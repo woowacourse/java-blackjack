@@ -60,7 +60,6 @@ public class BlackjackGameTest {
     void 게임_결과_항목_수는_딜러_포함_참가자_수_더하기_1() {
         // given
         blackjackGame.dealCards();
-        blackjackGame.calculateDealerScore();
 
         // when
         List<String> results = blackjackGame.evaluateGame();
@@ -73,7 +72,6 @@ public class BlackjackGameTest {
     void 게임_결과_첫번째_항목은_딜러() {
         // given
         blackjackGame.dealCards();
-        blackjackGame.calculateDealerScore();
 
         // when
         List<String> results = blackjackGame.evaluateGame();
@@ -86,7 +84,6 @@ public class BlackjackGameTest {
     void 게임_결과에_각_참가자_이름_포함() {
         // given
         blackjackGame.dealCards();
-        blackjackGame.calculateDealerScore();
 
         // when
         List<String> results = blackjackGame.evaluateGame();

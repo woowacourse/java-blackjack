@@ -72,21 +72,12 @@ public class Participants {
         participants.get(index).receiveCard(deck.dealCard());
     }
 
-    public void calculateScore(int index) {
-        participants.get(index).calculateScore();
-    }
-
-    public void caculateDealerscore() {
-        dealer.calculateScore();
-    }
-
     public Boolean determineDealerDealMore() {
         return dealer.determineDealerDealMore();
     }
 
     public void dealCardToDealer(Card card) {
         dealer.receiveCard(card);
-        dealer.calculateScore();
     }
 
     public String getDealerFinalDisplay() {

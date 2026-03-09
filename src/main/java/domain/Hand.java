@@ -10,20 +10,13 @@ public class Hand {
     private static final Integer DEALER_DEAL_AGAIN_BOUNDARY = 16;
 
     private final List<Card> cards;
-    private int totalScore;
-    private boolean hasAce;
 
     public Hand() {
         cards = new ArrayList<>();
-        totalScore = 0;
-        hasAce = false;
     }
 
     public void saveCard(Card card) {
         cards.add(card);
-        if (card.isAceCard()) {
-            hasAce = true;
-        }
     }
 
     public String getCardsDisplay() {
@@ -32,30 +25,42 @@ public class Hand {
                 .collect(Collectors.joining(", "));
     }
 
-    public void calculateHandScore() {
-        this.totalScore = 0;
-        for (Card card : cards) {
-            totalScore += card.getCardScore();
-        }
-
-        if (hasAce && totalScore > WINNING_SCORE_BOUNDARY) {
-            totalScore -= ACE_SUBTRACTION_POINT;
-        }
-    }
-
     public Boolean determineDealerDealMore() {
-        if (totalScore <= DEALER_DEAL_AGAIN_BOUNDARY) {
+        if (calculateTotalScore() <= DEALER_DEAL_AGAIN_BOUNDARY) {
             return true;
         }
         return false;
     }
 
     public String getFinalDisplay() {
-        String finalDisplay = " - 결과: " + totalScore;
-        return finalDisplay;
+        return " - 결과: " + calculateTotalScore();
     }
 
-    public int getTotalScore() {
+    public int calculateTotalScore() {
+        int totalScore = cards.stream()
+                .mapToInt(Card::getCardScore)
+                .sum();
+
+        if (totalScore > WINNING_SCORE_BOUNDARY) {
+            totalScore = adjustContainAce(totalScore);
+        }
+        return totalScore;
+    }
+
+    private int adjustContainAce(int totalScore) {
+        for (Card card : cards) {
+            totalScore = adjustAce(totalScore, card);
+        }
+        return totalScore;
+    }
+
+    private int adjustAce(int totalScore, Card card) {
+        if (totalScore <= WINNING_SCORE_BOUNDARY) {
+            return totalScore;
+        }
+        if (card.isAceCard()) {
+            return totalScore - ACE_SUBTRACTION_POINT;
+        }
         return totalScore;
     }
 }

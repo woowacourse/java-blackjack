@@ -1,13 +1,14 @@
 package domain;
 
 import view.Message;
+import vo.Name;
 
 public class User {
-    private final String name;
+    private final Name name;
     private final Hand hand;
 
     public User(String name) {
-        this.name = name;
+        this.name = new Name(name);
         this.hand = new Hand();
     }
 
@@ -16,7 +17,7 @@ public class User {
     }
 
     public String getName() {
-        return name;
+        return name.getName();
     }
 
     public String getCardsDisplay() {
@@ -24,11 +25,7 @@ public class User {
     }
 
     public String getFormatedAskGetExtraCard() {
-        return String.format(Message.REQUEST_GET_EXTRA_CARD, name);
-    }
-
-    public void calculateScore() {
-        hand.calculateHandScore();
+        return String.format(Message.REQUEST_GET_EXTRA_CARD, name.getName());
     }
 
     public String getUserFinalDisplay() {
@@ -36,6 +33,6 @@ public class User {
     }
 
     public int getHand() {
-        return hand.getTotalScore();
+        return hand.calculateTotalScore();
     }
 }

@@ -90,17 +90,12 @@ public class Application {
     }
 
     private void dealDealerCard() {
-        calculateDealerScore();
         String dealerReceivedCard = determineDealToDealer();
         outputView.printMessage(dealerReceivedCard);
     }
 
     private String determineDealToDealer() {
         return blackjackGame.determineDealToDealer();
-    }
-
-    private void calculateDealerScore() {
-        blackjackGame.calculateDealerScore();
     }
 
     private void printDealResult() {
@@ -113,9 +108,6 @@ public class Application {
         if (answer.equalsIgnoreCase("y")) {
             String cardDrawMessage = blackjackGame.processPlayerDecision(index);
             outputView.printMessage(cardDrawMessage);
-        }
-        if (answer.equalsIgnoreCase("n")) {
-            blackjackGame.calculateScore(index);
         }
     }
 

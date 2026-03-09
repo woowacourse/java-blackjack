@@ -41,12 +41,7 @@ public class BlackjackGame {
 
     public String processPlayerDecision(int index) {
         participants.dealCard(deck, index);
-        participants.calculateScore(index);
         return participants.makeOneUserCardDelegator(index);
-    }
-
-    public void calculateDealerScore() {
-        participants.caculateDealerscore();
     }
 
     public String determineDealToDealer() {
@@ -63,10 +58,6 @@ public class BlackjackGame {
 
     public List<String> makeUserFinalResultDisplay() {
         return participants.addScoreToUserHand();
-    }
-
-    public void calculateScore(int index) {
-        participants.calculateScore(index);
     }
 
     public List<String> evaluateGame() {

@@ -22,11 +22,8 @@ public class HandTest {
         hand.saveCard(new Card(Suit.SPADE, Rank.TWO));
         hand.saveCard(new Card(Suit.HEART, Rank.THREE));
 
-        // when
-        hand.calculateHandScore();
-
-        // then
-        assertThat(hand.getTotalScore()).isEqualTo(5);
+        // when & then
+        assertThat(hand.calculateTotalScore()).isEqualTo(5);
     }
 
     @Test
@@ -35,11 +32,8 @@ public class HandTest {
         hand.saveCard(new Card(Suit.SPADE, Rank.ACE));
         hand.saveCard(new Card(Suit.HEART, Rank.FIVE));
 
-        // when
-        hand.calculateHandScore();
-
-        // then
-        assertThat(hand.getTotalScore()).isEqualTo(16);
+        // when & then
+        assertThat(hand.calculateTotalScore()).isEqualTo(16);
     }
 
     @Test
@@ -49,11 +43,8 @@ public class HandTest {
         hand.saveCard(new Card(Suit.HEART, Rank.KING));
         hand.saveCard(new Card(Suit.DIAMOND, Rank.FIVE));
 
-        // when
-        hand.calculateHandScore();
-
-        // then
-        assertThat(hand.getTotalScore()).isEqualTo(16);
+        // when & then
+        assertThat(hand.calculateTotalScore()).isEqualTo(16);
     }
 
     @Test
@@ -63,11 +54,8 @@ public class HandTest {
         hand.saveCard(new Card(Suit.HEART, Rank.QUEEN));
         hand.saveCard(new Card(Suit.DIAMOND, Rank.TWO));
 
-        // when
-        hand.calculateHandScore();
-
-        // then
-        assertThat(hand.getTotalScore()).isEqualTo(22);
+        // when & then
+        assertThat(hand.calculateTotalScore()).isEqualTo(22);
     }
 
     @Test
@@ -75,7 +63,6 @@ public class HandTest {
         // given
         hand.saveCard(new Card(Suit.SPADE, Rank.TEN));
         hand.saveCard(new Card(Suit.HEART, Rank.SIX));
-        hand.calculateHandScore();
 
         // when & then
         assertThat(hand.determineDealerDealMore()).isTrue();
@@ -86,7 +73,6 @@ public class HandTest {
         // given
         hand.saveCard(new Card(Suit.SPADE, Rank.TEN));
         hand.saveCard(new Card(Suit.HEART, Rank.SEVEN));
-        hand.calculateHandScore();
 
         // when & then
         assertThat(hand.determineDealerDealMore()).isFalse();

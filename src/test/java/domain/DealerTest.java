@@ -22,7 +22,6 @@ public class DealerTest {
         // given
         dealer.receiveCard(new Card(Suit.SPADE, Rank.TEN));
         dealer.receiveCard(new Card(Suit.HEART, Rank.SEVEN));
-        dealer.calculateScore();
         int userScore = 22;
 
         // when
@@ -37,7 +36,6 @@ public class DealerTest {
         // given
         dealer.receiveCard(new Card(Suit.SPADE, Rank.TEN));
         dealer.receiveCard(new Card(Suit.HEART, Rank.SEVEN));
-        dealer.calculateScore();
         int userScore = 21;
 
         // when
@@ -53,7 +51,6 @@ public class DealerTest {
         dealer.receiveCard(new Card(Suit.SPADE, Rank.KING));
         dealer.receiveCard(new Card(Suit.HEART, Rank.QUEEN));
         dealer.receiveCard(new Card(Suit.DIAMOND, Rank.TWO));
-        dealer.calculateScore();
         int userScore = 18;
 
         // when
@@ -68,7 +65,6 @@ public class DealerTest {
         // given
         dealer.receiveCard(new Card(Suit.SPADE, Rank.TEN));
         dealer.receiveCard(new Card(Suit.HEART, Rank.FIVE));
-        dealer.calculateScore();
         int userScore = 18;
 
         // when
@@ -83,7 +79,6 @@ public class DealerTest {
         // given
         dealer.receiveCard(new Card(Suit.SPADE, Rank.TEN));
         dealer.receiveCard(new Card(Suit.HEART, Rank.EIGHT));
-        dealer.calculateScore();
         int userScore = 15;
 
         // when
@@ -98,7 +93,6 @@ public class DealerTest {
         // given
         dealer.receiveCard(new Card(Suit.SPADE, Rank.TEN));
         dealer.receiveCard(new Card(Suit.HEART, Rank.EIGHT));
-        dealer.calculateScore();
         int userScore = 18;
 
         // when
@@ -113,7 +107,6 @@ public class DealerTest {
         // given
         dealer.receiveCard(new Card(Suit.SPADE, Rank.TEN));
         dealer.receiveCard(new Card(Suit.HEART, Rank.SIX));
-        dealer.calculateScore();
 
         // when & then
         assertThat(dealer.determineDealerDealMore()).isTrue();
@@ -124,7 +117,6 @@ public class DealerTest {
         // given
         dealer.receiveCard(new Card(Suit.SPADE, Rank.TEN));
         dealer.receiveCard(new Card(Suit.HEART, Rank.SEVEN));
-        dealer.calculateScore();
 
         // when & then
         assertThat(dealer.determineDealerDealMore()).isFalse();
