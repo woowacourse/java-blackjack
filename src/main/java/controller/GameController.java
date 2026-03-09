@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import view.InputParser;
+import view.InputValidator;
 import view.InputView;
 import view.OutputView;
 
@@ -75,14 +76,10 @@ public class GameController {
     }
 
     private void processRound(Player player, Dealer dealer) {
-        String hitOption = inputView.readHitOption(player.getName());
-        if (hitOption.equals("y")) {
-            player.addCard(dealer.dealCard());
-        }
-        outputView.printCurrentHoldCard(player);
-
-        while (hitOption.equals("y") && !player.isBust()) {
+        String hitOption;
+        while (!player.isBust()) {
             hitOption = inputView.readHitOption(player.getName());
+            InputValidator.validateHitOption(hitOption);
             if (hitOption.equals("n")) {
                 break;
             }
