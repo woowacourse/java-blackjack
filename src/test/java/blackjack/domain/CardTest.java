@@ -9,8 +9,7 @@ import org.junit.jupiter.api.Test;
 public class CardTest {
 
     @Test
-    @DisplayName("카드가 올바르게 생성하는지에 대한 테스트")
-    void createCard() {
+    void 카드가_올바르게_생성하는지에_대한_테스트() {
         // given
         CardValue value = CardValue.ACE;
         CardShape cardShape = CardShape.DIAMOND;
