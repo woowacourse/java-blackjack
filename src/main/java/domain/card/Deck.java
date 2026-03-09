@@ -1,9 +1,6 @@
-package domain;
+package domain.card;
 
-import domain.card.Card;
-import domain.card.CardNumber;
-import domain.card.CardPattern;
-import domain.exception.DeckIsEmptyException;
+import domain.exception.EmptyDeckException;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,7 +25,7 @@ public class Deck {
 
     public Card draw() {
         if (queue.isEmpty()) {
-            throw new DeckIsEmptyException();
+            throw new EmptyDeckException();
         }
         return queue.poll();
     }
