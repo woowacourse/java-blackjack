@@ -1,0 +1,65 @@
+package blackjack.domain.deck;
+
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Rank;
+import blackjack.domain.card.Suit;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
+
+public class Deck {
+
+    private static final String EMPTY_DECK_MESSAGE = "덱에 남은 카드가 없습니다.";
+
+    private final List<Card> cards;
+
+    public Deck() {
+        this.cards = createAllCards();
+    }
+
+    public void shuffle() {
+        Collections.shuffle(this.cards);
+    }
+
+    public void shuffle(final Consumer<List<Card>> shuffleStrategy) {
+        shuffleStrategy.accept(this.cards);
+    }
+
+    private List<Card> createAllCards() {
+        return Arrays.stream(Suit.values())
+                .flatMap(suit -> Arrays.stream(Rank.values())
+                        .map(rank -> new Card(suit, rank)))
+                .collect(Collectors.toList());
+    }
+
+    public Card draw() {
+        if (cards.isEmpty()) {
+            throw new IllegalStateException(EMPTY_DECK_MESSAGE);
+        }
+        return cards.removeFirst();
+    }
+
+    public int size() {
+        return cards.size();
+    }
+
+    public List<Card> getCards() {
+        return List.copyOf(cards);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Deck deck = (Deck) o;
+        return Objects.equals(cards, deck.cards);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(cards);
+    }
+}
