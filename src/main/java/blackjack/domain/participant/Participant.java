@@ -4,8 +4,7 @@ import blackjack.domain.PlayingCards;
 import blackjack.dto.DrawResult;
 
 public abstract class Participant {
-    
-    private static final String DEALER_ROLE_NAME = "dealer";
+
     private static final int FIRST_DRAW_COUNT = 2;
 
     protected String nickname;
@@ -19,7 +18,7 @@ public abstract class Participant {
     }
 
     public boolean isDealer() {
-        return role.getName().equals(DEALER_ROLE_NAME);
+        return role == Role.DEALER;
     }
 
     public String getNickname() {
