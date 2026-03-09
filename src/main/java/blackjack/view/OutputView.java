@@ -22,7 +22,6 @@ public class OutputView {
         System.out.println(playerName + "카드: " + stringJoinWithComma(cards) + " - 결과: " + score);
     }
 
-    // TODO: 16점 고정 상수 제거
     public static void printGetMoreCardsForDealer(String dealerName) {
         System.out.println();
         System.out.println(dealerName + "는 16이하라 한장의 카드를 더 받았습니다.");
@@ -39,7 +38,6 @@ public class OutputView {
         System.out.println();
     }
 
-    // TODO: 딜러 하드 코딩 제거
     private static void printWinningResultOfDealer(int winCountOfDealer, int numberOfPlayer) {
         System.out.println("딜러: " + winCountOfDealer + "승 " + (numberOfPlayer - winCountOfDealer) + "패");
     }
