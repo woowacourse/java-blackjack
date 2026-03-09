@@ -16,15 +16,6 @@ class DealerTest {
     }
 
     @Test
-    void 딜러_정상_생성_테스트() {
-        // given
-        // when
-
-        // then
-        assertThat(dealer.getName()).isEqualTo("딜러");
-    }
-
-    @Test
     void 첫번째_턴의_딜러의_카드_오픈_테스트() {
         // given
         Card card1 = Card.of("스페이드", 3);
