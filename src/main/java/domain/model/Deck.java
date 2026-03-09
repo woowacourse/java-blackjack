@@ -29,10 +29,6 @@ public class Deck {
         return sum;
     }
 
-    public DeckStatus getDeckStatus() {
-        return deckStatus;
-    }
-
     public List<Card> getCards() {
         return List.copyOf(cards);
     }
@@ -67,11 +63,8 @@ public class Deck {
 
     // 최종 점수 계산 메서드
     public int calculateFinalSum() {
-        // 카드를 순회하며 A가 있는지 확인
         boolean hasAce = cards.stream().anyMatch(Card::isAce);
         if (hasAce && sum <= 11) {
-            // A가 있으면 11로 계산해서 21이 넘는지 확인
-            // 넘지 않으면 11로 처리 후 반환
             return sum + 10;
         }
         return sum;
