@@ -3,6 +3,7 @@ import domain.card.Pattern;
 import domain.card.Rank;
 import domain.participant.Dealer;
 import domain.participant.Hand;
+import domain.participant.PlayerName;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,12 +12,12 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 public class DealerTest {
 
     Hand dummyHand;
-    String name;
+    PlayerName name;
 
     @BeforeEach
     void init() {
         dummyHand = new Hand();
-        name = "딜러";
+        name = new PlayerName("딜러");
     }
 
     @Test
@@ -25,7 +26,7 @@ public class DealerTest {
         Dealer dealer = new Dealer(dummyHand);
         int beforeSize = dealer.handSize();
 
-        if (dealer.dealerRule()) {
+        if (dealer.shouldHit()) {
             dealer.keepCard(card);
         }
         int afterSize = dealer.handSize();
@@ -43,7 +44,7 @@ public class DealerTest {
         Dealer dealer = new Dealer(dummyHand);
         int beforeSize = dealer.handSize();
 
-        if (dealer.dealerRule()) {
+        if (dealer.shouldHit()) {
             dealer.keepCard(card3);
         }
         int afterSize = dealer.handSize();

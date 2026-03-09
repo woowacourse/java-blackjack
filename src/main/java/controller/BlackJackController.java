@@ -49,7 +49,11 @@ public class BlackJackController {
     }
 
     private void playDealer(GameState gameState) {
-        dealerHitOrStand(gameState.getDealer(), gameState.getCardDeck());
+        int hitCount = blackJackService.dealerHitOrStand(gameState.getDealer(), gameState.getCardDeck());
+
+        for (int i = 0; i < hitCount; i++) {
+            OutputView.dealerHitMessage();
+        }
     }
 
     private void showResult(GameState gameState) {
@@ -108,13 +112,6 @@ public class BlackJackController {
         }
         if (!player.getHand().isBust()) {
             finalizePlayerTurn(player);
-        }
-    }
-
-    private void dealerHitOrStand(Dealer dealer, CardDeck cardDeck) {
-        while (dealer.dealerRule()) {
-            OutputView.dealerHitMessage();
-            dealer.keepCard(cardDeck.drawCard());
         }
     }
 }
