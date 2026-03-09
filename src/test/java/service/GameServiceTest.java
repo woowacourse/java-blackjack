@@ -18,7 +18,7 @@ class GameServiceTest {
     void 플레이어_등록_테스트(){
         List<String> playerNames = new ArrayList<>(List.of("pobi", "jason"));
 
-        gameService.joinPlayers(playerNames);
-        assertThat(gameService.getPlayerGroupSize()).isEqualTo(playerNames.size() + 1); // +1은 딜러
+        gameService.registerPlayers(playerNames);
+        assertThat(gameService.getPlayerGroupSize()).isEqualTo(playerNames.size());
     }
 }
