@@ -1,5 +1,9 @@
-package domain;
+package domain.participant;
 
+import domain.card.Card;
+import domain.card.CardNumber;
+import domain.card.CardSuit;
+import domain.card.Deck;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;

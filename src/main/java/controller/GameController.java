@@ -1,11 +1,11 @@
 package controller;
 
-import domain.Dealer;
-import domain.Deck;
+import domain.participant.Dealer;
+import domain.card.Deck;
 import domain.GameResult;
 import domain.Judgement;
-import domain.Player;
-import domain.Players;
+import domain.participant.Player;
+import domain.participant.Players;
 import dto.ParticipantDto;
 import dto.PlayerResultDto;
 import java.util.ArrayList;
