@@ -57,20 +57,19 @@ public class BlackjackController {
     private void getMoreCards(Players players) {
         for (Player player : players.getPlayers()) {
             int count = 0;
-            while (!player.isBurst() && !player.isBlackjack()) {
-                String yesOrNo = inputView.readMoreCard(player.getName());
-                if (yesOrNo.equals("y")) {
-                    player.draw(Deck.top());
-                    OutputView.printCardResults(player.getName(), player.getCardsName());
-                    count++;
-                    continue;
-                }
-                if (count == 0) {
-                    OutputView.printCardResults(player.getName(), player.getCardsName());
-                }
-                break;
+            while (!player.isBurst() && !player.isBlackjack() && readPlayerWantMoreCard(player)) {
+                player.draw(Deck.top());
+                OutputView.printCardResults(player.getName(), player.getCardsName());
+                count++;
+            }
+            if (count == 0) {
+                OutputView.printCardResults(player.getName(), player.getCardsName());
             }
         }
+    }
+
+    private boolean readPlayerWantMoreCard(Player player) {
+        return "y".equals(inputView.readMoreCard(player.getName()));
     }
 
     private void getMoreCardsForDealer(Player dealer, Players players) {
