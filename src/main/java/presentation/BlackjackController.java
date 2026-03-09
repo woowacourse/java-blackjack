@@ -20,7 +20,7 @@ public class BlackjackController {
         this.outputView = outputView;
     }
 
-    public void run() {
+    public void executeGame() {
         List<String> playerNames = getPlayerNames();
         distributeInitialCards();
         playGame(playerNames);

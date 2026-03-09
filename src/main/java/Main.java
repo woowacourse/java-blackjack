@@ -16,6 +16,6 @@ public class Main {
         BlackjackService blackjackService = new BlackjackService(gameTable, deck);
         BlackjackController blackjackController = new BlackjackController(blackjackService, inputView, outputView);
 
-        blackjackController.run();
+        blackjackController.executeGame();
     }
 }
