@@ -14,22 +14,38 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
+    private static final String JOIN_DELIMITER = ", ";
+    private static final String INITIAL_DEAL_FORMAT = "%n딜러와 %s에게 2장을 나누었습니다.%n";
+    private static final String DEALER_FIRST_CARD_FORMAT = "딜러카드: %s%n";
+    private static final String PLAYER_CARDS_FORMAT = "%s카드: %s%n";
+    private static final String DEALER_HIT_MESSAGE = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    private static final String PARTICIPANT_FINAL_CARDS_FORMAT = "%s카드: %s - 결과: %d%n";
+    private static final String FINAL_RESULTS_HEADER = "\n## 최종 승패";
+    private static final String DEALER_RESULT_FORMAT = "딜러: %s%n";
+    private static final String PLAYER_RESULT_FORMAT = "%s: %s%n";
+    private static final String WIN_DISPLAY_TEXT = "승";
+    private static final String LOSE_DISPLAY_TEXT = "패";
+    private static final String DRAW_DISPLAY_TEXT = "무";
+    private static final String WIN_LABEL = "승 ";
+    private static final String DRAW_LABEL = "무 ";
+    private static final String LOSE_LABEL = "패";
+
     public void printInitialDeal(final Players players, final Dealer dealer) {
         final String playerNames = players.players().stream()
                 .map(Player::getName)
-                .collect(Collectors.joining(", "));
-        System.out.printf("%n딜러와 %s에게 2장을 나누었습니다.%n", playerNames);
-        System.out.printf("딜러카드: %s%n", dealer.getFirstCard());
+                .collect(Collectors.joining(JOIN_DELIMITER));
+        System.out.printf(INITIAL_DEAL_FORMAT, playerNames);
+        System.out.printf(DEALER_FIRST_CARD_FORMAT, dealer.getFirstCard());
         players.players().forEach(this::printPlayerCards);
         System.out.println();
     }
 
     public void printPlayerCards(final Player player) {
-        System.out.printf("%s카드: %s%n", player.getName(), formatCards(player.getCards()));
+        System.out.printf(PLAYER_CARDS_FORMAT, player.getName(), formatCards(player.getCards()));
     }
 
     public void printDealerHit() {
-        System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println(DEALER_HIT_MESSAGE);
     }
 
     public void printFinalCards(final Players players, final Dealer dealer) {
@@ -41,24 +57,24 @@ public class OutputView {
     }
 
     public void printFinalResults(final GameResults gameResults) {
-        System.out.println("\n## 최종 승패");
+        System.out.println(FINAL_RESULTS_HEADER);
         printDealerResult(gameResults.dealerResult());
         gameResults.playerResults().forEach(this::printPlayerResult);
     }
 
     private void printParticipantFinalCards(final String name, final List<Card> cards, final int score) {
-        System.out.printf("%s카드: %s - 결과: %d%n", name, formatCards(cards), score);
+        System.out.printf(PARTICIPANT_FINAL_CARDS_FORMAT, name, formatCards(cards), score);
     }
 
     private void printDealerResult(Map<GameResult, Integer> dealerResults) {
-        System.out.println("딜러: " + buildDealerResultText(dealerResults).trim());
+        System.out.printf(DEALER_RESULT_FORMAT, buildDealerResultText(dealerResults).trim());
     }
 
     private String buildDealerResultText(final Map<GameResult, Integer> dealerResults) {
         final StringBuilder stringBuilder = new StringBuilder();
-        appendResultIfExists(stringBuilder, dealerResults, GameResult.WIN, "승 ");
-        appendResultIfExists(stringBuilder, dealerResults, GameResult.DRAW, "무 ");
-        appendResultIfExists(stringBuilder, dealerResults, GameResult.LOSE, "패");
+        appendResultIfExists(stringBuilder, dealerResults, GameResult.WIN, WIN_LABEL);
+        appendResultIfExists(stringBuilder, dealerResults, GameResult.DRAW, DRAW_LABEL);
+        appendResultIfExists(stringBuilder, dealerResults, GameResult.LOSE, LOSE_LABEL);
         return stringBuilder.toString();
     }
 
@@ -74,22 +90,22 @@ public class OutputView {
     }
 
     private void printPlayerResult(final Participant player, final GameResult result) {
-        System.out.printf("%s: %s%n", player.getName(), toDisplayText(result));
+        System.out.printf(PLAYER_RESULT_FORMAT, player.getName(), toDisplayText(result));
     }
 
     private String toDisplayText(final GameResult result) {
         if (result == GameResult.WIN) {
-            return "승";
+            return WIN_DISPLAY_TEXT;
         }
         if (result == GameResult.LOSE) {
-            return "패";
+            return LOSE_DISPLAY_TEXT;
         }
-        return "무";
+        return DRAW_DISPLAY_TEXT;
     }
 
     private String formatCards(final List<Card> cards) {
         return cards.stream()
                 .map(Card::toDisplayName)
-                .collect(Collectors.joining(", "));
+                .collect(Collectors.joining(JOIN_DELIMITER));
     }
 }
