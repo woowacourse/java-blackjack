@@ -18,25 +18,39 @@ Java로 구현한 콘솔 기반 블랙잭 게임입니다.
 
 ```
 src/main/java/
-├── Main.java                     # 진입점
+├── Main.java                      # 진입점
+├── constant/
+│   ├── ErrorMessage.java          # 에러 메시지 Enum
+│   └── MatchStatus.java           # 승무패 상태 Enum
 ├── controller/
-│   ├── BlackJackController.java  # 게임 흐름 제어
-│   └── InputController.java      # 입력 처리
+│   ├── BlackJackController.java   # 게임 흐름 제어
+│   └── InputController.java       # 입력 처리
+├── dto/
+│   ├── Card.java                  # 카드 데이터 전달 객체
+│   ├── ParticipantWinning.java    # 딜러+플레이어 승패 결과 DTO
+│   ├── PlayerResult.java          # 플레이어 카드/점수 결과 DTO
+│   └── PlayerWinning.java         # 플레이어 승패 결과 DTO
 ├── model/
-│   ├── Participant.java          # 딜러/플레이어 공통 부모 클래스
-│   ├── Dealer.java               # 딜러
-│   ├── Player.java               # 플레이어
-│   ├── Players.java              # 플레이어 목록
-│   ├── BlackJackDeck.java        # 카드 덱
-│   ├── Scorer.java               # 점수 계산 (A 보너스 처리)
-│   ├── CardNumber.java           # 카드 숫자 (2~9, J, Q, K, A)
-│   ├── Shape.java                # 카드 문양 (하트, 다이아몬드, 스페이드, 클로버)
-│   └── dto/                      # 데이터 전달 객체
+│   ├── Participant.java           # 딜러/플레이어 공통 부모 클래스
+│   ├── ParticipantHand.java       # 참가자의 패(손패) 관리
+│   ├── Dealer.java                # 딜러
+│   ├── DealerWinning.java         # 딜러 승패 집계
+│   ├── Player.java                # 플레이어
+│   ├── PlayerName.java            # 플레이어 이름 값 객체
+│   ├── Players.java               # 플레이어 목록
+│   ├── PlayersWinning.java        # 플레이어 전체 승패 집계
+│   ├── Agreement.java             # y/n 입력 값 객체
+│   ├── BlackJackDeck.java         # 카드 덱
+│   ├── Cards.java                 # 카드 컬렉션
+│   ├── Score.java                 # 점수 값 객체
+│   ├── Scorer.java                # 에이스 점수 계산
+│   ├── CardNumber.java            # 카드 숫자 (A, 2~9, J, Q, K)
+│   └── Shape.java                 # 카드 문양 (하트, 다이아몬드, 클로버, 스페이드)
 ├── service/
-│   └── BlackJackService.java     # 게임 비즈니스 로직
+│   └── BlackJackService.java      # 게임 비즈니스 로직
 └── view/
-    ├── InputView.java            # 입력 뷰
-    └── OutputView.java           # 출력 뷰
+    ├── InputView.java             # 입력 뷰
+    └── OutputView.java            # 출력 뷰
 ```
 
 ### 주요 규칙
@@ -91,3 +105,16 @@ src/main/java/
   - [x] 딜러가 카드를 뽑았는지의 여부를 출력한다.
   - [x] 최종덱과 총 점수를 출력한다.
   - [x] 승패 여부와 결과를 출력한다.
+
+### 팀 규칙
+1. 테스트 단위 기준
+   - 가장 작은 단위, 메소드
+
+2. 테스트 제외 기준
+   - IO 테스트, 중복되거나 하위 부분
+
+3. 테스트 어려움 대응
+   - 기능 분리와 역할 이관
+
+4. 리팩터링 우선 순위
+   - 컨벤션/규칙 > 역할 분리 > 세부 로직
