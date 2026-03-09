@@ -81,7 +81,7 @@ public class PlayingCards {
     }
 
     public boolean isDealerDraw() {
-        return calculateScoreSum() <= DEALER_SCORE;
+        return calculateTotalScore() <= DEALER_SCORE;
     }
 
     public boolean isNotDrawable() {
@@ -91,7 +91,7 @@ public class PlayingCards {
     public boolean isDrawable() {
         return calculateTotalScore() < BUSTED_SCORE;
     }
-    
+
     public boolean isBusted(int scoreSum) {
         return scoreSum > BUSTED_SCORE;
     }
@@ -105,7 +105,7 @@ public class PlayingCards {
         }
         return scoreSum;
     }
-    
+
     public int calculateTotalScoreForResult() {
         int scoreSum = calculateScoreSum();
         boolean busted = isBusted(scoreSum);
@@ -115,7 +115,7 @@ public class PlayingCards {
         }
         return scoreSum;
     }
-    
+
     private int bustedScore(int scoreSum, int aceCount) {
         int totalScore = scoreSum;
         if (aceCount > 0) {
@@ -126,30 +126,30 @@ public class PlayingCards {
         }
         return 0;
     }
-    
+
     public String getStatusByDisplayName() {
         return cards.stream().map(Card::getDisplayName).collect(Collectors.joining(", "));
     }
-    
+
     private static void matchDenominationWithSymbol(Rank rank, List<Suit> suits, List<Card> deck) {
         for (Suit suit : suits) {
             Card card = new Card(rank, suit);
             deck.add(card);
         }
     }
-    
+
     private int calculateScoreSum() {
         return cards
-                .stream()
-                .mapToInt(Card::getScore)
-                .sum();
+            .stream()
+            .mapToInt(Card::getScore)
+            .sum();
     }
 
     private int countAce() {
         return (int) cards
-                .stream()
-                .filter(Card::isAce)
-                .count();
+            .stream()
+            .filter(Card::isAce)
+            .count();
     }
 
     private int calculateWithAce(int scoreSum, int aceCount) {
