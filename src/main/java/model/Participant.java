@@ -2,7 +2,6 @@ package model;
 
 import java.util.List;
 import model.dto.Card;
-import model.dto.PlayerName;
 import model.dto.PlayerResult;
 
 public class Participant {
@@ -16,7 +15,7 @@ public class Participant {
     }
 
     public String getName() {
-        return this.name.value();
+        return this.name.getName();
     }
 
     public PlayerResult getResult() {

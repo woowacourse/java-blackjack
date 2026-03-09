@@ -2,8 +2,6 @@ package model;
 
 import static constant.GameRule.DEALER_NAME;
 
-import model.dto.PlayerName;
-
 public class Dealer extends Participant{
     private static final Integer CARD_DRAW_THRESHOLD = 16;
 

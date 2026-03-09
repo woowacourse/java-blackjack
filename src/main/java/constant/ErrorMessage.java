@@ -8,9 +8,7 @@ public enum ErrorMessage {
 
     DUPLICATED_CARD_IN_DECK("덱에 중복된 카드가 있습니다."),
 
-    ACE_CARD_NEED_TOTAL_SCORE("Ace 카드는 전체 점수가 필요합니다."),
-    NO_ACE_CARD("Ace 카드가 아닙니다."),
-
+    NO_EMPTY_NAME("이름은 공백으로 가질 수 없습니다."),
     NO_PLAYER_NAME_DEALER("플레이어는 '딜러'라는 이름을 가질 수 없습니다."),
     DUPLICATED_NAME("중복된 이름이 있습니다.");
 

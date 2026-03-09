@@ -4,7 +4,6 @@ import static constant.GameRule.DEALER_NAME;
 
 import constant.ErrorMessage;
 import java.util.Objects;
-import model.dto.PlayerName;
 
 public class Player extends Participant {
 
@@ -14,7 +13,7 @@ public class Player extends Participant {
     }
 
     private void validate(PlayerName name) {
-        if(name.value().equals(DEALER_NAME)) {
+        if(name.getName().equals(DEALER_NAME)) {
             throw new IllegalArgumentException(ErrorMessage.NO_PLAYER_NAME_DEALER.getMessage());
         }
     }

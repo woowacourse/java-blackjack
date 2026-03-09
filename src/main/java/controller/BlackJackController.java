@@ -8,7 +8,7 @@ import model.Dealer;
 import model.Participant;
 import model.Player;
 import model.Players;
-import model.dto.PlayerName;
+import model.PlayerName;
 import model.dto.PlayerResult;
 import service.BlackJackService;
 import view.InputView;
@@ -44,8 +44,8 @@ public class BlackJackController {
 
     private Players getParticipantsName() {
         String nameInput = InputView.getPlayerNames();
-        List<Player> players = Arrays.stream(nameInput.split(NAME_SPLIT_REGEX))
-                .map((name) -> new Player(new PlayerName(name)))
+        List<Player> players = Arrays.stream(nameInput.split(NAME_SPLIT_REGEX, -1))
+                .map((name) -> new Player(new PlayerName(name.trim())))
                 .toList();
 
         return new Players(players);
