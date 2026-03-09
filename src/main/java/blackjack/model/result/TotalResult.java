@@ -36,7 +36,9 @@ public class TotalResult {
     public String getDealerResult() {
         return String.format(
                 "%d승 %d무 %d패",
-                countOf(Result.LOSE), countOf(Result.DRAW), countOf(Result.WIN)
+                countOf(Result.LOSE),
+                countOf(Result.DRAW),
+                countOf(Result.WIN)
         );
     }
 
@@ -48,7 +50,11 @@ public class TotalResult {
 
     public List<String> getPlayerResults() {
         return results.entrySet().stream()
-                .map(entry -> String.format("%s: %s", entry.getKey().getName(), entry.getValue().getDisplayName()))
-                .toList();
+                .map(
+                        entry -> String.format(
+                                "%s: %s",
+                                entry.getKey().getName(),
+                                entry.getValue().getDisplayName())
+                ).toList();
     }
 }
