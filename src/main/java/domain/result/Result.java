@@ -7,6 +7,7 @@ public class Result {
     private static final int WIN_INDEX = 0;
     private static final int DRAW_INDEX = 1;
     private static final int DEFEAT_INDEX = 2;
+
     private final Map<String, ResultInfo> gameResult;
 
     public Result() {

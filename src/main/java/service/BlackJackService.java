@@ -7,7 +7,6 @@ import domain.participant.ParticipantGroup;
 import domain.participant.Player;
 
 public class BlackJackService {
-
     public void dealInitialCards(CardDeck cardDeck, ParticipantGroup participantGroup) {
         divideCard(cardDeck, participantGroup.getDealer());
 

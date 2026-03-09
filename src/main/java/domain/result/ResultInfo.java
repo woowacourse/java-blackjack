@@ -1,7 +1,6 @@
 package domain.result;
 
 public enum ResultInfo {
-
     WIN("승"),
     DEFEAT("패"),
     DRAW("무");

@@ -1,7 +1,5 @@
 package domain.participant;
 
-import java.util.List;
-
 public class ParticipantGroup {
     private final Players players;
     private final Dealer dealer;
