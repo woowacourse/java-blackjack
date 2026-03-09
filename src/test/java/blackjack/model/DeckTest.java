@@ -26,8 +26,9 @@ class DeckTest {
         assertThat(dealer.cards().size()).isEqualTo(2);
     }
 
+
     @Test
-    @DisplayName("카드 추가 지급 성공")
+    @DisplayName("카드 추가 지급 정상")
     void test_provide_one_card_success() {
         Player player = new Player("pobi");
         List<Card> cards = List.of(new Card(Suit.HEART, Rank.TEN));
