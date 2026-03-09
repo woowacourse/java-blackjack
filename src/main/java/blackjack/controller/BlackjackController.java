@@ -53,18 +53,21 @@ public class BlackjackController {
         OutputView.println();
     }
 
-    // TODO : 코드 품질 개선 필요
     private void getMoreCards(Players players) {
         for (Player player : players.getPlayers()) {
-            int count = 0;
-            while (!player.isBurst() && !player.isBlackjack() && readPlayerWantMoreCard(player)) {
-                player.draw(Deck.pop());
-                OutputView.printCardResults(player.getName(), player.getCardsName());
-                count++;
-            }
-            if (count == 0) {
-                OutputView.printCardResults(player.getName(), player.getCardsName());
-            }
+            getMoreCard(player);
+        }
+    }
+
+    private void getMoreCard(Player player) {
+        boolean isDraw = false;
+        while (!player.isBurst() && !player.isBlackjack() && readPlayerWantMoreCard(player)) {
+            player.draw(Deck.pop());
+            OutputView.printCardResults(player.getName(), player.getCardsName());
+            isDraw = true;
+        }
+        if (!isDraw) {
+            OutputView.printCardResults(player.getName(), player.getCardsName());
         }
     }
 
