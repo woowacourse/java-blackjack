@@ -22,11 +22,11 @@ public class BlackJack {
     public void start() {
         Dealer dealer = new Dealer();
         Gamblers gamblers = new Gamblers(getPlayerNames());
-        initialDeal(dealer, gamblers); //초기 2장 지급
-        printInitialDealInfo(dealer, gamblers); //초기 상태 출력
 
-        gamblersTurn(gamblers); // 플레이어턴 순회
-        dealerTurn(dealer); // 딜러 턴
+        initialDeal(dealer, gamblers);
+        printInitialDealInfo(dealer, gamblers);
+        gamblersTurn(gamblers);
+        dealerTurn(dealer);
 
         printFinalPlayerInfo(dealer, gamblers);
         printFinalResult(dealer, gamblers);
