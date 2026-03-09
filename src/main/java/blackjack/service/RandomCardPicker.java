@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class RandomCardPicker {
     private final Random random;
-    private List<Card> notDrawnCards;
+    private final List<Card> notDrawnCards;
 
     public RandomCardPicker(Random random) {
         this.random = random;

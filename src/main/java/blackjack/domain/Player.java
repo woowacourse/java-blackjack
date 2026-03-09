@@ -5,7 +5,7 @@ import java.util.List;
 public class Player {
     private final String name;
 
-    private Cards drawnCards;
+    private final Cards drawnCards;
 
     public Player(String name) {
         this.name = name;
