@@ -9,12 +9,12 @@ public class Hand {
 
     private final List<TrumpCard> cards;
 
-    private Hand(List<TrumpCard> cards) {
+    private Hand() {
         this.cards = new ArrayList<>();
     }
 
     public static Hand init() {
-        return new Hand(List.of());
+        return new Hand();
     }
 
     public void receive(TrumpCard card) {
