@@ -1,6 +1,6 @@
 package blackjack.controller;
 
-import blackjack.model.game.Answer;
+import blackjack.model.game.HitAnswer;
 import blackjack.model.game.BlackjackResult;
 import blackjack.model.card.Card;
 import blackjack.model.participant.Dealer;
@@ -84,7 +84,7 @@ public class BlackjackController {
     }
 
     private void playerHit(Player player, Deck deck) {
-        while (!player.isBust() && inputView.askHit(player.getName()) == Answer.YES) {
+        while (!player.isBust() && inputView.askHit(player.getName()) == HitAnswer.HIT) {
             player.addCard(deck.draw());
             outputView.printPlayerCards(player.getName(), cardsToDtos(player.getCards()));
         }

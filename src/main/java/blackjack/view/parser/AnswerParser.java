@@ -1,16 +1,16 @@
 package blackjack.view.parser;
 
-import blackjack.model.game.Answer;
+import blackjack.model.game.HitAnswer;
 import java.util.Map;
 
 public class AnswerParser {
 
-    private static final Map<String, Answer> ANSWERS = Map.of(
-            "y", Answer.YES,
-            "n", Answer.NO
+    private static final Map<String, HitAnswer> ANSWERS = Map.of(
+            "y", HitAnswer.HIT,
+            "n", HitAnswer.STAND
     );
 
-    public static Answer parseToModel(String rawAnswer) {
+    public static HitAnswer parseToModel(String rawAnswer) {
         if (!ANSWERS.containsKey(rawAnswer)) {
             throw new IllegalArgumentException("부적절한 응답입니다.");
         }
