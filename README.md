@@ -20,8 +20,12 @@ Java로 구현한 콘솔 기반 블랙잭 게임입니다.
 src/main/java/
 ├── Main.java                      # 진입점
 ├── constant/
-│   ├── ErrorMessage.java          # 에러 메시지 Enum
-│   └── MatchStatus.java           # 승무패 상태 Enum
+│   ├── ErrorCode.java             # 에러 코드 인터페이스
+│   ├── CardErrorCode.java         # 카드 관련 에러 코드 (CARD_001~)
+│   ├── PlayerErrorCode.java       # 플레이어 관련 에러 코드 (PLAYER_001~)
+│   └── InputErrorCode.java        # 입력 관련 에러 코드 (INPUT_001~)
+├── exception/
+│   └── GameException.java         # 공통 예외 클래스
 ├── controller/
 │   ├── BlackJackController.java   # 게임 흐름 제어
 │   └── InputController.java       # 입력 처리
@@ -32,7 +36,7 @@ src/main/java/
 │   └── PlayerWinning.java         # 플레이어 승패 결과 DTO
 ├── model/
 │   ├── Participant.java           # 딜러/플레이어 공통 부모 클래스
-│   ├── ParticipantHand.java       # 참가자의 패(손패) 관리
+│   ├── ParticipantHand.java       # 참가자의 패(손패) 관리 및 점수 계산
 │   ├── Dealer.java                # 딜러
 │   ├── DealerWinning.java         # 딜러 승패 집계
 │   ├── Player.java                # 플레이어
@@ -40,10 +44,9 @@ src/main/java/
 │   ├── Players.java               # 플레이어 목록
 │   ├── PlayersWinning.java        # 플레이어 전체 승패 집계
 │   ├── Agreement.java             # y/n 입력 값 객체
-│   ├── BlackJackDeck.java         # 카드 덱
-│   ├── Cards.java                 # 카드 컬렉션
-│   ├── Score.java                 # 점수 값 객체
-│   ├── Scorer.java                # 에이스 점수 계산
+│   ├── BlackJackDeck.java         # 카드 덱 (카드 보관 및 분배)
+│   ├── CardDeckFactory.java       # 카드 생성 및 셔플
+│   ├── MatchStatus.java           # 승무패 상태 Enum
 │   ├── CardNumber.java            # 카드 숫자 (A, 2~9, J, Q, K)
 │   └── Shape.java                 # 카드 문양 (하트, 다이아몬드, 클로버, 스페이드)
 ├── service/
@@ -56,7 +59,7 @@ src/main/java/
 ### 주요 규칙
 
 - **버스트**: 카드 합산 점수가 21을 초과하면 자동 패배
-- **A(에이스)**: 카드 현재 점수에 따라 1 또는 11로 적용가능
+- **A(에이스)**: 카드 현재 점수에 따라 1 또는 11로 적용 가능
 - **J, Q, K**: 10점으로 계산
 - **딜러**: 16점 이하일 경우 자동으로 카드를 추가 드로우
 - **플레이어 이름**: 중복 불가, `딜러`라는 이름 사용 불가
