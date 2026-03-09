@@ -35,6 +35,10 @@ public class Player {
         return score;
     }
 
+    public List<Card> getCards() {
+        return cards;
+    }
+
     public String getName() {
         return name;
     }

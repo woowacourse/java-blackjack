@@ -24,10 +24,10 @@ public class PlayersTest {
         assertThat(players.getSize()).isEqualTo(3); // 딜러 포함
     }
 
-    @DisplayName("플레이어가 없으면 예외가 발생한다")
+    @DisplayName("이름이 공백이면 예외가 발생한다")
     @Test
-    void 플레이어가_없으면_예외가_발생한다() {
-        assertThatThrownBy(() -> new Players(List.of()))
+    void 이름이_공백이면_예외가_발생한다() {
+        assertThatThrownBy(() -> new Players(List.of("아나키", " ", "모아")))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

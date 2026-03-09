@@ -12,13 +12,19 @@ public class Players {
     private final List<Player> playerList;
 
     public Players(List<String> names) {
-        if (names.isEmpty()) {
-            throw new IllegalArgumentException("플레이어는 최소 1명이어야 합니다.");
-        }
+        validate(names);
         playerList = new ArrayList<>();
         playerList.add(new Player(DEALER_NAME));
         for (String name : names) {
             playerList.add(new Player(name));
+        }
+    }
+
+    private void validate(List<String> names) {
+        for (String name : names) {
+            if (name.isBlank()) {
+                throw new IllegalArgumentException("이름은 공백일 수 없습니다.");
+            }
         }
     }
 
