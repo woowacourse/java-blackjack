@@ -1,5 +1,6 @@
 package domain.player;
 
+import domain.participant.HandCards;
 import domain.participant.player.Player;
 import domain.participant.player.PlayerGroups;
 import domain.vo.Name;
@@ -15,8 +16,8 @@ class PlayerGroupsTest {
     @Test
     void playerGroup_정상_생성_테스트(){
         List<Player> players = new ArrayList<>(List
-                .of(new Player(new Name("pobi")), new Player(new Name("Jason")),
-                        new Player(new Name("파도")), new Player(new Name("이안"))));
+                .of(new Player(new Name("pobi"), new HandCards()), new Player(new Name("Jason"), new HandCards()),
+                        new Player(new Name("파도"), new HandCards()), new Player(new Name("이안"),new HandCards())));
         PlayerGroups playerGroups = new PlayerGroups(players);
 
         assertThat(playerGroups.getPlayerGroupSize()).isEqualTo(players.size());
@@ -25,8 +26,8 @@ class PlayerGroupsTest {
     @Test
     void 플레이어_정원초과_테스트() {
         List<Player> players = new ArrayList<>(List
-                .of(new Player(new Name("pobi")), new Player(new Name("Jason")),
-                        new Player(new Name("파도")), new Player(new Name("이안")), new Player(new Name("슈크림"))));
+                .of(new Player(new Name("pobi"), new HandCards()), new Player(new Name("Jason"), new HandCards()),
+                        new Player(new Name("파도"), new HandCards()), new Player(new Name("이안"), new HandCards()), new Player(new Name("슈크림"), new HandCards())));
 
         assertThatThrownBy(() -> new PlayerGroups(players))
                 .isInstanceOf(IllegalArgumentException.class);
