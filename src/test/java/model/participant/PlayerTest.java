@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import model.card.Card;
 import model.card.Cards;
+import model.card.Rank;
+import model.card.Suit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -28,8 +30,8 @@ class PlayerTest {
     @Test
     void 플레이어의_카드_오픈_테스트() {
         // given
-        Card card1 = Card.of("스페이드", 3);
-        Card card2 = Card.of("스페이드", 4);
+        Card card1 = Card.of(Suit.SPADE, Rank.THREE);
+        Card card2 = Card.of(Suit.SPADE, Rank.FOUR);
         player.receive(card1);
         player.receive(card2);
 

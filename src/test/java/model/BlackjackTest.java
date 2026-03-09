@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import java.util.Map;
 import model.card.Card;
+import model.card.Rank;
+import model.card.Suit;
 import model.participant.Dealer;
 import model.participant.Participant;
 import model.participant.Participants;
@@ -19,15 +21,15 @@ public class BlackjackTest {
     void setUp() {
         participants = Participants.from(List.of("pobi", "jason"));
         Dealer dealer = participants.getDealer();
-        dealer.receive(Card.of("스페이드", 2));
-        dealer.receive(Card.of("스페이드", 4));
+        dealer.receive(Card.of(Suit.SPADE, Rank.TWO));
+        dealer.receive(Card.of(Suit.SPADE, Rank.FOUR));
 
-        Participant player1 = participants.getPlayers().get(0);
-        player1.receive(Card.of("하트", 2));
-        player1.receive(Card.of("하트", 3));
+        Participant player1 = participants.getPlayers().getFirst();
+        player1.receive(Card.of(Suit.HEART, Rank.TWO));
+        player1.receive(Card.of(Suit.HEART, Rank.THREE));
         Participant player2 = participants.getPlayers().get(1);
-        player2.receive(Card.of("하트", 5));
-        player2.receive(Card.of("하트", 6));
+        player2.receive(Card.of(Suit.HEART, Rank.FOUR));
+        player2.receive(Card.of(Suit.HEART, Rank.SIX));
 
         blackjack = Blackjack.from(participants);
     }

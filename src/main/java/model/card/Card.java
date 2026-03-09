@@ -9,14 +9,6 @@ public class Card {
         this.rank = rank;
     }
 
-    public static Card of(String suits, int cardNumber) {
-        return new Card(Suit.findByName(suits), Rank.findByValue(cardNumber));
-    }
-
-    public static Card of(String suits, String cardName) {
-        return new Card(Suit.findByName(suits), Rank.findByName(cardName));
-    }
-
     public static Card of(Suit suit, Rank rank) {
         return new Card(suit, rank);
     }

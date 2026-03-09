@@ -6,6 +6,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import java.util.List;
 import model.card.Card;
 import model.card.Cards;
+import model.card.Rank;
+import model.card.Suit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -26,8 +28,8 @@ class DealerTest {
     @Test
     void 첫_번째_오픈_때는_한_장의_카드만_오픈한다() {
         // given
-        Card card1 = Card.of("스페이드", 3);
-        Card card2 = Card.of("스페이드", 4);
+        Card card1 = Card.of(Suit.SPADE, Rank.THREE);
+        Card card2 = Card.of(Suit.SPADE, Rank.FOUR);
         dealer.receive(card1);
         dealer.receive(card2);
 
@@ -42,8 +44,8 @@ class DealerTest {
     @Test
     void 첫_번째_오픈이_아니면_모든_카드를_오픈한다() {
         // given
-        Card card1 = Card.of("스페이드", 3);
-        Card card2 = Card.of("스페이드", 4);
+        Card card1 = Card.of(Suit.SPADE, Rank.THREE);
+        Card card2 = Card.of(Suit.SPADE, Rank.FOUR);
         dealer.receive(card1);
         dealer.receive(card2);
 

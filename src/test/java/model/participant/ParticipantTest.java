@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import java.util.stream.Stream;
 import model.card.Card;
+import model.card.Rank;
+import model.card.Suit;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,7 +25,7 @@ class ParticipantTest {
     @Test
     void 카드를_뽑으면_현재_카드_목록에_추가한다() {
         // given
-        Card card = Card.of("스페이드", 3);
+        Card card = Card.of(Suit.SPADE, Rank.THREE);
 
         // when
         List<Card> cards = participant.receive(card);
@@ -38,9 +40,9 @@ class ParticipantTest {
         Participant jason = Player.of("jason");
         Participant gump = Player.of("gump");
 
-        Card card1 = Card.of("스페이드", 10);
-        Card card2 = Card.of("스페이드", 9);
-        Card card3 = Card.of("스페이드", 8);
+        Card card1 = Card.of(Suit.SPADE, Rank.TEN);
+        Card card2 = Card.of(Suit.SPADE, Rank.NINE);
+        Card card3 = Card.of(Suit.SPADE, Rank.EIGHT);
 
         // when
         jason.receive(card1);
@@ -71,14 +73,22 @@ class ParticipantTest {
 
     private static Stream<Arguments> provideCard() {
         return Stream.of(
-                Arguments.of(List.of(Card.of("스페이드", 11), Card.of("스페이드", 6)), 17),
-                Arguments.of(List.of(Card.of("스페이드", 10), Card.of("스페이드", 11)), 21),
-                Arguments.of(List.of(Card.of("스페이드", 6), Card.of("스페이드", 8), Card.of("스페이드", 11)), 15),
-                Arguments.of(List.of(Card.of("스페이드", 10), Card.of("스페이드", 10), Card.of("스페이드", 11)), 21),
-                Arguments.of(List.of(Card.of("스페이드", 11), Card.of("스페이드", 2), Card.of("스페이드", 3), Card.of("스페이드", 11)),
-                        17),
                 Arguments.of(
-                        List.of(Card.of("스페이드", 11), Card.of("스페이드", 11), Card.of("스페이드", 11), Card.of("스페이드", 11)), 14)
+                        List.of(Card.of(Suit.SPADE, Rank.ACE), Card.of(Suit.SPADE, Rank.SIX)), 17),
+                Arguments.of(
+                        List.of(Card.of(Suit.SPADE, Rank.TEN), Card.of(Suit.SPADE, Rank.ACE)), 21),
+                Arguments.of(
+                        List.of(Card.of(Suit.SPADE, Rank.SIX), Card.of(Suit.SPADE, Rank.EIGHT),
+                                Card.of(Suit.SPADE, Rank.ACE)), 15),
+                Arguments.of(
+                        List.of(Card.of(Suit.SPADE, Rank.TEN), Card.of(Suit.SPADE, Rank.JACK),
+                                Card.of(Suit.SPADE, Rank.ACE)), 21),
+                Arguments.of(
+                        List.of(Card.of(Suit.SPADE, Rank.ACE), Card.of(Suit.SPADE, Rank.TWO),
+                                Card.of(Suit.SPADE, Rank.THREE), Card.of(Suit.SPADE, Rank.ACE)), 17),
+                Arguments.of(
+                        List.of(Card.of(Suit.SPADE, Rank.ACE), Card.of(Suit.SPADE, Rank.ACE),
+                                Card.of(Suit.SPADE, Rank.ACE), Card.of(Suit.SPADE, Rank.ACE)), 14)
         );
     }
 }
