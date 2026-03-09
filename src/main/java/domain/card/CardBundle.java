@@ -49,7 +49,7 @@ public class CardBundle {
 
     public boolean checkExist(Card targetCard) {
         return cardBundle.stream().
-                anyMatch(c -> c.equals(targetCard));
+                anyMatch(card -> card.equals(targetCard));
     }
 
     public List<String> toDisplay() {
