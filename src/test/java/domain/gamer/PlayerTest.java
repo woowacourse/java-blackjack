@@ -22,8 +22,11 @@ public class PlayerTest {
 
         dealer.hitCardToPlayer(player);
         Card card = Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER);
+        CardBundle playerCardBundle = player.getCardBundle();
+        CardBundle answerCardBundle = CardBundle.from(List.of(card));
 
-        Assertions.assertThat(player.hasCard(card)).isTrue();
+        Assertions.assertThat(playerCardBundle)
+                .isEqualTo(answerCardBundle);
     }
 
     @Test
