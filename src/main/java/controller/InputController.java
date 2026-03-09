@@ -18,8 +18,8 @@ public class InputController {
         return new Players(players);
     }
 
-    public boolean getCondition(String name) {
-        String input = InputView.getDrawRequest(name);
+    public boolean getCondition(PlayerName name) {
+        String input = InputView.getDrawRequest(name.toString());
         return new Agreement(input).get();
     }
 

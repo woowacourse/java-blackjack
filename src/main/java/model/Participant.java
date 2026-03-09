@@ -13,7 +13,15 @@ public class Participant {
     }
 
     public PlayerResult getResult() {
-        return new PlayerResult(name, participantHand.getHand().get(), participantHand.getScore());
+        return new PlayerResult(name, participantHand.getHand().get(), getScore());
+    }
+
+    public PlayerName getName() {
+        return name;
+    }
+
+    public Integer getScore() {
+        return participantHand.getScore();
     }
 
     public void draw(Card card) {

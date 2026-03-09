@@ -72,7 +72,7 @@ public class BlackJackController {
     }
 
     private boolean drawPlayerTurn(Player player) {
-        if(!inputController.getCondition(player.getResult().name().value())) {
+        if(!inputController.getCondition(player.getName())) {
             return false;
         }
 

@@ -23,12 +23,12 @@ public class Player extends Participant {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Player other = (Player) o;
-        return this.getResult().name().equals(other.getResult().name());
+        return this.getName().equals(other.getName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.getResult().name());
+        return Objects.hash(this.getName());
     }
 
 }
