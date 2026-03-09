@@ -30,6 +30,12 @@ public class Dealer extends Participant {
         return Cards.from(hands);
     }
 
+    private void validateHasCards() {
+        if (hands.isEmpty()) {
+            throw new IllegalStateException("가진 카드 패가 없어 오픈할 수 없습니다.");
+        }
+    }
+
     @Override
     public boolean beats(Participant participant) {
         if (participant.isBust()) {
