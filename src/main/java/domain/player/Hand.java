@@ -1,6 +1,7 @@
 package domain.player;
 
 import domain.Card;
+import domain.CardDto;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +29,10 @@ public class Hand {
         }
 
         return score;
+    }
+
+    public CardDto handToDto() {
+        return new CardDto(List.copyOf(cards));
     }
 
     private int calculateAcePoint(int currentScore) {

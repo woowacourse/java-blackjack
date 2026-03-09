@@ -1,14 +1,13 @@
 package domain.player;
 
+import domain.Participant;
 import java.util.Objects;
 
-public class Player {
+public class Player extends Participant {
     private final Name name;
-    private final Hand hand;
 
     public Player(Name name) {
         this.name = name;
-        this.hand = new Hand();
     }
 
     @Override

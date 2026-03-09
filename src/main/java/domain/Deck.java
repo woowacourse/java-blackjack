@@ -24,6 +24,13 @@ public class Deck {
         return new Deck(cards);
     }
 
+    public Card pop() {
+        Card card = cards.getLast();
+        cards.removeLast();
+
+        return card;
+    }
+
     public void shuffle() {
         Collections.shuffle(this.cards);
     }

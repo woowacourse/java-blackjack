@@ -1,10 +1,11 @@
 package domain.player;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-public class Players {
+public class Players implements Iterable<Player> {
     private static final String ERROR_DUPLICATE_NAME = "플레이어 이름은 중복될 수 없습니다.";
     private static final String ERROR_PLAYER_COUNT = "참가할 플레이어의 수는 최대 7명입니다.";
     private static final int MAX_PLAYER_COUNT = 7;
@@ -17,6 +18,11 @@ public class Players {
     public static Players of(List<Player> players) {
         validate(players);
         return new Players(players);
+    }
+
+    @Override
+    public Iterator<Player> iterator() {
+         return players.iterator();
     }
 
     private static void validate(List<Player> players) {
