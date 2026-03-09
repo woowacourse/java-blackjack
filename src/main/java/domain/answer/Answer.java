@@ -8,7 +8,7 @@ public enum Answer {
     NO("n")
     ;
 
-    private static final String INVALID_INPUT_ERROR = "y 또는 n을 입력해주세요.";
+    private static final String INVALID_INPUT_ERROR = String.format("%s 또는 %s을 입력해주세요.", YES.answer, NO.answer);
 
     private final String answer;
 
