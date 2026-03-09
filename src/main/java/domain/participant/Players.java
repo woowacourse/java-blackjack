@@ -27,12 +27,6 @@ public class Players {
                 .toList());
     }
 
-    public List<String> getAllPlayersName() {
-        return players.stream()
-                .map(Player::getName)
-                .toList();
-    }
-
     private void validatePlayers(List<String> names) {
         names.forEach(this::validateNameLength);
         validateDuplicatedName(names);
@@ -88,6 +82,12 @@ public class Players {
     public boolean checkScoreUnderCriterion(String name) {
         Player foundPlayer = findPlayerByName(name);
         return foundPlayer.checkScoreUnderCriterion();
+    }
+
+    public List<String> getAllPlayerNames() {
+        return players.stream()
+                .map(Player::getName)
+                .toList();
     }
 
     public List<CardDto> getPlayerCards(String name) {
