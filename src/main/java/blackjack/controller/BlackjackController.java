@@ -2,12 +2,12 @@ package blackjack.controller;
 
 import blackjack.domain.Deck;
 import blackjack.domain.Player;
-import blackjack.util.InputParser;
+import blackjack.domain.Players;
+import blackjack.dto.CardsOfPlayer;
+import blackjack.dto.WinningResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class BlackjackController {
 
@@ -18,83 +18,59 @@ public class BlackjackController {
     }
 
     public void run() {
-        List<Player> players = readUsers();
+        Players players = readPlayers();
         Player dealer = new Player("딜러");
 
-        settingCards(players, dealer);
-        printGameSettingResult(players, dealer);
+        setInitialTwoCards(players, dealer);
+        printInitialSettings(players, dealer);
 
         getMoreCards(players);
         getMoreCardsForDealer(dealer, players);
 
-        printGameResult(List.of(dealer));
-        printGameResult(players);
-
+        printGameResult(players, dealer);
         printWinningResult(players, dealer);
     }
 
-    private List<Player> readUsers() {
-        String userName = inputView.readUserName();
-        return InputParser.createUser(userName);
+    private Players readPlayers() {
+        List<String> playersName = inputView.readPlayersName();
+        return Players.from(playersName);
     }
 
-    // TODO: 가독성 향상 필요
-    private void settingCards(List<Player> players, Player dealer) {
+    private void setInitialTwoCards(Players players, Player dealer) {
         Deck.shuffle();
         for (int i = 0; i < 2; i++) {
-            for (Player player : players) {
-                player.draw(Deck.top());
-            }
+            players.draw();
             dealer.draw(Deck.top());
         }
     }
 
-    private void printGameSettingResult(List<Player> players, Player dealer) {
-        List<String> playerNames = players.stream()
-                .map(Player::getName)
-                .toList();
-
-        OutputView.printGameSettingDoneMessage(dealer.getName(), playerNames);
-
-        Map<String, List<String>> cardsResult = new HashMap<>();
-        cardsResult.put(dealer.getName(), dealer.getCardsName().subList(0, 1));
-        for (Player player : players) {
-            cardsResult.put(player.getName(), player.getCardsName());
-        }
-
-        OutputView.printSettingCardResultsByPlayer(cardsResult);
+    private void printInitialSettings(Players players, Player dealer) {
+        OutputView.printInitialSettingsDoneMessage(dealer.getName(), players.getPlayersName());
+        OutputView.printSettingResultsByPlayer(CardsOfPlayer.from(players, dealer));
     }
 
     // TODO : 코드 품질 개선 필요
-    private void getMoreCards(List<Player> players) {
-        for (Player player : players) {
+    private void getMoreCards(Players players) {
+        for (Player player : players.getPlayers()) {
             int count = 0;
             while (!player.isBurst() && !player.isBlackjack()) {
                 String yesOrNo = inputView.readMoreCard(player.getName());
                 if (yesOrNo.equals("y")) {
                     player.draw(Deck.top());
-                    OutputView.printSettingCardResults(player.getName(), player.getCardsName());
+                    OutputView.printSettingResults(player.getName(), player.getCardsName());
                     count++;
                     continue;
                 }
                 if (count == 0) {
-                    OutputView.printSettingCardResults(player.getName(), player.getCardsName());
+                    OutputView.printSettingResults(player.getName(), player.getCardsName());
                 }
                 break;
             }
         }
     }
 
-    // TODO: Player를 일급컬랙션으로 감싸 상태 확인 로직을 숨긴다
-    private boolean isAllUserBurst(List<Player> players) {
-        int burstUserCount = (int) players.stream()
-                .filter(Player::isBurst)
-                .count();
-        return players.size() == burstUserCount;
-    }
-
-    private void getMoreCardsForDealer(Player dealer, List<Player> players) {
-        if (isAllUserBurst(players)) {
+    private void getMoreCardsForDealer(Player dealer, Players players) {
+        if (players.isAllPlayersBurst()) {
             return;
         }
         while (dealer.calculateCardsValue() < 17) {
@@ -103,24 +79,13 @@ public class BlackjackController {
         }
     }
 
-    private void printGameResult(List<Player> players) {
-        for (Player player : players) {
-            OutputView.printCardResult(player.getName(), player.getCardsName(), player.calculateCardsValue());
-        }
+    // TODO: 총합 계산 로직 필요
+    private void printGameResult(Players players, Player dealer) {
+        OutputView.printSettingResultsByPlayer(CardsOfPlayer.from(players, dealer));
     }
 
-    private void printWinningResult(List<Player> players, Player dealer) {
-        Map<String, Boolean> result = new HashMap<>();
-        int dealerWinCount = 0;
-        for (Player player : players) {
-            boolean isDealerWinning = dealer.winsAgainst(player);
-            result.put(player.getName(), !isDealerWinning);
-            if (isDealerWinning) {
-                dealerWinCount++;
-            }
-        }
-
-        OutputView.printWinningResult(result, dealer.getName(), dealerWinCount);
+    private void printWinningResult(Players players, Player dealer) {
+        OutputView.printWinningResult(WinningResult.from(players, dealer));
     }
 
 }
