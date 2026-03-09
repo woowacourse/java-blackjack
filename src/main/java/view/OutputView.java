@@ -34,10 +34,10 @@ public class OutputView {
         printPlayersInitialCards(players);
     }
 
-    public void printGameResult(GameResult gameResult) {
+    public void printGameResult(DealerResultInfo dealerResult, List<PlayerResultInfo> playersResult) {
         printWinOrLoseMessage();
-        printDealerResult(gameResult.getDealerResult());
-        printPlayersResult(gameResult.getPlayersResult());
+        printDealerResult(dealerResult);
+        printPlayersResult(playersResult);
     }
 
     public void printParticipantCards(Participant participant) {
@@ -111,7 +111,7 @@ public class OutputView {
 
     public void printPlayersResult(List<PlayerResultInfo> playersResult) {
         for (PlayerResultInfo playerResult : playersResult) {
-            System.out.println(playerResult.name() + COLON + playerResult.winningStatus().getSymbol());
+            System.out.println(playerResult.name() + ": " + playerResult.resultText());
         }
     }
 }

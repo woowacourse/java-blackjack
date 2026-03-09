@@ -9,6 +9,8 @@ public class InputParser {
     private static final String NO = "n";
 
     public List<String> parseName(String input) {
+        validateInputNull(input);
+
         StringTokenizer stringTokenizer = new StringTokenizer(input.strip(), ",");
         List<String> names = new ArrayList<>();
 
@@ -28,6 +30,7 @@ public class InputParser {
     }
 
     public String parseUserChoice(String choice) {
+        validateInputNull(choice);
         String normalizedChoice  = choice.toLowerCase().strip();
 
         if (normalizedChoice.equals(NO)) {
@@ -39,5 +42,11 @@ public class InputParser {
         }
 
         throw new IllegalArgumentException();
+    }
+
+    private static void validateInputNull(String input) {
+        if (input == null) {
+            throw new IllegalArgumentException();
+        }
     }
 }

@@ -1,20 +1,13 @@
+// /Users/jaeheon/Desktop/Programming/WoowaCourse/java-blackjack/src/main/java/domain/WinningStatus.java
 package domain;
 
 import domain.participant.Dealer;
 import domain.participant.Player;
 
 public enum WinningStatus {
-    WIN("승"),
-    TIE("무"),
-    LOSE("패");
+    WIN, TIE, LOSE;
 
     public static final int BLACK_JACK = 21;
-
-    private final String symbol;
-
-    WinningStatus(String symbol) {
-        this.symbol = symbol;
-    }
 
     public static WinningStatus of(Player player, Dealer dealer) {
         int playerScore = player.score();
@@ -23,7 +16,6 @@ public enum WinningStatus {
         if (playerScore > BLACK_JACK) {
             return LOSE;
         }
-
         if (dealerScore > BLACK_JACK) {
             return WIN;
         }
@@ -38,9 +30,5 @@ public enum WinningStatus {
             return LOSE;
         }
         return TIE;
-    }
-
-    public String getSymbol() {
-        return symbol;
     }
 }

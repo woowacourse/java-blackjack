@@ -9,11 +9,14 @@ import domain.participant.Players;
 import java.util.ArrayList;
 
 import domain.strategy.ShuffleStrategy;
+import dto.DealerResultInfo;
+import dto.PlayerResultInfo;
 import util.InputParser;
 import view.InputView;
 import view.OutputView;
 
 import java.util.List;
+import java.util.Map;
 
 public class BlackjackGame {
     private final InputView inputView;
@@ -87,6 +90,35 @@ public class BlackjackGame {
         participants.forEach(outputView::printFinalResult);
 
         GameResult gameResult = new GameResult(players, dealer);
-        outputView.printGameResult(gameResult);
+
+        DealerResultInfo dealerResultInfo = new DealerResultInfo(
+                gameResult.dealerWinCount(),
+                gameResult.dealerTieCount(),
+                gameResult.dealerLoseCount()
+        );
+
+        List<PlayerResultInfo> playerResultInfos = createPlayerResultInfos(gameResult);
+        outputView.printGameResult(dealerResultInfo, playerResultInfos);
+    }
+
+    private List<PlayerResultInfo> createPlayerResultInfos(GameResult gameResult) {
+        List<PlayerResultInfo> resultInfos = new ArrayList<>();
+
+        for (Map.Entry<String, WinningStatus> entry : gameResult.getPlayerWinningStatus().entrySet()) {
+            String name = entry.getKey();
+            WinningStatus status = entry.getValue();
+
+            resultInfos.add(new PlayerResultInfo(name, toKorean(status)));
+        }
+
+        return resultInfos;
+    }
+
+    private String toKorean(WinningStatus status) {
+        return switch (status) {
+            case WIN -> "승";
+            case TIE -> "무";
+            case LOSE -> "패";
+        };
     }
 }

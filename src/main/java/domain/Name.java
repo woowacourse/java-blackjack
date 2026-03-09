@@ -10,6 +10,10 @@ public class Name {
     }
 
     private void validateNameLength(String name) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException();
+        }
+
         if (name.length() > NAME_LENGTH_THRESHOLD) {
             throw new IllegalArgumentException();
         }
