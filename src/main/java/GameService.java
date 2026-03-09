@@ -26,29 +26,31 @@ public class GameService {
 
     public void settleResult(List<User> users, Dealer dealer) {
         dealer.calculateScore();
-        users.forEach(user -> user.setGameResult(decideResult(user, dealer)));
+        for (User user : users) {
+            user.calculateScore();
+            GameResult result = decideResult(user, dealer);
+            user.setGameResult(result);
+            dealer.recordRounds(result.opposite());
+        }
     }
 
     private GameResult decideResult(User user, Dealer dealer) {
-        user.calculateScore();
-
         if (user.isBlackjack() && dealer.isBlackjack()) {
-            return applyResult(dealer, GameResult.DRAW);
+            return GameResult.DRAW;
         }
         if (user.isBlackjack()) {
-            return applyResult(dealer, GameResult.WIN);
+            return GameResult.WIN;
         }
         if (dealer.isBlackjack()) {
-            return applyResult(dealer, GameResult.LOSE);
+            return GameResult.LOSE;
         }
         if (user.isBurst()) {
-            return applyResult(dealer, GameResult.LOSE);
+            return GameResult.LOSE;
         }
         if (dealer.isBurst()) {
-            return applyResult(dealer, GameResult.WIN);
+            return GameResult.WIN;
         }
-
-        return applyResult(dealer, compareScore(user, dealer));
+        return compareScore(user, dealer);
     }
 
     private GameResult compareScore(User user, Dealer dealer) {
@@ -59,10 +61,5 @@ public class GameService {
             return GameResult.LOSE;
         }
         return GameResult.DRAW;
-    }
-
-    private GameResult applyResult(Dealer dealer, GameResult userResult) {
-        dealer.recordRounds(userResult.opposite());
-        return userResult;
     }
 }
