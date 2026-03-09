@@ -23,7 +23,7 @@ public class BlackjackController {
         setInitialTwoCards(players, dealer);
         printInitialSettings(players, dealer);
 
-        getMoreCards(players);
+        getMoreCardsForPlayers(players);
         getMoreCardsForDealer(dealer, players);
 
         printGameResult(players, dealer);
@@ -45,7 +45,6 @@ public class BlackjackController {
 
     private void printInitialSettings(Players players, Player dealer) {
         OutputView.printInitialSettingsDoneMessage(dealer.getName(), players.getPlayersName());
-
         OutputView.printCardResults(dealer.getName(), List.of(dealer.getFirstCardName()));
         for (Player player : players.getPlayers()) {
             OutputView.printCardResults(player.getName(), player.getCardsName());
@@ -53,7 +52,7 @@ public class BlackjackController {
         OutputView.println();
     }
 
-    private void getMoreCards(Players players) {
+    private void getMoreCardsForPlayers(Players players) {
         for (Player player : players.getPlayers()) {
             getMoreCard(player);
         }
