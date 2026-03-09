@@ -14,7 +14,7 @@ public class OutputView {
     private static final String HIT_OR_STAND_MESSAGE = "%n%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n";
     private static final String DEALER_HIT_MESSAGE = "%n%n딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String FINAL_WIN_DEFEAT_DRAW_MESSAGE = "%n## 최종 승패%n";
-    private static final String DEALER_RESULT = "딜러: %d승 %d무 %d패%n";
+    private static final String DEALER_RESULT = "딜러: %s%n";
     private static final String PLAYER_RESULT = "%s: %s%n";
 
     public static void inputPlayerMessage() {
@@ -58,10 +58,12 @@ public class OutputView {
 
     public static void gameResultMessage(Result result) {
         System.out.printf(FINAL_WIN_DEFEAT_DRAW_MESSAGE);
-        System.out.printf(DEALER_RESULT,
-                result.dealerResult().getFirst(), result.dealerResult().get(1), result.dealerResult().get(2));
+        String dealerResultMessage = result.getDealerResult().entrySet().stream()
+                .map(entry -> entry.getValue() + entry.getKey().getInfo())
+                .collect(Collectors.joining(" "));
+        System.out.printf(DEALER_RESULT, dealerResultMessage);
 
-        for (Map.Entry<String, ResultInfo> entry : result.getGameResult().entrySet()) {
+        for (Map.Entry<String, ResultInfo> entry : result.getPlayersResult().entrySet()) {
             System.out.printf(PLAYER_RESULT, entry.getKey(), entry.getValue().getInfo());
         }
     }

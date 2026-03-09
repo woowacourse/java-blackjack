@@ -40,7 +40,7 @@ public class BlackJackServiceTest {
     void 딜러의_총합이_플레이어의_총합보다_낮으면_플레이어가_승리한다() {
         BlackJackService blackJackService = new BlackJackService(new Result());
         Result result = blackJackService.calculateResult(dealer, players);
-        ResultInfo info = result.getGameResult().get(winPlayer.getName());
+        ResultInfo info = result.getPlayersResult().get(winPlayer.getName());
         assertThat(info).isEqualTo(ResultInfo.WIN);
     }
 
@@ -48,7 +48,7 @@ public class BlackJackServiceTest {
     void 딜러의_총합이_플레이어의_총합보다_높으면_플레이어가_패배한다() {
         BlackJackService blackJackService = new BlackJackService(new Result());
         Result result = blackJackService.calculateResult(dealer, players);
-        ResultInfo info = result.getGameResult().get(defeatPlayer.getName());
+        ResultInfo info = result.getPlayersResult().get(defeatPlayer.getName());
         assertThat(info).isEqualTo(ResultInfo.DEFEAT);
     }
 
@@ -56,7 +56,7 @@ public class BlackJackServiceTest {
     void 딜러의_총합과_플레이어의_총합이_같으면_비긴다() {
         BlackJackService blackJackService = new BlackJackService(new Result());
         Result result = blackJackService.calculateResult(dealer, players);
-        ResultInfo info = result.getGameResult().get(drawPlayer.getName());
+        ResultInfo info = result.getPlayersResult().get(drawPlayer.getName());
         assertThat(info).isEqualTo(ResultInfo.DRAW);
     }
 }

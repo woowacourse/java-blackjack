@@ -3,8 +3,8 @@ package domain.game;
 public enum ResultInfo {
 
     WIN("승"),
-    DEFEAT("패"),
-    DRAW("무");
+    DRAW("무"),
+    DEFEAT("패");
 
     private final String info;
 

@@ -1,24 +1,30 @@
 import domain.game.Result;
 import domain.game.ResultInfo;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
+import java.util.EnumMap;
+import java.util.Map;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class ResultTest {
 
     @Test
-    void 딜러의_승패_판정은_플레이어의_승패_판정의_역산이다() {
-        List<Integer> expectedDealerScoreBoard = List.of(1, 2, 1);
-        Result result = new Result();
+    void 플레이어의_승패_판정을_역산하면_딜러의_승패_결과가_나온다() {
+        Map<ResultInfo, Integer> expectedDealerResult=new EnumMap<>(ResultInfo.class);
 
+        Result result = new Result();
         result.setPlayerResult("user1", ResultInfo.WIN);
         result.setPlayerResult("user2", ResultInfo.DRAW);
         result.setPlayerResult("user3", ResultInfo.DRAW);
         result.setPlayerResult("user4", ResultInfo.DEFEAT);
 
-        List<Integer> dealerScoreBoard = result.dealerResult();
+        result.setDealerResult(result.getPlayersResult());
+        expectedDealerResult.put(ResultInfo.WIN, 1);
+        expectedDealerResult.put(ResultInfo.DRAW, 2);
+        expectedDealerResult.put(ResultInfo.DEFEAT, 1);
 
-        Assertions.assertThat(dealerScoreBoard).containsExactlyElementsOf(expectedDealerScoreBoard);
+        assertThat(result.getDealerResult()).isEqualTo(expectedDealerResult);
+
     }
 }

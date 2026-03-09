@@ -3,41 +3,38 @@ package domain.game;
 import java.util.*;
 
 public class Result {
-    private static final int INIT_COUNT = 0;
-    private static final int WIN_INDEX = 0;
-    private static final int DRAW_INDEX = 1;
-    private static final int DEFEAT_INDEX = 2;
-    private final Map<String, ResultInfo> gameResult;
+    private final Map<String, ResultInfo> playersResult;
+    private final Map<ResultInfo, Integer> dealerResult;
 
     public Result() {
-        this.gameResult = new HashMap<>();
+        this.playersResult = new HashMap<>();
+        this.dealerResult = new EnumMap<>(ResultInfo.class);
+        Arrays.stream(ResultInfo.values()).forEach(resultInfo -> dealerResult.put(resultInfo, 0));
     }
 
-    public Map<String, ResultInfo> getGameResult() {
-        return Collections.unmodifiableMap(gameResult);
+    public Map<String, ResultInfo> getPlayersResult() {
+        return Collections.unmodifiableMap(playersResult);
     }
 
     public void setPlayerResult(String name, ResultInfo info) {
-        gameResult.put(name, info);
+        playersResult.put(name, info);
     }
 
-    public List<Integer> dealerResult() {
-        List<Integer> dealerScoreBoard = new ArrayList<>(List.of(INIT_COUNT, INIT_COUNT, INIT_COUNT));
-        for (Map.Entry<String, ResultInfo> entry : gameResult.entrySet()) {
-            calculateDealerScoreBoard(entry, dealerScoreBoard);
-        }
-        return dealerScoreBoard;
+    public Map<ResultInfo, Integer> getDealerResult() {
+        return Collections.unmodifiableMap(dealerResult);
     }
 
-    private void calculateDealerScoreBoard(Map.Entry<String, ResultInfo> entry, List<Integer> dealerScoreBoard) {
-        if (entry.getValue().equals(ResultInfo.WIN)) {
-            dealerScoreBoard.set(DEFEAT_INDEX, dealerScoreBoard.get(DEFEAT_INDEX) + 1);
+    public void setDealerResult(Map<String, ResultInfo> playersResult) {
+        for (String name : playersResult.keySet()) {
+            ResultInfo playerOutcome = playersResult.get(name);
+            ResultInfo dealerOutcome = calculateDealerOutcome(playerOutcome);
+            dealerResult.merge(dealerOutcome, 1, Integer::sum);
         }
-        if (entry.getValue().equals(ResultInfo.DEFEAT)) {
-            dealerScoreBoard.set(WIN_INDEX, dealerScoreBoard.get(WIN_INDEX) + 1);
-        }
-        if (entry.getValue().equals(ResultInfo.DRAW)) {
-            dealerScoreBoard.set(DRAW_INDEX, dealerScoreBoard.get(DRAW_INDEX) + 1);
-        }
+    }
+
+    private ResultInfo calculateDealerOutcome(ResultInfo playerResult) {
+        if (playerResult == ResultInfo.WIN) return ResultInfo.DEFEAT;
+        if (playerResult == ResultInfo.DEFEAT) return ResultInfo.WIN;
+        return ResultInfo.DRAW;
     }
 }
