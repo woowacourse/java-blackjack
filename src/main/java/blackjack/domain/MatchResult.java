@@ -1,7 +1,6 @@
 package blackjack.domain;
 
 import java.util.Arrays;
-import java.util.Map;
 
 public enum MatchResult {
     WIN("승") {
@@ -55,20 +54,6 @@ public enum MatchResult {
                 .filter(result -> result.matches(player, dealer))
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("매칭되는 결과가 없습니다."));
-    }
-
-    public static Map<String, Long> calculateDealerResult(Map<Player, MatchResult> playerResults) {
-        return Map.of(
-                "승", countResult(playerResults, LOSE),
-                "패", countResult(playerResults, WIN),
-                "무", countResult(playerResults, DRAW)
-        );
-    }
-
-    private static long countResult(Map<Player, MatchResult> playerResults, MatchResult target) {
-        return playerResults.values().stream()
-                .filter(result -> result == target)
-                .count();
     }
 }
 

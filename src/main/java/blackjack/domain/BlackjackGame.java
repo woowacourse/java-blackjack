@@ -69,6 +69,14 @@ public class BlackjackGame {
         return GameResult.from(players, dealer);
     }
 
+    public Players getPlayers() {
+        return players;
+    }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
     public Map<Player, MatchResult> getPlayerFinalResult() {
         Map<Player, MatchResult> playerResult = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
@@ -78,14 +86,16 @@ public class BlackjackGame {
     }
 
     public Map<String, Long> getDealerFinalResult(Map<Player, MatchResult> playerResult) {
-        return MatchResult.calculateDealerResult(playerResult);
+        return Map.of(
+                "승", countMatchResult(playerResult, MatchResult.LOSE),
+                "패", countMatchResult(playerResult, MatchResult.WIN),
+                "무", countMatchResult(playerResult, MatchResult.DRAW)
+        );
     }
 
-    public Players getPlayers() {
-        return players;
-    }
-
-    public Dealer getDealer() {
-        return dealer;
+    private long countMatchResult(Map<Player, MatchResult> playerResults, MatchResult target) {
+        return playerResults.values().stream()
+                .filter(result -> result == target)
+                .count();
     }
 }
