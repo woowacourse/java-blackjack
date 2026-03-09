@@ -25,7 +25,7 @@ public class CardDeck {
     }
 
     public Card getCard() {
-        if (index > cardDeck.size() - 1) {
+        if (index > cardDeck.size() - 1) { // 카드 덱을 한 번 순환하면 셔플해 초기화한다
             shuffleCards();
             index = 0;
         }
