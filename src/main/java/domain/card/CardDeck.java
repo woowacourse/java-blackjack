@@ -35,7 +35,7 @@ public class CardDeck {
 
     public Card drawCard() {
         if (deck.isEmpty()) {
-            throw new IllegalArgumentException(CONSUME_ALL_CARD_DECK_ERROR_MESSAGE);
+            throw new NoSuchElementException(CONSUME_ALL_CARD_DECK_ERROR_MESSAGE);
         }
         return deck.pop();
     }

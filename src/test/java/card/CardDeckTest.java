@@ -1,13 +1,19 @@
+package card;
+
 import domain.card.Card;
 import domain.card.CardDeck;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class CardDeckTest {
+class CardDeckTest {
+    private static final String CONSUME_ALL_CARD_DECK_ERROR_MESSAGE = "[ERROR] 카드를 다 뽑았습니다.";
 
     @Test
     void 생성한_카드덱은_카드_52장을_가진다() {
@@ -44,5 +50,19 @@ public class CardDeckTest {
 
         //then
         assertThat(cardDeck.getDeckSize()).isEqualTo(51);
+    }
+
+    @Test
+    @DisplayName("카드를 52장을 다 뽑고 또 뽑으면 예외가 발생한다")
+    void drawCard_ThrowsException_WhenAllCardsAreUsed() {
+        CardDeck cardDeck = new CardDeck();
+
+        for (int i = 0; i < 52; i++) {
+            cardDeck.drawCard();
+        }
+
+        assertThatThrownBy(cardDeck::drawCard)
+                .isInstanceOf(NoSuchElementException.class)
+                .hasMessage(CONSUME_ALL_CARD_DECK_ERROR_MESSAGE);
     }
 }
