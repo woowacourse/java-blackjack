@@ -21,6 +21,16 @@ public enum CardNumber {
         this.number = number;
     }
 
+    public static int fromScore(CardNumber cardNumber) {
+        if (cardNumber == CardNumber.ACE) {
+            return 1;
+        }
+        if (cardNumber == CardNumber.JACK || cardNumber == CardNumber.QUEEN || cardNumber == CardNumber.KING) {
+            return 10;
+        }
+        return Integer.parseInt(cardNumber.getNumber());
+    }
+
     public String getNumber() {
         return number;
     }
