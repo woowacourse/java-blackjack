@@ -7,21 +7,21 @@ public class HandCard {
     private static final int BLACKJACK_MAX_LIMIT = 21;
     private static final int ACE_MAX_VALUE = 11;
     private static final int ACE_MIN_VALUE = 1;
+
     private final List<Card> cards;
 
     public HandCard() {
         this.cards = new ArrayList<>();
     }
 
-    public int cardCalculator() {
-        int nonAceTotal = cards.stream().map(Card::getRankScore).filter(e -> e != 1).mapToInt(Integer::intValue).sum();
-        int aceCount = (int) cards.stream().map(Card::getRankScore).filter(e -> e == 1).count();
-
-        return aceCalculator(nonAceTotal, aceCount);
+    public int cardCalculate() {
+        int nonAceTotal = cards.stream().map(Card::getRankScore).filter(e -> !CardRank.isAce(e))
+                .mapToInt(Integer::intValue).sum();
+        int aceCount = (int) cards.stream().map(Card::getRankScore).filter(CardRank::isAce).count();
+        return aceCalculate(nonAceTotal, aceCount);
     }
 
-    //이 메소드는 전체 점수를 리턴해서 이름이 맞지 않다. 아래 주석 메소드를 사용하는게 맞는가?
-    private int aceCalculator(int nonAceTotal, int aceCount) {
+    private int aceCalculate(int nonAceTotal, int aceCount) {
         int totalSum = nonAceTotal + (aceCount * ACE_MAX_VALUE);
         int remainingAce = aceCount;
         while (totalSum > BLACKJACK_MAX_LIMIT && remainingAce > 0) {
