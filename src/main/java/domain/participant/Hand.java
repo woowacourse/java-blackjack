@@ -1,4 +1,4 @@
-package domain.participants;
+package domain.participant;
 
 import domain.card.Card;
 import domain.card.Rank;

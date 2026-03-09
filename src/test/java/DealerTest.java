@@ -1,8 +1,8 @@
 import domain.card.Card;
 import domain.card.Pattern;
 import domain.card.Rank;
-import domain.participants.Dealer;
-import domain.participants.Hand;
+import domain.participant.Dealer;
+import domain.participant.Hand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,9 +25,8 @@ public class DealerTest {
         Dealer dealer = new Dealer(dummyHand);
         int beforeSize = dealer.handSize();
 
-        if (dealer.dealerRule()) {
-            dealer.keepCard(card);
-        }
+        dealer.keepCard(card);
+
         int afterSize = dealer.handSize();
 
         assertThat(beforeSize + 1).isEqualTo(afterSize);
@@ -43,9 +42,7 @@ public class DealerTest {
         Dealer dealer = new Dealer(dummyHand);
         int beforeSize = dealer.handSize();
 
-        if (dealer.dealerRule()) {
-            dealer.keepCard(card3);
-        }
+        dealer.keepCard(card3);
         int afterSize = dealer.handSize();
 
         assertThat(beforeSize).isEqualTo(afterSize);

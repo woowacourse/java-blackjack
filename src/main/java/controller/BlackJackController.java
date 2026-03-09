@@ -2,10 +2,10 @@ package controller;
 
 import domain.card.CardDeck;
 import domain.game.Result;
-import domain.participants.Dealer;
-import domain.participants.Hand;
-import domain.participants.Player;
-import domain.participants.Players;
+import domain.participant.Dealer;
+import domain.participant.Hand;
+import domain.participant.Player;
+import domain.participant.Players;
 import service.BlackJackService;
 import util.Parser;
 import util.Validator;
@@ -103,9 +103,9 @@ public class BlackJackController {
     }
 
     private void dealerHitOrStand(Dealer dealer, CardDeck cardDeck) {
-        while (dealer.dealerRule()) {
-            OutputView.dealerHitMessage();
-            dealer.keepCard(cardDeck.drawCard());
-        }
+//        while (dealer.dealerRule()) {
+//            OutputView.dealerHitMessage();
+//            dealer.keepCard(cardDeck.drawCard());
+//        }
     }
 }

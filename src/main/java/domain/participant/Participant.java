@@ -1,19 +1,17 @@
-package domain.participants;
+package domain.participant;
 
 import domain.card.Card;
 
-public class Participants {
+public abstract class Participant {
     private final String name;
     private final Hand hand;
 
-    public Participants(String name, Hand hand) {
+    public Participant(String name, Hand hand) {
         this.name = name;
         this.hand = hand;
     }
 
-    public void keepCard(Card card) {
-        hand.addCard(card);
-    }
+    public abstract void keepCard(Card card);
 
     public int handSize() {
         return hand.getHandSize();

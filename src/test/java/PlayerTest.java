@@ -1,8 +1,8 @@
 import domain.card.Card;
 import domain.card.Pattern;
 import domain.card.Rank;
-import domain.participants.Hand;
-import domain.participants.Player;
+import domain.participant.Hand;
+import domain.participant.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package domain.participants;
+package domain.participant;
 
 import java.util.Collections;
 import java.util.List;

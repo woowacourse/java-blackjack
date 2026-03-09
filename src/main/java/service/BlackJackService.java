@@ -2,9 +2,9 @@ package service;
 
 import domain.game.Result;
 import domain.game.ResultInfo;
-import domain.participants.Dealer;
-import domain.participants.Player;
-import domain.participants.Players;
+import domain.participant.Dealer;
+import domain.participant.Player;
+import domain.participant.Players;
 
 public class BlackJackService {
     private static final int BLACKJACK_LIMIT_NUMBER = 21;

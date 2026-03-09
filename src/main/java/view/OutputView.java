@@ -2,9 +2,9 @@ package view;
 
 import domain.game.Result;
 import domain.game.ResultInfo;
-import domain.participants.Dealer;
-import domain.participants.Player;
-import domain.participants.Players;
+import domain.participant.Dealer;
+import domain.participant.Player;
+import domain.participant.Players;
 
 import java.util.Map;
 import java.util.stream.Collectors;
