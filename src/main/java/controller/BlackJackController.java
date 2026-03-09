@@ -1,29 +1,33 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import model.Agreement;
 import model.Dealer;
 import model.Participant;
 import model.Player;
 import model.Players;
+import model.dto.PlayerName;
 import model.dto.PlayerResult;
 import service.BlackJackService;
+import view.InputView;
 import view.OutputView;
 
 public class BlackJackController {
     private static final Integer INITIAL_DRAW_QUANTITY = 2;
     private static final Integer MIN_DEALER_DRAW_SCORE = 16;
 
-    private final InputController inputController;
+    private static final String NAME_SPLIT_REGEX = ",";
+
     private final BlackJackService blackJackService;
 
-    public BlackJackController(InputController inputController, BlackJackService blackJackService) {
-        this.inputController = inputController;
+    public BlackJackController(BlackJackService blackJackService) {
         this.blackJackService = blackJackService;
     }
 
     public void run() {
-        Players players = inputController.getParticipantsName();
+        Players players = getParticipantsName();
         Dealer dealer = new Dealer();
 
         OutputView.printNewLine();
@@ -38,6 +42,16 @@ public class BlackJackController {
         printPlayersScore(dealer, players);
         OutputView.printResult(blackJackService.getGameResult(players, dealer));
     }
+
+    private Players getParticipantsName() {
+        String nameInput = InputView.getPlayerNames();
+        List<Player> players = Arrays.stream(nameInput.split(NAME_SPLIT_REGEX))
+                .map((name) -> new Player(new PlayerName(name)))
+                .toList();
+
+        return new Players(players);
+    }
+
 
     private void initDraw(Dealer dealer, Players players) {
         initParticipantDraw(dealer);
@@ -70,13 +84,17 @@ public class BlackJackController {
     }
 
     private boolean drawPlayerTurn(Player player) {
-        if(!inputController.getCondition(player.getResult().name().value())) {
+        if(!getCondition(player.getResult().name().value())) {
             return false;
         }
 
         blackJackService.draw(player);
 
         return !blackJackService.isBust(player);
+    }
+
+    private boolean getCondition(String name) {
+        return new Agreement(InputView.getDrawCondition(name)).get();
     }
 
     private void drawDealer(Dealer dealer) {
