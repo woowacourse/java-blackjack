@@ -3,7 +3,7 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User {
+public class User extends Player {
 
     private final String name;
     private final List<Card> hand = new ArrayList<>();
@@ -19,18 +19,6 @@ public class User {
 
     public String getName() {
         return name;
-    }
-
-    public void receiveInitCard(List<Card> cards) {
-        hand.addAll(cards);
-    }
-
-    public void receiveCard(Card card) {
-        hand.add(card);
-    }
-
-    public List<Card> getHand() {
-        return hand;
     }
 
     public void setGameResult(GameResult gameResult) {

@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Dealer {
+public class Dealer extends Player {
 
     private final List<Card> hand = new ArrayList<>();
 
@@ -13,18 +13,6 @@ public class Dealer {
 
     public Card reveal() {
         return hand.getFirst();
-    }
-
-    public void receiveInitCard(List<Card> cards) {
-        hand.addAll(cards);
-    }
-
-    public void receiveCard(Card card) {
-        hand.add(card);
-    }
-
-    public List<Card> getHand() {
-        return hand;
     }
 
     public void setRounds(GameResult gameResult) {
