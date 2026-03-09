@@ -1,4 +1,4 @@
-package domain.participant.player;
+package domain.participant;
 
 public enum WinStatus {
     WIN("승"),
