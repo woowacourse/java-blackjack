@@ -52,6 +52,6 @@ public class Hand {
     }
 
     public List<TrumpCard> getCards() {
-        return cards;
+        return List.copyOf(cards);
     }
 }
