@@ -14,7 +14,7 @@ public class BlackjackController {
     private final Dealer dealer;
 
     public BlackjackController() {
-        this.dealer = new Dealer(Cards.createDeck());
+        this.dealer = new Dealer(Cards.createShuffledDeck());
     }
 
     public void run() {

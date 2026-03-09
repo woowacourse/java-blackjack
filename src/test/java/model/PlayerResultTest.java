@@ -16,7 +16,7 @@ public class PlayerResultTest {
             GameStatus status
     ) {
         // given
-        Dealer dealer = new Dealer(Cards.createDeck());
+        Dealer dealer = new Dealer(Cards.createShuffledDeck());
         dealerCards.forEach(dealer::addCard);
 
         Player player = new Player("pobi");

@@ -15,7 +15,7 @@ public class Cards {
         this.cards = new ArrayList<>(cards);
     }
 
-    public static Cards createDeck() {
+    public static Cards createShuffledDeck() {
         List<Card> cards = Arrays.stream(CardShape.values())
                 .flatMap(Cards::combinate)
                 .collect(Collectors.toCollection(ArrayList::new));
