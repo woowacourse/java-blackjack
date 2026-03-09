@@ -34,15 +34,6 @@ public class Participants {
                 .toList();
     }
 
-    public List<String> getNames() {
-        ArrayList<String> names = new ArrayList<>();
-        for (Participant participant : values) {
-            names.add(participant.getName());
-        }
-
-        return names;
-    }
-
     public List<Participant> toList() {
         return List.copyOf(values);
     }
