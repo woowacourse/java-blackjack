@@ -23,8 +23,13 @@ public class ResultAnalyzer {
         int dealerResultScore = dealer.getResultScore();
 
         List<PlayerGameResult> playerGameResults = players.stream().map(player -> {
-           if (player.isBusted()) {
+
+            if (player.isBusted()) {
                 return PlayerGameResult.of(player, GameResult.LOSS);
+            }
+
+            if (dealer.isBusted()) {
+                return PlayerGameResult.of(player, GameResult.WIN);
             }
 
             GameResult gameResult = GameResult.judge(dealerResultScore, player.getResultScore());
