@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class PlayerTest {
 
     @Test
-    void 버스트가_아니고_히트_의사가_있으면_카드를_받을_수_있다() {
+    void 버스트가_아니면_카드를_받을_수_있다() {
         Player player = new Player("pobi");
         player.receiveCard(new Card(Suit.HEART, Rank.TWO));
 
