@@ -5,10 +5,8 @@ import domain.player.Player;
 
 import java.util.List;
 
-public record PlayerHandDto(
-        String playerName,
-        String handOnCards
-) {
+public record PlayerHandDto(String playerName, String handOnCards) {
+
     public static PlayerHandDto of(Player player) {
         String playerName = player.toDisplayMyName();
         List<String> handOnCards = player.disPlayMyCardBundle();

@@ -33,31 +33,6 @@ public class CardBundle {
         cardBundle.add(card);
     }
 
-    @Override
-    public boolean equals(Object object) {
-        if (object == null || getClass() != object.getClass()) {
-            return false;
-        }
-        CardBundle that = (CardBundle) object;
-        return Objects.equals(cardBundle, that.cardBundle);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(cardBundle);
-    }
-
-    public boolean checkExist(Card targetCard) {
-        return cardBundle.stream().
-                anyMatch(c -> c.equals(targetCard));
-    }
-
-    public List<String> toDisplay() {
-        return cardBundle.stream()
-                .map(Card::toDisplay)
-                .toList();
-    }
-
     public int getResultScore() {
         int basicScore = getBasicScore();
         boolean hasAce = hasAce();
@@ -84,4 +59,28 @@ public class CardBundle {
                 .anyMatch(Card::isAce);
     }
 
+    public List<String> toDisplay() {
+        return cardBundle.stream()
+                .map(Card::toDisplay)
+                .toList();
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+        CardBundle that = (CardBundle) object;
+        return Objects.equals(cardBundle, that.cardBundle);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(cardBundle);
+    }
+
+    public boolean checkExist(Card targetCard) {
+        return cardBundle.stream().
+                anyMatch(c -> c.equals(targetCard));
+    }
 }

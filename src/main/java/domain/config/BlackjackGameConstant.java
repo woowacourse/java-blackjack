@@ -11,5 +11,4 @@ public class BlackjackGameConstant {
 
     public static final String DEALER_DISPLAY_NAME = "딜러";
 
-
 }

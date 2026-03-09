@@ -8,7 +8,7 @@ public class OutputWriter {
     private final String ASK_DRAW_CARD_GUIDE_MESSAGE = "%s는 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private final String DEALER_ADDITIONAL_DRAW_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private final String FINAL_RESULT_TITLE_MESSAGE = "## 최종 승패";
-    private final String FINAL_RESULT_PLAYER =  "%s: %s";
+    private final String FINAL_RESULT_PLAYER = "%s: %s";
     private final String FINAL_RESULT_DEALER = "딜러: %s";
     private final String PLAYER_HAND_MESSAGE = "%s카드: %s";
     private final String CARD_SUM_RESULT_MESSAGE = "%s카드: %s - 결과: %d";

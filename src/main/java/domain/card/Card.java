@@ -18,7 +18,9 @@ public class Card {
 
     @Override
     public boolean equals(Object object) {
-        if (object == null || getClass() != object.getClass()) return false;
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
         Card card = (Card) object;
         return denomination == card.denomination && emblem == card.emblem;
     }

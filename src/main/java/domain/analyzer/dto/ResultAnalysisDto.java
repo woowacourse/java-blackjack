@@ -7,7 +7,7 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public record ResultAnalysisDto (
+public record ResultAnalysisDto(
         EnumMap<GameResult, Integer> dealerGameResult,
         List<PlayerGameResult> playerGameResults
 ) {

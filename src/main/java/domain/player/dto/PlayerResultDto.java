@@ -3,10 +3,8 @@ package domain.player.dto;
 import domain.dealer.Dealer;
 import domain.player.Player;
 
-public record PlayerResultDto(
-        PlayerHandDto playerHand,
-        int resultScore
-) {
+public record PlayerResultDto(PlayerHandDto playerHand, int resultScore) {
+
     public static PlayerResultDto from(Player player) {
         int resultScore = player.getResultScore();
         return new PlayerResultDto(PlayerHandDto.of(player), resultScore);

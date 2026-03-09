@@ -5,8 +5,7 @@ import java.util.Arrays;
 public enum DrawCardIntetion {
 
     YES("y"),
-    NO("n")
-    ;
+    NO("n");
 
     private final String intention;
 

@@ -2,9 +2,7 @@ package domain.player;
 
 import static domain.config.BlackjackGameConstant.PLAYER_NAME_LENGTH_LIMIT;
 
-public record PlayerName(
-        String name
-) {
+public record PlayerName(String name) {
 
     public static PlayerName from(String name) {
         validateNameLength(name);
@@ -12,7 +10,7 @@ public record PlayerName(
     }
 
     private static void validateNameLength(String name) {
-        if(name.length() > PLAYER_NAME_LENGTH_LIMIT) {
+        if (name.length() > PLAYER_NAME_LENGTH_LIMIT) {
             throw new IllegalArgumentException();
         }
     }

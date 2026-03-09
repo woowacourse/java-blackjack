@@ -33,9 +33,7 @@ public class ApplicationView {
         writer.printInputNameGuideMessage();
         List<String> names = reader.readInputBasedOnSeparator(DELIMITER);
 
-        return names.stream()
-                .map(PlayerName::from)
-                .toList();
+        return names.stream().map(PlayerName::from).toList();
     }
 
     public DrawCardIntetion requestDrawCardIntention(String playerName) {
@@ -74,10 +72,9 @@ public class ApplicationView {
 
     private void printAllPlayersResult(ResultAnalysisDto resultAnalysis) {
         writer.printFinalResultOfDealer(resultAnalysis.getDealerResult());
-        resultAnalysis.playerGameResults()
-                .forEach(player -> {
-                    writer.printFinalResultOfPlayer(player.playerName(), player.gameResult().displayName());
-                });
+        resultAnalysis.playerGameResults().forEach(player -> {
+            writer.printFinalResultOfPlayer(player.playerName(), player.gameResult().displayName());
+        });
     }
 
     public void printFinalResultMessage(PlayerResultDto playerResult) {
