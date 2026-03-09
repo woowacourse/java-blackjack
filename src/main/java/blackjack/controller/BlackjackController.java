@@ -26,9 +26,7 @@ public class BlackjackController {
         printGameSettingResult(players, dealer);
 
         getMoreCards(players);
-        if (!isAllUserBurst(players)) {
-            getMoreCardsForDealer(dealer);
-        }
+        getMoreCardsForDealer(dealer, players);
 
         printGameResult(List.of(dealer));
         printGameResult(players);
@@ -41,6 +39,7 @@ public class BlackjackController {
         return InputParser.createUser(userName);
     }
 
+    // TODO: 가독성 향상 필요
     private void settingCards(List<Player> players, Dealer dealer) {
         Deck.shuffle();
         for (int i = 0; i < 2; i++) {
@@ -95,7 +94,10 @@ public class BlackjackController {
         return players.size() == burstUserCount;
     }
 
-    private void getMoreCardsForDealer(Dealer dealer) {
+    private void getMoreCardsForDealer(Dealer dealer, List<Player> players) {
+        if (isAllUserBurst(players)) {
+            return;
+        }
         while (dealer.calculateCardsValue() < 17) {
             dealer.draw(Deck.top());
             OutputView.printGetMoreCardsForDealer(dealer.getName());
