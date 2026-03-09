@@ -10,16 +10,35 @@ import java.util.stream.Collectors;
 
 public record ScoreResultDto(List<String> scoreResults) {
 
+    public static final String DEALER_NAME = "딜러";
+    public static final String SCORE_RESULT_FORMAT = "%s카드: %s - 결과: %s";
+
     public ScoreResultDto(Dealer dealer, List<Player> players) {
         this(new ArrayList<>());
-        scoreResults.add(getScoreResultString("딜러", dealer.getHand()));
+        addDealerScoreResult(dealer);
+        addPlayerScoreResults(players);
+    }
+
+    private void addPlayerScoreResults(List<Player> players) {
         for (Player player : players) {
-            scoreResults.add(getScoreResultString(player.getName(), player.getHand()));
+            Hand playerHand = player.getHand();
+            String scoreResult = String.format(
+                    SCORE_RESULT_FORMAT,
+                    player.getName(),
+                    getHandString(playerHand),
+                    playerHand.getSum());
+            scoreResults.add(scoreResult);
         }
     }
 
-    private String getScoreResultString(String name, Hand hand) {
-        return name + "카드: " + getHandString(hand) + " - 결과: " + hand.getSum();
+    private void addDealerScoreResult(Dealer dealer) {
+        Hand dealerHand = dealer.getHand();
+        String scoreResult = String.format(
+                SCORE_RESULT_FORMAT,
+                DEALER_NAME,
+                getHandString(dealerHand),
+                dealerHand.getSum());
+        scoreResults.add(scoreResult);
     }
 
     private String getHandString(Hand hand) {
