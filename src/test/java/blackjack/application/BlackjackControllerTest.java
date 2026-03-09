@@ -9,7 +9,7 @@ import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class BlackjackAcceptanceTest extends BlackjackTest {
+class BlackjackControllerTest extends BlackjackTest {
 
     @Test
     void 전체_시나리오() {
