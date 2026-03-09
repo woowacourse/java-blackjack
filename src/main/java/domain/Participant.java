@@ -6,7 +6,6 @@ import java.util.List;
 public abstract class Participant {
 
     private final int BLACKJACK_NUM = 21;
-    private final int DEALER_HIT_NUM = 16;
 
     protected final List<Card> hand = new ArrayList<>();
 
@@ -18,6 +17,22 @@ public abstract class Participant {
         hand.add(card);
     }
 
+    public int calculateScore() {
+        int score = 0;
+        int aceCount = 0;
+        for (Card card: hand) {
+            if (!card.isAce()) {
+                score += card.getValue();
+                continue;
+            }
+            aceCount++;
+        }
+        for(int i = 0; i< aceCount; i++){
+            score += calculateOptimalAceScore(score);
+        }
+        return score;
+    }
+
     public boolean isBlackjack(int score) {
         return score == BLACKJACK_NUM;
     }
@@ -26,11 +41,14 @@ public abstract class Participant {
         return score > BLACKJACK_NUM;
     }
 
-    public boolean isHit(int score) {
-        return score <= DEALER_HIT_NUM;
-    }
-
     public List<Card> getHand() {
         return hand;
+    }
+
+    private int calculateOptimalAceScore(int sum) {
+        if (sum > 10) {
+            return 1;
+        }
+        return 11;
     }
 }

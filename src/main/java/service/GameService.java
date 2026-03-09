@@ -25,31 +25,8 @@ public class GameService {
         }
     }
 
-    public int calculateScore(List<Card> cards) {
-        int score = 0;
-        int aceCount = 0;
-        for (Card card: cards) {
-            if (!card.isAce()) {
-                score += card.getValue();
-                continue;
-            }
-            aceCount++;
-        }
-        for(int i = 0; i< aceCount; i++){
-            score += calculateOptimalAceScore(score);
-        }
-        return score;
-    }
-
-    public int calculateOptimalAceScore(int sum) {
-        if (sum > 10) {
-         return 1;
-        }
-        return 11;
-    }
-
     public void determineResult(List<User> users, Dealer dealer) {
-        int dealerScore = calculateScore(dealer.getHand());
+        int dealerScore = dealer.calculateScore();
         boolean dealerBurst = dealer.isBurst(dealerScore);
 
         for (User user : users) {
@@ -57,9 +34,9 @@ public class GameService {
         }
     }
 
-    private GameResult judge(User user,  Dealer dealer, boolean dealerBurst) {
-        int userScore = calculateScore(user.getHand());
-        int dealerScore = calculateScore(dealer.getHand());
+    private GameResult judge(User user, Dealer dealer, boolean dealerBurst) {
+        int userScore = user.calculateScore();
+        int dealerScore = dealer.calculateScore();
         boolean userBurst = user.isBurst(userScore);
 
         if (dealerBurst && userBurst) {

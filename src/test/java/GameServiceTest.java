@@ -24,31 +24,45 @@ class GameServiceTest {
     @Test
     @DisplayName("일반 카드들의 합산 점수를 계산한다")
     void calculateBasicScore() {
-        int score = gameService.calculateScore(List.of(Card.CLUB_FIVE,Card.CLUB_NINE,Card.CLUB_THREE));
-        assertThat(score).isEqualTo(17);
+        User user = new User("test");
+        user.receiveCard(Card.CLUB_FIVE);
+        user.receiveCard(Card.CLUB_NINE);
+        user.receiveCard(Card.CLUB_THREE);
+
+        assertThat(user.calculateScore()).isEqualTo(17);
     }
 
     @Test
     @DisplayName("페이스 카드가 포함된 점수를 계산한다")
-    void calculate_ace_as_eleven() {
-        int score = gameService.calculateScore(List.of(Card.CLUB_ACE, Card.CLUB_JACK, Card.CLUB_QUEEN, Card.CLUB_KING));
-        assertThat(score).isEqualTo(31);
+    void calculateScoreWithFaceCards() {
+        User user = new User("test");
+        user.receiveCard(Card.CLUB_ACE);
+        user.receiveCard(Card.CLUB_JACK);
+        user.receiveCard(Card.CLUB_QUEEN);
+        user.receiveCard(Card.CLUB_KING);
+
+        assertThat(user.calculateScore()).isEqualTo(31);
     }
 
     @Test
-    @DisplayName("Ace를 제외한 점수의 합이 10 이하면 Ace 점수는 11이 된다.")
-    public void if_remain_score_under10_ace_score_11() {
-        int sum = 10;
-        int aceScore = gameService.calculateOptimalAceScore(sum);
-        assertThat(aceScore).isEqualTo(11);
+    @DisplayName("Ace는 버스트가 나지 않도록 최적값으로 계산된다")
+    void calculateScoreWithAceOptimal() {
+        User user = new User("test");
+        user.receiveCard(Card.CLUB_ACE);
+        user.receiveCard(Card.CLUB_KING);
+
+        assertThat(user.calculateScore()).isEqualTo(21);
     }
 
     @Test
-    @DisplayName("Ace를 제외한 점수의 합이 11 이상이면 Ace 점수는 1이 된다.")
-    public void if_remain_score_over11_ace_score_1() {
-        int sum = 11;
-        int aceScore = gameService.calculateOptimalAceScore(sum);
-        assertThat(aceScore).isEqualTo(1);
+    @DisplayName("Ace가 11이면 버스트일 때 1로 계산된다")
+    void calculateScoreWithAceAvoidsBurst() {
+        User user = new User("test");
+        user.receiveCard(Card.CLUB_ACE);
+        user.receiveCard(Card.CLUB_KING);
+        user.receiveCard(Card.CLUB_QUEEN);
+
+        assertThat(user.calculateScore()).isEqualTo(21);
     }
 
     @Test
