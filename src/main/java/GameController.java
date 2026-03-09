@@ -38,16 +38,18 @@ public class GameController {
     }
 
     private void processUserTurns(List<User> users) {
-        for (User user : users) {
-            boolean hitAtLeastOnce = false;
-            while (inputView.readWillHit(user.getName())) {
-                hitAtLeastOnce = true;
-                user.receiveCard(gameService.deal());
-                outputView.printHand(user);
-            }
-            if (!hitAtLeastOnce) {
-                outputView.printHand(user);
-            }
+        users.forEach(this::processUserTurn);
+    }
+
+    private void processUserTurn(User user) {
+        boolean hit = false;
+        while (inputView.readWillHit(user.getName())) {
+            hit = true;
+            user.receiveCard(gameService.deal());
+            outputView.printHand(user);
+        }
+        if (!hit) {
+            outputView.printHand(user);
         }
     }
 
