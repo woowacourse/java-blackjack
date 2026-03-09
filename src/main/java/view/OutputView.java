@@ -1,6 +1,7 @@
 package view;
 
 import dto.BlackjackResult;
+import dto.DealerCardInfo;
 import dto.GamblerCardInfo;
 import java.util.List;
 
