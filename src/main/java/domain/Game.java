@@ -1,5 +1,7 @@
 package domain;
 
+import static constant.GameRule.INIT_CARD_COUNT;
+
 import domain.card.Deck;
 import domain.enums.Result;
 import domain.participant.Dealer;
@@ -20,8 +22,10 @@ public class Game {
     }
 
     public void initializeGame(Deck deck) {
-        players.initializeCard(deck);
-        dealer.addCards(List.of(deck.drawCard(), deck.drawCard()));
+        for (int i = 0; i < INIT_CARD_COUNT; i++) {
+            players.distributeCardForAllPlayers(deck);
+            dealer.addCard(deck.drawCard());
+        }
     }
 
     public void distributeCard(String name, Deck deck) {
@@ -58,7 +62,7 @@ public class Game {
         return players.getAllPlayerNames();
     }
 
-    public Map<String, List<CardDto>> getAllPlayersCards() {
+    public Map<String, List<CardDto>> getAllPlayerCards() {
         Map<String, List<CardDto>> playerCards = new LinkedHashMap<>();
         for (String name : players.getAllPlayerNames()) {
             playerCards.put(name, players.getPlayerCards(name));

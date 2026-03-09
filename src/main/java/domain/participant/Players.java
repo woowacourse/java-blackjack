@@ -52,9 +52,9 @@ public class Players {
         }
     }
 
-    public void initializeCard(Deck deck) {
+    public void distributeCardForAllPlayers(Deck deck) {
         players.forEach(player -> {
-            player.addCards(List.of(deck.drawCard(), deck.drawCard()));
+            player.addCard(deck.drawCard());
         });
     }
 

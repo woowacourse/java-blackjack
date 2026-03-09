@@ -25,7 +25,7 @@ public class BlackjackController {
         Game game = blackjackService.makeGame(players);
 
         blackjackService.initializeGame(game, deck);
-        OutputView.printPlayers(game.getDealerCard(), game.getAllPlayersCards());
+        OutputView.printPlayers(game.getDealerCard(), game.getAllPlayerCards());
 
         List<String> playersName = players.getAllPlayerNames();
         playTurn(game, deck);

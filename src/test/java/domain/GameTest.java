@@ -164,8 +164,8 @@ public class GameTest {
             //then
 
             List<CardDto> fizzCard = onePlayerGame.getPlayerCards("피즈");
-            List<Rank> expectedFizzRank = List.of(Rank.FIVE, Rank.FIVE, Rank.FOUR);
-            List<Suit> expectedFizzSuit = List.of(Suit.CLOVER, Suit.HEART, Suit.SPADE);
+            List<Rank> expectedFizzRank = List.of(Rank.FIVE, Rank.SIX, Rank.FOUR);
+            List<Suit> expectedFizzSuit = List.of(Suit.CLOVER, Suit.CLOVER, Suit.SPADE);
 
             for (int i = 0; i < 3; i++) {
                 assertThat(fizzCard.get(i).rank()).isEqualTo(expectedFizzRank.get(i));
@@ -173,8 +173,8 @@ public class GameTest {
             }
 
             List<CardDto> dealerCard = onePlayerGame.getDealerCard();
-            List<Rank> expectedDealerRank = List.of(Rank.SIX, Rank.SEVEN, Rank.SEVEN);
-            List<Suit> expectedDealerSuit = List.of(Suit.CLOVER, Suit.CLOVER, Suit.HEART);
+            List<Rank> expectedDealerRank = List.of(Rank.FIVE, Rank.SEVEN, Rank.SEVEN);
+            List<Suit> expectedDealerSuit = List.of(Suit.HEART, Suit.CLOVER, Suit.HEART);
 
             for (int i = 0; i < 3; i++) {
                 assertThat(dealerCard.get(i).rank()).isEqualTo(expectedDealerRank.get(i));
