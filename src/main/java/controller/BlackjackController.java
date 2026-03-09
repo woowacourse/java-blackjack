@@ -113,7 +113,7 @@ public class BlackjackController {
         }
     }
 
-    private static boolean sayYes(String answer) {
+    private boolean sayYes(String answer) {
         return answer.equals(InputMessage.USER_INPUT_YES.getMessage());
     }
 
