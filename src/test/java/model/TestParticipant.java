@@ -3,7 +3,6 @@ package model;
 
 import java.util.List;
 import model.dto.Card;
-import model.dto.PlayerName;
 import model.dto.PlayerResult;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +16,7 @@ public class TestParticipant {
 
         PlayerResult result = participant.getResult();
 
-        assertThat(result.name().value()).isEqualTo("jason");
+        assertThat(result.name()).isEqualTo("jason");
         assertThat(result.deck().isEmpty()).isTrue();
         assertThat(result.score()).isEqualTo(0);
     }
@@ -28,11 +27,10 @@ public class TestParticipant {
         Participant participant = new Participant(new PlayerName("jason"));
         participant.addCard(card);
 
-        List<Card> deck = participant.getResult().deck();
+        List<String> deck = participant.getResult().deck();
 
-        assertThat(deck).contains(card);
+        assertThat(deck).contains(card.getString());
         assertThat(deck.size()).isEqualTo(1);
-
     }
 
 }
