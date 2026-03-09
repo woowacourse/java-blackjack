@@ -6,16 +6,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerGroups {
-    private List<Player> players;
-    private int playIndex = 0;
     private static final int PLAYER_NUMBER_LIMIT = 4;
+    private final List<Player> players;
+    private int playIndex = 0;
 
     public PlayerGroups(List<Player> players) {
         validatePlayerNum(players);
         this.players = new ArrayList<>(players);
     }
 
-    public void onePlayerDrawCard(Card card){
+    public void onePlayerDrawCard(Card card) {
         players.get(playIndex).drawCard(card);
     }
 
@@ -48,9 +48,9 @@ public class PlayerGroups {
         return players.get(playIndex++);
     }
 
-    private void validatePlayerNum(List<Player> players){
+    private void validatePlayerNum(List<Player> players) {
         if (players.size() > PLAYER_NUMBER_LIMIT) {
-            throw new IllegalArgumentException("[ERROR] 플레이어의 수가 정원인 " + PLAYER_NUMBER_LIMIT + "명을 초과합니다.");
+            throw new IllegalArgumentException("[ERROR] 플레이어의 수가 " + players.size() + "명으로 정원인 " + PLAYER_NUMBER_LIMIT + "명을 초과합니다.");
         }
     }
 }
