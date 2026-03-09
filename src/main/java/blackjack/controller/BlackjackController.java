@@ -18,27 +18,17 @@ import java.util.Map;
 
 public class BlackjackController {
     public void run() {
-        List<String> names = inputName();
-        RandomShuffleStrategy shuffleStrategy = new RandomShuffleStrategy();
-        BlackjackGame blackjackGame = BlackjackGame.create(names, shuffleStrategy);
-
-        DealResult dealResult = deal(blackjackGame);
-        OutputView.printDealResult(dealResult);
-
+        BlackjackGame blackjackGame = readyBlackjackGame();
+        dealAndPrintResult(blackjackGame);
         playPlayerTurn(blackjackGame);
+        playDealerTurn(blackjackGame);
+        generateAndPrintPlayResult(blackjackGame);
+    }
 
-        while (blackjackGame.canDealerHit()) {
-            OutputView.printDealerDrawMessage();
-            blackjackGame.dealerDraw();
-        }
-
-        GameResult gameResult = blackjackGame.generateGameResult();
-        OutputView.printGameResult(gameResult);
-
-        Map<Player, MatchResult> playerFinalResult = blackjackGame.getPlayerFinalResult();
-        Map<String, Long> dealerFinalResult = blackjackGame.getDealerFinalResult(playerFinalResult);
-        OutputView.printFinalResult(playerFinalResult, dealerFinalResult);
-
+    private BlackjackGame readyBlackjackGame() {
+        List<String> playerNames = inputName();
+        RandomShuffleStrategy shuffleStrategy = new RandomShuffleStrategy();
+        return BlackjackGame.create(playerNames, shuffleStrategy);
     }
 
     private List<String> inputName() {
@@ -47,9 +37,10 @@ public class BlackjackController {
         return splitDelimiter(input);
     }
 
-    private DealResult deal(BlackjackGame blackjackGame) {
+    private void dealAndPrintResult(BlackjackGame blackjackGame) {
         blackjackGame.deal();
-        return DealResult.from(blackjackGame.getPlayers(), blackjackGame.getDealer());
+        DealResult dealResult = DealResult.from(blackjackGame.getPlayers(), blackjackGame.getDealer());
+        OutputView.printDealResult(dealResult);
     }
 
     private void playPlayerTurn(BlackjackGame blackjackGame) {
@@ -59,14 +50,19 @@ public class BlackjackController {
     }
 
     private void playTurn(BlackjackGame blackjackGame, int index) {
-        while (blackjackGame.canPlayerHit(index)) {
-            if (!inputYesOrNo(blackjackGame.playerNameByIndex(index))) {
-                break;
-            }
-            PlayerHandResult playerHandResult = PlayerHandResult.from(blackjackGame.playerDraw(index));
-            OutputView.printCurrentPlayerHand(playerHandResult);
+        while (blackjackGame.canPlayerHit(index) && playerChoosesHit(blackjackGame, index)) {
+            hitAndPrintPlayerHand(blackjackGame, index);
         }
-        System.out.println();
+        OutputView.printLineBreak();
+    }
+
+    private boolean playerChoosesHit(BlackjackGame blackjackGame, int index) {
+        return inputYesOrNo(blackjackGame.playerNameByIndex(index));
+    }
+
+    private void hitAndPrintPlayerHand(BlackjackGame blackjackGame, int index) {
+        PlayerHandResult playerHandResult = PlayerHandResult.from(blackjackGame.playerDraw(index));
+        OutputView.printCurrentPlayerHand(playerHandResult);
     }
 
     private boolean inputYesOrNo(String playerName) {
@@ -74,5 +70,21 @@ public class BlackjackController {
         Parser.notEmpty(input);
         Parser.yesOrNo(input);
         return Parser.parseAnswer(input);
+    }
+
+    private void playDealerTurn(BlackjackGame blackjackGame) {
+        while (blackjackGame.canDealerHit()) {
+            OutputView.printDealerDrawMessage();
+            blackjackGame.dealerDraw();
+        }
+    }
+
+    private void generateAndPrintPlayResult(BlackjackGame blackjackGame) {
+        GameResult gameResult = blackjackGame.generateGameResult();
+        OutputView.printGameResult(gameResult);
+
+        Map<Player, MatchResult> playerFinalResult = blackjackGame.getPlayerFinalResult();
+        Map<String, Long> dealerFinalResult = blackjackGame.getDealerFinalResult(playerFinalResult);
+        OutputView.printFinalResult(playerFinalResult, dealerFinalResult);
     }
 }
