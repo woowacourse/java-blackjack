@@ -3,7 +3,8 @@ package domain;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.exception.DeckIsEmptyException;
+import domain.card.Deck;
+import domain.exception.EmptyDeckException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -29,6 +30,6 @@ public class DeckTest {
         }
 
         assertThatThrownBy(deck::draw)
-                .isInstanceOf(DeckIsEmptyException.class);
+                .isInstanceOf(EmptyDeckException.class);
     }
 }
