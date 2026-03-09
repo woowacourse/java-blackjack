@@ -8,7 +8,6 @@ import blackjack.dto.ResultDto;
 import blackjack.model.Answer;
 import blackjack.model.BlackjackResult;
 import blackjack.model.Card;
-import blackjack.model.CardsGenerator;
 import blackjack.model.Dealer;
 import blackjack.model.Deck;
 import blackjack.model.Player;
@@ -24,25 +23,22 @@ public class BlackjackController {
     private final InputView inputView;
     private final OutputView outputView;
 
-    private final CardsGenerator cardsGenerator;
     private final ResultJudgement resultJudgement;
 
     public BlackjackController(
             InputView inputView,
             OutputView outputView,
-            CardsGenerator cardsGenerator,
             ResultJudgement resultJudgement
     ) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.cardsGenerator = cardsGenerator;
         this.resultJudgement = resultJudgement;
     }
 
     public void run() {
         Players players = readPlayers();
         Dealer dealer = new Dealer();
-        Deck deck = Deck.shuffled(cardsGenerator);
+        Deck deck = Deck.unique();
 
         initialDeal(players, dealer, deck);
         hit(players, dealer, deck);

@@ -1,6 +1,7 @@
 package blackjack.model;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -14,8 +15,8 @@ public class Deck {
         this.cards = new ArrayDeque<>(cards);
     }
 
-    public static Deck shuffled(CardsGenerator cardsGenerator) {
-        List<Card> cards = cardsGenerator.create();
+    public static Deck unique() {
+        List<Card> cards = createUniqueCards();
         Collections.shuffle(cards);
 
         return new Deck(cards);
@@ -27,5 +28,17 @@ public class Deck {
         }
 
         return cards.poll();
+    }
+
+    private static List<Card> createUniqueCards() {
+        List<Card> cards = new ArrayList<>();
+
+        for (Rank rank : Rank.values()) {
+            for (Suit suit : Suit.values()) {
+                cards.add(new Card(rank, suit));
+            }
+        }
+
+        return cards;
     }
 }
