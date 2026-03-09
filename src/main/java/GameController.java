@@ -66,7 +66,7 @@ public class GameController {
     }
 
     private void showGameRecord(List<User> users){
-        gameService.determineResult(users, dealer);
+        gameService.settleResult(users, dealer);
         outputView.printGameRecord(users, dealer);
     }
 }
