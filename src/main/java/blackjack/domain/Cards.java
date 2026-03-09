@@ -35,8 +35,7 @@ public class Cards {
     public List<String> getCardNames() {
         List<String> cardNames = new ArrayList<>();
         for (Card card : cards) {
-            String cardName = card.rank() + card.shape();
-            cardNames.add(cardName);
+            cardNames.add(card.getDisplayName());
         }
         return cardNames;
     }

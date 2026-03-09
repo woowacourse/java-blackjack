@@ -2,6 +2,10 @@ package blackjack.domain;
 
 public record Card(String rank, String shape) {
 
+    public String getDisplayName() {
+        return rank + shape;
+    }
+
     public int translateToScore() {
         if (rank.equals("J") || rank.equals("Q") || rank.equals("K")) {
             return 10;
