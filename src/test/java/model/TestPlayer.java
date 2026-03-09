@@ -4,7 +4,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import constant.ErrorMessage;
-import model.dto.PlayerName;
 import org.junit.jupiter.api.Test;
 
 public class TestPlayer {
@@ -13,7 +12,7 @@ public class TestPlayer {
         String name = "player1";
         Player player = new Player(new PlayerName(name));
 
-        assertThat(player.getResult().name().value()).isEqualTo(name);
+        assertThat(player.getResult().name()).isEqualTo(name);
     }
 
     @Test
