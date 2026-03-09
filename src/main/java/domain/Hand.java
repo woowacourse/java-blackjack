@@ -26,13 +26,13 @@ public class Hand implements Iterable<Card> {
 
     public boolean hasAce() {
         return cards.stream()
-                .anyMatch(c -> c.getCardRank().equals(CardRank.ACE));
+                .anyMatch(c -> c.cardRank().equals(CardRank.ACE));
     }
 
     public int calculateScore() {
         int total = 0;
         for (Card card : cards) {
-            total += card.getCardRank().getValue();
+            total += card.cardRank().getValue();
         }
         return total;
     }
