@@ -54,10 +54,10 @@ public class GameController {
     }
 
     private void processDealerTurn() {
-        if(dealer.isHit()) {
+        while (dealer.isHit()) {
             dealer.receiveCard(gameService.deal());
             outputView.printDealerHit();
-            return;
+            dealer.calculateScore();
         }
         outputView.printDealerStand();
     }
