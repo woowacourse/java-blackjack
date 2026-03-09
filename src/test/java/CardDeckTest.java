@@ -26,7 +26,9 @@ public class CardDeckTest {
         Set<Card> notDuplicatedDeck = new HashSet<>();
 
         //when
-        notDuplicatedDeck.addAll(cardDeck.getCardDeck());
+        for (int i = 0; i < 52; i++) {
+            notDuplicatedDeck.add(cardDeck.drawCard());
+        }
 
         //then
         assertThat(notDuplicatedDeck.size()).isEqualTo(52);
