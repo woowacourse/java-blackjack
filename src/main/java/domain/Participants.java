@@ -15,10 +15,12 @@ public class Participants {
 
     public Participants(List<Participant> participants) {
         validatePlayerCounts(participants);
+        // FIXME: 사이드 이펙트가 발생할 수 있다
         participants.add(new Participant(new Name(DEALER_NAME), new HandCards(new ArrayList<>()), true));
         this.participants = participants;
     }
 
+    // FIXME: indent가 2인 부분인데, 어떻게 개선할 수 있을까?
     public Participant getDealer() {
         for (Participant participant : participants) {
             if (participant.isDealer()) {
@@ -26,6 +28,7 @@ public class Participants {
             }
         }
 
+        // TODO: IllegalState가 적합한가? 의미상 IllegalArgument가 더 적합한가?
         throw new IllegalStateException(DEALER_NOT_FOUND_ERROR.getMessage());
     }
 
@@ -48,6 +51,7 @@ public class Participants {
         return cardResults;
     }
 
+    // TODO: 검증에 대한 테스트 필요
     private static void validatePlayerCounts(List<Participant> participants) {
         if (participants.size() < MINIMUM_PLAYER_BOUND || participants.size() > MAXIMUM_PLAYER_BOUND) {
             throw new IllegalStateException(PLAYER_COUNT_OUT_OF_RANGE.getMessage());

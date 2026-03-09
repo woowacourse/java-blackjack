@@ -7,6 +7,7 @@ import infra.CardShuffler;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO: Service가 존재해야 하는가? 책임을 더 적합한 곳으로 옮겨보자
 public class BlackjackService {
 
     private final CardShuffler cardShuffler;
@@ -18,6 +19,7 @@ public class BlackjackService {
     public List<Card> drawCard(CardDeck cardDeck, int drawCount) {
         List<Card> cards = new ArrayList<>();
 
+        // FIXME: Deck 내부를 Deque로 수정한 뒤, 전면 수정될 부분
         for (int i = 0; i < drawCount; i++) {
             int cardIndex = cardShuffler.shuffleCardDeck(cardDeck.getDeckSize());
             cards.add(cardDeck.getCardOf(cardIndex));

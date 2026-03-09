@@ -19,6 +19,7 @@ import service.FinalResult;
 import view.InputView;
 import view.OutputView;
 
+// FIXME: 컨트롤러에 책임이 너무 많다 -> 적합한 객체로 책임을 분산
 public class BlackjackController {
 
     private final InputView inputView;

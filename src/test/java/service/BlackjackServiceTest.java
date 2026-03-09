@@ -18,6 +18,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+// TODO: 경계값 및 예외 테스트 등 추가 필요
 class BlackjackServiceTest {
 
     private final BlackjackService blackjackService = new BlackjackService(new FakeCardShuffler());

@@ -1,5 +1,6 @@
 package constant;
 
+// FIXME: 각각의 상수가 존재해야 할 곳으로 옮기기
 public class BlackjackConstant {
     public static final int INIT_DRAW_COUNT = 2;
     public static final int HIT_DRAW_COUNT = 1;
