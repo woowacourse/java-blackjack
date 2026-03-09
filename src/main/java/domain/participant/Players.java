@@ -24,16 +24,27 @@ public class Players {
 
     public void giveCardsToEachPlayers(Function<Integer, List<Card>> getCard, int quantity) {
         for (Player player : players) {
-            player.addAll(getCard.apply(quantity));
+            player.addCards(getCard.apply(quantity));
         }
     }
 
-    private void validate(List<String> players) {
-        HashSet<String> uniqueNames = new HashSet<>(players);
-
-        if (uniqueNames.size() != players.size()) {
-            throw new IllegalArgumentException(ExceptionMessage.ALREADY_EXIST_NAME.getMessage());
+    public void hitStandEachPlayers(Function<Player, Boolean> hitStandFunc, Supplier<Card> getCard,
+                                    Consumer<Player> printResultFunc) {
+        for (Player player : players) {
+            while (true) {
+                if (hitStandFunc.apply(player)) {
+                    player.addCard(getCard.get());
+                    printResultFunc.accept(player);
+                    continue;
+                }
+                printResultFunc.accept(player);
+                break;
+            }
         }
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 
     private void addPlayers(List<String> names) {
@@ -46,22 +57,11 @@ public class Players {
         players.add(new Player(name));
     }
 
-    public void hitStandEachPlayers(Function<Player, Boolean> hitStandFunc, Supplier<Card> getCard,
-                                    Consumer<Player> printResultFunc) {
-        for (Player player : players) {
-            while (true) {
-                if (hitStandFunc.apply(player)) {
-                    player.add(getCard.get());
-                    printResultFunc.accept(player);
-                    continue;
-                }
-                printResultFunc.accept(player);
-                break;
-            }
-        }
-    }
+    private void validate(List<String> players) {
+        HashSet<String> uniqueNames = new HashSet<>(players);
 
-    public List<Player> getPlayers() {
-        return players;
+        if (uniqueNames.size() != players.size()) {
+            throw new IllegalArgumentException(ExceptionMessage.ALREADY_EXIST_NAME.getMessage());
+        }
     }
 }

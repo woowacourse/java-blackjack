@@ -21,13 +21,11 @@ public class BlackjackController {
 
         Players players = blackjackGame.getPlayers();
         Dealer dealer = blackjackGame.getDealer();
-        resultView.printParticipantsCards(players.getPlayers(), dealer);
 
+        resultView.printParticipantsCards(players.getPlayers(), dealer);
         blackjackGame.playerHitStand((player) -> inputView.readHitStand(player),
                 (player) -> resultView.printCards(player));
-
         blackjackGame.dealerHitStand((decision) -> resultView.printDealerHitStand(decision));
-
         resultView.printCardsWithResult(players.getPlayers(), dealer);
         resultView.printResultStatistics(players.getPlayers(), dealer);
     }

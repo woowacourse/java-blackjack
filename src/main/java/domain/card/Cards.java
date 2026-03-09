@@ -5,6 +5,8 @@ import domain.Rank;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class Cards {
     private final List<Card> cards;
@@ -15,6 +17,18 @@ public class Cards {
 
     public void add(Card card) {
         cards.add(card);
+    }
+
+    public void addCard(Supplier<Card> getCard) {
+        cards.add(getCard.get());
+    }
+
+    public void addAll(List<Card> cards) {
+        this.cards.addAll(cards);
+    }
+
+    public void addAll(Function<Integer, List<Card>> getCardsFunc, int quantity) {
+        cards.addAll(getCardsFunc.apply(quantity));
     }
 
     public Card pull() {
@@ -66,9 +80,6 @@ public class Cards {
         return sum;
     }
 
-    public void addAll(List<Card> cards) {
-        this.cards.addAll(cards);
-    }
 
     public List<Card> getCards() {
         return List.copyOf(cards);

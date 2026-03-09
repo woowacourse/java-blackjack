@@ -5,7 +5,6 @@ import static domain.Constant.DEFAULT_HAND_NUMBER;
 
 import domain.card.Deck;
 import domain.participant.Dealer;
-import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
 import java.util.List;
@@ -28,20 +27,8 @@ public class BlackjackGame {
         dealer.addCards(deck.getCardsWithQuantityFunc, DEFAULT_HAND_NUMBER);
     }
 
-    public void giveCard(Participant participant) {
-        participant.add(deck.pull());
-    }
-
     public void playerHitStand(Function<Player, Boolean> decideHitStandFunc, Consumer<Player> printResultFunc) {
         players.hitStandEachPlayers(decideHitStandFunc, () -> deck.pull(), printResultFunc);
-    }
-
-    public Players getPlayers() {
-        return players;
-    }
-
-    public Dealer getDealer() {
-        return dealer;
     }
 
     public void dealerHitStand(Consumer<Boolean> printDecisionOutput) {
@@ -54,5 +41,13 @@ public class BlackjackGame {
             dealer.addCards(deck.getCardsWithQuantityFunc, 1);
             printDecisionOutput.accept(dealerHitStand);
         }
+    }
+
+    public Players getPlayers() {
+        return players;
+    }
+
+    public Dealer getDealer() {
+        return dealer;
     }
 }
