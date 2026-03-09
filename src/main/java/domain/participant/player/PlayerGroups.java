@@ -1,15 +1,14 @@
-package domain.player;
+package domain.participant.player;
 
 import domain.card.Card;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class PlayerGroups {
     private List<Player> players;
     private int playIndex = 0;
+    private static final int PLAYER_NUMBER_LIMIT = 4;
 
     public PlayerGroups(List<Player> players) {
         validatePlayerNum(players);
@@ -20,16 +19,6 @@ public class PlayerGroups {
         players.get(playIndex).drawCard(card);
     }
 
-    public Map<String, List<String>> playersStatus() {
-        Map<String, List<String>> status = new LinkedHashMap<>();
-
-        for (Player player : players) {
-            status.put(player.getName(), player.getCards());
-        }
-
-        return status;
-    }
-
     public Player getCurrentPlayer() {
         return players.get(playIndex);
     }
@@ -38,42 +27,8 @@ public class PlayerGroups {
         return players.get(playIndex).getCards();
     }
 
-    public int getCurrentPlayerScore() {
-        return players.get(playIndex).getMyScore();
-    }
-
-    public Map<String, Integer> playersTotalScore() {
-        Map<String, Integer> scores = new LinkedHashMap<>();
-
-        for (Player player : players) {
-            scores.put(player.getName(), player.getMyScore());
-        }
-
-        return scores;
-    }
-
-    public Map<String, WinStatus> getGameResult() {
-        Player dealer = players.getFirst();
-        Map<String, WinStatus> result = new LinkedHashMap<>();
-
-        for (int i = 1; i < players.size(); i++) {
-            Player player = players.get(i);
-            String playerName = player.getName();
-
-            if(player.isBust()) {
-                result.put(playerName, WinStatus.LOSS);
-                continue;
-            }
-
-            if(dealer.isBust()) {
-                result.put(playerName, WinStatus.WIN);
-                continue;
-            }
-
-            result.put(playerName, player.finalizeResult(dealer.getMyScore()));
-        }
-
-        return result;
+    public List<Player> getPlayers() {
+        return new ArrayList<>(players);
     }
 
     public int getPlayerGroupSize() {
@@ -94,8 +49,8 @@ public class PlayerGroups {
     }
 
     private void validatePlayerNum(List<Player> players){
-        if (players.size() > 5) {
-            throw new IllegalArgumentException();
+        if (players.size() > PLAYER_NUMBER_LIMIT) {
+            throw new IllegalArgumentException("[ERROR] 플레이어의 수가 정원인 " + PLAYER_NUMBER_LIMIT + "명을 초과합니다.");
         }
     }
 }
