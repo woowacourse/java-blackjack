@@ -9,13 +9,16 @@ class Participants {
     private final Dealer dealer;
     private final Players players;
 
-    Participants(List<String> names, DrawStrategy drawStrategy) {
-        this.dealer = Dealer.of("딜러", drawStrategy);
-        this.players = Players.from(names, drawStrategy);
+    Participants(Dealer dealer, Players players) {
+        this.dealer = dealer;
+        this.players = players;
     }
 
-    void addPlayer(String name, DrawStrategy drawStrategy) {
-        players.add(name, drawStrategy);
+    static Participants from(List<String> names, DrawStrategy drawStrategy) {
+        Dealer dealer = Dealer.of(drawStrategy);
+        Players players = Players.from(names, drawStrategy);
+
+        return new Participants(dealer, players);
     }
 
     List<String> allPlayerNames() {
@@ -49,19 +52,31 @@ class Participants {
         return players.allPlayerCardInfos();
     }
 
-    public String currentPlayerName() {
+    String currentPlayerName() {
         return players.currentPlayerName();
     }
 
-    public void currentPlayerDrawCard() {
+    void currentPlayerDrawCard() {
         players.currentPlayerDrawCard();
     }
 
-    public boolean isCurrentPlayerPlayable() {
+    boolean isCurrentPlayerPlayable() {
         return players.isCurrentPlayerPlayable();
     }
 
-    public boolean hasWaitingPlayers() {
+    boolean hasWaitingPlayers() {
         return players.hasWaitingPlayers();
+    }
+
+    NameAndCardInfos currentPlayersResult() {
+        return players.currentPlayersResult();
+    }
+
+    public boolean isDealerPlayable() {
+        return dealer.isPlayable();
+    }
+
+    public void dealerDrawCard() {
+        dealer.draw();
     }
 }

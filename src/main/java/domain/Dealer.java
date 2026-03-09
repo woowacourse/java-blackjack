@@ -8,8 +8,9 @@ public class Dealer extends Participant {
         super(name, hand);
     }
 
-    static Dealer of(String name, DrawStrategy drawStrategy) {
-        return new Dealer(name, Hand.based(drawStrategy));
+    static Dealer of(DrawStrategy drawStrategy) {
+        return new Dealer("딜러",
+                Hand.based(drawStrategy));
     }
 
     @Override

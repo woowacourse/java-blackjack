@@ -3,7 +3,7 @@ package config;
 import controller.BlackJackController;
 import domain.BlackJackFactory;
 import domain.DrawStrategy;
-import domain.strategy.RandomStrategy;
+import domain.strategy.OneDeckStrategy;
 import repository.GameTableRepository;
 import service.BlackJackCommandService;
 import service.BlackJackQueryService;
@@ -20,7 +20,7 @@ public class AppConfig {
     }
 
     private DrawStrategy drawStrategy() {
-        return new RandomStrategy();
+        return new OneDeckStrategy();
     }
 
     private BlackJackFactory blackJackFactory() {

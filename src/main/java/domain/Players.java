@@ -61,7 +61,9 @@ class Players {
     }
 
     void currentPlayerDrawCard() {
-        currentPlayer().draw();
+        if(hasWaitingPlayers()) {
+            currentPlayer().draw();
+        }
     }
 
     boolean isCurrentPlayerPlayable() {
@@ -70,5 +72,10 @@ class Players {
 
     boolean hasWaitingPlayers() {
         return !players.isEmpty();
+    }
+
+    NameAndCardInfos currentPlayersResult() {
+        Player player = players.poll();
+        return player.infos();
     }
 }

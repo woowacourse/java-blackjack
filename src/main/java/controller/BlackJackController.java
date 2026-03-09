@@ -1,7 +1,5 @@
 package controller;
 
-import dto.GameStatus;
-import dto.NameResponse;
 import dto.PlayerNamesRequest;
 import dto.SelectRequest;
 import service.BlackJackCommandService;
@@ -55,15 +53,18 @@ public class BlackJackController {
         while (queryService.hasWaitingPlayers()) {
             playerGameProcess();
         }
+
+        OutputView.printTaskDivider();
     }
 
     private void playerGameProcess() {
         SelectRequest select = playerSelect();
         firstPlayerGameProcess(select);
 
-        if(select.isPositive()) {
+        if (select.isPositive()) {
             playerGameLoop();
         }
+
         commandService.recordCurrentGameResult();
     }
 
@@ -94,7 +95,16 @@ public class BlackJackController {
     }
 
     private void dealerGamePhase() {
+        while (queryService.isDealerPlayable()) {
+            dealerGameLoopProcess();
+        }
+    }
 
+    private void dealerGameLoopProcess() {
+        if (queryService.isDealerPlayable()) {
+            commandService.dealerDrawCard();
+            OutputView.dealerDrawCard();
+        }
     }
 
     private void resultPhase() {

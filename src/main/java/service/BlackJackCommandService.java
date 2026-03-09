@@ -10,7 +10,8 @@ public class BlackJackCommandService {
     private final GameTableRepository gameTableRepository;
     private final BlackJackFactory blackJackFactory;
 
-    public BlackJackCommandService(GameTableRepository gameTableRepository, BlackJackFactory blackJackFactory) {
+    public BlackJackCommandService(GameTableRepository gameTableRepository,
+                                   BlackJackFactory blackJackFactory) {
         this.gameTableRepository = gameTableRepository;
         this.blackJackFactory = blackJackFactory;
     }
@@ -30,5 +31,9 @@ public class BlackJackCommandService {
 
     public void recordCurrentGameResult() {
         gameTableRepository.recordCurrentGameResult();
+    }
+
+    public void dealerDrawCard() {
+        gameTableRepository.dealerDrawCard();
     }
 }

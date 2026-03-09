@@ -6,17 +6,15 @@ import java.util.List;
 public class GameTable {
 
     private final Participants participants;
+    private final ScoreBoard scoreBoard;
 
-    private GameTable(List<String> playerNames, DrawStrategy drawStrategy) {
-        this.participants = new Participants(playerNames, drawStrategy);
+    private GameTable(Participants participants, ScoreBoard scoreBoard) {
+        this.participants = participants;
+        this.scoreBoard = scoreBoard;
     }
 
     public static GameTable setupGame(List<String> playerNames, DrawStrategy drawStrategy) {
-        return new GameTable(playerNames, drawStrategy);
-    }
-
-    public void addPlayer(String name, DrawStrategy drawStrategy) {
-        participants.addPlayer(name, drawStrategy);
+        return new GameTable(Participants.from(playerNames, drawStrategy), new ScoreBoard());
     }
 
     public List<String> allPlayerNames() {
@@ -53,6 +51,20 @@ public class GameTable {
 
     public boolean hasWaitingPlayers() {
         return participants.hasWaitingPlayers();
+    }
+
+    public void recordCurrentGameResult() {
+        NameAndCardInfos nameAndCardInfos = participants.currentPlayersResult();
+//        scoreBoard.record();
+//        scoreBoard.recordPlayersScore();
+    }
+
+    public boolean isDealerPlayable() {
+        return participants.isDealerPlayable();
+    }
+
+    public void dealerDrawCard() {
+        participants.dealerDrawCard();
     }
 
 //

@@ -2,7 +2,7 @@ package view;
 
 public enum OutputMessage {
     DISTRIBUTE("딜러와 %s에게 2장을 나누었습니다."),
-    DEALER_DRAW("딜러는 16이하라 한장의 카드를 더 받았습니다."),
+    DEALER_DRAW_CARD("딜러는 16이하라 한장의 카드를 더 받았습니다."),
     PARTICIPANTS_RESULT("%s - 결과: %d"),
 
     RESULT_HEADER("## 최종 승패"),

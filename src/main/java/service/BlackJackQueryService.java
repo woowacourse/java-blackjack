@@ -48,4 +48,8 @@ public class BlackJackQueryService {
     public boolean hasWaitingPlayers() {
         return gameTableRepository.hasWaitingPlayers();
     }
+
+    public boolean isDealerPlayable() {
+        return gameTableRepository.isDealerPlayable();
+    }
 }

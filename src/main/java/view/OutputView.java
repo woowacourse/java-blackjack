@@ -41,14 +41,16 @@ public final class OutputView {
     public static void printTaskDivider() {
         System.out.println();
     }
+    
+    public static void dealerDrawCard() {
+        System.out.println(OutputMessage.DEALER_DRAW_CARD.description());
+    }
+
 //
 //    public static void printGameLog(GameStatus gameStatuses) {
 //        System.out.println(getGameLog(gameStatuses));
 //    }
 //
-//    public static void dealerStay() {
-//        System.out.println(OutputMessage.DEALER_DRAW.description());
-//    }
 //
 //    public static void participantsResults(List<GameStatus> gameStatuses) {
 //        for (GameStatus gameStatus : gameStatuses) {
