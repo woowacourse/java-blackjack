@@ -16,4 +16,9 @@ public class Player extends User {
     public void mark(GameResult gameResult) {
         this.gameResult = gameResult;
     }
+
+    @Override
+    public boolean isHitAvailable() {
+        return totalScore() < Constant.BLACKJACK_SCORE;
+    }
 }
