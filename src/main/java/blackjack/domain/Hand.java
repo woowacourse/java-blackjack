@@ -26,6 +26,19 @@ public class Hand {
         return getCardSnapshot();
     }
 
+    public boolean isDrawable() {
+        int scoreSum = calculateScoreSum();
+        if (scoreSum < BUSTED_SCORE) {
+            return true;
+        }
+        return !isBusted();
+    }
+
+    public boolean isBusted() {
+        int totalScore = getTotalScore();
+        return totalScore >= BUSTED_SCORE;
+    }
+
     public int getTotalScore() {
         boolean busted = isBusted();
         int scoreSum = calculateScoreSum();
@@ -35,16 +48,15 @@ public class Hand {
         return scoreSum;
     }
 
-    public int calculateScoreSum() {
+    public int getScoreSum() {
+        return calculateScoreSum();
+    }
+
+    private int calculateScoreSum() {
         return cards.getCards()
                 .stream()
                 .mapToInt(Card::getScore)
                 .sum();
-    }
-
-    public boolean isBusted() {
-        int scoreSum = calculateScoreSum();
-        return scoreSum >= BUSTED_SCORE;
     }
 
     private int calculateWithAce(int scoreSum) {
@@ -52,7 +64,7 @@ public class Hand {
         return calculateAce(scoreSum, aceCount);
     }
 
-    public int countAce() {
+    private int countAce() {
         return (int) cards.getCards()
                 .stream()
                 .filter(Card::isAce)

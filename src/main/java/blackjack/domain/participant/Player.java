@@ -24,7 +24,7 @@ public class Player extends Participant {
         if (stopDrawing) {
             return false;
         }
-        return !hand.isBusted();
+        return hand.isDrawable();
     }
 
     public void stop() {
@@ -32,15 +32,19 @@ public class Player extends Participant {
     }
 
     public PlayerResult determinePlayerResult(int dealerScore) {
-        int playerScore = getResultScore();
-        GameResult gameResult = resolveGameResult(playerScore, dealerScore);
+        GameResult gameResult = resolveGameResult(dealerScore);
         return new PlayerResult(nickname, gameResult);
     }
 
-    private GameResult resolveGameResult(int playerScore, int dealerScore) {
-        if (playerScore < dealerScore) {
+    private GameResult resolveGameResult(int dealerScore) {
+        if (hand.isBusted()) {
             return GameResult.LOSE;
         }
+
+        if (getTotalScore() < dealerScore) {
+            return GameResult.LOSE;
+        }
+        // 무승부 로직 배제
         return GameResult.WIN;
     }
 

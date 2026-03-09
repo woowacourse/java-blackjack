@@ -2,9 +2,7 @@ package blackjack.domain;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.dto.PlayerResult;
 import blackjack.dto.WinningResult;
-import java.util.List;
 
 public class Participants {
     
@@ -40,7 +38,7 @@ public class Participants {
     }
 
     public WinningResult getWinningResult() {
-        int dealerScore = dealer.getResultScore();
+        int dealerScore = dealer.getTotalScore();
         return getWinningResult(dealerScore);
     }
     
