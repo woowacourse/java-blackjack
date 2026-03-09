@@ -12,7 +12,7 @@ public class PlayersWinning {
         playersWinnings.add(playerWinning);
     }
 
-    public List<PlayerWinning> getPlayersWinnings() {
+    public List<PlayerWinning> getFormattedPlayersWinnings() {
         return List.copyOf(playersWinnings);
     }
 }

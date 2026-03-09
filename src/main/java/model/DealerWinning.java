@@ -1,6 +1,7 @@
 package model;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DealerWinning {
@@ -16,7 +17,10 @@ public class DealerWinning {
         dealerWinning.put(matchStatus, dealerWinning.get(matchStatus) + 1);
     }
 
-    public Map<MatchStatus, Integer> getDealerWinning() {
-        return Map.copyOf(dealerWinning);
+    public List<String> getFormattedDealerWinning() {
+        return dealerWinning.entrySet().stream()
+                .filter(entry -> entry.getValue() > 0)
+                .map(entry -> entry.getValue() + entry.getKey().getStatus())
+                .toList();
     }
 }

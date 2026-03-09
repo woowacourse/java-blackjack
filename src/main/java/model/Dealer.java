@@ -12,4 +12,8 @@ public class Dealer extends Participant{
     public boolean canDraw() {
         return !super.isMoreThanScore(CARD_DRAW_THRESHOLD);
     }
+
+    public String getFirstCard() {
+        return super.getDeck().getFirst().getString();
+    }
 }

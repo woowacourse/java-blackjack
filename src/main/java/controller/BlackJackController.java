@@ -61,7 +61,7 @@ public class BlackJackController {
             playersResult.add(player.getResult());
         }
 
-        OutputView.printInitDeck(playersResult,dealer.getResult());
+        OutputView.printInitDeck(playersResult, dealer.getFirstCard());
     }
 
     private void initParticipantDraw(Participant participant) {

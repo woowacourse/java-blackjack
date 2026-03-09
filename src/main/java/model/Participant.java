@@ -34,4 +34,8 @@ public class Participant {
     public boolean isBust() {
         return isMoreThanScore(BUST_SCORE);
     }
+
+    public List<Card> getDeck() {
+        return List.copyOf(participantHand.getDeck());
+    }
 }

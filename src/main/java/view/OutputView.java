@@ -1,12 +1,8 @@
 package view;
 
-
 import java.util.List;
-import java.util.Map.Entry;
 import model.DealerWinning;
-import model.MatchStatus;
 import model.PlayersWinning;
-import model.dto.Card;
 import model.dto.ParticipantWinning;
 import model.dto.PlayerResult;
 import model.dto.PlayerWinning;
@@ -24,10 +20,10 @@ public class OutputView {
     private static final String SCORE_TEXT = " - 결과: ";
     private static final String DEALER_TEXT = "딜러:";
 
-    public static void printInitDeck(List<PlayerResult> players, PlayerResult dealer) {
+    public static void printInitDeck(List<PlayerResult> players, String dealerFirstCard) {
         List<String> playerNames = players.stream().map(PlayerResult::name).toList();
         printInitDeckDrawMessage(playerNames);
-        printDealerInitDeck(dealer.deck().getFirst());
+        printDealerInitDeck(dealerFirstCard);
         printPlayersCurrentDeck(players);
         printNewLine();
     }
@@ -40,7 +36,6 @@ public class OutputView {
         System.out.println(DEALER_DRAW_ONE_CARD_TEXT);
         printNewLine();
     }
-
 
     public static void printPlayersScore(PlayerResult dealerResult, List<PlayerResult> players) {
         printPlayerScore(dealerResult);
@@ -60,13 +55,12 @@ public class OutputView {
         printPlayersResult(participantWinning.playersWinning());
     }
 
-
     private static void printInitDeckDrawMessage(List<String> players) {
         System.out.println(DEALER_INIT_DECK_TEXT + String.join(JOIN_DELIMITER, players) + INIT_DECK_TEXT);
     }
 
-    private static void printDealerInitDeck(String card) {
-        System.out.println(DEALER_CARD_TEXT + card);
+    private static void printDealerInitDeck(String firstCard) {
+        System.out.println(DEALER_CARD_TEXT + firstCard);
     }
 
     private static void printPlayersCurrentDeck(List<PlayerResult> players) {
@@ -81,22 +75,12 @@ public class OutputView {
 
     private static void printDealerResult(DealerWinning dealerWinning) {
         System.out.print(DEALER_TEXT);
-        for(Entry<MatchStatus, Integer> matchStatus : dealerWinning.getDealerWinning().entrySet()) {
-            printStatusResult(matchStatus.getKey(), matchStatus.getValue());
-        }
+        System.out.print(" " + String.join(" ", dealerWinning.getFormattedDealerWinning()));
         printNewLine();
     }
 
-
-    private static void printStatusResult(MatchStatus matchStatus, Integer quantity) {
-        if(quantity > 0) {
-            System.out.print(" " + quantity + matchStatus.getStatus());
-        }
-
-    }
-
     private static void printPlayersResult(PlayersWinning playersWinning) {
-        for(PlayerWinning playerWinning : playersWinning.getPlayersWinnings()) {
+        for(PlayerWinning playerWinning : playersWinning.getFormattedPlayersWinnings()) {
             printPlayerResult(playerWinning);
         }
     }
