@@ -14,16 +14,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class ParticipantTest {
     Participant participant;
-//    @Test
-//    void 참가자_생성_테스트() {
-//        // given
-//        // when
-//        String dealerName = "딜러";
-//        Participant participant1 = Dealer.of(dealerName);
-//
-//        // then
-//        assertThat(participant1).isInstanceOf(Dealer.class);
-//    }
 
     @BeforeEach
     void setUp() {
@@ -89,8 +79,6 @@ class ParticipantTest {
                         15),
                 Arguments.of(
                         List.of(Card.of("스페이드", 11), Card.of("스페이드", 11), Card.of("스페이드", 11), Card.of("스페이드", 11)), 14)
-
         );
-
     }
 }
