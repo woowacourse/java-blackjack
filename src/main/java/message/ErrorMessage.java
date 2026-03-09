@@ -12,7 +12,8 @@ public enum ErrorMessage {
     PLAYER_NUMBER_OUT_OF_RANGE(
             String.format("[ERROR] 플레이어는 %d명 이상 %d명 이하여야 합니다.", MIN_PLAYER_NUMBER, MAX_PLAYER_NUMBER)),
     PLAYER_NOT_FOUND("[ERROR] 플레이어를 찾을 수 없습니다."),
-    DECK_CAN_NOT_DUPLICATED("[ERROR] 덱에 중복된 카드가 존재합니다.");
+    DECK_CAN_NOT_DUPLICATED("[ERROR] 덱에 중복된 카드가 존재합니다."),
+    DECK_IS_EMPTY("[ERROR] 더 이상 뽑을 카드가 없습니다.");
 
     private final String message;
 

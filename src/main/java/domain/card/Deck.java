@@ -1,9 +1,11 @@
 package domain.card;
 
 import static message.ErrorMessage.DECK_CAN_NOT_DUPLICATED;
+import static message.ErrorMessage.DECK_IS_EMPTY;
 
 import java.util.ArrayDeque;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Queue;
 
 public class Deck {
@@ -29,6 +31,9 @@ public class Deck {
     }
 
     public Card drawCard() {
+        if (cards.isEmpty()) {
+            throw new NoSuchElementException(DECK_IS_EMPTY.getMessage());
+        }
         return cards.poll();
     }
 }
