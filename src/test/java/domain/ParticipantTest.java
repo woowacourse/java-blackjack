@@ -2,9 +2,11 @@ package domain;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import domain.constant.CardMark;
+import domain.constant.CardRank;
+import domain.strategy.RandomStrategy;
+import domain.vo.Card;
 import strategy.AceDrawStrategy;
-import strategy.RandomStrategy;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -15,7 +17,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class ParticipantTest {
 
-    static Hand emptyHand = new Hand(new RandomStrategy(),new ArrayList<>());
+    static Hand emptyHand = Hand.based(new RandomStrategy());
     static Hand playingHand = new Hand(
             new RandomStrategy(),
             List.of(new Card(CardRank.QUEEN, CardMark.SPADE),

@@ -1,4 +1,4 @@
-package domain;
+package domain.constant;
 
 public enum CardRank {
 

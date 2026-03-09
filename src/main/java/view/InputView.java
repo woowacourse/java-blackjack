@@ -1,25 +1,25 @@
 package view;
 
+import dto.response.NameResponse;
+import dto.request.PlayerNamesRequest;
+import dto.request.SelectRequest;
 import java.util.Scanner;
 
 public final class InputView {
 
+    private InputView() {
+
+    }
+
     private final static Scanner scanner = new Scanner(System.in);
 
-    public static String readPlayers() {
-        String names = readLine(InfoMessage.PLAYER_INPUT);
-        System.out.println();
-        return names;
+    public static PlayerNamesRequest readPlayers() {
+        System.out.println(InfoMessage.PLAYER_INPUT.message());
+        return PlayerNamesRequest.from(scanner.nextLine());
     }
 
-    public static String readSelect(String name) {
-        String formatter = InfoMessage.SELECT.message();
-        System.out.printf(formatter + System.lineSeparator(), name);
-        return scanner.nextLine();
-    }
-
-    private static String readLine(InfoMessage info) {
-        System.out.println(info.message());
-        return scanner.nextLine();
+    public static SelectRequest readSelect(NameResponse response) {
+        System.out.println(InfoMessage.SELECT.messageWith(response.name()));
+        return SelectRequest.from(scanner.nextLine());
     }
 }

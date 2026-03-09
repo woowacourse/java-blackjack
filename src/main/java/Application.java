@@ -1,8 +1,15 @@
-import controller.Controller;
+import config.AppConfig;
+import controller.BlackJackController;
 
 public class Application {
+
     public static void main(String[] args) {
-        Controller controller = new Controller();
-        controller.run();
+        blackjackController().run();
+    }
+
+    private static BlackJackController blackjackController() {
+        AppConfig config = new AppConfig();
+        return config.blackJackController();
     }
 }
+

@@ -1,97 +1,90 @@
 package domain;
 
-import dto.GameResult;
-import dto.GameStatus;
-import java.util.ArrayList;
-import java.util.LinkedList;
+import domain.vo.DealerWinningScore;
+import domain.vo.NameAndCardInfos;
 import java.util.List;
-import java.util.Queue;
 
 public class GameTable {
 
-    private final Queue<Participant> participants;
+    private final Participants participants;
     private final ScoreBoard scoreBoard;
 
-    public GameTable() {
-        this.participants = new LinkedList<>();
-        this.scoreBoard = new ScoreBoard();
+    private GameTable(Participants participants, ScoreBoard scoreBoard) {
+        this.participants = participants;
+        this.scoreBoard = scoreBoard;
     }
 
-    public void addParticipant(Participant participant) {
-        participants.add(participant);
+    public static GameTable setupGame(List<String> playerNames, DrawStrategy drawStrategy) {
+        return new GameTable(Participants.from(playerNames, drawStrategy), new ScoreBoard());
     }
 
-    public List<GameStatus> initGameStatus() {
-        List<GameStatus> gameStatuses = new ArrayList<>();
-        for (Participant participant : participants) {
-            gameStatuses.add(participant.status());
-        }
-
-        return gameStatuses;
+    public List<String> allPlayerNames() {
+        return participants.allPlayerNames();
     }
 
-    public List<GameStatus> endedGameStatus() {
-        return scoreBoard.gameStatuses();
+    public void allParticipantsDrawInitialCards() {
+        participants.allParticipantsDrawInitialCards();
     }
 
-    public void playCurrentPlayer() {
-        if (isPlayerExist()) {
-            currentPlayer().draw();
-        }
+    public NameAndCardInfos dealerCardsInfo() {
+        return participants.dealerCardInfos();
     }
 
-    public void playDealer() {
-        dealer().draw();
+    public List<NameAndCardInfos> allPlayerCardInfos() {
+        return participants.allPlayerCardInfos();
     }
 
-    public GameStatus currentPlayerStatus() {
-        return currentParticipant().status();
-    }
-
-    public Participant currentPlayer() {
-        Participant participant = participants.peek();
-
-        if (!participants.isEmpty() && !participant.isPlayer()) {
-            participants.add(participants.poll());
-        }
-
-        return participants.peek();
-    }
-
-    public boolean isPlayerExist() {
-        return !participants.isEmpty() && !hasOnlyDealer();
-    }
-
-    public void recordResult() {
-        Participant current = participants.poll();
-        scoreBoard.record(current.status());
-    }
-
-    public List<GameResult> result() {
-        return scoreBoard.playerResults();
+    public NameAndCardInfos currentPlayerCardInfos() {
+        return participants.currentPlayerCardInfos();
     }
 
     public String currentPlayerName() {
-        return currentPlayer().name();
+        return participants.currentPlayerName();
+    }
+
+    public void currentPlayerDrawCard() {
+        participants.currentPlayerDrawCard();
     }
 
     public boolean isCurrentPlayerPlayable() {
-        return currentPlayer().isPlayable();
+        return participants.isCurrentPlayerPlayable();
+    }
+
+    public boolean hasWaitingPlayers() {
+        return participants.hasWaitingPlayers();
+    }
+
+    public void recordCurrentGameResult() {
+        PlayedGameResult playedGameResult = participants.currentPlayersResult();
+        scoreBoard.record(playedGameResult);
     }
 
     public boolean isDealerPlayable() {
-        return currentParticipant().isPlayable();
+        return participants.isDealerPlayable();
     }
 
-    private Participant dealer() {
-        return participants.stream().filter(p -> !p.isPlayer()).findFirst().orElse(null);
+    public void dealerDrawCard() {
+        participants.dealerDrawCard();
     }
 
-    private boolean hasOnlyDealer() {
-        return participants.stream().noneMatch(Participant::isPlayer);
+    public void recordDealerGameResult() {
+        PlayedGameResult playedGameResult = participants.dealerResult();
+        scoreBoard.record(playedGameResult);
     }
 
-    private Participant currentParticipant() {
-        return participants.peek();
+    public PlayedGameResult dealerResult() {
+        return scoreBoard.dealerGameResult();
+    }
+
+    public List<PlayedGameResult> playerResults() {
+        return scoreBoard.playerGameResults();
+    }
+
+    public DealerWinningScore dealerWinningStatistics() {
+        return scoreBoard.dealerWinningScore();
+    }
+
+    public List<PlayerWinningInfo> playerWinningInfos() {
+        return scoreBoard.playerWinningInfos();
     }
 }
