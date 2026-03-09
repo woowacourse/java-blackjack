@@ -49,6 +49,7 @@ public class OutputView {
     }
 
     public void printFinalResult(List<GameFinalResultDto> finalResult) {
+        // TODO: 베팅 기능 추가 시 정산 금액도 출력하도록 형식 수정 필요
         System.out.println("## 최종 승패");
         GameFinalResultDto firstPlayer = finalResult.removeFirst();
         Map<Result, Integer> resultCounts = new EnumMap<>(Result.class);
@@ -84,6 +85,7 @@ public class OutputView {
     }
 
     private void printPlayerResult(List<GameFinalResultDto> finalResult) {
+        // TODO: 베팅 기능 추가 시 플레이어별 베팅 금액,수익 출력 필요
         for (GameFinalResultDto result : finalResult) {
             System.out.println(MessageFormat.format(
                     FINAL_RESULT_MESSAGE,

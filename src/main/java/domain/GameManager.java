@@ -39,6 +39,7 @@ public class GameManager {
     }
 
     public void addPlayer(String name) {
+        // TODO: 베팅 기능 추가 시 이름만이 아니라 베팅 금액도 함께 받도록 수정 필요
         players.add(new Player(name));
     }
 
@@ -115,6 +116,7 @@ public class GameManager {
     }
 
     public List<GameFinalResultDto> getFinalResult() {
+        // TODO: 베팅 기능 추가 시 승/패/무 뿐 아니라 정산 금액까지 포함한 결과 생성 필요
         List<GameFinalResultDto> results = new ArrayList<>();
         results.add(new GameFinalResultDto(dealer.getName()));
 
@@ -124,6 +126,7 @@ public class GameManager {
     }
 
     private void determineWinLose(List<GameFinalResultDto> results) {
+        // TODO: 베팅 기능 추가 시 승패 판정 후 베팅 금액 기준 정산 로직 추가 필요
         for (Player player : players.getPlayers()) {
             int playerScore = player.getScore();
             int dealerScore = dealer.getScore();
