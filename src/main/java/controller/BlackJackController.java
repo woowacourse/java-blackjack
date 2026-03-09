@@ -10,7 +10,7 @@ import model.card.Deck;
 import model.card.Rank;
 import model.card.Suit;
 import model.card.RandomDeck;
-import model.Participants;
+import model.participant.Participants;
 import model.participant.Dealer;
 import model.participant.Player;
 import util.InputParser;

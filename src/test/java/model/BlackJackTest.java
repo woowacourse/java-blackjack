@@ -1,12 +1,13 @@
-package model.participant;
+package model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import java.util.Map;
-import model.BlackJack;
 import model.card.Card;
-import model.Participants;
+import model.participant.Dealer;
+import model.participant.Participant;
+import model.participant.Participants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import model.participant.Participant;
-import model.Participants;
+import model.participant.Participants;
 
 public class OutputView {
     private static final String LINE_SEPARATOR = System.lineSeparator();

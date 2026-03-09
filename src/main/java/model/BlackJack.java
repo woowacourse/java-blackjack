@@ -11,6 +11,7 @@ import model.card.Rank;
 import model.card.Suit;
 import model.participant.Dealer;
 import model.participant.Participant;
+import model.participant.Participants;
 import model.participant.Player;
 
 public class BlackJack {
