@@ -1,7 +1,5 @@
 package model.card;
 
-import java.util.Arrays;
-
 public enum Rank {
     TWO(2, "2"),
     THREE(3, "3"),
@@ -23,20 +21,6 @@ public enum Rank {
     Rank(int value, String name) {
         this.value = value;
         this.name = name;
-    }
-
-    public static Rank findByValue(int targetValue) {
-        return Arrays.stream(Rank.values())
-                .filter(rank -> rank.value == targetValue)
-                .findFirst()
-                .orElseThrow();
-    }
-
-    public static Rank findByName(String name) {
-        return Arrays.stream(Rank.values())
-                .filter(rank -> rank.name.equals(name))
-                .findFirst()
-                .orElseThrow();
     }
 
     public int toValue() {
