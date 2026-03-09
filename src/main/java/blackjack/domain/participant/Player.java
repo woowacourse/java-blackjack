@@ -2,18 +2,18 @@ package blackjack.domain.participant;
 
 public class Player extends Participant {
 
-    private boolean wantsHit = true;
+    private final HitDecision hitDecision = new HitDecision();
 
     public Player(final String name) {
         super(new Name(name));
     }
 
     public void stay() {
-        wantsHit = false;
+        hitDecision.stay();
     }
 
     @Override
     public boolean canReceiveCard() {
-        return wantsHit && !isBust();
+        return hitDecision.wantsHit() && !isBust();
     }
 }
