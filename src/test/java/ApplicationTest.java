@@ -37,7 +37,8 @@ class ApplicationTest {
                                 "## 최종 승패",
                                 "딜러: 2승",
                                 "tion: 패",
-                                "jake: 패")
+                                "jake: 패"),
+                        (RandomValueGenerator) bound -> bound - 1
                 ),
                 Arguments.of(
                         """
@@ -46,19 +47,37 @@ class ApplicationTest {
                                 n
                                 """,
                         List.of(
-                                "딜러: 2무",
-                                "tion: 무",
-                                "jake: 무")
+                                "딜러카드: 7클로버, 7하트, 8다이아몬드 - 결과: 22",
+                                "tion카드: 7다이아몬드, 7스페이드 - 결과: 14",
+                                "jake카드: 8클로버, 8하트 - 결과: 16",
+                                "딜러: 2패",
+                                "tion: 승",
+                                "jake: 승"),
+                        (RandomValueGenerator) bound -> 24 // 7부터 제공
+                ),
+                Arguments.of(
+                        """
+                                tion, jake
+                                y
+                                y
+                                """,
+                        List.of(
+                                "딜러카드: 7클로버, 7하트 - 결과: 14",
+                                "tion카드: 7다이아몬드, 7스페이드, 8다이아몬드 - 결과: 22",
+                                "jake카드: 8클로버, 8하트, 8스페이드 - 결과: 24",
+                                "딜러: 2승",
+                                "tion: 패",
+                                "jake: 패"),
+                        (RandomValueGenerator) bound -> 24 // 7부터 제공
                 ));
     }
 
     @ParameterizedTest
     @MethodSource
-    void integrationTest(String input, List<String> expected) throws Exception {
+    void integrationTest(String input, List<String> expected, RandomValueGenerator randomValueGenerator)
+            throws Exception {
         ByteArrayInputStream inputArrayInputStream = new ByteArrayInputStream(input.getBytes());
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-
-        RandomValueGenerator randomValueGenerator = (n) -> n - 1;
         BlackjackController blackjackController = new BlackjackController(
                 new InputView(inputArrayInputStream), new OutputView(new PrintStream(byteArrayOutputStream)));
 
