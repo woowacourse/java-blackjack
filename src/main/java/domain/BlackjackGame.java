@@ -96,10 +96,9 @@ public class BlackjackGame {
         return view.requestPlayerNames();
     }
 
-    private List<PlayerHandDto> getPlayerHandInformation(Players players) {
-        return players.stream()
-                .map(PlayerHandDto::of)
-                .toList();
+    private void printAllParticipantsHand(Dealer dealer, Players players) {
+        view.printParticipantHand(PlayerHandDto.of(dealer));
+        view.printAllPlayersHand(players.getPlayerHandDtos());
     }
 
     private ResultAnalysisDto analyzeBlackjackResult(Players players, Dealer dealer) {

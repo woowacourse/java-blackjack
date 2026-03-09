@@ -40,4 +40,10 @@ public class Players {
                 .toList();
     }
 
+    public List<PlayerHandDto> getPlayerHandDtos() {
+        return players.stream()
+                .map(PlayerHandDto::of)
+                .toList();
+    }
+
 }
