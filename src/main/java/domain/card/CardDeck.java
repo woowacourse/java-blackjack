@@ -16,17 +16,10 @@ public class CardDeck {
     }
 
     private void init() {
-        for (Pattern pattern : Pattern.values()) {
-            for (Rank rank : Rank.values()) {
-                deck.push(new Card(rank, pattern));
-            }
-        }
-
-        //위아래중 무엇이 나은지?
-//                Arrays.stream(Pattern.values())
-//                        .flatMap(pattern -> Arrays.stream(Rank.values())
-//                        .map(rank -> new Card(rank, pattern)))
-//                        .forEach(deck::push);
+        Arrays.stream(Pattern.values())
+                .flatMap(pattern -> Arrays.stream(Rank.values())
+                        .map(rank -> new Card(rank, pattern)))
+                .forEach(deck::push);
     }
 
     private void shuffle() {
@@ -45,10 +38,6 @@ public class CardDeck {
             throw new IllegalArgumentException(CONSUME_ALL_CARD_DECK_ERROR_MESSAGE);
         }
         return deck.pop();
-    }
-
-    public List<Card> getCardDeck() {
-        return List.copyOf(deck);
     }
 
     private void validate(Deque<Card> items) {
