@@ -10,21 +10,25 @@ public class TotalResult {
 
     private final Map<Player, Result> results;
 
-    public TotalResult(Map<Player, Result> results) {
-        if (results == null) {
-            throw new IllegalArgumentException("results가 null입니다.");
+    private TotalResult(Map<Player, Result> results) {
+        if (results == null || results.isEmpty()) {
+            throw new IllegalArgumentException("results가 null이거나 비어있습니다.");
         }
 
         this.results = results;
     }
 
-    public static TotalResult of(List<Player> players, Dealer dealer) {
+    public static TotalResult of(
+            List<Player> players,
+            Dealer dealer
+    ) {
         Map<Player, Result> results = new HashMap<>();
 
-        for (Player player : players) {
-            Result result = dealer.determineResultOf(player);
-            results.put(player, result);
-        }
+        players.forEach(
+                        player -> results.put(
+                                player,
+                                dealer.determineResultOf(player)
+                        ));
 
         return new TotalResult(results);
     }
