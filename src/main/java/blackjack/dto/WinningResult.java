@@ -12,10 +12,8 @@ public record WinningResult(
     public static WinningResult from(Players players, Player dealer) {
         Map<String, Boolean> winningResult = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
-            boolean isWin = player.winsAgainst(dealer);
-            winningResult.put(player.getName(), isWin);
+            winningResult.put(player.getName(), player.winsAgainst(dealer));
         }
-
         return new WinningResult(winningResult);
     }
 
@@ -28,9 +26,12 @@ public record WinningResult(
     public int numberOfPlayer() {
         return winningResult.size();
     }
-
-    public Boolean get(String playerName) {
-        return winningResult.get(playerName);
+    
+    public String getWinningResultFrom(String playerName) {
+        if (winningResult.get(playerName)) {
+            return "승";
+        }
+        return "패";
     }
 
 }

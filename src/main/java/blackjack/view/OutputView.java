@@ -28,25 +28,26 @@ public class OutputView {
         System.out.println(dealerName + "는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    // TODO: 딜러 하드 코딩 제거
-    // TODO: 딜러와 플레이어 출력 코드 분리
     public static void printWinningResult(WinningResult winningResult) {
         System.out.println();
         System.out.println("## 최종 승패");
-        System.out.println("딜러: " + winningResult.getWinCountOfDealer() + "승 "
-                + (winningResult.numberOfPlayer() - winningResult.getWinCountOfDealer()) + "패");
-
-        for (String playerName : winningResult.winningResult().keySet()) {
-            String flag = "패";
-            if (winningResult.get(playerName)) {
-                flag = "승";
-            }
-            System.out.println(playerName + ": " + flag);
-        }
+        printWinningResultOfDealer(winningResult.getWinCountOfDealer(), winningResult.numberOfPlayer());
+        printWinningResultOfPlayers(winningResult);
     }
 
     public static void println() {
         System.out.println();
+    }
+
+    // TODO: 딜러 하드 코딩 제거
+    private static void printWinningResultOfDealer(int winCountOfDealer, int numberOfPlayer) {
+        System.out.println("딜러: " + winCountOfDealer + "승 " + (numberOfPlayer - winCountOfDealer) + "패");
+    }
+
+    private static void printWinningResultOfPlayers(WinningResult winningResult) {
+        for (String playerName : winningResult.winningResult().keySet()) {
+            System.out.println(playerName + ": " + winningResult.getWinningResultFrom(playerName));
+        }
     }
 
     private static String stringJoinWithComma(List<String> strings) {
