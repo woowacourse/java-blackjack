@@ -1,11 +1,11 @@
 package util;
 
 public class InputHitOptionParser {
+
+    private InputHitOptionParser() {
+    }
+
     public static HitOption parseHitOption(String inputHitOption) {
-        try {
-            return HitOption.of(inputHitOption);
-        } catch (IllegalArgumentException exception) {
-            throw new IllegalArgumentException();
-        }
+        return HitOption.of(inputHitOption);
     }
 }

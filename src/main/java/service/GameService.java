@@ -4,35 +4,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 import domain.PlayerGameResult;
-import domain.card.Card;
+import domain.Players;
 import domain.card.Deck;
 import domain.participant.Dealer;
 import domain.participant.Player;
-import dto.*;
+
+import dto.GameStartDTO;
+import dto.HandDTO;
+import dto.GameScoreDTO;
+import dto.PlayerResultDTO;
+import dto.GameResultDTO;
+import dto.DealerResultDTO;
 
 public class GameService {
-    private final List<Player> players;
+    private final Players players;
     private final Dealer dealer;
     private final Deck deck = new Deck();
 
 
-    public GameService(List<String> playerNames) {
-        this.players = participateGame(playerNames);
+    public GameService(Players players) {
+        this.players = players;
         this.dealer = new Dealer();
     }
 
-    private List<Player> participateGame(List<String> playerNames) {
-        return playerNames.stream()
-                .map(Player::new)
-                .toList();
-    }
-
     public GameStartDTO startGame() {
-        for (Player player : players) {
-            List<Card> firstHandCards = deck.dealFirstHandCards();
-            player.receiveInitialCards(firstHandCards);
-        }
-
+        players.receiveInitialCards(deck);
         dealer.receiveInitialCards(deck.dealFirstHandCards());
         return GameStartDTO.from(players, dealer);
     }
@@ -59,6 +55,7 @@ public class GameService {
         int dealerWinCount = 0;
         int dealerDrawCount = 0;
         int dealerLoseCount = 0;
+
         for (Player player : players) {
             PlayerGameResult playerResult = PlayerGameResult.from(player, dealer);
             if (playerResult == PlayerGameResult.WIN) {
@@ -77,7 +74,7 @@ public class GameService {
 
     }
 
-    public List<Player> getPlayers() {
+    public Players getPlayers() {
         return players;
     }
 

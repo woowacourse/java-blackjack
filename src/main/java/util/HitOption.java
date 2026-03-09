@@ -20,6 +20,6 @@ public enum HitOption {
         return Arrays.stream(HitOption.values())
                 .filter(hitOption -> lowerCaseValue.equals(hitOption.getValue()))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Invalid value: " + value));
+                .orElseThrow(() -> new IllegalArgumentException("입력은 y 또는 n만 가능합니다."));
     }
 }

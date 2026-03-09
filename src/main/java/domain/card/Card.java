@@ -13,12 +13,11 @@ public class Card {
         return cardNumber;
     }
 
-    public int getBaseScore() {
-        return cardNumber.getScore();
+    public CardShape getCardShape() {
+        return cardShape;
     }
 
-    @Override
-    public String toString() {
-        return cardNumber.getNumber() + cardShape.getShape();
+    public int getBaseScore() {
+        return cardNumber.getScore();
     }
 }

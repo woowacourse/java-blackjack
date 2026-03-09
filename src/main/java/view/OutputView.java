@@ -56,4 +56,8 @@ public class OutputView {
     private String convertListToString(List<String> list) {
         return String.join(", ", list);
     }
+
+    public void printErrorMessage(String errorMessage) {
+        System.out.printf("%s 다시 입력해주세요\n", errorMessage);
+    }
 }

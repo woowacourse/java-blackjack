@@ -5,6 +5,9 @@ import java.util.List;
 
 public class InputNameValidator {
 
+    private InputNameValidator() {
+    }
+
     public static void validateInputNames(List<String> playerNames) {
         validateDuplicateNames(playerNames);
         validateEmptyNames(playerNames);
