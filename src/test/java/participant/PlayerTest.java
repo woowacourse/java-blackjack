@@ -24,10 +24,11 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("히트")
-    void 플레이어는_카드를_뽑아_핸드에_저장한다() {
+    @DisplayName("플레이어는 카드를 뽑아 핸드에 저장할 수 있다")
+    void keepCard_AddsCardToHand() {
         Player player = new Player(name, dummyHand);
         int beforeSize = player.handSize();
+
         player.keepCard(new Card(Rank.EIGHT, Pattern.CLOVER));
         int afterSize = player.handSize();
 
@@ -35,17 +36,45 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("스탠드")
-    void 플레이어는_카드를_뽑지_않고_카드_총합을_계산한다() {
+    @DisplayName("플레이어는 자신의 핸드 카드의 총합을 계산할 수 있다.")
+    void getTotalCardScore_CalculatesTotalCardScore() {
         Player player = new Player(name, dummyHand);
         Card card1 = new Card(Rank.FOUR, Pattern.CLOVER);
         Card card2 = new Card(Rank.SIX, Pattern.CLOVER);
+
         player.keepCard(card1);
         player.keepCard(card2);
-
         int expectedScore = card1.getCardScore() + card2.getCardScore();
         int playerScore = player.getTotalCardScore();
 
         assertThat(playerScore).isEqualTo(expectedScore);
+    }
+
+    @Test
+    @DisplayName("플레이어 핸드의 카드 총합이 21초과면 bust이다.")
+    void isBust_ReturnsTrue_WhenTotalScoreExceeds21() {
+        Card card1 = new Card(Rank.JACK, Pattern.CLOVER);
+        Card card2 = new Card(Rank.QUEEN, Pattern.CLOVER);
+        Card card3 = new Card(Rank.KING, Pattern.CLOVER);
+        dummyHand.addCard(card1);
+        dummyHand.addCard(card2);
+        dummyHand.addCard(card3);
+
+        boolean result = new Player(name, dummyHand).isBust();
+
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    @DisplayName("플레이어 핸드의 카드 총합이 21이하면 bust가 아니다.")
+    void isBust_ReturnsFalse_WhenTotalScoreLessThan21() {
+        Card card1 = new Card(Rank.JACK, Pattern.CLOVER);
+        Card card2 = new Card(Rank.TWO, Pattern.CLOVER);
+        dummyHand.addCard(card1);
+        dummyHand.addCard(card2);
+
+        boolean result = new Player(name, dummyHand).isBust();
+
+        assertThat(result).isFalse();
     }
 }
