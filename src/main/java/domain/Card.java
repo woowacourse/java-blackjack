@@ -17,7 +17,7 @@ public class Card {
     }
 
     public String cardName() {
-        return number.getCourt()+pattern.getName();
+        return number.getCourt() + pattern.getName();
     }
 
     @Override
