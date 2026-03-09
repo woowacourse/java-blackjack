@@ -6,7 +6,7 @@ import java.util.List;
 public class User {
 
     private final UserName name;
-    private final List<Card> cards;
+    protected final List<Card> cards;
 
     public User(String name) {
         this.name = new UserName(name);

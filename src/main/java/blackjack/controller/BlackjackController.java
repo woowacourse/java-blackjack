@@ -43,7 +43,7 @@ public class BlackjackController {
                 .toList();
 
         OutputView.printGameSettingMessage(dealer.getName(), userNames);
-        OutputView.printSettingCardsResult(dealer.getName(), dealer.getCardsName().subList(0, 1));
+        OutputView.printSettingCardsResult(dealer.getName(), dealer.getFirstCard());
         for (User user : users) {
             OutputView.printSettingCardsResult(user.getName(), user.getCardsName());
         }

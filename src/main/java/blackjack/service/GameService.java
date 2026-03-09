@@ -46,10 +46,10 @@ public class GameService {
     public int applyGameResult(User user, Dealer dealer, Map<String, Boolean> result) {
         boolean isDealerWinning = isDealerWinning(user, dealer);
         result.put(user.getName(), !isDealerWinning);
-
         if (isDealerWinning) {
             return 1;
         }
+
         return 0;
     }
 
