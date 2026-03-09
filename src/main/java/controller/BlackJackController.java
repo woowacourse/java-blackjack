@@ -116,10 +116,17 @@ public class BlackJackController {
     }
 
     private void resultPhase() {
-        PlayedGameResultResponse dealerResultResponse = queryService.dealerResult();
-        OutputView.participantResult(dealerResultResponse);
+        displayDealersResult();
+        displayPlayerResults();
+    }
 
+    private void displayPlayerResults() {
         PlayerGameResultsResponse playerGameResultsResponse = queryService.playerResult();
         OutputView.playerResults(playerGameResultsResponse);
+    }
+
+    private void displayDealersResult() {
+        PlayedGameResultResponse dealerResultResponse = queryService.dealerResult();
+        OutputView.participantResult(dealerResultResponse);
     }
 }

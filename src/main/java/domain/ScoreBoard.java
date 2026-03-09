@@ -1,6 +1,6 @@
 package domain;
 
-import common.Constants;
+import domain.constant.BlackJackRule;
 import dto.GameStatus;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,11 +37,11 @@ public class ScoreBoard {
     }
 
     private boolean isWin(GameStatus playerGameStatus, int dealerScore) {
-        if (playerGameStatus.scoreSum() > Constants.BUST_NUMBER) {
+        if (playerGameStatus.scoreSum() > BlackJackRule.BUST_NUMBER.value()) {
             return false;
         }
 
-        if (dealerScore > Constants.BUST_NUMBER) {
+        if (dealerScore > BlackJackRule.BUST_NUMBER.value()) {
             return true;
         }
 
