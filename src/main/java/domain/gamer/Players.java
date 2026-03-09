@@ -18,9 +18,7 @@ public class Players {
     }
 
     public void dealCardBundle(Dealer dealer) {
-        for (Player player : players) {
-            dealer.dealCardToPlayer(player);
-        }
+        players.forEach(dealer::dealCardToPlayer);
     }
 
     public List<Player> getPlayers() {
