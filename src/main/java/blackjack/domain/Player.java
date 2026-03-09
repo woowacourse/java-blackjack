@@ -13,8 +13,39 @@ public class Player {
         this.cards = new ArrayList<>();
     }
 
-    public void bring(Card card) {
+    public void draw(Card card) {
         cards.add(card);
+    }
+
+    public int calculateCardsValue() {
+        int sum = cards.stream()
+                .mapToInt(Card::getCardValue)
+                .sum();
+
+        return applyBestAceValue(sum);
+    }
+
+    public boolean winsAgainst(Player other) {
+        if (other.isBurst()) {
+            return true;
+        }
+        if (this.isBurst()) {
+            return false;
+        }
+
+        return other.calculateCardsValue() < this.calculateCardsValue();
+    }
+
+    public boolean isBurst() {
+        return calculateCardsValue() > 21;
+    }
+
+    public boolean isBlackjack() {
+        return calculateCardsValue() == 21;
+    }
+
+    public String getFirstCardName() {
+        return cards.getFirst().getName();
     }
 
     public String getName() {
@@ -26,29 +57,9 @@ public class Player {
     }
 
     public List<String> getCardsName() {
-        List<String> cardsName = new ArrayList<>();
-        for (Card card : cards) {
-            cardsName.add(card.getName());
-        }
-
-        return cardsName;
-    }
-
-    public int calculateCardsValue() {
-        int sum = 0;
-        for (Card card : cards) {
-            sum += card.getValue();
-        }
-
-        return applyBestAceValue(sum);
-    }
-
-    public boolean isBurst() {
-        return calculateCardsValue() > 21;
-    }
-
-    public boolean isBlackjack() {
-        return calculateCardsValue() == 21;
+        return cards.stream()
+                .map(Card::getName)
+                .toList();
     }
 
     private int applyBestAceValue(int sum) {
@@ -59,12 +70,7 @@ public class Player {
     }
 
     private boolean hasAce() {
-        for (Card card : cards) {
-            if (card.isAce()) {
-                return true;
-            }
-        }
-        return false;
+        return cards.stream().anyMatch(Card::isAce);
     }
 
 }

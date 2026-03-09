@@ -6,30 +6,29 @@ import java.util.List;
 
 public class Deck {
 
-    private final List<Card> cards;
+    private static final List<Card> cards = new ArrayList<>();
 
-    public Deck() {
-        List<Card> cards = new ArrayList<>();
+    static {
         for (CardShape cardShape : CardShape.values()) {
-            matching(cards, cardShape);
-        }
-
-        this.cards = cards;
-    }
-
-    private static void matching(List<Card> cards, CardShape cardShape) {
-        for (CardValue value : CardValue.values()) {
-            Card card = new Card(value, cardShape);
-            cards.add(card);
+            matching(cardShape);
         }
     }
 
-    public void shuffle() {
+    private Deck() {
+    }
+
+    public static void shuffle() {
         Collections.shuffle(cards);
     }
 
-    public Card bringTopCard() {
+    public static Card pop() {
         return cards.removeFirst();
+    }
+
+    private static void matching(CardShape cardShape) {
+        for (CardValue cardValue : CardValue.values()) {
+            cards.add(new Card(cardValue, cardShape));
+        }
     }
 
 }
