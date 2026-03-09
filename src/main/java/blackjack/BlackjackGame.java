@@ -11,21 +11,20 @@ import java.util.List;
 
 public class BlackjackGame {
 
-    private Dealer dealer;
-    private Players players;
+    private final Dealer dealer;
+    private final Players players;
+
+    public BlackjackGame() {
+        this.dealer = new Dealer(new Deck());
+        this.players = createPlayers();
+    }
 
     public void start() {
-        setupGame();
         dealer.dealInitialCards(players);
         printInitialDeal();
         processPlayersTurn();
         processDealerTurn();
         printResults();
-    }
-
-    private void setupGame() {
-        dealer = new Dealer(new Deck());
-        players = createPlayers();
     }
 
     private Players createPlayers() {
@@ -47,9 +46,7 @@ public class BlackjackGame {
     private void processPlayerTurn(final Player player) {
         boolean hasHit = false;
         while (player.canReceiveCard()) {
-            if (askHitAndProcess(player)) {
-                hasHit = true;
-            }
+            hasHit |= askHitAndProcess(player);
         }
         if (!hasHit) {
             OutputView.printPlayerCards(player);
