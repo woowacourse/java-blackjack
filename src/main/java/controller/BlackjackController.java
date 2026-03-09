@@ -13,6 +13,7 @@ import domain.score.Score;
 import dto.DealerDrawDto;
 import dto.NamesDto;
 import dto.PlayerCardsDto;
+import dto.PlayersCardsDto;
 import dto.StatisticsDto;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,21 +35,17 @@ public class BlackjackController {
     public void start(final RandomValueGenerator randomValueGenerator) {
         Deck deck = new Deck(CardsCreator.createLinkedCards(), randomValueGenerator);
         Dealer dealer = new Dealer(drawHand(deck), new CasinoDealerHitStrategy());
-        List<String> playerNames = Parser.parse(inputView.readPlayerName());
-        List<Player> players = createPlayers(playerNames, deck);
 
-        printPlayers(dealer, playerNames);
-        printParticipantHand(dealer, players);
-        chooseToFillPlayersHand(players, deck);
-        fillDealerHand(dealer, deck, players);  //전부 버스트나면 안뽑게해야 하나?
-        printPlayerStatus(dealer, players);
-        showGameResultStatistics(dealer, players);
-    }
-
-    private void showGameResultStatistics(Dealer dealer, List<Player> players) {
-        Score dealerScore = dealer.getScore();
-        List<StatisticsDto> statisticsDtos = getStatisticsDtos(players, dealerScore);
-        outputView.showResultStatistics(statisticsDtos, dealer.getName());
+        List<Player> players = createPlayers(Parser.parse(inputView.readPlayerName()), deck);
+        outputView.drawCard(NamesDto.fromEntity(dealer, players));
+        outputView.showOnlyOneCard(PlayerCardsDto.fromEntity(dealer));
+        outputView.showPlayersCards(PlayersCardsDto.fromEntities(players));
+        chooseToFillPlayersHandAndPrint(players, deck);
+        fillDealerHandAndPrint(dealer, deck, players);  //전부 버스트나면 안뽑게해야 하나?
+        
+        outputView.showCardsAndScore(PlayerCardsDto.fromEntity(dealer));
+        players.forEach(player -> outputView.showCardsAndScore(PlayerCardsDto.fromEntity(player)));
+        outputView.showResultStatistics(getStatisticsDtos(players, dealer.getScore()), dealer.getName());
     }
 
     private List<StatisticsDto> getStatisticsDtos(List<Player> players, Score dealerScore) {
@@ -61,49 +58,20 @@ public class BlackjackController {
         return statisticsDtos;
     }
 
-    private void printPlayers(Dealer dealer, List<String> playerNames) {
-        NamesDto namesDto = new NamesDto(dealer.getName(), playerNames);
-        outputView.drawCard(namesDto);
-    }
-
-    private void printParticipantHand(Dealer dealer, List<Player> players) {
-        PlayerCardsDto dealerCardsDto = PlayerCardsDto.fromEntity(dealer);
-        outputView.showOnlyOneCard(dealerCardsDto);
+    private void chooseToFillPlayersHandAndPrint(List<Player> players, Deck deck) {
         for (Player player : players) {
-            PlayerCardsDto playerCardsDto = PlayerCardsDto.fromEntity(player);
-            outputView.showCard(playerCardsDto);
-        }
-    }
-
-    private void chooseToFillPlayersHand(List<Player> players, Deck deck) {
-        for (Player player : players) {
-            String name = player.getName();
-            while (player.needToHit() && inputView.readNeedToHit(name)) {
-                Card card = deck.drawCard();
-                player.addCard(card);
-                PlayerCardsDto playerCardsDto = PlayerCardsDto.fromEntity(player);
-                outputView.showCard(playerCardsDto);
+            while (player.needToHit() && inputView.readNeedToHit(player.getName())) {
+                player.addCard(deck.drawCard());
+                outputView.showCards(PlayerCardsDto.fromEntity(player));
             }
         }
     }
 
-    private void fillDealerHand(Dealer dealer, Deck deck, List<Player> players) {
-        while (dealer.needsToHit(players.stream().map(Player::getScore).toList())
-                && players.stream().noneMatch(p -> p.getScore().isBurst())) {
-            Card card = deck.drawCard();
-            dealer.addCard(card);
-            DealerDrawDto dealerDrawDto = new DealerDrawDto(dealer.getName(), CasinoDealerHitStrategy.BOUNDARY);
-            outputView.drawDealer(dealerDrawDto);
-        }
-    }
-
-    private void printPlayerStatus(Dealer dealer, List<Player> players) {
-        PlayerCardsDto dealerCardsDto;
-        dealerCardsDto = PlayerCardsDto.fromEntity(dealer);
-        outputView.showCardsAndScore(dealerCardsDto, dealer.getScore().getValue());
-        for (Player player : players) {
-            PlayerCardsDto playerCardsDto = PlayerCardsDto.fromEntity(player);
-            outputView.showCardsAndScore(playerCardsDto, player.getScore().getValue());
+    private void fillDealerHandAndPrint(Dealer dealer, Deck deck, List<Player> players) {
+        while (dealer.needsToHit(players.stream().map(Player::getScore).toList())) {
+            dealer.addCard(deck.drawCard());
+            outputView.drawDealer(new DealerDrawDto(dealer.getName(), CasinoDealerHitStrategy.BOUNDARY));
+            outputView.showCards(PlayerCardsDto.fromEntity(dealer));
         }
     }
 

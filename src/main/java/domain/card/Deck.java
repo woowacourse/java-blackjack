@@ -32,7 +32,7 @@ public class Deck {
 
     public Card drawCard() {
         int idx = randomValueGenerator.generate(getSize());
-        if (idx < 0 || idx > cards.size()) {
+        if (idx < 0 || idx >= cards.size()) {
             throw new IllegalArgumentException(ErrorMessage.INDEX_RANGE.getMessage());
         }
         Card card = cards.get(idx);

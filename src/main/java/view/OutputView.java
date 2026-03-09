@@ -4,6 +4,7 @@ import domain.score.Result;
 import dto.DealerDrawDto;
 import dto.NamesDto;
 import dto.PlayerCardsDto;
+import dto.PlayersCardsDto;
 import dto.StatisticsDto;
 import java.io.PrintStream;
 import java.util.List;
@@ -19,10 +20,7 @@ public class OutputView {
     private static final String DEALER_RECORD_FORMAT = "%s: %s";
     private static final String STATISTICS_FORMAT = "%s: %s";
 
-    private final PrintStream out;
-
     public OutputView(PrintStream out) {
-        this.out = out;
         System.setOut(out);
     }
 
@@ -31,18 +29,22 @@ public class OutputView {
         System.out.printf(DEAL_INITIAL_CARDS_MESSAGE + "%n", namesDto.dealerName(), namesResult);
     }
 
-    public void showCard(PlayerCardsDto playerCardsDto) {
-        System.out.println(SHOW_CARD.formatted(playerCardsDto.name(), String.join(", ", playerCardsDto.cards())));
+    public void showCards(PlayerCardsDto playerCardsDto) {
+        System.out.printf(SHOW_CARD + "%n", playerCardsDto.name(), String.join(", ", playerCardsDto.cards()));
+    }
+
+    public void showPlayersCards(PlayersCardsDto playersCardsDto) {
+        playersCardsDto.playerCards().forEach(this::showCards);
     }
 
     public void showOnlyOneCard(PlayerCardsDto playerCardsDto) {
-        System.out.println(
-                SHOW_CARD.formatted(playerCardsDto.name(), String.join(", ", playerCardsDto.cards().getFirst())));
+        System.out.printf(SHOW_CARD + "%n", playerCardsDto.name(),
+                String.join(", ", playerCardsDto.cards().getFirst()));
     }
 
-    public void showCardsAndScore(PlayerCardsDto playerCardsDto, Integer totalScore) {
-        System.out.println(SHOW_RESULT.formatted(playerCardsDto.name(), String.join(", ", playerCardsDto.cards())
-                , totalScore));
+    public void showCardsAndScore(PlayerCardsDto playerCardsDto) {
+        System.out.printf(SHOW_RESULT + "%n", playerCardsDto.name(), String.join(", ", playerCardsDto.cards())
+                , playerCardsDto.totalScore());
     }
 
     public void drawDealer(DealerDrawDto dealerDrawDto) {
@@ -51,12 +53,12 @@ public class OutputView {
 
     public void showResultStatistics(List<StatisticsDto> statisticsDtos, String dealerName) {
         System.out.println(PRINT_RESULT_PHRASE);
-        System.out.println(DEALER_RECORD_FORMAT.formatted(dealerName, makeResult(statisticsDtos)));
+        System.out.printf(DEALER_RECORD_FORMAT + "%n", dealerName, makeResult(statisticsDtos));
 
         for (StatisticsDto statisticsDto : statisticsDtos) {
             String name = statisticsDto.name();
             String result = statisticsDto.result();
-            System.out.println(STATISTICS_FORMAT.formatted(name, result));
+            System.out.printf(STATISTICS_FORMAT + "%n", name, result);
         }
     }
 
