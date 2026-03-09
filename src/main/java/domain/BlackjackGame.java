@@ -91,7 +91,7 @@ public class BlackjackGame {
 
     private void handOutInitialCard(Dealer dealer, Players players) {
         dealer.drawMySelf(INITIAL_CARD_DRAW_COUNT);
-        players.giveMeFirstCardBundle(dealer);
+        players.giveInitialCardBundle(dealer);
         view.printInitialHandOutResult(players.displayNames(), INITIAL_CARD_DRAW_COUNT);
     }
 

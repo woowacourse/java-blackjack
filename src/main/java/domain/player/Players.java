@@ -18,14 +18,13 @@ public class Players {
         return new Players(players);
     }
 
-    public void giveMeFirstCardBundle(Dealer dealer) {
-        for (Player player : players) {
-            dealer.handOutCardToPlayer(player, 2);
-        }
-    }
-
     public Stream<Player> stream() {
         return players.stream();
+    }
+
+    public void giveInitialCardBundle(Dealer dealer) {
+        players.forEach(player ->
+                dealer.handOutInitialCardToPlayer(player));
     }
 
     public List<PlayerHandDto> getPlayersHand() {

@@ -10,6 +10,7 @@ import java.util.stream.Stream;
 
 public class Dealer {
 
+    private static final int INITIAL_CARD_DRAW_COUNT = 2;
     private static final int ADDITIONAL_DRAW_CONDITION = 16;
 
     private final CardDeck cardDeck;
@@ -24,7 +25,10 @@ public class Dealer {
         return new Dealer(cardDeck);
     }
 
-    // TODO Method Name Refactor
+    public CardBundle handOutInitialCardToPlayer(Player player) {
+        return handOutCardToPlayer(player, INITIAL_CARD_DRAW_COUNT);
+    }
+
     public CardBundle handOutCard(int tryCount) {
         try {
             List<Card> cardList = Stream.generate(this::drawCard)
