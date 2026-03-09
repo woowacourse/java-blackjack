@@ -1,6 +1,7 @@
 package domain.card;
 
 import static message.ErrorMessage.DECK_CAN_NOT_DUPLICATED;
+import static message.ErrorMessage.DECK_OUT_OF_CARD_STOCK;
 
 import java.util.ArrayDeque;
 import java.util.List;
@@ -28,6 +29,10 @@ public class Deck {
     }
 
     public Card drawCard() {
+        if (cards.poll() == null) {
+            throw new IllegalStateException(DECK_OUT_OF_CARD_STOCK.getMessage());
+        }
+
         return cards.poll();
     }
 }

@@ -37,5 +37,17 @@ public class DeckTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(DECK_CAN_NOT_DUPLICATED.getMessage());
     }
+
+    @DisplayName("덱에 카드가 없는 경우 예외가 발생한다.")
+    @Test
+    void 덱_카드_X_드로우_예외() {
+        //given
+        Deck deck = new Deck(List.of());
+        //when
+        //then
+        Assertions.assertThatThrownBy(deck::drawCard)
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("[ERROR] 덱에 드로우할 카드가 존재하지 않습니다.");
+    }
 }
 
