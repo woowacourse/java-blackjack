@@ -24,8 +24,8 @@ public class Player {
         return name;
     }
 
-    public List<Card> getHand() {
-        return hand.getHand();
+    public Hand getHand() {
+        return hand;
     }
 
     public List<String> getHandToString() {
@@ -34,5 +34,9 @@ public class Player {
 
     public void setBust() {
         isBust = true;
+    }
+
+    public int getScore(){
+        return hand.calculateScore();
     }
 }

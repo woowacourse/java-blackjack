@@ -10,7 +10,6 @@ import java.util.List;
 
 public class GameManager {
     private final Deck deck = new Deck();
-    private final ScoreCalculator scoreCalculator = new ScoreCalculator();
     private final Players players = new Players();
     private final Dealer dealer = new Dealer();
 
@@ -25,25 +24,25 @@ public class GameManager {
         }
     }
 
-    public void judgeBust(int score, Player currentPlayer) {
-        if (scoreCalculator.isBust(score)) {
+    public void judgeBust(Player currentPlayer) {
+        if (currentPlayer.isBust()) {
             currentPlayer.setBust();
         }
     }
 
-    public int calculateScore(List<Card> hand) {
-        return scoreCalculator.calculateScore(hand);
+    public int calculateScore(Hand hand) {
+        return hand.calculateScore();
     }
 
     public List<String> drawPlayerCard(Player player) {
         player.addCard(deck.draw());
-        judgeBust(calculateScore(player.getHand()), player);
+        judgeBust(player);
         return player.getHandToString();
     }
 
     public void drawDealerCard() {
         dealer.addCard(deck.draw());
-        judgeBust(calculateScore(dealer.getHand()), dealer);
+        judgeBust(dealer);
     }
 
     public void addPlayer(String name) {
@@ -68,7 +67,7 @@ public class GameManager {
         results.add(new GameScoreResultDto(
                 dealer.getName(),
                 dealer.getHandToString(),
-                scoreCalculator.calculateScore(dealer.getHand())
+                dealer.getScore()
         ));
     }
 
@@ -77,7 +76,7 @@ public class GameManager {
             results.add(new GameScoreResultDto(
                     player.getName(),
                     player.getHandToString(),
-                    scoreCalculator.calculateScore(player.getHand())
+                    player.getScore()
             ));
         }
     }
@@ -85,13 +84,12 @@ public class GameManager {
     public List<GameInitialInfoDto> getInitialInfo() {
         List<GameInitialInfoDto> results = new ArrayList<>();
 
-        // 딜러 첫 카드 공개
         List<String> dealerOpenCard = new ArrayList<>();
         dealerOpenCard.add(dealer.getHandToString().getFirst());
 
-        // dealer
+
         addDealerInfo(results, dealerOpenCard);
-        //players
+
         addPlayersInfo(results);
 
         return results;
@@ -125,10 +123,8 @@ public class GameManager {
 
     public List<GameFinalResultDto> getFinalResult() {
         List<GameFinalResultDto> results = new ArrayList<>();
-        // 딜러 추가
         results.add(new GameFinalResultDto(dealer.getName()));
 
-        // 플레이어 추가
         determineWinLose(results);
 
         return results;
