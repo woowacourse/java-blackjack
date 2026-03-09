@@ -4,7 +4,15 @@ import java.util.List;
 
 public abstract class Participant {
 
-    protected final Hand hand = new Hand();
+    protected final Hand hand;
+
+    public Participant() {
+        this.hand = new Hand();
+    }
+
+    public Participant(Hand hand) {
+        this.hand = hand;
+    }
 
     public void addCard(Card card) {
         hand.addCard(card);

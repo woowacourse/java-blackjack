@@ -7,7 +7,6 @@ import blackjack.model.Dealer;
 import blackjack.model.Deck;
 import blackjack.model.Player;
 import blackjack.model.Players;
-import blackjack.model.ResultJudgement;
 import blackjack.util.RetryUtil;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -25,16 +24,12 @@ public class BlackjackController {
     private final InputView inputView;
     private final OutputView outputView;
 
-    private final ResultJudgement resultJudgement;
-
     public BlackjackController(
             InputView inputView,
-            OutputView outputView,
-            ResultJudgement resultJudgement
+            OutputView outputView
     ) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.resultJudgement = resultJudgement;
     }
 
     public void run() {
@@ -114,7 +109,7 @@ public class BlackjackController {
     private void printResult(Players players, Dealer dealer) {
         List<ResultDto> resultDtos = new ArrayList<>();
         for (Player player : players) {
-            BlackjackResult result = resultJudgement.judge(player.getHand(), dealer.getHand());
+            BlackjackResult result = player.calculateResult(dealer.getHand());
             resultDtos.add(new ResultDto(player.getName(), result));
         }
 
