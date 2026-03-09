@@ -52,9 +52,7 @@ public class OutputView {
     public static void printFinalResult(final FinalResultDto dto) {
         System.out.println("## 최종 승패");
         System.out.printf("딜러: %d승 %d무 %d패\n",
-            dto.countByGameResult(GameResult.LOSE),
-            dto.countByGameResult(GameResult.DRAW),
-            dto.countByGameResult(GameResult.WIN));
+            dto.dealerWinCount(), dto.dealerDrawCount(), dto.dealerLoseCount());
         dto.playerGameResultMap()
             .forEach((key, value) ->
                 System.out.printf("%s: %s\n", key, value.getName()));
