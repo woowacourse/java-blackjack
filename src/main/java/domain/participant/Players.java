@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 
 public class Players {
     public static final int PLAYER_THRESHOLD = 5;
+    public static final String ERROR_PLAYER_COUNT_OVER = "[ERROR] 플레이어의 수는 5명 이하여야 합니다.";
+    public static final String ERROR_PLAYERS_NAME_DUPLICATION = "[ERROR] 참가자의 이름이 중복됩니다.";
 
     private final List<Player> players = new ArrayList<>();
 
@@ -33,7 +35,7 @@ public class Players {
 
     private void validatePlayerCount(List<Player> players) {
         if (players.size() > PLAYER_THRESHOLD) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(ERROR_PLAYER_COUNT_OVER);
         }
     }
 
@@ -43,7 +45,7 @@ public class Players {
                 .collect(Collectors.toSet());
 
         if (namesSet.size() != players.size()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(ERROR_PLAYERS_NAME_DUPLICATION);
         }
     }
 }

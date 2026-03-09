@@ -65,7 +65,7 @@ public class BlackjackGame {
         List<Participant> participants = new ArrayList<>(players.getPlayers());
         participants.add(dealer);
         participants.forEach(participant ->
-                participant.receiveInitialCards(deck.drawInitialCards(INITIAL_CARDS_COUNT), INITIAL_CARDS_COUNT)
+                participant.receiveInitialCards(deck.drawInitialCards(INITIAL_CARDS_COUNT))
         );
 
         outputView.printInitialDistribution(players, dealer);

@@ -44,7 +44,7 @@ public class Hand {
         return cards.size();
     }
 
-    public int calculateRawTotal() {
+    private int calculateRawTotal() {
         return cards.stream()
                 .mapToInt(Card::score)
                 .sum();

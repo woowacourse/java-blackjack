@@ -14,11 +14,7 @@ public abstract class Participant {
         this.hand = new Hand();
     }
 
-    public void receiveInitialCards(List<Card> cards, int initialCardsCount) {
-        if (cards.size() != initialCardsCount) {
-            throw new IllegalArgumentException();
-        }
-
+    public void receiveInitialCards(List<Card> cards) {
         cards.forEach(card -> receive(card));
     }
 
