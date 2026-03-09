@@ -6,6 +6,7 @@ import model.dto.Card;
 
 public class Cards {
     private final List<Card> cards;
+    private boolean hasAce = false;
 
     public Cards() {
         this.cards = new ArrayList<>();
@@ -17,9 +18,16 @@ public class Cards {
 
     public void add(Card card) {
         cards.add(card);
+        if(card.isAce()) {
+            hasAce = true;
+        }
     }
 
     public List<Card> get() {
         return new ArrayList<>(cards);
+    }
+
+    public boolean hasAce() {
+        return hasAce;
     }
 }

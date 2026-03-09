@@ -4,6 +4,8 @@ import constant.ErrorMessage;
 import model.dto.Card;
 
 public class ParticipantHand {
+    private static final Integer MAX_ACE_SCORE = 11;
+    private static final Integer ADDITIONAL_ACE_SCORE = 10;
 
     private final Score score = new Score();
     private final Cards deck = new Cards();
@@ -18,6 +20,9 @@ public class ParticipantHand {
     }
 
     public Integer getScore() {
+        if(deck.hasAce() && score.get() <= MAX_ACE_SCORE) {
+            return score.get() + ADDITIONAL_ACE_SCORE;
+        }
         return score.get();
     }
 

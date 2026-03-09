@@ -9,7 +9,6 @@ import model.Participant;
 import model.Player;
 import model.Players;
 import model.PlayersWinning;
-import model.Scorer;
 import model.dto.Card;
 import model.dto.ParticipantWinning;
 import model.dto.PlayerWinning;
@@ -29,21 +28,13 @@ public class BlackJackService {
 
     public void draw(Participant participant) {
         Card card = cards.draw();
-
-        Integer score = getScore(card);
-
         participant.addCard(card);
-        participant.addScore(score);
     }
 
     public boolean isBust(Participant participant) {
         Integer score = participant.getResult().score();
 
         return score > BUST_NUMBER;
-    }
-
-    public void updateFinalScore(Participant participant) {
-        Scorer.updateFinalScore(participant);
     }
 
     public ParticipantWinning getGameResult(Players players, Dealer dealer) {
@@ -73,10 +64,6 @@ public class BlackJackService {
         return dealerWinning;
     }
 
-    private Integer getScore(Card card) {
-        return Scorer.calculate(card);
-    }
-
     private MatchStatus reverseMatchResult(MatchStatus matchStatus) {
         if(matchStatus.equals(MatchStatus.WIN)) {
             return MatchStatus.LOSE;
@@ -90,12 +77,12 @@ public class BlackJackService {
     }
 
     private MatchStatus getPlayerResult(Player player, Dealer dealer) {
-        if((isBust(dealer) && isBust(player)) || (Objects.equals(player.getResult().score(),
+        if((dealer.isBust() && player.isBust()) || (Objects.equals(player.getResult().score(),
                 dealer.getResult().score()))) {
             return MatchStatus.DRAW;
         }
 
-        if(isBust(dealer) || (!isBust(player) && (player.getResult().score() > dealer.getResult().score()))) {
+        if(dealer.isBust() || !player.isBust() && (player.getResult().score() > dealer.getResult().score())) {
             return MatchStatus.WIN;
         }
 
