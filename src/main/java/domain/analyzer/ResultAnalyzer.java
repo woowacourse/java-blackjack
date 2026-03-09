@@ -21,7 +21,7 @@ public class ResultAnalyzer {
             if (dealer.isBusted()) {
                 return PlayerGameResult.of(player, GameResult.WIN);
             }
-
+    
             int dealerResultScore = dealer.getResultScore();
             GameResult gameResult = GameResult.judge(dealerResultScore, player.getResultScore());
             return PlayerGameResult.of(player, gameResult);

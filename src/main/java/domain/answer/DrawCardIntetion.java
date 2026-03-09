@@ -8,15 +8,15 @@ public enum DrawCardIntetion {
     NO("n")
     ;
 
-    private final String answer;
+    private final String intention;
 
-    DrawCardIntetion(String ansewr) {
-        this.answer = ansewr;
+    DrawCardIntetion(String intention) {
+        this.intention = intention;
     }
 
     public static DrawCardIntetion from(String value) {
         return Arrays.stream(DrawCardIntetion.values())
-                .filter(v -> v.answer.equals(value))
+                .filter(v -> v.intention.equals(value))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("y 또는 n을 입력해주세요.")
                 );
