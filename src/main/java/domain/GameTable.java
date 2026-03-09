@@ -54,7 +54,7 @@ public class GameTable {
         gameResults.add(new GameResult(DEALER.format(),
                 members.judgeDealerGameResult(DEALER.format())));
 
-        Map<String, Boolean> playerResults = members.judgePlayerGameResult(DEALER.format());
+        Map<String, MatchResult> playerResults = members.judgePlayerGameResult(DEALER.format());
 
         for (String playerName : playerResults.keySet()) {
             gameResults.add(new GameResult(playerName,

@@ -9,8 +9,8 @@ public enum Word {
     DISTRIBUTE_MESSAGE("딜러와 %s에게 2장을 나누었습니다."),
     PLAYER_NAME_MESSAGE("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"),
     FINAL_GAME_RESULT_MESSAGE("## 최종 승패"),
-    DEALER_GAME_RESULT("%s: %d승 %d패"),
     PLAYER_GAME_WIN("%s: 승"),
+    PLAYER_GAME_DRAW("%s: 무"),
     PLAYER_GAME_LOSE("%s: 패");
 
     private final String word;

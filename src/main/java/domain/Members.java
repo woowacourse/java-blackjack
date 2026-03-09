@@ -46,30 +46,30 @@ public class Members {
                 .toList();
     }
 
-    public List<Boolean> judgeDealerGameResult(String name) {
+    public List<MatchResult> judgeDealerGameResult(String name) {
         Member dealer = findByName(name);
         List<Member> players = members.stream()
                 .filter(member -> !member.name().equals(name))
                 .toList();
 
-        List<Boolean> gameResult = new ArrayList<>();
+        List<MatchResult> gameResult = new ArrayList<>();
         for (Member player : players) {
-            gameResult.add(dealer.isWinner(player).name().equals(name));
+            gameResult.add(dealer.isCompareScoreWith(player));
         }
         return gameResult;
     }
 
-    public Map<String, Boolean> judgePlayerGameResult(String dealerName) {
+    public Map<String, MatchResult> judgePlayerGameResult(String dealerName) {
         Member dealer = findByName(dealerName);
         List<Member> players = members.stream()
                 .filter(member -> !member.name().equals(dealerName))
                 .toList();
 
-        Map<String, Boolean> gameResult = new HashMap<>();
+        Map<String, MatchResult> gameResult = new HashMap<>();
         for (Member player : players) {
             String playerName = player.name();
             gameResult.put(playerName,
-                    player.isWinner(dealer).name().equals(playerName));
+                    player.isCompareScoreWith(dealer));
         }
 
         return gameResult;

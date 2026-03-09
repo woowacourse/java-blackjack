@@ -4,6 +4,7 @@ import static constant.Word.*;
 
 import application.dto.RoundResult;
 import domain.Card;
+import domain.MatchResult;
 import domain.dto.GameResult;
 import domain.dto.MemberStatus;
 import java.util.List;
@@ -76,23 +77,39 @@ public class OutputView {
 
     private void printMemberResult(GameResult gameResult) {
         String name = gameResult.name();
-        List<Boolean> results = gameResult.result();
+        List<MatchResult> results = gameResult.result();
         if (name.equals(DEALER.format())) {
             printDealerResult(results, name);
             return;
         }
-        if (results.getFirst()) {
+        if (results.getFirst() == MatchResult.WIN) {
             System.out.println(PLAYER_GAME_WIN.format(name));
             return;
+        }
+        if (results.getFirst() == MatchResult.DRAW) {
+            System.out.println(PLAYER_GAME_DRAW.format(name));
         }
         System.out.println(PLAYER_GAME_LOSE.format(name));
     }
 
-    private static void printDealerResult(List<Boolean> results, String name) {
-        int win = Math.toIntExact(results.stream().filter(result -> result == true)
-                .count());
-        int lose = Math.toIntExact(results.stream().filter(result -> result == false)
-                .count());
-        System.out.println(DEALER_GAME_RESULT.format(name, win, lose));
+    private static void printDealerResult(List<MatchResult> results, String name) {
+        int win = (int) results.stream()
+                .filter(result -> result == MatchResult.WIN)
+                .count();
+        int draw = (int) results.stream()
+                .filter(result -> result == MatchResult.DRAW)
+                .count();
+        int lose = (int) results.stream()
+                .filter(result -> result == MatchResult.LOSE)
+                .count();
+
+        StringBuilder dealerResult = new StringBuilder();
+        dealerResult.append(name).append(": ");
+
+        if (win > 0) dealerResult.append(win).append("승 ");
+        if (draw > 0) dealerResult.append(draw).append("무 ");
+        if (lose > 0) dealerResult.append(lose).append("패 ");
+
+        System.out.println(dealerResult);
     }
 }

@@ -36,12 +36,25 @@ public class Member {
         hand.appendCard(card);
     }
 
-    public Member isWinner(Member member) {
-        if (member.hand.calculateTotalValue() > BUST_CONDITION) return this;
-        if (this.hand.calculateTotalValue() > BUST_CONDITION) return member;
-        if (this.hand.calculateTotalValue() > member.hand.calculateTotalValue()) {
-            return this;
-        }
-        return member;
+    public MatchResult isCompareScoreWith(Member member) {
+        int myScore = currentValue();
+        int targetScore = member.currentValue();
+
+        if (myScore > BUST_CONDITION && targetScore > BUST_CONDITION) return handleBothBust();
+        if (targetScore > BUST_CONDITION) return MatchResult.WIN;
+        if (myScore > BUST_CONDITION) return MatchResult.LOSE;
+
+        return calculateResultFromNormalCase(myScore, targetScore);
+    }
+
+    private MatchResult handleBothBust() {
+        if (isDealer()) return MatchResult.WIN;
+        return MatchResult.LOSE;
+    }
+
+    private MatchResult calculateResultFromNormalCase(int myScore, int targetScore) {
+        if (myScore > targetScore) return MatchResult.WIN;
+        if (myScore < targetScore) return MatchResult.LOSE;
+        return MatchResult.DRAW;
     }
 }
