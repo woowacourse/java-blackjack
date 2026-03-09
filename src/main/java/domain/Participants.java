@@ -81,13 +81,13 @@ public class Participants {
     }
 
     public String getDealerFinalDisplay() {
-        return dealer.getDealerFinalDisplay();
+        return dealer.getFinalDisplay();
     }
 
     public List<String> addScoreToUserHand() {
         List<String> userDisplays = new ArrayList<>();
         for (User user : participants) {
-            String userFinalDisplay = makeOneUserCard(user) + user.getUserFinalDisplay();
+            String userFinalDisplay = makeOneUserCard(user) + user.getFinalDisplay();
             userDisplays.add(userFinalDisplay);
         }
         return userDisplays;
@@ -106,7 +106,7 @@ public class Participants {
     private Map<String, GameResult> calculateUserResults() {
         Map<String, GameResult> userResults = new HashMap<>();
         for (User user : participants) {
-            userResults.put(user.getName(), dealer.judgeUserWin(user.getHand()));
+            userResults.put(user.getName(), dealer.judgeUserWin(user.getScore()));
         }
         return userResults;
     }
@@ -114,7 +114,7 @@ public class Participants {
     private EnumMap<GameResult, Integer> calculateDealerResults() {
         EnumMap<GameResult, Integer> dealerResults = initEnumMap();
         for (User user : participants) {
-            GameResult dealerResult = dealer.judgeUserResult(user.getHand());
+            GameResult dealerResult = dealer.judgeUserResult(user.getScore());
             dealerResults.replace(dealerResult, dealerResults.get(dealerResult) + 1);
         }
         return dealerResults;
