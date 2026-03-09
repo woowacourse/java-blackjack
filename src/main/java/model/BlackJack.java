@@ -46,15 +46,6 @@ public class BlackJack {
         return dealOutResult;
     }
 
-    public void startPlayerTurn(Function<String, Boolean> askHit, Consumer<Participant> afterHit) {
-        for (Player player : participants.getPlayers()) {
-            while (player.canHit() && askHit.apply(player.getName())) {
-                giveCardTo(player);
-                afterHit.accept(player);
-            }
-        }
-    }
-
     public void startDealerTurn(Consumer<Boolean> afterDealerTurn) {
         Dealer dealer = participants.getDealer();
 

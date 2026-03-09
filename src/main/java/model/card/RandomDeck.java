@@ -31,7 +31,9 @@ public class RandomDeck implements Deck {
     }
 
     public static RandomDeck from(List<Card> cards) {
-        return new RandomDeck(cards);
+        List<Card> copied = List.copyOf(cards);
+
+        return new RandomDeck(copied);
     }
 
     private static void validateDeckSize(List<Card> cards) {
