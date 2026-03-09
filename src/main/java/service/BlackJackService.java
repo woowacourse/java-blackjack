@@ -29,11 +29,7 @@ public class BlackJackService {
 
     public void draw(Participant participant) {
         Card card = cards.draw();
-
-        Integer score = getScore(card);
-
-        participant.addCard(card);
-        participant.addScore(score);
+        participant.draw(card);
     }
 
     public boolean isBust(Participant participant) {
@@ -71,10 +67,6 @@ public class BlackJackService {
             dealerWinning.increase(reverseMatchResult(playerWinning.matchStatus()));
         }
         return dealerWinning;
-    }
-
-    private Integer getScore(Card card) {
-        return Scorer.calculate(card);
     }
 
     private MatchStatus reverseMatchResult(MatchStatus matchStatus) {

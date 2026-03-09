@@ -19,12 +19,7 @@ public class Participant {
     public void draw(Card card) {
         participantHand.addCard(card);
         Integer score = card.cardNumber().getScore();
-
-        participantHand.addScore(score);
-    }
-
-    public void addCard(Card card) {
-        participantHand.addCard(card);
+        addScore(score);
     }
 
     public void addScore(Integer score) {
