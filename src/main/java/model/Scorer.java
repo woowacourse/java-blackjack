@@ -5,8 +5,8 @@ import dto.Card;
 import dto.PlayerResult;
 
 public class Scorer {
-    private static final Integer ADDITIONAL_ACE_SCORE = 10;
-    private static final Integer MAX_ACE_SCORE = 11;
+    private static final int ADDITIONAL_ACE_SCORE = 10;
+    private static final int MAX_ACE_SCORE = 11;
 
     public static void updateAceScore(Participant participant) {
         boolean hasAce = hasAceCard(participant.getResult());
