@@ -13,6 +13,8 @@ public abstract class Participant {
 
     public abstract void keepCard(Card card);
 
+    public abstract boolean canHit();
+
     public int handSize() {
         return hand.getHandSize();
     }

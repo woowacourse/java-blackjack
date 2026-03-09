@@ -94,7 +94,7 @@ public class BlackJackController {
     }
 
     private void dealerHitOrStand(Dealer dealer, CardDeck cardDeck) {
-        while (dealer.getTotalCardScore() < 17) {
+        while (dealer.canHit()) {
             OutputView.dealerHitMessage();
             dealer.keepCard(cardDeck.drawCard());
         }
