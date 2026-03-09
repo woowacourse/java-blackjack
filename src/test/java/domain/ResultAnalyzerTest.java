@@ -31,8 +31,8 @@ class ResultAnalyzerTest {
         Dealer dealerScore4 = Dealer.from(cardDeck);
 
         dealerScore4.dealMyself();
-        Player playerScore7 = Player.from(PlayerName.from("p7"));
-        Player playerScore11 = Player.from(PlayerName.from("p11"));
+        Player playerScore7 = Player.from(new PlayerName("p7"));
+        Player playerScore11 = Player.from(new PlayerName("p11"));
         Players players = Players.from(List.of(playerScore7, playerScore11));
         players.dealCardBundle(dealerScore4);
 
