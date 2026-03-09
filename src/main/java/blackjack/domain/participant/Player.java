@@ -4,8 +4,6 @@ import blackjack.domain.PlayingCards;
 
 public class Player extends Participant {
 
-    private static final int BUSTED_SCORE = 21;
-
     private boolean stopDrawing;
 
     public Player(String nickname, Role role) {
@@ -21,6 +19,6 @@ public class Player extends Participant {
         if (stopDrawing) {
             return false;
         }
-        return hand.calculateTotalScore() < BUSTED_SCORE;
+        return hand.isDrawable();
     }
 }
