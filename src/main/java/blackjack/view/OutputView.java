@@ -21,12 +21,16 @@ public class OutputView {
         for (PlayerHandResult playerHand : dealResult.playerHands()) {
             printCurrentPlayerHand(playerHand);
         }
-        System.out.println();
+        printLineBreak();
     }
 
     public static void printCurrentPlayerHand(PlayerHandResult playerHand) {
         String cards = formatCards(playerHand.cards());
         System.out.println(playerHand.name() + "카드: " + cards);
+    }
+
+    public static void printLineBreak() {
+        System.out.println();
     }
 
     public static void printGameResult(GameResult gameResult) {
@@ -38,7 +42,7 @@ public class OutputView {
             System.out.println(player.name() + "카드: " + formatCards(player.cards())
                     + " - 결과: " + player.score());
         }
-        System.out.println();
+        printLineBreak();
     }
 
     private static String formatCards(List<CardInfo> cards) {
@@ -47,12 +51,13 @@ public class OutputView {
                 .collect(Collectors.joining(", "));
     }
 
-    public static void printDealerDrawMessage(){
+    public static void printDealerDrawMessage() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
-        System.out.println();
+        printLineBreak();
     }
 
-    public static void printFinalResult(Map<Player, MatchResult> playerFinalResult, Map<String, Long> dealerFinalResult){
+    public static void printFinalResult(Map<Player, MatchResult> playerFinalResult,
+                                        Map<String, Long> dealerFinalResult) {
         System.out.println("## 최종 승패");
         printDealerFinalResult(dealerFinalResult.get("승"), dealerFinalResult.get("패"));
         for (Player player : playerFinalResult.keySet()) {
