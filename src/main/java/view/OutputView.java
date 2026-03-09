@@ -36,14 +36,14 @@ public class OutputView {
         printNewLine();
     }
 
-    public void printDealerDrawResult(boolean draw) {
+    public void printDealerDrawResult(boolean draw, int dealerDrawThreshold) {
         printNewLine();
         if (draw) {
-            System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다." + LINE_SEPARATOR);
+            System.out.println("딜러는 " + dealerDrawThreshold + "이하라 한장의 카드를 더 받았습니다." + LINE_SEPARATOR);
             return;
         }
 
-        System.out.println("딜러는 16을 초과하여 카드를 더 받지 않았습니다." + LINE_SEPARATOR);
+        System.out.println("딜러는 " + dealerDrawThreshold + "을 초과하여 카드를 더 받지 않았습니다." + LINE_SEPARATOR);
     }
 
     public void printNewLine() {

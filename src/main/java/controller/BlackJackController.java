@@ -116,7 +116,7 @@ public class BlackJackController {
     private void proceedDealerTurn(Blackjack blackjack, Dealer dealer) {
         boolean draw = dealer.needDraw();
 
-        outputView.printDealerDrawResult(draw);
+        outputView.printDealerDrawResult(draw, GameRule.DEALER_DRAW_THRESHOLD);
 
         if (draw) {
             blackjack.giveCardTo(dealer);
