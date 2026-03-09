@@ -38,4 +38,8 @@ public class Participant {
     public List<Card> getDeck() {
         return List.copyOf(participantHand.getDeck());
     }
+
+    public boolean isMoreScore(Participant other) {
+        return this.participantHand.getScore() > other.participantHand.getScore();
+    }
 }

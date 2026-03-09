@@ -31,12 +31,6 @@ public class BlackJackService {
         participant.addCard(card);
     }
 
-    public boolean isBust(Participant participant) {
-        Integer score = participant.getResult().score();
-
-        return score > BUST_NUMBER;
-    }
-
     public ParticipantWinning getGameResult(Players players, Dealer dealer) {
         PlayersWinning playersWinning = getPlayersResult(players, dealer);
         DealerWinning dealerWinning = getDealerResult(players, dealer);
@@ -78,15 +72,14 @@ public class BlackJackService {
     }
 
     private MatchStatus getPlayerResult(Player player, Dealer dealer) {
-        if((dealer.isBust() && player.isBust()) || (Objects.equals(player.getResult().score(),
-                dealer.getResult().score()))) {
-            return MatchStatus.DRAW;
+        if (player.isBust() || (!dealer.isBust() && dealer.isMoreScore(player))) {
+            return MatchStatus.LOSE;
         }
 
-        if(dealer.isBust() || !player.isBust() && (player.getResult().score() > dealer.getResult().score())) {
+        if(!player.isBust() && (player.isMoreScore(dealer) || dealer.isBust())) {
             return MatchStatus.WIN;
         }
 
-        return MatchStatus.LOSE;
+        return MatchStatus.DRAW;
     }
 }
