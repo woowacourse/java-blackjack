@@ -1,21 +1,24 @@
-import java.util.List;
-
-import domain.Card;
 import domain.Dealer;
 import domain.User;
+import view.InputParser;
+import view.InputView;
+import view.OutputView;
+
+import java.util.List;
 
 public class GameController {
 
-    private final GameService gameService;
     private final InputView inputView;
     private final OutputView outputView;
+    private final GameService gameService;
 
-    private final Dealer dealer = new Dealer();
+    private final Dealer dealer;
 
-    public GameController(InputView inputView, OutputView outputVIew, GameService gameService) {
+    public GameController(InputView inputView, OutputView outputView, GameService gameService) {
         this.inputView = inputView;
-        this.outputView = outputVIew;
+        this.outputView = outputView;
         this.gameService = gameService;
+        this.dealer = new Dealer();
     }
 
     public void run() {
