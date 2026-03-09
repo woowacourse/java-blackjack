@@ -1,9 +1,10 @@
 package domain.dealer;
 
+import static config.BlackjackGameConstant.*;
+
 import domain.card.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import domain.dealer.Dealer;
 
 import java.util.List;
 

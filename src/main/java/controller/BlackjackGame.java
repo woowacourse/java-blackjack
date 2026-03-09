@@ -1,5 +1,7 @@
 package controller;
 
+import static config.BlackjackGameConstant.*;
+
 import domain.result.GameResultAnalyzer;
 import domain.result.dto.GameResultAnalysisDto;
 import domain.intention.DrawCardIntetion;

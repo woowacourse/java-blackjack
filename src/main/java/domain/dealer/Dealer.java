@@ -1,5 +1,7 @@
 package domain.dealer;
 
+import static config.BlackjackGameConstant.*;
+
 import domain.card.Card;
 import domain.card.CardBundle;
 import domain.card.CardDeck;
