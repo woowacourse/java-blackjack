@@ -59,14 +59,14 @@ public class BlackjackGame {
             player.stay();
             return false;
         }
-        player.receiveCard(dealer.drawCard());
+        dealer.dealCardTo(player);
         OutputView.printPlayerCards(player);
         return true;
     }
 
     private void processDealerTurn() {
         while (dealer.canReceiveCard()) {
-            dealer.receiveCard(dealer.drawCard());
+            dealer.drawAndReceive();
             OutputView.printDealerHit();
         }
     }

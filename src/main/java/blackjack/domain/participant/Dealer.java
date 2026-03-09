@@ -25,8 +25,12 @@ public class Dealer extends Participant {
         receiveCard(deck.draw());
     }
 
-    public Card drawCard() {
-        return deck.draw();
+    public void dealCardTo(final Player player) {
+        player.receiveCard(deck.draw());
+    }
+
+    public void drawAndReceive() {
+        receiveCard(deck.draw());
     }
 
     @Override
