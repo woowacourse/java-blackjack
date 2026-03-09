@@ -11,6 +11,7 @@ import repository.PlayerRepository;
 import util.*;
 import view.InputView;
 import view.OutputView;
+import view.View;
 
 public class DIConfig {
 
@@ -21,8 +22,7 @@ public class DIConfig {
     public BlackJackController blackJackController() {
         return new BlackJackController(
                 blackJackService(),
-                inputView(),
-                outputView(),
+                view(),
                 stringParser()
         );
     }
@@ -88,6 +88,13 @@ public class DIConfig {
     }
 
     // view
+    public View view() {
+        return new View(
+                inputView(),
+                outputView()
+        );
+    }
+
     public InputView inputView() {
         return new InputView();
     }
