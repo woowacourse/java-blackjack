@@ -1,7 +1,7 @@
 package domain.card;
 
 public enum Rank {
-    ACE("A", 11),
+    ACE("A", 1),
     TWO("2", 2),
     THREE("3", 3),
     FOUR("4", 4),

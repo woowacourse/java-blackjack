@@ -8,7 +8,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class Hand {
-    private static final int ACE_MIN_VALUE = 1;
+    private static final int ACE_MIN_COUNT = 0;
+    private static final int ADDITIONAL_ACE_VALUE = 10;
     private static final int BLACKJACK_LIMIT_VALUE = 21;
 
     private final List<Card> hand;
@@ -22,7 +23,7 @@ public class Hand {
     }
 
     public boolean isBust() {
-        return calculateTotalScore() > 21;
+        return calculateTotalScore() > BLACKJACK_LIMIT_VALUE;
     }
 
     public int getHandSize() {
@@ -39,18 +40,17 @@ public class Hand {
                 .mapToInt(Card::getCardScore)
                 .sum();
 
-        int aCount = (int) hand.stream()
+        int aceCount = (int) hand.stream()
                 .filter(card -> card.getRank() == Rank.ACE)
                 .count();
 
-        return aceCalculate(sum, aCount);
+        return aceCalculate(sum, aceCount);
     }
 
-    private int aceCalculate(int sum, int aCount) {
-        int totalSum = sum + (aCount * Rank.ACE.getValue());
-        while (aCount > 0 && totalSum > BLACKJACK_LIMIT_VALUE) {
-            totalSum -= (Rank.ACE.getValue() - ACE_MIN_VALUE);
-            aCount--;
+    private int aceCalculate(int sum, int aceCount) {
+        int totalSum = sum + (aceCount * Rank.ACE.getValue());
+        if (aceCount > ACE_MIN_COUNT && totalSum + ADDITIONAL_ACE_VALUE <= BLACKJACK_LIMIT_VALUE) {
+            return totalSum + ADDITIONAL_ACE_VALUE;
         }
         return totalSum;
     }

@@ -40,7 +40,7 @@ public class HandTest {
         Card card = new Card(Rank.ACE, Pattern.DIAMOND);
         dummyHand.addCard(card);
 
-        int expectedScore = card1.getCardScore() + card2.getCardScore() + card.getCardScore(); //18
+        int expectedScore = card1.getCardScore() + card2.getCardScore() + card.getCardScore() + 10; //18
         int totalScore = dummyHand.calculateTotalScore();
 
         assertThat(totalScore).isEqualTo(expectedScore);
