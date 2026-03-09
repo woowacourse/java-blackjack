@@ -101,7 +101,4 @@ public class BlackJackController {
         OutputView.printPlayersScore(playerResults);
     }
 
-
-
-
 }
