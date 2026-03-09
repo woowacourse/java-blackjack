@@ -11,9 +11,10 @@ class DeckTest {
     @Test
     @DisplayName("딜러 및 플레이어에게 초기 카드 2장 정상 배분")
     void test_provide_init_cards() {
-        Deck deck = new Deck();
+        List<Card> cards = List.of(new Card(Suit.HEART, Rank.TEN));
+        Deck deck = new Deck(new FixShuffleStrategy(cards));
 
-        List<Player> playerList = List.of(new Player("pobi"), new Player("james"));
+        List<String> playerList = List.of("pobi", "james");
         Players players = new Players(playerList);
         Dealer dealer = new Dealer();
 
@@ -29,7 +30,8 @@ class DeckTest {
     @DisplayName("카드 추가 지급 성공")
     void test_provide_one_card_success() {
         Player player = new Player("pobi");
-        Deck deck = new Deck();
+        List<Card> cards = List.of(new Card(Suit.HEART, Rank.TEN));
+        Deck deck = new Deck(new FixShuffleStrategy(cards));
 
         deck.provideOneCard(player);
 
