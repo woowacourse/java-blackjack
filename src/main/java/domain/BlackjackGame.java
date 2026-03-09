@@ -18,6 +18,8 @@ import java.util.List;
 
 public class BlackjackGame {
 
+    private static final int INITIAL_CARD_DRAW_COUNT = 2;
+    private static final int DEFAULT_CARD_DRAW_COUNT = 1;
     private ApplicationView view;
     private CardDeck cardDeck;
 
@@ -67,13 +69,13 @@ public class BlackjackGame {
                 return;
             }
 
-            dealer.handOutCardToPlayer(p, 1);
+            dealer.handOutCardToPlayer(p, DEFAULT_CARD_DRAW_COUNT);
             view.printParticipantHand(PlayerHandDto.of(p));
         }
     }
 
     private void dealInitialCard(Dealer dealer, Players players) {
-        dealer.drawMySelf(2);
+        dealer.drawMySelf(INITIAL_CARD_DRAW_COUNT);
         players.giveMeFirstCardBundle(dealer);
     }
 
