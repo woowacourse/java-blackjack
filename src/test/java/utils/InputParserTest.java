@@ -18,25 +18,19 @@ public class InputParserTest {
 
         @Test
         @DisplayName("사용자 이름 입력 값이 구분자를 통해 정상 분리")
-        void 사용자_이름_입력값_분리_정상_테스트() {
+        void user_name_split_success() {
             String input = "pobi,jason";
 
-            List<String> usernames = List.of(input.split(DELIMITER));
-
-            List<String> expect = List.of("pobi", "jason");
-            assertThat(usernames).isEqualTo(expect);
+            assertThat(InputParser.splitByDelimiter(input)).isEqualTo(List.of("pobi", "jason"));
         }
 
         @Test
         @DisplayName("사용자 이름 입력 값이 공백인 경우 구분자 분리 실패")
-        void 사용자_이름_입력값_실패_테스트() {
+        void user_name_isEmpty_failed() {
             String input = "";
 
             assertThatIllegalArgumentException()
-                    .isThrownBy(() -> {
-                        if (input.isEmpty())
-                            throw new IllegalArgumentException(ErrorMessage.EMPTY_INPUT.getMessage());
-                    })
+                    .isThrownBy(() -> InputParser.splitByDelimiter(input))
                     .withMessage(ErrorMessage.EMPTY_INPUT.getMessage());
         }
     }
