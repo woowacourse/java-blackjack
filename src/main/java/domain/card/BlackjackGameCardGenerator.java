@@ -1,11 +1,10 @@
 package domain.card;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class GameCardGenerator implements CardGenerator {
+public class BlackjackGameCardGenerator implements CardGenerator {
 
     @Override
     public List<Card> generate() {
