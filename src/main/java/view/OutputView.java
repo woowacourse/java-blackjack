@@ -21,6 +21,10 @@ public class OutputView {
     private OutputView() {
     }
 
+    public static void printErrorMessage(String message) {
+        System.out.println(message);
+    }
+
     public static void printParticipantCards(List<CardDto> dealerCards, Map<String, List<CardDto>> playerCards) {
         printDistributeComplete(playerCards.keySet().stream().toList());
         printDealerFirstCard(dealerCards);
