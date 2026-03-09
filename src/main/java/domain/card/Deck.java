@@ -5,6 +5,7 @@ import static message.ErrorMessage.DECK_CAN_NOT_DUPLICATED;
 import java.util.ArrayDeque;
 import java.util.List;
 import java.util.Queue;
+import java.util.Set;
 
 public class Deck {
     private final Queue<Card> cards = new ArrayDeque<>();
@@ -15,9 +16,7 @@ public class Deck {
     }
 
     private void validateDuplicatedCards(List<Card> cards) {
-        List<Card> distinctCards = cards.stream()
-                .distinct()
-                .toList();
+        Set<Card> distinctCards = Set.copyOf(cards);
 
         if (distinctCards.size() != cards.size()) {
             throw new IllegalArgumentException(DECK_CAN_NOT_DUPLICATED.getMessage());
