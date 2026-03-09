@@ -7,13 +7,11 @@ import team.blackjack.domain.Card;
 import team.blackjack.domain.Result;
 
 class DefaultBlackjackRuleTest {
-    private static final DefaultBlackjackRule defaultBlackjackRule = new DefaultBlackjackRule();
-
     @Test
     void 각_핸드의_점수는_21점을_초과하는_경우_버스트이다() {
         int handScore = 22;
 
-        boolean isBust = defaultBlackjackRule.isBust(handScore);
+        boolean isBust = DefaultBlackjackRule.isBust(handScore);
 
         Assertions.assertEquals(true, isBust);
     }
@@ -22,7 +20,7 @@ class DefaultBlackjackRuleTest {
     void 각_핸드의_점수는_21점을_초과하지_않는_경우_버스트가_아니다() {
         int handScore = 21;
 
-        boolean isBust = defaultBlackjackRule.isBust(handScore);
+        boolean isBust = DefaultBlackjackRule.isBust(handScore);
 
         Assertions.assertEquals(false, isBust);
     }
@@ -32,7 +30,7 @@ class DefaultBlackjackRuleTest {
         int handScore = 21;
         int cardCount = 2;
 
-        boolean isBlackjack = defaultBlackjackRule.isBlackjack(handScore, cardCount);
+        boolean isBlackjack = DefaultBlackjackRule.isBlackjack(handScore, cardCount);
 
         Assertions.assertEquals(true, isBlackjack);
     }
@@ -42,7 +40,7 @@ class DefaultBlackjackRuleTest {
         int handScore = 21;
         int cardCount = 3;
 
-        boolean isBlackjack = defaultBlackjackRule.isBlackjack(handScore, cardCount);
+        boolean isBlackjack = DefaultBlackjackRule.isBlackjack(handScore, cardCount);
 
         Assertions.assertEquals(false, isBlackjack);
     }
@@ -52,7 +50,7 @@ class DefaultBlackjackRuleTest {
         int handScore = 20;
         int cardCount = 2;
 
-        boolean isBlackjack = defaultBlackjackRule.isBlackjack(handScore, cardCount);
+        boolean isBlackjack = DefaultBlackjackRule.isBlackjack(handScore, cardCount);
 
         Assertions.assertEquals(false, isBlackjack);
     }
@@ -60,7 +58,7 @@ class DefaultBlackjackRuleTest {
     @Test
     void 딜러의_점수가_17점_미만인_경우_딜러는_카드를_더_받아야한다() {
         int dealerScore = 16;
-        boolean isDealerMustDraw = defaultBlackjackRule.isDealerMustDraw(dealerScore);
+        boolean isDealerMustDraw = DefaultBlackjackRule.isDealerMustDraw(dealerScore);
 
         Assertions.assertEquals(true, isDealerMustDraw);
     }
@@ -68,7 +66,7 @@ class DefaultBlackjackRuleTest {
     @Test
     void 딜러의_점수가_17점_이상인_경우_딜러는_카드를_더_받지_않아야한다() {
         int dealerScore = 17;
-        boolean isDealerMustDraw = defaultBlackjackRule.isDealerMustDraw(dealerScore);
+        boolean isDealerMustDraw = DefaultBlackjackRule.isDealerMustDraw(dealerScore);
 
         Assertions.assertEquals(false, isDealerMustDraw);
     }
