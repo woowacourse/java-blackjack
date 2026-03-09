@@ -2,7 +2,7 @@ package domain.participant;
 
 public class Player extends Participant {
 
-    public static final int BLAKC_JACK = 21;
+    public static final int BLACK_JACK = 21;
 
     public Player(String name) {
         super(name);
@@ -10,7 +10,7 @@ public class Player extends Participant {
 
     @Override
     public boolean canDraw() {
-        if (super.score() <= BLAKC_JACK) {
+        if (super.score() <= BLACK_JACK) {
             return true;
         }
 
