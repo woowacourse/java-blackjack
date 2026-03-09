@@ -1,8 +1,8 @@
 package domain.result;
 
-import domain.participants.Dealer;
-import domain.participants.Player;
-import domain.participants.Players;
+import domain.participant.Dealer;
+import domain.participant.Player;
+import domain.participant.Players;
 
 public class ResultJudge {
     private static final int BLACKJACK_LIMIT_NUMBER = 21;

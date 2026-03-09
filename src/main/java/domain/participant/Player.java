@@ -1,6 +1,6 @@
-package domain.participants;
+package domain.participant;
 
-public class Player extends Participants {
+public class Player extends Participant {
 
     public Player(String name, Hand hand) {
         super(name, hand);

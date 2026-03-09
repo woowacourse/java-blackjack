@@ -1,12 +1,12 @@
-package domain.participants;
+package domain.participant;
 
 import domain.card.Card;
 
-public class Participants {
+public class Participant {
     private final String name;
     private final Hand hand;
 
-    public Participants(String name, Hand hand) {
+    public Participant(String name, Hand hand) {
         this.name = name;
         this.hand = hand;
     }

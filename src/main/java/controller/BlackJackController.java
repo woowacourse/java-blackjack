@@ -2,10 +2,10 @@ package controller;
 
 import domain.card.CardDeck;
 import domain.result.Result;
-import domain.participants.Dealer;
-import domain.participants.Hand;
-import domain.participants.Player;
-import domain.participants.Players;
+import domain.participant.Dealer;
+import domain.participant.Hand;
+import domain.participant.Player;
+import domain.participant.Players;
 import domain.result.ResultJudge;
 import util.Parser;
 import util.Validator;
