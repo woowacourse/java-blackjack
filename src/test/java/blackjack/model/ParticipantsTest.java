@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class ParticipantsTest {
 
@@ -19,11 +21,9 @@ class ParticipantsTest {
         assertThat(actualPlayerNames).contains("pobi", "jason");
     }
 
-    @Test
-    void 플레이어_이름이_중복되면_에러를_던진다() {
-        // given
-        String duplicatedRawPlayerNames = "pobi,pobi";
-        // when
+    @ParameterizedTest
+    @ValueSource(strings = {"pobi,pobi", "pobi, pobi"})
+    void 플레이어_이름이_중복되면_에러를_던진다(String duplicatedRawPlayerNames) {
         assertThatThrownBy(() -> Participants.from(duplicatedRawPlayerNames))
                 .isInstanceOf(IllegalArgumentException.class);
     }

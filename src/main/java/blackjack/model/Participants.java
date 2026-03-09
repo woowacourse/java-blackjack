@@ -30,7 +30,7 @@ public class Participants implements Iterable<Participant> {
         if (playerNames.contains(DEALER_NAME)) {
             throw new IllegalArgumentException("참가자의 이름은 딜러의 이름과 동일할 수 없습니다.");
         }
-        if (playerNames.stream().distinct().count() != playerNames.size()) {
+        if (playerNames.stream().map(String::strip).distinct().count() != playerNames.size()) {
             throw new IllegalArgumentException("참가자의 이름은 중복될 수 없습니다.");
         }
     }
