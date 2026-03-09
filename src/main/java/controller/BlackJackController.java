@@ -5,6 +5,7 @@ import domain.participant.*;
 import domain.result.GameState;
 import domain.result.Result;
 import domain.result.ResultJudge;
+import service.BlackJackService;
 import util.Parser;
 import util.Validator;
 import view.InputView;
@@ -15,10 +16,13 @@ import java.util.List;
 
 public class BlackJackController {
     private static final String HIT_COMMAND = "y";
-    private final ResultJudge resultJudge;
 
-    public BlackJackController(ResultJudge resultJudge) {
+    private final ResultJudge resultJudge;
+    private final BlackJackService blackJackService;
+
+    public BlackJackController(ResultJudge resultJudge, BlackJackService blackJackService) {
         this.resultJudge = resultJudge;
+        this.blackJackService = blackJackService;
     }
 
     public void run() {
@@ -33,7 +37,7 @@ public class BlackJackController {
         Players players = getPlayer();
         Dealer dealer = new Dealer(new Hand());
 
-        initGame(cardDeck, dealer, players);
+        initGame(cardDeck, new ParticipantGroup(players, dealer));
 
         return new GameState(new ParticipantGroup(players, dealer), cardDeck);
     }
@@ -68,16 +72,9 @@ public class BlackJackController {
         return new Players(players);
     }
 
-    private void initGame(CardDeck cardDeck, Dealer dealer, Players players) {
-        dealer.keepCard(cardDeck.drawCard());
-        dealer.keepCard(cardDeck.drawCard());
-
-        for (Player player : players.getAllPlayers()) {
-            player.keepCard(cardDeck.drawCard());
-            player.keepCard(cardDeck.drawCard());
-        }
-
-        OutputView.gameStartMessage(dealer, players);
+    private void initGame(CardDeck cardDeck, ParticipantGroup participantGroup) {
+        blackJackService.dealInitialCards(cardDeck, participantGroup);
+        OutputView.gameStartMessage(participantGroup.getDealer(), participantGroup.getPlayers());
     }
 
     private boolean isHitRequested(Player player) {
