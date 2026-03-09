@@ -12,10 +12,14 @@ public class Deck {
 
     public Deck() {
         this.cards = makeCards();
+        Collections.shuffle(cards);
+    }
+
+    public Deck(List<Card> cards) {
+        this.cards = new ArrayList<>(cards);
     }
 
     public Card dealCard() {
-        Collections.shuffle(cards);
         return cards.removeFirst();
     }
 

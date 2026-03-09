@@ -17,6 +17,10 @@ public class BlackjackGame {
         deck = new Deck();
     }
 
+    void setDeck(Deck deck) {
+        this.deck = deck;
+    }
+
     public void dealCards() {
         for(int cardCount = 0; cardCount < FIRST_CARD_DEAL_COUNT; cardCount++) {
             participants.dealCards(deck);
