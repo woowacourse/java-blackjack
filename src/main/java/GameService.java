@@ -4,6 +4,9 @@ import java.util.List;
 
 public class GameService {
 
+    private static final int BLACKJACK_SCORE = 21;
+    private static final int HIT_SCORE = 16;
+
     private final CardDeck cardDeck;
 
     public GameService() {
@@ -41,21 +44,21 @@ public class GameService {
     
 
     public boolean isBlackjack(int score) {
-        if(score == 21) {
+        if(score == BLACKJACK_SCORE) {
             return true;
         }
         return false;
     }
 
     public boolean isBurst(int score) {
-        if(score > 21) {
+        if(score > BLACKJACK_SCORE) {
             return true;
         }
         return false;
     }
 
     public boolean isHit(int score) {
-        if (score <= 16) {
+        if (score <= HIT_SCORE) {
             return true;
         }
         return false;
@@ -68,17 +71,13 @@ public class GameService {
         return 11;
     }
 
-    public void determineResult(List<User> users, Dealer dealer) {
+    public void settleResult(List<User> users, Dealer dealer) {
         int dealerScore = calculateScore(dealer.getHand());
         boolean dealerBurst = isBurst(dealerScore);
-
-        for (User user : users) {
-            int userScore = calculateScore(user.getHand());
-            user.setGameResult(judge(user, dealer, dealerBurst));
-        }
+        users.forEach(user -> user.setGameResult(decideResult(user,dealer,dealerBurst)));
     }
 
-    private GameResult judge(User user,  Dealer dealer, boolean dealerBurst) {
+    private GameResult decideResult(User user, Dealer dealer, boolean dealerBurst) {
         int userScore = calculateScore(user.getHand());
         int dealerScore = calculateScore(dealer.getHand());
         boolean userBurst = isBurst(userScore);
