@@ -6,7 +6,9 @@ import java.util.List;
 
 public class ParticipantHand {
 
-    private final Score score = new Score();
+    private static final int ADDITIONAL_ACE_SCORE = 10;
+    private static final int ACE_THRESHOLD = 11;
+
     private final Cards hand = new Cards();
 
     public void addCard(Card card) {
@@ -14,12 +16,18 @@ public class ParticipantHand {
         hand.add(card);
     }
 
-    public void addScore(Integer score) {
-        this.score.add(score);
-    }
-
     public Integer getScore() {
-        return score.get();
+        int baseScore = hand.get().stream()
+                .mapToInt(card -> card.cardNumber().getScore())
+                .sum();
+
+        boolean hasAce = hand.get().stream()
+                .anyMatch(card -> card.cardNumber() == CardNumber.ACE);
+
+        if (hasAce && baseScore <= ACE_THRESHOLD) {
+            return baseScore + ADDITIONAL_ACE_SCORE;
+        }
+        return baseScore;
     }
 
     public Integer getHandSize() {

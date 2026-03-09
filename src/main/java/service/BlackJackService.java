@@ -9,7 +9,6 @@ import model.Participant;
 import model.Player;
 import model.Players;
 import model.PlayersWinning;
-import model.Scorer;
 import dto.Card;
 import dto.ParticipantWinning;
 import dto.PlayerWinning;
@@ -43,9 +42,6 @@ public class BlackJackService {
                 && participant.getScore() == BLACKJACK_SCORE;
     }
 
-    public void updateAceScore(Participant participant) {
-        Scorer.updateAceScore(participant);
-    }
 
     public ParticipantWinning getGameResult(Players players, Dealer dealer) {
         PlayersWinning playersWinning = getPlayersResult(players, dealer);

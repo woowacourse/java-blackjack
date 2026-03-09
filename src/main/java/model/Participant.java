@@ -20,7 +20,6 @@ public class Participant {
         return name;
     }
 
-
     public Integer getScore() {
         return participantHand.getScore();
     }
@@ -31,11 +30,5 @@ public class Participant {
 
     public void draw(Card card) {
         participantHand.addCard(card);
-        Integer score = card.cardNumber().getScore();
-        addScore(score);
-    }
-
-    public void addScore(Integer score) {
-        participantHand.addScore(score);
     }
 }
