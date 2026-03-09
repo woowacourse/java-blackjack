@@ -15,8 +15,8 @@ class HandTest {
     void 손패의_합_계산() {
         //given
         Hand hand = new Hand();
-        hand.addCard(new Card(Suit.SPADES, Rank.NUM3));
-        hand.addCard(new Card(Suit.SPADES, Rank.NUM5));
+        hand.addCard(new Card(Suit.SPADES, Rank.THREE));
+        hand.addCard(new Card(Suit.SPADES, Rank.FIVE));
         hand.addCard(new Card(Suit.SPADES, Rank.JACK));
 
         // when, then
@@ -28,7 +28,7 @@ class HandTest {
         //given
         Hand hand = new Hand();
         hand.addCard(new Card(Suit.SPADES, Rank.ACE));
-        hand.addCard(new Card(Suit.SPADES, Rank.NUM3));
+        hand.addCard(new Card(Suit.SPADES, Rank.THREE));
         hand.addCard(new Card(Suit.SPADES, Rank.QUEEN));
 
         // when, then
@@ -40,8 +40,8 @@ class HandTest {
         //given
         Hand hand = new Hand();
         hand.addCard(new Card(Suit.SPADES, Rank.ACE));
-        hand.addCard(new Card(Suit.SPADES, Rank.NUM3));
-        hand.addCard(new Card(Suit.SPADES, Rank.NUM4));
+        hand.addCard(new Card(Suit.SPADES, Rank.THREE));
+        hand.addCard(new Card(Suit.SPADES, Rank.FOUR));
 
         // when, then
         assertEquals(18, hand.getSum());
@@ -63,7 +63,7 @@ class HandTest {
         Hand hand = new Hand();
         hand.addCard(new Card(Suit.SPADES, Rank.KING));
         hand.addCard(new Card(Suit.SPADES, Rank.QUEEN));
-        hand.addCard(new Card(Suit.SPADES, Rank.NUM2));
+        hand.addCard(new Card(Suit.SPADES, Rank.TWO));
 
         // when, then
         assertTrue(hand.isBurst());
@@ -74,8 +74,8 @@ class HandTest {
         //given
         Hand hand = new Hand();
         hand.addCard(new Card(Suit.SPADES, Rank.KING));
-        hand.addCard(new Card(Suit.SPADES, Rank.NUM2));
-        hand.addCard(new Card(Suit.SPADES, Rank.NUM9));
+        hand.addCard(new Card(Suit.SPADES, Rank.TWO));
+        hand.addCard(new Card(Suit.SPADES, Rank.NINE));
 
         // when, then
         assertFalse(hand.isBurst());

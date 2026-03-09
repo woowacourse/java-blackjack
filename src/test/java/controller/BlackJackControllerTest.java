@@ -43,27 +43,27 @@ public class BlackJackControllerTest {
         Deck deck = mock(Deck.class);
         when(deck.drawCard()).thenReturn(
                 // 시오
-                new Card(Suit.HEARTS, Rank.NUM2),
-                new Card(Suit.HEARTS, Rank.NUM3),
+                new Card(Suit.HEARTS, Rank.TWO),
+                new Card(Suit.HEARTS, Rank.THREE),
                 // 봉구스
-                new Card(Suit.HEARTS, Rank.NUM4),
-                new Card(Suit.HEARTS, Rank.NUM5),
+                new Card(Suit.HEARTS, Rank.FOUR),
+                new Card(Suit.HEARTS, Rank.FIVE),
                 // 딜러
-                new Card(Suit.HEARTS, Rank.NUM6),
-                new Card(Suit.HEARTS, Rank.NUM7),
+                new Card(Suit.HEARTS, Rank.SIX),
+                new Card(Suit.HEARTS, Rank.SEVEN),
                 // 시오
-                new Card(Suit.HEARTS, Rank.NUM8),
+                new Card(Suit.HEARTS, Rank.EIGHT),
                 // 봉구스
-                new Card(Suit.HEARTS, Rank.NUM9),
+                new Card(Suit.HEARTS, Rank.NINE),
                 // 딜러
-                new Card(Suit.SPADES, Rank.NUM2),
-                new Card(Suit.SPADES, Rank.NUM3),
+                new Card(Suit.SPADES, Rank.TWO),
+                new Card(Suit.SPADES, Rank.THREE),
 
-                new Card(Suit.SPADES, Rank.NUM4),
-                new Card(Suit.SPADES, Rank.NUM5),
-                new Card(Suit.SPADES, Rank.NUM6),
-                new Card(Suit.SPADES, Rank.NUM7),
-                new Card(Suit.SPADES, Rank.NUM8)
+                new Card(Suit.SPADES, Rank.FOUR),
+                new Card(Suit.SPADES, Rank.FIVE),
+                new Card(Suit.SPADES, Rank.SIX),
+                new Card(Suit.SPADES, Rank.SEVEN),
+                new Card(Suit.SPADES, Rank.EIGHT)
         );
 
         BlackJackInitService blackJackInitService = spy(new BlackJackInitService());

@@ -24,14 +24,14 @@ class ScoreResultDtoTest {
         player1.draw(new Card(Suit.DIAMONDS, Rank.KING));
 
         Player player2 = new Player("시오");
-        player2.draw(new Card(Suit.HEARTS, Rank.NUM5));
+        player2.draw(new Card(Suit.HEARTS, Rank.FIVE));
         player2.draw(new Card(Suit.SPADES, Rank.JACK));
         players.add(player1);
         players.add(player2);
 
         dealer = new Dealer();
-        dealer.draw(new Card(Suit.HEARTS, Rank.NUM4));
-        dealer.draw(new Card(Suit.CLUBS, Rank.NUM8));
+        dealer.draw(new Card(Suit.HEARTS, Rank.FOUR));
+        dealer.draw(new Card(Suit.CLUBS, Rank.EIGHT));
     }
 
     @Test

@@ -46,7 +46,7 @@ class BlackJackResultServiceTest {
     void createFinalResultDto() {
         // given
         dealer.draw(new Card(Suit.HEARTS, Rank.JACK));
-        players.get(0).draw(new Card(Suit.CLUBS, Rank.NUM5));
+        players.get(0).draw(new Card(Suit.CLUBS, Rank.FIVE));
         players.get(1).draw(new Card(Suit.CLUBS, Rank.JACK));
         players.get(2).draw(new Card(Suit.CLUBS, Rank.ACE));
         FinalResultDto finalResultDto = blackJackResultService.createFinalResultDto(dealer, players);

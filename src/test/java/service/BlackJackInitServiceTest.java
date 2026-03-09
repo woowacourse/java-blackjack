@@ -27,7 +27,7 @@ class BlackJackInitServiceTest {
     void 덱을_정상적으로_생성() {
         // given, when
         Deck deck = blackJackInitService.createDeck();
-        
+
         //then
         assertNotNull(deck);
     }
@@ -57,7 +57,7 @@ class BlackJackInitServiceTest {
     void 초기_상태_Dto를_생성하는_경우() {
         //given
         Dealer dealer = new Dealer();
-        dealer.draw(new Card(Suit.CLUBS, Rank.NUM8));
+        dealer.draw(new Card(Suit.CLUBS, Rank.EIGHT));
         List<Player> players = List.of(new Player("봉구스"), new Player("시오"));
 
         // when

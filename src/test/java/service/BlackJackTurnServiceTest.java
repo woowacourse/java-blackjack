@@ -53,8 +53,8 @@ class BlackJackTurnServiceTest {
     void 딜러가_드로우_할_수_있는_경우() {
         // given
         Dealer dealer = new Dealer();
-        dealer.draw(new Card(Suit.HEARTS, Rank.NUM2));
-        dealer.draw(new Card(Suit.HEARTS, Rank.NUM5));
+        dealer.draw(new Card(Suit.HEARTS, Rank.TWO));
+        dealer.draw(new Card(Suit.HEARTS, Rank.FIVE));
 
         // when, then
         assertTrue(blackJackTurnService.canDealerHit(dealer));
@@ -77,8 +77,8 @@ class BlackJackTurnServiceTest {
         // given
         Player player = new Player("시오");
 
-        player.draw(new Card(Suit.HEARTS, Rank.NUM2));
-        player.draw(new Card(Suit.HEARTS, Rank.NUM5));
+        player.draw(new Card(Suit.HEARTS, Rank.TWO));
+        player.draw(new Card(Suit.HEARTS, Rank.FIVE));
 
         // when, then
         assertTrue(blackJackTurnService.canPlayerHit(player, "y"));
@@ -104,8 +104,8 @@ class BlackJackTurnServiceTest {
             // given
             Player player = new Player("시오");
 
-            player.draw(new Card(Suit.HEARTS, Rank.NUM2));
-            player.draw(new Card(Suit.HEARTS, Rank.NUM5));
+            player.draw(new Card(Suit.HEARTS, Rank.TWO));
+            player.draw(new Card(Suit.HEARTS, Rank.FIVE));
 
             // when, then
             assertFalse(blackJackTurnService.canPlayerHit(player, "n"));

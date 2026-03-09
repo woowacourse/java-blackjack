@@ -14,8 +14,8 @@ class BlackJackHandDtoTest {
     void from() {
         // given
         Player player = new Player("시오");
-        player.draw(new Card(Suit.HEARTS, Rank.NUM8));
-        player.draw(new Card(Suit.HEARTS, Rank.NUM7));
+        player.draw(new Card(Suit.HEARTS, Rank.EIGHT));
+        player.draw(new Card(Suit.HEARTS, Rank.SEVEN));
 
         // when
         BlackJackHandDto blackJackHandDto = BlackJackHandDto.from(player);
