@@ -14,11 +14,10 @@ public class Card {
     }
 
     public boolean isAce(){
-        return number==TrumpNumber.ACE;
+        return number == TrumpNumber.ACE;
     }
 
-    @Override
-    public String toString() {
+    public String cardToKorName() {
         return ""+ number + suit;
     }
 }

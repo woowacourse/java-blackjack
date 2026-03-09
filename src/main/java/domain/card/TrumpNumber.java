@@ -9,7 +9,7 @@ public enum TrumpNumber {
     SIX("6",6),
     SEVEN("7", 7),
     EIGHT("8", 8),
-    NIGHT("9", 9),
+    NINE("9", 9),
     TEN("10", 10),
     JACK("J",10),
     QUEEN("Q", 10),
@@ -23,12 +23,11 @@ public enum TrumpNumber {
         this.value = value;
     }
 
-    public int getValue() {
-        return value;
+    public String getName() {
+        return name;
     }
 
-    @Override
-    public String toString() {
-        return "" + name;
+    public int getValue() {
+        return value;
     }
 }

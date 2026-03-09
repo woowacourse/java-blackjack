@@ -12,8 +12,7 @@ public enum TrumpSuit {
         this.name = name;
     }
 
-    @Override
-    public String toString() {
+    public String getName() {
         return name;
     }
 }
