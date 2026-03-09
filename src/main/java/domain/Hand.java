@@ -8,7 +8,7 @@ public class Hand {
     private static final Integer MAXIMUM_TOTAL_SCORE = 21;
     private static final Integer MINIMUM_DEALER_SCORE = 16;
 
-    private List<Card> cards;
+    private final List<Card> cards;
     private int handTotalScore;
     private boolean hasAce;
 
