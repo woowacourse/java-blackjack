@@ -7,9 +7,13 @@ import domain.card.Suit;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 class PlayersTest {
 
@@ -67,176 +71,80 @@ class PlayersTest {
         Assertions.assertEquals(players.findBy(targetPlayer), targetPlayer);
     }
 
-    @Test
-    @DisplayName("플레이어만 버스트일 경우 바로 패배한다.")
-    void 플레이어만_버스트_패_판단() {
+    @ParameterizedTest(name = "{index} - {0}")
+    @MethodSource("provideGameResultCases")
+    void calculateResultParameterizedTest(String description,
+                                          List<Card> dealerCards,
+                                          List<Card> playerCards,
+                                          MatchResult expected) {
         // given
         Dealer dealer = new Dealer();
         Player player = new Player("pobi");
         Players players = new Players(List.of(player));
 
         // when
-        dealer.receive(new Card(Rank.ACE, Suit.CLOVER));
-        dealer.receive(new Card(Rank.KING, Suit.CLOVER));
-
-        players.findBy(player).receive(new Card(Rank.JACK, Suit.CLOVER));
-        players.findBy(player).receive(new Card(Rank.SEVEN, Suit.HEART));
-        players.findBy(player).receive(new Card(Rank.JACK, Suit.HEART));
+        dealerCards.forEach(dealer::receive);
+        playerCards.forEach(players.findBy(player)::receive);
 
         // then
-        for (Map.Entry<Player, MatchResult> matchResultEntry : players.calculateResult(dealer).entrySet()) {
-            Assertions.assertEquals(matchResultEntry.getValue(), MatchResult.LOSE);
+        for (Map.Entry<Player, MatchResult> entry : players.calculateResult(dealer).entrySet()) {
+            Assertions.assertEquals(expected, entry.getValue());
         }
     }
 
-    @Test
-    @DisplayName("딜러만 버스트일 경우 플레이어가 승리한다.")
-    void 딜러만_버스트_플레이어_패_판단() {
-        // given
-        Dealer dealer = new Dealer();
-        Player player = new Player("pobi");
-        Players players = new Players(List.of(player));
-
-        // when
-        dealer.receive(new Card(Rank.JACK, Suit.CLOVER));
-        dealer.receive(new Card(Rank.SEVEN, Suit.HEART));
-        dealer.receive(new Card(Rank.JACK, Suit.HEART));
-
-
-        players.findBy(player).receive(new Card(Rank.ACE, Suit.CLOVER));
-        players.findBy(player).receive(new Card(Rank.KING, Suit.CLOVER));
-
-        // then
-        for (Map.Entry<Player, MatchResult> matchResultEntry : players.calculateResult(dealer).entrySet()) {
-            Assertions.assertEquals(matchResultEntry.getValue(), MatchResult.WIN);
-        }
-    }
-
-    @Test
-    @DisplayName("플레이어가 딜러를 이긴 경우 승리한다.")
-    void 플레이어_승_판단() {
-        // given
-        Dealer dealer = new Dealer();
-        Player player = new Player("pobi");
-        Players players = new Players(List.of(player));
-
-        // when
-        dealer.receive(new Card(Rank.JACK, Suit.CLOVER));
-        dealer.receive(new Card(Rank.SEVEN, Suit.HEART));
-
-        players.findBy(player).receive(new Card(Rank.QUEEN, Suit.CLOVER));
-        players.findBy(player).receive(new Card(Rank.KING, Suit.CLOVER));
-
-        // then
-        for (Map.Entry<Player, MatchResult> matchResultEntry : players.calculateResult(dealer).entrySet()) {
-            Assertions.assertEquals(matchResultEntry.getValue(), MatchResult.WIN);
-        }
-    }
-
-    @Test
-    @DisplayName("플레이어가 딜러와 비긴 경우 무승부한다.")
-    void 플레이어_무승부_판단() {
-        // given
-        Dealer dealer = new Dealer();
-        Player player = new Player("pobi");
-        Players players = new Players(List.of(player));
-
-        // when
-        dealer.receive(new Card(Rank.JACK, Suit.CLOVER));
-        dealer.receive(new Card(Rank.SEVEN, Suit.HEART));
-
-        players.findBy(player).receive(new Card(Rank.SEVEN, Suit.CLOVER));
-        players.findBy(player).receive(new Card(Rank.KING, Suit.CLOVER));
-
-        // then
-        for (Map.Entry<Player, MatchResult> matchResultEntry : players.calculateResult(dealer).entrySet()) {
-            Assertions.assertEquals(matchResultEntry.getValue(), MatchResult.DRAW);
-        }
-    }
-
-    @Test
-    @DisplayName("딜러와 플레이어가 동점인 상황에서 플레이어만 블랙잭일 경우 플레이어가 승리한다.")
-    void 동점_플레이어_블랙잭_승리_판단() {
-        // given
-        Dealer dealer = new Dealer();
-        Player player = new Player("pobi");
-        Players players = new Players(List.of(player));
-
-        // when
-        dealer.receive(new Card(Rank.JACK, Suit.CLOVER));
-        dealer.receive(new Card(Rank.ACE, Suit.HEART));
-        dealer.receive(new Card(Rank.KING, Suit.HEART));
-
-        players.findBy(player).receive(new Card(Rank.ACE, Suit.CLOVER));
-        players.findBy(player).receive(new Card(Rank.KING, Suit.CLOVER));
-
-        // then
-        for (Map.Entry<Player, MatchResult> matchResultEntry : players.calculateResult(dealer).entrySet()) {
-            Assertions.assertEquals(matchResultEntry.getValue(), MatchResult.WIN);
-        }
-    }
-
-    @Test
-    @DisplayName("딜러와 플레이어가 동점인 상황에서 딜러만 블랙잭일 경우 플레이어가 패배한다.")
-    void 동점_딜러_블랙잭_플레이어_패배_판단() {
-        // given
-        Dealer dealer = new Dealer();
-        Player player = new Player("pobi");
-        Players players = new Players(List.of(player));
-
-        // when
-        dealer.receive(new Card(Rank.ACE, Suit.CLOVER));
-        dealer.receive(new Card(Rank.KING, Suit.CLOVER));
-
-        players.findBy(player).receive(new Card(Rank.JACK, Suit.CLOVER));
-        players.findBy(player).receive(new Card(Rank.ACE, Suit.HEART));
-        players.findBy(player).receive(new Card(Rank.KING, Suit.HEART));
-
-        // then
-        for (Map.Entry<Player, MatchResult> matchResultEntry : players.calculateResult(dealer).entrySet()) {
-            Assertions.assertEquals(matchResultEntry.getValue(), MatchResult.LOSE);
-        }
-    }
-
-    @Test
-    @DisplayName("딜러와 플레이어 모두 블랙잭인 경우 무승부 처리된다.")
-    void 동점_딜러_플레이어_모두_블랙잭_무승부_판단() {
-        // given
-        Dealer dealer = new Dealer();
-        Player player = new Player("pobi");
-        Players players = new Players(List.of(player));
-
-        // when
-        dealer.receive(new Card(Rank.ACE, Suit.CLOVER));
-        dealer.receive(new Card(Rank.KING, Suit.CLOVER));
-
-        players.findBy(player).receive(new Card(Rank.JACK, Suit.CLOVER));
-        players.findBy(player).receive(new Card(Rank.ACE, Suit.HEART));
-
-        // then
-        for (Map.Entry<Player, MatchResult> matchResultEntry : players.calculateResult(dealer).entrySet()) {
-            Assertions.assertEquals(matchResultEntry.getValue(), MatchResult.DRAW);
-        }
-    }
-
-    @Test
-    @DisplayName("플레이어가 딜러에게 진 경우 패배한다.")
-    void 플레이어_패_판단() {
-        // given
-        Dealer dealer = new Dealer();
-        Player player = new Player("pobi");
-        Players players = new Players(List.of(player));
-
-        // when
-        dealer.receive(new Card(Rank.JACK, Suit.CLOVER));
-        dealer.receive(new Card(Rank.KING, Suit.CLOVER));
-
-        players.findBy(player).receive(new Card(Rank.JACK, Suit.CLOVER));
-        players.findBy(player).receive(new Card(Rank.SEVEN, Suit.HEART));
-
-        // then
-        for (Map.Entry<Player, MatchResult> matchResultEntry : players.calculateResult(dealer).entrySet()) {
-            Assertions.assertEquals(matchResultEntry.getValue(), MatchResult.LOSE);
-        }
+    private static Stream<Arguments> provideGameResultCases() {
+        return Stream.of(
+                Arguments.of("플레이어만 버스트 패",
+                        List.of(new Card(Rank.ACE, Suit.CLOVER), new Card(Rank.KING, Suit.CLOVER)),
+                        List.of(new Card(Rank.JACK, Suit.CLOVER),
+                                new Card(Rank.SEVEN, Suit.HEART),
+                                new Card(Rank.JACK, Suit.HEART)),
+                        MatchResult.LOSE),
+                Arguments.of("딜러만 버스트 플레이어 승",
+                        List.of(new Card(Rank.JACK, Suit.CLOVER),
+                                new Card(Rank.SEVEN, Suit.HEART),
+                                new Card(Rank.JACK, Suit.HEART)),
+                        List.of(new Card(Rank.ACE, Suit.CLOVER),
+                                new Card(Rank.KING, Suit.CLOVER)),
+                        MatchResult.WIN),
+                Arguments.of("플레이어가 딜러를 이긴 경우 승리",
+                        List.of(new Card(Rank.JACK, Suit.CLOVER),
+                                new Card(Rank.SEVEN, Suit.HEART)),
+                        List.of(new Card(Rank.QUEEN, Suit.CLOVER),
+                                new Card(Rank.KING, Suit.CLOVER)),
+                        MatchResult.WIN),
+                Arguments.of("플레이어가 딜러와 비긴 경우 무승부",
+                        List.of(new Card(Rank.JACK, Suit.CLOVER),
+                                new Card(Rank.SEVEN, Suit.HEART)),
+                        List.of(new Card(Rank.SEVEN, Suit.CLOVER),
+                                new Card(Rank.KING, Suit.CLOVER)),
+                        MatchResult.DRAW),
+                Arguments.of("동점, 플레이어만 블랙잭 승리",
+                        List.of(new Card(Rank.JACK, Suit.CLOVER),
+                                new Card(Rank.ACE, Suit.HEART),
+                                new Card(Rank.KING, Suit.HEART)),
+                        List.of(new Card(Rank.ACE, Suit.CLOVER),
+                                new Card(Rank.KING, Suit.CLOVER)),
+                        MatchResult.WIN),
+                Arguments.of("동점, 딜러만 블랙잭 플레이어 패배",
+                        List.of(new Card(Rank.ACE, Suit.CLOVER),
+                                new Card(Rank.KING, Suit.CLOVER)),
+                        List.of(new Card(Rank.JACK, Suit.CLOVER),
+                                new Card(Rank.ACE, Suit.HEART),
+                                new Card(Rank.KING, Suit.HEART)),
+                        MatchResult.LOSE),
+                Arguments.of("딜러와 플레이어 모두 블랙잭 무승부",
+                        List.of(new Card(Rank.ACE, Suit.CLOVER),
+                                new Card(Rank.KING, Suit.CLOVER)),
+                        List.of(new Card(Rank.JACK, Suit.CLOVER),
+                                new Card(Rank.ACE, Suit.HEART)),
+                        MatchResult.DRAW),
+                Arguments.of("플레이어가 딜러에게 진 경우 패배",
+                        List.of(new Card(Rank.JACK, Suit.CLOVER),
+                                new Card(Rank.KING, Suit.CLOVER)),
+                        List.of(new Card(Rank.JACK, Suit.CLOVER),
+                                new Card(Rank.SEVEN, Suit.HEART)),
+                        MatchResult.LOSE)
+        );
     }
 }
