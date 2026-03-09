@@ -16,8 +16,12 @@ public class GameResultCalculator {
 
     private GameResult compare(final Score playerScore, final Score dealerScore) {
         int result = playerScore.compareTo(dealerScore);
-        if (result > 0) return GameResult.WIN;
-        if (result < 0) return GameResult.LOSE;
+        if (result > 0) {
+            return GameResult.WIN;
+        }
+        if (result < 0) {
+            return GameResult.LOSE;
+        }
         return GameResult.DRAW;
     }
 }
