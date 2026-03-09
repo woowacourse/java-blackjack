@@ -1,7 +1,7 @@
 package blackjack.controller;
 
+import static blackjack.model.Constant.BLACKJACK_SCORE;
 import static blackjack.model.Constant.DEALER_ADD_CARD_STAND;
-import static blackjack.model.Constant.TWENTY_ONE;
 import static blackjack.util.ExceptionHandler.retryUntilSuccess;
 
 import blackjack.model.Dealer;
@@ -99,7 +99,7 @@ public class BlackjackController {
     }
 
     boolean checkAddCard(Player player) {
-        if (player.getScore() >= TWENTY_ONE) {
+        if (player.getScore() >= BLACKJACK_SCORE) {
             OutputView.printCantAddCard();
             return false;
         }

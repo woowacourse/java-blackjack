@@ -1,7 +1,7 @@
 package blackjack.model;
 
+import static blackjack.model.Constant.BLACKJACK_SCORE;
 import static blackjack.model.Constant.INIT_CARDS_END_IDX;
-import static blackjack.model.Constant.TWENTY_ONE;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,11 +41,11 @@ public class Hand {
     }
 
     public boolean isBlackjack() {
-        return calculateScore() == TWENTY_ONE && cards.size() == INIT_CARDS_END_IDX;
+        return calculateScore() == BLACKJACK_SCORE && cards.size() == INIT_CARDS_END_IDX;
     }
 
     public boolean isBust() {
-        return calculateScore() > TWENTY_ONE;
+        return calculateScore() > BLACKJACK_SCORE;
     }
 
     private int convertAceToEleven(int currentScore) {
