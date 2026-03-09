@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
-
     private static final String LINE_SEPARATOR = "\n";
     private static final String STRING_JOIN_DELIMITER = ", ";
     private static final String DISTRIBUTE_INITIAL_CARD = "딜러와 %s에게 2장을 나누었습니다.";
@@ -19,7 +18,10 @@ public class OutputView {
     private static final String DEALER_RESULT = "딜러: %d승 %d패 %d무";
     private static final String PLAYER_RESULT = "%s: %s";
 
-    public void printPlayers(List<CardDto> dealerCard, Map<String, List<CardDto>> playerCards) {
+    private OutputView() {
+    }
+
+    public static void printPlayers(List<CardDto> dealerCard, Map<String, List<CardDto>> playerCards) {
         String playerNames = String.join(STRING_JOIN_DELIMITER, playerCards.keySet());
 
         System.out.printf(LINE_SEPARATOR + DISTRIBUTE_INITIAL_CARD + LINE_SEPARATOR, playerNames);
@@ -30,39 +32,39 @@ public class OutputView {
         System.out.print(LINE_SEPARATOR);
     }
 
-    private void printDealerFirstCard(CardDto dealerCard) {
+    private static void printDealerFirstCard(CardDto dealerCard) {
         System.out.printf(DEALER_CARD + LINE_SEPARATOR, dealerCard.rank().getRank() + dealerCard.suit().getSuit());
     }
 
-    public void printPlayerCard(String name, List<CardDto> playerCard) {
+    public static void printPlayerCard(String name, List<CardDto> playerCard) {
         String card = collectCards(playerCard);
 
         System.out.printf(PLAYER_CARD + LINE_SEPARATOR, name, card);
     }
 
-    public void printDealerCardWithScore(List<CardDto> dealerCard, int score) {
+    public static void printDealerCardWithScore(List<CardDto> dealerCard, int score) {
         String card = collectCards(dealerCard);
 
         System.out.printf(LINE_SEPARATOR + DEALER_CARD + SCORE + LINE_SEPARATOR, card, score);
     }
 
-    public void printPlayerCardWithScore(String name, List<CardDto> playerCard, int score) {
+    public static void printPlayerCardWithScore(String name, List<CardDto> playerCard, int score) {
         String card = collectCards(playerCard);
 
         System.out.printf(PLAYER_CARD + SCORE + LINE_SEPARATOR, name, card, score);
     }
 
-    private String collectCards(List<CardDto> cardDtos) {
+    private static String collectCards(List<CardDto> cardDtos) {
         return cardDtos.stream()
                 .map(cardDto -> cardDto.rank().getRank() + cardDto.suit().getSuit())
                 .collect(Collectors.joining(STRING_JOIN_DELIMITER));
     }
 
-    public void printDealerHit() {
+    public static void printDealerHit() {
         System.out.println(LINE_SEPARATOR + DEALER_DRAW);
     }
 
-    public void printGameResult(Map<Result, Integer> dealerResult, Map<String, Result> playerResults) {
+    public static void printGameResult(Map<Result, Integer> dealerResult, Map<String, Result> playerResults) {
         System.out.println(LINE_SEPARATOR + FINAL_RESULT);
 
         int winCount = dealerResult.getOrDefault(Result.WIN, 0);
