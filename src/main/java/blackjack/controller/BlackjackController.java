@@ -32,7 +32,7 @@ public class BlackjackController {
         List<Player> players = getPlayers(playerNames);
         Dealer dealer = new Dealer();
 
-        setupInitailHand(players, dealer, playerNames); // 2장씩 카드 분배
+        setupInitialHand(players, dealer, playerNames); // 2장씩 카드 분배
 
         processTurn(players); // 플레이어 hit or stand
         playDealerTurn(dealer);
@@ -41,7 +41,7 @@ public class BlackjackController {
         calculateFinalGameResult(players, dealer);
     }
 
-    private void setupInitailHand(List<Player> players, Dealer dealer, List<String> playerNames) {
+    private void setupInitialHand(List<Player> players, Dealer dealer, List<String> playerNames) {
         distributeInitialCards(players, dealer);
         OutputView.printInitialCardsDistribution(playerNames);
         printInitialCards(players, dealer);
