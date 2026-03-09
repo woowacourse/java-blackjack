@@ -2,6 +2,7 @@ package service;
 
 import domain.participant.Dealer;
 import domain.card.CardDeck;
+import domain.participant.HandCards;
 import domain.participant.player.Player;
 import domain.participant.player.PlayerGroups;
 import domain.participant.WinStatus;
@@ -15,7 +16,7 @@ import java.util.Map;
 
 public class GameService {
     private PlayerGroups playerGroups;
-    private Dealer dealer = new Dealer();
+    private Dealer dealer = new Dealer(new HandCards());
     private CardDeck cardDeck = new CardDeck();
     private static final int START_CARD_COUNT = 2;
 
@@ -23,7 +24,7 @@ public class GameService {
         List<Player> players = new ArrayList<>();
 
         for (String playerName : playerNames) {
-            Player player = new Player(new Name(playerName));
+            Player player = new Player(new Name(playerName), new HandCards());
             players.add(player);
         }
 
