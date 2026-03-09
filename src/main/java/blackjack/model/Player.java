@@ -20,6 +20,10 @@ public class Player {
         hand.addCard(card);
     }
 
+    public Hand getHand() {
+        return hand;
+    }
+
     public List<Card> getCards() {
         return hand.getCards();
     }

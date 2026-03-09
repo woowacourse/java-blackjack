@@ -114,7 +114,7 @@ public class BlackjackController {
     private void printResult(Players players, Dealer dealer) {
         List<ResultDto> resultDtos = new ArrayList<>();
         for (Player player : players) {
-            BlackjackResult result = resultJudgement.judge(player.getScore(), dealer.getScore());
+            BlackjackResult result = resultJudgement.judge(player.getHand(), dealer.getHand());
             resultDtos.add(new ResultDto(player.getName(), result));
         }
 
