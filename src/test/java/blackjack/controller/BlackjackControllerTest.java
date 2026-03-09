@@ -1,7 +1,6 @@
 package blackjack.controller;
 
 import blackjack.model.Card;
-import blackjack.model.CardCalculator;
 import blackjack.model.Deck;
 import blackjack.model.GameResultCalculator;
 import blackjack.model.Player;
@@ -13,9 +12,8 @@ import org.junit.jupiter.api.Test;
 
 class BlackjackControllerTest {
     private final Deck deck = new Deck();
-    private final CardCalculator cardCalculator = new CardCalculator();
     private final GameResultCalculator gameResultCalculator = new GameResultCalculator();
-    private final BlackjackController blackjackController = new BlackjackController(deck, cardCalculator,
+    private final BlackjackController blackjackController = new BlackjackController(deck,
             gameResultCalculator);
 
 

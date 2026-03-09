@@ -23,5 +23,17 @@ public class User {
     public void addCard(Card card) {
         hand.addCard(card);
     }
+
+    public int getScore() {
+        return hand.calculateScore();
+    }
+
+    public boolean isBust() {
+        return hand.isBust();
+    }
+
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
+    }
 }
 

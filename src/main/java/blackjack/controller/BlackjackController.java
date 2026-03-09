@@ -4,7 +4,6 @@ import static blackjack.model.Constant.DEALER_ADD_CARD_STAND;
 import static blackjack.model.Constant.TWENTY_ONE;
 import static blackjack.util.ExceptionHandler.retryUntilSuccess;
 
-import blackjack.model.CardCalculator;
 import blackjack.model.Dealer;
 import blackjack.model.Deck;
 import blackjack.model.ErrorMessage;
@@ -25,13 +24,11 @@ public class BlackjackController {
     private static final String Y_N_REGREX = "^[yYnN]$";
 
     private final Deck deck;
-    private final CardCalculator cardCalculator;
     private final GameResultCalculator gameResultCalculator;
 
-    public BlackjackController(Deck deck, CardCalculator cardCalculator,
+    public BlackjackController(Deck deck,
                                GameResultCalculator gameResultCalculator) {
         this.deck = deck;
-        this.cardCalculator = cardCalculator;
         this.gameResultCalculator = gameResultCalculator;
     }
 
@@ -69,9 +66,9 @@ public class BlackjackController {
     private List<GameSummary> createGameSummaryAndPrint(List<User> users) {
         List<GameSummary> gameSummaries = new ArrayList<>();
         for (User user : users) {
-            int totalScore = cardCalculator.totalScore(user.cards());
-            boolean bust = cardCalculator.calculateBust(totalScore);
-            boolean blackjack = cardCalculator.calculateBlackjack(user.cards());
+            int totalScore = user.getScore();
+            boolean bust = user.isBust();
+            boolean blackjack = user.isBlackjack();
 
             GameSummary gameSummary = new GameSummary(user, totalScore, bust, blackjack);
             gameSummaries.add(gameSummary);
@@ -88,7 +85,7 @@ public class BlackjackController {
             }
         }
 
-        while (cardCalculator.totalScore(dealer.cards()) < DEALER_ADD_CARD_STAND) {
+        while (dealer.getScore() < DEALER_ADD_CARD_STAND) {
             OutputView.printDealerHit();
             deck.provideOneCard(dealer);
         }
@@ -102,7 +99,7 @@ public class BlackjackController {
     }
 
     boolean checkAddCard(Player player) {
-        if (cardCalculator.totalScore(player.cards()) >= TWENTY_ONE) {
+        if (player.getScore() >= TWENTY_ONE) {
             OutputView.printCantAddCard();
             return false;
         }

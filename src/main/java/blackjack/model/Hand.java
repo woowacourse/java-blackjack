@@ -1,6 +1,10 @@
 package blackjack.model;
 
+import static blackjack.model.Constant.INIT_CARDS_END_IDX;
+import static blackjack.model.Constant.TWENTY_ONE;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Hand {
@@ -12,11 +16,44 @@ public class Hand {
     }
 
     public List<Card> getCards() {
-        return cards;
+        return Collections.unmodifiableList(cards);
     }
 
     public void addCard(Card card) {
         cards.add(card);
     }
+
+    public int calculateScore() {
+
+        int baseScore = cards.stream()
+                .mapToInt((card) -> card.getRank().getScore())
+                .sum();
+
+        int aceCount = (int) cards.stream()
+                .filter((card) -> card.getRank() == Rank.ACE)
+                .count();
+
+        for (int i = 0; i < aceCount; i++) {
+            baseScore = convertAceToEleven(baseScore);
+        }
+        return baseScore;
+
+    }
+
+    public boolean isBlackjack() {
+        return calculateScore() == TWENTY_ONE && cards.size() == INIT_CARDS_END_IDX;
+    }
+
+    public boolean isBust() {
+        return calculateScore() > TWENTY_ONE;
+    }
+
+    private int convertAceToEleven(int currentScore) {
+        if (currentScore + 10 <= 21) {
+            return currentScore + 10;
+        }
+        return currentScore;
+    }
+
 }
 
