@@ -1,7 +1,7 @@
 package domain.view;
 
 import domain.analyzer.dto.ResultAnalysisDto;
-import domain.answer.Answer;
+import domain.answer.DrawCardIntetion;
 import domain.player.PlayerName;
 import domain.player.dto.PlayerHandDto;
 import domain.player.dto.PlayerResultDto;
@@ -12,31 +12,39 @@ import java.util.function.Supplier;
 
 public class ApplicationView {
 
-    public InputReader reader;
-    public OutputWriter writer;
+    private final InputReader reader;
+    private final OutputWriter writer;
 
-    public ApplicationView(InputReader reader, OutputWriter writer) {
+    private ApplicationView(InputReader reader, OutputWriter writer) {
         this.reader = reader;
         this.writer = writer;
     }
 
-    public List<PlayerName> requestPlayerNames() {
-        return retry(() -> {
-            writer.printInputNameGuideMessage();
-            String names = reader.readInput();
-            return Arrays.stream(names.split(","))
-                    .map(String::trim)
-                    .map(PlayerName::from)
-                    .toList();
-        });
+    public static ApplicationView of(InputReader reader, OutputWriter writer) {
+        return new ApplicationView(reader, writer);
     }
 
-    public Answer askDrawCard(String playerName) {
-        return retry(() -> {
-            writer.printDrawCardGuideMessage(playerName);
-            String input = reader.readInput();
-            return Answer.from(input);
-        });
+    public List<PlayerName> requestPlayerNames() {
+        return retry(this::readPlayerNames);
+    }
+
+    private List<PlayerName> readPlayerNames() {
+        writer.printInputNameGuideMessage();
+        String names = reader.readInput();
+        return Arrays.stream(names.split(","))
+                .map(String::trim)
+                .map(PlayerName::from)
+                .toList();
+    }
+
+    public DrawCardIntetion requestDrawCardIntention(String playerName) {
+        return retry(() -> readDrawCardIntention(playerName));
+    }
+
+    private DrawCardIntetion readDrawCardIntention(String playerName) {
+        writer.printDrawCardGuideMessage(playerName);
+        String input = reader.readInput();
+        return DrawCardIntetion.from(input);
     }
 
     public void printInitialHandOutResult(List<String> playerNames, int initialCardCount) {
@@ -75,7 +83,6 @@ public class ApplicationView {
         PlayerHandDto playerHand = playerResult.playerHand();
         writer.printFinalResultMessage(playerHand.playerName(), playerHand.handOnCards(), playerResult.resultScore());
     }
-
 
     private <T> T retry(Supplier<T> task) {
         while (true) {

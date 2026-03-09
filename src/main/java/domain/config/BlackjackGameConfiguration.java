@@ -12,6 +12,6 @@ public record BlackjackGameConfiguration(
 ) {
 
     public BlackjackGameConfiguration() {
-        this(new ApplicationView(new InputReader(), new OutputWriter()), new GameCardGenerator());
+        this(ApplicationView.of(new InputReader(), new OutputWriter()), new GameCardGenerator());
     }
 }
