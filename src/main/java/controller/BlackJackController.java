@@ -82,7 +82,7 @@ public class BlackJackController {
 
         for (Entry<String, Cards> entry : dealoutResult.entrySet()) {
             String participantName = entry.getKey();
-            List<Card> hands = entry.getValue().toList();
+            List<Card> hands = entry.getValue().asList();
 
             List<String> result = hands.stream()
                     .map(card -> card.getSuit().getName() + card.getRank().getName())
@@ -99,7 +99,7 @@ public class BlackJackController {
             while (player.canHit() && inputView.askHit(player.getName())) {
                 blackjack.giveCardTo(player);
 
-                List<Card> hands = player.open().toList();
+                List<Card> hands = player.open().asList();
                 List<String> result = hands.stream()
                         .map(card -> card.getSuit().getName() + card.getRank().getName())
                         .toList();
@@ -128,8 +128,8 @@ public class BlackJackController {
     }
 
     private void proceedFinalPhase(Blackjack blackjack, Participants participants) {
-        for (Participant participant : participants.toList()) {
-            List<Card> hands = participant.open().toList();
+        for (Participant participant : participants.asList()) {
+            List<Card> hands = participant.open().asList();
             List<String> result = hands.stream()
                     .map(card -> card.getSuit().getName() + card.getRank().getName())
                     .toList();

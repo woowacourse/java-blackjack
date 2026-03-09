@@ -15,7 +15,7 @@ public class Cards {
         return new Cards(copied);
     }
 
-    public List<Card> toList() {
+    public List<Card> asList() {
         return List.copyOf(values);
     }
 }

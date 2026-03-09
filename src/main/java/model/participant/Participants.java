@@ -34,7 +34,7 @@ public class Participants {
                 .toList();
     }
 
-    public List<Participant> toList() {
+    public List<Participant> asList() {
         return List.copyOf(values);
     }
 }

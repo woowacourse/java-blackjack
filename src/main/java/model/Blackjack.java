@@ -36,7 +36,7 @@ public class Blackjack {
     public Map<String, Cards> dealout() {
         Map<String, Cards> dealOutResult = new LinkedHashMap<>();
 
-        for (Participant participant : participants.toList()) {
+        for (Participant participant : participants.asList()) {
             for (int i = 0; i < DEALOUT_DRAW_COUNT; i++) {
                 Card card = drawNewCard();
                 participant.receive(card);

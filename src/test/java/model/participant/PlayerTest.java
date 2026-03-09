@@ -40,8 +40,8 @@ class PlayerTest {
         Cards opened = player.open();
 
         // then
-        assertThat(opened.toList()).contains(card1, card2);
-        assertThat(opened.toList()).containsAll(List.of(card1, card2));
-        assertThat(opened.toList()).hasSize(2);
+        assertThat(opened.asList()).contains(card1, card2);
+        assertThat(opened.asList()).containsAll(List.of(card1, card2));
+        assertThat(opened.asList()).hasSize(2);
     }
 }
