@@ -37,4 +37,4 @@
   - 먼저 공부할 것. https://tecoble.techcourse.co.kr/post/2020-05-18-inheritance-vs-composition/
 - [x] **17. 블랙잭 도메인에 대한 테스트 코드를 진행할 것**
 - [ ] **18. 테스트 커버리지 80%를 목표로**
-- [ ] **19. Parser와 Validator의 구분 명확하게 할 것.**
+- [x] **19. Parser와 Validator의 구분 명확하게 할 것.**
