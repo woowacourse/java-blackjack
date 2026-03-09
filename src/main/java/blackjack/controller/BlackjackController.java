@@ -30,7 +30,7 @@ public class BlackjackController {
         Dealer dealer = new Dealer();
 
         setupInitailHand(players, dealer, playerNames); // 2장씩 카드 분배
-        
+
         processTurn(players); // 플레이어 hit or stand
         playDealerTurn(dealer);
 
@@ -69,18 +69,24 @@ public class BlackjackController {
 
     private void processTurn(List<Player> players) {
         for (Player player : players) {
-            while (true) {
-                String hitOrStand = InputView.askHitOrStand(player.getName());
-                if (!isHit(hitOrStand)) {
-                    break;
-                }
-                cardDistributor.distributeCardToPlayer(player);
-                OutputView.printDrawnCards(player.getName(), player.getCardNames());
-                if (player.isBust()) {
-                    break;
-                }
-            }
+            processPlayerTurn(player);
         }
+    }
+
+    private void processPlayerTurn(Player player) {
+        while (canContinueTurn(player)) {
+            drawCard(player);
+        }
+    }
+
+    private boolean canContinueTurn(Player player) {
+        String hitOrStand = InputView.askHitOrStand(player.getName());
+        return isHit(hitOrStand) && !player.isBust();
+    }
+
+    private void drawCard(Player player) {
+        cardDistributor.distributeCardToPlayer(player);
+        OutputView.printDrawnCards(player.getName(), player.getCardNames());
     }
 
     private static void printInitialCards(List<Player> players, Dealer dealer) {
