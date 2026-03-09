@@ -7,47 +7,47 @@ import java.util.Map;
 public class Referee {
 
     public GameResultDto createGameResult(int dealerScore, Map<String, Integer> scoreByPlayer) {
-        EnumMap<MatchResult, Integer> dealerMatchResult = new EnumMap<>(MatchResult.class);
-        Map<String, MatchResult> playerMatchResults = new LinkedHashMap<>();
+        Map<String, MatchResult> playerResults = calculatePlayerResults(dealerScore, scoreByPlayer);
+        EnumMap<MatchResult, Integer> dealerResults = calculateDealerResults(playerResults);
+
+        return new GameResultDto(dealerResults, playerResults);
+    }
+
+    private Map<String, MatchResult> calculatePlayerResults(int dealerScore, Map<String, Integer> scoreByPlayer) {
+        Map<String, MatchResult> results = new LinkedHashMap<>();
         for (Map.Entry<String, Integer> entry : scoreByPlayer.entrySet()) {
-            if (isBust(entry.getValue())) {
-                // 딜러 맵 승 증가
-                dealerMatchResult.merge(MatchResult.WIN, 1, Integer::sum);
-                // 플레이어맵 put(entry.getKey(), matchResult.패)
-                playerMatchResults.put(entry.getKey(), MatchResult.LOSE);
-                continue;
-            }
-            if (isBust(dealerScore)) {
-                // 딜러 맵 패 증가
-                dealerMatchResult.merge(MatchResult.LOSE, 1, Integer::sum);
-                // 플레이어맵 put(entry.getKey(), matchResult.승)
-                playerMatchResults.put(entry.getKey(), MatchResult.WIN);
-                continue;
-            }
+            results.put(entry.getKey(), judge(dealerScore, entry.getValue()));
+        }
+        return results;
+    }
 
-            // 비교
-            int dealerGap = Math.abs(21 - dealerScore);
-            int playerGap = Math.abs(21 - entry.getValue());
-            if (dealerGap < playerGap) {
-                // 딜러 맵 승 증가
-                dealerMatchResult.merge(MatchResult.WIN, 1, Integer::sum);
-                // 플레이어맵 put(entry.getKey(), matchResult.패)
-                playerMatchResults.put(entry.getKey(), MatchResult.LOSE);
-                continue;
-            }
+    private EnumMap<MatchResult, Integer> calculateDealerResults(Map<String, MatchResult> playerResults) {
+        EnumMap<MatchResult, Integer> counts = new EnumMap<>(MatchResult.class);
+        for (MatchResult result : playerResults.values()) {
+            counts.merge(result.reverse(), 1, Integer::sum);
+        }
+        return counts;
+    }
 
-            if (dealerGap == playerGap) {
-                dealerMatchResult.merge(MatchResult.DRAW, 1, Integer::sum);
-                playerMatchResults.put(entry.getKey(), MatchResult.DRAW);
-                continue;
-            }
-
-            dealerMatchResult.merge(MatchResult.LOSE, 1, Integer::sum);
-            // 플레이어맵 put(entry.getKey(), matchResult.승)
-            playerMatchResults.put(entry.getKey(), MatchResult.WIN);
+    private MatchResult judge(int dealerScore, int playerScore) {
+        if (isBust(playerScore)) {
+            return MatchResult.LOSE;
+        }
+        if (isBust(dealerScore)) {
+            return MatchResult.WIN;
         }
 
-        return new GameResultDto(dealerMatchResult, playerMatchResults);
+        return compareScore(dealerScore, playerScore);
+    }
+
+    private MatchResult compareScore(int dealerScore, int playerScore) {
+        if (dealerScore > playerScore) {
+            return MatchResult.LOSE;
+        }
+        if (dealerScore < playerScore) {
+            return MatchResult.WIN;
+        }
+        return MatchResult.DRAW;
     }
 
     private boolean isBust(int score) {

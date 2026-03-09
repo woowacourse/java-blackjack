@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
+    private final static int BUST_THRESHOLD = 21;
+    private final static int ACE_ADJUST_SCORE = 10;
     private final List<Card> cards;
 
     public Hand() {
@@ -36,8 +38,8 @@ public class Hand {
     }
 
     private int calculateAcePoint(int currentScore) {
-        if (currentScore > 21) {
-            return currentScore - 10;
+        if (currentScore > BUST_THRESHOLD) {
+            return currentScore - ACE_ADJUST_SCORE;
         }
         return currentScore;
     }
