@@ -37,8 +37,7 @@ class ResultAnalyzerTest {
         Players players = Players.from(List.of(playerScore7, playerScore11));
         players.giveInitialCardBundle(dealerScore4);
 
-        ResultAnalyzer resultAnalyzer = ResultAnalyzer.getInstance();
-        ResultAnalysisDto analysis = resultAnalyzer.analyze(players, dealerScore4);
+        ResultAnalysisDto analysis = ResultAnalyzer.analyze(players, dealerScore4);
 
         Assertions.assertThat(analysis.getDealerResult())
                 .isEqualTo("2패");
