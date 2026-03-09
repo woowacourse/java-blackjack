@@ -16,5 +16,4 @@ public enum CardShape {
     public String getName() {
         return name;
     }
-
 }

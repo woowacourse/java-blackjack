@@ -21,5 +21,4 @@ public class Card {
     public int getValue() {
         return value.getValue();
     }
-
 }

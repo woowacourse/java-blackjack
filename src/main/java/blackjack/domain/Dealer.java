@@ -14,5 +14,4 @@ public class Dealer extends User {
     public List<String> getFirstCard() {
         return List.of(cards.getFirst().getName());
     }
-
 }

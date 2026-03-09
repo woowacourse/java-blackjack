@@ -59,6 +59,7 @@ public class User {
         if (hasAce() && (sum + 10) <= 21) {
             return sum + 10;
         }
+
         return sum;
     }
 
@@ -68,7 +69,7 @@ public class User {
                 return true;
             }
         }
+
         return false;
     }
-
 }

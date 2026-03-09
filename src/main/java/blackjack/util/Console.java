@@ -24,7 +24,7 @@ public class Console {
         if (scanner == null) {
             scanner = new Scanner(System.in);
         }
+
         return scanner;
     }
-
 }

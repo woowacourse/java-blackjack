@@ -31,5 +31,4 @@ public class Deck {
     public Card bringTopCard() {
         return cards.removeFirst();
     }
-
 }

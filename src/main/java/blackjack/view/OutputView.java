@@ -59,5 +59,4 @@ public class OutputView {
             System.out.println(userName + ": " + flag);
         }
     }
-
 }

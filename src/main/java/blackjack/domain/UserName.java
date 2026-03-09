@@ -17,5 +17,4 @@ public record UserName(
             throw new IllegalArgumentException("플레이어 이름은 5자가 넘을 수 없습니다.");
         }
     }
-
 }

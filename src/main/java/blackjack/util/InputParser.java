@@ -10,5 +10,4 @@ public class InputParser {
     public static List<String> parseUser(String userName) {
         return List.of(userName.split(","));
     }
-
 }
