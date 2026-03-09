@@ -2,15 +2,15 @@ package blackjack.domain;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
-import blackjack.dto.ParticipantResult;
 import blackjack.domain.participant.Player;
 import blackjack.dto.DrawResult;
+import blackjack.dto.ParticipantResult;
 import blackjack.dto.WinningResult;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Participants {
-    
+
     private final Players players;
     private final Dealer dealer;
 
@@ -98,9 +98,4 @@ public class Participants {
     public List<String> getAllPlayerNickname() {
         return players.getAllPlayerNickname();
     }
-
-    public ParticipantResult getDrawPlayerResult() {
-        return new ParticipantResult(players.findDrawablePlayer());
-    }
-
 }
