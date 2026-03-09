@@ -27,13 +27,13 @@ public class OutputView {
     public static void printInitDeck(List<PlayerResult> players, PlayerResult dealer) {
         List<String> playerNames = players.stream().map(playerResult -> playerResult.name().value()).toList();
         printInitDeckDrawMessage(playerNames);
-        printDealerInitDeck(dealer.deck().getFirst());
+        printDealerInitDeck(dealer.hand().getFirst());
         printPlayersCurrentDeck(players);
         printNewLine();
     }
 
     public static void printPlayerCurrentDeck(PlayerResult playerResult) {
-        List<String> cardString = playerResult.deck().stream().map(Card::getString).toList();
+        List<String> cardString = playerResult.hand().stream().map(Card::getString).toList();
         System.out.println(playerResult.name().value() + CARD_TEXT + String.join(JOIN_DELIMITER, cardString));
     }
 
@@ -76,7 +76,7 @@ public class OutputView {
     }
 
     private static void printPlayerScore(PlayerResult playerResult) {
-        List<String> cardString = playerResult.deck().stream().map(Card::getString).toList();
+        List<String> cardString = playerResult.hand().stream().map(Card::getString).toList();
         System.out.println(playerResult.name().value() + CARD_TEXT + String.join(JOIN_DELIMITER, cardString) + SCORE_TEXT + playerResult.score());
     }
 
