@@ -11,7 +11,7 @@ public class Dealer extends Player {
         return score >= DEALER_STOP_SCORE;
     }
 
-    public String showFirstCard() {
+    public String getFirstCardInfo() {
         return handCard.getFirstCardInfo();
     }
 
