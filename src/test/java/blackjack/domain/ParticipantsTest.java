@@ -20,7 +20,7 @@ class ParticipantsTest {
         
         participants.distributeCards(deck);
         
-        assertThat(participants.getInitialResults()).contains("\n");
+        assertThat(participants.getPlayersStatus()).size().isEqualTo(2);
     }
     
     @DisplayName("덱에 남은 카드가 부족할 때 초기 분배를 시도하면 예외가 발생한다.")
@@ -28,7 +28,8 @@ class ParticipantsTest {
     void distributeCardsThrowsExceptionOnShortDeck() {
         Players players = Players.makePlayers(List.of(
                 "pobi", "jason", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p"
-                , "a10", "a11", "a12", "a13", "a14", "a15", "a16", "a17", "a1a", "a1s", "a1d", "a1f", "a1g", "a1h", "a1j", "a1k", "a1l", "a1q"));
+                , "a10", "a11", "a12", "a13", "a14", "a15", "a16", "a17", "a1a", "a1s", "a1d", "a1f", "a1g", "a1h",
+                "a1j", "a1k", "a1l", "a1q"));
         Participants participants = new Participants(players, new Dealer());
         Deck shortDeck = new Deck();
         

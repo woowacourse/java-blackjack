@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.Card;
 import blackjack.domain.Deck;
 import blackjack.domain.Hand;
+import blackjack.dto.ParticipantStatus;
 import java.util.List;
 
 public abstract class Participant {
@@ -16,31 +17,24 @@ public abstract class Participant {
         this.hand = new Hand();
     }
     
-    public String getResultSnapshot() {
-        String info = getInfoSnapshot();
-        int aceCalculatedScoreSum = hand.getTotalScore();
-        return String.format("%s - 결과: %d", info, aceCalculatedScoreSum);
-    }
-    
     public String getInfoSnapshot() {
-        String cardSnapshot = hand.getSnapshot();
-        return String.format("%s카드: %s", nickname, cardSnapshot);
+        return hand.getSnapshot();
     }
     
     public String getNickname() {
         return nickname;
     }
     
-    public String distributeCards(Deck deck) {
+    public ParticipantStatus distributeCards(Deck deck) {
         List<Card> drewCards = deck.drawCards(FIRST_DRAW_COUNT);
         return receiveCard(drewCards);
     }
     
     public abstract boolean isDrawable();
     
-    public String receiveCard(List<Card> receivedCards) {
+    public ParticipantStatus receiveCard(List<Card> receivedCards) {
         hand.addCard(receivedCards);
-        return getInfoSnapshot();
+        return new ParticipantStatus(this);
     }
     
     public int getTotalScore() {
@@ -49,5 +43,9 @@ public abstract class Participant {
     
     public boolean isBusted() {
         return hand.isBusted();
+    }
+    
+    public ParticipantStatus getCardStatus() {
+        return new ParticipantStatus(this);
     }
 }

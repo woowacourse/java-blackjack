@@ -4,7 +4,8 @@ import blackjack.domain.Deck;
 import blackjack.domain.Participants;
 import blackjack.domain.Players;
 import blackjack.domain.participant.Dealer;
-import blackjack.dto.WinningResult;
+import blackjack.dto.ParticipantStatus;
+import blackjack.dto.TotalWinningResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.UserCommand;
@@ -35,11 +36,11 @@ public class BlackjackRunner {
     }
     
     private void printInitialResult(Participants participants) {
-        outputView.printInitialResult(participants.getInitialResults());
+        outputView.printInitialResult(participants.getParticipantsInitialStatus());
     }
     
     private void printInitialSetup(Participants participants) {
-        outputView.printInitialSetUp(participants.getPlayerNicknames());
+        outputView.printInitialSetUp(participants.getPlayersStatus());
     }
     
     private Participants makeParticipants() {
@@ -51,18 +52,18 @@ public class BlackjackRunner {
     }
     
     public void printGameResult(Participants participants) {
-        outputView.printTotalResult(participants.getTotalResults());
+        outputView.printTotalResult(participants.getParticipantsStatus());
         
-        WinningResult winningResults = participants.getWinningResult();
-
-        outputView.printWinningResults(winningResults);
+        TotalWinningResult totalWinningResults = participants.getWinningResult();
+        
+        outputView.printWinningResults(totalWinningResults);
     }
     
     private void gameStart(Participants participants, Deck deck) {
         printInitialSetup(participants);
-
+        
         participants.distributeCards(deck);
-
+        
         printInitialResult(participants);
     }
     
@@ -74,45 +75,35 @@ public class BlackjackRunner {
     }
     
     private void playerTurn(Participants participants, final Deck deck) {
-        while (participants.findDrawablePlayer() != null) {
+        while (participants.isPlayerDraw()) {
             playerDraw(participants, deck);
         }
     }
     
     private void playerDraw(Participants participants, Deck deck) {
-        String drawablePlayerNickname = participants.findDrawablePlayer();
-        boolean isPlayerDraw = isDraw(drawablePlayerNickname);
-        if (isPlayerDraw) {
-            String drawResult = participants.addCardToAvailablePlayer(deck);
+        ParticipantStatus drawablePlayer = participants.getDrawablePlayerInfo();
+        if (isDraw(drawablePlayer)) {
+            ParticipantStatus drawResult = participants.giveCard(deck);
             printDrewResult(drawResult);
             return;
         }
         participants.dontWantDraw();
     }
     
-    private void printDrewResult(String drawResult) {
-        outputView.printLine(drawResult);
+    private void printDrewResult(ParticipantStatus drawResult) {
+        outputView.printPlayerStatus(drawResult);
     }
     
-    private boolean isDraw(String nickname) {
-        outputView.hitOrStand(nickname);
+    private boolean isDraw(ParticipantStatus drawablePlayer) {
+        outputView.hitOrStand(drawablePlayer);
         return getCommand() == UserCommand.YES;
     }
     
     private UserCommand getCommand() {
         UserCommand command = null;
         while (command == null) {
-            command = getValidCommand();
+            command = inputView.getCommand();
         }
         return command;
-    }
-    
-    private UserCommand getValidCommand() {
-        try {
-            return UserCommand.from(inputView.readLine());
-        } catch (IllegalArgumentException exception) {
-            outputView.printLine(exception.getMessage());
-            return null;
-        }
     }
 }

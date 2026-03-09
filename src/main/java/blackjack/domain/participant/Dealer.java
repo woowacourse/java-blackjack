@@ -1,5 +1,7 @@
 package blackjack.domain.participant;
 
+import blackjack.dto.ParticipantStatus;
+
 public class Dealer extends Participant {
     
     private static final String DEALER_NICKNAME = "딜러";
@@ -10,12 +12,15 @@ public class Dealer extends Participant {
     }
     
     public String getFirstCardInfoSnapshot() {
-        String firstCardSnapshot = hand.getFirstSnapshot();
-        return String.format("%s카드: %s", nickname, firstCardSnapshot);
+        return hand.getFirstSnapshot();
     }
-
+    
     @Override
     public boolean isDrawable() {
         return hand.getTotalScore() <= DEALER_SCORE;
+    }
+    
+    public ParticipantStatus getInitialStatus() {
+        return new ParticipantStatus(this);
     }
 }

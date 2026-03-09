@@ -2,17 +2,17 @@ package blackjack.domain;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.dto.PlayerResult;
-import blackjack.dto.WinningResult;
+import blackjack.dto.ParticipantStatus;
+import blackjack.dto.PlayerGameResult;
+import blackjack.dto.TotalWinningResult;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Players {
     
-    private final List<Player> players;
+    private final List<Player> playerList;
     
-    private Players(List<Player> players) {
-        this.players = players;
+    private Players(List<Player> playerList) {
+        this.playerList = playerList;
     }
     
     public static Players from(List<Player> players) {
@@ -27,77 +27,70 @@ public class Players {
         return from(result);
     }
     
-    public String findDrawablePlayerNickname() {
-        Player player = findDrawablePlayer();
-        if (player == null) {
-            return null;
+    public void distributeCards(Deck deck) {
+        playerList.forEach(player -> player.distributeCards(deck));
+    }
+    
+    public List<ParticipantStatus> getPlayerCardStatus() {
+        return playerList
+                .stream()
+                .map(Player::getCardStatus)
+                .toList();
+    }
+    
+    public ParticipantStatus giveCard(List<Card> card) {
+        if (isDrawablePlayer()) {
+            Player player = findDrawablePlayer();
+            return player.receiveCard(card);
         }
-        return player.getNickname();
+        return null;
     }
     
-    public String addCardToAvailablePlayer(List<Card> card) {
-        Player player = findDrawablePlayer();
-        return player.receiveCard(card);
+    public boolean isDrawablePlayer() {
+        return playerList
+                .stream()
+                .anyMatch(Player::isDrawable);
     }
     
-    public Player findDrawablePlayer() {
-        return players.stream()
+    public ParticipantStatus getDrawablePlayerInfo() {
+        return new ParticipantStatus(findDrawablePlayer());
+    }
+    
+    private Player findDrawablePlayer() {
+        return playerList.stream()
                 .filter(Player::isDrawable)
                 .findFirst()
                 .orElse(null);
     }
     
     public void dontWantDraw() {
-        Player player = findDrawablePlayer();
-        player.stop();
+        Player drawablePlayer = findDrawablePlayer();
+        if (drawablePlayer != null) {
+            drawablePlayer.stop();
+        }
     }
     
-    public String getPlayersInfo() {
-        return players
-                .stream()
-                .map(Player::getInfoSnapshot)
-                .collect(Collectors.joining("\n"));
-    }
-    
-    public String getAllPlayerNicknames() {
-        return players
-                .stream()
-                .map(Player::getNickname)
-                .collect(Collectors.joining(", "));
-    }
-    
-    public String getPlayersResult() {
-        return players
-                .stream()
-                .map(Player::getResultSnapshot)
-                .collect(Collectors.joining("\n"));
-    }
-    
-    public WinningResult getWinningResult(Dealer dealer) {
-        List<PlayerResult> playerResult = players
+    public TotalWinningResult getWinningResult(Dealer dealer) {
+        List<PlayerGameResult> playerGameResult = playerList
                 .stream()
                 .map(player -> player.determinePlayerResult(dealer))
                 .toList();
-        return getWinningResultWithDealerWinning(playerResult);
+        return getWinningResultWithDealerWinning(playerGameResult);
     }
     
-    private WinningResult getWinningResultWithDealerWinning(List<PlayerResult> playerResult) {
-        int dealerWin = (int) playerResult
+    private TotalWinningResult getWinningResultWithDealerWinning(List<PlayerGameResult> playerGameResult) {
+        int dealerWin = (int) playerGameResult
                 .stream()
                 .filter(result -> result.gameResult() == GameResult.LOSE)
                 .count();
-        int dealerDraw = (int) playerResult
+        int dealerDraw = (int) playerGameResult
                 .stream()
                 .filter(result -> result.gameResult() == GameResult.DRAW)
                 .count();
-        int dealerLose = (int) playerResult
+        int dealerLose = (int) playerGameResult
                 .stream()
                 .filter(result -> result.gameResult() == GameResult.WIN)
                 .count();
-        return new WinningResult(dealerWin, dealerDraw, dealerLose, playerResult);
-    }
-    
-    public void distributeCards(Deck deck) {
-        players.forEach(player -> player.distributeCards(deck));
+        return new TotalWinningResult(dealerWin, dealerDraw, dealerLose, playerGameResult);
     }
 }

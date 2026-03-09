@@ -1,7 +1,9 @@
 package blackjack.domain;
 
 import blackjack.domain.participant.Dealer;
-import blackjack.dto.WinningResult;
+import blackjack.dto.ParticipantStatus;
+import blackjack.dto.TotalWinningResult;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Participants {
@@ -19,33 +21,30 @@ public class Participants {
         players.distributeCards(deck);
     }
     
-    public String getPlayerNicknames() {
-        return players.getAllPlayerNicknames();
+    public List<ParticipantStatus> getParticipantsInitialStatus() {
+        List<ParticipantStatus> participantStatuses = new ArrayList<>();
+        participantStatuses.add(dealer.getInitialStatus());
+        participantStatuses.addAll(getPlayersStatus());
+        return participantStatuses;
     }
     
-    public String getInitialResults() {
-        String dealerInfo = dealer.getFirstCardInfoSnapshot();
-        String playersInfo = players.getPlayersInfo();
-        return String.format("%s\n%s", dealerInfo, playersInfo);
+    public List<ParticipantStatus> getParticipantsStatus() {
+        List<ParticipantStatus> participantStatuses = new ArrayList<>();
+        participantStatuses.add(dealer.getCardStatus());
+        participantStatuses.addAll(getPlayersStatus());
+        return participantStatuses;
     }
     
-    public String getTotalResults() {
-        String dealerResult = dealer.getResultSnapshot();
-        String playersResult = players.getPlayersResult();
-        return String.format("%s\n%s", dealerResult, playersResult);
+    public List<ParticipantStatus> getPlayersStatus() {
+        return players.getPlayerCardStatus();
     }
     
-    public WinningResult getWinningResult() {
+    public TotalWinningResult getWinningResult() {
         return players.getWinningResult(dealer);
     }
     
-    public String findDrawablePlayer() {
-        return players.findDrawablePlayerNickname();
-    }
-    
-    public String addCardToAvailablePlayer(Deck deck) {
-        List<Card> drewCards = deck.drawCard();
-        return players.addCardToAvailablePlayer(drewCards);
+    public ParticipantStatus getDrawablePlayerInfo() {
+        return players.getDrawablePlayerInfo();
     }
     
     public void dontWantDraw() {
@@ -59,5 +58,14 @@ public class Participants {
     public void dealerDraw(Deck deck) {
         List<Card> drewCard = deck.drawCard();
         dealer.receiveCard(drewCard);
+    }
+    
+    public ParticipantStatus giveCard(Deck deck) {
+        List<Card> drewCards = deck.drawCard();
+        return players.giveCard(drewCards);
+    }
+    
+    public boolean isPlayerDraw() {
+        return players.isDrawablePlayer();
     }
 }

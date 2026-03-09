@@ -44,4 +44,8 @@ public class InputView {
             throw new IllegalArgumentException("플레이어 이름은 중복될 수 없습니다.");
         }
     }
+    
+    public UserCommand getCommand() {
+        return UserCommand.from(readLine());
+    }
 }

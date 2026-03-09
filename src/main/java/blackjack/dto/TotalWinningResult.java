@@ -6,6 +6,6 @@ public record TotalWinningResult(
         int dealerWin,
         int dealerDraw,
         int dealerLoss,
-        List<PlayerResult> playerResults
+        List<PlayerGameResult> playerGameResults
 ) {
 }

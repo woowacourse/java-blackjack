@@ -1,7 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.GameResult;
-import blackjack.dto.PlayerResult;
+import blackjack.dto.PlayerGameResult;
 
 public class Player extends Participant {
     
@@ -27,9 +27,9 @@ public class Player extends Participant {
         stopDrawing = true;
     }
     
-    public PlayerResult determinePlayerResult(Dealer dealer) {
+    public PlayerGameResult determinePlayerResult(Dealer dealer) {
         GameResult gameResult = determineGameResult(dealer);
-        return new PlayerResult(nickname, gameResult);
+        return new PlayerGameResult(nickname, gameResult);
     }
     
     private GameResult determineGameResult(Dealer dealer) {
