@@ -3,8 +3,8 @@ package domain;
 import java.util.Objects;
 
 public class Card {
-    private CardNumber cardNumber;
-    private CardShape cardShape;
+    private final CardNumber cardNumber;
+    private final CardShape cardShape;
 
     public Card(CardNumber cardNumber, CardShape cardShape) {
         this.cardNumber = cardNumber;

@@ -6,10 +6,10 @@ import java.util.Collections;
 import java.util.List;
 
 public class Deck {
-    private List<Card> cards = new ArrayList<>();
+    private final List<Card> cards;
 
     public Deck() {
-        cards = initialize();
+        this.cards = initialize();
     }
 
     private List<Card> initialize() {
