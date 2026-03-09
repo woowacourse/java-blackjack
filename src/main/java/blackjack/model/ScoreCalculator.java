@@ -24,7 +24,7 @@ public class ScoreCalculator {
         return cards.stream().anyMatch(x -> x.rank() == Rank.ACE);
     }
 
-    private boolean canApplyAceAmount(int sum) {
+    private boolean canApplyAceAmount(final int sum) {
         return !bustPolicy.isBust(new Score(sum + ACE_ADJUST_AMOUNT));
     }
 }

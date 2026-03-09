@@ -46,9 +46,7 @@ public class BlackjackController {
     }
 
     private void hitPlayers(List<Player> players, Deck deck) {
-        for (Player player : players) {
-            hitPlayer(player, deck);
-        }
+        players.forEach(player -> hitPlayer(player, deck));
     }
 
     private void hitPlayer(Player player, Deck deck) {

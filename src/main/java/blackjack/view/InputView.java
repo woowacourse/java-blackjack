@@ -23,7 +23,7 @@ public class InputView {
         return converToAnswer(readStrippedLine());
     }
 
-    private Answer converToAnswer(String rawAnswer) {
+    private Answer converToAnswer(final String rawAnswer) {
         if (YES.equals(rawAnswer)) {
             return Answer.YES;
         }

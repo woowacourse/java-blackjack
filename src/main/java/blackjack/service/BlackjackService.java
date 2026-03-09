@@ -1,6 +1,7 @@
 package blackjack.service;
 
 import blackjack.model.Answer;
+import blackjack.model.Player;
 import blackjack.model.PlayerBlackjackResult;
 import blackjack.model.BlackjackGameManager;
 import blackjack.model.Card;
@@ -43,7 +44,7 @@ public class BlackjackService {
         player.hit(deck.draw());
     }
 
-    public boolean canHit(Participant player) {
+    public boolean canHit(Player player) {
         return manager.canHit(player);
     }
 

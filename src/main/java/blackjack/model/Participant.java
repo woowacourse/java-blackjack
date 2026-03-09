@@ -12,7 +12,7 @@ public abstract class Participant {
         this.hand = hand;
     }
 
-    private void validate(String name) {
+    private void validate(final String name) {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("참가자의 이름은 null 이거나 empty 일 수 없습니다.");
         }

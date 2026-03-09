@@ -68,7 +68,7 @@ public class OutputView {
         System.out.println();
     }
 
-    private void printPlayerScore(String playerName, List<CardDto> cards, Score score) {
+    private void printPlayerScore(final String playerName, List<CardDto> cards, Score score) {
         List<String> cardOutputs = parseCardsToOutputs(cards);
         String joinedCards = String.join(", ", cardOutputs);
         System.out.println(playerName + "카드: " + joinedCards + " - 결과: " + score.value());

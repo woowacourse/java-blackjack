@@ -11,7 +11,7 @@ public class BlackjackGameManager {
         this.rule = rule;
     }
 
-    public boolean canHit(Participant player) {
+    public boolean canHit(Player player) {
         Score score = calculate(player.getCards());
         return rule.canHitPlayer(score);
     }

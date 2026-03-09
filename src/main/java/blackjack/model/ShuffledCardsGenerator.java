@@ -16,7 +16,7 @@ public class ShuffledCardsGenerator implements CardsGenerator {
             .collect(Collectors.toCollection(ArrayList::new));
 
         Collections.shuffle(cards);
-        return cards;
+        return Collections.unmodifiableList(cards);
     }
 
     private static Stream<Card> createCardsByRank(Rank rank) {

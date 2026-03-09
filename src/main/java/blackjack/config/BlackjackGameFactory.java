@@ -18,13 +18,8 @@ import blackjack.view.OutputView;
 
 public class BlackjackGameFactory {
 
-    private final int bustThreshold;
-    private final int dealerThreshold;
-
-    public BlackjackGameFactory(int bustThreshold, int dealerThreshold) {
-        this.bustThreshold = bustThreshold;
-        this.dealerThreshold = dealerThreshold;
-    }
+    private final static int BUST_THRESHOLD = 21;
+    private final static int DEALER_HIT_THRESHOLD = 16;
 
     public BlackjackController controller() {
         return new BlackjackController(output(), service());
@@ -51,10 +46,10 @@ public class BlackjackGameFactory {
     }
 
     private BustPolicy bustPolicy() {
-        return new BustPolicyImpl(bustThreshold);
+        return new BustPolicyImpl(BUST_THRESHOLD);
     }
 
     private DealerHitPolicy dealerHitPolicy() {
-        return new DealerThresholdHitPolicy(dealerThreshold);
+        return new DealerThresholdHitPolicy(DEALER_HIT_THRESHOLD);
     }
 }

@@ -18,11 +18,11 @@ public class Participants implements Iterable<Participant> {
         this.players = players;
     }
 
-    public static Participants from(String rawPlayerNames) {
+    public static Participants from(final String rawPlayerNames) {
         List<String> playerNames = Arrays.asList(rawPlayerNames.split(DELIMITER, INCLUDE_EMPTY_ELEMENT));
         validateDuplicatedNames(playerNames);
-        List<Player> players = new java.util.ArrayList<>(playerNames.stream()
-            .map(playerName -> new Player(playerName, new Hand())).toList());
+        List<Player> players = playerNames.stream()
+            .map(playerName -> new Player(playerName.strip(), new Hand())).toList();
         return new Participants(players);
     }
 
