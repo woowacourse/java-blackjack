@@ -1,10 +1,14 @@
 package blackjack.controller;
 
 import blackjack.model.Deck;
+import blackjack.view.InputView;
+import blackjack.view.OutputView;
 
 class BlackjackControllerTest {
+    private final InputView inputView = new InputView();
+    private final OutputView outputView = new OutputView();
     private final Deck deck = new Deck();
-    private final BlackjackController blackjackController = new BlackjackController(deck);
+    private final BlackjackController blackjackController = new BlackjackController(inputView, outputView, deck);
 
 //    @Test
 //    @DisplayName("카드의 합이 21이상인 경우 카드 추가 지급 불가 ( false 반환 )")

@@ -4,12 +4,10 @@ import static blackjack.util.ExceptionHandler.retryUntilSuccess;
 
 import blackjack.model.Dealer;
 import blackjack.model.Deck;
-import blackjack.model.ErrorMessage;
 import blackjack.model.GameSummary;
 import blackjack.model.Player;
 import blackjack.model.Players;
 import blackjack.util.PlayerParser;
-import blackjack.util.Validator;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -17,17 +15,19 @@ import java.util.List;
 
 public class BlackjackController {
 
-    private static final String Y_N_REGREX = "^[yYnN]$";
-
+    private final InputView inputView;
+    private final OutputView outputView;
     private final Deck deck;
 
-    public BlackjackController(Deck deck) {
+    public BlackjackController(InputView inputView, OutputView outputView, Deck deck) {
+        this.inputView = inputView;
+        this.outputView = outputView;
         this.deck = deck;
     }
 
     public void run() {
         List<Player> playerList = retryUntilSuccess(() -> {
-            String input = InputView.readPlayerName();
+            String input = inputView.readPlayerName();
             return PlayerParser.parse(input);
         });
 
@@ -35,40 +35,33 @@ public class BlackjackController {
         Dealer dealer = new Dealer();
 
         deck.provideInitCards(players, dealer);
-        OutputView.printInitCards(players.all(), dealer);
+        outputView.printInitCards(players.all(), dealer);
 
         hit(players, dealer);
 
         List<GameSummary> gameSummaries = players.calculateGameResult(dealer);
 
         for (GameSummary gameSummary : gameSummaries) {
-            OutputView.printCardStatus(gameSummary);
+            outputView.printCardStatus(gameSummary);
         }
 
-        OutputView.printGameResult(players, dealer);
+        outputView.printGameResult(players, dealer);
 
-        InputView.closeScanner();
+        inputView.closeScanner();
     }
 
-    public void hit(Players players, Dealer dealer) {
+    private void hit(Players players, Dealer dealer) {
         for (Player player : players.all()) {
-            while (player.canHit() && retryUntilSuccess(() -> checkY(player))) {
+            while (player.canHit() && retryUntilSuccess(() -> inputView.readCardAdd(player))) {
                 deck.provideOneCard(player);
-                OutputView.printPlayerCards(player);
+                outputView.printPlayerCards(player);
             }
         }
 
         while (dealer.canHit()) {
-            OutputView.printDealerHit();
+            outputView.printDealerHit();
             deck.provideOneCard(dealer);
         }
-    }
-
-    private boolean checkY(Player player) {
-        String input = InputView.readCardAdd(player).trim();
-        Validator.validateEmpty(input, ErrorMessage.ERROR_EMPTY_INPUT.getErrorMessage());
-        Validator.validateRegrex(Y_N_REGREX, input, ErrorMessage.ERROR_NOT_Y_N_INPUT.getErrorMessage());
-        return input.equals("y");
     }
 
 }

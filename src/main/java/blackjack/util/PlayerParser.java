@@ -9,7 +9,6 @@ import java.util.List;
 
 public class PlayerParser {
 
-    private static final String PLAYER_NAME_REGREX = "^[a-zA-Z가-힣]*$";
 
     public static List<Player> parse(String names) {
         return Arrays.stream(names.split(","))

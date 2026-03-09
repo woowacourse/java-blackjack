@@ -10,7 +10,7 @@ import java.util.EnumMap;
 import java.util.List;
 
 public class OutputView {
-    public static void printInitCards(List<Player> players, Dealer dealer) {
+    public void printInitCards(List<Player> players, Dealer dealer) {
         List<String> names = players.stream()
                 .map(Player::getName)
                 .toList();
@@ -28,13 +28,13 @@ public class OutputView {
         System.out.println();
     }
 
-    private static void printDealerCard(Dealer dealer) {
+    private void printDealerCard(Dealer dealer) {
         System.out.println(
                 "딜러카드: " + dealer.cards().getFirst().getRank().getName() + dealer.cards().getFirst().getSuit()
                         .getName());
     }
 
-    public static void printPlayerCards(Player player) {
+    public void printPlayerCards(Player player) {
         List<String> formats = player.cards().stream()
                 .map((card) -> {
                     return card.getRank().getName() + card.getSuit().getName();
@@ -45,11 +45,11 @@ public class OutputView {
     }
 
 
-    public static void printDealerHit() {
+    public void printDealerHit() {
         System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
     }
 
-    public static void printCardStatus(GameSummary gameSummary) {
+    public void printCardStatus(GameSummary gameSummary) {
         User user = gameSummary.user();
 
         StringBuilder sb = new StringBuilder();
@@ -62,7 +62,7 @@ public class OutputView {
         System.out.println(sb);
     }
 
-    public static void printGameResult(Players players, Dealer dealer) {
+    public void printGameResult(Players players, Dealer dealer) {
         System.out.println();
         System.out.println("## 최종 승패");
 
@@ -78,7 +78,7 @@ public class OutputView {
         }
     }
 
-    public static void printError(String errorMessage) {
+    public void printError(String errorMessage) {
         System.out.println("[ERROR] " + errorMessage);
     }
 
