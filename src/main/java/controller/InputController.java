@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 import model.Agreement;
 import model.Player;
-import model.dto.PlayerName;
+import dto.PlayerName;
 import model.Players;
 import view.InputView;
 

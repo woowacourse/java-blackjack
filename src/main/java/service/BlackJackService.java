@@ -10,9 +10,9 @@ import model.Player;
 import model.Players;
 import model.PlayersWinning;
 import model.Scorer;
-import model.dto.Card;
-import model.dto.ParticipantWinning;
-import model.dto.PlayerWinning;
+import dto.Card;
+import dto.ParticipantWinning;
+import dto.PlayerWinning;
 
 public class BlackJackService {
     private static final Integer BUST_NUMBER = 21;

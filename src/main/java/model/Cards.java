@@ -2,7 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
-import model.dto.Card;
+import dto.Card;
 
 public class Cards {
     private final List<Card> cards;

@@ -1,8 +1,8 @@
 package model;
 
-import model.dto.Card;
-import model.dto.PlayerName;
-import model.dto.PlayerResult;
+import dto.Card;
+import dto.PlayerName;
+import dto.PlayerResult;
 
 public class Participant {
     private final PlayerName name;
@@ -13,11 +13,18 @@ public class Participant {
     }
 
     public PlayerResult getResult() {
-        return new PlayerResult(name, participantHand.getDeck().get(), participantHand.getScore());
+        return new PlayerResult(name, participantHand.getHand().get(), participantHand.getScore());
+    }
+
+    public void draw(Card card) {
+        participantHand.addCard(card);
+        Integer score = card.cardNumber().getScore();
+
+        participantHand.addScore(score);
     }
 
     public void addCard(Card card) {
-        participantHand.addDeck(card);
+        participantHand.addCard(card);
     }
 
     public void addScore(Integer score) {

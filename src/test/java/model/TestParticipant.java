@@ -2,9 +2,9 @@ package model;
 
 
 import java.util.List;
-import model.dto.Card;
-import model.dto.PlayerName;
-import model.dto.PlayerResult;
+import dto.Card;
+import dto.PlayerName;
+import dto.PlayerResult;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;

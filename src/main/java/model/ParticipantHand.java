@@ -1,16 +1,16 @@
 package model;
 
 import constant.ErrorMessage;
-import model.dto.Card;
+import dto.Card;
 
 public class ParticipantHand {
 
     private final Score score = new Score();
-    private final Cards deck = new Cards();
+    private final Cards hand = new Cards();
 
-    public void addDeck(Card card) {
+    public void addCard(Card card) {
         validateCardDuplicate(card);
-        deck.add(card);
+        hand.add(card);
     }
 
     public void addScore(Integer score) {
@@ -21,12 +21,12 @@ public class ParticipantHand {
         return score.get();
     }
 
-    public Cards getDeck() {
-        return deck;
+    public Cards getHand() {
+        return hand;
     }
 
     private void validateCardDuplicate(Card card) {
-        if(deck.get().contains(card)) {
+        if(hand.get().contains(card)) {
             throw new IllegalArgumentException(ErrorMessage.DUPLICATED_CARD_IN_DECK.getMessage());
         }
     }

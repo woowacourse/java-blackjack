@@ -1,3 +1,3 @@
-package model.dto;
+package dto;
 
 public record PlayerName(String value) { }

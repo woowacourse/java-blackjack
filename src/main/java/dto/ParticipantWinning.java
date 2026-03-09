@@ -1,4 +1,4 @@
-package model.dto;
+package dto;
 
 import model.DealerWinning;
 import model.PlayersWinning;

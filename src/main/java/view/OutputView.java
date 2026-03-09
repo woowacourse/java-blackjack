@@ -6,10 +6,10 @@ import java.util.Map.Entry;
 import model.DealerWinning;
 import model.MatchStatus;
 import model.PlayersWinning;
-import model.dto.Card;
-import model.dto.ParticipantWinning;
-import model.dto.PlayerResult;
-import model.dto.PlayerWinning;
+import dto.Card;
+import dto.ParticipantWinning;
+import dto.PlayerResult;
+import dto.PlayerWinning;
 
 public class OutputView {
     private static final String JOIN_DELIMITER = ", ";

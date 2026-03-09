@@ -2,7 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
-import model.dto.PlayerWinning;
+import dto.PlayerWinning;
 
 public class PlayersWinning {
 

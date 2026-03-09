@@ -1,8 +1,8 @@
 package model;
 
 import java.util.List;
-import model.dto.Card;
-import model.dto.PlayerResult;
+import dto.Card;
+import dto.PlayerResult;
 
 public class Scorer {
     private static final Integer ADDITIONAL_ACE_SCORE = 10;

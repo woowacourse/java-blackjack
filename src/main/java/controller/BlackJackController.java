@@ -6,7 +6,7 @@ import model.Dealer;
 import model.Participant;
 import model.Player;
 import model.Players;
-import model.dto.PlayerResult;
+import dto.PlayerResult;
 import service.BlackJackService;
 import view.OutputView;
 

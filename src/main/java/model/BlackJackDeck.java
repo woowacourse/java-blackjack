@@ -4,7 +4,7 @@ import constant.ErrorMessage;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import model.dto.Card;
+import dto.Card;
 
 public class BlackJackDeck {
     private Cards cards;
