@@ -201,4 +201,33 @@ public class judgeTest {
         // then
         assertThat(player.getPlayerStatus()).isEqualTo(PlayerStatus.DRAW);
     }
+
+    @Test
+    void 승패_판단시_최종합으로_계산_테스트() {
+        // given
+        Player player = Player.of("phobi");
+        playerRepository.save(player);
+        List<Card> cards1 = List.of(
+                Card.of(CardRank.ACE, CardShape.HEART),
+                Card.of(CardRank.NINE, CardShape.CLUB)
+        );
+        Deck deck1 = Deck.of(cards1);
+        player.assignDeck(deck1);
+        player.calculateFinalSum();
+
+        List<Card> cards2 = List.of(
+                Card.of(CardRank.TEN, CardShape.HEART),
+                Card.of(CardRank.NINE, CardShape.CLUB)
+        );
+        Deck deck2 = Deck.of(cards2);
+        Dealer dealer = Dealer.of(deck2);
+        dealer.calculateFinalSum();
+        dealerRepository.save(dealer);
+
+        // when
+        judgementService.judgementWinning(player, dealer);
+
+        // then
+        assertThat(player.getPlayerStatus()).isEqualTo(PlayerStatus.WIN);
+    }
 }
