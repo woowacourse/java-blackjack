@@ -16,7 +16,6 @@ import view.OutputView;
 
 public class BlackJackController {
     private static final Integer INITIAL_DRAW_QUANTITY = 2;
-
     private static final String NAME_SPLIT_REGEX = ",";
 
     private final BlackJackService blackJackService;

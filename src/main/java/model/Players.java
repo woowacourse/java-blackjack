@@ -13,17 +13,17 @@ public class Players {
         this.players = players;
     }
 
-    private void validate(List<Player> players) {
-        if(players.stream().distinct().toList().size() != players.size()) {
-            throw new IllegalArgumentException(ErrorMessage.DUPLICATED_NAME.getMessage());
-        }
-    }
-
     public List<Player> getPlayers() {
         return List.copyOf(players);
     }
 
     public List<PlayerResult> getPlayersResult() {
         return List.copyOf(players.stream().map(Participant::getResult).toList());
+    }
+
+    private void validate(List<Player> players) {
+        if(players.stream().distinct().toList().size() != players.size()) {
+            throw new IllegalArgumentException(ErrorMessage.DUPLICATED_NAME.getMessage());
+        }
     }
 }

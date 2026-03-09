@@ -12,12 +12,6 @@ public class Player extends Participant {
         validate(name);
     }
 
-    private void validate(PlayerName name) {
-        if(name.getName().equals(DEALER_NAME)) {
-            throw new IllegalArgumentException(ErrorMessage.NO_PLAYER_NAME_DEALER.getMessage());
-        }
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -29,6 +23,12 @@ public class Player extends Participant {
     @Override
     public int hashCode() {
         return Objects.hash(this.getResult().name());
+    }
+
+    private void validate(PlayerName name) {
+        if(name.getName().equals(DEALER_NAME)) {
+            throw new IllegalArgumentException(ErrorMessage.NO_PLAYER_NAME_DEALER.getMessage());
+        }
     }
 
 }

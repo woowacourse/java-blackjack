@@ -1,6 +1,5 @@
 package service;
 
-import java.util.Objects;
 import model.BlackJackDeck;
 import model.Dealer;
 import model.DealerWinning;
@@ -14,8 +13,6 @@ import model.dto.ParticipantWinning;
 import model.dto.PlayerWinning;
 
 public class BlackJackService {
-    private static final Integer BUST_NUMBER = 21;
-
     private final BlackJackDeck cards;
 
     public BlackJackService(BlackJackDeck cards) {
