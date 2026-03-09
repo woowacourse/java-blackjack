@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import model.card.Card;
+import model.card.Cards;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -34,11 +35,11 @@ class PlayerTest {
 
         // when
         player.open();
-        List<String> opened = player.open();
+        Cards opened = player.open();
 
         // then
-        assertThat(opened).contains(card1.toString(), card2.toString());
-        assertThat(opened).containsAll(List.of(card1.toString(), card2.toString()));
-        assertThat(opened).hasSize(2);
+        assertThat(opened.toList()).contains(card1, card2);
+        assertThat(opened.toList()).containsAll(List.of(card1, card2));
+        assertThat(opened.toList()).hasSize(2);
     }
 }

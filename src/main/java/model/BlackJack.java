@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import model.card.Card;
+import model.card.Cards;
 import model.card.Deck;
 import model.card.RandomDeck;
 import model.card.Rank;
@@ -31,8 +32,9 @@ public class BlackJack {
         return new BlackJack(participants, deck);
     }
 
-    public Map<String, List<String>> dealOut() {
-        Map<String, List<String>> dealOutResult = new LinkedHashMap<>();
+    public Map<String, Cards> dealOut() {
+        Map<String, Cards> dealOutResult = new LinkedHashMap<>();
+
         for (Participant participant : participants.toList()) {
             for (int i = 0; i < 2; i++) {
                 Card card = drawNewCard();

@@ -3,6 +3,7 @@ package model.participant;
 import java.util.ArrayList;
 import java.util.List;
 import model.card.Card;
+import model.card.Cards;
 import model.card.Rank;
 
 public abstract class Participant {
@@ -53,7 +54,7 @@ public abstract class Participant {
 
     private int calculate() {
         return hands.stream()
-                .map(Card::getCardNumber)
+                .map(Card::getRank)
                 .mapToInt(Rank::toValue)
                 .sum();
     }
@@ -61,7 +62,7 @@ public abstract class Participant {
     private int aceCount() {
         int count = 0;
         for (Card card : hands) {
-            if (card.getCardNumber() == Rank.ACE) {
+            if (card.getRank() == Rank.ACE) {
                 count++;
             }
         }
@@ -69,5 +70,5 @@ public abstract class Participant {
         return count;
     }
 
-    public abstract List<String> open();
+    public abstract Cards open();
 }

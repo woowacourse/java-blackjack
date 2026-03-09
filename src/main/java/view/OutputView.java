@@ -3,40 +3,25 @@ package view;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import model.participant.Participant;
-import model.participant.Participants;
 
 public class OutputView {
     private static final String LINE_SEPARATOR = System.lineSeparator();
 
-    public void printDealOut(Map<String, List<String>> dealOutResult) {
-        List<String> names = dealOutResult.keySet().stream().toList();
-        String playerNames = String.join(", ", names.subList(1, names.size()));
-        System.out.println(LINE_SEPARATOR + "딜러와 " + playerNames + "에게 2장을 나누었습니다.");
-
-        for (Entry<String, List<String>> entry : dealOutResult.entrySet()) {
-            System.out.printf("%s카드: %s",
-                    entry.getKey(), entry.getValue().toString().replaceAll("[]\\[]", "") + LINE_SEPARATOR);
-        }
-
+    public void printDealOut(String playerNames) {
         printNewLine();
+        System.out.println("딜러와 " + playerNames + "에게 2장을 나누었습니다.");
     }
 
-    public void printHands(Participant participant) {
-        String replaced = participant.open().toString().replaceAll("[]\\[]", "");
-        System.out.printf("%s카드: %s", participant.getName(), replaced + LINE_SEPARATOR);
+    public void printHands(String participantName, List<String> hands) {
+        System.out.println(participantName + "카드: " + String.join(", ", hands));
     }
 
-    public void printHandsAndScore(List<Participant> participants) {
-        for (Participant participant : participants) {
-            System.out.printf("%s카드: %s - 결과: %d%s", participant.getName(), participant.open(),
-                    participant.calculateScore(), LINE_SEPARATOR);
-        }
+    public void printHandsWithScore(String participantName, List<String> hands, int score) {
+        System.out.println(participantName + "카드: " + String.join(", ", hands) + " - 결과: " + score);
+    }
 
+    public void printFinalResult(Map<String, Integer> dealerResult, Map<String, Boolean> playerResult) {
         printNewLine();
-    }
-
-    public void printResult(Map<String, Integer> dealerResult, Map<String, Boolean> playerResult) {
         System.out.println("## 최종 승패");
         System.out.printf("딜러: %d승 %d패%s", dealerResult.getOrDefault("승", 0), dealerResult.getOrDefault("패", 0),
                 LINE_SEPARATOR);
@@ -46,6 +31,7 @@ public class OutputView {
     }
 
     public void printBustState(String name, int score) {
+        printNewLine();
         System.out.printf("%s는 %d점이므로 21점 초과로 버스트입니다.%s", name, score, LINE_SEPARATOR);
     }
 
@@ -59,7 +45,7 @@ public class OutputView {
         System.out.println("딜러는 16을 초과하여 카드를 더 받지 않았습니다." + LINE_SEPARATOR);
     }
 
-    private static void printNewLine() {
+    public void printNewLine() {
         System.out.println();
     }
 }

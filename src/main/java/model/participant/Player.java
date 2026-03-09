@@ -1,7 +1,6 @@
 package model.participant;
 
-import java.util.List;
-import model.card.Card;
+import model.card.Cards;
 
 public class Player extends Participant {
     private Player(String name) {
@@ -13,9 +12,7 @@ public class Player extends Participant {
     }
 
     @Override
-    public List<String> open() {
-        return hands.stream()
-                .map(Card::toString)
-                .toList();
+    public Cards open() {
+        return Cards.from(hands);
     }
 }

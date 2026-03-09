@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import model.card.Card;
+import model.card.Cards;
 
 public class Dealer extends Participant {
     private static final int DRAW_THRESHOLD = 16;
@@ -19,15 +20,14 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public List<String> open() {
+    public Cards open() {
         if (firstTurn) {
             firstTurn = false;
-            return List.of(hands.getFirst().toString());
+            return Cards.from(List.of(hands.getFirst()));
         }
 
-        return hands.stream()
-                .map(Card::toString)
-                .toList();
+        return Cards.from(hands);
+
     }
 
     public boolean needDraw() {

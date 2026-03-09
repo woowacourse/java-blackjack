@@ -21,12 +21,11 @@ public class Card {
         return new Card(suit, rank);
     }
 
-    public Rank getCardNumber() {
-        return rank;
+    public Suit getSuit() {
+        return suit;
     }
 
-    @Override
-    public String toString() {
-        return rank.getName() + suit.getName();
+    public Rank getRank() {
+        return rank;
     }
 }

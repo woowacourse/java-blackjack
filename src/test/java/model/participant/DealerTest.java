@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import model.card.Card;
+import model.card.Cards;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -24,11 +25,11 @@ class DealerTest {
         dealer.receive(card2);
 
         // when
-        List<String> opened = dealer.open();
+        Cards opened = dealer.open();
 
         // then
-        assertThat(opened.getFirst()).isEqualTo(card1.toString());
-        assertThat(opened).hasSize(1);
+        assertThat(opened.toList()).containsExactly(card1);
+        assertThat(opened.toList()).hasSize(1);
     }
 
     @Test
@@ -41,11 +42,11 @@ class DealerTest {
 
         // when
         dealer.open();
-        List<String> opened = dealer.open();
+        Cards opened = dealer.open();
 
         // then
-        assertThat(opened).contains(card1.toString(), card2.toString());
-        assertThat(opened).containsAll(List.of(card1.toString(), card2.toString()));
-        assertThat(opened).hasSize(2);
+        assertThat(opened.toList()).contains(card1, card2);
+        assertThat(opened.toList()).containsAll(List.of(card1, card2));
+        assertThat(opened.toList()).hasSize(2);
     }
 }
