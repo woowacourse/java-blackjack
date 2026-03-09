@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import team.blackjack.service.dto.DrawResult;
-import team.blackjack.service.dto.GameResult;
-import team.blackjack.service.dto.GameResult.DealerResult;
-import team.blackjack.service.dto.GameResult.PlayerResult;
+import team.blackjack.service.dto.MatchResult;
+import team.blackjack.service.dto.MatchResult.DealerResult;
+import team.blackjack.service.dto.MatchResult.PlayerResult;
 import team.blackjack.service.dto.ScoreResult;
 import team.blackjack.domain.Result;
 
@@ -52,7 +52,7 @@ public class OutputView {
         }
     }
 
-     public static void printGameResult(GameResult result) {
+     public static void printGameResult(MatchResult result) {
          final DealerResult dealerResult = result.dealerResult();
          final Map<String, PlayerResult> playeredResultMap = result.playerResultMap();
 

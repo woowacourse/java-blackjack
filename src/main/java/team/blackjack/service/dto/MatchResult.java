@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import team.blackjack.domain.Result;
 
-public record GameResult(
+public record MatchResult(
         DealerResult dealerResult,
         Map<String, PlayerResult> playerResultMap
 ) {

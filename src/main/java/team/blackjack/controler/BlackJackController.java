@@ -2,7 +2,7 @@ package team.blackjack.controler;
 
 import java.util.List;
 import team.blackjack.service.dto.DrawResult;
-import team.blackjack.service.dto.GameResult;
+import team.blackjack.service.dto.MatchResult;
 import team.blackjack.service.dto.ScoreResult;
 import team.blackjack.service.BlackJackService;
 import team.blackjack.view.InputView;
@@ -23,7 +23,7 @@ public class BlackJackController {
         DrawResult drawResult = blackJackService.getDrawResult();
         OutputView.printDrawResult(drawResult);
 
-        readHitDecision(blackJackService.getPlayerNames());
+        readHitDecision(blackJackService.getAllPlayerNames());
 
         while (blackJackService.shouldDealerHit()) {
             OutputView.printDealerHitMessage();
@@ -33,8 +33,8 @@ public class BlackJackController {
         ScoreResult scoreResult = blackJackService.calculateAllParticipantScore();
         OutputView.printParticipantScoreResult(scoreResult);
 
-        GameResult gameResult = blackJackService.getGameResult();
-        OutputView.printGameResult(gameResult);
+        MatchResult matchResult = blackJackService.getGameResult();
+        OutputView.printGameResult(matchResult);
     }
 
     private List<String> readPlayerNames(){
@@ -75,7 +75,7 @@ public class BlackJackController {
             }
 
             blackJackService.hitPlayer(playerName);
-            OutputView.printPlayerCards(playerName, blackJackService.getPlayerCardNamesByName(playerName));
+            OutputView.printPlayerCards(playerName, blackJackService.findPlayerCardNamesByName(playerName));
         }
 
         OutputView.printBustMessage();

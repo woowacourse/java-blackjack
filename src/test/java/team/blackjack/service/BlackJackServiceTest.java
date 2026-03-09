@@ -21,7 +21,7 @@ class BlackJackServiceTest {
     void 플레이어_이름_목록으로_게임을_초기화한다() {
         blackJackService.initGame(List.of("pobi", "jason"));
 
-        List<String> playerNames = blackJackService.getPlayerNames();
+        List<String> playerNames = blackJackService.getAllPlayerNames();
         assertThat(playerNames).hasSize(2);
         assertThat(playerNames)
                 .containsExactly("pobi", "jason");
@@ -33,7 +33,7 @@ class BlackJackServiceTest {
         blackJackService.initGame(List.of(pobi));
         blackJackService.drawInitialCards();
 
-        List<String> playerCards = blackJackService.getPlayerCardNamesByName(pobi);
+        List<String> playerCards = blackJackService.findPlayerCardNamesByName(pobi);
         assertThat(playerCards.getFirst()).hasSize(2);
 
         ScoreResult scoreResult = blackJackService.calculateAllParticipantScore();
@@ -47,12 +47,12 @@ class BlackJackServiceTest {
         blackJackService.initGame(List.of(playerName));
         blackJackService.drawInitialCards();
 
-        List<String> pobiCardNames = blackJackService.getPlayerCardNamesByName(playerName);
+        List<String> pobiCardNames = blackJackService.findPlayerCardNamesByName(playerName);
         int sizeBefore = pobiCardNames.size();
 
         blackJackService.hitPlayer(playerName);
 
-        pobiCardNames = blackJackService.getPlayerCardNamesByName(playerName);
+        pobiCardNames = blackJackService.findPlayerCardNamesByName(playerName);
         int sizeAfter = pobiCardNames.size();
         assertThat(sizeAfter).isEqualTo(sizeBefore + 1);
     }
