@@ -43,6 +43,10 @@ public class BlackjackGame {
         }
     }
 
+    public List<RoundResult> getResult() {
+        return players.getResults(dealer.getTotalSum());
+    }
+
     public Players getPlayers() {
         return players;
     }

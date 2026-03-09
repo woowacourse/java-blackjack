@@ -5,6 +5,7 @@ import static domain.Constant.DEFAULT_HAND_NUMBER;
 import static domain.Constant.DELIMITER;
 
 import domain.Result;
+import domain.RoundResult;
 import domain.card.Card;
 import domain.participant.Dealer;
 import domain.participant.Name;
@@ -14,6 +15,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ResultView {
+    private final List<Result> orderedResults = List.of(Result.LOSE, Result.DRAW, Result.WIN);
+
     public void printParticipantsCards(List<Player> players, Dealer dealer) {
         printEmptyLine();
         System.out.println(
@@ -72,47 +75,38 @@ public class ResultView {
                         + participant.getTotalSum());
     }
 
-    public void printResultStatistics(List<Player> players, Dealer dealer) {
-        StringBuilder sb = new StringBuilder();
-        sb.append('\n');
-        sb.append("## 최종 승패\n");
+    public void printResult(List<RoundResult> results) {
+        printEmptyLine();
+        System.out.println("## 최종 승패");
+        System.out.print("딜러: ");
 
-        int playerWinCount = 0;
-        int playerDrawCount = 0;
-        int playerLoseCount = 0;
+        for (Result result : orderedResults) {
+            long resultCount = results.stream()
+                    .filter(res -> res.result() == result)
+                    .count();
 
-        for (Player player : players) {
-            Result result = Result.judge(player.getTotalSum(), dealer.getTotalSum());
-            if (result == Result.WIN) {
-                playerWinCount += 1;
-            }
-            if (result == Result.DRAW) {
-                playerDrawCount += 1;
-            }
-            if (result == Result.LOSE) {
-                playerLoseCount += 1;
-            }
+            System.out.print(resultCount + changeToDealerSideResult(result).getDescription() + " ");
         }
 
-        sb.append("딜러: " + playerLoseCount + "승 " + playerDrawCount + "무 " + playerWinCount + "패\n");
-
-        for (Player player : players) {
-            sb.append(player.getName().getValue() + ": ");
-            Result result = Result.judge(player.getTotalSum(), dealer.getTotalSum());
-            if (result == Result.WIN) {
-                sb.append("승\n");
-                continue;
-            }
-            if (result == Result.LOSE) {
-                sb.append("패\n");
-                continue;
-            }
-            sb.append("무\n");
+        printEmptyLine();
+        for (RoundResult roundResult : results) {
+            System.out.println(
+                    roundResult.player().getName().getValue() + ": " + roundResult.result().getDescription());
         }
-        System.out.println(sb);
+    }
+
+    private Result changeToDealerSideResult(Result result) {
+        if (result == Result.WIN) {
+            return Result.LOSE;
+        }
+        if (result == Result.LOSE) {
+            return Result.WIN;
+        }
+        return Result.DRAW;
     }
 
     private void printEmptyLine() {
         System.out.println();
     }
+
 }

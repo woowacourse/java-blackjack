@@ -27,7 +27,8 @@ public class BlackjackController {
                 (player) -> resultView.printCards(player));
         blackjackGame.dealerHitStand((decision) -> resultView.printDealerHitStand(decision));
         resultView.printCardsWithResult(players.getPlayers(), dealer);
-        resultView.printResultStatistics(players.getPlayers(), dealer);
+
+        resultView.printResult(blackjackGame.getResult());
     }
 
     private void readAndRegistPlayers() {

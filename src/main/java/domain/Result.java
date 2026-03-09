@@ -3,7 +3,13 @@ package domain;
 import static domain.Constant.BLACKJACK_MAX_NUMBER;
 
 public enum Result {
-    WIN, DRAW, LOSE;
+    WIN("승"), DRAW("무"), LOSE("패");
+
+    private final String description;
+
+    Result(String description) {
+        this.description = description;
+    }
 
     public static Result judge(int playerSum, int dealerSum) {
         if (isPlayerWin(playerSum, dealerSum)) {
@@ -13,6 +19,10 @@ public enum Result {
             return LOSE;
         }
         return DRAW;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     private static boolean isPlayerWin(int playerSum, int dealerSum) {

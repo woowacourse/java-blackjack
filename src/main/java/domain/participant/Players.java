@@ -1,6 +1,8 @@
 package domain.participant;
 
 import domain.ExceptionMessage;
+import domain.Result;
+import domain.RoundResult;
 import domain.card.Card;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -41,6 +43,15 @@ public class Players {
                 break;
             }
         }
+    }
+
+    public List<RoundResult> getResults(int dealerSum) {
+        List<RoundResult> roundResults = new ArrayList<>();
+        for (Player player : players) {
+            Result result = Result.judge(player.getTotalSum(), dealerSum);
+            roundResults.add(new RoundResult(player, result));
+        }
+        return roundResults;
     }
 
     public List<Player> getPlayers() {
