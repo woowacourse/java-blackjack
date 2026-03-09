@@ -10,8 +10,8 @@ import model.card.Deck;
 import model.card.Rank;
 import model.card.Suit;
 import model.card.RandomDeck;
-import model.participant.Participant;
 import model.Participants;
+import model.participant.Dealer;
 import model.participant.Player;
 import util.InputParser;
 import view.InputView;
@@ -34,9 +34,8 @@ public class BlackJackController {
         Map<String, List<String>> dealOutResult = blackJack.dealOut();
         outputView.printDealOut(dealOutResult);
 
-        processPlayerTurns(blackJack, participants.getPlayers());
-//        blackJack.startPlayerTurn(this::askHit, this::afterHit);
-        blackJack.startDealerTurn(this::afterDealerTurn);
+        proceedPlayerTurns(blackJack, participants.getPlayers());
+        proceedDealerTurn(blackJack, participants.getDealer());
 
         outputView.printHandsAndScore(participants);
         outputView.printResult(blackJack.calculateDealerResult(), blackJack.calculatePlayerResult());
@@ -63,7 +62,7 @@ public class BlackJackController {
         return RandomDeck.from(cards);
     }
 
-    private void processPlayerTurns(BlackJack blackJack, List<Player> players) {
+    private void proceedPlayerTurns(BlackJack blackJack, List<Player> players) {
         for (Player player : players) {
             while (player.canHit() && inputView.askHit(player.getName())) {
                 blackJack.giveCardTo(player);
@@ -76,19 +75,17 @@ public class BlackJackController {
         }
     }
 
-    private Boolean askHit(String name) {
-        return inputView.askHit(name);
-    }
+    private void proceedDealerTurn(BlackJack blackJack, Dealer dealer) {
+        boolean draw = dealer.needDraw();
 
-    private void afterHit(Participant participant) {
-        outputView.printHands(participant);
-
-        if (participant.isBust()) {
-            outputView.printBustState(participant.getName(), participant.calculateScore());
-        }
-    }
-
-    private void afterDealerTurn(Boolean draw) {
         outputView.printDealerDrawResult(draw);
+
+        if (draw) {
+            blackJack.giveCardTo(dealer);
+
+            if (dealer.isBust()) {
+                outputView.printBustState(dealer.getName(), dealer.calculateScore());
+            }
+        }
     }
 }
