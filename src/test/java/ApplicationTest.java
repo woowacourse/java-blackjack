@@ -1,22 +1,14 @@
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
-import com.sun.tools.javac.Main;
 import controller.BlackjackController;
 import domain.RandomValueGenerator;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.CharArrayReader;
-import java.io.OutputStream;
 import java.io.PrintStream;
-import java.lang.ModuleLayer.Controller;
 import java.util.List;
 import java.util.stream.Stream;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import view.InputView;
 import view.OutputView;
@@ -68,15 +60,11 @@ class ApplicationTest {
 
         RandomValueGenerator randomValueGenerator = (n) -> n - 1;
         BlackjackController blackjackController = new BlackjackController(
-                new InputView(inputArrayInputStream), new OutputView(new PrintStream(byteArrayOutputStream)),
-                randomValueGenerator);
+                new InputView(inputArrayInputStream), new OutputView(new PrintStream(byteArrayOutputStream)));
 
-        blackjackController.start();
-
+        blackjackController.start(randomValueGenerator);
         String outputString = byteArrayOutputStream.toString();
 
-        for (String s : expected) {
-            assertThat(outputString).contains(s);
-        }
+        assertThat(outputString).contains(expected.toArray(new String[0]));
     }
 }

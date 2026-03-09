@@ -5,13 +5,13 @@ import view.InputView;
 import view.OutputView;
 
 public class Application {
-    public static void main(String[] args){
+    public static void main(String[] args) {
         InputView inputView = new InputView(System.in);
         OutputView outputView = new OutputView(System.out);
 
         RandomValueGenerator randomValueGenerator = new RandomValueGeneratorImpl();
-        BlackjackController controller = new BlackjackController(inputView,outputView,randomValueGenerator);
+        BlackjackController controller = new BlackjackController(inputView, outputView);
 
-        controller.start();
+        controller.start(randomValueGenerator);
     }
 }

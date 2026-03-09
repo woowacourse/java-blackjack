@@ -25,15 +25,13 @@ public class BlackjackController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private final RandomValueGenerator randomValueGenerator;
 
-    public BlackjackController(InputView inputView, OutputView outputView, RandomValueGenerator randomValueGenerator) {
+    public BlackjackController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.randomValueGenerator = randomValueGenerator;
     }
 
-    public void start() {
+    public void start(final RandomValueGenerator randomValueGenerator) {
         Deck deck = new Deck(CardsCreator.createLinkedCards(), randomValueGenerator);
         Dealer dealer = new Dealer(drawHand(deck), new CasinoDealerHitStrategy());
         List<String> playerNames = Parser.parse(inputView.readPlayerName());

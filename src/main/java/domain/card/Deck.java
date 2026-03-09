@@ -44,7 +44,7 @@ public class Deck {
     public boolean contains(Card card) {
         return cards.contains(card);
     }
-    
+
     private int getSize() {
         return cards.size();
     }
