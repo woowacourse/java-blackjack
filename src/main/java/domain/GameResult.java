@@ -14,4 +14,10 @@ public enum GameResult {
     public String getName() {
         return name;
     }
+
+    public GameResult reverse() {
+        if(this == WIN) return GameResult.LOSE;
+        if(this == LOSE) return GameResult.WIN;
+        return GameResult.DRAW;
+    }
 }

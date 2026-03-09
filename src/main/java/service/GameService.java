@@ -30,37 +30,20 @@ public class GameService {
         boolean dealerBurst = dealer.isBurst(dealerScore);
 
         for (User user : users) {
-            user.setGameResult(judge(user, dealer, dealerBurst));
+            int userScore = user.calculateScore();
+            boolean userBurst = user.isBurst(userScore);
+            GameResult userResult = judge(userScore, dealerScore, userBurst, dealerBurst);
+            user.setGameResult(userResult);
+            dealer.setRounds(userResult.reverse());
         }
     }
 
-    private GameResult judge(User user, Dealer dealer, boolean dealerBurst) {
-        int userScore = user.calculateScore();
-        int dealerScore = dealer.calculateScore();
-        boolean userBurst = user.isBurst(userScore);
-
-        if (dealerBurst && userBurst) {
-            dealer.setRounds(GameResult.DRAW);
-            return GameResult.DRAW;
-        }
-        if (dealerBurst) {
-            dealer.setRounds(GameResult.LOSE);
-            return GameResult.WIN;
-        }
-        if (userBurst) {
-            dealer.setRounds(GameResult.WIN);
-            return GameResult.LOSE;
-        }
-
-        if (userScore > dealerScore) {
-            dealer.setRounds(GameResult.LOSE);
-            return GameResult.WIN;
-        }
-        if (userScore < dealerScore) {
-            dealer.setRounds(GameResult.WIN);
-            return GameResult.LOSE;
-        }
-        dealer.setRounds(GameResult.DRAW);
+    private GameResult judge(int userScore, int dealerScore, boolean userBurst, boolean dealerBurst) {
+        if (dealerBurst && userBurst) return GameResult.DRAW;
+        if (dealerBurst) return GameResult.WIN;
+        if (userBurst) return GameResult.LOSE;
+        if (userScore > dealerScore) return GameResult.WIN;
+        if (userScore < dealerScore) return GameResult.LOSE;
         return GameResult.DRAW;
     }
 }
