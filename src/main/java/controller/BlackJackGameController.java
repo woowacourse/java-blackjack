@@ -94,7 +94,9 @@ public class BlackJackGameController {
 
     private void playGameWithPlayer(Player player, Deck deck) {
         while (player.canReceiveCard()) {
-            if (isContinueGame(player)) break;
+            if (isContinueGame(player)) {
+                break;
+            }
             distributeCard(player, deck);
             printCards(player.getParticipantCardsDto());
         }
@@ -119,9 +121,7 @@ public class BlackJackGameController {
     }
 
     private List<String> getPlayerNames(List<Player> players) {
-        return players.stream()
-                .map(Participant::getName)
-                .toList();
+        return players.stream().map(Participant::getName).toList();
     }
 
     private boolean isContinue(String response) {
@@ -152,6 +152,4 @@ public class BlackJackGameController {
         Dealer dealer = new Dealer(name);
         return dealer;
     }
-
-
 }
