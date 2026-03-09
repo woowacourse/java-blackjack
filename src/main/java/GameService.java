@@ -4,9 +4,6 @@ import java.util.List;
 
 public class GameService {
 
-    private static final int BLACKJACK_SCORE = 21;
-    private static final int HIT_SCORE = 16;
-
     private final CardDeck cardDeck;
 
     public GameService() {
@@ -22,65 +19,21 @@ public class GameService {
         }
     }
 
-    public int calculateScore(List<Card> cards) {
-        int score = 0;
-        int aceCount = 0;
-        for (Card card: cards) {
-            if (!card.isAce()) {
-                score += card.getValue();
-                continue;
-            }
-            aceCount++;
-        }
-        for(int i = 0; i< aceCount; i++){
-            score += calculateOptimalAceScore(score);
-        }
-        return score;
-    }
 
     public Card deal() {
         return cardDeck.deal();
     }
-    
-
-    public boolean isBlackjack(int score) {
-        if(score == BLACKJACK_SCORE) {
-            return true;
-        }
-        return false;
-    }
-
-    public boolean isBurst(int score) {
-        if(score > BLACKJACK_SCORE) {
-            return true;
-        }
-        return false;
-    }
-
-    public boolean isHit(int score) {
-        if (score <= HIT_SCORE) {
-            return true;
-        }
-        return false;
-    }
-
-    public int calculateOptimalAceScore(int sum) {
-        if (sum > 10) {
-         return 1;
-        }
-        return 11;
-    }
 
     public void settleResult(List<User> users, Dealer dealer) {
-        int dealerScore = calculateScore(dealer.getHand());
-        boolean dealerBurst = isBurst(dealerScore);
+        dealer.calculateScore();
+        boolean dealerBurst = dealer.isBurst();
         users.forEach(user -> user.setGameResult(decideResult(user,dealer,dealerBurst)));
     }
 
     private GameResult decideResult(User user, Dealer dealer, boolean dealerBurst) {
-        int userScore = calculateScore(user.getHand());
-        int dealerScore = calculateScore(dealer.getHand());
-        boolean userBurst = isBurst(userScore);
+        user.calculateScore();
+        dealer.calculateScore();
+        boolean userBurst = user.isBurst();
 
         if (dealerBurst && userBurst) {
             dealer.setRounds(GameResult.DRAW);
