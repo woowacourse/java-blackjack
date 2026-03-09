@@ -1,6 +1,5 @@
 package view;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -29,7 +28,13 @@ public class InputView {
     }
 
     private List<String> splitPlayerNames(String playerNames) {
-        return Arrays.stream(playerNames.split(COMMA_DELIMITER)).toList();
+        List<String> names = List.of(playerNames.split(COMMA_DELIMITER, -1));
+        for (String name : names) {
+            if (name.trim().isEmpty()) {
+                throw new IllegalArgumentException("잘못된 입력입니다. 다시 입력해주세요.");
+            }
+        }
+        return names;
     }
 
     private boolean validateBinaryOption(String userInput) {

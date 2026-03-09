@@ -9,6 +9,7 @@ import service.BlackJackService;
 import view.InputView;
 import view.OutputView;
 
+import java.util.List;
 import java.util.Map;
 
 public class BlackJackController {
@@ -63,11 +64,15 @@ public class BlackJackController {
     }
 
     private Players readUntilValidPlayers() {
-        try {
-            return new Players(inputView.readPlayers());
-        } catch (IllegalArgumentException e) {
-            OutputView.printErrorMessage(e.getMessage());
-            return readUntilValidPlayers();
+        List<String> players;
+        while (true) {
+            try {
+                players = inputView.readPlayers();
+                break;
+            } catch (IllegalArgumentException e) {
+                OutputView.printErrorMessage(e.getMessage());
+            }
         }
+        return new Players(players);
     }
 }
