@@ -29,6 +29,4 @@ class InputValidatorTest {
         List<String> inputNames = List.of("유저1", "유저2", "유저3", "유저4", "유저5", "유저6", "유저7", "유저8", "유저9");
         Assertions.assertThrows(IllegalArgumentException.class, () -> InputValidator.validateInputNames(inputNames));
     }
-
-
 }

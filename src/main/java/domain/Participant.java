@@ -27,7 +27,7 @@ public abstract class Participant {
         return results;
     }
 
-    public List<Card> getHand(){
+    public List<Card> getHand() {
         return List.copyOf(hand);
     }
 

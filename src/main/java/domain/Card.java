@@ -27,7 +27,7 @@ public class Card {
 
     @Override
     public String toString() {
-        return cardNumber.getNumber() + cardSuit.getShape();
+        return cardNumber.getNumber() + cardSuit.getSuit();
     }
 
     @Override

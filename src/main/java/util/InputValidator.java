@@ -27,5 +27,4 @@ public class InputValidator {
             throw new IllegalArgumentException("플레이어의 수는 1명 이상 8명 이하여야 합니다.");
         }
     }
-
 }

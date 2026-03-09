@@ -31,6 +31,4 @@ public class CardTest {
 
         Assertions.assertThat(number).isEqualTo(11);
     }
-
-
 }
