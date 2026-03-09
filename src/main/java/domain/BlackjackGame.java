@@ -39,33 +39,48 @@ public class BlackjackGame {
 
         handOutInitialCard(dealer, players);
 
-        view.printParticipantHand(PlayerHandDto.of(dealer));
-        view.printAllParticipantsHand(getPlayerHandInformation(players));
+        printAllParticipantsHand(dealer, players);
 
-        players.stream().forEach(player -> {
-            drawPlayerCard(player, dealer);
-        });
+        proceedEachPlayersTurn(players, dealer);
+        proceedDealersTurn(dealer);
 
-        if (dealer.hitIfRequired()) {
-            view.printDealerAdditionalDrawCardMessage();
-        }
+        printAllParticipantsFinalHandResult(dealer, players);
+        printFinalWinningStatistic(players, dealer);
+    }
 
-        // 딜러 + Player의 카드 상황 및 총합 출력
+    private void printFinalWinningStatistic(Players players, Dealer dealer) {
+        ResultAnalysisDto analysis = analyzeBlackjackResult(players, dealer);
+        view.printFinalResultMessage(analysis);
+    }
+
+    private void printAllParticipantsFinalHandResult(Dealer dealer, Players players) {
         view.printFinalResultMessage(PlayerResultDto.from(dealer));
         players.stream().forEach(player -> {
             view.printFinalResultMessage(PlayerResultDto.from(player));
         });
+    }
 
-        //최종 결과 통계 출력
-        ResultAnalysisDto analysis = analyzeBlackjackResult(players, dealer);
-        view.printFinalResultMessage(analysis);
+    private void printAllParticipantsHand(Dealer dealer, Players players) {
+        view.printParticipantHand(PlayerHandDto.of(dealer));
+        view.printAllPlayersHand(players.getPlayerHandDtos());
+    }
 
+    private void proceedDealersTurn(Dealer dealer) {
+        if (dealer.hitIfRequired()) {
+            view.printDealerAdditionalDrawCardMessage();
+        }
+    }
+
+    private void proceedEachPlayersTurn(Players players, Dealer dealer) {
+        players.stream().forEach(player -> {
+            drawPlayerCard(player, dealer);
+        });
     }
 
     private void drawPlayerCard(Player p, Dealer dealer) {
-        while(!p.isBusted()) {
+        while (!p.isBusted()) {
             Answer answer = view.askDrawCard(p.toDisplayMyName());
-            if(answer.isNo()) {
+            if (answer.isNo()) {
                 return;
             }
 
@@ -94,11 +109,6 @@ public class BlackjackGame {
 
     private List<PlayerName> requestPlayerNames() {
         return view.requestPlayerNames();
-    }
-
-    private void printAllParticipantsHand(Dealer dealer, Players players) {
-        view.printParticipantHand(PlayerHandDto.of(dealer));
-        view.printAllPlayersHand(players.getPlayerHandDtos());
     }
 
     private ResultAnalysisDto analyzeBlackjackResult(Players players, Dealer dealer) {

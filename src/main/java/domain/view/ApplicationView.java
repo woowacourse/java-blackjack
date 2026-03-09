@@ -44,7 +44,7 @@ public class ApplicationView {
         writer.printDealInitialCardMessage(formattedNames, initialCardCount);
     }
 
-    public void printAllParticipantsHand(List<PlayerHandDto> playerHands) {
+    public void printAllPlayersHand(List<PlayerHandDto> playerHands) {
         for (PlayerHandDto playerHand : playerHands) {
             printParticipantHand(playerHand);
         }
