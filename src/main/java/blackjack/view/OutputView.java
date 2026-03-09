@@ -6,6 +6,9 @@ import blackjack.dto.PlayerDto;
 import blackjack.dto.PlayerScoreDto;
 import blackjack.dto.ResultDto;
 import blackjack.model.BlackjackResult;
+import blackjack.view.parser.RankParser;
+import blackjack.view.parser.ResultParser;
+import blackjack.view.parser.SuitParser;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -88,7 +91,9 @@ public class OutputView {
     }
 
     private void printPlayerResult(ResultDto playerResult) {
-        System.out.println(playerResult.playerName() + ": " + playerResult.result().getLabel());
+        String result = ResultParser.parseToLabel(playerResult.result());
+
+        System.out.println(playerResult.playerName() + ": " + result);
     }
 
     private List<String> parseCardsToOutputs(List<CardDto> cards) {
@@ -98,8 +103,8 @@ public class OutputView {
     }
 
     private String parseCardToOutput(CardDto card) {
-        String rank = card.rank().getLabel();
-        String suit = card.suit().getKorean();
+        String rank = RankParser.parseToLabel(card.rank());
+        String suit = SuitParser.parseToLabel(card.suit());
 
         return rank + suit;
     }

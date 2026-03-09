@@ -77,16 +77,10 @@ public class BlackjackController {
     }
 
     private void playerHit(Player player, Deck deck) {
-        while (!player.isBust() && askHit(player.getName()) == Answer.YES) {
+        while (!player.isBust() && inputView.askHit(player.getName()) == Answer.YES) {
             player.addCard(deck.draw());
             outputView.printPlayerCards(player.getName(), cardsToDtos(player.getCards()));
         }
-    }
-
-    private Answer askHit(String playerName) {
-        String answer = inputView.askHit(playerName);
-
-        return Answer.from(answer);
     }
 
     private void dealerHit(Dealer dealer, Deck deck) {

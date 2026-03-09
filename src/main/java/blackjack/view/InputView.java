@@ -1,5 +1,7 @@
 package blackjack.view;
 
+import blackjack.model.Answer;
+import blackjack.view.parser.AnswerParser;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -16,10 +18,10 @@ public class InputView {
         return playerNames;
     }
 
-    public String askHit(final String playerName) {
+    public Answer askHit(final String playerName) {
         System.out.println(playerName + "은 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
 
-        return readLine();
+        return AnswerParser.parseToModel(readLine());
     }
 
     private String readLine() {
