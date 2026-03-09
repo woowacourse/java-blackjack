@@ -35,14 +35,20 @@ public class Participants {
         return participants;
     }
 
-    public List<ParticipantResult> getInitialResult() {
-        List<ParticipantResult> participantResults = new ArrayList<>();
-        ParticipantResult dealerParticipantResult = new ParticipantResult(dealer, dealer.getFirstCard());
-        participantResults.add(dealerParticipantResult);
-        for (Player player : players.getAllPlayers()) {
-            participantResults.add(new ParticipantResult(player));
-        }
-        return participantResults;
+    public String getDealerNickname() {
+        return dealer.getDealerNickname();
+    }
+
+    public String getDealerFirstCard() {
+        return dealer.getFirstCard();
+    }
+
+    public int getDealerTotalScore() {
+        return dealer.getTotalScore();
+    }
+
+    public List<Player> getAllPlayers() {
+        return players.getAllPlayers();
     }
 
     public List<ParticipantResult> getGameResult() {

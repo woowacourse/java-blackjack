@@ -16,14 +16,6 @@ public record ParticipantResult(
         );
     }
 
-    public ParticipantResult(Participant participant, String cardStatus) {
-        this(
-            participant.getNickname(),
-            cardStatus,
-            participant.getTotalScore()
-        );
-    }
-
     @Override
     public String toString() {
         return String.format("%s카드: %s", nickname, cardStatus);
