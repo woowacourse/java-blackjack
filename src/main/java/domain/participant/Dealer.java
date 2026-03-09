@@ -10,7 +10,7 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public boolean canDraw() {
+    public boolean canReceive() {
         int score = super.score();
         return score <= 16;
     }

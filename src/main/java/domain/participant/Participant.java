@@ -44,5 +44,5 @@ public abstract class Participant {
         return hand.getAllCards();
     }
 
-    public abstract boolean canDraw();
+    public abstract boolean canReceive();
 }
