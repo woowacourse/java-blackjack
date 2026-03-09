@@ -13,14 +13,14 @@ public class GameResults {
 
     private static final GameResultCalculator calculator = new GameResultCalculator();
 
-    private final Map<Participant, GameResult> playerResults;
+    private final Map<Player, GameResult> playerResults;
 
-    private GameResults(final Map<Participant, GameResult> playerResults) {
+    private GameResults(final Map<Player, GameResult> playerResults) {
         this.playerResults = playerResults;
     }
 
     public static GameResults create(final Players players, final Dealer dealer) {
-        Map<Participant, GameResult> playerResults = new LinkedHashMap<>();
+        Map<Player, GameResult> playerResults = new LinkedHashMap<>();
 
         for (Player player : players.players()) {
             GameResult playerResult = calculator.calculate(player.calculateScore(), dealer.calculateScore());
@@ -38,7 +38,7 @@ public class GameResults {
         return dealerResults;
     }
 
-    public Map<Participant, GameResult> playerResults() {
+    public Map<Player, GameResult> playerResults() {
         return playerResults;
     }
 }
