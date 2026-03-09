@@ -1,7 +1,5 @@
 package domain;
 
-import static domain.card.Rank.ACE;
-
 import domain.card.Card;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,13 +25,13 @@ public class Hand {
 
     private int getInitSum() {
         return cards.stream()
-                .mapToInt(c -> c.rank().getScore())
+                .mapToInt(Card::getScore)
                 .sum();
     }
 
     private long countAce() {
         return cards.stream()
-                .filter(c -> c.rank() == ACE)
+                .filter(Card::isAce)
                 .count();
     }
 
