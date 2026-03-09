@@ -1,5 +1,6 @@
 package blackjack;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
@@ -8,9 +9,11 @@ import blackjack.domain.result.GameResults;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 public class BlackjackController {
 
@@ -26,8 +29,12 @@ public class BlackjackController {
     }
 
     public void run() {
+        run(Collections::shuffle);
+    }
+
+    public void run(final Consumer<List<Card>> shuffleStrategy) {
         final Deck deck = new Deck();
-        deck.shuffle();
+        deck.shuffle(shuffleStrategy);
 
         final Players players = createPlayers();
         final Dealer dealer = new Dealer();

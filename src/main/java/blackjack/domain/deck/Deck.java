@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class Deck {
@@ -22,6 +23,10 @@ public class Deck {
 
     public void shuffle() {
         Collections.shuffle(this.cards);
+    }
+
+    public void shuffle(final Consumer<List<Card>> shuffleStrategy) {
+        shuffleStrategy.accept(this.cards);
     }
 
     private List<Card> createAllCards() {
