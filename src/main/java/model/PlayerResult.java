@@ -11,19 +11,19 @@ import java.util.Map;
 
 public class PlayerResult {
 
-    private final Map<String, GameStatus> result;
+    private final Map<Player, GameStatus> result;
 
-    private PlayerResult(Map<String, GameStatus> result) {
+    private PlayerResult(Map<Player, GameStatus> result) {
         this.result = result;
     }
 
     public static PlayerResult judgeByPlayer(Dealer dealer, List<Player> players) {
-        Map<String, GameStatus> result = new HashMap<>();
+        Map<Player, GameStatus> result = new HashMap<>();
 
         int dealerScore = dealer.calculateTotalScore();
         players.forEach(player -> {
             int playerScore = player.calculateTotalScore();
-            result.put(player.getName(), decide(playerScore, dealerScore));
+            result.put(player, decide(playerScore, dealerScore));
         });
 
         return new PlayerResult(result);
@@ -49,7 +49,7 @@ public class PlayerResult {
                 .count();
     }
 
-    public Map<String, GameStatus> getResult() {
+    public Map<Player, GameStatus> getResult() {
         return Collections.unmodifiableMap(result);
     }
 }

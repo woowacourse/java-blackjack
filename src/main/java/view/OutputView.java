@@ -79,7 +79,7 @@ public class OutputView {
         System.out.println(result.toString().trim());
     }
 
-    public static void printResultByPlayers(Map<String, GameStatus> result) {
-        result.forEach((name, status) -> System.out.printf("%s: %s%n", name, status.getName()));
+    public static void printResultByPlayers(Map<Player, GameStatus> result) {
+        result.forEach((player, status) -> System.out.printf("%s: %s%n", player.getName(), status.getName()));
     }
 }
