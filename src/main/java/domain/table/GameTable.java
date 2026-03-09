@@ -2,6 +2,7 @@ package domain.table;
 
 import domain.vo.RoundResult;
 import domain.card.Card;
+import domain.member.Member;
 import domain.member.Members;
 import java.util.List;
 import java.util.Map;
@@ -17,8 +18,17 @@ public class GameTable {
         this.members = new Members(playerNames);
     }
 
+    public List<String> getMemberNames() {
+        return members.getMemberNames();
+    }
+
+    public String getDealerName() {
+        return members.getDealerName();
+    }
+
     public void draw(String memberName, Card card) {
-        members.draw(memberName, card);
+        Member member = members.findByName(memberName);
+        member.receiveCard(card);
     }
 
     public boolean canDealerDraw() {
@@ -27,18 +37,6 @@ public class GameTable {
 
     public boolean checkBust(String memberName) {
         return members.getValue(memberName) > BLACKJACK;
-    }
-
-    public Map<String, RoundResult> checkGameResult() {
-        return members.judgeGameResults();
-    }
-
-    public List<String> getMemberNames() {
-        return members.getMemberNames();
-    }
-
-    public String getDealerName() {
-        return members.getDealerName();
     }
 
     public List<Card> getCards(String playerName) {
@@ -51,5 +49,9 @@ public class GameTable {
 
     public int memberPoint(String playerName) {
         return members.getValue(playerName);
+    }
+
+    public Map<String, RoundResult> checkGameResult() {
+        return members.judgeGameResults();
     }
 }
