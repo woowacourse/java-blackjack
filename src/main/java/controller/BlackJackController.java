@@ -11,8 +11,8 @@ import service.BlackJackService;
 import view.OutputView;
 
 public class BlackJackController {
-    private static final Integer INITIAL_DRAW_QUANTITY = 2;
-    private static final Integer MIN_DEALER_DRAW_SCORE = 16;
+    private static final int INITIAL_DRAW_QUANTITY = 2;
+    private static final int MIN_DEALER_DRAW_SCORE = 16;
 
     private final InputController inputController;
     private final BlackJackService blackJackService;
