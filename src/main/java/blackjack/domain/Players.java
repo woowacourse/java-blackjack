@@ -19,7 +19,7 @@ public class Players {
 
     public void draw() {
         for (Player player : players) {
-            player.draw(Deck.top());
+            player.draw(Deck.pop());
         }
     }
 

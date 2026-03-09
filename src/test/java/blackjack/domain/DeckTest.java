@@ -11,7 +11,7 @@ public class DeckTest {
         // given
 
         // when & then
-        assertThatCode(Deck::top)
+        assertThatCode(Deck::pop)
                 .doesNotThrowAnyException();
     }
 

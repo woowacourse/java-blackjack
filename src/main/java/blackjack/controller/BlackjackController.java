@@ -39,7 +39,7 @@ public class BlackjackController {
         Deck.shuffle();
         for (int i = 0; i < 2; i++) {
             players.draw();
-            dealer.draw(Deck.top());
+            dealer.draw(Deck.pop());
         }
     }
 
@@ -58,7 +58,7 @@ public class BlackjackController {
         for (Player player : players.getPlayers()) {
             int count = 0;
             while (!player.isBurst() && !player.isBlackjack() && readPlayerWantMoreCard(player)) {
-                player.draw(Deck.top());
+                player.draw(Deck.pop());
                 OutputView.printCardResults(player.getName(), player.getCardsName());
                 count++;
             }
@@ -77,7 +77,7 @@ public class BlackjackController {
             return;
         }
         while (dealer.calculateCardsValue() < 17) {
-            dealer.draw(Deck.top());
+            dealer.draw(Deck.pop());
             OutputView.printGetMoreCardsForDealer(dealer.getName());
         }
     }

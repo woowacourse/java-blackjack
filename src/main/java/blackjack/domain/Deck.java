@@ -21,7 +21,7 @@ public class Deck {
         Collections.shuffle(cards);
     }
 
-    public static Card top() {
+    public static Card pop() {
         return cards.removeFirst();
     }
 
