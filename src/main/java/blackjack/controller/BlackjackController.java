@@ -46,7 +46,7 @@ public class BlackjackController {
 
     private void printInitialSettings(Players players, Player dealer) {
         OutputView.printInitialSettingsDoneMessage(dealer.getName(), players.getPlayersName());
-        OutputView.printSettingResultsByPlayer(CardsOfPlayer.from(players, dealer));
+        OutputView.printCardResultsByPlayer(CardsOfPlayer.from(players, dealer));
     }
 
     // TODO : 코드 품질 개선 필요
@@ -57,12 +57,12 @@ public class BlackjackController {
                 String yesOrNo = inputView.readMoreCard(player.getName());
                 if (yesOrNo.equals("y")) {
                     player.draw(Deck.top());
-                    OutputView.printSettingResults(player.getName(), player.getCardsName());
+                    OutputView.printCardResults(player.getName(), player.getCardsName());
                     count++;
                     continue;
                 }
                 if (count == 0) {
-                    OutputView.printSettingResults(player.getName(), player.getCardsName());
+                    OutputView.printCardResults(player.getName(), player.getCardsName());
                 }
                 break;
             }
@@ -81,7 +81,7 @@ public class BlackjackController {
 
     // TODO: 총합 계산 로직 필요
     private void printGameResult(Players players, Player dealer) {
-        OutputView.printSettingResultsByPlayer(CardsOfPlayer.from(players, dealer));
+        OutputView.printCardResultsByPlayer(CardsOfPlayer.from(players, dealer));
     }
 
     private void printWinningResult(Players players, Player dealer) {

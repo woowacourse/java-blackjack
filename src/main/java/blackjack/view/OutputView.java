@@ -11,22 +11,19 @@ public class OutputView {
     }
 
     public static void printInitialSettingsDoneMessage(String dealerName, List<String> playersName) {
-        String joinedPlayersName = stringJoinWithComma(playersName);
-
         System.out.println();
-        System.out.println(dealerName + "와 " + joinedPlayersName + "에게 2장을 나누었습니다.");
+        System.out.println(dealerName + "와 " + stringJoinWithComma(playersName) + "에게 2장을 나누었습니다.");
     }
 
-    public static void printSettingResultsByPlayer(CardsOfPlayer cardsOfPlayer) {
+    public static void printCardResultsByPlayer(CardsOfPlayer cardsOfPlayer) {
         for (String playerName : cardsOfPlayer.cardsOfPlayer().keySet()) {
-            printSettingResults(playerName, cardsOfPlayer.get(playerName));
+            printCardResults(playerName, cardsOfPlayer.get(playerName));
         }
         System.out.println();
     }
 
-    public static void printSettingResults(String playerName, List<String> cards) {
-        String joinedCards = stringJoinWithComma(cards);
-        System.out.println(playerName + "카드: " + joinedCards);
+    public static void printCardResults(String playerName, List<String> cards) {
+        System.out.println(playerName + "카드: " + stringJoinWithComma(cards));
     }
 
     // TODO: 16점 고정 상수 제거
@@ -36,8 +33,7 @@ public class OutputView {
     }
 
     public static void printCardResult(String playerName, List<String> cards, int score) {
-        String joinedCards = stringJoinWithComma(cards);
-        System.out.println(playerName + "카드: " + joinedCards + " - 결과: " + score);
+        System.out.println(playerName + "카드: " + stringJoinWithComma(cards) + " - 결과: " + score);
     }
 
     // TODO: 딜러 하드 코딩 제거
@@ -59,9 +55,8 @@ public class OutputView {
 
     private static String stringJoinWithComma(List<String> strings) {
         StringJoiner stringJoiner = new StringJoiner(",");
-        for (String string : strings) {
-            stringJoiner.add(string);
-        }
+        strings.forEach(stringJoiner::add);
+
         return stringJoiner.toString();
     }
 
