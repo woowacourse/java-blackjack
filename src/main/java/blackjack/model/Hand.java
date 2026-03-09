@@ -8,7 +8,7 @@ public class Hand {
     private static final int BUST_LOWER_BOUND = 22;
     private static final int ACE_ADJUST_SCORE = 10;
 
-    private final List<Card> cards  = new ArrayList<>();
+    private final List<Card> cards = new ArrayList<>();
 
     public List<Card> getCards() {
         return List.copyOf(cards);
