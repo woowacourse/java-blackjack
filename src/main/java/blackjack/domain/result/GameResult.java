@@ -19,12 +19,9 @@ public enum GameResult {
     }
 
     private static GameResult compare(final Score playerScore, final Score dealerScore) {
-        if (playerScore.isGreaterThan(dealerScore)) {
-            return WIN;
-        }
-        if (playerScore.isLessThan(dealerScore)) {
-            return LOSE;
-        }
+        int result = playerScore.compareTo(dealerScore);
+        if (result > 0) return WIN;
+        if (result < 0) return LOSE;
         return DRAW;
     }
 

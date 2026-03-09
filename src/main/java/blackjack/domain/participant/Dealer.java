@@ -1,7 +1,5 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.hand.Score;
-
 public class Dealer extends Participant {
 
     private static final String DEALER_NAME = "딜러";
@@ -13,6 +11,6 @@ public class Dealer extends Participant {
 
     @Override
     public boolean canReceiveCard() {
-        return calculateScore().isLessThanOrEqualTo(new Score(HIT_THRESHOLD));
+        return calculateScore().isLessThanOrEqualTo(HIT_THRESHOLD);
     }
 }
