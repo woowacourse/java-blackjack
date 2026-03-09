@@ -1,10 +1,12 @@
 package domain.card;
 
-import static message.ErrorMessage.*;
+import static message.ErrorMessage.DECK_CAN_NOT_DUPLICATED;
+import static message.ErrorMessage.DECK_IS_EMPTY;
 
 import domain.enums.Rank;
 import domain.enums.Suit;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -32,6 +34,16 @@ public class DeckTest {
         Assertions.assertThatThrownBy(() -> new Deck(cards))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(DECK_CAN_NOT_DUPLICATED.getMessage());
+    }
+
+    @DisplayName("더 이상 뽑을 카드가 없는데 드로우할 경우 예외가 발생한다.")
+    @Test
+    void 카드가_없는데_드로우할_경우_예외가_발생한다() {
+        Deck deck = new Deck(List.of());
+
+        Assertions.assertThatThrownBy(deck::drawCard)
+                .isInstanceOf(NoSuchElementException.class)
+                .hasMessage(DECK_IS_EMPTY.getMessage());
     }
 }
 
