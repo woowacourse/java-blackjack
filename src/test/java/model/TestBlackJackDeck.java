@@ -16,7 +16,7 @@ public class TestBlackJackDeck {
     }
 
     @Test
-    public void 남은_카드가_0장_일_때_드로우() {
+    public void 남은_카드가_0장_일_때_드로우_예외() {
         BlackJackDeck blackJackDeck = new BlackJackDeck();
 
         for(int i = 0; i < 52; i++) {
