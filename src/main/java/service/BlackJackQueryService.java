@@ -1,8 +1,10 @@
 package service;
 
+import domain.DealerWinningScore;
 import domain.GameTable;
 import domain.vo.NameAndCardInfos;
 import dto.AllPlayersNameAndCardsResponse;
+import dto.DealerWinningStatisticsResponse;
 import dto.NameAndCardsResponse;
 import dto.NameResponse;
 import dto.PlayedGameResultResponse;
@@ -62,5 +64,14 @@ public class BlackJackQueryService {
 
     public PlayerGameResultsResponse playerResult() {
         return PlayerGameResultsResponse.from(gameTableRepository.playerResults());
+    }
+
+    public DealerWinningStatisticsResponse dealerWinningStatistics() {
+        DealerWinningScore winningStatistics = gameTableRepository.getDealerWinningStatistics();
+        return new DealerWinningStatisticsResponse(
+                winningStatistics.winCount(),
+                winningStatistics.drawCount(),
+                winningStatistics.loseCount()
+        );
     }
 }

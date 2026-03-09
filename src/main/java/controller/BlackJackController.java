@@ -120,6 +120,9 @@ public class BlackJackController {
     private void resultPhase() {
         displayDealersResult();
         displayPlayerResults();
+
+        OutputView.printTaskDivider();
+
         displayDealerWinningStatistics();
         displayPlayerWinningConditions();
     }

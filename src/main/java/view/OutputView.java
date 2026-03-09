@@ -1,15 +1,18 @@
 package view;
 
 import dto.AllPlayersNameAndCardsResponse;
+import dto.DealerWinningStatisticsResponse;
 import dto.NameAndCardsResponse;
 import dto.PlayedGameResultResponse;
 import dto.PlayerGameResultsResponse;
 import dto.PlayerNamesResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 public final class OutputView {
 
     private static final String JOINER = ", ";
+    private static final String CONDITION_JOINER = " ";
 
     private OutputView() {
 
@@ -53,6 +56,46 @@ public final class OutputView {
     public static void playerResults(PlayerGameResultsResponse playerGameResultsResponse) {
         playerGameResultsResponse.results()
                 .forEach(OutputView::participantResult);
+    }
+
+    public static void winningConditionsHeader() {
+        winningConditionHeader();
+    }
+
+    public static void dealerWinningStatistics(DealerWinningStatisticsResponse response) {
+        StringBuilder buffer = new StringBuilder();
+
+        appendWin(response.winCount(), buffer);
+        appendDraw(response.drawCount(), buffer);
+        appendLose(response.loseCount(), buffer);
+
+        System.out.println(OutputMessage.DEALER_WINNING_CONDITION.description(buffer));
+    }
+
+    private static void appendWin(int winCount, StringBuilder statistics) {
+        if (winCount > 0) {
+            statistics.append(OutputMessage.WIN.description(winCount)).append(CONDITION_JOINER);
+        }
+    }
+
+    private static void appendDraw(int drawCount, StringBuilder statistics) {
+        if (drawCount > 0) {
+            statistics.append(OutputMessage.DRAW.description(drawCount)).append(CONDITION_JOINER);
+        }
+    }
+
+    private static void appendLose(int loseCount, StringBuilder statistics) {
+        if (loseCount > 0) {
+            statistics.append(OutputMessage.LOSE.description(loseCount));
+        }
+    }
+
+    public static void playerWinningConditions() {
+
+    }
+
+    private static void winningConditionHeader() {
+        System.out.println(OutputMessage.RESULT_HEADER.description());
     }
 
     public static void printTaskDivider() {

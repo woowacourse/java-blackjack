@@ -1,5 +1,6 @@
 package repository;
 
+import domain.DealerWinningScore;
 import domain.GameTable;
 import domain.PlayedGameResult;
 import domain.vo.NameAndCardInfos;
@@ -71,5 +72,9 @@ public class GameTableRepository {
 
     public List<PlayedGameResult> playerResults() {
         return gameTable.playerResults();
+    }
+
+    public DealerWinningScore getDealerWinningStatistics() {
+        return gameTable.dealerWinningStatistics();
     }
 }

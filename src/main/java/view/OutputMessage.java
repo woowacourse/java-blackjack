@@ -6,8 +6,12 @@ public enum OutputMessage {
     PARTICIPANTS_RESULT("%s - 결과: %d"),
 
     RESULT_HEADER("## 최종 승패"),
-    DEALER_WINNING_CONDITION("딜러: %d승 %d패"),
+    DEALER_WINNING_CONDITION("딜러: %s"),
     PLAYER_WINNING_CONDITION("%s: %s"),
+
+    WIN("%d승"),
+    DRAW("%d무"),
+    LOSE("%d패"),
 
     NAME_AND_CARDS("%s카드: %s"),
     ;
