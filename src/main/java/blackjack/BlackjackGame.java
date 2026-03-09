@@ -18,7 +18,8 @@ public class BlackjackGame {
         setupGame();
         dealer.dealInitialCards(players);
         printInitialDeal();
-        dealer.processGame(players);
+        processPlayersTurn();
+        processDealerTurn();
         printResults();
     }
 
@@ -37,6 +38,40 @@ public class BlackjackGame {
 
     private void printInitialDeal() {
         OutputView.printInitialDeal(players, dealer);
+    }
+
+    private void processPlayersTurn() {
+        players.getPlayers().forEach(this::processPlayerTurn);
+    }
+
+    private void processPlayerTurn(final Player player) {
+        boolean hasHit = false;
+        while (player.canReceiveCard()) {
+            if (askHitAndProcess(player)) {
+                hasHit = true;
+            }
+        }
+        if (!hasHit) {
+            OutputView.printPlayerCards(player);
+        }
+    }
+
+    private boolean askHitAndProcess(final Player player) {
+        final boolean wantsHit = InputView.readHitDecision(player.getName());
+        if (!wantsHit) {
+            player.stay();
+            return false;
+        }
+        player.receiveCard(dealer.drawCard());
+        OutputView.printPlayerCards(player);
+        return true;
+    }
+
+    private void processDealerTurn() {
+        while (dealer.canReceiveCard()) {
+            dealer.receiveCard(dealer.drawCard());
+            OutputView.printDealerHit();
+        }
     }
 
     private void printResults() {
