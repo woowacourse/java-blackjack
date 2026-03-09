@@ -18,7 +18,7 @@ public class DealerTest {
     @BeforeEach
     void setUp() {
         dealer = new Dealer();
-        cardDeck = new CardDeck();
+        cardDeck = new CardDeck(cards -> {});
     }
 
     @Test

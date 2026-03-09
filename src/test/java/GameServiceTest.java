@@ -1,16 +1,16 @@
-
 import domain.Card;
 import domain.Dealer;
 import domain.GameResult;
+import domain.RandomShuffle;
+import domain.ShuffleStrategy;
 import domain.User;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class GameServiceTest {
 
@@ -18,7 +18,8 @@ class GameServiceTest {
 
     @BeforeEach
     void setUp() {
-        gameService = new GameService();
+        ShuffleStrategy strategy = new RandomShuffle();
+        gameService = new GameService(strategy);
     }
 
     @Test
@@ -49,7 +50,7 @@ class GameServiceTest {
         loseUser.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_ACE));
         drawUser.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_NINE));
 
-        gameService.determineResult(users, dealer);
+        gameService.settleResult(users, dealer);
         long totalUserWinRounds = users.stream().filter(user -> user.getGameResult() == GameResult.WIN)
                         .count();
         long totalUserLoseRounds = users.stream().filter(user -> user.getGameResult() == GameResult.LOSE)

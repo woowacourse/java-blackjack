@@ -19,7 +19,6 @@ public class GameService {
         }
     }
 
-
     public Card deal() {
         return cardDeck.deal();
     }
