@@ -67,9 +67,6 @@ public abstract class Player {
     }
 
     public boolean isBlackjack() {
-        if(score == BLACKJACK_SCORE) {
-            return true;
-        }
-        return false;
+        return hand.size() == 2 && score == BLACKJACK_SCORE;
     }
 }
