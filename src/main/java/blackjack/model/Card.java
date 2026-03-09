@@ -6,6 +6,6 @@ public record Card(
 ) {
 
     public int getValue() {
-        return rank.getValue();
+        return rank.getScore();
     }
 }

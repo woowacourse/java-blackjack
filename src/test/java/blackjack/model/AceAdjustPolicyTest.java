@@ -20,7 +20,7 @@ class AceAdjustPolicyTest {
                 new Card(Rank.ACE, Suit.CLUB),
                 new Card(rank, Suit.CLUB)
         );
-        int sum = Rank.ACE.getValue() + rank.getValue();
+        int sum = Rank.ACE.getScore() + rank.getScore();
 
         // when
         int adjustedScore = aceAdjustPolicy.adjust(sum, cards);
