@@ -1,6 +1,6 @@
 package repository;
 
-import domain.DealerWinningScore;
+import domain.vo.DealerWinningScore;
 import domain.GameTable;
 import domain.PlayedGameResult;
 import domain.PlayerWinningInfo;
