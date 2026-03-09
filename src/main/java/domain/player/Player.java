@@ -16,7 +16,7 @@ public abstract class Player {
     }
 
     public int score() {
-        return handCard.cardCalculator();
+        return handCard.cardCalculate();
     }
 
     public boolean isBust() {
