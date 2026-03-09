@@ -1,19 +1,17 @@
 package domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
     private final String name;
     private final Hand hand = new Hand();
-    private boolean isBust = false;
 
     public Player(String name) {
         this.name = name;
     }
 
     public boolean isBust() {
-        return isBust;
+        return hand.isBust();
     }
 
     public void addCard(Card card) {
@@ -30,10 +28,6 @@ public class Player {
 
     public List<String> getHandToString() {
         return hand.toStringList();
-    }
-
-    public void setBust() {
-        isBust = true;
     }
 
     public int getScore(){

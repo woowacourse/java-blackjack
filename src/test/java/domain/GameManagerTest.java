@@ -86,17 +86,16 @@ class GameManagerTest {
         player.addCard(new Card(Rank.ACE, Suit.SPADE));
         player.addCard(new Card(Rank.KING, Suit.SPADE));
 
-        assertThat(manager.isBlackjack(player)).isTrue();
+        assertThat(player.getHand().isBlackjack()).isTrue();
     }
 
     @Test
     void 합계가_21점이_아니면_블랙잭이_아니다() {
-        GameManager manager = new GameManager();
         Player player = new Player("pobi");
         player.addCard(new Card(Rank.TEN, Suit.SPADE));
         player.addCard(new Card(Rank.KING, Suit.SPADE));
 
-        assertThat(manager.isBlackjack(player)).isFalse();
+        assertThat(player.getHand().isBlackjack()).isFalse();
     }
 
     @Test

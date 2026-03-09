@@ -52,10 +52,10 @@ public class Hand {
     }
 
     public boolean isBust() {
-        return sumScore() > BLACKJACK_SCORE;
+        return calculateScore() > BLACKJACK_SCORE;
     }
 
     public boolean isBlackjack() {
-        return sumScore() == BLACKJACK_SCORE;
+        return calculateScore() == BLACKJACK_SCORE;
     }
 }

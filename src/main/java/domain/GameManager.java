@@ -24,11 +24,6 @@ public class GameManager {
         }
     }
 
-    public void judgeBust(Player currentPlayer) {
-        if (currentPlayer.isBust()) {
-            currentPlayer.setBust();
-        }
-    }
 
     public int calculateScore(Hand hand) {
         return hand.calculateScore();
@@ -36,13 +31,11 @@ public class GameManager {
 
     public List<String> drawPlayerCard(Player player) {
         player.addCard(deck.draw());
-        judgeBust(player);
         return player.getHandToString();
     }
 
     public void drawDealerCard() {
         dealer.addCard(deck.draw());
-        judgeBust(dealer);
     }
 
     public void addPlayer(String name) {
@@ -132,8 +125,8 @@ public class GameManager {
 
     private void determineWinLose(List<GameFinalResultDto> results) {
         for (Player player : players.getPlayers()) {
-            int playerScore = calculateScore(player.getHand());
-            int dealerScore = calculateScore(dealer.getHand());
+            int playerScore = player.getScore();
+            int dealerScore = dealer.getScore();
             if (player.isBust() || playerScore < dealerScore) {
                 results.add(new GameFinalResultDto(player.getName(), Result.LOSE));
                 continue;
