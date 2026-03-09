@@ -11,7 +11,7 @@ public class Dealer extends User {
     }
 
     public EnumMap<GameResult, Integer> getGameResults() {
-        return gameResults;
+        return new EnumMap<>(gameResults);
     }
 
     public void addResult(GameResult gameResult) {

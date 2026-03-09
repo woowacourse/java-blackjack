@@ -1,7 +1,6 @@
 package blackjack.model;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Players {
@@ -16,7 +15,7 @@ public class Players {
     }
 
     public List<Player> all() {
-        return Collections.unmodifiableList(players);
+        return players;
     }
 
     public List<GameSummary> calculateGameResult(Dealer dealer) {
