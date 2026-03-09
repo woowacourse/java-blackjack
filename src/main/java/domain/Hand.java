@@ -10,12 +10,12 @@ public class Hand {
     private static final Integer DEALER_DEAL_AGAIN_BOUNDARY = 16;
 
     private final List<Card> cards;
-    private int handTotalScore;
+    private int totalScore;
     private boolean hasAce;
 
     public Hand() {
         cards = new ArrayList<>();
-        handTotalScore = 0;
+        totalScore = 0;
         hasAce = false;
     }
 
@@ -33,29 +33,29 @@ public class Hand {
     }
 
     public void calculateHandScore() {
-        this.handTotalScore = 0;
+        this.totalScore = 0;
         for (Card card : cards) {
-            handTotalScore += card.getCardScore();
+            totalScore += card.getCardScore();
         }
 
-        if (hasAce && handTotalScore > WINNING_SCORE_BOUNDARY) {
-            handTotalScore -= ACE_SUBTRACTION_POINT;
+        if (hasAce && totalScore > WINNING_SCORE_BOUNDARY) {
+            totalScore -= ACE_SUBTRACTION_POINT;
         }
     }
 
     public Boolean determineDealerDealMore() {
-        if (handTotalScore <= DEALER_DEAL_AGAIN_BOUNDARY) {
+        if (totalScore <= DEALER_DEAL_AGAIN_BOUNDARY) {
             return true;
         }
         return false;
     }
 
     public String getFinalDisplay() {
-        String finalDisplay = " - 결과: " + handTotalScore;
+        String finalDisplay = " - 결과: " + totalScore;
         return finalDisplay;
     }
 
-    public int getHandTotalScore() {
-        return handTotalScore;
+    public int getTotalScore() {
+        return totalScore;
     }
 }

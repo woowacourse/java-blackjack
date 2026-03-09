@@ -3,11 +3,11 @@ package domain;
 import view.Message;
 
 public class User {
-    private final String username;
+    private final String name;
     private final Hand hand;
 
     public User(String name) {
-        this.username = name;
+        this.name = name;
         this.hand = new Hand();
     }
 
@@ -16,7 +16,7 @@ public class User {
     }
 
     public String getName() {
-        return username;
+        return name;
     }
 
     public String getCardsDisplay() {
@@ -24,7 +24,7 @@ public class User {
     }
 
     public String formatAskGetExtraCard() {
-        return String.format(Message.REQUEST_GET_EXTRA_CARD, username);
+        return String.format(Message.REQUEST_GET_EXTRA_CARD, name);
     }
 
     public void calculateScore() {
@@ -36,6 +36,6 @@ public class User {
     }
 
     public int getHand() {
-        return hand.getHandTotalScore();
+        return hand.getTotalScore();
     }
 }

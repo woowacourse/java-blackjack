@@ -13,11 +13,11 @@ public class Card {
     }
 
     public int getCardScore() {
-        return rank.getRankScore();
+        return rank.getScore();
     }
 
     public String getDisplayName() {
-        return rank.getRankName() + suit.getSuitName();
+        return rank.getName() + suit.getName();
     }
 
     public boolean isAceCard() {

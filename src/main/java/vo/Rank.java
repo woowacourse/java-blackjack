@@ -15,19 +15,19 @@ public enum Rank {
     QUEEN("Q", 10),
     KING("K", 10),;
 
-    private final String rankName;
-    private final Integer rankScore;
+    private final String name;
+    private final Integer score;
 
-    Rank(String rankName, Integer rankScore) {
-        this.rankName = rankName;
-        this.rankScore = rankScore;
+    Rank(String name, Integer score) {
+        this.name = name;
+        this.score = score;
     }
 
-    public int getRankScore() {
-        return rankScore;
+    public int getScore() {
+        return score;
     }
 
-    public String getRankName() {
-        return rankName;
+    public String getName() {
+        return name;
     }
 }
