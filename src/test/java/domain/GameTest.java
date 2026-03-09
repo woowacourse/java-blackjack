@@ -163,7 +163,7 @@ public class GameTest {
             onePlayerGame.distributeCard(deck);
             //then
 
-            List<CardDto> fizzCard = onePlayerGame.getPlayerCard("피즈");
+            List<CardDto> fizzCard = onePlayerGame.getPlayerCards("피즈");
             List<Rank> expectedFizzRank = List.of(Rank.FIVE, Rank.FIVE, Rank.FOUR);
             List<Suit> expectedFizzSuit = List.of(Suit.CLOVER, Suit.HEART, Suit.SPADE);
 

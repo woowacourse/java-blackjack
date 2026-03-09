@@ -19,23 +19,6 @@ public class Game {
         this.dealer = dealer;
     }
 
-    public List<CardDto> getDealerCard() {
-        return dealer.getDealerCards();
-    }
-
-    public Map<String, List<CardDto>> getAllPlayerCard() {
-        Map<String, List<CardDto>> playerCards = new LinkedHashMap<>();
-        for (String name : players.getAllPlayersName()) {
-            playerCards.put(name, players.getPlayerCards(name));
-        }
-
-        return playerCards;
-    }
-
-    public List<CardDto> getPlayerCard(String name) {
-        return players.getPlayerCards(name);
-    }
-
     public void initializeGame(Deck deck) {
         players.initializeCard(deck);
         dealer.addCards(List.of(deck.drawCard(), deck.drawCard()));
@@ -47,6 +30,10 @@ public class Game {
 
     public void distributeCard(Deck deck) {
         dealer.addCard(deck.drawCard());
+    }
+
+    public void dealerHit(Deck deck) {
+        distributeCard(deck);
     }
 
     public boolean isPlayerBust(String name) {
@@ -63,8 +50,24 @@ public class Game {
         }
     }
 
-    public void dealerHit(Deck deck) {
-        distributeCard(deck);
+    public List<CardDto> getDealerCard() {
+        return dealer.getDealerCards();
+    }
+
+    public List<String> getAllPlayerNames() {
+        return players.getAllPlayerNames();
+    }
+
+    public Map<String, List<CardDto>> getAllPlayersCards() {
+        Map<String, List<CardDto>> playerCards = new LinkedHashMap<>();
+        for (String name : players.getAllPlayerNames()) {
+            playerCards.put(name, players.getPlayerCards(name));
+        }
+        return playerCards;
+    }
+
+    public List<CardDto> getPlayerCards(String name) {
+        return players.getPlayerCards(name);
     }
 
     public Map<Result, Integer> getDealerResult() {
