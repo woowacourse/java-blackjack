@@ -32,10 +32,7 @@ public class InputView {
         System.out.println(CARD_MORD_MESSAGE.format(playerName));
         try {
             String answer = bufferedReader.readLine();
-            if (answer.equals("y") || answer.equals("Y")) {
-                return true;
-            }
-            return false;
+            return answer.equals("y") || answer.equals("Y");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
