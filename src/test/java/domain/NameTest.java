@@ -11,7 +11,6 @@ class NameTest {
     @DisplayName("이름은 비어있거나 공백일 수 없다.")
     void validateBlank_InputBlank_ThrowsException() {
         String name = " ";
-
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             new Name(name);
         });
@@ -22,7 +21,6 @@ class NameTest {
     @DisplayName("이름은 영어만 허용된다.")
     void validateEnglish_InputKorean_ThrowsException() {
         String name = "한글";
-
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             new Name(name);
         });
