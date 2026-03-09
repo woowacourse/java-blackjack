@@ -1,10 +1,6 @@
 package service;
 
-import domain.*;
-import domain.card.Card;
-import domain.card.Deck;
-import domain.card.Rank;
-import domain.card.Suit;
+import domain.card.*;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
