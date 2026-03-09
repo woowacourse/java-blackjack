@@ -1,8 +1,5 @@
 package presentation.ui;
 
-import static constant.Word.CARD_MORD_MESSAGE;
-import static constant.Word.PLAYER_NAME_MESSAGE;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -19,7 +16,7 @@ public class InputView {
 
     public List<String> readPlayerNames() {
         try {
-            System.out.println(PLAYER_NAME_MESSAGE.format());
+            System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
             return Stream.of(bufferedReader.readLine().split(","))
                     .map(String::trim)
                     .toList();
@@ -29,7 +26,7 @@ public class InputView {
     }
 
     public Boolean playContinue(String playerName) {
-        System.out.println(CARD_MORD_MESSAGE.format(playerName));
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n", playerName);
         try {
             String answer = bufferedReader.readLine();
             if (answer.equals("y") || answer.equals("Y")) {
