@@ -11,6 +11,9 @@ import domain.participant.Name;
 import domain.participant.Participant;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 class RefereeTest {
 
     @Test
@@ -27,13 +30,13 @@ class RefereeTest {
         dealerHand.receiveCard(new Card(Emblem.CLOVER, Grade.TEN));
         playerHand.receiveCard(new Card(Emblem.CLOVER, Grade.ACE));
 
-        Participants players = new Participants();
-        players.add(player);
+        List<Participant> players = new ArrayList<>(List.of(player));
+        Participants participants = new Participants(players);
 
         Referee referee = new Referee();
 
         // when
-        GameStatistics statistics = referee.judge(dealer, players);
+        GameStatistics statistics = referee.judge(dealer, participants);
 
         // then
         assertAll(

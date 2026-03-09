@@ -44,10 +44,6 @@ public class Participants {
         participant.initHand(deck);
     }
 
-    public void add(Participant participant) {
-        participants.add(participant);
-    }
-
     public List<Participant> getParticipants() {
         return participants;
     }
