@@ -21,16 +21,11 @@ public class Hand {
         hand.add(card);
     }
 
-    //버스트면 true
-    public boolean isBust() {
-        return calculateTotalScore() > 21;
-    }
-
     public int getHandSize() {
         return hand.size();
     }
 
-    public List<Card> getNowHand() {
+    public List<Card> getHandCards() {
         return Collections.unmodifiableList(hand);
     }
 
@@ -40,18 +35,18 @@ public class Hand {
                 .mapToInt(Card::getCardScore)
                 .sum();
 
-        int aCount = (int) hand.stream()
+        int aceCount = (int) hand.stream()
                 .filter(card -> card.getRank() == Rank.ACE)
                 .count();
 
-        return aceCalculate(sum, aCount);
+        return aceCalculate(sum, aceCount);
     }
 
-    private int aceCalculate(int sum, int aCount) {
-        int totalSum = sum + (aCount * Rank.ACE.getValue());
-        while (aCount > 0 && totalSum > BLACKJACK_LIMIT_VALUE) {
+    private int aceCalculate(int sum, int aceCount) {
+        int totalSum = sum + (aceCount * Rank.ACE.getValue());
+        while (aceCount > 0 && totalSum > BLACKJACK_LIMIT_VALUE) {
             totalSum -= (Rank.ACE.getValue() - ACE_MIN_VALUE);
-            aCount--;
+            aceCount--;
         }
         return totalSum;
     }

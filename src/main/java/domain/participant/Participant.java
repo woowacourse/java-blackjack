@@ -2,7 +2,11 @@ package domain.participant;
 
 import domain.card.Card;
 
+import java.util.stream.Collectors;
+
 public class Participant {
+    private static final int BLACKJACK_LIMIT_VALUE = 21;
+
     private final PlayerName name;
     private final Hand hand;
 
@@ -27,7 +31,14 @@ public class Participant {
         return name.getName();
     }
 
-    public Hand getHand() {
-        return hand;
+    //버스트면 true
+    public boolean isBust() {
+        return hand.calculateTotalScore() > BLACKJACK_LIMIT_VALUE;
+    }
+
+    public String handDisplay() {
+        return hand.getHandCards().stream()
+                .map(card -> card.getCardCode() + card.getCardShape())
+                .collect(Collectors.joining(", "));
     }
 }

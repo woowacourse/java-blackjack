@@ -89,7 +89,7 @@ public class BlackJackController {
     }
 
     private boolean canPlayerDraw(Player player) {
-        if (player.getHand().isBust()) {
+        if (player.isBust()) {
             player.getTotalCardScore();
             return false;
         }
@@ -110,7 +110,7 @@ public class BlackJackController {
         while (canPlayerDraw(player)) {
             drawAndShowCard(cardDeck, player);
         }
-        if (!player.getHand().isBust()) {
+        if (!player.isBust()) {
             finalizePlayerTurn(player);
         }
     }

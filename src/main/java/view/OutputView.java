@@ -1,6 +1,7 @@
 package view;
 
 import domain.participant.Dealer;
+import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
 import domain.result.Result;
@@ -37,7 +38,7 @@ public class OutputView {
                 .collect(Collectors.joining(", ")));
         System.out.println("에게 2장을 나누었습니다.");
 
-        System.out.println(dealer.getName() + "카드: " + dealerCardPrint(dealer));
+        System.out.println(dealer.getName() + "카드: " + participantCardPrint(dealer));
 
         for (Player player : players.getAllPlayers()) {
             holdingCardMessage(player);
@@ -47,7 +48,7 @@ public class OutputView {
 
     public static void scoreStatisticsMessage(Dealer dealer, Players players) {
         System.out.print("\n\n" + dealer.getName() + "카드: ");
-        System.out.print(dealerCardPrint(dealer));
+        System.out.print(participantCardPrint(dealer));
         System.out.println(" - 결과: " + dealer.getTotalCardScore());
 
         for (Player player : players.getAllPlayers()) {
@@ -67,18 +68,10 @@ public class OutputView {
     }
 
     public static void holdingCardMessage(Player player) {
-        System.out.print(player.getName() + "카드: " + playerCardPrint(player));
+        System.out.print(player.getName() + "카드: " + participantCardPrint(player));
     }
 
-    private static String dealerCardPrint(Dealer dealer) {
-        return dealer.getHand().getNowHand().stream()
-                .map(card -> card.getCardCode() + card.getCardShape())
-                .collect(Collectors.joining(", "));
-    }
-
-    private static String playerCardPrint(Player player) {
-        return player.getHand().getNowHand().stream()
-                .map(card -> card.getCardCode() + card.getCardShape())
-                .collect(Collectors.joining(", "));
+    private static String participantCardPrint(Participant participant) {
+        return participant.handDisplay();
     }
 }
