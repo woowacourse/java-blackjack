@@ -2,7 +2,6 @@ package domain.participant;
 
 import domain.card.Card;
 import java.util.List;
-import java.util.function.Consumer;
 
 public class Dealer extends Participant {
 
@@ -19,11 +18,6 @@ public class Dealer extends Participant {
                 .map(Card::getCardName)
                 .toList();
         return List.of(cards.getFirst());
-    }
-
-    @Override
-    public void play(Consumer<Participant> consumer) {
-        consumer.accept(this);
     }
 
     public boolean isStand() {

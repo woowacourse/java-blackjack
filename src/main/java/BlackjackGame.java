@@ -39,12 +39,12 @@ public class BlackjackGame {
     }
 
     private void playTurns(Participants participants) {
-        participants.playPlayerTurn(this::playPlayerTurn);
-        participants.playDealerTurn(this::playDealerTurn);
+        participants.playPlayerTurn(this::hitByPlayer);
+        participants.playDealerTurn(this::hitByDealer);
         OutputView.showResult(participants);
     }
 
-    private void playPlayerTurn(Player player) {
+    private void hitByPlayer(Player player) {
         while (!player.isBust() && wantHit(player)) {
             player.playTurn(deck);
             OutputView.showCardName(player);
@@ -57,7 +57,7 @@ public class BlackjackGame {
         return command.isYes();
     }
 
-    private void playDealerTurn(Dealer dealer) {
+    private void hitByDealer(Dealer dealer) {
         while (!dealer.isStand()) {
             dealer.playTurn(deck);
             OutputView.showDealerMessage();

@@ -12,10 +12,12 @@ public class Referee {
     }
 
     public GameStatistics judge(Participants participants) {
-        for (Participant player : participants.getPlayers()) {
-            judgeDealerResult(participants.getDealer(), player);
-            judgePlayerResult(participants.getDealer(), player);
-        }
+        participants.playDealerTurn(dealer ->
+                participants.playPlayerTurn(player -> {
+                    judgePlayerResult(dealer, player);
+                    judgeDealerResult(dealer, player);
+                })
+        );
         return gameStatistics;
     }
 

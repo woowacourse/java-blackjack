@@ -6,7 +6,6 @@ import domain.card.Card;
 import domain.card.Deck;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Consumer;
 
 public abstract class Participant {
 
@@ -19,8 +18,6 @@ public abstract class Participant {
     }
 
     public abstract List<String> getInitialCards();
-
-    public abstract void play(Consumer<Participant> consumer);
 
     public boolean isBust() {
         return getScore() > BLACKJACK_SCORE;

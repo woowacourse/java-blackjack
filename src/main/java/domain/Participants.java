@@ -51,14 +51,6 @@ public class Participants {
         return getParticipants(dealer, players);
     }
 
-    public Dealer getDealer() {
-        return dealer;
-    }
-
-    public List<Player> getPlayers() {
-        return players;
-    }
-
     public void playPlayerTurn(Consumer<Player> consumer) {
         players.forEach(consumer);
     }
