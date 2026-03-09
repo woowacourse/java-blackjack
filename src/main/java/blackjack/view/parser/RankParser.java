@@ -1,11 +1,11 @@
 package blackjack.view.parser;
 
-import static blackjack.model.Rank.ACE;
-import static blackjack.model.Rank.JACK;
-import static blackjack.model.Rank.KING;
-import static blackjack.model.Rank.QUEEN;
+import static blackjack.model.card.Rank.ACE;
+import static blackjack.model.card.Rank.JACK;
+import static blackjack.model.card.Rank.KING;
+import static blackjack.model.card.Rank.QUEEN;
 
-import blackjack.model.Rank;
+import blackjack.model.card.Rank;
 import java.util.Map;
 
 public class RankParser {

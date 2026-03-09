@@ -1,7 +1,12 @@
-package blackjack.model;
+package blackjack.model.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.model.card.Card;
+import blackjack.model.card.Hand;
+import blackjack.model.card.Rank;
+import blackjack.model.card.Suit;
+import blackjack.model.game.BlackjackResult;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;

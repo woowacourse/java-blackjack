@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.model.Answer;
+import blackjack.model.game.Answer;
 import blackjack.view.parser.AnswerParser;
 import java.io.BufferedReader;
 import java.io.IOException;

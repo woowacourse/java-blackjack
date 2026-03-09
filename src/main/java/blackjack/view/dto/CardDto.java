@@ -1,8 +1,8 @@
 package blackjack.view.dto;
 
-import blackjack.model.Card;
-import blackjack.model.Rank;
-import blackjack.model.Suit;
+import blackjack.model.card.Card;
+import blackjack.model.card.Rank;
+import blackjack.model.card.Suit;
 
 public record CardDto(
         Rank rank,

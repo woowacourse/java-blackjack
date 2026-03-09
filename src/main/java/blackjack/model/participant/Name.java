@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.model.participant;
 
 public record Name(
         String value

@@ -1,6 +1,6 @@
 package blackjack.view.parser;
 
-import blackjack.model.BlackjackResult;
+import blackjack.model.game.BlackjackResult;
 
 public class ResultParser {
 

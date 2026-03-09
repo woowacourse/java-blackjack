@@ -1,6 +1,6 @@
 package blackjack.view.parser;
 
-import blackjack.model.Answer;
+import blackjack.model.game.Answer;
 import java.util.Map;
 
 public class AnswerParser {

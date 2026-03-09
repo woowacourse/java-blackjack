@@ -5,7 +5,7 @@ import blackjack.view.dto.DealerScoreDto;
 import blackjack.view.dto.PlayerDto;
 import blackjack.view.dto.PlayerScoreDto;
 import blackjack.view.dto.ResultDto;
-import blackjack.model.BlackjackResult;
+import blackjack.model.game.BlackjackResult;
 import blackjack.view.parser.RankParser;
 import blackjack.view.parser.ResultParser;
 import blackjack.view.parser.SuitParser;

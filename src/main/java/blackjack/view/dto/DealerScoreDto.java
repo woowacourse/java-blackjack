@@ -1,6 +1,6 @@
 package blackjack.view.dto;
 
-import blackjack.model.Dealer;
+import blackjack.model.participant.Dealer;
 import java.util.List;
 
 public record DealerScoreDto(

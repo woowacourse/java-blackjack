@@ -1,6 +1,6 @@
 package blackjack.view.parser;
 
-import blackjack.model.Suit;
+import blackjack.model.card.Suit;
 
 public class SuitParser {
 
