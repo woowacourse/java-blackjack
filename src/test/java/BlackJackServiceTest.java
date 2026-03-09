@@ -1,8 +1,8 @@
 import domain.card.Card;
 import domain.card.Pattern;
 import domain.card.Rank;
-import domain.game_result.Result;
-import domain.game_result.ResultInfo;
+import domain.result.Result;
+import domain.result.ResultInfo;
 import domain.participants.Dealer;
 import domain.participants.Hand;
 import domain.participants.Player;
@@ -38,7 +38,7 @@ public class BlackJackServiceTest {
 
     @Test
     void 딜러의_총합이_플레이어의_총합보다_낮으면_플레이어가_승리한다() {
-        BlackJackService blackJackService = new BlackJackService(new Result());
+        BlackJackService blackJackService = new BlackJackService();
         Result result = blackJackService.calculateResult(dealer, players);
         ResultInfo info = result.getGameResult().get(winPlayer.getName());
         assertThat(info).isEqualTo(ResultInfo.WIN);
@@ -46,7 +46,7 @@ public class BlackJackServiceTest {
 
     @Test
     void 딜러의_총합이_플레이어의_총합보다_높으면_플레이어가_패배한다() {
-        BlackJackService blackJackService = new BlackJackService(new Result());
+        BlackJackService blackJackService = new BlackJackService();
         Result result = blackJackService.calculateResult(dealer, players);
         ResultInfo info = result.getGameResult().get(defeatPlayer.getName());
         assertThat(info).isEqualTo(ResultInfo.DEFEAT);
@@ -54,7 +54,7 @@ public class BlackJackServiceTest {
 
     @Test
     void 딜러의_총합과_플레이어의_총합이_같으면_비긴다() {
-        BlackJackService blackJackService = new BlackJackService(new Result());
+        BlackJackService blackJackService = new BlackJackService();
         Result result = blackJackService.calculateResult(dealer, players);
         ResultInfo info = result.getGameResult().get(drawPlayer.getName());
         assertThat(info).isEqualTo(ResultInfo.DRAW);

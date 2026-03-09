@@ -1,7 +1,7 @@
 package controller;
 
 import domain.card.CardDeck;
-import domain.game_result.Result;
+import domain.result.Result;
 import domain.participants.Dealer;
 import domain.participants.Hand;
 import domain.participants.Player;
@@ -18,11 +18,9 @@ import java.util.List;
 public class BlackJackController {
     private static final String HIT_COMMAND = "y";
     private final BlackJackService blackJackService;
-    private Result result;
 
-    public BlackJackController(BlackJackService blackJackService, Result result) {
+    public BlackJackController(BlackJackService blackJackService) {
         this.blackJackService = blackJackService;
-        this.result = result;
     }
 
     public void run() {
@@ -38,7 +36,7 @@ public class BlackJackController {
 
         dealerHitOrStand(dealer, cardDeck);
         OutputView.scoreStatisticsMessage(dealer, players);
-        result = blackJackService.calculateResult(dealer, players);
+        Result result = blackJackService.calculateResult(dealer, players);
         OutputView.gameResultMessage(result);
     }
 

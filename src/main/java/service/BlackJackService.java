@@ -1,20 +1,16 @@
 package service;
 
-import domain.game_result.Result;
-import domain.game_result.ResultInfo;
+import domain.result.Result;
+import domain.result.ResultInfo;
 import domain.participants.Dealer;
 import domain.participants.Player;
 import domain.participants.Players;
 
 public class BlackJackService {
     private static final int BLACKJACK_LIMIT_NUMBER = 21;
-    private final Result result;
-
-    public BlackJackService(Result result) {
-        this.result = result;
-    }
 
     public Result calculateResult(Dealer dealer, Players players) {
+        Result result = new Result();
         for (Player player : players.getPlayers()) {
             result.setPlayerResult(player.getName(), calculateWinDefeatDraw(dealer, player));
         }
