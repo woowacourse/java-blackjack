@@ -18,7 +18,8 @@ public class Users {
     }
 
     public boolean isAllBurst() {
-        return users.stream().allMatch(User::isBurst);
+        return users.stream()
+                .allMatch(User::isBurst);
     }
 
     public void forEach(Consumer<User> action) {

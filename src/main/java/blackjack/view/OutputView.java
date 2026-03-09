@@ -39,11 +39,11 @@ public class OutputView {
 
     private static void printUsersResult(GameResult gameResult) {
         for (Map.Entry<String, Boolean> entry : gameResult.getEntries()) {
-            System.out.println(entry.getKey() + ": " + toWinFlag(entry.getValue()));
+            System.out.println(entry.getKey() + ": " + toWinResult(entry.getValue()));
         }
     }
 
-    private static String toWinFlag(boolean isWin) {
+    private static String toWinResult(boolean isWin) {
         if (isWin) {
             return "승";
         }

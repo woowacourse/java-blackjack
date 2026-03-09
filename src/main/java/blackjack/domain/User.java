@@ -36,7 +36,7 @@ public class User {
         return calculateCardsValue() > 21;
     }
 
-    public boolean isBlackjack() {
+    private boolean isBlackjack() {
         return calculateCardsValue() == 21;
     }
 

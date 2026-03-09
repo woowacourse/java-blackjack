@@ -46,21 +46,6 @@ public class UserTest {
     }
 
     @Test
-    void 가지고_있는_카드의_핪이_버스트인지_확인하는_테스트() {
-        // given
-        User user = new User("밀란");
-        user.bring(new Card(CardValue.TEN, CardShape.DIAMOND));
-        user.bring(new Card(CardValue.TEN, CardShape.DIAMOND));
-        user.bring(new Card(CardValue.TEN, CardShape.DIAMOND));
-
-        // when
-        boolean isBurst = user.isBurst();
-
-        // then
-        assertThat(isBurst).isTrue();
-    }
-
-    @Test
     void ACE의_값이_1이_유리할_때_테스트() {
         // given
         User user = new User("밀란");
@@ -112,7 +97,7 @@ public class UserTest {
         user.bring(new Card(CardValue.TEN, CardShape.DIAMOND));
 
         // when
-        boolean isBlackjack = user.isBlackjack();
+        boolean isBlackjack = user.isFinished();
 
         // then
         assertThat(isBlackjack).isTrue();

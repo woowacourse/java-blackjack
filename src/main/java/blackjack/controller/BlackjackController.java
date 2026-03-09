@@ -47,7 +47,9 @@ public class BlackjackController {
     private void printGameSettingResult(Users users, Dealer dealer) {
         OutputView.printGameSettingMessage(dealer.getName(), users.getNames());
         OutputView.printSettingCardsResult(dealer.getName(), List.of(dealer.getFirstCardName()));
-        users.forEach(user -> OutputView.printSettingCardsResult(user.getName(), user.getCardsName()));
+        users.forEach(user ->
+                OutputView.printSettingCardsResult(user.getName(), user.getCardsName())
+        );
     }
 
     private void getMoreCards(Users users) {
@@ -80,12 +82,16 @@ public class BlackjackController {
 
     private void printGameResult(Users users, Dealer dealer) {
         OutputView.printCardsResult(dealer.getName(), dealer.getCardsName(), dealer.calculateCardsValue());
-        users.forEach(user -> OutputView.printCardsResult(user.getName(), user.getCardsName(), user.calculateCardsValue()));
+        users.forEach(user ->
+                OutputView.printCardsResult(user.getName(), user.getCardsName(), user.calculateCardsValue())
+        );
     }
 
     private void printWinningResult(Users users, Dealer dealer) {
         GameResult gameResult = new GameResult();
-        users.forEach(user -> gameService.applyGameResult(user, dealer, gameResult));
+        users.forEach(user ->
+                gameService.applyGameResult(user, dealer, gameResult)
+        );
         OutputView.printWinningResult(gameResult, dealer.getName());
     }
 }
