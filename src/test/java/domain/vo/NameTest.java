@@ -23,12 +23,12 @@ class NameTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    // Deprecated
-//    @Test
-//    void 이름이_딜러일때_예외 (){
-//        String input = "딜러";
-//
-//        Assertions.assertThatThrownBy(() -> new Name(input))
-//                .isInstanceOf(IllegalArgumentException.class);
-//    }
+
+    @Test
+    void 이름이_딜러일때_예외 (){
+        String input = "딜러";
+
+        Assertions.assertThatThrownBy(() -> new Name(input))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }
