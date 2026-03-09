@@ -1,14 +1,16 @@
 package view;
 
-import common.Constants;
 import dto.GameResult;
 import dto.GameStatus;
 import java.util.List;
 
 public class OutputView {
+    private static final String DEALER_NAME = "딜러";
+    private static final String WIN = "승";
+    private static final String CARD_JOINER = ", ";
 
     public static void divideCards(List<String> participants) {
-        String players = String.join(Constants.CARD_JOINER, participants);
+        String players = String.join(CARD_JOINER, participants);
         System.out.println(OutputMessage.DIVIDE.description(players));
     }
 
@@ -49,7 +51,7 @@ public class OutputView {
     }
 
     private static void statisticDealer(List<GameResult> gameResults) {
-        long playersWin = gameResults.stream().filter(cond -> cond.winningCondition().equals(Constants.WIN)).count();
+        long playersWin = gameResults.stream().filter(cond -> cond.winningCondition().equals(WIN)).count();
         System.out.println(
                 OutputMessage.DEALER_WINNING_CONDITION.description(gameResults.size() - playersWin, playersWin));
     }
@@ -59,7 +61,7 @@ public class OutputView {
     }
 
     private static String getInitGameLog(GameStatus gameStatuses) {
-        if (gameStatuses.name().equals(Constants.DEALER_NAME)) {
+        if (gameStatuses.name().equals(DEALER_NAME)) {
             return String.format(OutputMessage.GAME_LOG.description(), gameStatuses.name(),
                     gameStatuses.cards().getFirst());
         }
@@ -71,6 +73,6 @@ public class OutputView {
     }
 
     private static String handInfo(GameStatus gameStatuses) {
-        return String.join(Constants.CARD_JOINER, gameStatuses.cards());
+        return String.join(CARD_JOINER, gameStatuses.cards());
     }
 }

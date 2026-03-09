@@ -1,8 +1,7 @@
 package domain;
 
-import common.Constants;
-
 public class Player extends Participant {
+    private static final int PLAYER_PLAYING_THRESHOLD = 20;
 
     public Player(String name, Hand hand) {
         super(name, hand);
@@ -10,6 +9,6 @@ public class Player extends Participant {
 
     @Override
     protected boolean isPlayable() {
-        return hand.scoreSum() <= Constants.PLAYER_PLAYING_THRESHOLD;
+        return hand.scoreSum() <= PLAYER_PLAYING_THRESHOLD;
     }
 }

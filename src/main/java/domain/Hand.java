@@ -1,11 +1,12 @@
 package domain;
 
-import common.Constants;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Hand {
+    private static final int BUST_NUMBER = 21;
+    private static final int ACE_WEIGHT = 10;
 
     private final DrawStrategy drawStrategy;
     private final List<Card> cards;
@@ -30,15 +31,15 @@ public class Hand {
     boolean isBusted() {
         int score = rawScoreSum();
         if (aceCount() > 0) {
-            score -= aceCount() * Constants.ACE_WEIGHT;
+            score -= aceCount() * ACE_WEIGHT;
         }
-        return score > Constants.BUST_NUMBER;
+        return score > BUST_NUMBER;
     }
 
     int scoreSum() {
         int total = rawScoreSum();
         if (isOvercome()) {
-            total -= aceCount() * Constants.ACE_WEIGHT;
+            total -= aceCount() * ACE_WEIGHT;
         }
         return total;
     }
@@ -58,6 +59,6 @@ public class Hand {
     }
 
     private boolean isOvercome() {
-        return rawScoreSum() > Constants.BUST_NUMBER;
+        return rawScoreSum() > BUST_NUMBER;
     }
 }
