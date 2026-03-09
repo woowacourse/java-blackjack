@@ -39,52 +39,6 @@ public class BlackjackGame {
         showGameResultAnalysis(players, dealer);
     }
 
-    private void showGameResultAnalysis(Players players, Dealer dealer) {
-        ResultAnalysisDto analysis = analyzeBlackjackResult(players, dealer);
-        view.printFinalResultMessage(analysis);
-    }
-
-    private void showGamerHandResult(Dealer dealer, Players players) {
-        view.printFinalResultMessage(PlayerResultDto.from(dealer));
-        players.stream().forEach(player -> {
-            view.printFinalResultMessage(PlayerResultDto.from(player));
-        });
-    }
-
-    private void tryHitDealer(Dealer dealer) {
-        if (dealer.hitIfRequired()) {
-            view.printDealerAdditionalDrawCardMessage();
-        }
-    }
-
-    private void tryHitPlayers(Players players, Dealer dealer) {
-        players.stream()
-                .forEach(player -> drawPlayerCard(player, dealer));
-    }
-
-    private void showGamerHands(Players players, Dealer dealer) {
-        view.printFirstHandOutResult(players.displayNames());
-        view.printParticipantHand(PlayerHandDto.of(dealer));
-        view.printAllParticipantsHand(getPlayerHandInformation(players));
-    }
-
-    private void drawPlayerCard(Player player, Dealer dealer) {
-        while(!player.isBusted() && isPlayerWantCard(player)) {
-            dealer.hitCardToPlayer(player);
-            view.printParticipantHand(PlayerHandDto.of(player));
-        }
-    }
-
-    private boolean isPlayerWantCard(Player player) {
-        Answer answer = view.askDrawCard(player.toDisplayMyName());
-        return answer.isYes();
-    }
-
-    private void dealInitialCard(Dealer dealer, Players players) {
-        dealer.dealMyself();
-        players.dealCardBundle(dealer);
-    }
-
     private Dealer enterDealer() {
         return Dealer.from(cardDeck);
     }
@@ -101,10 +55,56 @@ public class BlackjackGame {
         return view.requestPlayerNames();
     }
 
+    private void dealInitialCard(Dealer dealer, Players players) {
+        dealer.dealMyself();
+        players.dealCardBundle(dealer);
+    }
+
+    private void showGamerHands(Players players, Dealer dealer) {
+        view.printFirstHandOutResult(players.displayNames());
+        view.printParticipantHand(PlayerHandDto.of(dealer));
+        view.printAllParticipantsHand(getPlayerHandInformation(players));
+    }
+
     private List<PlayerHandDto> getPlayerHandInformation(Players players) {
         return players.stream()
                 .map(PlayerHandDto::of)
                 .toList();
+    }
+
+    private void tryHitPlayers(Players players, Dealer dealer) {
+        players.stream()
+                .forEach(player -> drawPlayerCard(player, dealer));
+    }
+
+    private void tryHitDealer(Dealer dealer) {
+        if (dealer.hitIfRequired()) {
+            view.printDealerAdditionalDrawCardMessage();
+        }
+    }
+
+    private void drawPlayerCard(Player player, Dealer dealer) {
+        while(!player.isBusted() && isPlayerWantCard(player)) {
+            dealer.hitCardToPlayer(player);
+            view.printParticipantHand(PlayerHandDto.of(player));
+        }
+    }
+
+    private boolean isPlayerWantCard(Player player) {
+        Answer answer = view.askDrawCard(player.toDisplayMyName());
+        return answer.isYes();
+    }
+
+    private void showGamerHandResult(Dealer dealer, Players players) {
+        view.printFinalResultMessage(PlayerResultDto.from(dealer));
+        players.stream().forEach(player -> {
+            view.printFinalResultMessage(PlayerResultDto.from(player));
+        });
+    }
+
+    private void showGameResultAnalysis(Players players, Dealer dealer) {
+        ResultAnalysisDto analysis = analyzeBlackjackResult(players, dealer);
+        view.printFinalResultMessage(analysis);
     }
 
     private ResultAnalysisDto analyzeBlackjackResult(Players players, Dealer dealer) {
