@@ -29,13 +29,6 @@ public class Gamblers {
 
     private void init(List<String> names) {
         names.stream().map(Gambler::new).forEach(gamblers::add);
-
-        /*
-        for(String name : names){
-           gamblers.add(new Gambler(name));
-        } 학습을 위해 남겨두었습니다.
-
-         */
     }
 
     public List<Gambler> getGamblers() {
@@ -44,11 +37,6 @@ public class Gamblers {
 
     public void dealAll(Deck deck) {
         gamblers.forEach(gambler -> gambler.deal(deck));
-        /*
-        for(Gambler gambler : gamblers) {
-            gambler.deal(cardDeck.deal());
-        }
-         */
     }
 
     public BlackjackResult getResult(Dealer dealer) {
