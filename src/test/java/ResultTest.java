@@ -15,14 +15,16 @@ public class ResultTest {
 
         Result result = new Result();
         result.setPlayerResult("user1", ResultInfo.WIN);
-        result.setPlayerResult("user2", ResultInfo.DRAW);
-        result.setPlayerResult("user3", ResultInfo.DRAW);
-        result.setPlayerResult("user4", ResultInfo.DEFEAT);
+        result.setPlayerResult("user2", ResultInfo.WIN);
+        result.setPlayerResult("user3", ResultInfo.WIN);
+        result.setPlayerResult("user4", ResultInfo.DRAW);
+        result.setPlayerResult("user5", ResultInfo.DRAW);
+        result.setPlayerResult("user6", ResultInfo.DEFEAT);
 
         result.setDealerResult(result.getPlayersResult());
         expectedDealerResult.put(ResultInfo.WIN, 1);
         expectedDealerResult.put(ResultInfo.DRAW, 2);
-        expectedDealerResult.put(ResultInfo.DEFEAT, 1);
+        expectedDealerResult.put(ResultInfo.DEFEAT, 3);
 
         assertThat(result.getDealerResult()).isEqualTo(expectedDealerResult);
 
