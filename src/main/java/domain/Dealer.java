@@ -1,10 +1,12 @@
 package domain;
 
+import dto.GameStatus;
+
 public class Dealer extends Participant {
     private static final int DEALER_PLAYING_THRESHOLD = 16;
 
     public Dealer(String name, Hand hand) {
-        super(name, hand);
+        super("딜러", hand);
     }
 
     @Override
@@ -15,5 +17,10 @@ public class Dealer extends Participant {
     @Override
     public boolean isDealer() {
         return true;
+    }
+
+    @Override
+    public GameStatus status() {
+        return new GameStatus(ParticipantsRole.DEALER, this.name(), hand.cardInfos(), scoreSum());
     }
 }

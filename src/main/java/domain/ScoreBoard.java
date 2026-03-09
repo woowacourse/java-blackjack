@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ScoreBoard {
-    private static final String DEALER_NAME = "딜러";
     private static final String WIN = "승";
     private static final String LOSE = "패";
     private static final int BUST_NUMBER = 21;
@@ -30,7 +29,7 @@ public class ScoreBoard {
     }
 
     private void addPlayerResult(GameStatus gameStatus, List<GameResult> resultList) {
-        if (!gameStatus.name().equals(DEALER_NAME)) {
+        if (gameStatus.role().equals(ParticipantsRole.PLAYER)) {
             addResults(gameStatus, resultList);
         }
     }
@@ -45,7 +44,7 @@ public class ScoreBoard {
     }
 
     private boolean isDealer(GameStatus gameStatus) {
-        return gameStatus.name().equals(DEALER_NAME);
+        return gameStatus.role().equals(ParticipantsRole.DEALER);
     }
 
     private void resultSort() {

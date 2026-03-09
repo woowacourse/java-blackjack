@@ -1,11 +1,11 @@
 package view;
 
+import domain.ParticipantsRole;
 import dto.GameResult;
 import dto.GameStatus;
 import java.util.List;
 
 public class OutputView {
-    private static final String DEALER_NAME = "딜러";
     private static final String WIN = "승";
     private static final String CARD_JOINER = ", ";
 
@@ -61,7 +61,7 @@ public class OutputView {
     }
 
     private static String getInitGameLog(GameStatus gameStatuses) {
-        if (gameStatuses.name().equals(DEALER_NAME)) {
+        if (gameStatuses.role().equals(ParticipantsRole.DEALER)) {
             return String.format(OutputMessage.GAME_LOG.description(), gameStatuses.name(),
                     gameStatuses.cards().getFirst());
         }
