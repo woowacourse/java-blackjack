@@ -95,7 +95,7 @@ public class BlackjackRunner {
             printDrewResult(drawablePlayerNickname, playerHand);
             return drawResult.drewDeck();
         }
-        participants.dontWandDraw();
+        participants.dontWantDraw();
         return deck;
     }
 

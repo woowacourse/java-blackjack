@@ -65,7 +65,7 @@ public class Players {
             .orElse(null);
     }
 
-    public void dontWandDraw() {
+    public void dontWantDraw() {
         Player player = findDrawablePlayer();
         player.stop();
     }

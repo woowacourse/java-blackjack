@@ -80,8 +80,8 @@ public class Participants {
         return new DrawResult(playerHand, drawDeck);
     }
 
-    public void dontWandDraw() {
-        players.dontWandDraw();
+    public void dontWantDraw() {
+        players.dontWantDraw();
     }
 
     public boolean isDealerDraw() {
