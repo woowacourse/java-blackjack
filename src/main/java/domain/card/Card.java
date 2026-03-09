@@ -16,6 +16,18 @@ public class Card {
         return new Card(denomination, emblem);
     }
 
+    public String toDisplay() {
+        return denomination.getDisplayName() + emblem.displayName();
+    }
+
+    public int getScore() {
+        return denomination.getScore();
+    }
+
+    public boolean isAce() {
+        return denomination.isAce();
+    }
+
     @Override
     public boolean equals(Object object) {
         if (object == null || getClass() != object.getClass()) {
@@ -28,18 +40,6 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(denomination, emblem);
-    }
-
-    public String toDisplay() {
-        return denomination.getDisplayName() + emblem.displayName();
-    }
-
-    public int getScore() {
-        return denomination.getScore();
-    }
-
-    public boolean isAce() {
-        return denomination.isAce();
     }
 
 }
