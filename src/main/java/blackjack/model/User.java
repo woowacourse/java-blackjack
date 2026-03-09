@@ -5,13 +5,13 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class User {
-    private static final String PLAYER_NAME_REGREX = "^[a-zA-Z가-힣]*$";
+    private static final String PLAYER_NAME_REGEX = "^[a-zA-Z가-힣]+$";
 
     private final String name;
     private final Hand hand;
 
     public User(String name) {
-        validate(name, PLAYER_NAME_REGREX);
+        validate(name);
         this.name = name;
         this.hand = new Hand();
     }
@@ -49,19 +49,19 @@ public class User {
         );
     }
 
-    private void validate(String input, String regrex) {
-        validateEmpty(input);
-        validateRegrex(input, regrex);
+    private void validate(String input) {
+        validateBlank(input);
+        validateRegex(input);
     }
 
-    private void validateEmpty(String input) {
-        if (input.isEmpty()) {
+    private void validateBlank(String input) {
+        if (input.isBlank()) {
             throw new IllegalArgumentException("플레이어의 이름은 공백일 수 없습니다.");
         }
     }
 
-    private void validateRegrex(String input, String regrex) {
-        if (!Pattern.matches(regrex, input)) {
+    private void validateRegex(String input) {
+        if (!Pattern.matches(PLAYER_NAME_REGEX, input)) {
             throw new IllegalArgumentException("플레이어의 이름은 영어 or 한글로만 이루어질 수 있습니다.");
         }
     }
