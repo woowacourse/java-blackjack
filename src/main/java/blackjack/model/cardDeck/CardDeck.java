@@ -14,7 +14,7 @@ public class CardDeck {
     private final List<Card> cards;
     private final PickStrategy pickStrategy;
 
-    public CardDeck(List<Card> cards, PickStrategy pickStrategy) {
+    private CardDeck(List<Card> cards, PickStrategy pickStrategy) {
         if (cards.isEmpty()) {
             throw new IllegalStateException("cards가 null입니다.");
         }
