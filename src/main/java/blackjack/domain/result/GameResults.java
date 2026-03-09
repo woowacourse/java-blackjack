@@ -11,6 +11,8 @@ import java.util.Map;
 
 public class GameResults {
 
+    private static final GameResultCalculator calculator = new GameResultCalculator();
+
     private final Map<Participant, GameResult> playerResults;
 
     private GameResults(final Map<Participant, GameResult> playerResults) {
@@ -21,7 +23,7 @@ public class GameResults {
         Map<Participant, GameResult> playerResults = new LinkedHashMap<>();
 
         for (Player player : players.players()) {
-            GameResult playerResult = GameResult.of(player.calculateScore(), dealer.calculateScore());
+            GameResult playerResult = calculator.calculate(player.calculateScore(), dealer.calculateScore());
             playerResults.put(player, playerResult);
         }
         return new GameResults(playerResults);
