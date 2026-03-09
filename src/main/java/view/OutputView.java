@@ -111,15 +111,15 @@ public class OutputView {
 
     public void printPlayersResult(List<PlayerResultInfo> playersResult) {
         for (PlayerResultInfo playerResult : playersResult) {
-            System.out.println(playerResult.name() + ": " + toKorean(playerResult.status()));
+            System.out.println(playerResult.name() + COLON + toKorean(playerResult.status()));
         }
     }
 
     private String toKorean(WinningStatus status) {
         return switch (status) {
-            case WIN -> "승";
-            case TIE -> "무";
-            case LOSE -> "패";
+            case WinningStatus.WIN -> WIN;
+            case WinningStatus.TIE -> TIE;
+            case WinningStatus.LOSE -> LOSE;
         };
     }
 }
