@@ -6,13 +6,13 @@ public enum CardSuit {
     CLUB("클로버"),
     DIAMOND("다이아몬드");
 
-    private final String shape;
+    private final String suit;
 
-    CardSuit(String shape) {
-        this.shape = shape;
+    CardSuit(String suit) {
+        this.suit = suit;
     }
 
-    public String getShape() {
-        return shape;
+    public String getSuit() {
+        return suit;
     }
 }
