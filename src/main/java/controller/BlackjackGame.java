@@ -76,15 +76,13 @@ public class BlackjackGame {
         });
     }
 
-    private void drawPlayerCard(Player p, Dealer dealer) {
-        while (!p.isBusted()) {
-            DrawCardIntetion drawCardIntetion = view.requestDrawCardIntention(p.toDisplayMyName());
-            if (drawCardIntetion.isNo()) {
-                return;
-            }
+    private void drawPlayerCard(Player player, Dealer dealer) {
+        if(player.isBusted()) return;
 
-            dealer.handOutCardToPlayer(p, DEFAULT_CARD_DRAW_COUNT);
-            view.printParticipantHand(PlayerHandDto.of(p));
+        DrawCardIntetion drawCardIntetion = view.requestDrawCardIntention(player.toDisplayMyName());
+        while (!player.isBusted() && drawCardIntetion.isYes()) {
+            dealer.handOutCardToPlayer(player, DEFAULT_CARD_DRAW_COUNT);
+            view.printParticipantHand(PlayerHandDto.of(player));
         }
     }
 

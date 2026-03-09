@@ -21,8 +21,8 @@ public enum DrawCardIntetion {
                 );
     }
 
-    public boolean isNo() {
-        return this.equals(DrawCardIntetion.NO);
+    public boolean isYes() {
+        return this.equals(DrawCardIntetion.YES);
     }
 
 }
