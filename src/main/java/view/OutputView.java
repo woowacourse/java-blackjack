@@ -82,4 +82,8 @@ public class OutputView {
     public static void printResultByPlayers(Map<Player, GameStatus> result) {
         result.forEach((player, status) -> System.out.printf("%s: %s%n", player.getName(), status.getName()));
     }
+
+    public static void printErrorMessage(final String message) {
+        System.out.printf("%s%n", message);
+    }
 }
