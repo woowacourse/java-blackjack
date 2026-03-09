@@ -1,7 +1,6 @@
 package domain.member;
 
 import domain.card.Card;
-import domain.exception.DuplicatedException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,18 +15,17 @@ public class Hand {
         cards = new ArrayList<>();
     }
 
-    public List<Card> cards() {
+    public List<Card> getCards() {
         return cards;
     }
 
     public void appendCard(Card card) {
-        validateDuplicate(card);
         cards.add(card);
     }
 
     public int calculateTotalValue() {
         int totalSum = cards.stream()
-                .mapToInt(Card::number)
+                .mapToInt(Card::getNumber)
                 .sum();
         if (hasAce() && totalSum + SOFT_HAND_VALUE <= BLACKJACK) {
             return totalSum + SOFT_HAND_VALUE;
@@ -38,11 +36,5 @@ public class Hand {
     private boolean hasAce() {
         return cards.stream()
                 .anyMatch(Card::isAce);
-    }
-
-    private void validateDuplicate(Card card) {
-        if (cards.contains(card)) {
-            throw new DuplicatedException();
-        }
     }
 }
