@@ -1,11 +1,12 @@
 package model;
 
+import static constant.GameRule.DEALER_NAME;
+
 import constant.ErrorMessage;
 import java.util.Objects;
 import model.dto.PlayerName;
 
 public class Player extends Participant {
-    private static final String DEALER_NAME = "딜러";
 
     public Player(PlayerName name) {
         super(name);
