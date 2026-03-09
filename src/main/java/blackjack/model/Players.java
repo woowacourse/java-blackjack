@@ -23,7 +23,7 @@ public class Players implements Iterable<Player> {
         validateDuplicatedNames(playerNames);
 
         List<Player> players = playerNames.stream()
-                .map(name -> new Player(name, new Hand()))
+                .map(Player::new)
                 .toList();
 
         return new Players(players);

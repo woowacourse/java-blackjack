@@ -1,38 +1,14 @@
 package blackjack.model;
 
-import java.util.List;
-
-public class Player {
+public class Player extends Participant {
 
     private final Name name;
-    private final Hand hand;
 
-    public Player(Name name, Hand hand) {
+    public Player(Name name) {
         this.name = name;
-        this.hand = hand;
     }
 
     public String getName() {
         return name.get();
-    }
-
-    public void addCard(Card card) {
-        hand.addCard(card);
-    }
-
-    public Hand getHand() {
-        return hand;
-    }
-
-    public List<Card> getCards() {
-        return hand.getCards();
-    }
-
-    public int getScore() {
-        return hand.calculateScore();
-    }
-
-    public boolean isBust() {
-        return hand.isBust();
     }
 }
