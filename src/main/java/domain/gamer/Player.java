@@ -25,10 +25,6 @@ public class Player extends Gamer{
         return cardBundle;
     }
 
-    public String toDisplayMyName() {
-        return name.name();
-    }
-
     public List<String> disPlayMyCardBundle() {
         return cardBundle.toDisplay();
     }

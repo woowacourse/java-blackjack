@@ -20,4 +20,8 @@ public abstract class Gamer {
         return cardBundle.isBusted();
     }
 
+    public String getMyName() {
+        return name.name();
+    }
+
 }

@@ -10,19 +10,19 @@ public record PlayerHandDto(
         String handOnCards
 ) {
     public static PlayerHandDto of(Player player) {
-        String playerName = player.toDisplayMyName();
+        String playerName = player.getMyName();
         List<String> handOnCards = player.disPlayMyCardBundle();
         return new PlayerHandDto(playerName, joining(handOnCards));
     }
 
     public static PlayerHandDto of(Dealer dealer) {
-        String playerName = dealer.toDisplayMyName();
+        String playerName = dealer.getMyName();
         List<String> handOnCards = List.of(dealer.disPlayMyCardBundle().getFirst());
         return new PlayerHandDto(playerName, joining(handOnCards));
     }
 
     public static PlayerHandDto generateAllCard(Dealer dealer) {
-        String playerName = dealer.toDisplayMyName();
+        String playerName = dealer.getMyName();
         List<String> handOnCards = dealer.disPlayMyCardBundle();
         return new PlayerHandDto(playerName, joining(handOnCards));
     }

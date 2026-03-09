@@ -79,10 +79,6 @@ public class Dealer extends Gamer {
         return cardDeck.giveCard();
     }
 
-    public String toDisplayMyName() {
-        return name.name();
-    }
-
     public List<String> disPlayMyCardBundle() {
         return cardBundle.toDisplay();
     }

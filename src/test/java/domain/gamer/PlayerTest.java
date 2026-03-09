@@ -44,7 +44,8 @@ public class PlayerTest {
         String name = "test1";
         Player player = Player.from(PlayerName.from(name));
 
-        Assertions.assertThat(player.toDisplayMyName()).isEqualTo(name);
+        Assertions.assertThat(player.getMyName())
+                .isEqualTo(name);
     }
 
     @Test

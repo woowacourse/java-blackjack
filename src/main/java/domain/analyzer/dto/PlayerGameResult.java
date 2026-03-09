@@ -8,6 +8,6 @@ public record PlayerGameResult(
         GameResult gameResult
 ) {
     public static PlayerGameResult of(Player player, GameResult gameResult) {
-        return new PlayerGameResult(player.toDisplayMyName(), gameResult);
+        return new PlayerGameResult(player.getMyName(), gameResult);
     }
 }

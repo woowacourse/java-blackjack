@@ -91,7 +91,7 @@ public class BlackjackGame {
     }
 
     private boolean isPlayerWantCard(Player player) {
-        DrawDecision drawDecision = view.askDrawCard(player.toDisplayMyName());
+        DrawDecision drawDecision = view.askDrawCard(player.getMyName());
         return drawDecision.isYes();
     }
 
