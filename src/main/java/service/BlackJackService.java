@@ -44,7 +44,7 @@ public class BlackJackService {
         PlayersWinning playersWinning = getPlayersResult(players, dealer);
         DealerWinning dealerWinning = getDealerResult(playersWinning);
 
-        return new ParticipantWinning(dealerWinning, playersWinning);
+        return new ParticipantWinning(dealerWinning.getDealerWinning(), playersWinning.getPlayersWinnings());
     }
 
     private PlayersWinning getPlayersResult(Players players, Dealer dealer) {
