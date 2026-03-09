@@ -1,10 +1,5 @@
 package blackjack.controller;
 
-import blackjack.view.dto.CardDto;
-import blackjack.view.dto.DealerScoreDto;
-import blackjack.view.dto.PlayerDto;
-import blackjack.view.dto.PlayerScoreDto;
-import blackjack.view.dto.ResultDto;
 import blackjack.model.Answer;
 import blackjack.model.BlackjackResult;
 import blackjack.model.Card;
@@ -13,10 +8,17 @@ import blackjack.model.Deck;
 import blackjack.model.Player;
 import blackjack.model.Players;
 import blackjack.model.ResultJudgement;
+import blackjack.util.RetryUtil;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import blackjack.view.dto.CardDto;
+import blackjack.view.dto.DealerScoreDto;
+import blackjack.view.dto.PlayerDto;
+import blackjack.view.dto.PlayerScoreDto;
+import blackjack.view.dto.ResultDto;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class BlackjackController {
 
@@ -36,14 +38,22 @@ public class BlackjackController {
     }
 
     public void run() {
-        Players players = readPlayers();
+        Players players = retryOnIllegalArgument(this::readPlayers);
         Dealer dealer = new Dealer();
         Deck deck = Deck.unique();
 
         initialDeal(players, dealer, deck);
-        hit(players, dealer, deck);
+        retryOnIllegalArgument(() -> hit(players, dealer, deck));
         printScore(players, dealer);
         printResult(players, dealer);
+    }
+
+    private <T> T retryOnIllegalArgument(Supplier<T> retryableAction) {
+        return RetryUtil.retryOnInvalidInput(retryableAction, outputView::printErrorMessage);
+    }
+
+    private void retryOnIllegalArgument(Runnable retryableAction) {
+        RetryUtil.retryOnInvalidInput(retryableAction, outputView::printErrorMessage);
     }
 
     private Players readPlayers() {

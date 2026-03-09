@@ -55,6 +55,10 @@ public class OutputView {
         System.out.println();
     }
 
+    public void printErrorMessage(Exception error) {
+        System.out.println(error.getMessage());
+    }
+
     private void printDealerCards(List<CardDto> cards) {
         printPlayerCards("딜러", List.of(cards.getFirst()));
     }
