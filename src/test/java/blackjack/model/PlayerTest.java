@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 
 class PlayerTest {
 
+    static final Name DEFAULT_NAME = new Name("name");
+
     Hand lowerScoreHand;
     Hand defaultHand;
     Hand higherScoreHand;
@@ -50,7 +52,7 @@ class PlayerTest {
         @Test
         void 둘_다_버스트가_아니면서_본인의_점수가_더_높다면_승리한다() {
             // given
-            Player player = new Player(new Name("p"), higherScoreHand);
+            Player player = new Player(DEFAULT_NAME, higherScoreHand);
             Dealer dealer = new Dealer(lowerScoreHand);
 
             // when
@@ -63,7 +65,7 @@ class PlayerTest {
         @Test
         void 둘_다_버스트가_아니면서_본인의_점수가_더_낮다면_패배한다() {
             // given
-            Player player = new Player(new Name("p"), lowerScoreHand);
+            Player player = new Player(DEFAULT_NAME, lowerScoreHand);
             Dealer dealer = new Dealer(higherScoreHand);
 
             // when
@@ -76,7 +78,7 @@ class PlayerTest {
         @Test
         void 둘_다_버스트가_아니면서_점수가_같다면_무승부한다() {
             // given
-            Player player = new Player(new Name("p"), defaultHand);
+            Player player = new Player(DEFAULT_NAME, defaultHand);
             Dealer dealer = new Dealer(defaultHand);
 
             // when
@@ -89,7 +91,7 @@ class PlayerTest {
         @Test
         void 본인이_버스트라면_패배한다() {
             // given
-            Player player = new Player(new Name("p"), bustScoreHand);
+            Player player = new Player(DEFAULT_NAME, bustScoreHand);
             Dealer dealer = new Dealer(defaultHand);
 
             // when
@@ -102,7 +104,7 @@ class PlayerTest {
         @Test
         void 딜러만_버스트라면_승리한다() {
             // given
-            Player player = new Player(new Name("p"), defaultHand);
+            Player player = new Player(DEFAULT_NAME, defaultHand);
             Dealer dealer = new Dealer(bustScoreHand);
 
             // when
@@ -115,7 +117,7 @@ class PlayerTest {
         @Test
         void 둘_다_버스트라면_패배한다() {
             // given
-            Player player = new Player(new Name("p"), bustScoreHand);
+            Player player = new Player(DEFAULT_NAME, bustScoreHand);
             Dealer dealer = new Dealer(bustScoreHand);
 
             // when
