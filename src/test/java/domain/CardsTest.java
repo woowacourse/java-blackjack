@@ -11,24 +11,26 @@ import static org.junit.jupiter.api.Assertions.*;
 class CardsTest {
 
     @Test
-    @DisplayName("카드 합계를 계산합니다.")
-    void calculate_card_score() {
-        Card card1 = new Card(Shape.from("스페이드"), Number.from(8));
-        Card card2 = new Card(Shape.from("하트"), Number.from(8));
+    @DisplayName("카드 합계를 계산한다.")
+    void calculateScore_ReturnSum() {
+        Card card1 = new Card(Shape.SPADE, Number.EIGHT);
+        Card card2 = new Card(Shape.HEART, Number.EIGHT);
 
         List<Card> cards = new ArrayList<>();
-        cards.add(card1);
-        cards.add(card2);
+        Cards testCards = new Cards(cards);
 
-        Cards realCards = new Cards(cards);
-        assertEquals(16, realCards.calculateScore());
+        testCards.addCard(card1);
+        testCards.addCard(card2);
+
+        assertEquals(16, testCards.calculateScore());
     }
 
     @Test
-    @DisplayName("Ace가 2개일 경우")
-    void two_ace() {
-        Card card1 = new Card(Shape.from("스페이드"), Number.from(11));
-        Card card2 = new Card(Shape.from("하트"), Number.from(11));
+    @DisplayName("Ace가 2개일 경우 추가로 카드를 받을 수 있다.")
+    void canReceiveCard_TwoAces_ReturnTrue() {
+        Card card1 = new Card(Shape.SPADE, Number.ACE);
+        Card card2 = new Card(Shape.HEART, Number.ACE);
+
         List<Card> cards = new ArrayList<>();
         Cards realCards = new Cards(cards);
 
@@ -39,12 +41,12 @@ class CardsTest {
     }
 
     @Test
-    @DisplayName("King,9,Ace,Ace일경우")
-    void king_nine_two_ace() {
-        Card card1 = new Card(Shape.from("스페이드"), Number.from(10));
-        Card card2 = new Card(Shape.from("하트"), Number.from(9));
-        Card card3 = new Card(Shape.from("스페이드"), Number.from(11));
-        Card card4 = new Card(Shape.from("하트"), Number.from(11));
+    @DisplayName("King,9,Ace,Ace일경우 추가로 카드를 받을 수 없다.")
+    void canReceiveCard_KingNineTwoAces_ReturnFalse() {
+        Card card1 = new Card(Shape.SPADE, Number.KING);
+        Card card2 = new Card(Shape.HEART, Number.NINE);
+        Card card3 = new Card(Shape.SPADE, Number.ACE);
+        Card card4 = new Card(Shape.HEART, Number.ACE);
 
         List<Card> cards = new ArrayList<>();
         Cards realCards = new Cards(cards);
@@ -53,23 +55,6 @@ class CardsTest {
         realCards.addCard(card2);
         realCards.addCard(card3);
         realCards.addCard(card4);
-
-        assertEquals(false, realCards.canReceiveCard(21));
-    }
-
-    @Test
-    @DisplayName("King,King,King 일경우")
-    void three_king() {
-        Card card1 = new Card(Shape.from("스페이드"), Number.from(10));
-        Card card2 = new Card(Shape.from("하트"), Number.from(10));
-        Card card3 = new Card(Shape.from("스페이드"), Number.from(10));
-
-        List<Card> cards = new ArrayList<>();
-        Cards realCards = new Cards(cards);
-
-        realCards.addCard(card1);
-        realCards.addCard(card2);
-        realCards.addCard(card3);
 
         assertEquals(false, realCards.canReceiveCard(21));
     }

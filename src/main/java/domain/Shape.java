@@ -14,13 +14,6 @@ public enum Shape {
         this.shapeKoreanName = shapeKoreanName;
     }
 
-    public static Shape from(String shapeKoreanName) {
-        return Arrays.stream(values())
-                .filter(shape -> shape.shapeKoreanName.equals(shapeKoreanName))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("ERROR"));
-    }
-
     public String getShape() {
         return shapeKoreanName;
     }
