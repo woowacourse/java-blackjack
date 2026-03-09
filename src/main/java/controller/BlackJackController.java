@@ -51,31 +51,35 @@ public class BlackJackController {
         BlackJackInitStatusDto blackJackInitStatusDto = blackJackInitService.createInitStatusDto(dealer, players);
         OutputView.printInitMessage(blackJackInitStatusDto);
 
-        for (Player player : players) {
-            drawPlayerCard(player, deck);
-        }
+        players.forEach(player -> drawPlayerCard(player, deck));
+
         drawDealerCard(dealer, deck);
     }
 
-    // todo: depth 2 해결
     private void drawPlayerCard(Player player, Deck deck) {
-        String yesNoInput = InputView.askPlayerCommand(player.getName());
-
-        if (!blackJackTurnService.canPlayerHit(player, yesNoInput)) {
-            BlackJackHandDto blackJackHandDto = blackJackTurnService.createHandDto(player);
-            OutputView.printHandOutput(blackJackHandDto);
+        if (isFirstCommandNo(player, deck)) {
+            return;
         }
+        repeatCommands(player, deck);
+    }
 
-        while (blackJackTurnService.canPlayerHit(player, yesNoInput)) {
+    private void repeatCommands(Player player, Deck deck) {
+        while (blackJackTurnService.canPlayerHit(player, InputView.askPlayerCommand(player.getName()))) {
             blackJackTurnService.playerHit(player, deck);
             BlackJackHandDto blackJackHandDto = blackJackTurnService.createHandDto(player);
             OutputView.printHandOutput(blackJackHandDto);
-            // 합이 21 넘어가면 바로 입력받기 종료
-            if (!blackJackTurnService.isPlayerUnder21(player)) {
-                break;
-            }
-            yesNoInput = InputView.askPlayerCommand(player.getName());
         }
+    }
+
+    private boolean isFirstCommandNo(Player player, Deck deck) {
+        String yesNoInput = InputView.askPlayerCommand(player.getName());
+
+        BlackJackHandDto blackJackHandDto = blackJackTurnService.createHandDto(player);
+        OutputView.printHandOutput(blackJackHandDto);
+        if (blackJackTurnService.canPlayerHit(player, yesNoInput)) {
+            blackJackTurnService.playerHit(player, deck);
+        }
+        return !blackJackTurnService.canPlayerHit(player, yesNoInput);
     }
 
     private void drawDealerCard(Dealer dealer, Deck deck) {
