@@ -13,4 +13,8 @@ public enum Suit {
     Suit(String format) {
         this.format = format;
     }
+
+    public String getFormat() {
+        return format;
+    }
 }
