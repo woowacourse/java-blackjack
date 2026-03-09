@@ -1,5 +1,7 @@
 package controller;
 
+import dto.PlayedGameResultResponse;
+import dto.PlayerGameResultsResponse;
 import dto.PlayerNamesRequest;
 import dto.SelectRequest;
 import service.BlackJackCommandService;
@@ -53,7 +55,6 @@ public class BlackJackController {
         while (queryService.hasWaitingPlayers()) {
             playerGameProcess();
         }
-
         OutputView.printTaskDivider();
     }
 
@@ -64,7 +65,6 @@ public class BlackJackController {
         if (select.isPositive()) {
             playerGameLoop();
         }
-
         commandService.recordCurrentGameResult();
     }
 
@@ -95,6 +95,14 @@ public class BlackJackController {
     }
 
     private void dealerGamePhase() {
+        if(queryService.isDealerPlayable()) {
+            dealerGameLoop();
+            commandService.recordDealerGameResult();
+            OutputView.printTaskDivider();
+        }
+    }
+
+    private void dealerGameLoop() {
         while (queryService.isDealerPlayable()) {
             dealerGameLoopProcess();
         }
@@ -108,6 +116,10 @@ public class BlackJackController {
     }
 
     private void resultPhase() {
+        PlayedGameResultResponse dealerResultResponse = queryService.dealerResult();
+        OutputView.participantResult(dealerResultResponse);
 
+        PlayerGameResultsResponse playerGameResultsResponse = queryService.playerResult();
+        OutputView.playerResults(playerGameResultsResponse);
     }
 }

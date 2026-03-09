@@ -1,6 +1,7 @@
 package repository;
 
 import domain.GameTable;
+import domain.PlayedGameResult;
 import domain.vo.NameAndCardInfos;
 import java.util.List;
 
@@ -58,5 +59,17 @@ public class GameTableRepository {
 
     public void dealerDrawCard() {
         gameTable.dealerDrawCard();
+    }
+
+    public void recordDealerGameResult() {
+        gameTable.recordDealerGameResult();
+    }
+
+    public PlayedGameResult dealerResult() {
+        return gameTable.dealerResult();
+    }
+
+    public List<PlayedGameResult> playerResults() {
+        return gameTable.playerResults();
     }
 }

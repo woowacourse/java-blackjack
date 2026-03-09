@@ -68,15 +68,19 @@ class Participants {
         return players.hasWaitingPlayers();
     }
 
-    NameAndCardInfos currentPlayersResult() {
+    PlayedGameResult currentPlayersResult() {
         return players.currentPlayersResult();
     }
 
-    public boolean isDealerPlayable() {
+    PlayedGameResult dealerResult() {
+        return PlayedGameResult.from(dealer);
+    }
+
+    boolean isDealerPlayable() {
         return dealer.isPlayable();
     }
 
-    public void dealerDrawCard() {
+    void dealerDrawCard() {
         dealer.draw();
     }
 }

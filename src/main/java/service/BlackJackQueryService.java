@@ -1,9 +1,12 @@
 package service;
 
+import domain.GameTable;
 import domain.vo.NameAndCardInfos;
 import dto.AllPlayersNameAndCardsResponse;
 import dto.NameAndCardsResponse;
 import dto.NameResponse;
+import dto.PlayedGameResultResponse;
+import dto.PlayerGameResultsResponse;
 import dto.PlayerNamesResponse;
 import java.util.List;
 import repository.GameTableRepository;
@@ -51,5 +54,13 @@ public class BlackJackQueryService {
 
     public boolean isDealerPlayable() {
         return gameTableRepository.isDealerPlayable();
+    }
+
+    public PlayedGameResultResponse dealerResult() {
+        return PlayedGameResultResponse.from(gameTableRepository.dealerResult());
+    }
+
+    public PlayerGameResultsResponse playerResult() {
+        return PlayerGameResultsResponse.from(gameTableRepository.playerResults());
     }
 }

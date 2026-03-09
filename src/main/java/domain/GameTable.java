@@ -54,9 +54,8 @@ public class GameTable {
     }
 
     public void recordCurrentGameResult() {
-        NameAndCardInfos nameAndCardInfos = participants.currentPlayersResult();
-//        scoreBoard.record();
-//        scoreBoard.recordPlayersScore();
+        PlayedGameResult playedGameResult = participants.currentPlayersResult();
+        scoreBoard.record(playedGameResult);
     }
 
     public boolean isDealerPlayable() {
@@ -65,6 +64,19 @@ public class GameTable {
 
     public void dealerDrawCard() {
         participants.dealerDrawCard();
+    }
+
+    public void recordDealerGameResult() {
+        PlayedGameResult playedGameResult = participants.dealerResult();
+        scoreBoard.record(playedGameResult);
+    }
+
+    public PlayedGameResult dealerResult() {
+        return scoreBoard.dealerGameResult();
+    }
+
+    public List<PlayedGameResult> playerResults() {
+        return scoreBoard.playerGameResults();
     }
 
 //

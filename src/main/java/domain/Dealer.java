@@ -9,8 +9,7 @@ public class Dealer extends Participant {
     }
 
     static Dealer of(DrawStrategy drawStrategy) {
-        return new Dealer("딜러",
-                Hand.based(drawStrategy));
+        return new Dealer("딜러", Hand.based(drawStrategy));
     }
 
     @Override

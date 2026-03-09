@@ -4,6 +4,7 @@ import domain.vo.NameAndCardInfos;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;
+import java.util.Objects;
 
 class Players {
 
@@ -74,8 +75,7 @@ class Players {
         return !players.isEmpty();
     }
 
-    NameAndCardInfos currentPlayersResult() {
-        Player player = players.poll();
-        return player.infos();
+    PlayedGameResult currentPlayersResult() {
+        return PlayedGameResult.from(Objects.requireNonNull(players.poll()));
     }
 }

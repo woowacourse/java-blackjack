@@ -36,4 +36,8 @@ public class BlackJackCommandService {
     public void dealerDrawCard() {
         gameTableRepository.dealerDrawCard();
     }
+
+    public void recordDealerGameResult() {
+        gameTableRepository.recordDealerGameResult();
+    }
 }
