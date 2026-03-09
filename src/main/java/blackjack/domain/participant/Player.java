@@ -4,7 +4,7 @@ import blackjack.domain.PlayingCards;
 
 public class Player extends Participant {
 
-    private final int BUSTED_SCORE = 21;
+    private static final int BUSTED_SCORE = 21;
 
     private boolean stopDrawing;
 
