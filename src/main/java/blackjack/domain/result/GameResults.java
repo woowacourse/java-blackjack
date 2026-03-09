@@ -21,16 +21,22 @@ public class GameResults {
     }
 
     public static GameResults calculate(final Players players, final Dealer dealer) {
-        Map<Player, GameResult> playerResults = new LinkedHashMap<>();
-        Map<GameResult, Integer> dealerResults = new EnumMap<>(GameResult.class);
-
-        for (Player player : players.getPlayers()) {
-            GameResult playerResult = GameResult.of(player.calculateScore(), dealer.calculateScore());
-            playerResults.put(player, playerResult);
-            dealerResults.merge(playerResult.reverse(), 1, Integer::sum);
-        }
-
+        final Map<Player, GameResult> playerResults = new LinkedHashMap<>();
+        final Map<GameResult, Integer> dealerResults = new EnumMap<>(GameResult.class);
+        players.getPlayers()
+                .forEach(player -> addResult(player, dealer, playerResults, dealerResults));
         return new GameResults(playerResults, dealerResults);
+    }
+
+    private static void addResult(
+            final Player player,
+            final Dealer dealer,
+            final Map<Player, GameResult> playerResults,
+            final Map<GameResult, Integer> dealerResults
+    ) {
+        final GameResult result = GameResult.of(player.calculateScore(), dealer.calculateScore());
+        playerResults.put(player, result);
+        dealerResults.merge(result.reverse(), 1, Integer::sum);
     }
 
     public Map<Player, GameResult> getPlayerResults() {
