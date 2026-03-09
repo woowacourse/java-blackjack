@@ -17,16 +17,23 @@ public class Players implements Iterable<Player> {
     }
 
     public static Players from(String rawPlayerNames, AceAdjustPolicy aceAdjustPolicy) {
-        List<String> playerNames = Arrays.asList(rawPlayerNames.split(DELIMITER, INCLUDE_EMPTY_ELEMENT));
+        List<Name> playerNames = Arrays.stream(rawPlayerNames.split(DELIMITER, INCLUDE_EMPTY_ELEMENT))
+                .map(Name::new)
+                .toList();
         validateDuplicatedNames(playerNames);
 
         List<Player> players = playerNames.stream()
                 .map(name -> new Player(name, new Hand(aceAdjustPolicy))).toList();
+
         return new Players(players);
     }
 
-    private static void validateDuplicatedNames(List<String> playerNames) {
-        if (playerNames.stream().distinct().count() != playerNames.size()) {
+    private static void validateDuplicatedNames(List<Name> playerNames) {
+        long uniqueNameCount = playerNames.stream()
+                .distinct()
+                .count();
+
+        if (uniqueNameCount != playerNames.size()) {
             throw new IllegalArgumentException("참가자의 이름은 중복될 수 없습니다.");
         }
     }

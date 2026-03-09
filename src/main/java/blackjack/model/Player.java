@@ -4,23 +4,16 @@ import java.util.List;
 
 public class Player {
 
-    private final String name;
+    private final Name name;
     private final Hand hand;
 
-    public Player(String name, Hand hand) {
-        validate(name);
+    public Player(Name name, Hand hand) {
         this.name = name;
         this.hand = hand;
     }
 
-    private void validate(String name) {
-        if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("플레이어 이름은 null 이거나 empty 일 수 없습니다.");
-        }
-    }
-
     public String getName() {
-        return name;
+        return name.get();
     }
 
     public void addCard(Card card) {
