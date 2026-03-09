@@ -1,9 +1,6 @@
 package domain;
 
 import constant.GameConstant;
-import domain.dto.PlayerCardDto;
-
-import java.util.List;
 
 public class Dealer extends Player {
     public static final String DEALER_NAME = "딜러";
@@ -16,7 +13,7 @@ public class Dealer extends Player {
         return hand.calculateFinalScore() <= GameConstant.DEALER_HIT_THRESHOLD;
     }
 
-    public PlayerCardDto toOpeningCardDto() {
-        return new PlayerCardDto(this.getName(), List.of(hand.getFirst().toCardDto()));
+    public Card getFirstCard() {
+        return hand.getFirst();
     }
 }

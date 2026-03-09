@@ -1,7 +1,8 @@
 package controller;
 
 import domain.*;
-import domain.dto.FinalCardDto;
+import domain.dto.BlackjackResultDto;
+import domain.dto.FinalPlayerCardDto;
 import domain.dto.PlayerCardDto;
 import service.BlackjackService;
 import view.InputView;
@@ -53,14 +54,14 @@ public class BlackjackController {
 
     private void showFinalResult(Dealer dealer, Players players) {
         BlackjackResult blackjackResult = BlackjackResult.from(dealer, players);
-        outputView.displayMatchResult(blackjackResult.toResultDto());
+        outputView.displayMatchResult(BlackjackResultDto.from(blackjackResult));
     }
 
     public List<PlayerCardDto> collectInitialCardContents(Dealer dealer, Players players) {
         List<PlayerCardDto> initialCardContents = new ArrayList<>();
-        initialCardContents.add(dealer.toOpeningCardDto());
+        initialCardContents.add(PlayerCardDto.fromDealer(dealer));
         for (Player player : players) {
-            initialCardContents.add(player.toPlayerCardDto());
+            initialCardContents.add(PlayerCardDto.from(player));
         }
         return initialCardContents;
     }
@@ -81,16 +82,16 @@ public class BlackjackController {
                 break;
             }
             player.add(deck.pop());
-            outputView.displayCardContent(List.of(player.toPlayerCardDto()));
+            outputView.displayCardContent(List.of(PlayerCardDto.from(player)));
             wantsCard = wantsAdditionalCard(name);
         }
     }
 
     public void displayFinalCards(Dealer dealer, Players players) {
-        List<FinalCardDto> finalCards = new ArrayList<>();
-        finalCards.add(dealer.toFinalCardDto());
+        List<FinalPlayerCardDto> finalCards = new ArrayList<>();
+        finalCards.add(FinalPlayerCardDto.from(dealer));
         for (Player player : players) {
-            finalCards.add(player.toFinalCardDto());
+            finalCards.add(FinalPlayerCardDto.from(player));
         }
         outputView.displayFinalCard(finalCards);
     }

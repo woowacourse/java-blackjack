@@ -1,7 +1,5 @@
 package domain;
 
-import domain.dto.BlackjackResultDto;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,15 +51,6 @@ public class BlackjackResult {
         matchCase.increaseMatchCountOf(this);
     }
 
-    public BlackjackResultDto toResultDto() {
-        return new BlackjackResultDto(
-                this.dealerWinningCount,
-                this.drawCount,
-                this.dealerLoseCount,
-                Map.copyOf(this.playerResultMap)
-        );
-    }
-
     public void increaseDealerWinCount() {
         this.dealerWinningCount++;
     }
@@ -72,5 +61,21 @@ public class BlackjackResult {
 
     public void increaseDealerLoseCount() {
         this.dealerLoseCount++;
+    }
+
+    public int getDealerWinningCount() {
+        return dealerWinningCount;
+    }
+
+    public int getDealerLoseCount() {
+        return dealerLoseCount;
+    }
+
+    public int getDrawCount() {
+        return drawCount;
+    }
+
+    public Map<String, MatchCase> getPlayerResultMap() {
+        return Map.copyOf(playerResultMap);
     }
 }

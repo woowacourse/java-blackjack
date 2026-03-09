@@ -1,7 +1,6 @@
 package domain;
 
 import constant.GameConstant;
-import domain.dto.CardDto;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -53,12 +52,12 @@ public class Hand implements Iterable<Card> {
         return calculateFinalScore() > GameConstant.BUST_THRESHOLD;
     }
 
-    public List<CardDto> toCardDtos() {
-        return cards.stream().map(Card::toCardDto).toList();
-    }
-
     @Override
     public Iterator<Card> iterator() {
         return cards.iterator();
+    }
+
+    public List<Card> getCards() {
+        return List.copyOf(cards);
     }
 }

@@ -1,7 +1,6 @@
 package domain;
 
-import domain.dto.FinalCardDto;
-import domain.dto.PlayerCardDto;
+import java.util.List;
 
 public class Player {
     protected final Hand hand = new Hand();
@@ -36,11 +35,7 @@ public class Player {
         return hand.getSize();
     }
 
-    public PlayerCardDto toPlayerCardDto() {
-        return new PlayerCardDto(this.name, this.hand.toCardDtos());
-    }
-
-    public FinalCardDto toFinalCardDto() {
-        return new FinalCardDto(this.name, this.hand.toCardDtos(), getFinalScore());
+    public List<Card> getCards() {
+        return hand.getCards();
     }
 }

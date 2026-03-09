@@ -4,7 +4,7 @@ import constant.GameConstant;
 import domain.MatchCase;
 import domain.dto.BlackjackResultDto;
 import domain.dto.CardDto;
-import domain.dto.FinalCardDto;
+import domain.dto.FinalPlayerCardDto;
 import domain.dto.PlayerCardDto;
 
 import java.util.ArrayList;
@@ -42,8 +42,8 @@ public class OutputView {
         System.out.println("딜러는 " + GameConstant.DEALER_HIT_THRESHOLD + "이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void displayFinalCard(List<FinalCardDto> finalCardDtos) {
-        for (FinalCardDto dto : finalCardDtos) {
+    public void displayFinalCard(List<FinalPlayerCardDto> finalPlayerCardDtos) {
+        for (FinalPlayerCardDto dto : finalPlayerCardDtos) {
             List<String> cardContents = new ArrayList<>();
             for (CardDto card : dto.cards()) {
                 cardContents.add(card.rankName() + card.shapeName());

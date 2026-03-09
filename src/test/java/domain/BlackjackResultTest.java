@@ -25,7 +25,7 @@ class BlackjackResultTest {
         )); // 21
 
         BlackjackResult blackjackResult = BlackjackResult.from(dealer, createSinglePlayerSet(player));
-        BlackjackResultDto blackjackResultDto = blackjackResult.toResultDto();
+        BlackjackResultDto blackjackResultDto = BlackjackResultDto.from(blackjackResult);
         assertThat(blackjackResultDto.winCount()).isEqualTo(1);
         assertThat(blackjackResultDto.loseCount()).isEqualTo(0);
     }
@@ -44,7 +44,7 @@ class BlackjackResultTest {
         )); // 20
 
         BlackjackResult blackjackResult = BlackjackResult.from(dealer, createSinglePlayerSet(player));
-        BlackjackResultDto blackjackResultDto = blackjackResult.toResultDto();
+        BlackjackResultDto blackjackResultDto = BlackjackResultDto.from(blackjackResult);
         assertThat(blackjackResultDto.loseCount()).isEqualTo(1);
         assertThat(blackjackResultDto.winCount()).isEqualTo(0);
     }
@@ -63,7 +63,7 @@ class BlackjackResultTest {
         )); // 21
 
         BlackjackResult blackjackResult = BlackjackResult.from(dealer, createSinglePlayerSet(player));
-        BlackjackResultDto blackjackResultDto = blackjackResult.toResultDto();
+        BlackjackResultDto blackjackResultDto = BlackjackResultDto.from(blackjackResult);
         assertThat(blackjackResultDto.drawCount()).isEqualTo(1);
     }
 
@@ -81,7 +81,7 @@ class BlackjackResultTest {
         )); // 2
 
         BlackjackResult blackjackResult = BlackjackResult.from(dealer, createSinglePlayerSet(player));
-        BlackjackResultDto blackjackResultDto = blackjackResult.toResultDto();
+        BlackjackResultDto blackjackResultDto = BlackjackResultDto.from(blackjackResult);
         assertThat(blackjackResultDto.winCount()).isEqualTo(1);
         assertThat(blackjackResultDto.loseCount()).isEqualTo(0);
     }
@@ -100,7 +100,7 @@ class BlackjackResultTest {
         )); // 2
 
         BlackjackResult blackjackResult = BlackjackResult.from(dealer, createSinglePlayerSet(player));
-        BlackjackResultDto blackjackResultDto = blackjackResult.toResultDto();
+        BlackjackResultDto blackjackResultDto = BlackjackResultDto.from(blackjackResult);
         assertThat(blackjackResultDto.loseCount()).isEqualTo(1);
         assertThat(blackjackResultDto.winCount()).isEqualTo(0);
     }
@@ -128,7 +128,7 @@ class BlackjackResultTest {
         )); // 22
 
         BlackjackResult blackjackResult = BlackjackResult.from(dealer, players);
-        BlackjackResultDto blackjackResultDto = blackjackResult.toResultDto();
+        BlackjackResultDto blackjackResultDto = BlackjackResultDto.from(blackjackResult);
         assertThat(blackjackResultDto.loseCount()).isEqualTo(1);
         assertThat(blackjackResultDto.winCount()).isEqualTo(1);
     }
