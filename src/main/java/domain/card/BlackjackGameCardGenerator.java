@@ -1,9 +1,9 @@
 package domain.card;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class BlackjackGameCardGenerator implements CardGenerator {
@@ -18,7 +18,7 @@ public class BlackjackGameCardGenerator implements CardGenerator {
     private List<Card> generateAllCards() {
         return Arrays.stream(CardDenomination.values())
                 .flatMap(this::generateCardsByDenomination)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     private Stream<Card> generateCardsByDenomination(CardDenomination denomination) {
