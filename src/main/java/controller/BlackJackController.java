@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BlackJackController {
-    private static final String HIT_COMMAND = "y";
     private final BlackJackService blackJackService;
     private Result result;
 
@@ -44,12 +43,8 @@ public class BlackJackController {
 
     private List<Player> getPlayer() {
         List<Player> players = new ArrayList<>();
-
         OutputView.inputPlayerMessage();
-        String input = InputView.input();
-        InputValidate.validateInput(input);
-        List<String> names = InputParse.separateBySeparator(input);
-
+        List<String> names = new ArrayList<>(InputView.inputName());
         for (String name : names) {
             players.add(new Player(name, new Hand()));
         }
@@ -70,9 +65,7 @@ public class BlackJackController {
 
     private boolean isHitRequested(Player player) {
         OutputView.hitOrStandMessage(player);
-        String input = InputView.input();
-        InputValidate.validateChoiceInput(input);
-        return HIT_COMMAND.equals(input);
+        return InputView.inputHitOrStand();
     }
 
     private boolean canPlayerDraw(Player player) {
@@ -103,9 +96,9 @@ public class BlackJackController {
     }
 
     private void dealerHitOrStand(Dealer dealer, CardDeck cardDeck) {
-//        while (dealer.dealerRule()) {
-//            OutputView.dealerHitMessage();
-//            dealer.keepCard(cardDeck.drawCard());
-//        }
+        while (dealer.getTotalCardScore() < 17) {
+            OutputView.dealerHitMessage();
+            dealer.keepCard(cardDeck.drawCard());
+        }
     }
 }
