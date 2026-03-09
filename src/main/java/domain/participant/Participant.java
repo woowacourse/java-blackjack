@@ -3,7 +3,7 @@ package domain.participant;
 import domain.card.Card;
 import domain.card.Hand;
 
-public class Participant {
+public abstract class Participant {
 
     protected final Hand hand;
 
