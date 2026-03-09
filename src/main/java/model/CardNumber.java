@@ -16,14 +16,14 @@ public enum CardNumber {
     KING("K",10);
 
     private final String name;
-    private final Integer score;
+    private final int score;
 
-    CardNumber(String name, Integer score) {
+    CardNumber(String name, int score) {
         this.name = name;
         this.score = score;
     }
 
-    public Integer getScore() {
+    public int getScore() {
         return score;
     }
 
