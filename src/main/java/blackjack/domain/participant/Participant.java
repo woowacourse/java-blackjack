@@ -43,4 +43,8 @@ public abstract class Participant {
     public int getTotalScore() {
         return hand.getTotalScore();
     }
+
+    public boolean isBusted() {
+        return hand.isBusted();
+    }
 }
