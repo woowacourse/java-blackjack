@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Queue;
 
 public class CardProvider {
+
     private final Queue<Card> deck = new LinkedList<>();
 
     public CardProvider() {

@@ -7,14 +7,18 @@ import java.util.regex.Pattern;
 
 public class HitCommand {
 
-    private static final String Y_N_REGREX = "^[yYnN]$";
+    private static final String Y_N_REGEX = "^[yYnN]$";
 
     private final String command;
 
     public HitCommand(String command) {
         validateEmpty(command);
-        validateRegrex(command);
+        validateRegex(command);
         this.command = command;
+    }
+
+    public boolean isY() {
+        return command.equals("y") || command.equals("Y");
     }
 
     private void validateEmpty(String command) {
@@ -23,13 +27,9 @@ public class HitCommand {
         }
     }
 
-    private void validateRegrex(String command) {
-        if (!Pattern.matches(Y_N_REGREX, command)) {
+    private void validateRegex(String command) {
+        if (!Pattern.matches(Y_N_REGEX, command)) {
             throw new IllegalArgumentException(ERROR_NOT_Y_N_INPUT.getErrorMessage());
         }
-    }
-
-    public boolean isY() {
-        return command.equals("y") || command.equals("Y");
     }
 }
