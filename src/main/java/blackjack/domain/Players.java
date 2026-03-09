@@ -3,7 +3,9 @@ package blackjack.domain;
 import blackjack.domain.participant.Player;
 import blackjack.dto.PlayerResult;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Players {
     
@@ -46,7 +48,7 @@ public class Players {
         return player.getNickname();
     }
     
-    public PlayingCards addCardToAvailablePlayer(PlayingCards card) {
+    public String addCardToAvailablePlayer(PlayingCards card) {
         Player player = findDrawablePlayer();
         return player.receiveCard(card);
     }
@@ -62,18 +64,22 @@ public class Players {
         Player player = findDrawablePlayer();
         player.stop();
     }
+
+    public String getPlayersInfo() {
+        return players
+                .stream()
+                .map(Player::getInfoSnapshot)
+                .collect(Collectors.joining("\n"));
+    }
     
     public List<PlayerResult> getWinningResults(int dealerScore) {
-        List<PlayerResult> playerResults = new ArrayList<>();
+        List<PlayerResult> winningResults = new ArrayList<>();
         
         for (Player player : players) {
-            int playerScore = player.getTotalScoreForResult();
-            GameResult gameResult = getGameResult(dealerScore, playerScore);
-            PlayerResult playerResult = new PlayerResult(player.getNickname(), gameResult);
-            playerResults.add(playerResult);
+            winningResults.add(player.getWinningResult(dealerScore));
         }
         
-        return playerResults;
+        return winningResults;
     }
     
     private GameResult getGameResult(int dealerScore, int playerScore) {
@@ -84,5 +90,19 @@ public class Players {
 //            return GameResult.DRAW;
 //        }
         return GameResult.LOSE;
+    }
+
+    public String getAllPlayerNicknames() {
+        return players
+                .stream()
+                .map(Player::getNickname)
+                .collect(Collectors.joining(", "));
+    }
+
+    public String getPlayersResult() {
+        return players
+                .stream()
+                .map(Player::getResultSnapshot)
+                .collect(Collectors.joining("\n"));
     }
 }

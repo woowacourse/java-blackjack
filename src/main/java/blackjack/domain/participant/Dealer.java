@@ -9,16 +9,13 @@ public class Dealer extends Participant {
         super(DEALER_NICKNAME);
     }
     
-    public String getFirstCard() {
-        return hand.getFirstCardDisplayName();
+    public String getFirstCardInfoSnapshot() {
+        String firstCardSnapshot = hand.getFirstSnapshot();
+        return String.format("%s카드: %s", nickname, firstCardSnapshot);
     }
-    
-    public boolean isDealerDraw() {
-        return hand.calculateTotalScore(BUSTED_SCORE) <= DEALER_SCORE;
-    }
-    
+
     @Override
-    public boolean isDealer() {
-        return true;
+    public boolean isDrawable() {
+        return hand.getResultScore(BUSTED_SCORE) <= DEALER_SCORE;
     }
 }

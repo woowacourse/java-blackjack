@@ -1,14 +1,13 @@
 package blackjack.domain;
 
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.ParticipantResult;
 import blackjack.domain.participant.Player;
-import blackjack.dto.DrawResult;
 import blackjack.dto.PlayerResult;
 import blackjack.dto.WinningResult;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Participants {
     
@@ -20,41 +19,29 @@ public class Participants {
         this.dealer = dealer;
     }
     
-    public PlayingCards distributeCards(PlayingCards deck) {
-        List<Participant> participants = getParticipants();
-        for (Participant participant : participants) {
-            DrawResult drawResult = participant.distributeCards(deck);
-            deck = drawResult.drewDeck();
-        }
-        return deck;
-    }
-    
-    private List<Participant> getParticipants() {
-        List<Participant> participants = new ArrayList<>();
-        participants.add(dealer);
-        participants.addAll(players.getAllPlayers());
-        return participants;
-    }
-    
-    public List<ParticipantResult> getInitialResult() {
-        List<ParticipantResult> participantResults = new ArrayList<>();
-        ParticipantResult dealerParticipantResult = new ParticipantResult(dealer, dealer.getFirstCard());
-        participantResults.add(dealerParticipantResult);
+    public void distributeCards(PlayingCards deck) {
+        dealer.distributeCards(deck);
         for (Player player : players.getAllPlayers()) {
-            participantResults.add(new ParticipantResult(player));
+            player.distributeCards(deck);
         }
-        return participantResults;
     }
     
-    public List<ParticipantResult> getGameResult() {
-        List<Participant> participants = getParticipants();
-        List<ParticipantResult> resultList = new ArrayList<>();
-        for (Participant participant : participants) {
-            resultList.add(new ParticipantResult(participant));
-        }
-        return resultList;
+    public String getPlayerNicknames() {
+        return players.getAllPlayerNicknames();
     }
     
+    public String getInitialResults() {
+        String dealerInfo = dealer.getFirstCardInfoSnapshot();
+        String playersInfo = players.getPlayersInfo();
+        return String.format("%s\n%s", dealerInfo, playersInfo);
+    }
+
+    public String getTotalResults() {
+        String dealerResult = dealer.getResultSnapshot();
+        String playersResult = players.getPlayersResult();
+        return String.format("%s\n%s", dealerResult, playersResult);
+    }
+
     public WinningResult getWinningResult() {
         int dealerScore = dealer.getTotalScoreForResult();
         return getWinningResult(dealerScore);
@@ -77,14 +64,9 @@ public class Participants {
         return players.findDrawablePlayerNickname();
     }
     
-    public DrawResult addCardToAvailablePlayer(PlayingCards deck) {
-        DrawResult drawResult = deck.draw();
-        PlayingCards drawCard = drawResult.drewCard();
-        PlayingCards drawDeck = drawResult.drewDeck();
-        
-        PlayingCards playerHand = players.addCardToAvailablePlayer(drawCard);
-        
-        return new DrawResult(playerHand, drawDeck);
+    public String addCardToAvailablePlayer(PlayingCards deck) {
+        PlayingCards drewCards = deck.drawCard();
+        return players.addCardToAvailablePlayer(drewCards);
     }
     
     public void dontWantDraw() {
@@ -92,17 +74,11 @@ public class Participants {
     }
     
     public boolean isDealerDraw() {
-        return dealer.isDealerDraw();
+        return dealer.isDrawable();
     }
     
-    public PlayingCards dealerDraw(PlayingCards deck) {
-        DrawResult drawResult = deck.draw();
-        PlayingCards drawCard = drawResult.drewCard();
-        dealer.receiveCard(drawCard);
-        return drawResult.drewDeck();
-    }
-    
-    public ParticipantResult getDrawPlayerResult() {
-        return new ParticipantResult(players.findDrawablePlayer());
+    public void dealerDraw(PlayingCards deck) {
+        PlayingCards drewCard = deck.drawCard();
+        dealer.receiveCard(drewCard);
     }
 }

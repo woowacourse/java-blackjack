@@ -1,46 +1,52 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.Hand;
 import blackjack.domain.PlayingCards;
-import blackjack.dto.DrawResult;
 
 public abstract class Participant {
     
     protected static final int BUSTED_SCORE = 21;
     private static final int FIRST_DRAW_COUNT = 2;
     protected final String nickname;
-    protected PlayingCards hand;
+    protected final Hand hand;
     
     protected Participant(String nickname) {
         this.nickname = nickname;
-        this.hand = new PlayingCards();
+        this.hand = new Hand();
     }
-    
-    public abstract boolean isDealer();
-    
+
+    public String getResultSnapshot() {
+        String info = getInfoSnapshot();
+        int score = getTotalScore();
+        return String.format("%s - 결과: %d", info, score);
+    }
+
+    public String getInfoSnapshot() {
+        String cardSnapshot = hand.getCardSnapshot();
+        return String.format("%s카드: %s", nickname, cardSnapshot);
+    }
+
     public String getNickname() {
         return nickname;
     }
-    
-    public String getCardStatus() {
-        return hand.getStatusByDisplayName();
+
+    public String distributeCards(PlayingCards deck) {
+        PlayingCards drewCards = deck.drawCards(FIRST_DRAW_COUNT);
+        return receiveCard(drewCards);
     }
-    
+
+    public abstract boolean isDrawable();
+
+    public String receiveCard(PlayingCards receivedCards) {
+        hand.addCard(receivedCards);
+        return getInfoSnapshot();
+    }
+
     public int getTotalScore() {
-        return hand.calculateTotalScore(BUSTED_SCORE);
+        return hand.getTotalScore();
     }
     
     public int getTotalScoreForResult() {
-        return hand.calculateTotalScoreForResult(BUSTED_SCORE);
-    }
-    
-    public DrawResult distributeCards(PlayingCards deck) {
-        DrawResult drawResult = deck.draw(FIRST_DRAW_COUNT);
-        receiveCard(drawResult.drewCard());
-        return drawResult;
-    }
-    
-    public PlayingCards receiveCard(PlayingCards drewCards) {
-        hand = hand.add(drewCards);
-        return hand;
+        return hand.getResultScore(BUSTED_SCORE);
     }
 }

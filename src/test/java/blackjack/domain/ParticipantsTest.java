@@ -20,7 +20,7 @@ class ParticipantsTest {
         
         participants.distributeCards(deck);
         
-        assertThat(participants.getInitialResult()).hasSize(3);
+        assertThat(participants.getInitialResults()).hasSize(3);
     }
     
     @DisplayName("덱에 남은 카드가 부족할 때 초기 분배를 시도하면 예외가 발생한다.")

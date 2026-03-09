@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import blackjack.dto.DrawResult;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -54,24 +53,18 @@ public class PlayingCards {
         Collections.shuffle(copiedCards);
         return from(copiedCards);
     }
-    
-    public PlayingCards add(PlayingCards cards) {
-        List<Card> copiedCards = new ArrayList<>(getCards());
-        copiedCards.addAll(cards.getCards());
-        return from(copiedCards);
+
+    public PlayingCards drawCard() {
+        return drawCards(1);
     }
     
-    public DrawResult draw() {
-        return draw(1);
-    }
-    
-    public DrawResult draw(int count) {
+    public PlayingCards drawCards(int count) {
         hasEnoughCard(count);
-        
+
         List<Card> drewCards = new ArrayList<>(cards.subList(0, count));
-        List<Card> remainCards = new ArrayList<>(cards.subList(count, cards.size()));
+        cards.subList(0, count).clear();
         
-        return DrawResult.of(from(drewCards), from(remainCards));
+        return new PlayingCards(drewCards);
     }
     
     private void hasEnoughCard(int count) {
@@ -79,79 +72,27 @@ public class PlayingCards {
             throw new IllegalArgumentException("남은 카드가 없습니다.");
         }
     }
-    
-    public String getFirstCardDisplayName() {
-        if (cards.isEmpty()) {
-            throw new IllegalArgumentException("남은 카드가 없습니다.");
-        }
+
+    public String getFirstSnapshot() {
         return cards.getFirst().getDisplayName();
     }
-    
-    public boolean isBusted(int threshold, int scoreSum) {
-        return scoreSum > threshold;
-    }
-    
-    public int calculateTotalScore(int threshold) {
-        int scoreSum = calculateScoreSum();
-        boolean busted = isBusted(threshold, scoreSum);
-        if (busted) {
-            int aceCount = countAce();
-            return calculateWithAce(scoreSum, aceCount, threshold);
-        }
-        return scoreSum;
-    }
-    
-    public int calculateTotalScoreForResult(int threshold) {
-        int scoreSum = calculateScoreSum();
-        boolean busted = isBusted(threshold, scoreSum);
-        if (busted) {
-            int aceCount = countAce();
-            return bustedScore(scoreSum, aceCount, threshold);
-        }
-        return scoreSum;
-    }
-    
-    private int bustedScore(int scoreSum, int aceCount, int threshold) {
-        int totalScore = scoreSum;
-        if (aceCount > 0) {
-            totalScore = calculateWithAce(scoreSum, aceCount, threshold);
-        }
-        if (totalScore <= threshold) {
-            return totalScore;
-        }
-        return 0;
-    }
-    
-    public String getStatusByDisplayName() {
-        return cards.stream().map(Card::getDisplayName).collect(Collectors.joining(", "));
-    }
-    
-    private int calculateScoreSum() {
+
+    public String getSnapshot() {
         return cards
                 .stream()
-                .mapToInt(Card::getScore)
-                .sum();
+                .map(Card::getDisplayName)
+                .collect(Collectors.joining(", "));
     }
-    
-    private int countAce() {
-        return (int) cards
-                .stream()
-                .filter(Card::isAce)
-                .count();
-    }
-    
-    private int calculateWithAce(int scoreSum, int aceCount, int threshold) {
-        if (aceCount == 0) {
-            return scoreSum;
-        }
-        int calculatedScore = scoreSum - 10;
-        if (calculatedScore <= threshold) {
-            return calculatedScore;
-        }
-        return calculateWithAce(calculatedScore, aceCount - 1, threshold);
-    }
-    
-    private List<Card> getCards() {
+
+    public List<Card> getCards() {
         return List.copyOf(cards);
+    }
+
+    public boolean add(PlayingCards receivedCards) {
+        return this.cards.addAll(receivedCards.getCards());
+    }
+
+    public boolean isCardRemain() {
+        return !cards.isEmpty();
     }
 }

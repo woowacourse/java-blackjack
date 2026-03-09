@@ -1,23 +1,20 @@
 package blackjack.domain.participant;
 
 public record ParticipantResult(
-        String nickname,
-        String cardStatus,
+        String infoSnapshot,
         int totalScore
 ) {
     
     public ParticipantResult(Participant participant) {
         this(
-                participant.getNickname(),
-                participant.getCardStatus(),
+                participant.getInfoSnapshot(),
                 participant.getTotalScore()
         );
     }
     
-    public ParticipantResult(Participant participant, String cardStatus) {
+    public ParticipantResult(Participant participant, String infoSnapshot) {
         this(
-                participant.getNickname(),
-                cardStatus,
+                infoSnapshot,
                 participant.getTotalScore()
         );
     }

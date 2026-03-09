@@ -4,8 +4,6 @@ import blackjack.domain.Participants;
 import blackjack.domain.Players;
 import blackjack.domain.PlayingCards;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.ParticipantResult;
-import blackjack.dto.DrawResult;
 import blackjack.dto.WinningResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -25,12 +23,9 @@ public class BlackjackRunner {
     public void execute() {
         Participants participants = makeParticipants();
         PlayingCards deck = PlayingCards.createShuffledDeck();
-        deck = gameStart(participants, deck);
+        gameStart(participants, deck);
         
-        printInitialSetup(participants);
-        printInitialResult(participants);
-        
-        deck = playerTurn(participants, deck);
+        playerTurn(participants, deck);
         dealerTurn(participants, deck);
         gameEnd(participants);
     }
@@ -40,11 +35,11 @@ public class BlackjackRunner {
     }
     
     private void printInitialResult(Participants participants) {
-        outputView.printInitialResult(participants);
+        outputView.printInitialResult(participants.getInitialResults());
     }
     
     private void printInitialSetup(Participants participants) {
-        outputView.printInitialSetUp(participants.getWinningResult());
+        outputView.printInitialSetUp(participants.getPlayerNicknames());
     }
     
     private Participants makeParticipants() {
@@ -56,51 +51,46 @@ public class BlackjackRunner {
     }
     
     public void printGameResult(Participants participants) {
-        List<ParticipantResult> participantResult = participants.getGameResult();
-        outputView.printGameResult(participantResult);
+        outputView.printTotalResult(participants.getTotalResults());
         
-        WinningResult winningResult = participants.getWinningResult();
-        outputView.printWinner(winningResult);
+        WinningResult winningResults = participants.getWinningResult();
+        outputView.printWinningResults(winningResults);
     }
     
-    private PlayingCards gameStart(Participants participants, PlayingCards deck) {
-        return participants.distributeCards(deck);
+    private void gameStart(Participants participants, PlayingCards deck) {
+        printInitialSetup(participants);
+
+        participants.distributeCards(deck);
+
+        printInitialResult(participants);
     }
     
-    private PlayingCards dealerTurn(Participants participants, final PlayingCards deck) {
-        PlayingCards copiedDeck = deck;
-        
+    private void dealerTurn(Participants participants, final PlayingCards deck) {
         while (participants.isDealerDraw()) {
             outputView.printDealerTurn();
-            copiedDeck = participants.dealerDraw(copiedDeck);
+            participants.dealerDraw(deck);
         }
-        return copiedDeck;
     }
     
-    private PlayingCards playerTurn(Participants participants, final PlayingCards deck) {
-        PlayingCards copiedDeck = deck;
-        
+    private void playerTurn(Participants participants, final PlayingCards deck) {
         while (participants.findDrawablePlayer() != null) {
-            copiedDeck = drawCard(participants, copiedDeck);
+            playerDraw(participants, deck);
         }
-        return copiedDeck;
     }
     
-    private PlayingCards drawCard(Participants participants, PlayingCards deck) {
+    private void playerDraw(Participants participants, PlayingCards deck) {
         String drawablePlayerNickname = participants.findDrawablePlayer();
         boolean isPlayerDraw = isDraw(drawablePlayerNickname);
         if (isPlayerDraw) {
-            DrawResult drawResult = participants.addCardToAvailablePlayer(deck);
-            PlayingCards playerHand = drawResult.drewCard();
-            printDrewResult(drawablePlayerNickname, playerHand);
-            return drawResult.drewDeck();
+            String drawResult = participants.addCardToAvailablePlayer(deck);
+            printDrewResult(drawResult);
+            return;
         }
         participants.dontWantDraw();
-        return deck;
     }
     
-    private void printDrewResult(String drawablePlayerNickname, PlayingCards playerCards) {
-        outputView.printPlayerStatus(drawablePlayerNickname, playerCards.getStatusByDisplayName());
+    private void printDrewResult(String drawResult) {
+        outputView.printLine(drawResult);
     }
     
     private boolean isDraw(String nickname) {
