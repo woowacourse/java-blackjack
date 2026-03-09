@@ -15,13 +15,10 @@ public class GameCardGenerator implements CardGenerator {
     }
 
     private List<Card> generateAllCards() {
-        List<Card> cards = new ArrayList<>();
-        Arrays.stream(CardDenomination.values()).forEach(denomination ->
-                Arrays.stream(CardEmblem.values()).forEach(emblem ->
-                        cards.add(Card.of(denomination, emblem))
-                )
-        );
-        return cards;
+        return Arrays.stream(CardDenomination.values())
+                .flatMap(denomination -> Arrays.stream(CardEmblem.values())
+                        .map(emblem -> Card.of(denomination, emblem)))
+                .toList();
     }
 
     private void shuffle(List<Card> blackjackGameCards) {
