@@ -3,8 +3,9 @@ package controller;
 import domain.Game;
 import domain.card.Deck;
 import domain.enums.Result;
+import domain.participant.Dealer;
 import domain.participant.Players;
-import java.util.LinkedHashMap;
+import dto.CardDto;
 import java.util.List;
 import java.util.Map;
 import service.BlackjackService;
@@ -20,36 +21,36 @@ public class BlackjackController {
     }
 
     public void start() {
-        Players players = blackjackService.makePlayers(askPlayerNames());
+        Players players = blackjackService.makePlayers(InputView.askPlayerNames());
         Deck deck = blackjackService.makeDeck();
-        Game game = blackjackService.makeGame(players);
+        Dealer dealer = new Dealer();
+        Game game = blackjackService.makeGame(players, dealer);
 
         blackjackService.initializeGame(game, deck);
-        OutputView.printPlayers(game.getDealerCard(), game.getAllPlayerCards());
+        printParticipantCards(players, dealer);
 
-        List<String> playersName = players.getAllPlayerNames();
-        playTurn(game, deck);
-        printResult(game, playersName);
+        playTurn(game, players, deck);
+        printResult(game, dealer, players);
     }
 
-    private List<String> askPlayerNames() {
-        String input = InputView.askPlayerNames();
-        return InputParser.parseNames(input);
+    private void printParticipantCards(Players players, Dealer dealer) {
+        OutputView.printParticipantCards(CardDto.fromCards(dealer.getCards()),
+                blackjackService.makePlayerCardDtos(players));
     }
 
-    private void playTurn(Game game, Deck deck) {
-        for (String name : game.getAllPlayerNames()) {
-            playPlayerTurn(game, name, deck);
+    private void playTurn(Game game, Players players, Deck deck) {
+        for (String name : players.getAllPlayerNames()) {
+            playPlayerTurn(game, players, name, deck);
         }
         blackjackService.playDealerTurn(game, deck);
     }
 
-    private void playPlayerTurn(Game game, String name, Deck deck) {
+    private void playPlayerTurn(Game game, Players players, String name, Deck deck) {
         boolean shouldContinue = true;
         while (shouldContinue && !game.isPlayerBust(name)) {
             shouldContinue = isPlayerWantHit(name);
             blackjackService.playPlayerTurn(game, name, deck, shouldContinue);
-            OutputView.printPlayerCard(name, game.getPlayerCards(name));
+            OutputView.printPlayerCards(name, CardDto.fromCards(players.getPlayerCards(name)));
         }
     }
 
@@ -58,13 +59,12 @@ public class BlackjackController {
         return InputParser.parseHitAnswer(input);
     }
 
-    private void printResult(Game game, List<String> playerNames) {
-        OutputView.printDealerCardWithScore(game.getDealerCard(), game.getDealerScore());
+    private void printResult(Game game, Dealer dealer, Players players) {
+        OutputView.printDealerCardsWithScore(CardDto.fromCards(dealer.getCards()), game.getDealerScore());
 
-        Map<String, Result> playerResults = new LinkedHashMap<>();
-        for (String name : playerNames) {
-            OutputView.printPlayerCardWithScore(name, game.getPlayerCards(name), game.getPlayerScore(name));
-            playerResults.put(name, game.getPlayerResult(name));
+        Map<String, Result> playerResults = blackjackService.makePlayerResults(players, game);
+        for (Map.Entry<String, List<CardDto>> entry : blackjackService.makePlayerCardDtos(players).entrySet()) {
+            OutputView.printPlayerCardsWithScore(entry.getKey(), entry.getValue(), game.getPlayerScore(entry.getKey()));
         }
 
         OutputView.printGameResult(game.getDealerResult(), playerResults);

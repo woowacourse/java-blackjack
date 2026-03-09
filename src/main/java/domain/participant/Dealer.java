@@ -3,7 +3,6 @@ package domain.participant;
 import static constant.GameRule.DEALER_HIT_CRITERION;
 
 import domain.enums.Result;
-import dto.CardDto;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,10 +23,6 @@ public class Dealer extends Participant {
                 }
         );
         return results;
-    }
-
-    public List<CardDto> getDealerCards() {
-        return cardBoard.createDto();
     }
 
     public int calculateScore() {

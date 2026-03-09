@@ -6,9 +6,6 @@ import domain.card.Deck;
 import domain.enums.Result;
 import domain.participant.Dealer;
 import domain.participant.Players;
-import dto.CardDto;
-import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Game {
@@ -52,26 +49,6 @@ public class Game {
         if (wantHit) {
             distributeCard(name, deck);
         }
-    }
-
-    public List<CardDto> getDealerCard() {
-        return dealer.getDealerCards();
-    }
-
-    public List<String> getAllPlayerNames() {
-        return players.getAllPlayerNames();
-    }
-
-    public Map<String, List<CardDto>> getAllPlayerCards() {
-        Map<String, List<CardDto>> playerCards = new LinkedHashMap<>();
-        for (String name : players.getAllPlayerNames()) {
-            playerCards.put(name, players.getPlayerCards(name));
-        }
-        return playerCards;
-    }
-
-    public List<CardDto> getPlayerCards(String name) {
-        return players.getPlayerCards(name);
     }
 
     public Map<Result, Integer> getDealerResult() {

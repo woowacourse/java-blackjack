@@ -9,7 +9,6 @@ import domain.enums.Result;
 import domain.enums.Suit;
 import domain.participant.Dealer;
 import domain.participant.Players;
-import dto.CardDto;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -54,7 +53,7 @@ public class GameTest {
             assertThat(twoPlayers.getPlayerCards("피즈").size()).isEqualTo(2);
             assertThat(twoPlayers.getPlayerCards("스타크").size()).isEqualTo(2);
 
-            assertThat(dealer.getDealerCards().size()).isEqualTo(2);
+            assertThat(dealer.getCards().size()).isEqualTo(2);
         }
 
         @DisplayName("플레이어의 카드 총합이 21미만이고 히트 요청 시 한장을 더 분배한다.")
@@ -82,7 +81,7 @@ public class GameTest {
             //then
             onePlayerGame.dealerHit(deck);
 
-            assertThat(dealer.getDealerCards().size()).isEqualTo(4);
+            assertThat(dealer.getCards().size()).isEqualTo(4);
         }
 
         @DisplayName("플레이어가 버스트 되면 플레이어는 패배하고 딜러는 승리한다.")
@@ -163,7 +162,7 @@ public class GameTest {
             onePlayerGame.distributeCard(deck);
             //then
 
-            List<CardDto> fizzCard = onePlayerGame.getPlayerCards("피즈");
+            List<Card> fizzCard = onePlayer.getPlayerCards("피즈");
             List<Rank> expectedFizzRank = List.of(Rank.FIVE, Rank.SIX, Rank.FOUR);
             List<Suit> expectedFizzSuit = List.of(Suit.CLOVER, Suit.CLOVER, Suit.SPADE);
 
@@ -172,7 +171,7 @@ public class GameTest {
                 assertThat(fizzCard.get(i).suit()).isEqualTo(expectedFizzSuit.get(i));
             }
 
-            List<CardDto> dealerCard = onePlayerGame.getDealerCard();
+            List<Card> dealerCard = dealer.getCards();
             List<Rank> expectedDealerRank = List.of(Rank.FIVE, Rank.SEVEN, Rank.SEVEN);
             List<Suit> expectedDealerSuit = List.of(Suit.HEART, Suit.CLOVER, Suit.HEART);
 

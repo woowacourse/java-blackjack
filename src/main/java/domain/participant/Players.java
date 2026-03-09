@@ -12,7 +12,6 @@ import static message.ErrorMessage.PLAYER_NUMBER_OUT_OF_RANGE;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.enums.Result;
-import dto.CardDto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -90,9 +89,9 @@ public class Players {
                 .toList();
     }
 
-    public List<CardDto> getPlayerCards(String name) {
+    public List<Card> getPlayerCards(String name) {
         Player foundPlayer = findPlayerByName(name);
-        return foundPlayer.cardBoard.createDto();
+        return foundPlayer.getCards();
     }
 
     public Result getPlayerResult(String name, int dealerScore, boolean dealerBust) {

@@ -14,15 +14,15 @@ public abstract class Participant {
         cardBoard.add(card);
     }
 
-    public void addCards(List<Card> cards) {
-        cardBoard.addAll(cards);
-    }
-
     public int getScore() {
         return cardBoard.calculateScore();
     }
 
     public boolean checkScoreUnderCriterion() {
         return cardBoard.calculateScore() <= BLACKJACK_CRITERION;
+    }
+
+    public List<Card> getCards() {
+        return cardBoard.getCards();
     }
 }
