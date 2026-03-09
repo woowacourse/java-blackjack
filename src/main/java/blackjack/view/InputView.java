@@ -16,6 +16,8 @@ public class InputView {
     private static final String STAY_INPUT = "n";
     private static final String INVALID_HIT_DECISION_MESSAGE = "y 또는 n만 입력할 수 있습니다.";
 
+    private InputView() {}
+
     public static List<String> readPlayerNames() {
         System.out.println(READ_PLAYER_NAMES_MESSAGE);
         String input = SCANNER.nextLine();

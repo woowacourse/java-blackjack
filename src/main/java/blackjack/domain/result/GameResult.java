@@ -4,10 +4,20 @@ import blackjack.domain.hand.Score;
 
 public enum GameResult {
 
-    WIN,
-    DRAW,
-    LOSE,
+    WIN("승"),
+    DRAW("무"),
+    LOSE("패"),
     ;
+
+    private final String displayName;
+
+    GameResult(final String displayName) {
+        this.displayName = displayName;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
 
     public static GameResult of(final Score playerScore, final Score dealerScore) {
         if (playerScore.isBust()) {

@@ -25,9 +25,7 @@ public class OutputView {
     private static final String DEALER_RESULT_PREFIX = "딜러: ";
     private static final String PLAYER_RESULT_FORMAT = "%s: %s%n";
 
-    private static final String WIN = "승";
-    private static final String DRAW = "무";
-    private static final String LOSE = "패";
+    private OutputView() {}
 
     public static void printInitialDeal(final Players players, final Dealer dealer) {
         final String playerNames = players.getPlayers().stream()
@@ -71,35 +69,24 @@ public class OutputView {
 
     private static String buildDealerResultText(final Map<GameResult, Integer> dealerResults) {
         final List<String> results = new ArrayList<>();
-        addResultIfExists(results, dealerResults, GameResult.WIN, WIN);
-        addResultIfExists(results, dealerResults, GameResult.DRAW, DRAW);
-        addResultIfExists(results, dealerResults, GameResult.LOSE, LOSE);
+        addResultIfExists(results, dealerResults, GameResult.WIN);
+        addResultIfExists(results, dealerResults, GameResult.DRAW);
+        addResultIfExists(results, dealerResults, GameResult.LOSE);
         return String.join(" ", results);
     }
 
     private static void addResultIfExists(
             final List<String> results,
             final Map<GameResult, Integer> dealerResults,
-            final GameResult result,
-            final String label
+            final GameResult result
     ) {
         if (dealerResults.containsKey(result)) {
-            results.add(dealerResults.get(result) + label);
+            results.add(dealerResults.get(result) + result.getDisplayName());
         }
     }
 
     private static void printPlayerResult(final Player player, final GameResult result) {
-        System.out.printf(PLAYER_RESULT_FORMAT, player.getName(), toDisplayText(result));
-    }
-
-    private static String toDisplayText(final GameResult result) {
-        if (result == GameResult.WIN) {
-            return WIN;
-        }
-        if (result == GameResult.LOSE) {
-            return LOSE;
-        }
-        return DRAW;
+        System.out.printf(PLAYER_RESULT_FORMAT, player.getName(), result.getDisplayName());
     }
 
     private static String formatCards(final List<Card> cards) {
