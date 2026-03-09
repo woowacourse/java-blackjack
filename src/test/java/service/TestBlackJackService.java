@@ -57,9 +57,9 @@ public class TestBlackJackService {
         player.addScore(playerScore);
 
         ParticipantWinning gameResult = blackJackService.getGameResult(players, dealer);
-        Map<MatchStatus, Integer> dealerWinning = gameResult.dealerWinning().getDealerWinning();
+        Map<MatchStatus, Integer> dealerWinning = gameResult.dealerWinning();
 
-        assertThat(gameResult.playersWinning().getPlayersWinnings().getFirst().matchStatus().getStatus()).isEqualTo(result);
+        assertThat(gameResult.playersWinning().getFirst().matchStatus().getStatus()).isEqualTo(result);
 
         if(result.equals("승")) {
             assertThat(dealerWinning.get(MatchStatus.WIN)).isEqualTo(0);
