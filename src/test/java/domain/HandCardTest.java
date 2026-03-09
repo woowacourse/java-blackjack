@@ -13,7 +13,7 @@ public class HandCardTest {
 
     @Test
     @DisplayName("손에 있는 카드 계산")
-    void 보유카드_정상_계산(){
+    void 보유카드_정상_계산() {
         //given
         Card aceClover = new Card(CardRank.ACE, CardSuit.CLOVER); // A
         Card aceHeart = new Card(CardRank.ACE, CardSuit.HEART); // A
