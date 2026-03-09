@@ -16,13 +16,12 @@ public class BlackJackService {
 
     public Result calculateResult(Dealer dealer, Players players) {
         for (Player player : players.getPlayers()) {
-            result.setPlayerResult(player.getName(), calculateWinDefeatDraw(dealer, player));
+            result.setPlayerResult(player.getName(), calculatePlayerWinDefeatDraw(dealer, player));
         }
         return result;
     }
 
-    //승패는 플레이어 기준
-    private ResultInfo calculateWinDefeatDraw(Dealer dealer, Player player) {
+    private ResultInfo calculatePlayerWinDefeatDraw(Dealer dealer, Player player) {
         int dealerTotalScore = dealer.getTotalCardScore();
         int playerTotalScore = player.getTotalCardScore();
 

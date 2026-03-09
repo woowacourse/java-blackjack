@@ -21,7 +21,6 @@ public class Hand {
         hand.add(card);
     }
 
-    //버스트면 true
     public boolean isBust() {
         return calculateTotalScore() > 21;
     }
