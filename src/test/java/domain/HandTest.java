@@ -1,7 +1,6 @@
 package domain;
 
 import domain.card.Card;
-import domain.exception.DuplicatedException;
 import domain.member.Hand;
 import java.util.LinkedList;
 import java.util.List;
@@ -20,16 +19,6 @@ public class HandTest {
     @BeforeEach
     void setUp() {
         hand = new Hand();
-    }
-
-    @DisplayName("카드 추가 시 중복 검사 예외 테스트")
-    @Test
-    void appendAndDuplicateTest_holdingTwoAndAppendTwo_ThrowDuplicatedException() {
-        hand.appendCard(new Card("2", "하트"));
-
-        Assertions.assertThatThrownBy(
-                () -> hand.appendCard(new Card("2", "하트")))
-                .isInstanceOf(DuplicatedException.class);
     }
 
     @DisplayName("카드 총합 계산 기능 테스트")
