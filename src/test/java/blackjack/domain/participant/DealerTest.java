@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 class DealerTest {
 
     @Test
-    void 점수가_16_이하이면_카드를_받을_수_있다() {
+    void 점수가_16_이면_카드를_받을_수_있다() {
         Dealer dealer = new Dealer();
         dealer.receiveCard(new Card(Suit.HEART, Rank.TEN));
         dealer.receiveCard(new Card(Suit.SPADE, Rank.SIX));
@@ -19,7 +19,7 @@ class DealerTest {
     }
 
     @Test
-    void 점수가_17_이상이면_카드를_받을_수_없다() {
+    void 점수가_17_이면_카드를_받을_수_없다() {
         Dealer dealer = new Dealer();
         dealer.receiveCard(new Card(Suit.HEART, Rank.TEN));
         dealer.receiveCard(new Card(Suit.SPADE, Rank.SEVEN));
