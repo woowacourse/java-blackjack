@@ -5,6 +5,7 @@ import domain.analyzer.dto.ResultAnalysisDto;
 import domain.answer.Answer;
 import domain.card.CardDeck;
 import domain.card.CardGenerator;
+import domain.config.BlackjackGameConfiguration;
 import domain.dealer.Dealer;
 import domain.player.Player;
 import domain.player.PlayerName;
@@ -17,12 +18,16 @@ import java.util.List;
 
 public class BlackjackGame {
 
-    public ApplicationView view;
-    public CardDeck cardDeck;
+    private ApplicationView view;
+    private CardDeck cardDeck;
 
-    public BlackjackGame(ApplicationView view, CardGenerator cardGenerator) {
+    private BlackjackGame(ApplicationView view, CardGenerator cardGenerator) {
         this.view = view;
         this.cardDeck = CardDeck.from(cardGenerator);
+    }
+
+    public static BlackjackGame from(BlackjackGameConfiguration configuration) {
+        return new BlackjackGame(configuration.view(), configuration.gameCardGenerator());
     }
 
     public void start() {
