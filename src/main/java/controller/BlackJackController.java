@@ -59,14 +59,14 @@ public class BlackJackController {
 
     // todo: depth 2 해결
     private void drawPlayerCard(Player player, Deck deck) {
-        String YesNoInput = InputView.askPlayerCommand(player.getName());
+        String yesNoInput = InputView.askPlayerCommand(player.getName());
 
-        if (!blackJackTurnService.canPlayerHit(player, YesNoInput)) {
+        if (!blackJackTurnService.canPlayerHit(player, yesNoInput)) {
             BlackJackHandDto blackJackHandDto = blackJackTurnService.createHandDto(player);
             OutputView.printHandOutput(blackJackHandDto);
         }
 
-        while (blackJackTurnService.canPlayerHit(player, YesNoInput)) {
+        while (blackJackTurnService.canPlayerHit(player, yesNoInput)) {
             blackJackTurnService.playerHit(player, deck);
             BlackJackHandDto blackJackHandDto = blackJackTurnService.createHandDto(player);
             OutputView.printHandOutput(blackJackHandDto);
@@ -74,7 +74,7 @@ public class BlackJackController {
             if (!blackJackTurnService.isPlayerUnder21(player)) {
                 break;
             }
-            YesNoInput = InputView.askPlayerCommand(player.getName());
+            yesNoInput = InputView.askPlayerCommand(player.getName());
         }
     }
 
