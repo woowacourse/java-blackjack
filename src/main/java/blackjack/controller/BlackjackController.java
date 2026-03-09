@@ -10,6 +10,7 @@ import blackjack.domain.ScoreCompareResult;
 import blackjack.service.CardDistributor;
 import blackjack.service.Game;
 import blackjack.utils.InputParser;
+import blackjack.utils.RetryInput;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -21,6 +22,7 @@ import blackjack.view.OutputView;
 public class BlackjackController {
     private final CardDistributor cardDistributor;
     private final Game game;
+    private static final RetryInput retryInput = new RetryInput();
 
     public BlackjackController(CardDistributor cardDistributor) {
         this.cardDistributor = cardDistributor;
@@ -48,9 +50,9 @@ public class BlackjackController {
     }
 
     private static List<String> getPlayerNames() {
-        String playerNamesStr = InputView.askPlayerNames();
-        List<String> playerNames = InputParser.splitPlayerNames(playerNamesStr);
-        return playerNames;
+        return retryInput.read(() ->
+                InputParser.splitPlayerNames(InputView.askPlayerNames())
+        );
     }
 
     private void calculateFinalGameResult(List<Player> players, Dealer dealer) {
