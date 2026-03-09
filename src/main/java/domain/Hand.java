@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Hand {
+    private static final Integer WINNING_SCORE_BOUNDARY = 21;
+    private static final Integer ACE_SUBTRACTION_POINT = 10;
+    private static final Integer DEALER_DEAL_AGAIN_BOUNDARY = 16;
+
     private final List<Card> cards;
     private int handTotalScore;
     private boolean hasAce;
@@ -34,13 +38,13 @@ public class Hand {
             handTotalScore += card.getCardScore();
         }
 
-        if (hasAce && handTotalScore > 21) {
-            handTotalScore -= 10;
+        if (hasAce && handTotalScore > WINNING_SCORE_BOUNDARY) {
+            handTotalScore -= ACE_SUBTRACTION_POINT;
         }
     }
 
     public Boolean determineDealerDealMore() {
-        if (handTotalScore <= 16) {
+        if (handTotalScore <= DEALER_DEAL_AGAIN_BOUNDARY) {
             return true;
         }
         return false;

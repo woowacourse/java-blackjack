@@ -3,6 +3,8 @@ package domain;
 import vo.GameResult;
 
 public class Dealer {
+    private final static Integer WINNING_SCORE_BOUNDARY = 21;
+
     private final Hand hand;
 
     public Dealer() {
@@ -30,11 +32,11 @@ public class Dealer {
     }
 
     public GameResult judgeUserResult(int userTotalScore) {
-        if (hand.getHandTotalScore() > 21) {
+        if (hand.getHandTotalScore() > WINNING_SCORE_BOUNDARY) {
             return GameResult.LOSE;
         }
 
-        if (hand.getHandTotalScore() == 21) {
+        if (hand.getHandTotalScore() == WINNING_SCORE_BOUNDARY) {
             return GameResult.WIN;
         }
 
@@ -46,19 +48,19 @@ public class Dealer {
     }
 
     public GameResult judgeUserWin(int userScore) {
-        if (userScore > 21) {
+        if (userScore > WINNING_SCORE_BOUNDARY) {
             return GameResult.LOSE;
         }
 
-        if (userScore == 21) {
+        if (userScore == WINNING_SCORE_BOUNDARY) {
             return GameResult.WIN;
         }
 
-        if (hand.getHandTotalScore() > 21) {
+        if (hand.getHandTotalScore() > WINNING_SCORE_BOUNDARY) {
             return GameResult.WIN;
         }
 
-        if (userScore > hand.getHandTotalScore() && (hand.getHandTotalScore() < 21)) {
+        if (userScore > hand.getHandTotalScore() && (hand.getHandTotalScore() < WINNING_SCORE_BOUNDARY)) {
             return GameResult.WIN;
         }
 

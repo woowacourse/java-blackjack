@@ -4,6 +4,8 @@ import java.util.List;
 import view.Message;
 
 public class BlackjackGame {
+    private final static Integer FIRST_CARD_DEAL_COUNT = 2;
+
     private Participants participants;
     private Deck deck;
 
@@ -16,7 +18,7 @@ public class BlackjackGame {
     }
 
     public void dealCards() {
-        for(int cardCount = 0; cardCount < 2; cardCount++) {
+        for(int cardCount = 0; cardCount < FIRST_CARD_DEAL_COUNT; cardCount++) {
             participants.dealCards(deck);
         }
     }
