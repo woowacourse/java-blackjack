@@ -21,7 +21,7 @@ public class BlackjackController {
     }
 
     public void run() {
-        List<Player> players = readUsers();
+        List<Player> players = createPlayers();
         Dealer dealer = new Dealer();
 
         gameService.settingCards(players, dealer);
@@ -49,9 +49,11 @@ public class BlackjackController {
         }
     }
 
-    private List<Player> readUsers() {
-        String userName = inputView.readUserName();
-        return InputParser.createUser(userName);
+    private List<Player> createPlayers() {
+        List<String> playerNames = InputParser.parsePlayer(inputView.readPlayerName());
+        return playerNames.stream()
+                .map(Player::new)
+                .toList();
     }
 
     // TODO : 코드 품질 개선 필요
