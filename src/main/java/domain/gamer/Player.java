@@ -16,10 +16,6 @@ public class Player extends Gamer{
         return new Player(name);
     }
 
-    public boolean hasCard(Card targetCard) {
-        return cardBundle.checkExist(targetCard);
-    }
-
     public CardBundle addCardBundle(CardBundle newCardBundle) {
         cardBundle = cardBundle.add(newCardBundle);
         return cardBundle;
