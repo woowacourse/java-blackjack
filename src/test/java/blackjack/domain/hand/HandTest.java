@@ -5,14 +5,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class HandTest {
 
     @Test
-    @DisplayName("ACE가 없을 때 카드 숫자의 합을 점수로 반환한다")
-    void calculateScore_returnsSumOfCardValues_whenNoAce() {
+    void ACE가_없을_때_카드_숫자의_합을_점수로_반환한다() {
         Hand hand = new Hand();
         hand.add(new Card(Suit.HEART, Rank.SEVEN));
         hand.add(new Card(Suit.SPADE, Rank.EIGHT));
@@ -21,8 +19,7 @@ class HandTest {
     }
 
     @Test
-    @DisplayName("ACE를 11로 계산해도 21 이하이면 ACE를 11로 계산한다")
-    void calculateScore_countsAceAsEleven_whenTotalDoesNotExceedTwentyOne() {
+    void ACE를_11로_계산해도_21_이하이면_ACE를_11로_계산한다() {
         Hand hand = new Hand();
         hand.add(new Card(Suit.HEART, Rank.ACE));
         hand.add(new Card(Suit.SPADE, Rank.EIGHT));
@@ -31,8 +28,7 @@ class HandTest {
     }
 
     @Test
-    @DisplayName("ACE를 11로 계산하면 21 초과일 때 ACE를 1로 계산한다")
-    void calculateScore_countsAceAsOne_whenTotalExceedsTwentyOne() {
+    void ACE를_11로_계산하면_21_초과일_때_ACE를_1로_계산한다() {
         Hand hand = new Hand();
         hand.add(new Card(Suit.HEART, Rank.ACE));
         hand.add(new Card(Suit.SPADE, Rank.EIGHT));
@@ -42,8 +38,7 @@ class HandTest {
     }
 
     @Test
-    @DisplayName("점수가 21 이하이면 버스트가 아니다")
-    void isBust_returnsFalse_whenScoreIsEqualToTwentyOne() {
+    void 점수가_21_이하이면_버스트가_아니다() {
         Hand hand = new Hand();
         hand.add(new Card(Suit.HEART, Rank.TEN));
         hand.add(new Card(Suit.SPADE, Rank.EIGHT));
@@ -53,8 +48,7 @@ class HandTest {
     }
 
     @Test
-    @DisplayName("점수가 21 초과이면 버스트이다")
-    void isBust_returnsTrue_whenScoreExceedsTwentyOne() {
+    void 점수가_21_초과이면_버스트이다() {
         Hand hand = new Hand();
         hand.add(new Card(Suit.HEART, Rank.TEN));
         hand.add(new Card(Suit.SPADE, Rank.EIGHT));

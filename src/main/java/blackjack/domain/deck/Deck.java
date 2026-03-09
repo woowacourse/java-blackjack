@@ -6,6 +6,7 @@ import blackjack.domain.card.Suit;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Deck {
@@ -16,9 +17,11 @@ public class Deck {
 
     public Deck() {
         this.cards = createAllCards();
-        Collections.shuffle(this.cards);
     }
 
+    public void shuffle() {
+        Collections.shuffle(this.cards);
+    }
     private List<Card> createAllCards() {
         return Arrays.stream(Suit.values())
                 .flatMap(suit -> Arrays.stream(Rank.values())
@@ -35,5 +38,17 @@ public class Deck {
 
     public int size() {
         return cards.size();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Deck deck = (Deck) o;
+        return Objects.equals(cards, deck.cards);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(cards);
     }
 }

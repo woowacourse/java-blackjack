@@ -5,14 +5,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class DealerTest {
 
     @Test
-    @DisplayName("점수가 16 이하이면 카드를 받을 수 있다")
-    void canReceiveCard_returnsTrue_whenScoreIsEqualToSixteen() {
+    void 점수가_16_이하이면_카드를_받을_수_있다() {
         Dealer dealer = new Dealer();
         dealer.receiveCard(new Card(Suit.HEART, Rank.TEN));
         dealer.receiveCard(new Card(Suit.SPADE, Rank.SIX));
@@ -21,8 +19,7 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("점수가 17 이상이면 카드를 받을 수 없다")
-    void canReceiveCard_returnsFalse_whenScoreIsEqualToSeventeen() {
+    void 점수가_17_이상이면_카드를_받을_수_없다() {
         Dealer dealer = new Dealer();
         dealer.receiveCard(new Card(Suit.HEART, Rank.TEN));
         dealer.receiveCard(new Card(Suit.SPADE, Rank.SEVEN));

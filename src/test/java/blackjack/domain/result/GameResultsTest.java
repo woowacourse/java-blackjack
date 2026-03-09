@@ -9,14 +9,12 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import java.util.List;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class GameResultsTest {
 
     @Test
-    @DisplayName("플레이어가 승리하면 딜러 결과에 패가 1개 집계된다")
-    void calculate_dealerLoseCount_whenPlayerWins() {
+    void 플레이어가_승리하면_딜러_결과에_패가_1개_집계된다() {
         Dealer dealer = new Dealer();
         dealer.receiveCard(new Card(Suit.HEART, Rank.TEN));
         dealer.receiveCard(new Card(Suit.SPADE, Rank.SEVEN));
@@ -31,8 +29,7 @@ class GameResultsTest {
     }
 
     @Test
-    @DisplayName("플레이어가 패배하면 딜러 결과에 승이 1개 집계된다")
-    void calculate_dealerWinCount_whenPlayerLoses() {
+    void 플레이어가_패배하면_딜러_결과에_승이_1개_집계된다() {
         Dealer dealer = new Dealer();
         dealer.receiveCard(new Card(Suit.HEART, Rank.TEN));
         dealer.receiveCard(new Card(Suit.SPADE, Rank.NINE));
@@ -47,8 +44,7 @@ class GameResultsTest {
     }
 
     @Test
-    @DisplayName("점수가 같으면 딜러 결과에 무승부가 1개 집계된다")
-    void calculate_dealerDrawCount_whenScoresAreEqual() {
+    void 점수가_같으면_딜러_결과에_무승부가_1개_집계된다() {
         Dealer dealer = new Dealer();
         dealer.receiveCard(new Card(Suit.HEART, Rank.TEN));
         dealer.receiveCard(new Card(Suit.SPADE, Rank.SEVEN));

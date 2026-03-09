@@ -2,50 +2,42 @@ package blackjack.domain.hand;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class ScoreTest {
 
     @Test
-    @DisplayName("점수가 21 초과이면 버스트이다")
-    void isBust_returnsTrue_whenScoreExceedsTwentyOne() {
+    void 점수가_21_초과이면_버스트이다() {
         assertThat(new Score(22).isBust()).isTrue();
     }
 
     @Test
-    @DisplayName("점수가 21 이하이면 버스트가 아니다")
-    void isBust_returnsFalse_whenScoreIsEqualToTwentyOne() {
+    void 점수가_21_이하이면_버스트가_아니다() {
         assertThat(new Score(21).isBust()).isFalse();
     }
 
     @Test
-    @DisplayName("점수가 다른 점수보다 크면 참이다")
-    void isGreaterThan_returnsTrue_whenScoreIsGreater() {
+    void 점수가_다른_점수보다_크면_참이다() {
         assertThat(new Score(20).isGreaterThan(new Score(18))).isTrue();
     }
 
     @Test
-    @DisplayName("점수가 다른 점수보다 작으면 isGreaterThan이 거짓이다")
-    void isGreaterThan_returnsFalse_whenScoreIsSmaller() {
+    void isGreaterThan은_점수가_다른_점수보다_작으면_거짓이다() {
         assertThat(new Score(18).isGreaterThan(new Score(20))).isFalse();
     }
 
     @Test
-    @DisplayName("점수가 다른 점수보다 작으면 참이다")
-    void isLessThan_returnsTrue_whenScoreIsSmaller() {
+    void 점수가_다른_점수보다_작으면_참이다() {
         assertThat(new Score(18).isLessThan(new Score(20))).isTrue();
     }
 
     @Test
-    @DisplayName("점수가 다른 점수와 같으면 isLessThanOrEqualTo가 참이다")
-    void isLessThanOrEqualTo_returnsTrue_whenScoresAreEqual() {
+    void 점수가_다른_점수와_같으면_isLessThanOrEqualTo가_참이다() {
         assertThat(new Score(16).isLessThanOrEqualTo(new Score(16))).isTrue();
     }
 
     @Test
-    @DisplayName("점수가 다른 점수보다 크면 isLessThanOrEqualTo가 거짓이다")
-    void isLessThanOrEqualTo_returnsFalse_whenScoreIsGreater() {
+    void 점수가_다른_점수보다_크면_isLessThanOrEqualTo가_거짓이다() {
         assertThat(new Score(17).isLessThanOrEqualTo(new Score(16))).isFalse();
     }
 }
