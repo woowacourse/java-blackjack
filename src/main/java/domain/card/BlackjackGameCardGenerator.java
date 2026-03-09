@@ -1,8 +1,10 @@
 package domain.card;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class BlackjackGameCardGenerator implements CardGenerator {
 
@@ -15,9 +17,13 @@ public class BlackjackGameCardGenerator implements CardGenerator {
 
     private List<Card> generateAllCards() {
         return Arrays.stream(CardDenomination.values())
-                .flatMap(denomination -> Arrays.stream(CardEmblem.values())
-                        .map(emblem -> Card.of(denomination, emblem)))
+                .flatMap(this::generateCardsByDenomination)
                 .toList();
+    }
+
+    private Stream<Card> generateCardsByDenomination(CardDenomination denomination) {
+        return Arrays.stream(CardEmblem.values())
+                .map(emblem -> Card.of(denomination, emblem));
     }
 
     private void shuffle(List<Card> blackjackGameCards) {
