@@ -59,11 +59,11 @@ public class GameManager {
         return dealer.shouldHit();
     }
 
-    public DealerHandDto getDealerHand() {
+    public DealerHandDto toDealerHandDto() {
         return new DealerHandDto(dealer.getFirstCard(), dealer.getCards(), dealer.getScore());
     }
 
-    public PlayersHandDto getPlayersHand() {
+    public PlayersHandDto toPlayersHandDto() {
         return new PlayersHandDto(players.getPlayersHand(), players.getPlayersScore());
     }
 

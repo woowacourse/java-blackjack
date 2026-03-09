@@ -20,10 +20,10 @@ public class BlackJackController {
     public void playGame() {
         readUntilValidPlayers();
         gameManager.dealInitialCardsToParticipants();
-        outputView.showInitialHandsOfParticipants(gameManager.getDealerHand(), gameManager.getPlayersHand());
+        outputView.showInitialHandsOfParticipants(gameManager.toDealerHandDto(), gameManager.toPlayersHandDto());
 
         playBlackJack();
-        outputView.showHandResults(gameManager.getDealerHand(), gameManager.getPlayersHand());
+        outputView.showHandResultsOfParticipants(gameManager.toDealerHandDto(), gameManager.toPlayersHandDto());
         outputView.showGameResult(gameManager.calculateResults());
     }
 
@@ -37,7 +37,7 @@ public class BlackJackController {
             if (!inputView.readPlayerToHitUntilValid(player.getName())) break;
 
             gameManager.dealCardTo(player);
-            outputView.showPlayerHand(player.getName(), gameManager.getPlayersHand());
+            outputView.showPlayerHand(player.getName(), gameManager.toPlayersHandDto());
         }
     }
 
@@ -45,7 +45,7 @@ public class BlackJackController {
         while (gameManager.isDealerShouldHit()) {
             outputView.showDealerHitMessage();
             gameManager.dealCardToDealer();
-            outputView.showDealerHand(gameManager.getDealerHand());
+            outputView.showDealerHand(gameManager.toDealerHandDto());
         }
 
         outputView.showDealerStandMessage();

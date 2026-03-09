@@ -47,7 +47,7 @@ public class OutputView {
         System.out.printf("딜러카드: %s\n", formatCards(dealerHandDto.getDealerHand()));
     }
 
-    public void showHandResults(DealerHandDto dealerHandDto, PlayersHandDto playersHandDto) {
+    public void showHandResultsOfParticipants(DealerHandDto dealerHandDto, PlayersHandDto playersHandDto) {
         System.out.printf("\n딜러카드: %s - 결과: %d\n", formatCards(dealerHandDto.getDealerHand()), dealerHandDto.getScore());
 
         for (Map.Entry<String, List<Card>> playerInfo : playersHandDto.getPlayersHand().entrySet()) {

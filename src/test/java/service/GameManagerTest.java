@@ -22,8 +22,8 @@ class GameManagerTest {
         gameManager.dealInitialCardsToParticipants();
 
         // then
-        Assertions.assertEquals(gameManager.getDealerHand().getDealerHand().size(), 2);
-        for (List<Card> cards : gameManager.getPlayersHand().getPlayersHand().values()) {
+        Assertions.assertEquals(gameManager.toDealerHandDto().getDealerHand().size(), 2);
+        for (List<Card> cards : gameManager.toPlayersHandDto().getPlayersHand().values()) {
             Assertions.assertEquals(cards.size(), 2);
         }
     }
