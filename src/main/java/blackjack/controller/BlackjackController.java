@@ -38,7 +38,7 @@ public class BlackjackController {
         Deck deck = Deck.unique();
 
         initialDeal(players, dealer, deck);
-        retryOnIllegalArgument(() -> hit(players, dealer, deck));
+        hit(players, dealer, deck);
         printScore(players, dealer);
         printResult(players, dealer);
     }
@@ -76,7 +76,7 @@ public class BlackjackController {
 
     private void hit(Players players, Dealer dealer, Deck deck) {
         for (Player player : players) {
-            playerHit(player, deck);
+            retryOnIllegalArgument(() -> playerHit(player, deck));
         }
         outputView.printEmptyLine();
 
