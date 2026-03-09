@@ -1,13 +1,13 @@
 package model.participant;
 
+import static model.GameRule.DEALER_DRAW_THRESHOLD;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import model.card.Cards;
 
 public class Dealer extends Participant {
-    private static final int DRAW_THRESHOLD = 16;
-
     private boolean firstTurn = true;
 
     private Dealer(String name) {
@@ -44,7 +44,7 @@ public class Dealer extends Participant {
     }
 
     public boolean needDraw() {
-        return this.calculateScore() <= DRAW_THRESHOLD;
+        return this.calculateScore() <= DEALER_DRAW_THRESHOLD;
     }
 
     public Map<String, Integer> calculateStatistics(List<Player> players) {

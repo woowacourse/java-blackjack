@@ -11,8 +11,8 @@ import model.participant.Participants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class BlackJackTest {
-    BlackJack blackJack;
+public class BlackjackTest {
+    Blackjack blackjack;
     Participants participants;
 
     @BeforeEach
@@ -29,14 +29,14 @@ public class BlackJackTest {
         player2.receive(Card.of("하트", 5));
         player2.receive(Card.of("하트", 6));
 
-        blackJack = BlackJack.from(participants);
+        blackjack = Blackjack.from(participants);
     }
 
     @Test
     void 전체_참여자들의_승패를_계산한다() {
         // when
-        Map<String, Integer> dealerResult = blackJack.calculateDealerResult();
-        Map<String, Boolean> playerResult = blackJack.calculatePlayerResult();
+        Map<String, Integer> dealerResult = blackjack.calculateDealerResult();
+        Map<String, Boolean> playerResult = blackjack.calculatePlayerResult();
 
         assertThat(dealerResult.get("승")).isEqualTo(1);
         assertThat(dealerResult.get("패")).isEqualTo(1);

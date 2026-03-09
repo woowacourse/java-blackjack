@@ -7,9 +7,9 @@ import java.util.Map.Entry;
 public class OutputView {
     private static final String LINE_SEPARATOR = System.lineSeparator();
 
-    public void printDealOut(String playerNames) {
+    public void printDealOut(String playerNames, int drawCount) {
         printNewLine();
-        System.out.println("딜러와 " + playerNames + "에게 2장을 나누었습니다.");
+        System.out.println("딜러와 " + playerNames + "에게 " + drawCount + "장을 나누었습니다.");
     }
 
     public void printHands(String participantName, List<String> hands) {
@@ -30,9 +30,10 @@ public class OutputView {
         }
     }
 
-    public void printBustState(String name, int score) {
+    public void printBustState(String name, int score, int blackjackScore) {
         printNewLine();
-        System.out.printf("%s는 %d점이므로 21점 초과로 버스트입니다.%s", name, score, LINE_SEPARATOR);
+        System.out.printf("%s는 %d점이므로 %d점 초과로 버스트입니다.", name, score, blackjackScore);
+        printNewLine();
     }
 
     public void printDealerDrawResult(boolean draw) {

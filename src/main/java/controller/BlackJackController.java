@@ -1,12 +1,15 @@
 package controller;
 
+import static model.GameRule.BLACKJACK_SCORE;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
-import model.BlackJack;
+import model.Blackjack;
+import model.GameRule;
 import model.card.Card;
 import model.card.Cards;
 import model.card.Deck;
@@ -33,15 +36,15 @@ public class BlackJackController {
     public void run() {
         Participants participants = setUpParticipants();
         Deck deck = setUpDeck();
-        BlackJack blackJack = BlackJack.of(participants, deck);
+        Blackjack blackjack = Blackjack.of(participants, deck);
 
-        proceedDealOut(blackJack, participants.getPlayers());
+        proceedDealOut(blackjack, participants.getPlayers());
 
-        proceedPlayerTurns(blackJack, participants.getPlayers());
+        proceedPlayerTurns(blackjack, participants.getPlayers());
 
-        proceedDealerTurn(blackJack, participants.getDealer());
+        proceedDealerTurn(blackjack, participants.getDealer());
 
-        proceedFinalPhase(blackJack, participants);
+        proceedFinalPhase(blackjack, participants);
     }
 
     private Participants setUpParticipants() {
@@ -65,8 +68,8 @@ public class BlackJackController {
         return RandomDeck.from(cards);
     }
 
-    private void proceedDealOut(BlackJack blackJack, List<Player> players) {
-        Map<String, Cards> dealOutResult = blackJack.dealOut();
+    private void proceedDealOut(Blackjack blackjack, List<Player> players) {
+        Map<String, Cards> dealoutResult = blackjack.dealout();
         String playerNames = players.stream()
                 .map(Participant::getName)
                 .collect(Collectors.joining(
@@ -75,9 +78,9 @@ public class BlackJackController {
                         ""
                 ));
 
-        outputView.printDealOut(playerNames);
+        outputView.printDealOut(playerNames, GameRule.DEALOUT_DRAW_COUNT);
 
-        for (Entry<String, Cards> entry : dealOutResult.entrySet()) {
+        for (Entry<String, Cards> entry : dealoutResult.entrySet()) {
             String participantName = entry.getKey();
             List<Card> hands = entry.getValue().toList();
 
@@ -89,12 +92,12 @@ public class BlackJackController {
         }
     }
 
-    private void proceedPlayerTurns(BlackJack blackJack, List<Player> players) {
+    private void proceedPlayerTurns(Blackjack blackjack, List<Player> players) {
         outputView.printNewLine();
 
         for (Player player : players) {
             while (player.canHit() && inputView.askHit(player.getName())) {
-                blackJack.giveCardTo(player);
+                blackjack.giveCardTo(player);
 
                 List<Card> hands = player.open().toList();
                 List<String> result = hands.stream()
@@ -104,27 +107,27 @@ public class BlackJackController {
                 outputView.printHands(player.getName(), result);
 
                 if (player.isBust()) {
-                    outputView.printBustState(player.getName(), player.calculateScore());
+                    outputView.printBustState(player.getName(), player.calculateScore(), BLACKJACK_SCORE);
                 }
             }
         }
     }
 
-    private void proceedDealerTurn(BlackJack blackJack, Dealer dealer) {
+    private void proceedDealerTurn(Blackjack blackjack, Dealer dealer) {
         boolean draw = dealer.needDraw();
 
         outputView.printDealerDrawResult(draw);
 
         if (draw) {
-            blackJack.giveCardTo(dealer);
+            blackjack.giveCardTo(dealer);
 
             if (dealer.isBust()) {
-                outputView.printBustState(dealer.getName(), dealer.calculateScore());
+                outputView.printBustState(dealer.getName(), dealer.calculateScore(), BLACKJACK_SCORE);
             }
         }
     }
 
-    private void proceedFinalPhase(BlackJack blackJack, Participants participants) {
+    private void proceedFinalPhase(Blackjack blackjack, Participants participants) {
         for (Participant participant : participants.toList()) {
             List<Card> hands = participant.open().toList();
             List<String> result = hands.stream()
@@ -134,6 +137,6 @@ public class BlackJackController {
             outputView.printHandsWithScore(participant.getName(), result, participant.calculateScore());
         }
 
-        outputView.printFinalResult(blackJack.calculateDealerResult(), blackJack.calculatePlayerResult());
+        outputView.printFinalResult(blackjack.calculateDealerResult(), blackjack.calculatePlayerResult());
     }
 }

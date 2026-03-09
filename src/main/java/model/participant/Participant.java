@@ -1,5 +1,7 @@
 package model.participant;
 
+import static model.GameRule.BLACKJACK_SCORE;
+
 import java.util.ArrayList;
 import java.util.List;
 import model.card.Card;
@@ -7,8 +9,6 @@ import model.card.Cards;
 import model.card.Rank;
 
 public abstract class Participant {
-    private static final int BUST_THRESHOLD = 21;
-
     private final String name;
     protected final List<Card> hands;
 
@@ -25,7 +25,7 @@ public abstract class Participant {
     public int calculateScore() {
         int total = calculate();
         int aceCardCount = aceCount();
-        while (aceCardCount-- > 0 && total > 21) {
+        while (aceCardCount-- > 0 && total > BLACKJACK_SCORE) {
             total -= 10;
         }
 
@@ -33,11 +33,11 @@ public abstract class Participant {
     }
 
     public boolean canHit() {
-        return calculateScore() < BUST_THRESHOLD;
+        return calculateScore() < BLACKJACK_SCORE;
     }
 
     public boolean isBust() {
-        return calculateScore() > BUST_THRESHOLD;
+        return calculateScore() > BLACKJACK_SCORE;
     }
 
     private int calculate() {
