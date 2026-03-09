@@ -9,14 +9,7 @@ public class Player extends Participant {
     
     public Player(String nickname) {
         super(nickname);
-        validate(nickname);
         stopDrawing = false;
-    }
-    
-    private static void validate(String name) {
-        if (name.isEmpty()) {
-            throw new IllegalArgumentException("플레이어 이름은 공백이 될 수 없습니다.");
-        }
     }
     
     @Override

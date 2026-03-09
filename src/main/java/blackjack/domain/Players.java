@@ -19,20 +19,11 @@ public class Players {
     }
     
     public static Players makePlayers(List<String> names) {
-        validate(names);
-        
         List<Player> result = names.stream()
                 .map(Player::new)
                 .toList();
         
         return from(result);
-    }
-    
-    private static void validate(List<String> names) {
-        long distinct = names.stream().distinct().count();
-        if (distinct != names.size()) {
-            throw new IllegalArgumentException("플레이어 이름은 중복될 수 없습니다.");
-        }
     }
     
     public String findDrawablePlayerNickname() {
