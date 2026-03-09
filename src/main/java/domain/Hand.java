@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Hand {
-    private List<Card> cards;
+    private final List<Card> cards;
     private int handTotalScore;
     private boolean hasAce;
 

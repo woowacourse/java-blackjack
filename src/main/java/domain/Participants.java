@@ -11,8 +11,8 @@ import vo.GameResult;
 public class Participants {
     private static final Integer MAXIMUM_NUMBER_OF_PARTICIPANTS = 16;
 
-    private List<User> participants;
-    private Dealer dealer;
+    private final List<User> participants;
+    private final Dealer dealer;
 
     public Participants(List<String> parsedParticipantsName) {
         this.participants = new ArrayList<>();

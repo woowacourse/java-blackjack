@@ -7,7 +7,7 @@ import vo.Rank;
 import vo.Suit;
 
 public class Deck {
-    private List<Card> cards;
+    private final List<Card> cards;
 
     public Deck() {
         this.cards = makeCards();
