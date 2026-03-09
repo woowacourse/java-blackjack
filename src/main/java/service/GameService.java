@@ -6,13 +6,14 @@ import java.util.List;
 
 public class GameService {
 
-    private final int BLACKJACK_NUM = 21;
-    private final int DEALER_HIT_NUM = 16;
-
     private final CardDeck cardDeck;
 
     public GameService() {
         this.cardDeck = new CardDeck();
+    }
+
+    public Card deal() {
+        return cardDeck.deal();
     }
 
     public void initDeal(List<User> users, Dealer dealer) {
@@ -40,32 +41,6 @@ public class GameService {
         return score;
     }
 
-    public Card deal() {
-        return cardDeck.deal();
-    }
-    
-
-    public boolean isBlackjack(int score) {
-        if(score == BLACKJACK_NUM) {
-            return true;
-        }
-        return false;
-    }
-
-    public boolean isBurst(int score) {
-        if(score > BLACKJACK_NUM) {
-            return true;
-        }
-        return false;
-    }
-
-    public boolean isHit(int score) {
-        if (score <= DEALER_HIT_NUM) {
-            return true;
-        }
-        return false;
-    }
-
     public int calculateOptimalAceScore(int sum) {
         if (sum > 10) {
          return 1;
@@ -75,7 +50,7 @@ public class GameService {
 
     public void determineResult(List<User> users, Dealer dealer) {
         int dealerScore = calculateScore(dealer.getHand());
-        boolean dealerBurst = isBurst(dealerScore);
+        boolean dealerBurst = dealer.isBurst(dealerScore);
 
         for (User user : users) {
             user.setGameResult(judge(user, dealer, dealerBurst));
@@ -85,7 +60,7 @@ public class GameService {
     private GameResult judge(User user,  Dealer dealer, boolean dealerBurst) {
         int userScore = calculateScore(user.getHand());
         int dealerScore = calculateScore(dealer.getHand());
-        boolean userBurst = isBurst(userScore);
+        boolean userBurst = user.isBurst(userScore);
 
         if (dealerBurst && userBurst) {
             dealer.setRounds(GameResult.DRAW);

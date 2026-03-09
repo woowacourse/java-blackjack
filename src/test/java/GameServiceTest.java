@@ -36,38 +36,6 @@ class GameServiceTest {
     }
 
     @Test
-    @DisplayName("첫 배부 때 합이 21 나오면 블랙잭 판정이다")
-    public void if_card_sum_equals21_blackjack(){
-        int score = 21;
-        boolean result = gameService.isBlackjack(score);
-        assertThat(result).isTrue();
-    }
-
-    @Test
-    @DisplayName("첫 배부 때 합이 21이 안 나오면 블랙잭 판정이 아니다")
-    public void if_card_sum_not21_blackjack(){
-        int score = 20;
-        boolean result = gameService.isBlackjack(score);
-        assertThat(result).isFalse();
-    }
-
-    @Test
-    @DisplayName("카드의 합이 21이 넘을 시 버스트 판정이다")
-    public void if_card_sum_over21_burst(){
-        int score = 22;
-        boolean result = gameService.isBurst(score);
-        assertThat(result).isTrue();
-    }
-
-    @Test
-    @DisplayName("카드의 합이 21이 넘지 않으면 버스트가 아니다")
-    public void if_card_sum_under21_burst(){
-        int score = 20;
-        boolean result = gameService.isBurst(score);
-        assertThat(result).isFalse();
-    }
-
-    @Test
     @DisplayName("Ace를 제외한 점수의 합이 10 이하면 Ace 점수는 11이 된다.")
     public void if_remain_score_under10_ace_score_11() {
         int sum = 10;

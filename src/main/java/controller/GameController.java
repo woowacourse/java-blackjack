@@ -59,7 +59,7 @@ public class GameController {
 
     private void processDealerTurn() {
         int sum = dealer.getHand().stream().mapToInt(Card::getValue).sum();
-        if(gameService.isHit(sum)) {
+        if(dealer.isHit(sum)) {
             dealer.receiveCard(gameService.deal());
             outputView.printDealerHit();
             return;
