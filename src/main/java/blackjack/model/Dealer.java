@@ -4,16 +4,16 @@ import java.util.List;
 
 public class Dealer {
 
-    private final Hand hand;
-    private final DealerDrawPolicy drawPolicy;
+    private static final int DRAW_UPPER_BOUND = 16;
 
-    public Dealer(DealerDrawPolicy drawPolicy) {
+    private final Hand hand;
+
+    public Dealer() {
         this.hand = new Hand();
-        this.drawPolicy = drawPolicy;
     }
 
     public boolean shouldDraw() {
-        return drawPolicy.shouldDraw(hand.calculateScore());
+        return hand.calculateScore() <= DRAW_UPPER_BOUND;
     }
 
     public void addCard(Card card) {
