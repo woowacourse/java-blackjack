@@ -4,7 +4,6 @@ import static constant.GameRule.BLACKJACK_CRITERION;
 
 import domain.card.Card;
 import domain.card.CardBoard;
-import dto.CardDto;
 import java.util.List;
 
 public abstract class Participant {
@@ -31,7 +30,7 @@ public abstract class Participant {
         return cardBoard.isBust();
     }
 
-    public List<CardDto> getHand() {
-        return cardBoard.createDto();
+    public List<Card> getHand() {
+        return cardBoard.getCards();
     }
 }

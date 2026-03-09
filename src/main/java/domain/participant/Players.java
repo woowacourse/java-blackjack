@@ -10,9 +10,7 @@ import static message.ErrorMessage.PLAYER_NOT_FOUND;
 import static message.ErrorMessage.PLAYER_NUMBER_OUT_OF_RANGE;
 
 import domain.card.Card;
-import domain.card.Deck;
 import domain.enums.Result;
-import dto.CardDto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -58,15 +56,14 @@ public class Players {
         }
     }
 
-    public void initializeCard(Deck deck) {
-        players.forEach(player -> {
-            player.addCards(List.of(deck.drawCard(), deck.drawCard()));
-        });
-    }
-
     public void distributeCard(String name, Card card) {
         Player foundPlayer = findPlayerByName(name);
         foundPlayer.addCard(card);
+    }
+
+    public void distributeCards(String name, List<Card> cards) {
+        Player foundPlayer = findPlayerByName(name);
+        foundPlayer.addCards(cards);
     }
 
     private Player findPlayerByName(String name) {
@@ -90,7 +87,7 @@ public class Players {
         return foundPlayer.checkScoreUnderCriterion();
     }
 
-    public List<CardDto> getPlayerCards(String name) {
+    public List<Card> getPlayerCards(String name) {
         Player foundPlayer = findPlayerByName(name);
         return foundPlayer.getHand();
     }

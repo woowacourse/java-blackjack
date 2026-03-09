@@ -1,7 +1,7 @@
 package view;
 
+import domain.card.Card;
 import domain.enums.Result;
-import dto.CardDto;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -19,7 +19,7 @@ public class OutputView {
     private static final String DEALER_RESULT = "딜러: %d승 %d패 %d무";
     private static final String PLAYER_RESULT = "%s: %s";
 
-    public void printPlayers(List<CardDto> dealerCard, Map<String, List<CardDto>> playerCards) {
+    public void printPlayers(List<Card> dealerCard, Map<String, List<Card>> playerCards) {
         String playerNames = String.join(STRING_JOIN_DELIMITER, playerCards.keySet());
 
         System.out.printf(LINE_SEPARATOR + DISTRIBUTE_INITIAL_CARD + LINE_SEPARATOR, playerNames);
@@ -30,31 +30,31 @@ public class OutputView {
         System.out.print(LINE_SEPARATOR);
     }
 
-    private void printDealerFirstCard(CardDto dealerCard) {
-        System.out.printf(DEALER_CARD + LINE_SEPARATOR, dealerCard.rank().getRank() + dealerCard.suit().getSuit());
+    private void printDealerFirstCard(Card dealerCard) {
+        System.out.printf(DEALER_CARD + LINE_SEPARATOR, dealerCard.getRankString() + dealerCard.getSuitString());
     }
 
-    public void printPlayerCard(String name, List<CardDto> playerCard) {
+    public void printPlayerCard(String name, List<Card> playerCard) {
         String card = collectCards(playerCard);
 
         System.out.printf(PLAYER_CARD + LINE_SEPARATOR, name, card);
     }
 
-    public void printDealerCardWithScore(List<CardDto> dealerCard, int score) {
+    public void printDealerCardWithScore(List<Card> dealerCard, int score) {
         String card = collectCards(dealerCard);
 
         System.out.printf(LINE_SEPARATOR + DEALER_CARD + SCORE + LINE_SEPARATOR, card, score);
     }
 
-    public void printPlayerCardWithScore(String name, List<CardDto> playerCard, int score) {
+    public void printPlayerCardWithScore(String name, List<Card> playerCard, int score) {
         String card = collectCards(playerCard);
 
         System.out.printf(PLAYER_CARD + SCORE + LINE_SEPARATOR, name, card, score);
     }
 
-    private String collectCards(List<CardDto> cardDtos) {
-        return cardDtos.stream()
-                .map(cardDto -> cardDto.rank().getRank() + cardDto.suit().getSuit())
+    private String collectCards(List<Card> cards) {
+        return cards.stream()
+                .map(card -> card.getRankString() + card.getSuitString())
                 .collect(Collectors.joining(STRING_JOIN_DELIMITER));
     }
 

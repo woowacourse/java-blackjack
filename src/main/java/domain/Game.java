@@ -1,10 +1,10 @@
 package domain;
 
+import domain.card.Card;
 import domain.card.Deck;
 import domain.enums.Result;
 import domain.participant.Dealer;
 import domain.participant.Players;
-import dto.CardDto;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,12 +19,12 @@ public class Game {
         this.dealer = dealer;
     }
 
-    public List<CardDto> getDealerCard() {
+    public List<Card> getDealerCard() {
         return dealer.getHand();
     }
 
-    public Map<String, List<CardDto>> getAllPlayerCard() {
-        Map<String, List<CardDto>> playerCards = new LinkedHashMap<>();
+    public Map<String, List<Card>> getAllPlayerCard() {
+        Map<String, List<Card>> playerCards = new LinkedHashMap<>();
         for (String name : players.getAllPlayersName()) {
             playerCards.put(name, players.getPlayerCards(name));
         }
@@ -32,12 +32,14 @@ public class Game {
         return playerCards;
     }
 
-    public List<CardDto> getPlayerCard(String name) {
+    public List<Card> getPlayerCard(String name) {
         return players.getPlayerCards(name);
     }
 
     public void initializeGame(Deck deck) {
-        players.initializeCard(deck);
+        players.getAllPlayersName().forEach(name ->
+                players.distributeCards(name, List.of(deck.drawCard(), deck.drawCard()))
+        );
         dealer.addCards(List.of(deck.drawCard(), deck.drawCard()));
     }
 

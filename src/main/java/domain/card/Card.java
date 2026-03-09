@@ -27,15 +27,19 @@ public class Card {
         return Objects.hash(rank, suit);
     }
 
-    public Rank getRank() {
-        return rank;
+    public String getRankString() {
+        return rank.getRank();
     }
 
-    public Suit getSuit() {
-        return suit;
+    public String getSuitString() {
+        return suit.getSuit();
     }
 
     public int getRankScore() {
         return rank.getScore();
+    }
+
+    public Rank getRank() {
+        return rank;
     }
 }

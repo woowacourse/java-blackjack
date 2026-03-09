@@ -4,18 +4,11 @@ import static constant.GameRule.ACE_BONUS_SCORE;
 import static constant.GameRule.BLACKJACK_CRITERION;
 
 import domain.enums.Rank;
-import dto.CardDto;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CardBoard {
     private final List<Card> cards = new ArrayList<>();
-
-    public List<CardDto> createDto() {
-        return cards.stream()
-                .map(card -> new CardDto(card.getRank(), card.getSuit()))
-                .toList();
-    }
 
     public void add(Card card) {
         this.cards.add(card);
@@ -57,5 +50,9 @@ public class CardBoard {
 
     public boolean isBust() {
         return calculateScore() > BLACKJACK_CRITERION;
+    }
+
+    public List<Card> getCards() {
+        return List.copyOf(cards);
     }
 }

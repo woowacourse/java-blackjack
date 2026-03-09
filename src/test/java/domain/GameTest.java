@@ -9,7 +9,6 @@ import domain.enums.Result;
 import domain.enums.Suit;
 import domain.participant.Dealer;
 import domain.participant.Players;
-import dto.CardDto;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -163,22 +162,22 @@ public class GameTest {
             onePlayerGame.distributeCard(deck);
             //then
 
-            List<CardDto> fizzCard = onePlayerGame.getPlayerCard("피즈");
+            List<Card> fizzCard = onePlayerGame.getPlayerCard("피즈");
             List<Rank> expectedFizzRank = List.of(Rank.FIVE, Rank.FIVE, Rank.FOUR);
-            List<Suit> expectedFizzSuit = List.of(Suit.CLOVER, Suit.HEART, Suit.SPADE);
+            List<String> expectedFizzSuit = List.of("클로버", "하트", "스페이드");
 
             for (int i = 0; i < 3; i++) {
-                assertThat(fizzCard.get(i).rank()).isEqualTo(expectedFizzRank.get(i));
-                assertThat(fizzCard.get(i).suit()).isEqualTo(expectedFizzSuit.get(i));
+                assertThat(fizzCard.get(i).getRank()).isEqualTo(expectedFizzRank.get(i));
+                assertThat(fizzCard.get(i).getSuitString()).isEqualTo(expectedFizzSuit.get(i));
             }
 
-            List<CardDto> dealerCard = onePlayerGame.getDealerCard();
+            List<Card> dealerCard = onePlayerGame.getDealerCard();
             List<Rank> expectedDealerRank = List.of(Rank.SIX, Rank.SEVEN, Rank.SEVEN);
-            List<Suit> expectedDealerSuit = List.of(Suit.CLOVER, Suit.CLOVER, Suit.HEART);
+            List<String> expectedDealerSuit = List.of("클로버", "클로버", "하트");
 
             for (int i = 0; i < 3; i++) {
-                assertThat(dealerCard.get(i).rank()).isEqualTo(expectedDealerRank.get(i));
-                assertThat(dealerCard.get(i).suit()).isEqualTo(expectedDealerSuit.get(i));
+                assertThat(dealerCard.get(i).getRank()).isEqualTo(expectedDealerRank.get(i));
+                assertThat(dealerCard.get(i).getSuitString()).isEqualTo(expectedDealerSuit.get(i));
             }
         }
     }
