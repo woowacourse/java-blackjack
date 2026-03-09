@@ -37,9 +37,6 @@ public class Participants {
     
     public WinningResult getWinningResult() {
         int dealerScore = dealer.getTotalScore();
-        if (dealer.isBusted()) {
-            dealerScore = 0;
-        }
         return getWinningResult(dealerScore);
     }
     
