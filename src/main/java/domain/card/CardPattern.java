@@ -9,7 +9,7 @@ public enum CardPattern {
     DIAMOND("다이아몬드"),
     CLUB("클로버");
 
-    private String name;
+    private final String name;
 
     CardPattern(String name) {
         this.name = name;
