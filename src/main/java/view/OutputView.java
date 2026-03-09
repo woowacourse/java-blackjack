@@ -6,6 +6,8 @@ import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import static util.BlackJackConstant.INIT_HAND_SIZE;
@@ -13,13 +15,8 @@ import static util.BlackJackConstant.INIT_HAND_SIZE;
 public class OutputView {
 
     public void showInitialHands(Dealer dealer, Players players) {
-        StringBuilder playerNames = new StringBuilder();
+        String playerNames = getPlayerNames(players);
 
-        for (Player player : players.getPlayers()) {
-            playerNames.append(player.getName()).append(", ");
-        }
-
-        playerNames.delete(playerNames.length() - 2, playerNames.length());
         System.out.printf("\n딜러와 %s에게 %d장을 나누었습니다.\n", playerNames, INIT_HAND_SIZE);
 
         Card openCard = dealer.getOpenCard();
@@ -51,15 +48,13 @@ public class OutputView {
         StringBuilder dealerCards = new StringBuilder();
         dealerCards.append("\n딜러카드: ");
 
+        List<String> cards = new ArrayList<>();
         for (Card card : dealer.getHand().getHand()) {
-            dealerCards
-                    .append(card.getRank().getName())
-                    .append(card.getSuit().getSuit())
-                    .append(", ");
+            cards.add(card.getRank().getName() + card.getSuit().getSuit());
         }
 
         dealerCards
-                .delete(dealerCards.length() - 2, dealerCards.length())
+                .append(String.join(", ", cards))
                 .append(" - 결과: ")
                 .append(dealer.getHand().calculateSum());
         System.out.println(dealerCards);
@@ -94,18 +89,24 @@ public class OutputView {
         System.out.println(message);
     }
 
+    private String getPlayerNames(Players players) {
+        List<String> names = new ArrayList<>();
+        for (Player player : players.getPlayers()) {
+            names.add(player.getName());
+        }
+        return String.join(", ", names);
+    }
+
     private StringBuilder printHand(Player player) {
         StringBuilder playerCards = new StringBuilder();
         playerCards.append(player.getName()).append("카드: ");
 
+        List<String> cards = new ArrayList<>();
         for (Card card : player.getHand().getHand()) {
-            playerCards
-                    .append(card.getRank().getName())
-                    .append(card.getSuit().getSuit())
-                    .append(", ");
+            cards.add(card.getRank().getName() + card.getSuit().getSuit());
         }
 
-        playerCards.delete(playerCards.length() - 2, playerCards.length());
+        playerCards.append(String.join(", ", cards));
         return playerCards;
     }
 
