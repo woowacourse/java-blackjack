@@ -7,7 +7,7 @@ import java.util.List;
 
 public abstract class Participant {
 
-    private static final int BLACKJACK_SCORE = 21;
+    protected static final int BLACKJACK_SCORE = 21;
 
     protected final String name;
     protected final Hands hands;
@@ -22,6 +22,8 @@ public abstract class Participant {
     }
 
     public abstract void pickInitialCards(CardDeck cardDeck);
+
+    public abstract boolean canPick();
 
     public boolean isBust() {
         return hands.isTotalScoreOver(BLACKJACK_SCORE);

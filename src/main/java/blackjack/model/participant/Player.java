@@ -18,4 +18,11 @@ public class Player extends Participant {
         hands.addCard(cardDeck.pick());
         hands.addCard(cardDeck.pick());
     }
+
+    @Override
+    public boolean canPick() {
+        return !hands.isTotalScoreOver(BLACKJACK_SCORE);
+    }
+
+
 }
