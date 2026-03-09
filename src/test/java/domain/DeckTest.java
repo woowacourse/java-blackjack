@@ -1,9 +1,8 @@
 package domain;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-import constant.Rank;
-import constant.Suit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,22 +15,26 @@ public class DeckTest {
         deck = new Deck();
     }
 
-    @DisplayName("덱 생성 성공")
+    @DisplayName("덱을 생성하면 52장이다")
     @Test
-    void 덱에_52장의_카드_생성() {
-        deck.init();
-        assertThat(deck.cards.size()).isEqualTo(52);
+    void 덱을_생성하면_52장이다() {
+        assertThat(deck.size()).isEqualTo(52);
     }
 
-    @DisplayName("덱이 잘 섞였는지 확인")
+    @DisplayName("카드를 뽑으면 덱이 줄어든다")
     @Test
-    void 섞인_덱에서_첫번째_카드_추출() {
-        Card testCard = new Card(Rank.ACE, Suit.HEART);
+    void 카드를_뽑으면_덱이_줄어든다() {
+        deck.draw();
+        assertThat(deck.size()).isEqualTo(51);
+    }
 
-        deck.init();
-        deck.shuffle();
-        Card randomCard = deck.draw();
-
-        assertThat(testCard).isNotEqualTo(randomCard);
+    @DisplayName("빈 덱에서 카드를 뽑으면 예외가 발생한다")
+    @Test
+    void 빈_덱에서_카드를_뽑으면_예외가_발생한다() {
+        assertThatThrownBy(() -> {
+            for (int i = 0; i <= 52; i++) {
+                deck.draw();
+            }
+        }).isInstanceOf(IllegalStateException.class);
     }
 }
