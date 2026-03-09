@@ -3,9 +3,9 @@ package domain.member;
 import domain.card.Card;
 import java.util.List;
 
-public class Member {
+public abstract class Member {
 
-    protected final Hand hand;
+    private final Hand hand;
     private final Name name;
 
     public Member(String name) {
@@ -13,16 +13,18 @@ public class Member {
         this.hand = new Hand();
     }
 
-    public String name() {
+    public abstract List<Card> showFirstCards();
+
+    public String getName() {
         return name.getValue();
     }
 
-    public int currentValue() {
+    public int handValue() {
         return hand.calculateTotalValue();
     }
 
-    public List<Card> currentCards() {
-        return hand.cards();
+    public List<Card> handCards() {
+        return hand.getCards();
     }
 
     public void receiveCard(Card card) {

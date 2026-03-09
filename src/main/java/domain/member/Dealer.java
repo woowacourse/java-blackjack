@@ -1,14 +1,18 @@
 package domain.member;
 
 import domain.card.Card;
+import java.util.List;
 
 public class Dealer extends Member {
 
-    public Dealer(String name) {
-        super(name);
+    private static final String DEFAULT_NAME = "딜러";
+
+    public Dealer() {
+        super(DEFAULT_NAME);
     }
 
-    public Card firstCard() {
-        return super.currentCards().getFirst();
+    @Override
+    public List<Card> showFirstCards() {
+        return List.of(super.handCards().getFirst());
     }
 }
