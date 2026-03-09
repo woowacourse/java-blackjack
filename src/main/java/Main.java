@@ -7,20 +7,30 @@ public class Main {
     public static void main(String[] args) {
         InputView inputView = new InputView();
         OutputView outputView = new OutputView();
-        BlackjackGame game = new BlackjackGame();
-        runBlackjack(inputView, outputView, game);
+        List<String> playerNames = inputView.readPlayerNames();
+        BlackjackGame game = new BlackjackGame(playerNames);
+        game.initialDeal(playerNames);
+        outputView.printInitialStatus(game.getDealerName(), game.memberFirstHands());
+        for (String playerName : playerNames) {
+            askToDraw(playerName, inputView, outputView, game);
+        }
+        printResult(outputView, game);
     }
 
-    private static void runBlackjack(InputView inputView, OutputView outputView, BlackjackGame game) {
-        List<String> playerNames = inputView.readPlayerNames();
-        game.joinPlayerToGame(playerNames);
-        outputView.printInitialStatus(game.playerHands());
-        game.playGame(playerNames, inputView, outputView);
-        if (game.checkDealerDrawable()) {
+    private static void askToDraw(String playerName, InputView inputView, OutputView outputView, BlackjackGame game) {
+        while (game.isContinuable(playerName) && inputView.playContinue(playerName)) {
+            game.drawPlayer(playerName);
+            outputView.printHandCard(playerName, game.getCards(playerName));
+        }
+    }
+
+
+    private static void printResult(OutputView outputView, BlackjackGame game) {
+        if (game.canDealerDraw()) {
             game.dealerDrawCard();
             outputView.printDealerDrawResult();
         }
-        outputView.printFinalMemberStatus(game.playerHands());
+        outputView.printFinalMemberStatus(game.memberHands());
         outputView.printGameResult(game.getGameResults());
     }
 }
