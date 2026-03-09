@@ -1,13 +1,10 @@
 package domain.card;
 
-import static domain.Constant.DELIMITER;
-
 import domain.ExceptionMessage;
 import domain.Rank;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Cards {
     private final List<Card> cards;
@@ -69,7 +66,13 @@ public class Cards {
         return sum;
     }
 
+    public void addAll(List<Card> cards) {
+        this.cards.addAll(cards);
+    }
+
     public List<Card> getCards() {
         return List.copyOf(cards);
     }
+
+
 }

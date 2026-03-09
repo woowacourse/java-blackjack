@@ -2,6 +2,8 @@ package domain.card;
 
 import domain.Rank;
 import domain.Suit;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Deck {
     private final Cards cards;
@@ -28,4 +30,11 @@ public class Deck {
         }
     }
 
+    public List<Card> pullCards(int quantity) {
+        List<Card> cards = new ArrayList<>();
+        for (int i = 0; i < quantity; i++) {
+            cards.add(pull());
+        }
+        return cards;
+    }
 }

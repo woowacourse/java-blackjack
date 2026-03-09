@@ -2,6 +2,7 @@ import domain.BlackjackGame;
 import domain.Constant;
 import domain.participant.Dealer;
 import domain.participant.Player;
+import domain.participant.Players;
 import java.util.List;
 import view.InputView;
 import view.ResultView;
@@ -9,27 +10,26 @@ import view.ResultView;
 public class BlackjackController {
     private final InputView inputView;
     private final ResultView resultView;
-    private final BlackjackGame blackjackGame;
+    private BlackjackGame blackjackGame;
 
-    public BlackjackController(InputView inputView, ResultView resultView, BlackjackGame blackjackGame) {
+    public BlackjackController(InputView inputView, ResultView resultView) {
         this.inputView = inputView;
         this.resultView = resultView;
-        this.blackjackGame = blackjackGame;
     }
 
     public void run() {
         readAndRegistPlayers();
         blackjackGame.giveHand();
 
-        List<Player> players = blackjackGame.getPlayers();
+        Players players = blackjackGame.getPlayers();
         Dealer dealer = blackjackGame.getDealer();
-        resultView.printParticipantsCards(players, dealer);
+        resultView.printParticipantsCards(players.getPlayers(), dealer);
 
-        playerHitStand(players);
+        playerHitStand(players.getPlayers());
 
-        while(true){
+        while (true) {
             boolean dealerHitStand = dealer.decideHitStand(Constant.DEALER_HIT_STAND_BOUNDARY);
-            if(!dealerHitStand) {
+            if (!dealerHitStand) {
                 resultView.printDealerHitStand(dealerHitStand);
                 break;
             }
@@ -37,13 +37,13 @@ public class BlackjackController {
             resultView.printDealerHitStand(dealerHitStand);
         }
 
-        resultView.printCardsWithResult(players, dealer);
-        resultView.printResultStatistics(players, dealer);
+        resultView.printCardsWithResult(players.getPlayers(), dealer);
+        resultView.printResultStatistics(players.getPlayers(), dealer);
     }
 
     private void readAndRegistPlayers() {
         List<String> names = inputView.readPlayerNames();
-        blackjackGame.registPlayers(names);
+        this.blackjackGame = new BlackjackGame(names);
     }
 
     private void playerHitStand(List<Player> players) {

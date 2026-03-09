@@ -4,20 +4,21 @@ import static domain.Constant.DEALER_HIT_STAND_BOUNDARY;
 import static domain.Constant.DEFAULT_HAND_NUMBER;
 import static domain.Constant.DELIMITER;
 
+import domain.Result;
 import domain.card.Card;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Participant;
 import domain.participant.Player;
-import domain.Result;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ResultView {
     public void printParticipantsCards(List<Player> players, Dealer dealer) {
         printEmptyLine();
-        System.out.println(dealer.getName().getValue() + "와 " + joinPlayersNameByDelimiter(players) + "에게 " + DEFAULT_HAND_NUMBER
-                + "장을 나누었습니다.");
+        System.out.println(
+                dealer.getName().getValue() + "와 " + joinPlayersNameByDelimiter(players) + "에게 " + DEFAULT_HAND_NUMBER
+                        + "장을 나누었습니다.");
         Card dealerCard = dealer.getFirstCard();
         System.out.println("딜러카드: " + dealerCard.getRank().getDisplayValue() + dealerCard.getSuit().getValue());
         printParticipantsCard(players);
@@ -41,7 +42,7 @@ public class ResultView {
         System.out.println(player.getName().getValue() + "카드: " + printCards(player.getCards().getCards()));
     }
 
-    private String printCards(List<Card> cards){
+    private String printCards(List<Card> cards) {
         return cards.stream()
                 .map(card -> card.getRank().getDisplayValue() + card.getSuit().getValue())
                 .collect(Collectors.joining(DELIMITER));
@@ -66,7 +67,9 @@ public class ResultView {
     }
 
     private void printCardWithResult(Participant participant) {
-        System.out.println(participant.getName().getValue() + "카드: " + printCards(participant.getCards().getCards()) + " - 결과: " + participant.getTotalSum());
+        System.out.println(
+                participant.getName().getValue() + "카드: " + printCards(participant.getCards().getCards()) + " - 결과: "
+                        + participant.getTotalSum());
     }
 
     public void printResultStatistics(List<Player> players, Dealer dealer) {
