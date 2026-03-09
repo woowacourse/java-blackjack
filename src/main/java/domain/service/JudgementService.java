@@ -45,7 +45,7 @@ public class JudgementService {
             player.changeStatus(PlayerStatus.LOSS);
             return;
         }
-        if (player.isBurst() && dealer.isAlice()) {
+        if (player.isBurst() && dealer.isAlive()) {
             player.changeStatus(PlayerStatus.LOSS);
             return;
         }
@@ -54,7 +54,7 @@ public class JudgementService {
             return;
         }
         // 합산 비교 TODO: 마지막 조건을 if로 처리하는게 맞을까?
-        if (player.isAlive() && dealer.isAlice()) {
+        if (player.isAlive() && dealer.isAlive()) {
             judgeStatusByDeckSum(player, dealer);
         }
     }
