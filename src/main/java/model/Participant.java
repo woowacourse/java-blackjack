@@ -25,7 +25,6 @@ public class Participant {
 
     public void addCard(Card card) {
         participantHand.addDeck(card);
-        participantHand.addScore(card.cardNumber().getScore());
     }
 
     public boolean isMoreThanScore(Integer threshold) {

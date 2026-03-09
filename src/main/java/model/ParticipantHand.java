@@ -14,10 +14,7 @@ public class ParticipantHand {
     public void addDeck(Card card) {
         validateCardDuplicate(card);
         deck.add(card);
-    }
-
-    public void addScore(Integer score) {
-        this.score.add(score);
+        score.add(card.cardNumber().getScore());
     }
 
     public Integer getScore() {
