@@ -1,11 +1,12 @@
 package controller;
 
+import dto.DealerInfoDto;
+import dto.PlayerInfoDto;
 import service.GameService;
 import view.InputView;
 import view.ResultView;
 
 import java.util.List;
-import java.util.Map;
 
 public class GameController {
     private GameService gameService;
@@ -16,54 +17,68 @@ public class GameController {
 
     public void run() {
         registerPlayers();
-
+        initAllParticipantsCard();
         printInitialCardResult();
 
-        playersHit();
+        playerGroupHit();
         dealerHit();
 
+        finalizeGameResult();
         printFinalCardResult();
         printRankResult();
-
-    }
-
-    private void printInitialCardResult() {
-        Map<String, List<String>> playersStatus = gameService.getPlayersStatus();
-        ResultView.printStartPlayersCards(playersStatus);
     }
 
     private void registerPlayers() {
         List<String> names = InputView.askName();
-        gameService.joinPlayers(names);
-        gameService.initAllPlayerCard();
+        gameService.registerPlayers(names);
     }
 
-    private void playersHit() {
-        while(gameService.isRemainPlayer()) {
-            askPlayerHit();
-        }
+    private void initAllParticipantsCard() {
+        gameService.initAllParticipantsCard();
     }
 
-    private void askPlayerHit() {
-        // TODO: 딜러 도메인 분리 후 삭제
-        if(gameService.getCurrentPlayerName().equals("딜러")) {
+    private void printInitialCardResult() {
+        DealerInfoDto dealerInfoDto = gameService.getDealerInfo();
+        List<PlayerInfoDto> playerInfoDtos = gameService.getAllPlayersInfo();
+        ResultView.printStartPlayersCards(dealerInfoDto, playerInfoDtos);
+    }
+
+    private void playerGroupHit() {
+        while (gameService.isRemainPlayer()) {
+            playerHit();
             gameService.nextPlayer();
-            return;
+        }
+    }
+
+    private void playerHit() {
+        while(canHitAndDraw()){
+            ResultView.printPlayerCards(gameService.getCurrentPlayerName(), gameService.getCurrentPlayerCards());
+        }
+    }
+
+    private boolean canHitAndDraw(){
+        if (gameService.isCurrentPlayerBust()) {
+            return false;
         }
 
-        while(InputView.askHit(gameService.getCurrentPlayerName()) && gameService.isCurrentPlayerBust()) {
-            gameService.selectHit();
-            ResultView.printPlayerCards(gameService.getCurrentPlayerName(), gameService.getCurrentPlayerCards());
+        if (InputView.askHit(gameService.getCurrentPlayerName())){
+            gameService.currentPlayerHit();
+            return true;
         }
 
         ResultView.printPlayerCards(gameService.getCurrentPlayerName(), gameService.getCurrentPlayerCards());
-        gameService.nextPlayer();
+        return false;
+    }
+
+    private void finalizeGameResult() {
+        gameService.finalizeGameResult();
     }
 
     private void printFinalCardResult() {
-        Map<String, List<String>> playersEndStatus = gameService.getPlayersStatus();
-        Map<String, Integer> playersTotalScore = gameService.getPlayersTotalScore();
-        ResultView.printCardSumResult(playersEndStatus, playersTotalScore);
+        DealerInfoDto dealerInfoDto = gameService.getDealerInfo();
+        List<PlayerInfoDto> playerInfoDtos = gameService.getAllPlayersInfo();
+
+        ResultView.printCardsAndScoreResult(dealerInfoDto, playerInfoDtos);
     }
 
     private void dealerHit() {
@@ -73,6 +88,9 @@ public class GameController {
     }
 
     private void printRankResult() {
-        ResultView.printResult(gameService.result());
+        DealerInfoDto dealerInfoDto = gameService.getDealerInfo();
+        List<PlayerInfoDto> playerInfoDtos = gameService.getAllPlayersInfo();
+
+        ResultView.printRankResult(dealerInfoDto, playerInfoDtos);
     }
 }
