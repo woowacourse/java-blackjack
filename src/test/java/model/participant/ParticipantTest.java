@@ -75,8 +75,8 @@ class ParticipantTest {
                 Arguments.of(List.of(Card.of("스페이드", 10), Card.of("스페이드", 11)), 21),
                 Arguments.of(List.of(Card.of("스페이드", 6), Card.of("스페이드", 8), Card.of("스페이드", 11)), 15),
                 Arguments.of(List.of(Card.of("스페이드", 10), Card.of("스페이드", 10), Card.of("스페이드", 11)), 21),
-                Arguments.of(List.of(Card.of("스페이드", 11), Card.of("스페이드", 1), Card.of("스페이드", 2), Card.of("스페이드", 11)),
-                        15),
+                Arguments.of(List.of(Card.of("스페이드", 11), Card.of("스페이드", 2), Card.of("스페이드", 3), Card.of("스페이드", 11)),
+                        17),
                 Arguments.of(
                         List.of(Card.of("스페이드", 11), Card.of("스페이드", 11), Card.of("스페이드", 11), Card.of("스페이드", 11)), 14)
         );

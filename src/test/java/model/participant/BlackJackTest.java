@@ -18,12 +18,12 @@ public class BlackJackTest {
     void setUp() {
         participants = Participants.of(List.of("pobi", "jason"));
         Dealer dealer = participants.getDealer();
-        dealer.receive(Card.of("스페이드", 1));
-        dealer.receive(Card.of("스페이드", 3));
+        dealer.receive(Card.of("스페이드", 2));
+        dealer.receive(Card.of("스페이드", 4));
 
         Participant player1 = participants.getPlayers().get(0);
-        player1.receive(Card.of("하트", 1));
         player1.receive(Card.of("하트", 2));
+        player1.receive(Card.of("하트", 3));
         Participant player2 = participants.getPlayers().get(1);
         player2.receive(Card.of("하트", 5));
         player2.receive(Card.of("하트", 6));
