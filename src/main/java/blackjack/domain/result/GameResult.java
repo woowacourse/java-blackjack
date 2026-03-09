@@ -6,7 +6,8 @@ public enum GameResult {
 
     WIN,
     DRAW,
-    LOSE;
+    LOSE,
+    ;
 
     public static GameResult of(final Score playerScore, final Score dealerScore) {
         if (playerScore.isBust()) {

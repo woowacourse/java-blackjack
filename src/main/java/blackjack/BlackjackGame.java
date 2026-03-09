@@ -29,10 +29,10 @@ public class BlackjackGame {
 
     private Players createPlayers() {
         final List<String> names = InputView.readPlayerNames();
-        final List<Player> playerList = names.stream()
+        final List<Player> players = names.stream()
                 .map(Player::new)
                 .toList();
-        return new Players(playerList);
+        return new Players(players);
     }
 
     private void printInitialDeal() {

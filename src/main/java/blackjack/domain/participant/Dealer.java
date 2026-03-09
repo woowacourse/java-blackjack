@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.hand.Score;
 import blackjack.view.InputView;
@@ -80,5 +81,9 @@ public class Dealer extends Participant {
     @Override
     public boolean canReceiveCard() {
         return calculateScore().isLessThanOrEqualTo(new Score(HIT_THRESHOLD));
+    }
+
+    public Card getOpenCard() {
+        return getCards().get(0);
     }
 }

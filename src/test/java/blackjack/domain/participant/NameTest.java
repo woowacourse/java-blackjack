@@ -13,7 +13,7 @@ class NameTest {
     void constructor_succeeds_whenValidName() {
         Name name = new Name("pobi");
 
-        assertThat(name.getValue()).isEqualTo("pobi");
+        assertThat(name.getName()).isEqualTo("pobi");
     }
 
     @Test

@@ -19,16 +19,12 @@ public class Hand {
     }
 
     public Score calculateScore() {
-        final int rawScore = sumCardValues();
-        final Score scoreWithAce = new Score(rawScore + ACE_BONUS);
-        if (hasAce() && !scoreWithAce.isBust()) {
+        final int baseScore = sumCardValues();
+        final Score scoreWithAce = new Score(baseScore + ACE_BONUS);
+        if (shouldApplyAceBonus(scoreWithAce)) {
             return scoreWithAce;
         }
-        return new Score(rawScore);
-    }
-
-    public boolean isBust() {
-        return calculateScore().isBust();
+        return new Score(baseScore);
     }
 
     private int sumCardValues() {
@@ -37,8 +33,16 @@ public class Hand {
                 .sum();
     }
 
+    private boolean shouldApplyAceBonus(Score score) {
+        return hasAce() && !score.isBust();
+    }
+
     private boolean hasAce() {
         return cards.stream()
                 .anyMatch(Card::isAce);
+    }
+
+    public boolean isBust() {
+        return calculateScore().isBust();
     }
 }
