@@ -1,16 +1,6 @@
 package blackjack.domain;
 
-import java.util.Objects;
-
-public class Card {
-
-    private final String rank;
-    private final String shape;
-
-    public Card(String rank, String shape) {
-        this.rank = rank;
-        this.shape = shape;
-    }
+public record Card(String rank, String shape) {
 
     public int translateToScore() {
         if (rank.equals("J") || rank.equals("Q") || rank.equals("K")) {
@@ -21,10 +11,6 @@ public class Card {
         }
 
         return convertToNumber(rank);
-    }
-
-    public String getRank() {
-        return rank;
     }
 
     private static int convertToNumber(String rank) {
@@ -53,12 +39,4 @@ public class Card {
                 shape.equals(card.shape);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(rank, shape);
-    }
-
-    public String getShape() {
-        return shape;
-    }
 }

@@ -12,7 +12,7 @@ public class Cards {
     }
 
     public Cards(List<Card> cards) {
-        this.cards = cards;
+        this.cards = new ArrayList<>(cards);
     }
 
     public int sumScore() {
@@ -35,7 +35,7 @@ public class Cards {
     public List<String> getCardNames() {
         List<String> cardNames = new ArrayList<>();
         for (Card card : cards) {
-            String cardName = card.getRank() + card.getShape();
+            String cardName = card.rank() + card.shape();
             cardNames.add(cardName);
         }
         return cardNames;
@@ -44,7 +44,7 @@ public class Cards {
     private int countAces() {
         int count = 0;
         for (Card card : cards) {
-            if (card.getRank().equals("A")) {
+            if (card.rank().equals("A")) {
                 count++;
             }
         }
