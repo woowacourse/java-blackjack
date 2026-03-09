@@ -6,25 +6,23 @@ import dto.InitialDto;
 import dto.PlayerResultDto;
 import dto.ResultDto;
 import util.InputValidator;
-import util.Parser;
+import util.StringParser;
 import view.View;
 
 public class BlackJackController {
 
     private final BlackJackService blackJackService;
     private final View view;
-    private final Parser<String> stringParser;
 
-    public BlackJackController(BlackJackService blackJackService, View view, Parser<String> stringParser) {
+    public BlackJackController(BlackJackService blackJackService, View view) {
         this.blackJackService = blackJackService;
         this.view = view;
-        this.stringParser = stringParser;
     }
 
     public void run() {
         String inputPlayerNames = view.inputPlayerNames();
         InputValidator.validatePlayerNames(inputPlayerNames);
-        InitialDto initialDto = blackJackService.createPlayer(stringParser.splitToDelimiter(inputPlayerNames, ","));
+        InitialDto initialDto = blackJackService.createPlayer(StringParser.parse(inputPlayerNames));
         view.outputInitialMessage(initialDto);
 
         blackJackService.getAllPlayers().forEach(this::getAdditionalCard);
