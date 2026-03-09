@@ -20,8 +20,8 @@ public class Dealer extends Participant {
         return deck.drawCard();
     }
 
-    public List<Card> getFirstCard() {
-        return getHandCards().subList(0, 1);
+    public Card getFirstCard() {
+        return getHandCards().getFirst();
     }
 
     public boolean isReceiveCard() {

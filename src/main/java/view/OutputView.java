@@ -1,32 +1,31 @@
 package view;
 
-import dto.DealerResultDTO;
-import dto.GameScoreDTO;
-import dto.GameStartDTO;
-import dto.ParticipantHandDTO;
-import dto.GameResultDTO;
-import dto.PlayerResultDTO;
+import dto.*;
 
 import java.util.List;
 
 public class OutputView {
-    public void printStartGame(GameStartDTO startGameDTO) {
-        System.out.println("딜러와 " + startGameDTO.getPlayerNames() + "에게 2장을 나누었습니다.");
-        printHandCard(startGameDTO.getDealer());
+    public void printStartGame(GameStartDTO gameStartDTO) {
+        System.out.println("딜러와 " + convertListToString(gameStartDTO.playerNames()) + "에게 2장을 나누었습니다.");
+        printDealerInitialHandCard(gameStartDTO.dealer());
 
-        List<ParticipantHandDTO> players = startGameDTO.getPlayers();
-        for (ParticipantHandDTO player : players) {
+        List<HandDTO> players = gameStartDTO.players();
+        for (HandDTO player : players) {
             printHandCard(player);
         }
         System.out.println();
     }
 
-    public void printHandCard(ParticipantHandDTO participantHandDTO) {
-        System.out.println(participantHandDTO.getName() + "카드: " + participantHandDTO.getHandCards());
+    private void printDealerInitialHandCard(DealerInitialHandDTO dealerInitialHandDTO) {
+        System.out.println("딜러카드: " + dealerInitialHandDTO.firstHandCard());
     }
 
-    public void printHandCardWithScore(ParticipantHandDTO participantHandDTO) {
-        System.out.println(participantHandDTO.getName() + "카드: " + participantHandDTO.getHandCards() + " - 결과: " + participantHandDTO.getScore());
+    public void printHandCard(HandDTO playerHandDTO) {
+        System.out.println(playerHandDTO.name() + "카드: " + convertListToString(playerHandDTO.handCards()));
+    }
+
+    public void printHandCardWithScore(HandScoreDTO handScoreDTO) {
+        System.out.println(handScoreDTO.name() + "카드: " + convertListToString(handScoreDTO.handCards()) + " - 결과: " + handScoreDTO.score());
     }
 
     public void printDealerReceiveCard() {
@@ -35,10 +34,10 @@ public class OutputView {
 
     public void printScore(GameScoreDTO gameResultDTO) {
         System.out.println();
-        printHandCardWithScore(gameResultDTO.getDealer());
+        printHandCardWithScore(gameResultDTO.dealer());
 
-        List<ParticipantHandDTO> players = gameResultDTO.getPlayers();
-        for (ParticipantHandDTO player : players) {
+        List<HandScoreDTO> players = gameResultDTO.players();
+        for (HandScoreDTO player : players) {
             printHandCardWithScore(player);
         }
     }
@@ -52,5 +51,9 @@ public class OutputView {
         for (PlayerResultDTO playerResultDTO : playerResultDTOs) {
             System.out.println(playerResultDTO.name() + ": " + playerResultDTO.result());
         }
+    }
+
+    private String convertListToString(List<String> list) {
+        return String.join(", ", list);
     }
 }

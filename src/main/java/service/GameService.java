@@ -34,13 +34,13 @@ public class GameService {
         return GameStartDTO.from(players, dealer);
     }
 
-    public ParticipantHandDTO playerHit(Player player) {
+    public HandDTO playerHit(Player player) {
         player.receiveHitCard(dealer.dealHitCard());
-        return new ParticipantHandDTO(player, player.getHandCards());
+        return getCurrentHand(player);
     }
 
-    public ParticipantHandDTO getCurrentHand(Player player) {
-        return new ParticipantHandDTO(player, player.getHandCards());
+    public HandDTO getCurrentHand(Player player) {
+        return HandDTO.from(player);
     }
 
     public void dealerHit() {
