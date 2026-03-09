@@ -38,15 +38,16 @@ public enum Rank {
         return BLACKJACK_MAX_NUMBER + 1 - leftAce;
     }
 
+    public boolean isAce() {
+        return this == Rank.ACE;
+    }
+
+
     public int getScoreValue() {
         return scoreValue;
     }
 
     public String getDisplayValue() {
         return displayValue;
-    }
-
-    public boolean isAce() {
-        return this == Rank.ACE;
     }
 }

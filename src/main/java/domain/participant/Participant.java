@@ -12,15 +12,15 @@ public abstract class Participant {
         this.cards = new Cards();
     }
 
-    public Name getName() {
-        return name;
-    }
-
     public void add(Card card) {
         cards.add(card);
     }
 
     public int getTotalSum() {
         return cards.getTotalSum();
+    }
+
+    public Name getName() {
+        return name;
     }
 }

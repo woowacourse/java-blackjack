@@ -23,14 +23,6 @@ public class BlackjackGame {
         this.deck = new Deck();
     }
 
-    public List<Player> getPlayers() {
-        return players;
-    }
-
-    public Dealer getDealer() {
-        return dealer;
-    }
-
     public void registPlayers(List<String> names) {
         for (String name : names) {
             registPlayer(name);
@@ -65,5 +57,14 @@ public class BlackjackGame {
             return true;
         }
         return false;
+    }
+
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public Dealer getDealer() {
+        return dealer;
     }
 }
