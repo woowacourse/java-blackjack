@@ -1,3 +1,5 @@
+package result;
+
 import domain.result.Result;
 import domain.result.ResultInfo;
 import org.assertj.core.api.Assertions;
@@ -5,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-public class ResultTest {
+class ResultTest {
 
     @Test
     void 딜러의_승패_판정은_플레이어의_승패_판정의_역산이다() {

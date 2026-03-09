@@ -1,18 +1,20 @@
+package result;
+
 import domain.card.Card;
 import domain.card.Pattern;
 import domain.card.Rank;
 import domain.participant.*;
 import domain.result.Result;
 import domain.result.ResultInfo;
+import domain.result.ResultJudge;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import domain.result.ResultJudge;
 
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class ResultJudgeTest {
+class ResultJudgeTest {
 
     Dealer dealer;
     Player winPlayer;

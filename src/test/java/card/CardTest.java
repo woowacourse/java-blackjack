@@ -1,3 +1,5 @@
+package card;
+
 import domain.card.Card;
 import domain.card.Pattern;
 import domain.card.Rank;
@@ -5,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CardTest {
+class CardTest {
 
     @Test
     void 카드를_생성한다() {

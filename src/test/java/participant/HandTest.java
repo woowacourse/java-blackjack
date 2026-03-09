@@ -1,13 +1,15 @@
+package participant;
+
 import domain.card.Card;
-import domain.participant.Hand;
 import domain.card.Pattern;
 import domain.card.Rank;
+import domain.participant.Hand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class HandTest {
+class HandTest {
 
     Hand dummyHand;
     Card card1 = new Card(Rank.FIVE, Pattern.CLOVER);

@@ -1,3 +1,5 @@
+package participant;
+
 import domain.card.Card;
 import domain.card.Pattern;
 import domain.card.Rank;
@@ -9,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class DealerTest {
+class DealerTest {
 
     Hand dummyHand;
     PlayerName name;
