@@ -3,7 +3,7 @@ package domain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
+import java.util.stream.IntStream;
 
 public abstract class Player {
 
@@ -30,19 +30,21 @@ public abstract class Player {
     }
 
     public void calculateScore() {
-        int score = hand.stream().mapToInt(Card::getValue).sum();
-        int aceCount = (int) hand.stream().filter(Card::isAce).count();
-        for(int i = 0; i< aceCount; i++){
-            score += calculateOptimalAceScore(score);
-        }
-        this.score = score;
+        int baseScore = hand.stream()
+                .mapToInt(Card::getValue)
+                .sum();
+        int aceCount = (int) hand.stream()
+                .filter(Card::isAce)
+                .count();
+        this.score = IntStream.range(0, aceCount)
+                .reduce(baseScore, (currentScore, index) -> currentScore + getAceBonus(currentScore));
     }
 
-    public int calculateOptimalAceScore(int sum) {
+    public int getAceBonus(int sum) {
         if (sum > 10) {
-            return 1;
+            return 0;
         }
-        return 11;
+        return 10;
     }
 
     public boolean isBurst() {

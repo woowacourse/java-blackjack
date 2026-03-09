@@ -1,13 +1,11 @@
 package domain;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
 
@@ -51,7 +49,7 @@ class PlayerTest {
         int sum = 10;
 
         //when
-        int aceScore = user.calculateOptimalAceScore(sum);
+        int aceScore = user.getAceBonus(sum);
 
         //then
         assertThat(aceScore).isEqualTo(11);
@@ -63,8 +61,8 @@ class PlayerTest {
         //given
         User user = User.from("abc");
         int sum = 11;
-        int aceScore = user.calculateOptimalAceScore(sum);
-        assertThat(aceScore).isEqualTo(1);
+        int aceScore = user.getAceBonus(sum);
+        assertThat(aceScore).isEqualTo(0);
     }
 
     @Test
