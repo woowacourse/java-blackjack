@@ -5,11 +5,11 @@ import java.util.List;
 public class User {
 
     private final String name;
-    private final CardStatus cardStatus;
+    private final Hand hand;
 
     public User(String name) {
         this.name = name;
-        this.cardStatus = new CardStatus();
+        this.hand = new Hand();
     }
 
     public String getName() {
@@ -17,11 +17,11 @@ public class User {
     }
 
     public List<Card> cards() {
-        return cardStatus.getCards();
+        return hand.getCards();
     }
 
     public void addCard(Card card) {
-        cardStatus.addCard(card);
+        hand.addCard(card);
     }
 }
 

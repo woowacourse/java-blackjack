@@ -3,11 +3,11 @@ package blackjack.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CardStatus {
+public class Hand {
 
     private final List<Card> cards;
 
-    public CardStatus() {
+    public Hand() {
         this.cards = new ArrayList<>();
     }
 
