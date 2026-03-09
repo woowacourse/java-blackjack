@@ -10,7 +10,7 @@ public class Players {
         this.players = players;
     }
 
-    public List<Player> getPlayers() {
+    public List<Player> getAllPlayers() {
         return Collections.unmodifiableList(players);
     }
 }

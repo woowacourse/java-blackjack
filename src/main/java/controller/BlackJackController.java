@@ -1,11 +1,9 @@
 package controller;
 
 import domain.card.CardDeck;
+import domain.participant.*;
+import domain.result.GameState;
 import domain.result.Result;
-import domain.participant.Dealer;
-import domain.participant.Hand;
-import domain.participant.Player;
-import domain.participant.Players;
 import domain.result.ResultJudge;
 import util.Parser;
 import util.Validator;
@@ -24,19 +22,35 @@ public class BlackJackController {
     }
 
     public void run() {
+        GameState gameState = prepareGame();
+        playPlayers(gameState);
+        playDealer(gameState);
+        showResult(gameState);
+    }
+
+    private GameState prepareGame() {
         CardDeck cardDeck = new CardDeck();
         Players players = new Players(getPlayer());
         Dealer dealer = new Dealer(new Hand());
 
         initGame(cardDeck, dealer, players);
 
-        for (Player player : players.getPlayers()) {
-            progressGame(cardDeck, player);
-        }
+        return new GameState(new ParticipantGroup(players, dealer), cardDeck);
+    }
 
-        dealerHitOrStand(dealer, cardDeck);
-        OutputView.scoreStatisticsMessage(dealer, players);
-        Result result = resultJudge.calculateResult(dealer, players);
+    private void playPlayers(GameState gameState) {
+        for (Player player : gameState.getPlayers().getAllPlayers()) {
+            progressGame(gameState.getCardDeck(), player);
+        }
+    }
+
+    private void playDealer(GameState gameState) {
+        dealerHitOrStand(gameState.getDealer(), gameState.getCardDeck());
+    }
+
+    private void showResult(GameState gameState) {
+        OutputView.scoreStatisticsMessage(gameState.getDealer(), gameState.getPlayers());
+        Result result = resultJudge.calculateResult(gameState.getDealer(), gameState.getPlayers());
         OutputView.gameResultMessage(result);
     }
 
@@ -58,7 +72,7 @@ public class BlackJackController {
         dealer.keepCard(cardDeck.drawCard());
         dealer.keepCard(cardDeck.drawCard());
 
-        for (Player player : players.getPlayers()) {
+        for (Player player : players.getAllPlayers()) {
             player.keepCard(cardDeck.drawCard());
             player.keepCard(cardDeck.drawCard());
         }

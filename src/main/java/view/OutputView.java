@@ -32,14 +32,14 @@ public class OutputView {
     public static void gameStartMessage(Dealer dealer, Players players) {
         System.out.println();
         System.out.print(dealer.getName() + "와 ");
-        System.out.print(players.getPlayers().stream()
+        System.out.print(players.getAllPlayers().stream()
                 .map(Player::getName)
                 .collect(Collectors.joining(", ")));
         System.out.println("에게 2장을 나누었습니다.");
 
         System.out.println(dealer.getName() + "카드: " + dealerCardPrint(dealer));
 
-        for (Player player : players.getPlayers()) {
+        for (Player player : players.getAllPlayers()) {
             holdingCardMessage(player);
             System.out.println();
         }
@@ -50,7 +50,7 @@ public class OutputView {
         System.out.print(dealerCardPrint(dealer));
         System.out.println(" - 결과: " + dealer.getTotalCardScore());
 
-        for (Player player : players.getPlayers()) {
+        for (Player player : players.getAllPlayers()) {
             holdingCardMessage(player);
             System.out.println(" - 결과: " + player.getTotalCardScore());
         }

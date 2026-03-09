@@ -9,7 +9,7 @@ public class ResultJudge {
 
     public Result calculateResult(Dealer dealer, Players players) {
         Result result = new Result();
-        for (Player player : players.getPlayers()) {
+        for (Player player : players.getAllPlayers()) {
             result.setPlayerResult(player.getName(), calculateWinDefeatDraw(dealer, player));
         }
         return result;
