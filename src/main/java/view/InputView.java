@@ -6,6 +6,8 @@ import java.util.Scanner;
 
 public class InputView {
 
+    private static final Integer MAX_PLAYER = 8;
+
     public static List<String> askPlayerNames() {
         Scanner sc = new Scanner(System.in);
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
@@ -38,7 +40,7 @@ public class InputView {
     }
 
     private static void validateMaximumPlayers(List<String> playerNames) {
-        if (playerNames.size() > 8) {
+        if (playerNames.size() > MAX_PLAYER) {
             throw new IllegalArgumentException("플레이어의 수는 8명을 초과할 수 없습니다.");
         }
     }
