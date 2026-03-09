@@ -1,7 +1,6 @@
 package domain;
 
 import java.util.List;
-import meesage.OutputMessage;
 
 public class Player {
 
@@ -65,14 +64,6 @@ public class Player {
         return cards.stream()
                 .map(Card::getName)
                 .toList();
-    }
-
-    public String getPlayerInfo() {
-        return OutputMessage.PLAYER_CARD_INFO.format(getName(), OutputMessage.DELIMITER.join(getCardsInfo()));
-    }
-
-    public String getPlayerScoreResult() {
-        return OutputMessage.RESULT_TEXT.format(getPlayerInfo(), calculateScore());
     }
 
     public String getName() {

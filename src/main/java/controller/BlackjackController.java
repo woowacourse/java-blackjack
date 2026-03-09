@@ -56,14 +56,23 @@ public class BlackjackController {
         outputView.printfList(OutputMessage.DEAL_INITIAL_CARDS.getMessage(),
                 OutputMessage.DELIMITER.join(players.getUserNames()));
         outputView.separatorLine();
-        outputView.println(dealer.getDealerInitialInfo());
-        outputView.printList(players.getPlayerInfo());
+        outputView.println(OutputMessage.DEALER_CARD_INFO.format(dealer.getCardsInfo().getFirst()));
 
+        printPlayersCardInfo(players);
+    }
+
+    private void printPlayersCardInfo(Players players) {
+        List<List<String>> playersCardsInfo = players.getPlayersCardsInfo();
+        List<String> playerNames = players.getUserNames();
+
+        for (int i = 0; i < playerNames.size(); i++) {
+            outputView.println(getPlayerCardsInfo(playerNames.get(i), playersCardsInfo.get(i)));
+        }
     }
 
     private void addCard(Players players, Cards deck, Dealer dealer) {
+        outputView.separatorLine();
         askPlayersAddCard(players, deck);
-
         addDealerCard(dealer, deck);
     }
 
@@ -79,41 +88,61 @@ public class BlackjackController {
             outputView.printfList(InputMessage.ASK_ADD_CARD.getMessage(), player.getName());
             outputView.separatorLine();
             answer = inputView.askUserInput();
-            printInitialHandIfAnswerNo(player, answer);
-            printInitialHandIfAnswerYes(player, deck, answer);
+            printInitialHandIfAnswer(player, deck, answer);
         }
     }
 
-    private void printInitialHandIfAnswerNo(Player player, String answer) {
+    private void printInitialHandIfAnswer(Player player, Cards deck, String answer) {
         if (answer.equals(InputMessage.USER_INPUT_NO.getMessage())) {
-            if (player.getCardsInfo().size() == Policy.FIRST_DRAW_SIZE) {
-                outputView.println(player.getPlayerInfo());
-            }
+            printIfNotPrintedPlayerCardsInfo(player);
         }
-    }
-
-    private void printInitialHandIfAnswerYes(Player player, Cards deck, String answer) {
         if (answer.equals(InputMessage.USER_INPUT_YES.getMessage())) {
             player.addCard(deck.draw());
-            outputView.println(player.getPlayerInfo());
+            outputView.println(getPlayerCardsInfo(player.getName(), player.getCardsInfo()));
         }
+    }
+
+    private void printIfNotPrintedPlayerCardsInfo(Player player) {
+        if (player.getCardsInfo().size() == Policy.FIRST_DRAW_SIZE) {
+            outputView.println(getPlayerCardsInfo(player.getName(), player.getCardsInfo()));
+        }
+    }
+
+    private String getPlayerCardsInfo(String playerName, List<String> cardsInfo) {
+        String playerCardsFormat = OutputMessage.DELIMITER.join(cardsInfo);
+        return OutputMessage.PLAYER_CARD_INFO.format(playerName, playerCardsFormat);
     }
 
     private void addDealerCard(Dealer dealer, Cards deck) {
         outputView.separatorLine();
-        while (dealer.shouldHit()) {
+        int dealerAddCardCount = dealer.drawUntilHitAndReturnCount(deck);
+        for (int i = 0; i < dealerAddCardCount; i++) {
             outputView.println(OutputMessage.DEALER_DRAW_CARD.getMessage());
-            dealer.addCard(deck.draw());
         }
     }
 
     private void printFinalCards(Dealer dealer, Players players) {
         outputView.separatorLine();
-        outputView.println(dealer.getDealerScoreInfo());
-        outputView.printList(players.getPlayerScoreInfo());
+        printDealerCardsAndScore(dealer);
+
+        List<List<String>> playersCardsInfo = players.getPlayersCardsInfo();
+        List<String> playerNames = players.getUserNames();
+        List<Integer> playersScoreInfo = players.getPlayerScoreInfo();
+
+        for (int i = 0; i < playersCardsInfo.size(); i++) {
+            String playerCardsInfo = getPlayerCardsInfo(playerNames.get(i), playersCardsInfo.get(i));
+            outputView.println(OutputMessage.RESULT_TEXT.format(playerCardsInfo, playersScoreInfo.get(i)));
+        }
+    }
+
+    private void printDealerCardsAndScore(Dealer dealer) {
+        String dealerCardsFormat = OutputMessage.DEALER_CARD_INFO.format(OutputMessage.DELIMITER.join(
+                dealer.getCardsInfo()));
+        outputView.println(OutputMessage.RESULT_TEXT.format(dealerCardsFormat, dealer.calculateScore()));
     }
 
     private void printGameResult(Dealer dealer, Players players) {
+        outputView.separatorLine();
         BlackjackResult blackjackResult = BlackjackResult.of(dealer, players);
 
         outputView.println(OutputMessage.FINAL_MESSAGE.getMessage());
