@@ -16,7 +16,7 @@ public class CardDeck {
         return new CardDeck(cardGenerator.generate());
     }
 
-    public Card giveCard() {
+    public Card getCard() {
         if (deck.isEmpty()) {
             throw new IllegalArgumentException();
         }

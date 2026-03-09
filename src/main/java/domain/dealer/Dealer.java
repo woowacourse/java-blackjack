@@ -61,7 +61,7 @@ public class Dealer {
     }
 
     public Card drawCard() {
-        return cardDeck.giveCard();
+        return cardDeck.getCard();
     }
 
     public int getResultScore() {
