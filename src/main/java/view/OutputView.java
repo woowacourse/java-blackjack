@@ -1,3 +1,5 @@
+package view;
+
 import domain.Card;
 import domain.Dealer;
 import domain.User;

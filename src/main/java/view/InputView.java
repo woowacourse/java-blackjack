@@ -1,6 +1,11 @@
+package view;
+
 import java.util.Scanner;
 
 public class InputView {
+
+    private static final String YES = "y";
+    private static final String NO = "n";
 
     private final Scanner scanner = new Scanner(System.in);
 
@@ -11,10 +16,10 @@ public class InputView {
 
     public boolean readWillHit(String name) {
         try {
-            System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", name);
+            System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)%n", name, YES, NO);
             String input = scanner.nextLine().trim().toLowerCase();
             validateHitInput(input);
-            return input.equals("y");
+            return input.equals(YES);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return readWillHit(name);
@@ -22,8 +27,8 @@ public class InputView {
     }
 
     private void validateHitInput(String input) {
-        if (!input.equals("y") && !input.equals("n")) {
-            throw new IllegalArgumentException("[ERROR] y 또는 n만 입력 가능합니다.");
+        if (!input.equals(YES) && !input.equals(NO)) {
+            throw new IllegalArgumentException("[ERROR] " + YES + " 또는 " + NO + "만 입력 가능합니다.");
         }
     }
 }
