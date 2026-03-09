@@ -1,17 +1,16 @@
 package service;
 
-import domain.DealerWinningScore;
+import domain.vo.DealerWinningScore;
 import domain.PlayerWinningInfo;
 import domain.vo.NameAndCardInfos;
-import dto.AllPlayerWinningInfoResponse;
-import dto.AllPlayersNameAndCardsResponse;
-import dto.DealerWinningStatisticsResponse;
-import dto.NameAndCardsResponse;
-import dto.NameResponse;
-import dto.PlayedGameResultResponse;
-import dto.PlayerGameResultsResponse;
-import dto.PlayerNamesResponse;
-import dto.PlayerWinningInfoResponse;
+import dto.response.AllPlayerWinningInfoResponse;
+import dto.response.AllPlayersNameAndCardsResponse;
+import dto.response.DealerWinningStatisticsResponse;
+import dto.response.NameAndCardsResponse;
+import dto.response.NameResponse;
+import dto.response.PlayedGameResultResponse;
+import dto.response.PlayerGameResultsResponse;
+import dto.request.PlayerNamesResponse;
 import java.util.List;
 import repository.GameTableRepository;
 

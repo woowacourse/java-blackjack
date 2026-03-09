@@ -14,13 +14,6 @@ public abstract class Participant {
         this.hand = hand;
     }
 
-//    static Participant of(String name) {
-//        if(name.equals("딜러")) {
-//            return Dealer.of(name);
-//        }
-//        return Player.of(name);
-//    }
-
     protected abstract boolean isPlayable();
 
     public void draw() {
@@ -47,12 +40,5 @@ public abstract class Participant {
 
     NameAndCardInfos infos() {
         return new NameAndCardInfos(name, cardInfos());
-    }
-//    public GameStatus status() {
-//        return new GameStatus(name, hand.cardInfos(), scoreSum());
-//    }
-
-    public boolean isPlayer() {
-        return this.getClass() == Player.class;
     }
 }

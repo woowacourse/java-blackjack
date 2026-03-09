@@ -1,6 +1,7 @@
 package domain;
 
 import domain.constant.BlackJackRule;
+import domain.constant.DealerName;
 
 public class Player extends Participant {
 
@@ -19,8 +20,9 @@ public class Player extends Participant {
     }
 
     private void requireNonDealer(String name) {
-        if(name.equals("딜러")) {
-            throw new IllegalArgumentException("플레이어는 \"딜러\"라는 이름을 사용할 수 없다.");
+        if (name.equals(DealerName.DEFAULT.dealerName())) {
+            String errorMessage = String.format("플레이어는 \"%s\"라는 이름을 사용할 수 없다.", DealerName.DEFAULT.dealerName());
+            throw new IllegalArgumentException(errorMessage);
         }
     }
 }

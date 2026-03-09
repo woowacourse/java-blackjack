@@ -1,4 +1,4 @@
-package dto;
+package dto.request;
 
 import view.SelectFormat;
 
@@ -22,7 +22,7 @@ public record SelectRequest(boolean isPositive) {
     }
 
     private static void requireCorrectFormat(String input) {
-        if(!SelectFormat.isCorrect(input)) {
+        if (!SelectFormat.isCorrect(input)) {
             throw new IllegalArgumentException("y, n 이외의 값이 입력되었습니다.");
         }
     }

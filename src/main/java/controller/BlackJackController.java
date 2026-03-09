@@ -1,11 +1,11 @@
 package controller;
 
-import dto.AllPlayerWinningInfoResponse;
-import dto.DealerWinningStatisticsResponse;
-import dto.PlayedGameResultResponse;
-import dto.PlayerGameResultsResponse;
-import dto.PlayerNamesRequest;
-import dto.SelectRequest;
+import dto.response.AllPlayerWinningInfoResponse;
+import dto.response.DealerWinningStatisticsResponse;
+import dto.response.PlayedGameResultResponse;
+import dto.response.PlayerGameResultsResponse;
+import dto.request.PlayerNamesRequest;
+import dto.request.SelectRequest;
 import service.BlackJackCommandService;
 import service.BlackJackQueryService;
 import view.InputView;

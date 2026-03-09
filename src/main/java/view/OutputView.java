@@ -1,13 +1,13 @@
 package view;
 
-import dto.AllPlayerWinningInfoResponse;
-import dto.AllPlayersNameAndCardsResponse;
-import dto.DealerWinningStatisticsResponse;
-import dto.NameAndCardsResponse;
-import dto.PlayedGameResultResponse;
-import dto.PlayerGameResultsResponse;
-import dto.PlayerNamesResponse;
-import dto.PlayerWinningInfoResponse;
+import dto.response.AllPlayerWinningInfoResponse;
+import dto.response.AllPlayersNameAndCardsResponse;
+import dto.response.DealerWinningStatisticsResponse;
+import dto.response.NameAndCardsResponse;
+import dto.response.PlayedGameResultResponse;
+import dto.response.PlayerGameResultsResponse;
+import dto.request.PlayerNamesResponse;
+import dto.response.PlayerWinningInfoResponse;
 import java.util.List;
 
 public final class OutputView {

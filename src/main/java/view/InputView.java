@@ -1,11 +1,15 @@
 package view;
 
-import dto.NameResponse;
-import dto.PlayerNamesRequest;
-import dto.SelectRequest;
+import dto.response.NameResponse;
+import dto.request.PlayerNamesRequest;
+import dto.request.SelectRequest;
 import java.util.Scanner;
 
 public final class InputView {
+
+    private InputView() {
+
+    }
 
     private final static Scanner scanner = new Scanner(System.in);
 

@@ -24,10 +24,6 @@ class Players {
                 .toList();
     }
 
-    void add(String name, DrawStrategy drawStrategy) {
-        players.add(Player.of(name, drawStrategy));
-    }
-
     List<String> names() {
         return players.stream()
                 .map(Participant::name)
@@ -62,7 +58,7 @@ class Players {
     }
 
     void currentPlayerDrawCard() {
-        if(hasWaitingPlayers()) {
+        if (hasWaitingPlayers()) {
             currentPlayer().draw();
         }
     }

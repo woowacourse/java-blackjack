@@ -1,7 +1,9 @@
 package domain;
 
 import domain.constant.BlackJackRule;
+import domain.constant.DealerName;
 import domain.constant.WinningCondition;
+import domain.vo.DealerWinningScore;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -29,12 +31,12 @@ public class ScoreBoard {
     private boolean isPlayerResult(PlayedGameResult result) {
         return !result.infos()
                 .name()
-                .equals("딜러");
+                .equals(DealerName.DEFAULT.dealerName());
     }
 
     PlayedGameResult dealerGameResult() {
         return gameResults.stream()
-                .filter(result -> result.infos().name().equals("딜러"))
+                .filter(result -> result.infos().name().equals(DealerName.DEFAULT.dealerName()))
                 .findFirst()
                 .orElseThrow();
     }
@@ -88,6 +90,7 @@ public class ScoreBoard {
         if (playerWinningConditionIfPlayerBusted(playedGameResult)) {
             return WinningCondition.LOSE;
         }
+
         return playerWinningConditionIfPlayerNotBusted(playedGameResult);
     }
 

@@ -1,4 +1,4 @@
-package dto;
+package dto.request;
 
 import java.util.List;
 

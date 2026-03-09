@@ -1,7 +1,7 @@
 package domain;
 
 import java.util.List;
-// 굳이인 느낌
+// 굳이 둬야 할까?
 public class BlackJackFactory {
 
     private final DrawStrategy drawStrategy;
