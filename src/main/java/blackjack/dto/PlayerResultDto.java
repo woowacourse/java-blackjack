@@ -10,12 +10,5 @@ public record PlayerResultDto(
 
     public static PlayerResultDto of(Player player, PlayerBlackjackResult playerBlackjackResult) {
         return new PlayerResultDto(player.getName(), playerBlackjackResult);
-//        if (result == PlayerBlackjackResult.WIN) {
-//            return new PlayerResultDto(playerName, "승");
-//        }
-//        if (result == PlayerBlackjackResult.LOSE) {
-//            return new PlayerResultDto(playerName, "패");
-//        }
-//        return new PlayerResultDto(playerName, "푸시");
     }
 }

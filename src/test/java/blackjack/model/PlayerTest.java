@@ -3,7 +3,6 @@ package blackjack.model;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PlayerTest {
@@ -11,8 +10,7 @@ class PlayerTest {
     private final Hand hand = new Hand();
 
     @Test
-    @DisplayName("본인의 이름을 반환한다.")
-    void returnName() {
+    void 본인의_이름을_반환한다() {
         // given
         String playerName = "Player Name";
         // when
@@ -27,7 +25,7 @@ class PlayerTest {
         String playerName = null;
         // when & then
         assertThatThrownBy(() -> new Player(playerName, hand))
-                .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -36,6 +34,6 @@ class PlayerTest {
         String playerName = "";
         // when & then
         assertThatThrownBy(() -> new Player(playerName, hand))
-                .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(IllegalArgumentException.class);
     }
 }

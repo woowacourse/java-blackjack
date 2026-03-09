@@ -1,8 +1,5 @@
 package blackjack.service;
 
-import blackjack.model.Answer;
-import blackjack.model.Player;
-import blackjack.model.PlayerBlackjackResult;
 import blackjack.model.BlackjackGameManager;
 import blackjack.model.Card;
 import blackjack.model.CardsGenerator;
@@ -10,6 +7,8 @@ import blackjack.model.Dealer;
 import blackjack.model.Deck;
 import blackjack.model.Participant;
 import blackjack.model.Participants;
+import blackjack.model.Player;
+import blackjack.model.PlayerBlackjackResult;
 import blackjack.model.Score;
 import java.util.List;
 

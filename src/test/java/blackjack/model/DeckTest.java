@@ -24,7 +24,6 @@ class DeckTest {
     @DisplayName("카드 인스턴스 하나를 반환한다")
     class ReturnCard {
         @Test
-        @DisplayName("남은 카드가 있다면 예외가 발생하지 않는다")
         void 남은_카드가_있다면_예외가_발생하지_않는다() {
             // given
             Deck deck = Deck.create(generator);

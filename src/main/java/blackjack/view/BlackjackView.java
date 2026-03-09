@@ -1,10 +1,9 @@
 package blackjack.view;
 
 import blackjack.dto.GameResultDto;
-import blackjack.dto.ParticipantCardsDto;
 import blackjack.dto.InitialDealDtos;
+import blackjack.dto.ParticipantCardsDto;
 import blackjack.dto.ParticipantScoreDto;
-import blackjack.dto.PlayerResultDto;
 import blackjack.model.Answer;
 import blackjack.model.Dealer;
 import java.util.List;
