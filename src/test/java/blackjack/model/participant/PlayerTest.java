@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 
 class PlayerTest {
 
-    PickStrategy mockStrategy = cards -> Card.opened(Rank.TEN, Suit.CLOVER);
+    PickStrategy mockStrategy = cards -> Card.openedCard(Rank.TEN, Suit.CLOVER);
     
     @Test
     @DisplayName("플레이어는 2 장의 오픈된 카드를 뽑는다.")

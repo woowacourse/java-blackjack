@@ -14,9 +14,9 @@ import org.junit.jupiter.api.Test;
 
 class DealerTest {
 
-    PickStrategy mustPickTen = cards -> Card.opened(Rank.TEN, Suit.CLOVER);
-    PickStrategy mustPickFive = cards -> Card.opened(Rank.FIVE, Suit.CLOVER);
-    PickStrategy mustPickAce = cards -> Card.opened(Rank.ACE, Suit.CLOVER);
+    PickStrategy mustPickTen = cards -> Card.openedCard(Rank.TEN, Suit.CLOVER);
+    PickStrategy mustPickFive = cards -> Card.openedCard(Rank.FIVE, Suit.CLOVER);
+    PickStrategy mustPickAce = cards -> Card.openedCard(Rank.ACE, Suit.CLOVER);
 
     @Test
     @DisplayName("딜러가 뽑은 두 장의 카드 중 한 장만 오픈돼 있다.")

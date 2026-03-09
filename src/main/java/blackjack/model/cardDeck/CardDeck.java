@@ -27,7 +27,7 @@ public class CardDeck {
 
         Arrays.stream(Suit.values())
                 .forEach(suit -> Arrays.stream(Rank.values())
-                        .forEach(rank -> cards.add(Card.opened(rank, suit))));
+                        .forEach(rank -> cards.add(Card.openedCard(rank, suit))));
 
         if (cards.size() != CARD_DECK_SIZE) {
             throw new IllegalStateException("덱이 잘 못 생성됐습니다.");

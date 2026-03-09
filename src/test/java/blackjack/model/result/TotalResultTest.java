@@ -15,9 +15,9 @@ import org.junit.jupiter.api.Test;
 
 class TotalResultTest {
 
-    PickStrategy mustPickTen = cards -> Card.opened(Rank.TEN, Suit.CLOVER);
-    PickStrategy mustPickFive = cards -> Card.opened(Rank.FIVE, Suit.CLOVER);
-    PickStrategy mustPickAce = cards -> Card.opened(Rank.ACE, Suit.CLOVER);
+    PickStrategy mustPickTen = cards -> Card.openedCard(Rank.TEN, Suit.CLOVER);
+    PickStrategy mustPickFive = cards -> Card.openedCard(Rank.FIVE, Suit.CLOVER);
+    PickStrategy mustPickAce = cards -> Card.openedCard(Rank.ACE, Suit.CLOVER);
     CardDeck cardDeckForMustPickTen = CardDeck.of(mustPickTen);
     CardDeck cardDeckForMustPickFive = CardDeck.of(mustPickFive);
     CardDeck cardDeckForMustPickAce = CardDeck.of(mustPickAce);
