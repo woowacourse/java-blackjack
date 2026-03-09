@@ -3,99 +3,124 @@ package team.blackjack.domain;
 import java.util.List;
 
 public enum Card {
-    ACE_OF_HEARTS(Suit.HEARTS, "A하트", true, List.of(1, 11)),
-    TWO_OF_HEARTS(Suit.HEARTS, "2하트", false, List.of(2)),
-    THREE_OF_HEARTS(Suit.HEARTS, "3하트", false, List.of(3)),
-    FOUR_OF_HEARTS(Suit.HEARTS, "4하트", false, List.of(4)),
-    FIVE_OF_HEARTS(Suit.HEARTS, "5하트", false, List.of(5)),
-    SIX_OF_HEARTS(Suit.HEARTS, "6하트", false, List.of(6)),
-    SEVEN_OF_HEARTS(Suit.HEARTS, "7하트", false, List.of(7)),
-    EIGHT_OF_HEARTS(Suit.HEARTS, "8하트", false, List.of(8)),
-    NINE_OF_HEARTS(Suit.HEARTS, "9하트", false, List.of(9)),
-    TEN_OF_HEARTS(Suit.HEARTS, "10하트", false, List.of(10)),
-    JACK_OF_HEARTS(Suit.HEARTS, "J하트", false, List.of(10)),
-    QUEEN_OF_HEARTS(Suit.HEARTS, "Q하트", false, List.of(10)),
-    KING_OF_HEARTS(Suit.HEARTS, "K하트", false, List.of(10)),
+    ACE_OF_HEARTS(Suit.HEARTS, Number.ACE),
+    TWO_OF_HEARTS(Suit.HEARTS, Number.TWO),
+    THREE_OF_HEARTS(Suit.HEARTS, Number.THREE),
+    FOUR_OF_HEARTS(Suit.HEARTS, Number.FOUR),
+    FIVE_OF_HEARTS(Suit.HEARTS, Number.FIVE),
+    SIX_OF_HEARTS(Suit.HEARTS, Number.SIX),
+    SEVEN_OF_HEARTS(Suit.HEARTS, Number.SEVEN),
+    EIGHT_OF_HEARTS(Suit.HEARTS, Number.EIGHT),
+    NINE_OF_HEARTS(Suit.HEARTS, Number.NINE),
+    TEN_OF_HEARTS(Suit.HEARTS, Number.TEN),
+    JACK_OF_HEARTS(Suit.HEARTS, Number.JACK),
+    QUEEN_OF_HEARTS(Suit.HEARTS, Number.QUEEN),
+    KING_OF_HEARTS(Suit.HEARTS, Number.KING),
 
-    ACE_OF_DIAMONDS(Suit.DIAMONDS, "A다이아", true, List.of(1, 11)),
-    TWO_OF_DIAMONDS(Suit.DIAMONDS, "2다이아", false, List.of(2)),
-    THREE_OF_DIAMONDS(Suit.DIAMONDS, "3다이아", false, List.of(3)),
-    FOUR_OF_DIAMONDS(Suit.DIAMONDS, "4다이아", false, List.of(4)),
-    FIVE_OF_DIAMONDS(Suit.DIAMONDS, "5다이아", false, List.of(5)),
-    SIX_OF_DIAMONDS(Suit.DIAMONDS, "6다이아", false, List.of(6)),
-    SEVEN_OF_DIAMONDS(Suit.DIAMONDS, "7다이아", false, List.of(7)),
-    EIGHT_OF_DIAMONDS(Suit.DIAMONDS, "8다이아", false, List.of(8)),
-    NINE_OF_DIAMONDS(Suit.DIAMONDS, "9다이아", false, List.of(9)),
-    TEN_OF_DIAMONDS(Suit.DIAMONDS, "10다이아", false, List.of(10)),
-    JACK_OF_DIAMONDS(Suit.DIAMONDS, "J다이아", false, List.of(10)),
-    QUEEN_OF_DIAMONDS(Suit.DIAMONDS, "Q다이아", false, List.of(10)),
-    KING_OF_DIAMONDS(Suit.DIAMONDS, "K다이아", false, List.of(10)),
+    ACE_OF_DIAMONDS(Suit.DIAMONDS, Number.ACE),
+    TWO_OF_DIAMONDS(Suit.DIAMONDS, Number.TWO),
+    THREE_OF_DIAMONDS(Suit.DIAMONDS, Number.THREE),
+    FOUR_OF_DIAMONDS(Suit.DIAMONDS, Number.FOUR),
+    FIVE_OF_DIAMONDS(Suit.DIAMONDS, Number.FIVE),
+    SIX_OF_DIAMONDS(Suit.DIAMONDS, Number.SIX),
+    SEVEN_OF_DIAMONDS(Suit.DIAMONDS, Number.SEVEN),
+    EIGHT_OF_DIAMONDS(Suit.DIAMONDS, Number.EIGHT),
+    NINE_OF_DIAMONDS(Suit.DIAMONDS, Number.NINE),
+    TEN_OF_DIAMONDS(Suit.DIAMONDS, Number.TEN),
+    JACK_OF_DIAMONDS(Suit.DIAMONDS, Number.JACK),
+    QUEEN_OF_DIAMONDS(Suit.DIAMONDS, Number.QUEEN),
+    KING_OF_DIAMONDS(Suit.DIAMONDS, Number.KING),
 
-    ACE_OF_CLUBS(Suit.CLUBS, "A클로버", true, List.of(1, 11)),
-    TWO_OF_CLUBS(Suit.CLUBS, "2클로버", false, List.of(2)),
-    THREE_OF_CLUBS(Suit.CLUBS, "3클로버", false, List.of(3)),
-    FOUR_OF_CLUBS(Suit.CLUBS, "4클로버", false, List.of(4)),
-    FIVE_OF_CLUBS(Suit.CLUBS, "5클로버", false, List.of(5)),
-    SIX_OF_CLUBS(Suit.CLUBS, "6클로버", false, List.of(6)),
-    SEVEN_OF_CLUBS(Suit.CLUBS, "7클로버", false, List.of(7)),
-    EIGHT_OF_CLUBS(Suit.CLUBS, "8클로버", false, List.of(8)),
-    NINE_OF_CLUBS(Suit.CLUBS, "9클로버", false, List.of(9)),
-    TEN_OF_CLUBS(Suit.CLUBS, "10클로버", false, List.of(10)),
-    JACK_OF_CLUBS(Suit.CLUBS, "J클로버", false, List.of(10)),
-    QUEEN_OF_CLUBS(Suit.CLUBS, "Q클로버", false, List.of(10)),
-    KING_OF_CLUBS(Suit.CLUBS, "K클로버", false, List.of(10)),
+    ACE_OF_CLUBS(Suit.CLUBS, Number.ACE),
+    TWO_OF_CLUBS(Suit.CLUBS, Number.TWO),
+    THREE_OF_CLUBS(Suit.CLUBS, Number.THREE),
+    FOUR_OF_CLUBS(Suit.CLUBS, Number.FOUR),
+    FIVE_OF_CLUBS(Suit.CLUBS, Number.FIVE),
+    SIX_OF_CLUBS(Suit.CLUBS, Number.SIX),
+    SEVEN_OF_CLUBS(Suit.CLUBS, Number.SEVEN),
+    EIGHT_OF_CLUBS(Suit.CLUBS, Number.EIGHT),
+    NINE_OF_CLUBS(Suit.CLUBS, Number.NINE),
+    TEN_OF_CLUBS(Suit.CLUBS, Number.TEN),
+    JACK_OF_CLUBS(Suit.CLUBS, Number.JACK),
+    QUEEN_OF_CLUBS(Suit.CLUBS, Number.QUEEN),
+    KING_OF_CLUBS(Suit.CLUBS, Number.KING),
 
-    ACE_OF_SPADES(Suit.SPADES, "A스페이드", true, List.of(1, 11)),
-    TWO_OF_SPADES(Suit.SPADES, "2스페이드", false, List.of(2)),
-    THREE_OF_SPADES(Suit.SPADES, "3스페이드", false, List.of(3)),
-    FOUR_OF_SPADES(Suit.SPADES, "4스페이드", false, List.of(4)),
-    FIVE_OF_SPADES(Suit.SPADES, "5스페이드", false, List.of(5)),
-    SIX_OF_SPADES(Suit.SPADES, "6스페이드", false, List.of(6)),
-    SEVEN_OF_SPADES(Suit.SPADES, "7스페이드", false, List.of(7)),
-    EIGHT_OF_SPADES(Suit.SPADES, "8스페이드", false, List.of(8)),
-    NINE_OF_SPADES(Suit.SPADES, "9스페이드", false, List.of(9)),
-    TEN_OF_SPADES(Suit.SPADES, "10스페이드", false, List.of(10)),
-    JACK_OF_SPADES(Suit.SPADES, "J스페이드", false, List.of(10)),
-    QUEEN_OF_SPADES(Suit.SPADES, "Q스페이드", false, List.of(10)),
-    KING_OF_SPADES(Suit.SPADES, "K스페이드", false, List.of(10));
+    ACE_OF_SPADES(Suit.SPADES, Number.ACE),
+    TWO_OF_SPADES(Suit.SPADES, Number.TWO),
+    THREE_OF_SPADES(Suit.SPADES, Number.THREE),
+    FOUR_OF_SPADES(Suit.SPADES, Number.FOUR),
+    FIVE_OF_SPADES(Suit.SPADES, Number.FIVE),
+    SIX_OF_SPADES(Suit.SPADES, Number.SIX),
+    SEVEN_OF_SPADES(Suit.SPADES, Number.SEVEN),
+    EIGHT_OF_SPADES(Suit.SPADES, Number.EIGHT),
+    NINE_OF_SPADES(Suit.SPADES, Number.NINE),
+    TEN_OF_SPADES(Suit.SPADES, Number.TEN),
+    JACK_OF_SPADES(Suit.SPADES, Number.JACK),
+    QUEEN_OF_SPADES(Suit.SPADES, Number.QUEEN),
+    KING_OF_SPADES(Suit.SPADES, Number.KING);
 
     private final Suit suit;
-    private final String name;
-    private final boolean isAce;
-    private final List<Integer> score;
+    private final Number number;
 
-    Card(Suit suit, String name, boolean isAce, List<Integer> values) {
+    Card(Suit suit, Number number) {
         this.suit = suit;
-        this.name = name;
-        this.isAce = isAce;
-        this.score = values;
+        this.number = number;
+    }
+
+    public String getCardName() {
+        return this.number.name + this.suit.name;
+    }
+
+    public boolean isAce() {
+        return this.number == Number.ACE;
+    }
+
+    public List<Integer> getScore() {
+        return this.number.score;
     }
 
     public enum Suit {
 
-        HEARTS(true), DIAMONDS(true), CLUBS(false), SPADES(false);
+        HEARTS("하트", true),
+        DIAMONDS("다이아", true),
+        CLUBS("클로버", false),
+        SPADES("스페이드", false);
 
+        private final String name;
         private final boolean isRed;
 
-        Suit(boolean isRed) {
+        Suit(String name, boolean isRed) {
+            this.name = name;
             this.isRed = isRed;
         }
 
-        public boolean isRed() {
-            return isRed;
+        public String getName() {
+            return name;
         }
     }
 
-    public String getCardName() {
-        return this.name;
-    }
 
-    public boolean isAce() {
-        return this.isAce;
-    }
+    public enum Number {
+        ACE("A", List.of(1, 11)),
+        TWO("2", List.of(2)),
+        THREE("3", List.of(3)),
+        FOUR("4", List.of(4)),
+        FIVE("5", List.of(5)),
+        SIX("6", List.of(6)),
+        SEVEN("7", List.of(7)),
+        EIGHT("8", List.of(8)),
+        NINE("9", List.of(9)),
+        TEN("10", List.of(10)),
+        JACK("J", List.of(10)),
+        QUEEN("Q", List.of(10)),
+        KING("K", List.of(10));
 
-    public List<Integer> getScore() {
-        return score;
-    }
+        private final String name;
+        private final List<Integer> score;
 
+        Number(String name, List<Integer> score) {
+            this.name = name;
+            this.score = score;
+        }
+    }
 }
