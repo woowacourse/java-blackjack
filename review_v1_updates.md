@@ -7,7 +7,7 @@
 - [x] **1. 코드의 계층구조 변경**
   - BlackjackGame같은 도메인 객체에서 상태관리 진행
   - Application 자체를 Controller로 변경
-- [ ] **2. ServiceLocator 패턴 사용 재고**
+- [x] **2. ServiceLocator 패턴 사용 재고**
   - ServiceLocator에 대해 제대로 공부하기
   - 생성자에서 의존성을 주입하는 방식으로 수정
 - [ ] **3. 함수 & 변수 네이밍**

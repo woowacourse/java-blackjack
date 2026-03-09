@@ -1,9 +1,8 @@
-package service;
+package domain;
 
-import domain.BlackjackGame;
 import org.junit.jupiter.api.BeforeAll;
 
-public class BlackjackServiceTest {
+public class BlackjackGameTest {
     private static BlackjackGame blackjackGame;
 
     @BeforeAll

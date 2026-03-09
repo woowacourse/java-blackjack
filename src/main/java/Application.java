@@ -1,7 +1,6 @@
 import java.util.List;
 import domain.BlackjackGame;
 import util.Parser;
-import util.ServiceLocator;
 import util.Validator;
 import view.InputView;
 import view.Message;
@@ -14,16 +13,22 @@ public class Application {
     private final BlackjackGame blackjackGame;
     private final Validator validator;
 
-    public Application() {
-        this.outputView = ServiceLocator.getOutputView();
-        this.inputView = ServiceLocator.getInputView();
-        this.parser = ServiceLocator.getParser();
-        this.blackjackGame = ServiceLocator.getBlackjackService();
-        this.validator = ServiceLocator.getValidator();
+    public Application(InputView inputView, OutputView outputView, Parser parser, Validator validator, BlackjackGame blackjackGame) {
+        this.inputView = inputView;
+        this.outputView = outputView;
+        this.parser = parser;
+        this.validator = validator;
+        this.blackjackGame = blackjackGame;
     }
 
     public static void main(String[] args) {
-        new Application().run();
+        new Application(
+            new InputView(),
+            new OutputView(),
+            new Parser(),
+            new Validator(),
+            new BlackjackGame()
+        ).run();
     }
 
     public void run() {
