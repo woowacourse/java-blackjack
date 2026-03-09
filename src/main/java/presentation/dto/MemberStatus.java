@@ -1,4 +1,4 @@
-package domain.dto;
+package presentation.dto;
 
 import domain.card.Card;
 import java.util.List;
