@@ -50,7 +50,7 @@ public class Hand {
 
     private int aceCount() {
         return (int) cards.stream()
-                .filter(c -> c.rank() == CardRank.ACE)
+                .filter(Card::isAce)
                 .count();
     }
 
