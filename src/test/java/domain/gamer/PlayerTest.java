@@ -12,8 +12,8 @@ import java.util.List;
 
 public class PlayerTest {
 
-    PlayerName testPlayerName;
-    Player testPlayer;
+    private PlayerName testPlayerName;
+    private Player testPlayer;
 
     @BeforeEach
     void setUp() {
