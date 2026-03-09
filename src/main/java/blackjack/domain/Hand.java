@@ -45,8 +45,6 @@ public class Hand {
     public int getTotalScore() {
         int scoreSum = calculateScoreSum();
         if (hasAce() && (scoreSum + 10 <= BUSTED_SCORE)) {
-            System.out.println("has?: " + hasAce());
-            System.out.println("scoreSum?: " + scoreSum);
             return scoreSum + 10;
         }
         return scoreSum;
