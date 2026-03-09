@@ -1,6 +1,6 @@
     package domain.common.exception;
 
-    public class BlackjackGameException extends IllegalArgumentException {
+    public class BlackjackGameException extends RuntimeException {
 
         private static final String ERROR_MESSAGE_PREFIX = "[ERROR] ";
 
