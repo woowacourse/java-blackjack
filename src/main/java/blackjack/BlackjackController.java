@@ -38,7 +38,7 @@ public class BlackjackController {
 
         final Players players = createPlayers();
         final Dealer dealer = new Dealer();
-        dealInitialCards(deck, players, dealer, INIT_ROUND);
+        dealInitialCards(deck, players, dealer);
         outputView.printInitialDeal(players, dealer);
         processPlayersTurn(deck, players);
         processDealerTurn(deck, dealer);
@@ -57,8 +57,8 @@ public class BlackjackController {
         return new Players(playerList);
     }
 
-    private void dealInitialCards(final Deck deck, final Players players, final Dealer dealer, int initRound) {
-        for (int i = 0; i < initRound; i++) {
+    private void dealInitialCards(final Deck deck, final Players players, final Dealer dealer) {
+        for (int i = 0; i < INIT_ROUND; i++) {
             dealOneRound(deck, players, dealer);
         }
     }
