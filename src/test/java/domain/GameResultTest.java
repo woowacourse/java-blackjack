@@ -11,8 +11,9 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class GameResultTest {
+
     @Test
-    void 플레이어의_게임_결과를_반환하다(){
+    void 플레이어의_게임_결과를_반환하다() {
         Players players = new Players(List.of("pobi"));
         Dealer dealer = new Dealer();
         GameResult gameResult = new GameResult(players, dealer);
@@ -25,7 +26,7 @@ class GameResultTest {
     }
 
     @Test
-    void 딜러의_게임_결과를_반환하다(){
+    void 딜러의_게임_결과를_반환하다() {
         Players players = new Players(List.of("pobi"));
         Dealer dealer = new Dealer();
 

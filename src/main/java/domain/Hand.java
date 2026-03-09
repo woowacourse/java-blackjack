@@ -10,7 +10,7 @@ public class Hand {
 
     private final List<Card> cards;
 
-    public Hand(){
+    public Hand() {
         this.cards = new ArrayList<>();
     }
 
@@ -40,7 +40,7 @@ public class Hand {
                 .count();
     }
 
-    public int size(){
+    public int size() {
         return cards.size();
     }
 
@@ -50,7 +50,7 @@ public class Hand {
                 .sum();
     }
 
-    public void add(Card card){
+    public void add(Card card) {
         cards.add(card);
     }
 

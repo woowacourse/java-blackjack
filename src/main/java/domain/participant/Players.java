@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 
 public class Players {
     public static final int PLAYER_THRESHOLD = 5;
-
     private final List<Player> players = new ArrayList<>();
 
     public Players(List<String> names) {
@@ -18,17 +17,6 @@ public class Players {
 
         validatePlayerCount(players);
         validateDuplicatedName(players);
-    }
-
-
-    public List<String> getPlayerNames(){
-        return  players.stream()
-                .map(player -> player.name())
-                .collect(Collectors.toList());
-    }
-
-    public List<Player> getPlayers() {
-        return players;
     }
 
     private void validatePlayerCount(List<Player> players) {
@@ -45,5 +33,15 @@ public class Players {
         if (namesSet.size() != players.size()) {
             throw new IllegalArgumentException();
         }
+    }
+
+    public List<String> getPlayerNames() {
+        return players.stream()
+                .map(player -> player.name())
+                .collect(Collectors.toList());
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 }

@@ -11,6 +11,18 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class HandTest {
+
+    private List<Card> createCards(Rank... ranks) {
+        List<Card> cards = new ArrayList<>();
+
+        for (Rank rank : ranks) {
+            Card card = new Card(rank, Suit.HEART);
+            cards.add(card);
+        }
+
+        return cards;
+    }
+
     @Test
     void 참가자의_카드가_21을_초과했는지_계산한다() {
         List<Card> cards = createCards(Rank.JACK, Rank.QUEEN, Rank.KING);
@@ -59,16 +71,5 @@ class HandTest {
         int score = hand.score();
 
         assertThat(score).isEqualTo(26);
-    }
-
-    private List<Card> createCards(Rank... ranks) {
-        List<Card> cards = new ArrayList<>();
-
-        for (Rank rank : ranks) {
-            Card card = new Card(rank, Suit.HEART);
-            cards.add(card);
-        }
-
-        return cards;
     }
 }

@@ -9,6 +9,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 class PlayersTest {
+
     @Test
     void 참가자_이름이_중복인_경우_예외를_발생한다() {
         List<String> names = List.of("pobi", "pobi");

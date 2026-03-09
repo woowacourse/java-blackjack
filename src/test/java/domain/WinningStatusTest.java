@@ -10,6 +10,27 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class WinningStatusTest {
+
+    private Player createPlayer(Rank... ranks) {
+        Player player = new Player("pobi");
+        for (Rank rank : ranks) {
+            Card card = new Card(rank, Suit.HEART);
+            player.receive(card);
+        }
+
+        return player;
+    }
+
+    private Dealer createDealer(Rank... ranks) {
+        Dealer dealer = new Dealer();
+        for (Rank rank : ranks) {
+            Card card = new Card(rank, Suit.HEART);
+            dealer.receive(card);
+        }
+
+        return dealer;
+    }
+
     @Test
     void 참가자가_21_초과인_경우_딜러와_무관하게_패배한다() {
         Player player = createPlayer(Rank.TEN, Rank.TEN, Rank.TWO);
@@ -58,25 +79,5 @@ class WinningStatusTest {
         WinningStatus status = WinningStatus.of(player, dealer);
 
         assertThat(status).isEqualTo(WinningStatus.WIN);
-    }
-
-    private Player createPlayer(Rank... ranks) {
-        Player player = new Player("pobi");
-        for (Rank rank : ranks) {
-            Card card = new Card(rank, Suit.HEART);
-            player.receive(card);
-        }
-
-        return player;
-    }
-
-    private Dealer createDealer(Rank... ranks) {
-        Dealer dealer = new Dealer();
-        for (Rank rank : ranks) {
-            Card card = new Card(rank, Suit.HEART);
-            dealer.receive(card);
-        }
-
-        return dealer;
     }
 }
