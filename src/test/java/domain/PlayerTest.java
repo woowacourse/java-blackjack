@@ -1,11 +1,12 @@
 package domain;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
 
@@ -34,5 +35,4 @@ class PlayerTest {
         // then
         assertTrue(player.isBurst());
     }
-
 }

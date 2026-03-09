@@ -4,7 +4,6 @@ import domain.Dealer;
 import domain.Hand;
 import domain.Player;
 import domain.card.Card;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,16 +13,16 @@ public record BlackJackInitStatusDto(List<String> initStatus) {
         this(new ArrayList<>());
 
         initStatus.add(getInitHeaderString(players.stream()
-                        .map(Player::getName)
-                        .toList()));
+                .map(Player::getName)
+                .toList()));
 
         initStatus.add("딜러카드: " + getDealerHandString(dealer.getHand()));
-        for(Player player : players){
-            initStatus.add(getHandOutputString(player.getName(),player.getHand()));
+        for (Player player : players) {
+            initStatus.add(getHandOutputString(player.getName(), player.getHand()));
         }
     }
 
-    private String getInitHeaderString(List<String> names){
+    private String getInitHeaderString(List<String> names) {
         return "딜러와 " + String.join(", ", names) + "에게 2장을 나누었습니다.";
     }
 

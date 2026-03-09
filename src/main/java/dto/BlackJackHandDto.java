@@ -3,7 +3,6 @@ package dto;
 import domain.Hand;
 import domain.Player;
 import domain.card.Card;
-
 import java.util.stream.Collectors;
 
 public record BlackJackHandDto(String handOutput) {

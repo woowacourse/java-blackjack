@@ -1,11 +1,10 @@
 package domain;
 
-import domain.card.Card;
+import static domain.card.Rank.ACE;
 
+import domain.card.Card;
 import java.util.ArrayList;
 import java.util.List;
-
-import static domain.card.Rank.ACE;
 
 public class Hand {
     private List<Card> cards;
@@ -41,7 +40,6 @@ public class Hand {
     public boolean isBurst() {
         return getSum() > 21;
     }
-
 
     public void addCard(Card card) {
         cards.add(card);

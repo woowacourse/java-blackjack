@@ -1,8 +1,9 @@
 package dto;
 
 import domain.WinningStatus;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public record FinalResultDto(List<String> finalResults) {
 

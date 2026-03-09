@@ -1,5 +1,8 @@
 package service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import domain.Dealer;
 import domain.Deck;
 import domain.Player;
@@ -7,12 +10,9 @@ import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
 import dto.BlackJackInitStatusDto;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class BlackJackInitServiceTest {
 
@@ -27,7 +27,7 @@ class BlackJackInitServiceTest {
     void 덱을_정상적으로_생성() {
         // given, when
         Deck deck = blackJackInitService.createDeck();
-
+        
         //then
         assertNotNull(deck);
     }
@@ -46,11 +46,11 @@ class BlackJackInitServiceTest {
     void 플레이어들을_정상적으로_생성() {
         //given, when
         Deck deck = new Deck();
-        List<Player> players = blackJackInitService.createPlayers(List.of("봉구스","시오"), deck);
+        List<Player> players = blackJackInitService.createPlayers(List.of("봉구스", "시오"), deck);
 
         // then
         assertNotNull(players);
-        assertEquals(2,players.size());
+        assertEquals(2, players.size());
     }
 
     @Test

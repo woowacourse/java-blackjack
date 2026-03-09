@@ -1,12 +1,11 @@
 package dto;
 
-import domain.WinningStatus;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import domain.WinningStatus;
 import java.util.SortedMap;
 import java.util.TreeMap;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 class FinalResultDtoTest {
 

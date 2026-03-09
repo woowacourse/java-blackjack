@@ -1,5 +1,8 @@
 package service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import domain.Dealer;
 import domain.Player;
 import domain.card.Card;
@@ -7,13 +10,10 @@ import domain.card.Rank;
 import domain.card.Suit;
 import dto.FinalResultDto;
 import dto.ScoreResultDto;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class BlackJackResultServiceTest {
 
@@ -33,7 +33,6 @@ class BlackJackResultServiceTest {
         players.add(new Player("영기"));
     }
 
-    // 이것저것
     @Test
     void createScoreResultDto() {
         // given
@@ -53,10 +52,10 @@ class BlackJackResultServiceTest {
         FinalResultDto finalResultDto = blackJackResultService.createFinalResultDto(dealer, players);
 
         // when, then
-        assertEquals("딜러: 1승 1패",finalResultDto.finalResults().get(0));
-        assertEquals("봉구스: 패",finalResultDto.finalResults().get(1));
-        assertEquals("시오: 무",finalResultDto.finalResults().get(2));
-        assertEquals("영기: 승",finalResultDto.finalResults().get(3));
+        assertEquals("딜러: 1승 1패", finalResultDto.finalResults().get(0));
+        assertEquals("봉구스: 패", finalResultDto.finalResults().get(1));
+        assertEquals("시오: 무", finalResultDto.finalResults().get(2));
+        assertEquals("영기: 승", finalResultDto.finalResults().get(3));
     }
 
     @Test
@@ -70,8 +69,8 @@ class BlackJackResultServiceTest {
         FinalResultDto finalResultDto = blackJackResultService.createFinalResultDto(dealer, players);
 
         // when, then
-        assertEquals("딜러: 3승 0패",finalResultDto.finalResults().get(0));
-        assertEquals("봉구스: 패",finalResultDto.finalResults().get(1));
+        assertEquals("딜러: 3승 0패", finalResultDto.finalResults().get(0));
+        assertEquals("봉구스: 패", finalResultDto.finalResults().get(1));
     }
 
 
@@ -86,7 +85,7 @@ class BlackJackResultServiceTest {
         FinalResultDto finalResultDto = blackJackResultService.createFinalResultDto(dealer, players);
 
         // when, then
-        assertEquals("딜러: 0승 3패",finalResultDto.finalResults().get(0));
-        assertEquals("봉구스: 승",finalResultDto.finalResults().get(1));
+        assertEquals("딜러: 0승 3패", finalResultDto.finalResults().get(0));
+        assertEquals("봉구스: 승", finalResultDto.finalResults().get(1));
     }
 }

@@ -5,7 +5,6 @@ import domain.Player;
 import domain.WinningStatus;
 import dto.FinalResultDto;
 import dto.ScoreResultDto;
-
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,4 +46,3 @@ public class BlackJackResultService {
         return WinningStatus.WIN;
     }
 }
-

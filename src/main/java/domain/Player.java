@@ -6,12 +6,12 @@ public class Player {
     private final String name;
     private final Hand hand;
 
-    public Player(String name){
+    public Player(String name) {
         this.name = name;
         hand = new Hand();
     }
 
-    public void draw(Card card){
+    public void draw(Card card) {
         hand.addCard(card);
     }
 

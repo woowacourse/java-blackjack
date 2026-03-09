@@ -1,17 +1,16 @@
 package dto;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import domain.Dealer;
 import domain.Player;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class BlackJackInitStatusDtoTest {
 

@@ -1,20 +1,23 @@
 package controller;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
+
 import domain.Deck;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import service.BlackJackInitService;
 import service.BlackJackResultService;
 import service.BlackJackTurnService;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 
 public class BlackJackControllerTest {
@@ -36,7 +39,7 @@ public class BlackJackControllerTest {
     }
 
     @Test
-    void 정상적으로_동작하는_경우(){
+    void 정상적으로_동작하는_경우() {
         Deck deck = mock(Deck.class);
         when(deck.drawCard()).thenReturn(
                 // 시오
@@ -61,7 +64,7 @@ public class BlackJackControllerTest {
                 new Card(Suit.SPADES, Rank.NUM6),
                 new Card(Suit.SPADES, Rank.NUM7),
                 new Card(Suit.SPADES, Rank.NUM8)
-                );
+        );
 
         BlackJackInitService blackJackInitService = spy(new BlackJackInitService());
         doReturn(deck).when(blackJackInitService).createDeck();
@@ -69,7 +72,8 @@ public class BlackJackControllerTest {
         BlackJackTurnService blackJackTurnService = new BlackJackTurnService();
         BlackJackResultService blackJackResultService = new BlackJackResultService();
 
-        BlackJackController blackJackController = new BlackJackController(blackJackInitService, blackJackTurnService, blackJackResultService);
+        BlackJackController blackJackController = new BlackJackController(blackJackInitService, blackJackTurnService,
+                blackJackResultService);
 
         systemIn("시오,봉구스\ny\nn\ny\nn");
         blackJackController.run();
@@ -97,5 +101,3 @@ public class BlackJackControllerTest {
                 .contains("봉구스: 무");
     }
 }
-
-

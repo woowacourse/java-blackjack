@@ -4,7 +4,6 @@ import domain.Dealer;
 import domain.Hand;
 import domain.Player;
 import domain.card.Card;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;

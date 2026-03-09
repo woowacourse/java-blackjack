@@ -5,7 +5,7 @@ import domain.card.Card;
 public class Dealer {
     private final Hand hand;
 
-    public Dealer(){
+    public Dealer() {
         hand = new Hand();
     }
 
@@ -13,7 +13,7 @@ public class Dealer {
         return hand.isBurst();
     }
 
-    public void draw(Card card){
+    public void draw(Card card) {
         hand.addCard(card);
     }
 

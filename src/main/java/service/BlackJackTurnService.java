@@ -18,15 +18,15 @@ public class BlackJackTurnService {
         dealer.draw(card);
     }
 
-    public boolean canDealerHit(Dealer dealer){
+    public boolean canDealerHit(Dealer dealer) {
         return dealer.getHand().getSum() < 17;
     }
 
-    public boolean canPlayerHit(Player player, String input){
+    public boolean canPlayerHit(Player player, String input) {
         return isPlayerUnder21(player) && input.equals("y");
     }
 
-    public boolean isPlayerUnder21(Player player){
+    public boolean isPlayerUnder21(Player player) {
         return player.getHand().getSum() < 21;
     }
 

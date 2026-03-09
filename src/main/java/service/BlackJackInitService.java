@@ -4,7 +4,6 @@ import domain.Dealer;
 import domain.Deck;
 import domain.Player;
 import dto.BlackJackInitStatusDto;
-
 import java.util.List;
 
 public class BlackJackInitService {

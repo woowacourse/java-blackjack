@@ -1,16 +1,12 @@
 package dto;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import domain.Player;
-import domain.WinningStatus;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
 import org.junit.jupiter.api.Test;
-
-import java.util.SortedMap;
-import java.util.TreeMap;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class BlackJackHandDtoTest {
 

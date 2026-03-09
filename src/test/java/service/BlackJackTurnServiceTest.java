@@ -1,5 +1,9 @@
 package service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import domain.Dealer;
 import domain.Deck;
 import domain.Player;
@@ -10,25 +14,23 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class BlackJackTurnServiceTest {
 
     BlackJackTurnService blackJackTurnService;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         blackJackTurnService = new BlackJackTurnService();
     }
 
     @Test
     void 플레이어가_정상적으로_Hit_하는_경우() {
         // given
-        Deck deck  = new Deck();
+        Deck deck = new Deck();
         Player player = new Player("봉구스");
 
         // when
-        blackJackTurnService.playerHit(player,deck);
+        blackJackTurnService.playerHit(player, deck);
 
         // then
         assertEquals(1, player.getHand().getCards().size());
@@ -37,11 +39,11 @@ class BlackJackTurnServiceTest {
     @Test
     void 딜러가_정상적으로_Hit_하는_경우() {
         // given
-        Deck deck  = new Deck();
+        Deck deck = new Deck();
         Dealer dealer = new Dealer();
 
         // when
-        blackJackTurnService.dealerHit(dealer,deck);
+        blackJackTurnService.dealerHit(dealer, deck);
 
         // then
         assertEquals(1, dealer.getHand().getCards().size());

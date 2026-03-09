@@ -3,7 +3,6 @@ package domain;
 import domain.card.Card;
 import exception.ErrorMessage;
 import factory.CardFactory;
-
 import java.util.Collections;
 import java.util.List;
 
@@ -33,5 +32,4 @@ public class Deck {
     public List<Card> getCards() {
         return cards;
     }
-
 }

@@ -1,15 +1,13 @@
 package domain;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.EnumSource;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class HandTest {
 
@@ -70,6 +68,7 @@ class HandTest {
         // when, then
         assertTrue(hand.isBurst());
     }
+
     @Test
     void 손패가_Burst가_아닌_경우() {
         //given
