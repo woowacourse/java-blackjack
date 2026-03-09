@@ -1,5 +1,6 @@
 package controller;
 
+import dto.DealerWinningStatisticsResponse;
 import dto.PlayedGameResultResponse;
 import dto.PlayerGameResultsResponse;
 import dto.PlayerNamesRequest;
@@ -100,6 +101,7 @@ public class BlackJackController {
             commandService.recordDealerGameResult();
             OutputView.printTaskDivider();
         }
+        commandService.recordDealerGameResult();
     }
 
     private void dealerGameLoop() {
@@ -118,6 +120,13 @@ public class BlackJackController {
     private void resultPhase() {
         displayDealersResult();
         displayPlayerResults();
+        displayDealerWinningStatistics();
+        displayPlayerWinningConditions();
+    }
+
+    private void displayDealersResult() {
+        PlayedGameResultResponse dealerResultResponse = queryService.dealerResult();
+        OutputView.participantResult(dealerResultResponse);
     }
 
     private void displayPlayerResults() {
@@ -125,8 +134,13 @@ public class BlackJackController {
         OutputView.playerResults(playerGameResultsResponse);
     }
 
-    private void displayDealersResult() {
-        PlayedGameResultResponse dealerResultResponse = queryService.dealerResult();
-        OutputView.participantResult(dealerResultResponse);
+    private void displayDealerWinningStatistics() {
+        OutputView.winningConditionsHeader();
+        DealerWinningStatisticsResponse response = queryService.dealerWinningStatistics();
+        OutputView.dealerWinningStatistics(response);
+    }
+
+    private void displayPlayerWinningConditions() {
+        OutputView.playerWinningConditions();
     }
 }
