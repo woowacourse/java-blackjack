@@ -8,15 +8,26 @@ import blackjack.domain.CardValue;
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
 import blackjack.domain.User;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class GameServiceTest {
 
+    private GameService gameService;
+
+    @BeforeEach
+    void setUp() {
+        gameService = new GameService(new Deck());
+    }
+
     @Test
-    void 게임_시작_세팅_테스트() {
+    @DisplayName("게임 시작 세팅 테스트")
+    void gameSetting() {
         // given
-        GameService gameService = new GameService(new Deck());
         User user = new User("흑곰");
         Dealer dealer = new Dealer();
 
@@ -28,9 +39,9 @@ class GameServiceTest {
     }
 
     @Test
-    void 승패_판단_테스트() {
+    @DisplayName("승패 판단 테스트")
+    void winningJudge() {
         // given
-        GameService gameService = new GameService(new Deck());
         User user = new User("흑곰");
         Dealer dealer = new Dealer();
         user.bring(new Card(CardValue.SEVEN, CardShape.DIAMOND));
@@ -41,6 +52,24 @@ class GameServiceTest {
 
         // then
         assertThat(isDealerWinning).isTrue();
+    }
+
+    @Test
+    @DisplayName("딜러 및 유저 승리 횟수 할당")
+    void applyWinningCount() {
+        // given
+        User user = new User("흑곰");
+        Dealer dealer = new Dealer();
+        Map<String, Boolean> result = new HashMap<>();
+        user.bring(new Card(CardValue.SEVEN, CardShape.DIAMOND));
+        dealer.bring(new Card(CardValue.EIGHT, CardShape.DIAMOND));
+
+        // when
+        gameService.applyGameResult(user, dealer, result);
+
+        // then
+        assertThat(false).isEqualTo(result.get("흑곰"));
+
     }
 
 }
