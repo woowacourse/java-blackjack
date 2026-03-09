@@ -81,7 +81,7 @@ public class Dealer extends Gamer {
     }
 
     private Card drawCard() {
-        return cardDeck.giveCard();
+        return cardDeck.drawCard();
     }
 
 }

@@ -19,7 +19,7 @@ public class CardDeck {
         return new CardDeck(cardGenerator.generate());
     }
 
-    public Card giveCard() {
+    public Card drawCard() {
         validateDeckIsEmpty();
         return deck.poll();
     }

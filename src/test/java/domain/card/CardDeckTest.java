@@ -12,7 +12,7 @@ public class CardDeckTest {
         CardDeck cardDeck = new CardDeckBuilder()
                 .cards(Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER), Card.of(CardDenomination.NINE, CardEmblem.SPADE))
                 .build();
-        Card card = cardDeck.giveCard();
+        Card card = cardDeck.drawCard();
 
         Assertions.assertThat(card).isEqualTo(Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER));
     }
@@ -23,7 +23,7 @@ public class CardDeckTest {
                 .build();
 
         Assertions.assertThatThrownBy(() -> {
-            Card card = cardDeck.giveCard();
+            Card card = cardDeck.drawCard();
         }).isInstanceOf(CardException.class);
     }
 
