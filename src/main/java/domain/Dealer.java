@@ -28,15 +28,11 @@ public class Dealer {
     }
 
     public GameResult judgeUserResult(int userTotalScore) {
-        if (hand.calculateTotalScore() > WINNING_SCORE_BOUNDARY) {
-            return GameResult.LOSE;
-        }
-
         if (hand.calculateTotalScore() == WINNING_SCORE_BOUNDARY) {
             return GameResult.WIN;
         }
 
-        if (userTotalScore > hand.calculateTotalScore()) {
+        if (hand.calculateTotalScore() > WINNING_SCORE_BOUNDARY || userTotalScore > hand.calculateTotalScore()) {
             return GameResult.LOSE;
         }
 
@@ -48,15 +44,8 @@ public class Dealer {
             return GameResult.LOSE;
         }
 
-        if (userScore == WINNING_SCORE_BOUNDARY) {
-            return GameResult.WIN;
-        }
-
-        if (hand.calculateTotalScore() > WINNING_SCORE_BOUNDARY) {
-            return GameResult.WIN;
-        }
-
-        if (userScore > hand.calculateTotalScore() && (hand.calculateTotalScore() < WINNING_SCORE_BOUNDARY)) {
+        int dealerScore = hand.calculateTotalScore();
+        if (userScore == WINNING_SCORE_BOUNDARY || dealerScore > WINNING_SCORE_BOUNDARY || userScore > dealerScore) {
             return GameResult.WIN;
         }
 

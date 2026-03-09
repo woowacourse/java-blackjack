@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import vo.Rank;
@@ -21,9 +22,15 @@ public class Deck {
     private List<Card> makeCards() {
         List<Card> cards = new ArrayList<>();
         for (Suit suit : Suit.values()) {
-            for (Rank rank : Rank.values()) {
-                cards.add(new Card(suit, rank));
-            }
+            cards.addAll(createCardsBySuit(suit));
+        }
+        return cards;
+    }
+
+    private List<Card> createCardsBySuit(Suit suit) {
+        List<Card> cards = new ArrayList<>();
+        for (Rank rank : Rank.values()) {
+            cards.add(new Card(suit, rank));
         }
         return cards;
     }

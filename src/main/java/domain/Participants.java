@@ -94,33 +94,51 @@ public class Participants {
     }
 
     public List<String> judgeWinner() {
-        EnumMap<GameResult, Integer> dealerScore = new EnumMap<>(GameResult.class);
+        Map<String, GameResult> userResults = calculateUserResults();
+        EnumMap<GameResult, Integer> dealerResults = calculateDealerResults();
 
+        List<String> displays = new ArrayList<>();
+        displays.add(formatDealerDisplay(dealerResults));
+        displays.addAll(formatUserDisplays(userResults));
+        return displays;
+    }
+
+    private Map<String, GameResult> calculateUserResults() {
+        Map<String, GameResult> userResults = new HashMap<>();
+        for (User user : participants) {
+            userResults.put(user.getName(), dealer.judgeUserWin(user.getHand()));
+        }
+        return userResults;
+    }
+
+    private EnumMap<GameResult, Integer> calculateDealerResults() {
+        EnumMap<GameResult, Integer> dealerResults = initEnumMap();
+        for (User user : participants) {
+            GameResult dealerResult = dealer.judgeUserResult(user.getHand());
+            dealerResults.replace(dealerResult, dealerResults.get(dealerResult) + 1);
+        }
+        return dealerResults;
+    }
+
+    private String formatDealerDisplay(EnumMap<GameResult, Integer> dealerResults) {
+        return "딜러: " + dealerResults.get(GameResult.WIN) + "승 " + dealerResults.get(GameResult.LOSE) + "패";
+    }
+
+    private List<String> formatUserDisplays(Map<String, GameResult> userResults) {
+        return participants.stream()
+                .map(user -> user.getName() + ": " + userResults.get(user.getName()).getName())
+                .collect(Collectors.toList());
+    }
+
+    private EnumMap<GameResult, Integer> initEnumMap() {
+        EnumMap<GameResult, Integer> dealerScore = new EnumMap<>(GameResult.class);
         for (GameResult result : GameResult.values()) {
             dealerScore.put(result, 0);
         }
-
-        Map<String, GameResult> userScore = new HashMap<String, GameResult>();
-
-        for (User user : participants) {
-            GameResult isDealerWin = dealer.judgeUserResult(user.getHand());
-            dealerScore.replace(isDealerWin, dealerScore.get(isDealerWin) + 1);
-
-            GameResult isUserWin = dealer.judgeUserWin(user.getHand());
-            userScore.put(user.getName(), isUserWin);
-        }
-
-        List<String> finalTotalDisplays = new ArrayList<>();
-        String dealerTotalFinalDisplay = "딜러: " + dealerScore.get(GameResult.WIN) + "승 " + dealerScore.get(GameResult.LOSE) + "패";
-        finalTotalDisplays.add(dealerTotalFinalDisplay);
-
-        for (User user : participants) {
-            String userTotalFinalDisplay = user.getName() + ": " + userScore.get(user.getName()).getName();
-            finalTotalDisplays.add(userTotalFinalDisplay);
-        }
-
-        return finalTotalDisplays;
+        return dealerScore;
     }
+
+
 }
 
 

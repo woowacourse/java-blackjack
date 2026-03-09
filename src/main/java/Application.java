@@ -1,5 +1,6 @@
 import java.util.List;
 import domain.BlackjackGame;
+import java.util.function.Supplier;
 import util.Parser;
 import util.Validator;
 import view.InputView;
@@ -41,17 +42,13 @@ public class Application {
     }
 
     public void readParticipants() {
-        while(true) {
-            try {
-                outputView.printMessage(Message.INPUT_PARTICIPANTS_MESSAGE);
-                String participantsName = inputView.readParticipantsName();
-                List<String> parsedParticipantsName = parser.parseParticipantsName(participantsName);
-                blackjackGame.saveParticipants(parsedParticipantsName);
-                return;
-            } catch (IllegalArgumentException e) {
-                outputView.printErrorMessage(e.getMessage());
-            }
-        }
+        retryUntilSuccess(() -> {
+            outputView.printMessage(Message.INPUT_PARTICIPANTS_MESSAGE);
+            String participantsName = inputView.readParticipantsName();
+            List<String> parsedParticipantsName = parser.parseParticipantsName(participantsName);
+            blackjackGame.saveParticipants(parsedParticipantsName);
+            return null;
+        });
     }
 
     private void shuffleCards() {
@@ -64,19 +61,18 @@ public class Application {
         List<String> requestMessages = getExtraCardRequestMessages();
 
         for(int index = 0; index < requestMessages.size(); index++) {
-            boolean flag = true;
-            while(flag) {
-                try {
-                    outputView.printMessage(requestMessages.get(index));
-                    String answer = inputView.readDealDecision();
-                    validator.validateAnswer(answer);
-                    determinePlayerContinue(answer, index);
-                    flag = false;
-                } catch (IllegalArgumentException e) {
-                    outputView.printErrorMessage(e.getMessage());
-                }
-            }
+            askCardToPlayer(requestMessages.get(index), index);
         }
+    }
+
+    private void askCardToPlayer(String message, int index) {
+        retryUntilSuccess(() -> {
+            outputView.printMessage(message);
+            String answer = inputView.readDealDecision();
+            validator.validateAnswer(answer);
+            determinePlayerContinue(answer, index);
+            return null;
+        });
     }
 
     private void printWinningResult() {
@@ -113,5 +109,14 @@ public class Application {
 
     private List<String> getExtraCardRequestMessages() {
         return blackjackGame.makeExtraCardRequests();
+    }
+
+    private <T> T retryUntilSuccess(Supplier<T> action) {
+        try {
+            return action.get();
+        } catch (IllegalArgumentException e) {
+            outputView.printErrorMessage(e.getMessage());
+            return retryUntilSuccess(action);
+        }
     }
 }
