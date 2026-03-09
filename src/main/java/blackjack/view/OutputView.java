@@ -1,10 +1,10 @@
 package blackjack.view;
 
-import blackjack.dto.CardDto;
-import blackjack.dto.DealerScoreDto;
-import blackjack.dto.PlayerDto;
-import blackjack.dto.PlayerScoreDto;
-import blackjack.dto.ResultDto;
+import blackjack.view.dto.CardDto;
+import blackjack.view.dto.DealerScoreDto;
+import blackjack.view.dto.PlayerDto;
+import blackjack.view.dto.PlayerScoreDto;
+import blackjack.view.dto.ResultDto;
 import blackjack.model.BlackjackResult;
 import blackjack.view.parser.RankParser;
 import blackjack.view.parser.ResultParser;

@@ -1,4 +1,4 @@
-package blackjack.dto;
+package blackjack.view.dto;
 
 import blackjack.model.Dealer;
 import java.util.List;
