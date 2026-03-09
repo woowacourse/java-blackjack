@@ -2,9 +2,6 @@ package view;
 
 import domain.MatchResult;
 import domain.card.Card;
-import domain.participant.Dealer;
-import domain.participant.Player;
-import domain.participant.Players;
 import dto.DealerHandDto;
 import dto.GameResultDto;
 import dto.PlayersHandDto;
@@ -12,13 +9,12 @@ import view.message.MatchResultMessage;
 import view.message.RankMessage;
 import view.message.SuitMessage;
 
-import javax.xml.namespace.QName;
 import java.util.List;
 import java.util.Map;
 
 public class OutputView {
 
-    public void showInitialHands(DealerHandDto dealerHandDto, PlayersHandDto playersHandDto) {
+    public void showInitialHandsOfParticipants(DealerHandDto dealerHandDto, PlayersHandDto playersHandDto) {
         String playerNames = String.join(", ", playersHandDto.getPlayersHand().keySet());
         System.out.printf("\n딜러와 %s에게 2장을 나누었습니다.\n", playerNames);
 

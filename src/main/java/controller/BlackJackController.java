@@ -23,8 +23,8 @@ public class BlackJackController {
     public void playGame() {
         Players players = new Players(readUntilValidPlayers());
 
-        gameManager.initHands();
-        outputView.showInitialHands(gameManager.getDealerHand(), gameManager.getPlayersHand());
+        gameManager.dealInitialCardsToParticipants();
+        outputView.showInitialHandsOfParticipants(gameManager.getDealerHand(), gameManager.getPlayersHand());
 
         playBlackJack(players);
         outputView.showHandResults(gameManager.getDealerHand(), gameManager.getPlayersHand());
@@ -32,10 +32,7 @@ public class BlackJackController {
     }
 
     private void playBlackJack(Players players) {
-        for (Player player : players.getPlayers()) {
-            playPlayerTurn(player);
-        }
-
+        players.playTurns(this::playPlayerTurn);
         playDealerTurn();
     }
 

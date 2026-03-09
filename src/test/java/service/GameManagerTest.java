@@ -19,7 +19,7 @@ class GameManagerTest {
 
         // when
         gameManager.createPlayers(players);
-        gameManager.initHands();
+        gameManager.dealInitialCardsToParticipant();
 
         // then
         Assertions.assertEquals(gameManager.getDealerHand().getDealerHand().size(), 2);

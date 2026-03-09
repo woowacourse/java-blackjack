@@ -2,8 +2,10 @@ package domain.participant;
 
 import domain.MatchResult;
 import domain.card.Card;
+import domain.card.Deck;
 
 import java.util.*;
+import java.util.function.Consumer;
 
 public class Players {
 
@@ -31,6 +33,28 @@ public class Players {
         throw new IllegalArgumentException("존재하지 않는 플레이어입니다.");
     }
 
+    public void dealCardToAllPlayers(Deck deck) {
+        for (Player player : players) {
+            player.receive(deck.drawCard());
+        }
+    }
+
+    public void playTurns(Consumer<Player> action) {
+        for (Player player : players) {
+            action.accept(player);
+        }
+    }
+
+    public Map<Player, MatchResult> calculateResult(Dealer dealer) {
+        Map<Player, MatchResult> result = new HashMap<>();
+
+        for (Player player : players) {
+            result.put(player, determineMatchResult(player, dealer));
+        }
+
+        return result;
+    }
+
     public Map<Player, List<Card>> getPlayersHand() {
         Map<Player, List<Card>> playersHand = new HashMap<>();
 
@@ -49,16 +73,6 @@ public class Players {
         }
 
         return playersScore;
-    }
-
-    public Map<Player, MatchResult> calculateResult(Dealer dealer) {
-        Map<Player, MatchResult> result = new HashMap<>();
-
-        for (Player player : players) {
-            result.put(player, determineMatchResult(player, dealer));
-        }
-
-        return result;
     }
 
     private MatchResult determineMatchResult(Player player, Dealer dealer) {
@@ -86,9 +100,5 @@ public class Players {
     private void validateSize(List<Player> playerNames) {
         if (playerNames.size() > MAX_PLAYER_SIZE)
             throw new IllegalArgumentException("플레이어 인원 수는 5명 이하여야 합니다.");
-    }
-
-    public List<Player> getPlayers() {
-        return players;
     }
 }

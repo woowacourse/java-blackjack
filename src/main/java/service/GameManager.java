@@ -33,13 +33,10 @@ public class GameManager {
                 .toList();
     }
 
-    public void initHands() {
+    public void dealInitialCardsToParticipants() {
         for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
             dealCardToDealer();
-
-            for (Player player : players.getPlayers()) {
-                dealCardTo(player);
-            }
+            players.dealCardToAllPlayers(deck);
         }
     }
 

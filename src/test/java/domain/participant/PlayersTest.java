@@ -72,22 +72,19 @@ class PlayersTest {
     void 플레이어만_버스트_패_판단() {
         // given
         Dealer dealer = new Dealer();
-        Players players = new Players(List.of(new Player("pobi")));
+        Player player = new Player("pobi");
+        Players players = new Players(List.of(player));
 
+        // when
         dealer.receive(new Card(Rank.ACE, Suit.CLOVER));
         dealer.receive(new Card(Rank.KING, Suit.CLOVER));
 
-        for (Player player : players.getPlayers()) {
-            player.receive(new Card(Rank.JACK, Suit.CLOVER));
-            player.receive(new Card(Rank.SEVEN, Suit.HEART));
-            player.receive(new Card(Rank.JACK, Suit.HEART));
-        }
-
-        // when
-        Map<Player, MatchResult> playerResult = players.calculateResult(dealer);
+        players.findBy(player).receive(new Card(Rank.JACK, Suit.CLOVER));
+        players.findBy(player).receive(new Card(Rank.SEVEN, Suit.HEART));
+        players.findBy(player).receive(new Card(Rank.JACK, Suit.HEART));
 
         // then
-        for (Map.Entry<Player, MatchResult> matchResultEntry : playerResult.entrySet()) {
+        for (Map.Entry<Player, MatchResult> matchResultEntry : players.calculateResult(dealer).entrySet()) {
             Assertions.assertEquals(matchResultEntry.getValue(), MatchResult.LOSE);
         }
     }
@@ -97,22 +94,20 @@ class PlayersTest {
     void 딜러만_버스트_플레이어_패_판단() {
         // given
         Dealer dealer = new Dealer();
-        Players players = new Players(List.of(new Player("pobi")));
+        Player player = new Player("pobi");
+        Players players = new Players(List.of(player));
 
+        // when
         dealer.receive(new Card(Rank.JACK, Suit.CLOVER));
         dealer.receive(new Card(Rank.SEVEN, Suit.HEART));
         dealer.receive(new Card(Rank.JACK, Suit.HEART));
 
-        for (Player player : players.getPlayers()) {
-            player.receive(new Card(Rank.ACE, Suit.CLOVER));
-            player.receive(new Card(Rank.KING, Suit.CLOVER));
-        }
 
-        // when
-        Map<Player, MatchResult> playerResult = players.calculateResult(dealer);
+        players.findBy(player).receive(new Card(Rank.ACE, Suit.CLOVER));
+        players.findBy(player).receive(new Card(Rank.KING, Suit.CLOVER));
 
         // then
-        for (Map.Entry<Player, MatchResult> matchResultEntry : playerResult.entrySet()) {
+        for (Map.Entry<Player, MatchResult> matchResultEntry : players.calculateResult(dealer).entrySet()) {
             Assertions.assertEquals(matchResultEntry.getValue(), MatchResult.WIN);
         }
     }
@@ -122,21 +117,18 @@ class PlayersTest {
     void 플레이어_승_판단() {
         // given
         Dealer dealer = new Dealer();
-        Players players = new Players(List.of(new Player("pobi")));
+        Player player = new Player("pobi");
+        Players players = new Players(List.of(player));
 
+        // when
         dealer.receive(new Card(Rank.JACK, Suit.CLOVER));
         dealer.receive(new Card(Rank.SEVEN, Suit.HEART));
 
-        for (Player player : players.getPlayers()) {
-            player.receive(new Card(Rank.ACE, Suit.CLOVER));
-            player.receive(new Card(Rank.KING, Suit.CLOVER));
-        }
-
-        // when
-        Map<Player, MatchResult> playerResult = players.calculateResult(dealer);
+        players.findBy(player).receive(new Card(Rank.QUEEN, Suit.CLOVER));
+        players.findBy(player).receive(new Card(Rank.KING, Suit.CLOVER));
 
         // then
-        for (Map.Entry<Player, MatchResult> matchResultEntry : playerResult.entrySet()) {
+        for (Map.Entry<Player, MatchResult> matchResultEntry : players.calculateResult(dealer).entrySet()) {
             Assertions.assertEquals(matchResultEntry.getValue(), MatchResult.WIN);
         }
     }
@@ -146,21 +138,18 @@ class PlayersTest {
     void 플레이어_무승부_판단() {
         // given
         Dealer dealer = new Dealer();
-        Players players = new Players(List.of(new Player("pobi")));
+        Player player = new Player("pobi");
+        Players players = new Players(List.of(player));
 
+        // when
         dealer.receive(new Card(Rank.JACK, Suit.CLOVER));
         dealer.receive(new Card(Rank.SEVEN, Suit.HEART));
 
-        for (Player player : players.getPlayers()) {
-            player.receive(new Card(Rank.SEVEN, Suit.CLOVER));
-            player.receive(new Card(Rank.KING, Suit.CLOVER));
-        }
-
-        // when
-        Map<Player, MatchResult> playerResult = players.calculateResult(dealer);
+        players.findBy(player).receive(new Card(Rank.SEVEN, Suit.CLOVER));
+        players.findBy(player).receive(new Card(Rank.KING, Suit.CLOVER));
 
         // then
-        for (Map.Entry<Player, MatchResult> matchResultEntry : playerResult.entrySet()) {
+        for (Map.Entry<Player, MatchResult> matchResultEntry : players.calculateResult(dealer).entrySet()) {
             Assertions.assertEquals(matchResultEntry.getValue(), MatchResult.DRAW);
         }
     }
@@ -170,22 +159,19 @@ class PlayersTest {
     void 동점_플레이어_블랙잭_승리_판단() {
         // given
         Dealer dealer = new Dealer();
-        Players players = new Players(List.of(new Player("pobi")));
+        Player player = new Player("pobi");
+        Players players = new Players(List.of(player));
 
+        // when
         dealer.receive(new Card(Rank.JACK, Suit.CLOVER));
         dealer.receive(new Card(Rank.ACE, Suit.HEART));
         dealer.receive(new Card(Rank.KING, Suit.HEART));
 
-        for (Player player : players.getPlayers()) {
-            player.receive(new Card(Rank.ACE, Suit.CLOVER));
-            player.receive(new Card(Rank.KING, Suit.CLOVER));
-        }
-
-        // when
-        Map<Player, MatchResult> playerResult = players.calculateResult(dealer);
+        players.findBy(player).receive(new Card(Rank.ACE, Suit.CLOVER));
+        players.findBy(player).receive(new Card(Rank.KING, Suit.CLOVER));
 
         // then
-        for (Map.Entry<Player, MatchResult> matchResultEntry : playerResult.entrySet()) {
+        for (Map.Entry<Player, MatchResult> matchResultEntry : players.calculateResult(dealer).entrySet()) {
             Assertions.assertEquals(matchResultEntry.getValue(), MatchResult.WIN);
         }
     }
@@ -195,22 +181,19 @@ class PlayersTest {
     void 동점_딜러_블랙잭_플레이어_패배_판단() {
         // given
         Dealer dealer = new Dealer();
-        Players players = new Players(List.of(new Player("pobi")));
+        Player player = new Player("pobi");
+        Players players = new Players(List.of(player));
 
+        // when
         dealer.receive(new Card(Rank.ACE, Suit.CLOVER));
         dealer.receive(new Card(Rank.KING, Suit.CLOVER));
 
-        for (Player player : players.getPlayers()) {
-            player.receive(new Card(Rank.JACK, Suit.CLOVER));
-            player.receive(new Card(Rank.ACE, Suit.HEART));
-            player.receive(new Card(Rank.KING, Suit.HEART));
-        }
-
-        // when
-        Map<Player, MatchResult> playerResult = players.calculateResult(dealer);
+        players.findBy(player).receive(new Card(Rank.JACK, Suit.CLOVER));
+        players.findBy(player).receive(new Card(Rank.ACE, Suit.HEART));
+        players.findBy(player).receive(new Card(Rank.KING, Suit.HEART));
 
         // then
-        for (Map.Entry<Player, MatchResult> matchResultEntry : playerResult.entrySet()) {
+        for (Map.Entry<Player, MatchResult> matchResultEntry : players.calculateResult(dealer).entrySet()) {
             Assertions.assertEquals(matchResultEntry.getValue(), MatchResult.LOSE);
         }
     }
@@ -220,21 +203,18 @@ class PlayersTest {
     void 동점_딜러_플레이어_모두_블랙잭_무승부_판단() {
         // given
         Dealer dealer = new Dealer();
-        Players players = new Players(List.of(new Player("pobi")));
+        Player player = new Player("pobi");
+        Players players = new Players(List.of(player));
 
+        // when
         dealer.receive(new Card(Rank.ACE, Suit.CLOVER));
         dealer.receive(new Card(Rank.KING, Suit.CLOVER));
 
-        for (Player player : players.getPlayers()) {
-            player.receive(new Card(Rank.JACK, Suit.CLOVER));
-            player.receive(new Card(Rank.ACE, Suit.HEART));
-        }
-
-        // when
-        Map<Player, MatchResult> playerResult = players.calculateResult(dealer);
+        players.findBy(player).receive(new Card(Rank.JACK, Suit.CLOVER));
+        players.findBy(player).receive(new Card(Rank.ACE, Suit.HEART));
 
         // then
-        for (Map.Entry<Player, MatchResult> matchResultEntry : playerResult.entrySet()) {
+        for (Map.Entry<Player, MatchResult> matchResultEntry : players.calculateResult(dealer).entrySet()) {
             Assertions.assertEquals(matchResultEntry.getValue(), MatchResult.DRAW);
         }
     }
@@ -244,21 +224,18 @@ class PlayersTest {
     void 플레이어_패_판단() {
         // given
         Dealer dealer = new Dealer();
-        Players players = new Players(List.of(new Player("pobi")));
+        Player player = new Player("pobi");
+        Players players = new Players(List.of(player));
 
+        // when
         dealer.receive(new Card(Rank.JACK, Suit.CLOVER));
         dealer.receive(new Card(Rank.KING, Suit.CLOVER));
 
-        for (Player player : players.getPlayers()) {
-            player.receive(new Card(Rank.JACK, Suit.CLOVER));
-            player.receive(new Card(Rank.SEVEN, Suit.HEART));
-        }
-
-        // when
-        Map<Player, MatchResult> playerResult = players.calculateResult(dealer);
+        players.findBy(player).receive(new Card(Rank.JACK, Suit.CLOVER));
+        players.findBy(player).receive(new Card(Rank.SEVEN, Suit.HEART));
 
         // then
-        for (Map.Entry<Player, MatchResult> matchResultEntry : playerResult.entrySet()) {
+        for (Map.Entry<Player, MatchResult> matchResultEntry : players.calculateResult(dealer).entrySet()) {
             Assertions.assertEquals(matchResultEntry.getValue(), MatchResult.LOSE);
         }
     }
