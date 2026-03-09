@@ -19,7 +19,8 @@ public class BlackJackService {
     private final JudgementService judgementService;
 
     public BlackJackService(
-            PlayerRepository playerRepository, DealerRepository dealerRepository,
+            PlayerRepository playerRepository,
+            DealerRepository dealerRepository,
             CardDistributor cardDistributor,
             JudgementService judgementService
     ) {

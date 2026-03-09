@@ -42,7 +42,7 @@ public class JudgementService {
     public void judgementWinning(Player player, Dealer dealer) {
         // 버스트 비교
         if (player.isBurst() && dealer.isBurst()) {
-            player.changeStatus(PlayerStatus.DRAW);
+            player.changeStatus(PlayerStatus.LOSS);
             return;
         }
         if (player.isBurst() && dealer.isAlice()) {
