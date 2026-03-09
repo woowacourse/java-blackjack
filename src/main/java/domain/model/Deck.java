@@ -7,7 +7,7 @@ import static constant.BlackJackConstant.BURST_CRITERIA;
 public class Deck {
 
     private int sum = 0;
-    private DeckStatus deckStatus = DeckStatus.ALIVE;
+    private DeckStatus deckStatus;
     private List<Card> cards;
 
     private Deck(List<Card> cards, int sum, DeckStatus deckStatus) {
@@ -37,32 +37,6 @@ public class Deck {
         return List.copyOf(cards);
     }
 
-    public void calculateSum() {
-        sum = cards.stream()
-                .mapToInt(Card::getValue)
-                .sum();
-    }
-
-    // 최종 점수 계산 메서드
-    public void calculateFinalSum() {
-        // 카드를 순회하며 A가 있는지 확인
-        boolean hasAce = cards.stream().anyMatch(Card::isAce);
-        if (hasAce && sum <= 11) {
-            // A가 있으면 11로 계산해서 21이 넘는지 확인
-            // 넘지 않으면 11로 처리
-            sum += 10;
-        }
-        // 만약 넘으면 sum은 그대로
-    }
-
-    public void append(Card card) {
-        if (deckStatus == DeckStatus.ALIVE) {
-            this.cards.add(card);
-            calculateSum();
-            checkStatus();
-        }
-    }
-
     public int getSize() {
         return cards.size();
     }
@@ -75,6 +49,32 @@ public class Deck {
         if (sum > BURST_CRITERIA) {
             deckStatus = DeckStatus.BURST;
         }
+    }
+
+    public void calculateSum() {
+        sum = cards.stream()
+                .mapToInt(Card::getValue)
+                .sum();
+    }
+
+    public void append(Card card) {
+        if (deckStatus == DeckStatus.ALIVE) {
+            this.cards.add(card);
+            calculateSum();
+            checkStatus();
+        }
+    }
+
+    // 최종 점수 계산 메서드
+    public int calculateFinalSum() {
+        // 카드를 순회하며 A가 있는지 확인
+        boolean hasAce = cards.stream().anyMatch(Card::isAce);
+        if (hasAce && sum <= 11) {
+            // A가 있으면 11로 계산해서 21이 넘는지 확인
+            // 넘지 않으면 11로 처리 후 반환
+            return sum + 10;
+        }
+        return sum;
     }
 
     private static DeckStatus judgeDeckStatus(int sum) {

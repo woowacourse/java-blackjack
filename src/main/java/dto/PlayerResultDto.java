@@ -18,6 +18,6 @@ public record PlayerResultDto(
         for (Card card : cards) {
             playerCards.add(CardDto.of(card));
         }
-        return new PlayerResultDto(player.getName(), playerCards, player.getDeckSum(), player.getPlayerStatus().getName());
+        return new PlayerResultDto(player.getName(), playerCards, player.getFinalSum(), player.getPlayerStatus().getName());
     }
 }

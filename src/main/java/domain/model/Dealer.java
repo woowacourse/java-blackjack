@@ -3,6 +3,7 @@ package domain.model;
 public class Dealer implements Person {
 
     private Deck deck;
+    private int finalSum = 0;
 
     private Dealer(Deck deck) {
         this.deck = deck;
@@ -12,19 +13,23 @@ public class Dealer implements Person {
         return new Dealer(deck);
     }
 
-    public void calculateFinalSum() {
-        deck.calculateFinalSum();
-    }
-
     public Deck getDeck() {
         return deck;
+    }
+
+    public int getFinalSum() {
+        return finalSum;
+    }
+
+    public void calculateFinalSum() {
+        finalSum = deck.calculateFinalSum();
     }
 
     public boolean isBurst() {
         return deck.getDeckStatus() == DeckStatus.BURST;
     }
 
-    public boolean isAlice() {
+    public boolean isAlive() {
         return deck.getDeckStatus() == DeckStatus.ALIVE;
     }
 

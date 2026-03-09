@@ -5,6 +5,7 @@ public class Player implements Person {
     private final String name;
     private Deck deck;
     private PlayerStatus playerStatus = PlayerStatus.NONE;
+    private int finalSum = 0;
 
     private Player(String name, Deck deck) {
         this.name = name;
@@ -13,10 +14,6 @@ public class Player implements Person {
 
     public static Player of(String name) {
         return new Player(name, null);
-    }
-
-    public void calculateFinalSum() {
-        deck.calculateFinalSum();
     }
 
     public String getName() {
@@ -29,6 +26,14 @@ public class Player implements Person {
 
     public PlayerStatus getPlayerStatus() {
         return playerStatus;
+    }
+
+    public int getFinalSum() {
+        return finalSum;
+    }
+
+    public void calculateFinalSum() {
+        finalSum = deck.calculateFinalSum();
     }
 
     // 플레이어에게 초기 생성된 카드 2개가 있는 덱을 부여
