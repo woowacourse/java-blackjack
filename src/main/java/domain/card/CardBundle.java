@@ -22,15 +22,9 @@ public class CardBundle {
         return new CardBundle(new ArrayList<>());
     }
 
-    public CardBundle addUp(CardBundle newCardBundle) {
-        for (Card card : newCardBundle.cardBundle) {
-            addUp(card);
-        }
+    public CardBundle addUp(CardBundle additionalCardBundle) {
+        cardBundle.addAll(additionalCardBundle.cardBundle);
         return this;
-    }
-
-    public void addUp(Card card) {
-        cardBundle.add(card);
     }
 
     public int getResultScore() {
