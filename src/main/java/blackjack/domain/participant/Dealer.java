@@ -20,6 +20,7 @@ public class Dealer extends Participant {
         dealRoundTo(players);
         dealRoundTo(players);
         drawAndReceive();
+        drawAndReceive();
     }
 
     private void dealRoundTo(final Players players) {
