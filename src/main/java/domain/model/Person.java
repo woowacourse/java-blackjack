@@ -3,7 +3,6 @@ package domain.model;
 public abstract class Person {
 
     private Deck deck;
-    private int finalSum = 0;
 
     public Person(Deck deck) {
         this.deck = deck;
@@ -39,11 +38,6 @@ public abstract class Person {
     // 최종 합산 계산
     public int calculateFinalSum() {
         return deck.calculateFinalSum();
-    }
-
-    // 최종 합산 조회
-    public int getFinalSum() {
-        return finalSum;
     }
 
     // 버스트인지 검사
