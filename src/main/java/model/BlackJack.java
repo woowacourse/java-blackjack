@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 import model.deck.Deck;
 import model.deck.DeckImpl;
 import model.participant.Dealer;
@@ -77,20 +78,13 @@ public class BlackJack {
     }
 
     public Map<String, Boolean> calculatePlayerResult() {
-        Map<String, Boolean> resultMap = new HashMap<>();
-
         Dealer dealer = participants.getDealer();
-        List<Player> players = participants.getPlayers();
 
-        for (Participant player : players) {
-            if (dealer.calculateScore() > player.calculateScore() || player.isBust()) {
-                resultMap.put(player.getName(), Boolean.FALSE);
-                continue;
-            }
-
-            resultMap.put(player.getName(), Boolean.TRUE);
-        }
-
-        return resultMap;
+        return participants.getPlayers()
+                .stream()
+                .collect(Collectors.toMap(
+                        Player::getName,
+                        player -> player.beats(dealer)
+                ));
     }
 }
