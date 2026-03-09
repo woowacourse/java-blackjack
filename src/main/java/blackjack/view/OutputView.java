@@ -1,18 +1,22 @@
 package blackjack.view;
 
-import static blackjack.model.Constant.TWENTY_ONE;
+import static blackjack.model.Constant.BLACKJACK_SCORE;
 
 import blackjack.model.Card;
 import blackjack.model.Dealer;
 import blackjack.model.GameResult;
-import blackjack.model.GameSummary;
 import blackjack.model.Player;
 import blackjack.model.User;
+import blackjack.model.Users;
 import java.util.EnumMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class OutputView {
-    public static void printInitCards(List<Player> players, Dealer dealer) {
+    public static void printInitCards(Users users) {
+        List<Player> players = users.getPlayers();
+        Dealer dealer = users.getDealer();
+
         List<String> names = players.stream()
                 .map(Player::getName)
                 .toList();
@@ -31,52 +35,50 @@ public class OutputView {
     }
 
     private static void printDealerCard(Dealer dealer) {
-        System.out.println("딜러카드: " + dealer.cards().getFirst().getFormat());
+        Card firstCard = dealer.cards().getFirst();
+        System.out.println("딜러카드: " + firstCard.getRank().getFormat() + firstCard.getSuit().getFormat());
     }
 
     public static void printPlayerCards(Player player) {
-        List<String> formats = player.cards().stream()
-                .map(Card::getFormat)
-                .toList();
+        String cardsFormat = player.cards().stream()
+                .map(card -> card.getRank().getFormat() + card.getSuit().getFormat())
+                .collect(Collectors.joining(", "));
 
-        System.out.println(player.getName() + "카드: " + String.join(", ", formats));
+        System.out.println(player.getName() + "카드: " + cardsFormat);
     }
 
-    public static void printCantAddCard() {
-        System.out.println("카드의 합계가 " + TWENTY_ONE + " 이상입니다. 더이상 카드를 받을 수 없습니다.");
+    public static void printCantHit() {
+        System.out.println("카드의 합계가 " + BLACKJACK_SCORE + " 이상입니다. 더이상 카드를 받을 수 없습니다.");
     }
 
     public static void printDealerHit() {
         System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
     }
 
-    public static void printCardStatus(GameSummary gameSummary) {
-        User user = gameSummary.user();
-
+    public static void printHandStatus(Users users) {
         StringBuilder sb = new StringBuilder();
-        sb.append(user.getName() + "카드: ");
-        List<String> cardFormats = user.cards().stream().map(Card::getFormat).toList();
-        sb.append(String.join(", ", cardFormats));
-        sb.append(" - 결과: " + gameSummary.totalScore());
-
+        for (User user : users.getUsers()) {
+            sb.append(user.getName()).append(" 카드: ");
+            sb.append(user.cards().stream()
+                    .map(card -> card.getRank().getFormat() + card.getSuit().getFormat())
+                    .collect(Collectors.joining(", ")));
+            sb.append(" - 결과: ").append(user.totalScore()).append("\n");
+        }
         System.out.println(sb);
     }
 
-    public static void printGameResult(List<User> users) {
+    public static void printGameResult(Users users) {
         System.out.println();
         System.out.println("## 최종 승패");
 
-        Dealer dealer = (Dealer) users.getFirst();
+        Dealer dealer = users.getDealer();
         EnumMap<GameResult, Integer> dealerGameResult = dealer.getGameResults();
         System.out.println(
                 dealer.getName() + ": " + dealerGameResult.getOrDefault(GameResult.WIN, 0) + "승 " +
                         dealerGameResult.getOrDefault(GameResult.DRAW, 0) + "무 " + dealerGameResult.getOrDefault(
                         GameResult.LOSE, 0) + "패");
 
-        List<Player> players = users.stream()
-                .skip(1)
-                .map(user -> (Player) user)
-                .toList();
+        List<Player> players = users.getPlayers();
         for (Player player : players) {
             System.out.print(player.getName() + ": ");
             System.out.println(player.getGameResult().getFormat());
@@ -86,5 +88,4 @@ public class OutputView {
     public static void printError(String errorMessage) {
         System.out.println("[ERROR] " + errorMessage);
     }
-
 }
