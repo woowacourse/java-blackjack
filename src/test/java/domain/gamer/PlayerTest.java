@@ -31,11 +31,11 @@ public class PlayerTest {
 
         dealer.hitCardToPlayer(testPlayer);
         Card card = Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER);
-        CardBundle playerCardBundle = testPlayer.getCardBundle();
-        CardBundle answerCardBundle = CardBundle.from(List.of(card));
+        CardBundle actualCardBundle = testPlayer.getCardBundle();
+        CardBundle expectedCardBundle = CardBundle.from(List.of(card));
 
-        Assertions.assertThat(playerCardBundle)
-                .isEqualTo(answerCardBundle);
+        Assertions.assertThat(actualCardBundle)
+                .isEqualTo(expectedCardBundle);
     }
 
     @Test
@@ -72,12 +72,15 @@ public class PlayerTest {
         CardDeck cardDeck = new CardDeckBuilder()
                 .cards(clover, spade)
                 .build();
-        CardBundle origin = CardBundle.from(List.of(clover, spade));
         Dealer dealer = Dealer.from(cardDeck);
 
-        CardBundle result = dealer.dealCardToPlayer(testPlayer);
+        int actualScore = dealer.dealCardToPlayer(testPlayer)
+                .getBasicScore();
 
-        Assertions.assertThat(result.getBasicScore()).isEqualTo(origin.getBasicScore());
+        int expectedScore = CardBundle.from(List.of(clover, spade))
+                .getBasicScore();
+        Assertions.assertThat(actualScore)
+                .isEqualTo(expectedScore);
     }
 
     @Test

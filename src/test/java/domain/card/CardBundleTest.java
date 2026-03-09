@@ -39,6 +39,7 @@ public class CardBundleTest {
     void 최종점수합을_계산한다() {
         int actualScore = cardBundle.getResultScore();
         int expectedScore = cloverAce.getScore() + spadeJack.getScore() + ACE_BONUS_SCORE;
+
         Assertions.assertThat(actualScore).isEqualTo(expectedScore);
     }
 

@@ -79,9 +79,9 @@ public class DealerTest {
         Dealer dealer = Dealer.from(cardDeck);
         dealer.dealMyself();
 
-        CardBundle cardBundle = CardBundle.from(cards);
+        CardBundle expectedCardBundle = CardBundle.from(cards);
         Assertions.assertThat(dealer.getCardBundle())
-                .isEqualTo(cardBundle);
+                .isEqualTo(expectedCardBundle);
     }
 
     @Test
@@ -114,7 +114,8 @@ public class DealerTest {
         Dealer dealer = Dealer.from(cardDeck);
         dealer.dealMyself();
 
-        Assertions.assertThat(dealer.hitIfRequired()).isTrue();
+        Assertions.assertThat(dealer.hitIfRequired())
+                .isTrue();
     }
 
 }
