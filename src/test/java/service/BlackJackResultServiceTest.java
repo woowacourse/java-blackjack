@@ -2,15 +2,14 @@ package service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static util.TestUtil.createDealer;
+import static util.TestUtil.createPlayer;
 
 import domain.Dealer;
 import domain.Player;
-import domain.card.Card;
 import domain.card.Rank;
-import domain.card.Suit;
 import dto.FinalResultDto;
 import dto.ScoreResultDto;
-import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,24 +17,17 @@ import org.junit.jupiter.api.Test;
 class BlackJackResultServiceTest {
 
     BlackJackResultService blackJackResultService;
-    Dealer dealer;
-    List<Player> players;
 
     @BeforeEach
     void setUp() {
         blackJackResultService = new BlackJackResultService();
-
-        dealer = new Dealer();
-
-        players = new ArrayList<>();
-        players.add(new Player("봉구스"));
-        players.add(new Player("시오"));
-        players.add(new Player("영기"));
     }
 
     @Test
     void createScoreResultDto() {
         // given
+        Dealer dealer = createDealer();
+        List<Player> players = List.of();
         ScoreResultDto scoreResultDto = blackJackResultService.createScoreResultDto(dealer, players);
 
         // when, then
@@ -45,10 +37,11 @@ class BlackJackResultServiceTest {
     @Test
     void createFinalResultDto() {
         // given
-        dealer.draw(new Card(Suit.HEARTS, Rank.JACK));
-        players.get(0).draw(new Card(Suit.CLUBS, Rank.FIVE));
-        players.get(1).draw(new Card(Suit.CLUBS, Rank.JACK));
-        players.get(2).draw(new Card(Suit.CLUBS, Rank.ACE));
+        Dealer dealer = createDealer(Rank.JACK);
+        List<Player> players = List.of(
+                createPlayer("봉구스", Rank.FIVE),
+                createPlayer("시오", Rank.JACK),
+                createPlayer("영기", Rank.ACE));
         FinalResultDto finalResultDto = blackJackResultService.createFinalResultDto(dealer, players);
 
         // when, then
@@ -61,10 +54,12 @@ class BlackJackResultServiceTest {
     @Test
     void 플레이어가_Bust로_패배하는_경우() {
         // given
-        dealer.draw(new Card(Suit.HEARTS, Rank.JACK));
-        players.get(0).draw(new Card(Suit.CLUBS, Rank.KING));
-        players.get(0).draw(new Card(Suit.CLUBS, Rank.QUEEN));
-        players.get(0).draw(new Card(Suit.CLUBS, Rank.JACK));
+        Dealer dealer = createDealer(Rank.JACK);
+        List<Player> players = List.of(
+                createPlayer("봉구스", Rank.KING, Rank.QUEEN, Rank.JACK),
+                createPlayer("시오"),
+                createPlayer("영기")
+        );
 
         FinalResultDto finalResultDto = blackJackResultService.createFinalResultDto(dealer, players);
 
@@ -76,10 +71,12 @@ class BlackJackResultServiceTest {
     @Test
     void 딜러가_Bust로_패배하는_경우() {
         // given
-        dealer.draw(new Card(Suit.HEARTS, Rank.JACK));
-        dealer.draw(new Card(Suit.HEARTS, Rank.KING));
-        dealer.draw(new Card(Suit.HEARTS, Rank.QUEEN));
-        players.get(0).draw(new Card(Suit.CLUBS, Rank.KING));
+        Dealer dealer = createDealer(Rank.JACK, Rank.KING, Rank.QUEEN);
+        List<Player> players = List.of(
+                createPlayer("봉구스", Rank.KING),
+                createPlayer("시오"),
+                createPlayer("영기")
+        );
 
         FinalResultDto finalResultDto = blackJackResultService.createFinalResultDto(dealer, players);
 

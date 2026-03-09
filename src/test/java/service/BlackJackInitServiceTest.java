@@ -2,13 +2,13 @@ package service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static util.TestUtil.createDealer;
+import static util.TestUtil.createPlayer;
 
 import domain.Dealer;
 import domain.Deck;
 import domain.Player;
-import domain.card.Card;
 import domain.card.Rank;
-import domain.card.Suit;
 import dto.BlackJackInitStatusDto;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -56,9 +56,10 @@ class BlackJackInitServiceTest {
     @Test
     void 초기_상태_Dto를_생성하는_경우() {
         //given
-        Dealer dealer = new Dealer();
-        dealer.draw(new Card(Suit.CLUBS, Rank.EIGHT));
-        List<Player> players = List.of(new Player("봉구스"), new Player("시오"));
+        Dealer dealer = createDealer(Rank.EIGHT);
+        List<Player> players = List.of(
+                createPlayer("봉구스"),
+                createPlayer("시오"));
 
         // when
         BlackJackInitStatusDto blackJackInitStatusDto = blackJackInitService.createInitStatusDto(dealer, players);

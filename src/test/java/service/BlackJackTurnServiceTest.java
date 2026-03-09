@@ -3,13 +3,13 @@ package service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static util.TestUtil.createDealer;
+import static util.TestUtil.createPlayer;
 
 import domain.Dealer;
 import domain.Deck;
 import domain.Player;
-import domain.card.Card;
 import domain.card.Rank;
-import domain.card.Suit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -27,7 +27,7 @@ class BlackJackTurnServiceTest {
     void 플레이어가_정상적으로_Hit_하는_경우() {
         // given
         Deck deck = new Deck();
-        Player player = new Player("봉구스");
+        Player player = createPlayer("봉구스");
 
         // when
         blackJackTurnService.playerHit(player, deck);
@@ -40,7 +40,7 @@ class BlackJackTurnServiceTest {
     void 딜러가_정상적으로_Hit_하는_경우() {
         // given
         Deck deck = new Deck();
-        Dealer dealer = new Dealer();
+        Dealer dealer = createDealer();
 
         // when
         blackJackTurnService.dealerHit(dealer, deck);
@@ -52,9 +52,7 @@ class BlackJackTurnServiceTest {
     @Test
     void 딜러가_드로우_할_수_있는_경우() {
         // given
-        Dealer dealer = new Dealer();
-        dealer.draw(new Card(Suit.HEARTS, Rank.TWO));
-        dealer.draw(new Card(Suit.HEARTS, Rank.FIVE));
+        Dealer dealer = createDealer(Rank.TWO, Rank.FIVE);
 
         // when, then
         assertTrue(blackJackTurnService.canDealerHit(dealer));
@@ -63,10 +61,7 @@ class BlackJackTurnServiceTest {
     @Test
     void 딜러가_드로우_할_수_없는_경우() {
         // given
-        Dealer dealer = new Dealer();
-        dealer.draw(new Card(Suit.HEARTS, Rank.JACK));
-        dealer.draw(new Card(Suit.HEARTS, Rank.QUEEN));
-        dealer.draw(new Card(Suit.HEARTS, Rank.KING));
+        Dealer dealer = createDealer(Rank.JACK, Rank.QUEEN, Rank.KING);
 
         // when, then
         assertFalse(blackJackTurnService.canDealerHit(dealer));
@@ -75,10 +70,7 @@ class BlackJackTurnServiceTest {
     @Test
     void 플레이어가_드로우_할_수_있는_경우() {
         // given
-        Player player = new Player("시오");
-
-        player.draw(new Card(Suit.HEARTS, Rank.TWO));
-        player.draw(new Card(Suit.HEARTS, Rank.FIVE));
+        Player player = createPlayer("시오", Rank.TWO, Rank.FIVE);
 
         // when, then
         assertTrue(blackJackTurnService.canPlayerHit(player, "y"));
@@ -89,11 +81,7 @@ class BlackJackTurnServiceTest {
         @Test
         void 플레이어의_손패의_합이_21_이상인_경우() {
             // given
-            Player player = new Player("시오");
-
-            player.draw(new Card(Suit.HEARTS, Rank.JACK));
-            player.draw(new Card(Suit.HEARTS, Rank.QUEEN));
-            player.draw(new Card(Suit.HEARTS, Rank.KING));
+            Player player = createPlayer("시오", Rank.JACK, Rank.QUEEN, Rank.KING);
 
             // when, then
             assertFalse(blackJackTurnService.canPlayerHit(player, "y"));
@@ -102,10 +90,7 @@ class BlackJackTurnServiceTest {
         @Test
         void 플레이어의_입력이_n인_경우() {
             // given
-            Player player = new Player("시오");
-
-            player.draw(new Card(Suit.HEARTS, Rank.TWO));
-            player.draw(new Card(Suit.HEARTS, Rank.FIVE));
+            Player player = createPlayer("시오", Rank.TWO, Rank.FIVE);
 
             // when, then
             assertFalse(blackJackTurnService.canPlayerHit(player, "n"));
@@ -116,9 +101,7 @@ class BlackJackTurnServiceTest {
     @Test
     void 손패의_합이_21보다_작은_경우() {
         // given
-        Player player = new Player("시오");
-
-        player.draw(new Card(Suit.HEARTS, Rank.JACK));
+        Player player = createPlayer("시오", Rank.JACK);
 
         // when, then
         assertTrue(blackJackTurnService.isPlayerUnder21(player));
@@ -127,11 +110,7 @@ class BlackJackTurnServiceTest {
     @Test
     void 손패의_합이_21보다_큰_경우() {
         // given
-        Player player = new Player("시오");
-
-        player.draw(new Card(Suit.HEARTS, Rank.JACK));
-        player.draw(new Card(Suit.HEARTS, Rank.QUEEN));
-        player.draw(new Card(Suit.HEARTS, Rank.KING));
+        Player player = createPlayer("시오", Rank.JACK, Rank.QUEEN, Rank.KING);
 
         // when, then
         assertFalse(blackJackTurnService.isPlayerUnder21(player));
