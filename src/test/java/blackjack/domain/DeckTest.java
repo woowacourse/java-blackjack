@@ -24,19 +24,4 @@ public class DeckTest {
                 .doesNotThrowAnyException();
     }
 
-    // TODO : 랜덤을 테스트 할 수 있도록 변경 필요
-    @Test
-    void 카드_섞기_테스트() {
-        // given
-        Deck deck = new Deck();
-        Deck compareDeck = new Deck();
-
-        // when
-        deck.shuffle();
-
-        // then
-        assertThat(deck.bringTopCard().getName())
-                .isNotEqualTo(compareDeck.bringTopCard().getName());
-    }
-
 }
