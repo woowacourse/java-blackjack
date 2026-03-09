@@ -35,7 +35,7 @@ public enum Rank {
 
     public static Rank findByName(String name) {
         return Arrays.stream(Rank.values())
-                .filter(rank -> rank.name == name)
+                .filter(rank -> rank.name.equals(name))
                 .findFirst()
                 .orElseThrow();
     }
