@@ -37,4 +37,12 @@ public class Player {
         hands.add(new Hand());
         return hands;
     }
+
+    public List<String> getCardInAllHand() {
+        return hands.stream()
+                .map(Hand::getCards)
+                .flatMap(List::stream)
+                .map(Card::getCardName)
+                .toList();
+    }
 }

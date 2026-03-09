@@ -4,8 +4,6 @@ import java.util.List;
 import team.blackjack.service.dto.DrawResult;
 import team.blackjack.service.dto.GameResult;
 import team.blackjack.service.dto.ScoreResult;
-import team.blackjack.domain.Player;
-import team.blackjack.domain.rule.DefaultBlackjackRule;
 import team.blackjack.service.BlackJackService;
 import team.blackjack.view.InputView;
 import team.blackjack.view.OutputView;
@@ -22,10 +20,10 @@ public class BlackJackController {
         blackJackService.initGame(playerNames);
         blackJackService.drawInitialCards();
 
-        DrawResult drawResult = blackJackService.getHandResult();
+        DrawResult drawResult = blackJackService.getDrawResult();
         OutputView.printDrawResult(drawResult);
 
-        readHitDecision(blackJackService.getPlayer());
+        readHitDecision(blackJackService.getPlayerNames());
 
         while (blackJackService.shouldDealerHit()) {
             OutputView.printDealerHitMessage();
@@ -44,20 +42,20 @@ public class BlackJackController {
         return InputView.readPlayerNames();
     }
 
-    private void readHitDecision(List<Player> players) {
-        players.forEach(this::processHit);
+    private void readHitDecision(List<String> playerNames) {
+        playerNames.forEach(this::processHit);
     }
 
-    private void processHit(Player player) {
-        while (!DefaultBlackjackRule.isBust(player.getScore())) {
-            OutputView.printAskDrawCard(player.getName());
+    private void processHit(String playerName) {
+        while (blackJackService.shouldPlayerHit(playerName)) {
+            OutputView.printAskDrawCard(playerName);
 
             if (!InputView.readHitDecision()) {
                 return;
             }
 
-            blackJackService.hitPlayer(player);
-            OutputView.printPlayerCards(player.getName(), player.getHands().getFirst().getCardNames());
+            blackJackService.hitPlayer(playerName);
+            OutputView.printPlayerCards(playerName, blackJackService.getPlayerCardNamesByName(playerName));
         }
 
         OutputView.printBustMessage();

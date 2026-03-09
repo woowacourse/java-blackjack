@@ -6,10 +6,10 @@ import java.util.Map;
 
 public class BlackjackGame {
     private final Dealer dealer;
-    private final List<Player> players;
+    private final Players players;
     private final Deck deck;
 
-    public BlackjackGame(Dealer dealer, List<Player> players) {
+    public BlackjackGame(Dealer dealer, Players players) {
         this.dealer = dealer;
         this.players = players;
         this.deck = new Deck();
@@ -19,25 +19,8 @@ public class BlackjackGame {
         return dealer;
     }
 
-    public List<Player> getPlayers() {
+    public Players getPlayers() {
         return players;
-    }
-
-    public Map<String, List<String>> getAllPlayerCards(){
-        final HashMap<String, List<String>> result = new HashMap<>();
-        for (Player player : players) {
-            result.put(player.getName(), getPlayerCardInAllHand(player));
-        }
-
-        return result;
-    }
-
-    private List<String> getPlayerCardInAllHand(Player player) {
-        return player.getHands().stream()
-                .map(Hand::getCards)
-                .flatMap(List::stream)
-                .map(Card::getCardName)
-                .toList();
     }
 
     public Deck getDeck() {
