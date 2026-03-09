@@ -7,6 +7,8 @@ import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
 import java.util.ArrayList;
+
+import domain.strategy.ShuffleStrategy;
 import util.InputParser;
 import view.InputView;
 import view.OutputView;
@@ -17,11 +19,13 @@ public class BlackjackGame {
     private final InputView inputView;
     private final InputParser inputParser;
     private final OutputView outputView;
+    private final ShuffleStrategy shuffleStrategy;
 
-    public BlackjackGame(InputView inputView, InputParser inputParser, OutputView outputView) {
+    public BlackjackGame(InputView inputView, InputParser inputParser, OutputView outputView, ShuffleStrategy shuffleStrategy) {
         this.inputView = inputView;
         this.inputParser = inputParser;
         this.outputView = outputView;
+        this.shuffleStrategy = shuffleStrategy;
     }
 
     public void run() {
@@ -31,8 +35,7 @@ public class BlackjackGame {
         Players players = new Players(parsedName);
         Dealer dealer = new Dealer();
 
-        List<Card> cards = Deck.createDeck();
-        Deck deck = new Deck(cards);
+        Deck deck = Deck.createDeck(shuffleStrategy);
 
         playGame(players, dealer, deck);
     }

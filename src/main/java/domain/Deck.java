@@ -3,6 +3,7 @@ package domain;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
+import domain.strategy.ShuffleStrategy;
 
 import java.util.*;
 
@@ -15,22 +16,20 @@ public class Deck {
         this.cards = cards;
     }
 
-    public static List<Card> createDeck() {
-        List<Card> cards = new ArrayList<>();
-
-        for (Rank rank : Rank.values()) {
-            createBySuit(rank, cards);
-        }
-        Collections.shuffle(cards);
-
-        return cards;
+    public static Deck createDeck(ShuffleStrategy shuffleStrategy) {
+        List<Card> orderedCards = createOrderedDeck();
+        List<Card> shuffledCards = shuffleStrategy.shuffle(orderedCards);
+        return new Deck(shuffledCards);
     }
 
-    private static void createBySuit(Rank rank, List<Card> cards) {
-        for (Suit suit : Suit.values()) {
-            Card card = new Card(rank, suit);
-            cards.add(card);
+    private static List<Card> createOrderedDeck() {
+        List<Card> cards = new ArrayList<>();
+        for (Rank rank : Rank.values()) {
+            for (Suit suit : Suit.values()) {
+                cards.add(new Card(rank, suit));
+            }
         }
+        return cards;
     }
 
     public int size(){
