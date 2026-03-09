@@ -9,10 +9,9 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class CardTest {
-    @DisplayName("카드_정보_한국어로_변환_테스트")
     @ParameterizedTest
     @MethodSource("provideCardData")
-    void complexTest(Card card, String korName) {
+    void 카드_정보_한국어로_변환_테스트(Card card, String korName) {
         assertThat(card.cardToKorName()).isEqualTo(korName);
     }
 

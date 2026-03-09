@@ -3,7 +3,6 @@ package domain.participant;
 import domain.card.Card;
 import domain.card.TrumpNumber;
 import domain.card.TrumpSuit;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -14,10 +13,9 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class HandCardsTest {
-    @DisplayName("복잡한 로직 및 리스트 검증")
     @ParameterizedTest
-    @MethodSource("provideHandCardsData") // ★ 아래 static 메서드 이름과 같아야 함!
-    void complexTest(List<Card> cards, int exceptResult) {
+    @MethodSource("provideHandCardsData")
+    void ace_값_계산_테스트(List<Card> cards, int exceptResult) {
         HandCards handCards = new HandCards();
 
         for (Card card : cards) {
