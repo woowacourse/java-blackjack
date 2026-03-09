@@ -34,7 +34,7 @@ public enum CardDenomination {
     }
 
     public boolean isAce() {
-        return this.equals(CardDenomination.ACE);
+        return this == CardDenomination.ACE;
     }
 
 }
