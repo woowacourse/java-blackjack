@@ -26,20 +26,20 @@ public class Hand {
         if (aceAmount > 0) {
             return softHandAces(aceAmount);
         }
-        AtomicInteger tempValue = new AtomicInteger();
-        cards.forEach(card -> tempValue.addAndGet(card.number()));
-        return tempValue.get();
+        return cards.stream()
+                .mapToInt(Card::number)
+                .sum();
     }
 
     private int softHandAces(int aceAmount) {
-        AtomicInteger sumWithoutAce = new AtomicInteger();
-        cards.stream()
+        int sumWithOutAce = cards.stream()
                 .filter(card -> card.number() != CardNumber.ACE.getValue())
-                .forEach(card -> sumWithoutAce.addAndGet(card.number()));
-        if (sumWithoutAce.get() >= CardNumber.ACE.getValue()) {
-            return sumWithoutAce.get() + aceAmount;
+                .mapToInt(Card::number)
+                .sum();
+        if (sumWithOutAce >= CardNumber.ACE.getValue()) {
+            return sumWithOutAce + aceAmount;
         }
-        return sumWithoutAce.get() + CardNumber.ACE.getValue() + aceAmount - 1;
+        return sumWithOutAce + CardNumber.ACE.getValue() + aceAmount - 1;
     }
 
     private int aceAmount() {
