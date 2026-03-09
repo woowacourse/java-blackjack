@@ -4,8 +4,9 @@ import blackjack.domain.Participants;
 import blackjack.domain.Players;
 import blackjack.domain.PlayingCards;
 import blackjack.domain.participant.Dealer;
-import blackjack.dto.ParticipantResult;
 import blackjack.dto.DrawResult;
+import blackjack.dto.ParticipantResult;
+import blackjack.dto.PlayerNicknamesResult;
 import blackjack.dto.WinningResult;
 import blackjack.util.PlayerNameParser;
 import blackjack.view.InputView;
@@ -40,11 +41,13 @@ public class BlackjackRunner {
     }
 
     private void printInitialResult(Participants participants) {
-        outputView.printInitialResult(participants);
+        List<ParticipantResult> initialResult = participants.getInitialResult();
+        outputView.printInitialResult(initialResult);
     }
 
     private void printInitialSetup(Participants participants) {
-        outputView.printInitialSetUp(participants);
+        PlayerNicknamesResult playerNicknamesResult = new PlayerNicknamesResult(participants);
+        outputView.printInitialSetUp(playerNicknamesResult);
     }
 
     private Participants makeParticipants() {
