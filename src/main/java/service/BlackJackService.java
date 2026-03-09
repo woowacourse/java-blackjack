@@ -4,7 +4,7 @@ import java.util.Objects;
 import model.BlackJackDeck;
 import model.Dealer;
 import model.DealerWinning;
-import constant.MatchStatus;
+import model.MatchStatus;
 import model.Participant;
 import model.Player;
 import model.Players;

@@ -1,6 +1,6 @@
 package view;
 
-import constant.MatchStatus;
+import model.MatchStatus;
 import dto.Card;
 import dto.ParticipantWinning;
 import dto.PlayerResult;

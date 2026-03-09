@@ -1,6 +1,6 @@
 package dto;
 
-import constant.MatchStatus;
+import model.MatchStatus;
 
 public record PlayerWinning(String name, MatchStatus matchStatus) {
 }

@@ -8,7 +8,7 @@ import model.BlackJackDeck;
 import model.CardDeckFactory;
 import model.CardNumber;
 import model.Dealer;
-import constant.MatchStatus;
+import model.MatchStatus;
 import model.Player;
 import model.PlayerName;
 import model.Players;

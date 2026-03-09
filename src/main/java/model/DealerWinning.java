@@ -1,6 +1,6 @@
 package model;
 
-import constant.MatchStatus;
+import model.MatchStatus;
 import java.util.LinkedHashMap;
 import java.util.Map;
 

@@ -1,6 +1,6 @@
 package dto;
 
-import constant.MatchStatus;
+import model.MatchStatus;
 import java.util.List;
 import java.util.Map;
 

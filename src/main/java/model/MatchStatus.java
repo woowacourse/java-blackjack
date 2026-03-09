@@ -1,4 +1,4 @@
-package constant;
+package model;
 
 public enum MatchStatus {
     WIN("승"),
@@ -15,4 +15,5 @@ public enum MatchStatus {
         return status;
     }
 }
+
 
