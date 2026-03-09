@@ -1,18 +1,28 @@
 package blackjack.domain.deck;
 
+import blackjack.domain.card.Card;
+import org.junit.jupiter.api.Test;
+
+import java.util.List;
+import java.util.stream.IntStream;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
-import org.junit.jupiter.api.Test;
 
 class DeckTest {
 
     @Test
-    void 덱_초기화를_진행하게_되면_기존의_덱과_다르다() {
+    void 셔플하면_적어도_하나_이상의_카드_위치가_바뀐다() {
         Deck deck = new Deck();
+        List<Card> before = deck.getCards();
 
         deck.shuffle();
-        assertThat(deck.size()).isEqualTo(52);
+        List<Card> after = deck.getCards();
+
+        boolean anyPositionChanged = IntStream.range(0, before.size())
+                .anyMatch(i -> !before.get(i).equals(after.get(i)));
+
+        assertThat(anyPositionChanged).isTrue();
     }
 
     @Test
