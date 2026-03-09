@@ -6,7 +6,6 @@ import java.util.List;
 public class User extends Player {
 
     private final String name;
-    private final List<Card> hand = new ArrayList<>();
     private GameResult gameResult;
 
     private User(String name) {

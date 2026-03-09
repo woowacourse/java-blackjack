@@ -7,12 +7,10 @@ import java.util.Map;
 
 public class Dealer extends Player {
 
-    private final List<Card> hand = new ArrayList<>();
-
     private Map<GameResult, Integer> gameResults = new HashMap<>();
 
     public Card reveal() {
-        return hand.getFirst();
+        return getHand().getFirst();
     }
 
     public void setRounds(GameResult gameResult) {
