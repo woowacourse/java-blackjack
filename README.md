@@ -47,5 +47,16 @@
 - [x] Ace, Jack, Queen, King 이름이 값(1,10)으로 출력되는 문제
 - [x] domain.GameManager 리팩터링
 - [x] 패키지 정리
+- [x] drawDealerCard() 메서드의 응답값 미사용
+- [ ] GameManager의 책임 재분배 (Deck 초기화, 셔플)
+- [ ] GameController 구조 수정
+- [ ] 디미터의 법칙 - 스트림 체이닝은 줄바꿈해서 작성
+- [x] rank 1 보다는 의미있는 값 (`ACE`)가 이해하기 쉽다
+- [x] 주석이 정말 필요한지, 이름이나 구조로 충분하지 않은지
+- [ ] primitive 타입과 wrapper 타입의 차이
+- [ ] 일급 컬렉션, Cards를 만들게 되면 어떤 장점이 있는가?
+- [ ] Controller가 필요할까? 필요한 이유는 무엇일까?
+- [x] mutable이어야 할 이유가 없다면, 반드시 final을 붙일 것
+- [ ] 플레이어가 입력되지 않는 경우에 대한 예외처리
 - [ ] 규칙 적용
 - [ ] 테스트 케이스 추가
