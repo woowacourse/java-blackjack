@@ -35,6 +35,14 @@ public abstract class Participant {
         return total;
     }
 
+    public boolean beats(Participant participant) {
+        if (participant.isBust()) {
+            return true;
+        }
+
+        return calculateScore() > participant.calculateScore();
+    }
+
     public boolean canHit() {
         return calculateScore() < BUST_THRESHOLD;
     }

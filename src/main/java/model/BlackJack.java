@@ -72,21 +72,8 @@ public class BlackJack {
     }
 
     public Map<String, Integer> calculateDealerResult() {
-        Map<String, Integer> resultMap = new HashMap<>();
-
-        Dealer dealer = participants.getDealer();
-        List<Player> players = participants.getPlayers();
-
-        for (Participant player : players) {
-            if (dealer.calculateScore() > player.calculateScore() || player.isBust()) {
-                resultMap.merge("승", 1, Integer::sum);
-                continue;
-            }
-
-            resultMap.merge("패", 1, Integer::sum);
-        }
-
-        return resultMap;
+        return participants.getDealer()
+                .calculateStatistics(participants.getPlayers());
     }
 
     public Map<String, Boolean> calculatePlayerResult() {

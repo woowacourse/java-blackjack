@@ -1,6 +1,8 @@
 package model.participant;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import model.Card;
 
 public class Dealer extends Participant {
@@ -30,5 +32,23 @@ public class Dealer extends Participant {
 
     public boolean needDraw() {
         return this.calculateScore() <= DRAW_THRESHOLD;
+    }
+
+    public Map<String, Integer> calculateStatistics(List<Player> players) {
+        return players.stream()
+                .map(this::judgeResult)
+                .collect(Collectors.toMap(
+                        key -> key,
+                        key -> 1,
+                        Integer::sum
+                ));
+    }
+
+    private String judgeResult(Player player) {
+        if (beats(player)) {
+            return "승";
+        }
+
+        return "패";
     }
 }
