@@ -1,12 +1,10 @@
 package domain.player;
 
-import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 import domain.MatchResult;
-import domain.StubDeck;
+import domain.StubDeckImplTest;
 import domain.card.Card;
 import domain.card.CardRank;
 import domain.card.CardSuit;
@@ -26,6 +24,7 @@ class GamblerTest {
         assertThatThrownBy(()-> new Gambler(name))
                 .isInstanceOf(BlackjackException.class);
     }
+
     @Test
     @DisplayName("이름은 두글자 이상 열글자 미만으로 한다.")
     void 이름이_열글자를_넘을_시(){
@@ -38,6 +37,7 @@ class GamblerTest {
         assertThatThrownBy(()-> new Gambler(min_range_name))
                 .isInstanceOf(BlackjackException.class);
     }
+
     @Test
     @DisplayName("승리 정상 판정")
     void 승리_정상_판정(){

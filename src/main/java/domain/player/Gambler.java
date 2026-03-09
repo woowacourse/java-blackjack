@@ -68,5 +68,4 @@ public class Gambler extends Player {
     public GamblerCardInfo getCardInfo() {
         return new GamblerCardInfo(name, handCard.getCardInfos(), score());
     }
-
 }

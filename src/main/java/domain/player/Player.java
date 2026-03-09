@@ -23,4 +23,3 @@ public abstract class Player {
         return score() > BLACKJACK_MAX_LIMIT;
     }
 }
-

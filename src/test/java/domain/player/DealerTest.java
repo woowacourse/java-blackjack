@@ -3,7 +3,7 @@ package domain.player;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.StubDeck;
+import domain.StubDeckImplTest;
 import domain.card.Card;
 import domain.card.CardRank;
 import domain.card.CardSuit;
@@ -51,4 +51,5 @@ public class DealerTest {
         //then
         assertThat(canStand).isFalse(); // 딜러가 16을 넘어 멈출 수 있는가?
     }
+
 }

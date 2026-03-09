@@ -1,5 +1,5 @@
-import domain.deck.CardDeck;
-import domain.deck.Deck;
+import domain.deck.CardDeckService;
+import domain.deck.DeckImpl;
 import domain.player.Dealer;
 import domain.player.Gambler;
 import domain.player.Gamblers;
@@ -12,10 +12,10 @@ import view.OutputView;
 
 public class BlackJack {
     private static final int INITIAL_CARD_COUNT = 2;
-    private final CardDeck cardDeck;
+    private final CardDeckService cardDeckService;
 
     public BlackJack() {
-        this.cardDeck = new Deck();
+        this.cardDeckService = new DeckImpl();
     }
 
     public void start() {
@@ -38,14 +38,14 @@ public class BlackJack {
 
     private void initialDeal(Dealer dealer, Gamblers gamblers) {
         for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
-            dealer.deal(cardDeck);
-            gamblers.dealAll(cardDeck);
+            dealer.deal(cardDeckService);
+            gamblers.dealAll(cardDeckService);
         }
     }
 
     private void printInitialDealInfo(Dealer dealer, Gamblers gamblers) {
         OutputView.printInitMessage(gamblers.getNames());
-        OutputView.printDealerFirstCard(dealer.showFirstCard());
+        OutputView.printDealerFirstCard(dealer.getFirstCard());
 
         for (GamblerCardInfo gamblerCardInfo : gamblers.gamblerCardInfos()) {
             OutputView.printPlayerCards(gamblerCardInfo);
@@ -66,7 +66,7 @@ public class BlackJack {
                 break;
             }
 
-            gambler.deal(cardDeck);
+            gambler.deal(cardDeckService);
 
             if (gambler.isBust()) {
                 OutputView.printPlayerBust(gambler.getName());
@@ -84,7 +84,7 @@ public class BlackJack {
             }
 
             OutputView.printDealerHit();
-            dealer.deal(cardDeck);
+            dealer.deal(cardDeckService);
         }
     }
 

@@ -16,7 +16,6 @@ public class Gamblers {
 
     public Gamblers(List<String> names) {
         validateNonDuplicate(names);
-
         gamblers = new ArrayList<>();
         init(names);
     }

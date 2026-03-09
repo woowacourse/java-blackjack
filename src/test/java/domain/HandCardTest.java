@@ -6,9 +6,6 @@ import domain.card.Card;
 import domain.card.CardRank;
 import domain.card.CardSuit;
 import domain.card.HandCard;
-import domain.deck.CardDeck;
-import java.util.List;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -36,4 +33,5 @@ public class HandCardTest {
         //then
         assertThat(result).isEqualTo(21);
     }
+
 }

@@ -3,7 +3,7 @@ package domain.player;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.StubDeck;
+import domain.StubDeckImplTest;
 import domain.card.Card;
 import domain.card.CardRank;
 import domain.card.CardSuit;

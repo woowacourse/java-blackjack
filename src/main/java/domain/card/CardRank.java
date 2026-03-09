@@ -1,7 +1,6 @@
 package domain.card;
 
 public enum CardRank {
-
     ACE("A", 1),
     TWO("2", 2),
     THREE("3", 3),
@@ -16,13 +15,16 @@ public enum CardRank {
     QUEEN("Q", 10),
     KING("K", 10);
 
-
     private final String name;
     private final int score;
 
     CardRank(String name, int score) {
         this.name = name;
         this.score = score;
+    }
+
+    public static boolean isAce(int score) {
+        return score == ACE.score;
     }
 
     public String getName() {

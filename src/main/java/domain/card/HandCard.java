@@ -30,11 +30,6 @@ public class HandCard {
         }
         return totalSum;
     }
-    /*
-    private int aceCalculator(int sum, int ace_cnt){
-        return Math.min(ace_cnt, Math.max(0, (BLACKJACK_MAX_LIMIT - sum) / (ACE_MAX_VALUE - ACE_MIN_VALUE)));
-    }
-     */
 
     public void addCard(Card card) {
         cards.add(card);
