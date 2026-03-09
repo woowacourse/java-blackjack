@@ -103,14 +103,19 @@ public class BlackjackController {
     }
 
     private void dealAdditionalCardIfRequested(Player player, Cards deck, boolean wantsCard) {
-        if (wantsCard) {
-            player.addCard(deck.draw());
-            outputView.println(player.getPlayerInfo());
-            return;
-        }
+        if (extracted(player, deck, wantsCard)) return;
         if (player.getCardsInfo().size() == Policy.FIRST_DRAW_SIZE) {
             outputView.println(player.getPlayerInfo());
         }
+    }
+
+    private boolean extracted(Player player, Cards deck, boolean wantsCard) {
+        if (wantsCard) {
+            player.addCard(deck.draw());
+            outputView.println(player.getPlayerInfo());
+            return true;
+        }
+        return false;
     }
 
     private boolean sayYes(String answer) {
