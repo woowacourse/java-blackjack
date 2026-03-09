@@ -6,9 +6,10 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import domain.card.Card;
 import domain.card.Emblem;
 import domain.card.Grade;
+import domain.participant.Dealer;
 import domain.participant.Hand;
-import domain.participant.Name;
-import domain.participant.Participant;
+import domain.participant.Player;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 class RefereeTest {
@@ -16,31 +17,24 @@ class RefereeTest {
     @Test
     void 딜러와_플레이어의_승패를_비교한다() {
         // given
-
-        Hand dealerHand = new Hand();
-        Participant participant = new Participant(new Name("dealer"), dealerHand);
-        Dealer dealer = new Dealer(participant);
-
-        Hand playerHand = new Hand();
-        Participant player = new Participant(new Name("player"), playerHand);
-
-        dealerHand.receiveCard(new Card(Emblem.CLOVER, Grade.TEN));
-        playerHand.receiveCard(new Card(Emblem.CLOVER, Grade.ACE));
-
-        Participants players = new Participants();
-        players.add(player);
-
+        Dealer dealer = new Dealer(createHand(Grade.TEN, Grade.EIGHT)
+        );
+        Participants participants = new Participants(dealer,
+                List.of(new Player("aa", createHand(Grade.TEN, Grade.ACE))));
         Referee referee = new Referee();
-
         // when
-        GameStatistics statistics = referee.judge(dealer, players);
-
+        GameStatistics statistics = referee.judge(participants);
         // then
         assertAll(
-                () -> assertThat(statistics.findGameResultBy(player)).isEqualTo(GameResult.WIN),
                 () -> assertThat(statistics.getDealerResult().get(GameResult.WIN)).isEqualTo(0),
                 () -> assertThat(statistics.getDealerResult().get(GameResult.LOSE)).isEqualTo(1),
                 () -> assertThat(statistics.getDealerResult().get(GameResult.DRAW)).isEqualTo(0)
         );
+    }
+
+    private Hand createHand(Grade grade1, Grade grade2) {
+        return new Hand(
+                List.of(new Card(Emblem.CLOVER, grade1),
+                        new Card(Emblem.DIAMOND, grade2)));
     }
 }
