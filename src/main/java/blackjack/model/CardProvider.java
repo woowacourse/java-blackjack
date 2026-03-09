@@ -40,7 +40,7 @@ public class CardProvider {
 
     public void provideOneCard(User user) {
         if (deck.peek() == null) {
-
+            initDeck();
         }
         user.addCard(deck.poll());
     }
