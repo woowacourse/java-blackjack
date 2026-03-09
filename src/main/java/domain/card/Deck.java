@@ -29,7 +29,7 @@ public class Deck {
     }
 
     public Card drawCard() {
-        if (cards.poll() == null) {
+        if (cards.peek() == null) {
             throw new IllegalStateException(DECK_OUT_OF_CARD_STOCK.getMessage());
         }
 
