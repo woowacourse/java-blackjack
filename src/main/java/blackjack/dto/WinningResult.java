@@ -26,12 +26,9 @@ public record WinningResult(
     public int numberOfPlayer() {
         return winningResult.size();
     }
-    
-    public String getWinningResultFrom(String playerName) {
-        if (winningResult.get(playerName)) {
-            return "승";
-        }
-        return "패";
+
+    public boolean get(String playerName) {
+        return winningResult.get(playerName);
     }
 
 }

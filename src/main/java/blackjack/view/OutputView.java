@@ -44,8 +44,15 @@ public class OutputView {
 
     private static void printWinningResultOfPlayers(WinningResult winningResult) {
         for (String playerName : winningResult.winningResult().keySet()) {
-            System.out.println(playerName + ": " + winningResult.getWinningResultFrom(playerName));
+            System.out.println(playerName + ": " + convertToString(winningResult.get(playerName)));
         }
+    }
+
+    private static String convertToString(boolean isWin) {
+        if (isWin) {
+            return "승";
+        }
+        return "패";
     }
 
     private static String stringJoinWithComma(List<String> strings) {
