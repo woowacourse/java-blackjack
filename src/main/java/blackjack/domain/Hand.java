@@ -1,34 +1,45 @@
 package blackjack.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class Hand {
 
     protected static final int BUSTED_SCORE = 21;
 
-    private final PlayingCards cards;
+    private final List<Card> cards;
 
     public Hand() {
-        cards = new PlayingCards();
-    }
-
-    public String getCardSnapshot() {
-        return cards.getSnapshot();
+        cards = new ArrayList<>();
     }
 
     public String getFirstSnapshot() {
-        if (cards.isCardRemain()) {
-            return cards.getFirstSnapshot();
+        if (cards.isEmpty()) {
+            throw new IllegalArgumentException("남은 카드가 없습니다.");
         }
-        throw new IllegalArgumentException("남은 카드가 없습니다.");
+        return cards.getFirst().getDisplayName();
     }
 
-    public String addCard(PlayingCards receivedCards) {
-        cards.add(receivedCards);
-        return getCardSnapshot();
+    public String getSnapshot() {
+        return cards
+                .stream()
+                .map(Card::getDisplayName)
+                .collect(Collectors.joining(", "));
+    }
+
+    public String addCard(List<Card> receivedCards) {
+        cards.addAll(receivedCards);
+        return getSnapshot();
     }
 
     public boolean isBusted() {
         int totalScore = getTotalScore();
         return totalScore >= BUSTED_SCORE;
+    }
+
+    public boolean isBlackjack() {
+        return getTotalScore() == BUSTED_SCORE;
     }
 
     public int getTotalScore() {
@@ -47,22 +58,24 @@ public class Hand {
         return scoreSum;
     }
 
-    public int getScoreSum() {
-        return calculateScoreSum();
-    }
-
     private int calculateScoreSum() {
-        return cards.getCards()
+        return cards
                 .stream()
                 .mapToInt(Card::getScore)
                 .sum();
     }
 
     private int countAce() {
-        return (int) cards.getCards()
+        return (int) cards
                 .stream()
                 .filter(Card::isAce)
                 .count();
+    }
+
+    public int calculateAce() {
+        int scoreSum = calculateScoreSum();
+        int aceCount = countAce();
+        return calculateAce(scoreSum, aceCount);
     }
 
     private int calculateAce(int scoreSum, int aceCount) {

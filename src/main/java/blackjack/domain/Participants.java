@@ -3,6 +3,7 @@ package blackjack.domain;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.dto.WinningResult;
+import java.util.List;
 
 public class Participants {
     
@@ -14,7 +15,7 @@ public class Participants {
         this.dealer = dealer;
     }
     
-    public void distributeCards(PlayingCards deck) {
+    public void distributeCards(Deck deck) {
         dealer.distributeCards(deck);
         for (Player player : players.getAllPlayers()) {
             player.distributeCards(deck);
@@ -52,8 +53,8 @@ public class Participants {
         return players.findDrawablePlayerNickname();
     }
     
-    public String addCardToAvailablePlayer(PlayingCards deck) {
-        PlayingCards drewCards = deck.drawCard();
+    public String addCardToAvailablePlayer(Deck deck) {
+        List<Card> drewCards = deck.drawCard();
         return players.addCardToAvailablePlayer(drewCards);
     }
     
@@ -65,8 +66,8 @@ public class Participants {
         return dealer.isDrawable();
     }
     
-    public void dealerDraw(PlayingCards deck) {
-        PlayingCards drewCard = deck.drawCard();
+    public void dealerDraw(Deck deck) {
+        List<Card> drewCard = deck.drawCard();
         dealer.receiveCard(drewCard);
     }
 }

@@ -48,7 +48,7 @@ public class Players {
         return player.getNickname();
     }
     
-    public String addCardToAvailablePlayer(PlayingCards card) {
+    public String addCardToAvailablePlayer(List<Card> card) {
         Player player = findDrawablePlayer();
         return player.receiveCard(card);
     }

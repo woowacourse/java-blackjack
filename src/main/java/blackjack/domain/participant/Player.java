@@ -37,15 +37,15 @@ public class Player extends Participant {
     }
 
     private GameResult resolveGameResult(int dealerScore) {
+        if (hand.isBlackjack()) {
+            return GameResult.WIN;
+        }
         if (hand.isBusted()) {
             return GameResult.LOSE;
         }
-
         if (getTotalScore() < dealerScore) {
             return GameResult.LOSE;
         }
-        // 무승부 로직 배제
         return GameResult.WIN;
     }
-
 }

@@ -1,8 +1,8 @@
 package blackjack;
 
+import blackjack.domain.Deck;
 import blackjack.domain.Participants;
 import blackjack.domain.Players;
-import blackjack.domain.PlayingCards;
 import blackjack.domain.participant.Dealer;
 import blackjack.dto.WinningResult;
 import blackjack.view.InputView;
@@ -22,7 +22,7 @@ public class BlackjackRunner {
     
     public void execute() {
         Participants participants = makeParticipants();
-        PlayingCards deck = PlayingCards.createShuffledDeck();
+        Deck deck = new Deck();
         gameStart(participants, deck);
         
         playerTurn(participants, deck);
@@ -58,7 +58,7 @@ public class BlackjackRunner {
         outputView.printWinningResults(winningResults);
     }
     
-    private void gameStart(Participants participants, PlayingCards deck) {
+    private void gameStart(Participants participants, Deck deck) {
         printInitialSetup(participants);
 
         participants.distributeCards(deck);
@@ -66,20 +66,20 @@ public class BlackjackRunner {
         printInitialResult(participants);
     }
     
-    private void dealerTurn(Participants participants, final PlayingCards deck) {
+    private void dealerTurn(Participants participants, final Deck deck) {
         while (participants.isDealerDraw()) {
             outputView.printDealerTurn();
             participants.dealerDraw(deck);
         }
     }
     
-    private void playerTurn(Participants participants, final PlayingCards deck) {
+    private void playerTurn(Participants participants, final Deck deck) {
         while (participants.findDrawablePlayer() != null) {
             playerDraw(participants, deck);
         }
     }
     
-    private void playerDraw(Participants participants, PlayingCards deck) {
+    private void playerDraw(Participants participants, Deck deck) {
         String drawablePlayerNickname = participants.findDrawablePlayer();
         boolean isPlayerDraw = isDraw(drawablePlayerNickname);
         if (isPlayerDraw) {

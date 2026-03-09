@@ -1,7 +1,9 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.Card;
+import blackjack.domain.Deck;
 import blackjack.domain.Hand;
-import blackjack.domain.PlayingCards;
+import java.util.List;
 
 public abstract class Participant {
 
@@ -16,12 +18,12 @@ public abstract class Participant {
 
     public String getResultSnapshot() {
         String info = getInfoSnapshot();
-        int scoreSum = hand.getScoreSum();
-        return String.format("%s - 결과: %d", info, scoreSum);
+        int aceCalculatedScoreSum = hand.calculateAce();
+        return String.format("%s - 결과: %d", info, aceCalculatedScoreSum);
     }
 
     public String getInfoSnapshot() {
-        String cardSnapshot = hand.getCardSnapshot();
+        String cardSnapshot = hand.getSnapshot();
         return String.format("%s카드: %s", nickname, cardSnapshot);
     }
 
@@ -29,14 +31,14 @@ public abstract class Participant {
         return nickname;
     }
 
-    public String distributeCards(PlayingCards deck) {
-        PlayingCards drewCards = deck.drawCards(FIRST_DRAW_COUNT);
+    public String distributeCards(Deck deck) {
+        List<Card> drewCards = deck.drawCards(FIRST_DRAW_COUNT);
         return receiveCard(drewCards);
     }
 
     public abstract boolean isDrawable();
 
-    public String receiveCard(PlayingCards receivedCards) {
+    public String receiveCard(List<Card> receivedCards) {
         hand.addCard(receivedCards);
         return getInfoSnapshot();
     }
