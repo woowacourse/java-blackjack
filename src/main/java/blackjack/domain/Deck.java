@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 public class Deck {
     private static final int CARDS_COUNT = 52;
+    private static final int INITIAL_CARDS_COUNT = 2;
 
     private final List<TrumpCard> cards;
 
@@ -49,11 +50,11 @@ public class Deck {
         }
     }
 
-    public List<TrumpCard> drawSecondTimes() {
+    public List<TrumpCard> drawInitialCards() {
         List<TrumpCard> cards = new ArrayList<>();
-
-        cards.add(draw());
-        cards.add(draw());
+        for (int i = 0; i < INITIAL_CARDS_COUNT; i++) {
+            cards.add(draw());
+        }
         return cards;
     }
 

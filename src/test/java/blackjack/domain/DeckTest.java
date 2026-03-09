@@ -81,7 +81,7 @@ class DeckTest {
     }
 
     @Test
-    void 카드_2장을_한번에_지급한다() {
+    void 초반에_카드를_2장씩_한번에_지급한다() {
         List<TrumpCard> cards = new ArrayList<>();
         for (Suit suit : Suit.values()) {
             for (Rank rank : Rank.values()) {
@@ -89,7 +89,7 @@ class DeckTest {
             }
         }
         Deck deck = Deck.of(cards);
-        List<TrumpCard> drawnCards = deck.drawSecondTimes();
+        List<TrumpCard> drawnCards = deck.drawInitialCards();
 
         assertThat(drawnCards).hasSize(2);
     }
