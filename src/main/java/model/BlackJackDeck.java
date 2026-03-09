@@ -1,6 +1,7 @@
 package model;
 
-import constant.ErrorMessage;
+import constant.CardErrorCode;
+import exception.GameException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -23,7 +24,7 @@ public class BlackJackDeck {
     public Card draw() {
         List<Card> currentCards = cards.get();
         if(currentCards.isEmpty()) {
-            ErrorMessage.NO_CARD_IN_DECK.throwException();
+            throw new GameException(CardErrorCode.NO_CARD_IN_DECK);
         }
 
         Card drawedCard = currentCards.removeFirst();

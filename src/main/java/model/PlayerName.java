@@ -1,13 +1,12 @@
 package model;
 
-
-import constant.ErrorMessage;
+import constant.PlayerErrorCode;
+import exception.GameException;
 
 public record PlayerName(String value) {
     public PlayerName {
         if (value.isBlank()) {
-            ErrorMessage.INPUT_IS_BLANK.throwException();
+            throw new GameException(PlayerErrorCode.INPUT_IS_BLANK);
         }
     }
 }
-

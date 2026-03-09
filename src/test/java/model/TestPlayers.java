@@ -3,7 +3,8 @@ package model;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-import constant.ErrorMessage;
+import constant.PlayerErrorCode;
+import exception.GameException;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -30,8 +31,9 @@ public class TestPlayers {
         Player player = new Player(playerName);
         Player player2 = new Player(playerName);
 
-        assertThatThrownBy(() -> new Players(List.of(player,player2)))
-                .isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ErrorMessage.DUPLICATED_NAME.getMessage());
+        assertThatThrownBy(() -> new Players(List.of(player, player2)))
+                .isExactlyInstanceOf(GameException.class)
+                .satisfies(e -> assertThat(((GameException) e).getErrorCode())
+                        .isEqualTo(PlayerErrorCode.DUPLICATED_NAME));
     }
 }

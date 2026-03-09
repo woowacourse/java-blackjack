@@ -1,6 +1,7 @@
 package model;
 
-import constant.ErrorMessage;
+import constant.CardErrorCode;
+import exception.GameException;
 import dto.Card;
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class ParticipantHand {
 
     private void validateCardDuplicate(Card card) {
         if(hand.get().contains(card)) {
-            ErrorMessage.DUPLICATED_CARD_IN_DECK.throwException();
+            throw new GameException(CardErrorCode.DUPLICATED_CARD_IN_DECK);
         }
     }
 }

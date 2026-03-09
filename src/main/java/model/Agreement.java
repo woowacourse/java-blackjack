@@ -1,6 +1,7 @@
 package model;
 
-import constant.ErrorMessage;
+import constant.InputErrorCode;
+import exception.GameException;
 
 public class Agreement {
     private static final String TRUE_TEXT = "y";
@@ -24,13 +25,13 @@ public class Agreement {
 
     private void validateEmptyValue(String value) {
         if(value.isBlank()) {
-            ErrorMessage.INPUT_IS_BLANK.throwException();
+            throw new GameException(InputErrorCode.INPUT_IS_BLANK);
         }
     }
 
     private void validatePossibleValue(String value) {
         if(!value.equals(TRUE_TEXT) && !value.equals(FALSE_TEXT)) {
-            ErrorMessage.INVALID_CONDITION_INPUT.throwException();
+            throw new GameException(InputErrorCode.INVALID_CONDITION_INPUT);
         }
     }
 }

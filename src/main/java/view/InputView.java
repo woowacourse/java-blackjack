@@ -1,6 +1,7 @@
 package view;
 
-import constant.ErrorMessage;
+import constant.InputErrorCode;
+import exception.GameException;
 import model.PlayerName;
 import java.util.List;
 import java.util.Scanner;
@@ -29,7 +30,7 @@ public class InputView {
         String input = scanner.nextLine();
 
         if(input.isBlank()) {
-            ErrorMessage.INPUT_IS_BLANK.throwException();
+            throw new GameException(InputErrorCode.INPUT_IS_BLANK);
         }
         return input;
     }

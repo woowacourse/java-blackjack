@@ -1,6 +1,7 @@
 package model;
 
-import constant.ErrorMessage;
+import constant.PlayerErrorCode;
+import exception.GameException;
 import java.util.Objects;
 
 public class Player extends Participant {
@@ -13,7 +14,7 @@ public class Player extends Participant {
 
     private void validate(PlayerName name) {
         if(name.value().equals(DEALER_NAME)) {
-            ErrorMessage.NO_PLAYER_NAME_DEALER.throwException();
+            throw new GameException(PlayerErrorCode.NO_PLAYER_NAME_DEALER);
         }
     }
 

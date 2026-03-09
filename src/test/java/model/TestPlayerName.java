@@ -3,7 +3,8 @@ package model;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-import constant.ErrorMessage;
+import constant.PlayerErrorCode;
+import exception.GameException;
 import org.junit.jupiter.api.Test;
 
 public class TestPlayerName {
@@ -18,8 +19,8 @@ public class TestPlayerName {
     @Test
     public void 플레이어_이름_빈값_예외() {
         assertThatThrownBy(() -> new PlayerName(""))
-                .isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ErrorMessage.INPUT_IS_BLANK.getMessage());
-
+                .isExactlyInstanceOf(GameException.class)
+                .satisfies(e -> assertThat(((GameException) e).getErrorCode())
+                        .isEqualTo(PlayerErrorCode.INPUT_IS_BLANK));
     }
 }

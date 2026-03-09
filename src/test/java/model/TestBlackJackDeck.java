@@ -3,7 +3,8 @@ package model;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-import constant.ErrorMessage;
+import constant.CardErrorCode;
+import exception.GameException;
 import org.junit.jupiter.api.Test;
 
 public class TestBlackJackDeck {
@@ -23,7 +24,9 @@ public class TestBlackJackDeck {
             blackJackDeck.draw();
         }
 
-        assertThatThrownBy(blackJackDeck::draw).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage(
-                ErrorMessage.NO_CARD_IN_DECK.getMessage());
+        assertThatThrownBy(blackJackDeck::draw)
+                .isExactlyInstanceOf(GameException.class)
+                .satisfies(e -> assertThat(((GameException) e).getErrorCode())
+                        .isEqualTo(CardErrorCode.NO_CARD_IN_DECK));
     }
 }
