@@ -30,6 +30,19 @@ public class Dealer extends Participant {
 
     }
 
+    @Override
+    public boolean beats(Participant participant) {
+        if (participant.isBust()) {
+            return true;
+        }
+
+        if (isBust()) {
+            return false;
+        }
+
+        return calculateScore() >= participant.calculateScore();
+    }
+
     public boolean needDraw() {
         return this.calculateScore() <= DRAW_THRESHOLD;
     }

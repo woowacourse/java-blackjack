@@ -15,4 +15,17 @@ public class Player extends Participant {
     public Cards open() {
         return Cards.from(hands);
     }
+
+    @Override
+    public boolean beats(Participant participant) {
+        if (isBust()) {
+            return false;
+        }
+
+        if (participant.isBust()) {
+            return false;
+        }
+
+        return calculateScore() > participant.calculateScore();
+    }
 }

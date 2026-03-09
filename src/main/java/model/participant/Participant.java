@@ -36,14 +36,6 @@ public abstract class Participant {
         return total;
     }
 
-    public boolean beats(Participant participant) {
-        if (participant.isBust()) {
-            return true;
-        }
-
-        return calculateScore() > participant.calculateScore();
-    }
-
     public boolean canHit() {
         return calculateScore() < BUST_THRESHOLD;
     }
@@ -71,4 +63,6 @@ public abstract class Participant {
     }
 
     public abstract Cards open();
+
+    public abstract boolean beats(Participant participant);
 }
