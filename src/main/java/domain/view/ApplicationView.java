@@ -1,7 +1,7 @@
 package domain.view;
 
 import domain.analyzer.dto.ResultAnalysisDto;
-import domain.answer.Answer;
+import domain.answer.DrawDecision;
 import domain.player.PlayerName;
 import domain.player.dto.PlayerHandDto;
 import domain.player.dto.PlayerResultDto;
@@ -33,11 +33,11 @@ public class ApplicationView {
         });
     }
 
-    public Answer askDrawCard(String playerName) {
+    public DrawDecision askDrawCard(String playerName) {
         return retry(() -> {
             writer.printDrawCardGuideMessage(playerName);
-            String input = reader.readInput();
-            return Answer.from(input);
+            String userDecision = reader.readInput();
+            return DrawDecision.from(userDecision);
         });
     }
 

@@ -2,7 +2,7 @@ package controller;
 
 import domain.analyzer.ResultAnalyzer;
 import domain.analyzer.dto.ResultAnalysisDto;
-import domain.answer.Answer;
+import domain.answer.DrawDecision;
 import domain.card.CardDeck;
 import domain.card.CardGenerator;
 import domain.dealer.Dealer;
@@ -91,8 +91,8 @@ public class BlackjackGame {
     }
 
     private boolean isPlayerWantCard(Player player) {
-        Answer answer = view.askDrawCard(player.toDisplayMyName());
-        return answer.isYes();
+        DrawDecision drawDecision = view.askDrawCard(player.toDisplayMyName());
+        return drawDecision.isYes();
     }
 
     private void showGamerHandResult(Dealer dealer, Players players) {

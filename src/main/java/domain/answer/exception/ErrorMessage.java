@@ -2,12 +2,12 @@ package domain.answer.exception;
 
 import domain.common.exception.ExceptionInformation;
 
-import static domain.answer.Answer.NO;
-import static domain.answer.Answer.YES;
+import static domain.answer.DrawDecision.NO;
+import static domain.answer.DrawDecision.YES;
 
 public enum ErrorMessage implements ExceptionInformation {
 
-    DRAW_DECISION_INPUT_ERROR(String.format("%s 또는 %s을 입력해주세요.", YES.getAnswer(), NO.getAnswer()))
+    DRAW_DECISION_INPUT_ERROR(String.format("%s 또는 %s을 입력해주세요.", YES.getDecision(), NO.getDecision()))
     ;
 
     private final String errorMessage;
