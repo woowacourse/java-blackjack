@@ -1,11 +1,42 @@
 package blackjack.domain;
 
+import java.util.Arrays;
 import java.util.Map;
 
 public enum MatchResult {
-    WIN("승"),
-    LOSE("패"),
-    DRAW("무");
+    WIN("승") {
+        @Override
+        public boolean matches(Player player, Dealer dealer) {
+            if (player.isBust()) {
+                return false;
+            }
+            if (dealer.isBust()) {
+                return true;
+            }
+            return player.score() > dealer.score();
+        }
+    },
+    LOSE("패") {
+        @Override
+        public boolean matches(Player player, Dealer dealer) {
+            if (player.isBust()) {
+                return true;
+            }
+            if (dealer.isBust()) {
+                return false;
+            }
+            return player.score() < dealer.score();
+        }
+    },
+    DRAW("무") {
+        @Override
+        public boolean matches(Player player, Dealer dealer) {
+            if (player.isBust() || dealer.isBust()) {
+                return false;
+            }
+            return player.score() == dealer.score();
+        }
+    };
 
     private final String display;
 
@@ -17,31 +48,27 @@ public enum MatchResult {
         return display;
     }
 
-    public static MatchResult playerResult(Player player, Dealer dealer){
-        if(player.isBust()){
-            return LOSE;
-        }
+    public abstract boolean matches(Player player, Dealer dealer);
 
-        if(dealer.isBust()){
-            return WIN;
-        }
-
-        if (player.score() > dealer.score()) {
-            return WIN;
-        }
-
-        if (player.score() < dealer.score()) {
-            return LOSE;
-        }
-
-        return DRAW;
+    public static MatchResult of(Player player, Dealer dealer) {
+        return Arrays.stream(values())
+                .filter(result -> result.matches(player, dealer))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("매칭되는 결과가 없습니다."));
     }
 
-    public static Map<String, Long> dealerResult(Map<Player, MatchResult> playerResults){
+    public static Map<String, Long> calculateDealerResult(Map<Player, MatchResult> playerResults) {
         return Map.of(
-                "승", playerResults.values().stream().filter(r -> r == LOSE).count(),
-                "패", playerResults.values().stream().filter(r -> r == WIN).count(),
-                "무", playerResults.values().stream().filter(r -> r == DRAW).count()
+                "승", countResult(playerResults, LOSE),
+                "패", countResult(playerResults, WIN),
+                "무", countResult(playerResults, DRAW)
         );
     }
+
+    private static long countResult(Map<Player, MatchResult> playerResults, MatchResult target) {
+        return playerResults.values().stream()
+                .filter(result -> result == target)
+                .count();
+    }
 }
+

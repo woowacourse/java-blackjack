@@ -72,13 +72,13 @@ public class BlackjackGame {
     public Map<Player, MatchResult> getPlayerFinalResult() {
         Map<Player, MatchResult> playerResult = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
-            playerResult.put(player, MatchResult.playerResult(player, dealer));
+            playerResult.put(player, MatchResult.of(player, dealer));
         }
         return playerResult;
     }
 
     public Map<String, Long> getDealerFinalResult(Map<Player, MatchResult> playerResult) {
-        return MatchResult.dealerResult(playerResult);
+        return MatchResult.calculateDealerResult(playerResult);
     }
 
     public Players getPlayers() {
