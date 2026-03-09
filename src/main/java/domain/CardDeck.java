@@ -9,13 +9,9 @@ public class CardDeck {
 
     private final List<Card> cards;
 
-    public CardDeck() {
+    public CardDeck(ShuffleStrategy generator) {
         this.cards = new ArrayList<>(Arrays.asList(Card.values()));
-        Collections.shuffle(this.cards);
-    }
-
-    public void shuffle() {
-        Collections.shuffle(this.cards);
+        generator.shuffle(cards);
     }
 
     public Card deal() {

@@ -1,3 +1,5 @@
+import domain.RandomShuffle;
+import domain.ShuffleStrategy;
 
 public class AppConfig {
 
@@ -6,7 +8,7 @@ public class AppConfig {
     }
 
     private GameService service() {
-        return new GameService();
+        return new GameService(strategy());
     }
 
     private InputView inputView() {
@@ -15,5 +17,9 @@ public class AppConfig {
 
     private OutputView outputView() {
         return new OutputView();
+    }
+
+    private ShuffleStrategy strategy() {
+        return new RandomShuffle();
     }
 }

@@ -6,8 +6,8 @@ public class GameService {
 
     private final CardDeck cardDeck;
 
-    public GameService() {
-        this.cardDeck = new CardDeck();
+    public GameService(ShuffleStrategy strategy) {
+        this.cardDeck = new CardDeck(strategy);
     }
 
     public void initDeal(List<User> users, Dealer dealer) {
