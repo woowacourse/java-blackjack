@@ -95,7 +95,7 @@ public class Application {
     }
 
     private void printDealResult() {
-        outputView.printMessage(blackjackGame.makeUserCardsDisplay());
+        outputView.printMessage(blackjackGame.makeDealCompleteDisplay());
         outputView.printMessage(blackjackGame.makeDealerCardsDisplay());
         blackjackGame.getUserCardsDisplays().forEach(outputView::printMessage);
     }

@@ -89,7 +89,7 @@ public class DealerTest {
     }
 
     @Test
-    void 딜러_점수_같으면_패() {
+    void 딜러_점수_같으면_승() {
         // given
         dealer.receiveCard(new Card(Suit.SPADE, Rank.TEN));
         dealer.receiveCard(new Card(Suit.HEART, Rank.EIGHT));
@@ -99,7 +99,7 @@ public class DealerTest {
         GameResult result = dealer.judgeUserWin(userScore);
 
         // then
-        assertThat(result).isEqualTo(GameResult.LOSE);
+        assertThat(result).isEqualTo(GameResult.WIN);
     }
 
     @Test

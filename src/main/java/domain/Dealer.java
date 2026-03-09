@@ -8,9 +8,9 @@ public class Dealer extends Participant{
     public Boolean determineDealerDealMore() {
         return hand.determineDealerDealMore();
     }
-    
-    public GameResult judgeUserResult(int userTotalScore) {
-        if (hand.calculateTotalScore() == WINNING_SCORE_BOUNDARY) {
+
+    public GameResult judgeDealerResult(int userTotalScore) {
+        if (hand.calculateTotalScore() == WINNING_SCORE_BOUNDARY || userTotalScore > WINNING_SCORE_BOUNDARY) {
             return GameResult.WIN;
         }
 
@@ -27,10 +27,14 @@ public class Dealer extends Participant{
         }
 
         int dealerScore = hand.calculateTotalScore();
-        if (userScore == WINNING_SCORE_BOUNDARY || dealerScore > WINNING_SCORE_BOUNDARY || userScore > dealerScore) {
+        if (userScore == WINNING_SCORE_BOUNDARY || dealerScore > WINNING_SCORE_BOUNDARY || userScore >= dealerScore) {
             return GameResult.WIN;
         }
 
         return GameResult.LOSE;
+    }
+
+    public String getOneCardDisplay() {
+        return hand.getFirstCardDisplay();
     }
 }

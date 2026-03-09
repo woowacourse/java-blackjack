@@ -63,4 +63,8 @@ public class Hand {
         }
         return totalScore;
     }
+
+    public String getFirstCardDisplay() {
+        return cards.getFirst().getDisplayName();
+    }
 }

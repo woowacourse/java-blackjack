@@ -45,6 +45,10 @@ public class Participants {
     }
 
     public String getDealerCardsDisplay() {
+        return dealer.getOneCardDisplay();
+    }
+
+    public Object getAllDealerCardsDisplay() {
         return dealer.getCardsDisplay();
     }
 
@@ -114,7 +118,7 @@ public class Participants {
     private EnumMap<GameResult, Integer> calculateDealerResults() {
         EnumMap<GameResult, Integer> dealerResults = initEnumMap();
         for (User user : participants) {
-            GameResult dealerResult = dealer.judgeUserResult(user.getScore());
+            GameResult dealerResult = dealer.judgeDealerResult(user.getScore());
             dealerResults.replace(dealerResult, dealerResults.get(dealerResult) + 1);
         }
         return dealerResults;
@@ -137,7 +141,6 @@ public class Participants {
         }
         return dealerScore;
     }
-
 
 }
 

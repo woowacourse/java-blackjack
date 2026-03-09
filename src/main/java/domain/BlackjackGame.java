@@ -27,12 +27,16 @@ public class BlackjackGame {
         }
     }
 
-    public String makeUserCardsDisplay() {
+    public String makeDealCompleteDisplay() {
         return String.format(Message.DEAL_CARDS_MESSAGE, participants.getUserNames());
     }
 
     public String makeDealerCardsDisplay() {
         return String.format(Message.DEALER_CARDS_MESSAGE, participants.getDealerCardsDisplay());
+    }
+
+    private String makeAllDealerCardsDisplay() {
+        return String.format(Message.DEALER_FINAL_CARDS_MESSAGE, participants.getAllDealerCardsDisplay());
     }
 
     public List<String> makeExtraCardRequests() {
@@ -57,7 +61,7 @@ public class BlackjackGame {
     }
 
     public String makeDealerFinalResultDisplay() {
-        return makeDealerCardsDisplay() + participants.getDealerFinalDisplay();
+        return makeAllDealerCardsDisplay() + participants.getDealerFinalDisplay();
     }
 
     public List<String> makeUserFinalResultDisplay() {
