@@ -54,7 +54,7 @@ public class GameController {
 
     private void printGameStart(List<String> playerNames, Dealer dealer, List<Player> players) {
         outputView.printStartCardMessage(playerNames);
-        outputView.printDealerStartCard(dealer.getHoldCards().getFirst());
+        outputView.printDealerStartCard(dealer.getHand().getFirst());
         outputView.printStartCard(players);
     }
 

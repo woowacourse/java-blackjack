@@ -3,23 +3,23 @@ package domain;
 import java.util.List;
 
 public abstract class Participant {
-    private final List<Card> holdCards;
+    private final List<Card> hand;
 
-    public Participant(List<Card> holdCards) {
-        this.holdCards = holdCards;
+    public Participant(List<Card> hand) {
+        this.hand = hand;
     }
 
     public void addCard(Card card) {
-        holdCards.add(card);
+        hand.add(card);
     }
 
     public int calculateTotalScore() {
         int results = 0;
-        for (Card holdCard : holdCards) {
+        for (Card holdCard : hand) {
             results += holdCard.getScore();
         }
 
-        boolean isAceExist = holdCards.stream()
+        boolean isAceExist = hand.stream()
                 .anyMatch(holdCard -> holdCard.getCardNumber() == CardNumber.ACE);
         if (isAceExist && (results + 10) <= 21) {
             return results + 10;
@@ -27,8 +27,8 @@ public abstract class Participant {
         return results;
     }
 
-    public List<Card> getHoldCards(){
-        return List.copyOf(holdCards);
+    public List<Card> getHand(){
+        return List.copyOf(hand);
     }
 
     public boolean isBust() {
