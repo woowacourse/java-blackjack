@@ -15,9 +15,4 @@ public class Dealer extends Member {
     public List<Card> showFirstCards() {
         return List.of(super.handCards().getFirst());
     }
-
-    @Override
-    public boolean isDealer() {
-        return true;
-    }
 }
