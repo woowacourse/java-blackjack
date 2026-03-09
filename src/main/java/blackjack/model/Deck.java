@@ -4,7 +4,6 @@ import static blackjack.model.Constant.INITIAL_CARD_COUNT;
 import static blackjack.model.Constant.INIT_CARDS_START_IDX;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -13,19 +12,19 @@ public class Deck {
 
     private final Queue<Card> deck = new LinkedList<>();
 
-    public Deck() {
-        initDeck();
+    public Deck(CardShuffleStrategy shuffleStrategy) {
+        initDeck(shuffleStrategy);
     }
 
-    private void initDeck() {
+    private void initDeck(CardShuffleStrategy shuffleStrategy) {
         List<Card> cards = new ArrayList<>();
         for (Suit suit : Suit.values()) {
             for (Rank rank : Rank.values()) {
                 cards.add(new Card(suit, rank));
             }
         }
-        Collections.shuffle(cards);
-        this.deck.addAll(cards);
+        List<Card> shuffleCards = shuffleStrategy.shuffle(cards);
+        this.deck.addAll(shuffleCards);
     }
 
     public void provideInitCards(Players players, Dealer dealer) {
