@@ -6,6 +6,7 @@ import domain.GameResult;
 import domain.Player;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import util.InputParser;
@@ -70,7 +71,7 @@ public class GameController {
     }
 
     private Map<String, GameResult> getPlayerFinalResults(List<Player> players, Dealer dealer) {
-        Map<String, GameResult> playerFinalResults = new HashMap<>();
+        Map<String, GameResult> playerFinalResults = new LinkedHashMap<>();
         int dealerWinningCount = 0;
         int dealerLosingCount = 0;
 
