@@ -2,26 +2,24 @@ package domain;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class BlackjackResultTest {
 
+    private final List<String> userNames = List.of("pobi", "jason");
+
     @Test
-    @DisplayName("딜러와 플레이어 승패 결과 테스트")
-    void 딜러_카드합계_VS_플레이어_카드합계() {
-        int dealerScore = 20;
-        int playerScore = 19;
-        WinOrLose playerResult = WinOrLose.DRAW;
+    @DisplayName("BlackjackResult 객체 생성 시 플레이어들의 승패 저장 확인")
+    void player_result_test() {
+        Cards cards = Cards.of();
+        Dealer dealer = Dealer.of(cards.drawInitialHand());
+        Players players = Players.of(cards, userNames);
 
-        if (playerScore > dealerScore) {
-            playerResult = WinOrLose.WIN;
-        }
-        if (playerScore < dealerScore) {
-            playerResult = WinOrLose.LOSE;
-        }
+        BlackjackResult result = BlackjackResult.of(dealer, players);
 
-        WinOrLose expect = WinOrLose.LOSE;
-        assertThat(playerResult).isEqualTo(expect);
+        int expect = userNames.size();
+        assertThat(result.getPlayersResult()).hasSize(expect);
     }
 }
