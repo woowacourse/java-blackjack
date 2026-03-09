@@ -30,15 +30,8 @@ public abstract class Player {
     }
 
     public void calculateScore() {
-        int score = 0;
-        int aceCount = 0;
-        for (Card card: hand) {
-            if (!card.isAce()) {
-                score += card.getValue();
-                continue;
-            }
-            aceCount++;
-        }
+        int score = hand.stream().mapToInt(Card::getValue).sum();
+        int aceCount = (int) hand.stream().filter(Card::isAce).count();
         for(int i = 0; i< aceCount; i++){
             score += calculateOptimalAceScore(score);
         }
