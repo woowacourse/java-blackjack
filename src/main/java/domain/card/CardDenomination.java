@@ -17,16 +17,16 @@ public enum CardDenomination {
     JACK("J", 10),
     ;
 
-    private final String displayName;
+    private final String name;
     private final int score;
 
-    CardDenomination(String displayName, int score) {
-        this.displayName = displayName;
+    CardDenomination(String name, int score) {
+        this.name = name;
         this.score = score;
     }
 
-    public String getDisplayName() {
-        return this.displayName;
+    public String getName() {
+        return this.name;
     }
 
     public int getScore() {

@@ -10,7 +10,7 @@ public record Card(
     }
 
     public String toDisplay() {
-        return denomination.getDisplayName() + emblem.displayName();
+        return denomination.getName() + emblem.getName();
     }
 
     public int getScore() {

@@ -8,14 +8,14 @@ public enum CardEmblem {
     CLOVER("클로버")
     ;
 
-    private final String emblem;
+    private final String name;
 
-    CardEmblem(String emblem) {
-        this.emblem = emblem;
+    CardEmblem(String name) {
+        this.name = name;
     }
 
-    public String displayName() {
-        return emblem;
+    public String getName() {
+        return name;
     }
 
 }
