@@ -1,5 +1,8 @@
 package blackjack.controller;
 
+import static blackjack.util.Parser.splitDelimiter;
+import static blackjack.view.InputView.readPlayNames;
+
 import blackjack.domain.MatchResult;
 import blackjack.domain.Player;
 import blackjack.dto.DealResult;
@@ -10,15 +13,11 @@ import blackjack.service.RandomShuffleStrategy;
 import blackjack.util.Parser;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-
 import java.util.List;
 import java.util.Map;
 
-import static blackjack.util.Parser.splitDelimiter;
-import static blackjack.view.InputView.readPlayNames;
-
 public class BlackjackController {
-    public void run(){
+    public void run() {
         List<String> names = inputName();
         RandomShuffleStrategy shuffleStrategy = new RandomShuffleStrategy();
         BlackjackGame blackjackGame = BlackjackGame.create(names, shuffleStrategy);
@@ -28,7 +27,7 @@ public class BlackjackController {
 
         playPlayerTurn(blackjackGame);
 
-        while(blackjackGame.canDealerHit()){
+        while (blackjackGame.canDealerHit()) {
             OutputView.printDealerDrawMessage();
             blackjackGame.dealerDraw();
         }
@@ -53,21 +52,27 @@ public class BlackjackController {
         return DealResult.from(blackjackGame.getPlayers(), blackjackGame.getDealer());
     }
 
-    private void playPlayerTurn(BlackjackGame blackjackGame){
+    private void playPlayerTurn(BlackjackGame blackjackGame) {
         for (int i = 0; i < blackjackGame.playerCount(); i++) {
             playTurn(blackjackGame, i);
         }
     }
 
-    private void playTurn(BlackjackGame blackjackGame, int index){
+    private void playTurn(BlackjackGame blackjackGame, int index) {
         while (blackjackGame.canPlayerHit(index)) {
-            String answer = InputView.readYesOrNo(blackjackGame.playerNameByIndex(index));
-            if ("n".equals(answer)) {
+            if (!inputYesOrNo(blackjackGame.playerNameByIndex(index))) {
                 break;
             }
             PlayerHandResult playerHandResult = PlayerHandResult.from(blackjackGame.playerDraw(index));
             OutputView.printCurrentPlayerHand(playerHandResult);
         }
         System.out.println();
+    }
+
+    private boolean inputYesOrNo(String playerName) {
+        String input = InputView.readYesOrNo(playerName);
+        Parser.notEmpty(input);
+        Parser.yesOrNo(input);
+        return Parser.parseAnswer(input);
     }
 }
