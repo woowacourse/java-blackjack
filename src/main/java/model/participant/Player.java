@@ -1,0 +1,21 @@
+package model.participant;
+
+import java.util.List;
+import model.Card;
+
+public class Player extends Participant {
+    private Player(String name) {
+        super(name);
+    }
+
+    public static Player of(String input) {
+        return new Player(input);
+    }
+
+    @Override
+    public List<String> open() {
+        return hands.stream()
+                .map(Card::toString)
+                .toList();
+    }
+}
