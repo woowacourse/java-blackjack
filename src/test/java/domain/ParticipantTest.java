@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.card.Card;
 import domain.card.Emblem;
 import domain.card.Grade;
-import domain.participant.GameState;
 import domain.participant.Hand;
 import domain.participant.Name;
 import domain.participant.Participant;
@@ -48,15 +47,4 @@ public class ParticipantTest {
         assertThat(result).isEqualTo(expect);
     }
 
-    @Test
-    void 플레이어의_게임_진행_상태를_변경한다() {
-        // given
-        Participant participant = new Participant(new Name("test"), new Hand());
-        GameState expectedState = GameState.STAND;
-        // when
-        participant.changeState();
-
-        // then
-        assertThat(participant.getGameState()).isEqualTo(expectedState);
-    }
 }
