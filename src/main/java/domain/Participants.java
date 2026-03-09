@@ -103,13 +103,28 @@ public class Participants {
         return userDisplays;
     }
 
-    public ParticipantsScoreDTO judgeWinner() {
+    public List<String> makeFinalWinnerDisplays() {
+        ParticipantsScoreDTO participantsScoreDTO = judgeWinner();
+        return formatFinalDisplays(participantsScoreDTO);
+    }
+
+    private ParticipantsScoreDTO judgeWinner() {
+        EnumMap<GameResult, Integer> dealerScore = calculateDealerScore();
+        Map<String, GameResult> userScore = calculateUserScore(dealerScore);
+        return new ParticipantsScoreDTO(dealerScore, userScore);
+    }
+
+    private EnumMap<GameResult, Integer> calculateDealerScore() {
         EnumMap<GameResult, Integer> dealerScore = new EnumMap<>(GameResult.class);
 
         for (GameResult result : GameResult.values()) {
             dealerScore.put(result, 0);
         }
 
+        return dealerScore;
+    }
+
+    private Map<String, GameResult> calculateUserScore(EnumMap<GameResult, Integer> dealerScore) {
         Map<String, GameResult> userScore = new HashMap<>();
 
         for (User user : participants) {
@@ -120,23 +135,29 @@ public class Participants {
             userScore.put(user.getName(), isUserWin);
         }
 
-        return new ParticipantsScoreDTO(dealerScore, userScore);
+        return userScore;
     }
 
-    public List<String> makeFinalWinnerDisplays(ParticipantsScoreDTO participantsScore) {
-        EnumMap<GameResult, Integer> dealerScore = participantsScore.getDealerScore();
-        Map<String, GameResult> userScore = participantsScore.getUserScore();
+    private List<String> formatFinalDisplays(ParticipantsScoreDTO participantsScoreDTO) {
+        EnumMap<GameResult, Integer> dealerScore = participantsScoreDTO.getDealerScore();
+        Map<String, GameResult> userScore = participantsScoreDTO.getUserScore();
 
         List<String> finalTotalDisplays = new ArrayList<>();
-        String dealerTotalFinalDisplay = "딜러: " + dealerScore.get(GameResult.WIN) + "승 " + dealerScore.get(GameResult.LOSE) + "패";
-        finalTotalDisplays.add(dealerTotalFinalDisplay);
+        finalTotalDisplays.add(formatDealerFinalDisplay(dealerScore));
 
         for (User user : participants) {
-            String userTotalFinalDisplay = user.getName() + ": " + userScore.get(user.getName()).getName();
-            finalTotalDisplays.add(userTotalFinalDisplay);
+            finalTotalDisplays.add(formatUserFinalDisplay(user, userScore));
         }
 
         return finalTotalDisplays;
+    }
+
+    private String formatDealerFinalDisplay(EnumMap<GameResult, Integer> dealerScore) {
+        return "딜러: " + dealerScore.get(GameResult.WIN) + "승 " + dealerScore.get(GameResult.LOSE) + "패";
+    }
+
+    private String formatUserFinalDisplay(User user, Map<String, GameResult> userScore) {
+        return user.getName() + ": " + userScore.get(user.getName()).getName();
     }
 }
 

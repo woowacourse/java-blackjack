@@ -71,7 +71,6 @@ public class BlackjackService {
     }
 
     public List<String> evaluateGame() {
-        ParticipantsScoreDTO participantsScoreDTO = participants.judgeWinner();
-        return participants.makeFinalWinnerDisplays(participantsScoreDTO);
+        return participants.makeFinalWinnerDisplays();
     }
 }
