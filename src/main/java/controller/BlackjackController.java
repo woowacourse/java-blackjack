@@ -37,15 +37,23 @@ public class BlackjackController {
         Dealer dealer = new Dealer(drawHand(deck), new CasinoDealerHitStrategy());
 
         List<Player> players = createPlayers(Parser.parse(inputView.readPlayerName()), deck);
-        outputView.drawCard(NamesDto.fromEntity(dealer, players));
-        outputView.showOnlyOneCard(PlayerCardsDto.fromEntity(dealer));
-        outputView.showPlayersCards(PlayersCardsDto.fromEntities(players));
+        printCards(dealer, players);
+
         chooseToFillPlayersHandAndPrint(players, deck);
-        fillDealerHandAndPrint(dealer, deck, players);  //전부 버스트나면 안뽑게해야 하나?
-        
+        fillDealerHandAndPrint(dealer, deck, players);
+        printAllStatus(dealer, players);
+    }
+
+    private void printAllStatus(Dealer dealer, List<Player> players) {
         outputView.showCardsAndScore(PlayerCardsDto.fromEntity(dealer));
         players.forEach(player -> outputView.showCardsAndScore(PlayerCardsDto.fromEntity(player)));
         outputView.showResultStatistics(getStatisticsDtos(players, dealer.getScore()), dealer.getName());
+    }
+
+    private void printCards(Dealer dealer, List<Player> players) {
+        outputView.drawCard(NamesDto.fromEntity(dealer, players));
+        outputView.showOnlyOneCard(PlayerCardsDto.fromEntity(dealer));
+        outputView.showPlayersCards(PlayersCardsDto.fromEntities(players));
     }
 
     private List<StatisticsDto> getStatisticsDtos(List<Player> players, Score dealerScore) {
