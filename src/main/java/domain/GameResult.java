@@ -3,6 +3,8 @@ package domain;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
+
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -18,7 +20,7 @@ public class GameResult {
     }
 
     public Map<String, WinningStatus> getPlayerWinningStatus() {
-        return Map.copyOf(playerWinningStatus);
+        return Collections.unmodifiableMap(new LinkedHashMap<>(playerWinningStatus));
     }
 
     public int dealerWinCount() {
