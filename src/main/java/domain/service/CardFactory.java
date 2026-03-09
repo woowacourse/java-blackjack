@@ -5,29 +5,33 @@ import domain.model.CardRank;
 import domain.model.CardShape;
 import repository.CardRepository;
 
+import static constant.ErrorMessage.EXCEEDED_MAX_TRY;
+
 public class CardFactory {
 
     private final CardRepository cardRepository;
     private final CardNumberGenerator cardNumberGenerator;
-    // TODO: 인스턴스 변수 2개까지 줄이기
+
+    private final int MAX_TRY = 5;
 
     public CardFactory(CardRepository cardRepository, CardNumberGenerator cardNumberGenerator) {
         this.cardRepository = cardRepository;
         this.cardNumberGenerator = cardNumberGenerator;
     }
 
-    // 카드 생성 후 저장
     public Card createCard() {
         Card card = getCard();
         return cardRepository.save(card);
     }
 
     private Card getCard() {
-        CardRank rank = cardNumberGenerator.generateRank();
-        CardShape shape = cardNumberGenerator.generateShape();
-        if (!cardRepository.isExistByShapeAndRank(rank, shape)) {
-            return Card.of(rank, shape);
+        for (int i = 0; i < MAX_TRY; i++) {
+            CardRank rank = cardNumberGenerator.generateRank();
+            CardShape shape = cardNumberGenerator.generateShape();
+            if (!cardRepository.isExistByShapeAndRank(rank, shape)) {
+                return Card.of(rank, shape);
+            }
         }
-        return getCard();
+        throw new IllegalArgumentException(EXCEEDED_MAX_TRY.getMessage());
     }
 }
