@@ -44,7 +44,7 @@ public class Hand {
     
     public int getTotalScore() {
         int scoreSum = calculateScoreSum();
-        if (scoreSum < BUSTED_SCORE) {
+        if (scoreSum <= BUSTED_SCORE) {
             return scoreSum;
         }
         return calculateBustedScore(scoreSum);

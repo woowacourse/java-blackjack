@@ -24,7 +24,10 @@ public class Player extends Participant {
         if (stopDrawing) {
             return false;
         }
-        return !(isBusted() || hand.isBlackjack());
+        if (isBusted()) {
+            return false;
+        }
+        return !hand.isBlackjack();
     }
     
     public void stop() {

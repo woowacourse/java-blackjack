@@ -56,6 +56,6 @@ class DealerTest {
         
         dealer.receiveCard(cards);
         
-        assertThat(dealer.getFirstCardInfoSnapshot()).isEqualTo("A스페이드");
+        assertThat(dealer.getFirstCardInfoSnapshot()).isEqualTo("딜러카드: A스페이드");
     }
 }
