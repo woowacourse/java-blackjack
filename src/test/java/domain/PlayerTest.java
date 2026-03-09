@@ -1,13 +1,7 @@
 package domain;
 
 import domain.model.*;
-import domain.service.CardDistributor;
-import domain.service.CardFactory;
 import org.junit.jupiter.api.Test;
-import repository.CardRepository;
-import repository.DealerRepository;
-import util.RandomRankNumberGenerator;
-import util.RandomShapeNumberGenerator;
 import util.StringParser;
 
 import java.util.List;
@@ -15,15 +9,6 @@ import java.util.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class PlayerTest {
-
-    private final CardDistributor cardDistributor = new CardDistributor(
-            new DealerRepository(),
-            new CardFactory(
-                    new CardRepository(),
-                    new RandomRankNumberGenerator(),
-                    new RandomShapeNumberGenerator()
-            )
-    );
 
     @Test
     void 플레이어_셍성_테스트() {
