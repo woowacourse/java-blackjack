@@ -33,9 +33,13 @@ public class Hand {
         return getSnapshot();
     }
 
+    public boolean isDrawable() {
+        return !(isBusted() || isBlackjack());
+    }
+
     public boolean isBusted() {
         int totalScore = getTotalScore();
-        return totalScore >= BUSTED_SCORE;
+        return totalScore > BUSTED_SCORE;
     }
 
     public boolean isBlackjack() {

@@ -24,7 +24,7 @@ public class Player extends Participant {
         if (stopDrawing) {
             return false;
         }
-        return !hand.isBusted();
+        return hand.isDrawable();
     }
 
     public void stop() {
