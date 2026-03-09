@@ -50,4 +50,8 @@ public class Dealer extends Participant{
     public int getLoseRounds() {
         return gameResults.getOrDefault(GameResult.LOSE,0);
     }
+
+    public void setRounds(GameResult gameResult) {
+        gameResults.put(gameResult, gameResults.getOrDefault(gameResult,0) + 1);
+    }
 }
