@@ -44,6 +44,10 @@ public class Player {
         return calculateCardsValue() == 21;
     }
 
+    public String getFirstCardName() {
+        return cards.getFirst().getName();
+    }
+
     public String getName() {
         return name.name();
     }

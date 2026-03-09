@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import blackjack.dto.CardsOfPlayer;
 import blackjack.dto.WinningResult;
 import java.util.List;
 import java.util.StringJoiner;
@@ -15,25 +14,18 @@ public class OutputView {
         System.out.println(dealerName + "와 " + stringJoinWithComma(playersName) + "에게 2장을 나누었습니다.");
     }
 
-    public static void printCardResultsByPlayer(CardsOfPlayer cardsOfPlayer) {
-        for (String playerName : cardsOfPlayer.cardsOfPlayer().keySet()) {
-            printCardResults(playerName, cardsOfPlayer.get(playerName));
-        }
-        System.out.println();
-    }
-
     public static void printCardResults(String playerName, List<String> cards) {
         System.out.println(playerName + "카드: " + stringJoinWithComma(cards));
     }
 
-    // TODO: 16점 고정 상수 제거
-    public static void printGetMoreCardsForDealer(String dealerName) {
-        System.out.println(dealerName + "는 16이하라 한장의 카드를 더 받았습니다.");
-        System.out.println();
+    public static void printCardResults(String playerName, List<String> cards, int score) {
+        System.out.println(playerName + "카드: " + stringJoinWithComma(cards) + " - 결과: " + score);
     }
 
-    public static void printCardResult(String playerName, List<String> cards, int score) {
-        System.out.println(playerName + "카드: " + stringJoinWithComma(cards) + " - 결과: " + score);
+    // TODO: 16점 고정 상수 제거
+    public static void printGetMoreCardsForDealer(String dealerName) {
+        System.out.println();
+        System.out.println(dealerName + "는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
     // TODO: 딜러 하드 코딩 제거
@@ -51,6 +43,10 @@ public class OutputView {
             }
             System.out.println(playerName + ": " + flag);
         }
+    }
+
+    public static void println() {
+        System.out.println();
     }
 
     private static String stringJoinWithComma(List<String> strings) {

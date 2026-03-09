@@ -3,7 +3,6 @@ package blackjack.controller;
 import blackjack.domain.Deck;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
-import blackjack.dto.CardsOfPlayer;
 import blackjack.dto.WinningResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -46,7 +45,12 @@ public class BlackjackController {
 
     private void printInitialSettings(Players players, Player dealer) {
         OutputView.printInitialSettingsDoneMessage(dealer.getName(), players.getPlayersName());
-        OutputView.printCardResultsByPlayer(CardsOfPlayer.from(players, dealer));
+
+        OutputView.printCardResults(dealer.getName(), List.of(dealer.getFirstCardName()));
+        for (Player player : players.getPlayers()) {
+            OutputView.printCardResults(player.getName(), player.getCardsName());
+        }
+        OutputView.println();
     }
 
     // TODO : 코드 품질 개선 필요
@@ -79,9 +83,12 @@ public class BlackjackController {
         }
     }
 
-    // TODO: 총합 계산 로직 필요
     private void printGameResult(Players players, Player dealer) {
-        OutputView.printCardResultsByPlayer(CardsOfPlayer.from(players, dealer));
+        OutputView.println();
+        OutputView.printCardResults(dealer.getName(), dealer.getCardsName(), dealer.calculateCardsValue());
+        for (Player player : players.getPlayers()) {
+            OutputView.printCardResults(player.getName(), player.getCardsName(), player.calculateCardsValue());
+        }
     }
 
     private void printWinningResult(Players players, Player dealer) {
