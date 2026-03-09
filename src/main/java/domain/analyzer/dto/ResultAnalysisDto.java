@@ -11,18 +11,22 @@ public record ResultAnalysisDto (
         EnumMap<GameResult, Integer> dealerGameResult,
         List<PlayerGameResult> playerGameResults
 ) {
+
+    private static final int ANALYSIS_INITIAL_VALUE = 0;
+    private static final int INCREMENT_UNIT = 1;
+
     public static ResultAnalysisDto from(List<PlayerGameResult> playerGameResults) {
-        EnumMap<GameResult, Integer> dealerGameResults = new EnumMap<>(GameResult.class);
+        EnumMap<GameResult, Integer> gameAnalysis = new EnumMap<>(GameResult.class);
         List<GameResult> gameResults = playerGameResults.stream()
                 .map(PlayerGameResult::gameResult)
                 .map(GameResult::reverseResult)
                 .toList();
 
-        for (GameResult gameResult : gameResults) {
-            dealerGameResults.put(gameResult, dealerGameResults.getOrDefault(gameResult, 0) + 1);
+        for (GameResult result : gameResults) {
+            gameAnalysis.put(result, gameAnalysis.getOrDefault(result, ANALYSIS_INITIAL_VALUE) + INCREMENT_UNIT);
         }
 
-        return new ResultAnalysisDto(dealerGameResults, playerGameResults);
+        return new ResultAnalysisDto(gameAnalysis, playerGameResults);
     }
 
     public String getDealerResult() {
