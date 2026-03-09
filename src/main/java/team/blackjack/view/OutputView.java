@@ -12,7 +12,7 @@ import team.blackjack.domain.Result;
 
 public class OutputView {
 
-    private static void println(String message) {
+    public static void println(String message) {
         System.out.println(message);
     }
 
@@ -43,6 +43,7 @@ public class OutputView {
     }
 
     public static void printParticipantScoreResult(ScoreResult scoreResult) {
+        println("");
         println("딜러의 최종 카드: %s - 결과: %d".formatted(String.join(", ", scoreResult.dealerCard()), scoreResult.dealerScore()));
         for (String playerName : scoreResult.playerNames()) {
             println("%s의 카드: %s - 결과: %d".formatted(playerName,
@@ -55,8 +56,8 @@ public class OutputView {
          final DealerResult dealerResult = result.dealerResult();
          final Map<String, PlayerResult> playeredResultMap = result.playerResultMap();
 
-         println("## 최종 승패:");
          println("");
+         println("## 최종 승패:");
          println("딜러: %d승 %d패 %d무".formatted(
                  dealerResult.countBy(Result.WIN),
                  dealerResult.countBy(Result.LOSE),
@@ -71,5 +72,9 @@ public class OutputView {
 
     public static void printBustMessage() {
         println("버스트 되었습니다. 더 이상 카드를 받을 수 없습니다.");
+    }
+
+    public static void printWrongInputMessage() {
+        println("잘못된 입력입니다. y, n 중 하나를 입력해주세요.");
     }
 }

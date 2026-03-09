@@ -50,7 +50,15 @@ public class BlackJackController {
         while (blackJackService.shouldPlayerHit(playerName)) {
             OutputView.printAskDrawCard(playerName);
 
-            if (!InputView.readHitDecision()) {
+            String hitYn = InputView.readHitDecision();
+
+            while (!hitYn.equalsIgnoreCase("y") && !hitYn.equalsIgnoreCase("n")) {
+                OutputView.printWrongInputMessage();
+                hitYn = InputView.readHitDecision();
+            }
+
+            final boolean isStand = hitYn.equalsIgnoreCase("n");
+            if (isStand) {
                 return;
             }
 

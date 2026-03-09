@@ -20,7 +20,7 @@ public class InputView {
      * 플레이어가 한장의 카드를 더 받을지 여부를 입력받는다.
      * @return
      */
-    public static boolean readHitDecision() {
-        return readInput().equalsIgnoreCase("y");
+    public static String readHitDecision() {
+        return readInput();
     }
 }
