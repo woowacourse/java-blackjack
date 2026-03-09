@@ -18,6 +18,6 @@ class PlayerTest {
         Player player = new Player(playerName, hand);
 
         // then
-        assertThat(player.getName()).isEqualTo(playerName);
+        assertThat(player.getName()).isEqualTo(playerName.get());
     }
 }
