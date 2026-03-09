@@ -16,17 +16,12 @@ public class CardRepository {
         return card;
     }
 
-    public boolean isExist(Card card) {
-        return cards.stream().anyMatch(value -> value.isSameCard(card));
+    public boolean isExistByShapeAndRank(CardRank cardRank, CardShape cardShape) {
+        return cards.stream()
+                .anyMatch(card -> matchesRankAndShape(card, cardRank, cardShape));
     }
 
-    public boolean isExistByShapeAndRank(CardRank cardRank, CardShape cardShape) {
-        for (Card card : cards) {
-            // TODO: depth2 -> depth1으로 리팩토링
-            if (card.getCardRank() == cardRank && card.getCardShape() == cardShape) {
-                return true;
-            }
-        }
-        return false;
+    private boolean matchesRankAndShape(Card card, CardRank cardRank, CardShape cardShape) {
+        return card.getCardRank() == cardRank && card.getCardShape() == cardShape;
     }
 }

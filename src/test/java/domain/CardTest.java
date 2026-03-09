@@ -78,7 +78,7 @@ public class CardTest {
         Card card = Card.of(CardRank.TWO, CardShape.HEART);
 
         // then
-        assertThat(cardRepository.isExist(card)).isEqualTo(false);
+        assertThat(cardRepository.isExistByShapeAndRank(card.getCardRank(), card.getCardShape())).isEqualTo(false);
     }
 
     @Test
@@ -91,6 +91,6 @@ public class CardTest {
         Card card = Card.of(CardRank.ACE, CardShape.HEART);
 
         // then
-        assertThat(cardRepository.isExist(card)).isEqualTo(true);
+        assertThat(cardRepository.isExistByShapeAndRank(card.getCardRank(), card.getCardShape())).isEqualTo(true);
     }
 }
