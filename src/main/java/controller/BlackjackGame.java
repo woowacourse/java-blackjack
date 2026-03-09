@@ -17,8 +17,14 @@ import view.OutputView;
 
 import java.util.List;
 import java.util.Map;
+import java.util.SequencedCollection;
 
 public class BlackjackGame {
+    public static final String NO = "n";
+    public static final String WIN = "승";
+    public static final String TIE = "무";
+    public static final String LOSE = "패";
+    public static final int INITIAL_CARDS_COUNT = 2;
     private final InputView inputView;
     private final InputParser inputParser;
     private final OutputView outputView;
@@ -58,7 +64,9 @@ public class BlackjackGame {
     private void initParticipantsHand(Players players, Dealer dealer, Deck deck) {
         List<Participant> participants = new ArrayList<>(players.getPlayers());
         participants.add(dealer);
-        participants.forEach(participant -> participant.receiveInitialCards(deck.drawInitialCards()));
+        participants.forEach(participant ->
+                participant.receiveInitialCards(deck.drawInitialCards(INITIAL_CARDS_COUNT), INITIAL_CARDS_COUNT)
+        );
 
         outputView.printInitialDistribution(players, dealer);
     }
@@ -75,7 +83,7 @@ public class BlackjackGame {
             String choice = inputView.getUserChoice(player.name());
             String userChoice = inputParser.parseUserChoice(choice);
 
-            if (userChoice.equals("n")) {
+            if (userChoice.equals(NO)) {
                 break;
             }
 
@@ -116,9 +124,9 @@ public class BlackjackGame {
 
     private String toKorean(WinningStatus status) {
         return switch (status) {
-            case WIN -> "승";
-            case TIE -> "무";
-            case LOSE -> "패";
+            case WinningStatus.WIN -> WIN;
+            case WinningStatus.TIE -> TIE;
+            case WinningStatus.LOSE -> LOSE;
         };
     }
 }

@@ -6,8 +6,6 @@ import domain.card.Card;
 import java.util.List;
 
 public abstract class Participant {
-    public static final int INITIAL_CARD_COUNT = 2;
-
     private final Name name;
     private final Hand hand;
 
@@ -16,8 +14,8 @@ public abstract class Participant {
         this.hand = new Hand();
     }
 
-    public void receiveInitialCards(List<Card> cards) {
-        if (cards.size() != INITIAL_CARD_COUNT) {
+    public void receiveInitialCards(List<Card> cards, int initialCardsCount) {
+        if (cards.size() != initialCardsCount) {
             throw new IllegalArgumentException();
         }
 
