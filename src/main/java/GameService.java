@@ -26,37 +26,43 @@ public class GameService {
 
     public void settleResult(List<User> users, Dealer dealer) {
         dealer.calculateScore();
-        boolean dealerBurst = dealer.isBurst();
-        users.forEach(user -> user.setGameResult(decideResult(user,dealer)));
+        users.forEach(user -> user.setGameResult(decideResult(user, dealer)));
     }
 
     private GameResult decideResult(User user, Dealer dealer) {
         user.calculateScore();
-        boolean dealerBurst = dealer.isBurst();
-        boolean userBurst = user.isBurst();
 
-        if (dealerBurst && userBurst) {
-            dealer.setRounds(GameResult.DRAW);
-            return GameResult.DRAW;
+        if (user.isBlackjack() && dealer.isBlackjack()) {
+            return applyResult(dealer, GameResult.DRAW);
         }
-        if (dealerBurst) {
-            dealer.setRounds(GameResult.LOSE);
-            return GameResult.WIN;
+        if (user.isBlackjack()) {
+            return applyResult(dealer, GameResult.WIN);
         }
-        if (userBurst) {
-            dealer.setRounds(GameResult.WIN);
-            return GameResult.LOSE;
+        if (dealer.isBlackjack()) {
+            return applyResult(dealer, GameResult.LOSE);
+        }
+        if (user.isBurst()) {
+            return applyResult(dealer, GameResult.LOSE);
+        }
+        if (dealer.isBurst()) {
+            return applyResult(dealer, GameResult.WIN);
         }
 
+        return applyResult(dealer, compareScore(user, dealer));
+    }
+
+    private GameResult compareScore(User user, Dealer dealer) {
         if (user.getScore() > dealer.getScore()) {
-            dealer.setRounds(GameResult.LOSE);
             return GameResult.WIN;
         }
         if (user.getScore() < dealer.getScore()) {
-            dealer.setRounds(GameResult.WIN);
             return GameResult.LOSE;
         }
-        dealer.setRounds(GameResult.DRAW);
         return GameResult.DRAW;
+    }
+
+    private GameResult applyResult(Dealer dealer, GameResult userResult) {
+        dealer.setRounds(userResult.opposite());
+        return userResult;
     }
 }
