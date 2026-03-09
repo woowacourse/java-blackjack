@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Hand {
+    private static final Integer MAXIMUM_TOTAL_SCORE = 21;
+    private static final Integer MINIMUM_DEALER_SCORE = 16;
+
     private List<Card> cards;
     private int handTotalScore;
     private boolean hasAce;
@@ -34,13 +37,13 @@ public class Hand {
             handTotalScore += card.getCardScore();
         }
 
-        if (hasAce && handTotalScore > 21) {
+        if (hasAce && handTotalScore > MAXIMUM_TOTAL_SCORE) {
             handTotalScore -= 10;
         }
     }
 
     public Boolean determineDealerDealMore() {
-        if (handTotalScore <= 16) {
+        if (handTotalScore <= MINIMUM_DEALER_SCORE) {
             return true;
         }
         return false;
