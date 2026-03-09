@@ -5,6 +5,7 @@ import java.util.List;
 
 import domain.PlayerGameResult;
 import domain.card.Card;
+import domain.card.Deck;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import dto.*;
@@ -12,6 +13,8 @@ import dto.*;
 public class GameService {
     private final List<Player> players;
     private final Dealer dealer;
+    private final Deck deck = new Deck();
+
 
     public GameService(List<String> playerNames) {
         this.players = participateGame(playerNames);
@@ -26,16 +29,16 @@ public class GameService {
 
     public GameStartDTO startGame() {
         for (Player player : players) {
-            List<Card> firstHandCards = dealer.dealInitialCards();
+            List<Card> firstHandCards = deck.dealFirstHandCards();
             player.receiveInitialCards(firstHandCards);
         }
-        dealer.receiveInitialCards(dealer.dealInitialCards());
 
+        dealer.receiveInitialCards(deck.dealFirstHandCards());
         return GameStartDTO.from(players, dealer);
     }
 
     public HandDTO playerHit(Player player) {
-        player.receiveHitCard(dealer.dealHitCard());
+        player.receiveHitCard(deck.drawCard());
         return getCurrentHand(player);
     }
 
@@ -44,7 +47,7 @@ public class GameService {
     }
 
     public void dealerHit() {
-        dealer.receiveHitCard(dealer.dealHitCard());
+        dealer.receiveHitCard(deck.drawCard());
     }
 
     public GameScoreDTO getTotalScore() {

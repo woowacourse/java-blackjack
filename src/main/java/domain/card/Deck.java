@@ -19,11 +19,7 @@ public class Deck {
         return new ArrayDeque<>(cards);
     }
 
-    public List<Card> getCards() {
-        return List.copyOf(cards);
-    }
-
-    public List<Card> firstHandCards() {
+    public List<Card> dealFirstHandCards() {
         List<Card> firstHandCards = new ArrayList<>();
         for (int index = 0; index < 2; index++) {
             firstHandCards.add(drawCard());
@@ -33,5 +29,9 @@ public class Deck {
 
     public Card drawCard() {
         return cards.pop();
+    }
+
+    public List<Card> getCards() {
+        return List.copyOf(cards);
     }
 }

@@ -19,7 +19,7 @@ public class DeckTest {
     @DisplayName("초기 카드는 두 장씩 나누어준다.")
     void handOutCardsTest() {
         Deck deck = new Deck();
-        List<Card> cards = deck.firstHandCards();
+        List<Card> cards = deck.dealFirstHandCards();
         Assertions.assertThat(cards.size()).isEqualTo(2);
     }
 
