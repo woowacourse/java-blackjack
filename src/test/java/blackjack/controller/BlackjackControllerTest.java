@@ -5,6 +5,8 @@ import blackjack.model.CardCalculator;
 import blackjack.model.CardProvider;
 import blackjack.model.GameResultCalculator;
 import blackjack.model.Player;
+import blackjack.model.Rank;
+import blackjack.model.Suit;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,9 +24,9 @@ class BlackjackControllerTest {
     void test_checkAddCard_return_false() {
 
         Player player = new Player("pobi");
-        player.addCard(Card.J_DIA);
-        player.addCard(Card.Q_CLOVER);
-        player.addCard(Card.TEN_HEART);
+        player.addCard(new Card(Suit.DIAMOND, Rank.JACK));
+        player.addCard(new Card(Suit.CLOVER, Rank.QUEEN));
+        player.addCard(new Card(Suit.HEART, Rank.TEN));
 
         Assertions.assertThat(blackjackController.checkAddCard(player)).isFalse();
     }
@@ -34,8 +36,8 @@ class BlackjackControllerTest {
     void test_checkAddCard_return_true() {
 
         Player player = new Player("pobi");
-        player.addCard(Card.J_DIA);
-        player.addCard(Card.Q_CLOVER);
+        player.addCard(new Card(Suit.DIAMOND, Rank.JACK));
+        player.addCard(new Card(Suit.CLOVER, Rank.QUEEN));
 
         Assertions.assertThat(blackjackController.checkAddCard(player)).isTrue();
     }

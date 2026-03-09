@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Queue;
 
 public class CardProvider {
+
     private final Queue<Card> deck = new LinkedList<>();
 
     public CardProvider() {
@@ -18,8 +19,10 @@ public class CardProvider {
 
     private void initDeck() {
         List<Card> cards = new ArrayList<>();
-        for (Card card : Card.values()) {
-            cards.add(card);
+        for (Suit suit : Suit.values()) {
+            for (Rank rank : Rank.values()) {
+                cards.add(new Card(suit, rank));
+            }
         }
         Collections.shuffle(cards);
         this.deck.addAll(cards);

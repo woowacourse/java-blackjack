@@ -20,16 +20,13 @@ public class CardCalculator {
     public int totalScore(List<Card> cards) {
         Map<Boolean, List<Card>> partitioned = cards.stream()
                 .collect(Collectors.partitioningBy(card ->
-                        card.equals(Card.A_CLOVER) ||
-                                card.equals(Card.A_DIA) ||
-                                card.equals(Card.A_SPADE) ||
-                                card.equals(Card.A_HEART)
+                        card.isAce()
                 ));
 
         List<Card> aceCards = partitioned.get(true);      // Ace인 카드들
         List<Card> nonAceCards = partitioned.get(false);// Ace가 아닌 카드들
         int totalScoreNonAce = nonAceCards.stream()
-                .mapToInt(Card::getNumber)
+                .mapToInt((card) -> card.getRank().getScore())
                 .sum();
 
         return addAceScore(aceCards, totalScoreNonAce);

@@ -10,7 +10,7 @@ class CardCalculatorTest {
     @Test
     @DisplayName("카드의 총합이 10 이하일 경우 ace 카드의 점수는 11")
     void test_getTotalScore_when_ace_is_eleven() {
-        List<Card> aceCards = List.of(Card.A_SPADE);
+        List<Card> aceCards = List.of(new Card(Suit.SPADE, Rank.ACE));
         int totalScore = 10;
         CardCalculator cardCalculator = new CardCalculator();
 
@@ -22,7 +22,7 @@ class CardCalculatorTest {
     @Test
     @DisplayName("카드의 총합이 11 이상일 경우 ace 카드의 점수는 1")
     void test_getTotalScore_when_ace_is_one() {
-        List<Card> aceCards = List.of(Card.A_SPADE);
+        List<Card> aceCards = List.of(new Card(Suit.SPADE, Rank.ACE));
         int totalScore = 11;
         CardCalculator cardCalculator = new CardCalculator();
 

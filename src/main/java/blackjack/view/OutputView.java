@@ -2,7 +2,6 @@ package blackjack.view;
 
 import static blackjack.model.Constant.TWENTY_ONE;
 
-import blackjack.model.Card;
 import blackjack.model.Dealer;
 import blackjack.model.GameResult;
 import blackjack.model.GameSummary;
@@ -31,12 +30,16 @@ public class OutputView {
     }
 
     private static void printDealerCard(Dealer dealer) {
-        System.out.println("딜러카드: " + dealer.cards().getFirst().getFormat());
+        System.out.println(
+                "딜러카드: " + dealer.cards().getFirst().getRank().getName() + dealer.cards().getFirst().getSuit()
+                        .getName());
     }
 
     public static void printPlayerCards(Player player) {
         List<String> formats = player.cards().stream()
-                .map(Card::getFormat)
+                .map((card) -> {
+                    return card.getRank().getName() + card.getSuit().getName();
+                })
                 .toList();
 
         System.out.println(player.getName() + "카드: " + String.join(", ", formats));
@@ -55,7 +58,8 @@ public class OutputView {
 
         StringBuilder sb = new StringBuilder();
         sb.append(user.getName() + "카드: ");
-        List<String> cardFormats = user.cards().stream().map(Card::getFormat).toList();
+        List<String> cardFormats = user.cards().stream()
+                .map((card) -> card.getSuit().getName() + card.getRank().getName()).toList();
         sb.append(String.join(", ", cardFormats));
         sb.append(" - 결과: " + gameSummary.totalScore());
 
