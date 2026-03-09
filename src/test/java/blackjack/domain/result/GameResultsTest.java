@@ -15,6 +15,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 class GameResultsTest {
 
     @Test
+    void 플레이어가_버스트이면_딜러_결과에_승이_집계된다() {
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(Suit.HEART, Rank.TEN));
+        dealer.receiveCard(new Card(Suit.SPADE, Rank.SEVEN));
+
+        Player player = new Player("pobi");
+        player.receiveCard(new Card(Suit.HEART, Rank.TEN));
+        player.receiveCard(new Card(Suit.SPADE, Rank.TEN));
+        player.receiveCard(new Card(Suit.CLOVER, Rank.TEN));
+
+        GameResults results = GameResults.create(new Players(List.of(player)), dealer);
+
+        assertThat(results.dealerResult().get(GameResult.WIN)).isEqualTo(1);
+    }
+
+    @Test
     void 플레이어가_승리하면_딜러_결과에_패가_1개_집계된다() {
         Dealer dealer = new Dealer();
         dealer.receiveCard(new Card(Suit.HEART, Rank.TEN));
