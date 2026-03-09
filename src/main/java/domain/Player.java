@@ -7,11 +7,14 @@ public class Player extends Participant {
 
     public Player(String name, List<Card> holdCards) {
         super(holdCards);
+        validateEmptyNames(name);
         this.name = name;
     }
 
-    public String getName() {
-        return name;
+    private void validateEmptyNames(String playerName) {
+        if (playerName.isBlank()) {
+            throw new IllegalArgumentException("[ERROR] 플레이어의 이름은 빈 값이 아니여야 합니다.");
+        }
     }
 
     public GameResult compareScore(int dealerScore) {
@@ -25,6 +28,10 @@ public class Player extends Participant {
             return GameResult.WIN;
         }
         return getGameResult(dealerScore);
+    }
+
+    public String getName() {
+        return name;
     }
 
     private GameResult getGameResult(int dealerScore) {

@@ -11,6 +11,16 @@ public enum GameResult {
         this.value = value;
     }
 
+    public GameResult toDealerResult() {
+        if (this == WIN) {
+            return LOSE;
+        }
+        if (this == LOSE) {
+            return WIN;
+        }
+        return DRAW;
+    }
+
     public String getValue() {
         return value;
     }
