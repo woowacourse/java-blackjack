@@ -1,7 +1,6 @@
 package domain;
 
-public enum
-GameResult {
+public enum GameResult {
 
     WIN("승"),
     LOSE("패"),
