@@ -8,6 +8,9 @@ import java.util.Map;
 
 public class TotalResult {
 
+    private static final String DEALER_RESULT_FORMAT = "%d승 %d무 %d패";
+    private static final String PLAYER_RESULT_FORMAT = "%s: %s";
+
     private final Map<Player, Result> results;
 
     private TotalResult(Map<Player, Result> results) {
@@ -35,7 +38,7 @@ public class TotalResult {
 
     public String getDealerResult() {
         return String.format(
-                "%d승 %d무 %d패",
+               DEALER_RESULT_FORMAT,
                 countOf(Result.LOSE),
                 countOf(Result.DRAW),
                 countOf(Result.WIN)
@@ -52,7 +55,7 @@ public class TotalResult {
         return results.entrySet().stream()
                 .map(
                         entry -> String.format(
-                                "%s: %s",
+                                PLAYER_RESULT_FORMAT,
                                 entry.getKey().getName(),
                                 entry.getValue().getDisplayName())
                 ).toList();

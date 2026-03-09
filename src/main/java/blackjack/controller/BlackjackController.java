@@ -85,7 +85,7 @@ public class BlackjackController {
                 player -> player.pickInitialCards(cardDeck)
         );
 
-        outputView.printCardDistributionCompleted(players);
+        outputView.printCardDistributionCompleted(players, dealer.getName());
 
         outputView.printParticipantCards(
                 dealer.getName(),
@@ -97,6 +97,8 @@ public class BlackjackController {
                         player.getOpenedCards()
                 )
         );
+
+        outputView.printNewLine();
     }
 
     private void askHitOrStand(
@@ -138,7 +140,8 @@ public class BlackjackController {
             Dealer dealer
     ) {
         outputView.printResult(
-                TotalResult.of(players, dealer)
+                TotalResult.of(players, dealer),
+                dealer.getName()
         );
     }
 }

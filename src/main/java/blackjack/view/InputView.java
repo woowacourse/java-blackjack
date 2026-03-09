@@ -7,6 +7,10 @@ import java.util.Scanner;
 
 public class InputView {
 
+    private static final String COMMA = ",";
+    private static final String YES = "y";
+    private static final String NO = "n";
+
     private final Scanner scanner;
 
     public InputView() {
@@ -15,7 +19,7 @@ public class InputView {
 
     public List<String> inputPlayerNames() {
         List<String> names = Arrays.stream(
-                scanner.nextLine().split(",")
+                scanner.nextLine().split(COMMA)
         ).toList();
 
         InputValidator.validatePlayerNames(names);
@@ -26,13 +30,13 @@ public class InputView {
     public boolean inputMoreCard() {
         String input = scanner.nextLine();
 
-        if("y".equals(input)){
+        if(YES.equals(input)){
             return true;
         }
-        if("n".equals(input)) {
+        if(NO.equals(input)) {
             return false;
         }
 
-        throw new IllegalArgumentException("'y' 또는 'n'만 입력 가능합니다.");
+        throw new IllegalArgumentException(YES + "또는 " + NO + "만 입력 가능합니다.");
     }
 }
