@@ -1,6 +1,7 @@
 package blackjack.domain.hand;
 
 import blackjack.domain.card.Card;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,5 +41,10 @@ public class Hand {
     private boolean hasAce() {
         return cards.stream()
                 .anyMatch(Card::isAce);
+    }
+
+    public String getFirstCard() {
+        Card firstCard = cards.getFirst();
+        return firstCard.toDisplayName();
     }
 }

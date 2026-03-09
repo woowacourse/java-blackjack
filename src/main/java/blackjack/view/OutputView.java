@@ -19,7 +19,7 @@ public class OutputView {
                 .map(Player::getName)
                 .collect(Collectors.joining(", "));
         System.out.printf("%n딜러와 %s에게 2장을 나누었습니다.%n", playerNames);
-        System.out.printf("딜러카드: %s%n", dealer.getCards().get(0).getDisplayName());
+        System.out.printf("딜러카드: %s%n", dealer.getFirstCard());
         players.players().forEach(this::printPlayerCards);
         System.out.println();
     }
@@ -89,7 +89,7 @@ public class OutputView {
 
     private String formatCards(final List<Card> cards) {
         return cards.stream()
-                .map(Card::getDisplayName)
+                .map(Card::toDisplayName)
                 .collect(Collectors.joining(", "));
     }
 }

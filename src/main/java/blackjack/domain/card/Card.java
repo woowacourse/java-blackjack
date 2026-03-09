@@ -2,7 +2,7 @@ package blackjack.domain.card;
 
 public record Card(Suit suit, Rank rank) {
 
-    public String getDisplayName() {
+    public String toDisplayName() {
         return rank.getName() + suit.getDisplayName();
     }
 

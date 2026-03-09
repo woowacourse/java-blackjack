@@ -31,6 +31,10 @@ public abstract class Participant {
         return hand.getCards();
     }
 
+    public String getFirstCard() {
+        return hand.getFirstCard();
+    }
+
     public String getName() {
         return name.value();
     }
