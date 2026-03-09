@@ -1,20 +1,19 @@
-package domain;
+package domain.result;
 
-import static domain.config.BlackjackGameConstant.INITIAL_CARD_DRAW_COUNT;
+import static config.BlackjackGameConstant.INITIAL_CARD_DRAW_COUNT;
 
-import domain.analyzer.ResultAnalyzer;
 import domain.card.*;
 import domain.dealer.Dealer;
 import domain.player.Player;
 import domain.player.PlayerName;
 import domain.player.Players;
-import domain.analyzer.dto.ResultAnalysisDto;
+import domain.result.dto.GameResultAnalysisDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-class ResultAnalyzerTest {
+class GameResultAnalyzerTest {
 
     @Test
     void 최종_승패_결과를_계산한다() {
@@ -37,7 +36,7 @@ class ResultAnalyzerTest {
         Players players = Players.from(List.of(playerScore7, playerScore11));
         players.giveInitialCardBundle(dealerScore4);
 
-        ResultAnalysisDto analysis = ResultAnalyzer.analyze(players, dealerScore4);
+        GameResultAnalysisDto analysis = GameResultAnalyzer.analyze(players, dealerScore4);
 
         Assertions.assertThat(analysis.getDealerResult())
                 .isEqualTo("2패");

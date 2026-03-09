@@ -1,6 +1,6 @@
 package domain.player;
 
-import static domain.config.BlackjackGameConstant.PLAYER_NAME_LENGTH_LIMIT;
+import static config.BlackjackGameConstant.PLAYER_NAME_LENGTH_LIMIT;
 
 public record PlayerName(String name) {
 

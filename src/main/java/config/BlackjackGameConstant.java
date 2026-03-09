@@ -1,4 +1,4 @@
-package domain.config;
+package config;
 
 public class BlackjackGameConstant {
 

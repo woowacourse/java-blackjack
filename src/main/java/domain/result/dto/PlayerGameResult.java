@@ -1,7 +1,7 @@
-package domain.analyzer.dto;
+package domain.result.dto;
 
-import domain.GameResult;
 import domain.player.Player;
+import domain.result.GameResult;
 
 public record PlayerGameResult(String playerName, GameResult gameResult) {
     public static PlayerGameResult of(Player player, GameResult gameResult) {

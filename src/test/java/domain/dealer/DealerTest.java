@@ -1,6 +1,4 @@
-package dealer;
-
-import static domain.config.BlackjackGameConstant.*;
+package domain.dealer;
 
 import domain.card.*;
 import org.assertj.core.api.Assertions;

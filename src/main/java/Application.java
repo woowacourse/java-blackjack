@@ -1,6 +1,5 @@
-package domain;
-
-import domain.config.BlackjackGameConfiguration;
+import controller.BlackjackGame;
+import config.BlackjackGameConfiguration;
 
 public class Application {
 

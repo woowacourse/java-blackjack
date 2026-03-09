@@ -1,17 +1,16 @@
-package domain.analyzer.dto;
+package domain.result.dto;
 
-import domain.GameResult;
-
+import domain.result.GameResult;
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public record ResultAnalysisDto(
+public record GameResultAnalysisDto(
         EnumMap<GameResult, Integer> dealerGameResult,
         List<PlayerGameResult> playerGameResults
 ) {
-    public static ResultAnalysisDto from(List<PlayerGameResult> playerGameResults) {
+    public static GameResultAnalysisDto from(List<PlayerGameResult> playerGameResults) {
         EnumMap<GameResult, Integer> dealerGameResult = new EnumMap<>(GameResult.class);
         List<GameResult> list = playerGameResults.stream()
                 .map(PlayerGameResult::gameResult)
@@ -22,7 +21,7 @@ public record ResultAnalysisDto(
             dealerGameResult.put(gameResult, dealerGameResult.getOrDefault(gameResult, 0) + 1);
         }
 
-        return new ResultAnalysisDto(dealerGameResult, playerGameResults);
+        return new GameResultAnalysisDto(dealerGameResult, playerGameResults);
     }
 
     public String getDealerResult() {

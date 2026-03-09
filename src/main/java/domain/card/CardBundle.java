@@ -1,7 +1,5 @@
 package domain.card;
 
-import static domain.config.BlackjackGameConstant.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

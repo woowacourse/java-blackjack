@@ -1,20 +1,18 @@
-package domain;
+package controller;
 
-import static domain.config.BlackjackGameConstant.*;
-
-import domain.analyzer.ResultAnalyzer;
-import domain.analyzer.dto.ResultAnalysisDto;
+import domain.result.GameResultAnalyzer;
+import domain.result.dto.GameResultAnalysisDto;
 import domain.intention.DrawCardIntetion;
 import domain.card.CardDeck;
 import domain.card.CardDeckInitializer;
-import domain.config.BlackjackGameConfiguration;
+import config.BlackjackGameConfiguration;
 import domain.dealer.Dealer;
 import domain.player.Player;
 import domain.player.PlayerName;
 import domain.player.Players;
 import domain.player.dto.PlayerHandDto;
 import domain.player.dto.PlayerResultDto;
-import domain.view.ApplicationView;
+import view.ApplicationView;
 
 import java.util.List;
 
@@ -48,7 +46,7 @@ public class BlackjackGame {
     }
 
     private void printFinalWinningStatistic(Players players, Dealer dealer) {
-        ResultAnalysisDto analysis = analyzeBlackjackResult(players, dealer);
+        GameResultAnalysisDto analysis = analyzeBlackjackResult(players, dealer);
         view.printFinalResultMessage(analysis);
     }
 
@@ -110,8 +108,8 @@ public class BlackjackGame {
         return view.requestPlayerNames();
     }
 
-    private ResultAnalysisDto analyzeBlackjackResult(Players players, Dealer dealer) {
-        return ResultAnalyzer.analyze(players, dealer);
+    private GameResultAnalysisDto analyzeBlackjackResult(Players players, Dealer dealer) {
+        return GameResultAnalyzer.analyze(players, dealer);
     }
 
 }

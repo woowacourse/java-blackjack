@@ -1,16 +1,15 @@
-package domain.analyzer;
+package domain.result;
 
-import domain.GameResult;
-import domain.analyzer.dto.PlayerGameResult;
-import domain.analyzer.dto.ResultAnalysisDto;
+import domain.result.dto.PlayerGameResult;
+import domain.result.dto.GameResultAnalysisDto;
 import domain.dealer.Dealer;
 import domain.player.Players;
 
 import java.util.List;
 
-public class ResultAnalyzer {
+public class GameResultAnalyzer {
 
-    public static ResultAnalysisDto analyze(Players players, Dealer dealer) {
+    public static GameResultAnalysisDto analyze(Players players, Dealer dealer) {
 
         List<PlayerGameResult> playerGameResults = players.stream().map(player -> {
 
@@ -27,7 +26,7 @@ public class ResultAnalyzer {
             return PlayerGameResult.of(player, gameResult);
         }).toList();
 
-        return ResultAnalysisDto.from(playerGameResults);
+        return GameResultAnalysisDto.from(playerGameResults);
     }
 
 }

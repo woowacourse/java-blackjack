@@ -1,6 +1,6 @@
-package domain.view;
+package view;
 
-import domain.analyzer.dto.ResultAnalysisDto;
+import domain.result.dto.GameResultAnalysisDto;
 import domain.intention.DrawCardIntetion;
 import domain.player.PlayerName;
 import domain.player.dto.PlayerHandDto;
@@ -65,12 +65,12 @@ public class ApplicationView {
         writer.printDealerAdditionalDrawCardMessage();
     }
 
-    public void printFinalResultMessage(ResultAnalysisDto resultAnalysis) {
+    public void printFinalResultMessage(GameResultAnalysisDto resultAnalysis) {
         writer.printFinalResultTitleMessage();
         printAllPlayersResult(resultAnalysis);
     }
 
-    private void printAllPlayersResult(ResultAnalysisDto resultAnalysis) {
+    private void printAllPlayersResult(GameResultAnalysisDto resultAnalysis) {
         writer.printFinalResultOfDealer(resultAnalysis.getDealerResult());
         resultAnalysis.playerGameResults().forEach(player -> {
             writer.printFinalResultOfPlayer(player.playerName(), player.gameResult().displayName());
