@@ -1,8 +1,8 @@
 package domain.model;
 
 public class Card {
-    private CardRank cardRank;
-    private CardShape cardShape;
+    private final CardRank cardRank;
+    private final CardShape cardShape;
 
     private Card(CardRank cardRank, CardShape cardShape) {
         this.cardRank = cardRank;
