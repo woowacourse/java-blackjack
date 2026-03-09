@@ -21,7 +21,7 @@ class CardTest {
     
     @DisplayName("카드의 점수를 정확하게 반환한다.")
     @ParameterizedTest
-    @CsvSource(value = {"TWO, 2", "TEN, 10", "KING, 10", "ACE, 11"})
+    @CsvSource(value = {"TWO, 2", "TEN, 10", "KING, 10", "ACE, 1"})
     void getScore(Rank rank, int expectedScore) {
         Card card = new Card(rank, Suit.HEART);
         

@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 public enum Rank {
+    ACE(1, "A"),
     TWO(2, "2"),
     THREE(3, "3"),
     FOUR(4, "4"),
@@ -13,21 +14,20 @@ public enum Rank {
     JACK(10, "J"),
     QUEEN(10, "Q"),
     KING(10, "K"),
-    ACE(11, "A"),
     ;
-
-    private int score;
-    private String name;
-
+    
+    private final int score;
+    private final String name;
+    
     Rank(int score, String name) {
         this.score = score;
         this.name = name;
     }
-
+    
     public int getScore() {
         return score;
     }
-
+    
     public String getRankName() {
         return name;
     }

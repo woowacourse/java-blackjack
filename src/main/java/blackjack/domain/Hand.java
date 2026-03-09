@@ -14,11 +14,9 @@ public class Hand {
         cards = new ArrayList<>();
     }
     
-    public String getFirstSnapshot() {
-        if (cards.isEmpty()) {
-            throw new IllegalArgumentException("남은 카드가 없습니다.");
-        }
-        return cards.getFirst().getDisplayName();
+    public String addCard(List<Card> receivedCards) {
+        cards.addAll(receivedCards);
+        return getSnapshot();
     }
     
     public String getSnapshot() {
@@ -28,9 +26,11 @@ public class Hand {
                 .collect(Collectors.joining(", "));
     }
     
-    public String addCard(List<Card> receivedCards) {
-        cards.addAll(receivedCards);
-        return getSnapshot();
+    public String getFirstSnapshot() {
+        if (cards.isEmpty()) {
+            throw new IllegalArgumentException("남은 카드가 없습니다.");
+        }
+        return cards.getFirst().getDisplayName();
     }
     
     public boolean isBlackjack() {
@@ -44,16 +44,8 @@ public class Hand {
     
     public int getTotalScore() {
         int scoreSum = calculateScoreSum();
-        if (scoreSum <= BUSTED_SCORE) {
-            return scoreSum;
-        }
-        return calculateBustedScore(scoreSum);
-    }
-    
-    private int calculateBustedScore(int scoreSum) {
-        int aceCount = countAce();
-        if (aceCount > 0) {
-            return calculateAce(scoreSum, aceCount);
+        if (hasAce() && scoreSum + 10 <= BUSTED_SCORE) {
+            return scoreSum + 10;
         }
         return scoreSum;
     }
@@ -65,27 +57,11 @@ public class Hand {
                 .sum();
     }
     
-    private int countAce() {
-        return (int) cards
+    private boolean hasAce() {
+        return cards
                 .stream()
-                .filter(Card::isAce)
-                .count();
-    }
-    
-    public int calculateAce() {
-        int scoreSum = calculateScoreSum();
-        int aceCount = countAce();
-        return calculateAce(scoreSum, aceCount);
-    }
-    
-    private int calculateAce(int scoreSum, int aceCount) {
-        if (aceCount == 0) {
-            return scoreSum;
-        }
-        int calculatedScore = scoreSum - 10;
-        if (calculatedScore <= BUSTED_SCORE) {
-            return calculatedScore;
-        }
-        return calculateAce(calculatedScore, aceCount - 1);
+                .map(Card::isAce)
+                .findAny()
+                .isPresent();
     }
 }
