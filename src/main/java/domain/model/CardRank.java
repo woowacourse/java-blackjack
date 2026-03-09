@@ -2,6 +2,8 @@ package domain.model;
 
 import java.util.Arrays;
 
+import static constant.ErrorMessage.INVALID_CARD_RANK_CODE;
+
 public enum CardRank {
 
     ACE(1, "A", 1, 11),
@@ -18,10 +20,10 @@ public enum CardRank {
     QUEEN(12, "Q", 10, 10),
     KING(13, "K", 10, 10);
 
-    private int code;
-    private String name;
-    private int value;
-    private int additionalValue;
+    private final int code;
+    private final String name;
+    private final int value;
+    private final int additionalValue;
 
     CardRank(int code, String name, int value, int additionalValue) {
         this.code = code;
@@ -34,7 +36,7 @@ public enum CardRank {
         return Arrays.stream(values())
                 .filter(value -> value.code == code)
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_CARD_RANK_CODE.getMessage()));
     }
 
     public String getName() {
