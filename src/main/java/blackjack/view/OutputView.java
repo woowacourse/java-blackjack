@@ -6,8 +6,8 @@ import java.util.Map;
 
 public class OutputView {
 
-    public static void printAllUserCards(Map<String, List<String>> playerCards, List<String> dealerCards) {
-        printDrawnCards("딜러", dealerCards);
+    public static void printAllUserCards(Map<String, List<String>> playerCards, String dealerCards) {
+        printDealerInitialDrawnCard(dealerCards);
         for (String playerName : playerCards.keySet()) {
             printDrawnCards(playerName, playerCards.get(playerName));
         }
@@ -21,6 +21,10 @@ public class OutputView {
 
     public static void printDrawnCards(String playerName, List<String> cardNames) {
         System.out.println(playerName + "카드: " + String.join(", ", cardNames));
+    }
+
+    public static void printDealerInitialDrawnCard(String cardName) {
+        System.out.println("딜러카드: " + cardName);
     }
 
     private static void printFinalDrawnCards(String playerName, List<String> cardNames) {

@@ -13,12 +13,12 @@ public class Dealer {
         drawnCards.addCard(card);
     }
 
-    public Cards getDrawnCards() {
-        return drawnCards;
-    }
-
     public List<String> getCardNames() {
         return drawnCards.getCardNames();
+    }
+
+    public String getOneCardName() {
+        return drawnCards.getCardNames().getFirst();
     }
 
     public int getAdditionalDrawnCardCount() {

@@ -94,7 +94,7 @@ public class BlackjackController {
         for (Player player : players) {
             playerCards.put(player.getName(), player.getCardNames());
         }
-        OutputView.printAllUserCards(playerCards, dealer.getCardNames());
+        OutputView.printAllUserCards(playerCards, dealer.getOneCardName());
     }
 
     private List<Player> getPlayers(List<String> playerNames) {
