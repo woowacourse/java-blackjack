@@ -1,4 +1,4 @@
-package domain.player;
+package domain.participant;
 
 public record Name(String value) {
     private static final String ERROR_EMPTY = "이름은 공백일 수 없습니다.";

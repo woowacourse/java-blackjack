@@ -1,10 +1,9 @@
-package domain.player;
+package domain.participant;
 
-import domain.Card;
-import domain.CardDto;
+import domain.card.Card;
+import domain.card.CardDto;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 
 public class Hand {
     private final List<Card> cards;

@@ -1,13 +1,12 @@
-package domain.player;
+package domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.Card;
-import domain.CardNumber;
-import domain.Suit;
+import domain.card.Card;
+import domain.card.Rank;
+import domain.card.Suit;
 import java.util.List;
 import java.util.stream.Stream;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -19,15 +18,15 @@ public class HandTest {
     void 카드숫자_2에서_10은_그대로_계산한다() {
         Hand hand = new Hand();
         List<Card> cards = List.of(
-                new Card(Suit.SPADE, CardNumber.TWO),
-                new Card(Suit.SPADE, CardNumber.THREE),
-                new Card(Suit.SPADE, CardNumber.FOUR),
-                new Card(Suit.SPADE, CardNumber.FIVE),
-                new Card(Suit.SPADE, CardNumber.SIX),
-                new Card(Suit.SPADE, CardNumber.SEVEN),
-                new Card(Suit.SPADE, CardNumber.EIGHT),
-                new Card(Suit.SPADE, CardNumber.NINE),
-                new Card(Suit.SPADE, CardNumber.TEN));
+                new Card(Suit.SPADE, Rank.TWO),
+                new Card(Suit.SPADE, Rank.THREE),
+                new Card(Suit.SPADE, Rank.FOUR),
+                new Card(Suit.SPADE, Rank.FIVE),
+                new Card(Suit.SPADE, Rank.SIX),
+                new Card(Suit.SPADE, Rank.SEVEN),
+                new Card(Suit.SPADE, Rank.EIGHT),
+                new Card(Suit.SPADE, Rank.NINE),
+                new Card(Suit.SPADE, Rank.TEN));
         for (Card card : cards) {
             hand.add(card);
         }
@@ -53,27 +52,27 @@ public class HandTest {
     private static Stream<Arguments> provideAceCases() {
         return Stream.of(
                 Arguments.of(List.of(
-                        new Card(Suit.SPADE, CardNumber.ACE)
+                        new Card(Suit.SPADE, Rank.ACE)
                 ), 11),
 
                 Arguments.of(List.of(
-                        new Card(Suit.SPADE, CardNumber.ACE),
-                        new Card(Suit.CLOVER, CardNumber.ACE),
-                        new Card(Suit.SPADE, CardNumber.TWO),
-                        new Card(Suit.SPADE, CardNumber.THREE)
+                        new Card(Suit.SPADE, Rank.ACE),
+                        new Card(Suit.CLOVER, Rank.ACE),
+                        new Card(Suit.SPADE, Rank.TWO),
+                        new Card(Suit.SPADE, Rank.THREE)
                 ), 17),
 
                 Arguments.of(List.of(
-                        new Card(Suit.SPADE, CardNumber.TEN),
-                        new Card(Suit.CLOVER, CardNumber.TEN),
-                        new Card(Suit.HEART, CardNumber.TEN),
-                        new Card(Suit.SPADE, CardNumber.ACE)
+                        new Card(Suit.SPADE, Rank.TEN),
+                        new Card(Suit.CLOVER, Rank.TEN),
+                        new Card(Suit.HEART, Rank.TEN),
+                        new Card(Suit.SPADE, Rank.ACE)
                 ), 31),
 
                 Arguments.of(List.of(
-                        new Card(Suit.SPADE, CardNumber.TEN),
-                        new Card(Suit.CLOVER, CardNumber.TEN),
-                        new Card(Suit.SPADE, CardNumber.ACE)
+                        new Card(Suit.SPADE, Rank.TEN),
+                        new Card(Suit.CLOVER, Rank.TEN),
+                        new Card(Suit.SPADE, Rank.ACE)
                 ), 21)
         );
     }
@@ -94,21 +93,21 @@ public class HandTest {
     private static Stream<Arguments> provideFaceCardCases() {
         return Stream.of(
                 Arguments.of(List.of(
-                        new Card(Suit.SPADE, CardNumber.JACK)
+                        new Card(Suit.SPADE, Rank.JACK)
                 ), 10),
                 Arguments.of(List.of(
-                        new Card(Suit.SPADE, CardNumber.QUEEN)
+                        new Card(Suit.SPADE, Rank.QUEEN)
                 ), 10),
                 Arguments.of(List.of(
-                        new Card(Suit.SPADE, CardNumber.KING)
+                        new Card(Suit.SPADE, Rank.KING)
                 ), 10),
 
                 Arguments.of(List.of(
-                        new Card(Suit.SPADE, CardNumber.ACE),
-                        new Card(Suit.SPADE, CardNumber.TEN),
-                        new Card(Suit.SPADE, CardNumber.JACK),
-                        new Card(Suit.SPADE, CardNumber.QUEEN),
-                        new Card(Suit.SPADE, CardNumber.KING)
+                        new Card(Suit.SPADE, Rank.ACE),
+                        new Card(Suit.SPADE, Rank.TEN),
+                        new Card(Suit.SPADE, Rank.JACK),
+                        new Card(Suit.SPADE, Rank.QUEEN),
+                        new Card(Suit.SPADE, Rank.KING)
                 ), 41)
         );
     }

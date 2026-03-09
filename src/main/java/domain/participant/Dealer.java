@@ -1,6 +1,7 @@
-package domain;
+package domain.participant;
 
-import domain.player.Name;
+import domain.card.Card;
+import domain.card.CardDto;
 import java.util.List;
 
 public class Dealer extends Participant {

@@ -1,9 +1,11 @@
 package domain;
 
+import domain.card.Card;
+import domain.card.Rank;
+import domain.card.Suit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 public class Deck {
     private final List<Card> cards;
@@ -16,7 +18,7 @@ public class Deck {
         List<Card> cards = new ArrayList<>();
 
         for (Suit suit : Suit.values()) {
-            for (CardNumber cardNumber : CardNumber.values()) {
+            for (Rank cardNumber : Rank.values()) {
                 cards.add(new Card(suit, cardNumber));
             }
         }

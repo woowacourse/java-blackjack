@@ -1,6 +1,6 @@
-package domain;
+package domain.card;
 
-public enum CardNumber {
+public enum Rank {
     TWO(2, "2"),
     THREE(3, "3"),
     FOUR(4, "4"),
@@ -19,7 +19,7 @@ public enum CardNumber {
     private final int point;
     private final String symbol;
 
-    CardNumber(int point, String symbol) {
+    Rank(int point, String symbol) {
         this.point = point;
         this.symbol = symbol;
     }

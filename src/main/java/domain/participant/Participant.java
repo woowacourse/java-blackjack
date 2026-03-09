@@ -1,7 +1,7 @@
-package domain;
+package domain.participant;
 
-import domain.player.Hand;
-import domain.player.Name;
+import domain.card.Card;
+import domain.card.CardDto;
 import java.util.Objects;
 
 public abstract class Participant {

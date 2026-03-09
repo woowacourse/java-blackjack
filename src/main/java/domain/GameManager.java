@@ -1,7 +1,10 @@
 package domain;
 
-import domain.player.Player;
-import domain.player.Players;
+import domain.card.CardDto;
+import domain.participant.Dealer;
+import domain.participant.Participant;
+import domain.participant.Player;
+import domain.participant.Players;
 
 public class GameManager {
     private final Deck deck;

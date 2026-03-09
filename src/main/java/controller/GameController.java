@@ -1,15 +1,15 @@
 package controller;
 
-import domain.CardDto;
 import domain.Command;
-import domain.Dealer;
 import domain.Deck;
 import domain.GameManager;
 import domain.GameResultDto;
 import domain.Referee;
-import domain.player.Player;
-import domain.player.PlayerParser;
-import domain.player.Players;
+import domain.card.CardDto;
+import domain.participant.Dealer;
+import domain.participant.Player;
+import domain.participant.PlayerParser;
+import domain.participant.Players;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import view.InputView;
@@ -18,34 +18,54 @@ import view.OutputView;
 public class GameController {
     private final InputView inputView;
     private final OutputView outputView;
+
     public GameController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }
 
     public void run() {
-        String rawPlayerName = inputView.readPlayerName();
-        Players players = PlayerParser.parseToPlayers(rawPlayerName);
+        Players players = getPlayers();
         Dealer dealer = new Dealer();
+        GameManager gameManager = getManager();
 
-        // 초기 카드 2장 지급
-        Deck deck = Deck.create();
-        deck.shuffle();
-        GameManager gameManager = new GameManager(deck);
-        gameManager.dealCard(dealer);
-        gameManager.dealCard(dealer);
-        gameManager.dealCardTo(players, 2);
+        initializeGame(gameManager, dealer, players);
+        playGame(players, gameManager, dealer);
+        resultPhase(players, dealer);
+    }
 
-        // 초기 카드 지급 결과 출력
-        Map<String, CardDto> result = new LinkedHashMap<>();
-        result.put(dealer.getName(), gameManager.getStartingCard(dealer));
+    private void resultPhase(Players players, Dealer dealer) {
+        Referee referee = new Referee();
+        Map<String, Integer> scoreByPlayerNames = new LinkedHashMap<>();
         for (Player player : players) {
-            result.put(player.getName(), gameManager.getCardsResult(player));
+            scoreByPlayerNames.put(player.getName(), player.getScore());
         }
-        outputView.printGameInitResult(result);
+        GameResultDto gameResultDto = referee.createGameResult(dealer.getScore(), scoreByPlayerNames);
+        outputView.printResult(gameResultDto);
+    }
+
+    private void playGame(Players players, GameManager gameManager, Dealer dealer) {
+        playPlayersTurn(players, gameManager);
+        playDealerTurn(players, gameManager, dealer);
+    }
+
+    private void playDealerTurn(Players players, GameManager gameManager, Dealer dealer) {
+        while (dealer.canReceive()) {
+            gameManager.dealCard(dealer);
+            outputView.printCompleteDealerTurn();
+        }
         outputView.printNewLine();
 
-        // 플레이어 턴
+        outputView.printParticipantResult(dealer.getName(), gameManager.getCardsResult(dealer).getFormattedCards(),
+                dealer.getScore());
+        for (Player player : players) {
+            outputView.printParticipantResult(player.getName(), gameManager.getCardsResult(player).getFormattedCards(),
+                    player.getScore());
+        }
+        outputView.printNewLine();
+    }
+
+    private void playPlayersTurn(Players players, GameManager gameManager) {
         for (Player player : players) {
             while (player.canReceive()) {
                 Command yesOrNo = Command.from(inputView.askPlayHit(player.getName()));
@@ -54,31 +74,36 @@ public class GameController {
                     break;
                 }
                 gameManager.dealCard(player);
-                outputView.printParticipantCard(player.getName(),gameManager.getCardsResult(player).getFormattedCards());
+                outputView.printParticipantCard(player.getName(),
+                        gameManager.getCardsResult(player).getFormattedCards());
             }
         }
         outputView.printNewLine();
+    }
 
-        // TODO: 하우스엣지 상황
-        // 딜러 턴
-        while (dealer.canReceive()) {
-            gameManager.dealCard(dealer);
-            outputView.printCompleteDealerTurn();
-        }
-        outputView.printNewLine();
+    private void initializeGame(GameManager gameManager, Dealer dealer, Players players) {
+        gameManager.dealCard(dealer);
+        gameManager.dealCard(dealer);
+        gameManager.dealCardTo(players, 2);
 
-        outputView.printParticipantResult(dealer.getName(), gameManager.getCardsResult(dealer).getFormattedCards(), dealer.getScore());
+        Map<String, CardDto> result = new LinkedHashMap<>();
+        result.put(dealer.getName(), gameManager.getStartingCard(dealer));
         for (Player player : players) {
-            outputView.printParticipantResult(player.getName(), gameManager.getCardsResult(player).getFormattedCards(), player.getScore());
+            result.put(player.getName(), gameManager.getCardsResult(player));
         }
+        
+        outputView.printGameInitResult(result);
         outputView.printNewLine();
+    }
 
-        Referee referee = new Referee();
-        Map<String, Integer> scoreByPlayerNames = new LinkedHashMap<>();
-        for (Player player : players) {
-            scoreByPlayerNames.put(player.getName(), player.getScore());
-        }
-        GameResultDto gameResultDto = referee.createGameResult(dealer.getScore(), scoreByPlayerNames);
-        outputView.printResult(gameResultDto);
+    private GameManager getManager() {
+        Deck deck = Deck.create();
+        deck.shuffle();
+        return new GameManager(deck);
+    }
+
+    private Players getPlayers() {
+        String rawPlayerName = inputView.readPlayerName();
+        return PlayerParser.parseToPlayers(rawPlayerName);
     }
 }

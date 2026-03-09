@@ -1,4 +1,4 @@
-package domain.player;
+package domain.participant;
 
 import java.util.HashSet;
 import java.util.Iterator;

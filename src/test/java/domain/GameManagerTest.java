@@ -2,9 +2,11 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.player.Name;
-import domain.player.Player;
-import domain.player.Players;
+import domain.card.CardDto;
+import domain.participant.Dealer;
+import domain.participant.Name;
+import domain.participant.Player;
+import domain.participant.Players;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 

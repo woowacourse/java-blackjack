@@ -1,6 +1,6 @@
 package view;
 
-import domain.CardDto;
+import domain.card.CardDto;
 import domain.GameResultDto;
 import domain.MatchResult;
 import java.util.ArrayList;
