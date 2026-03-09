@@ -1,37 +1,38 @@
 package blackjack.service;
 
 import blackjack.domain.Card;
+import blackjack.domain.CardPicker;
 import blackjack.domain.Dealer;
 import blackjack.domain.Player;
 
 public class CardDistributor {
 
-    private final RandomCardPicker randomCardPicker;
+    private final CardPicker cardPicker;
 
-    public CardDistributor(RandomCardPicker randomCardPicker) {
-        this.randomCardPicker = randomCardPicker;
+    public CardDistributor(CardPicker cardPicker) {
+        this.cardPicker = cardPicker;
     }
 
     public void distributeCardToPlayer(Player player) {
-        Card card = randomCardPicker.drawCard();
+        Card card = cardPicker.drawCard();
         player.receiveOneCard(card);
     }
 
     public void distributeCardToDealer(Dealer dealer) {
-        Card card = randomCardPicker.drawCard();
+        Card card = cardPicker.drawCard();
         dealer.receiveOneCard(card);
     }
 
     public void distributeTwoCardsToPlayer(Player player) {
         for (int i = 0; i < 2; i++) {
-            Card card = randomCardPicker.drawCard();
+            Card card = cardPicker.drawCard();
             player.receiveOneCard(card);
         }
     }
 
     public void distributeTwoCardsToDealer(Dealer dealer) {
         for (int i = 0; i < 2; i++) {
-            Card card = randomCardPicker.drawCard();
+            Card card = cardPicker.drawCard();
             dealer.receiveOneCard(card);
         }
     }
