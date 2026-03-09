@@ -39,7 +39,19 @@ public class BlackJackController {
 
     private List<String> readPlayerNames(){
         OutputView.printPlayerNameRequest();
-        return InputView.readPlayerNames();
+        List<String> playerNames = InputView.readPlayerNames();
+
+        // 중복된 이름은 허용되지 않음
+        while (hasDuplicatedName(playerNames)) {
+            OutputView.printDuplicatedNameMessage();
+            OutputView.printPlayerNameRequest();
+            playerNames = InputView.readPlayerNames();
+        }
+        return playerNames;
+    }
+
+    private boolean hasDuplicatedName(List<String> playerNames) {
+        return playerNames.size() != playerNames.stream().distinct().count();
     }
 
     private void readHitDecision(List<String> playerNames) {

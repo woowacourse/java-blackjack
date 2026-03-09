@@ -77,4 +77,8 @@ public class OutputView {
     public static void printWrongInputMessage() {
         println("잘못된 입력입니다. y, n 중 하나를 입력해주세요.");
     }
+
+    public static void printDuplicatedNameMessage() {
+        println("중복된 이름은 허용되지 않습니다. 다시 입력해주세요.");
+    }
 }
