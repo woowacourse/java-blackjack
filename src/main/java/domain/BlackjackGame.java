@@ -1,11 +1,9 @@
-package service;
+package domain;
 
-import domain.Deck;
-import domain.Participants;
 import java.util.List;
 import view.Message;
 
-public class BlackjackService {
+public class BlackjackGame {
     private Participants participants;
     private Deck deck;
 

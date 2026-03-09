@@ -4,7 +4,7 @@
 
 ## ✅ 리팩토링 할 것 목록 
 
-- [ ] **1. 코드의 계층구조 변경**
+- [x] **1. 코드의 계층구조 변경**
   - BlackjackGame같은 도메인 객체에서 상태관리 진행
   - Application 자체를 Controller로 변경
 - [ ] **2. ServiceLocator 패턴 사용 재고**

@@ -1,15 +1,14 @@
 package service;
 
+import domain.BlackjackGame;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 
 public class BlackjackServiceTest {
-    private static BlackjackService blackjackService;
+    private static BlackjackGame blackjackGame;
 
     @BeforeAll
     static void setUp() {
-        blackjackService = new BlackjackService();
+        blackjackGame = new BlackjackGame();
     }
 
 //    @Test

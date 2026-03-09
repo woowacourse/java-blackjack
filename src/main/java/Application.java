@@ -1,7 +1,5 @@
-package controller;
-
 import java.util.List;
-import service.BlackjackService;
+import domain.BlackjackGame;
 import util.Parser;
 import util.ServiceLocator;
 import util.Validator;
@@ -9,19 +7,23 @@ import view.InputView;
 import view.Message;
 import view.OutputView;
 
-public class BlackjackController {
+public class Application {
     private final OutputView outputView;
     private final InputView inputView;
     private final Parser parser;
-    private final BlackjackService blackjackService;
+    private final BlackjackGame blackjackGame;
     private final Validator validator;
 
-    public BlackjackController() {
+    public Application() {
         this.outputView = ServiceLocator.getOutputView();
         this.inputView = ServiceLocator.getInputView();
         this.parser = ServiceLocator.getParser();
-        this.blackjackService = ServiceLocator.getBlackjackService();
+        this.blackjackGame = ServiceLocator.getBlackjackService();
         this.validator = ServiceLocator.getValidator();
+    }
+
+    public static void main(String[] args) {
+        new Application().run();
     }
 
     public void run() {
@@ -35,12 +37,12 @@ public class BlackjackController {
 
     private void printWinningResult() {
         outputView.printMessage(Message.FINAL_RESULT_ANNOUNCE);
-        blackjackService.evaluateGame().forEach(outputView::printMessage);
+        blackjackGame.evaluateGame().forEach(outputView::printMessage);
     }
 
     private void printFinalResult() {
-        outputView.printMessage(blackjackService.makeDealerFinalResultDisplay());
-        blackjackService.makeUserFinalResultDisplay().forEach(outputView::printMessage);
+        outputView.printMessage(blackjackGame.makeDealerFinalResultDisplay());
+        blackjackGame.makeUserFinalResultDisplay().forEach(outputView::printMessage);
     }
 
     private void dealDealerCard() {
@@ -50,23 +52,23 @@ public class BlackjackController {
     }
 
     private String determineDealToDealer() {
-        return blackjackService.determineDealToDealer();
+        return blackjackGame.determineDealToDealer();
     }
 
     private void calculateDealerScore() {
-        blackjackService.calculateDealerScore();
+        blackjackGame.calculateDealerScore();
     }
 
     private void shuffleCards() {
-        blackjackService.makeDeck();
-        blackjackService.dealCards();
+        blackjackGame.makeDeck();
+        blackjackGame.dealCards();
         printDealResult();
     }
 
     private void printDealResult() {
-        outputView.printMessage(blackjackService.makeUserNameFormat());
-        outputView.printMessage(blackjackService.makeDealerCardsDisplay());
-        blackjackService.getUserCardsDisplays().forEach(outputView::printMessage);
+        outputView.printMessage(blackjackGame.makeUserNameFormat());
+        outputView.printMessage(blackjackGame.makeDealerCardsDisplay());
+        blackjackGame.getUserCardsDisplays().forEach(outputView::printMessage);
     }
 
     public void readParticipants() {
@@ -75,7 +77,7 @@ public class BlackjackController {
                 outputView.printMessage(Message.INPUT_PARTICIPANTS_MESSAGE);
                 String participantsName = inputView.readParticipantsName();
                 List<String> parsedParticipantsName = parser.parseParticipantsName(participantsName);
-                blackjackService.saveParticipants(parsedParticipantsName);
+                blackjackGame.saveParticipants(parsedParticipantsName);
                 return;
             } catch (IllegalArgumentException e) {
                 outputView.printErrorMessage(e.getMessage());
@@ -104,15 +106,15 @@ public class BlackjackController {
 
     private void determinePlayerContinue(String answer, int index) {
         if (answer.equalsIgnoreCase("y")) {
-            String cardDrawMessage = blackjackService.processPlayerDecision(index);
+            String cardDrawMessage = blackjackGame.processPlayerDecision(index);
             outputView.printMessage(cardDrawMessage);
         }
         if (answer.equalsIgnoreCase("n")) {
-            blackjackService.calculateScore(index);
+            blackjackGame.calculateScore(index);
         }
     }
 
     private List<String> extraCardRequest() {
-        return blackjackService.makeExtraCardRequsts();
+        return blackjackGame.makeExtraCardRequsts();
     }
 }
