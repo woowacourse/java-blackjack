@@ -12,7 +12,7 @@ public class Card {
         this.pattern = CardPattern.matchCardPattern(pattern);
     }
 
-    public int number() {
+    public int getNumber() {
         return number.getValue();
     }
 
@@ -20,7 +20,7 @@ public class Card {
         return number.isAce();
     }
 
-    public String cardName() {
+    public String getCardName() {
         return number.getCourt() + pattern.getName();
     }
 
