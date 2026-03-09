@@ -35,7 +35,7 @@ public enum CardNumber {
 
     public static CardNumber findByName(String name) {
         return Arrays.stream(CardNumber.values())
-                .filter(cardNumber -> cardNumber.name == name)
+                .filter(cardNumber -> cardNumber.name.equals(name))
                 .findFirst()
                 .orElseThrow();
     }
