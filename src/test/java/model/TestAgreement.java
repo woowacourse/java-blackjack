@@ -21,5 +21,9 @@ public class TestAgreement {
         assertThatThrownBy(() ->  new Agreement("x"))
                 .isExactlyInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.INVALID_CONDITION_INPUT.getMessage());
+
+        assertThatThrownBy(() -> new Agreement(" "))
+                .isExactlyInstanceOf(IllegalArgumentException.class)
+                .hasMessage(ErrorMessage.INPUT_IS_BLANK.getMessage());
     }
 }
