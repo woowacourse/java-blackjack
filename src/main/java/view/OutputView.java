@@ -38,7 +38,7 @@ public class OutputView {
                 .collect(Collectors.joining(", ")));
         System.out.println("에게 2장을 나누었습니다.");
 
-        System.out.println(dealer.getName() + "카드: " + participantCardPrint(dealer));
+        System.out.println(dealer.getName() + "카드: " + dealerInitialCardPrint(dealer));
 
         for (Player player : players.getAllPlayers()) {
             holdingCardMessage(player);
@@ -73,5 +73,9 @@ public class OutputView {
 
     private static String participantCardPrint(Participant participant) {
         return participant.handDisplay();
+    }
+
+    private static String dealerInitialCardPrint(Dealer dealer) {
+        return dealer.initialHandDisplay();
     }
 }

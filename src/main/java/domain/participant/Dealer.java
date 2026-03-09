@@ -11,4 +11,8 @@ public class Dealer extends Participant {
     public boolean shouldHit() {
         return getTotalCardScore() <= DEALER_HIT_STANDARD;
     }
+
+    public String initialHandDisplay() {
+        return getHandCards().getFirst().getCardCode() + getHandCards().getFirst().getCardShape();
+    }
 }

@@ -2,6 +2,7 @@ package domain.participant;
 
 import domain.card.Card;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class Participant {
@@ -40,5 +41,9 @@ public class Participant {
         return hand.getHandCards().stream()
                 .map(card -> card.getCardCode() + card.getCardShape())
                 .collect(Collectors.joining(", "));
+    }
+
+    protected List<Card> getHandCards() {
+        return hand.getHandCards();
     }
 }
