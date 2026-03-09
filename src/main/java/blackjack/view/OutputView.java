@@ -1,8 +1,8 @@
 package blackjack.view;
 
+import blackjack.domain.GameResult;
 import java.util.List;
 import java.util.Map;
-import java.util.StringJoiner;
 
 public class OutputView {
 
@@ -11,52 +11,42 @@ public class OutputView {
 
     public static void printGameSettingMessage(String dealerName, List<String> playersName) {
         System.out.println();
-        StringJoiner stringJoiner = new StringJoiner(", ");
-        for (String playerName : playersName) {
-            stringJoiner.add(playerName);
-        }
-
-        System.out.println(dealerName + "와 " + stringJoiner + "에게 2장을 나누었습니다.");
+        System.out.println(dealerName + "와 " + String.join(", ", playersName) + "에게 2장을 나누었습니다.");
     }
 
     public static void printSettingCardsResult(String userName, List<String> cards) {
-        System.out.print(userName + "카드: ");
-
-        StringJoiner stringJoiner = new StringJoiner(", ");
-        for (String card : cards) {
-            stringJoiner.add(card);
-        }
-
-        System.out.println(stringJoiner);
+        System.out.println(userName + "카드: " + String.join(", ", cards));
     }
 
-    // TODO: 16점 고정 상수 제거
     public static void printGetMoreCardsForDealer(String dealerName) {
         System.out.println(dealerName + "는 16이하라 한장의 카드를 더 받았습니다.");
         System.out.println();
     }
 
     public static void printCardsResult(String userName, List<String> cards, int cardsValue) {
-        System.out.print(userName + "카드: ");
-
-        StringJoiner stringJoiner = new StringJoiner(", ");
-        for (String card : cards) {
-            stringJoiner.add(card);
-        }
-
-        System.out.println(stringJoiner + " - 결과: " + cardsValue);
+        System.out.println(userName + "카드: " + String.join(", ", cards) + " - 결과: " + cardsValue);
     }
 
-    public static void printWinningResult(Map<String, Boolean> result, String dealerName, int dealerWinCount) {
+    public static void printWinningResult(GameResult gameResult, String dealerName) {
         System.out.println("## 최종 승패");
-        System.out.println(dealerName + ": " + dealerWinCount + "승 " + (result.size() - dealerWinCount) + "패");
+        printDealerResult(dealerName, gameResult);
+        printUsersResult(gameResult);
+    }
 
-        for (String userName : result.keySet()) {
-            String flag = "패";
-            if (result.get(userName)) {
-                flag = "승";
-            }
-            System.out.println(userName + ": " + flag);
+    private static void printDealerResult(String dealerName, GameResult gameResult) {
+        System.out.println(dealerName + ": " + gameResult.getDealerWinCount() + "승 " + gameResult.getUserWinCount() + "패");
+    }
+
+    private static void printUsersResult(GameResult gameResult) {
+        for (Map.Entry<String, Boolean> entry : gameResult.getEntries()) {
+            System.out.println(entry.getKey() + ": " + toWinFlag(entry.getValue()));
         }
+    }
+
+    private static String toWinFlag(boolean isWin) {
+        if (isWin) {
+            return "승";
+        }
+        return "패";
     }
 }
