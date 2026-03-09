@@ -6,9 +6,14 @@ import java.util.Random;
 
 public class RandomPickStrategy implements PickStrategy {
 
+    private final Random random;
+
+    public RandomPickStrategy() {
+        random = new Random();
+    }
+
     @Override
     public Card pick(List<Card> cards) {
-        Random random = new Random();
         int randomIndex = random.nextInt(0, cards.size());
 
         return cards.remove(randomIndex);
