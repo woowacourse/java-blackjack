@@ -83,6 +83,10 @@ public class GameTable {
         return scoreBoard.dealerWinningScore();
     }
 
+    public List<PlayerWinningInfo> playerWinningInfos() {
+        return scoreBoard.playerWinningInfos();
+    }
+
 //
 //    public List<GameStatus> initGameStatus() {
 //        List<GameStatus> gameStatuses = new ArrayList<>();

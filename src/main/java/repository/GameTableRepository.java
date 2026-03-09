@@ -3,6 +3,7 @@ package repository;
 import domain.DealerWinningScore;
 import domain.GameTable;
 import domain.PlayedGameResult;
+import domain.PlayerWinningInfo;
 import domain.vo.NameAndCardInfos;
 import java.util.List;
 
@@ -76,5 +77,9 @@ public class GameTableRepository {
 
     public DealerWinningScore getDealerWinningStatistics() {
         return gameTable.dealerWinningStatistics();
+    }
+
+    public List<PlayerWinningInfo> getPlayerWinningInfos() {
+        return gameTable.playerWinningInfos();
     }
 }

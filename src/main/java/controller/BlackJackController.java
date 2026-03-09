@@ -1,5 +1,6 @@
 package controller;
 
+import dto.AllPlayerWinningInfoResponse;
 import dto.DealerWinningStatisticsResponse;
 import dto.PlayedGameResultResponse;
 import dto.PlayerGameResultsResponse;
@@ -144,6 +145,7 @@ public class BlackJackController {
     }
 
     private void displayPlayerWinningConditions() {
-        OutputView.playerWinningConditions();
+        AllPlayerWinningInfoResponse response = queryService.playerWinningInfos();
+        OutputView.playerWinningConditions(response);
     }
 }

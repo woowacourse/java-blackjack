@@ -55,23 +55,27 @@ public class ScoreBoard {
                 .forEach(condition -> countMap.putIfAbsent(condition, 0));
 
         playerGameResults().stream()
-                .map(playerResult -> {
-                    if(playerWinningCondition(playerResult) == WinningCondition.WIN) {
-                        return WinningCondition.LOSE;
-                    }
-
-                    if(playerWinningCondition(playerResult) == WinningCondition.LOSE) {
-                        return WinningCondition.WIN;
-                    }
-                    return WinningCondition.DRAW;
-                })
+                .map(this::playerConditionToDealerCondition)
                 .forEach(condition -> countMap.merge(condition, 1, Integer::sum));
 
         return countMap;
     }
 
+    private WinningCondition playerConditionToDealerCondition(PlayedGameResult playerResult) {
+        if (playerWinningCondition(playerResult) == WinningCondition.WIN) {
+            return WinningCondition.LOSE;
+        }
+
+        if (playerWinningCondition(playerResult) == WinningCondition.LOSE) {
+            return WinningCondition.WIN;
+        }
+
+        return WinningCondition.DRAW;
+    }
+
     List<PlayerWinningInfo> playerWinningInfos() {
         return gameResults.stream()
+                .filter(this::isPlayerResult)
                 .map(this::playerWinningInfo)
                 .toList();
     }
@@ -81,27 +85,27 @@ public class ScoreBoard {
     }
 
     private WinningCondition playerWinningCondition(PlayedGameResult playedGameResult) {
-        if (winningConditionIfPlayerBusted(playedGameResult)) {
+        if (playerWinningConditionIfPlayerBusted(playedGameResult)) {
             return WinningCondition.LOSE;
         }
-        return winningConditionIfPlayerNotBusted(playedGameResult);
+        return playerWinningConditionIfPlayerNotBusted(playedGameResult);
     }
 
-    private WinningCondition winningConditionIfPlayerNotBusted(PlayedGameResult playedGameResult) {
+    private WinningCondition playerWinningConditionIfPlayerNotBusted(PlayedGameResult playedGameResult) {
         int dealerScore = dealerGameResult().scoreSum();
 
         if (dealerScore > BlackJackRule.BUST_NUMBER.value()) {
             return WinningCondition.WIN;
         }
 
-        return winningConditionIfBothNotBusted(playedGameResult, dealerScore);
+        return playerWinningConditionIfBothNotBusted(playedGameResult, dealerScore);
     }
 
-    private boolean winningConditionIfPlayerBusted(PlayedGameResult playedGameResult) {
+    private boolean playerWinningConditionIfPlayerBusted(PlayedGameResult playedGameResult) {
         return playedGameResult.scoreSum() > BlackJackRule.BUST_NUMBER.value();
     }
 
-    private WinningCondition winningConditionIfBothNotBusted(PlayedGameResult playedGameResult, int dealerScore) {
+    private WinningCondition playerWinningConditionIfBothNotBusted(PlayedGameResult playedGameResult, int dealerScore) {
         if (dealerScore > playedGameResult.scoreSum()) {
             return WinningCondition.LOSE;
         }

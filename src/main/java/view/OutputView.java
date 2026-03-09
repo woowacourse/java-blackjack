@@ -1,12 +1,13 @@
 package view;
 
+import dto.AllPlayerWinningInfoResponse;
 import dto.AllPlayersNameAndCardsResponse;
 import dto.DealerWinningStatisticsResponse;
 import dto.NameAndCardsResponse;
 import dto.PlayedGameResultResponse;
 import dto.PlayerGameResultsResponse;
 import dto.PlayerNamesResponse;
-import java.util.ArrayList;
+import dto.PlayerWinningInfoResponse;
 import java.util.List;
 
 public final class OutputView {
@@ -90,8 +91,12 @@ public final class OutputView {
         }
     }
 
-    public static void playerWinningConditions() {
+    public static void playerWinningConditions(AllPlayerWinningInfoResponse response) {
+        List<PlayerWinningInfoResponse> winningInfos = response.playerWinningInfoResponses();
 
+        winningInfos.forEach(info -> {
+            System.out.println(OutputMessage.PLAYER_WINNING_CONDITION.description(info.name(), info.winningCondition()));
+        });
     }
 
     private static void winningConditionHeader() {
