@@ -39,9 +39,9 @@ public class ApplicationView {
         });
     }
 
-    public void printFirstHandOutResult(List<String> playerNames) {
+    public void printInitialHandOutResult(List<String> playerNames, int initialCardCount) {
         String formattedNames = String.join(",", playerNames);
-        writer.printDealInitialCardMessage(formattedNames);
+        writer.printDealInitialCardMessage(formattedNames, initialCardCount);
     }
 
     public void printAllParticipantsHand(List<PlayerHandDto> playerHands) {

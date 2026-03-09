@@ -37,9 +37,8 @@ public class BlackjackGame {
         Dealer dealer = enterDealer();
         Players players = enterPlayers();
 
-        dealInitialCard(dealer, players);
+        handOutInitialCard(dealer, players);
 
-        view.printFirstHandOutResult(players.displayNames());
         view.printParticipantHand(PlayerHandDto.of(dealer));
         view.printAllParticipantsHand(getPlayerHandInformation(players));
 
@@ -75,9 +74,10 @@ public class BlackjackGame {
         }
     }
 
-    private void dealInitialCard(Dealer dealer, Players players) {
+    private void handOutInitialCard(Dealer dealer, Players players) {
         dealer.drawMySelf(INITIAL_CARD_DRAW_COUNT);
         players.giveMeFirstCardBundle(dealer);
+        view.printInitialHandOutResult(players.displayNames(), INITIAL_CARD_DRAW_COUNT);
     }
 
     private Dealer enterDealer() {
