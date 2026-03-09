@@ -1,26 +1,25 @@
 package domain.card;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 public class CardDeck {
     private static final String CONSUME_ALL_CARD_DECK_ERROR_MESSAGE = "[ERROR] 카드를 다 뽑았습니다.";
     private static final String DUPLICATED_CARD_ERROR_MESSAGE = "[ERROR] 중복된 항목이 존재합니다.";
     private static final String EMPTY_LIST_ERROR_MESSAGE = "[ERROR] 리스트가 비어있습니다.";
-    private final Stack<Card> deck;
+    private final Deque<Card> deck;
 
     public CardDeck() {
-        this.deck = new Stack<>();
-        init();
-        validate(deck);
-        shuffle();
+        List<Card> initialCards = new ArrayList<>();
+        init(initialCards);
+        validate(initialCards);
+        shuffle(initialCards);
+        this.deck = new ArrayDeque<>(initialCards);
     }
 
-    private void init() {
+    private void init(List<Card> initialCard) {
         for (Pattern pattern : Pattern.values()) {
             for (Rank rank : Rank.values()) {
-                deck.push(new Card(rank, pattern));
+                initialCard.add(new Card(rank, pattern));
             }
         }
 
@@ -31,8 +30,8 @@ public class CardDeck {
 //                        .forEach(deck::push);
     }
 
-    private void shuffle() {
-        Collections.shuffle(deck);
+    private void shuffle(List<Card> initialCards) {
+        Collections.shuffle(initialCards);
     }
 
     public int getDeckSize() {
@@ -47,10 +46,11 @@ public class CardDeck {
     }
 
     public List<Card> getCardDeck() {
-        return Collections.unmodifiableList(deck);
+        List<Card> copyDeck = new ArrayList<>(this.deck);
+        return Collections.unmodifiableList(copyDeck);
     }
 
-    private void validate(Stack<Card> items) {
+    private void validate(List<Card> items) {
         if (items == null || items.isEmpty()) {
             throw new IllegalArgumentException(EMPTY_LIST_ERROR_MESSAGE);
         }
