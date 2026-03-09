@@ -4,6 +4,7 @@ import java.util.regex.Pattern;
 
 public class Name {
     private String name;
+    private static final String ALPHABET_AND_KOREAN_TEXT_REG = "^[a-zA-Z가-힣]+$";
 
     public Name(String name) {
         validateName(name);
@@ -21,7 +22,7 @@ public class Name {
 
 
     private static void validateKorEng(String name) {
-        Pattern namePattern = Pattern.compile("^[a-zA-Z가-힣]+$");
+        Pattern namePattern = Pattern.compile(ALPHABET_AND_KOREAN_TEXT_REG);
 
         if(!namePattern.matcher(name).matches()) {
             throw new IllegalArgumentException("[ERROR] 플레이어 이름은 영어와 한글만 가능합니다.");
