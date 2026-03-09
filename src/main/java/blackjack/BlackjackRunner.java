@@ -72,8 +72,7 @@ public class BlackjackRunner {
     }
 
     private PlayingCards dealerTurn(Participants participants, PlayingCards deck) {
-        boolean isDealerDraw = participants.isDealerDraw();
-        if (isDealerDraw) {
+        while (participants.isDealerDraw()) {
             outputView.printDealerTurn();
             deck = participants.dealerDraw(deck);
         }
