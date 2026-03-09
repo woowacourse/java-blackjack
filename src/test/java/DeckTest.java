@@ -1,10 +1,12 @@
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.Card;
-import domain.Deck;
-import domain.Rank;
-import domain.Suit;
+import domain.RandomValueGenerator;
+import domain.RandomValueGeneratorImpl;
+import domain.card.Card;
+import domain.card.Rank;
+import domain.card.Suit;
+import domain.player.Deck;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -21,11 +23,13 @@ class DeckTest {
     @DisplayName("constructor(): ")
     class Constructor {
         @Test
-        @DisplayName("[예외] - 사이즈가 52개인지 확인한다.")
+        @DisplayName("[예외] - 사이즈가 52개가 아니라면 예외를 반환한다.")
         void invalidSize() {
             List<Card> cards = TestDefaults.createCards();
+            RandomValueGenerator randomValueGenerator = new RandomValueGeneratorImpl();
             cards.add(new Card(Rank.ACE, Suit.SPADE));
-            assertThatThrownBy(() -> new Deck(cards))
+
+            assertThatThrownBy(() -> new Deck(cards, randomValueGenerator))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ErrorMessage.DECK_SIZE.getMessage());
         }
@@ -34,11 +38,12 @@ class DeckTest {
         @DisplayName("[예외] - 카드가 중복되는지 확인한다.")
         void duplicate() {
             List<Card> cards = TestDefaults.createCards();
+            RandomValueGenerator randomValueGenerator = new RandomValueGeneratorImpl();
 
             cards.removeLast();
             cards.add(cards.getFirst());    //중복 발생시키기
 
-            assertThatThrownBy(() -> new Deck(cards))
+            assertThatThrownBy(() -> new Deck(cards, randomValueGenerator))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ErrorMessage.DECK_DUPLICATE.getMessage());
         }
@@ -61,9 +66,9 @@ class DeckTest {
         @ParameterizedTest
         @MethodSource
         void drawCard(int idx, Card expected) {
-            Deck deck = TestDefaults.createDeck();
+            Deck deck = TestDefaults.createDeck(bound -> idx);
 
-            assertThat(deck.drawCard(idx)).isEqualTo(expected);
+            assertThat(deck.drawCard()).isEqualTo(expected);
             assertThat(deck.contains(expected)).isFalse();
         }
 
@@ -74,8 +79,8 @@ class DeckTest {
                 "53"
         })
         void invalidSize(int idx) {
-            Deck deck = TestDefaults.createDeck();
-            assertThatThrownBy(() -> deck.drawCard(idx))
+            Deck deck = TestDefaults.createDeck(bound -> idx);
+            assertThatThrownBy(deck::drawCard)
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage(ErrorMessage.INDEX_RANGE.getMessage());
         }

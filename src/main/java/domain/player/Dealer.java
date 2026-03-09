@@ -1,8 +1,8 @@
-package domain;
+package domain.player;
 
+import domain.card.Card;
 import java.util.List;
 
-//추상 클래스
 public class Dealer extends Player {
     private static final String NAME = "딜러";
     private static final int BOUNDARY = 16;
@@ -15,7 +15,7 @@ public class Dealer extends Player {
         return super.getHand().getTotalScore() <= BOUNDARY;
     }
 
-    public List<Card> getCards(){
+    public List<Card> getCards() {
         return super.getCards();
     }
 

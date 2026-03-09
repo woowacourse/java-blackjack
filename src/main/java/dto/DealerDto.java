@@ -1,9 +1,9 @@
 package dto;
 
-import domain.Dealer;
+import domain.player.Dealer;
 
 public record DealerDto(String dealerName, Integer boundary) {
-    public static DealerDto FromEntity(Dealer dealer){
+    public static DealerDto fromEntity(Dealer dealer) {
         return new DealerDto(dealer.getName(), dealer.getBoundary());
     }
 }

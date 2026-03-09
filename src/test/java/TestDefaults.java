@@ -1,28 +1,18 @@
-import domain.*;
-import domain.Hand;
-
+import domain.RandomValueGenerator;
+import domain.card.Card;
+import domain.card.Rank;
+import domain.card.Suit;
+import domain.player.Deck;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class TestDefaults {
-    private static final Suit FIRST_SUIT = Suit.SPADE;
-    private static final Suit SECOND_SUIT = Suit.HEART;
-    private static final Rank DEFAULT_RANK = Rank.ACE;
 
     private static final List<Card> DEFAULT_CARDS = createCards();
-    private static final Hand DEFAULT_BLACKJACK_HAND = createBlackjackHand();
 
-    public static Deck createDeck() {
-        return new Deck(createCards());
-    }
-
-    public static Hand createBlackjackHand() {
-        return new Hand(List.of(new Card(DEFAULT_RANK, FIRST_SUIT), new Card(DEFAULT_RANK, FIRST_SUIT)));
-    }
-
-    public static Hand getBlackjackHand() {
-        return DEFAULT_BLACKJACK_HAND;
+    public static Deck createDeck(RandomValueGenerator randomValueGenerator) {
+        return new Deck(createCards(), randomValueGenerator);
     }
 
     public static List<Card> createCards() {

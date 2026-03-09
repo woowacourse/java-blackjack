@@ -4,12 +4,10 @@ import dto.DealerDto;
 import dto.NamesDto;
 import dto.PlayerCardsDto;
 import dto.StatisticsDto;
-import util.Parser;
-
 import java.util.List;
 
 public class OutputView {
-    private static final String DEAL_INITIAL_CARDS_MESSAGE = "%s와 %s에게 2장을 나누었습니다.";
+    private static final String DEAL_INITIAL_CARDS_MESSAGE = "\n%s와 %s에게 2장을 나누었습니다.";
     private static final String SHOW_CARD = "%s카드: %s";
     private static final String DRAW_DEALER = "%s는 %d이하라 한장의 카드를 더 받았습니다.";
     private static final String SHOW_RESULT = SHOW_CARD + " - 결과: %d";
@@ -19,16 +17,16 @@ public class OutputView {
 
     public void drawCard(NamesDto namesDto) {
         String namesResult = String.join(", ", namesDto.playerNames());
-        System.out.printf(DEAL_INITIAL_CARDS_MESSAGE + "%n",namesDto.dealerName(), namesResult);
+        System.out.printf(DEAL_INITIAL_CARDS_MESSAGE + "%n", namesDto.dealerName(), namesResult);
     }
 
     public void showCard(PlayerCardsDto playerCardsDto) {
-        System.out.println(SHOW_CARD.formatted(playerCardsDto.name(),String.join(", ", playerCardsDto.cards())));
+        System.out.printf((SHOW_CARD) + "%n", playerCardsDto.name(), String.join(", ", playerCardsDto.cards()));
     }
 
     public void showCardsAndScore(PlayerCardsDto playerCardsDto, Integer totalScore) {
-        System.out.println(SHOW_RESULT.formatted(playerCardsDto.name() ,String.join(", ", playerCardsDto.cards())
-                ,totalScore));
+        System.out.printf((SHOW_RESULT) + "%n", playerCardsDto.name(), String.join(", ", playerCardsDto.cards())
+                , totalScore);
     }
 
     public void drawDealer(DealerDto dealerDto) {
@@ -37,12 +35,12 @@ public class OutputView {
 
     public void showResultStatistics(List<StatisticsDto> statisticsDtos, String dealerName) {
         System.out.println(PRINT_RESULT_PHRASE);
-        System.out.println(DEALER_RECORD_FORMAT.formatted(dealerName,makeResult(statisticsDtos)));
+        System.out.printf((DEALER_RECORD_FORMAT) + "%n", dealerName, makeResult(statisticsDtos));
 
-        for(StatisticsDto statisticsDto: statisticsDtos) {
+        for (StatisticsDto statisticsDto : statisticsDtos) {
             String name = statisticsDto.name();
             String result = statisticsDto.result();
-            System.out.println(STATISTICS_FORMAT.formatted(name, result));
+            System.out.printf((STATISTICS_FORMAT) + "%n", name, result);
         }
     }
 
@@ -53,7 +51,7 @@ public class OutputView {
         String message = "";
         message += getResultMessage(statistics, Result.LOSE, Result.WIN);
         message += getResultMessage(statistics, Result.DRAW, Result.DRAW);
-        getResultMessage(statistics, Result.WIN, Result.LOSE);
+        message += getResultMessage(statistics, Result.WIN, Result.LOSE);
 
         return message;
     }

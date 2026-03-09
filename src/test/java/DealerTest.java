@@ -1,8 +1,8 @@
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.Hand;
-import domain.Dealer;
-import domain.Rank;
+import domain.card.Rank;
+import domain.player.Dealer;
+import domain.player.Hand;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -13,8 +13,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 class DealerTest {
     public static Stream<Arguments> needsToHit() {
         return Stream.of(
-                Arguments.of(new Hand(TestDefaults.getCardsByRanks(List.of(Rank.TEN, Rank.SIX))),true),
-                Arguments.of(new Hand(TestDefaults.getCardsByRanks(List.of(Rank.TEN,Rank.SEVEN))),false)
+                Arguments.of(new Hand(TestDefaults.getCardsByRanks(List.of(Rank.TEN, Rank.SIX))), true),
+                Arguments.of(new Hand(TestDefaults.getCardsByRanks(List.of(Rank.TEN, Rank.SEVEN))), false)
         );
     }
 

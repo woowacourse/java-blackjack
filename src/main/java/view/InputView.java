@@ -22,8 +22,8 @@ public class InputView {
         return yesOrNo.equals(YES);
     }
 
-    private String printAndGet(String needsToHit) {
-        System.out.println(needsToHit);
+    private String printAndGet(String statement) {
+        System.out.println(statement);
         String input = scanner.nextLine();
 
         validateIsBlank(input);

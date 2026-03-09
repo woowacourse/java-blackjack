@@ -1,15 +1,15 @@
 package util;
 
-import domain.Card;
-import domain.Rank;
-import domain.Suit;
-import java.util.LinkedList;
+import domain.card.Card;
+import domain.card.Rank;
+import domain.card.Suit;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CardsCreator {
 
-    public static List<Card> createLinkedCards() {
-        List<Card> cards = new LinkedList<>();
+    public static List<Card> createCards() {
+        List<Card> cards = new ArrayList<>();
         for (Rank rank : Rank.values()) {
             for (Suit suit : Suit.values()) {
                 cards.add(new Card(rank, suit));

@@ -1,5 +1,6 @@
-package domain;
+package domain.player;
 
+import domain.card.Card;
 import java.util.Collections;
 import java.util.List;
 import util.ErrorMessage;
@@ -8,7 +9,6 @@ public class Hand {
     public static final int ACE_PROFIT_VALUE = 10;
     public static final int BLACKJACK_MAX_SCORE = 21;
     private static final int MIN_SIZE = 2;
-    private static final int MIN_TOTAL_SCORE = 2;
 
     private final List<Card> cards;
 
@@ -17,12 +17,8 @@ public class Hand {
         this.cards = cards;
     }
 
-    // 버스트 확인
-    public static boolean isBurst(int totalScore) {
-        if (totalScore < MIN_TOTAL_SCORE) {
-            throw new IllegalArgumentException(ErrorMessage.BURST_TOTAL_SCORE.getMessage());
-        }
-        return totalScore > BLACKJACK_MAX_SCORE;
+    public boolean isBust() {
+        return getTotalScore() > BLACKJACK_MAX_SCORE;
     }
 
     private void validateCardsSize(List<Card> cards) { //테스트 작성

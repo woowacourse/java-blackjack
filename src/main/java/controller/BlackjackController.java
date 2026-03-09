@@ -1,33 +1,36 @@
 package controller;
 
-import domain.*;
+import domain.RandomValueGenerator;
+import domain.RandomValueGeneratorImpl;
+import domain.card.Card;
+import domain.player.Dealer;
+import domain.player.Deck;
+import domain.player.Hand;
+import domain.player.Player;
 import dto.DealerDto;
 import dto.NamesDto;
 import dto.PlayerCardsDto;
 import dto.StatisticsDto;
+import java.util.ArrayList;
+import java.util.List;
 import util.CardsCreator;
 import util.Parser;
 import view.InputView;
 import view.OutputView;
 import view.Result;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class BlackjackController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private final RandomValueGenerator randomValueGenerator;
 
-    public BlackjackController(InputView inputView, OutputView outputView, RandomValueGenerator randomValueGenerator) {
+    public BlackjackController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.randomValueGenerator = randomValueGenerator;
     }
 
     public void start() {
-        Deck deck = new Deck(CardsCreator.createLinkedCards());
+        Deck deck = createDeck();
         List<String> playerNames = Parser.parse(inputView.readPlayerName());
         List<Player> players = createPlayers(playerNames, deck);
 
@@ -40,31 +43,49 @@ public class BlackjackController {
         showGameResultStatistics(dealer, players);
     }
 
+    private static Deck createDeck() {
+        RandomValueGenerator randomValueGenerator = new RandomValueGeneratorImpl();
+        return new Deck(CardsCreator.createCards(), randomValueGenerator);
+    }
+
     private void showGameResultStatistics(Dealer dealer, List<Player> players) {
-        int dealerTotalScore = dealer.getHand().getTotalScore();
-        List<StatisticsDto> statisticsDtos = getStatisticsDtos(players, dealerTotalScore);
+        List<StatisticsDto> statisticsDtos = getStatisticsDtos(players, dealer);
         outputView.showResultStatistics(statisticsDtos, dealer.getName());
     }
 
-    private List<StatisticsDto> getStatisticsDtos(List<Player> players, int dealerTotalScore) {
+    private List<StatisticsDto> getStatisticsDtos(List<Player> players, Dealer dealer) {
+        int dealerTotalScore = dealer.getTotalScore();
         List<StatisticsDto> statisticsDtos = new ArrayList<>();
+        if (dealer.getHand().isBust()) {
+            dealerTotalScore = 0;
+            judgeResult(players, dealerTotalScore, statisticsDtos);
+            return statisticsDtos;
+        }
+        judgeResult(players, dealerTotalScore, statisticsDtos);
+        return statisticsDtos;
+    }
+
+    private void judgeResult(List<Player> players, int dealerTotalScore, List<StatisticsDto> statisticsDtos) {
         for (Player player : players) {
-            int totalScore = player.getHand().getTotalScore();
+            int totalScore = player.getTotalScore();
             Result result;
             result = getResult(dealerTotalScore, totalScore);
             StatisticsDto statisticsDto = new StatisticsDto(player.getName(), result.getDisplayName());
             statisticsDtos.add(statisticsDto);
         }
-        return statisticsDtos;
     }
 
     private Result getResult(int dealerTotalScore, int totalScore) {
-        if(totalScore > Hand.BLACKJACK_MAX_SCORE) return Result.LOSE;
-        if (dealerTotalScore > totalScore) return Result.WIN;
+        if (totalScore > Hand.BLACKJACK_MAX_SCORE) {
+            return Result.LOSE;
+        }
+        if (dealerTotalScore > totalScore) {
+            return Result.LOSE;
+        }
         if (dealerTotalScore == totalScore) {
             return Result.DRAW;
         }
-        return Result.LOSE;
+        return Result.WIN;
     }
 
     private Dealer createDealerAndPrintPlayers(Deck deck, List<String> playerNames) {
@@ -86,24 +107,27 @@ public class BlackjackController {
 
     private void chooseToFillPlayersHand(List<Player> players, Deck deck) {
         for (Player player : players) {
-            String name = player.getName();
+            PlayerTurn(deck, player);
+        }
+    }
 
-            while (!Hand.isBurst(player.getHand().getTotalScore())
-                    && inputView.readNeedToHit(name)) {
-                Card card = deck.drawCard(randomValueGenerator.generate(deck.getSize()));
-                player.addHand(card);
-                PlayerCardsDto playerCardsDto = PlayerCardsDto.fromEntity(player);
-                outputView.showCard(playerCardsDto);
-            }
+    private void PlayerTurn(Deck deck, Player player) {
+        String name = player.getName();
+
+        while (!player.getHand().isBust() && inputView.readNeedToHit(name)) {
+            Card card = deck.drawCard();
+            player.addHand(card);
+            PlayerCardsDto playerCardsDto = PlayerCardsDto.fromEntity(player);
+            outputView.showCard(playerCardsDto);
         }
     }
 
     private void fillDealerHand(Dealer dealer, Deck deck, List<Player> players) {
-        while(dealer.needsToHit()
-                && players.stream().noneMatch(p -> Hand.isBurst(p.getHand().getTotalScore()))){
-            Card card = deck.drawCard(randomValueGenerator.generate(deck.getSize()));
+        while (dealer.needsToHit()
+                && players.stream().noneMatch(player -> player.getHand().isBust())) {
+            Card card = deck.drawCard();
             dealer.addHand(card);
-            DealerDto dealerDto = DealerDto.FromEntity(dealer);
+            DealerDto dealerDto = DealerDto.fromEntity(dealer);
             outputView.drawDealer(dealerDto);
         }
     }
@@ -131,8 +155,8 @@ public class BlackjackController {
 
 
     private Hand getHand(Deck deck) {
-        Card card1 = deck.drawCard(randomValueGenerator.generate(deck.getSize()));
-        Card card2 = deck.drawCard(randomValueGenerator.generate(deck.getSize()));
+        Card card1 = deck.drawCard();
+        Card card2 = deck.drawCard();
         List<Card> cards = new ArrayList<>();
         cards.add(card1);
         cards.add(card2);

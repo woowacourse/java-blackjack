@@ -1,9 +1,9 @@
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.Hand;
-import domain.Card;
-import domain.Rank;
+import domain.card.Card;
+import domain.card.Rank;
+import domain.player.Hand;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import util.ErrorMessage;
 
@@ -60,28 +59,23 @@ class HandTest {
     @Nested
     @DisplayName("isBurst(): ")
     class IsBurst {
-        @ParameterizedTest
-        @DisplayName("2 이하의 값이 들어오면 예외를 발생시킨다.")
-        @CsvSource({
-                "-1",
-                "0",
-                "1"
-        })
-        void underTwoValue(int totalScore) {
-            assertThatThrownBy(() -> Hand.isBurst(totalScore))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage(ErrorMessage.BURST_TOTAL_SCORE.getMessage());
+
+        @Test
+        @DisplayName("패의 총합이 21을 초과하면 true를 반환한다")
+        void returnsTrueWhenTotalScoreIsOver21() {
+            Hand hand = new Hand(TestDefaults.getCardsByRanks(List.of(Rank.KING, Rank.QUEEN)));
+
+            hand.add(TestDefaults.getCardByRank(Rank.TWO));
+
+            assertThat(hand.isBust()).isTrue();
         }
 
-        @ParameterizedTest
-        @DisplayName("총합이 21을 초과한다면 true 반환, 아니라면 false 반환한다")
-        @CsvSource({
-                "2,false",
-                "21,false",
-                "22,true"
-        })
-        void isBurst(int totalScore, boolean expected) {
-            assertThat(Hand.isBurst(totalScore)).isEqualTo(expected);
+        @Test
+        @DisplayName("패의 총합이 21 이하이면 false를 반환한다")
+        void returnsFalseWhenTotalScoreIs21OrLess() {
+            Hand hand = new Hand(TestDefaults.getCardsByRanks(List.of(Rank.ACE, Rank.QUEEN)));
+
+            assertThat(hand.isBust()).isFalse();
         }
     }
 
