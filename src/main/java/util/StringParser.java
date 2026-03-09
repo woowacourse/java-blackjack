@@ -3,11 +3,12 @@ package util;
 import java.util.Arrays;
 import java.util.List;
 
-public class StringParser implements Parser<String> {
+public class StringParser {
 
-    @Override
-    public List<String> splitToDelimiter(String input, String delimiter) {
-        return Arrays.stream(input.split(delimiter))
+    private static final String NAME_DELIMITER = ",";
+
+    public static List<String> parse(String input) {
+        return Arrays.stream(input.split(NAME_DELIMITER))
                 .toList();
     }
 }

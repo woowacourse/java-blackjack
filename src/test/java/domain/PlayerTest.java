@@ -6,7 +6,6 @@ import domain.service.CardFactory;
 import org.junit.jupiter.api.Test;
 import repository.CardRepository;
 import repository.DealerRepository;
-import util.Parser;
 import util.RandomRankNumberGenerator;
 import util.RandomShapeNumberGenerator;
 import util.StringParser;
@@ -30,8 +29,7 @@ public class PlayerTest {
     void 플레이어_셍성_테스트() {
         // given
         String playerNamesInput = "phobi,jason";
-        Parser parser = new StringParser();
-        List<String> playerNames = parser.splitToDelimiter(playerNamesInput, ",");
+        List<String> playerNames = StringParser.parse(playerNamesInput);
 
         // when
         // 플레이어 리스트 = 플레이어 객체를 만드는 메소드 실행
