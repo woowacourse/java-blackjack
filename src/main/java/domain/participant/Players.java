@@ -70,10 +70,10 @@ public class Players {
                 .orElseThrow(() -> new IllegalArgumentException(PLAYER_NOT_FOUND.getMessage()));
     }
 
-    public List<Result> decideAllResults(int dealerScore, boolean dealerBurst) {
+    public List<Result> decideAllResults(int dealerScore, boolean dealerBust) {
         List<Result> results = new ArrayList<>();
         for (Player player : players) {
-            Result playerResult = player.calculateResult(dealerScore, dealerBurst);
+            Result playerResult = player.calculateResult(dealerScore, dealerBust);
             results.add(playerResult);
         }
         return results;
@@ -95,9 +95,9 @@ public class Players {
         return foundPlayer.cardBoard.createDto();
     }
 
-    public Result getPlayerResult(String name, int dealerScore, boolean dealerBurst) {
+    public Result getPlayerResult(String name, int dealerScore, boolean dealerBust) {
         Player foundPlayer = findPlayerByName(name);
-        return foundPlayer.calculateResult(dealerScore, dealerBurst);
+        return foundPlayer.calculateResult(dealerScore, dealerBust);
     }
 
     public int getPlayerScore(String name) {

@@ -45,9 +45,9 @@ public class ParticipantTest {
     @Test
     public void 카드_점수_합계가_21을_넘으면_버스트를_판정한다() {
         Participant participant = new Player("stark");
-        List<Card> burstCards = List.of(new Card(Rank.JACK, Suit.CLOVER), new Card(Rank.QUEEN, Suit.CLOVER),
+        List<Card> bustCards = List.of(new Card(Rank.JACK, Suit.CLOVER), new Card(Rank.QUEEN, Suit.CLOVER),
                 new Card(Rank.TWO, Suit.CLOVER));
-        burstCards.forEach(participant::addCard);
+        bustCards.forEach(participant::addCard);
 
         assertThat(participant.cardBoard.isBust()).isTrue();
     }

@@ -15,10 +15,10 @@ public class Player extends Participant {
         return name;
     }
 
-    public Result calculateResult(int dealerScore, boolean dealerBurst) {
+    public Result calculateResult(int dealerScore, boolean dealerBust) {
         int playerScore = cardBoard.calculateScore();
 
-        if (cardBoard.isBust() || (playerScore < dealerScore && !dealerBurst)) {
+        if (cardBoard.isBust() || (playerScore < dealerScore && !dealerBust)) {
             return Result.LOSE;
         }
         if (playerScore == dealerScore) {

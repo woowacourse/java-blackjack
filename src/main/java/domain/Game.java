@@ -72,14 +72,14 @@ public class Game {
 
     public Map<Result, Integer> getDealerResult() {
         int dealerScore = dealer.calculateScore();
-        boolean dealerBurst = dealer.isBurst();
-        return dealer.calculateResults(players.decideAllResults(dealerScore, dealerBurst));
+        boolean dealerBust = dealer.isBust();
+        return dealer.calculateResults(players.decideAllResults(dealerScore, dealerBust));
     }
 
     public Result getPlayerResult(String name) {
         int dealerScore = dealer.calculateScore();
-        boolean dealerBurst = dealer.isBurst();
-        return players.getPlayerResult(name, dealerScore, dealerBurst);
+        boolean dealerBust = dealer.isBust();
+        return players.getPlayerResult(name, dealerScore, dealerBust);
     }
 
     public int getPlayerScore(String name) {
