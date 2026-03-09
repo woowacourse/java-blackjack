@@ -35,8 +35,4 @@ public class InputView {
 
         throw new IllegalArgumentException("'y' 또는 'n'만 입력 가능합니다.");
     }
-
-    public void closeScanner() {
-        scanner.close();
-    }
 }
