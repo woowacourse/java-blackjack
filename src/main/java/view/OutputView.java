@@ -43,7 +43,8 @@ public class OutputView {
     }
 
 
-    public static void printPlayersScore(List<PlayerResult> players) {
+    public static void printPlayersScore(PlayerResult dealerResult, List<PlayerResult> players) {
+        printPlayerScore(dealerResult);
         for(PlayerResult playerResult : players) {
             printPlayerScore(playerResult);
         }

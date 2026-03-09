@@ -2,6 +2,7 @@ package model;
 
 import constant.ErrorMessage;
 import java.util.List;
+import model.dto.PlayerResult;
 
 public class Players {
 
@@ -20,5 +21,9 @@ public class Players {
 
     public List<Player> getPlayers() {
         return List.copyOf(players);
+    }
+
+    public List<PlayerResult> getPlayersResult() {
+        return List.copyOf(players.stream().map(Participant::getResult).toList());
     }
 }

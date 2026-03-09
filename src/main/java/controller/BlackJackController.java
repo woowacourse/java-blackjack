@@ -39,7 +39,7 @@ public class BlackJackController {
         drawPlayersTurn(players);
         drawDealer(dealer);
 
-        printPlayersScore(dealer, players);
+        OutputView.printPlayersScore(dealer.getResult(), players.getPlayersResult());
         OutputView.printResult(blackJackService.getGameResult(players, dealer));
     }
 
@@ -106,18 +106,6 @@ public class BlackJackController {
             blackJackService.draw(dealer);
             OutputView.printDealerCardDrawMessage();
         }
-
-    }
-
-    private void printPlayersScore(Dealer dealer, Players players) {
-        List<PlayerResult> playerResults = new ArrayList<>();
-        playerResults.add(dealer.getResult());
-
-        for(Player player : players.getPlayers()) {
-            playerResults.add(player.getResult());
-        }
-
-        OutputView.printPlayersScore(playerResults);
     }
 
 }
