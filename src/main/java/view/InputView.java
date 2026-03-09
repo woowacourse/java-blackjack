@@ -13,7 +13,7 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public String readYesOrNo() {
+    public String readDealDecision() {
         return scanner.nextLine();
     }
 }

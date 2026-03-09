@@ -34,10 +34,49 @@ public class Application {
     public void run() {
         readParticipants();
         shuffleCards();
-        readExtraCardCommand();
+        selectToDealExtraCard();
         dealDealerCard();
-        printFinalResult();
+        printEachHand();
         printWinningResult();
+    }
+
+    public void readParticipants() {
+        while(true) {
+            try {
+                outputView.printMessage(Message.INPUT_PARTICIPANTS_MESSAGE);
+                String participantsName = inputView.readParticipantsName();
+                List<String> parsedParticipantsName = parser.parseParticipantsName(participantsName);
+                blackjackGame.saveParticipants(parsedParticipantsName);
+                return;
+            } catch (IllegalArgumentException e) {
+                outputView.printErrorMessage(e.getMessage());
+            }
+        }
+    }
+
+    private void shuffleCards() {
+        blackjackGame.makeDeck();
+        blackjackGame.dealCards();
+        printDealResult();
+    }
+
+    public void selectToDealExtraCard() {
+        List<String> requestMessages = getExtraCardRequestMessages();
+
+        for(int index = 0; index < requestMessages.size(); index++) {
+            boolean flag = true;
+            while(flag) {
+                try {
+                    outputView.printMessage(requestMessages.get(index));
+                    String answer = inputView.readDealDecision();
+                    validator.validateAnswer(answer);
+                    determinePlayerContinue(answer, index);
+                    flag = false;
+                } catch (IllegalArgumentException e) {
+                    outputView.printErrorMessage(e.getMessage());
+                }
+            }
+        }
     }
 
     private void printWinningResult() {
@@ -45,7 +84,7 @@ public class Application {
         blackjackGame.evaluateGame().forEach(outputView::printMessage);
     }
 
-    private void printFinalResult() {
+    private void printEachHand() {
         outputView.printMessage(blackjackGame.makeDealerFinalResultDisplay());
         blackjackGame.makeUserFinalResultDisplay().forEach(outputView::printMessage);
     }
@@ -64,49 +103,10 @@ public class Application {
         blackjackGame.calculateDealerScore();
     }
 
-    private void shuffleCards() {
-        blackjackGame.makeDeck();
-        blackjackGame.dealCards();
-        printDealResult();
-    }
-
     private void printDealResult() {
-        outputView.printMessage(blackjackGame.makeUserNameFormat());
+        outputView.printMessage(blackjackGame.makeUserCardsDisplay());
         outputView.printMessage(blackjackGame.makeDealerCardsDisplay());
         blackjackGame.getUserCardsDisplays().forEach(outputView::printMessage);
-    }
-
-    public void readParticipants() {
-        while(true) {
-            try {
-                outputView.printMessage(Message.INPUT_PARTICIPANTS_MESSAGE);
-                String participantsName = inputView.readParticipantsName();
-                List<String> parsedParticipantsName = parser.parseParticipantsName(participantsName);
-                blackjackGame.saveParticipants(parsedParticipantsName);
-                return;
-            } catch (IllegalArgumentException e) {
-                outputView.printErrorMessage(e.getMessage());
-            }
-        }
-    }
-
-    public void readExtraCardCommand() {
-        List<String> getUsersRequestMessages = extraCardRequest();
-
-        for(int index = 0; index < getUsersRequestMessages.size(); index++) {
-            boolean flag = true;
-            while(flag) {
-                try {
-                    outputView.printMessage(getUsersRequestMessages.get(index));
-                    String answer = inputView.readYesOrNo();
-                    validator.validateAnswer(answer);
-                    determinePlayerContinue(answer, index);
-                    flag = false;
-                } catch (IllegalArgumentException e) {
-                    outputView.printErrorMessage(e.getMessage());
-                }
-            }
-        }
     }
 
     private void determinePlayerContinue(String answer, int index) {
@@ -119,7 +119,7 @@ public class Application {
         }
     }
 
-    private List<String> extraCardRequest() {
-        return blackjackGame.makeExtraCardRequsts();
+    private List<String> getExtraCardRequestMessages() {
+        return blackjackGame.makeExtraCardRequests();
     }
 }

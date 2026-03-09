@@ -23,7 +23,7 @@ public class User {
         return hand.getCardsDisplay();
     }
 
-    public String formatAskGetExtraCard() {
+    public String getFormatedAskGetExtraCard() {
         return String.format(Message.REQUEST_GET_EXTRA_CARD, name);
     }
 

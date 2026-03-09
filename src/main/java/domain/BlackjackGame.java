@@ -23,7 +23,7 @@ public class BlackjackGame {
         }
     }
 
-    public String makeUserNameFormat() {
+    public String makeUserCardsDisplay() {
         return String.format(Message.DEAL_CARDS_MESSAGE, participants.getUserNames());
     }
 
@@ -31,8 +31,8 @@ public class BlackjackGame {
         return String.format(Message.DEALER_CARDS_MESSAGE, participants.getDealerCardsDisplay());
     }
 
-    public List<String> makeExtraCardRequsts() {
-        return participants.askGetExtraCard();
+    public List<String> makeExtraCardRequests() {
+        return participants.askToGetExtraCard();
     }
 
     public List<String> getUserCardsDisplays() {
