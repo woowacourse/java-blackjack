@@ -4,14 +4,17 @@ import domain.Rank;
 import domain.Suit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 public class Deck {
+    public final Function<Integer, List<Card>> getCardsWithQuantityFunc;
     private final Cards cards;
 
     public Deck() {
         this.cards = new Cards();
         init();
         cards.shuffle();
+        this.getCardsWithQuantityFunc = (quantity) -> pullCards(quantity);
     }
 
     public Card pull() {
