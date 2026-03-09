@@ -9,9 +9,6 @@ import model.Player;
 
 public class OutputView {
 
-    private OutputView() {
-    }
-
     public static void printCardOpen(List<Player> players) {
         List<String> names = players.stream()
                 .map(Player::getName)
