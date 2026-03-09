@@ -7,6 +7,7 @@ import domain.CardNumber;
 import domain.Suit;
 import java.util.List;
 import java.util.stream.Stream;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -76,6 +77,7 @@ public class HandTest {
                 ), 21)
         );
     }
+
     @ParameterizedTest
     @MethodSource("provideFaceCardCases")
     void J_Q_K는_각각_10으로_계산한다(List<Card> cards, int expected) {
@@ -111,7 +113,32 @@ public class HandTest {
         );
     }
 
+    @Test
+    void 핸드_점수_총합이_21_초과인_경우_버스트_판정() {
+        Hand hand = new Hand();
+        List<Card> cards = List.of(
+                new Card(Suit.SPADE, CardNumber.KING),
+                new Card(Suit.SPADE, CardNumber.QUEEN),
+                new Card(Suit.SPADE, CardNumber.TWO));
+        for (Card card : cards) {
+            hand.add(card);
+        }
 
+        Assertions.assertThat(hand.isBust()).isTrue();
+    }
 
+    @Test
+    void 핸드_점수_총합이_21_이하인_경우_판정() {
+        Hand hand = new Hand();
+        List<Card> cards = List.of(
+                new Card(Suit.SPADE, CardNumber.KING),
+                new Card(Suit.SPADE, CardNumber.QUEEN),
+                new Card(Suit.SPADE, CardNumber.ACE));
+        for (Card card : cards) {
+            hand.add(card);
+        }
+
+        Assertions.assertThat(hand.isBust()).isFalse();
+    }
 }
 
