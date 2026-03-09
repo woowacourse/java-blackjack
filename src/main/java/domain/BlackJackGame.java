@@ -1,6 +1,5 @@
-package service;
+package domain;
 
-import domain.MatchResult;
 import domain.card.Deck;
 import domain.participant.Dealer;
 import domain.participant.Player;
@@ -9,14 +8,14 @@ import dto.GameResultDto;
 
 import java.util.Map;
 
-public class GameManager {
+public class BlackJackGame {
 
     private static final int INITIAL_CARD_COUNT = 2;
 
     private final Dealer dealer;
     private final Players players;
 
-    public GameManager(Dealer dealer, Players players) {
+    public BlackJackGame(Dealer dealer, Players players) {
         this.dealer = dealer;
         this.players = players;
     }
