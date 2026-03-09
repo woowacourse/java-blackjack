@@ -18,20 +18,23 @@ public class TestParticipant {
         PlayerResult result = participant.getResult();
 
         assertThat(result.name().value()).isEqualTo("jason");
-        assertThat(result.deck().isEmpty()).isTrue();
+        assertThat(result.hand().isEmpty()).isTrue();
         assertThat(result.score()).isEqualTo(0);
     }
 
     @Test
-    public void 카드_받기_정상_작동() {
+    public void 카드_드로우_정상_작동() {
         Card card = new Card(Shape.CLOVER, CardNumber.EIGHT);
         Participant participant = new Participant(new PlayerName("jason"));
-        participant.addCard(card);
+        participant.draw(card);
 
-        List<Card> deck = participant.getResult().deck();
+        List<Card> deck = participant.getResult().hand();
+        Integer score = participant.getResult().score();
 
         assertThat(deck).contains(card);
         assertThat(deck.size()).isEqualTo(1);
+
+        assertThat(score).isEqualTo(card.cardNumber().getScore());
 
     }
 

@@ -8,7 +8,7 @@ public class Scorer {
     private static final Integer ADDITIONAL_ACE_SCORE = 10;
     private static final Integer MAX_ACE_SCORE = 11;
 
-    public static void updateFinalScore(Participant participant) {
+    public static void updateAceScore(Participant participant) {
         boolean hasAce = hasAceCard(participant.getResult());
         Integer score = participant.getResult().score();
 

@@ -38,8 +38,8 @@ public class BlackJackService {
         return score > BUST_NUMBER;
     }
 
-    public void updateFinalScore(Participant participant) {
-        Scorer.updateFinalScore(participant);
+    public void updateAceScore(Participant participant) {
+        Scorer.updateAceScore(participant);
     }
 
     public ParticipantWinning getGameResult(Players players, Dealer dealer) {

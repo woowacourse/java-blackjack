@@ -27,7 +27,7 @@ public class TestBlackJackService {
         blackJackService.draw(player);
 
         assertThat(player.getResult().score()).isGreaterThan(0);
-        assertThat(player.getResult().deck().size()).isEqualTo(1);
+        assertThat(player.getResult().hand().size()).isEqualTo(1);
     }
 
     @ParameterizedTest
