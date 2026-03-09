@@ -16,4 +16,9 @@ public class Card {
     public boolean isAce() {
         return rank == Rank.ACE;
     }
+
+    @Override
+    public String toString() {
+        return rank.getDisplayName() + suit.getShape();
+    }
 }
