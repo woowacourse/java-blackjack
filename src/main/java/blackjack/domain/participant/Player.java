@@ -24,7 +24,7 @@ public class Player extends Participant {
         if (stopDrawing) {
             return false;
         }
-        return hand.getDrawableScore(BUSTED_SCORE) < BUSTED_SCORE;
+        return !hand.isBusted();
     }
 
     public void stop() {

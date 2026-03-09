@@ -2,6 +2,8 @@ package blackjack.domain;
 
 public class Hand {
 
+    protected static final int BUSTED_SCORE = 21;
+
     private final PlayingCards cards;
 
     public Hand() {
@@ -24,12 +26,11 @@ public class Hand {
         return getCardSnapshot();
     }
 
-    public int getDrawableScore(int threshold) {
-        boolean busted = isBusted(threshold);
+    public int getTotalScore() {
+        boolean busted = isBusted();
         int scoreSum = calculateScoreSum();
         if (busted) {
-            int aceCount = countAce();
-            return calculateWithAce(threshold, scoreSum, aceCount);
+            return calculateWithAce(scoreSum);
         }
         return scoreSum;
     }
@@ -41,30 +42,14 @@ public class Hand {
                 .sum();
     }
 
-    public int getTotalScore(int bustedScore) {
-        return calculateResultScore(bustedScore);
-    }
-
-    private int calculateResultScore(int threshold) {
-        boolean busted = isBusted(threshold);
-        if (busted) {
-            return calculateBustedScore(threshold);
-        }
-        return calculateScoreSum();
-    }
-
-    public boolean isBusted(int threshold) {
+    public boolean isBusted() {
         int scoreSum = calculateScoreSum();
-        return threshold <= scoreSum;
+        return scoreSum >= BUSTED_SCORE;
     }
 
-    private int calculateBustedScore(int threshold) {
+    private int calculateWithAce(int scoreSum) {
         int aceCount = countAce();
-        if (aceCount > 0) {
-            int scoreSum = calculateScoreSum();
-            return calculateWithAce(threshold, scoreSum, aceCount);
-        }
-        return 0;
+        return calculateAce(scoreSum, aceCount);
     }
 
     public int countAce() {
@@ -74,14 +59,14 @@ public class Hand {
                 .count();
     }
 
-    private int calculateWithAce(int threshold, int scoreSum, int aceCount) {
+    private int calculateAce(int scoreSum, int aceCount) {
         if (aceCount == 0) {
             return scoreSum;
         }
         int calculatedScore = scoreSum - 10;
-        if (calculatedScore <= threshold) {
+        if (calculatedScore <= BUSTED_SCORE) {
             return calculatedScore;
         }
-        return calculateWithAce(calculatedScore, aceCount - 1, threshold);
+        return calculateAce(calculatedScore, aceCount - 1);
     }
 }

@@ -4,8 +4,7 @@ import blackjack.domain.Hand;
 import blackjack.domain.PlayingCards;
 
 public abstract class Participant {
-    
-    protected static final int BUSTED_SCORE = 21;
+
     private static final int FIRST_DRAW_COUNT = 2;
     protected final String nickname;
     protected final Hand hand;
@@ -47,6 +46,6 @@ public abstract class Participant {
     }
     
     public int getResultScore() {
-        return hand.getTotalScore(BUSTED_SCORE);
+        return hand.getTotalScore();
     }
 }
