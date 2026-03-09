@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 class InputParserTest {
 
     @Test
-    @DisplayName("쉼표를 기준으로 문자열을 분리한다.")
+    @DisplayName("쉼표를 기준으로 문자열 분리")
     void test_parse_input() {
         String input = "pobi,james";
 
