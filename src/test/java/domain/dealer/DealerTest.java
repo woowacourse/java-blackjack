@@ -1,6 +1,7 @@
 package domain.dealer;
 
 import domain.card.*;
+import domain.card.exception.CardException;
 import domain.player.Player;
 import domain.player.PlayerName;
 import org.assertj.core.api.Assertions;
@@ -57,7 +58,7 @@ public class DealerTest {
 
         Assertions.assertThatThrownBy(() -> {
             dealer.dealCardToPlayer(player);
-        }).isInstanceOf(IllegalArgumentException.class);
+        }).isInstanceOf(CardException.class);
     }
 
     @Test
@@ -91,7 +92,7 @@ public class DealerTest {
 
         Assertions.assertThatThrownBy(() -> {
             dealer.dealMyself();
-        }).isInstanceOf(IllegalArgumentException.class);
+        }).isInstanceOf(CardException.class);
     }
 
     @Test

@@ -1,5 +1,6 @@
 package domain.card;
 
+import domain.card.exception.CardException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +23,7 @@ public class CardDeckTest {
 
         Assertions.assertThatThrownBy(() -> {
             Card card = cardDeck.giveCard();
-        }).isInstanceOf(IllegalArgumentException.class);
+        }).isInstanceOf(CardException.class);
     }
 
 }

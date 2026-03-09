@@ -73,14 +73,10 @@ public class Dealer extends Gamer {
     }
 
     private CardBundle handOutCard(int tryCount) {
-        try {
-            List<Card> cardList = Stream.generate(this::drawCard)
-                    .limit(tryCount)
-                    .toList();
-            return CardBundle.from(cardList);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(CANNOT_HAND_OUT_CARDS_ERROR);
-        }
+        List<Card> cardList = Stream.generate(this::drawCard)
+                .limit(tryCount)
+                .toList();
+        return CardBundle.from(cardList);
     }
 
     private Card drawCard() {

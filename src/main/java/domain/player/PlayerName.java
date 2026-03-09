@@ -1,11 +1,12 @@
 package domain.player;
 
+import domain.common.exception.BlackjackGameException;
+import domain.player.exception.ErrorMessage;
+import domain.player.exception.PlayerException;
+
 public record PlayerName(
         String name
 ) {
-
-    private static final String BLANK_NAME_ERROR = "이름은 빈칸일 수 없습니다.";
-    private static final String NAME_LENGTH_ERROR = ("이름은 1자 이상, 5자 이하의 문자입니다.");
 
     public static PlayerName from(String name) {
         validateNameIsBlank(name);
@@ -15,13 +16,13 @@ public record PlayerName(
 
     private static void validateNameIsBlank(String name) {
         if (name.isBlank()) {
-            throw new IllegalArgumentException(BLANK_NAME_ERROR);
+            throw new BlackjackGameException(ErrorMessage.NAME_BLANK_ERROR);
         }
     }
 
     private static void validateNameLength(String name) {
         if(name.length() > 5) {
-            throw new IllegalArgumentException(NAME_LENGTH_ERROR);
+            throw new PlayerException(ErrorMessage.NAME_LENGTH_ERROR);
         }
     }
 

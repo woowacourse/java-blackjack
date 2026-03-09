@@ -1,5 +1,8 @@
 package domain.answer;
 
+import domain.answer.exception.AnswerException;
+import domain.answer.exception.ErrorMessage;
+
 import java.util.Arrays;
 
 public enum Answer {
@@ -7,8 +10,6 @@ public enum Answer {
     YES("y"),
     NO("n")
     ;
-
-    private static final String INVALID_INPUT_ERROR = String.format("%s 또는 %s을 입력해주세요.", YES.answer, NO.answer);
 
     private final String answer;
 
@@ -24,7 +25,7 @@ public enum Answer {
         return Arrays.stream(Answer.values())
                 .filter(v -> v.answer.equals(value))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(INVALID_INPUT_ERROR)
+                .orElseThrow(() -> new AnswerException(ErrorMessage.DRAW_DECISION_INPUT_ERROR)
                 );
     }
 

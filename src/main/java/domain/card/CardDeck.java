@@ -1,5 +1,8 @@
 package domain.card;
 
+import domain.card.exception.CardException;
+import domain.card.exception.ErrorMessage;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -23,7 +26,7 @@ public class CardDeck {
 
     private void validateDeckIsEmpty() {
         if (deck.isEmpty()) {
-            throw new IllegalArgumentException();
+            throw new CardException(ErrorMessage.CARD_DECK_IS_EMPTY_ERROR);
         }
     }
 

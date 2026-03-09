@@ -1,4 +1,4 @@
-package domain.common;
+package domain.common.exception;
 
 public interface ExceptionInformation {
     String getErrorMessage();

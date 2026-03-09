@@ -1,7 +1,9 @@
 package domain.player;
 
 import domain.card.*;
+import domain.card.exception.CardException;
 import domain.dealer.Dealer;
+import domain.player.exception.PlayerException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -34,7 +36,7 @@ public class PlayerTest {
 
         Assertions.assertThatThrownBy(() -> {
             dealer.hitCardToPlayer(player);
-        }).isInstanceOf(IllegalArgumentException.class);
+        }).isInstanceOf(CardException.class);
     }
 
     @Test
@@ -51,7 +53,7 @@ public class PlayerTest {
 
         Assertions.assertThatThrownBy(() -> {
             Player.from(PlayerName.from(overFiveLengthName));
-        }).isInstanceOf(IllegalArgumentException.class);
+        }).isInstanceOf(PlayerException.class);
     }
 
     @Test
