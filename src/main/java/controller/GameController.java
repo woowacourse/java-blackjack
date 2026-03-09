@@ -27,11 +27,11 @@ public class GameController {
         List<String> playerNames = getPlayerNames();
 
         Deck deck = new Deck();
-        Dealer dealer = new Dealer(deck.handOutCards());
+        Dealer dealer = new Dealer(deck);
 
         Players players = getPlayers(playerNames, deck);
         printGameStart(playerNames, dealer, players);
-        receiveMoreCard(players, deck, dealer);
+        receiveMoreCard(players, dealer);
 
         outputView.printFinalScore(dealer, players);
 
@@ -51,7 +51,7 @@ public class GameController {
     private Players getPlayers(List<String> playerNames, Deck deck) {
         List<Player> players = new ArrayList<>();
         for (String playerName : playerNames) {
-            Player player = new Player(playerName, deck.handOutCards());
+            Player player = new Player(playerName, new ArrayList<>(List.of(deck.draw(), deck.draw())));
             players.add(player);
         }
         return new Players(players);
@@ -63,21 +63,21 @@ public class GameController {
         outputView.printStartCard(players);
     }
 
-    private void receiveMoreCard(Players players, Deck deck, Dealer dealer) {
+    private void receiveMoreCard(Players players, Dealer dealer) {
         for (Player player : players.getPlayers()) {
-            processRound(player, deck);
+            processRound(player, dealer);
         }
 
         while (dealer.isReceiveCard()) {
-            dealer.addCard(deck.peekCard());
+            dealer.addCard(dealer.dealCard());
             outputView.printDealerReceiveCard();
         }
     }
 
-    private void processRound(Player player, Deck deck) {
+    private void processRound(Player player, Dealer dealer) {
         String hitOption = inputView.readHitOption(player.getName());
         if (hitOption.equals("y")) {
-            player.addCard(deck.peekCard());
+            player.addCard(dealer.dealCard());
         }
         outputView.printCurrentHoldCard(player);
 
@@ -86,7 +86,7 @@ public class GameController {
             if (hitOption.equals("n")) {
                 break;
             }
-            player.addCard(deck.peekCard());
+            player.addCard(dealer.dealCard());
             outputView.printCurrentHoldCard(player);
         }
     }

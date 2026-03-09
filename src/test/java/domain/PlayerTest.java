@@ -70,7 +70,6 @@ public class PlayerTest {
         List<Card> cards2 = new ArrayList<>(
                 List.of(new Card(CardNumber.FOUR, CardSuit.CLUB), new Card(CardNumber.ACE, CardSuit.CLUB)));
         Player player2 = new Player("woni", cards2);
-
         player2.addCard(new Card(CardNumber.ACE, CardSuit.SPADE));
         player2.addCard(new Card(CardNumber.ACE, CardSuit.HEART));
         int player2TotalScore = player2.calculateTotalScore();
@@ -85,7 +84,6 @@ public class PlayerTest {
         List<Card> cards = new ArrayList<>(
                 List.of(new Card(CardNumber.JACK, CardSuit.CLUB), new Card(CardNumber.FOUR, CardSuit.CLUB)));
         Player player = new Player("pobi", cards);
-
         player.addCard(new Card(CardNumber.EIGHT, CardSuit.CLUB));
         boolean isBust = player.isBust();
 
@@ -96,7 +94,7 @@ public class PlayerTest {
     @DisplayName("카드를 한 장 받는다.")
     void receiveOneCardTest() {
         Deck deck = new Deck();
-        Card card = deck.peekCard();
+        Card card = deck.draw();
 
         Assertions.assertThat(deck.getCards().size()).isEqualTo(51);
         Assertions.assertThat(card).isInstanceOf(Card.class);

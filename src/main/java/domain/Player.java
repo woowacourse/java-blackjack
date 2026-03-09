@@ -5,8 +5,8 @@ import java.util.List;
 public class Player extends Participant {
     private final String name;
 
-    public Player(String name, List<Card> holdCards) {
-        super(holdCards);
+    public Player(String name, List<Card> hand) {
+        super(hand);
         validateEmptyNames(name);
         this.name = name;
     }
@@ -30,10 +30,6 @@ public class Player extends Participant {
         return getGameResult(dealerScore);
     }
 
-    public String getName() {
-        return name;
-    }
-
     private GameResult getGameResult(int dealerScore) {
         if (calculateTotalScore() > dealerScore) {
             return GameResult.WIN;
@@ -42,5 +38,9 @@ public class Player extends Participant {
             return GameResult.DRAW;
         }
         return GameResult.LOSE;
+    }
+
+    public String getName() {
+        return name;
     }
 }

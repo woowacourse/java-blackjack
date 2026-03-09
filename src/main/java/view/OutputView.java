@@ -61,7 +61,7 @@ public class OutputView {
         System.out.println();
         System.out.println("## 최종 승패");
         System.out.println("딜러: " + dealerResults.getOrDefault(GameResult.WIN, 0) + "승 "
-                + dealerResults.getOrDefault(GameResult.DRAW, 0) + "무"
+                + dealerResults.getOrDefault(GameResult.DRAW, 0) + "무 "
                 + dealerResults.getOrDefault(GameResult.LOSE, 0) + "패");
     }
 

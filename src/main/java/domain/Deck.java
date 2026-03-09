@@ -1,42 +1,36 @@
 package domain;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.List;
 
 public class Deck {
-    private final List<Card> cards;
+    private final Deque<Card> cards;
 
     public Deck() {
         this.cards = initialize();
     }
 
-    private List<Card> initialize() {
-        List<Card> results = new ArrayList<>();
+    private Deque<Card> initialize() {
+        Deque<Card> results = new ArrayDeque<>();
         for (CardSuit cardSuit : CardSuit.values()) {
             Arrays.stream(CardNumber.values())
                     .forEach(cardNumber -> results.add(new Card(cardNumber, cardSuit)));
         }
-        Collections.shuffle(results);
-        return results;
+        List<Card> shuffled = new ArrayList<>(results);
+        Collections.shuffle(shuffled);
+
+        return new ArrayDeque<>(shuffled);
+    }
+
+    public Card draw() {
+        return cards.pop();
     }
 
     public List<Card> getCards() {
         return List.copyOf(cards);
-    }
-
-    public List<Card> handOutCards() {
-        List<Card> handOutCards = new ArrayList<>();
-        for (int index = 0; index < 2; index++) {
-            handOutCards.add(peekCard());
-        }
-        return handOutCards;
-    }
-
-    public Card peekCard() {
-        Card lastCard = cards.getLast();
-        cards.remove(lastCard);
-        return lastCard;
     }
 }

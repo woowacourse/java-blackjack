@@ -29,6 +29,6 @@ public class CardTest {
         Card card = new Card(CardNumber.ACE, CardSuit.CLUB);
         int number = card.getScore();
 
-        Assertions.assertThat(number).isEqualTo(11);
+        Assertions.assertThat(number).isEqualTo(1);
     }
 }

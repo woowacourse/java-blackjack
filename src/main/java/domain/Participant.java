@@ -27,11 +27,11 @@ public abstract class Participant {
         return results;
     }
 
-    public List<Card> getHand() {
-        return List.copyOf(hand);
-    }
-
     public boolean isBust() {
         return calculateTotalScore() > 21;
+    }
+
+    public List<Card> getHand() {
+        return List.copyOf(hand);
     }
 }

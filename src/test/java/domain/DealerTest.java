@@ -1,6 +1,5 @@
 package domain;
 
-import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,8 +8,8 @@ class DealerTest {
     @Test
     @DisplayName("딜러는 점수의 합이 16 이하이면, 카드를 한 장 받는다.")
     void receiveCardTest() {
-        List<Card> cards = List.of(new Card(CardNumber.EIGHT, CardSuit.CLUB), new Card(CardNumber.FOUR, CardSuit.CLUB));
-        Dealer dealer = new Dealer(cards);
+        Deck deck = new Deck();
+        Dealer dealer = new Dealer(deck);
 
         boolean isReceiveCard = dealer.isReceiveCard();
 
