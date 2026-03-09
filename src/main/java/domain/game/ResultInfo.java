@@ -1,4 +1,4 @@
-package domain.game_result;
+package domain.game;
 
 public enum ResultInfo {
 

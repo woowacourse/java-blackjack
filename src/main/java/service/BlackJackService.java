@@ -1,7 +1,7 @@
 package service;
 
-import domain.game_result.Result;
-import domain.game_result.ResultInfo;
+import domain.game.Result;
+import domain.game.ResultInfo;
 import domain.participants.Dealer;
 import domain.participants.Player;
 import domain.participants.Players;

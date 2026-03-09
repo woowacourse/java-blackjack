@@ -1,8 +1,8 @@
 import domain.card.Card;
 import domain.card.Pattern;
 import domain.card.Rank;
-import domain.game_result.Result;
-import domain.game_result.ResultInfo;
+import domain.game.Result;
+import domain.game.ResultInfo;
 import domain.participants.Dealer;
 import domain.participants.Hand;
 import domain.participants.Player;

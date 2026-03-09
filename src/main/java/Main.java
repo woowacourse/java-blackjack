@@ -1,5 +1,5 @@
 import controller.BlackJackController;
-import domain.game_result.Result;
+import domain.game.Result;
 import service.BlackJackService;
 
 public class Main {

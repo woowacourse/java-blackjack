@@ -1,5 +1,5 @@
-import domain.game_result.Result;
-import domain.game_result.ResultInfo;
+import domain.game.Result;
+import domain.game.ResultInfo;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
