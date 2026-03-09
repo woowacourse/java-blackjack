@@ -51,7 +51,7 @@ public class GameTable {
     public Participant currentPlayer() {
         Participant participant = participants.peek();
 
-        if (!participants.isEmpty() && !participant.isPlayer()) {
+        if (!participants.isEmpty() && participant.isDealer()) {
             participants.add(participants.poll());
         }
 
@@ -84,11 +84,11 @@ public class GameTable {
     }
 
     private Participant dealer() {
-        return participants.stream().filter(p -> !p.isPlayer()).findFirst().orElse(null);
+        return participants.stream().filter(Participant::isDealer).findFirst().orElse(null);
     }
 
     private boolean hasOnlyDealer() {
-        return participants.stream().noneMatch(Participant::isPlayer);
+        return participants.stream().allMatch(Participant::isDealer);
     }
 
     private Participant currentParticipant() {

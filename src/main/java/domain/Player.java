@@ -11,4 +11,9 @@ public class Player extends Participant {
     protected boolean isPlayable() {
         return hand.scoreSum() <= PLAYER_PLAYING_THRESHOLD;
     }
+
+    @Override
+    public boolean isDealer() {
+        return false;
+    }
 }
