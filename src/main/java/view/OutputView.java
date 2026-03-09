@@ -102,7 +102,7 @@ public class OutputView {
     }
 
     private static void printPlayerResult(PlayerWinning playerWinning) {
-        System.out.println(playerWinning.name() + RESULT_DELIMITER + playerWinning.matchStatus().getStatus());
+        System.out.println(playerWinning.name() + RESULT_DELIMITER + playerWinning.matchStatus());
     }
 
 }

@@ -39,7 +39,7 @@ public class BlackJackService {
 
     public ParticipantWinning getGameResult(Players players, Dealer dealer) {
         PlayersWinning playersWinning = getPlayersResult(players, dealer);
-        DealerWinning dealerWinning = getDealerResult(playersWinning);
+        DealerWinning dealerWinning = getDealerResult(players, dealer);
 
         return new ParticipantWinning(dealerWinning, playersWinning);
     }
@@ -49,17 +49,18 @@ public class BlackJackService {
 
         for(Player player : players.getPlayers()) {
             MatchStatus matchStatus = getPlayerResult(player, dealer);
-            playersWinning.add(new PlayerWinning(player.getName(), matchStatus));
+            playersWinning.add(new PlayerWinning(player.getName(), matchStatus.getStatus()));
         }
 
         return playersWinning;
     }
 
-    private DealerWinning getDealerResult(PlayersWinning playersWinning) {
+    private DealerWinning getDealerResult(Players players, Dealer dealer) {
         DealerWinning dealerWinning = new DealerWinning();
 
-        for(PlayerWinning playerWinning : playersWinning.getPlayersWinnings()) {
-            dealerWinning.increase(reverseMatchResult(playerWinning.matchStatus()));
+        for(Player player : players.getPlayers()) {
+            MatchStatus matchStatus = getPlayerResult(player, dealer);
+            dealerWinning.increase(reverseMatchResult(matchStatus));
         }
         return dealerWinning;
     }
