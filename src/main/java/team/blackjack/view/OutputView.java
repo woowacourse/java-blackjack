@@ -58,10 +58,7 @@ public class OutputView {
 
          println("");
          println("## 최종 승패:");
-         println("딜러: %d승 %d패 %d무".formatted(
-                 dealerResult.countBy(Result.WIN),
-                 dealerResult.countBy(Result.LOSE),
-                 dealerResult.countBy(Result.DRAW))
+         println("딜러: %d승 %d패 %d무".formatted(result.winCount(), result.loseCount(), result.drawCount())
          );
 
          playeredResultMap.entrySet().stream()

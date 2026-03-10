@@ -8,6 +8,9 @@ import team.blackjack.domain.Result;
 
 public record MatchResult(
         DealerResult dealerResult,
+        long winCount,
+        long loseCount,
+        long drawCount,
         Map<String, PlayerResult> playerResultMap
 ) {
 
@@ -22,12 +25,6 @@ public record MatchResult(
             }
 
             return new DealerResult(dealerResults);
-        }
-
-        public long countBy(Result target) {
-            return results.stream()
-                    .filter(result -> result == target)
-                    .count();
         }
     }
 

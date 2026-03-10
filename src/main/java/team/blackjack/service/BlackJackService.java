@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import team.blackjack.domain.Card;
 import team.blackjack.domain.Players;
+import team.blackjack.domain.Result;
 import team.blackjack.service.dto.DrawResult;
 import team.blackjack.service.dto.MatchResult;
 import team.blackjack.service.dto.MatchResult.DealerResult;
@@ -99,8 +100,17 @@ public class BlackJackService {
     public MatchResult getGameResult() {
         final Map<String, PlayerResult> playerResults = calculatePlayersResultMap(blackjackGame.getDealer().getScore());
         final DealerResult dealerResult = DealerResult.from(playerResults.values());
+        final long winCnt = countBy(dealerResult.results(), Result.WIN);
+        final long loseCnt = countBy(dealerResult.results(), Result.LOSE);
+        final long drawCnt = countBy(dealerResult.results(), Result.DRAW);
 
-        return new MatchResult(dealerResult, playerResults);
+        return new MatchResult(dealerResult, winCnt, loseCnt, drawCnt, playerResults);
+    }
+
+    private long countBy(List<Result> results, Result target) {
+        return results.stream()
+                .filter(result -> result == target)
+                .count();
     }
 
     private Map<String, PlayerResult> calculatePlayersResultMap(int dealerScore) {
