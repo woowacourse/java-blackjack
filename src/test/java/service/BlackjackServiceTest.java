@@ -39,7 +39,7 @@ class BlackjackServiceTest {
     void 초기_카드_2장_배부_테스트() {
         Cards cards = blackjackService.generateCards(new ShuffledCardsGenerator());
         Players playerList = blackjackService.createPlayers(List.of("요크", "아티"), cards);
-        assertThat(playerList.getPlayer(0).getCardCount()).isEqualTo(2);
+        assertThat(playerList.getPlayer(0).getCards().size()).isEqualTo(2);
     }
 
     @DisplayName("셔플된 카드 덱에서 플레이어에게 초기 카드 2장이 순서대로 배부된다.")

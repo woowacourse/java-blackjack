@@ -60,10 +60,6 @@ public class Player {
         return cards;
     }
 
-    public int getCardCount() {
-        return cards.size();
-    }
-
     public CardContentDto toCardContentDto() {
         return new CardContentDto(this.name, this.cards);
     }
