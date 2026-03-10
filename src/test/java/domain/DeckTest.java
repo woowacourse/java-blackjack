@@ -1,8 +1,12 @@
 package domain;
 
 import domain.card.Card;
+import exception.ErrorMessage;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DeckTest {
@@ -13,7 +17,7 @@ class DeckTest {
         Deck deck = new Deck();
 
         // when, then
-        assertEquals(52, deck.getCards().size());
+        assertEquals(52, deck.getCardsSize());
     }
 
     @Test
@@ -25,21 +29,19 @@ class DeckTest {
         Card card = deck.drawCard();
 
         // then
-        assertEquals(51, deck.getCards().size());
+        assertEquals(51, deck.getCardsSize());
         assertFalse(deck.getCards().contains(card));
     }
 
     @Test
     void 드로우가_실패하는_경우() {
         // given
-        Deck deck = new Deck();
-        for (int i = 0; i < 52; i++) {
-            deck.drawCard();
-        }
+        Deck deck = new Deck(new ArrayList<>());
 
         // when, then
-        assertThrows(IllegalStateException.class,
-                () -> deck.drawCard());
+        assertThatThrownBy(deck::drawCard)
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage(ErrorMessage.EMPTY_DECK.getMessage());
     }
 
 }
