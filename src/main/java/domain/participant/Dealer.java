@@ -3,6 +3,7 @@ package domain.participant;
 import domain.card.Card;
 
 public class Dealer extends Participant {
+    private static final int DEALER_MAX_DRAW_SCORE = 16;
 
     public Dealer(String name) {
         super(name);
@@ -11,7 +12,7 @@ public class Dealer extends Participant {
     @Override
     public boolean canDraw() {
         int score = super.score();
-        return score <= 16;
+        return score <= DEALER_MAX_DRAW_SCORE;
     }
 
     public Card firstCard() {
