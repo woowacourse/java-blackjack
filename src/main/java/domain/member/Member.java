@@ -17,6 +17,10 @@ public abstract class Member {
 
     public abstract boolean isDealer();
 
+    public abstract int getBettingAmount();
+
+    public abstract void applyBlackjackBonus();
+
     public String getName() {
         return name.getValue();
     }
