@@ -23,8 +23,8 @@ class GameResultTest {
         List<PlayerResultInfo> playersResult = gameResult.getPlayersResult();
 
         assertThat(playersResult).hasSize(1);
-        assertThat(playersResult.get(0).name()).isEqualTo("pobi");
-        assertThat(playersResult.get(0).winningStatus()).isEqualTo(WinningStatus.TIE);
+        assertThat(playersResult.getFirst().name()).isEqualTo("pobi");
+        assertThat(playersResult.getFirst().winningStatus()).isEqualTo(WinningStatus.TIE);
     }
 
     @Test

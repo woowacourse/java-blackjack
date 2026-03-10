@@ -56,7 +56,7 @@ class HandTest {
 
     @Test
     void 카드_중_에이스_카드가_여러장_존재하고_카드의_합이_21을_초과하는_경우_합이_21에_근접하되_21을_초과하지_않도록_계산한다() {
-        List<Card> cards = createCards(Rank.ACE, Rank.ACE, Rank.QUEEN, Rank.FIVE);
+        List<Card> cards = createCards(Rank.ACE, Rank.ACE, Rank.QUEEN);
         Hand hand = new Hand(cards);
 
         int score = hand.score();

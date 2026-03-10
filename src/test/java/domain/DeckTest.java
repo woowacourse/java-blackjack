@@ -39,7 +39,7 @@ class DeckTest {
         }
 
         assertThatThrownBy(() -> deck.draw())
-                .isInstanceOf(Exception.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
