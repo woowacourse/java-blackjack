@@ -14,7 +14,7 @@ class DealerTest {
 
     @BeforeEach
     void setUp() {
-        Dealer dealer = new Dealer("딜러");
+        Dealer dealer = new Dealer();
         this.dealer = dealer;
     }
 
@@ -41,7 +41,7 @@ class DealerTest {
     }
 
     private Dealer createDealerFromCards(List<Card> cards) {
-        Dealer dealer = new Dealer("aaaa");
+        Dealer dealer = new Dealer();
         for (Card card : cards) {
             dealer.add(card);
         }

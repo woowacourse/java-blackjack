@@ -14,7 +14,7 @@ public final class PlayerTestUtil {
     }
 
     public static Dealer createDealer(List<Card> cards) {
-        Dealer dealer = new Dealer("AAAA");
+        Dealer dealer = new Dealer();
         cards.forEach(dealer::add);
         return dealer;
     }
