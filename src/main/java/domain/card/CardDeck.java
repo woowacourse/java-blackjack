@@ -1,37 +1,28 @@
 package domain.card;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class CardDeck {
-    private final List<Card> cardDeck = new ArrayList<>();
-    private int index = 0;
+    private final Deque<Card> cardDeck = new ArrayDeque<>();
 
     public CardDeck() {
         initCardDeck();
     }
 
     private void initCardDeck() {
+        List<Card> cards = new ArrayList<>();
         for (TrumpSuit suit : TrumpSuit.values()) {
             for (TrumpNumber number : TrumpNumber.values()){
-                cardDeck.add(new Card(suit, number));
+                cards.add(new Card(suit, number));
             }
         }
+        Collections.shuffle(cards);
 
-        shuffleCards();
+        cardDeck.addAll(cards);
     }
 
-    private void shuffleCards(){
-        Collections.shuffle(cardDeck);
-    }
 
     public Card draw() {
-        if (index > cardDeck.size() - 1) {
-            shuffleCards();
-            index = 0;
-        }
-
-        return cardDeck.get(index++);
+        return cardDeck.pop();
     }
 }
