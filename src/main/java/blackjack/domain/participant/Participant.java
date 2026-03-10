@@ -3,49 +3,47 @@ package blackjack.domain.participant;
 import blackjack.domain.Card;
 import blackjack.domain.Deck;
 import blackjack.domain.Hand;
-import blackjack.dto.ParticipantStatus;
 import java.util.List;
 
-public abstract class Participant {
-    
+public class Participant {
+
     private static final int FIRST_DRAW_COUNT = 2;
+
     protected final String nickname;
     protected final Hand hand;
-    
+
     protected Participant(String nickname) {
         this.nickname = nickname;
         this.hand = new Hand();
     }
-    
-    public String getInfoSnapshot() {
-        return hand.getSnapshot();
+
+    public List<String> getCardNames() {
+        return hand.getCardNames();
     }
-    
+
     public String getNickname() {
         return nickname;
     }
-    
-    public ParticipantStatus distributeCards(Deck deck) {
+
+    public void distributeCards(Deck deck) {
         List<Card> drewCards = deck.drawCards(FIRST_DRAW_COUNT);
-        return receiveCard(drewCards);
+        hand.addCard(drewCards);
     }
-    
-    public abstract boolean isDrawable();
-    
-    public ParticipantStatus receiveCard(List<Card> receivedCards) {
-        hand.addCard(receivedCards);
-        return new ParticipantStatus(this);
+
+    public void addCardFrom(Deck deck) {
+        List<Card> drewCards = deck.drawCard();
+        hand.addCard(drewCards);
     }
-    
+
+    public boolean isDrawable() {
+        return !isBusted();
+    }
+
     public int getTotalScore() {
         return hand.getTotalScore();
     }
-    
+
     public boolean isBusted() {
         return hand.isBusted();
-    }
-    
-    public ParticipantStatus getCardStatus() {
-        return new ParticipantStatus(this);
     }
 }

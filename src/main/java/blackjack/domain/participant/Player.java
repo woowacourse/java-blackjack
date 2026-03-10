@@ -1,17 +1,16 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.GameResult;
-import blackjack.dto.PlayerGameResult;
 
 public class Player extends Participant {
-    
+
     private boolean stopDrawing;
-    
+
     public Player(String nickname) {
         super(nickname);
         stopDrawing = false;
     }
-    
+
     @Override
     public boolean isDrawable() {
         if (stopDrawing) {
@@ -22,16 +21,15 @@ public class Player extends Participant {
         }
         return !hand.isBlackjack();
     }
-    
-    public void stop() {
+
+    public void stopDrawing() {
         stopDrawing = true;
     }
-    
-    public PlayerGameResult determinePlayerResult(Dealer dealer) {
-        GameResult gameResult = determineGameResult(dealer);
-        return new PlayerGameResult(nickname, gameResult);
+
+    public GameResult determinePlayerResult(Dealer dealer) {
+        return determineGameResult(dealer);
     }
-    
+
     private GameResult determineGameResult(Dealer dealer) {
         if (isBusted()) {
             return GameResult.LOSE;
@@ -41,7 +39,7 @@ public class Player extends Participant {
         }
         return compareScore(dealer.getTotalScore(), getTotalScore());
     }
-    
+
     private GameResult compareScore(int dealerScore, int playerScore) {
         if (dealerScore == playerScore) {
             return GameResult.DRAW;

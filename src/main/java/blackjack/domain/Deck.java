@@ -59,7 +59,7 @@ public class Deck {
 
     private void hasEnoughCard(int count) {
         if (cards.size() < count) {
-            throw new IllegalArgumentException("남은 카드가 없습니다.");
+            throw new IllegalArgumentException("남은 카드가 뽑을 카드보다 적습니다.");
         }
     }
 }

@@ -163,7 +163,7 @@
     - [x] 버스트 판별용 상수 `BUSTED_SCORE` _중복_
     - [x] 카드를 그만 받을 지를 저장하는 `boolean stopDrawing`
     - ## `플레이어`의 행위`Behavior`
-    - [x] 카드를 그만 받겠다 상태 업데이트 `stop()`
+    - [x] 카드를 그만 받겠다 상태 업데이트 `stopDrawing()`
     - [x] 카드를 받을 수 있는지 상태 확인, 반환 `isDrawable()`
 
 
