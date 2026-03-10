@@ -44,7 +44,7 @@ public class GameManager {
     }
 
     public List<String> drawPlayerCard(String player) {
-        players.get(player).addCard(deck.draw());
+        players.get(player).receiveCard(deck.draw());
         return players.get(player).showHand();
     }
 
@@ -53,7 +53,7 @@ public class GameManager {
     }
 
     public List<String> drawDealerCard() {
-        dealer.addCard(deck.draw());
+        dealer.receiveCard(deck.draw());
         return dealer.showHand();
     }
 
@@ -74,9 +74,9 @@ public class GameManager {
     private void drawInitialCards() {
         for (int i = 0; i < 2; i++) {
             for (Player player : players.values()) {
-                player.addCard(deck.draw());
+                player.receiveCard(deck.draw());
             }
-            dealer.addCard(deck.draw());
+            dealer.receiveCard(deck.draw());
         }
     }
 

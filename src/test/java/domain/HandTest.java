@@ -71,17 +71,4 @@ public class HandTest {
 
         assertThat(hand.isBust()).isFalse();
     }
-
-    @Test
-    void 합계_점수에_따라_카드를_더_받을_수_있는지_판정한다() {
-        Hand hand = new Hand();
-        hand.addCard(new Card(TWO, SPADE));
-        hand.addCard(new Card(NINE, SPADE));
-
-        assertThat(hand.canHit()).isTrue();
-
-        hand.addCard(new Card(TEN, HEART));
-
-        assertThat(hand.canHit()).isFalse();
-    }
 }

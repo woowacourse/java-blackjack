@@ -12,8 +12,8 @@ import java.util.Map;
 
 public class GameResult {
 
-    private final DealerResultDto dealerResult;
     private final Map<Player, Result> playerResults;
+    private final DealerResultDto dealerResult;
 
     public GameResult(Dealer dealer, Collection<Player> players) {
         this.playerResults = determinePlayerResults(dealer, players);

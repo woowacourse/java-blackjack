@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
-    public static final int ACE_BONUS_SCORE = 10;
-    public static final int MAX_NON_BUST_SCORE = 21;
+    private static final int MAX_NON_BUST_SCORE = 21;
+    private static final int ACE_BONUS_SCORE = 10;
 
     private final List<Card> cards = new ArrayList<>();
 
@@ -31,10 +31,6 @@ public class Hand {
 
     public boolean isBust() {
         return calculateScore() > MAX_NON_BUST_SCORE;
-    }
-
-    public boolean canHit() {
-        return calculateScore() < MAX_NON_BUST_SCORE;
     }
 
     private int calculateAceBonus(int totalScore) {

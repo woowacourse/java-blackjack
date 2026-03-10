@@ -6,24 +6,22 @@ import domain.Hand;
 import java.util.List;
 
 public abstract class Participant {
-    private String name;
-    protected Hand hand;
+    private final String name;
+    protected final Hand hand;
 
     protected Participant(String name, Hand hand) {
         this.name = name;
         this.hand = hand;
     }
 
-    public void addCard(Card card) {
+    public abstract boolean canReceiveCard();
+
+    public void receiveCard(Card card) {
         hand.addCard(card);
     }
 
     public boolean isBust() {
         return hand.isBust();
-    }
-
-    public boolean canReceiveCard() {
-        return hand.canHit();
     }
 
     public String getName() {

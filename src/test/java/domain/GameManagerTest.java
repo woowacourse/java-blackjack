@@ -114,8 +114,8 @@ class GameManagerTest {
     void 참가자의_이름과_핸드와_점수를_제공한다() {
         Dealer dealer = new Dealer();
         GameManager manager = new GameManager(new Deck(new RandomShuffle()), dealer);
-        dealer.addCard(new Card(ACE, SPADE));
-        dealer.addCard(new Card(KING, DIAMOND));
+        dealer.receiveCard(new Card(ACE, SPADE));
+        dealer.receiveCard(new Card(KING, DIAMOND));
 
         List<GameScoreResultDto> scoreResults = manager.getScoreResults();
 

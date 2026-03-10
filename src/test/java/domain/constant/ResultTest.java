@@ -21,9 +21,9 @@ class ResultTest {
         Dealer dealer = new Dealer();
 
         Player player = new Player("pobi", new Hand());
-        player.addCard(new Card(TEN, SPADE));
-        player.addCard(new Card(TEN, HEART));
-        player.addCard(new Card(FIVE, HEART));
+        player.receiveCard(new Card(TEN, SPADE));
+        player.receiveCard(new Card(TEN, HEART));
+        player.receiveCard(new Card(FIVE, HEART));
 
         Result result = of(dealer, player);
 
@@ -33,9 +33,9 @@ class ResultTest {
     @Test
     void 딜러만_버스트면_결과는_승이다() {
         Dealer dealer = new Dealer();
-        dealer.addCard(new Card(TEN, SPADE));
-        dealer.addCard(new Card(TEN, HEART));
-        dealer.addCard(new Card(FIVE, HEART));
+        dealer.receiveCard(new Card(TEN, SPADE));
+        dealer.receiveCard(new Card(TEN, HEART));
+        dealer.receiveCard(new Card(FIVE, HEART));
 
         Player player = new Player("pobi", new Hand());
 
@@ -47,20 +47,20 @@ class ResultTest {
     @Test
     void 딜러와_플레이어의_점수를_비교하여_승패를_결정한다() {
         Dealer dealer = new Dealer();
-        dealer.addCard(new Card(KING, HEART));
-        dealer.addCard(new Card(TEN, SPADE));
+        dealer.receiveCard(new Card(KING, HEART));
+        dealer.receiveCard(new Card(TEN, SPADE));
 
         Player player1 = new Player("pobi", new Hand());
-        player1.addCard(new Card(EIGHT, HEART));
-        player1.addCard(new Card(NINE, HEART));
+        player1.receiveCard(new Card(EIGHT, HEART));
+        player1.receiveCard(new Card(NINE, HEART));
 
         Player player2 = new Player("cary", new Hand());
-        player2.addCard(new Card(TEN, HEART));
-        player2.addCard(new Card(JACK, HEART));
+        player2.receiveCard(new Card(TEN, HEART));
+        player2.receiveCard(new Card(JACK, HEART));
 
         Player player3 = new Player("jason", new Hand());
-        player3.addCard(new Card(ACE, HEART));
-        player3.addCard(new Card(QUEEN, HEART));
+        player3.receiveCard(new Card(ACE, HEART));
+        player3.receiveCard(new Card(QUEEN, HEART));
 
         List<Result> results = Stream.of(player1, player2, player3)
                 .map(player -> of(dealer, player))
