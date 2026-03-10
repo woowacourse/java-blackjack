@@ -3,6 +3,8 @@ package domain.participant;
 import domain.card.Card;
 import domain.vo.Name;
 
+import java.util.List;
+
 public abstract class Participant {
     private static final int BUST_CONDITION = 22;
     protected Name name;
@@ -22,6 +24,10 @@ public abstract class Participant {
 
     public String getName() {
         return name.getName();
+    }
+
+    public List<String> getCards() {
+        return handCards.cardsToString();
     }
 
     public int getScore() {

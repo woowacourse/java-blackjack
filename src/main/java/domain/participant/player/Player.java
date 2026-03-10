@@ -19,10 +19,6 @@ public class Player extends Participant {
         return winStatus;
     }
 
-    public List<String> getCards() {
-        return handCards.cardsToString();
-    }
-
     @Override
     public void finalizeResult(int dealerScore) {
         if (isBust() || getScore() < dealerScore) {

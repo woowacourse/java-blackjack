@@ -28,10 +28,6 @@ public class Dealer extends Participant {
         return false;
     }
 
-    public List<String> getCards() {
-        return handCards.cardsToString();
-    }
-
     public Map<WinStatus, Integer> getRecord() {
         return record;
     }
