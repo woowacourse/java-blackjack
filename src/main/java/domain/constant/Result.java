@@ -24,6 +24,22 @@ public enum Result {
         return compareScore(dealer.getScore(), player.getScore());
     }
 
+    public Result reverse() {
+        if (this == WIN) {
+            return LOSE;
+        }
+
+        if (this == LOSE) {
+            return WIN;
+        }
+
+        return DRAW;
+    }
+
+    public String getName() {
+        return name;
+    }
+
     private static Result compareScore(int dealerScore, int playerScore) {
         if (dealerScore < playerScore) {
             return WIN;
@@ -34,9 +50,5 @@ public enum Result {
         }
 
         return DRAW;
-    }
-
-    public String getName() {
-        return name;
     }
 }

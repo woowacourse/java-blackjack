@@ -4,8 +4,8 @@ import java.util.Map;
 import java.util.Set;
 
 public class GameFinalResultDto {
-    private DealerResultDto dealerResult;
-    private Map<String, String> playerResults;
+    private final DealerResultDto dealerResult;
+    private final Map<String, String> playerResults;
 
     public GameFinalResultDto(DealerResultDto dealerResult, Map<String, String> playerResults) {
         this.dealerResult = dealerResult;

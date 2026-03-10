@@ -7,6 +7,7 @@ import domain.participant.Dealer;
 import domain.participant.Player;
 
 import java.util.Collection;
+import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -17,7 +18,7 @@ public class GameResult {
 
     public GameResult(Dealer dealer, Collection<Player> players) {
         this.playerResults = determinePlayerResults(dealer, players);
-        this.dealerResult = aggregateResult(dealer);
+        this.dealerResult = aggregateDealerResult(dealer);
     }
 
     public GameFinalResultDto convertToDto() {
@@ -38,25 +39,15 @@ public class GameResult {
         return playerResults;
     }
 
-    private DealerResultDto aggregateResult(Dealer dealer) {
-        int winCount = 0;
-        int drawCount = 0;
-        int loseCount = 0;
+    private DealerResultDto aggregateDealerResult(Dealer dealer) {
+        Map<Result, Integer> dealerResult = new EnumMap<>(Result.class);
 
-        for (Result result : playerResults.values()) {
-            if (result == Result.LOSE) {
-                winCount++;
-                continue;
-            }
-
-            if (result == Result.WIN) {
-                loseCount++;
-                continue;
-            }
-
-            drawCount++;
+        for (Result playerResult : playerResults.values()) {
+            Result reversedResult = playerResult.reverse();
+            Integer count = dealerResult.getOrDefault(reversedResult, 0);
+            dealerResult.put(reversedResult, ++count);
         }
 
-        return new DealerResultDto(dealer.getName(), winCount, drawCount, loseCount);
+        return DealerResultDto.of(dealer.getName(), dealerResult);
     }
 }
