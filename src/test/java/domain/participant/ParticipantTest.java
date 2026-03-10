@@ -36,7 +36,7 @@ public class ParticipantTest {
     public void 카드_점수_합계를_정상적으로_계산한다(List<Card> cards, int expectedValue) {
         Participant participant = new Dealer();
         cards.forEach(participant::addCard);
-        int score = participant.cardBoard.calculateScore();
+        int score = participant.hand.calculateScore();
 
         assertThat(score).isEqualTo(expectedValue);
     }
@@ -49,6 +49,6 @@ public class ParticipantTest {
                 new Card(Rank.TWO, Suit.CLOVER));
         burstCards.forEach(participant::addCard);
 
-        assertThat(participant.cardBoard.isBust()).isTrue();
+        assertThat(participant.hand.isBust()).isTrue();
     }
 }

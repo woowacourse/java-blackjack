@@ -3,34 +3,34 @@ package domain.participant;
 import static constant.GameRule.BLACKJACK_CRITERION;
 
 import domain.card.Card;
-import domain.card.CardBoard;
+import domain.card.Hand;
 import java.util.List;
 
 public abstract class Participant {
 
-    protected final CardBoard cardBoard = new CardBoard();
+    protected final Hand hand = new Hand();
 
     public void addCard(Card card) {
-        cardBoard.add(card);
+        hand.add(card);
     }
 
     public void addCards(List<Card> cards) {
-        cardBoard.addAll(cards);
+        hand.addAll(cards);
     }
 
     public int getScore() {
-        return cardBoard.calculateScore();
+        return hand.calculateScore();
     }
 
     public boolean checkScoreUnderCriterion() {
-        return cardBoard.calculateScore() <= BLACKJACK_CRITERION;
+        return hand.calculateScore() <= BLACKJACK_CRITERION;
     }
 
     public boolean isBust() {
-        return cardBoard.isBust();
+        return hand.isBust();
     }
 
     public List<Card> getHand() {
-        return cardBoard.getCards();
+        return hand.getCards();
     }
 }

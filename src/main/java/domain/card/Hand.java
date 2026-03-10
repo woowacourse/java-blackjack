@@ -7,7 +7,7 @@ import domain.enums.Rank;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CardBoard {
+public class Hand {
     private final List<Card> cards = new ArrayList<>();
 
     public void add(Card card) {

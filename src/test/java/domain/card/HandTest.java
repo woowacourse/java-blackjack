@@ -15,7 +15,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import service.CardGenerator;
 import service.TestCardGenerator;
 
-class CardBoardTest {
+class HandTest {
 
     private List<Card> cards;
 
@@ -29,12 +29,12 @@ class CardBoardTest {
     @Test
     void 카드_정상_추가_테스트() {
         //given
-        CardBoard cardBoard = new CardBoard();
+        Hand hand = new Hand();
         //when
-        cardBoard.addAll(cards);
+        hand.addAll(cards);
         //then
-        assertThat(cardBoard.getCards()).isEqualTo(cards);
-        assertThat(cardBoard.getCards().size()).isEqualTo(6);
+        assertThat(hand.getCards()).isEqualTo(cards);
+        assertThat(hand.getCards().size()).isEqualTo(6);
     }
 
     private static Stream<Arguments> CalculatingScoreCards() {
@@ -52,11 +52,11 @@ class CardBoardTest {
     @ParameterizedTest
     @MethodSource("CalculatingScoreCards")
     void 카드_점수_정상_테스트(List<Card> cards, int expectedScore) {
-        CardBoard cardBoard = new CardBoard();
+        Hand hand = new Hand();
 
-        cardBoard.addAll(cards);
+        hand.addAll(cards);
 
-        assertThat(cardBoard.calculateScore()).isEqualTo(expectedScore);
+        assertThat(hand.calculateScore()).isEqualTo(expectedScore);
     }
 
     private static Stream<Arguments> BustResult() {
@@ -72,10 +72,10 @@ class CardBoardTest {
     @ParameterizedTest
     @MethodSource("BustResult")
     void 버스트_여부_테스트(List<Card> cards, boolean expectedBust) {
-        CardBoard cardBoard = new CardBoard();
+        Hand hand = new Hand();
 
-        cardBoard.addAll(cards);
+        hand.addAll(cards);
 
-        assertThat(cardBoard.isBust()).isEqualTo(expectedBust);
+        assertThat(hand.isBust()).isEqualTo(expectedBust);
     }
 }
