@@ -16,14 +16,15 @@ public class MemberTest {
             "3:2, 5:4, LOSE",
             "10:9:3, 8:7:6:5, WIN"
     })
-    void winnerTest_CompareDealerAndPlayerScore_returnMatchResult(String dealerCardValue, String playerCardValue, MatchResult expected) {
+    void winnerTest_CompareDealerAndPlayerScore_returnMatchResult(String dealerCardValue, String playerCardValue,
+                                                                  MatchResult expected) {
         Member dealer = new Dealer();
         Member player = new Player("브리");
 
         Arrays.stream(dealerCardValue.split(":"))
-                        .forEach(number -> dealer.receiveCard(new Card(number, "하트")));
+                .forEach(number -> dealer.receiveCard(new Card(number, "하트")));
         Arrays.stream(playerCardValue.split(":"))
-                        .forEach(number -> player.receiveCard(new Card(number, "하트")));
+                .forEach(number -> player.receiveCard(new Card(number, "하트")));
 
         Assertions.assertEquals(expected, dealer.compareScoreWith(player));
     }

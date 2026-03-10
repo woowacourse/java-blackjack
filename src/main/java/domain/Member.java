@@ -32,8 +32,12 @@ public abstract class Member {
     public abstract MatchResult compareScoreWith(Member other);
 
     protected MatchResult calculateResultFromNormalCase(int myScore, int targetScore) {
-        if (myScore > targetScore) return MatchResult.WIN;
-        if (myScore < targetScore) return MatchResult.LOSE;
+        if (myScore > targetScore) {
+            return MatchResult.WIN;
+        }
+        if (myScore < targetScore) {
+            return MatchResult.LOSE;
+        }
         return MatchResult.DRAW;
     }
 }

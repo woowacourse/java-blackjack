@@ -65,8 +65,8 @@ public class OutputView {
     private void printDealerCurrentCard(MemberStatus dealerStatus) {
         System.out.println(
                 dealerStatus.playerName()
-                    + ": "
-                    + dealerStatus.cards().getFirst().cardName()
+                        + ": "
+                        + dealerStatus.cards().getFirst().cardName()
         );
     }
 
@@ -106,9 +106,15 @@ public class OutputView {
         StringBuilder dealerResult = new StringBuilder();
         dealerResult.append(name).append(": ");
 
-        if (win > 0) dealerResult.append(win).append("승 ");
-        if (draw > 0) dealerResult.append(draw).append("무 ");
-        if (lose > 0) dealerResult.append(lose).append("패 ");
+        if (win > 0) {
+            dealerResult.append(win).append("승 ");
+        }
+        if (draw > 0) {
+            dealerResult.append(draw).append("무 ");
+        }
+        if (lose > 0) {
+            dealerResult.append(lose).append("패 ");
+        }
 
         System.out.println(dealerResult);
     }

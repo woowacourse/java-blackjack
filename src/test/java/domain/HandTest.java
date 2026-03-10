@@ -26,7 +26,7 @@ public class HandTest {
         hand.appendCard(new Card("2", "하트"));
 
         Assertions.assertThatThrownBy(
-                () -> hand.appendCard(new Card("2", "하트")))
+                        () -> hand.appendCard(new Card("2", "하트")))
                 .isInstanceOf(DuplicatedException.class);
     }
 

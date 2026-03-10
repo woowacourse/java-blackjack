@@ -15,10 +15,10 @@ class GameTableTest {
     @BeforeEach
     void setUpTest() {
         List<Card> cards = List.of(
-                new Card("10","클로버"),
-                new Card("9","클로버"),
-                new Card("8","클로버"),
-                new Card("7","클로버")
+                new Card("10", "클로버"),
+                new Card("9", "클로버"),
+                new Card("8", "클로버"),
+                new Card("7", "클로버")
         );
         this.gameTable = new GameTable(List.of(pobiName), new FixedDeck(cards));
     }

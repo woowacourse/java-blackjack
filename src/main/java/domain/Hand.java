@@ -3,11 +3,11 @@ package domain;
 import domain.exception.DuplicatedException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class Hand {
 
     private final List<Card> cards;
+
     public Hand() {
         cards = new ArrayList<>();
     }

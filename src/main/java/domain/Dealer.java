@@ -13,9 +13,15 @@ public class Dealer extends Member {
         int dealerScore = currentValue();
         int playerScore = player.currentValue();
 
-        if (dealerScore > BUST_CONDITION && playerScore > BUST_CONDITION) return MatchResult.WIN;
-        if (playerScore > BUST_CONDITION) return MatchResult.WIN;
-        if (dealerScore > BUST_CONDITION) return MatchResult.LOSE;
+        if (dealerScore > BUST_CONDITION && playerScore > BUST_CONDITION) {
+            return MatchResult.WIN;
+        }
+        if (playerScore > BUST_CONDITION) {
+            return MatchResult.WIN;
+        }
+        if (dealerScore > BUST_CONDITION) {
+            return MatchResult.LOSE;
+        }
 
         return calculateResultFromNormalCase(dealerScore, playerScore);
     }
