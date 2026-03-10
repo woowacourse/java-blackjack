@@ -8,6 +8,10 @@ public final class InputValidator {
     private static final String BLANK = " ";
 
     public static void validatePlayerNames(final List<String> names) {
+        if (names == null) {
+            throw new IllegalArgumentException("names가 null입니다.");
+        }
+
         boolean hasInvalidName = names.stream()
                 .anyMatch(name -> name.startsWith(BLANK) || name.endsWith(BLANK));
 
