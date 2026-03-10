@@ -7,9 +7,9 @@ import team.blackjack.domain.Card;
 import team.blackjack.domain.Result;
 
 public class DefaultBlackjackRule {
-    public static final int BLACKJACK = 21;
-    public static final int BLACKJACK_CARD_COUNT = 2;
-    public static final int DEALER_STAND_SCORE = 17;
+    private static final int BLACKJACK = 21;
+    private static final int BLACKJACK_CARD_COUNT = 2;
+    private static final int DEALER_STAND_SCORE = 17;
 
     public static boolean isBust(int score) {
         return score > BLACKJACK;
