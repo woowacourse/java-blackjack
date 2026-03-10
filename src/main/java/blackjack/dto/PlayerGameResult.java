@@ -11,7 +11,7 @@ public record PlayerGameResult(
     public static PlayerGameResult of(Player player, Dealer dealer) {
         return new PlayerGameResult(
                 player.getNickname(),
-                player.determineGameResult(dealer)
+                player.calculateResult(dealer)
         );
     }
 }
