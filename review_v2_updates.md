@@ -35,9 +35,9 @@
   - [x] `Participants`: 포맷팅 메서드 전부 제거 (`makeOneUserCard`, `formatDealerDisplay`, `formatUserDisplays`, `addScoreToUserHand`, `getUserCardsDisplays` 등) → `getUsers()`, `getDealer()` 같은 순수 데이터 반환 메서드로 교체
   - [x] `OutputView`: 위에서 제거한 모든 포맷팅 로직을 여기서 담당
 - [x] **6. `suit`의 변수명에 class 이름이 들어가는 것 수정.**
-- [ ] **7. 게임의 흐름은 도메인에서, 입출력이 필요한 경우만 Application으로**
+- [x] **7. 게임의 흐름은 도메인에서, 입출력이 필요한 경우만 Application으로**
   - ex) readParticipants나 shuffleCards의 경우, read는 inputView에서 처리하고 shuffle은 Game 또는 deck 자체가 진행.
 - [x] **8. 입력에 trim() 설정하도록 변경**
-- [ ] **9. 모든 파일 포멧팅 최적화**
+- [x] **9. 모든 파일 포멧팅 최적화**
   - `cmd + opt + L`
 - [x] **10. validator 없애고, inputView에서 객체가 없는 입력값 확인하도록 변경**

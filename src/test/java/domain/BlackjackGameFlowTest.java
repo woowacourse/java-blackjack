@@ -14,9 +14,7 @@ public class BlackjackGameFlowTest {
 
     @BeforeEach
     void setUp() {
-        blackjackGame = new BlackjackGame();
-        blackjackGame.saveParticipants("영기,라이");
-        blackjackGame.setDeck(new Deck(List.of(
+        Deck fixedDeck = new Deck(List.of(
                 new Card(Suit.SPADE, Rank.KING),
                 new Card(Suit.HEART, Rank.TWO),
                 new Card(Suit.DIAMOND, Rank.FIVE),
@@ -25,8 +23,9 @@ public class BlackjackGameFlowTest {
                 new Card(Suit.DIAMOND, Rank.SIX),
                 new Card(Suit.CLUB, Rank.SEVEN),
                 new Card(Suit.CLUB, Rank.TEN)
-        )));
-        blackjackGame.dealCards();
+        ));
+        blackjackGame = new TestBlackjackGame(fixedDeck);
+        blackjackGame.prepare("영기,라이");
     }
 
     @Test

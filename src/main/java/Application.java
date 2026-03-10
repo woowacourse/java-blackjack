@@ -1,5 +1,5 @@
-import java.util.List;
 import domain.BlackjackGame;
+import java.util.List;
 import java.util.function.Supplier;
 import view.InputView;
 import view.Message;
@@ -18,15 +18,15 @@ public class Application {
 
     public static void main(String[] args) {
         new Application(
-            new InputView(),
-            new OutputView(),
-            new BlackjackGame()
+                new InputView(),
+                new OutputView(),
+                new BlackjackGame()
         ).run();
     }
 
     public void run() {
         readParticipants();
-        shuffleCards();
+        printInitialCardInformation();
         selectToDealExtraCard();
         dealDealerCard();
         printEachHand();
@@ -36,16 +36,15 @@ public class Application {
     public void readParticipants() {
         retryUntilSuccess(() -> {
             outputView.printMessage(Message.INPUT_PARTICIPANTS_MESSAGE);
-            String participantsName = inputView.readParticipantsName();
-            blackjackGame.saveParticipants(participantsName);
+            blackjackGame.prepare(inputView.readParticipantsName());
             return null;
         });
     }
 
-    private void shuffleCards() {
-        blackjackGame.makeDeck();
-        blackjackGame.dealCards();
-        printDealResult();
+    private void printInitialCardInformation() {
+        outputView.printDealComplete(blackjackGame.getParticipantNames());
+        outputView.printDealerFirstCard(blackjackGame.getDealer().getFirstCard());
+        blackjackGame.getUsers().forEach(outputView::printUserCards);
     }
 
     public void selectToDealExtraCard() {
@@ -58,24 +57,13 @@ public class Application {
     private void askCardToPlayer(String name, int index) {
         retryUntilSuccess(() -> {
             outputView.printAskExtraCard(name);
-            String answer = inputView.readDealDecision().trim();
-            determinePlayerContinue(answer, index);
+            String answer = inputView.readDealDecision();
+            if (answer.equalsIgnoreCase("y")) {
+                blackjackGame.processPlayerDecision(index);
+                outputView.printUserCards(blackjackGame.getUsers().get(index));
+            }
             return null;
         });
-    }
-
-    private void printWinningResult() {
-        outputView.printMessage(Message.FINAL_RESULT_ANNOUNCE);
-        outputView.printWinningResults(
-            blackjackGame.getDealerResults(),
-            blackjackGame.getUserResults(),
-            blackjackGame.getParticipantNames()
-        );
-    }
-
-    private void printEachHand() {
-        outputView.printDealerFinalHand(blackjackGame.getDealer());
-        blackjackGame.getUsers().forEach(outputView::printUserFinalHand);
     }
 
     private void dealDealerCard() {
@@ -84,17 +72,18 @@ public class Application {
         }
     }
 
-    private void printDealResult() {
-        outputView.printDealComplete(blackjackGame.getParticipantNames());
-        outputView.printDealerFirstCard(blackjackGame.getDealer().getFirstCard());
-        blackjackGame.getUsers().forEach(outputView::printUserCards);
+    private void printEachHand() {
+        outputView.printDealerFinalHand(blackjackGame.getDealer());
+        blackjackGame.getUsers().forEach(outputView::printUserFinalHand);
     }
 
-    private void determinePlayerContinue(String answer, int index) {
-        if (answer.equalsIgnoreCase("y")) {
-            blackjackGame.processPlayerDecision(index);
-            outputView.printUserCards(blackjackGame.getUsers().get(index));
-        }
+    private void printWinningResult() {
+        outputView.printMessage(Message.FINAL_RESULT_ANNOUNCE);
+        outputView.printWinningResults(
+                blackjackGame.getDealerResults(),
+                blackjackGame.getUserResults(),
+                blackjackGame.getParticipantNames()
+        );
     }
 
     private <T> T retryUntilSuccess(Supplier<T> action) {

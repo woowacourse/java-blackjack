@@ -13,8 +13,10 @@ public class BlackjackGame {
     private Participants participants;
     private Deck deck;
 
-    public void saveParticipants(String participantsName) {
+    public void prepare(String participantsName) {
         participants = new Participants(participantsName);
+        makeDeck();
+        dealCards();
     }
 
     public void makeDeck() {

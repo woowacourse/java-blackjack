@@ -17,9 +17,15 @@ public enum GameResult {
     }
 
     public GameResult opposite() {
-        if (this == LOSE) return WIN;
-        if (this == WIN) return LOSE;
-        if (this == BUST) return WIN;
+        if (this == LOSE) {
+            return WIN;
+        }
+        if (this == WIN) {
+            return LOSE;
+        }
+        if (this == BUST) {
+            return WIN;
+        }
         return this;
     }
 }
