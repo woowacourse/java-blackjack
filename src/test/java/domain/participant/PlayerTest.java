@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.MatchResult;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
@@ -51,5 +52,18 @@ class PlayerTest {
 
         // then
         Assertions.assertEquals(player.getCards().size(), 1);
+    }
+
+    @Test
+    @DisplayName("플레이어의 승패 결과에 따라 돌려받는 수익을 계산한다.")
+    void applyMatchResultToBetTest() {
+        // given
+        Player player = new Player("pobi");
+
+        // when
+        player.placeBet(3000);
+
+        // then
+        Assertions.assertEquals(player.applyMatchResultToBet(MatchResult.WIN), 3000);
     }
 }
