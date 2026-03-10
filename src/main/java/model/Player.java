@@ -7,15 +7,22 @@ import java.util.Objects;
 public class Player extends Participant {
     private static final String DEALER_NAME = "딜러";
 
-    public Player(PlayerName name) {
+    private final BattingMoney battingMoney;
+
+    public Player(PlayerName name, BattingMoney battingMoney) {
         super(name);
         validate(name);
+        this.battingMoney = battingMoney;
     }
 
     private void validate(PlayerName name) {
         if(name.value().equals(DEALER_NAME)) {
             throw new GameException(PlayerErrorCode.NO_PLAYER_NAME_DEALER);
         }
+    }
+
+    public BattingMoney getBattingMoney() {
+        return battingMoney;
     }
 
     @Override
