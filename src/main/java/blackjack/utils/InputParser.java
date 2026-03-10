@@ -10,12 +10,16 @@ public class InputParser {
         }
         String[] names = input.split(",");
         for (String name : names) {
-            if (name.trim().isEmpty()) {
-                throw new IllegalArgumentException("[ERROR] 플레이어 이름은 공백이 될 수 없습니다.");
-            }
+            validateNameEmpty(name);
         }
         return List.of(names).stream()
                 .map(String::trim)
                 .toList();
+    }
+
+    private static void validateNameEmpty(String name) {
+        if (name.trim().isEmpty()) {
+            throw new IllegalArgumentException("[ERROR] 플레이어 이름은 공백이 될 수 없습니다.");
+        }
     }
 }

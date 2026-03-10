@@ -91,22 +91,28 @@ public class Game {
 
     public void processTurn(List<Player> players, CardPicker cardPicker) {
         for (Player player : players) {
-            while (true) {
-                String hitOrStand = InputView.askHitOrStand(player.getName());
-                if (!isHit(hitOrStand)) {
-                    break;
-                }
-
-                Card card = cardPicker.drawCard();
-
-                cardDistributor.distributeCardToPlayer(player, card);
-
-                OutputView.printDrawnCards(player.getName(), player.getCardNames());
-                if (player.isBust()) {
-                    break;
-                }
-            }
+            playPlayerTurn(player, cardPicker);
         }
+    }
+
+    private void playPlayerTurn(Player player, CardPicker cardPicker) {
+        while (canDrawMore(player)) {
+            drawAndPrintCard(player, cardPicker);
+        }
+    }
+
+    private boolean canDrawMore(Player player) {
+        if (player.isBust()) {
+            return false;
+        }
+        String hitOrStand = InputView.askHitOrStand(player.getName());
+        return isHit(hitOrStand);
+    }
+
+    private void drawAndPrintCard(Player player, CardPicker cardPicker) {
+        Card card = cardPicker.drawCard();
+        cardDistributor.distributeCardToPlayer(player, card);
+        OutputView.printDrawnCards(player.getName(), player.getCardNames());
     }
 
     private boolean isHit(String hitOrStand) {

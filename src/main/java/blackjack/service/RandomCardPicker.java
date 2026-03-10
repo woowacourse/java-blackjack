@@ -21,11 +21,15 @@ public class RandomCardPicker implements CardPicker {
     private List<Card> initializeNotDrawnCards() {
         List<Card> cards = new ArrayList<>();
         for (Rank rank : Rank.values()) {
-            for (Shape shape : Shape.values()) {
-                cards.add(new Card(rank, shape));
-            }
+            addCardsByRank(rank, cards);
         }
         return cards;
+    }
+
+    private static void addCardsByRank(Rank rank, List<Card> cards) {
+        for (Shape shape : Shape.values()) {
+            cards.add(new Card(rank, shape));
+        }
     }
 
     @Override
