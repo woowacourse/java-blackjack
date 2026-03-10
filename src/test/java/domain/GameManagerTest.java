@@ -2,17 +2,16 @@ package domain;
 
 import domain.deck.Deck;
 import domain.deck.RandomShuffle;
-import domain.deck.Shuffle;
 import domain.dto.GameInitialInfoDto;
 import domain.dto.GameScoreResultDto;
 import domain.participant.Dealer;
+import domain.participant.Players;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Map;
 
-import static domain.constant.Rank.ACE;
-import static domain.constant.Rank.KING;
+import static domain.constant.Rank.*;
 import static domain.constant.Suit.DIAMOND;
 import static domain.constant.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,7 +22,7 @@ class GameManagerTest {
 
     @Test
     void 플레이어어_등록_테스트() {
-        GameManager manager = new GameManager(new Deck(new RandomShuffle()), new Dealer());
+        GameManager manager = new GameManager(new Deck(new RandomShuffle()), new Dealer(), new Players());
         manager.registerPlayer("pobi");
         manager.registerPlayer("cary");
 
@@ -36,7 +35,8 @@ class GameManagerTest {
     void 게임을_시작하면_등록된_플레이어부터_딜러_순으로_순서대로_한_장씩_총_2장의_카드를_받는다() {
         GameManager manager = new GameManager(
                 new Deck(cards -> {}), // 덱을 섞지 않음, 기본 순서: 스페이드 A, 2, 3, 4 ...
-                new Dealer());
+                new Dealer(),
+                new Players());
 
         manager.registerPlayer("pobi");
         manager.registerPlayer("cary");
@@ -57,7 +57,7 @@ class GameManagerTest {
     @Test
     void 처음_핸드_공개_시_딜러는_1장_플레이어는_2장의_카드를_공개한다() {
         Dealer dealer = new Dealer();
-        GameManager manager = new GameManager(new Deck(new RandomShuffle()), dealer);
+        GameManager manager = new GameManager(new Deck(new RandomShuffle()), dealer, new Players());
         manager.registerPlayer("pobi");
         manager.registerPlayer("cary");
 
@@ -75,7 +75,7 @@ class GameManagerTest {
 
     @Test
     void 플레이어_카드_드로우_테스트() {
-        GameManager manager = new GameManager(new Deck(new RandomShuffle()), new Dealer());
+        GameManager manager = new GameManager(new Deck(new RandomShuffle()), new Dealer(), new Players());
         manager.registerPlayer("pobi");
         manager.registerPlayer("cary");
 
@@ -100,7 +100,7 @@ class GameManagerTest {
     @Test
     void 딜러_카드_드로우_테스트() {
         Dealer dealer = new Dealer();
-        GameManager manager = new GameManager(new Deck(new RandomShuffle()), dealer);
+        GameManager manager = new GameManager(new Deck(new RandomShuffle()), dealer, new Players());
 
         manager.drawDealerCard();
 
@@ -110,7 +110,7 @@ class GameManagerTest {
     @Test
     void 참가자의_이름과_핸드와_점수를_제공한다() {
         Dealer dealer = new Dealer();
-        GameManager manager = new GameManager(new Deck(new RandomShuffle()), dealer);
+        GameManager manager = new GameManager(new Deck(new RandomShuffle()), dealer, new Players());
         dealer.receiveCard(new Card(ACE, SPADE));
         dealer.receiveCard(new Card(KING, DIAMOND));
 
@@ -122,5 +122,27 @@ class GameManagerTest {
                         result -> result.getHand(),
                         result -> result.getScore()
                 ).containsExactly(tuple("딜러", List.of("A스페이드", "K다이아몬드"), 21));
+    }
+
+    @Test
+    void 딜러가_추가로_카드를_받을_수_있는지_확인한다() {
+        Dealer dealer = new Dealer();
+        GameManager manager = new GameManager(new Deck(new RandomShuffle()), dealer, new Players());
+        dealer.receiveCard(new Card(SEVEN, SPADE));
+        dealer.receiveCard(new Card(EIGHT, DIAMOND));
+
+        assertThat(manager.canDealerReceiveCard()).isTrue();
+    }
+
+    @Test
+    void 플레이어가_추가로_카드를_받을_수_있는지_확인한다() {
+        Players players = new Players();
+        players.register("pobi");
+        players.drawCardTo("pobi", new Card(ACE, SPADE));
+        players.drawCardTo("pobi", new Card(QUEEN, SPADE));
+
+        GameManager manager = new GameManager(new Deck(new RandomShuffle()), new Dealer(), players);
+
+        assertThat(manager.canPlayerReceiveCard("pobi")).isFalse();
     }
 }

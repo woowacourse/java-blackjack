@@ -6,17 +6,14 @@ import domain.dto.GameFinalResultDto;
 import domain.participant.Dealer;
 import domain.participant.Player;
 
-import java.util.Collection;
-import java.util.EnumMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 public class GameResult {
 
     private final Map<Player, Result> playerResults;
     private final DealerResultDto dealerResult;
 
-    public GameResult(Dealer dealer, Collection<Player> players) {
+    public GameResult(Dealer dealer, List<Player> players) {
         this.playerResults = determinePlayerResults(dealer, players);
         this.dealerResult = aggregateDealerResult(dealer);
     }
@@ -29,7 +26,7 @@ public class GameResult {
         return new GameFinalResultDto(dealerResult, stringResults);
     }
 
-    private Map<Player, Result> determinePlayerResults(Dealer dealer, Collection<Player> players) {
+    private Map<Player, Result> determinePlayerResults(Dealer dealer, List<Player> players) {
         Map<Player, Result> playerResults = new LinkedHashMap<>();
 
         for (Player player : players) {

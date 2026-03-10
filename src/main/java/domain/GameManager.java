@@ -6,22 +6,23 @@ import domain.dto.GameInitialInfoDto;
 import domain.dto.GameScoreResultDto;
 import domain.participant.Dealer;
 import domain.participant.Player;
+import domain.participant.Players;
 
 import java.util.*;
 
 public class GameManager {
     private final Deck deck;
     private final Dealer dealer;
-    private final Map<String, Player> players;
+    private final Players players;
 
-    public GameManager(Deck deck, Dealer dealer) {
+    public GameManager(Deck deck, Dealer dealer, Players players) {
         this.deck = deck;
         this.dealer = dealer;
-        this.players = new LinkedHashMap<>();
+        this.players = players;
     }
 
     public void registerPlayer(String name) {
-        players.put(name, new Player(name, new Hand()));
+        players.register(name);
     }
 
     public void startGame() {
@@ -33,19 +34,16 @@ public class GameManager {
         return new GameInitialInfoDto(
                 dealer.getName(),
                 dealer.showHand().getFirst(),
-                players.values().stream()
-                        .map(GameScoreResultDto::from)
-                        .toList()
+                players.getScoreResults()
         );
     }
 
-    public boolean canPlayerReceiveCard(String player) {
-        return players.get(player).canReceiveCard();
+    public boolean canPlayerReceiveCard(String playerName) {
+        return players.canReceiveCard(playerName);
     }
 
-    public List<String> drawPlayerCard(String player) {
-        players.get(player).receiveCard(deck.draw());
-        return players.get(player).showHand();
+    public List<String> drawPlayerCard(String playerName) {
+        return players.drawCardTo(playerName, deck.draw());
     }
 
     public boolean canDealerReceiveCard() {
@@ -65,14 +63,14 @@ public class GameManager {
     }
 
     public GameFinalResultDto getFinalResult() {
-        GameResult gameResult = new GameResult(dealer, players.values());
+        GameResult gameResult = new GameResult(dealer, players.getAll());
 
         return gameResult.convertToDto();
     }
 
     private void drawInitialCards() {
         for (int i = 0; i < 2; i++) {
-            for (Player player : players.values()) {
+            for (Player player : players.getAll()) {
                 player.receiveCard(deck.draw());
             }
             dealer.receiveCard(deck.draw());
@@ -84,11 +82,6 @@ public class GameManager {
     }
 
     private List<GameScoreResultDto> createPlayerScoreResults() {
-        List<GameScoreResultDto> playerResults = new ArrayList<>();
-        for (Player player : players.values()) {
-            playerResults.add(GameScoreResultDto.from(player));
-        }
-
-        return playerResults;
+        return players.getScoreResults();
     }
 }
