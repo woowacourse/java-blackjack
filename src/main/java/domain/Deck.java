@@ -4,11 +4,12 @@ import domain.card.Card;
 import exception.ErrorMessage;
 import factory.CardFactory;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Deck {
-    private List<Card> cards;
+    private final List<Card> cards;
 
     public Deck() {
         this.cards = CardFactory.createDeck();
@@ -31,7 +32,6 @@ public class Deck {
     }
 
     public List<Card> getCards() {
-        return cards;
+        return new ArrayList<>(cards);
     }
-
 }
