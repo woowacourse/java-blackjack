@@ -22,7 +22,7 @@ public class HitCommand {
     }
 
     private void validateEmpty(String command) {
-        if (command.isEmpty()) {
+        if (command.isBlank()) {
             throw new IllegalArgumentException(ERROR_EMPTY_INPUT.getErrorMessage());
         }
     }
