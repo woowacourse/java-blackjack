@@ -12,8 +12,8 @@ public class Dealer implements Person {
         return new Dealer(deck);
     }
 
-    public void calculateFinalSum() {
-        deck.calculateFinalSum();
+    public int calculateFinalSum() {
+        return deck.calculateFinalSum();
     }
 
     public Deck getDeck() {

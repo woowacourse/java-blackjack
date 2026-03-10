@@ -17,8 +17,8 @@ public class Player implements Person {
         return new Player(name, null);
     }
 
-    public void calculateFinalSum() {
-        deck.calculateFinalSum();
+    public int calculateFinalSum() {
+        return deck.calculateFinalSum();
     }
 
     public String getName() {

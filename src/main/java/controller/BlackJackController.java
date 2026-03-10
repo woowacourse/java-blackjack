@@ -33,8 +33,7 @@ public class BlackJackController {
 
         // 카드 추가 분배
         blackJackService.getAllPlayers().forEach(this::getAdditionalCard);
-
-        // 딜려 추가 배부
+        // 딜러 추가 배부
         getAdditionalDealerCard();
 
         // 결과 출력

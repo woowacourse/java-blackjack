@@ -16,6 +16,5 @@ public class DealerRepository {
 
     public Dealer getDealer() {
         return dealer;
-        // TODO: 새로운 Dealer 객체 생성후 반환으로 추후에 변경 예정
     }
 }

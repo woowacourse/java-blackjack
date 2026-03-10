@@ -24,16 +24,16 @@ public class JudgementService {
         // 최종 점수 계산
         List<Player> players = playerRepository.findAll();
         Dealer dealer = dealerRepository.getDealer();
-        dealer.calculateFinalSum();
+        int dealerFinalScore = dealer.calculateFinalSum();
         List<PlayerResultDto> playerResultDtos = new ArrayList<>();
         for (Player player : players) {
-            player.calculateFinalSum();
+            int playerFinalScore = player.calculateFinalSum();
             judgementWinning(player, dealer);
-            PlayerResultDto playerResultDto = PlayerResultDto.of(player);
+            PlayerResultDto playerResultDto = PlayerResultDto.of(player, playerFinalScore);
             playerResultDtos.add(playerResultDto);
         }
 
-        DealerResultDto dealerResultDto = DealerResultDto.of(dealer);
+        DealerResultDto dealerResultDto = DealerResultDto.of(dealer, dealerFinalScore);
         return ResultDto.of(dealerResultDto, playerResultDtos);
     }
 

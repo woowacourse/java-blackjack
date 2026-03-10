@@ -43,7 +43,8 @@ public class BlackJackService {
     // 플레이어 추가 카드
     public PlayerResultDto additionalCard(Player player) {
         cardDistributor.distributeAdditionalCard(player);
-        return PlayerResultDto.of(player);
+        int sum = player.getDeckSum();
+        return PlayerResultDto.of(player, sum);
     }
 
     public ResultDto judgement() {
