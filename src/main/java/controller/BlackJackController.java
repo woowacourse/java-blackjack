@@ -2,12 +2,12 @@ package controller;
 
 import static util.Constants.COMMA_DELIMITER;
 import static util.Constants.DEALER_NAME;
+import static util.Constants.DEFAULT_CARD_SET;
 import static util.Constants.HIT;
 import static util.Constants.STAND;
 
 import domain.game.GamblersGameResult;
 import domain.game.Game;
-import domain.game.GameResult;
 import domain.player.Gambler;
 import dto.AgreementRequestDto;
 import dto.DealerResultDto;
@@ -35,27 +35,18 @@ public class BlackJackController {
         playGame(game);
         checkDealerHand(game);
 
-        printParticipantsResult(game);
+        printParticipantsResult(game); // [실험: 배팅 코드 추가] 결과에 따른 값 계산
 
         determineFinalGameResult(game.getResult());
     }
 
-    private void determineFinalGameResult(GamblersGameResult gamblersGameResult) {
-        outputView.printDealerResult(
-                new DealerResultDto(gamblersGameResult.countDealerWin(),
-                        gamblersGameResult.countDealerLose(),
-                        gamblersGameResult.countDealerDraw()));
-        outputView.printGamblerResult(
-                gamblersGameResult.getResultInfo()
-        );
-    }
     private List<String> inputGamblersInfo() {
         String name = inputView.askGamblerNames().name();
         return Parser.parse(name, COMMA_DELIMITER);
     }
 
     private Game initializeGame(List<String> names) {
-        Game game = new Game(DEALER_NAME, names, 1);
+        Game game = new Game(DEALER_NAME, names, DEFAULT_CARD_SET);
 
         outputView.printInitialDeal(names);
         game.initializeGame();
@@ -98,5 +89,15 @@ public class BlackJackController {
         outputView.printParticipantsGameInfo(new ParticipantsGameInfoDto(
                 game.getParticipantGameInfos()
         ));
+    }
+
+    private void determineFinalGameResult(GamblersGameResult gamblersGameResult) {
+        outputView.printDealerResult(
+                new DealerResultDto(gamblersGameResult.countDealerWin(),
+                        gamblersGameResult.countDealerLose(),
+                        gamblersGameResult.countDealerDraw()));
+        outputView.printGamblerResult(
+                gamblersGameResult.getResultInfo()
+        );
     }
 }
