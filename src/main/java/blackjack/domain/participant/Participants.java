@@ -1,11 +1,8 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import blackjack.domain.card.Deck;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Player;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class Participants {
     
@@ -31,10 +28,9 @@ public class Participants {
     }
     
     public List<Participant> getParticipants() {
-        List<Participant> participantList = new ArrayList<>();
-        participantList.add(dealer);
-        participantList.addAll(getPlayers());
-        return participantList;
+        return Stream
+                .concat(Stream.of(dealer), players.getPlayers().stream())
+                .toList();
     }
     
     public Player getCurrentPlayer() {

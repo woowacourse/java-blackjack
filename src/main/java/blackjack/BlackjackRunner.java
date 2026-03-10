@@ -1,10 +1,10 @@
 package blackjack;
 
-import blackjack.domain.Participants;
-import blackjack.domain.Players;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 import blackjack.dto.DealerInitialHand;
 import blackjack.dto.ParticipantHandScore;
 import blackjack.dto.PlayerGameResult;
@@ -39,7 +39,7 @@ public class BlackjackRunner {
     private Participants makeParticipants() {
         outputView.askGameMembers();
         List<String> playerNames = inputView.parsePlayerNames();
-        Players players = Players.makePlayers(playerNames);
+        Players players = Players.fromNames(playerNames);
         Dealer dealer = new Dealer();
         return new Participants(players, dealer);
     }
