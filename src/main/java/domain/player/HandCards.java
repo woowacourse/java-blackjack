@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HandCards {
+    private static final int MAX_SCORE = 21;
+    private static final int ACE_BONUS_SCORE = 10;
+
     private final List<Card> cards;
 
     public HandCards() {
@@ -39,6 +42,10 @@ public class HandCards {
             return sum + ACE_BONUS_SCORE;
         }
         return sum;
+    }
+
+    private boolean canAce11(int sum) {
+        return containsAce() && sum + ACE_BONUS_SCORE <= MAX_SCORE;
     }
 
     private boolean containsAce() {
