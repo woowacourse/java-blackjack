@@ -20,7 +20,7 @@ class InputParserTest {
         List<Name> parsedResult = InputParser.parsePlayers(strPlayerNames);
 
         // then
-        assertThat(parsedResult).hasSize(2).extracting(Name::getName).containsExactlyInAnyOrder("pobi", "jason");
+        assertThat(parsedResult).hasSize(2).extracting(Name::name).containsExactlyInAnyOrder("pobi", "jason");
     }
 
     @Test

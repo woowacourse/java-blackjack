@@ -35,7 +35,7 @@ public class Participant {
     }
 
     public String getName() {
-        return name.getName();
+        return name.name();
     }
 
     public List<Card> getHandCards() {
