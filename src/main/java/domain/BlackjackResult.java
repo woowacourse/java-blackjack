@@ -1,9 +1,9 @@
 package domain;
 
-import domain.dto.BlackjackResultDto;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import domain.dto.BlackjackResultDto;
 
 public class BlackjackResult {
     private final Map<String, MatchCase> playerWinningMap = new HashMap<>();
@@ -63,7 +63,6 @@ public class BlackjackResult {
             drawCount++;
             return;
         }
-
         dealerWinningCount++;
     }
 

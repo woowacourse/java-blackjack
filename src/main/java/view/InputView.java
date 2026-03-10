@@ -1,11 +1,11 @@
 package view;
 
-import utils.Parser;
-import validator.Validator;
-
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+
+import utils.Parser;
+import validator.Validator;
 
 
 public class InputView {

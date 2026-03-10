@@ -8,7 +8,6 @@ import domain.Dealer;
 import domain.Player;
 import domain.Players;
 import utils.generator.CardsGenerator;
-import utils.generator.ShuffledCardsGenerator;
 import view.OutputView;
 
 public class BlackjackService {
@@ -28,7 +27,7 @@ public class BlackjackService {
             player.addInitializedCard(cards);
             playerList.add(player);
         }
-        return new Players(playerList) ;
+        return new Players(playerList);
     }
 
     public Dealer createDealer(Cards cards) {

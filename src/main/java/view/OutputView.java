@@ -1,15 +1,15 @@
 package view;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import constant.GameConstant;
 import domain.Card;
 import domain.MatchCase;
 import domain.dto.BlackjackResultDto;
 import domain.dto.CardContentDto;
 import domain.dto.FinalCardDto;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 public final class OutputView {
     public static void displayCardDistribution(List<String> names) {

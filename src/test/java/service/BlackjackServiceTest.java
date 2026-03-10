@@ -48,11 +48,11 @@ class BlackjackServiceTest {
         Cards cards = blackjackService.generateCards(new FakeShuffledCardsGenerator());
         Players playerList = blackjackService.createPlayers(List.of("요크", "아티"), cards);
 
-        assertThat(playerList.getPlayer(0).getCards().getFirst()).isEqualTo(new Card(CardShape.SPADE,CardRank.ACE));
-        assertThat(playerList.getPlayer(0).getCards().get(1)).isEqualTo(new Card(CardShape.SPADE,CardRank.TWO));
+        assertThat(playerList.getPlayer(0).getCards().getFirst()).isEqualTo(new Card(CardShape.SPADE, CardRank.ACE));
+        assertThat(playerList.getPlayer(0).getCards().get(1)).isEqualTo(new Card(CardShape.SPADE, CardRank.TWO));
 
-        assertThat(playerList.getPlayer(1).getCards().get(0)).isEqualTo(new Card(CardShape.SPADE,CardRank.THREE));
-        assertThat(playerList.getPlayer(1).getCards().get(1)).isEqualTo(new Card(CardShape.SPADE,CardRank.FOUR));
+        assertThat(playerList.getPlayer(1).getCards().get(0)).isEqualTo(new Card(CardShape.SPADE, CardRank.THREE));
+        assertThat(playerList.getPlayer(1).getCards().get(1)).isEqualTo(new Card(CardShape.SPADE, CardRank.FOUR));
     }
 
     public static class FakeShuffledCardsGenerator implements CardsGenerator {
@@ -64,7 +64,7 @@ class BlackjackServiceTest {
                             new Card(CardShape.SPADE, CardRank.THREE),
                             new Card(CardShape.SPADE, CardRank.FOUR),
                             new Card(CardShape.SPADE, CardRank.FIVE))
-            ));
+                    ));
         }
     }
 
