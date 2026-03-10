@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class Result {
     private static final String DEALER = "딜러";
-    private static final Integer JUDGE_SCORE = 21;
+    private static final int BURST_THRESHOLD = 21;
 
     public static Map<String, Boolean> calculateResult(Map<Participant, Integer> participantScores) {
         Map<String, Boolean> gameResult = new HashMap<>();
@@ -19,12 +19,12 @@ public class Result {
             String name = entry.getKey().getName();
             int score = entry.getValue();
 
-            if (score > JUDGE_SCORE) {
+            if (score > BURST_THRESHOLD) {
                 gameResult.put(name, false);
                 continue;
             }
 
-            if (dealerScore > JUDGE_SCORE) {
+            if (dealerScore > BURST_THRESHOLD) {
                 gameResult.put(name, true);
                 continue;
             }

@@ -17,7 +17,7 @@ public abstract class Participant {
         cards.addCard(card);
     }
 
-    public abstract boolean canReceiveCard();
+    public abstract boolean isContinue();
 
     public String getName() {
         return name.getName();
@@ -26,7 +26,6 @@ public abstract class Participant {
     public int getScore() {
         return cards.calculateScore();
     }
-
 
     public ParticipantCardsDto getParticipantCardsDto() {
         return new ParticipantCardsDto(name.getName(), cards.getCardsInfo(), getScore());

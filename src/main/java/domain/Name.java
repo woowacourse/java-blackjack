@@ -2,8 +2,8 @@ package domain;
 
 public class Name {
     private final String name;
-    private static final Integer MIN_LENGTH = 2;
-    private static final Integer MAX_LENGTH = 5;
+    private static final int MIN_LENGTH = 2;
+    private static final int MAX_LENGTH = 5;
 
     public Name(String name) {
         validateBlank(name);
