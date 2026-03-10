@@ -1,7 +1,6 @@
 package domain;
 
 import domain.table.GameTable;
-import domain.vo.RoundResult;
 import domain.card.Deck;
 import java.util.List;
 import java.util.Map;
@@ -11,8 +10,8 @@ public class BlackjackGame {
     private final GameTable gameTable;
     private final Deck deck;
 
-    public BlackjackGame(List<String> playerNames) {
-        this.gameTable = new GameTable(playerNames);
+    public BlackjackGame(Map<String, Integer> players) {
+        this.gameTable = new GameTable(players);
         this.deck = new Deck();
         this.deck.init();
     }
@@ -61,11 +60,19 @@ public class BlackjackGame {
         return gameTable.memberPoint(memberName);
     }
 
-    public Map<String, RoundResult> getGameResults() {
+    public Map<String, Integer> getGameResults() {
         return gameTable.checkGameResult();
     }
 
     public boolean isContinuable(String playerName) {
         return !gameTable.checkBust(playerName);
+    }
+
+    public boolean hasBlackjack() {
+        return gameTable.checkBlackjack();
+    }
+
+    public void applyBlackjackBonus() {
+        gameTable.applyBlackjackBonus();
     }
 }
