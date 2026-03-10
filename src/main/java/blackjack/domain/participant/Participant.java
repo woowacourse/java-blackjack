@@ -13,8 +13,15 @@ public class Participant {
     protected final Hand hand;
     
     protected Participant(String nickname) {
+        validate(nickname);
         this.nickname = nickname;
         this.hand = new Hand();
+    }
+    
+    private void validate(String nickname) {
+        if (nickname.isBlank()) {
+            throw new IllegalArgumentException("플레이어 이름은 공백이 될 수 없습니다.");
+        }
     }
     
     public void drawInitialCards(Deck deck) {

@@ -16,25 +16,9 @@ public class InputView {
     }
     
     public List<String> parsePlayerNames() {
-        List<String> playerNames = Arrays
-                .stream(readLine().split(DELIMITER))
+        return Arrays.stream(readLine().split(DELIMITER))
                 .map(String::trim)
                 .toList();
-        
-        validateNames(playerNames);
-        return playerNames;
-    }
-    
-    private void validateNames(List<String> playerNames) {
-        validateName(playerNames);
-    }
-    
-    private void validateName(List<String> playerNames) {
-        playerNames.forEach(name -> {
-            if (name.isEmpty()) {
-                throw new IllegalArgumentException("플레이어 이름은 공백이 될 수 없습니다.");
-            }
-        });
     }
     
     public boolean getUserCommand() {
