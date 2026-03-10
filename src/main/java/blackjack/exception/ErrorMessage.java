@@ -6,7 +6,8 @@ public enum ErrorMessage {
     INVALID_PLAYERS("플레이어는 2명 이상 5명 이하여야 합니다."),
     INVALID_INPUT("유효하지 않은 입력입니다."),
     INVALID_BETTING_AMOUNT_INPUT("유효하지 않은 배팅 금액 입력입니다."),
-    OUT_OF_AMOUNT_RANGE("배팅 금액은 1000원 이상 50000원이하여야 합니다.");
+    OUT_OF_AMOUNT_RANGE("배팅 금액은 1000원 이상 50000원이하여야 합니다."),
+    INVALID_BETTING_AMOUNT_UNIT("배팅 금액은 천 원 단위여야 합니다.");
 
     private final String message;
 
