@@ -15,8 +15,8 @@ public class Participants {
 
     public Participants(List<Participant> participants) {
         validatePlayerCounts(participants);
-        participants.add(new Participant(new Name(DEALER_NAME), new HandCards(new ArrayList<>()), true));
-        this.participants = participants;
+        this.participants = new ArrayList<>(participants);
+        this.participants.add(new Participant(new Name(DEALER_NAME), new HandCards(new ArrayList<>()), true));
     }
 
     public Participant getDealer() {
