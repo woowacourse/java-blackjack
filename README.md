@@ -41,7 +41,7 @@
 
 ### 리팩토링 대상
 - [x] updateScore 제거
-- [ ] GameResult 로직 수정
+- [x] GameResult 로직 수정
 ```
 (플레이어 기준)
 플레이어 혼자 블랙잭이면 승리
