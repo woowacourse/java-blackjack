@@ -47,4 +47,12 @@ public class DealerTest {
 
         assertThat(beforeSize).isEqualTo(afterSize);
     }
+
+    @Test
+    void 딜러는_배팅금이_없다() {
+        Dealer dealer=new Dealer();
+        int amount=dealer.getBettingMoney();
+
+        assertThat(amount).isEqualTo(0);
+    }
 }
