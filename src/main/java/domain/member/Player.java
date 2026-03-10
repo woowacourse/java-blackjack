@@ -13,4 +13,9 @@ public class Player extends Member {
     public List<Card> showFirstCards() {
         return super.handCards();
     }
+
+    @Override
+    public boolean isDealer() {
+        return false;
+    }
 }

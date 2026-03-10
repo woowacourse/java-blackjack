@@ -59,7 +59,7 @@ public class Members {
     public Map<String, RoundResult> judgeGameResults() {
         Member dealer = findDealer();
         return members.stream()
-                .filter(member -> member instanceof Player)
+                .filter(member -> !member.isDealer())
                 .collect(Collectors.toMap(
                                 Member::getName,
                                 player -> RoundResult.judgeAgainst(
@@ -74,7 +74,7 @@ public class Members {
 
     private Member findDealer() {
         return members.stream()
-                .filter(member -> member instanceof Dealer)
+                .filter(Member::isDealer)
                 .findFirst()
                 .orElseThrow(NoSuchElementException::new);
     }
