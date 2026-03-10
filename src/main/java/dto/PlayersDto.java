@@ -9,8 +9,4 @@ public record PlayersDto(
     Dealer dealer
 ) {
 
-    @Override
-    public List<Player> players() {
-        return List.copyOf(players);
-    }
 }
