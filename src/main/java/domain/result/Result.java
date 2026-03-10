@@ -4,9 +4,6 @@ import java.util.*;
 
 public class Result {
     private static final int INIT_COUNT = 0;
-    private static final int WIN_INDEX = 0;
-    private static final int DRAW_INDEX = 1;
-    private static final int DEFEAT_INDEX = 2;
 
     private final Map<String, ResultInfo> gameResult;
 
@@ -23,22 +20,22 @@ public class Result {
     }
 
     public List<Integer> dealerResult() {
-        List<Integer> dealerScoreBoard = new ArrayList<>(List.of(INIT_COUNT, INIT_COUNT, INIT_COUNT));
+        List<Integer> dealerResultBoard = new ArrayList<>(List.of(INIT_COUNT, INIT_COUNT, INIT_COUNT));
         for (Map.Entry<String, ResultInfo> entry : gameResult.entrySet()) {
-            calculateDealerScoreBoard(entry, dealerScoreBoard);
+            calculateDealerResultBoard(entry, dealerResultBoard);
         }
-        return dealerScoreBoard;
+        return dealerResultBoard;
     }
 
-    private void calculateDealerScoreBoard(Map.Entry<String, ResultInfo> entry, List<Integer> dealerScoreBoard) {
+    private void calculateDealerResultBoard(Map.Entry<String, ResultInfo> entry, List<Integer> dealerResultBoard) {
         if (entry.getValue().equals(ResultInfo.WIN)) {
-            dealerScoreBoard.set(DEFEAT_INDEX, dealerScoreBoard.get(DEFEAT_INDEX) + 1);
+            dealerResultBoard.set(ResultInfo.DEFEAT.getCode(), dealerResultBoard.get(ResultInfo.DEFEAT.getCode()) + 1);
         }
         if (entry.getValue().equals(ResultInfo.DEFEAT)) {
-            dealerScoreBoard.set(WIN_INDEX, dealerScoreBoard.get(WIN_INDEX) + 1);
+            dealerResultBoard.set(ResultInfo.WIN.getCode(), dealerResultBoard.get(ResultInfo.WIN.getCode()) + 1);
         }
         if (entry.getValue().equals(ResultInfo.DRAW)) {
-            dealerScoreBoard.set(DRAW_INDEX, dealerScoreBoard.get(DRAW_INDEX) + 1);
+            dealerResultBoard.set(ResultInfo.DRAW.getCode(), dealerResultBoard.get(ResultInfo.DRAW.getCode()) + 1);
         }
     }
 }

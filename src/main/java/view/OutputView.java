@@ -60,7 +60,10 @@ public class OutputView {
     public static void gameResultMessage(Result result) {
         System.out.printf(FINAL_WIN_DEFEAT_DRAW_MESSAGE);
         System.out.printf(DEALER_RESULT,
-                result.dealerResult().getFirst(), result.dealerResult().get(1), result.dealerResult().get(2));
+                result.dealerResult().get(ResultInfo.WIN.getCode()),
+                result.dealerResult().get(ResultInfo.DRAW.getCode()),
+                result.dealerResult().get(ResultInfo.DEFEAT.getCode())
+        );
 
         for (Map.Entry<String, ResultInfo> entry : result.getGameResult().entrySet()) {
             System.out.printf(PLAYER_RESULT, entry.getKey(), entry.getValue().getInfo());
