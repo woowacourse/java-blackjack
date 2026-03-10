@@ -3,21 +3,20 @@ package domain;
 import static java.util.Arrays.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class Cards {
+public class Deck {
 
     private final List<Card> cards;
 
-    private Cards(CardShuffleStrategy shuffleStrategy) {
+    private Deck(CardShuffleStrategy shuffleStrategy) {
         this.cards = generateCards();
         shuffleStrategy.shuffle(cards);
     }
 
-    public static Cards of(CardShuffleStrategy shuffleStrategy) {
-        return new Cards(shuffleStrategy);
+    public static Deck of(CardShuffleStrategy shuffleStrategy) {
+        return new Deck(shuffleStrategy);
     }
 
     private List<Card> generateCards() {

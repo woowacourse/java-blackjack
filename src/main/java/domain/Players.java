@@ -7,17 +7,17 @@ public class Players {
 
     private final List<Player> players;
 
-    private Players(Cards cards, List<String> userNames) {
+    private Players(Deck deck, List<String> userNames) {
         List<Player> players = new ArrayList<>();
 
         for (int i = 0; i < userNames.size(); i++) {
-            players.add(Player.of(cards.drawInitialHand(), userNames.get(i)));
+            players.add(Player.of(deck.drawInitialHand(), userNames.get(i)));
         }
         this.players = players;
     }
 
-    public static Players of(Cards cards, List<String> userNames) {
-        return new Players(cards, userNames);
+    public static Players of(Deck deck, List<String> userNames) {
+        return new Players(deck, userNames);
     }
 
     public List<String> getUserNames() {

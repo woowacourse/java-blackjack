@@ -23,7 +23,7 @@ public class BlackjackController {
     public void run() {
         List<String> userNames = getUserNames();
 
-        Cards deck = Cards.of(new RandomCardStrategy());
+        Deck deck = Deck.of(new RandomCardStrategy());
         ;
         Dealer dealer = Dealer.of(deck.drawInitialHand());
         Players players = Players.of(deck, userNames);
@@ -62,18 +62,18 @@ public class BlackjackController {
 
     }
 
-    private void addCard(Players players, Cards deck, Dealer dealer) {
+    private void addCard(Players players, Deck deck, Dealer dealer) {
         askPlayersAddCard(players, deck);
         addDealerCard(dealer, deck);
     }
 
-    private void askPlayersAddCard(Players players, Cards deck) {
+    private void askPlayersAddCard(Players players, Deck deck) {
         for (Player player : players.getPlayers()) {
             askAddCard(player, deck);
         }
     }
 
-    private void askAddCard(Player player, Cards deck) {
+    private void askAddCard(Player player, Deck deck) {
         String answer = InputMessage.USER_INPUT_YES.getMessage();
         while (shouldDrawCard(player, answer)) {
             outputView.printfList(InputMessage.ASK_ADD_CARD.getMessage(), player.getName());
@@ -88,14 +88,14 @@ public class BlackjackController {
         return !player.isBust(player.calculateScore()) && sayYes(answer);
     }
 
-    private void dealAdditionalCardIfRequested(Player player, Cards deck, boolean wantsCard) {
+    private void dealAdditionalCardIfRequested(Player player, Deck deck, boolean wantsCard) {
         if (extracted(player, deck, wantsCard)) return;
         if (player.getCardsInfo().size() == Policy.FIRST_DRAW_SIZE) {
             outputView.println(player.getPlayerInfo());
         }
     }
 
-    private boolean extracted(Player player, Cards deck, boolean wantsCard) {
+    private boolean extracted(Player player, Deck deck, boolean wantsCard) {
         if (wantsCard) {
             player.addCard(deck.draw());
             outputView.println(player.getPlayerInfo());
@@ -108,7 +108,7 @@ public class BlackjackController {
         return answer.equals(InputMessage.USER_INPUT_YES.getMessage());
     }
 
-    private void addDealerCard(Dealer dealer, Cards deck) {
+    private void addDealerCard(Dealer dealer, Deck deck) {
         outputView.separatorLine();
         while (dealer.shouldHit()) {
             outputView.println(OutputMessage.DEALER_DRAW_CARD.getMessage());
