@@ -2,19 +2,14 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
-import vo.GameResult;
 
 public class Participants {
     private static final Integer MAX_PLAYER_COUNT = 16;
 
     private final List<User> participants;
     private final Dealer dealer;
-    private final GameJudge gameJudge = new GameJudge();
 
     public Participants(String participantsName) {
         this.participants = new ArrayList<>();
@@ -72,30 +67,5 @@ public class Participants {
 
     public void dealCardToDealer(Card card) {
         dealer.receiveCard(card);
-    }
-
-    public Map<String, GameResult> calculateUserResults() {
-        Map<String, GameResult> userResults = new HashMap<>();
-        for (User user : participants) {
-            userResults.put(user.getName(), gameJudge.judge(dealer.getScore(), user.getScore()));
-        }
-        return userResults;
-    }
-
-    public EnumMap<GameResult, Integer> calculateDealerResults() {
-        EnumMap<GameResult, Integer> dealerResults = initEnumMap();
-        for (User user : participants) {
-            GameResult dealerResult = gameJudge.judge(dealer.getScore(), user.getScore()).opposite();
-            dealerResults.replace(dealerResult, dealerResults.get(dealerResult) + 1);
-        }
-        return dealerResults;
-    }
-
-    private EnumMap<GameResult, Integer> initEnumMap() {
-        EnumMap<GameResult, Integer> dealerScore = new EnumMap<>(GameResult.class);
-        for (GameResult result : GameResult.values()) {
-            dealerScore.put(result, 0);
-        }
-        return dealerScore;
     }
 }
