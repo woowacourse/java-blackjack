@@ -19,7 +19,7 @@ public class BlackjackService {
         List<Card> cards = new ArrayList<>();
 
         for (int i = 0; i < drawCount; i++) {
-            int cardIndex = cardShuffler.shuffleCardDeck(cardDeck.getDeckSize());
+            int cardIndex = cardShuffler.getRandomCardIndex(cardDeck.getDeckSize());
             cards.add(cardDeck.getCardOf(cardIndex));
             cardDeck.removeCardOf(cardIndex);
         }

@@ -17,7 +17,7 @@ class CardShufflerImplTest {
         int size = 52;
 
         // when
-        int cardIndex = cardShuffler.shuffleCardDeck(size);
+        int cardIndex = cardShuffler.getRandomCardIndex(size);
 
         // then
         assertThat(cardIndex).isBetween(0, size - 1);

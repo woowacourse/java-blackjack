@@ -41,7 +41,7 @@ class BlackjackServiceTest {
     static class FakeCardShuffler implements CardShuffler {
 
         @Override
-        public int shuffleCardDeck(int deckSize) {
+        public int getRandomCardIndex(int deckSize) {
             return 0;
         }
     }
