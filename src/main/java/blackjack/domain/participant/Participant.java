@@ -30,12 +30,12 @@ public abstract class Participant {
         return hand.isBust();
     }
 
-    public List<Card> getCards() {
-        return hand.getCards();
-    }
-
     public String getName() {
         return name.getName();
+    }
+
+    public List<Card> getCards() {
+        return hand.getCards();
     }
 
     public abstract boolean canReceiveCard();

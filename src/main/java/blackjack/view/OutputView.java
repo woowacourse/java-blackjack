@@ -17,6 +17,7 @@ public class OutputView {
     private static final String DEALER_CARD_MESSAGE = "딜러카드: %s%n";
     private static final String PLAYER_CARD_MESSAGE = "%s카드: %s%n";
     private static final String DEALER_HIT_MESSAGE = "%n딜러는 16이하라 한장의 카드를 더 받았습니다.%n";
+
     private static final String FINAL_CARDS_FORMAT = "%s카드: %s - 결과: %d%n";
     private static final String FINAL_RESULTS_HEADER = "%n## 최종 수익%n";
     private static final String PROFIT_FORMAT = "%s: %d%n";

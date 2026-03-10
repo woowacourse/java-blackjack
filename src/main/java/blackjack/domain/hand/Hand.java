@@ -16,10 +16,6 @@ public class Hand {
         cards.add(card);
     }
 
-    public List<Card> getCards() {
-        return List.copyOf(cards);
-    }
-
     public Score calculateScore() {
         final int baseScore = sumCardValues();
         final Score scoreWithAce = new Score(baseScore + ACE_BONUS);
@@ -29,9 +25,13 @@ public class Hand {
         return new Score(baseScore);
     }
 
+    private boolean shouldApplyAceBonus(final Score score) {
+        return hasAce() && !score.isBust();
+    }
+
     public boolean isBlackjack() {
-        return cards.size() == BLACKJACK_CARD_COUNT
-                && calculateScore().getValue() == BLACKJACK_SCORE;
+        return cards.size() == BLACKJACK_CARD_COUNT &&
+                calculateScore().getValue() == BLACKJACK_SCORE;
     }
 
     private int sumCardValues() {
@@ -40,15 +40,15 @@ public class Hand {
                 .sum();
     }
 
-    private boolean shouldApplyAceBonus(final Score score) {
-        return hasAce() && !score.isBust();
-    }
-
     private boolean hasAce() {
         return cards.stream().anyMatch(Card::isAce);
     }
 
     public boolean isBust() {
         return calculateScore().isBust();
+    }
+
+    public List<Card> getCards() {
+        return List.copyOf(cards);
     }
 }
