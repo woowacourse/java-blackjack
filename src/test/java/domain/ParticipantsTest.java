@@ -2,9 +2,7 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.util.List;
 import org.junit.jupiter.api.Test;
-import util.Validator;
 
 public class ParticipantsTest {
     public static final String ERROR_PREFIX = "[ERROR] ";

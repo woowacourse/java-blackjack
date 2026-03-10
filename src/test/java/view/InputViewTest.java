@@ -1,10 +1,10 @@
-package util;
+package view;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import org.junit.jupiter.api.Test;
 
-public class ValidatorTest {
+public class InputViewTest {
     public static final String ERROR_PREFIX = "[ERROR] ";
 
     @Test
@@ -14,7 +14,7 @@ public class ValidatorTest {
 
         // when & then
         assertThatThrownBy(() ->
-                Validator.validateGetMoreEmptyInput(answer))
+                InputView.validateGetMoreEmptyInput(answer))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageStartingWith(ERROR_PREFIX);
     }
@@ -26,8 +26,9 @@ public class ValidatorTest {
 
         // when & then
         assertThatThrownBy(() ->
-                Validator.validateYesOrNo(answer))
+                InputView.validateYesOrNo(answer))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageStartingWith(ERROR_PREFIX);
     }
+
 }
