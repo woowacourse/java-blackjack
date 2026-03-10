@@ -37,9 +37,6 @@ public abstract class Participant {
         hand.addCard(card);
     }
 
-    public boolean isOver17() {
-        return hand.isOver17();
-    }
 
     public String getFirstCardName() {
         return hand.getFirstCardName();
