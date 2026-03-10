@@ -16,6 +16,10 @@ public class CardRepository {
         return card;
     }
 
+    public int getCardCount() {
+        return cards.size();
+    }
+
     public boolean isExistByShapeAndRank(CardRank cardRank, CardShape cardShape) {
         return cards.stream()
                 .anyMatch(card -> matchesRankAndShape(card, cardRank, cardShape));
