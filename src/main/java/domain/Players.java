@@ -9,9 +9,8 @@ public class Players {
 
     private Players(Deck deck, List<String> userNames) {
         List<Player> players = new ArrayList<>();
-
-        for (int i = 0; i < userNames.size(); i++) {
-            players.add(Player.of(deck.drawInitialHand(), userNames.get(i)));
+        for (String userName : userNames) {
+            players.add(Player.of(deck.drawInitialHand(), userName));
         }
         this.players = players;
     }
@@ -20,19 +19,19 @@ public class Players {
         return new Players(deck, userNames);
     }
 
-    public List<String> getUserNames() {
+    public List<String> getPlayersName() {
         return players.stream()
                 .map(Player::getName)
                 .toList();
     }
 
-    public List<String> getPlayerInfo() {
+    public List<String> getPlayersInfo() {
         return players.stream()
                 .map(Player::getPlayerInfo)
                 .toList();
     }
 
-    public List<String> getPlayerScoreInfo() {
+    public List<String> getPlayersScoreInfo() {
         return players.stream()
                 .map(Player::getPlayerScoreResult)
                 .toList();

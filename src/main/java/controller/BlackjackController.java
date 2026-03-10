@@ -55,10 +55,10 @@ public class BlackjackController {
     private void printInitialCards(Players players, Dealer dealer) {
         outputView.separatorLine();
         outputView.printfList(OutputMessage.DEAL_INITIAL_CARDS.getMessage(),
-                OutputMessage.DELIMITER.join(players.getUserNames()));
+                OutputMessage.DELIMITER.join(players.getPlayersName()));
         outputView.separatorLine();
         outputView.println(dealer.getDealerInitialInfo());
-        outputView.printList(players.getPlayerInfo());
+        outputView.printList(players.getPlayersInfo());
 
     }
 
@@ -89,13 +89,13 @@ public class BlackjackController {
     }
 
     private void dealAdditionalCardIfRequested(Player player, Deck deck, boolean wantsCard) {
-        if (extracted(player, deck, wantsCard)) return;
-        if (player.getCardSize() == Policy.FIRST_DRAW_SIZE) {
+        if (dealCardIfRequested(player, deck, wantsCard)) return;
+        if (player.isInitialHand()) {
             outputView.println(player.getPlayerInfo());
         }
     }
 
-    private boolean extracted(Player player, Deck deck, boolean wantsCard) {
+    private boolean dealCardIfRequested(Player player, Deck deck, boolean wantsCard) {
         if (wantsCard) {
             player.addCard(deck.draw());
             outputView.println(player.getPlayerInfo());
@@ -119,7 +119,7 @@ public class BlackjackController {
     private void printFinalCards(Dealer dealer, Players players) {
         outputView.separatorLine();
         outputView.println(dealer.getDealerScoreInfo());
-        outputView.printList(players.getPlayerScoreInfo());
+        outputView.printList(players.getPlayersScoreInfo());
     }
 
     private void printGameResult(Dealer dealer, Players players) {
