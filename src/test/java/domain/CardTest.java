@@ -57,14 +57,20 @@ public class CardTest {
     }
 
     @Test
-    void 카드_표시_이름_반환() {
+    void 카드_랭크_이름_반환() {
         // given
         Card card = new Card(Suit.SPADE, Rank.ACE);
 
-        // when
-        String displayName = card.getDisplayName();
+        // when & then
+        assertThat(card.getRankName()).isEqualTo("A");
+    }
 
-        // then
-        assertThat(displayName).isEqualTo("A스페이드");
+    @Test
+    void 카드_수트_이름_반환() {
+        // given
+        Card card = new Card(Suit.SPADE, Rank.ACE);
+
+        // when & then
+        assertThat(card.getSuitName()).isEqualTo("스페이드");
     }
 }

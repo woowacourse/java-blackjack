@@ -1,8 +1,8 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Hand {
     private static final Integer BUST_THRESHOLD = 21;
@@ -19,21 +19,12 @@ public class Hand {
         cards.add(card);
     }
 
-    public String getCardsDisplay() {
-        return cards.stream()
-                .map(Card::getDisplayName)
-                .collect(Collectors.joining(", "));
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 
     public Boolean determineDealerDealMore() {
-        if (calculateTotalScore() <= DEALER_HIT_THRESHOLD) {
-            return true;
-        }
-        return false;
-    }
-
-    public String getFinalDisplay() {
-        return " - 결과: " + calculateTotalScore();
+        return calculateTotalScore() <= DEALER_HIT_THRESHOLD;
     }
 
     public int calculateTotalScore() {
@@ -62,9 +53,5 @@ public class Hand {
             return totalScore - ACE_HIGH_LOW_DIFFERENCE;
         }
         return totalScore;
-    }
-
-    public String getFirstCardDisplay() {
-        return cards.getFirst().getDisplayName();
     }
 }

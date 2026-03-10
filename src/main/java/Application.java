@@ -58,9 +58,8 @@ public class Application {
     }
 
     public void selectToDealExtraCard() {
-        List<String> participantNames = getParticipantNames();
-
-        for(int index = 0; index < participantNames.size(); index++) {
+        List<String> participantNames = blackjackGame.getParticipantNames();
+        for (int index = 0; index < participantNames.size(); index++) {
             askCardToPlayer(participantNames.get(index), index);
         }
     }
@@ -77,12 +76,16 @@ public class Application {
 
     private void printWinningResult() {
         outputView.printMessage(Message.FINAL_RESULT_ANNOUNCE);
-        blackjackGame.evaluateGame().forEach(outputView::printMessage);
+        outputView.printWinningResults(
+            blackjackGame.getDealerResults(),
+            blackjackGame.getUserResults(),
+            blackjackGame.getParticipantNames()
+        );
     }
 
     private void printEachHand() {
-        outputView.printDealerFinalHand(blackjackGame.getDealerHandDisplay());
-        blackjackGame.getUserFinalHandDisplays().forEach(outputView::printMessage);
+        outputView.printDealerFinalHand(blackjackGame.getDealer());
+        blackjackGame.getUsers().forEach(outputView::printUserFinalHand);
     }
 
     private void dealDealerCard() {
@@ -93,19 +96,15 @@ public class Application {
 
     private void printDealResult() {
         outputView.printDealComplete(blackjackGame.getParticipantNames());
-        outputView.printDealerFirstCard(blackjackGame.getDealerFirstCardDisplay());
-        blackjackGame.getUserCardsDisplays().forEach(outputView::printMessage);
+        outputView.printDealerFirstCard(blackjackGame.getDealer().getFirstCard());
+        blackjackGame.getUsers().forEach(outputView::printUserCards);
     }
 
     private void determinePlayerContinue(String answer, int index) {
         if (answer.equalsIgnoreCase("y")) {
-            String cardDrawMessage = blackjackGame.processPlayerDecision(index);
-            outputView.printMessage(cardDrawMessage);
+            blackjackGame.processPlayerDecision(index);
+            outputView.printUserCards(blackjackGame.getUsers().get(index));
         }
-    }
-
-    private List<String> getParticipantNames() {
-        return blackjackGame.getParticipantNames();
     }
 
     private <T> T retryUntilSuccess(Supplier<T> action) {

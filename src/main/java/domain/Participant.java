@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.List;
+
 public abstract class Participant {
     protected final Hand hand;
 
@@ -11,12 +13,8 @@ public abstract class Participant {
         hand.saveCard(card);
     }
 
-    public String getCardsDisplay() {
-        return hand.getCardsDisplay();
-    }
-
-    public String getFinalDisplay() {
-        return hand.getFinalDisplay();
+    public List<Card> getCards() {
+        return hand.getCards();
     }
 
     public int getScore() {

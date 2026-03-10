@@ -17,12 +17,12 @@
   - 뷰를 위한 로직은 오직 뷰에서만 처리하도록 수정.
   - domain 패키지 내의 객체들이 view를 import 하는 것은 의존성 역전임.
   - [x] `User`: `getFormatedAskGetExtraCard()` 제거, `view.Message` import 제거
-  - [ ] `BlackjackGame`: `make*Display()` 메서드 전부 제거, `view.Message` import 제거
-  - [ ] `Card`: `getDisplayName()` 제거 → `getRankName()`, `getSuitName()` 으로 분리
-  - [ ] `Hand`: `getCardsDisplay()`, `getFinalDisplay()`, `getFirstCardDisplay()` 제거 → `getCards()` (List<Card>) 반환
-  - [ ] `Participant`: `getCardsDisplay()`, `getFinalDisplay()` 제거 → `getCards()`, `getScore()`만 유지
-  - [ ] `Participants`: 포맷팅 메서드 전부 제거 (`makeOneUserCard`, `formatDealerDisplay`, `formatUserDisplays`, `addScoreToUserHand`, `getUserCardsDisplays` 등) → `getUsers()`, `getDealer()` 같은 순수 데이터 반환 메서드로 교체
-  - [ ] `OutputView`: 위에서 제거한 모든 포맷팅 로직을 여기서 담당
+  - [x] `BlackjackGame`: `make*Display()` 메서드 전부 제거, `view.Message` import 제거
+  - [x] `Card`: `getDisplayName()` 제거 → `getRankName()`, `getSuitName()` 으로 분리
+  - [x] `Hand`: `getCardsDisplay()`, `getFinalDisplay()`, `getFirstCardDisplay()` 제거 → `getCards()` (List<Card>) 반환
+  - [x] `Participant`: `getCardsDisplay()`, `getFinalDisplay()` 제거 → `getCards()`, `getScore()`만 유지
+  - [x] `Participants`: 포맷팅 메서드 전부 제거 (`makeOneUserCard`, `formatDealerDisplay`, `formatUserDisplays`, `addScoreToUserHand`, `getUserCardsDisplays` 등) → `getUsers()`, `getDealer()` 같은 순수 데이터 반환 메서드로 교체
+  - [x] `OutputView`: 위에서 제거한 모든 포맷팅 로직을 여기서 담당
 - [x] **6. `suit`의 변수명에 class 이름이 들어가는 것 수정.**
 - [ ] **7. 게임의 흐름은 도메인에서, 입출력이 필요한 경우만 Application으로**
   - ex) readParticipants나 shuffleCards의 경우, read는 inputView에서 처리하고 shuffle은 Game 또는 deck 자체가 진행.

@@ -3,8 +3,10 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import vo.GameResult;
 
 public class BlackjackGameTest {
     private BlackjackGame blackjackGame;
@@ -17,67 +19,54 @@ public class BlackjackGameTest {
     }
 
     @Test
-    void 참가자_수만큼_추가_카드_요청_메시지_생성() {
+    void 참가자_수만큼_이름_반환() {
         // when
-        List<String> requestMessages = blackjackGame.getParticipantNames();
+        List<String> names = blackjackGame.getParticipantNames();
 
         // then
-        assertThat(requestMessages).hasSize(2);
+        assertThat(names).hasSize(2);
     }
 
     @Test
-    void 추가_카드_요청_메시지에_참가자_이름_포함() {
+    void 참가자_이름_포함_확인() {
         // when
-        List<String> requestMessages = blackjackGame.getParticipantNames();
+        List<String> names = blackjackGame.getParticipantNames();
 
         // then
-        assertThat(requestMessages.get(0)).contains("영기");
-        assertThat(requestMessages.get(1)).contains("라이");
+        assertThat(names.get(0)).isEqualTo("영기");
+        assertThat(names.get(1)).isEqualTo("라이");
     }
 
     @Test
-    void 초기_카드_배분_후_유저_카드_표시_개수() {
-        // when
-        blackjackGame.dealCards();
-        List<String> userCardsDisplays = blackjackGame.getUserCardsDisplays();
-
-        // then
-        assertThat(userCardsDisplays).hasSize(2);
-    }
-
-    @Test
-    void 초기_카드_배분_후_유저_카드_표시에_이름_포함() {
+    void 초기_카드_배분_후_유저_수() {
         // when
         blackjackGame.dealCards();
-        List<String> userCardsDisplays = blackjackGame.getUserCardsDisplays();
 
         // then
-        assertThat(userCardsDisplays.get(0)).contains("영기");
-        assertThat(userCardsDisplays.get(1)).contains("라이");
+        assertThat(blackjackGame.getUsers()).hasSize(2);
     }
 
     @Test
-    void 게임_결과_항목_수는_딜러_포함_참가자_수_더하기_1() {
+    void 초기_카드_배분_후_유저_이름_확인() {
+        // when
+        blackjackGame.dealCards();
+        List<User> users = blackjackGame.getUsers();
+
+        // then
+        assertThat(users.get(0).getName()).isEqualTo("영기");
+        assertThat(users.get(1).getName()).isEqualTo("라이");
+    }
+
+    @Test
+    void 게임_결과_유저_수만큼_반환() {
         // given
         blackjackGame.dealCards();
 
         // when
-        List<String> results = blackjackGame.evaluateGame();
+        Map<String, GameResult> results = blackjackGame.getUserResults();
 
         // then
-        assertThat(results).hasSize(3);
-    }
-
-    @Test
-    void 게임_결과_첫번째_항목은_딜러() {
-        // given
-        blackjackGame.dealCards();
-
-        // when
-        List<String> results = blackjackGame.evaluateGame();
-
-        // then
-        assertThat(results.get(0)).contains("딜러");
+        assertThat(results).hasSize(2);
     }
 
     @Test
@@ -86,10 +75,23 @@ public class BlackjackGameTest {
         blackjackGame.dealCards();
 
         // when
-        List<String> results = blackjackGame.evaluateGame();
+        Map<String, GameResult> results = blackjackGame.getUserResults();
 
         // then
-        assertThat(results.get(1)).contains("영기");
-        assertThat(results.get(2)).contains("라이");
+        assertThat(results).containsKey("영기");
+        assertThat(results).containsKey("라이");
+    }
+
+    @Test
+    void 딜러_결과에_승패_정보_포함() {
+        // given
+        blackjackGame.dealCards();
+
+        // when
+        var dealerResults = blackjackGame.getDealerResults();
+
+        // then
+        assertThat(dealerResults).containsKey(GameResult.WIN);
+        assertThat(dealerResults).containsKey(GameResult.LOSE);
     }
 }

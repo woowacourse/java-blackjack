@@ -34,7 +34,7 @@ public class Dealer extends Participant{
         return GameResult.LOSE;
     }
 
-    public String getOneCardDisplay() {
-        return hand.getFirstCardDisplay();
+    public Card getFirstCard() {
+        return hand.getCards().get(0);
     }
 }

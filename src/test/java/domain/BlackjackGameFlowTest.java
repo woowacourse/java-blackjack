@@ -37,30 +37,33 @@ public class BlackjackGameFlowTest {
     }
 
     @Test
-    void 초기_배분_후_영기_카드_표시() {
+    void 초기_배분_후_영기_카드_확인() {
         // when
-        List<String> displays = blackjackGame.getUserCardsDisplays();
+        List<Card> cards = blackjackGame.getUsers().get(0).getCards();
 
         // then
-        assertThat(displays.get(0)).contains("영기", "K스페이드", "A스페이드");
+        assertThat(cards.get(0).getRankName()).isEqualTo("K");
+        assertThat(cards.get(0).getSuitName()).isEqualTo("스페이드");
+        assertThat(cards.get(1).getRankName()).isEqualTo("A");
     }
 
     @Test
-    void 초기_배분_후_라이_카드_표시() {
+    void 초기_배분_후_라이_카드_확인() {
         // when
-        List<String> displays = blackjackGame.getUserCardsDisplays();
+        List<Card> cards = blackjackGame.getUsers().get(1).getCards();
 
         // then
-        assertThat(displays.get(1)).contains("라이", "2하트", "3하트");
+        assertThat(cards.get(0).getRankName()).isEqualTo("2");
+        assertThat(cards.get(0).getSuitName()).isEqualTo("하트");
     }
 
     @Test
     void 라이_히트_후_카드_추가됨() {
         // when
-        String result = blackjackGame.processPlayerDecision(1);
+        blackjackGame.processPlayerDecision(1);
 
         // then
-        assertThat(result).contains("라이", "2하트", "3하트", "10클로버");
+        assertThat(blackjackGame.getUsers().get(1).getCards()).hasSize(3);
     }
 
     @Test
@@ -77,11 +80,8 @@ public class BlackjackGameFlowTest {
         // given
         blackjackGame.dealToDealer();
 
-        // when
-        List<String> results = blackjackGame.evaluateGame();
-
-        // then
-        assertThat(results.get(1)).contains("영기", GameResult.WIN.getName());
+        // when & then
+        assertThat(blackjackGame.getUserResults().get("영기")).isEqualTo(GameResult.WIN);
     }
 
     @Test
@@ -90,22 +90,20 @@ public class BlackjackGameFlowTest {
         blackjackGame.processPlayerDecision(1);
         blackjackGame.dealToDealer();
 
-        // when
-        List<String> results = blackjackGame.evaluateGame();
-
-        // then
-        assertThat(results.get(2)).contains("라이", GameResult.LOSE.getName());
+        // when & then
+        assertThat(blackjackGame.getUserResults().get("라이")).isEqualTo(GameResult.LOSE);
     }
 
     @Test
-    void 딜러_최종_결과_포맷() {
+    void 딜러_결과에_승패_포함() {
         // given
         blackjackGame.dealToDealer();
 
         // when
-        List<String> results = blackjackGame.evaluateGame();
+        var dealerResults = blackjackGame.getDealerResults();
 
         // then
-        assertThat(results.get(0)).contains("딜러", "승", "패");
+        assertThat(dealerResults).containsKey(GameResult.WIN);
+        assertThat(dealerResults).containsKey(GameResult.LOSE);
     }
 }

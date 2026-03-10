@@ -16,8 +16,12 @@ public class Card {
         return rank.getScore();
     }
 
-    public String getDisplayName() {
-        return rank.getName() + suit.getName();
+    public String getRankName() {
+        return rank.getName();
+    }
+
+    public String getSuitName() {
+        return suit.getName();
     }
 
     public boolean isAceCard() {

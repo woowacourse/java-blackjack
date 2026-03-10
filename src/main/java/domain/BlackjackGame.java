@@ -1,6 +1,9 @@
 package domain;
 
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
+import vo.GameResult;
 
 public class BlackjackGame {
     private final static Integer FIRST_CARD_DEAL_COUNT = 2;
@@ -21,7 +24,7 @@ public class BlackjackGame {
     }
 
     public void dealCards() {
-        for(int cardCount = 0; cardCount < FIRST_CARD_DEAL_COUNT; cardCount++) {
+        for (int cardCount = 0; cardCount < FIRST_CARD_DEAL_COUNT; cardCount++) {
             participants.dealCards(deck);
         }
     }
@@ -30,17 +33,16 @@ public class BlackjackGame {
         return participants.getParticipantNames();
     }
 
-    public String getDealerFirstCardDisplay() {
-        return participants.getDealerCardsDisplay();
+    public List<User> getUsers() {
+        return participants.getUsers();
     }
 
-    public List<String> getUserCardsDisplays() {
-        return participants.getUserCardsDisplays();
+    public Dealer getDealer() {
+        return participants.getDealer();
     }
 
-    public String processPlayerDecision(int index) {
+    public void processPlayerDecision(int index) {
         participants.dealCard(deck, index);
-        return participants.makeOneUserCardDelegator(index);
     }
 
     public boolean dealToDealer() {
@@ -51,15 +53,11 @@ public class BlackjackGame {
         return false;
     }
 
-    public String getDealerHandDisplay() {
-        return participants.getAllDealerCardsDisplay() + participants.getDealerFinalDisplay();
+    public Map<String, GameResult> getUserResults() {
+        return participants.calculateUserResults();
     }
 
-    public List<String> getUserFinalHandDisplays() {
-        return participants.addScoreToUserHand();
-    }
-
-    public List<String> evaluateGame() {
-        return participants.judgeWinner();
+    public EnumMap<GameResult, Integer> getDealerResults() {
+        return participants.calculateDealerResults();
     }
 }

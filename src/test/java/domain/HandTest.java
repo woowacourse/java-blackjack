@@ -79,15 +79,17 @@ public class HandTest {
     }
 
     @Test
-    void 카드_표시_콤마로_구분() {
+    void 카드_목록_반환() {
         // given
         hand.saveCard(new Card(Suit.SPADE, Rank.ACE));
         hand.saveCard(new Card(Suit.HEART, Rank.KING));
 
         // when
-        String display = hand.getCardsDisplay();
+        var cards = hand.getCards();
 
         // then
-        assertThat(display).isEqualTo("A스페이드, K하트");
+        assertThat(cards).hasSize(2);
+        assertThat(cards.get(0).getRankName()).isEqualTo("A");
+        assertThat(cards.get(1).getRankName()).isEqualTo("K");
     }
 }
