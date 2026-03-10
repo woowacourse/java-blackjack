@@ -22,8 +22,8 @@ public class InputView {
         return sc.nextLine();
     }
 
-    public String getBettingAmount(Player player) {
+    public Integer getBettingAmount(Player player) {
         System.out.println(player.getName() + "의 배팅 금액은?");
-        return sc.nextLine();
+        return Integer.parseInt(sc.nextLine());
     }
 }
