@@ -31,11 +31,8 @@ public class Player extends Participant {
         return compareScore(getScore(), dealer.getScore());
     }
     
-    private GameResult compareScore(int dealerScore, int playerScore) {
-        if (playerScore == dealerScore) {
-            return GameResult.DRAW;
-        }
-        if (playerScore < dealerScore) {
+    private GameResult compareScore(int score, int dealerScore) {
+        if (score < dealerScore) {
             return GameResult.LOSE;
         }
         return GameResult.WIN;
