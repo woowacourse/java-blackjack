@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class DealerTest {
 
     @Test
-    void 드로우가_정상적으로_동작하는_경우() {
+    void 딜러가_카드를_뽑으면_손패의_크기가_1_증가한다() {
         // given
         Dealer dealer = new Dealer();
 
@@ -22,7 +22,7 @@ class DealerTest {
     }
 
     @Test
-    void 딜러가_Burst인_경우() {
+    void 딜러의_카드_점수_합이_21을_초과하면_버스트_상태가_된다() {
         // given
         Dealer dealer = new Dealer();
 

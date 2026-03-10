@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class DeckTest {
 
     @Test
-    void 덱을_정상적으로_생성하는_경우() {
+    void 초기_덱을_생성하면_52장의_카드가_준비된다() {
         // given
         Deck deck = new Deck();
 
@@ -21,7 +21,7 @@ class DeckTest {
     }
 
     @Test
-    void 드로우가_정상적으로_실행되는_경우() {
+    void 덱에서_카드를_뽑으면_남은_카드_수가_1장_감소한다() {
         // given
         Deck deck = new Deck();
 
@@ -34,7 +34,7 @@ class DeckTest {
     }
 
     @Test
-    void 드로우가_실패하는_경우() {
+    void 남은_카드가_없는_빈_덱에서_카드를_뽑으면_예외가_발생한다() {
         // given
         Deck deck = new Deck(new ArrayList<>());
 

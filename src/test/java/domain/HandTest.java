@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class HandTest {
 
     @Test
-    void 손패의_합_계산() {
+    void 손패에_있는_카드들의_점수_합을_정확히_계산한다() {
         //given
         Hand hand = new Hand();
         hand.addCard(new Card(Suit.SPADES, Rank.NUM3));
@@ -26,7 +26,7 @@ class HandTest {
     }
 
     @Test
-    void ACE가_1로_계산되는_경우_손패의_합_계산() {
+    void 점수_합이_21을_초과할_상황이면_ACE를_1점으로_계산한다() {
         //given
         Hand hand = new Hand();
         hand.addCard(new Card(Suit.SPADES, Rank.ACE));
@@ -38,7 +38,7 @@ class HandTest {
     }
 
     @Test
-    void ACE가_11로_계산되는_경우_손패의_합_계산() {
+    void 점수_합이_21_이하라면_ACE를_11점으로_계산한다() {
         //given
         Hand hand = new Hand();
         hand.addCard(new Card(Suit.SPADES, Rank.ACE));
@@ -50,7 +50,7 @@ class HandTest {
     }
 
     @Test
-    void 손패에_정상적으로_카드가_추가되는_경우() {
+    void 손패에_새로운_카드를_추가하면_내부_목록에_정상적으로_포함된다() {
         //given
         Hand hand = new Hand();
         hand.addCard(new Card(Suit.SPADES, Rank.ACE));
@@ -60,7 +60,7 @@ class HandTest {
     }
 
     @Test
-    void 손패가_Burst인_경우() {
+    void 카드_점수의_합이_21을_초과하면_버스트_상태를_반환한다() {
         //given
         Hand hand = new Hand();
         hand.addCard(new Card(Suit.SPADES, Rank.KING));
@@ -70,8 +70,9 @@ class HandTest {
         // when, then
         assertTrue(hand.isBurst());
     }
+
     @Test
-    void 손패가_Burst가_아닌_경우() {
+    void 카드_점수의_합이_21_이하이면_버스트_상태가_아님을_반환한다() {
         //given
         Hand hand = new Hand();
         hand.addCard(new Card(Suit.SPADES, Rank.KING));
