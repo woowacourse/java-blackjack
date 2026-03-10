@@ -85,4 +85,7 @@ public class Cards {
                 .toList();
     }
 
+    public Card removeFirst() {
+        return cards.removeFirst();
+    }
 }

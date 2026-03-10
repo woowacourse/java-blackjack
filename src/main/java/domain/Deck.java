@@ -1,35 +1,19 @@
 package domain;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 public class Deck {
-    private final List<Card> cards;
+    private final Cards cards;
 
+    // TODO: 주입하는 건 Card한테 Deck을 의존하는 상황. -> 직접 주입을 통해 card 의존성을 해결
     public Deck() {
-        List<Card> beforeShuffledCards = generateDeck();
-        this.cards = shuffleCards(beforeShuffledCards);
+        Cards deck = Cards.createCards();
+        Cards.shuffleCards(deck);
+        this.cards = deck;
     }
 
+    // TODO: Deck에 카즈가 있으니까. - 0장이 되었을 때 예외처리
+    // TODO: 카드를 보관하고 섞고, 한 장씩 나눠주는 역할을 한다.
     public Card distributeCard() {
         Card card = cards.removeFirst();
         return card;
-    }
-
-    private List<Card> generateDeck() {
-        List<Card> cards = new ArrayList<>();
-        for (Shape shape : Shape.values()) {
-            for (Number number : Number.values()) {
-                cards.add(new Card(shape, number));
-            }
-        }
-        return cards;
-    }
-
-    private List<Card> shuffleCards(List<Card> cards) {
-        List<Card> shuffledCards = new ArrayList<>(cards);
-        Collections.shuffle(shuffledCards);
-        return shuffledCards;
     }
 }

@@ -25,6 +25,5 @@ class CardsTest {
         Cards.shuffleCards(standardCards);
         List<Card> afterShuffle = standardCards.getCards();
         assertNotEquals(beforeShuffle, afterShuffle);
-
     }
 }
