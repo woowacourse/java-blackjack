@@ -3,7 +3,7 @@ package blackjack.domain;
 public abstract class Participant {
 
     private final String name;
-    protected final Hand hand;
+    private final Hand hand;
 
     public Participant(String name, Hand hand) {
         this.name = name;
@@ -31,6 +31,18 @@ public abstract class Participant {
 
     public String getName() {
         return name;
+    }
+
+    public void addCard(Card card) {
+        hand.addCard(card);
+    }
+
+    public boolean isOver17() {
+        return hand.isOver17();
+    }
+
+    public String getFirstCardName() {
+        return hand.getFirstCardName();
     }
 
 }
