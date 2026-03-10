@@ -9,9 +9,7 @@ public class Player extends Participant {
 
     @Override
     public void recieveCard(Card card) {
-        if (!isBust()) {
-            addCard(card);
-        }
+        addCard(card);
     }
 
     @Override

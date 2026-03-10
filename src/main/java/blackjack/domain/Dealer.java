@@ -11,22 +11,17 @@ public class Dealer extends Participant {
 
     @Override
     public void recieveCard(Card card) {
-        if (!isOver17()) {
-            addCard(card);
-        }
+        addCard(card);
     }
 
     public String getFirstCardNames() {
         return getFirstCardName();
     }
 
-    public boolean isOver17() {
-        return getTotalPoint() >= DEALER_STAND_POINT;
-    }
 
     @Override
     public boolean shouldDraw() {
-        return getTotalPoint() >= DEALER_STAND_POINT;
+        return getTotalPoint() < DEALER_STAND_POINT;
     }
 
 
