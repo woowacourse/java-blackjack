@@ -15,8 +15,8 @@ import blackjack.view.OutputView;
 public class BlackjackController {
     private final Game game;
 
-    public BlackjackController(CardDistributor cardDistributor) {
-        this.game = new Game(cardDistributor);
+    public BlackjackController(CardDistributor cardDistributor, Referee referee) {
+        this.game = new Game(cardDistributor, referee);
     }
 
     public void startGame() {
