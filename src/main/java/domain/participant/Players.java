@@ -7,6 +7,7 @@ import domain.card.Deck;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class Players {
 
@@ -41,9 +42,9 @@ public class Players {
         }
     }
 
-    public void dealCardToAllPlayers(Deck deck) {
+    public void dealCardToAllPlayers(Supplier<Card> cardSupplier) {
         for (Player player : players) {
-            player.receive(deck.drawCard());
+            player.receive(cardSupplier.get());
         }
     }
 
