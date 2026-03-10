@@ -14,6 +14,10 @@ public class Deck {
         this.cards = initialize();
     }
 
+    public Card draw() {
+        return cards.pop();
+    }
+
     private Deque<Card> initialize() {
         Deque<Card> results = new ArrayDeque<>();
         for (CardSuit cardSuit : CardSuit.values()) {
@@ -21,10 +25,6 @@ public class Deck {
                     .forEach(cardNumber -> results.add(new Card(cardNumber, cardSuit)));
         }
         return shuffle(results);
-    }
-
-    public Card draw() {
-        return cards.pop();
     }
 
     private ArrayDeque<Card> shuffle(Deque<Card> results) {

@@ -35,17 +35,8 @@ public class GameController {
         printGameStart(playerNames, dealer, players);
         receiveMoreCard(players, dealer);
 
-        List<ParticipantDto> participantDtos = players.getPlayers().stream()
-                .map(player -> ParticipantDto.from(player.getName(), player))
-                .toList();
-        outputView.printFinalScore(
-                ParticipantDto.from("딜러", dealer), participantDtos);
-
-        Judgement judgement = new Judgement();
-        Map<String, GameResult> playerResults = judgement.judgePlayerResults(players, dealer);
-        Map<GameResult, Integer> dealerResults = judgement.judgeDealerResults(playerResults);
-        outputView.printDealerFinalCount(dealerResults);
-        outputView.printPlayerFinalResults(PlayerResultDto.from(playerResults));
+        printFinalScore(players, dealer);
+        printFinalResults(players, dealer);
     }
 
     private List<String> getPlayerNames() {
@@ -78,6 +69,22 @@ public class GameController {
             dealer.addCard(dealer.dealCard());
             outputView.printDealerReceiveCard();
         }
+    }
+
+    private void printFinalScore(Players players, Dealer dealer) {
+        List<ParticipantDto> participantDtos = players.getPlayers().stream()
+                .map(player -> ParticipantDto.from(player.getName(), player))
+                .toList();
+        outputView.printFinalScore(
+                ParticipantDto.from("딜러", dealer), participantDtos);
+    }
+
+    private void printFinalResults(Players players, Dealer dealer) {
+        Judgement judgement = new Judgement();
+        Map<String, GameResult> playerResults = judgement.judgePlayerResults(players, dealer);
+        Map<GameResult, Integer> dealerResults = judgement.judgeDealerResults(playerResults);
+        outputView.printDealerFinalCount(dealerResults);
+        outputView.printPlayerFinalResults(PlayerResultDto.from(playerResults));
     }
 
     private void processRound(Player player, Dealer dealer) {
