@@ -16,6 +16,16 @@ public class InputView {
 
     public boolean readHitAnswer(String name) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", name);
-        return sc.nextLine().equals("y");
+        String input = sc.nextLine();
+        validateHitAnswer(input);
+
+        return input.equals("y");
     }
+
+    private void validateHitAnswer(String input) {
+        if (!input.equals("y") && !input.equals("n")) {
+            throw new IllegalArgumentException("[ERROR] y 또는 n로 입력해주세요.");
+        }
+    }
+
 }
