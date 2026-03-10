@@ -1,127 +1,180 @@
 package blackjack.domain;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class GameResultTest {
 
     @Test
-    @DisplayName("딜러의 카드 합보다 플레이어의 카드 합이 높으면 승 판정")
+    @DisplayName("딜러 카드 합이 17이고 플레이어 카드 합이 21이면 플레이어가 승리이다")
     void winTest() {
         // given
-        Dealer dealer = new Dealer();
-        Player player = new Player("luke");
-        Card card = new Card(Figure.SPADE, Number.THREE);
-        Card card2 = new Card(Figure.CLOVER, Number.TWO);
-
-        player.receiveCard(card);
-        dealer.receiveCard(card2);
+        Dealer dealer = createDealerWithCars(
+                new Card(Figure.CLOVER, Number.SEVEN),
+                new Card(Figure.CLOVER, Number.KING));
+        Player player = createPlayerWithCars(
+                new Card(Figure.CLOVER, Number.KING),
+                new Card(Figure.CLOVER, Number.NINE),
+                new Card(Figure.CLOVER, Number.TWO));
 
         // when & then
-        assertThat(GameResult.getResult(player, dealer).getStatus())
-                .isEqualTo("승");
+        assertThat(GameResult.matchResult(player, dealer))
+                .isEqualTo(GameResult.WIN);
     }
 
     @Test
-    @DisplayName("딜러의 카드 합보다 플레이어의 카드 합이 낮으면 패 판정")
+    @DisplayName("딜러의 카드 합이 21이고 플레이어 카드 합이 17이면 패배이다")
     void loseTest() {
         // given
-        Dealer dealer = new Dealer();
-        Player player = new Player("luke");
-        Card card = new Card(Figure.SPADE, Number.TWO);
-        Card card2 = new Card(Figure.CLOVER, Number.THREE);
-
-        player.receiveCard(card);
-        dealer.receiveCard(card2);
+        Dealer dealer = createDealerWithCars(
+                new Card(Figure.CLOVER, Number.KING),
+                new Card(Figure.CLOVER, Number.NINE),
+                new Card(Figure.CLOVER, Number.TWO));
+        Player player = createPlayerWithCars(
+                new Card(Figure.CLOVER, Number.SEVEN),
+                new Card(Figure.CLOVER, Number.KING));
 
         // when & then
-        assertThat(GameResult.getResult(player, dealer).getStatus())
-                .isEqualTo("패");
+        assertThat(GameResult.matchResult(player, dealer))
+                .isEqualTo(GameResult.LOSE);
     }
 
     @Test
-    @DisplayName("딜러의 카드합과 플레이어의 카드 합이 같으면 무 판정")
+    @DisplayName("딜러와 플레이어 카드 합이 버스트가 아니고 같다면 무승부이다")
     void drawTest() {
         // given
-        Dealer dealer = new Dealer();
-        Player player = new Player("luke");
-        Card card = new Card(Figure.SPADE, Number.THREE);
-        Card card2 = new Card(Figure.CLOVER, Number.THREE);
-
-        player.receiveCard(card);
-        dealer.receiveCard(card2);
+        Dealer dealer = createDealerWithCars(
+                new Card(Figure.CLOVER, Number.SEVEN),
+                new Card(Figure.CLOVER, Number.KING));
+        Player player = createPlayerWithCars(
+                new Card(Figure.CLOVER, Number.SEVEN),
+                new Card(Figure.CLOVER, Number.KING));
 
         // when & then
-        assertThat(GameResult.getResult(player, dealer).getStatus())
-                .isEqualTo("무");
+        assertThat(GameResult.matchResult(player, dealer))
+                .isEqualTo(GameResult.DRAW);
     }
 
     @Test
-    @DisplayName("딜러가 버스트이고, 플레이어가 버스트가 아니면 승 판정")
+    @DisplayName("딜러가 버스트이고, 플레이어 카드 합이 17이면 승리이다")
     void isWinWhenDealerIsBurstTest() {
         // given
-        Dealer dealer = new Dealer();
-        Player player = new Player("luke");
-        Card card = new Card(Figure.SPADE, Number.THREE);
-        Card card2 = new Card(Figure.SPADE, Number.TEN);
-        Card card3 = new Card(Figure.SPADE, Number.KING);
-        Card card4 = new Card(Figure.CLOVER, Number.JACK);
-
-        player.receiveCard(card);
-        dealer.receiveCard(card2);
-        dealer.receiveCard(card3);
-        dealer.receiveCard(card4);
+        Dealer dealer = createDealerWithCars(
+                new Card(Figure.CLOVER, Number.JACK),
+                new Card(Figure.CLOVER, Number.KING),
+                new Card(Figure.CLOVER, Number.TWO));
+        Player player = createPlayerWithCars(
+                new Card(Figure.CLOVER, Number.SEVEN),
+                new Card(Figure.CLOVER, Number.KING));
 
         // when & then
-        assertThat(GameResult.getResult(player, dealer).getStatus())
-                .isEqualTo("승");
+        assertThat(GameResult.matchResult(player, dealer))
+                .isEqualTo(GameResult.WIN);
     }
 
     @Test
-    @DisplayName("딜러가 버스트가 아니고, 플레이어가 버스트라면 패 판정")
+    @DisplayName("딜러 카드 합이 17이고 플레이어가 버스트라면 패배이다")
     void isLoseWhenPlayerIsBurstTest() {
         // given
-        Dealer dealer = new Dealer();
-        Player player = new Player("luke");
-        Card card = new Card(Figure.SPADE, Number.JACK);
-        Card card2 = new Card(Figure.SPADE, Number.TEN);
-        Card card3 = new Card(Figure.SPADE, Number.KING);
-        Card card4 = new Card(Figure.CLOVER, Number.JACK);
-
-        player.receiveCard(card);
-        player.receiveCard(card2);
-        player.receiveCard(card3);
-        dealer.receiveCard(card4);
+        Dealer dealer = createDealerWithCars(
+                new Card(Figure.CLOVER, Number.SEVEN),
+                new Card(Figure.CLOVER, Number.KING));
+        Player player = createPlayerWithCars(
+                new Card(Figure.CLOVER, Number.JACK),
+                new Card(Figure.CLOVER, Number.KING),
+                new Card(Figure.CLOVER, Number.TWO));
 
         // when & then
-        assertThat(GameResult.getResult(player, dealer).getStatus())
-                .isEqualTo("패");
+        assertThat(GameResult.matchResult(player, dealer))
+                .isEqualTo(GameResult.LOSE);
     }
 
     @Test
     @DisplayName("딜러와 플레이어 모두 버스트인 경우 패 판정")
     void isLoseWhenBothIsBurstTest() {
         // given
-        Dealer dealer = new Dealer();
-        Player player = new Player("luke");
-        Card card = new Card(Figure.SPADE, Number.JACK);
-        Card card2 = new Card(Figure.SPADE, Number.TEN);
-        Card card3 = new Card(Figure.SPADE, Number.KING);
-        Card card4 = new Card(Figure.SPADE, Number.JACK);
-        Card card5 = new Card(Figure.SPADE, Number.TEN);
-        Card card6 = new Card(Figure.SPADE, Number.KING);
-
-        player.receiveCard(card);
-        player.receiveCard(card2);
-        player.receiveCard(card3);
-        dealer.receiveCard(card4);
-        dealer.receiveCard(card5);
-        dealer.receiveCard(card6);
+        Dealer dealer = createDealerWithCars(
+                new Card(Figure.CLOVER, Number.JACK),
+                new Card(Figure.CLOVER, Number.KING),
+                new Card(Figure.CLOVER, Number.TWO));
+        Player player = createPlayerWithCars(
+                new Card(Figure.CLOVER, Number.JACK),
+                new Card(Figure.CLOVER, Number.KING),
+                new Card(Figure.CLOVER, Number.TWO));
 
         // when & then
-        assertThat(GameResult.getResult(player, dealer).getStatus())
-                .isEqualTo("패");
+        assertThat(GameResult.matchResult(player, dealer))
+                .isEqualTo(GameResult.LOSE);
+    }
+
+    @Test
+    @DisplayName("딜러가 블랙잭이고 플레이어 카드 합이 21점이면 패배한다")
+    void loseWhenOnlyDealerIsBlackjackTest() {
+        // given
+        Dealer dealer = createDealerWithCars(
+                new Card(Figure.CLOVER, Number.KING),
+                new Card(Figure.CLOVER, Number.ACE));
+        Player player = createPlayerWithCars(
+                new Card(Figure.CLOVER, Number.NINE),
+                new Card(Figure.CLOVER, Number.KING),
+                new Card(Figure.CLOVER, Number.TWO));
+
+        // when & then
+        assertThat(GameResult.matchResult(player, dealer))
+                .isEqualTo(GameResult.LOSE);
+    }
+
+    @Test
+    @DisplayName("딜러와 플레이어 모두 블랙잭이면 무승부이다")
+    void drawWhenDealerAndPlayerAreBlackjackTest() {
+        // given
+        Dealer dealer = createDealerWithCars(
+                new Card(Figure.CLOVER, Number.KING),
+                new Card(Figure.CLOVER, Number.ACE));
+        Player player = createPlayerWithCars(
+                new Card(Figure.CLOVER, Number.KING),
+                new Card(Figure.CLOVER, Number.ACE));
+
+        // when & then
+        assertThat(GameResult.matchResult(player, dealer))
+                .isEqualTo(GameResult.DRAW);
+    }
+
+    @Test
+    @DisplayName("딜러가 21점이고 플레이어 블랙잭이면 블랙잭 승리이다")
+    void winWhenOnlyPlayerIsBlackjackTest() {
+        // given
+        Dealer dealer = createDealerWithCars(
+                new Card(Figure.CLOVER, Number.NINE),
+                new Card(Figure.CLOVER, Number.KING),
+                new Card(Figure.CLOVER, Number.TWO));
+        Player player = createPlayerWithCars(
+                new Card(Figure.CLOVER, Number.KING),
+                new Card(Figure.CLOVER, Number.ACE));
+
+        // when & then
+        assertThat(GameResult.matchResult(player, dealer))
+                .isEqualTo(GameResult.BLACKJACK);
+    }
+
+    private Dealer createDealerWithCars(Card... cards) {
+        Dealer dealer = new Dealer();
+        for (Card card : cards) {
+            dealer.receiveCard(card);
+        }
+        return dealer;
+    }
+
+    private Player createPlayerWithCars(Card... cards) {
+        Player player = new Player("usher");
+        for (Card card : cards) {
+            player.receiveCard(card);
+        }
+        return player;
     }
 }
