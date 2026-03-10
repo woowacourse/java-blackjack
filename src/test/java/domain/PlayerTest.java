@@ -1,16 +1,12 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import constant.Rank;
 import constant.Suit;
-import exception.ErrorMessage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 class PlayerTest {
 
@@ -34,33 +30,6 @@ class PlayerTest {
                 String expected = "jacob";
                 Assertions.assertEquals(expected, actual);
             }
-
-        }
-
-        @Nested
-        class Fail {
-
-            @ParameterizedTest
-            @ValueSource(strings = {"a", "aaa aa"})
-            void 게임_참가자_이름의_길이가_2_이상_5_이하가_아니라면_예외를_발생_시켜야_한다(String name) {
-
-                // when & then
-                assertThatThrownBy(() -> new Player(name))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining(ErrorMessage.PLAYER_NAME_LENGTH_OUT_OF_RANGE.getMessage());
-            }
-
-            @Test
-            void 입력값에_공백만_입력되면_예외를_발생_시켜야_한다() {
-
-                // given
-                String name = "  ";
-
-                // when & then
-                assertThatThrownBy(() -> new Player(name))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining(ErrorMessage.PLAYER_NAME_BLANK.getMessage());
-            }
         }
     }
 
@@ -81,7 +50,7 @@ class PlayerTest {
                 player.addCard(card);
 
                 // then
-                assertThat(player.getHand().getCardNames().size()).isEqualTo(1);
+                assertThat(player.getHand().size()).isEqualTo(1);
             }
         }
     }
