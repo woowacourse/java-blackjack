@@ -58,16 +58,16 @@ public class Application {
     }
 
     public void selectToDealExtraCard() {
-        List<String> requestMessages = getExtraCardRequestMessages();
+        List<String> participantNames = getParticipantNames();
 
-        for(int index = 0; index < requestMessages.size(); index++) {
-            askCardToPlayer(requestMessages.get(index), index);
+        for(int index = 0; index < participantNames.size(); index++) {
+            askCardToPlayer(participantNames.get(index), index);
         }
     }
 
-    private void askCardToPlayer(String message, int index) {
+    private void askCardToPlayer(String name, int index) {
         retryUntilSuccess(() -> {
-            outputView.printMessage(message);
+            outputView.printAskExtraCard(name);
             String answer = inputView.readDealDecision();
             validator.validateAnswer(answer);
             determinePlayerContinue(answer, index);
@@ -107,8 +107,8 @@ public class Application {
         }
     }
 
-    private List<String> getExtraCardRequestMessages() {
-        return blackjackGame.makeExtraCardRequests();
+    private List<String> getParticipantNames() {
+        return blackjackGame.getParticipantNames();
     }
 
     private <T> T retryUntilSuccess(Supplier<T> action) {

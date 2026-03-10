@@ -1,6 +1,5 @@
 package domain;
 
-import view.Message;
 import vo.Name;
 
 public class User extends Participant {
@@ -12,9 +11,5 @@ public class User extends Participant {
 
     public String getName() {
         return name.getName();
-    }
-
-    public String getFormatedAskGetExtraCard() {
-        return String.format(Message.REQUEST_GET_EXTRA_CARD, name.getName());
     }
 }

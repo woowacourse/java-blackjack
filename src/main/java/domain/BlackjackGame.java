@@ -39,8 +39,8 @@ public class BlackjackGame {
         return String.format(Message.DEALER_FINAL_CARDS_MESSAGE, participants.getAllDealerCardsDisplay());
     }
 
-    public List<String> makeExtraCardRequests() {
-        return participants.askToGetExtraCard();
+    public List<String> getParticipantNames() {
+        return participants.getParticipantNames();
     }
 
     public List<String> getUserCardsDisplays() {

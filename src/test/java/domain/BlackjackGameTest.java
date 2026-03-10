@@ -19,7 +19,7 @@ public class BlackjackGameTest {
     @Test
     void 참가자_수만큼_추가_카드_요청_메시지_생성() {
         // when
-        List<String> requestMessages = blackjackGame.makeExtraCardRequests();
+        List<String> requestMessages = blackjackGame.getParticipantNames();
 
         // then
         assertThat(requestMessages).hasSize(2);
@@ -28,7 +28,7 @@ public class BlackjackGameTest {
     @Test
     void 추가_카드_요청_메시지에_참가자_이름_포함() {
         // when
-        List<String> requestMessages = blackjackGame.makeExtraCardRequests();
+        List<String> requestMessages = blackjackGame.getParticipantNames();
 
         // then
         assertThat(requestMessages.get(0)).contains("영기");
