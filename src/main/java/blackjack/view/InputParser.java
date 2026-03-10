@@ -10,6 +10,5 @@ public class InputParser {
                 .map(String::trim)
                 .toList();
     }
-
 }
 

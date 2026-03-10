@@ -36,7 +36,7 @@ public class OutputView {
 
     public void printPlayerCards(Player player) {
         List<String> formats = player.cards().stream()
-                .map((card) -> {
+                .map(card -> {
                     return card.getRank().getName() + card.getSuit().getName();
                 })
                 .toList();
@@ -55,7 +55,7 @@ public class OutputView {
         StringBuilder sb = new StringBuilder();
         sb.append(user.getName() + "카드: ");
         List<String> cardFormats = user.cards().stream()
-                .map((card) -> card.getSuit().getName() + card.getRank().getName()).toList();
+                .map(card -> card.getSuit().getName() + card.getRank().getName()).toList();
         sb.append(String.join(", ", cardFormats));
         sb.append(" - 결과: " + gameSummary.score());
 

@@ -1,6 +1,5 @@
 package blackjack.model;
 
-
 public enum Rank {
     ACE("A", 1),
     TWO("2", 2),
