@@ -1,7 +1,6 @@
 package presentation.ui;
 
 import presentation.dto.GameResult;
-import domain.vo.RoundResult;
 import presentation.dto.MemberStatus;
 import java.util.List;
 import java.util.Map;
@@ -34,21 +33,20 @@ public class OutputView {
     }
 
     public void printGameResult(GameResult gameResult) {
-        System.out.println("## 최종 승패");
+        System.out.println("## 최종 수익");
         printDealerGameResult(
-                gameResult.dealerWinAmount(),
-                gameResult.dealerLoseAmount()
+                gameResult.dealerAmount()
         );
-        printPlayerGameResult(gameResult.playerResults());
+        printPlayerGameResult(gameResult.playerAmounts());
     }
 
-    private void printDealerGameResult(int winAmount, int loseAmount) {
-        System.out.printf("딜러: %d승 %d패\n", winAmount, loseAmount);
+    private void printDealerGameResult(int amount) {
+        System.out.printf("딜러: %d\n", amount);
     }
 
-    private void printPlayerGameResult(Map<String, RoundResult> roundResults) {
-        for (Entry<String, RoundResult> round : roundResults.entrySet()) {
-            System.out.printf("%s: %s\n", round.getKey(), round.getValue().result());
+    private void printPlayerGameResult(Map<String, Integer> roundResults) {
+        for (Entry<String, Integer> round : roundResults.entrySet()) {
+            System.out.printf("%s: %d\n", round.getKey(), round.getValue());
         }
     }
 

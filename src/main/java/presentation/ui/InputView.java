@@ -14,6 +14,15 @@ public class InputView {
         this.bufferedReader = new BufferedReader(new InputStreamReader(System.in));
     }
 
+    public int readBettingAmount(String playerName) {
+        try {
+            System.out.printf("%s의 배팅 금액은?\n", playerName);
+            return Integer.parseInt(bufferedReader.readLine());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public List<String> readPlayerNames() {
         try {
             System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
