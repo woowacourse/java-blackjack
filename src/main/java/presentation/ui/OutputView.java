@@ -18,8 +18,8 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printHandCard(String playerName, List<Card> cards) {
-        String cardNames = cards.stream().map(Card::getCardName).collect(Collectors.joining(", "));
+    public void printHandCard(String playerName, List<String> cards) {
+        String cardNames = String.join(", ", cards);
         System.out.printf("%s카드: %s\n", playerName, cardNames);
     }
 
