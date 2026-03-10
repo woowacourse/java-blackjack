@@ -102,12 +102,12 @@ public class BlackjackController {
 
     private void printGameResult(List<Player> players) {
         PlayerResult playerResult = PlayerResult.judgeByPlayer(dealer, players);
-        int winCount = playerResult.countByStatus(GameStatus.LOSE);
-        int loseCount = playerResult.countByStatus(GameStatus.WIN);
-        int drawCount = playerResult.countByStatus(GameStatus.DRAW);
+        int dealerWinCount = playerResult.countByStatus(GameStatus.LOSE);
+        int dealerLoseCount = playerResult.countByStatus(GameStatus.WIN);
+        int dealerDrawCount = playerResult.countByStatus(GameStatus.DRAW);
 
         OutputView.printFinalResultHeader();
-        OutputView.printDealerResult(winCount, loseCount, drawCount);
+        OutputView.printDealerResult(dealerWinCount, dealerLoseCount, dealerDrawCount);
         OutputView.printResultByPlayers(playerResult.getResult());
     }
 }
