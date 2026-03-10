@@ -34,7 +34,8 @@ class HandTest {
         );
     }
 
-    @ParameterizedTest(name = "{0}")
+    @ParameterizedTest
+    @DisplayName("Ace는 1 또는 11로 계산할 수 있으며, King, Queen, Jack은 각각 10으로 계산한다.")
     @MethodSource("handScoreProvider")
     void calculateScoreTests(HandScoreTestCase testCase) {
         // given

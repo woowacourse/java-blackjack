@@ -13,7 +13,7 @@ public class Dealer extends Participant {
     public Dealer() {
     }
 
-    public Map<MatchResult, Integer> calculateResult(Map<Player, MatchResult> playersResult) {
+    public Map<MatchResult, Integer> calculateMatchResult(Map<Player, MatchResult> playersResult) {
         Map<MatchResult, Integer> dealerResult = new EnumMap<>(MatchResult.class);
 
         for (Map.Entry<Player, MatchResult> playerResult : playersResult.entrySet()) {
@@ -24,6 +24,16 @@ public class Dealer extends Participant {
         }
 
         return dealerResult;
+    }
+
+    public int calculateProfitResult(Map<Player, Integer>  playersProfitResult) {
+        int dealerProfit = 0;
+
+        for (Integer playerProfit : playersProfitResult.values()) {
+            dealerProfit += playerProfit;
+        }
+
+        return dealerProfit;
     }
 
     public boolean shouldHit() {

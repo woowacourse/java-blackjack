@@ -71,7 +71,8 @@ class PlayersTest {
         Assertions.assertEquals(players.findBy(targetPlayer), targetPlayer);
     }
 
-    @ParameterizedTest(name = "{index} - {0}")
+    @ParameterizedTest
+    @DisplayName("딜러의 패가 주어졌을 때, 플레이어가 자신의 승패를 계산한다.")
     @MethodSource("provideGameResultCases")
     void calculateResultParameterizedTest(String description,
                                           List<Card> dealerCards,
@@ -87,7 +88,7 @@ class PlayersTest {
         playerCards.forEach(players.findBy(player)::receive);
 
         // then
-        for (Map.Entry<Player, MatchResult> entry : players.calculateResult(dealer).entrySet()) {
+        for (Map.Entry<Player, MatchResult> entry : players.calculateMatchResult(dealer).entrySet()) {
             Assertions.assertEquals(expected, entry.getValue());
         }
     }
@@ -95,7 +96,8 @@ class PlayersTest {
     private static Stream<Arguments> provideGameResultCases() {
         return Stream.of(
                 Arguments.of("플레이어만 버스트 패",
-                        List.of(new Card(Rank.ACE, Suit.CLOVER), new Card(Rank.KING, Suit.CLOVER)),
+                        List.of(new Card(Rank.ACE, Suit.CLOVER),
+                                new Card(Rank.KING, Suit.CLOVER)),
                         List.of(new Card(Rank.JACK, Suit.CLOVER),
                                 new Card(Rank.SEVEN, Suit.HEART),
                                 new Card(Rank.JACK, Suit.HEART)),

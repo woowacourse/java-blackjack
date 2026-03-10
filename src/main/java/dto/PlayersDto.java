@@ -7,12 +7,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class PlayersHandDto {
+public class PlayersDto {
 
     private final Map<String, List<Card>> playersHand;
     private final Map<String, Integer> playersScore;
 
-    public PlayersHandDto(Map<Player, List<Card>> playersHand, Map<Player, Integer> playersScore) {
+    public PlayersDto(Map<Player, List<Card>> playersHand, Map<Player, Integer> playersScore) {
         this.playersHand = convertPlayerKeyToName(playersHand);
         this.playersScore = convertPlayerKeyToName(playersScore);
     }

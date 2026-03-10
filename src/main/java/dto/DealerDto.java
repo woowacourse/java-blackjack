@@ -4,13 +4,13 @@ import domain.card.Card;
 
 import java.util.List;
 
-public class DealerHandDto {
+public class DealerDto {
 
     private final Card firstOpenCard;
     private final List<Card> dealerHand;
     private final int score;
 
-    public DealerHandDto(Card firstOpenCard, List<Card> dealerHand, int score) {
+    public DealerDto(Card firstOpenCard, List<Card> dealerHand, int score) {
         this.firstOpenCard = firstOpenCard;
         this.dealerHand = dealerHand;
         this.score = score;
