@@ -31,4 +31,8 @@ public class Deck {
         return deck.removeLast();
     }
 
+    public Card getLastCard() {
+        return deck.getLast();
+    }
+
 }
