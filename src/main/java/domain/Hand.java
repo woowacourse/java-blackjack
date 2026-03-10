@@ -43,7 +43,7 @@ public class Hand {
             .toList();
     }
 
-    public Card getFirstCard() {
-        return cards.getFirst();
+    public String getFirstCard() {
+        return cards.getFirst().getName();
     }
 }

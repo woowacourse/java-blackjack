@@ -1,6 +1,7 @@
 package domain;
 
 import constant.PolicyConstant;
+import java.util.List;
 
 public class Participant {
 
@@ -10,8 +11,8 @@ public class Participant {
         this.hand = new Hand();
     }
 
-    public Hand getHand() {
-        return hand;
+    public List<String> getHand() {
+        return hand.getCardNames();
     }
 
     public void addCard(Card card) {

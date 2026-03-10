@@ -1,18 +1,22 @@
 package domain;
 
 import constant.PolicyConstant;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Dealer extends Participant {
 
-    private final String name = PolicyConstant.DEALER_NAME;
-
-    public Dealer(String name) {
+    public Dealer() {
         super();
     }
 
-    public Hand getOnlyFirstHand() {
-        Hand newHand = new Hand();
-        newHand.addCard(hand.getFirstCard());
+    public List<String> getOnlyFirstHand() {
+        List<String> newHand = new ArrayList<>();
+        newHand.add(hand.getFirstCard());
         return newHand;
+    }
+
+    public String getName() {
+        return PolicyConstant.DEALER_NAME;
     }
 }
