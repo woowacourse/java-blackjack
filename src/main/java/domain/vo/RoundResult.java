@@ -2,14 +2,16 @@ package domain.vo;
 
 public enum RoundResult {
 
-    WIN("승"),LOSE("패"),DRAW("무");
+    WIN(1),
+    LOSE(-1),
+    DRAW(0);
 
     private static final int BUST_CONDITION = 21;
 
-    private final String result;
+    private final double profitRate;
 
-    RoundResult(String result) {
-        this.result = result;
+    RoundResult(double profitRate) {
+        this.profitRate = profitRate;
     }
 
     public static RoundResult judgeAgainst(int dealerScore, int playerScore) {
@@ -20,7 +22,7 @@ public enum RoundResult {
         return RoundResult.DRAW;
     }
 
-    public String result() {
-        return result;
+    public int calculateProfit(int bettingAmount) {
+        return (int) (bettingAmount * profitRate);
     }
 }
