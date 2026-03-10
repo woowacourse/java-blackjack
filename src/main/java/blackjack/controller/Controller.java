@@ -1,6 +1,6 @@
 package blackjack.controller;
 
-import blackjack.model.*;
+import blackjack.domain.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 

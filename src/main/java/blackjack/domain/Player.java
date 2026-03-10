@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.domain;
 
 public class Player extends Participant {
     private static final int MAX_CARD_SUM = 21;

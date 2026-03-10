@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.domain;
 
 import java.util.Objects;
 

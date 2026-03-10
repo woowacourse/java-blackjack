@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.domain;
 
 public enum Number {
     ACE("A", 1),

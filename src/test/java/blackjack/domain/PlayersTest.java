@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.domain;
 
 import blackjack.exception.ErrorMessage;
 import org.junit.jupiter.api.DisplayName;

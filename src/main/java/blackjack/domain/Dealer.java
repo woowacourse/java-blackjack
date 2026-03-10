@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.domain;
 
 public class Dealer extends Participant {
     private static final int MIN_CARD_SUM = 17;

@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.domain;
 
 public enum Figure {
     SPADE("스페이드"),
