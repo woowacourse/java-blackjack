@@ -14,7 +14,7 @@ public class OutputView {
     private static final String INIT_NAME_HEADER_FORMAT = "\n딜러와 %s에게 2장을 나누었습니다.\n";
     private static final String HAND_FORMAT = "%s카드 : %s\n";
     private static final String HAND_WITH_SCORE_FORMAT = "%s카드 : %s - 결과: %d\n";
-    private static final String DEALER_HIT_MESSAGE = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n";
+    private static final String DEALER_HIT_MESSAGE = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String FINAL_RESULT_HEADER = "\n## 최종 승패";
     private static final String FINAL_RESULT_DEALER_FORMAT = "딜러: %d승 %d패\n";
 
@@ -30,6 +30,7 @@ public class OutputView {
         for (HandDto playerHandDto : blackJackInitStatusDto.playerHands()) {
             System.out.printf(HAND_FORMAT, playerHandDto.name(), String.join(", ", playerHandDto.cardNames()));
         }
+        System.out.println();
     }
 
     public static void printHandOutput(HandDto HandDto) {
