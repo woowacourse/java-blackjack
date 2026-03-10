@@ -33,7 +33,7 @@ class WinningStatusTest {
     }
 
     @Test
-    void 참가자가_21_초과인_경우_딜러와_무관하게_패배한다() {
+    void 플레이어의_카드의_합이_21을_초과하는_경우_플레이어가_패배한다() {
         Player player = createPlayer(Rank.TEN, Rank.TEN, Rank.TWO);
         Dealer dealer = new Dealer();
 
@@ -43,7 +43,7 @@ class WinningStatusTest {
     }
 
     @Test
-    void 딜러가_21_초과한_경우_플레이어가_승리한다() {
+    void 딜러의_카드의_합이_21을_초과하는_경우_플레이어가_승리한다() {
         Player player = createPlayer(Rank.TEN, Rank.TWO);
         Dealer dealer = createDealer(Rank.TEN, Rank.TEN, Rank.TWO);
 
@@ -53,7 +53,7 @@ class WinningStatusTest {
     }
 
     @Test
-    void 딜러와_참가자의_카드의_합이_동일한_경우_무승부로_처리한다() {
+    void 딜러와_플레이어의_카드의_합이_동일한_경우_무승부로_처리한다() {
         Player player = createPlayer(Rank.TEN, Rank.TWO);
         Dealer dealer = createDealer(Rank.TEN, Rank.TWO);
 
@@ -63,7 +63,7 @@ class WinningStatusTest {
     }
 
     @Test
-    void 딜러의_카드의_합이_참가자의_카드의_합보다_큰_경우_패배한다() {
+    void 딜러의_카드의_합이_플레이어의_카드의_합보다_큰_경우_플레이어가_패배한다() {
         Player player = createPlayer(Rank.TEN, Rank.TWO);
         Dealer dealer = createDealer(Rank.TEN, Rank.THREE);
 
@@ -73,7 +73,7 @@ class WinningStatusTest {
     }
 
     @Test
-    void 딜러의_카드의_합이_참가자의_카드의_합보다_작을_경우_승리한다() {
+    void 딜러의_카드의_합이_플레이어의_카드의_합보다_작을_경우_플레이어가_승리한다() {
         Player player = createPlayer(Rank.TEN, Rank.THREE);
         Dealer dealer = createDealer(Rank.TEN, Rank.TWO);
 

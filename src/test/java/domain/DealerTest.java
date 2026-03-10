@@ -25,7 +25,7 @@ class DealerTest {
     }
 
     @Test
-    void 딜러는_카드의_합이_16_이하인_경우_카드를_한_장_받는다() {
+    void 딜러의_카드의_합이_16_이하인_경우_딜러는_카드를_한_장_받는다() {
         boolean canDraw = dealer.canDraw();
 
         assertThat(canDraw).isTrue();

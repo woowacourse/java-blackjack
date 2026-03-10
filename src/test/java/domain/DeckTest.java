@@ -30,7 +30,7 @@ class DeckTest {
     }
 
     @Test
-    void 덱이_비었을_때_예외를_발생한다() {
+    void 덱이_빈_상태에서_카드를_뽑을_경우_예외를_발생시킨다() {
         Deck deck = Deck.createDeck(new RandomShuffleStrategy());
         int deckSize = deck.size();
 

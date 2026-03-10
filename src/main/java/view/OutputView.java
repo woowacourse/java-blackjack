@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OutputView {
-    public static final String DEALER_ONE_MORE_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    public static final String DEALER_ONE_MORE_CARD_MESSAGE = "딜러는 16이하라 한 장의 카드를 더 받았습니다.";
     private static final String FINAL_WIN_OR_LOSE_MESSAGE = "## 최종 승패";
     private static final String COMMA = ", ";
     private static final String COLON = ": ";
