@@ -1,5 +1,6 @@
 import domain.Card;
 import domain.CardDeck;
+import domain.Player;
 import domain.ShuffleStrategy;
 import domain.User;
 import org.assertj.core.api.Assertions;
@@ -40,5 +41,21 @@ class UserTest {
         cards.add(gameService.deal());
         user.receiveInitCard(cards);
         assertThat(user.getHand().size()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("베팅 금액을 설정하면 User 객체에 들어간다.")
+    public void setup_bet_amount_to_player() {
+        User user = new User.from("json",1000);
+        int betAmount =1000;
+        Assertions.assertThat(user.getBetAmount).isEqualTo(betAmount);
+    }
+
+    @Test
+    @DisplayName("베팅 금액이 0 이하면 오류를 반환한다.")
+    public void bet_amount_cannot_under_0() {
+        Assertions.assertThatThrownBy(() -> User.from("json",-1000))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("[ERROR] 베팅 금액은 0보다 커야 합니다.");
     }
 }
