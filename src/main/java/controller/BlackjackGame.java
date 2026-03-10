@@ -67,14 +67,14 @@ public class BlackjackGame {
     }
 
     private void dealerTurn(Dealer dealer, Deck deck) {
-        while (dealer.canReceive()) {
+        while (dealer.canDraw()) {
             dealer.receive(deck.draw());
             outputView.printDealerReceiveMessage();
         }
     }
 
     private void playerTurn(Player player, Deck deck) {
-        while (player.canReceive()) {
+        while (player.canDraw()) {
             String choice = inputView.getUserChoice(player.name());
             String userChoice = inputParser.parseUserChoice(choice);
 

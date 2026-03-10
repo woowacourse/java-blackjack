@@ -67,7 +67,6 @@ public class OutputView {
     private void printDealerInitialCard(Dealer dealer) {
         Card firstCard = dealer.getFirstCard();
         String dealerCard = firstCard.name();
-
         System.out.println(DEALER_CARD_PREFIX + dealerCard);
     }
 
