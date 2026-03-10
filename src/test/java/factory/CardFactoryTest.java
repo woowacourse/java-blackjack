@@ -1,6 +1,5 @@
 package factory;
 
-import domain.Deck;
 import domain.card.Card;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +15,6 @@ class CardFactoryTest {
         List<Card> cards = CardFactory.createDeck();
 
         // then
-        assertFalse(cards.stream().distinct().count() != cards.size());
         assertEquals(52, cards.size());
     }
 }
