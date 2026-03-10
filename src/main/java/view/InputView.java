@@ -24,7 +24,7 @@ public class InputView {
 
     public static int inputBettingMoney() {
         String input = readLine();
-        InputValidator.validateInput(input);
+        InputValidator.validateMoneyInput(input);
         return InputParser.parseInt(input);
     }
 

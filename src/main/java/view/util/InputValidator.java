@@ -5,6 +5,7 @@ public class InputValidator {
     private static final String NOT_Y_AND_N_ERROR_MESSAGE = "[ERROR] y나 n이 아닙니다!";
     private static final String HIT_COMMAND = "y";
     private static final String STAND_COMMAND = "n";
+    private static final String INVALID_DECIMAL_INPUT_MESSAGE="[ERROR] 배팅금은 양수로 입력해주세요";
 
     public static void validateInput(String input) {
         if (input != null && input.isBlank()) {
@@ -15,6 +16,17 @@ public class InputValidator {
     public static void validateChoiceInput(String input) {
         validateInput(input);
         isNotHitAndStand(input);
+    }
+
+    public static void validateMoneyInput(String input) {
+        validateInput(input);
+        validateInteger(input);
+    }
+
+    private static void validateInteger(String input) {
+        if (!input.matches("^[0-9]+$")) {
+            throw new IllegalArgumentException(INVALID_DECIMAL_INPUT_MESSAGE);
+        }
     }
 
     private static void isNotHitAndStand(String input) {
