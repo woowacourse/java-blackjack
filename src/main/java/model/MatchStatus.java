@@ -1,8 +1,9 @@
 package model;
 
 public enum MatchStatus {
-    WIN("승", 1.5f),
-    DRAW("무", 1.0f),
+    BLACKJACK("블랙잭 승", 1.5f),
+    WIN("승", 1.0f),
+    DRAW("무", 0.0f),
     LOSE("패", -1.0f);
 
     private final String status;
