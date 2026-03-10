@@ -25,16 +25,12 @@ public class BlackjackGame {
         return gameTable.getDealerName();
     }
 
-    public void initialDeal(List<String> playerNames) {
-        List<String> allParticipants = Stream.concat(
-                Stream.of(getDealerName()),
-                playerNames.stream()
-        ).toList();
-
-        allParticipants.forEach(name -> {
-            gameTable.draw(name, deck.draw());
-            gameTable.draw(name, deck.draw());
-        });
+    public void initialDeal() {
+        gameTable.getMemberNames().forEach(name -> {
+                gameTable.draw(name, deck.draw());
+                gameTable.draw(name, deck.draw());
+            }
+        );
     }
 
     public void drawPlayer(String playerName) {
@@ -51,7 +47,7 @@ public class BlackjackGame {
         return gameTable.canDealerDraw();
     }
 
-    public void dealerDrawCard() {
+    public void drawDealer() {
         gameTable.draw(getDealerName(), deck.draw());
     }
 
