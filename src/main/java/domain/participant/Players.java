@@ -1,9 +1,9 @@
 package domain.participant;
 
-import static constant.GameRule.MAX_NAME_LENGTH;
-import static constant.GameRule.MAX_PLAYER_NUMBER;
-import static constant.GameRule.MIN_NAME_LENGTH;
-import static constant.GameRule.MIN_PLAYER_NUMBER;
+import static domain.constant.GameRule.MAX_NAME_LENGTH;
+import static domain.constant.GameRule.MAX_PLAYER_NUMBER;
+import static domain.constant.GameRule.MIN_NAME_LENGTH;
+import static domain.constant.GameRule.MIN_PLAYER_NUMBER;
 import static message.ErrorMessage.PLAYER_NAME_DUPLICATED;
 import static message.ErrorMessage.PLAYER_NAME_OUT_OF_RANGE;
 import static message.ErrorMessage.PLAYER_NOT_FOUND;

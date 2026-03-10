@@ -1,6 +1,6 @@
 package domain.participant;
 
-import static constant.GameRule.BLACKJACK_CRITERION;
+import static domain.constant.GameRule.BLACKJACK_CRITERION;
 
 import domain.card.Card;
 import domain.card.CardBoard;

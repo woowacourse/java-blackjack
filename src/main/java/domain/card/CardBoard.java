@@ -1,7 +1,7 @@
 package domain.card;
 
-import static constant.GameRule.ACE_BONUS_SCORE;
-import static constant.GameRule.BLACKJACK_CRITERION;
+import static domain.constant.GameRule.ACE_BONUS_SCORE;
+import static domain.constant.GameRule.BLACKJACK_CRITERION;
 
 import domain.enums.Rank;
 import java.util.ArrayList;

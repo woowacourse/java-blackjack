@@ -1,9 +1,9 @@
 package message;
 
-import static constant.GameRule.MAX_NAME_LENGTH;
-import static constant.GameRule.MAX_PLAYER_NUMBER;
-import static constant.GameRule.MIN_NAME_LENGTH;
-import static constant.GameRule.MIN_PLAYER_NUMBER;
+import static domain.constant.GameRule.MAX_NAME_LENGTH;
+import static domain.constant.GameRule.MAX_PLAYER_NUMBER;
+import static domain.constant.GameRule.MIN_NAME_LENGTH;
+import static domain.constant.GameRule.MIN_PLAYER_NUMBER;
 
 public enum ErrorMessage {
     INVALID_HIT_INPUT("[ERROR] 허용된 입력이 아닙니다."),

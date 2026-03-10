@@ -1,6 +1,6 @@
 package domain.participant;
 
-import static constant.GameRule.DEALER_HIT_CRITERION;
+import static domain.constant.GameRule.DEALER_HIT_CRITERION;
 
 import domain.enums.Result;
 import java.util.HashMap;

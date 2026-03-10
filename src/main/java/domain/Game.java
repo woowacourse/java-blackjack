@@ -1,6 +1,6 @@
 package domain;
 
-import static constant.GameRule.INIT_CARD_COUNT;
+import static domain.constant.GameRule.INIT_CARD_COUNT;
 
 import domain.card.Deck;
 import domain.enums.Result;

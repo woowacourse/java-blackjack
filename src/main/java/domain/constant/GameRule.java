@@ -1,11 +1,6 @@
-package constant;
-
-import java.util.List;
+package domain.constant;
 
 public class GameRule {
-    public static final List<String> YES_ANSWER = List.of("Y", "y");
-    public static final List<String> NO_ANSWER = List.of("N", "n");
-
     public static final int BLACKJACK_CRITERION = 21;
     public static final int DEALER_HIT_CRITERION = 17;
 
