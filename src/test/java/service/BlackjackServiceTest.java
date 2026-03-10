@@ -12,7 +12,7 @@ import domain.HandCards;
 import domain.Name;
 import domain.Participant;
 import domain.Participants;
-import infra.CardShuffler;
+import domain.CardShuffler;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;

@@ -2,7 +2,7 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import infra.CardShuffler;
+import infra.CardShufflerImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

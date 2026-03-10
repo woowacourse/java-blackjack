@@ -3,7 +3,7 @@ package service;
 import domain.Card;
 import domain.CardDeck;
 import domain.Participant;
-import infra.CardShuffler;
+import domain.CardShuffler;
 import java.util.ArrayList;
 import java.util.List;
 
