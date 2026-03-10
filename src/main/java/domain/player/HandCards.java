@@ -30,35 +30,24 @@ public class HandCards {
     // 손에 쥔 카드 점수 계산해 반환
     public int getCardScoreSum() {
         int sum = 0;
-        int aceCount = 0;
-
 
         for(Card card : cards) {
-            if (card.isAce()) {
-                aceCount++;
-                continue;
-            }
-
             sum += card.getValue();
         }
 
-        while(aceCount > 0) {
-            sum += calculateAce(sum);
-            aceCount--;
+        if (canAce11(sum)) {
+            return sum + ACE_BONUS_SCORE;
         }
-
         return sum;
     }
 
-    // ACE 처리 로직
-    private int calculateAce(int currentSum){
-        int aceCase11 = Math.max(21 - (currentSum + 11), 0);
-        int aceCase1 = Math.max(21 - (currentSum + 1), 0);
-
-        if (aceCase11 < aceCase1) {
-            return 11;
+    private boolean containsAce() {
+        for (Card card : cards) {
+            if (card.isAce()) {
+                return true;
+            }
         }
 
-        return 1;
+        return false;
     }
 }
