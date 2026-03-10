@@ -2,6 +2,7 @@ package blackjack.util;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.common.error.ErrorCode;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,7 +22,7 @@ class InputValidatorTest {
         // when & then
         assertThatThrownBy(() -> InputValidator.validatePlayerNames(List.of(name)))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("이름이 공백으로 시작하거나 끝납니다.");
+                .hasMessageContaining(ErrorCode.NAME_STARTS_OR_ENDS_WITH_SPACE.getMessage());
     }
 
 
@@ -34,6 +35,6 @@ class InputValidatorTest {
         // when & then
         assertThatThrownBy(() -> InputValidator.validatePlayerNames(names))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("중복된 플레이어 이름이 존재합니다.");
+                .hasMessageContaining(ErrorCode.DUPLICATED_NAME.getMessage());
     }
 }
