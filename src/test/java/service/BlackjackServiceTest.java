@@ -59,9 +59,9 @@ class BlackjackServiceTest {
         // then
         assertThat(finalResults).extracting(
                 FinalResult::name,
-                FinalResult::win,
-                FinalResult::draw,
-                FinalResult::lose,
+                FinalResult::winCount,
+                FinalResult::drawCount,
+                FinalResult::loseCount,
                 FinalResult::isDealer
         ).containsExactlyInAnyOrder(
                 tuple(BlackjackConstant.DEALER_NAME, 1, 0, 1, true),

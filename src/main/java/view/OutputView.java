@@ -119,26 +119,26 @@ public class OutputView {
     }
 
     private static void printDealerResultDetail(FinalResult finalResult) {
-        if (finalResult.win() != 0) {
-            System.out.printf("%d승 ", finalResult.win());
+        if (finalResult.winCount() != 0) {
+            System.out.printf("%d승 ", finalResult.winCount());
         }
-        if (finalResult.draw() != 0) {
-            System.out.printf("%d무 ", finalResult.draw());
+        if (finalResult.drawCount() != 0) {
+            System.out.printf("%d무 ", finalResult.drawCount());
         }
-        if (finalResult.lose() != 0) {
-            System.out.printf("%d패", finalResult.lose());
+        if (finalResult.loseCount() != 0) {
+            System.out.printf("%d패", finalResult.loseCount());
         }
         System.out.println();
     }
 
     private static void printPlayerResultDetail(FinalResult finalResult) {
-        if (finalResult.win() != 0) {
+        if (finalResult.winCount() != 0) {
             System.out.println("승");
         }
-        if (finalResult.draw() != 0) {
+        if (finalResult.drawCount() != 0) {
             System.out.println("무");
         }
-        if (finalResult.lose() != 0) {
+        if (finalResult.loseCount() != 0) {
             System.out.println("패");
         }
     }

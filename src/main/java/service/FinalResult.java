@@ -2,9 +2,9 @@ package service;
 
 public record FinalResult(
         String name,
-        int win,
-        int draw,
-        int lose,
+        int winCount,
+        int drawCount,
+        int loseCount,
         boolean isDealer
 ) {
 }
