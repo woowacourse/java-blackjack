@@ -4,13 +4,14 @@ import constant.GameConstant;
 
 public class Dealer extends Player {
     public static final String DEALER_NAME = "딜러";
+    public static final int ADDITIONAL_THRESHOLD = 16;
 
     public Dealer() {
         super(DEALER_NAME);
     }
 
     public boolean needAdditionalCard() {
-        return this.calculateScore() <= GameConstant.ADDITIONAL_THRESHOLD;
+        return this.calculateScore() <= ADDITIONAL_THRESHOLD;
     }
 
     public Card getFirstCard() {

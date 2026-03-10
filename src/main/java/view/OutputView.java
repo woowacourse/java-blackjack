@@ -6,6 +6,7 @@ import java.util.Map;
 
 import constant.GameConstant;
 import domain.Card;
+import domain.Dealer;
 import domain.MatchCase;
 import domain.dto.BlackjackResultDto;
 import domain.dto.CardContentDto;
@@ -14,7 +15,7 @@ import domain.dto.FinalCardDto;
 public final class OutputView {
     public static void displayCardDistribution(List<String> names) {
         String nameContent = String.join(", ", names);
-        System.out.printf("딜러가 %s에게 2장을 나누었습니다.\n", nameContent);
+        System.out.printf("%s가 %s에게 2장을 나누었습니다.\n", Dealer.DEALER_NAME, nameContent);
     }
 
     public static void displayCardContent(List<CardContentDto> cardContentDto) {
@@ -39,7 +40,7 @@ public final class OutputView {
     }
 
     public static void displayDealerCard() {
-        System.out.println("딜러는 " + GameConstant.ADDITIONAL_THRESHOLD + "이하라 한장의 카드를 더 받았습니다.");
+        System.out.printf("%s는 %d 이하라 한장의 카드를 더 받았습니다.\n",Dealer.DEALER_NAME, Dealer.ADDITIONAL_THRESHOLD);
     }
 
     public static void displayFinalCard(List<FinalCardDto> finalCardDto) {
@@ -51,15 +52,13 @@ public final class OutputView {
 
             System.out.printf("%s카드: %s - 결과: %d\n", dto.name(), String.join(", ", cardContents), dto.total());
         }
-
     }
 
     public static void displayMatchResult(BlackjackResultDto resultDto) {
         System.out.printf("## 최종 승패\n딜러: %d승 %d패\n", resultDto.winCount(), resultDto.loseCount());
         Map<String, MatchCase> resultMap = resultDto.matchResultMap();
-        for (String playerName : resultMap.keySet()) {
-            String korResult = resultMap.get(playerName).getKorResult();
-            System.out.printf("%s: %s\n", playerName, korResult);
+        for (Map.Entry<String, MatchCase> playerName : resultMap.entrySet()) {
+            System.out.printf("%s: %s\n", playerName.getKey(), playerName.getValue().name());
         }
     }
 }
