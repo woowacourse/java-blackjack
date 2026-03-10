@@ -9,7 +9,6 @@ public class CardPointTest {
 
     @Test
     void 각_카드는_점수를_가진다() {
-
         assertAll(
                 () -> assertEquals(2, CardPoint.TWO.getPoint()),
                 () -> assertEquals(3, CardPoint.THREE.getPoint()),
@@ -25,12 +24,10 @@ public class CardPointTest {
                 () -> assertEquals(10, CardPoint.KING.getPoint()),
                 () -> assertEquals(11, CardPoint.ACE.getPoint())
         );
-
     }
 
     @Test
     void 각_카드는_고유한_이름을_가진다() {
-
         assertAll(
                 () -> assertEquals("2", CardPoint.TWO.getName()),
                 () -> assertEquals("3", CardPoint.THREE.getName()),
@@ -46,7 +43,6 @@ public class CardPointTest {
                 () -> assertEquals("K", CardPoint.KING.getName()),
                 () -> assertEquals("A", CardPoint.ACE.getName())
         );
-
     }
-    
+
 }

@@ -8,13 +8,9 @@ public class DealerTest {
 
     @Test
     void 딜러가_카드를_받는다() {
-
         Dealer dealer = new Dealer();
-
         dealer.recieveCard(new Card(CardPoint.ACE, CardPattern.DIAMOND));
-
         assertThat(dealer.getCardCount()).isEqualTo(1);
-
     }
-
+    
 }
