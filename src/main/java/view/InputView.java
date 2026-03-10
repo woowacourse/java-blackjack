@@ -16,4 +16,8 @@ public class InputView {
     public String readYesOrNo() {
         return scanner.nextLine();
     }
+
+    public String readBettingMoney() {
+        return scanner.nextLine();
+    }
 }

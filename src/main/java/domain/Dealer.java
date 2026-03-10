@@ -1,11 +1,13 @@
 package domain;
 
 import vo.GameResult;
+import vo.Money;
 
 public class Dealer {
     private static final Integer MAXIMUM_TOTAL_SCORE = 21;
 
     private final Hand hand;
+    private Money currentMoney;
 
     public Dealer() {
         this.hand = new Hand();

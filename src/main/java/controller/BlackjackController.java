@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import service.BlackjackService;
 import util.Parser;
@@ -8,6 +9,7 @@ import util.Validator;
 import view.InputView;
 import view.Message;
 import view.OutputView;
+import vo.Money;
 
 public class BlackjackController {
     private final OutputView outputView;
@@ -25,12 +27,24 @@ public class BlackjackController {
     }
 
     public void run() {
-        readParticipants();
+        initParticipants();
         shuffleCards();
         readExtraCardCommand();
         dealDealerCard();
         printFinalResult();
         printWinningResult();
+    }
+
+    private void initParticipants() {
+        List<String> participantsNames = readParticipantsName();
+        List<Money> betAmounts = new ArrayList<>();
+
+        for (String userName : participantsNames) {
+            Money money = readBettingMoney(userName);
+            betAmounts.add(money);
+        }
+
+        blackjackService.saveParticipants(participantsNames, betAmounts);
     }
 
     private void printWinningResult() {
@@ -69,22 +83,35 @@ public class BlackjackController {
         blackjackService.getUserCardsDisplays().forEach(outputView::printMessage);
     }
 
-    public void readParticipants() {
+    private List<String> readParticipantsName() {
         while(true) {
             try {
                 outputView.printMessage(Message.INPUT_PARTICIPANTS_MESSAGE);
                 String participantsName = inputView.readParticipantsName();
                 validator.validateParticipantsName(participantsName);
-                List<String> parsedParticipantsName = parser.parseParticipantsName(participantsName);
-                blackjackService.saveParticipants(parsedParticipantsName);
-                return;
+                return parser.parseParticipantsName(participantsName);
             } catch (IllegalArgumentException e) {
                 outputView.printErrorMessage(e.getMessage());
             }
         }
     }
 
-    public void readExtraCardCommand() {
+    private Money readBettingMoney(String userName) {
+        String getBettingMoneyRequestMessage = bettingMoneyRequest(userName);
+
+        while(true) {
+            try {
+                outputView.printMessage(getBettingMoneyRequestMessage);
+                String bettingMoney = inputView.readBettingMoney();
+                validator.validateEmptyBettingMoney(bettingMoney);
+                return parser.parseBettingMoney(bettingMoney);
+            } catch (IllegalArgumentException e) {
+                outputView.printErrorMessage(e.getMessage());
+            }
+        }
+    }
+
+    private void readExtraCardCommand() {
         List<String> getUsersRequestMessages = extraCardRequest();
 
         for(int index = 0; index < getUsersRequestMessages.size(); index++) {
@@ -114,6 +141,10 @@ public class BlackjackController {
     }
 
     private List<String> extraCardRequest() {
-        return blackjackService.makeExtraCardRequsts();
+        return blackjackService.makeExtraCardRequests();
+    }
+
+    private String bettingMoneyRequest(String userName) {
+        return String.format(Message.INPUT_BETTING_MONEY_MESSAGE, userName);
     }
 }

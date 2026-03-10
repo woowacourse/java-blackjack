@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import vo.GameResult;
+import vo.Money;
 
 public class Participants {
     private static final Integer MAXIMUM_NUMBER_OF_PARTICIPANTS = 16;
@@ -15,17 +16,19 @@ public class Participants {
     private final List<User> participants;
     private final Dealer dealer;
 
-    public Participants(List<String> parsedParticipantsName) {
+    public Participants(List<String> parsedParticipantsName, List<Money> parsedBetAmounts) {
         this.participants = new ArrayList<>();
         this.dealer = new Dealer();
         validateParticipantsNumbers(parsedParticipantsName);
-        saveUsers(parsedParticipantsName);
+        saveUsers(parsedParticipantsName, parsedBetAmounts);
     }
 
-    private void saveUsers(List<String> parsedParticipantsName) {
-        parsedParticipantsName.forEach(name -> {
-            participants.add(new User(name));
-        });
+    private void saveUsers(List<String> parsedParticipantsName, List<Money> parsedBetAmounts) {
+        for (int i = 0; i < parsedParticipantsName.size(); i++) {
+            String userName = parsedParticipantsName.get(i);
+            Money betAmount = parsedBetAmounts.get(i);
+            participants.add(new User(userName, betAmount));
+        }
     }
 
     static void validateParticipantsNumbers(List<String> parsedParticipantsName) {

@@ -46,4 +46,10 @@ public class Validator {
             throw new IllegalArgumentException("[ERROR] 'y' 또는 'n'만 입력해 주세요.");
         }
     }
+
+    public void validateEmptyBettingMoney(String bettingMoney) {
+        if (bettingMoney.trim().isEmpty()) {
+            throw new IllegalArgumentException("[ERROR] 배팅 금액은 비어 있을 수 없습니다.");
+        }
+    }
 }

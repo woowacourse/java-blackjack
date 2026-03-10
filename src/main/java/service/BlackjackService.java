@@ -2,16 +2,16 @@ package service;
 
 import domain.Deck;
 import domain.Participants;
-import dto.ParticipantsScoreDTO;
 import java.util.List;
 import view.Message;
+import vo.Money;
 
 public class BlackjackService {
     private Participants participants;
     private Deck deck;
 
-    public void saveParticipants(List<String> parsedParticipantsName) {
-        participants = new Participants(parsedParticipantsName);
+    public void saveParticipants(List<String> parsedParticipantsName, List<Money> parsedBetAmounts) {
+        participants = new Participants(parsedParticipantsName, parsedBetAmounts);
     }
 
     public void makeDeck() {
@@ -32,7 +32,7 @@ public class BlackjackService {
         return String.format(Message.DEALER_CARDS_MESSAGE, participants.getDealerCardsDisplay());
     }
 
-    public List<String> makeExtraCardRequsts() {
+    public List<String> makeExtraCardRequests() {
         return participants.askGetExtraCard();
     }
 
