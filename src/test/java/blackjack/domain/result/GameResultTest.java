@@ -156,7 +156,7 @@ class GameResultTest {
         BettingMoney bettingMoney = new BettingMoney(10000);
 
         // when
-        int profit = GameResult.BLACKJACK.calculateProfit(bettingMoney);
+        int profit = GameResult.BLACKJACK.calculateProfit(bettingMoney).getAmount();
 
         // then
         assertThat(profit).isEqualTo(15000);
@@ -169,7 +169,7 @@ class GameResultTest {
         BettingMoney bettingMoney = new BettingMoney(10000);
 
         // when
-        int profit = GameResult.WIN.calculateProfit(bettingMoney);
+        int profit = GameResult.WIN.calculateProfit(bettingMoney).getAmount();
 
         // then
         assertThat(profit).isEqualTo(10000);
@@ -182,7 +182,7 @@ class GameResultTest {
         BettingMoney bettingMoney = new BettingMoney(10000);
 
         // when
-        int profit = GameResult.DRAW.calculateProfit(bettingMoney);
+        int profit = GameResult.DRAW.calculateProfit(bettingMoney).getAmount();
 
         // then
         assertThat(profit).isEqualTo(0);
@@ -195,7 +195,7 @@ class GameResultTest {
         BettingMoney bettingMoney = new BettingMoney(10000);
 
         // when
-        int profit = GameResult.LOSE.calculateProfit(bettingMoney);
+        int profit = GameResult.LOSE.calculateProfit(bettingMoney).getAmount();
 
         // then
         assertThat(profit).isEqualTo(-10000);

@@ -2,6 +2,7 @@ package blackjack.view;
 
 import static java.util.stream.Collectors.joining;
 
+import blackjack.domain.betting.Profit;
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
@@ -58,9 +59,9 @@ public class OutputView {
 
     public static void printFinalProfits(final GameResults gameResults, final Dealer dealer) {
         System.out.printf(FINAL_RESULTS_HEADER);
-        System.out.printf(PROFIT_FORMAT, dealer.getName(), gameResults.getDealerProfit());
+        System.out.printf(PROFIT_FORMAT, dealer.getName(), gameResults.getDealerProfit().getAmount());
         gameResults.getPlayerProfits().forEach((player, profit) ->
-                System.out.printf(PROFIT_FORMAT, player.getName(), profit)
+                System.out.printf(PROFIT_FORMAT, player.getName(), profit.getAmount())
         );
     }
 

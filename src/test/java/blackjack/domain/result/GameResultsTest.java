@@ -32,7 +32,7 @@ class GameResultsTest {
         GameResults results = GameResults.calculate(new Players(List.of(player)), dealer);
 
         // then
-        assertThat(results.getPlayerProfits().get(player)).isEqualTo(10000);
+        assertThat(results.getPlayerProfits().get(player).getAmount()).isEqualTo(10000);
     }
 
     @Test
@@ -51,7 +51,7 @@ class GameResultsTest {
         GameResults results = GameResults.calculate(new Players(List.of(player)), dealer);
 
         // then
-        assertThat(results.getPlayerProfits().get(player)).isEqualTo(-10000);
+        assertThat(results.getPlayerProfits().get(player).getAmount()).isEqualTo(-10000);
     }
 
     @Test
@@ -70,7 +70,7 @@ class GameResultsTest {
         GameResults results = GameResults.calculate(new Players(List.of(player)), dealer);
 
         // then
-        assertThat(results.getPlayerProfits().get(player)).isEqualTo(0);
+        assertThat(results.getPlayerProfits().get(player).getAmount()).isEqualTo(0);
     }
 
     @Test
@@ -89,7 +89,7 @@ class GameResultsTest {
         GameResults results = GameResults.calculate(new Players(List.of(player)), dealer);
 
         // then
-        assertThat(results.getPlayerProfits().get(player)).isEqualTo(15000);
+        assertThat(results.getPlayerProfits().get(player).getAmount()).isEqualTo(15000);
     }
 
     @Test
@@ -112,7 +112,6 @@ class GameResultsTest {
         GameResults results = GameResults.calculate(new Players(List.of(winner, loser)), dealer);
 
         // then
-        // winner +10000, loser -20000 → dealer profit = -(10000 + (-20000)) = 10000
-        assertThat(results.getDealerProfit()).isEqualTo(10000);
+        assertThat(results.getDealerProfit().getAmount()).isEqualTo(10000);
     }
 }

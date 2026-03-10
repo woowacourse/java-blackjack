@@ -1,6 +1,7 @@
 package blackjack.domain.result;
 
 import blackjack.domain.betting.BettingMoney;
+import blackjack.domain.betting.Profit;
 import blackjack.domain.hand.Score;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
@@ -21,8 +22,12 @@ public enum GameResult {
         this.profitMultiplier = profitMultiplier;
     }
 
-    public int calculateProfit(final BettingMoney bettingMoney) {
-        return (int) (bettingMoney.getAmount() * profitMultiplier);
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public Profit calculateProfit(final BettingMoney bettingMoney) {
+        return new Profit((int) (bettingMoney.getAmount() * profitMultiplier));
     }
 
     public static GameResult of(final Player player, final Dealer dealer) {
