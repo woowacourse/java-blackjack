@@ -26,6 +26,6 @@
 - [x] **6. `suit`의 변수명에 class 이름이 들어가는 것 수정.**
 - [ ] **7. 게임의 흐름은 도메인에서, 입출력이 필요한 경우만 Application으로**
   - ex) readParticipants나 shuffleCards의 경우, read는 inputView에서 처리하고 shuffle은 Game 또는 deck 자체가 진행.
-- [ ] **8. 입력에 trim() 설정하도록 변경**
+- [x] **8. 입력에 trim() 설정하도록 변경**
 - [ ] **9. 모든 파일 포멧팅 최적화**
   - `cmd + opt + L`

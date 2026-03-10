@@ -23,7 +23,7 @@ public class Participants {
 
     private void saveUsers(String participantsName) {
         parseName(participantsName)
-                .forEach(name -> participants.add(new User(name)));
+                .forEach(name -> participants.add(new User(name.trim())));
     }
 
     private List<String> parseName(String participantsName) {

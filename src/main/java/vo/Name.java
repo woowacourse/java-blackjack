@@ -4,7 +4,7 @@ import java.util.regex.Pattern;
 
 public class Name {
     private static final Pattern DIGIT_PATTERN = Pattern.compile(".*\\d.*");
-    private static final Pattern VALID_NAME_PATTERN = Pattern.compile("^[a-zA-Z가-힣,]+$");
+    private static final Pattern VALID_NAME_PATTERN = Pattern.compile("^[a-zA-Z가-힣, ]+$");
 
     private final String name;
 
