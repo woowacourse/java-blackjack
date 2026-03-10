@@ -11,16 +11,13 @@ public class Cards {
 
     private final List<Card> cards;
 
-    private Cards() {
+    private Cards(CardShuffleStrategy shuffleStrategy) {
         this.cards = generateCards();
+        shuffleStrategy.shuffle(cards);
     }
 
-    public void shuffle() {
-        Collections.shuffle(this.cards);
-    }
-
-    public static Cards of() {
-        return new Cards();
+    public static Cards of(CardShuffleStrategy shuffleStrategy) {
+        return new Cards(shuffleStrategy);
     }
 
     private List<Card> generateCards() {

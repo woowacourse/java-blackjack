@@ -1,11 +1,6 @@
 package controller;
 
-import domain.BlackjackResult;
-import domain.Cards;
-import domain.Dealer;
-import domain.Player;
-import domain.Players;
-import domain.Policy;
+import domain.*;
 
 import java.util.List;
 
@@ -28,7 +23,8 @@ public class BlackjackController {
     public void run() {
         List<String> userNames = getUserNames();
 
-        Cards deck = getDeck();
+        Cards deck = Cards.of(new RandomCardStrategy());
+        ;
         Dealer dealer = Dealer.of(deck.drawInitialHand());
         Players players = Players.of(deck, userNames);
 
@@ -54,16 +50,6 @@ public class BlackjackController {
             outputView.println(exception.getMessage());
             return null;
         }
-    }
-
-    private Cards getDeck() {
-        Cards deck = Cards.of();
-        cardShuffle(deck);
-        return deck;
-    }
-
-    private void cardShuffle(Cards deck) {
-        deck.shuffle();
     }
 
     private void printInitialCards(Players players, Dealer dealer) {
