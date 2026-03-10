@@ -1,5 +1,7 @@
-package blackjack.model;
+package blackjack.model.user;
 
+import blackjack.model.constant.Constant;
+import blackjack.model.GameResult;
 import java.util.EnumMap;
 
 public class Dealer extends User {

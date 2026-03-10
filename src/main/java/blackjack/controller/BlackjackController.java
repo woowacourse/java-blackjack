@@ -4,10 +4,10 @@ import static blackjack.util.ExceptionHandler.retryUntilSuccess;
 
 import blackjack.model.HitCommand;
 import blackjack.model.CardProvider;
-import blackjack.model.Dealer;
-import blackjack.model.Player;
+import blackjack.model.user.Dealer;
+import blackjack.model.user.Player;
 import blackjack.model.PlayersGameResult;
-import blackjack.model.Users;
+import blackjack.model.user.Users;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;

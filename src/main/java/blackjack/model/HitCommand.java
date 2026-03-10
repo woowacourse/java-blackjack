@@ -1,7 +1,7 @@
 package blackjack.model;
 
-import static blackjack.model.ErrorMessage.ERROR_EMPTY_INPUT;
-import static blackjack.model.ErrorMessage.ERROR_NOT_Y_N_INPUT;
+import static blackjack.model.constant.ErrorMessage.ERROR_EMPTY_INPUT;
+import static blackjack.model.constant.ErrorMessage.ERROR_NOT_Y_N_INPUT;
 
 import java.util.regex.Pattern;
 

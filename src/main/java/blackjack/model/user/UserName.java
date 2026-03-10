@@ -1,7 +1,7 @@
-package blackjack.model;
+package blackjack.model.user;
 
-import static blackjack.model.ErrorMessage.ERROR_EMPTY_INPUT;
-import static blackjack.model.ErrorMessage.ERROR_INVALID_PLAYER_NAME;
+import static blackjack.model.constant.ErrorMessage.ERROR_EMPTY_INPUT;
+import static blackjack.model.constant.ErrorMessage.ERROR_INVALID_PLAYER_NAME;
 
 import java.util.regex.Pattern;
 

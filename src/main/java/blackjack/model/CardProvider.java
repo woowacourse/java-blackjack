@@ -1,8 +1,15 @@
 package blackjack.model;
 
-import static blackjack.model.Constant.INIT_CARDS_END_IDX;
-import static blackjack.model.Constant.INIT_CARDS_START_IDX;
+import static blackjack.model.constant.Constant.INIT_CARDS_END_IDX;
+import static blackjack.model.constant.Constant.INIT_CARDS_START_IDX;
 
+import blackjack.model.card.Card;
+import blackjack.model.card.Rank;
+import blackjack.model.card.Suit;
+import blackjack.model.user.Dealer;
+import blackjack.model.user.Player;
+import blackjack.model.user.User;
+import blackjack.model.user.Users;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;

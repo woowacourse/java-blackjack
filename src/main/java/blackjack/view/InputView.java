@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.model.Player;
+import blackjack.model.user.Player;
 import java.util.Scanner;
 
 public class InputView {

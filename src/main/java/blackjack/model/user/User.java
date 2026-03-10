@@ -1,5 +1,7 @@
-package blackjack.model;
+package blackjack.model.user;
 
+import blackjack.model.card.Card;
+import blackjack.model.Hand;
 import java.util.List;
 
 public abstract class User {

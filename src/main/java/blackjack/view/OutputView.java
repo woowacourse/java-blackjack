@@ -1,14 +1,13 @@
 package blackjack.view;
 
-import static blackjack.model.Constant.BLACKJACK_SCORE;
+import static blackjack.model.constant.Constant.BLACKJACK_SCORE;
 
-import blackjack.model.Card;
-import blackjack.model.Dealer;
+import blackjack.model.card.Card;
+import blackjack.model.user.Dealer;
 import blackjack.model.GameResult;
-import blackjack.model.Player;
+import blackjack.model.user.Player;
 import blackjack.model.PlayersGameResult;
-import blackjack.model.User;
-import blackjack.model.Users;
+import blackjack.model.user.Users;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;

@@ -1,5 +1,7 @@
-package blackjack.model;
+package blackjack.model.user;
 
+import blackjack.model.GameResult;
+import blackjack.model.PlayersGameResult;
 import blackjack.util.PlayerParser;
 import java.util.ArrayList;
 import java.util.HashMap;
