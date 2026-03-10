@@ -10,7 +10,7 @@ public class Deck {
     }
 
     // TODO: Deck이 0장이 되었을 때 예외처리
-    public Card distributeCard() {
+    public Card drawCardFromDeck() {
         Card card = cards.removeFirst();
         return card;
     }

@@ -116,7 +116,7 @@ public class BlackJackGameController {
     }
 
     private void distributeCard(Participant participant, Deck deck) {
-        Card card = deck.distributeCard();
+        Card card = deck.drawCardFromDeck();
         participant.receiveCard(card);
     }
 
