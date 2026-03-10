@@ -1,10 +1,7 @@
 package domain;
 
 import common.ErrorMessage;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Players {
     private static final int MAX_PLAYER_NUMBER = 5;
@@ -20,32 +17,44 @@ public class Players {
     }
 
     private static List<Player> createPlayers(List<String> playerNames, Deck totalDeck) {
+        validateUserCountLimit(playerNames);
+        validateNameUniqueness(playerNames);
+
+        return playerNames.stream()
+                .map(name -> createNewPlayer(totalDeck, name))
+                .toList();
+    }
+
+    private static Player createNewPlayer(Deck totalDeck, String name) {
+        List<Card> twoCards = totalDeck.drawTwoCards();
+        return new Player(name, twoCards.get(0), twoCards.get(1));
+    }
+
+    private static void validateNameUniqueness(List<String> playerNames) {
+        long uniqueCount = playerNames.stream().distinct().count();
+        if (uniqueCount != playerNames.size()) {
+            throw new IllegalArgumentException(ErrorMessage.NAME_UNIQUENESS_ERR.toString());
+        }
+    }
+
+    private static void validateUserCountLimit(List<String> playerNames) {
         if (playerNames.size() > MAX_PLAYER_NUMBER) {
             throw new IllegalArgumentException(ErrorMessage.MAX_PLAYER_ERROR.getMessage());
         }
-
-        List<Player> players = new ArrayList<>();
-        playerNames.forEach(
-                name -> players.add(
-                        new Player(Deck.createParticipantDeck(totalDeck), name)
-                )
-        );
-
-        return players;
     }
 
     public List<Player> getPlayers() {
         return players;
     }
 
-    public Map<String, List<Card>> getDecksPerPlayer() {
-        Map<String, List<Card>> decksPerUser = new LinkedHashMap<>();
-        for (Player player : players) {
-            decksPerUser.put(
-                    player.getName(),
-                    player.getDeck().getCards()
-            );
-        }
-        return decksPerUser;
-    }
+//    public Map<String, List<Card>> getDecksPerPlayer() {
+//        Map<String, List<Card>> decksPerUser = new LinkedHashMap<>();
+//        for (Player player : players) {
+//            decksPerUser.put(
+//                    player.getName(),
+//                    player.getDeck().getCards()
+//            );
+//        }
+//        return decksPerUser;
+//    }
 }

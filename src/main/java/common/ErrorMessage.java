@@ -6,6 +6,7 @@ public enum ErrorMessage {
     UNSUPPORTED_OPERATION_MESSAGE("해당 객체[%s]에서는 지원하지 않는 메서드입니다 "),
     NOT_ALLOW_EMPTY_INPUT("공백은 허용되지 않습니다"),
     ONLY_KO_AND_ENG("이름은 영어 또는 한국어만 가능합니다: "),
+    NAME_UNIQUENESS_ERR("이름은 중복되면 안됩니다"),
     MAX_PLAYER_ERROR("최대 인원을 초과했습니다.");
 
     private final String message;
