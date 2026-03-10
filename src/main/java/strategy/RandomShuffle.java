@@ -1,4 +1,6 @@
-package domain;
+package strategy;
+
+import domain.Card;
 
 import java.util.Collections;
 import java.util.List;
