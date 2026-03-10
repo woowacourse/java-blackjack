@@ -3,32 +3,15 @@ package domain;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class Dealer {
-    private final Hand hand;
+public final class Dealer extends Participant {
     private final Map<Outcome, Integer> result;
 
     public Dealer() {
-        this.hand = new Hand();
+        super();
         this.result = new HashMap<>();
         for (Outcome outcome : Outcome.values()) {
             result.put(outcome, 0);
         }
-    }
-
-    public void drawCard(Cards cards) {
-        hand.addCard(cards.draw());
-    }
-
-    public Hand getCardList() {
-        return hand;
-    }
-
-    public Score getScore() {
-        return hand.getScore();
-    }
-
-    public int getResult() {
-        return hand.getResult();
     }
 
     public int getCount(Outcome playerOutcome) {
@@ -39,7 +22,4 @@ public final class Dealer {
         result.put(playerOutcome, result.getOrDefault(playerOutcome, 0) + 1);
     }
 
-    public boolean checkBust() {
-        return hand.checkBust();
-    }
 }
