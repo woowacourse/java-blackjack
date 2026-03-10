@@ -1,5 +1,5 @@
 import domain.BlackjackGame;
-import domain.vo.RoundResult;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import presentation.dto.GameResult;
@@ -12,13 +12,27 @@ public class Main {
         InputView inputView = new InputView();
         OutputView outputView = new OutputView();
         List<String> playerNames = inputView.readPlayerNames();
-        BlackjackGame game = new BlackjackGame(playerNames);
+        BlackjackGame game = new BlackjackGame(initPlayer(inputView, playerNames));
         game.initialDeal();
         outputView.printInitialStatus(game.getDealerName(), memberFirstHands(game));
-        for (String playerName : playerNames) {
-            askToDraw(playerName, inputView, outputView, game);
-        }
+        checkBlackjackBonus(game);
+        playerNames.forEach(playerName -> askToDraw(playerName, inputView, outputView, game));
         printResult(outputView, game);
+    }
+
+    private static Map<String, Integer> initPlayer(InputView inputView, List<String> playerNames) {
+        Map<String, Integer> players = new HashMap<>();
+        for (String playerName : playerNames) {
+            int amount = inputView.readBettingAmount(playerName);
+            players.put(playerName, amount);
+        }
+        return players;
+    }
+
+    private static void checkBlackjackBonus(BlackjackGame game) {
+        if (game.hasBlackjack()) {
+            game.applyBlackjackBonus();
+        }
     }
 
     private static List<MemberStatus> memberFirstHands(BlackjackGame game) {
@@ -58,13 +72,11 @@ public class Main {
     }
 
     private static void printGameResult(OutputView outputView, BlackjackGame game) {
-        Map<String, RoundResult> gameResults = game.getGameResults();
-        int dealerLoseAmount = Math.toIntExact(gameResults.values().stream()
-                .filter(result -> result.equals(RoundResult.WIN))
-                .count());
-        int dealerWinAmount = Math.toIntExact(gameResults.values().stream()
-                .filter(result -> result.equals(RoundResult.LOSE))
-                .count());
-        outputView.printGameResult(new GameResult(dealerWinAmount, dealerLoseAmount, gameResults));
+        Map<String, Integer> gameResults = game.getGameResults();
+        int dealerAmount = gameResults.values().stream()
+                .mapToInt(result -> -1 * result)
+                .sum();
+
+        outputView.printGameResult(new GameResult(dealerAmount, gameResults));
     }
 }
