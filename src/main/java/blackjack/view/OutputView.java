@@ -6,11 +6,8 @@ import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.domain.result.GameResult;
 import blackjack.domain.result.GameResults;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class OutputView {
 
@@ -21,9 +18,8 @@ public class OutputView {
     private static final String PLAYER_CARD_MESSAGE = "%s카드: %s%n";
     private static final String DEALER_HIT_MESSAGE = "%n딜러는 16이하라 한장의 카드를 더 받았습니다.%n";
     private static final String FINAL_CARDS_FORMAT = "%s카드: %s - 결과: %d%n";
-    private static final String FINAL_RESULTS_HEADER = "%n## 최종 승패%n";
-    private static final String DEALER_RESULT_PREFIX = "딜러: ";
-    private static final String PLAYER_RESULT_FORMAT = "%s: %s%n";
+    private static final String FINAL_RESULTS_HEADER = "%n## 최종 수익%n";
+    private static final String PROFIT_FORMAT = "%s: %d%n";
 
     private OutputView() {}
 
@@ -57,36 +53,12 @@ public class OutputView {
         System.out.printf(FINAL_CARDS_FORMAT, name, formatCards(cards), score);
     }
 
-    public static void printFinalResults(final GameResults gameResults) {
+    public static void printFinalProfits(final GameResults gameResults) {
         System.out.printf(FINAL_RESULTS_HEADER);
-        printDealerResult(gameResults.getDealerResults());
-        gameResults.getPlayerResults().forEach(OutputView::printPlayerResult);
-    }
-
-    private static void printDealerResult(final Map<GameResult, Integer> dealerResults) {
-        System.out.println(DEALER_RESULT_PREFIX + buildDealerResultText(dealerResults));
-    }
-
-    private static String buildDealerResultText(final Map<GameResult, Integer> dealerResults) {
-        final List<String> results = new ArrayList<>();
-        addResultIfExists(results, dealerResults, GameResult.WIN);
-        addResultIfExists(results, dealerResults, GameResult.DRAW);
-        addResultIfExists(results, dealerResults, GameResult.LOSE);
-        return String.join(" ", results);
-    }
-
-    private static void addResultIfExists(
-            final List<String> results,
-            final Map<GameResult, Integer> dealerResults,
-            final GameResult result
-    ) {
-        if (dealerResults.containsKey(result)) {
-            results.add(dealerResults.get(result) + result.getDisplayName());
-        }
-    }
-
-    private static void printPlayerResult(final Player player, final GameResult result) {
-        System.out.printf(PLAYER_RESULT_FORMAT, player.getName(), result.getDisplayName());
+        System.out.printf(PROFIT_FORMAT, "딜러", gameResults.getDealerProfit());
+        gameResults.getPlayerProfits().forEach((player, profit) ->
+                System.out.printf(PROFIT_FORMAT, player.getName(), profit)
+        );
     }
 
     private static String formatCards(final List<Card> cards) {
