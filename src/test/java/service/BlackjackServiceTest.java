@@ -4,18 +4,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import config.AppConfig;
-import constant.PolicyConstant;
 import constant.Rank;
 import constant.Result;
 import constant.Suit;
 import domain.Card;
-import domain.Dealer;
-import domain.Player;
-import dto.BlackjackResultDto;
-import dto.DealerResultDto;
+import dto.BlackjackStatisticsDto;
+import dto.ParticipantDto;
 import dto.PlayerResultDto;
-import dto.PlayersDto;
 import exception.ErrorMessage;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Nested;
@@ -46,9 +44,68 @@ class BlackjackServiceTest {
 
             static Stream<Arguments> successCases() {
                 return Stream.of(
-                    Arguments.of(List.of("jacob", "seoye")),
-                    Arguments.of(List.of("aa aa", "성 열"))
+                        Arguments.of(List.of("jacob", "seoye")),
+                        Arguments.of(List.of("aa aa", "성 열"))
                 );
+            }
+        }
+    }
+
+    @Nested
+    class DealInitialCardsTest {
+
+        @Nested
+        class Success {
+
+            @Test
+            void 초기_카드_분배시_딜러는_1장_플레이어는_2장씩_초기_결과에_노출된다() {
+
+                // given
+                blackjackService.createPlayers(List.of("jacob", "seoye"));
+
+                // when
+                blackjackService.dealInitialCards();
+                List<ParticipantDto> actual = blackjackService.generateInitialParticipantDtoList();
+
+                // then
+                assertThat(actual).hasSize(3);
+                assertThat(actual.getFirst().name()).isEqualTo("딜러");
+                assertThat(actual.getFirst().hand()).hasSize(1);
+                assertThat(actual.get(1).hand()).hasSize(2);
+                assertThat(actual.get(2).hand()).hasSize(2);
+            }
+
+            @Test
+            void 초기_카드_분배시_최종_결과에는_모두_2장씩_있어야_한다() {
+
+                // given
+                blackjackService.createPlayers(List.of("jacob", "seoye"));
+
+                // when
+                blackjackService.dealInitialCards();
+                List<ParticipantDto> actual = blackjackService.getBlackjackResult();
+
+                // then
+                assertThat(actual).hasSize(3);
+                assertThat(actual.getFirst().hand()).hasSize(2);
+                assertThat(actual.get(1).hand()).hasSize(2);
+                assertThat(actual.get(2).hand()).hasSize(2);
+            }
+        }
+    }
+
+    @Nested
+    class validateHitOrStand {
+
+        @Nested
+        class Success {
+
+            @ParameterizedTest
+            @ValueSource(strings = {"y", "n"})
+            void y_또는_n_이면_예외를_발생시키지_않는다(String input) {
+
+                // given & when & then
+                blackjackService.validateHitOrStand(input);
             }
         }
 
@@ -56,68 +113,72 @@ class BlackjackServiceTest {
         class Fail {
 
             @Test
-            void 게임_참가_인원은_이름이_중복_되어선_안된다() {
+            void y_또는_n_가_아니면_예외를_발생시킨다() {
 
                 // given
-                List<String> input = List.of("jacob", "jacob");
+                String input = "a";
 
                 // when & then
-                assertThatThrownBy(() -> {
-                    blackjackService.createPlayers(input);
-                })
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining(ErrorMessage.PLAYER_DUPLICATED.getMessage());
-            }
-
-            @Test
-            void 게임_참가_인원은_2_이상_8_이하가_아니라면_예외를_발생_시켜야_한다() {
-
-                // given
-                List<String> input = List.of("jacob");
-
-                // when & then
-                assertThatThrownBy(() -> {
-                    blackjackService.createPlayers(input);
-                })
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining(ErrorMessage.PLAYER_COUNT_OUT_OF_RANGE.getMessage());
-            }
-
-            @Test
-            void 입력값에_공백만_입력되면_예외를_발생_시켜야_한다() {
-
-                // given
-                List<String> input = List.of("ab", "", "bc");
-
-                // when & then
-                assertThatThrownBy(() -> {
-                    blackjackService.createPlayers(input);
-                })
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining(ErrorMessage.PLAYER_NAME_BLANK.getMessage());
-            }
-
-            @ParameterizedTest
-            @MethodSource("provideCases")
-            void 게임_참가자_이름의_길이가_2_이상_5_이하가_아니라면_예외를_발생_시켜야_한다(List<String> input) {
-
-                // when & then
-                assertThatThrownBy(() -> {
-                    blackjackService.createPlayers(input);
-                })
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining(ErrorMessage.PLAYER_NAME_LENGTH_OUT_OF_RANGE.getMessage());
-            }
-
-            static Stream<Arguments> provideCases() {
-                return Stream.of(
-                    Arguments.of(List.of("j", "ja")),
-                    Arguments.of(List.of("aa aaa", "bb bbb"))
-                );
+                assertThatThrownBy(() -> blackjackService.validateHitOrStand(input))
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessageContaining(ErrorMessage.INVALID_YES_NO_INPUT.getMessage());
             }
         }
+    }
 
+    @Nested
+    class DrawDealerCardTest {
 
+        @Nested
+        class Success {
+
+            @Test
+            void 딜러_점수가_16_이하면_카드를_추가로_뽑아야_한다() {
+
+                // given
+                BlackjackService blackjackService = new FixedDeckBlackjackService(List.of(
+                        card(Rank.TEN, Suit.HEART), card(Rank.SIX, Suit.SPADE),
+                        card(Rank.TWO, Suit.CLOVER), card(Rank.THREE, Suit.DIAMOND),
+                        card(Rank.FOUR, Suit.HEART), card(Rank.FIVE, Suit.SPADE),
+                        card(Rank.NINE, Suit.CLOVER)
+                ));
+                blackjackService.createPlayers(List.of("jacob", "seoye"));
+                blackjackService.dealInitialCards();
+                ParticipantDto dealerDto = blackjackService.getBlackjackResult().getFirst();
+
+                // when
+                boolean actual = blackjackService.drawDealerCard(dealerDto);
+
+                // then
+                List<ParticipantDto> result = blackjackService.getBlackjackResult();
+                assertThat(actual).isTrue();
+                assertThat(result.getFirst().hand()).hasSize(3);
+            }
+
+            @Test
+            void 딜러_점수가_17_이상이면_카드를_추가로_뽑지_않아야_한다() {
+
+                // given
+                BlackjackService blackjackService = new FixedDeckBlackjackService(List.of(
+                        card(Rank.TEN, Suit.HEART), card(Rank.SEVEN, Suit.SPADE),
+                        card(Rank.TWO, Suit.CLOVER), card(Rank.THREE, Suit.DIAMOND),
+                        card(Rank.FOUR, Suit.HEART), card(Rank.FIVE, Suit.SPADE),
+                        card(Rank.NINE, Suit.CLOVER)
+                ));
+                blackjackService.createPlayers(List.of("jacob", "seoye"));
+                blackjackService.dealInitialCards();
+                ParticipantDto dealerDto = blackjackService.getBlackjackResult().getFirst();
+
+                // when
+                boolean actual = blackjackService.drawDealerCard(dealerDto);
+
+                // then
+                List<ParticipantDto> result = blackjackService.getBlackjackResult();
+                assertThat(actual).isFalse();
+                assertThat(result.getFirst().hand()).hasSize(2);
+            }
+
+        }
     }
 
     @Nested
@@ -168,70 +229,6 @@ class BlackjackServiceTest {
         }
     }
 
-
-    @Nested
-    class DealInitialCardsTest {
-
-        @Nested
-        class Success {
-
-            @Test
-            void 게임_참가자와_딜러_모두가_카드를_두장씩_받아야_한다() {
-
-                // given
-                PlayersDto playersDto = blackjackService.createPlayers(List.of("aa", "bb", "cc"));
-
-                // when
-                PlayersDto actual = blackjackService.dealInitialCards(playersDto);
-
-                // then
-                assertThat(blackjackService.generateHandDto(actual.dealer()).hand()).hasSize(2);
-                assertThat(actual.players())
-                    .allSatisfy(
-                        player -> assertThat(blackjackService.generateHandDto(player).hand())
-                            .hasSize(2));
-            }
-        }
-    }
-
-    @Nested
-    class DrawDealerCardTest {
-
-        @Nested
-        class Success {
-
-            @Test
-            void 딜러의_카드_숫자가_17_미만_이라면_카드를_뽑는다() {
-
-                // given
-                Dealer dealer = new Dealer(PolicyConstant.DEALER_NAME);
-                addCards(dealer, Rank.TEN, Rank.SIX);
-
-                // when
-                boolean actual = blackjackService.drawDealerCard(dealer);
-
-                // then
-                assertThat(actual).isTrue();
-                assertThat(blackjackService.generateHandDto(dealer).hand()).hasSize(3);
-            }
-
-            @Test
-            void 딜러의_카드_숫자가_17_이상_이라면_카드를_뽑지_않는다() {
-
-                // given
-                Dealer dealer = new Dealer(PolicyConstant.DEALER_NAME);
-                addCards(dealer, Rank.TEN, Rank.SEVEN);
-
-                // when
-                boolean actual = blackjackService.drawDealerCard(dealer);
-
-                // then
-                assertThat(actual).isFalse();
-                assertThat(blackjackService.generateHandDto(dealer).hand()).hasSize(2);
-            }
-        }
-    }
-
     @Nested
     class CalculatePlayerResultsTest {
 
@@ -239,62 +236,27 @@ class BlackjackServiceTest {
         class Success {
 
             @Test
-            void 딜러가_버스트면_버스트가_아닌_참가자는_승이고_버스트인_참가자는_패다() {
+            void 플레이어별_결과를_승무패로_계산해야_한다() {
 
                 // given
-                Dealer dealer = new Dealer(PolicyConstant.DEALER_NAME);
-                addCards(dealer, Rank.TEN, Rank.Q, Rank.TWO);
-
-                Player player1 = new Player("aa");
-                addCards(player1, Rank.TEN, Rank.SEVEN);
-
-                Player player2 = new Player("bb");
-                addCards(player2, Rank.TEN, Rank.Q, Rank.TWO);
-
-                PlayersDto playersDto = new PlayersDto(List.of(player1, player2), dealer);
+                BlackjackService blackjackService = new FixedDeckBlackjackService(List.of(
+                    card(Rank.TEN, Suit.HEART), card(Rank.SEVEN, Suit.SPADE),
+                    card(Rank.TEN, Suit.CLOVER), card(Rank.EIGHT, Suit.DIAMOND),
+                    card(Rank.TEN, Suit.DIAMOND), card(Rank.SEVEN, Suit.HEART),
+                    card(Rank.NINE, Suit.CLOVER), card(Rank.SEVEN, Suit.DIAMOND)
+                ));
+                blackjackService.createPlayers(List.of("jacob", "seoye", "brown"));
+                blackjackService.dealInitialCards();
 
                 // when
-                List<PlayerResultDto> actual = blackjackService.calculatePlayerResults(playersDto);
+                List<PlayerResultDto> actual = blackjackService.calculatePlayerResults();
 
                 // then
-                assertThat(actual).hasSize(2);
-                assertThat(actual.get(0).name()).isEqualTo("aa");
-                assertThat(actual.get(0).result()).isEqualTo(Result.WIN);
-                assertThat(actual.get(1).name()).isEqualTo("bb");
-                assertThat(actual.get(1).result()).isEqualTo(Result.LOSE);
-            }
-
-            @Test
-            void 딜러가_버스트가_아니면_점수_비교_규칙대로_승무패를_계산해야_한다() {
-
-                // given
-                Dealer dealer = new Dealer(PolicyConstant.DEALER_NAME);
-                addCards(dealer, Rank.TEN, Rank.SEVEN);
-
-                Player player1 = new Player("aa");
-                addCards(player1, Rank.TEN, Rank.SIX);
-
-                Player player2 = new Player("bb");
-                addCards(player2, Rank.TEN, Rank.SEVEN);
-
-                Player player3 = new Player("cc");
-                addCards(player3, Rank.TEN, Rank.EIGHT);
-
-                Player player4 = new Player("dd");
-                addCards(player4, Rank.TEN, Rank.Q, Rank.TWO);
-
-                PlayersDto playersDto = new PlayersDto(List.of(player1, player2, player3, player4),
-                    dealer);
-
-                // when
-                List<PlayerResultDto> actual = blackjackService.calculatePlayerResults(playersDto);
-
-                // then
-                assertThat(actual).hasSize(4);
-                assertThat(actual.get(0).result()).isEqualTo(Result.LOSE);
-                assertThat(actual.get(1).result()).isEqualTo(Result.DRAW);
-                assertThat(actual.get(2).result()).isEqualTo(Result.WIN);
-                assertThat(actual.get(3).result()).isEqualTo(Result.LOSE);
+                assertThat(actual).containsExactly(
+                    new PlayerResultDto("jacob", Result.WIN),
+                    new PlayerResultDto("seoye", Result.DRAW),
+                    new PlayerResultDto("brown", Result.LOSE)
+                );
             }
         }
     }
@@ -306,41 +268,26 @@ class BlackjackServiceTest {
         class Success {
 
             @Test
-            void 딜러_승무패_집계는_참가자_결과를_기준으로_계산해야_한다() {
+            void 딜러_승무패_통계를_플레이어_결과로부터_계산해야_한다() {
 
                 // given
-                Dealer dealer = new Dealer(PolicyConstant.DEALER_NAME);
-                addCards(dealer, Rank.TEN, Rank.SEVEN);
-
-                Player player1 = new Player("aa");
-                addCards(player1, Rank.TEN, Rank.SIX);
-
-                Player player2 = new Player("bb");
-                addCards(player2, Rank.TEN, Rank.SEVEN);
-
-                Player player3 = new Player("cc");
-                addCards(player3, Rank.TEN, Rank.EIGHT);
-
-                Player player4 = new Player("dd");
-                addCards(player4, Rank.TEN, Rank.Q, Rank.TWO);
-
-                PlayersDto playersDto = new PlayersDto(List.of(player1, player2, player3, player4),
-                    dealer);
+                BlackjackService blackjackService = new FixedDeckBlackjackService(List.of(
+                    card(Rank.TEN, Suit.HEART), card(Rank.SEVEN, Suit.SPADE),
+                    card(Rank.TEN, Suit.CLOVER), card(Rank.EIGHT, Suit.DIAMOND),
+                    card(Rank.TEN, Suit.DIAMOND), card(Rank.SEVEN, Suit.HEART),
+                    card(Rank.NINE, Suit.CLOVER), card(Rank.SEVEN, Suit.DIAMOND)
+                ));
+                blackjackService.createPlayers(List.of("jacob", "seoye", "brown"));
+                blackjackService.dealInitialCards();
 
                 // when
-                DealerResultDto actual = blackjackService.calculateDealerResult(playersDto);
+                BlackjackStatisticsDto actual = blackjackService.getBlackjackStatistics();
 
                 // then
-                assertThat(actual.win()).isEqualTo(2);
-                assertThat(actual.draw()).isEqualTo(1);
-                assertThat(actual.lose()).isEqualTo(1);
+                assertThat(actual.dealerResultDto().win()).isEqualTo(1);
+                assertThat(actual.dealerResultDto().draw()).isEqualTo(1);
+                assertThat(actual.dealerResultDto().lose()).isEqualTo(1);
             }
-        }
-    }
-
-    private void addCards(Player player, Rank... ranks) {
-        for (Rank rank : ranks) {
-            player.addCard(new Card(rank, Suit.HEART));
         }
     }
 
@@ -351,86 +298,52 @@ class BlackjackServiceTest {
         class Success {
 
             @Test
-            void 딜러_승무패_집계는_참가자_결과를_기준으로_계산해야_한다() {
+            void 플레이어가_카드를_추가로_받으면_최종_결과에_반영되어야_한다() {
 
                 // given
-                Dealer dealer = new Dealer(PolicyConstant.DEALER_NAME);
-                addCards(dealer, Rank.TEN, Rank.SEVEN);
-
-                Player player1 = new Player("aa");
-                addCards(player1, Rank.TEN, Rank.SIX);
-
-                Player player2 = new Player("bb");
-                addCards(player2, Rank.TEN, Rank.SEVEN);
-
-                Player player3 = new Player("cc");
-                addCards(player3, Rank.TEN, Rank.EIGHT);
-
-                Player player4 = new Player("dd");
-                addCards(player4, Rank.TEN, Rank.Q, Rank.TWO);
-
-                PlayersDto playersDto = new PlayersDto(List.of(player1, player2, player3, player4),
-                    dealer);
+                BlackjackService blackjackService = new FixedDeckBlackjackService(List.of(
+                    card(Rank.TEN, Suit.HEART), card(Rank.SIX, Suit.SPADE),
+                    card(Rank.TWO, Suit.CLOVER), card(Rank.THREE, Suit.DIAMOND),
+                    card(Rank.FOUR, Suit.HEART), card(Rank.FIVE, Suit.SPADE),
+                    card(Rank.ACE, Suit.CLOVER)
+                ));
+                blackjackService.createPlayers(List.of("jacob", "seoye"));
+                blackjackService.dealInitialCards();
+                blackjackService.updatePlayer("jacob");
 
                 // when
-                List<BlackjackResultDto> actual = blackjackService.generateBlackjackResultDto(
-                    playersDto);
+                List<ParticipantDto> actual = blackjackService.getBlackjackResult();
 
                 // then
-                assertThat(actual).hasSize(5);
-
-                assertThat(actual.get(0).handDto().name()).isEqualTo(PolicyConstant.DEALER_NAME);
-                assertThat(actual.get(0).score()).isEqualTo(17);
-                assertThat(actual.get(0).handDto().hand()).hasSize(2);
-
-                assertThat(actual.get(1).handDto().name()).isEqualTo("aa");
-                assertThat(actual.get(1).score()).isEqualTo(16);
-                assertThat(actual.get(1).handDto().hand()).hasSize(2);
-
-                assertThat(actual.get(2).handDto().name()).isEqualTo("bb");
-                assertThat(actual.get(2).score()).isEqualTo(17);
-                assertThat(actual.get(2).handDto().hand()).hasSize(2);
-
-                assertThat(actual.get(3).handDto().name()).isEqualTo("cc");
-                assertThat(actual.get(3).score()).isEqualTo(18);
-                assertThat(actual.get(3).handDto().hand()).hasSize(2);
-
-                assertThat(actual.get(4).handDto().name()).isEqualTo("dd");
-                assertThat(actual.get(4).score()).isEqualTo(22);
-                assertThat(actual.get(4).handDto().hand()).hasSize(3);
+                assertThat(actual).hasSize(3);
+                assertThat(actual.getFirst().name()).isEqualTo("딜러");
+                assertThat(actual.get(1).name()).isEqualTo("jacob");
+                assertThat(actual.get(1).hand()).hasSize(3);
+                assertThat(actual.get(1).hand()).contains("A클로버");
+                assertThat(actual.get(2).name()).isEqualTo("seoye");
+                assertThat(actual.get(2).hand()).hasSize(2);
             }
         }
     }
 
-    @Nested
-    class validateHitOrStand {
+    private static Card card(Rank rank, Suit suit) {
+        return new Card(rank, suit);
+    }
 
-        @Nested
-        class Success {
+    private static class FixedDeckBlackjackService extends BlackjackService {
 
-            @ParameterizedTest
-            @ValueSource(strings = {"y", "n"})
-            void y_또는_n_이면_예외를_발생시키지_않는다(String input) {
+        private final Deque<Card> cards;
 
-                // given & when & then
-                blackjackService.validateHitOrStand(input);
-            }
+        private FixedDeckBlackjackService(List<Card> cards) {
+            this.cards = new ArrayDeque<>(cards);
         }
 
-        @Nested
-        class Fail {
-
-            @Test
-            void y_또는_n_가_아니면_예외를_발생시킨다() {
-
-                // given
-                String input = "a";
-
-                // when & then
-                assertThatThrownBy(() -> blackjackService.validateHitOrStand(input))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining(ErrorMessage.INVALID_YES_NO_INPUT.getMessage());
+        @Override
+        public Card drawCard() {
+            if (cards.isEmpty()) {
+                return null;
             }
+            return cards.removeFirst();
         }
     }
 }
