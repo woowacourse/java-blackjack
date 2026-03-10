@@ -12,12 +12,14 @@ public class ProfitResultDto {
 
     public ProfitResultDto(int dealerProfitResult, Map<Player, Integer> playersProfitResult) {
         this.dealerProfitResult = dealerProfitResult;
-        this.playersProfitResult = playersProfitResult.entrySet()
+        this.playersProfitResult = Map.copyOf(
+                playersProfitResult.entrySet()
                 .stream()
                 .collect(Collectors.toMap(
                         entry -> entry.getKey().getName(),
                         Map.Entry::getValue
-                ));
+                ))
+        );
     }
 
     public int getDealerProfitResult() {
