@@ -38,6 +38,9 @@ public class BlackjackController {
 
         final Players players = createPlayers();
         final Dealer dealer = new Dealer();
+
+        Map<Player, Integer> wagers = players.placeWagers(inputView::readWager);
+
         dealInitialCards(deck, players, dealer);
         outputView.printInitialDeal(players, dealer);
         processPlayersTurn(deck, players);
