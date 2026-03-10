@@ -4,28 +4,17 @@ import team.blackjack.controler.BlackJackController;
 import team.blackjack.service.BlackJackService;
 
 public class AppConfig {
-    private static volatile AppConfig instance;
+    private static final AppConfig instance = new AppConfig();
+    private final BlackJackService blackJackService = new BlackJackService();
+    private final BlackJackController blackJackController = new BlackJackController(blackJackService);
 
-    private AppConfig() {
-    }
+    private AppConfig() {}
 
     public static AppConfig getInstance() {
-        if (instance == null) {
-            synchronized (AppConfig.class) {
-                if (instance == null) {
-                    instance = new AppConfig();
-                }
-            }
-        }
-
         return instance;
     }
 
-    public BlackJackService blackJackService() {
-        return new BlackJackService();
-    }
-
     public BlackJackController blackJackController() {
-        return new BlackJackController(blackJackService());
+        return blackJackController;
     }
 }
