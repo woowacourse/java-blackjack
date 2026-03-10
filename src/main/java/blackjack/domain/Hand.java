@@ -30,7 +30,17 @@ public class Hand {
             .count();
     }
 
-    public int handleAce(int totalScore) {
+    public boolean isBurst() {
+        return calculateScore() > BURST_THRESHOLD;
+    }
+
+    public List<String> getCardNames(int startInclusive) {
+        return cards.subList(startInclusive, cards.size()).stream()
+            .map(Card::toString)
+            .toList();
+    }
+
+    private int handleAce(int totalScore) {
         long aceCount = countAce();
         int updatedScore = totalScore;
         int aceScoreDifference = 10;
@@ -40,15 +50,5 @@ public class Hand {
         }
 
         return updatedScore;
-    }
-
-    public boolean isBurst() {
-        return calculateScore() > BURST_THRESHOLD;
-    }
-
-    public List<String> getCardNames(int startInclusive) {
-        return cards.subList(startInclusive, cards.size()).stream()
-            .map(Card::toString)
-            .toList();
     }
 }
