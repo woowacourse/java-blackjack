@@ -1,0 +1,99 @@
+package blackjack.controller;
+
+import blackjack.domain.Deck;
+import blackjack.domain.Player;
+import blackjack.domain.Players;
+import blackjack.dto.WinningResult;
+import blackjack.view.InputView;
+import blackjack.view.OutputView;
+import java.util.List;
+
+public class BlackjackController {
+
+    private final InputView inputView;
+
+    public BlackjackController(InputView inputView) {
+        this.inputView = inputView;
+    }
+
+    public void run() {
+        Players players = readPlayers();
+        Player dealer = new Player("딜러");
+
+        setInitialTwoCards(players, dealer);
+        printInitialSettings(players, dealer);
+
+        getMoreCardsForPlayers(players);
+        getMoreCardsForDealer(dealer, players);
+
+        printGameResult(players, dealer);
+        printWinningResult(players, dealer);
+    }
+
+    private Players readPlayers() {
+        List<String> playersName = inputView.readPlayersName();
+        return Players.from(playersName);
+    }
+
+    private void setInitialTwoCards(Players players, Player dealer) {
+        Deck.shuffle();
+        for (int i = 0; i < 2; i++) {
+            players.draw();
+            dealer.draw(Deck.pop());
+        }
+    }
+
+    private void printInitialSettings(Players players, Player dealer) {
+        OutputView.printInitialSettingsDoneMessage(dealer.getName(), players.getPlayersName());
+        OutputView.printCardResults(dealer.getName(), List.of(dealer.getFirstCardName()));
+        for (Player player : players.getPlayers()) {
+            OutputView.printCardResults(player.getName(), player.getCardsName());
+        }
+        OutputView.println();
+    }
+
+    private void getMoreCardsForPlayers(Players players) {
+        for (Player player : players.getPlayers()) {
+            getMoreCardsForPlayer(player);
+        }
+    }
+
+    private void getMoreCardsForPlayer(Player player) {
+        boolean isDraw = false;
+        while (!player.isBurst() && !player.isBlackjack() && readPlayerWantMoreCard(player)) {
+            player.draw(Deck.pop());
+            OutputView.printCardResults(player.getName(), player.getCardsName());
+            isDraw = true;
+        }
+        if (!isDraw) {
+            OutputView.printCardResults(player.getName(), player.getCardsName());
+        }
+    }
+
+    private boolean readPlayerWantMoreCard(Player player) {
+        return "y".equals(inputView.readMoreCard(player.getName()));
+    }
+
+    private void getMoreCardsForDealer(Player dealer, Players players) {
+        if (players.isAllPlayersBurst()) {
+            return;
+        }
+        while (dealer.calculateCardsValue() < 17) {
+            dealer.draw(Deck.pop());
+            OutputView.printGetMoreCardsMessageForDealer(dealer.getName());
+        }
+    }
+
+    private void printGameResult(Players players, Player dealer) {
+        OutputView.println();
+        OutputView.printCardResults(dealer.getName(), dealer.getCardsName(), dealer.calculateCardsValue());
+        for (Player player : players.getPlayers()) {
+            OutputView.printCardResults(player.getName(), player.getCardsName(), player.calculateCardsValue());
+        }
+    }
+
+    private void printWinningResult(Players players, Player dealer) {
+        OutputView.printWinningResult(WinningResult.from(players, dealer));
+    }
+
+}
