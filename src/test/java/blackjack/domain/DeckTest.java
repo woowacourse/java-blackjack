@@ -12,4 +12,12 @@ public class DeckTest {
         assertThat(deck.getCount()).isEqualTo(52);
     }
 
+    @Test
+    void 카드는_맨_뒤에서부터_나눠준다() {
+        Deck deck = new Deck();
+        Card lastCard = deck.getLastCard();
+        Card drawCard = deck.draw();
+        assertThat(drawCard).isEqualTo(lastCard);
+    }
+
 }
