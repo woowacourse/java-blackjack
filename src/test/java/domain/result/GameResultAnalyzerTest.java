@@ -6,7 +6,7 @@ import domain.card.*;
 import domain.participant.Dealer;
 import domain.participant.ParticipantName;
 import domain.participant.Players;
-import domain.result.dto.GameResultAnalysisDto;
+import domain.result.dto.GameResultAnalysis;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -33,7 +33,7 @@ class GameResultAnalyzerTest {
         Players players = Players.from(List.of(ParticipantName.from("p7"), ParticipantName.from("p11")));
         players.giveInitialCardBundle(dealerScore4);
 
-        GameResultAnalysisDto analysis = GameResultAnalyzer.analyze(players, dealerScore4);
+        GameResultAnalysis analysis = GameResultAnalyzer.analyze(players, dealerScore4);
 
         Assertions.assertThat(analysis.getDealerResult())
                 .isEqualTo("2패");

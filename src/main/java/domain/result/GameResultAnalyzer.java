@@ -2,7 +2,7 @@ package domain.result;
 
 import domain.participant.Player;
 import domain.result.dto.PlayerGameResult;
-import domain.result.dto.GameResultAnalysisDto;
+import domain.result.dto.GameResultAnalysis;
 import domain.participant.Dealer;
 import domain.participant.Players;
 
@@ -11,12 +11,12 @@ import java.util.List;
 //TODO player,dealer 상속 적용 후 개선 필요 (중복 if문)
 public class GameResultAnalyzer {
 
-    public static GameResultAnalysisDto analyze(Players players, Dealer dealer) {
+    public static GameResultAnalysis analyze(Players players, Dealer dealer) {
         List<PlayerGameResult> playerGameResults = players.stream()
                 .map(player -> judgePlayerGameResult(dealer, player))
                 .toList();
 
-        return GameResultAnalysisDto.from(playerGameResults);
+        return GameResultAnalysis.from(playerGameResults);
     }
 
     private static PlayerGameResult judgePlayerGameResult(Dealer dealer, Player player) {

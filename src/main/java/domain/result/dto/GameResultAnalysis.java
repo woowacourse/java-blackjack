@@ -6,11 +6,11 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public record GameResultAnalysisDto(
+public record GameResultAnalysis(
         EnumMap<GameResult, Integer> dealerGameResult,
         List<PlayerGameResult> playerGameResults
 ) {
-    public static GameResultAnalysisDto from(List<PlayerGameResult> playerGameResults) {
+    public static GameResultAnalysis from(List<PlayerGameResult> playerGameResults) {
         EnumMap<GameResult, Integer> dealerGameResult = new EnumMap<>(GameResult.class);
         List<GameResult> list = playerGameResults.stream()
                 .map(PlayerGameResult::gameResult)
@@ -21,7 +21,7 @@ public record GameResultAnalysisDto(
             dealerGameResult.put(gameResult, dealerGameResult.getOrDefault(gameResult, 0) + 1);
         }
 
-        return new GameResultAnalysisDto(dealerGameResult, playerGameResults);
+        return new GameResultAnalysis(dealerGameResult, playerGameResults);
     }
 
     public String getDealerResult() {
