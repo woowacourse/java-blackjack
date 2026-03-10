@@ -65,7 +65,7 @@ public class BlackjackController {
     }
 
     private void drawCardOnPlayer(String name, String hitOrStand) {
-        while (blackjackService.isHit(name, hitOrStand)) {
+        while (blackjackService.isHit(hitOrStand)) {
             ParticipantDto playerDto = blackjackService.updatePlayer(name);
             outputView.printlnHand(name, playerDto.hand());
             hitOrStand = inputView.inputHitOrStand(name);

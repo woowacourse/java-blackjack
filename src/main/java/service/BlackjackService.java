@@ -140,7 +140,7 @@ public class BlackjackService {
         return new ParticipantDto(name, player.getHand(), player.calculateScore());
     }
 
-    public boolean isHit(String name, String hitOrStand) {
+    public boolean isHit(String hitOrStand) {
         return hitOrStand.strip().equals(HitOrStand.HIT.getHitOrStand());
     }
 
