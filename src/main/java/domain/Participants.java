@@ -14,6 +14,7 @@ public class Participants {
 
     private final List<User> participants;
     private final Dealer dealer;
+    private final GameJudge gameJudge = new GameJudge();
 
     public Participants(String participantsName) {
         this.participants = new ArrayList<>();
@@ -76,7 +77,7 @@ public class Participants {
     public Map<String, GameResult> calculateUserResults() {
         Map<String, GameResult> userResults = new HashMap<>();
         for (User user : participants) {
-            userResults.put(user.getName(), dealer.judgeUserWin(user.getScore()));
+            userResults.put(user.getName(), gameJudge.judge(dealer.getScore(), user.getScore()));
         }
         return userResults;
     }
@@ -84,7 +85,7 @@ public class Participants {
     public EnumMap<GameResult, Integer> calculateDealerResults() {
         EnumMap<GameResult, Integer> dealerResults = initEnumMap();
         for (User user : participants) {
-            GameResult dealerResult = dealer.judgeDealerResult(user.getScore());
+            GameResult dealerResult = gameJudge.judge(dealer.getScore(), user.getScore()).opposite();
             dealerResults.replace(dealerResult, dealerResults.get(dealerResult) + 1);
         }
         return dealerResults;

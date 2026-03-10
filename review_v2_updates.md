@@ -6,9 +6,20 @@
 
 - [x] **1. 도메인 특화 단어 사용**
   - WINNING_SCORE_BOUNDARY -> BLACKJACK_SCORE
-- [ ] **2. 승패판정 책임 분리 -> 새로운 객체 도입**
+- [x] **2. 승패판정 책임 분리 -> 새로운 객체 도입**
   - 객체지향은 현실을 복사하는 게 아니라, 현실의 은유를 빌려서 역할과 책임을 분리하는 것이다.
   - `Participants`와 `Dealer` 수정할 것.
+  - [x] `GameResult`에 `PUSH`(동점), `BUST`(21 초과) 추가
+  - [x] `GameResult`에 `opposite()` 메서드 추가
+    - `WIN → LOSE`, `LOSE → WIN`, `PUSH → PUSH`, `BUST → WIN`
+  - [x] `GameJudge` 클래스 생성: `judge(int dealerScore, int userScore) → GameResult`
+    - 유저 > 21 → `BUST`
+    - 유저 == 딜러 → `PUSH`
+    - 기존 WIN/LOSE 분기 유지
+  - [x] `Dealer`에서 `judgeUserWin()`, `judgeDealerResult()` 제거
+  - [x] `Participants.calculateUserResults()`: `gameJudge.judge(dealer.getScore(), user.getScore())` 사용
+  - [x] `Participants.calculateDealerResults()`: `gameJudge.judge(...).opposite()`로 집계 (`initEnumMap()` 수정 불필요)
+  - [x] `OutputView.printWinningResults()`: PUSH, BUST 출력 처리 추가
 - [x] **3. `Name` 원시값 포장 검증 테스트 위치 확인**
   - 지금 다른 곳에서 validation 하고 있는 것을 위치 수정할 것.
 - [x] **4. 의미없는 주석 제거**

@@ -10,13 +10,6 @@ import vo.Rank;
 import vo.Suit;
 
 public class BlackjackGameFlowTest {
-
-    // 카드 배분 순서 (dealCards 2라운드):
-    // round1: 영기 → 라이 → 딜러
-    // round2: 영기 → 라이 → 딜러
-    // 영기: KING(10) + ACE(11) = 21 블랙잭
-    // 라이: TWO(2) + THREE(3) = 5, 히트 → TEN(10) = 15
-    // 딜러: FIVE(5) + SIX(6) = 11 → 히트 → SEVEN(7) = 18
     private BlackjackGame blackjackGame;
 
     @BeforeEach
@@ -30,8 +23,8 @@ public class BlackjackGameFlowTest {
                 new Card(Suit.SPADE, Rank.ACE),
                 new Card(Suit.HEART, Rank.THREE),
                 new Card(Suit.DIAMOND, Rank.SIX),
-                new Card(Suit.CLUB, Rank.TEN),
-                new Card(Suit.CLUB, Rank.SEVEN)
+                new Card(Suit.CLUB, Rank.SEVEN),
+                new Card(Suit.CLUB, Rank.TEN)
         )));
         blackjackGame.dealCards();
     }

@@ -48,7 +48,9 @@ public class OutputView {
     }
 
     public void printWinningResults(EnumMap<GameResult, Integer> dealerResults, Map<String, GameResult> userResults, List<String> userNames) {
-        printMessage("딜러: " + dealerResults.get(GameResult.WIN) + "승 " + dealerResults.get(GameResult.LOSE) + "패");
+        int dealerWin = dealerResults.get(GameResult.WIN) + dealerResults.get(GameResult.PUSH);
+        int dealerLose = dealerResults.get(GameResult.LOSE) + dealerResults.get(GameResult.BUST);
+        printMessage("딜러: " + dealerWin + "승 " + dealerLose + "패");
         userNames.forEach(name -> printMessage(name + ": " + userResults.get(name).getName()));
     }
 
