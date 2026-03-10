@@ -2,12 +2,19 @@ package blackjack.model;
 
 import blackjack.util.PlayerParser;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Users {
 
     private final List<Player> players;
     private final Dealer dealer;
+
+    public Users(List<Player> players, Dealer dealer) {
+        this.players = players;
+        this.dealer = dealer;
+    }
 
     public Users(String playerNames) {
         this.players = PlayerParser.parse(playerNames);
@@ -28,70 +35,81 @@ public class Users {
         return users;
     }
 
-    public void determineWinner() {
+    public PlayersGameResult determineWinner() {
+        Map<Player, GameResult> result = new HashMap<>();
         for (Player player : players) {
-            if (calculateWhenBlackjack(player, dealer)) {
+            if (calculateWhenBlackjack(player, dealer, result)) {
                 continue;
             }
 
-            if (calculateWhenBust(player, dealer)) {
+            if (calculateWhenBust(player, dealer, result)) {
                 continue;
             }
 
-            calculateWhenNormal(player, dealer);
+            calculateWhenNormal(player, dealer, result);
         }
+        return new PlayersGameResult(result);
     }
 
-    private boolean calculateWhenBlackjack(Player player, Dealer dealer) {
+    private boolean calculateWhenBlackjack(Player player, Dealer dealer, Map<Player, GameResult> result) {
         if (player.isBlackjack() && dealer.isBlackjack()) {
-            dealer.addResult(GameResult.DRAW);
+            logDraw(player, dealer, result);
             return true;
         }
 
         if (player.isBlackjack()) {
-            player.mark(GameResult.WIN);
-            dealer.addResult(GameResult.LOSE);
+            logPlayerWin(player, dealer, result);
             return true;
         }
 
         if (dealer.isBlackjack()) {
-            player.mark(GameResult.LOSE);
-            dealer.addResult(GameResult.WIN);
+            logPlayerLose(player, dealer, result);
             return true;
         }
 
         return false;
     }
 
-    private boolean calculateWhenBust(Player player, Dealer dealer) {
+    private boolean calculateWhenBust(Player player, Dealer dealer, Map<Player, GameResult> result) {
         if (player.isBust()) {
-            dealer.addResult(GameResult.WIN);
-            player.mark(GameResult.LOSE);
+            logPlayerLose(player, dealer, result);
             return true;
         }
 
         if (dealer.isBust()) {
-            dealer.addResult(GameResult.LOSE);
-            player.mark(GameResult.WIN);
+            logPlayerWin(player, dealer, result);
             return true;
         }
 
         return false;
     }
 
-    private static void calculateWhenNormal(Player player, Dealer dealer) {
+    private void calculateWhenNormal(Player player, Dealer dealer, Map<Player, GameResult> result) {
         if (player.totalScore() > dealer.totalScore()) {
-            dealer.addResult(GameResult.LOSE);
-            player.mark(GameResult.WIN);
+            logPlayerWin(player, dealer, result);
             return;
         }
 
         if (player.totalScore() < dealer.totalScore()) {
-            dealer.addResult(GameResult.WIN);
-            player.mark(GameResult.LOSE);
+            logPlayerLose(player, dealer, result);
             return;
         }
 
+        logDraw(player, dealer, result);
+    }
+
+    private void logPlayerWin(Player player, Dealer dealer, Map<Player, GameResult> result) {
+        result.put(player, GameResult.WIN);
+        dealer.addResult(GameResult.LOSE);
+    }
+
+    private void logPlayerLose(Player player, Dealer dealer, Map<Player, GameResult> result) {
+        result.put(player, GameResult.LOSE);
+        dealer.addResult(GameResult.WIN);
+    }
+
+    private void logDraw(Player player, Dealer dealer, Map<Player, GameResult> result) {
+        result.put(player, GameResult.DRAW);
         dealer.addResult(GameResult.DRAW);
     }
 }

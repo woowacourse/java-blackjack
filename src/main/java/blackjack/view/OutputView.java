@@ -6,10 +6,12 @@ import blackjack.model.Card;
 import blackjack.model.Dealer;
 import blackjack.model.GameResult;
 import blackjack.model.Player;
+import blackjack.model.PlayersGameResult;
 import blackjack.model.User;
 import blackjack.model.Users;
 import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -56,18 +58,27 @@ public class OutputView {
     }
 
     public static void printHandStatus(Users users) {
+        Dealer dealer = users.getDealer();
+        List<Player> players = users.getPlayers();
         StringBuilder sb = new StringBuilder();
-        for (User user : users.getUsers()) {
-            sb.append(user.getName()).append(" 카드: ");
-            sb.append(user.cards().stream()
+
+        sb.append(dealer.getName()).append(" 카드: ");
+        sb.append(dealer.cards().stream()
+                .map(card -> card.getRank().getFormat() + card.getSuit().getFormat())
+                .collect(Collectors.joining(", ")));
+        sb.append(" - 결과: ").append(dealer.totalScore()).append("\n");
+
+        for (Player player : players) {
+            sb.append(player.getName()).append(" 카드: ");
+            sb.append(player.cards().stream()
                     .map(card -> card.getRank().getFormat() + card.getSuit().getFormat())
                     .collect(Collectors.joining(", ")));
-            sb.append(" - 결과: ").append(user.totalScore()).append("\n");
+            sb.append(" - 결과: ").append(player.totalScore()).append("\n");
         }
         System.out.println(sb);
     }
 
-    public static void printGameResult(Users users) {
+    public static void printGameResult(PlayersGameResult playersGameResult, Users users) {
         System.out.println();
         System.out.println("## 최종 승패");
 
@@ -78,10 +89,10 @@ public class OutputView {
                         dealerGameResult.getOrDefault(GameResult.DRAW, 0) + "무 " + dealerGameResult.getOrDefault(
                         GameResult.LOSE, 0) + "패");
 
-        List<Player> players = users.getPlayers();
-        for (Player player : players) {
+        Map<Player, GameResult> result = playersGameResult.result();
+        for (Player player : users.getPlayers()) {
             System.out.print(player.getName() + ": ");
-            System.out.println(player.getGameResult().getFormat());
+            System.out.println(result.get(player).getFormat());
         }
     }
 
