@@ -3,6 +3,7 @@ package domain.player;
 import domain.card.Card;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class HandCards {
@@ -27,7 +28,7 @@ public class HandCards {
             cardList.add(card.toString());
         }
 
-        return cardList;
+        return Collections.unmodifiableList(cardList);
     }
 
     // 손에 쥔 카드 점수 계산해 반환
