@@ -24,7 +24,6 @@ public class Main {
         }
     }
 
-
     private static void printResult(OutputView outputView, BlackjackGame game) {
         if (game.canDealerDraw()) {
             game.dealerDrawCard();
