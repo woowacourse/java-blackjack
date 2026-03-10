@@ -6,11 +6,11 @@ import java.util.List;
 
 public abstract class User {
 
-    private final UserName name;
+    private final Username name;
     private final Hand hand;
 
     public User(String name) {
-        this.name = new UserName(name);
+        this.name = new Username(name);
         this.hand = new Hand();
     }
 
