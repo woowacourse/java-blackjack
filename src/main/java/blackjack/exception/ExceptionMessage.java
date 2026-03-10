@@ -3,6 +3,7 @@ package blackjack.exception;
 public enum ExceptionMessage {
 
     INVALID_INPUT("잘못된 입력 형식입니다."),
+    INVALID_NUMBER("잘못된 숫자 형식입니다."),
     INVALID_NAME_RANGE("잘못된 이름 범위 입니다."),
     INVALID_NAME_FORMAT("잘못된 이름 형식 입니다."),
     COMMAND_NOT_FOUND("존재하지 않는 명령어 입니다."),

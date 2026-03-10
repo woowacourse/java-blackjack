@@ -6,9 +6,9 @@
 
 - [x] 게임에 참여할 사람의 이름 입력 받기(구분자 ,)
     - [x] 공백일 경우 `IllegalArgumentException`을 발생시킨다.
-- [] 플레이어로부터 베팅 금액 입력 받기
-    - [] 공백일 경우 `IllegalArgumentException`을 발생시킨다.
-    - [] 숫자 형식이 아닐 경우 `IllegalArgumentException`을 발생시킨다.
+- [x] 플레이어로부터 베팅 금액 입력 받기
+    - [x] 공백일 경우 `IllegalArgumentException`을 발생시킨다.
+    - [x] 숫자 형식이 아닐 경우 `IllegalArgumentException`을 발생시킨다.
 - [x] 플레이어에게 hit 여부 입력 받기(y,n).
     - [x] 공백일 경우 `IllegalArgumentException`을 발생시킨다.
 

@@ -20,6 +20,12 @@ public final class InputView {
         return Parser.parseByDelimiter(DELIMITER, input);
     }
 
+    public static int readBettingAmount(String name) {
+        System.out.println(name + "의 배팅 금액은?");
+        String input = readLine();
+        return Parser.parseToInt(input);
+    }
+
     public static String readHitOrStand(String name) {
         System.out.println(NEW_LINE + name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         return readLine();
