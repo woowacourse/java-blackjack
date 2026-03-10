@@ -68,7 +68,7 @@ public class GameManager {
         List<GameInitialInfoDto> results = new ArrayList<>();
 
         List<String> dealerOpenCard = new ArrayList<>();
-        dealerOpenCard.add(dealer.getHandToString().getFirst());
+        dealerOpenCard.add(dealer.getOpenCard());
 
 
         addDealerInfo(results, dealerOpenCard);
