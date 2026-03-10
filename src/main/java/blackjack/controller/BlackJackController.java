@@ -8,8 +8,8 @@ import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BlackJackController {
     private final InputView inputView = new InputView();
@@ -32,7 +32,7 @@ public class BlackJackController {
 
         outputView.printFinalCardResult(dealer, players);
 
-        HashMap<Player, GameResult> result = blackJackGame.judgeGameResult();
+        Map<Player, GameResult> result = blackJackGame.judgeGameResult();
         outputView.printFinalGameResult(result);
 
 

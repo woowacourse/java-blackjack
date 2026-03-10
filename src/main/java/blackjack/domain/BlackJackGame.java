@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import java.util.HashMap;
+import java.util.Map;
 
 public class BlackJackGame {
     private static final int INIT_DRAW_CARD_COUNT = 2;
@@ -15,15 +15,15 @@ public class BlackJackGame {
     }
 
     public void initDraw() {
-        for(int i = 0; i < INIT_DRAW_CARD_COUNT; i++) {
+        for (int i = 0; i < INIT_DRAW_CARD_COUNT; i++) {
             players.recieveCard(deck);
             dealer.recieveCard(deck.draw());
         }
     }
 
-    public HashMap<Player, GameResult> judgeGameResult(){
+    public Map<Player, GameResult> judgeGameResult() {
         BlackJackJudge blackJackJudge = new BlackJackJudge();
-        return blackJackJudge.judge( players, dealer);
+        return blackJackJudge.judge(players, dealer);
     }
 
 }

@@ -2,11 +2,12 @@ package blackjack.domain;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class BlackJackJudge {
 
 
-    public HashMap<Player, GameResult> judge(Players players, Dealer dealer) {
+    public Map<Player, GameResult> judge(Players players, Dealer dealer) {
         HashMap<Player, GameResult> result = new LinkedHashMap<>();
 
         for (Player player : players.getPlayers()) {
@@ -15,9 +16,9 @@ public class BlackJackJudge {
 
         return result;
     }
-    
+
     private GameResult judgeGameResult(Player player, Dealer dealer) {
-        if(player.isBust()){
+        if (player.isBust()) {
             return GameResult.LOSE;
         }
 
@@ -30,13 +31,13 @@ public class BlackJackJudge {
 
     private static GameResult judgeNearestBlackJackPoint(Player player, Dealer dealer) {
         int playerTotalPoint = player.getTotalPoint();
-        int dealerTotalPoint= dealer.getTotalPoint();
+        int dealerTotalPoint = dealer.getTotalPoint();
 
-        if(playerTotalPoint >dealerTotalPoint){
+        if (playerTotalPoint > dealerTotalPoint) {
             return GameResult.WIN;
         }
 
-        if(playerTotalPoint <dealerTotalPoint){
+        if (playerTotalPoint < dealerTotalPoint) {
             return GameResult.LOSE;
         }
         return GameResult.TIE;

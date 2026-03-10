@@ -4,7 +4,6 @@ import blackjack.domain.Dealer;
 import blackjack.domain.GameResult;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
-import java.util.HashMap;
 import java.util.Map;
 
 public class OutputView {
@@ -41,7 +40,7 @@ public class OutputView {
 
     }
 
-    public void printFinalGameResult(HashMap<Player, GameResult> result) {
+    public void printFinalGameResult(Map<Player, GameResult> result) {
         System.out.println("\n## 최종 승패");
 
         int winCount = 0;
