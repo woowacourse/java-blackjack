@@ -5,7 +5,7 @@ import domain.card.Rank;
 import domain.card.Suit;
 
 import java.util.*;
-
+import java.util.stream.Collectors;
 
 public class Deck {
     public static final int INITIAL_CARDS_COUNT = 2;
@@ -16,21 +16,16 @@ public class Deck {
     }
 
     public static List<Card> createDeck() {
-        List<Card> cards = new ArrayList<>();
+        List<Card> cards = Arrays.stream(Rank.values())
+                .flatMap(
+                        rank -> Arrays.stream(Suit.values())
+                                .map(suit -> new Card(rank, suit))
+                )
+                .collect(Collectors.toCollection(ArrayList::new));
 
-        for (Rank rank : Rank.values()) {
-            createBySuit(rank, cards);
-        }
         Collections.shuffle(cards);
 
         return cards;
-    }
-
-    private static void createBySuit(Rank rank, List<Card> cards) {
-        for (Suit suit : Suit.values()) {
-            Card card = new Card(rank, suit);
-            cards.add(card);
-        }
     }
 
     public int size() {
