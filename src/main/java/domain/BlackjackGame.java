@@ -41,8 +41,10 @@ public class BlackjackGame {
         gameTable.draw(playerName, deck.draw());
     }
 
-    public List<Card> getCards(String playerName) {
-        return gameTable.getCards(playerName);
+    public List<String> getCardNames(String playerName) {
+        return gameTable.getCards(playerName).stream()
+                .map(Card::getCardName)
+                .toList();
     }
 
     public boolean canDealerDraw() {

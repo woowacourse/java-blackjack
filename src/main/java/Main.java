@@ -20,7 +20,7 @@ public class Main {
     private static void askToDraw(String playerName, InputView inputView, OutputView outputView, BlackjackGame game) {
         while (game.isContinuable(playerName) && inputView.playContinue(playerName)) {
             game.drawPlayer(playerName);
-            outputView.printHandCard(playerName, game.getCards(playerName));
+            outputView.printHandCard(playerName, game.getCardNames(playerName));
         }
     }
 
