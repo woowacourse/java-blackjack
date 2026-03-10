@@ -5,7 +5,6 @@ import domain.Deck;
 import domain.Game;
 import domain.Judge;
 import domain.Player;
-import factory.CardFactory;
 import view.InputView;
 import view.OutputView;
 
@@ -41,12 +40,27 @@ public class BlackJackController {
     }
 
     private void playPlayer(Game game, Player player){
-        while(player.canHit()){
-            String yesNoInput = InputView.askPlayerCommand(player.getName());
-            if(yesNoInput.equals("n")){
-                return;
-            }
+        boolean hasPrintHand = false;
+
+        while(player.canHit() && wantsToHit(player, hasPrintHand)){
             game.hitPlayer(player);
+            OutputView.printHandOutput(OutputDtoAssembler.toPlayerHandDto(player));
+            hasPrintHand = true;
+        }
+    }
+
+    private boolean wantsToHit(Player player, boolean hasPrintHand){
+        String yesNoInput = InputView.askPlayerCommand(player.getName());
+
+        if(yesNoInput.equals("n")){
+            printHandIfFirstTurn(player, hasPrintHand);
+            return false;
+        }
+        return true;
+    }
+
+    private void printHandIfFirstTurn(Player player, boolean hasPrintHand) {
+        if (!hasPrintHand) {
             OutputView.printHandOutput(OutputDtoAssembler.toPlayerHandDto(player));
         }
     }
