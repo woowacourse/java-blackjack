@@ -39,6 +39,9 @@ public class Deck {
     }
 
     public Card drawCard() {
+        if (cards.isEmpty()) {
+            throw new IllegalArgumentException("Deck is empty.");
+        }
         return cards.pollFirst();
     }
 }
