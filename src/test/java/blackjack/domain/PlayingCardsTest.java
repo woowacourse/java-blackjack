@@ -75,19 +75,4 @@ class PlayingCardsTest {
 
         assertThat(hands.calculateTotalScore()).isEqualTo(21);
     }
-
-    @DisplayName("ACE를 모두 1점으로 바꿔도 21점을 넘기면, 결과용 계산 메서드는 0점을 반환한다.")
-    @Test
-    void bustedScoreReturnsZero() {
-        PlayingCards hands = PlayingCards.from(List.of(
-            new Card(Rank.ACE, Suit.SPADE),
-            new Card(Rank.TEN, Suit.HEART),
-            new Card(Rank.TEN, Suit.DIAMOND),
-            new Card(Rank.FIVE, Suit.CLOVER)
-        ));
-
-        assertThat(hands.calculateTotalScore()).isEqualTo(26);
-        assertThat(hands.calculateTotalScoreForResult()).isEqualTo(0);
-        assertThat(hands.isNotDrawable()).isTrue();
-    }
 }

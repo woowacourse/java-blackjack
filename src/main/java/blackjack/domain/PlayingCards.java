@@ -79,10 +79,6 @@ public class PlayingCards {
         return getCards().getFirst();
     }
 
-    public boolean isNotDrawable() {
-        return !isDrawable();
-    }
-
     public boolean isDrawable() {
         return calculateTotalScore() < BUSTED_SCORE;
     }
@@ -103,27 +99,6 @@ public class PlayingCards {
             return calculateWithAce(scoreSum, aceCount);
         }
         return scoreSum;
-    }
-
-    public int calculateTotalScoreForResult() {
-        boolean busted = isRawSumBusted();
-        int scoreSum = calculateScoreSum();
-        if (busted) {
-            int aceCount = countAce();
-            return bustedScore(scoreSum, aceCount);
-        }
-        return scoreSum;
-    }
-
-    private int bustedScore(int scoreSum, int aceCount) {
-        int totalScore = scoreSum;
-        if (aceCount > 0) {
-            totalScore = calculateWithAce(scoreSum, aceCount);
-        }
-        if (totalScore <= BUSTED_SCORE) {
-            return totalScore;
-        }
-        return 0;
     }
 
     public String getStatusByDisplayName() {

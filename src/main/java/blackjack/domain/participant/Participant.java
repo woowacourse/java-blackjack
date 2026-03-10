@@ -33,10 +33,6 @@ public abstract class Participant {
         return hand.calculateTotalScore();
     }
 
-    public int getTotalScoreForResult() {
-        return hand.calculateTotalScoreForResult();
-    }
-
     public DrawResult distributeCards(PlayingCards deck) {
         DrawResult drawResult = deck.draw(FIRST_DRAW_COUNT);
         receiveCard(drawResult.drewCard());
