@@ -71,12 +71,16 @@ public class BlackjackController {
     }
 
     private void handleAnswer(final Player player, final Dealer dealer, final Answer answer) {
-        if (answer == Answer.YES) { // HIT
-            dealer.giveCardTo(player);
-            player.handleBurst();
+        if (answer == Answer.YES) {
+            playerHit(dealer, player);
         }
-        if (answer == Answer.NO) { // STAY
+        if (answer == Answer.NO) {
             player.stay();
         }
+    }
+
+    private void playerHit(final Dealer dealer, final Player player) {
+        dealer.giveCardTo(player);
+        player.handleBurst();
     }
 }
