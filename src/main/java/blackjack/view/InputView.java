@@ -24,7 +24,7 @@ public class InputView {
     }
 
     public int inputBettingAmount(Player player) {
-        System.out.println(player.getName() + "의 배팅 금액은?");
+        System.out.println("\n" + player.getName() + "의 배팅 금액은?");
         try {
             return Integer.parseInt(sc.nextLine());
         } catch (NumberFormatException e) {
