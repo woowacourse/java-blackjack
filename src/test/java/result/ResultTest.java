@@ -18,7 +18,7 @@ class ResultTest {
         result.setPlayerResult("user2", ResultInfo.DRAW);
         result.setPlayerResult("user3", ResultInfo.DRAW);
         result.setPlayerResult("user4", ResultInfo.DEFEAT);
-
+        
         List<Integer> dealerResultBoard = result.dealerResult();
 
         Assertions.assertThat(dealerResultBoard).containsExactlyElementsOf(expectedDealerScoreBoard);
