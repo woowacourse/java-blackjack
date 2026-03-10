@@ -2,6 +2,7 @@ package domain.card;
 
 import domain.exception.OutOfBoundException;
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 
 public enum CardNumber {
     ACE(1, "A"),
@@ -34,7 +35,7 @@ public enum CardNumber {
         return Arrays.stream(CardNumber.values())
                 .filter(card -> card.court.equals(value))
                 .findAny()
-                .orElseThrow(NoSuchFieldError::new);
+                .orElseThrow(NoSuchElementException::new);
     }
 
     public boolean isAce() {
