@@ -1,25 +1,23 @@
 package domain;
 
-import java.util.Random;
-
 public class Card {
-    private static final int CARD_BOUND = 52;
-    private final int card;
+    private final Suit suit;
+    private final Rank rank;
 
-    public Card() {
-        this.card = drawCard();
+    public Card(final Suit suit, final Rank rank) {
+        this.suit = suit;
+        this.rank = rank;
     }
 
-    private int drawCard() {
-        Random random = new Random();
-        return random.nextInt(CARD_BOUND);
+    public int getScore() {
+        return rank.value();
     }
 
-    public int getCard() {
-        return card;
+    public boolean isAce() {
+        return rank == Rank.ACE;
     }
 
-    public boolean checkAce() {
-        return card % 13 == 0;
+    public String displayName() {
+        return rank.symbol() + suit.suit();
     }
 }

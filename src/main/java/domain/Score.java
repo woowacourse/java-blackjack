@@ -4,18 +4,22 @@ public final class Score {
     private static final int BLACKJACK_SCORE = 21;
     private static final int DEALER_SCORE = 16;
 
-    private int score;
+    private final int score;
 
     public Score() {
-        this.score = 0;
+        this(0);
     }
 
-    public void addScore(int number) {
-        score += (number % 13);
+    private Score(int score) {
+        this.score = score;
     }
 
-    public void subScore(int number) {
-        score -= number;
+    public Score addScore(int number) {
+        return new Score(score + number);
+    }
+
+    public Score subScore(int number) {
+        return new Score(score - number);
     }
 
     public int getScore() {
@@ -24,10 +28,6 @@ public final class Score {
 
     public boolean isBust() {
         return score > BLACKJACK_SCORE;
-    }
-
-    public boolean isBlackjack() {
-        return score == BLACKJACK_SCORE;
     }
 
     public boolean isDealerDraw() {
