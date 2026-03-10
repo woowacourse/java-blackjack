@@ -11,9 +11,11 @@ public class InputView {
     private static final String DELIMITER = ",";
 
     private static final String READ_PLAYER_NAMES_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
-    private static final String READ_PLAYER_BETTING_MONEY_MESSAGE = "%n%s의 배팅 금액은?%n";
-    private static final String READ_HIT_DECISION_MESSAGE = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n";
 
+    private static final String READ_PLAYER_BETTING_MONEY_MESSAGE = "%n%s의 배팅 금액은?%n";
+    private static final String INVALID_BETTING_AMOUNT_MESSAGE = "배팅 금액은 숫자여야 합니다.";
+
+    private static final String READ_HIT_DECISION_MESSAGE = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n";
     private static final String HIT_INPUT = "y";
     private static final String STAY_INPUT = "n";
     private static final String INVALID_HIT_DECISION_MESSAGE = "y 또는 n만 입력할 수 있습니다.";
@@ -28,13 +30,21 @@ public class InputView {
                 .toList();
     }
 
-    public static List<BettingMoney> readBettingMonies(List<String> names) {
+    public static List<BettingMoney> readBettingMonies(final List<String> names) {
         return names.stream()
                 .map(name -> {
                     System.out.printf(READ_PLAYER_BETTING_MONEY_MESSAGE, name);
-                    return new BettingMoney(Integer.parseInt(SCANNER.nextLine()));
+                    return new BettingMoney(parseBettingAmount(SCANNER.nextLine()));
                 })
                 .toList();
+    }
+
+    private static int parseBettingAmount(final String input) {
+        try {
+            return Integer.parseInt(input.strip());
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(INVALID_BETTING_AMOUNT_MESSAGE);
+        }
     }
 
     public static boolean readHitDecision(final String name) {
