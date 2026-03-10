@@ -13,6 +13,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class HandCardsTest {
     @Test
+    @DisplayName("카드를 한장 받는다.")
+    void hitCardTest() {
+        // Given
+        HandCards handCards = new HandCards();
+
+        // When
+        handCards.receiveHitCard(new Card(CardNumber.ACE, CardShape.CLUB));
+        int size = handCards.getCards().size();
+
+        // Then
+        assertThat(size).isEqualTo(1);
+    }
+
+    @Test
     @DisplayName("카드 점수를 계산한다.")
     void calculateScoreTest() {
         // Given
