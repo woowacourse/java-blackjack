@@ -11,19 +11,19 @@ public abstract class Participant {
     protected final Name name;
     protected final Hand hand;
 
-    public Participant(String name, Hand hand) {
+    protected Participant(String name, Hand hand) {
         this.name = new Name(name);
         this.hand = hand;
     }
 
     public abstract List<String> getInitialCards();
 
-    public boolean isBust() {
+    public final boolean isBust() {
         GameScore gameScore = hand.calculateTotalScore();
         return gameScore.isBust();
     }
 
-    public void playTurn(Deck deck) {
+    public final void playTurn(Deck deck) {
         Card hitCard = deck.drawCard();
         hand.receiveCard(hitCard);
     }
@@ -34,15 +34,15 @@ public abstract class Participant {
                 .toList();
     }
 
-    public String getName() {
+    public final String getName() {
         return name.getValue();
     }
 
-    public List<Card> getCards() {
+    public final List<Card> getCards() {
         return hand.getCards();
     }
 
-    public GameScore getScore() {
+    public final GameScore getScore() {
         return hand.calculateTotalScore();
     }
 

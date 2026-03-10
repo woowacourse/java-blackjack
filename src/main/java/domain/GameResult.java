@@ -9,7 +9,7 @@ public enum GameResult {
     DRAW("무"),
     ;
 
-    private String description;
+    private final String description;
 
     GameResult(String description) {
         this.description = description;
