@@ -39,7 +39,7 @@ public class BlackJackController {
     }
 
     private void dealerTurn(Dealer dealer, Deck deck) {
-        while (dealer.shoudDraw()) {
+        while (dealer.shouldDraw()) {
             outputView.printDealerDraw();
             dealer.recieveCard(deck.draw());
         }
@@ -47,7 +47,7 @@ public class BlackJackController {
 
     private void playerTurn(Players players, Deck deck) {
         for (Player player : players.getPlayers()) {
-            while (player.shoudDraw()) {
+            while (player.shouldDraw()) {
                 boolean isHit = inputView.readHitAnswer(player.getName());
                 if (isHit) {
                     player.recieveCard(deck.draw());

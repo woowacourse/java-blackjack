@@ -14,7 +14,8 @@ public class Player extends Participant {
         }
     }
 
-    public boolean shoudDraw() {
+    @Override
+    public boolean shouldDraw() {
         return !isBust();
     }
 

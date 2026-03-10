@@ -42,4 +42,7 @@ public abstract class Participant {
         return hand.getFirstCardName();
     }
 
+    public abstract boolean shouldDraw();
+
+
 }

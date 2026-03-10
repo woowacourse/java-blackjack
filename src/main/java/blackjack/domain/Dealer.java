@@ -24,7 +24,8 @@ public class Dealer extends Participant {
         return getTotalPoint() >= DEALER_STAND_POINT;
     }
 
-    public boolean shoudDraw() {
+    @Override
+    public boolean shouldDraw() {
         return getTotalPoint() >= DEALER_STAND_POINT;
     }
 
