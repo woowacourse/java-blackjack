@@ -1,6 +1,9 @@
 package domain.player;
 
 import domain.card.Card;
+import domain.vo.Name;
+import dto.DealerResult;
+import dto.PlayerResult;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -8,46 +11,34 @@ import java.util.List;
 import java.util.Map;
 
 public class PlayerGroups {
+    private static final int MAX_PLAYER_NUMBER = 4;
+
     private final List<Player> players;
-    private int playIndex = 0;
+    private final Dealer dealer = new Dealer();
 
-    public PlayerGroups(List<Player> players) {
-        validatePlayerNum(players);
-        this.players = new ArrayList<>(players);
+    public PlayerGroups(List<String> playerNames) {
+        validatePlayerNumber(playerNames);
+        this.players = createPlayers(playerNames);
     }
 
-    public void drawCard(Card card){
-        players.get(playIndex).addCard(card);
+    public List<Player> getPlayers() {
+        return new ArrayList<>(players);
     }
 
-    public Map<String, List<String>> playersStatus() {
-        Map<String, List<String>> status = new LinkedHashMap<>();
+    public void drawDealerCard(Card card) {
+        dealer.addCard(card);
+    }
 
+    public List<PlayerResult> playersStatus() {
+        List<PlayerResult> playerResult = new ArrayList<>();
         for (Player player : players) {
-            status.put(player.getName(), player.getCards());
+            playerResult.add(new PlayerResult(player.getName(), player.getCards()));
         }
-
-        return status;
+        return playerResult;
     }
 
-    // 이번 라운드의, 해당 플레이어 반환
-    public Player getCurrentPlayer() {
-        return players.get(playIndex);
-    }
-
-    // 현재 플레이어의 카드 덱 반환
-    public List<String> getCurrentPlayerCards() {
-        return players.get(playIndex).getCards();
-    }
-
-    // 현재 플레이어의 카드 합산 점수 반환
-    public int getCurrentPlayerCardSum() {
-        return players.get(playIndex).getCardSum();
-    }
-
-    // 딜러 반환
-    public Player getDealer() {
-        return players.get(0);
+    public Dealer getDealer() {
+        return dealer;
     }
 
     public Map<String, Integer> getPlayerTotalScore() {
@@ -61,49 +52,48 @@ public class PlayerGroups {
     }
 
     public Map<String, WinStatus> getGameResult() {
-        Player dealer = players.getFirst();
         Map<String, WinStatus> result = new LinkedHashMap<>();
 
-        for (int i = 1; i < players.size(); i++) {
-            Player player = players.get(i);
-            String playerName = player.getName();
-
-            if(player.isBust()) {
-                result.put(playerName, WinStatus.LOSE);
-                continue;
-            }
-
-            if(dealer.isBust()) {
-                result.put(playerName, WinStatus.WIN);
-                continue;
-            }
-
-            result.put(playerName, player.matchResult(dealer.getCardSum()));
+        for (Player player : players) {
+            result.put(player.getName(), getResultOf(player));
         }
 
         return result;
+    }
+
+    private WinStatus getResultOf(Player player) {
+        if (player.isBust()) {
+            return WinStatus.LOSE;
+        }
+
+        if (dealer.isBust()) {
+            return WinStatus.WIN;
+        }
+
+        return player.matchResult(dealer.getCardSum());
     }
 
     public int getPlayerGroupSize() {
         return players.size();
     }
 
-    public boolean hasNextPlayer() {
-        if (playIndex > players.size() - 1) {
-            playIndex = 0;
-            return false;
+    public DealerResult getDealerResult() {
+        return new DealerResult(dealer.getName(), dealer.getCards(), dealer.getCardSum());
+    }
+
+    private List<Player> createPlayers(List<String> playerNames) {
+        List<Player> players = new ArrayList<>();
+
+        for (String playerName : playerNames) {
+            players.add(new Player(new Name(playerName)));
         }
 
-        return true;
+        return players;
     }
 
-    public Player nextPlayer() {
-        return players.get(playIndex++);
-    }
-
-    private void validatePlayerNum(List<Player> players){
-        if (players.size() > 5) {
-            throw new IllegalArgumentException();
+    private void validatePlayerNumber(List<String> playerNames) {
+        if (playerNames.size() > MAX_PLAYER_NUMBER) {
+            throw new IllegalArgumentException("[ERROR] 최대 플레이어 인원은 " + MAX_PLAYER_NUMBER + "명 입니다.");
         }
     }
 }
