@@ -12,7 +12,6 @@ import blackjack.util.PlayerNameParser;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class BlackjackRunner {
 
@@ -51,15 +50,7 @@ public class BlackjackRunner {
     }
 
     private void printInitialResult(Participants participants) {
-        ParticipantResult dealerResult = new ParticipantResult(
-            participants.getDealerNickname(),
-            participants.getDealerFirstCard(),
-            participants.getDealerTotalScore()
-        );
-        List<ParticipantResult> participantResults = Stream.concat(Stream.of(dealerResult),
-            participants.getAllPlayers()
-                .stream()
-                .map(ParticipantResult::new)).toList();
+        List<ParticipantResult> participantResults = participants.getInitialResult();
         outputView.printInitialResult(participantResults);
     }
 

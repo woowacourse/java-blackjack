@@ -3,6 +3,7 @@ package blackjack.domain;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Role;
+import blackjack.dto.ParticipantResult;
 import blackjack.dto.PlayerGameResult;
 import java.util.ArrayList;
 import java.util.List;
@@ -78,5 +79,13 @@ public class Players {
             result.add(playerGameResult);
         }
         return result;
+    }
+
+    public List<ParticipantResult> getInitialResult() {
+        List<ParticipantResult> initialResults = new ArrayList<>();
+        for (Player player : players) {
+            initialResults.add(new ParticipantResult(player));
+        }
+        return initialResults;
     }
 }

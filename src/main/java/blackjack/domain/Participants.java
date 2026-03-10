@@ -2,7 +2,6 @@ package blackjack.domain;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Player;
 import blackjack.dto.DealerGameResult;
 import blackjack.dto.DrawResult;
 import blackjack.dto.ParticipantResult;
@@ -37,20 +36,13 @@ public class Participants {
         return participants;
     }
 
-    public String getDealerNickname() {
-        return dealer.getDealerNickname();
-    }
-
-    public String getDealerFirstCard() {
-        return dealer.getFirstCard();
-    }
-
-    public int getDealerTotalScore() {
-        return dealer.getTotalScore();
-    }
-
-    public List<Player> getAllPlayers() {
-        return players.getAllPlayers();
+    public List<ParticipantResult> getInitialResult() {
+        ParticipantResult dealerResult = dealer.getInitialResult();
+        List<ParticipantResult> playersResult = players.getInitialResult();
+        List<ParticipantResult> participantResults = new ArrayList<>();
+        participantResults.add(dealerResult);
+        participantResults.addAll(playersResult);
+        return participantResults;
     }
 
     public List<ParticipantResult> getGameResult() {
@@ -62,11 +54,6 @@ public class Participants {
         return participantsTotalGameResult;
     }
 
-    public TotalGameResult getWinningResult() {
-        List<PlayerGameResult> winningResultsWithDealer = players.getWinningResultsWithDealer(dealer);
-        DealerGameResult dealerWinningResult = dealer.getDealerWinningResult(winningResultsWithDealer);
-        return new TotalGameResult(dealerWinningResult, winningResultsWithDealer);
-    }
 
     public String findDrawablePlayer() {
         return players.findDrawablePlayerNickname();
@@ -99,5 +86,11 @@ public class Participants {
 
     public List<String> getAllPlayerNickname() {
         return players.getAllPlayerNickname();
+    }
+
+    public TotalGameResult getWinningResult() {
+        List<PlayerGameResult> winningResultsWithDealer = players.getWinningResultsWithDealer(dealer);
+        DealerGameResult dealerWinningResult = dealer.getDealerWinningResult(winningResultsWithDealer);
+        return new TotalGameResult(dealerWinningResult, winningResultsWithDealer);
     }
 }

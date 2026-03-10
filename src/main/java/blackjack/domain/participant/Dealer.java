@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import blackjack.domain.MatchResult;
 import blackjack.domain.PlayingCards;
 import blackjack.dto.DealerGameResult;
+import blackjack.dto.ParticipantResult;
 import blackjack.dto.PlayerGameResult;
 import java.util.List;
 
@@ -50,5 +51,13 @@ public class Dealer extends Participant {
             .filter(result -> result.matchResult() == MatchResult.WIN)
             .count();
         return new DealerGameResult(dealerWin, dealerTie, dealerLose);
+    }
+
+    public ParticipantResult getInitialResult() {
+        return new ParticipantResult(
+            getDealerNickname(),
+            getFirstCard(),
+            getTotalScore()
+        );
     }
 }

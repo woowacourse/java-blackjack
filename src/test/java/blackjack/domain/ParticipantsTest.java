@@ -21,7 +21,7 @@ class ParticipantsTest {
         PlayingCards deck = PlayingCards.createShuffledDeck();
 
         participants.distributeCards(deck);
-        List<Player> allPlayers = participants.getAllPlayers();
+        List<Player> allPlayers = players.getAllPlayers();
         List<String> playerCards = Arrays.stream(allPlayers.getFirst().getCardStatus().split(",")).toList();
 
         assertThat(playerCards).hasSize(2);
