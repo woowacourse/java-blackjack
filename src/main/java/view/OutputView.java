@@ -8,7 +8,7 @@ public class OutputView {
     private static final String LINE_SEPARATOR = System.lineSeparator();
 
     public void printDealOut(String playerNames, int drawCount) {
-        printNewLine();
+        System.out.println();
         System.out.println("딜러와 " + playerNames + "에게 " + drawCount + "장을 나누었습니다.");
     }
 
@@ -21,7 +21,7 @@ public class OutputView {
     }
 
     public void printFinalResult(Map<String, Integer> dealerResult, Map<String, Boolean> playerResult) {
-        printNewLine();
+        System.out.println();
         System.out.println("## 최종 승패");
         System.out.printf("딜러: %d승 %d패%s", dealerResult.getOrDefault("승", 0), dealerResult.getOrDefault("패", 0),
                 LINE_SEPARATOR);
@@ -31,22 +31,18 @@ public class OutputView {
     }
 
     public void printBustState(String name, int score, int blackjackScore) {
-        printNewLine();
+        System.out.println();
         System.out.printf("%s는 %d점이므로 %d점 초과로 버스트입니다.", name, score, blackjackScore);
-        printNewLine();
+        System.out.println();
     }
 
     public void printDealerDrawResult(boolean draw, int dealerDrawThreshold) {
-        printNewLine();
+        System.out.println();
         if (draw) {
             System.out.println("딜러는 " + dealerDrawThreshold + "이하라 한장의 카드를 더 받았습니다." + LINE_SEPARATOR);
             return;
         }
 
         System.out.println("딜러는 " + dealerDrawThreshold + "을 초과하여 카드를 더 받지 않았습니다." + LINE_SEPARATOR);
-    }
-
-    public void printNewLine() {
-        System.out.println();
     }
 }

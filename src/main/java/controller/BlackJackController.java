@@ -93,8 +93,6 @@ public class BlackJackController {
     }
 
     private void proceedPlayerTurns(Blackjack blackjack, List<Player> players) {
-        outputView.printNewLine();
-
         for (Player player : players) {
             while (player.canHit() && inputView.askHit(player.getName())) {
                 blackjack.giveCardTo(player);
