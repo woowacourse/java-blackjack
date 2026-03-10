@@ -33,13 +33,13 @@ public class Players {
 
         throw new IllegalArgumentException("존재하지 않는 플레이어입니다.");
     }
-
-    public void placeBetAllPlayers(Function<String, Integer> action) {
-        for (Player player : players) {
-            int betAmount = action.apply(player.getName());
-            player.placeBet(betAmount);
-        }
-    }
+//
+//    public void placeBetAllPlayers(Function<String, Integer> action) {
+//        for (Player player : players) {
+//            int betAmount = action.apply(player.getName());
+//            player.placeBet(betAmount);
+//        }
+//    }
 
     public void dealCardToAllPlayers(Supplier<Card> cardSupplier) {
         for (Player player : players) {
@@ -63,18 +63,18 @@ public class Players {
         return result;
     }
 
-    public Map<Player, Integer> calculateProfitResult(Map<Player, MatchResult> playersMatchResult) {
-        Map<Player, Integer> profitResult = new HashMap<>();
-
-        for (Map.Entry<Player, MatchResult> matchResultEntry : playersMatchResult.entrySet()) {
-            Player player = matchResultEntry.getKey();
-            MatchResult matchResult = matchResultEntry.getValue();
-
-            profitResult.put(player, player.applyMatchResultToBet(matchResult));
-        }
-
-        return profitResult;
-    }
+//    public Map<Player, Integer> calculateProfitResult(Map<Player, MatchResult> playersMatchResult) {
+//        Map<Player, Integer> profitResult = new HashMap<>();
+//
+//        for (Map.Entry<Player, MatchResult> matchResultEntry : playersMatchResult.entrySet()) {
+//            Player player = matchResultEntry.getKey();
+//            MatchResult matchResult = matchResultEntry.getValue();
+//
+//            profitResult.put(player, player.applyMatchResultToBet(matchResult));
+//        }
+//
+//        return profitResult;
+//    }
 
     public Map<Player, List<Card>> getPlayersHand() {
         Map<Player, List<Card>> playersHand = new HashMap<>();
