@@ -29,6 +29,11 @@ public class Members {
         return member.handCards();
     }
 
+    public void draw(String memberName, Card card) {
+        Member member = findByName(memberName);
+        member.receiveCard(card);
+    }
+
     public Member findByName(String memberName) {
         return members.stream()
                 .filter(member -> member.getName().equals(memberName))
