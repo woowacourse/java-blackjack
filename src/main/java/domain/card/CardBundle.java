@@ -8,10 +8,10 @@ import java.util.Objects;
 
 public class CardBundle {
 
-    private final List<Card> cardBundle;
+    private final List<Card> cards;
 
-    private CardBundle(List<Card> cardBundle) {
-        this.cardBundle = cardBundle;
+    private CardBundle(List<Card> cards) {
+        this.cards = cards;
     }
 
     public static CardBundle of(List<Card> cardBundle) {
@@ -23,7 +23,7 @@ public class CardBundle {
     }
 
     public CardBundle addUp(CardBundle additionalCardBundle) {
-        cardBundle.addAll(additionalCardBundle.cardBundle);
+        cards.addAll(additionalCardBundle.cards);
         return this;
     }
 
@@ -39,7 +39,7 @@ public class CardBundle {
     }
 
     public int getBasicScore() {
-        return cardBundle.stream()
+        return cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
     }
@@ -49,17 +49,17 @@ public class CardBundle {
     }
 
     public boolean hasAce() {
-        return cardBundle.stream()
+        return cards.stream()
                 .anyMatch(Card::isAce);
     }
 
     public boolean checkExist(Card targetCard) {
-        return cardBundle.stream().
+        return cards.stream().
                 anyMatch(c -> c.equals(targetCard));
     }
 
     public List<String> toDisplay() {
-        return cardBundle.stream()
+        return cards.stream()
                 .map(Card::toDisplay)
                 .toList();
     }
@@ -70,11 +70,11 @@ public class CardBundle {
             return false;
         }
         CardBundle that = (CardBundle) object;
-        return Objects.equals(cardBundle, that.cardBundle);
+        return Objects.equals(cards, that.cards);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(cardBundle);
+        return Objects.hashCode(cards);
     }
 }
