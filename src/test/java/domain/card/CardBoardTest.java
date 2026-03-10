@@ -25,7 +25,7 @@ class CardBoardTest {
         cards = cardGenerator.generate();
     }
 
-    @DisplayName("카드가 정상적으로 추가되나 테스트합니다.")
+    @DisplayName("카드패에 카드가 정상적으로 추가되나 테스트합니다.")
     @Test
     void 카드_정상_추가_테스트() {
         //given
@@ -33,6 +33,7 @@ class CardBoardTest {
         //when
         cardBoard.addAll(cards);
         //then
+        assertThat(cardBoard.getCards()).isEqualTo(cards);
         assertThat(cardBoard.getCards().size()).isEqualTo(6);
     }
 
@@ -47,7 +48,7 @@ class CardBoardTest {
         );
     }
 
-    @DisplayName("카드 점수의 계산을 테스트합니다.")
+    @DisplayName("카드패의 점수 계산을 테스트합니다.")
     @ParameterizedTest
     @MethodSource("CalculatingScoreCards")
     void 카드_점수_정상_테스트(List<Card> cards, int expectedScore) {
@@ -67,7 +68,7 @@ class CardBoardTest {
         );
     }
 
-    @DisplayName("버스트 여부를 테스트합니다.")
+    @DisplayName("카드패의 버스트 여부를 테스트합니다.")
     @ParameterizedTest
     @MethodSource("BustResult")
     void 버스트_여부_테스트(List<Card> cards, boolean expectedBust) {
