@@ -27,7 +27,7 @@ public class Username {
         }
     }
 
-    public static void validateRegex(String name) {
+    private void validateRegex(String name) {
         if (!Pattern.matches(PLAYER_NAME_REGEX, name)) {
             throw new IllegalArgumentException(ERROR_INVALID_PLAYER_NAME.getErrorMessage());
         }
