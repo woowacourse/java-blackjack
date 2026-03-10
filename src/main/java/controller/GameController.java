@@ -10,6 +10,7 @@ import dto.GameStatus;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
 import strategy.RandomStrategy;
 import view.InputView;
 import view.OutputView;
@@ -18,6 +19,7 @@ public class GameController {
     private static final String DEALER_NAME = "딜러";
     private static final String DELIMITER = ",";
     private static final String POSITIVE = "y";
+    private static final int DRAW_COUNT = 2;
 
     private GameTable gameTable;
 
@@ -67,8 +69,7 @@ public class GameController {
     private void dealerSetup() {
         Hand hand = new Hand(new RandomStrategy(), new ArrayList<>());
         Participant dealer = new Dealer(DEALER_NAME, hand);
-        dealer.draw();
-        dealer.draw();
+        drawSetup(dealer);
         gameTable.addParticipant(dealer);
     }
 
@@ -80,10 +81,13 @@ public class GameController {
         for (String name : names) {
             Hand hand = new Hand(new RandomStrategy(), new ArrayList<>());
             Participant player = new Player(name, hand);
-            player.draw();
-            player.draw();
+            drawSetup(player);
             gameTable.addParticipant(new Player(name, hand));
         }
+    }
+
+    private void drawSetup(Participant participant) {
+        IntStream.range(0, DRAW_COUNT).forEach(i -> participant.draw());
     }
 
     private void playerExecute(String name) {
