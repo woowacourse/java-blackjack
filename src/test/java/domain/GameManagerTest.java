@@ -34,12 +34,9 @@ class GameManagerTest {
 
     @Test
     void 게임을_시작하면_등록된_플레이어부터_딜러_순으로_순서대로_한_장씩_총_2장의_카드를_받는다() {
-        GameManager manager = new GameManager(new Deck(new Shuffle() {
-            @Override
-            public void shuffle(List<Card> cards) {
-                // 덱을 섞지 않음, 기본 순서: 스페이드 A, 2, 3, 4 ...
-            }
-        }), new Dealer());
+        GameManager manager = new GameManager(
+                new Deck(cards -> {}), // 덱을 섞지 않음, 기본 순서: 스페이드 A, 2, 3, 4 ...
+                new Dealer());
 
         manager.registerPlayer("pobi");
         manager.registerPlayer("cary");

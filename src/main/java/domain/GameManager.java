@@ -39,7 +39,7 @@ public class GameManager {
         );
     }
 
-    public boolean canReceiveCard(String player) {
+    public boolean canPlayerReceiveCard(String player) {
         return players.get(player).canReceiveCard();
     }
 
@@ -48,13 +48,12 @@ public class GameManager {
         return players.get(player).showHand();
     }
 
-    public boolean canReceiveCard() {
+    public boolean canDealerReceiveCard() {
         return dealer.canReceiveCard();
     }
 
-    public List<String> drawDealerCard() {
+    public void drawDealerCard() {
         dealer.receiveCard(deck.draw());
-        return dealer.showHand();
     }
 
     public List<GameScoreResultDto> getScoreResults() {

@@ -44,7 +44,7 @@ public class GameController {
 
     private void playPlayerTurn(List<String> playerNames) {
         for (String playerName : playerNames) {
-            while (manager.canReceiveCard(playerName) && isStand(playerName)) {
+            while (manager.canPlayerReceiveCard(playerName) && isStand(playerName)) {
                 List<String> playerHand = manager.drawPlayerCard(playerName);
                 outputView.printHand(playerHand, playerName);
             }
@@ -52,7 +52,7 @@ public class GameController {
     }
 
     private void playDealerTurn() {
-        while (manager.canReceiveCard()) {
+        while (manager.canDealerReceiveCard()) {
             manager.drawDealerCard();
             outputView.printDealerTurn();
         }
