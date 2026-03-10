@@ -87,11 +87,11 @@ public enum Card {
         SPADES("스페이드", false);
 
         private final String name;
-        private final boolean isRed;
+        private final boolean red;
 
-        Suit(String name, boolean isRed) {
+        Suit(String name, boolean red) {
             this.name = name;
-            this.isRed = isRed;
+            this.red = red;
         }
 
         public String getName() {
