@@ -1,7 +1,6 @@
 import domain.Card;
 import domain.CardDeck;
-import domain.Player;
-import domain.ShuffleStrategy;
+import strategy.ShuffleStrategy;
 import domain.User;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -46,9 +45,9 @@ class UserTest {
     @Test
     @DisplayName("베팅 금액을 설정하면 User 객체에 들어간다.")
     public void setup_bet_amount_to_player() {
-        User user = new User.from("json",1000);
+        User user = User.from("json", 1000);
         int betAmount =1000;
-        Assertions.assertThat(user.getBetAmount).isEqualTo(betAmount);
+        Assertions.assertThat(user.getBetAmount()).isEqualTo(betAmount);
     }
 
     @Test
