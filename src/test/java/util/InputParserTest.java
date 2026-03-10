@@ -10,16 +10,11 @@ import static org.assertj.core.api.Assertions.*;
 class InputParserTest {
     InputParser inputParser;
 
-    @BeforeEach
-    void setUp() {
-        inputParser = new InputParser();
-    }
-
     @Test
     void 이름을_입력하면_쉼표를_기준으로_분리한다() {
         String input = "pobi,jason";
 
-        List<String> names = inputParser.parseName(input);
+        List<String> names = InputParser.parseName(input);
 
         assertThat(names.size()).isEqualTo(2);
         assertThat(names.get(0)).isEqualTo("pobi");
@@ -30,7 +25,7 @@ class InputParserTest {
     void 컴마가_맨앞에_있으면_컴마를_제거하고_분리한다() {
         String input = ",pobi,jason";
 
-        List<String> names = inputParser.parseName(input);
+        List<String> names = InputParser.parseName(input);
 
         assertThat(names.size()).isEqualTo(2);
         assertThat(names.get(0)).isEqualTo("pobi");

@@ -20,18 +20,16 @@ import java.util.List;
 
 public class BlackjackGame {
     private final InputView inputView;
-    private final InputParser inputParser;
     private final OutputView outputView;
 
-    public BlackjackGame(InputView inputView, InputParser inputParser, OutputView outputView) {
+    public BlackjackGame(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
-        this.inputParser = inputParser;
         this.outputView = outputView;
     }
 
     public void run() {
         String names = inputView.getNames();
-        List<String> parsedName = inputParser.parseName(names);
+        List<String> parsedName = InputParser.parseName(names);
 
         Players players = new Players(parsedName);
         Dealer dealer = new Dealer();
