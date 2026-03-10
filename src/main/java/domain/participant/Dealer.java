@@ -9,13 +9,12 @@ import domain.card.CardDeck;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class Dealer {
+public class Dealer extends Participant{
 
     private final CardDeck cardDeck;
-    private final CardBundle cardBundle;
 
     private Dealer(CardDeck cardDeck) {
-        this.cardBundle = CardBundle.empty();
+        super(PlayerName.from(DEALER_DISPLAY_NAME));
         this.cardDeck = cardDeck;
     }
 
@@ -62,14 +61,6 @@ public class Dealer {
 
     private boolean canHit() {
         return cardBundle.getBasicScore() <= DEALER_ADDITIONAL_DRAW_CONDITION;
-    }
-
-    public boolean isBusted() {
-        return cardBundle.getBasicScore() > BUSTED_CONDITION;
-    }
-
-    public int getResultScore() {
-        return cardBundle.getResultScore();
     }
 
     public String toDisplayMyName() {
