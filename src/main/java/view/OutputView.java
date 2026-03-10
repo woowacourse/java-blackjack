@@ -1,5 +1,7 @@
 package view;
 
+import static view.constant.ViewRule.LINE_SEPARATOR;
+
 import domain.enums.Result;
 import dto.CardDto;
 import java.util.List;
@@ -7,7 +9,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
-    private static final String LINE_SEPARATOR = "\n";
     private static final String STRING_JOIN_DELIMITER = ", ";
     private static final String DISTRIBUTE_INITIAL_CARD = "딜러와 %s에게 2장을 나누었습니다.";
     private static final String DEALER_CARD = "딜러카드: %s";

@@ -11,7 +11,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
 import service.BlackjackService;
-import util.InputParser;
 import view.InputView;
 import view.OutputView;
 
@@ -63,7 +62,7 @@ public class BlackjackController {
 
     private boolean isPlayerWantHit(String name) {
         String input = retryOnException(() -> InputView.askPlayerHit(name));
-        return InputParser.parseHitAnswer(input);
+        return blackjackService.parseHitAnswer(input);
     }
 
     public void playDealerTurn(Game game, Deck deck) {

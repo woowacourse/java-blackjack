@@ -1,4 +1,4 @@
-package util;
+package domain.view;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import view.InputParser;
 
 public class InputParserTest {
 
@@ -24,7 +25,7 @@ public class InputParserTest {
     @ParameterizedTest
     @MethodSource("inputNames")
     void 구분자를_통해_플레이어_이름을_구분한다(String input, List<String> expectedNames) {
-        List<String> playerNames =  InputParser.parseNames(input);
+        List<String> playerNames = InputParser.parseNames(input);
 
         Assertions.assertThat(playerNames).isEqualTo(expectedNames);
     }

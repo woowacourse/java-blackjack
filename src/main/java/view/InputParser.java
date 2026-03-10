@@ -1,6 +1,6 @@
-package util;
+package view;
 
-import static constant.GameRule.YES_ANSWER;
+import static view.constant.ViewRule.YES_ANSWER;
 
 import java.util.Arrays;
 import java.util.List;

@@ -1,13 +1,13 @@
 package view;
 
-import static constant.GameRule.NO_ANSWER;
-import static constant.GameRule.YES_ANSWER;
+import static view.constant.ViewRule.LINE_SEPARATOR;
+import static view.constant.ViewRule.NO_ANSWER;
+import static view.constant.ViewRule.YES_ANSWER;
 
 import java.util.Scanner;
 import message.ErrorMessage;
 
 public class InputView {
-    private static final String LINE_SEPARATOR = "\n";
     private static final String ENTER_PLAYER_NAME = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     private static final String ASK_HIT_OR_NOT = "%s는 한장의 카드를 더 받겠습니까?(예: %s, 아니오: %s)";
 
