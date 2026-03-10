@@ -56,7 +56,7 @@ public class BlackJackController {
     private void readPlayersUntilValid() {
         while (true) {
             try {
-                gameManager.addPlayers(inputView.readPlayers());
+                gameManager.covertAndCreatePlayers(inputView.readPlayers());
                 return;
             } catch (IllegalArgumentException e) {
                 OutputView.printErrorMessage(e.getMessage());

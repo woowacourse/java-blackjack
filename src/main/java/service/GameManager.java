@@ -29,7 +29,7 @@ public class GameManager {
         this.players = new Players();
     }
 
-    public void addPlayers(List<String> names) {
+    public void covertAndCreatePlayers(List<String> names) {
         List<Player> players = names.stream()
                 .map(Player::new)
                 .toList();

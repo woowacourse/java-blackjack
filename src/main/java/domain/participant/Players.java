@@ -2,7 +2,6 @@ package domain.participant;
 
 import domain.MatchResult;
 import domain.card.Card;
-import domain.card.Deck;
 
 import java.util.*;
 import java.util.function.Consumer;
