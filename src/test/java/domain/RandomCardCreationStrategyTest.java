@@ -1,6 +1,6 @@
 package domain;
 
-import java.util.List;
+import java.util.Deque;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ class RandomCardCreationStrategyTest {
         CardCreationStrategy strategy = new RandomCardCreationStrategy();
 
         //when
-        List<Card> cards = strategy.create();
+        Deque<Card> cards = strategy.create();
 
         //then
         Assertions.assertThat(cards.size()).isEqualTo(expectCardSize);
