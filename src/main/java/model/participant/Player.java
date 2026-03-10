@@ -28,4 +28,12 @@ public class Player extends Participant {
 
         return calculateScore() > participant.calculateScore();
     }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "name='" + getName() + '\'' +
+                "hands=" + hands +
+                '}';
+    }
 }

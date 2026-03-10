@@ -18,4 +18,11 @@ public class Cards {
     public List<Card> asList() {
         return List.copyOf(values);
     }
+
+    @Override
+    public String toString() {
+        return "Cards{" +
+                "values=" + values +
+                '}';
+    }
 }

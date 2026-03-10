@@ -70,4 +70,13 @@ public class Dealer extends Participant {
 
         return "패";
     }
+
+    @Override
+    public String toString() {
+        return "Dealer{" +
+                "name='" + getName() + '\'' +
+                "firstTurn=" + firstTurn +
+                ", hands=" + hands +
+                '}';
+    }
 }

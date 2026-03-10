@@ -37,4 +37,11 @@ public class Participants {
     public List<Participant> asList() {
         return List.copyOf(values);
     }
+
+    @Override
+    public String toString() {
+        return "Participants{" +
+                "values=" + values +
+                '}';
+    }
 }
