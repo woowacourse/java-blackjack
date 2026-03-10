@@ -14,11 +14,9 @@ import blackjack.view.OutputView;
 
 public class BlackjackController {
     private final Game game;
-    private final CardPicker cardPicker;
 
-    public BlackjackController(CardDistributor cardDistributor, CardPicker cardPicker) {
+    public BlackjackController(CardDistributor cardDistributor) {
         this.game = new Game(cardDistributor);
-        this.cardPicker = cardPicker;
     }
 
     public void startGame() {
@@ -26,42 +24,31 @@ public class BlackjackController {
         List<Player> players = getPlayers(playerNames);
         Dealer dealer = new Dealer();
 
-        setupInitialHand(players, dealer, playerNames); // 2장씩 카드 분배
-        
-        game.processTurn(players, cardPicker); // 플레이어 hit or stand
+        setupInitialHand(players, dealer, playerNames);
+        processPlayersTurn(players);
         playDealerTurn(dealer);
 
         calculateFinalScore(players, dealer);
         calculateFinalGameResult(players, dealer);
     }
 
-    private void setupInitialHand(List<Player> players, Dealer dealer, List<String> playerNames) {
-        game.distributeInitialCards(players, dealer, cardPicker);
-        OutputView.printInitialCardsDistribution(playerNames);
-        printInitialCards(players, dealer);
-    }
-
     private static List<String> getPlayerNames() {
         String playerNamesStr = InputView.askPlayerNames();
-        List<String> playerNames = InputParser.splitPlayerNames(playerNamesStr);
-        return playerNames;
+        return InputParser.splitPlayerNames(playerNamesStr);
     }
 
-    private void calculateFinalGameResult(List<Player> players, Dealer dealer) {
-        GameResult gameResult = game.judgeTotalGameResult(players, dealer);
-        Map<ScoreCompareResult, Integer> dealerResult = gameResult.dealerResult();
-        Map<Player, ScoreCompareResult> playerResult = gameResult.playerResults();
-        HashMap<String, ScoreCompareResult> playerNameResult = new HashMap<>();
-
-        for (Entry<Player, ScoreCompareResult> entry : playerResult.entrySet()) {
-            playerNameResult.put(entry.getKey().getName(), entry.getValue());
+    private List<Player> getPlayers(List<String> playerNames) {
+        List<Player> players = new ArrayList<>();
+        for (String playerName : playerNames) {
+            players.add(new Player(playerName));
         }
-        OutputView.printFinalResult(dealerResult, playerNameResult);
+        return players;
     }
 
-    private void playDealerTurn(Dealer dealer) {
-        game.dealerDrawsCardsUntilDone(dealer,cardPicker);
-        OutputView.printDealerCardDrawnResult(dealer.getAdditionalDrawnCardCount());
+    private void setupInitialHand(List<Player> players, Dealer dealer, List<String> playerNames) {
+        game.distributeInitialCards(players, dealer);
+        OutputView.printInitialCardsDistribution(playerNames);
+        printInitialCards(players, dealer);
     }
 
     private static void printInitialCards(List<Player> players, Dealer dealer) {
@@ -72,12 +59,34 @@ public class BlackjackController {
         OutputView.printAllUserCards(playerCards, dealer.getCardNames());
     }
 
-    private List<Player> getPlayers(List<String> playerNames) {
-        List<Player> players = new ArrayList<>();
-        for (String playerName : playerNames) {
-            players.add(new Player(playerName));
+
+    private void processPlayersTurn(List<Player> players) {
+        for (Player player : players) {
+            drawUntilPlayerStand(player);
         }
-        return players;
+    }
+
+    private void drawUntilPlayerStand(Player player) {
+        while (!player.isBust() && isHit(player)) {
+            game.drawCardToPlayer(player);
+            OutputView.printDrawnCards(player.getName(), player.getCardNames());
+        }
+    }
+
+    private void playDealerTurn(Dealer dealer) {
+        game.dealerDrawsCardsUntilDone(dealer);
+        OutputView.printDealerCardDrawnResult(dealer.getAdditionalDrawnCardCount());
+    }
+
+    private boolean isHit(Player player) {
+        String hitOrStand = InputView.askHitOrStand(player.getName());
+        if (hitOrStand.equals("y")) {
+            return true;
+        }
+        if (hitOrStand.equals("n")) {
+            return false;
+        }
+        throw new IllegalArgumentException("잘못된 입력입니다. y 또는 n을 입력해주세요");
     }
 
     private void calculateFinalScore(List<Player> players, Dealer dealer) {
@@ -92,6 +101,18 @@ public class BlackjackController {
         int dealerScore = dealer.calculateTotalScore();
 
         OutputView.printFinalCardScores(playerCards, dealerCards, playerScores, dealerScore);
+    }
+
+    private void calculateFinalGameResult(List<Player> players, Dealer dealer) {
+        GameResult gameResult = game.judgeTotalGameResult(players, dealer);
+        Map<ScoreCompareResult, Integer> dealerResult = gameResult.dealerResult();
+        Map<Player, ScoreCompareResult> playerResult = gameResult.playerResults();
+        HashMap<String, ScoreCompareResult> playerNameResult = new HashMap<>();
+
+        for (Entry<Player, ScoreCompareResult> entry : playerResult.entrySet()) {
+            playerNameResult.put(entry.getKey().getName(), entry.getValue());
+        }
+        OutputView.printFinalResult(dealerResult, playerNameResult);
     }
 
 }

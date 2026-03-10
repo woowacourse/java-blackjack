@@ -17,17 +17,18 @@ public class GameTest {
 
     @Test
     void dealer_should_draw_card_until_score_at_least_17() {
-        Dealer dealer = new Dealer();
-        CardDistributor cardDistributor = new CardDistributor();
-        Game game = new Game(cardDistributor);
-
-        List<Card> cards = new ArrayList<>(List.of(
+             List<Card> cards = new ArrayList<>(List.of(
                 new Card(Rank.EIGHT, Shape.HEART), // 8
                 new Card(Rank.NINE, Shape.SPADE)   // 9
         ));
 
         CardPicker cardPicker = cards::removeFirst;
-        game.dealerDrawsCardsUntilDone(dealer, cardPicker);
+
+        CardDistributor cardDistributor = new CardDistributor(cardPicker);
+        Game game = new Game(cardDistributor);
+        Dealer dealer = new Dealer();
+
+        game.dealerDrawsCardsUntilDone(dealer);
         assertThat(dealer.calculateTotalScore()).isEqualTo(17);
     }
 

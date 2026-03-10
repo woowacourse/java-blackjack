@@ -16,13 +16,23 @@ public class Game {
         this.cardDistributor = cardDistributor;
     }
 
-    public void dealerDrawsCardsUntilDone(Dealer dealer, CardPicker cardPicker) {
+    public void dealerDrawsCardsUntilDone(Dealer dealer) {
         while (!dealer.isDealerDone()) {
-            Card card = cardPicker.drawCard();
-            cardDistributor.distributeCardToDealer(dealer, card);
+            cardDistributor.distributeCardToDealer(dealer);
         }
     }
 
+    // 초기 카드 분배
+    public void distributeInitialCards(List<Player> players, Dealer dealer) {
+        cardDistributor.distributeInitialCards(players, dealer);
+    }
+
+    // 플레이어에게 한 장 분배
+    public void drawCardToPlayer(Player player) {
+        cardDistributor.distributeCardToPlayer(player);
+    }
+
+    // 승패 판정 로직
     public GameResult judgeTotalGameResult(List<Player> players, Dealer dealer) {
         Map<ScoreCompareResult, Integer> dealerResult = new HashMap<>();
         Map<Player, ScoreCompareResult> playerResults = new HashMap<>();
@@ -34,6 +44,17 @@ public class Game {
         }
 
         return new GameResult(dealerResult, playerResults);
+    }
+
+    public ScoreCompareResult compareScore(Player player, Dealer dealer) {
+        boolean isPlayerBust = player.isBust();
+        boolean isDealerBust = dealer.isBust();
+
+        if (isPlayerBust || isDealerBust) {
+            return compareScoreWhenBust(isPlayerBust);
+        }
+
+        return compareScoreWhenNotBust(player.calculateTotalScore(), dealer.calculateTotalScore());
     }
 
     private ScoreCompareResult toPlayerResult(ScoreCompareResult result) {
@@ -48,19 +69,6 @@ public class Game {
             return ScoreCompareResult.DEALER_LOSS;
         }
         return result;
-    }
-
-
-    public ScoreCompareResult compareScore(Player player, Dealer dealer) {
-        boolean isPlayerBust = player.isBust();
-        boolean isDealerBust = dealer.isBust();
-
-        if (isPlayerBust || isDealerBust) {
-            return compareScoreWhenBust(isPlayerBust);
-        }
-
-        return compareScoreWhenNotBust(player.calculateTotalScore(), dealer.calculateTotalScore());
-
     }
 
     private ScoreCompareResult compareScoreWhenBust(boolean isPlayerBust) {
@@ -78,50 +86,5 @@ public class Game {
             return ScoreCompareResult.DEALER_WIN;
         }
         return ScoreCompareResult.PUSH;
-    }
-
-    public void distributeInitialCards(List<Player> players, Dealer dealer, CardPicker cardPicker) {
-        for (Player player : players) {
-            List<Card> cards = List.of(cardPicker.drawCard(), cardPicker.drawCard());
-            cardDistributor.distributeTwoCardsToPlayer(player, cards);
-        }
-        List<Card> cards = List.of(cardPicker.drawCard(), cardPicker.drawCard());
-        cardDistributor.distributeTwoCardsToDealer(dealer, cards);
-    }
-
-    public void processTurn(List<Player> players, CardPicker cardPicker) {
-        for (Player player : players) {
-            playPlayerTurn(player, cardPicker);
-        }
-    }
-
-    private void playPlayerTurn(Player player, CardPicker cardPicker) {
-        while (canDrawMore(player)) {
-            drawAndPrintCard(player, cardPicker);
-        }
-    }
-
-    private boolean canDrawMore(Player player) {
-        if (player.isBust()) {
-            return false;
-        }
-        String hitOrStand = InputView.askHitOrStand(player.getName());
-        return isHit(hitOrStand);
-    }
-
-    private void drawAndPrintCard(Player player, CardPicker cardPicker) {
-        Card card = cardPicker.drawCard();
-        cardDistributor.distributeCardToPlayer(player, card);
-        OutputView.printDrawnCards(player.getName(), player.getCardNames());
-    }
-
-    private boolean isHit(String hitOrStand) {
-        if (hitOrStand.equals("y")) {
-            return true;
-        }
-        if (hitOrStand.equals("n")) {
-            return false;
-        }
-        throw new IllegalArgumentException("잘못된 입력입니다. y 또는 n을 입력해주세요");
     }
 }
