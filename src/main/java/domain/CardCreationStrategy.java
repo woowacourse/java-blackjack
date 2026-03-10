@@ -1,7 +1,7 @@
 package domain;
 
-import java.util.List;
+import java.util.Deque;
 
 public interface CardCreationStrategy {
-    List<Card> create();
+    Deque<Card> create();
 }
