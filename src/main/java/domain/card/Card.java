@@ -20,8 +20,12 @@ public class Card {
         return number.isAce();
     }
 
-    public String getCardName() {
-        return number.getCourt() + pattern.getName();
+    public String getCourt() {
+        return number.getCourt();
+    }
+
+    public String getPattern() {
+        return pattern.getName();
     }
 
     @Override
