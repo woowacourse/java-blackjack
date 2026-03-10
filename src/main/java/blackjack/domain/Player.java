@@ -1,7 +1,7 @@
 package blackjack.domain;
 
 public class Player extends Participant {
-    
+
     public Player(String name) {
         super(name, new Hand());
 
@@ -14,8 +14,5 @@ public class Player extends Participant {
         }
     }
 
-    public String getName() {
-        return super.getName();
-    }
 
 }
