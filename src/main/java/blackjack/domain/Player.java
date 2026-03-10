@@ -14,5 +14,9 @@ public class Player extends Participant {
         }
     }
 
+    public boolean shoudDraw() {
+        return !isBust();
+    }
+
 
 }

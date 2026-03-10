@@ -24,5 +24,9 @@ public class Dealer extends Participant {
         return getTotalPoint() >= DEALER_STAND_POINT;
     }
 
+    public boolean shoudDraw() {
+        return getTotalPoint() >= DEALER_STAND_POINT;
+    }
+
 
 }

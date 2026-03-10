@@ -39,11 +39,7 @@ public class BlackJackController {
     }
 
     private void dealerTurn(Dealer dealer, Deck deck) {
-        while (true) {
-            boolean isOver17 = dealer.isOver17();
-            if (isOver17) {
-                break;
-            }
+        while (dealer.shoudDraw()) {
             outputView.printDealerDraw();
             dealer.recieveCard(deck.draw());
         }
@@ -51,11 +47,7 @@ public class BlackJackController {
 
     private void playerTurn(Players players, Deck deck) {
         for (Player player : players.getPlayers()) {
-            while (true) {
-                boolean isBust = player.isBust();
-                if (isBust) {
-                    break;
-                }
+            while (player.shoudDraw()) {
                 boolean isHit = inputView.readHitAnswer(player.getName());
                 if (isHit) {
                     player.recieveCard(deck.draw());
