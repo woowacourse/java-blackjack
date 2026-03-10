@@ -5,10 +5,12 @@ import view.message.BinaryOptionMessage;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class InputView {
 
     private static final String COMMA_DELIMITER = ",";
+    private static final String NUMBER_REGEX = "^\\d+$";
 
     private final Scanner sc = new Scanner(System.in);
 
@@ -28,8 +30,27 @@ public class InputView {
         }
     }
 
+    public int readPlayerBetAmount(String name) {
+        while (true) {
+            try {
+                System.out.printf("\n%s의 배팅 금액은?\n", name);
+                return validateNumber(userInput());
+            } catch (IllegalArgumentException e) {
+                OutputView.printErrorMessage(e.getMessage());
+            }
+        }
+    }
+
     private List<String> splitPlayerNames(String playerNames) {
         return Arrays.stream(playerNames.split(COMMA_DELIMITER)).toList();
+    }
+
+    private int validateNumber(String userInput) {
+        if (!Pattern.matches(NUMBER_REGEX, userInput)) {
+            throw new IllegalArgumentException("배팅 금액은 숫자만 입력 가능합니다. 다시 입력해주세요.");
+        }
+
+        return Integer.parseInt(userInput);
     }
 
     private String userInput() {
