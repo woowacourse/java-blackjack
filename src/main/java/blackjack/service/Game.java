@@ -1,9 +1,6 @@
 package blackjack.service;
 
-import blackjack.domain.Dealer;
-import blackjack.domain.GameResult;
-import blackjack.domain.Player;
-import blackjack.domain.ScoreCompareResult;
+import blackjack.domain.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -19,9 +16,10 @@ public class Game {
         this.cardDistributor = cardDistributor;
     }
 
-    public void dealerDrawsCardsUntilDone(Dealer dealer) {
+    public void dealerDrawsCardsUntilDone(Dealer dealer, CardPicker cardPicker) {
         while (!dealer.isDealerDone()) {
-            cardDistributor.distributeCardToDealer(dealer);
+            Card card = cardPicker.drawCard();
+            cardDistributor.distributeCardToDealer(dealer, card);
         }
     }
 
@@ -82,21 +80,27 @@ public class Game {
         return ScoreCompareResult.PUSH;
     }
 
-    public void distributeInitialCards(List<Player> players, Dealer dealer) {
+    public void distributeInitialCards(List<Player> players, Dealer dealer, CardPicker cardPicker) {
         for (Player player : players) {
-            cardDistributor.distributeTwoCardsToPlayer(player);
+            List<Card> cards = List.of(cardPicker.drawCard(), cardPicker.drawCard());
+            cardDistributor.distributeTwoCardsToPlayer(player, cards);
         }
-        cardDistributor.distributeTwoCardsToDealer(dealer);
+        List<Card> cards = List.of(cardPicker.drawCard(), cardPicker.drawCard());
+        cardDistributor.distributeTwoCardsToDealer(dealer, cards);
     }
 
-    public void processTurn(List<Player> players) {
+    public void processTurn(List<Player> players, CardPicker cardPicker) {
         for (Player player : players) {
             while (true) {
                 String hitOrStand = InputView.askHitOrStand(player.getName());
                 if (!isHit(hitOrStand)) {
                     break;
                 }
-                cardDistributor.distributeCardToPlayer(player);
+
+                Card card = cardPicker.drawCard();
+
+                cardDistributor.distributeCardToPlayer(player, card);
+
                 OutputView.printDrawnCards(player.getName(), player.getCardNames());
                 if (player.isBust()) {
                     break;

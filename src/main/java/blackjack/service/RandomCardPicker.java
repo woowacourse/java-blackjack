@@ -10,18 +10,12 @@ import java.util.List;
 import java.util.Random;
 
 public class RandomCardPicker implements CardPicker {
-    private final Random random;
+    private final NumberGenerator numberGenerator;
     private final List<Card> notDrawnCards;
 
-    public RandomCardPicker(Random random) {
-        this.random = random;
+    public RandomCardPicker(NumberGenerator numberGenerator) {
+        this.numberGenerator = numberGenerator;
         this.notDrawnCards = initializeNotDrawnCards();
-    }
-
-    @Override
-    public Card drawCard() {
-        int randomCardIndex = random.nextInt(notDrawnCards.size());
-        return notDrawnCards.remove(randomCardIndex);
     }
 
     private List<Card> initializeNotDrawnCards() {
@@ -32,6 +26,12 @@ public class RandomCardPicker implements CardPicker {
             }
         }
         return cards;
+    }
+
+    @Override
+    public Card drawCard() {
+        int randomCardIndex = numberGenerator.generate(notDrawnCards.size());
+        return notDrawnCards.remove(randomCardIndex);
     }
 
 

@@ -14,10 +14,6 @@ public class CardTest {
     Card cardQ = new Card(Rank.QUEEN, Shape.DIAMOND);
     Card cardK = new Card(Rank.KING, Shape.CLOVER);
 
-    /*Card cardException1 = new Card("B", "하트");
-    Card cardException2 = new Card("-1", "스페이드");
-*/
-
     @Test
     @DisplayName("카드 점수 계산시 J, Q, K는 10으로 환산 2~10은 그대로 적용한다.")
     void calculate_card_score() {
@@ -26,13 +22,4 @@ public class CardTest {
         assertThat(cardQ.getScore()).isEqualTo(10);
         assertThat(cardK.getScore()).isEqualTo(10);
     }
-
-    /*@Test
-    @DisplayName("카드 점수 계산 예외 처리")
-    void calculate_card_score_exception() {
-        assertThatThrownBy(() -> cardException1.getScore())
-                .isInstanceOf(IllegalArgumentException.class);
-        assertThatThrownBy(() -> cardException2.getScore())
-                .isInstanceOf(IllegalArgumentException.class);
-    }*/
 }

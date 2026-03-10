@@ -5,6 +5,8 @@ import static org.mockito.Mockito.when;
 import blackjack.domain.*;
 import blackjack.service.CardDistributor;
 import blackjack.service.Game;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -16,16 +18,16 @@ public class GameTest {
     @Test
     void dealer_should_draw_card_until_score_at_least_17() {
         Dealer dealer = new Dealer();
-        Random mockRandom = mock(Random.class);
-        RandomCardPicker randomCardPicker = new RandomCardPicker(mockRandom);
-        CardDistributor cardDistributor = new CardDistributor(randomCardPicker);
-
-        // 2 하트, 2 스페이드, 2 클로버, 2 다이아몬드, 3 하트, 3 스페이드, 3 클로버, 3 다이아몬드, ...
-        when(mockRandom.nextInt(52)).thenReturn(0);
-
+        CardDistributor cardDistributor = new CardDistributor();
         Game game = new Game(cardDistributor);
-        game.dealerDrawsCardsUntilDone(dealer);
 
+        List<Card> cards = new ArrayList<>(List.of(
+                new Card(Rank.EIGHT, Shape.HEART), // 8
+                new Card(Rank.NINE, Shape.SPADE)   // 9
+        ));
+
+        CardPicker cardPicker = cards::removeFirst;
+        game.dealerDrawsCardsUntilDone(dealer, cardPicker);
         assertThat(dealer.calculateTotalScore()).isEqualTo(17);
     }
 

@@ -1,9 +1,6 @@
 package blackjack.controller;
 
-import blackjack.domain.Dealer;
-import blackjack.domain.GameResult;
-import blackjack.domain.Player;
-import blackjack.domain.ScoreCompareResult;
+import blackjack.domain.*;
 import blackjack.service.CardDistributor;
 import blackjack.service.Game;
 import blackjack.utils.InputParser;
@@ -17,9 +14,11 @@ import blackjack.view.OutputView;
 
 public class BlackjackController {
     private final Game game;
+    private final CardPicker cardPicker;
 
-    public BlackjackController(CardDistributor cardDistributor) {
+    public BlackjackController(CardDistributor cardDistributor, CardPicker cardPicker) {
         this.game = new Game(cardDistributor);
+        this.cardPicker = cardPicker;
     }
 
     public void startGame() {
@@ -29,7 +28,7 @@ public class BlackjackController {
 
         setupInitialHand(players, dealer, playerNames); // 2장씩 카드 분배
         
-        game.processTurn(players); // 플레이어 hit or stand
+        game.processTurn(players, cardPicker); // 플레이어 hit or stand
         playDealerTurn(dealer);
 
         calculateFinalScore(players, dealer);
@@ -37,7 +36,7 @@ public class BlackjackController {
     }
 
     private void setupInitialHand(List<Player> players, Dealer dealer, List<String> playerNames) {
-        game.distributeInitialCards(players, dealer);
+        game.distributeInitialCards(players, dealer, cardPicker);
         OutputView.printInitialCardsDistribution(playerNames);
         printInitialCards(players, dealer);
     }
@@ -61,7 +60,7 @@ public class BlackjackController {
     }
 
     private void playDealerTurn(Dealer dealer) {
-        game.dealerDrawsCardsUntilDone(dealer);
+        game.dealerDrawsCardsUntilDone(dealer,cardPicker);
         OutputView.printDealerCardDrawnResult(dealer.getAdditionalDrawnCardCount());
     }
 

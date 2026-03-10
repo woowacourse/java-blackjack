@@ -5,34 +5,28 @@ import blackjack.domain.CardPicker;
 import blackjack.domain.Dealer;
 import blackjack.domain.Player;
 
+import java.util.List;
+
 public class CardDistributor {
-
-    private final CardPicker cardPicker;
-
-    public CardDistributor(CardPicker cardPicker) {
-        this.cardPicker = cardPicker;
+    public CardDistributor() {
     }
 
-    public void distributeCardToPlayer(Player player) {
-        Card card = cardPicker.drawCard();
+    public void distributeCardToPlayer(Player player, Card card) {
         player.receiveOneCard(card);
     }
 
-    public void distributeCardToDealer(Dealer dealer) {
-        Card card = cardPicker.drawCard();
+    public void distributeCardToDealer(Dealer dealer, Card card) {
         dealer.receiveOneCard(card);
     }
 
-    public void distributeTwoCardsToPlayer(Player player) {
-        for (int i = 0; i < 2; i++) {
-            Card card = cardPicker.drawCard();
+    public void distributeTwoCardsToPlayer(Player player, List<Card> cards) {
+        for (Card card : cards) {
             player.receiveOneCard(card);
         }
     }
 
-    public void distributeTwoCardsToDealer(Dealer dealer) {
-        for (int i = 0; i < 2; i++) {
-            Card card = cardPicker.drawCard();
+    public void distributeTwoCardsToDealer(Dealer dealer, List<Card> cards) {
+        for (Card card : cards) {
             dealer.receiveOneCard(card);
         }
     }
