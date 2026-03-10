@@ -81,7 +81,8 @@ public class OutputView {
     
     private void printDealerWinning(TotalWinningResult totalWinningResult) {
         printLine(
-                String.format("딜러: %d승 %d패", totalWinningResult.dealerResult().get(), totalWinningResult.dealerLoss()));
+                String.format("딜러: %d승 %d패", totalWinningResult.dealerWinCount(),
+                        totalWinningResult.dealerLossCount()));
     }
     
     public void printPlayerWinningResults(TotalWinningResult totalWinningResult) {

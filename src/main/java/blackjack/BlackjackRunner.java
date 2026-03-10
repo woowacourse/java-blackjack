@@ -28,11 +28,21 @@ public class BlackjackRunner {
     public void execute() {
         Participants participants = makeParticipants();
         Deck deck = new Deck();
-        gameStart(participants, deck);
+        initializeGame(participants, deck);
         
         playerTurn(participants, deck);
         dealerTurn(participants, deck);
         gameEnd(participants);
+    }
+    
+    private void playerTurn(Participants participants, Deck deck) {
+        while (true) {
+            Player currentPlayer = participants.getCurrentPlayer();
+            if (currentPlayer == null) {
+                break;
+            }
+            playerDraw(currentPlayer, deck);
+        }
     }
     
     private Participants makeParticipants() {
@@ -43,34 +53,62 @@ public class BlackjackRunner {
         return new Participants(players, dealer);
     }
     
-    private void gameStart(Participants participants, Deck deck) {
-        printInitialSetup(participants);
+    private void initializeGame(Participants participants, Deck deck) {
+        printParticipantsNames(participants);
         participants.distributeCards(deck);
-        printInitialResult(participants);
+        printInitialHand(participants);
     }
     
-    private void printInitialSetup(Participants participants) {
+    private void printParticipantsNames(Participants participants) {
         List<Player> players = participants.getPlayers();
         outputView.printInitialSetUp(PlayerNames.from(players));
     }
     
-    private void printInitialResult(Participants participants) {
+    private void printInitialHand(Participants participants) {
         Dealer dealer = participants.getDealer();
         List<Player> players = participants.getPlayers();
         
-        printDealerInitialResult(dealer);
-        printPlayersInitialResult(players);
+        printDealerInitialHand(dealer);
+        printPlayersInitialHand(players);
     }
     
-    private void printDealerInitialResult(Dealer dealer) {
+    private void printDealerInitialHand(Dealer dealer) {
         outputView.printDealerInitialHand(DealerInitialHand.from(dealer));
     }
     
-    private void printPlayersInitialResult(List<Player> players) {
+    private void printPlayersInitialHand(List<Player> players) {
         outputView.printPlayersInitialHand(PlayerHand.listOf(players));
     }
     
-    private void printPlayerHand(Player player) {
+    private void playerDraw(Player currentPlayer, Deck deck) {
+        boolean hit = askHitOrStand(currentPlayer);
+        if (hit) {
+            currentPlayer.drawCard(deck);
+            printCurrentHand(currentPlayer);
+            return;
+        }
+        if (currentPlayer.getCards().size() == 2) {
+            printCurrentHand(currentPlayer);
+        }
+        currentPlayer.stand();
+    }
+    
+    private boolean askHitOrStand(Player currentPlayer) {
+        return retry(() -> {
+            outputView.hitOrStand(currentPlayer.getNickname());
+            return inputView.getUserCommand();
+        });
+    }
+    
+    private void dealerTurn(Participants participants, final Deck deck) {
+        Dealer dealer = participants.getDealer();
+        while (dealer.isDrawable()) {
+            outputView.printDealerTurn();
+            dealer.drawCard(deck);
+        }
+    }
+    
+    private void printCurrentHand(Player player) {
         outputView.printParticipantInitialHand(PlayerHand.from(player));
     }
     
@@ -91,44 +129,6 @@ public class BlackjackRunner {
         List<Player> players = participants.getPlayers();
         
         return TotalWinningResult.of(dealer, players);
-    }
-    
-    private void playerTurn(Participants participants, Deck deck) {
-        while (true) {
-            Player currentPlayer = participants.getCurrentPlayer();
-            if (currentPlayer == null) {
-                break;
-            }
-            playerDraw(currentPlayer, deck);
-        }
-    }
-    
-    private void playerDraw(Player currentPlayer, Deck deck) {
-        boolean isPlayerDraw = isDraw(currentPlayer);
-        if (isPlayerDraw) {
-            currentPlayer.drawCard(deck);
-            printPlayerHand(currentPlayer);
-            return;
-        }
-        if (currentPlayer.getCards().size() == 2) {
-            printPlayerHand(currentPlayer);
-        }
-        currentPlayer.stopDrawing();
-    }
-    
-    private boolean isDraw(Player currentPlayer) {
-        return retry(() -> {
-            outputView.hitOrStand(currentPlayer.getNickname());
-            return inputView.getUserCommand();
-        });
-    }
-    
-    private void dealerTurn(Participants participants, final Deck deck) {
-        Dealer dealer = participants.getDealer();
-        while (dealer.isDrawable()) {
-            outputView.printDealerTurn();
-            dealer.drawCard(deck);
-        }
     }
     
     private <T> T retry(Supplier<T> supplier) {

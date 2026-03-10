@@ -17,7 +17,7 @@ public class Player extends Participant {
         return !hand.isBlackjack();
     }
     
-    public void stopDrawing() {
+    public void stand() {
         stopDrawing = true;
     }
     
