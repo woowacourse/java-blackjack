@@ -3,7 +3,6 @@ package service;
 import java.util.Objects;
 import model.BlackJackDeck;
 import model.Dealer;
-import model.DealerWinning;
 import model.MatchStatus;
 import model.Participant;
 import model.Player;
@@ -42,9 +41,8 @@ public class BlackJackService {
 
     public ParticipantWinning getGameResult(Players players, Dealer dealer) {
         PlayersWinning playersWinning = getPlayersResult(players, dealer);
-        DealerWinning dealerWinning = getDealerResult(playersWinning);
 
-        return new ParticipantWinning(dealerWinning.getDealerWinning(), playersWinning.getPlayersWinnings());
+        return new ParticipantWinning(getDealerResult(playersWinning), playersWinning.getPlayersWinnings());
     }
 
     private PlayersWinning getPlayersResult(Players players, Dealer dealer) {
@@ -52,31 +50,17 @@ public class BlackJackService {
 
         for(Player player : players.getPlayers()) {
             MatchStatus matchStatus = getPlayerResult(player, dealer);
-            playersWinning.add(new PlayerWinning(player.getResult().name(), matchStatus));
+            int profit = (int) (player.getBattingMoney().get()  * matchStatus.getMultiplier());
+            playersWinning.add(new PlayerWinning(player.getResult().name(), profit));
         }
 
         return playersWinning;
     }
 
-    private DealerWinning getDealerResult(PlayersWinning playersWinning) {
-        DealerWinning dealerWinning = new DealerWinning();
-
-        for(PlayerWinning playerWinning : playersWinning.getPlayersWinnings()) {
-            dealerWinning.increase(reverseMatchResult(playerWinning.matchStatus()));
-        }
-        return dealerWinning;
-    }
-
-    private MatchStatus reverseMatchResult(MatchStatus matchStatus) {
-        if(matchStatus.equals(MatchStatus.WIN)) {
-            return MatchStatus.LOSE;
-        }
-
-        if(matchStatus.equals(MatchStatus.LOSE)) {
-            return MatchStatus.WIN;
-        }
-
-        return matchStatus;
+    private Integer getDealerResult(PlayersWinning playersWinning) {
+        return -playersWinning.getPlayersWinnings().stream()
+                .mapToInt(PlayerWinning::profit)
+                .sum();
     }
 
     private MatchStatus getPlayerResult(Player player, Dealer dealer) {
@@ -91,7 +75,7 @@ public class BlackJackService {
 
     private MatchStatus checkBlackJack(Player player, Dealer dealer) {
         if (isBlackJack(player) && isBlackJack(dealer)) return MatchStatus.DRAW;
-        if (isBlackJack(player)) return MatchStatus.WIN;
+        if (isBlackJack(player)) return MatchStatus.BLACKJACK;
         if (isBlackJack(dealer)) return MatchStatus.LOSE;
         return null;
     }
