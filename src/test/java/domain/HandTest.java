@@ -25,6 +25,20 @@ class HandTest {
     }
 
     @Test
+    void 참가자가_가진_카드_목록을_반환한다() {
+        Hand hand = new Hand();
+
+        Card card1 = new Card(Rank.ACE, Suit.HEART);
+        Card card2 = new Card(Rank.ACE, Suit.HEART);
+
+        hand.add(card1);
+        hand.add(card2);
+
+        List<Card> cards = hand.cards();
+        assertThat(cards).containsExactly(card1, card2);
+    }
+
+    @Test
     void 플레이어의_카드의_합이_21을_초과하는지_반환한다() {
         List<Card> cards = createCards(Rank.JACK, Rank.QUEEN, Rank.KING);
         Hand hand = new Hand(cards);

@@ -15,7 +15,7 @@ public class Dealer extends Participant {
         return score <= 16;
     }
 
-    public Card getFirstCard() {
-        return getAllCards().getFirst();
+    public Card firstCard() {
+        return cards().getFirst();
     }
 }

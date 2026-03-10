@@ -10,10 +10,6 @@ public class Player extends Participant {
 
     @Override
     public boolean canDraw() {
-        if (super.score() <= BLACK_JACK) {
-            return true;
-        }
-
-        return false;
+        return super.score() <= BLACK_JACK;
     }
 }

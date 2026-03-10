@@ -63,7 +63,7 @@ public class OutputView {
     }
 
     private void printDealerInitialCard(Dealer dealer) {
-        Card firstCard = dealer.getFirstCard();
+        Card firstCard = dealer.firstCard();
         String dealerCard = firstCard.name();
 
         System.out.println(String.format(CARD_MESSAGE, dealer.name()) + dealerCard);
@@ -78,7 +78,7 @@ public class OutputView {
     private String formatParticipantCards(Participant participant) {
         List<String> cards = new ArrayList<>();
 
-        for (Card card : participant.getAllCards()) {
+        for (Card card : participant.cards()) {
             cards.add(card.name());
         }
 

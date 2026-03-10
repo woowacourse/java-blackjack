@@ -15,7 +15,7 @@ public class Hand {
     }
 
     public Hand(List<Card> cards) {
-        this.cards = cards;
+        this.cards = new ArrayList<>(cards);
     }
 
     public boolean isBust() {
@@ -54,7 +54,7 @@ public class Hand {
         cards.add(card);
     }
 
-    public List<Card> getAllCards() {
+    public List<Card> cards() {
         return List.copyOf(cards);
     }
 }

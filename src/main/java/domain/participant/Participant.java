@@ -20,7 +20,7 @@ public abstract class Participant {
             throw new IllegalArgumentException();
         }
 
-        cards.forEach(card -> receive(card));
+        cards.forEach(this::receive);
     }
 
     public void receive(Card card) {
@@ -36,11 +36,11 @@ public abstract class Participant {
     }
 
     public String name() {
-        return name.getName();
+        return name.name();
     }
 
-    public List<Card> getAllCards() {
-        return hand.getAllCards();
+    public List<Card> cards() {
+        return hand.cards();
     }
 
     public abstract boolean canDraw();
