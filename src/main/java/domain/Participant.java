@@ -17,7 +17,7 @@ public abstract class Participant {
         cards.addCard(card);
     }
 
-    public abstract boolean isContinue();
+    public abstract boolean isContinueGame();
 
     public String getName() {
         return name.getName();

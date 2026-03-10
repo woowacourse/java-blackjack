@@ -83,8 +83,8 @@ public class BlackJackGameController {
     }
 
     private void playGameWithDealer(Dealer dealer, Deck deck) {
-        while (dealer.canReceiveCard()) {
-            if (!dealer.canReceiveCard()) {
+        while (dealer.isContinueGame()) {
+            if (!dealer.isContinueGame()) {
                 break;
             }
             distributeCard(dealer, deck);
@@ -93,7 +93,7 @@ public class BlackJackGameController {
     }
 
     private void playGameWithPlayer(Player player, Deck deck) {
-        while (player.canReceiveCard()) {
+        while (player.isContinueGame()) {
             if (isContinueGame(player)) {
                 break;
             }

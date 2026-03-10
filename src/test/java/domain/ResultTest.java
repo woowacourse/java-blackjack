@@ -22,7 +22,7 @@ class ResultTest {
         realCards.addCard(card1);
         realCards.addCard(card2);
 
-        assertEquals(true, realCards.canReceiveCard(21));
+        assertEquals(true, realCards.isBurst(21));
     }
 
     @Test
@@ -41,6 +41,6 @@ class ResultTest {
         realCards.addCard(card3);
         realCards.addCard(card4);
 
-        assertEquals(false, realCards.canReceiveCard(21));
+        assertEquals(false, realCards.isBurst(21));
     }
 }

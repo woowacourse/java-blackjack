@@ -7,7 +7,7 @@ public class Player extends Participant {
         super(name);
     }
 
-    public boolean isContinue() {
+    public boolean isContinueGame() {
         return cards.isBurst(BURST_THRESHOLD);
     }
 }
