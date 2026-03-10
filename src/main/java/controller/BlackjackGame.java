@@ -54,9 +54,7 @@ public class BlackjackGame {
 
     private void printAllParticipantsFinalHandResult(Dealer dealer, Players players) {
         view.printFinalResultMessage(PlayerResultDto.from(dealer));
-        players.stream().forEach(player -> {
-            view.printFinalResultMessage(PlayerResultDto.from(player));
-        });
+        players.toPlayerResultDtos().forEach(view::printFinalResultMessage);
     }
 
     private void printAllParticipantsHand(Dealer dealer, Players players) {

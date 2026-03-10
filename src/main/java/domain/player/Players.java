@@ -2,6 +2,7 @@ package domain.player;
 
 import domain.dealer.Dealer;
 import domain.player.dto.PlayerHandDto;
+import domain.player.dto.PlayerResultDto;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -35,6 +36,12 @@ public class Players {
     public List<PlayerHandDto> getPlayerHandDtos() {
         return players.stream()
                 .map(PlayerHandDto::of)
+                .toList();
+    }
+
+    public List<PlayerResultDto> toPlayerResultDtos() {
+        return players.stream()
+                .map(PlayerResultDto::from)
                 .toList();
     }
 
