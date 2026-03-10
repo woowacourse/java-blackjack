@@ -1,12 +1,13 @@
-import config.AppConfig;
 import controller.BlackJackController;
+import domain.Deck;
+
+import java.util.function.Supplier;
 
 public class Application {
 
     public static void main(String[] args) {
-        AppConfig appConfig = new AppConfig();
-        BlackJackController blackJackController = appConfig.blackJackController();
-
+        Supplier<Deck> randomDeckSupplier = Deck::new;
+        BlackJackController blackJackController = new BlackJackController(randomDeckSupplier);
         blackJackController.run();
     }
 }

@@ -8,6 +8,7 @@ import java.util.List;
 import static domain.card.Rank.ACE;
 
 public class Hand {
+    private static final int BLACKJACK_NUMBER = 21;
     private final List<Card> cards;
 
     public Hand() {
@@ -42,9 +43,24 @@ public class Hand {
         return getSum() > 21;
     }
 
+    public boolean isLessThanBlackJack(){
+        return getSum() < BLACKJACK_NUMBER;
+    }
+
+    public boolean isLargerThanEqualToBlackJack(){
+        return getSum() >= BLACKJACK_NUMBER;
+    }
+
+    public int getSize(){
+        return cards.size();
+    }
 
     public void addCard(Card card) {
         cards.add(card);
+    }
+
+    public Card getFirstCard(){
+        return cards.getFirst();
     }
 
     public List<Card> getCards() {

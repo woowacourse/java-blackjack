@@ -1,88 +1,60 @@
 package controller;
 
-import domain.Dealer;
+import assembler.OutputDtoAssembler;
 import domain.Deck;
+import domain.Game;
+import domain.Judge;
 import domain.Player;
-import dto.BlackJackHandDto;
-import dto.BlackJackInitStatusDto;
-import dto.FinalResultDto;
-import dto.ScoreResultDto;
-import service.BlackJackInitService;
-import service.BlackJackResultService;
-import service.BlackJackTurnService;
+import factory.CardFactory;
 import view.InputView;
 import view.OutputView;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 public class BlackJackController {
 
-    private final BlackJackInitService blackJackInitService;
-    private final BlackJackTurnService blackJackTurnService;
-    private final BlackJackResultService blackJackResultService;
+    private final Supplier<Deck> deckSupplier;
 
-    public BlackJackController(BlackJackInitService blackJackInitService,
-                               BlackJackTurnService blackJackTurnService,
-                               BlackJackResultService blackJackResultService){
-        this.blackJackInitService = blackJackInitService;
-        this.blackJackTurnService = blackJackTurnService;
-        this.blackJackResultService = blackJackResultService;
+    public BlackJackController(Supplier<Deck> deckSupplier){
+        this.deckSupplier = deckSupplier;
     }
 
     public void run() {
-        List<String> names = InputView.askPlayerNames();
+        List<String> playerNames = InputView.askPlayerNames();
+        Game game = new Game(playerNames, deckSupplier.get());
+        OutputView.printInitMessage(OutputDtoAssembler
+                .toBlackJackInitStatusDto(game.getDealer(),game.getPlayers()));
 
-        Deck deck = blackJackInitService.createDeck();
-        List<Player> players = blackJackInitService.createPlayers(names, deck);
-        Dealer dealer = blackJackInitService.createDealer(deck);
+        playPlayers(game);
+        playDealer(game);
 
-        playGame(deck, dealer, players);
-        printResult(dealer, players);
+        Judge judge = new Judge(game.getDealer(), game.getPlayers());
+        OutputView.printFinalResult(OutputDtoAssembler
+                .toFinalResultDto(game.getDealer(),game.getPlayers(), judge));
     }
 
-    private void printResult(Dealer dealer, List<Player> players){
-        ScoreResultDto scoreResultDto = blackJackResultService.createScoreResultDto(dealer, players);
-        OutputView.printScoreResult(scoreResultDto);
-
-        FinalResultDto finalResultDto = blackJackResultService.createFinalResultDto(dealer, players);
-        OutputView.printFinalResult(finalResultDto);
-    }
-
-    private void playGame(Deck deck, Dealer dealer, List<Player> players){
-        BlackJackInitStatusDto blackJackInitStatusDto = blackJackInitService.createInitStatusDto(dealer, players);
-        OutputView.printInitMessage(blackJackInitStatusDto);
-
-        for(Player player : players){
-            drawPlayerCard(player, deck);
+    private void playPlayers(Game game){
+        for(Player player : game.getPlayers()){
+            playPlayer(game, player);
         }
-        drawDealerCard(dealer, deck);
     }
 
-    // todo: depth 2 해결
-    private void drawPlayerCard(Player player, Deck deck) {
-        String YesNoInput = InputView.askPlayerCommand(player.getName());
-
-        if (!blackJackTurnService.canPlayerHit(player, YesNoInput)) {
-            BlackJackHandDto blackJackHandDto = blackJackTurnService.createHandDto(player);
-            OutputView.printHandOutput(blackJackHandDto);
-        }
-
-        while (blackJackTurnService.canPlayerHit(player, YesNoInput)) {
-            blackJackTurnService.playerHit(player, deck);
-            BlackJackHandDto blackJackHandDto = blackJackTurnService.createHandDto(player);
-            OutputView.printHandOutput(blackJackHandDto);
-            // 합이 21 넘어가면 바로 입력받기 종료
-            if (!blackJackTurnService.isPlayerUnder21(player)) {
-                break;
+    private void playPlayer(Game game, Player player){
+        while(player.canHit()){
+            String yesNoInput = InputView.askPlayerCommand(player.getName());
+            if(yesNoInput.equals("n")){
+                return;
             }
-            YesNoInput = InputView.askPlayerCommand(player.getName());
+            game.hitPlayer(player);
+            OutputView.printHandOutput(OutputDtoAssembler.toPlayerHandDto(player));
         }
     }
 
-    private void drawDealerCard(Dealer dealer, Deck deck){
-        while (blackJackTurnService.canDealerHit(dealer)) {
-            blackJackTurnService.dealerHit(dealer, deck);
+    private void playDealer(Game game){
+        while(game.dealerShouldHit()){
             OutputView.printDealerHitMessage();
+            game.hitDealer();
         }
     }
 }

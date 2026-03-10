@@ -18,7 +18,7 @@ class DealerTest {
         dealer.draw(new Card(Suit.CLUBS, Rank.ACE));
 
         // then
-        assertEquals(1, dealer.getHand().getCards().size());
+        assertEquals(1, dealer.getHandSize());
     }
 
     @Test

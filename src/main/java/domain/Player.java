@@ -2,6 +2,8 @@ package domain;
 
 import domain.card.Card;
 
+import java.util.List;
+
 public class Player {
     private final String name;
     private final Hand hand;
@@ -19,11 +21,27 @@ public class Player {
         return hand.isBurst();
     }
 
-    public String getName() {
-        return name;
+    public boolean canHit() {
+        return hand.isLessThanBlackJack();
     }
 
-    public Hand getHand() {
-        return hand;
+    public boolean canNotHit(){
+        return hand.isLargerThanEqualToBlackJack();
+    }
+
+    public int getScore() {
+        return hand.getSum();
+    }
+
+    public List<Card> getCards(){
+        return hand.getCards();
+    }
+
+    public int getHandSize(){
+        return hand.getSize();
+    }
+
+    public String getName() {
+        return name;
     }
 }
