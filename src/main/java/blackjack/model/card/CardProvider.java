@@ -1,11 +1,8 @@
-package blackjack.model;
+package blackjack.model.card;
 
 import static blackjack.model.constant.Constant.INIT_CARDS_END_IDX;
 import static blackjack.model.constant.Constant.INIT_CARDS_START_IDX;
 
-import blackjack.model.card.Card;
-import blackjack.model.card.Rank;
-import blackjack.model.card.Suit;
 import blackjack.model.user.Dealer;
 import blackjack.model.user.Player;
 import blackjack.model.user.User;

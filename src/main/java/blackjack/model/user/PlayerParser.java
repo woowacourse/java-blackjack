@@ -1,6 +1,5 @@
-package blackjack.util;
+package blackjack.model.user;
 
-import blackjack.model.user.Player;
 import java.util.Arrays;
 import java.util.List;
 

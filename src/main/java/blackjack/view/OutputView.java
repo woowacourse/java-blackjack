@@ -4,9 +4,9 @@ import static blackjack.model.constant.Constant.BLACKJACK_SCORE;
 
 import blackjack.model.card.Card;
 import blackjack.model.user.Dealer;
-import blackjack.model.GameResult;
+import blackjack.model.gameresult.GameResult;
 import blackjack.model.user.Player;
-import blackjack.model.PlayersGameResult;
+import blackjack.model.gameresult.PlayersGameResult;
 import blackjack.model.user.Users;
 import java.util.EnumMap;
 import java.util.List;

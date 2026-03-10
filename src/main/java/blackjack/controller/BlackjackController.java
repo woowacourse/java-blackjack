@@ -2,11 +2,11 @@ package blackjack.controller;
 
 import static blackjack.util.ExceptionHandler.retryUntilSuccess;
 
-import blackjack.model.HitCommand;
-import blackjack.model.CardProvider;
+import blackjack.model.card.HitCommand;
+import blackjack.model.card.CardProvider;
 import blackjack.model.user.Dealer;
 import blackjack.model.user.Player;
-import blackjack.model.PlayersGameResult;
+import blackjack.model.gameresult.PlayersGameResult;
 import blackjack.model.user.Users;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;

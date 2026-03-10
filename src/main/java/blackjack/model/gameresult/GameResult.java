@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.model.gameresult;
 
 public enum GameResult {
 

@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.model.card;
 
 import static blackjack.model.constant.ErrorMessage.ERROR_EMPTY_INPUT;
 import static blackjack.model.constant.ErrorMessage.ERROR_NOT_Y_N_INPUT;

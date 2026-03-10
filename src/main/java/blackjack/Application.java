@@ -1,7 +1,7 @@
 package blackjack;
 
 import blackjack.controller.BlackjackController;
-import blackjack.model.CardProvider;
+import blackjack.model.card.CardProvider;
 
 public class Application {
 

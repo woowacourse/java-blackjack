@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.model.card;
 
 import static blackjack.model.constant.Constant.ACE_SCORE_ELEVEN;
 import static blackjack.model.constant.Constant.ACE_SCORE_ONE;
@@ -6,8 +6,6 @@ import static blackjack.model.constant.Constant.INIT_CARDS_END_IDX;
 import static blackjack.model.constant.Constant.INIT_CARDS_START_IDX;
 import static blackjack.model.constant.Constant.BLACKJACK_SCORE;
 
-import blackjack.model.card.Card;
-import blackjack.model.card.Rank;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
