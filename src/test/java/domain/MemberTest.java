@@ -14,7 +14,7 @@ public class MemberTest {
     @Test
     void winnerTest_isPlayerThenDecide_returnMember() {
         Dealer dealer = new Dealer();
-        Player player = new Player("브리");
+        Player player = new Player("브리", 1000);
 
         dealer.receiveCard(new Card("2", "하트"));
         dealer.receiveCard(new Card("3","클로버"));
