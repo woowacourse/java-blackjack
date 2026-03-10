@@ -77,6 +77,6 @@ public class BlackjackGame {
     private void printResults() {
         OutputView.printFinalCards(players, dealer);
         final GameResults gameResults = GameResults.calculate(players, dealer);
-        OutputView.printFinalProfits(gameResults);
+        OutputView.printFinalProfits(gameResults, dealer);
     }
 }

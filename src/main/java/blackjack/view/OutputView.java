@@ -53,9 +53,9 @@ public class OutputView {
         System.out.printf(FINAL_CARDS_FORMAT, name, formatCards(cards), score);
     }
 
-    public static void printFinalProfits(final GameResults gameResults) {
+    public static void printFinalProfits(final GameResults gameResults, final Dealer dealer) {
         System.out.printf(FINAL_RESULTS_HEADER);
-        System.out.printf(PROFIT_FORMAT, "딜러", gameResults.getDealerProfit());
+        System.out.printf(PROFIT_FORMAT, dealer.getName(), gameResults.getDealerProfit());
         gameResults.getPlayerProfits().forEach((player, profit) ->
                 System.out.printf(PROFIT_FORMAT, player.getName(), profit)
         );
