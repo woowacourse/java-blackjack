@@ -15,9 +15,6 @@ public abstract class Participant {
 
     public void receiveCard(Card card) {
         cards.add(card);
-    }
-
-    public void updateScore() {
         score.calculateAll(cards);
     }
 
@@ -35,6 +32,10 @@ public abstract class Participant {
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
+    }
+
+    public boolean isBlackjack() {
+        return cards.size() == 2 && score.isBlackjack();
     }
 
     public abstract boolean canReceive();

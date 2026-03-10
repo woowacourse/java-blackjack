@@ -48,4 +48,8 @@ public class Score {
     public boolean isLess(int score) {
         return this.score < score;
     }
+
+    public boolean isBlackjack() {
+        return score == BLACKJACK_NUMBER;
+    }
 }
