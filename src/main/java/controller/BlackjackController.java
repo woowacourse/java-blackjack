@@ -4,7 +4,6 @@ import domain.Game;
 import domain.card.Deck;
 import domain.enums.Result;
 import domain.participant.Dealer;
-import domain.participant.Players;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,23 +23,21 @@ public class BlackjackController {
     }
 
     public void start() {
-        Players players = makePlayers();
         CardGenerator cardGenerator = new ShuffledCardGenerator();
         Deck deck = new Deck(cardGenerator.generate());
-        Game game = new Game(players, new Dealer());
+        Game game = new Game(makePlayers(), new Dealer());
 
         game.initializeGame(deck);
         outputView.printPlayers(game.getDealerCard(), game.getAllPlayerCard());
 
-        List<String> playersName = players.getAllPlayersName();
+        List<String> playersName = game.getAllPlayersName();
         playTurn(game, playersName, deck);
         printResult(game, playersName);
     }
 
-    private Players makePlayers() {
+    private List<String> makePlayers() {
         String input = inputView.askPlayerNames();
-        List<String> names = InputParser.parseNames(input);
-        return new Players(names);
+        return InputParser.parseNames(input);
     }
 
     private void playPlayerTurn(Game game, String name, Deck deck) {
