@@ -3,20 +3,18 @@ package service;
 import java.util.ArrayList;
 import java.util.List;
 
-import controller.BlackjackController;
 import domain.Cards;
 import domain.Dealer;
 import domain.Player;
 import domain.Players;
-import utils.generator.CardGenerator;
+import utils.generator.CardsGenerator;
+import utils.generator.ShuffledCardsGenerator;
 import view.OutputView;
 
 public class BlackjackService {
 
-    public Cards generateCards() {
-        Cards cards = CardGenerator.generate();
-        cards.shuffle();
-        return cards;
+    public Cards generateCards(CardsGenerator cardsGenerator) {
+        return cardsGenerator.generateShuffledCards();
     }
 
     public void giveInitialedCard(Cards cards, Dealer dealer) {

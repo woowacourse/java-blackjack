@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -14,13 +15,14 @@ public class Cards {
         Collections.shuffle(cards);
     }
 
+    public List<Card> getCards() {
+        return cards;
+    }
+
     public Card pop() {
         return cards.removeFirst();
 
         // 리스트 비었을 때 처리 필요
     }
 
-    public int getLength() {
-        return cards.size();
-    }
 }

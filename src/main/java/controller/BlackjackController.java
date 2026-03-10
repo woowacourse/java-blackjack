@@ -4,6 +4,7 @@ import domain.*;
 import domain.dto.CardContentDto;
 import domain.dto.FinalCardDto;
 import service.BlackjackService;
+import utils.generator.ShuffledCardsGenerator;
 import view.InputView;
 import view.OutputView;
 
@@ -22,7 +23,7 @@ public class BlackjackController {
     }
 
     public void run() {
-        Cards cards = blackjackService.generateCards();
+        Cards cards = blackjackService.generateCards(new ShuffledCardsGenerator());
         List<String> names = inputNames();
 
         Dealer dealer = blackjackService.createDealer(cards);
