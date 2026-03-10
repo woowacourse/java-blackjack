@@ -33,7 +33,7 @@ public class Players {
                 .toList();
     }
 
-    public List<PlayerHandDto> getPlayerHandDtos() {
+    public List<PlayerHandDto> toPlayerHandDtos() {
         return players.stream()
                 .map(PlayerHandDto::of)
                 .toList();

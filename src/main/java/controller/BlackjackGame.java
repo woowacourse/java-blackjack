@@ -59,7 +59,7 @@ public class BlackjackGame {
 
     private void printAllParticipantsHand(Dealer dealer, Players players) {
         view.printParticipantHand(PlayerHandDto.of(dealer));
-        view.printAllPlayersHand(players.getPlayerHandDtos());
+        view.printAllPlayersHand(players.toPlayerHandDtos());
     }
 
     private void proceedDealersTurn(Dealer dealer) {
