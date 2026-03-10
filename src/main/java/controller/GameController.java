@@ -116,7 +116,7 @@ public class GameController {
     private void dealerTurn(GameService gameService) {
         Dealer dealer = gameService.getDealer();
 
-        while (dealer.isRunning() && dealer.isReceiveCard()) {
+        while (dealer.isReceiveCard()) {
             gameService.hit(dealer);
             outputView.printDealerReceiveCard();
         }

@@ -8,7 +8,7 @@ public class Dealer extends Participant {
     }
 
     public Card getFirstCard() {
-        return status.getCards().getFirst();
+        return getHandCards().getFirst();
     }
 
     public boolean isReceiveCard() {
