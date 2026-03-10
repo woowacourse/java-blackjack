@@ -17,16 +17,16 @@ public class Player {
         return hand.isBust();
     }
 
-    public void addCard(Card card) {
+    public void receiveCard(Card card) {
         hand.add(card);
     }
 
-    public String getName() {
-        return name;
+    public boolean canDraw() {
+        return !(isBust()|| hand.isBlackjack());
     }
 
-    public Hand getHand() {
-        return hand;
+    public int handSize() {
+        return hand.size();
     }
 
     public List<String> getHandToString() {
@@ -35,5 +35,13 @@ public class Player {
 
     public int getScore(){
         return hand.calculateScore();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Hand getHand() {
+        return hand;
     }
 }

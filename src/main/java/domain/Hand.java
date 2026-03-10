@@ -58,4 +58,8 @@ public class Hand {
     public boolean isBlackjack() {
         return calculateScore() == BLACKJACK_SCORE;
     }
+
+    public int size() {
+        return hand.size();
+    }
 }

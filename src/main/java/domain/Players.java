@@ -6,9 +6,12 @@ import java.util.List;
 public class Players {
     private final List<Player> players = new ArrayList<>();
 
-
     public void add(Player player) {
         players.add(player);
+    }
+
+    public void receiveCard(Card card) {
+        players.forEach(player -> player.receiveCard(card));
     }
 
     public List<Player> getPlayers() {
