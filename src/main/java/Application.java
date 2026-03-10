@@ -1,6 +1,6 @@
 import controller.GameController;
-import domain.Deck;
-import domain.GameManager;
+import domain.card.Deck;
+import domain.game.GameManager;
 import view.InputView;
 import view.OutputView;
 

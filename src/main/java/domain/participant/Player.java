@@ -1,5 +1,7 @@
-package domain;
+package domain.participant;
 
+import domain.card.Card;
+import domain.Hand;
 import java.util.List;
 
 public class Player {

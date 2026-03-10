@@ -1,4 +1,4 @@
-package domain.constant;
+package domain.card;
 
 public enum Rank {
     ACE(1, "A"),

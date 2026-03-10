@@ -1,9 +1,14 @@
-package domain;
+package domain.game;
 
+import domain.DtoFactory;
+import domain.card.Deck;
 import domain.dto.GameFinalResultDto;
 import domain.dto.GameInitialInfoDto;
 import domain.dto.GameScoreResultDto;
 
+import domain.participant.Dealer;
+import domain.participant.Player;
+import domain.participant.Players;
 import java.util.List;
 
 public class GameManager {

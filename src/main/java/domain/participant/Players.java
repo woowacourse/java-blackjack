@@ -1,5 +1,6 @@
-package domain;
+package domain.participant;
 
+import domain.card.Card;
 import java.util.ArrayList;
 import java.util.List;
 

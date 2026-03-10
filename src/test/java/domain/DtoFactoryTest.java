@@ -2,8 +2,14 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.card.Card;
+import domain.card.Rank;
+import domain.card.Suit;
 import domain.dto.GameInitialInfoDto;
 import domain.dto.GameScoreResultDto;
+import domain.participant.Dealer;
+import domain.participant.Player;
+import domain.participant.Players;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -12,13 +18,13 @@ public class DtoFactoryTest {
     @Test
     void 초기정보를_생성하면_딜러는_한장만_공개된다() {
         Dealer dealer = new Dealer();
-        dealer.receiveCard(new Card(domain.constant.Rank.ACE, domain.constant.Suit.SPADE));
-        dealer.receiveCard(new Card(domain.constant.Rank.KING, domain.constant.Suit.HEART));
+        dealer.receiveCard(new Card(Rank.ACE, Suit.SPADE));
+        dealer.receiveCard(new Card(Rank.KING, Suit.HEART));
 
         Players players = new Players();
         Player player = new Player("pobi");
-        player.receiveCard(new Card(domain.constant.Rank.TWO, domain.constant.Suit.CLUB));
-        player.receiveCard(new Card(domain.constant.Rank.THREE, domain.constant.Suit.DIAMOND));
+        player.receiveCard(new Card(Rank.TWO, Suit.CLUB));
+        player.receiveCard(new Card(Rank.THREE, Suit.DIAMOND));
         players.add(player);
 
         List<GameInitialInfoDto> result = DtoFactory.toInitialInfo(dealer, players);
@@ -31,13 +37,13 @@ public class DtoFactoryTest {
     @Test
     void 초기정보를_생성하면_플레이어는_두장을_공개한다() {
         Dealer dealer = new Dealer();
-        dealer.receiveCard(new Card(domain.constant.Rank.ACE, domain.constant.Suit.SPADE));
-        dealer.receiveCard(new Card(domain.constant.Rank.KING, domain.constant.Suit.HEART));
+        dealer.receiveCard(new Card(Rank.ACE, Suit.SPADE));
+        dealer.receiveCard(new Card(Rank.KING, Suit.HEART));
 
         Players players = new Players();
         Player player = new Player("pobi");
-        player.receiveCard(new Card(domain.constant.Rank.TWO, domain.constant.Suit.CLUB));
-        player.receiveCard(new Card(domain.constant.Rank.THREE, domain.constant.Suit.DIAMOND));
+        player.receiveCard(new Card(Rank.TWO, Suit.CLUB));
+        player.receiveCard(new Card(Rank.THREE, Suit.DIAMOND));
         players.add(player);
 
         List<GameInitialInfoDto> result = DtoFactory.toInitialInfo(dealer, players);
@@ -49,13 +55,13 @@ public class DtoFactoryTest {
     @Test
     void 점수결과를_생성하면_딜러와_플레이어의_이름_승패_정보를_포함한다() {
         Dealer dealer = new Dealer();
-        dealer.receiveCard(new Card(domain.constant.Rank.TEN, domain.constant.Suit.SPADE));
-        dealer.receiveCard(new Card(domain.constant.Rank.SEVEN, domain.constant.Suit.HEART));
+        dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
+        dealer.receiveCard(new Card(Rank.SEVEN, Suit.HEART));
 
         Players players = new Players();
         Player player = new Player("pobi");
-        player.receiveCard(new Card(domain.constant.Rank.NINE, domain.constant.Suit.CLUB));
-        player.receiveCard(new Card(domain.constant.Rank.EIGHT, domain.constant.Suit.DIAMOND));
+        player.receiveCard(new Card(Rank.NINE, Suit.CLUB));
+        player.receiveCard(new Card(Rank.EIGHT, Suit.DIAMOND));
         players.add(player);
 
         List<GameScoreResultDto> result = DtoFactory.toScoreResults(dealer, players);

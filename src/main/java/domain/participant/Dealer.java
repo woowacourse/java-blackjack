@@ -1,4 +1,4 @@
-package domain;
+package domain.participant;
 
 public class Dealer extends Player {
     private final int DEALER_DRAW_CONDITION = 16;

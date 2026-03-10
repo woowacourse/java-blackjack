@@ -1,5 +1,7 @@
 package domain;
 
+import domain.card.Card;
+import domain.card.Deck;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

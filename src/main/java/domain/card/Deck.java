@@ -1,7 +1,4 @@
-package domain;
-
-import domain.constant.Rank;
-import domain.constant.Suit;
+package domain.card;
 
 import java.util.ArrayList;
 import java.util.Collections;
