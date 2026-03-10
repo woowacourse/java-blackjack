@@ -4,12 +4,12 @@ import static config.BlackjackGameConstant.PLAYER_NAME_LENGTH_LIMIT;
 
 import java.util.Objects;
 
-public record PlayerName(String name) {
+public record ParticipantName(String name) {
 
-    public static PlayerName from(String name) {
+    public static ParticipantName from(String name) {
         validateBlank(name);
         validateNameLength(name);
-        return new PlayerName(name);
+        return new ParticipantName(name);
     }
 
     private static void validateNameLength(String name) {
@@ -29,7 +29,7 @@ public record PlayerName(String name) {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        PlayerName that = (PlayerName) o;
+        ParticipantName that = (ParticipantName) o;
         return Objects.equals(name, that.name);
     }
 

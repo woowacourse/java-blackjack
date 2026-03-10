@@ -14,7 +14,7 @@ public class Dealer extends Participant{
     private final CardDeck cardDeck;
 
     private Dealer(CardDeck cardDeck) {
-        super(PlayerName.from(DEALER_DISPLAY_NAME));
+        super(ParticipantName.from(DEALER_DISPLAY_NAME));
         this.cardDeck = cardDeck;
     }
 

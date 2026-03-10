@@ -7,10 +7,10 @@ import java.util.Objects;
 
 public abstract class Participant {
 
-    protected final PlayerName name;
+    protected final ParticipantName name;
     protected final CardBundle cardBundle;
 
-    protected Participant(PlayerName name) {
+    protected Participant(ParticipantName name) {
         this.cardBundle = CardBundle.empty();
         this.name = name;
     }

@@ -10,7 +10,7 @@ import domain.card.CardDeckInitializer;
 import config.BlackjackGameConfiguration;
 import domain.participant.Dealer;
 import domain.participant.Player;
-import domain.participant.PlayerName;
+import domain.participant.ParticipantName;
 import domain.participant.Players;
 import domain.participant.dto.PlayerHandDto;
 import domain.participant.dto.PlayerResultDto;
@@ -91,7 +91,7 @@ public class BlackjackGame {
     }
 
 
-    private List<PlayerName> requestPlayerNames() {
+    private List<ParticipantName> requestPlayerNames() {
         return view.requestPlayerNames();
     }
 

@@ -17,7 +17,7 @@ public class PlayerTest {
                         Card.of(CardDenomination.TWO, CardEmblem.SPADE), Card.of(CardDenomination.THREE, CardEmblem.HEART))
                 .build();
         Dealer dealer = Dealer.of(cardDeck);
-        Player player = Player.from(PlayerName.from("test"));
+        Player player = Player.from(ParticipantName.from("test"));
 
         dealer.handOutCardToPlayer(player, DEFAULT_CARD_DRAW_COUNT);
         Card card = Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER);
@@ -31,7 +31,7 @@ public class PlayerTest {
                 .build();
 
         Dealer dealer = Dealer.of(cardDeck);
-        Player player = Player.from(PlayerName.from("test"));
+        Player player = Player.from(ParticipantName.from("test"));
 
         Assertions.assertThatThrownBy(() -> {
             dealer.handOutCardToPlayer(player, DEFAULT_CARD_DRAW_COUNT);
@@ -41,7 +41,7 @@ public class PlayerTest {
     @Test
     void 플레이어를_생성한다() {
         String name = "test1";
-        Player player = Player.from(PlayerName.from(name));
+        Player player = Player.from(ParticipantName.from(name));
 
         Assertions.assertThat(player.toDisplayMyName()).isEqualTo(name);
     }
@@ -51,7 +51,7 @@ public class PlayerTest {
         String overFiveLengthName = "testtest";
 
         Assertions.assertThatThrownBy(() -> {
-            Player.from(PlayerName.from(overFiveLengthName));
+            Player.from(ParticipantName.from(overFiveLengthName));
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -64,7 +64,7 @@ public class PlayerTest {
                 .build();
         CardBundle origin = CardBundle.of(List.of(clover, spade));
         Dealer dealer = Dealer.of(cardDeck);
-        Player player = Player.from(PlayerName.from("test"));
+        Player player = Player.from(ParticipantName.from("test"));
 
         CardBundle result = dealer.handOutCardToPlayer(player, 2);
 
@@ -81,7 +81,7 @@ public class PlayerTest {
                 .cards(cards)
                 .build();
         Dealer dealer = Dealer.of(cardDeck);
-        Player player = Player.from(PlayerName.from("test"));
+        Player player = Player.from(ParticipantName.from("test"));
 
         CardBundle result = dealer.handOutCardToPlayer(player, 3);
 

@@ -15,8 +15,8 @@ public class Players {
         this.playerList = playerList;
     }
 
-    public static Players from(List<PlayerName> playerNames) {
-        return new Players(playerNames.stream()
+    public static Players from(List<ParticipantName> participantNames) {
+        return new Players(participantNames.stream()
                 .map(Player::from)
                 .toList()
         );

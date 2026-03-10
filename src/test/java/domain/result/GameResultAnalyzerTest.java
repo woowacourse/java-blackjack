@@ -4,7 +4,7 @@ import static config.BlackjackGameConstant.INITIAL_CARD_DRAW_COUNT;
 
 import domain.card.*;
 import domain.participant.Dealer;
-import domain.participant.PlayerName;
+import domain.participant.ParticipantName;
 import domain.participant.Players;
 import domain.result.dto.GameResultAnalysisDto;
 import org.assertj.core.api.Assertions;
@@ -30,7 +30,7 @@ class GameResultAnalyzerTest {
         Dealer dealerScore4 = Dealer.of(cardDeck);
 
         dealerScore4.drawMySelf(INITIAL_CARD_DRAW_COUNT);
-        Players players = Players.from(List.of(PlayerName.from("p7"), PlayerName.from("p11")));
+        Players players = Players.from(List.of(ParticipantName.from("p7"), ParticipantName.from("p11")));
         players.giveInitialCardBundle(dealerScore4);
 
         GameResultAnalysisDto analysis = GameResultAnalyzer.analyze(players, dealerScore4);

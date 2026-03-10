@@ -10,7 +10,7 @@ class PlayersTest {
 
     @Test
     void 게임_시작시_플레이어들에게_카드를_두장씩_나누어준다() {
-        Players players = Players.from(List.of(PlayerName.from("송송"), PlayerName.from("라텔")));
+        Players players = Players.from(List.of(ParticipantName.from("송송"), ParticipantName.from("라텔")));
         Card cloverAce = Card.of(CardDenomination.ACE, CardEmblem.CLOVER);
         Card clover2 = Card.of(CardDenomination.TWO, CardEmblem.CLOVER);
         Card clover8 = Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER);

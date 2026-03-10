@@ -2,7 +2,7 @@ package view;
 
 import domain.result.dto.GameResultAnalysisDto;
 import domain.intention.DrawCardIntetion;
-import domain.participant.PlayerName;
+import domain.participant.ParticipantName;
 import domain.participant.dto.PlayerHandDto;
 import domain.participant.dto.PlayerResultDto;
 
@@ -25,15 +25,15 @@ public class ApplicationView {
         return new ApplicationView(reader, writer);
     }
 
-    public List<PlayerName> requestPlayerNames() {
+    public List<ParticipantName> requestPlayerNames() {
         return retry(this::readPlayerNames);
     }
 
-    private List<PlayerName> readPlayerNames() {
+    private List<ParticipantName> readPlayerNames() {
         writer.printInputNameGuideMessage();
         List<String> names = reader.readInputBasedOnSeparator(DELIMITER);
 
-        return names.stream().map(PlayerName::from).toList();
+        return names.stream().map(ParticipantName::from).toList();
     }
 
     public DrawCardIntetion requestDrawCardIntention(String playerName) {
