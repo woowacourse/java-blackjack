@@ -5,7 +5,7 @@ import java.util.List;
 public class AceScoreDiscriminator {
     private static final int BUST_CRITERIA = 21;
 
-    public int calculateAceCardsSum(List<Card> cards, int sumExceptAce) {
+    public static int calculateAceCardsSum(List<Card> cards, int sumExceptAce) {
         int aceCount = countAce(cards);
 
         int aceSum = 0;
@@ -20,14 +20,13 @@ public class AceScoreDiscriminator {
         return aceSum;
     }
 
-    private int countAce(List<Card> cards) {
+    private static int countAce(List<Card> cards) {
         int count = 0;
         for (Card card : cards) {
             if (card.isAce()) {
                 count++;
             }
         }
-
         return count;
     }
 }
