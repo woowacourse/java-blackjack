@@ -10,4 +10,7 @@ public class BlackjackConstant {
     public static final int MINIMUM_PLAYER_BOUND = 1;
     public static final int MAXIMUM_PLAYER_BOUND = 7;
     public static final int BLACKJACK_CARD_COUNT = 2;
+
+    public static final int NAME_MINIMUM_LENGTH = 2;
+    public static final int NAME_MAX_LENGTH = 10;
 }
