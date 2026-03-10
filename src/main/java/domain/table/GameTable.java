@@ -3,8 +3,10 @@ package domain.table;
 import domain.vo.RoundResult;
 import domain.card.Card;
 import domain.member.Members;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class GameTable {
 
@@ -13,8 +15,8 @@ public class GameTable {
 
     private final Members members;
 
-    public GameTable(List<String> playerNames) {
-        this.members = new Members(playerNames);
+    public GameTable(Map<String, Integer> players) {
+        this.members = new Members(players);
     }
 
     public void draw(String memberName, Card card) {
@@ -29,8 +31,32 @@ public class GameTable {
         return members.getValue(memberName) > BLACKJACK;
     }
 
-    public Map<String, RoundResult> checkGameResult() {
-        return members.judgeGameResults();
+    public boolean checkBlackjack() {
+        return members.getMemberNames()
+                .stream()
+                .filter(memberName -> !members.getDealerName().equals(memberName))
+                .anyMatch(memberName -> members.getValue(memberName) == BLACKJACK);
+    }
+
+    public void applyBlackjackBonus() {
+        members.getMemberNames()
+                .stream()
+                .filter(memberName -> !members.getDealerName().equals(memberName))
+                .forEach(members::applyBlackjackBonus);
+    }
+
+    public Map<String, Integer> checkGameResult() {
+        Map<String, Integer> result = new LinkedHashMap<>();
+        for (Entry<String, RoundResult> player : members.judgeGameResults().entrySet()) {
+            String playerName = player.getKey();
+            int bettingAmount = members.getBettingAmount(playerName);
+            result.put(
+                    player.getKey(),
+                    player.getValue()
+                            .calculateProfit(bettingAmount)
+            );
+        }
+        return result;
     }
 
     public List<String> getMemberNames() {
