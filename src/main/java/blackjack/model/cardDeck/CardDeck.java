@@ -6,6 +6,7 @@ import blackjack.model.card.Rank;
 import blackjack.model.card.Suit;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CardDeck {
 
@@ -24,7 +25,7 @@ public class CardDeck {
         List<Card> cards = Arrays.stream(Suit.values())
                 .flatMap(suit -> Arrays.stream(Rank.values())
                         .map(rank -> Card.opened(rank, suit)))
-                .toList();
+                .collect(Collectors.toList());
 
         return new CardDeck(cards, pickStrategy);
     }
