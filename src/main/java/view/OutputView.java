@@ -78,11 +78,8 @@ public class OutputView {
         System.out.println(playerResult.name() + CARD_TEXT + String.join(JOIN_DELIMITER, cardString) + SCORE_TEXT + playerResult.score());
     }
 
-    private static void printDealerResult(Map<MatchStatus, Integer> dealerWinning) {
-        System.out.print(DEALER_TEXT);
-        for(Entry<MatchStatus, Integer> matchStatus : dealerWinning.entrySet()) {
-            printStatusResult(matchStatus.getKey(), matchStatus.getValue());
-        }
+    private static void printDealerResult(Integer dealerWinning) {
+        System.out.print(DEALER_TEXT + dealerWinning);
         printNewLine();
     }
 
