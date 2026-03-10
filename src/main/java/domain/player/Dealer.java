@@ -8,7 +8,7 @@ public class Dealer extends Participant {
         super(name);
     }
 
-    public boolean isTotalScore16OrLess() {
+    public boolean isBelowDrawThreshold() {
         return getTotalScore() <= DEALER_REFERENCE_POINT;
     }
 

@@ -35,7 +35,7 @@ public class BlackJackController {
         playGame(game);
         checkDealerHand(game);
 
-        printParticipantsResult(game); // [실험: 배팅 코드 추가] 결과에 따른 값 계산
+        printParticipantsResult(game);
 
         determineFinalGameResult(game.getResult());
     }

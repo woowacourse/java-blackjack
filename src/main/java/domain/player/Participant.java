@@ -49,7 +49,6 @@ public class Participant {
     }
 
     public boolean isEqualName(String name) {
-        if(this.name.isEqualName(name)) return true;
-        return false;
+        return this.name.isEqualName(name);
     }
 }

@@ -40,7 +40,7 @@ public class Game {
     }
 
     public boolean shouldDealerDraw() {
-        return dealer.isTotalScore16OrLess();
+        return dealer.isBelowDrawThreshold();
     }
 
     public void addDealerCard() {
