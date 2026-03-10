@@ -5,7 +5,7 @@ import java.util.Arrays;
 public enum CardKind {
     CLOVER("클로버"),
     HEART("하트"),
-    DIAMOND ("다이아몬드"),
+    DIAMOND("다이아몬드"),
     SPADES("스페이드");
 
     private final String kind;
@@ -18,7 +18,7 @@ public enum CardKind {
         return kind;
     }
 
-    public static CardKind of(final String kind){
+    public static CardKind of(final String kind) {
         return Arrays.stream(values())
                 .filter(val -> val.kind.equals(kind))
                 .findFirst()
