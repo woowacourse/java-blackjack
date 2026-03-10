@@ -23,7 +23,7 @@ public class InputView {
     }
 
     public static String getBattingRequest(String name) {
-        System.out.print(name + BATTING_REQUEST_TEXT);
+        System.out.println(name + BATTING_REQUEST_TEXT);
 
         return getInput();
     }
