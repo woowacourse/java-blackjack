@@ -22,7 +22,7 @@ public class DealerTest {
     @Test
     void 핸드가_16_이하면_카드를_뽑는다() {
         Card card = new Card(Rank.FOUR, Pattern.CLOVER);
-        Dealer dealer = new Dealer(dummyHand);
+        Dealer dealer = new Dealer();
         int beforeSize = dealer.handSize();
 
         dealer.keepCard(card);
@@ -37,9 +37,9 @@ public class DealerTest {
         Card card1 = new Card(Rank.JACK, Pattern.CLOVER);
         Card card2 = new Card(Rank.QUEEN, Pattern.CLOVER);
         Card card3 = new Card(Rank.KING, Pattern.CLOVER);
-        dummyHand.addCard(card1);
-        dummyHand.addCard(card2);
-        Dealer dealer = new Dealer(dummyHand);
+        Dealer dealer = new Dealer();
+        dealer.keepCard(card1);
+        dealer.keepCard(card2);
         int beforeSize = dealer.handSize();
 
         dealer.keepCard(card3);

@@ -1,10 +1,7 @@
 package controller;
 
 import domain.card.CardDeck;
-import domain.participant.Dealer;
-import domain.participant.Hand;
-import domain.participant.Player;
-import domain.participant.Players;
+import domain.participant.*;
 import service.BlackJackService;
 import view.InputView;
 import view.OutputView;
@@ -22,7 +19,7 @@ public class BlackJackController {
     public void run() {
         CardDeck cardDeck = new CardDeck();
         Players players = new Players(getPlayer());
-        Dealer dealer = new Dealer(new Hand());
+        Dealer dealer = new Dealer();
 
         initGame(cardDeck, dealer, players);
 
@@ -40,7 +37,7 @@ public class BlackJackController {
         OutputView.inputPlayerMessage();
         List<String> names = new ArrayList<>(InputView.inputName());
         for (String name : names) {
-            players.add(new Player(name, new Hand()));
+            players.add(new Player(new ParticipantInfo(name, new Hand())));
         }
         return players;
     }

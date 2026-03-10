@@ -6,8 +6,8 @@ public class Dealer extends Participant {
     private static final int DEALER_MAX_HITTABLE_SCORE = 17;
     private static final String DEALER_NAME = "딜러";
 
-    public Dealer(Hand hand) {
-        super(DEALER_NAME, hand);
+    public Dealer() {
+        super(new ParticipantInfo(DEALER_NAME, new Hand()));
     }
 
     @Override

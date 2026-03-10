@@ -3,12 +3,10 @@ package domain.participant;
 import domain.card.Card;
 
 public abstract class Participant {
-    private final String name;
-    private final Hand hand;
+    private final ParticipantInfo participantInfo;
 
-    public Participant(String name, Hand hand) {
-        this.name = name;
-        this.hand = hand;
+    public Participant(ParticipantInfo participantInfo) {
+        this.participantInfo=participantInfo;
     }
 
     public abstract void keepCard(Card card);
@@ -16,18 +14,18 @@ public abstract class Participant {
     public abstract boolean canHit();
 
     public int handSize() {
-        return hand.getHandSize();
+        return participantInfo.handSize();
     }
 
     public int getTotalCardScore() {
-        return hand.calculateTotalScore();
+        return participantInfo.getTotalCardScore();
     }
 
     public String getName() {
-        return name;
+        return participantInfo.getName();
     }
 
     public Hand getHand() {
-        return hand;
+        return participantInfo.getHand();
     }
 }

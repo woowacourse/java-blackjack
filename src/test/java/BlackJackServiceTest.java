@@ -3,10 +3,7 @@ import domain.card.Pattern;
 import domain.card.Rank;
 import domain.game.Result;
 import domain.game.ResultInfo;
-import domain.participant.Dealer;
-import domain.participant.Hand;
-import domain.participant.Player;
-import domain.participant.Players;
+import domain.participant.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import service.BlackJackService;
@@ -25,10 +22,10 @@ public class BlackJackServiceTest {
 
     @BeforeEach
     void init() {
-        dealer = new Dealer(new Hand());
-        winPlayer = new Player("이김", new Hand());
-        defeatPlayer = new Player("짐", new Hand());
-        drawPlayer = new Player("비김", new Hand());
+        dealer = new Dealer();
+        winPlayer = new Player(new ParticipantInfo("이김", new Hand()));
+        defeatPlayer = new Player(new ParticipantInfo("짐", new Hand()));
+        drawPlayer = new Player(new ParticipantInfo("비김", new Hand()));
         dealer.keepCard(new Card(Rank.FIVE, Pattern.CLOVER));
         winPlayer.keepCard(new Card(Rank.SIX, Pattern.CLOVER));
         defeatPlayer.keepCard(new Card(Rank.FOUR, Pattern.CLOVER));
