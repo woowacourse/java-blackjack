@@ -2,7 +2,6 @@ package presentation.ui;
 
 import presentation.dto.GameResult;
 import domain.vo.RoundResult;
-import domain.card.Card;
 import presentation.dto.MemberStatus;
 import java.util.List;
 import java.util.Map;
@@ -53,26 +52,24 @@ public class OutputView {
         }
     }
 
-    private void printDistributeMessage(String dealerName, List<MemberStatus> playerStatuses) {
-        String playerNames = playerStatuses.stream()
-                .map(MemberStatus::playerName)
-                .filter(s -> !s.equals(dealerName))
+    private void printDistributeMessage(String dealerName, List<MemberStatus> memberStatuses) {
+        String playerNames = memberStatuses.stream()
+                .map(MemberStatus::memberName)
+                .filter(memberName -> !memberName.equals(dealerName))
                 .collect(Collectors.joining(", "));
         System.out.printf("딜러와 %s에게 2장을 나누었습니다.\n", playerNames);
     }
 
-    private void printMemberHandCard(MemberStatus playerStatus) {
+    private void printMemberHandCard(MemberStatus memberStatus) {
         System.out.println(
-                playerStatus.playerName()
+                memberStatus.memberName()
                         + ": "
-                        + playerStatus.cards().stream()
-                        .map(Card::getCardName)
-                        .collect(Collectors.joining(", "))
+                        + String.join(", ", memberStatus.cards())
         );
     }
 
-    private void printFinalMemberCardAndResult(MemberStatus status) {
-        String cards = status.cards().stream().map(Card::getCardName).collect(Collectors.joining(", "));
-        System.out.printf("%s카드: %s - 결과: %d\n", status.playerName(), cards, status.totalValue());
+    private void printFinalMemberCardAndResult(MemberStatus memberStatus) {
+        String cards = String.join(", ", memberStatus.cards());
+        System.out.printf("%s카드: %s - 결과: %d\n", memberStatus.memberName(), cards, memberStatus.totalValue());
     }
 }
