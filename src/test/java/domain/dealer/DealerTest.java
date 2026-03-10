@@ -3,6 +3,7 @@ package domain.dealer;
 import static config.BlackjackGameConstant.*;
 
 import domain.card.*;
+import domain.participant.Dealer;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 

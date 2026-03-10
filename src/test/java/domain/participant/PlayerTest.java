@@ -1,9 +1,8 @@
-package domain.player;
+package domain.participant;
 
 import static config.BlackjackGameConstant.DEFAULT_CARD_DRAW_COUNT;
 
 import domain.card.*;
-import domain.dealer.Dealer;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 

@@ -1,10 +1,8 @@
-package domain.player;
+package domain.participant;
 
 import domain.card.*;
-import domain.player.dto.PlayerHandDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import domain.dealer.Dealer;
 
 import java.util.List;
 

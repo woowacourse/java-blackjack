@@ -1,6 +1,6 @@
 package domain.result.dto;
 
-import domain.player.Player;
+import domain.participant.Player;
 import domain.result.GameResult;
 
 public record PlayerGameResult(String playerName, GameResult gameResult) {

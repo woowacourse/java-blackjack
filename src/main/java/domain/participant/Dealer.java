@@ -1,11 +1,10 @@
-package domain.dealer;
+package domain.participant;
 
 import static config.BlackjackGameConstant.*;
 
 import domain.card.Card;
 import domain.card.CardBundle;
 import domain.card.CardDeck;
-import domain.player.Player;
 
 import java.util.List;
 import java.util.stream.Stream;

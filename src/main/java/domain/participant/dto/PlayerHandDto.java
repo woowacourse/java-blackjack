@@ -1,7 +1,7 @@
-package domain.player.dto;
+package domain.participant.dto;
 
-import domain.dealer.Dealer;
-import domain.player.Player;
+import domain.participant.Dealer;
+import domain.participant.Player;
 
 import java.util.List;
 

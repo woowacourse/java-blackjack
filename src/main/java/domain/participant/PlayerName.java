@@ -1,4 +1,4 @@
-package domain.player;
+package domain.participant;
 
 import static config.BlackjackGameConstant.PLAYER_NAME_LENGTH_LIMIT;
 

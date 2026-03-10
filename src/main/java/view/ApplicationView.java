@@ -2,9 +2,9 @@ package view;
 
 import domain.result.dto.GameResultAnalysisDto;
 import domain.intention.DrawCardIntetion;
-import domain.player.PlayerName;
-import domain.player.dto.PlayerHandDto;
-import domain.player.dto.PlayerResultDto;
+import domain.participant.PlayerName;
+import domain.participant.dto.PlayerHandDto;
+import domain.participant.dto.PlayerResultDto;
 
 import java.util.List;
 import java.util.function.Supplier;

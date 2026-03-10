@@ -1,8 +1,7 @@
-package domain.player;
+package domain.participant;
 
-import domain.dealer.Dealer;
-import domain.player.dto.PlayerHandDto;
-import domain.player.dto.PlayerResultDto;
+import domain.participant.dto.PlayerHandDto;
+import domain.participant.dto.PlayerResultDto;
 
 import java.util.List;
 import java.util.Objects;

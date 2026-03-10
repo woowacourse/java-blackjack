@@ -8,12 +8,12 @@ import domain.intention.DrawCardIntetion;
 import domain.card.CardDeck;
 import domain.card.CardDeckInitializer;
 import config.BlackjackGameConfiguration;
-import domain.dealer.Dealer;
-import domain.player.Player;
-import domain.player.PlayerName;
-import domain.player.Players;
-import domain.player.dto.PlayerHandDto;
-import domain.player.dto.PlayerResultDto;
+import domain.participant.Dealer;
+import domain.participant.Player;
+import domain.participant.PlayerName;
+import domain.participant.Players;
+import domain.participant.dto.PlayerHandDto;
+import domain.participant.dto.PlayerResultDto;
 import view.ApplicationView;
 
 import java.util.List;

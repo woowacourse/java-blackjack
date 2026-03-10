@@ -1,10 +1,10 @@
 package domain.result;
 
-import domain.player.Player;
+import domain.participant.Player;
 import domain.result.dto.PlayerGameResult;
 import domain.result.dto.GameResultAnalysisDto;
-import domain.dealer.Dealer;
-import domain.player.Players;
+import domain.participant.Dealer;
+import domain.participant.Players;
 
 import java.util.List;
 

@@ -3,10 +3,9 @@ package domain.result;
 import static config.BlackjackGameConstant.INITIAL_CARD_DRAW_COUNT;
 
 import domain.card.*;
-import domain.dealer.Dealer;
-import domain.player.Player;
-import domain.player.PlayerName;
-import domain.player.Players;
+import domain.participant.Dealer;
+import domain.participant.PlayerName;
+import domain.participant.Players;
 import domain.result.dto.GameResultAnalysisDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
