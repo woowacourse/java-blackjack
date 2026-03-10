@@ -58,9 +58,10 @@ public class BlackjackController {
 
     private void playPlayerTurn(Game game, String name, Deck deck) {
         boolean shouldContinue = true;
-        while (shouldContinue && !game.isPlayerBust(name)) {
+        boolean isBust = false;
+        while (shouldContinue && !isBust) {
             shouldContinue = isPlayerWantHit(name);
-            game.playerHit(name, deck, shouldContinue);
+            isBust = game.playPlayerTurn(name, deck, shouldContinue);
             outputView.printPlayerCard(name, game.getPlayerCard(name));
         }
     }
@@ -71,8 +72,9 @@ public class BlackjackController {
     }
 
     private void playDealerTurn(Game game, Deck deck) {
-        while (!game.isDealerBust()) {
-            game.dealerHit(deck);
+        boolean isBust = false;
+        while (!isBust) {
+            isBust = game.playDealerTurn(deck);
             outputView.printDealerHit();
         }
     }

@@ -62,7 +62,7 @@ public class GameTest {
                     new Card(Rank.EIGHT, Suit.CLOVER)
             );
             //then
-            onePlayerGame.playerHit("피즈", deck, true);
+            onePlayerGame.playPlayerTurn("피즈", deck, true);
 
             assertThat(onePlayerGame.getPlayerCard("피즈").size()).isEqualTo(4);
         }
@@ -75,7 +75,7 @@ public class GameTest {
             int beforeCardCount = onePlayerGame.getPlayerCard("피즈").size();
 
             //when
-            onePlayerGame.playerHit("피즈", deck, false);
+            onePlayerGame.playPlayerTurn("피즈", deck, false);
 
             //then
             assertThat(onePlayerGame.getPlayerCard("피즈").size()).isEqualTo(beforeCardCount);
@@ -90,7 +90,7 @@ public class GameTest {
             dealer.addCard(new Card(Rank.FOUR, Suit.CLOVER));
             dealer.addCard(new Card(Rank.EIGHT, Suit.CLOVER));
             //then
-            onePlayerGame.dealerHit(deck);
+            onePlayerGame.playDealerTurn(deck);
 
             assertThat(dealer.getHand().size()).isEqualTo(4);
         }
@@ -176,7 +176,7 @@ public class GameTest {
         private void distributePlayerCards(Game game, String name, Card... cards) {
             Deck testDeck = new Deck(Arrays.asList(cards));
             for (int i = 0; i < cards.length; i++) {
-                game.playerHit(name, testDeck, true);
+                game.playPlayerTurn(name, testDeck, true);
             }
         }
 
@@ -186,8 +186,8 @@ public class GameTest {
             //given
             onePlayerGame.initializeGame(deck);
             //when
-            onePlayerGame.playerHit("피즈", deck, true);
-            onePlayerGame.dealerHit(deck);
+            onePlayerGame.playPlayerTurn("피즈", deck, true);
+            onePlayerGame.playDealerTurn(deck);
             //then
 
             List<Card> fizzCard = onePlayerGame.getPlayerCard("피즈");

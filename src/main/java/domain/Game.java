@@ -25,22 +25,17 @@ public class Game {
         dealer.addCards(List.of(deck.drawCard(), deck.drawCard()));
     }
 
-    public boolean isPlayerBust(String name) {
-        return !players.checkScoreUnderCriterion(name);
-    }
-
-    public boolean isDealerBust() {
-        return !dealer.checkScoreUnderCriterion();
-    }
-
-    public void playerHit(String name, Deck deck, boolean wantHit) {
+    public boolean playPlayerTurn(String name, Deck deck, boolean wantHit) {
         if (wantHit) {
             players.distributeCard(name, deck.drawCard());
         }
+        return !players.checkScoreUnderCriterion(name);
     }
 
-    public void dealerHit(Deck deck) {
+    public boolean playDealerTurn(Deck deck) {
         dealer.addCard(deck.drawCard());
+
+        return !dealer.checkScoreUnderCriterion();
     }
 
     public List<String> getAllPlayersName() {
