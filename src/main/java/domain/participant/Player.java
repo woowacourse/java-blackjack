@@ -1,5 +1,8 @@
 package domain.participant;
 
+import domain.MatchResult;
+import domain.card.Bet;
+
 import java.util.Objects;
 
 public class Player extends Participant {
@@ -7,6 +10,7 @@ public class Player extends Participant {
     private static final int MAX_NAME_LENGTH = 8;
 
     private final String name;
+    private Bet bet;
 
     public Player(String name) {
         validateNameLength(name);
@@ -19,6 +23,14 @@ public class Player extends Participant {
 
     public boolean isTie(Dealer dealer) {
         return getScore() == dealer.getScore();
+    }
+
+    public void placeBet(int amount) {
+        this.bet = new Bet(amount);
+    }
+
+    public int applyMatchResultToBet(MatchResult matchResult) {
+        return bet.calculateProfit(matchResult, isBlackJack());
     }
 
     private void validateNameLength(String name) {
