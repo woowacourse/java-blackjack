@@ -8,6 +8,7 @@ import domain.participant.Players;
 import dto.CardDto;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Supplier;
 import service.BlackjackService;
 import util.InputParser;
@@ -84,12 +85,19 @@ public class BlackjackController {
     }
 
     private <T> T retryOnException(Supplier<T> operation) {
-        while (true) {
-            try {
-                return operation.get();
-            } catch (IllegalArgumentException e) {
-                OutputView.printErrorMessage(e.getMessage());
-            }
+        Optional<T> result = tryOperation(operation);
+        while (result.isEmpty()) {
+            result = tryOperation(operation);
+        }
+        return result.orElseThrow();
+    }
+
+    private <T> Optional<T> tryOperation(Supplier<T> operation) {
+        try {
+            return Optional.of(operation.get());
+        } catch (IllegalArgumentException exception) {
+            OutputView.printErrorMessage(exception.getMessage());
+            return Optional.empty();
         }
     }
 }
