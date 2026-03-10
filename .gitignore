@@ -30,3 +30,11 @@ out/
 
 ### VS Code ###
 .vscode/
+
+.husky/
+package.json
+package-lock.json
+node_modules/
+
+checkstyle.sh
+style/
