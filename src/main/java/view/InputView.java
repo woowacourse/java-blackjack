@@ -5,7 +5,7 @@ import java.util.Scanner;
 import message.IOMessage;
 
 public class InputView {
-    private Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
 
     public String getParticipant() {
         System.out.println(IOMessage.ASK_GAME_PARTICIPANT.message());
