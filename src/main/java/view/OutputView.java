@@ -98,7 +98,7 @@ public class OutputView {
             result.add(dealerResult.winCount() + WIN);
         }
         if (dealerResult.tieCount() > 0) {
-            result.add(dealerResult.winCount() + TIE);
+            result.add(dealerResult.tieCount() + TIE);
         }
         if (dealerResult.loseCount() > 0) {
             result.add(dealerResult.loseCount() + LOSE);

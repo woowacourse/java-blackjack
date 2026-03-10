@@ -1,6 +1,5 @@
 package util;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -11,7 +10,7 @@ class InputParserTest {
     InputParser inputParser;
 
     @Test
-    void 이름을_입력하면_쉼표를_기준으로_분리한다() {
+    void 입력의_쉼표를_기준으로_문자열을_분리한다() {
         String input = "pobi,jason";
 
         List<String> names = InputParser.parseName(input);
@@ -22,7 +21,7 @@ class InputParserTest {
     }
 
     @Test
-    void 컴마가_맨앞에_있으면_컴마를_제거하고_분리한다() {
+    void 입력에_컴마가_맨앞에_있으면_컴마를_제거하고_분리한다() {
         String input = ",pobi,jason";
 
         List<String> names = InputParser.parseName(input);
@@ -33,7 +32,7 @@ class InputParserTest {
     }
 
     @Test
-    void 컴마가_중복되는_경우_제거하고_분리한다() {
+    void 입력에_컴마가_중복되는_경우_제거하고_분리한다() {
         String input = ",pobi,,,jason";
 
         List<String> names = inputParser.parseName(input);
@@ -57,5 +56,15 @@ class InputParserTest {
 
         assertThatThrownBy(() -> inputParser.parseName(input))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void 입력에_공백이_포함된_경우_공백을_제거한다(){
+        String input = "pobi  , jason";
+
+        List<String> names = InputParser.parseName(input);
+
+        assertThat(names.getFirst()).isEqualTo("pobi");
+        assertThat(names.getLast()).isEqualTo("jason");
     }
 }
