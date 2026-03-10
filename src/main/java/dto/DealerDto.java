@@ -12,7 +12,7 @@ public class DealerDto {
 
     public DealerDto(Card firstOpenCard, List<Card> dealerHand, int score) {
         this.firstOpenCard = firstOpenCard;
-        this.dealerHand = dealerHand;
+        this.dealerHand = List.copyOf(dealerHand);
         this.score = score;
     }
 

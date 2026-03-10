@@ -13,17 +13,22 @@ public class PlayersDto {
     private final Map<String, Integer> playersScore;
 
     public PlayersDto(Map<Player, List<Card>> playersHand, Map<Player, Integer> playersScore) {
-        this.playersHand = convertPlayerKeyToName(playersHand);
-        this.playersScore = convertPlayerKeyToName(playersScore);
-    }
-
-    private <T> Map<String, T> convertPlayerKeyToName(Map<Player, T> map) {
-        return map.entrySet()
-                .stream()
-                .collect(Collectors.toMap(
-                        entry -> entry.getKey().getName(),
-                        Map.Entry::getValue
-                ));
+        this.playersHand = Map.copyOf(
+                playersHand.entrySet()
+                        .stream()
+                        .collect(Collectors.toMap(
+                                entry1 -> entry1.getKey().getName(),
+                                entry1 -> List.copyOf(entry1.getValue())
+                        ))
+        );
+        this.playersScore = Map.copyOf(
+                playersScore.entrySet()
+                        .stream()
+                        .collect(Collectors.toMap(
+                                entry -> entry.getKey().getName(),
+                                Map.Entry::getValue
+                        ))
+        );
     }
 
     public Map<String, List<Card>> getPlayersHand() {
