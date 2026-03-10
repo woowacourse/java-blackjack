@@ -3,8 +3,8 @@ package util;
 import java.util.regex.Pattern;
 
 public class Validator {
-    private static final Pattern CONTAINS_DIGIT = Pattern.compile(".*\\d.*");
-    private static final Pattern VALID_INPUT = Pattern.compile("^[a-zA-Z가-힣,]+$");
+    private static final Pattern DIGIT_PATTERN = Pattern.compile(".*\\d.*");
+    private static final Pattern VALID_NAME_PATTERN = Pattern.compile("^[a-zA-Z가-힣,]+$");
 
     public void validateAnswer(String answer) {
         validateGetMoreEmptyInput(answer);
@@ -36,13 +36,13 @@ public class Validator {
     }
 
     static void validateNonLiteralInput(String participantsName) {
-        if (CONTAINS_DIGIT.matcher(participantsName).matches()) {
+        if (DIGIT_PATTERN.matcher(participantsName).matches()) {
             throw new IllegalArgumentException("[ERROR] 참가자 이름에는 숫자를 포함할 수 없습니다.");
         }
     }
 
     static void validateInvalidSymbolInput(String participantsName) {
-        if (!VALID_INPUT.matcher(participantsName).matches()) {
+        if (!VALID_NAME_PATTERN.matcher(participantsName).matches()) {
             throw new IllegalArgumentException("[ERROR] 참가자 이름에는 쉼표를 제외한 특수문자를 사용할 수 없습니다.");
         }
     }

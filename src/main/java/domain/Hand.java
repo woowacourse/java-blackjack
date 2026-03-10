@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Hand {
-    private static final Integer WINNING_SCORE_BOUNDARY = 21;
-    private static final Integer ACE_SUBTRACTION_POINT = 10;
-    private static final Integer DEALER_DEAL_AGAIN_BOUNDARY = 16;
+    private static final Integer BUST_THRESHOLD = 21;
+    private static final Integer ACE_HIGH_LOW_DIFFERENCE = 10;
+    private static final Integer DEALER_HIT_THRESHOLD = 16;
 
     private final List<Card> cards;
 
@@ -26,7 +26,7 @@ public class Hand {
     }
 
     public Boolean determineDealerDealMore() {
-        if (calculateTotalScore() <= DEALER_DEAL_AGAIN_BOUNDARY) {
+        if (calculateTotalScore() <= DEALER_HIT_THRESHOLD) {
             return true;
         }
         return false;
@@ -41,7 +41,7 @@ public class Hand {
                 .mapToInt(Card::getCardScore)
                 .sum();
 
-        if (totalScore > WINNING_SCORE_BOUNDARY) {
+        if (totalScore > BUST_THRESHOLD) {
             totalScore = adjustContainAce(totalScore);
         }
         return totalScore;
@@ -55,11 +55,11 @@ public class Hand {
     }
 
     private int adjustAce(int totalScore, Card card) {
-        if (totalScore <= WINNING_SCORE_BOUNDARY) {
+        if (totalScore <= BUST_THRESHOLD) {
             return totalScore;
         }
         if (card.isAceCard()) {
-            return totalScore - ACE_SUBTRACTION_POINT;
+            return totalScore - ACE_HIGH_LOW_DIFFERENCE;
         }
         return totalScore;
     }

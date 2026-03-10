@@ -3,18 +3,18 @@ package domain;
 import vo.GameResult;
 
 public class Dealer extends Participant{
-    private final static Integer WINNING_SCORE_BOUNDARY = 21;
+    private final static Integer BLACKJACK_SCORE = 21;
 
     public Boolean determineDealerDealMore() {
         return hand.determineDealerDealMore();
     }
 
     public GameResult judgeDealerResult(int userTotalScore) {
-        if (hand.calculateTotalScore() == WINNING_SCORE_BOUNDARY || userTotalScore > WINNING_SCORE_BOUNDARY) {
+        if (hand.calculateTotalScore() == BLACKJACK_SCORE || userTotalScore > BLACKJACK_SCORE) {
             return GameResult.WIN;
         }
 
-        if (hand.calculateTotalScore() > WINNING_SCORE_BOUNDARY || userTotalScore > hand.calculateTotalScore()) {
+        if (hand.calculateTotalScore() > BLACKJACK_SCORE || userTotalScore > hand.calculateTotalScore()) {
             return GameResult.LOSE;
         }
 
@@ -22,12 +22,12 @@ public class Dealer extends Participant{
     }
 
     public GameResult judgeUserWin(int userScore) {
-        if (userScore > WINNING_SCORE_BOUNDARY) {
+        if (userScore > BLACKJACK_SCORE) {
             return GameResult.LOSE;
         }
 
         int dealerScore = hand.calculateTotalScore();
-        if (userScore == WINNING_SCORE_BOUNDARY || dealerScore > WINNING_SCORE_BOUNDARY || userScore >= dealerScore) {
+        if (userScore == BLACKJACK_SCORE || dealerScore > BLACKJACK_SCORE || userScore >= dealerScore) {
             return GameResult.WIN;
         }
 

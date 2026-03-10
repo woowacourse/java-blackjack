@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import vo.GameResult;
 
 public class Participants {
-    private static final Integer MAXIMUM_NUMBER_OF_PARTICIPANTS = 16;
+    private static final Integer MAX_PLAYER_COUNT = 16;
 
     private final List<User> participants;
     private final Dealer dealer;
@@ -22,7 +22,7 @@ public class Participants {
     }
 
     static void validateParticipantsNumbers(List<String> parsedParticipantsName) {
-        if (parsedParticipantsName.size() > MAXIMUM_NUMBER_OF_PARTICIPANTS) {
+        if (parsedParticipantsName.size() > MAX_PLAYER_COUNT) {
             throw new IllegalArgumentException("[ERROR] 최대 참가 인원은 16명 이하여야 합니다.");
         }
     }
