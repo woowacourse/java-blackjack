@@ -9,6 +9,9 @@ public class InputView {
     private static final String DELIMITER = ",";
 
     private static final String READ_PLAYER_NAMES_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
+    private static final String BLANK_NAME_MESSAGE = "이름은 공백일 수 없습니다.";
+    private static final String DUPLICATE_NAME_MESSAGE = "중복된 이름은 입력할 수 없습니다.";
+    private static final String EMPTY_NAMES_MESSAGE = "이름을 1개 이상 입력해야 합니다.";
 
     private static final String READ_PLAYER_BETTING_MONEY_MESSAGE = "%n%s의 배팅 금액은?%n";
     private static final String INVALID_BETTING_AMOUNT_MESSAGE = "배팅 금액은 숫자여야 합니다.";
@@ -21,10 +24,14 @@ public class InputView {
     private InputView() {}
 
     public static List<String> readPlayerNames() {
-        System.out.println(READ_PLAYER_NAMES_MESSAGE);
-        return Arrays.stream(ConsoleInput.readLine().split(DELIMITER))
-                .map(String::strip)
-                .toList();
+        return ConsoleInput.readWithRetry(() -> {
+            System.out.println(READ_PLAYER_NAMES_MESSAGE);
+            final List<String> names = Arrays.stream(ConsoleInput.readLine().split(DELIMITER))
+                    .map(String::strip)
+                    .toList();
+            validatePlayerNames(names);
+            return names;
+        });
     }
 
     public static List<BettingMoney> readBettingMonies(final List<String> names) {
@@ -43,6 +50,18 @@ public class InputView {
             validateHitDecision(input);
             return input.equals(HIT_INPUT);
         });
+    }
+
+    private static void validatePlayerNames(final List<String> names) {
+        if (names.isEmpty()) {
+            throw new IllegalArgumentException(EMPTY_NAMES_MESSAGE);
+        }
+        if (names.stream().anyMatch(String::isBlank)) {
+            throw new IllegalArgumentException(BLANK_NAME_MESSAGE);
+        }
+        if (names.size() != names.stream().distinct().count()) {
+            throw new IllegalArgumentException(DUPLICATE_NAME_MESSAGE);
+        }
     }
 
     private static int parseBettingAmount(final String input) {
