@@ -1,6 +1,8 @@
 package view;
 
 import domain.player.WinStatus;
+import dto.DealerResult;
+import dto.PlayerResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,27 +10,16 @@ import java.util.Map;
 
 public class ResultView {
     // 딜러와 플레이어들의 카드 보유 내역
-    public static void printStartPlayersCards(Map<String, List<String>> playerCardList) {
+    public static void printStartPlayersCards(DealerResult dealerResult, List<PlayerResult> playerResults) {
         List<String> playerNames = new ArrayList<>();
-        for (String playerName : playerCardList.keySet()) {
-            if (playerName.equals("딜러")) {
-                continue;
-            }
-            playerNames.add(playerName);
+        for (PlayerResult playerResult : playerResults) {
+            playerNames.add(playerResult.name());
         }
+        System.out.println("딜러와 " + String.join(", ", playerNames) + "에게 2장을 나누었습니다.");
+        System.out.println("딜러카드: " + dealerResult.cardList().getFirst());
 
-        System.out.println("\n딜러와 " + String.join(", ", playerNames) +"에게 2장을 나누었습니다.");
-
-        for (String playerName : playerCardList.keySet()) {
-            List<String> cards = playerCardList.get(playerName);
-
-            if (playerName.equals("딜러")) {
-                System.out.println(playerName + "카드: " + cards.get(0));
-
-                continue;
-            }
-
-            System.out.println(playerName + "카드: " + String.join(", ", cards));
+        for (PlayerResult playerResult : playerResults) {
+            System.out.println(playerResult.name() + "카드: " + String.join(", ", playerResult.cardList()));
         }
         System.out.println();
     }
@@ -39,18 +30,24 @@ public class ResultView {
     }
 
     public static void printDealerOneMoreCard() {
-        System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println();
+        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
     // 카드 합산 결과
-    public static void printCardSumResult(Map<String, List<String>> playerCardList, Map<String, Integer> playerTotalScore) {
-        System.out.println();
-        for (String playerName : playerCardList.keySet()) {
-            List<String> cards = playerCardList.get(playerName);
-            Integer score = playerTotalScore.get(playerName);
-            System.out.println(playerName + "카드: " + String.join(", ", cards) + " - 결과: " + score);
+    public static void printCardSumResult(List<PlayerResult> playerCardList, Map<String, Integer> playerTotalScore) {
+        for (PlayerResult playerResult : playerCardList) {
+            List<String> cards = playerResult.cardList();
+            Integer score = playerTotalScore.get(playerResult.name());
+            System.out.println(playerResult.name() + "카드: " + String.join(", ", cards) + " - 결과: " + score);
         }
         System.out.println();
+    }
+
+    public static void printCardSumResult(DealerResult dealerResult) {
+        System.out.println();
+        List<String> dealerCards = dealerResult.cardList();
+        System.out.println(dealerResult.name() + "카드: " + String.join(", ", dealerCards) + " - 결과: " + dealerResult.score());
     }
 
     public static void printResult(Map<String, WinStatus> playerResult) {
