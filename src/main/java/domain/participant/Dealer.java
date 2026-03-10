@@ -30,7 +30,7 @@ public class Dealer extends Participant {
         int dealerProfit = 0;
 
         for (Integer playerProfit : playersProfitResult.values()) {
-            dealerProfit += playerProfit;
+            dealerProfit -= playerProfit;
         }
 
         return dealerProfit;
