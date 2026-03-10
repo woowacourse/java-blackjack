@@ -1,7 +1,6 @@
 package config;
 
 import controller.BlackjackController;
-import converter.BlackjackConverter;
 import service.BlackjackService;
 import view.InputView;
 import view.OutputView;
@@ -13,7 +12,7 @@ public class AppConfig {
     }
 
     public BlackjackService blackjackService() {
-        return new BlackjackService(blackjackConverter());
+        return new BlackjackService();
     }
 
     private InputView inputView() {
@@ -22,9 +21,5 @@ public class AppConfig {
 
     private OutputView outputView() {
         return new OutputView();
-    }
-
-    public BlackjackConverter blackjackConverter() {
-        return new BlackjackConverter();
     }
 }
