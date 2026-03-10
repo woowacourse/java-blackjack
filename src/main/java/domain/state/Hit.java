@@ -17,4 +17,3 @@ public class Hit extends State {
         return !hitStrategy.canHit(this);
     }
 }
-

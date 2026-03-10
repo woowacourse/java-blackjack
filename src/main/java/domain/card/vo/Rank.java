@@ -1,4 +1,4 @@
-package domain.card;
+package domain.card.vo;
 
 public enum Rank {
     ACE(1, "A"),

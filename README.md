@@ -74,11 +74,11 @@
     - 추후 idx 값을 주입받는다.
 
 - 동일한 호출이 하위 클래스에서 상위 클래스로 반복될것 같다면 캡슐화가 깨졌는지 확인하자.
-  ex) Card에서 domain.card.Rank.equals()를 통해 FaceCard(J/Q/K) 확인 -> 해당 값을 가장 잘 아는 Rank에게 책임 맡김
+  ex) Card에서 domain.card.vo.Rank.equals()를 통해 FaceCard(J/Q/K) 확인 -> 해당 값을 가장 잘 아는 Rank에게 책임 맡김
 - domain.card.Hand 에서 카드 값의 총합을 반환하는 메서드를 만들려고 했다.
     - 하나의 카드 값을 반환하는 메서드를 만들었다.
-    - domain.card.Hand <- domain.card.Card <- domain.card.Rank 순으로 값을 포장만 하고 넘기는 케이스가 발생
-    - domain.card.Card 값자체를 가장 잘 아는 Card에게 책임을 넘기고 domain.card.Hand 는 함수를 사용했다.
+    - domain.card.Hand <- domain.card.vo.Card <- domain.card.vo.Rank 순으로 값을 포장만 하고 넘기는 케이스가 발생
+    - domain.card.vo.Card 값자체를 가장 잘 아는 Card에게 책임을 넘기고 domain.card.Hand 는 함수를 사용했다.
 - 테스트 주도 개발에서 테스트를 안한 케이스
   enum과 같이 get만을 이용한 상수는 테스트를 진행하지 않았다.
   이유: 상수이기 때문에 테스트 할 필요 없다. (로직이 아니다.)

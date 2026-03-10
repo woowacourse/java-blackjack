@@ -1,5 +1,6 @@
 package domain.card;
 
+import domain.card.vo.Card;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashSet;

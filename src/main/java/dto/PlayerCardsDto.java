@@ -1,6 +1,6 @@
 package dto;
 
-import domain.card.Card;
+import domain.card.vo.Card;
 import domain.state.State;
 import java.util.List;
 

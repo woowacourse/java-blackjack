@@ -1,9 +1,9 @@
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.card.Card;
 import domain.card.Deck;
-import domain.card.Rank;
-import domain.card.Suit;
+import domain.card.vo.Card;
+import domain.card.vo.Rank;
+import domain.card.vo.Suit;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

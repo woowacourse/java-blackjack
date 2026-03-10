@@ -1,4 +1,4 @@
-package domain.card;
+package domain.card.vo;
 
 public record Card(Rank rank, Suit suit) {
     public boolean isAce() {

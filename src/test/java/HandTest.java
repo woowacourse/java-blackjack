@@ -1,9 +1,9 @@
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.card.Card;
 import domain.card.Hand;
-import domain.card.Rank;
-import domain.card.Suit;
+import domain.card.vo.Card;
+import domain.card.vo.Rank;
+import domain.card.vo.Suit;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;

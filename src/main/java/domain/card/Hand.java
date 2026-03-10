@@ -1,5 +1,6 @@
 package domain.card;
 
+import domain.card.vo.Card;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

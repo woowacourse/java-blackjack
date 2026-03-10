@@ -1,7 +1,7 @@
 package domain.participants;
 
-import domain.card.Card;
 import domain.card.Hand;
+import domain.card.vo.Card;
 import domain.hitStrategy.HitStrategy;
 import domain.state.State;
 import java.util.List;

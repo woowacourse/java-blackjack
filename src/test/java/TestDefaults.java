@@ -1,9 +1,9 @@
-import domain.card.Card;
 import domain.card.DeckMaker;
 import domain.card.Hand;
 import domain.card.OneDeckMaker;
-import domain.card.Rank;
-import domain.card.Suit;
+import domain.card.vo.Card;
+import domain.card.vo.Rank;
+import domain.card.vo.Suit;
 import java.util.ArrayList;
 import java.util.List;
 

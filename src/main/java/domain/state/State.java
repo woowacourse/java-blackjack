@@ -1,8 +1,8 @@
 package domain.state;
 
-import domain.card.Card;
 import domain.card.Deck;
 import domain.card.Hand;
+import domain.card.vo.Card;
 import domain.participants.Participant;
 import java.util.List;
 
@@ -43,4 +43,3 @@ public abstract class State {
         return hand.getCards();
     }
 }
-
