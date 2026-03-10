@@ -20,8 +20,7 @@ public class BlackjackService {
 
         for (int i = 0; i < drawCount; i++) {
             int cardIndex = cardShuffler.getRandomCardIndex(deck.getDeckSize());
-            cards.add(deck.getCardOf(cardIndex));
-            deck.removeCardOf(cardIndex);
+            cards.add(deck.draw(cardIndex));
         }
 
         return cards;

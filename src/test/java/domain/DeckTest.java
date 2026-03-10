@@ -1,8 +1,11 @@
 package domain;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -24,6 +27,21 @@ class DeckTest {
                 assertThat(cards).contains(new Card(cardSuit, cardRank));
             }
         }
+    }
+
+    @Test
+    @DisplayName("카드를 뽑으면 덱에서 카드 한장이 줄어든다.")
+    public void 카드_뽑으면_한장_줄어듦_성공() throws Exception {
+        // given
+        Deck deck = Deck.initCardDeck();
+        int originDeckSize = deck.getDeckSize();
+
+        // when
+        Card card = deck.draw(0);
+
+        // then
+        assertThat(card).isNotNull();
+        assertThat(deck.getDeckSize()).isEqualTo(originDeckSize - 1);
     }
 
 }

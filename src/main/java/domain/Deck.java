@@ -24,9 +24,9 @@ public class Deck {
         }
     }
 
-    public void removeCardOf(int index) {
-        cardDeck.remove(index);
-    }
+//    public void removeCardOf(int index) {
+//        cardDeck.remove(index);
+//    }
 
     public List<Card> getCardDeck() {
         return List.copyOf(cardDeck);
@@ -36,7 +36,11 @@ public class Deck {
         return cardDeck.size();
     }
 
-    public Card getCardOf(int index) {
-        return cardDeck.get(index);
+//    public Card getCardOf(int index) {
+//        return cardDeck.get(index);
+//    }
+
+    public Card draw(int index) {
+        return cardDeck.remove(index);
     }
 }
