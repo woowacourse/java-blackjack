@@ -7,7 +7,7 @@ public class Players implements Iterable<Player> {
     private final List<Player> players;
 
     public Players(List<Player> players) {
-        this.players = players;
+        this.players = List.copyOf(players);
     }
 
     @Override
