@@ -12,7 +12,6 @@ public class ScoreCalculator {
         return applyAceLogic(baseSum, aceCount);
     }
 
-
     private static int calculateBaseSum(List<Card> cards) {
         int sum = 0;
         for (Card card : cards) {
