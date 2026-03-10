@@ -9,6 +9,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
+    private final OutputViewFormatter outputViewFormatter;
+
+    public OutputView(OutputViewFormatter outputViewFormatter) {
+        this.outputViewFormatter = outputViewFormatter;
+    }
+
     public void printHandOutMessage(PlayersDto playersDto) {
         String playersName = playersDto.playersDto().stream()
                 .map(PlayerDto::name)
@@ -18,11 +24,12 @@ public class OutputView {
     }
 
     public void printDealerCardStatus(ResultDto resultDto) {
-        System.out.printf("%n딜러카드: %s%n", getDealerCardStatus(resultDto));
+        System.out.print(System.lineSeparator());
+        System.out.print(outputViewFormatter.formatDealerCardStatus(resultDto));
     }
 
     public void printPlayerCardStatus(PlayerDto playerDto) {
-        System.out.printf("%s카드: %s%n", playerDto.name(), getCardStatusFormat(playerDto.resultDto().cards()));
+        System.out.print(outputViewFormatter.formatPlayerCardStatus(playerDto));
     }
 
     public void printCardStatus(PlayersDto playersDto, ResultDto resultDto) {
@@ -31,14 +38,6 @@ public class OutputView {
             printPlayerCardStatus(playerDto);
         }
         System.out.print(System.lineSeparator());
-    }
-
-    private String getDealerCardStatus(ResultDto resultDto) {
-        return resultDto.cards().getFirst();
-    }
-
-    private String getCardStatusFormat(List<String> cards) {
-        return String.join(", ", cards);
     }
 
     public void printAddDealerCardMessage() {
@@ -51,27 +50,19 @@ public class OutputView {
     }
 
     private void printDealerCardResult(ResultDto resultDto) {
-        System.out.printf("%n딜러카드: %s - 결과: %d",
-                getCardStatusFormat(resultDto.cards()),
-                resultDto.score());
+        System.out.print(outputViewFormatter.formatCardResult("딜러", resultDto));
     }
 
     private void printPlayersCardResult(PlayersDto playersDto) {
         for (PlayerDto playerDto : playersDto.playersDto()) {
-            printPlayerCardResult(playerDto);
+            System.out.print(outputViewFormatter.formatCardResult(playerDto.name(), playerDto.resultDto()));
         }
-    }
-
-    private void printPlayerCardResult(PlayerDto playerDto) {
-        System.out.printf("%n%s카드: %s - 결과: %d", playerDto.name(),
-                getCardStatusFormat(playerDto.resultDto().cards()),
-                playerDto.resultDto().score());
     }
 
     public void printTotalResult(DealerFinalResultDto dealerFinalResultDto,
                                         TotalFinalResultsDto totalFinalResultsDto) {
         System.out.println("\n\n## 최종 승패");
-        System.out.print(dealerFinalResultDto.result());
+        System.out.print(outputViewFormatter.formatDealerResult(dealerFinalResultDto));
         for (String finalResult : totalFinalResultsDto.totalResults()) {
             System.out.print(finalResult);
         }
