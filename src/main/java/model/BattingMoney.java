@@ -2,6 +2,7 @@ package model;
 
 import constant.MoneyErrorCode;
 import exception.GameException;
+import java.math.BigInteger;
 
 public class BattingMoney {
 
@@ -18,11 +19,16 @@ public class BattingMoney {
     }
 
     private int parse(String battingMoney) {
+        BigInteger parsed;
         try {
-            return Integer.parseInt(battingMoney);
+            parsed = new BigInteger(battingMoney);
         } catch (NumberFormatException e) {
             throw new GameException(MoneyErrorCode.MONEY_IS_NOT_NUMBER);
         }
+        if (parsed.compareTo(BigInteger.valueOf(Integer.MAX_VALUE)) > 0) {
+            throw new GameException(MoneyErrorCode.MONEY_IS_OUT_OF_RANGE);
+        }
+        return parsed.intValue();
     }
 
     private void validate(int battingMoney) {
