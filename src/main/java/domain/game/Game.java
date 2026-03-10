@@ -74,4 +74,3 @@ public class Game {
         return new GamblersGameResult(dealer.getTotalScore(), gamblers.getParticipantTotalScore());
     }
 }
-
