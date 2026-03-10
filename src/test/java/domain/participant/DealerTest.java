@@ -84,4 +84,24 @@ class DealerTest {
         Assertions.assertEquals(dealerResult.get(MatchResult.DRAW), 1);
         Assertions.assertEquals(dealerResult.get(MatchResult.WIN), 1);
     }
+
+    @Test
+    @DisplayName("플레이어의 수익 결과에 따른 딜러의 수익을 계산한다.")
+    void calculateProfitResultTest() {
+        // given
+        Dealer dealer = new Dealer();
+        Map<Player, Integer> playerProfitResults = new HashMap<>();
+
+        playerProfitResults.put(new Player("pobi"), 20000);
+        playerProfitResults.put(new Player("sisi"), 1000);
+        playerProfitResults.put(new Player("ao"), -1000);
+        playerProfitResults.put(new Player("james"), 15000);
+        playerProfitResults.put(new Player("lala"), -10000);
+
+        // when
+        ;
+
+        // then
+        Assertions.assertEquals(dealer.calculateProfitResult(playerProfitResults), -25000);
+    }
 }
