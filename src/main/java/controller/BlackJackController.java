@@ -26,8 +26,7 @@ public class BlackJackController {
 
     public void run() {
         // 사용자 이름 입력 후 초기 카드 분배 출력
-        String inputPlayerNames = inputView.inputPlayerNames();
-        InputValidator.validatePlayerNames(inputPlayerNames);
+        String inputPlayerNames = inputPlayers();
         InitialDto initialDto = blackJackService.createPlayer(stringParser.splitToDelimiter(inputPlayerNames, ","));
         outputView.outputInitialMessage(initialDto);
 
@@ -44,8 +43,7 @@ public class BlackJackController {
     public void getAdditionalCard(Player player) {
         if (player.isBurst()) return;
 
-        String isTrue = inputView.inputAdditionalCard(player.getName());
-        InputValidator.validateAdditionalCard(isTrue);
+        String isTrue = readYesOrNo(player);
         if (isTrue.equals("y")) {
             PlayerResultDto playerResultDto = blackJackService.additionalCard(player);
             outputView.outputPlayerDeckDtos(playerResultDto);
@@ -60,5 +58,28 @@ public class BlackJackController {
             outputView.outputDealerAdditionCardMessage();
             getAdditionalDealerCard();
         }
+    }
+
+    public String inputPlayers() {
+        String inputPlayerNames = inputView.inputPlayerNames();
+        try {
+            InputValidator.validatePlayerNames(inputPlayerNames);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            inputPlayers();
+        }
+        return inputPlayerNames;
+    }
+
+    public String readYesOrNo(Player player) {
+        String isTrue = inputView.inputAdditionalCard(player.getName());
+        try {
+            InputValidator.validateAdditionalCard(isTrue);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            readYesOrNo(player);
+        }
+
+        return isTrue;
     }
 }
