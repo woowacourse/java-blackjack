@@ -1,4 +1,4 @@
-package domain;
+package domain.deck;
 
 import domain.card.Card;
 import domain.card.Rank;
@@ -15,7 +15,7 @@ public class Deck {
         this.cards = cards;
     }
 
-    public static List<Card> createDeck() {
+    public static Deck createDeck(CardShuffleStrategy cardShuffleStrategy) {
         List<Card> cards = Arrays.stream(Rank.values())
                 .flatMap(
                         rank -> Arrays.stream(Suit.values())
@@ -23,9 +23,9 @@ public class Deck {
                 )
                 .collect(Collectors.toCollection(ArrayList::new));
 
-        Collections.shuffle(cards);
+        cardShuffleStrategy.shuffle(cards);
 
-        return cards;
+        return new Deck(cards);
     }
 
     public int size() {

@@ -3,6 +3,7 @@ package domain;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
+import domain.game.WinningStatus;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import org.junit.jupiter.api.Test;

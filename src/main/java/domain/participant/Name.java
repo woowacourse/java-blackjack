@@ -1,4 +1,4 @@
-package domain;
+package domain.participant;
 
 public class Name {
     public static final int NAME_LENGTH_THRESHOLD = 5;

@@ -1,6 +1,6 @@
 package dto;
 
-import domain.WinningStatus;
+import domain.game.WinningStatus;
 
 public record PlayerResultInfo(
         String name,

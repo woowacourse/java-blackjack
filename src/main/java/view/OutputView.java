@@ -1,7 +1,7 @@
 package view;
 
-import domain.GameResult;
-import domain.WinningStatus;
+import domain.game.GameResult;
+import domain.game.WinningStatus;
 import domain.card.Card;
 import domain.participant.Dealer;
 import domain.participant.Participant;

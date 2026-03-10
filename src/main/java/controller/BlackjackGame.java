@@ -1,7 +1,10 @@
 package controller;
 
-import domain.*;
 import domain.card.Card;
+import domain.deck.CardShuffleStrategy;
+import domain.deck.Deck;
+import domain.deck.RandomShuffleStrategy;
+import domain.game.GameResult;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
@@ -33,8 +36,8 @@ public class BlackjackGame {
         Players players = new Players(parsedName);
         Dealer dealer = new Dealer();
 
-        List<Card> cards = Deck.createDeck();
-        Deck deck = new Deck(cards);
+        CardShuffleStrategy cardShuffleStrategy = new RandomShuffleStrategy();
+        Deck deck = Deck.createDeck(cardShuffleStrategy);
 
         playGame(players, dealer, deck);
     }

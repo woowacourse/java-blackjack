@@ -1,5 +1,7 @@
 package domain;
 
+import domain.game.GameResult;
+import domain.game.WinningStatus;
 import domain.participant.Dealer;
 import domain.participant.Players;
 import dto.DealerResultInfo;
