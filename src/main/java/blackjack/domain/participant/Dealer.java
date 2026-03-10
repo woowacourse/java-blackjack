@@ -28,12 +28,12 @@ public class Dealer extends Participant {
         players.getPlayers().forEach(player -> player.receiveCard(deck.draw()));
     }
 
-    public void dealCardTo(final Player player) {
-        player.receiveCard(deck.draw());
-    }
-
     public void drawAndReceive() {
         receiveCard(deck.draw());
+    }
+
+    public void dealCardTo(final Player player) {
+        player.receiveCard(deck.draw());
     }
 
     @Override
