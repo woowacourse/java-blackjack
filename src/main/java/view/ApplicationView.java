@@ -11,7 +11,7 @@ import java.util.function.Supplier;
 
 public class ApplicationView {
 
-    private final String DELIMITER = ",";
+    private static final String DELIMITER = ",";
 
     private final InputReader reader;
     private final OutputWriter writer;
@@ -72,9 +72,9 @@ public class ApplicationView {
 
     private void printAllPlayersResult(GameResultAnalysisDto resultAnalysis) {
         writer.printFinalResultOfDealer(resultAnalysis.getDealerResult());
-        resultAnalysis.playerGameResults().forEach(player -> {
-            writer.printFinalResultOfPlayer(player.playerName(), player.gameResult().displayName());
-        });
+        resultAnalysis.playerGameResults().forEach(player ->
+                writer.printFinalResultOfPlayer(player.playerName(), player.gameResult().displayName())
+        );
     }
 
     public void printFinalResultMessage(PlayerResultDto playerResult) {
