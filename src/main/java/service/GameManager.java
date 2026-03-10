@@ -5,13 +5,15 @@ import domain.card.Deck;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
-import dto.DealerHandDto;
+import dto.DealerDto;
 import dto.GameResultDto;
-import dto.PlayersHandDto;
+import dto.PlayersDto;
+import dto.ProfitResultDto;
 
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class GameManager {
 
@@ -33,6 +35,10 @@ public class GameManager {
                 .toList();
 
         this.players = new Players(players);
+    }
+
+    public void forEachPlayerPlaceBet(Function<String, Integer> action) {
+        players.placeBetAllPlayers(action);
     }
 
     public void dealInitialCardsToParticipants() {
@@ -58,18 +64,26 @@ public class GameManager {
         return dealer.shouldHit();
     }
 
-    public DealerHandDto toDealerHandDto() {
-        return new DealerHandDto(dealer.getFirstCard(), dealer.getCards(), dealer.getScore());
+    public DealerDto toDealerDto() {
+        return new DealerDto(dealer.getFirstCard(), dealer.getCards(), dealer.getScore());
     }
 
-    public PlayersHandDto toPlayersHandDto() {
-        return new PlayersHandDto(players.getPlayersHand(), players.getPlayersScore());
+    public PlayersDto toPlayersDto() {
+        return new PlayersDto(players.getPlayersHand(), players.getPlayersScore());
     }
 
-    public GameResultDto calculateResults() {
-        Map<Player, MatchResult> playersResult = players.calculateResult(dealer);
-        Map<MatchResult, Integer> dealerResult = dealer.calculateResult(playersResult);
+    public GameResultDto getGameResults() {
+        Map<Player, MatchResult> playersMatchResult = players.calculateMatchResult(dealer);
+        Map<MatchResult, Integer> dealerMatchResult = dealer.calculateMatchResult(playersMatchResult);
 
-        return new GameResultDto(dealerResult, playersResult);
+        return new GameResultDto(dealerMatchResult, playersMatchResult);
+    }
+
+    public ProfitResultDto getProfitResults() {
+        Map<Player, MatchResult> playersMatchResult = players.calculateMatchResult(dealer);
+        Map<Player, Integer> playersProfitResult = players.calculateProfitResult(playersMatchResult);
+        int dealerProfitResult = dealer.calculateProfitResult(playersProfitResult);
+
+        return new ProfitResultDto(dealerProfitResult, playersProfitResult);
     }
 }
