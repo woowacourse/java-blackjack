@@ -6,10 +6,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
-//    딜러와 pobi, jason에게 2장을 나누었습니다.
-//    딜러카드: 3다이아몬드
-//    pobi카드: 2하트, 8스페이드
-//    jason카드: 7클로버, K스페이드
 
     public void outputInitialMessage(InitialDto initialDto) {
         StringBuilder stringBuilder = new StringBuilder();

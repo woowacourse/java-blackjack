@@ -1,10 +1,7 @@
 package dto;
 
 import domain.model.Dealer;
-import domain.model.Deck;
 import domain.model.Player;
-import domain.service.CardDistributor;
-import java.util.ArrayList;
 import java.util.List;
 
 public record InitialDto (

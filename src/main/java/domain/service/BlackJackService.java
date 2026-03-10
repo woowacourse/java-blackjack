@@ -6,7 +6,6 @@ import dto.*;
 import repository.DealerRepository;
 import repository.PlayerRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static constant.BlackJackConstant.DEALER_APPEND_CRITERIA;
