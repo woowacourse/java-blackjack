@@ -1,9 +1,12 @@
 package domain.participant;
 
 import domain.MatchResult;
-import domain.card.Deck;
+import domain.card.Card;
 
 import java.util.*;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class Players {
 
@@ -11,105 +14,112 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(List<String> playerNames) {
-        validateSize(playerNames);
-        validateDuplicateName(playerNames);
-        this.players = from(playerNames);
+    public Players() {
+        this.players = new ArrayList<>();
     }
 
-    public void initialHands(Deck deck, int initialCardCount) {
+    public Players(List<Player> players) {
+        validateSize(players);
+        validateDuplicateName(players);
+        this.players = players;
+    }
+
+    public Player findBy(Player targetPlayer) {
         for (Player player : players) {
-            for (int i = 0; i < initialCardCount; i++) {
-                player.receive(deck.drawCard());
+            if (player.equals(targetPlayer)) {
+                return player;
             }
         }
+
+        throw new IllegalArgumentException("존재하지 않는 플레이어입니다.");
     }
 
-    public Map<Player, MatchResult> calculateResult(Dealer dealer) {
-        Map<Player, MatchResult> playersResult = new HashMap<>();
+    public void placeBetAllPlayers(Function<String, Integer> action) {
+        for (Player player : players) {
+            int betAmount = action.apply(player.getName());
+            player.placeBet(betAmount);
+        }
+    }
+
+    public void dealCardToAllPlayers(Supplier<Card> cardSupplier) {
+        for (Player player : players) {
+            player.receive(cardSupplier.get());
+        }
+    }
+
+    public void playTurns(Consumer<Player> action) {
+        for (Player player : players) {
+            action.accept(player);
+        }
+    }
+
+    public Map<Player, MatchResult> calculateMatchResult(Dealer dealer) {
+        Map<Player, MatchResult> result = new HashMap<>();
 
         for (Player player : players) {
-            if (isBustResult(dealer, player, playersResult)) continue;
-            if (isHigherScoreThanDealer(dealer, player, playersResult)) continue;
-            if (isDrawResult(dealer, player, playersResult)) continue;
-
-            playersResult.put(player, MatchResult.LOSE);
+            result.put(player, determineMatchResult(player, dealer));
         }
 
-        return playersResult;
+        return result;
     }
 
-    private boolean isBustResult(Dealer dealer, Player player, Map<Player, MatchResult> playersResult) {
-        if (player.isBust()) {
-            playersResult.put(player, MatchResult.LOSE);
-            return true;
+    public Map<Player, Integer> calculateProfitResult(Map<Player, MatchResult> playersMatchResult) {
+        Map<Player, Integer> profitResult = new HashMap<>();
+
+        for (Map.Entry<Player, MatchResult> matchResultEntry : playersMatchResult.entrySet()) {
+            Player player = matchResultEntry.getKey();
+            MatchResult matchResult = matchResultEntry.getValue();
+
+            profitResult.put(player, player.applyMatchResultToBet(matchResult));
         }
 
-        if (dealer.isBust()) {
-            playersResult.put(player, MatchResult.WIN);
-            return true;
-        }
-
-        return false;
+        return profitResult;
     }
 
-    private boolean isHigherScoreThanDealer(Dealer dealer, Player player, Map<Player, MatchResult> playersResult) {
-        if (player.isHigherThan(dealer)) {
-            playersResult.put(player, MatchResult.WIN);
-            return true;
+    public Map<Player, List<Card>> getPlayersHand() {
+        Map<Player, List<Card>> playersHand = new HashMap<>();
+
+        for (Player player : players) {
+            playersHand.put(player, player.getCards());
         }
 
-        return false;
+        return playersHand;
     }
 
-    private boolean isDrawResult(Dealer dealer, Player player, Map<Player, MatchResult> playersResult) {
+    public Map<Player, Integer> getPlayersScore() {
+        Map<Player, Integer> playersScore = new HashMap<>();
+
+        for (Player player : players) {
+            playersScore.put(player, player.getScore());
+        }
+
+        return playersScore;
+    }
+
+    private MatchResult determineMatchResult(Player player, Dealer dealer) {
+        if (player.isBust()) return MatchResult.LOSE;
+        if (dealer.isBust()) return MatchResult.WIN;
+        if (player.isHigherThan(dealer)) return MatchResult.WIN;
+
         if (player.isTie(dealer)) {
-            return isDrawWithBlackJack(dealer, player, playersResult);
+            if (player.isBlackJack() && !dealer.isBlackJack()) return MatchResult.WIN;
+            if (!player.isBlackJack() && dealer.isBlackJack()) return MatchResult.LOSE;
+            return MatchResult.DRAW;
         }
 
-        return false;
+        return MatchResult.LOSE;
     }
 
-    private boolean isDrawWithBlackJack(Dealer dealer, Player player, Map<Player, MatchResult> playersResult) {
-        if (player.isBlackJack() && !dealer.isBlackJack()) {
-            playersResult.put(player, MatchResult.WIN);
-            return true;
-        }
-
-        if (!player.isBlackJack() && dealer.isBlackJack()) {
-            playersResult.put(player, MatchResult.LOSE);
-            return true;
-        }
-
-        if (!player.isBlackJack() && !dealer.isBlackJack()) {
-            playersResult.put(player, MatchResult.DRAW);
-            return true;
-        }
-
-        return false;
-    }
-
-    private List<Player> from(List<String> playerNames) {
-        return playerNames.stream()
-                .map(String::trim)
-                .map(Player::new)
-                .toList();
-    }
-
-    private void validateDuplicateName(List<String> playerNames) {
-        Set<String> uniqueNames = new HashSet<>(playerNames);
+    private void validateDuplicateName(List<Player> playerNames) {
+        Set<Player> uniqueNames = new HashSet<>(playerNames);
 
         if (uniqueNames.size() != playerNames.size()) {
             throw new IllegalArgumentException("플레이어 이름은 중복될 수 없습니다.");
         }
     }
 
-    private void validateSize(List<String> playerNames) {
+    private void validateSize(List<Player> playerNames) {
         if (playerNames.size() > MAX_PLAYER_SIZE)
             throw new IllegalArgumentException("플레이어 인원 수는 5명 이하여야 합니다.");
-    }
-
-    public List<Player> getPlayers() {
-        return players;
     }
 }
