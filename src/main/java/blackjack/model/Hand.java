@@ -38,10 +38,6 @@ public class Hand {
         return totalScore(cards) > BLACKJACK_SCORE;
     }
 
-    public boolean isHitAvailable() {
-        return totalScore(cards) >= BLACKJACK_SCORE;
-    }
-
     public int calculateTotalScore() {
         return totalScore(cards);
     }
