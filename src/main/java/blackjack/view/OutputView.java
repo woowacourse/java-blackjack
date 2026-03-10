@@ -24,7 +24,7 @@ public class OutputView {
     }
 
     public void printDealerInitialHand(DealerInitialHand dealerHand) {
-        printParticipantInitialHand(dealerHand.nickname(), dealerHand.cardName());
+        printParticipantInitialHand(dealerHand.nickname(), dealerHand.cardDisplayName());
     }
 
     public void printPlayersInitialHand(List<PlayerHand> playersHand) {

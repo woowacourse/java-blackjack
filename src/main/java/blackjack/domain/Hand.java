@@ -17,7 +17,7 @@ public class Hand {
     }
 
     public List<Card> getCards() {
-        return List.copyOf(cards)
+        return List.copyOf(cards);
     }
 
     public boolean isBlackjack() {

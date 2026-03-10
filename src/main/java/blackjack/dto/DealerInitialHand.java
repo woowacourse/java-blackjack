@@ -1,15 +1,15 @@
 package blackjack.dto;
 
-import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Dealer;
 
 public record DealerInitialHand(
         String nickname,
-        String cardName
+        String cardDisplayName
 ) {
-    public static DealerInitialHand from(Participant participant) {
+    public static DealerInitialHand from(Dealer dealer) {
         return new DealerInitialHand(
-                participant.getNickname(),
-                participant.getCards().getFirst()
+                dealer.getNickname(),
+                CardDisplayName.from(dealer.getCards().getFirst()).displayName()
         );
     }
 }
