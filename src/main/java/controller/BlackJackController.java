@@ -7,7 +7,6 @@ import static util.Constants.STAND;
 
 import domain.game.GamblersGameResult;
 import domain.game.Game;
-import domain.game.GameResult;
 import domain.player.Gambler;
 import dto.AgreementRequestDto;
 import dto.DealerResultDto;
@@ -16,8 +15,8 @@ import dto.ParticipantsGameInfoDto;
 import dto.ParticipantsHandResponseDto;
 import java.util.List;
 import util.Parser;
-import view.InputView;
-import view.OutputView;
+import view.input.InputView;
+import view.output.OutputView;
 
 public class BlackJackController {
     private final InputView inputView;
