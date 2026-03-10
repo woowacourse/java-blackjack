@@ -1,6 +1,5 @@
 package domain.player;
 
-import domain.vo.Name;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -10,23 +9,24 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PlayerGroupsTest {
+
+    private final List<String> VALID_PLAYER_NAMES = List.of("Eian", "pado", "jason", "pobi");
+
     @Test
     void playerGroup_정상_생성_테스트(){
-        List<Player> players = new ArrayList<>(List
-                .of(new Player(new Name("pobi")), new Player(new Name("Jason")),
-                        new Player(new Name("파도")), new Player(new Name("이안"))));
-        PlayerGroups playerGroups = new PlayerGroups(players);
+        PlayerGroups playerGroups = new PlayerGroups(VALID_PLAYER_NAMES);
 
-        assertThat(playerGroups.getPlayerGroupSize()).isEqualTo(players.size());
+        assertThat(playerGroups.getPlayerGroupSize()).isEqualTo(VALID_PLAYER_NAMES.size());
     }
 
     @Test
     void 플레이어_정원초과_테스트() {
-        List<Player> players = new ArrayList<>(List
-                .of(new Player(new Name("딜러")), new Player(new Name("pobi")), new Player(new Name("Jason")),
-                        new Player(new Name("파도")), new Player(new Name("이안")), new Player(new Name("슈크림"))));
+        List<String> playerNames = new ArrayList<>(VALID_PLAYER_NAMES);
+        playerNames.add("woowa");
+        playerNames.add("kim");
 
-        assertThatThrownBy(() -> new PlayerGroups(players))
-                .isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new PlayerGroups(playerNames))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("[ERROR] 최대 플레이어 인원은");
     }
 }
