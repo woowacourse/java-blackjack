@@ -9,7 +9,7 @@ import domain.card.CardDeck;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class Dealer extends Participant{
+public class Dealer extends Participant {
 
     private final CardDeck cardDeck;
 
@@ -58,17 +58,8 @@ public class Dealer extends Participant{
         return cardDeck.getCard();
     }
 
-
     private boolean canHit() {
         return cardBundle.getBasicScore() <= DEALER_ADDITIONAL_DRAW_CONDITION;
-    }
-
-    public String toDisplayMyName() {
-        return DEALER_DISPLAY_NAME;
-    }
-
-    public List<String> disPlayMyCardBundle() {
-        return cardBundle.toDisplay();
     }
 
 }
