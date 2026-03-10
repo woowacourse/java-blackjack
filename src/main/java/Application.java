@@ -62,7 +62,7 @@ public class Application {
     private void askCardToPlayer(String name, int index) {
         retryUntilSuccess(() -> {
             outputView.printAskExtraCard(name);
-            String answer = inputView.readDealDecision();
+            String answer = inputView.readDealDecision().trim();
             validator.validateAnswer(answer);
             determinePlayerContinue(answer, index);
             return null;
