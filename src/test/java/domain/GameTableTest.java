@@ -2,7 +2,7 @@ package domain;
 
 import domain.card.Card;
 import domain.table.GameTable;
-import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,7 @@ class GameTableTest {
     private final String playerName = "포비";
 
     public GameTableTest() {
-        this.gameTable = new GameTable(List.of(playerName));
+        this.gameTable = new GameTable(Map.of(playerName, 1000));
     }
 
     @DisplayName("카드의 총합이 21보다 크면 CurrentResult의 isBust는 true이다.")
