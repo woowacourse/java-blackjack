@@ -58,8 +58,8 @@ public class GameManager {
 
     public List<GameScoreResultDto> getScoreResults() {
         List<GameScoreResultDto> results = new ArrayList<>();
-        aggregateDealerResult(results);
-        aggregatePlayerResult(results);
+        results.add(createDealerScoreResult());
+        results.addAll(createPlayerScoreResults());
 
         return results;
     }
@@ -79,13 +79,16 @@ public class GameManager {
         }
     }
 
-    private void aggregateDealerResult(List<GameScoreResultDto> results) {
-        results.add(GameScoreResultDto.from(dealer));
+    private GameScoreResultDto createDealerScoreResult() {
+        return GameScoreResultDto.from(dealer);
     }
 
-    private void aggregatePlayerResult(List<GameScoreResultDto> results) {
+    private List<GameScoreResultDto> createPlayerScoreResults() {
+        List<GameScoreResultDto> playerResults = new ArrayList<>();
         for (Player player : players.values()) {
-            results.add(GameScoreResultDto.from(player));
+            playerResults.add(GameScoreResultDto.from(player));
         }
+
+        return playerResults;
     }
 }
