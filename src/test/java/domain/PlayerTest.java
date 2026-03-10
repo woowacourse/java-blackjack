@@ -26,7 +26,7 @@ class PlayerTest {
         cards.forEach(player::receive);
         boolean canDraw = player.canDraw();
 
-        assertThat(canDraw).isEqualTo(true);
+        assertThat(canDraw).isTrue();
     }
 
     @Test
@@ -42,7 +42,7 @@ class PlayerTest {
         cards.forEach(player::receive);
         boolean canDraw = player.canDraw();
 
-        assertThat(canDraw).isEqualTo(false);
+        assertThat(canDraw).isFalse();
 
     }
 }

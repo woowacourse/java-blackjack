@@ -7,7 +7,6 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.*;
 
 class InputParserTest {
-    InputParser inputParser;
 
     @Test
     void 입력의_쉼표를_기준으로_문자열을_분리한다() {
@@ -15,7 +14,7 @@ class InputParserTest {
 
         List<String> names = InputParser.parseName(input);
 
-        assertThat(names.size()).isEqualTo(2);
+        assertThat(names).hasSize(2);
         assertThat(names.get(0)).isEqualTo("pobi");
         assertThat(names.get(1)).isEqualTo("jason");
     }
@@ -26,7 +25,7 @@ class InputParserTest {
 
         List<String> names = InputParser.parseName(input);
 
-        assertThat(names.size()).isEqualTo(2);
+        assertThat(names).hasSize(2);
         assertThat(names.get(0)).isEqualTo("pobi");
         assertThat(names.get(1)).isEqualTo("jason");
     }
@@ -35,9 +34,9 @@ class InputParserTest {
     void 입력에_컴마가_중복되는_경우_제거하고_분리한다() {
         String input = ",pobi,,,jason";
 
-        List<String> names = inputParser.parseName(input);
+        List<String> names = InputParser.parseName(input);
 
-        assertThat(names.size()).isEqualTo(2);
+        assertThat(names).hasSize(2);
         assertThat(names.get(0)).isEqualTo("pobi");
         assertThat(names.get(1)).isEqualTo("jason");
     }
@@ -46,7 +45,7 @@ class InputParserTest {
     void 입력이_빈_경우_예외를_발생한다() {
         String input = "";
 
-        assertThatThrownBy(() -> inputParser.parseName(input))
+        assertThatThrownBy(() -> InputParser.parseName(input))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -54,7 +53,7 @@ class InputParserTest {
     void 입력이_공백인_경우_예외를_발생한다() {
         String input = "  ";
 
-        assertThatThrownBy(() -> inputParser.parseName(input))
+        assertThatThrownBy(() -> InputParser.parseName(input))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

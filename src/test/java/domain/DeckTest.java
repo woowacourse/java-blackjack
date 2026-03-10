@@ -27,7 +27,7 @@ class DeckTest {
             cards.add(deck.draw());
         }
 
-        assertThat(cards.size()).isEqualTo(52);
+        assertThat(cards).hasSize(52);
     }
 
     @Test

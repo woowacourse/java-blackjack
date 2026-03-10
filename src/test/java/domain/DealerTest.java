@@ -26,7 +26,7 @@ class DealerTest {
 
         boolean canDraw = dealer.canDraw();
 
-        assertThat(canDraw).isEqualTo(true);
+        assertThat(canDraw).isTrue();
     }
 
     @Test
@@ -41,6 +41,6 @@ class DealerTest {
 
         boolean canDraw = dealer.canDraw();
 
-        assertThat(canDraw).isEqualTo(false);
+        assertThat(canDraw).isFalse();
     }
 }

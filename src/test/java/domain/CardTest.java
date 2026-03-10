@@ -18,7 +18,7 @@ class CardTest {
 
         boolean ace = card.isAce();
 
-        assertThat(ace).isEqualTo(true);
+        assertThat(ace).isTrue();
     }
 
     @ParameterizedTest
