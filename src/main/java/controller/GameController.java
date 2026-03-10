@@ -1,5 +1,6 @@
 package controller;
 
+import domain.card.Card;
 import domain.participant.Dealer;
 import domain.card.Deck;
 import domain.GameResult;
@@ -55,7 +56,9 @@ public class GameController {
 
     private void printGameStart(List<String> playerNames, Dealer dealer, Players players) {
         outputView.printStartCardMessage(playerNames);
-        outputView.printDealerStartCard(dealer.getHand().getFirst().toString());
+
+        Card dealerFirstCard = dealer.getHand().getFirst();
+        outputView.printDealerStartCard(dealerFirstCard.getCardNumber(), dealerFirstCard.getCardSuit());
         outputView.printStartCard(
                 players.getPlayers().stream().map(player -> ParticipantDto.of(player.getName(), player)).toList());
     }

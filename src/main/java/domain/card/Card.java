@@ -15,13 +15,12 @@ public class Card {
         return cardNumber;
     }
 
-    public int getScore() {
-        return CardNumber.fromScore(cardNumber);
+    public CardSuit getCardSuit() {
+        return cardSuit;
     }
 
-    @Override
-    public String toString() {
-        return cardNumber.getNumber() + cardSuit.getSuit();
+    public int getScore() {
+        return CardNumber.fromScore(cardNumber);
     }
 
     @Override

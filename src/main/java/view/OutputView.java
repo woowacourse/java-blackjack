@@ -1,6 +1,9 @@
 package view;
 
 import domain.GameResult;
+import domain.card.Card;
+import domain.card.CardNumber;
+import domain.card.CardSuit;
 import dto.ParticipantDto;
 import dto.PlayerResultDto;
 import java.util.List;
@@ -13,8 +16,8 @@ public class OutputView {
         System.out.println("딜러와 " + String.join(", ", playerNames) + "에게 2장을 나누었습니다.");
     }
 
-    public void printDealerStartCard(String firstCard) {
-        System.out.println("딜러카드: " + firstCard);
+    public void printDealerStartCard(CardNumber cardNumber, CardSuit cardSuit) {
+        System.out.println("딜러카드: " + cardNumber.getNumber() + getCardSuit(cardSuit));
     }
 
     public void printStartCard(List<ParticipantDto> playerDtos) {
@@ -25,7 +28,7 @@ public class OutputView {
     }
 
     public void printCurrentHoldCard(ParticipantDto dto) {
-        System.out.println(dto.name() + "카드: " + dto.cards());
+        System.out.println(dto.name() + "카드: " + cardsToString(dto.cards()));
     }
 
     public void printDealerReceiveCard() {
@@ -57,6 +60,19 @@ public class OutputView {
     }
 
     private void printParticipantScore(ParticipantDto participant) {
-        System.out.println(participant.name() + "카드: " + participant.cards() + " - 결과: " + participant.score());
+        System.out.println(participant.name() + "카드: " + cardsToString(participant.cards()) + " - 결과: " + participant.score());
+    }
+
+    private String cardsToString(List<Card> hand) {
+        return String.join(", ", hand.stream().map(card -> card.getCardNumber().getNumber() + getCardSuit(card.getCardSuit())).toList());
+    }
+
+    private String getCardSuit(CardSuit cardSuit) {
+        return switch (cardSuit) {
+            case HEART -> "하트";
+            case SPADE -> "스페이드";
+            case CLUB -> "클로버";
+            case DIAMOND -> "다이아몬드";
+        };
     }
 }

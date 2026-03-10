@@ -6,16 +6,12 @@ import java.util.List;
 
 public record ParticipantDto(
         String name,
-        String cards,
+        List<Card> cards,
         String score
 ) {
 
     public static ParticipantDto of(String name, Participant participant) {
-        return new ParticipantDto(name, cardsToString(participant.getHand()), scoreToString(participant));
-    }
-
-    private static String cardsToString(List<Card> hand) {
-        return String.join(", ", hand.stream().map(Card::toString).toList());
+        return new ParticipantDto(name, participant.getHand(), scoreToString(participant));
     }
 
     private static String scoreToString(Participant participant) {
