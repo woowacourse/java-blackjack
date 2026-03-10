@@ -13,6 +13,20 @@ public class Cards {
         changeAvailableAceCount = 0;
     }
 
+    public static Cards createCards() {
+        List<Card> cards = new ArrayList<>();
+        for (Shape shape : Shape.values()) {
+            for (Number number : Number.values()) {
+                cards.add(new Card(shape, number));
+            }
+        }
+        return new Cards(cards);
+    }
+
+    public static void shuffleCards(Cards beforeShuffle) {
+        Collections.shuffle(beforeShuffle.cards);
+    }
+
     public void addCard(Card card) {
         if (card.getScore() == 11) {
             changeAvailableAceCount += 1;
@@ -20,20 +34,8 @@ public class Cards {
         cards.add(card);
     }
 
-    public static List<Card> createCards() {
-        List<Card> cards = new ArrayList<>();
-        for (Shape shape : Shape.values()) {
-            for (Number number : Number.values()) {
-                cards.add(new Card(shape, number));
-            }
-        }
-        return cards;
-    }
-
-    public static List<Card> shuffleCards(List<Card> cards) {
-        List<Card> cards1 = new ArrayList<>(cards);
-        Collections.shuffle(cards1);
-        return cards1;
+    public static Integer getCardsSize(Cards targetCards) {
+        return targetCards.cards.size();
     }
 
     // TODO: 이게 거의 isBurst 처럼 동작 - canReceiveCard는 isBurst처럼
@@ -70,6 +72,11 @@ public class Cards {
             sum += card.getScore();
         }
         return sum;
+    }
+
+    public List<Card> getCards() {
+        return cards.stream()
+                .toList();
     }
 
     public List<String> getCardsInfo() {
