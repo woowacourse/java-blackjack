@@ -69,11 +69,11 @@ public class HandCards {
             notBustMaxScore = getNotBustMaxScore(score, notBustMaxScore);
         }
 
-        if (notBustMaxScore != 0) { // 없다면, 제일 작은거
+        if (notBustMaxScore != 0) {
             return notBustMaxScore;
         }
 
-        return Collections.min(scores);
+        return Collections.min(scores); // // 21이하의 수가 없다면, 제일 작은거 리턴하기
     }
 
     private static int getNotBustMaxScore(int score, int notBustMaxScore) {

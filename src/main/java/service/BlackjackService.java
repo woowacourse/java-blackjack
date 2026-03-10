@@ -37,19 +37,19 @@ public class BlackjackService {
         for (Participant player : players) {
             int playerScore = player.getScore();
 
-            if (isDealerWin(dealer, player, dealerScore, playerScore)) { // 딜러 승
+            if (isDealerWin(dealer, player, dealerScore, playerScore)) {
                 dealerWinCount++;
                 finalResults.add(new FinalResult(player.getName(), 0, 0, 1, false));
                 continue;
             }
 
-            if (isDealerDraw(dealer, player, dealerScore, playerScore)) { // 무승부
+            if (isDealerDraw(dealer, player, dealerScore, playerScore)) {
                 dealerDrawCount++;
                 finalResults.add(new FinalResult(player.getName(), 0, 1, 0, false));
                 continue;
             }
 
-            dealerLoseCount++; // 딜러 패배
+            dealerLoseCount++; // 그외에 경우는 딜러 패배
             finalResults.add(new FinalResult(player.getName(), 1, 0, 0, false));
         }
         finalResults.add(

@@ -32,22 +32,22 @@ public class BlackjackController {
     }
 
     public void run() {
-        List<Participant> participantList = addParticipants(); // 플레이어 추가
+        List<Participant> participantList = addParticipants();
         Participants participants = new Participants(participantList);
 
-        CardDeck cardDeck = CardDeck.initCardDeck(); // 카드 덱 초기화
+        CardDeck cardDeck = CardDeck.initCardDeck();
 
-        drawInitCard(participantList, cardDeck, participants); // 카드 최초 뽑기
+        drawInitCard(participantList, cardDeck, participants);
 
-        List<Participant> players = doHitAndStand(participants, cardDeck); // 히트 스탠드 처리
+        List<Participant> players = doHitAndStand(participants, cardDeck);
 
-        Participant dealer = drawDealerAdditionalCard(participants, cardDeck); // 딜러 추가 뽑기
+        Participant dealer = drawDealerAdditionalCard(participants, cardDeck);
 
-        printResult(participants, dealer, players); // 최종 결과 출력
+        printResult(participants, dealer, players);
     }
 
     private List<Participant> addParticipants() {
-        List<Name> playerNames = inputView.readPlayers(); // 플레이어 입력받기
+        List<Name> playerNames = inputView.readPlayers();
         List<Participant> participantList = new ArrayList<>();
         for (Name name : playerNames) {
             participantList.add(
@@ -61,7 +61,7 @@ public class BlackjackController {
             List<Card> drawnCards = blackjackService.drawCard(cardDeck, INIT_DRAW_COUNT);
             addHandCard(participant, drawnCards);
         }
-        outputView.printInitHandCard(participants); // 뽑은 카드 정보 출력
+        outputView.printInitHandCard(participants);
     }
 
     private static void addHandCard(Participant participant, List<Card> drawnCards) {
@@ -82,10 +82,8 @@ public class BlackjackController {
     private void hitAndStand(Participant player, CardDeck cardDeck) {
         while (!player.isBust() && player.getScore() != BUST_BOUND) {
             boolean isHit = isHit(player, cardDeck);
-            // 현재 카드 출력하기
             outputView.printCurrentHandCard(player);
-            // 스탠드면 끝
-            if (!isHit) {
+            if (!isHit) { // 스탠드면 끝
                 break;
             }
         }
@@ -114,11 +112,9 @@ public class BlackjackController {
     }
 
     private void printResult(Participants participants, Participant dealer, List<Participant> players) {
-        // 결과 출력 - 패 공개
         List<CardResult> cardResults = participants.getCardResults();
         outputView.printCardResults(participants);
 
-        // 최종 승패
         List<FinalResult> finalResults = blackjackService.getFinalResults(dealer, players);
         outputView.printFinalResults(finalResults);
     }
