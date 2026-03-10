@@ -1,8 +1,9 @@
 package domain.card;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class CardTest {
     @Test
@@ -11,7 +12,7 @@ class CardTest {
         Card card = new Card(CardNumber.TWO, CardShape.CLUB);
         int baseScore = card.getBaseScore();
 
-        Assertions.assertThat(baseScore).isEqualTo(2);
+        assertThat(baseScore).isEqualTo(2);
     }
 
     @Test
@@ -20,7 +21,7 @@ class CardTest {
         Card card = new Card(CardNumber.JACK, CardShape.CLUB);
         int baseScore = card.getBaseScore();
 
-        Assertions.assertThat(baseScore).isEqualTo(10);
+        assertThat(baseScore).isEqualTo(10);
     }
 
     @Test
@@ -29,7 +30,7 @@ class CardTest {
         Card card = new Card(CardNumber.ACE, CardShape.CLUB);
         int baseScore = card.getBaseScore();
 
-        Assertions.assertThat(baseScore).isEqualTo(1);
+        assertThat(baseScore).isEqualTo(1);
     }
 
 }
