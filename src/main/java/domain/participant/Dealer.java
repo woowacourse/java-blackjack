@@ -1,9 +1,6 @@
 package domain.participant;
 
-import domain.vo.Name;
-
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Dealer extends Participant {
@@ -17,7 +14,6 @@ public class Dealer extends Participant {
 
     public Dealer(HandCards handCards) {
         super(handCards);
-        this.name = new Name("딜러");
     }
 
     public boolean isDealerHit(){
@@ -30,6 +26,11 @@ public class Dealer extends Participant {
 
     public Map<WinStatus, Integer> getRecord() {
         return record;
+    }
+
+    @Override
+    public String getName() {
+        return "딜러";
     }
 
     @Override

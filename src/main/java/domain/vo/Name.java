@@ -20,7 +20,6 @@ public class Name {
         validateNotDealer(name);
     }
 
-
     private static void validateKorEng(String name) {
         Pattern namePattern = Pattern.compile(ALPHABET_AND_KOREAN_TEXT_REG);
 
