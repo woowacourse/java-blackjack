@@ -31,17 +31,6 @@ public abstract class Member {
 
     public abstract MatchResult compareScoreWith(Member other);
 
-//    public MatchResult isCompareScoreWith(Member member) {
-//        int myScore = currentValue();
-//        int targetScore = member.currentValue();
-//
-//        if (myScore > BUST_CONDITION && targetScore > BUST_CONDITION) return handleBothBust();
-//        if (targetScore > BUST_CONDITION) return MatchResult.WIN;
-//        if (myScore > BUST_CONDITION) return MatchResult.LOSE;
-//
-//        return calculateResultFromNormalCase(myScore, targetScore);
-//    }
-
     protected MatchResult calculateResultFromNormalCase(int myScore, int targetScore) {
         if (myScore > targetScore) return MatchResult.WIN;
         if (myScore < targetScore) return MatchResult.LOSE;
