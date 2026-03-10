@@ -16,7 +16,8 @@ public enum CardPattern {
     }
 
     public static CardPattern matchCardPattern(String value) {
-        return Arrays.stream(CardPattern.values()).filter(pattern ->  pattern.name.equals(value))
+        return Arrays.stream(CardPattern.values())
+                .filter(pattern ->  pattern.name.equals(value))
                 .findAny()
                 .orElseThrow(NoSuchElementException::new);
     }
