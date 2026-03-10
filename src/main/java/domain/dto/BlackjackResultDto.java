@@ -1,9 +1,6 @@
 package domain.dto;
 
-import domain.BlackjackResult;
-import domain.MatchCase;
-
-import java.util.Map;
+import domain.result.BlackjackResult;
 
 public record BlackjackResultDto(
         int winCount,

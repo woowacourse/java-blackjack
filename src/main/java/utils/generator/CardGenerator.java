@@ -1,9 +1,9 @@
 package utils.generator;
 
-import domain.Card;
-import domain.CardRank;
-import domain.CardShape;
-import domain.Deck;
+import domain.card.Card;
+import domain.card.CardRank;
+import domain.card.CardShape;
+import domain.card.Deck;
 
 import java.util.ArrayList;
 import java.util.List;

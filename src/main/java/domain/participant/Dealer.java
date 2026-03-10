@@ -1,6 +1,7 @@
-package domain;
+package domain.participant;
 
 import constant.GameConstant;
+import domain.card.Card;
 
 public class Dealer extends Player {
     public static final String DEALER_NAME = "딜러";

@@ -1,6 +1,6 @@
 package domain.dto;
 
-import domain.Player;
+import domain.participant.Player;
 
 import java.util.List;
 

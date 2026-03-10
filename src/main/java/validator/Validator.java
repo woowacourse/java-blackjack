@@ -14,12 +14,11 @@ public interface Validator {
         final String YES_COMMAND = "y";
         final String NO_COMMAND = "n";
 
-        if (!Set.of(YES_COMMAND, NO_COMMAND).contains(input.strip())) {
+        if (!Set.of(YES_COMMAND, NO_COMMAND).contains(input.strip().toLowerCase())) {
             throw new IllegalArgumentException("[ERROR] 입력이 올바르지 않습니다.");
         }
     }
 
     void validate(String input);
-
 }
 

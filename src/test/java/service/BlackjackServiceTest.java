@@ -8,9 +8,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import domain.Deck;
-import domain.Player;
-import domain.Players;
+import domain.card.Deck;
+import domain.participant.Player;
+import domain.participant.Players;
 
 class BlackjackServiceTest {
     private BlackjackService blackjackService;

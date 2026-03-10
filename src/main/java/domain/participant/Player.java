@@ -1,4 +1,8 @@
-package domain;
+package domain.participant;
+
+import domain.card.Card;
+import domain.card.Deck;
+import domain.card.Hand;
 
 import java.util.List;
 

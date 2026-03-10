@@ -1,6 +1,6 @@
 package domain.dto;
 
-import domain.Card;
+import domain.card.Card;
 
 public record CardDto(String rankName, String shapeName) {
     public static CardDto from(Card card) {

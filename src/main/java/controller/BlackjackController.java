@@ -1,11 +1,11 @@
 package controller;
 
 import constant.GameConstant;
-import domain.BlackjackResult;
-import domain.Dealer;
-import domain.Deck;
-import domain.Player;
-import domain.Players;
+import domain.card.Deck;
+import domain.participant.Dealer;
+import domain.participant.Player;
+import domain.participant.Players;
+import domain.result.BlackjackResult;
 import domain.dto.BlackjackResultDto;
 import domain.dto.FinalPlayerCardDto;
 import domain.dto.PlayerCardDto;

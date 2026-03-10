@@ -1,6 +1,12 @@
-package domain;
+package domain.result;
 
+import domain.card.Card;
+import domain.card.CardRank;
+import domain.card.CardShape;
 import domain.dto.BlackjackResultDto;
+import domain.participant.Dealer;
+import domain.participant.Player;
+import domain.participant.Players;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import testutil.PlayerTestUtil;

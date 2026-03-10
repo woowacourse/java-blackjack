@@ -1,7 +1,7 @@
 package domain.dto;
 
-import domain.BlackjackResult;
-import domain.MatchCase;
+import domain.result.BlackjackResult;
+import domain.result.MatchCase;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
