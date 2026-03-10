@@ -1,5 +1,6 @@
 package domain;
 
+import constant.Word;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,30 +47,30 @@ public class Members {
                 .toList();
     }
 
-    public List<MatchResult> judgeDealerGameResult(String name) {
-        Member dealer = findByName(name);
+    public List<MatchResult> judgeDealerGameResult() {
+        Member dealer = findByName(Word.DEALER.getWord());
         List<Member> players = members.stream()
-                .filter(member -> !member.name().equals(name))
+                .filter(member -> !member.name().equals(Word.DEALER.getWord()))
                 .toList();
 
         List<MatchResult> gameResult = new ArrayList<>();
         for (Member player : players) {
-            gameResult.add(dealer.isCompareScoreWith(player));
+            gameResult.add(dealer.compareScoreWith(player));
         }
         return gameResult;
     }
 
-    public Map<String, MatchResult> judgePlayerGameResult(String dealerName) {
-        Member dealer = findByName(dealerName);
+    public Map<String, MatchResult> judgePlayerGameResult() {
+        Member dealer = findByName(Word.DEALER.getWord());
         List<Member> players = members.stream()
-                .filter(member -> !member.name().equals(dealerName))
+                .filter(member -> !member.name().equals(Word.DEALER.getWord()))
                 .toList();
 
         Map<String, MatchResult> gameResult = new HashMap<>();
         for (Member player : players) {
             String playerName = player.name();
             gameResult.put(playerName,
-                    player.isCompareScoreWith(dealer));
+                    player.compareScoreWith(dealer));
         }
 
         return gameResult;

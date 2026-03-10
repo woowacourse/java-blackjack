@@ -1,13 +1,12 @@
 package application;
 
-import static constant.Word.*;
-
+import constant.Word;
 import domain.Card;
+import domain.Dealer;
 import domain.Deck;
 import domain.GameTable;
 import application.dto.RoundResult;
-import domain.Member;
-import domain.Role;
+import domain.Player;
 import domain.dto.GameResult;
 import domain.dto.MemberStatus;
 import java.util.List;
@@ -25,11 +24,11 @@ public class BlackjackService {
     }
 
     public void joinPlayerToGame(List<String> players) {
-        gameTable.joinMember(new Member(DEALER.format(), Role.DEALER));
+        gameTable.joinMember(new Dealer());
 
-        players.forEach(name -> gameTable.joinMember(new Member(name, Role.PLAYER)));
+        players.forEach(name -> gameTable.joinMember(new Player(name)));
 
-        List<String> allParticipants = Stream.concat(Stream.of(DEALER.format()), players.stream()).toList();
+        List<String> allParticipants = Stream.concat(Stream.of(Word.DEALER.getWord()), players.stream()).toList();
 
         allParticipants.forEach(name -> {
             for (int i = 0; i < 2; i++) {

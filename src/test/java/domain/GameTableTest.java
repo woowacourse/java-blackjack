@@ -15,7 +15,7 @@ class GameTableTest {
     @DisplayName("카드의 총합이 21보다 크면 CurrentResult의 isBust는 true이다.")
     @Test
     void checkCurrentTest_playerHasCardSumOf22_returnTrue() {
-        Member pobi = new Member("포비", Role.PLAYER);
+        Member pobi = new Player("포비");
 
         gameTable.joinMember(pobi);
 
@@ -29,7 +29,7 @@ class GameTableTest {
     @DisplayName("카드의 총합이 21보다 작으면 CurrentResult의 isBust는 false이다.")
     @Test
     void checkCurrentTest_playerHasCardSumOf20_returnFalse() {
-        Member pobi = new Member("포비", Role.PLAYER);
+        Member pobi = new Player("포비");
 
         gameTable.joinMember(pobi);
 

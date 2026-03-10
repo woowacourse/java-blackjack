@@ -27,10 +27,10 @@ public class OutputView {
     public void printDealerDrawOut() {
         System.out.println();
         System.out.println(DEALER_DRAW_MESSAGE.format());
-        System.out.println();
     }
 
     public void printFinalMemberStatus(List<MemberStatus> statuses) {
+        System.out.println();
         statuses.forEach(this::printFinalMemberCardAndResult);
         System.out.println();
     }
@@ -43,13 +43,13 @@ public class OutputView {
     private void printDistributeMessage(List<MemberStatus> playerStatuses) {
         String playerNames = playerStatuses.stream()
                 .map(MemberStatus::playerName)
-                .filter(s -> !s.equals(DEALER.format()))
+                .filter(s -> !s.equals(DEALER.getWord()))
                 .collect(Collectors.joining(", "));
-        System.out.println(DISTRIBUTE_MESSAGE.format(playerNames));
+        System.out.println(DISTRIBUTE_MESSAGE.format(DEALER.getWord(), playerNames));
     }
 
     private void printMemberCurrentCard(MemberStatus playerStatus) {
-        if (playerStatus.playerName().equals(DEALER.format())) {
+        if (playerStatus.playerName().equals(DEALER.getWord())) {
             printDealerCurrentCard(playerStatus);
             return;
         }
@@ -78,7 +78,7 @@ public class OutputView {
     private void printMemberResult(GameResult gameResult) {
         String name = gameResult.name();
         List<MatchResult> results = gameResult.result();
-        if (name.equals(DEALER.format())) {
+        if (name.equals(DEALER.getWord())) {
             printDealerResult(results, name);
             return;
         }

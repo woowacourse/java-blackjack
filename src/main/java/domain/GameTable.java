@@ -1,7 +1,6 @@
 package domain;
 
-import static constant.Word.*;
-
+import constant.Word;
 import domain.dto.GameResult;
 import domain.dto.MemberStatus;
 import java.util.ArrayList;
@@ -32,8 +31,8 @@ public class GameTable {
     }
 
     public boolean draw(Card card) {
-        if (members.checkValue(DEALER.format()) <= DEALER_DRAW_CONDITION) {
-            members.provideCard(DEALER.format(), card);
+        if (members.checkValue(Word.DEALER.getWord()) <= DEALER_DRAW_CONDITION) {
+            members.provideCard(Word.DEALER.getWord(), card);
             return true;
         }
         return false;
@@ -51,10 +50,10 @@ public class GameTable {
 
     public List<GameResult> checkGameResult() {
         List<GameResult> gameResults = new ArrayList<>();
-        gameResults.add(new GameResult(DEALER.format(),
-                members.judgeDealerGameResult(DEALER.format())));
+        gameResults.add(new GameResult(Word.DEALER.getWord(),
+                members.judgeDealerGameResult()));
 
-        Map<String, MatchResult> playerResults = members.judgePlayerGameResult(DEALER.format());
+        Map<String, MatchResult> playerResults = members.judgePlayerGameResult();
 
         for (String playerName : playerResults.keySet()) {
             gameResults.add(new GameResult(playerName,
