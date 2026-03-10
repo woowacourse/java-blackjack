@@ -7,7 +7,6 @@ import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.dto.DealerInitialHand;
 import blackjack.dto.ParticipantHandScore;
-import blackjack.dto.PlayerGameResult;
 import blackjack.dto.PlayerHand;
 import blackjack.dto.PlayerNames;
 import blackjack.dto.TotalWinningResult;
@@ -82,16 +81,16 @@ public class BlackjackRunner {
     public void printGameResult(Participants participants) {
         outputView.printParticipantsHandScore(ParticipantHandScore.listOf(participants.getParticipants()));
         
-        List<PlayerGameResult> gameResults = determineGameResults(participants.getPlayers(), participants.getDealer());
-        TotalWinningResult totalWinningResult = TotalWinningResult.from(gameResults);
+        TotalWinningResult totalWinningResult = determineTotalWinningResult(participants);
         
         outputView.printWinningResults(totalWinningResult);
     }
     
-    private List<PlayerGameResult> determineGameResults(List<Player> players, Dealer dealer) {
-        return players.stream()
-                .map(player -> PlayerGameResult.of(player, dealer))
-                .toList();
+    private TotalWinningResult determineTotalWinningResult(Participants participants) {
+        Dealer dealer = participants.getDealer();
+        List<Player> players = participants.getPlayers();
+        
+        return TotalWinningResult.of(dealer, players);
     }
     
     private void playerTurn(Participants participants, Deck deck) {

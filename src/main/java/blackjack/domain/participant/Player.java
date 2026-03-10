@@ -1,7 +1,5 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.GameResult;
-
 public class Player extends Participant {
     
     private boolean stopDrawing;

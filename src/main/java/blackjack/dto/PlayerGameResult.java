@@ -1,7 +1,7 @@
 package blackjack.dto;
 
-import blackjack.domain.GameResult;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.GameResult;
 import blackjack.domain.participant.Player;
 
 public record PlayerGameResult(

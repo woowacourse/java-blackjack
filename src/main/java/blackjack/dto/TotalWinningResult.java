@@ -1,32 +1,25 @@
 package blackjack.dto;
 
-import blackjack.domain.GameResult;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.GameResult;
+import blackjack.domain.participant.Player;
 import java.util.List;
+import java.util.Map;
 
 public record TotalWinningResult(
-        int dealerWin,
-        int dealerDraw,
-        int dealerLoss,
-        List<PlayerGameResult> playersResults
+        long dealerWinCount,
+        long dealerLossCount,
+        List<PlayerGameResult> playerResults
 ) {
-    public static TotalWinningResult from(List<PlayerGameResult> playersGameResult) {
-        List<GameResult> gameResults = playersGameResult.stream()
-                .map(PlayerGameResult::gameResult)
+    public static TotalWinningResult of(Dealer dealer, List<Player> players) {
+        Map<GameResult, Long> dealerResult = dealer.calculateResult(players);
+        long dealerWinCount = dealerResult.getOrDefault(GameResult.WIN, 0L);
+        long dealerLoseCount = dealerResult.getOrDefault(GameResult.LOSE, 0L);
+        
+        List<PlayerGameResult> playerResults = players.stream()
+                .map(player -> PlayerGameResult.of(player, dealer))
                 .toList();
-        return determineDealerWinning(playersGameResult, gameResults);
-    }
-
-    private static TotalWinningResult determineDealerWinning(List<PlayerGameResult> playersGameResult,
-                                                             List<GameResult> playerGameResults) {
-        int dealerWin = (int) playerGameResults.stream()
-                .filter(result -> result == GameResult.LOSE)
-                .count();
-        int dealerDraw = (int) playerGameResults.stream()
-                .filter(result -> result == GameResult.DRAW)
-                .count();
-        int dealerLose = (int) playerGameResults.stream()
-                .filter(result -> result == GameResult.WIN)
-                .count();
-        return new TotalWinningResult(dealerWin, dealerDraw, dealerLose, playersGameResult);
+        
+        return new TotalWinningResult(dealerWinCount, dealerLoseCount, playerResults);
     }
 }
