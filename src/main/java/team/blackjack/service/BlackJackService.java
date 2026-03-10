@@ -33,10 +33,8 @@ public class BlackJackService {
         final Deck deck = blackjackGame.getDeck();
         final Dealer dealer = blackjackGame.getDealer();
 
-        // 플레이어 카드 초기화
         getPlayers().initPlayerHands(deck);
 
-        // 딜러 카드 초기화
         dealer.hit(dealer.draw(deck));
         dealer.hit(dealer.draw(deck));
     }

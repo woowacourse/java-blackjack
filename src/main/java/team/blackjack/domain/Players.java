@@ -16,7 +16,6 @@ public class Players {
         return List.copyOf(players);
     }
 
-    // 플레이어 카드 초기화
     public void initPlayerHands(Deck deck) {
         for (Player player : players) {
             player.hit(deck.draw());
