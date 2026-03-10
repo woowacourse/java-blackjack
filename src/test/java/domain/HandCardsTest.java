@@ -51,13 +51,13 @@ class HandCardsTest {
         Card two = new Card(CardSuit.SPADE, CardRank.TWO);
 
         return Stream.of(
-                Arguments.of(
-                        List.of(ace, ten), true,
-                        List.of(ace, jack), true,
-                        List.of(ace, queen), true,
-                        List.of(ace, king), true,
-                        List.of(ace, two), false
-                )
+                Arguments.of(List.of(ace, ten), true),
+                Arguments.of(List.of(ace, jack), true),
+                Arguments.of(List.of(ace, queen), true),
+                Arguments.of(List.of(ace, king), true),
+                Arguments.of(List.of(ace, two), false),
+                Arguments.of(List.of(ace), false),
+                Arguments.of(List.of(ace, two, queen), false)
         );
     }
 

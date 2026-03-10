@@ -1,5 +1,6 @@
 package domain;
 
+import static constant.BlackjackConstant.BLACKJACK_CARD_COUNT;
 import static constant.BlackjackConstant.BUST_BOUND;
 import static domain.CardRank.ACE;
 import static domain.CardRank.JACK;
@@ -53,6 +54,10 @@ public class HandCards {
     }
 
     public boolean isBlackjack() {
+        if(handCards.size() != BLACKJACK_CARD_COUNT) {
+            return false;
+        }
+
         List<CardRank> cardRanks = handCards.stream()
                 .map(Card::getCardRank)
                 .toList();
