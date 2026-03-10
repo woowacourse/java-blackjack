@@ -67,6 +67,15 @@ public class HandTest {
     }
 
     @Test
+    void 포인트가_22점으로_버스트인_경우() {
+        Hand hand = new Hand();
+        hand.addCard(new Card(CardPoint.QUEEN, CardPattern.HEART));
+        hand.addCard(new Card(CardPoint.TWO, CardPattern.DIAMOND));
+        hand.addCard(new Card(CardPoint.JACK, CardPattern.SPADE));
+        assertTrue(hand.isBust());
+    }
+
+    @Test
     void 버스트가_아닌_경우() {
         Hand hand = new Hand();
         hand.addCard(new Card(CardPoint.FIVE, CardPattern.DIAMOND));
