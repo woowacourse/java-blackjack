@@ -9,11 +9,9 @@ class DeckTest {
 
     @Test
     @DisplayName("덱의 처음 카드 숫자는 52개이다.")
-    void deck_count() {
-        Deck deck = new Deck();
-
-
-
+    void getDeckSize_Return52() {
+        testDeck testDeck = domain.testDeck.createStandardDeck();
+        Integer realValue = domain.testDeck.getDeckSize(testDeck);
+        assertEquals(52, realValue);
     }
-
 }
