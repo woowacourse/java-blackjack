@@ -4,9 +4,8 @@ import model.MatchStatus;
 import java.util.List;
 import java.util.Map;
 
-public record ParticipantWinning(Map<MatchStatus, Integer> dealerWinning, List<PlayerWinning> playersWinning) {
+public record ParticipantWinning(int dealerWinning, List<PlayerWinning> playersWinning) {
     public ParticipantWinning {
-        dealerWinning = Map.copyOf(dealerWinning);
         playersWinning = List.copyOf(playersWinning);
     }
 }
