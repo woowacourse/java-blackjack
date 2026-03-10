@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Cards {
@@ -19,6 +20,23 @@ public class Cards {
         cards.add(card);
     }
 
+    public static List<Card> createCards() {
+        List<Card> cards = new ArrayList<>();
+        for (Shape shape : Shape.values()) {
+            for (Number number : Number.values()) {
+                cards.add(new Card(shape, number));
+            }
+        }
+        return cards;
+    }
+
+    public static List<Card> shuffleCards(List<Card> cards) {
+        List<Card> cards1 = new ArrayList<>(cards);
+        Collections.shuffle(cards1);
+        return cards1;
+    }
+
+    // TODO: 이게 거의 isBurst 처럼 동작 - canReceiveCard는 isBurst처럼
     public boolean canReceiveCard(int burstThreshold) {
         int sum = calculateScore();
 
@@ -27,7 +45,7 @@ public class Cards {
             changeAvailableAceCount -= 1;
         }
 
-        if(changeAvailableAceCount == 0 && isBurst(sum)){
+        if (changeAvailableAceCount == 0 && isBurst(sum)) {
             return false;
         }
 
@@ -36,6 +54,14 @@ public class Cards {
         }
 
         return true;
+    }
+
+    // TODO: 이건 그냥 21이 넘는지 판단
+    private boolean isBurst(int score) {
+        if (score > 21) {
+            return true;
+        }
+        return false;
     }
 
     public int calculateScore() {
@@ -52,10 +78,4 @@ public class Cards {
                 .toList();
     }
 
-    private boolean isBurst(int score) {
-        if (score > 21) {
-            return true;
-        }
-        return false;
-    }
 }
