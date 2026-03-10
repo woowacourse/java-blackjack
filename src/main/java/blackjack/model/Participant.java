@@ -5,29 +5,30 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class Participant {
+    // TODO: protected를 굳이? 그리고 List<Card>를 일급컬렉션으로 빼보자 (2026. 3. 9.)
     protected final List<Card> cards;
 
     public Participant() {
         this.cards = new ArrayList<>();
     }
 
-    public void receiveCard(Card card) {
+    public final void receiveCard(Card card) {
         cards.add(card);
     }
 
-    public Score getScore() {
+    public final Score getScore() {
         return ScoreCalculator.calculate(cards);
     }
 
-    public boolean isBurst() {
+    public final boolean isBurst() {
         return getScore().isBurst();
     }
 
-    public Card getFirstCardName() {
+    public final Card getFirstCardName() {
         return cards.getFirst();
     }
 
-    public List<Card> getCards() {
+    public final List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
 
