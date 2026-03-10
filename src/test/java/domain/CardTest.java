@@ -21,23 +21,7 @@ class CardTest {
         assertEquals(expected, actual);
     }
 
-    @ParameterizedTest
-    @MethodSource("cardInfo")
-    @DisplayName("카드 정보가 정상적으로 반환되어야 한다.")
-    void 카드_정보_반환(Card provided) {
-        Card card = provided;
-
-        String expected = "8클로버";
-        String actual = card.info();
-
-        assertEquals(expected, actual);
-    }
-
     static Stream<CardRank> cardRanks() {
         return Stream.of(CardRank.values());
-    }
-
-    static Stream<Card> cardInfo() {
-        return Stream.of(new Card(CardRank.EIGHT, CardMark.CLOVER));
     }
 }

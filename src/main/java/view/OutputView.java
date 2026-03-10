@@ -1,8 +1,10 @@
 package view;
 
+import domain.Card;
 import domain.ParticipantsRole;
 import dto.GameResult;
 import dto.GameStatus;
+import java.util.ArrayList;
 import java.util.List;
 
 public class OutputView {
@@ -63,7 +65,7 @@ public class OutputView {
     private static String getInitGameLog(GameStatus gameStatuses) {
         if (gameStatuses.role().equals(ParticipantsRole.DEALER)) {
             return String.format(OutputMessage.GAME_LOG.description(), gameStatuses.name(),
-                    gameStatuses.cards().getFirst());
+                    joinInfo(gameStatuses.cards().getFirst()));
         }
         return String.format(getGameLog(gameStatuses));
     }
@@ -72,7 +74,15 @@ public class OutputView {
         return OutputMessage.GAME_LOG.description(gameStatuses.name(), handInfo(gameStatuses));
     }
 
-    private static String handInfo(GameStatus gameStatuses) {
-        return String.join(CARD_JOINER, gameStatuses.cards());
+    private static String handInfo(GameStatus gameStatus) {
+        List<String> cardList = new ArrayList<>();
+        for (Card card : gameStatus.cards()) {
+            cardList.add(joinInfo(card));
+        }
+        return String.join(CARD_JOINER, cardList);
+    }
+
+    private static String joinInfo(Card card) {
+        return card.rank().label() + card.mark().description();
     }
 }

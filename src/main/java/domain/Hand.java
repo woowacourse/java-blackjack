@@ -20,10 +20,6 @@ public class Hand {
         cards.add(createCard());
     }
 
-    List<String> cardInfos() {
-        return cards.stream().map(Card::info).collect(Collectors.toList());
-    }
-
     List<Card> cards() {
         return List.copyOf(cards);
     }

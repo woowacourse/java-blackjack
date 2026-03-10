@@ -44,8 +44,8 @@ class HandTest {
         List<Card> cards = List.of(new Card(CardRank.QUEEN, CardMark.SPADE), new Card(CardRank.EIGHT, CardMark.HEART));
         Hand hand = new Hand(new RandomStrategy(), cards);
 
-        List<String> expected = List.of("Q스페이드", "8하트");
-        List<String> actual = hand.cardInfos();
+        List<Card> expected = List.of(new Card(CardRank.QUEEN, CardMark.SPADE), new Card(CardRank.EIGHT, CardMark.HEART));
+        List<Card> actual = hand.cards();
 
         assertEquals(expected, actual);
     }

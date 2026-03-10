@@ -7,7 +7,7 @@ public final class InputView {
     private final static Scanner scanner = new Scanner(System.in);
 
     public static String readPlayers() {
-        String names = readLine(InfoMessage.PLAYER_INPUT);
+        String names = readLine();
         System.out.println();
         return names;
     }
@@ -18,8 +18,8 @@ public final class InputView {
         return scanner.nextLine();
     }
 
-    private static String readLine(InfoMessage info) {
-        System.out.println(info.message());
+    private static String readLine() {
+        System.out.println(InfoMessage.PLAYER_INPUT.message());
         return scanner.nextLine();
     }
 }
