@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 public class BlackJackGameTest {
 
     @Test
-    public void 게임이_시작되면_참여자_모두_카드를_2장씩_받는다() {
+    void 게임이_시작되면_참여자_모두_카드를_2장씩_받는다() {
         // arrange
         Players players = new Players(List.of("이산", "모카"));
         Dealer dealer = new Dealer();
