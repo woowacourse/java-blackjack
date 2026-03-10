@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.Player;
+import blackjack.exception.ErrorMessage;
 
 import java.util.Scanner;
 
@@ -20,5 +21,14 @@ public class InputView {
     public String getReceiveCard(Player player) {
         System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         return sc.nextLine();
+    }
+
+    public int inputBettingAmount(Player player) {
+        System.out.println(player.getName() + "의 배팅 금액은?");
+        try {
+            return Integer.parseInt(sc.nextLine());
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_BETTING_AMOUNT_INPUT.getMessage());
+        }
     }
 }
