@@ -16,6 +16,8 @@ public class OutputView {
     private static final String SHOW_HAND_MESSAGE = "{0}카드: {1}";
     private static final String FINAL_RESULT_MESSAGE = "{0}: {1}";
     private static final String DEALER_DRAW_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
+    private static final String ERROR_PREFIX = "[ERROR] ";
+
 
     public void printInitialInfo(List<GameInitialInfoDto> initialInfo) {
         printHandOutNotice(initialInfo);
@@ -107,7 +109,6 @@ public class OutputView {
                 initialInfo.getFirst().getInitialHandSize()
         ));
     }
-
     private void printInitialHands(List<GameInitialInfoDto> initialInfo) {
         for (GameInitialInfoDto info : initialInfo) {
             System.out.println(MessageFormat.format(
@@ -117,5 +118,8 @@ public class OutputView {
             ));
         }
         System.out.println();
+    }
+    public void printError(String message) {
+        System.out.println(ERROR_PREFIX + message);
     }
 }

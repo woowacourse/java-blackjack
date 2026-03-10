@@ -32,9 +32,19 @@ public class GameController {
 
     private void registerPlayer() {
         // TODO: 베팅 기능 추가 시 이름 입력 후 각 플레이어의 베팅 금액도 함께 등록
-        List<String> playerNames = inputView.readPlayerName();
-        for (String playerName : playerNames) {
-            manager.addPlayer(playerName);
+        while (true) {
+            try {
+                List<String> playerNames = inputView.readPlayerName();
+                validatePlayerNames(playerNames);
+
+                for (String playerName : playerNames) {
+                    manager.addPlayer(playerName);
+                }
+                return;
+
+            } catch (IllegalArgumentException e) {
+                outputView.printError(e.getMessage());
+            }
         }
     }
 
@@ -65,6 +75,16 @@ public class GameController {
     private void playDealerTurn() {
         while (manager.proceedDealerTurn()) {
             outputView.printDealerTurn();
+        }
+    }
+
+    private void validatePlayerNames(List<String> playerNames) {
+        if (playerNames == null || playerNames.isEmpty()) {
+            throw new IllegalArgumentException("플레이어 이름을 입력해야 합니다.");
+        }
+
+        if (playerNames.stream().anyMatch(name -> name == null || name.isBlank())) {
+            throw new IllegalArgumentException("플레이어 이름은 비어 있을 수 없습니다.");
         }
     }
 }

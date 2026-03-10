@@ -11,4 +11,8 @@ public class Dealer extends Player {
     public boolean canDraw(){
         return this.getScore() <= DEALER_DRAW_CONDITION;
     }
+
+    public String getOpenCard() {
+        return getHandToString().getFirst();
+    }
 }
