@@ -4,7 +4,6 @@ import domain.card.vo.Card;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import util.ErrorMessage;
 
 public class Hand {
     private static final int BURST_SCORE = 21;
@@ -27,7 +26,7 @@ public class Hand {
 
     private void validateCardsSize(List<Card> cards) {
         if (cards.size() != MIN_SIZE) {
-            throw new IllegalArgumentException(ErrorMessage.HANDS_CARDS_SIZE.getMessage());
+            throw new IllegalArgumentException("처음 게임 시작 시, 두장을 나눠줘야한다.");
         }
     }
 

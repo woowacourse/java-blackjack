@@ -19,22 +19,22 @@ class HandTest {
         public static Stream<Arguments> ifTotalScoreBelow11() {
             return Stream.of(
                     //A를 우선 1로 처리하고 총합이 11 이하라면 +11해서 반환한다.
-                    Arguments.of(new Hand(TestDefaults.getCardsByRanks(List.of(Rank.ACE, Rank.KING))),
+                    Arguments.of(new Hand(TestFixture.getCardsByRanks(List.of(Rank.ACE, Rank.KING))),
                             11 + 10),
-                    Arguments.of(new Hand(TestDefaults.getCardsByRanks(List.of(Rank.ACE, Rank.ACE))), 2 + 10)
+                    Arguments.of(new Hand(TestFixture.getCardsByRanks(List.of(Rank.ACE, Rank.ACE))), 2 + 10)
             );
         }
 
         public static Stream<Arguments> ifTotalScoreOver11() {
             return Stream.of(
                     //A를 우선 1로 처리하고 총합이 11 이하라면 +11해서 반환한다.
-                    Arguments.of(new Hand(TestDefaults.getCardsByRanks(List.of(Rank.ACE, Rank.KING))),
+                    Arguments.of(new Hand(TestFixture.getCardsByRanks(List.of(Rank.ACE, Rank.KING))),
                             new Card(Rank.ACE, Suit.SPADE),
                             12),
-                    Arguments.of(new Hand(TestDefaults.getCardsByRanks(List.of(Rank.ACE, Rank.KING))),
+                    Arguments.of(new Hand(TestFixture.getCardsByRanks(List.of(Rank.ACE, Rank.KING))),
                             new Card(Rank.TWO, Suit.SPADE),
                             13),
-                    Arguments.of(new Hand(TestDefaults.getCardsByRanks(List.of(Rank.ACE, Rank.KING))),
+                    Arguments.of(new Hand(TestFixture.getCardsByRanks(List.of(Rank.ACE, Rank.KING))),
                             new Card(Rank.TEN, Suit.SPADE),
                             21)
             );

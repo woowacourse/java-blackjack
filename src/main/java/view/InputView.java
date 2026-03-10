@@ -2,7 +2,6 @@ package view;
 
 import java.io.InputStream;
 import java.util.Scanner;
-import util.ErrorMessage;
 
 public class InputView {
     private static final String INPUT_PLAYER_NAME = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
@@ -37,13 +36,13 @@ public class InputView {
 
     private void validateInputFormat(String input) {
         if (!input.equals(YES) && !input.equals(NO)) {
-            throw new IllegalArgumentException(ErrorMessage.INPUT_WRONG.getMessage());
+            throw new IllegalArgumentException("입력값은 '%s' or '%s' 이어야 합니다.".formatted(YES, NO));
         }
     }
 
     private void validateIsBlank(String input) {
         if (input.isBlank()) {
-            throw new IllegalArgumentException(ErrorMessage.INPUT_BLANK.getMessage());
+            throw new IllegalArgumentException("입력값이 비어있습니다.");
         }
     }
 }

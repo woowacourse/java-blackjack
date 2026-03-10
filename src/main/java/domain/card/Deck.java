@@ -5,7 +5,6 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashSet;
 import java.util.List;
-import util.ErrorMessage;
 
 public class Deck {
     public static final int CARD_SIZE_UNIT = 52;
@@ -29,13 +28,13 @@ public class Deck {
 
     private void validateSize(Deque<Card> cards) {
         if (cards.size() % CARD_SIZE_UNIT != 0) {
-            throw new IllegalArgumentException(ErrorMessage.DECK_SIZE.getMessage());
+            throw new IllegalArgumentException("카드 사이즈는 %d단위 이어야 합니다.".formatted(Deck.CARD_SIZE_UNIT));
         }
     }
 
     private void validateDuplicate(Deque<Card> cards) {
         if (new HashSet<>(cards).size() != cards.size()) {
-            throw new IllegalArgumentException(ErrorMessage.DECK_DUPLICATE.getMessage());
+            throw new IllegalArgumentException("카드는 중복될 수 없습니다.");
         }
     }
 

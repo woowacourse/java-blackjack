@@ -5,7 +5,6 @@ import domain.card.vo.Card;
 import domain.hitStrategy.HitStrategy;
 import domain.state.State;
 import java.util.List;
-import util.ErrorMessage;
 
 public abstract class Participant {
     private static final int MIN_NAME_SIZE = 2;
@@ -22,7 +21,7 @@ public abstract class Participant {
 
     private void validateNameLength(String name) {
         if (name.length() < MIN_NAME_SIZE || name.length() > MAX_NAME_SIZE) {
-            throw new IllegalArgumentException(ErrorMessage.PLAYER_NAME.getMessage());
+            throw new IllegalArgumentException("플레이어 이름은 2~7자이어야 합니다.");
         }
     }
 

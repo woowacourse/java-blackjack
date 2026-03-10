@@ -7,7 +7,7 @@ import domain.card.vo.Suit;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TestDefaults {
+public class TestFixture {
     private static final Rank FIRST_DEFAULT_RANK = Rank.ACE;
     private static final Rank SECOND_DEFAULT_RANK = Rank.KING;
     private static final Suit DEFAULT_SUIT = Suit.SPADE;
