@@ -22,6 +22,10 @@ public class Constants {
 
     public static final String STAND = "n";
 
+    public static final int MINIMUM_NAME_LENGTH = 2;
+
+    public static final int MAXIMUM_NAME_LENGTH = 10;
+
     private Constants() {
     }
 }

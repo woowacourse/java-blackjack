@@ -1,5 +1,8 @@
 package domain.player.attribute;
 
+import static util.Constants.MAXIMUM_NAME_LENGTH;
+import static util.Constants.MINIMUM_NAME_LENGTH;
+
 public class Name {
     private final String name;
 
@@ -30,7 +33,7 @@ public class Name {
     }
 
     private void validateNameRangeTwoToTen(String name) {
-        if (name.length() < 2 || name.length() > 10) {
+        if (name.length() < MINIMUM_NAME_LENGTH || name.length() > MAXIMUM_NAME_LENGTH) {
             throw new IllegalArgumentException("이름은 2글자 이상 10글자 이하로 입력되어야 합니다");
         }
     }
