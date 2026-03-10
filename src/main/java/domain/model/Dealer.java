@@ -42,4 +42,8 @@ public class Dealer implements Person {
     public void appendCard(Card card) {
         deck.append(card);
     }
+
+    public Card getLastCard() {
+        return getDeck().getLastCard();
+    }
 }

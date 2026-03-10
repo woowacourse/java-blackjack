@@ -37,16 +37,7 @@ public class BlackJackService {
                 .toList();
         cardDistributor.initialize(players);
 
-        // TODO: 출력 리팩토링 -> 객체 넘기기
-        CardDto dealerCard = CardDto.of(cardDistributor.getDealer().getDeck().getLastCard());
-        List<PlayerDeckDto> playerDeckDtos = new ArrayList<>();
-        for (Player player : players) {
-            List<CardDto> cardDtos = player.getDeck().getCards().stream()
-                    .map(CardDto::of)
-                    .toList();
-            playerDeckDtos.add(PlayerDeckDto.of(player.getName(), cardDtos));
-        }
-        return new InitialDto(dealerCard, playerDeckDtos);
+        return InitialDto.of(dealerRepository.getDealer(), players);
     }
 
     // 플레이어 추가 카드

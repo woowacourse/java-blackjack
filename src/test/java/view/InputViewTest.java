@@ -11,6 +11,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 public class InputViewTest {
 
+    // TODO : 재입력 로직 (재귀)
     @ParameterizedTest
     @ValueSource(strings = {"", " ", "phobi:jason", "마이찬,도우너", "phobii,jasonn"})
     void 이름_입력_실패_테스트(String input) {

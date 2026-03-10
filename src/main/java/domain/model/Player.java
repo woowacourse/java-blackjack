@@ -1,5 +1,7 @@
 package domain.model;
 
+import java.util.List;
+
 public class Player implements Person {
 
     private final String name;
@@ -29,6 +31,10 @@ public class Player implements Person {
 
     public PlayerStatus getPlayerStatus() {
         return playerStatus;
+    }
+
+    public List<Card> getCards() {
+        return deck.getCards();
     }
 
     // 플레이어에게 초기 생성된 카드 2개가 있는 덱을 부여

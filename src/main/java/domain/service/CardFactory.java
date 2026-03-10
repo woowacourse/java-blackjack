@@ -10,7 +10,6 @@ public class CardFactory {
 
     private final CardRepository cardRepository;
     private final RandomCardGenerator randomCardGenerator;
-    // TODO: 인스턴스 변수 2개까지 줄이기
 
     public CardFactory(CardRepository cardRepository, RandomCardGenerator randomCardGenerator) {
         this.cardRepository = cardRepository;
@@ -23,6 +22,7 @@ public class CardFactory {
         return cardRepository.save(card);
     }
 
+    // TODO 재귀없이 하는 법 (현재는 52장 넘어가면 stackoverflow
     private Card getCard() {
         CardRank rank = randomCardGenerator.generateRank();
         CardShape shape = randomCardGenerator.generateShape();

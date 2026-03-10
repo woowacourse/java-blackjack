@@ -7,10 +7,5 @@ public class judgeTest {
     @Test
     void 게임_승패_판정_테스트() {
 
-
-
-
-
-
     }
 }

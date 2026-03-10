@@ -6,6 +6,7 @@ import static constant.BlackJackConstant.BURST_CRITERIA;
 
 public class Deck {
 
+    // TODO sum에 대해 마이찬과 이야기해보기
     private int sum = 0;
     private DeckStatus deckStatus = DeckStatus.ALIVE;
     private List<Card> cards;
@@ -41,6 +42,7 @@ public class Deck {
     }
 
     // 최종 점수 계산 메서드
+    // TODO 중복 호출 시
     public void calculateFinalSum() {
         // 카드를 순회하며 A가 있는지 확인
         boolean hasAce = cards.stream().anyMatch(Card::isAce);
