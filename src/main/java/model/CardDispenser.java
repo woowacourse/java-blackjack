@@ -9,11 +9,11 @@ public class CardDispenser {
         this.deck = deck;
     }
 
-    public void dispenseOneCard(Player player) {
+    public void dispenseOneCard(Participant player) {
         player.addCard(deck.pickCard());
     }
 
-    public void dispenseStartingCards(Player player) {
+    public void dispenseStartingCards(Participant player) {
         for (int i = 0; i < START_CARD_NUMBER; i++) {
             player.addCard(deck.pickCard());
         }

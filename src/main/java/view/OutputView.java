@@ -5,6 +5,7 @@ import java.util.Map;
 import model.Card;
 import model.Dealer;
 import model.GameStatus;
+import model.Participant;
 import model.Player;
 
 public class OutputView {
@@ -37,7 +38,7 @@ public class OutputView {
     }
 
 
-    public static void printCardByPlayerWithScore(Player player) {
+    public static void printCardByPlayerWithScore(Participant player) {
         int sum = player.calculateTotalScore();
         List<String> cards = player.getCards()
                 .stream()

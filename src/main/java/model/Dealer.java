@@ -1,10 +1,9 @@
 package model;
 
-public class Dealer extends Player {
+public class Dealer extends AbstractParticipant {
 
     private static final String DEALER_NAME = "딜러";
     private static final int MINIMUM_STAND_SCORE = 16;
-    private static final int INITIAL_DISPENSE_COUNT = 2;
 
     public Dealer() {
         super(DEALER_NAME);
