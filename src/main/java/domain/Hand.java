@@ -8,7 +8,7 @@ import java.util.List;
 import static domain.card.Rank.ACE;
 
 public class Hand {
-    private List<Card> cards;
+    private final List<Card> cards;
 
     public Hand() {
         cards = new ArrayList<>();
@@ -48,6 +48,6 @@ public class Hand {
     }
 
     public List<Card> getCards() {
-        return cards;
+        return new ArrayList<>(cards);
     }
 }
