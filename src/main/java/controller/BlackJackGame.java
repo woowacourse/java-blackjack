@@ -1,17 +1,19 @@
 package controller;
 
+import domain.Cards;
 import domain.Dealer;
 import domain.Player;
 import domain.Players;
-import dto.DealerPlayersDTO;
+import java.util.Random;
 import java.util.stream.IntStream;
-import message.IOMessage;
-import util.CheckWinner;
 import util.NameParser;
 import view.InputView;
 import view.ResultView;
 
 public class BlackJackGame {
+    private static final int INITIAL_DRAW_COUNT = 2;
+    private static final String STOP_DRAW_INPUT = "n";
+
     private final InputView inputView;
     private final ResultView resultView;
 
@@ -21,84 +23,109 @@ public class BlackJackGame {
     }
 
     public void run() {
-        Dealer dealer = new Dealer();
+        Random random = new Random();
         Players players = NameParser.makeNameList(inputView.getParticipant());
-        DealerPlayersDTO gameContext = new DealerPlayersDTO(dealer, players);
-        startAndPrint(gameContext);
-        drawPlayersTurn(players);
-        drawDealerTurn(dealer);
-        printResult(gameContext);
+        Dealer dealer = new Dealer();
+        Cards cards = new Cards(random);
+
+        startGame(players, dealer, cards);
+        resultView.printGameStartSection(players, dealer);
+        drawPlayersTurn(players, cards);
+        drawDealerTurn(dealer, cards);
+        printResult(players, dealer);
     }
 
-    private void startGame(DealerPlayersDTO gameContext) {
-        Dealer dealer = gameContext.dealer();
-        Players players = gameContext.players();
-        IntStream.range(0, 2).forEach(i -> dealer.drawCard());
+    private void startGame(Players players, Dealer dealer, Cards cards) {
+        drawInitialDealerCards(dealer, cards);
+        drawInitialPlayerCards(players, cards);
+    }
 
+    private void drawInitialDealerCards(Dealer dealer, Cards cards) {
+        IntStream.range(0, INITIAL_DRAW_COUNT).forEach(i -> dealer.drawCard(cards));
+    }
+
+    private void drawInitialPlayerCards(Players players, Cards cards) {
         IntStream.range(0, players.getSize())
                 .mapToObj(players::getPlayer)
-                .forEach(player -> IntStream.range(0, 2)
-                        .forEach(i -> player.drawCard()));
+                .forEach(player -> drawInitialCardsToPlayer(player, cards));
     }
 
-    private void startAndPrint(DealerPlayersDTO gameContext) {
-        startGame(gameContext);
-        System.out.printf("%n");
-        resultView.printGameStart(gameContext);
-        System.out.printf("%n");
+    private void drawInitialCardsToPlayer(Player player, Cards cards) {
+        IntStream.range(0, INITIAL_DRAW_COUNT)
+                .forEach(i -> player.drawCard(cards));
     }
 
-    private void drawPlayersTurn(Players players) {
+    private void drawPlayersTurn(Players players, Cards cards) {
         IntStream.range(0, players.getSize())
                 .mapToObj(players::getPlayer)
-                .forEach(this::drawPlayerTurn);
+                .forEach(player -> drawPlayerTurn(player, cards));
     }
 
-    private void drawPlayerTurn(Player player) {
-        boolean shouldStop = false;
-        while (!shouldStop) {
-            shouldStop = stopDraw(player) || drawAfterChoice(player);
+    private void drawPlayerTurn(Player player, Cards cards) {
+        while (shouldContinuePlayerTurn(player, cards)) {
         }
     }
 
-    private boolean stopDraw(Player player) {
-        return inputView.getMoreCards(player).equals("n");
+    private boolean shouldContinuePlayerTurn(Player player, Cards cards) {
+        if (checkPlayerStopDraw(player)) {
+            return false;
+        }
+        return !drawAndCheckBust(player, cards);
     }
 
-    private void drawOneCardAndPrint(Player player) {
-        player.drawCard();
-        System.out.println(player.getName() + "카드: " + resultView.joinCardNames(player.getCardList()));
+    private boolean checkPlayerStopDraw(Player player) {
+        return inputView.getMoreCards(player).equals(STOP_DRAW_INPUT);
     }
 
-    private boolean drawAfterChoice(Player player) {
-        drawOneCardAndPrint(player);
+    private boolean drawAndCheckBust(Player player, Cards cards) {
+        drawOneCardAndPrint(player, cards);
         return printBustAndCheck(player);
+    }
+
+    private void drawOneCardAndPrint(Player player, Cards cards) {
+        player.drawCard(cards);
+        resultView.printPlayerCards(player.getName(), resultView.joinCardNames(player.getCardList()));
     }
 
     private boolean printBustAndCheck(Player player) {
         if (!player.checkBust()) {
             return false;
         }
-        System.out.println(player.getName() + "는 버스트!");
+        resultView.printPlayerBust(player.getName());
         return true;
     }
 
-    private void drawDealerTurn(Dealer dealer) {
-        System.out.printf("%n");
-        while (dealer.getScore().isDealerDraw()) {
-            dealer.drawCard();
-            System.out.println(IOMessage.DEALER_ONE_CARD.message());
+    private void drawDealerTurn(Dealer dealer, Cards cards) {
+        resultView.printLineBreak();
+        while (canDealerDraw(dealer)) {
+            drawDealerCardAndPrint(dealer, cards);
         }
-        System.out.printf("%n");
+        resultView.printLineBreak();
     }
 
-    private void printResult(DealerPlayersDTO gameContext) {
-        Dealer dealer = gameContext.dealer();
-        resultView.printResult(gameContext);
+    private boolean canDealerDraw(Dealer dealer) {
+        return dealer.getScore().isDealerDraw();
+    }
+
+    private void drawDealerCardAndPrint(Dealer dealer, Cards cards) {
+        dealer.drawCard(cards);
+        resultView.printDealerDrawMessage();
+    }
+
+    private void printResult(Players players, Dealer dealer) {
+        printGameResult(players, dealer);
+        printWinnerResult(players, dealer);
+    }
+
+    private void printGameResult(Players players, Dealer dealer) {
+        resultView.printResult(players, dealer);
         if (dealer.checkBust()) {
-            System.out.println("딜러는 버스트!");
+            resultView.printDealerBust();
         }
-        CheckWinner.decideWinner(gameContext);
-        resultView.printWinner(gameContext);
+    }
+
+    private void printWinnerResult(Players players, Dealer dealer) {
+        players.decideWinner(dealer);
+        resultView.printWinner(players, dealer);
     }
 }
