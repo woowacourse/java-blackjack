@@ -49,8 +49,6 @@
 - CardResult playRound()
 - List<Card> draw(memberName, Card)
 
-### Service
-- holdingPlayerCards()
 ```
 딜러카드: 3다이아몬드, 9클로버, 8다이아몬드 - 결과: 20
 pobi카드: 2하트, 8스페이드, A클로버 - 결과: 21
@@ -63,11 +61,6 @@ jason카드: 7클로버, K스페이드 - 결과: 17
   pobi: 승
   jason: 패
  ```
-
-### Controller
-- inputView로 입력받는 멤버 추가 (join 호출)
-- GameTable에서 멤버 리스트를 받아와서 멤버별 draw의사 판별 반복
-
 ---
 ### Deck
 #### method
