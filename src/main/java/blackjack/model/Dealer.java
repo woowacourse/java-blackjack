@@ -15,7 +15,7 @@ public class Dealer extends User {
     }
 
     public void addResult(GameResult gameResult) {
-        gameResults.put(gameResult, gameResults.getOrDefault(gameResult, 0) + 1);
+        gameResults.merge(gameResult, 1, Integer::sum);
     }
 
     @Override
