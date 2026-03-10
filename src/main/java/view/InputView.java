@@ -1,6 +1,6 @@
 package view;
 
-import static domain.GameManager.validatePlayerNamesSize;
+import static domain.GameManager.validatePlayersNumber;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,7 +14,7 @@ public class InputView {
 
         String input = sc.nextLine();
         List<String> playerNames = getPlayerNames(input);
-        validatePlayerNamesSize(playerNames);
+        validatePlayersNumber(playerNames);
 
         return playerNames;
     }

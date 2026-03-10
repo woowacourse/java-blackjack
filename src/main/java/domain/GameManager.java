@@ -13,7 +13,7 @@ public class GameManager {
         return false;
     }
 
-    public static void validatePlayerNamesSize(List<String> playerNames) {
+    public static void validatePlayersNumber(List<String> playerNames) {
         validateMinimumPlayers(playerNames);
         validateMaximumPlayers(playerNames);
     }
