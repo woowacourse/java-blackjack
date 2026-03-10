@@ -38,7 +38,8 @@ public class RandomDeck implements Deck {
 
     private static void validateDeckSize(List<Card> cards) {
         if (cards.size() != DECK_SIZE) {
-            throw new IllegalArgumentException("덱은 " + DECK_SIZE + "개의 카드를 가져야 합니다.");
+            throw new IllegalArgumentException(
+                    "덱은 " + DECK_SIZE + "개의 카드를 가져야 합니다(현재 " + cards.size() + "개).");
         }
     }
 
