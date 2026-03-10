@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import java.util.List;
 
@@ -36,5 +37,11 @@ public class Players {
                 .filter(Player::isDrawable)
                 .findFirst()
                 .orElse(null);
+    }
+
+    public List<GameResult> determinePlayersGameResult(Dealer dealer) {
+        return playerList.stream()
+                .map(player -> player.determineGameResult(dealer))
+                .toList();
     }
 }

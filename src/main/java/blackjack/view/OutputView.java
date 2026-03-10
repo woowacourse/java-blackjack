@@ -1,8 +1,8 @@
 package blackjack.view;
 
 import blackjack.dto.DealerInitialHand;
+import blackjack.dto.GameResultDisplayName;
 import blackjack.dto.ParticipantHandScore;
-import blackjack.dto.PlayerGameResult;
 import blackjack.dto.PlayerHand;
 import blackjack.dto.PlayerNames;
 import blackjack.dto.TotalWinningResult;
@@ -14,13 +14,18 @@ public class OutputView {
         System.out.println(message);
     }
 
+    private void printNewLine() {
+        System.out.println();
+    }
+
     public void askGameMembers() {
         printLine("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
     }
 
     public void printInitialSetUp(PlayerNames playerNames) {
         printNewLine();
-        printLine(String.format("딜러와 %s에게 2장을 나누었습니다.", playerNames));
+        String playerNicknames = String.join(", ", playerNames.playerNames());
+        printLine(String.format("딜러와 %s에게 2장을 나누었습니다.", playerNicknames));
     }
 
     public void printDealerInitialHand(DealerInitialHand dealerHand) {
@@ -29,6 +34,7 @@ public class OutputView {
 
     public void printPlayersInitialHand(List<PlayerHand> playersHand) {
         playersHand.forEach(this::printParticipantInitialHand);
+        printNewLine();
     }
 
     public void printParticipantInitialHand(PlayerHand playerHand) {
@@ -47,37 +53,35 @@ public class OutputView {
     }
 
     public void printParticipantsHandScore(List<ParticipantHandScore> participantsHandScore) {
+        printNewLine();
         participantsHandScore.forEach(this::printParticipantHandScore);
     }
 
     public void printParticipantHandScore(ParticipantHandScore playerStatus) {
-        printLine(String.format("%s카드: %s - 결과: %d", playerStatus.nickname(), playerStatus.cardNames(),
-                playerStatus.totalScore()));
+        String nickname = playerStatus.nickname();
+        String cardDisplayNames = String.join(", ", playerStatus.cardDisplayNames());
+        String toTotalScore = String.valueOf(playerStatus.totalScore());
+        printLine(String.format("%s카드: %s - 결과: %s", nickname, cardDisplayNames, toTotalScore));
     }
 
     public void hitOrStand(String nickname) {
         printLine(String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", nickname));
     }
 
-    public void printWinningResults(TotalWinningResult totalWinningResult) {
+    public void printWinningResults() {
         printNewLine();
         printLine("## 최종 승패");
+    }
+
+    public void printDealerWinningResults(TotalWinningResult totalWinningResult) {
         printDealerWinning(totalWinningResult);
-        printPlayerWinning(totalWinningResult.playerGameResults());
     }
 
     private void printDealerWinning(TotalWinningResult totalWinningResult) {
         printLine(String.format("딜러: %d승 %d패", totalWinningResult.dealerWin(), totalWinningResult.dealerLoss()));
     }
 
-    private void printPlayerWinning(List<PlayerGameResult> playerGameResults) {
-        playerGameResults
-                .forEach(playerGameResult ->
-                        printLine(String.format("%s: %s", playerGameResult.nickname(),
-                                playerGameResult.gameResult().getMessage())));
-    }
-
-    private void printNewLine() {
-        System.out.println();
+    public void printPlayerWinningResult(String nickname, GameResultDisplayName gameResult) {
+        printLine(String.format("%s: %s", nickname, gameResult.displayName()));
     }
 }

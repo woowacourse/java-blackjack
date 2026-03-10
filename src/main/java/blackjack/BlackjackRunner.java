@@ -6,9 +6,12 @@ import blackjack.domain.Players;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.dto.DealerInitialHand;
+import blackjack.dto.GameResultDisplayName;
 import blackjack.dto.ParticipantHandScore;
+import blackjack.dto.PlayerGameResult;
 import blackjack.dto.PlayerHand;
 import blackjack.dto.PlayerNames;
+import blackjack.dto.TotalWinningResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -80,16 +83,45 @@ public class BlackjackRunner {
     public void printGameResult(Participants participants) {
         outputView.printParticipantsHandScore(ParticipantHandScore.listOf(participants.getParticipants()));
 
-//        TotalWinningResult totalWinningResults = participants.getWinningResult();
-//        outputView.printWinningResults(totalWinningResults);
+        List<PlayerGameResult> gameResults = determineGameResults(participants.getPlayers(), participants.getDealer());
+        TotalWinningResult totalWinningResult = TotalWinningResult.from(gameResults);
+        printWinningResults(totalWinningResult);
+    }
+
+    private void printWinningResults(TotalWinningResult totalWinningResult) {
+        outputView.printWinningResults();
+        printDealerWinning(totalWinningResult);
+        printPlayerWinning(totalWinningResult);
+    }
+
+    private void printPlayerWinning(TotalWinningResult totalWinningResult) {
+        totalWinningResult.playersResults()
+                .forEach(playerGameResult -> {
+                    outputView.printPlayerWinningResult(
+                            playerGameResult.nickname(),
+                            GameResultDisplayName.from(playerGameResult.gameResult())
+                    );
+                });
+    }
+
+    private void printDealerWinning(TotalWinningResult totalWinningResult) {
+        outputView.printDealerWinningResults(totalWinningResult);
+    }
+
+    private List<PlayerGameResult> determineGameResults(List<Player> players, Dealer dealer) {
+        return players.stream()
+                .map(player -> PlayerGameResult.of(player, dealer))
+                .toList();
     }
 
     private void playerTurn(Participants participants, Deck deck) {
-        Player currentPlayer;
-        do {
-            currentPlayer = participants.getCurrentPlayer();
+        while (true) {
+            Player currentPlayer = participants.getCurrentPlayer();
+            if (currentPlayer == null) {
+                break;
+            }
             playerDraw(currentPlayer, deck);
-        } while (currentPlayer != null);
+        }
     }
 
     private void playerDraw(Player currentPlayer, Deck deck) {

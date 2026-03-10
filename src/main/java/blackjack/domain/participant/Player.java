@@ -26,7 +26,7 @@ public class Player extends Participant {
         stopDrawing = true;
     }
 
-    private GameResult determineGameResult(Dealer dealer) {
+    public GameResult determineGameResult(Dealer dealer) {
         if (isBusted()) {
             return GameResult.LOSE;
         }
