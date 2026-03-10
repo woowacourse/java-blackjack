@@ -20,13 +20,10 @@ public class Participants {
     }
 
     public Participant getDealer() {
-        for (Participant participant : participants) {
-            if (participant.isDealer()) {
-                return participant;
-            }
-        }
-
-        throw new IllegalStateException(DEALER_NOT_FOUND_ERROR.getMessage());
+        return participants.stream()
+                .filter(Participant::isDealer)
+                .findAny()
+                .orElseThrow(() -> new IllegalStateException(DEALER_NOT_FOUND_ERROR.getMessage()));
     }
 
     public List<Participant> getPlayers() {
