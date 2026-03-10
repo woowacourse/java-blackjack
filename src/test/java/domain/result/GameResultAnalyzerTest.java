@@ -27,7 +27,7 @@ class GameResultAnalyzerTest {
         CardDeck cardDeck = new CardDeckBuilder()
                 .cards(cards)
                 .build();
-        Dealer dealerScore4 = Dealer.of(cardDeck);
+        Dealer dealerScore4 = Dealer.from(cardDeck);
 
         dealerScore4.drawMySelf(INITIAL_CARD_DRAW_COUNT);
         Players players = Players.from(List.of(ParticipantName.from("p7"), ParticipantName.from("p11")));

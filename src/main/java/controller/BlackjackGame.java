@@ -35,7 +35,7 @@ public class BlackjackGame {
     }
 
     public void start() {
-        Dealer dealer = Dealer.of(cardDeck);
+        Dealer dealer = Dealer.from(cardDeck);
         Players players = Players.from(requestPlayerNames());
 
         handOutInitialCard(dealer, players);
@@ -60,7 +60,7 @@ public class BlackjackGame {
     }
 
     private void printInitialParticipantsHand(Dealer dealer, Players players) {
-        view.printParticipantHand(ParticipantHandMapper.from(dealer, STARTING_REVEALED_CARD_COUNT));
+        view.printParticipantHand(ParticipantHandMapper.map(dealer, STARTING_REVEALED_CARD_COUNT));
         view.printAllPlayersHand(players.toParticipantHand());
     }
 
@@ -80,7 +80,7 @@ public class BlackjackGame {
         DrawCardIntetion drawCardIntetion = view.requestDrawCardIntention(player.toDisplayMyName());
         while (!player.isBusted() && drawCardIntetion.isYes()) {
             dealer.handOutCardToPlayer(player, DEFAULT_CARD_DRAW_COUNT);
-            view.printParticipantHand(ParticipantHandMapper.from(player));
+            view.printParticipantHand(ParticipantHandMapper.map(player));
         }
     }
 

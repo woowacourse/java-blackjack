@@ -40,7 +40,7 @@ public class Players {
 
     public List<ParticipantHand> toParticipantHand() {
         return playerList.stream()
-                .map(ParticipantHandMapper::from)
+                .map(ParticipantHandMapper::map)
                 .toList();
     }
 

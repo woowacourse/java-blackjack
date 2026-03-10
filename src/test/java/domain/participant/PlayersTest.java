@@ -19,7 +19,7 @@ class PlayersTest {
         CardDeck cardDeck = new CardDeckBuilder()
                 .cards(cloverAce, clover2, clover8, clover9)
                 .build();
-        Dealer dealer = Dealer.of(cardDeck);
+        Dealer dealer = Dealer.from(cardDeck);
 
         Players afterInitialize = players.giveInitialCardBundle(dealer);
         Assertions.assertThat(afterInitialize).isEqualTo(players);

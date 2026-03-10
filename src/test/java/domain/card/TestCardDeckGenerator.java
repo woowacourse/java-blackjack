@@ -10,7 +10,7 @@ public class TestCardDeckGenerator implements CardDeckInitializer {
         this.cardList = cardList;
     }
 
-    public static TestCardDeckGenerator of(List<Card> cardList) {
+    public static TestCardDeckGenerator from(List<Card> cardList) {
         return new TestCardDeckGenerator(cardList);
     }
 

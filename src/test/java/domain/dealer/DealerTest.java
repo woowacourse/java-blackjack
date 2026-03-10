@@ -19,11 +19,11 @@ public class DealerTest {
                 .cards(Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER), Card.of(CardDenomination.NINE, CardEmblem.SPADE))
                 .build();
 
-        Dealer dealer = Dealer.of(cardDeck);
+        Dealer dealer = Dealer.from(cardDeck);
         CardBundle cardBundle = dealer.handOutCard(INITIAL_CARD_DRAW_COUNT);
 
         Assertions.assertThat(cardBundle)
-                .isEqualTo(CardBundle.of(List.of(
+                .isEqualTo(CardBundle.from(List.of(
                         Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER),
                         Card.of(CardDenomination.NINE, CardEmblem.SPADE)))
                 );
@@ -35,11 +35,11 @@ public class DealerTest {
                 .cards(Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER), Card.of(CardDenomination.NINE, CardEmblem.SPADE))
                 .build();
 
-        Dealer dealer = Dealer.of(cardDeck);
+        Dealer dealer = Dealer.from(cardDeck);
         CardBundle cardBundle = dealer.handOutCard(1);
 
         Assertions.assertThat(cardBundle)
-                .isEqualTo(CardBundle.of(List.of(Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER))
+                .isEqualTo(CardBundle.from(List.of(Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER))
                 ));
     }
 
@@ -49,7 +49,7 @@ public class DealerTest {
                 .cards(Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER))
                 .build();
 
-        Dealer dealer = Dealer.of(cardDeck);
+        Dealer dealer = Dealer.from(cardDeck);
 
         Assertions.assertThatThrownBy(() -> {
             CardBundle cardBundle = dealer.handOutCard(INITIAL_CARD_DRAW_COUNT);
@@ -66,10 +66,10 @@ public class DealerTest {
                 .cards(cards)
                 .build();
 
-        Dealer dealer = Dealer.of(cardDeck);
+        Dealer dealer = Dealer.from(cardDeck);
         dealer.drawMySelf(INITIAL_CARD_DRAW_COUNT);
 
-        CardBundle cardBundle = CardBundle.of(cards);
+        CardBundle cardBundle = CardBundle.from(cards);
         Assertions.assertThat(dealer.disPlayMyCardBundle())
                 .isEqualTo(cardBundle.toDisplay());
     }
@@ -83,7 +83,7 @@ public class DealerTest {
                 .cards(cards)
                 .build();
 
-        Dealer dealer = Dealer.of(cardDeck);
+        Dealer dealer = Dealer.from(cardDeck);
 
         Assertions.assertThatThrownBy(() -> {
             dealer.drawMySelf(INITIAL_CARD_DRAW_COUNT);
@@ -101,7 +101,7 @@ public class DealerTest {
                 .cards(cards)
                 .build();
 
-        Dealer dealer = Dealer.of(cardDeck);
+        Dealer dealer = Dealer.from(cardDeck);
         dealer.drawMySelf(INITIAL_CARD_DRAW_COUNT);
 
         Assertions.assertThat(dealer.hitIfRequired()).isTrue();

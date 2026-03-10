@@ -8,11 +8,11 @@ public class ParticipantHandMapper {
     private ParticipantHandMapper() {
     }
 
-    public static ParticipantHand from(Participant participant) {
+    public static ParticipantHand map(Participant participant) {
         return new ParticipantHand(participant.toDisplayMyName(), participant.disPlayMyCardBundle());
     }
 
-    public static ParticipantHand from(Participant participant, int cardCount) {
+    public static ParticipantHand map(Participant participant, int cardCount) {
         return new ParticipantHand(participant.toDisplayMyName(), extractAsCount(participant, cardCount));
     }
 

@@ -16,7 +16,7 @@ public class PlayerTest {
                 .cards(Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER), Card.of(CardDenomination.NINE, CardEmblem.SPADE),
                         Card.of(CardDenomination.TWO, CardEmblem.SPADE), Card.of(CardDenomination.THREE, CardEmblem.HEART))
                 .build();
-        Dealer dealer = Dealer.of(cardDeck);
+        Dealer dealer = Dealer.from(cardDeck);
         Player player = Player.from(ParticipantName.from("test"));
 
         dealer.handOutCardToPlayer(player, DEFAULT_CARD_DRAW_COUNT);
@@ -30,7 +30,7 @@ public class PlayerTest {
         CardDeck cardDeck = new CardDeckBuilder()
                 .build();
 
-        Dealer dealer = Dealer.of(cardDeck);
+        Dealer dealer = Dealer.from(cardDeck);
         Player player = Player.from(ParticipantName.from("test"));
 
         Assertions.assertThatThrownBy(() -> {
@@ -62,8 +62,8 @@ public class PlayerTest {
         CardDeck cardDeck = new CardDeckBuilder()
                 .cards(clover, spade)
                 .build();
-        CardBundle origin = CardBundle.of(List.of(clover, spade));
-        Dealer dealer = Dealer.of(cardDeck);
+        CardBundle origin = CardBundle.from(List.of(clover, spade));
+        Dealer dealer = Dealer.from(cardDeck);
         Player player = Player.from(ParticipantName.from("test"));
 
         CardBundle result = dealer.handOutCardToPlayer(player, 2);
@@ -80,7 +80,7 @@ public class PlayerTest {
         CardDeck cardDeck = new CardDeckBuilder()
                 .cards(cards)
                 .build();
-        Dealer dealer = Dealer.of(cardDeck);
+        Dealer dealer = Dealer.from(cardDeck);
         Player player = Player.from(ParticipantName.from("test"));
 
         CardBundle result = dealer.handOutCardToPlayer(player, 3);

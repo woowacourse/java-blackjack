@@ -18,7 +18,7 @@ public class Dealer extends Participant {
         this.cardDeck = cardDeck;
     }
 
-    public static Dealer of(CardDeck cardDeck) {
+    public static Dealer from(CardDeck cardDeck) {
         return new Dealer(cardDeck);
     }
 
@@ -31,7 +31,7 @@ public class Dealer extends Participant {
             List<Card> cardList = Stream.generate(this::drawCard)
                     .limit(tryCount)
                     .toList();
-            return CardBundle.of(cardList);
+            return CardBundle.from(cardList);
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("딜러가 카드를 나눠줄 수 없습니다.");
         }

@@ -13,7 +13,7 @@ public class CardBundleTest {
         Card spade2 = Card.of(CardDenomination.TWO, CardEmblem.SPADE);
         Card heart3 = Card.of(CardDenomination.THREE, CardEmblem.HEART);
         List<Card> cards = List.of(cloverAce, spade2, heart3);
-        CardBundle cardBundle = CardBundle.of(cards);
+        CardBundle cardBundle = CardBundle.from(cards);
 
         Assertions.assertThat(cardBundle.hasAce()).isTrue();
     }
@@ -23,7 +23,7 @@ public class CardBundleTest {
         Card cloverAce = Card.of(CardDenomination.ACE, CardEmblem.CLOVER);
         Card spadeJack = Card.of(CardDenomination.JACK, CardEmblem.SPADE);
         List<Card> cards = List.of(cloverAce, spadeJack);
-        CardBundle cardBundle = CardBundle.of(cards);
+        CardBundle cardBundle = CardBundle.from(cards);
 
         int basicScore = cardBundle.getBasicScore(); // 11
 
@@ -35,7 +35,7 @@ public class CardBundleTest {
         Card cloverAce = Card.of(CardDenomination.ACE, CardEmblem.CLOVER);
         Card spadeJack = Card.of(CardDenomination.JACK, CardEmblem.SPADE);
         List<Card> cards = List.of(cloverAce, spadeJack);
-        CardBundle cardBundle = CardBundle.of(cards);
+        CardBundle cardBundle = CardBundle.from(cards);
 
         int resultScore = cardBundle.getResultScore(); // 21
 
