@@ -1,15 +1,15 @@
 package blackjack.model;
 
-import static blackjack.model.BlackjackConfig.ACE_HIGH_SCORE;
-import static blackjack.model.BlackjackConfig.ACE_LOW_SCORE;
-import static blackjack.model.BlackjackConfig.BLACKJACK_SCORE;
-import static blackjack.model.BlackjackConfig.INITIAL_CARD_COUNT;
+import static blackjack.model.Deck.INITIAL_CARD_COUNT;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Hand {
+
+    public static final int BLACKJACK_SCORE = 21;
+    public static final int ACE_SCORE_GAP = 10;
 
     private final List<Card> cards;
 
@@ -51,8 +51,8 @@ public class Hand {
     }
 
     private int convertAceToEleven(int currentScore) {
-        if (currentScore + (ACE_HIGH_SCORE - ACE_LOW_SCORE) <= BLACKJACK_SCORE) {
-            return currentScore + (ACE_HIGH_SCORE - ACE_LOW_SCORE);
+        if (currentScore + ACE_SCORE_GAP <= BLACKJACK_SCORE) {
+            return currentScore + ACE_SCORE_GAP;
         }
         return currentScore;
     }

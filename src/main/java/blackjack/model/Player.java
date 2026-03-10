@@ -1,6 +1,7 @@
 package blackjack.model;
 
-import static blackjack.model.BlackjackConfig.BLACKJACK_SCORE;
+
+import static blackjack.model.Hand.BLACKJACK_SCORE;
 
 public class Player extends User {
     private GameResult gameResult;

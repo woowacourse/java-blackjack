@@ -1,10 +1,11 @@
 package blackjack.model;
 
-import static blackjack.model.BlackjackConfig.DEALER_STAND_SCORE;
 
 import java.util.EnumMap;
 
 public class Dealer extends User {
+
+    public static final int DEALER_STAND_SCORE = 17;
 
     private final EnumMap<GameResult, Integer> gameResults;
 
