@@ -16,11 +16,15 @@ public class CardTest {
     }
 
     @Test
-    void 에이스인지_아닌지_확인한다() {
+    void 에이스인지_확인한다() {
         Card aceCard = new Card(CardPoint.ACE, CardPattern.CLUB);
-        Card normalCard = new Card(CardPoint.TWO, CardPattern.CLUB);
         assertTrue(aceCard.isAce());
+    }
+
+    @Test
+    void 에이스가_아닌_일반_카드를_확인한다() {
+        Card normalCard = new Card(CardPoint.TWO, CardPattern.CLUB);
         assertFalse(normalCard.isAce());
     }
-    
+
 }
