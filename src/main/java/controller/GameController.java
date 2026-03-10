@@ -1,5 +1,8 @@
 package controller;
 
+import domain.player.Player;
+import dto.DealerResult;
+import dto.PlayerResult;
 import service.GameService;
 import view.InputView;
 import view.ResultView;
@@ -8,60 +11,68 @@ import java.util.List;
 import java.util.Map;
 
 public class GameController {
-    private GameService gameService;
+    private final GameService gameService;
 
     public GameController(GameService gameService) {
         this.gameService = gameService;
     }
 
     public void run() {
+        startGame();
+        printInitialCards();
+
+        hitRound();
+
+        printFinalStatus();
+
+        ResultView.printResult(gameService.result());
+    }
+
+    private void printFinalStatus() {
+        DealerResult dealerResult = gameService.getDealerResult();
+        ResultView.printCardSumResult(dealerResult);
+
+        List<PlayerResult> playersEndStatus = gameService.getPlayersStatus();
+        Map<String, Integer> playersTotalScore = gameService.getPlayersTotalScore();
+        ResultView.printCardSumResult(playersEndStatus, playersTotalScore);
+    }
+
+    private void hitRound() {
+        for (Player player : gameService.getPlayers()) {
+            askPlayerHit(player);
+        }
+
+        if (gameService.dealerHit()) {
+            ResultView.printDealerOneMoreCard();
+        }
+    }
+
+    private void printInitialCards() {
+        DealerResult dealerStatus = gameService.getDealerResult();
+        List<PlayerResult> playersStatus = gameService.getPlayersStatus();
+        ResultView.printStartPlayersCards(dealerStatus, playersStatus);
+    }
+
+    private void startGame() {
         List<String> names = InputView.askName();
         gameService.joinPlayers(names);
         gameService.initAllPlayerCard();
-
-        Map<String, List<String>> playersStatus = gameService.getPlayersStatus();
-        ResultView.printStartPlayersCards(playersStatus);
-
-        // 플레이어들에 대해 히트 여부 묻기
-        while(gameService.isRemainPlayer()) {
-            askPlayerHit();
-        }
-
-        // 딜러 문구 출력
-        if (gameService.isDealerHit()) {
-            ResultView.printDealerOneMoreCard();
-        }
-
-        // 카드 결과 계산
-        Map<String, List<String>> playersEndStatus = gameService.getPlayersStatus();
-        Map<String, Integer> playersTotalScore = gameService.getPlayersTotalScore();
-        ResultView.printCardSumResult(playersEndStatus, playersTotalScore);
-
-        // 최종 결과
-        ResultView.printResult(gameService.result());
-
     }
 
-    private void askPlayerHit() {
-        if(gameService.getCurrentPlayerName().equals("딜러")) {
-            gameService.nextPlayer();
-            return;
-        }
-
-        playerChooseHit();
-        ResultView.printPlayerCards(gameService.getCurrentPlayerName(), gameService.getCurrentPlayerCards());
-        gameService.nextPlayer();
+    private void askPlayerHit(Player player) {
+        playerChooseHit(player);
+        ResultView.printPlayerCards(player.getName(), player.getCards());
     }
 
-    public void playerChooseHit() {
-        while(InputView.askHit(gameService.getCurrentPlayerName())) {
-            gameService.selectHit();
+    private void playerChooseHit(Player player) {
+        while (InputView.askHit(player.getName())) {
+            gameService.hit(player);
 
-            if(gameService.isCurrentPlayerBust()) {
+            if (player.isBust()) {
                 break;
             }
 
-            ResultView.printPlayerCards(gameService.getCurrentPlayerName(), gameService.getCurrentPlayerCards());
+            ResultView.printPlayerCards(player.getName(), player.getCards());
         }
     }
 }
