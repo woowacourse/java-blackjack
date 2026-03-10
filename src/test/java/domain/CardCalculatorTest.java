@@ -41,7 +41,7 @@ public class CardCalculatorTest {
         phobi.calculateFinalSum();
 
         // then
-        assertThat(phobi.getDeckSum()).isEqualTo(19);
+        assertThat(phobi.calculateFinalSum()).isEqualTo(19);
 
     }
 }
