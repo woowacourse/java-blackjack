@@ -1,5 +1,6 @@
 package blackjack;
 
+import blackjack.domain.betting.BettingMoney;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
@@ -8,6 +9,7 @@ import blackjack.domain.result.GameResults;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class BlackjackGame {
 
@@ -19,20 +21,21 @@ public class BlackjackGame {
         this.players = createPlayers();
     }
 
+    private Players createPlayers() {
+        final List<String> names = InputView.readPlayerNames();
+        final List<BettingMoney> bettingMonies = InputView.readBettingMonies(names);
+        final List<Player> players = IntStream.range(0, names.size())
+                .mapToObj(i -> new Player(names.get(i), bettingMonies.get(i)))
+                .toList();
+        return new Players(players);
+    }
+
     public void start() {
         dealer.dealInitialCards(players);
         printInitialDeal();
         processPlayersTurn();
         processDealerTurn();
         printResults();
-    }
-
-    private Players createPlayers() {
-        final List<String> names = InputView.readPlayerNames();
-        final List<Player> players = names.stream()
-                .map(Player::new)
-                .toList();
-        return new Players(players);
     }
 
     private void printInitialDeal() {
@@ -74,6 +77,6 @@ public class BlackjackGame {
     private void printResults() {
         OutputView.printFinalCards(players, dealer);
         final GameResults gameResults = GameResults.calculate(players, dealer);
-        OutputView.printFinalResults(gameResults);
+        OutputView.printFinalProfits(gameResults);
     }
 }
