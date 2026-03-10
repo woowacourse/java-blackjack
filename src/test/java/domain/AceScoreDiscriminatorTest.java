@@ -7,8 +7,6 @@ import org.junit.jupiter.api.Test;
 
 public class AceScoreDiscriminatorTest {
 
-    private final AceScoreDiscriminator discriminator = new AceScoreDiscriminator();
-
     @Test
     @DisplayName("Ace 1개 있을 때 값 판별 잘함")
     void calculateAceCardSum_success() {
@@ -21,7 +19,7 @@ public class AceScoreDiscriminatorTest {
         int expectedAceCardsSum = 11;
 
         //when
-        int result = discriminator.calculateAceCardsSum(testCards, testSumExceptAce);
+        int result = AceScoreDiscriminator.calculateAceCardsSum(testCards, testSumExceptAce);
 
         //then
         Assertions.assertEquals(expectedAceCardsSum, result);
@@ -40,7 +38,7 @@ public class AceScoreDiscriminatorTest {
         int expectedAceCardsSum = 2;
 
         //when
-        int result = discriminator.calculateAceCardsSum(testCards, testSumExceptAce);
+        int result = AceScoreDiscriminator.calculateAceCardsSum(testCards, testSumExceptAce);
 
         //then
         Assertions.assertEquals(expectedAceCardsSum, result);
