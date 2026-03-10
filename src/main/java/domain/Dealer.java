@@ -7,6 +7,8 @@ public class Dealer extends Player {
 
     private Map<GameResult, Integer> gameResults = new HashMap<>();
 
+    private int revenue;
+
     public Card reveal() {
         return getHand().getFirst();
     }

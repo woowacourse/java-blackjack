@@ -1,4 +1,5 @@
 import domain.*;
+import strategy.ShuffleStrategy;
 
 import java.util.List;
 

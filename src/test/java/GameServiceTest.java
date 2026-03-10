@@ -1,8 +1,8 @@
 import domain.Card;
 import domain.Dealer;
 import domain.GameResult;
-import domain.RandomShuffle;
-import domain.ShuffleStrategy;
+import strategy.RandomShuffle;
+import strategy.ShuffleStrategy;
 import domain.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -62,4 +62,6 @@ class GameServiceTest {
         assertThat(dealer.getLoseRounds()).isEqualTo(totalUserWinRounds);
         assertThat(dealer.getDrawRounds()).isEqualTo(totalUserDrawRounds);
     }
+
+
 }
