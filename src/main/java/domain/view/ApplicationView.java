@@ -1,0 +1,92 @@
+package domain.view;
+
+import domain.analyzer.dto.ResultAnalysisDto;
+import domain.answer.DrawDecision;
+import domain.gamer.PlayerName;
+import domain.gamer.dto.GamerHandDto;
+import domain.gamer.dto.GamerResultDto;
+import domain.gamer.dto.GamersNameDto;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Supplier;
+
+public class ApplicationView {
+
+    private static final String PLAYER_NAME_DELIMITER = ",";
+
+    public InputReader reader;
+    public OutputWriter writer;
+
+    public ApplicationView(InputReader reader, OutputWriter writer) {
+        this.reader = reader;
+        this.writer = writer;
+    }
+
+    public List<PlayerName> requestPlayerNames() {
+        return retry(() -> {
+            writer.printInputNameGuideMessage();
+            String names = reader.readInput();
+            return Arrays.stream(names.split(PLAYER_NAME_DELIMITER))
+                    .map(String::trim)
+                    .map(PlayerName::new)
+                    .toList();
+        });
+    }
+
+    public DrawDecision askDrawCard(String playerName) {
+        return retry(() -> {
+            writer.printDrawCardGuideMessage(playerName);
+            String userDecision = reader.readInput();
+            return DrawDecision.from(userDecision);
+        });
+    }
+
+    public void printFirstHandOutResult(GamersNameDto playerNames) {
+        String formattedNames = String.join(PLAYER_NAME_DELIMITER, playerNames.playerNames());
+        writer.printDealInitialCardMessage(formattedNames);
+    }
+
+    public void printAllParticipantsHand(List<GamerHandDto> playerHands) {
+        for (GamerHandDto playerHand : playerHands) {
+            printParticipantHand(playerHand);
+        }
+    }
+
+    public void printParticipantHand(GamerHandDto playerHand) {
+        writer.printAllParticipantsHand(playerHand.playerName(), playerHand.handOnCards());
+    }
+
+    public void printDealerAdditionalDrawCardMessage() {
+        writer.printDealerAdditionalDrawCardMessage();
+    }
+
+    public void printFinalResultMessage(ResultAnalysisDto resultAnalysis) {
+        writer.printFinalResultTitleMessage();
+        writer.printFinalResultOfDealer(resultAnalysis.getDealerResult());
+        printAllPlayersResult(resultAnalysis);
+    }
+
+    private void printAllPlayersResult(ResultAnalysisDto resultAnalysis) {
+        resultAnalysis.playerGameResults()
+                .forEach(player -> {
+                    writer.printFinalResultOfPlayer(player.playerName(), player.gameResult().displayName());
+                });
+    }
+
+    public void printFinalResultMessage(GamerResultDto playerResult) {
+        GamerHandDto playerHand = playerResult.playerHand();
+        writer.printFinalResultMessage(playerHand.playerName(), playerHand.handOnCards(), playerResult.resultScore());
+    }
+
+    private <T> T retry(Supplier<T> task) {
+        while (true) {
+            try {
+                return task.get();
+            } catch (IllegalArgumentException e) {
+                writer.printErrorMessage(e.getMessage());
+            }
+        }
+    }
+
+}
