@@ -103,7 +103,6 @@ public class BlackJackController {
 
     private void finalizePlayerTurn(Player player) {
         OutputView.holdingCardMessage(player);
-        player.getTotalCardScore();
     }
 
     private void progressGame(CardDeck cardDeck, Player player) {
