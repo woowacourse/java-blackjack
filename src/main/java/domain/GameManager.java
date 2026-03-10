@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameManager {
+    private final int FIRST_DRAW_CARDS = 2;
+
     private final Deck deck = new Deck();
     private final Players players = new Players();
     private final Dealer dealer = new Dealer();
@@ -16,26 +18,15 @@ public class GameManager {
     public GameManager() {}
 
     public void startGame() {
-        for (int i = 0; i < 2; i++) {
-            for (Player player : players.getPlayers()) {
-                player.addCard(deck.draw());
-            }
-            dealer.addCard(deck.draw());
+        for (int i = 0; i < FIRST_DRAW_CARDS; i++) {
+            players.receiveCard(deck.draw());
+            dealer.receiveCard(deck.draw());
         }
     }
 
-
-    public int calculateScore(Hand hand) {
-        return hand.calculateScore();
-    }
-
     public List<String> drawPlayerCard(Player player) {
-        player.addCard(deck.draw());
+        player.receiveCard(deck.draw());
         return player.getHandToString();
-    }
-
-    public void drawDealerCard() {
-        dealer.addCard(deck.draw());
     }
 
     public void addPlayer(String name) {
@@ -49,9 +40,7 @@ public class GameManager {
 
     public List<GameScoreResultDto> getScoreResults() {
         List<GameScoreResultDto> results = new ArrayList<>();
-        // dealer
         aggregateDealerResult(results);
-        //players
         aggregatePlayerResult(results);
 
         return results;
@@ -107,14 +96,6 @@ public class GameManager {
         ));
     }
 
-    public boolean isBlackjack(Player player) {
-        return calculateScore(player.getHand()) == 21;
-    }
-
-    public boolean isDealerTurn() {
-        return calculateScore(dealer.getHand()) <= 16;
-    }
-
     public List<GameFinalResultDto> getFinalResult() {
         // TODO: 베팅 기능 추가 시 승/패/무 뿐 아니라 정산 금액까지 포함한 결과 생성 필요
         List<GameFinalResultDto> results = new ArrayList<>();
@@ -142,5 +123,15 @@ public class GameManager {
 
             results.add(new GameFinalResultDto(player.getName(), Result.DRAW));
         }
+    }
+
+    public boolean proceedDealerTurn() {
+        if (!dealer.canDraw()) {
+            return false;
+        }
+
+        Card card = deck.draw();
+        dealer.receiveCard(card);
+        return true;
     }
 }

@@ -83,8 +83,8 @@ class GameManagerTest {
     void 합계가_21점이면_블랙잭이다() {
         GameManager manager = new GameManager();
         Player player = new Player("pobi");
-        player.addCard(new Card(Rank.ACE, Suit.SPADE));
-        player.addCard(new Card(Rank.KING, Suit.SPADE));
+        player.receiveCard(new Card(Rank.ACE, Suit.SPADE));
+        player.receiveCard(new Card(Rank.KING, Suit.SPADE));
 
         assertThat(player.getHand().isBlackjack()).isTrue();
     }
@@ -92,17 +92,53 @@ class GameManagerTest {
     @Test
     void 합계가_21점이_아니면_블랙잭이_아니다() {
         Player player = new Player("pobi");
-        player.addCard(new Card(Rank.TEN, Suit.SPADE));
-        player.addCard(new Card(Rank.KING, Suit.SPADE));
+        player.receiveCard(new Card(Rank.TEN, Suit.SPADE));
+        player.receiveCard(new Card(Rank.KING, Suit.SPADE));
 
         assertThat(player.getHand().isBlackjack()).isFalse();
     }
 
     @Test
     void 딜러가_16점_이하인지_확인한다() {
-        GameManager manager = new GameManager();
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(Rank.ACE, Suit.SPADE)) ;
 
-        assertThat(manager.isDealerTurn()).isTrue();
+        assertThat(dealer.canDraw()).isTrue();
     }
 
+    @Test
+    void 플레이어가_카드를_한장_더_받는다() {
+        GameManager manager = new GameManager();
+        manager.addPlayer("pobi");
+
+        manager.startGame();
+        Player player = manager.getPlayerSequence().getFirst();
+
+        int before = player.handSize();
+
+        manager.drawPlayerCard(player);
+
+        int after = player.handSize();
+
+        assertThat(after).isEqualTo(before + 1);
+    }
+
+    @Test
+    void 딜러가_카드를_뽑으면_true를_반환한다() {
+        GameManager manager = new GameManager();
+
+        boolean result = manager.proceedDealerTurn();
+
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    void 딜러가_더이상_카드를_못뽑으면_false를_반환한다() {
+        Dealer dealer = new Dealer();
+
+        dealer.receiveCard(new Card(Rank.KING, Suit.SPADE));
+        dealer.receiveCard(new Card(Rank.QUEEN, Suit.SPADE));
+
+        assertThat(dealer.canDraw()).isFalse();
+    }
 }

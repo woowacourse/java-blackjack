@@ -30,22 +30,6 @@ public class GameController {
         outputView.printFinalResult(manager.getFinalResult());
     }
 
-    private void playDealerTurn() {
-        while (manager.isDealerTurn()) {
-            manager.drawDealerCard();
-            outputView.printDealerTurn();
-        }
-    }
-
-    private void playPlayerTurn() {
-        for (Player player : manager.getPlayerSequence()) {
-            while (isPlayerTurn(player) && isStand(player)) {
-                List<String> playerHand = manager.drawPlayerCard(player);
-                outputView.printHand(playerHand, player.getName());
-            }
-        }
-    }
-
     private void registerPlayer() {
         // TODO: 베팅 기능 추가 시 이름 입력 후 각 플레이어의 베팅 금액도 함께 등록
         List<String> playerNames = inputView.readPlayerName();
@@ -61,11 +45,26 @@ public class GameController {
         outputView.printInitialInfo(initialInfo);
     }
 
-    private boolean isStand(Player player) {
+    private void playPlayerTurn() {
+        for (Player player : manager.getPlayerSequence()) {
+            playSinglePlayerTurn(player);
+        }
+    }
+
+    private void playSinglePlayerTurn(Player player) {
+        while (player.canDraw() && wantsToDraw(player)) {
+            List<String> playerHand = manager.drawPlayerCard(player);
+            outputView.printHand(playerHand, player.getName());
+        }
+    }
+
+    private boolean wantsToDraw(Player player) {
         return !inputView.readCommand(player.getName()).equals("n");
     }
 
-    private boolean isPlayerTurn(Player player) {
-        return !(player.isBust() || manager.isBlackjack(player));
+    private void playDealerTurn() {
+        while (manager.proceedDealerTurn()) {
+            outputView.printDealerTurn();
+        }
     }
 }
