@@ -56,10 +56,7 @@ public class BlackjackController {
                 player -> askHitOrStand(cardDeck, player)
         );
 
-        if (dealer.canPick()) {
-            dealer.pickAdditionalCard(cardDeck);
-            outputView.printDealerPicksCard();
-        }
+       drawUntilSeventeen(dealer, cardDeck);
 
         openDealerHands(dealer);
         openPlayersHands(players);
@@ -115,6 +112,16 @@ public class BlackjackController {
     private boolean inputIsContinued(Player player) {
         outputView.printMoreCardInputPrompt(player.getName());
         return inputView.inputMoreCard();
+    }
+
+    private void drawUntilSeventeen(
+            Dealer dealer,
+            CardDeck cardDeck
+    ) {
+        while (dealer.canPick()) {
+            dealer.pickAdditionalCard(cardDeck);
+            outputView.printDealerPicksCard();
+        }
     }
 
     private void openDealerHands(Dealer dealer) {
