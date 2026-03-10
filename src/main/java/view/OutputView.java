@@ -1,6 +1,7 @@
 package view;
 
 import dto.DealerFinalResultDto;
+import dto.FinalResultDto;
 import dto.PlayerDto;
 import dto.PlayersDto;
 import dto.ResultDto;
@@ -63,8 +64,8 @@ public class OutputView {
                                         TotalFinalResultsDto totalFinalResultsDto) {
         System.out.println("\n\n## 최종 승패");
         System.out.print(outputViewFormatter.formatDealerResult(dealerFinalResultDto));
-        for (String finalResult : totalFinalResultsDto.totalResults()) {
-            System.out.print(finalResult);
+        for (FinalResultDto finalResult : totalFinalResultsDto.totalResults()) {
+            System.out.print(outputViewFormatter.formatTotalResult(finalResult));
         }
     }
 }
