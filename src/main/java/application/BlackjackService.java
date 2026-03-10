@@ -1,44 +1,27 @@
 package application;
 
-import constant.Word;
 import domain.Card;
-import domain.Dealer;
-import domain.Deck;
 import domain.GameTable;
 import application.dto.RoundResult;
-import domain.Player;
+import domain.StandardDeck;
 import domain.dto.GameResult;
 import domain.dto.MemberStatus;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class BlackjackService {
 
-    private final GameTable gameTable;
-    private final Deck deck;
+    private GameTable gameTable;
 
-    public BlackjackService(GameTable gameTable, Deck deck) {
-        this.gameTable = gameTable;
-        this.deck = deck;
-        this.deck.init();
+    public BlackjackService() {
     }
 
-    public void joinPlayerToGame(List<String> players) {
-        gameTable.joinMember(new Dealer());
-
-        players.forEach(name -> gameTable.joinMember(new Player(name)));
-
-        List<String> allParticipants = Stream.concat(Stream.of(Word.DEALER.getWord()), players.stream()).toList();
-
-        allParticipants.forEach(name -> {
-            for (int i = 0; i < 2; i++) {
-                gameTable.draw(name, deck.draw());
-            }
-        });
+    public void initializeGame(List<String> playerNames) {
+        this.gameTable = new GameTable(playerNames, new StandardDeck());
+        gameTable.distributeInitCard();
     }
 
     public RoundResult startOneRound(String memberName) {
-        List<Card> playerCards = gameTable.draw(memberName, deck.draw());
+        List<Card> playerCards = gameTable.drawForMember(memberName);
 
         boolean isBust = gameTable.checkBust(memberName);
 
@@ -46,7 +29,7 @@ public class BlackjackService {
     }
 
     public boolean checkDealerDrawable() {
-        return gameTable.draw(deck.draw());
+        return gameTable.drawForDealer();
     }
 
     public List<MemberStatus> getMemberStatuses() {

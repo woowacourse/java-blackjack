@@ -11,28 +11,34 @@ public class GameTable {
 
     private static final int BLACKJACK = 21;
     private static final int DEALER_DRAW_CONDITION = 16;
-    private final Members members;
 
-    public GameTable() {
-        this.members = new Members();
+    private final Members members;
+    private final Deck deck;
+
+    public GameTable(List<String> playerNames, Deck deck) {
+        this.members = new Members(playerNames);
+        this.deck = deck;
     }
 
-    public void joinMember(Member member) {
-        members.join(member);
+    public void distributeInitCard() {
+        for (String memberName : members.getAllPlayerName()) {
+            members.provideCard(memberName, deck.draw());
+            members.provideCard(memberName, deck.draw());
+        }
     }
 
     public boolean checkBust(String memberName) {
         return members.checkValue(memberName) > BLACKJACK;
     }
 
-    public List<Card> draw(String memberName, Card card) {
-        members.provideCard(memberName, card);
+    public List<Card> drawForMember(String memberName) {
+        members.provideCard(memberName, deck.draw());
         return members.findCardByName(memberName);
     }
 
-    public boolean draw(Card card) {
+    public boolean drawForDealer() {
         if (members.checkValue(Word.DEALER.getWord()) <= DEALER_DRAW_CONDITION) {
-            members.provideCard(Word.DEALER.getWord(), card);
+            members.provideCard(Word.DEALER.getWord(), deck.draw());
             return true;
         }
         return false;

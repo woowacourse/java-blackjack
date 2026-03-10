@@ -22,7 +22,7 @@ public class BlackjackController {
 
     public void executeGame() {
         List<String> playerNames = getPlayerNames();
-        distributeInitialCards();
+        InitialCards();
         playGame(playerNames);
         checkDrawableOfDealer();
         finalGameStatus();
@@ -52,14 +52,14 @@ public class BlackjackController {
         }
     }
 
-    private void distributeInitialCards() {
+    private void InitialCards() {
         List<MemberStatus> memberStatuses = blackjackService.getMemberStatuses();
         outputView.printInitialStatus(memberStatuses);
     }
 
     private List<String> getPlayerNames() {
         List<String> playerNames = inputView.readPlayerNames();
-        blackjackService.joinPlayerToGame(playerNames);
+        blackjackService.initializeGame(playerNames);
         return playerNames;
     }
 

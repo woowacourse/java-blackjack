@@ -11,11 +11,15 @@ public class Members {
 
     private final List<Member> members;
 
-    public Members() {
+    public Members(List<String> playerNames) {
         this.members = new ArrayList<>();
+        join(new Dealer());
+        for (String name : playerNames) {
+            join(new Player(name));
+        }
     }
 
-    public void join(Member member) {
+    private void join(Member member) {
         members.add(member);
     }
 

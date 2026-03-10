@@ -1,7 +1,7 @@
 package constant;
 
 public enum Word {
-    DEALER("딜러아닌데?"),
+    DEALER("딜러"),
     CARD_STATUS("%s카드: %s"),
     CARD_MORD_MESSAGE("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)"),
     DEALER_DRAW_MESSAGE("딜러는 16이하라 한장의 카드를 더 받았습니다."),

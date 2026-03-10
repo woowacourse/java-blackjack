@@ -1,42 +1,44 @@
 package domain;
 
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class GameTableTest {
 
-    private final GameTable gameTable;
+    private static final String pobiName = "pobi";
 
-    public GameTableTest() {
-        this.gameTable = new GameTable();
+    private GameTable gameTable;
+
+    @BeforeEach
+    void setUpTest() {
+        List<Card> cards = List.of(
+                new Card("10","클로버"),
+                new Card("9","클로버"),
+                new Card("8","클로버"),
+                new Card("7","클로버")
+        );
+        this.gameTable = new GameTable(List.of(pobiName), new FixedDeck(cards));
     }
 
     @DisplayName("카드의 총합이 21보다 크면 CurrentResult의 isBust는 true이다.")
     @Test
     void checkCurrentTest_playerHasCardSumOf22_returnTrue() {
-        Member pobi = new Player("포비");
+        gameTable.drawForMember(pobiName);
+        gameTable.drawForMember(pobiName);
+        gameTable.drawForMember(pobiName);
 
-        gameTable.joinMember(pobi);
-
-        gameTable.draw(pobi.name(), new Card("10","클로버"));
-        gameTable.draw(pobi.name(), new Card("5", "하트"));
-        gameTable.draw(pobi.name(), new Card("7", "하트"));
-
-        Assertions.assertTrue(gameTable.checkBust("포비"));
+        Assertions.assertTrue(gameTable.checkBust(pobiName));
     }
 
     @DisplayName("카드의 총합이 21보다 작으면 CurrentResult의 isBust는 false이다.")
     @Test
     void checkCurrentTest_playerHasCardSumOf20_returnFalse() {
-        Member pobi = new Player("포비");
+        gameTable.drawForMember(pobiName);
+        gameTable.drawForMember(pobiName);
 
-        gameTable.joinMember(pobi);
-
-        gameTable.draw(pobi.name(), new Card("10","클로버"));
-        gameTable.draw(pobi.name(), new Card("5", "하트"));
-        gameTable.draw(pobi.name(), new Card("5", "스페이드"));
-
-        Assertions.assertFalse(gameTable.checkBust("포비"));
+        Assertions.assertFalse(gameTable.checkBust(pobiName));
     }
 }
