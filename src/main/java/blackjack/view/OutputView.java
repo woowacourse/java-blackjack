@@ -7,6 +7,7 @@ import blackjack.model.user.Dealer;
 import blackjack.model.gameresult.GameResult;
 import blackjack.model.user.Player;
 import blackjack.model.gameresult.PlayersGameResult;
+import blackjack.model.user.User;
 import blackjack.model.user.Users;
 import java.util.EnumMap;
 import java.util.List;
@@ -22,7 +23,6 @@ public class OutputView {
                 .map(Player::getName)
                 .toList();
         StringBuilder sb = new StringBuilder();
-        sb.append("\n");
         sb.append("딜러와 ");
         sb.append(String.join(", ", names));
         sb.append("에게 2장을 나누었습니다.");
@@ -37,14 +37,11 @@ public class OutputView {
 
     private static void printDealerCard(Dealer dealer) {
         Card firstCard = dealer.cards().getFirst();
-        System.out.println("딜러카드: " + firstCard.getRank().getFormat() + firstCard.getSuit().getFormat());
+        System.out.println("딜러카드: " + getCardFormat(firstCard));
     }
 
     public static void printPlayerCards(Player player) {
-        String cardsFormat = player.cards().stream()
-                .map(card -> card.getRank().getFormat() + card.getSuit().getFormat())
-                .collect(Collectors.joining(", "));
-
+        String cardsFormat = getCardsFormat(player);
         System.out.println(player.getName() + "카드: " + cardsFormat);
     }
 
@@ -61,18 +58,9 @@ public class OutputView {
         List<Player> players = users.getPlayers();
         StringBuilder sb = new StringBuilder();
 
-        sb.append(dealer.getName()).append(" 카드: ");
-        sb.append(dealer.cards().stream()
-                .map(card -> card.getRank().getFormat() + card.getSuit().getFormat())
-                .collect(Collectors.joining(", ")));
-        sb.append(" - 결과: ").append(dealer.totalScore()).append("\n");
-
+        createHandStatusFormat(sb, dealer);
         for (Player player : players) {
-            sb.append(player.getName()).append(" 카드: ");
-            sb.append(player.cards().stream()
-                    .map(card -> card.getRank().getFormat() + card.getSuit().getFormat())
-                    .collect(Collectors.joining(", ")));
-            sb.append(" - 결과: ").append(player.totalScore()).append("\n");
+            createHandStatusFormat(sb, player);
         }
         System.out.println(sb);
     }
@@ -97,5 +85,21 @@ public class OutputView {
 
     public static void printError(String errorMessage) {
         System.out.println("[ERROR] " + errorMessage);
+    }
+
+    private static void createHandStatusFormat(StringBuilder sb, User user) {
+        sb.append(user.getName()).append(" 카드: ");
+        sb.append(getCardsFormat(user));
+        sb.append(" - 결과: ").append(user.totalScore()).append("\n");
+    }
+
+    private static String getCardsFormat(User user) {
+        return user.cards().stream()
+                .map(OutputView::getCardFormat)
+                .collect(Collectors.joining(", "));
+    }
+
+    private static String getCardFormat(Card card) {
+        return card.getRank().getFormat() + card.getSuit().getFormat();
     }
 }
