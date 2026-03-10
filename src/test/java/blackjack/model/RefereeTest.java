@@ -5,12 +5,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class GameResultTest {
+class RefereeTest {
 
     @Test
     @DisplayName("딜러의 카드 합보다 플레이어의 카드 합이 높으면 승 판정")
     void winTest() {
         // given
+        Referee referee = new Referee();
         Dealer dealer = new Dealer();
         Player player = new Player("luke");
         Card card = new Card(Figure.SPADE, Number.THREE);
@@ -23,7 +24,7 @@ class GameResultTest {
         dealer.getScore();
 
         // when & then
-        assertThat(GameResult.calculateScore(player, dealer).getStatus())
+        assertThat(referee.judge(player, dealer).getStatus())
                 .isEqualTo("승");
     }
 
@@ -31,6 +32,7 @@ class GameResultTest {
     @DisplayName("딜러의 카드 합보다 플레이어의 카드 합이 낮으면 패 판정")
     void loseTest() {
         // given
+        Referee referee = new Referee();
         Dealer dealer = new Dealer();
         Player player = new Player("luke");
         Card card = new Card(Figure.SPADE, Number.TWO);
@@ -43,7 +45,7 @@ class GameResultTest {
         dealer.getScore();
 
         // when & then
-        assertThat(GameResult.calculateScore(player, dealer).getStatus())
+        assertThat(referee.judge(player, dealer).getStatus())
                 .isEqualTo("패");
     }
 
@@ -51,6 +53,7 @@ class GameResultTest {
     @DisplayName("딜러의 카드 합과 플레이어의 카드 합이 같으면 무 판정")
     void drawTest() {
         // given
+        Referee referee = new Referee();
         Dealer dealer = new Dealer();
         Player player = new Player("luke");
         Card card = new Card(Figure.SPADE, Number.JACK);
@@ -67,7 +70,7 @@ class GameResultTest {
         dealer.getScore();
 
         // when & then
-        assertThat(GameResult.calculateScore(player, dealer).getStatus())
+        assertThat(referee.judge(player, dealer).getStatus())
                 .isEqualTo("무");
     }
 
@@ -75,6 +78,7 @@ class GameResultTest {
     @DisplayName("딜러가 버스트이고, 플레이어가 버스트가 아니면 승 판정")
     void isWinWhenDealerIsBurstTest() {
         // given
+        Referee referee = new Referee();
         Dealer dealer = new Dealer();
         Player player = new Player("luke");
         Card card = new Card(Figure.SPADE, Number.THREE);
@@ -91,7 +95,7 @@ class GameResultTest {
         dealer.getScore();
 
         // when & then
-        assertThat(GameResult.calculateScore(player, dealer).getStatus())
+        assertThat(referee.judge(player, dealer).getStatus())
                 .isEqualTo("승");
     }
 
@@ -99,6 +103,7 @@ class GameResultTest {
     @DisplayName("딜러가 버스트가 아니고, 플레이어가 버스트라면 패 판정")
     void isLoseWhenPlayerIsBurstTest() {
         // given
+        Referee referee = new Referee();
         Dealer dealer = new Dealer();
         Player player = new Player("luke");
         Card card = new Card(Figure.SPADE, Number.JACK);
@@ -115,7 +120,7 @@ class GameResultTest {
         dealer.getScore();
 
         // when & then
-        assertThat(GameResult.calculateScore(player, dealer).getStatus())
+        assertThat(referee.judge(player, dealer).getStatus())
                 .isEqualTo("패");
     }
 
@@ -123,6 +128,7 @@ class GameResultTest {
     @DisplayName("딜러와 플레이어 모두 버스트인 경우 무 판정")
     void isDrawWhenBothIsBurstTest() {
         // given
+        Referee referee = new Referee();
         Dealer dealer = new Dealer();
         Player player = new Player("luke");
         Card card = new Card(Figure.SPADE, Number.JACK);
@@ -143,7 +149,7 @@ class GameResultTest {
         dealer.getScore();
 
         // when & then
-        assertThat(GameResult.calculateScore(player, dealer).getStatus())
+        assertThat(referee.judge(player, dealer).getStatus())
                 .isEqualTo("무");
     }
 }
