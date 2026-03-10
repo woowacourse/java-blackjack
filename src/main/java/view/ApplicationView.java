@@ -8,6 +8,7 @@ import domain.participant.dto.PlayerResultDto;
 
 import java.util.List;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class ApplicationView {
 
@@ -58,7 +59,7 @@ public class ApplicationView {
     }
 
     public void printParticipantHand(PlayerHandDto playerHand) {
-        writer.printAllParticipantsHand(playerHand.playerName(), playerHand.handOnCards());
+        writer.printAllParticipantsHand(playerHand.playerName(), formatHands(playerHand.handOnCards()));
     }
 
     public void printDealerAdditionalDrawCardMessage() {
@@ -79,7 +80,11 @@ public class ApplicationView {
 
     public void printFinalResultMessage(PlayerResultDto playerResult) {
         PlayerHandDto playerHand = playerResult.playerHand();
-        writer.printFinalResultMessage(playerHand.playerName(), playerHand.handOnCards(), playerResult.resultScore());
+        writer.printFinalResultMessage(playerHand.playerName(), formatHands(playerHand.handOnCards()), playerResult.resultScore());
+    }
+
+    private String formatHands(List<String> hands) {
+        return String.join(", ", hands);
     }
 
     private <T> T retry(Supplier<T> task) {
