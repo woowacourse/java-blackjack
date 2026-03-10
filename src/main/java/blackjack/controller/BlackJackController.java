@@ -24,19 +24,14 @@ public class BlackJackController {
         BlackJackGame blackJackGame = new BlackJackGame(players, dealer, deck);
         blackJackGame.initDraw();
 
-        // 출력
         outputView.printInitDraw(players, dealer);
 
-        // 플레이어 턴
         playerTurn(players, deck);
 
-        // 딜러 턴
         dealerTurn(dealer, deck);
 
-        //최종 결과 출력
         outputView.printFinalCardResult(dealer, players);
 
-        //  최종 승패 출력
         HashMap<Player, GameResult> result = blackJackGame.judgeGameResult();
         outputView.printFinalGameResult(result);
 
@@ -57,7 +52,6 @@ public class BlackJackController {
     private void playerTurn(Players players, Deck deck) {
         for (Player player : players.getPlayers()) {
             while (true) {
-                // 버스트인지 확인
                 boolean isBust = player.isBust();
                 if (isBust) {
                     break;
@@ -67,7 +61,6 @@ public class BlackJackController {
                     player.recieveCard(deck.draw());
                 }
 
-                // 출력
                 outputView.printCard(player);
 
                 if (!isHit) {
