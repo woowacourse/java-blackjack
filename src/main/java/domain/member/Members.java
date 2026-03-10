@@ -51,26 +51,26 @@ public class Members {
         return findDealer().getName();
     }
 
-    private Member findDealer() {
-        return members.stream()
-                .filter(member -> member instanceof Dealer)
-                .findFirst()
-                .orElseThrow(NoSuchElementException::new);
-    }
-
     public Map<String, RoundResult> judgeGameResults() {
         Member dealer = findDealer();
         return members.stream()
                 .filter(member -> member instanceof Player)
                 .collect(Collectors.toMap(
-                        Member::getName,
-                        player -> RoundResult.judgeAgainst(
-                                dealer.handValue(),
-                                player.handValue()
-                        ),
-                        (existing, replacement) -> existing,
-                        LinkedHashMap::new
-                    )
+                                Member::getName,
+                                player -> RoundResult.judgeAgainst(
+                                        dealer.handValue(),
+                                        player.handValue()
+                                ),
+                                (existing, replacement) -> existing,
+                                LinkedHashMap::new
+                        )
                 );
+    }
+
+    private Member findDealer() {
+        return members.stream()
+                .filter(member -> member instanceof Dealer)
+                .findFirst()
+                .orElseThrow(NoSuchElementException::new);
     }
 }
