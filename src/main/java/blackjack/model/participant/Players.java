@@ -1,0 +1,54 @@
+package blackjack.model.participant;
+
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Stream;
+
+public class Players implements Iterable<Player> {
+
+    private static final String DELIMITER = ",";
+    private static final int INCLUDE_EMPTY_ELEMENT = -1;
+
+    private final List<Player> players;
+
+    public Players(List<Player> players) {
+        this.players = players;
+    }
+
+    public static Players from(String rawPlayerNames) {
+        List<Name> playerNames = Arrays.stream(rawPlayerNames.split(DELIMITER, INCLUDE_EMPTY_ELEMENT))
+                .map(Name::new)
+                .toList();
+        validateDuplicatedNames(playerNames);
+
+        List<Player> players = playerNames.stream()
+                .map(Player::new)
+                .toList();
+
+        return new Players(players);
+    }
+
+    private static void validateDuplicatedNames(List<Name> playerNames) {
+        long uniqueNameCount = playerNames.stream()
+                .distinct()
+                .count();
+
+        if (uniqueNameCount != playerNames.size()) {
+            throw new IllegalArgumentException("참가자의 이름은 중복될 수 없습니다.");
+        }
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    @Override
+    public Iterator<Player> iterator() {
+        return players.iterator();
+    }
+
+    public Stream<Player> stream() {
+        return players.stream();
+    }
+}
