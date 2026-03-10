@@ -10,7 +10,7 @@ public record ParticipantDto(
         String score
 ) {
 
-    public static ParticipantDto from(String name, Participant participant) {
+    public static ParticipantDto of(String name, Participant participant) {
         return new ParticipantDto(name, cardsToString(participant.getHand()), scoreToString(participant));
     }
 
