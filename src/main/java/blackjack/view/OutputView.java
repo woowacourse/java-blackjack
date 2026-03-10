@@ -56,6 +56,18 @@ public class OutputView {
         printPlayersGameResult(gameResult);
     }
 
+    public void printGameResultProfit(Map<Player, BettingAmount> playerAmounts) {
+        System.out.println("\n## 최종 수익");
+        int dealerTotal = 0;
+        for (BettingAmount value : playerAmounts.values()) {
+            dealerTotal += value.getAmount();
+        }
+        System.out.println("딜러: " + dealerTotal * (-1));
+        for (Player player : playerAmounts.keySet()) {
+            System.out.println(player.getName() + ": " + playerAmounts.get(player).getAmount());
+        }
+    }
+
     private static void printPlayersGameResult(Map<Player, GameResult> gameResult) {
         for (Player player : gameResult.keySet()) {
             System.out.println(player.getName() + ": " + gameResult.get(player).getStatus());
