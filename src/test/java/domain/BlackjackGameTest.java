@@ -65,7 +65,7 @@ public class BlackjackGameTest {
         List<String> results = blackjackGame.evaluateGame();
 
         // then
-        assertThat(results).hasSize(3); // 딜러 1 + 플레이어 2
+        assertThat(results).hasSize(3);
     }
 
     @Test

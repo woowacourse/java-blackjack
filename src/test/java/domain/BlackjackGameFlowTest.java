@@ -24,14 +24,14 @@ public class BlackjackGameFlowTest {
         blackjackGame = new BlackjackGame();
         blackjackGame.saveParticipants(List.of("영기", "라이"));
         blackjackGame.setDeck(new Deck(List.of(
-                new Card(Suit.SPADE, Rank.KING),    // 영기 round1
-                new Card(Suit.HEART, Rank.TWO),     // 라이 round1
-                new Card(Suit.DIAMOND, Rank.FIVE),  // 딜러 round1
-                new Card(Suit.SPADE, Rank.ACE),     // 영기 round2
-                new Card(Suit.HEART, Rank.THREE),   // 라이 round2
-                new Card(Suit.DIAMOND, Rank.SIX),   // 딜러 round2
-                new Card(Suit.CLUB, Rank.TEN),      // 라이 히트
-                new Card(Suit.CLUB, Rank.SEVEN)     // 딜러 히트
+                new Card(Suit.SPADE, Rank.KING),
+                new Card(Suit.HEART, Rank.TWO),
+                new Card(Suit.DIAMOND, Rank.FIVE),
+                new Card(Suit.SPADE, Rank.ACE),
+                new Card(Suit.HEART, Rank.THREE),
+                new Card(Suit.DIAMOND, Rank.SIX),
+                new Card(Suit.CLUB, Rank.TEN),
+                new Card(Suit.CLUB, Rank.SEVEN)
         )));
         blackjackGame.dealCards();
     }
@@ -87,8 +87,8 @@ public class BlackjackGameFlowTest {
     @Test
     void 라이_히트_후_딜러보다_낮아_패배() {
         // given
-        blackjackGame.processPlayerDecision(1); // 라이 히트 → 15
-        blackjackGame.determineDealToDealer();  // 딜러 히트 → 18
+        blackjackGame.processPlayerDecision(1);
+        blackjackGame.determineDealToDealer();
 
         // when
         List<String> results = blackjackGame.evaluateGame();

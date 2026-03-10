@@ -18,18 +18,14 @@ import vo.Rank;
 import vo.Suit;
 
 public class ApplicationTest {
-    // 카드 배분 순서:
-    // 영기: KING(10) + ACE(11) = 21 블랙잭
-    // 라이: TWO(2) + THREE(3) = 5
-    // 딜러: FIVE(5) + SIX(6) = 11 → 히트 → SEVEN(7) = 18
     private static final List<Card> FIXED_CARDS = List.of(
-            new Card(Suit.SPADE, Rank.KING),    // 영기 round1
-            new Card(Suit.HEART, Rank.TWO),     // 라이 round1
-            new Card(Suit.DIAMOND, Rank.FIVE),  // 딜러 round1
-            new Card(Suit.SPADE, Rank.ACE),     // 영기 round2
-            new Card(Suit.HEART, Rank.THREE),   // 라이 round2
-            new Card(Suit.DIAMOND, Rank.SIX),   // 딜러 round2
-            new Card(Suit.CLUB, Rank.SEVEN)     // 딜러 히트
+            new Card(Suit.SPADE, Rank.KING),
+            new Card(Suit.HEART, Rank.TWO),
+            new Card(Suit.DIAMOND, Rank.FIVE),
+            new Card(Suit.SPADE, Rank.ACE),
+            new Card(Suit.HEART, Rank.THREE),
+            new Card(Suit.DIAMOND, Rank.SIX),
+            new Card(Suit.CLUB, Rank.SEVEN)
     );
 
     private final PrintStream originalOut = System.out;
@@ -83,13 +79,13 @@ public class ApplicationTest {
         app.run();
         String output = outContent.toString();
 
-        // then - 초기 카드 배분 안내 메시지 포함
+        // then
         assertThat(output).contains("영기, 라이에게 2장을 나누었습니다.");
     }
 
     @Test
     void 잘못된_참가자_입력_재시도() {
-        // given - 첫 입력 숫자(invalid) → 재시도 → 정상 입력
+        // given
         String input = "123\n영기,라이\nn\nn\n";
         System.setIn(new ByteArrayInputStream(input.getBytes()));
 
@@ -103,7 +99,7 @@ public class ApplicationTest {
         app.run();
         String output = outContent.toString();
 
-        // then - 에러 메시지 출력 후 정상 진행
+        // then
         assertThat(output).contains("[ERROR]");
         assertThat(output).contains("영기", "라이");
     }
