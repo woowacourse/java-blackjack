@@ -1,16 +1,7 @@
 package domain;
 
-import java.util.List;
-
 public class Player extends Participant {
-
-    public Player(Deck participantDeck, String name) {
-        super(participantDeck, name);
+    public Player(String name, Card card1, Card card2) {
+        super(name, card1, card2);
     }
-
-    @Override
-    public List<Card> getInitialVisibleCards() {
-        return super.getDeck().getCards();
-    }
-
 }
