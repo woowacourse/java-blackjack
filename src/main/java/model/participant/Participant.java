@@ -4,6 +4,7 @@ import static model.GameRule.BLACKJACK_SCORE;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import model.card.Card;
 import model.card.Cards;
 import model.card.Rank;
@@ -60,6 +61,19 @@ public abstract class Participant {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Participant that)) {
+            return false;
+        }
+        return Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(name);
     }
 
     public abstract Cards open();

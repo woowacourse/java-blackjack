@@ -1,5 +1,7 @@
 package model.card;
 
+import java.util.Objects;
+
 public class Card {
     private final Suit suit;
     private final Rank rank;
@@ -19,5 +21,18 @@ public class Card {
 
     public Rank getRank() {
         return rank;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Card card)) {
+            return false;
+        }
+        return suit == card.suit && rank == card.rank;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(suit, rank);
     }
 }
