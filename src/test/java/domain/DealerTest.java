@@ -6,7 +6,10 @@ import blackjack.domain.Card;
 import blackjack.domain.Dealer;
 import blackjack.domain.Denomination;
 import blackjack.domain.Hand;
+import blackjack.domain.Participant;
+import blackjack.domain.Participants;
 import blackjack.domain.Player;
+import blackjack.domain.Players;
 import blackjack.domain.Status;
 import blackjack.domain.Suit;
 import blackjack.domain.Trump;
@@ -58,13 +61,28 @@ public class DealerTest {
             new Player(new Hand(new ArrayList<>()), Status.HIT, "pobi"),
             new Player(new Hand(new ArrayList<>()), Status.HIT, "jason")
         );
-        int expected = 13 * 4 - (players.size() + 1) * 2;
+        Participants participants = new Participants(new Players(players), dealer);
+        int expectedTrumpSize = 13 * 4 - (players.size() + 1) * 2;
+        int participantHandSize = 2;
 
         dealer.pitch(players);
 
+        assertTrumpDeckSize(trump, expectedTrumpSize);
+        participants.all().forEach(participant ->
+            assertParticipantHandSize(participant, participantHandSize));
+    }
+
+    private void assertTrumpDeckSize(Trump trump, int expectedTrumpSize) {
         assertThat(trump).extracting("deck")
             .asInstanceOf(InstanceOfAssertFactories.LIST)
-            .hasSize(expected);
+            .hasSize(expectedTrumpSize);
+    }
+
+    private void assertParticipantHandSize(Participant participant, int participantHandSize) {
+        assertThat(participant).extracting("hand")
+            .extracting("cards")
+            .asInstanceOf(InstanceOfAssertFactories.LIST)
+            .hasSize(participantHandSize);
     }
 
     @Test
