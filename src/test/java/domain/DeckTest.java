@@ -8,9 +8,9 @@ import org.junit.jupiter.api.Test;
 
 public class DeckTest {
 
-    @DisplayName("카드 한 장 뽑아 반환하는 테스트")
+    @DisplayName("뽑은 카드가 올바른 카드인지 확인하는 테스트")
     @Test
-    void drawTest_notNull_ReturnCard() {
+    void drawTest_drawnCardIsValid_SameCard() {
         String cardNumber = "10";
         String cardPattern = "하트";
         Card tempCard = new Card(cardNumber, cardPattern);
