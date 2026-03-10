@@ -82,40 +82,36 @@ public class OutputView {
             printDealerResult(results, name);
             return;
         }
-        if (results.getFirst() == MatchResult.WIN) {
+        printPlayerResult(results.getFirst(), name);
+    }
+
+    private void printPlayerResult(MatchResult playerResult, String name) {
+        if (playerResult == MatchResult.WIN) {
             System.out.println(PLAYER_GAME_WIN.format(name));
             return;
         }
-        if (results.getFirst() == MatchResult.DRAW) {
+        if (playerResult == MatchResult.DRAW) {
             System.out.println(PLAYER_GAME_DRAW.format(name));
         }
         System.out.println(PLAYER_GAME_LOSE.format(name));
     }
 
-    private static void printDealerResult(List<MatchResult> results, String name) {
-        int win = (int) results.stream()
-                .filter(result -> result == MatchResult.WIN)
-                .count();
-        int draw = (int) results.stream()
-                .filter(result -> result == MatchResult.DRAW)
-                .count();
-        int lose = (int) results.stream()
-                .filter(result -> result == MatchResult.LOSE)
-                .count();
+    private void printDealerResult(List<MatchResult> results, String name) {
+        int win = countResult(results, MatchResult.WIN);
+        int draw = countResult(results, MatchResult.DRAW);
+        int lose = countResult(results, MatchResult.LOSE);
 
         StringBuilder dealerResult = new StringBuilder();
         dealerResult.append(name).append(": ");
-
-        if (win > 0) {
-            dealerResult.append(win).append("승 ");
-        }
-        if (draw > 0) {
-            dealerResult.append(draw).append("무 ");
-        }
-        if (lose > 0) {
-            dealerResult.append(lose).append("패 ");
-        }
-
+        if (win > 0) dealerResult.append(win).append("승 ");
+        if (draw > 0) dealerResult.append(draw).append("무 ");
+        if (lose > 0) dealerResult.append(lose).append("패 ");
         System.out.println(dealerResult);
+    }
+
+    private int countResult(List<MatchResult> results, MatchResult target) {
+        return (int) results.stream()
+                .filter(result -> result == target)
+                .count();
     }
 }
