@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
@@ -13,10 +14,12 @@ public class Members {
 
     private final List<Member> members;
 
-    public Members(List<String> playerNames) {
+    public Members(Map<String, Integer> players) {
         members = new ArrayList<>();
         members.add(new Dealer());
-        playerNames.forEach(playerName -> members.add(new Player(playerName)));
+        for (Entry<String, Integer> player : players.entrySet()) {
+            members.add(new Player(player.getKey(), player.getValue()));
+        }
     }
 
     public List<Card> getFirstCards(String memberName) {
@@ -70,6 +73,16 @@ public class Members {
                                 LinkedHashMap::new
                         )
                 );
+    }
+
+    public int getBettingAmount(String playerName) {
+        Member member = findByName(playerName);
+        return member.getBettingAmount();
+    }
+
+    public void applyBlackjackBonus(String playerName) {
+        Member member = findByName(playerName);
+        member.applyBlackjackBonus();
     }
 
     private Member findDealer() {
