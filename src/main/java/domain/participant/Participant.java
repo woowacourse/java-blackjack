@@ -14,6 +14,11 @@ public abstract class Participant {
         this.handCards = new HandCards();
     }
 
+    public Participant(String name, HandCards handCards) {
+        this.name = name;
+        this.handCards = handCards;
+    }
+
     public void receiveInitialCards(List<Card> firstHandCards) {
         handCards.receiveInitialCards(firstHandCards);
     }
