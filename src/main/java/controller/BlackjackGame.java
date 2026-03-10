@@ -2,6 +2,7 @@ package controller;
 
 import static config.BlackjackGameConstant.*;
 
+import domain.participant.dto.PlayerHandMapper;
 import domain.result.GameResultAnalyzer;
 import domain.result.dto.GameResultAnalysisDto;
 import domain.intention.DrawCardIntetion;
@@ -12,13 +13,14 @@ import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.ParticipantName;
 import domain.participant.Players;
-import domain.participant.dto.PlayerHandDto;
 import domain.participant.dto.PlayerResultDto;
 import view.ApplicationView;
 
 import java.util.List;
 
 public class BlackjackGame {
+
+    private static final int STARTING_REVEALED_CARD_COUNT = 1;
 
     private final ApplicationView view;
     private final CardDeck cardDeck;
@@ -38,7 +40,7 @@ public class BlackjackGame {
 
         handOutInitialCard(dealer, players);
 
-        printAllParticipantsHand(dealer, players);
+        printInitialParticipantsHand(dealer, players);
 
         proceedEachPlayersTurn(players, dealer);
         proceedDealersTurn(dealer);
@@ -57,8 +59,8 @@ public class BlackjackGame {
         players.toPlayerResultDtos().forEach(view::printFinalResultMessage);
     }
 
-    private void printAllParticipantsHand(Dealer dealer, Players players) {
-        view.printParticipantHand(PlayerHandDto.of(dealer));
+    private void printInitialParticipantsHand(Dealer dealer, Players players) {
+        view.printParticipantHand(PlayerHandMapper.from(dealer, STARTING_REVEALED_CARD_COUNT));
         view.printAllPlayersHand(players.toPlayerHandDtos());
     }
 
@@ -69,9 +71,7 @@ public class BlackjackGame {
     }
 
     private void proceedEachPlayersTurn(Players players, Dealer dealer) {
-        players.stream().forEach(player -> {
-            drawPlayerCard(player, dealer);
-        });
+        players.stream().forEach(player -> drawPlayerCard(player, dealer));
     }
 
     private void drawPlayerCard(Player player, Dealer dealer) {
@@ -80,7 +80,7 @@ public class BlackjackGame {
         DrawCardIntetion drawCardIntetion = view.requestDrawCardIntention(player.toDisplayMyName());
         while (!player.isBusted() && drawCardIntetion.isYes()) {
             dealer.handOutCardToPlayer(player, DEFAULT_CARD_DRAW_COUNT);
-            view.printParticipantHand(PlayerHandDto.of(player));
+            view.printParticipantHand(PlayerHandMapper.from(player));
         }
     }
 

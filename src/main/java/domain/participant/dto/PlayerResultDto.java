@@ -1,18 +1,10 @@
 package domain.participant.dto;
 
-import domain.participant.Dealer;
-import domain.participant.Player;
+import domain.participant.Participant;
 
 public record PlayerResultDto(PlayerHandDto playerHand, int resultScore) {
-
-    public static PlayerResultDto from(Player player) {
-        int resultScore = player.getResultScore();
-        return new PlayerResultDto(PlayerHandDto.of(player), resultScore);
+    public static PlayerResultDto from(Participant participant) {
+        int resultScore = participant.getResultScore();
+        return new PlayerResultDto(PlayerHandMapper.from(participant), resultScore);
     }
-
-    public static PlayerResultDto from(Dealer dealer) {
-        int resultScore = dealer.getResultScore();
-        return new PlayerResultDto(PlayerHandDto.generateAllCard(dealer), resultScore);
-    }
-
 }

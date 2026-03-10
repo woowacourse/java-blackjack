@@ -1,6 +1,7 @@
 package domain.participant;
 
 import domain.participant.dto.PlayerHandDto;
+import domain.participant.dto.PlayerHandMapper;
 import domain.participant.dto.PlayerResultDto;
 
 import java.util.List;
@@ -39,7 +40,7 @@ public class Players {
 
     public List<PlayerHandDto> toPlayerHandDtos() {
         return playerList.stream()
-                .map(PlayerHandDto::of)
+                .map(PlayerHandMapper::from)
                 .toList();
     }
 
