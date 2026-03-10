@@ -4,9 +4,11 @@ import domain.card.Card;
 
 public abstract class Participant {
     private final ParticipantInfo participantInfo;
+    private final Money bettingMoney;
 
-    public Participant(ParticipantInfo participantInfo) {
+    public Participant(ParticipantInfo participantInfo, Money bettingMoney) {
         this.participantInfo=participantInfo;
+        this.bettingMoney=bettingMoney;
     }
 
     public abstract void keepCard(Card card);
@@ -27,5 +29,9 @@ public abstract class Participant {
 
     public Hand getHand() {
         return participantInfo.getHand();
+    }
+
+    public int getBettingMoney() {
+        return bettingMoney.getBettingMoney();
     }
 }

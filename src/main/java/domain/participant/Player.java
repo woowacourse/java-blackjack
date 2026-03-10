@@ -5,8 +5,8 @@ import domain.card.Card;
 public class Player extends Participant {
     private static final int PLAYER_MAX_HITTABLE_SCORE = 21;
 
-    public Player(ParticipantInfo participantInfo) {
-        super(participantInfo);
+    public Player(ParticipantInfo participantInfo, Money bettingMoney) {
+        super(participantInfo, bettingMoney);
     }
 
     @Override
