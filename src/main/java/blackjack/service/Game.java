@@ -19,7 +19,7 @@ public class Game {
     }
 
     public void dealerDrawsCardsUntilDone(Dealer dealer) {
-        while (!dealer.isDealerDone()) {
+        while (dealer.isDealerNotDone()) {
             cardDistributor.distributeCardToDealer(dealer);
         }
     }

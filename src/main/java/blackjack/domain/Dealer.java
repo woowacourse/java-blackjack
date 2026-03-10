@@ -10,7 +10,7 @@ public class Dealer extends Participant{
         return drawnCards.getCardNames().size() - 2;
     }
 
-    public boolean isDealerDone() {
-        return calculateTotalScore() >= 17;
+    public boolean isDealerNotDone() {
+        return calculateTotalScore() < 17;
     }
 }

@@ -26,11 +26,11 @@ public class DealerTest {
         Dealer dealer1 = new Dealer();
         dealer1.receiveOneCard(new Card(Rank.TEN, Shape.HEART));
         dealer1.receiveOneCard(new Card(Rank.SEVEN, Shape.SPADE));
-        assertThat(dealer1.isDealerDone()).isEqualTo(true);
+        assertThat(dealer1.isDealerNotDone()).isEqualTo(false);
 
         Dealer dealer2 = new Dealer();
         dealer2.receiveOneCard(new Card(Rank.TWO, Shape.HEART));
         dealer2.receiveOneCard(new Card(Rank.SEVEN, Shape.SPADE));
-        assertThat(dealer2.isDealerDone()).isEqualTo(false);
+        assertThat(dealer2.isDealerNotDone()).isEqualTo(true);
     }
 }
