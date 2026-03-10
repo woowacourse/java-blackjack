@@ -3,8 +3,7 @@ package blackjack.util;
 import java.util.Arrays;
 import java.util.List;
 
-public class NameSplitter {
-
+public class Splitter {
     public static final String DELIMITER = ",";
 
     public static List<String> split(String names) {
