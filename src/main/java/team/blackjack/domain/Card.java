@@ -1,6 +1,7 @@
 package team.blackjack.domain;
 
 import java.util.List;
+import java.util.Set;
 
 public enum Card {
     ACE_OF_HEARTS(Suit.HEARTS, Number.ACE),
@@ -75,8 +76,8 @@ public enum Card {
         return this.number == Number.ACE;
     }
 
-    public List<Integer> getScore() {
-        return this.number.score;
+    public Set<Integer> getScore() {
+        return Set.copyOf(this.number.score);
     }
 
     public enum Suit {
@@ -101,24 +102,24 @@ public enum Card {
 
 
     public enum Number {
-        ACE("A", List.of(1, 11)),
-        TWO("2", List.of(2)),
-        THREE("3", List.of(3)),
-        FOUR("4", List.of(4)),
-        FIVE("5", List.of(5)),
-        SIX("6", List.of(6)),
-        SEVEN("7", List.of(7)),
-        EIGHT("8", List.of(8)),
-        NINE("9", List.of(9)),
-        TEN("10", List.of(10)),
-        JACK("J", List.of(10)),
-        QUEEN("Q", List.of(10)),
-        KING("K", List.of(10));
+        ACE("A", Set.of(1, 11)),
+        TWO("2", Set.of(2)),
+        THREE("3", Set.of(3)),
+        FOUR("4", Set.of(4)),
+        FIVE("5", Set.of(5)),
+        SIX("6", Set.of(6)),
+        SEVEN("7", Set.of(7)),
+        EIGHT("8", Set.of(8)),
+        NINE("9", Set.of(9)),
+        TEN("10", Set.of(10)),
+        JACK("J", Set.of(10)),
+        QUEEN("Q", Set.of(10)),
+        KING("K", Set.of(10));
 
         private final String name;
-        private final List<Integer> score;
+        private final Set<Integer> score;
 
-        Number(String name, List<Integer> score) {
+        Number(String name, Set<Integer> score) {
             this.name = name;
             this.score = score;
         }

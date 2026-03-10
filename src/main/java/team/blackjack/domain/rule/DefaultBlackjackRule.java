@@ -67,15 +67,20 @@ public class DefaultBlackjackRule {
 
     private static int aceScore(Card card, int currentSum) {
         if (DefaultBlackjackRule.canUseAceAsEleven(currentSum)) {
-            return card.getScore().getLast();
+            return card.getScore().stream()
+                    .max(Integer::compareTo)
+                    .orElseThrow(() -> new IllegalStateException("ACE 카드의 점수가 존재하지 않습니다."));
         }
 
-        return card.getScore().getFirst();
+        return card.getScore().stream()
+                .min(Integer::compareTo)
+                .orElseThrow(() -> new IllegalStateException("ACE 카드의 점수가 존재하지 않습니다."));
     }
 
     private static int calculateBestSumWithoutAce(List<Card> cards) {
         return cards.stream()
-                .mapToInt(card -> card.getScore().getFirst())
+                .flatMap(card -> card.getScore().stream())
+                .mapToInt(Integer::intValue)
                 .sum();
     }
 
