@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
-    public static void printHandOutMessage(PlayersDto playersDto) {
+    public void printHandOutMessage(PlayersDto playersDto) {
         String playersName = playersDto.playersDto().stream()
                 .map(PlayerDto::name)
                 .collect(Collectors.joining(","));
@@ -17,17 +17,15 @@ public class OutputView {
         System.out.print("\n딜러와 " + playersName + "에게 2장을 나누었습니다.");
     }
 
-    // 딜러카드 출력
-    public static void printDealerCardStatus(ResultDto resultDto) {
+    public void printDealerCardStatus(ResultDto resultDto) {
         System.out.printf("%n딜러카드: %s%n", getDealerCardStatus(resultDto));
     }
 
-    //플레이어 카드 출력
-    public static void printPlayerCardStatus(PlayerDto playerDto) {
+    public void printPlayerCardStatus(PlayerDto playerDto) {
         System.out.printf("%s카드: %s%n", playerDto.name(), getCardStatusFormat(playerDto.resultDto().cards()));
     }
 
-    public static void printCardStatus(PlayersDto playersDto, ResultDto resultDto) {
+    public void printCardStatus(PlayersDto playersDto, ResultDto resultDto) {
         printDealerCardStatus(resultDto);
         for (PlayerDto playerDto : playersDto.playersDto()) {
             printPlayerCardStatus(playerDto);
@@ -35,43 +33,42 @@ public class OutputView {
         System.out.print(System.lineSeparator());
     }
 
-    private static String getDealerCardStatus(ResultDto resultDto) {
+    private String getDealerCardStatus(ResultDto resultDto) {
         return resultDto.cards().getFirst();
     }
 
-    private static String getCardStatusFormat(List<String> cards) {
+    private String getCardStatusFormat(List<String> cards) {
         return String.join(", ", cards);
     }
 
-    public static void printAddDealerCardMessage() {
+    public void printAddDealerCardMessage() {
         System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printCardResult(ResultDto resultDto, PlayersDto playersDto) {
+    public void printCardResult(ResultDto resultDto, PlayersDto playersDto) {
         printDealerCardResult(resultDto);
         printPlayersCardResult(playersDto);
     }
 
-    private static void printDealerCardResult(ResultDto resultDto) {
+    private void printDealerCardResult(ResultDto resultDto) {
         System.out.printf("%n딜러카드: %s - 결과: %d",
                 getCardStatusFormat(resultDto.cards()),
                 resultDto.score());
     }
 
-    private static void printPlayersCardResult(PlayersDto playersDto) {
+    private void printPlayersCardResult(PlayersDto playersDto) {
         for (PlayerDto playerDto : playersDto.playersDto()) {
             printPlayerCardResult(playerDto);
         }
     }
 
-    // TODO 버스트 나면 버스트로 표시?
-    private static void printPlayerCardResult(PlayerDto playerDto) {
+    private void printPlayerCardResult(PlayerDto playerDto) {
         System.out.printf("%n%s카드: %s - 결과: %d", playerDto.name(),
                 getCardStatusFormat(playerDto.resultDto().cards()),
                 playerDto.resultDto().score());
     }
 
-    public static void printTotalResult(DealerFinalResultDto dealerFinalResultDto,
+    public void printTotalResult(DealerFinalResultDto dealerFinalResultDto,
                                         TotalFinalResultsDto totalFinalResultsDto) {
         System.out.println("\n\n## 최종 승패");
         System.out.print(dealerFinalResultDto.result());
