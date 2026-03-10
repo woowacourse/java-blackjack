@@ -9,10 +9,10 @@ import java.util.stream.Stream;
 
 public class Players {
 
-    private final List<Player> players;
+    private final List<Player> playerList;
 
-    private Players(List<Player> players) {
-        this.players = players;
+    private Players(List<Player> playerList) {
+        this.playerList = playerList;
     }
 
     public static Players from(List<PlayerName> playerNames) {
@@ -23,28 +23,28 @@ public class Players {
     }
 
     public Stream<Player> stream() {
-        return players.stream();
+        return playerList.stream();
     }
 
     public Players giveInitialCardBundle(Dealer dealer) {
-        players.forEach(dealer::handOutInitialCardToPlayer);
+        playerList.forEach(dealer::handOutInitialCardToPlayer);
         return this;
     }
 
     public List<String> displayNames() {
-        return players.stream()
+        return playerList.stream()
                 .map(Player::toDisplayMyName)
                 .toList();
     }
 
     public List<PlayerHandDto> toPlayerHandDtos() {
-        return players.stream()
+        return playerList.stream()
                 .map(PlayerHandDto::of)
                 .toList();
     }
 
     public List<PlayerResultDto> toPlayerResultDtos() {
-        return players.stream()
+        return playerList.stream()
                 .map(PlayerResultDto::from)
                 .toList();
     }
@@ -55,11 +55,11 @@ public class Players {
             return false;
         }
         Players players1 = (Players) o;
-        return Objects.equals(players, players1.players);
+        return Objects.equals(playerList, players1.playerList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(players);
+        return Objects.hashCode(playerList);
     }
 }
