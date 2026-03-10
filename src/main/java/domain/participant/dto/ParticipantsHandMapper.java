@@ -5,8 +5,11 @@ import java.util.List;
 
 public class PlayerHandMapper {
 
-    public static PlayerHandDto from(Participant participant) {
-        return new PlayerHandDto(participant.toDisplayMyName(), participant.disPlayMyCardBundle());
+    private ParticipantsHandMapper() {
+    }
+
+    public static ParticipantsHandDto from(Participant participant) {
+        return new ParticipantsHandDto(participant.toDisplayMyName(), participant.disPlayMyCardBundle());
     }
 
     public static PlayerHandDto from(Participant participant, int cardCount) {
