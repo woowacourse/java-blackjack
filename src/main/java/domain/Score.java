@@ -2,23 +2,14 @@ package domain;
 
 public final class Score {
     private static final int BLACKJACK_SCORE = 21;
-    private static final int DEALER_SCORE = 16;
 
-    private int score;
+    private final int score;
 
-    public Score() {
-        this.score = 0;
+    public Score(int score) {
+        this.score = score;
     }
 
-    public void addScore(int number) {
-        score += (number % 13);
-    }
-
-    public void subScore(int number) {
-        score -= number;
-    }
-
-    public int getScore() {
+    public int getGameScore() {
         return score;
     }
 
@@ -28,9 +19,5 @@ public final class Score {
 
     public boolean isBlackjack() {
         return score == BLACKJACK_SCORE;
-    }
-
-    public boolean isDealerDraw() {
-        return score <= DEALER_SCORE;
     }
 }
