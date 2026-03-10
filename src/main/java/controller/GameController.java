@@ -57,7 +57,7 @@ public class GameController {
         outputView.printStartCardMessage(playerNames);
         outputView.printDealerStartCard(dealer.getHand().getFirst().toString());
         outputView.printStartCard(
-                players.getPlayers().stream().map(p -> ParticipantDto.of(p.getName(), p)).toList());
+                players.getPlayers().stream().map(player -> ParticipantDto.of(player.getName(), player)).toList());
     }
 
     private void receiveMoreCard(Players players, Dealer dealer) {
