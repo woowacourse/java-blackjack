@@ -17,18 +17,6 @@ public enum GameResult {
         return result;
     }
 
-    public static GameResult judge(int dealerScore, int playerScore) {
-        if (dealerScore > playerScore) {
-            return LOSS;
-        }
-
-        if (dealerScore == playerScore) {
-            return DRAW;
-        }
-
-        return WIN;
-    }
-
     public GameResult reverseResult() {
         if (this == WIN) {
             return LOSS;
