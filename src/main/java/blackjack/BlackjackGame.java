@@ -47,24 +47,22 @@ public class BlackjackGame {
     }
 
     private void processPlayerTurn(final Player player) {
-        boolean hasHit = false;
         while (player.canReceiveCard()) {
-            hasHit |= askHitAndProcess(player);
+            askHitAndProcess(player);
         }
-        if (!hasHit) {
+        if (!player.hasAdditionalCard()) {
             OutputView.printPlayerCards(player);
         }
     }
 
-    private boolean askHitAndProcess(final Player player) {
+    private void askHitAndProcess(final Player player) {
         final boolean wantsHit = InputView.readHitDecision(player.getName());
         if (!wantsHit) {
             player.stay();
-            return false;
+            return;
         }
         dealer.dealCardTo(player);
         OutputView.printPlayerCards(player);
-        return true;
     }
 
     private void processDealerTurn() {
