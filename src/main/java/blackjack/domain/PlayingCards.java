@@ -87,13 +87,17 @@ public class PlayingCards {
         return calculateTotalScore() < BUSTED_SCORE;
     }
 
-    public boolean isBusted(int scoreSum) {
-        return scoreSum > BUSTED_SCORE;
+    private boolean isRawSumBusted() {
+        return calculateScoreSum() > BUSTED_SCORE;
+    }
+
+    public boolean isBusted() {
+        return calculateTotalScore() > BUSTED_SCORE;
     }
 
     public int calculateTotalScore() {
+        boolean busted = isRawSumBusted();
         int scoreSum = calculateScoreSum();
-        boolean busted = isBusted(scoreSum);
         if (busted) {
             int aceCount = countAce();
             return calculateWithAce(scoreSum, aceCount);
@@ -102,8 +106,8 @@ public class PlayingCards {
     }
 
     public int calculateTotalScoreForResult() {
+        boolean busted = isRawSumBusted();
         int scoreSum = calculateScoreSum();
-        boolean busted = isBusted(scoreSum);
         if (busted) {
             int aceCount = countAce();
             return bustedScore(scoreSum, aceCount);

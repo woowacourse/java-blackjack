@@ -7,7 +7,7 @@ import blackjack.domain.participant.Dealer;
 import blackjack.dto.DrawResult;
 import blackjack.dto.ParticipantResult;
 import blackjack.dto.PlayerNicknamesResult;
-import blackjack.dto.WinningResult;
+import blackjack.dto.TotalGameResult;
 import blackjack.util.PlayerNameParser;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -37,6 +37,15 @@ public class BlackjackRunner {
         gameEnd(participants);
     }
 
+    private PlayingCards gameStart(Participants participants, PlayingCards deck) {
+        return participants.distributeCards(deck);
+    }
+
+    private void printInitialSetup(Participants participants) {
+        PlayerNicknamesResult playerNicknamesResult = new PlayerNicknamesResult(participants);
+        outputView.printInitialSetUp(playerNicknamesResult);
+    }
+
     private void gameEnd(Participants participants) {
         printGameResult(participants);
     }
@@ -54,11 +63,6 @@ public class BlackjackRunner {
         outputView.printInitialResult(participantResults);
     }
 
-    private void printInitialSetup(Participants participants) {
-        PlayerNicknamesResult playerNicknamesResult = new PlayerNicknamesResult(participants);
-        outputView.printInitialSetUp(playerNicknamesResult);
-    }
-
     private Participants makeParticipants() {
         outputView.askGameMembers();
         String playerNamesInput = inputView.readLine();
@@ -71,13 +75,8 @@ public class BlackjackRunner {
     public void printGameResult(Participants participants) {
         List<ParticipantResult> participantResult = participants.getGameResult();
         outputView.printGameResult(participantResult);
-
-        List<WinningResult> winningResults = participants.getWinningResult();
-        outputView.printWinner(winningResults);
-    }
-
-    private PlayingCards gameStart(Participants participants, PlayingCards deck) {
-        return participants.distributeCards(deck);
+        TotalGameResult gameResult = participants.getWinningResult();
+        outputView.printWinner(gameResult);
     }
 
     private PlayingCards dealerTurn(Participants participants, PlayingCards deck) {

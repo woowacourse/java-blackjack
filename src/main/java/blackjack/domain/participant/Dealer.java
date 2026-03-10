@@ -1,6 +1,10 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.MatchResult;
 import blackjack.domain.PlayingCards;
+import blackjack.dto.DealerGameResult;
+import blackjack.dto.PlayerGameResult;
+import java.util.List;
 
 public class Dealer extends Participant {
 
@@ -26,5 +30,25 @@ public class Dealer extends Participant {
 
     public boolean isDealerDraw() {
         return hand.calculateTotalScore() <= DEALER_SCORE;
+    }
+
+    public boolean isBusted() {
+        return hand.isBusted();
+    }
+
+    public DealerGameResult getDealerWinningResult(List<PlayerGameResult> winningResultsWithDealer) {
+        int dealerWin = (int) winningResultsWithDealer
+            .stream()
+            .filter(result -> result.matchResult() == MatchResult.LOSE)
+            .count();
+        int dealerTie = (int) winningResultsWithDealer
+            .stream()
+            .filter(result -> result.matchResult() == MatchResult.TIE)
+            .count();
+        int dealerLose = (int) winningResultsWithDealer
+            .stream()
+            .filter(result -> result.matchResult() == MatchResult.WIN)
+            .count();
+        return new DealerGameResult(dealerWin, dealerTie, dealerLose);
     }
 }

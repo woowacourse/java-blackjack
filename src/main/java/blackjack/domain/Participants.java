@@ -3,9 +3,11 @@ package blackjack.domain;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
+import blackjack.dto.DealerGameResult;
 import blackjack.dto.DrawResult;
 import blackjack.dto.ParticipantResult;
-import blackjack.dto.WinningResult;
+import blackjack.dto.PlayerGameResult;
+import blackjack.dto.TotalGameResult;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,23 +55,17 @@ public class Participants {
 
     public List<ParticipantResult> getGameResult() {
         List<Participant> participants = getParticipants();
-        List<ParticipantResult> resultList = new ArrayList<>();
+        List<ParticipantResult> participantsTotalGameResult = new ArrayList<>();
         for (Participant participant : participants) {
-            resultList.add(new ParticipantResult(participant));
+            participantsTotalGameResult.add(new ParticipantResult(participant));
         }
-        return resultList;
+        return participantsTotalGameResult;
     }
 
-    public List<WinningResult> getWinningResult() {
-        int dealerScore = dealer.getTotalScoreForResult();
-        if (dealerScore == 0) {
-            dealerScore = 1;
-        }
-        return getPlayerWinningResult(dealerScore);
-    }
-
-    private List<WinningResult> getPlayerWinningResult(int dealerScore) {
-        return players.getWinningResults(dealerScore);
+    public TotalGameResult getWinningResult() {
+        List<PlayerGameResult> winningResultsWithDealer = players.getWinningResultsWithDealer(dealer);
+        DealerGameResult dealerWinningResult = dealer.getDealerWinningResult(winningResultsWithDealer);
+        return new TotalGameResult(dealerWinningResult, winningResultsWithDealer);
     }
 
     public String findDrawablePlayer() {

@@ -1,8 +1,10 @@
 package blackjack.view;
 
+import blackjack.dto.DealerGameResult;
 import blackjack.dto.ParticipantResult;
 import blackjack.dto.PlayerNicknamesResult;
-import blackjack.dto.WinningResult;
+import blackjack.dto.PlayerGameResult;
+import blackjack.dto.TotalGameResult;
 import java.util.List;
 
 public class OutputView {
@@ -37,11 +39,27 @@ public class OutputView {
         printLine(String.format("%s카드: %s", drawablePlayerNickname, statusByDisplayName));
     }
 
-    public void printWinner(List<WinningResult> winningResultList) {
+    public void printWinner(TotalGameResult gameResult) {
         printNewLine();
         printLine("## 최종 승패");
-        printLine(winningResultList.removeFirst().dealerWinningResult());
-        winningResultList.forEach(winningResult -> printLine(winningResult.playerWinningResult()));
+        printDealerGameResult(gameResult.dealerGameResult());
+        printPlayersGameResult(gameResult.playerGameResult());
+//        winningResultList.forEach(winningResult -> printLine(winningResult.playerWinningResult()));
+    }
+
+    private void printPlayersGameResult(List<PlayerGameResult> playerGameResults) {
+        for (PlayerGameResult playerGameResult : playerGameResults) {
+            printLine(
+                String.format("%s: %s",
+                    playerGameResult.nickname(),
+                    playerGameResult.matchResult().getMessage()
+                )
+            );
+        }
+    }
+
+    private void printDealerGameResult(DealerGameResult dealerGameResult) {
+        printLine(String.format("딜러: %d승 %d패", dealerGameResult.dealerWin(), dealerGameResult.dealerLose()));
     }
 
     public void printGameResult(List<ParticipantResult> participantResult) {
