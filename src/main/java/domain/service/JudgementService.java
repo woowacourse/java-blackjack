@@ -48,7 +48,7 @@ public class JudgementService {
             return;
         }
         // 합산 비교
-        if (player.isAlive() && dealer.isAlice()) {
+        if (player.isAlive() && dealer.isAlive()) {
             judgeStatusByDeckSum(player, dealer);
         }
     }

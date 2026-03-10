@@ -8,7 +8,6 @@ import repository.CardRepository;
 import util.NumberGenerator;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.fail;
 
 public class CardTest {
 

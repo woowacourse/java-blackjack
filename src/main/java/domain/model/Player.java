@@ -1,5 +1,8 @@
 package domain.model;
 
+import static constant.BlackJackConstant.BURST_CRITERIA;
+
+import constant.BlackJackConstant;
 import java.util.List;
 
 public class Player implements Person {
@@ -48,7 +51,7 @@ public class Player implements Person {
     }
 
     public boolean isBurst() {
-        return deck.getDeckStatus() == DeckStatus.BURST;
+        return deck.calculateFinalSum() > BURST_CRITERIA;
     }
 
     public boolean isAlive() {

@@ -14,7 +14,9 @@ public class Deck {
     }
 
     public static Deck of(List<Card> cards) {
-        return new Deck(cards);
+        Deck deck = new Deck(cards);
+        deck.checkStatus(deck.calculateFinalSum());
+        return deck;
     }
 
     public int getSum() {
@@ -30,7 +32,6 @@ public class Deck {
     public List<Card> getCards() {
         return List.copyOf(cards);
     }
-
 
     // 최종 점수 계산 메서드
     public int calculateFinalSum() {
@@ -51,7 +52,7 @@ public class Deck {
     public void append(Card card) {
         if (deckStatus == DeckStatus.ALIVE) {
             this.cards.add(card);
-            checkStatus(getSum());
+            checkStatus(calculateFinalSum());
         }
     }
 

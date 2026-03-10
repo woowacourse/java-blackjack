@@ -24,7 +24,7 @@ public class Dealer implements Person {
         return deck.getDeckStatus() == DeckStatus.BURST;
     }
 
-    public boolean isAlice() {
+    public boolean isAlive() {
         return deck.getDeckStatus() == DeckStatus.ALIVE;
     }
 
