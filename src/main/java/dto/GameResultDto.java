@@ -13,12 +13,15 @@ public class GameResultDto {
 
     public GameResultDto(Map<MatchResult, Integer> dealerResult, Map<Player, MatchResult> playersResult) {
         this.dealerResult = dealerResult;
-        this.playersResult = playersResult.entrySet()
+        this.playersResult = Map.copyOf(
+                playersResult.entrySet()
                 .stream()
                 .collect(Collectors.toMap(
                         entry -> entry.getKey().getName(),
                         Map.Entry::getValue
-                ));    }
+                ))
+        );
+    }
 
     public Map<MatchResult, Integer> getDealerResult() {
         return dealerResult;
