@@ -9,7 +9,7 @@ public class Main {
         OutputView outputView = new OutputView();
         List<String> playerNames = inputView.readPlayerNames();
         BlackjackGame game = new BlackjackGame(playerNames);
-        game.initialDeal(playerNames);
+        game.initialDeal();
         outputView.printInitialStatus(game.getDealerName(), game.memberFirstHands());
         for (String playerName : playerNames) {
             askToDraw(playerName, inputView, outputView, game);
@@ -26,7 +26,7 @@ public class Main {
 
     private static void printResult(OutputView outputView, BlackjackGame game) {
         if (game.canDealerDraw()) {
-            game.dealerDrawCard();
+            game.drawDealer();
             outputView.printDealerDrawResult();
         }
         outputView.printFinalMemberStatus(game.memberHands());
