@@ -1,84 +1,44 @@
 package domain;
 
-import java.util.List;
-
 import meesage.OutputMessage;
 
 public class Dealer {
 
-    private final List<Card> cards;
+    private final Cards cards;
 
-    private Dealer(List<Card> cards) {
+    private Dealer(Cards cards) {
         this.cards = cards;
     }
 
-    public static Dealer of(List<Card> cards) {
+    public static Dealer of(Cards cards) {
         return new Dealer(cards);
     }
 
     public void addCard(Card card) {
-        cards.add(card);
-    }
-
-    public int calculateScore() {
-        int cardScore = calculateRawScore();
-        int aceCount = countAce();
-
-        for (int i = 0; i < aceCount; i++) {
-            cardScore = adjustForAce(cardScore);
-        }
-
-        return cardScore;
-    }
-
-    private int calculateRawScore() {
-        return cards.stream()
-                .mapToInt(Card::getScore)
-                .sum();
-    }
-
-    private int countAce() {
-        return (int) cards.stream().filter(Card::isAce).count();
-    }
-
-    private int adjustForAce(int cardScore) {
-        if (isBust(cardScore)) {
-            cardScore -= Policy.ACE_HIGH_LOW_DIFF;
-        }
-        return cardScore;
-    }
-
-    public boolean isBust(int cardScore) {
-        return cardScore > Policy.BUST_THRESHOLD;
-    }
-
-    public int getScoreOrZeroIfBust() {
-        int score = calculateScore();
-        if (isBust(score)) {
-            return Policy.BUST_SCORE;
-        }
-        return score;
+        cards.addCard(card);
     }
 
     public String getDealerInfo() {
-        return OutputMessage.DEALER_CARD_INFO.format(OutputMessage.DELIMITER.join(getCardsInfo()));
+        return OutputMessage.DEALER_CARD_INFO.format(OutputMessage.DELIMITER.join(cards.getCardsInfo()));
     }
 
-    public List<String> getCardsInfo() {
-        return cards.stream()
-                .map(Card::getName)
-                .toList();
+    public int getScoreOrZeroIfBust(){
+        return cards.getScoreOrZeroIfBust();
     }
 
     public String getDealerInitialInfo() {
-        return OutputMessage.DEALER_CARD_INFO.format(getCardsInfo().getFirst());
+        return OutputMessage.DEALER_CARD_INFO.format(cards.getCardsInfo().getFirst());
     }
 
     public String getDealerScoreInfo() {
-        return OutputMessage.RESULT_TEXT.format(getDealerInfo(), calculateScore());
+        return OutputMessage.RESULT_TEXT.format(getDealerInfo(), cards.calculateScore());
     }
 
     public boolean shouldHit() {
-        return calculateScore() < Policy.DEALER_HIT_THRESHOLD;
+        return cards.calculateScore() < Policy.DEALER_HIT_THRESHOLD;
+    }
+
+    public int getCardSize() {
+        return cards.size();
     }
 }

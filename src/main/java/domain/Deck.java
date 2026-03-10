@@ -2,13 +2,11 @@ package domain;
 
 import static java.util.Arrays.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Stream;
 
 public class Deck {
 
-    private final List<Card> cards;
+    private final Cards cards;
 
     private Deck(CardShuffleStrategy shuffleStrategy) {
         this.cards = generateCards();
@@ -19,15 +17,15 @@ public class Deck {
         return new Deck(shuffleStrategy);
     }
 
-    private List<Card> generateCards() {
-        return new ArrayList<>(stream(Rank.values())
+    private Cards generateCards() {
+        return Cards.of(stream(Rank.values())
                 .flatMap(rank -> stream(Suit.values())
                         .map(suit -> Card.of(rank, suit)))
                 .toList());
     }
 
-    public List<Card> drawInitialHand() {
-        return new ArrayList<>(Stream.generate(this::draw)
+    public Cards drawInitialHand() {
+        return Cards.of(Stream.generate(this::draw)
                 .limit(Policy.FIRST_DRAW_SIZE)
                 .toList());
     }

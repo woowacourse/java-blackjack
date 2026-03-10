@@ -24,7 +24,7 @@ public class BlackjackController {
         List<String> userNames = getUserNames();
 
         Deck deck = Deck.of(new RandomCardStrategy());
-        ;
+
         Dealer dealer = Dealer.of(deck.drawInitialHand());
         Players players = Players.of(deck, userNames);
 
@@ -85,12 +85,12 @@ public class BlackjackController {
     }
 
     private boolean shouldDrawCard(Player player, String answer) {
-        return !player.isBust(player.calculateScore()) && sayYes(answer);
+        return !player.isBust() && sayYes(answer);
     }
 
     private void dealAdditionalCardIfRequested(Player player, Deck deck, boolean wantsCard) {
         if (extracted(player, deck, wantsCard)) return;
-        if (player.getCardsInfo().size() == Policy.FIRST_DRAW_SIZE) {
+        if (player.getCardSize() == Policy.FIRST_DRAW_SIZE) {
             outputView.println(player.getPlayerInfo());
         }
     }

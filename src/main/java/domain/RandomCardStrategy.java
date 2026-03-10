@@ -1,12 +1,9 @@
 package domain;
 
-import java.util.Collections;
-import java.util.List;
-
-public class RandomCardStrategy implements CardShuffleStrategy{
+public class RandomCardStrategy implements CardShuffleStrategy {
 
     @Override
-    public void shuffle(List<Card> cards) {
-        Collections.shuffle(cards);
+    public void shuffle(Cards cards) {
+        cards.shuffle();
     }
 }
