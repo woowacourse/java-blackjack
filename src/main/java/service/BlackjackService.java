@@ -33,7 +33,7 @@ public class BlackjackService {
     }
 
     public Dealer createDealer(Cards cards) {
-        Dealer dealer = new Dealer(BlackjackController.DEALER_NAME);
+        Dealer dealer = new Dealer();
         giveInitialedCard(cards, dealer);
         return dealer;
     }
