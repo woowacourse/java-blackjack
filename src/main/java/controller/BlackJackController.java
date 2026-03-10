@@ -18,13 +18,15 @@ public class BlackJackController {
     }
 
     public void playGame() {
-        readUntilValidPlayers();
+        readPlayersUntilValid();
+        readPlayerBetAmountUntilValid();
         gameManager.dealInitialCardsToParticipants();
-        outputView.showInitialHandsOfParticipants(gameManager.toDealerHandDto(), gameManager.toPlayersHandDto());
+        outputView.showInitialHandsOfParticipants(gameManager.toDealerDto(), gameManager.toPlayersDto());
 
         playBlackJack();
-        outputView.showHandResultsOfParticipants(gameManager.toDealerHandDto(), gameManager.toPlayersHandDto());
-        outputView.showGameResult(gameManager.calculateResults());
+        outputView.showHandResultsOfParticipants(gameManager.toDealerDto(), gameManager.toPlayersDto());
+//        outputView.showMatchResult(gameManager.getGameResults());
+        outputView.showProfitResult(gameManager.getProfitResults());
     }
 
     private void playBlackJack() {
@@ -37,7 +39,7 @@ public class BlackJackController {
             if (!inputView.readPlayerToHitUntilValid(player.getName())) break;
 
             gameManager.dealCardTo(player);
-            outputView.showPlayerHand(player.getName(), gameManager.toPlayersHandDto());
+            outputView.showPlayerHand(player.getName(), gameManager.toPlayersDto());
         }
     }
 
@@ -45,13 +47,13 @@ public class BlackJackController {
         while (gameManager.isDealerShouldHit()) {
             outputView.showDealerHitMessage();
             gameManager.dealCardToDealer();
-            outputView.showDealerHand(gameManager.toDealerHandDto());
+            outputView.showDealerHand(gameManager.toDealerDto());
         }
 
         outputView.showDealerStandMessage();
     }
 
-    private void readUntilValidPlayers() {
+    private void readPlayersUntilValid() {
         while (true) {
             try {
                 gameManager.addPlayers(inputView.readPlayers());
@@ -61,4 +63,16 @@ public class BlackJackController {
             }
         }
     }
+
+    private void readPlayerBetAmountUntilValid() {
+        while (true) {
+            try {
+                gameManager.forEachPlayerPlaceBet(inputView::readPlayerBetAmount);
+                return;
+            } catch (IllegalArgumentException e) {
+                OutputView.printErrorMessage(e.getMessage());
+            }
+        }
+    }
+
 }
