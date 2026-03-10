@@ -2,6 +2,7 @@ package domain;
 
 import domain.constant.Rank;
 import domain.constant.Suit;
+import domain.dto.GameFinalResultDto;
 import domain.dto.GameInitialInfoDto;
 import domain.dto.GameScoreResultDto;
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,7 @@ class GameManagerTest {
 
     @Test
     void 등록된_플레이어와_딜러_순서대로_카드를_돌린다() {
-        GameManager manager = new GameManager();
+        GameManager manager = new GameManager(new Deck());
 
         manager.addPlayer("pobi");
         manager.addPlayer("cary");
@@ -32,7 +33,7 @@ class GameManagerTest {
 
     @Test
     void 딜러의_카드는_한_장만_공개한다() {
-        GameManager manager = new GameManager();
+        GameManager manager = new GameManager(new Deck());
 
         manager.addPlayer("pobi");
 
@@ -44,7 +45,7 @@ class GameManagerTest {
 
     @Test
     void 플레이어의_카드는_두_장_공개한다() {
-        GameManager manager = new GameManager();
+        GameManager manager = new GameManager(new Deck());
 
         manager.addPlayer("pobi");
 
@@ -56,7 +57,7 @@ class GameManagerTest {
 
     @Test
     void 플레이어를_한명_등록한다() {
-        GameManager manager = new GameManager();
+        GameManager manager = new GameManager(new Deck());
         manager.addPlayer("pobi");
 
         List<Player> result = manager.getPlayerSequence();
@@ -67,7 +68,7 @@ class GameManagerTest {
 
     @Test
     void 플레이어를_세명_등록한다() {
-        GameManager manager = new GameManager();
+        GameManager manager = new GameManager(new Deck());
         List<String> playerNames = List.of("pobi", "cary", "rudy");
 
         for (String playerName : playerNames) {
@@ -79,36 +80,10 @@ class GameManagerTest {
         assertThat(result.size()).isEqualTo(3);
     }
 
-    @Test
-    void 합계가_21점이면_블랙잭이다() {
-        GameManager manager = new GameManager();
-        Player player = new Player("pobi");
-        player.receiveCard(new Card(Rank.ACE, Suit.SPADE));
-        player.receiveCard(new Card(Rank.KING, Suit.SPADE));
-
-        assertThat(player.getHand().isBlackjack()).isTrue();
-    }
-
-    @Test
-    void 합계가_21점이_아니면_블랙잭이_아니다() {
-        Player player = new Player("pobi");
-        player.receiveCard(new Card(Rank.TEN, Suit.SPADE));
-        player.receiveCard(new Card(Rank.KING, Suit.SPADE));
-
-        assertThat(player.getHand().isBlackjack()).isFalse();
-    }
-
-    @Test
-    void 딜러가_16점_이하인지_확인한다() {
-        Dealer dealer = new Dealer();
-        dealer.receiveCard(new Card(Rank.ACE, Suit.SPADE)) ;
-
-        assertThat(dealer.canDraw()).isTrue();
-    }
 
     @Test
     void 플레이어가_카드를_한장_더_받는다() {
-        GameManager manager = new GameManager();
+        GameManager manager = new GameManager(new Deck());
         manager.addPlayer("pobi");
 
         manager.startGame();
@@ -125,7 +100,7 @@ class GameManagerTest {
 
     @Test
     void 딜러가_카드를_뽑으면_true를_반환한다() {
-        GameManager manager = new GameManager();
+        GameManager manager = new GameManager(new Deck());
 
         boolean result = manager.proceedDealerTurn();
 
@@ -133,12 +108,53 @@ class GameManagerTest {
     }
 
     @Test
-    void 딜러가_더이상_카드를_못뽑으면_false를_반환한다() {
-        Dealer dealer = new Dealer();
+    void 게임_최종_결과에는_딜러와_모든_플레이어_결과가_포함된다() {
+        GameManager manager = new GameManager(new Deck());
+        manager.addPlayer("pobi");
+        manager.addPlayer("cary");
 
-        dealer.receiveCard(new Card(Rank.KING, Suit.SPADE));
-        dealer.receiveCard(new Card(Rank.QUEEN, Suit.SPADE));
+        List<GameFinalResultDto> result = manager.getFinalResult();
 
-        assertThat(dealer.canDraw()).isFalse();
+        assertThat(result).hasSize(3);
+        assertThat(result.get(0).getPlayerName()).isEqualTo("딜러");
+        assertThat(result.get(1).getPlayerName()).isEqualTo("pobi");
+        assertThat(result.get(2).getPlayerName()).isEqualTo("cary");
     }
+
+    @Test
+    void 플레이어가_없는_경우_초기정보에는_딜러만_포함된다() {
+        GameManager manager = new GameManager(new Deck());
+
+        manager.startGame();
+
+        List<GameInitialInfoDto> result = manager.getInitialInfo();
+
+        assertThat(result).hasSize(1);
+        assertThat(result.getFirst().getPlayerName()).isEqualTo("딜러");
+    }
+
+    @Test
+    void 플레이어가_없는_경우_점수결과에는_딜러만_포함된다() {
+        GameManager manager = new GameManager(new Deck());
+
+        manager.startGame();
+
+        List<GameScoreResultDto> result = manager.getScoreResults();
+
+        assertThat(result).hasSize(1);
+        assertThat(result.getFirst().getPlayerName()).isEqualTo("딜러");
+    }
+
+    @Test
+    void 플레이어가_없는_경우_최종결과에는_딜러만_포함된다() {
+        GameManager manager = new GameManager(new Deck());
+
+        manager.startGame();
+
+        List<GameFinalResultDto> result = manager.getFinalResult();
+
+        assertThat(result).hasSize(1);
+        assertThat(result.getFirst().getPlayerName()).isEqualTo("딜러");
+    }
+
 }

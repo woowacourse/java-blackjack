@@ -79,7 +79,7 @@ public class OutputView {
 
     private void printDealerResult(GameFinalResultDto firstPlayer, Map<Result, Integer> resultCounts) {
         StringBuilder sb = new StringBuilder();
-        sb.append(firstPlayer.getName()).append(": ");
+        sb.append(firstPlayer.getPlayerName()).append(": ");
         for (Result result : resultCounts.keySet()) {
             sb.append(resultCounts.get(result)).append(result.getName());
         }
@@ -91,7 +91,7 @@ public class OutputView {
         for (GameFinalResultDto result : finalResult) {
             System.out.println(MessageFormat.format(
                     FINAL_RESULT_MESSAGE,
-                    result.getName(),
+                    result.getPlayerName(),
                     result.getResult().getName()
             ));
         }

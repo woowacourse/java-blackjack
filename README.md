@@ -48,10 +48,10 @@
 - [x] domain.GameManager 리팩터링
 - [x] 패키지 정리
 - [x] drawDealerCard() 메서드의 응답값 미사용
-- [ ] GameManager의 책임 재분배 
+- [x] GameManager의 책임 재분배 
   - [x] Deck 초기화, 셔플 책임 제거
-  - [ ] DTO 생성 책임 분리
-  - [ ] 승패 판정 책임 분리
+  - [x] DTO 생성 책임 분리
+  - [x] 승패 판정 책임 분리
 - [x] GameController 구조 수정
 - [x] 디미터의 법칙 
   - [x] 스트림 체이닝은 줄바꿈해서 작성
@@ -61,8 +61,7 @@
 - [x] primitive 타입 wrapper로 감싸기
 - [x] 일급 컬렉션 -> Hand로 수정
   - [x] 핸드 기능 추가(스코어 계산, 상태값 판단, ACE 계산 로직) 및 기존 Calculator 제거
-- [ ] Controller 구조 수정
 - [x] mutable이어야 할 이유가 없다면, 반드시 final을 붙일 것
 - [x] 플레이어가 입력되지 않는 경우에 대한 예외처리
-- [ ] 규칙 적용
+- [x] 규칙 적용
 - [ ] 테스트 케이스 추가

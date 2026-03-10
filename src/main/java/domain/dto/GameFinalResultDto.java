@@ -3,22 +3,22 @@ package domain.dto;
 import domain.constant.Result;
 
 public class GameFinalResultDto {
-    String name;
+    String playerName;
     Result result;
     // TODO: 베팅 기능 추가 시 베팅 금액, 정산 금액(수익/손실) 필드 추가 필요
 
 
-    public GameFinalResultDto(String name) {
-        this(name, null);
+    public GameFinalResultDto(String playerName) {
+        this(playerName, null);
     }
 
-    public GameFinalResultDto(String name, Result result) {
-        this.name = name;
+    public GameFinalResultDto(String playerName, Result result) {
+        this.playerName = playerName;
         this.result = result;
     }
 
-    public String getName() {
-        return name;
+    public String getPlayerName() {
+        return playerName;
     }
 
     public Result getResult() {
@@ -28,7 +28,7 @@ public class GameFinalResultDto {
     @Override
     public String toString() {
         return "domain.dto.GameFinalResultDto{" +
-                "name='" + name + '\'' +
+                "name='" + playerName + '\'' +
                 ", result=" + result +
                 '}';
     }
