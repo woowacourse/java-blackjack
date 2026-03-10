@@ -8,6 +8,8 @@ import java.util.List;
 import static domain.BlackjackRule.BLACK_JACK;
 
 public class Hand {
+    public static final int ACE_ADJUST_VALUE = 10;
+
     private final List<Card> cards;
 
     public Hand() {
@@ -27,7 +29,7 @@ public class Hand {
         int aceCount = countAce();
 
         while (total > BLACK_JACK && aceCount > 0) {
-            total -= 10;
+            total -= ACE_ADJUST_VALUE;
             aceCount--;
         }
 
