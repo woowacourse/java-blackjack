@@ -19,6 +19,37 @@ import org.junit.jupiter.api.Test;
 public class DealerTest {
 
     @Test
+    @DisplayName("플레이어에게 카드 전달 테스트")
+    void 플레이어에게_카드_전달_테스트() {
+        Trump trump = new Trump();
+        Player player = new Player(new Hand(new ArrayList<>()), Status.HIT, "pobi");
+        Dealer dealer = new Dealer(new Hand(new ArrayList<>()), Status.HIT, trump);
+        int expected = 1;
+
+        dealer.giveCardTo(player);
+
+        assertThat(player).extracting("hand")
+            .extracting("cards")
+            .asInstanceOf(InstanceOfAssertFactories.LIST)
+            .hasSize(expected);
+    }
+
+    @Test
+    @DisplayName("딜러 자신에게 카드 전달 테스트")
+    void 딜러_자신에게_카드_전달_테스트() {
+        Trump trump = new Trump();
+        Dealer dealer = new Dealer(new Hand(new ArrayList<>()), Status.HIT, trump);
+        int expected = 1;
+
+        dealer.giveCardMyself();
+
+        assertThat(dealer).extracting("hand")
+            .extracting("cards")
+            .asInstanceOf(InstanceOfAssertFactories.LIST)
+            .hasSize(expected);
+    }
+
+    @Test
     @DisplayName("딜러 피치 테스트")
     void 딜러_피치_테스트() {
         Trump trump = new Trump();
