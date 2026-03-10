@@ -6,7 +6,6 @@ import blackjack.domain.Players;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.dto.DealerInitialHand;
-import blackjack.dto.GameResultDisplayName;
 import blackjack.dto.ParticipantHandScore;
 import blackjack.dto.PlayerGameResult;
 import blackjack.dto.PlayerHand;
@@ -85,27 +84,8 @@ public class BlackjackRunner {
 
         List<PlayerGameResult> gameResults = determineGameResults(participants.getPlayers(), participants.getDealer());
         TotalWinningResult totalWinningResult = TotalWinningResult.from(gameResults);
-        printWinningResults(totalWinningResult);
-    }
 
-    private void printWinningResults(TotalWinningResult totalWinningResult) {
-        outputView.printWinningResults();
-        printDealerWinning(totalWinningResult);
-        printPlayerWinning(totalWinningResult);
-    }
-
-    private void printPlayerWinning(TotalWinningResult totalWinningResult) {
-        totalWinningResult.playersResults()
-                .forEach(playerGameResult -> {
-                    outputView.printPlayerWinningResult(
-                            playerGameResult.nickname(),
-                            GameResultDisplayName.from(playerGameResult.gameResult())
-                    );
-                });
-    }
-
-    private void printDealerWinning(TotalWinningResult totalWinningResult) {
-        outputView.printDealerWinningResults(totalWinningResult);
+        outputView.printWinningResults(totalWinningResult);
     }
 
     private List<PlayerGameResult> determineGameResults(List<Player> players, Dealer dealer) {
@@ -130,6 +110,9 @@ public class BlackjackRunner {
             currentPlayer.addCardFrom(deck);
             printPlayerHand(currentPlayer);
             return;
+        }
+        if (currentPlayer.getCards().size() == 2) {
+            printPlayerHand(currentPlayer);
         }
         currentPlayer.stopDrawing();
     }

@@ -68,9 +68,11 @@ public class OutputView {
         printLine(String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", nickname));
     }
 
-    public void printWinningResults() {
+    public void printWinningResults(TotalWinningResult totalWinningResult) {
         printNewLine();
         printLine("## 최종 승패");
+        printDealerWinningResults(totalWinningResult);
+        printPlayerWinningResults(totalWinningResult);
     }
 
     public void printDealerWinningResults(TotalWinningResult totalWinningResult) {
@@ -81,7 +83,17 @@ public class OutputView {
         printLine(String.format("딜러: %d승 %d패", totalWinningResult.dealerWin(), totalWinningResult.dealerLoss()));
     }
 
-    public void printPlayerWinningResult(String nickname, GameResultDisplayName gameResult) {
-        printLine(String.format("%s: %s", nickname, gameResult.displayName()));
+    public void printPlayerWinningResults(TotalWinningResult totalWinningResult) {
+        totalWinningResult.playersResults()
+                .forEach(playerGameResult -> {
+                    printPlayerWinningResult(
+                            playerGameResult.nickname(),
+                            GameResultDisplayName.from(playerGameResult.gameResult())
+                    );
+                });
+    }
+
+    private void printPlayerWinningResult(String nickname, GameResultDisplayName from) {
+        printLine(String.format("%s: %s", nickname, from.displayName()));
     }
 }
