@@ -55,7 +55,7 @@ public class Gamblers {
     }
 
     public List<Gambler> getGamblers() {
-        return gamblers;
+        return List.copyOf(gamblers);
     }
 
     public void validateDuplicateNames(List<String> names) {
