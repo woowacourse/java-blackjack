@@ -18,7 +18,11 @@ public class Card {
         return this.rank == Rank.ACE;
     }
 
-    public String getDisplayName() {
-        return String.format("%s%s", rank.getRankName(), suit.getSuitDisplayName());
+    public Rank getRank() {
+        return rank;
+    }
+
+    public Suit getSuit() {
+        return suit;
     }
 }
