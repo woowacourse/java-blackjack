@@ -1,12 +1,12 @@
 package view;
 
+import static domain.GameManager.validatePlayerNamesSize;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
-
-    private static final Integer MAX_PLAYER = 8;
 
     public static List<String> askPlayerNames() {
         Scanner sc = new Scanner(System.in);
@@ -32,23 +32,6 @@ public class InputView {
                 .map(String::trim)
                 .toList();
         return playerNames;
-    }
-
-    private static void validatePlayerNamesSize(List<String> playerNames) {
-        validateMinimumPlayers(playerNames);
-        validateMaximumPlayers(playerNames);
-    }
-
-    private static void validateMaximumPlayers(List<String> playerNames) {
-        if (playerNames.size() > MAX_PLAYER) {
-            throw new IllegalArgumentException("플레이어의 수는 8명을 초과할 수 없습니다.");
-        }
-    }
-
-    private static void validateMinimumPlayers(List<String> playerNames) {
-        if (playerNames.isEmpty()) {
-            throw new IllegalArgumentException("플레이어의 수는 1명 이상이어야 합니다.");
-        }
     }
 
     private static void validateContinueResponse(String input) {
