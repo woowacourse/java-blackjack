@@ -18,6 +18,8 @@ import view.OutputView;
 
 import java.util.List;
 
+import static domain.BlackjackRule.DEALER_NAME;
+
 public class BlackjackGame {
     private final InputView inputView;
     private final OutputView outputView;
@@ -32,7 +34,7 @@ public class BlackjackGame {
         List<String> parsedName = InputParser.parseName(names);
 
         Players players = new Players(parsedName);
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(DEALER_NAME);
 
         CardShuffleStrategy cardShuffleStrategy = new RandomShuffleStrategy();
         Deck deck = Deck.createDeck(cardShuffleStrategy);

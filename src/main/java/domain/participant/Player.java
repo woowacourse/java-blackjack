@@ -1,8 +1,8 @@
 package domain.participant;
 
-public class Player extends Participant {
+import static domain.BlackjackRule.BLACK_JACK;
 
-    public static final int BLACK_JACK = 21;
+public class Player extends Participant {
 
     public Player(String name) {
         super(name);

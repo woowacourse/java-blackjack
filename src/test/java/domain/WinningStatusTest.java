@@ -8,6 +8,7 @@ import domain.participant.Dealer;
 import domain.participant.Player;
 import org.junit.jupiter.api.Test;
 
+import static domain.BlackjackRule.DEALER_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class WinningStatusTest {
@@ -23,7 +24,7 @@ class WinningStatusTest {
     }
 
     private Dealer createDealer(Rank... ranks) {
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(DEALER_NAME);
         for (Rank rank : ranks) {
             Card card = new Card(rank, Suit.HEART);
             dealer.receive(card);
@@ -35,7 +36,7 @@ class WinningStatusTest {
     @Test
     void 플레이어의_카드의_합이_21을_초과하는_경우_플레이어가_패배한다() {
         Player player = createPlayer(Rank.TEN, Rank.TEN, Rank.TWO);
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(DEALER_NAME);
 
         WinningStatus status = WinningStatus.of(player, dealer);
 

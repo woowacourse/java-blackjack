@@ -3,12 +3,12 @@ package domain.game;
 import domain.participant.Dealer;
 import domain.participant.Player;
 
+import static domain.BlackjackRule.BLACK_JACK;
+
 public enum WinningStatus {
     WIN,
     TIE,
     LOSE;
-
-    public static final int BLACK_JACK = 21;
 
     public static WinningStatus of(Player player, Dealer dealer) {
         int playerScore = player.score();

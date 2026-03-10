@@ -5,9 +5,9 @@ import domain.card.Card;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Hand {
-    public static final int BLACK_JACK = 21;
+import static domain.BlackjackRule.BLACK_JACK;
 
+public class Hand {
     private final List<Card> cards;
 
     public Hand() {

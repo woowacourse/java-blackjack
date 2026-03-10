@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static domain.BlackjackRule.DEALER_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class GameResultTest {
@@ -17,7 +18,7 @@ class GameResultTest {
     @Test
     void 플레이어의_게임_결과를_반환하다() {
         Players players = new Players(List.of("pobi"));
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(DEALER_NAME);
         GameResult gameResult = new GameResult(players, dealer);
 
         List<PlayerResultInfo> playersResult = gameResult.getPlayersResult();
@@ -30,7 +31,7 @@ class GameResultTest {
     @Test
     void 딜러의_게임_결과를_반환하다() {
         Players players = new Players(List.of("pobi"));
-        Dealer dealer = new Dealer();
+        Dealer dealer = new Dealer(DEALER_NAME);
 
         GameResult gameResult = new GameResult(players, dealer);
 
