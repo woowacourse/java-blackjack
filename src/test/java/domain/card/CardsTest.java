@@ -39,7 +39,7 @@ public class CardsTest {
         cards.add(card2);
 
         //then
-        Assertions.assertEquals(cards.getTotalSum(), BLACKJACK_MAX_NUMBER);
+        Assertions.assertEquals(cards.getTotalSum(), 21);
     }
 
     @Test
