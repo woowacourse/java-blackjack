@@ -1,6 +1,6 @@
 package blackjack.domain;
 
-import static blackjack.global.Constants.DEALER_HIT_THRESHOLD;
+import static blackjack.global.ParticipantConstants.DEALER_HIT_THRESHOLD;
 
 import java.util.List;
 
