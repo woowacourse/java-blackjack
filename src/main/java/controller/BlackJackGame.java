@@ -1,12 +1,25 @@
 package controller;
 
+import domain.Card;
 import domain.Dealer;
+import domain.Deck;
+import domain.GameResult;
+import domain.Outcome;
+import domain.Participant;
 import domain.Player;
 import domain.Players;
-import dto.DealerPlayersDTO;
+import dto.AllOutcomeDto;
+import dto.FinalScoreDto;
+import dto.InitialDto;
+import dto.ParticipantDto;
+import dto.ParticipantScoreDto;
+import dto.PlayerOutcomeDto;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import message.IOMessage;
-import util.CheckWinner;
 import util.NameParser;
 import view.InputView;
 import view.ResultView;
@@ -21,84 +34,89 @@ public class BlackJackGame {
     }
 
     public void run() {
+        Deck deck = createDeck();
         Dealer dealer = new Dealer();
         Players players = NameParser.makeNameList(inputView.getParticipant());
-        DealerPlayersDTO gameContext = new DealerPlayersDTO(dealer, players);
-        startAndPrint(gameContext);
-        drawPlayersTurn(players);
-        drawDealerTurn(dealer);
-        printResult(gameContext);
+        initialDraw(deck, dealer, players);
+        printInitialStatus(dealer, players);
+        players.getPlayers().forEach(player -> drawPlayerTurn(deck, player));
+        drawDealerTurn(deck, dealer);
+        printFinalScore(dealer, players);
+        printFinalWinner(dealer, players);
     }
 
-    private void startGame(DealerPlayersDTO gameContext) {
-        Dealer dealer = gameContext.dealer();
-        Players players = gameContext.players();
-        IntStream.range(0, 2).forEach(i -> dealer.drawCard());
-
-        IntStream.range(0, players.getSize())
-                .mapToObj(players::getPlayer)
-                .forEach(player -> IntStream.range(0, 2)
-                        .forEach(i -> player.drawCard()));
+    private Deck createDeck() {
+        List<Card> cards = IntStream.range(0, 52)
+                .mapToObj(Card::new)
+                .collect(Collectors.toList());
+        return new Deck(cards);
     }
 
-    private void startAndPrint(DealerPlayersDTO gameContext) {
-        startGame(gameContext);
-        System.out.printf("%n");
-        resultView.printGameStart(gameContext);
-        System.out.printf("%n");
+    private void initialDraw(Deck deck, Dealer dealer, Players players) {
+        IntStream.range(0, 2).forEach(i -> {
+            dealer.drawCard(deck.draw());
+            players.getPlayers().forEach(player -> player.drawCard(deck.draw()));
+        });
     }
 
-    private void drawPlayersTurn(Players players) {
-        IntStream.range(0, players.getSize())
-                .mapToObj(players::getPlayer)
-                .forEach(this::drawPlayerTurn);
+    private void printInitialStatus(Dealer dealer, Players players) {
+        ParticipantDto dealerDto = new ParticipantDto(dealer.getName(), getCardNames(dealer));
+        List<ParticipantDto> participantDtos = players.getPlayers().stream()
+                .map(player -> new ParticipantDto(player.getName(), getCardNames(player)))
+                .collect(Collectors.toList());
+        String joinedNames = players.getPlayers().stream()
+                .map(Player::getName)
+                .collect(Collectors.joining(", "));
+        resultView.printGameStart(new InitialDto(joinedNames, dealerDto, participantDtos));
     }
 
-    private void drawPlayerTurn(Player player) {
-        boolean shouldStop = false;
-        while (!shouldStop) {
-            shouldStop = stopDraw(player) || drawAfterChoice(player);
+    private void drawPlayerTurn(Deck deck, Player player) {
+        while (player.canDraw() && inputView.getMoreCards(player).equals("y")) {
+            player.drawCard(deck.draw());
+            resultView.printParticipantMoreCard(new ParticipantDto(player.getName(), getCardNames(player)));
         }
     }
 
-    private boolean stopDraw(Player player) {
-        return inputView.getMoreCards(player).equals("n");
-    }
-
-    private void drawOneCardAndPrint(Player player) {
-        player.drawCard();
-        System.out.println(player.getName() + "카드: " + resultView.joinCardNames(player.getCardList()));
-    }
-
-    private boolean drawAfterChoice(Player player) {
-        drawOneCardAndPrint(player);
-        return printBustAndCheck(player);
-    }
-
-    private boolean printBustAndCheck(Player player) {
-        if (!player.checkBust()) {
-            return false;
+    private void drawDealerTurn(Deck deck, Dealer dealer) {
+        while (dealer.canDraw()) {
+            dealer.drawCard(deck.draw());
+            resultView.printDealerMoreCard();
         }
-        System.out.println(player.getName() + "는 버스트!");
-        return true;
     }
 
-    private void drawDealerTurn(Dealer dealer) {
-        System.out.printf("%n");
-        while (dealer.getScore().isDealerDraw()) {
-            dealer.drawCard();
-            System.out.println(IOMessage.DEALER_ONE_CARD.message());
+    private void printFinalWinner(Dealer dealer, Players players) {
+        Map<Player, Outcome> playerResults = new LinkedHashMap<>();
+        List<PlayerOutcomeDto> outcomeDtos = new ArrayList<>();
+        for (Player player : players.getPlayers()) {
+            Outcome outcome = Outcome.decideWinner(player.getScore(), dealer.getScore());
+            playerResults.put(player, outcome);
+            outcomeDtos.add(new PlayerOutcomeDto(player.getName(), outcome.getName()));
         }
-        System.out.printf("%n");
+        GameResult gameResult = new GameResult(playerResults);
+        resultView.printWinner(new AllOutcomeDto(gameResult.getDealerResult(), outcomeDtos));
     }
 
-    private void printResult(DealerPlayersDTO gameContext) {
-        Dealer dealer = gameContext.dealer();
-        resultView.printResult(gameContext);
-        if (dealer.checkBust()) {
-            System.out.println("딜러는 버스트!");
+    private void printFinalScore(Dealer dealer, Players players) {
+        ParticipantScoreDto dealerScoreDto = createScoreDto(dealer);
+        List<ParticipantScoreDto> playerScoreDtos = players.getPlayers().stream()
+                .map(this::createScoreDto)
+                .collect(Collectors.toList());
+        resultView.printResult(new FinalScoreDto(dealerScoreDto, playerScoreDtos));
+    }
+
+    private ParticipantScoreDto createScoreDto(Participant participant) {
+        return new ParticipantScoreDto(
+                participant.getName(),
+                getCardNames(participant),
+                participant.getScore().getGameScore()
+        );
+    }
+
+    private List<String> getCardNames(Participant participant) {
+        List<String> cardNames = new ArrayList<>();
+        for (Card card : participant.getHand().getCards()) {
+            cardNames.add(card.getCardName());
         }
-        CheckWinner.decideWinner(gameContext);
-        resultView.printWinner(gameContext);
+        return cardNames;
     }
 }
