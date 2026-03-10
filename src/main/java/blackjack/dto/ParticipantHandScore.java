@@ -11,7 +11,7 @@ public record ParticipantHandScore(
     public static ParticipantHandScore from(Participant participant) {
         return new ParticipantHandScore(
                 participant.getNickname(),
-                participant.getCardNames(),
+                participant.getCards(),
                 participant.getTotalScore()
         );
     }

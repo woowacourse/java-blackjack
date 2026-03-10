@@ -16,10 +16,8 @@ public class Hand {
         cards.addAll(drewCards);
     }
 
-    public List<String> getCardNames() {
-        return cards.stream()
-                .map(Card::getDisplayName)
-                .toList();
+    public List<Card> getCards() {
+        return List.copyOf(cards)
     }
 
     public boolean isBlackjack() {

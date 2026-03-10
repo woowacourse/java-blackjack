@@ -3,6 +3,7 @@ package blackjack.dto;
 import blackjack.domain.Card;
 import blackjack.domain.Rank;
 import blackjack.domain.Suit;
+import java.util.List;
 import java.util.Map;
 
 public record CardDisplayName(String displayName) {
@@ -21,6 +22,12 @@ public record CardDisplayName(String displayName) {
             Suit.HEART, "하트",
             Suit.CLOVER, "클로버"
     );
+
+    public static List<CardDisplayName> listOf(List<Card> cards) {
+        return cards.stream()
+                .map(CardDisplayName::from)
+                .toList();
+    }
 
     public static CardDisplayName from(Card card) {
         String rankName = translateRank(card.getRank());

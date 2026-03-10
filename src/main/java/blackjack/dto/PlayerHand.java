@@ -10,7 +10,7 @@ public record PlayerHand(
     public static PlayerHand from(Player player) {
         return new PlayerHand(
                 player.getNickname(),
-                player.getCardNames()
+                player.getCards()
         );
     }
 

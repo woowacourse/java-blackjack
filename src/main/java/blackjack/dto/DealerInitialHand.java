@@ -9,7 +9,7 @@ public record DealerInitialHand(
     public static DealerInitialHand from(Participant participant) {
         return new DealerInitialHand(
                 participant.getNickname(),
-                participant.getCardNames().getFirst()
+                participant.getCards().getFirst()
         );
     }
 }

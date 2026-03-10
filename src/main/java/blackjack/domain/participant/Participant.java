@@ -17,8 +17,8 @@ public class Participant {
         this.hand = new Hand();
     }
 
-    public List<String> getCardNames() {
-        return hand.getCardNames();
+    public List<Card> getCards() {
+        return hand.getCards();
     }
 
     public String getNickname() {
