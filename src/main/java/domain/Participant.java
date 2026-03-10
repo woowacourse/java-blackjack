@@ -16,18 +16,19 @@ public abstract class Participant {
     }
 
     private static void validateName(String name) {
-        Pattern NAME_PATTERN = Pattern.compile("^[a-zA-Z가-힣]+$");
         validateIsNotBlank(name);
-        validateKoreanAndEnglish(name, NAME_PATTERN);
+        validateKoreanAndEnglish(name);
     }
 
-    private static void validateKoreanAndEnglish(String name, Pattern NAME_PATTERN) {
+    private static void validateKoreanAndEnglish(String name) {
+        Pattern NAME_PATTERN = Pattern.compile("^[a-zA-Z가-힣]+$");
         if (!NAME_PATTERN.matcher(name).matches()) {
             throw new IllegalArgumentException(ErrorMessage.ONLY_KO_AND_ENG.getMessage());
         }
     }
 
     private static void validateIsNotBlank(String name) {
+
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException(ErrorMessage.NOT_ALLOW_EMPTY_INPUT.getMessage());
         }
