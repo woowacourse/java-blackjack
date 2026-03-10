@@ -81,22 +81,19 @@ public class Application {
     }
 
     private void printEachHand() {
-        outputView.printMessage(blackjackGame.makeDealerFinalResultDisplay());
-        blackjackGame.makeUserFinalResultDisplay().forEach(outputView::printMessage);
+        outputView.printDealerFinalHand(blackjackGame.getDealerHandDisplay());
+        blackjackGame.getUserFinalHandDisplays().forEach(outputView::printMessage);
     }
 
     private void dealDealerCard() {
-        String dealerReceivedCard = determineDealToDealer();
-        outputView.printMessage(dealerReceivedCard);
-    }
-
-    private String determineDealToDealer() {
-        return blackjackGame.determineDealToDealer();
+        if (blackjackGame.dealToDealer()) {
+            outputView.printDealerReceivedCard();
+        }
     }
 
     private void printDealResult() {
-        outputView.printMessage(blackjackGame.makeDealCompleteDisplay());
-        outputView.printMessage(blackjackGame.makeDealerCardsDisplay());
+        outputView.printDealComplete(blackjackGame.getParticipantNames());
+        outputView.printDealerFirstCard(blackjackGame.getDealerFirstCardDisplay());
         blackjackGame.getUserCardsDisplays().forEach(outputView::printMessage);
     }
 

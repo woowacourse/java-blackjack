@@ -1,7 +1,6 @@
 package domain;
 
 import java.util.List;
-import view.Message;
 
 public class BlackjackGame {
     private final static Integer FIRST_CARD_DEAL_COUNT = 2;
@@ -27,20 +26,12 @@ public class BlackjackGame {
         }
     }
 
-    public String makeDealCompleteDisplay() {
-        return String.format(Message.DEAL_CARDS_MESSAGE, participants.getUserNames());
-    }
-
-    public String makeDealerCardsDisplay() {
-        return String.format(Message.DEALER_CARDS_MESSAGE, participants.getDealerCardsDisplay());
-    }
-
-    private String makeAllDealerCardsDisplay() {
-        return String.format(Message.DEALER_FINAL_CARDS_MESSAGE, participants.getAllDealerCardsDisplay());
-    }
-
     public List<String> getParticipantNames() {
         return participants.getParticipantNames();
+    }
+
+    public String getDealerFirstCardDisplay() {
+        return participants.getDealerCardsDisplay();
     }
 
     public List<String> getUserCardsDisplays() {
@@ -52,19 +43,19 @@ public class BlackjackGame {
         return participants.makeOneUserCardDelegator(index);
     }
 
-    public String determineDealToDealer() {
+    public boolean dealToDealer() {
         if (participants.determineDealerDealMore()) {
             participants.dealCardToDealer(deck.dealCard());
-            return Message.DEALER_CARD_RECEIVE_ANNOUNCE;
+            return true;
         }
-        return "";
+        return false;
     }
 
-    public String makeDealerFinalResultDisplay() {
-        return makeAllDealerCardsDisplay() + participants.getDealerFinalDisplay();
+    public String getDealerHandDisplay() {
+        return participants.getAllDealerCardsDisplay() + participants.getDealerFinalDisplay();
     }
 
-    public List<String> makeUserFinalResultDisplay() {
+    public List<String> getUserFinalHandDisplays() {
         return participants.addScoreToUserHand();
     }
 

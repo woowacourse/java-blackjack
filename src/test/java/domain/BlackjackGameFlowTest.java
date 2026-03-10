@@ -66,16 +66,16 @@ public class BlackjackGameFlowTest {
     @Test
     void 딜러_점수_16이하_히트_발생() {
         // when
-        String message = blackjackGame.determineDealToDealer();
+        boolean dealt = blackjackGame.dealToDealer();
 
         // then
-        assertThat(message).isNotEmpty();
+        assertThat(dealt).isTrue();
     }
 
     @Test
     void 영기_블랙잭으로_승리() {
         // given
-        blackjackGame.determineDealToDealer();
+        blackjackGame.dealToDealer();
 
         // when
         List<String> results = blackjackGame.evaluateGame();
@@ -88,7 +88,7 @@ public class BlackjackGameFlowTest {
     void 라이_히트_후_딜러보다_낮아_패배() {
         // given
         blackjackGame.processPlayerDecision(1);
-        blackjackGame.determineDealToDealer();
+        blackjackGame.dealToDealer();
 
         // when
         List<String> results = blackjackGame.evaluateGame();
@@ -100,7 +100,7 @@ public class BlackjackGameFlowTest {
     @Test
     void 딜러_최종_결과_포맷() {
         // given
-        blackjackGame.determineDealToDealer();
+        blackjackGame.dealToDealer();
 
         // when
         List<String> results = blackjackGame.evaluateGame();
