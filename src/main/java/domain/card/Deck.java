@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public class Deck {
@@ -34,7 +35,11 @@ public class Deck {
     }
 
     public Card drawCard() {
-        return cards.pop();
+        try {
+            return cards.pop();
+        } catch (NoSuchElementException exception) {
+            throw new IllegalStateException("덱이 비었습니다");
+        }
     }
 
     public List<Card> getCards() {
