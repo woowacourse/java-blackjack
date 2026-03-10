@@ -5,6 +5,7 @@ import exception.ErrorMessage;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class InputView {
 
@@ -15,7 +16,9 @@ public class InputView {
 
     public static List<String> askPlayerNames() {
         System.out.println(START_MESSAGE);
-        List<String> inputs = Arrays.asList(sc.nextLine().split(","));
+        List<String> inputs = Arrays.stream(sc.nextLine().split(","))
+                .map(String::trim)
+                .collect(Collectors.toList());
 
         for(String input : inputs){
             validateInput(input);
