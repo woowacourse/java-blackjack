@@ -3,47 +3,39 @@ package blackjack.domain.result;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class GameResults {
 
-    private final Map<Player, GameResult> playerResults;
-    private final Map<GameResult, Integer> dealerResults;
+    private final Map<Player, Integer> playerProfits;
 
-    private GameResults(
-            final Map<Player, GameResult> playerResults,
-            final Map<GameResult, Integer> dealerResults
-    ) {
-        this.playerResults = playerResults;
-        this.dealerResults = dealerResults;
+    private GameResults(final Map<Player, Integer> playerProfits) {
+        this.playerProfits = playerProfits;
     }
 
     public static GameResults calculate(final Players players, final Dealer dealer) {
-        final Map<Player, GameResult> playerResults = new LinkedHashMap<>();
-        final Map<GameResult, Integer> dealerResults = new EnumMap<>(GameResult.class);
-        players.getPlayers()
-                .forEach(player -> addResult(player, dealer, playerResults, dealerResults));
-        return new GameResults(playerResults, dealerResults);
+        final Map<Player, Integer> playerProfits = new LinkedHashMap<>();
+        players.getPlayers().forEach(player -> addProfit(player, dealer, playerProfits));
+        return new GameResults(playerProfits);
     }
 
-    private static void addResult(
+    private static void addProfit(
             final Player player,
             final Dealer dealer,
-            final Map<Player, GameResult> playerResults,
-            final Map<GameResult, Integer> dealerResults
+            final Map<Player, Integer> playerProfits
     ) {
-        final GameResult result = GameResult.of(player.calculateScore(), dealer.calculateScore());
-        playerResults.put(player, result);
-        dealerResults.merge(result.reverse(), 1, Integer::sum);
+        final GameResult result = GameResult.of(player, dealer);
+        playerProfits.put(player, result.calculateProfit(player.getBettingMoney()));
     }
 
-    public Map<Player, GameResult> getPlayerResults() {
-        return playerResults;
+    public int getDealerProfit() {
+        return -playerProfits.values().stream()
+                .mapToInt(Integer::intValue)
+                .sum();
     }
 
-    public Map<GameResult, Integer> getDealerResults() {
-        return dealerResults;
+    public Map<Player, Integer> getPlayerProfits() {
+        return playerProfits;
     }
 }
