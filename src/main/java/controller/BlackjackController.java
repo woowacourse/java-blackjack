@@ -45,7 +45,7 @@ public class BlackjackController {
 
     private Players playRound(Dealer dealer, Players players, Deck cards) {
         List<PlayerCardDto> firstCardContents = collectInitialCardContents(dealer, players);
-        outputView.displayCardContent(firstCardContents);
+        outputView.displayCardContents(firstCardContents);
         players = processPlayersTurn(players, cards);
 
         if (!players.areAllBust()) {
@@ -80,14 +80,13 @@ public class BlackjackController {
         return players;
     }
 
-
     private void dealAdditionalCards(Player player, boolean wantsCard, Deck deck, String name) {
         while (wantsCard) {
             player.add(deck.pop());
             if (player.isBust()) {
                 break;
             }
-            outputView.displayCardContent(List.of(PlayerCardDto.from(player)));
+            outputView.displayCardContents(List.of(PlayerCardDto.from(player)));
             wantsCard = wantsAdditionalCard(name);
         }
     }

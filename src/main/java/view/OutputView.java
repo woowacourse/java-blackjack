@@ -1,7 +1,5 @@
 package view;
 
-import constant.GameConstant;
-import domain.MatchCase;
 import domain.dto.BlackjackResultDto;
 import domain.dto.CardDto;
 import domain.dto.FinalPlayerCardDto;
@@ -17,7 +15,7 @@ public class OutputView {
         System.out.printf("딜러가 %s에게 2장을 나누었습니다.\n", nameContent);
     }
 
-    public void displayCardContent(List<PlayerCardDto> playerCardDtos) {
+    public void displayCardContents(List<PlayerCardDto> playerCardDtos) {
         for (PlayerCardDto dto : playerCardDtos) {
             List<String> cardContents = new ArrayList<>();
             for (CardDto card : dto.cards()) {
@@ -26,16 +24,6 @@ public class OutputView {
 
             System.out.printf("%s카드: %s\n", dto.name(), String.join(", ", cardContents));
         }
-
-    }
-
-    public void displayCardContent(PlayerCardDto dto) {
-        List<String> cardContents = new ArrayList<>();
-        for (CardDto card : dto.cards()) {
-            cardContents.add(card.rankName() + card.shapeName());
-        }
-
-        System.out.printf("%s카드: %s\n", dto.name(), String.join(", ", cardContents));
     }
 
     public void displayDealerCard(int hitThreshold) {
