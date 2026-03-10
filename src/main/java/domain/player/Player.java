@@ -4,6 +4,7 @@ import domain.card.Card;
 import domain.card.CardBundle;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Player {
 
@@ -43,4 +44,17 @@ public class Player {
         return cardBundle.toDisplay();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Player player = (Player) o;
+        return Objects.equals(name, player.name) && Objects.equals(cardBundle, player.cardBundle);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, cardBundle);
+    }
 }

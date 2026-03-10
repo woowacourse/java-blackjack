@@ -33,8 +33,8 @@ public class BlackjackGame {
     }
 
     public void start() {
-        Dealer dealer = enterDealer();
-        Players players = enterPlayers();
+        Dealer dealer = Dealer.of(cardDeck);
+        Players players = Players.from(requestPlayerNames());
 
         handOutInitialCard(dealer, players);
 
@@ -90,17 +90,6 @@ public class BlackjackGame {
         view.printInitialHandOutResult(players.displayNames(), INITIAL_CARD_DRAW_COUNT);
     }
 
-    private Dealer enterDealer() {
-        return Dealer.of(cardDeck);
-    }
-
-    private Players enterPlayers() {
-        return Players.from(requestPlayerNames()
-                .stream()
-                .map(Player::from)
-                .toList()
-        );
-    }
 
     private List<PlayerName> requestPlayerNames() {
         return view.requestPlayerNames();

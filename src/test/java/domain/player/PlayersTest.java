@@ -12,18 +12,18 @@ class PlayersTest {
 
     @Test
     void 게임_시작시_플레이어들에게_카드를_두장씩_나누어준다() {
-        Player songsong = Player.from(PlayerName.from("송송"));
-        Players players = Players.from(List.of(songsong));
+        Players players = Players.from(List.of(PlayerName.from("송송"), PlayerName.from("라텔")));
+        Card cloverAce = Card.of(CardDenomination.ACE, CardEmblem.CLOVER);
+        Card clover2 = Card.of(CardDenomination.TWO, CardEmblem.CLOVER);
         Card clover8 = Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER);
         Card clover9 = Card.of(CardDenomination.NINE, CardEmblem.CLOVER);
 
         CardDeck cardDeck = new CardDeckBuilder()
-                .cards(clover8, clover9)
+                .cards(cloverAce, clover2, clover8, clover9)
                 .build();
         Dealer dealer = Dealer.of(cardDeck);
 
-        players.giveInitialCardBundle(dealer);
-        List<PlayerHandDto> playersHand = players.toPlayerHandDtos();
-        Assertions.assertThat(playersHand.getFirst()).isEqualTo(PlayerHandDto.of(songsong));
+        Players afterInitialize = players.giveInitialCardBundle(dealer);
+        Assertions.assertThat(afterInitialize).isEqualTo(players);
     }
 }

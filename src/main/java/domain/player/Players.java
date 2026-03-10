@@ -5,6 +5,7 @@ import domain.player.dto.PlayerHandDto;
 import domain.player.dto.PlayerResultDto;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 public class Players {
@@ -15,16 +16,20 @@ public class Players {
         this.players = players;
     }
 
-    public static Players from(List<Player> players) {
-        return new Players(players);
+    public static Players from(List<PlayerName> playerNames) {
+        return new Players(playerNames.stream()
+                .map(Player::from)
+                .toList()
+        );
     }
 
     public Stream<Player> stream() {
         return players.stream();
     }
 
-    public void giveInitialCardBundle(Dealer dealer) {
+    public Players giveInitialCardBundle(Dealer dealer) {
         players.forEach(dealer::handOutInitialCardToPlayer);
+        return this;
     }
 
     public List<String> displayNames() {
@@ -45,4 +50,17 @@ public class Players {
                 .toList();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Players players1 = (Players) o;
+        return Objects.equals(players, players1.players);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(players);
+    }
 }
