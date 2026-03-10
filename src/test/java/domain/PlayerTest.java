@@ -34,11 +34,7 @@ class PlayerTest {
                 Card.of(Rank.EIGHT, Suit.DIAMOND),
                 Card.of(Rank.ACE, Suit.HEART));
 
-        int cardScore = Player.of(cards, "워니").calculateScore();
-
-        if (cardScore > 21 && cards.stream().anyMatch(Card::isAce)) {
-            cardScore -= 10;
-        }
+        int cardScore = Cards.of(cards).calculateScore();
 
         int expect = 20;
         assertThat(cardScore).isEqualTo(expect);
@@ -53,7 +49,7 @@ class PlayerTest {
                 Card.of(Rank.EIGHT, Suit.DIAMOND),
                 Card.of(Rank.ACE, Suit.HEART));
 
-        Player player = Player.of(cards, "포비");
+        Player player = Player.of(Cards.of(cards), "포비");
 
         int aceCount = (int) cards.stream().filter(Card::isAce).count();
         int cardScore = cards.stream()
@@ -65,7 +61,6 @@ class PlayerTest {
             cardScore -= 10;
         }
 
-
         int expect = 19;
         assertThat(cardScore).isEqualTo(expect);
     }
@@ -76,7 +71,7 @@ class PlayerTest {
         Deck deck = Deck.of(new NoShuffleStrategy());
         Player player = Player.of(deck.drawInitialHand(), "pobi");
 
-        int cardSize = player.getCardsInfo().size();
+        int cardSize = player.getCardSize();
 
         int expect = 2;
         assertThat(cardSize).isEqualTo(expect);
@@ -89,7 +84,7 @@ class PlayerTest {
         Player player = Player.of(deck.drawInitialHand(), "pobi");
 
         player.addCard(deck.draw());
-        int cardSize = player.getCardsInfo().size();
+        int cardSize = player.getCardSize();
 
         int expect = 3;
         assertThat(cardSize).isEqualTo(expect);
