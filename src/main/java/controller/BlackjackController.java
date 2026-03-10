@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.List;
+import model.CardDispenser;
 import model.Cards;
 import model.Dealer;
 import model.GameStatus;
@@ -12,21 +13,23 @@ import view.OutputView;
 public class BlackjackController {
 
     private final Dealer dealer;
+    private CardDispenser cardDispenser;
 
     public BlackjackController() {
-        this.dealer = new Dealer(Cards.createShuffledDeck());
+        this.dealer = new Dealer();
     }
 
     public void run() {
         List<String> names = InputView.readPlayerNames();
         List<Player> players = createPlayers(names);
+        createCardDispenser();
         distributeCard(players);
 
         hitOrStandByPlayers(players);
-        hitUntilStandByDealer(dealer);
+        hitUntilStandByDealer();
 
-        printFinalCards(dealer, players);
-        printGameResult(dealer, players);
+        printFinalCards(players);
+        printGameResult(players);
     }
 
     private List<Player> createPlayers(List<String> names) {
@@ -35,11 +38,20 @@ public class BlackjackController {
                 .toList();
     }
 
-    private void distributeCard(List<Player> players) {
-        dealer.distributeInitialCards(players);
+    private void createCardDispenser() {
+        Cards cards = Cards.createShuffledDeck();
+        this.cardDispenser = new CardDispenser(cards);
+    }
 
+    private void distributeCard(List<Player> players) {
         OutputView.printCardOpen(players);
+
+        cardDispenser.dispenseStartingCards(dealer);
         OutputView.printCardByDealer(dealer);
+
+        for (Player player : players) {
+            cardDispenser.dispenseStartingCards(player);
+        }
         OutputView.printCardByPlayers(players);
     }
 
@@ -71,24 +83,24 @@ public class BlackjackController {
     }
 
     private void distributeMoreOneCard(Player player) {
-        dealer.distributeCard(player);
+        cardDispenser.dispenseOneCard(player);
         OutputView.printCardByPlayer(player);
     }
 
-    private void hitUntilStandByDealer(Dealer dealer) {
+    private void hitUntilStandByDealer() {
         while (dealer.canHit()) {
             OutputView.printToOpenDealerNewCard(dealer.getName());
-            dealer.distributeCard();
+            cardDispenser.dispenseOneCard(dealer);
         }
     }
 
-    private void printFinalCards(Dealer dealer, List<Player> players) {
+    private void printFinalCards(List<Player> players) {
         OutputView.printBlank();
         OutputView.printCardByPlayerWithScore(dealer);
         players.forEach(OutputView::printCardByPlayerWithScore);
     }
 
-    private void printGameResult(Dealer dealer, List<Player> players) {
+    private void printGameResult(List<Player> players) {
         PlayerResult playerResult = PlayerResult.judgeByPlayer(dealer, players);
         int winCount = playerResult.countByStatus(GameStatus.LOSE);
         int loseCount = playerResult.countByStatus(GameStatus.WIN);
