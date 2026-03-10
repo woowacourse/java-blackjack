@@ -3,9 +3,6 @@ package domain;
 import domain.table.GameTable;
 import domain.vo.RoundResult;
 import domain.card.Deck;
-import presentation.dto.GameResult;
-import domain.card.Card;
-import presentation.dto.MemberStatus;
 import java.util.List;
 import java.util.Map;
 
@@ -36,9 +33,15 @@ public class BlackjackGame {
         gameTable.draw(playerName, deck.draw());
     }
 
-    public List<String> getCardNames(String playerName) {
-        return gameTable.getCards(playerName).stream()
-                .map(Card::getCardName)
+    public List<String> getCardNames(String memberName) {
+        return gameTable.getCards(memberName).stream()
+                .map(card -> card.getCourt() + card.getPattern())
+                .toList();
+    }
+
+    public List<String> getFirstCardNames(String memberName) {
+        return gameTable.getFirstCards(memberName).stream()
+                .map(card -> card.getCourt() + card.getPattern())
                 .toList();
     }
 
@@ -50,35 +53,16 @@ public class BlackjackGame {
         gameTable.draw(getDealerName(), deck.draw());
     }
 
-    public List<MemberStatus> memberFirstHands() {
-        return gameTable.getMemberNames()
-                .stream()
-                .map(name -> {
-                    List<Card> cards = gameTable.getFirstCards(name);
-                    int memberPoint = gameTable.memberPoint(name);
-                    return new MemberStatus(name, cards, memberPoint);
-                }).toList();
+    public List<String> getMemberNames() {
+        return gameTable.getMemberNames();
     }
 
-    public List<MemberStatus> memberHands() {
-        return gameTable.getMemberNames()
-                .stream()
-                .map(name -> {
-                    List<Card> cards = gameTable.getCards(name);
-                    int playerPoint = gameTable.memberPoint(name);
-                    return new MemberStatus(name, cards, playerPoint);
-                }).toList();
+    public int getMemberPoint(String memberName) {
+        return gameTable.memberPoint(memberName);
     }
 
-    public GameResult getGameResults() {
-        Map<String, RoundResult> gameResults = gameTable.checkGameResult();
-        int dealerLoseAmount = Math.toIntExact(gameResults.values().stream()
-                .filter(result -> result.equals(RoundResult.WIN))
-                .count());
-        int dealerWinAmount = Math.toIntExact(gameResults.values().stream()
-                .filter(result -> result.equals(RoundResult.LOSE))
-                .count());
-        return new GameResult(dealerWinAmount, dealerLoseAmount, gameResults);
+    public Map<String, RoundResult> getGameResults() {
+        return gameTable.checkGameResult();
     }
 
     public boolean isContinuable(String playerName) {
