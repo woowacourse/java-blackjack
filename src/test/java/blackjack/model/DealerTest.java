@@ -22,7 +22,6 @@ class DealerTest {
         Dealer dealer = new Dealer();
         dealer.receiveCard(new Card(Figure.CLOVER, Number.ACE));
         dealer.receiveCard(new Card(Figure.CLOVER, Number.SEVEN));
-        dealer.updateScore();
 
         // when & then
         assertThat(dealer.canReceive()).isFalse();

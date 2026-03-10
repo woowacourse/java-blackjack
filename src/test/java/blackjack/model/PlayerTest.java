@@ -23,7 +23,7 @@ class PlayerTest {
         Player player = new Player("luke");
         player.receiveCard(new Card(Figure.CLOVER, Number.ACE));
         player.receiveCard(new Card(Figure.CLOVER, Number.KING));
-        player.updateScore();
+
         // when& then
         assertThat(player.canReceive()).isFalse();
     }

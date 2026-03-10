@@ -41,18 +41,16 @@ public class Controller {
     private static Map<Player, GameResult> getPlayerGameResult(List<Player> participants, Dealer dealer) {
         Map<Player, GameResult> gameResult = new LinkedHashMap<>();
         for (Player player : participants) {
-            gameResult.put(player ,GameResult.getResult(player, dealer));
+            gameResult.put(player, GameResult.getResult(player, dealer));
         }
         return gameResult;
     }
 
     private void turnToDealer(Dealer dealer, Deck deck) {
-        dealer.updateScore();
 
         while (dealer.canReceive()) {
             outputView.printDealerReceiveCard();
             receiveCardToParticipant(dealer, deck, ONE_REPEAT);
-            dealer.updateScore();
             if (dealer.isBurst()) {
                 outputView.printBurst("딜러");
                 return;
@@ -67,8 +65,6 @@ public class Controller {
     }
 
     private void turnToOnePlayer(Deck deck, Player player) {
-        player.updateScore();
-
         while (player.canReceive()) {
             HitCommand command = HitCommand.from(inputView.getReceiveCard(player));
             if (!command.isHit()) {
@@ -76,7 +72,6 @@ public class Controller {
             }
 
             receiveCardToParticipant(player, deck, ONE_REPEAT);
-            player.updateScore();
             if (player.isBurst()) {
                 outputView.printBurst(player.getName());
                 return;

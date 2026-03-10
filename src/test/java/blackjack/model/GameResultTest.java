@@ -19,9 +19,6 @@ class GameResultTest {
         player.receiveCard(card);
         dealer.receiveCard(card2);
 
-        player.updateScore();
-        dealer.updateScore();
-
         // when & then
         assertThat(GameResult.getResult(player, dealer).getStatus())
                 .isEqualTo("승");
@@ -39,9 +36,6 @@ class GameResultTest {
         player.receiveCard(card);
         dealer.receiveCard(card2);
 
-        player.updateScore();
-        dealer.updateScore();
-
         // when & then
         assertThat(GameResult.getResult(player, dealer).getStatus())
                 .isEqualTo("패");
@@ -58,9 +52,6 @@ class GameResultTest {
 
         player.receiveCard(card);
         dealer.receiveCard(card2);
-
-        player.updateScore();
-        dealer.updateScore();
 
         // when & then
         assertThat(GameResult.getResult(player, dealer).getStatus())
@@ -83,9 +74,6 @@ class GameResultTest {
         dealer.receiveCard(card3);
         dealer.receiveCard(card4);
 
-        player.updateScore();
-        dealer.updateScore();
-
         // when & then
         assertThat(GameResult.getResult(player, dealer).getStatus())
                 .isEqualTo("승");
@@ -106,9 +94,6 @@ class GameResultTest {
         player.receiveCard(card2);
         player.receiveCard(card3);
         dealer.receiveCard(card4);
-
-        player.updateScore();
-        dealer.updateScore();
 
         // when & then
         assertThat(GameResult.getResult(player, dealer).getStatus())
@@ -134,9 +119,6 @@ class GameResultTest {
         dealer.receiveCard(card4);
         dealer.receiveCard(card5);
         dealer.receiveCard(card6);
-
-        player.updateScore();
-        dealer.updateScore();
 
         // when & then
         assertThat(GameResult.getResult(player, dealer).getStatus())
