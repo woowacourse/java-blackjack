@@ -5,15 +5,15 @@ import static blackjack.model.constant.ErrorMessage.ERROR_INVALID_PLAYER_NAME;
 
 import java.util.regex.Pattern;
 
-public class UserName {
+public class Username {
 
-    private static final String PLAYER_NAME_REGREX = "^[a-zA-Z가-힣]*$";
+    private static final String PLAYER_NAME_REGEX = "^[a-zA-Z가-힣]*$";
 
     private final String name;
 
-    public UserName(String name) {
+    public Username(String name) {
         validateEmpty(name);
-        validateRegrex(name);
+        validateRegex(name);
         this.name = name;
     }
 
@@ -22,13 +22,13 @@ public class UserName {
     }
 
     private void validateEmpty(String name) {
-        if (name.isEmpty()) {
+        if (name.isBlank()) {
             throw new IllegalArgumentException(ERROR_EMPTY_INPUT.getErrorMessage());
         }
     }
 
-    public static void validateRegrex(String name) {
-        if (!Pattern.matches(PLAYER_NAME_REGREX, name)) {
+    public static void validateRegex(String name) {
+        if (!Pattern.matches(PLAYER_NAME_REGEX, name)) {
             throw new IllegalArgumentException(ERROR_INVALID_PLAYER_NAME.getErrorMessage());
         }
     }
