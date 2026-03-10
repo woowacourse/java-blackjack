@@ -71,22 +71,19 @@ class PlayerTest {
         Deck deck = Deck.of(new NoShuffleStrategy());
         Player player = Player.of(deck.drawInitialHand(), "pobi");
 
-        int cardSize = player.getCardSize();
+        player.addCard(deck.draw());
 
-        int expect = 2;
-        assertThat(cardSize).isEqualTo(expect);
+        assertThat(player.isInitialHand()).isTrue();
     }
 
     @Test
-    @DisplayName("플레이어에게 한 장의 카드를 추가 분배할 수 있는지 확인한다.")
-    void 카드_한장_draw_여부_확인_테스트() {
+    @DisplayName("플레이어에게 한 장의 카드를 추가 분배하면 초기 카드 상태가 아니다.")
+    void 카드_한장_draw_후_initial_hand_아님() {
         Deck deck = Deck.of(new NoShuffleStrategy());
         Player player = Player.of(deck.drawInitialHand(), "pobi");
 
         player.addCard(deck.draw());
-        int cardSize = player.getCardSize();
 
-        int expect = 3;
-        assertThat(cardSize).isEqualTo(expect);
+        assertThat(player.isInitialHand()).isFalse();
     }
 }

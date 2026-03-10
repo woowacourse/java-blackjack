@@ -40,7 +40,7 @@ public class Player {
         return name;
     }
 
-    public int getCardSize(){
-        return cards.size();
+    public boolean isInitialHand() {
+        return cards.size() == Policy.FIRST_DRAW_SIZE;
     }
 }
