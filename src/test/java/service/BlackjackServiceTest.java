@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.tuple;
 
 import constant.BlackjackConstant;
 import domain.Card;
-import domain.CardDeck;
+import domain.Deck;
 import domain.CardRank;
 import domain.CardSuit;
 import domain.Hand;
@@ -26,16 +26,16 @@ class BlackjackServiceTest {
     @DisplayName("카드덱에서 지정한 수만큼의 카드를 뽑는다.")
     public void 카드_뽑기_성공() {
         // given
-        CardDeck cardDeck = CardDeck.initCardDeck();
-        int originCount = cardDeck.getDeckSize();
+        Deck deck = Deck.initCardDeck();
+        int originCount = deck.getDeckSize();
         int drawCount = 2;
 
         // when
-        List<Card> cards = blackjackService.drawCard(cardDeck, drawCount);
+        List<Card> cards = blackjackService.drawCard(deck, drawCount);
 
         // then
         assertThat(cards).hasSize(drawCount);
-        assertThat(cardDeck.getDeckSize()).isEqualTo(originCount - drawCount);
+        assertThat(deck.getDeckSize()).isEqualTo(originCount - drawCount);
     }
 
     static class FakeCardShuffler implements CardShuffler {

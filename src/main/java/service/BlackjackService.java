@@ -1,7 +1,7 @@
 package service;
 
 import domain.Card;
-import domain.CardDeck;
+import domain.Deck;
 import domain.Participant;
 import domain.CardShuffler;
 import java.util.ArrayList;
@@ -15,13 +15,13 @@ public class BlackjackService {
         this.cardShuffler = cardShuffler;
     }
 
-    public List<Card> drawCard(CardDeck cardDeck, int drawCount) {
+    public List<Card> drawCard(Deck deck, int drawCount) {
         List<Card> cards = new ArrayList<>();
 
         for (int i = 0; i < drawCount; i++) {
-            int cardIndex = cardShuffler.getRandomCardIndex(cardDeck.getDeckSize());
-            cards.add(cardDeck.getCardOf(cardIndex));
-            cardDeck.removeCardOf(cardIndex);
+            int cardIndex = cardShuffler.getRandomCardIndex(deck.getDeckSize());
+            cards.add(deck.getCardOf(cardIndex));
+            deck.removeCardOf(cardIndex);
         }
 
         return cards;

@@ -6,7 +6,7 @@ import static constant.BlackjackConstant.HIT_DRAW_COUNT;
 import static constant.BlackjackConstant.INIT_DRAW_COUNT;
 
 import domain.Card;
-import domain.CardDeck;
+import domain.Deck;
 import domain.CardResult;
 import domain.Hand;
 import domain.Name;
@@ -35,13 +35,13 @@ public class BlackjackController {
         List<Participant> participantList = addParticipants();
         Participants participants = new Participants(participantList);
 
-        CardDeck cardDeck = CardDeck.initCardDeck();
+        Deck deck = Deck.initCardDeck();
 
-        drawInitCard(participantList, cardDeck, participants);
+        drawInitCard(participantList, deck, participants);
 
-        List<Participant> players = doHitAndStand(participants, cardDeck);
+        List<Participant> players = doHitAndStand(participants, deck);
 
-        Participant dealer = drawDealerAdditionalCard(participants, cardDeck);
+        Participant dealer = drawDealerAdditionalCard(participants, deck);
 
         printResult(participants, dealer, players);
     }
@@ -56,9 +56,9 @@ public class BlackjackController {
         return participantList;
     }
 
-    private void drawInitCard(List<Participant> participantList, CardDeck cardDeck, Participants participants) {
+    private void drawInitCard(List<Participant> participantList, Deck deck, Participants participants) {
         for (Participant participant : participantList) {
-            List<Card> drawnCards = blackjackService.drawCard(cardDeck, INIT_DRAW_COUNT);
+            List<Card> drawnCards = blackjackService.drawCard(deck, INIT_DRAW_COUNT);
             addHandCard(participant, drawnCards);
         }
         outputView.printInitHandCard(participants);
@@ -70,18 +70,18 @@ public class BlackjackController {
         }
     }
 
-    private List<Participant> doHitAndStand(Participants participants, CardDeck cardDeck) {
+    private List<Participant> doHitAndStand(Participants participants, Deck deck) {
         List<Participant> players = participants.getPlayers();
         for (Participant player : players) {
-            hitAndStand(player, cardDeck);
+            hitAndStand(player, deck);
         }
         outputView.printWhiteLine();
         return players;
     }
 
-    private void hitAndStand(Participant player, CardDeck cardDeck) {
+    private void hitAndStand(Participant player, Deck deck) {
         while (!player.isBust() && player.getScore() != BUST_BOUND) {
-            boolean isHit = isHit(player, cardDeck);
+            boolean isHit = isHit(player, deck);
             outputView.printCurrentHandCard(player);
             if (!isHit) { // 스탠드면 끝
                 break;
@@ -89,22 +89,22 @@ public class BlackjackController {
         }
     }
 
-    private boolean isHit(Participant player, CardDeck cardDeck) {
+    private boolean isHit(Participant player, Deck deck) {
         boolean isHit = inputView.readHitOrStand(player.getName());  // 더 받을 지 물어봄
         if (isHit) {
             // 히트인 경우 카드 더 뽑아 추가하기
-            List<Card> drawnCards = blackjackService.drawCard(cardDeck, HIT_DRAW_COUNT);
+            List<Card> drawnCards = blackjackService.drawCard(deck, HIT_DRAW_COUNT);
             addHandCard(player, drawnCards);
         }
         return isHit;
     }
 
-    private Participant drawDealerAdditionalCard(Participants participants, CardDeck cardDeck) {
+    private Participant drawDealerAdditionalCard(Participants participants, Deck deck) {
         Participant dealer = participants.getDealer();
         while (dealer.getScore() <= DEALER_DRAW_BOUND) {
             outputView.printDealerAdditionalDraw();
 
-            List<Card> drawnCards = blackjackService.drawCard(cardDeck, HIT_DRAW_COUNT);
+            List<Card> drawnCards = blackjackService.drawCard(deck, HIT_DRAW_COUNT);
 
             addHandCard(dealer, drawnCards);
         }

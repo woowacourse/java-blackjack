@@ -3,19 +3,19 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CardDeck {
+public class Deck {
     private final List<Card> cardDeck;
 
-    private CardDeck(List<Card> cardDeck) {
+    private Deck(List<Card> cardDeck) {
         this.cardDeck = cardDeck;
     }
 
-    public static CardDeck initCardDeck() {
+    public static Deck initCardDeck() {
         List<Card> cards = new ArrayList<>();
         for (CardSuit suit : CardSuit.values()) {
             addCard(suit, cards);
         }
-        return new CardDeck(cards);
+        return new Deck(cards);
     }
 
     private static void addCard(CardSuit suit, List<Card> cards) {
