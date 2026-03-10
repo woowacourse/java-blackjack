@@ -15,6 +15,8 @@ public abstract class Member {
 
     public abstract List<Card> showFirstCards();
 
+    public abstract boolean isDealer();
+
     public String getName() {
         return name.getValue();
     }
