@@ -9,6 +9,7 @@ public final class CardSuitMap {
             2, "다이아몬드",
             3, "클로버"
     );
+
     private static final Map<Integer, String> RANK_MAP = Map.ofEntries(
             Map.entry(0, "A"),
             Map.entry(1, "2"),
@@ -25,26 +26,11 @@ public final class CardSuitMap {
             Map.entry(12, "K")
     );
 
-    private CardSuitMap() {
+    public static String getSuit(int shape) {
+        return SUIT_MAP.get(shape);
     }
 
-    public static int getScore(int card) {
-        int cardNumber = card % 13;
-
-        if (1 <= cardNumber && cardNumber <= 9) {
-            return cardNumber + 1;
-        }
-
-        if (cardNumber >= 10) {
-            return 10;
-        }
-
-        return 11;
-    }
-
-    public static String getCardName(int score) {
-        int shape = score / 13;
-        int number = score % 13;
-        return RANK_MAP.get(number) + SUIT_MAP.get(shape);
+    public static String getRank(int number) {
+        return RANK_MAP.get(number);
     }
 }
