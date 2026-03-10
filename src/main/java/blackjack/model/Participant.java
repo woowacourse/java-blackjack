@@ -1,35 +1,33 @@
 package blackjack.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public abstract class Participant {
-    // TODO: protected를 굳이? 그리고 List<Card>를 일급컬렉션으로 빼보자 (2026. 3. 9.)
-    protected final List<Card> cards;
+
+    private final HandCards handCards;
 
     public Participant() {
-        this.cards = new ArrayList<>();
+        this.handCards = new HandCards();
     }
 
     public final void receiveCard(Card card) {
-        cards.add(card);
+        handCards.addCard(card);
     }
 
     public final Score getScore() {
-        return ScoreCalculator.calculate(cards);
+        return handCards.calculate();
     }
 
     public final boolean isBurst() {
         return getScore().isBurst();
     }
 
-    public final Card getFirstCardName() {
-        return cards.getFirst();
+    public final Card oneCardOpen() {
+        return handCards.getFirstCard();
     }
 
-    public final List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+    public final List<Card> getHandCards() {
+        return handCards.getCards();
     }
 
     public abstract boolean canReceive();
