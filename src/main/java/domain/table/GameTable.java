@@ -2,7 +2,6 @@ package domain.table;
 
 import domain.vo.RoundResult;
 import domain.card.Card;
-import domain.member.Member;
 import domain.member.Members;
 import java.util.List;
 import java.util.Map;
@@ -27,8 +26,7 @@ public class GameTable {
     }
 
     public void draw(String memberName, Card card) {
-        Member member = members.findByName(memberName);
-        member.receiveCard(card);
+        members.draw(memberName, card);
     }
 
     public boolean canDealerDraw() {
