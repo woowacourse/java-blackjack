@@ -6,7 +6,7 @@ import dto.ResultDto;
 import java.util.List;
 
 public class OutputViewFormatter {
-    public static String formatDealerResult(DealerFinalResultDto dealerFinalResultDto) {
+    public String formatDealerResult(DealerFinalResultDto dealerFinalResultDto) {
         if (dealerFinalResultDto.drawCount() > 0) {
             return String.format("딜러: %d승 %d무 %d패%n", dealerFinalResultDto.winCount(), dealerFinalResultDto.drawCount(),
                     dealerFinalResultDto.loseCount());
@@ -14,19 +14,19 @@ public class OutputViewFormatter {
         return String.format("딜러: %d승 %d패%n", dealerFinalResultDto.winCount(), dealerFinalResultDto.loseCount());
     }
 
-    public static String formatDealerCardStatus(ResultDto resultDto) {
+    public String formatDealerCardStatus(ResultDto resultDto) {
         return String.format("딜러카드: %s%n", resultDto.cards().getFirst());
     }
 
-    public static String formatPlayerCardStatus(PlayerDto playerDto) {
+    public String formatPlayerCardStatus(PlayerDto playerDto) {
         return String.format("%s카드: %s%n", playerDto.name(), getCardStatusFormat(playerDto.resultDto().cards()));
     }
 
-    public static String getCardStatusFormat(List<String> cards) {
+    public String getCardStatusFormat(List<String> cards) {
         return String.join(", ", cards);
     }
 
-    public static String formatCardResult(String name, ResultDto resultDto) {
+    public String formatCardResult(String name, ResultDto resultDto) {
         return String.format("%n%s카드: %s - 결과: %d", name, resultDto.cards(), resultDto.score());
     }
 }
