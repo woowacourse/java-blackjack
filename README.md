@@ -117,3 +117,36 @@
 1. controller에서 입출력 기능 메서드를 private으로 해야하는지
 
 2. `InputView`, `OutputView` 유틸 클래스 아니면, 인스턴스 클래스로?
+
+----
+
+코드 리뷰 반영 사항
+- [x] BlackjackService에서 cards를 shuffle하는 책임 분리      
+ → 인터페이스 사용, 외부에서 인스턴스를 주입하게끔 구조를 변경해    
+   테스트 시 ShuffledCardsGenerator를 FakeShuffledCardsGenerator로 대체해서 
+ shuffle 값을 조작가능하도록 함.   
+- [x] Dealer의 이름 상수에 대한 책임을 Controller에서 Dealer 클래스로 변경
+- [x] List대신 Players라는 일급 컬렉션 사용
+- [x] 테스트에서만 사용되는 메서드 getCardCount() 삭제
+- [x] 키와 값을 모두 사용할 때는 entrySet() 사용
+- [x] 사용하지 않는 import 제거
+
+
+
+질문
+1. 상수화   
+Dealer 클래스에 둔 아래의 상수의 경우 outputView에서 Dealer.ADDITIONAL_THRESHOLD라고 사용해도 될까요?
+캡슐화의 관점으로 Dealer 내부로 옮긴건데 outputView에서 사용하면 의도대로 작동한게 맞나 싶어서요. 
+책임만 Dealer에게 할당하고, 사용은 어처피 상수여서 OutputView에서 사용해도 상관없을까요?
+```java
+public static final int ADDITIONAL_THRESHOLD = 16;
+```
+2. 인터페이스 사용   
+shuffle은 랜덤 추출처럼 통제할 수 없는 값이라,
+이 값을 테스트에서 편하게 조작해주기 위해 CardsGenerator라는 인터페이스를 추가했습니다.
+덕분에, FakeShuffledCardsGenerator를 사용해서 테스트 시 제가 직접 순서를 조작할 수 있었습니다.
+통제할 수 없는 값을 테스트 할때, 인터페이스를 사용해서 주로 하나요? 아니면 다른 방법도 있나요?
+추가로, 지금 인터페이스와 이를 이용한 테스트 코드가 잘 구현되어있는지 궁금합니다!
+(참고 테스트 코드 : BlackjackServiceTest의 셔플_카드_순서대로_배부_정상_테스트())
+
+3. 더 추가해야할 테스트가 있을지 궁금합니다.
