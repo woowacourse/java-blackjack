@@ -16,6 +16,10 @@ public class Deck {
         shuffle();
     }
 
+    public Deck(List<Card> cards) {
+        this.cards = new ArrayList<>(cards);
+    }
+
     private void shuffle() {
         Collections.shuffle(cards);
     }
@@ -23,6 +27,10 @@ public class Deck {
     public Card drawCard() {
         validateEmptyDeck();
         return cards.removeFirst();
+    }
+
+    public int getCardsSize(){
+        return cards.size();
     }
 
     private void validateEmptyDeck() {
