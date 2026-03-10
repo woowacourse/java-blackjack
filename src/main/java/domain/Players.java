@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Players {
@@ -15,5 +16,9 @@ public class Players {
 
     public Player getPlayer(int index) {
         return players.get(index);
+    }
+
+    public List<Player> getPlayers() {
+        return new ArrayList<>(this.players);
     }
 }
