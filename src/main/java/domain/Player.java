@@ -1,9 +1,12 @@
 package domain;
 
-import domain.constant.BlackJackRule;
 import domain.constant.DealerName;
+import java.util.Map;
+import java.util.Set;
 
-public class Player extends Participant {
+class Player extends Participant {
+
+    private static final int PLAYER_PLAYABLE_THRESHOLD = 20;
 
     Player(String name, Hand hand) {
         super(name, hand);
@@ -16,7 +19,7 @@ public class Player extends Participant {
 
     @Override
     protected boolean isPlayable() {
-        return hand.scoreSum() <= BlackJackRule.PLAYER_PLAYABLE_THRESHOLD.value();
+        return hand.scoreSum() <= PLAYER_PLAYABLE_THRESHOLD;
     }
 
     private void requireNonDealer(String name) {

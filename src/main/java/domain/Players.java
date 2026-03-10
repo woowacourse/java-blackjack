@@ -1,10 +1,10 @@
 package domain;
 
 import domain.vo.NameAndCardInfos;
+import domain.vo.PlayedGameResult;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;
-import java.util.Objects;
 
 class Players {
 
@@ -72,6 +72,7 @@ class Players {
     }
 
     PlayedGameResult currentPlayersResult() {
-        return PlayedGameResult.from(Objects.requireNonNull(players.poll()));
+        Player currentPlayer = players.poll();
+        return new PlayedGameResult(currentPlayer.infos(), currentPlayer.scoreSum());
     }
 }

@@ -1,6 +1,6 @@
 package dto.response;
 
-import domain.PlayedGameResult;
+import domain.vo.PlayedGameResult;
 import domain.vo.CardInfo;
 import domain.vo.NameAndCardInfos;
 import java.util.List;

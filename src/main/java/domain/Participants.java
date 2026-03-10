@@ -2,6 +2,7 @@ package domain;
 
 import domain.constant.BlackJackRule;
 import domain.vo.NameAndCardInfos;
+import domain.vo.PlayedGameResult;
 import java.util.List;
 
 class Participants {
@@ -73,7 +74,7 @@ class Participants {
     }
 
     PlayedGameResult dealerResult() {
-        return PlayedGameResult.from(dealer);
+        return new PlayedGameResult(dealer.infos(), dealer.scoreSum());
     }
 
     boolean isDealerPlayable() {

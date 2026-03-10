@@ -2,7 +2,7 @@ package repository;
 
 import domain.vo.DealerWinningScore;
 import domain.GameTable;
-import domain.PlayedGameResult;
+import domain.vo.PlayedGameResult;
 import domain.PlayerWinningInfo;
 import domain.vo.NameAndCardInfos;
 import java.util.List;

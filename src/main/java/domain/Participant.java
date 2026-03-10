@@ -4,19 +4,19 @@ import domain.vo.CardInfo;
 import domain.vo.NameAndCardInfos;
 import java.util.List;
 
-public abstract class Participant {
+abstract class Participant {
 
     private final String name;
     protected final Hand hand;
 
-    public Participant(String name, Hand hand) {
+    Participant(String name, Hand hand) {
         this.name = name;
         this.hand = hand;
     }
 
     protected abstract boolean isPlayable();
 
-    public void draw() {
+    void draw() {
         if (isPlayable()) {
             hand.drawCard();
         }
@@ -26,15 +26,15 @@ public abstract class Participant {
         return hand.cardInfos();
     }
 
-    public boolean isBusted() {
+    boolean isBusted() {
         return hand.isBusted();
     }
 
-    public int scoreSum() {
+    int scoreSum() {
         return hand.scoreSum();
     }
 
-    public String name() {
+    String name() {
         return name;
     }
 

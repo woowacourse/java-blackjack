@@ -1,20 +1,20 @@
 package domain;
 
-import domain.constant.BlackJackRule;
-import domain.constant.DealerName;
+class Dealer extends Participant {
 
-public class Dealer extends Participant {
+    private static final String NAME = "딜러";
+    private static final int DEALER_PLAYABLE_THRESHOLD = 16;
 
-    public Dealer(String name, Hand hand) {
+    Dealer(String name, Hand hand) {
         super(name, hand);
     }
 
     static Dealer of(DrawStrategy drawStrategy) {
-        return new Dealer(DealerName.DEFAULT.dealerName(), Hand.based(drawStrategy));
+        return new Dealer(NAME, Hand.based(drawStrategy));
     }
 
     @Override
     protected boolean isPlayable() {
-        return hand.scoreSum() <= BlackJackRule.DEALER_PLAYABLE_THRESHOLD.value();
+        return hand.scoreSum() <= DEALER_PLAYABLE_THRESHOLD;
     }
 }

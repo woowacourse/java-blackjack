@@ -2,6 +2,7 @@ package domain;
 
 import domain.vo.DealerWinningScore;
 import domain.vo.NameAndCardInfos;
+import domain.vo.PlayedGameResult;
 import java.util.List;
 
 public class GameTable {
