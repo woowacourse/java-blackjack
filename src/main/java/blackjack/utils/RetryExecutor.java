@@ -4,7 +4,11 @@ import blackjack.view.OutputView;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public class RetryExecutor {
+public final class RetryExecutor {
+
+    private RetryExecutor() {
+
+    }
 
     public static <T> T retry(final Supplier<T> supplier) {
         try {

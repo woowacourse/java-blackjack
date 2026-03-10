@@ -4,7 +4,11 @@ import blackjack.domain.Pair;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class Lists {
+public final class Lists {
+
+    private Lists() {
+
+    }
 
     public static <T, U> List<Pair<T, U>> cartesianProduct(final List<T> list1,
         final List<U> list2) {

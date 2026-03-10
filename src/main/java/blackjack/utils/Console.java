@@ -2,7 +2,7 @@ package blackjack.utils;
 
 import java.util.Scanner;
 
-public class Console {
+public final class Console {
 
     private static Scanner scanner;
 
