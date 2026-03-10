@@ -1,6 +1,8 @@
 package blackjack.model;
 
 public class Score {
+    public static final int BUST_BOUNDARY = 21;
+    public static final int DEALER_HIT_BOUNDARY = 16;
     private final int score;
 
     public Score(int score) {
@@ -17,15 +19,15 @@ public class Score {
 
     // TODO: 매직넘버 제거 (2026. 3. 9.)
     public boolean isDealerHitScore() {
-        return score <= 16;
+        return score <= DEALER_HIT_BOUNDARY;
     }
 
     public boolean isPlayerHitScore() {
-        return score < 21;
+        return score < BUST_BOUNDARY;
     }
 
     public boolean isBurst() {
-        return score > 21;
+        return score > BUST_BOUNDARY;
     }
 
     public int getScore() {
