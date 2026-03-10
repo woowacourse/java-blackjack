@@ -17,7 +17,6 @@ public class Score {
         return score < otherScore.score;
     }
 
-    // TODO: 매직넘버 제거 (2026. 3. 9.)
     public boolean isDealerHitScore() {
         return score <= DEALER_HIT_BOUNDARY;
     }
