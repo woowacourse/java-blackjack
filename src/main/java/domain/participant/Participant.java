@@ -4,9 +4,9 @@ import domain.card.Card;
 
 import java.util.List;
 
-public abstract class Participant {
-    public static final int INITIAL_CARD_COUNT = 2;
+import static domain.BlackjackRule.INITIAL_CARDS_COUNT;
 
+public abstract class Participant {
     private final Name name;
     private final Hand hand;
 
@@ -16,7 +16,7 @@ public abstract class Participant {
     }
 
     public void receiveInitialCards(List<Card> cards) {
-        if (cards.size() != INITIAL_CARD_COUNT) {
+        if (cards.size() != INITIAL_CARDS_COUNT) {
             throw new IllegalArgumentException();
         }
 

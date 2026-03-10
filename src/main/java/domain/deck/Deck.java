@@ -7,8 +7,9 @@ import domain.card.Suit;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static domain.BlackjackRule.INITIAL_CARDS_COUNT;
+
 public class Deck {
-    public static final int INITIAL_CARDS_COUNT = 2;
     private final List<Card> cards;
 
     public Deck(List<Card> cards) {

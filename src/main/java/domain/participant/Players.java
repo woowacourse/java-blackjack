@@ -27,7 +27,7 @@ public class Players {
 
     private void validateDuplicatedName(List<Player> players) {
         Set<String> namesSet = players.stream()
-                .map(player -> player.name())
+                .map(Participant::name)
                 .collect(Collectors.toSet());
 
         if (namesSet.size() != players.size()) {
@@ -37,7 +37,7 @@ public class Players {
 
     public List<String> getPlayerNames() {
         return players.stream()
-                .map(player -> player.name())
+                .map(Participant::name)
                 .collect(Collectors.toList());
     }
 
