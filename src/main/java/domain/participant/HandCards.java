@@ -1,5 +1,7 @@
 package domain.participant;
 
+import domain.Score;
+import domain.ScoreStatus;
 import domain.card.Card;
 import domain.card.CardNumber;
 
@@ -26,11 +28,18 @@ public class HandCards {
         cards.add(card);
     }
 
-    public boolean isBust() {
-        return calculateScore() > 21;
+    public Score getScore() {
+        int score = calculateScore();
+        if (isBlackJack()) {
+            return new Score(score, ScoreStatus.BLACKJACK);
+        }
+        if (isBust()) {
+            return new Score(score, ScoreStatus.BUST);
+        }
+        return new Score(score, ScoreStatus.STAND);
     }
 
-    public int calculateScore() {
+    private int calculateScore() {
         int baseCardScore = cards.stream()
                 .map(Card::getBaseScore)
                 .reduce(0, Integer::sum);
@@ -50,5 +59,13 @@ public class HandCards {
 
     public List<Card> getCards() {
         return List.copyOf(cards);
+    }
+
+    public boolean isBust() {
+        return calculateScore() > 21;
+    }
+
+    public boolean isBlackJack() {
+        return cards.size() == 2 && calculateScore() == 21;
     }
 }

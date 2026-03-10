@@ -17,27 +17,15 @@ public enum PlayerGameResult {
     }
 
     public static PlayerGameResult from(Player player, Dealer dealer) {
-        if (player.isBust() || dealer.isBust()) {
-            return bustResult(player.isBust(), dealer.isBust());
-        }
-        return compareScore(player.calculateScore(), dealer.calculateScore());
+        return compareScore(player.getScore(), dealer.getScore());
     }
 
-    private static PlayerGameResult bustResult(boolean playerIsBust, boolean dealerIsBust) {
-        if (playerIsBust && dealerIsBust) {
-            return DRAW;
-        }
-        if (dealerIsBust) {
-            return WIN;
-        }
-        return LOSE;
-    }
 
-    private static PlayerGameResult compareScore(int playerScore, int dealerScore) {
-        if (playerScore > dealerScore) {
+    private static PlayerGameResult compareScore(Score playerScore, Score dealerScore) {
+        if (playerScore.compareTo(dealerScore) > 0) {
             return WIN;
         }
-        if (playerScore == dealerScore) {
+        if (playerScore.compareTo(dealerScore) == 0) {
             return DRAW;
         }
         return LOSE;

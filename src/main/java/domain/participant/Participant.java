@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.Score;
 import domain.card.Card;
 
 import java.util.List;
@@ -31,8 +32,8 @@ public abstract class Participant {
         return handCards.isBust();
     }
 
-    public int calculateScore() {
-        return handCards.calculateScore();
+    public Score getScore() {
+        return handCards.getScore();
     }
 
     public List<Card> getHandCards() {

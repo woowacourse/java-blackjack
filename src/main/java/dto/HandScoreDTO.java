@@ -18,6 +18,6 @@ public record HandScoreDTO(String name, List<String> handCards, String score) {
         if (participant.isBust()) {
             return "버스트";
         }
-        return String.valueOf(participant.calculateScore());
+        return String.valueOf(participant.getScore());
     }
 }
