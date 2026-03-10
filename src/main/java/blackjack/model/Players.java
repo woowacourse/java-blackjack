@@ -39,7 +39,7 @@ public class Players {
     }
 
     private void validateDuplicate(List<String> names) {
-        int unique = (int) names.stream().distinct().count();
+        long unique = names.stream().distinct().count();
         if (unique != names.size()) {
             throw new IllegalArgumentException("플레이어 이름은 중복될 수 없습니다.");
         }

@@ -5,7 +5,7 @@ import blackjack.model.Deck;
 import blackjack.model.GameSummary;
 import blackjack.model.Player;
 import blackjack.model.Players;
-import blackjack.util.InputParser;
+import blackjack.view.InputParser;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
