@@ -4,17 +4,17 @@ import java.util.List;
 
 public class Participant {
     private final Name name;
-    private final HandCards handCards;
+    private final Hand hand;
     private final boolean isDealer;
 
-    public Participant(Name name, HandCards handCards, boolean isDealer) {
+    public Participant(Name name, Hand hand, boolean isDealer) {
         this.name = name;
-        this.handCards = handCards;
+        this.hand = hand;
         this.isDealer = isDealer;
     }
 
     public void addHandCard(Card card) {
-        handCards.addCard(card);
+        hand.addCard(card);
     }
 
     public boolean isDealer() {
@@ -22,16 +22,16 @@ public class Participant {
     }
 
     public boolean isBust() {
-        return handCards.isBust();
+        return hand.isBust();
     }
 
     public boolean isBlackjack() {
-        return handCards.isBlackjack();
+        return hand.isBlackjack();
     }
 
 
     public int getScore() {
-        return handCards.getScore();
+        return hand.getScore();
     }
 
     public String getName() {
@@ -39,6 +39,6 @@ public class Participant {
     }
 
     public List<Card> getHandCards() {
-        return handCards.getHandCards();
+        return hand.getHandCards();
     }
 }

@@ -13,12 +13,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class HandCards {
+public class Hand {
 
     private final List<Card> handCards;
     private final Set<Integer> scores = new HashSet<>();
 
-    public HandCards(List<Card> handCards) {
+    public Hand(List<Card> handCards) {
         this.handCards = handCards;
     }
 
