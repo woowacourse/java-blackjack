@@ -8,22 +8,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CardsTest {
-
-    @Test
-    @DisplayName("카드 합계를 계산한다.")
-    void calculateScore_ReturnSum() {
-        Card card1 = new Card(Shape.SPADE, Number.EIGHT);
-        Card card2 = new Card(Shape.HEART, Number.EIGHT);
-
-        List<Card> cards = new ArrayList<>();
-        Cards testCards = new Cards(cards);
-
-        testCards.addCard(card1);
-        testCards.addCard(card2);
-
-        assertEquals(16, testCards.calculateScore());
-    }
+class ResultTest {
 
     @Test
     @DisplayName("Ace가 2개일 경우 추가로 카드를 받을 수 있다.")
