@@ -73,8 +73,8 @@ class PlayerTest {
     @Test
     @DisplayName("플레이어 객체 생성 시 2장의 카드를 정상 분배하는지 확인한다.")
     void 카드_초기_draw시_2장_보유_확인_테스트() {
-        Cards cards = Cards.of();
-        Player player = Player.of(cards.drawInitialHand(), "pobi");
+        Deck deck = Deck.of(new NoShuffleStrategy());
+        Player player = Player.of(deck.drawInitialHand(), "pobi");
 
         int cardSize = player.getCardsInfo().size();
 
@@ -85,10 +85,10 @@ class PlayerTest {
     @Test
     @DisplayName("플레이어에게 한 장의 카드를 추가 분배할 수 있는지 확인한다.")
     void 카드_한장_draw_여부_확인_테스트() {
-        Cards cards = Cards.of();
-        Player player = Player.of(cards.drawInitialHand(), "pobi");
+        Deck deck = Deck.of(new NoShuffleStrategy());
+        Player player = Player.of(deck.drawInitialHand(), "pobi");
 
-        player.addCard(cards.draw());
+        player.addCard(deck.draw());
         int cardSize = player.getCardsInfo().size();
 
         int expect = 3;
