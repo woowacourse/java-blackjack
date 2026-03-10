@@ -24,5 +24,4 @@ public class Card {
     public int getScore() {
         return rank.getValue();
     }
-
 }

@@ -39,5 +39,4 @@ public class Cards {
     public Card draw() {
         return cards.removeFirst();
     }
-
 }

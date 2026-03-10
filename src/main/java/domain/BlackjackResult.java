@@ -24,11 +24,11 @@ public class BlackjackResult {
             int playerScore = player.getScoreOrZeroIfBust();
             int dealerScore = dealer.getScoreOrZeroIfBust();
 
-            playerResult.put(player, getJudgeResult(playerScore, dealerScore));
+            playerResult.put(player, judgeResult(playerScore, dealerScore));
         }
     }
 
-    private GameResult getJudgeResult(int playerScore, int dealerScore) {
+    private GameResult judgeResult(int playerScore, int dealerScore) {
         if (playerScore > dealerScore) {
             return GameResult.WIN;
         }
@@ -64,5 +64,4 @@ public class BlackjackResult {
                 .filter(value -> value == gameResult)
                 .count();
     }
-
 }

@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.List;
+
 import meesage.OutputMessage;
 
 public class Dealer {
@@ -80,5 +81,4 @@ public class Dealer {
     public boolean shouldHit() {
         return calculateScore() < Policy.DEALER_HIT_THRESHOLD;
     }
-
 }
