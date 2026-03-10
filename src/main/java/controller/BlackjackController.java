@@ -27,7 +27,7 @@ public class BlackjackController {
 
         Dealer dealer = blackjackService.createDealer(cards);
         OutputView.displayCardDistribution(names);
-        List<Player> playerList = blackjackService.createPlayers(names, cards);
+        Players playerList = blackjackService.createPlayers(names, cards);
 
         List<CardContentDto> firstCardContents = getCardContentDtos(dealer, playerList);
         OutputView.displayCardContent(firstCardContents);
@@ -44,7 +44,7 @@ public class BlackjackController {
         OutputView.displayMatchResult(blackjackResult.toResultDto());
     }
 
-    public List<CardContentDto> getCardContentDtos(Dealer dealer, List<Player> playerList) {
+    public List<CardContentDto> getCardContentDtos(Dealer dealer, Players playerList) {
         List<CardContentDto> firstCardContents = new ArrayList<>();
         firstCardContents.add(new CardContentDto(dealer.getName(), List.of(dealer.getFirstCard())));
         for (Player player : playerList) {
@@ -53,8 +53,7 @@ public class BlackjackController {
         return firstCardContents;
     }
 
-    public Players addAdditionalCard(List<Player> playerList, Cards cards) {
-        Players players = new Players(playerList);
+    public Players addAdditionalCard(Players players, Cards cards) {
         for (Player player : players) {
             String name = player.getName();
             boolean hasCard = hasAdditionalCard(name);

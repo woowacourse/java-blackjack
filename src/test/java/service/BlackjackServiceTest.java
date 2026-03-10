@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import domain.Cards;
 import domain.Player;
+import domain.Players;
 
 class BlackjackServiceTest {
     private BlackjackService blackjackService;
@@ -32,9 +33,9 @@ class BlackjackServiceTest {
     @Test
     void 초기_카드_2장_배부_테스트() {
         Cards cards = blackjackService.generateCards();
-        List<Player> playerList = blackjackService.createPlayers(List.of("요크", "아티"), cards);
+        Players playerList = blackjackService.createPlayers(List.of("요크", "아티"), cards);
 
-        assertThat(playerList.getFirst().getCardCount()).isEqualTo(2);
+        assertThat(playerList.getPlayer(0).getCardCount()).isEqualTo(2);
     }
 
 }

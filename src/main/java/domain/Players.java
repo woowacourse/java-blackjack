@@ -2,7 +2,6 @@ package domain;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 public class Players implements Iterable<Player> {
     private List<Player> players;
@@ -19,4 +18,10 @@ public class Players implements Iterable<Player> {
     public boolean isAllPlayerBurst() {
         return players.stream().allMatch(Player::isBust);
     }
+
+    public Player getPlayer(int index){
+        return players.get(index);
+    }
+
+
 }

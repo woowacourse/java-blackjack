@@ -7,6 +7,7 @@ import controller.BlackjackController;
 import domain.Cards;
 import domain.Dealer;
 import domain.Player;
+import domain.Players;
 import utils.generator.CardGenerator;
 import view.OutputView;
 
@@ -22,14 +23,14 @@ public class BlackjackService {
         dealer.addInitializedCard(cards);
     }
 
-    public List<Player> createPlayers(List<String> names, Cards cards) {
+    public Players createPlayers(List<String> names, Cards cards) {
         List<Player> playerList = new ArrayList<>();
         for (String name : names) {
             Player player = new Player(name);
             player.addInitializedCard(cards);
             playerList.add(player);
         }
-        return playerList;
+        return new Players(playerList) ;
     }
 
     public Dealer createDealer(Cards cards) {
