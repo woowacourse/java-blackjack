@@ -38,8 +38,8 @@ public class OutputView {
         System.out.printf("%s카드: %s\n", dto.name(), String.join(", ", cardContents));
     }
 
-    public void displayDealerCard() {
-        System.out.println("딜러는 " + GameConstant.DEALER_HIT_THRESHOLD + "이하라 한장의 카드를 더 받았습니다.");
+    public void displayDealerCard(int hitThreshold) {
+        System.out.println("딜러는 " + hitThreshold + "이하라 한장의 카드를 더 받았습니다.");
     }
 
     public void displayFinalCard(List<FinalPlayerCardDto> finalPlayerCardDtos) {

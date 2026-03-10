@@ -1,5 +1,6 @@
 package controller;
 
+import constant.GameConstant;
 import domain.BlackjackResult;
 import domain.Dealer;
 import domain.Deck;
@@ -50,7 +51,7 @@ public class BlackjackController {
         if (!players.areAllBust()) {
             int dealerCardCount = blackjackService.determineAdditionalCardOfDealer(dealer, cards);
             for (int i = 0; i < dealerCardCount; i++) {
-                outputView.displayDealerCard();
+                outputView.displayDealerCard(GameConstant.DEALER_HIT_THRESHOLD);
             }
         }
         return players;
