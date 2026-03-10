@@ -5,8 +5,11 @@ import java.util.List;
 
 public class Player extends Member {
 
-    public Player(String name) {
+    private final BettingAmount amount;
+
+    public Player(String name, int amount) {
         super(name);
+        this.amount = new BettingAmount(amount);
     }
 
     @Override
@@ -17,5 +20,15 @@ public class Player extends Member {
     @Override
     public boolean isDealer() {
         return false;
+    }
+
+    @Override
+    public int getBettingAmount() {
+        return amount.getAmount();
+    }
+
+    @Override
+    public void applyBlackjackBonus() {
+        amount.applyBonus();
     }
 }
