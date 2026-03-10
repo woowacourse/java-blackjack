@@ -77,7 +77,7 @@ class DealerTest {
         playerResults.put(new Player("lala"), MatchResult.LOSE);
 
         // when
-        Map<MatchResult, Integer> dealerResult = dealer.calculateResult(playerResults);
+        Map<MatchResult, Integer> dealerResult = dealer.calculateMatchResult(playerResults);
 
         // then
         Assertions.assertEquals(dealerResult.get(MatchResult.LOSE), 3);
