@@ -1,0 +1,76 @@
+import domain.Dealer;
+import domain.User;
+import view.InputParser;
+import view.InputView;
+import view.OutputView;
+
+import java.util.List;
+
+public class GameController {
+
+    private final InputView inputView;
+    private final OutputView outputView;
+    private final GameService gameService;
+
+    private final Dealer dealer;
+
+    public GameController(InputView inputView, OutputView outputView, GameService gameService) {
+        this.inputView = inputView;
+        this.outputView = outputView;
+        this.gameService = gameService;
+        this.dealer = new Dealer();
+    }
+
+    public void run() {
+        List<User> users = setUpUsers();
+        initDeal(users);
+        processUserTurns(users);
+        processDealerTurn();
+        showCardResult(users);
+        showGameRecord(users);
+    }
+
+    private List<User> setUpUsers(){
+        String input = inputView.readUsers();
+        return InputParser.parseUsers(input);
+    }
+
+    private void initDeal(List<User> users){
+        gameService.initDeal(users, dealer);
+        outputView.printInitialDeal(users, dealer);
+    }
+
+    private void processUserTurns(List<User> users) {
+        users.forEach(this::processUserTurn);
+    }
+
+    private void processUserTurn(User user) {
+        boolean hit = false;
+        while (inputView.readWillHit(user.getName())) {
+            hit = true;
+            user.receiveCard(gameService.deal());
+            outputView.printHand(user);
+        }
+        if (!hit) {
+            outputView.printHand(user);
+        }
+    }
+
+    private void processDealerTurn() {
+        while (dealer.isHit()) {
+            dealer.receiveCard(gameService.deal());
+            outputView.printDealerHit();
+            dealer.calculateScore();
+        }
+        outputView.printDealerStand();
+    }
+
+    private void showCardResult(List<User> users) {
+        outputView.printCardResult(users, dealer);
+    }
+
+    private void showGameRecord(List<User> users){
+        gameService.settleResult(users, dealer);
+        outputView.printGameRecord(users, dealer);
+    }
+}
