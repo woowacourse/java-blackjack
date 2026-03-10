@@ -53,6 +53,7 @@ public class DealerTest {
 
     }
 
+
     @Test
     @DisplayName("딜러 히트 여부 결정 테스트: 카드 합계가 16 초과인 경우")
     void 딜러_히트_여부_결정_테스트_카드_합계가_16_초과인_경우() {
@@ -61,12 +62,10 @@ public class DealerTest {
             new Card(Suit.SPADE, Denomination.SEVEN)));
         Trump trump = new Trump();
         Dealer dealer = new Dealer(hand, Status.HIT, trump);
-        Status expected = Status.STAY;
 
         dealer.decideHit();
 
-        assertThat(dealer).extracting("status")
-            .isEqualTo(expected);
-
+        assertThat(dealer.isHit()).isFalse();
+        assertThat(dealer.isBurst()).isFalse();
     }
 }
