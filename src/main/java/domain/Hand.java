@@ -20,7 +20,7 @@ public class Hand {
     }
 
     public int calculateScore() {
-        int totalScore = cards.stream().mapToInt(Card::getScore).sum();
+        int totalScore = sumDefaultScore();
 
         if (hasAceCard()) {
             return calculateAceBonus(totalScore);
@@ -31,6 +31,10 @@ public class Hand {
 
     public boolean isBust() {
         return calculateScore() > MAX_NON_BUST_SCORE;
+    }
+
+    private int sumDefaultScore() {
+        return cards.stream().mapToInt(Card::getScore).sum();
     }
 
     private int calculateAceBonus(int totalScore) {
