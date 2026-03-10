@@ -1,6 +1,7 @@
 package controller;
 
 import domain.Game;
+import domain.card.Card;
 import domain.card.Deck;
 import domain.enums.Result;
 import domain.participant.Dealer;
@@ -26,11 +27,11 @@ public class BlackjackController {
         CardGenerator cardGenerator = new ShuffledCardGenerator();
         Deck deck = new Deck(cardGenerator.generate());
         Game game = new Game(makePlayers(), new Dealer());
+        List<String> playersName = game.getAllPlayersName();
 
         game.initializeGame(deck);
-        outputView.printPlayers(game.getDealerCard(), game.getAllPlayerCard());
+        outputView.printPlayers(game.getDealerCard(), getPlayerCards(game, playersName));
 
-        List<String> playersName = game.getAllPlayersName();
         playTurn(game, playersName, deck);
         printResult(game, playersName);
     }
@@ -38,6 +39,21 @@ public class BlackjackController {
     private List<String> makePlayers() {
         String input = inputView.askPlayerNames();
         return InputParser.parseNames(input);
+    }
+
+    private Map<String, List<Card>> getPlayerCards(Game game, List<String> playersName) {
+        Map<String, List<Card>> playerCards = new LinkedHashMap<>();
+        for (String name : playersName) {
+            playerCards.put(name, game.getPlayerCard(name));
+        }
+        return playerCards;
+    }
+
+    private void playTurn(Game game, List<String> playersName, Deck deck) {
+        for (String name : playersName) {
+            playPlayerTurn(game, name, deck);
+        }
+        playDealerTurn(game, deck);
     }
 
     private void playPlayerTurn(Game game, String name, Deck deck) {
@@ -59,13 +75,6 @@ public class BlackjackController {
             game.dealerHit(deck);
             outputView.printDealerHit();
         }
-    }
-
-    private void playTurn(Game game, List<String> playersName, Deck deck) {
-        for (String name : playersName) {
-            playPlayerTurn(game, name, deck);
-        }
-        playDealerTurn(game, deck);
     }
 
     private void printResult(Game game, List<String> playerNames) {
