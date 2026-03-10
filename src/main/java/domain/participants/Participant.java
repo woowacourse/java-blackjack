@@ -2,7 +2,8 @@ package domain.participants;
 
 import domain.card.Card;
 import domain.card.Hand;
-import domain.score.Score;
+import domain.hitStrategy.HitStrategy;
+import domain.state.State;
 import java.util.List;
 import util.ErrorMessage;
 
@@ -10,8 +11,8 @@ public abstract class Participant {
     private static final int MIN_NAME_SIZE = 2;
     private static final int MAX_NAME_SIZE = 7;
 
-    private final String name;
-    private final Hand hand;
+    protected final String name;
+    protected final Hand hand;
 
     protected Participant(String name, Hand hand) {
         validateNameLength(name);
@@ -25,10 +26,6 @@ public abstract class Participant {
         }
     }
 
-    public void addCard(Card card) {
-        hand.add(card);
-    }
-
     public List<Card> getCards() {
         return hand.getCards();
     }
@@ -37,7 +34,7 @@ public abstract class Participant {
         return name;
     }
 
-    public Score getScore() {
-        return hand.getScore();
-    }
+    abstract State getStartState();
+
+    abstract public HitStrategy getHitStrategy();
 }

@@ -1,6 +1,6 @@
 package dto;
 
-public record StatisticsDto (
+public record StatisticsDto(
         String name,
         String result
 ) {

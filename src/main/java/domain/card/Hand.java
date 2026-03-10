@@ -1,11 +1,13 @@
 package domain.card;
 
-import domain.score.Score;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import util.ErrorMessage;
 
 public class Hand {
+    private static final int BURST_SCORE = 21;
+    public static final int ACE_ADVANTAGE_SCORE = 10;
     private static final int MIN_SIZE = 2;
 
     private final List<Card> cards;
@@ -15,23 +17,38 @@ public class Hand {
         this.cards = cards;
     }
 
+    public static Hand createFromDeck(Deck deck) {
+        List<Card> cards = new ArrayList<>();
+        cards.add(deck.drawCard());
+        cards.add(deck.drawCard());
+        return new Hand(cards);
+    }
+
     private void validateCardsSize(List<Card> cards) {
         if (cards.size() != MIN_SIZE) {
             throw new IllegalArgumentException(ErrorMessage.HANDS_CARDS_SIZE.getMessage());
         }
     }
 
-    public Score getScore() {
-        int totalScore = cards.stream()
+    public Integer getScore() {
+        int score = cards.stream()
                 .map(Card::getScore)
                 .reduce(Integer::sum)
                 .orElse(0);
 
-        return new Score(totalScore, hasAce(cards));
+        if (hasAce(cards) && !aceAdvantageIsBurst(score)) {
+            return score + ACE_ADVANTAGE_SCORE;
+        }
+
+        return score;
     }
 
     public void add(Card card) {
         cards.add(card);
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 
     private boolean hasAce(List<Card> hands) {
@@ -39,7 +56,11 @@ public class Hand {
                 .anyMatch(Card::isAce);
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+    private boolean aceAdvantageIsBurst(int score) {
+        return score + ACE_ADVANTAGE_SCORE > BURST_SCORE;
+    }
+
+    public boolean isBurst() {
+        return getScore() > BURST_SCORE;
     }
 }

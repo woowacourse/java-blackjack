@@ -1,7 +1,7 @@
 package domain.hitStrategy;
 
-import domain.score.Score;
+import domain.state.State;
 
 public interface HitStrategy {
-    boolean needToHit(Score score);
+    boolean canHit(State state);
 }
