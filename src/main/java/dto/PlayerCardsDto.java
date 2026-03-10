@@ -5,7 +5,7 @@ import domain.state.State;
 import java.util.List;
 
 public record PlayerCardsDto(String name, List<String> cards, Integer totalScore) {
-    public static PlayerCardsDto fromEntity(State state) {
+    public static PlayerCardsDto fromState(State state) {
         return new PlayerCardsDto(state.getParticipantName(), cardToString(state.getCards()), state.getScore());
     }
 

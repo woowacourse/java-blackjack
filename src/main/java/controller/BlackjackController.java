@@ -51,7 +51,7 @@ public class BlackjackController {
         for (State state : playersState) {
             while (!state.isFinished()) {
                 state = state.drawCard(deck, inputView.readNeedToHit(state.getParticipantName()));
-                outputView.showCards(PlayerCardsDto.fromEntity(state));
+                outputView.showCards(PlayerCardsDto.fromState(state));
             }
             states.add(state);
         }
@@ -59,15 +59,15 @@ public class BlackjackController {
     }
 
     private void printAllStatus(State dealerState, List<State> playersState) {
-        outputView.showCardsAndScore(PlayerCardsDto.fromEntity(dealerState));
-        playersState.forEach(player -> outputView.showCardsAndScore(PlayerCardsDto.fromEntity(player)));
+        outputView.showCardsAndScore(PlayerCardsDto.fromState(dealerState));
+        playersState.forEach(player -> outputView.showCardsAndScore(PlayerCardsDto.fromState(player)));
         outputView.showResultStatistics(getStatisticsDtos(playersState, dealerState), dealerState.getParticipantName());
     }
 
     private void printCards(State dealerState, List<State> playersState) {
-        outputView.drawCard(NamesDto.fromEntity(dealerState, playersState));
-        outputView.showOnlyOneCard(PlayerCardsDto.fromEntity(dealerState));
-        outputView.showPlayersCards(PlayersCardsDto.fromEntities(playersState));
+        outputView.drawCard(NamesDto.fromState(dealerState, playersState));
+        outputView.showOnlyOneCard(PlayerCardsDto.fromState(dealerState));
+        outputView.showPlayersCards(PlayersCardsDto.fromStates(playersState));
     }
 
     private List<StatisticsDto> getStatisticsDtos(List<State> playersState, State dealerState) {
@@ -88,7 +88,7 @@ public class BlackjackController {
             state = dealerState.drawCard(deck, true);
             outputView.drawDealer(
                     new DealerDrawDto(dealerState.getParticipantName(), CasinoDealerHitStrategy.BOUNDARY));
-            outputView.showCards(PlayerCardsDto.fromEntity(dealerState));
+            outputView.showCards(PlayerCardsDto.fromState(dealerState));
         }
         return state;
     }
