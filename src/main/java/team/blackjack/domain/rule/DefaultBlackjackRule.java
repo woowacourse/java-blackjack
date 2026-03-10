@@ -30,7 +30,6 @@ public class DefaultBlackjackRule {
         return currentSum <= 10;
     }
 
-    // 딜러와 플레이어의 승패를 결정하는 메서드
     public static Result judgeResult(int myScore, int targetScore) {
         if(myScore > BLACKJACK){
             return Result.LOSE;
@@ -44,9 +43,6 @@ public class DefaultBlackjackRule {
         return Result.DRAW;
     }
 
-    /**
-     * 모든 카드를 발급한 이후에, 최종 점수 계산시에 사용하는 함수
-     */
     public static int calculateBestScore(List<Card> cards) {
         if (existAceInCards(cards)) {
             final Map<Boolean, List<Card>> result = cards.stream()
