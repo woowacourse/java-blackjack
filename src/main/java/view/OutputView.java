@@ -2,12 +2,10 @@ package view;
 
 import constant.PolicyConstant;
 import constant.Result;
-import domain.Player;
-import dto.BlackjackResultDto;
+import dto.BlackjackStatisticsDto;
 import dto.DealerResultDto;
-import dto.HandDto;
+import dto.ParticipantDto;
 import dto.PlayerResultDto;
-import dto.PlayersDto;
 import java.util.List;
 
 public class OutputView {
@@ -20,27 +18,26 @@ public class OutputView {
     private static final String PRINT_BLACKJACK_STATISTICS_DEALER_MESSAGE = "딜러:%s%s%s\n";
     private static final String PRINT_BLACKJACK_STATISTICS_PLAYER_MESSAGE = "%s: %s\n";
 
-    public void printPlayers(PlayersDto playersDto) {
-        List<String> names = playersDto.players().stream()
-            .map(Player::getName)
+    public void printPlayers(List<ParticipantDto> participantDtoList) {
+        List<String> names = participantDtoList.stream()
+            .map(ParticipantDto::name)
             .toList();
         System.out.printf(PRINT_PLAYERS_MESSAGE, String.join(PolicyConstant.DELIMITER + " ", names));
     }
 
-    public void printHandList(List<HandDto> handDtoList) {
-        for (HandDto handDto : handDtoList) {
-            printlnHand(handDto);
+    public void printHandList(List<ParticipantDto> participantDtoList) {
+        for (ParticipantDto participantDto : participantDtoList) {
+            printlnHand(participantDto.name(), participantDto.hand());
         }
         System.out.println();
     }
 
-    public void printHand(HandDto handDto) {
-        System.out.printf(PRINT_HAND_MESSAGE, handDto.name(),
-            String.join(PolicyConstant.DELIMITER + " ", handDto.hand()));
+    public void printHand(String name, List<String> hand) {
+        System.out.printf(PRINT_HAND_MESSAGE, name, String.join(PolicyConstant.DELIMITER + " ", hand));
     }
 
-    public void printlnHand(HandDto handDto) {
-        printHand(handDto);
+    public void printlnHand(String name, List<String> hand) {
+        printHand(name, hand);
         System.out.println();
     }
 
@@ -48,17 +45,18 @@ public class OutputView {
         System.out.println(PRINT_DEALER_HIT);
     }
 
-    public void printBlackjackResult(List<BlackjackResultDto> blackjackResultDtoList) {
+    public void printBlackjackResult(List<ParticipantDto> blackjackResult) {
         System.out.println();
-        for (BlackjackResultDto resultDto : blackjackResultDtoList) {
-            printHand(resultDto.handDto());
-            System.out.printf(PRINT_BLACKJACK_RESULT_MESSAGE, resultDto.score());
+        for (ParticipantDto participantDto : blackjackResult) {
+            printHand(participantDto.name(), participantDto.hand());
+            System.out.printf(PRINT_BLACKJACK_RESULT_MESSAGE, participantDto.score());
         }
         System.out.println();
     }
 
-    public void printBlackjackStatistics(DealerResultDto dealerResultDto,
-        List<PlayerResultDto> playerResultDtoList) {
+    public void printBlackjackStatistics(BlackjackStatisticsDto blackjackStatistics) {
+        DealerResultDto dealerResultDto = blackjackStatistics.dealerResultDto();
+        List<PlayerResultDto> playerResultDtoList = blackjackStatistics.playerResultDtoList();
         System.out.println(PRINT_BLACKJACK_STATISTICS_HEADER_MESSAGE);
         System.out.printf(PRINT_BLACKJACK_STATISTICS_DEALER_MESSAGE,
             printResult(dealerResultDto.win(), Result.WIN.getResult()),
