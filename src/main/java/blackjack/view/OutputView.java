@@ -2,8 +2,8 @@ package blackjack.view;
 
 import blackjack.dto.DealerGameResult;
 import blackjack.dto.ParticipantResult;
-import blackjack.dto.PlayerNicknamesResult;
 import blackjack.dto.PlayerGameResult;
+import blackjack.dto.PlayerNicknamesResult;
 import blackjack.dto.TotalGameResult;
 import java.util.List;
 
@@ -44,7 +44,6 @@ public class OutputView {
         printLine("## 최종 승패");
         printDealerGameResult(gameResult.dealerGameResult());
         printPlayersGameResult(gameResult.playerGameResult());
-//        winningResultList.forEach(winningResult -> printLine(winningResult.playerWinningResult()));
     }
 
     private void printPlayersGameResult(List<PlayerGameResult> playerGameResults) {
