@@ -1,51 +1,44 @@
 package domain.card;
 
-import domain.RandomValueGenerator;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.HashSet;
 import java.util.List;
 import util.ErrorMessage;
 
 public class Deck {
-    public static final int CARD_SIZE = 52;
+    public static final int CARD_SIZE_UNIT = 52;
 
-    private final List<Card> cards;
-    private final RandomValueGenerator randomValueGenerator;
+    private final Deque<Card> cards;
 
-    public Deck(List<Card> cards, RandomValueGenerator randomValueGenerator) {
+    private Deck(Deque<Card> cards) {
         validateSize(cards);
         validateDuplicate(cards);
         this.cards = cards;
-        this.randomValueGenerator = randomValueGenerator;
     }
 
-    private void validateSize(List<Card> cards) {
-        if (cards.size() != CARD_SIZE) {
+    public static Deck createFromDeckMaker(DeckMaker deckMaker) {
+        Deque<Card> deque = new ArrayDeque<Card>(deckMaker.make());
+        return new Deck(deque);
+    }
+
+    public static Deck createFromList(List<Card> cards) {
+        return new Deck(new ArrayDeque<>(cards));
+    }
+
+    private void validateSize(Deque<Card> cards) {
+        if (cards.size() % CARD_SIZE_UNIT != 0) {
             throw new IllegalArgumentException(ErrorMessage.DECK_SIZE.getMessage());
         }
     }
 
-    private void validateDuplicate(List<Card> cards) {
+    private void validateDuplicate(Deque<Card> cards) {
         if (new HashSet<>(cards).size() != cards.size()) {
             throw new IllegalArgumentException(ErrorMessage.DECK_DUPLICATE.getMessage());
         }
     }
 
     public Card drawCard() {
-        int idx = randomValueGenerator.generate(getSize());
-        if (idx < 0 || idx >= cards.size()) {
-            throw new IllegalArgumentException(ErrorMessage.INDEX_RANGE.getMessage());
-        }
-        Card card = cards.get(idx);
-        cards.remove(idx);
-
-        return card;
-    }
-
-    public boolean contains(Card card) {
-        return cards.contains(card);
-    }
-
-    private int getSize() {
-        return cards.size();
+        return cards.pollFirst();
     }
 }

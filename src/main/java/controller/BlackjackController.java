@@ -1,8 +1,8 @@
 package controller;
 
-import domain.RandomValueGenerator;
 import domain.card.Card;
 import domain.card.Deck;
+import domain.card.DeckMaker;
 import domain.card.Hand;
 import domain.hitStrategy.CasinoDealerHitStrategy;
 import domain.hitStrategy.UntilBurstHitStrategy;
@@ -17,7 +17,6 @@ import dto.PlayersCardsDto;
 import dto.StatisticsDto;
 import java.util.ArrayList;
 import java.util.List;
-import util.CardsCreator;
 import util.Parser;
 import view.InputView;
 import view.OutputView;
@@ -32,8 +31,8 @@ public class BlackjackController {
         this.outputView = outputView;
     }
 
-    public void start(final RandomValueGenerator randomValueGenerator) {
-        Deck deck = new Deck(CardsCreator.createLinkedCards(), randomValueGenerator);
+    public void start(final DeckMaker deckMaker) {
+        Deck deck = Deck.createFromDeckMaker(deckMaker);
         Dealer dealer = new Dealer(drawHand(deck), new CasinoDealerHitStrategy());
 
         List<Player> players = createPlayers(Parser.parse(inputView.readPlayerName()), deck);

@@ -1,6 +1,6 @@
 import controller.BlackjackController;
-import domain.RandomValueGenerator;
-import domain.RandomValueGeneratorImpl;
+import domain.card.DeckMaker;
+import domain.card.OneRandomDeckMaker;
 import view.InputView;
 import view.OutputView;
 
@@ -9,9 +9,9 @@ public class Application {
         InputView inputView = new InputView(System.in);
         OutputView outputView = new OutputView(System.out);
 
-        RandomValueGenerator randomValueGenerator = new RandomValueGeneratorImpl();
+        DeckMaker deckMaker = new OneRandomDeckMaker();
         BlackjackController controller = new BlackjackController(inputView, outputView);
 
-        controller.start(randomValueGenerator);
+        controller.start(deckMaker);
     }
 }
