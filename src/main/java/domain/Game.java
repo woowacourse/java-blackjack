@@ -14,8 +14,8 @@ public class Game {
     private final Players players;
     private final Dealer dealer;
 
-    public Game(Players players, Dealer dealer) {
-        this.players = players;
+    public Game(List<String> playerNames, Dealer dealer) {
+        this.players = new Players(playerNames);
         this.dealer = dealer;
     }
 
@@ -43,14 +43,6 @@ public class Game {
         dealer.addCards(List.of(deck.drawCard(), deck.drawCard()));
     }
 
-    public void distributeCard(String name, Deck deck) {
-        players.distributeCard(name, deck.drawCard());
-    }
-
-    public void distributeCard(Deck deck) {
-        dealer.addCard(deck.drawCard());
-    }
-
     public boolean isPlayerBust(String name) {
         return !players.checkScoreUnderCriterion(name);
     }
@@ -61,12 +53,12 @@ public class Game {
 
     public void playerHit(String name, Deck deck, boolean wantHit) {
         if (wantHit) {
-            distributeCard(name, deck);
+            players.distributeCard(name, deck.drawCard());
         }
     }
 
     public void dealerHit(Deck deck) {
-        distributeCard(deck);
+        dealer.addCard(deck.drawCard());
     }
 
     public Map<Result, Integer> getDealerResult() {
@@ -87,5 +79,9 @@ public class Game {
 
     public int getDealerScore() {
         return dealer.getScore();
+    }
+
+    public List<String> getAllPlayersName() {
+        return players.getAllPlayersName();
     }
 }
