@@ -19,16 +19,20 @@ public class Player {
         return new Player(name);
     }
 
-    public boolean hasCard(Card targetCard) {
-        return cardBundle.checkExist(targetCard);
-    }
-
     public CardBundle addCardBundle(CardBundle newCardBundle) {
         return cardBundle.addUp(newCardBundle);
     }
 
+    public boolean hasCard(Card targetCard) {
+        return cardBundle.checkExist(targetCard);
+    }
+
     public int getResultScore() {
         return cardBundle.getResultScore();
+    }
+
+    public boolean isBusted() {
+        return cardBundle.isBusted();
     }
 
     public String toDisplayMyName() {
@@ -37,10 +41,6 @@ public class Player {
 
     public List<String> disPlayMyCardBundle() {
         return cardBundle.toDisplay();
-    }
-
-    public boolean isBusted() {
-        return cardBundle.isBusted();
     }
 
 }

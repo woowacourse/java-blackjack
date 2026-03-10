@@ -16,16 +16,16 @@ public class Card {
         return new Card(denomination, emblem);
     }
 
-    public String toDisplay() {
-        return denomination.getDisplayName() + emblem.displayName();
-    }
-
     public int getScore() {
         return denomination.getScore();
     }
 
     public boolean isAce() {
         return denomination.isAce();
+    }
+
+    public String toDisplay() {
+        return denomination.getDisplayName() + emblem.displayName();
     }
 
     @Override

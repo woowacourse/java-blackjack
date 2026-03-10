@@ -53,6 +53,11 @@ public class CardBundle {
                 .anyMatch(Card::isAce);
     }
 
+    public boolean checkExist(Card targetCard) {
+        return cardBundle.stream().
+                anyMatch(c -> c.equals(targetCard));
+    }
+
     public List<String> toDisplay() {
         return cardBundle.stream()
                 .map(Card::toDisplay)
@@ -71,10 +76,5 @@ public class CardBundle {
     @Override
     public int hashCode() {
         return Objects.hashCode(cardBundle);
-    }
-
-    public boolean checkExist(Card targetCard) {
-        return cardBundle.stream().
-                anyMatch(c -> c.equals(targetCard));
     }
 }
