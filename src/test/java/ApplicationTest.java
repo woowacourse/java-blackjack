@@ -10,7 +10,6 @@ import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import util.Parser;
 import util.Validator;
 import view.InputView;
 import view.OutputView;
@@ -49,8 +48,7 @@ public class ApplicationTest {
 
         Application app = new Application(
                 new InputView(), new OutputView(),
-                new Parser(), new Validator(),
-                new TestBlackjackGame(new Deck(FIXED_CARDS))
+                new Validator(), new TestBlackjackGame(new Deck(FIXED_CARDS))
         );
 
         // when
@@ -71,8 +69,7 @@ public class ApplicationTest {
 
         Application app = new Application(
                 new InputView(), new OutputView(),
-                new Parser(), new Validator(),
-                new TestBlackjackGame(new Deck(FIXED_CARDS))
+                new Validator(), new TestBlackjackGame(new Deck(FIXED_CARDS))
         );
 
         // when
@@ -91,8 +88,7 @@ public class ApplicationTest {
 
         Application app = new Application(
                 new InputView(), new OutputView(),
-                new Parser(), new Validator(),
-                new TestBlackjackGame(new Deck(FIXED_CARDS))
+                new Validator(), new TestBlackjackGame(new Deck(FIXED_CARDS))
         );
 
         // when

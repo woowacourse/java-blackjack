@@ -14,7 +14,7 @@ public class BlackjackGameTest {
     @BeforeEach
     void setUp() {
         blackjackGame = new BlackjackGame();
-        blackjackGame.saveParticipants(List.of("영기", "라이"));
+        blackjackGame.saveParticipants("영기,라이");
         blackjackGame.makeDeck();
     }
 

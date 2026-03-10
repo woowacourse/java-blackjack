@@ -15,21 +15,28 @@ public class Participants {
     private final List<User> participants;
     private final Dealer dealer;
 
-    public Participants(List<String> parsedParticipantsName) {
+    public Participants(String participantsName) {
         this.participants = new ArrayList<>();
         this.dealer = new Dealer();
-        validateParticipantsNumbers(parsedParticipantsName);
-        saveUsers(parsedParticipantsName);
+        saveUsers(participantsName);
     }
 
-    static void validateParticipantsNumbers(List<String> parsedParticipantsName) {
-        if (parsedParticipantsName.size() > MAX_PLAYER_COUNT) {
+    private void saveUsers(String participantsName) {
+        parseName(participantsName)
+                .forEach(name -> participants.add(new User(name)));
+    }
+
+    private List<String> parseName(String participantsName) {
+        List<String> parsedName = List.of(participantsName.split(","));
+        validateParticipantsNumbers(parsedName);
+
+        return parsedName;
+    }
+
+    private void validateParticipantsNumbers(List<String> parsedName) {
+        if (parsedName.size() > MAX_PLAYER_COUNT) {
             throw new IllegalArgumentException("[ERROR] 최대 참가 인원은 16명 이하여야 합니다.");
         }
-    }
-
-    private void saveUsers(List<String> parsedParticipantsName) {
-        parsedParticipantsName.forEach(name -> participants.add(new User(name)));
     }
 
     public List<User> getUsers() {

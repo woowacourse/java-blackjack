@@ -11,8 +11,8 @@ public class BlackjackGame {
     private Participants participants;
     private Deck deck;
 
-    public void saveParticipants(List<String> parsedParticipantsName) {
-        participants = new Participants(parsedParticipantsName);
+    public void saveParticipants(String participantsName) {
+        participants = new Participants(participantsName);
     }
 
     public void makeDeck() {

@@ -22,7 +22,7 @@ public class BlackjackGameFlowTest {
     @BeforeEach
     void setUp() {
         blackjackGame = new BlackjackGame();
-        blackjackGame.saveParticipants(List.of("영기", "라이"));
+        blackjackGame.saveParticipants("영기,라이");
         blackjackGame.setDeck(new Deck(List.of(
                 new Card(Suit.SPADE, Rank.KING),
                 new Card(Suit.HEART, Rank.TWO),

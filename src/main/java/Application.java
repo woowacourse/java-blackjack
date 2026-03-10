@@ -1,7 +1,6 @@
 import java.util.List;
 import domain.BlackjackGame;
 import java.util.function.Supplier;
-import util.Parser;
 import util.Validator;
 import view.InputView;
 import view.Message;
@@ -10,14 +9,12 @@ import view.OutputView;
 public class Application {
     private final OutputView outputView;
     private final InputView inputView;
-    private final Parser parser;
     private final BlackjackGame blackjackGame;
     private final Validator validator;
 
-    public Application(InputView inputView, OutputView outputView, Parser parser, Validator validator, BlackjackGame blackjackGame) {
+    public Application(InputView inputView, OutputView outputView, Validator validator, BlackjackGame blackjackGame) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.parser = parser;
         this.validator = validator;
         this.blackjackGame = blackjackGame;
     }
@@ -26,7 +23,6 @@ public class Application {
         new Application(
             new InputView(),
             new OutputView(),
-            new Parser(),
             new Validator(),
             new BlackjackGame()
         ).run();
@@ -45,8 +41,7 @@ public class Application {
         retryUntilSuccess(() -> {
             outputView.printMessage(Message.INPUT_PARTICIPANTS_MESSAGE);
             String participantsName = inputView.readParticipantsName();
-            List<String> parsedParticipantsName = parser.parseParticipantsName(participantsName);
-            blackjackGame.saveParticipants(parsedParticipantsName);
+            blackjackGame.saveParticipants(participantsName);
             return null;
         });
     }
