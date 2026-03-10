@@ -24,9 +24,9 @@ public class OutputView {
     private static final String DEALER_CARD_PREFIX = "딜러카드: ";
     private static final String CARD_MESSAGE = "%s카드: %s";
     private static final String DEALER_RESULT = "딜러: ";
-    private static final String WIN = "승 ";
-    private static final String TIE = "무 ";
-    private static final String LOSE = "패 ";
+    private static final String WIN_MESSAGE = "승 ";
+    private static final String TIE_MESSAGE = "무 ";
+    private static final String LOSE_MESSAGE = "패 ";
 
     public void printInitialDistribution(Players players, Dealer dealer) {
         printDistributionMessage(players);
@@ -96,13 +96,13 @@ public class OutputView {
         StringBuilder stringBuilder = new StringBuilder(DEALER_RESULT);
 
         if (dealerResult.winCount() > 0) {
-            stringBuilder.append(dealerResult.winCount()).append(WIN);
+            stringBuilder.append(dealerResult.winCount()).append(WIN_MESSAGE);
         }
         if (dealerResult.tieCount() > 0) {
-            stringBuilder.append(dealerResult.tieCount()).append(TIE);
+            stringBuilder.append(dealerResult.tieCount()).append(TIE_MESSAGE);
         }
         if (dealerResult.loseCount() > 0) {
-            stringBuilder.append(dealerResult.loseCount()).append(LOSE);
+            stringBuilder.append(dealerResult.loseCount()).append(LOSE_MESSAGE);
         }
 
         System.out.println(stringBuilder.toString().trim());
@@ -116,9 +116,9 @@ public class OutputView {
 
     private String toKorean(WinningStatus status) {
         return switch (status) {
-            case WinningStatus.WIN -> WIN;
-            case WinningStatus.TIE -> TIE;
-            case WinningStatus.LOSE -> LOSE;
+            case WinningStatus.WIN -> WIN_MESSAGE;
+            case WinningStatus.TIE -> TIE_MESSAGE;
+            case WinningStatus.LOSE -> LOSE_MESSAGE;
         };
     }
 }
