@@ -1,6 +1,7 @@
 package domain.player;
 
-import dto.DealerCardInfo;
+import domain.card.Card;
+import java.util.List;
 
 public class Dealer extends Player {
     private static final int DEALER_STOP_SCORE = 17;
@@ -13,11 +14,11 @@ public class Dealer extends Player {
         return score >= DEALER_STOP_SCORE;
     }
 
-    public String getFirstCardInfo() {
+    public Card getFirstCard() {
         return handCard.getFirstCardInfo();
     }
 
-    public DealerCardInfo getCardInfo() {
-        return new DealerCardInfo(handCard.getCardInfos());
+    public List<Card> getCards() {
+        return handCard.getCards();
     }
 }
