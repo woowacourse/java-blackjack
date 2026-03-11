@@ -1,6 +1,10 @@
 package domain.result;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Result {
     private static final int INIT_COUNT = 0;
