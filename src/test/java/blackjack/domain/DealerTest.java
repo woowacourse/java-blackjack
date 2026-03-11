@@ -1,18 +1,7 @@
-package domain;
+package blackjack.domain;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-import blackjack.domain.Card;
-import blackjack.domain.Dealer;
-import blackjack.domain.Denomination;
-import blackjack.domain.Hand;
-import blackjack.domain.Participant;
-import blackjack.domain.Participants;
-import blackjack.domain.Player;
-import blackjack.domain.Players;
-import blackjack.domain.Status;
-import blackjack.domain.Suit;
-import blackjack.domain.Trump;
 import java.util.ArrayList;
 import java.util.List;
 import org.assertj.core.api.InstanceOfAssertFactories;
