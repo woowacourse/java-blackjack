@@ -7,7 +7,6 @@ import view.InputView;
 import view.ResultView;
 
 import java.util.List;
-import java.util.Map;
 
 public class GameController {
     private final GameService gameService;
@@ -28,12 +27,12 @@ public class GameController {
     }
 
     private void printFinalStatus() {
+        ResultView.printBlankLine();
         ParticipantResult dealerResult = gameService.getDealerResult();
         ResultView.printCardSumResult(dealerResult);
 
         List<ParticipantResult> playersEndStatus = gameService.getPlayersStatus();
-        Map<String, Integer> playersTotalScore = gameService.getPlayersTotalScore();
-        ResultView.printCardSumResult(playersEndStatus, playersTotalScore);
+        ResultView.printCardSumResult(playersEndStatus);
     }
 
     private void hitRound() {

@@ -34,26 +34,26 @@ public class ResultView {
     }
 
     // 카드 합산 결과
-    public static void printCardSumResult(List<ParticipantResult> playerCardList, Map<String, Integer> playerTotalScore) {
+    public static void printCardSumResult(List<ParticipantResult> playerCardList) {
         for (ParticipantResult playerResult : playerCardList) {
-            List<String> cards = playerResult.cardList();
-            Integer score = playerTotalScore.get(playerResult.name());
-            System.out.println(playerResult.name() + "카드: " + String.join(", ", cards) + " - 결과: " + score);
+            printCardSumResult(playerResult);
         }
-        System.out.println();
     }
 
-    public static void printCardSumResult(ParticipantResult dealerResult) {
-        System.out.println();
-        List<String> dealerCards = dealerResult.cardList();
-        System.out.println(dealerResult.name() + "카드: " + String.join(", ", dealerCards) + " - 결과: " + dealerResult.score());
+    public static void printCardSumResult(ParticipantResult participantResult) {
+        List<String> participantCards = participantResult.cardList();
+        System.out.println(participantResult.name() + "카드: " + String.join(", ", participantCards) + " - 결과: " + participantResult.score());
     }
 
     public static void printResult(Map<String, WinStatus> playerResult) {
+        System.out.println();
         System.out.println("## 최종 승패");
         printDealerResult(playerResult);
         printPlayerResult(playerResult);
+    }
 
+    public static void printBlankLine() {
+        System.out.println();
     }
 
     private static void printDealerResult(Map<String, WinStatus> playerResult) {
