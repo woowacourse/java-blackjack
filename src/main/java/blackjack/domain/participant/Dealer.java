@@ -14,11 +14,8 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public List<String> getInitialCards() {
-        List<String> cards = hand.getCards().stream()
-                .map(Card::getCardName)
-                .toList();
-        return List.of(cards.getFirst());
+    public List<Card> getInitialCards() {
+        return List.of(hand.getFirstCard());
     }
 
     public boolean isStand() {

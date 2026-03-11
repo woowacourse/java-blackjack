@@ -21,7 +21,7 @@ class PlayerTest {
                         new Card(Emblem.DIAMOND, Grade.TEN)));
         Participant dealer = new Player("러키", hand);
         // when
-        List<String> result = dealer.getInitialCards();
+        List<Card> result = dealer.getInitialCards();
         // then
         assertThat(result).hasSize(2);
     }

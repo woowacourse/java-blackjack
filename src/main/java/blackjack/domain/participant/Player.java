@@ -10,9 +10,7 @@ public class Player extends Participant {
     }
 
     @Override
-    public List<String> getInitialCards() {
-        return hand.getCards().stream()
-                .map(Card::getCardName)
-                .toList();
+    public List<Card> getInitialCards() {
+        return hand.getCards();
     }
 }

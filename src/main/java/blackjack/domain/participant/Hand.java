@@ -20,6 +20,10 @@ public class Hand {
         this.cards.add(card);
     }
 
+    public Card getFirstCard() {
+        return cards.getFirst();
+    }
+
     public List<Card> getCards() {
         return List.copyOf(cards);
     }

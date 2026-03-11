@@ -24,17 +24,17 @@ public final class OutputView {
 
     private static void showCards(Participants participants) {
         participants.getParticipants().stream()
-                .map(participant -> getCardNames(participant, participant.getInitialCards()))
+                .map(OutputView::getCardNames)
                 .forEach(System.out::println);
     }
 
-    private static String getCardNames(Participant participant, List<String> playerCardNames) {
+    private static String getCardNames(Participant participant) {
+        List<String> playerCardNames = createCardNames(participant);
         return participant.getName() + "카드: " + String.join(DELIMITER, playerCardNames);
     }
 
     public static void showCardName(Participant participant) {
-        List<String> playerCardNames = createCardNames(participant);
-        System.out.println(getCardNames(participant, playerCardNames));
+        System.out.println(getCardNames(participant));
     }
 
     private static List<String> createCardNames(Participant participant) {
@@ -54,7 +54,7 @@ public final class OutputView {
     }
 
     private static void showCardAndScore(Participant participant, int score) {
-        System.out.println(getCardNames(participant, participant.getCardNames()) + " - 결과: " + score);
+        System.out.println(getCardNames(participant) + " - 결과: " + score);
     }
 
     public static void showProfitRate(int dealerProfitRate, Map<Participant, Integer> statistics) {

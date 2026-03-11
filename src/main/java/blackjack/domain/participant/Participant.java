@@ -19,7 +19,7 @@ public abstract class Participant {
         this.bettingAmount = BettingAmount.initial();
     }
 
-    public abstract List<String> getInitialCards();
+    public abstract List<Card> getInitialCards();
 
     public final void bet(int bettingAmount) {
         this.bettingAmount = this.bettingAmount.register(bettingAmount);
@@ -41,12 +41,6 @@ public abstract class Participant {
 
     public final boolean isBlackjack() {
         return hand.isBlackjack();
-    }
-
-    public List<String> getCardNames() {
-        return hand.getCards().stream()
-                .map(Card::getCardName)
-                .toList();
     }
 
     public final String getName() {

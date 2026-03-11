@@ -18,18 +18,17 @@ class DealerTest {
     @Test
     void 딜러는_처음_받은_카드만_노출한다() {
         // given
-        Grade expectedGrade = Grade.TEN;
-        Emblem expectedEmblem = Emblem.CLOVER;
+        Card expectedCard = new Card(Emblem.CLOVER, Grade.TEN);
         Hand hand = new Hand(
-                List.of(new Card(expectedEmblem, expectedGrade),
+                List.of(expectedCard,
                         new Card(Emblem.DIAMOND, Grade.TEN)));
         Dealer dealer = new Dealer(hand);
         // when
-        List<String> result = dealer.getInitialCards();
+        List<Card> result = dealer.getInitialCards();
         // then
         assertAll(
                 () -> assertThat(result).hasSize(1),
-                () -> assertThat(result.getFirst()).isEqualTo(expectedGrade.getName() + expectedEmblem.getName())
+                () -> assertThat(result.getFirst()).isEqualTo(expectedCard)
         );
     }
 
