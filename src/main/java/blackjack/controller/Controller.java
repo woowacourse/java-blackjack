@@ -60,7 +60,7 @@ public class Controller {
         while (dealer.canReceive()) {
             outputView.printDealerReceiveCard();
             receiveCardToParticipant(dealer, deck, ONE_REPEAT);
-            if (dealer.isBurst()) {
+            if (dealer.isBust()) {
                 outputView.printBurst("딜러");
                 return;
             }
@@ -83,7 +83,7 @@ public class Controller {
                 throw new IllegalArgumentException(ErrorMessage.INVALID_INPUT.getMessage());
             }
             receiveCardToParticipant(player, deck, ONE_REPEAT);
-            if (player.isBurst()) {
+            if (player.isBust()) {
                 outputView.printBurst(player.getName());
                 return;
             }

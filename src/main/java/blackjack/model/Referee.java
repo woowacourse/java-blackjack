@@ -6,11 +6,11 @@ public class Referee {
         Score playerScore = player.getScore();
         Score dealerScore = dealer.getScore();
 
-        if ((player.isBurst() && dealer.isBurst()) || (playerScore.isSame(dealerScore))) {
+        if ((player.isBust() && dealer.isBust()) || (playerScore.isSame(dealerScore))) {
             return GameResult.DRAW;
         }
 
-        if (player.isBurst() || (!dealer.isBurst() && (playerScore.isLess(dealerScore)))) {
+        if (player.isBust() || (!dealer.isBust() && (playerScore.isLess(dealerScore)))) {
             return GameResult.LOSE;
         }
 

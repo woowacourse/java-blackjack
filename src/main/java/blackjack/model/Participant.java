@@ -18,7 +18,7 @@ public abstract class Participant {
         return handCards.calculate();
     }
 
-    public final boolean isBurst() {
+    public final boolean isBust() {
         return getScore().isBurst();
     }
 
