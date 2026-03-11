@@ -3,6 +3,7 @@ package domain.enums;
 public enum Result {
 
     WIN("승"),
+    WIN_BLACKJACK("블랙잭 승"),
     LOSE("패"),
     DRAW("무");
 
@@ -13,7 +14,7 @@ public enum Result {
     }
 
     public static Result getOpposite(Result result) {
-        if (result.equals(WIN)) {
+        if (result.equals(WIN) || result.equals(WIN_BLACKJACK)) {
             return LOSE;
         }
 
