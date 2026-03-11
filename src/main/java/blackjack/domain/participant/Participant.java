@@ -30,6 +30,9 @@ public class Participant {
     }
     
     public void drawCard(Deck deck) {
+        if (isDrawable()) {
+            throw new IllegalStateException("더이상 카드를 받을 수 없는 참가자입니다.");
+        }
         Card card = deck.drawCard();
         hand.addCard(card);
     }
