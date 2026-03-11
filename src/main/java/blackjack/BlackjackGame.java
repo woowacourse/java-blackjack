@@ -43,7 +43,8 @@ public class BlackjackGame {
     }
 
     private void processPlayersTurn() {
-        players.getPlayers().forEach(this::processPlayerTurn);
+        players.getPlayers()
+                .forEach(this::processPlayerTurn);
     }
 
     private void processPlayerTurn(final Player player) {
