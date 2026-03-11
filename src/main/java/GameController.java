@@ -35,7 +35,9 @@ public class GameController {
 
     private List<User> setUpUsers(){
         String input = inputView.readUsers();
-        return InputParser.parseUsers(input);
+        List<String> names = InputParser.parseToList(input);
+        List<Integer> betAmounts = inputView.readBetAmounts(names);
+        return InputParser.parseToUsers(names, betAmounts);
     }
 
     private void initDeal(List<User> users){

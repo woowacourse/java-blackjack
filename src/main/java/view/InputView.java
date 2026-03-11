@@ -1,5 +1,6 @@
 package view;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
@@ -24,6 +25,15 @@ public class InputView {
             System.out.println(e.getMessage());
             return readWillHit(name);
         }
+    }
+
+    public List<Integer> readBetAmounts(List<String> names) {
+        return names.stream()
+                .map(name -> {
+                    System.out.println(name + "의 베팅 금액은?");
+                    return Integer.parseInt(scanner.nextLine());
+                })
+                .toList();
     }
 
     private void validateHitInput(String input) {
