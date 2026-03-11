@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.bet;
 
 public class LosePayoutPolicy implements PayoutPolicy {
 

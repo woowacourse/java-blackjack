@@ -1,5 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.bet;
 
+import blackjack.domain.participant.DrawPayoutPolicy;
+import blackjack.domain.participant.GameResult;
 import blackjack.utils.Formatter;
 
 public class Bet {

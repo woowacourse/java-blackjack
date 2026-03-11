@@ -2,10 +2,10 @@ package blackjack.view;
 
 import static blackjack.global.ParticipantConstants.DEALER_HIT_THRESHOLD;
 
-import blackjack.domain.Dealer;
-import blackjack.domain.Participant;
-import blackjack.domain.Participants;
-import blackjack.domain.Player;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Player;
 import blackjack.dto.FinalProfitsDto;
 import blackjack.dto.FinalResultDto;
 import java.util.List;

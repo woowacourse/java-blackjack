@@ -1,4 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.participant;
+
+import blackjack.domain.bet.PayoutPolicy;
 
 public class DrawPayoutPolicy implements PayoutPolicy {
 

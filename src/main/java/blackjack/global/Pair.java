@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.global;
 
 public class Pair<T, U> {
 

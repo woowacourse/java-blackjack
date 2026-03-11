@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.trump;
 
 import blackjack.utils.Lists;
 import java.util.ArrayList;
