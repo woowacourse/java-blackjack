@@ -12,6 +12,8 @@ import expcetion.BlackjackException;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class GamblerTest {
     @Test
@@ -25,16 +27,15 @@ class GamblerTest {
                 .isInstanceOf(BlackjackException.class);
     }
 
-    @Test
-    @DisplayName("이름은 두글자 이상 열글자 미만으로 한다.")
-    void 이름이_열글자를_넘을_시() {
-        //given
-        String maxRangeName = "tobiisverygoob";
-        String minRangeName = "h";
-        //when & then
-        assertThatThrownBy(() -> new Gambler(maxRangeName, 1000))
-                .isInstanceOf(BlackjackException.class);
-        assertThatThrownBy(() -> new Gambler(minRangeName, 1000))
+    @ParameterizedTest
+    @ValueSource(strings = {"h", "tobiisverygoob"})
+    @DisplayName("이름 길이가 범위를 벗어나면 예외가 발생한다.")
+    void 이름_길이_검증(String name) {
+        // given
+        int bettingMoney = 1000;
+
+        // when & then
+        assertThatThrownBy(() -> new Gambler(name, bettingMoney))
                 .isInstanceOf(BlackjackException.class);
     }
 
