@@ -1,12 +1,13 @@
 package controller;
 
-import domain.*;
-import view.InputView;
-import view.OutputView;
-
-import java.util.HashMap;
+import domain.BlackJackGame;
+import domain.Dealer;
+import domain.Deck;
+import domain.Player;
 import java.util.List;
 import java.util.Map;
+import view.InputView;
+import view.OutputView;
 
 public class BlackJackGameController {
 
@@ -24,16 +25,16 @@ public class BlackJackGameController {
 
         OutputView.printGameInitialMessage(playerNames);
 
-        OutputView.printInitialDealerCards(dealer.getParticipantCardsDto());
+        OutputView.printInitialDealerCards(blackJackGame.getDealerCardsDto());
         for (Player player : players) {
-            OutputView.printInitialPlayerCards(player.getParticipantCardsDto());
+            OutputView.printInitialPlayerCards(blackJackGame.getPlayerCardsDto(player));
         }
 
-        playGame(blackJackGame, players, deck, dealer);
+        playGame(blackJackGame, players, dealer);
 
-        Map<String, Boolean> gameResult = getGameResult(dealer, players);
+        Map<String, Boolean> gameResult = blackJackGame.getGameResult();
 
-        endGame(dealer, players, gameResult);
+        endGame(blackJackGame, dealer, players, gameResult);
     }
 
     private List<String> getPlayerNames() {
@@ -52,62 +53,44 @@ public class BlackJackGameController {
         return dealer;
     }
 
-    private static Map<String, Boolean> getGameResult(Dealer dealer, List<Player> players) {
-        Map<Participant, Integer> participantScores = getParticipantScores(dealer, players);
-        Map<String, Boolean> gameResult = Result.calculateResult(participantScores);
-        return gameResult;
-    }
-
-    private static void endGame(Dealer dealer, List<Player> players, Map<String, Boolean> gameResult) {
-        OutputView.printFinalCards(dealer.getParticipantCardsDto());
-        printFinalScores(players);
-        OutputView.printGameResult(gameResult);
-    }
-
-    private void playGame(BlackJackGame blackJackGame, List<Player> players, Deck deck, Dealer dealer) {
+    private void playGame(BlackJackGame blackJackGame, List<Player> players, Dealer dealer) {
         for (Player player : players) {
-            while (player.canReceiveCard()) {
-                if (isContinueGame(player)) {
+            while (blackJackGame.canPlayerReceiveCard(player)) {
+                if (isContinueGame(blackJackGame, player)) {
                     break;
                 }
                 blackJackGame.playGameWithPlayer(player);
-                OutputView.printCards(player.getParticipantCardsDto());
+                OutputView.printCards(blackJackGame.getPlayerCardsDto(player));
             }
         }
-        if (dealer.canReceiveCard()) {
+        if (blackJackGame.canDealerReceiveCard(dealer)) {
             blackJackGame.playGameWithDealer();
             OutputView.printDealerMessage();
         }
     }
 
-    private static void printFinalScores(List<Player> players) {
+    private static void endGame(BlackJackGame blackJackGame, Dealer dealer, List<Player> players,
+                                Map<String, Boolean> gameResult) {
+        OutputView.printFinalCards(blackJackGame.getDealerCardsDto());
+        printFinalScores(blackJackGame, players);
+        OutputView.printGameResult(gameResult);
+    }
+
+    private static void printFinalScores(BlackJackGame blackJackGame, List<Player> players) {
         for (Player player : players) {
-            OutputView.printFinalCards(player.getParticipantCardsDto());
+            OutputView.printFinalCards(blackJackGame.getPlayerCardsDto(player));
         }
     }
 
-    private static Map<Participant, Integer> getParticipantScores(Dealer dealer, List<Player> players) {
-        Map<Participant, Integer> participantScores = new HashMap<>();
-        participantScores.put(dealer, dealer.getScore());
-
-        for (Player player : players) {
-            participantScores.put(player, player.getScore());
-        }
-        return participantScores;
-    }
-
-    private boolean isContinueGame(Player player) {
+    private boolean isContinueGame(BlackJackGame blackJackGame, Player player) {
         if (!isContinue(InputView.askContinue(player.getName()))) {
-            OutputView.printCards(player.getParticipantCardsDto());
+            OutputView.printCards(blackJackGame.getPlayerCardsDto(player));
             return true;
         }
         return false;
     }
 
     private boolean isContinue(String response) {
-        if (response.equals("y")) {
-            return true;
-        }
-        return false;
+        return response.equals("y");
     }
 }
