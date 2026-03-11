@@ -1,6 +1,5 @@
 package view;
 
-import domain.Player;
 import java.util.Scanner;
 import message.IOMessage;
 
@@ -12,8 +11,8 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public String getMoreCards(Player player) {
-        System.out.println(player.getName() + IOMessage.ASK_MORE_CARD.message());
+    public String getMoreCards(String name) {
+        System.out.println(name + IOMessage.ASK_MORE_CARD.message());
         return scanner.nextLine();
     }
 }
