@@ -1,11 +1,16 @@
 package service;
 
+import domain.card.Card;
 import domain.card.CardDeck;
+import domain.card.TrumpNumber;
+import domain.card.TrumpSuit;
 import domain.player.Player;
 import domain.player.PlayerGroups;
 import domain.player.WinStatus;
 import dto.ParticipantResult;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +18,7 @@ public class GameService {
     private static final int CARDS_PER_PLAYER_AT_START = 2;
 
     private PlayerGroups playerGroups;
-    private final CardDeck cardDeck = new CardDeck();
+    private final CardDeck cardDeck = initCardDeck();
 
     public void joinPlayers(List<String> playerNames) {
         playerGroups = new PlayerGroups(playerNames);
@@ -70,5 +75,18 @@ public class GameService {
 
     public ParticipantResult getDealerResult() {
         return playerGroups.getDealerResult();
+    }
+
+    private CardDeck initCardDeck() {
+        List<Card> cards = new ArrayList<>();
+        for (TrumpSuit suit : TrumpSuit.values()) {
+            for (TrumpNumber number : TrumpNumber.values()) {
+                cards.add(new Card(suit, number));
+            }
+        }
+
+        Collections.shuffle(cards);
+
+        return new CardDeck(cards);
     }
 }

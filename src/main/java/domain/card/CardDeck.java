@@ -1,26 +1,19 @@
 package domain.card;
 
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.List;
 
 public class CardDeck {
     private final Deque<Card> cardDeck = new ArrayDeque<>();
 
-    public CardDeck() {
-        initCardDeck();
+    public CardDeck(List<Card> cards) {
+        addAllCards(cards);
     }
 
-    private void initCardDeck() {
-        List<Card> cards = new ArrayList<>();
-        for (TrumpSuit suit : TrumpSuit.values()) {
-            for (TrumpNumber number : TrumpNumber.values()){
-                cards.add(new Card(suit, number));
-            }
-        }
-        Collections.shuffle(cards);
-
+    private void addAllCards(List<Card> cards) {
         cardDeck.addAll(cards);
     }
-
 
     public Card draw() {
         return cardDeck.pop();
