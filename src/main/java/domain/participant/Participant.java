@@ -33,8 +33,6 @@ public abstract class Participant {
         return hand.calculateScore();
     }
 
-    public abstract boolean canReceive();
-
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) {

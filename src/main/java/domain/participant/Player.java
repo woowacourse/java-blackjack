@@ -7,7 +7,6 @@ public class Player extends Participant {
         super(name);
     }
 
-    @Override
     public boolean canReceive() {
         return getScore() <= BUST_THRESHOLD;
     }

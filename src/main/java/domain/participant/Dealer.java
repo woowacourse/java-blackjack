@@ -14,7 +14,6 @@ public class Dealer extends Participant {
         return firstCardInfo();
     }
 
-    @Override
     public boolean canReceive() {
         return getScore() <= HIT_THRESHOLD;
     }

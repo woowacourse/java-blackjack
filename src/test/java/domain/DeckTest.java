@@ -10,7 +10,7 @@ public class DeckTest {
     void 카드덱은_52개의_카드로_구성된다() {
         Deck deck1 = Deck.create();
 
-        assertThat(deck1.getCards().size()).isEqualTo(52);
+        assertThat(deck1.getCards()).hasSize(52);
     }
 
     @Test
