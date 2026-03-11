@@ -2,7 +2,6 @@ package blackjack.view;
 
 import static java.util.stream.Collectors.joining;
 
-import blackjack.domain.betting.Profit;
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;

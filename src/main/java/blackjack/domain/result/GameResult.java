@@ -22,10 +22,6 @@ public enum GameResult {
         this.profitMultiplier = profitMultiplier;
     }
 
-    public String getDisplayName() {
-        return displayName;
-    }
-
     public Profit calculateProfit(final BettingMoney bettingMoney) {
         return new Profit((int) (bettingMoney.getAmount() * profitMultiplier));
     }
