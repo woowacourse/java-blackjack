@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import java.util.List;
+
 public abstract class Participant {
 
     private final String name;
@@ -9,6 +11,8 @@ public abstract class Participant {
         this.name = name;
         this.hand = hand;
     }
+
+    public abstract boolean canHit();
 
     public void receiveCard(Card card) {
         if (canHit()) {
@@ -20,8 +24,8 @@ public abstract class Participant {
         return hand.getCount();
     }
 
-    public String getCardNames() {
-        return hand.getCardNames();
+    public List<Card> getCards() {
+        return hand.getCards();
     }
 
 
@@ -36,6 +40,4 @@ public abstract class Participant {
     public String getName() {
         return name;
     }
-
-    public abstract boolean canHit();
 }

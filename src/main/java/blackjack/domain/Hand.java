@@ -47,14 +47,7 @@ public class Hand {
         return getTotalPoint() > BLACKJACK_POINT;
     }
 
-    public String getCardNames() {
-
-        List<String> names = new ArrayList<>();
-        for (Card card : cards) {
-            names.add(card.getName());
-        }
-
-        return String.join(", ", names);
+    public List<Card> getCards() {
+        return cards;
     }
-
 }

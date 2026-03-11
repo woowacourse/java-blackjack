@@ -1,11 +1,14 @@
 package blackjack.view;
 
+import blackjack.domain.Card;
 import blackjack.domain.Dealer;
 import blackjack.domain.GameResult;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class OutputView {
 
@@ -13,17 +16,26 @@ public class OutputView {
         System.out.printf("%n딜러와 %s에게 2장을 나누었습니다.%n",
                 String.join(", ", players.getNames()));
 
-        System.out.printf("딜러카드: %s%n", dealer.getFirstCardNames());
+        List<Card> dealerCards = dealer.getCards();
+
+        System.out.printf("딜러카드: %s%n", dealerCards.getFirst().getName());
 
         //플레이어 카드 출력
         for (Player player : players.getPlayers()) {
-            System.out.printf("%s카드: %s%n", player.getName(), player.getCardNames());
+            String displayPlayerCards = displayPlayerCards(player.getCards());
+            System.out.printf("%s카드: %s%n", player.getName(), displayPlayerCards);
         }
 
     }
 
+    private static String displayPlayerCards(List<Card> playerCards) {
+        return playerCards.stream()
+                .map(Card::getName)
+                .collect(Collectors.joining(", "));
+    }
+
     public void printCard(Player player) {
-        System.out.printf("%s카드: %s%n", player.getName(), player.getCardNames());
+        System.out.printf("%s카드: %s%n", player.getName(), displayPlayerCards(player.getCards()));
     }
 
     public void printDealerDraw() {
@@ -31,11 +43,11 @@ public class OutputView {
     }
 
     public void printFinalCardResult(Dealer dealer, Players players) {
-
         System.out.printf("%n딜러카드: %s - 결과: %d%n",
-                String.join(", ", dealer.getCardNames()), dealer.getTotalPoint());
+                String.join(", ", displayPlayerCards(dealer.getCards())), dealer.getTotalPoint());
         for (Player player : players.getPlayers()) {
-            System.out.printf("%s카드: %s - 결과: %d%n", player.getName(), player.getCardNames(), player.getTotalPoint());
+            System.out.printf("%s카드: %s - 결과: %d%n", player.getName(), displayPlayerCards(player.getCards()),
+                    player.getTotalPoint());
         }
 
 

@@ -18,15 +18,4 @@ public class Dealer extends Participant {
         }
         return false;
     }
-
-    public String getFirstCardNames() {
-//        return hand.getFirstCardName();
-        return "";
-    }
-
-    public boolean isOver17() {
-//        return hand.isOver17();
-        return false;
-    }
-
 }
