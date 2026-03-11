@@ -74,7 +74,7 @@ class PlayerTest {
                         new Card(Emblem.DIAMOND, Grade.ACE)
                 )
         );
-        Participant player = new Player("test", hand);
+        Player player = new Player("test", hand);
 
         int bettingAmount = 10_000;
         player.bet(bettingAmount);

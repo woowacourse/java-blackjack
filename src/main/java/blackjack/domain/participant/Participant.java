@@ -21,10 +21,6 @@ public abstract class Participant {
 
     public abstract List<Card> getInitialCards();
 
-    public final void bet(int bettingAmount) {
-        this.bettingAmount = this.bettingAmount.register(bettingAmount);
-    }
-
     public final int calculateProfitRate(BettingResult bettingResult) {
         return bettingResult.getProfitRate(bettingAmount.getBettingAmount());
     }

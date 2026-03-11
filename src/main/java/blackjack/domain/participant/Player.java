@@ -13,4 +13,8 @@ public class Player extends Participant {
     public List<Card> getInitialCards() {
         return hand.getCards();
     }
+
+    public void bet(int bettingAmount) {
+        this.bettingAmount = this.bettingAmount.register(bettingAmount);
+    }
 }
