@@ -9,7 +9,7 @@ public class BustTest {
 
     @Test
     void player_busts_when_sum_exceeds_21() {
-        Player player = new Player("Aliㅍce");
+        Player player = new Player("Alice");
         player.receiveOneCard(new Card(Rank.TWO, Shape.HEART));
         player.receiveOneCard(new Card(Rank.QUEEN, Shape.SPADE));
         player.receiveOneCard(new Card(Rank.TEN, Shape.CLOVER));
