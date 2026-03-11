@@ -45,14 +45,6 @@ public class BlackjackController {
         printResult(players, dealer);
     }
 
-    private <T> T retryOnIllegalArgument(Supplier<T> retryableAction) {
-        return RetryUtil.retryOnInvalidInput(retryableAction, outputView::printErrorMessage);
-    }
-
-    private void retryOnIllegalArgument(Runnable retryableAction) {
-        RetryUtil.retryOnInvalidInput(retryableAction, outputView::printErrorMessage);
-    }
-
     private List<Player> readPlayers() {
         ArrayList<Player> players = new ArrayList<>();
 
@@ -122,6 +114,14 @@ public class BlackjackController {
         }
 
         outputView.printResult(resultDtos);
+    }
+
+    private <T> T retryOnIllegalArgument(Supplier<T> retryableAction) {
+        return RetryUtil.retryOnInvalidInput(retryableAction, outputView::printErrorMessage);
+    }
+
+    private void retryOnIllegalArgument(Runnable retryableAction) {
+        RetryUtil.retryOnInvalidInput(retryableAction, outputView::printErrorMessage);
     }
 
     private List<CardDto> cardsToDtos(List<Card> cards) {
