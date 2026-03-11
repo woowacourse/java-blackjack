@@ -44,7 +44,7 @@ public class BlackjackRunner {
     }
 
     private void printInitialSetup(Participants participants) {
-        PlayerNicknamesResult playerNicknamesResult = new PlayerNicknamesResult(participants);
+        PlayerNicknamesResult playerNicknamesResult = PlayerNicknamesResult.from(participants);
         outputView.printInitialSetUp(playerNicknamesResult);
     }
 
