@@ -10,10 +10,11 @@ class DrawPayoutPolicyTest {
     @Test
     @DisplayName("베팅 금액의 2배로 계산한다.")
     void 베팅_금액의_1배로_계산한다() {
-        Bet bet = new Bet(10000);
+        int amount = 10000;
+        PayoutPolicy drawPayoutPolicy = new DrawPayoutPolicy();
         int expected = 10000;
 
-        int actual = bet.calculatePayout();
+        int actual = drawPayoutPolicy.payout(amount);
 
         assertThat(actual).isEqualTo(expected);
     }

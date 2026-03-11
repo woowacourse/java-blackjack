@@ -10,10 +10,11 @@ class LosePayoutPolicyTest {
     @Test
     @DisplayName("베팅 금액의 0배로 계산한다.")
     void 베팅_금액의_0배로_계산한다() {
-        Bet bet = new Bet(10000);
+        int amount = 10000;
+        LosePayoutPolicy losePayoutPolicy = new LosePayoutPolicy();
         int expected = 0;
 
-        int actual = bet.calculatePayout();
+        int actual = losePayoutPolicy.payout(amount);
 
         assertThat(actual).isEqualTo(expected);
     }
