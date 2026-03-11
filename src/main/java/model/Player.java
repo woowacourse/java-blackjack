@@ -6,10 +6,19 @@ import constant.ErrorMessage;
 import java.util.Objects;
 
 public class Player extends Participant {
+    private Integer betAmount = 0;
 
     public Player(PlayerName name) {
         super(name);
         validate(name);
+    }
+
+    public void setBetAmount(Integer betAmount) {
+        this.betAmount = betAmount;
+    }
+
+    public Integer getBetAmount() {
+        return this.betAmount;
     }
 
     @Override

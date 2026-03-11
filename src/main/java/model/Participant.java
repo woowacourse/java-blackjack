@@ -1,11 +1,13 @@
 package model;
 
 import java.util.List;
+import java.util.Objects;
 import model.dto.Card;
 import model.dto.PlayerResult;
 
 public class Participant {
     private static final Integer BUST_SCORE = 21;
+    private static final Integer BLACK_JACK_CARD_SIZE = 2;
 
     private final PlayerName name;
     private final ParticipantHand participantHand = new ParticipantHand();
@@ -33,6 +35,10 @@ public class Participant {
 
     public boolean isBust() {
         return isMoreThanScore(BUST_SCORE);
+    }
+
+    public boolean isBlackJack() {
+        return participantHand.getDeck().size() == BLACK_JACK_CARD_SIZE && Objects.equals(participantHand.getScore(), BUST_SCORE);
     }
 
     public List<Card> getDeck() {

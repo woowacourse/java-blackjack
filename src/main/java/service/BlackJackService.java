@@ -1,5 +1,6 @@
 package service;
 
+import java.math.BigDecimal;
 import model.BlackJackDeck;
 import model.Dealer;
 import model.DealerWinning;
@@ -40,7 +41,8 @@ public class BlackJackService {
 
         for(Player player : players.getPlayers()) {
             MatchStatus matchStatus = getPlayerResult(player, dealer);
-            playersWinning.add(new PlayerWinning(player.getName(), matchStatus.getStatus()));
+            Integer profit = calculateBetAmount(player, dealer);
+            playersWinning.add(new PlayerWinning(player.getName(), matchStatus.getStatus(), profit));
         }
 
         return playersWinning;
@@ -51,9 +53,45 @@ public class BlackJackService {
 
         for(Player player : players.getPlayers()) {
             MatchStatus matchStatus = getPlayerResult(player, dealer);
-            dealerWinning.increase(reverseMatchResult(matchStatus));
+            Integer betAmount = calculateBetAmount(player, dealer);
+            dealerWinning.increase(reverseMatchResult(matchStatus), -betAmount);
         }
         return dealerWinning;
+    }
+
+    private Integer calculateBetAmount(Player player, Dealer dealer) {
+        return calculateBustBetAmount(player, dealer).intValue();
+    }
+
+    private BigDecimal calculateBustBetAmount(Player player, Dealer dealer) {
+        if(player.isBust()) {
+            return new BigDecimal(-player.getBetAmount());
+        }
+
+        return calculateBlackJackBetAmount(player, dealer);
+    }
+
+    private BigDecimal calculateBlackJackBetAmount(Player player, Dealer dealer) {
+        if(player.isBlackJack() && dealer.isBlackJack()) {
+            return BigDecimal.ZERO;
+        }
+
+        if(player.isBlackJack()) {
+            return BigDecimal.valueOf(player.getBetAmount()).multiply(BigDecimal.valueOf(1.5));
+        }
+
+        return calculateRegularBetAmount(player, dealer);
+    }
+
+    private BigDecimal calculateRegularBetAmount(Player player, Dealer dealer) {
+        if(player.isMoreScore(dealer)) {
+            return BigDecimal.valueOf(player.getBetAmount());
+        }
+
+        if(dealer.isMoreScore(dealer)) {
+            return BigDecimal.valueOf(-player.getBetAmount());
+        }
+        return BigDecimal.ZERO;
     }
 
     private MatchStatus reverseMatchResult(MatchStatus matchStatus) {
