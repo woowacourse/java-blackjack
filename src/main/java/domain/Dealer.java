@@ -42,6 +42,10 @@ public class Dealer {
             return GameResult.BLACKJACK;
         }
 
+        if (hand.getHandTotalScore() == MAXIMUM_TOTAL_SCORE) {
+            return GameResult.LOSE_BY_BLACKJACK;
+        }
+
         // 딜러의 점수가 21을 초과하는 경우, 유저 승
         if (hand.getHandTotalScore() > MAXIMUM_TOTAL_SCORE) {
             return GameResult.WIN;
@@ -57,9 +61,5 @@ public class Dealer {
         }
 
         return GameResult.LOSE;
-    }
-
-    public void updateProfit(Money profit) {
-        this.profit = profit;
     }
 }
