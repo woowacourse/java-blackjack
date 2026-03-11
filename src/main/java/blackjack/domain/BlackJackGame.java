@@ -22,8 +22,11 @@ public class BlackJackGame {
     }
 
     public HashMap<Player, GameResult> judgeGameResult() {
-        BlackJackJudge blackJackJudge = new BlackJackJudge();
-        return blackJackJudge.judge(players, dealer);
+        HashMap<Player, GameResult> gameResult = new HashMap<>();
+        for (Player player : players.getPlayers()) {
+            gameResult.put(player, player.compareResult(dealer));
+        }
+        return gameResult;
     }
 
 }
