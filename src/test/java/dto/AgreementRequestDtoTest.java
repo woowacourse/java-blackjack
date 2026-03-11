@@ -24,6 +24,6 @@ class AgreementRequestDtoTest {
     @DisplayName("y/n 입력 문자열이 y 또는 n 이 아닌 경우 에러 발생 검증")
     void agreement_is_y_or_n() {
         Assertions.assertThrows(IllegalArgumentException.class,
-                () -> new AgreementRequestDto("n"));
+                () -> new AgreementRequestDto("Q"));
     }
 }
