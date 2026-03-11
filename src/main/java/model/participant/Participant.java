@@ -14,7 +14,7 @@ public abstract class Participant {
     protected List<Card> hands;
 
     protected Participant(String name) {
-        this(name, new ArrayList<Card>());
+        this(name, new ArrayList<>());
     }
 
     public Participant(String name, List<Card> hands) {
