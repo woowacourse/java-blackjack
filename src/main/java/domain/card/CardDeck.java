@@ -17,12 +17,12 @@ public class CardDeck {
         return new CardDeck(cardDeckInitializer.initialize());
     }
 
-    public CardBundle draw(CardBundle cardBundle, int count) {
+    public Hand draw(Hand hand, int count) {
         List<Card> additionalCards = Stream.generate(this::drawCard)
                 .limit(count)
                 .toList();
 
-        return cardBundle.addUp(CardBundle.from(additionalCards));
+        return hand.addUp(Hand.from(additionalCards));
     }
 
     private Card drawCard() {

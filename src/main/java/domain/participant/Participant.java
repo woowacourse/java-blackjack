@@ -1,34 +1,34 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.card.CardBundle;
+import domain.card.Hand;
 import domain.card.CardDeck;
 import java.util.List;
 
 public abstract class Participant {
 
     protected final ParticipantName name;
-    protected final CardBundle cardBundle;
+    protected final Hand hand;
 
     protected Participant(ParticipantName name) {
-        this.cardBundle = CardBundle.empty();
+        this.hand = Hand.empty();
         this.name = name;
     }
 
-    public CardBundle drawCards(CardDeck cardDeck, int count) {
-        return cardDeck.draw(cardBundle, count);
+    public Hand drawCards(CardDeck cardDeck, int count) {
+        return cardDeck.draw(hand, count);
     }
 
     public boolean hasCard(Card targetCard) {
-        return cardBundle.checkExist(targetCard);
+        return hand.checkExist(targetCard);
     }
 
     public int getResultScore() {
-        return cardBundle.getResultScore();
+        return hand.getResultScore();
     }
 
     public boolean isBusted() {
-        return cardBundle.isBusted();
+        return hand.isBusted();
     }
 
     public String toDisplayMyName() {
@@ -36,7 +36,7 @@ public abstract class Participant {
     }
 
     public List<String> disPlayMyCardBundle() {
-        return cardBundle.toDisplay();
+        return hand.toDisplay();
     }
 
 }

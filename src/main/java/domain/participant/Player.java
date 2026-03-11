@@ -18,11 +18,11 @@ public class Player extends Participant{
             return false;
         }
         Participant that = (Participant) o;
-        return Objects.equals(name, that.name) && Objects.equals(cardBundle, that.cardBundle);
+        return Objects.equals(name, that.name) && Objects.equals(hand, that.hand);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, cardBundle);
+        return Objects.hash(name, hand);
     }
 }

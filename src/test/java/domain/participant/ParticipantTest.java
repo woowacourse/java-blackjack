@@ -4,7 +4,7 @@ package domain.participant;
 import static config.BlackjackGameConstant.INITIAL_CARD_DRAW_COUNT;
 
 import domain.card.Card;
-import domain.card.CardBundle;
+import domain.card.Hand;
 import domain.card.CardDeck;
 import domain.card.CardDeckBuilder;
 import domain.card.CardDenomination;
@@ -24,10 +24,10 @@ class ParticipantTest {
                 .cards(cards)
                 .build();
         Participant participant = new TestParticipant();
-        CardBundle cardBundle = participant.drawCards(cardDeck, INITIAL_CARD_DRAW_COUNT);
+        Hand hand = participant.drawCards(cardDeck, INITIAL_CARD_DRAW_COUNT);
 
-        Assertions.assertThat(cardBundle)
-                .isEqualTo(CardBundle.from(cards));
+        Assertions.assertThat(hand)
+                .isEqualTo(Hand.from(cards));
     }
 
     @Test

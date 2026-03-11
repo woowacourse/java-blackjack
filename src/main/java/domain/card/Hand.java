@@ -7,24 +7,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class CardBundle {
+public class Hand {
 
     private final List<Card> cards;
 
-    private CardBundle(List<Card> cards) {
+    private Hand(List<Card> cards) {
         this.cards = cards;
     }
 
-    public static CardBundle from(List<Card> cardBundle) {
-        return new CardBundle(cardBundle);
+    public static Hand from(List<Card> cardBundle) {
+        return new Hand(cardBundle);
     }
 
-    public static CardBundle empty() {
-        return new CardBundle(new ArrayList<>());
+    public static Hand empty() {
+        return new Hand(new ArrayList<>());
     }
 
-    public CardBundle addUp(CardBundle additionalCardBundle) {
-        cards.addAll(additionalCardBundle.cards);
+    public Hand addUp(Hand additionalHand) {
+        cards.addAll(additionalHand.cards);
         return this;
     }
 
@@ -70,7 +70,7 @@ public class CardBundle {
         if (object == null || getClass() != object.getClass()) {
             return false;
         }
-        CardBundle that = (CardBundle) object;
+        Hand that = (Hand) object;
         return Objects.equals(cards, that.cards);
     }
 

@@ -16,14 +16,14 @@ public class Dealer extends Participant {
 
     public boolean hitIfRequired(CardDeck cardDeck) {
         if (canHit()) {
-            cardDeck.draw(cardBundle, DEFAULT_CARD_DRAW_COUNT);
+            cardDeck.draw(hand, DEFAULT_CARD_DRAW_COUNT);
             return true;
         }
         return false;
     }
 
     public boolean canHit() {
-        return cardBundle.getBasicScore() <= DEALER_ADDITIONAL_DRAW_CONDITION;
+        return hand.getBasicScore() <= DEALER_ADDITIONAL_DRAW_CONDITION;
     }
 
 }

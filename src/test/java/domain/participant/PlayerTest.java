@@ -60,10 +60,10 @@ class PlayerTest {
         CardDeck cardDeck = new CardDeckBuilder()
                 .cards(clover, spade)
                 .build();
-        CardBundle origin = CardBundle.from(List.of(clover, spade));
+        Hand origin = Hand.from(List.of(clover, spade));
         Player player = Player.from(ParticipantName.from("test"));
 
-        CardBundle result = player.drawCards(cardDeck, 2);
+        Hand result = player.drawCards(cardDeck, 2);
 
         Assertions.assertThat(result.getBasicScore()).isEqualTo(origin.getBasicScore());
     }
