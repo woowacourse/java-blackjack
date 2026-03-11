@@ -48,7 +48,7 @@ public class BlackJackGame {
         return player.canReceiveCard();
     }
 
-    public boolean canDealerReceiveCard(Dealer dealer) {
+    public boolean canDealerReceiveCard() {
         return dealer.canReceiveCard();
     }
 

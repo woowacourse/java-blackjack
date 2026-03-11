@@ -17,10 +17,9 @@ public class BlackJackGameController {
     public void run() {
         List<String> playerNames = getPlayerNames();
         List<Player> players = initPlayer(playerNames);
-        Dealer dealer = initDealer();
         Deck deck = new Deck();
 
-        BlackJackGame blackJackGame = new BlackJackGame(deck, players, dealer);
+        BlackJackGame blackJackGame = new BlackJackGame(deck, players, Dealer.create());
         blackJackGame.distributeInitialCards();
 
         OutputView.printGameInitialMessage(playerNames);
@@ -30,11 +29,11 @@ public class BlackJackGameController {
             OutputView.printInitialPlayerCards(blackJackGame.getPlayerCardsDto(player));
         }
 
-        playGame(blackJackGame, players, dealer);
+        playGame(blackJackGame, players);
 
         Map<String, Boolean> gameResult = blackJackGame.getGameResult();
 
-        endGame(blackJackGame, dealer, players, gameResult);
+        endGame(blackJackGame, players, gameResult);
     }
 
     private List<String> getPlayerNames() {
@@ -48,12 +47,7 @@ public class BlackJackGameController {
         return players;
     }
 
-    private Dealer initDealer() {
-        Dealer dealer = Dealer.create();
-        return dealer;
-    }
-
-    private void playGame(BlackJackGame blackJackGame, List<Player> players, Dealer dealer) {
+    private void playGame(BlackJackGame blackJackGame, List<Player> players) {
         for (Player player : players) {
             while (blackJackGame.canPlayerReceiveCard(player)) {
                 if (isStopGame(blackJackGame, player)) {
@@ -63,13 +57,13 @@ public class BlackJackGameController {
                 OutputView.printCards(blackJackGame.getPlayerCardsDto(player));
             }
         }
-        if (blackJackGame.canDealerReceiveCard(dealer)) {
+        if (blackJackGame.canDealerReceiveCard()) {
             blackJackGame.playGameWithDealer();
             OutputView.printDealerMessage();
         }
     }
 
-    private static void endGame(BlackJackGame blackJackGame, Dealer dealer, List<Player> players,
+    private static void endGame(BlackJackGame blackJackGame, List<Player> players,
                                 Map<String, Boolean> gameResult) {
         OutputView.printFinalCards(blackJackGame.getDealerCardsDto());
         printFinalScores(blackJackGame, players);
