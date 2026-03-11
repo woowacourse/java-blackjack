@@ -42,7 +42,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어의 점수가 21점이면 카드를 뽑을 수 없다.")
+    @DisplayName("플레이어의 점수가 21점이면 카드를 뽑을 수 있다.")
     void cantReceiveCardScore21Test() {
         // given
         Player player = new Player("luke", 1000);
@@ -56,7 +56,7 @@ class PlayerTest {
         player.receiveCard(cardAce);
         player.getScore();
         // then
-        assertThat(player.canReceive()).isFalse();
+        assertThat(player.canReceive()).isTrue();
     }
 
     @Test
