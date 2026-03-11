@@ -27,16 +27,9 @@ public class Players {
         for (PlayerBettingRequest playerBettingRequest : playersBettingRequest.value()) {
             String nickname = playerBettingRequest.playerNickname();
             int amount = playerBettingRequest.amount();
-            validate(nickname);
             result.add(new Player(nickname, Role.PLAYER, amount));
         }
         return from(result);
-    }
-
-    private static void validate(String name) {
-        if (name.isEmpty()) {
-            throw new IllegalArgumentException("이름은 공백이 될 수 없습니다.");
-        }
     }
 
     public List<String> getAllPlayerNickname() {
