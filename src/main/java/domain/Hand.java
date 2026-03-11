@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Hand {
@@ -15,9 +16,16 @@ public class Hand {
         return new Hand(List.of(card1, card2));
     }
 
-    //TODO : 책임 : 가지고 있는 카드패가 isBust 인지 판단하세요.
     public boolean isBust() {
         return calculateCardScoreSum() > BUST_CRITERIA;
+    }
+
+    public List<Card> showCards() {
+        return Collections.unmodifiableList(cards);
+    }
+
+    public void addCard(Card card) {
+        this.cards.add(card);
     }
 
     private int calculateCardScoreSum() {
@@ -41,8 +49,4 @@ public class Hand {
         }
         return sum;
     }
-
-//    public void addCard(Card card) {
-//        this.cards.add(card);
-//    }
 }
