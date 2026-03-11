@@ -1,8 +1,8 @@
 package domain.participant;
 
 import domain.card.Card;
+import domain.card.Cards;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static domain.BlackjackRule.BLACK_JACK;
@@ -10,14 +10,14 @@ import static domain.BlackjackRule.BLACK_JACK;
 public class Hand {
     public static final int ACE_ADJUST_VALUE = 10;
 
-    private final List<Card> cards;
+    private final Cards cards;
 
     public Hand() {
-        this.cards = new ArrayList<>();
+        this.cards = new Cards();
     }
 
     public Hand(List<Card> cards) {
-        this.cards = new ArrayList<>(cards);
+        this.cards = new Cards(cards);
     }
 
     public boolean isBust() {
@@ -25,8 +25,8 @@ public class Hand {
     }
 
     public int score() {
-        int total = calculateRawTotal();
-        int aceCount = countAce();
+        int total = cards.sum();
+        int aceCount = cards.countAce();
 
         while (total > BLACK_JACK && aceCount > 0) {
             total -= ACE_ADJUST_VALUE;
@@ -36,20 +36,12 @@ public class Hand {
         return total;
     }
 
-    private int countAce() {
-        return (int) cards.stream()
-                .filter(Card::isAce)
-                .count();
+    public Card peek(){
+        return cards.peek();
     }
 
     public int size() {
         return cards.size();
-    }
-
-    public int calculateRawTotal() {
-        return cards.stream()
-                .mapToInt(Card::score)
-                .sum();
     }
 
     public void add(Card card) {
@@ -57,6 +49,6 @@ public class Hand {
     }
 
     public List<Card> cards() {
-        return List.copyOf(cards);
+        return cards.cards();
     }
 }

@@ -12,6 +12,7 @@ import dto.PlayerResultInfo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class OutputView {
     public static final String DEALER_ONE_MORE_CARD_MESSAGE = "딜러는 16이하라 한 장의 카드를 더 받았습니다.";
@@ -53,17 +54,15 @@ public class OutputView {
     }
 
     private void printDistributionMessage(Dealer dealer, Players players) {
-        List<String> names = players.getPlayerNames();
-
         String dealerName = dealer.name();
-        String playerNames = String.join(COMMA, names);
+        String playerNames = String.join(COMMA, players.getPlayerNames().stream().toList());
         String distributionMessage = String.format(DISTRIBUTION_MESSAGE, dealerName, playerNames);
 
         System.out.println(distributionMessage);
     }
 
     private void printDealerInitialCard(Dealer dealer) {
-        Card firstCard = dealer.firstCard();
+        Card firstCard = dealer.card();
         String dealerCard = firstCard.name();
 
         System.out.println(String.format(CARD_MESSAGE, dealer.name()) + dealerCard);
@@ -76,13 +75,10 @@ public class OutputView {
     }
 
     private String formatParticipantCards(Participant participant) {
-        List<String> cards = new ArrayList<>();
-
-        for (Card card : participant.cards()) {
-            cards.add(card.name());
-        }
-
-        String joinedCards = String.join(COMMA, cards);
+        String joinedCards = participant.cards()
+                .stream()
+                .map(Card::name)
+                .collect(Collectors.joining(COMMA));
 
         return String.format(CARD_MESSAGE, participant.name()) + joinedCards;
     }

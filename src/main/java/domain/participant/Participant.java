@@ -1,6 +1,7 @@
 package domain.participant;
 
 import domain.card.Card;
+import domain.card.Cards;
 
 import java.util.List;
 
@@ -15,12 +16,12 @@ public abstract class Participant {
         this.hand = new Hand();
     }
 
-    public void receiveInitialCards(List<Card> cards) {
+    public void receiveInitialCards(Cards cards) {
         if (cards.size() != INITIAL_CARDS_COUNT) {
             throw new IllegalArgumentException();
         }
 
-        cards.forEach(this::receive);
+        cards.cards().forEach(this::receive);
     }
 
     public void receive(Card card) {
@@ -37,6 +38,10 @@ public abstract class Participant {
 
     public String name() {
         return name.name();
+    }
+
+    public Card card() {
+        return hand.peek();
     }
 
     public List<Card> cards() {

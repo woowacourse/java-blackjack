@@ -1,6 +1,7 @@
 package domain.deck;
 
 import domain.card.Card;
+import domain.card.Cards;
 import domain.card.Rank;
 import domain.card.Suit;
 
@@ -10,10 +11,10 @@ import java.util.stream.Collectors;
 import static domain.BlackjackRule.INITIAL_CARDS_COUNT;
 
 public class Deck {
-    private final List<Card> cards;
+    private final Cards cards;
 
     public Deck(List<Card> cards) {
-        this.cards = cards;
+        this.cards = new Cards(cards);
     }
 
     public static Deck createDeck(CardShuffleStrategy cardShuffleStrategy) {
@@ -34,16 +35,15 @@ public class Deck {
     }
 
     public Card draw() {
-        return cards.removeFirst();
+        return cards.draw();
     }
 
-    public List<Card> drawInitialCards() {
-        List<Card> cards = new ArrayList<>();
-
+    public Cards drawInitialCards() {
+        Cards initCards = new Cards();
         for (int i = 0; i < INITIAL_CARDS_COUNT; i++) {
-            cards.add(draw());
+            initCards.add(draw());
         }
 
-        return cards;
+        return initCards;
     }
 }
