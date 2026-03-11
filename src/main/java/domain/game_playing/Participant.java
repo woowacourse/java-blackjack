@@ -24,20 +24,14 @@ abstract class Participant {
         hand.drawCard();
     }
 
-    private void requirePlayableHand() {
-        if(!isPlayable()) {
-            throw new IllegalStateException(String.format("%s는 드로우 할 수 없습니다.", name));
-        }
-    }
-
     void drawInitialCards() {
         for (int i = 0; i < BlackJackRule.INITIAL_CARD_COUNT.value(); i++) {
             draw();
         }
     }
 
-    List<CardInfo> cardInfos() {
-        return hand.cardInfos();
+    NameAndCardInfos infos() {
+        return new NameAndCardInfos(name, cardInfos());
     }
 
     boolean isBusted() {
@@ -52,7 +46,13 @@ abstract class Participant {
         return name;
     }
 
-    NameAndCardInfos infos() {
-        return new NameAndCardInfos(name, cardInfos());
+    private List<CardInfo> cardInfos() {
+        return hand.cardInfos();
+    }
+
+    private void requirePlayableHand() {
+        if (!isPlayable()) {
+            throw new IllegalStateException(String.format("%s는 더 이상 드로우 할 수 없습니다.", name));
+        }
     }
 }

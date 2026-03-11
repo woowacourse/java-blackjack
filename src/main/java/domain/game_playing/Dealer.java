@@ -2,7 +2,6 @@ package domain.game_playing;
 
 class Dealer extends Participant {
 
-    private static final String NAME = "딜러";
     private static final int DEALER_PLAYABLE_THRESHOLD = 16;
 
     Dealer(String name, Hand hand) {
@@ -10,7 +9,7 @@ class Dealer extends Participant {
     }
 
     static Dealer of(DrawStrategy drawStrategy) {
-        return new Dealer(NAME, Hand.based(drawStrategy));
+        return new Dealer(DEALER_NAME, Hand.based(drawStrategy));
     }
 
     @Override

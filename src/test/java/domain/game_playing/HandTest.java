@@ -22,7 +22,7 @@ class HandTest {
         hand.drawCard();
 
         int expected = 1;
-        int actual = hand.cards().size();
+        int actual = hand.cardInfos().size();
 
         assertEquals(expected, actual);
     }

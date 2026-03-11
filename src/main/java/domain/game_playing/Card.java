@@ -4,15 +4,15 @@ import domain.common.CardInfo;
 
 public record Card(CardRank rank, CardMark mark) {
 
-    public boolean isAce() {
+    boolean isAce() {
         return rank == CardRank.ACE;
     }
 
-    public CardInfo info () {
+    CardInfo info () {
         return new CardInfo(rank.label(), mark.description());
     }
 
-    public int score() {
+    int score() {
         return rank.score();
     }
 }

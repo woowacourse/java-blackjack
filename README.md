@@ -32,8 +32,8 @@
 - [x] 승패 집계
 
 ## 리팩토링
-- [ ] GameTable 분해 및 책임 분리
-  - [ ] Repository, Service 정리
+- [x] GameTable 분해 및 책임 분리
+  - [x] Repository, Service 정리
 - [x] service, repository 레이어 도입
 - [x] Constants를 각 도메인에 맞는 enum으로 분리
 - [x] 애그리거트 내 접근 제어자 정리
@@ -42,11 +42,11 @@
 - [x] ScoreBoard 책임 분리 고려
 - [x] View 정리
 - [x] 예외 처리
+- [ ] ScoreBoard 인스턴스에 딜러용 인스턴스 추가 고려
 
 ## 테스트
 - [ ] TestFixture 또는 테스트용 팩토리 클래스 도입
 - [ ] 누락된 테스트들 작성
-  - [ ] GameTable
   - [ ] ScoreBoard
 - [ ] 테스트 케이스 보강 및 `parameterizedTest` 도입
 

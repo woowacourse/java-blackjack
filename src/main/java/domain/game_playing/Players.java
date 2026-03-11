@@ -24,12 +24,6 @@ class Players {
         return new Players(playersFrom(names), this.drawStrategy);
     }
 
-    private List<Player> playersFrom(List<String> names) {
-        return names.stream()
-                .map(name -> Player.of(name, drawStrategy))
-                .toList();
-    }
-
     List<String> names() {
         return players.stream()
                 .map(Participant::name)
@@ -50,10 +44,6 @@ class Players {
                 .toList();
     }
 
-    String currentPlayerName() {
-        return currentPlayer().name();
-    }
-
     void currentPlayerDrawCard() {
         if (hasWaitingPlayers()) {
             currentPlayer().draw();
@@ -66,6 +56,16 @@ class Players {
 
     boolean hasWaitingPlayers() {
         return !players.isEmpty();
+    }
+
+    String currentPlayerName() {
+        return currentPlayer().name();
+    }
+
+    private List<Player> playersFrom(List<String> names) {
+        return names.stream()
+                .map(name -> Player.of(name, drawStrategy))
+                .toList();
     }
 
     private Player currentPlayer() {

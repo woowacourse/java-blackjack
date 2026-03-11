@@ -29,16 +29,20 @@ class Hand {
                 .toList();
     }
 
-    List<Card> cards() {
-        return List.copyOf(cards);
-    }
-
     boolean isBusted() {
         int score = rawScoreSum();
         if (aceCount() > 0) {
             score -= aceCount() * BlackJackRule.ACE_WEIGHT.value();
         }
         return score > BlackJackRule.BUST_NUMBER.value();
+    }
+
+    int scoreSum() {
+        int total = rawScoreSum();
+        if (isExceededBustNumber(total)) {
+            total -= aceCount() * BlackJackRule.ACE_WEIGHT.value();
+        }
+        return total;
     }
 
     private int rawScoreSum() {
@@ -51,14 +55,6 @@ class Hand {
         return (int) cards.stream()
                 .filter(Card::isAce)
                 .count();
-    }
-
-    int scoreSum() {
-        int total = rawScoreSum();
-        if (isExceededBustNumber(total)) {
-            total -= aceCount() * BlackJackRule.ACE_WEIGHT.value();
-        }
-        return total;
     }
 
     private boolean isExceededBustNumber(int total) {
