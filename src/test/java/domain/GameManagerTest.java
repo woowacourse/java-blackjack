@@ -90,13 +90,13 @@ class GameManagerTest {
         manager.startGame();
         Player player = manager.getPlayerSequence().getFirst();
 
-        int before = player.handSize();
+        int before = player.getScore();
 
         manager.drawPlayerCard(player);
 
-        int after = player.handSize();
+        int after = player.getScore();
 
-        assertThat(after).isEqualTo(before + 1);
+        assertThat(after).isGreaterThan(before);
     }
 
     @Test

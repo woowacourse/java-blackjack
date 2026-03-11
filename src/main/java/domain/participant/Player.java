@@ -27,10 +27,6 @@ public class Player {
         return !(isBust()|| hand.isBlackjack());
     }
 
-    public int handSize() {
-        return hand.size();
-    }
-
     public List<String> getHandToString() {
         return hand.toStringList();
     }
@@ -43,7 +39,4 @@ public class Player {
         return name;
     }
 
-    public Hand getHand() {
-        return hand;
-    }
 }
