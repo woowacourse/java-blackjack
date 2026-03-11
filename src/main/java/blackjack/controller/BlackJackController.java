@@ -47,7 +47,7 @@ public class BlackJackController {
 
     private void playerTurn(Players players, Deck deck) {
         for (Player player : players.getPlayers()) {
-            while (player.isBust()) {
+            while (!player.isBust()) {
                 boolean isHit = inputView.readHitAnswer(player.getName());
                 if (isHit) {
                     player.receiveCard(deck.draw());
