@@ -60,7 +60,7 @@ class DealerTest {
         dealer.pickAdditionalCard(mustPickTen); // 10 + 10 + 10 = 30
 
         //when & then
-        assertThat(dealer.awardPrize(players))
+        assertThat(dealer.award(players))
                 .containsExactlyElementsOf(players);
     }
 
@@ -89,10 +89,10 @@ class DealerTest {
         dealer.pickAdditionalCard(mustPickTen); // 10 + 10 = 20점
 
         //when & then
-        assertThat(dealer.awardPrize(players).getFirst().getPrize())
+        assertThat(dealer.award(players).getFirst().getPrize())
                 .isEqualTo((int) (blackjack_player.getPrize() * 1.5));
 
-        assertThat(dealer.awardPrize(players).getLast().getPrize())
+        assertThat(dealer.award(players).getLast().getPrize())
                 .isNotEqualTo((int) (not_blackjack_player.getPrize() * 1.5));
     }
 
@@ -122,10 +122,10 @@ class DealerTest {
         dealer.pickAdditionalCard(mustPickFive); // 10 + 5 = 15점
 
         //when & then
-        assertThat(dealer.awardPrize(players).getFirst().getPrize())
+        assertThat(dealer.award(players).getFirst().getPrize())
                 .isEqualTo(winner.getPrize());
 
-        assertThat(dealer.awardPrize(players).getLast().getPrize())
+        assertThat(dealer.award(players).getLast().getPrize())
                 .isEqualTo(-1 * loser.getPrize());
     }
 }

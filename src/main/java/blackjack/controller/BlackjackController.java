@@ -57,7 +57,7 @@ public class BlackjackController {
         players = applyBustToPlayers(players);
 
        drawUntilSeventeen(dealer, cardDeck);
-       players = dealer.awardPrize(players);
+       players = dealer.award(players);
 
         openDealerHands(dealer);
         openPlayersHands(players);

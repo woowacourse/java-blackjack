@@ -32,35 +32,42 @@ public class Dealer extends Participant {
         return !hands.isTotalScoreOver(PICK_THRESHOLD);
     }
 
-    public List<Player> awardPrize(List<Player> players) {
+    public List<Player> award(List<Player> players) {
         if (this.isBust()) {
             return List.copyOf(players);
         }
 
         if (this.isBlackjack()) {
-            return players.stream()
-                    .map(player -> {
-                        if (player.isBlackjack()) {
-                            return player;
-                        }
-
-                        return player.bust();
-                    }).toList();
+            return bustNotBlackjackPlayers(players);
         }
 
-        int dealerScore = this.getCurrentTotalScore();
+        return players.stream()
+                .map(player -> awardPlayer(
+                        player,
+                        this.getCurrentTotalScore()
+                )).toList();
+    }
 
+    private List<Player> bustNotBlackjackPlayers(List<Player> players) {
         return players.stream()
                 .map(player -> {
                     if (player.isBlackjack()) {
-                        return player.blackjack();
-                    }
-
-                    if (player.getCurrentTotalScore() >= dealerScore) {
                         return player;
                     }
 
                     return player.bust();
                 }).toList();
+    }
+
+    private Player awardPlayer(Player player, int dealerScore) {
+        if (player.isBlackjack()) {
+            return player.blackjack();
+        }
+
+        if (player.getCurrentTotalScore() >= dealerScore) {
+            return player;
+        }
+
+        return player.bust();
     }
 }
