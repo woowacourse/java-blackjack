@@ -1,8 +1,8 @@
 package domain;
 
+import dto.ParticipantCardsDto;
 import java.util.ArrayList;
 import java.util.List;
-import view.InputView;
 
 public class GameManager {
     private static final int MAX_PLAYER = 8;
@@ -16,6 +16,45 @@ public class GameManager {
         this.dealer = initDealer();
         this.players = players;
         this.deck = new Deck();
+    }
+
+    public void distributeInitialCards() {
+        distributeCardToDealer(dealer, deck);
+        distributeCardToPlayers(players, deck);
+    }
+
+    private void distributeCardToDealer(Dealer dealer, Deck deck) {
+        distributeInitialCards(dealer, deck);
+    }
+
+    private void distributeCardToPlayers(List<Player> players, Deck deck) {
+        for (Player player : players) {
+            distributeInitialCards(player, deck);
+        }
+    }
+
+    private void distributeInitialCards(Participant participant, Deck deck) {
+        distributeCard(participant, deck);
+        distributeCard(participant, deck);
+    }
+
+
+    private void distributeCard(Participant participant, Deck deck) {
+        Card card = deck.drawCardFromDeck();
+        participant.receiveCard(card);
+    }
+
+    public ParticipantCardsDto getDealerDto() {
+        return dealer.getParticipantCardsDto();
+    }
+
+    public List<ParticipantCardsDto> getPlayerDtos() {
+        List<ParticipantCardsDto> participantCardsDtos = new ArrayList<>();
+        for (Player player : players) {
+            participantCardsDtos.add(player.getParticipantCardsDto());
+        }
+
+        return participantCardsDtos;
     }
 
     private Dealer initDealer() {

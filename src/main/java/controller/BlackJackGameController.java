@@ -1,6 +1,7 @@
 package controller;
 
 import domain.*;
+import dto.ParticipantCardsDto;
 import view.InputView;
 import view.OutputView;
 
@@ -20,17 +21,28 @@ public class BlackJackGameController {
         List<Player> players = initPlayer();
         GameManager gameManager = new GameManager(players);
 
+        // TODO: 이름 출력 로직
         List<String> playersNames = getPlayerNames(players);
         OutputView.printGameInitialMessage(playersNames);
 
-        distributeCardToDealer(dealer, deck);
-        distributeCardToPlayers(players, deck);
+        gameManager.distributeInitialCards();
+        printParticipantCards(gameManager);
 
+        // TODO: ------------------------------------------------------------
         playGame(players, deck, dealer);
 
         Map<String, Boolean> gameResult = getGameResult(dealer, players);
 
         endGame(dealer, players, gameResult);
+    }
+
+    private static void printParticipantCards(GameManager gameManager) {
+        ParticipantCardsDto dealerDto = gameManager.getDealerDto();
+        OutputView.printCards(dealerDto);
+        List<ParticipantCardsDto> playerDtos = gameManager.getPlayerDtos();
+        for (ParticipantCardsDto playerDto : playerDtos) {
+            OutputView.printCards(playerDto);
+        }
     }
 
     private static Map<String, Boolean> getGameResult(Dealer dealer, List<Player> players) {
@@ -53,17 +65,6 @@ public class BlackJackGameController {
         playGameWithDealer(dealer, deck);
     }
 
-    private void distributeCardToDealer(Dealer dealer, Deck deck) {
-        distributeInitialCards(dealer, deck);
-        printCards(dealer.getParticipantCardsDto());
-    }
-
-    private void distributeCardToPlayers(List<Player> players, Deck deck) {
-        for (Player player : players) {
-            distributeInitialCards(player, deck);
-            printCards(player.getParticipantCardsDto());
-        }
-    }
 
     private static void printFinalScores(List<Player> players) {
         for (Player player : players) {
@@ -107,16 +108,6 @@ public class BlackJackGameController {
             return true;
         }
         return false;
-    }
-
-    private void distributeInitialCards(Participant participant, Deck deck) {
-        distributeCard(participant, deck);
-        distributeCard(participant, deck);
-    }
-
-    private void distributeCard(Participant participant, Deck deck) {
-        Card card = deck.drawCardFromDeck();
-        participant.receiveCard(card);
     }
 
     private List<String> getPlayerNames(List<Player> players) {
