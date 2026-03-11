@@ -4,6 +4,8 @@ package domain;
 public class User extends Participant{
 
     private final String name;
+    private Amount amount;
+
     private GameResult gameResult;
 
     public User(String name) {

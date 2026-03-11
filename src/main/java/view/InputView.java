@@ -1,5 +1,7 @@
 package view;
 
+import domain.User;
+
 import java.util.Scanner;
 
 public class InputView {
@@ -27,5 +29,10 @@ public class InputView {
         if (!input.equals("y") && !input.equals("n")) {
             throw new IllegalArgumentException("[ERROR] y 또는 n만 입력 가능합니다.");
         }
+    }
+
+    public String readBetAmount(User user) {
+        System.out.println(user.getName() + "의 배팅 금액은?");
+        return scanner.nextLine();
     }
 }

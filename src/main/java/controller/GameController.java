@@ -2,6 +2,7 @@ package controller;
 
 import java.util.List;
 
+import domain.Amount;
 import domain.Card;
 import domain.Dealer;
 import domain.User;
@@ -26,6 +27,7 @@ public class GameController {
 
     public void run() {
         List<User> users = setUpUsers();
+        processBet(users);
         initDeal(users);
         processUserTurns(users);
         processDealerTurn();
@@ -36,6 +38,14 @@ public class GameController {
     private List<User> setUpUsers(){
         String input = inputView.readUsers();
         return InputParser.parseUsers(input);
+    }
+
+    private void processBet(List<User> users) {
+        for(User user : users) {
+            String input = inputView.readBetAmount(user);
+            Amount amount = new Amount(InputParser.parseAmount(input));
+            user.bet(amount);
+        }
     }
 
     private void initDeal(List<User> users){
