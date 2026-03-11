@@ -1,49 +1,57 @@
 package domain;
 
-import constant.PolicyConstant;
 import constant.Rank;
 import constant.Suit;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.Deque;
 import java.util.List;
-import java.util.Map;
 
 public class CardMachine {
 
-    private final Map<Card, Integer> decks;
+    private static final int DECK_COUNT = 6;
+
+    private final Deque<Card> decks;
 
     public CardMachine() {
-        decks = new HashMap<>();
+        List<Card> decks = new ArrayList<>();
+        setInitialDecks(decks);
+        Collections.shuffle(decks);
+        this.decks = new ArrayDeque<>(decks);
+    }
+
+    private void setInitialDecks(List<Card> decks) {
+        setRanksAndSuits(decks);
+    }
+
+    private void setRanksAndSuits(List<Card> decks) {
+        for (Rank rank : Rank.values()) {
+            setSuits(decks, rank);
+        }
+    }
+
+    private void setSuits(List<Card> decks, Rank rank) {
+        for (Suit suit : Suit.values()) {
+            addRepeatSix(decks, rank, suit);
+        }
+    }
+
+    private void addRepeatSix(List<Card> decks, Rank rank, Suit suit) {
+        for (int i = 0; i < DECK_COUNT; i++) {
+            decks.add(new Card(rank, suit));
+        }
     }
 
     public Card drawCard() {
         if (isDrawFinished()) {
             return null;
         }
-        Card newCard = pickRandomCard();
-        while (decks.getOrDefault(newCard, 0) >= PolicyConstant.DECK_COUNT) {
-            newCard = pickRandomCard();
-        }
-        decks.put(newCard, decks.getOrDefault(newCard, 0) + 1);
-        return newCard;
+
+        return this.decks.pollFirst();
     }
 
     private boolean isDrawFinished() {
-        return decks.size() >= PolicyConstant.DECK_SIZE && validateCardCount();
-    }
-
-    private boolean validateCardCount() {
-        return decks.values().stream()
-            .allMatch(count -> count >= PolicyConstant.DECK_COUNT);
-    }
-
-    private Card pickRandomCard() {
-        ArrayList<Rank> ranks = new ArrayList<>(List.of(Rank.values()));
-        ArrayList<Suit> suits = new ArrayList<>(List.of(Suit.values()));
-        Collections.shuffle(ranks);
-        Collections.shuffle(suits);
-
-        return new Card(ranks.getFirst(), suits.getFirst());
+        return this.decks.isEmpty();
     }
 }
