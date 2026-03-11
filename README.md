@@ -318,6 +318,17 @@ SRP를 완벽히 지킨 것입니다.
 
 ---
 
+## 🧪 테스트
+
+- [ ] 배팅금 `private final int amount`
+- [ ] 수익금 `public int calculateProfit(GameResult result)`
+- [ ] 딜러 수익금 계산 `public int determineProfit(List<Player> players)`
+- [ ] 참가자 수익금 계산 `record ParticipantsProfit(String nickname, int profit)`
+- [ ] 참가자 수익금 DTO `ParticipantsProfit.from(player.getNickname(), player.calculateProfit())`
+- [ ] 최종 게임 결과 DTO `record TotalWinningResult(ParticipantsProfit dealerProfit, ParticipantsProfit playerProfit)`
+
+---
+
 ## 🔍 분석
 
 --- 
