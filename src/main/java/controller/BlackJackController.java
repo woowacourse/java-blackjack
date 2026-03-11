@@ -1,14 +1,13 @@
 package controller;
 
 import assembler.OutputDtoAssembler;
-import domain.Deck;
-import domain.Game;
-import domain.Judge;
-import domain.Player;
+import domain.*;
 import view.InputView;
 import view.OutputView;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
 
 public class BlackJackController {
@@ -22,6 +21,10 @@ public class BlackJackController {
     public void run() {
         List<String> playerNames = InputView.askPlayerNames();
         Game game = new Game(playerNames, deckSupplier.get());
+
+        Map<Player, Money> moneyTable = createMoneyTable(game);
+        BettingTable bettingTable = new BettingTable(moneyTable);
+
         OutputView.printInitMessage(OutputDtoAssembler
                 .toBlackJackInitStatusDto(game.getDealer(),game.getPlayers()));
 
@@ -70,5 +73,15 @@ public class BlackJackController {
             OutputView.printDealerHitMessage();
             game.hitDealer();
         }
+    }
+
+    private Map<Player, Money> createMoneyTable(Game game){
+        Map<Player, Money> moneyTable = new LinkedHashMap<>();
+        for(Player player : game.getPlayers()){
+            String moneyInput = InputView.askPlayerBettingMoney(player.getName());
+            Money money = new Money(moneyInput);
+            moneyTable.put(player,money);
+        }
+        return moneyTable;
     }
 }
