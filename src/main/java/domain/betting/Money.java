@@ -9,8 +9,12 @@ public record Money(
 
     public static Money from(String money) {
         validateMoneyIsNumber(money);
-        validateMoneyIsNegative(Double.parseDouble(money));
-        return new Money(Double.parseDouble(money));
+        return Money.from(Double.parseDouble(money));
+    }
+
+    public static Money from(double money) {
+        validateMoneyIsNegative(money);
+        return new Money(money);
     }
 
     public Money changeMoney(double times) {
