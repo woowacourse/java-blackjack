@@ -1,8 +1,7 @@
 package model;
 
-import static constant.GameRule.DEALER_NAME;
-
 public class Dealer extends Participant{
+    public static final String DEALER_NAME = "딜러";
     private static final Integer CARD_DRAW_THRESHOLD = 16;
 
     public Dealer() {

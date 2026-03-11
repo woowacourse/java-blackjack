@@ -1,6 +1,6 @@
 package model;
 
-import static constant.GameRule.DEALER_NAME;
+import static model.Dealer.DEALER_NAME;
 
 import constant.ErrorMessage;
 import java.util.Objects;
