@@ -56,7 +56,7 @@ public class BlackJackGameController {
     private void playGame(BlackJackGame blackJackGame, List<Player> players, Dealer dealer) {
         for (Player player : players) {
             while (blackJackGame.canPlayerReceiveCard(player)) {
-                if (isContinueGame(blackJackGame, player)) {
+                if (isStopGame(blackJackGame, player)) {
                     break;
                 }
                 blackJackGame.playGameWithPlayer(player);
@@ -82,7 +82,7 @@ public class BlackJackGameController {
         }
     }
 
-    private boolean isContinueGame(BlackJackGame blackJackGame, Player player) {
+    private boolean isStopGame(BlackJackGame blackJackGame, Player player) {
         if (!isContinue(InputView.askContinue(player.getName()))) {
             OutputView.printCards(blackJackGame.getPlayerCardsDto(player));
             return true;

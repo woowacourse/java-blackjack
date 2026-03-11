@@ -1,12 +1,11 @@
 package domain;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 class CardsTest {
 
@@ -21,7 +20,7 @@ class CardsTest {
         cards.add(card2);
 
         Cards realCards = new Cards(cards);
-        assertEquals(16, realCards.calculateScore());
+        assertEquals(16, realCards.calculateOptimalScore());
     }
 
     @Test

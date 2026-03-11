@@ -5,40 +5,33 @@ import java.util.List;
 
 public class Cards {
     private final List<Card> cards;
-    private int changeAvailableAceCount;
 
     public Cards(List<Card> cards) {
         this.cards = new ArrayList<>(cards);
-        changeAvailableAceCount = 0;
+    }
+
+    public int calculateOptimalScore() {
+        int aceCount = (int) cards.stream()
+                .filter(Card::isAce)
+                .count();
+        int sum = calculateScore();
+        while (aceCount != 0 && isBust(sum)) {
+            sum -= 10;
+            aceCount--;
+        }
+        return sum;
     }
 
     public void addCard(Card card) {
-        if (card.getScore() == 11) {
-            changeAvailableAceCount += 1;
-        }
         cards.add(card);
     }
 
     public boolean canReceiveCard(int bustThreshold) {
-        int sum = calculateScore();
-
-        while (changeAvailableAceCount != 0 && isBust(sum)) {
-            sum -= 10;
-            changeAvailableAceCount -= 1;
-        }
-
-        if (changeAvailableAceCount == 0 && isBust(sum)) {
-            return false;
-        }
-
-        if (isBust(sum) || sum >= bustThreshold) {
-            return false;
-        }
-
-        return true;
+        int sum = calculateOptimalScore();
+        return !isBust(sum) && sum < bustThreshold;
     }
 
-    public int calculateScore() {
+    private int calculateScore() {
         int sum = 0;
         for (Card card : cards) {
             sum += card.getScore();
@@ -53,9 +46,6 @@ public class Cards {
     }
 
     private boolean isBust(int score) {
-        if (score > 21) {
-            return true;
-        }
-        return false;
+        return score > 21;
     }
 }

@@ -16,4 +16,8 @@ public class Card {
     public String getCardInfo() {
         return number.getDisplayName() + shape.getShape();
     }
+
+    public boolean isAce() {
+        return number == Number.ACE;
+    }
 }

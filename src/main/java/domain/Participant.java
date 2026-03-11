@@ -24,9 +24,8 @@ public abstract class Participant {
     }
 
     public int getScore() {
-        return cards.calculateScore();
+        return cards.calculateOptimalScore();
     }
-
 
     public ParticipantCardsDto getParticipantCardsDto() {
         return new ParticipantCardsDto(name.getName(), cards.getCardsInfo(), getScore());
