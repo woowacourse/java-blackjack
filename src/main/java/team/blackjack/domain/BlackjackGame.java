@@ -36,7 +36,7 @@ public class BlackjackGame {
     }
 
     public boolean shouldPlayerHit(String name) {
-        return this.players.getPlayerByName(name).shouldPlayerHit();
+        return this.players.getPlayerByName(name).isBust();
     }
 
     public void hitPlayer(String name) {

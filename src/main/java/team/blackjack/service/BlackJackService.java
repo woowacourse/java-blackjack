@@ -30,7 +30,7 @@ public class BlackJackService {
         blackjackGame.drawInitialCards();
     }
 
-    public boolean shouldPlayerHit(String name) {
+    public boolean isPlayerBust(String name) {
         return blackjackGame.shouldPlayerHit(name);
     }
 

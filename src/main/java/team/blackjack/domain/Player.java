@@ -46,7 +46,7 @@ public class Player {
                 .toList();
     }
 
-    public boolean shouldPlayerHit() {
+    public boolean isBust() {
         return !DefaultBlackjackRule.isBust(getScore());
     }
 }
