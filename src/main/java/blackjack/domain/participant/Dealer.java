@@ -40,7 +40,7 @@ public class Dealer extends Participant {
         long totalPlayerProfit = playerGameResults.stream()
             .mapToLong(PlayerGameResult::profit)
             .sum();
-        return new DealerGameResult(-totalPlayerProfit);
+        return DealerGameResult.from(-totalPlayerProfit);
     }
 
     public ParticipantResult getInitialResult() {
