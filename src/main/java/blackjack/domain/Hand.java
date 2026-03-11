@@ -18,16 +18,24 @@ public class Hand {
     }
 
     public int getTotalPoint() {
-        int totalPoint = 0;
-        for (Card card : cards) {
-            totalPoint += card.getCardPoint();
-        }
+        int normalPoint = getNormalPoint();
         int aceCount = getAceCount();
+        return calculateTotalPoint(aceCount, normalPoint);
+    }
+
+    private static int calculateTotalPoint(int aceCount, int totalPoint) {
         while (aceCount > 0 && totalPoint > BLACKJACK_POINT) {
             totalPoint -= ACE_OFFSET_POINT;
             aceCount--;
         }
+        return totalPoint;
+    }
 
+    private int getNormalPoint() {
+        int totalPoint = 0;
+        for (Card card : cards) {
+            totalPoint += card.getCardPoint();
+        }
         return totalPoint;
     }
 
