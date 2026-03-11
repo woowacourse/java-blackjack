@@ -5,9 +5,8 @@ import blackjack.domain.Dealer;
 import blackjack.domain.GameResult;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
-import java.util.HashMap;
+import blackjack.dto.PlayerGameResultDto;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -28,7 +27,7 @@ public class OutputView {
 
     }
 
-    private static String displayPlayerCards(List<Card> playerCards) {
+    private String displayPlayerCards(List<Card> playerCards) {
         return playerCards.stream()
                 .map(Card::getName)
                 .collect(Collectors.joining(", "));
@@ -53,26 +52,26 @@ public class OutputView {
 
     }
 
-    public void printFinalGameResult(HashMap<Player, GameResult> result) {
+    public void printFinalGameResult(List<PlayerGameResultDto> playerGameResultDtos) {
         System.out.println("\n## 최종 승패");
 
         int winCount = 0;
         int tieCount = 0;
         int loseCount = 0;
-        for (Map.Entry<Player, GameResult> entry : result.entrySet()) {
-            if (entry.getValue() == GameResult.WIN) {
+        for (PlayerGameResultDto dto : playerGameResultDtos) {
+            if (dto.gameResult().equals(GameResult.WIN.getName())) {
                 loseCount++;
             }
-            if (entry.getValue() == GameResult.LOSE) {
+            if (dto.gameResult().equals(GameResult.LOSE.getName())) {
                 winCount++;
             }
-            if (entry.getValue() == GameResult.TIE) {
+            if (dto.gameResult().equals(GameResult.TIE.getName())) {
                 tieCount++;
             }
         }
         System.out.printf("딜러: %d승 %d무 %d패%n", winCount, tieCount, loseCount);
-        for (Map.Entry<Player, GameResult> entry : result.entrySet()) {
-            System.out.printf("%s: %s%n", entry.getKey().getName(), entry.getValue().getName());
+        for (PlayerGameResultDto dto : playerGameResultDtos) {
+            System.out.printf("%s: %s%n", dto.name(), dto.gameResult());
         }
     }
 

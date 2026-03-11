@@ -3,12 +3,12 @@ package blackjack.controller;
 import blackjack.domain.BlackJackGame;
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
-import blackjack.domain.GameResult;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
+import blackjack.dto.PlayerGameResultDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BlackJackController {
@@ -32,8 +32,11 @@ public class BlackJackController {
 
         outputView.printFinalCardResult(dealer, players);
 
-        HashMap<Player, GameResult> result = blackJackGame.judgeGameResult();
-        outputView.printFinalGameResult(result);
+        List<PlayerGameResultDto> playerGameResultDtos = new ArrayList<>();
+        for (Player player : players.getPlayers()) {
+            playerGameResultDtos.add(new PlayerGameResultDto(player.getName(), player.compareResult(dealer).getName()));
+        }
+        outputView.printFinalGameResult(playerGameResultDtos);
 
 
     }
