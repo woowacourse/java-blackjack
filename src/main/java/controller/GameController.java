@@ -67,18 +67,22 @@ public class GameController {
 
     private void playPlayersTurn(Players players, GameManager gameManager) {
         for (Player player : players) {
-            while (player.canReceive()) {
-                Command yesOrNo = Command.from(inputView.askPlayHit(player.getName()));
-
-                if (yesOrNo.isNo()) {
-                    break;
-                }
-                gameManager.dealCard(player);
-                outputView.printParticipantCard(player.getName(),
-                        gameManager.getCardsResult(player).getFormattedCards());
-            }
+            playPlayerTurn(gameManager, player);
         }
         outputView.printNewLine();
+    }
+
+    private void playPlayerTurn(GameManager gameManager, Player player) {
+        while (player.canReceive()) {
+            Command userAnswer = Command.from(inputView.askPlayHit(player.getName()));
+
+            if (userAnswer.isNo()) {
+                return;
+            }
+            gameManager.dealCard(player);
+            outputView.printParticipantCard(player.getName(),
+                    gameManager.getCardsResult(player).getFormattedCards());
+        }
     }
 
     private void initializeGame(GameManager gameManager, Dealer dealer, Players players) {
