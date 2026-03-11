@@ -10,7 +10,7 @@ import domain.result.MatchResult;
 import domain.result.PlayerMatchResult;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static constant.BlackjackConstant.DEALER_NAME;
@@ -47,7 +47,7 @@ public class Participants {
         int dealerWinCount = 0;
         int dealerDrawCount = 0;
         int dealerLoseCount = 0;
-        Map<Player, MatchCase> playerMatchResult = new HashMap<>();
+        Map<Player, MatchCase> playerMatchResult = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
 
             if (isDealerWin(player)) { // 딜러승, 플레이어 패배
