@@ -25,7 +25,8 @@ public class View {
     }
 
     public void playerResultMessage(ResultDto resultDto) {
-        outputView.playerResultMessage(resultDto);    }
+        outputView.playerResultMessage(resultDto);
+    }
 
     public void outputPlayerDeckDtos(PlayerResultDto playerResultDto) {
         outputView.outputPlayerDeckDtos(playerResultDto);

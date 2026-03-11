@@ -12,9 +12,9 @@ import view.View;
 
 public class DIConfig {
 
-    private PlayerRepository playerRepository = new PlayerRepository();
-    private CardRepository cardRepository = new CardRepository();
-    private DealerRepository dealerRepository = new DealerRepository();
+    private final PlayerRepository playerRepository = new PlayerRepository();
+    private final CardRepository cardRepository = new CardRepository();
+    private final DealerRepository dealerRepository = new DealerRepository();
 
     public BlackJackController blackJackController() {
         return new BlackJackController(

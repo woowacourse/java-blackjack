@@ -16,8 +16,13 @@ public abstract class Person {
     }
 
     // 덱의 총합 조회
-    public int getDeckSum() {
-        return deck.getSum();
+    public int getDefaultDeckSum() {
+        return deck.getSumWithAceDefaultValue();
+    }
+
+    // 최종 합산 계산
+    public int getFinalDeckSum() {
+        return deck.calculateFinalSum();
     }
 
     // 덱의 사이즈 조회
@@ -33,11 +38,6 @@ public abstract class Person {
     // 카드 추가
     public void appendCard(Card card) {
         deck.append(card);
-    }
-
-    // 최종 합산 계산
-    public int calculateFinalSum() {
-        return deck.calculateFinalSum();
     }
 
     // 버스트인지 검사
