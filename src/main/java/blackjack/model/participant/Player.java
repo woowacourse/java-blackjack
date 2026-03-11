@@ -27,18 +27,22 @@ public class Player extends Participant {
     }
 
     public Player bust() {
+        int negativeMultiplier = -1;
+
         return new Player(
                 name,
                 hands,
-                -1 * prize
+                negativeMultiplier * prize
         );
     }
 
     public Player blackjack() {
+        double blackjackProfitRate = 1.5;
+
         return new Player(
                 name,
                 hands,
-                (int) (prize * 1.5)
+                (int) (prize * blackjackProfitRate)
         );
     }
 
