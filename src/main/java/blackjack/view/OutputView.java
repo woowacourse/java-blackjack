@@ -39,7 +39,7 @@ public class OutputView {
         printLine(String.format("%s카드: %s", drawablePlayerNickname, statusByDisplayName));
     }
 
-    public void printWinner(TotalGameResult gameResult) {
+    public void printMatchResult(TotalGameResult gameResult) {
         printNewLine();
         printLine("## 최종 승패");
         printDealerGameResult(gameResult.dealerGameResult());
@@ -58,7 +58,7 @@ public class OutputView {
     }
 
     private void printDealerGameResult(DealerGameResult dealerGameResult) {
-        printLine(String.format("딜러: %d승 %d패", dealerGameResult.dealerWin(), dealerGameResult.dealerLose()));
+        printLine(String.format("딜러: %d승 %d패", dealerGameResult.winCount(), dealerGameResult.loseCount()));
     }
 
     public void printGameResult(List<ParticipantResult> participantResult) {
@@ -80,5 +80,22 @@ public class OutputView {
     public void askBetAmount(String playerName) {
         printNewLine();
         printLine(String.format("%s의 배팅 금액은?", playerName));
+    }
+
+    public void printTotalProfitResult(TotalGameResult totalGameResult) {
+        printNewLine();
+        printLine("## 최종 수익");
+        printDealerProfitResult(totalGameResult.dealerGameResult());
+        printPlayersProfitResult(totalGameResult.playerGameResult());
+    }
+
+    private void printPlayersProfitResult(List<PlayerGameResult> playerGameResults) {
+        for (PlayerGameResult playerGameResult : playerGameResults) {
+            printLine(String.format("%s: %s", playerGameResult.nickname(), playerGameResult.profit()));
+        }
+    }
+
+    private void printDealerProfitResult(DealerGameResult dealerGameResult) {
+        printLine(String.format("딜러: %s", dealerGameResult.profit()));
     }
 }
