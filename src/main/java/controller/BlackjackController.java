@@ -2,13 +2,15 @@ package controller;
 
 import constant.GameConstant;
 import domain.card.Deck;
+import exception.BlackjackException;
+import domain.dto.BlackjackResultDto;
+import domain.dto.FinalPlayerCardDto;
+import domain.dto.PlayerCardDto;
+import domain.participant.BetMap;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
 import domain.result.BlackjackResult;
-import domain.dto.BlackjackResultDto;
-import domain.dto.FinalPlayerCardDto;
-import domain.dto.PlayerCardDto;
 import service.BlackjackService;
 import view.InputView;
 import view.OutputView;
@@ -32,10 +34,10 @@ public class BlackjackController {
     public void run() {
         Deck cards = blackjackService.generateCards();
         List<String> names = readNames();
+        BetMap betMap = readBets(names);
 
         Dealer dealer = blackjackService.createDealer(cards);
-        outputView.displayCardDistribution(names);
-        Players players = blackjackService.createPlayers(names, cards);
+        Players players = initializePlayers(names, cards);
 
         players = playRound(dealer, players, cards);
 
@@ -43,18 +45,34 @@ public class BlackjackController {
         showFinalResult(dealer, players);
     }
 
+    private Players initializePlayers(List<String> names, Deck cards) {
+        outputView.displayCardDistribution(names);
+        return blackjackService.createPlayers(names, cards);
+    }
+
+    private BetMap readBets(List<String> names) {
+        BetMap betMap = new BetMap();
+        for (String name : names) {
+            betMap.addBetAmountOf(name, doRetry(() -> inputView.readBet(name)));
+        }
+        return betMap;
+    }
+
     private Players playRound(Dealer dealer, Players players, Deck cards) {
         List<PlayerCardDto> firstCardContents = collectInitialCardContents(dealer, players);
         outputView.displayCardContents(firstCardContents);
-        players = processPlayersTurn(players, cards);
+        processPlayersTurn(players, cards);
+        processDealerTurn(dealer, players, cards);
+        return players;
+    }
 
+    private void processDealerTurn(Dealer dealer, Players players, Deck cards) {
         if (!players.areAllBust()) {
             int dealerCardCount = blackjackService.determineAdditionalCardOfDealer(dealer, cards);
             for (int i = 0; i < dealerCardCount; i++) {
                 outputView.displayDealerCard(GameConstant.DEALER_HIT_THRESHOLD);
             }
         }
-        return players;
     }
 
     private void showFinalResult(Dealer dealer, Players players) {
@@ -62,7 +80,7 @@ public class BlackjackController {
         outputView.displayMatchResult(BlackjackResultDto.from(blackjackResult));
     }
 
-    public List<PlayerCardDto> collectInitialCardContents(Dealer dealer, Players players) {
+    private List<PlayerCardDto> collectInitialCardContents(Dealer dealer, Players players) {
         List<PlayerCardDto> initialCardContents = new ArrayList<>();
         initialCardContents.add(PlayerCardDto.fromDealer(dealer));
         for (Player player : players) {
@@ -71,13 +89,12 @@ public class BlackjackController {
         return initialCardContents;
     }
 
-    public Players processPlayersTurn(Players players, Deck deck) {
+    private void processPlayersTurn(Players players, Deck deck) {
         for (Player player : players) {
             String name = player.getName();
             boolean wantsCard = wantsAdditionalCard(name);
             dealAdditionalCards(player, wantsCard, deck, name);
         }
-        return players;
     }
 
     private void dealAdditionalCards(Player player, boolean wantsCard, Deck deck, String name) {
@@ -91,7 +108,7 @@ public class BlackjackController {
         }
     }
 
-    public void displayFinalCards(Dealer dealer, Players players) {
+    private void displayFinalCards(Dealer dealer, Players players) {
         List<FinalPlayerCardDto> finalCards = new ArrayList<>();
         finalCards.add(FinalPlayerCardDto.from(dealer));
         for (Player player : players) {
@@ -115,12 +132,12 @@ public class BlackjackController {
         while (retryCount < MAX_RETRY) {
             try {
                 return action.get();
-            } catch (IllegalArgumentException e) {
+            } catch (BlackjackException e) {
                 retryCount++;
-                System.out.println(e.getMessage());
+                System.out.println("[ERROR] " + e.getMessage());
             }
         }
-        throw new IllegalStateException("입력 횟수를 초과했습니다.");
+        throw new BlackjackException("입력 횟수를 초과했습니다.");
     }
 }
 
