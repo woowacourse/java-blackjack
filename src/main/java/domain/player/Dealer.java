@@ -14,7 +14,7 @@ public class Dealer extends Player {
     }
 
     public String firstCard() {
-        return handCard.firstCardInfo();
+        return handCard.firstCard();
     }
 
 }

@@ -19,15 +19,12 @@ public enum MatchResult {
 
 
     public static MatchResult of(Gambler gambler, Dealer dealer) {
-        if (isBothBlackJack(gambler, dealer)) {
+        if (isBothBlackJack(gambler, dealer))
             return DRAW;
-        }
-        if (gambler.isBlackJack()) {
+        if (gambler.isBlackJack())
             return BLACKJACK;
-        }
-        if (dealer.isBlackJack()) {
+        if (dealer.isBlackJack())
             return LOSE;
-        }
 
         return compareScore(gambler.score(), dealer.score());
     }

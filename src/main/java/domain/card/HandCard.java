@@ -48,7 +48,7 @@ public class HandCard {
                 .toList();
     }
 
-    public String firstCardInfo() {
+    public String firstCard() {
         return cards.getFirst().getCardInfo();
     }
 
