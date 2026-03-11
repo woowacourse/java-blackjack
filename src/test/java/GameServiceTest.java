@@ -1,6 +1,8 @@
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
+import domain.DealerProfit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -82,19 +84,38 @@ class GameServiceTest {
         drawUser.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_NINE));
 
         gameService.settleResult(users, dealer);
-        UserProfit winUserProfitList = gameService.createEachUserProfit(winUser, dealer);
-        UserProfit drawUserProfitList = gameService.createEachUserProfit(drawUser, dealer);
-        UserProfit loseUserProfitList = gameService.createEachUserProfit(loseUser, dealer);
+        UserProfit winUserProfitList = gameService.createEachUserProfit(winUser);
+        UserProfit drawUserProfitList = gameService.createEachUserProfit(drawUser);
+        UserProfit loseUserProfitList = gameService.createEachUserProfit(loseUser);
 
         assertThat(winUserProfitList.profit()).isEqualTo(15000);
         assertThat(drawUserProfitList.profit()).isEqualTo(0);
         assertThat(loseUserProfitList.profit()).isEqualTo(-20000);
-
-
-
-
-
-
     }
 
+    @Test
+    @DisplayName("딜러의 수익은 유저 수익의 반대 부호다.")
+    public void dealer_profit_reverse_user_profit() {
+        Dealer dealer = new Dealer();
+        User winUser = User.from("json", 10000);
+        User loseUser = User.from("poby", 20000);
+        User drawUser = User.from("draw", 30000);
+        List<User> users = List.of(winUser, loseUser, drawUser);
+
+        dealer.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_NINE));
+        winUser.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_ACE));
+        loseUser.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_SEVEN));
+        drawUser.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_NINE));
+
+        gameService.settleResult(users, dealer);
+        UserProfit winUserProfitList = gameService.createEachUserProfit(winUser);
+        UserProfit drawUserProfitList = gameService.createEachUserProfit(drawUser);
+        UserProfit loseUserProfitList = gameService.createEachUserProfit(loseUser);
+
+        List<UserProfit> profitList = List.of(winUserProfitList,drawUserProfitList,loseUserProfitList);
+
+        DealerProfit dealerProfit = gameService.upsertDealerProfit(profitList);
+
+        assertThat(dealerProfit.profit()).isEqualTo(5000);
+    }
 }
