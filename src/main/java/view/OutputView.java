@@ -21,6 +21,7 @@ public class OutputView {
     public void printPlayers(List<ParticipantDto> participantDtoList) {
         List<String> names = participantDtoList.stream()
             .map(ParticipantDto::name)
+            .filter(name -> !name.equals(PolicyConstant.DEALER_NAME))
             .toList();
         System.out.printf(PRINT_PLAYERS_MESSAGE, String.join(PolicyConstant.DELIMITER + " ", names));
     }
