@@ -49,7 +49,7 @@ public class Hand implements Iterable<Card> {
     }
 
     public boolean isBust() {
-        return calculateFinalScore() > GameConstant.BUST_THRESHOLD;
+        return calculateFinalScore() > GameConstant.BLACKJACK_SCORE;
     }
 
     @Override

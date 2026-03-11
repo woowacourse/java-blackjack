@@ -1,5 +1,6 @@
 package domain.participant;
 
+import constant.GameConstant;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.card.Hand;
@@ -41,5 +42,9 @@ public class Player {
 
     public List<Card> getCards() {
         return hand.getCards();
+    }
+
+    public boolean isBlackjack() {
+        return hand.getSize() == GameConstant.NUM_OF_TO_BLACKJACK && getFinalScore() == GameConstant.BLACKJACK_SCORE;
     }
 }

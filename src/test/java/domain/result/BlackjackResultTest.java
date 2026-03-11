@@ -4,6 +4,7 @@ import domain.card.Card;
 import domain.card.CardRank;
 import domain.card.CardShape;
 import domain.dto.BlackjackResultDto;
+import domain.participant.BetMap;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
@@ -16,6 +17,8 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class BlackjackResultTest {
+    private static final BetMap betMap = new  BetMap();
+
     @Test
     @DisplayName("참가자가 딜러보다 낮은 점수면 딜러가 이긴다")
     void 참가자가_딜러보다_점수_낮음() {

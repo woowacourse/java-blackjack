@@ -12,7 +12,7 @@ import java.util.Map;
 public class OutputView {
     public void displayCardDistribution(List<String> names) {
         String nameContent = String.join(", ", names);
-        System.out.printf("딜러가 %s에게 2장을 나누었습니다.\n", nameContent);
+        System.out.printf("딜러가 %s에게 2장을 나누었습니다.\n\n", nameContent);
     }
 
     public void displayCardContents(List<PlayerCardDto> playerCardDtos) {
@@ -39,14 +39,14 @@ public class OutputView {
 
             System.out.printf("%s카드: %s - 결과: %d\n", dto.name(), String.join(", ", cardContents), dto.total());
         }
-
+        System.out.println();
     }
 
     public void displayMatchResult(BlackjackResultDto resultDto) {
-        System.out.printf("## 최종 수익\n딜러: %d승 %d패\n", resultDto.winCount(), resultDto.loseCount());
-        Map<String, String> resultMap = resultDto.matchResultMap().resultMap();
+        System.out.printf("## 최종 수익\n딜러: %d\n", resultDto.dealerBenefit());
+        Map<String, Long> resultMap = resultDto.matchResultMap().resultMap();
         for (String playerName : resultMap.keySet()) {
-            System.out.printf("%s: %s\n", playerName, resultMap.get(playerName));
+            System.out.printf("%s: %d\n", playerName, resultMap.get(playerName));
         }
     }
 }

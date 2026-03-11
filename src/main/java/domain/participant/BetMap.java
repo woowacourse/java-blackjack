@@ -9,4 +9,8 @@ public class BetMap {
     public void addBetAmountOf(String playerName, Bet bet) {
         betsMap.put(playerName, bet);
     }
+
+    public Bet findBet(String playerName) {
+        return betsMap.get(playerName);
+    }
 }
