@@ -111,7 +111,7 @@ public class BlackjackService {
 
     private List<String> convertHandString(List<Card> cards) {
         return cards.stream()
-                .map(card -> card.getRank().getRank() + card.getSuit().getSuit())
+                .map(card -> card.rank().getRank() + card.suit().getSuit())
                 .toList();
     }
 
@@ -138,14 +138,11 @@ public class BlackjackService {
     }
 
     private Result calculatePlayerResult(Dealer dealer, Player player) {
-        if (dealer.isBust() && player.isBust()) {
-            return Result.LOSE;
-        }
-        if (dealer.isBust() && !player.isBust()) {
-            return Result.WIN;
-        }
         if (player.isBust()) {
             return Result.LOSE;
+        }
+        if (dealer.isBust()) {
+            return Result.WIN;
         }
         if (player.calculateScore() > dealer.calculateScore()) {
             return Result.WIN;
