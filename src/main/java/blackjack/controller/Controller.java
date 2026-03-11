@@ -2,10 +2,11 @@ package blackjack.controller;
 
 import blackjack.exception.ErrorMessage;
 import blackjack.model.*;
-import blackjack.util.NameSplitter;
+import blackjack.util.Splitter;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,10 +23,12 @@ public class Controller {
         this.outputView = outputView;
     }
 
+    // TODO: 전체 리팩토링 (2026. 3. 9.)
     public void run() {
         Deck deck = new Deck();
+        Referee referee = new Referee();
         Dealer dealer = new Dealer();
-        Players players = getPlayers();
+        Players players = createPlayer();
         List<Player> participants = players.getPlayers();
 
         deck.shuffle();
@@ -36,24 +39,21 @@ public class Controller {
         turnToDealer(dealer, deck);
         outputView.printScoreResult(dealer, players);
 
-        outputView.printGameResult(getPlayerGameResult(participants, dealer));
+        outputView.printGameResult(getPlayerGameResult(participants, dealer, referee));
     }
 
-    private static Map<Player, GameResult> getPlayerGameResult(List<Player> participants, Dealer dealer) {
+    private static Map<Player, GameResult> getPlayerGameResult(List<Player> participants, Dealer dealer, Referee referee) {
         Map<Player, GameResult> gameResult = new LinkedHashMap<>();
         for (Player player : participants) {
-            gameResult.put(player ,GameResult.calculateScore(player, dealer));
+            gameResult.put(player, referee.judge(player, dealer));
         }
         return gameResult;
     }
 
     private void turnToDealer(Dealer dealer, Deck deck) {
-        dealer.getScore();
-
         while (dealer.canReceive()) {
             outputView.printDealerReceiveCard();
             receiveCardToParticipant(dealer, deck, ONE_REPEAT);
-            dealer.getScore();
             if (dealer.isBurst()) {
                 outputView.printBurst("딜러");
                 return;
@@ -68,8 +68,6 @@ public class Controller {
     }
 
     private void turnToOnePlayer(Deck deck, Player player) {
-        player.getScore();
-
         while (player.canReceive()) {
             String receiveCard = inputView.getReceiveCard(player);
             if (receiveCard.equals("n")) {
@@ -79,20 +77,20 @@ public class Controller {
                 throw new IllegalArgumentException(ErrorMessage.INVALID_INPUT.getMessage());
             }
             receiveCardToParticipant(player, deck, ONE_REPEAT);
-            player.getScore();
             if (player.isBurst()) {
                 outputView.printBurst(player.getName());
                 return;
             }
-            outputView.printPlayerCardStatus(player, player.getCards());
+            outputView.printPlayerCardStatus(player, player.getHandCards());
         }
     }
 
-    private Players getPlayers() {
-        List<Player> players = NameSplitter.split(inputView.getName())
-                .stream()
-                .map(Player::new)
-                .toList();
+    private Players createPlayer() {
+        List<Player> players = new ArrayList<>();
+        List<String> playerNames = Splitter.split(inputView.getName()).stream().toList();
+        for (String name : playerNames) {
+            players.add(new Player(name, inputView.getBettingAmount(name)));
+        }
         return new Players(players);
     }
 
