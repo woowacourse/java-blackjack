@@ -14,9 +14,9 @@ public enum Rank {
     J("J", new Score(10)),
     Q("Q", new Score(10)),
     K("K", new Score(10));
-    public static final Score BLACKJACK_MAX_NUMBER = new Score(21);
-    public static final Score ACE_MAX_VALUE = new Score(11);
-    public static final Score ACE_MIN_VALUE = new Score(1);
+    public static final Score BLACKJACK_MAX_SCORE = new Score(21);
+    public static final Score ACE_MAX_SCORE = new Score(11);
+    public static final Score ACE_MIN_SCORE = new Score(1);
 
     private final String displayValue;
     private final Score score;
@@ -34,11 +34,11 @@ public enum Rank {
     }
 
     private static Score decideAceValue(Score sum, int leftAce) {
-        if (sum.add(ACE_MAX_VALUE).isLessThanOrEqualTo(BLACKJACK_MAX_NUMBER)
-                && BLACKJACK_MAX_NUMBER.sub(sum.add(ACE_MAX_VALUE)).isGreaterThanOrEqualTo(leftAce)) {
-            return ACE_MAX_VALUE;
+        if (sum.add(ACE_MAX_SCORE).isLessThanOrEqualTo(BLACKJACK_MAX_SCORE)
+                && BLACKJACK_MAX_SCORE.sub(sum.add(ACE_MAX_SCORE)).isGreaterThanOrEqualTo(leftAce)) {
+            return ACE_MAX_SCORE;
         }
-        return ACE_MIN_VALUE;
+        return ACE_MIN_SCORE;
     }
 
 

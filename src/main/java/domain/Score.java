@@ -10,7 +10,7 @@ public class Score {
     }
 
     public boolean isBust() {
-        return isGreaterThan(Rank.BLACKJACK_MAX_NUMBER);
+        return isGreaterThan(Rank.BLACKJACK_MAX_SCORE);
     }
 
     public static Score zero() {

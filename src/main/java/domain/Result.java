@@ -1,7 +1,7 @@
 package domain;
 
 
-import static domain.Rank.BLACKJACK_MAX_NUMBER;
+import static domain.Rank.BLACKJACK_MAX_SCORE;
 
 public enum Result {
     WIN("승"), DRAW("무"), LOSE("패");
@@ -27,11 +27,11 @@ public enum Result {
     }
 
     private static boolean isPlayerWin(Score playerSum, Score dealerSum) {
-        return playerSum.isLessThanOrEqualTo(BLACKJACK_MAX_NUMBER) && playerSum.isGreaterThan(dealerSum);
+        return playerSum.isLessThanOrEqualTo(BLACKJACK_MAX_SCORE) && playerSum.isGreaterThan(dealerSum);
     }
 
     private static boolean isPlayerLose(Score playerSum, Score dealerSum) {
-        return (playerSum.isLessThan(dealerSum) && dealerSum.isLessThanOrEqualTo(BLACKJACK_MAX_NUMBER) || (playerSum.isGreaterThan(BLACKJACK_MAX_NUMBER))
-                && dealerSum.isLessThanOrEqualTo(BLACKJACK_MAX_NUMBER));
+        return (playerSum.isLessThan(dealerSum) && dealerSum.isLessThanOrEqualTo(BLACKJACK_MAX_SCORE) || (playerSum.isGreaterThan(BLACKJACK_MAX_SCORE))
+                && dealerSum.isLessThanOrEqualTo(BLACKJACK_MAX_SCORE));
     }
 }
