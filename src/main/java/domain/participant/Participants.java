@@ -1,8 +1,6 @@
 package domain.participant;
 
 import static constant.BlackjackConstant.DEALER_NAME;
-import static constant.BlackjackConstant.MAXIMUM_PLAYER_BOUND;
-import static constant.BlackjackConstant.MINIMUM_PLAYER_BOUND;
 import static exception.ErrorMessage.DEALER_NOT_FOUND_ERROR;
 import static exception.ErrorMessage.PLAYER_COUNT_OUT_OF_RANGE;
 
@@ -12,6 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Participants {
+
+    public static final int MINIMUM_BOUND = 1;
+    public static final int MAXIMUM_BOUND = 7;
 
     private final List<Participant> participants;
 
@@ -55,7 +56,7 @@ public class Participants {
 
     // TODO: 검증에 대한 테스트 필요
     private static void validatePlayerCounts(final List<Participant> participants) {
-        if (participants.size() < MINIMUM_PLAYER_BOUND || participants.size() > MAXIMUM_PLAYER_BOUND) {
+        if (participants.size() < MINIMUM_BOUND || participants.size() > MAXIMUM_BOUND) {
             throw new IllegalStateException(PLAYER_COUNT_OUT_OF_RANGE.getMessage());
         }
     }
