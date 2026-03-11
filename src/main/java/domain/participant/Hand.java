@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
-    private final static int BUST_THRESHOLD = 21;
-    private final static int ACE_ADJUST_SCORE = 10;
+    private static final int BUST_THRESHOLD = 21;
+    private static final int ACE_ADJUST_SCORE = 10;
     private final List<Card> cards;
 
     public Hand() {
@@ -35,6 +35,10 @@ public class Hand {
 
     public CardsSnapshot snapshot() {
         return new CardsSnapshot(List.copyOf(cards));
+    }
+
+    public CardsSnapshot firstCardSnapshot() {
+        return new CardsSnapshot(List.of(cards.getFirst()));
     }
 
     private int calculateAcePoint(int currentScore) {

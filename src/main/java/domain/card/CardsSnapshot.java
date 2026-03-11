@@ -1,18 +1,14 @@
 package domain.card;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public record CardsSnapshot(List<Card> cards) {
 
     public String getFormattedCards() {
-        List<String> cardsResult = new ArrayList<>();
-        for (Card card : cards) {
-            String suit = card.suitValue();
-            String rank = card.symbol();
-            cardsResult.add(rank + suit);
-        }
-        return String.join(", ", cardsResult);
+        return cards.stream()
+                .map(card -> card.suit() + card.symbol())
+                .collect(Collectors.joining(", "));
     }
 
     public int size() {

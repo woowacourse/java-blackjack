@@ -21,6 +21,10 @@ public abstract class Participant {
         return hand.snapshot();
     }
 
+    public CardsSnapshot firstCardInfo() {
+        return hand.firstCardSnapshot();
+    }
+
     public String getName() {
         return name.value();
     }

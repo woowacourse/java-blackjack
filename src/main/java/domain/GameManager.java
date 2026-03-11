@@ -27,7 +27,6 @@ public class GameManager {
 
     public CardsSnapshot getStartingCard(Dealer dealer) {
         return dealer.startingHandInfo();
-
     }
 
     public CardsSnapshot getCardsResult(Participant participant) {
