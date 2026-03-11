@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import blackjack.domain.betting.BettingAmounts;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
@@ -23,6 +24,8 @@ public class BlackjackController {
         Players players = readPlayers();
         Dealer dealer = new Dealer();
 
+        BettingAmounts bettingAmounts = readBettingAmounts(players);
+
         setInitialTwoCards(players, dealer);
         printInitialSettings(players, dealer);
 
@@ -36,6 +39,15 @@ public class BlackjackController {
     private Players readPlayers() {
         List<String> playersName = inputView.readPlayersName();
         return Players.from(playersName);
+    }
+
+    private BettingAmounts readBettingAmounts(Players players) {
+        BettingAmounts bettingAmounts = new BettingAmounts();
+        for (Player player : players.getPlayers()) {
+            String playerName = player.getName();
+            bettingAmounts.put(playerName, inputView.readBettingAmount(playerName));
+        }
+        return bettingAmounts;
     }
 
     private void setInitialTwoCards(Players players, Dealer dealer) {
