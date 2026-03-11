@@ -25,4 +25,29 @@ public class Player extends Participant {
         return super.getName();
     }
 
+    public GameResult compareResult(Dealer dealer) {
+        if (this.isBust()) {
+            return GameResult.LOSE;
+        }
+
+        if (dealer.isBust()) {
+            return GameResult.WIN;
+        }
+
+        return judgeNearestBlackJackPoint(this, dealer);
+    }
+
+    private GameResult judgeNearestBlackJackPoint(Player player, Dealer dealer) {
+        int playerTotalPoint = getTotalPoint();
+        int dealerTotalPoint = dealer.getTotalPoint();
+
+        if (playerTotalPoint > dealerTotalPoint) {
+            return GameResult.WIN;
+        }
+
+        if (playerTotalPoint < dealerTotalPoint) {
+            return GameResult.LOSE;
+        }
+        return GameResult.TIE;
+    }
 }
