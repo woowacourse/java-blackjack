@@ -11,10 +11,7 @@ import blackjack.domain.result.GameResults;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
 
 public class BlackjackController {
@@ -39,7 +36,8 @@ public class BlackjackController {
         deck.shuffle(shuffleStrategy);
         final Players players = createPlayers();
         final Dealer dealer = new Dealer();
-        Map<Player, Money> wagers = players.placeWagers(inputView::readWager);
+
+        Map<Player, Money> wagers = placeWagers(players);
 
         dealInitialCards(deck, players, dealer);
         outputView.printInitialDeal(players, dealer);
@@ -52,6 +50,15 @@ public class BlackjackController {
 
         Map<Participant, Money> profits = calculateProfit(gameResults, wagers, dealer);
         printProfits(profits);
+    }
+
+    private Map<Player, Money> placeWagers(Players players) {
+        Map<Player, Money> wagers = new LinkedHashMap<>();
+        for (Player player : players.players()) {
+            int amount = inputView.readWager(player);
+            wagers.put(player, new Money(amount));
+        }
+        return wagers;
     }
 
     private void printProfits(Map<Participant, Money> profits) {

@@ -1,10 +1,6 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.money.Money;
-
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public record Players(List<Player> players) {
 
@@ -14,16 +10,6 @@ public record Players(List<Player> players) {
     public Players(final List<Player> players) {
         validate(players);
         this.players = List.copyOf(players);
-    }
-
-    public Map<Player, Money> placeWagers(WagerReader wagerReader) {
-        Map<Player, Money> wagers = new LinkedHashMap<>();
-        players
-                .forEach(player -> {
-                    Money wager = wagerReader.wagerOf(player);
-                    wagers.put(player, wager);
-                });
-        return wagers;
     }
 
     private void validate(final List<Player> players) {

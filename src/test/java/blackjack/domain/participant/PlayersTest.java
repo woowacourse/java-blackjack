@@ -1,11 +1,8 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.money.Money;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -35,20 +32,5 @@ class PlayersTest {
         Players result = new Players(players);
 
         assertThat(result.players()).hasSize(1);
-    }
-
-    @Test
-    void 플레이어들은_베팅_금액을_입력하여_베팅을_하고_베팅_결과를_Map으로_반환하여_검증할_수_있다() {
-        Player 포비 = new Player("pobi");
-        Player 티뉴 = new Player("tinuu");
-        Money wager = new Money(10000);
-        Players players = new Players(List.of(포비, 티뉴));
-
-        Map<Player, Money> wagers = players.placeWagers(player -> wager);
-
-        Assertions.assertAll(
-                () -> assertThat(wagers.get(포비)).isEqualTo(wager),
-                () -> assertThat(wagers.get(티뉴)).isEqualTo(wager)
-        );
     }
 }
