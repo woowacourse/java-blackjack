@@ -1,12 +1,11 @@
 package domain.participant;
 
-import static config.BlackjackGameConstant.*;
+import static config.BlackjackGameConstant.INITIAL_CARD_DRAW_COUNT;
 
 import domain.card.CardDeck;
 import domain.participant.dto.ParticipantHandDto;
 import domain.participant.dto.ParticipantHandDtoMapper;
 import domain.result.dto.ParticipantGameResultDto;
-
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
