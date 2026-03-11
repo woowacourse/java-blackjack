@@ -1,10 +1,13 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackJackGame;
+import blackjack.domain.Card;
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
+import blackjack.domain.Participant;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
+import blackjack.dto.ParticipantDto;
 import blackjack.dto.PlayerGameResultDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -24,21 +27,20 @@ public class BlackJackController {
         BlackJackGame blackJackGame = new BlackJackGame(players, dealer, deck);
         blackJackGame.initDraw();
 
-        outputView.printInitDraw(players, dealer);
+        printInitDrawResult(dealer, players);
 
         playerTurn(players, deck);
 
         dealerTurn(dealer, deck);
 
-        outputView.printFinalCardResult(dealer, players);
+        printFinalCardResult(dealer, players);
 
-        List<PlayerGameResultDto> playerGameResultDtos = new ArrayList<>();
-        for (Player player : players.getPlayers()) {
-            playerGameResultDtos.add(new PlayerGameResultDto(player.getName(), player.compareResult(dealer).getName()));
-        }
-        outputView.printFinalGameResult(playerGameResultDtos);
+        printFinalGameResult(dealer, players);
+    }
 
-
+    private ParticipantDto convertToDto(Participant participant) {
+        List<String> cardNames = participant.getCards().stream().map(Card::getName).toList();
+        return new ParticipantDto(participant.getName(), cardNames, participant.getTotalPoint());
     }
 
     private void dealerTurn(Dealer dealer, Deck deck) {
@@ -56,12 +58,32 @@ public class BlackJackController {
                     player.receiveCard(deck.draw());
                 }
 
-                outputView.printCard(player);
+                outputView.printCard(convertToDto(player));
 
                 if (!isHit) {
                     break;
                 }
             }
         }
+    }
+
+    private void printInitDrawResult(Dealer dealer, Players players) {
+        ParticipantDto dealerDto = convertToDto(dealer);
+        List<ParticipantDto> playerDtos = players.getPlayers().stream().map(this::convertToDto).toList();
+        outputView.printInitDraw(dealerDto, playerDtos);
+    }
+
+    private void printFinalCardResult(Dealer dealer, Players players) {
+        ParticipantDto dealerDto = convertToDto(dealer);
+        List<ParticipantDto> playerDtos = players.getPlayers().stream().map(this::convertToDto).toList();
+        outputView.printFinalCardResult(dealerDto, playerDtos);
+    }
+
+    private void printFinalGameResult(Dealer dealer, Players players) {
+        List<PlayerGameResultDto> playerGameResultDtos = new ArrayList<>();
+        for (Player player : players.getPlayers()) {
+            playerGameResultDtos.add(new PlayerGameResultDto(player.getName(), player.compareResult(dealer).getName()));
+        }
+        outputView.printFinalGameResult(playerGameResultDtos);
     }
 }
