@@ -1,16 +1,17 @@
-import domain.Card;
-import domain.Dealer;
-import domain.GameResult;
-import strategy.RandomShuffle;
-import strategy.ShuffleStrategy;
-import domain.User;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import domain.Card;
+import domain.Dealer;
+import domain.GameResult;
+import domain.User;
+import domain.UserProfit;
+import strategy.RandomShuffle;
+import strategy.ShuffleStrategy;
 
 class GameServiceTest {
 
@@ -43,7 +44,7 @@ class GameServiceTest {
         User winUser = User.from("json");
         User loseUser = User.from("poby");
         User drawUser = User.from("draw");
-        List<User> users = List.of(winUser, loseUser);
+        List<User> users = List.of(winUser, loseUser, drawUser);
 
         dealer.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_NINE));
         winUser.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_SEVEN));
@@ -63,5 +64,34 @@ class GameServiceTest {
         assertThat(dealer.getDrawRounds()).isEqualTo(totalUserDrawRounds);
     }
 
+    @Test
+    @DisplayName("게임 승패에 따라 수익을 계산한다.")
+    public void calculate_user_profit_by_gameresult() {
+        Dealer dealer = new Dealer();
+        User winUser = User.from("json", 10000);
+        User loseUser = User.from("poby", 20000);
+        User drawUser = User.from("draw", 30000);
+        List<User> users = List.of(winUser, loseUser, drawUser);
+
+        dealer.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_NINE));
+        winUser.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_ACE));
+        loseUser.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_SEVEN));
+        drawUser.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_NINE));
+
+        gameService.settleResult(users, dealer);
+        UserProfit winUserProfitList = gameService.createEachUserProfit(winUser, dealer);
+        UserProfit drawUserProfitList = gameService.createEachUserProfit(drawUser, dealer);
+        UserProfit loseUserProfitList = gameService.createEachUserProfit(loseUser, dealer);
+
+        assertThat(winUserProfitList.profit()).isEqualTo(15000);
+        assertThat(drawUserProfitList.profit()).isEqualTo(0);
+        assertThat(loseUserProfitList.profit()).isEqualTo(-20000);
+
+
+
+
+
+
+    }
 
 }
