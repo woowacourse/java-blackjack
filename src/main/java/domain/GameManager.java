@@ -5,7 +5,7 @@ import java.util.List;
 public class GameManager {
     private static final int MAX_PLAYER = 8;
     private static final int BURST_THRESHOLD = 21;
-
+    
     public static boolean isOverBurstThreshold(int score) {
         if (score > BURST_THRESHOLD) {
             return true;

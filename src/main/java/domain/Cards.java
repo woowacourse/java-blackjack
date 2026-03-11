@@ -1,5 +1,7 @@
 package domain;
 
+import static domain.GameManager.isOverBurstThreshold;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -54,28 +56,26 @@ public class Cards {
         return sum;
     }
 
-    //TODO: ----------------------------------------------------------------------
     public void addCard(Card card) {
-        if (card.getScore() == 11) {
+        if (card.isAce()) {
             changeAvailableAceCount += 1;
         }
         cards.add(card);
     }
 
-    // TODO: 이게 거의 isOver21 처럼 동작 - canReceiveCard는 isBurst처럼
     public boolean isBurst(int burstThreshold) {
         int sum = calculateScore();
 
-        while (changeAvailableAceCount != 0 && GameManager.isOverBurstThreshold(sum)) {
+        while (changeAvailableAceCount != 0 && isOverBurstThreshold(sum)) {
             sum -= 10;
             changeAvailableAceCount -= 1;
         }
 
-        if (changeAvailableAceCount == 0 && GameManager.isOverBurstThreshold(sum)) {
+        if (changeAvailableAceCount == 0 && isOverBurstThreshold(sum)) {
             return false;
         }
 
-        if (GameManager.isOverBurstThreshold(sum) || sum >= burstThreshold) {
+        if (isOverBurstThreshold(sum) || sum >= burstThreshold) {
             return false;
         }
 
