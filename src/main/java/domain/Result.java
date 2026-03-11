@@ -1,6 +1,7 @@
 package domain;
 
-import static domain.Constant.BLACKJACK_MAX_NUMBER;
+
+import static domain.Rank.BLACKJACK_MAX_NUMBER;
 
 public enum Result {
     WIN("승"), DRAW("무"), LOSE("패");

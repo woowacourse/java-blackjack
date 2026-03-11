@@ -1,14 +1,14 @@
 package domain.participant;
 
-import static domain.Constant.DEALER_HIT_STAND_BOUNDARY;
-import static domain.Constant.DEALER_NAME;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-
 import domain.Rank;
 import domain.Suit;
 import domain.card.Card;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import static domain.BlackjackGame.DEALER_HIT_STAND_BOUNDARY;
+import static domain.BlackjackGame.DEALER_NAME;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class DealerTest {
     @Test

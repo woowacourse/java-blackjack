@@ -6,7 +6,7 @@ import domain.Suit;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static domain.Constant.BLACKJACK_MAX_NUMBER;
+import static domain.Rank.BLACKJACK_MAX_NUMBER;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class CardsTest {

@@ -1,9 +1,7 @@
 package domain;
 
-import static domain.Constant.*;
-
 public enum Rank {
-    ACE("A", new Score(ACE_MIN_VALUE)),
+    ACE("A", new Score(1)),
     TWO("2", new Score(2)),
     THREE("3", new Score(3)),
     FOUR("4", new Score(4)),
@@ -16,6 +14,9 @@ public enum Rank {
     J("J", new Score(10)),
     Q("Q", new Score(10)),
     K("K", new Score(10));
+    public static final Score BLACKJACK_MAX_NUMBER = new Score(21);
+    public static final int ACE_MAX_VALUE = 11;
+    public static final int ACE_MIN_VALUE = 1;
 
     private final String displayValue;
     private final Score score;

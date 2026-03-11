@@ -1,11 +1,13 @@
 package view;
 
-import domain.ExceptionMessage;
 import domain.participant.Player;
-import java.util.List;
 import util.Console;
 
+import java.util.List;
+
 public class InputView {
+    private static final String INVALID_HIT_STAND_RESPONSE = "[ERROR] 입력은 y 또는 n으로만 입력해야 합니다.";
+
     public List<String> readPlayerNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String input = Console.readLine();
@@ -22,6 +24,6 @@ public class InputView {
         if (input.equals("n")) {
             return false;
         }
-        throw new IllegalArgumentException(ExceptionMessage.INVALID_HIT_STAND_RESPONSE.getMessage());
+        throw new IllegalArgumentException(INVALID_HIT_STAND_RESPONSE);
     }
 }

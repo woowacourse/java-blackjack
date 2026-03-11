@@ -1,5 +1,6 @@
 package view;
 
+import domain.BlackjackGame;
 import domain.Result;
 import domain.RoundResult;
 import domain.Score;
@@ -12,15 +13,16 @@ import domain.participant.Player;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static domain.Constant.*;
+import static domain.BlackjackGame.DEALER_HIT_STAND_BOUNDARY;
 
 public class ResultView {
+    private static final String DELIMITER = ", ";
     private final List<Result> orderedResults = List.of(Result.LOSE, Result.DRAW, Result.WIN);
 
     public void printParticipantsCards(List<Player> players, Dealer dealer) {
         printEmptyLine();
         System.out.println(
-                dealer.getName().getValue() + "와 " + joinPlayersNameByDelimiter(players) + "에게 " + DEFAULT_HAND_NUMBER
+                dealer.getName().getValue() + "와 " + joinPlayersNameByDelimiter(players) + "에게 " + BlackjackGame.DEFAULT_HAND_NUMBER
                         + "장을 나누었습니다.");
         Card dealerCard = dealer.getFirstCard();
         System.out.println("딜러카드: " + dealerCard.getRank().getDisplayValue() + dealerCard.getSuit().getValue());

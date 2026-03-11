@@ -1,6 +1,5 @@
 package domain.participant;
 
-import domain.ExceptionMessage;
 import domain.Result;
 import domain.RoundResult;
 import domain.Score;
@@ -13,6 +12,8 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class Players {
+    private static final String ALREADY_EXIST_NAME = "[ERROR] 이름은 중복될 수 없습니다.";
+
     private final List<Player> players;
 
     public Players(List<Player> players) {
@@ -30,7 +31,7 @@ public class Players {
         HashSet<String> uniqueNames = new HashSet<>(players);
 
         if (uniqueNames.size() != players.size()) {
-            throw new IllegalArgumentException(ExceptionMessage.ALREADY_EXIST_NAME.getMessage());
+            throw new IllegalArgumentException(ALREADY_EXIST_NAME);
         }
     }
 

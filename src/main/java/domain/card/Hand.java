@@ -5,8 +5,6 @@ import domain.Score;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
-import java.util.function.Supplier;
 
 public class Hand {
     private final List<Card> cards;
@@ -19,16 +17,8 @@ public class Hand {
         cards.add(card);
     }
 
-    public void add(Supplier<Card> getCard) {
-        cards.add(getCard.get());
-    }
-
     public void addAll(List<Card> cards) {
         this.cards.addAll(cards);
-    }
-
-    public void addAll(Function<Integer, List<Card>> getCardsFunc, int quantity) {
-        cards.addAll(getCardsFunc.apply(quantity));
     }
 
     public Card peek() {

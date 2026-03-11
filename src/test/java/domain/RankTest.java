@@ -3,8 +3,9 @@ package domain;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static domain.Constant.ACE_MAX_VALUE;
-import static domain.Constant.ACE_MIN_VALUE;
+import static domain.Rank.ACE_MAX_VALUE;
+import static domain.Rank.ACE_MIN_VALUE;
+
 
 public class RankTest {
 

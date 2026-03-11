@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import static domain.Constant.DEALER_NAME;
-import static domain.Constant.DEFAULT_HAND_NUMBER;
-
 public class BlackjackGame {
+    public static final int DEFAULT_HAND_NUMBER = 2;
+    public static final String DEALER_NAME = "딜러";
+    public static final Score DEALER_HIT_STAND_BOUNDARY = new Score(16);
     private final Players players;
     private final Dealer dealer;
     private final Deck deck;
@@ -34,7 +34,7 @@ public class BlackjackGame {
 
     public void dealerHitStand(Consumer<Boolean> printDecisionOutput) {
         while (true) {
-            boolean dealerHitStand = dealer.decideHitStand(Constant.DEALER_HIT_STAND_BOUNDARY);
+            boolean dealerHitStand = dealer.decideHitStand(DEALER_HIT_STAND_BOUNDARY);
             if (!dealerHitStand) {
                 printDecisionOutput.accept(dealerHitStand);
                 break;
