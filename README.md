@@ -25,33 +25,37 @@
 ## 구현 기능 체크리스트
 
 ### 게임 시작
-- [x]  참여자 입력 (쉼표로 구분)
+
+- [X]  참여자 입력 (쉼표로 구분)
 - [ ]  게임 시작 시 배팅 금액 입력
-- [x]  플레이어/딜러 관리
+- [X]  플레이어/딜러 관리
 
 ### 카드 및 덱
-- [x]  카드 셔플
-- [x]  초기 카드 분배 (플레이어/딜러 각 2장)
-- [x]  카드 딜 (추가 뽑기)
-- [x]  카드 점수 계산
-  - [x]  숫자 카드: 숫자 그대로
-  - [x]  J, Q, K: 10으로 계산
-  - [x]  Ace: 1 또는 11 선택 가능
+
+- [X]  카드 셔플
+- [X]  초기 카드 분배 (플레이어/딜러 각 2장)
+- [X]  카드 딜 (추가 뽑기)
+- [X]  카드 점수 계산
+  - [X]  숫자 카드: 숫자 그대로
+  - [X]  J, Q, K: 10으로 계산
+  - [X]  Ace: 1 또는 11 선택 가능
 
 ### 게임 진행
-- [x]  블랙잭 판별 (처음 두 장의 합 21)
-- [x]  버스트 판별 (21 초과 시 배팅 금액 상실)
-- [x]  히트/스탠드 (21 미만 시 추가 카드 뽑기 선택)
-- [x]  딜러 룰
-  - [x]  16 이하: 반드시 1장 추가
-  - [x]  17 이상: 추가 카드 없음
+
+- [X]  블랙잭 판별 (처음 두 장의 합 21)
+- [X]  버스트 판별 (21 초과 시 배팅 금액 상실)
+- [X]  히트/스탠드 (21 미만 시 추가 카드 뽑기 선택)
+- [X]  딜러 룰
+  - [X]  16 이하: 반드시 1장 추가
+  - [X]  17 이상: 추가 카드 없음
 
 ### 결과 및 보상
+
 - [ ]  블랙잭 시 베팅 금액의 1.5배 수령
 - [ ]  딜러·플레이어 동시 블랙잭 시 베팅 금액 반환
 - [ ]  딜러 버스트 시 남은 플레이어 승리 및 베팅 금액 수령
-- [x]  승패 판정
-- [x]  최종 카드 상태 출력
+- [X]  승패 판정
+- [X]  최종 카드 상태 출력
 - [ ]  결과 출력 (승/패/무 및 수익/손실)
 
 ## 기술 스택
@@ -67,3 +71,76 @@
 3. **카드 셔플 검증**: 셔플 결과가 겹치는 경우 검증 방식
 4. **카드 리스트 싱글톤**: 덱 공유 여부 및 생명주기
 5. **테스트 전용 메서드**: CardDeck 등에서 기능상 필요 없지만 테스트를 위해 덱 상태 조회 메서드를 두는 것에 대한 고민
+
+## 사이클2 - 미션 중 기록
+
+### 기능 추가로 인해 수정된 위치 개수
+
+20개 파일을 변경했다. 베팅 룰 추가로 인한 BettingRule 인터페이스와 기본 DefaultBettingRule, 사용자의 최종 이익을 저장하기 위한 UserProfit 레코드 생성과 이로 인한 테스트 생성 등으로 여러 파일들이 생겼으며, 달라진 입출력을 위해 컨트롤러나 서비스 등 여러 파일들을 수정하게 되었다. 사이클1의 마지막 커밋 기준 추가된 라인은 290줄, 삭제된 라인은 20줄이다.
+
+
+### 사이클1 때보다 수정 범위가 줄었는가/늘었는가
+
+생각보다 수정 범위가 적었다고 생각한다. 그 이유는, 기존 사이클1에서 리팩토링을 통해 객체 간의 책임을 보다 명확히 했기 때문이라고 생각한다. 우선 베팅 룰을 설계하는 과정에서, ShuffleStrategy처럼 인터페이스 전략으로 여러 전략들에 유연하게 대체하기로 결정했기 때문에 새로운 인터페이스만 테스트하면 되었다. 또한 처음에는 User가 Profit을 가지고 있게 하기 위해 User 클래스에 profit 변수를 추가하려 했지만, 클래스 변수가 세개를 넘으면 안되는 요구사항을 만족하기 위해 판당 profit을 저장해놓는 UserProfit 레코드를 따로 구현하였다. 이렇게 책임을 분리해놨기 때문에 수익 계산과 관련없는 부분은 아예 건드릴 필요가 없었다.
+
+BettingRule과 UserProfit을 구현한 뒤에는, 반환 타입이나 컨트롤러에서 입출력 정도만 수정하면 되는 거여서 사이클1보다는 수정이 훨씬 준 것 같다.
+
+
+### 규칙 적용으로 변경한 코드 1곳
+
+
+```
+if: 테스트 작성이 어렵다면
+then: 의존성, 책임 분리, 상태 관리 구조를 점검한다.
+
+## 개선 방법
+- 순수 함수로 분리
+- 의존성 주입
+- 작은 단위 객체 설계
+```
+
+를 통해 UserProfit이라는 객체를 설계했다. 처음에는 GameResult 안에 profit 필드를 두고, GameResult에서 수익을 계산하는 방식으로 구현하려 했다. 하지만 이렇게 하면 GameResult가 승패 결과와 수익 계산이라는 서로 다른 책임을 갖게 되어 테스트가 어려워졌다. 순수 함수로 분리하고 작은 단위 객체를 설계하라는 원칙에 따라, GameResult는 승패 판정만 담당하고 수익 계산 결과를 담는 UserProfit 레코드를 따로 두기로 했다. 이렇게 하니 수익 로직을 독립적으로 검증할 수 있어 테스트 작성이 훨씬 수월해졌다.
+
+
+
+### 테스트가 설계를 도운 순간
+
+```
+1.2 테스트 어려움에 대한 대응
+설계 수정: 테스트 코드를 작성하기 어렵다면, 그것은 코드의 설계에 문제가 있다는 신호입니다.
+
+대응 방법: 메서드를 더 작게 분리하거나 의존성을 분리하여 테스트하기 쉬운 설계로 개선합니다.
+```
+
+
+를 통해
+
+```
+    public List<UserProfit> createUsersProfit(List<User> users){
+        List<UserProfit> list = new ArrayList<>();
+        for (User each : users) {
+            list.add(createEachUserProfit(each));
+        }
+        return list;
+    }
+
+    protected UserProfit createEachUserProfit(User user) {
+        String eachName = user.getName();
+        int eachBetAmount = user.getBetAmount();
+        GameResult gameResult = user.getGameResult();
+        boolean eachIsBlackjack = user.isBlackjack();
+        int eachProfit = bettingRule.calculateBetAmount(eachBetAmount,gameResult,eachIsBlackjack);
+
+        return new UserProfit(eachName,eachBetAmount,gameResult,eachProfit);
+    }
+
+    protected DealerProfit upsertDealerProfit(List<UserProfit> userProfits) {
+        int dealerProfit = 0;
+        for (UserProfit each: userProfits) {
+            dealerProfit += each.profit() * (-1);
+        }
+        return new DealerProfit(dealerProfit);
+    }
+```
+
+를 설계했다. 원래는 테스트 코드를 짤 때 createUsersProfit라는 메소드를 만들어서 user와 dealer까지 한꺼번에 계산을 하려고 했는데, 그러다보니 너무 코드가 길어지기도 했으며, 결정적으로 테스트를 할 때 문제가 생겼다. 그렇기 때문에 위 코드처럼 메소드를 분리해 보다 테스트가 용이하도록 수정했다. 이렇게 하니 가독성도 좋아져서 만족스럽다.
