@@ -1,13 +1,15 @@
-package domain;
+package domain.result;
 
 import domain.participant.Participant;
+import domain.participant.Player;
+
 import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class GameStatistics {
 
-    private final Map<Participant, GameResult> playerResult;
+    private final Map<Player, GameResult> playerResult;
     private final Map<GameResult, Integer> dealerResult;
 
     public GameStatistics() {
@@ -23,15 +25,15 @@ public class GameStatistics {
         return dealerResult;
     }
 
-    public void addPlayerResult(Participant participant, GameResult gameResult) {
-        playerResult.put(participant, gameResult);
+    public void addPlayerResult(Player player, GameResult gameResult) {
+        playerResult.put(player, gameResult);
     }
 
     public void addDealerResult(GameResult gameResult) {
         dealerResult.put(gameResult, dealerResult.getOrDefault(gameResult, 0) + 1);
     }
 
-    public Map<Participant, GameResult> getPlayerResult() {
+    public Map<Player, GameResult> getPlayerResult() {
         return playerResult;
     }
 

@@ -1,6 +1,7 @@
 package domain;
 
 import domain.card.Deck;
+import domain.participant.Dealer;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 

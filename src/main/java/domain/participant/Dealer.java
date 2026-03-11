@@ -1,9 +1,6 @@
-package domain;
+package domain.participant;
 
 import domain.card.Deck;
-import domain.participant.Hand;
-import domain.participant.Name;
-import domain.participant.Participant;
 
 public record Dealer(Participant dealer) {
 

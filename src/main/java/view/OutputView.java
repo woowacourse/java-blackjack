@@ -1,9 +1,10 @@
 package view;
 
-import domain.Dealer;
-import domain.GameResult;
-import domain.GameStatistics;
-import domain.Participants;
+import domain.participant.Dealer;
+import domain.participant.Player;
+import domain.participant.Players;
+import domain.result.GameResult;
+import domain.result.GameStatistics;
 import domain.card.Card;
 import domain.participant.Participant;
 import java.util.ArrayList;
@@ -15,9 +16,9 @@ public final class OutputView {
     private static final String DELIMITER = ", ";
     private static final String NEW_LINE = System.lineSeparator();
 
-    public static void showIntroMessage(Participants participants) {
+    public static void showIntroMessage(Players players) {
         System.out.println(NEW_LINE + "딜러와 "
-                + String.join(DELIMITER, String.join(DELIMITER, participants.getParticipantNames())
+                + String.join(DELIMITER, String.join(DELIMITER, players.getPlayerNames())
                 + "에게 2장을 나누었습니다."));
     }
 
@@ -28,14 +29,14 @@ public final class OutputView {
         System.out.println(getCardNames(dealer.getDealer(), dealerCard));
     }
 
-    public static void showPlayerCardName(Participants participants) {
-        participants.getParticipants()
+    public static void showPlayerCardName(Players players) {
+        players.getPlayers()
                 .forEach(OutputView::showCardName);
     }
 
-    public static void showCardName(Participant participant) {
-        List<String> playerCardNames = createCardNames(participant);
-        System.out.println(getCardNames(participant, playerCardNames));
+    public static void showCardName(Player player) {
+        List<String> playerCardNames = createCardNames(player.getParticipant());
+        System.out.println(getCardNames(player.getParticipant(), playerCardNames));
     }
 
     private static String getCardNames(Participant participant, List<String> playerCardNames) {
@@ -52,12 +53,12 @@ public final class OutputView {
         System.out.println(NEW_LINE + "딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void showResult(Dealer dealer, Participants participants) {
+    public static void showResult(Dealer dealer, Players players) {
         System.out.println();
 
         showCardAndScore(dealer.getDealer(), dealer.getScore());
-        participants.getParticipants()
-                .forEach(participant -> showCardAndScore(participant, participant.getScore()));
+        players.getPlayers()
+                .forEach(player -> showCardAndScore(player.getParticipant(), player.getScore()));
     }
 
     private static void showCardAndScore(Participant participant, int score) {
@@ -81,8 +82,8 @@ public final class OutputView {
     }
 
     private static void showPlayerResult(GameStatistics statistics) {
-        Map<Participant, GameResult> playerResult = statistics.getPlayerResult();
-        for (Map.Entry<Participant, GameResult> entry : playerResult.entrySet()) {
+        Map<Player, GameResult> playerResult = statistics.getPlayerResult();
+        for (Map.Entry<Player, GameResult> entry : playerResult.entrySet()) {
             System.out.println(entry.getKey().getName() + ": " + entry.getValue().getDescription());
         }
     }
