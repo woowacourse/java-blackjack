@@ -35,7 +35,7 @@ public class Result {
     public Map<String, Integer> calculatePlayerYield(Map<Player, ResultInfo> playersResult) {
         Map<String, Integer> playerYield=new HashMap<>();
         for (Player player : playersResult.keySet()) {
-            playerYield.put(player.getName(), (int)(player.getBettingMoney()*playersResult.get(player).getYield()));
+            playerYield.put(player.getName(), (int)((double)player.getBettingMoney()*playersResult.get(player).getYield()));
         }
         return playerYield;
     }
