@@ -6,16 +6,17 @@ import java.util.List;
 import model.BlackJackDeck;
 import model.CardNumber;
 import model.Dealer;
+import model.Participant;
 import model.Player;
 import model.PlayerName;
 import model.Players;
 import model.Shape;
 import model.dto.Card;
-import model.dto.ParticipantWinning;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class TestBlackJackService {
+    private static final Integer INITIAL_BET = 10000;
     private BlackJackService blackJackService;
 
     private Player player;
@@ -28,6 +29,7 @@ public class TestBlackJackService {
         blackJackService = new BlackJackService(cards);
 
         player = new Player(new PlayerName("player"));
+        player.setBetAmount(INITIAL_BET);
         dealer = new Dealer();
     }
 
@@ -45,101 +47,77 @@ public class TestBlackJackService {
     }
 
     @Test
-    public void 둘_다_버스트가_아니면서_점수가_높은_경우_정상_작동() {
-        dealer.addCard(new Card(Shape.CLOVER, CardNumber.KING));
-        dealer.addCard(new Card(Shape.CLOVER, CardNumber.EIGHT));
+    public void 플레이어가_버스트인_경우_정상_작동() {
+        participantBust(player);
+        Integer profit1 = blackJackService.getGameResult(new Players(List.of(player)), dealer).dealerWinning().getTotalBet();
 
-        player.addCard(new Card(Shape.CLOVER, CardNumber.KING));
+        assertThat(profit1).isEqualTo(INITIAL_BET);
 
-        ParticipantWinning winning = blackJackService.getGameResult(new Players(List.of(player)), dealer);
+        participantBust(dealer);
 
-        List<String> dealerWinning = winning.dealerWinning().getFormattedDealerWinning();
-
-        assertThat(dealerWinning.getFirst()).isEqualTo("1승");
-        assertThat(dealerWinning.size()).isEqualTo(1);
+        Integer profit2 = blackJackService.getGameResult(new Players(List.of(player)), dealer).dealerWinning().getTotalBet();
+        assertThat(profit2).isEqualTo(INITIAL_BET);
     }
 
     @Test
-    public void 둘_다_버스트가_아니면서_점수가_같은_경우_정상_작동() {
-        dealer.addCard(new Card(Shape.CLOVER, CardNumber.KING));
-        dealer.addCard(new Card(Shape.DIAMOND, CardNumber.KING));
+    public void 플레이어만_블랙잭인_경우_정상_작동() {
+        participantBlackJack(player);
+        Integer profit = blackJackService.getGameResult(new Players(List.of(player)), dealer).dealerWinning().getTotalBet();
 
-        player.addCard(new Card(Shape.CLOVER, CardNumber.KING));
-        player.addCard(new Card(Shape.DIAMOND, CardNumber.KING));
-
-        ParticipantWinning winning = blackJackService.getGameResult(new Players(List.of(player)), dealer);
-
-        List<String> dealerWinning = winning.dealerWinning().getFormattedDealerWinning();
-
-        assertThat(dealerWinning.getFirst()).isEqualTo("1무");
-        assertThat(dealerWinning.size()).isEqualTo(1);
+        assertThat(profit).isEqualTo(-15000);
     }
 
     @Test
-    public void 둘_다_버스트가_아니면서_점수가_낮은_경우_정상_작동() {
-        dealer.addCard(new Card(Shape.CLOVER, CardNumber.KING));
-        dealer.addCard(new Card(Shape.CLOVER, CardNumber.EIGHT));
+    public void 둘_다_블랙잭인_경우_정상_작동() {
+        participantBlackJack(player);
+        participantBlackJack(dealer);
 
-        player.addCard(new Card(Shape.CLOVER, CardNumber.KING));
-        player.addCard(new Card(Shape.DIAMOND, CardNumber.KING));
+        Integer profit = blackJackService.getGameResult(new Players(List.of(player)), dealer).dealerWinning().getTotalBet();
 
-        ParticipantWinning winning = blackJackService.getGameResult(new Players(List.of(player)), dealer);
-
-        List<String> dealerWinning = winning.dealerWinning().getFormattedDealerWinning();
-
-        assertThat(dealerWinning.getFirst()).isEqualTo("1패");
-        assertThat(dealerWinning.size()).isEqualTo(1);
+        assertThat(profit).isEqualTo(0);
     }
 
     @Test
-    public void 플레이어만_버스트인_경우_정상_작동() {
-        dealer.addCard(new Card(Shape.CLOVER, CardNumber.KING));
-        dealer.addCard(new Card(Shape.CLOVER, CardNumber.EIGHT));
+    public void 둘_다_일반_점수면서_플레이어_점수가_낮은_경우_정상_작동() {
+        dealer.addCard(new Card(Shape.DIAMOND, CardNumber.QUEEN));
+        player.addCard(new Card(Shape.DIAMOND, CardNumber.TWO));
 
-        player.addCard(new Card(Shape.CLOVER, CardNumber.KING));
-        player.addCard(new Card(Shape.DIAMOND, CardNumber.KING));
-        player.addCard(new Card(Shape.HEART, CardNumber.KING));
+        Integer profit = blackJackService.getGameResult(new Players(List.of(player)), dealer).dealerWinning().getTotalBet();
 
-        ParticipantWinning winning = blackJackService.getGameResult(new Players(List.of(player)), dealer);
-
-        List<String> dealerWinning = winning.dealerWinning().getFormattedDealerWinning();
-
-        assertThat(dealerWinning.getFirst()).isEqualTo("1승");
-        assertThat(dealerWinning.size()).isEqualTo(1);
+        assertThat(profit).isEqualTo(INITIAL_BET);
     }
 
     @Test
-    public void 딜러만_버스트인_경우_정상_작동() {
-        dealer.addCard(new Card(Shape.CLOVER, CardNumber.KING));
-        dealer.addCard(new Card(Shape.DIAMOND, CardNumber.KING));
-        dealer.addCard(new Card(Shape.HEART, CardNumber.KING));
+    public void 둘_다_일반_점수면서_플레이어_점수가_높은_경우_정상_작동() {
+        dealer.addCard(new Card(Shape.DIAMOND, CardNumber.QUEEN));
+        player.addCard(new Card(Shape.DIAMOND, CardNumber.ACE));
 
-        player.addCard(new Card(Shape.CLOVER, CardNumber.KING));
-        player.addCard(new Card(Shape.CLOVER, CardNumber.EIGHT));
+        Integer profit = blackJackService.getGameResult(new Players(List.of(player)), dealer).dealerWinning().getTotalBet();
 
-        ParticipantWinning winning = blackJackService.getGameResult(new Players(List.of(player)), dealer);
-
-        List<String> dealerWinning = winning.dealerWinning().getFormattedDealerWinning();
-
-        assertThat(dealerWinning.getFirst()).isEqualTo("1패");
-        assertThat(dealerWinning.size()).isEqualTo(1);
+        assertThat(profit).isEqualTo(-INITIAL_BET);
     }
 
     @Test
-    public void 둘_다_버스트인_경우_정상_작동() {
-        dealer.addCard(new Card(Shape.CLOVER, CardNumber.KING));
-        dealer.addCard(new Card(Shape.DIAMOND, CardNumber.KING));
-        dealer.addCard(new Card(Shape.HEART, CardNumber.KING));
+    public void 둘_다_일반_점수면서_점수가_같은_경우_정상_작동() {
+        dealer.addCard(new Card(Shape.DIAMOND, CardNumber.NINE));
+        dealer.addCard(new Card(Shape.HEART, CardNumber.NINE));
 
-        player.addCard(new Card(Shape.CLOVER, CardNumber.KING));
-        player.addCard(new Card(Shape.DIAMOND, CardNumber.KING));
-        player.addCard(new Card(Shape.HEART, CardNumber.KING));
+        player.addCard(new Card(Shape.DIAMOND, CardNumber.QUEEN));
+        player.addCard(new Card(Shape.DIAMOND, CardNumber.EIGHT));
 
-        ParticipantWinning winning = blackJackService.getGameResult(new Players(List.of(player)), dealer);
+        Integer profit = blackJackService.getGameResult(new Players(List.of(player)), dealer).dealerWinning().getTotalBet();
 
-        List<String> dealerWinning = winning.dealerWinning().getFormattedDealerWinning();
+        assertThat(profit).isEqualTo(0);
+    }
 
-        assertThat(dealerWinning.getFirst()).isEqualTo("1승");
-        assertThat(dealerWinning.size()).isEqualTo(1);
+    private void participantBust(Participant participant) {
+        participant.addCard(new Card(Shape.DIAMOND, CardNumber.KING));
+        participant.addCard(new Card(Shape.DIAMOND, CardNumber.QUEEN));
+        participant.addCard(new Card(Shape.DIAMOND, CardNumber.JACK));
+    }
+
+    private void participantBlackJack(Participant participant) {
+        participant.addCard(new Card(Shape.DIAMOND, CardNumber.KING));
+        participant.addCard(new Card(Shape.DIAMOND, CardNumber.ACE));
     }
 }
