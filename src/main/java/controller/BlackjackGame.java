@@ -5,7 +5,6 @@ import static config.BlackjackGameConstant.*;
 import domain.participant.dto.ParticipantHandDtoMapper;
 import domain.result.GameResultAnalyzer;
 import domain.result.dto.GameResultDto;
-import domain.intention.DrawCardIntetion;
 import domain.card.CardDeck;
 import domain.card.CardDeckInitializer;
 import config.BlackjackGameConfiguration;
@@ -79,8 +78,8 @@ public class BlackjackGame {
             return;
         }
 
-        DrawCardIntetion drawCardIntetion = view.requestDrawCardIntention(player.toDisplayMyName());
-        while (!player.isBusted() && drawCardIntetion.isYes()) {
+        boolean drawCardIntention = view.requestDrawCardIntention(player.toDisplayMyName());
+        while (!player.isBusted() && drawCardIntention) {
             player.drawCards(cardDeck, DEFAULT_CARD_DRAW_COUNT);
             view.printParticipantHand(ParticipantHandDtoMapper.map(player));
         }

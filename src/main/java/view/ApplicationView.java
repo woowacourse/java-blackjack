@@ -1,7 +1,6 @@
 package view;
 
 import domain.result.dto.GameResultDto;
-import domain.intention.DrawCardIntetion;
 import domain.participant.ParticipantName;
 import domain.participant.dto.ParticipantHandDto;
 import domain.result.dto.ParticipantGameResultDto;
@@ -12,6 +11,8 @@ import java.util.function.Supplier;
 public class ApplicationView {
 
     private static final String DELIMITER = ",";
+    private static final String INTENTION_YES = "y";
+    private static final String INTENTION_NO = "n";
 
     private final InputReader reader;
     private final OutputWriter writer;
@@ -36,14 +37,15 @@ public class ApplicationView {
         return names.stream().map(ParticipantName::from).toList();
     }
 
-    public DrawCardIntetion requestDrawCardIntention(String playerName) {
+    public boolean requestDrawCardIntention(String playerName) {
         return retry(() -> readDrawCardIntention(playerName));
     }
 
-    private DrawCardIntetion readDrawCardIntention(String playerName) {
+    private boolean readDrawCardIntention(String playerName) {
         writer.printDrawCardGuideMessage(playerName);
-        String input = reader.readInput();
-        return DrawCardIntetion.from(input);
+        String input = reader.readInputOnlyCandidate(List.of(INTENTION_YES, INTENTION_NO));
+
+        return input.equals(INTENTION_YES);
     }
 
     public void printInitialHandOutResult(List<String> playerNames, int initialCardCount) {

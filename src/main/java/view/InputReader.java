@@ -22,4 +22,16 @@ public class InputReader {
                 .map(String::trim)
                 .toList();
     }
+
+    public String readInputOnlyCandidate(List<String> candidates) {
+        String input = readInput();
+        validateInCandidate(candidates, input);
+        return input;
+    }
+
+    private void validateInCandidate(List<String> candidates, String input) {
+        if(!candidates.contains(input)) {
+            throw new IllegalArgumentException("잘못된 입력입니다.");
+        }
+    }
 }
