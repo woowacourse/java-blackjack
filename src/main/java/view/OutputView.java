@@ -32,6 +32,18 @@ public class OutputView {
         System.out.println(user.getName() + "카드: " + cards);
     }
 
+    public void printBlackjackWin(User user) {
+        System.out.println(user.getName() + "는 블랙잭입니다!!");
+    }
+
+    public void printDealerBlackjack() {
+        System.out.println("딜러가 블랙잭이 나왔습니다!!");
+    }
+
+    public void printBlackjackDraw(User user) {
+        System.out.println(user.getName() + "와 딜러가 블랙잭입니다!!");
+    }
+
     public void printDealerHit(){
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }

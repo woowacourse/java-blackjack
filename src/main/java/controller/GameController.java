@@ -29,6 +29,7 @@ public class GameController {
         List<User> users = setUpUsers();
         processBet(users);
         initDeal(users);
+        processBlackjack(users);
         processUserTurns(users);
         processDealerTurn();
         showCardResult(users);
@@ -53,8 +54,25 @@ public class GameController {
         outputView.printInitialDeal(users, dealer);
     }
 
+    private void processBlackjack(List<User> users) {
+        for(User user: users) {
+            boolean userIsBlackjack = user.isBlackjack();
+            boolean dealerIsBlackjack = dealer.isBlackjack();
+            if(userIsBlackjack && !dealerIsBlackjack) {
+                outputView.printBlackjackWin(user);
+                continue;
+            }
+            if(userIsBlackjack) {
+                outputView.printBlackjackDraw(user);
+            }
+        }
+    }
+
     private void processUserTurns(List<User> users) {
         for (User user : users) {
+            if(user.isBlackjack()) {
+                continue;
+            }
             boolean hitAtLeastOnce = false;
             while (inputView.readWillHit(user.getName())) {
                 hitAtLeastOnce = true;
@@ -69,6 +87,10 @@ public class GameController {
 
     private void processDealerTurn() {
         int sum = dealer.getHand().stream().mapToInt(Card::getValue).sum();
+        if(dealer.isBlackjack()) {
+            outputView.printDealerBlackjack();
+            return;
+        }
         if(dealer.isHit(sum)) {
             dealer.receiveCard(gameService.deal());
             outputView.printDealerHit();

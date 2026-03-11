@@ -33,7 +33,8 @@ public abstract class Participant {
         return score;
     }
 
-    public boolean isBlackjack(int score) {
+    public boolean isBlackjack() {
+        int score = calculateScore();
         return score == BLACKJACK_NUM;
     }
 
