@@ -1,7 +1,6 @@
 package domain;
 
 import constant.Rank;
-import constant.Suit;
 
 public record Card(Rank rank, Suit suit) {
 

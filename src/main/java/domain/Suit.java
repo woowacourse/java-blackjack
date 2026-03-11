@@ -1,4 +1,4 @@
-package constant;
+package domain;
 
 public enum Suit {
     SPADE("스페이드"),

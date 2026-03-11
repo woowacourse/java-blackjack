@@ -3,7 +3,6 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import constant.Rank;
-import constant.Suit;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 

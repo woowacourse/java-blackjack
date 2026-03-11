@@ -6,7 +6,7 @@ import config.ControllerConfig;
 import constant.HitOrStand;
 import constant.Rank;
 import constant.Result;
-import constant.Suit;
+import domain.Suit;
 import domain.Card;
 import dto.BlackjackStatisticsDto;
 import dto.ParticipantDto;
