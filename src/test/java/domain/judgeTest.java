@@ -19,11 +19,11 @@ public class judgeTest {
     private final PlayerBettingRepository playerBettingRepository = new PlayerBettingRepository();
     private final PersonService personService = new PersonService(
             playerRepository,
-            dealerRepository
+            dealerRepository,
+            playerBettingRepository
     );
     private final JudgementService judgementService = new JudgementService(
-            personService,
-            playerBettingRepository
+            personService
     );
 
     @Test
@@ -52,7 +52,7 @@ public class judgeTest {
         judgementService.judgementWinning(player, dealer);
 
         // then
-        assertThat(player.getPlayerStatus()).isEqualTo(PlayerStatus.LOSS);
+        assertThat(player.getPlayerStatus()).isEqualTo(PlayerStatus.WIN);
     }
 
     // 플레이어 버스트

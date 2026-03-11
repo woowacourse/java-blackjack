@@ -8,40 +8,33 @@ import repository.PlayerBettingRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static constant.ErrorMessage.PLAYER_BETTING_NOT_FOUND;
 
 public class JudgementService {
 
     private final PersonService personService;
-    private final PlayerBettingRepository playerBettingRepository;
 
-    public JudgementService(PersonService personService, PlayerBettingRepository playerBettingRepository) {
+    public JudgementService(PersonService personService) {
         this.personService = personService;
-        this.playerBettingRepository = playerBettingRepository;
     }
 
     public ResultDto getGameResult() {
         List<Player> players = personService.findAllPlayers();
         Dealer dealer = personService.getDealer();
-
-        List<PlayerResultDto> playerResultDtos = new ArrayList<>();
-        for (Player player : players) {
-            judgementWinning(player, dealer);
-            PlayerBetting playerBetting = getPlayerBetting(player);
-            playerBetting.applyBetting(dealer);
-            PlayerResultDto playerResultDto = PlayerResultDto.of(player);
-            playerResultDtos.add(playerResultDto);
-        }
+        List<PlayerResultDto> playerResultDtos = players.stream().map(player -> {
+            judge(player, dealer);
+            return PlayerResultDto.of(player);
+        }).toList();
 
         DealerResultDto dealerResultDto = DealerResultDto.of(dealer);
         return ResultDto.of(dealerResultDto, playerResultDtos);
     }
 
-    private PlayerBetting getPlayerBetting(Player player) {
-        return playerBettingRepository.findByPlayer(player)
-                .orElseThrow(() -> new IllegalArgumentException(PLAYER_BETTING_NOT_FOUND.getMessage()));
+    private void judge(Player player, Dealer dealer) {
+        judgementWinning(player, dealer);
+        PlayerBetting playerBetting = personService.findPlayerBettingByPlayer(player);
+        playerBetting.applyBetting(dealer);
     }
 
     public void judgementWinning(Player player, Dealer dealer) {

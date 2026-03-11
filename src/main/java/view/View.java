@@ -16,6 +16,10 @@ public class View {
         return inputView.inputPlayerNames();
     }
 
+    public String inputPlayerBetting(String name) {
+        return inputView.inputBettingPrice(name);
+    }
+
     public String inputAdditionalCard(String name) {
         return inputView.inputAdditionalCard(name);
     }

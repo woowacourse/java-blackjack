@@ -8,6 +8,7 @@ import domain.service.PersonService;
 import org.junit.jupiter.api.Test;
 import repository.CardRepository;
 import repository.DealerRepository;
+import repository.PlayerBettingRepository;
 import repository.PlayerRepository;
 import util.RandomRankNumberGenerator;
 import util.RandomShapeNumberGenerator;
@@ -20,9 +21,12 @@ public class CardDistributorTest {
 
     private final PlayerRepository playerRepository = new PlayerRepository();
     private final DealerRepository dealerRepository = new DealerRepository();
+    private final PlayerBettingRepository playerBettingRepository = new PlayerBettingRepository();
     private final PersonService personService = new PersonService(
             playerRepository,
-            dealerRepository
+            dealerRepository,
+            playerBettingRepository
+
     );
     private final CardRepository cardRepository = new CardRepository();
     private final CardNumberGenerator cardNumberGenerator = new CardNumberGenerator(

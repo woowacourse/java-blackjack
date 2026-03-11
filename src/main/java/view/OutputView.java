@@ -41,9 +41,9 @@ public class OutputView {
         }
 
         stringBuilder.append("\n").append("## 최종 수익").append("\n");
-        stringBuilder.append("딜러: ").append(resultDto.dealerResultDto().profit()).append("\n");
+        stringBuilder.append("딜러: ").append(stringIntFormatting(resultDto.dealerResultDto().profit())).append("\n");
         for (PlayerResultDto playerResultDto : resultDto.playerResultDtos()) {
-            stringBuilder.append(playerResultDto.playerName()).append(": ").append(playerResultDto.profit()).append("\n");
+            stringBuilder.append(playerResultDto.playerName()).append(": ").append(stringIntFormatting(playerResultDto.profit())).append("\n");
         }
         System.out.println(stringBuilder);
     }
@@ -63,5 +63,9 @@ public class OutputView {
         return cardDtos.stream()
                 .map(CardDto::toString)
                 .collect(Collectors.joining(", "));
+    }
+
+    private String stringIntFormatting(double value) {
+        return String.format("%.0f", value);
     }
 }

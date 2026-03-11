@@ -11,9 +11,8 @@ public class PlayerBettingRepository {
 
     private final List<PlayerBetting> playerBettings = new ArrayList<>();
 
-    public PlayerBetting save(PlayerBetting playerBetting) {
+    public void save(PlayerBetting playerBetting) {
         playerBettings.add(playerBetting);
-        return playerBetting;
     }
 
     public Optional<PlayerBetting> findByPlayer(Player player) {

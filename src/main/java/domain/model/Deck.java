@@ -23,7 +23,7 @@ public class Deck {
 
     // 최종 점수 계산 메서드
     public int calculateFinalSum() {
-        boolean hasAce = cards.stream().anyMatch(Card::isAce);
+        boolean hasAce = isHasAce();
         int sum = getSumWithAceAdditionalValue();
         if (hasAce && sum <= BURST_CRITERIA) {
             return sum;
@@ -55,7 +55,7 @@ public class Deck {
     }
 
     private void judgeDeckStatus() {
-        if (getSumWithAceAdditionalValue() == BLACKJACK_CRITERIA) {
+        if (getSize() == 2 && isHasAce() && getSumWithAceAdditionalValue() == BLACKJACK_CRITERIA) {
             deckStatus = DeckStatus.BLACKJACK;
         }
 
@@ -86,5 +86,9 @@ public class Deck {
         return cards.stream()
                 .mapToInt(Card::getAdditionalValue)
                 .sum();
+    }
+
+    private boolean isHasAce() {
+        return cards.stream().anyMatch(Card::isAce);
     }
 }
