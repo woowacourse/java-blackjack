@@ -20,7 +20,8 @@ class NameTest {
     @ValueSource(strings = {"", " ", "!", "1000j"})
     void 이름에_영어_한글_외_입력시_예외 (String input) {
         Assertions.assertThatThrownBy(() -> new Name(input))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("영어와 한글만 가능");
     }
 
 
@@ -29,6 +30,7 @@ class NameTest {
         String input = "딜러";
 
         Assertions.assertThatThrownBy(() -> new Name(input))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("딜러는 플레이어 이름으로 사용할 수 없습니다");
     }
 }
