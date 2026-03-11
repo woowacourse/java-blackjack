@@ -63,7 +63,7 @@ public class OutputView {
 
     public static void printFinalResultHeader() {
         System.out.println();
-        System.out.println("## 최종 승패");
+        System.out.println("## 최종 수익");
     }
 
     public static void printResult(BlackjackResult result) {
