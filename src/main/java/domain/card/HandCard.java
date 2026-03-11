@@ -55,6 +55,7 @@ public class HandCard {
     public boolean isBust() {
         return score() > BLACKJACK_MAX_LIMIT;
     }
+
     public boolean isBlackJack() {
         return cards.size() == 2 && score() == BLACKJACK_MAX_LIMIT;
     }

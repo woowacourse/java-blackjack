@@ -1,7 +1,6 @@
 package view;
 
 import dto.BlackjackResult;
-import dto.MatchResultLog;
 import dto.PlayerCardInfo;
 import java.util.List;
 import java.util.Map;
@@ -30,10 +29,6 @@ public class OutputView {
 
     public static void printGamblerCards(String name, PlayerCardInfo playerCardInfo) {
         System.out.println(name + "카드 : " + String.join(", ", playerCardInfo.card()));
-    }
-
-    public static void printDealerCards(PlayerCardInfo playerCardInfo) {
-        System.out.println("딜러카드 : " + String.join(", ", playerCardInfo.card()));
     }
 
     public static void printPlayerBust(String name) {

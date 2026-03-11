@@ -2,11 +2,8 @@ package domain.player;
 
 import domain.MatchResult;
 import domain.deck.CardDeck;
-import dto.BlackjackResult;
-import dto.MatchResultLog;
 import expcetion.BlackjackException;
 import expcetion.ExceptionMessage;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;

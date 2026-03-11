@@ -8,6 +8,7 @@ public enum MatchResult {
     WIN(1),
     LOSE(-1),
     DRAW(0);
+
     private static final int BLACKJACK_MAX_LIMIT = 21;
 
     private final double rate;
@@ -18,12 +19,15 @@ public enum MatchResult {
 
 
     public static MatchResult of(Gambler gambler, Dealer dealer) {
-        if (isBothBlackJack(gambler, dealer))
+        if (isBothBlackJack(gambler, dealer)) {
             return DRAW;
-        if (gambler.isBlackJack())
+        }
+        if (gambler.isBlackJack()) {
             return BLACKJACK;
-        if (dealer.isBlackJack())
+        }
+        if (dealer.isBlackJack()) {
             return LOSE;
+        }
 
         return compareScore(gambler.score(), dealer.score());
     }

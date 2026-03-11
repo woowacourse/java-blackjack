@@ -2,7 +2,6 @@ import domain.deck.CardDeck;
 import domain.player.Dealer;
 import domain.player.Gambler;
 import domain.player.Gamblers;
-import domain.player.Player;
 import dto.BlackjackResult;
 import dto.PlayerCardInfo;
 import java.util.List;
