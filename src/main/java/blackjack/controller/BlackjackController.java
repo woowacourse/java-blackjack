@@ -8,6 +8,7 @@ import blackjack.model.Players;
 import blackjack.view.InputParser;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -25,11 +26,24 @@ public class BlackjackController {
     }
 
     public void run() {
-        Players players = retry(() -> {
+        List<String> playerNames = retry(() -> {
             String input = inputView.readPlayerName();
-            List<String> names = InputParser.parse(input);
-            return new Players(names);
+            return InputParser.parse(input);
+
         });
+
+        List<Player> allPlayers = new ArrayList<>();
+
+        for (String playerName : playerNames) {
+            int betAmount = retry(() -> inputView.readBetAmount(playerName));
+            allPlayers.add(new Player(playerName, betAmount));
+        }
+
+        Players players = new Players(allPlayers);
+
+        // 플레이어별로 이름 받아오고
+
+        // 플레이어별로 반복문 -> Player 객체 만들고 그 객체를 Players에 넣어주기 ?
 
         Dealer dealer = new Dealer();
 

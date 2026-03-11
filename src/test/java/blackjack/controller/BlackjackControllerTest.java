@@ -42,7 +42,7 @@ class BlackjackControllerTest {
                 new Card(Suit.CLOVER, Rank.TEN)
         );
 
-        String result = run("pobi\nn\n", fixCards);
+        String result = run("pobi\n1000\nn\n", fixCards);
         assertThat(result).contains("딜러: 0승 0무 1패");
         assertThat(result).contains("pobi: 승");
     }
@@ -57,7 +57,7 @@ class BlackjackControllerTest {
                 new Card(Suit.CLOVER, Rank.TEN)
         );
 
-        String result = run("pobi\nn\n", fixCards);
+        String result = run("pobi\n1000\nn\n", fixCards);
         assertThat(result).contains("딜러: 1승 0무 0패");
         assertThat(result).contains("pobi: 패");
     }
@@ -73,7 +73,7 @@ class BlackjackControllerTest {
                 new Card(Suit.DIAMOND, Rank.SIX)
         );
 
-        String result = run("pobi\ny\n", fixCards);
+        String result = run("pobi\n1000\ny\n", fixCards);
         assertThat(result).contains("딜러: 1승 0무 0패");
         assertThat(result).contains("pobi: 패");
     }
@@ -90,7 +90,7 @@ class BlackjackControllerTest {
                 new Card(Suit.CLOVER, Rank.SIX)
         );
 
-        String result = run("pobi\nn\n", fixCards);
+        String result = run("pobi\n1000\nn\n", fixCards);
         assertThat(result).contains("딜러는 16이하라 한장의 카드를 더 받았습니다");
     }
 

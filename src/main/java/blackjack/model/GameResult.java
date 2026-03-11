@@ -1,20 +1,26 @@
 package blackjack.model;
 
 public enum GameResult {
-
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패"),
+    BLACKJACK_WIN("승(블랙잭)", 1.5),
+    WIN("승", 1),
+    DRAW("무", 0),
+    LOSE("패", -1),
     ;
 
     private final String format;
+    private final double payoutRate;
 
-    GameResult(String format) {
+    GameResult(String format, double payoutRate) {
         this.format = format;
+        this.payoutRate = payoutRate;
     }
 
     public String getFormat() {
         return format;
+    }
+
+    public double getPayoutRate() {
+        return payoutRate;
     }
 
     public static GameResult judge(GameSummary player, GameSummary dealer) {
@@ -22,7 +28,7 @@ public enum GameResult {
             return DRAW;
         }
         if (player.isBlackjack()) {
-            return WIN;
+            return BLACKJACK_WIN;
         }
         if (dealer.isBlackjack()) {
             return LOSE;
@@ -46,7 +52,7 @@ public enum GameResult {
     }
 
     public GameResult reverse() {
-        if (this == WIN) {
+        if (this == WIN || this == BLACKJACK_WIN) {
             return LOSE;
         }
         if (this == LOSE) {

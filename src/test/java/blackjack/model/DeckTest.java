@@ -14,8 +14,8 @@ class DeckTest {
         List<Card> cards = List.of(new Card(Suit.HEART, Rank.TEN));
         Deck deck = new Deck(new FixShuffleStrategy(cards));
 
-        List<String> playerList = List.of("pobi", "james");
-        Players players = new Players(playerList);
+        List<Player> allPlayers = List.of(new Player("pobi", 1000), new Player("james", 1000));
+        Players players = new Players(allPlayers);
         Dealer dealer = new Dealer();
 
         deck.provideInitCards(players, dealer);
@@ -30,7 +30,7 @@ class DeckTest {
     @Test
     @DisplayName("카드 추가 지급 정상")
     void test_provide_one_card_success() {
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", 1000);
         List<Card> cards = List.of(new Card(Suit.HEART, Rank.TEN));
         Deck deck = new Deck(new FixShuffleStrategy(cards));
 
