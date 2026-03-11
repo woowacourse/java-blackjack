@@ -27,6 +27,19 @@ public class BlackjackController {
     }
 
     public void run() {
+        Players players = setupPlayers();
+        Dealer dealer = new Dealer();
+
+        initCards(players, dealer);
+        hit(players, dealer);
+
+        displayGameSummary(players, dealer);
+        displayGameResult(players, dealer);
+
+        inputView.closeScanner();
+    }
+
+    private Players setupPlayers() {
         List<String> playerNames = retry(() -> {
             String input = inputView.readPlayerName();
             return InputParser.parse(input);
@@ -40,25 +53,13 @@ public class BlackjackController {
             allPlayers.add(new Player(playerName, betAmount));
         }
 
-        Players players = new Players(allPlayers);
+        return new Players(allPlayers);
+    }
 
-        Dealer dealer = new Dealer();
-
+    private void initCards(Players players, Dealer dealer) {
         deck.provideInitCards(players, dealer);
         outputView.printInitCards(players.all(), dealer);
 
-        hit(players, dealer);
-
-        List<GameSummary> gameSummaries = players.calculateGameSummary(dealer);
-
-        for (GameSummary gameSummary : gameSummaries) {
-            outputView.printCardStatus(gameSummary);
-        }
-
-        List<GameResult> gameResults = players.calculateGameResult(dealer);
-        outputView.printGameResult(gameResults);
-
-        inputView.closeScanner();
     }
 
     private void hit(Players players, Dealer dealer) {
@@ -73,6 +74,20 @@ public class BlackjackController {
             outputView.printDealerHit();
             deck.provideOneCard(dealer);
         }
+    }
+
+    private void displayGameSummary(Players players, Dealer dealer) {
+        List<GameSummary> gameSummaries = players.calculateGameSummary(dealer);
+
+        for (GameSummary gameSummary : gameSummaries) {
+            outputView.printGameSummary(gameSummary);
+        }
+
+    }
+
+    private void displayGameResult(Players players, Dealer dealer) {
+        List<GameResult> gameResults = players.calculateGameResult(dealer);
+        outputView.printGameResult(gameResults);
     }
 
     private <T> T retry(Supplier<T> supplier) {
