@@ -1,5 +1,10 @@
 import domain.game.Result;
 import domain.game.ResultInfo;
+import domain.participant.Hand;
+import domain.participant.Money;
+import domain.participant.ParticipantInfo;
+import domain.participant.Player;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.EnumMap;
@@ -10,25 +15,37 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class ResultTest {
 
+    Map<Player, ResultInfo> playersResult;
+    Hand hand;
+    Result result;
+
+    @BeforeEach
+    void init(){
+        playersResult=new HashMap<>();
+        hand=new Hand();
+        playersResult.put(new Player(new ParticipantInfo("user1", hand),
+                new Money(30000)),ResultInfo.WIN);
+        playersResult.put(new Player(new ParticipantInfo("user2", hand),
+                new Money(20000)),ResultInfo.DEFEAT);
+        playersResult.put(new Player(new ParticipantInfo("user3", hand),
+                new Money(10000)),ResultInfo.DRAW);
+        result=new Result(playersResult);
+    }
+
     @Test
-    void 플레이어의_승패_판정을_역산하면_딜러의_승패_결과가_나온다() {
-        Map<String, ResultInfo> playersResult = new HashMap<>();
-        Map<ResultInfo, Integer> expectedDealerResult = new EnumMap<>(ResultInfo.class);
-
-        playersResult.put("user1", ResultInfo.WIN);
-        playersResult.put("user2", ResultInfo.WIN);
-        playersResult.put("user3", ResultInfo.WIN);
-        playersResult.put("user4", ResultInfo.DRAW);
-        playersResult.put("user5", ResultInfo.DRAW);
-        playersResult.put("user6", ResultInfo.DEFEAT);
-
-        Result result = new Result(playersResult);
-
-        expectedDealerResult.put(ResultInfo.WIN, 1);
-        expectedDealerResult.put(ResultInfo.DRAW, 2);
-        expectedDealerResult.put(ResultInfo.DEFEAT, 3);
+    void 딜러의_수익금은_플레이어의_수익금의_합을_음수로_만든것과_같다() {
+        int expectedDealerResult=-10000;
 
         assertThat(result.getDealerResult()).isEqualTo(expectedDealerResult);
+    }
 
+    @Test
+    void 플레이어들의_수익금을_계산할_수_있다() {
+        Map<String, Integer> expectedPlayersYield=new HashMap<>();
+        expectedPlayersYield.put("user1", 30000);
+        expectedPlayersYield.put("user2", -20000);
+        expectedPlayersYield.put("user3", 0);
+
+        assertThat(expectedPlayersYield).isEqualTo(result.calculatePlayerYield(result.getPlayersResult()));
     }
 }
