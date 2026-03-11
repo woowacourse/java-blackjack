@@ -3,17 +3,14 @@ package domain.player;
 import expcetion.BlackjackException;
 import expcetion.ExceptionMessage;
 
-public class Name {
+public record Name(String name) {
 
     private static final int GAMBLER_NAME_MAX_LENGTH = 10;
     private static final int GAMBLER_NAME_MIN_LENGTH = 2;
     private static final String MATCH_NUMBER_PATTERN = ".*\\d.*";
 
-    private final String name;
-
-    public Name(String name) {
+    public Name {
         validate(name);
-        this.name = name;
     }
 
     private static void validate(String name) {
@@ -32,8 +29,5 @@ public class Name {
             throw new BlackjackException(ExceptionMessage.NAME_LENGTH_ERROR);
         }
     }
-
-    public String getName() {
-        return name;
-    }
 }
+

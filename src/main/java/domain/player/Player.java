@@ -6,16 +6,10 @@ import java.util.List;
 
 public abstract class Player {
 
-    protected final Name name;
     protected final HandCard handCard;
 
-    protected Player(Name name) {
-        this.name = name;
+    protected Player() {
         this.handCard = new HandCard();
-    }
-
-    public String getName() {
-        return name.getName();
     }
 
     public void deal(CardDeck cardDeck) {
@@ -32,6 +26,10 @@ public abstract class Player {
 
     public List<String> getCardInfo() {
         return handCard.cardInfos();
+    }
+
+    public boolean isBlackJack() {
+        return handCard.isBlackJack();
     }
 
 }

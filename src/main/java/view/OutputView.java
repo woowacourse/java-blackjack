@@ -4,6 +4,7 @@ import dto.BlackjackResult;
 import dto.MatchResultLog;
 import dto.PlayerCardInfo;
 import java.util.List;
+import java.util.Map;
 
 public class OutputView {
 
@@ -12,6 +13,10 @@ public class OutputView {
 
     public static void printStartMessage() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
+    }
+
+    public static void printBettingMessage(String name) {
+        System.out.println(name + "의 배팅금액은?");
     }
 
     public static void printInitMessage(List<String> names) {
@@ -23,12 +28,20 @@ public class OutputView {
         System.out.println("딜러카드: " + card);
     }
 
-    public static void printPlayerCards(PlayerCardInfo playerCardInfo) {
-        System.out.println(playerCardInfo.name() + " " + String.join(", ", playerCardInfo.card()));
+    public static void printGamblerCards(String name, PlayerCardInfo playerCardInfo) {
+        System.out.println(name + "카드 : " + String.join(", ", playerCardInfo.card()));
+    }
+
+    public static void printDealerCards(PlayerCardInfo playerCardInfo) {
+        System.out.println("딜러카드 : " + String.join(", ", playerCardInfo.card()));
     }
 
     public static void printPlayerBust(String name) {
         System.out.println(name + " 버스트!");
+    }
+
+    public static void printPlayerBlackJack(String name) {
+        System.out.println(name + " 블랙잭!");
     }
 
     public static void askHit(String name) {
@@ -39,20 +52,25 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printFinalPlayer(PlayerCardInfo playerCardInfo) {
-        System.out.println(playerCardInfo.name() + "카드: " +
+    public static void printFinalGambler(String name, PlayerCardInfo playerCardInfo) {
+        System.out.println(name + "카드: " +
+                String.join(", ", playerCardInfo.card()) + " - 결과: " + playerCardInfo.score());
+    }
+
+    public static void printFinalDealer(PlayerCardInfo playerCardInfo) {
+        System.out.println("딜러카드: " +
                 String.join(", ", playerCardInfo.card()) + " - 결과: " + playerCardInfo.score());
     }
 
     public static void printFinalResultHeader() {
         System.out.println();
-        System.out.println("## 최종 승패");
+        System.out.println("## 최종 수익");
     }
 
     public static void printResult(BlackjackResult result) {
-        System.out.println("딜러: " + result.winCount() + "승 " + result.lossCount() + "패 " + result.drawCount() + "무");
-        for (MatchResultLog gamblerResult : result.matchResultLog()) {
-            System.out.println(gamblerResult.name() + ": " + gamblerResult.matchResult().getName());
+        System.out.println("딜러: " + result.dealerProfit());
+        for (Map.Entry<String, Integer> entry : result.matchResultLog().entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
         }
     }
 }
