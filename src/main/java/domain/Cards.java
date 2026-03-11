@@ -81,6 +81,9 @@ public class Cards {
     }
 
     private boolean isOverBurstThreshold(int sum) {
-        return true;
+        if (sum > 21) {
+            return true;
+        }
+        return false;
     }
 }
