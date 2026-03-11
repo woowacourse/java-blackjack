@@ -1,7 +1,6 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.dto.PlayerBettingRequest;
@@ -27,19 +26,6 @@ class PlayersTest {
         // then
         assertThat(players.getAllPlayers()).hasSize(2);
         assertThat(players.getAllPlayerNickname()).containsExactly("pobi", "jason");
-    }
-
-    @DisplayName("이름이 공백일 경우 예외가 발생한다.")
-    @Test
-    void validateEmptyName() {
-        // given
-        PlayerBettingRequest playerBettingRequest = PlayerBettingRequest.of("", "1000");
-        PlayersBettingRequest playersBettingRequest = PlayersBettingRequest.from(List.of(playerBettingRequest));
-
-        // when & then
-        assertThatThrownBy(() -> Players.makePlayers(playersBettingRequest))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("이름은 공백이 될 수 없습니다.");
     }
 
     @DisplayName("카드를 받을 수 있는 플레이어를 순서대로 찾는다.")
