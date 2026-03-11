@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import blackjack.domain.betting.BettingMoney;
 import java.util.Arrays;
 import java.util.List;
 
@@ -34,11 +33,11 @@ public class InputView {
         });
     }
 
-    public static List<BettingMoney> readBettingMonies(final List<String> names) {
+    public static List<Integer> readBettingAmounts(final List<String> names) {
         return names.stream()
                 .map(name -> ConsoleInput.readWithRetry(() -> {
                     System.out.printf(READ_PLAYER_BETTING_MONEY_MESSAGE, name);
-                    return new BettingMoney(parseBettingAmount(ConsoleInput.readLine()));
+                    return parseBettingAmount(ConsoleInput.readLine());
                 }))
                 .toList();
     }
@@ -66,7 +65,11 @@ public class InputView {
 
     private static int parseBettingAmount(final String input) {
         try {
-            return Integer.parseInt(input);
+            final int amount = Integer.parseInt(input);
+            if (amount <= 0) {
+                throw new IllegalArgumentException(INVALID_BETTING_AMOUNT_MESSAGE);
+            }
+            return amount;
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException(INVALID_BETTING_AMOUNT_MESSAGE);
         }
