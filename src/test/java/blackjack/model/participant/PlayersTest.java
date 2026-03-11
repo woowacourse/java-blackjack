@@ -8,8 +8,6 @@ import org.junit.jupiter.api.Test;
 
 class PlayersTest {
 
-    static final int ADJUST_VALUE = 10;
-
     @Test
     void 구분자를_기준으로_전체_플레이어_리스트를_생성한다() {
         // given
