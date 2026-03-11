@@ -5,6 +5,7 @@ import domain.card.Pattern;
 import domain.card.Rank;
 import domain.participant.Dealer;
 import domain.participant.Hand;
+import domain.participant.Player;
 import domain.participant.PlayerName;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -75,5 +76,23 @@ class DealerTest {
         boolean result = new Dealer(dummyHand).shouldHit();
 
         assertThat(result).isFalse();
+    }
+
+    @Test
+    @DisplayName("딜러의 블랙잭 여부를 판단할 수 있다.")
+    void isBlackjack_returnsTrue_whenPlayerHasBlackjack(){
+        Dealer blackJackDealer = new Dealer(dummyHand);
+        blackJackDealer.keepCard(new Card(Rank.ACE, Pattern.CLOVER));
+        blackJackDealer.keepCard(new Card(Rank.JACK, Pattern.CLOVER));
+
+        Dealer blackJackDealer2 = new Dealer(new Hand());
+        blackJackDealer2.keepCard(new Card(Rank.ACE, Pattern.HEART));
+        blackJackDealer2.keepCard(new Card(Rank.EIGHT, Pattern.HEART));
+
+        boolean success = blackJackDealer.isBlackjack();
+        boolean fail = blackJackDealer2.isBlackjack();
+
+        assertThat(success).isTrue();
+        assertThat(fail).isFalse();
     }
 }
