@@ -3,6 +3,7 @@ package blackjack.view;
 import blackjack.util.InputValidator;
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class InputView {
@@ -37,6 +38,10 @@ public class InputView {
             return false;
         }
 
-        throw new IllegalArgumentException(YES + "또는 " + NO + "만 입력 가능합니다.");
+        throw new IllegalArgumentException(YES + "또는 " + NO + "만 입력 가능합니다");
+    }
+
+    public int inputBetAmount() {
+        return 0;
     }
 }

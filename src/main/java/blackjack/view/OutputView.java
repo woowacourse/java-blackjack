@@ -18,6 +18,7 @@ public class OutputView {
     private static final String DEALER_PICK_CARD = NEW_LINE + "딜러는 16이하라 한 장의 카드를 더 받았습니다." + NEW_LINE;
     private static final String TOTAL_RESULT = NEW_LINE + "## 최종 승패";
     private static final String DEALER_RESULT = "%s: %s" + NEW_LINE;
+    private static final String BET_AMOUNT_INPUT_PROMPT = "%s의 배팅 금액은?" + NEW_LINE;
 
     public void printPlayerNamesInputPrompt() {
         System.out.println(PLAYER_NAME_INPUT_PROMPT);
@@ -86,5 +87,9 @@ public class OutputView {
 
     public void printNewLine() {
         System.out.print(NEW_LINE);
+    }
+
+    public void printBetAmountInputPrompt(String name) {
+        System.out.printf(BET_AMOUNT_INPUT_PROMPT, name);
     }
 }

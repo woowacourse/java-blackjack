@@ -5,12 +5,19 @@ import blackjack.model.Hands;
 
 public class Player extends Participant {
 
-    private Player(String name, Hands hands) {
+    private final int betAmount;
+
+    private Player(String name, Hands hands, int betAmount) {
         super(name, hands);
+        this.betAmount = betAmount;
     }
 
-    public static Player of(String name) {
-        return new Player(name, Hands.empty());
+    public static Player of(String name, int betAmount) {
+        return new Player(
+                name,
+                Hands.empty(),
+                betAmount
+        );
     }
 
     @Override
@@ -23,6 +30,4 @@ public class Player extends Participant {
     public boolean canPick() {
         return !hands.isTotalScoreOver(BLACKJACK_SCORE);
     }
-
-
 }

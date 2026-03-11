@@ -58,19 +58,19 @@ class DealerTest {
         CardDeck cardDeckForMustPickTen = CardDeck.of(mustPickTen);
         dealer.pickInitialCards(cardDeckForMustPickTen);
 
-        Player player1 = Player.of("player1");
+        Player player1 = Player.of("player1", 1000);
 
         CardDeck cardDeckForMustPickFive = CardDeck.of(mustPickFive);
         player1.pickAdditionalCard(cardDeckForMustPickFive);
         player1.pickAdditionalCard(cardDeckForMustPickFive);
 
-        Player player2 = Player.of("player2");
+        Player player2 = Player.of("player2", 1000);
 
         CardDeck cardDeckForMustPickAce = CardDeck.of(mustPickAce);
         player2.pickAdditionalCard(cardDeckForMustPickTen);
         player2.pickAdditionalCard(cardDeckForMustPickAce);
 
-        Player player3 = Player.of("player3");
+        Player player3 = Player.of("player3", 1000);
 
         player3.pickAdditionalCard(cardDeckForMustPickTen);
         player3.pickAdditionalCard(cardDeckForMustPickTen);

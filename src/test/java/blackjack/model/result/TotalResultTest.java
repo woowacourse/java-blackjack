@@ -23,19 +23,19 @@ class TotalResultTest {
         dealer.pickAdditionalCard(createCardDeckOf(Rank.TEN));
         dealer.pickAdditionalCard(createCardDeckOf(Rank.TEN));  //20
 
-        Player player1 = Player.of("player1");
+        Player player1 = Player.of("player1", 1000);
         player1.pickAdditionalCard(createCardDeckOf(Rank.TEN));
         player1.pickAdditionalCard(createCardDeckOf(Rank.ACE)); // 21
 
-        Player player2 = Player.of("player2");
+        Player player2 = Player.of("player2", 1000);
         player2.pickAdditionalCard(createCardDeckOf(Rank.TEN));
         player2.pickAdditionalCard(createCardDeckOf(Rank.TEN)); // 20
 
-        Player player3 = Player.of("player3");
+        Player player3 = Player.of("player3", 1000);
         player3.pickAdditionalCard(createCardDeckOf(Rank.TEN));
         player3.pickAdditionalCard(createCardDeckOf(Rank.FIVE)); // 15
 
-        Player player4 = Player.of("player4");
+        Player player4 = Player.of("player4", 1000);
         player3.pickAdditionalCard(createCardDeckOf(Rank.TEN));
         player3.pickAdditionalCard(createCardDeckOf(Rank.FIVE)); // 15
 

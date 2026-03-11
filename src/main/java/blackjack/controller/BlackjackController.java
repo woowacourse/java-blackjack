@@ -46,7 +46,7 @@ public class BlackjackController {
     }
 
     public void run() {
-        List<Player> players = initPlayers();
+        List<Player> players = createPlayers();
         Dealer dealer = new Dealer();
 
         CardDeck cardDeck = CardDeck.of(pickStrategy);
@@ -64,12 +64,16 @@ public class BlackjackController {
         printGameResult(players, dealer);
     }
 
-    private List<Player> initPlayers() {
+    private List<Player> createPlayers() {
         outputView.printPlayerNamesInputPrompt();
         List<String> names = inputView.inputPlayerNames();
 
         return names.stream()
-                .map(Player::of).toList();
+                .map(name -> {
+                    outputView.printBetAmountInputPrompt(name);
+                    int amount = inputView.inputBetAmount();
+                    return Player.of(name, amount);
+                }).toList();
     }
     
     private void distributeInitialCards(
