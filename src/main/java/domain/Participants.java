@@ -132,7 +132,7 @@ public class Participants {
         Money dealerProfit = new Money(0);
 
         for (User user : players) {
-            GameResult isUserWin = dealer.judgeResultForUser(user.getTotalScore());
+            GameResult isUserWin = dealer.judgeResultForUser(user);
             Money earnedMoney = user.updateProfitBy(isUserWin);
             dealerProfit = dealerProfit.subtract(earnedMoney);
             participantsProfit.put(user.getName(), earnedMoney);

@@ -49,4 +49,8 @@ public class User {
         this.profit = earnedMoney;
         return earnedMoney;
     }
+
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
+    }
 }

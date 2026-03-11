@@ -31,24 +31,28 @@ public class Dealer {
         return hand.getFinalDisplay();
     }
 
-    public GameResult judgeResultForUser(int userTotalScore) {
+    public GameResult judgeResultForUser(User user) {
+        int userTotalScore = user.getTotalScore();
+        boolean isUserBlackjack = user.isBlackjack();
+        boolean isDealerBlackjack = this.hand.isBlackjack();
+
         // 유저 버스트
         if (userTotalScore > MAXIMUM_TOTAL_SCORE) {
             return GameResult.LOSE;
         }
 
         // 딜러와 유저 둘 다 블랙잭
-        if ((userTotalScore == MAXIMUM_TOTAL_SCORE) && (hand.getHandTotalScore() == MAXIMUM_TOTAL_SCORE)) {
+        if (isUserBlackjack && isDealerBlackjack) {
             return GameResult.DRAW;
         }
 
         // 유저만 블랙잭
-        if (userTotalScore == MAXIMUM_TOTAL_SCORE) {
+        if (isUserBlackjack) {
             return GameResult.BLACKJACK;
         }
 
         // 딜러만 블랙잭
-        if (hand.getHandTotalScore() == MAXIMUM_TOTAL_SCORE) {
+        if (isDealerBlackjack) {
             return GameResult.LOSE_BY_BLACKJACK;
         }
 

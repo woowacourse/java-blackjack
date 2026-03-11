@@ -53,4 +53,8 @@ public class Hand {
     public int getHandTotalScore() {
         return handTotalScore;
     }
+
+    public boolean isBlackjack() {
+        return (getHandTotalScore() == MAXIMUM_TOTAL_SCORE) && (cards.size() == 2);
+    }
 }
