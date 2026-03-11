@@ -24,4 +24,12 @@ public abstract class Participant {
     public boolean isBust() {
         return hand.getScore().isBust();
     }
+
+    public Score getScore() {
+        return hand.getScore();
+    }
+
+    public int getScoreValue() {
+        return hand.getScore().value();
+    }
 }

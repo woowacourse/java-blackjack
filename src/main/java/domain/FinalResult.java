@@ -20,4 +20,12 @@ public class FinalResult {
     public ResultType getResultType() {
         return resultType;
     }
+
+    public String getNameText() {
+        return name.getName();
+    }
+
+    public String getResultText() {
+        return resultType.getType();
+    }
 }

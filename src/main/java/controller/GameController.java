@@ -38,7 +38,7 @@ public class GameController {
     }
 
     private void addPlayerCards(BlackjackGame blackjackGame, Player player) {
-        while (!player.isBust() && InputView.checkAddCard(player.getName().getName())) {
+        while (!player.isBust() && InputView.checkAddCard(player.getNameValue())) {
             blackjackGame.addPlayerCard(player);
             OutputView.printPlayerCardStatus(PlayerDto.from(player));
         }

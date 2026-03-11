@@ -17,7 +17,7 @@ public class Card {
         return cardNumber;
     }
 
-    public CardShape getCardShape() {
-        return cardShape;
+    public String getDisplayName() {
+        return cardNumber.getSymbol() + cardShape.getName();
     }
 }

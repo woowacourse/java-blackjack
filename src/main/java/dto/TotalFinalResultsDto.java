@@ -14,8 +14,8 @@ public record TotalFinalResultsDto(
         List<String> totalResults = new ArrayList<>();
         for (FinalResult finalResult : finalResults) {
             totalResults.add(String.format("%s: %s%n",
-                    finalResult.getName().getName(),
-                    finalResult.getResultType().getType()));
+                    finalResult.getNameText(),
+                    finalResult.getResultText()));
         }
 
         return new TotalFinalResultsDto(totalResults);

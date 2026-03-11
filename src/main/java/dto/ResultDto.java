@@ -1,5 +1,6 @@
 package dto;
 
+import domain.Card;
 import domain.Dealer;
 import domain.Participant;
 
@@ -11,19 +12,19 @@ public record ResultDto(
 ) {
     public static ResultDto from(Participant participant) {
         List<String> cardInfo = participant.getHandCards().stream()
-                .map(card -> card.getCardNumber().getSymbol() + card.getCardShape().getName())
+                .map(Card::getDisplayName)
                 .toList();
 
-        return new ResultDto(cardInfo, participant.getHand().getScore().value());
+        return new ResultDto(cardInfo, participant.getScoreValue());
     }
 
     public static ResultDto fromDealerInitial(Dealer dealer) {
         List<String> cardInfo = dealer.getHandCards().stream()
                 .limit(1)
-                .map(card -> card.getCardNumber().getSymbol() + card.getCardShape().getName())
+                .map(Card::getDisplayName)
                 .toList();
 
-        return new ResultDto(cardInfo, dealer.getHand().getScore().value());
+        return new ResultDto(cardInfo, dealer.getScoreValue());
     }
 
 }

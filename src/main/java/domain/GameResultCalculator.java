@@ -9,8 +9,7 @@ public class GameResultCalculator {
 
     private static FinalResult checkFinalResult(Player player, Dealer dealer) {
         return FinalResult.from(player.getName(),
-                getResultType(player.getHand().getScore(),
-                        dealer.getHand().getScore()));
+                getResultType(player.getScore(), dealer.getScore()));
     }
 
     private static ResultType getResultType(Score playerScore, Score dealerScore) {
