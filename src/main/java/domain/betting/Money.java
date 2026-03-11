@@ -25,6 +25,14 @@ public record Money(
         return new Money(this.money);
     }
 
+    public Money addMoney(Money other) {
+        return new Money(other.money + this.money);
+    }
+
+    public Money reverseMoney() {
+        return new Money(this.money * -1);
+    }
+
     private static void validateMoneyIsNumber(String money) {
         try {
             Double.parseDouble(money);

@@ -42,5 +42,20 @@ public class BettingsTest {
                 .isEqualTo(expectedBettingMoney);
     }
 
+    @Test
+    void 딜러의_수익금을_계산한다() {
+        double tenThousand = 1000.0;
+        Money bettingMoney = Money.from(tenThousand);
+        Player testPlayer = Player.from(new PlayerName("test"));
+        Bettings bettings = new Bettings();
+        bettings.bet(testPlayer, bettingMoney);
+
+        Money actualDealerProfit = bettings.calculateDealerProfit();
+        Money expectedDealerProfit = bettingMoney.reverseMoney();
+
+        Assertions.assertThat(actualDealerProfit)
+                .isEqualTo(expectedDealerProfit);
+    }
+
 
 }

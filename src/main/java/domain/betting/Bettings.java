@@ -7,6 +7,8 @@ import java.util.Map;
 
 public class Bettings {
 
+    private static final int DEALER_INITIAL_PROFIT = 0;
+
     private Map<Player, Money> bettings;
 
     public Bettings() {
@@ -24,6 +26,13 @@ public class Bettings {
     public Money calculateBettingMoney(Player player, BettingRate bettingRate) {
         Money money = bettings.get(player);
         return bettings.put(player, bettingRate.payOut(money));
+    }
+
+    public Money calculateDealerProfit() {
+        return bettings.values()
+                .stream()
+                .reduce(Money.from(DEALER_INITIAL_PROFIT), Money::addMoney)
+                .reverseMoney();
     }
 
 }
