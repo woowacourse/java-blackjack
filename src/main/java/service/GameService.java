@@ -42,27 +42,20 @@ public class GameService {
         playerGroups.drawDealerCard(cardDeck.draw());
     }
 
-    // 플레이어들 정보 전달
     public List<ParticipantResult> getPlayersStatus() {
         return playerGroups.playersStatus();
     }
 
-    // 히트
     public void hit(Player player) {
         player.addCard(cardDeck.draw());
     }
 
-    // 딜러 히트
     public boolean dealerHit() {
         if (playerGroups.getDealer().isHit()) {
             playerGroups.getDealer().addCard(cardDeck.draw());
             return true;
         }
         return false;
-    }
-
-    public Map<String, Integer> getPlayersTotalScore() {
-        return playerGroups.getPlayerTotalScore();
     }
 
     public Map<String, WinStatus> result() {
