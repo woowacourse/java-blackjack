@@ -6,15 +6,14 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.stream.Collectors;
 
 public class GameTable {
 
     private final Queue<Participant> participants;
-    private final ScoreBoard scoreBoard;
 
     public GameTable() {
         this.participants = new LinkedList<>();
-        this.scoreBoard = new ScoreBoard();
     }
 
     public void addParticipant(Participant participant) {
@@ -31,11 +30,16 @@ public class GameTable {
     }
 
     public List<GameStatus> endedGameStatus() {
-        return scoreBoard.gameStatuses();
+        List<GameStatus> gameStatuses = new ArrayList<>();
+        for (Participant participant : participants) {
+            gameStatuses.add(participant.status());
+        }
+
+        return gameStatuses;
     }
 
     public void playCurrentPlayer() {
-        if (isPlayerExist()) {
+        if (isPlayer()) {
             currentPlayer().draw();
         }
     }
@@ -58,17 +62,19 @@ public class GameTable {
         return participants.peek();
     }
 
-    public boolean isPlayerExist() {
-        return !participants.isEmpty() && !hasOnlyDealer();
+    public boolean isPlayer() {
+        return !participants.isEmpty() && !participants.peek().isDealer();
     }
 
-    public void recordResult() {
-        Participant current = participants.poll();
-        scoreBoard.record(current.status());
+    public void rotateParticipant() {
+        participants.add(participants.poll());
     }
 
     public List<GameResult> result() {
-        return scoreBoard.playerResults();
+        ScoreBoard scoreBoard = new ScoreBoard();
+        List<GameStatus> playersGameStatus = playerStatuses();
+        GameStatus dealerGameStatus = dealer().status();
+        return scoreBoard.calculateGameResults(playersGameStatus, dealerGameStatus);
     }
 
     public String currentPlayerName() {
@@ -83,12 +89,13 @@ public class GameTable {
         return currentParticipant().isPlayable();
     }
 
-    private Participant dealer() {
-        return participants.stream().filter(Participant::isDealer).findFirst().orElse(null);
+    private List<GameStatus> playerStatuses() {
+        return participants.stream().filter(participant -> !participant.isDealer())
+                .map(Participant::status).collect(Collectors.toList());
     }
 
-    private boolean hasOnlyDealer() {
-        return participants.stream().allMatch(Participant::isDealer);
+    private Participant dealer() {
+        return participants.stream().filter(Participant::isDealer).findFirst().orElse(null);
     }
 
     private Participant currentParticipant() {

@@ -1,4 +1,6 @@
 package dto;
 
-public record GameResult(String name, String winningCondition) {
+import domain.WinningCondition;
+
+public record GameResult(String name, WinningCondition winningCondition) {
 }

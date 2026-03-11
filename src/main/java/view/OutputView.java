@@ -2,6 +2,7 @@ package view;
 
 import domain.Card;
 import domain.ParticipantsRole;
+import domain.WinningCondition;
 import dto.GameResult;
 import dto.GameStatus;
 import java.util.ArrayList;
@@ -49,13 +50,15 @@ public class OutputView {
 
     private static void playersWinningLog(List<GameResult> gameResults) {
         gameResults.forEach(c -> System.out.println(
-                OutputMessage.PLAYER_WINNING_CONDITION.description(c.name(), c.winningCondition())));
+                OutputMessage.PLAYER_WINNING_CONDITION.description(c.name(), c.winningCondition().message())));
     }
 
     private static void statisticDealer(List<GameResult> gameResults) {
-        long playersWin = gameResults.stream().filter(cond -> cond.winningCondition().equals(WIN)).count();
+        long playersWin = gameResults.stream().filter(cond -> cond.winningCondition().equals(WinningCondition.WIN)).count();
+        long playersDraw = gameResults.stream().filter(cond -> cond.winningCondition().equals(WinningCondition.DRAW)).count();
+
         System.out.println(
-                OutputMessage.DEALER_WINNING_CONDITION.description(gameResults.size() - playersWin, playersWin));
+                OutputMessage.DEALER_WINNING_CONDITION.description(gameResults.size() - playersWin - playersDraw, playersDraw, playersWin));
     }
 
     public static void printTaskDivider() {

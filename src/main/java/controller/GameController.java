@@ -38,7 +38,8 @@ public class GameController {
     }
 
     private void playerGamePhase() {
-        while (gameTable.isPlayerExist()) {
+        gameTable.rotateParticipant();
+        while (gameTable.isPlayer()) {
             playerExecute(gameTable.currentPlayerName());
         }
         OutputView.printTaskDivider();
@@ -49,7 +50,6 @@ public class GameController {
             gameTable.playDealer();
             OutputView.dealerStay();
         }
-        gameTable.recordResult();
         OutputView.printTaskDivider();
     }
 
@@ -98,7 +98,7 @@ public class GameController {
             playLoop(name);
         }
 
-        gameTable.recordResult();
+        gameTable.rotateParticipant();
     }
 
     private void initProcess(String select) {
