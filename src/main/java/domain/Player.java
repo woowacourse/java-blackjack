@@ -56,8 +56,8 @@ public class Player {
         bettingScore = money;
     }
 
-    public void resetMoney() {
-        bettingScore = 0;
+    public void loseMoney() {
+        bettingScore -= bettingScore*2 ;
     }
 
     public String getName() {
