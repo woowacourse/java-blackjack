@@ -15,6 +15,28 @@ public class Card {
         this.suit = suit;
     }
 
+    public int calculateScore() {
+        if (rank.equals(Rank.J) || rank.equals(Rank.Q) || rank.equals(Rank.K)) {
+            return PolicyConstant.JQK;
+        }
+        if (rank.equals(Rank.ACE)) {
+            return PolicyConstant.ACE;
+        }
+        return Integer.parseInt(rank.getRank());
+    }
+
+    public boolean isAce() {
+        return rank.isAce();
+    }
+
+    public Rank getRank() {
+        return rank;
+    }
+
+    public Suit getSuit() {
+        return suit;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) {
@@ -27,23 +49,5 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(rank, suit);
-    }
-
-    public int calculateScore() {
-        if (rank.equals(Rank.J) || rank.equals(Rank.Q) || rank.equals(Rank.K)) {
-            return PolicyConstant.JQK;
-        }
-        if (rank.equals(Rank.ACE)) {
-            return PolicyConstant.ACE;
-        }
-        return Integer.parseInt(rank.getRank());
-    }
-
-    public boolean isAce() {
-        return rank.equals(Rank.ACE);
-    }
-
-    public String getName() {
-        return rank.getRank() + suit.getSuit();
     }
 }
