@@ -22,10 +22,6 @@ public enum Result {
         return DRAW;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
     private static boolean isPlayerWin(Score playerSum, Score dealerSum) {
         return playerSum.isLessThanOrEqualTo(BLACKJACK_MAX_SCORE) && playerSum.isGreaterThan(dealerSum);
     }
@@ -33,5 +29,9 @@ public enum Result {
     private static boolean isPlayerLose(Score playerSum, Score dealerSum) {
         return (playerSum.isLessThan(dealerSum) && dealerSum.isLessThanOrEqualTo(BLACKJACK_MAX_SCORE) || (playerSum.isGreaterThan(BLACKJACK_MAX_SCORE))
                 && dealerSum.isLessThanOrEqualTo(BLACKJACK_MAX_SCORE));
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

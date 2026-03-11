@@ -34,5 +34,4 @@ public abstract class Participant {
     public Hand getCards() {
         return hand;
     }
-
 }

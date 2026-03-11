@@ -18,14 +18,6 @@ public class Card {
         return rank.isAce();
     }
 
-    public Suit getSuit() {
-        return suit;
-    }
-
-    public Rank getRank() {
-        return rank;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) {
@@ -38,5 +30,13 @@ public class Card {
     @Override
     public int hashCode() {
         return Objects.hash(suit, rank);
+    }
+
+    public Suit getSuit() {
+        return suit;
+    }
+
+    public Rank getRank() {
+        return rank;
     }
 }

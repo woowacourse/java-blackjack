@@ -30,6 +30,10 @@ public class ResultView {
         printEmptyLine();
     }
 
+    private void printEmptyLine() {
+        System.out.println();
+    }
+
     private String joinPlayersNameByDelimiter(List<Player> players) {
         return players.stream()
                 .map(Player::getName)
@@ -107,9 +111,5 @@ public class ResultView {
                 participant.getName().getValue() + "카드: " + cardsToString(
                         participant.getCards().getCards()) + " - 결과: "
                         + participant.getTotalSum().getValue());
-    }
-
-    private void printEmptyLine() {
-        System.out.println();
     }
 }

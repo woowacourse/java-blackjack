@@ -29,10 +29,6 @@ public class Hand {
         return cards.size();
     }
 
-    public List<Card> getCards() {
-        return List.copyOf(cards);
-    }
-
     public Score totalSum() {
         return Rank.totalSum(getAceAmount(), getSumWithoutAce());
     }
@@ -48,5 +44,9 @@ public class Hand {
                 .filter(card -> !card.isAce())
                 .map(card -> card.getRank().getScore())
                 .reduce(new Score(0), Score::add);
+    }
+
+    public List<Card> getCards() {
+        return List.copyOf(cards);
     }
 }

@@ -27,8 +27,8 @@ public enum Rank {
     }
 
     public static Score totalSum(int aceAmount, Score sum) {
-        for (int i = 1; i <= aceAmount; i++) {
-            sum = sum.add(decideAceValue(sum, aceAmount - i));
+        for (int i = 0; i < aceAmount; i++) {
+            sum = sum.add(decideAceValue(sum, aceAmount - i - 1));
         }
         return sum;
     }
@@ -40,7 +40,6 @@ public enum Rank {
         }
         return ACE_MIN_SCORE;
     }
-
 
     public boolean isAce() {
         return this == Rank.ACE;

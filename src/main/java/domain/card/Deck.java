@@ -23,19 +23,6 @@ public class Deck {
         this.cards = new LinkedList<>(cards);
     }
 
-    public List<Card> drawWithAmount(int amount) {
-        validateAmountIsPositive(amount);
-        return IntStream.range(0, amount)
-                .mapToObj(i -> draw())
-                .toList();
-    }
-
-    private void validateAmountIsPositive(int amount) {
-        if (amount <= 0) {
-            throw new IllegalArgumentException(INVALID_DRAW_AMOUNT);
-        }
-    }
-
     public Card draw() {
         validateIsEmpty();
         return cards.poll();
@@ -47,4 +34,16 @@ public class Deck {
         }
     }
 
+    public List<Card> drawWithAmount(int amount) {
+        validateIsPositive(amount);
+        return IntStream.range(0, amount)
+                .mapToObj(i -> draw())
+                .toList();
+    }
+
+    private void validateIsPositive(int value) {
+        if (value <= 0) {
+            throw new IllegalArgumentException(INVALID_DRAW_AMOUNT);
+        }
+    }
 }

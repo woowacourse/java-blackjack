@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-public class CardsTest {
+public class HandTest {
     @Test
     void 카드_더미가_정상적으로_생성되어야_한다() {
         assertDoesNotThrow(() -> new Hand());

@@ -9,24 +9,32 @@ public class Score {
         this.value = value;
     }
 
-    public boolean isBust() {
-        return isGreaterThan(Rank.BLACKJACK_MAX_SCORE);
-    }
-
-    public static Score zero() {
-        return new Score(0);
-    }
-
     public Score add(Score target) {
         return new Score(target.value + this.value);
     }
 
-    public boolean isLessThanOrEqualTo(Score target) {
-        return value <= target.value;
+    public Score sub(Score target) {
+        return new Score(value - target.value);
     }
 
-    public int getValue() {
-        return value;
+    public boolean isGreaterThan(Score target) {
+        return value > target.value;
+    }
+
+    public boolean isGreaterThanOrEqualTo(Score target) {
+        return value >= target.value;
+    }
+
+    public boolean isGreaterThanOrEqualTo(int target) {
+        return value >= target;
+    }
+
+    public boolean isLessThan(Score target) {
+        return value < target.value;
+    }
+
+    public boolean isLessThanOrEqualTo(Score target) {
+        return value <= target.value;
     }
 
     @Override
@@ -46,23 +54,7 @@ public class Score {
         return Objects.hash(value);
     }
 
-    public boolean isGreaterThan(Score dealerSum) {
-        return value > dealerSum.value;
-    }
-
-    public boolean isGreaterThanOrEqualTo(Score target) {
-        return value >= target.value;
-    }
-
-    public Score sub(Score target) {
-        return new Score(value - target.value);
-    }
-
-    public boolean isGreaterThanOrEqualTo(int target) {
-        return value >= target;
-    }
-
-    public boolean isLessThan(Score dealerSum) {
-        return value < dealerSum.value;
+    public int getValue() {
+        return value;
     }
 }
