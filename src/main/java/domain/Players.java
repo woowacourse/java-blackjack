@@ -4,6 +4,7 @@ import common.ErrorMessage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 public class Players {
     private static final int MAX_PLAYER_NUMBER = 5;
@@ -37,7 +38,7 @@ public class Players {
     private static void validateNameUniqueness(List<String> playerNames) {
         long uniqueCount = playerNames.stream().distinct().count();
         if (uniqueCount != playerNames.size()) {
-            throw new IllegalArgumentException(ErrorMessage.NAME_UNIQUENESS_ERR.toString());
+            throw new IllegalArgumentException(ErrorMessage.NAME_UNIQUENESS_ERR.getMessage());
         }
     }
 
@@ -47,19 +48,25 @@ public class Players {
         }
     }
 
-    public Optional<Player> findCurrentUser() {
+    public Optional<Player> findNotStayPlayer() {
         return players.stream()
                 .filter(player -> !player.isFinished())
                 .findFirst();
     }
 
-    public void stand(Player player) {
+    public void executeHit(Player player, Supplier<Card> cardSupplier) {
         int index = players.indexOf(player);
         if (index != -1) {
-            players.set(index, player.stay());
+            players.set(index, player.hit(cardSupplier));
         }
     }
 
+    public void executeStand(Player player) {
+        int index = players.indexOf(player);
+        if (index != -1) {
+            players.set(index, player.stand());
+        }
+    }
 //    public void hitPlayer(Player targetPlayer, Supplier<Card> cardSupplier) {
 //        targetPlayer.hit(cardSupplier);
 //    }
