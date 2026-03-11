@@ -3,7 +3,6 @@ package blackjack.model.participant;
 import blackjack.model.card.Card;
 import blackjack.model.cardDeck.CardDeck;
 import blackjack.model.Hands;
-import blackjack.model.result.Result;
 import java.util.List;
 
 public class Dealer extends Participant {
@@ -33,28 +32,6 @@ public class Dealer extends Participant {
         return !hands.isTotalScoreOver(PICK_THRESHOLD);
     }
 
-    public Result determineResultOf(Player player) {
-        if (player.isBust()) {
-            return Result.LOSE;
-        }
-
-        if (this.isBust()) {
-            return Result.WIN;
-        }
-
-        if (hands.isTotalScoreOver(
-                player.getCurrentTotalScore())
-        ) {
-            return Result.LOSE;
-        }
-
-        if (player.getCurrentTotalScore() > hands.calculateTotalScore()) {
-            return Result.WIN;
-        }
-
-        return Result.DRAW;
-    }
-
     public List<Player> awardPrize(List<Player> players) {
         if (this.isBust()) {
             return List.copyOf(players);
@@ -72,7 +49,6 @@ public class Dealer extends Participant {
         }
 
         int dealerScore = this.getCurrentTotalScore();
-        System.out.println("dealerScore: " + dealerScore);
 
         return players.stream()
                 .map(player -> {
@@ -86,5 +62,11 @@ public class Dealer extends Participant {
 
                     return player.bust();
                 }).toList();
+    }
+
+    public int getProfit(List<Player> players) {
+        return (int) players.stream()
+                .mapToInt(Player::getPrize)
+                .sum();
     }
 }

@@ -3,9 +3,7 @@ package blackjack.controller;
 import blackjack.model.cardDeck.CardDeck;
 import blackjack.model.cardDeck.PickStrategy;
 import blackjack.model.participant.Dealer;
-import blackjack.model.participant.Participant;
 import blackjack.model.participant.Player;
-import blackjack.model.result.TotalResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -56,18 +54,15 @@ public class BlackjackController {
         players.forEach(
                 player -> askHitOrStand(cardDeck, player)
         );
-
-        players = players.stream()
-                .filter(Participant::isBust)
-                .map(Player::bust)
-                .toList();
+        players = applyBustToPlayers(players);
 
        drawUntilSeventeen(dealer, cardDeck);
+       players = dealer.awardPrize(players);
 
         openDealerHands(dealer);
         openPlayersHands(players);
 
-        printGameResult(players, dealer);
+        outputView.printPlayerPrizes(players);
     }
 
     private List<Player> createPlayers() {
@@ -104,8 +99,6 @@ public class BlackjackController {
                         player.getOpenedCards()
                 )
         );
-
-        outputView.printNewLine();
     }
 
     private void askHitOrStand(
@@ -121,6 +114,17 @@ public class BlackjackController {
     private boolean inputIsContinued(Player player) {
         outputView.printMoreCardInputPrompt(player.getName());
         return inputView.inputMoreCard();
+    }
+
+    public List<Player> applyBustToPlayers(List<Player> players) {
+        return players.stream()
+                .map(player -> {
+                    if (player.isBust()) {
+                        return player.bust();
+                    }
+
+                    return player;
+                }).toList();
     }
 
     private void drawUntilSeventeen(
@@ -142,22 +146,10 @@ public class BlackjackController {
     }
 
     private void openPlayersHands(List<Player> players) {
-        for (Player player : players) {
-            outputView.printParticipantCardsWithScore(
-                    player.getName(),
-                    player.getAllCard(),
-                    player.getCurrentTotalScore()
-            );
-        }
-    }
-
-    private void printGameResult(
-            List<Player> players,
-            Dealer dealer
-    ) {
-        outputView.printResult(
-                TotalResult.of(players, dealer),
-                dealer.getName()
-        );
+        players.forEach(player -> outputView.printParticipantCardsWithScore(
+                player.getName(),
+                player.getAllCard(),
+                player.getCurrentTotalScore()
+        ));
     }
 }

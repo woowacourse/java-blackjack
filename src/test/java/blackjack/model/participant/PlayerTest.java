@@ -64,6 +64,6 @@ class PlayerTest {
 
         //when & then
         assertThat(player.bust().getPrize())
-                .isEqualTo(0);
+                .isEqualTo(-1000);
     }
 }

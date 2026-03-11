@@ -30,7 +30,7 @@ public class Player extends Participant {
         return new Player(
                 name,
                 hands,
-                0
+                -1 * prize
         );
     }
 
