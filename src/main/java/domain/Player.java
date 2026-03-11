@@ -1,8 +1,6 @@
 package domain;
 
 import domain.constant.DealerName;
-import java.util.Map;
-import java.util.Set;
 
 class Player extends Participant {
 

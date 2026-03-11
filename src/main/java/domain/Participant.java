@@ -1,5 +1,6 @@
 package domain;
 
+import domain.constant.BlackJackRule;
 import domain.vo.CardInfo;
 import domain.vo.NameAndCardInfos;
 import java.util.List;
@@ -19,6 +20,12 @@ abstract class Participant {
     void draw() {
         if (isPlayable()) {
             hand.drawCard();
+        }
+    }
+
+    void drawInitialCards() {
+        for (int i = 0; i < BlackJackRule.INITIAL_CARD_COUNT.value(); i++) {
+            draw();
         }
     }
 

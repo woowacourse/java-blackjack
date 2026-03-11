@@ -1,40 +1,40 @@
 package domain;
 
-import domain.constant.BlackJackRule;
 import domain.vo.NameAndCardInfos;
 import domain.vo.PlayedGameResult;
 import java.util.List;
 
-class Participants {
+public class Participants {
 
     private final Dealer dealer;
     private final Players players;
 
-    Participants(Dealer dealer, Players players) {
+    private Participants(Dealer dealer, Players players) {
         this.dealer = dealer;
         this.players = players;
     }
 
-    static Participants from(List<String> names, DrawStrategy drawStrategy) {
-        Dealer dealer = Dealer.of(drawStrategy);
-        Players players = Players.from(names, drawStrategy);
-
-        return new Participants(dealer, players);
+    public static Participants onlyDealer(DrawStrategy drawStrategy) {
+        return new Participants(Dealer.of(drawStrategy), Players.noOne(drawStrategy));
     }
 
-    List<String> allPlayerNames() {
+    public Participants join(List<String> names) {
+        return new Participants(this.dealer, this.players.join(names));
+    }
+
+    public List<String> allPlayerNames() {
         return players.names();
     }
 
-    NameAndCardInfos dealerCardInfos() {
+    public NameAndCardInfos dealerCardInfos() {
         return dealer.infos();
     }
 
-    NameAndCardInfos currentPlayerCardInfos() {
+    public NameAndCardInfos currentPlayerCardInfos() {
         return players.currentPlayerCardInfos();
     }
 
-    void allParticipantsDrawInitialCards() {
+    public void allParticipantsDrawInitialCards() {
         dealerDrawInitialCards();
         playersDrawInitialCards();
     }
@@ -43,45 +43,43 @@ class Participants {
         players.drawInitialCards();
     }
 
-    void dealerDrawInitialCards() {
-        for (int i = 0; i < BlackJackRule.INITIAL_CARD_COUNT.value(); i++) {
-            dealer.draw();
-        }
+    private void dealerDrawInitialCards() {
+        dealer.drawInitialCards();
     }
 
-    List<NameAndCardInfos> allPlayerCardInfos() {
+    public List<NameAndCardInfos> allPlayerCardInfos() {
         return players.allPlayerCardInfos();
     }
 
-    String currentPlayerName() {
+    public String currentPlayerName() {
         return players.currentPlayerName();
     }
 
-    void currentPlayerDrawCard() {
+    public void currentPlayerDrawCard() {
         players.currentPlayerDrawCard();
     }
 
-    boolean isCurrentPlayerPlayable() {
+    public boolean isCurrentPlayerPlayable() {
         return players.isCurrentPlayerPlayable();
     }
 
-    boolean hasWaitingPlayers() {
+    public boolean hasWaitingPlayers() {
         return players.hasWaitingPlayers();
     }
 
-    PlayedGameResult currentPlayersResult() {
+    public PlayedGameResult currentPlayersResult() {
         return players.currentPlayersResult();
     }
 
-    PlayedGameResult dealerResult() {
+    public PlayedGameResult dealerResult() {
         return new PlayedGameResult(dealer.infos(), dealer.scoreSum());
     }
 
-    boolean isDealerPlayable() {
+    public boolean isDealerPlayable() {
         return dealer.isPlayable();
     }
 
-    void dealerDrawCard() {
+    public void dealerDrawCard() {
         dealer.draw();
     }
 }

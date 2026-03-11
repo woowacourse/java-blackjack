@@ -14,7 +14,11 @@ public class BlackJackFactory {
         return new BlackJackFactory(drawStrategy);
     }
 
-    public GameTable openGame(List<String> playerNames) {
-        return GameTable.setupGame(playerNames, drawStrategy);
+//    public GameTable openGame(List<String> playerNames) {
+//        return GameTable.setupGame(playerNames, drawStrategy);
+//    }
+
+    public Participants onlyDealer() {
+        return Participants.onlyDealer(drawStrategy);
     }
 }
