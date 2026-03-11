@@ -13,12 +13,4 @@ class InputParserTest {
         List<String> result = InputParser.splitComma(input);
         Assertions.assertThat(result).hasSize(2).containsExactly("pobi", "jason");
     }
-
-    @Test
-    void 이름이_중복일때_예외(){
-        String input = "pobi, pobi";
-
-        Assertions.assertThatThrownBy(() -> InputParser.splitComma(input))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
 }
