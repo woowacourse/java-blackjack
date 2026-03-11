@@ -29,8 +29,9 @@ public class GameController {
         processUserTurns(users);
         processDealerTurn();
         showCardResult(users);
-        showGameRecord(users);
-        processTotalProfit(users);
+        List<UserProfit> userProfits = gameService.settleResult(users, dealer);
+        showGameRecord(userProfits);
+        processTotalProfit(userProfits);
     }
 
     private List<User> setUpUsers(){
@@ -74,13 +75,11 @@ public class GameController {
         outputView.printCardResult(users, dealer);
     }
 
-    private void showGameRecord(List<User> users){
-        gameService.settleResult(users, dealer);
-        outputView.printGameRecord(users, dealer);
+    private void showGameRecord(List<UserProfit> userProfits) {
+        outputView.printGameRecord(userProfits, dealer);
     }
 
-    private void processTotalProfit(List<User> users) {
-        List<UserProfit> userProfits = gameService.createUsersProfit(users);
+    private void processTotalProfit(List<UserProfit> userProfits) {
         DealerProfit dealerProfit = gameService.upsertDealerProfit(userProfits);
         outputView.printTotalProfit(userProfits, dealerProfit);
     }

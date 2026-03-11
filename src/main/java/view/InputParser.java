@@ -20,10 +20,4 @@ public class InputParser {
                 .toList();
     }
 
-    public static List<User> parseUsers(String input) {
-        return Arrays.stream(input.split(","))
-                .map(String::strip)
-                .map(User::from)
-                .toList();
-    }
 }

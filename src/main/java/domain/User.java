@@ -3,7 +3,6 @@ package domain;
 public class User extends Player {
 
     private final String name;
-    private GameResult gameResult;
     private int betAmount;
 
     private User(String name) {
@@ -48,11 +47,4 @@ public class User extends Player {
         return betAmount;
     }
 
-    public void setGameResult(GameResult gameResult) {
-        this.gameResult = gameResult;
-    }
-
-    public GameResult getGameResult() {
-        return gameResult;
-    }
 }

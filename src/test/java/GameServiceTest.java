@@ -56,12 +56,12 @@ class GameServiceTest {
         loseUser.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_ACE));
         drawUser.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_NINE));
 
-        gameService.settleResult(users, dealer);
-        long totalUserWinRounds = users.stream().filter(user -> user.getGameResult() == GameResult.WIN)
+        List<UserProfit> userProfits = gameService.settleResult(users, dealer);
+        long totalUserWinRounds = userProfits.stream().filter(up -> up.gameResult() == GameResult.WIN)
                         .count();
-        long totalUserLoseRounds = users.stream().filter(user -> user.getGameResult() == GameResult.LOSE)
+        long totalUserLoseRounds = userProfits.stream().filter(up -> up.gameResult() == GameResult.LOSE)
                         .count();
-        long totalUserDrawRounds = users.stream().filter(user -> user.getGameResult() == GameResult.DRAW)
+        long totalUserDrawRounds = userProfits.stream().filter(up -> up.gameResult() == GameResult.DRAW)
                 .count();
 
         assertThat(dealer.getWinRounds()).isEqualTo(totalUserLoseRounds);
@@ -83,14 +83,14 @@ class GameServiceTest {
         loseUser.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_SEVEN));
         drawUser.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_NINE));
 
-        gameService.settleResult(users, dealer);
-        UserProfit winUserProfitList = gameService.createEachUserProfit(winUser);
-        UserProfit drawUserProfitList = gameService.createEachUserProfit(drawUser);
-        UserProfit loseUserProfitList = gameService.createEachUserProfit(loseUser);
+        List<UserProfit> userProfits = gameService.settleResult(users, dealer);
+        UserProfit winUserProfit = userProfits.stream().filter(up -> up.userName().equals("json")).findFirst().get();
+        UserProfit drawUserProfit = userProfits.stream().filter(up -> up.userName().equals("draw")).findFirst().get();
+        UserProfit loseUserProfit = userProfits.stream().filter(up -> up.userName().equals("poby")).findFirst().get();
 
-        assertThat(winUserProfitList.profit()).isEqualTo(15000);
-        assertThat(drawUserProfitList.profit()).isEqualTo(0);
-        assertThat(loseUserProfitList.profit()).isEqualTo(-20000);
+        assertThat(winUserProfit.profit()).isEqualTo(15000);
+        assertThat(drawUserProfit.profit()).isEqualTo(0);
+        assertThat(loseUserProfit.profit()).isEqualTo(-20000);
     }
 
     @Test
@@ -107,14 +107,9 @@ class GameServiceTest {
         loseUser.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_SEVEN));
         drawUser.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_NINE));
 
-        gameService.settleResult(users, dealer);
-        UserProfit winUserProfitList = gameService.createEachUserProfit(winUser);
-        UserProfit drawUserProfitList = gameService.createEachUserProfit(drawUser);
-        UserProfit loseUserProfitList = gameService.createEachUserProfit(loseUser);
+        List<UserProfit> userProfits = gameService.settleResult(users, dealer);
 
-        List<UserProfit> profitList = List.of(winUserProfitList,drawUserProfitList,loseUserProfitList);
-
-        DealerProfit dealerProfit = gameService.upsertDealerProfit(profitList);
+        DealerProfit dealerProfit = gameService.upsertDealerProfit(userProfits);
 
         assertThat(dealerProfit.profit()).isEqualTo(5000);
     }

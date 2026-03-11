@@ -28,14 +28,16 @@ public class GameService {
         return cardDeck.deal();
     }
 
-    public void settleResult(List<User> users, Dealer dealer) {
+    public List<UserProfit> settleResult(List<User> users, Dealer dealer) {
         dealer.calculateScore();
+        List<UserProfit> userProfits = new ArrayList<>();
         for (User user : users) {
             user.calculateScore();
             GameResult result = decideResult(user, dealer);
-            user.setGameResult(result);
             dealer.recordRounds(result.opposite());
+            userProfits.add(createEachUserProfit(user, result));
         }
+        return userProfits;
     }
 
     private GameResult decideResult(User user, Dealer dealer) {
@@ -67,27 +69,18 @@ public class GameService {
         return GameResult.DRAW;
     }
 
-    public List<UserProfit> createUsersProfit(List<User> users){
-        List<UserProfit> list = new ArrayList<>();
-        for (User each : users) {
-            list.add(createEachUserProfit(each));
-        }
-        return list;
-    }
-
-    protected UserProfit createEachUserProfit(User user) {
+    private UserProfit createEachUserProfit(User user, GameResult gameResult) {
         String eachName = user.getName();
         int eachBetAmount = user.getBetAmount();
-        GameResult gameResult = user.getGameResult();
         boolean eachIsBlackjack = user.isBlackjack();
-        int eachProfit = bettingRule.calculateBetAmount(eachBetAmount,gameResult,eachIsBlackjack);
+        int eachProfit = bettingRule.calculateBetAmount(eachBetAmount, gameResult, eachIsBlackjack);
 
-        return new UserProfit(eachName,eachBetAmount,gameResult,eachProfit);
+        return new UserProfit(eachName, eachBetAmount, gameResult, eachProfit);
     }
 
-    protected DealerProfit upsertDealerProfit(List<UserProfit> userProfits) {
+    public DealerProfit upsertDealerProfit(List<UserProfit> userProfits) {
         int dealerProfit = 0;
-        for (UserProfit each: userProfits) {
+        for (UserProfit each : userProfits) {
             dealerProfit += each.profit() * (-1);
         }
         return new DealerProfit(dealerProfit);
