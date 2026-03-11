@@ -71,7 +71,7 @@ public class BlackJackGame {
     }
 
     private void drawPlayerTurn(Deck deck, Player player) {
-        while (player.canDraw() && inputView.getMoreCards(player).equals("y")) {
+        while (player.canDraw() && inputView.getMoreCards(player.getName()).equals("y")) {
             player.drawCard(deck.draw());
             resultView.printParticipantMoreCard(new ParticipantDto(player.getName(), getCardNames(player)));
         }
