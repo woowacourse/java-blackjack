@@ -18,30 +18,34 @@ public class GameManager {
         this.deck = new Deck();
     }
 
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    private Dealer initDealer() {
+        Name name = new Name("딜러");
+        Dealer dealer = new Dealer(name);
+        return dealer;
+    }
+
     public void distributeInitialCards() {
-        distributeCardToDealer(dealer, deck);
-        distributeCardToPlayers(players, deck);
+        distributeCardToDealer(dealer);
+        distributeCardToPlayers(players);
     }
 
-    private void distributeCardToDealer(Dealer dealer, Deck deck) {
-        distributeInitialCards(dealer, deck);
+    private void distributeCardToDealer(Dealer dealer) {
+        distributeInitialCards(dealer);
     }
 
-    private void distributeCardToPlayers(List<Player> players, Deck deck) {
+    private void distributeCardToPlayers(List<Player> players) {
         for (Player player : players) {
-            distributeInitialCards(player, deck);
+            distributeInitialCards(player);
         }
     }
 
-    private void distributeInitialCards(Participant participant, Deck deck) {
-        distributeCard(participant, deck);
-        distributeCard(participant, deck);
-    }
-
-
-    private void distributeCard(Participant participant, Deck deck) {
-        Card card = deck.drawCardFromDeck();
-        participant.receiveCard(card);
+    private void distributeInitialCards(Participant participant) {
+        drawCardTo(participant);
+        drawCardTo(participant);
     }
 
     public ParticipantCardsDto getDealerDto() {
@@ -57,10 +61,9 @@ public class GameManager {
         return participantCardsDtos;
     }
 
-    private Dealer initDealer() {
-        Name name = new Name("딜러");
-        Dealer dealer = new Dealer(name);
-        return dealer;
+    public void drawCardTo(Participant participant) {
+        Card card = deck.drawCardFromDeck();
+        participant.receiveCard(card);
     }
 
     public static boolean isOverBurstThreshold(int score) {

@@ -29,11 +29,54 @@ public class BlackJackGameController {
         printParticipantCards(gameManager);
 
         // TODO: ------------------------------------------------------------
-        playGame(players, deck, dealer);
+        playGame(players, gameManager);
 
-        Map<String, Boolean> gameResult = getGameResult(dealer, players);
+        Map<String, Boolean> gameResult = getGameResult(gameManager.getDealer(), players);
 
-        endGame(dealer, players, gameResult);
+        endGame(gameManager.getDealer(), players, gameResult);
+    }
+
+    private void playGame(List<Player> players, GameManager gameManager) {
+        for (Player player : players) {
+            playGameWithPlayer(player, gameManager);
+        }
+        playGameWithDealer(gameManager);
+    }
+
+    public static void playGameWithDealer(GameManager gameManager) {
+        while (gameManager.getDealer().isContinueGame()) {
+            if (!gameManager.getDealer().isContinueGame()) {
+                break;
+            }
+            gameManager.drawCardTo(gameManager.getDealer());
+            OutputView.printDealerMessage();
+        }
+    }
+
+    public static void playGameWithPlayer(Player player, GameManager gameManager) {
+        while (player.isContinueGame()) {
+            if (isContinueGame(player)) {
+                break;
+            }
+            gameManager.drawCardTo(player);
+            printCards(player.getParticipantCardsDto());
+        }
+    }
+
+    private static boolean isContinueGame(Player player) {
+        if (!isContinue(InputView.askContinue(player.getName()))) {
+            printCards(player.getParticipantCardsDto());
+            return true;
+        }
+        return false;
+    }
+
+    private static boolean isContinue(String response) {
+        if (response.equals("y")) {
+            return true;
+        }
+
+        return false;
     }
 
     private static void printParticipantCards(GameManager gameManager) {
@@ -57,14 +100,6 @@ public class BlackJackGameController {
         OutputView.printGameResult(gameResult);
     }
 
-    private void playGame(List<Player> players, Deck deck, Dealer dealer) {
-        for (Player player : players) {
-            playGameWithPlayer(player, deck);
-        }
-
-        playGameWithDealer(dealer, deck);
-    }
-
 
     private static void printFinalScores(List<Player> players) {
         for (Player player : players) {
@@ -82,44 +117,8 @@ public class BlackJackGameController {
         return participantScores;
     }
 
-    private void playGameWithDealer(Dealer dealer, Deck deck) {
-        while (dealer.isContinueGame()) {
-            if (!dealer.isContinueGame()) {
-                break;
-            }
-            distributeCard(dealer, deck);
-            OutputView.printDealerMessage();
-        }
-    }
-
-    private void playGameWithPlayer(Player player, Deck deck) {
-        while (player.isContinueGame()) {
-            if (isContinueGame(player)) {
-                break;
-            }
-            distributeCard(player, deck);
-            printCards(player.getParticipantCardsDto());
-        }
-    }
-
-    private boolean isContinueGame(Player player) {
-        if (!isContinue(InputView.askContinue(player.getName()))) {
-            printCards(player.getParticipantCardsDto());
-            return true;
-        }
-        return false;
-    }
-
     private List<String> getPlayerNames(List<Player> players) {
         return players.stream().map(Participant::getName).toList();
-    }
-
-    private boolean isContinue(String response) {
-        if (response.equals("y")) {
-            return true;
-        }
-
-        return false;
     }
 
     private List<Player> initPlayer() {
