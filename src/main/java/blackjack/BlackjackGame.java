@@ -21,6 +21,7 @@ public class BlackjackGame {
 
     public void run() {
         Participants participants = createParticipants();
+        registerBettingAmount(participants);
         playTurns(participants);
         judge(participants);
     }
@@ -28,9 +29,7 @@ public class BlackjackGame {
     private Participants createParticipants() {
         Dealer dealer = new Dealer(deck.dealInitialCards());
         List<Player> players = createPlayers();
-        Participants participants = new Participants(dealer, players);
-        OutputView.showCardNames(participants);
-        return participants;
+        return new Participants(dealer, players);
     }
 
     private List<Player> createPlayers() {
@@ -40,7 +39,15 @@ public class BlackjackGame {
                 .toList();
     }
 
+    private void registerBettingAmount(Participants participants) {
+        for (Player player : participants.getPlayers()) {
+            int bettingAmount = InputView.readBettingAmount(player.getName());
+            player.bet(bettingAmount);
+        }
+    }
+
     private void playTurns(Participants participants) {
+        OutputView.showCardNames(participants);
         participants.playPlayerTurn(this::hitByPlayer);
         participants.playDealerTurn(this::hitByDealer);
         OutputView.showResult(participants);

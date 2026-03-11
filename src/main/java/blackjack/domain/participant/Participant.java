@@ -10,13 +10,19 @@ public abstract class Participant {
 
     protected final Name name;
     protected final Hand hand;
+    protected BettingAmount bettingAmount;
 
     protected Participant(String name, Hand hand) {
         this.name = new Name(name);
         this.hand = hand;
+        this.bettingAmount = BettingAmount.initial();
     }
 
     public abstract List<String> getInitialCards();
+
+    public final void bet(int bettingAmount) {
+        this.bettingAmount = this.bettingAmount.register(bettingAmount);
+    }
 
     public final boolean isBust() {
         GameScore gameScore = hand.calculateTotalScore();

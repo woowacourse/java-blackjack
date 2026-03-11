@@ -12,18 +12,22 @@ class BettingAmountTest {
 
     @ParameterizedTest
     @ValueSource(ints = {1999, 200_001})
-    void 베팅_가능한_금액_범위를_벗어나면_예외가_발생한다(int bettingAmount) {
+    void 베팅_가능한_금액_범위를_벗어나면_예외가_발생한다(int bettingAmountValue) {
+        // given
+        BettingAmount bettingAmount = BettingAmount.initial();
         // when & then
-        assertThatThrownBy(() -> new BettingAmount(bettingAmount))
+        assertThatThrownBy(() -> bettingAmount.register(bettingAmountValue))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ExceptionMessage.BETTING_AMOUNT_OUT_OF_RANGE.getMessage());
     }
 
     @ParameterizedTest
     @ValueSource(ints = {5500, 199100})
-    void 베팅_가능한_금액_단위가_아니면_예외가_발생한다(int bettingAmount) {
+    void 베팅_가능한_금액_단위가_아니면_예외가_발생한다(int bettingAmountValue) {
+        // given
+        BettingAmount bettingAmount = BettingAmount.initial();
         // when & then
-        assertThatThrownBy(() -> new BettingAmount(bettingAmount))
+        assertThatThrownBy(() -> bettingAmount.register(bettingAmountValue))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ExceptionMessage.INVALID_BETTING_UNIT.getMessage(BETTING_UNIT));
     }

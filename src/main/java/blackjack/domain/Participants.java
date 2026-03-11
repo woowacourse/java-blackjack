@@ -58,4 +58,8 @@ public class Participants {
     public void playDealerTurn(Consumer<Dealer> consumer) {
         consumer.accept(dealer);
     }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
 }
