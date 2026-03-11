@@ -2,9 +2,7 @@ package service;
 
 import domain.game.Result;
 import domain.game.ResultInfo;
-import domain.participant.Dealer;
-import domain.participant.Player;
-import domain.participant.Players;
+import domain.participant.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,9 +14,9 @@ public class BlackJackService {
     }
 
     public Result calculateResult(Dealer dealer, Players players) {
-        Map<String, ResultInfo> playersResult = new HashMap<>();
+        Map<Player, ResultInfo> playersResult = new HashMap<>();
         for (Player player : players.getPlayers()) {
-            playersResult.put(player.getName(), calculatePlayerWinDefeatDraw(dealer, player));
+            playersResult.put(player, calculatePlayerWinDefeatDraw(dealer, player));
         }
 
         return new Result(playersResult);

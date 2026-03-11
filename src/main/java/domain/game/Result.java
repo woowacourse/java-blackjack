@@ -1,40 +1,42 @@
 package domain.game;
 
+import domain.participant.Player;
+
 import java.util.*;
 
 public class Result {
-    private final Map<String, ResultInfo> playersResult;
-    private final Map<ResultInfo, Integer> dealerResult;
+    private final Map<Player, ResultInfo> playersResult;
+    private final int dealerResult;
 
-    public Result(Map<String, ResultInfo> playersResult) {
+    public Result(Map<Player, ResultInfo> playersResult) {
         this.playersResult = playersResult;
-        this.dealerResult = setDealerResult(playersResult);
+        this.dealerResult = calculateDealerResult(playersResult);
     }
 
-    public Map<String, ResultInfo> getPlayersResult() {
+    public Map<Player, ResultInfo> getPlayersResult() {
         return Collections.unmodifiableMap(playersResult);
     }
 
-    public Map<ResultInfo, Integer> getDealerResult() {
-        return Collections.unmodifiableMap(dealerResult);
-    }
-
-    private Map<ResultInfo, Integer> setDealerResult(Map<String, ResultInfo> playersResult) {
-        Map<ResultInfo, Integer> dealerResult = new EnumMap<>(ResultInfo.class);
-        Arrays.stream(ResultInfo.values()).forEach(resultInfo -> dealerResult.put(resultInfo, 0));
-        for (String name : playersResult.keySet()) {
-            ResultInfo playerOutcome = playersResult.get(name);
-            ResultInfo dealerOutcome = calculateDealerOutcome(playerOutcome);
-            dealerResult.merge(dealerOutcome, 1, Integer::sum);
-        }
-
+    public int getDealerResult() {
         return dealerResult;
     }
 
-    private ResultInfo calculateDealerOutcome(ResultInfo playerResult) {
-        if (playerResult == ResultInfo.WIN) return ResultInfo.DEFEAT;
-        if (playerResult == ResultInfo.DEFEAT) return ResultInfo.WIN;
-        return ResultInfo.DRAW;
+    private int calculateDealerResult(Map<Player, ResultInfo> playersResult) {
+        int dealerResult=0;
+        for (Player player : playersResult.keySet()) {
+            ResultInfo playerOutcome=playersResult.get(player);
+            int playerBettingMoney= player.getBettingMoney();
+            double playerYield=playerOutcome.getYield();
+            dealerResult+=(int)(playerBettingMoney*playerYield);
+        }
+        return dealerResult*(-1);
     }
 
+    public Map<String, Integer> calculatePlayerYield(Map<Player, ResultInfo> playersResult) {
+        Map<String, Integer> playerYield=new HashMap<>();
+        for (Player player : playersResult.keySet()) {
+            playerYield.put(player.getName(), (int)(player.getBettingMoney()*playersResult.get(player).getYield()));
+        }
+        return playerYield;
+    }
 }
