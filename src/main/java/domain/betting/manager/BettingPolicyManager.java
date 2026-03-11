@@ -17,7 +17,8 @@ public class BettingPolicyManager {
                 new BlackjackPushPolicy(),
                 new BlackjackPolicy(),
                 new DoubleBustPolicy(),
-                new BustPolicy()
+                new BustPolicy(),
+                new ComparePolicy()
         );
     }
 

@@ -23,6 +23,7 @@ public class BettingPolicyTest {
     private Card spadeFive = Card.of(CardDenomination.FIVE, CardEmblem.SPADE);
     private CardBundle bustBundle;
     private CardBundle nonBustBundle;
+    private CardBundle biggerBundle;
     private CardBundle blackjackBundle;
     private BettingPolicyManager policyManager;
 
@@ -31,6 +32,7 @@ public class BettingPolicyTest {
         this.blackjackBundle = generateTestCardBundle(cloverAce, spadeJack);
         this.bustBundle = generateTestCardBundle(spadeFive, spadeNine, spadeJack);
         this.nonBustBundle = generateTestCardBundle(spadeFive, spadeEight);
+        this.biggerBundle = generateTestCardBundle(spadeEight, spadeNine);
         policyManager = new BettingPolicyManager();
     }
 
@@ -93,6 +95,20 @@ public class BettingPolicyTest {
 
         BettingRate actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
         BettingRate expectedBettingRate = BettingResult.BUST.bettingRate();
+
+        Assertions.assertThat(actualBettingRate)
+                .isEqualTo(expectedBettingRate);
+    }
+
+    @Test
+    void 플레이어가_딜러보다_합이_큰_경우를_테스트한다() {
+        Player testPlayer = Player.from(new PlayerName("test"));
+        testPlayer.addCardBundle(biggerBundle);
+        Dealer dealer = createDealer(nonBustBundle.openMyCards());
+        dealer.dealMyself();
+
+        BettingRate actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
+        BettingRate expectedBettingRate = BettingResult.COMPARE_WIN.bettingRate();
 
         Assertions.assertThat(actualBettingRate)
                 .isEqualTo(expectedBettingRate);

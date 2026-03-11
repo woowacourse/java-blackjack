@@ -9,6 +9,8 @@ public enum BettingResult {
     BLACK_JACK(new BettingRate(1.5), GameResult.WIN, 2),
     DOUBLE_BUST(new BettingRate(1.0), GameResult.WIN, 3),
     BUST(new BettingRate(-1.0), GameResult.LOSS, 4),
+    COMPARE_WIN(new BettingRate(1.0), GameResult.WIN, 5),
+    COMPARE_LOSE(new BettingRate(-1.0), GameResult.LOSS, 6),
     ;
 
     private final BettingRate bettingRate;
@@ -27,6 +29,13 @@ public enum BettingResult {
 
     public GameResult gameResult() {
         return gameResult;
+    }
+
+    public BettingResult reverseResult() {
+        if (this == COMPARE_WIN) {
+            return COMPARE_LOSE;
+        }
+        return COMPARE_WIN;
     }
 
 }
