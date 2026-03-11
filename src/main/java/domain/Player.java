@@ -18,18 +18,13 @@ public class Player extends Participant {
         return new Player(this.name, this.hand, true);
     }
 
-    public boolean isFinished() {
-        return this.hand.isBust() || isStay;
-    }
-
     public void hit(Supplier<Card> cardSupplier) {
-        Hand ownHand = this.hand;
-        if (canHit(ownHand)) {
-            ownHand.addCard(cardSupplier.get());
+        if (!isFinished()) {
+            hand.addCard(cardSupplier.get());
         }
     }
 
-    private boolean canHit(Hand ownHand) {
-        return !ownHand.isBust();
+    public boolean isFinished() {
+        return hand.isBust() || isStay;
     }
 }
