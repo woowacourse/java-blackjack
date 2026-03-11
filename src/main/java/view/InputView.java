@@ -30,6 +30,16 @@ public class InputView {
         return input.equals("y");
     }
 
+    public int readBettingPrice(String name) {
+        System.out.println(name + "의 배팅 금액은?\n");
+        String input = readInput(List.of(
+                Validator::validateNotBlank,
+                Validator::validateInteger
+        ));
+
+        return Integer.parseInt(input);
+    }
+
     private String readInput(List<Validator> validators) {
         try {
             String input = new Scanner(System.in).nextLine();

@@ -9,8 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
-    private static final int ACE_ADDITIONAL_SCORE = 10;
-    private static final int ACE_ADDITION_NONE_SCORE = 0;
+    private static final int ACE_ADDITIONAL_SCORE = 11;
     protected final List<Card> cards = new ArrayList<>();
     private final String name;
 
@@ -23,20 +22,19 @@ public class Player {
         for (Card card : cards) {
             total += card.getCardRank().getNumber();
         }
-
         return total;
-    }
-
-    private int calculateAceScore() {
-        if (!isAceExist() || calculateScore() > 11) {
-            return ACE_ADDITION_NONE_SCORE;
-        }
-
-        return ACE_ADDITIONAL_SCORE;
     }
 
     public int getFinalScore() {
         return calculateScore() + calculateAceScore();
+    }
+
+
+    private int calculateAceScore() {
+        if (!isAceExist() || calculateScore() > ACE_ADDITIONAL_SCORE) {
+            return 0;
+        }
+        return ACE_ADDITIONAL_SCORE-1;
     }
 
     public boolean isBust() {
