@@ -8,12 +8,15 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class PlayersTest {
+    private static final List<String> TEST_PLAYER_NAMES = List.of("pobi", "terry", "rati", "gump");
+
 
     Deck totalDeck;
 
@@ -28,12 +31,9 @@ class PlayersTest {
         @Test
         @DisplayName("생성 잘 한다")
         void of_good() {
-            //given
-            List<String> testPlayerNames = List.of("pobi", "terry", "rati", "gump");
-
             //when, then
             assertDoesNotThrow(
-                    () -> Players.of(testPlayerNames, totalDeck)
+                    () -> Players.of(TEST_PLAYER_NAMES, totalDeck)
             );
         }
 
@@ -48,6 +48,20 @@ class PlayersTest {
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining(ErrorMessage.NAME_UNIQUENESS_ERR.getMessage());
         }
+    }
+
+    @Test
+    @DisplayName("다음 사용자로 넘기라는 명령을 받은 이후 현재 사용자 호출 시 다른 사용자가 나오다")
+    void next_change_targetUser() {
+        //given
+        Players testPlayers = Players.of(TEST_PLAYER_NAMES, totalDeck);
+        Player prevPlayer = testPlayers.findCurrentUser().get();
+
+        //when
+        testPlayers.next();
+
+        //then
+        Assertions.assertNotEquals(prevPlayer, testPlayers.findCurrentUser());
     }
 
     //    @Test
