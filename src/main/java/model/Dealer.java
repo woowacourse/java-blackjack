@@ -23,4 +23,8 @@ public class Dealer extends AbstractParticipant {
     public void addDealerProfit(int dealerProfit) {
         this.dealerProfit += dealerProfit;
     }
+
+    public void subtractDealerProfit(int dealerProfit) {
+        this.dealerProfit -= dealerProfit;
+    }
 }

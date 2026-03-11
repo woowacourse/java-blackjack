@@ -6,6 +6,7 @@ public class BettingResult {
 
     private static final int BLACK_JACK = 21;
     private static final double BLACK_JACK_WIN_PRICE = 1.5;
+    private static final double BLACK_JACK_DEALER_LOSS = 0.5;
     private static final int GAME_WIN_PRICE = 2;
 
     private BettingResult() {
@@ -35,12 +36,14 @@ public class BettingResult {
         int money = player.getMoney();
         if (!dealerWin && blackJack) {
             player.setMoney((int) (money * BLACK_JACK_WIN_PRICE));
+            dealer.subtractDealerProfit((int) (money * BLACK_JACK_DEALER_LOSS));
             return;
         } else if (dealerWin) {
             dealer.addDealerProfit(money);
-            player.setMoney(0);
+            player.setMoney(-money);
             return;
         }
         player.setMoney(money * GAME_WIN_PRICE);
+        dealer.subtractDealerProfit(money);
     }
 }

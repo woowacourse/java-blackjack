@@ -15,7 +15,7 @@ public class FinalResultTestFixture {
                 Arguments.of(
                         List.of(card(CardValue.TEN), card(CardValue.ACE)),
                         List.of(card(CardValue.SEVEN), card(CardValue.TEN)),
-                        1000, 1500, 0
+                        1000, 1500, -500
                 ),
                 // 2. 플레이어와 딜러 둘 다 블랙잭
                 Arguments.of(
@@ -27,19 +27,19 @@ public class FinalResultTestFixture {
                 Arguments.of(
                         List.of(card(CardValue.TEN), card(CardValue.NINE), card(CardValue.EIGHT)),
                         List.of(card(CardValue.SEVEN), card(CardValue.ACE)),
-                        1000, 0, 1000
+                        1000, -1000, 1000
                 ),
                 // 4. 플레이어 딜러 모두 21점을 넘지 않고, 딜러가 플레이어보다 점수가 높은 경우
                 Arguments.of(
                         List.of(card(CardValue.TEN), card(CardValue.NINE)),
                         List.of(card(CardValue.JACK), card(CardValue.QUEEN)),
-                        1000, 0, 1000
+                        1000, -1000, 1000
                 ),
                 // 5. 플레이어 딜러 모두 21점을 넘지 않고, 플레이어가 딜러보다 점수가 높은 경우
                 Arguments.of(
                         List.of(card(CardValue.TEN), card(CardValue.NINE)),
                         List.of(card(CardValue.QUEEN), card(CardValue.EIGHT)),
-                        1000, 2000, 0
+                        1000, 2000, -1000
                 )
         );
     }
