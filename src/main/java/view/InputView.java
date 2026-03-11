@@ -1,7 +1,10 @@
 package view;
 
+import domain.participant.Bet;
 import utils.Parser;
 import validator.Validator;
+
+import exception.BlankInputException;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -30,6 +33,15 @@ public class InputView {
         return input.equals("y");
     }
 
+    public Bet readBet(String playerName) {
+        System.out.printf("%s의 배팅 금액은?%n", playerName);
+        String input = readInput(List.of(
+                Validator::validateNotBlank
+        ));
+
+        return new Bet(Long.parseLong(input));
+    }
+
     private String readInput(List<Validator> validators) {
         try {
             String input = new Scanner(System.in).nextLine();
@@ -38,7 +50,7 @@ public class InputView {
             }
             return input;
         } catch (NoSuchElementException e) {
-            throw new IllegalArgumentException("입력이 비어있습니다.");
+            throw new BlankInputException();
         }
     }
 }
