@@ -43,7 +43,7 @@ public class OutputView {
         System.out.printf((DEALER_COUNT_FORMAT) + "%n", finalResultDto.dealerWinCount(),
                 finalResultDto.dealerLoseCount());
 
-        finalResultDto.playerResults().forEach((key, value) ->
-                System.out.printf(PLAYER_RESULT_FORMAT, key, value));
+        finalResultDto.playerResults().forEach(dto ->
+                System.out.printf(PLAYER_RESULT_FORMAT, dto.name(), dto.result()));
     }
 }

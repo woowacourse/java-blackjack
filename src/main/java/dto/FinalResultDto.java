@@ -6,10 +6,9 @@ import domain.WinningStatus;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-public record FinalResultDto(long dealerWinCount, long dealerLoseCount, Map<String, String> playerResults) {
+public record FinalResultDto(long dealerWinCount, long dealerLoseCount, List<PlayerResultDto> playerResults) {
 
     public static FinalResultDto from(Map<String, WinningStatus> playerResults) {
         long dealerWinCount = playerResults.values().stream()
@@ -20,11 +19,10 @@ public record FinalResultDto(long dealerWinCount, long dealerLoseCount, Map<Stri
                 .filter(v -> v == WinningStatus.WIN)
                 .count();
 
-        Map<String, String> transformedPlayerResults = playerResults.entrySet().stream()
-                .collect(Collectors.toMap(
-                        Entry::getKey,
-                        entry -> entry.getValue().getDescription()
-                ));
+        List<PlayerResultDto> transformedPlayerResults = playerResults.entrySet().stream()
+                .map(entry -> new PlayerResultDto(entry.getKey(), entry.getValue().getDescription()))
+                .toList();
+        
         return new FinalResultDto(dealerWinCount, dealerLoseCount, transformedPlayerResults);
     }
 

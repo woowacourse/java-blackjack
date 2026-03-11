@@ -9,7 +9,6 @@ import domain.Player;
 import domain.WinningStatus;
 import domain.card.Rank;
 import java.util.List;
-import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import org.junit.jupiter.api.Test;
@@ -27,7 +26,9 @@ class FinalResultDtoTest {
         // then
         assertEquals(1, finalResultDto.dealerWinCount());
         assertEquals(1, finalResultDto.dealerLoseCount());
-        assertEquals(Map.of("봉구스", "승", "시오", "패"), finalResultDto.playerResults());
+        assertEquals(List.of(new PlayerResultDto("봉구스", "승"),
+                        new PlayerResultDto("시오", "패")),
+                finalResultDto.playerResults());
     }
 
     @Test
@@ -43,6 +44,9 @@ class FinalResultDtoTest {
         // when, then
         assertEquals(1, finalResultDto.dealerWinCount());
         assertEquals(1, finalResultDto.dealerLoseCount());
-        assertEquals(Map.of("봉구스", "패", "시오", "무", "영기", "승"), finalResultDto.playerResults());
+        assertEquals(List.of(new PlayerResultDto("봉구스", "패"),
+                        new PlayerResultDto("시오", "무"),
+                        new PlayerResultDto("영기", "승")),
+                finalResultDto.playerResults());
     }
 }
