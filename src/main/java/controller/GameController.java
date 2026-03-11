@@ -27,7 +27,7 @@ public class GameController {
 
         addPlayersCard(blackjackGame, players);
         addDealerCards(blackjackGame);
-        printCardResults(ResultDto.from(dealer), PlayersDto.from(players));
+        printCardResults(ResultDto.from(dealer), playersDto);
         printFinalResults(players, dealer);
     }
 
@@ -46,7 +46,7 @@ public class GameController {
 
     private void addDealerCards(BlackjackGame blackjackGame) {
         boolean dealerDrew = blackjackGame.playDealerTurn();
-        if(dealerDrew){
+        if (dealerDrew) {
             OutputView.printAddDealerCardMessage();
         }
     }
