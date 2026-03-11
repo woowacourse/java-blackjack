@@ -18,9 +18,6 @@ import java.util.List;
 
 public class BlackjackService {
 
-    public static final String INVALID_YES_NO_INPUT =
-            String.format("%s 또는 %s을 입력해야 합니다.", HitOrStand.HIT.getHitOrStand(), HitOrStand.STAND.getHitOrStand());
-
     private final CardMachine cardMachine;
     private Participants participants;
 
@@ -53,13 +50,6 @@ public class BlackjackService {
         participantDtoList.addAll(playersDto);
 
         return participantDtoList;
-    }
-
-    public void validateHitOrStand(String hitOrStand) {
-        if (!hitOrStand.strip().equals(HitOrStand.HIT.getHitOrStand()) && !hitOrStand.strip()
-                .equals(HitOrStand.STAND.getHitOrStand())) {
-            throw new IllegalArgumentException(PolicyConstant.ERROR_PREFIX + INVALID_YES_NO_INPUT);
-        }
     }
 
     public boolean drawDealerCard() {
@@ -169,11 +159,11 @@ public class BlackjackService {
         return new ParticipantDto(name, hand, player.calculateScore());
     }
 
-    public boolean isHit(String hitOrStand) {
+    public boolean isHit(HitOrStand hitOrStand) {
         return hitOrStand.strip().equals(HitOrStand.HIT.getHitOrStand());
     }
 
-    public boolean isStand(String hitOrStand) {
+    public boolean isStand(HitOrStand hitOrStand) {
         return hitOrStand.strip().equals(HitOrStand.STAND.getHitOrStand());
     }
 }

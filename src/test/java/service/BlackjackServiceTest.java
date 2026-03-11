@@ -1,10 +1,8 @@
 package service;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import config.ControllerConfig;
-import constant.PolicyConstant;
 import constant.Rank;
 import constant.Result;
 import constant.Suit;
@@ -21,7 +19,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 class BlackjackServiceTest {
 
@@ -175,38 +172,6 @@ class BlackjackServiceTest {
                 assertThat(actual).hasSize(2);
                 assertThat(actual.get(0).name()).isEqualTo("jacob");
                 assertThat(actual.get(1).name()).isEqualTo("seoye");
-            }
-        }
-    }
-
-    @Nested
-    class validateHitOrStand {
-
-        @Nested
-        class Success {
-
-            @ParameterizedTest
-            @ValueSource(strings = {"y", "n"})
-            void y_또는_n_이면_예외를_발생시키지_않는다(String input) {
-
-                // given & when & then
-                blackjackService.validateHitOrStand(input);
-            }
-        }
-
-        @Nested
-        class Fail {
-
-            @Test
-            void y_또는_n_가_아니면_예외를_발생시킨다() {
-
-                // given
-                String input = "a";
-
-                // when & then
-                assertThatThrownBy(() -> blackjackService.validateHitOrStand(input))
-                        .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessageContaining(PolicyConstant.ERROR_PREFIX + BlackjackService.INVALID_YES_NO_INPUT);
             }
         }
     }

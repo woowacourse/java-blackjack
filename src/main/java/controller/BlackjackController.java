@@ -1,5 +1,6 @@
 package controller;
 
+import constant.HitOrStand;
 import constant.PolicyConstant;
 import dto.BlackjackStatisticsDto;
 import dto.ParticipantDto;
@@ -54,8 +55,7 @@ public class BlackjackController {
     }
 
     private void inputHitOrStand(String name, List<String> hand) {
-        String hitOrStand = inputView.inputHitOrStand(name);
-        blackjackService.validateHitOrStand(hitOrStand);
+        HitOrStand hitOrStand = HitOrStand.from(inputView.inputHitOrStand(name));
         if (blackjackService.isStand(hitOrStand)) {
             outputView.printlnHand(name, hand);
             return;
@@ -64,12 +64,11 @@ public class BlackjackController {
         drawCardOnPlayer(name, hitOrStand);
     }
 
-    private void drawCardOnPlayer(String name, String hitOrStand) {
+    private void drawCardOnPlayer(String name, HitOrStand hitOrStand) {
         while (blackjackService.isHit(hitOrStand)) {
             ParticipantDto playerDto = blackjackService.updatePlayer(name);
             outputView.printlnHand(name, playerDto.hand());
-            hitOrStand = inputView.inputHitOrStand(name);
-            blackjackService.validateHitOrStand(hitOrStand);
+            hitOrStand = HitOrStand.from(inputView.inputHitOrStand(name));
         }
     }
 
