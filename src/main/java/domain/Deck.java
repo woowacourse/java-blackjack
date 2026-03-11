@@ -17,8 +17,19 @@ public class Deck {
         return new Deck(cards);
     }
 
-    public static Deck from(List<Card> cards){
+    public static Deck from(List<Card> cards) {
         return new Deck(new ArrayList<>(cards));
+    }
+
+    public List<Card> getCards() {
+        return List.copyOf(cards);
+    }
+
+    public Card draw() {
+        if (cards.isEmpty()) {
+            throw new IllegalArgumentException("덱에 남은 카드가 없습니다.");
+        }
+        return cards.removeFirst();
     }
 
     private static List<Card> generateAllCards() {
@@ -33,16 +44,5 @@ public class Deck {
         for (CardNumber number : CardNumber.values()) {
             cards.add(Card.of(number, shape));
         }
-    }
-
-    public List<Card> getCards() {
-        return List.copyOf(cards);
-    }
-
-    public Card draw() {
-        if (cards.isEmpty()) {
-            throw new IllegalArgumentException("덱에 남은 카드가 없습니다.");
-        }
-        return cards.removeFirst();
     }
 }
