@@ -55,15 +55,19 @@ public class Application {
     }
 
     private void askCardToPlayer(String name, int index) {
-        retryUntilSuccess(() -> {
+        String answer;
+        do {
             outputView.printAskExtraCard(name);
-            String answer = inputView.readDealDecision();
-            if (answer.equalsIgnoreCase("y")) {
-                blackjackGame.processPlayerDecision(index);
-                outputView.printUserCards(blackjackGame.getUsers().get(index));
-            }
-            return null;
-        });
+            answer = retryUntilSuccess(inputView::readDealDecision);
+            dealMoreCard(answer, index);
+        } while (answer.equalsIgnoreCase("y"));
+    }
+
+    private void dealMoreCard(String answer, int index) {
+        if (answer.equalsIgnoreCase("y")) {
+            blackjackGame.processPlayerDecision(index);
+            outputView.printUserCards(blackjackGame.getUsers().get(index));
+        }
     }
 
     private void dealDealerCard() {

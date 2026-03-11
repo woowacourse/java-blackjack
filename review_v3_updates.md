@@ -5,7 +5,7 @@
 ## ✅ 리팩토링 할 것 목록
 
 - [ ] **1. 규칙에 맞춰 코드 수정**
-  - [ ] Application askCardPlayer(String name, int index) -> 무한정 hit 가능하게 수정
+  - [x] Application askCardPlayer(String name, int index) -> 무한정 hit 가능하게 수정
   - [ ] dealDealerCard() -> 딜러 17명 이상 될 때까지 계속 뽑게 수정
 - [x] **2. EOF 파일 인텔리제이 자동 설정 하도록 수정**
 - [ ] **3. index로 데이터에 접근하는 함수 수정**
