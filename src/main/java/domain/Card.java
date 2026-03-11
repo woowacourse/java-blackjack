@@ -1,40 +1,16 @@
 package domain;
 
-import constant.PolicyConstant;
 import constant.Rank;
 import constant.Suit;
-import java.util.Objects;
 
-public class Card {
+public record Card(Rank rank, Suit suit) {
 
-    private final Rank rank;
-    private final Suit suit;
-
-    public Card(constant.Rank rank, Suit suit) {
-        this.rank = rank;
-        this.suit = suit;
-    }
-
-    public int calculateScore() {
-        if (rank.equals(Rank.J) || rank.equals(Rank.Q) || rank.equals(Rank.K)) {
-            return PolicyConstant.JQK;
-        }
-        if (rank.equals(Rank.ACE)) {
-            return PolicyConstant.ACE;
-        }
-        return Integer.parseInt(rank.getRank());
+    public int getScore() {
+        return rank.getScore();
     }
 
     public boolean isAce() {
         return rank.isAce();
-    }
-
-    public Rank getRank() {
-        return rank;
-    }
-
-    public Suit getSuit() {
-        return suit;
     }
 
     @Override
@@ -46,8 +22,4 @@ public class Card {
         return rank == card.rank && suit == card.suit;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(rank, suit);
-    }
 }
