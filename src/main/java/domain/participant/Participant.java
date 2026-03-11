@@ -16,7 +16,8 @@ public abstract class Participant {
     }
 
     public Hand drawCards(CardDeck cardDeck, int count) {
-        return cardDeck.draw(hand, count);
+        List<Card> cards = cardDeck.draw(count);
+        return hand.addUp(Hand.from(cards));
     }
 
     public boolean hasCard(Card targetCard) {

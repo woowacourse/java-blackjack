@@ -18,13 +18,12 @@ class CardDeckTest {
                         Card.of(CardDenomination.NINE, CardEmblem.SPADE))
                 .build();
 
-        Hand hand = Hand.empty();
-        cardDeck.draw(hand, 2);
+        List<Card> cards = cardDeck.draw(2);
 
-        Assertions.assertThat(hand)
-                .isEqualTo(Hand.from(List.of(
+        Assertions.assertThat(cards)
+                .isEqualTo(List.of(
                         Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER),
-                        Card.of(CardDenomination.NINE, CardEmblem.SPADE)))
+                        Card.of(CardDenomination.NINE, CardEmblem.SPADE))
                 );
     }
 
@@ -34,10 +33,8 @@ class CardDeckTest {
                 .cards(Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER))
                 .build();
 
-        Hand hand = Hand.empty();
-
         Assertions.assertThatThrownBy(() -> {
-            cardDeck.draw(hand, INITIAL_CARD_DRAW_COUNT);
+            cardDeck.draw(INITIAL_CARD_DRAW_COUNT);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 

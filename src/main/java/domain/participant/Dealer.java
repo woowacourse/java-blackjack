@@ -2,7 +2,10 @@ package domain.participant;
 
 import static config.BlackjackGameConstant.*;
 
+import domain.card.Card;
 import domain.card.CardDeck;
+import domain.card.Hand;
+import java.util.List;
 
 public class Dealer extends Participant {
 
@@ -16,7 +19,8 @@ public class Dealer extends Participant {
 
     public boolean hitIfRequired(CardDeck cardDeck) {
         if (canHit()) {
-            cardDeck.draw(hand, DEFAULT_CARD_DRAW_COUNT);
+            List<Card> cards = cardDeck.draw(DEFAULT_CARD_DRAW_COUNT);
+            hand.addUp(Hand.from(cards));
             return true;
         }
         return false;
