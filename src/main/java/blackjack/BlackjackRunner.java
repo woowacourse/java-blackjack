@@ -6,11 +6,14 @@ import blackjack.domain.PlayingCards;
 import blackjack.domain.participant.Dealer;
 import blackjack.dto.DrawResult;
 import blackjack.dto.ParticipantResult;
+import blackjack.dto.PlayerBettingRequest;
 import blackjack.dto.PlayerNicknamesResult;
+import blackjack.dto.PlayersBettingRequest;
 import blackjack.dto.TotalGameResult;
 import blackjack.util.PlayerNameParser;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BlackjackRunner {
@@ -58,9 +61,20 @@ public class BlackjackRunner {
         outputView.askGameMembers();
         String playerNamesInput = inputView.readLine();
         List<String> playerNames = PlayerNameParser.parsePlayerNames(playerNamesInput);
-        Players players = Players.makePlayers(playerNames);
+        PlayersBettingRequest playersBettingRequest = betPlayers(playerNames);
+        Players players = Players.makePlayers(playersBettingRequest);
         Dealer dealer = Dealer.from();
         return new Participants(players, dealer);
+    }
+
+    private PlayersBettingRequest betPlayers(List<String> playerNames) {
+        List<PlayerBettingRequest> playerBettingRequests = new ArrayList<>();
+        for (String playerName : playerNames) {
+            outputView.askBetAmount(playerName);
+            String amount = inputView.readLine();
+            playerBettingRequests.add(PlayerBettingRequest.of(playerName, amount));
+        }
+        return PlayersBettingRequest.from(playerBettingRequests);
     }
 
     public void printGameResult(Participants participants) {

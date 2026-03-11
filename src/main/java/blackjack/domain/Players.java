@@ -4,7 +4,9 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Role;
 import blackjack.dto.ParticipantResult;
+import blackjack.dto.PlayerBettingRequest;
 import blackjack.dto.PlayerGameResult;
+import blackjack.dto.PlayersBettingRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,11 +22,13 @@ public class Players {
         return new Players(players);
     }
 
-    public static Players makePlayers(List<String> names) {
+    public static Players makePlayers(PlayersBettingRequest playersBettingRequest) {
         List<Player> result = new ArrayList<>();
-        for (String name : names) {
-            validate(name);
-            result.add(new Player(name, Role.PLAYER));
+        for (PlayerBettingRequest playerBettingRequest : playersBettingRequest.value()) {
+            String nickname = playerBettingRequest.playerNickname();
+            int amount = playerBettingRequest.amount();
+            validate(nickname);
+            result.add(new Player(nickname, Role.PLAYER, amount));
         }
         return from(result);
     }
