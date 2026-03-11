@@ -3,9 +3,9 @@ package controller;
 import domain.Dealer;
 import domain.Deck;
 import domain.Player;
-import dto.BlackJackHandDto;
 import dto.BlackJackInitStatusDto;
 import dto.FinalResultDto;
+import dto.HandDto;
 import dto.ScoreResultDto;
 import java.util.List;
 import service.BlackJackInitService;
@@ -66,16 +66,16 @@ public class BlackJackController {
     private void repeatCommands(Player player, Deck deck) {
         while (blackJackTurnService.canPlayerHit(player, InputView.askPlayerCommand(player.getName()))) {
             blackJackTurnService.playerHit(player, deck);
-            BlackJackHandDto blackJackHandDto = blackJackTurnService.createHandDto(player);
-            OutputView.printHandOutput(blackJackHandDto);
+            HandDto handDto = blackJackTurnService.createHandDto(player.getHand());
+            OutputView.printHandOutput(handDto);
         }
     }
 
     private boolean isFirstCommandNo(Player player, Deck deck) {
         String yesNoInput = InputView.askPlayerCommand(player.getName());
 
-        BlackJackHandDto blackJackHandDto = blackJackTurnService.createHandDto(player);
-        OutputView.printHandOutput(blackJackHandDto);
+        HandDto handDto = blackJackTurnService.createHandDto(player.getHand());
+        OutputView.printHandOutput(handDto);
         if (blackJackTurnService.canPlayerHit(player, yesNoInput)) {
             blackJackTurnService.playerHit(player, deck);
         }

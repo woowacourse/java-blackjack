@@ -1,8 +1,8 @@
 package view;
 
-import dto.BlackJackHandDto;
 import dto.BlackJackInitStatusDto;
 import dto.FinalResultDto;
+import dto.HandDto;
 import dto.ScoreResultDto;
 
 public class OutputView {
@@ -18,8 +18,9 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printHandOutput(BlackJackHandDto blackJackHandDto) {
-        System.out.println(blackJackHandDto.handOutput());
+    public static void printHandOutput(HandDto handDto) {
+        String output = String.join(", ", handDto.cards());
+        System.out.println(output);
     }
 
     public static void printDealerHitMessage() {

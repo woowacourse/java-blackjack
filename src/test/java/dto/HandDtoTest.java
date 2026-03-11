@@ -6,9 +6,10 @@ import domain.Player;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
-class BlackJackHandDtoTest {
+class HandDtoTest {
 
     @Test
     void from() {
@@ -18,9 +19,9 @@ class BlackJackHandDtoTest {
         player.draw(new Card(Suit.HEARTS, Rank.SEVEN));
 
         // when
-        BlackJackHandDto blackJackHandDto = BlackJackHandDto.from(player);
+        HandDto handDto = new HandDto(player.getHand());
 
         // then
-        assertEquals("시오카드: 8하트, 7하트", blackJackHandDto.handOutput());
+        assertEquals(List.of("8하트", "7하트"), handDto.cards());
     }
 }

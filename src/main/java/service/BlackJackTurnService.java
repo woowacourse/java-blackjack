@@ -2,9 +2,10 @@ package service;
 
 import domain.Dealer;
 import domain.Deck;
+import domain.Hand;
 import domain.Player;
 import domain.card.Card;
-import dto.BlackJackHandDto;
+import dto.HandDto;
 
 public class BlackJackTurnService {
 
@@ -30,7 +31,7 @@ public class BlackJackTurnService {
         return player.getScore() < 21;
     }
 
-    public BlackJackHandDto createHandDto(Player player) {
-        return BlackJackHandDto.from(player);
+    public HandDto createHandDto(Hand hand) {
+        return new HandDto(hand);
     }
 }
