@@ -24,6 +24,6 @@ public class Player extends Participant {
     }
 
     public String getName() {
-        return name.getName();
+        return name.name();
     }
 }
