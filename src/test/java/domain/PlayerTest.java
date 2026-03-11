@@ -15,24 +15,27 @@ class PlayerTest {
     @Test
     @DisplayName("Player를 생성할 때 오류 발생 안함")
     void player_create_success() {
-        Card spadeJ = new Card(CardShape.스페이드, CardContents.J);
-        Card clover5 = new Card(CardShape.클로버, CardContents.K);
+        Hand playerHand = Hand.of(
+                new Card(CardShape.스페이드, CardContents.J),
+                new Card(CardShape.클로버, CardContents.K)
+        );
+
         String name = "pobi";
 
         assertDoesNotThrow(
-                () -> new Player(name, spadeJ, clover5)
+                () -> Player.from(name, playerHand)
         );
     }
 
     @Nested
     class hitTest {
         //given
-        String testName = "gump";
-        Player testPlayer = new Player(
-                testName,
+        Hand playerHand = Hand.of(
                 new Card(CardShape.스페이드, CardContents.J),
                 new Card(CardShape.클로버, CardContents.FIVE)
         );
+        String testName = "gump";
+        Player testPlayer = Player.from(testName, playerHand);
 
         @Test
         @DisplayName("hit 할 수 있는 상태이면 hit를 진행한다")
@@ -60,7 +63,7 @@ class PlayerTest {
             ));
             Supplier<Card> testCardSupplier = () -> testDeck.poll();
             testPlayer.hit(testCardSupplier);
-            
+
             //when
             testPlayer.hit(testCardSupplier);
 

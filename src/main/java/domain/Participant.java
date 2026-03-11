@@ -4,11 +4,11 @@ import common.ErrorMessage;
 import java.util.regex.Pattern;
 
 public abstract class Participant {
-    private final Hand hand;
-    private final String name;
+    protected final Hand hand;
+    protected final String name;
 
-    protected Participant(String name, Card card1, Card card2) {
-        this.hand = Hand.of(card1, card2);
+    protected Participant(String name, Hand hand) {
+        this.hand = hand;
         validateName(name);
         this.name = name;
     }

@@ -29,7 +29,7 @@ public class Players {
 
     private static Player createNewPlayer(Deck totalDeck, String name) {
         List<Card> twoCards = totalDeck.drawTwoCards();
-        return new Player(name, twoCards.get(0), twoCards.get(1));
+        return Player.from(name, Hand.of(twoCards.get(0), twoCards.get(1)));
     }
 
     private static void validateNameUniqueness(List<String> playerNames) {

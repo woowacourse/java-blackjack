@@ -3,8 +3,19 @@ package domain;
 import java.util.function.Supplier;
 
 public class Player extends Participant {
-    public Player(String name, Card card1, Card card2) {
-        super(name, card1, card2);
+    private final boolean isStay;
+
+    private Player(String name, Hand hand, boolean isStay) {
+        super(name, hand);
+        this.isStay = isStay;
+    }
+
+    public static Player from(String name, Hand hand) {
+        return new Player(name, hand, false);
+    }
+
+    public Player stay() {
+        return new Player(this.name, this.hand, true);
     }
 
     public void hit(Supplier<Card> cardSupplier) {

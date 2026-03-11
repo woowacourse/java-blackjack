@@ -9,10 +9,13 @@ public class DealerTest {
     @Test
     @DisplayName("Dealer를 생성할 때 오류 발생 안함")
     void dealer_create_success() {
-        Card spadeJ = new Card(CardShape.스페이드, CardContents.J);
-        Card clover5 = new Card(CardShape.클로버, CardContents.FIVE);
+        Hand dealerHand = Hand.of(
+                new Card(CardShape.스페이드, CardContents.J),
+                new Card(CardShape.클로버, CardContents.FIVE)
+        );
+
         assertDoesNotThrow(
-                () -> new Dealer(spadeJ, clover5)
+                () -> new Dealer(dealerHand)
         );
     }
 
