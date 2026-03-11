@@ -7,9 +7,9 @@ import blackjack.util.Console;
 public class Application {
 
     public static void main(String[] args) {
+        AppConfig config = new AppConfig();
+        BlackjackController controller = config.controller();
         try {
-            AppConfig config = new AppConfig();
-            BlackjackController controller = config.controller();
             controller.run();
         } finally {
             Console.close();
