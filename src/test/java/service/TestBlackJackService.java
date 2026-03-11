@@ -3,11 +3,9 @@ package service;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import java.util.List;
-import java.util.Map;
 import model.BlackJackDeck;
 import model.CardNumber;
 import model.Dealer;
-import model.MatchStatus;
 import model.Player;
 import model.PlayerName;
 import model.Players;
@@ -16,8 +14,6 @@ import model.dto.Card;
 import model.dto.ParticipantWinning;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 public class TestBlackJackService {
     private BlackJackService blackJackService;

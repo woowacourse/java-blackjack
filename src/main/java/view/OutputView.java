@@ -18,7 +18,7 @@ public class OutputView {
     private static final String INIT_DECK_TEXT = "에게 2장을 나누었습니다.";
     private static final String DEALER_CARD_TEXT = "딜러카드: ";
     private static final String SCORE_TEXT = " - 결과: ";
-    private static final String DEALER_TEXT = "딜러:";
+    private static final String DEALER_TEXT = "딜러: ";
 
     public static void printInitDeck(List<PlayerResult> players, String dealerFirstCard) {
         List<String> playerNames = players.stream().map(PlayerResult::name).toList();
@@ -74,9 +74,7 @@ public class OutputView {
     }
 
     private static void printDealerResult(DealerWinning dealerWinning) {
-        System.out.print(DEALER_TEXT);
-        System.out.print(" " + String.join(" ", dealerWinning.getFormattedDealerWinning()));
-        printNewLine();
+        System.out.println(DEALER_TEXT + dealerWinning.getTotalBet());
     }
 
     private static void printPlayersResult(PlayersWinning playersWinning) {
@@ -86,7 +84,7 @@ public class OutputView {
     }
 
     private static void printPlayerResult(PlayerWinning playerWinning) {
-        System.out.println(playerWinning.name() + RESULT_DELIMITER + playerWinning.matchStatus());
+        System.out.println(playerWinning.name() + RESULT_DELIMITER + playerWinning.profit());
     }
 
 }

@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import model.BlackJackDeck;
 import model.Dealer;
 import model.DealerWinning;
-import model.MatchStatus;
 import model.Participant;
 import model.Player;
 import model.Players;
@@ -40,9 +39,8 @@ public class BlackJackService {
         PlayersWinning playersWinning = new PlayersWinning();
 
         for(Player player : players.getPlayers()) {
-            MatchStatus matchStatus = getPlayerResult(player, dealer);
             Integer profit = calculateBetAmount(player, dealer);
-            playersWinning.add(new PlayerWinning(player.getName(), matchStatus.getStatus(), profit));
+            playersWinning.add(new PlayerWinning(player.getName(), profit));
         }
 
         return playersWinning;
@@ -52,9 +50,8 @@ public class BlackJackService {
         DealerWinning dealerWinning = new DealerWinning();
 
         for(Player player : players.getPlayers()) {
-            MatchStatus matchStatus = getPlayerResult(player, dealer);
             Integer betAmount = calculateBetAmount(player, dealer);
-            dealerWinning.increase(reverseMatchResult(matchStatus), -betAmount);
+            dealerWinning.increase(-betAmount);
         }
         return dealerWinning;
     }
@@ -92,29 +89,5 @@ public class BlackJackService {
             return BigDecimal.valueOf(-player.getBetAmount());
         }
         return BigDecimal.ZERO;
-    }
-
-    private MatchStatus reverseMatchResult(MatchStatus matchStatus) {
-        if(matchStatus.equals(MatchStatus.WIN)) {
-            return MatchStatus.LOSE;
-        }
-
-        if(matchStatus.equals(MatchStatus.LOSE)) {
-            return MatchStatus.WIN;
-        }
-
-        return matchStatus;
-    }
-
-    private MatchStatus getPlayerResult(Player player, Dealer dealer) {
-        if (player.isBust() || (!dealer.isBust() && dealer.isMoreScore(player))) {
-            return MatchStatus.LOSE;
-        }
-
-        if(!player.isBust() && (player.isMoreScore(dealer) || dealer.isBust())) {
-            return MatchStatus.WIN;
-        }
-
-        return MatchStatus.DRAW;
     }
 }
