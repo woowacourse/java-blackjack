@@ -50,13 +50,13 @@ public class Dealer extends Participant {
             .stream()
             .filter(result -> result.matchResult() == MatchResult.WIN)
             .count();
-        double profit = calculateDealerProfit(playerGameResults);
+        long profit = calculateDealerProfit(playerGameResults);
         return new DealerGameResult(dealerWin, dealerTie, dealerLose, profit);
     }
 
-    private double calculateDealerProfit(List<PlayerGameResult> playerGameResults) {
-        double totalPlayerProfit = playerGameResults.stream()
-            .mapToDouble(PlayerGameResult::profit)
+    private long calculateDealerProfit(List<PlayerGameResult> playerGameResults) {
+        long totalPlayerProfit = playerGameResults.stream()
+            .mapToLong(PlayerGameResult::profit)
             .sum();
         return -totalPlayerProfit;
     }
