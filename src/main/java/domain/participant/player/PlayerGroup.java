@@ -38,16 +38,19 @@ public class PlayerGroup {
         return players.size();
     }
 
-    public boolean hasNextPlayer() {
-        if (playIndex > players.size() - 1) {
-            playIndex = 0;
-            return false;
-        }
+    public void initPlayerIndex() {
+        playIndex = 0;
+    }
 
-        return true;
+    public boolean hasNextPlayer() {
+        return playIndex <= players.size() - 1;
     }
 
     public Player nextPlayer() {
+        if (!hasNextPlayer()) {
+            throw new IndexOutOfBoundsException("[ERROR] 플레이어 수의 범위를 초과했습니다.");
+        }
+
         return players.get(playIndex++);
     }
 

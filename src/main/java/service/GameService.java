@@ -14,9 +14,9 @@ import java.util.List;
 
 public class GameService {
     private static final int START_CARD_COUNT = 2;
-    private PlayerGroup playerGroup;
     private final Dealer dealer = new Dealer(new HandCards());
     private final CardDeck cardDeck = new CardDeck();
+    private PlayerGroup playerGroup;
 
     public void registerPlayers(List<String> playerNames) {
         List<Player> players = new ArrayList<>();
@@ -41,6 +41,8 @@ public class GameService {
     }
 
     private void dealInitialPlayersCards() {
+        playerGroup.initPlayerIndex();
+
         while (playerGroup.hasNextPlayer()) {
             playerGroup.onePlayerDrawCard(cardDeck.getCard());
             playerGroup.nextPlayer();
