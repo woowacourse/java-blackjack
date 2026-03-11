@@ -13,7 +13,7 @@ public class Name {
     }
 
     private void validate(String name) {
-        if (name.isBlank()) {
+        if (name == null || name.isBlank()) {
             throw new IllegalArgumentException(BLANK_NAME_NOT_ALLOWED);
         }
         if (name.length() < NAME_MIN_LENGTH || name.length() > NAME_MAX_LENGTH) {

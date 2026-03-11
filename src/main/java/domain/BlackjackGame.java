@@ -1,5 +1,6 @@
 package domain;
 
+import domain.card.Card;
 import domain.card.Deck;
 import domain.participant.Dealer;
 import domain.participant.Player;
@@ -18,9 +19,16 @@ public class BlackjackGame {
     private final Deck deck;
 
     public BlackjackGame(List<String> players) {
+        validate(players);
         this.players = Players.from(players);
         this.dealer = new Dealer(DEALER_NAME);
         this.deck = new Deck();
+    }
+
+    private void validate(List<String> players) {
+        if (players == null) {
+            throw new IllegalArgumentException(Card.FIELD_CAN_NOT_BE_NULL);
+        }
     }
 
     public void giveHand() {
