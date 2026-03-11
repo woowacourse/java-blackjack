@@ -1,7 +1,7 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.card.CardNumber;
+import domain.card.CardValue;
 import java.util.List;
 
 public abstract class Participant {
@@ -22,7 +22,7 @@ public abstract class Participant {
         }
 
         boolean isAceExist = hand.stream()
-                .anyMatch(holdCard -> holdCard.getCardNumber() == CardNumber.ACE);
+                .anyMatch(holdCard -> holdCard.getCardNumber() == CardValue.ACE);
         if (isSoftHand(isAceExist, results)) {
             return results + 10;
         }
@@ -33,7 +33,7 @@ public abstract class Participant {
         return calculateScore() > 21;
     }
 
-    private boolean isSoftHand(boolean isAceExist, int results) {
+    public boolean isSoftHand(boolean isAceExist, int results) {
         return isAceExist && (results + 10) <= 21;
     }
 

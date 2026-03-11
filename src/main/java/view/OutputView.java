@@ -2,7 +2,7 @@ package view;
 
 import domain.GameResult;
 import domain.card.Card;
-import domain.card.CardNumber;
+import domain.card.CardValue;
 import domain.card.CardSuit;
 import dto.ParticipantDto;
 import dto.PlayerResultDto;
@@ -16,8 +16,8 @@ public class OutputView {
         System.out.println("딜러와 " + String.join(", ", playerNames) + "에게 2장을 나누었습니다.");
     }
 
-    public void printDealerStartCard(CardNumber cardNumber, CardSuit cardSuit) {
-        System.out.println("딜러카드: " + cardNumber.getNumber() + getCardSuit(cardSuit));
+    public void printDealerStartCard(CardValue cardValue, CardSuit cardSuit) {
+        System.out.println("딜러카드: " + cardValue.getValue() + getCardSuit(cardSuit));
     }
 
     public void printStartCard(List<ParticipantDto> playerDtos) {
@@ -64,7 +64,7 @@ public class OutputView {
     }
 
     private String cardsToString(List<Card> hand) {
-        return String.join(", ", hand.stream().map(card -> card.getCardNumber().getNumber() + getCardSuit(card.getCardSuit())).toList());
+        return String.join(", ", hand.stream().map(card -> card.getCardNumber().getValue() + getCardSuit(card.getCardSuit())).toList());
     }
 
     private String getCardSuit(CardSuit cardSuit) {
@@ -73,6 +73,14 @@ public class OutputView {
             case SPADE -> "스페이드";
             case CLUB -> "클로버";
             case DIAMOND -> "다이아몬드";
+        };
+    }
+
+    private String getGameResult(GameResult gameResult) {
+        return switch (gameResult) {
+            case WIN -> "승";
+            case DRAW -> "무";
+            case LOSE -> "패";
         };
     }
 }
