@@ -59,4 +59,9 @@ public class OutputView {
                 .map(this::formatCard)
                 .collect(Collectors.joining(", "));
     }
+
+    public void printAskBetAmount(String name) {
+        printMessage(String.format(Message.INPUT_BET_AMOUNT_MESSAGE, name));
+
+    }
 }

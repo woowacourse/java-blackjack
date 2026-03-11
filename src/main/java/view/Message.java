@@ -8,4 +8,5 @@ public class Message {
     public final static String REQUEST_GET_EXTRA_CARD = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     public final static String DEALER_CARD_RECEIVE_ANNOUNCE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     public final static String FINAL_RESULT_ANNOUNCE = "\n## 최종 승패";
+    public static final String INPUT_BET_AMOUNT_MESSAGE = "%s의 배팅 금액은?";
 }

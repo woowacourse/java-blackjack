@@ -27,6 +27,7 @@ public class Application {
 
     public void run() {
         readParticipants();
+        readBetAmount();
         printInitialCardInformation();
         selectToDealExtraCard();
         dealDealerCard();
@@ -39,6 +40,16 @@ public class Application {
             outputView.printMessage(Message.INPUT_PARTICIPANTS_MESSAGE);
             blackjackGame.prepare(inputView.readParticipantsName());
             return null;
+        });
+    }
+
+    private void readBetAmount() {
+        blackjackGame.getUsers().forEach(blackjackUser -> {
+            retryUntilSuccess(() -> {
+                outputView.printAskBetAmount(blackjackUser.getName());
+
+                return null;
+            });
         });
     }
 
