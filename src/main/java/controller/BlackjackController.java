@@ -41,7 +41,7 @@ public class BlackjackController {
         playRound(dealer, players, cards);
 
         displayFinalCards(dealer, players);
-        showFinalResult(dealer, players);
+        showFinalResult(dealer, players, betMap);
     }
 
     private List<String> readNames() {
@@ -118,8 +118,8 @@ public class BlackjackController {
         outputView.displayFinalCard(finalCards);
     }
 
-    private void showFinalResult(Dealer dealer, Players players) {
-        BlackjackResult blackjackResult = BlackjackResult.from(dealer, players);
+    private void showFinalResult(Dealer dealer, Players players, BetMap betMap) {
+        BlackjackResult blackjackResult = BlackjackResult.from(dealer, players, betMap);
         outputView.displayMatchResult(BlackjackResultDto.from(blackjackResult));
     }
 

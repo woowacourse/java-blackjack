@@ -43,7 +43,7 @@ public class OutputView {
     }
 
     public void displayMatchResult(BlackjackResultDto resultDto) {
-        System.out.printf("## 최종 승패\n딜러: %d승 %d패\n", resultDto.winCount(), resultDto.loseCount());
+        System.out.printf("## 최종 수익\n딜러: %d승 %d패\n", resultDto.winCount(), resultDto.loseCount());
         Map<String, String> resultMap = resultDto.matchResultMap().resultMap();
         for (String playerName : resultMap.keySet()) {
             System.out.printf("%s: %s\n", playerName, resultMap.get(playerName));

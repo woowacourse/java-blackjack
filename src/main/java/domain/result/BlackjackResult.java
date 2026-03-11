@@ -1,5 +1,6 @@
 package domain.result;
 
+import domain.participant.BetMap;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
@@ -9,11 +10,12 @@ import java.util.Map;
 
 public class BlackjackResult {
     private final Map<String, MatchCase> playerResultMap = new HashMap<>();
-    private int dealerWinningCount = 0;
-    private int drawCount = 0;
-    private int dealerLoseCount = 0;
+    private final BetMap betMap;
+    private final DealerMatchCount dealerMatchCount;
 
-    private BlackjackResult(Dealer dealer, Players players) {
+    private BlackjackResult(Dealer dealer, Players players, BetMap betMap) {
+        this.betMap = betMap;
+        this.dealerMatchCount = new DealerMatchCount();
         calculateMatchResult(dealer, players);
     }
 
@@ -21,8 +23,8 @@ public class BlackjackResult {
         return player.isBust() || (!dealerBurst && player.getFinalScore() < dealerTotal);
     }
 
-    public static BlackjackResult from(Dealer dealer, Players players) {
-        return new BlackjackResult(dealer, players);
+    public static BlackjackResult from(Dealer dealer, Players players, BetMap betMap) {
+        return new BlackjackResult(dealer, players, betMap);
     }
 
     private void calculateMatchResult(Dealer dealer, Players players) {
@@ -56,27 +58,27 @@ public class BlackjackResult {
     }
 
     public void increaseDealerWinCount() {
-        this.dealerWinningCount++;
+        this.dealerMatchCount.increaseWinCount();
     }
 
     public void increaseDrawCount() {
-        this.drawCount++;
+        this.dealerMatchCount.increaseDrawCount();
     }
 
     public void increaseDealerLoseCount() {
-        this.dealerLoseCount++;
+        this.dealerMatchCount.increaseLoseCount();
     }
 
     public int getDealerWinningCount() {
-        return dealerWinningCount;
+        return this.dealerMatchCount.getWinningCount();
     }
 
     public int getDealerLoseCount() {
-        return dealerLoseCount;
+        return this.dealerMatchCount.getLoseCount();
     }
 
     public int getDrawCount() {
-        return drawCount;
+        return this.dealerMatchCount.getDrawCount();
     }
 
     public Map<String, MatchCase> getPlayerResultMap() {
