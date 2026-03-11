@@ -13,11 +13,13 @@ import dto.BlackjackStatisticsDto;
 import dto.DealerResultDto;
 import dto.ParticipantDto;
 import dto.PlayerResultDto;
-import exception.ErrorMessage;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BlackjackService {
+
+    public static final String INVALID_YES_NO_INPUT =
+            String.format("%s 또는 %s을 입력해야 합니다.", HitOrStand.HIT.getHitOrStand(), HitOrStand.STAND.getHitOrStand());
 
     private final CardMachine cardMachine;
     private Participants participants;
@@ -44,10 +46,10 @@ public class BlackjackService {
     public List<ParticipantDto> generateInitialParticipantDtoList() {
         List<ParticipantDto> participantDtoList = new ArrayList<>();
 
-        ParticipantDto dealerDto =  participants.generateInitialDealerDto();
+        ParticipantDto dealerDto = generateInitialDealerDto();
         participantDtoList.add(dealerDto);
 
-        List<ParticipantDto> playersDto = participants.generatePlayersDto();
+        List<ParticipantDto> playersDto = generatePlayersDto();
         participantDtoList.addAll(playersDto);
 
         return participantDtoList;
@@ -56,13 +58,13 @@ public class BlackjackService {
     public void validateHitOrStand(String hitOrStand) {
         if (!hitOrStand.strip().equals(HitOrStand.HIT.getHitOrStand()) && !hitOrStand.strip()
                 .equals(HitOrStand.STAND.getHitOrStand())) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_YES_NO_INPUT.getMessage());
+            throw new IllegalArgumentException(PolicyConstant.ERROR_PREFIX + INVALID_YES_NO_INPUT);
         }
     }
 
-    public boolean drawDealerCard(ParticipantDto dealerDto) {
-        if (dealerDto.score() <= PolicyConstant.DEALER_HIT_MAX_SCORE) {
-            Dealer dealer = participants.getDealer();
+    public boolean drawDealerCard() {
+        Dealer dealer = participants.dealer();
+        if (dealer.calculateScore() <= PolicyConstant.DEALER_HIT_MAX_SCORE) {
             dealer.addCard(drawCard());
             return true;
         }
@@ -77,13 +79,40 @@ public class BlackjackService {
     public List<ParticipantDto> getBlackjackResult() {
         List<ParticipantDto> participantDtoList = new ArrayList<>();
 
-        ParticipantDto dealerDto =  participants.generateDealerDto();
+        ParticipantDto dealerDto = generateDealerDto();
         participantDtoList.add(dealerDto);
 
-        List<ParticipantDto> playersDto = participants.generatePlayersDto();
+        List<ParticipantDto> playersDto = generatePlayersDto();
         participantDtoList.addAll(playersDto);
 
         return participantDtoList;
+    }
+
+    public ParticipantDto generateInitialDealerDto() {
+        Dealer dealer = participants.dealer();
+        List<String> hand = convertHandString(dealer.getOnlyFirstHand());
+        return new ParticipantDto(dealer.getName(), hand, dealer.calculateScore());
+    }
+
+    public ParticipantDto generateDealerDto() {
+        Dealer dealer = participants.dealer();
+        List<String> hand = convertHandString(dealer.getHand());
+        return new ParticipantDto(dealer.getName(), hand, dealer.calculateScore());
+    }
+
+    public List<ParticipantDto> generatePlayersDto() {
+        List<ParticipantDto> playersDto = new ArrayList<>();
+        for (Player player : participants.players().getPlayers()) {
+            List<String> hand = convertHandString(player.getHand());
+            playersDto.add(new ParticipantDto(player.getName(), hand, player.calculateScore()));
+        }
+        return playersDto;
+    }
+
+    private List<String> convertHandString(List<Card> cards) {
+        return cards.stream()
+                .map(card -> card.getRank().getRank() + card.getSuit().getSuit())
+                .toList();
     }
 
     public BlackjackStatisticsDto getBlackjackStatistics() {
@@ -137,7 +166,8 @@ public class BlackjackService {
     public ParticipantDto updatePlayer(String name) {
         Player player = participants.getPlayer(name);
         player.addCard(drawCard());
-        return new ParticipantDto(name, player.getHand(), player.calculateScore());
+        List<String> hand = convertHandString(player.getHand());
+        return new ParticipantDto(name, hand, player.calculateScore());
     }
 
     public boolean isHit(String hitOrStand) {
@@ -145,6 +175,6 @@ public class BlackjackService {
     }
 
     public boolean isStand(String hitOrStand) {
-        return hitOrStand.equals(HitOrStand.STAND.getHitOrStand());
+        return hitOrStand.strip().equals(HitOrStand.STAND.getHitOrStand());
     }
 }
