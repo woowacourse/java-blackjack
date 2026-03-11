@@ -1,7 +1,8 @@
 package blackjack.model.participant;
 
-import blackjack.model.Hands;
-import blackjack.model.cardDeck.CardDeck;
+import blackjack.model.card.Hands;
+import blackjack.dto.CardDto;
+import java.util.List;
 
 public class Player extends Participant {
 
@@ -14,8 +15,7 @@ public class Player extends Participant {
     }
 
     @Override
-    public void pickInitCards(CardDeck cardDeck) {
-        hands.addCard(cardDeck.pick());
-        hands.addCard(cardDeck.pick());
+    public List<CardDto> getInitCards() {
+        return hands.getAllCards();
     }
 }

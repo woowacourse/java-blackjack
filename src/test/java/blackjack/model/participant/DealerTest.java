@@ -13,24 +13,9 @@ import org.junit.jupiter.api.Test;
 
 class DealerTest {
 
-    PickStrategy mustPickTen = cards -> Card.opened(Rank.TEN, Suit.CLOVER);
-    PickStrategy mustPickFive = cards -> Card.opened(Rank.FIVE, Suit.CLOVER);
-    PickStrategy mustPickAce = cards -> Card.opened(Rank.ACE, Suit.CLOVER);
-
-    @Test
-    @DisplayName("딜러가 뽑은 두 장의 카드 중 한 장만 오픈돼 있다.")
-    void pickInitCards() {
-        // given
-        Dealer dealer = Dealer.create();
-        CardDeck cardDeck = CardDeck.of(mustPickTen);
-
-        // when
-        dealer.pickInitCards(cardDeck);
-
-        //then
-        assertThat(dealer.getOpenedCards().size()).isEqualTo(1);
-        assertThat(dealer.getAllCard().size()).isEqualTo(2);
-    }
+    PickStrategy mustPickTen = cards -> Card.of(Rank.TEN, Suit.CLOVER);
+    PickStrategy mustPickFive = cards -> Card.of(Rank.FIVE, Suit.CLOVER);
+    PickStrategy mustPickAce = cards -> Card.of(Rank.ACE, Suit.CLOVER);
 
     @Test
     @DisplayName("딜러의 점수가 16점을 초과하면 false를 반환한다.")

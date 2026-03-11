@@ -1,9 +1,9 @@
 package blackjack.model.participant;
 
-import blackjack.model.Hands;
-import blackjack.model.card.Card;
-import blackjack.model.cardDeck.CardDeck;
+import blackjack.dto.CardDto;
+import blackjack.model.card.Hands;
 import blackjack.model.result.Result;
+import java.util.List;
 
 public class Dealer extends Participant {
 
@@ -19,12 +19,8 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public void pickInitCards(CardDeck cardDeck) {
-        hands.addCard(cardDeck.pick());
-
-        Card secondPickedCard = cardDeck.pick();
-        secondPickedCard.flip();
-        hands.addCard(secondPickedCard);
+    public List<CardDto> getInitCards() {
+        return List.of(hands.getFirstCard());
     }
 
     public boolean canPick() {

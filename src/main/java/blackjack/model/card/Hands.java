@@ -1,7 +1,6 @@
-package blackjack.model;
+package blackjack.model.card;
 
-import blackjack.model.card.Card;
-import blackjack.model.card.CardDto;
+import blackjack.dto.CardDto;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,15 +42,13 @@ public class Hands {
         return calculateTotalScore() > score;
     }
 
-    public List<CardDto> getAllCard() {
-        return this.cards.stream()
-                .map(Card::toDto)
-                .toList();
+    public CardDto getFirstCard() {
+        Card firstCard = cards.getFirst();
+        return firstCard.toDto();
     }
 
-    public List<CardDto> getOpenedCards() {
+    public List<CardDto> getAllCards() {
         return this.cards.stream()
-                .filter(Card::isOpened)
                 .map(Card::toDto)
                 .toList();
     }

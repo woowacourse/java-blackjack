@@ -1,31 +1,23 @@
 package blackjack.model.card;
 
+import blackjack.dto.CardDto;
+
 public class Card {
 
     private final Rank rank;
     private final Suit suit;
-    private boolean isOpened;
 
-    private Card(Rank rank, Suit suit, boolean isOpened) {
+    private Card(Rank rank, Suit suit) {
         this.rank = rank;
         this.suit = suit;
-        this.isOpened = isOpened;
     }
 
-    public static Card opened(Rank rank, Suit suit) {
-        return new Card(rank, suit, true);
-    }
-
-    public void flip() {
-        this.isOpened = false;
+    public static Card of(Rank rank, Suit suit) {
+        return new Card(rank, suit);
     }
 
     public boolean isAce() {
         return this.rank == Rank.ACE;
-    }
-
-    public boolean isOpened() {
-        return this.isOpened;
     }
 
     public int getDefaultScore() {

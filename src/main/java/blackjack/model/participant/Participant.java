@@ -1,8 +1,8 @@
 package blackjack.model.participant;
 
 import blackjack.common.error.ErrorCode;
-import blackjack.model.Hands;
-import blackjack.model.card.CardDto;
+import blackjack.dto.CardDto;
+import blackjack.model.card.Hands;
 import blackjack.model.cardDeck.CardDeck;
 import java.util.List;
 
@@ -21,36 +21,6 @@ public abstract class Participant {
         this.hands = hands;
     }
 
-    public abstract void pickInitCards(CardDeck cardDeck);
-
-    public void pickAdditionalCard(CardDeck cardDeck) {
-        hands.addCard(cardDeck.pick());
-    }
-
-    public boolean isBust() {
-        return hands.hasScoreHigherThan(BLACKJACK_SCORE);
-    }
-
-    public boolean hasHigherScoreThan(Participant other) {
-        return this.hands.hasScoreHigherThan(other.getCurrentTotalScore());
-    }
-
-    public int getCurrentTotalScore() {
-        return hands.calculateTotalScore();
-    }
-
-    public List<CardDto> getAllCard() {
-        return hands.getAllCard();
-    }
-
-    public List<CardDto> getOpenedCards() {
-        return hands.getOpenedCards();
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
     private void validateName(String name) {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException(ErrorCode.NO_NAME_PARTICIPANT_NAME.getMessage());
@@ -61,5 +31,36 @@ public abstract class Participant {
         if (hands == null) {
             throw new IllegalArgumentException(ErrorCode.NULL_HANDS.getMessage());
         }
+    }
+
+    public abstract List<CardDto> getInitCards();
+
+    public void pickInitCards(CardDeck cardDeck) {
+        hands.addCard(cardDeck.pick());
+        hands.addCard(cardDeck.pick());
+    }
+
+    public void pickAdditionalCard(CardDeck cardDeck) {
+        hands.addCard(cardDeck.pick());
+    }
+
+    public boolean isBust() {
+        return hands.hasScoreHigherThan(BLACKJACK_SCORE);
+    }
+
+    public boolean hasHigherScoreThan(Participant other) {
+        return this.hands.hasScoreHigherThan(other.getFinalScore());
+    }
+
+    public int getFinalScore() {
+        return hands.calculateTotalScore();
+    }
+
+    public List<CardDto> getAllCards() {
+        return hands.getAllCards();
+    }
+
+    public String getName() {
+        return this.name;
     }
 }

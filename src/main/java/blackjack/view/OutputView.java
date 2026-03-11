@@ -1,9 +1,10 @@
 package blackjack.view;
 
-import blackjack.model.card.CardDto;
+import blackjack.dto.CardDto;
+import blackjack.dto.PlayerResults;
 import blackjack.model.participant.Player;
-import blackjack.model.result.TotalResult;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class OutputView {
 
@@ -20,7 +21,7 @@ public class OutputView {
         System.out.println("딜러와 " + joinedName + "에게 2장을 나누었습니다.");
     }
 
-    public void printParticipantCards(String name, List<CardDto> openedCards) {
+    public void printParticipantHands(String name, List<CardDto> openedCards) {
         String joinedCardNames = getJoinedCardNames(openedCards);
         System.out.println(name + "카드: " + joinedCardNames);
     }
@@ -42,19 +43,21 @@ public class OutputView {
         System.out.println("딜러는 16초과라 더 이상 카드를 받지 않습니다.");
     }
 
-    public void printResult(TotalResult totalResult) {
+    public void printResult(PlayerResults playerResults) {
         System.out.println("## 최종 승패");
-        printDealerResult(totalResult.getDealerResult());
-        printAllPlayerResult(totalResult);
+        printDealerResult(playerResults.getDealerResult());
+        printAllPlayerResult(playerResults);
     }
 
     private void printDealerResult(String dealerResult) {
         System.out.println("딜러: " + dealerResult);
     }
 
-    private void printAllPlayerResult(TotalResult totalResult) {
-        List<String> playerResults = totalResult.getPlayerResults();
-        System.out.println(String.join("\n", playerResults));
+    private void printAllPlayerResult(PlayerResults playerResults) {
+        String results = playerResults.results().entrySet().stream()
+                .map(result -> result.getKey() + ": " + result.getValue().getDisplayName())
+                .collect(Collectors.joining("\n"));
+        System.out.println(results);
     }
 
     private String getJoinedCardNames(List<CardDto> cards) {

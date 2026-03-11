@@ -4,7 +4,7 @@ import blackjack.model.cardDeck.CardDeck;
 import blackjack.model.cardDeck.RandomPickStrategy;
 import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Player;
-import blackjack.model.result.TotalResult;
+import blackjack.dto.PlayerResults;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -50,8 +50,8 @@ public class BlackjackController {
 
         outputView.printCardDistributionCompleted(players);
 
-        outputView.printParticipantCards(dealer.getName(), dealer.getOpenedCards());
-        players.forEach(player -> outputView.printParticipantCards(player.getName(), player.getOpenedCards()));
+        outputView.printParticipantHands(dealer.getName(), dealer.getInitCards());
+        players.forEach(player -> outputView.printParticipantHands(player.getName(), player.getInitCards()));
     }
 
     private void askPlayersHitOrStand(List<Player> players, CardDeck cardDeck) {
@@ -64,7 +64,7 @@ public class BlackjackController {
 
         while (isContinued) {
             player.pickAdditionalCard(cardDeck);
-            outputView.printParticipantCards(player.getName(), player.getAllCard());
+            outputView.printParticipantHands(player.getName(), player.getAllCards());
             outputView.printMoreCardInputPrompt(player.getName());
             isContinued = inputView.inputMoreCard();
         }
@@ -81,20 +81,20 @@ public class BlackjackController {
     private void openPlayersHands(List<Player> players) {
         players.forEach(player -> outputView.printParticipantCardsWithScore(
                 player.getName(),
-                player.getAllCard(),
-                player.getCurrentTotalScore()
+                player.getAllCards(),
+                player.getFinalScore()
         ));
     }
 
     private void openDealerHands(Dealer dealer) {
         outputView.printParticipantCardsWithScore(
                 dealer.getName(),
-                dealer.getAllCard(),
-                dealer.getCurrentTotalScore()
+                dealer.getAllCards(),
+                dealer.getFinalScore()
         );
     }
 
     private void printResult(List<Player> players, Dealer dealer) {
-        outputView.printResult(TotalResult.of(players, dealer));
+        outputView.printResult(PlayerResults.of(players, dealer));
     }
 }
