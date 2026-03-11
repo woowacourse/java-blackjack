@@ -45,7 +45,7 @@ public class BlackjackTest {
         assertThat(dealerResult.get("승")).isEqualTo(1);
         assertThat(dealerResult.get("패")).isEqualTo(1);
 
-        assertThat(playerResult.get("pobi")).isEqualTo(Boolean.FALSE);
-        assertThat(playerResult.get("jason")).isEqualTo(Boolean.TRUE);
+        assertThat(playerResult.get("pobi")).isFalse();
+        assertThat(playerResult.get("jason")).isTrue();
     }
 }
