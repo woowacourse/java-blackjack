@@ -47,6 +47,6 @@ public class Player {
     }
 
     public boolean isBust() {
-        return !DefaultBlackjackRule.isBust(getScore());
+        return DefaultBlackjackRule.isBust(getScore());
     }
 }

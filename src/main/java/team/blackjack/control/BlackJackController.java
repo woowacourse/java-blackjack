@@ -67,7 +67,7 @@ public class BlackJackController {
     private boolean readPlayerHitDecision(String playerName) {
         final boolean isPlayerBust = blackJackService.isPlayerBust(playerName);
 
-        if (!isPlayerBust) {
+        if (isPlayerBust) {
             OutputView.printBustMessage();
             return false;
         }
@@ -75,11 +75,11 @@ public class BlackJackController {
         OutputView.printAskDrawCard(playerName);
         String hitYn = InputView.readHitDecision();
 
-        while (!hitYn.equalsIgnoreCase("y") && !hitYn.equalsIgnoreCase("n")) {
+        while (!"y".equalsIgnoreCase(hitYn) && !"n".equalsIgnoreCase(hitYn)) {
             OutputView.printWrongInputMessage();
             hitYn = InputView.readHitDecision();
         }
 
-        return hitYn.equalsIgnoreCase("n");
+        return "y".equalsIgnoreCase(hitYn);
     }
 }
