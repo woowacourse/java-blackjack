@@ -22,9 +22,8 @@ public class Bettings {
     }
 
     public Money calculateBettingMoney(Player player, BettingRate bettingRate) {
-        Money changedMoney = bettings.get(player)
-                .changeMoney(bettingRate);
-        return bettings.put(player, changedMoney);
+        Money money = bettings.get(player);
+        return bettings.put(player, bettingRate.payOut(money));
     }
 
 }
