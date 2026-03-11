@@ -51,6 +51,7 @@
 
 - [ ] 배팅 금액 요청
     - 숫자가 아닐 경우 예외 발생
+    - 금액이 1000원 단위로 나누어 떨어지지 않을 경우 예외 발생
     - 금액이 1000-300000원 사이가 아닌 경우 예외 발생
         - 배팅 금액 한도 결정
           이유: [강원랜드 배팅액](http://www.wikileaks-kr.org/news/articleView.html?idxno=148517#:~:text=%EA%B0%95%EC%9B%90%EB%9E%9C%EB%93%9C%20%EC%B9%B4%EC%A7%80%EB%85%B8%20%EC%9D%BC%EB%B0%98%20%EC%98%81%EC%97%85%EC%9E%A5%20%ED%85%8C%EC%9D%B4%EB%B8%94%20%EA%B2%8C%EC%9E%84%EC%9D%80%20%EC%B5%9C%EA%B3%A0%20%EB%B2%A0%ED%8C%85%20%ED%95%9C%EB%8F%84%2030%EB%A7%8C%20%EC%9B%90%2C%20%EC%B5%9C%EC%A0%80%20%EB%B2%A0%ED%8C%85%EA%B8%88%EC%95%A1%EC%9D%80%201000%EC%9B%90%EC%9C%BC%EB%A1%9C%20%EA%B7%9C%EC%A0%9C%ED%95%98%EA%B3%A0%20%EC%9E%88%EB%8B%A4.)
