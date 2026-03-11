@@ -7,7 +7,7 @@ public record CardsSnapshot(List<Card> cards) {
 
     public String getFormattedCards() {
         return cards.stream()
-                .map(card -> card.suit() + card.symbol())
+                .map(card -> card.symbol() + card.suitValue())
                 .collect(Collectors.joining(", "));
     }
 
