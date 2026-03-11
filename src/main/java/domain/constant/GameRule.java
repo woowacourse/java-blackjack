@@ -13,4 +13,7 @@ public class GameRule {
     public static final int MAX_NAME_LENGTH = 5;
 
     public static final int INIT_CARD_COUNT = 2;
+
+    public static final int MIN_BET_AMOUNT = 1_000;
+    public static final int MAX_BET_AMOUNT = 300_000;
 }
