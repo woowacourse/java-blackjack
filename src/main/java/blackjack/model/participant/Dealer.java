@@ -63,10 +63,4 @@ public class Dealer extends Participant {
                     return player.bust();
                 }).toList();
     }
-
-    public int getProfit(List<Player> players) {
-        return (int) players.stream()
-                .mapToInt(Player::getPrize)
-                .sum();
-    }
 }

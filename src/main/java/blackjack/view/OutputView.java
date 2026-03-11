@@ -73,13 +73,23 @@ public class OutputView {
         );
     }
 
-    public void printPlayerPrizes(List<Player> players) {
+    public void printPlayerPrizes(List<Player> players, String dealerName) {
         System.out.println(FINAL_PRIZE);
 
+        printDealerProfit(players, dealerName);
         players.forEach(player -> System.out.printf(
                 PLAYER_PRIZE + NEW_LINE,
                 player.getName(),
                 player.getPrize())
         );
+    }
+
+    private void printDealerProfit(List<Player> players, String dealerName) {
+        int negativeMultiplier = -1;
+        int dealerProfit = negativeMultiplier * players.stream()
+                .mapToInt(Player::getPrize)
+                .sum();
+
+        System.out.printf(PLAYER_PRIZE + NEW_LINE, dealerName, dealerProfit);
     }
 }

@@ -128,35 +128,4 @@ class DealerTest {
         assertThat(dealer.awardPrize(players).getLast().getPrize())
                 .isEqualTo(-1 * loser.getPrize());
     }
-
-    @Test
-    @DisplayName("딜러의 최종 수익과 모든 플레이어의 수익의 합은 0이다.")
-    void getProfit() {
-        //given
-        Player winner = Player.of(
-                "winner",
-                1000
-        );
-        winner.pickAdditionalCard(mustPickTen);
-        winner.pickAdditionalCard(mustPickFive);
-        winner.pickAdditionalCard(mustPickAce);   //10 + 5 + 1 = 16점
-
-        Player loser = Player.of(
-                "loser",
-                1000
-        );
-        loser.pickAdditionalCard(mustPickFive);
-        loser.pickAdditionalCard(mustPickFive); // 5 + 5 = 10점
-
-        List<Player> players = List.of(winner, loser);
-
-        Dealer dealer =  new Dealer();
-        dealer.pickAdditionalCard(mustPickTen);
-        dealer.pickAdditionalCard(mustPickFive); // 10 + 5 = 15점
-
-        players = dealer.awardPrize(players);
-
-        //when & then
-        assertThat(dealer.getProfit(players)).isEqualTo(0);
-    }
 }

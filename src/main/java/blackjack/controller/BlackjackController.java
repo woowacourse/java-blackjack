@@ -62,7 +62,7 @@ public class BlackjackController {
         openDealerHands(dealer);
         openPlayersHands(players);
 
-        outputView.printPlayerPrizes(players);
+        outputView.printPlayerPrizes(players, dealer.getName());
     }
 
     private List<Player> createPlayers() {
