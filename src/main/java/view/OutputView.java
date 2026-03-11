@@ -12,51 +12,51 @@ import service.FinalResult;
 
 public class OutputView {
 
-    public void printInitHandCard(Participants participants) {
-        Participant dealer = participants.getDealer();
-        List<Participant> players = participants.getPlayers();
+    public void printInitHandCard(final Participants participants) {
+        final Participant dealer = participants.getDealer();
+        final List<Participant> players = participants.getPlayers();
 
         printInitHandCardInfo(dealer, players);
         printDealerInitHandCard(dealer);
         printPlayerInitHandCard(players);
     }
 
-    private static void printInitHandCardInfo(Participant dealer, List<Participant> players) {
-        StringBuilder playerNames = new StringBuilder();
+    private static void printInitHandCardInfo(final Participant dealer, final List<Participant> players) {
+        final StringBuilder playerNames = new StringBuilder();
         System.out.printf("\n%s와 ", dealer.getName());
-        for (Participant player : players) {
+        for (final Participant player : players) {
             playerNames.append(player.getName() + ", ");
         }
         playerNames.delete(playerNames.length() - 2, playerNames.length());
         System.out.printf("%s에게 %d장을 나누었습니다.\n", playerNames, INIT_DRAW_COUNT);
     }
 
-    private static void printPlayerInitHandCard(List<Participant> players) {
-        for (Participant player : players) {
+    private static void printPlayerInitHandCard(final List<Participant> players) {
+        for (final Participant player : players) {
             printParticipantHandCard(player);
             System.out.println();
         }
         System.out.println();
     }
 
-    private static void printDealerInitHandCard(Participant dealer) {
+    private static void printDealerInitHandCard(final Participant dealer) {
         System.out.printf("%s카드: %s\n", dealer.getName(), dealer.getHandCards().getFirst().getCardDescription());
     }
 
-    private static void printParticipantHandCard(Participant player) {
+    private static void printParticipantHandCard(final Participant player) {
         System.out.printf("%s카드: ", player.getName());
 
-        StringBuilder cardDescriptions = new StringBuilder();
-        List<Card> handCards = player.getHandCards();
-        for (Card handCard : handCards) {
+        final StringBuilder cardDescriptions = new StringBuilder();
+        final List<Card> handCards = player.getHandCards();
+        for (final Card handCard : handCards) {
             cardDescriptions.append(handCard.getCardDescription() + ", ");
         }
         cardDescriptions.delete(cardDescriptions.length() - 2, cardDescriptions.length());
         System.out.print(cardDescriptions);
     }
-    
 
-    public void printCurrentHandCard(Participant participant) {
+
+    public void printCurrentHandCard(final Participant participant) {
         printParticipantHandCard(participant);
         System.out.println();
     }
@@ -65,10 +65,10 @@ public class OutputView {
         System.out.printf("%s는 %d이하라 한장의 카드를 더 받았습니다.\n", DEALER_NAME, DEALER_DRAW_BOUND);
     }
 
-    public void printCardResults(Participants participants) {
+    public void printCardResults(final Participants participants) {
         System.out.println();
-        Participant dealer = participants.getDealer();
-        List<Participant> players = participants.getPlayers();
+        final Participant dealer = participants.getDealer();
+        final List<Participant> players = participants.getPlayers();
 
         printDealerCardResult(dealer);
         printPlayerCardResult(players);
@@ -76,30 +76,30 @@ public class OutputView {
         System.out.println();
     }
 
-    private static void printDealerCardResult(Participant dealer) {
+    private static void printDealerCardResult(final Participant dealer) {
         printParticipantHandCard(dealer);
         printScore(dealer);
     }
 
-    private static void printPlayerCardResult(List<Participant> players) {
-        for (Participant player : players) {
+    private static void printPlayerCardResult(final List<Participant> players) {
+        for (final Participant player : players) {
             printDealerCardResult(player);
         }
     }
 
-    private static void printScore(Participant dealer) {
+    private static void printScore(final Participant dealer) {
         System.out.printf(" - 결과: %d\n", dealer.getScore());
     }
 
-    public void printFinalResults(List<FinalResult> finalResults) {
+    public void printFinalResults(final List<FinalResult> finalResults) {
         System.out.println("\n## 최종 승패");
 
         printDealerFinalResult(finalResults);
         printPlayerFinalResult(finalResults);
     }
 
-    private static void printDealerFinalResult(List<FinalResult> finalResults) {
-        for (FinalResult finalResult : finalResults) {
+    private static void printDealerFinalResult(final List<FinalResult> finalResults) {
+        for (final FinalResult finalResult : finalResults) {
             if (finalResult.isDealer()) {
                 System.out.printf("%s: ", finalResult.name());
 
@@ -109,8 +109,8 @@ public class OutputView {
         }
     }
 
-    private static void printPlayerFinalResult(List<FinalResult> finalResults) {
-        for (FinalResult finalResult : finalResults) {
+    private static void printPlayerFinalResult(final List<FinalResult> finalResults) {
+        for (final FinalResult finalResult : finalResults) {
             if (!finalResult.isDealer()) {
                 System.out.printf("%s: ", finalResult.name());
                 printPlayerResultDetail(finalResult);
@@ -118,27 +118,27 @@ public class OutputView {
         }
     }
 
-    private static void printDealerResultDetail(FinalResult finalResult) {
-        if (finalResult.win() != 0) {
-            System.out.printf("%d승 ", finalResult.win());
+    private static void printDealerResultDetail(final FinalResult finalResult) {
+        if (finalResult.winCount() != 0) {
+            System.out.printf("%d승 ", finalResult.winCount());
         }
-        if (finalResult.draw() != 0) {
-            System.out.printf("%d무 ", finalResult.draw());
+        if (finalResult.drawCount() != 0) {
+            System.out.printf("%d무 ", finalResult.drawCount());
         }
-        if (finalResult.lose() != 0) {
-            System.out.printf("%d패", finalResult.lose());
+        if (finalResult.loseCount() != 0) {
+            System.out.printf("%d패", finalResult.loseCount());
         }
         System.out.println();
     }
 
-    private static void printPlayerResultDetail(FinalResult finalResult) {
-        if (finalResult.win() != 0) {
+    private static void printPlayerResultDetail(final FinalResult finalResult) {
+        if (finalResult.winCount() != 0) {
             System.out.println("승");
         }
-        if (finalResult.draw() != 0) {
+        if (finalResult.drawCount() != 0) {
             System.out.println("무");
         }
-        if (finalResult.lose() != 0) {
+        if (finalResult.loseCount() != 0) {
             System.out.println("패");
         }
     }
