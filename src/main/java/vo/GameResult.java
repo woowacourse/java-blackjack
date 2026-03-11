@@ -1,31 +1,19 @@
 package vo;
 
 public enum GameResult {
-    WIN("승"),
-    LOSE("패"),
-    PUSH("승"),
-    BUST("패");
+    BLACKJACK(1.5),
+    WIN(1.0),
+    LOSE(-1.0),
+    PUSH(0.0),
+    BUST(-1.0);
 
-    private final String name;
+    private final Double multiplier;
 
-    GameResult(String name) {
-        this.name = name;
+    GameResult(Double multiplier) {
+        this.multiplier = multiplier;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public GameResult opposite() {
-        if (this == LOSE) {
-            return WIN;
-        }
-        if (this == WIN) {
-            return LOSE;
-        }
-        if (this == BUST) {
-            return WIN;
-        }
-        return this;
+    public Long calculateProfit(Long betAmount) {
+        return (long)(betAmount * multiplier);
     }
 }
