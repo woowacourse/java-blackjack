@@ -30,7 +30,7 @@ public class Player extends Participant {
         return result.calculateProfit(bet, hand.getEarningRate());
     }
 
-    public BlackjackResult calculateResult(Hand dealerHand) {
+    private BlackjackResult calculateResult(Hand dealerHand) {
         if (hand.isBust()) {
             return BlackjackResult.LOSE;
         }
