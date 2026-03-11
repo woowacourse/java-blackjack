@@ -25,4 +25,12 @@ public enum HitOrStand {
     public String getHitOrStand() {
         return hitOrStand;
     }
+
+    public boolean isHit() {
+        return this.equals(HitOrStand.HIT);
+    }
+
+    public boolean isStand() {
+        return this.equals(HitOrStand.STAND);
+    }
 }

@@ -160,10 +160,10 @@ public class BlackjackService {
     }
 
     public boolean isHit(HitOrStand hitOrStand) {
-        return hitOrStand.strip().equals(HitOrStand.HIT.getHitOrStand());
+        return hitOrStand.isHit();
     }
 
     public boolean isStand(HitOrStand hitOrStand) {
-        return hitOrStand.strip().equals(HitOrStand.STAND.getHitOrStand());
+        return hitOrStand.isStand();
     }
 }

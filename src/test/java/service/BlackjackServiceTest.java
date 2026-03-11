@@ -3,6 +3,7 @@ package service;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import config.ControllerConfig;
+import constant.HitOrStand;
 import constant.Rank;
 import constant.Result;
 import constant.Suit;
@@ -410,10 +411,12 @@ class BlackjackServiceTest {
         class Success {
 
             @Test
-            void y를_입력하면_true를_반환한다() {
+            void y를_입력하면_true_를_반환한다() {
+                // given
+                HitOrStand hitOrStand = HitOrStand.from(" y ");
 
                 // when
-                boolean actual = blackjackService.isHit("y");
+                boolean actual = blackjackService.isHit(hitOrStand);
 
                 // then
                 assertThat(actual).isTrue();
@@ -421,9 +424,11 @@ class BlackjackServiceTest {
 
             @Test
             void n을_입력하면_false를_반환한다() {
+                // given
+                HitOrStand hitOrStand = HitOrStand.from(" n ");
 
                 // when
-                boolean actual = blackjackService.isHit("n");
+                boolean actual = blackjackService.isHit(hitOrStand);
 
                 // then
                 assertThat(actual).isFalse();
@@ -439,9 +444,11 @@ class BlackjackServiceTest {
 
             @Test
             void n을_입력하면_true를_반환한다() {
+                // given
+                HitOrStand hitOrStand = HitOrStand.from(" n ");
 
                 // when
-                boolean actual = blackjackService.isStand(" n ");
+                boolean actual = blackjackService.isStand(hitOrStand);
 
                 // then
                 assertThat(actual).isTrue();
@@ -449,9 +456,11 @@ class BlackjackServiceTest {
 
             @Test
             void y를_입력하면_false를_반환한다() {
+                // given
+                HitOrStand hitOrStand = HitOrStand.from(" y ");
 
                 // when
-                boolean actual = blackjackService.isStand("y");
+                boolean actual = blackjackService.isStand(hitOrStand);
 
                 // then
                 assertThat(actual).isFalse();
