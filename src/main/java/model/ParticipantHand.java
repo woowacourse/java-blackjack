@@ -27,6 +27,10 @@ public class ParticipantHand {
         return deck.get();
     }
 
+    public String getFirstCard() {
+        return deck.getFirstCard().getString();
+    }
+
     private void validateCardDuplicate(Card card) {
         if(deck.get().contains(card)) {
             throw new IllegalArgumentException(ErrorMessage.DUPLICATED_CARD_IN_DECK.getMessage());

@@ -14,6 +14,6 @@ public class Dealer extends Participant{
     }
 
     public String getFirstCard() {
-        return super.getDeck().getFirst().getString();
+        return super.getFirstCard();
     }
 }

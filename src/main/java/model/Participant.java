@@ -44,6 +44,10 @@ public class Participant {
         return List.copyOf(participantHand.getDeck());
     }
 
+    public String getFirstCard() {
+        return participantHand.getFirstCard();
+    }
+
     public boolean isMoreScore(Participant other) {
         return this.participantHand.getScore() > other.participantHand.getScore();
     }
