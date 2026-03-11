@@ -11,10 +11,6 @@ public class Participant {
         this.hand = new Hand();
     }
 
-    public List<String> getHand() {
-        return hand.getCardNames();
-    }
-
     public void addCard(Card card) {
         hand.addCard(card);
     }
@@ -25,5 +21,9 @@ public class Participant {
 
     public int calculateScore() {
         return hand.calculateScore();
+    }
+
+    public List<Card> getHand() {
+        return hand.getCard();
     }
 }
