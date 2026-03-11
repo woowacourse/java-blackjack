@@ -39,4 +39,8 @@ public abstract class Gamer {
         return cardBundle.isBlackjack();
     }
 
+    public boolean isStop() {
+        return cardBundle.isStop();
+    }
+
 }

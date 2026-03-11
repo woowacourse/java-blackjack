@@ -80,4 +80,8 @@ public class CardBundle {
         return cardBundle.size() == 2 && getResultScore() == 21;
     }
 
+    public boolean isStop() {
+        return !isBlackjack() && !isBusted();
+    }
+
 }
