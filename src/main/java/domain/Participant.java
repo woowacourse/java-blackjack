@@ -32,6 +32,8 @@ public abstract class Participant {
         }
     }
 
+    public abstract List<Card> showInitialCard();
+
     public String getName() {
         return name;
     }
@@ -40,21 +42,11 @@ public abstract class Participant {
         return hand.showCards();
     }
 
-    public abstract List<Card> showInitialCard();
-//
-////    public abstract List<Card> getInitialVisibleCards();
-//
-//    public boolean isBust() {
-//        return hand.isBust();
-//    }
-//
-//    public int calculateHandSum() {
-//        return hand.calculateCardScoreSum();
-//    }
-//
-//    public Optional<Card> addCard(Deck totalDeck) {
-//        Card newCard = totalDeck.drawCard();
-//        this.hand.addCard(newCard);
-//        return Optional.of(newCard);
-//    }
+    public int getOwnCardsSum() {
+        return this.hand.calculateCardScoreSum();
+    }
+
+    public boolean isBust() {
+        return hand.isBust();
+    }
 }
