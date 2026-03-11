@@ -8,7 +8,7 @@ import static constant.BlackjackConstant.INIT_DRAW_COUNT;
 import domain.CardResult;
 import domain.card.Card;
 import domain.card.Deck;
-import domain.card.HandCards;
+import domain.card.Hand;
 import domain.participant.Name;
 import domain.participant.Participant;
 import domain.participant.Participants;
@@ -53,7 +53,7 @@ public class BlackjackController {
         final List<Participant> participantList = new ArrayList<>();
         for (final Name name : playerNames) {
             participantList.add(
-                    new Participant(name, new HandCards(new ArrayList<>()), false));
+                    new Participant(name, new Hand(new ArrayList<>()), false));
         }
         return participantList;
     }

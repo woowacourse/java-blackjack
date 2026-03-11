@@ -7,7 +7,7 @@ import static exception.ErrorMessage.DEALER_NOT_FOUND_ERROR;
 import static exception.ErrorMessage.PLAYER_COUNT_OUT_OF_RANGE;
 
 import domain.CardResult;
-import domain.card.HandCards;
+import domain.card.Hand;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +18,7 @@ public class Participants {
     public Participants(final List<Participant> participants) {
         validatePlayerCounts(participants);
         // FIXME: 사이드 이펙트가 발생할 수 있다
-        participants.add(new Participant(new Name(DEALER_NAME), new HandCards(new ArrayList<>()), true));
+        participants.add(new Participant(new Name(DEALER_NAME), new Hand(new ArrayList<>()), true));
         this.participants = participants;
     }
 

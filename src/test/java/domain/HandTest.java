@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.card.Card;
 import domain.card.CardRank;
 import domain.card.CardSuit;
-import domain.card.HandCards;
+import domain.card.Hand;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -15,20 +15,20 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class HandCardsTest {
+class HandTest {
 
     @Test
     @DisplayName("패에 카드를 추가한다.")
     public void 패에_카드_추가_성공() {
         // given
         final Card card = new Card(CardSuit.SPADE, CardRank.ACE);
-        final HandCards handCards = new HandCards(new ArrayList<>());
+        final Hand hand = new Hand(new ArrayList<>());
 
         // when
-        handCards.addCard(card);
+        hand.addCard(card);
 
         // then
-        assertThat(handCards.getHandCards()).contains(card);
+        assertThat(hand.getHandCards()).contains(card);
     }
 
     @ParameterizedTest
@@ -36,10 +36,10 @@ class HandCardsTest {
     @DisplayName("가진 패의 블랙잭 여부를 판단한다.")
     public void 블랙잭_여부_판단(final List<Card> cards, final boolean result) {
         // given
-        final HandCards handCards = new HandCards(cards);
+        final Hand hand = new Hand(cards);
 
         // when
-        final boolean isBlackjack = handCards.isBlackjack();
+        final boolean isBlackjack = hand.isBlackjack();
 
         // then
         assertThat(isBlackjack).isEqualTo(result);
@@ -69,14 +69,14 @@ class HandCardsTest {
     @DisplayName("플레이어가 가지고 있는 카드 점수를 반환한다.")
     public void 카드_점수_반환_성공() {
         // given
-        final HandCards handCards = new HandCards(new ArrayList<>());
-        handCards.addCard(new Card(CardSuit.SPADE, CardRank.ACE));
-        handCards.addCard(new Card(CardSuit.SPADE, CardRank.TWO));
-        handCards.addCard(new Card(CardSuit.SPADE, CardRank.ACE));
-        handCards.addCard(new Card(CardSuit.SPADE, CardRank.EIGHT));
+        final Hand hand = new Hand(new ArrayList<>());
+        hand.addCard(new Card(CardSuit.SPADE, CardRank.ACE));
+        hand.addCard(new Card(CardSuit.SPADE, CardRank.TWO));
+        hand.addCard(new Card(CardSuit.SPADE, CardRank.ACE));
+        hand.addCard(new Card(CardSuit.SPADE, CardRank.EIGHT));
 
         // when
-        final int score = handCards.getScore();
+        final int score = hand.getScore();
 
         // then
         assertThat(score).isEqualTo(12);

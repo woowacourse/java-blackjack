@@ -13,12 +13,12 @@ import java.util.List;
 import java.util.Set;
 
 // FIXME: Hand만으로도 네이밍 충분
-public class HandCards {
+public class Hand {
 
     private final List<Card> handCards;
     private final Set<Integer> scores = new HashSet<>();
 
-    public HandCards(final List<Card> handCards) {
+    public Hand(final List<Card> handCards) {
         this.handCards = handCards;
     }
 

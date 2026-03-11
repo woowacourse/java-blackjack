@@ -9,7 +9,7 @@ import domain.card.CardRank;
 import domain.card.CardShuffler;
 import domain.card.CardSuit;
 import domain.card.Deck;
-import domain.card.HandCards;
+import domain.card.Hand;
 import domain.participant.Name;
 import domain.participant.Participant;
 import domain.participant.Participants;
@@ -72,12 +72,12 @@ class BlackjackServiceTest {
     }
 
     private static Participants initParticipants() {
-        final Participant pobi = new Participant(new Name("포비"), new HandCards(new ArrayList<>()), false);
+        final Participant pobi = new Participant(new Name("포비"), new Hand(new ArrayList<>()), false);
         pobi.addHandCard(new Card(CardSuit.HEART, CardRank.TWO));
         pobi.addHandCard(new Card(CardSuit.SPADE, CardRank.EIGHT));
         pobi.addHandCard(new Card(CardSuit.CLUB, CardRank.ACE));
 
-        final Participant jason = new Participant(new Name("제이슨"), new HandCards(new ArrayList<>()), false);
+        final Participant jason = new Participant(new Name("제이슨"), new Hand(new ArrayList<>()), false);
         jason.addHandCard(new Card(CardSuit.CLUB, CardRank.SEVEN));
         jason.addHandCard(new Card(CardSuit.SPADE, CardRank.KING));
 
