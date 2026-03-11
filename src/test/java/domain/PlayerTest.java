@@ -1,6 +1,7 @@
 package domain;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.util.LinkedList;
@@ -93,51 +94,48 @@ class PlayerTest {
 
     @Nested
     class HitClass {
+        Queue<Card> onlyTenCardsDeck = new LinkedList<>(List.of(
+                new Card(CardShape.하트, CardContents.TEN),
+                new Card(CardShape.하트, CardContents.J),
+                new Card(CardShape.하트, CardContents.K),
+                new Card(CardShape.하트, CardContents.Q)
+        ));
 
         @Test
-        @DisplayName("hit를 잘 수행하고, 완료가 아닌 상태를 유지한다")
+        @DisplayName("hit를 잘 수행한다")
         void hit_and_not_finished() {
             //given
-            Queue<Card> testDeck = new LinkedList<>(List.of(
-                    new Card(CardShape.하트, CardContents.TEN)
-            ));
-
             Hand playerHand = Hand.of(
-                    new Card(CardShape.스페이드, CardContents.TEN),
-                    new Card(CardShape.클로버, CardContents.TEN)
+                    new Card(CardShape.스페이드, CardContents.A),
+                    new Card(CardShape.클로버, CardContents.TWO)
             );
             String testName = "gump";
             Player testPlayer = Player.from(testName, playerHand);
 
             //when
-            testPlayer = testPlayer.hit(testDeck::poll);
+            testPlayer = testPlayer.hit(onlyTenCardsDeck::poll);
 
             //then
             assertFalse(testPlayer.isFinished());
         }
 
         @Test
-        @DisplayName("hit를 요구했지만 bust이면 해당 사용자는 게임을 종료한 상태가 된다")
+        @DisplayName("hit를 요구했지만 bust 상태이면 변화가 없다")
         void hit_butBust_and_finish() {
             //given
-            Queue<Card> testDeck = new LinkedList<>(List.of(
-                    new Card(CardShape.하트, CardContents.TEN),
-                    new Card(CardShape.클로버, CardContents.A)
-            ));
-
             Hand playerHand = Hand.of(
                     new Card(CardShape.스페이드, CardContents.TEN),
                     new Card(CardShape.클로버, CardContents.TEN)
             );
             String testName = "gump";
             Player testPlayer = Player.from(testName, playerHand);
-            testPlayer.hit(testDeck::poll);
+            testPlayer.hit(onlyTenCardsDeck::poll);
 
             //when
-            testPlayer = testPlayer.hit(testDeck::poll);
+            Player hitResultPlayer = testPlayer.hit(onlyTenCardsDeck::poll);
 
             //then
-            Assertions.assertThat(testPlayer.isFinished()).isTrue();
+            assertEquals(testPlayer.hashCode(), hitResultPlayer.hashCode());
         }
     }
 
