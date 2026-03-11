@@ -5,7 +5,6 @@ import domain.*;
 import java.util.List;
 
 import meesage.InputMessage;
-import meesage.OutputMessage;
 import utils.InputParser;
 import view.InputView;
 import view.OutputView;
@@ -22,15 +21,14 @@ public class BlackjackController {
 
     public void run() {
         List<String> userNames = getUserNames();
-
         Deck deck = Deck.of(new RandomCardStrategy());
 
         Dealer dealer = Dealer.of(deck.drawInitialHand());
         Players players = Players.of(deck, userNames);
 
         printInitialCards(players, dealer);
-        addCard(players, deck, dealer);
-        printFinalCards(dealer, players);
+        askPlayerAddCard(players, deck, dealer);
+
         printGameResult(dealer, players);
     }
 
@@ -44,89 +42,84 @@ public class BlackjackController {
 
     private List<String> readUserNames() {
         try {
-            String rawUserNames = inputView.askUserInputWithMessage(InputMessage.ASK_USER_NAME.getMessage());
+            String rawUserNames = inputView.askUsersName();
             return InputParser.splitByDelimiter(rawUserNames);
         } catch (IllegalArgumentException exception) {
-            outputView.println(exception.getMessage());
+            outputView.printLine(exception.getMessage());
             return null;
         }
     }
 
     private void printInitialCards(Players players, Dealer dealer) {
-        outputView.separatorLine();
-        outputView.printfList(OutputMessage.DEAL_INITIAL_CARDS.getMessage(),
-                OutputMessage.DELIMITER.join(players.getPlayersName()));
-        outputView.separatorLine();
-        outputView.println(dealer.getDealerInitialInfo());
-        outputView.printList(players.getPlayersInfo());
-
+        outputView.initialDrawMessage(players.getPlayersName());
+        outputView.printDealerCards(dealer);
+        outputView.printPlayersCards(players);
     }
 
-    private void addCard(Players players, Deck deck, Dealer dealer) {
+    private void askPlayerAddCard(Players players, Deck deck, Dealer dealer) {
         askPlayersAddCard(players, deck);
         addDealerCard(dealer, deck);
     }
 
     private void askPlayersAddCard(Players players, Deck deck) {
+        outputView.printEmptyLine();
         for (Player player : players.getPlayers()) {
-            askAddCard(player, deck);
+            askPlayerAddCard(player, deck);
         }
     }
 
-    private void askAddCard(Player player, Deck deck) {
+    private void askPlayerAddCard(Player player, Deck deck) {
         String answer = InputMessage.USER_INPUT_YES.getMessage();
-        while (shouldDrawCard(player, answer)) {
-            outputView.printfList(InputMessage.ASK_ADD_CARD.getMessage(), player.getName());
-            answer = inputView.askUserInput();
 
+        while (shouldDrawCard(player, answer)) {
+            answer = readAddCardAnswer(player);
             boolean wantsCard = sayYes(answer);
-            dealAdditionalCardIfRequested(player, deck, wantsCard);
+            processAdditionalCard(player, deck, wantsCard);
         }
     }
 
     private boolean shouldDrawCard(Player player, String answer) {
+        HitDecision.from(answer);
         return !player.isBust() && sayYes(answer);
     }
 
-    private void dealAdditionalCardIfRequested(Player player, Deck deck, boolean wantsCard) {
-        if (dealCardIfRequested(player, deck, wantsCard)) return;
-        if (player.isInitialHand()) {
-            outputView.println(player.getPlayerInfo());
+    private String readAddCardAnswer(Player player) {
+        while (true) {
+            try {
+                String answer = inputView.askAddCard(player.getName());
+                HitDecision.from(answer);
+                return answer;
+            } catch (IllegalArgumentException exception) {
+                outputView.printLine(exception.getMessage());
+            }
         }
     }
 
-    private boolean dealCardIfRequested(Player player, Deck deck, boolean wantsCard) {
+    private void processAdditionalCard(Player player, Deck deck, boolean wantsCard) {
         if (wantsCard) {
             player.addCard(deck.draw());
-            outputView.println(player.getPlayerInfo());
-            return true;
+            outputView.printPlayerCards(player);
+            return;
         }
-        return false;
+        if (player.isInitialHand()) {
+            outputView.printPlayerCards(player);
+        }
     }
 
     private boolean sayYes(String answer) {
-        return answer.equals(InputMessage.USER_INPUT_YES.getMessage());
+        return HitDecision.from(answer) == HitDecision.YES;
     }
 
     private void addDealerCard(Dealer dealer, Deck deck) {
-        outputView.separatorLine();
         while (dealer.shouldHit()) {
-            outputView.println(OutputMessage.DEALER_DRAW_CARD.getMessage());
+            outputView.dealerDrawMessage();
             dealer.addCard(deck.draw());
         }
     }
 
-    private void printFinalCards(Dealer dealer, Players players) {
-        outputView.separatorLine();
-        outputView.println(dealer.getDealerScoreInfo());
-        outputView.printList(players.getPlayersScoreInfo());
-    }
-
     private void printGameResult(Dealer dealer, Players players) {
+        outputView.printEmptyLine();
         BlackjackResult blackjackResult = BlackjackResult.of(dealer, players);
-
-        outputView.println(OutputMessage.FINAL_MESSAGE.getMessage());
-        outputView.println(blackjackResult.getDealerResult());
-        outputView.printList(blackjackResult.getPlayersResult());
+        outputView.printFinalResult(blackjackResult);
     }
 }
