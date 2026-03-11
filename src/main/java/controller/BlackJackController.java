@@ -62,7 +62,7 @@ public class BlackJackController {
     }
 
     private boolean canPlayerDraw(Player player) {
-        if (player.getHand().isBust()) {
+        if (player.getHand().isBust() || player.isMaxScore()) {
             player.getTotalCardScore();
             return false;
         }
@@ -71,18 +71,24 @@ public class BlackJackController {
 
     private void drawAndShowCard(CardDeck cardDeck, Player player) {
         player.keepCard(cardDeck.drawCard());
-        OutputView.holdingCardMessage(player);
+        if(!player.isMaxScore()){
+            OutputView.holdingCardMessage(player);
+        }
     }
 
     private void finalizePlayerTurn(Player player) {
         OutputView.holdingCardMessage(player);
-        player.getTotalCardScore();
     }
 
     private void progressGame(CardDeck cardDeck, Player player) {
+        if (player.isMaxScore()) {
+            System.out.println();
+        }
+
         while (canPlayerDraw(player)) {
             drawAndShowCard(cardDeck, player);
         }
+
         if (!player.getHand().isBust()) {
             finalizePlayerTurn(player);
         }
