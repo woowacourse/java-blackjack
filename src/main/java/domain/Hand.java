@@ -43,10 +43,7 @@ public class Hand {
     }
 
     public Boolean determineDealerDealMore() {
-        if (handTotalScore <= MINIMUM_DEALER_SCORE) {
-            return true;
-        }
-        return false;
+        return handTotalScore <= MINIMUM_DEALER_SCORE;
     }
 
     public String getFinalDisplay() {

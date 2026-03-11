@@ -37,7 +37,7 @@ public class Participants {
         }
     }
 
-    public void dealCards(Deck deck) {
+    public void dealOneCardToAll(Deck deck) {
         for (User user : participants) {
             user.receiveCard(deck.dealCard());
         }
@@ -54,15 +54,15 @@ public class Participants {
 
     public List<String> getUserCardsDisplays() {
         return participants.stream()
-                .map(this::makeOneUserCard)
+                .map(this::makeOneUserCardDisplay)
                 .collect(Collectors.toList());
     }
 
-    public String makeOneUserCardDelegator(int userIndex) {
-        return makeOneUserCard(participants.get(userIndex));
+    public String getPlayerCardStatus(int userIndex) {
+        return makeOneUserCardDisplay(participants.get(userIndex));
     }
 
-    private String makeOneUserCard(User user) {
+    private String makeOneUserCardDisplay(User user) {
         return user.getName() + "카드: " + user.getCardsDisplay();
     }
 
@@ -76,15 +76,15 @@ public class Participants {
         participants.get(index).receiveCard(deck.dealCard());
     }
 
-    public void calculateScore(int index) {
+    public void calculateUserScore(int index) {
         participants.get(index).calculateScore();
     }
 
-    public void caculateDealerscore() {
+    public void calculateDealerScore() {
         dealer.calculateScore();
     }
 
-    public Boolean determineDealerDealMore() {
+    public Boolean shouldDealerDraw() {
         return dealer.determineDealerDealMore();
     }
 
@@ -100,7 +100,7 @@ public class Participants {
     public List<String> addScoreToUserHand() {
         List<String> userDisplays = new ArrayList<>();
         for (User user : participants) {
-            String userFinalDisplay = makeOneUserCard(user) + user.getUserFinalDisplay();
+            String userFinalDisplay = makeOneUserCardDisplay(user) + user.getUserFinalDisplay();
             userDisplays.add(userFinalDisplay);
         }
         return userDisplays;
@@ -112,12 +112,12 @@ public class Participants {
     }
 
     private ParticipantsScoreDTO judgeWinner() {
-        EnumMap<GameResult, Integer> dealerScore = calculateDealerScore();
-        Map<String, GameResult> userScore = calculateUserScore(dealerScore);
+        EnumMap<GameResult, Integer> dealerScore = evaluateDealerScore();
+        Map<String, GameResult> userScore = evaluateUserScore(dealerScore);
         return new ParticipantsScoreDTO(dealerScore, userScore);
     }
 
-    private EnumMap<GameResult, Integer> calculateDealerScore() {
+    private EnumMap<GameResult, Integer> evaluateDealerScore() {
         EnumMap<GameResult, Integer> dealerScore = new EnumMap<>(GameResult.class);
 
         for (GameResult result : GameResult.values()) {
@@ -127,7 +127,7 @@ public class Participants {
         return dealerScore;
     }
 
-    private Map<String, GameResult> calculateUserScore(EnumMap<GameResult, Integer> dealerScore) {
+    private Map<String, GameResult> evaluateUserScore(EnumMap<GameResult, Integer> dealerScore) {
         Map<String, GameResult> userScore = new HashMap<>();
 
         for (User user : participants) {

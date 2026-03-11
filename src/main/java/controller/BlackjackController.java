@@ -28,9 +28,9 @@ public class BlackjackController {
 
     public void run() {
         initParticipants();
-        shuffleCards();
-        readExtraCardCommand();
-        dealDealerCard();
+        dealInitialCards();
+        processAllPlayersHitOrStand();
+        processDealerTurn();
         printFinalResult();
         printWinningResult();
     }
@@ -57,23 +57,19 @@ public class BlackjackController {
         blackjackService.makeUserFinalResultDisplay().forEach(outputView::printMessage);
     }
 
-    private void dealDealerCard() {
-        calculateDealerScore();
-        String dealerReceivedCard = determineDealToDealer();
-        outputView.printMessage(dealerReceivedCard);
-    }
-
-    private String determineDealToDealer() {
-        return blackjackService.determineDealToDealer();
-    }
-
-    private void calculateDealerScore() {
+    private void processDealerTurn() {
         blackjackService.calculateDealerScore();
+        String dealerDrawMessage = dealExtraCardToDealer();
+        outputView.printMessage(dealerDrawMessage);
     }
 
-    private void shuffleCards() {
+    private String dealExtraCardToDealer() {
+        return blackjackService.dealExtraCardIfNeeded();
+    }
+
+    private void dealInitialCards() {
         blackjackService.makeDeck();
-        blackjackService.dealCards();
+        blackjackService.dealInitialCards();
         printDealResult();
     }
 
@@ -84,7 +80,7 @@ public class BlackjackController {
     }
 
     private List<String> readParticipantsName() {
-        while(true) {
+        while (true) {
             try {
                 outputView.printMessage(Message.INPUT_PARTICIPANTS_MESSAGE);
                 String participantsName = inputView.readParticipantsName();
@@ -99,7 +95,7 @@ public class BlackjackController {
     private Money readBettingMoney(String userName) {
         String getBettingMoneyRequestMessage = bettingMoneyRequest(userName);
 
-        while(true) {
+        while (true) {
             try {
                 outputView.printMessage(getBettingMoneyRequestMessage);
                 String bettingMoney = inputView.readBettingMoney();
@@ -111,18 +107,17 @@ public class BlackjackController {
         }
     }
 
-    private void readExtraCardCommand() {
+    private void processAllPlayersHitOrStand() {
         List<String> getUsersRequestMessages = extraCardRequest();
 
-        for(int index = 0; index < getUsersRequestMessages.size(); index++) {
-            boolean flag = true;
-            while(flag) {
+        for (int index = 0; index < getUsersRequestMessages.size(); index++) {
+            while (true) {
                 try {
                     outputView.printMessage(getUsersRequestMessages.get(index));
                     String answer = inputView.readYesOrNo();
                     validator.validateAnswer(answer);
-                    determinePlayerContinue(answer, index);
-                    flag = false;
+                    processHitOrStand(answer, index);
+                    break;
                 } catch (IllegalArgumentException e) {
                     outputView.printErrorMessage(e.getMessage());
                 }
@@ -130,14 +125,15 @@ public class BlackjackController {
         }
     }
 
-    private void determinePlayerContinue(String answer, int index) {
+    private void processHitOrStand(String answer, int index) {
+        String cardDrawMessage = "";
         if (answer.equalsIgnoreCase("y")) {
-            String cardDrawMessage = blackjackService.processPlayerDecision(index);
-            outputView.printMessage(cardDrawMessage);
+            cardDrawMessage = blackjackService.hit(index);
         }
         if (answer.equalsIgnoreCase("n")) {
-            blackjackService.calculateScore(index);
+            cardDrawMessage = blackjackService.stand(index);
         }
+        outputView.printMessage(cardDrawMessage);
     }
 
     private List<String> extraCardRequest() {

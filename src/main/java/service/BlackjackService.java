@@ -18,9 +18,9 @@ public class BlackjackService {
         deck = new Deck();
     }
 
-    public void dealCards() {
-        for(int cardCount = 0; cardCount < 2; cardCount++) {
-            participants.dealCards(deck);
+    public void dealInitialCards() {
+        for (int cardCount = 0; cardCount < 2; cardCount++) {
+            participants.dealOneCardToAll(deck);
         }
     }
 
@@ -40,18 +40,23 @@ public class BlackjackService {
         return participants.getUserCardsDisplays();
     }
 
-    public String processPlayerDecision(int index) {
+    public String hit(int index) {
         participants.dealCard(deck, index);
-        participants.calculateScore(index);
-        return participants.makeOneUserCardDelegator(index);
+        participants.calculateUserScore(index);
+        return participants.getPlayerCardStatus(index);
+    }
+
+    public String stand(int index) {
+        calculateUserScore(index);
+        return participants.getPlayerCardStatus(index);
     }
 
     public void calculateDealerScore() {
-        participants.caculateDealerscore();
+        participants.calculateDealerScore();
     }
 
-    public String determineDealToDealer() {
-        if (participants.determineDealerDealMore()) {
+    public String dealExtraCardIfNeeded() {
+        if (participants.shouldDealerDraw()) {
             participants.dealCardToDealer(deck.dealCard());
             return Message.DEALER_CARD_RECEIVE_ANNOUNCE;
         }
@@ -66,8 +71,8 @@ public class BlackjackService {
         return participants.addScoreToUserHand();
     }
 
-    public void calculateScore(int index) {
-        participants.calculateScore(index);
+    private void calculateUserScore(int index) {
+        participants.calculateUserScore(index);
     }
 
     public List<String> evaluateGame() {
