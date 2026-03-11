@@ -28,6 +28,10 @@ public abstract class Participant {
         return status == Status.BURST;
     }
 
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
+    }
+
     public void stay() {
         if (status == Status.HIT) {
             status = Status.STAY;

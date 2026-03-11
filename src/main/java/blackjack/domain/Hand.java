@@ -6,6 +6,7 @@ public class Hand {
 
     private static final int BURST_THRESHOLD = 21;
     private static final int ACE_SCORE_DIFFERENCE = 10;
+    private static final int BLACKJACK_CARDS_SIZE = 2;
 
     private final List<Card> cards;
 
@@ -44,6 +45,13 @@ public class Hand {
 
     public boolean isBurst() {
         return calculateScore() > BURST_THRESHOLD;
+    }
+
+    public boolean isBlackjack() {
+        if (calculateScore() == BURST_THRESHOLD && cards.size() == BLACKJACK_CARDS_SIZE) {
+            return true;
+        }
+        return false;
     }
 
     public List<String> getCardNames(final int startInclusive) {
