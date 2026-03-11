@@ -23,4 +23,16 @@ class BlackjackHandTest {
         // then
         assertThat(hand).isInstanceOf(BlackjackHand.class);
     }
+
+    @Test
+    void 블랙잭_수익률을_제공한다() {
+        // given
+        Hand hand = new BlackjackHand(List.of());
+
+        // when
+        double earningRate = hand.getEarningRate();
+
+        // then
+        assertThat(earningRate).isEqualTo(1.5);
+    }
 }
