@@ -44,8 +44,7 @@ public class BettingPolicyTest {
     void 블랙잭_푸쉬가일어나는_경우를_테스트한다() {
         Player testPlayer = Player.from(new PlayerName("test"));
         testPlayer.addCardBundle(blackjackBundle);
-        TestCardGenerator testCardGenerator = TestCardGenerator.of(List.of(cloverAce, spadeJack));
-        Dealer dealer = Dealer.from(CardDeck.from(testCardGenerator));
+        Dealer dealer = createDealer(blackjackBundle.openMyCards());
         dealer.dealMyself();
 
         BettingRate actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
@@ -59,8 +58,7 @@ public class BettingPolicyTest {
     void 블랙잭_승리가_일어나는_경우를_테스트한다() {
         Player testPlayer = Player.from(new PlayerName("test"));
         testPlayer.addCardBundle(blackjackBundle);
-        TestCardGenerator testCardGenerator = TestCardGenerator.of(List.of(spadeFive, spadeEight));
-        Dealer dealer = Dealer.from(CardDeck.from(testCardGenerator));
+        Dealer dealer = createDealer(List.of(spadeFive, spadeEight));
         dealer.dealMyself();
 
         BettingRate actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
@@ -74,8 +72,8 @@ public class BettingPolicyTest {
     void 플레이어와_딜러_둘다_버스트인_경우를_테스트한다() {
         Player testPlayer = Player.from(new PlayerName("test"));
         testPlayer.addCardBundle(bustBundle);
-        TestCardGenerator testCardGenerator = TestCardGenerator.of(bustBundle.openMyCards());
-        Dealer dealer = Dealer.from(CardDeck.from(testCardGenerator));
+        Dealer dealer = createDealer(bustBundle.openMyCards());
+
         dealer.dealMyself();
         dealer.hitMyself();
 
@@ -84,6 +82,12 @@ public class BettingPolicyTest {
 
         Assertions.assertThat(actualBettingRate)
                 .isEqualTo(expectedBettingRate);
+    }
+
+    private Dealer createDealer(List<Card> cards) {
+        TestCardGenerator testCardGenerator = TestCardGenerator.of(cards);
+        Dealer dealer = Dealer.from(CardDeck.from(testCardGenerator));
+        return dealer;
     }
 
 }
