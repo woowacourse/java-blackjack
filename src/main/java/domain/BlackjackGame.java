@@ -1,7 +1,6 @@
 package domain;
 
-import java.util.EnumMap;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import vo.GameResult;
@@ -57,34 +56,14 @@ public class BlackjackGame {
         return false;
     }
 
-    public Map<String, GameResult> getUserResults() {
-        Map<String, GameResult> userResults = new HashMap<>();
+    public GameSummary getResult() {
+        Map<String, GameResult> userResults = new LinkedHashMap<>();
         List<User> users = participants.getUsers();
         Dealer dealer = participants.getDealer();
 
         for (User user : users) {
             userResults.put(user.getName(), gameJudge.judge(dealer.getScore(), user.getScore()));
         }
-        return userResults;
-    }
-
-    public EnumMap<GameResult, Integer> getDealerResults() {
-        EnumMap<GameResult, Integer> dealerResults = initEnumMap();
-        List<User> users = participants.getUsers();
-        Dealer dealer = participants.getDealer();
-
-        for (User user : users) {
-            GameResult dealerResult = gameJudge.judge(dealer.getScore(), user.getScore()).opposite();
-            dealerResults.replace(dealerResult, dealerResults.get(dealerResult) + 1);
-        }
-        return dealerResults;
-    }
-
-    private EnumMap<GameResult, Integer> initEnumMap() {
-        EnumMap<GameResult, Integer> dealerScore = new EnumMap<>(GameResult.class);
-        for (GameResult result : GameResult.values()) {
-            dealerScore.put(result, 0);
-        }
-        return dealerScore;
+        return new GameSummary(userResults);
     }
 }

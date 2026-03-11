@@ -3,10 +3,8 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
-import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import vo.GameResult;
 
 public class BlackjackGameTest {
     private BlackjackGame blackjackGame;
@@ -63,10 +61,10 @@ public class BlackjackGameTest {
         blackjackGame.dealCards();
 
         // when
-        Map<String, GameResult> results = blackjackGame.getUserResults();
+        GameSummary summary = blackjackGame.getResult();
 
         // then
-        assertThat(results).hasSize(2);
+        assertThat(summary.getUserResults()).hasSize(2);
     }
 
     @Test
@@ -75,23 +73,22 @@ public class BlackjackGameTest {
         blackjackGame.dealCards();
 
         // when
-        Map<String, GameResult> results = blackjackGame.getUserResults();
+        GameSummary summary = blackjackGame.getResult();
 
         // then
-        assertThat(results).containsKey("영기");
-        assertThat(results).containsKey("라이");
+        assertThat(summary.getUserResults()).containsKey("영기");
+        assertThat(summary.getUserResults()).containsKey("라이");
     }
 
     @Test
-    void 딜러_결과에_승패_정보_포함() {
+    void 딜러_결과에_승패_집계_포함() {
         // given
         blackjackGame.dealCards();
 
         // when
-        var dealerResults = blackjackGame.getDealerResults();
+        GameSummary summary = blackjackGame.getResult();
 
         // then
-        assertThat(dealerResults).containsKey(GameResult.WIN);
-        assertThat(dealerResults).containsKey(GameResult.LOSE);
+        assertThat(summary.getDealerWinCount() + summary.getDealerLoseCount()).isEqualTo(2);
     }
 }

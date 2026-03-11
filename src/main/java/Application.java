@@ -84,11 +84,7 @@ public class Application {
 
     private void printWinningResult() {
         outputView.printMessage(Message.FINAL_RESULT_ANNOUNCE);
-        outputView.printWinningResults(
-                blackjackGame.getDealerResults(),
-                blackjackGame.getUserResults(),
-                blackjackGame.getParticipantNames()
-        );
+        outputView.printWinningResults(blackjackGame.getResult());
     }
 
     private <T> T retryUntilSuccess(Supplier<T> action) {

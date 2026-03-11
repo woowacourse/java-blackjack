@@ -2,12 +2,10 @@ package view;
 
 import domain.Card;
 import domain.Dealer;
+import domain.GameSummary;
 import domain.User;
-import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
-import vo.GameResult;
 
 public class OutputView {
     public void printMessage(String message) {
@@ -47,12 +45,9 @@ public class OutputView {
         printMessage(user.getName() + "카드: " + formatCards(user.getCards()) + " - 결과: " + user.getScore());
     }
 
-    public void printWinningResults(EnumMap<GameResult, Integer> dealerResults, Map<String, GameResult> userResults,
-                                    List<String> userNames) {
-        int dealerWin = dealerResults.get(GameResult.WIN) + dealerResults.get(GameResult.PUSH);
-        int dealerLose = dealerResults.get(GameResult.LOSE) + dealerResults.get(GameResult.BUST);
-        printMessage("딜러: " + dealerWin + "승 " + dealerLose + "패");
-        userNames.forEach(name -> printMessage(name + ": " + userResults.get(name).getName()));
+    public void printWinningResults(GameSummary summary) {
+        printMessage("딜러: " + summary.getDealerWinCount() + "승 " + summary.getDealerLoseCount() + "패");
+        summary.getUserResults().forEach((name, result) -> printMessage(name + ": " + result.getName()));
     }
 
     private String formatCard(Card card) {
