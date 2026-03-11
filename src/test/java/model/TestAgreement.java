@@ -3,7 +3,6 @@ package model;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-import constant.InputErrorCode;
 import exception.GameException;
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +20,6 @@ public class TestAgreement {
     public void 이상_입력_예외() {
         assertThatThrownBy(() -> new Agreement("x"))
                 .isExactlyInstanceOf(GameException.class)
-                .satisfies(e -> assertThat(((GameException) e).getErrorCode())
-                        .isEqualTo(InputErrorCode.INVALID_CONDITION_INPUT));
+                .hasMessage("유효한 형식의 입력으로 넣어주세요(y 또는 n)");
     }
 }
