@@ -8,10 +8,9 @@ public class Bet {
         this.betAmount = betAmount;
     }
 
-
     private void validatePositive(int input) {
         if (input <= 0) {
-            throw new IllegalArgumentException("베팅 금액은 1 이상이여야 합니다.");
+            throw new IllegalArgumentException("베팅 금액은 1원 이상이여야 합니다.");
         }
     }
 

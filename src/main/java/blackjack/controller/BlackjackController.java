@@ -55,14 +55,8 @@ public class BlackjackController {
             outputView.printCardStatus(gameSummary);
         }
 
-        for (Player player : players.all()) {
-            player.getBet().calculateProfit(player.getGameResult().getPayoutRate());
-        }
-
         List<GameResult> gameResults = players.calculateProfit(dealer);
         outputView.printGameResult(gameResults);
-
-        // outputView.printGameResult(players, dealer);
 
         inputView.closeScanner();
     }
