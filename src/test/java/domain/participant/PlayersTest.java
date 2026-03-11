@@ -23,11 +23,11 @@ class PlayersTest {
         Players players = new Players(List.of("피즈", "스타크"));
 
         //when
-        List<String> allPlayersName = players.getAllPlayersName();
+        List<Name> allPlayersName = players.getAllPlayersName();
 
         //then
-        Assertions.assertThat(allPlayersName).contains("피즈");
-        Assertions.assertThat(allPlayersName).contains("스타크");
+        Assertions.assertThat(allPlayersName).contains(new Name("피즈"));
+        Assertions.assertThat(allPlayersName).contains(new Name("스타크"));
     }
 
 

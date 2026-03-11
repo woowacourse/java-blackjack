@@ -8,6 +8,7 @@ import domain.enums.GameResult;
 import domain.enums.Rank;
 import domain.enums.Suit;
 import domain.participant.Dealer;
+import domain.participant.Name;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -45,8 +46,8 @@ public class GameTest {
             twoPlayerGame.initializeGame(deck);
             //then
 
-            assertThat(twoPlayerGame.getPlayerCard("피즈").size()).isEqualTo(2);
-            assertThat(twoPlayerGame.getPlayerCard("스타크").size()).isEqualTo(2);
+            assertThat(twoPlayerGame.getPlayerCard(new Name("피즈")).size()).isEqualTo(2);
+            assertThat(twoPlayerGame.getPlayerCard(new Name("스타크")).size()).isEqualTo(2);
 
             assertThat(dealer.getHand().size()).isEqualTo(2);
         }
@@ -56,15 +57,15 @@ public class GameTest {
         void 플레이어_카드_합_21_미만_히트_요청_시_한장_더_분배한다() {
             //given
             //when
-            distributePlayerCards(onePlayerGame, "피즈",
+            distributePlayerCards(onePlayerGame, new Name("피즈"),
                     new Card(Rank.ACE, Suit.CLOVER),
                     new Card(Rank.FOUR, Suit.CLOVER),
                     new Card(Rank.EIGHT, Suit.CLOVER)
             );
             //then
-            onePlayerGame.playPlayerTurn("피즈", deck, true);
+            onePlayerGame.playPlayerTurn(new Name("피즈"), deck, true);
 
-            assertThat(onePlayerGame.getPlayerCard("피즈").size()).isEqualTo(4);
+            assertThat(onePlayerGame.getPlayerCard(new Name("피즈")).size()).isEqualTo(4);
         }
 
         @DisplayName("플레이어가 히트를 원하지 않으면 카드를 추가로 받지 않는다.")
@@ -72,13 +73,13 @@ public class GameTest {
         void 플레이어_히트_거절시_카드_추가되지_않는다() {
             //given
             onePlayerGame.initializeGame(deck);
-            int beforeCardCount = onePlayerGame.getPlayerCard("피즈").size();
+            int beforeCardCount = onePlayerGame.getPlayerCard(new Name("피즈")).size();
 
             //when
-            onePlayerGame.playPlayerTurn("피즈", deck, false);
+            onePlayerGame.playPlayerTurn(new Name("피즈"), deck, false);
 
             //then
-            assertThat(onePlayerGame.getPlayerCard("피즈").size()).isEqualTo(beforeCardCount);
+            assertThat(onePlayerGame.getPlayerCard(new Name("피즈")).size()).isEqualTo(beforeCardCount);
         }
 
         @DisplayName("딜러의 카드 총합이 17미만이면 한장을 더 분배한다.")
@@ -98,20 +99,20 @@ public class GameTest {
         @DisplayName("플레이어가 버스트 되면 플레이어는 패배하고 딜러는 승리한다.")
         @Test
         void 플레이어_버스트_시_무조건_플레이어는_패배한다() {
-            distributePlayerCards(onePlayerGame, "피즈",
+            distributePlayerCards(onePlayerGame, new Name("피즈"),
                     new Card(Rank.JACK, Suit.CLOVER),
                     new Card(Rank.QUEEN, Suit.CLOVER),
                     new Card(Rank.EIGHT, Suit.CLOVER)
             );
 
-            assertThat(onePlayerGame.getPlayerResult("피즈")).isEqualTo(GameResult.LOSE);
+            assertThat(onePlayerGame.getPlayerResult(new Name("피즈"))).isEqualTo(GameResult.LOSE);
             assertThat(onePlayerGame.getDealerResult().get(GameResult.WIN)).isEqualTo(1);
         }
 
         @DisplayName("플레이어가 버스트 되지 않았을 때 플레이어의 점수가 더 높으면 플레이어가 승리하고 딜러는 패배한다.")
         @Test
         void 플레이어_점수_더_높으면_플레이어_승리한다() {
-            distributePlayerCards(onePlayerGame, "피즈",
+            distributePlayerCards(onePlayerGame, new Name("피즈"),
                     new Card(Rank.JACK, Suit.CLOVER),
                     new Card(Rank.QUEEN, Suit.CLOVER),
                     new Card(Rank.ACE, Suit.CLOVER)
@@ -120,7 +121,7 @@ public class GameTest {
             dealer.addCard(new Card(Rank.JACK, Suit.HEART));
             dealer.addCard(new Card(Rank.QUEEN, Suit.HEART));
 
-            assertThat(onePlayerGame.getPlayerResult("피즈")).isEqualTo(GameResult.WIN);
+            assertThat(onePlayerGame.getPlayerResult(new Name("피즈"))).isEqualTo(GameResult.WIN);
             assertThat(onePlayerGame.getDealerResult().get(GameResult.LOSE)).isEqualTo(1);
         }
 
@@ -128,7 +129,7 @@ public class GameTest {
         @Test
         void 딜러가_버스트된_경우_플레이어가_승리한다() {
 
-            distributePlayerCards(onePlayerGame, "피즈",
+            distributePlayerCards(onePlayerGame, new Name("피즈"),
                     new Card(Rank.JACK, Suit.CLOVER),
                     new Card(Rank.QUEEN, Suit.CLOVER)
             );
@@ -137,14 +138,14 @@ public class GameTest {
             dealer.addCard(new Card(Rank.SIX, Suit.HEART));
             dealer.addCard(new Card(Rank.SEVEN, Suit.HEART));
 
-            assertThat(onePlayerGame.getPlayerResult("피즈")).isEqualTo(GameResult.WIN);
+            assertThat(onePlayerGame.getPlayerResult(new Name("피즈"))).isEqualTo(GameResult.WIN);
             assertThat(onePlayerGame.getDealerResult().get(GameResult.LOSE)).isEqualTo(1);
         }
 
         @DisplayName("플레이어가 버스트 되지 않았을 때 플레이어의 점수가 더 낮으면 플레이어가 패배하고 딜러는 승리한다.")
         @Test
         void 플레이어_점수_더_높으면_플레이어_패배한다() {
-            distributePlayerCards(onePlayerGame, "피즈",
+            distributePlayerCards(onePlayerGame, new Name("피즈"),
                     new Card(Rank.JACK, Suit.CLOVER),
                     new Card(Rank.NINE, Suit.CLOVER)
             );
@@ -152,7 +153,7 @@ public class GameTest {
             dealer.addCard(new Card(Rank.JACK, Suit.HEART));
             dealer.addCard(new Card(Rank.QUEEN, Suit.HEART));
 
-            assertThat(onePlayerGame.getPlayerResult("피즈")).isEqualTo(GameResult.LOSE);
+            assertThat(onePlayerGame.getPlayerResult(new Name("피즈"))).isEqualTo(GameResult.LOSE);
             assertThat(onePlayerGame.getDealerResult().get(GameResult.WIN)).isEqualTo(1);
         }
 
@@ -160,7 +161,7 @@ public class GameTest {
         @Test
         void 플레이어_딜러_점수_같으면_무승부_된다() {
 
-            distributePlayerCards(onePlayerGame, "피즈",
+            distributePlayerCards(onePlayerGame, new Name("피즈"),
                     new Card(Rank.JACK, Suit.CLOVER),
                     new Card(Rank.QUEEN, Suit.CLOVER)
             );
@@ -169,11 +170,11 @@ public class GameTest {
             dealer.addCard(new Card(Rank.QUEEN, Suit.HEART));
 
             //then
-            assertThat(onePlayerGame.getPlayerResult("피즈")).isEqualTo(GameResult.DRAW);
+            assertThat(onePlayerGame.getPlayerResult(new Name("피즈"))).isEqualTo(GameResult.DRAW);
             assertThat(onePlayerGame.getDealerResult().get(GameResult.DRAW)).isEqualTo(1);
         }
 
-        private void distributePlayerCards(Game game, String name, Card... cards) {
+        private void distributePlayerCards(Game game, Name name, Card... cards) {
             Deck testDeck = new Deck(Arrays.asList(cards));
             for (int i = 0; i < cards.length; i++) {
                 game.playPlayerTurn(name, testDeck, true);
@@ -186,11 +187,11 @@ public class GameTest {
             //given
             onePlayerGame.initializeGame(deck);
             //when
-            onePlayerGame.playPlayerTurn("피즈", deck, true);
+            onePlayerGame.playPlayerTurn(new Name("피즈"), deck, true);
             onePlayerGame.playDealerTurn(deck);
             //then
 
-            List<Card> fizzCard = onePlayerGame.getPlayerCard("피즈");
+            List<Card> fizzCard = onePlayerGame.getPlayerCard(new Name("피즈"));
             List<Rank> expectedFizzRank = List.of(Rank.FIVE, Rank.FIVE, Rank.FOUR);
             List<String> expectedFizzSuit = List.of("클로버", "하트", "스페이드");
 

@@ -4,6 +4,7 @@ import domain.card.Card;
 import domain.card.Deck;
 import domain.enums.GameResult;
 import domain.participant.Dealer;
+import domain.participant.Name;
 import domain.participant.Players;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +26,7 @@ public class Game {
         dealer.addCards(List.of(deck.drawCard(), deck.drawCard()));
     }
 
-    public boolean playPlayerTurn(String name, Deck deck, boolean wantHit) {
+    public boolean playPlayerTurn(Name name, Deck deck, boolean wantHit) {
         if (wantHit) {
             players.distributeCard(name, deck.drawCard());
         }
@@ -38,11 +39,11 @@ public class Game {
         return !dealer.checkScoreUnderCriterion();
     }
 
-    public List<String> getAllPlayersName() {
+    public List<Name> getAllPlayersName() {
         return players.getAllPlayersName();
     }
 
-    public GameResult getPlayerResult(String name) {
+    public GameResult getPlayerResult(Name name) {
         int dealerScore = dealer.getScore();
         boolean dealerBurst = dealer.isBust();
         return players.getPlayerResult(name, dealerScore, dealerBurst);
@@ -54,7 +55,7 @@ public class Game {
         return GameResult.calculateDealerResult(players.decideAllResults(dealerScore, dealerBurst));
     }
 
-    public List<Card> getPlayerCard(String name) {
+    public List<Card> getPlayerCard(Name name) {
         return players.getPlayerCards(name);
     }
 
@@ -62,7 +63,7 @@ public class Game {
         return dealer.getHand();
     }
 
-    public int getPlayerScore(String name) {
+    public int getPlayerScore(Name name) {
         return players.getPlayerScore(name);
     }
 

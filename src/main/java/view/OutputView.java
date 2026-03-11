@@ -2,6 +2,7 @@ package view;
 
 import domain.card.Card;
 import domain.enums.GameResult;
+import domain.participant.Name;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -19,12 +20,12 @@ public class OutputView {
     private static final String DEALER_RESULT = "딜러: %d승 %d패 %d무";
     private static final String PLAYER_RESULT = "%s: %s";
 
-    public void printPlayers(List<Card> dealerCard, Map<String, List<Card>> playerCards) {
-        String playerNames = String.join(STRING_JOIN_DELIMITER, playerCards.keySet());
+    public void printPlayers(List<Card> dealerCard, Map<Name, List<Card>> playerCards) {
+        String playerNames = String.join(STRING_JOIN_DELIMITER, playerCards.keySet().toString());
 
         System.out.printf(LINE_SEPARATOR + DISTRIBUTE_INITIAL_CARD + LINE_SEPARATOR, playerNames);
         printDealerFirstCard(dealerCard.getFirst());
-        for (String playerName : playerCards.keySet()) {
+        for (Name playerName : playerCards.keySet()) {
             printPlayerCard(playerName, playerCards.get(playerName));
         }
         System.out.print(LINE_SEPARATOR);
@@ -34,7 +35,7 @@ public class OutputView {
         System.out.printf(DEALER_CARD + LINE_SEPARATOR, dealerCard.getRankString() + dealerCard.getSuitString());
     }
 
-    public void printPlayerCard(String name, List<Card> playerCard) {
+    public void printPlayerCard(Name name, List<Card> playerCard) {
         String card = collectCards(playerCard);
 
         System.out.printf(PLAYER_CARD + LINE_SEPARATOR, name, card);
@@ -46,7 +47,7 @@ public class OutputView {
         System.out.printf(LINE_SEPARATOR + DEALER_CARD + SCORE + LINE_SEPARATOR, card, score);
     }
 
-    public void printPlayerCardWithScore(String name, List<Card> playerCard, int score) {
+    public void printPlayerCardWithScore(Name name, List<Card> playerCard, int score) {
         String card = collectCards(playerCard);
 
         System.out.printf(PLAYER_CARD + SCORE + LINE_SEPARATOR, name, card, score);
@@ -62,7 +63,7 @@ public class OutputView {
         System.out.println(LINE_SEPARATOR + DEALER_DRAW);
     }
 
-    public void printGameResult(Map<GameResult, Integer> dealerResult, Map<String, GameResult> playerResults) {
+    public void printGameResult(Map<GameResult, Integer> dealerResult, Map<Name, GameResult> playerResults) {
         System.out.println(LINE_SEPARATOR + FINAL_RESULT);
 
         int winCount = dealerResult.getOrDefault(GameResult.WIN, 0);
@@ -70,7 +71,7 @@ public class OutputView {
         int drawCount = dealerResult.getOrDefault(GameResult.DRAW, 0);
 
         System.out.printf(DEALER_RESULT + LINE_SEPARATOR, winCount, loseCount, drawCount);
-        for (String playerName : playerResults.keySet()) {
+        for (Name playerName : playerResults.keySet()) {
             System.out.printf(PLAYER_RESULT + LINE_SEPARATOR, playerName,
                     playerResults.get(playerName).getDescription());
         }

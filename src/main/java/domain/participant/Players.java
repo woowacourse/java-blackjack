@@ -22,7 +22,7 @@ public class Players {
                 .toList());
     }
 
-    public List<String> getAllPlayersName() {
+    public List<Name> getAllPlayersName() {
         return players.stream()
                 .map(Player::getName)
                 .toList();
@@ -46,17 +46,17 @@ public class Players {
         }
     }
 
-    public void distributeCard(String name, Card card) {
+    public void distributeCard(Name name, Card card) {
         Player foundPlayer = findPlayerByName(name);
         foundPlayer.addCard(card);
     }
 
-    public void distributeCards(String name, List<Card> cards) {
+    public void distributeCards(Name name, List<Card> cards) {
         Player foundPlayer = findPlayerByName(name);
         foundPlayer.addCards(cards);
     }
 
-    private Player findPlayerByName(String name) {
+    private Player findPlayerByName(Name name) {
         return players.stream()
                 .filter(player -> player.getName().equals(name))
                 .findFirst()
@@ -72,22 +72,22 @@ public class Players {
         return gameResults;
     }
 
-    public boolean checkScoreUnderCriterion(String name) {
+    public boolean checkScoreUnderCriterion(Name name) {
         Player foundPlayer = findPlayerByName(name);
         return foundPlayer.checkScoreUnderCriterion();
     }
 
-    public List<Card> getPlayerCards(String name) {
+    public List<Card> getPlayerCards(Name name) {
         Player foundPlayer = findPlayerByName(name);
         return foundPlayer.getHand();
     }
 
-    public GameResult getPlayerResult(String name, int dealerScore, boolean dealerBust) {
+    public GameResult getPlayerResult(Name name, int dealerScore, boolean dealerBust) {
         Player foundPlayer = findPlayerByName(name);
         return GameResult.calculatePlayerResult(foundPlayer, dealerScore, dealerBust);
     }
 
-    public int getPlayerScore(String name) {
+    public int getPlayerScore(Name name) {
         Player foundPlayer = findPlayerByName(name);
         return foundPlayer.getScore();
     }

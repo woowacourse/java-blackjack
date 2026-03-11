@@ -5,6 +5,7 @@ import domain.card.Card;
 import domain.card.Deck;
 import domain.enums.GameResult;
 import domain.participant.Dealer;
+import domain.participant.Name;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +28,7 @@ public class BlackjackController {
         CardGenerator cardGenerator = new ShuffledCardGenerator();
         Deck deck = new Deck(cardGenerator.generate());
         Game game = new Game(makePlayers(), new Dealer());
-        List<String> playersName = game.getAllPlayersName();
+        List<Name> playersName = game.getAllPlayersName();
 
         game.initializeGame(deck);
         outputView.printPlayers(game.getDealerCard(), getPlayerCards(game, playersName));
@@ -41,22 +42,22 @@ public class BlackjackController {
         return InputParser.parseNames(input);
     }
 
-    private Map<String, List<Card>> getPlayerCards(Game game, List<String> playersName) {
-        Map<String, List<Card>> playerCards = new LinkedHashMap<>();
-        for (String name : playersName) {
+    private Map<Name, List<Card>> getPlayerCards(Game game, List<Name> playersName) {
+        Map<Name, List<Card>> playerCards = new LinkedHashMap<>();
+        for (Name name : playersName) {
             playerCards.put(name, game.getPlayerCard(name));
         }
         return playerCards;
     }
 
-    private void playTurn(Game game, List<String> playersName, Deck deck) {
-        for (String name : playersName) {
+    private void playTurn(Game game, List<Name> playersName, Deck deck) {
+        for (Name name : playersName) {
             playPlayerTurn(game, name, deck);
         }
         playDealerTurn(game, deck);
     }
 
-    private void playPlayerTurn(Game game, String name, Deck deck) {
+    private void playPlayerTurn(Game game, Name name, Deck deck) {
         boolean shouldContinue = true;
         boolean isBust = false;
         while (shouldContinue && !isBust) {
@@ -66,7 +67,7 @@ public class BlackjackController {
         }
     }
 
-    private boolean isPlayerWantHit(String name) {
+    private boolean isPlayerWantHit(Name name) {
         String input = inputView.askPlayerHit(name);
         return InputParser.parseHitAnswer(input);
     }
@@ -79,11 +80,11 @@ public class BlackjackController {
         }
     }
 
-    private void printResult(Game game, List<String> playerNames) {
+    private void printResult(Game game, List<Name> playerNames) {
         outputView.printDealerCardWithScore(game.getDealerCard(), game.getDealerScore());
 
-        Map<String, GameResult> playerResults = new LinkedHashMap<>();
-        for (String name : playerNames) {
+        Map<Name, GameResult> playerResults = new LinkedHashMap<>();
+        for (Name name : playerNames) {
             outputView.printPlayerCardWithScore(name, game.getPlayerCard(name), game.getPlayerScore(name));
             playerResults.put(name, game.getPlayerResult(name));
         }

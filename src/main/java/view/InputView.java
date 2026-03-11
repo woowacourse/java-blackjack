@@ -3,6 +3,7 @@ package view;
 import static constant.GameRule.NO_ANSWER;
 import static constant.GameRule.YES_ANSWER;
 
+import domain.participant.Name;
 import java.util.Scanner;
 import message.ErrorMessage;
 
@@ -23,7 +24,7 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public String askPlayerHit(String name) {
+    public String askPlayerHit(Name name) {
         System.out.printf(ASK_HIT_OR_NOT + LINE_SEPARATOR, name, YES_ANSWER, NO_ANSWER);
         String input = scanner.nextLine();
         if (!YES_ANSWER.contains(input) && !NO_ANSWER.contains(input)) {
