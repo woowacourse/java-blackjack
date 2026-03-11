@@ -21,13 +21,13 @@ public class GameResults {
     }
 
     public static GameResults create(final Players players, final Dealer dealer) {
-        Map<Player, GameResult> playerResults = new LinkedHashMap<>();
+        Map<Player, GameResult> gameResults = new LinkedHashMap<>();
 
         for (Player player : players.players()) {
-            GameResult playerResult = calculator.calculate(player.calculateScore(), dealer.calculateScore());
-            playerResults.put(player, playerResult);
+            GameResult gameResult = resolveGameResult(dealer, player);
+            gameResults.put(player, gameResult);
         }
-        return new GameResults(playerResults);
+        return new GameResults(gameResults);
     }
 
     public Map<GameResult, Integer> dealerResult() {
@@ -53,6 +53,16 @@ public class GameResults {
             profits.put(dealer, profits.get(dealer).add(playerProfit.negate()));
         }
         return profits;
+    }
+
+    private static GameResult resolveGameResult(Dealer dealer, Player player) {
+        if (player.isBlackjack() && dealer.isBlackjack()) {
+            return GameResult.DRAW;
+        } else if (player.isBlackjack()) {
+            return GameResult.BLACKJACK;
+        } else {
+            return calculator.calculate(player.calculateScore(), dealer.calculateScore());
+        }
     }
 
     private Money profitOf(Player player, Money wager) {

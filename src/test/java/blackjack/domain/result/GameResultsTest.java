@@ -128,4 +128,77 @@ class GameResultsTest {
         assertThat(profits.get(drawer)).isEqualTo(new Money(0));
         assertThat(profits.get(dealer)).isEqualTo(loserWager);
     }
+
+    @Test
+    void 플레이어만_블랙잭이면_플레이어는_베팅_금액의_150퍼센트의_수익을_얻고_딜러는_그만큼_잃는다() {
+        Dealer dealer = new Dealer();
+        Player blackjack = new Player("blackjack");
+
+        blackjack.receiveCard(new Card(Suit.HEART, Rank.ACE));
+        blackjack.receiveCard(new Card(Suit.HEART, Rank.KING));
+
+        dealer.receiveCard(new Card(Suit.HEART, Rank.TEN));
+        dealer.receiveCard(new Card(Suit.SPADE, Rank.SIX));
+
+        GameResults results = GameResults.create(new Players(List.of(blackjack)), dealer);
+
+        Map<Player, Money> wagers = new HashMap<>();
+        Money blackjackWager = new Money(10000);
+        wagers.put(blackjack, blackjackWager);
+
+        Map<Participant, Money> profits = results.calculateProfits(wagers, dealer);
+
+        Money expectedProfit = blackjackWager.multiply(1.5);
+        assertThat(profits.get(blackjack)).isEqualTo(expectedProfit);
+
+        assertThat(profits.get(dealer)).isEqualTo(expectedProfit.negate());
+    }
+
+    @Test
+    void 플레이어와_딜러_모두_블랙잭이면_플레이어와_딜러_모두_수익이_없다() {
+        Dealer dealer = new Dealer();
+        Player blackjack = new Player("blackjack");
+
+        blackjack.receiveCard(new Card(Suit.HEART, Rank.ACE));
+        blackjack.receiveCard(new Card(Suit.HEART, Rank.KING));
+
+        dealer.receiveCard(new Card(Suit.SPADE, Rank.ACE));
+        dealer.receiveCard(new Card(Suit.SPADE, Rank.KING));
+
+        GameResults results = GameResults.create(new Players(List.of(blackjack)), dealer);
+
+        Map<Player, Money> wagers = new HashMap<>();
+        Money blackjackWager = new Money(10000);
+        wagers.put(blackjack, blackjackWager);
+
+        Map<Participant, Money> profits = results.calculateProfits(wagers, dealer);
+
+        Money expectedProfit = new Money(0);
+        assertThat(profits.get(blackjack)).isEqualTo(expectedProfit);
+        assertThat(profits.get(dealer)).isEqualTo(expectedProfit);
+    }
+
+    @Test
+    void 딜러만_블랙잭이면_플레이어의_베팅_금액만큼_잃고_딜러는_그만큼_얻는다() {
+        Dealer blackjackDealer = new Dealer();
+        Player loser = new Player("loser");
+
+        loser.receiveCard(new Card(Suit.HEART, Rank.QUEEN));
+        loser.receiveCard(new Card(Suit.HEART, Rank.KING));
+
+        blackjackDealer.receiveCard(new Card(Suit.SPADE, Rank.ACE));
+        blackjackDealer.receiveCard(new Card(Suit.SPADE, Rank.KING));
+
+        GameResults results = GameResults.create(new Players(List.of(loser)), blackjackDealer);
+
+        Map<Player, Money> wagers = new HashMap<>();
+        Money loserWager = new Money(10000);
+        wagers.put(loser, loserWager);
+
+        Map<Participant, Money> profits = results.calculateProfits(wagers, blackjackDealer);
+
+        Money expectedProfit = new Money(-10000);
+        assertThat(profits.get(loser)).isEqualTo(expectedProfit);
+        assertThat(profits.get(blackjackDealer)).isEqualTo(expectedProfit.negate());
+    }
 }

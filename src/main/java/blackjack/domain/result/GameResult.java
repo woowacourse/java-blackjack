@@ -4,18 +4,19 @@ import blackjack.domain.money.Money;
 
 public enum GameResult {
 
+    BLACKJACK(1.5),
     WIN(1),
     DRAW(0),
     LOSE(-1);
 
-    private final int multiplier;
+    private final double multiplier;
 
-    GameResult(int multiplier) {
+    GameResult(double multiplier) {
         this.multiplier = multiplier;
     }
 
     public GameResult reverse() {
-        if (this == WIN) {
+        if (this == WIN || this == BLACKJACK) {
             return LOSE;
         }
         if (this == LOSE) {

@@ -103,7 +103,7 @@ public class OutputView {
     }
 
     private String toDisplayText(final GameResult result) {
-        if (result == GameResult.WIN) {
+        if (result == GameResult.WIN || result == GameResult.BLACKJACK) {
             return WIN_DISPLAY_TEXT;
         }
         if (result == GameResult.LOSE) {

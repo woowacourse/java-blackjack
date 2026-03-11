@@ -40,4 +40,8 @@ public abstract class Participant {
     }
 
     public abstract boolean canReceiveCard();
+
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
+    }
 }

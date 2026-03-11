@@ -8,6 +8,8 @@ import java.util.List;
 public class Hand {
 
     private static final int ACE_BONUS = 10;
+    private static final int BLACKJACK_CARD_COUNT = 2;
+    private static final Score BLACKJACK_SCORE = new Score(21);
 
     private final List<Card> cards = new ArrayList<>();
 
@@ -46,5 +48,10 @@ public class Hand {
     public String getFirstCard() {
         Card firstCard = cards.getFirst();
         return firstCard.toDisplayName();
+    }
+
+    public boolean isBlackjack() {
+        return cards.size() == BLACKJACK_CARD_COUNT
+                && calculateScore().equals(BLACKJACK_SCORE);
     }
 }

@@ -14,8 +14,8 @@ public class Money {
         return new Money(value + money.value);
     }
 
-    public Money multiply(int multiplier) {
-        return new Money(value * multiplier);
+    public Money multiply(double multiplier) {
+        return new Money((int) (value * multiplier));
     }
 
     public Money negate() {
