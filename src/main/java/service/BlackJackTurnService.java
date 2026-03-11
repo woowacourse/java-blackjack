@@ -2,10 +2,8 @@ package service;
 
 import domain.Dealer;
 import domain.Deck;
-import domain.Hand;
 import domain.Player;
 import domain.card.Card;
-import dto.HandDto;
 
 public class BlackJackTurnService {
 
@@ -29,9 +27,5 @@ public class BlackJackTurnService {
 
     public boolean isPlayerUnder21(Player player) {
         return player.getScore() < 21;
-    }
-
-    public HandDto createHandDto(Hand hand) {
-        return HandDto.from(hand);
     }
 }

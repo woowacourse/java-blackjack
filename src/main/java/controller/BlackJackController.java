@@ -66,7 +66,7 @@ public class BlackJackController {
     private void repeatCommands(Player player, Deck deck) {
         while (blackJackTurnService.canPlayerHit(player, InputView.askPlayerCommand(player.getName()))) {
             blackJackTurnService.playerHit(player, deck);
-            HandDto handDto = blackJackTurnService.createHandDto(player.getHand());
+            HandDto handDto = HandDto.from(player.getHand());
             OutputView.printHandOutput(handDto);
         }
     }
@@ -74,7 +74,7 @@ public class BlackJackController {
     private boolean isFirstCommandNo(Player player, Deck deck) {
         String yesNoInput = InputView.askPlayerCommand(player.getName());
 
-        HandDto handDto = blackJackTurnService.createHandDto(player.getHand());
+        HandDto handDto = HandDto.from(player.getHand());
         OutputView.printHandOutput(handDto);
         if (blackJackTurnService.canPlayerHit(player, yesNoInput)) {
             blackJackTurnService.playerHit(player, deck);
