@@ -73,16 +73,27 @@ public class GameController {
     }
 
     private void playPlayerTurn(GameManager gameManager, Player player) {
-        while (player.canReceive()) {
-            Command userAnswer = Command.from(inputView.askPlayHit(player.getName()));
-
-            if (userAnswer.isNo()) {
-                return;
-            }
-            gameManager.dealCard(player);
-            outputView.printParticipantCard(player.getName(),
-                    gameManager.getCardsResult(player).getFormattedCards());
+        while (shouldDrawCard(player)) {
+            drawAndPrint(gameManager, player);
         }
+    }
+
+    private boolean shouldDrawCard(Player player) {
+        if (!player.canReceive()) {
+            return false;
+        }
+        return isUserWantHit(player);
+    }
+
+    private boolean isUserWantHit(Player player) {
+        Command command = Command.from(inputView.askPlayHit(player.getName()));
+        return !command.isNo();
+    }
+
+    private void drawAndPrint(GameManager gameManager, Player player) {
+        gameManager.dealCard(player);
+        outputView.printParticipantCard(player.getName(),
+                gameManager.getCardsResult(player).getFormattedCards());
     }
 
     private void initializeGame(GameManager gameManager, Dealer dealer, Players players) {
@@ -95,7 +106,7 @@ public class GameController {
         for (Player player : players) {
             result.put(player.getName(), gameManager.getCardsResult(player));
         }
-        
+
         outputView.printGameInitResult(result);
         outputView.printNewLine();
     }
