@@ -35,8 +35,8 @@ class GameResultAnalyzerTest {
 
         GameResultAnalysis analysis = GameResultAnalyzer.analyze(players, dealerScore4);
 
-        Assertions.assertThat(analysis.getDealerResult())
-                .isEqualTo("2패");
+        Assertions.assertThat(analysis.dealerGameResult()
+                .resultStatistic()).containsEntry(GameResult.LOSS, 2);
     }
 
 }

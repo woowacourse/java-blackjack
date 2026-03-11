@@ -1,5 +1,9 @@
 package view;
 
+import domain.result.GameResult;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 public class OutputWriter {
 
     private static final String LINE_SEPARATOR = System.lineSeparator();
@@ -55,10 +59,16 @@ public class OutputWriter {
         System.out.print(LINE_SEPARATOR);
     }
 
-    public void printFinalResultOfDealer(String status) {
+    public void printFinalResultOfDealer(Map<GameResult, Integer> gameResultIntegerEnumMap) {
         System.out.print(LINE_SEPARATOR);
-        System.out.printf(FINAL_RESULT_DEALER, status);
+        System.out.printf(FINAL_RESULT_DEALER, formatDealerResult(gameResultIntegerEnumMap));
         System.out.print(LINE_SEPARATOR);
+    }
+
+    private String formatDealerResult(Map<GameResult, Integer> gameResultIntegerEnumMap) {
+        return gameResultIntegerEnumMap.keySet().stream()
+                .map(result -> gameResultIntegerEnumMap.get(result) + result.displayName())
+                .collect(Collectors.joining(" "));
     }
 
     public void printFinalResultMessage(String gamerName, String playerCards, int resultScore) {

@@ -71,7 +71,7 @@ public class ApplicationView {
     }
 
     private void printAllPlayersResult(GameResultAnalysis resultAnalysis) {
-        writer.printFinalResultOfDealer(resultAnalysis.getDealerResult());
+        writer.printFinalResultOfDealer(resultAnalysis.dealerGameResult().resultStatistic());
         resultAnalysis.playerGameResults().forEach(player ->
                 writer.printFinalResultOfPlayer(player.playerName(), player.gameResult().displayName())
         );
