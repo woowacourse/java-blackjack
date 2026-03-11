@@ -66,7 +66,7 @@ public class Participants {
 
         PlayingCards playerHand = players.addCardToAvailablePlayer(drawCard);
 
-        return new DrawResult(playerHand, drawDeck);
+        return DrawResult.of(playerHand, drawDeck);
     }
 
     public void dontWantDraw() {
