@@ -23,7 +23,4 @@ public class Deck {
         return cards.removeLast();
     }
 
-    public int size() {
-        return cards.size();
-    }
 }
