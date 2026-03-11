@@ -1,20 +1,22 @@
 package domain;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import constant.GameConstant;
 import domain.dto.CardContentDto;
 import domain.dto.FinalCardDto;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Player {
     private static final int ACE_ADDITIONAL_SCORE = 11;
     protected final List<Card> cards = new ArrayList<>();
     private final String name;
+    private int bettingScore;
 
     public Player(String name) {
         this.name = name;
+        this.bettingScore = 0;
     }
 
     protected int calculateScore() {
@@ -34,7 +36,7 @@ public class Player {
         if (!isAceExist() || calculateScore() > ACE_ADDITIONAL_SCORE) {
             return 0;
         }
-        return ACE_ADDITIONAL_SCORE-1;
+        return ACE_ADDITIONAL_SCORE - 1;
     }
 
     public boolean isBust() {
@@ -50,6 +52,14 @@ public class Player {
         cards.add(totalCards.pop());
     }
 
+    public void betMoney(int money) {
+        bettingScore = money;
+    }
+
+    public void resetMoney() {
+        bettingScore = 0;
+    }
+
     public String getName() {
         return name;
     }
@@ -58,6 +68,9 @@ public class Player {
         return cards;
     }
 
+    public int getBettingScore() {
+        return bettingScore;
+    }
     public CardContentDto toCardContentDto() {
         return new CardContentDto(this.name, this.cards);
     }

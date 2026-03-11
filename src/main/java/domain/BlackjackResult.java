@@ -34,6 +34,7 @@ public class BlackjackResult {
 
     private void determinePlayerResult(Player player, boolean dealerBust, int dealerTotal) {
         if (isPlayerLose(player, dealerBust, dealerTotal)) {
+            player.resetMoney();
             addMatchResult(player.getName(), MatchCase.LOSE);
             return;
         }

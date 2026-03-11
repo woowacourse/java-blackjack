@@ -32,10 +32,7 @@ public class BlackjackController {
 
         Dealer dealer = blackjackService.createDealer(cards);
         Players playerList = blackjackService.createPlayers(names, cards);
-        for (Player player : playerList) {
-            int bettingScore = inputBettingPrice(player.getName());
-            // Todo: 배팅 금액 할당
-        }
+        setPlayerBetting(playerList);
 
         OutputView.displayCardDistribution(names);
 
@@ -52,6 +49,13 @@ public class BlackjackController {
         // 최종 승패
         BlackjackResult blackjackResult = BlackjackResult.from(dealer, players);
         OutputView.displayMatchResult(blackjackResult.toResultDto());
+    }
+
+    public void setPlayerBetting(Players playerList) {
+        for (Player player : playerList) {
+            int bettingScore = inputBettingPrice(player.getName());
+            player.betMoney(bettingScore);
+        }
     }
 
     public int inputBettingPrice(String name) {
