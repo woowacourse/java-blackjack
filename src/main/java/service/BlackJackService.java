@@ -85,7 +85,7 @@ public class BlackJackService {
             return BigDecimal.valueOf(player.getBetAmount());
         }
 
-        if(dealer.isMoreScore(dealer)) {
+        if(dealer.isMoreScore(player)) {
             return BigDecimal.valueOf(-player.getBetAmount());
         }
         return BigDecimal.ZERO;
