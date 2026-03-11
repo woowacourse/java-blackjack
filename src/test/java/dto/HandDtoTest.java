@@ -19,7 +19,7 @@ class HandDtoTest {
         player.draw(new Card(Suit.HEARTS, Rank.SEVEN));
 
         // when
-        HandDto handDto = new HandDto(player.getHand());
+        HandDto handDto = HandDto.from(player.getHand());
 
         // then
         assertEquals(List.of("8하트", "7하트"), handDto.cards());

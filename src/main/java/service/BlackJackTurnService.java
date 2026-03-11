@@ -32,6 +32,6 @@ public class BlackJackTurnService {
     }
 
     public HandDto createHandDto(Hand hand) {
-        return new HandDto(hand);
+        return HandDto.from(hand);
     }
 }
