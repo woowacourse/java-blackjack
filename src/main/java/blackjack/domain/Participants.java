@@ -91,6 +91,6 @@ public class Participants {
     public TotalGameResult getWinningResult() {
         List<PlayerGameResult> winningResultsWithDealer = players.getWinningResultsWithDealer(dealer);
         DealerGameResult dealerWinningResult = dealer.calculateDealerProfitResult(winningResultsWithDealer);
-        return new TotalGameResult(dealerWinningResult, winningResultsWithDealer);
+        return TotalGameResult.of(dealerWinningResult, winningResultsWithDealer);
     }
 }
