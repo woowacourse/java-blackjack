@@ -17,10 +17,6 @@ public class PlayerResult {
         this.result = result;
     }
 
-    public static PlayerResult initResult() {
-        return new PlayerResult(new HashMap<>());
-    }
-
     public static PlayerResult judgeByPlayer(Dealer dealer, List<Player> players) {
         Map<String, GameStatus> result = new HashMap<>();
 

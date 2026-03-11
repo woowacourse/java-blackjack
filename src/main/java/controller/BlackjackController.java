@@ -1,13 +1,14 @@
 package controller;
 
 import java.util.List;
-import model.card.Card;
-import model.card.CardShuffler;
 import model.Dealer;
-import model.card.Deck;
 import model.GameStatus;
 import model.Player;
 import model.PlayerResult;
+import model.Players;
+import model.card.Card;
+import model.card.CardShuffler;
+import model.card.Deck;
 import model.card.SimpleCardShuffler;
 import model.service.CardFactory;
 import view.InputView;
@@ -25,7 +26,7 @@ public class BlackjackController {
         Dealer dealer = new Dealer(deck);
 
         List<String> names = InputView.readPlayerNames();
-        List<Player> players = createPlayers(names);
+        Players players = Players.from(names);
         distributeCard(dealer, players);
 
         hitOrStandByPlayers(dealer, players);
@@ -35,22 +36,16 @@ public class BlackjackController {
         printGameResult(dealer, players);
     }
 
-    private List<Player> createPlayers(List<String> names) {
-        return names.stream()
-                .map(Player::new)
-                .toList();
-    }
-
-    private void distributeCard(Dealer dealer, List<Player> players) {
-        dealer.distributeInitialCards(players);
+    private void distributeCard(Dealer dealer, Players players) {
+        dealer.distributeInitialCards(players.getPlayers());
 
         OutputView.printCardOpen(players);
         OutputView.printCardByDealer(dealer);
         OutputView.printCardByPlayers(players);
     }
 
-    private void hitOrStandByPlayers(Dealer dealer, List<Player> players) {
-        for (Player player : players) {
+    private void hitOrStandByPlayers(Dealer dealer, Players players) {
+        for (Player player : players.getPlayers()) {
             chooseHitOrStand(dealer, player);
         }
     }
@@ -88,14 +83,14 @@ public class BlackjackController {
         }
     }
 
-    private void printFinalCards(Dealer dealer, List<Player> players) {
+    private void printFinalCards(Dealer dealer, Players players) {
         OutputView.printBlank();
         OutputView.printCardByPlayerWithScore(dealer);
-        players.forEach(OutputView::printCardByPlayerWithScore);
+        players.getPlayers().forEach(OutputView::printCardByPlayerWithScore);
     }
 
-    private void printGameResult(Dealer dealer, List<Player> players) {
-        PlayerResult playerResult = PlayerResult.judgeByPlayer(dealer, players);
+    private void printGameResult(Dealer dealer, Players players) {
+        PlayerResult playerResult = PlayerResult.judgeByPlayer(dealer, players.getPlayers());
         int winCount = playerResult.countByStatus(GameStatus.LOSE);
         int loseCount = playerResult.countByStatus(GameStatus.WIN);
         int drawCount = playerResult.countByStatus(GameStatus.DRAW);

@@ -2,26 +2,30 @@ package view;
 
 import java.util.List;
 import java.util.Map;
-import model.card.Card;
 import model.Dealer;
 import model.GameStatus;
+import model.Participant;
 import model.Player;
+import model.Players;
+import model.card.Card;
 
 public class OutputView {
 
     private OutputView() {
     }
 
-    public static void printCardOpen(List<Player> players) {
-        List<String> names = players.stream()
+    public static void printCardOpen(Players players) {
+        List<String> names = players.getPlayers()
+                .stream()
                 .map(Player::getName)
                 .toList();
+
         System.out.println();
         System.out.printf("딜러와 %s에게 2장을 나누었습니다.%n", String.join(", ", names));
     }
 
-    public static void printCardByPlayers(List<Player> players) {
-        players.forEach(OutputView::printCardByPlayer);
+    public static void printCardByPlayers(Players players) {
+        players.getPlayers().forEach(OutputView::printCardByPlayer);
         System.out.println();
     }
 
@@ -40,13 +44,13 @@ public class OutputView {
     }
 
 
-    public static void printCardByPlayerWithScore(Player player) {
-        int sum = player.calculateTotalScore();
-        List<String> cards = player.getCards()
+    public static void printCardByPlayerWithScore(Participant participant) {
+        int sum = participant.calculateTotalScore();
+        List<String> cards = participant.getCards()
                 .stream()
                 .map(OutputView::convert)
                 .toList();
-        System.out.printf("%s카드: %s - 결과: %d%n", player.getName(), String.join(", ", cards), sum);
+        System.out.printf("%s카드: %s - 결과: %d%n", participant.getName(), String.join(", ", cards), sum);
     }
 
     private static String convert(Card card) {
