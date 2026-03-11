@@ -6,9 +6,6 @@ import java.util.stream.Collectors;
 import model.card.Card;
 import model.card.Cards;
 import model.card.Deck;
-import model.card.RandomDeck;
-import model.card.Rank;
-import model.card.Suit;
 import model.participant.Dealer;
 import model.participant.Participant;
 import model.participant.Participants;
@@ -24,10 +21,6 @@ public class Blackjack {
     private Blackjack(Participants participants, Deck deck) {
         this.participants = participants;
         this.deck = deck;
-    }
-
-    public static Blackjack from(Participants participants) {
-        return new Blackjack(participants, RandomDeck.of(Suit.values(), Rank.values()));
     }
 
     public static Blackjack of(Participants participants, Deck deck) {

@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import java.util.Map;
 import model.card.Card;
+import model.card.Deck;
 import model.card.Rank;
 import model.card.Suit;
 import model.participant.Dealer;
@@ -16,6 +17,7 @@ import org.junit.jupiter.api.Test;
 public class BlackjackTest {
     Blackjack blackjack;
     Participants participants;
+    Deck simpleDeck = () -> Card.of(Suit.SPADE, Rank.ACE);
 
     @BeforeEach
     void setUp() {
@@ -31,7 +33,7 @@ public class BlackjackTest {
         player2.receive(Card.of(Suit.HEART, Rank.FOUR));
         player2.receive(Card.of(Suit.HEART, Rank.SIX));
 
-        blackjack = Blackjack.from(participants);
+        blackjack = Blackjack.of(participants, simpleDeck);
     }
 
     @Test
