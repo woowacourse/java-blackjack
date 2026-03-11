@@ -40,10 +40,6 @@ public class Participant {
         return participantHand.getDeck().size() == BLACK_JACK_CARD_SIZE && Objects.equals(participantHand.getScore(), BUST_SCORE);
     }
 
-    public List<Card> getDeck() {
-        return List.copyOf(participantHand.getDeck());
-    }
-
     public String getFirstCard() {
         return participantHand.getFirstCard();
     }

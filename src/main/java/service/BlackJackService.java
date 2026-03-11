@@ -26,17 +26,6 @@ public class BlackJackService {
         initDraw(dealer, players);
     }
 
-    private void shuffle() {
-        cards.shuffle();
-    }
-
-    private void initDraw(Dealer dealer, Players players) {
-        for(int i  = 0; i < INITIAL_DRAW_QUANTITY; i++) {
-            draw(dealer);
-            initPlayersDraw(players);
-        }
-    }
-
     public void draw(Participant participant) {
         Card card = cards.draw();
         participant.addCard(card);
@@ -47,6 +36,17 @@ public class BlackJackService {
         DealerWinning dealerWinning = getDealerResult(players, dealer);
 
         return new ParticipantWinning(dealerWinning, playersWinning);
+    }
+
+    private void shuffle() {
+        cards.shuffle();
+    }
+
+    private void initDraw(Dealer dealer, Players players) {
+        for(int i  = 0; i < INITIAL_DRAW_QUANTITY; i++) {
+            draw(dealer);
+            initPlayersDraw(players);
+        }
     }
 
     private void initPlayersDraw(Players players) {

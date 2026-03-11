@@ -13,14 +13,6 @@ public class Player extends Participant {
         validate(name);
     }
 
-    public void setBetAmount(Integer betAmount) {
-        this.betAmount = betAmount;
-    }
-
-    public Integer getBetAmount() {
-        return this.betAmount;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -34,10 +26,17 @@ public class Player extends Participant {
         return Objects.hash(this.getResult().name());
     }
 
+    public void setBetAmount(Integer betAmount) {
+        this.betAmount = betAmount;
+    }
+
+    public Integer getBetAmount() {
+        return this.betAmount;
+    }
+
     private void validate(PlayerName name) {
         if(name.getName().equals(DEALER_NAME)) {
             throw new IllegalArgumentException(ErrorMessage.NO_PLAYER_NAME_DEALER.getMessage());
         }
     }
-
 }

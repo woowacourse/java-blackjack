@@ -5,7 +5,6 @@ import java.util.List;
 import model.dto.PlayerResult;
 
 public class Players {
-
     private final List<Player> players;
 
     public Players(List<Player> players) {
