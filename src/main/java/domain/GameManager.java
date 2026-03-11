@@ -7,6 +7,7 @@ import domain.participant.Player;
 import domain.participant.Players;
 
 public class GameManager {
+    private static final int STARTING_CARD_COUNT = 2;
     private final Deck deck;
 
     public GameManager(Deck deck) {
@@ -33,4 +34,9 @@ public class GameManager {
         return participant.handInfo();
     }
 
+    public void dealStartingCards(Participant participant) {
+        for (int i = 0; i < STARTING_CARD_COUNT; i++) {
+            participant.addCard(deck.pop());
+        }
+    }
 }

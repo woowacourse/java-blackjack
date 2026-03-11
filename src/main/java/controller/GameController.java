@@ -97,8 +97,7 @@ public class GameController {
     }
 
     private void initializeGame(GameManager gameManager, Dealer dealer, Players players) {
-        gameManager.dealCard(dealer);
-        gameManager.dealCard(dealer);
+        gameManager.dealStartingCards(dealer);
         gameManager.dealCardTo(players, 2);
 
         Map<String, CardsSnapshot> result = new LinkedHashMap<>();
