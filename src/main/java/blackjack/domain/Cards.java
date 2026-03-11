@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
+    private static final int BUST_SCORE = 21;
 
     private final List<Card> cards;
 
@@ -21,7 +22,7 @@ public class Cards {
             totalScore += card.translateToScore();
         }
         int aceCount = countAces();
-        while (totalScore > 21 && aceCount > 0) {
+        while (totalScore > BUST_SCORE && aceCount > 0) {
             totalScore -= 10;
             aceCount--;
         }
