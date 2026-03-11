@@ -47,19 +47,26 @@ public class BlackjackController {
         return new Deck(CardsCreator.createCards(), randomValueGenerator);
     }
 
-    private void showGameResultStatistics(Dealer dealer, List<Player> players) {
-        List<StatisticsDto> statisticsDtos = getStatisticsDtos(players, dealer);
-        outputView.showResultStatistics(statisticsDtos, dealer.getName());
+    private List<Player> createPlayers(List<String> playerNames, Deck deck) {
+        List<Player> players = new ArrayList<>();
+        for (String playerName : playerNames) {
+            int amount = inputView.readPlayerBettingAmount(playerName);
+            Hand hand = getHand(deck);
+
+            Player player = Player.create(playerName, hand, amount);
+            players.add(player);
+        }
+        return players;
     }
 
-    private List<StatisticsDto> getStatisticsDtos(List<Player> players, Dealer dealer) {
-        List<StatisticsDto> statisticsDtos = new ArrayList<>();
-        for (Player player : players) {
-            int profit = player.calculateProfit(dealer);
-            StatisticsDto statisticsDto = new StatisticsDto(player.getName(), profit);
-            statisticsDtos.add(statisticsDto);
-        }
-        return statisticsDtos;
+
+    private Hand getHand(Deck deck) {
+        Card card1 = deck.drawCard();
+        Card card2 = deck.drawCard();
+        List<Card> cards = new ArrayList<>();
+        cards.add(card1);
+        cards.add(card2);
+        return new Hand(cards);
     }
 
     private Dealer createDealerAndPrintPlayers(Deck deck, List<Player> players) {
@@ -131,25 +138,18 @@ public class BlackjackController {
         }
     }
 
-    private List<Player> createPlayers(List<String> playerNames, Deck deck) {
-        List<Player> players = new ArrayList<>();
-        for (String playerName : playerNames) {
-            int amount = inputView.readPlayerBettingAmount(playerName);
-            Hand hand = getHand(deck);
-
-            Player player = Player.create(playerName, hand, amount);
-            players.add(player);
-        }
-        return players;
+    private void showGameResultStatistics(Dealer dealer, List<Player> players) {
+        List<StatisticsDto> statisticsDtos = getStatisticsDtos(players, dealer);
+        outputView.showResultStatistics(statisticsDtos, dealer.getName());
     }
 
-
-    private Hand getHand(Deck deck) {
-        Card card1 = deck.drawCard();
-        Card card2 = deck.drawCard();
-        List<Card> cards = new ArrayList<>();
-        cards.add(card1);
-        cards.add(card2);
-        return new Hand(cards);
+    private List<StatisticsDto> getStatisticsDtos(List<Player> players, Dealer dealer) {
+        List<StatisticsDto> statisticsDtos = new ArrayList<>();
+        for (Player player : players) {
+            int profit = player.calculateProfit(dealer);
+            StatisticsDto statisticsDto = new StatisticsDto(player.getName(), profit);
+            statisticsDtos.add(statisticsDto);
+        }
+        return statisticsDtos;
     }
 }
