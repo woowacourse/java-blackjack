@@ -1,35 +1,19 @@
 package blackjack.dto;
 
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
-import blackjack.domain.participant.Players;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 public record WinningResult(
-        Map<String, Boolean> winningResult
+        Map<String, Integer> winningResult
 ) {
 
-    public static WinningResult from(Players players, Dealer dealer) {
-        Map<String, Boolean> winningResult = new LinkedHashMap<>();
-        for (Player player : players.getPlayers()) {
-            winningResult.put(player.getName(), player.winsAgainst(dealer));
-        }
+    public static WinningResult from(Map<String, Integer> winningResult) {
         return new WinningResult(winningResult);
     }
 
-    public int getWinCountOfDealer() {
-        return (int) winningResult.entrySet().stream()
-                .filter(entry -> Boolean.FALSE.equals(entry.getValue()))
-                .count();
-    }
-
-    public int getLoseCountOfDealer() {
-        return winningResult.size() - getWinCountOfDealer();
-    }
-
-    public boolean get(String playerName) {
-        return winningResult.get(playerName);
+    public int getProfitOfDealer() {
+        return -winningResult.values().stream()
+                .mapToInt(integer -> integer)
+                .sum();
     }
 
 }

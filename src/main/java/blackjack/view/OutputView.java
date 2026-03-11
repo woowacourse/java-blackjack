@@ -30,7 +30,7 @@ public class OutputView {
     public void printWinningResult(WinningResult winningResult) {
         System.out.println();
         System.out.println("## 최종 승패");
-        printWinningResultOfDealer(winningResult.getWinCountOfDealer(), winningResult.getLoseCountOfDealer());
+        printWinningResultOfDealer(winningResult.getProfitOfDealer());
         printWinningResultOfPlayers(winningResult);
     }
 
@@ -38,21 +38,14 @@ public class OutputView {
         System.out.println();
     }
 
-    private void printWinningResultOfDealer(int winCountOfDealer, int loseCountOfDealer) {
-        System.out.println("딜러: " + winCountOfDealer + "승 " + loseCountOfDealer + "패");
+    private void printWinningResultOfDealer(int profitOfDealer) {
+        System.out.println("딜러: " + profitOfDealer);
     }
 
     private void printWinningResultOfPlayers(WinningResult winningResult) {
-        for (String playerName : winningResult.winningResult().keySet()) {
-            System.out.println(playerName + ": " + convertToString(winningResult.get(playerName)));
-        }
-    }
-
-    private String convertToString(boolean isWin) {
-        if (isWin) {
-            return "승";
-        }
-        return "패";
+        winningResult.winningResult().forEach((playerName, bettingAmount) ->
+                System.out.println(playerName + ": " + bettingAmount)
+        );
     }
 
     private String stringJoinWithComma(List<String> strings) {

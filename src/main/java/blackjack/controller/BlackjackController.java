@@ -8,7 +8,9 @@ import blackjack.domain.participant.Players;
 import blackjack.dto.WinningResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BlackjackController {
 
@@ -33,7 +35,7 @@ public class BlackjackController {
         getMoreCardsForDealer(dealer, players);
 
         printGameResult(players, dealer);
-        printWinningResult(players, dealer);
+        printWinningResult(bettingAmounts, players, dealer);
     }
 
     private Players readPlayers() {
@@ -107,8 +109,14 @@ public class BlackjackController {
         }
     }
 
-    private void printWinningResult(Players players, Dealer dealer) {
-        outputView.printWinningResult(WinningResult.from(players, dealer));
+    private void printWinningResult(BettingAmounts bettingAmounts, Players players, Dealer dealer) {
+        Map<String, Integer> winningResult = new LinkedHashMap<>();
+        for (Player player : players.getPlayers()) {
+            if (player.winsAgainst(dealer)) {
+                winningResult.put(player.getName(), bettingAmounts.findByName(player.getName()));
+            }
+        }
+        outputView.printWinningResult(WinningResult.from(winningResult));
     }
 
 }

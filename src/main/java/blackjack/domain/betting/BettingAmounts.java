@@ -16,5 +16,8 @@ public class BettingAmounts {
         bettingAmounts.put(playerName, bettingAmount);
     }
 
+    public Integer findByName(String name) {
+        return bettingAmounts.get(name);
+    }
 
 }
