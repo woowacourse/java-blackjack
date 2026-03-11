@@ -7,4 +7,8 @@ public class BettingAmount {
     public BettingAmount(int price) {
         this.price = price;
     }
+
+    public int getPrice() {
+        return price;
+    }
 }
