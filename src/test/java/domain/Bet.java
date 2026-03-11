@@ -26,4 +26,13 @@ public class Bet {
     public Map<Name, Integer> getBetProfit() {
         return betProfit.getBetProfit();
     }
+
+    public int getDealerProfit() {
+        int playerProfitSum = betProfit.getBetProfit().values()
+                .stream()
+                .mapToInt(i -> i)
+                .sum();
+
+        return -playerProfitSum;
+    }
 }

@@ -107,5 +107,33 @@ public class BetTest {
             //then
             assertThat(bet.getBetProfit().get(firstPlayer)).isEqualTo(expectedProfit);
         }
+
+        private static Stream<Arguments> dealerProfitTest() {
+            return Stream.of(
+                    Arguments.of(List.of(10_000, 20_000), List.of(GameResult.WIN, GameResult.LOSE), 10_000),
+                    Arguments.of(List.of(20_000, 20_000), List.of(GameResult.WIN, GameResult.WIN), -40_000),
+                    Arguments.of(List.of(20_000, 20_000), List.of(GameResult.BLACKJACK_WIN, GameResult.WIN), -50_000),
+                    Arguments.of(List.of(20_000, 20_000), List.of(GameResult.LOSE, GameResult.DRAW), 20_000)
+            );
+        }
+
+        @DisplayName("딜러의 수익금 계산 테스트")
+        @ParameterizedTest
+        @MethodSource("dealerProfitTest")
+        void 딜러_수익금_계산_테스트(List<Integer> bettingMoneys, List<GameResult> gameResults, int expectedProfit) {
+            //given
+            bet.bettingMoney(firstPlayer, bettingMoneys.getFirst());
+            bet.bettingMoney(secondPlayer, bettingMoneys.getLast());
+            //when
+            bet.calculateProfit(
+                    Map.of(
+                            firstPlayer, gameResults.getFirst(),
+                            secondPlayer, gameResults.getLast()
+                    )
+            );
+            //then
+            int profit = bet.getDealerProfit();
+            assertThat(profit).isEqualTo(expectedProfit);
+        }
     }
 }
