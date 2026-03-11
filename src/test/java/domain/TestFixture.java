@@ -1,5 +1,6 @@
 package domain;
 
+import domain.bet.Betting;
 import domain.card.DeckMaker;
 import domain.card.OneDeckMaker;
 import domain.card.vo.Card;
@@ -19,11 +20,11 @@ public class TestFixture {
 
 
     public static State createDefaultPlayerStateByRank(List<Rank> ranks) {
-        return Player.createDefaultStrategy("익명", createHandByRank(ranks)).getStartState();
+        return Player.createDefaultStrategy("익명", new Betting(0)).getStartState(createHandByRank(ranks));
     }
 
     public static State createDefaultDealerState(List<Rank> ranks) {
-        return Dealer.createDefaultStrategy(createHandByRank(ranks)).getStartState();
+        return Dealer.createDefaultStrategy().getStartState(createHandByRank(ranks));
     }
 
     public static Hand createHandByRank(List<Rank> ranks) {

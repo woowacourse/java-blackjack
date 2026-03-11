@@ -1,16 +1,17 @@
 package controller;
 
+import domain.bet.Betting;
 import domain.card.Deck;
 import domain.card.DeckMaker;
 import domain.hitStrategy.CasinoDealerHitStrategy;
 import domain.participants.Dealer;
 import domain.participants.Hand;
 import domain.participants.Player;
-import domain.state.Result;
 import domain.state.State;
 import dto.DealerDrawDto;
 import dto.NamesDto;
 import dto.PlayerCardsDto;
+import dto.PlayerCreateDto;
 import dto.PlayersCardsDto;
 import dto.StatisticsDto;
 import java.util.ArrayList;
@@ -31,19 +32,31 @@ public class BlackjackController {
 
     public void start(final DeckMaker deckMaker) {
         Deck deck = Deck.createFromDeckMaker(deckMaker);
-        List<String> playerNames = Parser.parse(inputView.readPlayerName());
+        Dealer dealer = Dealer.createDefaultStrategy();
 
-        Dealer dealer = Dealer.createDefaultStrategy(Hand.createFromDeck(deck));
-        List<Player> players = playerNames.stream()
-                .map(playerName -> Player.createDefaultStrategy(playerName, Hand.createFromDeck(deck)))
+        List<Player> players = readPlayersInfo().stream()
+                .map(PlayerCreateDto::toDefaultStrategyPlayer)
                 .toList();
-        State dealerState = dealer.getStartState();
-        List<State> playersState = players.stream().map(Player::getStartState).toList();
-        printCards(dealerState, playersState);
 
+        State dealerState = dealer.getStartState(Hand.createFromDeck(deck));
+        List<State> playersState = players.stream()
+                .map(player -> player.getStartState(Hand.createFromDeck(deck)))
+                .toList();
+        printCards(dealerState, playersState);
         playersState = drawPlayerHandAndPrint(playersState, deck);
         dealerState = drawDealerHandAndPrint(dealerState, deck, playersState);
         printAllStatus(dealerState, playersState);
+    }
+
+    private List<PlayerCreateDto> readPlayersInfo() {
+        List<String> playerNames = Parser.parse(inputView.readPlayerName());
+        List<PlayerCreateDto> playerCreateDtos = new ArrayList<>();
+        for (String playerName : playerNames) {
+            Integer betting = Parser.toInteger(inputView.readBettingCost(playerName));
+            playerCreateDtos.add(new PlayerCreateDto(playerName, new Betting(betting)));
+        }
+
+        return playerCreateDtos;
     }
 
     private List<State> drawPlayerHandAndPrint(List<State> playersState, Deck deck) {
@@ -74,8 +87,7 @@ public class BlackjackController {
         List<StatisticsDto> statisticsDtos = new ArrayList<>();
         for (State playerState : playersState) {
             String playerName = playerState.getParticipantName();
-            Result result = Result.getResult(dealerState, playerState);
-            StatisticsDto statisticsDto = new StatisticsDto(playerName, result.getDisplayName());
+            StatisticsDto statisticsDto = new StatisticsDto(playerName, playerState.getProfit(dealerState));
             statisticsDtos.add(statisticsDto);
         }
 

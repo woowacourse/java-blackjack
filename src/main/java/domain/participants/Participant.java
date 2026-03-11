@@ -1,21 +1,21 @@
 package domain.participants;
 
-import domain.card.vo.Card;
+import domain.bet.Betting;
 import domain.hitStrategy.HitStrategy;
+import domain.state.Result;
 import domain.state.State;
-import java.util.List;
 
 public abstract class Participant {
     private static final int MIN_NAME_SIZE = 2;
     private static final int MAX_NAME_SIZE = 7;
 
     protected final String name;
-    protected final Hand hand;
+    private final Betting betting;
 
-    protected Participant(String name, Hand hand) {
+    protected Participant(String name, Betting betting) {
         validateNameLength(name);
         this.name = name;
-        this.hand = hand;
+        this.betting = betting;
     }
 
     private void validateNameLength(String name) {
@@ -24,15 +24,15 @@ public abstract class Participant {
         }
     }
 
-    public List<Card> getCards() {
-        return hand.getCards();
-    }
-
     public String getName() {
         return name;
     }
 
-    abstract State getStartState();
+    public Integer getProfit(Result result) {
+        return betting.getProfit(result);
+    }
+
+    abstract State getStartState(Hand hand);
 
     abstract public HitStrategy getHitStrategy();
 }

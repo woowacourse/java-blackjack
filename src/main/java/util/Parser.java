@@ -12,4 +12,8 @@ public class Parser {
                 .map(String::trim)
                 .toList();
     }
+
+    public static Integer toInteger(String input) {
+        return Integer.parseInt(input);
+    }
 }

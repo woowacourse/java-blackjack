@@ -24,7 +24,7 @@ class PlayerTest {
         })
         void player(String name) {
             assertThatThrownBy(() -> new Player(name, TestFixture.createHandByRank(List.of(Rank.ACE, Rank.KING)),
-                    new UntilBurstHitStrategy()))
+                    new UntilBurstHitStrategy(), ))
                     .isInstanceOf(IllegalArgumentException.class);
         }
     }

@@ -1,5 +1,6 @@
 package domain.participants;
 
+import domain.bet.Betting;
 import domain.hitStrategy.CasinoDealerHitStrategy;
 import domain.hitStrategy.HitStrategy;
 import domain.state.Hit;
@@ -12,17 +13,17 @@ public class Dealer extends Participant {
 
     private final HitStrategy hitStrategy;
 
-    public Dealer(Hand hand, HitStrategy hitStrategy) {
-        super(NAME, hand);
+    public Dealer(HitStrategy hitStrategy) {
+        super(NAME, new Betting(0));
         this.hitStrategy = hitStrategy;
     }
 
-    public static Dealer createDefaultStrategy(Hand hand) {
-        return new Dealer(hand, DEFAULT_HIT_STRATEGY);
+    public static Dealer createDefaultStrategy() {
+        return new Dealer(DEFAULT_HIT_STRATEGY);
     }
 
     @Override
-    public State getStartState() {
+    public State getStartState(Hand hand) {
         return new Hit(hand, this, hitStrategy);
     }
 

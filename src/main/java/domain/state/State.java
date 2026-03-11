@@ -35,6 +35,10 @@ public abstract class State {
         return hand.getScore();
     }
 
+    public Integer getProfit(State dealerState) {
+        return participant.getProfit(Result.getResult(dealerState, this));
+    }
+
     public String getParticipantName() {
         return participant.getName();
     }
