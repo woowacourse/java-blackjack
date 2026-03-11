@@ -1,9 +1,8 @@
 package domain.card;
 
-import domain.ExceptionMessage;
 import domain.Rank;
+
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -31,19 +30,6 @@ public class Cards {
         cards.addAll(getCardsFunc.apply(quantity));
     }
 
-    public Card pull() {
-        validateIsEmpty();
-        return cards.removeFirst();
-    }
-
-    public List<Card> pullByCount(int quantity) {
-        List<Card> cards = new ArrayList<>();
-        for (int i = 0; i < quantity; i++) {
-            cards.add(pull());
-        }
-        return cards;
-    }
-
     public Card peek() {
         return cards.getFirst();
     }
@@ -52,9 +38,6 @@ public class Cards {
         return cards.size();
     }
 
-    public void shuffle() {
-        Collections.shuffle(cards);
-    }
 
     public int getTotalSum() {
         int aceNum = getAceAmount();
@@ -68,12 +51,6 @@ public class Cards {
 
     public List<Card> getCards() {
         return List.copyOf(cards);
-    }
-
-    private void validateIsEmpty() {
-        if (cards.isEmpty()) {
-            throw new IllegalArgumentException(ExceptionMessage.EMPTY_CARDS.getMessage());
-        }
     }
 
     private int getAceAmount() {
