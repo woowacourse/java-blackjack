@@ -18,7 +18,7 @@ public class Hand {
 
     public int calculateScore() {
         int score = cards.stream()
-            .map(Card::calculateScore)
+            .map(Card::getScore)
             .reduce(0, Integer::sum);
         int aceCount = cards.stream()
             .filter(Card::isAce)

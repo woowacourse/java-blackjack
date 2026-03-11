@@ -1,14 +1,14 @@
 package exception;
 
-import constant.HitOrStand;
+import constant.PlayerAction;
 import constant.PolicyConstant;
 
 public enum ErrorMessage {
-    PLAYER_DUPLICATED("게임 참가자의 이름은 중복 되어선 안됩니다."),
+    NAME_DUPLICATED("게임 참가자의 이름은 중복 되어선 안됩니다."),
     PLAYER_COUNT_OUT_OF_RANGE(
         String.format("게임 참가자의 수는 %d~%d명 사이여야 합니다.", PolicyConstant.PLAYER_MIN_COUNT, PolicyConstant.PLAYER_MAX_COUNT)),
     INVALID_YES_NO_INPUT(
-        String.format("%s 또는 %s을 입력해야 합니다.", HitOrStand.HIT.getHitOrStand(), HitOrStand.STAND.getHitOrStand())),
+        String.format("%s 또는 %s을 입력해야 합니다.", PlayerAction.HIT.getAction(), PlayerAction.STAND.getAction())),
     PLAYER_NAME_LENGTH_OUT_OF_RANGE(
         String.format("게임 참가자의 이름은 %d~%d글자 사이여야 합니다.", PolicyConstant.PLAYER_NAME_MIN_LENGTH,
             PolicyConstant.PLAYER_NAME_MAX_LENGTH)),

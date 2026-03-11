@@ -2,12 +2,10 @@ package view;
 
 import constant.PolicyConstant;
 import constant.Result;
-import domain.Player;
 import dto.BlackjackResultDto;
 import dto.DealerResultDto;
-import dto.HandDto;
+import dto.ParticipantDto;
 import dto.PlayerResultDto;
-import dto.PlayersDto;
 import java.util.List;
 
 public class OutputView {
@@ -20,27 +18,14 @@ public class OutputView {
     private static final String PRINT_BLACKJACK_STATISTICS_DEALER_MESSAGE = "딜러:%s%s%s\n";
     private static final String PRINT_BLACKJACK_STATISTICS_PLAYER_MESSAGE = "%s: %s\n";
 
-    public void printPlayers(PlayersDto playersDto) {
-        List<String> names = playersDto.players().stream()
-            .map(Player::getName)
-            .toList();
+    public void printPlayers(List<String> names) {
         System.out.printf(PRINT_PLAYERS_MESSAGE, String.join(PolicyConstant.DELIMITER + " ", names));
     }
 
-    public void printHandList(List<HandDto> handDtoList) {
-        for (HandDto handDto : handDtoList) {
-            printlnHand(handDto);
+    public void printPlayerList(List<ParticipantDto> participantDtoList) {
+        for (ParticipantDto participantDto : participantDtoList) {
+            printlnPlayer(participantDto);
         }
-        System.out.println();
-    }
-
-    public void printHand(HandDto handDto) {
-        System.out.printf(PRINT_HAND_MESSAGE, handDto.name(),
-            String.join(PolicyConstant.DELIMITER + " ", handDto.hand()));
-    }
-
-    public void printlnHand(HandDto handDto) {
-        printHand(handDto);
         System.out.println();
     }
 
@@ -51,10 +36,20 @@ public class OutputView {
     public void printBlackjackResult(List<BlackjackResultDto> blackjackResultDtoList) {
         System.out.println();
         for (BlackjackResultDto resultDto : blackjackResultDtoList) {
-            printHand(resultDto.handDto());
+            printPlayer(resultDto.name(), resultDto.hand());
             System.out.printf(PRINT_BLACKJACK_RESULT_MESSAGE, resultDto.score());
         }
         System.out.println();
+    }
+
+    public void printlnPlayer(ParticipantDto participantDto) {
+        printPlayer(participantDto.name(), participantDto.hand());
+        System.out.println();
+    }
+
+    private void printPlayer(String name, List<String> hand) {
+        System.out.printf(PRINT_HAND_MESSAGE, name,
+            String.join(PolicyConstant.DELIMITER + " ", hand));
     }
 
     public void printBlackjackStatistics(DealerResultDto dealerResultDto,

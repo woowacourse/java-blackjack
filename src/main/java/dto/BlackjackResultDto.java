@@ -1,7 +1,10 @@
 package dto;
 
+import java.util.List;
+
 public record BlackjackResultDto(
-    HandDto handDto,
+    String name,
+    List<String> hand,
     int score
 ) {
 

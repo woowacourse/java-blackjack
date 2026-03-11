@@ -1,4 +1,4 @@
-package domain;
+package domain.participant;
 
 import constant.PolicyConstant;
 import exception.ErrorMessage;
