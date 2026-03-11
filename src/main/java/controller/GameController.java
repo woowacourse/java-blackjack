@@ -5,7 +5,7 @@ import domain.Deck;
 import domain.GameManager;
 import domain.GameResultDto;
 import domain.Referee;
-import domain.card.CardDto;
+import domain.card.CardsSnapshot;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.PlayerParser;
@@ -90,7 +90,7 @@ public class GameController {
         gameManager.dealCard(dealer);
         gameManager.dealCardTo(players, 2);
 
-        Map<String, CardDto> result = new LinkedHashMap<>();
+        Map<String, CardsSnapshot> result = new LinkedHashMap<>();
         result.put(dealer.getName(), gameManager.getStartingCard(dealer));
         for (Player player : players) {
             result.put(player.getName(), gameManager.getCardsResult(player));

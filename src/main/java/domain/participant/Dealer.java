@@ -1,7 +1,7 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.card.CardDto;
+import domain.card.CardsSnapshot;
 import java.util.List;
 
 public class Dealer extends Participant {
@@ -11,9 +11,9 @@ public class Dealer extends Participant {
         super(new Name(DEFAULT_NAME));
     }
 
-    public CardDto startingHandInfo() {
+    public CardsSnapshot startingHandInfo() {
         List<Card> card = List.of(handInfo().cards().getFirst());
-        return new CardDto(card);
+        return new CardsSnapshot(card);
     }
 
     @Override

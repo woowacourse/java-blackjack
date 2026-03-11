@@ -3,7 +3,7 @@ package domain.card;
 import java.util.ArrayList;
 import java.util.List;
 
-public record CardDto(List<Card> cards) {
+public record CardsSnapshot(List<Card> cards) {
 
     public String getFormattedCards() {
         List<String> cardsResult = new ArrayList<>();

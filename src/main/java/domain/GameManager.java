@@ -1,6 +1,6 @@
 package domain;
 
-import domain.card.CardDto;
+import domain.card.CardsSnapshot;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
@@ -25,12 +25,12 @@ public class GameManager {
         }
     }
 
-    public CardDto getStartingCard(Dealer dealer) {
+    public CardsSnapshot getStartingCard(Dealer dealer) {
         return dealer.startingHandInfo();
 
     }
 
-    public CardDto getCardsResult(Participant participant) {
+    public CardsSnapshot getCardsResult(Participant participant) {
         return participant.handInfo();
     }
 

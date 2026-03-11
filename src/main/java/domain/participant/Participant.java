@@ -1,7 +1,7 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.card.CardDto;
+import domain.card.CardsSnapshot;
 import java.util.Objects;
 
 public abstract class Participant {
@@ -17,7 +17,7 @@ public abstract class Participant {
         hand.add(card);
     }
 
-    public CardDto handInfo() {
+    public CardsSnapshot handInfo() {
         return hand.snapshot();
     }
 

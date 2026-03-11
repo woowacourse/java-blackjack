@@ -1,7 +1,7 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.card.CardDto;
+import domain.card.CardsSnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,8 +33,8 @@ public class Hand {
         return score;
     }
 
-    public CardDto snapshot() {
-        return new CardDto(List.copyOf(cards));
+    public CardsSnapshot snapshot() {
+        return new CardsSnapshot(List.copyOf(cards));
     }
 
     private int calculateAcePoint(int currentScore) {

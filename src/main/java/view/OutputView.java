@@ -1,6 +1,6 @@
 package view;
 
-import domain.card.CardDto;
+import domain.card.CardsSnapshot;
 import domain.GameResultDto;
 import domain.MatchResult;
 import java.util.ArrayList;
@@ -11,13 +11,13 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    public void printGameInitResult(Map<String, CardDto> result) {
+    public void printGameInitResult(Map<String, CardsSnapshot> result) {
         String playersName = result.keySet().stream()
                 .filter(name -> !name.equals("딜러"))
                 .collect(Collectors.joining(", "));
         System.out.printf("딜러와 %s에게 2장을 나누었습니다.%n", playersName);
 
-        for (Map.Entry<String, CardDto> entry : result.entrySet()) {
+        for (Map.Entry<String, CardsSnapshot> entry : result.entrySet()) {
             String name = entry.getKey();
 
             printParticipantCard(name, entry.getValue().getFormattedCards());
