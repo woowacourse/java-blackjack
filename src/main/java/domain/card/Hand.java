@@ -18,8 +18,12 @@ public class Hand {
     private final List<Card> hand;
     private final Set<Integer> scores = new HashSet<>();
 
-    public Hand(final List<Card> hand) {
-        this.hand = new ArrayList<>(hand);
+    public Hand() {
+        this.hand = new ArrayList<>();
+    }
+
+    public Hand(final List<Card> cards) {
+        hand = new ArrayList<>(cards);
     }
 
     public void addCard(final Card card) {

@@ -6,7 +6,6 @@ import domain.card.Card;
 import domain.card.CardRank;
 import domain.card.CardSuit;
 import domain.card.Hand;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -22,13 +21,13 @@ class HandTest {
     public void 패에_카드_추가_성공() {
         // given
         final Card card = new Card(CardSuit.SPADE, CardRank.ACE);
-        final Hand hand = new Hand(new ArrayList<>());
+        final Hand hand = new Hand();
 
         // when
         hand.addCard(card);
 
         // then
-        assertThat(hand.getHandCards()).contains(card);
+        assertThat(hand.getHand()).contains(card);
     }
 
     @ParameterizedTest
@@ -69,7 +68,7 @@ class HandTest {
     @DisplayName("플레이어가 가지고 있는 카드 점수를 반환한다.")
     public void 카드_점수_반환_성공() {
         // given
-        final Hand hand = new Hand(new ArrayList<>());
+        final Hand hand = new Hand();
         hand.addCard(new Card(CardSuit.SPADE, CardRank.ACE));
         hand.addCard(new Card(CardSuit.SPADE, CardRank.TWO));
         hand.addCard(new Card(CardSuit.SPADE, CardRank.ACE));
