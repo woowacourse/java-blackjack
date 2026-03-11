@@ -1,4 +1,4 @@
-package domain;
+package domain.bet;
 
 import domain.participant.Name;
 import java.util.HashMap;

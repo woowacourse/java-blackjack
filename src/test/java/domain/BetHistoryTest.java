@@ -3,6 +3,7 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
+import domain.bet.BetHistory;
 import domain.participant.Name;
 import java.util.List;
 import java.util.Map;

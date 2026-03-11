@@ -2,6 +2,7 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.bet.BetProfit;
 import domain.enums.GameResult;
 import domain.participant.Name;
 import java.util.List;

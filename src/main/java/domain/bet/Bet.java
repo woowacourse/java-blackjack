@@ -1,4 +1,4 @@
-package domain;
+package domain.bet;
 
 import domain.enums.GameResult;
 import domain.participant.Name;
