@@ -63,7 +63,7 @@ public class PlayerStatus {
 
     public int calculateProfit(Dealer dealer) {
         Result result = calculateResult(dealer);
-        if (hand.isBlackjack()) {
+        if (result == Result.WIN && hand.isBlackjack()) {
             return bet.blackjackWinProfit();
         }
         if (result == Result.WIN) {
