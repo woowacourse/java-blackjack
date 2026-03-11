@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.ParticipantResult;
 import blackjack.domain.ScoreCompareResult;
 import java.util.List;
 import java.util.Map;
@@ -32,14 +33,15 @@ public class OutputView {
         System.out.println("딜러는 " + cardCount + "장의 카드를 더 뽑았습니다.");
     }
 
-    public static void printFinalCardScores(Map<String, List<String>> playerCards, List<String> dealerCards,
-                                            Map<String, Integer> playerScores, int dealerScore) {
+    public static void printFinalCardScores(List<ParticipantResult> playerResult, ParticipantResult dealerResult) {
         System.out.println();
-        printFinalDrawnCards("딜러", dealerCards);
-        System.out.printf(" - 결과: %d\n", dealerScore);
-        for (String playerName : playerCards.keySet()) {
-            printFinalDrawnCards(playerName, playerCards.get(playerName));
-            System.out.printf(" - 결과: %d\n", playerScores.get(playerName));
+
+        printFinalDrawnCards(dealerResult.name(), dealerResult.cardNames());
+        System.out.printf(" - 결과: %d\n", dealerResult.score());
+
+        for (ParticipantResult result : playerResult) {
+            printFinalDrawnCards(result.name(), result.cardNames());
+            System.out.printf(" - 결과: %d\n", result.score());
         }
     }
 

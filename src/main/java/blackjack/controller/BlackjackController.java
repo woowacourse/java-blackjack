@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -91,17 +92,14 @@ public class BlackjackController {
     }
 
     private void calculateFinalScore(List<Participant> players, Participant dealer) {
-        Map<String, List<String>> playerCards = new HashMap<>();
-        Map<String, Integer> playerScores = new HashMap<>();
+        List<ParticipantResult> playerResults = new ArrayList<>();
         for (Participant player : players) {
-            playerCards.put(player.getName(), player.getCardNames());
-            playerScores.put(player.getName(), player.calculateTotalScore());
+            ParticipantResult participantResult = new ParticipantResult(player.getName(), player.getCardNames(), player.calculateTotalScore());
+            playerResults.add(participantResult);
         }
 
-        List<String> dealerCards = dealer.getCardNames();
-        int dealerScore = dealer.calculateTotalScore();
-
-        OutputView.printFinalCardScores(playerCards, dealerCards, playerScores, dealerScore);
+        ParticipantResult dealerResult = new ParticipantResult(dealer.getName(), dealer.getCardNames(), dealer.calculateTotalScore());
+        OutputView.printFinalCardScores(playerResults, dealerResult);
     }
 
     private void calculateFinalGameResult(List<Participant> players, Participant dealer) {
