@@ -34,6 +34,14 @@ public class Player extends Participant {
         );
     }
 
+    public Player blackjack() {
+        return new Player(
+                name,
+                hands,
+                (int) (prize * 1.5)
+        );
+    }
+
     public int getPrize() {
         return prize;
     }

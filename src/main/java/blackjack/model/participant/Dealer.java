@@ -60,6 +60,31 @@ public class Dealer extends Participant {
             return List.copyOf(players);
         }
 
-        return null;
+        if (this.isBlackjack()) {
+            return players.stream()
+                    .map(player -> {
+                        if (player.isBlackjack()) {
+                            return player;
+                        }
+
+                        return player.bust();
+                    }).toList();
+        }
+
+        int dealerScore = this.getCurrentTotalScore();
+        System.out.println("dealerScore: " + dealerScore);
+
+        return players.stream()
+                .map(player -> {
+                    if (player.isBlackjack()) {
+                        return player.blackjack();
+                    }
+
+                    if (player.getCurrentTotalScore() >= dealerScore) {
+                        return player;
+                    }
+
+                    return player.bust();
+                }).toList();
     }
 }

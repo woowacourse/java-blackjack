@@ -27,6 +27,10 @@ public abstract class Participant {
         return hands.isTotalScoreOver(BLACKJACK_SCORE);
     }
 
+    public boolean isBlackjack() {
+        return hands.calculateTotalScore() == BLACKJACK_SCORE;
+    }
+
     public List<Card> getOpenedCards() {
         return hands.getOpenedCards();
     }

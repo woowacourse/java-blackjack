@@ -14,6 +14,7 @@ class DealerTest {
 
     CardDeck mustPickTen = CardDeck.of(cards -> Card.openedCard(Rank.TEN, Suit.CLOVER));
     CardDeck mustPickAce = CardDeck.of(cards -> Card.openedCard(Rank.ACE, Suit.CLOVER));
+    CardDeck mustPickFive = CardDeck.of(cards -> Card.openedCard(Rank.FIVE, Suit.CLOVER));
 
     @Test
     @DisplayName("딜러가 뽑은 두 장의 카드 중 한 장만 오픈돼 있다.")
@@ -22,13 +23,13 @@ class DealerTest {
         Dealer dealer = new Dealer();
 
         // when
-        dealer.pickInitialCards(mustPickTen);  //10 + 10 = 20
+        dealer.pickInitialCards(mustPickTen);
 
         //then
         List<Card> cards = dealer.getOpenedCards();
 
         assertThat(cards.size()).isEqualTo(1);
-        assertThat(cards.getFirst().getDefaultScore()).isEqualTo(20);
+        assertThat(cards.getFirst().getDefaultScore()).isEqualTo(10);
     }
 
     @Test
@@ -120,7 +121,44 @@ class DealerTest {
         dealer.pickAdditionalCard(mustPickTen); // 10 + 10 = 20점
 
         //when & then
-        assertThat(dealer.awardPrize(players).get(0).getPrize())
-                .isEqualTo(blackjack_player.getPrize() * 1.5);
+        assertThat(dealer.awardPrize(players).getFirst().getPrize())
+                .isEqualTo((int) (blackjack_player.getPrize() * 1.5));
+
+        assertThat(dealer.awardPrize(players).getLast().getPrize())
+                .isNotEqualTo((int) (not_blackjack_player.getPrize() * 1.5));
+    }
+
+    @Test
+    @DisplayName("딜러와 플레이어가 버스트가 아니고 플레이어 점수가 딜러 점수 이상이면(단 플레이어는 블랙잭이 아니다), 최종 수익을 배팅 금액으로 처리한다.")
+    void award_prize_when_dealer_player_are_not_bust() {
+        //given
+        Player winner = Player.of(
+                "winner",
+                1000
+        );
+        winner.pickAdditionalCard(mustPickTen);
+        winner.pickAdditionalCard(mustPickFive);
+        winner.pickAdditionalCard(mustPickAce);   //10 + 5 + 1 = 16점
+
+        Player loser = Player.of(
+                "loser",
+                1000
+        );
+        loser.pickAdditionalCard(mustPickFive);
+        loser.pickAdditionalCard(mustPickFive); // 5 + 5 = 10점
+
+        List<Player> players = List.of(winner, loser);
+
+        Dealer dealer =  new Dealer();
+        dealer.pickAdditionalCard(mustPickTen);
+        dealer.pickAdditionalCard(mustPickFive); // 10 + 5 = 15점
+
+        //when & then
+        assertThat(dealer.awardPrize(players).getFirst().getPrize())
+                .isEqualTo(winner.getPrize());
+
+        assertThat(dealer.awardPrize(players).getLast().getPrize())
+                .isEqualTo(0);
+
     }
 }
