@@ -28,7 +28,7 @@ class ParticipantTest {
                 // then
                 assertThat(participant.getHand())
                         .hasSize(1)
-                        .containsExactly(card.getName());
+                        .containsExactly(card);
             }
         }
     }
@@ -68,7 +68,7 @@ class ParticipantTest {
                 // then
                 assertThat(actual)
                         .hasSize(2)
-                        .containsExactly(firstCard.getName(), secondCard.getName());
+                        .containsExactly(firstCard, secondCard);
             }
         }
     }
