@@ -6,7 +6,7 @@ public abstract class Participant {
     private final Hand hand;
 
     protected Participant(Hand hand){
-        this.hand=hand;
+        this.hand = hand;
     }
 
     public List<Card> getHandCards(){

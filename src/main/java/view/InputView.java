@@ -16,6 +16,15 @@ public class InputView {
         return NameParser.parse(scanner.nextLine());
     }
 
+    public int readPlayerBettingAmount(String name) {
+        try {
+            System.out.printf("%n%s의 배팅 금액은?%n", name);
+            return Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("정수를 입력해주세요.");
+        }
+    }
+
     public boolean checkAddCard(String name) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", name);
         return scanner.nextLine().equalsIgnoreCase("y");
