@@ -15,7 +15,7 @@ class DealerTest {
     @Test
     @DisplayName("딜러 객체 생성 시 2장의 카드를 보유한지 테스트")
     void holding_two_card_success() {
-        assertThat(dealer.getCardsInfo()).hasSize(2);
+        assertThat(dealer.getCards()).hasSize(2);
     }
 
     @Test
@@ -34,7 +34,7 @@ class DealerTest {
 
         dealer.drawUntilHitAndReturnCount(deck);
 
-        assertThat(dealer.getCardsInfo()).hasSize(3);
+        assertThat(dealer.getCards()).hasSize(3);
     }
 
     @Test
@@ -45,9 +45,9 @@ class DealerTest {
                 Card.of(Rank.FIVE, Suit.CLOVER)));
         Dealer dealer = Dealer.of(initialCards);
 
-        List<String> expect = List.of(Rank.TEN.getName() + Suit.DIAMOND.getName(),
-                Rank.FIVE.getName() + Suit.CLOVER.getName());
-        assertThat(dealer.getCardsInfo()).isEqualTo(expect);
+        List<Card> expect = List.of(Card.of(Rank.TEN, Suit.DIAMOND),
+                Card.of(Rank.FIVE, Suit.CLOVER));
+        assertThat(dealer.getCards()).isEqualTo(expect);
     }
 
     @Test
