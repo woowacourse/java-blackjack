@@ -65,38 +65,6 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러가 블랙잭이 아니면, 블랙잭인 플레이어는 최종 수익을 배팅 금액의 1.5배로 처리한다.")
-    void award_prize_when_only_player_blackjack() {
-        //given
-        Player blackjack_player = Player.of(
-                "blackjack_player",
-                1000
-        );
-        blackjack_player.pickAdditionalCard(mustPickTen);
-        blackjack_player.pickAdditionalCard(mustPickAce);   //10 + 11 = 21점
-
-        Player not_blackjack_player = Player.of(
-                "not_blackjack_player",
-                1000
-        );
-        not_blackjack_player.pickAdditionalCard(mustPickTen);
-        not_blackjack_player.pickAdditionalCard(mustPickTen); // 10 + 10 = 20점
-
-        List<Player> players = List.of(blackjack_player, not_blackjack_player);
-
-        Dealer dealer =  new Dealer();
-        dealer.pickAdditionalCard(mustPickTen);
-        dealer.pickAdditionalCard(mustPickTen); // 10 + 10 = 20점
-
-        //when & then
-        assertThat(dealer.award(players).getFirst().getPrize())
-                .isEqualTo((int) (blackjack_player.getPrize() * 1.5));
-
-        assertThat(dealer.award(players).getLast().getPrize())
-                .isNotEqualTo((int) (not_blackjack_player.getPrize() * 1.5));
-    }
-
-    @Test
     @DisplayName("딜러와 플레이어가 버스트가 아니고 플레이어 점수가 딜러 점수 이상이면(단 플레이어는 블랙잭이 아니다), 최종 수익을 배팅 금액으로 처리한다.")
     void award_prize_when_dealer_player_are_not_bust() {
         //given

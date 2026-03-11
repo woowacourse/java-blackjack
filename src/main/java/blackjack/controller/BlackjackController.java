@@ -1,5 +1,8 @@
 package blackjack.controller;
 
+import blackjack.model.card.Card;
+import blackjack.model.card.Rank;
+import blackjack.model.card.Suit;
 import blackjack.model.cardDeck.CardDeck;
 import blackjack.model.cardDeck.PickStrategy;
 import blackjack.model.participant.Dealer;
@@ -51,6 +54,8 @@ public class BlackjackController {
         CardDeck cardDeck = CardDeck.of(pickStrategy);
         distributeInitialCards(dealer, players, cardDeck);
 
+        players = applyBlackjackToPlayers(players);
+
         players.forEach(
                 player -> askHitOrStand(cardDeck, player)
         );
@@ -99,6 +104,18 @@ public class BlackjackController {
                         player.getOpenedCards()
                 )
         );
+    }
+
+    private List<Player> applyBlackjackToPlayers(List<Player> players) {
+        return players.stream()
+                .map(player -> {
+                    if (player.isBlackjack()) {
+                        return player.blackjack();
+                    }
+
+                    return player;
+                })
+                .toList();
     }
 
     private void askHitOrStand(

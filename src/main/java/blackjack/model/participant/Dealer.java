@@ -37,10 +37,6 @@ public class Dealer extends Participant {
             return List.copyOf(players);
         }
 
-        if (this.isBlackjack()) {
-            return bustNotBlackjackPlayers(players);
-        }
-
         return players.stream()
                 .map(player -> awardPlayer(
                         player,
@@ -48,22 +44,7 @@ public class Dealer extends Participant {
                 )).toList();
     }
 
-    private List<Player> bustNotBlackjackPlayers(List<Player> players) {
-        return players.stream()
-                .map(player -> {
-                    if (player.isBlackjack()) {
-                        return player;
-                    }
-
-                    return player.bust();
-                }).toList();
-    }
-
     private Player awardPlayer(Player player, int dealerScore) {
-        if (player.isBlackjack()) {
-            return player.blackjack();
-        }
-
         if (player.getCurrentTotalScore() >= dealerScore) {
             return player;
         }
