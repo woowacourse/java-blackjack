@@ -21,9 +21,7 @@ public class BlackjackService {
 
         // FIXME: Deck 내부를 Deque로 수정한 뒤, 전면 수정될 부분
         for (int i = 0; i < drawCount; i++) {
-            final int cardIndex = shuffler.shuffleCardDeck(deck.getDeckSize());
-            cards.add(deck.getCardOf(cardIndex));
-            deck.removeCardOf(cardIndex);
+            cards.add(deck.draw());
         }
 
         return cards;

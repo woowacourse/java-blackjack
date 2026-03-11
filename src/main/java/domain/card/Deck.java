@@ -1,5 +1,7 @@
 package domain.card;
 
+import static exception.ErrorMessage.DECK_EMPTY;
+
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -19,21 +21,16 @@ public class Deck {
         this.deck = new ArrayDeque<>(orderedCards);
     }
 
-    // FIXME: 카드의 인덱스 접근이 의미상 부자연스러움
-    public void removeCardOf(final int index) {
-        deck.remove(index);
+    public Card draw() {
+        if (deck.isEmpty()) {
+            throw new IllegalStateException(DECK_EMPTY.getMessage());
+        }
+
+        return deck.pollFirst();
     }
 
     public List<Card> getDeck() {
         return List.copyOf(deck);
-    }
-
-    public int getDeckSize() {
-        return deck.size();
-    }
-
-    public Card getCardOf(final int index) {
-        return deck.get(index);
     }
 
 
