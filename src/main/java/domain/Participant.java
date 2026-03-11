@@ -1,6 +1,5 @@
 package domain;
 
-import constant.PolicyConstant;
 import java.util.List;
 
 public class Participant {
@@ -16,7 +15,7 @@ public class Participant {
     }
 
     public boolean isBust() {
-        return hand.calculateScore() > PolicyConstant.BLACKJACK_SCORE;
+        return hand.isBust();
     }
 
     public int calculateScore() {
