@@ -18,7 +18,7 @@ public class Gambler extends Player {
     }
 
     public int calculateReward(MatchResult matchResult) {
-        return (int) (betting.amount() * matchResult.getRate());
+        return matchResult.calculateReward(betting.amount());
     }
 
 }

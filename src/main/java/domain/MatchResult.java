@@ -65,4 +65,8 @@ public enum MatchResult {
     public double getRate() {
         return rate;
     }
+
+    public int calculateReward(int bettingAmount) {
+        return (int) (bettingAmount * rate);
+    }
 }
