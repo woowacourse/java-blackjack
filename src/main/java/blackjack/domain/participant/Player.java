@@ -28,15 +28,29 @@ public class Player extends Participant {
 
     public PlayerGameResult determinePlayerResult(Dealer dealer) {
         MatchResult matchResult = determineGameResult(dealer);
-        return new PlayerGameResult(nickname, matchResult);
+        double payout = determinePayout(matchResult);
+        return new PlayerGameResult(nickname, matchResult, payout);
+    }
+
+    private double determinePayout(MatchResult matchResult) {
+        if (matchResult == MatchResult.LOSE) {
+            return 0;
+        }
+        if (matchResult == MatchResult.TIE) {
+            return amount;
+        }
+        if (hand.isBlackJack()) {
+            return amount * 2.5;
+        }
+        return amount * 2;
     }
 
     public MatchResult determineGameResult(Dealer dealer) {
-        if (hand.isBusted()) {
-            return MatchResult.LOSE;
-        }
         if (dealer.isBusted()) {
             return MatchResult.WIN;
+        }
+        if (hand.isBusted()) {
+            return MatchResult.LOSE;
         }
         return compareScore(dealer.getTotalScore(), getTotalScore());
     }

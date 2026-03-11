@@ -79,6 +79,11 @@ public class PlayingCards {
         return getCards().getFirst();
     }
 
+    public boolean isBlackJack() {
+        List<Card> allCards = getCards();
+        return allCards.size() == 2 && calculateTotalScore() == BUSTED_SCORE;
+    }
+
     public boolean isDrawable() {
         return calculateTotalScore() < BUSTED_SCORE;
     }
