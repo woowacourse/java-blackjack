@@ -4,6 +4,8 @@ import domain.MatchResult;
 import domain.deck.CardDeck;
 import expcetion.BlackjackException;
 import expcetion.ExceptionMessage;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -33,12 +35,16 @@ public class Gamblers {
         gamblers.forEach(gambler -> gambler.deal(cardDeck));
     }
 
-    public Map<String, Integer> getResult(Dealer dealer) {
-        return gamblers.stream()
-                .collect(Collectors.toMap(
-                        Gambler::getName,
-                        gambler -> gambler.calculateReward(MatchResult.of(gambler, dealer))
-                ));
+    public LinkedHashMap<String, Integer> getResult(Dealer dealer) {
+        LinkedHashMap<String, Integer> resultMap = new LinkedHashMap<>();
+
+        for (Gambler gambler : gamblers) {
+            MatchResult matchResult = MatchResult.of(gambler, dealer);
+            int reward = gambler.calculateReward(matchResult);
+            resultMap.put(gambler.getName(), reward);
+        }
+
+        return resultMap;
     }
 
     public List<String> getNames() {
