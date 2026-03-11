@@ -52,10 +52,11 @@ public class BlackjackGameFlowTest {
     @Test
     void 라이_히트_후_카드_추가됨() {
         // when
-        blackjackGame.processPlayerDecision(1);
+        User user = blackjackGame.getUsers().get(1);
+        blackjackGame.processPlayerDecision(user);
 
         // then
-        assertThat(blackjackGame.getUsers().get(1).getCards()).hasSize(3);
+        assertThat(user.getCards()).hasSize(3);
     }
 
     @Test
@@ -79,7 +80,7 @@ public class BlackjackGameFlowTest {
     @Test
     void 라이_히트_후_딜러보다_낮아_패배() {
         // given
-        blackjackGame.processPlayerDecision(1);
+        blackjackGame.processPlayerDecision(blackjackGame.getUsers().get(1));
         blackjackGame.dealToDealer();
 
         // when & then

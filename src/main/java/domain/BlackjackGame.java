@@ -45,8 +45,8 @@ public class BlackjackGame {
         return participants.getDealer();
     }
 
-    public void processPlayerDecision(int index) {
-        participants.dealCard(deck, index);
+    public void processPlayerDecision(User user) {
+        participants.dealCard(deck, user);
     }
 
     public boolean dealToDealer() {

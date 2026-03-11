@@ -1,4 +1,5 @@
 import domain.BlackjackGame;
+import domain.User;
 import java.util.List;
 import java.util.function.Supplier;
 import view.InputView;
@@ -48,25 +49,25 @@ public class Application {
     }
 
     public void selectToDealExtraCard() {
-        List<String> participantNames = blackjackGame.getParticipantNames();
-        for (int index = 0; index < participantNames.size(); index++) {
-            askCardToPlayer(participantNames.get(index), index);
+        List<User> participants = blackjackGame.getUsers();
+        for (User participant : participants) {
+            askCardToPlayer(participant);
         }
     }
 
-    private void askCardToPlayer(String name, int index) {
+    private void askCardToPlayer(User user) {
         String answer;
         do {
-            outputView.printAskExtraCard(name);
+            outputView.printAskExtraCard(user.getName());
             answer = retryUntilSuccess(inputView::readDealDecision);
-            dealMoreCard(answer, index);
+            dealMoreCard(answer, user);
         } while (answer.equalsIgnoreCase("y"));
     }
 
-    private void dealMoreCard(String answer, int index) {
+    private void dealMoreCard(String answer, User user) {
         if (answer.equalsIgnoreCase("y")) {
-            blackjackGame.processPlayerDecision(index);
-            outputView.printUserCards(blackjackGame.getUsers().get(index));
+            blackjackGame.processPlayerDecision(user);
+            outputView.printUserCards(user);
         }
     }
 

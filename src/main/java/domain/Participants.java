@@ -56,9 +56,8 @@ public class Participants {
         dealer.receiveCard(deck.dealCard());
     }
 
-    public void dealCard(Deck deck, int index) {
-        participants.get(index)
-                .receiveCard(deck.dealCard());
+    public void dealCard(Deck deck, User user) {
+        user.receiveCard(deck.dealCard());
     }
 
     public Boolean determineDealerDealMore() {
