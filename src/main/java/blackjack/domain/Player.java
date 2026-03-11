@@ -15,10 +15,7 @@ public class Player extends Participant {
 
     @Override
     public boolean canHit() {
-        if (getTotalPoint() < BLACKJACK_POINT) {
-            return true;
-        }
-        return false;
+        return getTotalPoint() < BLACKJACK_POINT;
     }
 
     public GameResult compareResult(Dealer dealer) {

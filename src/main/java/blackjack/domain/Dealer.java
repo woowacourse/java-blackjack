@@ -13,9 +13,6 @@ public class Dealer extends Participant {
 
     @Override
     public boolean canHit() {
-        if (getTotalPoint() < DEALER_STAND_POINT) {
-            return true;
-        }
-        return false;
+        return getTotalPoint() < DEALER_STAND_POINT;
     }
 }
