@@ -1,10 +1,10 @@
 package view;
 
-import domain.result.dto.GameResultAnalysis;
+import domain.result.dto.GameResultDto;
 import domain.intention.DrawCardIntetion;
 import domain.participant.ParticipantName;
-import domain.participant.dto.ParticipantHand;
-import domain.participant.dto.ParticipantResult;
+import domain.participant.dto.ParticipantHandDto;
+import domain.result.dto.ParticipantGameResultDto;
 
 import java.util.List;
 import java.util.function.Supplier;
@@ -51,13 +51,13 @@ public class ApplicationView {
         writer.printDealInitialCardMessage(formattedNames, initialCardCount);
     }
 
-    public void printAllPlayersHand(List<ParticipantHand> playerHands) {
-        for (ParticipantHand playerHand : playerHands) {
+    public void printAllPlayersHand(List<ParticipantHandDto> playerHands) {
+        for (ParticipantHandDto playerHand : playerHands) {
             printParticipantHand(playerHand);
         }
     }
 
-    public void printParticipantHand(ParticipantHand playerHand) {
+    public void printParticipantHand(ParticipantHandDto playerHand) {
         writer.printAllParticipantsHand(playerHand.playerName(), formatHands(playerHand.handOnCards()));
     }
 
@@ -65,20 +65,20 @@ public class ApplicationView {
         writer.printDealerAdditionalDrawCardMessage();
     }
 
-    public void printFinalResultMessage(GameResultAnalysis resultAnalysis) {
+    public void printFinalResultMessage(GameResultDto resultAnalysis) {
         writer.printFinalResultTitleMessage();
         printAllPlayersResult(resultAnalysis);
     }
 
-    private void printAllPlayersResult(GameResultAnalysis resultAnalysis) {
-        writer.printFinalResultOfDealer(resultAnalysis.dealerGameResult().resultStatistic());
-        resultAnalysis.playerGameResults().forEach(player ->
+    private void printAllPlayersResult(GameResultDto resultAnalysis) {
+        writer.printFinalResultOfDealer(resultAnalysis.dealerGameResultDto().resultStatistic());
+        resultAnalysis.playerGameResultDtos().forEach(player ->
                 writer.printFinalResultOfPlayer(player.playerName(), player.gameResult().displayName())
         );
     }
 
-    public void printFinalResultMessage(ParticipantResult playerResult) {
-        ParticipantHand playerHand = playerResult.playerHand();
+    public void printFinalResultMessage(ParticipantGameResultDto playerResult) {
+        ParticipantHandDto playerHand = playerResult.playerHand();
         writer.printFinalResultMessage(playerHand.playerName(), formatHands(playerHand.handOnCards()), playerResult.resultScore());
     }
 

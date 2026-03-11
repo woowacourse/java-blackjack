@@ -1,9 +1,9 @@
 package domain.result;
 
 import domain.participant.Player;
-import domain.result.dto.DealerGameResult;
-import domain.result.dto.PlayerGameResult;
-import domain.result.dto.GameResultAnalysis;
+import domain.result.dto.DealerGameResultDto;
+import domain.result.dto.PlayerGameResultDto;
+import domain.result.dto.GameResultDto;
 import domain.participant.Dealer;
 import domain.participant.Players;
 
@@ -15,28 +15,28 @@ public class GameResultAnalyzer {
     private GameResultAnalyzer() {
     }
 
-    public static GameResultAnalysis analyze(Players players, Dealer dealer) {
-        List<PlayerGameResult> playerGameResults = players.stream()
+    public static GameResultDto analyze(Players players, Dealer dealer) {
+        List<PlayerGameResultDto> playerGameResultDtos = players.stream()
                 .map(player -> judgePlayerGameResult(dealer, player))
                 .toList();
-        DealerGameResult dealerGameResult = makeDealerResult(playerGameResults);
+        DealerGameResultDto dealerGameResultDto = makeDealerResult(playerGameResultDtos);
 
-        return GameResultAnalysis.of(dealerGameResult, playerGameResults);
+        return GameResultDto.of(dealerGameResultDto, playerGameResultDtos);
     }
 
-    private static PlayerGameResult judgePlayerGameResult(Dealer dealer, Player player) {
+    private static PlayerGameResultDto judgePlayerGameResult(Dealer dealer, Player player) {
         if (player.isBusted()) {
-            return PlayerGameResult.of(player, GameResult.LOSS);
+            return PlayerGameResultDto.of(player, GameResult.LOSS);
         }
 
         if (dealer.isBusted()) {
-            return PlayerGameResult.of(player, GameResult.WIN);
+            return PlayerGameResultDto.of(player, GameResult.WIN);
         }
 
         int dealerResultScore = dealer.getResultScore();
         GameResult gameResult = judge(dealerResultScore, player.getResultScore());
 
-        return PlayerGameResult.of(player, gameResult);
+        return PlayerGameResultDto.of(player, gameResult);
     }
 
     private static GameResult judge(int dealerScore, int playerScore) {
@@ -51,17 +51,17 @@ public class GameResultAnalyzer {
         return GameResult.WIN;
     }
 
-    private static DealerGameResult makeDealerResult(List<PlayerGameResult> playerGameResults) {
+    private static DealerGameResultDto makeDealerResult(List<PlayerGameResultDto> playerGameResultDtos) {
         EnumMap<GameResult, Integer> dealerGameResult = new EnumMap<>(GameResult.class);
-        List<GameResult> list = playerGameResults.stream()
-                .map(PlayerGameResult::gameResult)
+        List<GameResult> list = playerGameResultDtos.stream()
+                .map(PlayerGameResultDto::gameResult)
                 .map(GameResult::reverseResult)
                 .toList();
 
         for (GameResult gameResult : list) {
             dealerGameResult.put(gameResult, dealerGameResult.getOrDefault(gameResult, 0) + 1);
         }
-        return DealerGameResult.from(dealerGameResult);
+        return DealerGameResultDto.from(dealerGameResult);
     }
 
 }

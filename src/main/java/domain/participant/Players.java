@@ -1,8 +1,8 @@
 package domain.participant;
 
-import domain.participant.dto.ParticipantHand;
-import domain.participant.dto.ParticipantHandMapper;
-import domain.participant.dto.ParticipantResult;
+import domain.participant.dto.ParticipantHandDto;
+import domain.participant.dto.ParticipantHandDtoMapper;
+import domain.result.dto.ParticipantGameResultDto;
 
 import java.util.List;
 import java.util.Objects;
@@ -38,15 +38,15 @@ public class Players {
                 .toList();
     }
 
-    public List<ParticipantHand> toParticipantHand() {
+    public List<ParticipantHandDto> toParticipantHandDtos() {
         return playerList.stream()
-                .map(ParticipantHandMapper::map)
+                .map(ParticipantHandDtoMapper::map)
                 .toList();
     }
 
-    public List<ParticipantResult> toParticipantResult() {
+    public List<ParticipantGameResultDto> toParticipantGameResultDtos() {
         return playerList.stream()
-                .map(ParticipantResult::from)
+                .map(ParticipantGameResultDto::from)
                 .toList();
     }
 
