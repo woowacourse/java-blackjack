@@ -30,6 +30,4 @@ public enum CardNumber {
     public String getName() {
         return name;
     }
-
-
 }

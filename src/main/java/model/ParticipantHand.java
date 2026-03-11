@@ -2,7 +2,6 @@ package model;
 
 import constant.ErrorMessage;
 import java.util.List;
-import model.dto.Card;
 
 public class ParticipantHand {
     private static final Integer MAX_ACE_SCORE = 11;

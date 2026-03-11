@@ -8,7 +8,7 @@ import model.Participant;
 import model.Player;
 import model.Players;
 import model.PlayersWinning;
-import model.dto.Card;
+import model.Card;
 import model.dto.ParticipantWinning;
 import model.dto.PlayerWinning;
 

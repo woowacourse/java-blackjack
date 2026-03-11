@@ -2,7 +2,6 @@ package model;
 
 import java.util.List;
 import java.util.Objects;
-import model.dto.Card;
 import model.dto.PlayerResult;
 
 public class Participant {

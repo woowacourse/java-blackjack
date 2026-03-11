@@ -2,7 +2,6 @@ package model;
 
 
 import java.util.List;
-import model.dto.Card;
 import model.dto.PlayerResult;
 import org.junit.jupiter.api.Test;
 
