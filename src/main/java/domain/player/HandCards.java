@@ -39,13 +39,13 @@ public class HandCards {
             sum += card.getValue();
         }
 
-        if (canAce11(sum)) {
+        if (canPlusBonusScore(sum)) {
             return sum + ACE_BONUS_SCORE;
         }
         return sum;
     }
 
-    private boolean canAce11(int sum) {
+    private boolean canPlusBonusScore(int sum) {
         return containsAce() && sum + ACE_BONUS_SCORE <= MAX_SCORE;
     }
 
