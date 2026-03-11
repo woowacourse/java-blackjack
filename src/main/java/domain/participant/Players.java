@@ -7,7 +7,7 @@ import static message.ErrorMessage.PLAYER_NOT_FOUND;
 import static message.ErrorMessage.PLAYER_NUMBER_OUT_OF_RANGE;
 
 import domain.card.Card;
-import domain.enums.Result;
+import domain.enums.GameResult;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -63,13 +63,13 @@ public class Players {
                 .orElseThrow(() -> new IllegalArgumentException(PLAYER_NOT_FOUND.getMessage()));
     }
 
-    public List<Result> decideAllResults(int dealerScore, boolean dealerBurst) {
-        List<Result> results = new ArrayList<>();
+    public List<GameResult> decideAllResults(int dealerScore, boolean dealerBurst) {
+        List<GameResult> gameResults = new ArrayList<>();
         for (Player player : players) {
-            Result playerResult = Result.calculatePlayerResult(player, dealerScore, dealerBurst);
-            results.add(playerResult);
+            GameResult playerGameResult = GameResult.calculatePlayerResult(player, dealerScore, dealerBurst);
+            gameResults.add(playerGameResult);
         }
-        return results;
+        return gameResults;
     }
 
     public boolean checkScoreUnderCriterion(String name) {
@@ -82,9 +82,9 @@ public class Players {
         return foundPlayer.getHand();
     }
 
-    public Result getPlayerResult(String name, int dealerScore, boolean dealerBust) {
+    public GameResult getPlayerResult(String name, int dealerScore, boolean dealerBust) {
         Player foundPlayer = findPlayerByName(name);
-        return Result.calculatePlayerResult(foundPlayer, dealerScore, dealerBust);
+        return GameResult.calculatePlayerResult(foundPlayer, dealerScore, dealerBust);
     }
 
     public int getPlayerScore(String name) {

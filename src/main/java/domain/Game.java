@@ -2,7 +2,7 @@ package domain;
 
 import domain.card.Card;
 import domain.card.Deck;
-import domain.enums.Result;
+import domain.enums.GameResult;
 import domain.participant.Dealer;
 import domain.participant.Players;
 import java.util.List;
@@ -42,16 +42,16 @@ public class Game {
         return players.getAllPlayersName();
     }
 
-    public Result getPlayerResult(String name) {
+    public GameResult getPlayerResult(String name) {
         int dealerScore = dealer.getScore();
         boolean dealerBurst = dealer.isBust();
         return players.getPlayerResult(name, dealerScore, dealerBurst);
     }
 
-    public Map<Result, Integer> getDealerResult() {
+    public Map<GameResult, Integer> getDealerResult() {
         int dealerScore = dealer.getScore();
         boolean dealerBurst = dealer.isBust();
-        return Result.calculateDealerResult(players.decideAllResults(dealerScore, dealerBurst));
+        return GameResult.calculateDealerResult(players.decideAllResults(dealerScore, dealerBurst));
     }
 
     public List<Card> getPlayerCard(String name) {

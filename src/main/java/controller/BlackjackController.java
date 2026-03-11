@@ -3,7 +3,7 @@ package controller;
 import domain.Game;
 import domain.card.Card;
 import domain.card.Deck;
-import domain.enums.Result;
+import domain.enums.GameResult;
 import domain.participant.Dealer;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -82,7 +82,7 @@ public class BlackjackController {
     private void printResult(Game game, List<String> playerNames) {
         outputView.printDealerCardWithScore(game.getDealerCard(), game.getDealerScore());
 
-        Map<String, Result> playerResults = new LinkedHashMap<>();
+        Map<String, GameResult> playerResults = new LinkedHashMap<>();
         for (String name : playerNames) {
             outputView.printPlayerCardWithScore(name, game.getPlayerCard(name), game.getPlayerScore(name));
             playerResults.put(name, game.getPlayerResult(name));

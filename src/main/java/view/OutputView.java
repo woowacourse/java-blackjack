@@ -1,7 +1,7 @@
 package view;
 
 import domain.card.Card;
-import domain.enums.Result;
+import domain.enums.GameResult;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -62,12 +62,12 @@ public class OutputView {
         System.out.println(LINE_SEPARATOR + DEALER_DRAW);
     }
 
-    public void printGameResult(Map<Result, Integer> dealerResult, Map<String, Result> playerResults) {
+    public void printGameResult(Map<GameResult, Integer> dealerResult, Map<String, GameResult> playerResults) {
         System.out.println(LINE_SEPARATOR + FINAL_RESULT);
 
-        int winCount = dealerResult.getOrDefault(Result.WIN, 0);
-        int loseCount = dealerResult.getOrDefault(Result.LOSE, 0);
-        int drawCount = dealerResult.getOrDefault(Result.DRAW, 0);
+        int winCount = dealerResult.getOrDefault(GameResult.WIN, 0);
+        int loseCount = dealerResult.getOrDefault(GameResult.LOSE, 0);
+        int drawCount = dealerResult.getOrDefault(GameResult.DRAW, 0);
 
         System.out.printf(DEALER_RESULT + LINE_SEPARATOR, winCount, loseCount, drawCount);
         for (String playerName : playerResults.keySet()) {

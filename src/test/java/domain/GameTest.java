@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
 import domain.card.Deck;
+import domain.enums.GameResult;
 import domain.enums.Rank;
-import domain.enums.Result;
 import domain.enums.Suit;
 import domain.participant.Dealer;
 import java.util.Arrays;
@@ -104,8 +104,8 @@ public class GameTest {
                     new Card(Rank.EIGHT, Suit.CLOVER)
             );
 
-            assertThat(onePlayerGame.getPlayerResult("피즈")).isEqualTo(Result.LOSE);
-            assertThat(onePlayerGame.getDealerResult().get(Result.WIN)).isEqualTo(1);
+            assertThat(onePlayerGame.getPlayerResult("피즈")).isEqualTo(GameResult.LOSE);
+            assertThat(onePlayerGame.getDealerResult().get(GameResult.WIN)).isEqualTo(1);
         }
 
         @DisplayName("플레이어가 버스트 되지 않았을 때 플레이어의 점수가 더 높으면 플레이어가 승리하고 딜러는 패배한다.")
@@ -120,8 +120,8 @@ public class GameTest {
             dealer.addCard(new Card(Rank.JACK, Suit.HEART));
             dealer.addCard(new Card(Rank.QUEEN, Suit.HEART));
 
-            assertThat(onePlayerGame.getPlayerResult("피즈")).isEqualTo(Result.WIN);
-            assertThat(onePlayerGame.getDealerResult().get(Result.LOSE)).isEqualTo(1);
+            assertThat(onePlayerGame.getPlayerResult("피즈")).isEqualTo(GameResult.WIN);
+            assertThat(onePlayerGame.getDealerResult().get(GameResult.LOSE)).isEqualTo(1);
         }
 
         @DisplayName("플레이어가 버스트 되지 않았을 때 딜러가 버스트된 경우 플레이어가 승리한다.")
@@ -137,8 +137,8 @@ public class GameTest {
             dealer.addCard(new Card(Rank.SIX, Suit.HEART));
             dealer.addCard(new Card(Rank.SEVEN, Suit.HEART));
 
-            assertThat(onePlayerGame.getPlayerResult("피즈")).isEqualTo(Result.WIN);
-            assertThat(onePlayerGame.getDealerResult().get(Result.LOSE)).isEqualTo(1);
+            assertThat(onePlayerGame.getPlayerResult("피즈")).isEqualTo(GameResult.WIN);
+            assertThat(onePlayerGame.getDealerResult().get(GameResult.LOSE)).isEqualTo(1);
         }
 
         @DisplayName("플레이어가 버스트 되지 않았을 때 플레이어의 점수가 더 낮으면 플레이어가 패배하고 딜러는 승리한다.")
@@ -152,8 +152,8 @@ public class GameTest {
             dealer.addCard(new Card(Rank.JACK, Suit.HEART));
             dealer.addCard(new Card(Rank.QUEEN, Suit.HEART));
 
-            assertThat(onePlayerGame.getPlayerResult("피즈")).isEqualTo(Result.LOSE);
-            assertThat(onePlayerGame.getDealerResult().get(Result.WIN)).isEqualTo(1);
+            assertThat(onePlayerGame.getPlayerResult("피즈")).isEqualTo(GameResult.LOSE);
+            assertThat(onePlayerGame.getDealerResult().get(GameResult.WIN)).isEqualTo(1);
         }
 
         @DisplayName("플레이어가 버스트 되지 않았을 때 플레이어와 딜러의 점수가 같으면 무승부가 된다.")
@@ -169,8 +169,8 @@ public class GameTest {
             dealer.addCard(new Card(Rank.QUEEN, Suit.HEART));
 
             //then
-            assertThat(onePlayerGame.getPlayerResult("피즈")).isEqualTo(Result.DRAW);
-            assertThat(onePlayerGame.getDealerResult().get(Result.DRAW)).isEqualTo(1);
+            assertThat(onePlayerGame.getPlayerResult("피즈")).isEqualTo(GameResult.DRAW);
+            assertThat(onePlayerGame.getDealerResult().get(GameResult.DRAW)).isEqualTo(1);
         }
 
         private void distributePlayerCards(Game game, String name, Card... cards) {
