@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import domain.enums.GameResult;
 import domain.participant.Name;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -59,33 +60,33 @@ public class BetTest {
         @Test
         void 플레이어_승리_시_1배의_수익() {
             //given
-            //when
             bet.bettingMoney(firstPlayer, 10_000);
-            int profit = bet.calculateProfit(firstPlayer, GameResult.WIN, false);
+            //when
+            bet.calculateProfit(Map.of(firstPlayer, GameResult.WIN));
             //then
-            assertThat(profit).isEqualTo(10_000);
+            assertThat(bet.getBetProfit().get(firstPlayer)).isEqualTo(10_000);
         }
 
         @DisplayName("플레이어 패배 시 전액 손실")
         @Test
         void 플레이어_패배_시_전액_손실() {
             //given
-            //when
             bet.bettingMoney(firstPlayer, 10_000);
-            int profit = bet.calculateProfit(firstPlayer, GameResult.LOSE, false);
+            //when
+            bet.calculateProfit(Map.of(firstPlayer, GameResult.LOSE));
             //then
-            assertThat(profit).isEqualTo(-10_000);
+            assertThat(bet.getBetProfit().get(firstPlayer)).isEqualTo(-10_000);
         }
 
         @DisplayName("무승부 시 0원의 수익")
         @Test
         void 무승부_0원_수익() {
             //given
-            //when
             bet.bettingMoney(firstPlayer, 10_000);
-            int profit = bet.calculateProfit(firstPlayer, GameResult.DRAW, false);
+            //when
+            bet.calculateProfit(Map.of(firstPlayer, GameResult.DRAW));
             //then
-            assertThat(profit).isEqualTo(0);
+            assertThat(bet.getBetProfit().get(firstPlayer)).isEqualTo(0);
         }
 
         private static Stream<Arguments> blackjackProfitTest() {
@@ -100,11 +101,11 @@ public class BetTest {
         @MethodSource("blackjackProfitTest")
         void 첫_카드_2장_승리_시_1_5배_수익(int bettingMoney, int expectedProfit) {
             //given
-            //when
             bet.bettingMoney(firstPlayer, bettingMoney);
-            int profit = bet.calculateProfit(firstPlayer, GameResult.WIN, true);
+            //when
+            bet.calculateProfit(Map.of(firstPlayer, GameResult.BLACKJACK_WIN));
             //then
-            assertThat(profit).isEqualTo(expectedProfit);
+            assertThat(bet.getBetProfit().get(firstPlayer)).isEqualTo(expectedProfit);
         }
     }
 }
