@@ -15,10 +15,7 @@ public class OutputView {
     private static final String INPUT_PLAYER_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     private static final String HIT_OR_STAND_MESSAGE = "%n%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n";
     private static final String DEALER_HIT_MESSAGE = "%n%n딜러는 16이하라 한장의 카드를 더 받았습니다.";
-    private static final String FINAL_WIN_DEFEAT_DRAW_MESSAGE = "%n## 최종 승패%n";
     private static final String FINAL_PROFIT_MESSAGE = "%n## 최종 수익%n";
-    private static final String DEALER_WIN_DRAW_DEFEAT_RESULT = "딜러: %d승 %d무 %d패%n";
-    private static final String PLAYER_WIN_DRAW_DEFEAT_RESULT = "%s: %s%n";
     private static final String DEALER_PROFIT_RESULT = "딜러: %d%n";
     private static final String PLAYER_PROFIT_RESULT = "%s: %d%n";
 
