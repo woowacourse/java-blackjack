@@ -20,8 +20,13 @@ abstract class Participant {
     protected abstract boolean isPlayable();
 
     void draw() {
-        if (isPlayable()) {
-            hand.drawCard();
+        requirePlayableHand();
+        hand.drawCard();
+    }
+
+    private void requirePlayableHand() {
+        if(!isPlayable()) {
+            throw new IllegalStateException(String.format("%s는 드로우 할 수 없습니다.", name));
         }
     }
 
