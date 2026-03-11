@@ -84,12 +84,11 @@ public class BlackjackRunner {
         outputView.printTotalProfitResult(gameResult);
     }
 
-    private PlayingCards dealerTurn(Participants participants, PlayingCards deck) {
+    private void dealerTurn(Participants participants, PlayingCards deck) {
         while (participants.isDealerDraw()) {
             outputView.printDealerTurn();
             deck = participants.dealerDraw(deck);
         }
-        return deck;
     }
 
     private PlayingCards playerTurn(Participants participants, PlayingCards deck) {
