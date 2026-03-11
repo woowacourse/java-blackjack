@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.Objects;
+
 public class Card {
     private final Rank rank;
     private final Suit suit;
@@ -17,12 +19,34 @@ public class Card {
         return rank.isAce();
     }
 
+    // 지울 것
     public String getName() {
         return rank.getName() + suit.getName();
+    }
+
+    public String getRankName() {
+        return rank.getName();
+    }
+
+    public String getSuitName() {
+        return suit.getName();
     }
 
     public int getScore() {
         return rank.getValue();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Card card = (Card) o;
+        return rank == card.rank && suit == card.suit;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(rank, suit);
+    }
 }
