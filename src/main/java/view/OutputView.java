@@ -17,12 +17,10 @@ public class OutputView {
         System.out.print("\n딜러와 " + playersName + "에게 2장을 나누었습니다.");
     }
 
-    // 딜러카드 출력
     public static void printDealerCardStatus(ResultDto resultDto) {
         System.out.printf("%n딜러카드: %s%n", getDealerCardStatus(resultDto));
     }
 
-    //플레이어 카드 출력
     public static void printPlayerCardStatus(PlayerDto playerDto) {
         System.out.printf("%s카드: %s%n", playerDto.name(), getCardStatusFormat(playerDto.resultDto().cards()));
     }
@@ -64,7 +62,6 @@ public class OutputView {
         }
     }
 
-    // TODO 버스트 나면 버스트로 표시?
     private static void printPlayerCardResult(PlayerDto playerDto) {
         System.out.printf("%n%s카드: %s - 결과: %d", playerDto.name(),
                 getCardStatusFormat(playerDto.resultDto().cards()),
