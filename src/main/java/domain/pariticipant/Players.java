@@ -13,8 +13,8 @@ public class Players {
         this.players = new ArrayList<>(players);
     }
 
-    public int getPlayerNumber() {
-        return players.size();
+    public List<Player> getPlayers() {
+        return List.copyOf(players);
     }
 
     public void drawInitialCards(Deck deck, CardShuffler cardShuffler) {
@@ -22,5 +22,7 @@ public class Players {
             player.drawInitialCards(deck, cardShuffler);
         }
     }
+
+
 
 }

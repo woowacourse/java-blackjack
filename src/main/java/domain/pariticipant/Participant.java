@@ -24,9 +24,13 @@ public abstract class Participant {
 
     public void drawInitialCards(Deck deck, CardShuffler cardShuffler) {
         for (int i = 0; i < BlackjackConstant.INIT_DRAW_COUNT; i++) {
-            int cardIndex = cardShuffler.getRandomCardIndex(deck.getDeckSize());
-            hand.addCard(deck.draw(cardIndex));
+            drawCard(deck, cardShuffler);
         }
+    }
+
+    protected void drawCard(Deck deck, CardShuffler cardShuffler) {
+        int cardIndex = cardShuffler.getRandomCardIndex(deck.getDeckSize());
+        hand.addCard(deck.draw(cardIndex));
     }
 
     public void addHandCard(Card card) {
@@ -51,7 +55,11 @@ public abstract class Participant {
     }
 
     public List<Card> getHandCards() {
-        return hand.getHandCards();
+        return hand.getHands();
+    }
+
+    public int getHandSize() {
+        return hand.getSize();
     }
 
 }
