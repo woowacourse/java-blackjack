@@ -57,10 +57,10 @@ public class ResultView {
     public void printDealerHitStand(boolean value) {
         printEmptyLine();
         if (value) {
-            System.out.println("딜러는 " + DEALER_HIT_STAND_BOUNDARY + "이하라 한장의 카드를 더 받았습니다.");
+            System.out.println("딜러는 " + DEALER_HIT_STAND_BOUNDARY.getValue() + "이하라 한장의 카드를 더 받았습니다.");
             return;
         }
-        System.out.println("딜러는 " + (DEALER_HIT_STAND_BOUNDARY.add(new Score(1))) + "이상이라 카드를 받지 않았습니다.");
+        System.out.println("딜러는 " + (DEALER_HIT_STAND_BOUNDARY.add(new Score(1)).getValue()) + "이상이라 카드를 받지 않았습니다.");
     }
 
     public void printResult(List<RoundResult> results) {
@@ -106,7 +106,7 @@ public class ResultView {
         System.out.println(
                 participant.getName().getValue() + "카드: " + cardsToString(
                         participant.getCards().getCards()) + " - 결과: "
-                        + participant.getTotalSum());
+                        + participant.getTotalSum().getValue());
     }
 
     private void printEmptyLine() {
