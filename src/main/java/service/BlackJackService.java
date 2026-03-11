@@ -25,6 +25,8 @@ public class BlackJackService {
         int dealerTotalScore = dealer.getTotalCardScore();
         int playerTotalScore = player.getTotalCardScore();
 
+        if(player.isBlackJack()&&dealer.isBlackJack()) return ResultInfo.DRAW;
+        if(player.isBlackJack()) return ResultInfo.BLACKJACK_WIN;
         if(player.getHand().isBust()) return ResultInfo.DEFEAT;
         if(dealer.getHand().isBust()) return ResultInfo.WIN;
         if (dealerTotalScore < playerTotalScore) return ResultInfo.WIN;
