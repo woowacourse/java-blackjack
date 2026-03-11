@@ -1,7 +1,6 @@
 package factory;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import domain.card.Card;
 import java.util.List;
@@ -15,7 +14,7 @@ class CardFactoryTest {
         List<Card> cards = CardFactory.createDeck();
 
         // then
-        assertFalse(cards.stream().distinct().count() != cards.size());
+        assertEquals(cards.stream().distinct().count(), cards.size());
         assertEquals(52, cards.size());
     }
 }
