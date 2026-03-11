@@ -66,22 +66,6 @@ public class Application {
         }
     }
 
-    private void askCardToPlayer(User user) {
-        String answer;
-        do {
-            outputView.printAskExtraCard(user.getName());
-            answer = retryUntilSuccess(inputView::readDealDecision);
-            dealMoreCard(answer, user);
-        } while (answer.equalsIgnoreCase("y"));
-    }
-
-    private void dealMoreCard(String answer, User user) {
-        if (answer.equalsIgnoreCase("y")) {
-            blackjackGame.processPlayerDecision(user);
-            outputView.printUserCards(user);
-        }
-    }
-
     private void dealDealerCard() {
         while (blackjackGame.dealToDealer()) {
             outputView.printDealerReceivedCard();
@@ -96,6 +80,22 @@ public class Application {
     private void printWinningResult() {
         outputView.printMessage(Message.FINAL_RESULT_ANNOUNCE);
         outputView.printWinningResults(blackjackGame.getResult());
+    }
+
+    private void askCardToPlayer(User user) {
+        String answer;
+        do {
+            outputView.printAskExtraCard(user.getName());
+            answer = retryUntilSuccess(inputView::readDealDecision);
+            dealMoreCard(answer, user);
+        } while (answer.equalsIgnoreCase("y"));
+    }
+
+    private void dealMoreCard(String answer, User user) {
+        if (answer.equalsIgnoreCase("y")) {
+            blackjackGame.processPlayerDecision(user);
+            outputView.printUserCards(user);
+        }
     }
 
     private <T> T retryUntilSuccess(Supplier<T> action) {

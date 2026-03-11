@@ -19,10 +19,6 @@ public class BlackjackGame {
         deck = new Deck();
     }
 
-    void setDeck(Deck deck) {
-        this.deck = deck;
-    }
-
     public void dealCards() {
         for (int cardCount = 0; cardCount < FIRST_CARD_DEAL_COUNT; cardCount++) {
             participants.dealCards(deck);
@@ -41,6 +37,10 @@ public class BlackjackGame {
         return participants.getDealer();
     }
 
+    public GameSummary getResult() {
+        return participants.judgeAll(gameJudge);
+    }
+
     public void placeBet(User user, String betAmount) {
         user.placeBet(betAmount);
     }
@@ -57,7 +57,7 @@ public class BlackjackGame {
         return false;
     }
 
-    public GameSummary getResult() {
-        return participants.judgeAll(gameJudge);
+    void setDeck(Deck deck) {
+        this.deck = deck;
     }
 }

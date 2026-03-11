@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import vo.GameResult;
 
 public class GameJudgeTest {
-
     private GameJudge gameJudge;
 
     @BeforeEach
