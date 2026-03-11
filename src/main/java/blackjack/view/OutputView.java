@@ -29,6 +29,7 @@ public class OutputView {
     private static final String WIN_LABEL = "승 ";
     private static final String DRAW_LABEL = "무 ";
     private static final String LOSE_LABEL = "패";
+    private static final String FINAL_PROFITS_HEADER = "\n## 최종 수익";
 
     public void printInitialDeal(final Players players, final Dealer dealer) {
         final String playerNames = players.players().stream()
@@ -60,6 +61,13 @@ public class OutputView {
         System.out.println(FINAL_RESULTS_HEADER);
         printDealerResult(gameResults.dealerResult());
         gameResults.playerResults().forEach(this::printPlayerResult);
+    }
+
+    public void printProfits(Map<Participant, Integer> profits) {
+        System.out.println(FINAL_PROFITS_HEADER);
+        for (Participant participant : profits.keySet()) {
+            System.out.printf(PLAYER_RESULT_FORMAT, participant.getName(), profits.get(participant));
+        }
     }
 
     private void printParticipantFinalCards(final String name, final List<Card> cards, final int score) {

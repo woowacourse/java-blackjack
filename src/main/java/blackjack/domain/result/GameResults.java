@@ -41,4 +41,21 @@ public class GameResults {
     public Map<Player, GameResult> playerResults() {
         return playerResults;
     }
+
+    public Map<Participant, Integer> calculateProfits(Map<Player, Integer> wagers, Dealer dealer) {
+        Map<Participant, Integer> profits = new LinkedHashMap<>();
+        profits.put(dealer, 0);
+
+        for (Player player : playerResults.keySet()) {
+            Integer profit = profitOf(player, wagers.get(player));
+            profits.put(player, profit);
+            profits.put(dealer, profits.get(dealer) - profit);
+        }
+        return profits;
+    }
+
+    private Integer profitOf(Player player, Integer wager) {
+        GameResult gameResult = playerResults.get(player);
+        return gameResult.profitOf(wager);
+    }
 }

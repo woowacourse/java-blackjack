@@ -24,7 +24,11 @@ class BlackjackControllerTest extends BlackjackTest {
                 .contains("## 최종 승패")
                 .contains("딜러: 1승 1패")
                 .contains("pobi: 패")
-                .contains("neo: 승");
+                .contains("neo: 승")
+                .contains("## 최종 수익")
+                .contains("딜러: -10000")
+                .contains("pobi: -10000")
+                .contains("neo: 20000");
     }
 
     @Override

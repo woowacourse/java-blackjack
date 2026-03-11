@@ -3,6 +3,7 @@ package blackjack;
 import blackjack.domain.card.Card;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.domain.result.GameResults;
@@ -35,17 +36,29 @@ public class BlackjackController {
     public void run(final Consumer<List<Card>> shuffleStrategy) {
         final Deck deck = new Deck();
         deck.shuffle(shuffleStrategy);
-
         final Players players = createPlayers();
         final Dealer dealer = new Dealer();
-
         Map<Player, Integer> wagers = players.placeWagers(inputView::readWager);
 
         dealInitialCards(deck, players, dealer);
         outputView.printInitialDeal(players, dealer);
+
         processPlayersTurn(deck, players);
         processDealerTurn(deck, dealer);
-        printResults(players, dealer);
+
+        GameResults gameResults = resolveGameResults(players, dealer);
+        printGameResults(gameResults);
+
+        Map<Participant, Integer> profits = calculateProfit(gameResults, wagers, dealer);
+        printProfits(profits);
+    }
+
+    private void printProfits(Map<Participant, Integer> profits) {
+        outputView.printProfits(profits);
+    }
+
+    private Map<Participant, Integer> calculateProfit(GameResults gameResults, Map<Player, Integer> wagers, Dealer dealer) {
+        return gameResults.calculateProfits(wagers, dealer);
     }
 
     private Players createPlayers() {
@@ -116,9 +129,12 @@ public class BlackjackController {
         }
     }
 
-    private void printResults(final Players players, final Dealer dealer) {
+    private GameResults resolveGameResults(final Players players, final Dealer dealer) {
         outputView.printFinalCards(players, dealer);
-        final GameResults gameResults = GameResults.create(players, dealer);
+        return GameResults.create(players, dealer);
+    }
+
+    private void printGameResults(final GameResults gameResults) {
         outputView.printFinalResults(gameResults);
     }
 }
