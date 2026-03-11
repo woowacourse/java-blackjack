@@ -12,7 +12,9 @@ public class InputView {
 
     public static String getPlayerNames() {
         System.out.println(NAME_REQUEST_TEXT);
-        return getInput();
+        String input = getInput();
+        System.out.println();
+        return input;
     }
 
     public static String getDrawCondition(String name) {
@@ -21,8 +23,10 @@ public class InputView {
     }
 
     public static String getBet(String name) {
-        System.out.println(BET_REQUEST_TEXT);
-        return getInput();
+        System.out.println(name + BET_REQUEST_TEXT);
+        String input = getInput();
+        System.out.println();
+        return input;
     }
 
     private static String getInput() {

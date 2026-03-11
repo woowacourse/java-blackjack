@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import model.Agreement;
+import model.BetPrice;
 import model.Dealer;
 import model.Participant;
 import model.Player;
@@ -26,9 +27,9 @@ public class BlackJackController {
 
     public void run() {
         Players players = getParticipantsName();
-        Dealer dealer = new Dealer();
+        getBet(players);
 
-        OutputView.printNewLine();
+        Dealer dealer = new Dealer();
 
         blackJackService.shuffle();
 
@@ -50,6 +51,16 @@ public class BlackJackController {
         return new Players(players);
     }
 
+    private void getBet(Players players) {
+        for(Player player : players.getPlayers()) {
+            addBet(player);
+        }
+    }
+
+    private void addBet(Player player) {
+        BetPrice betPrice = new BetPrice(InputView.getBet(player.getName()));
+        player.setBetAmount(betPrice.value());
+    }
 
     private void initDraw(Dealer dealer, Players players) {
         initParticipantDraw(dealer);
