@@ -1,11 +1,6 @@
 package domain.card;
 
 import static domain.BlackjackGame.BUST_BOUND;
-import static domain.card.CardRank.ACE;
-import static domain.card.CardRank.JACK;
-import static domain.card.CardRank.KING;
-import static domain.card.CardRank.QUEEN;
-import static domain.card.CardRank.TEN;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -58,13 +53,7 @@ public class Hand {
     }
 
     public boolean isBlackjack() {
-        final List<CardRank> cardRanks = hand.stream()
-                .map(Card::getCardRank)
-                .toList();
-
-        return cardRanks.contains(ACE) &&
-                (cardRanks.contains(TEN) || cardRanks.contains(JACK)
-                        || cardRanks.contains(QUEEN) || cardRanks.contains(KING));
+        return hand.size() == 2 && getScore() == BUST_BOUND;
     }
 
 
