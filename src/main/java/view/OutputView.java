@@ -18,7 +18,7 @@ public class OutputView {
     }
 
     public static void printDealerCardStatus(ResultDto resultDto) {
-        System.out.printf("%n딜러카드: %s%n", getDealerCardStatus(resultDto));
+        System.out.printf("%n딜러카드: %s%n", getCardStatusFormat(resultDto.cards()));
     }
 
     public static void printPlayerCardStatus(PlayerDto playerDto) {
@@ -33,9 +33,6 @@ public class OutputView {
         System.out.print(System.lineSeparator());
     }
 
-    private static String getDealerCardStatus(ResultDto resultDto) {
-        return resultDto.cards().getFirst();
-    }
 
     private static String getCardStatusFormat(List<String> cards) {
         return String.join(", ", cards);

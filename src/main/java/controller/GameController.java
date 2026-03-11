@@ -23,11 +23,11 @@ public class GameController {
 
         PlayersDto playersDto = PlayersDto.from(players);
         OutputView.printHandOutMessage(playersDto);
-        OutputView.printCardStatus(playersDto, ResultDto.from(dealer));
+        OutputView.printCardStatus(playersDto, ResultDto.fromDealerInitial(dealer));
 
         addPlayersCard(blackjackGame, players);
         addDealerCards(blackjackGame);
-        printCardResults(ResultDto.from(dealer), playersDto);
+        printCardResults(ResultDto.from(dealer), PlayersDto.from(players));
         printFinalResults(players, dealer);
     }
 

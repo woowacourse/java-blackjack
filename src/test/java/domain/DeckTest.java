@@ -26,9 +26,9 @@ public class DeckTest {
 
     @Test
     void 덱에_카드_없을_경우_예외_발생() {
-        Deck deck = Deck.createDeck();
-        List<Card> cards = deck.getCards();
-        cards.clear();
-        assertThatThrownBy(deck::draw).isInstanceOf(IllegalArgumentException.class);
+        Deck deck = Deck.from(List.of());
+        assertThatThrownBy(deck::draw)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("덱에 남은 카드가 없습니다.");
     }
 }
