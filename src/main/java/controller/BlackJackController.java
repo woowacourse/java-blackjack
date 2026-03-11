@@ -40,7 +40,7 @@ public class BlackJackController {
     }
 
     private void printResult(Dealer dealer, List<Player> players) {
-        ScoreResultDto scoreResultDto = blackJackResultService.createScoreResultDto(dealer, players);
+        ScoreResultDto scoreResultDto = ScoreResultDto.of(dealer, players);
         OutputView.printScoreResult(scoreResultDto);
 
         FinalResultDto finalResultDto = FinalResultDto.of(dealer, players);

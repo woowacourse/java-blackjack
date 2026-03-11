@@ -28,7 +28,7 @@ class BlackJackResultServiceTest {
         // given
         Dealer dealer = createDealer();
         List<Player> players = List.of();
-        ScoreResultDto scoreResultDto = blackJackResultService.createScoreResultDto(dealer, players);
+        ScoreResultDto scoreResultDto = ScoreResultDto.of(dealer, players);
 
         // when, then
         assertNotNull(scoreResultDto);
