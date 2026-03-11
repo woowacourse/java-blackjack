@@ -3,7 +3,7 @@ package model.participant;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import model.card.Cards;
+import model.card.Card;
 
 public class Dealer extends Participant {
     public static final int DRAW_THRESHOLD = 16;
@@ -19,21 +19,13 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public Cards open() {
-        validateHasCards();
-
+    public List<Card> open() {
         if (firstTurn) {
             firstTurn = false;
-            return Cards.from(List.of(hands.getFirst()));
+            return List.of(hands.getFirst());
         }
 
-        return Cards.from(hands);
-    }
-
-    private void validateHasCards() {
-        if (hands.isEmpty()) {
-            throw new IllegalStateException("가진 카드 패가 없어 오픈할 수 없습니다.");
-        }
+        return hands.asList();
     }
 
     @Override

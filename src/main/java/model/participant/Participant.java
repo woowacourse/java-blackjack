@@ -7,30 +7,20 @@ import java.util.List;
 import java.util.Objects;
 import model.card.Card;
 import model.card.Cards;
-import model.card.Rank;
 
 public abstract class Participant {
     private final String name;
-    protected final List<Card> hands;
+    protected final Cards hands;
 
     protected Participant(String name) {
         this.name = name;
-        this.hands = new ArrayList<>();
+        this.hands = Cards.from(new ArrayList<>());
     }
 
     public List<Card> receive(Card card) {
         hands.add(card);
-        return List.copyOf(hands);
-    }
 
-    public int calculateScore() {
-        int total = calculate();
-        int aceCardCount = aceCount();
-        while (aceCardCount-- > 0 && total > BLACKJACK_SCORE) {
-            total -= 10;
-        }
-
-        return total;
+        return hands.asList();
     }
 
     public boolean canHit() {
@@ -41,22 +31,8 @@ public abstract class Participant {
         return calculateScore() > BLACKJACK_SCORE;
     }
 
-    private int calculate() {
-        return hands.stream()
-                .map(Card::getRank)
-                .mapToInt(Rank::toValue)
-                .sum();
-    }
-
-    private int aceCount() {
-        int count = 0;
-        for (Card card : hands) {
-            if (card.getRank() == Rank.ACE) {
-                count++;
-            }
-        }
-
-        return count;
+    public int calculateScore() {
+        return hands.calculateScore();
     }
 
     public String getName() {
@@ -76,7 +52,7 @@ public abstract class Participant {
         return Objects.hashCode(name);
     }
 
-    public abstract Cards open();
+    public abstract List<Card> open();
 
     public abstract boolean beats(Participant participant);
 }

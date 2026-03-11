@@ -34,11 +34,11 @@ class DealerTest {
         dealer.receive(card2);
 
         // when
-        Cards opened = dealer.open();
+        List<Card> opened = dealer.open();
 
         // then
-        assertThat(opened.asList()).containsExactly(card1);
-        assertThat(opened.asList()).hasSize(1);
+        assertThat(opened).containsExactly(card1);
+        assertThat(opened).hasSize(1);
     }
 
     @Test
@@ -51,11 +51,11 @@ class DealerTest {
 
         // when
         dealer.open();
-        Cards opened = dealer.open();
+        List<Card> opened = dealer.open();
 
         // then
-        assertThat(opened.asList()).contains(card1, card2);
-        assertThat(opened.asList()).containsAll(List.of(card1, card2));
-        assertThat(opened.asList()).hasSize(2);
+        assertThat(opened).contains(card1, card2);
+        assertThat(opened).containsAll(List.of(card1, card2));
+        assertThat(opened).hasSize(2);
     }
 }

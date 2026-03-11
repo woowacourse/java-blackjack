@@ -43,7 +43,7 @@ public class Blackjack {
                 participant.receive(card);
             }
 
-            dealOutResult.put(participant.getName(), participant.open());
+            dealOutResult.put(participant.getName(), Cards.from(participant.open()));
         }
 
         return dealOutResult;

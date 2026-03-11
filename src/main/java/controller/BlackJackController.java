@@ -97,7 +97,7 @@ public class BlackJackController {
             while (player.canHit() && inputView.askHit(player.getName())) {
                 blackjack.giveCardTo(player);
 
-                List<Card> hands = player.open().asList();
+                List<Card> hands = player.open();
                 List<String> result = hands.stream()
                         .map(card -> card.getSuit().getName() + card.getRank().getName())
                         .toList();
@@ -127,7 +127,7 @@ public class BlackJackController {
 
     private void proceedFinalPhase(Blackjack blackjack, Participants participants) {
         for (Participant participant : participants.asList()) {
-            List<Card> hands = participant.open().asList();
+            List<Card> hands = participant.open();
             List<String> result = hands.stream()
                     .map(card -> card.getSuit().getName() + card.getRank().getName())
                     .toList();

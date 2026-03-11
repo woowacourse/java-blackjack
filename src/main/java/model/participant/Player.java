@@ -1,6 +1,7 @@
 package model.participant;
 
-import model.card.Cards;
+import java.util.List;
+import model.card.Card;
 
 public class Player extends Participant {
     private Player(String name) {
@@ -12,8 +13,8 @@ public class Player extends Participant {
     }
 
     @Override
-    public Cards open() {
-        return Cards.from(hands);
+    public List<Card> open() {
+        return hands.asList();
     }
 
     @Override

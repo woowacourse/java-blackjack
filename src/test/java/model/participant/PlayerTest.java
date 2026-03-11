@@ -37,11 +37,11 @@ class PlayerTest {
 
         // when
         player.open();
-        Cards opened = player.open();
+        List<Card> opened = player.open();
 
         // then
-        assertThat(opened.asList()).contains(card1, card2);
-        assertThat(opened.asList()).containsAll(List.of(card1, card2));
-        assertThat(opened.asList()).hasSize(2);
+        assertThat(opened).contains(card1, card2);
+        assertThat(opened).containsAll(List.of(card1, card2));
+        assertThat(opened).hasSize(2);
     }
 }
