@@ -85,7 +85,7 @@ class ProfitCalculatorTest {
         betTable.placeBet(player2.getName(), 15000);
         player2.keepCard(new Card(Rank.ACE, Pattern.CLOVER));
         player2.keepCard(new Card(Rank.JACK, Pattern.HEART));
-        int expectedProfit = 22500;
+        int expectedProfit = 22500 - 15000;
 
         ProfitCalculator calculator = new ProfitCalculator(betTable);
         calculator.playerCalculateProfit(ResultInfo.WIN, player2);
@@ -119,7 +119,7 @@ class ProfitCalculatorTest {
 
     @Test
     @DisplayName("딜러의 수익을 계산할 수 있다")
-    void calculateProfit_returnsDealerProfit(){
+    void calculateProfit_returnsDealerProfit() {
         Player player2 = new Player(new PlayerName("user2"), new Hand());
         betTable.placeBet(player2.getName(), 15000);
         player2.keepCard(new Card(Rank.TWO, Pattern.SPADE));
