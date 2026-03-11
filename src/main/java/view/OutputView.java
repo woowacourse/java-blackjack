@@ -1,9 +1,11 @@
 package view;
 
+import domain.card.Card;
+import domain.player.Dealer;
 import dto.BlackjackResult;
-import dto.DealerCardInfo;
 import dto.GamblerCardInfo;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class OutputView {
 
@@ -39,8 +41,8 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printFinalDealer(DealerCardInfo dealerCardInfo, int score) {
-        System.out.println("딜러카드: " + String.join(", ", dealerCardInfo.cards()) + " - 결과: " + score);
+    public static void printFinalDealer(Dealer dealer, int score) {
+        System.out.println("딜러카드: " + formatCards(dealer.getCards()) + " - 결과: " + score);
     }
 
     public static void printFinalPlayer(GamblerCardInfo gamblerCardInfo) {
@@ -58,5 +60,17 @@ public class OutputView {
         for (String gamblerResult : result.logs()) {
             System.out.println(gamblerResult);
         }
+    }
+
+    private static String formatCard(Card card) {
+        return card.getCardRank()
+                .getName() + card.getCardSuit()
+                .getSuit();
+    }
+
+    private static String formatCards(List<Card> cards) {
+        return cards.stream()
+                .map(OutputView::formatCard)
+                .collect(Collectors.joining(", "));
     }
 }
