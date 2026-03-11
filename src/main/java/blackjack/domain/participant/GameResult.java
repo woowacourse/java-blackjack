@@ -2,14 +2,14 @@ package blackjack.domain.participant;
 
 public enum GameResult {
     WIN, DRAW, LOSE;
-
-    public static GameResult reverse(GameResult gameResult) {
-        if (gameResult == GameResult.WIN) {
+    
+    public GameResult opposite() {
+        if (this == WIN) {
             return GameResult.LOSE;
         }
-        if (gameResult == GameResult.LOSE) {
+        if (this == LOSE) {
             return GameResult.WIN;
         }
-        return GameResult.DRAW;
+        return DRAW;
     }
 }
