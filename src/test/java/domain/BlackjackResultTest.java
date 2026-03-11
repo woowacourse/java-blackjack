@@ -134,6 +134,27 @@ class BlackjackResultTest {
         assertThat(blackjackResultDto.winCount()).isEqualTo(1);
     }
 
+
+    @DisplayName("참가자가 bust되면 배팅금액이 0이 된다.")
+    @Test
+    void 참가자_bust_배팅금액_리셋() {
+        Player player = PlayerTestUtil.createPlayer(List.of(
+                new Card(CardShape.SPADE, CardRank.TEN),
+                new Card(CardShape.SPADE, CardRank.NINE),
+                new Card(CardShape.SPADE, CardRank.EIGHT)
+        )); // 21
+        player.betMoney(10000);
+
+        Dealer dealer = PlayerTestUtil.createDealer(List.of(
+                new Card(CardShape.SPADE, CardRank.TEN),
+                new Card(CardShape.SPADE, CardRank.ACE)
+        )); // 21
+
+        assertThat(player.getBettingScore()).isEqualTo(10000);
+        BlackjackResult blackjackResult = BlackjackResult.from(dealer, createSinglePlayerSet(player));
+        assertThat(player.getBettingScore()).isEqualTo(0);
+    }
+
     private Players createSinglePlayerSet(Player player) {
         return new Players(List.of(player));
     }
