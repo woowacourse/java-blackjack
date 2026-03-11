@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HandCards {
-    private List<Card> cards;
     private static final int BUST_CONDITION = 22;
+    private final List<Card> cards;
 
     public HandCards() {
         this.cards = new ArrayList<>();
@@ -21,11 +21,11 @@ public class HandCards {
         cards.add(card);
     }
 
-    public List<String> cardsToString() {
+    public List<String> getCardNames() {
         List<String> cardList = new ArrayList<>();
 
         for (Card card : cards) {
-            cardList.add(card.cardToKorName());
+            cardList.add(card.getCardName());
         }
 
         return cardList;

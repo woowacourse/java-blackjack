@@ -27,7 +27,7 @@ public abstract class Participant {
     }
 
     public List<String> getCards() {
-        return handCards.cardsToString();
+        return handCards.getCardNames();
     }
 
     public int getScore() {

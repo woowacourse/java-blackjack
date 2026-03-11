@@ -5,8 +5,6 @@ import domain.participant.Participant;
 import domain.participant.WinStatus;
 import domain.vo.Name;
 
-import java.util.List;
-
 public class Player extends Participant {
     private WinStatus winStatus = WinStatus.DRAW;
 

@@ -1,8 +1,8 @@
 package domain.card;
 
 public class Card {
-    private TrumpSuit suit;
-    private TrumpNumber number;
+    private final TrumpSuit suit;
+    private final TrumpNumber number;
 
     public Card(TrumpSuit suit, TrumpNumber number) {
         this.suit = suit;
@@ -17,7 +17,7 @@ public class Card {
         return number == TrumpNumber.ACE;
     }
 
-    public String cardToKorName() {
-        return ""+ number.getName() + suit.getName();
+    public String getCardName() {
+        return number.getName() + suit.getName();
     }
 }
