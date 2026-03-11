@@ -76,16 +76,6 @@ public class GameManager {
         return gameResult;
     }
 
-    private static Map<Participant, Integer> getParticipantScores(Dealer dealer, List<Player> players) {
-        Map<Participant, Integer> participantScores = new HashMap<>();
-        participantScores.put(dealer, dealer.getScore());
-
-        for (Player player : players) {
-            participantScores.put(player, player.getScore());
-        }
-        return participantScores;
-    }
-
     public static void validatePlayersNumber(List<String> playerNames) {
         validateMinimumPlayers(playerNames);
         validateMaximumPlayers(playerNames);
