@@ -1,9 +1,9 @@
 package controller;
 
 import domain.Game;
+import domain.card.CardGenerator;
 import domain.card.Deck;
 import domain.enums.Result;
-import domain.participant.Dealer;
 import domain.participant.Players;
 import dto.CardDto;
 import java.util.List;
@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
 import service.BlackjackService;
+import view.InputParser;
 import view.InputView;
 import view.OutputView;
 
@@ -23,60 +24,66 @@ public class BlackjackController {
 
     public void start() {
         Players players = retryOnException(this::makePlayers);
-        Deck deck = blackjackService.makeDeck();
-        Dealer dealer = new Dealer();
-        Game game = blackjackService.makeGame(players, dealer);
+        Deck deck = new Deck(CardGenerator.generateCards());
+        Game game = new Game(players);
 
-        blackjackService.initializeGame(game, deck);
-        printParticipantCards(players, dealer);
-
-        playTurn(game, players, deck);
-        printResult(game, dealer, players);
+        playGame(game, deck);
     }
 
     private Players makePlayers() {
         String input = InputView.askPlayerNames();
-        return blackjackService.makePlayers(input);
+        List<String> names = InputParser.parseNames(input);
+        return new Players(names);
     }
 
-    private void printParticipantCards(Players players, Dealer dealer) {
-        OutputView.printParticipantCards(CardDto.fromCards(dealer.getCards()),
-                blackjackService.makePlayerCardDtos(players));
+    private void playGame(Game game, Deck deck) {
+        game.initializeGame(deck);
+        printParticipantCards(game);
+
+        playTurn(game, deck);
+        printResult(game);
     }
 
-    private void playTurn(Game game, Players players, Deck deck) {
-        for (String name : players.getAllPlayerNames()) {
-            playPlayerTurn(game, players, name, deck);
+    private void printParticipantCards(Game game) {
+        OutputView.printParticipantCards(CardDto.fromCards(game.getDealerCards()),
+                blackjackService.makePlayerCardDtos(game));
+    }
+
+    private void playTurn(Game game, Deck deck) {
+        for (String name : game.getAllPlayerNames()) {
+            playPlayerTurn(game, name, deck);
         }
         playDealerTurn(game, deck);
     }
 
-    private void playPlayerTurn(Game game, Players players, String name, Deck deck) {
-        boolean shouldContinue = true;
-        while (shouldContinue && !game.isPlayerBust(name)) {
-            shouldContinue = retryOnException(() -> isPlayerWantHit(name));
-            blackjackService.playPlayerTurn(game, name, deck, shouldContinue);
-            OutputView.printPlayerCards(name, CardDto.fromCards(players.getPlayerCards(name)));
+    private void playPlayerTurn(Game game, String name, Deck deck) {
+        boolean isPlayerEnd = false;
+        boolean wantHit = true;
+        while (!isPlayerEnd && wantHit) {
+            wantHit = retryOnException(() -> isPlayerWantHit(name));
+            isPlayerEnd = game.isPlayerEnd(name, wantHit);
+            game.playerHit(name, deck, wantHit);
+            OutputView.printPlayerCards(name, CardDto.fromCards(game.getPlayerCards(name)));
         }
     }
 
     private boolean isPlayerWantHit(String name) {
         String input = retryOnException(() -> InputView.askPlayerHit(name));
-        return blackjackService.parseHitAnswer(input);
+        return InputParser.parseHitAnswer(input);
     }
 
     public void playDealerTurn(Game game, Deck deck) {
-        while (!game.isDealerBust()) {
-            blackjackService.playDealerTurn(game, deck);
+        while (!game.isDealerEnd()) {
+            game.dealerHit(deck);
             OutputView.printDealerHit();
         }
     }
 
-    private void printResult(Game game, Dealer dealer, Players players) {
-        OutputView.printDealerCardsWithScore(CardDto.fromCards(dealer.getCards()), game.getDealerScore());
+    private void printResult(Game game) {
+        OutputView.printDealerCardsWithScore(CardDto.fromCards(game.getDealerCards()), game.getDealerScore());
 
-        Map<String, Result> playerResults = blackjackService.makePlayerResults(players, game);
-        for (Map.Entry<String, List<CardDto>> entry : blackjackService.makePlayerCardDtos(players).entrySet()) {
+        Map<String, Result> playerResults = blackjackService.makePlayerResults(game);
+        for (Map.Entry<String, List<CardDto>> entry : blackjackService.makePlayerCardDtos(game).entrySet()) {
             OutputView.printPlayerCardsWithScore(entry.getKey(), entry.getValue(), game.getPlayerScore(entry.getKey()));
         }
 

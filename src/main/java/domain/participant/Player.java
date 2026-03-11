@@ -4,6 +4,7 @@ import domain.enums.Result;
 
 public class Player extends Participant {
 
+    //    네임 객체로 변경
     private final String name;
 
     public Player(String name) {
