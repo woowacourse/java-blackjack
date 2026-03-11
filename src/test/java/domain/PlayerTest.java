@@ -17,7 +17,7 @@ class PlayerTest {
     void holding_two_card_success() {
         Player player = Player.of(Cards.of().drawInitialHand(), userName);
 
-        assertThat(player.getCardsInfo()).hasSize(2);
+        assertThat(player.getCards()).hasSize(2);
     }
 
     @Test
@@ -34,11 +34,12 @@ class PlayerTest {
         List<Card> initialCards = new ArrayList<>(List.of(
                 Card.of(Rank.TEN, Suit.DIAMOND),
                 Card.of(Rank.FIVE, Suit.CLOVER)));
+
         Player player = Player.of(initialCards, userName);
 
-        List<String> expect = List.of(Rank.TEN.getName() + Suit.DIAMOND.getName(),
-                Rank.FIVE.getName() + Suit.CLOVER.getName());
-        assertThat(player.getCardsInfo()).isEqualTo(expect);
+        List<Card> expect = List.of(Card.of(Rank.TEN, Suit.DIAMOND),
+                Card.of(Rank.FIVE, Suit.CLOVER));
+        assertThat(player.getCards()).isEqualTo(expect);
     }
 
     @Test
@@ -57,14 +58,14 @@ class PlayerTest {
 
     @Test
     @DisplayName("플레이어 ACE 판정 이후 점수가 21 초과이면 0점 처리")
-    void isBust_final_score_zero_success() {
+    void isBust_final_score_true() {
         List<Card> cards = List.of(
                 Card.of(Rank.FIVE, Suit.DIAMOND),
                 Card.of(Rank.NINE, Suit.CLOVER),
                 Card.of(Rank.EIGHT, Suit.DIAMOND));
         Player player = Player.of(cards, userName);
 
-        assertThat(player.getScoreOrZeroIfBust()).isZero();
+        assertThat(player.isBust(player.calculateScore())).isTrue();
     }
 
     @Test
@@ -74,7 +75,7 @@ class PlayerTest {
 
         player.addCard(cards.draw());
 
-        assertThat(player.getCardsInfo()).hasSize(3);
+        assertThat(player.getCards()).hasSize(3);
     }
 
 }
