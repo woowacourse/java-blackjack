@@ -47,10 +47,6 @@ public class Hand {
         return getSum() < BLACKJACK_NUMBER;
     }
 
-    public boolean isLargerThanEqualToBlackJack(){
-        return getSum() >= BLACKJACK_NUMBER;
-    }
-
     public int getSize(){
         return cards.size();
     }

@@ -25,10 +25,6 @@ public class Player {
         return hand.isLessThanBlackJack();
     }
 
-    public boolean canNotHit(){
-        return hand.isLargerThanEqualToBlackJack();
-    }
-
     public int getScore() {
         return hand.getSum();
     }
