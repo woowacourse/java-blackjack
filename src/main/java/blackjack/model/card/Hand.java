@@ -23,7 +23,11 @@ public class Hand {
     }
 
     public boolean isBust() {
-        return calculateScore() >= BUST_LOWER_BOUND;
+        return isBust(calculateScore());
+    }
+
+    public boolean isBust(int score) {
+        return score >= BUST_LOWER_BOUND;
     }
 
     public int calculateScore() {
@@ -51,6 +55,6 @@ public class Hand {
     }
 
     private boolean isNotBust(int score) {
-        return score <= BUST_LOWER_BOUND;
+        return !isBust(score);
     }
 }
