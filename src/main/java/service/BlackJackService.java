@@ -11,7 +11,7 @@ import model.Player;
 import model.Players;
 import dto.Card;
 import dto.ParticipantWinning;
-import dto.PlayerWinning;
+import dto.PlayerProfit;
 
 public class BlackJackService {
     private static final int BUST_NUMBER = 21;
@@ -40,25 +40,25 @@ public class BlackJackService {
 
 
     public ParticipantWinning getGameResult(Players players, Dealer dealer) {
-        List<PlayerWinning> playersWinning = getPlayersResult(players, dealer);
+        List<PlayerProfit> playersWinning = getPlayersResult(players, dealer);
 
         return new ParticipantWinning(getDealerResult(playersWinning), playersWinning);
     }
 
-    private List<PlayerWinning> getPlayersResult(Players players, Dealer dealer) {
-        List<PlayerWinning> playersWinning = new ArrayList<>();
+    private List<PlayerProfit> getPlayersResult(Players players, Dealer dealer) {
+        List<PlayerProfit> playersWinning = new ArrayList<>();
 
         for (Player player : players.getPlayers()) {
             MatchStatus matchStatus = getPlayerResult(player, dealer);
             int profit = (int) (player.getBettingMoney().get() * matchStatus.getMultiplier());
-            playersWinning.add(new PlayerWinning(player.getResult().name(), profit));
+            playersWinning.add(new PlayerProfit(player.getResult().name(), profit));
         }
 
         return playersWinning;
     }
 
-    private Integer getDealerResult(List<PlayerWinning> playersWinning) {
-        return -playersWinning.stream().mapToInt(PlayerWinning::profit).sum();
+    private Integer getDealerResult(List<PlayerProfit> playersWinning) {
+        return -playersWinning.stream().mapToInt(PlayerProfit::profit).sum();
     }
 
     private MatchStatus getPlayerResult(Player player, Dealer dealer) {

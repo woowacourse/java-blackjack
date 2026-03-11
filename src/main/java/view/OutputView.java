@@ -3,7 +3,7 @@ package view;
 import dto.Card;
 import dto.ParticipantWinning;
 import dto.PlayerResult;
-import dto.PlayerWinning;
+import dto.PlayerProfit;
 import java.util.List;
 
 public class OutputView {
@@ -80,14 +80,14 @@ public class OutputView {
         System.out.println(DEALER_TEXT + RESULT_DELIMITER + dealerProfit);
     }
 
-    private static void printPlayersResult(List<PlayerWinning> playersWinning) {
-        for (PlayerWinning playerWinning : playersWinning) {
-            printPlayerResult(playerWinning);
+    private static void printPlayersResult(List<PlayerProfit> playersWinning) {
+        for (PlayerProfit playerProfit : playersWinning) {
+            printPlayerResult(playerProfit);
         }
     }
 
-    private static void printPlayerResult(PlayerWinning playerWinning) {
-        System.out.println(playerWinning.name() + RESULT_DELIMITER + playerWinning.profit());
+    private static void printPlayerResult(PlayerProfit playerProfit) {
+        System.out.println(playerProfit.name() + RESULT_DELIMITER + playerProfit.profit());
     }
 
 }
