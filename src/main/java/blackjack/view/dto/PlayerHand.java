@@ -2,6 +2,7 @@ package blackjack.view.dto;
 
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
+import blackjack.view.CardMapper;
 import java.util.List;
 
 public record PlayerHand(
@@ -24,7 +25,7 @@ public record PlayerHand(
     
     private static List<String> toCardDisplayNames(Participant participant) {
         return participant.getCards().stream()
-                .map(CardDisplayName::from)
+                .map(CardMapper::toDisplayName)
                 .map(CardDisplayName::displayName)
                 .toList();
     }
