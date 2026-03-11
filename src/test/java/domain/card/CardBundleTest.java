@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-public class CardBundleTest {
+class CardBundleTest {
 
     @Test
     void 플레이어의_카드에_에이스가_있는지_확인한다() {

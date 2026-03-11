@@ -3,7 +3,7 @@ package domain.card;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class CardTest {
+class CardTest {
 
     @Test
     void 카드를_생성한다() {

@@ -3,7 +3,7 @@ package domain.card;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class CardDeckTest {
+class CardDeckTest {
 
     @Test
     void 카드덱에서_카드를_뽑는다() {

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-public class PlayerTest {
+class PlayerTest {
 
     @Test
     void 플레이어가_카드를_1장_받는다() {

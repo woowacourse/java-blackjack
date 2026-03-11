@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-public class DealerTest {
+class DealerTest {
 
     // THINK @BeforeEach 생각해볼 것.
 
