@@ -1,9 +1,11 @@
 package controller;
 
 import domain.Players;
+import domain.batting.Money;
 import domain.participant.Player;
 import service.GameService;
 import util.HitOption;
+import util.InputBattingParser;
 import util.InputHitOptionParser;
 import view.InputView;
 import view.OutputView;
@@ -44,6 +46,17 @@ public class GameController {
             try {
                 String rawHitOption = inputView.readHitOption(player.getName());
                 return InputHitOptionParser.parseHitOption(rawHitOption);
+            } catch (IllegalArgumentException exception) {
+                outputView.printErrorMessage(exception.getMessage());
+            }
+        }
+    }
+
+    private Money inputBattingMoney(Player player) {
+        while (true) {
+            try {
+                String rawBattingMoney = inputView.readBatting(player.getName());
+                return InputBattingParser.parseBattingParser(rawBattingMoney);
             } catch (IllegalArgumentException exception) {
                 outputView.printErrorMessage(exception.getMessage());
             }
