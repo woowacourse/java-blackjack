@@ -1,7 +1,6 @@
 package domain;
 
-import static message.ErrorMessage.INVALID_BET_AMOUNT_RANGE;
-import static message.ErrorMessage.INVALID_BET_AMOUNT_UNIT;
+import static message.ErrorMessage.BET_AMOUNT_OUT_OF_RANGE;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
@@ -17,7 +16,7 @@ public class BetAmountTest {
     void 배팅_금액이_배팅_한도를_벗어날_경우_예외가_발생한다(int amount) {
         assertThatThrownBy(() -> new BetAmount(amount))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(INVALID_BET_AMOUNT_RANGE.getMessage());
+                .hasMessage(BET_AMOUNT_OUT_OF_RANGE.getMessage());
     }
 
     @ParameterizedTest
@@ -26,7 +25,7 @@ public class BetAmountTest {
     void 배팅_금액이_1000원_단위로_나누어_떨어지지_않을_경우_예외가_발생한다(int amount) {
         assertThatThrownBy(() -> new BetAmount(amount))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(INVALID_BET_AMOUNT_UNIT.getMessage());
+                .hasMessage(BET_AMOUNT_OUT_OF_RANGE.getMessage());
     }
 
     @ParameterizedTest
