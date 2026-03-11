@@ -3,7 +3,6 @@ package domain.player;
 import domain.MatchResult;
 import domain.deck.Deck;
 import dto.BlackjackResult;
-import dto.GamblerCardInfo;
 import expcetion.BlackjackException;
 import expcetion.ExceptionMessage;
 import java.util.ArrayList;
@@ -58,9 +57,5 @@ public class Gamblers {
 
     public List<String> getNames() {
         return gamblers.stream().map(Gambler::getName).toList();
-    }
-
-    public List<GamblerCardInfo> gamblerCardInfos() {
-        return gamblers.stream().map(Gambler::getCardInfo).toList();
     }
 }

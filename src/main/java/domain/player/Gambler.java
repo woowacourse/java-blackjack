@@ -1,9 +1,10 @@
 package domain.player;
 
 import domain.MatchResult;
-import dto.GamblerCardInfo;
+import domain.card.Card;
 import expcetion.BlackjackException;
 import expcetion.ExceptionMessage;
+import java.util.List;
 
 public class Gambler extends Player {
     private static final int GAMBLER_NAME_MAX_LENGTH = 10;
@@ -66,7 +67,7 @@ public class Gambler extends Player {
         return name;
     }
 
-    public GamblerCardInfo getCardInfo() {
-        return new GamblerCardInfo(name, handCard.getCardInfos(), score());
+    public List<Card> getCardInfo() {
+        return handCard.getCards();
     }
 }
