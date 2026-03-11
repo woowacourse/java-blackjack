@@ -31,7 +31,7 @@ public class BlackJackGameController {
 
         Map<String, Boolean> gameResult = gameManager.getGameResult();
 
-        endGame(gameManager.getDealer(), players, gameResult);
+        endGame(gameManager, players, gameResult);
     }
 
     private void playGame(List<Player> players, GameManager gameManager) {
@@ -85,8 +85,8 @@ public class BlackJackGameController {
         }
     }
 
-    private static void endGame(Dealer dealer, List<Player> players, Map<String, Boolean> gameResult) {
-        OutputView.printFinalCards(dealer.getParticipantCardsDto());
+    private static void endGame(GameManager gameManager, List<Player> players, Map<String, Boolean> gameResult) {
+        OutputView.printFinalCards(gameManager.getDealerDto());
         printFinalScores(players);
         OutputView.printGameResult(gameResult);
     }
