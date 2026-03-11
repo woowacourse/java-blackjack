@@ -13,6 +13,7 @@ import util.InputParser;
 
 public class Participants implements Iterable<Participant> {
     private static final String DEALER_PARTICIPANT = "딜러,";
+
     private List<Participant> values;
 
     private Participants(List<Participant> values) {

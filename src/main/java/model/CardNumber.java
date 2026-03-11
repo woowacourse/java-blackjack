@@ -30,14 +30,14 @@ public enum CardNumber {
         return Arrays.stream(CardNumber.values())
                 .filter(cardNumber -> cardNumber.value == targetValue)
                 .findFirst()
-                .orElseThrow();
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당하는 값을 카드 중에서 찾을 수 없습니다."));
     }
 
     public static CardNumber findByName(String name) {
         return Arrays.stream(CardNumber.values())
                 .filter(cardNumber -> cardNumber.name.equals(name))
                 .findFirst()
-                .orElseThrow();
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당하는 카드 이름을 카드 중에서 찾을 수 없습니다."));
     }
 
     public int toValue() {
