@@ -76,4 +76,9 @@ public class OutputView {
     private void printNewLine() {
         System.out.println();
     }
+
+    public void askBetAmount(String playerName) {
+        printNewLine();
+        printLine(String.format("%s의 배팅 금액은?", playerName));
+    }
 }
