@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -17,6 +18,14 @@ class HandTest {
         @Test
         @DisplayName("카드 합이 21 이하이면 isBust는 False다")
         void isBust_False() {
+            List<Card> cardsThatValue16 = List.of(
+                    new Card(CardShape.다이아몬드, CardContents.SIX),
+                    new Card(CardShape.다이아몬드, CardContents.TEN)
+            );
+            cardsThatValue16.forEach(
+                    card -> testHandThatValueFive.addCard(card)
+            );
+
             //when
             boolean result = testHandThatValueFive.isBust();
 
@@ -24,8 +33,23 @@ class HandTest {
             Assertions.assertFalse(result);
         }
 
-        //TODO : isBust_False 의 결과를 21로 차후 수정.
-        //TODO: isBust_True 테스트 추가
+        @Test
+        @DisplayName("카드 합이 21 초과이면 isBust는 True다")
+        void isBust_True() {
+            List<Card> cardsThatValue17 = List.of(
+                    new Card(CardShape.다이아몬드, CardContents.SEVEN),
+                    new Card(CardShape.다이아몬드, CardContents.TEN)
+            );
+            cardsThatValue17.forEach(
+                    card -> testHandThatValueFive.addCard(card)
+            );
+
+            //when
+            boolean result = testHandThatValueFive.isBust();
+
+            //then
+            Assertions.assertTrue(result);
+        }
     }
 
     @Test
