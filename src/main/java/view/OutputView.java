@@ -1,6 +1,5 @@
 package view;
 
-import domain.Result;
 import dto.DealerDto;
 import dto.NamesDto;
 import dto.ParticipantsCardsDto;
@@ -51,16 +50,6 @@ public class OutputView {
                 .mapToInt(StatisticsDto::profit)
                 .sum();
         return -totalPlayerProfit;
-    }
-
-    private static String getResultMessage(List<String> statistics, Result playerResult, Result dealerResult) {
-        if (statistics.stream()
-                .anyMatch(s -> s.equals(playerResult.getDisplayName()))) {
-            return statistics.stream()
-                    .filter(s -> s.equals(playerResult.getDisplayName()))
-                    .count() + dealerResult.getDisplayName() + " ";
-        }
-        return "";
     }
 
 
