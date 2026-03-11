@@ -1,15 +1,16 @@
 package domain;
 
-import static domain.Constant.DEALER_NAME;
-import static domain.Constant.DEFAULT_HAND_NUMBER;
-
 import domain.card.Deck;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
+
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
+
+import static domain.Constant.DEALER_NAME;
+import static domain.Constant.DEFAULT_HAND_NUMBER;
 
 public class BlackjackGame {
     private final Players players;
@@ -23,12 +24,12 @@ public class BlackjackGame {
     }
 
     public void giveHand() {
-        players.giveCardsToEachPlayers((quantity) -> deck.pullCards(quantity), DEFAULT_HAND_NUMBER);
-        dealer.addCards((quantity) -> deck.pullCards(quantity), DEFAULT_HAND_NUMBER);
+        players.giveCardsToEachPlayers((quantity) -> deck.drawWithAmount(quantity), DEFAULT_HAND_NUMBER);
+        dealer.addCards((quantity) -> deck.drawWithAmount(quantity), DEFAULT_HAND_NUMBER);
     }
 
     public void playerHitStand(Function<Player, Boolean> decideHitStandFunc, Consumer<Player> printResultFunc) {
-        players.hitStandEachPlayers(decideHitStandFunc, () -> deck.pull(), printResultFunc);
+        players.hitStandEachPlayers(decideHitStandFunc, () -> deck.draw(), printResultFunc);
     }
 
     public void dealerHitStand(Consumer<Boolean> printDecisionOutput) {
@@ -38,7 +39,7 @@ public class BlackjackGame {
                 printDecisionOutput.accept(dealerHitStand);
                 break;
             }
-            dealer.addCard(() -> deck.pull());
+            dealer.addCard(() -> deck.draw());
             printDecisionOutput.accept(dealerHitStand);
         }
     }
