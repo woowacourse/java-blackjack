@@ -295,7 +295,8 @@ SRP를 완벽히 지킨 것입니다.
         - 기존의 기능 `public Map<GameResult, Long> determineGameResult(List<Player> players)`
         - ↘️ 아래로 변경 `public int determineProfit(List<Player> players)`
     - ⬆️ 참가자의 수익금 결과를 표현할 `DTO` `참가자 수익금` ⭕
-        - `record ParticipantsProfit(String nickname, int profit)`
+        - `record PlayerGameResult(String nickname, GameResult gameResult)`
+        - ↘️ 아래로 변경 `record ParticipantsProfit(String nickname, int profit)`
         - ↘️ 아래로 변경 `ParticipantsProfit.from(player.getNickname(), player.calculateProfit())`
     - ⬆️ 최종 게임 결과를 통합 표현할 `DTO` `최종 게임 결과` ⭕
         - `record TotalWinningResult(long dealerWinCount, long dealerLossCount, List<PlayerGameResult> playerResults)`
@@ -307,6 +308,13 @@ SRP를 완벽히 지킨 것입니다.
 ---
 
 ## 🧪 구현
+
+- [ ] 배팅금 `private final int amount`
+- [ ] 수익금 `public int calculateProfit(GameResult result)`
+- [ ] 딜러 수익금 계산 `public int determineProfit(List<Player> players)`
+- [ ] 참가자 수익금 계산 `record ParticipantsProfit(String nickname, int profit)`
+- [ ] 참가자 수익금 DTO `ParticipantsProfit.from(player.getNickname(), player.calculateProfit())`
+- [ ] 최종 게임 결과 DTO `record TotalWinningResult(ParticipantsProfit dealerProfit, ParticipantsProfit playerProfit)`
 
 ---
 
