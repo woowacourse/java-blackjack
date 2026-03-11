@@ -11,7 +11,7 @@ public class PlayersTest {
         List<String> names = List.of("이산", "바니", "소낙눈");
         Players players = new Players(names);
         Deck deck = new Deck();
-        players.recieveCard(deck);
+        players.receiveCard(deck);
 
         assertThat(players.getPlayers()).allSatisfy(player -> {
             assertThat(player.getCardCount()).isEqualTo(1);
