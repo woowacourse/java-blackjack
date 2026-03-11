@@ -1,24 +1,22 @@
 package service;
 
-import domain.participant.Dealer;
 import domain.card.CardDeck;
+import domain.participant.Dealer;
 import domain.participant.HandCards;
 import domain.participant.player.Player;
-import domain.participant.player.PlayerGroups;
-import domain.participant.WinStatus;
+import domain.participant.player.PlayerGroup;
 import domain.vo.Name;
 import dto.DealerInfoDto;
 import dto.PlayerInfoDto;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class GameService {
-    private PlayerGroups playerGroups;
-    private Dealer dealer = new Dealer(new HandCards());
-    private CardDeck cardDeck = new CardDeck();
     private static final int START_CARD_COUNT = 2;
+    private PlayerGroup playerGroup;
+    private final Dealer dealer = new Dealer(new HandCards());
+    private final CardDeck cardDeck = new CardDeck();
 
     public void registerPlayers(List<String> playerNames) {
         List<Player> players = new ArrayList<>();
@@ -28,7 +26,7 @@ public class GameService {
             players.add(player);
         }
 
-        playerGroups = new PlayerGroups(players);
+        playerGroup = new PlayerGroup(players);
     }
 
     public void initAllParticipantsCard() {
@@ -43,9 +41,9 @@ public class GameService {
     }
 
     private void dealInitialPlayersCards() {
-        while (playerGroups.hasNextPlayer()) {
-            playerGroups.onePlayerDrawCard(cardDeck.getCard());
-            playerGroups.nextPlayer();
+        while (playerGroup.hasNextPlayer()) {
+            playerGroup.onePlayerDrawCard(cardDeck.getCard());
+            playerGroup.nextPlayer();
         }
     }
 
@@ -56,7 +54,7 @@ public class GameService {
     public List<PlayerInfoDto> getAllPlayersInfo() {
         List<PlayerInfoDto> playerInfoDtos = new ArrayList<>();
 
-        for (Player player : playerGroups.getPlayers()) {
+        for (Player player : playerGroup.getPlayers()) {
             playerInfoDtos.add(new PlayerInfoDto(player.getName(), player.getCards(), player.getScore(), player.getWinStatus()));
         }
 
@@ -64,28 +62,28 @@ public class GameService {
     }
 
     public boolean isRemainPlayer() {
-        return playerGroups.hasNextPlayer();
+        return playerGroup.hasNextPlayer();
     }
 
     public String getCurrentPlayerName() {
-        return playerGroups.getCurrentPlayer()
+        return playerGroup.getCurrentPlayer()
                 .getName();
     }
 
     public List<String> getCurrentPlayerCards(){
-        return playerGroups.getCurrentPlayerCards();
+        return playerGroup.getCurrentPlayerCards();
     }
 
     public void currentPlayerHit(){
-        playerGroups.onePlayerDrawCard(cardDeck.getCard());
+        playerGroup.onePlayerDrawCard(cardDeck.getCard());
     }
 
     public boolean isCurrentPlayerBust() {
-        return playerGroups.getCurrentPlayer().isBust();
+        return playerGroup.getCurrentPlayer().isBust();
     }
 
     public void nextPlayer() {
-        playerGroups.nextPlayer();
+        playerGroup.nextPlayer();
     }
 
     public boolean isDealerHit(){
@@ -97,14 +95,14 @@ public class GameService {
     }
 
     public void finalizeGameResult() {
-        for (Player player : playerGroups.getPlayers()) {
+        for (Player player : playerGroup.getPlayers()) {
             player.finalizeResult(dealer.getScore());
             dealer.finalizeResult(player.getScore());
         }
     }
 
     public int getPlayerGroupSize() {
-        return playerGroups.getPlayerGroupSize();
+        return playerGroup.getPlayerGroupSize();
     }
 
 }

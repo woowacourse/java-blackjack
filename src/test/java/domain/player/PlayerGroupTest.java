@@ -2,7 +2,7 @@ package domain.player;
 
 import domain.participant.HandCards;
 import domain.participant.player.Player;
-import domain.participant.player.PlayerGroups;
+import domain.participant.player.PlayerGroup;
 import domain.vo.Name;
 import org.junit.jupiter.api.Test;
 
@@ -12,15 +12,15 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class PlayerGroupsTest {
+class PlayerGroupTest {
     @Test
     void playerGroup_정상_생성_테스트() {
         List<Player> players = new ArrayList<>(List
                 .of(new Player(new Name("pobi"), new HandCards()), new Player(new Name("Jason"), new HandCards()),
                         new Player(new Name("파도"), new HandCards()), new Player(new Name("이안"), new HandCards())));
-        PlayerGroups playerGroups = new PlayerGroups(players);
+        PlayerGroup playerGroup = new PlayerGroup(players);
 
-        assertThat(playerGroups.getPlayerGroupSize()).isEqualTo(players.size());
+        assertThat(playerGroup.getPlayerGroupSize()).isEqualTo(players.size());
     }
 
     @Test
@@ -29,7 +29,7 @@ class PlayerGroupsTest {
                 .of(new Player(new Name("pobi"), new HandCards()), new Player(new Name("Jason"), new HandCards()),
                         new Player(new Name("파도"), new HandCards()), new Player(new Name("이안"), new HandCards()), new Player(new Name("슈크림"), new HandCards())));
 
-        assertThatThrownBy(() -> new PlayerGroups(players))
+        assertThatThrownBy(() -> new PlayerGroup(players))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("정원");
     }
@@ -40,7 +40,7 @@ class PlayerGroupsTest {
                 .of(new Player(new Name("pobi"), new HandCards()), new Player(new Name("Jason"), new HandCards()),
                         new Player(new Name("파도"), new HandCards()), new Player(new Name("파도"), new HandCards())));
 
-        assertThatThrownBy(() -> new PlayerGroups(players))
+        assertThatThrownBy(() -> new PlayerGroup(players))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("동명이인");
     }

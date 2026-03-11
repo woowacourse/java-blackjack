@@ -7,12 +7,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class PlayerGroups {
+public class PlayerGroup {
     private static final int PLAYER_NUMBER_LIMIT = 4;
     private final List<Player> players;
     private int playIndex = 0;
 
-    public PlayerGroups(List<Player> players) {
+    public PlayerGroup(List<Player> players) {
         validatePlayerNum(players);
         validateDuplicate(players);
         this.players = new ArrayList<>(players);
