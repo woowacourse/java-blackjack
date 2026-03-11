@@ -21,6 +21,18 @@ public class InputView {
         }
     }
 
+    public static int readPlayerBettingMoney(String playerName) {
+        System.out.println("\n" + playerName + "의 배팅 금액은?");
+        while (true) {
+            try {
+                String input = readLine();
+                return Integer.parseInt(input);
+            } catch (IllegalArgumentException e) {
+                OutputView.printErrorMessage(e.getMessage());
+            }
+        }
+    }
+
     public static String readMoreCard(String playerName) {
         System.out.println(playerName + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         while (true) {
