@@ -1,14 +1,35 @@
 package blackjack.view;
 
+import static blackjack.model.card.Rank.ACE;
+import static blackjack.model.card.Rank.EIGHT;
+import static blackjack.model.card.Rank.FIVE;
+import static blackjack.model.card.Rank.FOUR;
+import static blackjack.model.card.Rank.JACK;
+import static blackjack.model.card.Rank.KING;
+import static blackjack.model.card.Rank.NINE;
+import static blackjack.model.card.Rank.QUEEN;
+import static blackjack.model.card.Rank.SEVEN;
+import static blackjack.model.card.Rank.SIX;
+import static blackjack.model.card.Rank.TEN;
+import static blackjack.model.card.Rank.THREE;
+import static blackjack.model.card.Rank.TWO;
+import static blackjack.model.card.Suit.CLUB;
+import static blackjack.model.card.Suit.DIAMOND;
+import static blackjack.model.card.Suit.HEART;
+import static blackjack.model.card.Suit.SPADE;
+import static blackjack.model.game.BlackjackResult.LOSE;
+import static blackjack.model.game.BlackjackResult.PUSH;
+import static blackjack.model.game.BlackjackResult.WIN;
+import static java.util.Map.entry;
+
+import blackjack.model.card.Rank;
+import blackjack.model.card.Suit;
+import blackjack.model.game.BlackjackResult;
 import blackjack.view.dto.CardDto;
 import blackjack.view.dto.DealerScoreDto;
 import blackjack.view.dto.PlayerDto;
 import blackjack.view.dto.PlayerScoreDto;
 import blackjack.view.dto.ResultDto;
-import blackjack.model.game.BlackjackResult;
-import blackjack.view.parser.RankParser;
-import blackjack.view.parser.ResultParser;
-import blackjack.view.parser.SuitParser;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -17,6 +38,35 @@ import java.util.stream.Collectors;
 public class OutputView {
 
     private static final String DELIMITER = ", ";
+
+    private static final Map<Rank, String> RANK_LABELS = Map.ofEntries(
+            entry(ACE, "A"),
+            entry(TWO, "2"),
+            entry(THREE, "3"),
+            entry(FOUR, "4"),
+            entry(FIVE, "5"),
+            entry(SIX, "6"),
+            entry(SEVEN, "7"),
+            entry(EIGHT, "8"),
+            entry(NINE, "9"),
+            entry(TEN, "10"),
+            entry(KING, "K"),
+            entry(QUEEN, "Q"),
+            entry(JACK, "J")
+    );
+
+    private static final Map<BlackjackResult, String> RESULT_LABELS = Map.of(
+            WIN, "승",
+            LOSE, "패",
+            PUSH, "푸시"
+    );
+
+    private static final Map<Suit, String> SUIT_LABELS = Map.of(
+            DIAMOND, "다이아몬드",
+            CLUB, "클로버",
+            SPADE, "스페이드",
+            HEART, "하트"
+    );
 
     public void printInitialDeal(List<CardDto> dealerCards, List<PlayerDto> players) {
         String joinedPlayerNames = players.stream()
@@ -91,14 +141,14 @@ public class OutputView {
                 ));
 
         int dealerWinCount = playerResultCounts.getOrDefault(BlackjackResult.LOSE, 0);
-        int dealerLoseCount = playerResultCounts.getOrDefault(BlackjackResult.WIN, 0);
+        int dealerLoseCount = playerResultCounts.getOrDefault(WIN, 0);
         int dealerDrawCount = playerResultCounts.getOrDefault(BlackjackResult.PUSH, 0);
 
         System.out.println("딜러: " + dealerWinCount + "승 " + dealerLoseCount + "패 " + dealerDrawCount + "무");
     }
 
     private void printPlayerResult(ResultDto playerResult) {
-        String result = ResultParser.parseToLabel(playerResult.result());
+        String result = RESULT_LABELS.get(playerResult.result());
 
         System.out.println(playerResult.playerName() + ": " + result);
     }
@@ -110,8 +160,8 @@ public class OutputView {
     }
 
     private String parseCardToOutput(CardDto card) {
-        String rank = RankParser.parseToLabel(card.rank());
-        String suit = SuitParser.parseToLabel(card.suit());
+        String rank = RANK_LABELS.get(card.rank());
+        String suit = SUIT_LABELS.get(card.suit());
 
         return rank + suit;
     }

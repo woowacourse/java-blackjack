@@ -1,12 +1,17 @@
 package blackjack.view;
 
 import blackjack.model.game.HitAnswer;
-import blackjack.view.parser.AnswerParser;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Map;
 
 public class InputView {
+
+    private static final Map<String, HitAnswer> ANSWERS = Map.of(
+            "y", HitAnswer.HIT,
+            "n", HitAnswer.STAND
+    );
 
     private final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
@@ -21,7 +26,12 @@ public class InputView {
     public HitAnswer askHit(final String playerName) {
         System.out.println(playerName + "은 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
 
-        return AnswerParser.parseToModel(readLine());
+        String answer = readLine();
+        if (!ANSWERS.containsKey(answer)) {
+            throw new IllegalArgumentException("부적절한 응답입니다.");
+        }
+
+        return ANSWERS.get(answer);
     }
 
     private String readLine() {
