@@ -1,7 +1,6 @@
 package view;
 
 import domain.Card;
-import domain.Dealer;
 import domain.Player;
 import domain.Rank;
 import domain.Result;
