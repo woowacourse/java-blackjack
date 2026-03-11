@@ -8,9 +8,13 @@ import org.junit.jupiter.api.Test;
 public class PlayersTest {
     @Test
     void 플레이어들이_카드를_받는다() {
-        Players players = new Players(List.of("이산", "바니"));
+        List<String> names = List.of("이산", "바니", "소낙눈");
+        Players players = new Players(names);
         Deck deck = new Deck();
         players.recieveCard(deck);
-        assertThat(deck.getCount()).isEqualTo(50);
+
+        assertThat(players.getPlayers()).allSatisfy(player -> {
+            assertThat(player.getCardCount()).isEqualTo(1);
+        });
     }
 }
