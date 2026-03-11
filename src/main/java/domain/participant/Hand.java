@@ -25,11 +25,16 @@ public class Hand {
         }
 
         for (Card card : cards) {
-            if (card.isAce()) {
-                score = calculateAcePoint(score);
-            }
+            score = calculateAceCase(card, score);
         }
 
+        return score;
+    }
+
+    private int calculateAceCase(Card card, int score) {
+        if (card.isAce()) {
+            score = calculateAcePoint(score);
+        }
         return score;
     }
 
