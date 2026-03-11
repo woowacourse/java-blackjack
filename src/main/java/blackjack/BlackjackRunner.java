@@ -81,7 +81,8 @@ public class BlackjackRunner {
         List<ParticipantResult> participantResult = participants.getGameResult();
         outputView.printGameResult(participantResult);
         TotalGameResult gameResult = participants.getWinningResult();
-        outputView.printWinner(gameResult);
+        outputView.printMatchResult(gameResult);
+        outputView.printTotalProfitResult(gameResult);
     }
 
     private PlayingCards dealerTurn(Participants participants, PlayingCards deck) {
