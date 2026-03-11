@@ -17,7 +17,8 @@ public class GameResults {
 
     public static GameResults calculate(final Players players, final Dealer dealer) {
         final Map<Player, Profit> playerProfits = new LinkedHashMap<>();
-        players.getPlayers().forEach(player -> addProfit(player, dealer, playerProfits));
+        players.getPlayers()
+                .forEach(player -> addProfit(player, dealer, playerProfits));
         return new GameResults(playerProfits);
     }
 

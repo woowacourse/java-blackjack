@@ -36,7 +36,8 @@ public class Hand {
     }
 
     private boolean hasAce() {
-        return cards.stream().anyMatch(Card::isAce);
+        return cards.stream()
+                .anyMatch(Card::isAce);
     }
 
     public boolean isBlackjack() {
