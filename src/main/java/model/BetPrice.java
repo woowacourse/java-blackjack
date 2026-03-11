@@ -8,7 +8,7 @@ public record BetPrice(Integer value) {
     }
 
     private static void validate(Integer value) {
-        if(value < 0) {
+        if(value <= 0) {
             throw new IllegalArgumentException(ErrorMessage.NO_NEGATIVE_BET.getMessage());
         }
     }
