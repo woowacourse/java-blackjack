@@ -36,8 +36,9 @@ public class BlackJackController {
         List<Player> players = new ArrayList<>();
         OutputView.inputPlayerMessage();
         List<String> names = new ArrayList<>(InputView.inputName());
-        Money bettingMoney=new Money(InputView.inputBettingMoney());
         for (String name : names) {
+            OutputView.askBettingMoneyMessage(name);
+            Money bettingMoney=new Money(InputView.inputBettingMoney());
             players.add(new Player(new ParticipantInfo(name, new Hand()), bettingMoney));
         }
         return players;
