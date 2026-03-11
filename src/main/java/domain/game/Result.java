@@ -29,7 +29,7 @@ public class Result {
             double playerYield = playerOutcome.getYield();
             dealerResult += (int) (playerBettingMoney * playerYield);
         }
-        return dealerResult * (-1);
+        return -dealerResult;
     }
 
     public Map<String, Integer> calculatePlayerYield(Map<Player, ResultInfo> playersResult) {
