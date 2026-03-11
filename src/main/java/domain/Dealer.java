@@ -24,4 +24,8 @@ public class Dealer {
     public int getScore() {
         return hand.getSum();
     }
+
+    public Card getFirstCard() {
+        return hand.getFirst();
+    }
 }
