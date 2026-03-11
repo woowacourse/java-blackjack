@@ -15,13 +15,12 @@ public class Hand {
         return new Hand(List.of(card1, card2));
     }
 
-    //사용자 카드 보관함을 생성해줘!!
-
-    public void addCard(Card card) {
-        this.cards.add(card);
+    //TODO : 책임 : 가지고 있는 카드패가 isBust 인지 판단하세요.
+    public boolean isBust() {
+        return calculateCardScoreSum() > BUST_CRITERIA;
     }
 
-    public int calculateCardScoreSum() {
+    private int calculateCardScoreSum() {
         int sumExceptAce = calculateCardScoreSumExceptAce();
         int sumAce = AceScoreDiscriminator.calculateAceCardsSum(cards, sumExceptAce);
 
@@ -33,7 +32,6 @@ public class Hand {
         for (Card card : cards) {
             sum = addCardScoreExceptAce(card, sum);
         }
-
         return sum;
     }
 
@@ -43,4 +41,8 @@ public class Hand {
         }
         return sum;
     }
+
+//    public void addCard(Card card) {
+//        this.cards.add(card);
+//    }
 }
