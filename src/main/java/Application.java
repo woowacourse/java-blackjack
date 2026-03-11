@@ -71,7 +71,7 @@ public class Application {
     }
 
     private void dealDealerCard() {
-        if (blackjackGame.dealToDealer()) {
+        while (blackjackGame.dealToDealer()) {
             outputView.printDealerReceivedCard();
         }
     }
