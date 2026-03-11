@@ -10,6 +10,6 @@ public class Main {
         OutputView outputView = new OutputView();
         CardCreationStrategy strategy = new RandomCardCreationStrategy();
 
-        new BlackJackController(inputView, outputView, strategy).doGame();
+        new BlackJackController(inputView, outputView, strategy).doGameProcess();
     }
 }

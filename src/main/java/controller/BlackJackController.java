@@ -1,16 +1,16 @@
 package controller;
 
+import domain.BlackJackGame;
 import domain.CardCreationStrategy;
-import domain.Game;
-import dto.GameResultDto;
-import dto.ParticipantDto;
+import domain.Player;
 import java.util.List;
-import java.util.function.BiFunction;
-import java.util.function.Consumer;
+import java.util.Optional;
+import java.util.function.Supplier;
 import view.InputView;
 import view.OutputView;
 
-public class BlackJackController implements GameDelegate {
+// 게임의 총 흐름을 담당.
+public class BlackJackController {
     private final InputView inputView;
     private final OutputView outputView;
     private final CardCreationStrategy strategy;
@@ -21,61 +21,44 @@ public class BlackJackController implements GameDelegate {
         this.strategy = strategy;
     }
 
-    public void doGame() {
-        Game game = retry(Game::ready, this, strategy);
-        retry(game::play, this);
-        game.end(this);
-    }
+    public void doGameProcess() {
+        BlackJackGame game = retry(this::readyGame);
+        outputView.printInitialStates(
+                game.getDealerGameSettingResult(),
+                game.getPlayersGameSettingResults()
+        );
 
-    @Override
-    public List<String> askPlayerNames() {
-        outputView.printNamePrompt();
-        return inputView.readNames();
-    }
-
-    @Override
-    public boolean askDrawCard(String playerName) {
-        outputView.printHitOrStandPrompt(playerName);
-        String input = inputView.readHitOrStand();
-        return input.equals("y");
-    }
-
-    @Override
-    public void showInitialParticipantCards(ParticipantDto dealerDto, List<ParticipantDto> playerDtos) {
-        outputView.printInitialCardShareDetail(dealerDto, playerDtos);
-    }
-
-    @Override
-    public void showPlayerCards(ParticipantDto participantDto) {
-        outputView.printUserCardInfo(participantDto);
-    }
-
-    @Override
-    public void showDealerOneMoreCardMessage() {
-        outputView.printAdditionalCardForDealerDescription();
-    }
-
-    @Override
-    public void showGameResult(GameResultDto resultDto) {
-        outputView.printCardInfoWithSum(resultDto);
-        outputView.printWinLossResult(resultDto);
-    }
-
-    private <T, U, R> R retry(BiFunction<T, U, R> biFunction, T input1, U input2) {
+        //2. 게임을 진행하라
         while (true) {
-            try {
-                return biFunction.apply(input1, input2);
-            } catch (IllegalArgumentException e) {
-                outputView.printErrorMessage(e);
+            Optional<Player> currentPlayer = game.whoseTurn();
+            if (currentPlayer.isEmpty()) {
+                break;
+            }
+
+            String currentUserName = currentPlayer.get().getName();
+            outputView.printHitOrStandPrompt(currentUserName);
+            String hitOrStand = inputView.readHitOrStand();
+            if (hitOrStand.equals("y")) {
+                game.doHitProcess(); //TODO: 출력이 야기되어야 합니다.
+            } else {
+                game.doStandProcess();
             }
         }
+//
+//        //3. 게임 결과를 구하라
+//        blackJackGame.end(this);
     }
 
-    private <T> void retry(Consumer<T> consumer, T input) {
+    private BlackJackGame readyGame() {
+        outputView.printNamePrompt();
+        List<String> playerNames = inputView.readNames();
+        return BlackJackGame.ready(playerNames, strategy);
+    }
+
+    private <T> T retry(Supplier<T> supplier) {
         while (true) {
             try {
-                consumer.accept(input);
-                return;
+                return supplier.get();
             } catch (IllegalArgumentException e) {
                 outputView.printErrorMessage(e);
             }
