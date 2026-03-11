@@ -18,7 +18,7 @@ public class Hand {
     private final Set<Integer> scores = new HashSet<>();
 
     public Hand(final List<Card> handCards) {
-        this.handCards = handCards;
+        this.handCards = List.copyOf(handCards);
     }
 
     public void addCard(final Card card) {
