@@ -30,7 +30,7 @@ public class OutputView {
     public void printWinningResult(WinningResult winningResult) {
         System.out.println();
         System.out.println("## 최종 승패");
-        printWinningResultOfDealer(winningResult.getWinCountOfDealer(), winningResult.numberOfPlayer());
+        printWinningResultOfDealer(winningResult.getWinCountOfDealer(), winningResult.getLoseCountOfDealer());
         printWinningResultOfPlayers(winningResult);
     }
 
@@ -38,8 +38,8 @@ public class OutputView {
         System.out.println();
     }
 
-    private void printWinningResultOfDealer(int winCountOfDealer, int numberOfPlayer) {
-        System.out.println("딜러: " + winCountOfDealer + "승 " + (numberOfPlayer - winCountOfDealer) + "패");
+    private void printWinningResultOfDealer(int winCountOfDealer, int loseCountOfDealer) {
+        System.out.println("딜러: " + winCountOfDealer + "승 " + loseCountOfDealer + "패");
     }
 
     private void printWinningResultOfPlayers(WinningResult winningResult) {

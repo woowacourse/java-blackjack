@@ -24,8 +24,8 @@ public record WinningResult(
                 .count();
     }
 
-    public int numberOfPlayer() {
-        return winningResult.size();
+    public int getLoseCountOfDealer() {
+        return winningResult.size() - getWinCountOfDealer();
     }
 
     public boolean get(String playerName) {
