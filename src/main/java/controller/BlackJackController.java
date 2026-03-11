@@ -1,5 +1,7 @@
 package controller;
 
+import domain.bet.BetAmount;
+import domain.bet.BetTable;
 import domain.card.CardDeck;
 import domain.participant.Dealer;
 import domain.participant.Hand;
@@ -8,6 +10,7 @@ import domain.participant.Player;
 import domain.participant.PlayerName;
 import domain.participant.Players;
 import domain.result.GameState;
+import domain.result.ProfitCalculator;
 import domain.result.Result;
 import domain.result.ResultJudge;
 import service.BlackJackService;
@@ -31,15 +34,34 @@ public class BlackJackController {
     }
 
     public void run() {
-        GameState gameState = prepareGame();
+        Players players = getPlayer();
+        BetTable betTable = playBet(players);
+        GameState gameState = prepareGame(players);
+
         playPlayers(gameState);
         playDealer(gameState);
-        showResult(gameState);
+        showResult(gameState, betTable);
     }
 
-    private GameState prepareGame() {
+    private BetTable playBet(Players players) {
+        BetTable betTable = new BetTable();
+        for (Player player : players.getAllPlayers()) {
+            BetAmount betAmount = getBetAmount(player);
+            betTable.placeBet(player.getName(), betAmount.getAmount());
+        }
+        return betTable;
+    }
+
+    private BetAmount getBetAmount(Player player) {
+        OutputView.betMessage(player);
+        String input = InputView.input();
+        Validator.validateInputIsNotNullOrBlank(input);
+        int betAmount = Parser.inputToNumber(input);
+        return new BetAmount(betAmount);
+    }
+
+    private GameState prepareGame(Players players) {
         CardDeck cardDeck = new CardDeck();
-        Players players = getPlayer();
         Dealer dealer = new Dealer(new Hand());
 
         initGame(cardDeck, new ParticipantGroup(players, dealer));
@@ -61,10 +83,15 @@ public class BlackJackController {
         }
     }
 
-    private void showResult(GameState gameState) {
+    private void showResult(GameState gameState, BetTable betTable) {
         OutputView.scoreStatisticsMessage(gameState.getDealer(), gameState.getPlayers());
         Result result = resultJudge.calculateResult(gameState.getDealer(), gameState.getPlayers());
-        OutputView.gameResultMessage(result);
+        ProfitCalculator calculator = new ProfitCalculator(betTable);
+        for (Player player : gameState.getPlayers().getAllPlayers()) {
+            calculator.playerCalculateProfit(result.getGameResult().get(player.getName()), player);
+        }
+        int dealerProfit = calculator.dealerCalculateProfit();
+        OutputView.gameProfitResultMessage(betTable, dealerProfit);
     }
 
     private Players getPlayer() {

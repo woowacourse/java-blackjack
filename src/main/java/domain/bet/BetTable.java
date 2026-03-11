@@ -26,4 +26,8 @@ public class BetTable {
     public void clearBet(){
         bettingTable.clear();
     }
+
+    public Map<String, Integer> getBettingTable() {
+        return bettingTable;
+    }
 }
