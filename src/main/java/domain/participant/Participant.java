@@ -10,7 +10,7 @@ public abstract class Participant {
     private final Name name;
     private final Hand hand;
 
-    public Participant(String name) {
+    protected Participant(String name) {
         this.name = new Name(name);
         this.hand = new Hand();
     }
