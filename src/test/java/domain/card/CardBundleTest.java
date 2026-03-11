@@ -43,4 +43,10 @@ public class CardBundleTest {
         Assertions.assertThat(actualScore).isEqualTo(expectedScore);
     }
 
+    @Test
+    void 플레이어_블랙잭을_테스트한다() {
+        Assertions.assertThat(cardBundle.isBlackjack())
+                .isTrue();
+    }
+
 }
