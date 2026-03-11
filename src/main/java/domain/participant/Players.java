@@ -26,11 +26,12 @@ public class Players {
     }
 
     private void validateDuplicatedName(List<Player> players) {
-        Set<String> namesSet = players.stream()
+        int playersNameDistinctSize = Math.toIntExact(players.stream()
                 .map(Participant::name)
-                .collect(Collectors.toSet());
+                .distinct()
+                .count());
 
-        if (namesSet.size() != players.size()) {
+        if (playersNameDistinctSize != players.size()) {
             throw new IllegalArgumentException();
         }
     }
