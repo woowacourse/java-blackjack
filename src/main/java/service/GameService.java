@@ -42,9 +42,8 @@ public class GameService {
         if(userIsBlackjack && dealerIsBlackjack) return GameResult.DRAW;
         if(userIsBlackjack) return GameResult.WIN;
         if(dealerIsBlackjack) return GameResult.LOSE;
-        if (dealerBurst && userBurst) return GameResult.DRAW;
-        if (dealerBurst) return GameResult.WIN;
         if (userBurst) return GameResult.LOSE;
+        if (dealerBurst) return GameResult.WIN;
         if (userScore > dealerScore) return GameResult.WIN;
         if (userScore < dealerScore) return GameResult.LOSE;
         return GameResult.DRAW;
