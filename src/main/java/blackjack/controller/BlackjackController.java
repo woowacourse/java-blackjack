@@ -98,7 +98,8 @@ public class BlackjackController {
 
     private void printScore(Players players, Dealer dealer) {
         DealerScoreDto dealerDto = DealerScoreDto.from(dealer);
-        List<PlayerScoreDto> playerDtos = players.stream()
+        List<PlayerScoreDto> playerDtos = players.getPlayers()
+                .stream()
                 .map(PlayerScoreDto::from)
                 .toList();
 
@@ -122,7 +123,8 @@ public class BlackjackController {
     }
 
     private List<PlayerDto> playersToDots(Players players) {
-        return players.stream()
+        return players.getPlayers()
+                .stream()
                 .map(PlayerDto::from)
                 .toList();
     }

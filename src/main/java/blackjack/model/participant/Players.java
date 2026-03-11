@@ -42,8 +42,4 @@ public class Players {
     public List<Player> getPlayers() {
         return players;
     }
-
-    public Stream<Player> stream() {
-        return players.stream();
-    }
 }
