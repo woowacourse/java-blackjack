@@ -1,6 +1,7 @@
 package util;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class InputParser {
@@ -9,17 +10,7 @@ public class InputParser {
                 .map(String::trim)
                 .collect(Collectors.toList());
 
-        validateDuplicate(names);
-
         return names;
-    }
-
-    private static void validateDuplicate(List<String> names) {
-        Set<String> set = new HashSet<>(names);
-
-        if (set.size() != names.size()) {
-            throw new IllegalArgumentException();
-        }
     }
 }
 
