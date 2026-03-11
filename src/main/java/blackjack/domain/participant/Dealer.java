@@ -1,6 +1,5 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.MatchResult;
 import blackjack.domain.PlayingCards;
 import blackjack.dto.DealerGameResult;
 import blackjack.dto.ParticipantResult;
@@ -37,28 +36,11 @@ public class Dealer extends Participant {
         return hand.isBusted();
     }
 
-    public DealerGameResult getDealerWinningResult(List<PlayerGameResult> playerGameResults) {
-        int dealerWin = (int) playerGameResults
-            .stream()
-            .filter(result -> result.matchResult() == MatchResult.LOSE)
-            .count();
-        int dealerTie = (int) playerGameResults
-            .stream()
-            .filter(result -> result.matchResult() == MatchResult.TIE)
-            .count();
-        int dealerLose = (int) playerGameResults
-            .stream()
-            .filter(result -> result.matchResult() == MatchResult.WIN)
-            .count();
-        long profit = calculateDealerProfit(playerGameResults);
-        return new DealerGameResult(dealerWin, dealerTie, dealerLose, profit);
-    }
-
-    private long calculateDealerProfit(List<PlayerGameResult> playerGameResults) {
+    public DealerGameResult calculateDealerProfitResult(List<PlayerGameResult> playerGameResults) {
         long totalPlayerProfit = playerGameResults.stream()
             .mapToLong(PlayerGameResult::profit)
             .sum();
-        return -totalPlayerProfit;
+        return new DealerGameResult(-totalPlayerProfit);
     }
 
     public ParticipantResult getInitialResult() {

@@ -90,7 +90,7 @@ public class Participants {
 
     public TotalGameResult getWinningResult() {
         List<PlayerGameResult> winningResultsWithDealer = players.getWinningResultsWithDealer(dealer);
-        DealerGameResult dealerWinningResult = dealer.getDealerWinningResult(winningResultsWithDealer);
+        DealerGameResult dealerWinningResult = dealer.calculateDealerProfitResult(winningResultsWithDealer);
         return new TotalGameResult(dealerWinningResult, winningResultsWithDealer);
     }
 }

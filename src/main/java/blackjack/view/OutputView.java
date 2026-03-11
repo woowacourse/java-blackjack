@@ -39,28 +39,6 @@ public class OutputView {
         printLine(String.format("%s카드: %s", drawablePlayerNickname, statusByDisplayName));
     }
 
-    public void printMatchResult(TotalGameResult gameResult) {
-        printNewLine();
-        printLine("## 최종 승패");
-        printDealerGameResult(gameResult.dealerGameResult());
-        printPlayersGameResult(gameResult.playerGameResult());
-    }
-
-    private void printPlayersGameResult(List<PlayerGameResult> playerGameResults) {
-        for (PlayerGameResult playerGameResult : playerGameResults) {
-            printLine(
-                String.format("%s: %s",
-                    playerGameResult.nickname(),
-                    playerGameResult.matchResult().getMessage()
-                )
-            );
-        }
-    }
-
-    private void printDealerGameResult(DealerGameResult dealerGameResult) {
-        printLine(String.format("딜러: %d승 %d패", dealerGameResult.winCount(), dealerGameResult.loseCount()));
-    }
-
     public void printGameResult(List<ParticipantResult> participantResult) {
         printNewLine();
         for (ParticipantResult result : participantResult) {
