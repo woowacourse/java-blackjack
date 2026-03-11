@@ -1,7 +1,7 @@
 package domain.participant;
 
 public record Name(String name) {
-    public static final int NAME_LENGTH_THRESHOLD = 5;
+    private static final int NAME_LENGTH_THRESHOLD = 5;
 
     public Name {
         validateNameLength(name);

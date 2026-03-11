@@ -6,7 +6,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Players {
-    public static final int PLAYER_THRESHOLD = 5;
+    private static final int PLAYER_THRESHOLD = 5;
     private final List<Player> players = new ArrayList<>();
 
     public Players(List<String> names) {
