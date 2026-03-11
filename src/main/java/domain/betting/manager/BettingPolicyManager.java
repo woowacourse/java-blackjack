@@ -16,7 +16,8 @@ public class BettingPolicyManager {
         policies = List.of(
                 new BlackjackPushPolicy(),
                 new BlackjackPolicy(),
-                new DoubleBustPolicy()
+                new DoubleBustPolicy(),
+                new BustPolicy()
         );
     }
 

@@ -84,6 +84,20 @@ public class BettingPolicyTest {
                 .isEqualTo(expectedBettingRate);
     }
 
+    @Test
+    void 플레이어가_버스트인_경우를_테스트한다() {
+        Player testPlayer = Player.from(new PlayerName("test"));
+        testPlayer.addCardBundle(bustBundle);
+        Dealer dealer = createDealer(nonBustBundle.openMyCards());
+        dealer.dealMyself();
+
+        BettingRate actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
+        BettingRate expectedBettingRate = BettingResult.BUST.bettingRate();
+
+        Assertions.assertThat(actualBettingRate)
+                .isEqualTo(expectedBettingRate);
+    }
+
     private Dealer createDealer(List<Card> cards) {
         TestCardGenerator testCardGenerator = TestCardGenerator.of(cards);
         Dealer dealer = Dealer.from(CardDeck.from(testCardGenerator));
