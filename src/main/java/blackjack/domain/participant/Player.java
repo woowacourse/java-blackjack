@@ -22,12 +22,12 @@ public class Player extends Participant {
         return getCards().size() > INITIAL_CARD_COUNT;
     }
 
+    public BettingMoney getBettingMoney() {
+        return bettingMoney;
+    }
+
     @Override
     public boolean canReceiveCard() {
         return !isStayed && !isBust();
-    }
-
-    public BettingMoney getBettingMoney() {
-        return bettingMoney;
     }
 }

@@ -25,23 +25,23 @@ public class Hand {
         return new Score(baseScore);
     }
 
-    private boolean shouldApplyAceBonus(final Score score) {
-        return hasAce() && !score.isBust();
-    }
-
-    public boolean isBlackjack() {
-        return cards.size() == BLACKJACK_CARD_COUNT &&
-                calculateScore().getValue() == BLACKJACK_SCORE;
-    }
-
     private int sumCardValues() {
         return cards.stream()
                 .mapToInt(Card::getValue)
                 .sum();
     }
 
+    private boolean shouldApplyAceBonus(final Score score) {
+        return hasAce() && !score.isBust();
+    }
+
     private boolean hasAce() {
         return cards.stream().anyMatch(Card::isAce);
+    }
+
+    public boolean isBlackjack() {
+        return cards.size() == BLACKJACK_CARD_COUNT &&
+                calculateScore().getValue() == BLACKJACK_SCORE;
     }
 
     public boolean isBust() {
