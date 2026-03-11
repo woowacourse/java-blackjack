@@ -10,16 +10,18 @@ import util.Randoms;
 public final class BlackJack {
     private static final int STARTING_CARDS = 2;
 
-    private Participants participants;
+    private final Participants participants;
+    private final List<Card> pickedCards = new ArrayList<>();
+    private final Map<Participant, Integer> betAmount;
     private boolean firstTurn = Boolean.TRUE;
-    private List<Card> pickedCards = new ArrayList<>();
 
-    private BlackJack(Participants participants) {
+    private BlackJack(Participants participants, Map<Participant, Integer> betAmount) {
         this.participants = participants;
+        this.betAmount = betAmount;
     }
 
-    public static BlackJack from(Participants participants) {
-        return new BlackJack(participants);
+    public static BlackJack from(Participants participants, Map<Participant, Integer> betAmount) {
+        return new BlackJack(participants, betAmount);
     }
 
     public Map<String, Integer> calculateDealerResult() {
@@ -69,10 +71,6 @@ public final class BlackJack {
                 participant.draw(pick);
             }
         }
-    }
-
-    public boolean isFirstTurn() {
-        return firstTurn;
     }
 
     public void setFirstTurn() {

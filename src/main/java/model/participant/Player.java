@@ -4,11 +4,11 @@ import java.util.List;
 import model.Card;
 
 public final class Player extends Participant {
-    private final int betAmount;
+    private final int amount;
 
-    private Player(String name, int betAmount) {
+    private Player(String name, int amount) {
         super(name);
-        this.betAmount = betAmount;
+        this.amount = amount;
     }
 
     public static Player of(String input, int betAmount) {

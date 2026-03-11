@@ -3,7 +3,6 @@ package controller;
 import model.BlackJack;
 import model.participant.Participant;
 import model.Participants;
-import util.InputParser;
 import util.Randoms;
 import view.InputView;
 import view.OutputView;
@@ -20,7 +19,7 @@ public class BlackJackController {
 
     public void run() {
         Participants participants = Participants.of(inputView.readParticipantNames());
-        BlackJack blackJack = BlackJack.from(participants);
+        BlackJack blackJack = BlackJack.from(participants, null);
 
         blackJack.dealOut();
         outputView.printDealOut(participants);
