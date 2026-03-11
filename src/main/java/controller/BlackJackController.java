@@ -44,7 +44,7 @@ public class BlackJackController {
     }
 
     private void playGame(Deck deck, Dealer dealer, List<Player> players) {
-        InitStatusDto initStatusDto = blackJackInitService.createInitStatusDto(dealer, players);
+        InitStatusDto initStatusDto = InitStatusDto.of(dealer, players);
         OutputView.printInitMessage(initStatusDto);
 
         players.forEach(player -> drawPlayerCard(player, deck));
