@@ -3,12 +3,34 @@ package view;
 import domain.Card;
 import domain.Dealer;
 import domain.Player;
+import domain.Rank;
 import domain.Result;
+import domain.Suit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class OutputView {
+
+    private static final Map<Suit, String> SUIT_NAME = Map.of(
+            Suit.HEART, "하트",
+            Suit.DIAMOND, "다이아몬드",
+            Suit.SPADE, "스페이드",
+            Suit.CLUB, "클럽"
+    );
+
+    private static final Map<Rank, String> RANK_NAME = Map.of(
+            Rank.ACE, "A",
+            Rank.JACK, "J",
+            Rank.QUEEN, "Q",
+            Rank.KING, "K"
+    );
+
+    private static final Map<Result, String> RESULT_NAME = Map.of(
+            Result.WIN, "승",
+            Result.LOSE, "패",
+            Result.TIE, "무"
+    );
 
     public void printInitialDeal(List<String> playerNames) {
         System.out.println("딜러와 " + String.join(", ", playerNames) + "에게 2장을 나누었습니다.");
@@ -55,7 +77,7 @@ public class OutputView {
 
     private void printPlayerResults(Map<Player, Result> results) {
         for (Map.Entry<Player, Result> entry : results.entrySet()) {
-            System.out.println(entry.getKey().getName() + ": " + entry.getValue().getDisplayName());
+            System.out.println(entry.getKey().getName() + ": " + RESULT_NAME.get(entry.getValue()));
         }
     }
 
@@ -68,6 +90,7 @@ public class OutputView {
     }
 
     private String formatCard(Card card) {
-        return card.getRankDisplayName() + card.getSuitShape();
+        return RANK_NAME.getOrDefault(card.getRank(), String.valueOf(card.getRank().getScore()))
+                + SUIT_NAME.get(card.getSuit());
     }
 }
