@@ -8,7 +8,6 @@ import java.util.Map;
 
 public class GameManager {
     private static final int MAX_PLAYER = 8;
-    private static final int BURST_THRESHOLD = 21;
 
     private final Dealer dealer;
     private final List<Player> players;
@@ -68,11 +67,12 @@ public class GameManager {
         participant.receiveCard(card);
     }
 
-
-
     public Map<String, Boolean> getGameResult() {
-        Map<Participant, Integer> participantScores = getParticipantScores(dealer, players);
-        Map<String, Boolean> gameResult = Result.calculateResult(participantScores);
+        Map<String, Boolean> gameResult = new HashMap<>();
+        for (Player player : players) {
+            boolean isWin = player.isWin(this.dealer);
+            gameResult.put(player.getName(), isWin);
+        }
         return gameResult;
     }
 
