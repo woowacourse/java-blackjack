@@ -24,6 +24,36 @@ public class BlackjackGame {
         return new BlackjackGame(deck, GameParticipants.of(dealer, players));
     }
 
+    public void addPlayerCard(Player player) {
+        player.addHandCard(deck.draw());
+    }
+
+    public boolean playDealerTurn() {
+        if (cannotDealerDraw()) {
+            return false;
+        }
+        drawDealerCards();
+        return true;
+    }
+
+    public Dealer getDealer() {
+        return participants.getDealer();
+    }
+
+    public Players getPlayers() {
+        return participants.getPlayers();
+    }
+
+    private boolean cannotDealerDraw() {
+        return participants.isAllPlayersBust() || !getDealer().checkThreshold();
+    }
+
+    private void drawDealerCards() {
+        while (getDealer().checkThreshold()) {
+            getDealer().addHandCard(deck.draw());
+        }
+    }
+
     private static Players createPlayers(List<String> names, Deck deck) {
         List<Player> players = new ArrayList<>();
         for (String name : names) {
@@ -42,35 +72,5 @@ public class BlackjackGame {
             cards.add(deck.draw());
         }
         return cards;
-    }
-
-    public void addPlayerCard(Player player) {
-        player.addHandCard(deck.draw());
-    }
-
-    public boolean playDealerTurn() {
-        if (cannotDealerDraw()) {
-            return false;
-        }
-        drawDealerCards();
-        return true;
-    }
-
-    private boolean cannotDealerDraw() {
-        return participants.isAllPlayersBust() || !getDealer().checkThreshold();
-    }
-
-    private void drawDealerCards() {
-        while (getDealer().checkThreshold()) {
-            getDealer().addHandCard(deck.draw());
-        }
-    }
-
-    public Dealer getDealer() {
-        return participants.getDealer();
-    }
-
-    public Players getPlayers() {
-        return participants.getPlayers();
     }
 }

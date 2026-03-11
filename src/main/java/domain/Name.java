@@ -13,6 +13,10 @@ public class Name {
         return new Name(validateName(name));
     }
 
+    public String getName() {
+        return name;
+    }
+
     private static String validateName(String name) {
         validateNullOrEmpty(name);
         validateLength(name);
@@ -31,7 +35,4 @@ public class Name {
         }
     }
 
-    public String getName() {
-        return name;
-    }
 }
