@@ -1,17 +1,25 @@
 package blackjack.domain.result;
 
 import blackjack.domain.hand.Score;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
 
 public class GameResultCalculator {
 
-    public GameResult calculate(final Score playerScore, final Score dealerScore) {
-        if (playerScore.isBust()) {
+    public GameResult calculate(final Player player, final Dealer dealer) {
+        if (player.isBlackjack() && dealer.isBlackjack()) {
+            return GameResult.DRAW;
+        }
+        if (player.isBlackjack()) {
+            return GameResult.BLACKJACK;
+        }
+        if (player.isBust()) {
             return GameResult.LOSE;
         }
-        if (dealerScore.isBust()) {
+        if (dealer.isBust()) {
             return GameResult.WIN;
         }
-        return compare(playerScore, dealerScore);
+        return compare(player.calculateScore(), dealer.calculateScore());
     }
 
     private GameResult compare(final Score playerScore, final Score dealerScore) {

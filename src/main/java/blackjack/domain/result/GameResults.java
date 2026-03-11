@@ -56,13 +56,7 @@ public class GameResults {
     }
 
     private static GameResult resolveGameResult(Dealer dealer, Player player) {
-        if (player.isBlackjack() && dealer.isBlackjack()) {
-            return GameResult.DRAW;
-        }
-        if (player.isBlackjack()) {
-            return GameResult.BLACKJACK;
-        }
-        return calculator.calculate(player.calculateScore(), dealer.calculateScore());
+        return calculator.calculate(player, dealer);
     }
 
     private Money profitOf(Player player, Money wager) {

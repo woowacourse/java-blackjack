@@ -1,6 +1,10 @@
 package blackjack.domain.result;
 
-import blackjack.domain.hand.Score;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Rank;
+import blackjack.domain.card.Suit;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -11,26 +15,68 @@ class GameResultCalculatorTest {
 
     @Test
     void 플레이어가_버스트이면_패이다() {
-        assertThat(calculator.calculate(new Score(23), new Score(18))).isEqualTo(GameResult.LOSE);
+        Player player = new Player("pobi");
+        player.receiveCard(new Card(Suit.CLUB, Rank.EIGHT));
+        player.receiveCard(new Card(Suit.CLUB, Rank.NINE));
+        player.receiveCard(new Card(Suit.CLUB, Rank.FIVE));
+
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(Suit.DIAMOND, Rank.EIGHT));
+        dealer.receiveCard(new Card(Suit.DIAMOND, Rank.QUEEN));
+
+        assertThat(calculator.calculate(player, dealer)).isEqualTo(GameResult.LOSE);
     }
 
     @Test
     void 딜러가_버스트이면_승이다() {
-        assertThat(calculator.calculate(new Score(18), new Score(23))).isEqualTo(GameResult.WIN);
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(Suit.CLUB, Rank.EIGHT));
+        dealer.receiveCard(new Card(Suit.CLUB, Rank.NINE));
+        dealer.receiveCard(new Card(Suit.CLUB, Rank.FIVE));
+
+        Player player = new Player("pobi");
+        player.receiveCard(new Card(Suit.DIAMOND, Rank.EIGHT));
+        player.receiveCard(new Card(Suit.DIAMOND, Rank.QUEEN));
+
+        assertThat(calculator.calculate(player, dealer)).isEqualTo(GameResult.WIN);
     }
 
     @Test
     void 플레이어_점수가_딜러보다_높으면_승이다() {
-        assertThat(calculator.calculate(new Score(20), new Score(18))).isEqualTo(GameResult.WIN);
+        Player player = new Player("pobi");
+        player.receiveCard(new Card(Suit.CLUB, Rank.EIGHT));
+        player.receiveCard(new Card(Suit.CLUB, Rank.JACK));
+
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(Suit.DIAMOND, Rank.SEVEN));
+        dealer.receiveCard(new Card(Suit.DIAMOND, Rank.QUEEN));
+
+        assertThat(calculator.calculate(player, dealer)).isEqualTo(GameResult.WIN);
     }
 
     @Test
     void 플레이어_점수가_딜러보다_낮으면_패이다() {
-        assertThat(calculator.calculate(new Score(18), new Score(20))).isEqualTo(GameResult.LOSE);
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(Suit.CLUB, Rank.EIGHT));
+        dealer.receiveCard(new Card(Suit.CLUB, Rank.JACK));
+
+        Player player = new Player("pobi");
+        player.receiveCard(new Card(Suit.DIAMOND, Rank.SEVEN));
+        player.receiveCard(new Card(Suit.DIAMOND, Rank.QUEEN));
+
+        assertThat(calculator.calculate(player, dealer)).isEqualTo(GameResult.LOSE);
     }
 
     @Test
     void 플레이어_점수와_딜러_점수가_같으면_무승부이다() {
-        assertThat(calculator.calculate(new Score(20), new Score(20))).isEqualTo(GameResult.DRAW);
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(Suit.CLUB, Rank.SEVEN));
+        dealer.receiveCard(new Card(Suit.CLUB, Rank.JACK));
+
+        Player player = new Player("pobi");
+        player.receiveCard(new Card(Suit.DIAMOND, Rank.SEVEN));
+        player.receiveCard(new Card(Suit.DIAMOND, Rank.QUEEN));
+
+        assertThat(calculator.calculate(player, dealer)).isEqualTo(GameResult.DRAW);
     }
 }
