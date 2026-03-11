@@ -3,7 +3,7 @@ package model.participant;
 import java.util.List;
 import model.Card;
 
-public class Player extends Participant {
+public final class Player extends Participant {
     private final int betAmount;
 
     private Player(String name, int betAmount) {

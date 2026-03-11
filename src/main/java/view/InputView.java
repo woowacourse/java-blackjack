@@ -2,7 +2,7 @@ package view;
 
 import java.util.Scanner;
 
-public class InputView {
+public final class InputView {
     private Scanner sc = new Scanner(System.in);
 
     public String readParticipantNames() {

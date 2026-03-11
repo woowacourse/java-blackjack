@@ -1,6 +1,6 @@
 package model;
 
-public class Card {
+public final class Card {
 
     private Suits suits;
     private CardNumber cardNumber;

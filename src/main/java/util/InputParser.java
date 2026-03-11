@@ -1,6 +1,6 @@
 package util;
 
-public class InputParser {
+public final class InputParser {
     private static final String DELIMITER = ",";
 
     private InputParser() {

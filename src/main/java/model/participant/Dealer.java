@@ -3,7 +3,7 @@ package model.participant;
 import java.util.List;
 import model.Card;
 
-public class Dealer extends Participant {
+public final class Dealer extends Participant {
     private boolean isFirstTurn = true;
 
     private Dealer(String name) {

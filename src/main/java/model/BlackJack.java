@@ -7,7 +7,7 @@ import java.util.Map;
 import model.participant.Participant;
 import util.Randoms;
 
-public class BlackJack {
+public final class BlackJack {
     private static final int STARTING_CARDS = 2;
 
     private Participants participants;

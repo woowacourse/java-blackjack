@@ -11,7 +11,7 @@ import model.participant.Participant;
 import model.participant.Player;
 import util.InputParser;
 
-public class Participants implements Iterable<Participant> {
+public final class Participants implements Iterable<Participant> {
     private static final String DEALER_PARTICIPANT = "딜러,";
     private static final int DEFAULT_BET_AMOUNT = 0;
 

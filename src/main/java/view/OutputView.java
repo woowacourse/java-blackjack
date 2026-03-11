@@ -6,7 +6,7 @@ import java.util.Map.Entry;
 import model.participant.Participant;
 import model.Participants;
 
-public class OutputView {
+public final class OutputView {
 
     public static final String LINE_SEPARATOR = System.lineSeparator();
 
