@@ -1,5 +1,7 @@
 import domain.Card;
 import domain.CardDeck;
+import strategy.BettingRule;
+import strategy.DefaultBettingRule;
 import strategy.ShuffleStrategy;
 import domain.User;
 import org.assertj.core.api.Assertions;
@@ -16,11 +18,13 @@ class UserTest {
 
     private GameService gameService;
     private CardDeck cardDeck;
+    private BettingRule bettingRule;
 
     @BeforeEach
     void setUp() {
         ShuffleStrategy strategy = (cards -> {});
-        gameService = new GameService(strategy);
+        bettingRule = new DefaultBettingRule();
+        gameService = new GameService(strategy, bettingRule);
     }
 
     @Test

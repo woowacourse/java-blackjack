@@ -10,6 +10,8 @@ import domain.Dealer;
 import domain.GameResult;
 import domain.User;
 import domain.UserProfit;
+import strategy.BettingRule;
+import strategy.DefaultBettingRule;
 import strategy.RandomShuffle;
 import strategy.ShuffleStrategy;
 
@@ -20,7 +22,8 @@ class GameServiceTest {
     @BeforeEach
     void setUp() {
         ShuffleStrategy strategy = new RandomShuffle();
-        gameService = new GameService(strategy);
+        BettingRule bettingRule = new DefaultBettingRule();
+        gameService = new GameService(strategy, bettingRule);
     }
 
     @Test

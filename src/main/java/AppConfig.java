@@ -1,3 +1,5 @@
+import strategy.BettingRule;
+import strategy.DefaultBettingRule;
 import strategy.RandomShuffle;
 import strategy.ShuffleStrategy;
 import view.InputView;
@@ -10,7 +12,7 @@ public class AppConfig {
     }
 
     private GameService service() {
-        return new GameService(strategy());
+        return new GameService(strategy(), bettingRule());
     }
 
     private InputView inputView() {
@@ -24,4 +26,6 @@ public class AppConfig {
     private ShuffleStrategy strategy() {
         return new RandomShuffle();
     }
+
+    private BettingRule bettingRule() {return new DefaultBettingRule();}
 }

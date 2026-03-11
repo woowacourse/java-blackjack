@@ -1,13 +1,17 @@
 import domain.*;
+import strategy.BettingRule;
 import strategy.ShuffleStrategy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameService {
 
     private final CardDeck cardDeck;
+    private final BettingRule bettingRule;
 
-    public GameService(ShuffleStrategy strategy) {
+    public GameService(ShuffleStrategy strategy, BettingRule bettingRule) {
+        this.bettingRule = bettingRule;
         this.cardDeck = new CardDeck(strategy);
     }
 
@@ -61,5 +65,23 @@ public class GameService {
             return GameResult.LOSE;
         }
         return GameResult.DRAW;
+    }
+
+    public List<UserProfit> createUsersProfit(List<User> users, Dealer dealer){
+        List<UserProfit> list = new ArrayList<>();
+        for (User each : users) {
+            list.add(createEachUserProfit(each, dealer));
+        }
+        return list;
+    }
+
+    protected UserProfit createEachUserProfit(User user, Dealer dealer) {
+        String eachName = user.getName();
+        int eachBetAmount = user.getBetAmount();
+        GameResult gameResult = user.getGameResult();
+        boolean eachIsBlackjack = user.isBlackjack();
+        int eachProfit = bettingRule.calculateBetAmount(eachBetAmount,gameResult,eachIsBlackjack);
+
+        return new UserProfit(eachName,eachBetAmount,gameResult,eachProfit);
     }
 }
