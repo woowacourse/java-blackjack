@@ -14,23 +14,23 @@ public class BlackjackGame {
         this.participants = participants;
     }
 
-    public static BlackjackGame start(List<String> names) {
+    public static BlackjackGame start(List<PlayerInfo> playerInfos) {
         Deck deck = Deck.createDeck();
         Dealer dealer = Dealer.from(new Hand(initCards(deck)));
-        Players players = createPlayers(names, deck);
+        Players players = createPlayers(playerInfos, deck);
         return new BlackjackGame(deck, GameParticipants.of(dealer, players));
     }
 
-    private static Players createPlayers(List<String> names, Deck deck) {
+    private static Players createPlayers(List<PlayerInfo> playerInfos, Deck deck) {
         List<Player> players = new ArrayList<>();
-        for (String name : names) {
-            players.add(createPlayer(name, deck));
+        for (PlayerInfo playerInfo : playerInfos) {
+            players.add(createPlayer(playerInfo, deck));
         }
         return Players.from(players);
     }
 
-    private static Player createPlayer(String name, Deck deck) {
-        return Player.of(Name.from(name), new Hand(initCards(deck)));
+    private static Player createPlayer(PlayerInfo playerInfo, Deck deck) {
+        return Player.of(playerInfo.name(), playerInfo.amount(), new Hand(initCards(deck)));
     }
 
     private static List<Card> initCards(Deck deck) {
