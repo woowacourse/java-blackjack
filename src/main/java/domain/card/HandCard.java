@@ -15,9 +15,13 @@ public class HandCard {
     }
 
     public int cardCalculate() {
-        int nonAceTotal = cards.stream().map(Card::getRankScore).filter(e -> !CardRank.isAce(e))
-                .mapToInt(Integer::intValue).sum();
-        int aceCount = (int) cards.stream().map(Card::getRankScore).filter(CardRank::isAce).count();
+        int nonAceTotal = cards.stream()
+                .filter(c -> !c.isAce())
+                .mapToInt(Card::getRankScore)
+                .sum();
+        int aceCount = (int) cards.stream()
+                .filter(Card::isAce)
+                .count();
 
         return aceCalculate(nonAceTotal, aceCount);
     }
@@ -38,10 +42,13 @@ public class HandCard {
     }
 
     public List<String> getCardInfos() {
-        return cards.stream().map(Card::getCardInfo).toList();
+        return cards.stream()
+                .map(Card::getCardInfo)
+                .toList();
     }
 
     public String getFirstCardInfo() {
-        return cards.getFirst().getCardInfo();
+        return cards.getFirst()
+                .getCardInfo();
     }
 }
