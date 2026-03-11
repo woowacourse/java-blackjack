@@ -12,8 +12,8 @@ public class ProfitCalculator {
 
     public void playerCalculateProfit(ResultInfo resultInfo, Player player) {
         int betAmount = betTable.getAmountByName(player.getName());
-        int calculatedBetAmount = resultInfo.calculateProfit(betAmount);
-        betTable.placeBet(player.getName(), calculatedBetAmount);
+        int calculatedProfit = resultInfo.calculateProfit(betAmount);
+        betTable.recodeAmount(player.getName(), calculatedProfit);
     }
 
     public int dealerCalculateProfit() {

@@ -9,7 +9,7 @@ public class BetAmount {
         this.amount = amount;
     }
 
-    public int getAmount() {
+    public int getBetAmount() {
         return amount;
     }
 

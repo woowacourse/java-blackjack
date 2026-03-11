@@ -36,7 +36,7 @@ class ProfitCalculatorTest {
         dealer.keepCard(new Card(Rank.TWO, Pattern.HEART));
 
         betTable = new BetTable();
-        betTable.placeBet(player.getName(), 10000);
+        betTable.recodeAmount(player.getName(), 10000);
     }
 
     @AfterEach
@@ -82,7 +82,7 @@ class ProfitCalculatorTest {
     @DisplayName("플레이어가 블랙잭으로 이겼을 때 수익(베팅한 금액의 1.5배)을 베팅테이블에 기록한다.")
     void calculateProfit_returnsOneAndHalfBet_whenPlayerIsBlackjack() {
         Player player2 = new Player(new PlayerName("user2"), new Hand());
-        betTable.placeBet(player2.getName(), 15000);
+        betTable.recodeAmount(player2.getName(), 15000);
         player2.keepCard(new Card(Rank.ACE, Pattern.CLOVER));
         player2.keepCard(new Card(Rank.JACK, Pattern.HEART));
         int expectedProfit = 22500 - 15000;
@@ -105,7 +105,7 @@ class ProfitCalculatorTest {
         player2.keepCard(new Card(Rank.ACE, Pattern.HEART));
         player2.keepCard(new Card(Rank.JACK, Pattern.HEART));
 
-        betTable.placeBet(player2.getName(), 15000);
+        betTable.recodeAmount(player2.getName(), 15000);
 
         int expectedProfit = 0;
 
@@ -121,7 +121,7 @@ class ProfitCalculatorTest {
     @DisplayName("딜러의 수익을 계산할 수 있다")
     void calculateProfit_returnsDealerProfit() {
         Player player2 = new Player(new PlayerName("user2"), new Hand());
-        betTable.placeBet(player2.getName(), 15000);
+        betTable.recodeAmount(player2.getName(), 15000);
         player2.keepCard(new Card(Rank.TWO, Pattern.SPADE));
         player2.keepCard(new Card(Rank.THREE, Pattern.SPADE));
         int expectedProfit = 5000;

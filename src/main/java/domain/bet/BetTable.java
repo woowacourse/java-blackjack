@@ -1,5 +1,6 @@
 package domain.bet;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +12,7 @@ public class BetTable {
         this.bettingTable = new HashMap<>();
     }
 
-    public void placeBet(String name, int amount) {
+    public void recodeAmount(String name, int amount) {
         bettingTable.put(name, amount);
     }
 
@@ -28,6 +29,6 @@ public class BetTable {
     }
 
     public Map<String, Integer> getBettingTable() {
-        return bettingTable;
+        return Map.copyOf(bettingTable);
     }
 }

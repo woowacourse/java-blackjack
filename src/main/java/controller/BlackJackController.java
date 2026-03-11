@@ -43,11 +43,25 @@ public class BlackJackController {
         showResult(gameState, betTable);
     }
 
+    private Players getPlayer() {
+        List<Player> players = new ArrayList<>();
+
+        OutputView.inputPlayerMessage();
+        String input = InputView.input();
+        Validator.validateInputName(input);
+        List<String> names = Parser.separateBySeparator(input);
+
+        for (String name : names) {
+            players.add(new Player(new PlayerName(name), new Hand()));
+        }
+        return new Players(players);
+    }
+
     private BetTable playBet(Players players) {
         BetTable betTable = new BetTable();
         for (Player player : players.getAllPlayers()) {
             BetAmount betAmount = getBetAmount(player);
-            betTable.placeBet(player.getName(), betAmount.getAmount());
+            betTable.recodeAmount(player.getName(), betAmount.getBetAmount());
         }
         return betTable;
     }
@@ -69,10 +83,48 @@ public class BlackJackController {
         return new GameState(new ParticipantGroup(players, dealer), cardDeck);
     }
 
+    private void initGame(CardDeck cardDeck, ParticipantGroup participantGroup) {
+        blackJackService.dealInitialCards(cardDeck, participantGroup);
+        OutputView.gameStartMessage(participantGroup.getDealer(), participantGroup.getPlayers());
+    }
+
     private void playPlayers(GameState gameState) {
         for (Player player : gameState.getPlayers().getAllPlayers()) {
             progressGame(gameState.getCardDeck(), player);
         }
+    }
+
+    private void progressGame(CardDeck cardDeck, Player player) {
+        while (canPlayerDraw(player)) {
+            drawAndShowCard(cardDeck, player);
+        }
+        if (!player.isBust()) {
+            finalizePlayerTurn(player);
+        }
+    }
+
+    private boolean canPlayerDraw(Player player) {
+        if (player.isBust()) {
+            player.getTotalCardScore();
+            return false;
+        }
+        return isHitRequested(player);
+    }
+
+    private boolean isHitRequested(Player player) {
+        OutputView.hitOrStandMessage(player);
+        String input = InputView.input();
+        Validator.validateChoiceInput(input);
+        return HIT_COMMAND.equals(input);
+    }
+
+    private void drawAndShowCard(CardDeck cardDeck, Player player) {
+        player.keepCard(cardDeck.drawCard());
+        OutputView.holdingCardMessage(player);
+    }
+
+    private void finalizePlayerTurn(Player player) {
+        OutputView.holdingCardMessage(player);
     }
 
     private void playDealer(GameState gameState) {
@@ -87,62 +139,16 @@ public class BlackJackController {
         OutputView.scoreStatisticsMessage(gameState.getDealer(), gameState.getPlayers());
         Result result = resultJudge.calculateResult(gameState.getDealer(), gameState.getPlayers());
         ProfitCalculator calculator = new ProfitCalculator(betTable);
-        for (Player player : gameState.getPlayers().getAllPlayers()) {
-            calculator.playerCalculateProfit(result.getGameResult().get(player.getName()), player);
-        }
+
+        savePlayerProfits(gameState, calculator, result);
+
         int dealerProfit = calculator.dealerCalculateProfit();
         OutputView.gameProfitResultMessage(betTable, dealerProfit);
     }
 
-    private Players getPlayer() {
-        List<Player> players = new ArrayList<>();
-
-        OutputView.inputPlayerMessage();
-        String input = InputView.input();
-        Validator.validateInputName(input);
-        List<String> names = Parser.separateBySeparator(input);
-
-        for (String name : names) {
-            players.add(new Player(new PlayerName(name), new Hand()));
-        }
-        return new Players(players);
-    }
-
-    private void initGame(CardDeck cardDeck, ParticipantGroup participantGroup) {
-        blackJackService.dealInitialCards(cardDeck, participantGroup);
-        OutputView.gameStartMessage(participantGroup.getDealer(), participantGroup.getPlayers());
-    }
-
-    private boolean isHitRequested(Player player) {
-        OutputView.hitOrStandMessage(player);
-        String input = InputView.input();
-        Validator.validateChoiceInput(input);
-        return HIT_COMMAND.equals(input);
-    }
-
-    private boolean canPlayerDraw(Player player) {
-        if (player.isBust()) {
-            player.getTotalCardScore();
-            return false;
-        }
-        return isHitRequested(player);
-    }
-
-    private void drawAndShowCard(CardDeck cardDeck, Player player) {
-        player.keepCard(cardDeck.drawCard());
-        OutputView.holdingCardMessage(player);
-    }
-
-    private void finalizePlayerTurn(Player player) {
-        OutputView.holdingCardMessage(player);
-    }
-
-    private void progressGame(CardDeck cardDeck, Player player) {
-        while (canPlayerDraw(player)) {
-            drawAndShowCard(cardDeck, player);
-        }
-        if (!player.isBust()) {
-            finalizePlayerTurn(player);
+    private void savePlayerProfits(GameState gameState, ProfitCalculator calculator, Result result) {
+        for (Player player : gameState.getPlayers().getAllPlayers()) {
+            calculator.playerCalculateProfit(result.getGameResult().get(player.getName()), player);
         }
     }
 }

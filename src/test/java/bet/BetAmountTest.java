@@ -25,6 +25,6 @@ class BetAmountTest {
     @DisplayName("100원 단위면 잘 생성된다")
     void constructor_successFullyCreate_whenAmountIsNotMultipleOf100(int amount) {
         BetAmount betAmount = new BetAmount(amount);
-        assertThat(betAmount.getAmount()).isEqualTo(amount);
+        assertThat(betAmount.getBetAmount()).isEqualTo(amount);
     }
 }

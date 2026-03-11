@@ -23,12 +23,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 class BetTableTest {
     @Test
     @DisplayName("플레이어는 베팅 금액을 설정할 수 있다.")
-    void placeBet_setsBetAmount() {
+    void recodeAmount_setsBetAmount() {
         Player player = new Player(new PlayerName("user1"), new Hand());
         BetTable betTable = new BetTable();
         int amount = 10000;
 
-        betTable.placeBet(player.getName(), amount);
+        betTable.recodeAmount(player.getName(), amount);
 
         assertThat(betTable.getAmountByName(player.getName())).isEqualTo(amount);
     }
@@ -46,7 +46,7 @@ class BetTableTest {
         dealer.keepCard(new Card(Rank.ACE, Pattern.HEART));
 
         int beforeBetAmount = 10000;
-        betTable.placeBet(player.getName(), beforeBetAmount);
+        betTable.recodeAmount(player.getName(), beforeBetAmount);
 
         ResultJudge resultJudge = new ResultJudge();
         Result result = resultJudge.calculateResult(dealer, new Players(List.of(player)));
@@ -72,7 +72,7 @@ class BetTableTest {
         dealer.keepCard(new Card(Rank.ACE, Pattern.HEART));
 
         int beforeBetAmount = 10000;
-        betTable.placeBet(player.getName(), beforeBetAmount);
+        betTable.recodeAmount(player.getName(), beforeBetAmount);
 
         ResultJudge resultJudge = new ResultJudge();
         Result result = resultJudge.calculateResult(dealer, new Players(List.of(player)));
@@ -99,7 +99,7 @@ class BetTableTest {
         dealer.keepCard(new Card(Rank.THREE, Pattern.HEART));
 
         int beforeBetAmount = 10000;
-        betTable.placeBet(player.getName(), beforeBetAmount);
+        betTable.recodeAmount(player.getName(), beforeBetAmount);
 
         ResultJudge resultJudge = new ResultJudge();
         Result result = resultJudge.calculateResult(dealer, new Players(List.of(player)));
@@ -126,7 +126,7 @@ class BetTableTest {
         dealer.keepCard(new Card(Rank.ACE, Pattern.HEART));
 
         int beforeBetAmount = 10000;
-        betTable.placeBet(player.getName(), beforeBetAmount);
+        betTable.recodeAmount(player.getName(), beforeBetAmount);
 
         ResultJudge resultJudge = new ResultJudge();
         Result result = resultJudge.calculateResult(dealer, new Players(List.of(player)));
