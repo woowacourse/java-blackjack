@@ -1,22 +1,22 @@
 package service;
 
-import domain.vo.NameAndCardInfos;
+import domain.common.NameAndCardInfos;
+import domain.common.PlayedGameResult;
+import domain.game_result.vo.PlayerWinningInfo;
+import domain.game_result.vo.DealerWinningScore;
+import dto.response.AllPlayerWinningInfoResponse;
 import dto.response.AllPlayersNameAndCardsResponse;
+import dto.response.DealerWinningStatisticsResponse;
 import dto.response.NameAndCardsResponse;
 import dto.response.NameResponse;
-import dto.response.PlayedGameResultResponse;
 import dto.request.PlayerNamesResponse;
+import dto.response.PlayedGameResultResponse;
+import dto.response.PlayerGameResultsResponse;
 import java.util.List;
 import repository.ParticipantRepository;
 import repository.ScoreRepository;
 
 public class BlackJackQueryService {
-//
-//    private final GameTableRepository gameTableRepository;
-//
-//    public BlackJackQueryService(GameTableRepository gameTableRepository) {
-//        this.gameTableRepository = gameTableRepository;
-//    }
 
     private final ParticipantRepository participantRepository;
     private final ScoreRepository scoreRepository;
@@ -64,25 +64,26 @@ public class BlackJackQueryService {
         return participantRepository.isDealerPlayable();
     }
 
-//    public PlayedGameResultResponse dealerResult() {
-//        return PlayedGameResultResponse.from(participantRepository.getDealerResult());
-//    }
+    public PlayedGameResultResponse dealerResult() {
+        return PlayedGameResultResponse.from(participantRepository.getDealerResult());
+    }
 
-//    public PlayerGameResultsResponse playerResult() {
-//        return PlayerGameResultsResponse.from(participantRepository.playerResults());
-//    }
-//
-//    public DealerWinningStatisticsResponse dealerWinningStatistics() {
-//        DealerWinningScore winningStatistics = gameTableRepository.getDealerWinningStatistics();
-//        return new DealerWinningStatisticsResponse(
-//                winningStatistics.winCount(),
-//                winningStatistics.drawCount(),
-//                winningStatistics.loseCount()
-//        );
-//    }
-//
-//    public AllPlayerWinningInfoResponse playerWinningInfos() {
-//        List<PlayerWinningInfo> playerWinningInfos = gameTableRepository.getPlayerWinningInfos();
-//        return AllPlayerWinningInfoResponse.of(playerWinningInfos);
-//    }
+    public PlayerGameResultsResponse playerResults() {
+        List<PlayedGameResult> playerGameResults = scoreRepository.getPlayerGameResults();
+        return PlayerGameResultsResponse.from(playerGameResults);
+    }
+
+    public DealerWinningStatisticsResponse dealerWinningStatistics() {
+        DealerWinningScore winningStatistics = scoreRepository.getDealerWinningScore();
+        return new DealerWinningStatisticsResponse(
+                winningStatistics.winCount(),
+                winningStatistics.drawCount(),
+                winningStatistics.loseCount()
+        );
+    }
+
+    public AllPlayerWinningInfoResponse playerWinningInfos() {
+        List<PlayerWinningInfo> playerWinningInfos = scoreRepository.getPlayerWinningInfos();
+        return AllPlayerWinningInfoResponse.of(playerWinningInfos);
+    }
 }

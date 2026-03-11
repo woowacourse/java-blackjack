@@ -1,8 +1,8 @@
 package dto.response;
 
-import domain.vo.PlayedGameResult;
-import domain.vo.CardInfo;
-import domain.vo.NameAndCardInfos;
+import domain.common.PlayedGameResult;
+import domain.common.CardInfo;
+import domain.common.NameAndCardInfos;
 import java.util.List;
 
 public record PlayedGameResultResponse(String name, List<String> cardInfos, int scoreSum) {

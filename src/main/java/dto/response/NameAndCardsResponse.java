@@ -1,7 +1,7 @@
 package dto.response;
 
-import domain.vo.CardInfo;
-import domain.vo.NameAndCardInfos;
+import domain.common.CardInfo;
+import domain.common.NameAndCardInfos;
 import java.util.List;
 
 public record NameAndCardsResponse(String name, List<String> cardInfos) {
