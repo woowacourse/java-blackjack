@@ -11,8 +11,10 @@ import view.InputView;
 
 public class InputController {
 
+    private static final String NAME_SPLIT_REGEX = ",";
+
     public Players getPlayersName() {
-        List<String> stringPlayers = InputView.getNameRequest();
+        List<String> stringPlayers = List.of(InputView.getNameRequest().split(NAME_SPLIT_REGEX));
         List<Player> players = new ArrayList<>();
 
         for (String player : stringPlayers) {
