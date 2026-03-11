@@ -1,21 +1,15 @@
 package dto;
 
-import java.util.LinkedHashMap;
+import domain.GameResult;
 import java.util.Map;
 
 public record BlackjackResult(
         int dealerProfit,
-        Map<String, Integer> matchResultLog
+        Map<String, Integer> gamblerProfits
 ) {
-    public static BlackjackResult from(Map<String, Integer> matchResultLog) {
-        int totalGamblersProfit = matchResultLog.values().stream()
-                .mapToInt(Integer::intValue)
-                .sum();
+    public static BlackjackResult from(GameResult gameResult) {
 
-
-        int dealerProfit = -(totalGamblersProfit);
-
-        return new BlackjackResult(dealerProfit, new LinkedHashMap<>(matchResultLog));
+        return new BlackjackResult(gameResult.dealerProfit(), gameResult.gamblerProfits());
     }
 
 }

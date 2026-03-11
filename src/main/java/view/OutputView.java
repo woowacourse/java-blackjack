@@ -64,7 +64,7 @@ public class OutputView {
 
     public static void printResult(BlackjackResult result) {
         System.out.println("딜러: " + result.dealerProfit());
-        for (Map.Entry<String, Integer> entry : result.matchResultLog().entrySet()) {
+        for (Map.Entry<String, Integer> entry : result.gamblerProfits().entrySet()) {
             System.out.println(entry.getKey() + ": " + entry.getValue());
         }
     }

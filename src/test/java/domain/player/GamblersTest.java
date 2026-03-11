@@ -3,6 +3,7 @@ package domain.player;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.GameResult;
 import domain.StubDeck;
 import domain.card.Card;
 import domain.card.CardRank;
@@ -51,12 +52,14 @@ class GamblersTest {
         dealer.deal(sd);
         gamblers.dealAll(sd);
 
+        GameResult gameResult = new GameResult(dealer, gamblers);
+
         //when
-        BlackjackResult result = BlackjackResult.from(gamblers.getResult(dealer));
+        BlackjackResult result = BlackjackResult.from(gameResult);
 
         //then
         assertThat(result.dealerProfit()).isEqualTo(-10000);
-        assertThat(result.matchResultLog().get("tobi")).isEqualTo(-10000);
-        assertThat(result.matchResultLog().get("quda")).isEqualTo(20000);
+        assertThat(result.gamblerProfits().get("tobi")).isEqualTo(-10000);
+        assertThat(result.gamblerProfits().get("quda")).isEqualTo(20000);
     }
 }

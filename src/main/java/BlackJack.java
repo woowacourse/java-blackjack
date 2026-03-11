@@ -1,3 +1,4 @@
+import domain.GameResult;
 import domain.deck.CardDeck;
 import domain.player.Dealer;
 import domain.player.Gambler;
@@ -116,7 +117,11 @@ public class BlackJack {
 
     private void printFinalResult(Dealer dealer, Gamblers gamblers) {
         OutputView.printFinalResultHeader();
-        OutputView.printResult(BlackjackResult.from(gamblers.getResult(dealer)));
+
+        GameResult gameResult = new GameResult(dealer, gamblers);
+        BlackjackResult blackjackResult = BlackjackResult.from(gameResult);
+
+        OutputView.printResult(blackjackResult);
     }
 
 }

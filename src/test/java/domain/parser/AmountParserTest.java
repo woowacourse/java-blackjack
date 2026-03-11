@@ -11,7 +11,7 @@ import parser.AmountParser;
 public class AmountParserTest {
     @Test
     @DisplayName("인풋 정상 입력")
-    void 인풋_정상_입력(){
+    void 인풋_정상_입력() {
         //given
         String input = "123464";
         //when
@@ -22,11 +22,11 @@ public class AmountParserTest {
 
     @Test
     @DisplayName("인풋 숫자 파싱 예외")
-    void 인풋_숫자_파싱_예외(){
+    void 인풋_숫자_파싱_예외() {
         //given
         String input = "12a";
         //when & then
-        assertThatThrownBy(()-> AmountParser.parse(input))
+        assertThatThrownBy(() -> AmountParser.parse(input))
                 .isInstanceOf(BlackjackException.class);
     }
 }
