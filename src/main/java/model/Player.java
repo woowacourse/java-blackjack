@@ -9,8 +9,7 @@ public class Player extends Participant {
     private Integer betAmount = 0;
 
     public Player(PlayerName name) {
-        super(name);
-        validate(name);
+        super(validate(name));
     }
 
     @Override
@@ -34,9 +33,10 @@ public class Player extends Participant {
         return this.betAmount;
     }
 
-    private void validate(PlayerName name) {
+    private static PlayerName validate(PlayerName name) {
         if(name.getName().equals(DEALER_NAME)) {
             throw new IllegalArgumentException(ErrorMessage.NO_PLAYER_NAME_DEALER.getMessage());
         }
+        return name;
     }
 }
