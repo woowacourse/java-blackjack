@@ -30,4 +30,11 @@ class BetTest {
         assertThatThrownBy(() -> new Bet(-1))
                 .isInstanceOf(OutOfRangeException.class);
     }
+
+    @DisplayName("베팅 금액이 long 최댓값일시 예외")
+    @Test
+    void 베팅금_LongMaxValue_불가(){
+        assertThatThrownBy(() -> new Bet(Long.MAX_VALUE))
+                .isInstanceOf(OutOfRangeException.class);
+    }
 }
