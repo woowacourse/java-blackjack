@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
@@ -20,7 +21,7 @@ public class BlackjackController {
 
     public void run() {
         Players players = readPlayers();
-        Player dealer = new Player("딜러");
+        Dealer dealer = new Dealer("딜러");
 
         setInitialTwoCards(players, dealer);
         printInitialSettings(players, dealer);
@@ -37,7 +38,7 @@ public class BlackjackController {
         return Players.from(playersName);
     }
 
-    private void setInitialTwoCards(Players players, Player dealer) {
+    private void setInitialTwoCards(Players players, Dealer dealer) {
         Deck.shuffle();
         for (int i = 0; i < 2; i++) {
             players.draw();
@@ -45,7 +46,7 @@ public class BlackjackController {
         }
     }
 
-    private void printInitialSettings(Players players, Player dealer) {
+    private void printInitialSettings(Players players, Dealer dealer) {
         outputView.printInitialSettingsDoneMessage(dealer.getName(), players.getPlayersName());
         outputView.printCardResults(dealer.getName(), List.of(dealer.getFirstCardName()));
         for (Player player : players.getPlayers()) {
@@ -76,17 +77,17 @@ public class BlackjackController {
         return "y".equals(inputView.readMoreCard(player.getName()));
     }
 
-    private void getMoreCardsForDealer(Player dealer, Players players) {
+    private void getMoreCardsForDealer(Dealer dealer, Players players) {
         if (players.isAllPlayersBurst()) {
             return;
         }
-        while (dealer.calculateCardsValue() < 17) {
+        while (dealer.canDraw()) {
             dealer.draw(Deck.pop());
             outputView.printGetMoreCardsMessageForDealer(dealer.getName());
         }
     }
 
-    private void printGameResult(Players players, Player dealer) {
+    private void printGameResult(Players players, Dealer dealer) {
         outputView.println();
         outputView.printCardResults(dealer.getName(), dealer.getCardsName(), dealer.calculateCardsValue());
         for (Player player : players.getPlayers()) {
@@ -94,7 +95,7 @@ public class BlackjackController {
         }
     }
 
-    private void printWinningResult(Players players, Player dealer) {
+    private void printWinningResult(Players players, Dealer dealer) {
         outputView.printWinningResult(WinningResult.from(players, dealer));
     }
 
