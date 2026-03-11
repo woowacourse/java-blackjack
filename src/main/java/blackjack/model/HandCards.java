@@ -8,6 +8,8 @@ import java.util.List;
 
 public class HandCards {
 
+    public static final int BLACKJACK_CARD_COUNT = 2;
+    public static final int BLACKJACK_SCORE = 21;
     private final List<Card> cards;
 
     public HandCards() {
@@ -31,7 +33,7 @@ public class HandCards {
     }
 
     public boolean isBlackjack() {
-        return cards.size() == 2 && calculate().getScore() == 21;
+        return cards.size() == BLACKJACK_CARD_COUNT && calculate().getScore() == BLACKJACK_SCORE;
     }
 
     public Card getFirstCard() {
