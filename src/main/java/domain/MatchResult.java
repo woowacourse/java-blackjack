@@ -1,5 +1,8 @@
 package domain;
 
+import domain.player.Dealer;
+import domain.player.Gambler;
+
 public enum MatchResult {
     BLACKJACK(1.5),
     WIN(1),
@@ -14,23 +17,56 @@ public enum MatchResult {
         this.rate = rate;
     }
 
-    public static MatchResult of(int gamblerScore, int dealerScore) {
-        if(gamblerScore == BLACKJACK_MAX_LIMIT)
+    public static MatchResult of(Gambler gambler, Dealer dealer) {
+        if (isBothBlackJack(gambler, dealer)) {
+            return DRAW;
+        }
+
+        if (gambler.isBlackJack()) {
             return BLACKJACK;
+        }
 
-        if (gamblerScore > BLACKJACK_MAX_LIMIT)
+        if (dealer.isBlackJack()) {
             return LOSE;
+        }
 
-        if (dealerScore > BLACKJACK_MAX_LIMIT || gamblerScore > dealerScore)
+        return compareScore(gambler.score(), dealer.score());
+    }
+
+    private static boolean isBothBlackJack(Gambler gambler, Dealer dealer) {
+        return gambler.isBlackJack() && dealer.isBlackJack();
+    }
+
+
+    private static MatchResult compareScore(int gamblerScore, int dealerScore) {
+        if (isBust(gamblerScore)) {
+            return LOSE;
+        }
+
+        if (isBust(dealerScore)) {
             return WIN;
+        }
 
-        if (gamblerScore < dealerScore)
+        return compareNormalScore(gamblerScore, dealerScore);
+    }
+
+    private static boolean isBust(int score) {
+        return score > BLACKJACK_MAX_LIMIT;
+    }
+
+    private static MatchResult compareNormalScore(int gamblerScore, int dealerScore) {
+        if (gamblerScore > dealerScore) {
+            return WIN;
+        }
+
+        if (gamblerScore < dealerScore) {
             return LOSE;
+        }
 
         return DRAW;
     }
 
-    public double getRate(){
+    public double getRate() {
         return rate;
     }
 }

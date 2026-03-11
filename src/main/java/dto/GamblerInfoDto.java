@@ -1,10 +1,12 @@
 package dto;
 
+import domain.player.Gambler;
+
 public record GamblerInfoDto(
         String name,
-        int betting
+        int amount
 ) {
-    public static GamblerInfoDto from(String name, int betting){
-        return new GamblerInfoDto(name, betting);
+    public Gambler toGambler() {
+        return new Gambler(name, amount);
     }
 }

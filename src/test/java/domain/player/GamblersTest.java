@@ -8,9 +8,7 @@ import domain.card.Card;
 import domain.card.CardRank;
 import domain.card.CardSuit;
 import dto.BlackjackResult;
-import dto.GamblerInfoDto;
 import expcetion.BlackjackException;
-import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,11 +18,14 @@ class GamblersTest {
     @Test
     @DisplayName("이름이 중복되면 안된다.")
     void 이름이_중복될_시() {
-        //given
-        List<String> names = new ArrayList<>(List.of("tobi", "tobi"));
+        // given
+        List<Gambler> gamblers = List.of(
+                new Gambler("tobi", 1000),
+                new Gambler("tobi", 2000)
+        );
 
-        //when & then
-        assertThatThrownBy(() -> new Gamblers(names))
+        // when & then
+        assertThatThrownBy(() -> new Gamblers(gamblers))
                 .isInstanceOf(BlackjackException.class);
     }
 
@@ -33,9 +34,9 @@ class GamblersTest {
     void 딜러와_사용자_승패결과_도출() {
         //given
         Dealer dealer = new Dealer();
-        GamblerInfoDto playerInfoDto1 = GamblerInfoDto.from("tobi",10000);
-        GamblerInfoDto playerInfoDto2 = GamblerInfoDto.from("quda", 20000);
-        Gamblers gamblers = new Gamblers(List.of(playerInfoDto1, playerInfoDto2)); // 사용자 두명
+        Gambler gambler1 = new Gambler("tobi", 10000);
+        Gambler gambler2 = new Gambler("quda", 20000);
+        Gamblers gamblers = new Gamblers(List.of(gambler1, gambler2)); // 사용자 두명
 
         Card jack = new Card(CardRank.JACK, CardSuit.CLOVER); // 딜러
         Card eight = new Card(CardRank.EIGHT, CardSuit.DIAMOND); // tobi
@@ -51,7 +52,7 @@ class GamblersTest {
         gamblers.dealAll(sd);
 
         //when
-        BlackjackResult result = BlackjackResult.from(gamblers.getResult(dealer.score()));
+        BlackjackResult result = BlackjackResult.from(gamblers.getResult(dealer));
 
         //then
         assertThat(result.dealerProfit()).isEqualTo(-10000);

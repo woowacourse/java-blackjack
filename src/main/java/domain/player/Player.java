@@ -28,5 +28,9 @@ public abstract class Player {
         return handCard.cardInfos();
     }
 
+    public boolean isBlackJack() {
+        return handCard.isBlackJack();
+    }
+
 }
 
