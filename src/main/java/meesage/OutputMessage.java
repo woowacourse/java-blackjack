@@ -1,6 +1,7 @@
 package meesage;
 
 public enum OutputMessage {
+
     DEAL_INITIAL_CARDS("딜러와 %s에게 2장을 나누었습니다."),
     DELIMITER(", "),
     PARTICIPANT_CARDS("%s카드: %s"),
@@ -9,7 +10,8 @@ public enum OutputMessage {
     FINAL_MESSAGE("## 최종 승패"),
     DEALER_RESULT_FORMAT("딜러: %d승 %d무 %d패"),
     PLAYER_RESULT_FORMAT("%s: %s"),
-    DEALER("딜러");
+    DEALER("딜러"),
+    ;
 
     private final String message;
 

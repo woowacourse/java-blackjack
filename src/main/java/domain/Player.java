@@ -1,7 +1,5 @@
 package domain;
 
-import meesage.OutputMessage;
-
 public class Player {
 
     private final Cards cards;
@@ -16,24 +14,24 @@ public class Player {
         return new Player(cards, name);
     }
 
-    public boolean isBust() {
-        return cards.isBust(cards.calculateScore());
-    }
-
     public void addCard(Card card) {
         cards.addCard(card);
+    }
+
+    public boolean isBust() {
+        return cards.isBust(cards.calculateScore());
     }
 
     public int getScoreOrZeroIfBust(){
         return cards.getScoreOrZeroIfBust();
     }
 
-    public String getName() {
-        return name;
-    }
-
     public boolean isInitialHand() {
         return cards.size() == Policy.FIRST_DRAW_SIZE;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public Cards getCards() {

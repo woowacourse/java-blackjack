@@ -1,7 +1,5 @@
 package domain;
 
-import meesage.OutputMessage;
-
 public class Dealer {
 
     private final Cards cards;

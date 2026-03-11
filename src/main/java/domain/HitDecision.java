@@ -3,9 +3,9 @@ package domain;
 import meesage.ErrorMessage;
 
 public enum HitDecision {
+
     YES("y"),
-    NO("n")
-    ;
+    NO("n");
 
     private final String value;
 
