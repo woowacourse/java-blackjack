@@ -59,15 +59,15 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러 ACE 판정 이후 점수가 21 초과이면 0점 처리")
-    void isBust_final_score_zero_success() {
+    @DisplayName("딜러 ACE 판정 이후 점수가 21 초과이면 True")
+    void isBust_final_score_true() {
         List<Card> cards = List.of(
                 Card.of(Rank.FIVE, Suit.DIAMOND),
                 Card.of(Rank.NINE, Suit.CLOVER),
                 Card.of(Rank.EIGHT, Suit.DIAMOND));
         Dealer dealer = Dealer.of(cards);
 
-        assertThat(dealer.getScoreOrZeroIfBust()).isZero();
+        assertThat(dealer.isBust(dealer.calculateScore())).isTrue();
     }
 
 
