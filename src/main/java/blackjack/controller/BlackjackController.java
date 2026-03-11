@@ -1,10 +1,9 @@
 package blackjack.controller;
 
-import blackjack.model.game.HitAnswer;
-import blackjack.model.game.BlackjackResult;
 import blackjack.model.card.Card;
-import blackjack.model.participant.Dealer;
 import blackjack.model.card.Deck;
+import blackjack.model.game.BlackjackResult;
+import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Player;
 import blackjack.model.participant.Players;
 import blackjack.util.RetryUtil;
@@ -68,14 +67,14 @@ public class BlackjackController {
     }
 
     private void deal(Players players, Dealer dealer, Deck deck) {
-        for (Player player : players) {
+        for (Player player : players.getPlayers()) {
             player.addCard(deck.draw());
         }
         dealer.addCard(deck.draw());
     }
 
     private void hit(Players players, Dealer dealer, Deck deck) {
-        for (Player player : players) {
+        for (Player player : players.getPlayers()) {
             retryOnIllegalArgument(() -> playerHit(player, deck));
         }
         outputView.printEmptyLine();
@@ -108,7 +107,7 @@ public class BlackjackController {
 
     private void printResult(Players players, Dealer dealer) {
         List<ResultDto> resultDtos = new ArrayList<>();
-        for (Player player : players) {
+        for (Player player : players.getPlayers()) {
             BlackjackResult result = player.calculateResult(dealer.getHand());
             resultDtos.add(new ResultDto(player.getName(), result));
         }

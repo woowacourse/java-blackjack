@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class Players implements Iterable<Player> {
+public class Players {
 
     private static final String DELIMITER = ",";
     private static final int INCLUDE_EMPTY_ELEMENT = -1;
@@ -41,11 +41,6 @@ public class Players implements Iterable<Player> {
 
     public List<Player> getPlayers() {
         return players;
-    }
-
-    @Override
-    public Iterator<Player> iterator() {
-        return players.iterator();
     }
 
     public Stream<Player> stream() {
