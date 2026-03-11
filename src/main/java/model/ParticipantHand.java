@@ -11,7 +11,11 @@ public class ParticipantHand {
     private static final int ADDITIONAL_ACE_SCORE = 10;
     private static final int BLACKJACK_SCORE = 21;
 
-    private final List<Card> hand = new ArrayList<>();
+    private final List<Card> hand;
+
+    public ParticipantHand() {
+        this.hand = new ArrayList<>();
+    }
 
     public void addCard(Card card) {
         validateCardDuplicate(card);
