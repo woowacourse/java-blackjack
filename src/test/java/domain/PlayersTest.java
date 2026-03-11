@@ -34,7 +34,7 @@ class PlayersTest {
     @Test
     @DisplayName("플레이어들의 점수가 제대로 저장이 됐는지 테스트")
     void players_score_success() {
-        assertThat(players.getPlayerScoreInfo()).hasSize(2);
+        assertThat(players.getPlayerScoreInfo()).isEqualTo(List.of(4, 4));
     }
 
 }
