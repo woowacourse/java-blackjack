@@ -1,7 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
-import model.BattingMoney;
+import model.BettingMoney;
 import model.PlayerName;
 import java.util.List;
 import model.Agreement;
@@ -16,8 +16,8 @@ public class InputController {
         List<Player> players = new ArrayList<>();
 
         for (String player : stringPlayers) {
-            String battingMoneyInput = InputView.getBattingRequest(player);
-            players.add(new Player(new PlayerName(player), new BattingMoney(battingMoneyInput)));
+            String bettingMoneyInput = InputView.getBettingRequest(player);
+            players.add(new Player(new PlayerName(player), new BettingMoney(bettingMoneyInput)));
         }
 
         return new Players(players);

@@ -50,7 +50,7 @@ public class BlackJackService {
 
         for (Player player : players.getPlayers()) {
             MatchStatus matchStatus = getPlayerResult(player, dealer);
-            int profit = (int) (player.getBattingMoney().get() * matchStatus.getMultiplier());
+            int profit = (int) (player.getBettingMoney().get() * matchStatus.getMultiplier());
             playersWinning.add(new PlayerWinning(player.getResult().name(), profit));
         }
 

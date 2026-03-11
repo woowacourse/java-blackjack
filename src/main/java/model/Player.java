@@ -7,12 +7,12 @@ public class Player extends Participant {
     private static final String DEALER_NAME = "딜러";
     private static final String NO_PLAYER_NAME_DEALER = "플레이어는 '딜러'라는 이름을 가질 수 없습니다.";
 
-    private final BattingMoney battingMoney;
+    private final BettingMoney bettingMoney;
 
-    public Player(PlayerName name, BattingMoney battingMoney) {
+    public Player(PlayerName name, BettingMoney bettingMoney) {
         super(name);
         validate(name);
-        this.battingMoney = battingMoney;
+        this.bettingMoney = bettingMoney;
     }
 
     private void validate(PlayerName name) {
@@ -21,8 +21,8 @@ public class Player extends Participant {
         }
     }
 
-    public BattingMoney getBattingMoney() {
-        return battingMoney;
+    public BettingMoney getBettingMoney() {
+        return bettingMoney;
     }
 
     @Override

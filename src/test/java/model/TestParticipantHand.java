@@ -41,7 +41,7 @@ public class TestParticipantHand {
     @ParameterizedTest
     @MethodSource("scoreCases")
     public void 점수_계산(List<Card> cards, int expectedScore) {
-        Player player = new Player(new PlayerName("player1"), new BattingMoney("10000"));
+        Player player = new Player(new PlayerName("player1"), new BettingMoney("10000"));
         cards.forEach(player::draw);
 
         assertThat(player.getScore()).isEqualTo(expectedScore);
