@@ -73,8 +73,7 @@ public class GameController {
             outputView.printCompleteDealerTurn();
         }
 
-        List<ParticipantResultResponse> dealerTurnResponse = createResultResponses(dealer, players);
-        outputView.printDealerTurn(dealerTurnResponse);
+        outputView.printDealerTurn(createResultResponses(dealer, players));
     }
 
     private void determineGame(Participants participants) {

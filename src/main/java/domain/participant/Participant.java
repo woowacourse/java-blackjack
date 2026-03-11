@@ -18,20 +18,24 @@ public abstract class Participant {
         hand.add(card);
     }
 
-    public List<Card> getCards() {
-        return hand.getCards();
+    public boolean isBust() {
+        return getScore().isBust();
+    }
+
+    public Card getFirstCard() {
+        return hand.getFirstCard();
     }
 
     public String getName() {
         return name.value();
     }
 
-    public Score getScore() {
-        return hand.calculateScore();
+    public List<Card> getCards() {
+        return hand.getCards();
     }
 
-    public boolean isBust() {
-        return getScore().isBust();
+    public Score getScore() {
+        return hand.calculateScore();
     }
 
     public abstract boolean canReceive();

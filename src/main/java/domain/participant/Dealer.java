@@ -11,7 +11,7 @@ public class Dealer extends Participant {
     }
 
     public Card getInitialCard() {
-        return getCards().getFirst();
+        return getFirstCard();
     }
 
     @Override

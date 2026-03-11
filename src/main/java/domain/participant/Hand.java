@@ -29,6 +29,10 @@ public class Hand {
         return new Score(score);
     }
 
+    public Card getFirstCard() {
+        return cards.getFirst();
+    }
+
     public List<Card> getCards() {
         return List.copyOf(cards);
     }
