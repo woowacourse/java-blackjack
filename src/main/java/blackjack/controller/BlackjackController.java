@@ -2,6 +2,7 @@ package blackjack.controller;
 
 import blackjack.model.Dealer;
 import blackjack.model.Deck;
+import blackjack.model.GameResult;
 import blackjack.model.GameSummary;
 import blackjack.model.Player;
 import blackjack.model.Players;
@@ -41,10 +42,6 @@ public class BlackjackController {
 
         Players players = new Players(allPlayers);
 
-        // 플레이어별로 이름 받아오고
-
-        // 플레이어별로 반복문 -> Player 객체 만들고 그 객체를 Players에 넣어주기 ?
-
         Dealer dealer = new Dealer();
 
         deck.provideInitCards(players, dealer);
@@ -58,7 +55,14 @@ public class BlackjackController {
             outputView.printCardStatus(gameSummary);
         }
 
-        outputView.printGameResult(players, dealer);
+        for (Player player : players.all()) {
+            player.getBet().calculateProfit(player.getGameResult().getPayoutRate());
+        }
+
+        List<GameResult> gameResults = players.calculateProfit(dealer);
+        outputView.printGameResult(gameResults);
+
+        // outputView.printGameResult(players, dealer);
 
         inputView.closeScanner();
     }

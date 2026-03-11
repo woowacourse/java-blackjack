@@ -36,14 +36,14 @@ class DealerTest {
     void test_gameresult_add_and_count() {
         Dealer dealer = new Dealer();
 
-        dealer.addResult(GameResult.WIN);
-        dealer.addResult(GameResult.WIN);
-        dealer.addResult(GameResult.DRAW);
-        dealer.addResult(GameResult.LOSE);
+        dealer.addResult(GameOutcome.WIN);
+        dealer.addResult(GameOutcome.WIN);
+        dealer.addResult(GameOutcome.DRAW);
+        dealer.addResult(GameOutcome.LOSE);
 
-        EnumMap<GameResult, Integer> gameresults = dealer.getGameResults();
-        assertThat(gameresults.get(GameResult.WIN)).isEqualTo(2);
-        assertThat(gameresults.get(GameResult.DRAW)).isEqualTo(1);
-        assertThat(gameresults.get(GameResult.LOSE)).isEqualTo(1);
+        EnumMap<GameOutcome, Integer> gameresults = dealer.getGameResults();
+        assertThat(gameresults.get(GameOutcome.WIN)).isEqualTo(2);
+        assertThat(gameresults.get(GameOutcome.DRAW)).isEqualTo(1);
+        assertThat(gameresults.get(GameOutcome.LOSE)).isEqualTo(1);
     }
 }

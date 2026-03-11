@@ -34,24 +34,24 @@ class PlayerTest {
     void test_gameresult_default_draw() {
         Player player = new Player("pobi", 1000);
 
-        assertThat(player.getGameResult()).isEqualTo(GameResult.DRAW);
+        assertThat(player.getGameResult()).isEqualTo(GameOutcome.DRAW);
     }
 
     @Test
     @DisplayName("GameResult set Win")
     void test_gameresult_update_win() {
         Player player = new Player("pobi", 1000);
-        player.mark(GameResult.WIN);
+        player.mark(GameOutcome.WIN);
 
-        assertThat(player.getGameResult()).isEqualTo(GameResult.WIN);
+        assertThat(player.getGameResult()).isEqualTo(GameOutcome.WIN);
     }
 
     @Test
     @DisplayName("GameResult set LOSE")
     void test_gameresult_update_lose() {
         Player player = new Player("pobi", 1000);
-        player.mark(GameResult.LOSE);
+        player.mark(GameOutcome.LOSE);
 
-        assertThat(player.getGameResult()).isEqualTo(GameResult.LOSE);
+        assertThat(player.getGameResult()).isEqualTo(GameOutcome.LOSE);
     }
 }

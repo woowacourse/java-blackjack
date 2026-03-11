@@ -20,20 +20,36 @@ public class Players {
 
         List<GameSummary> gameSummaries = new ArrayList<>();
 
-        GameSummary dealerSummary = dealer.toSummary();
+        GameSummary dealerSummary = GameSummary.from(dealer);
         gameSummaries.add(dealerSummary);
 
         for (Player player : players) {
-            GameSummary playerSummary = player.toSummary();
+            GameSummary playerSummary = GameSummary.from(player);
             gameSummaries.add(playerSummary);
 
-            GameResult result = GameResult.judge(playerSummary, dealerSummary);
+            GameOutcome result = GameOutcome.judge(playerSummary, dealerSummary);
 
             player.mark(result);
             dealer.addResult(result.reverse());
         }
 
         return gameSummaries;
+    }
+
+    public List<GameResult> calculateProfit(Dealer dealer) {
+        List<GameResult> gameResults = new ArrayList<>();
+
+        for (Player player : players) {
+            gameResults.add(
+                    GameResult.from(player, player.getBet().calculateProfit(player.getGameResult().getPayoutRate())));
+        }
+
+        int dealerProfit = -players.stream()
+                .mapToInt(player -> player.getBet().calculateProfit(player.getGameResult().getPayoutRate())).sum();
+
+        gameResults.addFirst(GameResult.from(dealer, dealerProfit));
+
+        return gameResults;
     }
 
     private void validateDuplicate(List<Player> allPlayers) {

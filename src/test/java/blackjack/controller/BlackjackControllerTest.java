@@ -43,8 +43,8 @@ class BlackjackControllerTest {
         );
 
         String result = run("pobi\n1000\nn\n", fixCards);
-        assertThat(result).contains("딜러: 0승 0무 1패");
-        assertThat(result).contains("pobi: 승");
+        assertThat(result).contains("딜러: -1000");
+        assertThat(result).contains("pobi: 1000");
     }
 
     @Test
@@ -58,8 +58,8 @@ class BlackjackControllerTest {
         );
 
         String result = run("pobi\n1000\nn\n", fixCards);
-        assertThat(result).contains("딜러: 1승 0무 0패");
-        assertThat(result).contains("pobi: 패");
+        assertThat(result).contains("딜러: 1000");
+        assertThat(result).contains("pobi: -1000");
     }
 
     @Test
@@ -74,8 +74,8 @@ class BlackjackControllerTest {
         );
 
         String result = run("pobi\n1000\ny\n", fixCards);
-        assertThat(result).contains("딜러: 1승 0무 0패");
-        assertThat(result).contains("pobi: 패");
+        assertThat(result).contains("딜러: 1000");
+        assertThat(result).contains("pobi: -1000");
     }
 
     @Test

@@ -7,19 +7,19 @@ public class Dealer extends User {
 
     public static final int DEALER_STAND_SCORE = 17;
 
-    private final EnumMap<GameResult, Integer> gameResults;
+    private final EnumMap<GameOutcome, Integer> gameResults;
 
     public Dealer() {
         super("딜러");
-        gameResults = new EnumMap<>(GameResult.class);
+        gameResults = new EnumMap<>(GameOutcome.class);
     }
 
-    public EnumMap<GameResult, Integer> getGameResults() {
+    public EnumMap<GameOutcome, Integer> getGameResults() {
         return new EnumMap<>(gameResults);
     }
 
-    public void addResult(GameResult gameResult) {
-        gameResults.put(gameResult, gameResults.getOrDefault(gameResult, 0) + 1);
+    public void addResult(GameOutcome gameOutcome) {
+        gameResults.put(gameOutcome, gameResults.getOrDefault(gameOutcome, 0) + 1);
     }
 
     public boolean canHit() {

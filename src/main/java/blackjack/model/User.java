@@ -40,14 +40,12 @@ public class User {
         return hand.isBlackjack();
     }
 
-    public GameSummary toSummary() {
-        return new GameSummary(
-                this,
-                getScore(),
-                isBust(),
-                isBlackjack()
-        );
-    }
+//    public GameSummary toSummary() {
+//        return new GameSummary(
+//                this,
+//                getScore()
+//        );
+//    }
 
     private void validate(String input) {
         validateBlank(input);
