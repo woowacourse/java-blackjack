@@ -63,7 +63,7 @@ public class Cards {
         cards.add(card);
     }
 
-    public boolean isBurst(int burstThreshold) {
+    public boolean canReceiveCard(int burstThreshold) {
         int sum = calculateScore();
 
         while (changeAvailableAceCount != 0 && isOverBurstThreshold(sum)) {

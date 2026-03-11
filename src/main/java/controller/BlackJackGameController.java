@@ -18,8 +18,7 @@ public class BlackJackGameController {
 
     public void run() {
         List<Player> players = initPlayer();
-        Dealer dealer = initDealer();
-        Deck deck = new Deck();
+        GameManager gameManager = new GameManager(players);
 
         List<String> playersNames = getPlayerNames(players);
         OutputView.printGameInitialMessage(playersNames);
@@ -145,11 +144,5 @@ public class BlackJackGameController {
 
     private List<String> getPlayerNames() {
         return InputView.askPlayerNames();
-    }
-
-    private Dealer initDealer() {
-        Name name = new Name("딜러");
-        Dealer dealer = new Dealer(name);
-        return dealer;
     }
 }

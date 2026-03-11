@@ -8,6 +8,6 @@ public class Player extends Participant {
     }
 
     public boolean isContinueGame() {
-        return cards.isBurst(BURST_THRESHOLD);
+        return cards.canReceiveCard(BURST_THRESHOLD);
     }
 }

@@ -1,11 +1,29 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.List;
+import view.InputView;
 
 public class GameManager {
     private static final int MAX_PLAYER = 8;
     private static final int BURST_THRESHOLD = 21;
-    
+
+    private final Dealer dealer;
+    private final List<Player> players;
+    private final Deck deck;
+
+    public GameManager(List<Player> players) {
+        this.dealer = initDealer();
+        this.players = players;
+        this.deck = new Deck();
+    }
+
+    private Dealer initDealer() {
+        Name name = new Name("딜러");
+        Dealer dealer = new Dealer(name);
+        return dealer;
+    }
+
     public static boolean isOverBurstThreshold(int score) {
         if (score > BURST_THRESHOLD) {
             return true;
