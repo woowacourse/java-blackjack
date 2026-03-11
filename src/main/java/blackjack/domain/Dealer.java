@@ -6,10 +6,6 @@ public class Dealer extends Participant{
         super("딜러");
     }
 
-    public int getAdditionalDrawnCardCount() {
-        return drawnCards.getCardNames().size() - 2;
-    }
-
     public boolean isDealerNotDone() {
         return calculateTotalScore() < 17;
     }
