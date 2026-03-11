@@ -9,11 +9,11 @@ public abstract class Participant {
     private static final int BUST_LIMIT = 21;
     private static final int ACE_BONUS_SCORE = 10;
 
-    private final String name;
+    private final Name name;
     private final Hand hand;
 
     protected Participant(String name) {
-        this.name = name;
+        this.name = new Name(name);
         this.hand = new Hand();
     }
 
@@ -35,7 +35,7 @@ public abstract class Participant {
     public abstract boolean canHit();
 
     public String getName() {
-        return name;
+        return name.name();
     }
 
     public List<Card> getCards() {

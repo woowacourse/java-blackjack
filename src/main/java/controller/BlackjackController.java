@@ -40,7 +40,10 @@ public class BlackjackController {
         OutputView.printCardByPlayers(players);
 
         players.forEach(this::chooseHitOrStand);
-        hitUntilStandByDealer(dealer);
+        while (dealer.canHit()) {
+            OutputView.printToOpenDealerNewCard(dealer.getName());
+            gameManager.distributeCard(dealer);
+        }
 
         printFinalCards(dealer, players);
         printGameResult(dealer, players);
@@ -68,17 +71,10 @@ public class BlackjackController {
         }
     }
 
-    private void hitUntilStandByDealer(Dealer dealer) {
-        while (dealer.canHit()) {
-            OutputView.printToOpenDealerNewCard(dealer.getName());
-            gameManager.distributeCard(dealer);
-        }
-    }
-
     private void printFinalCards(Dealer dealer, Players players) {
         OutputView.printBlank();
         OutputView.printCardByPlayerWithScore(dealer);
-        players.getPlayers().forEach(OutputView::printCardByPlayerWithScore);
+        players.forEach(OutputView::printCardByPlayerWithScore);
     }
 
     private void printGameResult(Dealer dealer, Players players) {
