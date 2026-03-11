@@ -2,6 +2,7 @@ package view;
 
 import java.util.List;
 import java.util.Scanner;
+
 import util.NameParser;
 
 public class InputView {

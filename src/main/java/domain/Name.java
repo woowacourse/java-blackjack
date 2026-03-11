@@ -26,7 +26,7 @@ public class Name {
     }
 
     private static void validateNullOrEmpty(String name) {
-        if ( name == null|| name.isBlank()) {
+        if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("잘못된 입력입니다. 다시 확인해주세요.");
         }
     }

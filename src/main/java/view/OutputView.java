@@ -5,6 +5,7 @@ import dto.PlayerDto;
 import dto.PlayersDto;
 import dto.ResultDto;
 import dto.TotalFinalResultsDto;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,7 +33,6 @@ public class OutputView {
         }
         System.out.print(System.lineSeparator());
     }
-
 
     private static String getCardStatusFormat(List<String> cards) {
         return String.join(", ", cards);

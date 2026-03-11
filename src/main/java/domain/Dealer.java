@@ -1,6 +1,6 @@
 package domain;
 
-public class Dealer extends Participant{
+public class Dealer extends Participant {
     private static final int DEALER_CARD_SUM_THRESHOLD = 16;
 
     private Dealer(Hand hand) {

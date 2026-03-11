@@ -1,7 +1,7 @@
 package domain;
 
 
-public class Player extends Participant{
+public class Player extends Participant {
     private final Name name;
 
     private Player(Name name, Hand hand) {

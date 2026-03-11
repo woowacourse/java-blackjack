@@ -1,7 +1,7 @@
 package domain;
 
 public class GameResultCalculator {
-    public static TotalFinalResult checkGameResult(Players players, Dealer dealer){
+    public static TotalFinalResult checkGameResult(Players players, Dealer dealer) {
         return TotalFinalResult.from(players.getPlayers().stream()
                 .map(player -> checkFinalResult(player, dealer))
                 .toList());

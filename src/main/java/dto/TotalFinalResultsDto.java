@@ -2,6 +2,7 @@ package dto;
 
 import domain.FinalResult;
 import domain.TotalFinalResult;
+
 import java.util.ArrayList;
 import java.util.List;
 

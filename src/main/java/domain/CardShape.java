@@ -9,10 +9,10 @@ public enum CardShape {
     private final String name;
 
     CardShape(String name) {
-        this.name=name;
+        this.name = name;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 }

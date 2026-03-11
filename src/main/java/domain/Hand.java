@@ -9,7 +9,7 @@ public class Hand {
         this.cards = cards;
     }
 
-    public void addCard(Card card){
+    public void addCard(Card card) {
         cards.add(card);
     }
 

@@ -14,7 +14,7 @@ public class BlackjackGame {
         this.participants = participants;
     }
 
-    public static BlackjackGame start(List<String> names){
+    public static BlackjackGame start(List<String> names) {
         return start(names, Deck.createDeck());
     }
 

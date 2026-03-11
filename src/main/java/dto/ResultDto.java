@@ -2,6 +2,7 @@ package dto;
 
 import domain.Dealer;
 import domain.Participant;
+
 import java.util.List;
 
 public record ResultDto(
@@ -16,10 +17,10 @@ public record ResultDto(
         return new ResultDto(cardInfo, participant.getHand().getScore().value());
     }
 
-    public static ResultDto fromDealerInitial(Dealer dealer){
+    public static ResultDto fromDealerInitial(Dealer dealer) {
         List<String> cardInfo = dealer.getHandCards().stream()
                 .limit(1)
-                .map(card->card.getCardNumber().getSymbol() + card.getCardShape().getName())
+                .map(card -> card.getCardNumber().getSymbol() + card.getCardShape().getName())
                 .toList();
 
         return new ResultDto(cardInfo, dealer.getHand().getScore().value());
