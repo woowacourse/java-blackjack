@@ -1,6 +1,6 @@
 package blackjack.controller;
 
-import blackjack.domain.betting.BettingAmounts;
+import blackjack.domain.betting.BettingRepository;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
@@ -26,7 +26,7 @@ public class BlackjackController {
         Players players = readPlayers();
         Dealer dealer = new Dealer();
 
-        BettingAmounts bettingAmounts = readBettingAmounts(players);
+        BettingRepository bettingRepository = readBettingAmounts(players);
 
         setInitialTwoCards(players, dealer);
         printInitialSettings(players, dealer);
@@ -35,7 +35,7 @@ public class BlackjackController {
         getMoreCardsForDealer(dealer, players);
 
         printGameResult(players, dealer);
-        printWinningResult(bettingAmounts, players, dealer);
+        printWinningResult(bettingRepository, players, dealer);
     }
 
     private Players readPlayers() {
@@ -43,13 +43,13 @@ public class BlackjackController {
         return Players.from(playersName);
     }
 
-    private BettingAmounts readBettingAmounts(Players players) {
-        BettingAmounts bettingAmounts = new BettingAmounts();
+    private BettingRepository readBettingAmounts(Players players) {
+        BettingRepository bettingRepository = new BettingRepository();
         for (Player player : players.getPlayers()) {
             String playerName = player.getName();
-            bettingAmounts.put(playerName, inputView.readBettingAmount(playerName));
+            bettingRepository.put(playerName, inputView.readBettingAmount(playerName));
         }
-        return bettingAmounts;
+        return bettingRepository;
     }
 
     private void setInitialTwoCards(Players players, Dealer dealer) {
@@ -109,11 +109,11 @@ public class BlackjackController {
         }
     }
 
-    private void printWinningResult(BettingAmounts bettingAmounts, Players players, Dealer dealer) {
+    private void printWinningResult(BettingRepository bettingRepository, Players players, Dealer dealer) {
         Map<String, Integer> winningResult = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
             if (player.winsAgainst(dealer)) {
-                winningResult.put(player.getName(), bettingAmounts.findByName(player.getName()));
+                winningResult.put(player.getName(), bettingRepository.findByName(player.getName()));
             }
         }
         outputView.printWinningResult(WinningResult.from(winningResult));
