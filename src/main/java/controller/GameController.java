@@ -30,11 +30,11 @@ public class GameController {
     public void run() {
         List<String> playerNames = getPlayerNames();
         Deck deck = new Deck();
-        Dealer dealer = new Dealer(new ArrayList<>(List.of(deck.draw(), deck.draw())), deck);
+        Dealer dealer = new Dealer(new ArrayList<>(List.of(deck.draw(), deck.draw())));
         Players players = getPlayers(playerNames, deck);
 
         printGameStart(playerNames, dealer, players);
-        receiveMoreCard(players, dealer);
+        receiveMoreCard(players, dealer, deck);
 
         printFinalScore(players, dealer);
         printFinalResults(players, dealer);
@@ -63,13 +63,13 @@ public class GameController {
                 players.getPlayers().stream().map(player -> ParticipantDto.of(player.getName(), player)).toList());
     }
 
-    private void receiveMoreCard(Players players, Dealer dealer) {
+    private void receiveMoreCard(Players players, Dealer dealer, Deck deck) {
         for (Player player : players.getPlayers()) {
-            processRound(player, dealer);
+            processRound(player, deck);
         }
 
         while (dealer.canReceiveCard()) {
-            dealer.addCard(dealer.dealCard());
+            dealer.addCard(deck.draw());
             outputView.printDealerReceiveCard();
         }
     }
@@ -90,14 +90,14 @@ public class GameController {
         outputView.printPlayerFinalResults(PlayerResultDto.from(playerResults));
     }
 
-    private void processRound(Player player, Dealer dealer) {
+    private void processRound(Player player, Deck deck) {
         while (!player.isBust()) {
             String hitOption = inputView.readHitOption(player.getName());
             InputValidator.validateHitOption(hitOption);
             if (hitOption.equals("n")) {
                 break;
             }
-            player.addCard(dealer.dealCard());
+            player.addCard(deck.draw());
             outputView.printCurrentHoldCard(ParticipantDto.of(player.getName(), player));
         }
     }

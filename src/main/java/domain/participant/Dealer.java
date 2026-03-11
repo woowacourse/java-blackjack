@@ -1,19 +1,11 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.card.Deck;
 import java.util.List;
 
 public class Dealer extends Participant {
-    private final Deck deck;
-
-    public Dealer(List<Card> hand, Deck deck) {
+    public Dealer(List<Card> hand) {
         super(hand);
-        this.deck = deck;
-    }
-
-    public Card dealCard() {
-        return deck.draw();
     }
 
     public boolean canReceiveCard() {

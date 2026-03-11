@@ -1,9 +1,8 @@
 package domain;
 
 import domain.card.Card;
-import domain.card.CardValue;
 import domain.card.CardSuit;
-import domain.card.Deck;
+import domain.card.CardValue;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
@@ -24,11 +23,11 @@ public class JudgementTest {
         judgement = new Judgement();
     }
 
-    private Dealer createDealer(CardValue number1, CardSuit suit1, CardValue number2, CardSuit suit2) {
+    private Dealer createDealer(CardValue value1, CardSuit suit1, CardValue value2, CardSuit suit2) {
         List<Card> hand = new ArrayList<>(List.of(
-                new Card(number1, suit1),
-                new Card(number2, suit2)));
-        return new Dealer(hand, new Deck());
+                new Card(value1, suit1),
+                new Card(value2, suit2)));
+        return new Dealer(hand);
     }
 
     @Test
