@@ -1,12 +1,12 @@
-package domain;
+package domain.card;
 
 import static constant.BlackjackConstant.BLACKJACK_CARD_COUNT;
 import static constant.BlackjackConstant.BUST_BOUND;
-import static domain.CardRank.ACE;
-import static domain.CardRank.JACK;
-import static domain.CardRank.KING;
-import static domain.CardRank.QUEEN;
-import static domain.CardRank.TEN;
+import static domain.card.CardRank.ACE;
+import static domain.card.CardRank.JACK;
+import static domain.card.CardRank.KING;
+import static domain.card.CardRank.QUEEN;
+import static domain.card.CardRank.TEN;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -20,6 +20,9 @@ public class Hand {
 
     public Hand(List<Card> handCards) {
         this.handCards = handCards;
+        for (Card card : handCards) {
+            updateScore(card);
+        }
     }
 
     public void addCard(Card card) {

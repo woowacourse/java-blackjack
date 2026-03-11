@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,10 +24,6 @@ public class Deck {
         }
     }
 
-//    public void removeCardOf(int index) {
-//        cardDeck.remove(index);
-//    }
-
     public List<Card> getCardDeck() {
         return List.copyOf(cardDeck);
     }
@@ -35,10 +31,6 @@ public class Deck {
     public int getDeckSize() {
         return cardDeck.size();
     }
-
-//    public Card getCardOf(int index) {
-//        return cardDeck.get(index);
-//    }
 
     public Card draw(int index) {
         return cardDeck.remove(index);

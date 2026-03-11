@@ -1,6 +1,6 @@
 package infra;
 
-import domain.CardShuffler;
+import domain.card.CardShuffler;
 
 public class CardShufflerImpl implements CardShuffler {
     @Override

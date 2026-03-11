@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 public enum CardSuit {
     SPADE("스페이드"),
