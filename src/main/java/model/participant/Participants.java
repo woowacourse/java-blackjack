@@ -15,7 +15,7 @@ public class Participants {
         participants.add(Dealer.from("딜러"));
 
         List<Player> players = names.stream()
-                .map(Player::of)
+                .map(Player::from)
                 .toList();
 
         participants.addAll(players);

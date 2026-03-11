@@ -20,7 +20,7 @@ class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        player = Player.of("pobi");
+        player = Player.from("pobi");
     }
 
     @Test
@@ -45,7 +45,7 @@ class PlayerTest {
     class 승패_판정 {
         @Test
         void 플레이어와의_승패_판정_대상이_딜러가_아니면_예외를_발생한다() {
-            Participant otherPlayer = Player.of("jason");
+            Participant otherPlayer = Player.from("jason");
             assertThatThrownBy(() -> player.beats(otherPlayer))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining("딜러");
@@ -54,7 +54,7 @@ class PlayerTest {
         @ParameterizedTest
         @MethodSource("provideDealerCases")
         void 플레이어가_버스트이면_딜러의_패와_관계없이_패배한다(Dealer dealer) {
-            Participant playerWithBust = Player.of("playerWithBust");
+            Participant playerWithBust = Player.from("playerWithBust");
             playerWithBust.receive(Card.of(Suit.SPADE, Rank.JACK));
             playerWithBust.receive(Card.of(Suit.SPADE, Rank.QUEEN));
             playerWithBust.receive(Card.of(Suit.SPADE, Rank.KING));
@@ -65,7 +65,7 @@ class PlayerTest {
         @ParameterizedTest
         @MethodSource("provideDealerCases")
         void 플레이어가_블랙잭이면_딜러의_패와_관계없이_승리한다(Dealer dealer) {
-            Participant playerWithBlackjack = Player.of("playerWithBlackjack");
+            Participant playerWithBlackjack = Player.from("playerWithBlackjack");
             playerWithBlackjack.receive(Card.of(Suit.SPADE, Rank.ACE));
             playerWithBlackjack.receive(Card.of(Suit.SPADE, Rank.JACK));
 
@@ -89,7 +89,7 @@ class PlayerTest {
         }
 
         private static Player createPlayerWithScore21() {
-            Player player = Player.of("player");
+            Player player = Player.from("player");
             player.receive(Card.of(Suit.SPADE, Rank.ACE));
             player.receive(Card.of(Suit.SPADE, Rank.JACK));
             player.receive(Card.of(Suit.SPADE, Rank.QUEEN));
@@ -98,7 +98,7 @@ class PlayerTest {
         }
 
         private static Player createPlayerWithScore20() {
-            Player player = Player.of("player");
+            Player player = Player.from("player");
             player.receive(Card.of(Suit.SPADE, Rank.JACK));
             player.receive(Card.of(Suit.SPADE, Rank.QUEEN));
 
@@ -106,7 +106,7 @@ class PlayerTest {
         }
 
         private static Player createPlayerWithScore19() {
-            Player player = Player.of("player");
+            Player player = Player.from("player");
             player.receive(Card.of(Suit.SPADE, Rank.JACK));
             player.receive(Card.of(Suit.SPADE, Rank.NINE));
 

@@ -25,6 +25,12 @@ class DealerTest {
     }
 
     @Test
+    void 딜러와_승패를_판정하는_상대가_플레이어가_아니면_예외를_발생한다() {
+        assertThatThrownBy(() -> dealer.beats(Dealer.from("또 다른 딜러")))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
     void 첫_번째_오픈_때는_한_장의_카드만_오픈한다() {
         // given
         Card card1 = Card.of(Suit.SPADE, Rank.THREE);
@@ -37,7 +43,6 @@ class DealerTest {
 
         // then
         assertThat(opened).containsExactly(card1);
-        assertThat(opened).hasSize(1);
     }
 
     @Test
@@ -53,8 +58,6 @@ class DealerTest {
         List<Card> opened = dealer.open();
 
         // then
-        assertThat(opened).contains(card1, card2);
-        assertThat(opened).containsAll(List.of(card1, card2));
-        assertThat(opened).hasSize(2);
+        assertThat(opened).containsExactlyInAnyOrder(card1, card2);
     }
 }

@@ -8,7 +8,7 @@ public class Player extends Participant {
         super(name);
     }
 
-    public static Player of(String input) {
+    public static Player from(String input) {
         return new Player(input);
     }
 
