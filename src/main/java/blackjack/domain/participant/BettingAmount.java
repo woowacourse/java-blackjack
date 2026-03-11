@@ -48,8 +48,8 @@ public class BettingAmount {
     private boolean isInvalidUnit(int bettingAmount) {
         return bettingAmount % BETTING_UNIT != INIT_AMOUNT;
     }
-    //참여자: 21을 초과할 경우 배팅 금액을 모두 잃게 된다 | 딜러x & 처음 두 장의 카드 합이 21일 경우 블랙잭이 되면 베팅 금액의 1.5 배를 딜러에게 받는다.
-    //딜러와 플레이어가 모두 동시에 블랙잭인 경우 플레이어는 베팅한 금액을 돌려받는다.
-    //
-    // 딜러: 21을 초과하면 그 시점까지 남아 있던 플레이어들은 베팅 금액을 받는다.
+
+    public int getBettingAmount() {
+        return bettingAmount;
+    }
 }

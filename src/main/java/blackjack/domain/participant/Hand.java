@@ -8,8 +8,9 @@ import java.util.List;
 public class Hand {
 
     private static final int ACE_SCORE_DIFFERENCE = 10;
+    private static final int BLACKJACK_SIZE = 2;
 
-    private List<Card> cards;
+    private final List<Card> cards;
 
     public Hand(List<Card> cards) {
         this.cards = new ArrayList<>(cards);
@@ -46,5 +47,10 @@ public class Hand {
         return (int) cards.stream()
                 .filter(Card::isAce)
                 .count();
+    }
+
+    public boolean isBlackjack() {
+        return cards.size() == BLACKJACK_SIZE
+                && calculateTotalScore().isSame(GameScore.BLACKJACK_SCORE);
     }
 }
