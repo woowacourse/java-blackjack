@@ -44,6 +44,6 @@ public class OutputView {
                 finalResultDto.dealerLoseCount());
 
         finalResultDto.playerResults().forEach(dto ->
-                System.out.printf(PLAYER_RESULT_FORMAT, dto.name(), dto.result()));
+                System.out.printf(PLAYER_RESULT_FORMAT, dto.name(), dto.winningStatus()));
     }
 }

@@ -50,7 +50,7 @@ class BlackJackResultServiceTest {
         // when, then
         assertEquals(3, finalResultDto.dealerWinCount());
         assertEquals(0, finalResultDto.dealerLoseCount());
-        assertEquals("패", finalResultDto.playerResults().getFirst().result());
+        assertEquals("패", finalResultDto.playerResults().getFirst().winningStatus());
     }
 
     // todo: 테스트 옮기기
@@ -69,6 +69,6 @@ class BlackJackResultServiceTest {
         // when, then
         assertEquals(0, finalResultDto.dealerWinCount());
         assertEquals(3, finalResultDto.dealerLoseCount());
-        assertEquals("승", finalResultDto.playerResults().getFirst().result());
+        assertEquals("승", finalResultDto.playerResults().getFirst().winningStatus());
     }
 }
