@@ -64,7 +64,7 @@ class HandTest {
 
     @Test
     @DisplayName("에이스가 핸드에 여러 장 있어도 가장 유리하게 계산한다")
-    void calculateTotalScore_WhenHandHasMultipleAces_UsesMostAdvantageousScore(){
+    void calculateTotalScore_WhenHandHasMultipleAces_UsesMostAdvantageousScore() {
         Card card3 = new Card(Rank.ACE, Pattern.DIAMOND);
         Card card4 = new Card(Rank.TEN, Pattern.SPADE);
         Card card5 = new Card(Rank.ACE, Pattern.HEART);

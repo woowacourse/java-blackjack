@@ -35,7 +35,7 @@ class BetTableTest {
 
     @Test
     @DisplayName("게임승리 후 플레이어의 수익금을 출력할 수 있다.")
-    void getAmountByName_printsPlayerProfitAfterGameWin(){
+    void getAmountByName_printsPlayerProfitAfterGameWin() {
         Player player = new Player(new PlayerName("user1"), new Hand());
         Dealer dealer = new Dealer(new Hand());
         BetTable betTable = new BetTable();
@@ -61,7 +61,7 @@ class BetTableTest {
 
     @Test
     @DisplayName("게임패배 후 플레이어의 수익금을 출력할 수 있다.")
-    void getAmountByName_printsPlayerProfitAfterGameDefeat(){
+    void getAmountByName_printsPlayerProfitAfterGameDefeat() {
         Player player = new Player(new PlayerName("user1"), new Hand());
         Dealer dealer = new Dealer(new Hand());
         BetTable betTable = new BetTable();
@@ -88,7 +88,7 @@ class BetTableTest {
 
     @Test
     @DisplayName("게임무승부 후 플레이어의 수익금을 출력할 수 있다.")
-    void getAmountByName_printsPlayerProfitAfterGameDraw(){
+    void getAmountByName_printsPlayerProfitAfterGameDraw() {
         Player player = new Player(new PlayerName("user1"), new Hand());
         Dealer dealer = new Dealer(new Hand());
         BetTable betTable = new BetTable();
@@ -115,7 +115,7 @@ class BetTableTest {
 
     @Test
     @DisplayName("블랙잭으로 게임 승리 후 플레이어의 수익금을 출력할 수 있다.")
-    void getAmountByName_printsPlayerProfitAfterGameBlackJackWin(){
+    void getAmountByName_printsPlayerProfitAfterGameBlackJackWin() {
         Player player = new Player(new PlayerName("user1"), new Hand());
         Dealer dealer = new Dealer(new Hand());
         BetTable betTable = new BetTable();

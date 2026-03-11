@@ -3,7 +3,11 @@ package result;
 import domain.card.Card;
 import domain.card.Pattern;
 import domain.card.Rank;
-import domain.participant.*;
+import domain.participant.Dealer;
+import domain.participant.Hand;
+import domain.participant.Player;
+import domain.participant.PlayerName;
+import domain.participant.Players;
 import domain.result.Result;
 import domain.result.ResultInfo;
 import domain.result.ResultJudge;
@@ -76,7 +80,7 @@ class ResultJudgeTest {
 
     @Test
     @DisplayName("딜러와 플레이어가 둘 다 버스트되면 플레이어 패배를 우선으로 처리한다.")
-    void calculateResult_ReturnsDrawWhenPlayerAndDealerAreBothBust(){
+    void calculateResult_ReturnsDrawWhenPlayerAndDealerAreBothBust() {
         ResultJudge resultJudge = new ResultJudge();
         dealer.keepCard(new Card(Rank.NINE, Pattern.CLOVER));
         dealer.keepCard(new Card(Rank.JACK, Pattern.CLOVER));
@@ -91,7 +95,7 @@ class ResultJudgeTest {
 
     @Test
     @DisplayName("딜러가 버스트되면 플레이어가 승리한다.")
-    void calculateResult_ReturnsWinWhenDealerIsBust(){
+    void calculateResult_ReturnsWinWhenDealerIsBust() {
         ResultJudge resultJudge = new ResultJudge();
         dealer.keepCard(new Card(Rank.NINE, Pattern.CLOVER));
         dealer.keepCard(new Card(Rank.JACK, Pattern.CLOVER));
@@ -105,7 +109,7 @@ class ResultJudgeTest {
 
     @Test
     @DisplayName("플레이어가 버스트 되면 플레이어가 패배한다")
-    void calculateResult_ReturnsDefeatWhenPlayerIsBust(){
+    void calculateResult_ReturnsDefeatWhenPlayerIsBust() {
         ResultJudge resultJudge = new ResultJudge();
         dealer.keepCard(new Card(Rank.NINE, Pattern.CLOVER));
         defeatPlayer.keepCard(new Card(Rank.SIX, Pattern.SPADE));
@@ -118,7 +122,7 @@ class ResultJudgeTest {
 
     @Test
     @DisplayName("플레이어가 블랙잭이 되면 승리한다")
-    void calculateResult_ReturnsBlackJackWinWhenPlayerIsBlackJack(){
+    void calculateResult_ReturnsBlackJackWinWhenPlayerIsBlackJack() {
         ResultJudge resultJudge = new ResultJudge();
         Result result = resultJudge.calculateResult(dealer, players);
 
@@ -128,7 +132,7 @@ class ResultJudgeTest {
 
     @Test
     @DisplayName("플레이어와 딜러가 둘 다 블랙잭이면 무승부이다")
-    void calculateResult_ReturnDraws_WhenPlayerAndDealerIsBlackJack(){
+    void calculateResult_ReturnDraws_WhenPlayerAndDealerIsBlackJack() {
         ResultJudge resultJudge = new ResultJudge();
         Result result = resultJudge.calculateResult(blackJackDealer, players);
 

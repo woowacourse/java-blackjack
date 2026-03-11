@@ -5,8 +5,6 @@ import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
-import domain.result.Result;
-import domain.result.ResultInfo;
 
 import java.util.Map;
 import java.util.stream.Collectors;

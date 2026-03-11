@@ -80,7 +80,7 @@ class PlayerTest {
 
     @Test
     @DisplayName("플레이어의 블랙잭 여부를 판단할 수 있다")
-    void isBlackjack_returnsTrue_whenPlayerHasBlackjack(){
+    void isBlackjack_returnsTrue_whenPlayerHasBlackjack() {
         Player player = new Player(name, dummyHand);
         player.keepCard(new Card(Rank.ACE, Pattern.CLOVER));
         player.keepCard(new Card(Rank.JACK, Pattern.CLOVER));

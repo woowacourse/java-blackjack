@@ -13,8 +13,8 @@ public class BetAmount {
         return amount;
     }
 
-    private void validateBetAmountUnit(int amount){
-        if(amount % 100 != 0){
+    private void validateBetAmountUnit(int amount) {
+        if (amount % 100 != 0) {
             throw new IllegalArgumentException(BET_AMOUNT_UNIT_ERROR_MESSAGE);
         }
     }

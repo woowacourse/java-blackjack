@@ -10,8 +10,8 @@ public class PlayerName {
         this.name = name;
     }
 
-    private void validateName(String name){
-        if(name == null || name.isBlank()){
+    private void validateName(String name) {
+        if (name == null || name.isBlank()) {
             throw new IllegalArgumentException(NAME_IS_NOT_NULL_OR_BLANK_ERROR_MESSAGE);
         }
     }
