@@ -1,4 +1,4 @@
-package blackjack.dto;
+package blackjack.view.dto;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Rank;

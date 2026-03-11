@@ -1,4 +1,4 @@
-package blackjack.dto;
+package blackjack.view.dto;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.GameResult;
