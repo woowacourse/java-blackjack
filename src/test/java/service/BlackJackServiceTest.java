@@ -15,7 +15,7 @@ import model.dto.Card;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class TestBlackJackService {
+public class BlackJackServiceTest {
     private static final Integer INITIAL_BET = 10000;
     private BlackJackService blackJackService;
 

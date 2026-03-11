@@ -6,7 +6,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import constant.ErrorMessage;
 import org.junit.jupiter.api.Test;
 
-public class TestAgreement {
+public class AgreementTest {
     @Test
     public void 정상_작동() {
         Agreement agreement1 = new Agreement("n");

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
 
-public class TestParticipant {
+public class ParticipantTest {
 
     @Test
     public void 결과_출력_정상_작동() {

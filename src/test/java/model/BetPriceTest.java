@@ -6,7 +6,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import constant.ErrorMessage;
 import org.junit.jupiter.api.Test;
 
-public class TestBetPrice {
+public class BetPriceTest {
     @Test
     public void 정상_작동() {
         BetPrice betPrice = new BetPrice(10000);

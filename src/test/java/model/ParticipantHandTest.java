@@ -8,7 +8,7 @@ import java.util.List;
 import model.dto.Card;
 import org.junit.jupiter.api.Test;
 
-public class TestParticipantHand {
+public class ParticipantHandTest {
     @Test
     public void 카드_넣기_정상_작동() {
         ParticipantHand participantHand = new ParticipantHand();

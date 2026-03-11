@@ -4,7 +4,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-public class TestScore {
+public class ScoreTest {
 
     @Test
     public void 점수_불러오기_정상_작동() {
