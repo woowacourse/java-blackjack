@@ -32,4 +32,8 @@ public class Player {
     public int getTotalScore() {
         return hand.getTotalScore();
     }
+
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
+    }
 }

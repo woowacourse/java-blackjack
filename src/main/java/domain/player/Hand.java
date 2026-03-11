@@ -40,6 +40,10 @@ public class Hand {
         return totalScore;
     }
 
+    public boolean isBlackjack() {
+        return (cards.size() == MIN_SIZE) && (getTotalScore() == BLACKJACK_MAX_SCORE);
+    }
+
     public int getHandsSize() {
         return cards.size();
     }

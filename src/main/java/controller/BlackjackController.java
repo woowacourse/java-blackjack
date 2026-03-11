@@ -3,8 +3,8 @@ package controller;
 import domain.RandomValueGenerator;
 import domain.RandomValueGeneratorImpl;
 import domain.card.Card;
+import domain.card.Deck;
 import domain.player.Dealer;
-import domain.player.Deck;
 import domain.player.Hand;
 import domain.player.Player;
 import dto.DealerDto;
@@ -113,6 +113,9 @@ public class BlackjackController {
 
     private void PlayerTurn(Deck deck, Player player) {
         String name = player.getName();
+        if (determineBlackjack(player, name)) {
+            return;
+        }
 
         while (!player.getHand().isBust() && inputView.readNeedToHit(name)) {
             Card card = deck.drawCard();
@@ -120,6 +123,14 @@ public class BlackjackController {
             PlayerCardsDto playerCardsDto = PlayerCardsDto.fromEntity(player);
             outputView.showCard(playerCardsDto);
         }
+    }
+
+    private boolean determineBlackjack(Player player, String name) {
+        if (player.isBlackjack()) {
+            outputView.congratulateBlackjack(name);
+            return true;
+        }
+        return false;
     }
 
     private void fillDealerHand(Dealer dealer, Deck deck, List<Player> players) {

@@ -55,9 +55,32 @@ class HandTest {
         }
     }
 
+    @Nested
+    @DisplayName("isBlackjack(): ")
+    class IsBlackjack {
+
+        @Test
+        @DisplayName("첫 패에서 합이 21이면 True를 반환한다.")
+        void isBlackjack() {
+            Hand hand = new Hand(TestDefaults.getCardsByRanks(List.of(Rank.ACE, Rank.QUEEN)));
+
+            assertThat(hand.isBlackjack()).isEqualTo(true);
+        }
+
+        @Test
+        @DisplayName("카드를 더 받아서 21일 경우 false를 반환한다.(Blackjack 아님)")
+        void notBlackjack() {
+            Hand hand = new Hand(TestDefaults.getCardsByRanks(List.of(Rank.KING, Rank.QUEEN)));
+
+            hand.add(TestDefaults.getCardByRank(Rank.ACE));
+
+            assertThat(hand.isBlackjack()).isEqualTo(false);
+        }
+    }
+
 
     @Nested
-    @DisplayName("isBurst(): ")
+    @DisplayName("isBust(): ")
     class IsBurst {
 
         @Test

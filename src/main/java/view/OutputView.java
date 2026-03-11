@@ -8,6 +8,7 @@ import java.util.List;
 
 public class OutputView {
     private static final String DEAL_INITIAL_CARDS_MESSAGE = "\n%s와 %s에게 2장을 나누었습니다.";
+    private static final String CONGRATULATE_BLACKJACK = "%s는 블랙잭입니다. 축하합니다!";
     private static final String SHOW_CARD = "%s카드: %s";
     private static final String DRAW_DEALER = "%s는 %d이하라 한장의 카드를 더 받았습니다.";
     private static final String SHOW_RESULT = SHOW_CARD + " - 결과: %d";
@@ -67,4 +68,7 @@ public class OutputView {
     }
 
 
+    public void congratulateBlackjack(String name) {
+        System.out.printf((CONGRATULATE_BLACKJACK) + "%n", name);
+    }
 }
