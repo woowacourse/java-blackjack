@@ -7,6 +7,8 @@ import model.Dealer;
 import model.Player;
 import model.Players;
 import model.PlayerName;
+import model.dto.ParticipantWinning;
+import model.dto.PlayerResult;
 import service.BlackJackService;
 import view.InputView;
 import view.OutputView;
@@ -18,19 +20,16 @@ public class BlackJackController {
         this.blackJackService = blackJackService;
     }
 
-    public void run() {
+    public void playBlackJackGame() {
         Players players = getParticipantsName();
         getBet(players);
 
         Dealer dealer = new Dealer();
 
-        blackJackService.initGame(dealer, players);
+        initGame(dealer, players);
+        participantTurn(dealer, players);
 
-        drawPlayersTurn(players);
-        drawDealer(dealer);
-
-        OutputView.printPlayersScore(dealer.getResult(), players.getPlayersResult());
-        OutputView.printResult(blackJackService.getGameResult(players, dealer));
+        displayResult(dealer.getResult(), players.getPlayersResult(), blackJackService.getGameResult(players, dealer));
     }
 
     private Players getParticipantsName() {
@@ -49,6 +48,16 @@ public class BlackJackController {
     private void addBet(Player player) {
         BetPrice betPrice = new BetPrice(InputView.getBet(player.getName()));
         player.setBetAmount(betPrice.value());
+    }
+
+    private void initGame(Dealer dealer, Players players) {
+        blackJackService.initGame(dealer, players);
+        OutputView.printInitDeck(players.getPlayersResult(), dealer.getFirstCard());
+    }
+
+    private void participantTurn(Dealer dealer, Players players) {
+        drawPlayersTurn(players);
+        drawDealerTurn(dealer);
     }
 
     private void drawPlayersTurn(Players players) {
@@ -77,11 +86,15 @@ public class BlackJackController {
         return new Agreement(InputView.getDrawCondition(name)).get();
     }
 
-    private void drawDealer(Dealer dealer) {
+    private void drawDealerTurn(Dealer dealer) {
         while (dealer.canDraw()) {
             blackJackService.draw(dealer);
             OutputView.printDealerCardDrawMessage();
         }
     }
 
+    private void displayResult(PlayerResult dealerResult, List<PlayerResult> playerResults, ParticipantWinning result) {
+        OutputView.printPlayersScore(dealerResult, playerResults);
+        OutputView.printResult(result);
+    }
 }

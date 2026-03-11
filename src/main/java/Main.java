@@ -8,6 +8,6 @@ public class Main {
         BlackJackService blackJackService = new BlackJackService(new BlackJackDeck());
         BlackJackController blackJackController = new BlackJackController(blackJackService);
 
-        blackJackController.run();
+        blackJackController.playBlackJackGame();
     }
 }
