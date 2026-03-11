@@ -38,16 +38,14 @@ public class BlackjackController {
 
         Dealer dealer = blackjackService.createDealer(cards);
         Players players = initializePlayers(names, cards);
-
-        players = playRound(dealer, players, cards);
+        playRound(dealer, players, cards);
 
         displayFinalCards(dealer, players);
         showFinalResult(dealer, players);
     }
 
-    private Players initializePlayers(List<String> names, Deck cards) {
-        outputView.displayCardDistribution(names);
-        return blackjackService.createPlayers(names, cards);
+    private List<String> readNames() {
+        return doRetry(inputView::readNames);
     }
 
     private BetMap readBets(List<String> names) {
@@ -58,26 +56,16 @@ public class BlackjackController {
         return betMap;
     }
 
-    private Players playRound(Dealer dealer, Players players, Deck cards) {
+    private Players initializePlayers(List<String> names, Deck cards) {
+        outputView.displayCardDistribution(names);
+        return blackjackService.createPlayers(names, cards);
+    }
+
+    private void playRound(Dealer dealer, Players players, Deck cards) {
         List<PlayerCardDto> firstCardContents = collectInitialCardContents(dealer, players);
         outputView.displayCardContents(firstCardContents);
         processPlayersTurn(players, cards);
         processDealerTurn(dealer, players, cards);
-        return players;
-    }
-
-    private void processDealerTurn(Dealer dealer, Players players, Deck cards) {
-        if (!players.areAllBust()) {
-            int dealerCardCount = blackjackService.determineAdditionalCardOfDealer(dealer, cards);
-            for (int i = 0; i < dealerCardCount; i++) {
-                outputView.displayDealerCard(GameConstant.DEALER_HIT_THRESHOLD);
-            }
-        }
-    }
-
-    private void showFinalResult(Dealer dealer, Players players) {
-        BlackjackResult blackjackResult = BlackjackResult.from(dealer, players);
-        outputView.displayMatchResult(BlackjackResultDto.from(blackjackResult));
     }
 
     private List<PlayerCardDto> collectInitialCardContents(Dealer dealer, Players players) {
@@ -97,6 +85,10 @@ public class BlackjackController {
         }
     }
 
+    private boolean wantsAdditionalCard(String name) {
+        return doRetry(() -> inputView.readAdditionalCard(name));
+    }
+
     private void dealAdditionalCards(Player player, boolean wantsCard, Deck deck, String name) {
         while (wantsCard) {
             player.add(deck.pop());
@@ -105,6 +97,15 @@ public class BlackjackController {
             }
             outputView.displayCardContents(List.of(PlayerCardDto.from(player)));
             wantsCard = wantsAdditionalCard(name);
+        }
+    }
+
+    private void processDealerTurn(Dealer dealer, Players players, Deck cards) {
+        if (!players.areAllBust()) {
+            int dealerCardCount = blackjackService.determineAdditionalCardOfDealer(dealer, cards);
+            for (int i = 0; i < dealerCardCount; i++) {
+                outputView.displayDealerCard(GameConstant.DEALER_HIT_THRESHOLD);
+            }
         }
     }
 
@@ -117,14 +118,9 @@ public class BlackjackController {
         outputView.displayFinalCard(finalCards);
     }
 
-    private List<String> readNames() {
-        return doRetry(
-                inputView::readNames
-        );
-    }
-
-    private boolean wantsAdditionalCard(String name) {
-        return doRetry(() -> inputView.readAdditionalCard(name));
+    private void showFinalResult(Dealer dealer, Players players) {
+        BlackjackResult blackjackResult = BlackjackResult.from(dealer, players);
+        outputView.displayMatchResult(BlackjackResultDto.from(blackjackResult));
     }
 
     private <T> T doRetry(Supplier<T> action) {
