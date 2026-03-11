@@ -10,18 +10,27 @@ import blackjack.domain.Player;
 import blackjack.domain.Status;
 import blackjack.domain.Suit;
 import blackjack.domain.Trump;
+import blackjack.strategy.ShuffleStrategy;
 import java.util.ArrayList;
 import java.util.List;
 import org.assertj.core.api.InstanceOfAssertFactories;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class DealerTest {
 
+    private Trump trump;
+
+    @BeforeEach
+    void setUp() {
+        ShuffleStrategy strategy = new NoShuffleStrategy();
+        trump = new Trump(strategy);
+    }
+
     @Test
     @DisplayName("딜러 pitch 테스트")
     void 딜러_피치_테스트() {
-        Trump trump = new Trump();
         Dealer dealer = new Dealer(new Hand(new ArrayList<>()), Status.HIT, trump);
         List<Player> players = List.of(
             new Player(new Hand(new ArrayList<>()), Status.HIT, "pobi"),
@@ -42,7 +51,6 @@ public class DealerTest {
         Hand hand = new Hand(List.of(
             new Card(Suit.DIAMOND, Denomination.TEN),
             new Card(Suit.SPADE, Denomination.SIX)));
-        Trump trump = new Trump();
         Dealer dealer = new Dealer(hand, Status.HIT, trump);
         Status expected = Status.HIT;
 
@@ -60,7 +68,6 @@ public class DealerTest {
         Hand hand = new Hand(List.of(
             new Card(Suit.DIAMOND, Denomination.TEN),
             new Card(Suit.SPADE, Denomination.SEVEN)));
-        Trump trump = new Trump();
         Dealer dealer = new Dealer(hand, Status.HIT, trump);
 
         dealer.decideHit();
