@@ -7,7 +7,6 @@ public class Dealer {
     public static final int DEALER_HIT_THRESHOLD = 16;
     public static final int ACE_HIGH_LOW_DIFF = 10;
     public static final int BUST_THRESHOLD = 21;
-    public static final int BUST_SCORE = 0;
 
     private final List<Card> cards;
 
@@ -61,16 +60,8 @@ public class Dealer {
         return cardScore;
     }
 
-    private boolean isBust(int score) {
+    public boolean isBust(int score) {
         return score > BUST_THRESHOLD;
-    }
-
-    public int getScoreOrZeroIfBust() {
-        int score = calculateScore();
-        if (isBust(score)) {
-            return BUST_SCORE;
-        }
-        return score;
     }
 
     public List<Card> getCards() {
