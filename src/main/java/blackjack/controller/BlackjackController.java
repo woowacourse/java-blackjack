@@ -26,7 +26,7 @@ public class BlackjackController {
     }
 
     public void run() {
-        Hand hand = new Hand(new ArrayList<>());
+        Dealer dealer = readyGame();
         Players players = RetryExecutor.retry(this::readPlayers);
         Participants participants = new Participants(players, dealer);
 
@@ -37,6 +37,12 @@ public class BlackjackController {
         handleDealerAction(dealer);
 
         printResult(participants, players, dealer);
+    }
+
+    private Dealer readyGame() {
+        Hand emptyHand = new Hand(new ArrayList<>());
+        Trump trump = new Trump(shuffleStrategy);
+        return new Dealer(emptyHand, Status.HIT, trump);
     }
 
     private void printResult(Participants participants, Players players, Dealer dealer) {
