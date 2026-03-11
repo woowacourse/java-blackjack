@@ -84,7 +84,7 @@ public class BlackjackController {
     }
 
     private void playerHit(Player player, Deck deck) {
-        while (!player.isBust() && inputView.askHit(player.getName()) == HitAnswer.HIT) {
+        while (!player.isBust() && inputView.askHit(player.getName()).isHit()) {
             player.addCard(deck.draw());
             outputView.printPlayerCards(player.getName(), cardsToDtos(player.getCards()));
         }

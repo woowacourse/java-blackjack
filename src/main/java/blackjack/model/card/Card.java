@@ -8,4 +8,8 @@ public record Card(
     public int getScore() {
         return rank.getScore();
     }
+
+    public boolean isAce() {
+        return rank.isAce();
+    }
 }

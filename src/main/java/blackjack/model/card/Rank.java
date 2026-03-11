@@ -24,4 +24,8 @@ public enum Rank {
     public int getScore() {
         return score;
     }
+
+    public boolean isAce() {
+        return this == ACE;
+    }
 }

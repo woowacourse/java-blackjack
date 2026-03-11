@@ -2,5 +2,9 @@ package blackjack.model.game;
 
 public enum HitAnswer {
     HIT,
-    STAND
+    STAND;
+
+    public boolean isHit() {
+        return this == HIT;
+    }
 }

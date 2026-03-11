@@ -40,7 +40,7 @@ public class Hand {
 
     private int adjust(int scoreBeforeAdjust, List<Card> cards) {
         boolean containAce = cards.stream()
-                .anyMatch(card -> card.rank() == Rank.ACE);
+                .anyMatch(Card::isAce);
         int scoreAfterAdjust = scoreBeforeAdjust + ACE_ADJUST_SCORE;
 
         if (isNotBust(scoreAfterAdjust) && containAce) {
