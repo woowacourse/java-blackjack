@@ -8,6 +8,7 @@ public record PlayerHand(
         String nickname,
         List<String> cardNames
 ) {
+
     public static PlayerHand from(Player player) {
         return new PlayerHand(
                 player.getNickname(),

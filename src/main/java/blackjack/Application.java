@@ -11,5 +11,4 @@ public class Application {
         BlackjackRunner blackjackRunner = new BlackjackRunner(inputView, outputView);
         blackjackRunner.execute();
     }
-
 }

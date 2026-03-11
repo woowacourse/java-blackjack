@@ -8,6 +8,7 @@ public record PlayerGameResult(
         String nickname,
         GameResult gameResult
 ) {
+
     public static PlayerGameResult of(Player player, Dealer dealer) {
         return new PlayerGameResult(
                 player.getNickname(),

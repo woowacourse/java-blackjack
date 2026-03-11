@@ -11,15 +11,16 @@ public record TotalWinningResult(
         long dealerLossCount,
         List<PlayerGameResult> playerResults
 ) {
+
     public static TotalWinningResult of(Dealer dealer, List<Player> players) {
         Map<GameResult, Long> dealerResult = dealer.calculateResult(players);
         long dealerWinCount = dealerResult.getOrDefault(GameResult.WIN, 0L);
         long dealerLoseCount = dealerResult.getOrDefault(GameResult.LOSE, 0L);
-        
+
         List<PlayerGameResult> playerResults = players.stream()
                 .map(player -> PlayerGameResult.of(player, dealer))
                 .toList();
-        
+
         return new TotalWinningResult(dealerWinCount, dealerLoseCount, playerResults);
     }
 }

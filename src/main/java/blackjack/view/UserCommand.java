@@ -3,16 +3,14 @@ package blackjack.view;
 import java.util.Arrays;
 
 public enum UserCommand {
-    YES("y"),
-    NO("n"),
-    ;
-    
+    YES("y"), NO("n");
+
     private final String command;
-    
+
     UserCommand(String command) {
         this.command = command;
     }
-    
+
     public static UserCommand from(String input) {
         return Arrays.stream(values())
                 .filter(userCommand -> userCommand.command.equals(input))
