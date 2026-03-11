@@ -267,7 +267,42 @@ SRP를 완벽히 지킨 것입니다.
 - 구현에 필요한 추가 의존성은?
     - 배팅 결과를 확인할 로직 ⭕
         - 점수를 비교할 `딜러` ⭕
-        - 결과를 표현할 `게임 결과` ⭕
+        - 참가자의 수익금 결과를 표현할 `DTO` `참가자 수익금` ⭕
+        - 최종 게임 결과를 통합 표현할 `DTO` `최종 게임 결과` ⭕
+
+---
+
+- 복잡해 보이지만 사실상 수익금의 경우의 수는
+- `베팅금 * {-1, 0, 1, 1.5}` 뿐이다
+    - 패배(버스트로 지든 점수로 지든) : -1
+    - 무승부(맞 블랙잭이든 점수로 비기든) : 0
+    - 승리(점수로 이긴 경우) : 1
+    - 승리(블랙잭으로 이긴 경우) : 1.5
+
+### 기능/테스트 시그니처 명명
+
+> 필요한 부분만 추출해, 그 상태나 행위를 명명한다
+
+- 상태인가? ⭕
+    - 배팅금 `private final int amount`
+- 행위인가? ⭕
+    - 수익금 `public int calculateProfit(GameResult result)`
+        - 승패를 받아
+        - 블랙잭 여부를 판별해
+        - 수익금을 계산해 반환한다
+- 배팅 결과를 확인할 로직 ⭕
+    - 점수를 비교할 `딜러` ⭕
+        - 기존의 기능 `public Map<GameResult, Long> determineGameResult(List<Player> players)`
+        - ↘️ 아래로 변경 `public int determineProfit(List<Player> players)`
+    - ⬆️ 참가자의 수익금 결과를 표현할 `DTO` `참가자 수익금` ⭕
+        - `record ParticipantsProfit(String nickname, int profit)`
+        - ↘️ 아래로 변경 `ParticipantsProfit.from(player.getNickname(), player.calculateProfit())`
+    - ⬆️ 최종 게임 결과를 통합 표현할 `DTO` `최종 게임 결과` ⭕
+        - `record TotalWinningResult(long dealerWinCount, long dealerLossCount, List<PlayerGameResult> playerResults)`
+        - ↘️ 아래로 변경 `record TotalWinningResult(ParticipantsProfit dealerProfit, ParticipantsProfit playerProfit)`
+        - 기존의 필드를 수정,
+        - 딜러의 승/패/무 개수 -> 딜러의 닉네임과 수익금을 담은 ParticipantsProfit
+        - 플레이어의 닉네임과 승/패/무 -> 플레이어의 닉네임과 수익금을 담은 ParticipantsProfit
 
 ---
 
