@@ -1,13 +1,16 @@
 package domain;
 
 import constant.PolicyConstant;
-import exception.ErrorMessage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
 public class Players {
+
+    public static final String PLAYER_DUPLICATED = "게임 참가자의 이름은 중복 되어선 안됩니다.";
+    public static final String PLAYER_COUNT_OUT_OF_RANGE =
+            String.format("게임 참가자의 수는 %d~%d명 사이여야 합니다.", PolicyConstant.PLAYER_MIN_COUNT, PolicyConstant.PLAYER_MAX_COUNT);
 
     private final List<Player> players;
 
@@ -27,19 +30,15 @@ public class Players {
 
     private void validatePlayerDuplication(List<String> names) {
         if (new HashSet<>(names).size() != names.size()) {
-            throw new IllegalArgumentException(ErrorMessage.PLAYER_DUPLICATED.getMessage());
+            throw new IllegalArgumentException(PolicyConstant.ERROR_PREFIX + PLAYER_DUPLICATED);
         }
     }
 
     private void validatePlayerCount(int playerCount) {
         if (!(PolicyConstant.PLAYER_MIN_COUNT <= playerCount
                 && playerCount <= PolicyConstant.PLAYER_MAX_COUNT)) {
-            throw new IllegalArgumentException(ErrorMessage.PLAYER_COUNT_OUT_OF_RANGE.getMessage());
+            throw new IllegalArgumentException(PolicyConstant.ERROR_PREFIX + PLAYER_COUNT_OUT_OF_RANGE);
         }
-    }
-
-    public List<Player> getPlayers() {
-        return Collections.unmodifiableList(players);
     }
 
     public Player getPlayer(String name) {
@@ -47,5 +46,9 @@ public class Players {
                 .filter(player -> player.getName().equals(name))
                 .findFirst()
                 .orElse(null);
+    }
+
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
     }
 }
