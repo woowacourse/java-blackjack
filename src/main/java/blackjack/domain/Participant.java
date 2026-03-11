@@ -1,21 +1,20 @@
 package blackjack.domain;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public abstract class Participant {
-    private final List<Card> cards;
-    protected final Score score;
+    private final Hand hand;
+    protected Score score;
 
     public Participant() {
-        this.cards = new ArrayList<>();
-        this.score = new Score();
+        this.hand = new Hand();
+        this.score = new Score(0);
     }
 
     public void receiveCard(Card card) {
-        cards.add(card);
-        score.calculateAll(cards);
+        hand.add(card);
+        score = hand.calculateScore();
     }
 
     public boolean isBurst() {
@@ -27,15 +26,15 @@ public abstract class Participant {
     }
 
     public String getInitialCards() {
-        return cards.getFirst().getCardName();
+        return hand.getFirst().getCardName();
     }
 
     public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+        return Collections.unmodifiableList(hand.getCards());
     }
 
     public boolean isBlackjack() {
-        return cards.size() == 2 && score.isBlackjack();
+        return hand.getSize() == 2 && score.isBlackjack();
     }
 
     public abstract boolean canReceive();
