@@ -1,0 +1,25 @@
+package domain.vo;
+
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+class NameTest {
+    @ParameterizedTest
+    @ValueSource(strings = {"pobi", "슈크림", "pa스타"})
+    void name_정상생성_테스트(String input) {
+        Name name = new Name(input);
+
+        assertThat(name.getName()).isEqualTo(input);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"", " ", "!", "1000j"})
+    void 이름에_영어_한글_외_입력시_예외 (String input) {
+        Assertions.assertThatThrownBy(() -> new Name(input))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("[ERROR] 플레이어 이름은 영어와 한글만 가능합니다.");
+    }
+}
