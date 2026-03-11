@@ -23,7 +23,7 @@ public class BlackJackController {
         DrawResult drawResult = blackJackService.getDrawResult();
         OutputView.printDrawResult(drawResult);
 
-        readHitDecision(blackJackService.getAllPlayerNames());
+        readPlayerHitDecision(blackJackService.getAllPlayerNames());
 
         while (blackJackService.shouldDealerHit()) {
             OutputView.printDealerHitMessage();
@@ -53,30 +53,33 @@ public class BlackJackController {
         return playerNames.size() != playerNames.stream().distinct().count();
     }
 
-    private void readHitDecision(List<String> playerNames) {
-        playerNames.forEach(this::processHit);
+    private void readPlayerHitDecision(List<String> playerNames) {
+        playerNames.forEach(this::processPlayerHit);
     }
 
-    private void processHit(String playerName) {
-        while (blackJackService.shouldPlayerHit(playerName)) {
-            OutputView.printAskDrawCard(playerName);
-
-            String hitYn = InputView.readHitDecision();
-
-            while (!hitYn.equalsIgnoreCase("y") && !hitYn.equalsIgnoreCase("n")) {
-                OutputView.printWrongInputMessage();
-                hitYn = InputView.readHitDecision();
-            }
-
-            final boolean isStand = hitYn.equalsIgnoreCase("n");
-            if (isStand) {
-                return;
-            }
-
+    private void processPlayerHit(String playerName) {
+        while (readPlayerHitDecision(playerName)) {
             blackJackService.hitPlayer(playerName);
             OutputView.printPlayerCards(playerName, blackJackService.findPlayerCardNamesByName(playerName));
         }
+    }
 
-        OutputView.printBustMessage();
+    private boolean readPlayerHitDecision(String playerName) {
+        final boolean isPlayerBust = blackJackService.isPlayerBust(playerName);
+
+        if (!isPlayerBust) {
+            OutputView.printBustMessage();
+            return false;
+        }
+
+        OutputView.printAskDrawCard(playerName);
+        String hitYn = InputView.readHitDecision();
+
+        while (!hitYn.equalsIgnoreCase("y") && !hitYn.equalsIgnoreCase("n")) {
+            OutputView.printWrongInputMessage();
+            hitYn = InputView.readHitDecision();
+        }
+
+        return hitYn.equalsIgnoreCase("n");
     }
 }
