@@ -135,4 +135,21 @@ class HandCardsTest {
         // Then
         assertThat(isBust).isFalse();
     }
+
+    @Test
+    @DisplayName("블랙잭인지 확인한다.")
+    void blackJackTest() {
+        // Given
+        List<Card> cards = List.of(
+                new Card(CardNumber.ACE, CardShape.CLUB),
+                new Card(CardNumber.KING, CardShape.HEART)
+        );
+        HandCards handCards = new HandCards(cards);
+
+        // When
+        boolean isBlackJack = handCards.isBlackJack();
+
+        // Then
+        assertThat(isBlackJack).isTrue();
+    }
 }
