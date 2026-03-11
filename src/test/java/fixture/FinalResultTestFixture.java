@@ -28,6 +28,12 @@ public class FinalResultTestFixture {
                         List.of(card(CardValue.TEN), card(CardValue.NINE), card(CardValue.EIGHT)),
                         List.of(card(CardValue.SEVEN), card(CardValue.ACE)),
                         1000, 0, 1000
+                ),
+                // 4. 플레이어 딜러 모두 21점을 넘지 않고, 딜러가 플레이어보다 점수가 높은 경우
+                Arguments.of(
+                        List.of(card(CardValue.TEN), card(CardValue.NINE)),
+                        List.of(card(CardValue.JACK), card(CardValue.QUEEN)),
+                        1000, 0, 1000
                 )
         );
     }

@@ -24,17 +24,21 @@ public class BettingResult {
             updateMoney(dealer, player, false, true);
         } else if (playerScore > BLACK_JACK) {
             updateMoney(dealer, player, true, false);
+        } else if (playerScore < dealerScore) {
+            updateMoney(dealer, player, true, false);
         }
-
     }
 
     private static void updateMoney(Dealer dealer, Player player, boolean dealerWin, boolean blackJack) {
         int money = player.getMoney();
         if (!dealerWin && blackJack) {
             player.setMoney((int) (money * BLACK_JACK_WIN_PRICE));
+            return;
         } else if (dealerWin) {
             dealer.addDealerProfit(money);
             player.setMoney(0);
+            return;
         }
+        player.setMoney(money * GAME_WIN_PRICE);
     }
 }
