@@ -18,7 +18,7 @@ public class Player extends User {
         return bet;
     }
 
-    public GameOutcome getGameResult() {
+    public GameOutcome getGameOutcome() {
         return gameOutcome;
     }
 

@@ -49,13 +49,13 @@ public class BlackjackController {
 
         hit(players, dealer);
 
-        List<GameSummary> gameSummaries = players.calculateGameResult(dealer);
+        List<GameSummary> gameSummaries = players.calculateGameSummary(dealer);
 
         for (GameSummary gameSummary : gameSummaries) {
             outputView.printCardStatus(gameSummary);
         }
 
-        List<GameResult> gameResults = players.calculateProfit(dealer);
+        List<GameResult> gameResults = players.calculateGameResult(dealer);
         outputView.printGameResult(gameResults);
 
         inputView.closeScanner();

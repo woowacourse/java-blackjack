@@ -34,7 +34,7 @@ class PlayerTest {
     void test_gameresult_default_draw() {
         Player player = new Player("pobi", 1000);
 
-        assertThat(player.getGameResult()).isEqualTo(GameOutcome.DRAW);
+        assertThat(player.getGameOutcome()).isEqualTo(GameOutcome.DRAW);
     }
 
     @Test
@@ -43,7 +43,7 @@ class PlayerTest {
         Player player = new Player("pobi", 1000);
         player.mark(GameOutcome.WIN);
 
-        assertThat(player.getGameResult()).isEqualTo(GameOutcome.WIN);
+        assertThat(player.getGameOutcome()).isEqualTo(GameOutcome.WIN);
     }
 
     @Test
@@ -52,6 +52,6 @@ class PlayerTest {
         Player player = new Player("pobi", 1000);
         player.mark(GameOutcome.LOSE);
 
-        assertThat(player.getGameResult()).isEqualTo(GameOutcome.LOSE);
+        assertThat(player.getGameOutcome()).isEqualTo(GameOutcome.LOSE);
     }
 }

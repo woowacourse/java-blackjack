@@ -16,7 +16,7 @@ public class Players {
         return players;
     }
 
-    public List<GameSummary> calculateGameResult(Dealer dealer) {
+    public List<GameSummary> calculateGameSummary(Dealer dealer) {
 
         List<GameSummary> gameSummaries = new ArrayList<>();
 
@@ -35,12 +35,12 @@ public class Players {
         return gameSummaries;
     }
 
-    public List<GameResult> calculateProfit(Dealer dealer) {
+    public List<GameResult> calculateGameResult(Dealer dealer) {
         List<GameResult> gameResults = new ArrayList<>();
         int totalPlayerProfit = 0;
 
         for (Player player : players) {
-            int playerProfit = player.getBet().calculateProfit(player.getGameResult().getPayoutRate());
+            int playerProfit = player.getBet().calculateProfit(player.getGameOutcome().getPayoutRate());
             totalPlayerProfit += playerProfit;
             gameResults.add(GameResult.from(player, playerProfit));
         }
