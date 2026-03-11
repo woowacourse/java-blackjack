@@ -14,10 +14,14 @@ import java.util.List;
 public class TestUtil {
 
     public static Player createPlayer(String name, List<Card> handCards) {
+        return createPlayer(name, handCards, 10000);
+    }
+
+    public static Player createPlayer(String name, List<Card> handCards, int price) {
         return new Player(
                 new Name(name),
                 new Hand(handCards),
-                new BettingAmount(10000));
+                new BettingAmount(price));
     }
 
     public static Card createCard(CardSuit cardSuit, CardRank cardRank) {
