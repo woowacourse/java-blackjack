@@ -25,6 +25,6 @@ public class BlackJackGameTest {
                 Stream.of(dealer), players.getPlayers().stream()
         ).toList();
         assertThat(allParticipants).allSatisfy(participant ->
-                assertThat(participant.getCards()).hasSize(2));
+                assertThat(participant.getCardCount()).isEqualTo(2));
     }
 }
