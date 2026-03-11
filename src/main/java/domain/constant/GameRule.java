@@ -16,4 +16,6 @@ public class GameRule {
 
     public static final int MIN_BET_AMOUNT = 1_000;
     public static final int MAX_BET_AMOUNT = 300_000;
+
+    public static final int BET_AMOUNT_UNIT = 1_000;
 }

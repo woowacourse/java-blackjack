@@ -1,5 +1,6 @@
 package message;
 
+import static domain.constant.GameRule.BET_AMOUNT_UNIT;
 import static domain.constant.GameRule.MAX_BET_AMOUNT;
 import static domain.constant.GameRule.MAX_NAME_LENGTH;
 import static domain.constant.GameRule.MAX_PLAYER_NUMBER;
@@ -17,7 +18,9 @@ public enum ErrorMessage {
     DECK_CAN_NOT_DUPLICATED("[ERROR] 덱에 중복된 카드가 존재합니다."),
     DECK_IS_EMPTY("[ERROR] 더 이상 뽑을 카드가 없습니다."),
     INVALID_BET_AMOUNT_RANGE(
-            String.format("[ERROR] 배팅 금액은 %,d원 이상, %,d원 이하여야 합니다.", MIN_BET_AMOUNT, MAX_BET_AMOUNT));
+            String.format("[ERROR] 배팅 금액은 %,d원 이상, %,d원 이하여야 합니다.", MIN_BET_AMOUNT, MAX_BET_AMOUNT)),
+    INVALID_BET_AMOUNT_UNIT(
+            String.format("[ERROR] 배팅 금액은 %,d원 단위로만 입력할 수 있습니다.", BET_AMOUNT_UNIT));
 
     private final String message;
 
