@@ -12,7 +12,7 @@ import java.util.List;
 public class Participants {
 
     public static final int MINIMUM_BOUND = 1;
-    public static final int MAXIMUM_BOUND = 7;
+    public static final int MAXIMUM_BOUND = 5;
 
     private final List<Participant> participants;
 
