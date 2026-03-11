@@ -45,9 +45,9 @@ public class GameController {
     }
 
     private void addDealerCards(BlackjackGame blackjackGame) {
-        if (blackjackGame.shouldDealerDraw()) {
+        boolean dealerDrew = blackjackGame.playDealerTurn();
+        if(dealerDrew){
             OutputView.printAddDealerCardMessage();
-            blackjackGame.playDealerTurn();
         }
     }
 
