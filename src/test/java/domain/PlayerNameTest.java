@@ -3,7 +3,7 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-import exception.ErrorMessage;
+import constant.PolicyConstant;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -49,7 +49,7 @@ class PlayerNameTest {
                 // when & then
                 assertThatThrownBy(() -> new PlayerName(input))
                         .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessageContaining(ErrorMessage.PLAYER_NAME_LENGTH_OUT_OF_RANGE.getMessage());
+                        .hasMessageContaining(PolicyConstant.ERROR_PREFIX + PlayerName.PLAYER_NAME_LENGTH_OUT_OF_RANGE);
             }
 
             @ParameterizedTest
@@ -59,7 +59,7 @@ class PlayerNameTest {
                 // when & then
                 assertThatThrownBy(() -> new PlayerName(input))
                         .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessageContaining(ErrorMessage.PLAYER_NAME_BLANK.getMessage());
+                        .hasMessageContaining(PolicyConstant.ERROR_PREFIX + PlayerName.PLAYER_NAME_BLANK);
             }
         }
     }
