@@ -1,5 +1,6 @@
 package domain;
 
+import common.ErrorMessage;
 import dto.ParticipantDto;
 import java.util.List;
 import java.util.Optional;
@@ -35,21 +36,25 @@ public class BlackJackGame {
         return players.findNotStayPlayer();
     }
 
-    public void doHitProcess() {
-        players.findNotStayPlayer()
-                .ifPresent(player -> players.executeHit(player, totalDeck::drawCard));
+    public ParticipantDto doHitProcess() {
+        Player newPlayer = players.findNotStayPlayer()
+                .map(player -> players.executeHit(player, totalDeck::drawCard))
+                .orElseThrow(() -> new IllegalStateException(ErrorMessage.NO_MORE_PLAYABLE_PLAYER.getMessage()));
+        return ParticipantDto.from(newPlayer);
     }
 
-    public void doStandProcess() {
-        players.findNotStayPlayer()
-                .ifPresent(players::executeStand);
+    public ParticipantDto doStandProcess() {
+        Player newPlayer = players.findNotStayPlayer()
+                .map(players::executeStand)
+                .orElseThrow(() -> new IllegalStateException(ErrorMessage.NO_MORE_PLAYABLE_PLAYER.getMessage()));
+        return ParticipantDto.from(newPlayer);
     }
 
-    public List<ParticipantDto> getPlayersGameSettingResults() {
+    public List<ParticipantDto> getPlayersGameSettingStates() {
         return players.getInitialStates();
     }
 
-    public ParticipantDto getDealerGameSettingResult() {
+    public ParticipantDto getDealerGameSettingState() {
         return ParticipantDto.consistWithInitialInfo(dealer);
     }
 //

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
 
 public class Players {
     private static final int MAX_PLAYER_NUMBER = 5;
@@ -57,24 +58,29 @@ public class Players {
                 .findFirst();
     }
 
-    public void executeHit(Player player, Supplier<Card> cardSupplier) {
-        int index = players.indexOf(player);
-        if (index != -1) {
-            players.set(index, player.hit(cardSupplier));
-        }
+    public Player executeHit(Player player, Supplier<Card> cardSupplier) {
+        return applyAction(player, p -> p.hit(cardSupplier));
     }
 
-    public void executeStand(Player player) {
-        int index = players.indexOf(player);
-        if (index != -1) {
-            players.set(index, player.stand());
-        }
+    public Player executeStand(Player player) {
+        return applyAction(player, Player::stand);
     }
 
     public List<ParticipantDto> getInitialStates() {
         return players.stream()
                 .map(ParticipantDto::consistWithInitialInfo)
                 .toList();
+    }
+
+    private Player applyAction(Player player, UnaryOperator<Player> action) {
+        int index = players.indexOf(player);
+        if (index == -1) {
+            throw new IllegalArgumentException(ErrorMessage.PLAYER_NOT_FOUND.getMessage());
+        }
+
+        Player newPlayer = action.apply(player);
+        players.set(index, newPlayer);
+        return newPlayer;
     }
 //    public void hitPlayer(Player targetPlayer, Supplier<Card> cardSupplier) {
 //        targetPlayer.hit(cardSupplier);
