@@ -6,15 +6,18 @@ import blackjack.model.card.Hand;
 public class Player extends Participant {
 
     private final Name name;
+    private final Bet bet;
 
-    public Player(Name name) {
+    public Player(Name name, Bet bet) {
         super();
         this.name = name;
+        this.bet = bet;
     }
 
-    public Player(Name name, Hand hand) {
+    public Player(Name name, Bet bet, Hand hand) {
         super(hand);
         this.name = name;
+        this.bet = bet;
     }
 
     public String getName() {

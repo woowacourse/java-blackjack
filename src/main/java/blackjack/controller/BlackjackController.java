@@ -3,9 +3,11 @@ package blackjack.controller;
 import blackjack.model.card.Card;
 import blackjack.model.card.Deck;
 import blackjack.model.game.BlackjackResult;
+import blackjack.model.participant.Bet;
 import blackjack.model.participant.Dealer;
+import blackjack.model.participant.Name;
+import blackjack.model.participant.Names;
 import blackjack.model.participant.Player;
-import blackjack.model.participant.Players;
 import blackjack.util.RetryUtil;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -15,6 +17,7 @@ import blackjack.view.dto.PlayerDto;
 import blackjack.view.dto.PlayerScoreDto;
 import blackjack.view.dto.ResultDto;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -32,7 +35,7 @@ public class BlackjackController {
     }
 
     public void run() {
-        Players players = retryOnIllegalArgument(this::readPlayers);
+        Collection<Player> players = retryOnIllegalArgument(this::readPlayers);
         Dealer dealer = new Dealer();
         Deck deck = Deck.unique();
 
@@ -50,13 +53,19 @@ public class BlackjackController {
         RetryUtil.retryOnInvalidInput(retryableAction, outputView::printErrorMessage);
     }
 
-    private Players readPlayers() {
-        String rawPlayerNames = inputView.readPlayerNames();
+    private List<Player> readPlayers() {
+        ArrayList<Player> players = new ArrayList<>();
 
-        return Players.from(rawPlayerNames);
+        Names playerNames = inputView.readPlayerNames();
+        for (Name playerName : playerNames.get()) {
+            Bet bet = inputView.readBet(playerName);
+            players.add(new Player(playerName, bet));
+        }
+
+        return players;
     }
 
-    private void initialDeal(Players players, Dealer dealer, Deck deck) {
+    private void initialDeal(Collection<Player> players, Dealer dealer, Deck deck) {
         deal(players, dealer, deck);
         deal(players, dealer, deck);
 
@@ -66,15 +75,15 @@ public class BlackjackController {
         );
     }
 
-    private void deal(Players players, Dealer dealer, Deck deck) {
-        for (Player player : players.getPlayers()) {
+    private void deal(Collection<Player>players, Dealer dealer, Deck deck) {
+        for (Player player : players) {
             player.addCard(deck.draw());
         }
         dealer.addCard(deck.draw());
     }
 
-    private void hit(Players players, Dealer dealer, Deck deck) {
-        for (Player player : players.getPlayers()) {
+    private void hit(Collection<Player>players, Dealer dealer, Deck deck) {
+        for (Player player : players) {
             retryOnIllegalArgument(() -> playerHit(player, deck));
         }
         outputView.printEmptyLine();
@@ -96,19 +105,18 @@ public class BlackjackController {
         }
     }
 
-    private void printScore(Players players, Dealer dealer) {
+    private void printScore(Collection<Player>players, Dealer dealer) {
         DealerScoreDto dealerDto = DealerScoreDto.from(dealer);
-        List<PlayerScoreDto> playerDtos = players.getPlayers()
-                .stream()
+        List<PlayerScoreDto> playerDtos = players.stream()
                 .map(PlayerScoreDto::from)
                 .toList();
 
         outputView.printScore(dealerDto, playerDtos);
     }
 
-    private void printResult(Players players, Dealer dealer) {
+    private void printResult(Collection<Player>players, Dealer dealer) {
         List<ResultDto> resultDtos = new ArrayList<>();
-        for (Player player : players.getPlayers()) {
+        for (Player player : players) {
             BlackjackResult result = player.calculateResult(dealer.getHand());
             resultDtos.add(new ResultDto(player.getName(), result));
         }
@@ -122,9 +130,8 @@ public class BlackjackController {
                 .toList();
     }
 
-    private List<PlayerDto> playersToDots(Players players) {
-        return players.getPlayers()
-                .stream()
+    private List<PlayerDto> playersToDots(Collection<Player>players) {
+        return players.stream()
                 .map(PlayerDto::from)
                 .toList();
     }

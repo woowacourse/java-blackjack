@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 class PlayerTest {
 
     static final Name DEFAULT_NAME = new Name("name");
+    static final Bet DEFAULT_BET = new Bet(10000);
 
     Hand lowerScoreHand;
     Hand defaultHand;
@@ -46,7 +47,7 @@ class PlayerTest {
         Name playerName = new Name("Player Name");
 
         // when
-        Player player = new Player(playerName);
+        Player player = new Player(playerName, DEFAULT_BET);
 
         // then
         assertThat(player.getName()).isEqualTo(playerName.get());
@@ -57,7 +58,7 @@ class PlayerTest {
         @Test
         void 둘_다_버스트가_아니면서_본인의_점수가_더_높다면_승리한다() {
             // given
-            Player player = new Player(DEFAULT_NAME, higherScoreHand);
+            Player player = new Player(DEFAULT_NAME, DEFAULT_BET, higherScoreHand);
             Dealer dealer = new Dealer(lowerScoreHand);
 
             // when
@@ -70,7 +71,7 @@ class PlayerTest {
         @Test
         void 둘_다_버스트가_아니면서_본인의_점수가_더_낮다면_패배한다() {
             // given
-            Player player = new Player(DEFAULT_NAME, lowerScoreHand);
+            Player player = new Player(DEFAULT_NAME, DEFAULT_BET, lowerScoreHand);
             Dealer dealer = new Dealer(higherScoreHand);
 
             // when
@@ -83,7 +84,7 @@ class PlayerTest {
         @Test
         void 둘_다_버스트가_아니면서_점수가_같다면_무승부한다() {
             // given
-            Player player = new Player(DEFAULT_NAME, defaultHand);
+            Player player = new Player(DEFAULT_NAME, DEFAULT_BET, defaultHand);
             Dealer dealer = new Dealer(defaultHand);
 
             // when
@@ -96,7 +97,7 @@ class PlayerTest {
         @Test
         void 본인이_버스트라면_패배한다() {
             // given
-            Player player = new Player(DEFAULT_NAME, bustScoreHand);
+            Player player = new Player(DEFAULT_NAME, DEFAULT_BET, bustScoreHand);
             Dealer dealer = new Dealer(defaultHand);
 
             // when
@@ -109,7 +110,7 @@ class PlayerTest {
         @Test
         void 딜러만_버스트라면_승리한다() {
             // given
-            Player player = new Player(DEFAULT_NAME, defaultHand);
+            Player player = new Player(DEFAULT_NAME, DEFAULT_BET, defaultHand);
             Dealer dealer = new Dealer(bustScoreHand);
 
             // when
@@ -122,7 +123,7 @@ class PlayerTest {
         @Test
         void 둘_다_버스트라면_패배한다() {
             // given
-            Player player = new Player(DEFAULT_NAME, bustScoreHand);
+            Player player = new Player(DEFAULT_NAME, DEFAULT_BET, bustScoreHand);
             Dealer dealer = new Dealer(bustScoreHand);
 
             // when
