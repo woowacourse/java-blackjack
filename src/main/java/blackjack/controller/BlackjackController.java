@@ -4,6 +4,7 @@ import blackjack.domain.*;
 import blackjack.service.CardDistributor;
 import blackjack.service.Game;
 import blackjack.utils.InputParser;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,14 +17,14 @@ import blackjack.view.OutputView;
 public class BlackjackController {
     private final Game game;
 
-    public BlackjackController(CardDistributor cardDistributor, Referee referee) {
-        this.game = new Game(cardDistributor, referee);
+    public BlackjackController(CardDistributor cardDistributor) {
+        this.game = new Game(cardDistributor);
     }
 
     public void startGame() {
         List<String> playerNames = getPlayerNames();
-
         List<Participant> players = getPlayers(playerNames);
+
         Participant dealer = Participant.createDealer();
 
         setupInitialHand(players, dealer, playerNames);
@@ -103,7 +104,7 @@ public class BlackjackController {
     }
 
     private void calculateFinalGameResult(List<Participant> players, Participant dealer) {
-        GameResult gameResult = game.judgeTotalGameResult(players, dealer);
+        GameResult gameResult = dealer.judgeResult(players, dealer);
         Map<ScoreCompareResult, Integer> dealerResult = gameResult.dealerResult();
         Map<Participant, ScoreCompareResult> playerResult = gameResult.playerResults();
         HashMap<String, ScoreCompareResult> playerNameResult = new HashMap<>();

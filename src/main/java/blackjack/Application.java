@@ -1,7 +1,6 @@
 package blackjack;
 
 import blackjack.controller.BlackjackController;
-import blackjack.domain.Referee;
 import blackjack.service.CardDistributor;
 import blackjack.service.RandomCardPicker;
 import blackjack.service.RandomNumberGenerator;
@@ -12,9 +11,8 @@ public class Application {
         RandomNumberGenerator randomNumberGenerator = new RandomNumberGenerator();
         RandomCardPicker cardPicker = new RandomCardPicker(randomNumberGenerator);
         CardDistributor cardDistributor = new CardDistributor(cardPicker);
-        Referee referee = new Referee();
 
-        BlackjackController blackjackController = new BlackjackController(cardDistributor, referee);
+        BlackjackController blackjackController = new BlackjackController(cardDistributor);
 
         blackjackController.startGame();
     }

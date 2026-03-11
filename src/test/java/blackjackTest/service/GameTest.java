@@ -1,7 +1,6 @@
 package blackjackTest.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
 
 import blackjack.domain.*;
 import blackjack.service.CardDistributor;
@@ -25,8 +24,7 @@ public class GameTest {
         CardPicker cardPicker = cards::removeFirst;
 
         CardDistributor cardDistributor = new CardDistributor(cardPicker);
-        Referee referee = new Referee();
-        Game game = new Game(cardDistributor, referee);
+        Game game = new Game(cardDistributor);
         Dealer dealer = new Dealer();
 
         game.dealerDrawsCardsUntilDone(dealer);
@@ -44,8 +42,7 @@ public class GameTest {
         dealer.receiveOneCard(new Card(Rank.TEN, Shape.HEART));
         dealer.receiveOneCard(new Card(Rank.SEVEN, Shape.SPADE));
 
-        Referee referee = new Referee();
-        assertThat(referee.compareScore(player, dealer)).isEqualTo(ScoreCompareResult.PLAYER_WIN);
+        assertThat(dealer.compareScore(player, dealer)).isEqualTo(ScoreCompareResult.PLAYER_WIN);
     }
 
     @Test
@@ -59,8 +56,7 @@ public class GameTest {
         dealer.receiveOneCard(new Card(Rank.TEN, Shape.HEART));
         dealer.receiveOneCard(new Card(Rank.NINE, Shape.SPADE));
 
-        Referee referee = new Referee();
-        assertThat(referee.compareScore(player, dealer)).isEqualTo(ScoreCompareResult.DEALER_WIN);
+        assertThat(dealer.compareScore(player, dealer)).isEqualTo(ScoreCompareResult.DEALER_WIN);
     }
 
     @Test
@@ -74,8 +70,7 @@ public class GameTest {
         dealer.receiveOneCard(new Card(Rank.TEN, Shape.HEART));
         dealer.receiveOneCard(new Card(Rank.ACE, Shape.SPADE));
 
-        Referee referee = new Referee();
-        assertThat(referee.compareScore(player, dealer)).isEqualTo(ScoreCompareResult.PUSH);
+        assertThat(dealer.compareScore(player, dealer)).isEqualTo(ScoreCompareResult.PUSH);
     }
 
     @Test
@@ -85,7 +80,6 @@ public class GameTest {
         Player brown = createPlayer("brown", "10:하트", "10:클로버");
         Dealer dealer = createDealer("3:다이아몬드", "9:클로버", "8:다이아몬드");
 
-        Referee referee = new Referee();
         GameResult expected = new GameResult(
                 Map.of(
                         ScoreCompareResult.DEALER_WIN, 1,
@@ -97,7 +91,7 @@ public class GameTest {
                         brown, ScoreCompareResult.PUSH)
         );
 
-        GameResult actual = referee.judgeResult(List.of(pobi, jason, brown), dealer);
+        GameResult actual = dealer.judgeResult(List.of(pobi, jason, brown), dealer);
 
         assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
     }

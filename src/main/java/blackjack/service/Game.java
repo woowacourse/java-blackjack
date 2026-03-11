@@ -11,11 +11,9 @@ import java.util.Map;
 public class Game {
 
     private final CardDistributor cardDistributor;
-    private final Referee referee;
 
-    public Game(CardDistributor cardDistributor, Referee referee) {
+    public Game(CardDistributor cardDistributor) {
         this.cardDistributor = cardDistributor;
-        this.referee = referee;
     }
 
     public int dealerDrawsCardsUntilDone(Participant dealer) {
@@ -35,9 +33,5 @@ public class Game {
     // 플레이어에게 한 장 분배
     public void drawCardToPlayer(Participant player) {
         cardDistributor.distributeCardToPlayer(player);
-    }
-
-    public GameResult judgeTotalGameResult(List<Participant> players, Participant dealer) {
-        return referee.judgeResult(players, dealer);
     }
 }
