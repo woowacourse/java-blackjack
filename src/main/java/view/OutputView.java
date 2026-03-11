@@ -10,14 +10,8 @@ import java.util.Map.Entry;
 
 public class OutputView {
     private static final String DELIMITER = ", ";
-    private static final String NAME_PROMPT = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
-    private static final String INITIAL_CARD_SHARE = "딜러와 %s에게 2장을 나누었습니다.\n";
-    private static final String HIT_OR_STAND_PROMPT = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n";
-    private static final String ADDITIONAL_CARD_FOR_DEALER_DESCRIPTION = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String PARTICIPANT_CARD_INFO_FORMAT = "%s카드: %s";
     private static final String PARTICIPANT_CARD_INFO_FORMAT_LINE = "%s카드: %s\n";
-    private static final String PARTICIPANT_CARD_INFO_WITH_SUM_FORMAT = "%s - 결과: %d\n";
-    private static final String WIN_LOSS_RESULT_HEADER = "## 최종 승패\n";
     private static final String WIN_LOSS_RESULT_FORMAT = "%s: %s\n";
 
     public void printErrorMessage(Exception e) {
@@ -25,7 +19,7 @@ public class OutputView {
     }
 
     public void printNamePrompt() {
-        System.out.println(NAME_PROMPT);
+        System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
     }
 
     public void printInitialCardShareDetail(ParticipantDto dealerDto, List<ParticipantDto> players) {
@@ -42,12 +36,12 @@ public class OutputView {
         }
 
         System.out.println();
-        System.out.printf(INITIAL_CARD_SHARE, String.join(DELIMITER, playerNames));
+        System.out.printf("딜러와 %s에게 2장을 나누었습니다.\n", String.join(DELIMITER, playerNames));
         System.out.println(initialCardShareDetail);
     }
 
     public void printHitOrStandPrompt(String name) {
-        System.out.printf(HIT_OR_STAND_PROMPT, name);
+        System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n", name);
     }
 
     public void printUserCardInfo(ParticipantDto participantDto) {
@@ -57,7 +51,7 @@ public class OutputView {
 
     public void printAdditionalCardForDealerDescription() {
         System.out.println();
-        System.out.println(ADDITIONAL_CARD_FOR_DEALER_DESCRIPTION);
+        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
     public void printCardInfoWithSum(GameResultDto gameResultDto) {
@@ -78,7 +72,7 @@ public class OutputView {
 
     public void printWinLossResult(GameResultDto gameResultDto) {
         StringBuilder winLossResult = new StringBuilder();
-        winLossResult.append(WIN_LOSS_RESULT_HEADER);
+        winLossResult.append("## 최종 승패\n");
 
         String dealerResult = consistDealerResult(gameResultDto);
         winLossResult.append(dealerResult);
@@ -99,7 +93,7 @@ public class OutputView {
     }
 
     private String consistCardInfoWithSum(ParticipantDto participantDto) {
-        return String.format(PARTICIPANT_CARD_INFO_WITH_SUM_FORMAT,
+        return String.format("%s - 결과: %d\n",
                 consistCardInfo(PARTICIPANT_CARD_INFO_FORMAT, participantDto), participantDto.score());
     }
 
