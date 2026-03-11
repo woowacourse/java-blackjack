@@ -96,4 +96,27 @@ class PlayerTest {
             }
         }
     }
+
+    @Nested
+    class CalculateScoreTest {
+
+        @Nested
+        class Success {
+
+            @Test
+            void 플레이어의_현재_점수를_반환해야_한다() {
+
+                // given
+                Player player = new Player("jacob");
+                player.addCard(new Card(Rank.TEN, Suit.HEART));
+                player.addCard(new Card(Rank.THREE, Suit.SPADE));
+
+                // when
+                int actual = player.calculateScore();
+
+                // then
+                assertThat(actual).isEqualTo(13);
+            }
+        }
+    }
 }
