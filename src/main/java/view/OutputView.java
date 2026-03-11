@@ -46,8 +46,9 @@ public class OutputView {
     }
 
     public void printWinningResults(GameSummary summary) {
-        printMessage("딜러: " + summary.getDealerWinCount() + "승 " + summary.getDealerLoseCount() + "패");
-        summary.getUserResults().forEach((name, result) -> printMessage(name + ": " + result.getName()));
+        printMessage("딜러: " + summary.getDealerProfit());
+        summary.getUserResults().keySet()
+                .forEach(name -> printMessage(name + ": " + summary.getUserProfit(name)));
     }
 
     private String formatCard(Card card) {
