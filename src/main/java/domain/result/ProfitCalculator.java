@@ -12,19 +12,8 @@ public class ProfitCalculator {
 
     public void playerCalculateProfit(ResultInfo resultInfo, Player player) {
         int betAmount = betTable.getAmountByName(player.getName());
-        if (resultInfo == ResultInfo.WIN) {
-            if (player.isBlackjack()) {
-                betTable.placeBet(player.getName(), (int) (betAmount * 1.5) - betAmount);
-                return;
-            }
-            betTable.placeBet(player.getName(), betAmount);
-            return;
-        }
-        if (resultInfo == ResultInfo.DEFEAT) {
-            betTable.placeBet(player.getName(), -betAmount);
-            return;
-        }
-        betTable.placeBet(player.getName(), 0);
+        int calculatedBetAmount = resultInfo.calculateProfit(betAmount);
+        betTable.placeBet(player.getName(), calculatedBetAmount);
     }
 
     public int dealerCalculateProfit() {

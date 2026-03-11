@@ -1,10 +1,30 @@
 package domain.result;
 
 public enum ResultInfo {
-    WIN("승", 0),
-    DRAW("무", 1),
-    DEFEAT("패", 2)
-    ;
+    WIN("승", 0) {
+        @Override
+        public int calculateProfit(int amount) {
+            return amount;
+        }
+    },
+    DRAW("무", 1) {
+        @Override
+        public int calculateProfit(int amount) {
+            return 0;
+        }
+    },
+    DEFEAT("패", 2) {
+        @Override
+        public int calculateProfit(int amount) {
+            return -amount;
+        }
+    },
+    BLACKJACK_WIN("블랙잭", 3) {
+        @Override
+        public int calculateProfit(int amount) {
+            return (int) ((amount * 1.5) - amount);
+        }
+    };
 
     private final String info;
     private final int code;
@@ -21,4 +41,6 @@ public enum ResultInfo {
     public int getCode() {
         return code;
     }
+
+    public abstract int calculateProfit(int amount);
 }

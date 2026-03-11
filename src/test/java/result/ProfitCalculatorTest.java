@@ -88,7 +88,7 @@ class ProfitCalculatorTest {
         int expectedProfit = 22500 - 15000;
 
         ProfitCalculator calculator = new ProfitCalculator(betTable);
-        calculator.playerCalculateProfit(ResultInfo.WIN, player2);
+        calculator.playerCalculateProfit(ResultInfo.BLACKJACK_WIN, player2);
 
         assertThat(betTable.getAmountByName(player2.getName())).isEqualTo(expectedProfit);
     }

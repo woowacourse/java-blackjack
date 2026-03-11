@@ -123,7 +123,7 @@ class ResultJudgeTest {
         Result result = resultJudge.calculateResult(dealer, players);
 
         ResultInfo resultInfo = result.getGameResult().get(blackJackPlayer.getName());
-        assertThat(resultInfo).isEqualTo(ResultInfo.WIN);
+        assertThat(resultInfo).isEqualTo(ResultInfo.BLACKJACK_WIN);
     }
 
     @Test
