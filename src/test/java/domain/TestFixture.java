@@ -1,31 +1,37 @@
+package domain;
+
 import domain.card.DeckMaker;
 import domain.card.OneDeckMaker;
 import domain.card.vo.Card;
 import domain.card.vo.Rank;
 import domain.card.vo.Suit;
+import domain.participants.Dealer;
 import domain.participants.Hand;
+import domain.participants.Player;
+import domain.state.State;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TestFixture {
-    private static final Rank FIRST_DEFAULT_RANK = Rank.ACE;
-    private static final Rank SECOND_DEFAULT_RANK = Rank.KING;
-    private static final Suit DEFAULT_SUIT = Suit.SPADE;
+    private static final Card KING_CARD = new Card(Rank.KING, Suit.SPADE);
     private static final DeckMaker ONE_DECK_MAKER = new OneDeckMaker();
     private static final List<Card> DEFAULT_CARDS = createCards();
-    private static final Hand DEFAULT_BLACKJACK_HAND = createBlackjackHand();
 
-    public static Hand createBlackjackHand() {
-        return new Hand(
-                List.of(new Card(FIRST_DEFAULT_RANK, DEFAULT_SUIT), new Card(SECOND_DEFAULT_RANK, DEFAULT_SUIT)));
+
+    public static State createDefaultPlayerStateByRank(List<Rank> ranks) {
+        return Player.createDefaultStrategy("익명", createHandByRank(ranks)).getStartState();
+    }
+
+    public static State createDefaultDealerState(List<Rank> ranks) {
+        return Dealer.createDefaultStrategy(createHandByRank(ranks)).getStartState();
+    }
+
+    public static Hand createHandByRank(List<Rank> ranks) {
+        return new Hand(getCardsByRanks(ranks));
     }
 
     public static List<Card> createCards() {
         return ONE_DECK_MAKER.make();
-    }
-
-    public static Hand getBlackjackHand() {
-        return DEFAULT_BLACKJACK_HAND;
     }
 
     public static List<Card> getCardsByRanks(List<Rank> ranks) {

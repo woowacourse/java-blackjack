@@ -8,6 +8,6 @@ public class CasinoDealerHitStrategy implements HitStrategy {
 
     @Override
     public boolean canHit(State state) {
-        return !(state instanceof Burst) && state.getScore() < BOUNDARY;
+        return !(state instanceof Burst) && state.getScore() <= BOUNDARY;
     }
 }

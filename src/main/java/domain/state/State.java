@@ -1,5 +1,6 @@
 package domain.state;
 
+import domain.card.Deck;
 import domain.card.vo.Card;
 import domain.participants.Hand;
 import domain.participants.Participant;
@@ -16,11 +17,11 @@ public abstract class State {
 
     abstract public boolean isFinished();
 
-    public State drawCard(Card card, boolean toHit) {
+    public State drawCard(Deck deck, boolean toHit) {
         if (!toHit) {
             return new Stay(hand, participant);
         }
-        hand.add(card);
+        hand.add(deck.drawCard());
         if (hand.isBurst()) {
             return new Burst(hand, participant);
         }
