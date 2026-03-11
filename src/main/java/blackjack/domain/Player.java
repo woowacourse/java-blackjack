@@ -30,10 +30,10 @@ public class Player extends Participant {
             return GameResult.WIN;
         }
 
-        return judgeNearestBlackJackPoint(this, dealer);
+        return judgeNearestBlackJackPoint(dealer);
     }
 
-    private GameResult judgeNearestBlackJackPoint(Player player, Dealer dealer) {
+    private GameResult judgeNearestBlackJackPoint(Dealer dealer) {
         int playerTotalPoint = getTotalPoint();
         int dealerTotalPoint = dealer.getTotalPoint();
 
