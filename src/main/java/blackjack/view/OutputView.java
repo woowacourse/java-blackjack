@@ -58,22 +58,6 @@ public class OutputView {
         System.out.println(sb);
     }
 
-//    public void printGameResult(Players players, Dealer dealer) {
-//        System.out.println();
-//        System.out.println("## 최종 승패");
-//
-//        EnumMap<GameOutcome, Integer> dealerGameResult = dealer.getGameResults();
-//        System.out.println(
-//                dealer.getName() + ": " + dealerGameResult.getOrDefault(GameOutcome.WIN, 0) + "승 " +
-//                        dealerGameResult.getOrDefault(GameOutcome.DRAW, 0) + "무 " + dealerGameResult.getOrDefault(
-//                        GameOutcome.LOSE, 0) + "패");
-//
-//        for (Player player : players.all()) {
-//            System.out.print(player.getName() + ": ");
-//            System.out.println(player.getGameResult().getFormat());
-//        }
-//    }
-
     public void printGameResult(List<GameResult> gameResults) {
         System.out.println();
         System.out.println("## 최종 수익");

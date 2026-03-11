@@ -23,7 +23,7 @@ public enum GameOutcome {
         return payoutRate;
     }
 
-    public static GameOutcome judge(GameSummary player, GameSummary dealer) {
+    public static GameOutcome judge(Player player, Dealer dealer) {
         if (player.isBlackjack() && dealer.isBlackjack()) {
             return DRAW;
         }
@@ -41,10 +41,10 @@ public enum GameOutcome {
             return WIN;
         }
 
-        if (player.score() > dealer.score()) {
+        if (player.getScore() > dealer.getScore()) {
             return WIN;
         }
-        if (player.score() < dealer.score()) {
+        if (player.getScore() < dealer.getScore()) {
             return LOSE;
         }
 
