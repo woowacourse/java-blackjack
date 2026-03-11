@@ -5,6 +5,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 public class HandTest {
@@ -85,5 +86,53 @@ public class HandTest {
         int actual = hand.calculateScore();
 
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @Nested
+    @DisplayName("블랙잭 판정 테스트")
+    class 블랙잭_판정_테스트 {
+
+        @Test
+        @DisplayName("정상 테스트")
+        void 정상_테스트() {
+            List<Card> cards = List.of(
+                new Card(Suit.DIAMOND, Denomination.KING),
+                new Card(Suit.HEART, Denomination.ACE));
+            Hand hand = new Hand(cards);
+            boolean expected = true;
+
+            boolean actual = hand.isBlackjack();
+
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        @Test
+        @DisplayName("카드가 2장이고 카드 점수 합이 21이 아닌 경우")
+        void 카드가_2장이고_카드_점수_합이_21이_아닌_경우() {
+            List<Card> cards = List.of(
+                new Card(Suit.DIAMOND, Denomination.TWO),
+                new Card(Suit.HEART, Denomination.ACE));
+            Hand hand = new Hand(cards);
+            boolean expected = false;
+
+            boolean actual = hand.isBlackjack();
+
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        @Test
+        @DisplayName("카드가 3장이고 카드 점수 합이 21인 경우")
+        void 카드가_3장이고_카드_점수_합이_21인_경우() {
+            List<Card> cards = List.of(
+                new Card(Suit.DIAMOND, Denomination.TWO),
+                new Card(Suit.HEART, Denomination.ACE),
+                new Card(Suit.HEART, Denomination.EIGHT));
+            Hand hand = new Hand(cards);
+            boolean expected = false;
+
+            boolean actual = hand.isBlackjack();
+
+            assertThat(actual).isEqualTo(expected);
+        }
     }
 }
