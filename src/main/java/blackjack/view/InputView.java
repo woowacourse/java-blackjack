@@ -1,9 +1,9 @@
 package blackjack.view;
 
+import blackjack.util.InputParser;
 import blackjack.util.InputValidator;
 import java.util.Arrays;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class InputView {
@@ -42,6 +42,8 @@ public class InputView {
     }
 
     public int inputBetAmount() {
-        return 0;
+        return InputParser.parseInt(
+                scanner.nextLine()
+        );
     }
 }
