@@ -38,12 +38,14 @@ class InitStatusDtoTest {
     @Test
     void initStatus() {
         // given, when
-        InitStatusDto initStatusDto = new InitStatusDto(dealer, players);
+        InitStatusDto initStatusDto = InitStatusDto.of(dealer, players);
 
         // then
-        assertEquals("딜러와 봉구스, 시오에게 2장을 나누었습니다.", initStatusDto.initStatus().get(0));
-        assertEquals("딜러카드: 4하트", initStatusDto.initStatus().get(1));
-        assertEquals("봉구스카드: A클로버, K다이아몬드", initStatusDto.initStatus().get(2));
-        assertEquals("시오카드: 5하트, J스페이드", initStatusDto.initStatus().get(3));
+        assertEquals(List.of("봉구스", "시오"), initStatusDto.names());
+        assertEquals(List.of("4하트"), initStatusDto.dealerHandDto().cards());
+        List<String> firstCards = initStatusDto.playerHandDtos().getFirst().handDto().cards();
+        assertEquals(List.of("A클로버", "K다이아몬드"), firstCards);
+        List<String> secondCards = initStatusDto.playerHandDtos().get(1).handDto().cards();
+        assertEquals(List.of("5하트", "J스페이드"), secondCards);
     }
 }

@@ -3,10 +3,15 @@ package view;
 import dto.FinalResultDto;
 import dto.HandDto;
 import dto.InitStatusDto;
+import dto.PlayerHandDto;
 import dto.PlayerHandScoreDto;
 import dto.ScoreResultDto;
 
 public class OutputView {
+
+    public static final String HEADER_FORMAT = "딜러와 %s에게 2장을 나누었습니다.";
+    public static final String DEALER_STATUS_FORMAT = "딜러카드: %s";
+    public static final String PLAYER_STATUS_FORMAT = "%s카드: %s";
 
     private static final String DEALER_HIT_MESSAGE = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n";
     private static final String FINAL_RESULT_HEADER = "## 최종 승패";
@@ -19,8 +24,11 @@ public class OutputView {
 
     public static void printInitMessage(InitStatusDto initStatusDto) {
         System.out.println();
-        for (String message : initStatusDto.initStatus()) {
-            System.out.println(message);
+        System.out.printf(HEADER_FORMAT, String.join(", ", initStatusDto.names()));
+        System.out.printf(DEALER_STATUS_FORMAT, getHandString(initStatusDto.dealerHandDto()));
+
+        for (PlayerHandDto playerHandDto : initStatusDto.playerHandDtos()) {
+            System.out.printf(PLAYER_STATUS_FORMAT, playerHandDto.name(), getHandString(playerHandDto.handDto()));
         }
         System.out.println();
     }

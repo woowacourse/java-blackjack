@@ -31,6 +31,6 @@ public class BlackJackInitService {
     }
 
     public InitStatusDto createInitStatusDto(Dealer dealer, List<Player> players) {
-        return new InitStatusDto(dealer, players);
+        return InitStatusDto.of(dealer, players);
     }
 }
