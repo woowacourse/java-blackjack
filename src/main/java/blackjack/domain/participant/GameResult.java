@@ -1,7 +1,9 @@
 package blackjack.domain.participant;
 
 public enum GameResult {
-    WIN, DRAW, LOSE;
+    WIN,
+    DRAW,
+    LOSE;
     
     public GameResult opposite() {
         if (this == WIN) {
