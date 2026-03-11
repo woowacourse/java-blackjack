@@ -14,7 +14,7 @@ public class Participants {
         List<Participant> participants = new ArrayList<>();
         participants.add(Dealer.from("딜러"));
 
-        List<Participant> players = names.stream()
+        List<Player> players = names.stream()
                 .map(Player::of)
                 .toList();
 

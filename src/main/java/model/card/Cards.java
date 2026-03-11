@@ -25,6 +25,10 @@ public class Cards {
         values.add(card);
     }
 
+    public int size() {
+        return values.size();
+    }
+
     public Card getFirst() {
         if (values.isEmpty()) {
             throw new IllegalStateException("가진 카드 패가 없어 오픈할 수 없습니다.");

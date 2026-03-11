@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
 import model.card.Card;
-import model.card.Cards;
 import model.card.Rank;
 import model.card.Suit;
 import org.junit.jupiter.api.BeforeEach;

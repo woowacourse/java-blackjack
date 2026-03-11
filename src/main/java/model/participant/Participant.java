@@ -5,6 +5,7 @@ import static model.Blackjack.BLACKJACK_SCORE;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import model.Blackjack;
 import model.card.Card;
 import model.card.Cards;
 
@@ -29,6 +30,10 @@ public abstract class Participant {
 
     public boolean isBust() {
         return calculateScore() > BLACKJACK_SCORE;
+    }
+
+    public boolean isBlackjack() {
+        return hands.size() == Blackjack.DEALOUT_DRAW_COUNT && calculateScore() == BLACKJACK_SCORE;
     }
 
     public int calculateScore() {

@@ -14,7 +14,7 @@ public class Dealer extends Participant {
         super(name);
     }
 
-    public static Participant from(String input) {
+    public static Dealer from(String input) {
         return new Dealer(input);
     }
 
@@ -30,15 +30,11 @@ public class Dealer extends Participant {
 
     @Override
     public boolean beats(Participant participant) {
-        if (participant.isBust()) {
-            return true;
+        if (!(participant instanceof Player player)) {
+            throw new IllegalArgumentException("딜러는 플레이어와만 승패를 판정할 수 있습니다.");
         }
 
-        if (isBust()) {
-            return false;
-        }
-
-        return calculateScore() >= participant.calculateScore();
+        return !player.beats(this);
     }
 
     public boolean needDraw() {
