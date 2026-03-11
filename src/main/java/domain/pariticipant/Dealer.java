@@ -1,5 +1,7 @@
 package domain.pariticipant;
 
+import domain.card.CardShuffler;
+import domain.card.Deck;
 import domain.card.Hand;
 import domain.result.DealerMatchResult;
 import domain.result.MatchCase;
@@ -9,6 +11,8 @@ import domain.result.PlayerMatchResult;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static constant.BlackjackConstant.DEALER_DRAW_BOUND;
 
 public class Dealer extends Participant {
     public Dealer(Name name, Hand hand) {
@@ -22,12 +26,12 @@ public class Dealer extends Participant {
         Map<Player, MatchCase> playerMatchResult = new HashMap<>();
         for (Player player : players) {
 
-            if(isDealerWin(player)) { // 딜러승, 플레이어 패배
+            if (isDealerWin(player)) { // 딜러승, 플레이어 패배
                 dealerWinCount = ifDealerWin(player, dealerWinCount, playerMatchResult);
                 continue;
             }
 
-            if(isDealerDraw(player)) { // 무승부
+            if (isDealerDraw(player)) { // 무승부
                 dealerDrawCount = ifDealerDraw(player, dealerDrawCount, playerMatchResult);
                 continue;
             }
@@ -71,4 +75,9 @@ public class Dealer extends Participant {
         playerMatchResult.put(player, MatchCase.WIN);
         return dealerLoseCount;
     }
+
+    public void drawAdditionalCard(Deck deck, CardShuffler cardShuffler) {
+        this.drawCard(deck, cardShuffler);
+    }
+
 }
