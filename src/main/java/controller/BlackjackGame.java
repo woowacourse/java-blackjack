@@ -35,14 +35,14 @@ public class BlackjackGame {
     }
 
     public void start() {
-        Dealer dealer = Dealer.from(cardDeck);
+        Dealer dealer = Dealer.from();
         Players players = Players.from(requestPlayerNames());
 
         handOutInitialCard(dealer, players);
 
         printInitialParticipantsHand(dealer, players);
 
-        proceedEachPlayersTurn(players, dealer);
+        proceedEachPlayersTurn(players);
         proceedDealersTurn(dealer);
 
         printAllParticipantsFinalHandResult(dealer, players);
@@ -65,31 +65,32 @@ public class BlackjackGame {
     }
 
     private void proceedDealersTurn(Dealer dealer) {
-        if (dealer.hitIfRequired()) {
+        if (dealer.hitIfRequired(cardDeck)) {
             view.printDealerAdditionalDrawCardMessage();
         }
     }
 
-    private void proceedEachPlayersTurn(Players players, Dealer dealer) {
-        players.stream().forEach(player -> drawPlayerCard(player, dealer));
+    private void proceedEachPlayersTurn(Players players) {
+        players.stream().forEach(this::drawPlayerCard);
     }
 
-    private void drawPlayerCard(Player player, Dealer dealer) {
-        if(player.isBusted()) return;
+    private void drawPlayerCard(Player player) {
+        if (player.isBusted()) {
+            return;
+        }
 
         DrawCardIntetion drawCardIntetion = view.requestDrawCardIntention(player.toDisplayMyName());
         while (!player.isBusted() && drawCardIntetion.isYes()) {
-            dealer.handOutCardToPlayer(player, DEFAULT_CARD_DRAW_COUNT);
+            player.drawCards(cardDeck, DEFAULT_CARD_DRAW_COUNT);
             view.printParticipantHand(ParticipantHandDtoMapper.map(player));
         }
     }
 
     private void handOutInitialCard(Dealer dealer, Players players) {
-        dealer.drawMySelf(INITIAL_CARD_DRAW_COUNT);
-        players.giveInitialCardBundle(dealer);
+        dealer.drawCards(cardDeck, INITIAL_CARD_DRAW_COUNT);
+        players.giveInitialCardBundle(cardDeck);
         view.printInitialHandOutResult(players.displayNames(), INITIAL_CARD_DRAW_COUNT);
     }
-
 
     private List<ParticipantName> requestPlayerNames() {
         return view.requestPlayerNames();

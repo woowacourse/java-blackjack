@@ -2,6 +2,7 @@ package domain.participant;
 
 import domain.card.Card;
 import domain.card.CardBundle;
+import domain.card.CardDeck;
 import java.util.List;
 
 public abstract class Participant {
@@ -14,8 +15,8 @@ public abstract class Participant {
         this.name = name;
     }
 
-    public CardBundle addCardBundle(CardBundle newCardBundle) {
-        return cardBundle.addUp(newCardBundle);
+    public CardBundle drawCards(CardDeck cardDeck, int count) {
+        return cardDeck.draw(cardBundle, count);
     }
 
     public boolean hasCard(Card targetCard) {

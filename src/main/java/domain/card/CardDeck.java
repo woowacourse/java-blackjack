@@ -3,6 +3,7 @@ package domain.card;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.stream.Stream;
 
 public class CardDeck {
 
@@ -16,12 +17,19 @@ public class CardDeck {
         return new CardDeck(cardDeckInitializer.initialize());
     }
 
-    public Card getCard() {
+    public CardBundle draw(CardBundle cardBundle, int count) {
+        List<Card> additionalCards = Stream.generate(this::drawCard)
+                .limit(count)
+                .toList();
+
+        return cardBundle.addUp(CardBundle.from(additionalCards));
+    }
+
+    private Card drawCard() {
         if (deck.isEmpty()) {
             throw new IllegalArgumentException();
         }
 
         return deck.poll();
     }
-
 }

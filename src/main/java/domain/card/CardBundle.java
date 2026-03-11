@@ -1,6 +1,7 @@
 package domain.card;
 
-import static config.BlackjackGameConstant.*;
+import static config.BlackjackGameConstant.ACE_BONUS_SCORE;
+import static config.BlackjackGameConstant.BUSTED_CONDITION;
 
 import java.util.ArrayList;
 import java.util.List;

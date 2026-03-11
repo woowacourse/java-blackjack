@@ -18,10 +18,9 @@ class PlayerTest {
                         Card.of(CardDenomination.TWO, CardEmblem.SPADE),
                         Card.of(CardDenomination.THREE, CardEmblem.HEART))
                 .build();
-        Dealer dealer = Dealer.from(cardDeck);
         Player player = Player.from(ParticipantName.from("test"));
 
-        dealer.handOutCardToPlayer(player, DEFAULT_CARD_DRAW_COUNT);
+        player.drawCards(cardDeck, DEFAULT_CARD_DRAW_COUNT);
         Card card = Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER);
 
         Assertions.assertThat(player.hasCard(card)).isTrue();
@@ -31,12 +30,10 @@ class PlayerTest {
     void 덱에_카드가_없으면_플레이어는_카드를_받을_수_없다() {
         CardDeck cardDeck = new CardDeckBuilder()
                 .build();
-
-        Dealer dealer = Dealer.from(cardDeck);
         Player player = Player.from(ParticipantName.from("test"));
 
         Assertions.assertThatThrownBy(() -> {
-            dealer.handOutCardToPlayer(player, DEFAULT_CARD_DRAW_COUNT);
+            player.drawCards(cardDeck, DEFAULT_CARD_DRAW_COUNT);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -51,9 +48,8 @@ class PlayerTest {
     @Test
     void 이름이_5자가_넘으면_예외가_발생한다() {
         String overFiveLengthName = "testtest";
-        ParticipantName name = ParticipantName.from(overFiveLengthName);
 
-        Assertions.assertThatThrownBy(() -> Player.from(name))
+        Assertions.assertThatThrownBy(() ->  ParticipantName.from(overFiveLengthName))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -65,10 +61,9 @@ class PlayerTest {
                 .cards(clover, spade)
                 .build();
         CardBundle origin = CardBundle.from(List.of(clover, spade));
-        Dealer dealer = Dealer.from(cardDeck);
         Player player = Player.from(ParticipantName.from("test"));
 
-        CardBundle result = dealer.handOutCardToPlayer(player, 2);
+        CardBundle result = player.drawCards(cardDeck, 2);
 
         Assertions.assertThat(result.getBasicScore()).isEqualTo(origin.getBasicScore());
     }
@@ -82,10 +77,9 @@ class PlayerTest {
         CardDeck cardDeck = new CardDeckBuilder()
                 .cards(cards)
                 .build();
-        Dealer dealer = Dealer.from(cardDeck);
         Player player = Player.from(ParticipantName.from("test"));
 
-        dealer.handOutCardToPlayer(player, 3);
+        player.drawCards(cardDeck, 3);
 
         Assertions.assertThat(player.isBusted()).isTrue();
     }

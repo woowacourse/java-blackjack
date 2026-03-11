@@ -1,5 +1,8 @@
 package domain.participant;
 
+import static config.BlackjackGameConstant.*;
+
+import domain.card.CardDeck;
 import domain.participant.dto.ParticipantHandDto;
 import domain.participant.dto.ParticipantHandDtoMapper;
 import domain.result.dto.ParticipantGameResultDto;
@@ -27,8 +30,8 @@ public class Players {
         return playerList.stream();
     }
 
-    public Players giveInitialCardBundle(Dealer dealer) {
-        playerList.forEach(dealer::handOutInitialCardToPlayer);
+    public Players giveInitialCardBundle(CardDeck cardDeck) {
+        playerList.forEach(player -> player.drawCards(cardDeck, INITIAL_CARD_DRAW_COUNT));
         return this;
     }
 

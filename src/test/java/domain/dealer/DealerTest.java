@@ -20,8 +20,8 @@ class DealerTest {
                         Card.of(CardDenomination.NINE, CardEmblem.SPADE))
                 .build();
 
-        Dealer dealer = Dealer.from(cardDeck);
-        CardBundle cardBundle = dealer.handOutCard(INITIAL_CARD_DRAW_COUNT);
+        Dealer dealer = Dealer.from();
+        CardBundle cardBundle = dealer.drawCards(cardDeck, INITIAL_CARD_DRAW_COUNT);
 
         Assertions.assertThat(cardBundle)
                 .isEqualTo(CardBundle.from(List.of(
@@ -37,8 +37,8 @@ class DealerTest {
                         Card.of(CardDenomination.NINE, CardEmblem.SPADE))
                 .build();
 
-        Dealer dealer = Dealer.from(cardDeck);
-        CardBundle cardBundle = dealer.handOutCard(1);
+        Dealer dealer = Dealer.from();
+        CardBundle cardBundle = dealer.drawCards(cardDeck, 1);
 
         Assertions.assertThat(cardBundle)
                 .isEqualTo(CardBundle.from(List.of(Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER))
@@ -51,10 +51,10 @@ class DealerTest {
                 .cards(Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER))
                 .build();
 
-        Dealer dealer = Dealer.from(cardDeck);
+        Dealer dealer = Dealer.from();
 
         Assertions.assertThatThrownBy(() -> {
-            dealer.handOutCard(INITIAL_CARD_DRAW_COUNT);
+            dealer.drawCards(cardDeck, INITIAL_CARD_DRAW_COUNT);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -68,9 +68,8 @@ class DealerTest {
                 .cards(cards)
                 .build();
 
-        Dealer dealer = Dealer.from(cardDeck);
-        dealer.drawMySelf(INITIAL_CARD_DRAW_COUNT);
-
+        Dealer dealer = Dealer.from();
+        dealer.drawCards(cardDeck, INITIAL_CARD_DRAW_COUNT);
         CardBundle cardBundle = CardBundle.from(cards);
         Assertions.assertThat(dealer.disPlayMyCardBundle())
                 .isEqualTo(cardBundle.toDisplay());
@@ -85,10 +84,10 @@ class DealerTest {
                 .cards(cards)
                 .build();
 
-        Dealer dealer = Dealer.from(cardDeck);
+        Dealer dealer = Dealer.from();
 
         Assertions.assertThatThrownBy(() -> {
-            dealer.drawMySelf(INITIAL_CARD_DRAW_COUNT);
+            dealer.drawCards(cardDeck, INITIAL_CARD_DRAW_COUNT);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -103,10 +102,9 @@ class DealerTest {
                 .cards(cards)
                 .build();
 
-        Dealer dealer = Dealer.from(cardDeck);
-        dealer.drawMySelf(INITIAL_CARD_DRAW_COUNT);
+        Dealer dealer = Dealer.from();
 
-        Assertions.assertThat(dealer.hitIfRequired()).isTrue();
+        Assertions.assertThat(dealer.hitIfRequired(cardDeck)).isTrue();
     }
 
 }

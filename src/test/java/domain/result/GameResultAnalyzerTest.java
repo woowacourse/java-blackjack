@@ -27,11 +27,11 @@ class GameResultAnalyzerTest {
         CardDeck cardDeck = new CardDeckBuilder()
                 .cards(cards)
                 .build();
-        Dealer dealerScore4 = Dealer.from(cardDeck);
+        Dealer dealerScore4 = Dealer.from();
 
-        dealerScore4.drawMySelf(INITIAL_CARD_DRAW_COUNT);
+        dealerScore4.drawCards(cardDeck, INITIAL_CARD_DRAW_COUNT);
         Players players = Players.from(List.of(ParticipantName.from("p7"), ParticipantName.from("p11")));
-        players.giveInitialCardBundle(dealerScore4);
+        players.giveInitialCardBundle(cardDeck);
 
         GameResultDto analysis = GameResultAnalyzer.analyze(players, dealerScore4);
 
