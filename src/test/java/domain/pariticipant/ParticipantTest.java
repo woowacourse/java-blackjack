@@ -13,6 +13,8 @@ import java.util.stream.Stream;
 
 import static constant.BlackjackConstant.DEALER_NAME;
 import static constant.BlackjackConstant.INIT_DRAW_COUNT;
+import static test_util.TestUtil.createPlayer;
+import static test_util.TestUtil.creteDealer;
 
 class ParticipantTest {
     @ParameterizedTest
@@ -37,20 +39,4 @@ class ParticipantTest {
                 creteDealer(DEALER_NAME, new ArrayList<>())
         );
     }
-
-
-    private static Player createPlayer(String name, List<Card> handCards) {
-        return new Player(
-                new Name(name),
-                new Hand(handCards));
-    }
-    private static Dealer creteDealer(String name, List<Card> handCards) {
-        return new Dealer(
-                new Name(name),
-                new Hand(handCards));
-    }
-    private static Card createCard(CardSuit cardSuit, CardRank cardRank) {
-        return new Card(cardSuit, cardRank);
-    }
-
 }

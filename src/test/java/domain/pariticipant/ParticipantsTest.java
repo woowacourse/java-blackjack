@@ -20,6 +20,8 @@ import static domain.card.CardRank.*;
 import static domain.card.CardRank.KING;
 import static domain.card.CardSuit.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static test_util.TestUtil.createCard;
+import static test_util.TestUtil.createPlayer;
 
 class ParticipantsTest {
     @Test
@@ -57,16 +59,6 @@ class ParticipantsTest {
                 .extracting(
                         DealerMatchResult::winCount, DealerMatchResult::drawCount, DealerMatchResult::loseCount)
                 .containsExactly(1, 0, 1);
-    }
-
-    private static Player createPlayer(String name, List<Card> handCards) {
-        return new Player(
-                new Name(name),
-                new Hand(handCards));
-    }
-
-    private static Card createCard(CardSuit cardSuit, CardRank cardRank) {
-        return new Card(cardSuit, cardRank);
     }
 
 }
