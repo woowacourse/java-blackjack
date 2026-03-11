@@ -13,7 +13,7 @@ public class Dealer extends Player {
         return score() >= DEALER_STOP_SCORE;
     }
 
-    public String firstCard(){
+    public String firstCard() {
         return handCard.firstCard();
     }
 

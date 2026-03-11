@@ -9,9 +9,11 @@ import domain.card.Card;
 import domain.card.CardRank;
 import domain.card.CardSuit;
 import dto.BlackjackResult;
+import dto.PlayerCardInfo;
 import expcetion.BlackjackException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -33,7 +35,9 @@ class GamblersTest {
     void 딜러와_사용자_승패결과_도출() {
         //given
         Dealer dealer = new Dealer();
-        Gamblers gamblers = new Gamblers(List.of("tobi", "quda")); // 사용자 두명
+        GamberInfoDto playerInfoDto1 = new GamberCardInfo("tobi", 10000);
+        GamberInfoDto playerInfoDto2 = new GamberCardInfo("quda", 20000);
+        Gamblers gamblers = new Gamblers(List.of(playerInfoDto1, playerInfoDto2)); // 사용자 두명
 
         Card jack = new Card(CardRank.JACK, CardSuit.CLOVER); // 딜러
         Card eight = new Card(CardRank.EIGHT, CardSuit.DIAMOND); // tobi
@@ -49,13 +53,11 @@ class GamblersTest {
         gamblers.dealAll(sd);
 
         //when
-        BlackjackResult result = gamblers.getResult(dealer.score());
+        GameResult result = GameResult.from(gamblers.getResult(dealer.score()));
 
         //then
-        assertThat(result.winCount()).isEqualTo(1);
-        assertThat(result.lossCount()).isEqualTo(1);
-        assertThat(result.drawCount()).isEqualTo(0);
-        assertThat(result.matchResultLog().get(0).matchResult()).isEqualTo(MatchResult.LOSE);
-        assertThat(result.matchResultLog().get(1).matchResult()).isEqualTo(MatchResult.WIN);
+        assertThat(result.dealerProfit()).isEqualTo(-10000);
+        assertThat(result.matchResultLog().get("tobi")).isEqualTo(-10000);
+        assertThat(result.matchResultLog().get("quda")).isEqualTo(20000);
     }
 }

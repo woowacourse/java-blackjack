@@ -95,5 +95,4 @@ public class BlackJack {
         OutputView.printFinalResultHeader();
         OutputView.printResult(gamblers.getResult(dealer.score()));
     }
-
 }

@@ -28,6 +28,5 @@ public abstract class Player {
         return handCard.cardInfos();
     }
 
-
 }
 
