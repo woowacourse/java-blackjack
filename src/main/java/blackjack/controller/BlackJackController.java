@@ -24,19 +24,14 @@ public class BlackJackController {
         BlackJackGame blackJackGame = new BlackJackGame(players, dealer, deck);
         blackJackGame.initDraw();
 
-        // 출력
         outputView.printInitDraw(players, dealer);
 
-        // 플레이어 턴
         playerTurn(players, deck);
 
-        // 딜러 턴
         dealerTurn(dealer, deck);
 
-        //최종 결과 출력
         outputView.printFinalCardResult(dealer, players);
-
-        //  최종 승패 출력
+        
         HashMap<Player, GameResult> result = blackJackGame.judgeGameResult();
         outputView.printFinalGameResult(result);
 
@@ -44,11 +39,7 @@ public class BlackJackController {
     }
 
     private void dealerTurn(Dealer dealer, Deck deck) {
-        while (true) {
-            boolean isOver17 = dealer.isOver17();
-            if (isOver17) {
-                break;
-            }
+        while (dealer.canHit()) {
             outputView.printDealerDraw();
             dealer.receiveCard(deck.draw());
         }
