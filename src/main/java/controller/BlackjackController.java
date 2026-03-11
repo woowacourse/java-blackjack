@@ -7,6 +7,7 @@ public class BlackjackController {
     private BettingPhase bettingPhase;
     private InitialDealPhase initialDealPhase;
     private PlayerTurnPhase playerTurnPhase;
+    private DealerTurnPhase dealerTurnPhase;
 
     public BlackjackController() {
         gameContext = new GameContext();
@@ -14,6 +15,7 @@ public class BlackjackController {
         bettingPhase = new BettingPhase();
         initialDealPhase = new InitialDealPhase();
         playerTurnPhase = new PlayerTurnPhase();
+        dealerTurnPhase = new DealerTurnPhase();
     }
 
     public void run() {
@@ -21,5 +23,6 @@ public class BlackjackController {
         bettingPhase.execute(gameContext);
         initialDealPhase.execute(gameContext);
         playerTurnPhase.execute(gameContext);
+        dealerTurnPhase.execute(gameContext);
     }
 }
