@@ -37,13 +37,12 @@ public class Hand {
         return score;
     }
 
-    public List<String> getCardNames() {
-        return cards.stream()
-            .map(Card::getName)
-            .toList();
+    public Card getFirstCard() {
+        return cards.getFirst();
     }
 
-    public String getFirstCard() {
-        return cards.getFirst().getName();
+    public List<Card> getCard() {
+        return cards.stream()
+                .toList();
     }
 }
