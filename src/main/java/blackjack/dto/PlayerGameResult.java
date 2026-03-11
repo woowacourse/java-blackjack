@@ -5,7 +5,7 @@ import blackjack.domain.MatchResult;
 public record PlayerGameResult(
     String nickname,
     MatchResult matchResult,
-    double profit
+    long profit
 ) {
 
 }
