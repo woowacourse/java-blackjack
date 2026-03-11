@@ -37,8 +37,10 @@ public class InputView {
 
     public Bet readBet(final Name playerName) {
         System.out.println(playerName.get() + "의 배팅 금액은?");
+        String betAmount = readLine();
+        System.out.println();
 
-        return Bet.from(readLine());
+        return Bet.from(betAmount);
     }
 
     public HitAnswer askHit(final String playerName) {
