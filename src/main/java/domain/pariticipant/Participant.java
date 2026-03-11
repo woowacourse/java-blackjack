@@ -2,7 +2,6 @@ package domain.pariticipant;
 
 import constant.BlackjackConstant;
 import domain.card.Card;
-import domain.card.CardShuffler;
 import domain.card.Deck;
 import domain.card.Hand;
 
@@ -22,15 +21,14 @@ public abstract class Participant {
         return hand;
     }
 
-    public void drawInitialCards(Deck deck, CardShuffler cardShuffler) {
+    public void drawInitialCards(Deck deck) {
         for (int i = 0; i < BlackjackConstant.INIT_DRAW_COUNT; i++) {
-            drawCard(deck, cardShuffler);
+            drawCard(deck);
         }
     }
 
-    protected void drawCard(Deck deck, CardShuffler cardShuffler) {
-        int cardIndex = cardShuffler.getRandomCardIndex(deck.getDeckSize());
-        hand.addCard(deck.draw(cardIndex));
+    protected void drawCard(Deck deck) {
+        hand.addCard(deck.draw());
     }
 
     public void addHandCard(Card card) {
