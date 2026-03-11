@@ -16,6 +16,4 @@ class CardTest {
         Card card = new Card(Rank.ACE, Suit.HEART);
         assertThat(card.getScore()).isEqualTo(1);
     }
-
-
 }
