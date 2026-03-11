@@ -58,11 +58,11 @@ public class GameResults {
     private static GameResult resolveGameResult(Dealer dealer, Player player) {
         if (player.isBlackjack() && dealer.isBlackjack()) {
             return GameResult.DRAW;
-        } else if (player.isBlackjack()) {
-            return GameResult.BLACKJACK;
-        } else {
-            return calculator.calculate(player.calculateScore(), dealer.calculateScore());
         }
+        if (player.isBlackjack()) {
+            return GameResult.BLACKJACK;
+        }
+        return calculator.calculate(player.calculateScore(), dealer.calculateScore());
     }
 
     private Money profitOf(Player player, Money wager) {
