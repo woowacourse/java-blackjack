@@ -1,36 +1,17 @@
 package blackjack.domain;
 
-import java.util.List;
 
-public class Dealer {
-    private final Cards drawnCards;
+public class Dealer extends Participant {
 
     public Dealer() {
-        drawnCards = new Cards();
-    }
-
-    public void receiveOneCard(Card card) {
-        drawnCards.addCard(card);
-    }
-
-    public List<String> getCardNames() {
-        return drawnCards.getCardNames();
     }
 
     public String getOneCardName() {
-        return drawnCards.getCardNames().getFirst();
+        return getCardNames().getFirst();
     }
 
     public int getAdditionalDrawnCardCount() {
-        return drawnCards.getCardNames().size() - 2;
-    }
-
-    public boolean isBust() {
-        return drawnCards.sumScore() > 21;
-    }
-
-    public int calculateTotalScore() {
-        return drawnCards.sumScore();
+        return getCardNames().size() - 2;
     }
 
     public boolean isDealerDone() {
