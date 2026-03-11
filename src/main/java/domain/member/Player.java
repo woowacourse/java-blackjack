@@ -1,4 +1,6 @@
-package domain;
+package domain.member;
+
+import domain.MatchResult;
 
 public class Player extends Member {
 

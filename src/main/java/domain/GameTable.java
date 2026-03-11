@@ -1,8 +1,11 @@
 package domain;
 
 import constant.Word;
-import domain.dto.GameResult;
-import domain.dto.MemberStatus;
+import domain.card.Card;
+import domain.card.Deck;
+import dto.GameResult;
+import dto.MemberStatus;
+import domain.member.Members;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

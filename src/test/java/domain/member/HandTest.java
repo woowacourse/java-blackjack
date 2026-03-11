@@ -1,6 +1,7 @@
-package domain;
+package domain.member;
 
-import domain.exception.DuplicatedException;
+import domain.card.Card;
+import constant.exception.DuplicatedException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;

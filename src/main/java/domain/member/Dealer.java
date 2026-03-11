@@ -1,6 +1,7 @@
-package domain;
+package domain.member;
 
 import constant.Word;
+import domain.MatchResult;
 
 public class Dealer extends Member {
 

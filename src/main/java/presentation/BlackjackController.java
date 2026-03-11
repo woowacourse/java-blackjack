@@ -1,9 +1,9 @@
 package presentation;
 
 import application.BlackjackService;
-import application.dto.RoundResult;
-import domain.dto.GameResult;
-import domain.dto.MemberStatus;
+import dto.RoundResult;
+import dto.GameResult;
+import dto.MemberStatus;
 import java.util.List;
 import presentation.ui.InputView;
 import presentation.ui.OutputView;

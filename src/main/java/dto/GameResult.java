@@ -1,4 +1,4 @@
-package domain.dto;
+package dto;
 
 import domain.MatchResult;
 import java.util.List;

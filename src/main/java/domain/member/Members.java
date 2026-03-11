@@ -1,6 +1,8 @@
-package domain;
+package domain.member;
 
 import constant.Word;
+import domain.MatchResult;
+import domain.card.Card;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

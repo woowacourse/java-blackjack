@@ -1,11 +1,11 @@
 package application;
 
-import domain.Card;
+import domain.card.Card;
 import domain.GameTable;
-import application.dto.RoundResult;
-import domain.StandardDeck;
-import domain.dto.GameResult;
-import domain.dto.MemberStatus;
+import dto.RoundResult;
+import domain.card.StandardDeck;
+import dto.GameResult;
+import dto.MemberStatus;
 import java.util.List;
 
 public class BlackjackService {

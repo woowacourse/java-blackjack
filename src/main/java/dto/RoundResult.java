@@ -1,6 +1,6 @@
-package application.dto;
+package dto;
 
-import domain.Card;
+import domain.card.Card;
 import java.util.List;
 
 public record RoundResult(

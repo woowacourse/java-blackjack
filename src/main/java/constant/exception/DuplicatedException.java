@@ -1,4 +1,4 @@
-package domain.exception;
+package constant.exception;
 
 public class DuplicatedException extends RuntimeException {
     public DuplicatedException() {

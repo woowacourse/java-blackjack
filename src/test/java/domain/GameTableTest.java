@@ -1,5 +1,7 @@
 package domain;
 
+import domain.card.Card;
+import domain.card.FixedDeck;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

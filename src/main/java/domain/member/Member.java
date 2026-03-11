@@ -1,5 +1,7 @@
-package domain;
+package domain.member;
 
+import domain.MatchResult;
+import domain.card.Card;
 import java.util.List;
 
 public abstract class Member {

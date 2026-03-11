@@ -1,5 +1,7 @@
-package domain;
+package domain.member;
 
+import domain.MatchResult;
+import domain.card.Card;
 import java.util.Arrays;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

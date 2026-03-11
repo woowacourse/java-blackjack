@@ -1,6 +1,8 @@
-package domain;
+package domain.member;
 
-import domain.exception.DuplicatedException;
+import domain.card.Card;
+import domain.card.CardNumber;
+import constant.exception.DuplicatedException;
 import java.util.ArrayList;
 import java.util.List;
 

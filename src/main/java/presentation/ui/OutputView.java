@@ -2,11 +2,11 @@ package presentation.ui;
 
 import static constant.Word.*;
 
-import application.dto.RoundResult;
-import domain.Card;
+import dto.RoundResult;
+import domain.card.Card;
 import domain.MatchResult;
-import domain.dto.GameResult;
-import domain.dto.MemberStatus;
+import dto.GameResult;
+import dto.MemberStatus;
 import java.util.List;
 import java.util.stream.Collectors;
 
