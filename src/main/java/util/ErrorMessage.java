@@ -9,9 +9,7 @@ public enum ErrorMessage {
     PLAYER_NAME("플레이어 이름은 2~7자이어야 합니다."),
     INPUT_BLANK("입력값이 비어있습니다."),
     INPUT_WRONG("입력값은 'y' or 'n' 이어야 합니다."),
-
     HANDS_CARDS_SIZE("처음 게임 시작 시, 두장을 나눠줘야한다."),
-    BURST_TOTAL_SCORE("토탈 스코어는 0 이하일 수 없습니다."),
     ;
 
 

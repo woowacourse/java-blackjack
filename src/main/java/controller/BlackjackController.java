@@ -56,7 +56,7 @@ public class BlackjackController {
     private List<StatisticsDto> getStatisticsDtos(List<Player> players, Dealer dealer) {
         int dealerTotalScore = dealer.getTotalScore();
         List<StatisticsDto> statisticsDtos = new ArrayList<>();
-        if (dealer.getHand().isBust()) {
+        if (dealer.isBust()) {
             dealerTotalScore = 0;
             judgeResult(players, dealerTotalScore, statisticsDtos);
             return statisticsDtos;
@@ -117,7 +117,7 @@ public class BlackjackController {
             return;
         }
 
-        while (!player.getHand().isBust() && inputView.readNeedToHit(name)) {
+        while (!player.isBust() && inputView.readNeedToHit(name)) {
             Card card = deck.drawCard();
             player.addHand(card);
             PlayerCardsDto playerCardsDto = PlayerCardsDto.fromEntity(player);
@@ -135,7 +135,7 @@ public class BlackjackController {
 
     private void fillDealerHand(Dealer dealer, Deck deck, List<Player> players) {
         while (dealer.needsToHit()
-                && players.stream().noneMatch(player -> player.getHand().isBust())) {
+                && players.stream().noneMatch(Player::isBust)) {
             Card card = deck.drawCard();
             dealer.addHand(card);
             DealerDto dealerDto = DealerDto.fromEntity(dealer);
@@ -146,10 +146,10 @@ public class BlackjackController {
     private void printPlayerStatus(Dealer dealer, List<Player> players) {
         PlayerCardsDto dealerCardsDto;
         dealerCardsDto = PlayerCardsDto.fromEntity(dealer);
-        outputView.showCardsAndScore(dealerCardsDto, dealer.getHand().getTotalScore());
+        outputView.showCardsAndScore(dealerCardsDto, dealer.getTotalScore());
         for (Player player : players) {
             PlayerCardsDto playerCardsDto = PlayerCardsDto.fromEntity(player);
-            outputView.showCardsAndScore(playerCardsDto, player.getHand().getTotalScore());
+            outputView.showCardsAndScore(playerCardsDto, player.getTotalScore());
         }
     }
 

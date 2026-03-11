@@ -13,12 +13,16 @@ public class Player {
         this.hand = hand;
     }
 
-    public Hand getHand() {
+    protected Hand getHand() {
         return hand;
     }
 
+    public boolean isBust() {
+        return hand.isBust();
+    }
+
     public List<Card> getCards() {
-        return getHand().getCards();
+        return hand.getCards();
     }
 
     public void addHand(Card card) {
