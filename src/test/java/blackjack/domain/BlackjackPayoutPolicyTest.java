@@ -12,7 +12,7 @@ class BlackjackPayoutPolicyTest {
     void 베팅_금액의_1_5배로_계산한다() {
         int amount = 20000;
         PayoutPolicy blackjackPayoutPolicy = new BlackjackPayoutPolicy();
-        int expected = 15000;
+        int expected = 30000;
 
         int actual = blackjackPayoutPolicy.payout(amount);
 
