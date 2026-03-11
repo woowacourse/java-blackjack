@@ -27,7 +27,7 @@ class StateTest {
             return Stream.of(
                     // --- 플레이어 ---
                     //Hit을 원하지 않는다면 Stay를 반환한다.
-                    Arguments.of(TestFixture.createDefaultPlayerStateByRank(List.of(Rank.ACE, Rank.KING)),
+                    Arguments.of(TestFixture.createDefaultPlayerStateByRank(List.of(Rank.KING, Rank.KING)),
                             Deck.createFromList(TestFixture.createCards()),
                             false, Stay.class, "Player", "21"),
                     //21이 넘는다면 버스트를 반환한다.
@@ -62,5 +62,6 @@ class StateTest {
                     .isInstanceOf(clazz);
         }
     }
+
 
 }

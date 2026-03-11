@@ -2,17 +2,26 @@ package domain.state;
 
 import domain.card.Deck;
 import domain.card.vo.Card;
+import domain.hitStrategy.HitStrategy;
 import domain.participants.Hand;
 import domain.participants.Participant;
 import java.util.List;
 
 public abstract class State {
+    private static final Integer BLACKJACK_SCORE = 21;
     private final Hand hand;
     private final Participant participant;
 
     protected State(Hand hand, Participant participant) {
         this.hand = hand;
         this.participant = participant;
+    }
+
+    public static State getStartState(Hand hand, Participant participant, HitStrategy hitStrategy) {
+        if (hand.getScore().equals(BLACKJACK_SCORE)) {
+            return new BlackJack(hand, participant);
+        }
+        return new Hit(hand, participant, hitStrategy);
     }
 
     abstract public boolean isFinished();

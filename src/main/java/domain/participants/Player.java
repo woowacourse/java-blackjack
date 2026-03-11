@@ -3,7 +3,6 @@ package domain.participants;
 import domain.bet.Betting;
 import domain.hitStrategy.HitStrategy;
 import domain.hitStrategy.UntilBurstHitStrategy;
-import domain.state.Hit;
 import domain.state.State;
 
 public class Player extends Participant {
@@ -22,7 +21,7 @@ public class Player extends Participant {
 
     @Override
     public State getStartState(Hand hand) {
-        return new Hit(hand, this, hitStrategy);
+        return State.getStartState(hand, this, hitStrategy);
     }
 
     @Override

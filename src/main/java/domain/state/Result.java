@@ -4,6 +4,7 @@ import java.util.function.Function;
 
 public enum Result {
     //여기서 금액 회수 or 1.5배 or 2배
+    BLACKJACK("블랙잭", (n) -> n * 15 / 10),
     WIN("승", (n) -> n),
     DRAW("무", (n) -> 0),
     LOSE("패", (n) -> -n),
@@ -20,6 +21,9 @@ public enum Result {
     public static Result getResult(State dealerState, State playerState) {
         if (playerState instanceof Burst) {
             return Result.LOSE;
+        }
+        if (playerState instanceof BlackJack && !(dealerState instanceof BlackJack)) {
+            return Result.BLACKJACK;
         }
         if (dealerState instanceof Burst || playerState.getScore() > dealerState.getScore()) {
             return Result.WIN;
