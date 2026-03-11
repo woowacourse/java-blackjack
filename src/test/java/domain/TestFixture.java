@@ -5,7 +5,6 @@ import domain.card.DeckMaker;
 import domain.card.OneDeckMaker;
 import domain.card.vo.Card;
 import domain.card.vo.Rank;
-import domain.card.vo.Suit;
 import domain.participants.Dealer;
 import domain.participants.Hand;
 import domain.participants.Player;
@@ -14,11 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TestFixture {
-    private static final Card KING_CARD = new Card(Rank.KING, Suit.SPADE);
     private static final DeckMaker ONE_DECK_MAKER = new OneDeckMaker();
     private static final List<Card> DEFAULT_CARDS = createCards();
-
-
+    
     public static State createDefaultPlayerStateByRank(List<Rank> ranks) {
         return Player.createDefaultStrategy("익명", new Betting(0)).getStartState(createHandByRank(ranks));
     }
@@ -51,9 +48,5 @@ public class TestFixture {
                 return;
             }
         }
-    }
-
-    public static Card getCard(int idx) {
-        return DEFAULT_CARDS.get(idx);
     }
 }

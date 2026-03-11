@@ -6,7 +6,6 @@ import domain.card.DeckMaker;
 import domain.hitStrategy.CasinoDealerHitStrategy;
 import domain.participants.Dealer;
 import domain.participants.Hand;
-import domain.participants.Player;
 import domain.state.State;
 import dto.DealerDrawDto;
 import dto.NamesDto;
@@ -32,20 +31,19 @@ public class BlackjackController {
 
     public void start(final DeckMaker deckMaker) {
         Deck deck = Deck.createFromDeckMaker(deckMaker);
-        Dealer dealer = Dealer.createDefaultStrategy();
-
-        List<Player> players = readPlayersInfo().stream()
-                .map(PlayerCreateDto::toDefaultStrategyPlayer)
-                .toList();
-
-        State dealerState = dealer.getStartState(Hand.createFromDeck(deck));
-        List<State> playersState = players.stream()
-                .map(player -> player.getStartState(Hand.createFromDeck(deck)))
-                .toList();
+        State dealerState = Dealer.createDefaultStrategy().getStartState(Hand.createFromDeck(deck));
+        List<State> playersState = readPlayerAndCreateState(deck);
         printCards(dealerState, playersState);
         playersState = drawPlayerHandAndPrint(playersState, deck);
         dealerState = drawDealerHandAndPrint(dealerState, deck, playersState);
         printAllStatus(dealerState, playersState);
+    }
+
+    private List<State> readPlayerAndCreateState(Deck deck) {
+        return readPlayersInfo().stream()
+                .map(PlayerCreateDto::toDefaultStrategyPlayer)
+                .map(player -> player.getStartState(Hand.createFromDeck(deck)))
+                .toList();
     }
 
     private List<PlayerCreateDto> readPlayersInfo() {

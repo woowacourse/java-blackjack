@@ -30,6 +30,10 @@ public abstract class State {
         if (!toHit) {
             return new Stay(hand, participant);
         }
+        return draw(deck);
+    }
+
+    private State draw(Deck deck) {
         hand.add(deck.drawCard());
         if (hand.isBurt()) {
             return new Bust(hand, participant);
