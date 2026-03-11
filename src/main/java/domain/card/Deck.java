@@ -13,14 +13,19 @@ public class Deck {
     private final Queue<Card> cards;
 
     public Deck() {
+        List<Card> generatedCards = getAllCards();
+        Collections.shuffle(generatedCards);
+        this.cards = new LinkedList<>(generatedCards);
+    }
+
+    private List<Card> getAllCards() {
         List<Card> cards = new ArrayList<>();
         for (Suit suit : Suit.values()) {
             for (Rank rank : Rank.values()) {
                 cards.add(new Card(suit, rank));
             }
         }
-        Collections.shuffle(cards);
-        this.cards = new LinkedList<>(cards);
+        return cards;
     }
 
     public Card draw() {
