@@ -22,6 +22,10 @@ public abstract class Participant {
         return getScore().isBurst();
     }
 
+    public boolean isBlackjack() {
+        return handCards.isBlackjack();
+    }
+
     public final Card FirstCardOpen() {
         return handCards.getFirstCard();
     }

@@ -6,6 +6,10 @@ public class Referee {
         Score playerScore = player.getScore();
         Score dealerScore = dealer.getScore();
 
+        if (player.isBlackjack()) {
+            return GameResult.BLACKJACK;
+        }
+
         if ((player.isBust() && dealer.isBust()) || (playerScore.isSame(dealerScore))) {
             return GameResult.DRAW;
         }

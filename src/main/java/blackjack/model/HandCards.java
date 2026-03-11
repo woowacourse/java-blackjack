@@ -30,6 +30,10 @@ public class HandCards {
         return new Score(aceTranslate(total, aceCount));
     }
 
+    public boolean isBlackjack() {
+        return cards.size() == 2 && calculate().getScore() == 21;
+    }
+
     public Card getFirstCard() {
         if (cards.isEmpty()) {
             throw new IllegalArgumentException(ErrorMessage.CARD_EMPTY.getMessage());
