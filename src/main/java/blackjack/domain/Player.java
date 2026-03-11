@@ -21,10 +21,6 @@ public class Player extends Participant {
         return false;
     }
 
-    public String getName() {
-        return super.getName();
-    }
-
     public GameResult compareResult(Dealer dealer) {
         if (this.isBust()) {
             return GameResult.LOSE;
