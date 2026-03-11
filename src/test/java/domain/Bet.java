@@ -42,7 +42,16 @@ public class Bet {
     public int calculateProfit(Name firstPlayer, GameResult gameResult) {
         Name foundPlayer = validatePlayer(firstPlayer);
         int betAmount = betHistory.get(foundPlayer);
+
+        if (gameResult == GameResult.LOSE) {
+            betAmount = negateBetAmount(betAmount);
+        }
+
         betProfit.put(foundPlayer, betAmount);
         return betAmount;
+    }
+
+    private int negateBetAmount(int betAmount) {
+        return -betAmount;
     }
 }
