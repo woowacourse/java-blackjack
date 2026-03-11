@@ -3,9 +3,9 @@ package domain.participant;
 import domain.ExceptionMessage;
 
 public class Name {
-    public static int NAME_MIN_LENGTH = 1;
-    public static int NAME_MAX_LENGTH = 10;
     private final String name;
+    private static final int NAME_MIN_LENGTH = 1;
+    private static final int NAME_MAX_LENGTH = 10;
 
     public Name(String name) {
         validate(name);
