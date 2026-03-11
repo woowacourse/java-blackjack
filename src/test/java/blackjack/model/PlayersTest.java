@@ -6,10 +6,22 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.tuple;
 
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PlayersTest {
+
+    private Players players;
+    private Dealer dealer;
+
+    @BeforeEach
+    void setup() {
+        players = new Players(List.of(new Player("pobi", 1000)));
+
+        dealer = new Dealer();
+        dealer.addCard(new Card(Suit.HEART, Rank.JACK));
+    }
 
     @Test
     @DisplayName("중복된 이름이 있으면 예외 발생")
@@ -23,16 +35,10 @@ class PlayersTest {
     @Test
     @DisplayName("게임 결과 계산")
     void test_calculate_game_summary() {
-        List<Player> allPlayers = List.of(new Player("pobi", 1000));
-
-        Players players = new Players(allPlayers);
 
         for (Player player : players.all()) {
             player.addCard(new Card(Suit.HEART, Rank.JACK));
         }
-
-        Dealer dealer = new Dealer();
-        dealer.addCard(new Card(Suit.HEART, Rank.JACK));
 
         List<GameSummary> gameSummaries = players.calculateGameSummary(dealer);
 
@@ -44,16 +50,10 @@ class PlayersTest {
     @Test
     @DisplayName("게임 수익 계산")
     void test_calculate_game_result() {
-        List<Player> allPlayers = List.of(new Player("pobi", 1000));
-
-        Players players = new Players(allPlayers);
 
         for (Player player : players.all()) {
             player.addCard(new Card(Suit.HEART, Rank.ACE));
         }
-
-        Dealer dealer = new Dealer();
-        dealer.addCard(new Card(Suit.HEART, Rank.JACK));
 
         players.calculateGameSummary(dealer);
         List<GameResult> gameResults = players.calculateGameResult(dealer);
