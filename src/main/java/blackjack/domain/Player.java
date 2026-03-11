@@ -6,6 +6,7 @@ public class Player extends Participant {
     private static final int NICKNAME_MAXIMUM_LENGTH = 10;
 
     private final String nickname;
+    private Bet bet;
 
 
     public Player(final Hand hand, final Status status, final String nickname) {
@@ -21,6 +22,13 @@ public class Player extends Participant {
         if (nickname.length() > NICKNAME_MAXIMUM_LENGTH) {
             throw new IllegalArgumentException("닉네임은 10자 이하여야 합니다.");
         }
+    }
+
+    public void bet(final Bet bet) {
+        if (this.bet != null) {
+            throw new IllegalStateException("해당 플레이어는 이미 베팅금을 입력하였습니다.");
+        }
+        this.bet = bet;
     }
 
     @Override

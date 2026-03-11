@@ -1,6 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.Answer;
+import blackjack.domain.Bet;
 import blackjack.domain.Dealer;
 import blackjack.domain.Hand;
 import blackjack.domain.Participants;
@@ -21,6 +22,8 @@ public class BlackjackController {
     public void run() {
         final Hand hand = new Hand(new ArrayList<>());
         final Players players = RetryExecutor.retry(this::readPlayers);
+        players.all().forEach(player ->
+            player.bet(RetryExecutor.retry(this::readBet, player)));
         final Dealer dealer = new Dealer(hand, Status.HIT, new Trump());
         final Participants participants = new Participants(players, dealer);
         dealer.pitch(players.all());
@@ -64,6 +67,11 @@ public class BlackjackController {
             .map(nickname -> new Player(new Hand(new ArrayList<>()), Status.HIT, nickname))
             .toList();
         return new Players(players);
+    }
+
+    private Bet readBet(final Player player) {
+        final int amount = InputView.readBetAmount(player.getNickname());
+        return new Bet(amount);
     }
 
     private Answer readAnswer(final String nickname) {
