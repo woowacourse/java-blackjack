@@ -4,12 +4,9 @@ import domain.*;
 import view.InputView;
 import view.OutputView;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static view.OutputView.printCards;
 
 public class BlackJackGameController {
 
@@ -17,21 +14,42 @@ public class BlackJackGameController {
     }
 
     public void run() {
-        List<Player> players = initPlayer();
+        List<String> playerNames = getPlayerNames();
+        List<Player> players = initPlayer(playerNames);
         Dealer dealer = initDealer();
         Deck deck = new Deck();
 
-        List<String> playersNames = getPlayerNames(players);
-        OutputView.printGameInitialMessage(playersNames);
+        BlackJackGame blackJackGame = new BlackJackGame(deck, players, dealer);
+        blackJackGame.distributeInitialCards();
 
-        distributeCardToDealer(dealer, deck);
-        distributeCardToPlayers(players, deck);
+        OutputView.printGameInitialMessage(playerNames);
 
-        playGame(players, deck, dealer);
+        OutputView.printInitialDealerCards(dealer.getParticipantCardsDto());
+        for (Player player : players) {
+            OutputView.printInitialPlayerCards(player.getParticipantCardsDto());
+        }
+
+        playGame(blackJackGame, players, deck, dealer);
 
         Map<String, Boolean> gameResult = getGameResult(dealer, players);
 
         endGame(dealer, players, gameResult);
+    }
+
+    private List<String> getPlayerNames() {
+        return InputView.askPlayerNames();
+    }
+
+    private List<Player> initPlayer(List<String> playerNames) {
+        List<Player> players = playerNames.stream()
+                .map(Player::from)
+                .toList();
+        return players;
+    }
+
+    private Dealer initDealer() {
+        Dealer dealer = Dealer.create();
+        return dealer;
     }
 
     private static Map<String, Boolean> getGameResult(Dealer dealer, List<Player> players) {
@@ -46,23 +64,19 @@ public class BlackJackGameController {
         OutputView.printGameResult(gameResult);
     }
 
-    private void playGame(List<Player> players, Deck deck, Dealer dealer) {
+    private void playGame(BlackJackGame blackJackGame, List<Player> players, Deck deck, Dealer dealer) {
         for (Player player : players) {
-            playGameWithPlayer(player, deck);
+            while (player.canReceiveCard()) {
+                if (isContinueGame(player)) {
+                    break;
+                }
+                blackJackGame.playGameWithPlayer(player);
+                OutputView.printCards(player.getParticipantCardsDto());
+            }
         }
-
-        playGameWithDealer(dealer, deck);
-    }
-
-    private void distributeCardToDealer(Dealer dealer, Deck deck) {
-        distributeInitialCards(dealer, deck);
-        printCards(dealer.getParticipantCardsDto());
-    }
-
-    private void distributeCardToPlayers(List<Player> players, Deck deck) {
-        for (Player player : players) {
-            distributeInitialCards(player, deck);
-            printCards(player.getParticipantCardsDto());
+        if (dealer.canReceiveCard()) {
+            blackJackGame.playGameWithDealer();
+            OutputView.printDealerMessage();
         }
     }
 
@@ -82,72 +96,18 @@ public class BlackJackGameController {
         return participantScores;
     }
 
-    private void playGameWithDealer(Dealer dealer, Deck deck) {
-        while (dealer.canReceiveCard()) {
-            if (!dealer.canReceiveCard()) {
-                break;
-            }
-            distributeCard(dealer, deck);
-            OutputView.printDealerMessage();
-        }
-    }
-
-    private void playGameWithPlayer(Player player, Deck deck) {
-        while (player.canReceiveCard()) {
-            if (isContinueGame(player)) {
-                break;
-            }
-            distributeCard(player, deck);
-            printCards(player.getParticipantCardsDto());
-        }
-    }
-
     private boolean isContinueGame(Player player) {
         if (!isContinue(InputView.askContinue(player.getName()))) {
-            printCards(player.getParticipantCardsDto());
+            OutputView.printCards(player.getParticipantCardsDto());
             return true;
         }
         return false;
-    }
-
-    private void distributeInitialCards(Participant participant, Deck deck) {
-        distributeCard(participant, deck);
-        distributeCard(participant, deck);
-    }
-
-    private void distributeCard(Participant participant, Deck deck) {
-        Card card = deck.distributeCard();
-        participant.receiveCard(card);
-    }
-
-    private List<String> getPlayerNames(List<Player> players) {
-        return players.stream().map(Participant::getName).toList();
     }
 
     private boolean isContinue(String response) {
         if (response.equals("y")) {
             return true;
         }
-
         return false;
-    }
-
-    private List<Player> initPlayer() {
-        List<Player> players = new ArrayList<>();
-        List<String> playerNames = getPlayerNames();
-
-        for (String name : playerNames) {
-            players.add(Player.from(name));
-        }
-        return players;
-    }
-
-    private List<String> getPlayerNames() {
-        return InputView.askPlayerNames();
-    }
-
-    private Dealer initDealer() {
-        Dealer dealer = Dealer.create();
-        return dealer;
     }
 }

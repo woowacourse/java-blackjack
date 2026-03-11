@@ -13,8 +13,8 @@ public class OutputView {
     }
 
     public static void printCards(ParticipantCardsDto participantCardsDto) {
-        printInitialDealerCards(participantCardsDto);
-        printInitialPlayerCards(participantCardsDto);
+        String cardsInfoMessage = String.join(",", participantCardsDto.cardsInfo());
+        System.out.printf("%s: %s%n", participantCardsDto.name(), cardsInfoMessage);
     }
 
     public static void printFinalCards(ParticipantCardsDto participantCardsDto) {
@@ -48,17 +48,15 @@ public class OutputView {
         System.out.printf(resultMessage.toString());
     }
 
-    private static void printInitialPlayerCards(ParticipantCardsDto participantCardsDto) {
-        if (!participantCardsDto.name().equals("딜러")) {
-            String cardsInfoMessage = String.join(",", participantCardsDto.cardsInfo());
-            System.out.printf("%s: %s%n", participantCardsDto.name(), cardsInfoMessage);
-        }
+    public static void printInitialPlayerCards(ParticipantCardsDto participantCardsDto) {
+        String cardsInfoMessage = String.join(",", participantCardsDto.cardsInfo());
+        System.out.printf("%s: %s%n", participantCardsDto.name(), cardsInfoMessage);
+
     }
 
-    private static void printInitialDealerCards(ParticipantCardsDto participantCardsDto) {
-        if (participantCardsDto.name().equals("딜러")) {
-            String dealerCard = participantCardsDto.cardsInfo().getFirst();
-            System.out.printf("%s: %s%n", participantCardsDto.name(), dealerCard);
-        }
+    public static void printInitialDealerCards(ParticipantCardsDto participantCardsDto) {
+        String dealerCard = participantCardsDto.cardsInfo().getFirst();
+        System.out.printf("%s: %s%n", participantCardsDto.name(), dealerCard);
+
     }
 }

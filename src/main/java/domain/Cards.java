@@ -19,19 +19,19 @@ public class Cards {
         cards.add(card);
     }
 
-    public boolean canReceiveCard(int burstThreshold) {
+    public boolean canReceiveCard(int bustThreshold) {
         int sum = calculateScore();
 
-        while (changeAvailableAceCount != 0 && isBurst(sum)) {
+        while (changeAvailableAceCount != 0 && isBust(sum)) {
             sum -= 10;
             changeAvailableAceCount -= 1;
         }
 
-        if (changeAvailableAceCount == 0 && isBurst(sum)) {
+        if (changeAvailableAceCount == 0 && isBust(sum)) {
             return false;
         }
 
-        if (isBurst(sum) || sum >= burstThreshold) {
+        if (isBust(sum) || sum >= bustThreshold) {
             return false;
         }
 
@@ -52,7 +52,7 @@ public class Cards {
                 .toList();
     }
 
-    private boolean isBurst(int score) {
+    private boolean isBust(int score) {
         if (score > 21) {
             return true;
         }

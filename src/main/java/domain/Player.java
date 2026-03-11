@@ -1,7 +1,7 @@
 package domain;
 
 public class Player extends Participant {
-    private static final int burstThreshold = 21;
+    private static final int bustThreshold = 21;
 
     private Player(Name name) {
         super(name);
@@ -12,6 +12,6 @@ public class Player extends Participant {
     }
 
     public boolean canReceiveCard() {
-        return cards.canReceiveCard(burstThreshold);
+        return cards.canReceiveCard(bustThreshold);
     }
 }
