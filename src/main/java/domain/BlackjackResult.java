@@ -1,11 +1,8 @@
 package domain;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import meesage.OutputMessage;
 
 public class BlackjackResult {
 
@@ -21,48 +18,39 @@ public class BlackjackResult {
 
     public void compareResult(Dealer dealer, Players players) {
         for (Player player : players.getPlayers()) {
-            int playerScore = player.getScoreOrZeroIfBust();
-            int dealerScore = dealer.getScoreOrZeroIfBust();
-
-            playerResult.put(player, getJudgeResult(playerScore, dealerScore));
+            getJudgeResult(dealer, player);
         }
     }
 
-    private WinOrLose getJudgeResult(int playerScore, int dealerScore) {
-        if (playerScore > dealerScore) {
-            return WinOrLose.WIN;
+    private void getJudgeResult(Dealer dealer, Player player) {
+        if (player.isBust(player.calculateScore())) {
+            playerResult.put(player, WinOrLose.LOSE);
+            return;
         }
-        if (playerScore < dealerScore) {
-            return WinOrLose.LOSE;
+        if (dealer.isBust(dealer.calculateScore())) {
+            playerResult.put(player, WinOrLose.WIN);
+            return;
         }
-        return WinOrLose.DRAW;
-
+        if (dealer.calculateScore() < player.calculateScore()) {
+            playerResult.put(player, WinOrLose.WIN);
+            return;
+        }
+        if (dealer.calculateScore() > player.calculateScore()) {
+            playerResult.put(player, WinOrLose.LOSE);
+            return;
+        }
+        playerResult.put(player, WinOrLose.DRAW);
     }
 
-    public List<String> getPlayersResult() {
-        List<String> results = new ArrayList<>();
-
-        for (Entry<Player, WinOrLose> playerWinOrLoseEntry : playerResult.entrySet()) {
-            Player player = playerWinOrLoseEntry.getKey();
-            String winningResult = playerWinOrLoseEntry.getValue().getMessage();
-
-            results.add(
-                    String.format(OutputMessage.PLAYER_RESULT_FORMAT.getMessage(), player.getName(), winningResult));
-        }
-
-        return results;
-    }
-
-    public String getDealerResult() {
-        return OutputMessage.DEALER_RESULT_FORMAT.format(countPlayerResult(WinOrLose.LOSE),
-                countPlayerResult(WinOrLose.DRAW), countPlayerResult(WinOrLose.WIN));
-    }
-
-    private int countPlayerResult(WinOrLose winOrLose) {
+    public int countDealerWinOrLoseReversePlayerResult(WinOrLose winOrLose) {
         return (int) playerResult.values()
                 .stream()
                 .filter(value -> value == winOrLose)
                 .count();
+    }
+
+    public List<WinOrLose> getPlayersResult() {
+        return playerResult.values().stream().toList();
     }
 
 }
