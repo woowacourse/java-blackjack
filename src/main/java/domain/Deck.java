@@ -17,6 +17,10 @@ public class Deck {
         return new Deck(cards);
     }
 
+    public static Deck from(List<Card> cards){
+        return new Deck(new ArrayList<>(cards));
+    }
+
     private static List<Card> generateAllCards() {
         List<Card> cards = new ArrayList<>();
         for (CardShape shape : CardShape.values()) {
@@ -32,7 +36,7 @@ public class Deck {
     }
 
     public List<Card> getCards() {
-        return cards;
+        return List.copyOf(cards);
     }
 
     public Card draw() {

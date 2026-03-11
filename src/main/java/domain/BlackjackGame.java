@@ -14,8 +14,11 @@ public class BlackjackGame {
         this.participants = participants;
     }
 
-    public static BlackjackGame start(List<String> names) {
-        Deck deck = Deck.createDeck();
+    public static BlackjackGame start(List<String> names){
+        return start(names, Deck.createDeck());
+    }
+
+    public static BlackjackGame start(List<String> names, Deck deck) {
         Dealer dealer = Dealer.from(new Hand(initCards(deck)));
         Players players = createPlayers(names, deck);
         return new BlackjackGame(deck, GameParticipants.of(dealer, players));
@@ -45,11 +48,19 @@ public class BlackjackGame {
         player.addHandCard(deck.draw());
     }
 
-    public boolean shouldDealerDraw() {
-        return getDealer().checkThreshold() && !participants.isAllPlayersBust();
+    public boolean playDealerTurn() {
+        if (cannotDealerDraw()) {
+            return false;
+        }
+        drawDealerCards();
+        return true;
     }
 
-    public void playDealerTurn() {
+    private boolean cannotDealerDraw() {
+        return participants.isAllPlayersBust() || !getDealer().checkThreshold();
+    }
+
+    private void drawDealerCards() {
         while (getDealer().checkThreshold()) {
             getDealer().addHandCard(deck.draw());
         }
