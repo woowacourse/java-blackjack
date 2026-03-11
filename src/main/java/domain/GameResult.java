@@ -28,11 +28,11 @@ public class GameResult {
     }
 
     private int calculateDealerProfit(Map<String, Integer> gamblerProfits) {
-        int totalPlayerProfit = gamblerProfits.values().stream()
+        int totalGamblerProfit = gamblerProfits.values().stream()
                 .mapToInt(Integer::intValue)
                 .sum();
 
-        return -(totalPlayerProfit);
+        return -(totalGamblerProfit);
     }
 
     public Map<String, Integer> gamblerProfits() {
