@@ -34,7 +34,7 @@ public class Hand {
         return new Hand(mutableCards);
     }
 
-    private int calculateCardScoreSum() {
+    public int calculateCardScoreSum() {
         int sumExceptAce = calculateCardScoreSumExceptAce();
         int sumAce = AceScoreDiscriminator.calculateAceCardsSum(cards, sumExceptAce);
 
