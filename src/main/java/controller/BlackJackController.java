@@ -3,9 +3,9 @@ package controller;
 import domain.Dealer;
 import domain.Deck;
 import domain.Player;
-import dto.BlackJackInitStatusDto;
 import dto.FinalResultDto;
 import dto.HandDto;
+import dto.InitStatusDto;
 import dto.ScoreResultDto;
 import java.util.List;
 import service.BlackJackInitService;
@@ -44,8 +44,8 @@ public class BlackJackController {
     }
 
     private void playGame(Deck deck, Dealer dealer, List<Player> players) {
-        BlackJackInitStatusDto blackJackInitStatusDto = blackJackInitService.createInitStatusDto(dealer, players);
-        OutputView.printInitMessage(blackJackInitStatusDto);
+        InitStatusDto initStatusDto = blackJackInitService.createInitStatusDto(dealer, players);
+        OutputView.printInitMessage(initStatusDto);
 
         players.forEach(player -> drawPlayerCard(player, deck));
 

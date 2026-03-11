@@ -12,7 +12,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class BlackJackInitStatusDtoTest {
+class InitStatusDtoTest {
 
     List<Player> players;
     Dealer dealer;
@@ -38,12 +38,12 @@ class BlackJackInitStatusDtoTest {
     @Test
     void initStatus() {
         // given, when
-        BlackJackInitStatusDto blackJackInitStatusDto = new BlackJackInitStatusDto(dealer, players);
+        InitStatusDto initStatusDto = new InitStatusDto(dealer, players);
 
         // then
-        assertEquals("딜러와 봉구스, 시오에게 2장을 나누었습니다.", blackJackInitStatusDto.initStatus().get(0));
-        assertEquals("딜러카드: 4하트", blackJackInitStatusDto.initStatus().get(1));
-        assertEquals("봉구스카드: A클로버, K다이아몬드", blackJackInitStatusDto.initStatus().get(2));
-        assertEquals("시오카드: 5하트, J스페이드", blackJackInitStatusDto.initStatus().get(3));
+        assertEquals("딜러와 봉구스, 시오에게 2장을 나누었습니다.", initStatusDto.initStatus().get(0));
+        assertEquals("딜러카드: 4하트", initStatusDto.initStatus().get(1));
+        assertEquals("봉구스카드: A클로버, K다이아몬드", initStatusDto.initStatus().get(2));
+        assertEquals("시오카드: 5하트, J스페이드", initStatusDto.initStatus().get(3));
     }
 }

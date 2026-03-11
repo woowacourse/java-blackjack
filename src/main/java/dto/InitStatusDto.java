@@ -8,13 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public record BlackJackInitStatusDto(List<String> initStatus) {
+public record InitStatusDto(List<String> initStatus) {
 
     public static final String HEADER_FORMAT = "딜러와 %s에게 2장을 나누었습니다.";
     public static final String DEALER_STATUS_FORMAT = "딜러카드: %s";
     public static final String PLAYER_STATUS_FORMAT = "%s카드: %s";
 
-    public BlackJackInitStatusDto(Dealer dealer, List<Player> players) {
+    public InitStatusDto(Dealer dealer, List<Player> players) {
         this(new ArrayList<>());
 
         addHeader(players);

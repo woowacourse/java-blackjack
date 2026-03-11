@@ -9,7 +9,7 @@ import domain.Dealer;
 import domain.Deck;
 import domain.Player;
 import domain.card.Rank;
-import dto.BlackJackInitStatusDto;
+import dto.InitStatusDto;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -62,8 +62,8 @@ class BlackJackInitServiceTest {
                 createPlayer("시오"));
 
         // when
-        BlackJackInitStatusDto blackJackInitStatusDto = blackJackInitService.createInitStatusDto(dealer, players);
+        InitStatusDto initStatusDto = blackJackInitService.createInitStatusDto(dealer, players);
         // then
-        assertNotNull(blackJackInitStatusDto);
+        assertNotNull(initStatusDto);
     }
 }

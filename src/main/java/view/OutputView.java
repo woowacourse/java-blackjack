@@ -1,8 +1,8 @@
 package view;
 
-import dto.BlackJackInitStatusDto;
 import dto.FinalResultDto;
 import dto.HandDto;
+import dto.InitStatusDto;
 import dto.PlayerHandScoreDto;
 import dto.ScoreResultDto;
 
@@ -17,9 +17,9 @@ public class OutputView {
     public static final String DEALER_NAME = "딜러";
     public static final String SCORE_RESULT_FORMAT = "%s카드: %s - 결과: %s\n";
 
-    public static void printInitMessage(BlackJackInitStatusDto blackJackInitStatusDto) {
+    public static void printInitMessage(InitStatusDto initStatusDto) {
         System.out.println();
-        for (String message : blackJackInitStatusDto.initStatus()) {
+        for (String message : initStatusDto.initStatus()) {
             System.out.println(message);
         }
         System.out.println();
