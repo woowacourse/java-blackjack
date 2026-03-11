@@ -10,8 +10,8 @@ public class Dealer extends Participant {
         super();
     }
 
-    public List<String> getOnlyFirstHand() {
-        List<String> newHand = new ArrayList<>();
+    public List<Card> getOnlyFirstHand() {
+        List<Card> newHand = new ArrayList<>();
         newHand.add(hand.getFirstCard());
         return newHand;
     }
