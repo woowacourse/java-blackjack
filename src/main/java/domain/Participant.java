@@ -28,7 +28,6 @@ public abstract class Participant {
     }
 
 
-
     public ParticipantCardsDto getParticipantCardsDto() {
         return new ParticipantCardsDto(name.getName(), cards.getCardsInfo(), getScore());
     }

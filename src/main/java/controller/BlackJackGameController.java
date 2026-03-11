@@ -94,7 +94,9 @@ public class BlackJackGameController {
 
     private void playGameWithPlayer(Player player, Deck deck) {
         while (player.canReceiveCard()) {
-            if (isContinueGame(player)) break;
+            if (isContinueGame(player)) {
+                break;
+            }
             distributeCard(player, deck);
             printCards(player.getParticipantCardsDto());
         }
@@ -119,9 +121,7 @@ public class BlackJackGameController {
     }
 
     private List<String> getPlayerNames(List<Player> players) {
-        return players.stream()
-                .map(Participant::getName)
-                .toList();
+        return players.stream().map(Participant::getName).toList();
     }
 
     private boolean isContinue(String response) {
@@ -137,8 +137,7 @@ public class BlackJackGameController {
         List<String> playerNames = getPlayerNames();
 
         for (String name : playerNames) {
-            Name playerName = new Name(name);
-            players.add(new Player(playerName));
+            players.add(Player.from(name));
         }
         return players;
     }
@@ -148,10 +147,7 @@ public class BlackJackGameController {
     }
 
     private Dealer initDealer() {
-        Name name = new Name("딜러");
-        Dealer dealer = new Dealer(name);
+        Dealer dealer = Dealer.create();
         return dealer;
     }
-
-
 }

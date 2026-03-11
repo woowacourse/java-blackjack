@@ -27,7 +27,7 @@ public class Cards {
             changeAvailableAceCount -= 1;
         }
 
-        if(changeAvailableAceCount == 0 && isBurst(sum)){
+        if (changeAvailableAceCount == 0 && isBurst(sum)) {
             return false;
         }
 

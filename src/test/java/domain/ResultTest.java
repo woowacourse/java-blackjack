@@ -13,9 +13,9 @@ class ResultTest {
     @Test
     @DisplayName("")
     void calculateResult() {
-        Dealer dealer = new Dealer(new Name("딜러"));
-        Player pobi = new Player(new Name("pobi"));
-        Player jason = new Player(new Name("jason"));
+        Dealer dealer = Dealer.create();
+        Player pobi = Player.from("fobi");
+        Player jason = Player.from("jason");
 
         dealer.receiveCard(new Card(Shape.HEART, Number.ACE));
         dealer.receiveCard(new Card(Shape.HEART, Number.JACK));
