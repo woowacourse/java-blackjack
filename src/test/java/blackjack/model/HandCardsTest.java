@@ -69,4 +69,29 @@ class HandCardsTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.CARD_EMPTY.getMessage());
     }
+
+    @Test
+    @DisplayName("카드 2장으로 21이되면 블랙잭이다.")
+    void isBlackjackTest() {
+        // given
+        HandCards handCards = new HandCards();
+        // when
+        handCards.addCard(new Card(Figure.SPADE, Number.ACE));
+        handCards.addCard(new Card(Figure.SPADE, Number.TEN));
+        // then
+        assertThat(handCards.isBlackjack()).isTrue();
+    }
+
+    @Test
+    @DisplayName("카드 2장 이상이며, 21이되면 블랙잭이 아니다.")
+    void isNotBlackjackTest() {
+        // given
+        HandCards handCards = new HandCards();
+        // when
+        handCards.addCard(new Card(Figure.SPADE, Number.ACE));
+        handCards.addCard(new Card(Figure.SPADE, Number.TEN));
+        handCards.addCard(new Card(Figure.SPADE, Number.TEN));
+        // then
+        assertThat(handCards.isBlackjack()).isFalse();
+    }
 }
