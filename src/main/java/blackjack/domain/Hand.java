@@ -6,7 +6,6 @@ import java.util.List;
 public class Hand {
     private static final int BLACKJACK_POINT = 21;
     private static final int ACE_OFFSET_POINT = 10;
-    private static final int DEALER_STAND_POINT = 17;
 
     private final List<Card> cards = new ArrayList<>();
 
@@ -44,14 +43,6 @@ public class Hand {
 
     public boolean isBust() {
         return getTotalPoint() > BLACKJACK_POINT;
-    }
-
-    public boolean isOver17() {
-        return getTotalPoint() >= DEALER_STAND_POINT;
-    }
-
-    public String getFirstCardName() {
-        return cards.getFirst().getName();
     }
 
     public String getCardNames() {
