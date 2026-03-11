@@ -11,7 +11,7 @@ public enum Result {
         this.description = description;
     }
 
-    public static Result judge(int playerSum, int dealerSum) {
+    public static Result judge(Score playerSum, Score dealerSum) {
         if (isPlayerWin(playerSum, dealerSum)) {
             return WIN;
         }
@@ -25,12 +25,12 @@ public enum Result {
         return description;
     }
 
-    private static boolean isPlayerWin(int playerSum, int dealerSum) {
-        return playerSum <= BLACKJACK_MAX_NUMBER && playerSum > dealerSum;
+    private static boolean isPlayerWin(Score playerSum, Score dealerSum) {
+        return playerSum.isLessThanOrEqualTo(BLACKJACK_MAX_NUMBER) && playerSum.isGreaterThan(dealerSum);
     }
 
-    private static boolean isPlayerLose(int playerSum, int dealerSum) {
-        return (playerSum < dealerSum && dealerSum <= BLACKJACK_MAX_NUMBER) || (playerSum > BLACKJACK_MAX_NUMBER
-                && dealerSum <= BLACKJACK_MAX_NUMBER);
+    private static boolean isPlayerLose(Score playerSum, Score dealerSum) {
+        return (playerSum.isLessThan(dealerSum) && dealerSum.isLessThanOrEqualTo(BLACKJACK_MAX_NUMBER) || (playerSum.isGreaterThan(BLACKJACK_MAX_NUMBER))
+                && dealerSum.isLessThanOrEqualTo(BLACKJACK_MAX_NUMBER));
     }
 }

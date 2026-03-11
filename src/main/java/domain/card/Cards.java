@@ -1,6 +1,7 @@
 package domain.card;
 
 import domain.Rank;
+import domain.Score;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,12 +40,14 @@ public class Cards {
     }
 
 
-    public int getTotalSum() {
+    public Score getTotalSum() {
         int aceNum = getAceAmount();
-        int sum = getSumWithoutAce();
+        Score sum = getSumWithoutAce();
 
+        System.out.println("aceNum = " + aceNum);
+        System.out.println("sum = " + sum.getValue());
         for (int i = aceNum; i > 0; i--) {
-            sum += Rank.decideAceValue(sum, i);
+            sum = sum.add(Rank.decideAceValue(sum, i));
         }
         return sum;
     }
@@ -54,18 +57,15 @@ public class Cards {
     }
 
     private int getAceAmount() {
-        int aceAmount = 0;
-        for (Card card : cards) {
-            aceAmount += card.getOneIfAce();
-        }
-        return aceAmount;
+        return (int) cards.stream()
+                .filter(card -> card.isAce())
+                .count();
     }
 
-    private int getSumWithoutAce() {
-        int sum = 0;
-        for (Card card : cards) {
-            sum += card.getRankValueIfNotAce();
-        }
-        return sum;
+    private Score getSumWithoutAce() {
+        return cards.stream()
+                .filter(card -> !card.isAce())
+                .map(card -> card.getRank().getScore())
+                .reduce(new Score(0), Score::add);
     }
 }

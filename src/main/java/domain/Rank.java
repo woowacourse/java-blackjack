@@ -1,8 +1,6 @@
 package domain;
 
-import static domain.Constant.ACE_MAX_VALUE;
-import static domain.Constant.ACE_MIN_VALUE;
-import static domain.Constant.BLACKJACK_MAX_NUMBER;
+import static domain.Constant.*;
 
 public enum Rank {
     ACE("A", new Score(ACE_MIN_VALUE)),
@@ -27,11 +25,11 @@ public enum Rank {
         this.score = scoreValue;
     }
 
-    public static int decideAceValue(int sum, int leftAce) {
-        if (sum + ACE_MAX_VALUE <= calculateThreshold(leftAce)) {
-            return ACE_MAX_VALUE;
+    public static Score decideAceValue(Score sum, int leftAce) {
+        if (sum.getValue() + ACE_MAX_VALUE <= calculateThreshold(leftAce).getValue()) {
+            return new Score(ACE_MAX_VALUE);
         }
-        return ACE_MIN_VALUE;
+        return new Score(ACE_MIN_VALUE);
     }
 
     public boolean isAce() {
@@ -46,7 +44,7 @@ public enum Rank {
         return displayValue;
     }
 
-    private static int calculateThreshold(int leftAce) {
-        return BLACKJACK_MAX_NUMBER + 1 - leftAce;
+    private static Score calculateThreshold(int leftAce) {
+        return BLACKJACK_MAX_NUMBER.add(new Score(1 - leftAce));
     }
 }

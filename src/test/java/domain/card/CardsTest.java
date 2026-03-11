@@ -1,6 +1,7 @@
 package domain.card;
 
 import domain.Rank;
+import domain.Score;
 import domain.Suit;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -58,6 +59,6 @@ public class CardsTest {
         cards.add(card4);
 
         //then
-        Assertions.assertEquals(cards.getTotalSum(), 13);
+        Assertions.assertEquals(cards.getTotalSum(), new Score(13));
     }
 }

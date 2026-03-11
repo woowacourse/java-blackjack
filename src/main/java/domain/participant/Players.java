@@ -3,6 +3,7 @@ package domain.participant;
 import domain.ExceptionMessage;
 import domain.Result;
 import domain.RoundResult;
+import domain.Score;
 import domain.card.Card;
 
 import java.util.ArrayList;
@@ -54,7 +55,7 @@ public class Players {
         }
     }
 
-    public List<RoundResult> getResults(int dealerSum) {
+    public List<RoundResult> getResults(Score dealerSum) {
         List<RoundResult> roundResults = new ArrayList<>();
         for (Player player : players) {
             Result result = Result.judge(player.getTotalSum(), dealerSum);

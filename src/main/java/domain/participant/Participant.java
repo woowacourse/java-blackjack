@@ -1,7 +1,9 @@
 package domain.participant;
 
+import domain.Score;
 import domain.card.Card;
 import domain.card.Cards;
+
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -31,7 +33,7 @@ public abstract class Participant {
         cards.addAll(getCardsFunc, quantity);
     }
 
-    public int getTotalSum() {
+    public Score getTotalSum() {
         return cards.getTotalSum();
     }
 

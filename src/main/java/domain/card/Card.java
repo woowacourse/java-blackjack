@@ -2,6 +2,7 @@ package domain.card;
 
 import domain.Rank;
 import domain.Suit;
+
 import java.util.Objects;
 
 public class Card {
@@ -13,18 +14,8 @@ public class Card {
         this.rank = rank;
     }
 
-    public int getOneIfAce() {
-        if (rank.isAce()) {
-            return 1;
-        }
-        return 0;
-    }
-
-    public int getRankValueIfNotAce() {
-        if (!rank.isAce()) {
-            return rank.getScore().getValue();
-        }
-        return 0;
+    public boolean isAce() {
+        return rank.isAce();
     }
 
     public Suit getSuit() {

@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.Score;
 import domain.card.Card;
 
 public class Dealer extends Participant {
@@ -11,7 +12,7 @@ public class Dealer extends Participant {
         return cards.peek();
     }
 
-    public boolean decideHitStand(int boundary) {
-        return cards.getTotalSum() <= boundary;
+    public boolean decideHitStand(Score boundary) {
+        return cards.getTotalSum().isLessThanOrEqualTo(boundary);
     }
 }

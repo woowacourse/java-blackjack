@@ -1,18 +1,18 @@
 package view;
 
-import static domain.Constant.DEALER_HIT_STAND_BOUNDARY;
-import static domain.Constant.DEFAULT_HAND_NUMBER;
-import static domain.Constant.DELIMITER;
-
 import domain.Result;
 import domain.RoundResult;
+import domain.Score;
 import domain.card.Card;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Participant;
 import domain.participant.Player;
+
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static domain.Constant.*;
 
 public class ResultView {
     private final List<Result> orderedResults = List.of(Result.LOSE, Result.DRAW, Result.WIN);
@@ -58,7 +58,7 @@ public class ResultView {
             System.out.println("딜러는 " + DEALER_HIT_STAND_BOUNDARY + "이하라 한장의 카드를 더 받았습니다.");
             return;
         }
-        System.out.println("딜러는 " + (DEALER_HIT_STAND_BOUNDARY + 1) + "이상이라 카드를 받지 않았습니다.");
+        System.out.println("딜러는 " + (DEALER_HIT_STAND_BOUNDARY.add(new Score(1))) + "이상이라 카드를 받지 않았습니다.");
     }
 
     public void printResult(List<RoundResult> results) {
