@@ -48,7 +48,7 @@ public class BlackJackService {
 
     public boolean isDealerCanAppend() {
         Dealer dealer = personService.getDealer();
-        return dealer.calculateFinalSum() <= DEALER_APPEND_CRITERIA;
+        return dealer.getDefaultDeckSum() <= DEALER_APPEND_CRITERIA;
     }
 
     public void additionalDealerCard() {

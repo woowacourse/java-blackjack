@@ -50,15 +50,15 @@ public class JudgementService {
     }
 
     private void judgeStatusByDeckSum(Player player, Dealer dealer) {
-        if (player.calculateFinalSum() > dealer.calculateFinalSum()) {
+        if (player.getFinalDeckSum() > dealer.getFinalDeckSum()) {
             player.changeStatus(PlayerStatus.WIN);
         }
 
-        if (player.calculateFinalSum() < dealer.calculateFinalSum()) {
+        if (player.getFinalDeckSum() < dealer.getFinalDeckSum()) {
             player.changeStatus(PlayerStatus.LOSS);
         }
 
-        if (player.calculateFinalSum() == dealer.calculateFinalSum()) {
+        if (player.getFinalDeckSum() == dealer.getFinalDeckSum()) {
             player.changeStatus(PlayerStatus.DRAW);
         }
     }

@@ -2,11 +2,16 @@ package domain.model;
 
 public enum DeckStatus {
     BURST("버스트"),
-    ALIVE("생존");
+    ALIVE("생존"),
+    BLACKJACK("블랙잭");
 
-    private String name;
+    private final String name;
 
     DeckStatus(String name) {
         this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 }
