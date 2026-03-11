@@ -39,11 +39,6 @@ class ProfitCalculatorTest {
         betTable.recodeAmount(player.getName(), 10000);
     }
 
-    @AfterEach
-    void clearBetTable() {
-        betTable.clearBet();
-    }
-
     @Test
     @DisplayName("플레이어가 게임을 이겼을 때 수익(베팅한 금액만큼)을 베팅테이블에 기록한다.")
     void calculateProfit_returnsBetProfit_whenPlayerIsWin() {

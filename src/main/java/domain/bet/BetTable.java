@@ -24,10 +24,6 @@ public class BetTable {
         return List.copyOf(bettingTable.values().stream().toList());
     }
 
-    public void clearBet(){
-        bettingTable.clear();
-    }
-
     public Map<String, Integer> getBettingTable() {
         return Map.copyOf(bettingTable);
     }
