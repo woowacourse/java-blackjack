@@ -34,6 +34,34 @@ class PlayerTest {
     }
 
     @Test
+    @DisplayName("플레이어는 점수가 21점 미만일 때 카드를 더 받을 수 있다.")
+    void isContinueGame_UnderScore21_ReturnTrue() {
+
+        Player player = new Player(new Name("pobi"));
+        player.receiveCard(new Card(Shape.SPADE, Number.EIGHT));
+        player.receiveCard(new Card(Shape.HEART, Number.JACK));
+        player.receiveCard(new Card(Shape.DIAMOND, Number.TWO));
+
+        boolean result = player.isContinueGame();
+
+        assertEquals(true, result);
+    }
+
+    @Test
+    @DisplayName("플레이어는 점수가 21점 이상일 때 카드를 더 받을 수 없다.")
+    void isContinueGame_OverScore21_ReturnFalse() {
+
+        Player player = new Player(new Name("pobi"));
+        player.receiveCard(new Card(Shape.SPADE, Number.NINE));
+        player.receiveCard(new Card(Shape.HEART, Number.JACK));
+        player.receiveCard(new Card(Shape.DIAMOND, Number.TWO));
+
+        boolean result = player.isContinueGame();
+
+        assertEquals(false, result);
+    }
+
+    @Test
     @DisplayName("둘 다 버스트되지 않고, 플레이어 점수가 딜러 점수보다 높으면 플레이어가 승리한다.")
     void isWin_PlayerScoreHigher_ReturnTrue() {
         Player player = new Player(new Name("pobi"));
