@@ -33,9 +33,4 @@ public class Deck {
             throw new IllegalArgumentException(ErrorMessage.DRAW_CARD_OUT_OF_RANGE.getMessage());
         }
     }
-
-    public int addCard(Card card) {
-        this.cards.add(card);
-        return cards.size();
-    }
 }
