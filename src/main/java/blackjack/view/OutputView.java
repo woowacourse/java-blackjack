@@ -141,7 +141,9 @@ public class OutputView {
     }
 
     private void printPlayerResult(ResultDto playerResult) {
-        System.out.println(playerResult.playerName() + ": " + playerResult.profit());
+        int integerProfit = (int) playerResult.profit();
+
+        System.out.println(playerResult.playerName() + ": " + integerProfit);
     }
 
     private List<String> parseCardsToOutputs(List<CardDto> cards) {
