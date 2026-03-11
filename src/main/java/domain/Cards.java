@@ -67,30 +67,4 @@ public class Cards {
         }
         cards.add(card);
     }
-
-    public boolean canReceiveCard(int burstThreshold) {
-        int sum = calculateScore();
-
-        while (changeAvailableAceCount != 0 && isOverBurstThreshold(sum)) {
-            sum -= 10;
-            changeAvailableAceCount -= 1;
-        }
-
-        if (changeAvailableAceCount == 0 && isOverBurstThreshold(sum)) {
-            return false;
-        }
-
-        if (isOverBurstThreshold(sum) || sum >= burstThreshold) {
-            return false;
-        }
-
-        return true;
-    }
-
-    private boolean isOverBurstThreshold(int sum) {
-        if (sum > 21) {
-            return true;
-        }
-        return false;
-    }
 }
