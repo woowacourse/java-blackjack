@@ -27,7 +27,7 @@ public class Dealer extends Participant{
         return new GameResult(dealerResult, playerResults);
     }
 
-    public ScoreCompareResult compareScore(Participant player, Participant dealer) {
+    private ScoreCompareResult compareScore(Participant player, Participant dealer) {
         boolean isPlayerBust = player.isBust();
         boolean isDealerBust = dealer.isBust();
 

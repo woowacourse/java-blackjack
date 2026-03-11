@@ -32,48 +32,6 @@ public class GameTest {
     }
 
     @Test
-    void compare_score_when_player_win() {
-        Player player = new Player("player1");
-        Dealer dealer = new Dealer();
-
-        player.receiveOneCard(new Card(Rank.ACE, Shape.HEART));
-        player.receiveOneCard(new Card(Rank.QUEEN, Shape.SPADE));
-
-        dealer.receiveOneCard(new Card(Rank.TEN, Shape.HEART));
-        dealer.receiveOneCard(new Card(Rank.SEVEN, Shape.SPADE));
-
-        assertThat(dealer.compareScore(player, dealer)).isEqualTo(ScoreCompareResult.PLAYER_WIN);
-    }
-
-    @Test
-    void compare_score_when_dealer_win() {
-        Player player = new Player("player1");
-        Dealer dealer = new Dealer();
-
-        player.receiveOneCard(new Card(Rank.ACE, Shape.HEART));
-        player.receiveOneCard(new Card(Rank.FOUR, Shape.SPADE));
-
-        dealer.receiveOneCard(new Card(Rank.TEN, Shape.HEART));
-        dealer.receiveOneCard(new Card(Rank.NINE, Shape.SPADE));
-
-        assertThat(dealer.compareScore(player, dealer)).isEqualTo(ScoreCompareResult.DEALER_WIN);
-    }
-
-    @Test
-    void compare_score_when_push() {
-        Player player = new Player("player1");
-        Dealer dealer = new Dealer();
-
-        player.receiveOneCard(new Card(Rank.ACE, Shape.HEART));
-        player.receiveOneCard(new Card(Rank.QUEEN, Shape.SPADE));
-
-        dealer.receiveOneCard(new Card(Rank.TEN, Shape.HEART));
-        dealer.receiveOneCard(new Card(Rank.ACE, Shape.SPADE));
-
-        assertThat(dealer.compareScore(player, dealer)).isEqualTo(ScoreCompareResult.PUSH);
-    }
-
-    @Test
     void judge_total_winner_result() {
         Player pobi = createPlayer("pobi", "2:하트", "8:스페이드", "A:클로버");
         Player jason = createPlayer("jason", "7:클로버", "K:스페이드");
