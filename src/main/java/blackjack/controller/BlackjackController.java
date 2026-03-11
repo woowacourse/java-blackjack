@@ -21,7 +21,7 @@ public class BlackjackController {
 
     public void run() {
         Players players = readPlayers();
-        Dealer dealer = new Dealer("딜러");
+        Dealer dealer = new Dealer();
 
         setInitialTwoCards(players, dealer);
         printInitialSettings(players, dealer);
