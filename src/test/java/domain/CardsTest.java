@@ -29,7 +29,7 @@ class CardsTest {
 
     @Test
     @DisplayName("카드 합계를 계산한다.")
-    void calculateScore_ReturnSum() {
+    void calculateScore_ContainsNonAce_ReturnSum() {
         Card card1 = new Card(Shape.SPADE, Number.EIGHT);
         Card card2 = new Card(Shape.HEART, Number.EIGHT);
 
@@ -40,6 +40,23 @@ class CardsTest {
         testCards.addCard(card2);
 
         assertEquals(16, testCards.calculateScore());
+    }
+
+    @Test
+    @DisplayName("ACE가 포함되었을 때 카드 합계를 계산한다.")
+    void calculateScore_ContainsAce_ReturnSum() {
+        Card card1 = new Card(Shape.SPADE, Number.ACE);
+        Card card2 = new Card(Shape.HEART, Number.FIVE);
+        Card card3 = new Card(Shape.CLUB, Number.EIGHT);
+
+        List<Card> cards = new ArrayList<>();
+        Cards testCards = new Cards(cards);
+
+        testCards.addCard(card1);
+        testCards.addCard(card2);
+        testCards.addCard(card3);
+
+        assertEquals(14, testCards.calculateScore());
     }
 
     @Test

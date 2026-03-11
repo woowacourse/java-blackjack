@@ -51,6 +51,13 @@ public class Cards {
         for (Card card : cards) {
             sum += card.getScore();
         }
+
+        int availableAceCount = changeAvailableAceCount;
+        while (availableAceCount > 0 && sum > 21) {
+            sum -= 10;
+            availableAceCount -= 1;
+        }
+
         return sum;
     }
 
