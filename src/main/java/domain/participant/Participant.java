@@ -43,6 +43,10 @@ public class Participant {
                 .collect(Collectors.joining(", "));
     }
 
+    public boolean isBlackjack(){
+        return handSize() == 2 && getTotalCardScore() == BLACKJACK_LIMIT_VALUE;
+    }
+
     protected List<Card> getHandCards() {
         return hand.getHandCards();
     }
