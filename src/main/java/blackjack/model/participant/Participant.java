@@ -17,7 +17,7 @@ public abstract class Participant {
     }
 
     public void addCard(Card card) {
-        hand.addCard(card);
+        hand.hit(card);
     }
 
     public Hand getHand() {

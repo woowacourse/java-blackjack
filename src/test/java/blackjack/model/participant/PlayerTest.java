@@ -25,16 +25,16 @@ class PlayerTest {
     @BeforeEach
     void initHands() {
         lowerScoreHand = new Hand();
-        lowerScoreHand.addCard(new Card(Rank.TWO, Suit.HEART));
+        lowerScoreHand.hit(new Card(Rank.TWO, Suit.HEART));
 
         defaultHand = new Hand();
-        defaultHand.addCard(new Card(Rank.THREE, Suit.HEART));
+        defaultHand.hit(new Card(Rank.THREE, Suit.HEART));
 
         higherScoreHand = new Hand();
-        higherScoreHand.addCard(new Card(Rank.TEN, Suit.HEART));
+        higherScoreHand.hit(new Card(Rank.TEN, Suit.HEART));
 
         bustScoreHand = new Hand();
-        bustScoreHand.addCards(List.of(
+        bustScoreHand.firstDeal(List.of(
                 new Card(Rank.JACK, Suit.HEART),
                 new Card(Rank.QUEEN, Suit.HEART),
                 new Card(Rank.KING, Suit.HEART)

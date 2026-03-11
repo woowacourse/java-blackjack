@@ -14,11 +14,11 @@ public class Hand {
         return List.copyOf(cards);
     }
 
-    public void addCard(Card card) {
+    public void hit(Card card) {
         this.cards.add(card);
     }
 
-    public void addCards(List<Card> cards) {
+    public void firstDeal(List<Card> cards) {
         this.cards.addAll(cards);
     }
 

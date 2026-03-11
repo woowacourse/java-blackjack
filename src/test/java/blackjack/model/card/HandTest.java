@@ -21,7 +21,7 @@ class HandTest {
             int expectedCardsCount = hand.getCards().size() + 1;
 
             // when
-            hand.addCard(card);
+            hand.hit(card);
 
             // then
             int actualCardsCount = hand.getCards().size();
@@ -40,7 +40,7 @@ class HandTest {
             int expectedCardsCount = hand.getCards().size() + cards.size();
 
             // when
-            hand.addCards(cards);
+            hand.firstDeal(cards);
 
             // then
             int actualCardsCount = hand.getCards().size();
@@ -58,7 +58,7 @@ class HandTest {
                     new Card(Rank.TWO, Suit.CLUB),
                     new Card(Rank.THREE, Suit.CLUB)
             );
-            hand.addCards(cards);
+            hand.firstDeal(cards);
 
             int expectedScore = cards.stream()
                     .mapToInt(Card::getScore)
@@ -79,7 +79,7 @@ class HandTest {
                     new Card(Rank.ACE, Suit.HEART),
                     new Card(Rank.TWO, Suit.HEART)
             );
-            hand.addCards(notBustCards);
+            hand.firstDeal(notBustCards);
 
             int expectedScore = notBustCards.stream()
                     .mapToInt(Card::getScore)
@@ -102,7 +102,7 @@ class HandTest {
                     new Card(Rank.QUEEN, Suit.HEART),
                     new Card(Rank.JACK, Suit.HEART)
             );
-            hand.addCards(notBustCards);
+            hand.firstDeal(notBustCards);
 
             int expectedScore = notBustCards.stream()
                     .mapToInt(Card::getScore)
@@ -127,7 +127,7 @@ class HandTest {
                     new Card(Rank.QUEEN, Suit.DIAMOND),
                     new Card(Rank.KING, Suit.DIAMOND)
             );
-            hand.addCards(bustedCards);
+            hand.firstDeal(bustedCards);
 
             // when
             boolean bust = hand.isBust();
@@ -145,7 +145,7 @@ class HandTest {
                     new Card(Rank.TWO, Suit.DIAMOND),
                     new Card(Rank.THREE, Suit.DIAMOND)
             );
-            hand.addCards(notBustedCards);
+            hand.firstDeal(notBustedCards);
 
             // when
             boolean bust = hand.isBust();
