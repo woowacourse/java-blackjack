@@ -26,7 +26,7 @@ public class Players {
         List<Player> result = new ArrayList<>();
         for (PlayerBettingRequest playerBettingRequest : playersBettingRequest.value()) {
             String nickname = playerBettingRequest.playerNickname();
-            int amount = playerBettingRequest.amount();
+            long amount = playerBettingRequest.amount();
             result.add(new Player(nickname, Role.PLAYER, amount));
         }
         return from(result);

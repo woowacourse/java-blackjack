@@ -9,7 +9,7 @@ public class Player extends Participant {
     private boolean stopDrawing;
     private long amount;
 
-    public Player(String nickname, Role role, int amount) {
+    public Player(String nickname, Role role, long amount) {
         super(nickname, PlayingCards.createEmptyHands(), role);
         stopDrawing = false;
         this.amount = amount;
