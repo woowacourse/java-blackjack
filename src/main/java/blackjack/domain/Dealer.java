@@ -2,6 +2,7 @@ package blackjack.domain;
 
 
 public class Dealer extends Participant {
+    private static final int DEALER_DRAW_LIMIT = 17;
 
     public Dealer() {
     }
@@ -15,6 +16,6 @@ public class Dealer extends Participant {
     }
 
     public boolean isDealerDone() {
-        return calculateTotalScore() >= 17;
+        return calculateTotalScore() >= DEALER_DRAW_LIMIT;
     }
 }
