@@ -21,7 +21,7 @@ class GamblerTest {
         String name = "121345";
 
         //when & then
-        assertThatThrownBy(() -> new Gambler(name))
+        assertThatThrownBy(() -> new Gambler(name, 1000))
                 .isInstanceOf(BlackjackException.class);
     }
 
@@ -32,9 +32,9 @@ class GamblerTest {
         String maxRangeName = "tobiisverygoob";
         String minRangeName = "h";
         //when & then
-        assertThatThrownBy(() -> new Gambler(maxRangeName))
+        assertThatThrownBy(() -> new Gambler(maxRangeName, 1000))
                 .isInstanceOf(BlackjackException.class);
-        assertThatThrownBy(() -> new Gambler(minRangeName))
+        assertThatThrownBy(() -> new Gambler(minRangeName, 1000))
                 .isInstanceOf(BlackjackException.class);
     }
 
@@ -43,8 +43,8 @@ class GamblerTest {
     void 승리_정상_판정() {
         //given
         Dealer dealer = new Dealer();
-        Gambler tobi = new Gambler("tobi");
-        Gambler quda = new Gambler("quda");
+        Gambler tobi = new Gambler("tobi", 1000);
+        Gambler quda = new Gambler("quda", 1000);
 
         Card jack = new Card(CardRank.JACK, CardSuit.CLOVER); // 딜러
         Card eight = new Card(CardRank.EIGHT, CardSuit.DIAMOND); // tobi
@@ -56,11 +56,11 @@ class GamblerTest {
         quda.deal(sd);
 
         //when
-        MatchResult tobiResult = tobi.getResult(dealer.score());
-        MatchResult qudaResult = quda.getResult(dealer.score());
+        int tobiResult = tobi.calculateReward(MatchResult.of(tobi,dealer));
+        int qudaResult = quda.calculateReward(MatchResult.of(quda,dealer));
 
         //then
-        assertThat(tobiResult).isEqualTo(MatchResult.LOSE);
-        assertThat(qudaResult).isEqualTo(MatchResult.DRAW);
+        assertThat(tobiResult).isEqualTo(-1000);
+        assertThat(qudaResult).isEqualTo(0);
     }
 }
