@@ -9,7 +9,7 @@ import domain.player.Hand;
 import domain.player.Player;
 import dto.DealerDto;
 import dto.NamesDto;
-import dto.PlayerCardsDto;
+import dto.ParticipantsCardsDto;
 import dto.StatisticsDto;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,6 @@ import util.CardsCreator;
 import util.Parser;
 import view.InputView;
 import view.OutputView;
-import view.Result;
 
 public class BlackjackController {
 
@@ -34,7 +33,7 @@ public class BlackjackController {
         List<String> playerNames = Parser.parse(inputView.readPlayerName());
         List<Player> players = createPlayers(playerNames, deck);
 
-        Dealer dealer = createDealerAndPrintPlayers(deck, playerNames);
+        Dealer dealer = createDealerAndPrintPlayers(deck, players);
 
         printPlayersHand(dealer, players);
         chooseToFillPlayersHand(players, deck);
@@ -54,42 +53,21 @@ public class BlackjackController {
     }
 
     private List<StatisticsDto> getStatisticsDtos(List<Player> players, Dealer dealer) {
-        int dealerTotalScore = dealer.getTotalScore();
         List<StatisticsDto> statisticsDtos = new ArrayList<>();
-        if (dealer.isBust()) {
-            dealerTotalScore = 0;
-            judgeResult(players, dealerTotalScore, statisticsDtos);
-            return statisticsDtos;
+        for (Player player : players) {
+            int profit = player.calculateProfit(dealer);
+            StatisticsDto statisticsDto = new StatisticsDto(player.getName(), profit);
+            statisticsDtos.add(statisticsDto);
         }
-        judgeResult(players, dealerTotalScore, statisticsDtos);
         return statisticsDtos;
     }
 
-    private void judgeResult(List<Player> players, int dealerTotalScore, List<StatisticsDto> statisticsDtos) {
-        for (Player player : players) {
-            int totalScore = player.getTotalScore();
-            Result result;
-            result = getResult(dealerTotalScore, totalScore);
-            StatisticsDto statisticsDto = new StatisticsDto(player.getName(), result.getDisplayName());
-            statisticsDtos.add(statisticsDto);
-        }
-    }
-
-    private Result getResult(int dealerTotalScore, int totalScore) {
-        if (totalScore > Hand.BLACKJACK_MAX_SCORE) {
-            return Result.LOSE;
-        }
-        if (dealerTotalScore > totalScore) {
-            return Result.LOSE;
-        }
-        if (dealerTotalScore == totalScore) {
-            return Result.DRAW;
-        }
-        return Result.WIN;
-    }
-
-    private Dealer createDealerAndPrintPlayers(Deck deck, List<String> playerNames) {
+    private Dealer createDealerAndPrintPlayers(Deck deck, List<Player> players) {
         Dealer dealer = new Dealer(getHand(deck));
+        List<String> playerNames = new ArrayList<>();
+        for (Player player : players) {
+            playerNames.add(player.getName());
+        }
 
         NamesDto namesDto = new NamesDto(dealer.getName(), playerNames);
         outputView.drawCard(namesDto);
@@ -97,10 +75,10 @@ public class BlackjackController {
     }
 
     private void printPlayersHand(Dealer dealer, List<Player> players) {
-        PlayerCardsDto dealerCardsDto = PlayerCardsDto.dealerFromEntity(dealer);
+        ParticipantsCardsDto dealerCardsDto = ParticipantsCardsDto.dealerFromEntity(dealer);
         outputView.showCard(dealerCardsDto);
         for (Player player : players) {
-            PlayerCardsDto playerCardsDto = PlayerCardsDto.fromEntity(player);
+            ParticipantsCardsDto playerCardsDto = ParticipantsCardsDto.playerFromEntity(player);
             outputView.showCard(playerCardsDto);
         }
     }
@@ -120,7 +98,7 @@ public class BlackjackController {
         while (!player.isBust() && inputView.readNeedToHit(name)) {
             Card card = deck.drawCard();
             player.addHand(card);
-            PlayerCardsDto playerCardsDto = PlayerCardsDto.fromEntity(player);
+            ParticipantsCardsDto playerCardsDto = ParticipantsCardsDto.playerFromEntity(player);
             outputView.showCard(playerCardsDto);
         }
     }
@@ -144,11 +122,11 @@ public class BlackjackController {
     }
 
     private void printPlayerStatus(Dealer dealer, List<Player> players) {
-        PlayerCardsDto dealerCardsDto;
-        dealerCardsDto = PlayerCardsDto.fromEntity(dealer);
+        ParticipantsCardsDto dealerCardsDto;
+        dealerCardsDto = ParticipantsCardsDto.dealerFromEntity(dealer);
         outputView.showCardsAndScore(dealerCardsDto, dealer.getTotalScore());
         for (Player player : players) {
-            PlayerCardsDto playerCardsDto = PlayerCardsDto.fromEntity(player);
+            ParticipantsCardsDto playerCardsDto = ParticipantsCardsDto.playerFromEntity(player);
             outputView.showCardsAndScore(playerCardsDto, player.getTotalScore());
         }
     }
@@ -156,9 +134,10 @@ public class BlackjackController {
     private List<Player> createPlayers(List<String> playerNames, Deck deck) {
         List<Player> players = new ArrayList<>();
         for (String playerName : playerNames) {
+            int amount = inputView.readPlayerBettingAmount(playerName);
             Hand hand = getHand(deck);
 
-            Player player = new Player(playerName, hand);
+            Player player = Player.create(playerName, hand, amount);
             players.add(player);
         }
         return players;
