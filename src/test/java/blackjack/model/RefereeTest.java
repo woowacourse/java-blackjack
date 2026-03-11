@@ -152,4 +152,25 @@ class RefereeTest {
         assertThat(referee.judge(player, dealer).getStatus())
                 .isEqualTo("무");
     }
+
+    @Test
+    @DisplayName("플레이어가 블랙잭이면 GameResult.BLACKJACK을 반환한다.")
+    void isBlackjackTest() {
+        // given
+        Referee referee = new Referee();
+        Dealer dealer = new Dealer();
+        Player player = new Player("luke", 1000);
+        Card card = new Card(Figure.SPADE, Number.JACK);
+        Card card2 = new Card(Figure.SPADE, Number.ACE);
+        Card card3 = new Card(Figure.SPADE, Number.JACK);
+        Card card4 = new Card(Figure.SPADE, Number.TEN);
+
+        player.receiveCard(card);
+        player.receiveCard(card2);
+        dealer.receiveCard(card3);
+        dealer.receiveCard(card4);
+
+        // when & then
+        assertThat(referee.judge(player, dealer)).isEqualTo(GameResult.BLACKJACK);
+    }
 }
