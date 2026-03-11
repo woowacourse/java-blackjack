@@ -1,5 +1,6 @@
 package domain;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -8,6 +9,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -60,6 +62,27 @@ class PlayersTest {
 
         //when, then
         Assertions.assertNotEquals(prevPlayer, testPlayers.findCurrentUser());
+    }
+
+    @Test
+    @DisplayName("사용자가 stay가 되면 더 이상 현재 사용자로 조회되지 않는다")
+    void stand_success() {
+        // given
+        String rati = "rati";
+        String pobi = "pobi";
+        Players players = Players.of(List.of(rati, pobi), totalDeck);
+        Player currentPlayer = players.findCurrentUser().get();
+
+        // when
+        players.stand(currentPlayer);
+
+        // then
+        Optional<Player> nextUser = players.findCurrentUser();
+        assertThat(nextUser.isPresent()).isTrue();
+        assertThat(nextUser.get().getName()).isEqualTo(pobi);
+
+        players.stand(nextUser.get());
+        assertThat(players.findCurrentUser()).isEmpty();
     }
 
     //    @Test

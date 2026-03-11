@@ -1,6 +1,7 @@
 package domain;
 
 import common.ErrorMessage;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,7 +15,9 @@ public class Players {
     }
 
     public static Players of(List<String> playerNames, Deck totalDeck) {
-        return new Players(createPlayers(playerNames, totalDeck));
+        return new Players(
+                new ArrayList<>(createPlayers(playerNames, totalDeck))
+        );
     }
 
     private static List<Player> createPlayers(List<String> playerNames, Deck totalDeck) {
@@ -50,7 +53,7 @@ public class Players {
                 .findFirst();
     }
 
-    public void updateToStand(Player player) {
+    public void stand(Player player) {
         int index = players.indexOf(player);
         if (index != -1) {
             players.set(index, player.stay());
