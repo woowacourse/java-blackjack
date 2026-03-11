@@ -1,7 +1,7 @@
 package view;
 
-import static domain.Constant.DEALER_HIT_STAND_BOUNDARY;
-import static domain.Constant.DEFAULT_HAND_NUMBER;
+import static domain.BlackjackGame.DEALER_HIT_STAND_BOUNDARY;
+import static domain.BlackjackGame.INITIAL_CARD_COUNT;
 import static domain.Constant.DELIMITER;
 
 import domain.participant.Dealer;
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class ResultView {
     public void printParticipantsCards(List<Player> players, Dealer dealer) {
         printEmptyLine();
-        System.out.println(dealer.getName() + "와 " + joinPlayersNameByDelimiter(players) + "에게 " + DEFAULT_HAND_NUMBER
+        System.out.println(dealer.getName() + "와 " + joinPlayersNameByDelimiter(players) + "에게 " + INITIAL_CARD_COUNT
                 + "장을 나누었습니다.");
         System.out.println("딜러카드: " + dealer.getFirstCard());
         printParticipantsCard(players);

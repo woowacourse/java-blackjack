@@ -1,9 +1,8 @@
 package domain;
 
-import static domain.Constant.BLACKJACK_MAX_NUMBER;
-
 public enum Result {
     WIN, DRAW, LOSE;
+    public static int BLACKJACK_MAX_NUMBER = 21;
 
     public static Result judge(int playerSum, int dealerSum) {
         if (isPlayerWin(playerSum, dealerSum)) {

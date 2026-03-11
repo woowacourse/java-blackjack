@@ -1,8 +1,5 @@
 package domain;
 
-import static domain.Constant.DEALER_HIT_STAND_BOUNDARY;
-import static domain.Constant.DEFAULT_HAND_NUMBER;
-
 import domain.card.Card;
 import domain.card.Deck;
 import domain.participant.Dealer;
@@ -12,9 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BlackjackGame {
+    public static int DEALER_HIT_STAND_BOUNDARY = 16;
     private final List<Player> players;
     private final Dealer dealer;
     private final Deck deck;
+
+    public static final int INITIAL_CARD_COUNT = 2;
 
     public BlackjackGame() {
         this.players = new ArrayList<>();
@@ -42,9 +42,9 @@ public class BlackjackGame {
 
     public void giveHand() {
         for (Player player : players) {
-            giveCards(player, DEFAULT_HAND_NUMBER);
+            giveCards(player, INITIAL_CARD_COUNT);
         }
-        giveCards(dealer, DEFAULT_HAND_NUMBER);
+        giveCards(dealer, INITIAL_CARD_COUNT);
     }
 
     public void giveCards(Participant participant, int quantity) {

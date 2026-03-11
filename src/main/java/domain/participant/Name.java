@@ -1,11 +1,10 @@
 package domain.participant;
 
-import static domain.Constant.NAME_MAX_LENGTH;
-import static domain.Constant.NAME_MIN_LENGTH;
-
 import domain.ExceptionMessage;
 
 public class Name {
+    public static int NAME_MIN_LENGTH = 1;
+    public static int NAME_MAX_LENGTH = 10;
     private final String name;
 
     public Name(String name) {

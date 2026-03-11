@@ -1,6 +1,5 @@
 package domain.card;
 
-import static domain.Constant.BLACKJACK_MAX_NUMBER;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import domain.Rank;
@@ -62,8 +61,9 @@ public class CardsTest {
     }
 
     @Test
-    void 뽑을_수_있는_카드가_존재하지_않으면_예외가_발생한다(){
+    void 뽑을_수_있는_카드가_존재하지_않으면_예외가_발생한다() {
         Cards cards = new Cards();
-        org.assertj.core.api.Assertions.assertThatThrownBy(() -> cards.pull()).isInstanceOf(IllegalArgumentException.class);
+        org.assertj.core.api.Assertions.assertThatThrownBy(() -> cards.pull())
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }
