@@ -7,7 +7,7 @@ import domain.card.Hand;
 import domain.result.DealerMatchResult;
 import domain.result.MatchCase;
 import domain.result.MatchResult;
-import domain.result.PlayerMatchResult;
+import domain.result.PlayersMatchResult;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -64,7 +64,7 @@ public class Participants {
         }
 
         return new MatchResult(
-                new PlayerMatchResult(playerMatchResult),
+                new PlayersMatchResult(playerMatchResult),
                 new DealerMatchResult(dealerWinCount, dealerDrawCount, dealerLoseCount)
         );
     }

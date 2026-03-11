@@ -5,7 +5,7 @@ import domain.pariticipant.Player;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public record PlayerMatchResult(Map<Player, MatchCase> playerMatchResult) {
+public record PlayersMatchResult(Map<Player, MatchCase> playerMatchResult) {
 
     public BettingProfit calculateBettingProfit() {
         Map<Player, Integer> bettingResult = new LinkedHashMap<>();
