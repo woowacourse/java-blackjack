@@ -1,7 +1,6 @@
 package controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import model.Agreement;
 import model.BetPrice;
@@ -43,10 +42,8 @@ public class BlackJackController {
     }
 
     private Players getParticipantsName() {
-        String nameInput = InputView.getPlayerNames();
-        List<Player> players = Arrays.stream(nameInput.split(NAME_SPLIT_REGEX, -1))
-                .map((name) -> new Player(new PlayerName(name.trim())))
-                .toList();
+        List<String> playerNamesInput = InputView.getPlayerNames();
+        List<Player> players = playerNamesInput.stream().map(playerNameInput -> new Player(new PlayerName(playerNameInput))).toList();
 
         return new Players(players);
     }
