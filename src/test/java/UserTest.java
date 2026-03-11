@@ -1,3 +1,4 @@
+import domain.Amount;
 import domain.Card;
 import domain.CardDeck;
 import domain.User;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.InstanceOfAssertFactories.set;
 
 class UserTest {
 
@@ -43,24 +45,6 @@ class UserTest {
     }
 
     @Test
-    @DisplayName("첫 배부 때 합이 21 나오면 블랙잭 판정이다")
-    public void if_card_sum_equals21_blackjack(){
-        int score = 21;
-        User user = new User("json");
-        boolean result = user.isBlackjack(score);
-        assertThat(result).isTrue();
-    }
-
-    @Test
-    @DisplayName("첫 배부 때 합이 21이 안 나오면 블랙잭 판정이 아니다")
-    public void if_card_sum_not21_blackjack(){
-        int score = 20;
-        User user = new User("json");
-        boolean result = user.isBlackjack(score);
-        assertThat(result).isFalse();
-    }
-
-    @Test
     @DisplayName("카드의 합이 21이 넘을 시 버스트 판정이다")
     public void if_card_sum_over21_burst(){
         int score = 22;
@@ -75,6 +59,24 @@ class UserTest {
         int score = 20;
         User user = new User("json");
         boolean result = user.isBurst(score);
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    @DisplayName("첫 배부 때 합이 21 나오면 블랙잭 판정이다")
+    public void if_card_sum_equals21_blackjack(){
+        User user = new User("json");
+        user.receiveInitCard(List.of(Card.CLUB_ACE, Card.CLUB_TEN));
+        boolean result = user.isBlackjack();
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    @DisplayName("첫 배부 때 합이 21이 안 나오면 블랙잭 판정이 아니다")
+    public void if_card_sum_not21_blackjack(){
+        User user = new User("json");
+        user.receiveInitCard(List.of(Card.CLUB_ACE, Card.CLUB_NINE));
+        boolean result = user.isBlackjack();
         assertThat(result).isFalse();
     }
 }

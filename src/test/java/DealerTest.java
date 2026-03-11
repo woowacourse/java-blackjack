@@ -36,18 +36,18 @@ public class DealerTest {
     @Test
     @DisplayName("첫 배부 때 합이 21 나오면 블랙잭 판정이다")
     public void if_card_sum_equals21_blackjack(){
-        int score = 21;
         Dealer dealer = new Dealer();
-        boolean result = dealer.isBlackjack(score);
+        dealer.receiveInitCard(List.of(Card.CLUB_ACE, Card.CLUB_TEN));
+        boolean result = dealer.isBlackjack();
         assertThat(result).isTrue();
     }
 
     @Test
     @DisplayName("첫 배부 때 합이 21이 안 나오면 블랙잭 판정이 아니다")
     public void if_card_sum_not21_blackjack(){
-        int score = 20;
         Dealer dealer = new Dealer();
-        boolean result = dealer.isBlackjack(score);
+        dealer.receiveInitCard(List.of(Card.CLUB_ACE, Card.CLUB_NINE));
+        boolean result = dealer.isBlackjack();
         assertThat(result).isFalse();
     }
 
