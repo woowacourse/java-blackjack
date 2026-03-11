@@ -1,9 +1,9 @@
 package service;
 
 import domain.card.Card;
-import domain.card.CardDeck;
+import domain.card.CardShuffler;
+import domain.card.Deck;
 import domain.participant.Participant;
-import infra.CardShuffler;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,14 +16,14 @@ public class BlackjackService {
         this.cardShuffler = cardShuffler;
     }
 
-    public List<Card> drawCard(final CardDeck cardDeck, final int drawCount) {
+    public List<Card> drawCard(final Deck deck, final int drawCount) {
         final List<Card> cards = new ArrayList<>();
 
         // FIXME: Deck 내부를 Deque로 수정한 뒤, 전면 수정될 부분
         for (int i = 0; i < drawCount; i++) {
-            final int cardIndex = cardShuffler.shuffleCardDeck(cardDeck.getDeckSize());
-            cards.add(cardDeck.getCardOf(cardIndex));
-            cardDeck.removeCardOf(cardIndex);
+            final int cardIndex = cardShuffler.shuffleCardDeck(deck.getDeckSize());
+            cards.add(deck.getCardOf(cardIndex));
+            deck.removeCardOf(cardIndex);
         }
 
         return cards;

@@ -6,20 +6,20 @@ import java.util.List;
 // FIXME: Deck 만으로도 의미 전달 충분
 // TODO: draw() 책임을 갖도록 리팩터링
 // TODO: shuffle()이 여기 있으면 자연스러우나, 테스트 측면에서 어떻게 할 것인가?
-public class CardDeck {
+public class Deck {
     // FIXME: Deque로 개선
     private final List<Card> cardDeck;
 
-    private CardDeck(final List<Card> cardDeck) {
+    private Deck(final List<Card> cardDeck) {
         this.cardDeck = cardDeck;
     }
 
-    public static CardDeck initCardDeck() {
+    public static Deck initCardDeck() {
         final List<Card> cards = new ArrayList<>();
         for (final CardSuit suit : CardSuit.values()) {
             addCard(suit, cards);
         }
-        return new CardDeck(cards);
+        return new Deck(cards);
     }
 
     private static void addCard(final CardSuit suit, final List<Card> cards) {
