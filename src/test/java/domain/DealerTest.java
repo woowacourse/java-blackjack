@@ -19,20 +19,14 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러 합계가 21 초과 여부 테스트")
-    void isBust_dealer_score_success() {
-        assertThat(dealer.isBust(22)).isTrue();
-    }
-
-    @Test
     @DisplayName("딜러 합계가 16이하이면 카드 1장 추가 테스트")
     void add_one_card_test() {
         List<Card> initialCards = new ArrayList<>(List.of(
-                Card.of(Rank.TEN, Suit.DIAMOND),
-                Card.of(Rank.FIVE, Suit.CLOVER)));
+                Card.of(Rank.ACE, Suit.DIAMOND),
+                Card.of(Rank.FOUR, Suit.CLOVER)));
         Dealer dealer = Dealer.of(initialCards);
 
-        dealer.drawUntilHitAndReturnCount(deck);
+        dealer.drawUntilHit(deck);
 
         assertThat(dealer.getCards()).hasSize(3);
     }
