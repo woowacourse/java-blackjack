@@ -31,8 +31,8 @@ public abstract class State {
             return new Stay(hand, participant);
         }
         hand.add(deck.drawCard());
-        if (hand.isBurst()) {
-            return new Burst(hand, participant);
+        if (hand.isBurt()) {
+            return new Bust(hand, participant);
         }
         if (isFinished()) {
             return new Stay(hand, participant);

@@ -19,13 +19,13 @@ public enum Result {
     }
 
     public static Result getResult(State dealerState, State playerState) {
-        if (playerState instanceof Burst) {
+        if (playerState instanceof Bust) {
             return Result.LOSE;
         }
         if (playerState instanceof BlackJack && !(dealerState instanceof BlackJack)) {
             return Result.BLACKJACK;
         }
-        if (dealerState instanceof Burst || playerState.getScore() > dealerState.getScore()) {
+        if (dealerState instanceof Bust || playerState.getScore() > dealerState.getScore()) {
             return Result.WIN;
         }
         if (dealerState.getScore() > playerState.getScore()) {
@@ -39,9 +39,5 @@ public enum Result {
 
     public Integer getEarnCost(int n) {
         return earnCost.apply(n);
-    }
-
-    public String getDisplayName() {
-        return displayName;
     }
 }

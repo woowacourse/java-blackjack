@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Hand {
     public static final int ACE_ADVANTAGE_SCORE = 10;
-    private static final int BURST_SCORE = 21;
+    private static final int BUST_SCORE = 21;
     private static final int MIN_SIZE = 2;
 
     private final List<Card> cards;
@@ -37,7 +37,7 @@ public class Hand {
                 .reduce(Integer::sum)
                 .orElse(0);
 
-        if (hasAce(cards) && !aceAdvantageIsBurst(score)) {
+        if (hasAce(cards) && !aceAdvantageIsBust(score)) {
             return score + ACE_ADVANTAGE_SCORE;
         }
 
@@ -57,11 +57,11 @@ public class Hand {
                 .anyMatch(Card::isAce);
     }
 
-    private boolean aceAdvantageIsBurst(int score) {
-        return score + ACE_ADVANTAGE_SCORE > BURST_SCORE;
+    private boolean aceAdvantageIsBust(int score) {
+        return score + ACE_ADVANTAGE_SCORE > BUST_SCORE;
     }
 
-    public boolean isBurst() {
-        return getScore() > BURST_SCORE;
+    public boolean isBurt() {
+        return getScore() > BUST_SCORE;
     }
 }

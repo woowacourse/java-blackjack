@@ -3,9 +3,9 @@ package domain.state;
 import domain.participants.Hand;
 import domain.participants.Participant;
 
-public class Burst extends State {
+public class Bust extends State {
 
-    public Burst(Hand hand, Participant participant) {
+    public Bust(Hand hand, Participant participant) {
         super(hand, participant);
     }
 

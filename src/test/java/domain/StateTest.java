@@ -4,7 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Deck;
 import domain.card.vo.Rank;
-import domain.state.Burst;
+import domain.state.BlackJack;
+import domain.state.Bust;
 import domain.state.Hit;
 import domain.state.State;
 import domain.state.Stay;
@@ -20,6 +21,23 @@ import org.junit.jupiter.params.provider.MethodSource;
 class StateTest {
 
 
+    public static Stream<Arguments> getStartState() {
+        return Stream.of(
+                Arguments.of(TestFixture.createDefaultPlayerStateByRank(List.of(Rank.ACE, Rank.KING)), BlackJack.class),
+                Arguments.of(TestFixture.createDefaultDealerState(List.of(Rank.ACE, Rank.KING)), BlackJack.class),
+                Arguments.of(TestFixture.createDefaultPlayerStateByRank(List.of(Rank.SIX, Rank.KING)), Hit.class),
+                Arguments.of(TestFixture.createDefaultDealerState(List.of(Rank.SIX, Rank.KING)), Hit.class)
+
+        );
+    }
+
+    @ParameterizedTest
+    @DisplayName("getStartState(): 첫 카드가 21이라면 블랙잭을 아니라면 Hit를 반환한다.")
+    @MethodSource
+    void getStartState(State state, Class<?> clazz) {
+        assertThat(state).isInstanceOf(clazz);
+    }
+
     @Nested
     @DisplayName("drawCard(): ")
     class DrawCard {
@@ -33,7 +51,7 @@ class StateTest {
                     //21이 넘는다면 버스트를 반환한다.
                     Arguments.of(TestFixture.createDefaultPlayerStateByRank(List.of(Rank.KING, Rank.KING)),
                             Deck.createFromList(TestFixture.createCards()),
-                            true, Burst.class, "Player", "20"),
+                            true, Bust.class, "Player", "20"),
                     //21이 넘지 않는다면 다시 Hit을 반환하여 다음 상태에 대기한다.
                     Arguments.of(TestFixture.createDefaultPlayerStateByRank(List.of(Rank.ACE, Rank.ACE)),
                             Deck.createFromList(TestFixture.createCards()),
@@ -42,7 +60,7 @@ class StateTest {
                     // 16 이하라면 무조건 드로우 한다. -> 21 넘으면 버스트 반환
                     Arguments.of(TestFixture.createDefaultDealerState(List.of(Rank.KING, Rank.SIX)),
                             Deck.createFromList(TestFixture.createCards()),
-                            true, Burst.class, "Dealer", "16"),
+                            true, Bust.class, "Dealer", "16"),
                     // 16 이하이면 무조건 드로우 한다. -> 16 넘으면 Stay 반환
                     Arguments.of(TestFixture.createDefaultDealerState(List.of(Rank.THREE, Rank.FOUR)),
                             Deck.createFromList(TestFixture.createCards()),
@@ -62,6 +80,4 @@ class StateTest {
                     .isInstanceOf(clazz);
         }
     }
-
-
 }

@@ -2,11 +2,11 @@ package domain.participants;
 
 import domain.bet.Betting;
 import domain.hitStrategy.HitStrategy;
-import domain.hitStrategy.UntilBurstHitStrategy;
+import domain.hitStrategy.UntilBustHitStrategy;
 import domain.state.State;
 
 public class Player extends Participant {
-    private static final HitStrategy DEFAULT_HIT_STRATEGY = new UntilBurstHitStrategy();
+    private static final HitStrategy DEFAULT_HIT_STRATEGY = new UntilBustHitStrategy();
 
     private final HitStrategy hitStrategy;
 

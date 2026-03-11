@@ -3,7 +3,7 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import domain.bet.Betting;
-import domain.hitStrategy.UntilBurstHitStrategy;
+import domain.hitStrategy.UntilBustHitStrategy;
 import domain.participants.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -22,7 +22,7 @@ class PlayerTest {
                 "12345678",
         })
         void player(String name) {
-            assertThatThrownBy(() -> new Player(name, new UntilBurstHitStrategy(), new Betting(0)))
+            assertThatThrownBy(() -> new Player(name, new UntilBustHitStrategy(), new Betting(0)))
                     .isInstanceOf(IllegalArgumentException.class);
         }
     }

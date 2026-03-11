@@ -1,6 +1,7 @@
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.hitStrategy.UntilBurstHitStrategy;
+import domain.bet.Betting;
+import domain.hitStrategy.UntilBustHitStrategy;
 import domain.participants.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -19,7 +20,7 @@ class PlayerTest {
                 "12345678",
         })
         void player(String name) {
-            assertThatThrownBy(() -> new Player(name, TestFixture.getBlackjackHand(), new UntilBurstHitStrategy()))
+            assertThatThrownBy(() -> new Player(name, new UntilBustHitStrategy(), new Betting(0)))
                     .isInstanceOf(IllegalArgumentException.class);
         }
     }
