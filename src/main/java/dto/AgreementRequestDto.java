@@ -1,6 +1,7 @@
 package dto;
 
 public record AgreementRequestDto(String agreement) {
+
     public AgreementRequestDto {
         validateNameIsNotNullAndIsNotBlank(agreement);
     }
