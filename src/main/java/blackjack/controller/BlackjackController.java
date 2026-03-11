@@ -3,12 +3,15 @@ package blackjack.controller;
 import blackjack.domain.Answer;
 import blackjack.domain.Bet;
 import blackjack.domain.Dealer;
+import blackjack.domain.GameResult;
 import blackjack.domain.Hand;
+import blackjack.domain.Participant;
 import blackjack.domain.Participants;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.domain.Status;
 import blackjack.domain.Trump;
+import blackjack.dto.FinalProfitsDto;
 import blackjack.dto.FinalResultDto;
 import blackjack.utils.Parser;
 import blackjack.utils.RetryExecutor;
@@ -32,14 +35,14 @@ public class BlackjackController {
         players.all().forEach(player -> handlePlayerAction(player, dealer));
         handleDealerAction(dealer);
 
-        printResult(participants, players, dealer);
+        players.all().forEach(player -> decidePayoutPolicy(player, dealer));
+        printResult(participants, players);
     }
 
-    private void printResult(final Participants participants, final Players players,
-        final Dealer dealer) {
+    private void printResult(final Participants participants, final Players players) {
+        final FinalProfitsDto finalProfitsDto = FinalProfitsDto.from(players);
         OutputView.printFinalStatus(participants);
-        final FinalResultDto finalResultDto = FinalResultDto.of(players.all(), dealer);
-        OutputView.printFinalResult(finalResultDto);
+        OutputView.printFinalProfits(finalProfitsDto);
     }
 
     private void handleDealerAction(final Dealer dealer) {
@@ -90,5 +93,10 @@ public class BlackjackController {
     private void playerHit(final Dealer dealer, final Player player) {
         dealer.giveCardTo(player);
         player.handleBurst();
+    }
+
+    private void decidePayoutPolicy(final Player player, final Dealer dealer) {
+        final GameResult gameResult = GameResult.calculate(player, dealer);
+        player.decidePayoutPolicy(gameResult);
     }
 }
