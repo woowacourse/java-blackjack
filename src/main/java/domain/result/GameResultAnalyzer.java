@@ -10,8 +10,10 @@ import domain.participant.Players;
 import java.util.EnumMap;
 import java.util.List;
 
-//TODO player,dealer 상속 적용 후 개선 필요 (중복 if문)
 public class GameResultAnalyzer {
+
+    private GameResultAnalyzer() {
+    }
 
     public static GameResultAnalysis analyze(Players players, Dealer dealer) {
         List<PlayerGameResult> playerGameResults = players.stream()
