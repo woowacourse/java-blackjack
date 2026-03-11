@@ -1,21 +1,17 @@
 package domain.pariticipant;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import static exception.ErrorMessage.PLAYER_COUNT_OUT_OF_RANGE;
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 import static test_util.TestUtil.createPlayer;
 
 class PlayersTest {
-    
+
     @ParameterizedTest
     @ValueSource(ints = {1, 7})
     @DisplayName("플레이어는 최소 1명 최대 7명이어야 한다.")
@@ -25,7 +21,7 @@ class PlayersTest {
         for (int i = 0; i < playerNum; i++) {
             players.add(createPlayer("name" + i, new ArrayList<>()));
         }
-        
+
         // when then
         assertThatCode(() -> new Players(players))
                 .doesNotThrowAnyException();
@@ -46,5 +42,4 @@ class PlayersTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(PLAYER_COUNT_OUT_OF_RANGE.getMessage());
     }
-
 }

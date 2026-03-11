@@ -12,4 +12,6 @@ public class BlackjackConstant {
 
     public static final int NAME_MINIMUM_LENGTH = 2;
     public static final int NAME_MAX_LENGTH = 10;
+
+    public static final double BLACKJACK_MULTIPLIER = 1.5;
 }
