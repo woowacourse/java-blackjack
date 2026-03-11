@@ -1,13 +1,10 @@
 package view;
 
-import model.MatchStatus;
 import dto.Card;
 import dto.ParticipantWinning;
 import dto.PlayerResult;
 import dto.PlayerWinning;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 public class OutputView {
     private static final String JOIN_DELIMITER = ", ";
@@ -54,7 +51,7 @@ public class OutputView {
 
     public static void printResult(ParticipantWinning participantWinning) {
         System.out.println(FINAL_RESULT_TEXT);
-        printDealerResult(participantWinning.dealerWinning());
+        printDealerResult(participantWinning.dealerProfit());
         printPlayersResult(participantWinning.playersWinning());
     }
 
@@ -78,8 +75,8 @@ public class OutputView {
         System.out.println(playerResult.name() + CARD_TEXT + String.join(JOIN_DELIMITER, cardString) + SCORE_TEXT + playerResult.score());
     }
 
-    private static void printDealerResult(Integer dealerWinning) {
-        System.out.println(DEALER_TEXT + RESULT_DELIMITER + dealerWinning);
+    private static void printDealerResult(int dealerProfit) {
+        System.out.println(DEALER_TEXT + RESULT_DELIMITER + dealerProfit);
     }
 
     private static void printPlayersResult(List<PlayerWinning> playersWinning) {
