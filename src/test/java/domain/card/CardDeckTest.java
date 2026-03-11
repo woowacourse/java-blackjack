@@ -20,9 +20,8 @@ class CardDeckTest {
         CardDeck cardDeck = new CardDeckBuilder()
                 .build();
 
-        Assertions.assertThatThrownBy(() -> {
-            Card card = cardDeck.getCard();
-        }).isInstanceOf(IllegalArgumentException.class);
+        Assertions.assertThatThrownBy(cardDeck::getCard)
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
 }

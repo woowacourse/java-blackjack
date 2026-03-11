@@ -13,8 +13,10 @@ class PlayerTest {
     @Test
     void 플레이어가_카드를_1장_받는다() {
         CardDeck cardDeck = new CardDeckBuilder()
-                .cards(Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER), Card.of(CardDenomination.NINE, CardEmblem.SPADE),
-                        Card.of(CardDenomination.TWO, CardEmblem.SPADE), Card.of(CardDenomination.THREE, CardEmblem.HEART))
+                .cards(Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER),
+                        Card.of(CardDenomination.NINE, CardEmblem.SPADE),
+                        Card.of(CardDenomination.TWO, CardEmblem.SPADE),
+                        Card.of(CardDenomination.THREE, CardEmblem.HEART))
                 .build();
         Dealer dealer = Dealer.from(cardDeck);
         Player player = Player.from(ParticipantName.from("test"));
@@ -49,10 +51,10 @@ class PlayerTest {
     @Test
     void 이름이_5자가_넘으면_예외가_발생한다() {
         String overFiveLengthName = "testtest";
+        ParticipantName name = ParticipantName.from(overFiveLengthName);
 
-        Assertions.assertThatThrownBy(() -> {
-            Player.from(ParticipantName.from(overFiveLengthName));
-        }).isInstanceOf(IllegalArgumentException.class);
+        Assertions.assertThatThrownBy(() -> Player.from(name))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -83,7 +85,7 @@ class PlayerTest {
         Dealer dealer = Dealer.from(cardDeck);
         Player player = Player.from(ParticipantName.from("test"));
 
-        CardBundle result = dealer.handOutCardToPlayer(player, 3);
+        dealer.handOutCardToPlayer(player, 3);
 
         Assertions.assertThat(player.isBusted()).isTrue();
     }

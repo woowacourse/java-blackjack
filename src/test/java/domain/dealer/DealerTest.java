@@ -16,7 +16,8 @@ class DealerTest {
     @Test
     void 카드를_2장_나눠준다() {
         CardDeck cardDeck = new CardDeckBuilder()
-                .cards(Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER), Card.of(CardDenomination.NINE, CardEmblem.SPADE))
+                .cards(Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER),
+                        Card.of(CardDenomination.NINE, CardEmblem.SPADE))
                 .build();
 
         Dealer dealer = Dealer.from(cardDeck);
@@ -32,7 +33,8 @@ class DealerTest {
     @Test
     void 카드를_1장_나눠준다() {
         CardDeck cardDeck = new CardDeckBuilder()
-                .cards(Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER), Card.of(CardDenomination.NINE, CardEmblem.SPADE))
+                .cards(Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER),
+                        Card.of(CardDenomination.NINE, CardEmblem.SPADE))
                 .build();
 
         Dealer dealer = Dealer.from(cardDeck);
@@ -52,7 +54,7 @@ class DealerTest {
         Dealer dealer = Dealer.from(cardDeck);
 
         Assertions.assertThatThrownBy(() -> {
-            CardBundle cardBundle = dealer.handOutCard(INITIAL_CARD_DRAW_COUNT);
+            dealer.handOutCard(INITIAL_CARD_DRAW_COUNT);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
