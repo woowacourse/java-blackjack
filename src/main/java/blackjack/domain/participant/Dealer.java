@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.card.Card;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -11,6 +12,10 @@ public class Dealer extends Participant {
     
     public Dealer() {
         super(DEALER_NICKNAME);
+    }
+    
+    public Card getFirstCard() {
+        return hand.getCards().getFirst();
     }
     
     @Override
