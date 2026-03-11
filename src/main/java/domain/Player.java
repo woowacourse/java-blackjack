@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Supplier;
 
@@ -30,6 +31,11 @@ public class Player extends Participant {
 
     public boolean isFinished() {
         return hand.isBust() || hand.isFull() || isStay;
+    }
+
+    @Override
+    public List<Card> showInitialCard() {
+        return super.showOwnCards();
     }
 
     @Override

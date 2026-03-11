@@ -1,6 +1,7 @@
 package domain;
 
 import common.ErrorMessage;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public abstract class Participant {
@@ -34,6 +35,12 @@ public abstract class Participant {
     public String getName() {
         return name;
     }
+
+    public List<Card> showOwnCards() {
+        return hand.showCards();
+    }
+
+    public abstract List<Card> showInitialCard();
 //
 ////    public abstract List<Card> getInitialVisibleCards();
 //

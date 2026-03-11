@@ -1,11 +1,19 @@
 package domain;
 
+import java.util.List;
+
 public class Dealer extends Participant {
     private static final int MINIMUM_TOTAL_SCORE = 16;
     private static final String DEALER_NAME = "딜러";
 
     public Dealer(Hand hand) {
         super(DEALER_NAME, hand);
+    }
+
+    @Override
+    public List<Card> showInitialCard() {
+        List<Card> ownCards = super.showOwnCards();
+        return List.of(ownCards.getFirst());
     }
 
 //    @Override
