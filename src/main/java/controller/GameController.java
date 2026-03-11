@@ -16,7 +16,7 @@ import view.OutputView;
 
 public class GameController {
 
-    public void start() {
+    public void run() {
         BlackjackGame blackjackGame = BlackjackGame.start(InputView.readParticipants());
         Dealer dealer = blackjackGame.getDealer();
         Players players = blackjackGame.getPlayers();
