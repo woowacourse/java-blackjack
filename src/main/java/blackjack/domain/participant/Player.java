@@ -7,10 +7,12 @@ import blackjack.dto.PlayerGameResult;
 public class Player extends Participant {
 
     private boolean stopDrawing;
+    private long amount;
 
-    public Player(String nickname, Role role) {
+    public Player(String nickname, Role role, int amount) {
         super(nickname, PlayingCards.createEmptyHands(), role);
         stopDrawing = false;
+        this.amount = amount;
     }
 
     public void stop() {
