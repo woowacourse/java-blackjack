@@ -1,11 +1,7 @@
 package domain;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import meesage.OutputMessage;
 
 public class BlackjackResult {
 
@@ -39,23 +35,12 @@ public class BlackjackResult {
 
     }
 
-    public List<String> getPlayersResult() {
-        List<String> results = new ArrayList<>();
-
-        for (Entry<Player, GameResult> playerWinOrLoseEntry : playerResult.entrySet()) {
-            Player player = playerWinOrLoseEntry.getKey();
-            String winningResult = playerWinOrLoseEntry.getValue().getMessage();
-
-            results.add(
-                    String.format(OutputMessage.PLAYER_RESULT_FORMAT.getMessage(), player.getName(), winningResult));
-        }
-
-        return results;
-    }
-
-    public String getDealerResult() {
-        return OutputMessage.DEALER_RESULT_FORMAT.format(countPlayerResult(GameResult.LOSE),
-                countPlayerResult(GameResult.DRAW), countPlayerResult(GameResult.WIN));
+    public DealerResultDto getDealerResult() {
+        return DealerResultDto.of(
+                countPlayerResult(GameResult.LOSE),
+                countPlayerResult(GameResult.DRAW),
+                countPlayerResult(GameResult.WIN)
+        );
     }
 
     private int countPlayerResult(GameResult gameResult) {
@@ -63,5 +48,9 @@ public class BlackjackResult {
                 .stream()
                 .filter(value -> value == gameResult)
                 .count();
+    }
+
+    public Map<Player, GameResult> getPlayerResults() {
+        return playerResult;
     }
 }
