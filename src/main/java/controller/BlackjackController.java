@@ -32,7 +32,7 @@ public class BlackjackController {
         processAllPlayersHitOrStand();
         processDealerTurn();
         printFinalResult();
-        printWinningResult();
+        printProfitResult();
     }
 
     private void initParticipants() {
@@ -47,14 +47,14 @@ public class BlackjackController {
         blackjackService.saveParticipants(participantsNames, betAmounts);
     }
 
-    private void printWinningResult() {
-        outputView.printMessage(Message.FINAL_RESULT_ANNOUNCE);
-        blackjackService.evaluateGame().forEach(outputView::printMessage);
-    }
-
     private void printFinalResult() {
         outputView.printMessage(blackjackService.makeDealerFinalResultDisplay());
         blackjackService.makeUserFinalResultDisplay().forEach(outputView::printMessage);
+    }
+
+    private void printProfitResult() {
+        outputView.printMessage(Message.FINAL_PROFIT_ANNOUNCE);
+        blackjackService.evaluateGame().forEach(outputView::printMessage);
     }
 
     private void processDealerTurn() {

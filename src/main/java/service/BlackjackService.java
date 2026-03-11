@@ -76,6 +76,6 @@ public class BlackjackService {
     }
 
     public List<String> evaluateGame() {
-        return participants.makeFinalWinnerDisplays();
+        return participants.makeProfitResultDisplays();
     }
 }

@@ -7,7 +7,7 @@ public class Dealer {
     private static final Integer MAXIMUM_TOTAL_SCORE = 21;
 
     private final Hand hand;
-    private Money currentMoney;
+    private Money profit;
 
     public Dealer() {
         this.hand = new Hand();
@@ -33,39 +33,33 @@ public class Dealer {
         return hand.getFinalDisplay();
     }
 
-    public GameResult judgeUserResult(int userTotalScore) {
-        if (hand.getHandTotalScore() > MAXIMUM_TOTAL_SCORE) {
+    public GameResult judgeResultForUser(int userTotalScore) {
+        if (userTotalScore > MAXIMUM_TOTAL_SCORE) {
             return GameResult.LOSE;
         }
 
-        if (hand.getHandTotalScore() == MAXIMUM_TOTAL_SCORE) {
-            return GameResult.WIN;
+        if (userTotalScore == MAXIMUM_TOTAL_SCORE) {
+            return GameResult.BLACKJACK;
         }
 
-        if (userTotalScore > hand.getHandTotalScore()) {
-            return GameResult.LOSE;
-        }
-
-        return GameResult.WIN;
-    }
-
-    public GameResult judgeUserWin(int userScore) {
-        if (userScore > MAXIMUM_TOTAL_SCORE) {
-            return GameResult.LOSE;
-        }
-
-        if (userScore == MAXIMUM_TOTAL_SCORE) {
-            return GameResult.WIN;
-        }
-
+        // 딜러의 점수가 21을 초과하는 경우, 유저 승
         if (hand.getHandTotalScore() > MAXIMUM_TOTAL_SCORE) {
             return GameResult.WIN;
         }
 
-        if (userScore > hand.getHandTotalScore() && (hand.getHandTotalScore() < MAXIMUM_TOTAL_SCORE)) {
+        // 딜러의 점수가 21보다 작으면서, 유저의 점수가 딜러의 점수보다 큰 경우, 유저 승
+        if (userTotalScore > hand.getHandTotalScore() && (hand.getHandTotalScore() < MAXIMUM_TOTAL_SCORE)) {
             return GameResult.WIN;
+        }
+
+        if (userTotalScore == hand.getHandTotalScore()) {
+            return GameResult.DRAW;
         }
 
         return GameResult.LOSE;
+    }
+
+    public void updateProfit(Money profit) {
+        this.profit = profit;
     }
 }

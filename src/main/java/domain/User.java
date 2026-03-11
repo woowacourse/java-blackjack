@@ -1,13 +1,14 @@
 package domain;
 
 import view.Message;
+import vo.GameResult;
 import vo.Money;
 
 public class User {
     private final String userName;
     private final Hand hand;
     private final Money bettingMoney;
-    private Money currentMoney;
+    private Money profit = new Money(0);
 
     public User(String name, Money bettingMoney) {
         this.userName = name;
@@ -39,7 +40,13 @@ public class User {
         return hand.getFinalDisplay();
     }
 
-    public int getHand() {
+    public int getTotalScore() {
         return hand.getHandTotalScore();
+    }
+
+    public Money updateProfitBy(GameResult gameResult) {
+        Money earnedMoney = gameResult.calculateProfit(this.bettingMoney);
+        this.profit = earnedMoney;
+        return earnedMoney;
     }
 }

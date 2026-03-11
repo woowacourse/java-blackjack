@@ -1,9 +1,9 @@
 package domain;
 
-import dto.ParticipantsScoreDTO;
+import dto.ProfitResultDTO;
 import java.util.ArrayList;
-import java.util.EnumMap;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -13,11 +13,11 @@ import vo.Money;
 public class Participants {
     private static final Integer MAXIMUM_NUMBER_OF_PARTICIPANTS = 16;
 
-    private final List<User> participants;
+    private final List<User> players;
     private final Dealer dealer;
 
     public Participants(List<String> parsedParticipantsName, List<Money> parsedBetAmounts) {
-        this.participants = new ArrayList<>();
+        this.players = new ArrayList<>();
         this.dealer = new Dealer();
         validateParticipantsNumbers(parsedParticipantsName);
         saveUsers(parsedParticipantsName, parsedBetAmounts);
@@ -27,7 +27,7 @@ public class Participants {
         for (int i = 0; i < parsedParticipantsName.size(); i++) {
             String userName = parsedParticipantsName.get(i);
             Money betAmount = parsedBetAmounts.get(i);
-            participants.add(new User(userName, betAmount));
+            players.add(new User(userName, betAmount));
         }
     }
 
@@ -38,14 +38,14 @@ public class Participants {
     }
 
     public void dealOneCardToAll(Deck deck) {
-        for (User user : participants) {
+        for (User user : players) {
             user.receiveCard(deck.dealCard());
         }
         dealer.receiveCard(deck.dealCard());
     }
 
     public String getUserNames() {
-        return participants.stream().map(User::getName).collect(Collectors.joining(", "));
+        return players.stream().map(User::getName).collect(Collectors.joining(", "));
     }
 
     public String getDealerCardsDisplay() {
@@ -53,13 +53,13 @@ public class Participants {
     }
 
     public List<String> getUserCardsDisplays() {
-        return participants.stream()
+        return players.stream()
                 .map(this::makeOneUserCardDisplay)
                 .collect(Collectors.toList());
     }
 
     public String getPlayerCardStatus(int userIndex) {
-        return makeOneUserCardDisplay(participants.get(userIndex));
+        return makeOneUserCardDisplay(players.get(userIndex));
     }
 
     private String makeOneUserCardDisplay(User user) {
@@ -67,17 +67,17 @@ public class Participants {
     }
 
     public List<String> askGetExtraCard() {
-        return participants.stream()
+        return players.stream()
                 .map(User::formatAskGetExtraCard)
                 .collect(Collectors.toList());
     }
 
     public void dealCard(Deck deck, int index) {
-        participants.get(index).receiveCard(deck.dealCard());
+        players.get(index).receiveCard(deck.dealCard());
     }
 
     public void calculateUserScore(int index) {
-        participants.get(index).calculateScore();
+        players.get(index).calculateScore();
     }
 
     public void calculateDealerScore() {
@@ -99,68 +99,54 @@ public class Participants {
 
     public List<String> addScoreToUserHand() {
         List<String> userDisplays = new ArrayList<>();
-        for (User user : participants) {
+        for (User user : players) {
             String userFinalDisplay = makeOneUserCardDisplay(user) + user.getUserFinalDisplay();
             userDisplays.add(userFinalDisplay);
         }
         return userDisplays;
     }
 
-    public List<String> makeFinalWinnerDisplays() {
-        ParticipantsScoreDTO participantsScoreDTO = judgeWinner();
-        return formatFinalDisplays(participantsScoreDTO);
+    public List<String> makeProfitResultDisplays() {
+        ProfitResultDTO profitResultDTO = calculateProfit();
+        return formatProfitDisplays(profitResultDTO);
     }
 
-    private ParticipantsScoreDTO judgeWinner() {
-        EnumMap<GameResult, Integer> dealerScore = evaluateDealerScore();
-        Map<String, GameResult> userScore = evaluateUserScore(dealerScore);
-        return new ParticipantsScoreDTO(dealerScore, userScore);
-    }
+    private List<String> formatProfitDisplays(ProfitResultDTO profitResultDTO) {
+        List<String> profitDisplays = new ArrayList<>();
+        Money dealerProfit = profitResultDTO.getDealerProfit();
+        Map<String, Money> participantsProfit = profitResultDTO.getParticipantsProfit();
 
-    private EnumMap<GameResult, Integer> evaluateDealerScore() {
-        EnumMap<GameResult, Integer> dealerScore = new EnumMap<>(GameResult.class);
+        profitDisplays.add(formatDealerProfitDisplay(dealerProfit));
 
-        for (GameResult result : GameResult.values()) {
-            dealerScore.put(result, 0);
+        for (Map.Entry<String, Money> entry : participantsProfit.entrySet()) {
+            String userName = entry.getKey();
+            Money userProfit = entry.getValue();
+            profitDisplays.add(formatUserProfitDisplay(userName, userProfit));
         }
 
-        return dealerScore;
+        return profitDisplays;
     }
 
-    private Map<String, GameResult> evaluateUserScore(EnumMap<GameResult, Integer> dealerScore) {
-        Map<String, GameResult> userScore = new HashMap<>();
+    private ProfitResultDTO calculateProfit() {
+        Map<String, Money> participantsProfit = new LinkedHashMap<>();
+        Money dealerProfit = new Money(0);
 
-        for (User user : participants) {
-            GameResult isDealerWin = dealer.judgeUserResult(user.getHand());
-            dealerScore.replace(isDealerWin, dealerScore.get(isDealerWin) + 1);
-
-            GameResult isUserWin = dealer.judgeUserWin(user.getHand());
-            userScore.put(user.getName(), isUserWin);
+        for (User user : players) {
+            GameResult isUserWin = dealer.judgeResultForUser(user.getTotalScore());
+            Money earnedMoney = user.updateProfitBy(isUserWin);
+            dealerProfit = dealerProfit.subtract(earnedMoney);
+            participantsProfit.put(user.getName(), earnedMoney);
         }
 
-        return userScore;
+        return new ProfitResultDTO(dealerProfit, participantsProfit);
     }
 
-    private List<String> formatFinalDisplays(ParticipantsScoreDTO participantsScoreDTO) {
-        EnumMap<GameResult, Integer> dealerScore = participantsScoreDTO.getDealerScore();
-        Map<String, GameResult> userScore = participantsScoreDTO.getUserScore();
-
-        List<String> finalTotalDisplays = new ArrayList<>();
-        finalTotalDisplays.add(formatDealerFinalDisplay(dealerScore));
-
-        for (User user : participants) {
-            finalTotalDisplays.add(formatUserFinalDisplay(user, userScore));
-        }
-
-        return finalTotalDisplays;
+    private String formatDealerProfitDisplay(Money dealerProfit) {
+        return "딜러: " + dealerProfit.getValue();
     }
 
-    private String formatDealerFinalDisplay(EnumMap<GameResult, Integer> dealerScore) {
-        return "딜러: " + dealerScore.get(GameResult.WIN) + "승 " + dealerScore.get(GameResult.LOSE) + "패";
-    }
-
-    private String formatUserFinalDisplay(User user, Map<String, GameResult> userScore) {
-        return user.getName() + ": " + userScore.get(user.getName()).getName();
+    private String formatUserProfitDisplay(String userName, Money userProfit) {
+        return userName + ": " + userProfit.getValue();
     }
 }
 
