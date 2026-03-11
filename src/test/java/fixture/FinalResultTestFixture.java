@@ -16,6 +16,18 @@ public class FinalResultTestFixture {
                         List.of(card(CardValue.TEN), card(CardValue.ACE)),
                         List.of(card(CardValue.SEVEN), card(CardValue.TEN)),
                         1000, 1500, 0
+                ),
+                // 2. 플레이어와 딜러 둘 다 블랙잭
+                Arguments.of(
+                        List.of(card(CardValue.TEN), card(CardValue.ACE)),
+                        List.of(card(CardValue.TEN), card(CardValue.ACE)),
+                        1000, 1000, 0
+                ),
+                // 3. 플레이어 버스트(점수 합 21 초과, 이때 딜러의 카드는 상관이 없다.)
+                Arguments.of(
+                        List.of(card(CardValue.TEN), card(CardValue.NINE), card(CardValue.EIGHT)),
+                        List.of(card(CardValue.SEVEN), card(CardValue.ACE)),
+                        1000, 0, 1000
                 )
         );
     }
