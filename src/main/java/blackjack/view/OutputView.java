@@ -67,7 +67,7 @@ public class OutputView {
     public void printProfits(Map<Participant, Money> profits) {
         System.out.println(FINAL_PROFITS_HEADER);
         for (Participant participant : profits.keySet()) {
-            System.out.printf(PLAYER_RESULT_FORMAT, participant.getName(), profits.get(participant).getValue());
+            System.out.printf(PLAYER_RESULT_FORMAT, participant.getName(), profits.get(participant).value());
         }
     }
 

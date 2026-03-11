@@ -1,7 +1,5 @@
 package blackjack.domain.hand;
 
-import java.util.Objects;
-
 public record Score(int value) implements Comparable<Score> {
 
     private static final int BUST_THRESHOLD = 21;
@@ -17,17 +15,5 @@ public record Score(int value) implements Comparable<Score> {
     @Override
     public int compareTo(Score score) {
         return Integer.compare(this.value, score.value);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        Score score = (Score) o;
-        return value() == score.value();
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(value());
     }
 }

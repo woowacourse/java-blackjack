@@ -7,7 +7,6 @@ import blackjack.domain.card.Suit;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -49,17 +48,5 @@ public class Deck {
 
     public List<Card> getCards() {
         return List.copyOf(cards);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        Deck deck = (Deck) o;
-        return Objects.equals(cards, deck.cards);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(cards);
     }
 }
