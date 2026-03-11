@@ -35,7 +35,7 @@ public abstract class Participant {
 
     public boolean isBlackjack() {
         int score = calculateScore();
-        return score == BLACKJACK_NUM;
+        return score == BLACKJACK_NUM && hand.size() == 2;
     }
 
     public boolean isBurst(int score) {
