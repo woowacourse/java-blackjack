@@ -20,4 +20,9 @@ public class Hand {
     public List<Card> getCards() {
         return List.copyOf(cards);
     }
+
+    public boolean hasScoreLessThanOrEqual(int value) {
+        return getScore().value() <= value;
+    }
+
 }

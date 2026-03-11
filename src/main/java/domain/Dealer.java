@@ -12,6 +12,6 @@ public class Dealer extends Participant {
     }
 
     public boolean checkThreshold() {
-        return getHand().getScore().value() <= DEALER_CARD_SUM_THRESHOLD;
+        return getHand().hasScoreLessThanOrEqual(DEALER_CARD_SUM_THRESHOLD);
     }
 }
