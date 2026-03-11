@@ -3,9 +3,7 @@ package domain;
 import common.ErrorMessage;
 import dto.ParticipantDto;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
@@ -81,20 +79,5 @@ public class Players {
         Player newPlayer = action.apply(player);
         players.set(index, newPlayer);
         return newPlayer;
-    }
-//    public void hitPlayer(Player targetPlayer, Supplier<Card> cardSupplier) {
-//        targetPlayer.hit(cardSupplier);
-//    }
-
-//    public List<Player> getPlayers() {
-//        return players;
-//    }
-
-    public Map<String, List<Card>> getDecksPerPlayer() {
-        Map<String, List<Card>> decksPerUser = new LinkedHashMap<>();
-        for (Player player : players) {
-            decksPerUser.put(player.getName(), player.showOwnCards());
-        }
-        return decksPerUser;
     }
 }
