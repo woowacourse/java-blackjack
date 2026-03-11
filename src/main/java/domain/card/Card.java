@@ -16,4 +16,8 @@ public class Card {
     public String getCardInfo() {
         return rank.getName() + suit.getSuit();
     }
+
+    public boolean isAce() {
+        return this.rank == CardRank.ACE;
+    }
 }

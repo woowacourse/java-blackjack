@@ -23,10 +23,6 @@ public enum CardRank {
         this.score = score;
     }
 
-    public static boolean isAce(int score) {
-        return score == ACE.score;
-    }
-
     public String getName() {
         return name;
     }
