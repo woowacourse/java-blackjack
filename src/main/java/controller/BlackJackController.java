@@ -70,10 +70,10 @@ public class BlackJackController {
     private boolean isFirstCommandNo(Player player, Deck deck) {
         String yesNoInput = InputView.askPlayerCommand(player.getName());
 
-        HandDto handDto = HandDto.from(player.getHand());
-        OutputView.printHandOutput(handDto);
         if (blackJackTurnService.canPlayerHit(player, yesNoInput)) {
             blackJackTurnService.playerHit(player, deck);
+            HandDto handDto = HandDto.from(player.getHand());
+            OutputView.printHandOutput(handDto);
         }
         return !blackJackTurnService.canPlayerHit(player, yesNoInput);
     }
