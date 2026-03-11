@@ -40,6 +40,6 @@ class BettingAmountTest {
         // given
         Player player = new Player("luke", 1000);
         // when & then
-        assertThat(player.getBettingAmount(GameResult.BLACK_JACK)).isEqualTo(1500);
+        assertThat(player.getBettingAmount(GameResult.BLACKJACK)).isEqualTo(1500);
     }
 }
