@@ -13,6 +13,7 @@ import domain.participant.Player;
 import domain.participant.PlayerParser;
 import domain.participant.Players;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
@@ -104,7 +105,7 @@ public class GameController {
 
     private GameManager getManager() {
         Deck deck = Deck.create();
-        deck.shuffle();
+        deck.shuffle(Collections::shuffle);
         return new GameManager(deck);
     }
 

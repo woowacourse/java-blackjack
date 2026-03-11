@@ -13,7 +13,7 @@ class PlayersTest {
         Player player1 = new Player(name);
         Player player2 = new Player(name);
 
-        assertThatThrownBy(() -> Players.of(List.of(player1, player2)))
+        assertThatThrownBy(() -> new Players(List.of(player1, player2)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -30,7 +30,7 @@ class PlayersTest {
                         new Player(Name.from("나무8"))
                 );
 
-        assertThatThrownBy(() -> Players.of(players))
+        assertThatThrownBy(() -> new Players(players))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

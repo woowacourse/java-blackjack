@@ -44,7 +44,7 @@ public class GameManagerTest {
         Player player1 = new Player(Name.from("나무"));
         Player player2 = new Player(Name.from("고래"));
 
-        Players players = Players.of(List.of(player1, player2));
+        Players players = new Players(List.of(player1, player2));
 
         for (Player player : players) {
             manager.dealCard(player);

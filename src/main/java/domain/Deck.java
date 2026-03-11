@@ -32,8 +32,8 @@ public class Deck {
         return card;
     }
 
-    public void shuffle() {
-        Collections.shuffle(this.cards);
+    public void shuffle(ShuffleStrategy strategy) {
+        strategy.shuffle(this.cards);
     }
 
     public List<Card> getCards() {
