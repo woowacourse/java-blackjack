@@ -1,9 +1,9 @@
 package blackjack;
 
+import blackjack.domain.BettingProfit;
+import blackjack.domain.BettingProfitCalculator;
 import blackjack.domain.GameCommand;
-import blackjack.domain.GameStatistics;
 import blackjack.domain.Participants;
-import blackjack.domain.Referee;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
@@ -74,8 +74,8 @@ public class BlackjackGame {
     }
 
     private void judge(Participants participants) {
-        Referee referee = new Referee();
-        GameStatistics statistics = referee.judge(participants);
-        OutputView.showGameResult(statistics);
+        BettingProfitCalculator bettingProfitCalculator = new BettingProfitCalculator();
+        BettingProfit bettingProfit = bettingProfitCalculator.calculate(participants);
+        OutputView.showProfitRate(bettingProfit.getDealerProfit(), bettingProfit.getPlayerProfit());
     }
 }

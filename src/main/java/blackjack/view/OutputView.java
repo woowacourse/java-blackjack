@@ -1,7 +1,5 @@
 package blackjack.view;
 
-import blackjack.domain.GameResult;
-import blackjack.domain.GameStatistics;
 import blackjack.domain.Participants;
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Participant;
@@ -59,23 +57,19 @@ public final class OutputView {
         System.out.println(getCardNames(participant, participant.getCardNames()) + " - 결과: " + score);
     }
 
-    public static void showGameResult(GameStatistics statistics) {
-        System.out.println(NEW_LINE + "## 최종 승패");
-        showDealerResult(statistics.getDealerResult());
-        System.out.println();
-        showPlayerResult(statistics.getPlayerResult());
+    public static void showProfitRate(int dealerProfitRate, Map<Participant, Integer> statistics) {
+        System.out.println(NEW_LINE + "## 최종 수익");
+        showDealerResult(dealerProfitRate);
+        showPlayerResult(statistics);
     }
 
-    private static void showDealerResult(Map<GameResult, Integer> dealerResult) {
-        System.out.print("딜러: ");
-        for (Map.Entry<GameResult, Integer> entry : dealerResult.entrySet()) {
-            System.out.print(entry.getValue() + entry.getKey().getDescription() + " ");
-        }
+    private static void showDealerResult(int dealerResult) {
+        System.out.println("딜러: " + dealerResult);
     }
 
-    private static void showPlayerResult(Map<Participant, GameResult> playerResult) {
-        for (Map.Entry<Participant, GameResult> entry : playerResult.entrySet()) {
-            System.out.println(entry.getKey().getName() + ": " + entry.getValue().getDescription());
+    private static void showPlayerResult(Map<Participant, Integer> playerResult) {
+        for (Map.Entry<Participant, Integer> entry : playerResult.entrySet()) {
+            System.out.println(entry.getKey().getName() + ": " + entry.getValue());
         }
     }
 }
