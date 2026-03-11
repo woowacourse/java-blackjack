@@ -59,8 +59,7 @@ public class PlayerGroups {
 
     private void validateDuplicate(List<Player> players) {
         Set<String> distinctNames = players.stream()
-                .peek(player -> player.getName())
-                .map(String::valueOf)
+                .map(player -> player.getName())
                 .collect(Collectors.toSet());
 
         if (distinctNames.size() != players.size()) {
