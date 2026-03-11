@@ -18,9 +18,11 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 class ResultJudgeTest {
 
     Dealer dealer;
+    Dealer blackJackDealer;
     Player winPlayer;
     Player defeatPlayer;
     Player drawPlayer;
+    Player blackJackPlayer;
     Players players;
 
     @BeforeEach
@@ -37,7 +39,15 @@ class ResultJudgeTest {
         drawPlayer = new Player(new PlayerName("비김"), new Hand());
         drawPlayer.keepCard(new Card(Rank.FIVE, Pattern.SPADE));
 
-        players = new Players(List.of(winPlayer, defeatPlayer, drawPlayer));
+        blackJackDealer = new Dealer(new Hand());
+        blackJackDealer.keepCard(new Card(Rank.ACE, Pattern.CLOVER));
+        blackJackDealer.keepCard(new Card(Rank.JACK, Pattern.CLOVER));
+
+        blackJackPlayer = new Player(new PlayerName("블랙잭"), new Hand());
+        blackJackPlayer.keepCard(new Card(Rank.ACE, Pattern.CLOVER));
+        blackJackPlayer.keepCard(new Card(Rank.JACK, Pattern.CLOVER));
+
+        players = new Players(List.of(winPlayer, defeatPlayer, drawPlayer, blackJackPlayer));
     }
 
     @Test
@@ -66,7 +76,7 @@ class ResultJudgeTest {
 
     @Test
     @DisplayName("딜러와 플레이어가 둘 다 버스트되면 플레이어 패배를 우선으로 처리한다.")
-    void ResultJudge_ReturnsDrawWhenPlayerAndDealerAreBothBust(){
+    void calculateResult_ReturnsDrawWhenPlayerAndDealerAreBothBust(){
         ResultJudge resultJudge = new ResultJudge();
         dealer.keepCard(new Card(Rank.NINE, Pattern.CLOVER));
         dealer.keepCard(new Card(Rank.JACK, Pattern.CLOVER));
@@ -81,7 +91,7 @@ class ResultJudgeTest {
 
     @Test
     @DisplayName("딜러가 버스트되면 플레이어가 승리한다.")
-    void ResultJudge_ReturnsWinWhenDealerIsBust(){
+    void calculateResult_ReturnsWinWhenDealerIsBust(){
         ResultJudge resultJudge = new ResultJudge();
         dealer.keepCard(new Card(Rank.NINE, Pattern.CLOVER));
         dealer.keepCard(new Card(Rank.JACK, Pattern.CLOVER));
@@ -95,7 +105,7 @@ class ResultJudgeTest {
 
     @Test
     @DisplayName("플레이어가 버스트 되면 플레이어가 패배한다")
-    void ResultJudge_ReturnsDefeatWhenPlayerIsBust(){
+    void calculateResult_ReturnsDefeatWhenPlayerIsBust(){
         ResultJudge resultJudge = new ResultJudge();
         dealer.keepCard(new Card(Rank.NINE, Pattern.CLOVER));
         defeatPlayer.keepCard(new Card(Rank.SIX, Pattern.SPADE));
@@ -106,4 +116,23 @@ class ResultJudgeTest {
         assertThat(info).isEqualTo(ResultInfo.DEFEAT);
     }
 
+    @Test
+    @DisplayName("플레이어가 블랙잭이 되면 승리한다")
+    void calculateResult_ReturnsBlackJackWinWhenPlayerIsBlackJack(){
+        ResultJudge resultJudge = new ResultJudge();
+        Result result = resultJudge.calculateResult(dealer, players);
+
+        ResultInfo resultInfo = result.getGameResult().get(blackJackPlayer.getName());
+        assertThat(resultInfo).isEqualTo(ResultInfo.WIN);
+    }
+
+    @Test
+    @DisplayName("플레이어와 딜러가 둘 다 블랙잭이면 무승부이다")
+    void calculateResult_ReturnDraws_WhenPlayerAndDealerIsBlackJack(){
+        ResultJudge resultJudge = new ResultJudge();
+        Result result = resultJudge.calculateResult(blackJackDealer, players);
+
+        ResultInfo resultInfo = result.getGameResult().get(blackJackPlayer.getName());
+        assertThat(resultInfo).isEqualTo(ResultInfo.DRAW);
+    }
 }
