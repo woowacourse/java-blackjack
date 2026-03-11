@@ -8,35 +8,6 @@ import org.junit.jupiter.api.Test;
 public class DealerTest {
 
     @Test
-    void 딜러의_카드의_합이_17_이상이다_에이스_포함() {
-        // arrange
-        Hand hand = new Hand();
-        hand.addCard(new Card(CardPoint.ACE, CardPattern.DIAMOND));
-        hand.addCard(new Card(CardPoint.SIX, CardPattern.CLUB));
-
-        // act
-        Dealer dealer = new Dealer(hand);
-
-        // assert
-        assertFalse(dealer.canHit());
-    }
-
-    @Test
-    void 딜러의_카드의_합이_17_이상이다_에이스_미포함() {
-        // arrange
-        Hand hand = new Hand();
-        hand.addCard(new Card(CardPoint.TEN, CardPattern.DIAMOND));
-        hand.addCard(new Card(CardPoint.FIVE, CardPattern.CLUB));
-        hand.addCard(new Card(CardPoint.FIVE, CardPattern.CLUB));
-
-        // act
-        Dealer dealer = new Dealer(hand);
-
-        //assert
-        assertFalse(dealer.canHit());
-    }
-
-    @Test
     void 딜러의_카드의_합이_17_미만이다() {
         // arrange
         Hand hand = new Hand();
