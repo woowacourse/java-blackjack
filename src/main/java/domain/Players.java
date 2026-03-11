@@ -5,14 +5,11 @@ import java.util.HashSet;
 import java.util.List;
 
 public class Players {
-    private static final String DEALER_NAME = "딜러";
-
     private final List<Player> playerList;
 
     public Players(List<String> names) {
         validateDuplicate(names);
         playerList = new ArrayList<>();
-        playerList.add(new Player(DEALER_NAME));
         for (String name : names) {
             playerList.add(new Player(name));
         }
@@ -22,10 +19,6 @@ public class Players {
         if (names.size() != new HashSet<>(names).size()) {
             throw new IllegalArgumentException("중복된 이름이 존재합니다.");
         }
-    }
-
-    public Player getDealer() {
-        return playerList.get(0);
     }
 
     public List<Player> getGamePlayers() {

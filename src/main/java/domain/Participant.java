@@ -11,6 +11,8 @@ public abstract class Participant {
         this.playerName = new PlayerName(name);
     }
 
+    public abstract boolean canHit();
+
     public void addCard(Card card) {
         cards.add(card);
     }
@@ -23,4 +25,18 @@ public abstract class Participant {
         return playerName.getName();
     }
 
+    public int calculateScore() {
+        int score = 0;
+        boolean hasAce = false;
+        for (Card card : cards) {
+            score += card.getScore();
+            if (card.isAce()) {
+                hasAce = true;
+            }
+        }
+        if (hasAce && score + 10 <= 21) {
+            return score + 10;
+        }
+        return score;
+    }
 }

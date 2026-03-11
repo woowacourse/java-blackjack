@@ -1,6 +1,7 @@
 package view;
 
 import domain.Card;
+import domain.Participant;
 import domain.Player;
 import domain.Rank;
 import domain.Result;
@@ -47,18 +48,18 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printFinalCards(Player player) {
-        System.out.println(player.getName() + "카드: " + formatCards(player.getCards())
-                + " - 결과: " + player.calculateScore());
+    public void printFinalCards(Participant participant) {
+        System.out.println(participant.getName() + "카드: " + formatCards(participant.getCards())
+                + " - 결과: " + participant.calculateScore());
     }
 
-    public void printFinalResult(Player dealer, Map<Player, Result> results) {
+    public void printFinalResult(Participant dealer, Map<Player, Result> results) {
         System.out.println("\n## 최종 승패");
         printDealerResult(dealer, results);
         printPlayerResults(results);
     }
 
-    private void printDealerResult(Player dealer, Map<Player, Result> results) {
+    private void printDealerResult(Participant dealer, Map<Player, Result> results) {
         int dealerWin = countResult(results, Result.LOSE);
         int dealerLose = countResult(results, Result.WIN);
         System.out.println(dealer.getName() + ": " + dealerWin + "승 " + dealerLose + "패");

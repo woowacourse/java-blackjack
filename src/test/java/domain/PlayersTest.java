@@ -20,7 +20,7 @@ public class PlayersTest {
     @DisplayName("입력에 따른 Player 객체 생성")
     @Test
     void 이름이_정상적으로_들어왔을때() {
-        assertThat(players.getSize()).isEqualTo(3); // 딜러 포함
+        assertThat(players.getSize()).isEqualTo(2);
     }
 
     @DisplayName("이름이 중복이면 예외가 발생한다")

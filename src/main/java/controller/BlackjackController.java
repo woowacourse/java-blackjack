@@ -14,8 +14,6 @@ import view.InputView;
 import view.OutputView;
 
 public class BlackjackController {
-    private static final int DEALER_HIT_THRESHOLD = 16;
-    private static final int BUST_THRESHOLD = 21;
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -34,8 +32,8 @@ public class BlackjackController {
         dealInitialCards(dealer, players, deck);
         printInitialState(dealer, players, names);
         playAllPlayerTurns(players, deck);
-        playDealerTurn(players.getDealer(), deck);
-        printFinalState(players);
+        playDealerTurn(dealer, deck);
+        printFinalState(dealer, players);
     }
 
     private void playAllPlayerTurns(Players players, Deck deck) {
@@ -62,7 +60,7 @@ public class BlackjackController {
 
     private void playPlayerTurn(Player player, Deck deck) {
         boolean cardShown = false;
-        while (player.calculateScore() <= BUST_THRESHOLD && inputView.askHit(player.getName())) {
+        while (player.canHit() && inputView.askHit(player.getName())) {
             player.addCard(deck.draw());
             outputView.printPlayerCards(player);
             cardShown = true;
@@ -72,24 +70,24 @@ public class BlackjackController {
         }
     }
 
-    private void playDealerTurn(Player dealer, Deck deck) {
-        while (dealer.calculateScore() <= DEALER_HIT_THRESHOLD) {
+    private void playDealerTurn(Dealer dealer, Deck deck) {
+        while (dealer.canHit()) {
             dealer.addCard(deck.draw());
             outputView.printDealerHit();
         }
     }
 
-    private void printFinalState(Players players) {
+    private void printFinalState(Dealer dealer, Players players) {
         System.out.println();
-        outputView.printFinalCards(players.getDealer());
+        outputView.printFinalCards(dealer);
         for (Player player : players.getGamePlayers()) {
             outputView.printFinalCards(player);
         }
         Referee referee = new Referee();
         Map<Player, Result> results = new LinkedHashMap<>();
         for (Player player : players.getGamePlayers()) {
-            results.put(player, referee.judge(player.calculateScore(), players.getDealer().calculateScore()));
+            results.put(player, referee.judge(player.calculateScore(), dealer.calculateScore()));
         }
-        outputView.printFinalResult(players.getDealer(), results);
+        outputView.printFinalResult(dealer, results);
     }
 }
