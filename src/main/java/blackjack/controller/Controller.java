@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import blackjack.dto.GameResultDto;
 import blackjack.exception.ErrorMessage;
 import blackjack.model.*;
 import blackjack.util.Splitter;
@@ -29,25 +30,30 @@ public class Controller {
         Referee referee = new Referee();
         Dealer dealer = new Dealer();
         Players players = createPlayer();
-        List<Player> participants = players.getPlayers();
 
         deck.shuffle();
         initializeDealToParticipants(dealer, players, deck);
         outputView.printFirstCardStatus(dealer, players);
 
-        turnToPlayers(participants, deck);
+        turnToPlayers(players, deck);
         turnToDealer(dealer, deck);
         outputView.printScoreResult(dealer, players);
 
-        outputView.printGameResult(getPlayerGameResult(participants, dealer, referee));
+        GameResultDto gameResultDto = getPlayerGameResult(players, dealer, referee);
+        Map<Player, GameResult> gameResult = gameResultDto.getGameResult();
+        double dealerAmount = 0;
+        for (Player player : gameResult.keySet()) {
+            dealerAmount += -player.getBettingAmount(gameResult.get(player));
+        }
+        outputView.printGameResult(gameResultDto, dealerAmount);
     }
 
-    private static Map<Player, GameResult> getPlayerGameResult(List<Player> participants, Dealer dealer, Referee referee) {
+    private static GameResultDto getPlayerGameResult(Players players, Dealer dealer, Referee referee) {
         Map<Player, GameResult> gameResult = new LinkedHashMap<>();
-        for (Player player : participants) {
+        for (Player player : players.getPlayers()) {
             gameResult.put(player, referee.judge(player, dealer));
         }
-        return gameResult;
+        return new GameResultDto(gameResult);
     }
 
     private void turnToDealer(Dealer dealer, Deck deck) {
@@ -61,8 +67,8 @@ public class Controller {
         }
     }
 
-    private void turnToPlayers(List<Player> participants, Deck deck) {
-        for (Player player : participants) {
+    private void turnToPlayers(Players players, Deck deck) {
+        for (Player player : players.getPlayers()) {
             turnToOnePlayer(deck, player);
         }
     }
