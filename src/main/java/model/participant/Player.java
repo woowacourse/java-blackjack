@@ -14,7 +14,7 @@ public class Player extends Participant {
 
     @Override
     public List<Card> open() {
-        return hands.asList();
+        return hand.asList();
     }
 
     @Override
@@ -46,7 +46,7 @@ public class Player extends Participant {
     public String toString() {
         return "Player{" +
                 "name='" + getName() + '\'' +
-                "hands=" + hands +
+                "hand=" + hand +
                 '}';
     }
 }

@@ -11,17 +11,17 @@ import model.card.Cards;
 
 public abstract class Participant {
     private final String name;
-    protected final Cards hands;
+    protected final Cards hand;
 
     protected Participant(String name) {
         this.name = name;
-        this.hands = Cards.from(new ArrayList<>());
+        this.hand = Cards.from(new ArrayList<>());
     }
 
     public List<Card> receive(Card card) {
-        hands.add(card);
+        hand.add(card);
 
-        return hands.asList();
+        return hand.asList();
     }
 
     public boolean canHit() {
@@ -33,11 +33,11 @@ public abstract class Participant {
     }
 
     public boolean isBlackjack() {
-        return hands.size() == Blackjack.DEALOUT_DRAW_COUNT && calculateScore() == BLACKJACK_SCORE;
+        return hand.size() == Blackjack.DEALOUT_DRAW_COUNT && calculateScore() == BLACKJACK_SCORE;
     }
 
     public int calculateScore() {
-        return hands.calculateScore();
+        return hand.calculateScore();
     }
 
     public String getName() {

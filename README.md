@@ -30,7 +30,7 @@
   - 딜러는 16 이하면 받는다.
   - 플레이어는 입력 값(y/n)에 따라 받는다.
 - [x] 합계 점수 계산 기능
-- [x] 딜러의 카드 패(hands) 전체 오픈 기능
+- [x] 딜러의 카드 패(hand) 전체 오픈 기능
 - [x] 최종 승패 계산 기능
   - 플레이어와 딜러의 상태에 따라 다음 표와 같이 승패를 구분할 수 있다.
     ![블랙잭-승패-판정-표](https://github.com/user-attachments/assets/54986bf6-924d-45a2-82aa-b51b34e6ffa4)
@@ -53,7 +53,7 @@
 ## 용어 사전
 
 - deck: 카드 묶음
-- hands: 카드 패
+- hand: 카드 패
 - dealer: 딜러
 - player: 플레이어
 - participant: 참여자. 딜러(dealer)와 플레이어(player)를 총칭

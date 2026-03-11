@@ -22,10 +22,10 @@ public class Dealer extends Participant {
     public List<Card> open() {
         if (firstTurn) {
             firstTurn = false;
-            return List.of(hands.getFirst());
+            return List.of(hand.getFirst());
         }
 
-        return hands.asList();
+        return hand.asList();
     }
 
     @Override
@@ -64,7 +64,7 @@ public class Dealer extends Participant {
         return "Dealer{" +
                 "name='" + getName() + '\'' +
                 "firstTurn=" + firstTurn +
-                ", hands=" + hands +
+                ", hand=" + hand +
                 '}';
     }
 }

@@ -13,12 +13,12 @@ public class OutputView {
         System.out.println("딜러와 " + playerNames + "에게 " + drawCount + "장을 나누었습니다.");
     }
 
-    public void printHands(String participantName, List<String> hands) {
-        System.out.println(participantName + "카드: " + String.join(", ", hands));
+    public void printHands(String participantName, List<String> hand) {
+        System.out.println(participantName + "카드: " + String.join(", ", hand));
     }
 
-    public void printHandsWithScore(String participantName, List<String> hands, int score) {
-        System.out.println(participantName + "카드: " + String.join(", ", hands) + " - 결과: " + score);
+    public void printHandsWithScore(String participantName, List<String> hand, int score) {
+        System.out.println(participantName + "카드: " + String.join(", ", hand) + " - 결과: " + score);
     }
 
     public void printFinalResult(Map<String, Integer> dealerResult, Map<String, Boolean> playerResult) {
