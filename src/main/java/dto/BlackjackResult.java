@@ -13,12 +13,9 @@ public record BlackjackResult(
                 .sum();
 
 
-        int dealerProfit = calculateDealerProfit(totalGamblersProfit);
+        int dealerProfit = -(totalGamblersProfit);
 
         return new BlackjackResult(dealerProfit, new LinkedHashMap<>(matchResultLog));
     }
 
-    private static int calculateDealerProfit(int totalGamblersProfit) {
-        return -(totalGamblersProfit);
-    }
 }

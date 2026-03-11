@@ -35,8 +35,8 @@ public class Gamblers {
         gamblers.forEach(gambler -> gambler.deal(cardDeck));
     }
 
-    public LinkedHashMap<String, Integer> getResult(Dealer dealer) {
-        LinkedHashMap<String, Integer> resultMap = new LinkedHashMap<>();
+    public Map<String, Integer> getResult(Dealer dealer) {
+        Map<String, Integer> resultMap = new LinkedHashMap<>();
 
         for (Gambler gambler : gamblers) {
             MatchResult matchResult = MatchResult.of(gambler, dealer);
