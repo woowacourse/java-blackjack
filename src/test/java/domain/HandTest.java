@@ -26,9 +26,9 @@ class HandTest {
                 hand.addCard(card);
 
                 // then
-                assertThat(hand.getCardNames())
+                assertThat(hand.getCard())
                     .hasSize(1)
-                    .containsExactly(card.getName());
+                    .containsExactly(card);
             }
 
             @Test
@@ -44,9 +44,9 @@ class HandTest {
                 hand.addCard(secondCard);
 
                 // then
-                assertThat(hand.getCardNames())
+                assertThat(hand.getCard())
                     .hasSize(2)
-                    .containsExactly(firstCard.getName(), secondCard.getName());
+                    .containsExactly(firstCard, secondCard);
             }
         }
     }
@@ -107,7 +107,7 @@ class HandTest {
     }
 
     @Nested
-    class GetCardNamesTest {
+    class GetCardTest {
 
         @Nested
         class Success {
@@ -119,7 +119,7 @@ class HandTest {
                 Hand hand = new Hand();
 
                 // when
-                var actual = hand.getCardNames();
+                var actual = hand.getCard();
 
                 // then
                 assertThat(actual).isEmpty();
@@ -136,12 +136,12 @@ class HandTest {
                 hand.addCard(secondCard);
 
                 // when
-                var actual = hand.getCardNames();
+                var actual = hand.getCard();
 
                 // then
                 assertThat(actual)
                     .hasSize(2)
-                    .containsExactly(firstCard.getName(), secondCard.getName());
+                    .containsExactly(firstCard, secondCard);
             }
         }
     }
