@@ -1,4 +1,4 @@
-package domain;
+package domain.pariticipant;
 
 import static constant.BlackjackConstant.NAME_MAX_LENGTH;
 import static constant.BlackjackConstant.NAME_MINIMUM_LENGTH;
