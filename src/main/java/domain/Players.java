@@ -1,8 +1,11 @@
 package domain;
 
 import common.ErrorMessage;
+import dto.ParticipantDto;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
 
@@ -67,6 +70,12 @@ public class Players {
             players.set(index, player.stand());
         }
     }
+
+    public List<ParticipantDto> getInitialStates() {
+        return players.stream()
+                .map(ParticipantDto::consistWithInitialInfo)
+                .toList();
+    }
 //    public void hitPlayer(Player targetPlayer, Supplier<Card> cardSupplier) {
 //        targetPlayer.hit(cardSupplier);
 //    }
@@ -75,14 +84,11 @@ public class Players {
 //        return players;
 //    }
 
-//    public Map<String, List<Card>> getDecksPerPlayer() {
-//        Map<String, List<Card>> decksPerUser = new LinkedHashMap<>();
-//        for (Player player : players) {
-//            decksPerUser.put(
-//                    player.getName(),
-//                    player.getDeck().getCards()
-//            );
-//        }
-//        return decksPerUser;
-//    }
+    public Map<String, List<Card>> getDecksPerPlayer() {
+        Map<String, List<Card>> decksPerUser = new LinkedHashMap<>();
+        for (Player player : players) {
+            decksPerUser.put(player.getName(), player.showOwnCards());
+        }
+        return decksPerUser;
+    }
 }

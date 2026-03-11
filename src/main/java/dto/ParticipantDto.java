@@ -5,29 +5,28 @@ import domain.Participant;
 import java.util.ArrayList;
 import java.util.List;
 
-public record ParticipantDto(String name, List<CardDto> cards, int score) {
-    public static ParticipantDto initialFrom(Participant participant) {
+public record ParticipantDto(String name, List<CardDto> cards) {
+    public static ParticipantDto consistWithInitialInfo(Participant participant) {
         String name = participant.getName();
 
         List<CardDto> cards = new ArrayList<>();
-        for (Card card : participant.getInitialVisibleCards()) {
+        for (Card card : participant.showInitialCard()) {
             cards.add(CardDto.from(card));
         }
 
         int score = 0;
-        return new ParticipantDto(name, cards, score);
+        return new ParticipantDto(name, cards);
     }
 
     public static ParticipantDto from(Participant participant) {
         String name = participant.getName();
 
         List<CardDto> cards = new ArrayList<>();
-        for (Card card : participant.getDeck().getCards()) {
+        for (Card card : participant.showOwnCards()) {
             cards.add(CardDto.from(card));
         }
 
-        int score = participant.calculateDeckSum();
-        return new ParticipantDto(name, cards, score);
+        return new ParticipantDto(name, cards);
     }
 
     public static List<ParticipantDto> listOf(List<? extends Participant> participants) {
@@ -37,13 +36,11 @@ public record ParticipantDto(String name, List<CardDto> cards, int score) {
             String name = participant.getName();
 
             List<CardDto> cards = new ArrayList<>();
-            for (Card card : participant.getDeck().getCards()) {
+            for (Card card : participant.showOwnCards()) {
                 cards.add(CardDto.from(card));
             }
 
-            int score = participant.calculateDeckSum();
-
-            ParticipantDto participantDto = new ParticipantDto(name, cards, score);
+            ParticipantDto participantDto = new ParticipantDto(name, cards);
             participantDtos.add(participantDto);
         }
 
