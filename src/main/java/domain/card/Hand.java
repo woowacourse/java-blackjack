@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public class Cards {
+public class Hand {
     private final List<Card> cards;
 
-    public Cards() {
+    public Hand() {
         this.cards = new ArrayList<>();
     }
 

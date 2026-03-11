@@ -9,10 +9,10 @@ public class Dealer extends Participant {
     }
 
     public Card getFirstCard() {
-        return cards.peek();
+        return hand.peek();
     }
 
     public boolean decideHitStand(Score boundary) {
-        return cards.getTotalSum().isLessThanOrEqualTo(boundary);
+        return hand.getTotalSum().isLessThanOrEqualTo(boundary);
     }
 }

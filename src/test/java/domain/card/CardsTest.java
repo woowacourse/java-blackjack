@@ -12,20 +12,20 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 public class CardsTest {
     @Test
     void 카드_더미가_정상적으로_생성되어야_한다() {
-        assertDoesNotThrow(() -> new Cards());
+        assertDoesNotThrow(() -> new Hand());
     }
 
     @Test
     void 카드가_정상적으로_추가되어야_한다() {
         //given
         Card card = new Card(Suit.SPADE, Rank.ACE);
-        Cards cards = new Cards();
+        Hand hand = new Hand();
 
         //when
-        cards.add(card);
+        hand.add(card);
 
         //then
-        Assertions.assertEquals(cards.size(), 1);
+        Assertions.assertEquals(hand.size(), 1);
     }
 
     @Test
@@ -33,14 +33,14 @@ public class CardsTest {
         //given
         Card card1 = new Card(Suit.SPADE, Rank.ACE);
         Card card2 = new Card(Suit.SPADE, Rank.TEN);
-        Cards cards = new Cards();
+        Hand hand = new Hand();
 
         //when
-        cards.add(card1);
-        cards.add(card2);
+        hand.add(card1);
+        hand.add(card2);
 
         //then
-        Assertions.assertEquals(cards.getTotalSum(), BLACKJACK_MAX_NUMBER);
+        Assertions.assertEquals(hand.getTotalSum(), BLACKJACK_MAX_NUMBER);
     }
 
     @Test
@@ -50,15 +50,15 @@ public class CardsTest {
         Card card2 = new Card(Suit.HEART, Rank.ACE);
         Card card3 = new Card(Suit.CLUB, Rank.ACE);
         Card card4 = new Card(Suit.SPADE, Rank.TEN);
-        Cards cards = new Cards();
+        Hand hand = new Hand();
 
         //when
-        cards.add(card1);
-        cards.add(card2);
-        cards.add(card3);
-        cards.add(card4);
+        hand.add(card1);
+        hand.add(card2);
+        hand.add(card3);
+        hand.add(card4);
 
         //then
-        Assertions.assertEquals(cards.getTotalSum(), new Score(13));
+        Assertions.assertEquals(hand.getTotalSum(), new Score(13));
     }
 }
