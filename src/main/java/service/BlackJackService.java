@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BlackJackService {
-    private static final int BLACKJACK_LIMIT_NUMBER = 21;
 
     public BlackJackService() {
     }
@@ -26,8 +25,8 @@ public class BlackJackService {
         int dealerTotalScore = dealer.getTotalCardScore();
         int playerTotalScore = player.getTotalCardScore();
 
-        if (dealerTotalScore > BLACKJACK_LIMIT_NUMBER) return ResultInfo.WIN;
-        if (playerTotalScore > BLACKJACK_LIMIT_NUMBER) return ResultInfo.DEFEAT;
+        if(player.getHand().isBust()) return ResultInfo.DEFEAT;
+        if(dealer.getHand().isBust()) return ResultInfo.WIN;
         if (dealerTotalScore < playerTotalScore) return ResultInfo.WIN;
         if (dealerTotalScore > playerTotalScore) return ResultInfo.DEFEAT;
         return ResultInfo.DRAW;
