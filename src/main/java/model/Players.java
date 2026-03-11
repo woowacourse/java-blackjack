@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class Players {
 
@@ -21,5 +22,9 @@ public class Players {
 
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
+    }
+
+    public void forEach(Consumer<? super Player> action) {
+        players.forEach(action);
     }
 }
