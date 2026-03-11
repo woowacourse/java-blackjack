@@ -67,7 +67,7 @@ public class GameService {
         return GameResult.DRAW;
     }
 
-    public List<UserProfit> createUsersProfit(List<User> users, Dealer dealer){
+    public List<UserProfit> createUsersProfit(List<User> users){
         List<UserProfit> list = new ArrayList<>();
         for (User each : users) {
             list.add(createEachUserProfit(each));

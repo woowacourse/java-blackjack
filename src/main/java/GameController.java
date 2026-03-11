@@ -1,5 +1,7 @@
 import domain.Dealer;
+import domain.DealerProfit;
 import domain.User;
+import domain.UserProfit;
 import view.InputParser;
 import view.InputView;
 import view.OutputView;
@@ -28,6 +30,7 @@ public class GameController {
         processDealerTurn();
         showCardResult(users);
         showGameRecord(users);
+        processTotalProfit(users);
     }
 
     private List<User> setUpUsers(){
@@ -72,5 +75,11 @@ public class GameController {
     private void showGameRecord(List<User> users){
         gameService.settleResult(users, dealer);
         outputView.printGameRecord(users, dealer);
+    }
+
+    private void processTotalProfit(List<User> users) {
+        List<UserProfit> userProfits = gameService.createUsersProfit(users);
+        DealerProfit dealerProfit = gameService.upsertDealerProfit(userProfits);
+        outputView.printTotalProfit(userProfits, dealerProfit);
     }
 }

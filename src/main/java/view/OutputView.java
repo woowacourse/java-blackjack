@@ -2,7 +2,9 @@ package view;
 
 import domain.Card;
 import domain.Dealer;
+import domain.DealerProfit;
 import domain.User;
+import domain.UserProfit;
 
 import java.util.List;
 import java.util.StringJoiner;
@@ -68,6 +70,14 @@ public class OutputView {
             for(User user : users) {
                 System.out.println(user.getName()+": " + user.getGameResult().getName());
             }
+        }
+    }
+
+    public void printTotalProfit(List<UserProfit> userProfits, DealerProfit dealerProfit) {
+        System.out.println('\n' + "## 최종 수익");
+        System.out.println("딜러: " + dealerProfit.profit());
+        for (UserProfit userProfit : userProfits) {
+            System.out.println(userProfit.userName() + ": " + userProfit.profit());
         }
     }
 }

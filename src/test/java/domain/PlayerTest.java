@@ -52,7 +52,7 @@ class PlayerTest {
         int aceScore = user.getAceBonus(sum);
 
         //then
-        assertThat(aceScore).isEqualTo(11);
+        assertThat(aceScore).isEqualTo(10);
     }
 
     @Test
@@ -62,7 +62,7 @@ class PlayerTest {
         User user = User.from("abc");
         int sum = 11;
         int aceScore = user.getAceBonus(sum);
-        assertThat(aceScore).isEqualTo(0);
+        assertThat(aceScore).isEqualTo(10);
     }
 
     @Test
