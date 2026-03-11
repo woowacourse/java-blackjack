@@ -45,7 +45,7 @@ public class Cards {
 
     public int getTotalSum() {
         int aceNum = getAceAmount();
-        int sum = getSumWithoutAce();
+        int sum = getAmountWithoutAce();
 
         for (int i = aceNum; i > 0; i--) {
             sum += Rank.decideAceValue(sum, i);
@@ -61,7 +61,7 @@ public class Cards {
         return aceAmount;
     }
 
-    private int getSumWithoutAce() {
+    private int getAmountWithoutAce() {
         int sum = 0;
         for (Card card : cards) {
             sum += card.getRankValueIfNotAce();
