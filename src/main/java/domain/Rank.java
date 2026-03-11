@@ -28,13 +28,13 @@ public enum Rank {
     }
 
     public static int decideAceValue(int sum, int leftAce) {
-        if (sum + ACE_MAX_VALUE <= calculateThreshold(leftAce)) {
+        if (sum + ACE_MAX_VALUE <= calculateThresholdConsideringRemainingAces(leftAce)) {
             return ACE_MAX_VALUE;
         }
         return ACE_MIN_VALUE;
     }
 
-    private static int calculateThreshold(int leftAce) {
+    private static int calculateThresholdConsideringRemainingAces(int leftAce) {
         return BLACKJACK_MAX_NUMBER + 1 - leftAce;
     }
 
