@@ -51,7 +51,7 @@ class UninitializedHandTest {
         }
 
         @Test
-        void 지닌_카드의_가치_합이_21_미만이라면_히트로_전이한다() {
+        void 지닌_카드의_가치_합이_21_미만이라면_힛으로_전이한다() {
             Hand hand = new UninitializedHand();
             hand = hand.hit(new Card(Rank.ACE, Suit.HEART));
             hand = hand.hit(new Card(Rank.TWO, Suit.HEART));
