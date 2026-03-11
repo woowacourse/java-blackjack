@@ -49,7 +49,7 @@ public class Participants {
         List<Participant> participants = getParticipants();
         List<ParticipantResult> participantsTotalGameResult = new ArrayList<>();
         for (Participant participant : participants) {
-            participantsTotalGameResult.add(new ParticipantResult(participant));
+            participantsTotalGameResult.add(ParticipantResult.from(participant));
         }
         return participantsTotalGameResult;
     }

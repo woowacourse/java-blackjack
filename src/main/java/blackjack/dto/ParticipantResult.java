@@ -8,8 +8,8 @@ public record ParticipantResult(
     int totalScore
 ) {
 
-    public ParticipantResult(Participant participant) {
-        this(
+    public static ParticipantResult from(Participant participant) {
+        return new ParticipantResult(
             participant.getNickname(),
             participant.getCardStatus(),
             participant.getTotalScore()

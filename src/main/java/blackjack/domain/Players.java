@@ -81,7 +81,7 @@ public class Players {
     public List<ParticipantResult> getInitialResult() {
         List<ParticipantResult> initialResults = new ArrayList<>();
         for (Player player : players) {
-            initialResults.add(new ParticipantResult(player));
+            initialResults.add(ParticipantResult.from(player));
         }
         return initialResults;
     }
