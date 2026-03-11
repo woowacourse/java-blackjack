@@ -9,28 +9,34 @@ import org.junit.jupiter.api.Test;
 public class DealerTest {
 
     @Test
-    void calculate_dealer_total_score() {
-        Dealer dealer1 = new Dealer();
-        dealer1.receiveOneCard(new Card(Rank.ACE, Shape.HEART));
-        dealer1.receiveOneCard(new Card(Rank.QUEEN, Shape.SPADE));
-        assertThat(dealer1.calculateTotalScore()).isEqualTo(21);
-
-        Dealer dealer2 = new Dealer();
-        dealer2.receiveOneCard(new Card(Rank.THREE, Shape.HEART));
-        dealer2.receiveOneCard(new Card(Rank.TEN, Shape.SPADE));
-        assertThat(dealer2.calculateTotalScore()).isEqualTo(13);
+    void dealer_total_score_blackjack() {
+        Dealer dealer = new Dealer();
+        dealer.receiveOneCard(new Card(Rank.ACE, Shape.HEART));
+        dealer.receiveOneCard(new Card(Rank.QUEEN, Shape.SPADE));
+        assertThat(dealer.calculateTotalScore()).isEqualTo(21);
     }
 
     @Test
-    void is_dealer_done_when_total_score_is_17_or_more() {
-        Dealer dealer1 = new Dealer();
-        dealer1.receiveOneCard(new Card(Rank.TEN, Shape.HEART));
-        dealer1.receiveOneCard(new Card(Rank.SEVEN, Shape.SPADE));
-        assertThat(dealer1.isDealerNotDone()).isEqualTo(false);
+    void dealer_total_score_not_blackjack() {
+        Dealer dealer = new Dealer();
+        dealer.receiveOneCard(new Card(Rank.THREE, Shape.HEART));
+        dealer.receiveOneCard(new Card(Rank.TEN, Shape.SPADE));
+        assertThat(dealer.calculateTotalScore()).isEqualTo(13);
+    }
 
-        Dealer dealer2 = new Dealer();
-        dealer2.receiveOneCard(new Card(Rank.TWO, Shape.HEART));
-        dealer2.receiveOneCard(new Card(Rank.SEVEN, Shape.SPADE));
-        assertThat(dealer2.isDealerNotDone()).isEqualTo(true);
+    @Test
+    void is_dealer_done_when_total_score_is_17() {
+        Dealer dealer = new Dealer();
+        dealer.receiveOneCard(new Card(Rank.TEN, Shape.HEART));
+        dealer.receiveOneCard(new Card(Rank.SEVEN, Shape.SPADE));
+        assertThat(dealer.isDealerNotDone()).isEqualTo(false);
+    }
+
+    @Test
+    void is_dealer_done_when_total_score_is_not_17() {
+        Dealer dealer = new Dealer();
+        dealer.receiveOneCard(new Card(Rank.TWO, Shape.HEART));
+        dealer.receiveOneCard(new Card(Rank.SEVEN, Shape.SPADE));
+        assertThat(dealer.isDealerNotDone()).isEqualTo(true);
     }
 }
