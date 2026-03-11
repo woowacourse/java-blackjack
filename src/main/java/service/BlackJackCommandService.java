@@ -1,43 +1,55 @@
 package service;
 
-import domain.GameTable;
-import domain.BlackJackFactory;
+import domain.common.PlayedGameResult;
+import domain.game_playing.DrawStrategy;
+import domain.game_playing.Participants;
+import domain.game_result.ScoreBoard;
 import java.util.List;
-import repository.GameTableRepository;
+import repository.ParticipantRepository;
+import repository.ScoreRepository;
 
 public class BlackJackCommandService {
 
-    private final GameTableRepository gameTableRepository;
-    private final BlackJackFactory blackJackFactory;
+    private final ParticipantRepository participantRepository;
+    private final ScoreRepository scoreRepository;
 
-    public BlackJackCommandService(GameTableRepository gameTableRepository,
-                                   BlackJackFactory blackJackFactory) {
-        this.gameTableRepository = gameTableRepository;
-        this.blackJackFactory = blackJackFactory;
+    public BlackJackCommandService(ParticipantRepository participantRepository,
+                                   ScoreRepository scoreRepository,
+                                   DrawStrategy drawStrategy) {
+        this.participantRepository = participantRepository;
+        this.scoreRepository = scoreRepository;
+
+        setupWith(drawStrategy);
     }
 
-    public void setupGameTable(List<String> playerNames) {
-        GameTable gameTable = blackJackFactory.openGame(playerNames);
-        gameTableRepository.save(gameTable);
+    private void setupWith(DrawStrategy drawStrategy) {
+        participantRepository.setup(Participants.onlyDealer(drawStrategy));
+        scoreRepository.setup(new ScoreBoard());
+    }
+
+    public void setupPlayers(List<String> playerNames) {
+        participantRepository.updateParticipantsWith(playerNames);
     }
 
     public void distributeInitialCards() {
-        gameTableRepository.distributeInitialCards();
+        participantRepository.distributeInitialCards();
     }
 
     public void currentPlayerDrawCard() {
-        gameTableRepository.currentPlayerDrawCard();
+        participantRepository.currentPlayerDrawCard();
     }
 
     public void recordCurrentGameResult() {
-        gameTableRepository.recordCurrentGameResult();
+        PlayedGameResult currentPlayerResult = participantRepository.getCurrentPlayerResult();
+        scoreRepository.recordCurrentGameResult(currentPlayerResult);
     }
 
     public void dealerDrawCard() {
-        gameTableRepository.dealerDrawCard();
+        participantRepository.dealerDrawCard();
     }
 
     public void recordDealerGameResult() {
-        gameTableRepository.recordDealerGameResult();
+        PlayedGameResult dealerResult = participantRepository.getDealerResult();
+        scoreRepository.recordDealerGameResult(dealerResult);
     }
 }

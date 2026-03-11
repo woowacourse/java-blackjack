@@ -1,6 +1,6 @@
 package dto.response;
 
-import domain.vo.NameAndCardInfos;
+import domain.common.NameAndCardInfos;
 import java.util.List;
 
 public record AllPlayersNameAndCardsResponse(List<NameAndCardsResponse> allInfos) {

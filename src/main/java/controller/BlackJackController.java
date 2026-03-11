@@ -40,7 +40,7 @@ public class BlackJackController {
 
     private void setupGameTable() {
         PlayerNamesRequest request = InputView.readPlayers();
-        commandService.setupGameTable(request.names());
+        commandService.setupPlayers(request.names());
     }
 
     private void distributeInitialCards() {
@@ -134,7 +134,7 @@ public class BlackJackController {
     }
 
     private void displayPlayerResults() {
-        PlayerGameResultsResponse playerGameResultsResponse = queryService.playerResult();
+        PlayerGameResultsResponse playerGameResultsResponse = queryService.playerResults();
         OutputView.playerResults(playerGameResultsResponse);
     }
 

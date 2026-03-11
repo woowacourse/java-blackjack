@@ -32,6 +32,8 @@
 - [x] 승패 집계
 
 ## 리팩토링
+- [ ] GameTable 분해 및 책임 분리
+  - [ ] Repository, Service 정리
 - [x] service, repository 레이어 도입
 - [x] Constants를 각 도메인에 맞는 enum으로 분리
 - [x] 애그리거트 내 접근 제어자 정리

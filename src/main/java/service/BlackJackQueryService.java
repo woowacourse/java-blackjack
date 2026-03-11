@@ -1,74 +1,80 @@
 package service;
 
-import domain.vo.DealerWinningScore;
-import domain.PlayerWinningInfo;
-import domain.vo.NameAndCardInfos;
+import domain.common.NameAndCardInfos;
+import domain.common.PlayedGameResult;
+import domain.game_result.vo.PlayerWinningInfo;
+import domain.game_result.vo.DealerWinningScore;
 import dto.response.AllPlayerWinningInfoResponse;
 import dto.response.AllPlayersNameAndCardsResponse;
 import dto.response.DealerWinningStatisticsResponse;
 import dto.response.NameAndCardsResponse;
 import dto.response.NameResponse;
+import dto.request.PlayerNamesResponse;
 import dto.response.PlayedGameResultResponse;
 import dto.response.PlayerGameResultsResponse;
-import dto.request.PlayerNamesResponse;
 import java.util.List;
-import repository.GameTableRepository;
+import repository.ParticipantRepository;
+import repository.ScoreRepository;
 
 public class BlackJackQueryService {
 
-    private final GameTableRepository gameTableRepository;
+    private final ParticipantRepository participantRepository;
+    private final ScoreRepository scoreRepository;
 
-    public BlackJackQueryService(GameTableRepository gameTableRepository) {
-        this.gameTableRepository = gameTableRepository;
+    public BlackJackQueryService(ParticipantRepository participantRepository,
+                                 ScoreRepository scoreRepository) {
+        this.participantRepository = participantRepository;
+        this.scoreRepository = scoreRepository;
     }
 
     public PlayerNamesResponse allPlayerNames() {
-        List<String> allPlayerNames = gameTableRepository.getAllPlayerNames();
+        List<String> allPlayerNames = participantRepository.getAllPlayerNames();
         return new PlayerNamesResponse(allPlayerNames);
     }
 
     public NameAndCardsResponse dealerCards() {
-        NameAndCardInfos dealerCards = gameTableRepository.getDealerCards();
+        NameAndCardInfos dealerCards = participantRepository.getDealerCards();
         return NameAndCardsResponse.from(dealerCards);
     }
 
     public AllPlayersNameAndCardsResponse AllPlayersCards() {
-        List<NameAndCardInfos> playerCardInfos = gameTableRepository.getAllPlayersCards();
+        List<NameAndCardInfos> playerCardInfos = participantRepository.getAllPlayersCards();
         return AllPlayersNameAndCardsResponse.from(playerCardInfos);
     }
 
     public NameResponse currentPlayerName() {
-        String name = gameTableRepository.getCurrentPlayerName();
+        String name = participantRepository.getCurrentPlayerName();
         return new NameResponse(name);
     }
 
     public NameAndCardsResponse currentPlayerCards() {
-        NameAndCardInfos dealerCards = gameTableRepository.getCurrentPlayerCards();
+        NameAndCardInfos dealerCards = participantRepository.getCurrentPlayerCards();
         return NameAndCardsResponse.from(dealerCards);
     }
 
     public boolean isCurrentPlayerPlayable() {
-        return gameTableRepository.isCurrentPlayerPlayable();
+        return participantRepository.isCurrentPlayerPlayable();
     }
 
     public boolean hasWaitingPlayers() {
-        return gameTableRepository.hasWaitingPlayers();
+        return participantRepository.hasWaitingPlayers();
     }
 
     public boolean isDealerPlayable() {
-        return gameTableRepository.isDealerPlayable();
+        return participantRepository.isDealerPlayable();
     }
 
     public PlayedGameResultResponse dealerResult() {
-        return PlayedGameResultResponse.from(gameTableRepository.dealerResult());
+        return PlayedGameResultResponse.from(participantRepository.getDealerResult());
     }
 
-    public PlayerGameResultsResponse playerResult() {
-        return PlayerGameResultsResponse.from(gameTableRepository.playerResults());
+    public PlayerGameResultsResponse playerResults() {
+        List<PlayedGameResult> playerGameResults = scoreRepository.getPlayerGameResults();
+        return PlayerGameResultsResponse.from(playerGameResults);
     }
 
     public DealerWinningStatisticsResponse dealerWinningStatistics() {
-        DealerWinningScore winningStatistics = gameTableRepository.getDealerWinningStatistics();
+        DealerWinningScore winningStatistics = scoreRepository.getDealerWinningScore();
         return new DealerWinningStatisticsResponse(
                 winningStatistics.winCount(),
                 winningStatistics.drawCount(),
@@ -77,7 +83,7 @@ public class BlackJackQueryService {
     }
 
     public AllPlayerWinningInfoResponse playerWinningInfos() {
-        List<PlayerWinningInfo> playerWinningInfos = gameTableRepository.getPlayerWinningInfos();
+        List<PlayerWinningInfo> playerWinningInfos = scoreRepository.getPlayerWinningInfos();
         return AllPlayerWinningInfoResponse.of(playerWinningInfos);
     }
 }
