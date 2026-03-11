@@ -11,6 +11,7 @@ import domain.card.Rank;
 import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class FinalResultDtoTest {
@@ -48,5 +49,45 @@ class FinalResultDtoTest {
                         new PlayerResultDto("시오", "무"),
                         new PlayerResultDto("영기", "승")),
                 finalResultDto.playerResults());
+    }
+
+    @Nested
+    class FinalResultDto가_올바른_값을_가진다 {
+
+        @Test
+        void 플레이어가_Bust로_패배하는_경우() {
+            // given
+            Dealer dealer = createDealer(Rank.JACK);
+            List<Player> players = List.of(
+                    createPlayer("봉구스", Rank.KING, Rank.QUEEN, Rank.JACK),
+                    createPlayer("시오"),
+                    createPlayer("영기")
+            );
+
+            FinalResultDto finalResultDto = FinalResultDto.of(dealer, players);
+
+            // when, then
+            assertEquals(3, finalResultDto.dealerWinCount());
+            assertEquals(0, finalResultDto.dealerLoseCount());
+            assertEquals("패", finalResultDto.playerResults().getFirst().winningStatus());
+        }
+
+        @Test
+        void 딜러가_Bust로_패배하는_경우() {
+            // given
+            Dealer dealer = createDealer(Rank.JACK, Rank.KING, Rank.QUEEN);
+            List<Player> players = List.of(
+                    createPlayer("봉구스", Rank.KING),
+                    createPlayer("시오"),
+                    createPlayer("영기")
+            );
+
+            FinalResultDto finalResultDto = FinalResultDto.of(dealer, players);
+
+            // when, then
+            assertEquals(0, finalResultDto.dealerWinCount());
+            assertEquals(3, finalResultDto.dealerLoseCount());
+            assertEquals("승", finalResultDto.playerResults().getFirst().winningStatus());
+        }
     }
 }

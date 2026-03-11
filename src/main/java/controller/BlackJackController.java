@@ -9,7 +9,6 @@ import dto.HandDto;
 import dto.ScoreResultDto;
 import java.util.List;
 import service.BlackJackInitService;
-import service.BlackJackResultService;
 import service.BlackJackTurnService;
 import view.InputView;
 import view.OutputView;
@@ -18,14 +17,11 @@ public class BlackJackController {
 
     private final BlackJackInitService blackJackInitService;
     private final BlackJackTurnService blackJackTurnService;
-    private final BlackJackResultService blackJackResultService;
 
     public BlackJackController(BlackJackInitService blackJackInitService,
-                               BlackJackTurnService blackJackTurnService,
-                               BlackJackResultService blackJackResultService) {
+                               BlackJackTurnService blackJackTurnService) {
         this.blackJackInitService = blackJackInitService;
         this.blackJackTurnService = blackJackTurnService;
-        this.blackJackResultService = blackJackResultService;
     }
 
     public void run() {

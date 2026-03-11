@@ -35,7 +35,7 @@ class ScoreResultDtoTest {
     }
 
     @Test
-    void 점수_결과_DTO_생성() {
+    void ScoreResultDto가_올바른_값을_가진다() {
         // given
         ScoreResultDto scoreResultDto = ScoreResultDto.of(dealer, players);
 

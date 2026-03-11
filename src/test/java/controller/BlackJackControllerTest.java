@@ -17,7 +17,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import service.BlackJackInitService;
-import service.BlackJackResultService;
 import service.BlackJackTurnService;
 
 
@@ -79,11 +78,8 @@ public class BlackJackControllerTest {
             doReturn(deck).when(blackJackInitService).createDeck();
 
             BlackJackTurnService blackJackTurnService = new BlackJackTurnService();
-            BlackJackResultService blackJackResultService = new BlackJackResultService();
 
-            blackJackController = new BlackJackController(blackJackInitService,
-                    blackJackTurnService,
-                    blackJackResultService);
+            blackJackController = new BlackJackController(blackJackInitService, blackJackTurnService);
         }
 
         @Test
@@ -129,5 +125,4 @@ public class BlackJackControllerTest {
                     .contains("봉구스: 무");
         }
     }
-
 }
