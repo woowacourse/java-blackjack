@@ -3,7 +3,7 @@ package blackjack.domain;
 
 public class Dealer extends Participant{
     public Dealer() {
-        super();
+        super("딜러");
     }
 
     public int getAdditionalDrawnCardCount() {

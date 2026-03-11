@@ -1,9 +1,6 @@
 package blackjack.service;
 
-import blackjack.domain.Card;
-import blackjack.domain.CardPicker;
-import blackjack.domain.Dealer;
-import blackjack.domain.Player;
+import blackjack.domain.*;
 
 import java.util.List;
 
@@ -15,29 +12,29 @@ public class CardDistributor {
         this.cardPicker = cardPicker;
     }
 
-    public void distributeCardToPlayer(Player player) {
+    public void distributeCardToPlayer(Participant player) {
         Card card = cardPicker.drawCard();
         player.receiveOneCard(card);
     }
 
-    public void distributeCardToDealer(Dealer dealer) {
+    public void distributeCardToDealer(Participant dealer) {
         Card card = cardPicker.drawCard();
         dealer.receiveOneCard(card);
     }
 
-    public void distributeInitialCards(List<Player> players, Dealer dealer) {
-        for (Player player : players) {
+    public void distributeInitialCards(List<Participant> players, Participant dealer) {
+        for (Participant player : players) {
             distributeTwoCardsToPlayer(player);
         }
         distributeTwoCardsToDealer(dealer);
     }
 
-    public void distributeTwoCardsToPlayer(Player player) {
+    public void distributeTwoCardsToPlayer(Participant player) {
         player.receiveOneCard(cardPicker.drawCard());
         player.receiveOneCard(cardPicker.drawCard());
     }
 
-    public void distributeTwoCardsToDealer(Dealer dealer) {
+    public void distributeTwoCardsToDealer(Participant dealer) {
         dealer.receiveOneCard(cardPicker.drawCard());
         dealer.receiveOneCard(cardPicker.drawCard());
     }

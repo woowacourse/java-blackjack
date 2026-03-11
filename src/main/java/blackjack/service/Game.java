@@ -18,23 +18,26 @@ public class Game {
         this.referee = referee;
     }
 
-    public void dealerDrawsCardsUntilDone(Dealer dealer) {
+    public int dealerDrawsCardsUntilDone(Participant dealer) {
+        int count = 0;
         while (dealer.isDealerNotDone()) {
             cardDistributor.distributeCardToDealer(dealer);
+            count++;
         }
+        return count;
     }
 
     // 초기 카드 분배
-    public void distributeInitialCards(List<Player> players, Dealer dealer) {
+    public void distributeInitialCards(List<Participant> players, Participant dealer) {
         cardDistributor.distributeInitialCards(players, dealer);
     }
 
     // 플레이어에게 한 장 분배
-    public void drawCardToPlayer(Player player) {
+    public void drawCardToPlayer(Participant player) {
         cardDistributor.distributeCardToPlayer(player);
     }
 
-    public GameResult judgeTotalGameResult(List<Player> players, Dealer dealer) {
+    public GameResult judgeTotalGameResult(List<Participant> players, Participant dealer) {
         return referee.judgeResult(players, dealer);
     }
 }

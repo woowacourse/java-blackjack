@@ -7,11 +7,11 @@ import java.util.Map;
 public class Referee {
 
     // 승패 판정 로직
-    public GameResult judgeResult(List<Player> players, Dealer dealer) {
+    public GameResult judgeResult(List<Participant> players, Participant dealer) {
         Map<ScoreCompareResult, Integer> dealerResult = new HashMap<>();
-        Map<Player, ScoreCompareResult> playerResults = new HashMap<>();
+        Map<Participant, ScoreCompareResult> playerResults = new HashMap<>();
 
-        for (Player player : players) {
+        for (Participant player : players) {
             ScoreCompareResult result = compareScore(player, dealer);
             playerResults.put(player, toPlayerResult(result));
             dealerResult.merge(toDealerKey(result), 1, Integer::sum);
@@ -20,7 +20,7 @@ public class Referee {
         return new GameResult(dealerResult, playerResults);
     }
 
-    public ScoreCompareResult compareScore(Player player, Dealer dealer) {
+    public ScoreCompareResult compareScore(Participant player, Participant dealer) {
         boolean isPlayerBust = player.isBust();
         boolean isDealerBust = dealer.isBust();
 
