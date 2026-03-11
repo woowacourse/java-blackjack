@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import constant.Rank;
 import constant.Suit;
-import java.util.List;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -27,12 +26,12 @@ class DealerTest {
                 dealer.addCard(secondCard);
 
                 // when
-                List<String> actual = dealer.getOnlyFirstHand();
+                var actual = dealer.getOnlyFirstHand();
 
                 // then
                 assertThat(actual)
                     .hasSize(1)
-                    .containsExactly(firstCard.getName());
+                    .containsExactly(firstCard);
             }
         }
     }
