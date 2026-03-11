@@ -1,4 +1,15 @@
 package blackjack.model;
 
-public record GameSummary(User user, int score, boolean isBust, boolean isBlackjack) {
+import java.util.List;
+
+public record GameSummary(String name, List<Card> cards, int score, boolean isBust, boolean isBlackjack) {
+    public static GameSummary from(User user) {
+        return new GameSummary(
+                user.getName(),
+                user.cards(),
+                user.getScore(),
+                user.isBust(),
+                user.isBlackjack()
+        );
+    }
 }

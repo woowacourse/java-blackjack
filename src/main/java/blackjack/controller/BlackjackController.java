@@ -2,12 +2,14 @@ package blackjack.controller;
 
 import blackjack.model.Dealer;
 import blackjack.model.Deck;
+import blackjack.model.GameResult;
 import blackjack.model.GameSummary;
 import blackjack.model.Player;
 import blackjack.model.Players;
 import blackjack.view.InputParser;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -25,28 +27,39 @@ public class BlackjackController {
     }
 
     public void run() {
-        Players players = retry(() -> {
-            String input = inputView.readPlayerName();
-            List<String> names = InputParser.parse(input);
-            return new Players(names);
-        });
-
+        Players players = setupPlayers();
         Dealer dealer = new Dealer();
 
+        initCards(players, dealer);
+        hit(players, dealer);
+
+        displayGameSummary(players, dealer);
+        displayGameResult(players, dealer);
+
+        inputView.closeScanner();
+    }
+
+    private Players setupPlayers() {
+        List<String> playerNames = retry(() -> {
+            String input = inputView.readPlayerName();
+            return InputParser.parse(input);
+
+        });
+
+        List<Player> allPlayers = new ArrayList<>();
+
+        for (String playerName : playerNames) {
+            int betAmount = retry(() -> inputView.readBetAmount(playerName));
+            allPlayers.add(new Player(playerName, betAmount));
+        }
+
+        return new Players(allPlayers);
+    }
+
+    private void initCards(Players players, Dealer dealer) {
         deck.provideInitCards(players, dealer);
         outputView.printInitCards(players.all(), dealer);
 
-        hit(players, dealer);
-
-        List<GameSummary> gameSummaries = players.calculateGameResult(dealer);
-
-        for (GameSummary gameSummary : gameSummaries) {
-            outputView.printCardStatus(gameSummary);
-        }
-
-        outputView.printGameResult(players, dealer);
-
-        inputView.closeScanner();
     }
 
     private void hit(Players players, Dealer dealer) {
@@ -61,6 +74,20 @@ public class BlackjackController {
             outputView.printDealerHit();
             deck.provideOneCard(dealer);
         }
+    }
+
+    private void displayGameSummary(Players players, Dealer dealer) {
+        List<GameSummary> gameSummaries = players.calculateGameSummary(dealer);
+
+        for (GameSummary gameSummary : gameSummaries) {
+            outputView.printGameSummary(gameSummary);
+        }
+
+    }
+
+    private void displayGameResult(Players players, Dealer dealer) {
+        List<GameResult> gameResults = players.calculateGameResult(dealer);
+        outputView.printGameResult(gameResults);
     }
 
     private <T> T retry(Supplier<T> supplier) {

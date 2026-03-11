@@ -4,19 +4,26 @@ package blackjack.model;
 import static blackjack.model.Hand.BLACKJACK_SCORE;
 
 public class Player extends User {
-    private GameResult gameResult;
 
-    public Player(String name) {
+    private GameOutcome gameOutcome;
+    private final Bet bet;
+
+    public Player(String name, int betAmount) {
         super(name);
-        this.gameResult = GameResult.DRAW;
+        this.gameOutcome = GameOutcome.DRAW;
+        this.bet = new Bet(betAmount);
     }
 
-    public GameResult getGameResult() {
-        return gameResult;
+    public Bet getBet() {
+        return bet;
     }
 
-    public void mark(GameResult gameResult) {
-        this.gameResult = gameResult;
+    public GameOutcome getGameOutcome() {
+        return gameOutcome;
+    }
+
+    public void mark(GameOutcome gameOutcome) {
+        this.gameOutcome = gameOutcome;
     }
 
     public boolean canHit() {

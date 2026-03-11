@@ -4,9 +4,6 @@ import blackjack.model.Dealer;
 import blackjack.model.GameResult;
 import blackjack.model.GameSummary;
 import blackjack.model.Player;
-import blackjack.model.Players;
-import blackjack.model.User;
-import java.util.EnumMap;
 import java.util.List;
 
 public class OutputView {
@@ -49,12 +46,11 @@ public class OutputView {
         System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
     }
 
-    public void printCardStatus(GameSummary gameSummary) {
-        User user = gameSummary.user();
+    public void printGameSummary(GameSummary gameSummary) {
 
         StringBuilder sb = new StringBuilder();
-        sb.append(user.getName() + "카드: ");
-        List<String> cardFormats = user.cards().stream()
+        sb.append(gameSummary.name() + "카드: ");
+        List<String> cardFormats = gameSummary.cards().stream()
                 .map(card -> card.getSuit().getName() + card.getRank().getName()).toList();
         sb.append(String.join(", ", cardFormats));
         sb.append(" - 결과: " + gameSummary.score());
@@ -62,19 +58,12 @@ public class OutputView {
         System.out.println(sb);
     }
 
-    public void printGameResult(Players players, Dealer dealer) {
+    public void printGameResult(List<GameResult> gameResults) {
         System.out.println();
-        System.out.println("## 최종 승패");
+        System.out.println("## 최종 수익");
 
-        EnumMap<GameResult, Integer> dealerGameResult = dealer.getGameResults();
-        System.out.println(
-                dealer.getName() + ": " + dealerGameResult.getOrDefault(GameResult.WIN, 0) + "승 " +
-                        dealerGameResult.getOrDefault(GameResult.DRAW, 0) + "무 " + dealerGameResult.getOrDefault(
-                        GameResult.LOSE, 0) + "패");
-
-        for (Player player : players.all()) {
-            System.out.print(player.getName() + ": ");
-            System.out.println(player.getGameResult().getFormat());
+        for (GameResult gameResult : gameResults) {
+            System.out.println(gameResult.name() + ": " + gameResult.profit());
         }
     }
 

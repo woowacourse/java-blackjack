@@ -3,39 +3,67 @@ package blackjack.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.tuple;
 
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PlayersTest {
 
+    private Players players;
+    private Dealer dealer;
+
+    @BeforeEach
+    void setup() {
+        players = new Players(List.of(new Player("pobi", 1000)));
+
+        dealer = new Dealer();
+        dealer.addCard(new Card(Suit.HEART, Rank.JACK));
+    }
+
     @Test
     @DisplayName("중복된 이름이 있으면 예외 발생")
     void test_fail_duplicate_name() {
-        List<String> names = List.of("pobi", "pobi");
+        List<Player> allPlayers = List.of(new Player("pobi", 1000), new Player("pobi", 1000));
 
-        assertThatThrownBy(() -> new Players(names))
+        assertThatThrownBy(() -> new Players(allPlayers))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     @DisplayName("게임 결과 계산")
-    void test_calculate_game_result() {
-        Players players = new Players(List.of("pobi"));
+    void test_calculate_game_summary() {
 
         for (Player player : players.all()) {
             player.addCard(new Card(Suit.HEART, Rank.JACK));
         }
 
-        Dealer dealer = new Dealer();
-        dealer.addCard(new Card(Suit.HEART, Rank.JACK));
-
-        List<GameSummary> gameSummaries = players.calculateGameResult(dealer);
+        List<GameSummary> gameSummaries = players.calculateGameSummary(dealer);
 
         for (GameSummary gameSummary : gameSummaries) {
             assertThat(gameSummary.score()).isEqualTo(10);
         }
+    }
+
+    @Test
+    @DisplayName("게임 수익 계산")
+    void test_calculate_game_result() {
+
+        for (Player player : players.all()) {
+            player.addCard(new Card(Suit.HEART, Rank.ACE));
+        }
+
+        players.calculateGameSummary(dealer);
+        List<GameResult> gameResults = players.calculateGameResult(dealer);
+
+        assertThat(gameResults)
+                .extracting(GameResult::name, GameResult::profit)
+                .containsExactly(
+                        tuple("딜러", -1000),
+                        tuple("pobi", 1000)
+                );
     }
 
 }

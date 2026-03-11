@@ -9,7 +9,7 @@ import java.util.List;
 public class Hand {
 
     public static final int BLACKJACK_SCORE = 21;
-    public static final int ACE_SCORE_GAP = 10;
+
 
     private final List<Card> cards;
 
@@ -28,7 +28,7 @@ public class Hand {
     public int calculateScore() {
 
         int baseScore = cards.stream()
-                .mapToInt((card) -> card.getRank().getScore())
+                .mapToInt((card) -> card.getRank().getScore().get(0))
                 .sum();
 
         int aceCount = (int) cards.stream()
@@ -51,8 +51,9 @@ public class Hand {
     }
 
     private int convertAceToEleven(int currentScore) {
-        if (currentScore + ACE_SCORE_GAP <= BLACKJACK_SCORE) {
-            return currentScore + ACE_SCORE_GAP;
+        int aceScoreGap = Rank.ACE.getScore().get(1) - Rank.ACE.getScore().get(0);
+        if (currentScore + aceScoreGap <= BLACKJACK_SCORE) {
+            return currentScore + aceScoreGap;
         }
         return currentScore;
     }
