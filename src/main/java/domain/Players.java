@@ -22,7 +22,7 @@ public class Players {
     }
 
     public List<Player> getGamePlayers() {
-        return playerList.subList(1, playerList.size());
+        return playerList;
     }
 
     public int getSize() {

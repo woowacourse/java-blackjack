@@ -1,8 +1,5 @@
 package domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Player extends Participant {
     private static final int BUST_THRESHOLD = 21;
 
@@ -12,6 +9,6 @@ public class Player extends Participant {
 
     @Override
     public boolean canHit() {
-        return calculateScore() <= BUST_THRESHOLD;
+        return getScore() <= BUST_THRESHOLD;
     }
 }

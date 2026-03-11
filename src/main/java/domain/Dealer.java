@@ -9,7 +9,7 @@ public class Dealer extends Participant {
 
     @Override
     public boolean canHit() {
-        return calculateScore() <= HIT_THRESHOLD;
+        return getScore() <= HIT_THRESHOLD;
     }
 
     public Card getInitialCard() {

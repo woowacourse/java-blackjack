@@ -50,7 +50,7 @@ public class OutputView {
 
     public void printFinalCards(Participant participant) {
         System.out.println(participant.getName() + "카드: " + formatCards(participant.getCards())
-                + " - 결과: " + participant.calculateScore());
+                + " - 결과: " + participant.getScore());
     }
 
     public void printFinalResult(Participant dealer, Map<Player, Result> results) {

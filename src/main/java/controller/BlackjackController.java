@@ -2,7 +2,6 @@ package controller;
 
 import domain.Dealer;
 import domain.Deck;
-import domain.Participant;
 import domain.Player;
 import domain.Players;
 import domain.Referee;
@@ -86,7 +85,7 @@ public class BlackjackController {
         Referee referee = new Referee();
         Map<Player, Result> results = new LinkedHashMap<>();
         for (Player player : players.getGamePlayers()) {
-            results.put(player, referee.judge(player.calculateScore(), dealer.calculateScore()));
+            results.put(player, referee.judge(player.getScore(), dealer.getScore()));
         }
         outputView.printFinalResult(dealer, results);
     }
