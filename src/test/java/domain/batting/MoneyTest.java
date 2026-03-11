@@ -20,4 +20,13 @@ class MoneyTest {
     void invalidValueTest() {
         assertThrows(IllegalArgumentException.class, () -> new Money(-1000));
     }
+
+    @Test
+    @DisplayName("금액을 합산할 수 있어야 한다.")
+    void addTest() {
+        Money money = new Money(1000);
+        Money other = new Money(2000);
+
+        assertThat(money.sum(other)).isEqualTo(new Money(3000));
+    }
 }
