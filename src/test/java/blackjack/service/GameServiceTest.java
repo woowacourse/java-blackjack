@@ -2,17 +2,15 @@ package blackjack.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.Card;
-import blackjack.domain.CardShape;
-import blackjack.domain.CardValue;
-import blackjack.domain.Dealer;
-import blackjack.domain.Deck;
+import blackjack.domain.deck.Card;
+import blackjack.domain.deck.CardShape;
+import blackjack.domain.deck.CardValue;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.deck.Deck;
 import blackjack.domain.GameResult;
-import blackjack.domain.User;
-import blackjack.domain.Users;
-import java.util.HashMap;
+import blackjack.domain.participant.User;
+import blackjack.domain.participant.Users;
 import java.util.List;
-import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

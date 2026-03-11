@@ -1,10 +1,10 @@
 package blackjack.service;
 
-import blackjack.domain.Dealer;
-import blackjack.domain.Deck;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.deck.Deck;
 import blackjack.domain.GameResult;
-import blackjack.domain.User;
-import blackjack.domain.Users;
+import blackjack.domain.participant.User;
+import blackjack.domain.participant.Users;
 
 public class GameService {
 

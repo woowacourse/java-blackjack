@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.participant.UserName;
 import org.junit.jupiter.api.Test;
 
 class UserNameTest {
