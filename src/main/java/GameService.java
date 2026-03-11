@@ -70,12 +70,12 @@ public class GameService {
     public List<UserProfit> createUsersProfit(List<User> users, Dealer dealer){
         List<UserProfit> list = new ArrayList<>();
         for (User each : users) {
-            list.add(createEachUserProfit(each, dealer));
+            list.add(createEachUserProfit(each));
         }
         return list;
     }
 
-    protected UserProfit createEachUserProfit(User user, Dealer dealer) {
+    protected UserProfit createEachUserProfit(User user) {
         String eachName = user.getName();
         int eachBetAmount = user.getBetAmount();
         GameResult gameResult = user.getGameResult();
@@ -83,5 +83,13 @@ public class GameService {
         int eachProfit = bettingRule.calculateBetAmount(eachBetAmount,gameResult,eachIsBlackjack);
 
         return new UserProfit(eachName,eachBetAmount,gameResult,eachProfit);
+    }
+
+    protected DealerProfit upsertDealerProfit(List<UserProfit> userProfits) {
+        int dealerProfit = 0;
+        for (UserProfit each: userProfits) {
+            dealerProfit += each.profit() * (-1);
+        }
+        return new DealerProfit(dealerProfit);
     }
 }
