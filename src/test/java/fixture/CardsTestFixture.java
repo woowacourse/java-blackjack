@@ -2,9 +2,12 @@ package fixture;
 
 import java.util.List;
 import java.util.stream.Stream;
-import model.Card;
-import model.CardShape;
-import model.CardValue;
+import model.Dealer;
+import model.card.Card;
+import model.card.CardShape;
+import model.card.CardValue;
+import model.card.Deck;
+import model.service.CardFactory;
 import org.junit.jupiter.params.provider.Arguments;
 
 public class CardsTestFixture {
@@ -27,5 +30,12 @@ public class CardsTestFixture {
                         21
                 )
         );
+    }
+
+    public static Dealer createDealer() {
+        CardFactory cardFactory = new CardFactory();
+        List<Card> cards = cardFactory.createFullCards();
+        Deck deck = new Deck(cards);
+        return new Dealer(deck);
     }
 }

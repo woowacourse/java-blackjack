@@ -1,6 +1,7 @@
 package model;
 
 import java.util.List;
+import model.card.Deck;
 
 public class Dealer extends Player {
 
@@ -8,11 +9,11 @@ public class Dealer extends Player {
     private static final int MINIMUM_STAND_SCORE = 16;
     private static final int INITIAL_DISPENSE_COUNT = 2;
 
-    private final Cards deck;
+    private final Deck deck;
 
-    public Dealer(Cards deck) {
+    public Dealer(Deck deck) {
         super(DEALER_NAME);
-        this.deck = deck.shuffle();
+        this.deck = deck;
     }
 
     @Override
@@ -26,16 +27,16 @@ public class Dealer extends Player {
     }
 
     public void distributeCard(Player player) {
-        player.addCard(deck.pickCard());
+        player.addCard(deck.draw());
     }
 
     public void distributeCard() {
-        this.addCard(deck.pickCard());
+        this.addCard(deck.draw());
     }
 
     private void distributeInitialByPlayer(Player player) {
         for (int i = 0; i < INITIAL_DISPENSE_COUNT; i++) {
-            player.addCard(deck.pickCard());
+            player.addCard(deck.draw());
         }
     }
 }

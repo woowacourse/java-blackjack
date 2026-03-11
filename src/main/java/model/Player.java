@@ -1,6 +1,8 @@
 package model;
 
 import java.util.List;
+import model.card.Card;
+import model.card.Hand;
 
 public class Player {
 
@@ -8,16 +10,16 @@ public class Player {
     private static final int ACE_BONUS_SCORE = 10;
 
     private final String name;
-    private final Cards cards;
+    private final Hand hand;
 
     public Player(String name) {
         this.name = name;
-        this.cards = Cards.createEmpty();
+        this.hand = new Hand();
     }
 
     public int calculateTotalScore() {
-        int score = this.cards.calculateScore();
-        int aceCount = this.cards.countAce();
+        int score = this.hand.calculateScore();
+        int aceCount = this.hand.countAce();
 
         while (aceCount > 0 && score + ACE_BONUS_SCORE <= BUST_LIMIT) {
             score += ACE_BONUS_SCORE;
@@ -27,7 +29,7 @@ public class Player {
     }
 
     public void addCard(Card card) {
-        this.cards.add(card);
+        this.hand.add(card);
     }
 
     public String getName() {
@@ -35,7 +37,7 @@ public class Player {
     }
 
     public List<Card> getCards() {
-        return cards.getCard();
+        return hand.getCards();
     }
 
     public boolean canHit() {

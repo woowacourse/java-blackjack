@@ -2,9 +2,9 @@ package fixture;
 
 import java.util.List;
 import java.util.stream.Stream;
-import model.Card;
-import model.CardShape;
-import model.CardValue;
+import model.card.Card;
+import model.card.CardShape;
+import model.card.CardValue;
 import org.junit.jupiter.params.provider.Arguments;
 
 public class PlayerTestFixture {

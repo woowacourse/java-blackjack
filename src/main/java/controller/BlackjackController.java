@@ -1,28 +1,34 @@
 package controller;
 
 import java.util.List;
-import model.Cards;
+import model.card.Card;
+import model.card.CardShuffler;
 import model.Dealer;
+import model.card.Deck;
 import model.GameStatus;
 import model.Player;
 import model.PlayerResult;
+import model.card.SimpleCardShuffler;
+import model.service.CardFactory;
 import view.InputView;
 import view.OutputView;
 
 public class BlackjackController {
 
-    private final Dealer dealer;
-
-    public BlackjackController() {
-        this.dealer = new Dealer(Cards.createDeck());
-    }
-
     public void run() {
+        CardFactory cardFactory = new CardFactory();
+        CardShuffler cardShuffler = new SimpleCardShuffler();
+
+        List<Card> fullCards = cardFactory.createFullCards();
+        List<Card> shuffledCard = cardShuffler.shuffle(fullCards);
+        Deck deck = new Deck(shuffledCard);
+        Dealer dealer = new Dealer(deck);
+
         List<String> names = InputView.readPlayerNames();
         List<Player> players = createPlayers(names);
-        distributeCard(players);
+        distributeCard(dealer, players);
 
-        hitOrStandByPlayers(players);
+        hitOrStandByPlayers(dealer, players);
         hitUntilStandByDealer(dealer);
 
         printFinalCards(dealer, players);
@@ -35,7 +41,7 @@ public class BlackjackController {
                 .toList();
     }
 
-    private void distributeCard(List<Player> players) {
+    private void distributeCard(Dealer dealer, List<Player> players) {
         dealer.distributeInitialCards(players);
 
         OutputView.printCardOpen(players);
@@ -43,9 +49,9 @@ public class BlackjackController {
         OutputView.printCardByPlayers(players);
     }
 
-    private void hitOrStandByPlayers(List<Player> players) {
+    private void hitOrStandByPlayers(Dealer dealer, List<Player> players) {
         for (Player player : players) {
-            chooseHitOrStand(player);
+            chooseHitOrStand(dealer, player);
         }
     }
 
@@ -58,10 +64,10 @@ public class BlackjackController {
         return Continuation.from(inputCommand);
     }
 
-    private void chooseHitOrStand(Player player) {
+    private void chooseHitOrStand(Dealer dealer, Player player) {
         boolean drawCard = false;
         while (canHitMore(player)) {
-            distributeMoreOneCard(player);
+            distributeMoreOneCard(dealer, player);
             drawCard = true;
         }
 
@@ -70,7 +76,7 @@ public class BlackjackController {
         }
     }
 
-    private void distributeMoreOneCard(Player player) {
+    private void distributeMoreOneCard(Dealer dealer, Player player) {
         dealer.distributeCard(player);
         OutputView.printCardByPlayer(player);
     }
