@@ -8,7 +8,7 @@ import domain.gamer.Player;
 public class DoubleBustPolicy extends BettingPolicy{
 
     public DoubleBustPolicy() {
-        super(BettingResult.DOUBLE_BUST.bettingRate());
+        super(BettingResult.DOUBLE_BUST);
     }
 
     @Override
@@ -18,7 +18,7 @@ public class DoubleBustPolicy extends BettingPolicy{
 
     @Override
     public BettingRate getBettingRate(Dealer dealer, Player player) {
-        return this.bettingRate;
+        return bettingResult.bettingRate();
     }
 
 }

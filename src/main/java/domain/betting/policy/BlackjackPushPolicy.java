@@ -12,7 +12,7 @@ import domain.gamer.Player;
 public class BlackjackPushPolicy extends BettingPolicy{
 
     public BlackjackPushPolicy() {
-        super(BettingResult.BLACK_JACK_PUSH.bettingRate());
+        super(BettingResult.BLACK_JACK_PUSH);
     }
 
     @Override
@@ -22,7 +22,7 @@ public class BlackjackPushPolicy extends BettingPolicy{
 
     @Override
     public BettingRate getBettingRate(Dealer dealer, Player player) {
-        return this.bettingRate;
+        return bettingResult.bettingRate();
     }
 
 }

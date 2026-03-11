@@ -8,7 +8,7 @@ import domain.gamer.Player;
 public class ComparePolicy extends BettingPolicy{
 
     public ComparePolicy() {
-        super(BettingResult.COMPARE_WIN.bettingRate());
+        super(BettingResult.COMPARE_WIN);
     }
 
     @Override
@@ -23,9 +23,10 @@ public class ComparePolicy extends BettingPolicy{
 
     private BettingRate compareScore(int dealerScore, int playerScore) {
         if (playerScore > dealerScore) {
-            return this.bettingRate;
+            return bettingResult.bettingRate();
         }
-        return this.bettingRate.reverseBettingRate();
+        BettingResult lose = bettingResult.reverseResult();
+        return lose.bettingRate();
     }
 
 }
