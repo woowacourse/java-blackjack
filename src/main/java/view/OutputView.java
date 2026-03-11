@@ -3,6 +3,7 @@ package view;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 public class OutputView {
     private static final String LINE_SEPARATOR = System.lineSeparator();
@@ -44,5 +45,19 @@ public class OutputView {
         }
 
         System.out.println("딜러는 " + dealerDrawThreshold + "을 초과하여 카드를 더 받지 않았습니다." + LINE_SEPARATOR);
+    }
+
+    public void printFinalProfit(Map<String, Integer> profitByParticipant) {
+        final String header = "## 최종 수익" + System.lineSeparator();
+        String output = profitByParticipant.entrySet()
+                .stream()
+                .map(entry -> entry.getKey() + ": " + entry.getValue())
+                .collect(Collectors.joining(
+                        System.lineSeparator(),
+                        header,
+                        ""
+                ));
+
+        System.out.println(output);
     }
 }
