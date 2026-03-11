@@ -50,7 +50,7 @@ class InputValidatorTest {
     void not_natural_number() {
         assertThatThrownBy(() -> InputValidator.validateBetAmount(-100))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("자연수가 아닙니다.");
+                .hasMessage("100원 단위 자연수가 아닙니다.");
     }
 
     @Test
@@ -58,6 +58,6 @@ class InputValidatorTest {
     void not_100() {
         assertThatThrownBy(() -> InputValidator.validateBetAmount(101))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("100원 단위가 아닙니다.");
+                .hasMessage("100원 단위 자연수가 아닙니다.");
     }
 }
