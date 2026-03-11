@@ -59,6 +59,10 @@ public class Participants {
         consumer.accept(dealer);
     }
 
+    public Dealer getDealer() {
+        return dealer;
+    }
+
     public List<Player> getPlayers() {
         return players;
     }

@@ -12,23 +12,24 @@ import blackjack.domain.participant.Player;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-class RefereeTest {
+class BettingProfitCalculatorTest {
 
     @Test
     void 딜러와_플레이어의_승패를_비교한다() {
         // given
-        Dealer dealer = new Dealer(createHand(Grade.TEN, Grade.EIGHT)
-        );
-        Participants participants = new Participants(dealer,
-                List.of(new Player("aa", createHand(Grade.TEN, Grade.ACE))));
-        Referee referee = new Referee();
+        Dealer dealer = new Dealer(createHand(Grade.TEN, Grade.EIGHT));
+        Player player = new Player("aa", createHand(Grade.TEN, Grade.ACE));
+        Participants participants = new Participants(dealer, List.of(player));
+
+        player.bet(10000);
+
+        BettingProfitCalculator bettingProfitCalculator = new BettingProfitCalculator();
         // when
-        GameStatistics statistics = referee.judge(participants);
+        BettingProfit statistics = bettingProfitCalculator.calculate(participants);
         // then
         assertAll(
-                () -> assertThat(statistics.getDealerResult().get(GameResult.WIN)).isEqualTo(0),
-                () -> assertThat(statistics.getDealerResult().get(GameResult.LOSE)).isEqualTo(1),
-                () -> assertThat(statistics.getDealerResult().get(GameResult.DRAW)).isEqualTo(0)
+                () -> assertThat(statistics.getDealerProfit()).isEqualTo(-15000),
+                () -> assertThat(statistics.getPlayerProfit()).containsEntry(player, 15000)
         );
     }
 
