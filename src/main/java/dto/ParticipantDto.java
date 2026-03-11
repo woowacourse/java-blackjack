@@ -8,24 +8,29 @@ import java.util.List;
 public record ParticipantDto(String name, List<CardDto> cards) {
     public static ParticipantDto consistWithInitialInfo(Participant participant) {
         String name = participant.getName();
+        List<Card> initialCards = participant.showInitialCard();
 
-        List<CardDto> cardsInfo = participant.showInitialCard()
-                .stream()
-                .map(CardDto::from)
-                .toList();
-
-        return new ParticipantDto(name, cardsInfo);
+        return new ParticipantDto(
+                name,
+                consistCardsInfo(initialCards)
+        );
     }
 
     public static ParticipantDto from(Participant participant) {
         String name = participant.getName();
+        List<Card> ownCards = participant.showOwnCards();
 
-        List<CardDto> cards = new ArrayList<>();
-        for (Card card : participant.showOwnCards()) {
-            cards.add(CardDto.from(card));
-        }
+        return new ParticipantDto(
+                name,
+                consistCardsInfo(ownCards)
+        );
+    }
 
-        return new ParticipantDto(name, cards);
+    private static List<CardDto> consistCardsInfo(List<Card> initialCards) {
+        return initialCards
+                .stream()
+                .map(CardDto::from)
+                .toList();
     }
 
     public static List<ParticipantDto> listOf(List<? extends Participant> participants) {
