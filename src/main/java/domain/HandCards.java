@@ -18,23 +18,23 @@ public class HandCards {
     private final List<Card> handCards;
     private final Set<Integer> scores = new HashSet<>();
 
-    public HandCards(List<Card> handCards) {
+    public HandCards(final List<Card> handCards) {
         this.handCards = handCards;
     }
 
-    public void addCard(Card card) {
+    public void addCard(final Card card) {
         handCards.add(card);
         updateScore(card);
     }
 
-    private void updateScore(Card card) {
-        HashSet<Integer> newScore = new HashSet<>();
+    private void updateScore(final Card card) {
+        final HashSet<Integer> newScore = new HashSet<>();
 
         if (scores.isEmpty()) {
             scores.addAll(card.getCardRank().getScores());
             return;
         }
-        for (Integer score : scores) {
+        for (final Integer score : scores) {
             addScore(card, score, newScore);
         }
 
@@ -42,8 +42,8 @@ public class HandCards {
         scores.addAll(newScore);
     }
 
-    private static void addScore(Card card, Integer score, HashSet<Integer> newScore) {
-        for (int s : card.getCardRank().getScores()) {
+    private static void addScore(final Card card, final Integer score, final HashSet<Integer> newScore) {
+        for (final int s : card.getCardRank().getScores()) {
             newScore.add(score + s);
         }
     }
@@ -54,7 +54,7 @@ public class HandCards {
     }
 
     public boolean isBlackjack() {
-        List<CardRank> cardRanks = handCards.stream()
+        final List<CardRank> cardRanks = handCards.stream()
                 .map(Card::getCardRank)
                 .toList();
 
@@ -66,7 +66,7 @@ public class HandCards {
 
     public int getScore() {
         int notBustMaxScore = 0; // 21 이하 중에 최대 점수
-        for (int score : scores) {
+        for (final int score : scores) {
             notBustMaxScore = getNotBustMaxScore(score, notBustMaxScore);
         }
 
@@ -77,7 +77,7 @@ public class HandCards {
         return Collections.min(scores);
     }
 
-    private static int getNotBustMaxScore(int score, int notBustMaxScore) {
+    private static int getNotBustMaxScore(final int score, int notBustMaxScore) {
         if (score <= BUST_BOUND && score > notBustMaxScore) {
             notBustMaxScore = score;
         }

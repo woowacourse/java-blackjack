@@ -12,16 +12,16 @@ public class BlackjackService {
 
     private final CardShuffler cardShuffler;
 
-    public BlackjackService(CardShuffler cardShuffler) {
+    public BlackjackService(final CardShuffler cardShuffler) {
         this.cardShuffler = cardShuffler;
     }
 
-    public List<Card> drawCard(CardDeck cardDeck, int drawCount) {
-        List<Card> cards = new ArrayList<>();
+    public List<Card> drawCard(final CardDeck cardDeck, final int drawCount) {
+        final List<Card> cards = new ArrayList<>();
 
         // FIXME: Deck 내부를 Deque로 수정한 뒤, 전면 수정될 부분
         for (int i = 0; i < drawCount; i++) {
-            int cardIndex = cardShuffler.shuffleCardDeck(cardDeck.getDeckSize());
+            final int cardIndex = cardShuffler.shuffleCardDeck(cardDeck.getDeckSize());
             cards.add(cardDeck.getCardOf(cardIndex));
             cardDeck.removeCardOf(cardIndex);
         }
@@ -29,15 +29,15 @@ public class BlackjackService {
         return cards;
     }
 
-    public List<FinalResult> getFinalResults(Participant dealer, List<Participant> players) {
-        List<FinalResult> finalResults = new ArrayList<>();
-        int dealerScore = dealer.getScore();
+    public List<FinalResult> getFinalResults(final Participant dealer, final List<Participant> players) {
+        final List<FinalResult> finalResults = new ArrayList<>();
+        final int dealerScore = dealer.getScore();
 
         int dealerWinCount = 0;
         int dealerDrawCount = 0;
         int dealerLoseCount = 0;
-        for (Participant player : players) {
-            int playerScore = player.getScore();
+        for (final Participant player : players) {
+            final int playerScore = player.getScore();
 
             if (isDealerWin(dealer, player, dealerScore, playerScore)) { // 딜러 승
                 dealerWinCount++;
@@ -59,13 +59,15 @@ public class BlackjackService {
         return finalResults;
     }
 
-    private static boolean isDealerWin(Participant dealer, Participant player, int dealerScore, int playerScore) {
+    private static boolean isDealerWin(final Participant dealer, final Participant player, final int dealerScore,
+                                       final int playerScore) {
         return player.isBust()
                 || (!dealer.isBust() && dealerScore > playerScore)
                 || (dealer.isBlackjack() && !player.isBlackjack());
     }
 
-    private static boolean isDealerDraw(Participant dealer, Participant player, int dealerScore, int playerScore) {
+    private static boolean isDealerDraw(final Participant dealer, final Participant player, final int dealerScore,
+                                        final int playerScore) {
         return !dealer.isBust()
                 && (dealerScore == playerScore)
                 && ((player.isBlackjack() && dealer.isBlackjack())

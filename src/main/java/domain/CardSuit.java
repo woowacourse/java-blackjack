@@ -8,7 +8,7 @@ public enum CardSuit {
 
     private final String description;
 
-    CardSuit(String description) {
+    CardSuit(final String description) {
         this.description = description;
     }
 

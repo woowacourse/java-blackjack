@@ -14,10 +14,10 @@ class CardShufflerImplTest {
     @DisplayName("0부터 size-1까지의 수 중 하나를 반환한다.")
     public void 랜덤_수_반환_성공() {
         // given
-        int size = 52;
+        final int size = 52;
 
         // when
-        int cardIndex = cardShuffler.shuffleCardDeck(size);
+        final int cardIndex = cardShuffler.shuffleCardDeck(size);
 
         // then
         assertThat(cardIndex).isBetween(0, size - 1);

@@ -27,12 +27,12 @@ class BlackjackServiceTest {
     @DisplayName("카드덱에서 지정한 수만큼의 카드를 뽑는다.")
     public void 카드_뽑기_성공() {
         // given
-        CardDeck cardDeck = CardDeck.initCardDeck();
-        int originCount = cardDeck.getDeckSize();
-        int drawCount = 2;
+        final CardDeck cardDeck = CardDeck.initCardDeck();
+        final int originCount = cardDeck.getDeckSize();
+        final int drawCount = 2;
 
         // when
-        List<Card> cards = blackjackService.drawCard(cardDeck, drawCount);
+        final List<Card> cards = blackjackService.drawCard(cardDeck, drawCount);
 
         // then
         assertThat(cards).hasSize(drawCount);
@@ -42,7 +42,7 @@ class BlackjackServiceTest {
     static class FakeCardShuffler implements CardShuffler {
 
         @Override
-        public int shuffleCardDeck(int deckSize) {
+        public int shuffleCardDeck(final int deckSize) {
             return 0;
         }
     }
@@ -51,10 +51,10 @@ class BlackjackServiceTest {
     @DisplayName("딜러와 플레이어들의 카드를 비교해서 딜러의 결과를 반환한다.")
     public void 딜러_결과_계산_성공() {
         // given
-        Participants participants = initParticipants();
+        final Participants participants = initParticipants();
 
         // when
-        List<FinalResult> finalResults = blackjackService.getFinalResults(participants.getDealer(),
+        final List<FinalResult> finalResults = blackjackService.getFinalResults(participants.getDealer(),
                 participants.getPlayers());
 
         // then
@@ -72,17 +72,17 @@ class BlackjackServiceTest {
     }
 
     private static Participants initParticipants() {
-        Participant pobi = new Participant(new Name("포비"), new HandCards(new ArrayList<>()), false);
+        final Participant pobi = new Participant(new Name("포비"), new HandCards(new ArrayList<>()), false);
         pobi.addHandCard(new Card(CardSuit.HEART, CardRank.TWO));
         pobi.addHandCard(new Card(CardSuit.SPADE, CardRank.EIGHT));
         pobi.addHandCard(new Card(CardSuit.CLUB, CardRank.ACE));
 
-        Participant jason = new Participant(new Name("제이슨"), new HandCards(new ArrayList<>()), false);
+        final Participant jason = new Participant(new Name("제이슨"), new HandCards(new ArrayList<>()), false);
         jason.addHandCard(new Card(CardSuit.CLUB, CardRank.SEVEN));
         jason.addHandCard(new Card(CardSuit.SPADE, CardRank.KING));
 
-        Participants participants = new Participants(new ArrayList<>(List.of(pobi, jason)));
-        Participant dealer = participants.getDealer();
+        final Participants participants = new Participants(new ArrayList<>(List.of(pobi, jason)));
+        final Participant dealer = participants.getDealer();
         dealer.addHandCard(new Card(CardSuit.DIAMOND, CardRank.THREE));
         dealer.addHandCard(new Card(CardSuit.CLUB, CardRank.NINE));
         dealer.addHandCard(new Card(CardSuit.DIAMOND, CardRank.EIGHT));

@@ -7,13 +7,13 @@ public class Participant {
     private final HandCards handCards;
     private final boolean isDealer;
 
-    public Participant(Name name, HandCards handCards, boolean isDealer) {
+    public Participant(final Name name, final HandCards handCards, final boolean isDealer) {
         this.name = name;
         this.handCards = handCards;
         this.isDealer = isDealer;
     }
 
-    public void addHandCard(Card card) {
+    public void addHandCard(final Card card) {
         handCards.addCard(card);
     }
 

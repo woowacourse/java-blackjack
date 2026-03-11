@@ -13,7 +13,7 @@ public class Participants {
 
     private final List<Participant> participants;
 
-    public Participants(List<Participant> participants) {
+    public Participants(final List<Participant> participants) {
         validatePlayerCounts(participants);
         // FIXME: 사이드 이펙트가 발생할 수 있다
         participants.add(new Participant(new Name(DEALER_NAME), new HandCards(new ArrayList<>()), true));
@@ -22,7 +22,7 @@ public class Participants {
 
     // FIXME: indent가 2인 부분인데, 어떻게 개선할 수 있을까?
     public Participant getDealer() {
-        for (Participant participant : participants) {
+        for (final Participant participant : participants) {
             if (participant.isDealer()) {
                 return participant;
             }
@@ -33,8 +33,8 @@ public class Participants {
     }
 
     public List<Participant> getPlayers() {
-        List<Participant> participants = new ArrayList<>();
-        for (Participant participant : this.participants) {
+        final List<Participant> participants = new ArrayList<>();
+        for (final Participant participant : this.participants) {
             if (!participant.isDealer()) {
                 participants.add(participant);
             }
@@ -44,15 +44,15 @@ public class Participants {
     }
 
     public List<CardResult> getCardResults() {
-        List<CardResult> cardResults = new ArrayList<>();
-        for (Participant participant : participants) {
+        final List<CardResult> cardResults = new ArrayList<>();
+        for (final Participant participant : participants) {
             cardResults.add(new CardResult(participant.getName(), participant.getHandCards(), participant.getScore()));
         }
         return cardResults;
     }
 
     // TODO: 검증에 대한 테스트 필요
-    private static void validatePlayerCounts(List<Participant> participants) {
+    private static void validatePlayerCounts(final List<Participant> participants) {
         if (participants.size() < MINIMUM_PLAYER_BOUND || participants.size() > MAXIMUM_PLAYER_BOUND) {
             throw new IllegalStateException(PLAYER_COUNT_OUT_OF_RANGE.getMessage());
         }

@@ -17,8 +17,8 @@ class HandCardsTest {
     @DisplayName("패에 카드를 추가한다.")
     public void 패에_카드_추가_성공() {
         // given
-        Card card = new Card(CardSuit.SPADE, CardRank.ACE);
-        HandCards handCards = new HandCards(new ArrayList<>());
+        final Card card = new Card(CardSuit.SPADE, CardRank.ACE);
+        final HandCards handCards = new HandCards(new ArrayList<>());
 
         // when
         handCards.addCard(card);
@@ -30,12 +30,12 @@ class HandCardsTest {
     @ParameterizedTest
     @MethodSource("블랙잭_여부_판단_테스트케이스")
     @DisplayName("가진 패의 블랙잭 여부를 판단한다.")
-    public void 블랙잭_여부_판단(List<Card> cards, boolean result) {
+    public void 블랙잭_여부_판단(final List<Card> cards, final boolean result) {
         // given
-        HandCards handCards = new HandCards(cards);
+        final HandCards handCards = new HandCards(cards);
 
         // when
-        boolean isBlackjack = handCards.isBlackjack();
+        final boolean isBlackjack = handCards.isBlackjack();
 
         // then
         assertThat(isBlackjack).isEqualTo(result);
@@ -43,12 +43,12 @@ class HandCardsTest {
     }
 
     private static Stream<Arguments> 블랙잭_여부_판단_테스트케이스() {
-        Card ace = new Card(CardSuit.SPADE, CardRank.ACE);
-        Card ten = new Card(CardSuit.SPADE, CardRank.TEN);
-        Card jack = new Card(CardSuit.SPADE, CardRank.JACK);
-        Card queen = new Card(CardSuit.SPADE, CardRank.QUEEN);
-        Card king = new Card(CardSuit.SPADE, CardRank.KING);
-        Card two = new Card(CardSuit.SPADE, CardRank.TWO);
+        final Card ace = new Card(CardSuit.SPADE, CardRank.ACE);
+        final Card ten = new Card(CardSuit.SPADE, CardRank.TEN);
+        final Card jack = new Card(CardSuit.SPADE, CardRank.JACK);
+        final Card queen = new Card(CardSuit.SPADE, CardRank.QUEEN);
+        final Card king = new Card(CardSuit.SPADE, CardRank.KING);
+        final Card two = new Card(CardSuit.SPADE, CardRank.TWO);
 
         return Stream.of(
                 Arguments.of(
@@ -65,14 +65,14 @@ class HandCardsTest {
     @DisplayName("플레이어가 가지고 있는 카드 점수를 반환한다.")
     public void 카드_점수_반환_성공() {
         // given
-        HandCards handCards = new HandCards(new ArrayList<>());
+        final HandCards handCards = new HandCards(new ArrayList<>());
         handCards.addCard(new Card(CardSuit.SPADE, CardRank.ACE));
         handCards.addCard(new Card(CardSuit.SPADE, CardRank.TWO));
         handCards.addCard(new Card(CardSuit.SPADE, CardRank.ACE));
         handCards.addCard(new Card(CardSuit.SPADE, CardRank.EIGHT));
 
         // when
-        int score = handCards.getScore();
+        final int score = handCards.getScore();
 
         // then
         assertThat(score).isEqualTo(12);

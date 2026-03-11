@@ -20,7 +20,7 @@ public enum CardRank {
     private final String description;
     private final List<Integer> scores;
 
-    private CardRank(String description, List<Integer> scores) {
+    CardRank(final String description, final List<Integer> scores) {
         this.description = description;
         this.scores = scores;
     }

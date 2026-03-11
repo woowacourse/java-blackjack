@@ -13,14 +13,14 @@ class CardDeckTest {
     public void 트럼프_덱_초기화_성공() {
 
         // when
-        CardDeck cardDeck = CardDeck.initCardDeck();
+        final CardDeck cardDeck = CardDeck.initCardDeck();
 
         // then
-        List<Card> cards = cardDeck.getCardDeck();
+        final List<Card> cards = cardDeck.getCardDeck();
         assertThat(cards).hasSize(CardSuit.values().length * CardRank.values().length);
 
-        for (CardSuit cardSuit : CardSuit.values()) {
-            for (CardRank cardRank : CardRank.values()) {
+        for (final CardSuit cardSuit : CardSuit.values()) {
+            for (final CardRank cardRank : CardRank.values()) {
                 assertThat(cards).contains(new Card(cardSuit, cardRank));
             }
         }

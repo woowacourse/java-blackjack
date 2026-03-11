@@ -14,10 +14,10 @@ class InputParserTest {
     @DisplayName("플레이어의 이름 입력값들을 문자열 리스트 형태로 변환한다.")
     public void 플레이어의_이름_변환_성공() {
         // given
-        String strPlayerNames = "pobi, jason";
+        final String strPlayerNames = "pobi, jason";
 
         // when
-        List<Name> parsedResult = InputParser.parsePlayers(strPlayerNames);
+        final List<Name> parsedResult = InputParser.parsePlayers(strPlayerNames);
 
         // then
         assertThat(parsedResult).hasSize(2).extracting(Name::getName).containsExactlyInAnyOrder("pobi", "jason");
@@ -27,7 +27,7 @@ class InputParserTest {
     @DisplayName("플레이어의 이름 길이가 맞지 않을 때 예외가 발생한다.")
     public void 플레이어_이름_길이_예외() {
         // given
-        String longPlayerNames = "p, abcdefghijk";
+        final String longPlayerNames = "p, abcdefghijk";
 
         // when
         assertThatThrownBy(() -> InputParser.parsePlayers(longPlayerNames)).isInstanceOf(IllegalArgumentException.class)
