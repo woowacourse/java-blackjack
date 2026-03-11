@@ -16,6 +16,14 @@ public record ParticipantResult(
         );
     }
 
+    public static ParticipantResult of(String nickname, String cardStatus, int totalScore) {
+        return new ParticipantResult(
+            nickname,
+            cardStatus,
+            totalScore
+        );
+    }
+
     @Override
     public String toString() {
         return String.format("%s카드: %s", nickname, cardStatus);
