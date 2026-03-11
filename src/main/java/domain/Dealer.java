@@ -4,6 +4,11 @@ import java.util.List;
 
 public class Dealer {
 
+    public static final int DEALER_HIT_THRESHOLD = 16;
+    public static final int ACE_HIGH_LOW_DIFF = 10;
+    public static final int BUST_THRESHOLD = 21;
+    public static final int BUST_SCORE = 0;
+
     private final List<Card> cards;
 
     private Dealer(List<Card> cards) {
@@ -14,17 +19,14 @@ public class Dealer {
         return new Dealer(cards);
     }
 
-    public int drawUntilHitAndReturnCount(Cards deck) {
-        int count = 0;
+    public void drawUntilHit(Cards deck) {
         while (isHit()) {
             addCard(deck.draw());
-            count++;
         }
-        return count;
     }
 
     private boolean isHit() {
-        return calculateScore() < Policy.DEALER_HIT_THRESHOLD;
+        return calculateScore() < DEALER_HIT_THRESHOLD;
     }
 
     private void addCard(Card card) {
@@ -54,19 +56,19 @@ public class Dealer {
 
     private int adjustForAce(int cardScore) {
         if (isBust(cardScore)) {
-            cardScore -= Policy.ACE_HIGH_LOW_DIFF;
+            cardScore -= ACE_HIGH_LOW_DIFF;
         }
         return cardScore;
     }
 
-    public boolean isBust(int cardScore) {
-        return cardScore > Policy.BUST_THRESHOLD;
+    private boolean isBust(int score) {
+        return score > BUST_THRESHOLD;
     }
 
     public int getScoreOrZeroIfBust() {
         int score = calculateScore();
         if (isBust(score)) {
-            return Policy.BUST_SCORE;
+            return BUST_SCORE;
         }
         return score;
     }
