@@ -2,7 +2,7 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.card.CardDto;
+import domain.card.Card;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Player;
@@ -20,9 +20,9 @@ public class GameManagerTest {
         manager.dealCard(dealer);
         manager.dealCard(dealer);
 
-        CardDto actual = manager.getCardsResult(dealer);
+        List<Card> actual = manager.getCardsResult(dealer);
 
-        assertThat(actual.size()).isEqualTo(2);
+        assertThat(actual).hasSize(2);
     }
 
     @Test
@@ -33,9 +33,9 @@ public class GameManagerTest {
         manager.dealCard(player);
         manager.dealCard(player);
 
-        CardDto actual = manager.getCardsResult(player);
+        List<Card> actual = manager.getCardsResult(player);
 
-        assertThat(actual.size()).isEqualTo(2);
+        assertThat(actual).hasSize(2);
     }
 
     @Test
@@ -50,9 +50,9 @@ public class GameManagerTest {
             manager.dealCard(player);
             manager.dealCard(player);
 
-            CardDto actual = manager.getCardsResult(player);
+            List<Card> actual = manager.getCardsResult(player);
 
-            assertThat(actual.size()).isEqualTo(2);
+            assertThat(actual).hasSize(2);
         }
     }
 }

@@ -1,16 +1,23 @@
 package domain;
 
-import domain.card.CardDto;
-import domain.participant.Dealer;
+import domain.card.Card;
 import domain.participant.Participant;
+import domain.participant.Participants;
 import domain.participant.Player;
 import domain.participant.Players;
+import java.util.List;
 
 public class GameManager {
     private final Deck deck;
 
     public GameManager(Deck deck) {
         this.deck = deck;
+    }
+
+    public void dealInitialCards(Participants participants) {
+        dealCard(participants.getDealer());
+        dealCard(participants.getDealer());
+        dealCardTo(participants.getPlayers(), 2);
     }
 
     public void dealCard(Participant participant) {
@@ -25,13 +32,8 @@ public class GameManager {
         }
     }
 
-    public CardDto getStartingCard(Dealer dealer) {
-        return dealer.startingHandInfo();
-
-    }
-
-    public CardDto getCardsResult(Participant participant) {
-        return participant.handInfo();
+    public List<Card> getCardsResult(Participant participant) {
+        return participant.getCards();
     }
 
 }

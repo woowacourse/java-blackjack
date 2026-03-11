@@ -19,7 +19,7 @@ public class PlayerParser {
     }
 
     private static List<String> splitByDelimiter(String rawPlayerName) {
-        return Arrays.stream(rawPlayerName.split(DELIMITER, -1))
+        return Arrays.stream(rawPlayerName.split(DELIMITER))
                 .map(String::strip)
                 .toList();
     }

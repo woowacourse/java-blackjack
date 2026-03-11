@@ -1,7 +1,8 @@
 package domain.participant;
 
+import domain.Score;
 import domain.card.Card;
-import domain.card.CardDto;
+import java.util.List;
 import java.util.Objects;
 
 public abstract class Participant {
@@ -17,16 +18,20 @@ public abstract class Participant {
         hand.add(card);
     }
 
-    public CardDto handInfo() {
-        return hand.snapshot();
+    public List<Card> getCards() {
+        return hand.getCards();
     }
 
     public String getName() {
         return name.value();
     }
 
-    public int getScore() {
+    public Score getScore() {
         return hand.calculateScore();
+    }
+
+    public boolean isBust() {
+        return getScore().isBust();
     }
 
     public abstract boolean canReceive();

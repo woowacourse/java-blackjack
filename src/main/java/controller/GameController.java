@@ -1,17 +1,19 @@
 package controller;
 
-import domain.Command;
+import domain.HitCommand;
 import domain.Deck;
 import domain.GameManager;
-import domain.GameResultDto;
+import domain.dto.GameResultResponse;
+import domain.dto.ParticipantCardsResponse;
+import domain.dto.ParticipantResultResponse;
 import domain.Referee;
-import domain.card.CardDto;
 import domain.participant.Dealer;
+import domain.participant.Participants;
 import domain.participant.Player;
 import domain.participant.PlayerParser;
 import domain.participant.Players;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import view.InputView;
 import view.OutputView;
 
@@ -25,75 +27,80 @@ public class GameController {
     }
 
     public void run() {
-        Players players = getPlayers();
-        Dealer dealer = new Dealer();
+        Participants participants = new Participants(getPlayers(), new Dealer());
         GameManager gameManager = getManager();
 
-        initializeGame(gameManager, dealer, players);
-        playGame(players, gameManager, dealer);
-        resultPhase(players, dealer);
+        initializeGame(gameManager, participants);
+        playGame(gameManager, participants);
+        determineGame(participants);
     }
 
-    private void resultPhase(Players players, Dealer dealer) {
-        Referee referee = new Referee();
-        Map<String, Integer> scoreByPlayerNames = new LinkedHashMap<>();
-        for (Player player : players) {
-            scoreByPlayerNames.put(player.getName(), player.getScore());
+    private void initializeGame(GameManager gameManager, Participants participants) {
+        gameManager.dealInitialCards(participants);
+        outputView.printGameInitResult(createInitialResponses(participants));
+    }
+
+    private void playGame(GameManager gameManager, Participants participants) {
+        playPlayersTurn(gameManager, participants);
+        playDealerTurn(gameManager, participants);
+    }
+
+    private void playPlayersTurn(GameManager gameManager, Participants participants) {
+        for (Player player : participants.getPlayers()) {
+            playSinglePlayerTurn(gameManager, player);
         }
-        GameResultDto gameResultDto = referee.createGameResult(dealer.getScore(), scoreByPlayerNames);
-        outputView.printResult(gameResultDto);
+        outputView.printNewLine();
     }
 
-    private void playGame(Players players, GameManager gameManager, Dealer dealer) {
-        playPlayersTurn(players, gameManager);
-        playDealerTurn(players, gameManager, dealer);
+    private void playSinglePlayerTurn(GameManager gameManager, Player player) {
+        while (player.canReceive() && wantsToHit(player)) {
+            gameManager.dealCard(player);
+            outputView.printParticipantCard(new ParticipantCardsResponse(player.getName(), player.getCards()));
+        }
     }
 
-    private void playDealerTurn(Players players, GameManager gameManager, Dealer dealer) {
+    private boolean wantsToHit(Player player) {
+        HitCommand command = HitCommand.from(inputView.askPlayHit(player.getName()));
+        return command.isYes();
+    }
+
+    private void playDealerTurn(GameManager gameManager, Participants participants) {
+        Dealer dealer = participants.getDealer();
+        Players players = participants.getPlayers();
+
         while (dealer.canReceive()) {
             gameManager.dealCard(dealer);
             outputView.printCompleteDealerTurn();
         }
-        outputView.printNewLine();
 
-        outputView.printParticipantResult(dealer.getName(), gameManager.getCardsResult(dealer).getFormattedCards(),
-                dealer.getScore());
-        for (Player player : players) {
-            outputView.printParticipantResult(player.getName(), gameManager.getCardsResult(player).getFormattedCards(),
-                    player.getScore());
-        }
-        outputView.printNewLine();
+        List<ParticipantResultResponse> dealerTurnResponse = createResultResponses(dealer, players);
+        outputView.printDealerTurn(dealerTurnResponse);
     }
 
-    private void playPlayersTurn(Players players, GameManager gameManager) {
-        for (Player player : players) {
-            while (player.canReceive()) {
-                Command yesOrNo = Command.from(inputView.askPlayHit(player.getName()));
-
-                if (yesOrNo.isNo()) {
-                    break;
-                }
-                gameManager.dealCard(player);
-                outputView.printParticipantCard(player.getName(),
-                        gameManager.getCardsResult(player).getFormattedCards());
-            }
-        }
-        outputView.printNewLine();
+    private void determineGame(Participants participants) {
+        Referee referee = new Referee();
+        GameResultResponse response = referee.evaluateMatch(participants);
+        outputView.printGameResult(response);
     }
 
-    private void initializeGame(GameManager gameManager, Dealer dealer, Players players) {
-        gameManager.dealCard(dealer);
-        gameManager.dealCard(dealer);
-        gameManager.dealCardTo(players, 2);
+    private List<ParticipantCardsResponse> createInitialResponses(Participants participants) {
+        List<ParticipantCardsResponse> responses = new ArrayList<>();
+        Dealer dealer = participants.getDealer();
 
-        Map<String, CardDto> result = new LinkedHashMap<>();
-        result.put(dealer.getName(), gameManager.getStartingCard(dealer));
-        for (Player player : players) {
-            result.put(player.getName(), gameManager.getCardsResult(player));
+        responses.add(new ParticipantCardsResponse(dealer.getName(), List.of(dealer.getInitialCard())));
+        for (Player player : participants.getPlayers()) {
+            responses.add(new ParticipantCardsResponse(player.getName(), player.getCards()));
         }
-        
-        outputView.printGameInitResult(result);
-        outputView.printNewLine();
+        return responses;
+    }
+
+    private List<ParticipantResultResponse> createResultResponses(Dealer dealer, Players players) {
+        List<ParticipantResultResponse> responses = new ArrayList<>();
+        responses.add(new ParticipantResultResponse(dealer.getName(), dealer.getCards(), dealer.getScore()));
+        for (Player player : players) {
+            responses.add(new ParticipantResultResponse(player.getName(), player.getCards(), player.getScore()));
+        }
+        return responses;
     }
 
     private GameManager getManager() {
@@ -104,6 +111,7 @@ public class GameController {
 
     private Players getPlayers() {
         String rawPlayerName = inputView.readPlayerName();
+        outputView.printNewLine();
         return PlayerParser.parseToPlayers(rawPlayerName);
     }
 }

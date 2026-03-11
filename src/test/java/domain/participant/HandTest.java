@@ -31,9 +31,9 @@ public class HandTest {
             hand.add(card);
         }
 
-        int score = hand.calculateScore();
+        int actual = hand.calculateScore().value();
 
-        assertThat(score).isEqualTo(54);
+        assertThat(actual).isEqualTo(54);
     }
 
     @ParameterizedTest
@@ -44,7 +44,7 @@ public class HandTest {
             hand.add(card);
         }
 
-        int actual = hand.calculateScore();
+        int actual = hand.calculateScore().value();
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -57,21 +57,21 @@ public class HandTest {
 
                 Arguments.of(List.of(
                         new Card(Suit.SPADE, Rank.ACE),
-                        new Card(Suit.CLOVER, Rank.ACE),
+                        new Card(Suit.CLUB, Rank.ACE),
                         new Card(Suit.SPADE, Rank.TWO),
                         new Card(Suit.SPADE, Rank.THREE)
                 ), 17),
 
                 Arguments.of(List.of(
                         new Card(Suit.SPADE, Rank.TEN),
-                        new Card(Suit.CLOVER, Rank.TEN),
+                        new Card(Suit.CLUB, Rank.TEN),
                         new Card(Suit.HEART, Rank.TEN),
                         new Card(Suit.SPADE, Rank.ACE)
                 ), 31),
 
                 Arguments.of(List.of(
                         new Card(Suit.SPADE, Rank.TEN),
-                        new Card(Suit.CLOVER, Rank.TEN),
+                        new Card(Suit.CLUB, Rank.TEN),
                         new Card(Suit.SPADE, Rank.ACE)
                 ), 21)
         );
@@ -85,7 +85,7 @@ public class HandTest {
             hand.add(card);
         }
 
-        int actual = hand.calculateScore();
+        int actual = hand.calculateScore().value();
 
         assertThat(actual).isEqualTo(expected);
     }

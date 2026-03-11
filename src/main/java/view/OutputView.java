@@ -1,67 +1,79 @@
 package view;
 
-import domain.card.CardDto;
-import domain.GameResultDto;
+import domain.dto.GameResultResponse;
 import domain.MatchResult;
+import domain.dto.ParticipantCardsResponse;
+import domain.dto.ParticipantResultResponse;
+import domain.dto.PlayerMatchResult;
+import domain.card.Card;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
 
-    public void printGameInitResult(Map<String, CardDto> result) {
-        String playersName = result.keySet().stream()
+    public void printGameInitResult(List<ParticipantCardsResponse> initialGameResponses) {
+        String playersName = initialGameResponses.stream()
+                .map(ParticipantCardsResponse::name)
                 .filter(name -> !name.equals("딜러"))
                 .collect(Collectors.joining(", "));
         System.out.printf("딜러와 %s에게 2장을 나누었습니다.%n", playersName);
 
-        for (Map.Entry<String, CardDto> entry : result.entrySet()) {
-            String name = entry.getKey();
-
-            printParticipantCard(name, entry.getValue().getFormattedCards());
+        for (ParticipantCardsResponse response : initialGameResponses) {
+            printParticipantCard(response);
         }
-    }
-
-    public void printParticipantCard(String name, String cards) {
-        System.out.printf("%s카드: %s%n", name, cards);
-    }
-
-    public void printParticipantResult(String name, String cards, int score) {
-        System.out.printf("%s카드: %s - 결과: %d%n", name, cards, score);
+        System.out.println();
     }
 
     public void printCompleteDealerTurn() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printResult(GameResultDto gameResultDto) {
+    public void printDealerTurn(List<ParticipantResultResponse> dealerTurnResponse) {
+        for (ParticipantResultResponse response : dealerTurnResponse) {
+            printParticipantResult(response);
+        }
+        System.out.println();
+    }
+
+    public void printGameResult(GameResultResponse response) {
         System.out.println("## 최종 승패");
-        printDealerResult(gameResultDto.dealerMatchResult());
-        printPlayerResults(gameResultDto.playerMatchResults());
+        printDealerResult(response.dealerMatchResult());
+        printPlayerResults(response.playerMatchResults());
+    }
+
+    public void printParticipantCard(ParticipantCardsResponse response) {
+        System.out.printf("%s카드: %s%n", response.name(), formattedCards(response.cards()));
     }
 
     public void printNewLine() {
         System.out.println();
     }
 
-    private void printDealerResult(EnumMap<MatchResult, Integer> matchResultIntegerEnumMap) {
-        System.out.print("딜러: ");
-        List<String> messages = new ArrayList<>();
-        for (MatchResult matchResult : matchResultIntegerEnumMap.keySet()) {
-            int value = matchResultIntegerEnumMap.get(matchResult);
-            if (value == 0) {
-                continue;
-            }
-            messages.add(value + matchResult.getResultName());
-        }
-        System.out.println(String.join(" ", messages));
+    private void printParticipantResult(ParticipantResultResponse response) {
+        System.out.printf("%s카드: %s - 결과: %d%n", response.name(), formattedCards(response.cards()),
+                response.score().value());
     }
 
-    private void printPlayerResults(Map<String, MatchResult> stringMatchResultMap) {
-        for (Map.Entry<String, MatchResult> entry : stringMatchResultMap.entrySet()) {
-            System.out.printf("%s: %s%n", entry.getKey(), entry.getValue().getResultName());
+    private String formattedCards(List<Card> cards) {
+        return cards.stream()
+                .map(card -> RankView.from(card.rank()) + SuitView.from(card.suit()))
+                .collect(Collectors.joining(", "));
+    }
+
+    private void printDealerResult(EnumMap<MatchResult, Integer> dealerResults) {
+        String formattedResult = dealerResults.entrySet().stream()
+                .filter(entry -> entry.getValue() > 0)
+                .map(entry -> entry.getValue() + MatchResultView.from(entry.getKey()))
+                .collect(Collectors.joining(" "));
+
+        System.out.printf("딜러: %s%n", formattedResult);
+    }
+
+    private void printPlayerResults(List<PlayerMatchResult> playerMatchResults) {
+        for (PlayerMatchResult playerMatchResult : playerMatchResults) {
+            System.out.printf("%s: %s%n", playerMatchResult.name(), MatchResultView.from(playerMatchResult.result()));
         }
     }
 }

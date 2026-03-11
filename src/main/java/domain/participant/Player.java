@@ -9,6 +9,6 @@ public class Player extends Participant {
 
     @Override
     public boolean canReceive() {
-        return getScore() <= BUST_THRESHOLD;
+        return getScore().value() <= BUST_THRESHOLD;
     }
 }

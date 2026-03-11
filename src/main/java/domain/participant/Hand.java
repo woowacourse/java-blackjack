@@ -1,27 +1,23 @@
 package domain.participant;
 
+import domain.Score;
 import domain.card.Card;
-import domain.card.CardDto;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
     private final static int BUST_THRESHOLD = 21;
     private final static int ACE_ADJUST_SCORE = 10;
-    private final List<Card> cards;
-
-    public Hand() {
-        this.cards = new ArrayList<>();
-    }
+    private final List<Card> cards = new ArrayList<>();
 
     public void add(Card card) {
         this.cards.add(card);
     }
 
-    public int calculateScore() {
+    public Score calculateScore() {
         int score = 0;
         for (Card card : cards) {
-            score += card.cardNumber().getPoint();
+            score += card.rank().getScore();
         }
 
         for (Card card : cards) {
@@ -30,11 +26,11 @@ public class Hand {
             }
         }
 
-        return score;
+        return new Score(score);
     }
 
-    public CardDto snapshot() {
-        return new CardDto(List.copyOf(cards));
+    public List<Card> getCards() {
+        return List.copyOf(cards);
     }
 
     private int calculateAcePoint(int currentScore) {

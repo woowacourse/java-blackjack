@@ -1,16 +1,7 @@
 package domain.card;
 
-public record Card(Suit suit, Rank cardNumber) {
+public record Card(Suit suit, Rank rank) {
     public boolean isAce() {
-        return this.cardNumber == Rank.ACE;
+        return this.rank == Rank.ACE;
     }
-
-    public String suitValue() {
-        return this.suit.getValue();
-    }
-
-    public String symbol() {
-        return this.cardNumber.getSymbol();
-    }
-
 }
