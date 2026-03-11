@@ -16,25 +16,44 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class BlackjackRunner {
-    
+
     private final InputView inputView;
     private final OutputView outputView;
-    
+
     public BlackjackRunner(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }
-    
+
     public void execute() {
         Participants participants = makeParticipants();
         Deck deck = new Deck();
         initializeGame(participants, deck);
-        
+
         playerTurn(participants, deck);
         dealerTurn(participants, deck);
         gameEnd(participants);
     }
-    
+
+    private Participants makeParticipants() {
+        outputView.askGameMembers();
+        Players players = makePlayers();
+        Dealer dealer = new Dealer();
+        return new Participants(players, dealer);
+    }
+
+    private Players makePlayers() {
+        List<String> playerNames = inputView.readPlayerNames();
+        List<Integer> playerBettingAmounts = playerNames.stream()
+                .map(playerName -> {
+                    outputView.printAskPlayerBettingAmount(playerName);
+                    return inputView.readPlayerBettingAmount();
+                })
+                .toList();
+        Players players = Players.fromNameAndBettingAmounts(playerNames, playerBettingAmounts);
+        return players;
+    }
+
     private void playerTurn(Participants participants, Deck deck) {
         while (true) {
             Player currentPlayer = participants.getCurrentPlayer();
@@ -44,42 +63,34 @@ public class BlackjackRunner {
             playerDraw(currentPlayer, deck);
         }
     }
-    
-    private Participants makeParticipants() {
-        outputView.askGameMembers();
-        List<String> playerNames = inputView.parsePlayerNames();
-        Players players = Players.fromNames(playerNames);
-        Dealer dealer = new Dealer();
-        return new Participants(players, dealer);
-    }
-    
+
     private void initializeGame(Participants participants, Deck deck) {
         printParticipantsNames(participants);
         participants.distributeCards(deck);
         printInitialHand(participants);
     }
-    
+
     private void printParticipantsNames(Participants participants) {
         List<Player> players = participants.getPlayers();
         outputView.printInitialSetUp(PlayerNames.from(players));
     }
-    
+
     private void printInitialHand(Participants participants) {
         Dealer dealer = participants.getDealer();
         List<Player> players = participants.getPlayers();
-        
+
         printDealerInitialHand(dealer);
         printPlayersInitialHand(players);
     }
-    
+
     private void printDealerInitialHand(Dealer dealer) {
         outputView.printDealerInitialHand(DealerInitialHand.from(dealer));
     }
-    
+
     private void printPlayersInitialHand(List<Player> players) {
         outputView.printPlayersInitialHand(PlayerHand.listOf(players));
     }
-    
+
     private void playerDraw(Player currentPlayer, Deck deck) {
         boolean hit = askHitOrStand(currentPlayer);
         if (hit) {
@@ -92,14 +103,14 @@ public class BlackjackRunner {
         }
         currentPlayer.stand();
     }
-    
+
     private boolean askHitOrStand(Player currentPlayer) {
         return retry(() -> {
             outputView.hitOrStand(currentPlayer.getNickname());
             return inputView.getUserCommand();
         });
     }
-    
+
     private void dealerTurn(Participants participants, final Deck deck) {
         Dealer dealer = participants.getDealer();
         while (dealer.isDrawable()) {
@@ -107,30 +118,30 @@ public class BlackjackRunner {
             dealer.drawCard(deck);
         }
     }
-    
+
     private void printCurrentHand(Player player) {
         outputView.printParticipantInitialHand(PlayerHand.from(player));
     }
-    
+
     private void gameEnd(Participants participants) {
         printGameResult(participants);
     }
-    
+
     public void printGameResult(Participants participants) {
         outputView.printParticipantsHandScore(ParticipantHandScore.listOf(participants.getParticipants()));
-        
+
         TotalWinningResult totalWinningResult = determineTotalWinningResult(participants);
-        
+
         outputView.printWinningResults(totalWinningResult);
     }
-    
+
     private TotalWinningResult determineTotalWinningResult(Participants participants) {
         Dealer dealer = participants.getDealer();
         List<Player> players = participants.getPlayers();
-        
+
         return TotalWinningResult.of(dealer, players);
     }
-    
+
     private <T> T retry(Supplier<T> supplier) {
         while (true) {
             try {
