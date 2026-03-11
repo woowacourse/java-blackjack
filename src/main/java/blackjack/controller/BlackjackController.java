@@ -25,17 +25,13 @@ public class BlackjackController {
     public void run() {
         final Hand hand = new Hand(new ArrayList<>());
         final Players players = RetryExecutor.retry(this::readPlayers);
-        players.all().forEach(player ->
-            player.bet(RetryExecutor.retry(this::readBet, player)));
         final Dealer dealer = new Dealer(hand, Status.HIT, new Trump());
         final Participants participants = new Participants(players, dealer);
+
+        handleBet(players);
         dealer.pitch(players.all());
         OutputView.printStartMessage(players.all(), dealer);
-
-        players.all().forEach(player -> handlePlayerAction(player, dealer));
-        handleDealerAction(dealer);
-
-        players.all().forEach(player -> decidePayoutPolicy(player, dealer));
+        handleAllActions(players, dealer);
         printResult(participants, players);
     }
 
@@ -43,6 +39,18 @@ public class BlackjackController {
         final FinalProfitsDto finalProfitsDto = FinalProfitsDto.from(players);
         OutputView.printFinalStatus(participants);
         OutputView.printFinalProfits(finalProfitsDto);
+    }
+
+    private void handleBet(final Players players) {
+        players.all().forEach(player ->
+            player.bet(RetryExecutor.retry(this::readBet, player)));
+    }
+
+    private void handleAllActions(final Players players, final Dealer dealer) {
+        players.all().forEach(player -> handlePlayerAction(player, dealer));
+        handleDealerAction(dealer);
+
+        players.all().forEach(player -> decidePayoutPolicy(player, dealer));
     }
 
     private void handleDealerAction(final Dealer dealer) {
