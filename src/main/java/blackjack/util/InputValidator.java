@@ -8,10 +8,6 @@ public final class InputValidator {
     private static final String BLANK = " ";
 
     public static void validatePlayerNames(final List<String> names) {
-        if (names == null) {
-            throw new IllegalArgumentException("names가 null입니다.");
-        }
-
         boolean hasInvalidName = names.stream()
                 .anyMatch(name -> name.startsWith(BLANK) || name.endsWith(BLANK));
 
@@ -21,12 +17,6 @@ public final class InputValidator {
 
         if (new HashSet<>(names).size() < names.size()) {
             throw new IllegalArgumentException("중복된 플레이어 이름이 존재합니다.");
-        }
-    }
-
-    public static void validateBetAmount(int amount) {
-        if (amount < 0 || amount % 100 != 0 ) {
-            throw new IllegalArgumentException("100원 단위 자연수가 아닙니다.");
         }
     }
 }
