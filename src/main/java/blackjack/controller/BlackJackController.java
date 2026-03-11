@@ -31,7 +31,7 @@ public class BlackJackController {
         dealerTurn(dealer, deck);
 
         outputView.printFinalCardResult(dealer, players);
-        
+
         HashMap<Player, GameResult> result = blackJackGame.judgeGameResult();
         outputView.printFinalGameResult(result);
 
@@ -47,18 +47,12 @@ public class BlackJackController {
 
     private void playerTurn(Players players, Deck deck) {
         for (Player player : players.getPlayers()) {
-            while (true) {
-                // 버스트인지 확인
-                boolean isBust = player.isBust();
-                if (isBust) {
-                    break;
-                }
+            while (player.isBust()) {
                 boolean isHit = inputView.readHitAnswer(player.getName());
                 if (isHit) {
                     player.receiveCard(deck.draw());
                 }
 
-                // 출력
                 outputView.printCard(player);
 
                 if (!isHit) {
