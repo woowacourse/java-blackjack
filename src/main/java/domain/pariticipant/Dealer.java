@@ -80,4 +80,7 @@ public class Dealer extends Participant {
         this.drawCard(deck, cardShuffler);
     }
 
+    public boolean shouldHit() {
+        return this.getScore() <= DEALER_DRAW_BOUND;
+    }
 }
