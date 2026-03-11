@@ -9,13 +9,12 @@ public record ParticipantDto(String name, List<CardDto> cards) {
     public static ParticipantDto consistWithInitialInfo(Participant participant) {
         String name = participant.getName();
 
-        List<CardDto> cards = new ArrayList<>();
-        for (Card card : participant.showInitialCard()) {
-            cards.add(CardDto.from(card));
-        }
+        List<CardDto> cardsInfo = participant.showInitialCard()
+                .stream()
+                .map(CardDto::from)
+                .toList();
 
-        int score = 0;
-        return new ParticipantDto(name, cards);
+        return new ParticipantDto(name, cardsInfo);
     }
 
     public static ParticipantDto from(Participant participant) {
