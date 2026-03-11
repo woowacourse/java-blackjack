@@ -63,13 +63,15 @@ public class BlackjackService {
     }
 
     public boolean drawDealerCard() {
+        boolean isDealerPick = false;
+
         Dealer dealer = participants.dealer();
-        if (dealer.calculateScore() <= PolicyConstant.DEALER_HIT_MAX_SCORE) {
+        while (dealer.calculateScore() <= PolicyConstant.DEALER_HIT_MAX_SCORE) {
             dealer.addCard(drawCard());
-            return true;
+            isDealerPick = true;
         }
 
-        return false;
+        return isDealerPick;
     }
 
     public Card drawCard() {
