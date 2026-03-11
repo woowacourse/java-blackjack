@@ -2,6 +2,7 @@ package view;
 
 import domain.participant.Bet;
 import utils.Parser;
+import validator.NumberRangeValidator;
 import validator.Validator;
 
 import exception.BlankInputException;
@@ -36,7 +37,8 @@ public class InputView {
     public Bet readBet(String playerName) {
         System.out.printf("%s의 배팅 금액은?%n", playerName);
         String input = readInput(List.of(
-                Validator::validateNotBlank
+                Validator::validateNotBlank,
+                NumberRangeValidator.createPositiveRange()
         ));
 
         return new Bet(Long.parseLong(input));

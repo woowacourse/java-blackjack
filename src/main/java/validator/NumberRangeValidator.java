@@ -4,6 +4,7 @@ import exception.InvalidInputException;
 import exception.OutOfRangeException;
 
 public class NumberRangeValidator implements Validator {
+    private static final int POSITIVE_MIN = 1;
     private final long startInclusive;
     private final long endInclusive;
 
@@ -14,6 +15,10 @@ public class NumberRangeValidator implements Validator {
 
     public NumberRangeValidator() {
         this(Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+
+    public static Validator createPositiveRange() {
+        return new NumberRangeValidator(POSITIVE_MIN, Long.MAX_VALUE);
     }
 
     @Override
