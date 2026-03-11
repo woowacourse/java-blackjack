@@ -9,6 +9,7 @@ public class Bet {
     private static final int BET_MAXIMUM_AMOUNT = 100_000_000;
 
     private final int amount;
+    private PayoutPolicy payoutPolicy;
 
     public Bet(final int amount) {
         validateAmountUnit(amount);
@@ -32,5 +33,29 @@ public class Bet {
             throw new IllegalArgumentException(String.format(
                 "베팅금은 %s 이하여야 합니다.", Formatter.amountFormat(BET_MAXIMUM_AMOUNT)));
         }
+    }
+
+    public void decidePayoutPolicy(final GameResult gameResult) {
+        if (gameResult == GameResult.WIN) {
+            this.payoutPolicy = new WinPayoutPolicy();
+            return;
+        }
+        if (gameResult == GameResult.BLACKJACK) {
+            this.payoutPolicy = new BlackjackPayoutPolicy();
+            return;
+        }
+        if (gameResult == GameResult.DRAW) {
+            this.payoutPolicy = new DrawPayoutPolicy();
+            return;
+        }
+        this.payoutPolicy = new LosePayoutPolicy();
+    }
+
+    public int calculateProfit() {
+        return calculatePayout() - amount;
+    }
+
+    private int calculatePayout() {
+        return payoutPolicy.payout(amount);
     }
 }
