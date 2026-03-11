@@ -61,19 +61,6 @@ public class OutputView {
         }
     }
 
-    public static void gameResultMessage(Result result) {
-        System.out.printf(FINAL_WIN_DEFEAT_DRAW_MESSAGE);
-        System.out.printf(DEALER_WIN_DRAW_DEFEAT_RESULT,
-                result.dealerResult().get(ResultInfo.WIN.getCode()),
-                result.dealerResult().get(ResultInfo.DRAW.getCode()),
-                result.dealerResult().get(ResultInfo.DEFEAT.getCode())
-        );
-
-        for (Map.Entry<String, ResultInfo> entry : result.getGameResult().entrySet()) {
-            System.out.printf(PLAYER_WIN_DRAW_DEFEAT_RESULT, entry.getKey(), entry.getValue().getInfo());
-        }
-    }
-
     public static void holdingCardMessage(Player player) {
         System.out.print(player.getName() + "카드: " + participantCardPrint(player));
     }
