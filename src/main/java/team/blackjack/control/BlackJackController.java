@@ -1,4 +1,4 @@
-package team.blackjack.controler;
+package team.blackjack.control;
 
 import java.util.List;
 import team.blackjack.service.dto.DrawResult;
