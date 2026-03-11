@@ -17,14 +17,10 @@ import static blackjack.model.card.Suit.CLUB;
 import static blackjack.model.card.Suit.DIAMOND;
 import static blackjack.model.card.Suit.HEART;
 import static blackjack.model.card.Suit.SPADE;
-import static blackjack.model.game.BlackjackResult.LOSE;
-import static blackjack.model.game.BlackjackResult.PUSH;
-import static blackjack.model.game.BlackjackResult.WIN;
 import static java.util.Map.entry;
 
 import blackjack.model.card.Rank;
 import blackjack.model.card.Suit;
-import blackjack.model.game.BlackjackResult;
 import blackjack.view.dto.CardDto;
 import blackjack.view.dto.DealerScoreDto;
 import blackjack.view.dto.PlayerDto;
@@ -53,12 +49,6 @@ public class OutputView {
             entry(KING, "K"),
             entry(QUEEN, "Q"),
             entry(JACK, "J")
-    );
-
-    private static final Map<BlackjackResult, String> RESULT_LABELS = Map.of(
-            WIN, "승",
-            LOSE, "패",
-            PUSH, "푸시"
     );
 
     private static final Map<Suit, String> SUIT_LABELS = Map.of(
