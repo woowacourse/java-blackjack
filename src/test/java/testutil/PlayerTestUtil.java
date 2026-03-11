@@ -13,6 +13,12 @@ public final class PlayerTestUtil {
         return player;
     }
 
+    public static Player createPlayer(List<Card> cards, String playerName) {
+        Player player = new Player(playerName);
+        cards.forEach(player::add);
+        return player;
+    }
+
     public static Dealer createDealer(List<Card> cards) {
         Dealer dealer = new Dealer("AAAA");
         cards.forEach(dealer::add);

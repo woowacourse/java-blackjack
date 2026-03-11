@@ -17,8 +17,7 @@ class BlackjackServiceTest {
 
     @BeforeEach
     void setUp() {
-        BlackjackService blackjackService = new BlackjackService();
-        this.blackjackService = blackjackService;
+        this.blackjackService = new BlackjackService();
     }
 
     @DisplayName("처음 전쳬 카드는 52장 생성되야한다.")

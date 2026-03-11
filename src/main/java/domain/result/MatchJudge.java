@@ -3,16 +3,17 @@ package domain.result;
 import domain.participant.Dealer;
 import domain.participant.Player;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.BiPredicate;
 
 public class MatchJudge {
     private static final Map<MatchCase, BiPredicate<Dealer, Player>> JUDGE_CRITERIA =
-            Map.of(
+            new LinkedHashMap<>(Map.of(
                     MatchCase.LOSE, MatchJudge::isPlayerLose,
                     MatchCase.DRAW, MatchJudge::isPlayerScoreEqualsDealer,
                     MatchCase.BLACKJACK_WIN, MatchJudge::isPlayerWinWithBlackjack
-            );
+            ));
 
     private final Dealer dealer;
     private final Player player;
@@ -31,7 +32,7 @@ public class MatchJudge {
     }
 
     private static boolean isPlayerWinWithBlackjack(Dealer dealer, Player player) {
-        return !isPlayerLose(dealer, player) && player.isBlackjack();
+        return !dealer.isBlackjack() && !isPlayerLose(dealer, player) && player.isBlackjack();
     }
 
     private static boolean isPlayerLose(Dealer dealer, Player player) {

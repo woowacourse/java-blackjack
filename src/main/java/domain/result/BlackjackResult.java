@@ -41,8 +41,7 @@ public class BlackjackResult {
     }
 
     private Long calculateProfit(String playerName, MatchCase matchCase) {
-        Bet playerBet = betMap.findBet(playerName);
-        return Math.round(playerBet.amount() * matchCase.getBenefitRate());
+        return betMap.calculateProfit(playerName, matchCase);
     }
 
     public void increaseDealerWinCount() {

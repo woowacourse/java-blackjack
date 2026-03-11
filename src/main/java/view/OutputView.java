@@ -44,7 +44,7 @@ public class OutputView {
 
     public void displayMatchResult(BlackjackResultDto resultDto) {
         System.out.printf("## 최종 수익\n딜러: %d\n", resultDto.dealerBenefit());
-        Map<String, Long> resultMap = resultDto.matchResultMap().resultMap();
+        Map<String, Long> resultMap = resultDto.playerProfitMap();
         for (String playerName : resultMap.keySet()) {
             System.out.printf("%s: %d\n", playerName, resultMap.get(playerName));
         }

@@ -16,8 +16,7 @@ class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        Player player = new Player("요크");
-        this.player = player;
+        this.player = new Player("요크");
     }
 
     @DisplayName("카드 합계 구하기")
