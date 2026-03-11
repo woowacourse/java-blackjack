@@ -13,6 +13,10 @@ public class Hand {
         this.cards = new ArrayList<>();
     }
 
+    public Hand(Hand hand) {
+        this.cards = List.copyOf(hand.getCards());
+    }
+
     public void add(Card card) {
         cards.add(card);
     }

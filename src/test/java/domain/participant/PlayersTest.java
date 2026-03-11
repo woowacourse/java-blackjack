@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.card.Deck;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -22,5 +23,19 @@ public class PlayersTest {
 
         // when & then
         Assertions.assertThat(Players.from(uniqueNames).getPlayers()).hasSize(3);
+    }
+
+    @Test
+    void getter로_받은_Player는_수정할_수_없다() {
+        //given
+        Players players = Players.from(List.of("jeje", "mingu", "minseo"));
+        Deck deck = new Deck();
+        players.giveCardsToEachPlayers(deck, 2);
+
+        Player player = players.getPlayers().get(0);
+
+        players.giveCardsToEachPlayers(deck, 2);
+
+        Assertions.assertThat(player.getCards().size()).isEqualTo(2);
     }
 }

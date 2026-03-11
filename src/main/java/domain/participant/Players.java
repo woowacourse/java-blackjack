@@ -64,6 +64,8 @@ public class Players {
     }
 
     public List<Player> getPlayers() {
-        return List.copyOf(players);
+        return players.stream()
+                .map(player -> new Player(player))
+                .toList();
     }
 }

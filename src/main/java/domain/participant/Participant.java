@@ -15,6 +15,18 @@ public abstract class Participant {
         this.hand = new Hand();
     }
 
+    public Participant(Name name, Hand hand) {
+        validate(name, hand);
+        this.name = name;
+        this.hand = hand;
+    }
+
+    private void validate(Name name, Hand hand) {
+        if (name == null || hand == null) {
+            throw new IllegalArgumentException(Card.FIELD_CAN_NOT_BE_NULL);
+        }
+    }
+
     public boolean isBust() {
         return hand.totalSum().isBust();
     }
