@@ -7,21 +7,17 @@ import java.util.List;
 public class Participant {
     private final Name name;
     private final Hand hand;
-    private final boolean isDealer;
 
-    public Participant(final Name name, final Hand hand, final boolean isDealer) {
+    public Participant(final Name name, final Hand hand) {
         this.name = name;
         this.hand = hand;
-        this.isDealer = isDealer;
     }
 
-    public void addHandCard(final Card card) {
+    
+    public void draw(final Card card) {
         hand.addCard(card);
     }
 
-    public boolean isDealer() {
-        return isDealer;
-    }
 
     public boolean isBust() {
         return hand.isBust();
@@ -40,7 +36,7 @@ public class Participant {
         return name.name();
     }
 
-    public List<Card> getHandCards() {
-        return hand.getHandCards();
+    public List<Card> getHand() {
+        return hand.getHand();
     }
 }

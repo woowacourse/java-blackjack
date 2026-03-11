@@ -1,12 +1,13 @@
 package domain.card;
 
-import static constant.BlackjackConstant.BUST_BOUND;
+import static domain.BlackjackGame.BUST_BOUND;
 import static domain.card.CardRank.ACE;
 import static domain.card.CardRank.JACK;
 import static domain.card.CardRank.KING;
 import static domain.card.CardRank.QUEEN;
 import static domain.card.CardRank.TEN;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -14,15 +15,15 @@ import java.util.Set;
 
 public class Hand {
 
-    private final List<Card> handCards;
+    private final List<Card> hand;
     private final Set<Integer> scores = new HashSet<>();
 
-    public Hand(final List<Card> handCards) {
-        this.handCards = List.copyOf(handCards);
+    public Hand(final List<Card> hand) {
+        this.hand = new ArrayList<>(hand);
     }
 
     public void addCard(final Card card) {
-        handCards.add(card);
+        hand.add(card);
         updateScore(card);
     }
 
@@ -53,7 +54,7 @@ public class Hand {
     }
 
     public boolean isBlackjack() {
-        final List<CardRank> cardRanks = handCards.stream()
+        final List<CardRank> cardRanks = hand.stream()
                 .map(Card::getCardRank)
                 .toList();
 
@@ -83,7 +84,7 @@ public class Hand {
         return notBustMaxScore;
     }
 
-    public List<Card> getHandCards() {
-        return List.copyOf(handCards);
+    public List<Card> getHand() {
+        return List.copyOf(hand);
     }
 }

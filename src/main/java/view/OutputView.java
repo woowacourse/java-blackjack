@@ -1,8 +1,8 @@
 package view;
 
-import static constant.BlackjackConstant.DEALER_DRAW_BOUND;
-import static constant.BlackjackConstant.DEALER_NAME;
-import static constant.BlackjackConstant.INIT_DRAW_COUNT;
+import static domain.BlackjackGame.INIT_DRAW_COUNT;
+import static domain.participant.Participants.DEALER_DRAW_BOUND;
+import static domain.participant.Participants.DEALER_NAME;
 
 import domain.card.Card;
 import domain.participant.Participant;
@@ -25,7 +25,7 @@ public class OutputView {
         final StringBuilder playerNames = new StringBuilder();
         System.out.printf("\n%s와 ", dealer.getName());
         for (final Participant player : players) {
-            playerNames.append(player.getName() + ", ");
+            playerNames.append(player.getName()).append(", ");
         }
         playerNames.delete(playerNames.length() - 2, playerNames.length());
         System.out.printf("%s에게 %d장을 나누었습니다.\n", playerNames, INIT_DRAW_COUNT);
@@ -40,16 +40,16 @@ public class OutputView {
     }
 
     private static void printDealerInitHandCard(final Participant dealer) {
-        System.out.printf("%s카드: %s\n", dealer.getName(), dealer.getHandCards().getFirst().getCardDescription());
+        System.out.printf("%s카드: %s\n", dealer.getName(), dealer.getHand().getFirst().getCardDescription());
     }
 
     private static void printParticipantHandCard(final Participant player) {
         System.out.printf("%s카드: ", player.getName());
 
         final StringBuilder cardDescriptions = new StringBuilder();
-        final List<Card> handCards = player.getHandCards();
+        final List<Card> handCards = player.getHand();
         for (final Card handCard : handCards) {
-            cardDescriptions.append(handCard.getCardDescription() + ", ");
+            cardDescriptions.append(handCard.getCardDescription()).append(", ");
         }
         cardDescriptions.delete(cardDescriptions.length() - 2, cardDescriptions.length());
         System.out.print(cardDescriptions);

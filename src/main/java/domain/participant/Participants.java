@@ -1,7 +1,5 @@
 package domain.participant;
 
-import static constant.BlackjackConstant.DEALER_NAME;
-import static exception.ErrorMessage.DEALER_NOT_FOUND_ERROR;
 import static exception.ErrorMessage.PLAYER_COUNT_OUT_OF_RANGE;
 
 import domain.CardResult;
@@ -13,43 +11,34 @@ public class Participants {
 
     public static final int MINIMUM_BOUND = 1;
     public static final int MAXIMUM_BOUND = 5;
+    
+    public static final String DEALER_NAME = "딜러";
+    public static final int DEALER_DRAW_BOUND = 16;
 
-    private final List<Participant> participants;
+    private final Participant dealer;
+    private final List<Participant> players;
 
-    public Participants(final List<Participant> participants) {
-        validatePlayerCounts(participants);
-        // FIXME: 사이드 이펙트가 발생할 수 있다
-        participants.add(new Participant(new Name(DEALER_NAME), new Hand(new ArrayList<>()), true));
-        this.participants = participants;
+    public Participants(final List<Participant> players) {
+        validatePlayerCounts(players);
+
+        dealer = new Participant(new Name(DEALER_NAME), new Hand(new ArrayList<>()));
+        this.players = new ArrayList<>(players);
     }
 
-    // FIXME: indent가 2인 부분인데, 어떻게 개선할 수 있을까?
     public Participant getDealer() {
-        for (final Participant participant : participants) {
-            if (participant.isDealer()) {
-                return participant;
-            }
-        }
-
-        // TODO: IllegalState가 적합한가? 의미상 IllegalArgument가 더 적합한가?
-        throw new IllegalStateException(DEALER_NOT_FOUND_ERROR.getMessage());
+        return dealer;
     }
 
     public List<Participant> getPlayers() {
-        final List<Participant> participants = new ArrayList<>();
-        for (final Participant participant : this.participants) {
-            if (!participant.isDealer()) {
-                participants.add(participant);
-            }
-        }
-
-        return participants;
+        return List.copyOf(players);
     }
 
     public List<CardResult> getCardResults() {
         final List<CardResult> cardResults = new ArrayList<>();
-        for (final Participant participant : participants) {
-            cardResults.add(new CardResult(participant.getName(), participant.getHandCards(), participant.getScore()));
+        cardResults.add(new CardResult(dealer.getName(), dealer.getHand(), dealer.getScore()));
+
+        for (final Participant participant : players) {
+            cardResults.add(new CardResult(participant.getName(), participant.getHand(), participant.getScore()));
         }
         return cardResults;
     }
