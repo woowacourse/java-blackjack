@@ -30,11 +30,16 @@ public class BlackJackGame {
         distributeCard(player);
     }
 
-    public Map<String, Boolean> getGameResult() {
-        Map<Participant, Integer> participantScores = getParticipantScores();
-        Map<String, Boolean> gameResult = Result.calculateResult(participantScores);
-        return gameResult;
+    public Result getGameResult() {
+        Map<String, Boolean> gameResult = new HashMap<>();
+        int dealerScore = dealer.getScore();
+
+        for (Player player : players) {
+            gameResult.put(player.getName(), isPlayerWin(player.getScore(), dealerScore));
+        }
+        return new Result(gameResult);
     }
+
 
     public ParticipantCardsDto getDealerCardsDto() {
         return dealer.getParticipantCardsDto();
@@ -63,10 +68,9 @@ public class BlackJackGame {
         participant.receiveCard(card);
     }
 
-    private Map<Participant, Integer> getParticipantScores() {
-        Map<Participant, Integer> participantScores = new HashMap<>();
-        participantScores.put(dealer, dealer.getScore());
-        players.forEach(player -> participantScores.put(player, player.getScore()));
-        return participantScores;
+    private boolean isPlayerWin(int playerScore, int dealerScore) {
+        if (playerScore > 21) return false;
+        if (dealerScore > 21) return true;
+        return playerScore > dealerScore;
     }
 }

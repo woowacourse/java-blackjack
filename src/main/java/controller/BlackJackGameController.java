@@ -4,8 +4,8 @@ import domain.BlackJackGame;
 import domain.Dealer;
 import domain.Deck;
 import domain.Player;
+import domain.Result;
 import java.util.List;
-import java.util.Map;
 import view.InputView;
 import view.OutputView;
 
@@ -31,8 +31,7 @@ public class BlackJackGameController {
 
         playGame(blackJackGame, players);
 
-        Map<String, Boolean> gameResult = blackJackGame.getGameResult();
-
+        Result gameResult = blackJackGame.getGameResult();
         endGame(blackJackGame, players, gameResult);
     }
 
@@ -64,10 +63,10 @@ public class BlackJackGameController {
     }
 
     private static void endGame(BlackJackGame blackJackGame, List<Player> players,
-                                Map<String, Boolean> gameResult) {
+                                Result gameResult) {
         OutputView.printFinalCards(blackJackGame.getDealerCardsDto());
         printFinalScores(blackJackGame, players);
-        OutputView.printGameResult(gameResult);
+        OutputView.printGameResult(gameResult.getGameResult());
     }
 
     private static void printFinalScores(BlackJackGame blackJackGame, List<Player> players) {

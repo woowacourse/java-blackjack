@@ -11,7 +11,6 @@ public class Player extends Participant {
         return new Player(new Name(name));
     }
 
-    public boolean canReceiveCard() {
-        return cards.canReceiveCard(BUST_THRESHOLD);
-    }
+    @Override
+    protected int getBustThreshold() { return BUST_THRESHOLD; }
 }

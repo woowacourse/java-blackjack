@@ -34,12 +34,12 @@ public class OutputView {
 
         for (Map.Entry<String, Boolean> entry : gameResult.entrySet()) {
             if (entry.getValue().equals(true)) {
-                resultMessage.append(entry.getKey()).append(": ").append("승%n");
+                resultMessage.append(entry.getKey()).append(": ").append("승\n");
                 winCount += 1;
                 continue;
             }
 
-            resultMessage.append(entry.getKey()).append(": ").append("패%n");
+            resultMessage.append(entry.getKey()).append(": ").append("패\n");
             loseCount += 1;
         }
 

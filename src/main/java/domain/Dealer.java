@@ -11,7 +11,9 @@ public class Dealer extends Participant {
     public static Dealer create() {
         return new Dealer(new Name(DEALER_NAME));
     }
-    public boolean canReceiveCard() {
-        return cards.canReceiveCard(BUST_THRESHOLD);
+
+    @Override
+    protected int getBustThreshold() {
+        return BUST_THRESHOLD;
     }
 }
