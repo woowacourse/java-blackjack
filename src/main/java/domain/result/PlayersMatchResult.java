@@ -7,13 +7,13 @@ import java.util.Map;
 
 public record PlayersMatchResult(Map<Player, MatchCase> playerMatchResult) {
 
-    public BettingProfit calculateBettingProfit() {
+    public PlayersBettingProfit calculateBettingProfit() {
         Map<Player, Integer> bettingResult = new LinkedHashMap<>();
 
         for (Player player : playerMatchResult.keySet()) {
             int profit = player.calculateBettingProfit(playerMatchResult.get(player));
             bettingResult.put(player, profit);
         }
-        return new BettingProfit(bettingResult);
+        return new PlayersBettingProfit(bettingResult);
     }
 }
