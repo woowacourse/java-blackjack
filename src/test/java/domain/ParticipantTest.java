@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 class ParticipantTest {
 
     @Test
-    void 핸드_점수_총합이_21_초과인_경우_버스트_판정() {
+    void 플레이어의_핸드_점수가_21을_초과하면_카드를_더_받을_수_없다() {
         GameManager gameManager = new GameManager(Deck.create());
 
         // A K Q J 10 9 8 7 6 순서 고정
@@ -24,7 +24,7 @@ class ParticipantTest {
     }
 
     @Test
-    void 핸드_점수_총합이_21_이하인_경우() {
+    void 플레이어의_핸드_점수가_21_이하면_카드를_더_받을_수_있다() {
         GameManager gameManager = new GameManager(Deck.create());
 
         // A K Q J 10 9 8 7 6 순서 고정
@@ -38,7 +38,7 @@ class ParticipantTest {
     }
 
     @Test
-    void 딜러_핸드_점수_총합이_16_초과인_경우_히트가능() {
+    void 딜러의_핸드_점수가_16_이하면_카드를_더_받을_수_있다() {
         GameManager gameManager = new GameManager(Deck.create());
 
         // A K Q J 10 9 8 7 6 순서 고정
@@ -51,7 +51,7 @@ class ParticipantTest {
     }
 
     @Test
-    void 딜러_핸드_점수_총합이_16_인_경우() {
+    void 딜러의_핸드_점수가_17_이상이면_카드를_더_받을_수_없다() {
         GameManager gameManager = new GameManager(Deck.create());
 
         // A K Q J 10 9 8 7 6 순서 고정
