@@ -31,6 +31,10 @@ public enum BettingResult {
         return gameResult;
     }
 
+    public int policyOrder() {
+        return policyOrder;
+    }
+
     public BettingResult reverseResult() {
         if (this == COMPARE_WIN) {
             return COMPARE_LOSE;

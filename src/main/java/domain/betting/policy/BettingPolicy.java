@@ -25,7 +25,7 @@ import domain.gamer.Player;
  *  상태 패턴?
  * */
 
-public abstract class BettingPolicy {
+public abstract class BettingPolicy implements Comparable<BettingPolicy>{
 
     protected BettingResult bettingResult;
 
@@ -36,5 +36,10 @@ public abstract class BettingPolicy {
     public abstract boolean isPolicyApplied(Dealer dealer, Player player);
 
     public abstract BettingRate getBettingRate(Dealer dealer, Player player);
+
+    @Override
+    public int compareTo(BettingPolicy o) {
+        return this.bettingResult.policyOrder() - o.bettingResult.policyOrder();
+    }
 
 }

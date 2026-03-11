@@ -128,12 +128,6 @@ public class BettingPolicyTest {
                 .isEqualTo(expectedBettingRate);
     }
 
-    @Test
-    void 베팅결과_비교테스트() {
-        BettingResult doubleBust = BettingResult.DOUBLE_BUST;
-        BettingResult compareWin = BettingResult.COMPARE_WIN;
-    }
-
     private Dealer createDealer(List<Card> cards) {
         TestCardGenerator testCardGenerator = TestCardGenerator.of(cards);
         Dealer dealer = Dealer.from(CardDeck.from(testCardGenerator));
