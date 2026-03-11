@@ -13,7 +13,7 @@ public class PolicyConstant {
 
     public static final int JQK = 10;
     public static final int ACE = 11;
-    public static final int DECK_COUNT = 6;
-    public static final int DECK_SIZE = 52;
     public static final int BLACKJACK_SCORE = 21;
+
+    public static final String ERROR_PREFIX = "[ERROR] ";
 }
