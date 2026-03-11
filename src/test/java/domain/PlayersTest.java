@@ -57,32 +57,32 @@ class PlayersTest {
     void next_change_targetUser() {
         //given
         Players testPlayers = Players.of(TEST_PLAYER_NAMES, totalDeck);
-        Player prevPlayer = testPlayers.findCurrentUser().get();
-        prevPlayer = prevPlayer.stay();
+        Player prevPlayer = testPlayers.findNotStayPlayer().get();
+        prevPlayer = prevPlayer.stand();
 
         //when, then
-        Assertions.assertNotEquals(prevPlayer, testPlayers.findCurrentUser());
+        Assertions.assertNotEquals(prevPlayer, testPlayers.findNotStayPlayer());
     }
 
     @Test
     @DisplayName("사용자가 stay가 되면 더 이상 현재 사용자로 조회되지 않는다")
-    void stand_success() {
+    void executeStand_success() {
         // given
         String rati = "rati";
         String pobi = "pobi";
         Players players = Players.of(List.of(rati, pobi), totalDeck);
-        Player currentPlayer = players.findCurrentUser().get();
+        Player currentPlayer = players.findNotStayPlayer().get();
 
         // when
-        players.stand(currentPlayer);
+        players.executeStand(currentPlayer);
 
         // then
-        Optional<Player> nextUser = players.findCurrentUser();
+        Optional<Player> nextUser = players.findNotStayPlayer();
         assertThat(nextUser.isPresent()).isTrue();
         assertThat(nextUser.get().getName()).isEqualTo(pobi);
 
-        players.stand(nextUser.get());
-        assertThat(players.findCurrentUser()).isEmpty();
+        players.executeStand(nextUser.get());
+        assertThat(players.findNotStayPlayer()).isEmpty();
     }
 
     //    @Test
