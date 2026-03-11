@@ -4,6 +4,7 @@ import controller.BlackJackController;
 import domain.service.*;
 import repository.CardRepository;
 import repository.DealerRepository;
+import repository.PlayerBettingRepository;
 import repository.PlayerRepository;
 import util.*;
 import view.InputView;
@@ -15,6 +16,7 @@ public class DIConfig {
     private final PlayerRepository playerRepository = new PlayerRepository();
     private final CardRepository cardRepository = new CardRepository();
     private final DealerRepository dealerRepository = new DealerRepository();
+    private final PlayerBettingRepository playerBettingRepository = new PlayerBettingRepository();
 
     public BlackJackController blackJackController() {
         return new BlackJackController(
@@ -41,7 +43,8 @@ public class DIConfig {
 
     public JudgementService judgementService() {
         return new JudgementService(
-                personService()
+                personService(),
+                playerBettingRepository()
         );
     }
 
@@ -77,6 +80,10 @@ public class DIConfig {
 
     public DealerRepository dealerRepository() {
         return dealerRepository;
+    }
+
+    public PlayerBettingRepository playerBettingRepository() {
+        return playerBettingRepository;
     }
 
     // util

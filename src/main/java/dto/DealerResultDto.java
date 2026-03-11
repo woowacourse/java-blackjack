@@ -7,7 +7,8 @@ import java.util.List;
 
 public record DealerResultDto(
         List<CardDto> cardDtos,
-        int sum
+        int sum,
+        double profit
 ) {
     public static DealerResultDto of(Dealer dealer) {
         List<Card> cards = dealer.getDeck().getCards();
@@ -15,6 +16,6 @@ public record DealerResultDto(
                 .map(CardDto::of)
                 .toList();
 
-        return new DealerResultDto(dealerCards, dealer.getFinalDeckSum());
+        return new DealerResultDto(dealerCards, dealer.getFinalDeckSum(), dealer.getProfit());
     }
 }

@@ -3,15 +3,22 @@ package repository;
 import domain.model.Player;
 import domain.model.PlayerBetting;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class PlayerBettingRepository {
 
-    private final Map<Player, PlayerBetting> playerBettings = new LinkedHashMap<>();
+    private final List<PlayerBetting> playerBettings = new ArrayList<>();
 
     public PlayerBetting save(PlayerBetting playerBetting) {
-        playerBettings.put(playerBetting.getPlayer(), playerBetting);
+        playerBettings.add(playerBetting);
         return playerBetting;
+    }
+
+    public Optional<PlayerBetting> findByPlayer(Player player) {
+        return playerBettings.stream()
+                .filter(playerBetting -> playerBetting.isSamePlayer(player))
+                .findFirst();
     }
 }

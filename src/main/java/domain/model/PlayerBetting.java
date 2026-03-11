@@ -25,6 +25,15 @@ public class PlayerBetting {
         return value;
     }
 
+    public boolean isSamePlayer(Player player) {
+        return this.player == player;
+    }
+
+    public void applyBetting(Dealer dealer) {
+        double playerProfit = player.applyBetting(value);
+        dealer.applyBetting(playerProfit);
+    }
+
     private static void validateValue(int value) {
         if (value <= 0) {
             throw new IllegalArgumentException(INVALID_BETTING_VALUE.getMessage());
