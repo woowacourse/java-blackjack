@@ -10,8 +10,8 @@ public abstract class Participant {
     private static final int DEALER_THRESHOLD = 16;
     private static final String DEALER_NAME = "딜러";
 
-    private String name;
-    protected List<Card> hands;
+    private final String name;
+    protected final List<Card> hands;
 
     protected Participant(String name) {
         this(name, new ArrayList<>());

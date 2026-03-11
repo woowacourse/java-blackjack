@@ -13,7 +13,7 @@ class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        player = Player.of("pobi");
+        player = Player.of("pobi", 10000);
     }
 
     @Test

@@ -27,7 +27,7 @@ class ParticipantTest {
 
     @BeforeEach
     void setUp() {
-         participant = Player.of("pobi");
+         participant = Player.of("pobi", 10000);
     }
 
     @Test
@@ -45,8 +45,8 @@ class ParticipantTest {
     @Test
     void 참가자의_점수가_버스트인지_확인하는_테스트() {
         // given
-        Participant jason = Player.of("jason");
-        Participant gump = Player.of("gump");
+        Participant jason = Player.of("jason", 10000);
+        Participant gump = Player.of("gump", 10000);
 
         Card card1 = Card.of("스페이드", 10);
         Card card2 = Card.of("스페이드", 9);

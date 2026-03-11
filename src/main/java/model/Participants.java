@@ -13,8 +13,9 @@ import util.InputParser;
 
 public class Participants implements Iterable<Participant> {
     private static final String DEALER_PARTICIPANT = "딜러,";
+    private static final int DEFAULT_BET_AMOUNT = 0;
 
-    private List<Participant> values;
+    private final List<Participant> values;
 
     private Participants(List<Participant> values) {
         this.values = values;
@@ -27,7 +28,7 @@ public class Participants implements Iterable<Participant> {
         List<Participant> participants = new ArrayList<>();
         participants.add(Dealer.of(names[0]));
         for (int i = 1; i < names.length; i++) {
-            participants.add(Player.of(names[i]));
+            participants.add(Player.of(names[i], DEFAULT_BET_AMOUNT));
         }
 
         return new Participants(participants);

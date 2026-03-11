@@ -11,7 +11,7 @@ class ApplicationTest {
         String input = "pobi";
 
         //when
-        Participant from = Player.of(input);
+        Participant from = Player.of(input, 10000);
 
         //then
         assertThat(from.getName()).isEqualTo(input);
