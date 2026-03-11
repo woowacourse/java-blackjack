@@ -6,27 +6,30 @@ import java.util.List;
 public class Player {
 
     private final Name name;
-    private final Hand hand;
+    private final PlayerStatus playerStatus;
 
-    public Player(String name, Hand hand) {
+    private Player(String name, PlayerStatus playerStatus) {
         this.name = new Name(name);
-        this.hand = hand;
+        this.playerStatus = playerStatus;
     }
 
-    protected Hand getHand() {
-        return hand;
+    public static Player create(String name, Hand hand, int amount) {
+        Money money = new Money(amount);
+        Bet bet = new Bet(money);
+        PlayerStatus playerStatus = new PlayerStatus(hand, bet);
+        return new Player(name, playerStatus);
     }
 
     public boolean isBust() {
-        return hand.isBust();
+        return playerStatus.isBust();
     }
 
     public List<Card> getCards() {
-        return hand.getCards();
+        return playerStatus.getCards();
     }
 
     public void addHand(Card card) {
-        hand.add(card);
+        playerStatus.addHand(card);
     }
 
     public String getName() {
@@ -34,10 +37,14 @@ public class Player {
     }
 
     public int getTotalScore() {
-        return hand.getTotalScore();
+        return playerStatus.getTotalScore();
     }
 
     public boolean isBlackjack() {
-        return hand.isBlackjack();
+        return playerStatus.isBlackjack();
+    }
+
+    public int calculateProfit(Dealer dealer) {
+        return playerStatus.calculateProfit(dealer);
     }
 }
