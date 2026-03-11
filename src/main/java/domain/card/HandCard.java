@@ -8,6 +8,7 @@ public class HandCard {
     private static final int BLACKJACK_MAX_LIMIT = 21;
     private static final int ACE_MAX_VALUE = 11;
     private static final int ACE_MIN_VALUE = 1;
+    private static final int INITIAL_CARD_COUNT = 2;
 
     private final List<Card> cards;
 
@@ -57,7 +58,7 @@ public class HandCard {
     }
 
     public boolean isBlackJack() {
-        return cards.size() == 2 && score() == BLACKJACK_MAX_LIMIT;
+        return cards.size() == INITIAL_CARD_COUNT && score() == BLACKJACK_MAX_LIMIT;
     }
 
 }
