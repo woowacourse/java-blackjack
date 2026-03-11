@@ -1,5 +1,7 @@
 package blackjack.domain.result;
 
+import static java.util.Collections.unmodifiableMap;
+
 import blackjack.domain.betting.Profit;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
@@ -38,7 +40,7 @@ public class GameResults {
         return new Profit(sum).negate();
     }
 
-    public Map<Player, Profit> getPlayerProfits() {
-        return playerProfits;
+    public Map<Player, Profit> getProfitsByPlayer() {
+        return unmodifiableMap(playerProfits);
     }
 }
