@@ -1,7 +1,6 @@
 package service;
 
 import constant.HitOrStand;
-import constant.PolicyConstant;
 import constant.Result;
 import domain.Card;
 import domain.CardMachine;
@@ -54,7 +53,7 @@ public class BlackjackService {
 
     public boolean drawDealerCard() {
         Dealer dealer = participants.dealer();
-        if (dealer.calculateScore() <= PolicyConstant.DEALER_HIT_MAX_SCORE) {
+        if (dealer.shouldHit()) {
             dealer.addCard(drawCard());
             return true;
         }

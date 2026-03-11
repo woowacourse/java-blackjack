@@ -6,6 +6,7 @@ import java.util.List;
 public class Dealer extends Participant {
 
     private static final String DEALER_NAME = "딜러";
+    private static final int DEALER_HIT_MAX_SCORE = 16;
 
     public Dealer() {
         super();
@@ -23,5 +24,9 @@ public class Dealer extends Participant {
 
     public boolean isDealer(String name) {
         return name.equals(DEALER_NAME);
+    }
+
+    public boolean shouldHit() {
+        return this.calculateScore() <= DEALER_HIT_MAX_SCORE;
     }
 }
