@@ -52,8 +52,19 @@
 
 ## 용어 사전
 
+참고: [온라인 블랙잭 시뮬레이터](https://www.blackjacksimulator.net/ko/guide/blackjack-glossary/), 블랙잭 미션 설명
+
 - deck: 카드 묶음
 - hand: 카드 패
 - dealer: 딜러
 - player: 플레이어
 - participant: 참여자. 딜러(dealer)와 플레이어(player)를 총칭
+- dealout: 게임을 시작하며 카드 2장을 나눠주는 행위
+- bust: 카드 합이 21을 초과해 패배하는 경우
+- blackjack: 'dealout'에서 받은 카드 2장만으로 합계가 21이 된 경우
+- push: 무승부
+- hit: 플레이어가 카드를 한 장 더 요청
+- stand: 추가 카드를 받지 않고 턴을 마침
+- hole card: 딜러의 뒤집힌 카드
+- up card: 딜러가 공개하는 첫 번째 카드
+- ten value card: 
