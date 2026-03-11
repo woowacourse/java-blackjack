@@ -3,6 +3,7 @@ package domain;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import blackjack.domain.Bet;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -33,7 +34,7 @@ class BetTest {
 
         @Test
         @DisplayName("베팅금이 100,000,000 초과인 경우")
-        void 베팅금이_5000_미만인_경우() {
+        void 베팅금이_100_000_000_초과인_경우() {
             int amount = 100_001_000;
 
             assertThatThrownBy(() -> new Bet(amount))
@@ -43,7 +44,7 @@ class BetTest {
 
         @Test
         @DisplayName("베팅금 단위가 1,000이 아닌 경우")
-        void 베팅금이_5000_미만인_경우() {
+        void 베팅금_단위가_1000이_아닌_경우() {
             int amount = 5001;
 
             assertThatThrownBy(() -> new Bet(amount))
