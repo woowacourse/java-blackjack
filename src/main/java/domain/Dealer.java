@@ -71,10 +71,8 @@ public class Dealer {
         return score;
     }
 
-    public List<String> getCardsInfo() {
-        return cards.stream()
-                .map(Card::getName)
-                .toList();
+    public List<Card> getCards() {
+        return List.copyOf(cards);
     }
 
 }
