@@ -8,12 +8,15 @@ import java.util.Map;
 import java.util.Set;
 
 public class BetProfit {
+    private final static int ZERO = 0;
+    private final static double BLACKJACK_YIELD = 1.5;
+
     private final Map<Name, Integer> betProfit = new HashMap<>();
 
     public BetProfit(List<Name> playerNames) {
         playerNames.forEach(
                 playerName -> {
-                    betProfit.put(playerName, 0);
+                    betProfit.put(playerName, ZERO);
                 }
         );
     }
@@ -48,7 +51,7 @@ public class BetProfit {
         }
 
         if (gameResult == GameResult.DRAW) {
-            betAmount = 0;
+            betAmount = ZERO;
         }
 
         if (gameResult == GameResult.BLACKJACK_WIN) {
@@ -59,7 +62,7 @@ public class BetProfit {
     }
 
     private int blackjackAmount(int betAmount) {
-        return (int) (betAmount * 1.5);
+        return (int) (betAmount * BLACKJACK_YIELD);
     }
 
     private int negateBetAmount(int betAmount) {
