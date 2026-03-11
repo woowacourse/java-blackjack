@@ -7,7 +7,7 @@ import exception.GameException;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-public class TestPlayers {
+public class PlayersTest {
 
     @Test
     public void 정상_작동() {

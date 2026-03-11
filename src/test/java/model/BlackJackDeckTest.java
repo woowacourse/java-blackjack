@@ -8,7 +8,7 @@ import exception.GameException;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-public class TestBlackJackDeck {
+public class BlackJackDeckTest {
 
     @Test
     public void 카드_드로우_정상_작동() {

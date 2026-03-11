@@ -20,7 +20,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class TestBlackJackService {
+public class BlackJackServiceTest {
 
     @Test
     public void 카드_뽑기_정상_작동() {

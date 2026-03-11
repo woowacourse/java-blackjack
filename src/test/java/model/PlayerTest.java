@@ -6,7 +6,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import exception.GameException;
 import org.junit.jupiter.api.Test;
 
-public class TestPlayer {
+public class PlayerTest {
     @Test
     public void 정상_작동() {
         String name = "player1";
