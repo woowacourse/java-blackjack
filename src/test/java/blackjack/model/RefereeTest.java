@@ -125,7 +125,7 @@ class RefereeTest {
     }
 
     @Test
-    @DisplayName("딜러와 플레이어 모두 버스트인 경우 무 판정")
+    @DisplayName("딜러와 플레이어 모두 버스트인 경우 플레이어의 패 판정")
     void isDrawWhenBothIsBurstTest() {
         // given
         Referee referee = new Referee();
@@ -150,12 +150,12 @@ class RefereeTest {
 
         // when & then
         assertThat(referee.judge(player, dealer).getStatus())
-                .isEqualTo("무");
+                .isEqualTo("패");
     }
 
     @Test
-    @DisplayName("플레이어가 블랙잭이면 GameResult.BLACKJACK을 반환한다.")
-    void isBlackjackTest() {
+    @DisplayName("플레이어가 블랙잭이면 블랙잭 판정")
+    void isBlackjackWhenPlayerTest() {
         // given
         Referee referee = new Referee();
         Dealer dealer = new Dealer();
@@ -172,5 +172,47 @@ class RefereeTest {
 
         // when & then
         assertThat(referee.judge(player, dealer)).isEqualTo(GameResult.BLACKJACK);
+    }
+
+    @Test
+    @DisplayName("플레이어와 딜러가 둘 다 블랙잭이면 무 판정")
+    void IsBlackjackWhenPlayerAndDealerTest() {
+        // given
+        Referee referee = new Referee();
+        Dealer dealer = new Dealer();
+        Player player = new Player("luke", 1000);
+        Card card = new Card(Figure.SPADE, Number.JACK);
+        Card card2 = new Card(Figure.SPADE, Number.ACE);
+        Card card3 = new Card(Figure.DIAMOND, Number.JACK);
+        Card card4 = new Card(Figure.DIAMOND, Number.ACE);
+
+        player.receiveCard(card);
+        player.receiveCard(card2);
+        dealer.receiveCard(card3);
+        dealer.receiveCard(card4);
+
+        // when & then
+        assertThat(referee.judge(player, dealer)).isEqualTo(GameResult.DRAW);
+    }
+
+    @Test
+    @DisplayName("딜러가 블랙잭이면 패 판정")
+    void IsBlackjackWhenDealerTest() {
+        // given
+        Referee referee = new Referee();
+        Dealer dealer = new Dealer();
+        Player player = new Player("luke", 1000);
+        Card card = new Card(Figure.SPADE, Number.TWO);
+        Card card2 = new Card(Figure.SPADE, Number.ACE);
+        Card card3 = new Card(Figure.DIAMOND, Number.JACK);
+        Card card4 = new Card(Figure.DIAMOND, Number.ACE);
+
+        player.receiveCard(card);
+        player.receiveCard(card2);
+        dealer.receiveCard(card3);
+        dealer.receiveCard(card4);
+
+        // when & then
+        assertThat(referee.judge(player, dealer)).isEqualTo(GameResult.LOSE);
     }
 }
