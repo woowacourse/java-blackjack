@@ -31,7 +31,7 @@ public class InputView {
         System.out.println(name + BET_REQUEST_TEXT);
 
         try {
-            Integer value = Integer.parseInt(name);
+            Integer value = Integer.parseInt(getInput());
             System.out.println();
             return value;
         } catch (NumberFormatException exception) {
