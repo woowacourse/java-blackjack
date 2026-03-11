@@ -3,8 +3,8 @@ package controller;
 import domain.BlackJackGame;
 import domain.CardCreationStrategy;
 import domain.Player;
+import dto.ParticipantDto;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Supplier;
 import view.InputView;
 import view.OutputView;
@@ -24,35 +24,54 @@ public class BlackJackController {
     public void doGameProcess() {
         BlackJackGame game = retry(this::readyGame);
         outputView.printInitialStates(
-                game.getDealerGameSettingResult(),
-                game.getPlayersGameSettingResults()
+                game.getDealerGameSettingState(),
+                game.getPlayersGameSettingStates()
         );
 
-        //2. 게임을 진행하라
-        while (true) {
-            Optional<Player> currentPlayer = game.whoseTurn();
-            if (currentPlayer.isEmpty()) {
-                break;
-            }
-
-            String currentUserName = currentPlayer.get().getName();
-            outputView.printHitOrStandPrompt(currentUserName);
-            String hitOrStand = inputView.readHitOrStand();
-            if (hitOrStand.equals("y")) {
-                game.doHitProcess(); //TODO: 출력이 야기되어야 합니다.
-            } else {
-                game.doStandProcess();
-            }
-        }
-//
-//        //3. 게임 결과를 구하라
-//        blackJackGame.end(this);
+        playPlayersTurn(game);
+        playDealerTurn(game);
     }
 
     private BlackJackGame readyGame() {
         outputView.printNamePrompt();
         List<String> playerNames = inputView.readNames();
         return BlackJackGame.ready(playerNames, strategy);
+    }
+
+    private void playDealerTurn(BlackJackGame game) {
+        while (game.doDealerHitOrStandProcess()) {
+            outputView.printDealerAddCardNotice();
+        }
+    }
+
+    private void playPlayersTurn(BlackJackGame game) {
+        while (game.whoseTurn().isPresent()) {
+            Player currentPlayer = game.whoseTurn().get();
+
+            outputView.printHitOrStandPrompt(currentPlayer.getName());
+            String hitOrStandInfo = retry(inputView::readHitOrStand);
+            doHitOrStand(hitOrStandInfo, game);
+        }
+    }
+
+    private void doHitOrStand(String hitOrStand, BlackJackGame game) {
+        if (hitOrStand.equals("y")) {
+            handlePlayerHitProcess(game);
+            return;
+        }
+        handlePlayerStandProcess(game);
+    }
+
+    private void handlePlayerStandProcess(BlackJackGame game) {
+        ParticipantDto playerState = game.doStandProcess();
+        if (playerState.cards().size() == 2) {
+            outputView.printUserState(playerState);
+        }
+    }
+
+    private void handlePlayerHitProcess(BlackJackGame game) {
+        ParticipantDto playerState = game.doHitProcess();
+        outputView.printUserState(playerState);
     }
 
     private <T> T retry(Supplier<T> supplier) {

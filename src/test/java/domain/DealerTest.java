@@ -14,9 +14,7 @@ public class DealerTest {
                 new Card(CardShape.클로버, CardContents.FIVE)
         );
 
-        assertDoesNotThrow(
-                () -> new Dealer(dealerHand)
-        );
+        assertDoesNotThrow(() -> Dealer.from(dealerHand));
     }
 
 //    @Test

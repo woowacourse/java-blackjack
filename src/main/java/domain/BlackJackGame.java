@@ -7,8 +7,8 @@ import java.util.Optional;
 
 public class BlackJackGame {
     private final Deck totalDeck;
-    private final Dealer dealer;
     private final Players players;
+    private Dealer dealer;
 
     private BlackJackGame(Deck totalDeck, Dealer dealer, Players players) {
         this.totalDeck = totalDeck;
@@ -18,18 +18,18 @@ public class BlackJackGame {
 
     public static BlackJackGame ready(List<String> playerNames, CardCreationStrategy strategy) {
         Deck totalDeck = Deck.createDeck(strategy);
-
-        Dealer dealer = createNewDealer(totalDeck);
-        Players players = Players.of(playerNames, totalDeck);
-
-        return new BlackJackGame(totalDeck, dealer, players);
+        return new BlackJackGame(
+                totalDeck,
+                createNewDealer(totalDeck),
+                Players.of(playerNames, totalDeck)
+        );
     }
 
     private static Dealer createNewDealer(Deck totalDeck) {
         List<Card> dealersInitialCards = totalDeck.drawTwoCards();
         Card card1 = dealersInitialCards.get(0);
         Card card2 = dealersInitialCards.get(1);
-        return new Dealer(Hand.of(card1, card2));
+        return Dealer.from(Hand.of(card1, card2));
     }
 
     public Optional<Player> whoseTurn() {
@@ -50,12 +50,22 @@ public class BlackJackGame {
         return ParticipantDto.from(newPlayer);
     }
 
+    public boolean doDealerHitOrStandProcess() {
+        Optional<Dealer> nextDealer = dealer.addCard(totalDeck::drawCard);
+        nextDealer.ifPresent(this::updateDealer);
+        return nextDealer.isPresent();
+    }
+
     public List<ParticipantDto> getPlayersGameSettingStates() {
         return players.getInitialStates();
     }
 
     public ParticipantDto getDealerGameSettingState() {
         return ParticipantDto.consistWithInitialInfo(dealer);
+    }
+
+    private void updateDealer(Dealer newDealer) {
+        this.dealer = newDealer;
     }
 //
 //    public void play(GameDelegate observer) {
