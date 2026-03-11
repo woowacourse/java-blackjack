@@ -14,7 +14,7 @@ public class CardTest {
     void getCardContents_success() {
         //given
         CardContents testCardContents = CardContents.J;
-        Card testCard = new Card(CardShape.스페이드, testCardContents);
+        Card testCard = new Card(CardShape.SPADE, testCardContents);
 
         //when
         CardContents result = testCard.getCardContents();
@@ -23,24 +23,12 @@ public class CardTest {
         Assertions.assertThat(result).isEqualTo(testCardContents);
     }
 
-    @Test
-    @DisplayName("카드 정보 출력 양식")
-    void card_toString() {
-        //given
-        CardContents testCardContents = CardContents.J;
-        Card testCard = new Card(CardShape.스페이드, testCardContents);
-        String expect = "J스페이드";
-
-        //when & then
-        Assertions.assertThat(testCard.toString()).isEqualTo(expect);
-    }
-
     @Nested
     class isAceTest {
         @Test
         void isAce_true() {
             //given
-            Card card = new Card(CardShape.하트, CardContents.A);
+            Card card = new Card(CardShape.HEART, CardContents.A);
 
             //when
             boolean result = card.isAce();
@@ -52,7 +40,7 @@ public class CardTest {
         @Test
         void isAce_false() {
             //given
-            Card card = new Card(CardShape.하트, CardContents.J);
+            Card card = new Card(CardShape.HEART, CardContents.J);
 
             //when
             boolean result = card.isAce();

@@ -18,7 +18,7 @@ public record GameResultDto(ParticipantDto dealerDto,
     public static GameResultDto from(Dealer dealer, Players players,
                                      Map<Result, Integer> dealerWinLossResults,
                                      Map<Player, Result> playerWinLossResults) {
-        
+
         ParticipantDto dealerDto = ParticipantDto.from(dealer);
 
         List<ParticipantDto> playerDtos = new ArrayList<>();
@@ -28,12 +28,12 @@ public record GameResultDto(ParticipantDto dealerDto,
 
         Map<String, Integer> dealerResults = new LinkedHashMap<>();
         for (Entry<Result, Integer> entry : dealerWinLossResults.entrySet()) {
-            dealerResults.put(entry.getKey().name(), entry.getValue());
+            dealerResults.put(entry.getKey().getName(), entry.getValue());
         }
 
         Map<String, String> playerResults = new LinkedHashMap<>();
         for (Entry<Player, Result> entry : playerWinLossResults.entrySet()) {
-            playerResults.put(entry.getKey().getName(), entry.getValue().name());
+            playerResults.put(entry.getKey().getName(), entry.getValue().getName());
         }
 
         return new GameResultDto(dealerDto, playerDtos, dealerResults, playerResults);

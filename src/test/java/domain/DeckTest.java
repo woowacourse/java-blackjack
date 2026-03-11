@@ -19,8 +19,8 @@ class DeckTest {
     CardCreationStrategy fixedCardCreationStrategy = new CardCreationStrategy() {
         @Override
         public List<Card> create() {
-            Card spadeJ = new Card(CardShape.스페이드, CardContents.J);
-            Card clover5 = new Card(CardShape.클로버, CardContents.FIVE);
+            Card spadeJ = new Card(CardShape.SPADE, CardContents.J);
+            Card clover5 = new Card(CardShape.CLOVER, CardContents.FIVE);
 
             return new ArrayList<>(List.of(spadeJ, clover5));
         }
@@ -53,9 +53,9 @@ class DeckTest {
         CardCreationStrategy fixedCardCreationStrategy = new CardCreationStrategy() {
             @Override
             public List<Card> create() {
-                Card spadeJ = new Card(CardShape.스페이드, CardContents.J);
-                Card clover5 = new Card(CardShape.클로버, CardContents.FIVE);
-                Card diamondAce = new Card(CardShape.다이아몬드, CardContents.A);
+                Card spadeJ = new Card(CardShape.SPADE, CardContents.J);
+                Card clover5 = new Card(CardShape.CLOVER, CardContents.FIVE);
+                Card diamondAce = new Card(CardShape.DIAMOND, CardContents.A);
 
                 return List.of(spadeJ, clover5, diamondAce);
             }
@@ -71,9 +71,9 @@ class DeckTest {
         CardCreationStrategy gameStrategy = new CardCreationStrategy() {
             @Override
             public List<Card> create() {
-                Card spadeJ = new Card(CardShape.스페이드, CardContents.J);
-                Card clover5 = new Card(CardShape.클로버, CardContents.FIVE);
-                Card diamond3 = new Card(CardShape.다이아몬드, CardContents.THREE);
+                Card spadeJ = new Card(CardShape.SPADE, CardContents.J);
+                Card clover5 = new Card(CardShape.CLOVER, CardContents.FIVE);
+                Card diamond3 = new Card(CardShape.DIAMOND, CardContents.THREE);
 
                 return new ArrayList<>(List.of(spadeJ, clover5, diamond3));
             }
@@ -83,7 +83,7 @@ class DeckTest {
         CardCreationStrategy playerStrategy = new CardCreationStrategy() {
             @Override
             public List<Card> create() {
-                Card spadeA = new Card(CardShape.스페이드, CardContents.A);
+                Card spadeA = new Card(CardShape.SPADE, CardContents.A);
 
                 return new ArrayList<>(List.of(spadeA));
             }
@@ -104,7 +104,7 @@ class DeckTest {
         @DisplayName("Deck에서 카드를 한장 뽑아줌")
         void draw_card_success() {
             Card result = deck.drawCard();
-            Card expected = new Card(CardShape.스페이드, CardContents.J);
+            Card expected = new Card(CardShape.SPADE, CardContents.J);
             assertThat(result).isEqualTo(expected);
         }
 
@@ -129,9 +129,9 @@ class DeckTest {
             CardCreationStrategy fixedCardCreationStrategy = new CardCreationStrategy() {
                 @Override
                 public List<Card> create() {
-                    Card spadeJ = new Card(CardShape.스페이드, CardContents.J);
-                    Card cloverQ = new Card(CardShape.클로버, CardContents.Q);
-                    Card diamondK = new Card(CardShape.다이아몬드, CardContents.K);
+                    Card spadeJ = new Card(CardShape.SPADE, CardContents.J);
+                    Card cloverQ = new Card(CardShape.CLOVER, CardContents.Q);
+                    Card diamondK = new Card(CardShape.DIAMOND, CardContents.K);
 
                     return List.of(spadeJ, cloverQ, diamondK);
                 }
@@ -146,9 +146,9 @@ class DeckTest {
             CardCreationStrategy fixedCardCreationStrategy = new CardCreationStrategy() {
                 @Override
                 public List<Card> create() {
-                    Card spadeJ = new Card(CardShape.스페이드, CardContents.J);
-                    Card clover5 = new Card(CardShape.클로버, CardContents.FIVE);
-                    Card diamond3 = new Card(CardShape.다이아몬드, CardContents.THREE);
+                    Card spadeJ = new Card(CardShape.SPADE, CardContents.J);
+                    Card clover5 = new Card(CardShape.CLOVER, CardContents.FIVE);
+                    Card diamond3 = new Card(CardShape.DIAMOND, CardContents.THREE);
 
                     return List.of(spadeJ, clover5, diamond3);
                 }

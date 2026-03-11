@@ -83,16 +83,16 @@ class GameTest {
             public List<Card> create() {
                 return new ArrayList<>(
                         List.of(
-                                new Card(CardShape.하트, CardContents.J),
-                                new Card(CardShape.하트, CardContents.EIGHT),
-                                new Card(CardShape.다이아몬드, CardContents.J),
-                                new Card(CardShape.다이아몬드, CardContents.THREE),
-                                new Card(CardShape.스페이드, CardContents.J),
-                                new Card(CardShape.스페이드, CardContents.THREE),
-                                new Card(CardShape.클로버, CardContents.J),
-                                new Card(CardShape.클로버, CardContents.NINE),
-                                new Card(CardShape.하트, CardContents.K),
-                                new Card(CardShape.하트, CardContents.NINE)
+                                new Card(CardShape.HEART, CardContents.J),
+                                new Card(CardShape.HEART, CardContents.EIGHT),
+                                new Card(CardShape.DIAMOND, CardContents.J),
+                                new Card(CardShape.DIAMOND, CardContents.THREE),
+                                new Card(CardShape.SPADE, CardContents.J),
+                                new Card(CardShape.SPADE, CardContents.THREE),
+                                new Card(CardShape.CLOVER, CardContents.J),
+                                new Card(CardShape.CLOVER, CardContents.NINE),
+                                new Card(CardShape.HEART, CardContents.K),
+                                new Card(CardShape.HEART, CardContents.NINE)
                         )
                 );
             }
@@ -101,7 +101,7 @@ class GameTest {
         when(gameDelegate.askPlayerNames()).thenReturn(TEST_PLAYER_NAMES);
         Game game = Game.ready(gameDelegate, strategy);
         Map<String, Integer> expectDealerWinLossResults = consistExpectDealerWinLossResults();
-        Map<String, String> expectPlayerWinLossResults = consistExpectPlayerWinLossResults(TEST_PLAYER_NAMES);
+        Map<String, String> expectPlayerWinLossResults = consistExpectPlayerWinLossResults();
 
         //when
         game.play(gameDelegate);
@@ -115,7 +115,7 @@ class GameTest {
         assertThat(result.playerWinLossResults()).isEqualTo(expectPlayerWinLossResults);
     }
 
-    private Map<String, String> consistExpectPlayerWinLossResults(List<String> testPlayerNames) {
+    private Map<String, String> consistExpectPlayerWinLossResults() {
         Map<String, String> expectPlayerWinLossResults = new LinkedHashMap<>();
         expectPlayerWinLossResults.put("pobi", "패");
         expectPlayerWinLossResults.put("terry", "패");

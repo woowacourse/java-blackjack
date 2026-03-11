@@ -60,9 +60,9 @@ class BlackJackControllerTest {
     void showPlayerCards_success() {
         //given
         List<Card> testCards = List.of(
-                new Card(CardShape.하트, CardContents.TWO),
-                new Card(CardShape.하트, CardContents.THREE),
-                new Card(CardShape.하트, CardContents.FOUR)
+                new Card(CardShape.HEART, CardContents.TWO),
+                new Card(CardShape.HEART, CardContents.THREE),
+                new Card(CardShape.HEART, CardContents.FOUR)
         );
         CardCreationStrategy strategy = new CardCreationStrategy() {
             @Override

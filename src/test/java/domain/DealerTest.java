@@ -16,8 +16,8 @@ public class DealerTest {
         CardCreationStrategy fixedCardCreationStrategy = new CardCreationStrategy() {
             @Override
             public List<Card> create() {
-                Card spadeJ = new Card(CardShape.스페이드, CardContents.J);
-                Card clover5 = new Card(CardShape.클로버, CardContents.FIVE);
+                Card spadeJ = new Card(CardShape.SPADE, CardContents.J);
+                Card clover5 = new Card(CardShape.CLOVER, CardContents.FIVE);
 
                 return new ArrayList<>(List.of(spadeJ, clover5));
             }
@@ -34,12 +34,12 @@ public class DealerTest {
     void addCard_Dealer_success() {
         //given
         CardCreationStrategy dealerCardCreationStrategy = () -> {
-            Card spadeJ = new Card(CardShape.스페이드, CardContents.J);
+            Card spadeJ = new Card(CardShape.SPADE, CardContents.J);
             return new ArrayList<>(List.of(spadeJ));
         };
         CardCreationStrategy totalCardCreationStrategy = () -> {
-            Card spadeA = new Card(CardShape.스페이드, CardContents.A);
-            Card heartA = new Card(CardShape.하트, CardContents.TWO);
+            Card spadeA = new Card(CardShape.SPADE, CardContents.A);
+            Card heartA = new Card(CardShape.HEART, CardContents.TWO);
             return new ArrayList<>(List.of(spadeA, heartA));
         };
         Deck dealerDeck = Deck.createDeck(dealerCardCreationStrategy);
@@ -59,13 +59,13 @@ public class DealerTest {
     void addCard_Dealer_Optional_empty() {
         //given
         CardCreationStrategy dealerCardCreationStrategy = () -> {
-            Card spadeJ = new Card(CardShape.스페이드, CardContents.J);
-            Card heartJ = new Card(CardShape.하트, CardContents.J);
+            Card spadeJ = new Card(CardShape.SPADE, CardContents.J);
+            Card heartJ = new Card(CardShape.HEART, CardContents.J);
             return new ArrayList<>(List.of(spadeJ, heartJ));
         };
         CardCreationStrategy totalCardCreationStrategy = () -> {
-            Card spadeA = new Card(CardShape.스페이드, CardContents.A);
-            Card heartA = new Card(CardShape.하트, CardContents.TWO);
+            Card spadeA = new Card(CardShape.SPADE, CardContents.A);
+            Card heartA = new Card(CardShape.HEART, CardContents.TWO);
             return new ArrayList<>(List.of(spadeA, heartA));
         };
         Deck dealerDeck = Deck.createDeck(dealerCardCreationStrategy);

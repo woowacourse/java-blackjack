@@ -1,7 +1,13 @@
 package domain;
 
 public enum Result {
-    승, 무, 패;
+    WIN("승"), TIE("무"), LOSS("패");
+
+    private final String name;
+
+    Result(String name) {
+        this.name = name;
+    }
 
     public static Result determinePlayerResult(
             int dealerScore,
@@ -10,33 +16,37 @@ public enum Result {
             boolean isPlayerBust
     ) {
         if (isDealerBust) {
-            return Result.승;
+            return Result.WIN;
         }
         if (isPlayerBust) {
-            return Result.패;
+            return Result.LOSS;
         }
         return compareScoreForCheckPlayerResult(dealerScore, playerScore);
     }
 
     private static Result compareScoreForCheckPlayerResult(int dealerScore, int playerScore) {
         if (dealerScore > playerScore) {
-            return Result.패;
+            return Result.LOSS;
         }
         if (dealerScore == playerScore) {
-            return Result.무;
+            return Result.TIE;
         }
-        return Result.승;
+        return Result.WIN;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public Result reverse() {
-        if (this.equals(Result.승)) {
-            return Result.패;
+        if (this.equals(Result.WIN)) {
+            return Result.LOSS;
         }
 
-        if (this.equals(Result.패)) {
-            return Result.승;
+        if (this.equals(Result.LOSS)) {
+            return Result.WIN;
         }
 
-        return Result.무;
+        return Result.TIE;
     }
 }

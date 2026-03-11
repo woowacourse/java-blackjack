@@ -14,8 +14,8 @@ public class AceScoreDiscriminatorTest {
     void calculateAceCardSum_success() {
         //given
         List<Card> testCards = List.of(
-                new Card(CardShape.스페이드, CardContents.A),
-                new Card(CardShape.클로버, CardContents.TEN)
+                new Card(CardShape.SPADE, CardContents.A),
+                new Card(CardShape.CLOVER, CardContents.TEN)
         );
         int testSumExceptAce = 10;
         int expectedAceCardsSum = 11;
@@ -32,9 +32,9 @@ public class AceScoreDiscriminatorTest {
     void calculateAceCardsSum_success() {
         //given
         List<Card> testCards = List.of(
-                new Card(CardShape.스페이드, CardContents.A),
-                new Card(CardShape.클로버, CardContents.A),
-                new Card(CardShape.클로버, CardContents.TEN)
+                new Card(CardShape.SPADE, CardContents.A),
+                new Card(CardShape.CLOVER, CardContents.A),
+                new Card(CardShape.CLOVER, CardContents.TEN)
         );
         int testSumExceptAce = 10;
         int expectedAceCardsSum = 2;

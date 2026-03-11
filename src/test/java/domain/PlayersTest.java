@@ -38,8 +38,8 @@ class PlayersTest {
         //given
         List<String> testPlayerNames = List.of("pobi");
         List<Card> expectPobiCards = List.of(
-                new Card(CardShape.스페이드, CardContents.A),
-                new Card(CardShape.스페이드, CardContents.TWO)
+                new Card(CardShape.SPADE, CardContents.A),
+                new Card(CardShape.SPADE, CardContents.TWO)
         );
 
         //when
