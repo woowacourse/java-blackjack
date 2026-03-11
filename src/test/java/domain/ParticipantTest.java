@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ParticipantTest {
-    int startSize;
     Participant pobi;
 
     @BeforeEach
@@ -23,7 +22,7 @@ class ParticipantTest {
         Deck deck = Deck.createDeck(new RandomShuffleStrategy());
         pobi.receive(deck.draw());
 
-        assertThat(pobi.handSize()).isEqualTo(startSize + 1);
+        assertThat(pobi.handSize()).isEqualTo(1);
     }
 
     @Test
@@ -31,6 +30,6 @@ class ParticipantTest {
         Deck deck = Deck.createDeck(new RandomShuffleStrategy());
         pobi.receiveInitialCards(deck.drawInitialCards());
 
-        assertThat(pobi.handSize()).isEqualTo(startSize + 2);
+        assertThat(pobi.handSize()).isEqualTo(2);
     }
 }

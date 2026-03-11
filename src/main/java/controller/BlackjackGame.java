@@ -1,6 +1,5 @@
 package controller;
 
-import domain.card.Card;
 import domain.deck.CardShuffleStrategy;
 import domain.deck.Deck;
 import domain.deck.RandomShuffleStrategy;
