@@ -3,6 +3,7 @@ package domain.card;
 import static domain.Constant.DELIMITER;
 
 import domain.Rank;
+import domain.Result;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,12 +28,15 @@ public class Cards {
     }
 
     public int getTotalSum() {
-        int aceNum = getAceAmount();
-        int sum = getAmountWithoutAce();
+        int aceCount = getAceAmount();
+        int sum = getBaseSum();
 
-        for (int i = aceNum; i > 0; i--) {
-            sum += Rank.decideAceValue(sum, i);
+        for (int i = 0; i < aceCount; i++) {
+            if ((sum + Rank.ACE_ADDITIONAL_VALUE) <= Result.BLACKJACK_MAX_NUMBER) {
+                sum += Rank.ACE_ADDITIONAL_VALUE;
+            }
         }
+
         return sum;
     }
 
@@ -44,12 +48,10 @@ public class Cards {
         return aceAmount;
     }
 
-    private int getAmountWithoutAce() {
-        int sum = 0;
-        for (Card card : cards) {
-            sum += card.getRankValueIfNotAce();
-        }
-        return sum;
+    private int getBaseSum() {
+        return cards.stream()
+                .mapToInt(Card::getRankValue)
+                .sum();
     }
 
     @Override

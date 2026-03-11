@@ -1,7 +1,5 @@
 package domain;
 
-import static domain.Result.BLACKJACK_MAX_NUMBER;
-
 public enum Rank {
     ACE("A", 1),
     TWO("2", 2),
@@ -19,23 +17,11 @@ public enum Rank {
 
     private final String displayValue;
     private final int scoreValue;
-    public static final int ACE_MAX_VALUE = 11;
-    public static final int ACE_MIN_VALUE = 1;
+    public static final int ACE_ADDITIONAL_VALUE = 10;
 
     Rank(String displayValue, int scoreValue) {
         this.displayValue = displayValue;
         this.scoreValue = scoreValue;
-    }
-
-    public static int decideAceValue(int sum, int leftAce) {
-        if (sum + ACE_MAX_VALUE <= calculateThresholdConsideringRemainingAces(leftAce)) {
-            return ACE_MAX_VALUE;
-        }
-        return ACE_MIN_VALUE;
-    }
-
-    private static int calculateThresholdConsideringRemainingAces(int leftAce) {
-        return BLACKJACK_MAX_NUMBER + 1 - leftAce;
     }
 
     public int getScoreValue() {

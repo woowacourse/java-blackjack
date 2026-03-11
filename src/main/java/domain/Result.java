@@ -15,7 +15,8 @@ public enum Result {
     }
 
     private static boolean isPlayerWin(int playerSum, int dealerSum) {
-        return playerSum <= BLACKJACK_MAX_NUMBER && playerSum > dealerSum;
+        return (playerSum <= BLACKJACK_MAX_NUMBER && playerSum > dealerSum) || (dealerSum > BLACKJACK_MAX_NUMBER
+                && playerSum <= BLACKJACK_MAX_NUMBER);
     }
 
     private static boolean isPlayerLose(int playerSum, int dealerSum) {
