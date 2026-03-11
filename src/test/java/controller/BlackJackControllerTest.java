@@ -110,18 +110,4 @@ class BlackJackControllerTest {
             Assertions.assertThat(result).isFalse();
         }
     }
-
-    //private List<Card> createSampleCards() {
-//        CardShape[] shapes = CardShape.values();
-//        CardContents[] contents = CardContents.values();
-//
-//        List<Card> sampleCards = new ArrayList<>();
-//        for (CardShape cardShape : shapes) {
-//            for (CardContents content : contents) {
-//                sampleCards.add(new Card(cardShape, content));
-//            }
-//        }
-//
-//        return sampleCards;
-//    }
 }
