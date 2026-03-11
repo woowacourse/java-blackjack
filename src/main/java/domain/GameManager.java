@@ -2,7 +2,9 @@ package domain;
 
 import dto.ParticipantCardsDto;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GameManager {
     private static final int MAX_PLAYER = 8;
@@ -66,11 +68,22 @@ public class GameManager {
         participant.receiveCard(card);
     }
 
-    public static boolean isOverBurstThreshold(int score) {
-        if (score > BURST_THRESHOLD) {
-            return true;
+
+
+    public Map<String, Boolean> getGameResult() {
+        Map<Participant, Integer> participantScores = getParticipantScores(dealer, players);
+        Map<String, Boolean> gameResult = Result.calculateResult(participantScores);
+        return gameResult;
+    }
+
+    private static Map<Participant, Integer> getParticipantScores(Dealer dealer, List<Player> players) {
+        Map<Participant, Integer> participantScores = new HashMap<>();
+        participantScores.put(dealer, dealer.getScore());
+
+        for (Player player : players) {
+            participantScores.put(player, player.getScore());
         }
-        return false;
+        return participantScores;
     }
 
     public static void validatePlayersNumber(List<String> playerNames) {

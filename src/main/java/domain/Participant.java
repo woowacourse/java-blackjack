@@ -5,6 +5,7 @@ import dto.ParticipantCardsDto;
 import java.util.ArrayList;
 
 public abstract class Participant {
+    private static final int BURST_THRESHOLD = 21;
     private final Name name;
     protected final Cards cards;
 
@@ -25,6 +26,13 @@ public abstract class Participant {
 
     public int getScore() {
         return cards.calculateScore();
+    }
+
+    public boolean isBurst() {
+        if (this.getScore() > BURST_THRESHOLD) {
+            return true;
+        }
+        return false;
     }
 
     public ParticipantCardsDto getParticipantCardsDto() {

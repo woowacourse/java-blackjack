@@ -1,7 +1,5 @@
 package domain;
 
-import static domain.GameManager.isOverBurstThreshold;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -79,6 +77,10 @@ public class Cards {
             return false;
         }
 
+        return true;
+    }
+
+    private boolean isOverBurstThreshold(int sum) {
         return true;
     }
 }

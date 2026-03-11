@@ -21,17 +21,15 @@ public class BlackJackGameController {
         List<Player> players = initPlayer();
         GameManager gameManager = new GameManager(players);
 
-        // TODO: 이름 출력 로직
         List<String> playersNames = getPlayerNames(players);
         OutputView.printGameInitialMessage(playersNames);
 
         gameManager.distributeInitialCards();
         printParticipantCards(gameManager);
 
-        // TODO: ------------------------------------------------------------
         playGame(players, gameManager);
 
-        Map<String, Boolean> gameResult = getGameResult(gameManager.getDealer(), players);
+        Map<String, Boolean> gameResult = gameManager.getGameResult();
 
         endGame(gameManager.getDealer(), players, gameResult);
     }
@@ -75,7 +73,6 @@ public class BlackJackGameController {
         if (response.equals("y")) {
             return true;
         }
-
         return false;
     }
 
@@ -86,12 +83,6 @@ public class BlackJackGameController {
         for (ParticipantCardsDto playerDto : playerDtos) {
             OutputView.printCards(playerDto);
         }
-    }
-
-    private static Map<String, Boolean> getGameResult(Dealer dealer, List<Player> players) {
-        Map<Participant, Integer> participantScores = getParticipantScores(dealer, players);
-        Map<String, Boolean> gameResult = Result.calculateResult(participantScores);
-        return gameResult;
     }
 
     private static void endGame(Dealer dealer, List<Player> players, Map<String, Boolean> gameResult) {
@@ -105,16 +96,6 @@ public class BlackJackGameController {
         for (Player player : players) {
             OutputView.printFinalCards(player.getParticipantCardsDto());
         }
-    }
-
-    private static Map<Participant, Integer> getParticipantScores(Dealer dealer, List<Player> players) {
-        Map<Participant, Integer> participantScores = new HashMap<>();
-        participantScores.put(dealer, dealer.getScore());
-
-        for (Player player : players) {
-            participantScores.put(player, player.getScore());
-        }
-        return participantScores;
     }
 
     private List<String> getPlayerNames(List<Player> players) {
