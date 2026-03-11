@@ -20,12 +20,15 @@ public class Deck {
             throw new IllegalStateException("덱에 카드가 없습니다.");
         }
 
-        final List<Card> cardList = new ArrayList<>(cards);
-        Collections.shuffle(cardList);
-
-        final Card drawnCard = cardList.getFirst();
+        final Card drawnCard = getShuffledCards().getFirst();
         cards.remove(drawnCard);
 
         return drawnCard;
+    }
+
+    private List<Card> getShuffledCards() {
+        final List<Card> cardList = new ArrayList<>(cards);
+        Collections.shuffle(cardList);
+        return cardList;
     }
 }
