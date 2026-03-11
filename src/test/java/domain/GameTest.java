@@ -3,10 +3,12 @@ package domain;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
+import exception.ErrorMessage;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -119,5 +121,16 @@ class GameTest {
 
         // then
         assertFalse(game.dealerShouldHit());
+    }
+
+    @Test
+    void 플레이어의_이름이_중복된다면_예외를_발생한다(){
+        // given
+        List<String> names = List.of("시오","시오");
+
+        // when, then
+        assertThatThrownBy(() -> new Game(names, new Deck()))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(ErrorMessage.DUPLICATE_NAME.getMessage());
     }
 }

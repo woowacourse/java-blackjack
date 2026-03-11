@@ -1,6 +1,10 @@
 package domain;
 
+import exception.ErrorMessage;
+
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Game {
     private final List<Player> players;
@@ -8,12 +12,20 @@ public class Game {
     private final Deck deck;
 
     public Game(List<String> playerNames, Deck deck){
+        validateDuplicate(playerNames);
+
         this.deck = deck;
         this.dealer = new Dealer();
         this.players = playerNames.stream()
                 .map(Player::new)
                 .toList();
         initCards();
+    }
+    private static void validateDuplicate(List<String> playerNames){
+        Set<String> set = new HashSet<>(playerNames);
+        if(set.size() != playerNames.size()){
+            throw new IllegalArgumentException(ErrorMessage.DUPLICATE_NAME.getMessage());
+        }
     }
 
     private void initCards(){
