@@ -2,7 +2,6 @@ package blackjack.util;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public final class InputValidator {
 
@@ -22,6 +21,16 @@ public final class InputValidator {
 
         if (new HashSet<>(names).size() < names.size()) {
             throw new IllegalArgumentException("중복된 플레이어 이름이 존재합니다.");
+        }
+    }
+
+    public static void validateBetAmount(int amount) {
+        if (amount < 0) {
+            throw new IllegalArgumentException("자연수가 아닙니다.");
+        }
+
+        if (amount % 100 != 0) {
+            throw new IllegalArgumentException("100원 단위가 아닙니다.");
         }
     }
 }

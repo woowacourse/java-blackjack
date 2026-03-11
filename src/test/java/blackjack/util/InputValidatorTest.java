@@ -44,4 +44,20 @@ class InputValidatorTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("names가 null입니다.");
     }
+
+    @Test
+    @DisplayName("배팅 금액이 자연수가 아니면 예외가 발생한다.")
+    void not_natural_number() {
+        assertThatThrownBy(() -> InputValidator.validateBetAmount(-100))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("자연수가 아닙니다.");
+    }
+
+    @Test
+    @DisplayName("배팅 금액이 100원 단위가 아니면 예외가 발생한다.")
+    void not_100() {
+        assertThatThrownBy(() -> InputValidator.validateBetAmount(101))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("100원 단위가 아닙니다.");
+    }
 }

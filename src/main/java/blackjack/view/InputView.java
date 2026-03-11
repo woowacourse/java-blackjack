@@ -42,8 +42,12 @@ public class InputView {
     }
 
     public int inputBetAmount() {
-        return InputParser.parseInt(
+        int amount = InputParser.parseInt(
                 scanner.nextLine()
         );
+
+        InputValidator.validateBetAmount(amount);
+
+        return amount;
     }
 }

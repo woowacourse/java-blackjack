@@ -4,6 +4,7 @@ import blackjack.model.card.Card;
 import blackjack.model.cardDeck.CardDeck;
 import blackjack.model.Hands;
 import blackjack.model.result.Result;
+import java.util.List;
 
 public class Dealer extends Participant {
 
@@ -52,5 +53,13 @@ public class Dealer extends Participant {
         }
 
         return Result.DRAW;
+    }
+
+    public List<Player> awardPrize(List<Player> players) {
+        if (this.isBust()) {
+            return List.copyOf(players);
+        }
+
+        return null;
     }
 }
