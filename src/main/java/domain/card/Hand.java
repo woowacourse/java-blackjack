@@ -1,13 +1,14 @@
 package domain.card;
 
-import static config.BlackjackGameConstant.ACE_BONUS_SCORE;
-import static config.BlackjackGameConstant.BUSTED_CONDITION;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class Hand {
+
+    public static final int BUSTED_CONDITION = 21;
+    public static final int ACE_BONUS_SCORE = 10;
 
     private final List<Card> cards;
 
