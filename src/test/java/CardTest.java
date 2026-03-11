@@ -9,14 +9,14 @@ import org.junit.jupiter.api.Test;
 
 public class CardTest {
 
-    Card card2 = new Card(Rank.TWO, Shape.HEART);
-    Card cardJ = new Card(Rank.JACK, Shape.SPADE);
-    Card cardQ = new Card(Rank.QUEEN, Shape.DIAMOND);
-    Card cardK = new Card(Rank.KING, Shape.CLOVER);
-
     @Test
     @DisplayName("카드 점수 계산시 J, Q, K는 10으로 환산 2~10은 그대로 적용한다.")
     void calculate_card_score() {
+        Card card2 = new Card(Rank.TWO, Shape.HEART);
+        Card cardJ = new Card(Rank.JACK, Shape.SPADE);
+        Card cardQ = new Card(Rank.QUEEN, Shape.DIAMOND);
+        Card cardK = new Card(Rank.KING, Shape.CLOVER);
+
         assertThat(card2.getScore()).isEqualTo(2);
         assertThat(cardJ.getScore()).isEqualTo(10);
         assertThat(cardQ.getScore()).isEqualTo(10);
