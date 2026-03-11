@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+import blackjack.dto.PlayerBettingRequest;
+import blackjack.dto.PlayersBettingRequest;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -15,7 +17,9 @@ class ParticipantsTest {
     @DisplayName("초기 분배 시 플레이어에게 두 장의 카드가 분배된다.")
     @Test
     void distributeCardsSuccessfully() {
-        Players players = Players.makePlayers(List.of("pobi"));
+        PlayerBettingRequest playerBettingRequest = PlayerBettingRequest.of("pobi", "1000");
+        PlayersBettingRequest playersBettingRequest = PlayersBettingRequest.from(List.of(playerBettingRequest));
+        Players players = Players.makePlayers(playersBettingRequest);
         Dealer dealer = Dealer.from();
         Participants participants = new Participants(players, dealer);
         PlayingCards deck = PlayingCards.createShuffledDeck();
@@ -30,7 +34,10 @@ class ParticipantsTest {
     @DisplayName("덱에 남은 카드가 부족할 때 초기 분배를 시도하면 예외가 발생한다.")
     @Test
     void distributeCardsThrowsExceptionOnShortDeck() {
-        Players players = Players.makePlayers(List.of("pobi", "jason"));
+        PlayerBettingRequest pobiRequest = PlayerBettingRequest.of("pobi", "1000");
+        PlayerBettingRequest jasonRequest = PlayerBettingRequest.of("jason", "2000");
+        PlayersBettingRequest playersBettingRequest = PlayersBettingRequest.from(List.of(pobiRequest, jasonRequest));
+        Players players = Players.makePlayers(playersBettingRequest);
         Participants participants = new Participants(players, Dealer.from());
         PlayingCards shortDeck = PlayingCards.from(List.of(
             new Card(Rank.TWO, Suit.SPADE),
@@ -45,7 +52,9 @@ class ParticipantsTest {
     @DisplayName("딜러가 카드를 더 받아야 하는 상황인지 정확히 판단한다.")
     @Test
     void isDealerDrawWorksCorrectly() {
-        Players players = Players.makePlayers(List.of("pobi"));
+        PlayerBettingRequest playerBettingRequest = PlayerBettingRequest.of("pobi", "1000");
+        PlayersBettingRequest playersBettingRequest = PlayersBettingRequest.from(List.of(playerBettingRequest));
+        Players players = Players.makePlayers(playersBettingRequest);
         Participants participants = new Participants(players, Dealer.from());
         PlayingCards dealerCards16 = PlayingCards.from(List.of(
             new Card(Rank.TEN, Suit.SPADE),
