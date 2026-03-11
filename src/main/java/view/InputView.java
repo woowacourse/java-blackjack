@@ -7,13 +7,23 @@ public final class InputView {
     private final static Scanner scanner = new Scanner(System.in);
 
     public static String readPlayers() {
-        String names = readLine();
+        System.out.println(InfoMessage.PLAYER_INPUT.message());
+        String names = scanner.nextLine();
         System.out.println();
         return names;
     }
 
+    public static String readBettingAmount(String name) {
+        String betting = readByFormatter(InfoMessage.BETTING_AMOUNT.message(), name);
+        System.out.println();
+        return betting;
+    }
+
     public static String readSelect(String name) {
-        String formatter = InfoMessage.SELECT.message();
+        return readByFormatter(InfoMessage.SELECT.message(), name);
+    }
+
+    private static String readByFormatter(String formatter, String name) {
         System.out.printf(formatter + System.lineSeparator(), name);
         return scanner.nextLine();
     }

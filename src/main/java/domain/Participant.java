@@ -31,6 +31,7 @@ public abstract class Participant {
     public int scoreSum() {
         return hand.scoreSum();
     }
+
     public String name() {
         return name;
     }
