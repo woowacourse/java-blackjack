@@ -26,9 +26,9 @@ public class Players {
                 .toList();
     }
 
-    public List<List<String>> getPlayersCardsInfo() {
+    public List<List<Card>> getPlayersCardsInfo() {
         return players.stream()
-                .map(Player::getCardsInfo)
+                .map(Player::getCards)
                 .toList();
     }
 
