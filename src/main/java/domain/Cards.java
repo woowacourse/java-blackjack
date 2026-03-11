@@ -9,18 +9,26 @@ import java.util.stream.Stream;
 
 public class Cards {
 
+    public static final int FIRST_DRAW_SIZE = 2;
+
     private final List<Card> cards;
 
     private Cards() {
         this.cards = generateCards();
     }
 
-    public void shuffle() {
-        Collections.shuffle(this.cards);
-    }
-
     public static Cards of() {
         return new Cards();
+    }
+
+    public static Cards shuffled() {
+        Cards deck = Cards.of();
+        deck.shuffle();
+        return deck;
+    }
+
+    private void shuffle() {
+        Collections.shuffle(this.cards);
     }
 
     private List<Card> generateCards() {
@@ -32,7 +40,7 @@ public class Cards {
 
     public List<Card> drawInitialHand() {
         return new ArrayList<>(Stream.generate(this::draw)
-                .limit(Policy.FIRST_DRAW_SIZE)
+                .limit(FIRST_DRAW_SIZE)
                 .toList());
     }
 
