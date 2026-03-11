@@ -13,7 +13,7 @@ class DealerTest {
         Deck deck = Deck.of(new NoShuffleStrategy());
         Dealer dealer = Dealer.of(deck.drawInitialHand());
 
-        int cardSize = dealer.getCardSize();
+        int cardSize = dealer.getCards().size();
 
         int expect = 2;
         assertThat(cardSize).isEqualTo(expect);

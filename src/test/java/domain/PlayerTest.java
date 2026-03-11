@@ -71,8 +71,6 @@ class PlayerTest {
         Deck deck = Deck.of(new NoShuffleStrategy());
         Player player = Player.of(deck.drawInitialHand(), "pobi");
 
-        player.addCard(deck.draw());
-
         assertThat(player.isInitialHand()).isTrue();
     }
 
