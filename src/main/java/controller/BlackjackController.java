@@ -25,10 +25,10 @@ public class BlackjackController {
     public void start() {
         List<ParticipantDto> participantDtoList = initializeGame();
         inputHitOrStandOnPlayer(participantDtoList);
-        boolean dealerPick = blackjackService.drawDealerCard();
-        if (dealerPick) {
+        while (blackjackService.drawDealerCard()) {
             outputView.printDealerHit();
         }
+
         printBlackjackResult();
         printBlackjackStatistics();
     }
