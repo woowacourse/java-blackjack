@@ -1,7 +1,5 @@
 package view;
 
-import java.util.List;
-
 public class OutputView {
 
     private static final String lineSeparator = System.lineSeparator();
@@ -16,10 +14,5 @@ public class OutputView {
 
     public void separatorLine() {
         System.out.print(lineSeparator);
-    }
-
-    public void printList(List<String> values) {
-        values.forEach(this::println);
-        separatorLine();
     }
 }

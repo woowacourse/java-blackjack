@@ -19,11 +19,6 @@ public class Card {
         return rank.isAce();
     }
 
-    // 지울 것
-    public String getName() {
-        return rank.getName() + suit.getName();
-    }
-
     public String getRankName() {
         return rank.getName();
     }

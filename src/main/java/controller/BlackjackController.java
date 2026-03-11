@@ -71,7 +71,6 @@ public class BlackjackController {
 
     private void printPlayersCardInfo(Players players) {
         List<List<Card>> playersCardsInfo = players.getPlayersCardsInfo();
-//        List<List<String>> playersCardsInfo = players.getPlayersCardsInfo();
         List<String> playerNames = players.getUserNames();
 
         for (int i = 0; i < playerNames.size(); i++) {
@@ -136,7 +135,6 @@ public class BlackjackController {
         outputView.separatorLine();
         printDealerCardsAndScore(dealer);
 
-//        List<List<String>> playersCardsInfo = players.getPlayersCardsInfo();
         List<List<Card>> playersCardsInfo = players.getPlayersCardsInfo();
         List<String> playerNames = players.getUserNames();
         List<Integer> playersScoreInfo = players.getPlayerScoreInfo();
