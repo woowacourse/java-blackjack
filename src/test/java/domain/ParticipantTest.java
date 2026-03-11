@@ -2,8 +2,10 @@ package domain;
 
 import domain.participant.Dealer;
 import domain.participant.Name;
+import domain.participant.Participant;
 import domain.participant.Player;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class ParticipantTest {
@@ -62,5 +64,21 @@ class ParticipantTest {
         gameManager.dealCard(dealer); // Q
 
         Assertions.assertThat(dealer.canReceive()).isFalse();
+    }
+
+    @Test
+    void 이름이_같으면_동일한_참가자로_판단한다() {
+        Participant participant1 = new Player(Name.from("나무"));
+        Participant participant2 = new Player(Name.from("나무"));
+
+        Assertions.assertThat(participant1).isEqualTo(participant2);
+    }
+
+    @Test
+    void 이름이_다르면_다른_참가자로_판단한다() {
+        Participant participant1 = new Player(Name.from("나무"));
+        Participant participant2 = new Player(Name.from("고래"));
+
+        Assertions.assertThat(participant1).isNotEqualTo(participant2);
     }
 }
