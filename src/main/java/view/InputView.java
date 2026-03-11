@@ -5,7 +5,6 @@ import static view.constant.ViewRule.NO_ANSWER;
 import static view.constant.ViewRule.YES_ANSWER;
 
 import java.util.Scanner;
-import message.ErrorMessage;
 
 public class InputView {
     private static final String ENTER_PLAYER_NAME = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
@@ -29,10 +28,6 @@ public class InputView {
 
     public static String askPlayerHit(String name) {
         System.out.printf(ASK_HIT_OR_NOT + LINE_SEPARATOR, name, YES_ANSWER, NO_ANSWER);
-        String input = SCANNER.nextLine();
-        if (!YES_ANSWER.contains(input) && !NO_ANSWER.contains(input)) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_HIT_INPUT.getMessage());
-        }
-        return input;
+        return SCANNER.nextLine();
     }
 }

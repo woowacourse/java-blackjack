@@ -1,6 +1,7 @@
 package view;
 
 import static message.ErrorMessage.BET_AMOUNT_OUT_OF_RANGE;
+import static view.constant.ViewRule.NO_ANSWER;
 import static view.constant.ViewRule.YES_ANSWER;
 
 import java.math.BigInteger;
@@ -18,6 +19,9 @@ public class InputParser {
     }
 
     public static boolean parseHitAnswer(String input) {
+        if (!YES_ANSWER.contains(input) && !NO_ANSWER.contains(input)) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_HIT_INPUT.getMessage());
+        }
         return YES_ANSWER.contains(input);
     }
 
