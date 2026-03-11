@@ -1,16 +1,18 @@
 package domain.pariticipant;
 
-import domain.card.CardShuffler;
 import domain.card.Deck;
 import domain.card.Hand;
 
 public class Player extends Participant {
 
-    public Player(Name name, Hand hand) {
+    private final BettingAmount bettingAmount;
+
+    public Player(Name name, Hand hand, BettingAmount bettingAmount) {
         super(name, hand);
+        this.bettingAmount = bettingAmount;
     }
 
-    public void hitCard(Deck deck, CardShuffler cardShuffler) {
-        this.drawCard(deck, cardShuffler);
+    public void hitCard(Deck deck) {
+        this.drawCard(deck);
     }
 }

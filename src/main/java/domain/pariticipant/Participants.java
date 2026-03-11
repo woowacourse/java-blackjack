@@ -39,8 +39,8 @@ public class Participants {
     }
 
     public void drawInitialCards(Deck deck, CardShuffler cardShuffler) {
-        dealer.drawInitialCards(deck, cardShuffler);
-        players.drawInitialCards(deck, cardShuffler);
+        dealer.drawInitialCards(deck);
+        players.drawInitialCards(deck);
     }
 
     public MatchResult calculateMatchResult() {

@@ -26,7 +26,7 @@ public class InputView {
         validateIsBlank(input);
         input = input.trim();
 
-        if (!input.matches("[y|n]")) {
+        if (!input.matches("[yn]")) {
             throw new IllegalArgumentException(INVALID_HIT_STAND_INPUT_ERROR.getMessage());
         }
         return "y".equals(input);

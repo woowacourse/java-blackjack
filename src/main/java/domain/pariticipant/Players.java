@@ -1,6 +1,5 @@
 package domain.pariticipant;
 
-import domain.card.CardShuffler;
 import domain.card.Deck;
 
 import java.util.ArrayList;
@@ -24,9 +23,9 @@ public class Players {
         return List.copyOf(players);
     }
 
-    public void drawInitialCards(Deck deck, CardShuffler cardShuffler) {
+    public void drawInitialCards(Deck deck) {
         for (Player player : players) {
-            player.drawInitialCards(deck, cardShuffler);
+            player.drawInitialCards(deck);
         }
     }
 }

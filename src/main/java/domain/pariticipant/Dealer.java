@@ -1,6 +1,5 @@
 package domain.pariticipant;
 
-import domain.card.CardShuffler;
 import domain.card.Deck;
 import domain.card.Hand;
 
@@ -11,8 +10,8 @@ public class Dealer extends Participant {
         super(name, hand);
     }
 
-    public void drawAdditionalCard(Deck deck, CardShuffler cardShuffler) {
-        this.drawCard(deck, cardShuffler);
+    public void drawAdditionalCard(Deck deck) {
+        this.drawCard(deck);
     }
 
     public boolean shouldHit() {

@@ -30,7 +30,7 @@ public class BlackjackController {
     public void run() {
         Participants participants = addParticipants();
 
-        Deck deck = Deck.initCardDeck();
+        Deck deck = Deck.initCardDeck(cardShuffler);
 
         drawInitCard(participants, deck);
 
@@ -43,9 +43,11 @@ public class BlackjackController {
 
     private Participants addParticipants() {
         List<Name> playerNames = inputView.readPlayers();
+
         List<Player> players = new ArrayList<>();
         for (Name name : playerNames) {
-            players.add(new Player(name, new Hand(new ArrayList<>())));
+            BettingAmount bettingAmount = inputView.readBettingAmount(name.name()); // 베팅 금액 입력 받기
+            players.add(new Player(name, new Hand(new ArrayList<>()), bettingAmount));
         }
         return new Participants(new Players(players));
     }
@@ -82,7 +84,7 @@ public class BlackjackController {
         boolean isHit = inputView.readHitOrStand(player.getName());  // 더 받을 지 물어봄
         if (isHit) {
             // 히트인 경우 카드 더 뽑아 추가하기
-            player.hitCard(deck, cardShuffler);
+            player.hitCard(deck);
         }
         return isHit;
     }
@@ -90,7 +92,7 @@ public class BlackjackController {
     private void drawDealerAdditionalCard(Dealer dealer, Deck deck) {
         while (dealer.shouldHit()) {
             outputView.printDealerAdditionalDraw();
-            dealer.drawAdditionalCard(deck, cardShuffler);
+            dealer.drawAdditionalCard(deck);
         }
     }
 

@@ -8,7 +8,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Stream;
 
 import static constant.BlackjackConstant.DEALER_NAME;
@@ -21,11 +20,11 @@ class ParticipantTest {
     @MethodSource("참가자_초기_카드_뽑기_테스트_케이스")
     @DisplayName("참가자의 초기 카드를 INIT_DRAW_COUNT만큼 뽑는다.")
     public void drawInitialCards(Participant participant) throws Exception {
-        Deck deck = Deck.initCardDeck();
+        Deck deck = Deck.initCardDeck(new FakeCardShuffler());
         CardShuffler cardShuffler = new FakeCardShuffler();
 
         // when
-        participant.drawInitialCards(deck, cardShuffler);
+        participant.drawInitialCards(deck);
 
         // then
         Hand hand = participant.getHand();
