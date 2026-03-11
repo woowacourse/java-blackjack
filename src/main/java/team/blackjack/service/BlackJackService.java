@@ -1,22 +1,18 @@
 package team.blackjack.service;
 
-import java.util.LinkedHashMap;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import team.blackjack.domain.BlackjackGame;
 import team.blackjack.domain.Card;
+import team.blackjack.domain.Dealer;
+import team.blackjack.domain.Player;
 import team.blackjack.domain.Players;
 import team.blackjack.domain.Result;
 import team.blackjack.service.dto.DrawResult;
 import team.blackjack.service.dto.MatchResult;
-import team.blackjack.service.dto.MatchResult.DealerResult;
-import team.blackjack.service.dto.MatchResult.PlayerResult;
 import team.blackjack.service.dto.ScoreResult;
-import team.blackjack.domain.BlackjackGame;
-import team.blackjack.domain.Dealer;
-import team.blackjack.domain.Deck;
-import team.blackjack.domain.Player;
-import team.blackjack.domain.rule.DefaultBlackjackRule;
 
 public class BlackJackService {
     private BlackjackGame blackjackGame;
@@ -31,50 +27,45 @@ public class BlackJackService {
     }
 
     public void drawInitialCards() {
-        final Deck deck = blackjackGame.getDeck();
-        final Dealer dealer = blackjackGame.getDealer();
-
-        getPlayers().initPlayerHands(deck);
-
-        dealer.hit(dealer.draw(deck));
-        dealer.hit(dealer.draw(deck));
+        blackjackGame.drawInitialCards();
     }
 
     public boolean shouldPlayerHit(String name) {
-        final Player player = getPlayers().getPlayerByName(name);
-
-        return !DefaultBlackjackRule.isBust(player.getScore());
+        return blackjackGame.shouldPlayerHit(name);
     }
 
     public void hitPlayer(String name) {
-        getPlayers()
-                .getPlayerByName(name)
-                .hit(blackjackGame.getDeck().draw());
+        blackjackGame.hitPlayer(name);
     }
 
-
     public boolean shouldDealerHit() {
-        final int score = blackjackGame.getDealer().getScore();
-
-        return DefaultBlackjackRule.isDealerMustDraw(score);
+        return blackjackGame.shouldDealerHit();
     }
 
     public void hitDealer() {
-        final Dealer dealer = blackjackGame.getDealer();
-
-        dealer.hit(blackjackGame.getDeck().draw());
+        blackjackGame.hitDealer();
     }
 
     public ScoreResult calculateAllParticipantScore() {
         final List<String> playerNames = getAllPlayerNames();
-        final Map<String, List<String>> playerCards = getPlayers().getCardsByPlayer();
-        final Map<String, Integer> playerScores = getPlayers().getPlayerScoresByPlayer();
+        final Map<String, Integer> playerScores = this.blackjackGame.getAllPlayerScore();
+        final Map<String, List<String>> playerCards = this.blackjackGame.getAllPlayerCards()
+                .entrySet().stream()
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        entry -> entry.getValue().stream()
+                                .map(Card::getCardName)
+                                .toList()
+                ));
 
-        final Dealer dealer = blackjackGame.getDealer();
+        final int dealerScore = this.blackjackGame.getDealerScore();
+        final List<String> dealerCardNames = this.blackjackGame.getDealerCards().stream()
+                .map(Card::getCardName)
+                .toList();
 
         return new ScoreResult(
-                dealer.getHand().getCardNames(),
-                dealer.getScore(),
+                dealerCardNames,
+                dealerScore,
                 playerNames,
                 playerCards,
                 playerScores
@@ -82,49 +73,44 @@ public class BlackJackService {
     }
 
     public List<String> getAllPlayerNames() {
-        return getPlayers().getPlayerNames();
+        return this.blackjackGame.getAllPlayerNames();
     }
 
     public List<String> findPlayerCardNamesByName(String name) {
-        return getPlayers().getPlayerByName(name).getCardInAllHand();
+        return this.blackjackGame.getPlayerCardsByName(name).stream()
+                .map(Card::getCardName)
+                .toList();
     }
 
     public DrawResult getDrawResult() {
         final List<String> playerNames = getAllPlayerNames();
-        final List<Card> cards = blackjackGame.getDealer().getHand().getCards();
-        final Map<String, List<String>> playerCards = getPlayers().getCardsByPlayer();
+        final List<Card> cards = this.blackjackGame.getDealerCards();
+        final Map<String, List<String>> playerCards = this.blackjackGame.getAllPlayerCards()
+                .entrySet().stream()
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        entry -> entry.getValue().stream()
+                                .map(Card::getCardName)
+                                .toList()
+                ));
 
         return new DrawResult(playerNames, cards.getFirst().getCardName(), playerCards);
     }
 
     public MatchResult getGameResult() {
-        final Map<String, PlayerResult> playerResults = calculatePlayersResultMap(blackjackGame.getDealer().getScore());
-        final DealerResult dealerResult = DealerResult.from(playerResults.values());
-        final long winCnt = countBy(dealerResult.results(), Result.WIN);
-        final long loseCnt = countBy(dealerResult.results(), Result.LOSE);
-        final long drawCnt = countBy(dealerResult.results(), Result.DRAW);
+        final Map<String, Result> playerResults = blackjackGame.calculatePlayersResultMap();
+        final Collection<Result> playerResultList = playerResults.values();
+        final long winCnt = countBy(playerResultList, Result.WIN);
+        final long loseCnt = countBy(playerResultList, Result.LOSE);
+        final long drawCnt = countBy(playerResultList, Result.DRAW);
 
-        return new MatchResult(dealerResult, winCnt, loseCnt, drawCnt, playerResults);
+        return new MatchResult(winCnt, loseCnt, drawCnt, playerResults);
     }
 
-    private long countBy(List<Result> results, Result target) {
+    private long countBy(Collection<Result> results, Result target) {
         return results.stream()
+                .map(Result::reverse)
                 .filter(result -> result == target)
                 .count();
-    }
-
-    private Map<String, PlayerResult> calculatePlayersResultMap(int dealerScore) {
-        return getPlayers().getPlayerList().stream()
-                .collect(Collectors.toMap(
-                        Player::getName,
-                        player -> new PlayerResult(DefaultBlackjackRule.judgeResult(player.getScore(), dealerScore)),
-                        (existing, replacement) -> existing,
-                        LinkedHashMap::new
-                ));
-    }
-
-
-    private Players getPlayers() {
-        return this.blackjackGame.getPlayers();
     }
 }

@@ -2,6 +2,7 @@ package team.blackjack.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import team.blackjack.domain.rule.DefaultBlackjackRule;
 
 public class Player {
     private final String name;
@@ -38,11 +39,14 @@ public class Player {
         return hands;
     }
 
-    public List<String> getCardInAllHand() {
+    public List<Card> getCardInAllHand() {
         return hands.stream()
                 .map(Hand::getCards)
                 .flatMap(List::stream)
-                .map(Card::getCardName)
                 .toList();
+    }
+
+    public boolean shouldPlayerHit() {
+        return !DefaultBlackjackRule.isBust(getScore());
     }
 }

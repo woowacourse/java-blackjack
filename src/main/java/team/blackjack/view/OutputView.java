@@ -5,8 +5,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import team.blackjack.service.dto.DrawResult;
 import team.blackjack.service.dto.MatchResult;
-import team.blackjack.service.dto.MatchResult.DealerResult;
-import team.blackjack.service.dto.MatchResult.PlayerResult;
 import team.blackjack.service.dto.ScoreResult;
 import team.blackjack.domain.Result;
 
@@ -53,16 +51,14 @@ public class OutputView {
     }
 
      public static void printGameResult(MatchResult result) {
-         final DealerResult dealerResult = result.dealerResult();
-         final Map<String, PlayerResult> playeredResultMap = result.playerResultMap();
-
+         final Map<String, Result> playeredResultMap = result.playerResultMap();
          println("");
          println("## 최종 승패:");
-         println("딜러: %d승 %d패 %d무".formatted(result.winCount(), result.loseCount(), result.drawCount())
-         );
+         println("딜러: %d승 %d패 %d무"
+                 .formatted(result.dealerWinCount(), result.dealerLoseCount(), result.dealerDrawCount()));
 
          playeredResultMap.entrySet().stream()
-                 .map(entry -> "%s: %s".formatted(entry.getKey(), entry.getValue().result().getName()))
+                 .map(entry -> "%s: %s".formatted(entry.getKey(), entry.getValue().getName()))
                  .forEach(OutputView::println);
 
     }
