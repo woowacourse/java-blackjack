@@ -4,7 +4,7 @@ import domain.card.Hand;
 import domain.result.DealerMatchResult;
 import domain.result.MatchCase;
 import domain.result.MatchResult;
-import domain.result.PlayerMatchResult;
+import domain.result.PlayersMatchResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -43,10 +43,10 @@ class ParticipantsTest {
         MatchResult matchResult = participants.calculateMatchResult();
 
         // then
-        PlayerMatchResult playerMatchResult = matchResult.playerMatchResult();
+        PlayersMatchResult playersMatchResult = matchResult.playersMatchResult();
         DealerMatchResult dealerMatchResult = matchResult.dealerMatchResult();
 
-        assertThat(playerMatchResult.playerMatchResult())
+        assertThat(playersMatchResult.playerMatchResult())
                 .containsExactlyInAnyOrderEntriesOf(
                         Map.of(pobi, MatchCase.WIN,
                                 jason, MatchCase.LOSE

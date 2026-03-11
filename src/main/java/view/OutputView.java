@@ -13,7 +13,7 @@ import domain.pariticipant.*;
 import domain.result.DealerMatchResult;
 import domain.result.MatchCase;
 import domain.result.MatchResult;
-import domain.result.PlayerMatchResult;
+import domain.result.PlayersMatchResult;
 
 public class OutputView {
 
@@ -98,7 +98,7 @@ public class OutputView {
     public void printFinalResults(MatchResult matchResult) {
         System.out.println("\n## 최종 승패");
         printDealerResult(matchResult.dealerMatchResult());
-        printPlayerResult(matchResult.playerMatchResult());
+        printPlayerResult(matchResult.playersMatchResult());
     }
 
 
@@ -116,8 +116,8 @@ public class OutputView {
         System.out.println();
     }
 
-    private static void printPlayerResult(PlayerMatchResult playerMatchResult) {
-        Map<Player, MatchCase> playerMatchCaseMap = playerMatchResult.playerMatchResult();
+    private static void printPlayerResult(PlayersMatchResult playersMatchResult) {
+        Map<Player, MatchCase> playerMatchCaseMap = playersMatchResult.playerMatchResult();
         for (Player player : playerMatchCaseMap.keySet()) {
             System.out.printf("%s: %s\n", player.getName(), playerMatchCaseMap.get(player).getDescription());
         }

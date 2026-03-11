@@ -1,5 +1,5 @@
 package domain.result;
 
-public record MatchResult(PlayerMatchResult playerMatchResult, DealerMatchResult dealerMatchResult) {
+public record MatchResult(PlayersMatchResult playersMatchResult, DealerMatchResult dealerMatchResult) {
 
 }
