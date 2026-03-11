@@ -6,10 +6,10 @@ import static org.assertj.core.api.Assertions.tuple;
 import constant.BlackjackConstant;
 import domain.card.Card;
 import domain.card.CardRank;
-import domain.card.CardShuffler;
 import domain.card.CardSuit;
 import domain.card.Deck;
 import domain.card.Hand;
+import domain.card.Shuffler;
 import domain.participant.Name;
 import domain.participant.Participant;
 import domain.participant.Participants;
@@ -21,13 +21,13 @@ import org.junit.jupiter.api.Test;
 // TODO: 경계값 및 예외 테스트 등 추가 필요
 class BlackjackServiceTest {
 
-    private final BlackjackService blackjackService = new BlackjackService(new FakeCardShuffler());
+    private final BlackjackService blackjackService = new BlackjackService(new FakeShuffler());
 
     @Test
     @DisplayName("카드덱에서 지정한 수만큼의 카드를 뽑는다.")
     public void 카드_뽑기_성공() {
         // given
-        final Deck deck = Deck.initCardDeck();
+        final Deck deck = new Deck();
         final int originCount = deck.getDeckSize();
         final int drawCount = 2;
 
@@ -39,11 +39,10 @@ class BlackjackServiceTest {
         assertThat(deck.getDeckSize()).isEqualTo(originCount - drawCount);
     }
 
-    static class FakeCardShuffler implements CardShuffler {
+    static class FakeShuffler implements Shuffler {
 
         @Override
-        public int shuffleCardDeck(final int deckSize) {
-            return 0;
+        public void shuffle(final List<Card> list) {
         }
     }
 

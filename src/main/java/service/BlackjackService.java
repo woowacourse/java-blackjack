@@ -1,8 +1,8 @@
 package service;
 
 import domain.card.Card;
-import domain.card.CardShuffler;
 import domain.card.Deck;
+import domain.card.Shuffler;
 import domain.participant.Participant;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,10 +10,10 @@ import java.util.List;
 // TODO: Service가 존재해야 하는가? 책임을 더 적합한 곳으로 옮겨보자
 public class BlackjackService {
 
-    private final CardShuffler cardShuffler;
+    private final Shuffler shuffler;
 
-    public BlackjackService(final CardShuffler cardShuffler) {
-        this.cardShuffler = cardShuffler;
+    public BlackjackService(final Shuffler shuffler) {
+        this.shuffler = shuffler;
     }
 
     public List<Card> drawCard(final Deck deck, final int drawCount) {
@@ -21,7 +21,7 @@ public class BlackjackService {
 
         // FIXME: Deck 내부를 Deque로 수정한 뒤, 전면 수정될 부분
         for (int i = 0; i < drawCount; i++) {
-            final int cardIndex = cardShuffler.shuffleCardDeck(deck.getDeckSize());
+            final int cardIndex = shuffler.shuffleCardDeck(deck.getDeckSize());
             cards.add(deck.getCardOf(cardIndex));
             deck.removeCardOf(cardIndex);
         }

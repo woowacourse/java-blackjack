@@ -17,10 +17,10 @@ class DeckTest {
     public void 트럼프_덱_초기화_성공() {
 
         // when
-        final Deck deck = Deck.initCardDeck();
+        final Deck deck = new Deck();
 
         // then
-        final List<Card> cards = deck.getCardDeck();
+        final List<Card> cards = deck.getDeck();
         assertThat(cards).hasSize(CardSuit.values().length * CardRank.values().length);
 
         for (final CardSuit cardSuit : CardSuit.values()) {

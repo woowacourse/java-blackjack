@@ -37,7 +37,7 @@ public class BlackjackController {
         final List<Participant> participantList = addParticipants(); // 플레이어 추가
         final Participants participants = new Participants(participantList);
 
-        final Deck deck = Deck.initCardDeck(); // 카드 덱 초기화
+        final Deck deck = new Deck(); // 카드 덱 초기화
 
         drawInitCard(participantList, deck, participants); // 카드 최초 뽑기
 
