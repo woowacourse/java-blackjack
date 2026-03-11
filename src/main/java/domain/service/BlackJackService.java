@@ -2,6 +2,7 @@ package domain.service;
 
 import domain.model.Dealer;
 import domain.model.Player;
+import domain.model.PlayerBetting;
 import dto.*;
 
 import java.util.List;
@@ -37,6 +38,11 @@ public class BlackJackService {
         return personService.findAllPlayers();
     }
 
+    public void createBetting(Player player, int bettingPrice) {
+        PlayerBetting playerBetting = PlayerBetting.of(player, bettingPrice);
+        personService.savePlayerBetting(playerBetting);
+    }
+
     public PlayerResultDto additionalCard(Player player) {
         cardDistributor.distributeAdditionalCard(player);
         return PlayerResultDto.of(player);
@@ -48,7 +54,7 @@ public class BlackJackService {
 
     public boolean isDealerCanAppend() {
         Dealer dealer = personService.getDealer();
-        return dealer.getDefaultDeckSum() <= DEALER_APPEND_CRITERIA;
+        return dealer.getFinalDeckSum() <= DEALER_APPEND_CRITERIA;
     }
 
     public void additionalDealerCard() {

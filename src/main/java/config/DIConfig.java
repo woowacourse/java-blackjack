@@ -28,7 +28,8 @@ public class DIConfig {
     public PersonService personService() {
         return new PersonService(
                 playerRepository(),
-                dealerRepository()
+                dealerRepository(),
+                playerBettingRepository()
         );
     }
 
@@ -43,8 +44,7 @@ public class DIConfig {
 
     public JudgementService judgementService() {
         return new JudgementService(
-                personService(),
-                playerBettingRepository()
+                personService()
         );
     }
 

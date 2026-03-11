@@ -21,7 +21,8 @@ public class BlackJackServiceTest {
     private final PlayerBettingRepository playerBettingRepository = new PlayerBettingRepository();
     private final PersonService personService = new PersonService(
             playerRepository,
-            dealerRepository
+            dealerRepository,
+            playerBettingRepository
     );
     private final CardRepository cardRepository = new CardRepository();
     private final CardNumberGenerator cardNumberGenerator = new CardNumberGenerator(
@@ -37,8 +38,7 @@ public class BlackJackServiceTest {
             cardFactory
     );
     private final JudgementService judgementService = new JudgementService(
-            personService,
-            playerBettingRepository
+            personService
     );
     private final BlackJackService blackJackService = new BlackJackService(
             personService,

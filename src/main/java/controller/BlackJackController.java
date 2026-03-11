@@ -23,6 +23,7 @@ public class BlackJackController {
         String inputPlayerNames = view.inputPlayerNames();
         InputValidator.validatePlayerNames(inputPlayerNames);
         InitialDto initialDto = blackJackService.createPlayer(StringParser.parse(inputPlayerNames));
+        blackJackService.getAllPlayers().forEach(this::createBetting);
         view.outputInitialMessage(initialDto);
 
         blackJackService.getAllPlayers().forEach(this::getAdditionalCard);
@@ -30,6 +31,12 @@ public class BlackJackController {
 
         ResultDto resultDto = blackJackService.judgement();
         view.playerResultMessage(resultDto);
+    }
+
+    private void createBetting(Player player) {
+        String bettingPriceInput = view.inputPlayerBetting(player.getName());
+        InputValidator.validateBettingPrice(bettingPriceInput);
+        blackJackService.createBetting(player, Integer.parseInt(bettingPriceInput));
     }
 
     public void getAdditionalCard(Player player) {

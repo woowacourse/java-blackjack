@@ -21,6 +21,11 @@ public class InputView {
         return input();
     }
 
+    public String inputBettingPrice(String name) {
+        System.out.println(name + "의 배팅 금액은?");
+        return input();
+    }
+
     private String input() {
         try {
             return bufferedReader.readLine();
