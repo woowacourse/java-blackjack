@@ -11,13 +11,9 @@ public class Players implements Iterable<Player> {
     private static final int MAX_PLAYER_COUNT = 7;
     private final List<Player> players;
 
-    private Players(List<Player> players) {
-        this.players = List.copyOf(players);
-    }
-
-    public static Players of(List<Player> players) {
+    public Players(List<Player> players) {
         validate(players);
-        return new Players(players);
+        this.players = List.copyOf(players);
     }
 
     @Override

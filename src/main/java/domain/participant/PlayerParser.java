@@ -15,7 +15,7 @@ public class PlayerParser {
                 .map(Player::new)
                 .toList();
 
-        return Players.of(players);
+        return new Players(players);
     }
 
     private static List<String> splitByDelimiter(String rawPlayerName) {
