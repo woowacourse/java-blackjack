@@ -58,8 +58,4 @@ public abstract class Participant {
         return hand.getHands();
     }
 
-    public int getHandSize() {
-        return hand.getSize();
-    }
-
 }

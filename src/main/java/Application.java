@@ -1,6 +1,5 @@
 import controller.BlackjackController;
 import infra.CardShufflerImpl;
-import service.BlackjackService;
 import view.InputView;
 import view.OutputView;
 
@@ -10,9 +9,8 @@ public class Application {
         new BlackjackController(
                 new InputView(),
                 new OutputView(),
-                new BlackjackService(
-                        new CardShufflerImpl()
-                )
+                new CardShufflerImpl()
+
         ).run();
     }
 }

@@ -22,7 +22,4 @@ public class Players {
             player.drawInitialCards(deck, cardShuffler);
         }
     }
-
-
-
 }

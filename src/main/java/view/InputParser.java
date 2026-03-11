@@ -1,6 +1,6 @@
 package view;
 
-import domain.Name;
+import domain.pariticipant.Name;
 import java.util.ArrayList;
 import java.util.List;
 

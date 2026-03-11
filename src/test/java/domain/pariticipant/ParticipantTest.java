@@ -27,7 +27,7 @@ class ParticipantTest {
 
         // then
         Hand hand = participant.getHand();
-        Assertions.assertThat(hand.getHandCards()).hasSize(INIT_DRAW_COUNT);
+        Assertions.assertThat(hand.getHands()).hasSize(INIT_DRAW_COUNT);
     }
 
     private static Stream<Participant> 참가자_초기_카드_뽑기_테스트_케이스() {

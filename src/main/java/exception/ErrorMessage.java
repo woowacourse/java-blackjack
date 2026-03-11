@@ -1,7 +1,5 @@
 package exception;
 
-import constant.BlackjackConstant;
-
 import static constant.BlackjackConstant.*;
 
 public enum ErrorMessage {

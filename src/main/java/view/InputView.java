@@ -3,7 +3,7 @@ package view;
 import static exception.ErrorMessage.INPUT_EMPTY_ERROR;
 import static exception.ErrorMessage.INVALID_HIT_STAND_INPUT_ERROR;
 
-import domain.Name;
+import domain.pariticipant.Name;
 import java.util.List;
 import java.util.Scanner;
 

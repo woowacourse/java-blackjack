@@ -44,8 +44,8 @@ class ParticipantsTest {
         MatchResult matchResult = participants.calculateMatchResult();
 
         // then
-        PlayerMatchResult playerMatchResult = matchResult.getPlayerMatchResult();
-        DealerMatchResult dealerMatchResult = matchResult.getDealerMatchResult();
+        PlayerMatchResult playerMatchResult = matchResult.playerMatchResult();
+        DealerMatchResult dealerMatchResult = matchResult.dealerMatchResult();
 
         assertThat(playerMatchResult.playerMatchResult())
                 .containsExactlyInAnyOrderEntriesOf(
