@@ -18,6 +18,10 @@ public class Player extends Participant {
         return new Player(this.name, this.hand, true);
     }
 
+    public boolean isFinished() {
+        return this.hand.isBust() || isStay;
+    }
+
     public void hit(Supplier<Card> cardSupplier) {
         Hand ownHand = this.hand;
         if (canHit(ownHand)) {

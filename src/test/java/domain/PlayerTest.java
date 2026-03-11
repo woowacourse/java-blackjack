@@ -70,7 +70,47 @@ class PlayerTest {
             //then
             Assertions.assertThat(testCardSupplier.get()).isNotNull();
         }
+    }
 
+    @Test
+    @DisplayName("stay를 호출하면 새로운 사용자를 반환하고 그 사용자는 게임을 종료한 상태가 된다")
+    void stay_and_finish() {
+        //given
+        Hand playerHand = Hand.of(
+                new Card(CardShape.스페이드, CardContents.J),
+                new Card(CardShape.클로버, CardContents.FIVE)
+        );
+        String testName = "gump";
+        Player testPlayer = Player.from(testName, playerHand);
+
+        //when
+        testPlayer = testPlayer.stay();
+
+        //then
+        Assertions.assertThat(testPlayer.isFinished()).isTrue();
+    }
+
+    @Test
+    @DisplayName("bust가 되어도 해당 사용자는 게임을 종료한 상태가 된다")
+    void bust_and_finish() {
+        //given
+        Queue<Card> testDeck = new LinkedList<>(List.of(
+                new Card(CardShape.클로버, CardContents.SEVEN)
+        ));
+
+        Hand playerHand = Hand.of(
+                new Card(CardShape.스페이드, CardContents.J),
+                new Card(CardShape.클로버, CardContents.FIVE)
+        );
+        String testName = "gump";
+        Player testPlayer = Player.from(testName, playerHand);
+        testPlayer.hit(() -> testDeck.poll());
+
+        //when
+        testPlayer = testPlayer.stay();
+
+        //then
+        Assertions.assertThat(testPlayer.isFinished()).isTrue();
     }
 //    @Test
 //    @DisplayName("플레이어가 카드를 한 장 더 받는다")
