@@ -1,5 +1,7 @@
 package domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import constant.Rank;
 import constant.Suit;
 import java.util.stream.Stream;
@@ -14,8 +16,6 @@ public class CardTest {
 
     @Nested
     class CalculateScoreTest {
-
-        // 10, A, etc
 
         @Nested
         class Success {
@@ -70,6 +70,76 @@ public class CardTest {
                     Arguments.of(new Card(Rank.TWO, Suit.CLOVER), 2),
                     Arguments.of(new Card(Rank.TEN, Suit.CLOVER), 10)
                 );
+            }
+        }
+    }
+
+    @Nested
+    class IsAceTest {
+
+        @Nested
+        class Success {
+
+            @Test
+            void 에이스_카드는_true를_반환해야_한다() {
+
+                // given
+                Card card = new Card(Rank.ACE, Suit.HEART);
+
+                // when
+                boolean actual = card.isAce();
+
+                // then
+                assertThat(actual).isTrue();
+            }
+
+            @Test
+            void 에이스가_아닌_카드는_false를_반환해야_한다() {
+
+                // given
+                Card card = new Card(Rank.TEN, Suit.HEART);
+
+                // when
+                boolean actual = card.isAce();
+
+                // then
+                assertThat(actual).isFalse();
+            }
+        }
+    }
+
+    @Nested
+    class EqualsAndHashCodeTest {
+
+        @Nested
+        class Success {
+
+            @Test
+            void 랭크와_무늬가_같으면_equals는_true다() {
+
+                // given
+                Card card = new Card(Rank.TEN, Suit.HEART);
+                Card other = new Card(Rank.TEN, Suit.HEART);
+
+                // when
+                boolean actual = card.equals(other);
+
+                // then
+                assertThat(actual).isTrue();
+            }
+
+            @Test
+            void 랭크와_무늬가_같으면_hashCode도_같다() {
+
+                // given
+                Card card = new Card(Rank.TEN, Suit.HEART);
+                Card other = new Card(Rank.TEN, Suit.HEART);
+
+                // when
+                int actual = card.hashCode();
+
+                // then
+                assertThat(actual).isEqualTo(other.hashCode());
             }
         }
     }
