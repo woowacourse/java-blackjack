@@ -1,22 +1,27 @@
 package validator;
 
+import constant.CommandConstant;
+import exception.BlankInputException;
+import exception.InvalidInputException;
+
 import java.util.Set;
 
 public interface Validator {
 
     static void validateNotBlank(String input) {
         if (input.isBlank()) {
-            throw new IllegalArgumentException("[ERROR] 빈 값은 입력할 수 없습니다.");
+            throw new BlankInputException();
         }
     }
 
     static void validateChoice(String input) {
-        final String YES_COMMAND = "y";
-        final String NO_COMMAND = "n";
-
-        if (!Set.of(YES_COMMAND, NO_COMMAND).contains(input.strip().toLowerCase())) {
-            throw new IllegalArgumentException("[ERROR] 입력이 올바르지 않습니다.");
+        if (hasChoiceCommand(input)) {
+            throw new InvalidInputException();
         }
+    }
+
+    private static boolean hasChoiceCommand(String input) {
+        return !Set.of(CommandConstant.YES_COMMAND, CommandConstant.NO_COMMAND).contains(input.strip().toLowerCase());
     }
 
     void validate(String input);
