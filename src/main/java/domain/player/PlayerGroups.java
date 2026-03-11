@@ -2,8 +2,7 @@ package domain.player;
 
 import domain.card.Card;
 import domain.vo.Name;
-import dto.DealerResult;
-import dto.PlayerResult;
+import dto.ParticipantResult;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -29,10 +28,10 @@ public class PlayerGroups {
         dealer.addCard(card);
     }
 
-    public List<PlayerResult> playersStatus() {
-        List<PlayerResult> playerResult = new ArrayList<>();
+    public List<ParticipantResult> playersStatus() {
+        List<ParticipantResult> playerResult = new ArrayList<>();
         for (Player player : players) {
-            playerResult.add(new PlayerResult(player.getName(), player.getCards()));
+            playerResult.add(new ParticipantResult(player.getName(), player.getCards(), player.getCardSum()));
         }
         return playerResult;
     }
@@ -77,8 +76,8 @@ public class PlayerGroups {
         return players.size();
     }
 
-    public DealerResult getDealerResult() {
-        return new DealerResult(dealer.getName(), dealer.getCards(), dealer.getCardSum());
+    public ParticipantResult getDealerResult() {
+        return new ParticipantResult(dealer.getName(), dealer.getCards(), dealer.getCardSum());
     }
 
     private List<Player> createPlayers(List<String> playerNames) {

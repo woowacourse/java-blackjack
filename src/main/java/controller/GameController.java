@@ -1,8 +1,7 @@
 package controller;
 
 import domain.player.Player;
-import dto.DealerResult;
-import dto.PlayerResult;
+import dto.ParticipantResult;
 import service.GameService;
 import view.InputView;
 import view.ResultView;
@@ -29,10 +28,10 @@ public class GameController {
     }
 
     private void printFinalStatus() {
-        DealerResult dealerResult = gameService.getDealerResult();
+        ParticipantResult dealerResult = gameService.getDealerResult();
         ResultView.printCardSumResult(dealerResult);
 
-        List<PlayerResult> playersEndStatus = gameService.getPlayersStatus();
+        List<ParticipantResult> playersEndStatus = gameService.getPlayersStatus();
         Map<String, Integer> playersTotalScore = gameService.getPlayersTotalScore();
         ResultView.printCardSumResult(playersEndStatus, playersTotalScore);
     }
@@ -48,8 +47,8 @@ public class GameController {
     }
 
     private void printInitialCards() {
-        DealerResult dealerStatus = gameService.getDealerResult();
-        List<PlayerResult> playersStatus = gameService.getPlayersStatus();
+        ParticipantResult dealerStatus = gameService.getDealerResult();
+        List<ParticipantResult> playersStatus = gameService.getPlayersStatus();
         ResultView.printStartPlayersCards(dealerStatus, playersStatus);
     }
 

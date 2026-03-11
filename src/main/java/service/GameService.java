@@ -4,8 +4,7 @@ import domain.card.CardDeck;
 import domain.player.Player;
 import domain.player.PlayerGroups;
 import domain.player.WinStatus;
-import dto.DealerResult;
-import dto.PlayerResult;
+import dto.ParticipantResult;
 
 import java.util.List;
 import java.util.Map;
@@ -39,7 +38,7 @@ public class GameService {
     }
 
     // 플레이어들 정보 전달
-    public List<PlayerResult> getPlayersStatus() {
+    public List<ParticipantResult> getPlayersStatus() {
         return playerGroups.playersStatus();
     }
 
@@ -69,7 +68,7 @@ public class GameService {
         return playerGroups.getPlayerGroupSize();
     }
 
-    public DealerResult getDealerResult() {
+    public ParticipantResult getDealerResult() {
         return playerGroups.getDealerResult();
     }
 }
