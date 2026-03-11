@@ -36,10 +36,6 @@ public class OutputView {
         }
     }
 
-    public void printBurst(String name) {
-        System.out.println(name + "의 점수가 버스트 되었습니다.");
-    }
-
     private void printParticipantGameResult(Participant participant, String name) {
         List<String> cardNames = participant.getHandCards().stream()
                 .map(Card::getCardName).toList();
