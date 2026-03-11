@@ -3,7 +3,8 @@ package blackjack.dto;
 public record DealerGameResult(
     int dealerWin,
     int dealerTie,
-    int dealerLose
+    int dealerLose,
+    double dealerProfit
 ) {
 
 }

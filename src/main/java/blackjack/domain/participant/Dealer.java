@@ -37,20 +37,28 @@ public class Dealer extends Participant {
         return hand.isBusted();
     }
 
-    public DealerGameResult getDealerWinningResult(List<PlayerGameResult> winningResultsWithDealer) {
-        int dealerWin = (int) winningResultsWithDealer
+    public DealerGameResult getDealerWinningResult(List<PlayerGameResult> playerGameResults) {
+        int dealerWin = (int) playerGameResults
             .stream()
             .filter(result -> result.matchResult() == MatchResult.LOSE)
             .count();
-        int dealerTie = (int) winningResultsWithDealer
+        int dealerTie = (int) playerGameResults
             .stream()
             .filter(result -> result.matchResult() == MatchResult.TIE)
             .count();
-        int dealerLose = (int) winningResultsWithDealer
+        int dealerLose = (int) playerGameResults
             .stream()
             .filter(result -> result.matchResult() == MatchResult.WIN)
             .count();
-        return new DealerGameResult(dealerWin, dealerTie, dealerLose);
+        double profit = calculateDealerProfit(playerGameResults);
+        return new DealerGameResult(dealerWin, dealerTie, dealerLose, profit);
+    }
+
+    private double calculateDealerProfit(List<PlayerGameResult> playerGameResults) {
+        double totalPlayerProfit = playerGameResults.stream()
+            .mapToDouble(PlayerGameResult::profit)
+            .sum();
+        return -totalPlayerProfit;
     }
 
     public ParticipantResult getInitialResult() {
