@@ -3,7 +3,7 @@ package model;
 public class Score {
     private Integer score = 0;
 
-    public Integer get() {
+    public Integer getScore() {
         return score;
     }
 

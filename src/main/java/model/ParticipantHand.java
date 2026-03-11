@@ -17,10 +17,10 @@ public class ParticipantHand {
     }
 
     public Integer getScore() {
-        if(deck.hasAce() && score.get() <= MAX_ACE_SCORE) {
-            return score.get() + ADDITIONAL_ACE_SCORE;
+        if(deck.hasAce() && score.getScore() <= MAX_ACE_SCORE) {
+            return score.getScore() + ADDITIONAL_ACE_SCORE;
         }
-        return score.get();
+        return score.getScore();
     }
 
     public List<Card> getDeck() {

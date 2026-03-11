@@ -10,7 +10,7 @@ public class ScoreTest {
     public void 점수_불러오기_정상_작동() {
         Score score = new Score();
 
-        assertThat(score.get()).isEqualTo(0);
+        assertThat(score.getScore()).isEqualTo(0);
     }
 
     @Test
@@ -18,6 +18,6 @@ public class ScoreTest {
         Score score = new Score();
 
         score.add(13);
-        assertThat(score.get()).isEqualTo(13);
+        assertThat(score.getScore()).isEqualTo(13);
     }
 }
