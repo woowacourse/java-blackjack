@@ -1,12 +1,12 @@
 package view;
 
-import constant.InputErrorCode;
 import exception.GameException;
 import model.PlayerName;
 import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
+    private static final String INPUT_IS_BLANK = "빈 값을 입력하셨습니다.";
     private static final String NAME_REQUEST_TEXT = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     private static final String DRAW_REQUEST_TEXT = "는 한장의 카드를 더 받겠습니까?(예는 y, 아니요는 n)";
     private static final String BATTING_REQUEST_TEXT = "의 배팅 금액은?";
@@ -38,7 +38,7 @@ public class InputView {
         String input = scanner.nextLine();
 
         if(input.isBlank()) {
-            throw new GameException(InputErrorCode.INPUT_IS_BLANK);
+            throw new GameException(INPUT_IS_BLANK);
         }
         return input;
     }

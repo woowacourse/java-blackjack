@@ -3,7 +3,6 @@ package model;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-import constant.PlayerErrorCode;
 import exception.GameException;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -35,7 +34,6 @@ public class TestPlayers {
 
         assertThatThrownBy(() -> new Players(List.of(player, player2)))
                 .isExactlyInstanceOf(GameException.class)
-                .satisfies(e -> assertThat(((GameException) e).getErrorCode())
-                        .isEqualTo(PlayerErrorCode.DUPLICATED_NAME));
+                .hasMessage("중복된 이름이 있습니다.");
     }
 }

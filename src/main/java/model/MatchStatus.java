@@ -21,6 +21,7 @@ public enum MatchStatus {
     public float getMultiplier() {
         return multiplier;
     }
+
 }
 
 

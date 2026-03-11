@@ -3,7 +3,6 @@ package model;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-import constant.PlayerErrorCode;
 import exception.GameException;
 import org.junit.jupiter.api.Test;
 
@@ -20,8 +19,7 @@ public class TestPlayer {
     public void 딜러_이름_예외() {
         assertThatThrownBy(() -> new Player(new PlayerName("딜러"), new BattingMoney("10000")))
                 .isExactlyInstanceOf(GameException.class)
-                .satisfies(e -> assertThat(((GameException) e).getErrorCode())
-                        .isEqualTo(PlayerErrorCode.NO_PLAYER_NAME_DEALER));
+                .hasMessage("플레이어는 '딜러'라는 이름을 가질 수 없습니다.");
     }
 
     @Test
