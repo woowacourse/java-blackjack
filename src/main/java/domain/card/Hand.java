@@ -1,6 +1,5 @@
 package domain.card;
 
-import domain.Rank;
 import domain.Score;
 
 import java.util.ArrayList;
@@ -29,28 +28,17 @@ public class Hand {
         return cards.size();
     }
 
-
-    public Score getTotalSum() {
-        int aceNum = getAceAmount();
-        Score sum = getSumWithoutAce();
-
-        for (int i = aceNum; i > 0; i--) {
-            sum = sum.add(Rank.decideAceValue(sum, i));
-        }
-        return sum;
-    }
-
     public List<Card> getCards() {
         return List.copyOf(cards);
     }
 
-    private int getAceAmount() {
+    public int getAceAmount() {
         return (int) cards.stream()
                 .filter(card -> card.isAce())
                 .count();
     }
 
-    private Score getSumWithoutAce() {
+    public Score getSumWithoutAce() {
         return cards.stream()
                 .filter(card -> !card.isAce())
                 .map(card -> card.getRank().getScore())

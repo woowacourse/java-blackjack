@@ -9,6 +9,10 @@ public class Score {
         this.value = value;
     }
 
+    public static Score zero() {
+        return new Score(0);
+    }
+
     public Score add(Score target) {
         return new Score(target.value + this.value);
     }
@@ -40,6 +44,18 @@ public class Score {
 
     public boolean isGreaterThan(Score dealerSum) {
         return value > dealerSum.value;
+    }
+
+    public boolean isGreaterThanOrEqualTo(Score target) {
+        return value >= target.value;
+    }
+
+    public Score sub(Score target) {
+        return new Score(value - target.value);
+    }
+
+    public boolean isGreaterThanOrEqualTo(int target) {
+        return value >= target;
     }
 
     public boolean isLessThan(Score dealerSum) {

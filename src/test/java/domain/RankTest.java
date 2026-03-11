@@ -3,23 +3,20 @@ package domain;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static domain.Rank.ACE_MAX_VALUE;
-import static domain.Rank.ACE_MIN_VALUE;
-
 
 public class RankTest {
 
     @Test
-    void 에이스와의_합이_21이하인_경우_11을_반환해야_한다() {
-        Score result = Rank.decideAceValue(new Score(10), 1);
+    void 에이스가_11이_될_수_있으면_11을_적용한다() {
+        Score result = Rank.totalSum(1, new Score(10));
 
-        Assertions.assertEquals(result.getValue(), ACE_MAX_VALUE);
+        Assertions.assertEquals(result.getValue(), 21);
     }
 
     @Test
-    void 에이스와의_합이_21초과인_경우_1을_반환해야_한다() {
-        Score result = Rank.decideAceValue(new Score(11), 1);
+    void 에이스가_11이_될_수_없으면_1을_적용한다() {
+        Score result = Rank.totalSum(1, new Score(11));
 
-        Assertions.assertEquals(result.getValue(), ACE_MIN_VALUE);
+        Assertions.assertEquals(result.getValue(), 12);
     }
 }

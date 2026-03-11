@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.Rank;
 import domain.Score;
 import domain.card.Card;
 import domain.card.Hand;
@@ -24,7 +25,7 @@ public abstract class Participant {
     }
 
     public Score getTotalSum() {
-        return hand.getTotalSum();
+        return Rank.totalSum(hand.getAceAmount(), hand.getSumWithoutAce());
     }
 
     public Name getName() {

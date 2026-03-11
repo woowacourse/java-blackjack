@@ -15,8 +15,8 @@ public enum Rank {
     Q("Q", new Score(10)),
     K("K", new Score(10));
     public static final Score BLACKJACK_MAX_NUMBER = new Score(21);
-    public static final int ACE_MAX_VALUE = 11;
-    public static final int ACE_MIN_VALUE = 1;
+    public static final Score ACE_MAX_VALUE = new Score(11);
+    public static final Score ACE_MIN_VALUE = new Score(1);
 
     private final String displayValue;
     private final Score score;
@@ -26,12 +26,21 @@ public enum Rank {
         this.score = scoreValue;
     }
 
-    public static Score decideAceValue(Score sum, int leftAce) {
-        if (sum.getValue() + ACE_MAX_VALUE <= calculateThreshold(leftAce).getValue()) {
-            return new Score(ACE_MAX_VALUE);
+    public static Score totalSum(int aceAmount, Score sum) {
+        for (int i = 1; i <= aceAmount; i++) {
+            sum = sum.add(decideAceValue(sum, aceAmount - i));
         }
-        return new Score(ACE_MIN_VALUE);
+        return sum;
     }
+
+    private static Score decideAceValue(Score sum, int leftAce) {
+        if (sum.add(ACE_MAX_VALUE).isLessThanOrEqualTo(BLACKJACK_MAX_NUMBER)
+                && BLACKJACK_MAX_NUMBER.sub(sum.add(ACE_MAX_VALUE)).isGreaterThanOrEqualTo(leftAce)) {
+            return ACE_MAX_VALUE;
+        }
+        return ACE_MIN_VALUE;
+    }
+
 
     public boolean isAce() {
         return this == Rank.ACE;
@@ -43,9 +52,5 @@ public enum Rank {
 
     public String getDisplayValue() {
         return displayValue;
-    }
-
-    private static Score calculateThreshold(int leftAce) {
-        return BLACKJACK_MAX_NUMBER.add(new Score(1 - leftAce));
     }
 }

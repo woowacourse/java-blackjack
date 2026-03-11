@@ -13,6 +13,6 @@ public class Dealer extends Participant {
     }
 
     public boolean decideHitStand(Score boundary) {
-        return hand.getTotalSum().isLessThanOrEqualTo(boundary);
+        return getTotalSum().isLessThanOrEqualTo(boundary);
     }
 }
