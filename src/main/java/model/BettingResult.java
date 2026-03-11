@@ -26,6 +26,8 @@ public class BettingResult {
             updateMoney(dealer, player, true, false);
         } else if (playerScore < dealerScore) {
             updateMoney(dealer, player, true, false);
+        } else if (playerScore > dealerScore) {
+            updateMoney(dealer, player, false, false);
         }
     }
 
