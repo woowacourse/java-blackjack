@@ -51,16 +51,14 @@ class PlayersTest {
     }
 
     @Test
-    @DisplayName("다음 사용자로 넘기라는 명령을 받은 이후 현재 사용자 호출 시 다른 사용자가 나오다")
+    @DisplayName("사용자의 상태에 따라 Turn이 변경된다")
     void next_change_targetUser() {
         //given
         Players testPlayers = Players.of(TEST_PLAYER_NAMES, totalDeck);
         Player prevPlayer = testPlayers.findCurrentUser().get();
+        prevPlayer = prevPlayer.stay();
 
-        //when
-        testPlayers.next();
-
-        //then
+        //when, then
         Assertions.assertNotEquals(prevPlayer, testPlayers.findCurrentUser());
     }
 

@@ -8,7 +8,6 @@ public class Players {
     private static final int MAX_PLAYER_NUMBER = 5;
 
     private final List<Player> players;
-    private int orderCursor = 0;
 
     private Players(List<Player> players) {
         this.players = players;
@@ -46,14 +45,9 @@ public class Players {
     }
 
     public Optional<Player> findCurrentUser() {
-        if (this.orderCursor < this.players.size()) {
-            return Optional.of(players.get(orderCursor));
-        }
-        return Optional.empty();
-    }
-
-    public void next() {
-        orderCursor++;
+        return players.stream()
+                .filter(player -> !player.isFinished())
+                .findFirst();
     }
 
 //    public void hitPlayer(Player targetPlayer, Supplier<Card> cardSupplier) {
