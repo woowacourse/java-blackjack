@@ -46,5 +46,4 @@ public class User extends Player {
     public int getBetAmount() {
         return betAmount;
     }
-
 }

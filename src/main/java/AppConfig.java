@@ -1,7 +1,7 @@
+import domain.RandomShuffle;
+import domain.ShuffleStrategy;
 import strategy.BettingRule;
 import strategy.DefaultBettingRule;
-import strategy.RandomShuffle;
-import strategy.ShuffleStrategy;
 import view.InputView;
 import view.OutputView;
 
@@ -27,5 +27,7 @@ public class AppConfig {
         return new RandomShuffle();
     }
 
-    private BettingRule bettingRule() {return new DefaultBettingRule();}
+    private BettingRule bettingRule() {
+        return new DefaultBettingRule();
+    }
 }

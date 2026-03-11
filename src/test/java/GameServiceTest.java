@@ -1,21 +1,20 @@
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
+import domain.Card;
+import domain.Dealer;
 import domain.DealerProfit;
+import domain.GameResult;
+import domain.RandomShuffle;
+import domain.ShuffleStrategy;
+import domain.User;
+import domain.UserProfit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import domain.Card;
-import domain.Dealer;
-import domain.GameResult;
-import domain.User;
-import domain.UserProfit;
 import strategy.BettingRule;
 import strategy.DefaultBettingRule;
-import strategy.RandomShuffle;
-import strategy.ShuffleStrategy;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class GameServiceTest {
 

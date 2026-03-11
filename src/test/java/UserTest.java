@@ -1,8 +1,8 @@
 import domain.Card;
 import domain.CardDeck;
+import domain.ShuffleStrategy;
 import strategy.BettingRule;
 import strategy.DefaultBettingRule;
-import strategy.ShuffleStrategy;
 import domain.User;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,12 +18,11 @@ class UserTest {
 
     private GameService gameService;
     private CardDeck cardDeck;
-    private BettingRule bettingRule;
 
     @BeforeEach
     void setUp() {
         ShuffleStrategy strategy = (cards -> {});
-        bettingRule = new DefaultBettingRule();
+        BettingRule bettingRule = new DefaultBettingRule();
         gameService = new GameService(strategy, bettingRule);
     }
 

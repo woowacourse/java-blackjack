@@ -19,5 +19,4 @@ public class InputParser {
                 .mapToObj(i -> User.from(names.get(i), betAmounts.get(i)))
                 .toList();
     }
-
 }

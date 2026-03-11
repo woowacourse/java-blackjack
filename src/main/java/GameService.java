@@ -1,6 +1,5 @@
 import domain.*;
 import strategy.BettingRule;
-import strategy.ShuffleStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
