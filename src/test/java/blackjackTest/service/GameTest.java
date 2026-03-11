@@ -1,6 +1,7 @@
+package blackjackTest.service;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 import blackjack.domain.*;
 import blackjack.service.CardDistributor;
@@ -9,9 +10,8 @@ import blackjack.service.Game;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+
 import org.junit.jupiter.api.Test;
-import blackjack.service.RandomCardPicker;
 
 public class GameTest {
 

@@ -1,3 +1,5 @@
+package blackjackTest.domain;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.*;
@@ -7,7 +9,7 @@ public class BustTest {
 
     @Test
     void player_busts_when_sum_exceeds_21() {
-        Player player = new Player("Alice");
+        Player player = new Player("Aliㅍce");
         player.receiveOneCard(new Card(Rank.TWO, Shape.HEART));
         player.receiveOneCard(new Card(Rank.QUEEN, Shape.SPADE));
         player.receiveOneCard(new Card(Rank.TEN, Shape.CLOVER));
