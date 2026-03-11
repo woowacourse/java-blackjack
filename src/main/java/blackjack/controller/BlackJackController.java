@@ -52,18 +52,7 @@ public class BlackJackController {
 
     private void playerTurn(Players players, Deck deck) {
         for (Player player : players.getPlayers()) {
-            while (!player.isBust()) {
-                boolean isHit = inputView.readHitAnswer(player.getName());
-                if (isHit) {
-                    player.receiveCard(deck.draw());
-                }
-
-                outputView.printCard(convertToDto(player));
-
-                if (!isHit) {
-                    break;
-                }
-            }
+            drawCardUntilStop(player, deck);
         }
     }
 
@@ -85,5 +74,12 @@ public class BlackJackController {
             playerGameResultDtos.add(new PlayerGameResultDto(player.getName(), player.compareResult(dealer).getName()));
         }
         outputView.printFinalGameResult(playerGameResultDtos);
+    }
+
+    private void drawCardUntilStop(Player player, Deck deck) {
+        while (!player.isBust() && inputView.readHitAnswer(player.getName())) {
+            player.receiveCard(deck.draw());
+            outputView.printCard(convertToDto(player));
+        }
     }
 }
