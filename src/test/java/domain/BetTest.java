@@ -6,11 +6,14 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import domain.enums.GameResult;
 import domain.participant.Name;
 import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 public class BetTest {
@@ -58,7 +61,7 @@ public class BetTest {
             //given
             //when
             bet.bettingMoney(firstPlayer, 10_000);
-            int profit = bet.calculateProfit(firstPlayer, GameResult.WIN);
+            int profit = bet.calculateProfit(firstPlayer, GameResult.WIN, false);
             //then
             assertThat(profit).isEqualTo(10_000);
         }
@@ -69,20 +72,39 @@ public class BetTest {
             //given
             //when
             bet.bettingMoney(firstPlayer, 10_000);
-            int profit = bet.calculateProfit(firstPlayer, GameResult.LOSE);
+            int profit = bet.calculateProfit(firstPlayer, GameResult.LOSE, false);
             //then
             assertThat(profit).isEqualTo(-10_000);
         }
-        
+
         @DisplayName("무승부 시 0원의 수익")
         @Test
         void 무승부_0원_수익() {
             //given
             //when
             bet.bettingMoney(firstPlayer, 10_000);
-            int profit = bet.calculateProfit(firstPlayer, GameResult.DRAW);
+            int profit = bet.calculateProfit(firstPlayer, GameResult.DRAW, false);
             //then
             assertThat(profit).isEqualTo(0);
+        }
+
+        private static Stream<Arguments> blackjackProfitTest() {
+            return Stream.of(
+                    Arguments.of(10_000, 15_000),
+                    Arguments.of(33_333, 49_999)
+            );
+        }
+
+        @DisplayName("첫 카드 2장 블랙잭으로 승리 시 1.5배 수익")
+        @ParameterizedTest
+        @MethodSource("blackjackProfitTest")
+        void 첫_카드_2장_승리_시_1_5배_수익(int bettingMoney, int expectedProfit) {
+            //given
+            //when
+            bet.bettingMoney(firstPlayer, bettingMoney);
+            int profit = bet.calculateProfit(firstPlayer, GameResult.WIN, true);
+            //then
+            assertThat(profit).isEqualTo(expectedProfit);
         }
     }
 }

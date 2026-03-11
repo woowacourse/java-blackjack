@@ -39,7 +39,8 @@ public class Bet {
         }
     }
 
-    public int calculateProfit(Name firstPlayer, GameResult gameResult) {
+    // TODO : 2장 블랙잭으로 승리 여부를 파라미터로 주입받는게 최선인지..
+    public int calculateProfit(Name firstPlayer, GameResult gameResult, boolean isBlackjack) {
         Name foundPlayer = validatePlayer(firstPlayer);
         int betAmount = betHistory.get(foundPlayer);
 
@@ -51,8 +52,16 @@ public class Bet {
             betAmount = 0;
         }
 
+        if (isBlackjack) {
+            betAmount = blackjackAmount(betAmount);
+        }
+
         betProfit.put(foundPlayer, betAmount);
         return betAmount;
+    }
+
+    private int blackjackAmount(int betAmount) {
+        return (int) (betAmount * 1.5);
     }
 
     private int negateBetAmount(int betAmount) {
