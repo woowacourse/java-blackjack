@@ -76,4 +76,8 @@ public class CardBundle {
         return Collections.unmodifiableList(cardBundle);
     }
 
+    public boolean isBlackjack() {
+        return cardBundle.size() == 2 && getResultScore() == 21;
+    }
+
 }
