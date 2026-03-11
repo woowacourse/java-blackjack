@@ -1,10 +1,11 @@
 package domain;
 
-import static domain.Name.MAXIMUM_BOUND;
-import static domain.Name.MINIMUM_BOUND;
+import static domain.participant.Name.MAXIMUM_BOUND;
+import static domain.participant.Name.MINIMUM_BOUND;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.participant.Name;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

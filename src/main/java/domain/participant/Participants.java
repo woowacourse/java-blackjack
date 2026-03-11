@@ -1,4 +1,4 @@
-package domain;
+package domain.participant;
 
 import static constant.BlackjackConstant.DEALER_NAME;
 import static constant.BlackjackConstant.MAXIMUM_PLAYER_BOUND;
@@ -6,6 +6,8 @@ import static constant.BlackjackConstant.MINIMUM_PLAYER_BOUND;
 import static exception.ErrorMessage.DEALER_NOT_FOUND_ERROR;
 import static exception.ErrorMessage.PLAYER_COUNT_OUT_OF_RANGE;
 
+import domain.CardResult;
+import domain.card.HandCards;
 import java.util.ArrayList;
 import java.util.List;
 

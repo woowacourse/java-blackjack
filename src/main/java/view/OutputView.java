@@ -4,9 +4,9 @@ import static constant.BlackjackConstant.DEALER_DRAW_BOUND;
 import static constant.BlackjackConstant.DEALER_NAME;
 import static constant.BlackjackConstant.INIT_DRAW_COUNT;
 
-import domain.Card;
-import domain.Participant;
-import domain.Participants;
+import domain.card.Card;
+import domain.participant.Participant;
+import domain.participant.Participants;
 import java.util.List;
 import service.FinalResult;
 

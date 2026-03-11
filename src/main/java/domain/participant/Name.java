@@ -1,4 +1,4 @@
-package domain;
+package domain.participant;
 
 import static exception.ErrorMessage.PLAYER_NAME_LENGTH_ERROR;
 

@@ -1,8 +1,8 @@
 package service;
 
-import domain.Card;
-import domain.CardDeck;
-import domain.Participant;
+import domain.card.Card;
+import domain.card.CardDeck;
+import domain.participant.Participant;
 import infra.CardShuffler;
 import java.util.ArrayList;
 import java.util.List;

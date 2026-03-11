@@ -1,5 +1,5 @@
 import controller.BlackjackController;
-import domain.CardShufflerImpl;
+import domain.card.CardShufflerImpl;
 import service.BlackjackService;
 import view.InputView;
 import view.OutputView;

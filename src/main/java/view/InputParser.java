@@ -1,16 +1,16 @@
 package view;
 
-import domain.Name;
+import domain.participant.Name;
 import java.util.ArrayList;
 import java.util.List;
 
 public class InputParser {
 
-    public static List<Name> parsePlayers(String strPlayers) {
+    public static List<Name> parsePlayers(final String strPlayers) {
 
-        String[] split = strPlayers.split(",", -1);
+        final String[] split = strPlayers.split(",", -1);
 
-        List<Name> playerNames = new ArrayList<>();
+        final List<Name> playerNames = new ArrayList<>();
         for (String name : split) {
             name = name.trim();
 
