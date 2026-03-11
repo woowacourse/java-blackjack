@@ -39,35 +39,35 @@ public class BlackJackController {
         initParticipantDraw(dealer);
         List<PlayerResult> playersResult = new ArrayList<>();
 
-        for(Player player : players.getPlayers()) {
+        for (Player player : players.getPlayers()) {
             initParticipantDraw(player);
             playersResult.add(player.getResult());
         }
 
-        OutputView.printInitDeck(playersResult,dealer.getResult());
+        OutputView.printInitDeck(playersResult, dealer.getResult());
     }
 
     private void initParticipantDraw(Participant participant) {
-        for(int i  = 0; i < INITIAL_DRAW_QUANTITY; i++) {
+        for (int i = 0; i < INITIAL_DRAW_QUANTITY; i++) {
             blackJackService.draw(participant);
         }
     }
 
     private void drawPlayersTurn(Players players) {
-        for(Player player : players.getPlayers()) {
+        for (Player player : players.getPlayers()) {
             drawPlayerTurns(player);
         }
         OutputView.printNewLine();
     }
 
     private void drawPlayerTurns(Player player) {
-        while(drawPlayerTurn(player)) {
+        while (drawPlayerTurn(player)) {
             OutputView.printPlayerCurrentDeck(player.getResult());
-        };
+        }
     }
 
     private boolean drawPlayerTurn(Player player) {
-        if(!inputController.getCondition(player.getName())) {
+        if (!inputController.getCondition(player.getName())) {
             return false;
         }
 
@@ -88,14 +88,12 @@ public class BlackJackController {
         List<PlayerResult> playerResults = new ArrayList<>();
         playerResults.add(dealer.getResult());
 
-        for(Player player : players.getPlayers()) {
+        for (Player player : players.getPlayers()) {
             playerResults.add(player.getResult());
         }
 
         OutputView.printPlayersScore(playerResults);
     }
-
-
 
 
 }

@@ -39,7 +39,7 @@ public class OutputView {
 
 
     public static void printPlayersScore(List<PlayerResult> players) {
-        for(PlayerResult playerResult : players) {
+        for (PlayerResult playerResult : players) {
             printPlayerScore(playerResult);
         }
         printNewLine();
@@ -65,14 +65,15 @@ public class OutputView {
     }
 
     private static void printPlayersCurrentDeck(List<PlayerResult> players) {
-        for(PlayerResult playerResult : players) {
+        for (PlayerResult playerResult : players) {
             printPlayerCurrentDeck(playerResult);
         }
     }
 
     private static void printPlayerScore(PlayerResult playerResult) {
         List<String> cardString = playerResult.hand().stream().map(Card::getString).toList();
-        System.out.println(playerResult.name() + CARD_TEXT + String.join(JOIN_DELIMITER, cardString) + SCORE_TEXT + playerResult.score());
+        System.out.println(playerResult.name() + CARD_TEXT + String.join(JOIN_DELIMITER, cardString) + SCORE_TEXT
+                + playerResult.score());
     }
 
     private static void printDealerResult(int dealerProfit) {
@@ -80,7 +81,7 @@ public class OutputView {
     }
 
     private static void printPlayersResult(List<PlayerWinning> playersWinning) {
-        for(PlayerWinning playerWinning : playersWinning) {
+        for (PlayerWinning playerWinning : playersWinning) {
             printPlayerResult(playerWinning);
         }
     }

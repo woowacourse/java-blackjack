@@ -23,12 +23,9 @@ public class ParticipantHand {
     }
 
     public int getScore() {
-        int baseScore = hand.stream()
-                .mapToInt(card -> card.cardNumber().getScore())
-                .sum();
+        int baseScore = hand.stream().mapToInt(card -> card.cardNumber().getScore()).sum();
 
-        boolean hasAce = hand.stream()
-                .anyMatch(card -> card.cardNumber() == CardNumber.ACE);
+        boolean hasAce = hand.stream().anyMatch(card -> card.cardNumber() == CardNumber.ACE);
 
         if (hasAce && baseScore + ADDITIONAL_ACE_SCORE <= BLACKJACK_SCORE) {
             return baseScore + ADDITIONAL_ACE_SCORE;

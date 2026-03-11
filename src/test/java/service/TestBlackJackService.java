@@ -31,29 +31,19 @@ public class TestBlackJackService {
         assertThat(player.getResult().score()).isGreaterThan(0);
         assertThat(player.getResult().hand().size()).isEqualTo(1);
     }
-    
+
     static Stream<Arguments> bustCases() {
         return Stream.of(
-            Arguments.of(List.of(
-                new Card(Shape.CLOVER, CardNumber.SEVEN),
-                new Card(Shape.HEART, CardNumber.SEVEN),
-                new Card(Shape.SPADE, CardNumber.SEVEN)   // 7+7+7=21, 버스트 아님
-            ), false),
-            Arguments.of(List.of(
-                new Card(Shape.CLOVER, CardNumber.TEN),
-                new Card(Shape.HEART, CardNumber.TEN),
-                new Card(Shape.SPADE, CardNumber.TWO)     // 10+10+2=22, 버스트
-            ), true),
-            Arguments.of(List.of(
-                new Card(Shape.CLOVER, CardNumber.ACE),
-                new Card(Shape.HEART, CardNumber.TEN),
-                new Card(Shape.SPADE, CardNumber.KING)    // ACE(1)+10+10=21, 버스트 아님
-            ), false),
-            Arguments.of(List.of(
-                new Card(Shape.CLOVER, CardNumber.TEN),
-                new Card(Shape.HEART, CardNumber.NINE),
-                new Card(Shape.SPADE, CardNumber.THREE)   // 10+9+3=22, 버스트
-            ), true)
+                Arguments.of(List.of(
+                        new Card(Shape.CLOVER, CardNumber.SEVEN),
+                        new Card(Shape.HEART, CardNumber.SEVEN),
+                        new Card(Shape.SPADE, CardNumber.SEVEN)   // 21, 버스트 아님
+                ), false),
+                Arguments.of(List.of(
+                        new Card(Shape.CLOVER, CardNumber.TEN),
+                        new Card(Shape.HEART, CardNumber.TEN),
+                        new Card(Shape.SPADE, CardNumber.TWO)     // 22, 버스트
+                ), true)
         );
     }
 
@@ -68,36 +58,24 @@ public class TestBlackJackService {
 
     static Stream<Arguments> isBlackJackCases() {
         return Stream.of(
-            Arguments.of(List.of(
-                new Card(Shape.CLOVER, CardNumber.ACE),
-                new Card(Shape.CLOVER, CardNumber.KING)   // ACE+KING=21, 2장 → 블랙잭
-            ), true),
-            Arguments.of(List.of(
-                new Card(Shape.CLOVER, CardNumber.ACE),
-                new Card(Shape.CLOVER, CardNumber.TEN)    // ACE+TEN=21, 2장 → 블랙잭
-            ), true),
-            Arguments.of(List.of(
-                new Card(Shape.CLOVER, CardNumber.ACE),
-                new Card(Shape.CLOVER, CardNumber.JACK)   // ACE+JACK=21, 2장 → 블랙잭
-            ), true),
-            Arguments.of(List.of(
-                new Card(Shape.CLOVER, CardNumber.ACE),
-                new Card(Shape.CLOVER, CardNumber.QUEEN)  // ACE+QUEEN=21, 2장 → 블랙잭
-            ), true),
-            Arguments.of(List.of(
-                new Card(Shape.CLOVER, CardNumber.SEVEN),
-                new Card(Shape.HEART, CardNumber.SEVEN),
-                new Card(Shape.SPADE, CardNumber.SEVEN)   // 7+7+7=21, 3장 → 블랙잭 아님
-            ), false),
-            Arguments.of(List.of(
-                new Card(Shape.CLOVER, CardNumber.NINE),
-                new Card(Shape.CLOVER, CardNumber.KING)   // 19점, 2장 → 블랙잭 아님
-            ), false),
-            Arguments.of(List.of(
-                new Card(Shape.CLOVER, CardNumber.ACE),
-                new Card(Shape.HEART, CardNumber.FIVE),
-                new Card(Shape.SPADE, CardNumber.FIVE)    // ACE+5+5=21, 3장 → 블랙잭 아님
-            ), false)
+                Arguments.of(List.of(
+                        new Card(Shape.CLOVER, CardNumber.ACE),
+                        new Card(Shape.CLOVER, CardNumber.KING)   // 21, 2장 → 블랙잭
+                ), true),
+                Arguments.of(List.of(
+                        new Card(Shape.CLOVER, CardNumber.SEVEN),
+                        new Card(Shape.HEART, CardNumber.SEVEN),
+                        new Card(Shape.SPADE, CardNumber.SEVEN)   // 21, 3장 → 블랙잭 아님
+                ), false),
+                Arguments.of(List.of(
+                        new Card(Shape.CLOVER, CardNumber.NINE),
+                        new Card(Shape.CLOVER, CardNumber.KING)   // 19, 2장 → 블랙잭 아님
+                ), false),
+                Arguments.of(List.of(
+                        new Card(Shape.CLOVER, CardNumber.ACE),
+                        new Card(Shape.HEART, CardNumber.FIVE),
+                        new Card(Shape.SPADE, CardNumber.FIVE)    // 21, 3장 → 블랙잭 아님
+                ), false)
         );
     }
 
@@ -112,51 +90,51 @@ public class TestBlackJackService {
 
     static Stream<Arguments> scoreMatchCases() {
         return Stream.of(
-            Arguments.of(
-                List.of(new Card(Shape.CLOVER, CardNumber.TEN)),
-                List.of(new Card(Shape.HEART, CardNumber.TEN)),
-                0           // 10 vs 10 → 무 → profit 0
-            ),
-            Arguments.of(
-                List.of(new Card(Shape.CLOVER, CardNumber.JACK),
-                        new Card(Shape.HEART, CardNumber.ACE)),
-                List.of(new Card(Shape.HEART, CardNumber.TEN)),
-                15000       // 블랙잭 승 → profit 10000 * 1.5
-            ),
-            Arguments.of(
-                List.of(new Card(Shape.CLOVER, CardNumber.NINE),
-                        new Card(Shape.HEART, CardNumber.FIVE)),
-                List.of(new Card(Shape.HEART, CardNumber.TEN)),
-                10000       // 14 vs 10 → 일반 승 → profit 10000 * 1.0
-            ),
-            Arguments.of(
-                List.of(new Card(Shape.CLOVER, CardNumber.FIVE)),
-                List.of(new Card(Shape.HEART, CardNumber.TEN)),
-                -10000      // 5 vs 10 → 패 → profit 10000 * -1.0
-            ),
-            Arguments.of(
-                List.of(new Card(Shape.CLOVER, CardNumber.TEN),
-                        new Card(Shape.HEART, CardNumber.TEN),
-                        new Card(Shape.SPADE, CardNumber.TWO)),
-                List.of(new Card(Shape.HEART, CardNumber.ACE)),
-                -10000      // 버스트(22) vs 1 → 패
-            ),
-            Arguments.of(
-                List.of(new Card(Shape.CLOVER, CardNumber.TWO)),
-                List.of(new Card(Shape.HEART, CardNumber.TEN),
-                        new Card(Shape.SPADE, CardNumber.TEN),
-                        new Card(Shape.CLOVER, CardNumber.TWO)),
-                10000       // 2 vs 딜러버스트(22) → 승
-            ),
-            Arguments.of(
-                List.of(new Card(Shape.CLOVER, CardNumber.TEN),
-                        new Card(Shape.HEART, CardNumber.TEN),
-                        new Card(Shape.SPADE, CardNumber.TWO)),
-                List.of(new Card(Shape.HEART, CardNumber.NINE),
-                        new Card(Shape.SPADE, CardNumber.NINE),
-                        new Card(Shape.CLOVER, CardNumber.FOUR)),
-                -10000      // 플레이어버스트(22) vs 딜러버스트(22) → 패
-            )
+                Arguments.of(
+                        List.of(new Card(Shape.CLOVER, CardNumber.TEN)),
+                        List.of(new Card(Shape.HEART, CardNumber.TEN)),
+                        0           // 10 vs 10 → 무 → profit 0
+                ),
+                Arguments.of(
+                        List.of(new Card(Shape.CLOVER, CardNumber.JACK),
+                                new Card(Shape.HEART, CardNumber.ACE)),
+                        List.of(new Card(Shape.HEART, CardNumber.TEN)),
+                        15000       // 블랙잭 승 → profit 10000 * 1.5
+                ),
+                Arguments.of(
+                        List.of(new Card(Shape.CLOVER, CardNumber.NINE),
+                                new Card(Shape.HEART, CardNumber.FIVE)),
+                        List.of(new Card(Shape.HEART, CardNumber.TEN)),
+                        10000       // 14 vs 10 → 일반 승 → profit 10000 * 1.0
+                ),
+                Arguments.of(
+                        List.of(new Card(Shape.CLOVER, CardNumber.FIVE)),
+                        List.of(new Card(Shape.HEART, CardNumber.TEN)),
+                        -10000      // 5 vs 10 → 패 → profit 10000 * -1.0
+                ),
+                Arguments.of(
+                        List.of(new Card(Shape.CLOVER, CardNumber.TEN),
+                                new Card(Shape.HEART, CardNumber.TEN),
+                                new Card(Shape.SPADE, CardNumber.TWO)),
+                        List.of(new Card(Shape.HEART, CardNumber.ACE)),
+                        -10000      // 버스트(22) vs 1 → 패
+                ),
+                Arguments.of(
+                        List.of(new Card(Shape.CLOVER, CardNumber.TWO)),
+                        List.of(new Card(Shape.HEART, CardNumber.TEN),
+                                new Card(Shape.SPADE, CardNumber.TEN),
+                                new Card(Shape.CLOVER, CardNumber.TWO)),
+                        10000       // 2 vs 딜러버스트(22) → 승
+                ),
+                Arguments.of(
+                        List.of(new Card(Shape.CLOVER, CardNumber.TEN),
+                                new Card(Shape.HEART, CardNumber.TEN),
+                                new Card(Shape.SPADE, CardNumber.TWO)),
+                        List.of(new Card(Shape.HEART, CardNumber.NINE),
+                                new Card(Shape.SPADE, CardNumber.NINE),
+                                new Card(Shape.CLOVER, CardNumber.FOUR)),
+                        -10000      // 플레이어버스트(22) vs 딜러버스트(22) → 패
+                )
         );
     }
 

@@ -7,7 +7,8 @@ import service.BlackJackService;
 public class Main {
 
     public static void main(String[] args) {
-        BlackJackService blackJackService = new BlackJackService(new BlackJackDeck(CardDeckFactory.createShuffledCards()));
+        BlackJackService blackJackService = new BlackJackService(
+                new BlackJackDeck(CardDeckFactory.createShuffledCards()));
         InputController inputController = new InputController();
         BlackJackController blackJackController = new BlackJackController(inputController, blackJackService);
 

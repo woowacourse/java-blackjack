@@ -16,7 +16,7 @@ public class Player extends Participant {
     }
 
     private void validate(PlayerName name) {
-        if(name.value().equals(DEALER_NAME)) {
+        if (name.value().equals(DEALER_NAME)) {
             throw new GameException(NO_PLAYER_NAME_DEALER);
         }
     }
@@ -27,8 +27,12 @@ public class Player extends Participant {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Player other = (Player) o;
         return this.getName().equals(other.getName());
     }

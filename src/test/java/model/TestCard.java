@@ -6,6 +6,7 @@ import dto.Card;
 import org.junit.jupiter.api.Test;
 
 public class TestCard {
+
     @Test
     public void 카드_저장_정상_작동() {
         Shape shape = Shape.CLOVER;

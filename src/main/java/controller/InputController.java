@@ -15,7 +15,7 @@ public class InputController {
         List<String> stringPlayers = InputView.getNameRequest();
         List<Player> players = new ArrayList<>();
 
-        for(String player : stringPlayers) {
+        for (String player : stringPlayers) {
             String battingMoneyInput = InputView.getBattingRequest(player);
             players.add(new Player(new PlayerName(player), new BattingMoney(battingMoneyInput)));
         }

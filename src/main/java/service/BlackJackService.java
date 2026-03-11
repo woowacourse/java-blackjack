@@ -35,8 +35,7 @@ public class BlackJackService {
     }
 
     public boolean isBlackJack(Participant participant) {
-        return participant.getHandSize() == BLACKJACK_HAND_SIZE
-                && participant.getScore() == BLACKJACK_SCORE;
+        return participant.getHandSize() == BLACKJACK_HAND_SIZE && participant.getScore() == BLACKJACK_SCORE;
     }
 
 
@@ -59,9 +58,7 @@ public class BlackJackService {
     }
 
     private Integer getDealerResult(List<PlayerWinning> playersWinning) {
-        return -playersWinning.stream()
-                .mapToInt(PlayerWinning::profit)
-                .sum();
+        return -playersWinning.stream().mapToInt(PlayerWinning::profit).sum();
     }
 
     private MatchStatus getPlayerResult(Player player, Dealer dealer) {

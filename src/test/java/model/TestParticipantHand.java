@@ -13,28 +13,28 @@ public class TestParticipantHand {
 
     static Stream<Arguments> scoreCases() {
         return Stream.of(
-            Arguments.of(
-                List.of(new Card(Shape.CLOVER, CardNumber.ACE),
-                        new Card(Shape.SPADE, CardNumber.ACE)),
-                12
-            ),
-            Arguments.of(
-                List.of(new Card(Shape.CLOVER, CardNumber.ACE),
-                        new Card(Shape.SPADE, CardNumber.ACE),
-                        new Card(Shape.HEART, CardNumber.KING)),
-                12
-            ),
-            Arguments.of(
-                List.of(new Card(Shape.SPADE, CardNumber.ACE),
-                        new Card(Shape.CLOVER, CardNumber.KING),
-                        new Card(Shape.CLOVER, CardNumber.TEN)),
-                21
-            ),
-            Arguments.of(
-                List.of(new Card(Shape.CLOVER, CardNumber.TEN),
-                        new Card(Shape.HEART, CardNumber.EIGHT)),
-                18
-            )
+                Arguments.of(
+                        List.of(new Card(Shape.CLOVER, CardNumber.ACE),
+                                new Card(Shape.SPADE, CardNumber.ACE)),
+                        12
+                ),
+                Arguments.of(
+                        List.of(new Card(Shape.CLOVER, CardNumber.ACE),
+                                new Card(Shape.SPADE, CardNumber.ACE),
+                                new Card(Shape.HEART, CardNumber.KING)),
+                        12
+                ),
+                Arguments.of(
+                        List.of(new Card(Shape.SPADE, CardNumber.ACE),
+                                new Card(Shape.CLOVER, CardNumber.KING),
+                                new Card(Shape.CLOVER, CardNumber.TEN)),
+                        21
+                ),
+                Arguments.of(
+                        List.of(new Card(Shape.CLOVER, CardNumber.TEN),
+                                new Card(Shape.HEART, CardNumber.EIGHT)),
+                        18
+                )
         );
     }
 

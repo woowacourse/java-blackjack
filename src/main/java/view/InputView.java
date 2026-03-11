@@ -37,7 +37,7 @@ public class InputView {
     private static String getInput() {
         String input = scanner.nextLine();
 
-        if(input.isBlank()) {
+        if (input.isBlank()) {
             throw new GameException(INPUT_IS_BLANK);
         }
         return input;

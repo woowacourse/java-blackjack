@@ -25,13 +25,13 @@ public class Agreement {
     }
 
     private void validateEmptyValue(String value) {
-        if(value.isBlank()) {
+        if (value.isBlank()) {
             throw new GameException(INPUT_IS_BLANK);
         }
     }
 
     private void validatePossibleValue(String value) {
-        if(!value.equals(TRUE_TEXT) && !value.equals(FALSE_TEXT)) {
+        if (!value.equals(TRUE_TEXT) && !value.equals(FALSE_TEXT)) {
             throw new GameException(INVALID_CONDITION_INPUT);
         }
     }
