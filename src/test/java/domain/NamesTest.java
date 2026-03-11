@@ -2,6 +2,8 @@ package domain;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
+import domain.participant.Name;
+import domain.participant.Names;
 import exception.ErrorMessage;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Nested;

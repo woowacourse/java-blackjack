@@ -29,15 +29,15 @@ public class CardTest {
                 Card card3 = new Card(Rank.K, Suit.HEART);
 
                 // when
-                int actual1 = card1.calculateScore();
-                int actual2 = card2.calculateScore();
-                int actual3 = card3.calculateScore();
+                int actual1 = card1.getScore();
+                int actual2 = card2.getScore();
+                int actual3 = card3.getScore();
 
                 // then
                 int expected = 10;
-                Assertions.assertEquals(10, actual1);
-                Assertions.assertEquals(10, actual2);
-                Assertions.assertEquals(10, actual3);
+                Assertions.assertEquals(expected, actual1);
+                Assertions.assertEquals(expected, actual2);
+                Assertions.assertEquals(expected, actual3);
             }
 
             @Test
@@ -47,7 +47,7 @@ public class CardTest {
                 Card card = new Card(Rank.ACE, Suit.CLOVER);
 
                 // when
-                int actual = card.calculateScore();
+                int actual = card.getScore();
 
                 // then
                 Assertions.assertEquals(11, actual);
@@ -58,7 +58,7 @@ public class CardTest {
             void 숫자라면_숫자를_반환_해야_한다(Card card, int expected) {
 
                 // when
-                int actual = card.calculateScore();
+                int actual = card.getScore();
 
                 // then
                 Assertions.assertEquals(expected, actual);
