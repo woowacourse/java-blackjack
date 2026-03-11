@@ -55,7 +55,7 @@
 ```
 - [ ] 책임 분리 기준 적용하기
 - [ ] controller 복잡한 흐름 제어 로직 객체로 분리하기
-- [ ] Score의 Ace 처리 로직 분리
+- [x] Score의 Ace 처리 로직 분리
 - [ ] OutputView 합계 계산 로직 객체로 분리
 - [ ] Participant에 사용된 protected 키워드가 적절한지 고민
 - [ ] 기존 테스트 수정
