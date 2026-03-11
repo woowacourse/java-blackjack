@@ -15,18 +15,21 @@ public class Player extends Participant {
         return new Player(name, hand, false);
     }
 
-    public Player stay() {
+    public Player stand() {
         return new Player(this.name, this.hand, true);
     }
 
-    public void hit(Supplier<Card> cardSupplier) {
-        if (!isFinished()) {
-            hand.addCard(cardSupplier.get());
+    public Player hit(Supplier<Card> cardSupplier) {
+        if (isFinished()) {
+            return this;
         }
+
+        Hand newHand = hand.addCard(cardSupplier.get());
+        return new Player(this.name, newHand, false);
     }
 
     public boolean isFinished() {
-        return hand.isBust() || isStay;
+        return hand.isBust() || hand.isFull() || isStay;
     }
 
     @Override
