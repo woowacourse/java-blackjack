@@ -44,8 +44,6 @@ public class Hand {
         int aceNum = getAceAmount();
         Score sum = getSumWithoutAce();
 
-        System.out.println("aceNum = " + aceNum);
-        System.out.println("sum = " + sum.getValue());
         for (int i = aceNum; i > 0; i--) {
             sum = sum.add(Rank.decideAceValue(sum, i));
         }

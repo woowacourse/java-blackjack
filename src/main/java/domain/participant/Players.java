@@ -4,14 +4,13 @@ import domain.ExceptionMessage;
 import domain.Result;
 import domain.RoundResult;
 import domain.Score;
-import domain.card.Card;
+import domain.card.Deck;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 public class Players {
     private final List<Player> players;
@@ -35,13 +34,13 @@ public class Players {
         }
     }
 
-    public void giveCardsToEachPlayers(Function<Integer, List<Card>> getCard, int quantity) {
+    public void giveCardsToEachPlayers(Deck deck, int quantity) {
         for (Player player : players) {
-            player.addCards(getCard.apply(quantity));
+            player.addCards(deck.drawWithAmount(quantity));
         }
     }
 
-    public void hitStandEachPlayers(Function<Player, Boolean> hitStandDecisionFunc, Supplier<Card> getCard,
+    public void hitStandEachPlayers(Function<Player, Boolean> hitStandDecisionFunc, Deck deck,
                                     Consumer<Player> printResultFunc) {
         for (Player player : players) {
             while (true) {
@@ -49,7 +48,7 @@ public class Players {
                     printResultFunc.accept(player);
                     break;
                 }
-                player.addCard(getCard.get());
+                player.addCard(deck.draw());
                 printResultFunc.accept(player);
             }
         }
@@ -66,15 +65,5 @@ public class Players {
 
     public List<Player> getPlayers() {
         return List.copyOf(players);
-    }
-
-    private void addPlayers(List<String> names) {
-        for (String name : names) {
-            addPlayer(name);
-        }
-    }
-
-    private void addPlayer(String name) {
-        players.add(new Player(name));
     }
 }

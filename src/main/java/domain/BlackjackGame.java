@@ -24,12 +24,12 @@ public class BlackjackGame {
     }
 
     public void giveHand() {
-        players.giveCardsToEachPlayers((quantity) -> deck.drawWithAmount(quantity), DEFAULT_HAND_NUMBER);
-        dealer.addCards((quantity) -> deck.drawWithAmount(quantity), DEFAULT_HAND_NUMBER);
+        players.giveCardsToEachPlayers(deck, DEFAULT_HAND_NUMBER);
+        dealer.addCards(deck.drawWithAmount(DEFAULT_HAND_NUMBER));
     }
 
     public void playerHitStand(Function<Player, Boolean> decideHitStandFunc, Consumer<Player> printResultFunc) {
-        players.hitStandEachPlayers(decideHitStandFunc, () -> deck.draw(), printResultFunc);
+        players.hitStandEachPlayers(decideHitStandFunc, deck, printResultFunc);
     }
 
     public void dealerHitStand(Consumer<Boolean> printDecisionOutput) {
@@ -39,7 +39,7 @@ public class BlackjackGame {
                 printDecisionOutput.accept(dealerHitStand);
                 break;
             }
-            dealer.addCard(() -> deck.draw());
+            dealer.addCard(deck.draw());
             printDecisionOutput.accept(dealerHitStand);
         }
     }
