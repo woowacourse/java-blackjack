@@ -1,6 +1,6 @@
 package blackjack.model.participant;
 
-import blackjack.model.card.Hand;
+import blackjack.model.hand.Hand;
 
 public class Dealer extends Participant {
 

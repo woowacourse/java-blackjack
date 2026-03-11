@@ -148,9 +148,7 @@ public class OutputView {
     }
 
     private void printPlayerResult(ResultDto playerResult) {
-        String result = RESULT_LABELS.get(playerResult.result());
-
-        System.out.println(playerResult.playerName() + ": " + result);
+        System.out.println(playerResult.playerName() + ": " + playerResult.profit());
     }
 
     private List<String> parseCardsToOutputs(List<CardDto> cards) {

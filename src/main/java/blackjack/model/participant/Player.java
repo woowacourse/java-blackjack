@@ -1,7 +1,7 @@
 package blackjack.model.participant;
 
 import blackjack.model.game.BlackjackResult;
-import blackjack.model.card.Hand;
+import blackjack.model.hand.Hand;
 
 public class Player extends Participant {
 
@@ -22,6 +22,12 @@ public class Player extends Participant {
 
     public String getName() {
         return name.get();
+    }
+
+    public double calculateProfit(Hand dealerHand) {
+        BlackjackResult result = calculateResult(dealerHand);
+
+        return result.calculateProfit(bet, hand.getEarningRate());
     }
 
     public BlackjackResult calculateResult(Hand dealerHand) {

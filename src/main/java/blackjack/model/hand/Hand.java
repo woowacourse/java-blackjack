@@ -1,26 +1,39 @@
-package blackjack.model.card;
+package blackjack.model.hand;
 
+import blackjack.model.card.Card;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class Hand {
+public abstract class Hand {
 
     private static final int BUST_LOWER_BOUND = 22;
     private static final int ACE_ADJUST_SCORE = 10;
 
-    private final Collection<Card> cards = new ArrayList<>();
+    protected final Collection<Card> cards;
+
+    protected Hand() {
+        this.cards = new ArrayList<>();
+    }
+
+    protected Hand(Collection<Card> cards) {
+        this.cards = new ArrayList<>(cards);
+    }
 
     public Collection<Card> getCards() {
         return List.copyOf(cards);
     }
 
-    public void hit(Card card) {
-        this.cards.add(card);
+    public Hand hit(Card card) {
+        cards.add(card);
+
+        return nextState();
     }
 
-    public void firstDeal(List<Card> cards) {
-        this.cards.addAll(cards);
+    public abstract boolean canHit();
+
+    public double getEarningRate() {
+        return 1;
     }
 
     public boolean isBust() {
@@ -36,6 +49,8 @@ public class Hand {
 
         return adjust(scoreBeforeAdjust, cards);
     }
+
+    protected abstract Hand nextState();
 
     private int getScoreBeforeAdjust() {
         return cards.stream()

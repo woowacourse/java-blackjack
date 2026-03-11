@@ -1,16 +1,16 @@
 package blackjack.model.participant;
 
 import blackjack.model.card.Card;
-import blackjack.model.card.Hand;
+import blackjack.model.hand.Hand;
+import blackjack.model.hand.UninitializedHand;
 import java.util.Collection;
-import java.util.List;
 
 public abstract class Participant {
 
-    protected final Hand hand;
+    protected Hand hand;
 
     protected Participant() {
-        this.hand = new Hand();
+        this.hand = new UninitializedHand();
     }
 
     protected Participant(Hand hand) {
@@ -18,7 +18,7 @@ public abstract class Participant {
     }
 
     public void addCard(Card card) {
-        hand.hit(card);
+        hand = hand.hit(card);
     }
 
     public Hand getHand() {
@@ -33,7 +33,7 @@ public abstract class Participant {
         return hand.calculateScore();
     }
 
-    public boolean isBust() {
-        return hand.isBust();
+    public boolean isPlaying() {
+        return hand.canHit();
     }
 }

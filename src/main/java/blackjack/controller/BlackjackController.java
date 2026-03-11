@@ -84,7 +84,7 @@ public class BlackjackController {
     }
 
     private void playerHit(Player player, Deck deck) {
-        while (!player.isBust() && inputView.askHit(player.getName()).isHit()) {
+        while (player.isPlaying() && inputView.askHit(player.getName()).isHit()) {
             player.addCard(deck.draw());
             outputView.printPlayerCards(player.getName(), cardsToDtos(player.getCards()));
         }
@@ -110,7 +110,8 @@ public class BlackjackController {
         List<ResultDto> resultDtos = new ArrayList<>();
         for (Player player : players) {
             BlackjackResult result = player.calculateResult(dealer.getHand());
-            resultDtos.add(new ResultDto(player.getName(), result));
+            double profit = player.calculateProfit(dealer.getHand());
+            resultDtos.add(new ResultDto(player.getName(), result, profit));
         }
 
         outputView.printResult(resultDtos);
