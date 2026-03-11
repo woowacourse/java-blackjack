@@ -7,7 +7,7 @@ import blackjack.model.card.Rank;
 import blackjack.model.card.Suit;
 import blackjack.model.cardDeck.CardDeck;
 import blackjack.model.cardDeck.PickStrategy;
-import blackjack.model.result.Result;
+import blackjack.model.result.PlayerResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -58,8 +58,8 @@ class DealerTest {
         player3.pickAdditionalCard(cardDeckForMustPickTen);
 
         // when & then
-        assertThat(dealer.judgePlayerResult(player1)).isEqualTo(Result.LOSE);
-        assertThat(dealer.judgePlayerResult(player2)).isEqualTo(Result.WIN);
-        assertThat(dealer.judgePlayerResult(player3)).isEqualTo(Result.DRAW);
+        assertThat(dealer.judgePlayerResult(player1)).isEqualTo(PlayerResult.LOSE);
+        assertThat(dealer.judgePlayerResult(player2)).isEqualTo(PlayerResult.WIN);
+        assertThat(dealer.judgePlayerResult(player3)).isEqualTo(PlayerResult.DRAW);
     }
 }

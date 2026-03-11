@@ -4,7 +4,7 @@ import blackjack.model.cardDeck.CardDeck;
 import blackjack.model.cardDeck.RandomPickStrategy;
 import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Player;
-import blackjack.dto.PlayerResults;
+import blackjack.dto.PlayerResultsDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -95,6 +95,6 @@ public class BlackjackController {
     }
 
     private void printResult(List<Player> players, Dealer dealer) {
-        outputView.printResult(PlayerResults.of(players, dealer));
+        outputView.printResult(PlayerResultsDto.of(players, dealer));
     }
 }

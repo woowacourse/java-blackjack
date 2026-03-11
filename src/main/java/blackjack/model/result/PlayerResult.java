@@ -1,6 +1,6 @@
 package blackjack.model.result;
 
-public enum Result {
+public enum PlayerResult {
 
     WIN("승"),
     DRAW("무"),
@@ -8,7 +8,7 @@ public enum Result {
 
     private final String displayName;
 
-    Result(String displayName) {
+    PlayerResult(String displayName) {
         this.displayName = displayName;
     }
 

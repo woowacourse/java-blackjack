@@ -2,7 +2,7 @@ package blackjack.model.participant;
 
 import blackjack.dto.CardDto;
 import blackjack.model.card.Hands;
-import blackjack.model.result.Result;
+import blackjack.model.result.PlayerResult;
 import java.util.List;
 
 public class Dealer extends Participant {
@@ -27,23 +27,23 @@ public class Dealer extends Participant {
         return !hands.hasScoreHigherThan(DEALER_PICK_THRESHOLD);
     }
 
-    public Result judgePlayerResult(Player player) {
+    public PlayerResult judgePlayerResult(Player player) {
         if (player.isBust()) {
-            return Result.LOSE;
+            return PlayerResult.LOSE;
         }
 
         if (this.isBust()) {
-            return Result.WIN;
+            return PlayerResult.WIN;
         }
 
         if (this.hasHigherScoreThan(player)) {
-            return Result.LOSE;
+            return PlayerResult.LOSE;
         }
 
         if (player.hasHigherScoreThan(this)) {
-            return Result.WIN;
+            return PlayerResult.WIN;
         }
 
-        return Result.DRAW;
+        return PlayerResult.DRAW;
     }
 }
