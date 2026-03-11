@@ -1,4 +1,4 @@
-package Bet;
+package bet;
 
 import domain.bet.BetTable;
 import domain.card.Card;
