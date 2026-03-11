@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.money.Money;
 import blackjack.domain.participant.Player;
 
 import java.util.Arrays;
@@ -35,11 +36,11 @@ public class InputView {
         return input.equals(HIT_INPUT);
     }
 
-    public int readWager(final Player player) {
+    public Money readWager(final Player player) {
         System.out.printf(READ_PLAYER_WAGER_MESSAGE, player.getName());
         String input = scanner.nextLine().trim();
         validNumber(input);
-        return Integer.parseInt(input);
+        return new Money(Integer.parseInt(input));
     }
 
     private void validNumber(String input) {

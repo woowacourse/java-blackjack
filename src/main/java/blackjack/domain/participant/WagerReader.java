@@ -1,7 +1,9 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.money.Money;
+
 @FunctionalInterface
 public interface WagerReader {
 
-    int wagerOf(Player player);
+    Money wagerOf(Player player);
 }

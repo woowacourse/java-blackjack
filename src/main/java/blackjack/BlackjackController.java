@@ -2,6 +2,7 @@ package blackjack;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.deck.Deck;
+import blackjack.domain.money.Money;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
@@ -38,7 +39,7 @@ public class BlackjackController {
         deck.shuffle(shuffleStrategy);
         final Players players = createPlayers();
         final Dealer dealer = new Dealer();
-        Map<Player, Integer> wagers = players.placeWagers(inputView::readWager);
+        Map<Player, Money> wagers = players.placeWagers(inputView::readWager);
 
         dealInitialCards(deck, players, dealer);
         outputView.printInitialDeal(players, dealer);
@@ -49,15 +50,15 @@ public class BlackjackController {
         GameResults gameResults = resolveGameResults(players, dealer);
         printGameResults(gameResults);
 
-        Map<Participant, Integer> profits = calculateProfit(gameResults, wagers, dealer);
+        Map<Participant, Money> profits = calculateProfit(gameResults, wagers, dealer);
         printProfits(profits);
     }
 
-    private void printProfits(Map<Participant, Integer> profits) {
+    private void printProfits(Map<Participant, Money> profits) {
         outputView.printProfits(profits);
     }
 
-    private Map<Participant, Integer> calculateProfit(GameResults gameResults, Map<Player, Integer> wagers, Dealer dealer) {
+    private Map<Participant, Money> calculateProfit(GameResults gameResults, Map<Player, Money> wagers, Dealer dealer) {
         return gameResults.calculateProfits(wagers, dealer);
     }
 

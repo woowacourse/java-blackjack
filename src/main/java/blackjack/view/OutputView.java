@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.card.Card;
+import blackjack.domain.money.Money;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
@@ -63,10 +64,10 @@ public class OutputView {
         gameResults.playerResults().forEach(this::printPlayerResult);
     }
 
-    public void printProfits(Map<Participant, Integer> profits) {
+    public void printProfits(Map<Participant, Money> profits) {
         System.out.println(FINAL_PROFITS_HEADER);
         for (Participant participant : profits.keySet()) {
-            System.out.printf(PLAYER_RESULT_FORMAT, participant.getName(), profits.get(participant));
+            System.out.printf(PLAYER_RESULT_FORMAT, participant.getName(), profits.get(participant).getValue());
         }
     }
 

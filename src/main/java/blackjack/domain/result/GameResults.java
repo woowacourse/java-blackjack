@@ -1,5 +1,6 @@
 package blackjack.domain.result;
 
+import blackjack.domain.money.Money;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
@@ -42,19 +43,19 @@ public class GameResults {
         return playerResults;
     }
 
-    public Map<Participant, Integer> calculateProfits(Map<Player, Integer> wagers, Dealer dealer) {
-        Map<Participant, Integer> profits = new LinkedHashMap<>();
-        profits.put(dealer, 0);
+    public Map<Participant, Money> calculateProfits(Map<Player, Money> wagers, Dealer dealer) {
+        Map<Participant, Money> profits = new LinkedHashMap<>();
+        profits.put(dealer, new Money(0));
 
         for (Player player : playerResults.keySet()) {
-            Integer profit = profitOf(player, wagers.get(player));
-            profits.put(player, profit);
-            profits.put(dealer, profits.get(dealer) - profit);
+            Money playerProfit = profitOf(player, wagers.get(player));
+            profits.put(player, playerProfit);
+            profits.put(dealer, profits.get(dealer).add(playerProfit.negate()));
         }
         return profits;
     }
 
-    private Integer profitOf(Player player, Integer wager) {
+    private Money profitOf(Player player, Money wager) {
         GameResult gameResult = playerResults.get(player);
         return gameResult.profitOf(wager);
     }

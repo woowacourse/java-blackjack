@@ -3,6 +3,7 @@ package blackjack.domain.result;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
+import blackjack.domain.money.Money;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
@@ -72,13 +73,13 @@ class GameResultsTest {
         Player player = new Player("pobi");
         GameResults gameResults = gameResultFixture.플레이어가_딜러에게_지는_게임_결과(player, dealer);
 
-        int wager = 10000;
-        Map<Player, Integer> wagers = new HashMap<>();
+        Money wager = new Money(10000);
+        Map<Player, Money> wagers = new HashMap<>();
         wagers.put(player, wager);
 
-        Map<Participant, Integer> profits = gameResults.calculateProfits(wagers, dealer);
+        Map<Participant, Money> profits = gameResults.calculateProfits(wagers, dealer);
 
-        assertThat(profits.get(player)).isEqualTo(-wager);
+        assertThat(profits.get(player)).isEqualTo(wager.negate());
         assertThat(profits.get(dealer)).isEqualTo(wager);
     }
 
@@ -88,14 +89,14 @@ class GameResultsTest {
         Player player = new Player("pobi");
         GameResults gameResults = gameResultFixture.플레이어가_딜러에게_이기는_게임_결과(player, dealer);
 
-        int wager = 10000;
-        Map<Player, Integer> wagers = new HashMap<>();
+        Money wager = new Money(10000);
+        Map<Player, Money> wagers = new HashMap<>();
         wagers.put(player, wager);
 
-        Map<Participant, Integer> profits = gameResults.calculateProfits(wagers, dealer);
+        Map<Participant, Money> profits = gameResults.calculateProfits(wagers, dealer);
 
         assertThat(profits.get(player)).isEqualTo(wager);
-        assertThat(profits.get(dealer)).isEqualTo(-wager);
+        assertThat(profits.get(dealer)).isEqualTo(wager.negate());
     }
 
     @Test
@@ -115,16 +116,16 @@ class GameResultsTest {
 
         GameResults results = GameResults.create(new Players(List.of(loser, drawer)), dealer);
 
-        Map<Player, Integer> wagers = new HashMap<>();
-        int loserWager = 10000;
-        int drawerWager = 20000;
+        Map<Player, Money> wagers = new HashMap<>();
+        Money loserWager = new Money(10000);
+        Money drawerWager = new Money(20000);
         wagers.put(loser, loserWager);
         wagers.put(drawer, drawerWager);
 
-        Map<Participant, Integer> profits = results.calculateProfits(wagers, dealer);
+        Map<Participant, Money> profits = results.calculateProfits(wagers, dealer);
 
-        assertThat(profits.get(loser)).isEqualTo(-loserWager);
-        assertThat(profits.get(drawer)).isZero();
+        assertThat(profits.get(loser)).isEqualTo(loserWager.negate());
+        assertThat(profits.get(drawer)).isEqualTo(new Money(0));
         assertThat(profits.get(dealer)).isEqualTo(loserWager);
     }
 }

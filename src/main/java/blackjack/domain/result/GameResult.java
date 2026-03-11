@@ -1,5 +1,7 @@
 package blackjack.domain.result;
 
+import blackjack.domain.money.Money;
+
 public enum GameResult {
 
     WIN(1),
@@ -22,7 +24,7 @@ public enum GameResult {
         return DRAW;
     }
 
-    public int profitOf(int wager) {
-        return wager * multiplier;
+    public Money profitOf(Money wager) {
+        return wager.multiply(multiplier);
     }
 }
