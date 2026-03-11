@@ -61,8 +61,8 @@ public class BlackjackController {
         boolean wantHit = true;
         while (!isPlayerEnd && wantHit) {
             wantHit = retryOnException(() -> isPlayerWantHit(name));
+            game.playerHit(name, deck, isPlayerEnd);
             isPlayerEnd = game.isPlayerEnd(name, wantHit);
-            game.playerHit(name, deck, wantHit);
             OutputView.printPlayerCards(name, CardDto.fromCards(game.getPlayerCards(name)));
         }
     }
