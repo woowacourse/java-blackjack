@@ -3,10 +3,10 @@ package model;
 import java.util.List;
 import model.card.Deck;
 
-public class Dealer extends Player {
+public class Dealer extends Participant {
 
     private static final String DEALER_NAME = "딜러";
-    private static final int MINIMUM_STAND_SCORE = 16;
+    private static final int DEALER_HIT_THRESHOLD = 16;
     private static final int INITIAL_DISPENSE_COUNT = 2;
 
     private final Deck deck;
@@ -18,12 +18,12 @@ public class Dealer extends Player {
 
     @Override
     public boolean canHit() {
-        return calculateTotalScore() <= MINIMUM_STAND_SCORE;
+        return calculateTotalScore() <= DEALER_HIT_THRESHOLD;
     }
 
     public void distributeInitialCards(List<Player> players) {
-        distributeInitialByPlayer(this);
-        players.forEach(this::distributeInitialByPlayer);
+        distributeInitialByParticipant(this);
+        players.forEach(this::distributeInitialByParticipant);
     }
 
     public void distributeCard(Player player) {
@@ -34,9 +34,9 @@ public class Dealer extends Player {
         this.addCard(deck.draw());
     }
 
-    private void distributeInitialByPlayer(Player player) {
+    private void distributeInitialByParticipant(Participant participant) {
         for (int i = 0; i < INITIAL_DISPENSE_COUNT; i++) {
-            player.addCard(deck.draw());
+            participant.addCard(deck.draw());
         }
     }
 }

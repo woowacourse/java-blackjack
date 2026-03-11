@@ -1,46 +1,15 @@
 package model;
 
-import java.util.List;
-import model.card.Card;
-import model.card.Hand;
+public class Player extends Participant {
 
-public class Player {
-
-    private static final int BUST_LIMIT = 21;
-    private static final int ACE_BONUS_SCORE = 10;
-
-    private final String name;
-    private final Hand hand;
+    private static final int PLAYER_HIT_THRESHOLD = 21;
 
     public Player(String name) {
-        this.name = name;
-        this.hand = new Hand();
+        super(name);
     }
 
-    public int calculateTotalScore() {
-        int score = this.hand.calculateScore();
-        int aceCount = this.hand.countAce();
-
-        while (aceCount > 0 && score + ACE_BONUS_SCORE <= BUST_LIMIT) {
-            score += ACE_BONUS_SCORE;
-            aceCount--;
-        }
-        return score;
-    }
-
-    public void addCard(Card card) {
-        this.hand.add(card);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public List<Card> getCards() {
-        return hand.getCards();
-    }
-
+    @Override
     public boolean canHit() {
-        return calculateTotalScore() < BUST_LIMIT;
+        return calculateTotalScore() < PLAYER_HIT_THRESHOLD;
     }
 }
