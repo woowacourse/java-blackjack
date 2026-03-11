@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class CardDeckFactory {
+public class CardFactory {
 
-    private CardDeckFactory() {
+    private CardFactory() {
     }
 
     public static List<Card> createShuffledCards() {
@@ -33,4 +33,5 @@ public class CardDeckFactory {
     }
 
 }
+
 
