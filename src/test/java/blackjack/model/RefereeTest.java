@@ -13,7 +13,7 @@ class RefereeTest {
         // given
         Referee referee = new Referee();
         Dealer dealer = new Dealer();
-        Player player = new Player("luke");
+        Player player = new Player("luke", 1000);
         Card card = new Card(Figure.SPADE, Number.THREE);
         Card card2 = new Card(Figure.CLOVER, Number.TWO);
 
@@ -34,7 +34,7 @@ class RefereeTest {
         // given
         Referee referee = new Referee();
         Dealer dealer = new Dealer();
-        Player player = new Player("luke");
+        Player player = new Player("luke", 1000);
         Card card = new Card(Figure.SPADE, Number.TWO);
         Card card2 = new Card(Figure.CLOVER, Number.THREE);
 
@@ -55,7 +55,7 @@ class RefereeTest {
         // given
         Referee referee = new Referee();
         Dealer dealer = new Dealer();
-        Player player = new Player("luke");
+        Player player = new Player("luke", 1000);
         Card card = new Card(Figure.SPADE, Number.JACK);
         Card card2 = new Card(Figure.SPADE, Number.ACE);
         Card card3 = new Card(Figure.SPADE, Number.KING);
@@ -80,7 +80,7 @@ class RefereeTest {
         // given
         Referee referee = new Referee();
         Dealer dealer = new Dealer();
-        Player player = new Player("luke");
+        Player player = new Player("luke", 1000);
         Card card = new Card(Figure.SPADE, Number.THREE);
         Card card2 = new Card(Figure.SPADE, Number.TEN);
         Card card3 = new Card(Figure.SPADE, Number.KING);
@@ -105,7 +105,7 @@ class RefereeTest {
         // given
         Referee referee = new Referee();
         Dealer dealer = new Dealer();
-        Player player = new Player("luke");
+        Player player = new Player("luke", 1000);
         Card card = new Card(Figure.SPADE, Number.JACK);
         Card card2 = new Card(Figure.SPADE, Number.TEN);
         Card card3 = new Card(Figure.SPADE, Number.KING);
@@ -130,7 +130,7 @@ class RefereeTest {
         // given
         Referee referee = new Referee();
         Dealer dealer = new Dealer();
-        Player player = new Player("luke");
+        Player player = new Player("luke", 1000);
         Card card = new Card(Figure.SPADE, Number.JACK);
         Card card2 = new Card(Figure.SPADE, Number.TEN);
         Card card3 = new Card(Figure.SPADE, Number.KING);
