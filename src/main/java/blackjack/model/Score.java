@@ -22,7 +22,7 @@ public class Score {
     }
 
     public boolean isPlayerHitScore() {
-        return score < BUST_BOUNDARY;
+        return score <= BUST_BOUNDARY;
     }
 
     public boolean isBurst() {
