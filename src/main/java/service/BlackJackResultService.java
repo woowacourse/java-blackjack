@@ -8,7 +8,6 @@ import java.util.List;
 public class BlackJackResultService {
 
     public ScoreResultDto createScoreResultDto(Dealer dealer, List<Player> players) {
-        return new ScoreResultDto(dealer, players);
+        return ScoreResultDto.of(dealer, players);
     }
-
 }
