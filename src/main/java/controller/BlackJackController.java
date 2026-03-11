@@ -1,6 +1,7 @@
 package controller;
 
-import static model.GameRule.BLACKJACK_SCORE;
+import static model.Blackjack.BLACKJACK_SCORE;
+import static model.Blackjack.DEALOUT_DRAW_COUNT;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,7 +10,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import model.Blackjack;
-import model.GameRule;
 import model.card.Card;
 import model.card.Cards;
 import model.card.Deck;
@@ -78,7 +78,7 @@ public class BlackJackController {
                         ""
                 ));
 
-        outputView.printDealOut(playerNames, GameRule.DEALOUT_DRAW_COUNT);
+        outputView.printDealOut(playerNames, DEALOUT_DRAW_COUNT);
 
         for (Entry<String, Cards> entry : dealoutResult.entrySet()) {
             String participantName = entry.getKey();
@@ -114,7 +114,7 @@ public class BlackJackController {
     private void proceedDealerTurn(Blackjack blackjack, Dealer dealer) {
         boolean draw = dealer.needDraw();
 
-        outputView.printDealerDrawResult(draw, GameRule.DEALER_DRAW_THRESHOLD);
+        outputView.printDealerDrawResult(draw, Dealer.DRAW_THRESHOLD);
 
         if (draw) {
             blackjack.giveCardTo(dealer);

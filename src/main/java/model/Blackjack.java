@@ -1,7 +1,5 @@
 package model;
 
-import static model.GameRule.DEALOUT_DRAW_COUNT;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -17,6 +15,9 @@ import model.participant.Participants;
 import model.participant.Player;
 
 public class Blackjack {
+    public static final int DEALOUT_DRAW_COUNT = 2;
+    public static final int BLACKJACK_SCORE = 21;
+
     private final Participants participants;
     private final Deck deck;
 

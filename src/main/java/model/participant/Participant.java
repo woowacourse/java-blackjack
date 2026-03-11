@@ -1,6 +1,6 @@
 package model.participant;
 
-import static model.GameRule.BLACKJACK_SCORE;
+import static model.Blackjack.BLACKJACK_SCORE;
 
 import java.util.ArrayList;
 import java.util.List;
