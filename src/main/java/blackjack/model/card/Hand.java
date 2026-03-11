@@ -1,6 +1,7 @@
 package blackjack.model.card;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class Hand {
@@ -8,9 +9,9 @@ public class Hand {
     private static final int BUST_LOWER_BOUND = 22;
     private static final int ACE_ADJUST_SCORE = 10;
 
-    private final List<Card> cards = new ArrayList<>();
+    private final Collection<Card> cards = new ArrayList<>();
 
-    public List<Card> getCards() {
+    public Collection<Card> getCards() {
         return List.copyOf(cards);
     }
 
@@ -42,7 +43,7 @@ public class Hand {
                 .sum();
     }
 
-    private int adjust(int scoreBeforeAdjust, List<Card> cards) {
+    private int adjust(int scoreBeforeAdjust, Collection<Card> cards) {
         boolean containAce = cards.stream()
                 .anyMatch(Card::isAce);
         int scoreAfterAdjust = scoreBeforeAdjust + ACE_ADJUST_SCORE;

@@ -2,6 +2,7 @@ package blackjack.model.participant;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.Hand;
+import java.util.Collection;
 import java.util.List;
 
 public abstract class Participant {
@@ -24,7 +25,7 @@ public abstract class Participant {
         return hand;
     }
 
-    public List<Card> getCards() {
+    public Collection<Card> getCards() {
         return hand.getCards();
     }
 

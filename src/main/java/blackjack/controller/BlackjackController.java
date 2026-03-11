@@ -67,14 +67,14 @@ public class BlackjackController {
         );
     }
 
-    private void deal(Collection<Player>players, Dealer dealer, Deck deck) {
+    private void deal(Collection<Player> players, Dealer dealer, Deck deck) {
         for (Player player : players) {
             player.addCard(deck.draw());
         }
         dealer.addCard(deck.draw());
     }
 
-    private void hit(Collection<Player>players, Dealer dealer, Deck deck) {
+    private void hit(Collection<Player> players, Dealer dealer, Deck deck) {
         for (Player player : players) {
             retryOnIllegalArgument(() -> playerHit(player, deck));
         }
@@ -97,7 +97,7 @@ public class BlackjackController {
         }
     }
 
-    private void printScore(Collection<Player>players, Dealer dealer) {
+    private void printScore(Collection<Player> players, Dealer dealer) {
         DealerScoreDto dealerDto = DealerScoreDto.from(dealer);
         List<PlayerScoreDto> playerDtos = players.stream()
                 .map(PlayerScoreDto::from)
@@ -106,7 +106,7 @@ public class BlackjackController {
         outputView.printScore(dealerDto, playerDtos);
     }
 
-    private void printResult(Collection<Player>players, Dealer dealer) {
+    private void printResult(Collection<Player> players, Dealer dealer) {
         List<ResultDto> resultDtos = new ArrayList<>();
         for (Player player : players) {
             BlackjackResult result = player.calculateResult(dealer.getHand());
@@ -124,13 +124,13 @@ public class BlackjackController {
         RetryUtil.retryOnInvalidInput(retryableAction, outputView::printErrorMessage);
     }
 
-    private List<CardDto> cardsToDtos(List<Card> cards) {
+    private List<CardDto> cardsToDtos(Collection<Card> cards) {
         return cards.stream()
                 .map(CardDto::from)
                 .toList();
     }
 
-    private List<PlayerDto> playersToDots(Collection<Player>players) {
+    private List<PlayerDto> playersToDots(Collection<Player> players) {
         return players.stream()
                 .map(PlayerDto::from)
                 .toList();
