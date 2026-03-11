@@ -1,15 +1,15 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import domain.Dealer;
+import domain.Hand;
 import domain.Outcome;
+import domain.Participant;
 import domain.Player;
 import domain.Players;
 import domain.Score;
-import dto.DealerPlayersDTO;
 import java.lang.reflect.Field;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import util.CheckWinner;
 import util.NameParser;
 
 public class CheckWinnerTest {
@@ -19,12 +19,12 @@ public class CheckWinnerTest {
         Dealer dealer = new Dealer();
         Players players = NameParser.makeNameList("pobi");
         Player player = players.getPlayer(0);
-        setScore(dealer.getScore(), 20);
-        setScore(player.getScore(), 20);
+        setScore(dealer, 20);
+        setScore(player, 20);
 
-        CheckWinner.decideWinner(new DealerPlayersDTO(dealer, players));
+        players.decideWinner(dealer);
 
-        assertEquals(Outcome.무, player.getOutcome());
+        assertEquals(Outcome.DRAW, player.getOutcome());
     }
 
     @Test
@@ -33,12 +33,12 @@ public class CheckWinnerTest {
         Dealer dealer = new Dealer();
         Players players = NameParser.makeNameList("pobi");
         Player player = players.getPlayer(0);
-        setScore(dealer.getScore(), 20);
-        setScore(player.getScore(), 18);
+        setScore(dealer, 20);
+        setScore(player, 18);
 
-        CheckWinner.decideWinner(new DealerPlayersDTO(dealer, players));
+        players.decideWinner(dealer);
 
-        assertEquals(Outcome.패, player.getOutcome());
+        assertEquals(Outcome.LOSE, player.getOutcome());
     }
 
     @Test
@@ -47,17 +47,29 @@ public class CheckWinnerTest {
         Dealer dealer = new Dealer();
         Players players = NameParser.makeNameList("pobi");
         Player player = players.getPlayer(0);
-        setScore(dealer.getScore(), 18);
-        setScore(player.getScore(), 20);
+        setScore(dealer, 18);
+        setScore(player, 20);
 
-        CheckWinner.decideWinner(new DealerPlayersDTO(dealer, players));
+        players.decideWinner(dealer);
 
-        assertEquals(Outcome.승, player.getOutcome());
+        assertEquals(Outcome.WIN, player.getOutcome());
     }
 
-    private void setScore(Score score, int value) throws Exception {
-        Field scoreField = Score.class.getDeclaredField("score");
-        scoreField.setAccessible(true);
-        scoreField.set(score, value);
+    private void setScore(Dealer dealer, int value) throws Exception {
+        Field handField = Participant.class.getDeclaredField("hand");
+        handField.setAccessible(true);
+        Hand hand = (Hand) handField.get(dealer);
+        Field dealerScoreField = Hand.class.getDeclaredField("score");
+        dealerScoreField.setAccessible(true);
+        dealerScoreField.set(hand, new Score().addScore(value));
+    }
+
+    private void setScore(Player player, int value) throws Exception {
+        Field handField = Participant.class.getDeclaredField("hand");
+        handField.setAccessible(true);
+        Hand hand = (Hand) handField.get(player);
+        Field playerScoreField = Hand.class.getDeclaredField("score");
+        playerScoreField.setAccessible(true);
+        playerScoreField.set(hand, new Score().addScore(value));
     }
 }

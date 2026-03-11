@@ -1,24 +1,20 @@
 import domain.Dealer;
-import domain.DuplicationSet;
+import domain.Cards;
 import domain.Player;
-import org.junit.jupiter.api.BeforeEach;
+import java.util.Random;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PlayerTest {
-    @BeforeEach
-    void clearCards() {
-        DuplicationSet.duplicationCards.clear();
-    }
-
     @Test
     @DisplayName("플레이어가 카드를 받으면 카드 개수가 1 증가한다")
     void drawCardByPlayer() {
         Player player = new Player("pobi");
+        Cards cards = new Cards(new Random(1));
 
-        player.drawCard();
+        player.drawCard(cards);
 
         assertEquals(1, player.getCardList().size());
     }
@@ -27,8 +23,9 @@ public class PlayerTest {
     @DisplayName("딜러가 카드를 받으면 카드 개수가 1 증가한다")
     void drawCardByDealer() {
         Dealer dealer = new Dealer();
+        Cards cards = new Cards(new Random(1));
 
-        dealer.drawCard();
+        dealer.drawCard(cards);
 
         assertEquals(1, dealer.getCardList().size());
     }

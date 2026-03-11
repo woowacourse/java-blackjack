@@ -1,5 +1,7 @@
 import domain.Player;
+import domain.Participant;
 import domain.Score;
+import domain.Hand;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +16,7 @@ public class PlayerAceTest {
     void checkBustWithOneAce() throws Exception {
         Player player = new Player("pobi");
         setAceCount(player, 1);
-        setScore(player.getScore(), 22);
+        setScore(player, 22);
 
         boolean busted = player.checkBust();
 
@@ -26,7 +28,7 @@ public class PlayerAceTest {
     void checkBustWithManyAces() throws Exception {
         Player player = new Player("pobi");
         setAceCount(player, 3);
-        setScore(player.getScore(), 31);
+        setScore(player, 31);
 
         player.checkBust();
 
@@ -34,14 +36,23 @@ public class PlayerAceTest {
     }
 
     private void setAceCount(Player player, int aceCount) throws Exception {
-        Field aceCountField = Player.class.getDeclaredField("aceCount");
+        Hand hand = getHand(player);
+        Field aceCountField = Hand.class.getDeclaredField("aceCount");
         aceCountField.setAccessible(true);
-        aceCountField.set(player, aceCount);
+        aceCountField.set(hand, aceCount);
     }
 
-    private void setScore(Score score, int value) throws Exception {
-        Field scoreField = Score.class.getDeclaredField("score");
-        scoreField.setAccessible(true);
-        scoreField.set(score, value);
+    private void setScore(Player player, int value) throws Exception {
+        Hand hand = getHand(player);
+        Field playerScoreField = Hand.class.getDeclaredField("score");
+        playerScoreField.setAccessible(true);
+        Score score = new Score().addScore(value);
+        playerScoreField.set(hand, score);
+    }
+
+    private Hand getHand(Player player) throws Exception {
+        Field handField = Participant.class.getDeclaredField("hand");
+        handField.setAccessible(true);
+        return (Hand) handField.get(player);
     }
 }
