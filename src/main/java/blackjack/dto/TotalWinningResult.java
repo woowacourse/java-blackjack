@@ -13,7 +13,7 @@ public record TotalWinningResult(
 ) {
 
     public static TotalWinningResult of(Dealer dealer, List<Player> players) {
-        Map<GameResult, Long> dealerResult = dealer.calculateResult(players);
+        Map<GameResult, Long> dealerResult = dealer.determineGameResult(players);
         long dealerWinCount = dealerResult.getOrDefault(GameResult.WIN, 0L);
         long dealerLoseCount = dealerResult.getOrDefault(GameResult.LOSE, 0L);
 

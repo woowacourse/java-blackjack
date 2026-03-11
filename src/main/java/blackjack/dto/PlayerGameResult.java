@@ -12,7 +12,7 @@ public record PlayerGameResult(
     public static PlayerGameResult of(Player player, Dealer dealer) {
         return new PlayerGameResult(
                 player.getNickname(),
-                player.calculateResult(dealer)
+                GameResult.reverse(dealer.determineGameResult(player))
         );
     }
 }
