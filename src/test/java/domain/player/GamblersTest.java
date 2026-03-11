@@ -3,17 +3,15 @@ package domain.player;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.MatchResult;
 import domain.StubDeck;
 import domain.card.Card;
 import domain.card.CardRank;
 import domain.card.CardSuit;
 import dto.BlackjackResult;
-import dto.PlayerCardInfo;
+import dto.GamblerInfoDto;
 import expcetion.BlackjackException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -35,8 +33,8 @@ class GamblersTest {
     void 딜러와_사용자_승패결과_도출() {
         //given
         Dealer dealer = new Dealer();
-        GamberInfoDto playerInfoDto1 = new GamberCardInfo("tobi", 10000);
-        GamberInfoDto playerInfoDto2 = new GamberCardInfo("quda", 20000);
+        GamblerInfoDto playerInfoDto1 = GamblerInfoDto.from("tobi",10000);
+        GamblerInfoDto playerInfoDto2 = GamblerInfoDto.from("quda", 20000);
         Gamblers gamblers = new Gamblers(List.of(playerInfoDto1, playerInfoDto2)); // 사용자 두명
 
         Card jack = new Card(CardRank.JACK, CardSuit.CLOVER); // 딜러
@@ -53,7 +51,7 @@ class GamblersTest {
         gamblers.dealAll(sd);
 
         //when
-        GameResult result = GameResult.from(gamblers.getResult(dealer.score()));
+        BlackjackResult result = BlackjackResult.from(gamblers.getResult(dealer.score()));
 
         //then
         assertThat(result.dealerProfit()).isEqualTo(-10000);

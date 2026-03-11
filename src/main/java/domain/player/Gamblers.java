@@ -3,6 +3,7 @@ package domain.player;
 import domain.MatchResult;
 import domain.deck.CardDeck;
 import dto.BlackjackResult;
+import dto.GamblerInfoDto;
 import dto.MatchResultLog;
 import expcetion.BlackjackException;
 import expcetion.ExceptionMessage;
@@ -16,21 +17,22 @@ public class Gamblers {
 
     private final List<Gambler> gamblers;
 
-    public Gamblers(List<String> names) {
-        validateNonDuplicate(names);
+    public Gamblers(List<GamblerInfoDto> gamblerInfoDtos) {
+        validateNonDuplicate(gamblerInfoDtos);
 
-        gamblers = names.stream()
+        gamblers = gamblerInfoDtos.stream()
                 .map(Gambler::new)
-                .collect(Collectors.toList());
+                .toList();
     }
+    private void validateNonDuplicate(List<GamblerInfoDto> gamblerInfoDtos) {
+        Set<String> names = gamblerInfoDtos.stream()
+                .map(GamblerInfoDto::name)
+                .collect(Collectors.toSet());
 
-    private void validateNonDuplicate(List<String> names) {
-        Set<String> namesSet = new HashSet<>(names);
-        if (namesSet.size() != names.size()) {
+        if (names.size() != gamblerInfoDtos.size()) {
             throw new BlackjackException(ExceptionMessage.NAME_DUPLICATE_ERROR);
         }
     }
-
     public void dealAll(CardDeck cardDeck) {
         gamblers.forEach(gambler -> gambler.deal(cardDeck));
     }
