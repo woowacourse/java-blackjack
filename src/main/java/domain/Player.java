@@ -16,14 +16,6 @@ public class Player {
         return new Player(cards, name);
     }
 
-    public String getPlayerInfo() {
-        return OutputMessage.PLAYER_CARD_INFO.format(name, OutputMessage.DELIMITER.join(cards.getCardsInfo()));
-    }
-
-    public String getPlayerScoreResult() {
-        return OutputMessage.RESULT_TEXT.format(getPlayerInfo(), cards.calculateScore());
-    }
-
     public boolean isBust() {
         return cards.isBust(cards.calculateScore());
     }
@@ -42,5 +34,9 @@ public class Player {
 
     public boolean isInitialHand() {
         return cards.size() == Policy.FIRST_DRAW_SIZE;
+    }
+
+    public Cards getCards() {
+        return cards;
     }
 }

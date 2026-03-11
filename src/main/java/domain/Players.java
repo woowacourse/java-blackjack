@@ -25,18 +25,6 @@ public class Players {
                 .toList();
     }
 
-    public List<String> getPlayersInfo() {
-        return players.stream()
-                .map(Player::getPlayerInfo)
-                .toList();
-    }
-
-    public List<String> getPlayersScoreInfo() {
-        return players.stream()
-                .map(Player::getPlayerScoreResult)
-                .toList();
-    }
-
     public List<Player> getPlayers() {
         return List.copyOf(players);
     }
