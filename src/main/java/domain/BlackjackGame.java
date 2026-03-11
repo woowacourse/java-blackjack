@@ -18,7 +18,7 @@ public class BlackjackGame {
     private final Deck deck;
 
     public BlackjackGame(List<String> players) {
-        this.players = new Players(players);
+        this.players = Players.from(players);
         this.dealer = new Dealer(DEALER_NAME);
         this.deck = new Deck();
     }

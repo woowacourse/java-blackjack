@@ -4,6 +4,7 @@ import domain.ExceptionMessage;
 import domain.Result;
 import domain.RoundResult;
 import domain.card.Card;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -14,14 +15,23 @@ import java.util.function.Supplier;
 public class Players {
     private final List<Player> players;
 
-    public Players() {
-        this.players = new ArrayList<>();
+    public Players(List<Player> players) {
+        this.players = players;
     }
 
-    public Players(List<String> players) {
-        this();
+    public static Players from(List<String> players) {
         validate(players);
-        addPlayers(players);
+        return new Players(players.stream()
+                .map(name -> new Player(name))
+                .toList());
+    }
+
+    private static void validate(List<String> players) {
+        HashSet<String> uniqueNames = new HashSet<>(players);
+
+        if (uniqueNames.size() != players.size()) {
+            throw new IllegalArgumentException(ExceptionMessage.ALREADY_EXIST_NAME.getMessage());
+        }
     }
 
     public void giveCardsToEachPlayers(Function<Integer, List<Card>> getCard, int quantity) {
@@ -55,14 +65,6 @@ public class Players {
 
     public List<Player> getPlayers() {
         return List.copyOf(players);
-    }
-
-    private void validate(List<String> players) {
-        HashSet<String> uniqueNames = new HashSet<>(players);
-
-        if (uniqueNames.size() != players.size()) {
-            throw new IllegalArgumentException(ExceptionMessage.ALREADY_EXIST_NAME.getMessage());
-        }
     }
 
     private void addPlayers(List<String> names) {
