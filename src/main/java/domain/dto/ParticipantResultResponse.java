@@ -9,4 +9,7 @@ public record ParticipantResultResponse(
         List<Card> cards,
         Score score
 ) {
+    public ParticipantResultResponse {
+        cards = List.copyOf(cards);
+    }
 }

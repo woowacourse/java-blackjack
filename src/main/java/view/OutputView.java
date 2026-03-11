@@ -9,6 +9,7 @@ import domain.card.Card;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -62,7 +63,7 @@ public class OutputView {
                 .collect(Collectors.joining(", "));
     }
 
-    private void printDealerResult(EnumMap<MatchResult, Integer> dealerResults) {
+    private void printDealerResult(Map<MatchResult, Integer> dealerResults) {
         String formattedResult = dealerResults.entrySet().stream()
                 .filter(entry -> entry.getValue() > 0)
                 .map(entry -> entry.getValue() + MatchResultView.from(entry.getKey()))
