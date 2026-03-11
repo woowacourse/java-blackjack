@@ -29,7 +29,7 @@ public class BettingPolicyTest {
     @BeforeEach
     void setUp() {
         this.blackjackBundle = generateTestCardBundle(cloverAce, spadeJack);
-        this.bustBundle = generateTestCardBundle(spadeEight, spadeNine, spadeJack);
+        this.bustBundle = generateTestCardBundle(spadeFive, spadeNine, spadeJack);
         this.nonBustBundle = generateTestCardBundle(spadeFive, spadeEight);
         policyManager = new BettingPolicyManager();
     }
@@ -65,6 +65,22 @@ public class BettingPolicyTest {
 
         BettingRate actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
         BettingRate expectedBettingRate = BettingResult.BLACK_JACK.bettingRate();
+
+        Assertions.assertThat(actualBettingRate)
+                .isEqualTo(expectedBettingRate);
+    }
+
+    @Test
+    void 플레이어와_딜러_둘다_버스트인_경우를_테스트한다() {
+        Player testPlayer = Player.from(new PlayerName("test"));
+        testPlayer.addCardBundle(bustBundle);
+        TestCardGenerator testCardGenerator = TestCardGenerator.of(bustBundle.openMyCards());
+        Dealer dealer = Dealer.from(CardDeck.from(testCardGenerator));
+        dealer.dealMyself();
+        dealer.hitMyself();
+
+        BettingRate actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
+        BettingRate expectedBettingRate = BettingResult.DOUBLE_BUST.bettingRate();
 
         Assertions.assertThat(actualBettingRate)
                 .isEqualTo(expectedBettingRate);
