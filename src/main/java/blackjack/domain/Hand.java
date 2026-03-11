@@ -40,13 +40,7 @@ public class Hand {
     }
 
     private int getAceCount() {
-        int aceCount = 0;
-        for (Card card : cards) {
-            if (card.isAce()) {
-                aceCount += 1;
-            }
-        }
-        return aceCount;
+        return (int) cards.stream().filter(Card::isAce).count();
     }
 
     public boolean isBust() {
