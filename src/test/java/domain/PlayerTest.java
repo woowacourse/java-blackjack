@@ -2,7 +2,13 @@ package domain;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+import java.util.function.Supplier;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class PlayerTest {
@@ -10,14 +16,59 @@ class PlayerTest {
     @DisplayName("Player를 생성할 때 오류 발생 안함")
     void player_create_success() {
         Card spadeJ = new Card(CardShape.스페이드, CardContents.J);
-        Card clover5 = new Card(CardShape.클로버, CardContents.FIVE);
+        Card clover5 = new Card(CardShape.클로버, CardContents.K);
         String name = "pobi";
 
         assertDoesNotThrow(
                 () -> new Player(name, spadeJ, clover5)
         );
     }
-//
+
+    @Nested
+    class hitTest {
+        //given
+        String testName = "gump";
+        Player testPlayer = new Player(
+                testName,
+                new Card(CardShape.스페이드, CardContents.J),
+                new Card(CardShape.클로버, CardContents.FIVE)
+        );
+
+        @Test
+        @DisplayName("hit 할 수 있는 상태이면 hit를 진행한다")
+        void hit_do() {
+            //given
+            Queue<Card> testDeck = new LinkedList<>(List.of(
+                    new Card(CardShape.클로버, CardContents.SEVEN)
+            ));
+            Supplier<Card> testCardSupplier = () -> testDeck.poll();
+
+            //when
+            testPlayer.hit(testCardSupplier);
+
+            //then
+            Assertions.assertThat(testCardSupplier.get()).isNull();
+        }
+
+        @Test
+        @DisplayName("hit 할 수 없는 상태이면 hit를 진행하지 않는다")
+        void hit_do_not() {
+            //given
+            Queue<Card> testDeck = new LinkedList<>(List.of(
+                    new Card(CardShape.하트, CardContents.TEN),
+                    new Card(CardShape.클로버, CardContents.TEN)
+            ));
+            Supplier<Card> testCardSupplier = () -> testDeck.poll();
+            testPlayer.hit(testCardSupplier);
+            
+            //when
+            testPlayer.hit(testCardSupplier);
+
+            //then
+            Assertions.assertThat(testCardSupplier.get()).isNotNull();
+        }
+
+    }
 //    @Test
 //    @DisplayName("플레이어가 카드를 한 장 더 받는다")
 //    void addCardWhenSumBelowMinimum() {
