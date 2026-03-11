@@ -55,4 +55,19 @@ public class BettingPolicyTest {
                 .isEqualTo(expectedBettingRate);
     }
 
+    @Test
+    void 블랙잭_승리가_일어나는_경우를_테스트한다() {
+        Player testPlayer = Player.from(new PlayerName("test"));
+        testPlayer.addCardBundle(blackjackBundle);
+        TestCardGenerator testCardGenerator = TestCardGenerator.of(List.of(spadeFive, spadeEight));
+        Dealer dealer = Dealer.from(CardDeck.from(testCardGenerator));
+        dealer.dealMyself();
+
+        BettingRate actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
+        BettingRate expectedBettingRate = BettingResult.BLACK_JACK.bettingRate();
+
+        Assertions.assertThat(actualBettingRate)
+                .isEqualTo(expectedBettingRate);
+    }
+
 }

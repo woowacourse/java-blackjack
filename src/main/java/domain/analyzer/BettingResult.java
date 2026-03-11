@@ -6,6 +6,7 @@ import domain.betting.BettingRate;
 public enum BettingResult {
 
     BLACK_JACK_PUSH(new BettingRate(1.0), GameResult.DRAW),
+    BLACK_JACK(new BettingRate(1.5), GameResult.WIN),
     ;
 
     private final BettingRate bettingRate;
