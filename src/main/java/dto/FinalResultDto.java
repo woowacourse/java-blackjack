@@ -58,13 +58,4 @@ public record FinalResultDto(long dealerWinCount, long dealerLoseCount, Map<Stri
         }
         return WinningStatus.WIN;
     }
-
-//    private static void addPlayerResults(Map<String, WinningStatus> playerResults, List<String> finalResults) {
-//        playerResults.forEach((key, value) ->
-//                finalResults.add(String.format(PLAYER_RESULT_FORMAT, key, value.getDescription())));
-//    }
-//
-//    private static void addDealerCount(List<String> finalResults, long dealerWinCount, long dealerLoseCount) {
-//        finalResults.add(String.format(DEALER_COUNT_FORMAT, dealerWinCount, dealerLoseCount));
-//    }
 }
