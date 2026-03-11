@@ -22,7 +22,7 @@ public abstract class Participant {
         return getScore().isBurst();
     }
 
-    public final Card oneCardOpen() {
+    public final Card FirstCardOpen() {
         return handCards.getFirstCard();
     }
 

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public class OutputView {
-
+    // TODO: DTO 만들어서 잘 감싸보기 (2026. 3. 9.)
     public void printPlayerCardStatus(Player player, List<Card> cards) {
         List<String> cardNames = cards.stream()
                 .map(Card::getCardName)
@@ -19,9 +19,9 @@ public class OutputView {
         List<String> playerNames = players.getPlayers().stream()
                 .map(Player::getName).toList();
         System.out.println("\n딜러와 " + String.join(", ", playerNames) + "에게 " + "2장을 나누었습니다.");
-        System.out.println("딜러카드: " + dealer.getFirstCardName().getCardName());
+        System.out.println("딜러카드: " + dealer.FirstCardOpen().getCardName());
         for (Player player : players.getPlayers()) {
-            printPlayerCardStatus(player, player.getCards());
+            printPlayerCardStatus(player, player.getHandCards());
         }
         System.out.println();
     }
@@ -70,7 +70,7 @@ public class OutputView {
     }
 
     private void printParticipantGameResult(Participant participant, String name) {
-        List<String> cardNames = participant.getCards().stream()
+        List<String> cardNames = participant.getHandCards().stream()
                 .map(Card::getCardName).toList();
         System.out.println(name + "카드: " +
                 String.join(", ", cardNames) +
