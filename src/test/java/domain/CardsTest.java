@@ -15,4 +15,12 @@ class CardsTest {
         assertThat(cards.drawInitialHand()).hasSize(2);
     }
 
+    @Test
+    @DisplayName("카드 덱에서 1장을 드로우 했는지 정상 테스트")
+    void draw_card_success(){
+        Cards cards = Cards.of();
+
+        assertThat(cards.draw()).isEqualTo(Card.of(Rank.TWO, Suit.SPADE));
+    }
+
 }
