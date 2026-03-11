@@ -1,11 +1,12 @@
 package controller;
 
 import domain.BlackjackResult;
+import domain.Card;
 import domain.Cards;
 import domain.Dealer;
 import domain.Player;
 import domain.Players;
-import domain.Policy;
+import domain.WinOrLose;
 import java.util.List;
 import meesage.InputMessage;
 import meesage.OutputMessage;
@@ -42,31 +43,39 @@ public class BlackjackController {
     }
 
     private static Cards getDeck() {
-        Cards deck = Cards.of();
-        cardShuffle(deck);
-        return deck;
+        return Cards.shuffled();
     }
 
-    private static void cardShuffle(Cards deck) {
-        deck.shuffle();
+    private List<String> getCardsInfo(List<Card> cards) {
+        return cards.stream()
+                .map(card -> card.getRankName() + card.getSuitName())
+                .toList();
     }
 
     private void printInitialCards(Players players, Dealer dealer) {
         outputView.separatorLine();
         outputView.printfList(OutputMessage.DEAL_INITIAL_CARDS.getMessage(),
                 OutputMessage.DELIMITER.join(players.getUserNames()));
-        outputView.separatorLine();
-        outputView.println(OutputMessage.DEALER_CARD_INFO.format(dealer.getCardsInfo().getFirst()));
+
+        printDealerFirstCardInfo(dealer);
 
         printPlayersCardInfo(players);
     }
 
+    private void printDealerFirstCardInfo(Dealer dealer) {
+        outputView.separatorLine();
+        Card dealerFirstCard = dealer.getCards().getFirst();
+        outputView.println(
+                OutputMessage.DEALER_CARD_INFO.format(dealerFirstCard.getRankName() + dealerFirstCard.getSuitName()));
+    }
+
     private void printPlayersCardInfo(Players players) {
-        List<List<String>> playersCardsInfo = players.getPlayersCardsInfo();
+        List<List<Card>> playersCardsInfo = players.getPlayersCardsInfo();
+//        List<List<String>> playersCardsInfo = players.getPlayersCardsInfo();
         List<String> playerNames = players.getUserNames();
 
         for (int i = 0; i < playerNames.size(); i++) {
-            outputView.println(getPlayerCardsInfo(playerNames.get(i), playersCardsInfo.get(i)));
+            outputView.println(getPlayerCardsInfo(playerNames.get(i), getCardsInfo(playersCardsInfo.get(i))));
         }
     }
 
@@ -98,13 +107,13 @@ public class BlackjackController {
         }
         if (answer.equals(InputMessage.USER_INPUT_YES.getMessage())) {
             player.addCard(deck.draw());
-            outputView.println(getPlayerCardsInfo(player.getName(), player.getCardsInfo()));
+            outputView.println(getPlayerCardsInfo(player.getName(), getCardsInfo(player.getCards())));
         }
     }
 
     private void printIfNotPrintedPlayerCardsInfo(Player player) {
-        if (player.getCardsInfo().size() == Policy.FIRST_DRAW_SIZE) {
-            outputView.println(getPlayerCardsInfo(player.getName(), player.getCardsInfo()));
+        if (player.getCards().size() == Cards.FIRST_DRAW_SIZE) {
+            outputView.println(getPlayerCardsInfo(player.getName(), getCardsInfo(player.getCards())));
         }
     }
 
@@ -115,8 +124,10 @@ public class BlackjackController {
 
     private void addDealerCard(Dealer dealer, Cards deck) {
         outputView.separatorLine();
-        int dealerAddCardCount = dealer.drawUntilHitAndReturnCount(deck);
-        for (int i = 0; i < dealerAddCardCount; i++) {
+        dealer.drawUntilHit(deck);
+
+        int countAddDealerCard = dealer.getCards().size() - Cards.FIRST_DRAW_SIZE;
+        for (int i = 0; i < countAddDealerCard; i++) {
             outputView.println(OutputMessage.DEALER_DRAW_CARD.getMessage());
         }
     }
@@ -125,19 +136,20 @@ public class BlackjackController {
         outputView.separatorLine();
         printDealerCardsAndScore(dealer);
 
-        List<List<String>> playersCardsInfo = players.getPlayersCardsInfo();
+//        List<List<String>> playersCardsInfo = players.getPlayersCardsInfo();
+        List<List<Card>> playersCardsInfo = players.getPlayersCardsInfo();
         List<String> playerNames = players.getUserNames();
         List<Integer> playersScoreInfo = players.getPlayerScoreInfo();
 
         for (int i = 0; i < playersCardsInfo.size(); i++) {
-            String playerCardsInfo = getPlayerCardsInfo(playerNames.get(i), playersCardsInfo.get(i));
+            String playerCardsInfo = getPlayerCardsInfo(playerNames.get(i), getCardsInfo(playersCardsInfo.get(i)));
             outputView.println(OutputMessage.RESULT_TEXT.format(playerCardsInfo, playersScoreInfo.get(i)));
         }
     }
 
     private void printDealerCardsAndScore(Dealer dealer) {
         String dealerCardsFormat = OutputMessage.DEALER_CARD_INFO.format(OutputMessage.DELIMITER.join(
-                dealer.getCardsInfo()));
+                getCardsInfo(dealer.getCards())));
         outputView.println(OutputMessage.RESULT_TEXT.format(dealerCardsFormat, dealer.calculateScore()));
     }
 
@@ -146,7 +158,18 @@ public class BlackjackController {
         BlackjackResult blackjackResult = BlackjackResult.of(dealer, players);
 
         outputView.println(OutputMessage.FINAL_MESSAGE.getMessage());
-        outputView.println(blackjackResult.getDealerResult());
-        outputView.printList(blackjackResult.getPlayersResult());
+
+        outputView.println(OutputMessage.DEALER_RESULT_FORMAT.format(blackjackResult.countDealerWinOrLoseReversePlayerResult(WinOrLose.LOSE),
+                blackjackResult.countDealerWinOrLoseReversePlayerResult(WinOrLose.DRAW), blackjackResult.countDealerWinOrLoseReversePlayerResult(WinOrLose.WIN)));
+
+        printPlayersResult(players, blackjackResult);
+    }
+
+    private void printPlayersResult(Players players, BlackjackResult blackjackResult) {
+        List<WinOrLose> playerResult = blackjackResult.getPlayersResult();
+        for (int i = 0; i < players.getPlayers().size(); i++) {
+            outputView.println(OutputMessage.PLAYER_RESULT_FORMAT.format(players.getUserNames().get(i),
+                    playerResult.get(i).getMessage()));
+        }
     }
 }
