@@ -3,7 +3,6 @@ package constant;
 public class PolicyConstant {
 
     public static final String DELIMITER = ",";
-    public static final String DEALER_NAME = "딜러";
     public static final int DEALER_HIT_MAX_SCORE = 16;
 
     public static final int PLAYER_MIN_COUNT = 2;

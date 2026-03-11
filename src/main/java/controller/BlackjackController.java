@@ -49,7 +49,7 @@ public class BlackjackController {
 
     private void inputHitOrStandOnPlayer(List<ParticipantDto> participantDtoList) {
         for (ParticipantDto participantDto : participantDtoList) {
-            if (participantDto.name().equals(PolicyConstant.DEALER_NAME)) continue;
+            if (blackjackService.isDealer(participantDto.name())) continue;
             inputHitOrStand(participantDto.name(), participantDto.hand());
         }
     }

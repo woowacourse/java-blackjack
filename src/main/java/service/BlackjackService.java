@@ -164,4 +164,8 @@ public class BlackjackService {
     public boolean isStand(HitOrStand hitOrStand) {
         return hitOrStand.isStand();
     }
+
+    public boolean isDealer(String name) {
+        return participants.dealer().isDealer(name);
+    }
 }
