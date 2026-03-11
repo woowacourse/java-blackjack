@@ -31,9 +31,9 @@ public abstract class Participant {
         }
     }
 
-//    public String getName() {
-//        return name;
-//    }
+    public String getName() {
+        return name;
+    }
 //
 ////    public abstract List<Card> getInitialVisibleCards();
 //
