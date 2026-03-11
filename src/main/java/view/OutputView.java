@@ -10,6 +10,9 @@ public class OutputView {
     private static final String DEALER_HIT_MESSAGE = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n";
     private static final String FINAL_RESULT_HEADER = "## 최종 승패";
 
+    public static final String DEALER_COUNT_FORMAT = "딜러: %d승 %d패";
+    public static final String PLAYER_RESULT_FORMAT = "%s: %s";
+
     public static void printInitMessage(BlackJackInitStatusDto blackJackInitStatusDto) {
         System.out.println();
         for (String message : blackJackInitStatusDto.initStatus()) {
@@ -37,8 +40,10 @@ public class OutputView {
 
     public static void printFinalResult(FinalResultDto finalResultDto) {
         System.out.println(FINAL_RESULT_HEADER);
-        for (String line : finalResultDto.finalResults()) {
-            System.out.println(line);
-        }
+        System.out.printf((DEALER_COUNT_FORMAT) + "%n", finalResultDto.dealerWinCount(),
+                finalResultDto.dealerLoseCount());
+
+        finalResultDto.playerResults().forEach((key, value) ->
+                System.out.printf(PLAYER_RESULT_FORMAT, key, value));
     }
 }

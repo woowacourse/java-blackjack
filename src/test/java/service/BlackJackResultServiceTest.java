@@ -34,23 +34,7 @@ class BlackJackResultServiceTest {
         assertNotNull(scoreResultDto);
     }
 
-    @Test
-    void createFinalResultDto() {
-        // given
-        Dealer dealer = createDealer(Rank.JACK);
-        List<Player> players = List.of(
-                createPlayer("봉구스", Rank.FIVE),
-                createPlayer("시오", Rank.JACK),
-                createPlayer("영기", Rank.ACE));
-        FinalResultDto finalResultDto = blackJackResultService.createFinalResultDto(dealer, players);
-
-        // when, then
-        assertEquals("딜러: 1승 1패", finalResultDto.finalResults().get(0));
-        assertEquals("봉구스: 패", finalResultDto.finalResults().get(1));
-        assertEquals("시오: 무", finalResultDto.finalResults().get(2));
-        assertEquals("영기: 승", finalResultDto.finalResults().get(3));
-    }
-
+    // todo: 테스트 옮기기
     @Test
     void 플레이어가_Bust로_패배하는_경우() {
         // given
@@ -61,13 +45,15 @@ class BlackJackResultServiceTest {
                 createPlayer("영기")
         );
 
-        FinalResultDto finalResultDto = blackJackResultService.createFinalResultDto(dealer, players);
+        FinalResultDto finalResultDto = FinalResultDto.of(dealer, players);
 
         // when, then
-        assertEquals("딜러: 3승 0패", finalResultDto.finalResults().get(0));
-        assertEquals("봉구스: 패", finalResultDto.finalResults().get(1));
+        assertEquals(3, finalResultDto.dealerWinCount());
+        assertEquals(0, finalResultDto.dealerLoseCount());
+        assertEquals("패", finalResultDto.playerResults().get("봉구스"));
     }
 
+    // todo: 테스트 옮기기
     @Test
     void 딜러가_Bust로_패배하는_경우() {
         // given
@@ -78,10 +64,11 @@ class BlackJackResultServiceTest {
                 createPlayer("영기")
         );
 
-        FinalResultDto finalResultDto = blackJackResultService.createFinalResultDto(dealer, players);
+        FinalResultDto finalResultDto = FinalResultDto.of(dealer, players);
 
         // when, then
-        assertEquals("딜러: 0승 3패", finalResultDto.finalResults().get(0));
-        assertEquals("봉구스: 승", finalResultDto.finalResults().get(1));
+        assertEquals(0, finalResultDto.dealerWinCount());
+        assertEquals(3, finalResultDto.dealerLoseCount());
+        assertEquals("승", finalResultDto.playerResults().get("봉구스"));
     }
 }

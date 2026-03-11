@@ -43,7 +43,7 @@ public class BlackJackController {
         ScoreResultDto scoreResultDto = blackJackResultService.createScoreResultDto(dealer, players);
         OutputView.printScoreResult(scoreResultDto);
 
-        FinalResultDto finalResultDto = blackJackResultService.createFinalResultDto(dealer, players);
+        FinalResultDto finalResultDto = FinalResultDto.of(dealer, players);
         OutputView.printFinalResult(finalResultDto);
     }
 
