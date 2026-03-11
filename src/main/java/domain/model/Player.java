@@ -25,7 +25,7 @@ public class Player extends Person {
         this.playerStatus = playerStatus;
     }
 
-    public void applyBetting(int bettingValue) {
+    public double applyBetting(int bettingValue) {
         // 블랙잭일 때
         if (super.isBlackJack() && playerStatus == PlayerStatus.WIN) {
             super.plusProfit((double) bettingValue * 3 / 2);
@@ -40,6 +40,6 @@ public class Player extends Person {
         if (playerStatus == PlayerStatus.LOSS) {
             super.minusProfit(bettingValue);
         }
+        return getProfit();
     }
-
 }

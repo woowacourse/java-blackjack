@@ -5,6 +5,7 @@ import domain.service.JudgementService;
 import domain.service.PersonService;
 import org.junit.jupiter.api.Test;
 import repository.DealerRepository;
+import repository.PlayerBettingRepository;
 import repository.PlayerRepository;
 
 import java.util.List;
@@ -15,12 +16,14 @@ public class judgeTest {
 
     private final PlayerRepository playerRepository = new PlayerRepository();
     private final DealerRepository dealerRepository = new DealerRepository();
+    private final PlayerBettingRepository playerBettingRepository = new PlayerBettingRepository();
     private final PersonService personService = new PersonService(
             playerRepository,
             dealerRepository
     );
     private final JudgementService judgementService = new JudgementService(
-            personService
+            personService,
+            playerBettingRepository
     );
 
     @Test

@@ -8,4 +8,8 @@ public class Dealer extends Person {
     public static Dealer of(Deck deck) {
         return new Dealer(deck);
     }
+
+    public void applyBetting(double playerBetting) {
+        super.minusProfit(playerBetting);
+    }
 }

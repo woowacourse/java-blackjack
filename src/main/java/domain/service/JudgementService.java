@@ -4,16 +4,22 @@ import domain.model.*;
 import dto.DealerResultDto;
 import dto.PlayerResultDto;
 import dto.ResultDto;
+import repository.PlayerBettingRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import static constant.ErrorMessage.PLAYER_BETTING_NOT_FOUND;
 
 public class JudgementService {
 
     private final PersonService personService;
+    private final PlayerBettingRepository playerBettingRepository;
 
-    public JudgementService(PersonService personService) {
+    public JudgementService(PersonService personService, PlayerBettingRepository playerBettingRepository) {
         this.personService = personService;
+        this.playerBettingRepository = playerBettingRepository;
     }
 
     public ResultDto getGameResult() {
@@ -23,12 +29,19 @@ public class JudgementService {
         List<PlayerResultDto> playerResultDtos = new ArrayList<>();
         for (Player player : players) {
             judgementWinning(player, dealer);
+            PlayerBetting playerBetting = getPlayerBetting(player);
+            playerBetting.applyBetting(dealer);
             PlayerResultDto playerResultDto = PlayerResultDto.of(player);
             playerResultDtos.add(playerResultDto);
         }
 
         DealerResultDto dealerResultDto = DealerResultDto.of(dealer);
         return ResultDto.of(dealerResultDto, playerResultDtos);
+    }
+
+    private PlayerBetting getPlayerBetting(Player player) {
+        return playerBettingRepository.findByPlayer(player)
+                .orElseThrow(() -> new IllegalArgumentException(PLAYER_BETTING_NOT_FOUND.getMessage()));
     }
 
     public void judgementWinning(Player player, Dealer dealer) {

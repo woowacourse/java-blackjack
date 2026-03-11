@@ -10,7 +10,7 @@ public record PlayerResultDto(
         String playerName,
         List<CardDto> cardDtos,
         int sum,
-        String isWin
+        double profit
 ) {
     public static PlayerResultDto of(Player player) {
         List<Card> cards = player.getDeck().getCards();
@@ -18,6 +18,6 @@ public record PlayerResultDto(
         for (Card card : cards) {
             playerCards.add(CardDto.of(card));
         }
-        return new PlayerResultDto(player.getName(), playerCards, player.getFinalDeckSum(), player.getPlayerStatus().getName());
+        return new PlayerResultDto(player.getName(), playerCards, player.getFinalDeckSum(), player.getProfit());
     }
 }
