@@ -32,12 +32,12 @@ import blackjack.view.dto.PlayerScoreDto;
 import blackjack.view.dto.ResultDto;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class OutputView {
 
     private static final String DELIMITER = ", ";
+    private static final String DEALER_NAME = "딜러";
 
     private static final Map<Rank, String> RANK_LABELS = Map.ofEntries(
             entry(ACE, "A"),
@@ -110,11 +110,11 @@ public class OutputView {
     }
 
     private void printDealerCards(List<CardDto> cards) {
-        printPlayerCards("딜러", List.of(cards.getFirst()));
+        printPlayerCards(DEALER_NAME, List.of(cards.getFirst()));
     }
 
     private void printDealerScore(DealerScoreDto dealer) {
-        printPlayerScore("딜러", dealer.cards(), dealer.score());
+        printPlayerScore(DEALER_NAME, dealer.cards(), dealer.score());
     }
 
     private void printPlayerScore(String playerName, List<CardDto> cards, int score) {
@@ -125,26 +125,19 @@ public class OutputView {
     }
 
     public void printResult(List<ResultDto> playerResults) {
-        System.out.println("## 최종 승패");
+        System.out.println("## 최종 수익");
 
         printDealerResult(playerResults);
         playerResults.forEach(this::printPlayerResult);
     }
 
     private void printDealerResult(List<ResultDto> playerResults) {
-        Map<BlackjackResult, Integer> playerResultCounts = playerResults.stream()
-                .map(ResultDto::result)
-                .collect(Collectors.toMap(
-                        Function.identity(),
-                        result -> 1,
-                        Integer::sum
-                ));
+        double dealerProfit = playerResults.stream()
+                .mapToDouble(ResultDto::profit)
+                .sum()
+                * -1;
 
-        int dealerWinCount = playerResultCounts.getOrDefault(BlackjackResult.LOSE, 0);
-        int dealerLoseCount = playerResultCounts.getOrDefault(WIN, 0);
-        int dealerDrawCount = playerResultCounts.getOrDefault(BlackjackResult.PUSH, 0);
-
-        System.out.println("딜러: " + dealerWinCount + "승 " + dealerLoseCount + "패 " + dealerDrawCount + "무");
+        printPlayerResult(new ResultDto(DEALER_NAME, dealerProfit));
     }
 
     private void printPlayerResult(ResultDto playerResult) {
