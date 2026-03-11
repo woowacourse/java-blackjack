@@ -1,11 +1,11 @@
 package view;
 
-import static exception.ErrorMessage.INPUT_EMPTY_ERROR;
-import static exception.ErrorMessage.INVALID_HIT_STAND_INPUT_ERROR;
-
+import domain.pariticipant.BettingAmount;
 import domain.pariticipant.Name;
 import java.util.List;
 import java.util.Scanner;
+
+import static exception.ErrorMessage.*;
 
 public class InputView {
     Scanner scanner = new Scanner(System.in);
@@ -37,5 +37,18 @@ public class InputView {
         if (input == null || input.isBlank()) {
             throw new IllegalArgumentException(INPUT_EMPTY_ERROR.getMessage());
         }
+    }
+
+    public BettingAmount readBettingAmount(String name) {
+        System.out.printf("\n%s의 베팅 금액은?\n", name);
+
+        int bettingAmount;
+        try {
+            bettingAmount = Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(INVALID_BETTING_AMOUNT_FORMAT_ERROR.getMessage());
+        }
+
+        return new BettingAmount(bettingAmount);
     }
 }
