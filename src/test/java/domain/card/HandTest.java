@@ -25,7 +25,7 @@ class HandTest {
         hand.addCard(card);
 
         // then
-        assertThat(hand.getHandCards()).contains(card);
+        assertThat(hand.getHands()).contains(card);
     }
 
     @ParameterizedTest

@@ -15,18 +15,18 @@ import java.util.Set;
 
 public class Hand {
 
-    private final List<Card> handCards;
+    private final List<Card> hands;
     private final Set<Integer> scores = new HashSet<>();
 
-    public Hand(List<Card> handCards) {
-        this.handCards = handCards;
-        for (Card card : handCards) {
+    public Hand(List<Card> hands) {
+        this.hands = hands;
+        for (Card card : hands) {
             updateScore(card);
         }
     }
 
     public void addCard(Card card) {
-        handCards.add(card);
+        hands.add(card);
         updateScore(card);
     }
 
@@ -57,11 +57,11 @@ public class Hand {
     }
 
     public boolean isBlackjack() {
-        if(handCards.size() != BLACKJACK_CARD_COUNT) {
+        if(hands.size() != BLACKJACK_CARD_COUNT) {
             return false;
         }
 
-        List<CardRank> cardRanks = handCards.stream()
+        List<CardRank> cardRanks = hands.stream()
                 .map(Card::getCardRank)
                 .toList();
 
@@ -91,7 +91,11 @@ public class Hand {
         return notBustMaxScore;
     }
 
-    public List<Card> getHandCards() {
-        return List.copyOf(handCards);
+    public List<Card> getHands() {
+        return List.copyOf(hands);
+    }
+
+    public int getSize() {
+        return hands.size();
     }
 }
