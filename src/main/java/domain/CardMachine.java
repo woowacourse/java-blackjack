@@ -1,6 +1,5 @@
 package domain;
 
-import constant.Rank;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;

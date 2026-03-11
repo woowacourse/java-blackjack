@@ -1,4 +1,4 @@
-package constant;
+package domain;
 
 public enum Rank {
     ACE("A", 11),

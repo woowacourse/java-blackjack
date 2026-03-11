@@ -1,7 +1,5 @@
 package domain;
 
-import constant.Rank;
-
 public record Card(Rank rank, Suit suit) {
 
     public int getScore() {

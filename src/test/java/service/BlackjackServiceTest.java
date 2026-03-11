@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import config.ControllerConfig;
 import constant.HitOrStand;
-import constant.Rank;
+import domain.Rank;
 import constant.Result;
 import domain.Suit;
 import domain.Card;

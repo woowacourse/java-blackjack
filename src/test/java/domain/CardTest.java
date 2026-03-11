@@ -2,7 +2,6 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import constant.Rank;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
