@@ -1,10 +1,11 @@
 package domain;
 
-import constant.PolicyConstant;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
+
+    private static final int BLACKJACK_SCORE = 21;
 
     private final List<Card> cards;
 
@@ -29,12 +30,16 @@ public class Hand {
     }
 
     private int calculateScoreWithBestAce(int score, int aceCount) {
-        while (score > PolicyConstant.BLACKJACK_SCORE && aceCount > 0) {
+        while (score > BLACKJACK_SCORE && aceCount > 0) {
             score -= 10;
             aceCount--;
         }
 
         return score;
+    }
+
+    public boolean isBust() {
+        return calculateScore() > BLACKJACK_SCORE;
     }
 
     public Card getFirstCard() {
