@@ -4,16 +4,11 @@ import domain.enums.Result;
 
 public class Player extends Participant {
 
-    //    네임 객체로 변경
-    private final String name;
+    private final Name name;
 
     public Player(String name) {
         super();
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
+        this.name = new Name(name);
     }
 
     public Result calculateResult(int dealerScore, boolean dealerBust) {
@@ -26,5 +21,9 @@ public class Player extends Participant {
             return Result.DRAW;
         }
         return Result.WIN;
+    }
+
+    public String getName() {
+        return name.getName();
     }
 }

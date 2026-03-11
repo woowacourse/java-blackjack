@@ -1,11 +1,8 @@
 package domain.participant;
 
-import static domain.constant.GameRule.MAX_NAME_LENGTH;
 import static domain.constant.GameRule.MAX_PLAYER_NUMBER;
-import static domain.constant.GameRule.MIN_NAME_LENGTH;
 import static domain.constant.GameRule.MIN_PLAYER_NUMBER;
 import static message.ErrorMessage.PLAYER_NAME_DUPLICATED;
-import static message.ErrorMessage.PLAYER_NAME_OUT_OF_RANGE;
 import static message.ErrorMessage.PLAYER_NOT_FOUND;
 import static message.ErrorMessage.PLAYER_NUMBER_OUT_OF_RANGE;
 
@@ -27,15 +24,8 @@ public class Players {
     }
 
     private void validatePlayers(List<String> names) {
-        names.forEach(this::validateNameLength);
         validateDuplicatedName(names);
         validatePlayerNumber(names);
-    }
-
-    private void validateNameLength(String name) {
-        if (name.length() < MIN_NAME_LENGTH || name.length() > MAX_NAME_LENGTH) {
-            throw new IllegalArgumentException(PLAYER_NAME_OUT_OF_RANGE.getMessage());
-        }
     }
 
     private void validateDuplicatedName(List<String> names) {
