@@ -15,8 +15,8 @@ public class Hand {
         this.cards = cards;
     }
 
-    public static Hand from(List<Card> cardBundle) {
-        return new Hand(cardBundle);
+    public static Hand from(List<Card> cards) {
+        return new Hand(cards);
     }
 
     public static Hand empty() {
