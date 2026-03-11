@@ -8,11 +8,7 @@ import java.util.List;
 public class Hand {
     private static final int BUST_THRESHOLD = 21;
     private static final int ACE_ADJUST_SCORE = 10;
-    private final List<Card> cards;
-
-    public Hand() {
-        this.cards = new ArrayList<>();
-    }
+    private final List<Card> cards = new ArrayList<>();
 
     public void add(Card card) {
         this.cards.add(card);
