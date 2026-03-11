@@ -7,13 +7,14 @@ import dto.*;
 
 import java.util.List;
 
-import static constant.BlackJackConstant.DEALER_APPEND_CRITERIA;
-
 public class BlackJackService {
 
     private final PersonService personService;
     private final CardDistributor cardDistributor;
     private final JudgementService judgementService;
+
+    public static final int DEALER_APPEND_CRITERIA = 16;
+
 
     public BlackJackService(
             PersonService personService,
