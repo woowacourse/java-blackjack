@@ -18,7 +18,7 @@ public class Cards {
 
     public void add(Card card) {
         cards.add(card);
-        if(card.isAce()) {
+        if (card.isAce()) {
             hasAce = true;
         }
     }

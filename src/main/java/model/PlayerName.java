@@ -4,6 +4,7 @@ import constant.ErrorMessage;
 
 public class PlayerName {
     private final String name;
+
     public PlayerName(String name) {
         validate(name);
         this.name = name;
