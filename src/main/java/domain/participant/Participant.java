@@ -22,6 +22,11 @@ public class Participant {
         return getScore() > BLACKJACK_SCORE;
     }
 
+    public boolean isBlackJack() {
+
+        return getScore() == BLACKJACK_SCORE && getCards().size() == INIT_CARD_SIZE;
+    }
+
     public void playTurn(Deck deck) {
         Card hitCard = deck.drawCard();
         hand.receiveCard(hitCard);

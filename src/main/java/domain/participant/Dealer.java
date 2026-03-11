@@ -23,8 +23,15 @@ public record Dealer(Participant dealer) {
         return dealer.getScore();
     }
 
+    public boolean isBlackJack() {
+        return dealer.isBlackJack();
+    }
+
     public Participant getDealer() {
         return dealer;
     }
 
+    public boolean isBust(){
+        return dealer.isBust();
+    }
 }

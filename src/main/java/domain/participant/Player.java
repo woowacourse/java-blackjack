@@ -1,22 +1,20 @@
 package domain.participant;
 
-import domain.BattingAmount;
-import domain.card.Card;
+import domain.BattingMoney;
 import domain.card.Deck;
-import java.util.List;
 
 public class Player {
     private final Participant participant;
-    private final BattingAmount battingAmount;
+    private final BattingMoney battingMoney;
 
-    private Player(Participant participant, BattingAmount battingAmount) {
+    private Player(Participant participant, BattingMoney battingMoney) {
         this.participant = participant;
-        this.battingAmount = battingAmount;
+        this.battingMoney = battingMoney;
     }
 
     public static Player from(String name, int amount) {
         Participant participant = new Participant(new Name(name), new Hand());
-        return new Player(participant, new BattingAmount(amount));
+        return new Player(participant, new BattingMoney(amount));
     }
 
     public void playTurn(Deck deck){
@@ -31,12 +29,12 @@ public class Player {
         return participant.isBust();
     }
 
-    public Participant getParticipant() {
-        return participant;
+    public boolean isBlackJack() {
+        return participant.isBlackJack();
     }
 
-    public List<Card> getCards() {
-        return this.participant.getCards();
+    public Participant getPlayer() {
+        return this.participant;
     }
 
     public int getScore() {

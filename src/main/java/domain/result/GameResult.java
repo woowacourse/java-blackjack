@@ -1,11 +1,14 @@
 package domain.result;
 
-public enum
-GameResult {
+import domain.participant.Dealer;
+import domain.participant.Player;
+
+public enum GameResult {
 
     WIN("승"),
     LOSE("패"),
     DRAW("무"),
+    BLACKJACK("승")
     ;
 
     public static final int BLACKJACK_SCORE = 21;
@@ -20,15 +23,31 @@ GameResult {
         return description;
     }
 
-    public static GameResult judge(int standardScore, int myScore) {
-        if ((standardScore < myScore && myScore <= BLACKJACK_SCORE)
-                || (standardScore > BLACKJACK_SCORE && myScore <= BLACKJACK_SCORE)) {
+
+    public static GameResult judge(Dealer dealer, Player player) {
+        if (player.isBust()) {
+            return LOSE;
+        }
+        if (dealer.isBust()) {
             return WIN;
         }
-        if (standardScore > BLACKJACK_SCORE
-                || (myScore <= BLACKJACK_SCORE && standardScore == myScore)) {
-            return DRAW;
+        if (player.isBlackJack() && !dealer.isBlackJack()) {
+            return BLACKJACK;
         }
-        return LOSE;
+        return compareScore(dealer.getScore(), player.getScore());
     }
+
+    private static GameResult compareScore(int dealerScore, int playerScore) {
+        if (playerScore > dealerScore) return WIN;
+        if (playerScore < dealerScore) return LOSE;
+        return DRAW;
+    }
+
+    public GameResult reverse() {
+        if (this == BLACKJACK) return LOSE; // 플레이어가 블랙잭이면 딜러는 패배
+        if (this == WIN) return LOSE;
+        if (this == LOSE) return WIN;
+        return DRAW;
+    }
+
 }

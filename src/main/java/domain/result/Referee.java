@@ -14,19 +14,15 @@ public class Referee {
 
     public GameStatistics judge(Dealer dealer, Players players) {
         for (Player player : players.getPlayers()) {
-            judgePlayerResult(dealer, player);
-            judgeDealerResult(dealer, player);
+            judgeStatisticResult(dealer, player);
         }
         return gameStatistics;
     }
 
-    private void judgePlayerResult(Dealer dealer, Player player) {
-        GameResult playerResult = GameResult.judge(dealer.getScore(), player.getScore());
+    private void judgeStatisticResult(Dealer dealer, Player player) {
+        GameResult playerResult = GameResult.judge(dealer, player);
         gameStatistics.addPlayerResult(player, playerResult);
+        gameStatistics.addDealerResult(playerResult.reverse());
     }
 
-    private void judgeDealerResult(Dealer dealer, Player player) {
-        GameResult dealerResult = GameResult.judge(player.getScore(), dealer.getScore());
-        gameStatistics.addDealerResult(dealerResult);
-    }
 }
