@@ -20,6 +20,10 @@ public class Money {
         }
     }
 
+    public Money sum(Money other) {
+        return new Money(this.value + other.value);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
