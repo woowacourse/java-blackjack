@@ -5,7 +5,7 @@ import service.BlackjackService;
 import view.InputView;
 import view.OutputView;
 
-public class AppConfig {
+public class ControllerConfig {
 
     public BlackjackController blackjackController() {
         return new BlackjackController(inputView(), outputView(), blackjackService());
