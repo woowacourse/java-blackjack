@@ -20,6 +20,8 @@ class ApplicationTest {
                 Arguments.of(
                         """
                                 tion, jake
+                                10000
+                                10000
                                 y
                                 y
                                 """, List.of(
@@ -35,9 +37,9 @@ class ApplicationTest {
                                 "tion카드: K다이아몬드, K스페이드, Q다이아몬드 - 결과: 30",
                                 "jake카드: Q클로버, Q하트, Q스페이드 - 결과: 30",
                                 "## 최종 승패",
-                                "딜러: 2승",
-                                "tion: 패",
-                                "jake: 패")
+                                "딜러: 20000",
+                                "tion: -10000",
+                                "jake: -10000")
                 ));
     }
 
