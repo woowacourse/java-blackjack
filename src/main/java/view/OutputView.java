@@ -10,9 +10,9 @@ public class OutputView {
     private static final String NAME_PROMPT = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     private static final String INITIAL_CARD_SHARE = "딜러와 %s에게 2장을 나누었습니다.\n";
     private static final String HIT_OR_STAND_PROMPT = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n";
-    private static final String ADDITIONAL_CARD_FOR_DEALER_DESCRIPTION = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
-    private static final String PARTICIPANT_CARD_INFO_FORMAT = "%s카드: %s";
     private static final String PARTICIPANT_CARD_INFO_FORMAT_LINE = "%s카드: %s\n";
+    private static final String DEALER_ADD_CARD_NOTICE = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n";
+    private static final String PARTICIPANT_CARD_INFO_FORMAT = "%s카드: %s";
     private static final String PARTICIPANT_CARD_INFO_WITH_SUM_FORMAT = "%s - 결과: %d\n";
     private static final String WIN_LOSS_RESULT_HEADER = "## 최종 승패\n";
     private static final String WIN_LOSS_RESULT_FORMAT = "%s: %s\n";
@@ -47,17 +47,16 @@ public class OutputView {
         System.out.printf(HIT_OR_STAND_PROMPT, name);
     }
 
+    public void printUserState(ParticipantDto participantDto) {
+        String userCardInfo = consistCardInfo(participantDto);
+        System.out.println(userCardInfo);
+    }
+
+    public void printDealerAddCardNotice() {
+        System.out.println(DEALER_ADD_CARD_NOTICE);
+    }
+
     //
-//    public void printUserCardInfo(ParticipantDto participantDto) {
-//        String userCardInfo = consistCardInfo(PARTICIPANT_CARD_INFO_FORMAT_LINE, participantDto);
-//        System.out.println(userCardInfo);
-//    }
-//
-//    public void printAdditionalCardForDealerDescription() {
-//        System.out.println();
-//        System.out.println(ADDITIONAL_CARD_FOR_DEALER_DESCRIPTION);
-//    }
-//
 //    public void printCardInfoWithSum(GameResultDto gameResultDto) {
 //        StringBuilder cardInfoWithSum = new StringBuilder();
 //
@@ -88,12 +87,22 @@ public class OutputView {
 //    }
 //
     private String consistCardInfo(ParticipantDto participantDto) {
-        List<String> cardInfos = new ArrayList<>();
-        for (CardDto card : participantDto.cards()) {
-            cardInfos.add(card.cardContentNumber() + card.cardShape());
-        }
-        return String.format(OutputView.PARTICIPANT_CARD_INFO_FORMAT_LINE, participantDto.name(),
-                String.join(DELIMITER, cardInfos));
+        List<CardDto> ownCards = participantDto.cards();
+        List<String> cardsInformation = extractCardsInfo(ownCards);
+
+        String cardsInformationText = String.join(DELIMITER, cardsInformation);
+
+        return String.format(
+                PARTICIPANT_CARD_INFO_FORMAT_LINE,
+                participantDto.name(),
+                cardsInformationText
+        );
+    }
+
+    private List<String> extractCardsInfo(List<CardDto> cards) {
+        return cards.stream()
+                .map(card -> card.cardContentNumber() + card.cardShape())
+                .toList();
     }
 //
 //    private String consistCardInfoWithSum(ParticipantDto participantDto) {
