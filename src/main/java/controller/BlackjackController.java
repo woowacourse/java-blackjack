@@ -1,6 +1,8 @@
 package controller;
 
+import domain.Dealer;
 import domain.Deck;
+import domain.Participant;
 import domain.Player;
 import domain.Players;
 import domain.Result;
@@ -24,9 +26,11 @@ public class BlackjackController {
     public void run() {
         List<String> names = inputView.inputPlayers();
         Players players = new Players(names);
+        Dealer dealer = new Dealer("딜러");
         Deck deck = new Deck();
-        dealInitialCards(players, deck);
-        printInitialState(players, names);
+        dealInitialCards(dealer, players, deck);
+        dealInitialCards(dealer, players, deck);
+        printInitialState(dealer, players, names);
         playAllPlayerTurns(players, deck);
         playDealerTurn(players.getDealer(), deck);
         printFinalState(players);
@@ -38,18 +42,16 @@ public class BlackjackController {
         }
     }
 
-    private void dealInitialCards(Players players, Deck deck) {
-        players.getDealer().addCard(deck.draw());
-        players.getDealer().addCard(deck.draw());
+    private void dealInitialCards(Dealer dealer, Players players, Deck deck) {
         for (Player player : players.getGamePlayers()) {
             player.addCard(deck.draw());
-            player.addCard(deck.draw());
         }
+        dealer.addCard(deck.draw());
     }
 
-    private void printInitialState(Players players, List<String> names) {
+    private void printInitialState(Dealer dealer, Players players, List<String> names) {
         outputView.printInitialDeal(names);
-        outputView.printDealerInitialCard(players.getDealer().getCards().get(0));
+        outputView.printDealerInitialCard(dealer.getInitialCard());
         for (Player player : players.getGamePlayers()) {
             outputView.printPlayerCards(player);
         }

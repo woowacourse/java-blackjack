@@ -1,6 +1,7 @@
 package view;
 
 import domain.Card;
+import domain.Dealer;
 import domain.Player;
 import domain.Result;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ public class OutputView {
     }
 
     public void printDealerInitialCard(Card card) {
-        System.out.println("딜러카드: " + card);
+        System.out.println("딜러카드: " + formatCard(card));
     }
 
     public void printPlayerCards(Player player) {
@@ -61,8 +62,12 @@ public class OutputView {
     private String formatCards(List<Card> cards) {
         List<String> cardNames = new ArrayList<>();
         for (Card card : cards) {
-            cardNames.add(card.toString());
+            cardNames.add(formatCard(card));
         }
         return String.join(", ", cardNames);
+    }
+
+    private String formatCard(Card card) {
+        return card.getRankDisplayName() + card.getSuitShape();
     }
 }

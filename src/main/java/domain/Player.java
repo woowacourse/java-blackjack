@@ -3,23 +3,18 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Player {
-    private final PlayerName playerName;
-    private final List<Card> cards = new ArrayList<>();
+public class Player extends Participant{
 
     public Player(String name) {
-        this.playerName = new PlayerName(name);
+        super(name);
     }
 
-    public void addCard(Card card) {
-        cards.add(card);
-    }
 
     public int calculateScore() {
         int score = 0;
         boolean hasAce = false;
 
-        for (Card card : cards) {
+        for (Card card : getCards()) {
             score += card.getScore();
             if (card.isAce()) {
                 hasAce = true;
@@ -39,11 +34,5 @@ public class Player {
         return hasAce && score + 10 <= 21;
     }
 
-    public List<Card> getCards() {
-        return cards;
-    }
 
-    public String getName() {
-        return playerName.getName();
-    }
 }

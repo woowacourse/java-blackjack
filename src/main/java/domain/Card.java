@@ -17,8 +17,16 @@ public class Card {
         return rank == Rank.ACE;
     }
 
-    @Override
-    public String toString() {
-        return rank.getDisplayName() + suit.getShape();
+    public String getRankDisplayName() {
+        return rank.getDisplayName();
     }
+
+    public String getSuitShape() {
+        return suit.getShape();
+    }
+
+//    @Override
+//    public String toString() {
+//        return rank.getDisplayName() + suit.getShape();
+//    }
 }
