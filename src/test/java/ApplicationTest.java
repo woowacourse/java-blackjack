@@ -42,7 +42,7 @@ public class ApplicationTest {
     @Test
     void 게임_전체_흐름_출력_검증() {
         // given
-        String input = "영기,라이\nn\nn\n";
+        String input = "영기,라이\n1000\n1000\nn\nn\n";
         System.setIn(new ByteArrayInputStream(input.getBytes()));
 
         Application app = new Application(
@@ -63,7 +63,7 @@ public class ApplicationTest {
     @Test
     void 초기_카드_배분_메시지_출력() {
         // given
-        String input = "영기,라이\nn\nn\n";
+        String input = "영기,라이\n1000\n1000\nn\nn\n";
         System.setIn(new ByteArrayInputStream(input.getBytes()));
 
         Application app = new Application(
@@ -82,7 +82,7 @@ public class ApplicationTest {
     @Test
     void 잘못된_참가자_입력_재시도() {
         // given
-        String input = "123\n영기,라이\nn\nn\n";
+        String input = "123\n영기,라이\n1000\n1000\nn\nn\n";
         System.setIn(new ByteArrayInputStream(input.getBytes()));
 
         Application app = new Application(

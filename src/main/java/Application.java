@@ -44,10 +44,10 @@ public class Application {
     }
 
     private void readBetAmount() {
-        blackjackGame.getUsers().forEach(blackjackUser -> {
+        blackjackGame.getUsers().forEach(user -> {
             retryUntilSuccess(() -> {
-                outputView.printAskBetAmount(blackjackUser.getName());
-
+                outputView.printAskBetAmount(user.getName());
+                blackjackGame.placeBet(user, inputView.readBetAmount());
                 return null;
             });
         });

@@ -44,6 +44,10 @@ public class BlackjackGame {
         return participants.getDealer();
     }
 
+    public void placeBet(User user, String betAmount) {
+        user.placeBet(betAmount);
+    }
+
     public void processPlayerDecision(User user) {
         participants.dealCard(deck, user);
     }

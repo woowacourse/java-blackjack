@@ -13,6 +13,10 @@ public class InputView {
         return scanner.nextLine();
     }
 
+    public String readBetAmount() {
+        return scanner.nextLine();
+    }
+
     public String readDealDecision() {
         String answer = scanner.nextLine();
         validateDealDecisionAnswer(answer);
