@@ -18,10 +18,6 @@ public class GameScore {
         return this.score <= other.score;
     }
 
-    public boolean isSame(GameScore other) {
-        return this.score == other.score;
-    }
-
     public GameScore minus(int amount) {
         return new GameScore(this.score - amount);
     }

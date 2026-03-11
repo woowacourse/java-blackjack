@@ -22,6 +22,6 @@ public class Dealer extends Participant {
         GameScore standScore = new GameScore(STAND_SCORE);
 
         return getScore().isBiggerThan(standScore)
-                || getScore().isSame(standScore);
+                || getScore().equals(standScore);
     }
 }

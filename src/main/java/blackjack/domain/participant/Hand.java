@@ -55,6 +55,6 @@ public class Hand {
 
     public boolean isBlackjack() {
         return cards.size() == BLACKJACK_SIZE
-                && calculateTotalScore().isSame(GameScore.BLACKJACK_SCORE);
+                && calculateTotalScore().equals(GameScore.BLACKJACK_SCORE);
     }
 }

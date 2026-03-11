@@ -44,7 +44,7 @@ class GameScoreTest {
         GameScore score = new GameScore(21);
         GameScore other = new GameScore(21);
         // when
-        boolean result = score.isSame(other);
+        boolean result = score.equals(other);
         // then
         assertThat(result).isTrue();
     }
