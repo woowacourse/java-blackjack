@@ -1,7 +1,6 @@
 package controller;
 
 import constant.HitOrStand;
-import constant.PolicyConstant;
 import dto.BlackjackStatisticsDto;
 import dto.ParticipantDto;
 import java.util.List;
@@ -43,7 +42,7 @@ public class BlackjackController {
     }
 
     private void inputPlayers() {
-        List<String> input = Parser.parseInput(inputView.inputPlayers(), PolicyConstant.DELIMITER);
+        List<String> input = Parser.parseInput(inputView.inputPlayers());
         blackjackService.createPlayers(input);
     }
 
