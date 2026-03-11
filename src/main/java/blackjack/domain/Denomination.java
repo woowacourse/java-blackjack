@@ -40,7 +40,7 @@ public enum Denomination {
     }
 
     public boolean isTypeOf(Denomination denomination) {
-        return Objects.equals(this.symbol, denomination.symbol);
+        return this == denomination;
     }
 
     public int toScore() {
