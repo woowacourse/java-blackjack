@@ -8,6 +8,7 @@ import meesage.ErrorMessage;
 public class InputParser {
 
     private static final String DELIMITER = ",";
+    private static final int MAX_PLAYERS_COUNT = 25;
 
     public static List<String> splitByDelimiter(String input) {
         validate(input);
@@ -29,7 +30,10 @@ public class InputParser {
 
     private static void validateNames(List<String> names) {
         if (names.isEmpty()) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_NAMES_SIZE.getMessage());
+            throw new IllegalArgumentException(ErrorMessage.INVALID_NAMES_EMPTY.getMessage());
+        }
+        if (names.size() >= MAX_PLAYERS_COUNT){
+            throw new IllegalArgumentException(ErrorMessage.INVALID_NAMES_EXCEED_LIMIT.getMessage());
         }
     }
 }
