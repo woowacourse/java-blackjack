@@ -7,10 +7,12 @@ public abstract class AbstractParticipant implements Participant {
     private static final int ACE_BONUS_SCORE = 10;
     private final String name;
     private final Cards cards;
+    private boolean isBlackJack;
 
     public AbstractParticipant(String name) {
         this.name = name;
         this.cards = Cards.createEmpty();
+        isBlackJack = false;
     }
 
     @Override
@@ -43,5 +45,9 @@ public abstract class AbstractParticipant implements Participant {
     @Override
     public List<Card> getCards() {
         return cards.getCards();
+    }
+
+    public void blackJack() {
+        this.isBlackJack = true;
     }
 }
