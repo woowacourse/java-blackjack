@@ -1,0 +1,80 @@
+package blackjackTest.service;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import blackjack.domain.*;
+import blackjack.service.CardDistributor;
+import blackjack.service.Game;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.junit.jupiter.api.Test;
+
+public class GameTest {
+
+    @Test
+    void dealer_should_draw_card_until_score_at_least_17() {
+             List<Card> cards = new ArrayList<>(List.of(
+                new Card(Rank.EIGHT, Shape.HEART), // 8
+                new Card(Rank.NINE, Shape.SPADE)   // 9
+        ));
+
+        CardPicker cardPicker = cards::removeFirst;
+
+        CardDistributor cardDistributor = new CardDistributor(cardPicker);
+        Game game = new Game(cardDistributor);
+        Dealer dealer = new Dealer();
+
+        game.dealerDrawsCardsUntilDone(dealer);
+        assertThat(dealer.calculateTotalScore()).isEqualTo(17);
+    }
+
+    @Test
+    void judge_total_winner_result() {
+        Player pobi = createPlayer("pobi", "2:하트", "8:스페이드", "A:클로버");
+        Player jason = createPlayer("jason", "7:클로버", "K:스페이드");
+        Player brown = createPlayer("brown", "10:하트", "10:클로버");
+        Dealer dealer = createDealer("3:다이아몬드", "9:클로버", "8:다이아몬드");
+
+        GameResult expected = new GameResult(
+                Map.of(
+                        ScoreCompareResult.DEALER_WIN, 1,
+                        ScoreCompareResult.DEALER_LOSS, 1,
+                        ScoreCompareResult.PUSH, 1),
+                Map.of(
+                        pobi, ScoreCompareResult.PLAYER_WIN,
+                        jason, ScoreCompareResult.PLAYER_LOSS,
+                        brown, ScoreCompareResult.PUSH)
+        );
+
+        GameResult actual = dealer.judgeResult(List.of(pobi, jason, brown), dealer);
+
+        assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
+    }
+
+    private Player createPlayer(String name, String... cards) {
+        Player player = new Player(name);
+        for (String card : cards) {
+            String[] parts = card.split(":");
+            Rank rank = Rank.from(parts[0]);
+            Shape shape = Shape.from(parts[1]);
+
+            player.receiveOneCard(new Card(rank, shape));
+        }
+        return player;
+    }
+
+    private Dealer createDealer(String... cards) {
+        Dealer dealer = new Dealer();
+        for (String card : cards) {
+            String[] parts = card.split(":");
+            Rank rank = Rank.from(parts[0]);
+            Shape shape = Shape.from(parts[1]);
+
+            dealer.receiveOneCard(new Card(rank, shape));
+        }
+        return dealer;
+    }
+}
