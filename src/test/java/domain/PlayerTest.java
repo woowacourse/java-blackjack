@@ -1,7 +1,9 @@
 package domain;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,6 +14,13 @@ public class PlayerTest {
     @BeforeEach
     void beforeEach() {
         player = new Player("아나키");
+    }
+
+    @DisplayName("공백이 들어오면 예외처리한다")
+    @Test
+    void 공백_들어오면_예외처리한다() {
+        assertThatThrownBy(() -> new Player(" "))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("일반 카드의 점수를 합산한다")

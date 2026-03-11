@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
-    private final String name;
+    private final PlayerName playerName;
     private final List<Card> cards = new ArrayList<>();
 
     public Player(String name) {
-        this.name = name;
+        this.playerName = new PlayerName(name);
     }
 
     public void addCard(Card card) {
@@ -29,10 +29,14 @@ public class Player {
     }
 
     private int applyAceBonus(int score, boolean hasAce) {
-        if (hasAce && score + 10 <= 21) {
+        if (isSoftHand(score, hasAce)) {
             return score + 10;
         }
         return score;
+    }
+
+    private boolean isSoftHand(int score, boolean hasAce) {
+        return hasAce && score + 10 <= 21;
     }
 
     public List<Card> getCards() {
@@ -40,6 +44,6 @@ public class Player {
     }
 
     public String getName() {
-        return name;
+        return playerName.getName();
     }
 }

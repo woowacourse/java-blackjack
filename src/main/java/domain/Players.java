@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +13,7 @@ public class Players {
     private final List<Player> playerList;
 
     public Players(List<String> names) {
-        validate(names);
+        validateDuplicate(names);
         playerList = new ArrayList<>();
         playerList.add(new Player(DEALER_NAME));
         for (String name : names) {
@@ -20,11 +21,9 @@ public class Players {
         }
     }
 
-    private void validate(List<String> names) {
-        for (String name : names) {
-            if (name.isBlank()) {
-                throw new IllegalArgumentException("이름은 공백일 수 없습니다.");
-            }
+    private void validateDuplicate(List<String> names) {
+        if (names.size() != new HashSet<>(names).size()) {
+            throw new IllegalArgumentException("중복된 이름이 존재합니다.");
         }
     }
 
