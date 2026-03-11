@@ -72,6 +72,10 @@ public class Deck {
         return deckStatus == DeckStatus.ALIVE;
     }
 
+    public boolean isBlackJack() {
+        return deckStatus == DeckStatus.BLACKJACK;
+    }
+
     public int getSumWithAceDefaultValue() {
         return cards.stream()
                 .mapToInt(Card::getValue)

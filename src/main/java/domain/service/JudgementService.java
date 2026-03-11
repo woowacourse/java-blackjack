@@ -32,16 +32,16 @@ public class JudgementService {
     }
 
     public void judgementWinning(Player player, Dealer dealer) {
-        if (player.isBurst() && dealer.isBurst()) {
-            player.changeStatus(PlayerStatus.LOSS);
+        if (dealer.isBurst()) {
+            player.changeStatus(PlayerStatus.WIN);
             return;
         }
         if (player.isBurst() && dealer.isAlive()) {
             player.changeStatus(PlayerStatus.LOSS);
             return;
         }
-        if (player.isAlive() && dealer.isBurst()) {
-            player.changeStatus(PlayerStatus.WIN);
+        if (player.isBlackJack() && dealer.isBlackJack()) {
+            player.changeStatus(PlayerStatus.DRAW);
             return;
         }
         if (player.isAlive() && dealer.isAlive()) {

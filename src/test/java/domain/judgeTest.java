@@ -228,4 +228,31 @@ public class judgeTest {
         // then
         assertThat(player.getPlayerStatus()).isEqualTo(PlayerStatus.WIN);
     }
+
+    @Test
+    void 플레이어와_딜러_모두_블랙잭일때_무승부_테스트() {
+        // given
+        Player player = Player.of("phobi");
+        playerRepository.save(player);
+        List<Card> cards1 = List.of(
+                Card.of(CardRank.ACE, CardShape.HEART),
+                Card.of(CardRank.TEN, CardShape.CLUB)
+        );
+        Deck deck1 = Deck.of(cards1);
+        player.assignDeck(deck1);
+
+        List<Card> cards2 = List.of(
+                Card.of(CardRank.ACE, CardShape.DIAMOND),
+                Card.of(CardRank.QUEEN, CardShape.CLUB)
+        );
+        Deck deck2 = Deck.of(cards2);
+        Dealer dealer = Dealer.of(deck2);
+        dealerRepository.save(dealer);
+
+        // when
+        judgementService.judgementWinning(player, dealer);
+
+        // then
+        assertThat(player.getPlayerStatus()).isEqualTo(PlayerStatus.DRAW);
+    }
 }
