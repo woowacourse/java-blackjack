@@ -1,6 +1,7 @@
 package domain;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -74,7 +75,7 @@ class PlayerTest {
 
     @Test
     @DisplayName("stay를 호출하면 새로운 사용자를 반환하고 그 사용자는 게임을 종료한 상태가 된다")
-    void stay_and_finish() {
+    void stand_and_finish() {
         //given
         Hand playerHand = Hand.of(
                 new Card(CardShape.스페이드, CardContents.J),
@@ -84,33 +85,60 @@ class PlayerTest {
         Player testPlayer = Player.from(testName, playerHand);
 
         //when
-        testPlayer = testPlayer.stay();
+        testPlayer = testPlayer.stand();
 
         //then
         Assertions.assertThat(testPlayer.isFinished()).isTrue();
     }
 
-    @Test
-    @DisplayName("bust가 되어도 해당 사용자는 게임을 종료한 상태가 된다")
-    void bust_and_finish() {
-        //given
-        Queue<Card> testDeck = new LinkedList<>(List.of(
-                new Card(CardShape.클로버, CardContents.SEVEN)
-        ));
+    @Nested
+    class HitClass {
 
-        Hand playerHand = Hand.of(
-                new Card(CardShape.스페이드, CardContents.J),
-                new Card(CardShape.클로버, CardContents.FIVE)
-        );
-        String testName = "gump";
-        Player testPlayer = Player.from(testName, playerHand);
-        testPlayer.hit(() -> testDeck.poll());
+        @Test
+        @DisplayName("hit를 잘 수행하고, 완료가 아닌 상태를 유지한다")
+        void hit_and_not_finished() {
+            //given
+            Queue<Card> testDeck = new LinkedList<>(List.of(
+                    new Card(CardShape.하트, CardContents.TEN)
+            ));
 
-        //when
-        testPlayer = testPlayer.stay();
+            Hand playerHand = Hand.of(
+                    new Card(CardShape.스페이드, CardContents.TEN),
+                    new Card(CardShape.클로버, CardContents.TEN)
+            );
+            String testName = "gump";
+            Player testPlayer = Player.from(testName, playerHand);
 
-        //then
-        Assertions.assertThat(testPlayer.isFinished()).isTrue();
+            //when
+            testPlayer = testPlayer.hit(testDeck::poll);
+
+            //then
+            assertFalse(testPlayer.isFinished());
+        }
+
+        @Test
+        @DisplayName("hit를 요구했지만 bust이면 해당 사용자는 게임을 종료한 상태가 된다")
+        void hit_butBust_and_finish() {
+            //given
+            Queue<Card> testDeck = new LinkedList<>(List.of(
+                    new Card(CardShape.하트, CardContents.TEN),
+                    new Card(CardShape.클로버, CardContents.A)
+            ));
+
+            Hand playerHand = Hand.of(
+                    new Card(CardShape.스페이드, CardContents.TEN),
+                    new Card(CardShape.클로버, CardContents.TEN)
+            );
+            String testName = "gump";
+            Player testPlayer = Player.from(testName, playerHand);
+            testPlayer.hit(testDeck::poll);
+
+            //when
+            testPlayer = testPlayer.hit(testDeck::poll);
+
+            //then
+            Assertions.assertThat(testPlayer.isFinished()).isTrue();
+        }
     }
 
     @Test

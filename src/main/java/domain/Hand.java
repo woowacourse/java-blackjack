@@ -9,7 +9,7 @@ public class Hand {
     private final List<Card> cards;
 
     private Hand(List<Card> cards) {
-        this.cards = new ArrayList<>(cards);
+        this.cards = cards;
     }
 
     public static Hand of(Card card1, Card card2) {
@@ -20,12 +20,18 @@ public class Hand {
         return calculateCardScoreSum() > BUST_CRITERIA;
     }
 
+    public boolean isFull() {
+        return calculateCardScoreSum() == BUST_CRITERIA;
+    }
+
     public List<Card> showCards() {
         return Collections.unmodifiableList(cards);
     }
 
-    public void addCard(Card card) {
-        this.cards.add(card);
+    public Hand addCard(Card card) {
+        ArrayList<Card> mutableCards = new ArrayList<>(cards);
+        mutableCards.add(card);
+        return new Hand(mutableCards);
     }
 
     private int calculateCardScoreSum() {
@@ -38,12 +44,12 @@ public class Hand {
     private int calculateCardScoreSumExceptAce() {
         int sum = 0;
         for (Card card : cards) {
-            sum = addCardScoreExceptAce(card, sum);
+            sum = calculateCardScoreSumWithoutAce(card, sum);
         }
         return sum;
     }
 
-    private int addCardScoreExceptAce(Card card, int sum) {
+    private int calculateCardScoreSumWithoutAce(Card card, int sum) {
         if (!card.isAce()) {
             sum += card.getCardContents().getScore();
         }
