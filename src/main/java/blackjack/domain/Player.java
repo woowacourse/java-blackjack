@@ -1,17 +1,24 @@
 package blackjack.domain;
 
 public class Player extends Participant {
-    
+
+    private static final int BLACKJACK_POINT = 21;
+
     public Player(String name) {
         super(name, new Hand());
 
     }
 
+    public Player(String name, Hand hand) {
+        super(name, hand);
+    }
+
     @Override
-    public void recieveCard(Card card) {
-        if (!hand.isBust()) {
-            hand.addCard(card);
+    public boolean canHit() {
+        if (getTotalPoint() < BLACKJACK_POINT) {
+            return true;
         }
+        return false;
     }
 
     public String getName() {

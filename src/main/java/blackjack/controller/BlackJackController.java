@@ -50,7 +50,7 @@ public class BlackJackController {
                 break;
             }
             outputView.printDealerDraw();
-            dealer.recieveCard(deck.draw());
+            dealer.receiveCard(deck.draw());
         }
     }
 
@@ -64,7 +64,7 @@ public class BlackJackController {
                 }
                 boolean isHit = inputView.readHitAnswer(player.getName());
                 if (isHit) {
-                    player.recieveCard(deck.draw());
+                    player.receiveCard(deck.draw());
                 }
 
                 // 출력

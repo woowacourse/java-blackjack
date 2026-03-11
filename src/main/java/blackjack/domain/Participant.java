@@ -3,14 +3,18 @@ package blackjack.domain;
 public abstract class Participant {
 
     private final String name;
-    protected final Hand hand;
+    private final Hand hand;
 
     public Participant(String name, Hand hand) {
         this.name = name;
         this.hand = hand;
     }
 
-    public abstract void recieveCard(Card card);
+    public void receiveCard(Card card) {
+        if (canHit()) {
+            hand.addCard(card);
+        }
+    }
 
     public int getCardCount() {
         return hand.getCount();
@@ -33,4 +37,5 @@ public abstract class Participant {
         return name;
     }
 
+    public abstract boolean canHit();
 }
