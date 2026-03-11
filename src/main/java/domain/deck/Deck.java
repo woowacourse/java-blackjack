@@ -18,14 +18,14 @@ public class Deck {
     }
 
     public static Deck createDeck(CardShuffleStrategy cardShuffleStrategy) {
-        List<Card> cards = Arrays.stream(Rank.values())
+        List<Card> beginningCards = Arrays.stream(Rank.values())
                 .flatMap(
                         rank -> Arrays.stream(Suit.values())
                                 .map(suit -> new Card(rank, suit))
                 )
                 .collect(Collectors.toCollection(ArrayList::new));
 
-        cardShuffleStrategy.shuffle(cards);
+        List<Card> cards = cardShuffleStrategy.shuffle(beginningCards);
 
         return new Deck(cards);
     }
