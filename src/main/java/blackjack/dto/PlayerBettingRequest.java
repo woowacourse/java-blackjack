@@ -2,7 +2,7 @@ package blackjack.dto;
 
 public record PlayerBettingRequest(
     String playerNickname,
-    int amount
+    long amount
 ) {
 
     public static PlayerBettingRequest of(String playerNickname, String rawAmount) {
