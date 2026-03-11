@@ -4,6 +4,9 @@ import java.util.List;
 
 public class Player {
 
+    public static final int ACE_HIGH_LOW_DIFF = 10;
+    public static final int BUST_THRESHOLD = 21;
+
     private final List<Card> cards;
     private final String name;
 
@@ -43,27 +46,17 @@ public class Player {
 
     private int adjustForAce(int cardScore) {
         if (isBust(cardScore)) {
-            cardScore -= Policy.ACE_HIGH_LOW_DIFF;
+            cardScore -= ACE_HIGH_LOW_DIFF;
         }
         return cardScore;
     }
 
     public boolean isBust(int cardScore) {
-        return cardScore > Policy.BUST_THRESHOLD;
+        return cardScore > BUST_THRESHOLD;
     }
 
-    public int getScoreOrZeroIfBust() {
-        int score = calculateScore();
-        if (isBust(score)) {
-            return Policy.BUST_SCORE;
-        }
-        return score;
-    }
-
-    public List<String> getCardsInfo() {
-        return cards.stream()
-                .map(Card::getName)
-                .toList();
+    public List<Card> getCards() {
+        return List.copyOf(cards);
     }
 
     public String getName() {
