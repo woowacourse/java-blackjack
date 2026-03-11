@@ -5,7 +5,6 @@ import domain.Dealer;
 import domain.User;
 
 import java.util.List;
-import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -63,18 +62,13 @@ public class OutputView {
     }
 
     public void printGameRecord(List<User> users, Dealer dealer) {
-        System.out.println('\n' + "## 최종 승패");
-        StringJoiner sj = new StringJoiner(" ");
-
-        if (dealer.getWinRounds() > 0) sj.add(dealer.getWinRounds() + "승");
-        if (dealer.getLoseRounds() > 0) sj.add(dealer.getLoseRounds() + "패");
-        if (dealer.getDrawRounds() > 0) sj.add(dealer.getDrawRounds() + "무");
-
-        if (sj.length() > 0) {
-            System.out.println("딜러: " + sj);
-            for(User user : users) {
-                System.out.println(user.getName()+": " + user.getGameResult().getName());
-            }
+        System.out.println('\n' + "## 최종 수익");
+        int dealerProfit = users.stream()
+                .mapToInt(User::calculateProfit)
+                .sum() * -1;
+        System.out.println("딜러: " + dealerProfit);
+        for (User user : users) {
+            System.out.println(user.getName() + ": " + user.calculateProfit());
         }
     }
 }

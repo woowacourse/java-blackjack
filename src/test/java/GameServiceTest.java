@@ -1,8 +1,5 @@
 
-import domain.Card;
-import domain.Dealer;
-import domain.GameResult;
-import domain.User;
+import domain.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -86,7 +83,7 @@ class GameServiceTest {
         User winUser = new User("json");
         User loseUser = new User("poby");
         User drawUser = new User("draw");
-        List<User> users = List.of(winUser, loseUser);
+        List<User> users = List.of(winUser, loseUser, drawUser);
 
         dealer.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_NINE));
         winUser.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_SEVEN));

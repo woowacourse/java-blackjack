@@ -32,13 +32,16 @@ public class GameService {
         for (User user : users) {
             int userScore = user.calculateScore();
             boolean userBurst = user.isBurst(userScore);
-            GameResult userResult = judge(userScore, dealerScore, userBurst, dealerBurst);
+            GameResult userResult = judge(user.isBlackjack(), dealer.isBlackjack(), userScore, dealerScore, userBurst, dealerBurst);
             user.setGameResult(userResult);
             dealer.setRounds(userResult.reverse());
         }
     }
 
-    private GameResult judge(int userScore, int dealerScore, boolean userBurst, boolean dealerBurst) {
+    private GameResult judge(boolean userIsBlackjack, boolean dealerIsBlackjack, int userScore, int dealerScore, boolean userBurst, boolean dealerBurst) {
+        if(userIsBlackjack && dealerIsBlackjack) return GameResult.DRAW;
+        if(userIsBlackjack) return GameResult.WIN;
+        if(dealerIsBlackjack) return GameResult.LOSE;
         if (dealerBurst && userBurst) return GameResult.DRAW;
         if (dealerBurst) return GameResult.WIN;
         if (userBurst) return GameResult.LOSE;
