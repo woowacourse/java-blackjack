@@ -1,8 +1,7 @@
 package domain.state;
 
-import domain.card.Deck;
-import domain.card.Hand;
 import domain.card.vo.Card;
+import domain.participants.Hand;
 import domain.participants.Participant;
 import java.util.List;
 
@@ -10,18 +9,18 @@ public abstract class State {
     private final Hand hand;
     private final Participant participant;
 
-    abstract public boolean isFinished();
-
     protected State(Hand hand, Participant participant) {
         this.hand = hand;
         this.participant = participant;
     }
 
-    public State drawCard(Deck deck, boolean toHit) {
+    abstract public boolean isFinished();
+
+    public State drawCard(Card card, boolean toHit) {
         if (!toHit) {
             return new Stay(hand, participant);
         }
-        hand.add(deck.drawCard());
+        hand.add(card);
         if (hand.isBurst()) {
             return new Burst(hand, participant);
         }

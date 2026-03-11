@@ -1,6 +1,5 @@
 package domain.participants;
 
-import domain.card.Hand;
 import domain.hitStrategy.HitStrategy;
 import domain.hitStrategy.UntilBurstHitStrategy;
 import domain.state.Hit;

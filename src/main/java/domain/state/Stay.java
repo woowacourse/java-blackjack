@@ -1,6 +1,6 @@
 package domain.state;
 
-import domain.card.Hand;
+import domain.participants.Hand;
 import domain.participants.Participant;
 
 public class Stay extends State {

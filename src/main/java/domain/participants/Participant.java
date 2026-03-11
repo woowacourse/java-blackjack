@@ -1,6 +1,5 @@
 package domain.participants;
 
-import domain.card.Hand;
 import domain.card.vo.Card;
 import domain.hitStrategy.HitStrategy;
 import domain.state.State;

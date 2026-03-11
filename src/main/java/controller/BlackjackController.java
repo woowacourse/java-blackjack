@@ -2,11 +2,11 @@ package controller;
 
 import domain.card.Deck;
 import domain.card.DeckMaker;
-import domain.card.Hand;
 import domain.hitStrategy.CasinoDealerHitStrategy;
 import domain.participants.Dealer;
+import domain.participants.Hand;
 import domain.participants.Player;
-import domain.score.Result;
+import domain.state.Result;
 import domain.state.State;
 import dto.DealerDrawDto;
 import dto.NamesDto;
@@ -50,7 +50,7 @@ public class BlackjackController {
         List<State> states = new ArrayList<>();
         for (State state : playersState) {
             while (!state.isFinished()) {
-                state = state.drawCard(deck, inputView.readNeedToHit(state.getParticipantName()));
+                state = state.drawCard(deck.drawCard(), inputView.readNeedToHit(state.getParticipantName()));
                 outputView.showCards(PlayerCardsDto.fromState(state));
             }
             states.add(state);
@@ -85,7 +85,7 @@ public class BlackjackController {
     private State drawDealerHandAndPrint(State dealerState, Deck deck, List<State> playersState) {
         State state = dealerState;
         while (!state.isFinished()) {
-            state = dealerState.drawCard(deck, true);
+            state = dealerState.drawCard(deck.drawCard(), true);
             outputView.drawDealer(
                     new DealerDrawDto(dealerState.getParticipantName(), CasinoDealerHitStrategy.BOUNDARY));
             outputView.showCards(PlayerCardsDto.fromState(dealerState));

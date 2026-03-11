@@ -1,7 +1,7 @@
 package domain.state;
 
-import domain.card.Hand;
 import domain.hitStrategy.HitStrategy;
+import domain.participants.Hand;
 import domain.participants.Participant;
 
 public class Hit extends State {

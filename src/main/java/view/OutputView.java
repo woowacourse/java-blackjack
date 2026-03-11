@@ -1,6 +1,6 @@
 package view;
 
-import domain.score.Result;
+import domain.state.Result;
 import dto.DealerDrawDto;
 import dto.NamesDto;
 import dto.PlayerCardsDto;
@@ -22,6 +22,14 @@ public class OutputView {
 
     public OutputView(PrintStream out) {
         System.setOut(out);
+    }
+
+    private static String getResultConvertedMessage(Map<String, Long> resultCount, Result lose, String message,
+                                                    Result win) {
+        if (resultCount.containsKey(lose.getDisplayName())) {
+            message += resultCount.get(lose.getDisplayName()) + win.getDisplayName();
+        }
+        return message;
     }
 
     public void drawCard(NamesDto namesDto) {
@@ -71,14 +79,6 @@ public class OutputView {
         message = getResultConvertedMessage(resultCount, Result.DRAW, message, Result.DRAW);
         message = getResultConvertedMessage(resultCount, Result.WIN, message, Result.LOSE);
 
-        return message;
-    }
-
-    private static String getResultConvertedMessage(Map<String, Long> resultCount, Result lose, String message,
-                                                    Result win) {
-        if (resultCount.containsKey(lose.getDisplayName())) {
-            message += resultCount.get(lose.getDisplayName()) + win.getDisplayName();
-        }
         return message;
     }
 }

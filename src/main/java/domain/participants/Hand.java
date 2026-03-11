@@ -1,13 +1,14 @@
-package domain.card;
+package domain.participants;
 
+import domain.card.Deck;
 import domain.card.vo.Card;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Hand {
-    private static final int BURST_SCORE = 21;
     public static final int ACE_ADVANTAGE_SCORE = 10;
+    private static final int BURST_SCORE = 21;
     private static final int MIN_SIZE = 2;
 
     private final List<Card> cards;
