@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.Objects;
 import java.util.function.Supplier;
 
 public class Player extends Participant {
@@ -26,5 +27,22 @@ public class Player extends Participant {
 
     public boolean isFinished() {
         return hand.isBust() || isStay;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Player player)) {
+            return false;
+        }
+
+        return Objects.equals(getName(), player.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName());
     }
 }

@@ -112,6 +112,25 @@ class PlayerTest {
         //then
         Assertions.assertThat(testPlayer.isFinished()).isTrue();
     }
+
+    @Test
+    @DisplayName("이름이 같으면 같은 Player로 본다")
+    void equal_when_name_equal() {
+        Hand playerHand1 = Hand.of(
+                new Card(CardShape.스페이드, CardContents.A),
+                new Card(CardShape.클로버, CardContents.TWO)
+        );
+        Hand playerHand2 = Hand.of(
+                new Card(CardShape.하트, CardContents.THREE),
+                new Card(CardShape.클로버, CardContents.FOUR)
+        );
+        String testName = "gump";
+        Player testPlayer1 = Player.from(testName, playerHand1);
+        Player testPlayer2 = Player.from(testName, playerHand2);
+
+        //when, then
+        Assertions.assertThat(testPlayer1.equals(testPlayer2)).isTrue();
+    }
 //    @Test
 //    @DisplayName("플레이어가 카드를 한 장 더 받는다")
 //    void addCardWhenSumBelowMinimum() {

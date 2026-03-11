@@ -50,6 +50,13 @@ public class Players {
                 .findFirst();
     }
 
+    public void updateToStand(Player player) {
+        int index = players.indexOf(player);
+        if (index != -1) {
+            players.set(index, player.stay());
+        }
+    }
+
 //    public void hitPlayer(Player targetPlayer, Supplier<Card> cardSupplier) {
 //        targetPlayer.hit(cardSupplier);
 //    }
