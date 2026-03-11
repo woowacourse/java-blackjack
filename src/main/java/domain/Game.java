@@ -38,8 +38,8 @@ public class Game {
         return !dealer.checkScoreUnderCriterion();
     }
 
-    public void playerHit(String name, Deck deck, boolean wantHit) {
-        if (!wantHit) {
+    public void playerHit(String name, Deck deck, boolean isPlayerEnd) {
+        if (isPlayerEnd) {
             return;
         }
         players.distributeCard(name, deck.drawCard());
