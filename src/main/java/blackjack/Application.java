@@ -1,14 +1,14 @@
 package blackjack;
 
-import blackjack.config.AppConfig;
 import blackjack.controller.BlackjackController;
 import blackjack.util.Console;
+import blackjack.view.InputView;
+import blackjack.view.OutputView;
 
 public class Application {
 
     public static void main(String[] args) {
-        AppConfig config = new AppConfig();
-        BlackjackController controller = config.controller();
+        BlackjackController controller = new BlackjackController(new InputView(), new OutputView());
         try {
             controller.run();
         } finally {
