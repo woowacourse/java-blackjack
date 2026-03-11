@@ -47,6 +47,10 @@ public class Bet {
             betAmount = negateBetAmount(betAmount);
         }
 
+        if (gameResult == GameResult.DRAW) {
+            betAmount = 0;
+        }
+
         betProfit.put(foundPlayer, betAmount);
         return betAmount;
     }
