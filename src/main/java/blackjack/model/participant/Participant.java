@@ -23,8 +23,6 @@ public abstract class Participant {
 
     public abstract void pickInitialCards(CardDeck cardDeck);
 
-    public abstract boolean canPick();
-
     public boolean isBust() {
         return hands.isTotalScoreOver(BLACKJACK_SCORE);
     }

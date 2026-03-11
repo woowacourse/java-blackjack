@@ -35,11 +35,11 @@ class PlayerTest {
         //given
         Player player = Player.of("player1", 1000);
 
-        player.pickInitialCards(mustPickFive);
-        player.pickInitialCards(mustPickFive); // 총 10점
+        player.pickAdditionalCard(mustPickFive);
+        player.pickAdditionalCard(mustPickFive); // 총 10점
 
         //when & then
-        assertThat(player.canPick()).isTrue();
+        assertThat(!player.isBust()).isTrue();
     }
 
     @Test
@@ -48,11 +48,22 @@ class PlayerTest {
         //given
         Player player = Player.of("player1", 1000);
 
-        player.pickInitialCards(mustPickTen);
-        player.pickInitialCards(mustPickTen);
-        player.pickInitialCards(mustPickTen); // 총 30점
+        player.pickAdditionalCard(mustPickTen);
+        player.pickAdditionalCard(mustPickTen);
+        player.pickAdditionalCard(mustPickTen); // 총 30점
 
         //when & then
-        assertThat(player.canPick()).isFalse();
+        assertThat(!player.isBust()).isFalse();
+    }
+
+    @Test
+    @DisplayName("최종 수익이 0인 새로운 플레이어를 반환한다.")
+    void bust() {
+        //given
+        Player player = Player.of("player1", 1000);
+
+        //when & then
+        assertThat(player.bust().getPrize())
+                .isEqualTo(0);
     }
 }

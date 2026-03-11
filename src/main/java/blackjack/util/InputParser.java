@@ -7,7 +7,7 @@ public final class InputParser {
             int number = Integer.parseInt(target);
 
             if (number < 0) {
-                throw new IllegalArgumentException("자연수가 이닙니다.");
+                throw new IllegalArgumentException("자연수가 아닙니다.");
             }
 
             return number;

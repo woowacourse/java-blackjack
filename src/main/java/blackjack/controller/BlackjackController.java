@@ -1,8 +1,9 @@
 package blackjack.controller;
 
 import blackjack.model.cardDeck.CardDeck;
-import blackjack.model.participant.Dealer;
 import blackjack.model.cardDeck.PickStrategy;
+import blackjack.model.participant.Dealer;
+import blackjack.model.participant.Participant;
 import blackjack.model.participant.Player;
 import blackjack.model.result.TotalResult;
 import blackjack.view.InputView;
@@ -56,6 +57,11 @@ public class BlackjackController {
                 player -> askHitOrStand(cardDeck, player)
         );
 
+        players = players.stream()
+                .filter(Participant::isBust)
+                .map(Player::bust)
+                .toList();
+
        drawUntilSeventeen(dealer, cardDeck);
 
         openDealerHands(dealer);
@@ -106,11 +112,10 @@ public class BlackjackController {
             CardDeck cardDeck,
             Player player
     ) {
-        while (player.canPick() && inputIsContinued(player)) {
+        while (!player.isBust() && inputIsContinued(player)) {
             player.pickAdditionalCard(cardDeck);
             outputView.printParticipantCards(player.getName(), player.getAllCard());
         }
-
     }
 
     private boolean inputIsContinued(Player player) {
