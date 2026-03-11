@@ -15,6 +15,10 @@ public abstract class Participant {
         this.hand = new Hand();
     }
 
+    public boolean isBust() {
+        return hand.totalSum().isBust();
+    }
+
     public void addCard(Card card) {
         hand.add(card);
     }

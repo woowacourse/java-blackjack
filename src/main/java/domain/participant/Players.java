@@ -2,7 +2,6 @@ package domain.participant;
 
 import domain.Result;
 import domain.RoundResult;
-import domain.Score;
 import domain.card.Deck;
 
 import java.util.ArrayList;
@@ -55,10 +54,10 @@ public class Players {
         }
     }
 
-    public List<RoundResult> getResults(Score dealerSum) {
+    public List<RoundResult> getResults(Dealer dealer) {
         List<RoundResult> roundResults = new ArrayList<>();
         for (Player player : players) {
-            Result result = Result.judge(player.getTotalSum(), dealerSum);
+            Result result = Result.judge(player, dealer);
             roundResults.add(new RoundResult(player, result));
         }
         return roundResults;

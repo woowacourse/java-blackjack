@@ -9,6 +9,10 @@ public class Score {
         this.value = value;
     }
 
+    public boolean isBust() {
+        return isGreaterThan(Rank.BLACKJACK_MAX_SCORE);
+    }
+
     public Score add(Score target) {
         return new Score(target.value + this.value);
     }
@@ -35,6 +39,10 @@ public class Score {
 
     public boolean isLessThanOrEqualTo(Score target) {
         return value <= target.value;
+    }
+
+    public boolean isEqualTo(Score target) {
+        return value == target.value;
     }
 
     @Override

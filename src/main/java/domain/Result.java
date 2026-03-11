@@ -1,7 +1,8 @@
 package domain;
 
 
-import static domain.Rank.BLACKJACK_MAX_SCORE;
+import domain.participant.Dealer;
+import domain.participant.Player;
 
 public enum Result {
     WIN("승"), DRAW("무"), LOSE("패");
@@ -12,23 +13,26 @@ public enum Result {
         this.description = description;
     }
 
-    public static Result judge(Score playerSum, Score dealerSum) {
-        if (isPlayerWin(playerSum, dealerSum)) {
-            return WIN;
+    public static Result judge(Player player, Dealer dealer) {
+        if (player.isBust() && dealer.isBust()) {
+            return DRAW;
         }
-        if (isPlayerLose(playerSum, dealerSum)) {
+        if (player.isBust()) {
             return LOSE;
         }
-        return DRAW;
-    }
+        if (dealer.isBust()) {
+            return WIN;
+        }
+        Score playerScore = player.getTotalSum();
+        Score dealerScore = dealer.getTotalSum();
 
-    private static boolean isPlayerWin(Score playerSum, Score dealerSum) {
-        return playerSum.isLessThanOrEqualTo(BLACKJACK_MAX_SCORE) && playerSum.isGreaterThan(dealerSum);
-    }
-
-    private static boolean isPlayerLose(Score playerSum, Score dealerSum) {
-        return (playerSum.isLessThan(dealerSum) && dealerSum.isLessThanOrEqualTo(BLACKJACK_MAX_SCORE) || (playerSum.isGreaterThan(BLACKJACK_MAX_SCORE))
-                && dealerSum.isLessThanOrEqualTo(BLACKJACK_MAX_SCORE));
+        if (playerScore.isEqualTo(dealerScore)) {
+            return DRAW;
+        }
+        if (playerScore.isGreaterThan(dealerScore)) {
+            return WIN;
+        }
+        return LOSE;
     }
 
     public String getDescription() {
