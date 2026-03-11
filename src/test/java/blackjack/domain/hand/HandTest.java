@@ -32,7 +32,7 @@ class HandTest {
         Hand hand = new Hand();
         hand.add(new Card(Suit.HEART, Rank.ACE));
         hand.add(new Card(Suit.SPADE, Rank.EIGHT));
-        hand.add(new Card(Suit.CLOVER, Rank.SEVEN));
+        hand.add(new Card(Suit.CLUB, Rank.SEVEN));
 
         assertThat(hand.calculateScore().value()).isEqualTo(16);
     }
@@ -42,7 +42,7 @@ class HandTest {
         Hand hand = new Hand();
         hand.add(new Card(Suit.HEART, Rank.TEN));
         hand.add(new Card(Suit.SPADE, Rank.EIGHT));
-        hand.add(new Card(Suit.CLOVER, Rank.THREE));
+        hand.add(new Card(Suit.CLUB, Rank.THREE));
 
         assertThat(hand.isBust()).isFalse();
     }
@@ -52,7 +52,7 @@ class HandTest {
         Hand hand = new Hand();
         hand.add(new Card(Suit.HEART, Rank.TEN));
         hand.add(new Card(Suit.SPADE, Rank.EIGHT));
-        hand.add(new Card(Suit.CLOVER, Rank.FOUR));
+        hand.add(new Card(Suit.CLUB, Rank.FOUR));
 
         assertThat(hand.isBust()).isTrue();
     }

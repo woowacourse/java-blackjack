@@ -29,7 +29,7 @@ class GameResultsTest {
         Player player = new Player("pobi");
         player.receiveCard(new Card(Suit.HEART, Rank.TEN));
         player.receiveCard(new Card(Suit.SPADE, Rank.TEN));
-        player.receiveCard(new Card(Suit.CLOVER, Rank.TEN));
+        player.receiveCard(new Card(Suit.CLUB, Rank.TEN));
 
         GameResults results = GameResults.create(new Players(List.of(player)), dealer);
 
@@ -111,8 +111,8 @@ class GameResultsTest {
         loser.receiveCard(new Card(Suit.HEART, Rank.TEN));
         loser.receiveCard(new Card(Suit.SPADE, Rank.SIX));
 
-        drawer.receiveCard(new Card(Suit.CLOVER, Rank.TEN));
-        drawer.receiveCard(new Card(Suit.CLOVER, Rank.SEVEN));
+        drawer.receiveCard(new Card(Suit.CLUB, Rank.TEN));
+        drawer.receiveCard(new Card(Suit.CLUB, Rank.SEVEN));
 
         GameResults results = GameResults.create(new Players(List.of(loser, drawer)), dealer);
 
