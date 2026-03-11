@@ -2,8 +2,11 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+import vo.GameResult;
 
 public class Participants {
     private static final Integer MAX_PLAYER_COUNT = 16;
@@ -66,5 +69,17 @@ public class Participants {
 
     public void dealCardToDealer(Card card) {
         dealer.receiveCard(card);
+    }
+
+    public GameSummary judgeAll(GameJudge gameJudge) {
+        Map<String, GameResult> userResults = new LinkedHashMap<>();
+        Map<String, Long> betAmounts = new LinkedHashMap<>();
+
+        for (User user : participants) {
+            userResults.put(user.getName(),
+                    gameJudge.judge(dealer.getScore(), user.getScore(), user.isBlackjack()));
+            betAmounts.put(user.getName(), user.getBetAmount());
+        }
+        return new GameSummary(userResults, betAmounts);
     }
 }

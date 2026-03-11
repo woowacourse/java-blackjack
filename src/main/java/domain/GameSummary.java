@@ -7,21 +7,21 @@ import vo.GameResult;
 
 public class GameSummary {
     private final Map<String, GameResult> userResults;
+    private final Map<String, Long> betAmounts;
 
-    public GameSummary(Map<String, GameResult> userResults) {
+    public GameSummary(Map<String, GameResult> userResults, Map<String, Long> betAmounts) {
         this.userResults = new LinkedHashMap<>(userResults);
+        this.betAmounts = new LinkedHashMap<>(betAmounts);
     }
 
-    public int getDealerWinCount() {
-        return (int) userResults.values().stream()
-                .filter(result -> result == GameResult.LOSE || result == GameResult.BUST)
-                .count();
+    public long getUserProfit(String name) {
+        return userResults.get(name).calculateProfit(betAmounts.get(name));
     }
 
-    public int getDealerLoseCount() {
-        return (int) userResults.values().stream()
-                .filter(result -> result == GameResult.WIN || result == GameResult.PUSH)
-                .count();
+    public long getDealerProfit() {
+        return -userResults.keySet().stream()
+                .mapToLong(this::getUserProfit)
+                .sum();
     }
 
     public Map<String, GameResult> getUserResults() {

@@ -26,6 +26,7 @@ public class BlackjackGameFlowTest {
         ));
         blackjackGame = new TestBlackjackGame(fixedDeck);
         blackjackGame.prepare("영기,라이");
+        blackjackGame.getUsers().forEach(user -> blackjackGame.placeBet(user, "1000"));
     }
 
     @Test
@@ -74,7 +75,7 @@ public class BlackjackGameFlowTest {
         blackjackGame.dealToDealer();
 
         // when & then
-        assertThat(blackjackGame.getResult().getUserResults().get("영기")).isEqualTo(GameResult.WIN);
+        assertThat(blackjackGame.getResult().getUserResults().get("영기")).isEqualTo(GameResult.BLACKJACK);
     }
 
     @Test
@@ -88,7 +89,7 @@ public class BlackjackGameFlowTest {
     }
 
     @Test
-    void 딜러_결과에_승패_집계_포함() {
+    void 영기_블랙잭_딜러_수익_마이너스() {
         // given
         blackjackGame.dealToDealer();
 
@@ -96,6 +97,6 @@ public class BlackjackGameFlowTest {
         GameSummary summary = blackjackGame.getResult();
 
         // then
-        assertThat(summary.getDealerWinCount() + summary.getDealerLoseCount()).isEqualTo(2);
+        assertThat(summary.getDealerProfit()).isEqualTo(-500);
     }
 }

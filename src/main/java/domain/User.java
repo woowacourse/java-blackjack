@@ -15,6 +15,10 @@ public class User extends Participant {
         this.bet = new Bet(betAmount);
     }
 
+    public long getBetAmount() {
+        return bet.getAmount();
+    }
+
     public String getName() {
         return name.getName();
     }

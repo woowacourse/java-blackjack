@@ -20,4 +20,8 @@ public abstract class Participant {
     public int getScore() {
         return hand.calculateTotalScore();
     }
+
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
+    }
 }

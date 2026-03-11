@@ -57,7 +57,7 @@ public class ApplicationTest {
         // then
         assertThat(output).contains("영기", "라이", "딜러");
         assertThat(output).contains("K스페이드", "A스페이드");
-        assertThat(output).contains("승", "패");
+        assertThat(output).contains("최종 수익");
     }
 
     @Test

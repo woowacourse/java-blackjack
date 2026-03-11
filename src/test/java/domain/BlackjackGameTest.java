@@ -13,6 +13,7 @@ public class BlackjackGameTest {
     void setUp() {
         blackjackGame = new BlackjackGame();
         blackjackGame.prepare("영기,라이");
+        blackjackGame.getUsers().forEach(user -> blackjackGame.placeBet(user, "1000"));
         blackjackGame.makeDeck();
     }
 
@@ -81,14 +82,17 @@ public class BlackjackGameTest {
     }
 
     @Test
-    void 딜러_결과에_승패_집계_포함() {
+    void 딜러_수익은_유저_수익의_합산에_반전() {
         // given
         blackjackGame.dealCards();
 
         // when
         GameSummary summary = blackjackGame.getResult();
+        long userProfitSum = summary.getUserResults().keySet().stream()
+                .mapToLong(summary::getUserProfit)
+                .sum();
 
         // then
-        assertThat(summary.getDealerWinCount() + summary.getDealerLoseCount()).isEqualTo(2);
+        assertThat(summary.getDealerProfit()).isEqualTo(-userProfitSum);
     }
 }
