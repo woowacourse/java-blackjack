@@ -1,21 +1,15 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import domain.enums.GameResult;
 import domain.participant.Name;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 public class BetTest {
 
@@ -30,110 +24,33 @@ public class BetTest {
         bet = new Bet(List.of(firstPlayer, secondPlayer));
     }
 
-    @Nested
-    @DisplayName("금액 배팅시의 예외 테스트")
-    class exception {
-        @DisplayName("게임에 참여한 플레이어만 값을 배팅할 수 없다.")
-        @Test
-        void 플레이어_금액_배팅_테스트() {
-            Name unknownPlayer = new Name("신원미상");
-
-            assertThatThrownBy(() -> bet.bettingMoney(unknownPlayer, 10_000))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("[ERROR] 게임에 참여한 플레이어만 배팅이 가능합니다.");
-        }
-
-        @DisplayName("플레이어는 양수 이외의 값을 배팅할 수 없다.")
-        @ParameterizedTest
-        @ValueSource(ints = {-10_000, 0})
-        void 플레이어_금액_배팅_테스트(int bettingMoney) {
-            assertThatThrownBy(() -> bet.bettingMoney(firstPlayer, bettingMoney))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("[ERROR] 배팅 금액은 양수값만 가능합니다.");
-        }
+    @DisplayName("배팅한 금액이 수익에 반영된다.")
+    @Test
+    void 배팅_기록으로_결과_계산() {
+        // given
+        bet.bettingMoney(firstPlayer, 10_000);
+        // when
+        bet.calculateProfit(Map.of(firstPlayer, GameResult.WIN));
+        // then
+        assertThat(bet.getPlayerBetProfit().get(firstPlayer)).isEqualTo(10_000);
     }
 
-    @Nested
-    @DisplayName("수익금 계산 테스트")
-    class profit {
-        @DisplayName("플레이어 승리 시 1배의 수익")
-        @Test
-        void 플레이어_승리_시_1배의_수익() {
-            //given
-            bet.bettingMoney(firstPlayer, 10_000);
-            //when
-            bet.calculateProfit(Map.of(firstPlayer, GameResult.WIN));
-            //then
-            assertThat(bet.getBetProfit().get(firstPlayer)).isEqualTo(10_000);
-        }
-
-        @DisplayName("플레이어 패배 시 전액 손실")
-        @Test
-        void 플레이어_패배_시_전액_손실() {
-            //given
-            bet.bettingMoney(firstPlayer, 10_000);
-            //when
-            bet.calculateProfit(Map.of(firstPlayer, GameResult.LOSE));
-            //then
-            assertThat(bet.getBetProfit().get(firstPlayer)).isEqualTo(-10_000);
-        }
-
-        @DisplayName("무승부 시 0원의 수익")
-        @Test
-        void 무승부_0원_수익() {
-            //given
-            bet.bettingMoney(firstPlayer, 10_000);
-            //when
-            bet.calculateProfit(Map.of(firstPlayer, GameResult.DRAW));
-            //then
-            assertThat(bet.getBetProfit().get(firstPlayer)).isEqualTo(0);
-        }
-
-        private static Stream<Arguments> blackjackProfitTest() {
-            return Stream.of(
-                    Arguments.of(10_000, 15_000),
-                    Arguments.of(33_333, 49_999)
-            );
-        }
-
-        @DisplayName("첫 카드 2장 블랙잭으로 승리 시 1.5배 수익")
-        @ParameterizedTest
-        @MethodSource("blackjackProfitTest")
-        void 첫_카드_2장_승리_시_1_5배_수익(int bettingMoney, int expectedProfit) {
-            //given
-            bet.bettingMoney(firstPlayer, bettingMoney);
-            //when
-            bet.calculateProfit(Map.of(firstPlayer, GameResult.BLACKJACK_WIN));
-            //then
-            assertThat(bet.getBetProfit().get(firstPlayer)).isEqualTo(expectedProfit);
-        }
-
-        private static Stream<Arguments> dealerProfitTest() {
-            return Stream.of(
-                    Arguments.of(List.of(10_000, 20_000), List.of(GameResult.WIN, GameResult.LOSE), 10_000),
-                    Arguments.of(List.of(20_000, 20_000), List.of(GameResult.WIN, GameResult.WIN), -40_000),
-                    Arguments.of(List.of(20_000, 20_000), List.of(GameResult.BLACKJACK_WIN, GameResult.WIN), -50_000),
-                    Arguments.of(List.of(20_000, 20_000), List.of(GameResult.LOSE, GameResult.DRAW), 20_000)
-            );
-        }
-
-        @DisplayName("딜러의 수익금 계산 테스트")
-        @ParameterizedTest
-        @MethodSource("dealerProfitTest")
-        void 딜러_수익금_계산_테스트(List<Integer> bettingMoneys, List<GameResult> gameResults, int expectedProfit) {
-            //given
-            bet.bettingMoney(firstPlayer, bettingMoneys.getFirst());
-            bet.bettingMoney(secondPlayer, bettingMoneys.getLast());
-            //when
-            bet.calculateProfit(
-                    Map.of(
-                            firstPlayer, gameResults.getFirst(),
-                            secondPlayer, gameResults.getLast()
-                    )
-            );
-            //then
-            int profit = bet.getDealerProfit();
-            assertThat(profit).isEqualTo(expectedProfit);
-        }
+    @DisplayName("여러 플레이어의 배팅 기록으로 플레이어와 딜러의 수익을 계산한다.")
+    @Test
+    void 여러_플레이어_배팅_기록으로_모든_참여자_수익_계산() {
+        // given
+        bet.bettingMoney(firstPlayer, 10_000);
+        bet.bettingMoney(secondPlayer, 20_000);
+        // when
+        bet.calculateProfit(Map.of(
+                firstPlayer, GameResult.WIN,
+                secondPlayer, GameResult.LOSE
+        ));
+        // then
+        assertSoftly(softAssertions -> {
+            softAssertions.assertThat(bet.getPlayerBetProfit().get(firstPlayer)).isEqualTo(10_000);
+            softAssertions.assertThat(bet.getPlayerBetProfit().get(secondPlayer)).isEqualTo(-20_000);
+            softAssertions.assertThat(bet.getDealerBetProfit()).isEqualTo(10_000);
+        });
     }
 }

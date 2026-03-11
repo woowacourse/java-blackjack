@@ -21,12 +21,12 @@ public class BetProfit {
         );
     }
 
-    public void calculateProfit(Map<Name, GameResult> playerResults, BetHistory betHistory) {
+    public void calculateProfit(Map<Name, GameResult> playerResults, Map<Name, Integer> betHistory) {
         validatePlayers(playerResults.keySet());
 
         playerResults.keySet().forEach(
                 playerName -> {
-                    int betAmount = betHistory.getBetAmount(playerName);
+                    int betAmount = betHistory.get(playerName);
                     GameResult gameResult = playerResults.get(playerName);
 
                     betAmount = calculateBetAmount(gameResult, betAmount);
@@ -69,7 +69,16 @@ public class BetProfit {
         return -betAmount;
     }
 
-    public Map<Name, Integer> getBetProfit() {
+    public Map<Name, Integer> getPlayerBetProfit() {
         return Map.copyOf(betProfit);
+    }
+
+    public int getDealerBetProfit() {
+        int playerProfitSum = betProfit.values()
+                .stream()
+                .mapToInt(i -> i)
+                .sum();
+
+        return negateBetAmount(playerProfitSum);
     }
 }

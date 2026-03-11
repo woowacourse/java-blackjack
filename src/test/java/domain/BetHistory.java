@@ -35,8 +35,7 @@ public class BetHistory {
         }
     }
 
-    public int getBetAmount(Name playerName) {
-        Name foundPlayer = validatePlayer(playerName);
-        return betHistory.get(foundPlayer);
+    public Map<Name, Integer> getBetHistory() {
+        return Map.copyOf(betHistory);
     }
 }

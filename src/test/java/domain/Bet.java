@@ -20,19 +20,14 @@ public class Bet {
     }
 
     public void calculateProfit(Map<Name, GameResult> playerResults) {
-        betProfit.calculateProfit(playerResults, betHistory);
+        betProfit.calculateProfit(playerResults, betHistory.getBetHistory());
     }
 
-    public Map<Name, Integer> getBetProfit() {
-        return betProfit.getBetProfit();
+    public Map<Name, Integer> getPlayerBetProfit() {
+        return betProfit.getPlayerBetProfit();
     }
 
-    public int getDealerProfit() {
-        int playerProfitSum = betProfit.getBetProfit().values()
-                .stream()
-                .mapToInt(i -> i)
-                .sum();
-
-        return -playerProfitSum;
+    public int getDealerBetProfit() {
+        return betProfit.getDealerBetProfit();
     }
 }
