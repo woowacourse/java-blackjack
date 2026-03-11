@@ -26,15 +26,15 @@ public class BlackJackServiceTest {
     void init() {
         dealer = new Dealer();
         winPlayer = new Player(new ParticipantInfo("이김", new Hand()), new Money(0));
-        defeatPlayer = new Player(new ParticipantInfo("짐", new Hand()),new Money(0));
-        drawPlayer = new Player(new ParticipantInfo("비김", new Hand()),new Money(0));
-        bustPlayer=new Player(new ParticipantInfo("버스트", new Hand()), new Money(0));
+        defeatPlayer = new Player(new ParticipantInfo("짐", new Hand()), new Money(0));
+        drawPlayer = new Player(new ParticipantInfo("비김", new Hand()), new Money(0));
+        bustPlayer = new Player(new ParticipantInfo("버스트", new Hand()), new Money(0));
         dealer.keepCard(new Card(Rank.FIVE, Pattern.CLOVER));
         winPlayer.keepCard(new Card(Rank.SIX, Pattern.CLOVER));
         defeatPlayer.keepCard(new Card(Rank.FOUR, Pattern.CLOVER));
         drawPlayer.keepCard(new Card(Rank.FIVE, Pattern.SPADE));
         players = new Players(List.of(winPlayer, defeatPlayer, drawPlayer, bustPlayer));
-        blackJackService=new BlackJackService();
+        blackJackService = new BlackJackService();
 
     }
 
@@ -68,17 +68,17 @@ public class BlackJackServiceTest {
         dealer.keepCard(new Card(Rank.KING, Pattern.HEART));
         dealer.keepCard(new Card(Rank.QUEEN, Pattern.HEART));
 
-        ResultInfo info=result.getPlayersResult().get(bustPlayer);
+        ResultInfo info = result.getPlayersResult().get(bustPlayer);
         assertThat(info).isEqualTo(ResultInfo.DEFEAT);
     }
 
     @Test
-    void 딜러가_버스트시_딜러보다_낮은_점수의_플레이어들은_무조건_승리한다(){
+    void 딜러가_버스트시_딜러보다_낮은_점수의_플레이어들은_무조건_승리한다() {
         dealer.keepCard(new Card(Rank.KING, Pattern.HEART));
         dealer.keepCard(new Card(Rank.QUEEN, Pattern.HEART));
         Result result = blackJackService.calculateResult(dealer, players);
 
-        ResultInfo info=result.getPlayersResult().get(defeatPlayer);
+        ResultInfo info = result.getPlayersResult().get(defeatPlayer);
         assertThat(info).isEqualTo(ResultInfo.WIN);
     }
 }

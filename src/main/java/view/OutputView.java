@@ -15,7 +15,7 @@ public class OutputView {
     private static final String FINAL_YIELD_MESSAGE = "%n## 최종 수익%n";
     private static final String DEALER_RESULT = "딜러: %d%n";
     private static final String PLAYER_RESULT = "%s: %d%n";
-    private static final String INPUT_PLAYER_BETTING_MONEY="%n%s의 배팅 금액은?%n";
+    private static final String INPUT_PLAYER_BETTING_MONEY = "%n%s의 배팅 금액은?%n";
 
     public static void inputPlayerMessage() {
         System.out.println(INPUT_PLAYER_MESSAGE);
@@ -58,14 +58,14 @@ public class OutputView {
 
     public static void gameResultMessage(Result result) {
         System.out.printf(FINAL_YIELD_MESSAGE);
-        int dealerResultMessage=result.getDealerResult();
+        int dealerResultMessage = result.getDealerResult();
         System.out.printf(DEALER_RESULT, dealerResultMessage);
 
-        Map<String, Integer> playerYield=result.calculatePlayerYield(result.getPlayersResult());
+        Map<String, Integer> playerYield = result.calculatePlayerYield(result.getPlayersResult());
         playerResultMessage(playerYield);
     }
 
-    private static void playerResultMessage(Map<String, Integer> playerYield){
+    private static void playerResultMessage(Map<String, Integer> playerYield) {
         for (String s : playerYield.keySet()) {
             System.out.printf(PLAYER_RESULT, s, playerYield.get(s));
         }
@@ -75,7 +75,7 @@ public class OutputView {
         System.out.print(player.getName() + "카드: " + playerCardPrint(player));
     }
 
-    public static void askBettingMoneyMessage(String name){
+    public static void askBettingMoneyMessage(String name) {
         System.out.printf(INPUT_PLAYER_BETTING_MONEY, name);
     }
 

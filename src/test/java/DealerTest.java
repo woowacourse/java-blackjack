@@ -50,8 +50,8 @@ public class DealerTest {
 
     @Test
     void 딜러는_배팅금이_없다() {
-        Dealer dealer=new Dealer();
-        int amount=dealer.getBettingMoney();
+        Dealer dealer = new Dealer();
+        int amount = dealer.getBettingMoney();
 
         assertThat(amount).isEqualTo(0);
     }

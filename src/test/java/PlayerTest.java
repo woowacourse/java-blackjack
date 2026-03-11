@@ -22,7 +22,7 @@ public class PlayerTest {
     void init() {
         dummyHand = new Hand();
         name = "제발";
-        participantInfo=new ParticipantInfo(name, dummyHand);
+        participantInfo = new ParticipantInfo(name, dummyHand);
         bettingMoney = new Money(0);
     }
 
@@ -55,7 +55,7 @@ public class PlayerTest {
     @Test
     void 플레이어는_배팅한_금액을_알고있다() {
         Player player = new Player(participantInfo, new Money(10000));
-        int amount=player.getBettingMoney();
+        int amount = player.getBettingMoney();
 
         assertThat(amount).isEqualTo(10000);
     }

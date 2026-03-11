@@ -38,7 +38,7 @@ public class BlackJackController {
         List<String> names = new ArrayList<>(InputView.inputName());
         for (String name : names) {
             OutputView.askBettingMoneyMessage(name);
-            Money bettingMoney=new Money(InputView.inputBettingMoney());
+            Money bettingMoney = new Money(InputView.inputBettingMoney());
             players.add(new Player(new ParticipantInfo(name, new Hand()), bettingMoney));
         }
         return players;
@@ -71,7 +71,7 @@ public class BlackJackController {
 
     private void drawAndShowCard(CardDeck cardDeck, Player player) {
         player.keepCard(cardDeck.drawCard());
-        if(!player.isMaxScore()){
+        if (!player.isMaxScore()) {
             OutputView.holdingCardMessage(player);
         }
     }

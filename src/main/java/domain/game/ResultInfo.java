@@ -1,7 +1,5 @@
 package domain.game;
 
-import java.util.Arrays;
-
 public enum ResultInfo {
 
     WIN("승", 1.0),
@@ -23,12 +21,5 @@ public enum ResultInfo {
 
     public Double getYield() {
         return yield;
-    }
-
-    public static ResultInfo from(String info){
-        return Arrays.stream(values())
-                .filter(resultInfo -> resultInfo.info.equals(info))
-                .findFirst()
-                .orElseThrow(()->new IllegalArgumentException("[ERROR] 해당하는 결과를 찾을 수 없습니다!"));
     }
 }

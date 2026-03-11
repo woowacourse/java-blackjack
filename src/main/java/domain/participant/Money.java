@@ -13,8 +13,8 @@ public class Money {
         return bettingMoney;
     }
 
-    private void validatePositiveMoney(int bettingMoney){
-        if(bettingMoney<0){
+    private void validatePositiveMoney(int bettingMoney) {
+        if (bettingMoney < 0) {
             throw new IllegalArgumentException(NEGATIVE_BETTING_MONEY_MESSAGE);
         }
     }
