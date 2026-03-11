@@ -21,7 +21,7 @@ public class Bettings {
         return bettings.get(player);
     }
 
-    public Money calculateBettingMoney(Player player, double bettingRate) {
+    public Money calculateBettingMoney(Player player, BettingRate bettingRate) {
         Money changedMoney = bettings.get(player)
                 .changeMoney(bettingRate);
         return bettings.put(player, changedMoney);

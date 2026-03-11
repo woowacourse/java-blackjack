@@ -26,16 +26,17 @@ public class BettingsTest {
     @Test
     void 플레이어의_베팅금액에_베팅률을_반영한다() {
         double tenThousand = 1000.0;
-        double testTimes = 2.0;
+        double testBettingRate = 2.0;
         Money bettingMoney = Money.from(tenThousand);
         Player testPlayer = Player.from(new PlayerName("test"));
+        BettingRate bettingRate = new BettingRate(testBettingRate);
         Bettings bettings = new Bettings();
 
         bettings.bet(testPlayer, bettingMoney);
-        bettings.calculateBettingMoney(testPlayer, testTimes);
+        bettings.calculateBettingMoney(testPlayer, bettingRate);
 
         Money actualBettingMoney = bettings.getPlayerBettingMoney(testPlayer);
-        Money expectedBettingMoney = Money.from(tenThousand * testTimes);
+        Money expectedBettingMoney = Money.from(tenThousand * testBettingRate);
 
         Assertions.assertThat(actualBettingMoney)
                 .isEqualTo(expectedBettingMoney);
