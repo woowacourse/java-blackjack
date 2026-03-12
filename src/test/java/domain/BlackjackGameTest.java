@@ -2,7 +2,7 @@ package domain;
 
 import static domain.BlackjackGame.HIT_DRAW_COUNT;
 import static domain.BlackjackGame.INIT_DRAW_COUNT;
-import static domain.participant.Participants.DEALER_NAME;
+import static domain.participant.Dealer.DEALER_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 
@@ -14,6 +14,7 @@ import domain.card.Shuffler;
 import domain.participant.Name;
 import domain.participant.Participant;
 import domain.participant.Participants;
+import domain.participant.Player;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -26,7 +27,7 @@ class BlackjackGameTest {
     public void 첫_드로우_성공() {
         // given
         final BlackjackGame blackjackGame = new BlackjackGame(
-                new Participants(List.of(new Participant(new Name("zzaekkii"), new Hand()))));
+                new Participants(List.of(new Player(new Name("zzaekkii"), new Hand()))));
 
         // when
         blackjackGame.initDraw();
@@ -42,17 +43,17 @@ class BlackjackGameTest {
     @DisplayName("Hit할 경우, 1장(HIT_DRAW_COUNT)을 뽑는다.")
     public void 히트_드로우_성공() {
         // given
-        final Participant player = new Participant(new Name("zzaekkii"), new Hand());
+        final Player player = new Player(new Name("zzaekkii"), new Hand());
         final BlackjackGame blackjackGame = new BlackjackGame(
                 new Participants(List.of(player)));
         blackjackGame.initDraw();
 
         // when
-        blackjackGame.hitPlayer(player);
-        blackjackGame.hitDealer();
+        blackjackGame.hit(player);
+        final Participant dealer = blackjackGame.getParticipants().getDealer();
+        blackjackGame.hit(dealer);
 
         // then
-        final Participant dealer = blackjackGame.getParticipants().getDealer();
         assertThat(player.getHand()).hasSize(INIT_DRAW_COUNT + HIT_DRAW_COUNT);
         assertThat(dealer.getHand()).hasSize(INIT_DRAW_COUNT + HIT_DRAW_COUNT);
     }
@@ -82,12 +83,12 @@ class BlackjackGameTest {
     }
 
     private static Participants initParticipants() {
-        final Participant pobi = new Participant(new Name("포비"), new Hand());
+        final Player pobi = new Player(new Name("포비"), new Hand());
         pobi.draw(new Card(CardSuit.HEART, CardRank.TWO));
         pobi.draw(new Card(CardSuit.SPADE, CardRank.EIGHT));
         pobi.draw(new Card(CardSuit.CLUB, CardRank.ACE));
 
-        final Participant jason = new Participant(new Name("제이슨"), new Hand());
+        final Player jason = new Player(new Name("제이슨"), new Hand());
         jason.draw(new Card(CardSuit.CLUB, CardRank.SEVEN));
         jason.draw(new Card(CardSuit.SPADE, CardRank.KING));
 

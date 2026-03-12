@@ -4,7 +4,7 @@ import domain.card.Card;
 import domain.card.Hand;
 import java.util.List;
 
-public class Participant {
+public abstract class Participant {
     private final Name name;
     private final Hand hand;
 
@@ -13,7 +13,7 @@ public class Participant {
         this.hand = hand;
     }
 
-    
+
     public void draw(final Card card) {
         hand.addCard(card);
     }

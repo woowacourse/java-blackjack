@@ -11,7 +11,6 @@ public class BlackjackGame {
 
     public static final int INIT_DRAW_COUNT = 2;
     public static final int HIT_DRAW_COUNT = 1;
-    public static final int DEALER_DRAW_BOUND = 16;
 
     private final Deck deck;
     private final Participants participants;
@@ -26,6 +25,7 @@ public class BlackjackGame {
         this.participants = participants;
     }
 
+
     public void initDraw() {
         for (final Participant participant : participants.getPlayers()) {
             drawCards(participant, INIT_DRAW_COUNT);
@@ -33,22 +33,8 @@ public class BlackjackGame {
         drawCards(participants.getDealer(), INIT_DRAW_COUNT);
     }
 
-    // FIXME: Player랑 Dealer 구분할까, hit 하나에서 공통으로 처리할 수 있게?
-    public void hitPlayer(final Participant player) {
-        drawCards(player, HIT_DRAW_COUNT);
-    }
-
-    public void hitDealer() {
-        drawCards(participants.getDealer(), HIT_DRAW_COUNT);
-    }
-
-
-    public boolean canPlayerDraw(final Participant player) {
-        return !player.isBust();
-    }
-
-    public boolean canDealerDraw() {
-        return participants.getDealer().getScore() <= DEALER_DRAW_BOUND;
+    public void hit(final Participant participant) {
+        drawCards(participant, HIT_DRAW_COUNT);
     }
 
 

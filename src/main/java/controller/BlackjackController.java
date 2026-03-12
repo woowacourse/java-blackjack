@@ -4,8 +4,8 @@ import domain.BlackjackGame;
 import domain.FinalResult;
 import domain.card.Hand;
 import domain.participant.Name;
-import domain.participant.Participant;
 import domain.participant.Participants;
+import domain.participant.Player;
 import java.util.ArrayList;
 import java.util.List;
 import view.InputView;
@@ -34,19 +34,19 @@ public class BlackjackController {
 
 
     private BlackjackGame initializeGame() {
-        final List<Participant> playerList = readPlayers();
+        final List<Player> playerList = readPlayers();
         final Participants participants = new Participants(playerList);
 
         return new BlackjackGame(participants);
     }
 
     // TODO: inputView와 outputView 명확히 분리하기 (inputView에서 출력도 섞이는 중)
-    private List<Participant> readPlayers() {
+    private List<Player> readPlayers() {
         final List<Name> playerNames = inputView.readPlayers();
 
-        final List<Participant> players = new ArrayList<>();
+        final List<Player> players = new ArrayList<>();
         for (final Name name : playerNames) {
-            players.add(new Participant(name, new Hand()));
+            players.add(new Player(name, new Hand()));
         }
 
         return players;
@@ -60,29 +60,30 @@ public class BlackjackController {
 
 
     private void hitOrStandPlayer(final BlackjackGame game) {
-        for (final Participant player : game.getParticipants().getPlayers()) {
+        for (final Player player : game.getParticipants().getPlayers()) {
             hitOrStand(game, player);
         }
         outputView.printWhiteLine();
     }
 
-    private void hitOrStand(final BlackjackGame game, final Participant player) {
-        while (game.canPlayerDraw(player)) {
+    private void hitOrStand(final BlackjackGame game, final Player player) {
+        while (player.canDraw()) {
             final boolean hit = inputView.readHitOrStand(player.getName());
-            outputView.printCurrentHandCard(player);
 
             if (!hit) {
+                outputView.printCurrentHandCard(player);
                 break;
             }
 
-            game.hitPlayer(player);
+            game.hit(player);
+            outputView.printCurrentHandCard(player);
         }
     }
 
     private void hitOrStandDealer(final BlackjackGame game) {
-        while (game.canDealerDraw()) {
+        while (game.getParticipants().getDealer().shouldDraw()) {
             outputView.printDealerAdditionalDraw();
-            game.hitDealer();
+            game.hit(game.getParticipants().getDealer());
         }
     }
 
