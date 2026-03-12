@@ -2,6 +2,7 @@ package util;
 
 import static constant.ErrorMessage.INVALID_INPUT_PATTERN;
 import static constant.Pattern.INPUT_ADDITIONAL_YN_PATTERN;
+import static constant.Pattern.INPUT_NUMBER_PATTERN;
 import static constant.Pattern.INPUT_PLAYER_PATTERN;
 
 public class InputValidator {
@@ -14,6 +15,15 @@ public class InputValidator {
 
     public static void validateAdditionalCard(String isTrue) {
         if (!isTrue.matches(INPUT_ADDITIONAL_YN_PATTERN)) {
+            throw new IllegalArgumentException(INVALID_INPUT_PATTERN.getMessage());
+        }
+    }
+
+    public static void validateBetAmount(String betAmount) {
+        if (betAmount == null || betAmount.isBlank()) {
+            throw new IllegalArgumentException(INVALID_INPUT_PATTERN.getMessage());
+        }
+        if (!betAmount.matches(INPUT_NUMBER_PATTERN)) {
             throw new IllegalArgumentException(INVALID_INPUT_PATTERN.getMessage());
         }
     }

@@ -22,8 +22,7 @@ public class DIConfig {
         return new BlackJackController(
                 blackJackService(),
                 inputView(),
-                outputView(),
-                stringParser()
+                outputView()
         );
     }
 
@@ -89,9 +88,6 @@ public class DIConfig {
         return new RandomShapeNumberGenerator();
     }
 
-    public Parser<String> stringParser() {
-        return new StringParser();
-    }
 
     // view
     public InputView inputView() {

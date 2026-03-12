@@ -16,19 +16,17 @@ public class BlackJackController {
     private final BlackJackService blackJackService;
     private final InputView inputView;
     private final OutputView outputView;
-    private final Parser<String> stringParser;
 
-    public BlackJackController(BlackJackService blackJackService, InputView inputView, OutputView outputView, Parser<String> stringParser) {
+    public BlackJackController(BlackJackService blackJackService, InputView inputView, OutputView outputView) {
         this.blackJackService = blackJackService;
         this.inputView = inputView;
         this.outputView = outputView;
-        this.stringParser = stringParser;
     }
 
     public void run() {
         // 사용자 이름 입력 후 초기 카드 분배 출력
         String inputPlayerNames = inputPlayers();
-        InitialDto initialDto = blackJackService.createPlayer(stringParser.splitToDelimiter(inputPlayerNames, ","));
+        InitialDto initialDto = blackJackService.createPlayer(Parser.splitToDelimiter(inputPlayerNames, ","));
         outputView.outputInitialMessage(initialDto);
 
         List<Player> players = blackJackService.getAllPlayers();
@@ -78,9 +76,14 @@ public class BlackJackController {
 
     public void getBetMoney(Player player) {
         String inputMoney = inputView.inputBetMoney(player.getName());
-        int money = Integer.parseInt(inputMoney);
+        int money = 0;
+        try {
+            money = Parser.toInt(inputMoney);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            getBetMoney(player);
+        }
         player.bet(money);
-        // TODO : 검증 & int 변환 분리
     }
 
     public String readYesOrNo(Player player) {
