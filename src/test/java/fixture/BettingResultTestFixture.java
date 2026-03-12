@@ -58,6 +58,12 @@ public class BettingResultTestFixture {
                         List.of(card(CardValue.TEN), card(CardValue.NINE), card(CardValue.TWO)),
                         List.of(card(CardValue.EIGHT), card(CardValue.THREE), card(CardValue.QUEEN)),
                         1000, 0, 0
+                ),
+                // 9. 딜러 버스트시, 그 당시에 버스트 되지 않은 플레이어가 블랙잭이 아닌 경우
+                Arguments.of(
+                        List.of(card(CardValue.TEN), card(CardValue.NINE)),
+                        List.of(card(CardValue.EIGHT), card(CardValue.SEVEN), card(CardValue.QUEEN)),
+                        1000, 1000, -1000
                 )
         );
     }

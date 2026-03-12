@@ -37,6 +37,8 @@ public class BettingResult {
             updateProfit(dealer, player, true, false);
         } else if (playerScore > BLACK_JACK) {
             updateProfit(dealer, player, true, false);
+        } else if (dealerScore > BLACK_JACK) {
+            updateProfit(dealer, player, false, false);
         } else if (playerScore < dealerScore) {
             updateProfit(dealer, player, true, false);
         } else if (playerScore > dealerScore) {
