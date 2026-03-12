@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 public class BlackJackGame {
+    private static final int BUST_THRESHOLD = 21;
     private static final int INITIAL_CARD_COUNT = 2;
     private final Deck deck;
     private final List<Player> players;
@@ -67,10 +68,10 @@ public class BlackJackGame {
     }
 
     private boolean isPlayerWin(int playerScore, int dealerScore) {
-        if (playerScore > 21) {
+        if (playerScore > BUST_THRESHOLD) {
             return false;
         }
-        if (dealerScore > 21) {
+        if (dealerScore > BUST_THRESHOLD) {
             return true;
         }
         return playerScore > dealerScore;
