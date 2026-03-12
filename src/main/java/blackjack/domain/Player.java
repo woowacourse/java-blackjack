@@ -2,10 +2,14 @@ package blackjack.domain;
 
 
 public class Player extends Participant {
-    private static final int BLACKJACK_SCORE = 21;
+    private static final double BLACKJACK_PROFIT_RATE = 1.5;
 
     private final String name;
     private final int bettingAmount;
+
+    public Player(String name) {
+        this(name, 0);
+    }
 
     public Player(String name, int bettingAmount) {
         this.name = name;
@@ -28,12 +32,8 @@ public class Player extends Participant {
 
     private double calculateProfitWhenPlayerWins() {
         if (isBlackjack()) {
-            return (bettingAmount * 1.5);
+            return (bettingAmount * BLACKJACK_PROFIT_RATE);
         }
         return bettingAmount;
-    }
-
-    private boolean isBlackjack() {
-        return calculateTotalScore() == BLACKJACK_SCORE;
     }
 }
