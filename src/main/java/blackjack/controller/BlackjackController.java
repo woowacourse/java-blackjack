@@ -67,8 +67,6 @@ public class BlackjackController {
 
     private boolean inputYesOrNo(String playerName) {
         String input = InputView.readYesOrNo(playerName);
-        Parser.notEmpty(input);
-        Parser.yesOrNo(input);
         return Parser.parseAnswer(input);
     }
 
