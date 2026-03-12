@@ -1,8 +1,12 @@
 package controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import model.BlackJack;
+import model.factory.ParticipantsFactory;
 import model.participant.Participant;
 import model.Participants;
+import util.InputParser;
 import util.Randoms;
 import view.InputView;
 import view.OutputView;
@@ -18,13 +22,35 @@ public class BlackJackController {
     }
 
     public void run() {
-        Participants participants = Participants.of(inputView.readParticipantNames());
+        String inputNames = inputView.readParticipantNames();
+        String[] names = InputParser.parseName(inputNames);
+
+        List<Integer> betAmounts = new ArrayList<>();
+        for (int i = 0; i < names.length; i++) {
+            String bettingAmount = inputView.readBettingAmount(names[i]);
+            betAmounts.add(Integer.parseInt(bettingAmount));
+        }
+
+        Participants participants = ParticipantsFactory.create(names, betAmounts);
         BlackJack blackJack = BlackJack.from(participants);
 
         blackJack.dealOut();
         outputView.printDealOut(participants);
         blackJack.setFirstTurn();
 
+        playersCardDraw(participants);
+
+        Participant dealer = participants.getDealer();
+        if (dealer.dealerNeedDraw()) {
+            dealer.draw(Randoms.pick());
+            outputView.printDealerDraw();
+        }
+
+        outputView.printHandsAndScore(participants);
+        outputView.printResultRevenue(blackJack.calculateRevenue());
+    }
+
+    private void playersCardDraw(Participants participants) {
         for (Participant participant : participants) {
             if (participant.isDealer()) {
                 continue;
@@ -51,14 +77,5 @@ public class BlackJackController {
 
             } while (input.equals("y"));
         }
-
-        Participant dealer = participants.getDealer();
-        if (dealer.dealerNeedDraw()) {
-            dealer.draw(Randoms.pick());
-            outputView.printDealerDraw();
-        }
-
-        outputView.printHandsAndScore(participants);
-        outputView.printResultRevenue(blackJack.calculateRevenue());
     }
 }

@@ -10,26 +10,15 @@ import model.participant.Player;
 import util.InputParser;
 
 public final class Participants implements Iterable<Participant> {
-    private static final String DEALER_PARTICIPANT = "딜러,";
-    private static final int DEFAULT_BET_AMOUNT = 1000;
-
     private final List<Participant> values;
 
     private Participants(List<Participant> values) {
         this.values = values;
     }
 
-    public static Participants of(String input) {
-        String rawPariticipants = DEALER_PARTICIPANT + input;
-        String[] names = InputParser.parseName(rawPariticipants);
+    public static Participants of(List<Participant> values) {
 
-        List<Participant> participants = new ArrayList<>();
-        participants.add(Dealer.of(names[0]));
-        for (int i = 1; i < names.length; i++) {
-            participants.add(Player.of(names[i], DEFAULT_BET_AMOUNT));
-        }
-
-        return new Participants(participants);
+        return new Participants(values);
     }
 
     public Participant getDealer() {
