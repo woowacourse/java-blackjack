@@ -13,10 +13,6 @@ public enum GameResult {
         this.name = name;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public static GameResult calculate(final Player player, final Dealer dealer) {
         if (isWin(player, dealer)) {
             return GameResult.WIN;
