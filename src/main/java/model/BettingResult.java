@@ -6,16 +6,17 @@ import view.OutputView;
 
 public class BettingResult {
 
-    private static final int BLACK_JACK = 21;
-    private static final double BLACK_JACK_WIN_PRICE = 1.5;
-    private static final double BLACK_JACK_DEALER_LOSS = 0.5;
-    private static final int GAME_WIN_PRICE = 2;
-    private static List<Participant> bettingResults = new ArrayList<>();
+    private final int BLACK_JACK = 21;
+    private final double BLACK_JACK_WIN_PRICE = 1.5;
+    private final double BLACK_JACK_DEALER_LOSS = 0.5;
+    private final int GAME_WIN_PRICE = 2;
+    private List<Participant> bettingResults;
 
     public BettingResult() {
+        bettingResults = new ArrayList<>();
     }
 
-    public static void calculateBettingMoney(Dealer dealer, List<Player> players) {
+    public void calculateBettingMoney(Dealer dealer, List<Player> players) {
         int dealerScore = dealer.calculateTotalScore();
         bettingResults.add(dealer);
         players.forEach(player -> {
@@ -24,7 +25,12 @@ public class BettingResult {
         });
     }
 
-    private static void resolveBettingResult(int dealerScore, Player player, Dealer dealer) {
+    public void printBettingResult() {
+        OutputView.printBettingResultHeader();
+        OutputView.printBettingResult(bettingResults);
+    }
+
+    private void resolveBettingResult(int dealerScore, Player player, Dealer dealer) {
         int playerScore = player.calculateTotalScore();
         if (player.getIsBlackJack() && !dealer.getIsBlackJack()) {
             updateMoney(dealer, player, false, true);
@@ -39,7 +45,7 @@ public class BettingResult {
         }
     }
 
-    private static void updateMoney(Dealer dealer, Player player, boolean dealerWin, boolean blackJack) {
+    private void updateMoney(Dealer dealer, Player player, boolean dealerWin, boolean blackJack) {
         int money = player.getMoney();
         if (blackJack) {
             player.setMoney((int) (money * BLACK_JACK_WIN_PRICE));
@@ -52,10 +58,5 @@ public class BettingResult {
         }
         player.setMoney(money * GAME_WIN_PRICE);
         dealer.subtractDealerProfit(money);
-    }
-
-    public static void printBettingResult() {
-        OutputView.printBettingResultHeader();
-        OutputView.printBettingResult(bettingResults);
     }
 }

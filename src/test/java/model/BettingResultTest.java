@@ -29,7 +29,8 @@ public class BettingResultTest {
         player.checkBlackJack();
 
         // when
-        BettingResult.calculateBettingMoney(dealer, List.of(player));
+        BettingResult bettingResult = new BettingResult();
+        bettingResult.calculateBettingMoney(dealer, List.of(player));
         int playerMoney = player.getMoney();
         int dealerMoney = dealer.getDealerProfit();
 

@@ -1,7 +1,5 @@
 package controller;
 
-import model.BettingResult;
-
 public class ShowBettingResultPhase implements GamePhase {
 
     public ShowBettingResultPhase() {
@@ -9,7 +7,7 @@ public class ShowBettingResultPhase implements GamePhase {
 
     @Override
     public void execute(GameContext gameContext) {
-        BettingResult.calculateBettingMoney(gameContext.getDealer(), gameContext.getPlayers());
-        BettingResult.printBettingResult();
+        gameContext.getBettingResult().calculateBettingMoney(gameContext.getDealer(), gameContext.getPlayers());
+        gameContext.getBettingResult().printBettingResult();
     }
 }

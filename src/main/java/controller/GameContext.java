@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.List;
+import model.BettingResult;
 import model.CardDispenser;
 import model.Cards;
 import model.Dealer;
@@ -10,11 +11,13 @@ public class GameContext {
     private Dealer dealer;
     private List<Player> players;
     private CardDispenser cardDispenser;
+    private BettingResult bettingResult;
 
     public GameContext() {
         dealer = new Dealer();
         Cards cards = Cards.createShuffledDeck();
         this.cardDispenser = new CardDispenser(cards);
+        bettingResult = new BettingResult();
     }
 
     public Dealer getDealer() {
@@ -33,7 +36,7 @@ public class GameContext {
         return this.cardDispenser;
     }
 
-    public void setCardDispenser(CardDispenser cardDispenser) {
-        this.cardDispenser = cardDispenser;
+    public BettingResult getBettingResult() {
+        return this.bettingResult;
     }
 }
