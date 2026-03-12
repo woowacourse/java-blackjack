@@ -2,7 +2,11 @@ package controller;
 
 import domain.Dealer;
 import domain.Deck;
+import domain.Money;
 import domain.Player;
+import domain.betting.Betting;
+import domain.betting.Bettings;
+import domain.result.Results;
 import dto.FinalResultDto;
 import dto.HandDto;
 import dto.InitStatusDto;
@@ -31,25 +35,40 @@ public class BlackJackController {
         List<Player> players = blackJackInitService.createPlayers(names, deck);
         Dealer dealer = blackJackInitService.createDealer(deck);
 
-        playGame(deck, dealer, players);
-        printResult(dealer, players);
+        Bettings bettings = betMoney(players);
+
+        Results results = playGame(deck, dealer, bettings);
+        printResult(dealer, players, results);
     }
 
-    private void printResult(Dealer dealer, List<Player> players) {
+    private Bettings betMoney(List<Player> players) {
+        Bettings bettings = new Bettings();
+        for (Player player : players) {
+            Money money = new Money(InputView.askBettingAmount(player.getName()));
+            Betting betting = new Betting(player, money);
+            bettings = bettings.addBetting(betting);
+        }
+        return bettings;
+    }
+
+    private void printResult(Dealer dealer, List<Player> players, Results results) {
         ScoreResultDto scoreResultDto = ScoreResultDto.of(dealer, players);
         OutputView.printScoreResult(scoreResultDto);
 
-        FinalResultDto finalResultDto = FinalResultDto.of(dealer, players);
+        FinalResultDto finalResultDto = FinalResultDto.from(results);
         OutputView.printFinalResult(finalResultDto);
     }
 
-    private void playGame(Deck deck, Dealer dealer, List<Player> players) {
+    private Results playGame(Deck deck, Dealer dealer, Bettings bettings) {
+        List<Player> players = bettings.getPlayers();
         InitStatusDto initStatusDto = InitStatusDto.of(dealer, players);
         OutputView.printInitMessage(initStatusDto);
 
         players.forEach(player -> drawPlayerCard(player, deck));
 
         drawDealerCard(dealer, deck);
+
+        return Results.of(dealer, bettings);
     }
 
     private void drawPlayerCard(Player player, Deck deck) {
