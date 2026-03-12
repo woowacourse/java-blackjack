@@ -1,7 +1,9 @@
 import domain.GameCommand;
 import domain.card.Deck;
-import domain.participant.*;
 import java.util.List;
+import domain.participant.Dealer;
+import domain.participant.Player;
+import domain.participant.Players;
 import domain.result.GameStatistics;
 import domain.result.Referee;
 import util.Parser;

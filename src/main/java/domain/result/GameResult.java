@@ -44,7 +44,7 @@ public enum GameResult {
     }
 
     public GameResult reverse() {
-        if (this == BLACKJACK) return LOSE; // 플레이어가 블랙잭이면 딜러는 패배
+        if (this == BLACKJACK) return LOSE;
         if (this == WIN) return LOSE;
         if (this == LOSE) return WIN;
         return DRAW;

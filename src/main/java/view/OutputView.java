@@ -1,12 +1,12 @@
 package view;
 
+import domain.card.Card;
 import domain.participant.Dealer;
+import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
 import domain.result.GameResult;
 import domain.result.GameStatistics;
-import domain.card.Card;
-import domain.participant.Participant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -35,8 +35,8 @@ public final class OutputView {
     }
 
     public static void showCardName(Player player) {
-        List<String> playerCardNames = createCardNames(player.getParticipant());
-        System.out.println(getCardNames(player.getParticipant(), playerCardNames));
+        List<String> playerCardNames = createCardNames(player.getPlayer());
+        System.out.println(getCardNames(player.getPlayer(), playerCardNames));
     }
 
     private static String getCardNames(Participant participant, List<String> playerCardNames) {
@@ -58,7 +58,7 @@ public final class OutputView {
 
         showCardAndScore(dealer.getDealer(), dealer.getScore());
         players.getPlayers()
-                .forEach(player -> showCardAndScore(player.getParticipant(), player.getScore()));
+                .forEach(player -> showCardAndScore(player.getPlayer(), player.getScore()));
     }
 
     private static void showCardAndScore(Participant participant, int score) {
@@ -76,8 +76,8 @@ public final class OutputView {
 
     private static void showDealerResult(GameStatistics statistics) {
         System.out.print("딜러: ");
-        for (Map.Entry<GameResult, Integer> entry : statistics.getDealerResult().entrySet()) {
-            System.out.print(entry.getValue() + entry.getKey().getDescription() + " ");
+        for (Map.Entry<String, Integer> entry : statistics.getDealerResult().entrySet()) {
+            System.out.print(entry.getValue() + entry.getKey() + " ");
         }
     }
 
