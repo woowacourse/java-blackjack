@@ -32,6 +32,11 @@ public class BettingProfit {
         return new BettingProfit(calculateFinalProfit(amount, LOSS_ODDS));
     }
 
+    public static BettingProfit from(double profit) {
+        return new BettingProfit(profit);
+    }
+
+
     private static double calculateFinalProfit(int amount, double odds) {
         return amount * odds;
     }

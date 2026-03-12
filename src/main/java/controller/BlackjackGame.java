@@ -6,9 +6,7 @@ import domain.participant.ParticipantInitialInformation;
 import domain.participant.dto.ParticipantHandDtoMapper;
 import domain.result.BettingResult;
 import domain.result.BettingResultAnalyzer;
-import domain.result.GameResultAnalyzer;
 import domain.result.dto.BettingProfitDto;
-import domain.result.dto.GameResultDto;
 import domain.card.CardDeck;
 import domain.card.CardDeckInitializer;
 import config.BlackjackGameConfiguration;
@@ -49,19 +47,18 @@ public class BlackjackGame {
         proceedDealersTurn(dealer);
 
         printAllParticipantsFinalHandResult(dealer, players);
-       //printFinalWinningStatistic(players, dealer);
         printBettingResult(players, dealer);
     }
 
     private void printBettingResult(Players players, Dealer dealer) {
-        List<BettingResult> bettingResults = BettingResultAnalyzer.analyze(players, dealer);
-        List<BettingProfitDto> bettingProfitDtos = bettingResults.stream().map(BettingProfitDto::from).toList();
-        view.printFinalBettingResult(bettingProfitDtos);
-    }
+        List<BettingResult> playerBettingResults = BettingResultAnalyzer.analyze(players, dealer);
+        BettingResult dealerBettingResult = BettingResultAnalyzer.analyzeDealerBettingResult(playerBettingResults);
+        BettingProfitDto dealerBettingResultDto = BettingProfitDto.from(dealerBettingResult);
+        List<BettingProfitDto> playerBettingResultDtos = playerBettingResults.stream()
+                .map(BettingProfitDto::from)
+                .toList();
 
-    private void printFinalWinningStatistic(Players players, Dealer dealer) {
-        GameResultDto analysis = analyzeBlackjackResult(players, dealer);
-        view.printFinalResultMessage(analysis);
+        view.printFinalBettingResult(dealerBettingResultDto, playerBettingResultDtos);
     }
 
     private void printAllParticipantsFinalHandResult(Dealer dealer, Players players) {
@@ -104,10 +101,6 @@ public class BlackjackGame {
 
     private List<ParticipantInitialInformation> requestInitialInformations() {
         return view.requestInitialInformations();
-    }
-
-    private GameResultDto analyzeBlackjackResult(Players players, Dealer dealer) {
-        return GameResultAnalyzer.analyze(players, dealer);
     }
 
 }

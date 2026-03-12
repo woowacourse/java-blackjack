@@ -87,9 +87,10 @@ public class ApplicationView {
         writer.printDealerAdditionalDrawCardMessage();
     }
 
-    public void printFinalBettingResult(List<BettingProfitDto> bettingProfitDtos) {
+    public void printFinalBettingResult(BettingProfitDto dealerBettingResultDto, List<BettingProfitDto> playerBettingResultDtos) {
         writer.printFinalBettingResultTitleMessage();
-        bettingProfitDtos.forEach(bettingProfitDto ->
+        writer.printBettingResult(dealerBettingResultDto.playerName(), dealerBettingResultDto.totalProfit());
+        playerBettingResultDtos.forEach(bettingProfitDto ->
                 writer.printBettingResult(bettingProfitDto.playerName(), bettingProfitDto.totalProfit()));
     }
 
