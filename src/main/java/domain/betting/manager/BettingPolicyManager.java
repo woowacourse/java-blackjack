@@ -6,7 +6,6 @@ import domain.gamer.Dealer;
 import domain.gamer.Player;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 // THINK Has state and method -> SingleTone?
@@ -24,10 +23,6 @@ public class BettingPolicyManager {
                         new ComparePolicy()
                 ).sorted()
                 .toList();
-    }
-
-    public List<BettingPolicy> getPolicies() {
-        return policies;
     }
 
     public BettingRate gainBettingRate(Dealer dealer, Player player) {

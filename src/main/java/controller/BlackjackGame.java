@@ -1,7 +1,5 @@
 package controller;
 
-import domain.analyzer.ResultAnalyzer;
-import domain.analyzer.dto.ResultAnalysisDto;
 import domain.answer.DrawDecision;
 import domain.betting.BettingTable;
 import domain.betting.Money;

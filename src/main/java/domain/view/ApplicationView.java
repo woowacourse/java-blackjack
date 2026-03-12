@@ -1,6 +1,5 @@
 package domain.view;
 
-import domain.analyzer.dto.ResultAnalysisDto;
 import domain.answer.DrawDecision;
 import domain.betting.Money;
 import domain.betting.dto.GamerBettingProfitDto;
