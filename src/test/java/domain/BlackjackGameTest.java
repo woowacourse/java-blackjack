@@ -1,5 +1,6 @@
 package domain;
 
+import static domain.BlackjackGame.HIT_DRAW_COUNT;
 import static domain.BlackjackGame.INIT_DRAW_COUNT;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -30,5 +31,22 @@ class BlackjackGameTest {
         assertThat(dealer.getHand()).hasSize(INIT_DRAW_COUNT);
     }
 
+    @Test
+    @DisplayName("Hit할 경우, 1장(HIT_DRAW_COUNT)을 뽑는다.")
+    public void 히트_드로우_성공() {
+        // given
+        final Participant player = new Participant(new Name("zzaekkii"), new Hand());
+        final BlackjackGame blackjackGame = new BlackjackGame(
+                new Participants(List.of(player)));
+        blackjackGame.initDraw();
 
+        // when
+        blackjackGame.hitPlayer(player);
+        blackjackGame.hitDealer();
+
+        // then
+        final Participant dealer = blackjackGame.getParticipants().getDealer();
+        assertThat(player.getHand()).hasSize(INIT_DRAW_COUNT + HIT_DRAW_COUNT);
+        assertThat(dealer.getHand()).hasSize(INIT_DRAW_COUNT + HIT_DRAW_COUNT);
+    }
 }
