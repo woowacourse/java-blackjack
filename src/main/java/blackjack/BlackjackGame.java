@@ -6,13 +6,11 @@ import blackjack.model.BetAmount;
 import blackjack.model.BetAmounts;
 import blackjack.model.card.CardProvider;
 import blackjack.model.card.HitCommand;
-import blackjack.model.gameresult.PlayersGameResult;
+import blackjack.model.gameresult.ProfitResult;
 import blackjack.model.user.Dealer;
 import blackjack.model.user.Player;
 import blackjack.model.user.Users;
-import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,7 +35,7 @@ public class BlackjackGame {
         Map<Player, BetAmount> betAmounts = new HashMap<>();
         for (Player player : players) {
             String input = readBetAmount.apply(player);
-            BetAmount betAmount = new BetAmount(player, input);
+            BetAmount betAmount = new BetAmount(input);
             betAmounts.put(player, betAmount);
         }
         return new BetAmounts(betAmounts);
@@ -64,9 +62,8 @@ public class BlackjackGame {
         }
     }
 
-    public PlayersGameResult determineWinner(Users users, BetAmounts betAmounts) {
-
-        return users.determineWinner();
+    public ProfitResult determineWinner(Users users, BetAmounts betAmounts) {
+        return users.determineWinner(betAmounts);
     }
 
     private boolean checkY(Player player, Function<Player, String> readHitCommand) {

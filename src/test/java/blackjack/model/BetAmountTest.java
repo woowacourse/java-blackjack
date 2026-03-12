@@ -18,7 +18,7 @@ class BetAmountTest {
         Player player = new Player("name");
 
         //when & then
-        assertDoesNotThrow(() -> new BetAmount(player, input));
+        assertDoesNotThrow(() -> new BetAmount(input));
     }
 
     @ParameterizedTest
@@ -29,7 +29,7 @@ class BetAmountTest {
         Player player = new Player("name");
 
         //when & then
-        Assertions.assertThatThrownBy(() -> new BetAmount(player, emptyInput))
+        Assertions.assertThatThrownBy(() -> new BetAmount(emptyInput))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -41,7 +41,7 @@ class BetAmountTest {
         Player player = new Player("name");
 
         //when & then
-        Assertions.assertThatThrownBy(() -> new BetAmount(player, stringInput))
+        Assertions.assertThatThrownBy(() -> new BetAmount(stringInput))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -53,7 +53,7 @@ class BetAmountTest {
         Player player = new Player("name");
 
         //when & then
-        Assertions.assertThatThrownBy(() -> new BetAmount(player, negativeInput))
+        Assertions.assertThatThrownBy(() -> new BetAmount(negativeInput))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

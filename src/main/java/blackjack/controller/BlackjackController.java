@@ -3,12 +3,11 @@ package blackjack.controller;
 import static blackjack.util.ExceptionHandler.retryUntilSuccess;
 
 import blackjack.BlackjackGame;
-import blackjack.model.BetAmount;
-import blackjack.model.gameresult.PlayersGameResult;
+import blackjack.model.BetAmounts;
+import blackjack.model.gameresult.ProfitResult;
 import blackjack.model.user.Users;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.List;
 
 
 public class BlackjackController {
@@ -22,7 +21,7 @@ public class BlackjackController {
     public void run() {
         Users users = retryUntilSuccess(() -> blackjackGame.createUsers(InputView::readPlayerName));
 
-        List<BetAmount> betAmounts = retryUntilSuccess(
+        BetAmounts betAmounts = retryUntilSuccess(
                 () -> blackjackGame.createBetAmount(InputView::readBetAmount, users));
 
         provideInitCardsAndPrint(users);
@@ -31,7 +30,7 @@ public class BlackjackController {
 
         printHandStatus(users);
 
-        printGameResult(users);
+        printProfitResult(users, betAmounts);
 
         InputView.closeScanner();
     }
@@ -45,8 +44,8 @@ public class BlackjackController {
         OutputView.printHandStatus(users);
     }
 
-    private void printGameResult(Users users) {
-        PlayersGameResult playersGameResult = blackjackGame.determineWinner(users);
-        OutputView.printGameResult(playersGameResult, users);
+    private void printProfitResult(Users users, BetAmounts betAmounts) {
+        ProfitResult profitResult = blackjackGame.determineWinner(users, betAmounts);
+        OutputView.printGameResult(profitResult, users);
     }
 }
