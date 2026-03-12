@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.game.BlackjackGameManager;
 import dto.BlackjackResultDto;
-import factory.BlackjackFactory;
+import factory.BlackjackControllerFactory;
 import constant.HitOrStand;
 import domain.card.Rank;
 import constant.Result;
@@ -25,8 +25,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class BlackjackGameManagerTest {
 
-    private final BlackjackFactory blackjackFactory = new BlackjackFactory();
-    private final BlackjackGameManager blackjackGameManager = blackjackFactory.blackjackService();
+    private final BlackjackControllerFactory blackjackControllerFactory = new BlackjackControllerFactory();
+    private final BlackjackGameManager blackjackGameManager = blackjackControllerFactory.blackjackService();
 
     @Nested
     class CreatePlayersTest {

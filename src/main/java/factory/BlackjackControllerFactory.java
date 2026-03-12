@@ -5,7 +5,7 @@ import domain.game.BlackjackGameManager;
 import view.InputView;
 import view.OutputView;
 
-public class BlackjackFactory {
+public class BlackjackControllerFactory {
 
     public BlackjackController blackjackController() {
         return new BlackjackController(inputView(), outputView(), blackjackService());
