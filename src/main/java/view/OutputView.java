@@ -6,10 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 public class OutputView {
+    private static final String DEALER = "딜러";
 
     public static void printGameInitialMessage(List<String> playersNames) {
         String playersNamesMessage = String.join(",", playersNames);
-        System.out.printf("딜러와 %s에게 2장을 나누었습니다.%n", playersNamesMessage);
+        System.out.printf(DEALER + "와 %s에게 2장을 나누었습니다.%n", playersNamesMessage);
     }
 
     public static void printCards(ParticipantCardsDto participantCardsDto) {
@@ -24,7 +25,7 @@ public class OutputView {
     }
 
     public static void printDealerMessage() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println(DEALER + "는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
     public static void printGameResult(Map<String, Boolean> gameResult) {
@@ -44,19 +45,19 @@ public class OutputView {
         }
 
         System.out.println("## 최종 승패");
-        System.out.println("딜러: " + loseCount + "승" + " " + winCount + "패");
+        System.out.println(DEALER + ": " + loseCount + "승" + " " + winCount + "패");
         System.out.printf(resultMessage.toString());
     }
 
     private static void printInitialPlayerCards(ParticipantCardsDto participantCardsDto) {
-        if (!participantCardsDto.name().equals("딜러")) {
+        if (!participantCardsDto.name().equals(DEALER)) {
             String cardsInfoMessage = String.join(",", participantCardsDto.cardsInfo());
             System.out.printf("%s: %s%n", participantCardsDto.name(), cardsInfoMessage);
         }
     }
 
     private static void printInitialDealerCards(ParticipantCardsDto participantCardsDto) {
-        if (participantCardsDto.name().equals("딜러")) {
+        if (participantCardsDto.name().equals(DEALER)) {
             String dealerCard = participantCardsDto.cardsInfo().getFirst();
             System.out.printf("%s: %s%n", participantCardsDto.name(), dealerCard);
         }
