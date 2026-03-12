@@ -41,7 +41,7 @@ class InputViewTest {
     }
 
     @Test
-    void 이름이_비어있으_예외가_발생한다() {
+    void 이름이_비어있으면_예외가_발생한다() {
         String input = ",";
 
         assertThatThrownBy(() -> inputView.parseNames(input))
