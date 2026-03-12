@@ -3,7 +3,9 @@ package view;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.Money;
 import java.util.List;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
@@ -46,15 +48,27 @@ class InputViewTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @Test
-    void 입력한_돈이_숫자가_아니면_예외를_발생한다() {
-        assertThatThrownBy(() -> inputView.parseMoney("abc123"))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
+    @Nested
+    class MoneyInputValidation {
+        @Test
+        void 입력한_돈이_숫자가_아니면_예외를_발생한다() {
+            assertThatThrownBy(() -> inputView.parseMoney("abc123"))
+                    .isInstanceOf(IllegalArgumentException.class);
+        }
 
-    @Test
-    void 입력한_돈이_음수인_경우_예외를_발생한다() {
-        assertThatThrownBy(() -> inputView.parseMoney("-100"))
-                .isInstanceOf(IllegalArgumentException.class);
+        @Test
+        void 입력한_돈이_음수인_경우_예외를_발생한다() {
+            assertThatThrownBy(() -> inputView.parseMoney("-100"))
+                    .isInstanceOf(IllegalArgumentException.class);
+        }
+
+        @Test
+        void 유효한_금액을_입력하면_정상적으로_파싱된다() {
+            Money money = inputView.parseMoney("10000");
+
+            int amount = money.amount;
+
+            assertThat(amount).isEqualTo(10000);
+        }
     }
 }
