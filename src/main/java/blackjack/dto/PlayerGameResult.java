@@ -8,4 +8,7 @@ public record PlayerGameResult(
     long profit
 ) {
 
+    public static PlayerGameResult of(String nickname, MatchResult matchResult, long profit) {
+        return new PlayerGameResult(nickname, matchResult, profit);
+    }
 }
