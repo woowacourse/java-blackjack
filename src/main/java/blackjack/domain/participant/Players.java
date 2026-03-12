@@ -6,11 +6,11 @@ import java.util.stream.IntStream;
 
 public class Players {
     
-    private final List<Player> playerList;
+    private final List<Player> players;
     
-    private Players(List<Player> playerList) {
-        validateDuplicate(playerList);
-        this.playerList = playerList;
+    private Players(List<Player> players) {
+        validateDuplicate(players);
+        this.players = players;
     }
     
     public static Players fromNameAndBettingAmounts(List<String> playerNicknames, List<Integer> playerBettingAmounts) {
@@ -42,15 +42,15 @@ public class Players {
     }
     
     public void distributeCards(Deck deck) {
-        playerList.forEach(player -> player.drawInitialCards(deck));
+        players.forEach(player -> player.drawInitialCards(deck));
     }
     
     public List<Player> getPlayers() {
-        return List.copyOf(playerList);
+        return List.copyOf(players);
     }
     
     public Player getDrawablePlayer() {
-        return playerList.stream()
+        return players.stream()
                 .filter(Player::isDrawable)
                 .findFirst()
                 .orElse(null);
