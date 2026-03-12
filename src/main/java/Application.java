@@ -6,8 +6,7 @@ import java.util.function.Supplier;
 public class Application {
 
     public static void main(String[] args) {
-        Supplier<Deck> randomDeckSupplier = Deck::new;
-        BlackJackController blackJackController = new BlackJackController(randomDeckSupplier);
+        BlackJackController blackJackController = new BlackJackController();
         blackJackController.run();
     }
 }

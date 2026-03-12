@@ -2,26 +2,18 @@ package controller;
 
 import assembler.OutputDtoAssembler;
 import domain.*;
+import factory.CardFactory;
 import view.InputView;
 import view.OutputView;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Supplier;
 
 public class BlackJackController {
 
-    private final Supplier<Deck> deckSupplier;
-
-    public BlackJackController(Supplier<Deck> deckSupplier){
-        this.deckSupplier = deckSupplier;
-    }
-
     public void run() {
-        List<String> playerNames = InputView.askPlayerNames();
-        Game game = new Game(playerNames, deckSupplier.get());
-
+        Game game = createGame();
         BettingTable bettingTable = createBettingTable(game);
         OutputView.printInitMessage(OutputDtoAssembler
                 .toBlackJackInitStatusDto(game.getDealer(),game.getPlayers()));
@@ -29,9 +21,8 @@ public class BlackJackController {
         playPlayers(game);
         playDealer(game);
 
-        Judge judge = new Judge(game.getDealer(), game.getPlayers());
+        Judge judge = createJudge(game);
         game.settleRoundBets(judge, bettingTable);
-
         OutputView.printFinalResult(OutputDtoAssembler
                 .toFinalResultDto(game.getDealer(),game.getPlayers(), bettingTable));
     }
@@ -73,6 +64,15 @@ public class BlackJackController {
             OutputView.printDealerHitMessage();
             game.hitDealer();
         }
+    }
+
+    private Game createGame(){
+        List<String> playerNames = InputView.askPlayerNames();
+        return new Game(playerNames, new Deck(CardFactory.createDeck()));
+    }
+
+    private Judge createJudge(Game game){
+        return new Judge(game.getDealer(), game.getPlayers());
     }
 
     private BettingTable createBettingTable(Game game){
