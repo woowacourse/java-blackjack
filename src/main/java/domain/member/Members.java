@@ -37,7 +37,7 @@ public class Members {
         member.receiveCard(card);
     }
 
-    public Member findByName(String memberName) {
+    private Member findByName(String memberName) {
         return members.stream()
                 .filter(member -> member.getName().equals(memberName))
                 .findAny()
@@ -57,6 +57,10 @@ public class Members {
 
     public String getDealerName() {
         return findDealer().getName();
+    }
+
+    public boolean isDealer(String memberName) {
+        return findByName(memberName).isDealer();
     }
 
     public Map<String, RoundResult> judgeGameResults() {
