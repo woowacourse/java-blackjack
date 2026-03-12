@@ -1,12 +1,13 @@
 package dto;
 
-import domain.state.State;
+import domain.participants.Dealer;
+import domain.participants.Player;
 import java.util.List;
 
 public record NamesDto(String dealerName, List<String> playerNames) {
-    public static NamesDto fromState(State dealerName, List<State> playersState) {
+    public static NamesDto fromState(Dealer dealer, List<Player> players) {
         return new NamesDto(
-                dealerName.getParticipantName(),
-                playersState.stream().map(State::getParticipantName).toList());
+                dealer.getName(),
+                players.stream().map(Player::getName).toList());
     }
 }

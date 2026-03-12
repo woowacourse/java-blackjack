@@ -1,6 +1,7 @@
 package dto;
 
 import domain.bet.Betting;
+import domain.participants.Hand;
 import domain.participants.Player;
 
 public record PlayerCreateDto(
@@ -8,7 +9,7 @@ public record PlayerCreateDto(
         Betting betting
 ) {
 
-    public Player toDefaultStrategyPlayer() {
-        return Player.createDefaultStrategy(name, betting);
+    public Player toDefaultStrategyPlayer(Hand hand) {
+        return Player.createDefaultStrategy(name, hand, betting);
     }
 }

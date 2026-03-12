@@ -118,20 +118,20 @@
 - OCP 위반. 다른 도메인의 상태를 다 알고 있다.
 
 ```java
-public static Result getResult(State dealerState, State playerState) {
-    if (playerState instanceof Bust) {
+public static Result getResult(State dealerRunning, State playerRunning) {
+    if (playerRunning instanceof Bust) {
         return Result.LOSE;
     }
-    if (playerState instanceof BlackJack) {
+    if (playerRunning instanceof BlackJack) {
         return Result.BLACKJACK;
     }
-    if (dealerState instanceof Bust || playerState.getScore() > dealerState.getScore()) {
+    if (dealerRunning instanceof Bust || playerRunning.getScore() > dealerRunning.getScore()) {
         return Result.WIN;
     }
-    if (dealerState.getScore() > playerState.getScore()) {
+    if (dealerRunning.getScore() > playerRunning.getScore()) {
         return LOSE;
     }
-    if (dealerState.getScore().equals(playerState.getScore())) {
+    if (dealerRunning.getScore().equals(playerRunning.getScore())) {
         return Result.DRAW;
     }
     throw new IllegalArgumentException("Result 뭔가 잘못된거같아...");

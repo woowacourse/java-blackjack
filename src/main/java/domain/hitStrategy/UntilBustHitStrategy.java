@@ -1,7 +1,7 @@
 package domain.hitStrategy;
 
-import domain.state.Bust;
 import domain.state.State;
+import domain.state.finished.Bust;
 
 public class UntilBustHitStrategy implements HitStrategy {
     @Override

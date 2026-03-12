@@ -8,20 +8,20 @@ import domain.card.vo.Rank;
 import domain.participants.Dealer;
 import domain.participants.Hand;
 import domain.participants.Player;
-import domain.state.State;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TestFixture {
     private static final DeckMaker ONE_DECK_MAKER = new OneDeckMaker();
     private static final List<Card> DEFAULT_CARDS = createCards();
-    
-    public static State createDefaultPlayerStateByRank(List<Rank> ranks) {
-        return Player.createDefaultStrategy("익명", new Betting(0)).getStartState(createHandByRank(ranks));
+    private static final Betting DEFAULT_BETTING = new Betting(10000);
+
+    public static Player createDefaultPlayerStateByRank(List<Rank> ranks) {
+        return Player.createDefaultStrategy("익명", createHandByRank(ranks), DEFAULT_BETTING);
     }
 
-    public static State createDefaultDealerState(List<Rank> ranks) {
-        return Dealer.createDefaultStrategy().getStartState(createHandByRank(ranks));
+    public static Dealer createDefaultDealer(List<Rank> ranks) {
+        return Dealer.createDefaultStrategy(createHandByRank(ranks));
     }
 
     public static Hand createHandByRank(List<Rank> ranks) {

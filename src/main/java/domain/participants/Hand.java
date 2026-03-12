@@ -65,4 +65,8 @@ public class Hand {
     public boolean isBust() {
         return getScore() > BUST_SCORE;
     }
+
+    public int getSize() {
+        return cards.size();
+    }
 }

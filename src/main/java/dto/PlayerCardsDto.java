@@ -1,12 +1,13 @@
 package dto;
 
 import domain.card.vo.Card;
-import domain.state.State;
+import domain.participants.Participant;
 import java.util.List;
 
 public record PlayerCardsDto(String name, List<String> cards, Integer totalScore) {
-    public static PlayerCardsDto fromState(State state) {
-        return new PlayerCardsDto(state.getParticipantName(), cardToString(state.getCards()), state.getScore());
+    public static PlayerCardsDto fromParticipant(Participant participant) {
+        return new PlayerCardsDto(participant.getName(), cardToString(participant.getState().getCards()),
+                participant.getState().getScore());
     }
 
     private static List<String> cardToString(List<Card> hands) {

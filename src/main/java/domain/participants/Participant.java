@@ -1,21 +1,24 @@
 package domain.participants;
 
 import domain.bet.Betting;
+import domain.card.vo.Card;
 import domain.hitStrategy.HitStrategy;
-import domain.state.Result;
 import domain.state.State;
+import domain.state.running.Hit;
 
 public abstract class Participant {
     private static final int MIN_NAME_SIZE = 2;
     private static final int MAX_NAME_SIZE = 7;
 
     protected final String name;
-    private final Betting betting;
+    protected final Betting betting;
+    protected State state;
 
-    protected Participant(String name, Betting betting) {
+    protected Participant(String name, Hand hand, Betting betting) {
         validateNameLength(name);
         this.name = name;
         this.betting = betting;
+        this.state = getStartState(hand);
     }
 
     private void validateNameLength(String name) {
@@ -28,11 +31,23 @@ public abstract class Participant {
         return name;
     }
 
-    public Integer getProfit(Result result) {
-        return betting.getProfit(result);
+    public State getState() {
+        return state;
     }
 
-    abstract State getStartState(Hand hand);
+    public void stay() {
+        state = state.stay();
+    }
+
+    public boolean canDraw() {
+        return !state.isFinished();
+    }
+
+    public void drawCard(Card card) {
+        this.state = getState().drawCard(card);
+    }
+
+    abstract protected Hit getStartState(Hand hand);
 
     abstract public HitStrategy getHitStrategy();
 }

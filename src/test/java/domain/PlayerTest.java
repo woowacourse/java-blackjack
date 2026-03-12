@@ -3,8 +3,10 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import domain.bet.Betting;
+import domain.card.vo.Rank;
 import domain.hitStrategy.UntilBustHitStrategy;
 import domain.participants.Player;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,7 +24,9 @@ class PlayerTest {
                 "12345678",
         })
         void player(String name) {
-            assertThatThrownBy(() -> new Player(name, new UntilBustHitStrategy(), new Betting(0)))
+            assertThatThrownBy(
+                    () -> new Player(name, TestFixture.createHandByRank(List.of(Rank.ACE, Rank.KING)), new Betting(0),
+                            new UntilBustHitStrategy()))
                     .isInstanceOf(IllegalArgumentException.class);
         }
     }
