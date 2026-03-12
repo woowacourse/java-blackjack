@@ -23,7 +23,7 @@ public class OutputView {
             .map(ParticipantDto::name)
             .filter(name -> !name.equals(PolicyConstant.DEALER_NAME))
             .toList();
-        System.out.printf(PRINT_PLAYERS_MESSAGE, String.join(DELIMITER + " ", names));
+        System.out.printf(PRINT_PLAYERS_MESSAGE, String.join(DELIMITER, names));
     }
 
     public void printHandList(List<ParticipantDto> participantDtoList) {
