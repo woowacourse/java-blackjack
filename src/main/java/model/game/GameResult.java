@@ -1,6 +1,5 @@
 package model.game;
 
-import model.participant.BettingAmount;
 import model.participant.Dealer;
 import model.participant.Player;
 

@@ -1,7 +1,11 @@
-package model.participant;
+package model.game;
+
+import model.game.exception.BettingUnitMismatchException;
+import model.game.exception.UnderMinimumAmountException;
 
 public final class BettingAmount {
     private static final int DIVIDE_UNIT = 100;
+    private static final int MINIMUM_BATTING_AMOUNT = 1000;
 
     private final int amount;
 
@@ -16,19 +20,19 @@ public final class BettingAmount {
     }
 
     private static void validateAmount(int amount) {
-        validatePositive(amount);
+        validateMinimumAmount(amount);
         validateDivideByUnit(amount);
     }
 
     private static void validateDivideByUnit(int amount) {
         if (amount % DIVIDE_UNIT != 0) {
-            throw new IllegalArgumentException("베팅 금액은 " + DIVIDE_UNIT + "원 단위여야 합니다.");
+            throw new BettingUnitMismatchException(amount, DIVIDE_UNIT);
         }
     }
 
-    private static void validatePositive(int amount) {
-        if (amount <= 0) {
-            throw new IllegalArgumentException("베팅 금액은 0원보다 커야 합니다.");
+    private static void validateMinimumAmount(int amount) {
+        if (amount <= MINIMUM_BATTING_AMOUNT) {
+            throw new UnderMinimumAmountException(amount, MINIMUM_BATTING_AMOUNT);
         }
     }
 
