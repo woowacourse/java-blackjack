@@ -6,7 +6,7 @@ import java.util.List;
 public class Hand {
     
     public static final int ACE_SCORE = 10;
-    private static final int BUST_SCORE = 21;
+    private static final int BLACKJACK_SCORE = 21;
     private final List<Card> cards;
     
     public Hand() {
@@ -26,12 +26,12 @@ public class Hand {
     }
     
     public boolean isBlackjack() {
-        return getTotalScore() == BUST_SCORE && cards.size() == 2;
+        return getTotalScore() == BLACKJACK_SCORE && cards.size() == 2;
     }
     
     public boolean isBust() {
         int totalScore = getTotalScore();
-        return totalScore > BUST_SCORE;
+        return totalScore > BLACKJACK_SCORE;
     }
     
     public int getSize() {
@@ -40,7 +40,7 @@ public class Hand {
     
     public int getTotalScore() {
         int scoreSum = calculateScoreSum();
-        if (hasAce() && (scoreSum + ACE_SCORE <= BUST_SCORE)) {
+        if (hasAce() && (scoreSum + ACE_SCORE <= BLACKJACK_SCORE)) {
             return scoreSum + ACE_SCORE;
         }
         return scoreSum;
