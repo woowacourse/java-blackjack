@@ -16,8 +16,6 @@ public class Deck {
         return new Deck(strategy.create());
     }
 
-    // 메시지 : 카드를 만들어줘.
-
     public Card drawCard() {
         try {
             return cards.pop();
