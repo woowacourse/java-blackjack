@@ -29,5 +29,11 @@ public class BetAmountTest {
                 .hasMessage("배팅 금액은 최대 100000원 이하이어야 합니다.");
     }
 
+    @Test
+    void 베팅_금액_값을_가져온다() {
+        int money = 10000;
+        assertThat(BetAmount.of(money).money()).isEqualTo(money);
+    }
+
 
 }
