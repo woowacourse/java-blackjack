@@ -19,10 +19,10 @@ class DealerTest {
         final int DRAW_NUM = 1;
         final int LOSS_NUM = 3;
 
-        List<Integer> playerScores = new ArrayList<>(List.of(14, 17, 19, 21, 20, 18));
+        List<WinStatus> playerWinStatus = new ArrayList<>(List.of(WinStatus.LOSS, WinStatus.WIN, WinStatus.LOSS, WinStatus.WIN, WinStatus.WIN, WinStatus.DRAW));
 
-        for (int playerScore : playerScores) {
-            dealer.finalizeResult(playerScore);
+        for (WinStatus winStatus : playerWinStatus) {
+            dealer.saveResult(winStatus);
         }
 
         assertThat(dealer.getRecord().get(WinStatus.WIN)).isEqualTo(WIN_NUM);
