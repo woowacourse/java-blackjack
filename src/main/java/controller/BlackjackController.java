@@ -89,11 +89,18 @@ public class BlackjackController {
 
     private void printResult(Game game, Map<String, BetAmount> betAmounts) {
         OutputView.printDealerCardsWithScore(CardDto.fromCards(game.getDealerCards()), game.getDealerScore());
+        printFinalCards(game);
+        printProfits(game, betAmounts);
+    }
 
-        Map<String, Result> playerResults = blackjackService.makePlayerResults(game);
+    private void printFinalCards(Game game) {
         for (Map.Entry<String, List<CardDto>> entry : blackjackService.makePlayerCardDtos(game).entrySet()) {
             OutputView.printPlayerCardsWithScore(entry.getKey(), entry.getValue(), game.getPlayerScore(entry.getKey()));
         }
+    }
+
+    private void printProfits(Game game, Map<String, BetAmount> betAmounts) {
+        Map<String, Result> playerResults = blackjackService.makePlayerResults(game);
         Map<String, Integer> playerProfits = blackjackService.calculateAllPlayerProfits(playerResults, betAmounts);
         int dealerProfit = blackjackService.calculateDealerProfit(playerProfits);
         OutputView.printGameResult(dealerProfit, playerProfits);
