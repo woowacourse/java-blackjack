@@ -10,10 +10,12 @@ public class GameStatistics {
     private final Map<Player, GameResult> playerResult;
     private final Map<String, Integer> dealerResult;
 
-    public GameStatistics() {
-        this.playerResult = new LinkedHashMap<>();
+    public GameStatistics(Map<Player, GameResult> gameResultMap) {
+        this.playerResult = gameResultMap;
         this.dealerResult = initialize();
+        initializeDealer();
     }
+
 
     private LinkedHashMap<String, Integer> initialize() {
         LinkedHashMap<String, Integer> dealerResult = new LinkedHashMap<>();
@@ -23,8 +25,10 @@ public class GameStatistics {
         return dealerResult;
     }
 
-    public void addPlayerResult(Player player, GameResult gameResult) {
-        playerResult.put(player, gameResult);
+    public void initializeDealer() {
+        for (Map.Entry<Player, GameResult> playerResult : playerResult.entrySet()) {
+            addDealerResult(playerResult.getValue().reverse());
+        }
     }
 
     public void addDealerResult(GameResult gameResult) {

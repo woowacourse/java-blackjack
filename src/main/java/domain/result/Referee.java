@@ -3,26 +3,23 @@ package domain.result;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class Referee {
 
-    private final GameStatistics gameStatistics;
-
     public Referee() {
-        this.gameStatistics = new GameStatistics();
     }
 
-    public GameStatistics judge(Dealer dealer, Players players) {
+    public Map<Player, GameResult> judge(Dealer dealer, Players players) {
+        Map<Player, GameResult> judgeMap = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
-            judgeStatisticResult(dealer, player);
+            GameResult playerResult = GameResult.judge(dealer, player);
+            judgeMap.put(player, playerResult);
         }
-        return gameStatistics;
+        return Collections.unmodifiableMap(judgeMap);
     }
 
-    private void judgeStatisticResult(Dealer dealer, Player player) {
-        GameResult playerResult = GameResult.judge(dealer, player);
-        gameStatistics.addPlayerResult(player, playerResult);
-        gameStatistics.addDealerResult(playerResult.reverse());
-    }
 
 }

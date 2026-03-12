@@ -4,9 +4,12 @@ import domain.card.RandomShuffleStrategy;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
+import domain.result.GameProfit;
+import domain.result.GameResult;
 import domain.result.GameStatistics;
 import domain.result.Referee;
 import java.util.List;
+import java.util.Map;
 import util.Parser;
 import view.InputView;
 import view.OutputView;
@@ -88,7 +91,12 @@ public class BlackjackGame {
 
     private void judge(Dealer dealer, Players players) {
         Referee referee = new Referee();
-        GameStatistics statistics = referee.judge(dealer, players);
+        Map<Player, GameResult> playerResultMap = referee.judge(dealer, players);
+        GameStatistics statistics = new GameStatistics(playerResultMap);
         OutputView.showGameResult(statistics);
+
+        GameProfit gameProfit = new GameProfit(playerResultMap);
+        OutputView.showDealerProfitResult(gameProfit.getDealerProfit());
+        OutputView.showPlayerProfitResult(gameProfit.getPlayerProfit());
     }
 }
