@@ -3,13 +3,14 @@ package controller;
 import domain.Bet;
 import domain.BettingBoard;
 import domain.BettingParser;
-import domain.HitCommand;
 import domain.Deck;
 import domain.GameManager;
-import domain.dto.GameResultResponse;
+import domain.HitCommand;
+import domain.Profits;
+import domain.Referee;
 import domain.dto.ParticipantCardsResponse;
 import domain.dto.ParticipantResultResponse;
-import domain.Referee;
+import domain.dto.ProfitsResultResponse;
 import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;
@@ -43,7 +44,7 @@ public class GameController {
 
         initializeGame(gameManager, participants);
         playGame(gameManager, participants);
-        determineGame(participants);
+        determineGame(participants, bettingBoard);
     }
 
     private void initializeGame(GameManager gameManager, Participants participants) {
@@ -87,10 +88,10 @@ public class GameController {
         outputView.printDealerTurn(createResultResponses(dealer, players));
     }
 
-    private void determineGame(Participants participants) {
+    private void determineGame(Participants participants, BettingBoard bettingBoard) {
         Referee referee = new Referee();
-        GameResultResponse response = referee.evaluateMatch(participants);
-        outputView.printGameResult(response);
+        Profits profits = referee.calculateProfits(participants, bettingBoard);
+        outputView.printProfitsResult(ProfitsResultResponse.from(profits));
     }
 
     private List<ParticipantCardsResponse> createInitialResponses(Participants participants) {

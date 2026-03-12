@@ -37,6 +37,10 @@ public class Hand {
         return List.copyOf(cards);
     }
 
+    public boolean isBlackjack() {
+        return cards.size() == 2 && calculateScore().value() == 21;
+    }
+
     private int calculateAcePoint(int currentScore) {
         if (currentScore > BUST_THRESHOLD) {
             return currentScore - ACE_ADJUST_SCORE;

@@ -1,13 +1,11 @@
 package view;
 
-import domain.MatchResult;
 import domain.card.Card;
-import domain.dto.GameResultResponse;
 import domain.dto.ParticipantCardsResponse;
 import domain.dto.ParticipantResultResponse;
-import domain.dto.PlayerMatchResult;
+import domain.dto.ProfitResponse;
+import domain.dto.ProfitsResultResponse;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -36,12 +34,6 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printGameResult(GameResultResponse response) {
-        System.out.println("## 최종 승패");
-        printDealerResult(response.dealerMatchResult());
-        printPlayerResults(response.playerMatchResults());
-    }
-
     public void printParticipantCard(ParticipantCardsResponse response) {
         System.out.printf("%s카드: %s%n", response.name(), formattedCards(response.cards()));
     }
@@ -61,18 +53,10 @@ public class OutputView {
                 .collect(Collectors.joining(", "));
     }
 
-    private void printDealerResult(Map<MatchResult, Integer> dealerResults) {
-        String formattedResult = dealerResults.entrySet().stream()
-                .filter(entry -> entry.getValue() > 0)
-                .map(entry -> entry.getValue() + MatchResultView.from(entry.getKey()))
-                .collect(Collectors.joining(" "));
-
-        System.out.printf("딜러: %s%n", formattedResult);
-    }
-
-    private void printPlayerResults(List<PlayerMatchResult> playerMatchResults) {
-        for (PlayerMatchResult playerMatchResult : playerMatchResults) {
-            System.out.printf("%s: %s%n", playerMatchResult.name(), MatchResultView.from(playerMatchResult.result()));
+    public void printProfitsResult( ProfitsResultResponse profitsResultResponse) {
+        System.out.println("## 최종 수익");
+        for (ProfitResponse profitResponse : profitsResultResponse.results()) {
+            System.out.printf("%s: %d%n", profitResponse.name(), profitResponse.profit());
         }
     }
 }

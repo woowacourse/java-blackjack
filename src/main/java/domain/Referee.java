@@ -1,42 +1,57 @@
 package domain;
 
-import domain.dto.GameResultResponse;
-import domain.dto.PlayerMatchResult;
 import domain.participant.Dealer;
+import domain.participant.Participant;
 import domain.participant.Participants;
 import domain.participant.Player;
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.List;
+import domain.participant.Players;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class Referee {
 
-    public GameResultResponse evaluateMatch(Participants participants) {
-        List<PlayerMatchResult> playerResults = calculatePlayerResults(participants);
-        EnumMap<MatchResult, Integer> dealerResults = calculateDealerResults(playerResults);
-
-        return new GameResultResponse(dealerResults, playerResults);
-    }
-
-    private List<PlayerMatchResult> calculatePlayerResults(Participants participants) {
-        List<PlayerMatchResult> results = new ArrayList<>();
+    public Profits calculateProfits(Participants participants, BettingBoard bettingBoard) {
         Dealer dealer = participants.getDealer();
-
-        for (Player player : participants.getPlayers()) {
-            results.add(new PlayerMatchResult(player.getName(), judge(dealer, player)));
-        }
-        return results;
+        Map<Participant, Profit> playerProfits = calculatePlayerProfits(participants.getPlayers(), dealer, bettingBoard);
+        Profit dealerProfit = calculateDealerProfit(playerProfits);
+        return assembleFinalProfits(dealer, dealerProfit, playerProfits);
     }
 
-    private EnumMap<MatchResult, Integer> calculateDealerResults(List<PlayerMatchResult> playerResults) {
-        EnumMap<MatchResult, Integer> counts = new EnumMap<>(MatchResult.class);
-        for (PlayerMatchResult playerResult : playerResults) {
-            counts.merge(playerResult.result().opposite(), 1, Integer::sum);
+    private Map<Participant, Profit> calculatePlayerProfits(Players players, Dealer dealer, BettingBoard bettingBoard) {
+        Map<Participant, Profit> playerProfits = new LinkedHashMap<>();
+        for (Player player : players) {
+            MatchResult result = judge(dealer, player);
+            Profit profit = bettingBoard.calculateProfit(player, result.getProfitRate());
+            playerProfits.put(player, profit);
         }
-        return counts;
+        return playerProfits;
+    }
+
+    private Profit calculateDealerProfit(Map<Participant, Profit> playerProfits) {
+        double totalPlayerProfit = playerProfits.values().stream()
+                .mapToDouble(Profit::value)
+                .sum();
+
+        return new Profit(totalPlayerProfit).negate();
+    }
+
+    private Profits assembleFinalProfits(Dealer dealer, Profit dealerProfit, Map<Participant, Profit> playerProfits) {
+        Map<Participant, Profit> finalProfits = new LinkedHashMap<>();
+        finalProfits.put(dealer, dealerProfit);
+        finalProfits.putAll(playerProfits);
+        return new Profits(finalProfits);
     }
 
     private MatchResult judge(Dealer dealer, Player player) {
+        if (player.isBlackjack() && dealer.isBlackjack()) {
+            return MatchResult.DRAW;
+        }
+        if (player.isBlackjack()) {
+            return MatchResult.BLACKJACK_WIN;
+        }
+        if (dealer.isBlackjack()) {
+            return MatchResult.LOSE;
+        }
         if (player.isBust()) {
             return MatchResult.LOSE;
         }
