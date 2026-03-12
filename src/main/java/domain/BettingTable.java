@@ -19,6 +19,13 @@ public class BettingTable {
         return (long) (moneyTable.get(player).getMoney() * winningStatus.getPayoutRatio());
     }
 
+    public long calculateDealerProfit() {
+        long totalPlayerProfit = moneyTable.values().stream()
+                .mapToLong(Money::getMoney)
+                .sum();
+        return -totalPlayerProfit;
+    }
+
     public Map<Player, Money> getMoneyTable() {
         return new LinkedHashMap<>(moneyTable);
     }
