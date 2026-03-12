@@ -335,7 +335,14 @@ SRP를 완벽히 지킨 것입니다.
         - 마침 플레이어 닉네임들을 저장하는 DTO가 있다 `PlayerNames`
         - 이 DTO를 도메인 계층으로 올려 검증을 담당하도록
 - ----------------------------------------1차 래핑----------------------------------------
-- [ ] 수익금 `public int calculateProfit(GameResult result)`
+- [x] 수익금 `public int calculateProfit(GameResult result)`
+    - [x] 수익금, 닉네임, 게임 결과를 한 번에 저장해야 하는가? ㄴㄴ
+    - [x] 수익금, 닉네임만 궁금하지 게임 결과 리턴할 필요가 없다
+    - [x] GameResult 제거해버리고 그 때 수익금 대신 을 계산하게,
+    - [x] 플레이어의 수익금 * -1 == 딜러의 수익금
+    - [x] 딜러의 수익금을 별도로 저장/계산하기보단
+        - 플레이어 수익금 목록(닉네임, 수익금)을 기반으로 DTO가 추론하기
+        - 그냥 값 꺼내서 더하는건데 이건 도메인의 로직을 조작하는게 아니니
 - [ ] 딜러 수익금 계산 `public int determineProfit(List<Player> players)`
 - [ ] 참가자 수익금 계산 `record ParticipantsProfit(String nickname, int profit)`
 - [ ] 참가자 수익금 DTO `ParticipantsProfit.from(player.getNickname(), player.calculateProfit())`
