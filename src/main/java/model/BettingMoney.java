@@ -10,7 +10,7 @@ public class BettingMoney {
     private static final String MONEY_IS_NEGATIVE = "돈은 음수일 수 없습니다.";
     private static final String MONEY_IS_ZERO = "0원 이상을 입력해주세요.";
 
-    private final Integer bettingMoney;
+    private final int bettingMoney;
 
     public BettingMoney(String bettingMoney) {
         int parsed = parse(bettingMoney);
@@ -18,7 +18,7 @@ public class BettingMoney {
         this.bettingMoney = parsed;
     }
 
-    public Integer get() {
+    public int get() {
         return bettingMoney;
     }
 
