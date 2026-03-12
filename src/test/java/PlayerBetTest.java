@@ -3,12 +3,10 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import blackjack.domain.Card;
 import blackjack.domain.Dealer;
 import blackjack.domain.GameResult;
-import blackjack.domain.Participant;
 import blackjack.domain.Player;
 import blackjack.domain.ProfitResults;
 import blackjack.domain.ScoreCompareResult;
 import blackjack.service.Game;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
@@ -52,13 +50,10 @@ public class PlayerBetTest {
         GameResult gameResult = game.judgeTotalGameResult();
 
         ProfitResults actualProfitResults = game.calculateTotalProfitResults(gameResult);
-        Map<Participant, Integer> expectedProfitMap = new HashMap<>() {{
-            put(dealer, 500);
-            put(winningPlayer, 1000);
-            put(losingPlayer, -1500);
-        }};
-        ProfitResults expectedProfitResults = new ProfitResults(expectedProfitMap);
-
+        ProfitResults expectedProfitResults = new ProfitResults(500.0, Map.of(
+                winningPlayer, 1000.0,
+                losingPlayer, -1500.0
+        ));
         assertThat(actualProfitResults).isEqualTo(expectedProfitResults);
     }
 

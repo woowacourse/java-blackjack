@@ -2,12 +2,15 @@ package blackjack.service;
 
 import blackjack.domain.Dealer;
 import blackjack.domain.GameResult;
+import blackjack.domain.Participant;
 import blackjack.domain.Player;
+import blackjack.domain.ProfitResults;
 import blackjack.domain.ScoreCompareResult;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class Game {
     private final List<Player> players;
@@ -30,6 +33,23 @@ public class Game {
         }
 
         return new GameResult(dealerResult, playerResults);
+    }
+
+    public ProfitResults calculateTotalProfitResults(GameResult gameResult) {
+        LinkedHashMap<Player, ScoreCompareResult> playerResults = gameResult.playerResults();
+
+        double dealerProfit = 0;
+        Map<Player, Double> playerProfits = new LinkedHashMap<>();
+        for (Map.Entry<Player, ScoreCompareResult> entry : playerResults.entrySet()) {
+            Player player = entry.getKey();
+            ScoreCompareResult result = entry.getValue();
+
+            double profit = player.calculateProfit(result);
+            dealerProfit += profit * -1.0;
+            playerProfits.put(player, profit);
+        }
+
+        return new ProfitResults(dealerProfit, playerProfits);
     }
 
     private static ScoreCompareResult toPlayerResult(ScoreCompareResult result) {
