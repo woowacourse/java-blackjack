@@ -354,8 +354,8 @@ SRP를 완벽히 지킨 것입니다.
     - `플레이어들`의 수익금 목록을 계산한다
 - [x] 각각의 계산된 수익금, 수익금들을 각각 반환한다. 조립은 컨트롤러의 역할/책임
 - [x] 참가자 수익금 계산 `public long calculateProfit(ProfitRate profitRate)` - `Player`
-- [ ] 참가자 수익금 DTO `ParticipantsProfit.from(player.getNickname(), player.calculateProfit())`
-- [ ] 최종 게임 결과 DTO `record TotalWinningResult(ParticipantsProfit dealerProfit, ParticipantsProfit playerProfit)`
+- [x] 참가자 수익금 DTO `public record PlayerProfit(String nickname, long profit)`
+- [x] 최종 게임 결과 DTO `public record TotalWinningResult(int dealerProfit, List<PlayerProfit> playerResults)`
 
 ---
 
