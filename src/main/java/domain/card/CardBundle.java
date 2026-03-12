@@ -7,7 +7,9 @@ import java.util.Objects;
 
 public class CardBundle {
 
-    private static final int BUSTED_CONDITION = 21;
+    private static final int BUSTED_CONDITION = 22;
+    private static final int BLACKJACK_CONDITION = 21;
+    private static final int NUMBER_OF_BLACKJACK_CARD = 2;
     private static final int ACE_BONUS_SCORE = 10;
 
     private final List<Card> cardBundle;
@@ -50,7 +52,7 @@ public class CardBundle {
 
     public int getResultScore() {
         int basicScore = getBasicScore();
-        if (hasAce() && (basicScore + ACE_BONUS_SCORE <= BUSTED_CONDITION)) {
+        if (hasAce() && (basicScore + ACE_BONUS_SCORE <= BLACKJACK_CONDITION)) {
             return basicScore + ACE_BONUS_SCORE;
         }
 
@@ -64,7 +66,7 @@ public class CardBundle {
     }
 
     public boolean isBusted() {
-        return getBasicScore() > BUSTED_CONDITION;
+        return getBasicScore() >= BUSTED_CONDITION;
     }
 
     public boolean hasAce() {
@@ -77,7 +79,7 @@ public class CardBundle {
     }
 
     public boolean isBlackjack() {
-        return cardBundle.size() == 2 && getResultScore() == 21;
+        return cardBundle.size() == NUMBER_OF_BLACKJACK_CARD && getResultScore() == BLACKJACK_CONDITION;
     }
 
     public boolean isStop() {
