@@ -1,7 +1,9 @@
 package util;
 
 import domain.Dealer;
+import domain.Money;
 import domain.Player;
+import domain.betting.Betting;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
@@ -56,5 +58,9 @@ public class TestUtil {
 
     public static Card createSpadesCard(Rank rank) {
         return new Card(Suit.SPADES, rank);
+    }
+
+    public static Betting createBetting(String name, int amount) {
+        return new Betting(createPlayer(name), new Money(amount));
     }
 }
