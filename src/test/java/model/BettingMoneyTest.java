@@ -27,7 +27,7 @@ public class BettingMoneyTest {
 
     @Test
     public void 숫자_범위_초과_예외() {
-        assertThatThrownBy(() -> new BettingMoney("2147483648"))
+        assertThatThrownBy(() -> new BettingMoney("9223372036854775808"))
                 .isExactlyInstanceOf(GameException.class)
                 .hasMessage("입력 가능한 범위를 초과한 숫자입니다.");
     }

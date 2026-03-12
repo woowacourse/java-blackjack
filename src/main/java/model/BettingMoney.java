@@ -1,7 +1,6 @@
 package model;
 
 import exception.GameException;
-import java.math.BigInteger;
 
 public class BettingMoney {
 
@@ -9,45 +8,56 @@ public class BettingMoney {
     private static final String MONEY_IS_OUT_OF_RANGE = "입력 가능한 범위를 초과한 숫자입니다.";
     private static final String MONEY_IS_NEGATIVE = "돈은 음수일 수 없습니다.";
     private static final String MONEY_IS_ZERO = "0원 이상을 입력해주세요.";
+    private static final String NUMBER_REGEX = "\\d+";
+    private static final String NEGATIVE_REGEX = "-\\d+";
+    private static final String LONG_MAX_VALUE = String.valueOf(Long.MAX_VALUE);
 
-    private final int bettingMoney;
+    private final long bettingMoney;
 
     public BettingMoney(String bettingMoney) {
-        int parsed = parse(bettingMoney);
-        validate(parsed);
-        this.bettingMoney = parsed;
+        validate(bettingMoney);
+        this.bettingMoney = parse(bettingMoney);
     }
 
-    public int get() {
+    public long get() {
         return bettingMoney;
     }
 
-    private int parse(String bettingMoney) {
-        BigInteger parsed;
-        try {
-            parsed = new BigInteger(bettingMoney);
-        } catch (NumberFormatException e) {
-            throw new GameException(MONEY_IS_NOT_NUMBER);
-        }
-        if (parsed.compareTo(BigInteger.valueOf(Integer.MAX_VALUE)) > 0) {
-            throw new GameException(MONEY_IS_OUT_OF_RANGE);
-        }
-        return parsed.intValue();
+    private long parse(String bettingMoney) {
+        return Long.parseLong(bettingMoney);
     }
 
-    private void validate(int bettingMoney) {
-        validateBettingMoneyIsNotNegative(bettingMoney);
-        validateBettingMoneyIsNotZero(bettingMoney);
+    private void validate(String bettingMoney) {
+        validateNotNegative(bettingMoney);
+        validateIsNumber(bettingMoney);
+        validateNotOutOfRange(bettingMoney);
+        validateNotZero(bettingMoney);
     }
 
-    private void validateBettingMoneyIsNotNegative(int bettingMoney) {
-        if (bettingMoney < 0) {
+    private void validateNotNegative(String bettingMoney) {
+        if (bettingMoney.matches(NEGATIVE_REGEX)) {
             throw new GameException(MONEY_IS_NEGATIVE);
         }
     }
 
-    private void validateBettingMoneyIsNotZero(int bettingMoney) {
-        if (bettingMoney == 0) {
+    private void validateIsNumber(String bettingMoney) {
+        if (!bettingMoney.matches(NUMBER_REGEX)) {
+            throw new GameException(MONEY_IS_NOT_NUMBER);
+        }
+    }
+
+    private void validateNotOutOfRange(String bettingMoney) {
+        if (bettingMoney.length() > LONG_MAX_VALUE.length()) {
+            throw new GameException(MONEY_IS_OUT_OF_RANGE);
+        }
+        if (bettingMoney.length() == LONG_MAX_VALUE.length()
+                && bettingMoney.compareTo(LONG_MAX_VALUE) > 0) {
+            throw new GameException(MONEY_IS_OUT_OF_RANGE);
+        }
+    }
+
+    private void validateNotZero(String bettingMoney) {
+        if (bettingMoney.equals("0")) {
             throw new GameException(MONEY_IS_ZERO);
         }
     }
