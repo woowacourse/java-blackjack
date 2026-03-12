@@ -29,7 +29,6 @@ public class BlackjackController {
 
     public void run() {
         Participants participants = addParticipants();
-
         Deck deck = Deck.initCardDeck(cardShuffler);
 
         drawInitCard(participants, deck);
