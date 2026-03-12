@@ -27,10 +27,7 @@ public class Player extends Participant {
     
     @Override
     public boolean isDrawable() {
-        if (stopDrawing || isBust()) {
-            return false;
-        }
-        return !isBlackjack();
+        return !stopDrawing && super.isDrawable();
     }
     
     public void stand() {

@@ -49,7 +49,7 @@ public class Participant {
     }
     
     public boolean isDrawable() {
-        return !isBust();
+        return hand.isUnderBlackjackScore();
     }
     
     public boolean isBust() {

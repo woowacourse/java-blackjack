@@ -34,6 +34,11 @@ public class Hand {
         return totalScore > BLACKJACK_SCORE;
     }
     
+    public boolean isUnderBlackjackScore() {
+        int totalScore = getTotalScore();
+        return totalScore < BLACKJACK_SCORE;
+    }
+    
     public int getSize() {
         return cards.size();
     }
