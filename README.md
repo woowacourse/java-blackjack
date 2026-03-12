@@ -82,10 +82,26 @@ getAmount 배팅 금액 반환
 - draw(memberName, card) 카드 뽑기
 - canDealerDraw() 딜러가 카드를 더 뽑을 수 있는지 확인
 - checkBust(memberName) 카드 총합이 버스트인지 확인
-- checkBlackjack() 블랙잭인지 확인
-- applyBlackjackBonus
-- checkGameResult
-
+- checkBlackjack(playerName) 블랙잭인지 확인
+- applyBlackjackBonus(playerName) 블랙잭 보너스 적용
+- checkGameResult() 게임 결과 출력
+---
+### BlackjackGame
+#### field
+- GameTable
+- Deck
+#### method
+- isNotDealer(memberName) 플레이어만을 구분하기 위한 검증
+- initialDeal() 딜러와 플레이어 모두에게 카드 2장씩 나누어주는 기능
+- drawPlayer() 플레이어가 카드 뽑는 기능
+- getFirstCardNames(memberName) 처음 나누어준 카드들을 보여주는 기능
+- canDealerDraw() 딜러가 16이하인지 확인하는 검증
+- drawDealer() 딜러가 카드 뽑는 기능
+- getGameResults() 승부결과 조회 기능
+- isContinuable(playerName) 버스트인지 확인하여, 계속 게임을 할 수 있는지 확인하는 기능
+- hasBlackjack(playerName) 블랙잭을 가지고 있는지 검증
+- applyBlackjackBonus(playerName) 블랙잭 보너스를 적용하는 기능
+---
 ```
 딜러카드: 3다이아몬드, 9클로버, 8다이아몬드 - 결과: 20
 pobi카드: 2하트, 8스페이드, A클로버 - 결과: 21
@@ -93,10 +109,10 @@ jason카드: 7클로버, K스페이드 - 결과: 17
 ```
 - finalResult()
 ```
-  ## 최종 승패
-  딜러: 1승 1패
-  pobi: 승
-  jason: 패
+  ## 최종 수익
+  딜러: 10000
+  pobi: 10000 
+  jason: -20000
  ```
 ---
 
@@ -107,8 +123,14 @@ jason카드: 7클로버, K스페이드 - 결과: 17
 게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)
 pobi,jason
 
+pobi의 배팅 금액은?
+10000
+
+jason의 배팅 금액은?
+20000
+
 딜러와 pobi, jason에게 2장을 나누었습니다.
-딜러카드: 3다이아몬드
+딜러: 3다이아몬드
 pobi카드: 2하트, 8스페이드
 jason카드: 7클로버, K스페이드
 
@@ -117,20 +139,21 @@ y
 pobi카드: 2하트, 8스페이드, A클로버
 pobi는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)
 n
-jason는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)
+pobi카드: 2하트, 8스페이드, A클로버
+jason은 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)
 n
 jason카드: 7클로버, K스페이드
 
 딜러는 16이하라 한장의 카드를 더 받았습니다.
 
-딜러카드: 3다이아몬드, 9클로버, 8다이아몬드 - 결과: 20
+딜러 카드: 3다이아몬드, 9클로버, 8다이아몬드 - 결과: 20
 pobi카드: 2하트, 8스페이드, A클로버 - 결과: 21
 jason카드: 7클로버, K스페이드 - 결과: 17
 
-## 최종 승패
-딜러: 1승 1패
-pobi: 승
-jason: 패
+## 최종 수익
+딜러: 10000
+pobi: 10000 
+jason: -20000
 ```
 
 ## 프로그래밍 요구 사항
@@ -161,13 +184,11 @@ jason: 패
 - 딜러와 플레이어에서 발생하는 중복 코드를 제거해야 한다.
 
 ## 미션 중 할 일
-
 ---
 토론 활동에서 정한 규칙을 의식하며 코드 작성  
 규칙 때문에 코드를 변경한 곳 기록
 막히는 순간 기록
 ## 미션 중 기록
-
 ---
 필수 기록:  
 [ ] 규칙을 적용해서 변경한 코드 1곳 이상  
@@ -175,7 +196,6 @@ jason: 패
 [ ] 막힌 순간 1회 이상
 
 ## 미션 완료 조건
-
 ---
 [ ] 요구사항 구현  
 [ ] 규칙에 의한 코드 변경 1회 이상  
