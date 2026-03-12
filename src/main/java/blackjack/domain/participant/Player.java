@@ -36,4 +36,8 @@ public class Player extends Participant {
     public void stand() {
         stopDrawing = true;
     }
+    
+    public int calculateProfit(GameResult gameResult) {
+        return bettingAmount * gameResult.getRate();
+    }
 }
