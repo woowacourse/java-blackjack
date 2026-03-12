@@ -9,6 +9,7 @@ import static domain.card.Rank.ACE;
 
 public class Hand {
     private static final int BLACKJACK_NUMBER = 21;
+    private static final int ACE_SCORE_ADJUSTMENT = 10;
     private final List<Card> cards;
 
     public Hand() {
@@ -19,8 +20,8 @@ public class Hand {
         int sum = getInitSum();
         long aceCount = countAce();
 
-        while (aceCount > 0 && sum > 21) {
-            sum -= 10;
+        while (aceCount > 0 && sum > BLACKJACK_NUMBER) {
+            sum -= ACE_SCORE_ADJUSTMENT;
             aceCount--;
         }
 
@@ -40,7 +41,7 @@ public class Hand {
     }
 
     public boolean isBurst() {
-        return getSum() > 21;
+        return getSum() > BLACKJACK_NUMBER;
     }
 
     public boolean isLessThanBlackJack(){
