@@ -5,7 +5,8 @@ import domain.card.Rank;
 import domain.card.Suit;
 import domain.strategy.ShuffleStrategy;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Deck {
@@ -31,7 +32,7 @@ public class Deck {
         return cards;
     }
 
-    public int size(){
+    public int size() {
         return cards.size();
     }
 

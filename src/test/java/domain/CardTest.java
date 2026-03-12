@@ -6,8 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
-import static domain.card.Rank.*;
-import static domain.card.Suit.*;
+import static domain.card.Rank.ACE;
+import static domain.card.Suit.CLOVER;
+import static domain.card.Suit.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class CardTest {

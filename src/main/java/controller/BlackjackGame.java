@@ -1,21 +1,21 @@
 package controller;
 
-import domain.*;
+import domain.Deck;
+import domain.GameResult;
+import domain.WinningStatus;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
-import java.util.ArrayList;
-
 import domain.strategy.ShuffleStrategy;
 import dto.DealerResultInfo;
 import dto.PlayerResultInfo;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import util.InputParser;
 import view.InputView;
 import view.OutputView;
-
-import java.util.List;
-import java.util.Map;
 
 public class BlackjackGame {
     public static final String NO = "n";
@@ -25,7 +25,8 @@ public class BlackjackGame {
     private final OutputView outputView;
     private final ShuffleStrategy shuffleStrategy;
 
-    public BlackjackGame(InputView inputView, InputParser inputParser, OutputView outputView, ShuffleStrategy shuffleStrategy) {
+    public BlackjackGame(InputView inputView, InputParser inputParser, OutputView outputView,
+                         ShuffleStrategy shuffleStrategy) {
         this.inputView = inputView;
         this.inputParser = inputParser;
         this.outputView = outputView;
@@ -59,9 +60,8 @@ public class BlackjackGame {
     private void initParticipantsHand(Players players, Dealer dealer, Deck deck) {
         List<Participant> participants = new ArrayList<>(players.getPlayers());
         participants.add(dealer);
-        participants.forEach(participant ->
-                participant.receiveInitialCards(deck.drawInitialCards(INITIAL_CARDS_COUNT))
-        );
+        participants.forEach(
+                participant -> participant.receiveInitialCards(deck.drawInitialCards(INITIAL_CARDS_COUNT)));
 
         outputView.printInitialDistribution(players, dealer);
     }
@@ -94,11 +94,8 @@ public class BlackjackGame {
 
         GameResult gameResult = new GameResult(players, dealer);
 
-        DealerResultInfo dealerResultInfo = new DealerResultInfo(
-                gameResult.dealerWinCount(),
-                gameResult.dealerTieCount(),
-                gameResult.dealerLoseCount()
-        );
+        DealerResultInfo dealerResultInfo = new DealerResultInfo(gameResult.dealerWinCount(),
+                gameResult.dealerTieCount(), gameResult.dealerLoseCount());
 
         List<PlayerResultInfo> playerResultInfos = createPlayerResultInfos(gameResult);
         outputView.printGameResult(dealerResultInfo, playerResultInfos);

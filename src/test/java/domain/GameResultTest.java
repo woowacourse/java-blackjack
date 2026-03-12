@@ -3,7 +3,6 @@ package domain;
 import domain.participant.Dealer;
 import domain.participant.Players;
 import dto.DealerResultInfo;
-import dto.PlayerResultInfo;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -26,7 +25,7 @@ class GameResultTest {
     }
 
     @Test
-    void 딜러의_게임_결과를_반환하다(){
+    void 딜러의_게임_결과를_반환하다() {
         Players players = new Players(List.of("pobi"));
         Dealer dealer = new Dealer();
 
