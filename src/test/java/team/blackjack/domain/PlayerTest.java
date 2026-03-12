@@ -11,7 +11,7 @@ class PlayerTest {
 
         player.hit(Card.ACE_OF_HEARTS);
 
-        assertThat(player.getHands().getFirst().getCards())
+        assertThat(player.getCards())
                 .containsExactly(Card.ACE_OF_HEARTS);
     }
 

@@ -62,11 +62,11 @@ public class BlackjackGame {
     }
 
     public List<Card> getDealerCards() {
-        return this.dealer.getHand().getCards();
+        return this.dealer.getCards();
     }
 
     public List<Card> getPlayerCardsByName(String name) {
-        return this.players.getPlayerByName(name).getCardInAllHand();
+        return this.players.getPlayerByName(name).getCards();
     }
 
     public Map<String, List<Card>> getAllPlayerCards() {

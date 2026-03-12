@@ -26,7 +26,7 @@ public class Players {
     public Map<String, List<Card>> getCardsByPlayer(){
         final HashMap<String, List<Card>> result = new HashMap<>();
         for (Player player : players) {
-            result.put(player.getName(), player.getCardInAllHand());
+            result.put(player.getName(), player.getCards());
         }
 
         return result;

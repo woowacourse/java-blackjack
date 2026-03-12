@@ -12,7 +12,7 @@ class DealerTest {
         dealer.hit(Card.ACE_OF_HEARTS);
         dealer.hit(Card.KING_OF_HEARTS);
 
-        assertThat(dealer.getHand().getCards())
+        assertThat(dealer.getCards())
                 .containsExactly(Card.ACE_OF_HEARTS, Card.KING_OF_HEARTS);
     }
     @Test
