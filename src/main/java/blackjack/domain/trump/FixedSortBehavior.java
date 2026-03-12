@@ -6,6 +6,6 @@ public class FixedSortBehavior implements SortBehavior {
 
     @Override
     public void shuffle(final List<Card> cards) {
-
+        // nothing to do
     }
 }
