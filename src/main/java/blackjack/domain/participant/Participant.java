@@ -6,7 +6,7 @@ import blackjack.domain.deck.Card;
 import blackjack.domain.deck.Cards;
 import java.util.List;
 
-public class Participant {
+public abstract class Participant {
 
     private final UserName name;
     private final Cards cards;
