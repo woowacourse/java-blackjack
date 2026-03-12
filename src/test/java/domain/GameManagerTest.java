@@ -27,13 +27,13 @@ class GameManagerTest {
         crong.receiveCard(new Card(Shape.SPADE, Number.NINE));
         crong.receiveCard(new Card(Shape.HEART, Number.SEVEN));
 
-        Map<String, Boolean> result = gameManager.getGameResult();
+        Map<String, GameResult> result = gameManager.getGameResult();
 
-        boolean pobiResult = result.get("pobi");
-        boolean crongResult = result.get("crong");
+        GameResult pobiResult = result.get("pobi");
+        GameResult crongResult = result.get("crong");
 
-        assertEquals(true, pobiResult);
-        assertEquals(false, crongResult);
+        assertEquals(GameResult.WIN, pobiResult);
+        assertEquals(GameResult.LOSE, crongResult);
     }
 
     @Test

@@ -1,7 +1,5 @@
 package domain;
 
-import java.util.Arrays;
-
 public enum Number {
     ACE(11, "A"),
     TWO(2, "2"),

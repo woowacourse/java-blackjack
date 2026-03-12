@@ -69,11 +69,11 @@ public class GameManager {
         participant.receiveCard(card);
     }
 
-    public Map<String, Boolean> getGameResult() {
-        Map<String, Boolean> gameResult = new HashMap<>();
+    public Map<String, GameResult> getGameResult() {
+        Map<String, GameResult> gameResult = new HashMap<>();
         for (Player player : players) {
-            boolean isWin = player.isWin(this.dealer);
-            gameResult.put(player.getName(), isWin);
+            GameResult result = player.judgeResult(this.dealer);
+            gameResult.put(player.getName(), result);
         }
         return gameResult;
     }

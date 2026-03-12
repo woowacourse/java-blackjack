@@ -14,13 +14,19 @@ public class Player extends Participant {
         return true;
     }
 
-    public boolean isWin(Dealer dealer) {
+    public GameResult judgeResult(Dealer dealer) {
         if (this.isBust()) {
-            return false;
+            return GameResult.LOSE;
         }
         if (dealer.isBust()) {
-            return true;
+            return GameResult.WIN;
         }
-        return this.getScore() >= dealer.getScore();
+        if (this.getScore() > dealer.getScore()) {
+            return GameResult.WIN;
+        }
+        if (this.getScore() < dealer.getScore()) {
+            return GameResult.LOSE;
+        }
+        return GameResult.DRAW;
     }
 }
