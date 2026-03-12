@@ -1,14 +1,13 @@
 package domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import domain.participant.Dealer;
 import domain.participant.Players;
 import dto.DealerResultInfo;
-import org.junit.jupiter.api.Test;
-
 import java.util.List;
 import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
 
 class GameResultTest {
     @Test
@@ -31,11 +30,7 @@ class GameResultTest {
 
         GameResult gameResult = new GameResult(players, dealer);
 
-        DealerResultInfo dealerResultInfo = new DealerResultInfo(
-                gameResult.dealerWinCount(),
-                gameResult.dealerTieCount(),
-                gameResult.dealerLoseCount()
-        );
+        DealerResultInfo dealerResultInfo = new DealerResultInfo(gameResult);
 
         assertThat(dealerResultInfo.winCount()).isEqualTo(0);
         assertThat(dealerResultInfo.tieCount()).isEqualTo(1);

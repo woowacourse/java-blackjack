@@ -93,9 +93,7 @@ public class BlackjackGame {
         participants.forEach(outputView::printFinalResult);
 
         GameResult gameResult = new GameResult(players, dealer);
-
-        DealerResultInfo dealerResultInfo = new DealerResultInfo(gameResult.dealerWinCount(),
-                gameResult.dealerTieCount(), gameResult.dealerLoseCount());
+        DealerResultInfo dealerResultInfo = new DealerResultInfo(gameResult);
 
         List<PlayerResultInfo> playerResultInfos = createPlayerResultInfos(gameResult);
         outputView.printGameResult(dealerResultInfo, playerResultInfos);
