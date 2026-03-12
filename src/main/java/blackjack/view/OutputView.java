@@ -57,9 +57,9 @@ public class OutputView {
         System.out.println();
         System.out.println("## 최종 승패");
         int wins = dealerResult.getOrDefault(ScoreCompareResult.DEALER_WIN, 0);
-        int losses = dealerResult.getOrDefault(ScoreCompareResult.DEALER_LOSS, 0);
+        int loses = dealerResult.getOrDefault(ScoreCompareResult.DEALER_LOSE, 0);
         int pushes = dealerResult.getOrDefault(ScoreCompareResult.PUSH, 0);
-        System.out.printf("딜러: %d승 %d무 %d패%n", wins, pushes, losses);
+        System.out.printf("딜러: %d승 %d무 %d패%n", wins, pushes, loses);
 
         for (PlayerFinalResult playerResult : playerResults) {
             System.out.println(playerResult.name() + ": " + toKorean(playerResult.scoreCompareResult()));
@@ -70,7 +70,7 @@ public class OutputView {
         if (result == ScoreCompareResult.PLAYER_WIN) {
             return "승";
         }
-        if (result == ScoreCompareResult.PLAYER_LOSS) {
+        if (result == ScoreCompareResult.PLAYER_LOSE) {
             return "패";
         }
         return "무";

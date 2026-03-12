@@ -90,13 +90,13 @@ public class GameTest {
 
         Map<ScoreCompareResult, Integer> dealerResult = Map.of(
                 ScoreCompareResult.DEALER_WIN, 1,
-                ScoreCompareResult.DEALER_LOSS, 1,
+                ScoreCompareResult.DEALER_LOSE, 1,
                 ScoreCompareResult.PUSH, 1
         );
 
         LinkedHashMap<Player, ScoreCompareResult> playerResults = new LinkedHashMap<>();
         playerResults.put(pobi, ScoreCompareResult.PLAYER_WIN);
-        playerResults.put(jason, ScoreCompareResult.PLAYER_LOSS);
+        playerResults.put(jason, ScoreCompareResult.PLAYER_LOSE);
         playerResults.put(brown, ScoreCompareResult.PUSH);
 
         GameResult expected = new GameResult(

@@ -13,6 +13,9 @@ public class PlayerBetting {
         if (compareResult == ScoreCompareResult.PLAYER_WIN) {
             return calculateProfitWhenPlayerWins();
         }
+        if (compareResult == ScoreCompareResult.PLAYER_LOSE) {
+            return -bettingAmount;
+        }
         return 0;
     }
 

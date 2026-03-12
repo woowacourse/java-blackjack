@@ -38,14 +38,14 @@ public class Game {
 
     private static ScoreCompareResult toPlayerResult(ScoreCompareResult result) {
         if (result == ScoreCompareResult.DEALER_WIN) {
-            return ScoreCompareResult.PLAYER_LOSS;
+            return ScoreCompareResult.PLAYER_LOSE;
         }
         return result;
     }
 
     private static ScoreCompareResult toDealerKey(ScoreCompareResult result) {
         if (result == ScoreCompareResult.PLAYER_WIN) {
-            return ScoreCompareResult.DEALER_LOSS;
+            return ScoreCompareResult.DEALER_LOSE;
         }
         return result;
     }
