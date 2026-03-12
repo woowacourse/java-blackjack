@@ -1,7 +1,7 @@
 package domain;
 
 public enum WinningCondition {
-    WIN("승"), DRAW("무"), LOSE("패");
+    WIN("승"), DRAW("무"), LOSE("패"), BLACK_JACK("");
 
     private final String message;
 

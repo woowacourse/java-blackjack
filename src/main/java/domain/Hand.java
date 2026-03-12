@@ -2,10 +2,9 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Hand {
-    private static final int BUST_NUMBER = 21;
+    private static final int MAX_PLAYABLE_NUMBER = 21;
     private static final int ACE_WEIGHT = 10;
 
     private final DrawStrategy drawStrategy;
@@ -20,6 +19,10 @@ public class Hand {
         cards.add(createCard());
     }
 
+    public boolean isBlackJack() {
+        return scoreSum() == MAX_PLAYABLE_NUMBER;
+    }
+
     List<Card> cards() {
         return List.copyOf(cards);
     }
@@ -29,7 +32,7 @@ public class Hand {
         if (aceCount() > 0) {
             score -= aceCount() * ACE_WEIGHT;
         }
-        return score > BUST_NUMBER;
+        return score > MAX_PLAYABLE_NUMBER;
     }
 
     int scoreSum() {
@@ -55,6 +58,6 @@ public class Hand {
     }
 
     private boolean isOvercome() {
-        return rawScoreSum() > BUST_NUMBER;
+        return rawScoreSum() > MAX_PLAYABLE_NUMBER;
     }
 }
