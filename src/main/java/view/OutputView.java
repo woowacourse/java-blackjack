@@ -60,7 +60,7 @@ public class OutputView {
 
     public static void printResult(String dealerName, BlackjackResult result) {
         System.out.println(dealerName + ": " + result.dealerProfit());
-        for (Map.Entry<String, Integer> entry : result.gamblerProfits().entrySet()) {
+        for (Map.Entry<String, Long> entry : result.gamblerProfits().entrySet()) {
             System.out.println(entry.getKey() + ": " + entry.getValue());
         }
     }

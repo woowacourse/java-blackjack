@@ -57,11 +57,11 @@ class GamblerTest {
         quda.deal(sd);
 
         //when
-        int tobiResult = tobi.calculateReward(MatchResult.of(tobi, dealer));
-        int qudaResult = quda.calculateReward(MatchResult.of(quda, dealer));
+        long tobiResult = tobi.calculateReward(MatchResult.of(tobi, dealer));
+        long qudaResult = quda.calculateReward(MatchResult.of(quda, dealer));
 
         //then
-        assertThat(tobiResult).isEqualTo(-1000);
-        assertThat(qudaResult).isEqualTo(0);
+        assertThat(tobiResult).isEqualTo(-1000L);
+        assertThat(qudaResult).isEqualTo(0L);
     }
 }

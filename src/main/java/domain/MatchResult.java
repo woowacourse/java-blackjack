@@ -65,7 +65,7 @@ public enum MatchResult {
         return DRAW;
     }
 
-    public int calculateReward(int amount) {
-        return (int) (amount * rate);
+    public long calculateReward(int amount) {
+        return (long) (amount * rate);
     }
 }

@@ -13,7 +13,7 @@ public class Gambler extends Player {
         this.betting = new Betting(amount);
     }
 
-    public int calculateReward(MatchResult matchResult) {
+    public long calculateReward(MatchResult matchResult) {
         return matchResult.calculateReward(betting.amount());
     }
 
