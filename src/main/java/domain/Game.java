@@ -6,10 +6,13 @@ import domain.enums.GameResult;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Players;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class Game {
+
+    private static final int INITIAL_CARD_COUNT = 2;
 
     private final Players players;
     private final Dealer dealer;
@@ -21,9 +24,17 @@ public class Game {
 
     public void initializeGame(Deck deck) {
         players.getAllPlayersName().forEach(name ->
-                players.distributeCards(name, List.of(deck.drawCard(), deck.drawCard()))
+                players.distributeCards(name, initCards(deck))
         );
-        dealer.addCards(List.of(deck.drawCard(), deck.drawCard()));
+        dealer.addCards(initCards(deck));
+    }
+
+    private List<Card> initCards(Deck deck) {
+        List<Card> initialCards = new ArrayList<>();
+        for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
+            initialCards.add(deck.drawCard());
+        }
+        return initialCards;
     }
 
     public boolean playPlayerTurn(Name name, Deck deck, boolean wantHit) {
