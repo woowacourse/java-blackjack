@@ -1,25 +1,39 @@
 package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class PlayerTest {
     
+    @DisplayName("배팅 금액이 0 이하일 경우 예외가 발생한다.")
+    @ParameterizedTest
+    @ValueSource(ints = {0, -1, -10000})
+    void validateBettingAmount_Exception_WhenInvalidAmount(int invalidAmount) {
+        assertThatThrownBy(() -> Player.from("pobi", invalidAmount))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("배팅 금액");
+    }
+    
     @Test
-    @DisplayName("플레이어가 Stand 상태이면 카드를 뽑을 수 없다.")
+    @DisplayName("플레이어가 Stand를 선언하면 카드를 뽑을 수 없다.")
     void isDrawable_False_WhenStand() {
         Player player = Player.from("pobi", 10000);
+        
         player.stand();
+        
         assertThat(player.isDrawable()).isFalse();
     }
     
     @Test
-    @DisplayName("플레이어가 버스트 상태이면 카드를 뽑을 수 없다.")
+    @DisplayName("플레이어가 Bust 상태이면 카드를 뽑을 수 없다.")
     void isDrawable_False_WhenBust() {
         Player player = Player.from("pobi", 10000);
         player.receiveCard(new Card(Rank.TEN, Suit.SPADE));
@@ -30,7 +44,7 @@ class PlayerTest {
     }
     
     @Test
-    @DisplayName("플레이어가 블랙잭 상태이면 카드를 뽑을 수 없다.")
+    @DisplayName("처음 두 장으로 블랙잭이 되면 카드를 뽑을 수 없다.")
     void isDrawable_False_WhenBlackjack() {
         Player player = Player.from("pobi", 10000);
         player.receiveCard(new Card(Rank.ACE, Suit.SPADE));
@@ -40,45 +54,13 @@ class PlayerTest {
     }
     
     @Test
-    @DisplayName("플레이어가 버스트 상태이면 딜러 점수와 무관하게 패배한다.")
-    void calculateResult_Lose_WhenPlayerIsBust() {
+    @DisplayName("전달받은 수익률에 자신의 배팅금을 곱해 최종 수익금을 반환한다.")
+    void calculateProfit_ReturnsCorrectAmount() {
         Player player = Player.from("pobi", 10000);
-        player.receiveCard(new Card(Rank.TEN, Suit.SPADE));
-        player.receiveCard(new Card(Rank.TEN, Suit.HEART));
-        player.receiveCard(new Card(Rank.TWO, Suit.CLOVER));
-        Dealer dealer = new Dealer();
         
-        ProfitRate profitRate = dealer.determinePlayerProfit(player) = ProfitRate.LOSE;
-        assertThat(player.calculateProfit(profitRate)).isEqualTo(-10000);
-    }
-    
-    @Test
-    @DisplayName("플레이어가 버스트가 아니고 딜러가 버스트 상태이면 승리한다.")
-    void calculateResult_Win_WhenDealerIsBust() {
-        Player player = Player.from("pobi", 10000);
-        player.receiveCard(new Card(Rank.TEN, Suit.SPADE));
-        
-        Dealer dealer = new Dealer();
-        dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
-        dealer.receiveCard(new Card(Rank.SIX, Suit.HEART));
-        dealer.receiveCard(new Card(Rank.SIX, Suit.CLOVER));
-        
-        ProfitRate profitRate = dealer.determinePlayerProfit(player) = ProfitRate.WIN;
-        assertThat(player.calculateProfit(profitRate)).isEqualTo(10000);
-    }
-    
-    @Test
-    @DisplayName("둘 다 버스트가 아닐 때 플레이어 점수가 더 높으면 승리한다.")
-    void calculateResult_Win_WhenScoreIsHigherThanDealer() {
-        Player player = Player.from("pobi", 10000);
-        player.receiveCard(new Card(Rank.TEN, Suit.SPADE));
-        player.receiveCard(new Card(Rank.NINE, Suit.HEART));
-        
-        Dealer dealer = new Dealer();
-        dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
-        dealer.receiveCard(new Card(Rank.EIGHT, Suit.HEART));
-        
-        ProfitRate profitRate = dealer.determinePlayerProfit(player) = ProfitRate.WIN;
-        assertThat(player.calculateProfit(profitRate)).isEqualTo(10000);
+        assertThat(player.calculateProfit(ProfitRate.WIN_BLACKJACK)).isEqualTo(15000);
+        assertThat(player.calculateProfit(ProfitRate.WIN)).isEqualTo(10000);
+        assertThat(player.calculateProfit(ProfitRate.DRAW)).isEqualTo(0);
+        assertThat(player.calculateProfit(ProfitRate.LOSE)).isEqualTo(-10000);
     }
 }

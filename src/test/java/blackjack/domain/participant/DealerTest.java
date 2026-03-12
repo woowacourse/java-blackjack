@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 class DealerTest {
     
     @Test
-    @DisplayName("딜러의 점수가 정확히 16점이면 카드를 뽑을 수 있다.")
+    @DisplayName("딜러의 점수가 16점 이하이면 카드를 뽑을 수 있다.")
     void isDrawable_True_WhenScoreIsExactly16() {
         Dealer dealer = new Dealer();
         dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
@@ -22,7 +22,7 @@ class DealerTest {
     }
     
     @Test
-    @DisplayName("딜러의 점수가 정확히 17점이면 카드를 뽑을 수 없다.")
+    @DisplayName("딜러의 점수가 17점 이상이면 카드를 뽑을 수 없다.")
     void isDrawable_False_WhenScoreIsExactly17() {
         Dealer dealer = new Dealer();
         dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
@@ -32,26 +32,74 @@ class DealerTest {
     }
     
     @Test
-    @DisplayName("플레이어들을 상대로 딜러 관점의 승무패 빈도를 계산하여 반환한다.")
-    void calculateResult_GroupResultsByPlayerScores() {
+    @DisplayName("플레이어만 블랙잭일 경우 1.5배의 수익을 얻는다.")
+    void determinePlayerProfit_WinBlackjack() {
+        Player player = Player.from("pobi", 10000);
+        player.receiveCard(new Card(Rank.ACE, Suit.SPADE));
+        player.receiveCard(new Card(Rank.TEN, Suit.HEART));
+        
         Dealer dealer = new Dealer();
         dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
-        dealer.receiveCard(new Card(Rank.EIGHT, Suit.HEART));
+        dealer.receiveCard(new Card(Rank.NINE, Suit.HEART));
         
+        List<Integer> profits = dealer.determinePlayersProfit(List.of(player));
+        
+        assertThat(profits.getFirst()).isEqualTo(15000);
+    }
+    
+    @Test
+    @DisplayName("딜러와 플레이어가 모두 블랙잭일 경우 무승부 처리된다.")
+    void determinePlayerProfit_Draw_WhenBothBlackjack() {
+        Player player = Player.from("pobi", 10000);
+        player.receiveCard(new Card(Rank.ACE, Suit.SPADE));
+        player.receiveCard(new Card(Rank.TEN, Suit.HEART));
+        
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(Rank.ACE, Suit.CLOVER));
+        dealer.receiveCard(new Card(Rank.KING, Suit.DIAMOND));
+        
+        List<Integer> profits = dealer.determinePlayersProfit(List.of(player));
+        
+        assertThat(profits.getFirst()).isEqualTo(0);
+    }
+    
+    @Test
+    @DisplayName("딜러와 플레이어가 모두 Bust일 경우 플레이어가 승리한다.")
+    void determinePlayerProfit_Win_WhenBothBust() {
+        Player player = Player.from("pobi", 10000);
+        player.receiveCard(new Card(Rank.TEN, Suit.SPADE));
+        player.receiveCard(new Card(Rank.TEN, Suit.HEART));
+        player.receiveCard(new Card(Rank.TWO, Suit.CLOVER));
+        
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(Rank.TEN, Suit.DIAMOND));
+        dealer.receiveCard(new Card(Rank.SIX, Suit.CLOVER));
+        dealer.receiveCard(new Card(Rank.SIX, Suit.SPADE));
+        
+        List<Integer> profits = dealer.determinePlayersProfit(List.of(player));
+        
+        assertThat(profits.getFirst()).isEqualTo(10000);
+    }
+    
+    @Test
+    @DisplayName("플레이어들의 수익을 정산하고, 딜러는 그 반대 부호의 최종 수익을 가진다.")
+    void determineProfit_DealerZeroSum() {
         Player winPlayer = Player.from("pobi", 10000);
-        winPlayer.receiveCard(new Card(Rank.TEN, Suit.CLOVER));
-        winPlayer.receiveCard(new Card(Rank.NINE, Suit.DIAMOND));
+        winPlayer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
+        winPlayer.receiveCard(new Card(Rank.NINE, Suit.HEART));
         
-        Player drawPlayer = Player.from("jason", 20000);
-        drawPlayer.receiveCard(new Card(Rank.TEN, Suit.CLOVER));
-        drawPlayer.receiveCard(new Card(Rank.EIGHT, Suit.DIAMOND));
-        
-        Player losePlayer = Player.from("honux", 30000);
+        Player losePlayer = Player.from("jason", 20000);
         losePlayer.receiveCard(new Card(Rank.TEN, Suit.CLOVER));
-        losePlayer.receiveCard(new Card(Rank.FIVE, Suit.DIAMOND));
+        losePlayer.receiveCard(new Card(Rank.SEVEN, Suit.DIAMOND));
         
-        List<ProfitRate> profitRates = dealer.determineGameResult(List.of(winPlayer, drawPlayer, losePlayer));
+        Player drawPlayer = Player.from("honux", 30000);
+        drawPlayer.receiveCard(new Card(Rank.TEN, Suit.DIAMOND));
+        drawPlayer.receiveCard(new Card(Rank.EIGHT, Suit.SPADE));
         
-        assertThat(dealer.carculateProfit(profitRates)).isEqualTo(-10000 + 30000);
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(Rank.TEN, Suit.HEART));
+        dealer.receiveCard(new Card(Rank.EIGHT, Suit.CLOVER));
+        
+        assertThat(dealer.determineProfit(List.of(winPlayer, losePlayer, drawPlayer))).isEqualTo(10000);
     }
 }
