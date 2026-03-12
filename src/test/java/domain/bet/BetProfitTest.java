@@ -1,6 +1,8 @@
 package domain.bet;
 
+import static message.ErrorMessage.PLAYER_NOT_IN_BETTING;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import domain.enums.GameResult;
 import domain.participant.Name;
@@ -25,6 +27,19 @@ class BetProfitTest {
         firstPlayer = new Name("피즈");
         secondPlayer = new Name("스타크");
         betProfit = new BetProfit(List.of(firstPlayer, secondPlayer));
+    }
+
+    @DisplayName("배팅에 참여하지 않은 플레이어의 수익은 계산할 수 없다.")
+    @Test
+    void 배팅에_참여하지_않은_플레이어_수익_계산_예외() {
+        Name unknownPlayer = new Name("신원미상");
+
+        assertThatThrownBy(() -> betProfit.calculateProfit(
+                Map.of(unknownPlayer, GameResult.WIN),
+                Map.of(unknownPlayer, 10_000)
+        ))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(PLAYER_NOT_IN_BETTING.getMessage());
     }
 
     @DisplayName("플레이어 승리 시 1배의 수익이 난다.")

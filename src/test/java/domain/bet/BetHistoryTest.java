@@ -2,7 +2,7 @@ package domain.bet;
 
 import static message.ErrorMessage.BETTING_MONEY_MUST_BE_MULTIPLE_OF_100;
 import static message.ErrorMessage.BETTING_MONEY_NOT_AVAILABLE;
-import static message.ErrorMessage.PLAYER_NOT_IN_BETTING;
+import static message.ErrorMessage.PLAYER_NOT_IN_GAME;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
@@ -39,7 +39,7 @@ class BetHistoryTest {
 
             assertThatThrownBy(() -> betHistory.bettingMoney(unknownPlayer, 10_000))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage(PLAYER_NOT_IN_BETTING.getMessage());
+                    .hasMessage(PLAYER_NOT_IN_GAME.getMessage());
         }
 
         @DisplayName("플레이어는 양수 이외의 값을 배팅할 수 없다.")
