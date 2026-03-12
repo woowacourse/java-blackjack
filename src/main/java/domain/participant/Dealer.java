@@ -24,12 +24,4 @@ public class Dealer extends Participant {
         );
         return results;
     }
-
-    public int calculateScore() {
-        return cardBoard.calculateScore();
-    }
-
-    public boolean isBust() {
-        return cardBoard.isBust();
-    }
 }

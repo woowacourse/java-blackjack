@@ -1,6 +1,7 @@
 package domain.participant;
 
 import static domain.constant.GameRule.BLACKJACK_CRITERION;
+import static domain.constant.GameRule.INIT_CARD_COUNT;
 
 import domain.card.Card;
 import domain.card.CardBoard;
@@ -24,5 +25,16 @@ public abstract class Participant {
 
     public List<Card> getCards() {
         return cardBoard.getCards();
+    }
+
+    public boolean isBust() {
+        return cardBoard.isBust();
+    }
+
+    public boolean isBlackjack() {
+        if (cardBoard.getCards().size() != INIT_CARD_COUNT) {
+            return false;
+        }
+        return cardBoard.calculateScore() == BLACKJACK_CRITERION;
     }
 }
