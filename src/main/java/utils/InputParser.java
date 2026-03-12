@@ -24,7 +24,7 @@ public class InputParser {
 
     private static void validate(String input) {
         if (input.isEmpty()) {
-            throw new IllegalArgumentException(ErrorMessage.EMPTY_INPUT.getMessage());
+            throw new IllegalArgumentException(ErrorMessage.EMPTY_NAME_INPUT.getMessage());
         }
     }
 
