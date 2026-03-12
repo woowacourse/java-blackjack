@@ -63,7 +63,7 @@ public class BlackJackController {
         while (blackJackTurnService.canPlayerHit(player, InputView.askPlayerCommand(player.getName()))) {
             blackJackTurnService.playerHit(player, deck);
             HandDto handDto = HandDto.from(player.getHand());
-            OutputView.printHandOutput(handDto);
+            OutputView.printHandOutput(player.getName(), handDto);
         }
     }
 
@@ -73,7 +73,7 @@ public class BlackJackController {
         if (blackJackTurnService.canPlayerHit(player, yesNoInput)) {
             blackJackTurnService.playerHit(player, deck);
             HandDto handDto = HandDto.from(player.getHand());
-            OutputView.printHandOutput(handDto);
+            OutputView.printHandOutput(player.getName(), handDto);
         }
         return !blackJackTurnService.canPlayerHit(player, yesNoInput);
     }

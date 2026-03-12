@@ -12,15 +12,12 @@ public class OutputView {
     public static final String HEADER_FORMAT = "딜러와 %s에게 2장을 나누었습니다.\n";
     public static final String DEALER_STATUS_FORMAT = "딜러카드: %s\n";
     public static final String PLAYER_STATUS_FORMAT = "%s카드: %s\n";
-
-    private static final String DEALER_HIT_MESSAGE = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n";
-    private static final String FINAL_RESULT_HEADER = "## 최종 승패";
-
     public static final String DEALER_COUNT_FORMAT = "딜러: %d승 %d패\n";
     public static final String PLAYER_RESULT_FORMAT = "%s: %s\n";
-
     public static final String DEALER_NAME = "딜러";
     public static final String SCORE_RESULT_FORMAT = "%s카드: %s - 결과: %s\n";
+    private static final String DEALER_HIT_MESSAGE = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n";
+    private static final String FINAL_RESULT_HEADER = "## 최종 승패";
 
     public static void printInitMessage(InitStatusDto initStatusDto) {
         System.out.println();
@@ -33,9 +30,8 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printHandOutput(HandDto handDto) {
-        String output = getHandString(handDto);
-        System.out.println(output);
+    public static void printHandOutput(String name, HandDto handDto) {
+        System.out.printf(PLAYER_STATUS_FORMAT, name, getHandString(handDto));
     }
 
     public static void printDealerHitMessage() {
