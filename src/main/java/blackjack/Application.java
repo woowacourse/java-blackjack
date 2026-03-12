@@ -11,5 +11,4 @@ public class Application {
         BlackjackController controller = new BlackjackController(new GameService(new Deck()), new InputView());
         controller.run();
     }
-
 }

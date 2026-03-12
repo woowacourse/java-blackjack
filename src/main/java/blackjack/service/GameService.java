@@ -45,9 +45,10 @@ public class GameService {
     }
 
     public void applyGameResult(User user, Dealer dealer, GameResult gameResult) {
-        boolean isUserWin = !isDealerWinning(user, dealer);
-        gameResult.add(user.getName(), isUserWin);
+        GameResultType resultType = determineResult(user, dealer);
+        gameResult.add(user.getName(), resultType.calculateProfit(user.getBettingAmount()));
     }
+
 
     public GameResultType determineResult(User user, Dealer dealer) {
         if (user.isBurst()) {
@@ -77,5 +78,4 @@ public class GameService {
         }
         return GameResultType.LOSE;
     }
-
 }
