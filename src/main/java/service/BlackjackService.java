@@ -4,7 +4,6 @@ import domain.BetAmount;
 import domain.Game;
 import domain.enums.Result;
 import dto.CardDto;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +28,7 @@ public class BlackjackService {
 
     public Map<String, Integer> calculateAllPlayerProfits(Map<String, Result> playerResults,
                                                           Map<String, BetAmount> betAmounts) {
-        Map<String, Integer> profits = new HashMap<>();
+        Map<String, Integer> profits = new LinkedHashMap<>();
         for (Entry<String, BetAmount> entry : betAmounts.entrySet()) {
             int profit = calculatePlayerProfit(playerResults.get(entry.getKey()), entry.getValue());
             profits.put(entry.getKey(), profit);
@@ -42,9 +41,9 @@ public class BlackjackService {
         return (int) profit;
     }
 
-    public int calculateDealerProfit(List<Integer> allPlayerProfits) {
+    public int calculateDealerProfit(Map<String, Integer> allPlayerProfits) {
         int dealerProfit = 0;
-        for (int profit : allPlayerProfits) {
+        for (int profit : allPlayerProfits.values()) {
             dealerProfit += -profit;
         }
         return dealerProfit;
