@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class ApplicationView {
+
     private static final String PLAYER_NAME_DELIMITER = ",";
 
     public InputReader reader;
@@ -97,4 +98,5 @@ public class ApplicationView {
             }
         }
     }
+
 }

@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Bettings {
+
     private static final int DEALER_INITIAL_PROFIT = 0;
 
     private Map<Player, Money> bettings;
@@ -33,4 +34,5 @@ public class Bettings {
                 .reduce(Money.from(DEALER_INITIAL_PROFIT), Money::addMoney)
                 .reverseMoney();
     }
+
 }

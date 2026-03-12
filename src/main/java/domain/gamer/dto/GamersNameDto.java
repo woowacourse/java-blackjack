@@ -7,10 +7,12 @@ import java.util.List;
 public record GamersNameDto(
         List<String> playerNames
 ) {
+
     public static GamersNameDto from(List<? extends Gamer> gamers) {
         List<String> playerNames = gamers.stream()
                 .map(Gamer::getMyName)
                 .toList();
         return new GamersNameDto(playerNames);
     }
+
 }

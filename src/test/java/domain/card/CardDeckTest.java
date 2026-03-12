@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import utils.CardDeckBuilder;
 
 public class CardDeckTest {
+
     @Test
     void 카드덱에서_카드를_뽑는다() {
         CardDeck cardDeck = new CardDeckBuilder()
@@ -25,4 +26,5 @@ public class CardDeckTest {
             Card card = cardDeck.drawCard();
         }).isInstanceOf(CardException.class);
     }
+
 }

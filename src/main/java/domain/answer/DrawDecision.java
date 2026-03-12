@@ -6,6 +6,7 @@ import domain.answer.exception.ErrorMessage;
 import java.util.Arrays;
 
 public enum DrawDecision {
+
     YES("y"),
     NO("n")
     ;
@@ -31,4 +32,5 @@ public enum DrawDecision {
     public boolean isYes() {
         return this.equals(DrawDecision.YES);
     }
+
 }

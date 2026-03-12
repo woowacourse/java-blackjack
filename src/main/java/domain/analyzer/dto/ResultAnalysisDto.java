@@ -11,6 +11,7 @@ public record ResultAnalysisDto (
         EnumMap<GameResult, Integer> dealerGameResult,
         List<PlayerGameResult> playerGameResults
 ) {
+
     private static final int ANALYSIS_INITIAL_VALUE = 0;
     private static final int INCREMENT_UNIT = 1;
 
@@ -34,4 +35,5 @@ public record ResultAnalysisDto (
                 .map(result -> dealerGameResult.get(result) + result.displayName())
                 .collect(Collectors.joining(" "));
     }
+
 }

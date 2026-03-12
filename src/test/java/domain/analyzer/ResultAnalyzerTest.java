@@ -13,6 +13,7 @@ import utils.CardDeckBuilder;
 import java.util.List;
 
 class ResultAnalyzerTest {
+
     @Test
     void 최종_승패_결과를_계산한다() {
         Card clover2 = Card.of(CardDenomination.TWO, CardEmblem.CLOVER);
@@ -39,4 +40,5 @@ class ResultAnalyzerTest {
         Assertions.assertThat(analysis.getDealerResult())
                 .isEqualTo("2패");
     }
+
 }

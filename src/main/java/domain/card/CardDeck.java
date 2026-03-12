@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Queue;
 
 public class CardDeck {
+
     private final Queue<Card> deck;
 
     private CardDeck(List<Card> cards) {
@@ -28,4 +29,5 @@ public class CardDeck {
             throw new CardException(ErrorMessage.CARD_DECK_IS_EMPTY_ERROR);
         }
     }
+
 }
