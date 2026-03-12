@@ -2,27 +2,22 @@ package blackjack.domain.result;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+import java.math.BigDecimal;
 
 public enum GameOutcome {
-    BLACKJACK_WIN("승(블랙잭)", 1.5),
-    WIN("승", 1),
-    DRAW("무", 0),
-    LOSE("패", -1),
+    BLACKJACK_WIN(new BigDecimal(1.5)),
+    WIN(new BigDecimal(1)),
+    DRAW(new BigDecimal(0)),
+    LOSE(new BigDecimal(-1)),
     ;
 
-    private final String format;
-    private final double payoutRate;
+    private final BigDecimal payoutRate;
 
-    GameOutcome(String format, double payoutRate) {
-        this.format = format;
+    GameOutcome(BigDecimal payoutRate) {
         this.payoutRate = payoutRate;
     }
 
-    public String getFormat() {
-        return format;
-    }
-
-    public double getPayoutRate() {
+    public BigDecimal getPayoutRate() {
         return payoutRate;
     }
 

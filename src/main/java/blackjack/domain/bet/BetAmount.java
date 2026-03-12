@@ -1,11 +1,14 @@
 package blackjack.domain.bet;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class BetAmount {
-    private final int amount;
+    private final BigDecimal amount;
 
     public BetAmount(int amount) {
         validatePositive(amount);
-        this.amount = amount;
+        this.amount = new BigDecimal(amount);
     }
 
     private void validatePositive(int input) {
@@ -14,7 +17,9 @@ public class BetAmount {
         }
     }
 
-    public int calculateProfit(double payoutRate) {
-        return (int) (amount * payoutRate);
+    public int calculateProfit(BigDecimal payoutRate) {
+        return amount.multiply(payoutRate)
+                .setScale(0, RoundingMode.FLOOR)
+                .intValue();
     }
 }
