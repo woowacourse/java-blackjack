@@ -52,7 +52,7 @@ public class BlackjackController {
     }
 
     private void drawInitCard(Participants participants, Deck deck) {
-        participants.drawInitialCards(deck, cardShuffler);
+        participants.drawInitialCards(deck);
         outputView.printInitHandCard(participants);
     }
 
