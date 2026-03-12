@@ -7,6 +7,7 @@ import domain.pariticipant.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 import domain.result.MatchResult;
 import view.InputView;
@@ -41,11 +42,12 @@ public class BlackjackController {
     }
 
     private Participants addParticipants() {
-        List<Name> playerNames = inputView.readPlayers();
+        List<Name> playerNames = readUntilSuccess(inputView::readPlayers);
 
         List<Player> players = new ArrayList<>();
         for (Name name : playerNames) {
-            BettingAmount bettingAmount = inputView.readBettingAmount(name.name()); // 베팅 금액 입력 받기
+            BettingAmount bettingAmount =
+                    readUntilSuccess(() -> inputView.readBettingAmount(name.name())); // 베팅 금액 입력 받기
             players.add(new Player(name, new Hand(new ArrayList<>()), bettingAmount));
         }
         return new Participants(new Players(players));
@@ -74,7 +76,7 @@ public class BlackjackController {
     }
 
     private boolean doHit(Player player, Deck deck) {
-        boolean isHit = inputView.readHitOrStand(player.getName());  // 더 받을 지 물어봄
+        boolean isHit = readUntilSuccess(() -> inputView.readHitOrStand(player.getName()));  // 더 받을 지 물어봄
         if (isHit) {
             // 히트인 경우 카드 더 뽑아 추가하기
             player.hitCard(deck);
@@ -96,5 +98,15 @@ public class BlackjackController {
 //        outputView.printFinalResults(matchResult);
 
         outputView.printBettingProfit(matchResult.calculateBettingProfit());
+    }
+
+    private <T> T readUntilSuccess(Supplier<T> action) {
+        while (true) {
+            try {
+                return action.get();
+            } catch (RuntimeException e) {
+                outputView.printErrorMessage(e.getMessage());
+            }
+        }
     }
 }
