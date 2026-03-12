@@ -33,7 +33,7 @@ public class GameManager {
     public GameInitialInfoDto getInitialInfo() {
         return new GameInitialInfoDto(
                 dealer.getName(),
-                dealer.showHand().getFirst(),
+                dealer.getOpenCard(),
                 players.getScoreResults()
         );
     }

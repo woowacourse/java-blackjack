@@ -15,19 +15,19 @@ class RankTest {
                         Rank::getScore
                 )
                 .containsExactly(
-                tuple("A", 1),
-                tuple("2", 2),
-                tuple("3", 3),
-                tuple("4", 4),
-                tuple("5", 5),
-                tuple("6", 6),
-                tuple("7", 7),
-                tuple("8", 8),
-                tuple("9", 9),
-                tuple("10", 10),
-                tuple("J", 10),
-                tuple("Q", 10),
-                tuple("K", 10)
-        );
+                        tuple("A", 1),
+                        tuple("2", 2),
+                        tuple("3", 3),
+                        tuple("4", 4),
+                        tuple("5", 5),
+                        tuple("6", 6),
+                        tuple("7", 7),
+                        tuple("8", 8),
+                        tuple("9", 9),
+                        tuple("10", 10),
+                        tuple("J", 10),
+                        tuple("Q", 10),
+                        tuple("K", 10)
+                );
     }
 }

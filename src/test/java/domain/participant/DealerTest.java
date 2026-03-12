@@ -26,4 +26,13 @@ class DealerTest {
 
         assertThat(dealer.canReceiveCard()).isFalse();
     }
+
+    @Test
+    void 핸드에서_첫_번째_카드를_오픈한다() {
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(ACE, SPADE));
+        dealer.receiveCard(new Card(TEN, SPADE));
+
+        assertThat(dealer.getOpenCard()).isEqualTo("A스페이드");
+    }
 }
