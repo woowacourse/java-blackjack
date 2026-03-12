@@ -61,7 +61,18 @@ public class BlackjackController {
     }
 
     public int inputBettingPrice(String name) {
-        return inputView.readBettingPrice(name);
+        return doRetry(
+                () -> {
+                    return inputView.readBettingPrice(name);
+                }
+        );
+
+    }
+
+    private List<String> inputNames() {
+        return doRetry(
+                inputView::readNames
+        );
     }
 
     public List<CardContentDto> getCardContentDtos(Dealer dealer, Players playerList) {
@@ -103,11 +114,6 @@ public class BlackjackController {
         OutputView.displayFinalCard(finalCards);
     }
 
-    private List<String> inputNames() {
-        return doRetry(
-                inputView::readNames
-        );
-    }
 
     private boolean hasAdditionalCard(String name) {
         return doRetry(() -> inputView.readAdditionalCard(name));
