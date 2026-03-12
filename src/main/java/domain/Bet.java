@@ -1,6 +1,4 @@
-package domain.card;
-
-import domain.MatchResult;
+package domain;
 
 public class Bet {
 

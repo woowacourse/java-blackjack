@@ -1,7 +1,7 @@
 package domain.participant;
 
 import domain.MatchResult;
-import domain.card.Bet;
+import domain.Bet;
 
 import java.util.Objects;
 

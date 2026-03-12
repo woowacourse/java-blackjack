@@ -1,5 +1,6 @@
 package domain.card;
 
+import domain.Bet;
 import domain.MatchResult;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
