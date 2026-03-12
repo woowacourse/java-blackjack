@@ -28,6 +28,6 @@ public class BettingAmountTest {
         // when & then
         assertThatThrownBy(() -> new BettingAmount(input))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("0¡");
+                .hasMessageContaining("0");
     }
 }
