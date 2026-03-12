@@ -98,12 +98,6 @@ public class BlackjackGame {
                 });
     }
 
-    private void tryHitDealer(Dealer dealer) {
-        if (dealer.hitIfRequired()) {
-            view.printDealerAdditionalDrawCardMessage();
-        }
-    }
-
     private void drawPlayerCard(Player player, Dealer dealer) {
         while (!player.isBusted() && isPlayerWantCard(player)) {
             dealer.hitCardToPlayer(player);
@@ -114,6 +108,12 @@ public class BlackjackGame {
     private boolean isPlayerWantCard(Player player) {
         DrawDecision drawDecision = view.askDrawCard(player.getMyName());
         return drawDecision.isYes();
+    }
+
+    private void tryHitDealer(Dealer dealer) {
+        if (dealer.hitIfRequired()) {
+            view.printDealerAdditionalDrawCardMessage();
+        }
     }
 
     private void showGamerHandResult(Dealer dealer, Players players) {

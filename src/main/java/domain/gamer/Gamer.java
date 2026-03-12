@@ -15,16 +15,12 @@ public abstract class Gamer {
         this.cardBundle = CardBundle.empty();
     }
 
-    public int getResultScore() {
-        return cardBundle.getResultScore();
-    }
-
-    public boolean isBusted() {
-        return cardBundle.isBusted();
-    }
-
     public String getMyName() {
         return name.name();
+    }
+
+    public int getResultScore() {
+        return cardBundle.getResultScore();
     }
 
     public CardBundle getCardBundle() {
@@ -37,6 +33,10 @@ public abstract class Gamer {
 
     public boolean isBlackjack() {
         return cardBundle.isBlackjack();
+    }
+
+    public boolean isBusted() {
+        return cardBundle.isBusted();
     }
 
     public boolean isStand() {

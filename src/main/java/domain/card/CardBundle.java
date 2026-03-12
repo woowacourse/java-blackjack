@@ -38,18 +38,6 @@ public class CardBundle {
         return new CardBundle(newCards);
     }
 
-    @Override
-    public boolean equals(Object object) {
-        if (object == null || getClass() != object.getClass()) return false;
-        CardBundle that = (CardBundle) object;
-        return Objects.equals(cardBundle, that.cardBundle);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(cardBundle);
-    }
-
     public int getResultScore() {
         int basicScore = getBasicScore();
         if (hasAce() && (basicScore + ACE_BONUS_SCORE <= BLACKJACK_CONDITION)) {
@@ -65,15 +53,6 @@ public class CardBundle {
                 .sum();
     }
 
-    public boolean isBusted() {
-        return getBasicScore() >= BUSTED_CONDITION;
-    }
-
-    public boolean hasAce() {
-        return cardBundle.stream()
-                .anyMatch(Card::isAce);
-    }
-
     public List<Card> openMyCards() {
         return Collections.unmodifiableList(cardBundle);
     }
@@ -84,6 +63,27 @@ public class CardBundle {
 
     public boolean isStand() {
         return !isBlackjack() && !isBusted();
+    }
+
+    public boolean isBusted() {
+        return getBasicScore() >= BUSTED_CONDITION;
+    }
+
+    public boolean hasAce() {
+        return cardBundle.stream()
+                .anyMatch(Card::isAce);
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) return false;
+        CardBundle that = (CardBundle) object;
+        return Objects.equals(cardBundle, that.cardBundle);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(cardBundle);
     }
 
 }
