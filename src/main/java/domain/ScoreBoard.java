@@ -8,17 +8,21 @@ import java.util.List;
 public class ScoreBoard {
     private static final int BUST_NUMBER = 21;
 
+    private final List<GameResult> results;
+
     public ScoreBoard() {
+        results = new ArrayList<>();
     }
 
-    public List<GameResult> calculateGameResults(List<GameStatus> playersGameStatus, GameStatus dealerGameStatus) {
-        List<GameResult> resultList = new ArrayList<>();
+    public void calculateGameResults(List<GameStatus> playersGameStatus, GameStatus dealerGameStatus) {
         int dealerScore = getDealerScore(dealerGameStatus);
         for (GameStatus gameStatus : playersGameStatus) {
-            resultList.add(new GameResult(gameStatus.name(), isWin(gameStatus, dealerScore)));
+            results.add(new GameResult(gameStatus.name(), isWin(gameStatus, dealerScore)));
         }
+    }
 
-        return resultList;
+    public List<GameResult> results() {
+        return results;
     }
 
     private WinningCondition isWin(GameStatus playerGameStatus, int dealerScore) {

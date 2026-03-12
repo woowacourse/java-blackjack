@@ -13,10 +13,10 @@ public final class InputView {
         return names;
     }
 
-    public static String readBettingAmount(String name) {
+    public static double readBettingAmount(String name) {
         String betting = readByFormatter(InfoMessage.BETTING_AMOUNT.message(), name);
         System.out.println();
-        return betting;
+        return Double.parseDouble(betting);
     }
 
     public static String readSelect(String name) {

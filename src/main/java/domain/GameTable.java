@@ -70,11 +70,12 @@ public class GameTable {
         participants.add(participants.poll());
     }
 
-    public List<GameResult> result() {
+    public List<GameResult> results() {
         ScoreBoard scoreBoard = new ScoreBoard();
         List<GameStatus> playersGameStatus = playerStatuses();
         GameStatus dealerGameStatus = dealer().status();
-        return scoreBoard.calculateGameResults(playersGameStatus, dealerGameStatus);
+        scoreBoard.calculateGameResults(playersGameStatus, dealerGameStatus);
+        return scoreBoard.results();
     }
 
     public String currentPlayerName() {
