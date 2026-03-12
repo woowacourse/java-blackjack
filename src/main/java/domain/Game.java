@@ -37,6 +37,12 @@ public class Game {
         dealer.draw(deck.drawCard());
     }
 
+    public void settleRoundBets(Judge judge, BettingTable bettingTable){
+        for(Player player : players){
+            bettingTable.settleBet(player,judge.getPlayerResult(player));
+        }
+    }
+
     public void hitPlayer(Player player) {
         player.draw(deck.drawCard());
     }

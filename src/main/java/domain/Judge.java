@@ -5,12 +5,12 @@ import java.util.List;
 import java.util.Map;
 
 public class Judge {
-    private final Map<String, WinningStatus> playerResults;
+    private final Map<Player, WinningStatus> playerResults;
 
     public Judge(Dealer dealer, List<Player> players){
         playerResults = new HashMap<>();
         for(Player player: players){
-            playerResults.put(player.getName(), calculateWinningStatus(dealer, player));
+            playerResults.put(player, calculateWinningStatus(dealer, player));
         }
     }
 
@@ -42,8 +42,11 @@ public class Judge {
                 .count();
     }
 
-    public Map<String, WinningStatus> getPlayerResults() {
-        return new HashMap<>(playerResults);
+    public WinningStatus getPlayerResult(Player player){
+        return playerResults.get(player);
     }
 
+    public Map<Player, WinningStatus> getPlayerResults() {
+        return new HashMap<>(playerResults);
+    }
 }
