@@ -16,10 +16,6 @@ public abstract class Person {
         return deck;
     }
 
-    public int getDefaultDeckSum() {
-        return deck.getSumWithAceDefaultValue();
-    }
-
     public int getFinalDeckSum() {
         return deck.calculateFinalSum();
     }

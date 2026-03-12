@@ -56,7 +56,7 @@ public class CardDistributorTest {
         // then
         assertThat(players.get(0).getDeckSize()).isEqualTo(2);
         assertThat(players.get(1).getDeckSize()).isEqualTo(2);
-        assertThat(cardDistributor.getDealer().getDeckSize()).isEqualTo(2);
+        assertThat(personService.getDealer().getDeckSize()).isEqualTo(2);
     }
 
     @Test

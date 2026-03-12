@@ -32,7 +32,7 @@ public class BlackJackService {
                 .map(Player::of)
                 .toList();
         cardDistributor.initialize(players);
-        return InitialDto.of(cardDistributor.getDealer(), players);
+        return InitialDto.of(personService.getDealer(), players);
     }
 
     public List<Player> getAllPlayers() {
