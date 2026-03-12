@@ -7,27 +7,27 @@ public class Bet {
     private static final double BLACK_JACK_RATE = 1.5;
     private static final double LOSE_RATE = -1.0;
 
-    private final Map<Participant, Integer> betting;
+    private final Map<String, Integer> betting;
 
     public Bet() {
         betting = new HashMap<>();
     }
 
-    public void addBetting(Participant player, int bettingAmount) {
-        betting.put(player, bettingAmount);
+    public void addBetting(String name, int bettingAmount) {
+        betting.put(name, bettingAmount);
     }
 
-    public double calculateEarningPrize(Participant player, WinningCondition playerCondition) {
+    public double calculateEarningPrize(String name, WinningCondition playerCondition) {
         if (playerCondition == WinningCondition.BLACK_JACK) {
-            return betting.get(player) * BLACK_JACK_RATE;
+            return betting.get(name) * BLACK_JACK_RATE;
         }
 
         if (playerCondition == WinningCondition.WIN) {
-            return betting.get(player);
+            return betting.get(name);
         }
 
         if (playerCondition == WinningCondition.LOSE) {
-            return betting.get(player) * LOSE_RATE;
+            return betting.get(name) * LOSE_RATE;
         }
 
         return 0;
