@@ -21,21 +21,29 @@ public enum BettingResult {
     }
 
     public static BettingResult judge(Dealer dealer, Player player) {
-        GameScore playerScore = player.getScore();
-        GameScore dealerScore = dealer.getScore();
-
         if (player.isBlackjack() && !dealer.isBlackjack()) {
             return BettingResult.BLACKJACK_WIN;
         }
         if (dealer.isBlackjack() && !player.isBlackjack()) {
             return BettingResult.LOSE;
         }
-        if (playerScore.isBust()) {
+        return compareBust(player, dealer);
+    }
+
+    private static BettingResult compareBust(Player player, Dealer dealer) {
+        if (player.isBust()) {
             return BettingResult.LOSE;
         }
-        if (dealerScore.isBust()) {
+        if (dealer.isBust()) {
             return BettingResult.WIN;
         }
+        return compareScore(player, dealer);
+    }
+
+    private static BettingResult compareScore(Player player, Dealer dealer) {
+        GameScore playerScore = player.getScore();
+        GameScore dealerScore = dealer.getScore();
+
         if (playerScore.isBiggerThan(dealerScore)) {
             return BettingResult.WIN;
         }
