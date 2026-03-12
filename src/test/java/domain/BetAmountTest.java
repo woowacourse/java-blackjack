@@ -34,6 +34,6 @@ public class BetAmountTest {
     @ValueSource(ints = {1000, 10000, 300000})
     void 배팅_금액이_배팅_한도_이내일_경우_금액이_저장된다(int amount) {
         BetAmount betAmount = new BetAmount(amount);
-        assertThat(amount).isEqualTo(betAmount.amount());
+        assertThat(betAmount.amount()).isEqualTo(amount);
     }
 }
