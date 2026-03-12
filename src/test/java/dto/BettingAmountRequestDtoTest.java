@@ -28,4 +28,11 @@ class BettingAmountRequestDtoTest {
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> new BettingAmountRequestDto("QWER"));
     }
+
+    @Test
+    @DisplayName("베팅 금액 입력 문자열이 양수가 아닌 문자면 에러 발생 검증")
+    void 베팅_금액_양수_검증_테스트() {
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> new BettingAmountRequestDto("-1000"));
+    }
 }
