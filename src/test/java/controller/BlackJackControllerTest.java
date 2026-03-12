@@ -122,7 +122,7 @@ public class BlackJackControllerTest {
                     .contains("딜러카드: 6하트, 7하트, 2스페이드, 3스페이드 - 결과: 18")
                     .contains("시오카드: 2하트, 3하트, 8하트 - 결과: 13")
                     .contains("봉구스카드: 4하트, 5하트, 9하트 - 결과: 18")
-                    .contains("딜러: 1승 0패")
+                    .contains("딜러: 10000")
                     .contains("시오: -10000")
                     .contains("봉구스: 0");
         }
