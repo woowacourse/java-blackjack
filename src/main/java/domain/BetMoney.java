@@ -4,9 +4,11 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 public class BetMoney {
+    public static final BetMoney ZERO = BetMoney.of(0);
     private static final BigDecimal BLACKJACK_ODDS = BigDecimal.valueOf(1.5);
     private static final BigDecimal WIN_ODDS = BigDecimal.valueOf(1.0);
-    private static final BigDecimal LOSE_ODDS = BigDecimal.valueOf(0);
+    private static final BigDecimal LOSE_ODDS = BigDecimal.valueOf(-1);
+    private static final BigDecimal DRAW_ODDS = BigDecimal.valueOf(0);
 
     private final BigDecimal value;
 
@@ -32,6 +34,10 @@ public class BetMoney {
 
     public BetMoney win() {
         return BetMoney.of(value.multiply(WIN_ODDS));
+    }
+
+    public BetMoney draw() {
+        return BetMoney.of(value.multiply(DRAW_ODDS));
     }
 
     public BetMoney lose() {

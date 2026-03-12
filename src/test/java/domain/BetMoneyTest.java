@@ -21,10 +21,18 @@ public class BetMoneyTest {
     }
 
     @Test
+    void 무승부_시_정해진_배율이_곱해져야_한다() {
+        BetMoney betMoney = BetMoney.of(100);
+
+        BetMoney afterBlackjack = betMoney.draw();
+        Assertions.assertThat(afterBlackjack).isEqualTo(BetMoney.of(0));
+    }
+
+    @Test
     void 패배_시_정해진_배율이_곱해져야_한다() {
         BetMoney betMoney = BetMoney.of(100);
 
         BetMoney afterBlackjack = betMoney.lose();
-        Assertions.assertThat(afterBlackjack).isEqualTo(BetMoney.of(0));
+        Assertions.assertThat(afterBlackjack).isEqualTo(BetMoney.of(-100));
     }
 }
