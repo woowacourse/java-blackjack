@@ -48,5 +48,5 @@ public abstract class Participant {
         return hand.getCardNames(0);
     }
 
-    public abstract String getNickname();
+    public abstract Name getName();
 }
