@@ -9,8 +9,8 @@ public class Participant {
     
     private static final int FIRST_DRAW_COUNT = 2;
     
-    protected final String nickname;
-    protected final Hand hand;
+    private final String nickname;
+    private final Hand hand;
     
     protected Participant(String nickname) {
         validate(nickname);
@@ -29,11 +29,10 @@ public class Participant {
         hand.addCards(initialCards);
     }
     
-    public void drawCard(Deck deck) {
+    public void receiveCard(Card card) {
         if (!isDrawable()) {
             throw new IllegalStateException("더이상 카드를 받을 수 없는 참가자입니다.");
         }
-        Card card = deck.drawCard();
         hand.addCard(card);
     }
     
@@ -51,6 +50,10 @@ public class Participant {
     
     public boolean isBust() {
         return hand.isBust();
+    }
+    
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
     }
     
     public int getScore() {

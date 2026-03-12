@@ -15,12 +15,12 @@ public class Dealer extends Participant {
     }
     
     public Card getFirstCard() {
-        return hand.getCards().getFirst();
+        return getCards().getFirst();
     }
     
     @Override
     public boolean isDrawable() {
-        return hand.getTotalScore() <= DEALER_SCORE;
+        return getScore() <= DEALER_SCORE;
     }
     
     public Map<GameResult, Long> determineGameResult(List<Player> players) {

@@ -30,7 +30,7 @@ public class Player extends Participant {
         if (stopDrawing || isBust()) {
             return false;
         }
-        return !hand.isBlackjack();
+        return !isBlackjack();
     }
     
     public void stand() {

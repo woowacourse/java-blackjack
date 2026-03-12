@@ -94,7 +94,7 @@ public class BlackjackRunner {
     private void playerDraw(Player currentPlayer, Deck deck) {
         boolean hit = askHitOrStand(currentPlayer);
         if (hit) {
-            currentPlayer.drawCard(deck);
+            currentPlayer.receiveCard(deck.drawCard());
             printCurrentHand(currentPlayer);
             return;
         }
@@ -115,7 +115,7 @@ public class BlackjackRunner {
         Dealer dealer = participants.getDealer();
         while (dealer.isDrawable()) {
             outputView.printDealerTurn();
-            dealer.drawCard(deck);
+            dealer.receiveCard(deck.drawCard());
         }
     }
     
