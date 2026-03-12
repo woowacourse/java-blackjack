@@ -9,9 +9,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 public class BettingResultTest {
 
-    @ParameterizedTest(name = "플레이어 {0}, 딜러 {1}, 플레이어 배팅금액 {2}, 딜러 배팅금액 {3} 일 때, 플레이어는 금액이 {4}, 딜러는 {5}이 된다.")
-    @MethodSource("fixture.BettingResultTestFixture#플레이어의_상황별_배팅금액_정보제공")
-    void 다양한_게임_상황에서_배팅_결과가_올바르게_적용된다(
+    @ParameterizedTest(name = "플레이어 {0}, 딜러 {1}, 플레이어 베팅금액 {2}, 딜러 베팅금액 {3} 일 때, 플레이어는 금액이 {4}, 딜러는 {5}이 된다.")
+    @MethodSource("fixture.BettingResultTestFixture#플레이어의_상황별_베팅금액_정보제공")
+    void 다양한_게임_상황에서_베팅_결과가_올바르게_적용된다(
             List<Card> playerCards,
             List<Card> dealerCards,
             int playerStartMoney,

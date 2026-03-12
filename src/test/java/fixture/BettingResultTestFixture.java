@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.Arguments;
 
 public class BettingResultTestFixture {
 
-    public static Stream<Arguments> 플레이어의_상황별_배팅금액_정보제공() {
+    public static Stream<Arguments> 플레이어의_상황별_베팅금액_정보제공() {
         return Stream.of(
                 // 1. 플레이어만 블랙잭 (딜러는 블랙잭이 아닌 그 외의 상황 모두)
                 Arguments.of(
