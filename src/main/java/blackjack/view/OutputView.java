@@ -23,6 +23,7 @@ public class OutputView {
     }
     
     public void printAskPlayerBettingAmount(String nickname) {
+        printNewLine();
         printLine(String.format("%s의 배팅 금액은?", nickname));
     }
     
@@ -33,7 +34,7 @@ public class OutputView {
     }
     
     public void printDealerInitialHand(DealerInitialHand dealerHand) {
-        printParticipantInitialHand(dealerHand.nickname(), dealerHand.cardDisplayName());
+        printDealerInitialHand(dealerHand.nickname(), dealerHand.cardDisplayName());
     }
     
     public void printPlayersInitialHand(List<PlayerHand> playersHand) {
@@ -47,6 +48,10 @@ public class OutputView {
         printParticipantInitialHand(nickname, cardNames);
     }
     
+    private void printDealerInitialHand(String nickname, String cardNames) {
+        printLine(String.format("%s: %s", nickname, cardNames));
+    }
+    
     private void printParticipantInitialHand(String nickname, String cardNames) {
         printLine(String.format("%s카드: %s", nickname, cardNames));
     }
@@ -58,10 +63,18 @@ public class OutputView {
     
     public void printParticipantsHandScore(List<ParticipantHandScore> participantsHandScore) {
         printNewLine();
-        participantsHandScore.forEach(this::printParticipantHandScore);
+        printDealerHandScore(participantsHandScore.getFirst());
+        participantsHandScore.forEach(this::printPlayerHandScore);
     }
     
-    public void printParticipantHandScore(ParticipantHandScore playerStatus) {
+    public void printDealerHandScore(ParticipantHandScore playerStatus) {
+        String nickname = playerStatus.nickname();
+        String cardDisplayNames = String.join(", ", playerStatus.cardDisplayNames());
+        String toTotalScore = String.valueOf(playerStatus.totalScore());
+        printLine(String.format("%s 카드: %s - 결과: %s", nickname, cardDisplayNames, toTotalScore));
+    }
+    
+    public void printPlayerHandScore(ParticipantHandScore playerStatus) {
         String nickname = playerStatus.nickname();
         String cardDisplayNames = String.join(", ", playerStatus.cardDisplayNames());
         String toTotalScore = String.valueOf(playerStatus.totalScore());
