@@ -35,14 +35,10 @@ public class GameTest {
         @DisplayName("게임 시작 후 모든 플레이어가 2장의 카드를 분배 받는다.")
         @Test
         void 게임_시작_후_모든_플레이어_2장의_카드_분배를_받는다() {
-            //given
-            //when
             twoPlayerGame.initializeGame(deck);
-            //then
 
             assertThat(twoPlayerGame.getPlayerCards("피즈").size()).isEqualTo(2);
             assertThat(twoPlayerGame.getPlayerCards("스타크").size()).isEqualTo(2);
-
             assertThat(twoPlayerGame.getDealerCards().size()).isEqualTo(2);
         }
 
@@ -54,6 +50,7 @@ public class GameTest {
             onePlayerGame.playerHit("피즈", deck, false);
 
             onePlayerGame.playerHit("피즈", deck, false);
+
             assertThat(onePlayerGame.getPlayerCards("피즈").size()).isEqualTo(4);
         }
 
@@ -89,10 +86,6 @@ public class GameTest {
             List<Card> dealerCard = onePlayerGame.getDealerCards();
             List<Card> expectedDealerCards = List.of(new Card(Rank.FIVE, Suit.HEART), new Card(Rank.SEVEN, Suit.CLOVER),
                     new Card(Rank.SEVEN, Suit.HEART));
-
-            deck = new Deck(List.of(new Card(Rank.FIVE, Suit.CLOVER), new Card(Rank.FIVE, Suit.HEART),
-                    new Card(Rank.SIX, Suit.CLOVER), new Card(Rank.SEVEN, Suit.CLOVER),
-                    new Card(Rank.FOUR, Suit.SPADE), new Card(Rank.SEVEN, Suit.HEART)));
 
             assertThat(dealerCard).isEqualTo(expectedDealerCards);
         }
