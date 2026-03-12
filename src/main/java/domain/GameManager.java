@@ -96,7 +96,7 @@ public class GameManager {
         }
     }
 
-    private static void validateDuplicateName(List<String> names){
+    private static void validateDuplicateName(List<String> names) {
         Set<String> uniqueNames = new HashSet<>(names);
         if (names.size() != uniqueNames.size()) {
             throw new IllegalArgumentException("중복된 참가자 이름이 있습니다!");

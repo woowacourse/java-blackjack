@@ -35,6 +35,7 @@ class GameManagerTest {
         assertEquals(true, pobiResult);
         assertEquals(false, crongResult);
     }
+
     @Test
     @DisplayName("플레이어들의 이름에 중복이 있는지 검사한다.")
     void validateDuplicateName_DuplicateName_ThrowsException() {

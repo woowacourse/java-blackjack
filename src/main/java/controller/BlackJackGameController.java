@@ -6,7 +6,6 @@ import view.InputView;
 import view.OutputView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -84,7 +83,6 @@ public class BlackJackGameController {
         printFinalScores(players);
         OutputView.printGameResult(gameResult);
     }
-
 
     private void printFinalScores(List<Player> players) {
         for (Player player : players) {

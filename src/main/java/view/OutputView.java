@@ -19,7 +19,8 @@ public class OutputView {
 
     public static void printFinalCards(ParticipantCardsDto participantCardsDto) {
         String cardsInfoMessage = String.join(",", participantCardsDto.cardsInfo());
-        System.out.println(participantCardsDto.name() + ": " + cardsInfoMessage + " - 결과: " + participantCardsDto.totalScore());
+        System.out.println(
+                participantCardsDto.name() + ": " + cardsInfoMessage + " - 결과: " + participantCardsDto.totalScore());
     }
 
     public static void printDealerMessage() {

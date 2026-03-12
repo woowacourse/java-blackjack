@@ -8,7 +8,7 @@ public class Player extends Participant {
     }
 
     public boolean isContinueGame() {
-        if(cards.calculateScore() >= CAN_RECEIVE_CARD_THRESHOLD){
+        if (cards.calculateScore() >= CAN_RECEIVE_CARD_THRESHOLD) {
             return false;
         }
         return true;
