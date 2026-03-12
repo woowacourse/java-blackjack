@@ -8,32 +8,31 @@ public class BlackJackJudge {
 
 
     public FinalIncome judge(Players players, Dealer dealer) {
-        Map<Player, GameResult> result = new LinkedHashMap<>();
-
-        for (Player player : players.getPlayers()) {
-            result.put(player, judgeGameResult(player, dealer));
-        }
-
+        Map<Player, Integer> incomeResult = new LinkedHashMap<>();
         int dealerIncome = 0;
 
-        Map<Player, Integer> incomeResult = new LinkedHashMap<>();
-        for (Player player : result.keySet()) {
-            if (result.get(player) == GameResult.BACKJACK_WIN) {
-                int income = (int) (1.5 * player.getBetAmount());
-                incomeResult.put(player, income);
-                dealerIncome -= income;
-            } else if (result.get(player) == GameResult.WIN) {
-                int income = player.getBetAmount();
-                incomeResult.put(player, income);
-                dealerIncome -= income;
-            } else if (result.get(player) == GameResult.LOSE) {
-                int income = -player.getBetAmount();
-                incomeResult.put(player, income);
-                dealerIncome += player.getBetAmount();
-            }
+        for (Player player : players.getPlayers()) {
+            GameResult gameResult = judgeGameResult(player, dealer);
+            int income = calculateIncome(player, gameResult);
+
+            incomeResult.put(player, income);
+            dealerIncome -= income;
         }
 
         return new FinalIncome(dealerIncome, incomeResult);
+    }
+
+    private int calculateIncome(Player player, GameResult gameResult) {
+        if (gameResult == GameResult.BACKJACK_WIN) {
+            return (int) (1.5 * player.getBetAmount());
+        }
+        if (gameResult == GameResult.WIN) {
+            return player.getBetAmount();
+        }
+        if (gameResult == GameResult.LOSE) {
+            return -player.getBetAmount();
+        }
+        return 0;
     }
 
     private GameResult judgeGameResult(Player player, Dealer dealer) {
