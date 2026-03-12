@@ -2,7 +2,6 @@ package domain;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -36,8 +35,15 @@ class PlayerTest {
                 new Card(CardShape.스페이드, CardContents.J),
                 new Card(CardShape.클로버, CardContents.FIVE)
         );
+
+        Queue<Card> onlyTwoTenCards = new LinkedList<>(List.of(
+                new Card(CardShape.하트, CardContents.TEN),
+                new Card(CardShape.하트, CardContents.J)
+        ));
+        Supplier<Card> onlyTwoTenCardSupplier = onlyTwoTenCards::poll;
+
         String testName = "gump";
-        Player testPlayer = Player.from(testName, playerHand);
+        Player testPlayerWhoHoldTotal15Cards = Player.from(testName, playerHand);
 
         @Test
         @DisplayName("hit 할 수 있는 상태이면 hit를 진행한다")
@@ -49,28 +55,42 @@ class PlayerTest {
             Supplier<Card> testCardSupplier = () -> testDeck.poll();
 
             //when
-            testPlayer.hit(testCardSupplier);
+            testPlayerWhoHoldTotal15Cards = testPlayerWhoHoldTotal15Cards.hit(testCardSupplier);
 
             //then
             Assertions.assertThat(testCardSupplier.get()).isNull();
         }
 
         @Test
-        @DisplayName("hit 할 수 없는 상태이면 hit를 진행하지 않는다")
+        @DisplayName("hit 할 수 없는 상태이면 카드 뽑기를 내부적으로 진행하지 않는다")
         void hit_do_not() {
             //given
-            Queue<Card> testDeck = new LinkedList<>(List.of(
-                    new Card(CardShape.하트, CardContents.TEN),
-                    new Card(CardShape.클로버, CardContents.TEN)
-            ));
-            Supplier<Card> testCardSupplier = () -> testDeck.poll();
-            testPlayer.hit(testCardSupplier);
+            testPlayerWhoHoldTotal15Cards = testPlayerWhoHoldTotal15Cards.hit(onlyTwoTenCardSupplier);
 
             //when
-            testPlayer.hit(testCardSupplier);
+            testPlayerWhoHoldTotal15Cards = testPlayerWhoHoldTotal15Cards.hit(onlyTwoTenCardSupplier);
 
             //then
-            Assertions.assertThat(testCardSupplier.get()).isNotNull();
+            Assertions.assertThat(onlyTwoTenCardSupplier.get()).isNotNull();
+        }
+
+        @Test
+        @DisplayName("hit를 요구했지만 isStay가 false이지만 bust 상태여도 변화가 없다")
+        void hit_butBust_and_finish() {
+            //given
+            Hand playerHand = Hand.of(
+                    new Card(CardShape.스페이드, CardContents.TEN),
+                    new Card(CardShape.클로버, CardContents.TEN)
+            );
+            String testName = "gump";
+            Player testPlayer = Player.from(testName, playerHand);
+            testPlayer.hit(onlyTwoTenCardSupplier);
+
+            //when
+            Player hitResultPlayer = testPlayer.hit(onlyTwoTenCards::poll);
+
+            //then
+            assertEquals(testPlayer.hashCode(), hitResultPlayer.hashCode());
         }
     }
 
@@ -92,51 +112,27 @@ class PlayerTest {
         Assertions.assertThat(testPlayer.isFinished()).isTrue();
     }
 
-    @Nested
-    class HitClass {
-        Queue<Card> onlyTenCardsDeck = new LinkedList<>(List.of(
-                new Card(CardShape.하트, CardContents.TEN),
-                new Card(CardShape.하트, CardContents.J),
-                new Card(CardShape.하트, CardContents.K),
-                new Card(CardShape.하트, CardContents.Q)
-        ));
+    @Test
+    @DisplayName("compare는 게임 결과 객체를 잘 반환한다")
+    void lose_when_dealer_blackjack() {
+        //given
+        String testPlayerName = "rati";
+        Hand blackJackHand = Hand.of(
+                new Card(CardShape.스페이드, CardContents.J),
+                new Card(CardShape.클로버, CardContents.A)
+        );
+        Hand notBlackJackAndNotBustHand = Hand.of(
+                new Card(CardShape.스페이드, CardContents.TWO),
+                new Card(CardShape.클로버, CardContents.THREE)
+        );
+        Dealer testDealer = Dealer.from(blackJackHand);
+        Player testPlayer = Player.from(testPlayerName, notBlackJackAndNotBustHand);
 
-        @Test
-        @DisplayName("hit를 잘 수행한다")
-        void hit_and_not_finished() {
-            //given
-            Hand playerHand = Hand.of(
-                    new Card(CardShape.스페이드, CardContents.A),
-                    new Card(CardShape.클로버, CardContents.TWO)
-            );
-            String testName = "gump";
-            Player testPlayer = Player.from(testName, playerHand);
+        //when
+        GameResult result = testPlayer.compare(testDealer);
 
-            //when
-            testPlayer = testPlayer.hit(onlyTenCardsDeck::poll);
-
-            //then
-            assertFalse(testPlayer.isFinished());
-        }
-
-        @Test
-        @DisplayName("hit를 요구했지만 bust 상태이면 변화가 없다")
-        void hit_butBust_and_finish() {
-            //given
-            Hand playerHand = Hand.of(
-                    new Card(CardShape.스페이드, CardContents.TEN),
-                    new Card(CardShape.클로버, CardContents.TEN)
-            );
-            String testName = "gump";
-            Player testPlayer = Player.from(testName, playerHand);
-            testPlayer.hit(onlyTenCardsDeck::poll);
-
-            //when
-            Player hitResultPlayer = testPlayer.hit(onlyTenCardsDeck::poll);
-
-            //then
-            assertEquals(testPlayer.hashCode(), hitResultPlayer.hashCode());
-        }
+        //then
+        assertEquals(GameResult.class, result.getClass());
     }
 
     @Test
@@ -157,28 +153,4 @@ class PlayerTest {
         //when, then
         Assertions.assertThat(testPlayer1.equals(testPlayer2)).isTrue();
     }
-//    @Test
-//    @DisplayName("플레이어가 카드를 한 장 더 받는다")
-//    void addCardWhenSumBelowMinimum() {
-//        //given
-//        Card expectResultCard = new Card(CardShape.스페이드, CardContents.A);
-//        CardCreationStrategy playerCardCreationStrategy = () -> {
-//            Card spadeJ = new Card(CardShape.스페이드, CardContents.J);
-//            return new ArrayList<>(List.of(spadeJ));
-//        };
-//        CardCreationStrategy totalCardCreationStrategy = () -> {
-//            Card heartA = new Card(CardShape.하트, CardContents.TWO);
-//            return new ArrayList<>(List.of(expectResultCard, heartA));
-//        };
-//        Deck playerDeck = Deck.createDeck(playerCardCreationStrategy);
-//        String testPlayerName = "pobi";
-//        Deck totalDeck = Deck.createDeck(totalCardCreationStrategy);
-//        Player player = new Player(playerDeck, testPlayerName);
-//
-//        //when
-//        Card resultCard = player.addCard(totalDeck).get();
-//
-//        //then
-//        Assertions.assertThat(resultCard).isEqualTo(expectResultCard);
-//    }
 }

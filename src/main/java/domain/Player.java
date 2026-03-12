@@ -16,10 +16,6 @@ public class Player extends Participant {
         return new Player(name, hand, false);
     }
 
-    public Player stand() {
-        return new Player(this.name, this.hand, true);
-    }
-
     public Player hit(Supplier<Card> cardSupplier) {
         if (isFinished()) {
             return this;
@@ -29,8 +25,16 @@ public class Player extends Participant {
         return new Player(this.name, newHand, false);
     }
 
+    public Player stand() {
+        return new Player(this.name, this.hand, true);
+    }
+
     public boolean isFinished() {
         return hand.isBust() || hand.isFull() || isStay;
+    }
+
+    public GameResult compare(Dealer dealer) {
+        return GameResult.decidePlayerResult(dealer, this);
     }
 
     @Override
