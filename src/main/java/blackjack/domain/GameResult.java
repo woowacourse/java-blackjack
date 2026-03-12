@@ -1,16 +1,17 @@
 package blackjack.domain;
 
 public enum GameResult {
-    BLACKJACK("블랙잭"),
-    WIN("승"),
-    LOSE("패"),
-    DRAW("무"),
-    ;
+    BLACKJACK("블랙잭", 1.5),
+    WIN("승", 1.0),
+    LOSE("패", 0.0),
+    DRAW("무", -1.0);
 
     private final String status;
+    private final double ratio;
 
-    GameResult(String status) {
+    GameResult(String status, double ratio) {
         this.status = status;
+        this.ratio = ratio;
     }
 
     public static GameResult matchResult(Player player, Dealer dealer) {
@@ -43,5 +44,9 @@ public enum GameResult {
 
     public String getStatus() {
         return status;
+    }
+
+    public double getRatio() {
+        return ratio;
     }
 }
