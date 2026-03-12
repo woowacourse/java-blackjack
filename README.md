@@ -141,7 +141,7 @@ jason: -20000
 ### 게임 중 (Rule에 따라 각 Player가 Card를 뽑는 단계)
 
 - [x] 각 Player는 Card를 더 받을지 말지 선택할 수 있다.
-    - [ ] 카드를 추가로 뽑아 Burst가 될 경우 Betting Amount를 모두 잃게 된다.
+    - [x] 카드를 추가로 뽑아 Burst가 될 경우 Betting Amount를 모두 잃게 된다.
     - [x] Stay나 Burst가 나올 경우 다음 Player로 넘어간다.
     - [x] 만약 다음 Player가 없을 경우 다음 단계로 넘어간다.
 
@@ -170,4 +170,4 @@ jason: -20000
     - 모든 Player의 Profit을 Dealer의 Profit으로 한다.
     - `-1 * (Sum of Players's Profit)`을 Dealer의 Profit으로 한다.
 
-- [ ] Player가 Blackjack이면 Betting Amount의 1.5배를 Profit으로 얻는다.
+- [x] Player가 Blackjack이면 Betting Amount의 1.5배를 Profit으로 얻는다.
