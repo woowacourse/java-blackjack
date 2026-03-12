@@ -6,4 +6,7 @@ public record DealerStatisticDto(
         int lose
 ) {
 
+    public static DealerStatisticDto of(int win, int draw, int lose) {
+        return new DealerStatisticDto(win, draw, lose);
+    }
 }
