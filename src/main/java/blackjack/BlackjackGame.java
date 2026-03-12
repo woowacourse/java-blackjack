@@ -3,6 +3,7 @@ package blackjack;
 import static blackjack.util.ExceptionHandler.retryUntilSuccess;
 
 import blackjack.model.BetAmount;
+import blackjack.model.BetAmounts;
 import blackjack.model.card.CardProvider;
 import blackjack.model.card.HitCommand;
 import blackjack.model.gameresult.PlayersGameResult;
@@ -12,7 +13,9 @@ import blackjack.model.user.Users;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -29,15 +32,15 @@ public class BlackjackGame {
         return new Users(input);
     }
 
-    public List<BetAmount> createBetAmount(Function<Player, String> readBetAmount, Users users) {
+    public BetAmounts createBetAmount(Function<Player, String> readBetAmount, Users users) {
         List<Player> players = users.getPlayers();
-        List<BetAmount> betAmounts = new ArrayList<>();
+        Map<Player, BetAmount> betAmounts = new HashMap<>();
         for (Player player : players) {
             String input = readBetAmount.apply(player);
             BetAmount betAmount = new BetAmount(player, input);
-            betAmounts.add(betAmount);
+            betAmounts.put(player, betAmount);
         }
-        return betAmounts;
+        return new BetAmounts(betAmounts);
     }
 
     public void provideInitCards(Users users) {
@@ -61,7 +64,8 @@ public class BlackjackGame {
         }
     }
 
-    public PlayersGameResult determineWinner(Users users) {
+    public PlayersGameResult determineWinner(Users users, BetAmounts betAmounts) {
+
         return users.determineWinner();
     }
 
