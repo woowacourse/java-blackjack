@@ -7,6 +7,7 @@ import domain.betting.Betting;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
+import domain.result.Result;
 
 public class TestUtil {
 
@@ -62,5 +63,9 @@ public class TestUtil {
 
     public static Betting createBetting(String name, int amount) {
         return new Betting(createPlayer(name), new Money(amount));
+    }
+
+    public static Result createResult(String name, int amount) {
+        return new Result(createPlayer(name), new Money(amount));
     }
 }
