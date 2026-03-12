@@ -107,7 +107,7 @@ public class BlackjackRunner {
     private boolean askHitOrStand(Player currentPlayer) {
         return retry(() -> {
             outputView.hitOrStand(currentPlayer.getNickname());
-            return inputView.getUserCommand();
+            return inputView.readUserCommand();
         });
     }
     
