@@ -26,18 +26,13 @@ public class BlackJackController {
         String inputNames = inputView.readParticipantNames();
         String[] names = InputParser.parseName(inputNames);
 
-        List<Integer> betAmounts = new ArrayList<>();
-        for (int i = 0; i < names.length; i++) {
-            String bettingAmount = inputView.readBettingAmount(names[i]);
-            betAmounts.add(Integer.parseInt(bettingAmount));
-        }
+        List<Integer> betAmounts = getBetAmounts(names);
 
         Participants participants = ParticipantsFactory.create(names, betAmounts);
         BlackJack blackJack = BlackJack.from(participants);
 
         blackJack.dealOut();
         outputView.printDealOut(participants);
-        blackJack.setFirstTurn();
 
         playersCardDraw(participants);
 
@@ -49,6 +44,15 @@ public class BlackJackController {
 
         outputView.printHandsAndScore(participants);
         outputView.printResultRevenue(blackJack.calculateRevenue());
+    }
+
+    private List<Integer> getBetAmounts(String[] names) {
+        List<Integer> betAmounts = new ArrayList<>();
+        for (int i = 0; i < names.length; i++) {
+            String bettingAmount = inputView.readBettingAmount(names[i]);
+            betAmounts.add(Integer.parseInt(bettingAmount));
+        }
+        return betAmounts;
     }
 
     private void playersCardDraw(Participants participants) {

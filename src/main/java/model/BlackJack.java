@@ -17,7 +17,6 @@ public final class BlackJack {
 
     private final Participants participants;
     private final List<Card> pickedCards;
-    private boolean firstTurn = Boolean.TRUE;
 
     private BlackJack(Participants participants) {
         this.participants = participants;
@@ -75,10 +74,6 @@ public final class BlackJack {
                 participant.draw(pick);
             }
         }
-    }
-
-    public void setFirstTurn() {
-        this.firstTurn = Boolean.FALSE;
     }
 
     public Map<String, Integer> calculateRevenue() {
