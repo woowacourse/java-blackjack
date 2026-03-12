@@ -1,4 +1,4 @@
 package dto;
 
-public record PlayerProfit(String name, int profit) {
+public record PlayerProfit(String name, double profit) {
 }

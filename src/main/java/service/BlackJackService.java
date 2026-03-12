@@ -2,7 +2,6 @@ package service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import model.BlackJackDeck;
 import model.CardFactory;
 import model.Dealer;
@@ -56,15 +55,15 @@ public class BlackJackService {
 
         for (Player player : players.getPlayers()) {
             MatchStatus matchStatus = getPlayerResult(player, dealer);
-            int profit = (int) (player.getBettingMoney().get() * matchStatus.getMultiplier());
+            double profit = player.getBettingMoney().get() * matchStatus.getMultiplier();
             playersWinning.add(new PlayerProfit(player.getResult().name(), profit));
         }
 
         return playersWinning;
     }
 
-    private Integer getDealerResult(List<PlayerProfit> playersWinning) {
-        return Math.negateExact(playersWinning.stream().mapToInt(PlayerProfit::profit).sum());
+    private double getDealerResult(List<PlayerProfit> playersWinning) {
+        return -playersWinning.stream().mapToDouble(PlayerProfit::profit).sum();
     }
 
     private MatchStatus getPlayerResult(Player player, Dealer dealer) {

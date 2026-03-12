@@ -76,8 +76,8 @@ public class OutputView {
                 + playerResult.score());
     }
 
-    private static void printDealerResult(int dealerProfit) {
-        System.out.println(DEALER_TEXT + RESULT_DELIMITER + dealerProfit);
+    private static void printDealerResult(double dealerProfit) {
+        System.out.println(DEALER_TEXT + RESULT_DELIMITER + formatProfit(dealerProfit));
     }
 
     private static void printPlayersResult(List<PlayerProfit> playersWinning) {
@@ -87,7 +87,14 @@ public class OutputView {
     }
 
     private static void printPlayerResult(PlayerProfit playerProfit) {
-        System.out.println(playerProfit.name() + RESULT_DELIMITER + playerProfit.profit());
+        System.out.println(playerProfit.name() + RESULT_DELIMITER + formatProfit(playerProfit.profit()));
+    }
+
+    private static String formatProfit(double profit) {
+        if (profit == Math.floor(profit)) {
+            return String.valueOf((long) profit);
+        }
+        return String.valueOf(profit);
     }
 
 }
