@@ -1,58 +1,36 @@
-import domain.Player;
-import domain.Participant;
-import domain.Score;
+import domain.Card;
 import domain.Hand;
+import domain.Rank;
+import domain.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.lang.reflect.Field;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class PlayerAceTest {
     @Test
-    @DisplayName("에이스 1장을 가진 상태에서 22점이면 버스트가 아니다")
-    void checkBustWithOneAce() throws Exception {
-        Player player = new Player("pobi");
-        setAceCount(player, 1);
-        setScore(player, 22);
+    @DisplayName("에이스가 포함된 점수는 카드 추가 시 자동 보정된다")
+    void checkBustWithOneAce() {
+        Hand hand = new Hand();
+        hand.addCard(new Card(Suit.SPADE, Rank.ACE));
+        hand.addCard(new Card(Suit.HEART, Rank.NINE));
+        hand.addCard(new Card(Suit.CLUB, Rank.FIVE));
 
-        boolean busted = player.checkBust();
-
-        assertFalse(busted);
+        assertFalse(hand.checkBust());
+        assertEquals(15, hand.getScore().getScore());
     }
 
     @Test
-    @DisplayName("에이스 여러 장이 있어도 점수 보정 후 음수가 되지 않는다")
-    void checkBustWithManyAces() throws Exception {
-        Player player = new Player("pobi");
-        setAceCount(player, 3);
-        setScore(player, 31);
+    @DisplayName("에이스 여러 장도 카드 추가 시점에 점수가 정상 보정된다")
+    void checkBustWithManyAces() {
+        Hand hand = new Hand();
+        hand.addCard(new Card(Suit.SPADE, Rank.ACE));
+        hand.addCard(new Card(Suit.HEART, Rank.ACE));
+        hand.addCard(new Card(Suit.CLUB, Rank.NINE));
+        hand.addCard(new Card(Suit.DIAMOND, Rank.KING));
 
-        player.checkBust();
-
-        assertEquals(21, player.getScore().getScore());
-    }
-
-    private void setAceCount(Player player, int aceCount) throws Exception {
-        Hand hand = getHand(player);
-        Field aceCountField = Hand.class.getDeclaredField("aceCount");
-        aceCountField.setAccessible(true);
-        aceCountField.set(hand, aceCount);
-    }
-
-    private void setScore(Player player, int value) throws Exception {
-        Hand hand = getHand(player);
-        Field playerScoreField = Hand.class.getDeclaredField("score");
-        playerScoreField.setAccessible(true);
-        Score score = new Score().addScore(value);
-        playerScoreField.set(hand, score);
-    }
-
-    private Hand getHand(Player player) throws Exception {
-        Field handField = Participant.class.getDeclaredField("hand");
-        handField.setAccessible(true);
-        return (Hand) handField.get(player);
+        assertFalse(hand.checkBust());
+        assertEquals(21, hand.getScore().getScore());
     }
 }

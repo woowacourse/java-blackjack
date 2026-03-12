@@ -1,13 +1,13 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import domain.Card;
 import domain.Dealer;
-import domain.Hand;
 import domain.Outcome;
 import domain.Participant;
 import domain.Player;
 import domain.Players;
-import domain.Score;
-import java.lang.reflect.Field;
+import domain.Rank;
+import domain.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import util.NameParser;
@@ -15,12 +15,16 @@ import util.NameParser;
 public class CheckWinnerTest {
     @Test
     @DisplayName("점수가 같으면 무승부다")
-    void drawResult() throws Exception {
+    void drawResult() {
         Dealer dealer = new Dealer();
         Players players = NameParser.makeNameList("pobi");
         Player player = players.getPlayer(0);
-        setScore(dealer, 20);
-        setScore(player, 20);
+        addCards(dealer,
+                new Card(Suit.SPADE, Rank.KING),
+                new Card(Suit.HEART, Rank.QUEEN));
+        addCards(player,
+                new Card(Suit.DIAMOND, Rank.JACK),
+                new Card(Suit.CLUB, Rank.KING));
 
         players.decideWinner(dealer);
 
@@ -29,12 +33,16 @@ public class CheckWinnerTest {
 
     @Test
     @DisplayName("딜러 점수가 더 크면 플레이어는 패배한다")
-    void loseResult() throws Exception {
+    void loseResult() {
         Dealer dealer = new Dealer();
         Players players = NameParser.makeNameList("pobi");
         Player player = players.getPlayer(0);
-        setScore(dealer, 20);
-        setScore(player, 18);
+        addCards(dealer,
+                new Card(Suit.SPADE, Rank.KING),
+                new Card(Suit.HEART, Rank.QUEEN));
+        addCards(player,
+                new Card(Suit.DIAMOND, Rank.TEN),
+                new Card(Suit.CLUB, Rank.EIGHT));
 
         players.decideWinner(dealer);
 
@@ -43,33 +51,25 @@ public class CheckWinnerTest {
 
     @Test
     @DisplayName("플레이어 점수가 더 크면 플레이어는 승리한다")
-    void winResult() throws Exception {
+    void winResult() {
         Dealer dealer = new Dealer();
         Players players = NameParser.makeNameList("pobi");
         Player player = players.getPlayer(0);
-        setScore(dealer, 18);
-        setScore(player, 20);
+        addCards(dealer,
+                new Card(Suit.SPADE, Rank.TEN),
+                new Card(Suit.HEART, Rank.EIGHT));
+        addCards(player,
+                new Card(Suit.DIAMOND, Rank.KING),
+                new Card(Suit.CLUB, Rank.QUEEN));
 
         players.decideWinner(dealer);
 
         assertEquals(Outcome.WIN, player.getOutcome());
     }
 
-    private void setScore(Dealer dealer, int value) throws Exception {
-        Field handField = Participant.class.getDeclaredField("hand");
-        handField.setAccessible(true);
-        Hand hand = (Hand) handField.get(dealer);
-        Field dealerScoreField = Hand.class.getDeclaredField("score");
-        dealerScoreField.setAccessible(true);
-        dealerScoreField.set(hand, new Score().addScore(value));
-    }
-
-    private void setScore(Player player, int value) throws Exception {
-        Field handField = Participant.class.getDeclaredField("hand");
-        handField.setAccessible(true);
-        Hand hand = (Hand) handField.get(player);
-        Field playerScoreField = Hand.class.getDeclaredField("score");
-        playerScoreField.setAccessible(true);
-        playerScoreField.set(hand, new Score().addScore(value));
+    private void addCards(Participant participant, Card... cards) {
+        for (Card card : cards) {
+            participant.getCardList().addCard(card);
+        }
     }
 }
