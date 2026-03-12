@@ -8,14 +8,14 @@ import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
 import java.util.List;
 
-public class BlackjackGameFactory {
+public class BlackjackBoardFactory {
 
-    private BlackjackGameFactory() {}
+    private BlackjackBoardFactory() {}
 
-    public static BlackjackGame create() {
+    public static BlackjackBoard create() {
         final Dealer dealer = new Dealer(new Deck(new RandomCardShuffler()));
         final Players players = createPlayers();
-        return new BlackjackGame(dealer, players);
+        return new BlackjackBoard(dealer, players);
     }
 
     private static Players createPlayers() {

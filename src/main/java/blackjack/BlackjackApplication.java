@@ -3,7 +3,7 @@ package blackjack;
 public class BlackjackApplication {
 
     public static void main(final String[] args) {
-        BlackjackGame blackjackGame = BlackjackGameFactory.create();
-        blackjackGame.start();
+        final BlackjackBoard board = BlackjackBoardFactory.create();
+        new BlackjackGame(board).start();
     }
 }
