@@ -1,4 +1,6 @@
-package domain;
+package domain.participant;
+
+import domain.MatchResult;
 
 public class Bet {
 
@@ -17,7 +19,7 @@ public class Bet {
     }
 
     private Bet(int amount) {
-        validateNonNegativeAmount(amount);
+        validatePositiveAmount(amount);
         validateBetUnit(amount);
         validateMaxBetAmount(amount);
         this.amount = amount;
@@ -34,21 +36,21 @@ public class Bet {
         return amount * LOSE_PAYOUT_RATIO;
     }
 
-    private void validateNonNegativeAmount(int amount) {
-        if (amount < 0) {
-            throw new IllegalArgumentException("배팅 금액은 음수일 수 없습니다.");
+    private void validatePositiveAmount(int amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException(String.format("잘못된 배팅 금액: %d (배팅 금액은 0보다 커야 합니다.)", amount));
         }
     }
 
     private void validateBetUnit(int amount) {
         if (amount % BET_UNIT != 0) {
-            throw new IllegalArgumentException(String.format("배팅 금액은 %d원 단위로 입력해야 합니다.", BET_UNIT));
+            throw new IllegalArgumentException(String.format("잘못된 배팅 금액: %d (배팅 금액은 %d원 단위로 입력해야 합니다.)", amount, BET_UNIT));
         }
     }
 
     private void validateMaxBetAmount(int amount) {
         if (amount > MAX_BET_AMOUNT) {
-            throw new IllegalArgumentException(String.format("배팅 금액은 %d을 초과할 수 없습니다.", MAX_BET_AMOUNT));
+            throw new IllegalArgumentException(String.format("잘못된 배팅 금액: %d (배팅 금액은 %d을 초과할 수 없습니다.)", amount, MAX_BET_AMOUNT));
         }
     }
 }
