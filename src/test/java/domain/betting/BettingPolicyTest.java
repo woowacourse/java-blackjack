@@ -87,6 +87,21 @@ public class BettingPolicyTest {
     }
 
     @Test
+    void 딜러가_버스트이고_플레이어가_스탠드인_경우를_테스트한다() {
+        Player testPlayer = Player.from(new PlayerName("test"));
+        testPlayer.addCardBundle(nonBustBundle);
+        Dealer dealer = createDealer(bustBundle.openMyCards());
+        dealer.dealMyself();
+        dealer.hitIfRequired();
+
+        BettingRate actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
+        BettingRate expectedBettingRate = BettingResult.DEALER_BUST.bettingRate();
+
+        Assertions.assertThat(actualBettingRate)
+                .isEqualTo(expectedBettingRate);
+    }
+
+    @Test
     void 플레이어가_버스트인_경우를_테스트한다() {
         Player testPlayer = Player.from(new PlayerName("test"));
         testPlayer.addCardBundle(bustBundle);
@@ -94,7 +109,7 @@ public class BettingPolicyTest {
         dealer.dealMyself();
 
         BettingRate actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
-        BettingRate expectedBettingRate = BettingResult.BUST.bettingRate();
+        BettingRate expectedBettingRate = BettingResult.PLAYER_BUST.bettingRate();
 
         Assertions.assertThat(actualBettingRate)
                 .isEqualTo(expectedBettingRate);

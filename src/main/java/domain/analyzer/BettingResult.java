@@ -8,9 +8,10 @@ public enum BettingResult {
     BLACK_JACK_PUSH(new BettingRate(1.0), GameResult.DRAW, 1),
     BLACK_JACK(new BettingRate(1.5), GameResult.WIN, 2),
     DOUBLE_BUST(new BettingRate(1.0), GameResult.WIN, 3),
-    BUST(new BettingRate(-1.0), GameResult.LOSS, 4),
-    COMPARE_WIN(new BettingRate(1.0), GameResult.WIN, 5),
-    COMPARE_LOSE(new BettingRate(-1.0), GameResult.LOSS, 6),
+    DEALER_BUST(new BettingRate(1.0), GameResult.WIN, 4),
+    PLAYER_BUST(new BettingRate(-1.0), GameResult.LOSS, 5),
+    COMPARE_WIN(new BettingRate(1.0), GameResult.WIN, 6),
+    COMPARE_LOSE(new BettingRate(-1.0), GameResult.LOSS, 7),
     ;
 
     private final BettingRate bettingRate;

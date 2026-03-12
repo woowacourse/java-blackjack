@@ -5,15 +5,15 @@ import domain.betting.BettingRate;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
 
-public class BustPolicy extends BettingPolicy{
+public class DealerBustPolicy extends BettingPolicy {
 
-    public BustPolicy() {
-        super(BettingResult.PLAYER_BUST);
+    public DealerBustPolicy() {
+        super(BettingResult.DEALER_BUST);
     }
 
     @Override
     public boolean isPolicyApplied(Dealer dealer, Player player) {
-        return player.isBusted() && !dealer.isBusted();
+        return dealer.isBusted() && player.isStop();
     }
 
     @Override
