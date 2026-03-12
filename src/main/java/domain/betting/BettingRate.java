@@ -5,7 +5,7 @@ public record BettingRate (
 ){
 
     public Money payOut(Money money) {
-        return money.changeMoney(this);
+        return money.applyBettingRate(this);
     }
 
 }

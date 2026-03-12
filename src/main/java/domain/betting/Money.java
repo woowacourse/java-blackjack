@@ -17,7 +17,7 @@ public record Money(
         return new Money(money);
     }
 
-    public Money changeMoney(BettingRate rate) {
+    public Money applyBettingRate(BettingRate rate) {
         return new Money(money * rate.bettingRate());
     }
 

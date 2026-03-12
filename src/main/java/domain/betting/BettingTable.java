@@ -30,6 +30,11 @@ public class BettingTable {
         bettings.calculateBettingMoney(player, bettingRate);
     }
 
+    public Money getDealerProfit() {
+        return bettings.calculateDealerProfit();
+    }
+
+
     public Money getPlayerProfit(Player player) {
         return bettings.getPlayerBettingMoney(player);
     }

@@ -10,7 +10,6 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import utils.CardBundleBuilder;
-import utils.CardDeckBuilder;
 import utils.TestCardGenerator;
 
 import java.util.List;
@@ -23,6 +22,7 @@ public class BettingTableTest {
     CardBundle blackJackBundle;
     CardBundle lossDealerBundle;
     BettingRate blackJackRate = BettingResult.BLACK_JACK.bettingRate();
+    BettingRate loseRate = BettingResult.COMPARE_LOSE.bettingRate();
     Money thousandWon = Money.from("1000");
     Player testPlayer = Player.from(new PlayerName("test"));
 
@@ -38,7 +38,7 @@ public class BettingTableTest {
     }
 
     @Test
-    void 베팅테이블에_베팅금액을_올린다(){
+    void 베팅테이블에_베팅금액을_올린다() {
         BettingTable bettingTable = new BettingTable();
 
         bettingTable.bet(testPlayer, thousandWon);
@@ -61,10 +61,30 @@ public class BettingTableTest {
         bettingTable.applyBettingRate(dealer, players);
 
         Money actualProfit = bettingTable.getPlayerProfit(testPlayer);
-        Money expectedProfit = thousandWon.changeMoney(blackJackRate);
+        Money expectedProfit = thousandWon.applyBettingRate(blackJackRate);
 
         Assertions.assertThat(actualProfit)
                 .isEqualTo(expectedProfit);
+    }
+
+    @Test
+    void 베팅테이블에서_딜러의_수익을_계산한다() {
+        BettingTable bettingTable = new BettingTable();
+        testPlayer.addCardBundle(blackJackBundle);
+        Players players = Players.from(List.of(testPlayer));
+        Dealer dealer = createDealer(lossDealerBundle.openMyCards());
+        dealer.dealMyself();
+
+        bettingTable.bet(testPlayer, thousandWon);
+        bettingTable.applyBettingRate(dealer, players);
+
+        Money actualDealerProfit = bettingTable.getDealerProfit();
+        Money expectedDealerProfit = thousandWon
+                .applyBettingRate(blackJackRate)
+                .applyBettingRate(loseRate);
+
+        Assertions.assertThat(actualDealerProfit)
+                .isEqualTo(expectedDealerProfit);
     }
 
     private Dealer createDealer(List<Card> cards) {
