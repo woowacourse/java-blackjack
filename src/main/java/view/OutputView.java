@@ -10,7 +10,7 @@ public class OutputView {
 
     public static void printCardOpen(List<Player> players) {
         List<String> names = players.stream()
-                .map(Player::getName)
+                .map(Player::name)
                 .toList();
         System.out.println();
         System.out.printf("딜러와 %s에게 2장을 나누었습니다.%n", String.join(", ", names));
@@ -22,31 +22,31 @@ public class OutputView {
     }
 
     public static void printCardByDealer(Dealer dealer) {
-        Card firstCard = dealer.getCards().getFirst();
+        Card firstCard = dealer.cards().getFirst();
         String card = convert(firstCard);
-        System.out.println(dealer.getName() + "카드: " + card);
+        System.out.println(dealer.name() + "카드: " + card);
     }
 
     public static void printCardByPlayer(Player player) {
-        List<String> cards = player.getCards()
+        List<String> cards = player.cards()
                 .stream()
                 .map(OutputView::convert)
                 .toList();
-        System.out.printf("%s카드: %s%n", player.getName(), String.join(", ", cards));
+        System.out.printf("%s카드: %s%n", player.name(), String.join(", ", cards));
     }
 
 
     public static void printCardByPlayerWithScore(Participant player) {
         int sum = player.calculateTotalScore();
-        List<String> cards = player.getCards()
+        List<String> cards = player.cards()
                 .stream()
                 .map(OutputView::convert)
                 .toList();
-        System.out.printf("%s카드: %s - 결과: %d%n", player.getName(), String.join(", ", cards), sum);
+        System.out.printf("%s카드: %s - 결과: %d%n", player.name(), String.join(", ", cards), sum);
     }
 
     private static String convert(Card card) {
-        return card.value().getSymbol() + card.shape().getShape();
+        return card.value().symbol() + card.shape().shape();
     }
 
     public static void printToOpenDealerNewCard(String name) {
@@ -86,9 +86,9 @@ public class OutputView {
     public static void printBettingResult(List<Participant> participants) {
         for (Participant participant : participants) {
             if (participant instanceof Dealer dealer) {
-                System.out.println(participant.getName() + ": " + dealer.getProfit());
+                System.out.println(participant.name() + ": " + dealer.profit());
             } else if (participant instanceof Player player) {
-                System.out.println(participant.getName() + ": " + player.getProfit());
+                System.out.println(participant.name() + ": " + player.profit());
             }
         }
     }

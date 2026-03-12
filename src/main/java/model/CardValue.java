@@ -23,11 +23,11 @@ public enum CardValue {
         this.symbol = symbol;
     }
 
-    public int getScore() {
+    public int score() {
         return score;
     }
 
-    public String getSymbol() {
+    public String symbol() {
         return symbol;
     }
 }

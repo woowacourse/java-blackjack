@@ -42,27 +42,27 @@ public abstract class AbstractParticipant implements Participant {
     }
 
     @Override
-    public String getName() {
+    public String name() {
         return name;
     }
 
     @Override
-    public List<Card> getCards() {
-        return cards.getCards();
+    public List<Card> cards() {
+        return cards.cards();
     }
 
     @Override
     public void checkBlackJack() {
-        if (calculateTotalScore() == BLACK_JACK && this.cards.getSize() == BLACK_JACK_REQUIREMENT) {
+        if (calculateTotalScore() == BLACK_JACK && this.cards.size() == BLACK_JACK_REQUIREMENT) {
             this.isBlackJack = true;
         }
     }
 
-    public boolean getIsBlackJack() {
+    public boolean isBlackJack() {
         return this.isBlackJack;
     }
 
-    public long getProfit() {
+    public long profit() {
         return this.profit;
     }
 

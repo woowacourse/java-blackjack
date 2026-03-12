@@ -31,8 +31,8 @@ public class BettingResultTest {
         // when
         BettingResult bettingResult = new BettingResult();
         bettingResult.calculateBettingMoney(dealer, List.of(player));
-        long playerMoney = player.getProfit();
-        long dealerMoney = dealer.getProfit();
+        long playerMoney = player.profit();
+        long dealerMoney = dealer.profit();
 
         // then
         assertAll(

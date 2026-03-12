@@ -36,7 +36,7 @@ public class PlayerTurnPhase implements GamePhase {
     }
 
     private Continuation readContinuation(Player player) {
-        String inputCommand = InputView.readMoreCard(player.getName());
+        String inputCommand = InputView.readMoreCard(player.name());
         return Continuation.from(inputCommand);
     }
 

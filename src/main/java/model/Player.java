@@ -8,7 +8,7 @@ public class Player extends AbstractParticipant {
         super(name);
     }
 
-    public long getMoney() {
+    public long money() {
         return this.bettingMoney;
     }
 

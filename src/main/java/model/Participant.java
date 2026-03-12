@@ -12,7 +12,7 @@ public interface Participant {
 
     boolean canHit();
 
-    String getName();
+    String name();
 
-    List<Card> getCards();
+    List<Card> cards();
 }
