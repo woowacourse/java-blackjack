@@ -1,10 +1,11 @@
 package view;
 
 import constant.Result;
+import dto.BlackjackResultDto;
 import dto.BlackjackStatisticsDto;
-import dto.DealerResultDto;
+import dto.DealerStatisticDto;
 import dto.ParticipantDto;
-import dto.PlayerResultDto;
+import dto.PlayerStatisticDto;
 import java.util.List;
 
 public class OutputView {
@@ -18,17 +19,18 @@ public class OutputView {
     private static final String PRINT_BLACKJACK_STATISTICS_DEALER_MESSAGE = "딜러:%s%s%s\n";
     private static final String PRINT_BLACKJACK_STATISTICS_PLAYER_MESSAGE = "%s: %s\n";
 
-    public void printPlayers(List<ParticipantDto> participantDtoList) {
-        List<String> names = participantDtoList.stream()
+    public void printPlayers(List<ParticipantDto> platerDtoList) {
+        List<String> names = platerDtoList.stream()
             .map(ParticipantDto::name)
             .filter(name -> !name.equals(PolicyConstant.DEALER_NAME))
             .toList();
         System.out.printf(PRINT_PLAYERS_MESSAGE, String.join(DELIMITER, names));
     }
 
-    public void printHandList(List<ParticipantDto> participantDtoList) {
-        for (ParticipantDto participantDto : participantDtoList) {
-            printlnHand(participantDto.name(), participantDto.hand());
+    public void printHandList(ParticipantDto dealerDto, List<ParticipantDto> playerDtoList) {
+        printlnHand(dealerDto.name(), dealerDto.hand());
+        for (ParticipantDto playerDto : playerDtoList) {
+            printlnHand(playerDto.name(), playerDto.hand());
         }
         System.out.println();
     }
@@ -46,26 +48,30 @@ public class OutputView {
         System.out.println(PRINT_DEALER_HIT);
     }
 
-    public void printBlackjackResult(List<ParticipantDto> blackjackResult) {
+    public void printBlackjackResult(BlackjackResultDto blackjackResult) {
+        ParticipantDto dealerResultDto = blackjackResult.dealerResultDto();
+        List<ParticipantDto> playerResultDtoList = blackjackResult.playerResultDtoList();
         System.out.println();
-        for (ParticipantDto participantDto : blackjackResult) {
-            printHand(participantDto.name(), participantDto.hand());
-            System.out.printf(PRINT_BLACKJACK_RESULT_MESSAGE, participantDto.score());
+        printHand(dealerResultDto.name(), dealerResultDto.hand());
+        System.out.printf(PRINT_BLACKJACK_RESULT_MESSAGE, dealerResultDto.score());
+        for (ParticipantDto playerResultDto : playerResultDtoList) {
+            printHand(playerResultDto.name(), playerResultDto.hand());
+            System.out.printf(PRINT_BLACKJACK_RESULT_MESSAGE, playerResultDto.score());
         }
         System.out.println();
     }
 
     public void printBlackjackStatistics(BlackjackStatisticsDto blackjackStatistics) {
-        DealerResultDto dealerResultDto = blackjackStatistics.dealerResultDto();
-        List<PlayerResultDto> playerResultDtoList = blackjackStatistics.playerResultDtoList();
+        DealerStatisticDto dealerStatisticDto = blackjackStatistics.dealerStatisticDto();
+        List<PlayerStatisticDto> playerStatisticDtoList = blackjackStatistics.playerStatisticDtoList();
         System.out.println(PRINT_BLACKJACK_STATISTICS_HEADER_MESSAGE);
         System.out.printf(PRINT_BLACKJACK_STATISTICS_DEALER_MESSAGE,
-            printResult(dealerResultDto.win(), Result.WIN.getResult()),
-            printResult(dealerResultDto.draw(), Result.DRAW.getResult()),
-            printResult(dealerResultDto.lose(), Result.LOSE.getResult()));
-        for (PlayerResultDto playerResultDto : playerResultDtoList) {
-            System.out.printf(PRINT_BLACKJACK_STATISTICS_PLAYER_MESSAGE, playerResultDto.name(),
-                playerResultDto.result().getResult());
+            printResult(dealerStatisticDto.win(), Result.WIN.getResult()),
+            printResult(dealerStatisticDto.draw(), Result.DRAW.getResult()),
+            printResult(dealerStatisticDto.lose(), Result.LOSE.getResult()));
+        for (PlayerStatisticDto playerStatisticDto : playerStatisticDtoList) {
+            System.out.printf(PRINT_BLACKJACK_STATISTICS_PLAYER_MESSAGE, playerStatisticDto.name(),
+                playerStatisticDto.result().getResult());
         }
     }
 
