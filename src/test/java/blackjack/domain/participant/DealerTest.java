@@ -39,15 +39,15 @@ class DealerTest {
         dealer.hand.addCard(new Card(Rank.TEN, Suit.SPADE));
         dealer.hand.addCard(new Card(Rank.EIGHT, Suit.HEART));
 
-        Player winPlayer = new Player("pobi");
+        Player winPlayer = Player.from("pobi", 10000);
         winPlayer.hand.addCard(new Card(Rank.TEN, Suit.CLOVER));
         winPlayer.hand.addCard(new Card(Rank.NINE, Suit.DIAMOND));
 
-        Player drawPlayer = new Player("jason");
+        Player drawPlayer = Player.from("jason", 20000);
         drawPlayer.hand.addCard(new Card(Rank.TEN, Suit.CLOVER));
         drawPlayer.hand.addCard(new Card(Rank.EIGHT, Suit.DIAMOND));
 
-        Player losePlayer = new Player("honux");
+        Player losePlayer = Player.from("honux", 30000);
         losePlayer.hand.addCard(new Card(Rank.TEN, Suit.CLOVER));
         losePlayer.hand.addCard(new Card(Rank.FIVE, Suit.DIAMOND));
 
