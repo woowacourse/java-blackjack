@@ -14,4 +14,6 @@ public class BlackjackConstant {
     public static final int NAME_MAX_LENGTH = 10;
 
     public static final double BLACKJACK_MULTIPLIER = 1.5;
+
+    public static final long BETTING_LIMIT = 1_000_000;
 }
