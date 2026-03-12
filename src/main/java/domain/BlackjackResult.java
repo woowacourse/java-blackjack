@@ -1,12 +1,14 @@
 package domain;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import domain.dto.BlackjackResultDto;
 
 public class BlackjackResult {
-    private final Map<String, MatchCase> playerWinningMap = new HashMap<>();
+    private final Map<String, MatchCase> playerWinningMap = new LinkedHashMap<>();
+    private final Map<String, Integer> bettingResultMap = new LinkedHashMap<>();
     private int dealerWinningCount = 0;
     private int drawCount = 0;
     private int dealerLoseCount = 0;
@@ -36,12 +38,15 @@ public class BlackjackResult {
         if (isPlayerLose(player, dealerBust, dealerTotal)) {
             player.loseMoney();
             addMatchResult(player.getName(), MatchCase.LOSE);
+            addBettingResult(player);
             return;
         }
         if (isPlayerScoreEqualsDealer(player, dealerBust, dealerTotal)) {
             addMatchResult(player.getName(), MatchCase.DRAW);
+            addBettingResult(player);
             return;
         }
+        addBettingResult(player);
         addMatchResult(player.getName(), MatchCase.WIN);
     }
 
@@ -52,6 +57,10 @@ public class BlackjackResult {
     private void addMatchResult(String playerName, MatchCase matchCase) {
         playerWinningMap.put(playerName, matchCase);
         increaseMatchResult(matchCase);
+    }
+
+    private void addBettingResult(Player player) {
+        bettingResultMap.put(player.getName(), player.getBettingScore());
     }
 
     private void increaseMatchResult(MatchCase matchCase) {

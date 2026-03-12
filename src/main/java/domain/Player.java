@@ -65,9 +65,9 @@ public class Player {
             bettingScore = (int) ((int) bettingScore * 1.5);
             return;
         }
-        if (isPlayerLose(dealer.isBust(), dealer.getFinalScore())) {
-            loseMoney();
-        }
+//        if (isPlayerLose(dealer.isBust(), dealer.getFinalScore())) {
+//            loseMoney();
+//        }
     }
 
     private boolean isPlayerLose(boolean dealerBurst, int dealerTotal) {
