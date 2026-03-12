@@ -19,10 +19,6 @@ public enum Continuation {
                 .orElseThrow(() -> new IllegalArgumentException("y와 n을 입력해주세요."));
     }
 
-    public boolean isStop() {
-        return this == STOP;
-    }
-
     public boolean isContinue() {
         return this == CONTINUE;
     }
