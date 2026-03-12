@@ -15,11 +15,11 @@ import java.util.List;
 
 public class BettingPolicyTest {
 
-    private Card cloverAce = Card.of(CardDenomination.ACE, CardEmblem.CLOVER);
-    private Card spadeJack = Card.of(CardDenomination.JACK, CardEmblem.SPADE);
-    private Card spadeNine = Card.of(CardDenomination.NINE, CardEmblem.SPADE);
-    private Card spadeEight = Card.of(CardDenomination.EIGHT, CardEmblem.SPADE);
-    private Card spadeFive = Card.of(CardDenomination.FIVE, CardEmblem.SPADE);
+    private final Card cloverAce = Card.of(CardDenomination.ACE, CardEmblem.CLOVER);
+    private final Card spadeJack = Card.of(CardDenomination.JACK, CardEmblem.SPADE);
+    private final Card spadeNine = Card.of(CardDenomination.NINE, CardEmblem.SPADE);
+    private final Card spadeEight = Card.of(CardDenomination.EIGHT, CardEmblem.SPADE);
+    private final Card spadeFive = Card.of(CardDenomination.FIVE, CardEmblem.SPADE);
     private CardBundle bustBundle;
     private CardBundle nonBustBundle;
     private CardBundle biggerBundle;

@@ -12,14 +12,8 @@ import java.util.List;
 
 public class PlayerTest {
 
-    private PlayerName testPlayerName;
-    private Player testPlayer;
-
-    @BeforeEach
-    void setUp() {
-        testPlayerName = new PlayerName("test");
-        testPlayer = Player.from(testPlayerName);
-    }
+    private final PlayerName testPlayerName  = new PlayerName("test");
+    private final Player testPlayer = Player.from(testPlayerName);;
 
     @Test
     void 플레이어가_카드를_1장_받는다() {

@@ -15,15 +15,15 @@ import java.util.List;
 
 public class BettingTableTest {
 
-    Card cloverAce = Card.of(CardDenomination.ACE, CardEmblem.CLOVER);
-    Card spadeJack = Card.of(CardDenomination.JACK, CardEmblem.SPADE);
-    Card spadeNine = Card.of(CardDenomination.NINE, CardEmblem.SPADE);
-    CardBundle blackJackBundle;
-    CardBundle lossDealerBundle;
-    BettingRate blackJackRate = BettingResult.BLACK_JACK.bettingRate();
-    BettingRate loseRate = BettingResult.PLAYER_LOSE.bettingRate();
-    Money thousandWon = Money.from("1000");
-    Player testPlayer = Player.from(new PlayerName("test"));
+    private final Card cloverAce = Card.of(CardDenomination.ACE, CardEmblem.CLOVER);
+    private final Card spadeJack = Card.of(CardDenomination.JACK, CardEmblem.SPADE);
+    private final Card spadeNine = Card.of(CardDenomination.NINE, CardEmblem.SPADE);
+    private final BettingRate blackJackRate = BettingResult.BLACK_JACK.bettingRate();
+    private final BettingRate loseRate = BettingResult.PLAYER_LOSE.bettingRate();
+    private final Money thousandWon = Money.from("1000");
+    private final Player testPlayer = Player.from(new PlayerName("test"));
+    private CardBundle blackJackBundle;
+    private CardBundle lossDealerBundle;
 
     @BeforeEach
     void setUp() {
