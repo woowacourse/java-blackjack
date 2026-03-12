@@ -2,6 +2,7 @@ package domain.participant;
 
 import domain.card.Card;
 import domain.card.Cards;
+import java.util.List;
 
 public abstract class Participant {
     protected final Name name;
@@ -14,6 +15,10 @@ public abstract class Participant {
 
     public Name getName() {
         return name;
+    }
+
+    public List<String> getCardNames() {
+        return cards.getCardNames();
     }
 
     public void add(Card card) {

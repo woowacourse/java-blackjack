@@ -4,16 +4,15 @@ import static domain.BlackjackGame.DEALER_HIT_STAND_BOUNDARY;
 import static domain.BlackjackGame.INITIAL_CARD_COUNT;
 import static domain.Constant.DELIMITER;
 
-import domain.participant.Dealer;
-import domain.participant.Name;
-import domain.participant.Participant;
-import domain.participant.Player;
 import domain.Result;
+import dto.DealerDto;
+import dto.ParticipantDto;
+import dto.PlayerDto;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ResultView {
-    public void printParticipantsCards(List<Player> players, Dealer dealer) {
+    public void printParticipantsCards(List<PlayerDto> players, DealerDto dealer) {
         printEmptyLine();
         System.out.println(dealer.getName() + "와 " + joinPlayersNameByDelimiter(players) + "에게 " + INITIAL_CARD_COUNT
                 + "장을 나누었습니다.");
@@ -22,22 +21,24 @@ public class ResultView {
         printEmptyLine();
     }
 
-    private String joinPlayersNameByDelimiter(List<Player> players) {
+    private String joinPlayersNameByDelimiter(List<PlayerDto> players) {
         return players.stream()
-                .map(Player::getName)
-                .map(Name::toString)
+                .map(PlayerDto::getName)
                 .collect(Collectors.joining(DELIMITER));
     }
 
-    private void printParticipantsCard(List<Player> players) {
-        for (Player player : players) {
+    private void printParticipantsCard(List<PlayerDto> players) {
+        for (PlayerDto player : players) {
             printCards(player);
         }
     }
 
-    public void printCards(Player player) {
-        System.out.println(player.getName() + "카드: " + player);
+    public void printCards(PlayerDto player) {
+        String cardNames = player.getCards().stream()
+                        .collect(Collectors.joining(DELIMITER));
+        System.out.println(player.getName() + "카드: " + cardNames);
     }
+
 
     public void printDealerHitStand(boolean value) {
         printEmptyLine();
@@ -48,20 +49,24 @@ public class ResultView {
         System.out.println("딜러는 " + (DEALER_HIT_STAND_BOUNDARY + 1) + "이상이라 카드를 받지 않았습니다.");
     }
 
-    public void printCardsWithResult(List<Player> players, Dealer dealer) {
+
+    public void printCardsWithResult(List<PlayerDto> players, DealerDto dealer) {
         printEmptyLine();
         printCardWithResult(dealer);
 
-        for (Player player : players) {
+        for (PlayerDto player : players) {
             printCardWithResult(player);
         }
     }
 
-    private void printCardWithResult(Participant participant) {
-        System.out.println(participant.getName() + "카드: " + participant + " - 결과: " + participant.getTotalSum());
+    private void printCardWithResult(ParticipantDto participant) {
+        String cardNames = participant.getCards().stream()
+                .collect(Collectors.joining(DELIMITER));
+        System.out.println(participant.getName() + "카드: " + cardNames + " - 결과: " + participant.getTotalSum());
     }
 
-    public void printResultStatistics(List<Player> players, Dealer dealer) {
+
+    public void printResultStatistics(List<PlayerDto> players, DealerDto dealer) {
         StringBuilder sb = new StringBuilder();
         sb.append('\n');
         sb.append("## 최종 승패\n");
@@ -70,7 +75,7 @@ public class ResultView {
         int playerDrawCount = 0;
         int playerLoseCount = 0;
 
-        for (Player player : players) {
+        for (PlayerDto player : players) {
             Result result = Result.judge(player.getTotalSum(), dealer.getTotalSum());
             if (result == Result.WIN) {
                 playerWinCount += 1;
@@ -85,9 +90,10 @@ public class ResultView {
 
         sb.append("딜러: " + playerLoseCount + "승 " + playerDrawCount + "무 " + playerWinCount + "패\n");
 
-        for (Player player : players) {
+        for (PlayerDto player : players) {
             sb.append(player.getName() + ": ");
             Result result = Result.judge(player.getTotalSum(), dealer.getTotalSum());
+
             if (result == Result.WIN) {
                 sb.append("승\n");
                 continue;

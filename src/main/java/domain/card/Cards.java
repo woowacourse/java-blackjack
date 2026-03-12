@@ -27,6 +27,12 @@ public class Cards {
         return cards.size();
     }
 
+    public List<String> getCardNames() {
+        return cards.stream()
+                .map(Card::toString)
+                .collect(Collectors.toList());
+    }
+
     public int getTotalSum() {
         int aceCount = getAceAmount();
         int sum = getBaseSum();

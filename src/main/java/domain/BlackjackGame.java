@@ -58,6 +58,7 @@ public class BlackjackGame {
         participant.add(card);
     }
 
+    // 고민) 이 메서드가 여기 있는게 맞나?
     public boolean dealerHitsStand() {
         if (dealer.decideHitStand(DEALER_HIT_STAND_BOUNDARY)) {
             giveCard(dealer);

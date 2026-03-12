@@ -1,7 +1,11 @@
 import domain.BlackjackGame;
 import domain.participant.Dealer;
 import domain.participant.Player;
+import dto.DealerDto;
+import dto.ParticipantDto;
+import dto.PlayerDto;
 import java.util.List;
+import java.util.stream.Collectors;
 import view.InputView;
 import view.ResultView;
 
@@ -22,12 +26,26 @@ public class BlackjackController {
 
         List<Player> players = blackjackGame.getPlayers();
         Dealer dealer = blackjackGame.getDealer();
-        resultView.printParticipantsCards(players, dealer);
+
+        DealerDto dealerDto = DealerDto.from(dealer);
+        List<PlayerDto> playerDtos = toPlayerDtos(players);
+
+        resultView.printParticipantsCards(playerDtos, dealerDto);
 
         playerHitStand(players);
         resultView.printDealerHitStand(blackjackGame.dealerHitsStand());
-        resultView.printCardsWithResult(players, dealer);
-        resultView.printResultStatistics(players, dealer);
+
+        List<PlayerDto> finalPlayerDtos = toPlayerDtos(players);
+        DealerDto finalDealerDto = DealerDto.from(dealer);
+
+        resultView.printCardsWithResult(finalPlayerDtos, finalDealerDto);
+        resultView.printResultStatistics(finalPlayerDtos, finalDealerDto);
+    }
+
+    private List<PlayerDto> toPlayerDtos(List<Player> players) {
+        return players.stream()
+                .map(PlayerDto::from)
+                .collect(Collectors.toList());
     }
 
     private void readAndRegistPlayers() {
@@ -41,10 +59,12 @@ public class BlackjackController {
         }
     }
 
+
+
     private void hitStand(Player player) {
         while (inputView.readHitStand(player.getName()).equals("y")) {
             blackjackGame.giveCard(player);
-            resultView.printCards(player);
+            resultView.printCards(PlayerDto.from(player));
         }
     }
 }
