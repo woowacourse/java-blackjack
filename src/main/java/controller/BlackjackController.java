@@ -100,7 +100,9 @@ public class BlackjackController {
                 outputView.printMessage(getBettingMoneyRequestMessage);
                 String bettingMoney = inputView.readBettingMoney();
                 validator.validateEmptyBettingMoney(bettingMoney);
-                return parser.parseBettingMoney(bettingMoney);
+                Money parsedBettingMoney = parser.parseBettingMoney(bettingMoney);
+                validator.validateNegativeBettingMoney(parsedBettingMoney.getValue());
+                return parsedBettingMoney;
             } catch (IllegalArgumentException e) {
                 outputView.printErrorMessage(e.getMessage());
             }

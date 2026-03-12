@@ -1,6 +1,7 @@
 package util;
 
 import java.util.regex.Pattern;
+import vo.Money;
 
 public class Validator {
     private static final Pattern CONTAINS_DIGIT = Pattern.compile(".*\\d.*");
@@ -47,9 +48,20 @@ public class Validator {
         }
     }
 
+//    public void validateBettingMoney(String bettingMoney) {
+//        validateEmptyBettingMoney(bettingMoney);
+//        validateNegativeBettingMoney(bettingMoney);
+//    }
+
     public void validateEmptyBettingMoney(String bettingMoney) {
         if (bettingMoney.trim().isEmpty()) {
-            throw new IllegalArgumentException("[ERROR] 배팅 금액은 비어 있을 수 없습니다.");
+            throw new IllegalArgumentException("[ERROR] 베팅 금액은 비어 있을 수 없습니다.");
+        }
+    }
+
+    public void validateNegativeBettingMoney(int bettingMoney) {
+        if (bettingMoney < 0) {
+            throw new IllegalArgumentException("[ERROR] 베팅 금액은 음수가 될 수 없습니다.");
         }
     }
 }
