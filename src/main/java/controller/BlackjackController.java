@@ -1,6 +1,7 @@
 package controller;
 
 import domain.Game;
+import domain.bet.Bet;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.enums.GameResult;
@@ -29,17 +30,27 @@ public class BlackjackController {
         Deck deck = new Deck(cardGenerator.generate());
         Game game = new Game(makePlayers(), new Dealer());
         List<Name> playersName = game.getAllPlayersName();
+        Bet bet = new Bet(playersName);
 
         game.initializeGame(deck);
+        askPlayerBet(bet, playersName);
         outputView.printPlayers(game.getDealerCard(), getPlayerCards(game, playersName));
 
         playTurn(game, playersName, deck);
-        printResult(game, playersName);
+        printResult(game, bet, playersName);
     }
 
     private List<String> makePlayers() {
         String input = inputView.askPlayerNames();
         return InputParser.parseNames(input);
+    }
+
+    private void askPlayerBet(Bet bet, List<Name> playersName) {
+        for (Name name : playersName) {
+            String input = inputView.askPlayerBet(name);
+            int playerMoney = InputParser.parseMoney(input);
+            bet.bettingMoney(name, playerMoney);
+        }
     }
 
     private Map<Name, List<Card>> getPlayerCards(Game game, List<Name> playersName) {
@@ -80,7 +91,7 @@ public class BlackjackController {
         }
     }
 
-    private void printResult(Game game, List<Name> playerNames) {
+    private void printResult(Game game, Bet bet, List<Name> playerNames) {
         outputView.printDealerCardWithScore(game.getDealerCard(), game.getDealerScore());
 
         Map<Name, GameResult> playerResults = new LinkedHashMap<>();
@@ -90,5 +101,12 @@ public class BlackjackController {
         }
 
         outputView.printGameResult(game.getDealerResult(), playerResults);
+
+        printProfit(bet, playerResults);
+    }
+
+    private void printProfit(Bet bet, Map<Name, GameResult> playerResults) {
+        bet.calculateProfit(playerResults);
+        outputView.printProfit(bet.getDealerBetProfit(), bet.getPlayerBetProfit());
     }
 }
