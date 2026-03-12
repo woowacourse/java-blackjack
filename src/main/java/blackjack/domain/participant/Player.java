@@ -37,7 +37,7 @@ public class Player extends Participant {
         stopDrawing = true;
     }
     
-    public int calculateProfit(GameResult gameResult) {
-        return bettingAmount * gameResult.getRate();
+    public long calculateProfit(ProfitRate profitRate) {
+        return profitRate.getProfit(bettingAmount);
     }
 }

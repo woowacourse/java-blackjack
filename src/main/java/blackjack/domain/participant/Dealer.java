@@ -2,8 +2,6 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Dealer extends Participant {
     
@@ -23,47 +21,46 @@ public class Dealer extends Participant {
         return getScore() <= DEALER_SCORE;
     }
     
-    public Map<GameResult, Long> determineGameResult(List<Player> players) {
+    public List<Long> determinePlayersProfit(List<Player> players) {
         return players.stream()
-                .map(this::determinePlayerProfit)
-                .collect(Collectors.groupingBy(
-                        result -> result, Collectors.counting()
-                ));
-    }
-    
-    public int determineProfit(List<Player> players) {
-        List<GameResult> gameResults = players.stream()
                 .map(this::determinePlayerProfit)
                 .toList();
     }
     
-    public int determinePlayerProfit(Player player) {
+    private long determinePlayerProfit(Player player) {
         if (player.isBlackjack()) {
-            return blackjackProfit(player);
+            return playerBlackjackProfit(player);
         }
         if (isBust()) {
-            return GameResult.LOSE;
+            return player.calculateProfit(ProfitRate.WIN);
         }
         if (player.isBust()) {
-            return GameResult.WIN;
+            return player.calculateProfit(ProfitRate.LOSE);
         }
-        return compareScore(getScore(), player.getScore());
+        return player.calculateProfit(calculateProfitRate(getScore(), player.getScore()));
     }
     
-    private int blackjackProfit(Player player) {
+    private long playerBlackjackProfit(Player player) {
         if (isBlackjack()) {
-            return 0;
+            return player.calculateProfit(ProfitRate.DRAW);
         }
-        return player.calculateProfit()
+        return player.calculateProfit(ProfitRate.WIN_BLACKJACK);
     }
     
-    private GameResult compareScore(int score, int playerScore) {
-        if (score == playerScore) {
-            return GameResult.DRAW;
+    private ProfitRate calculateProfitRate(int dealerScore, int playerScore) {
+        if (dealerScore == playerScore) {
+            return ProfitRate.DRAW;
         }
-        if (score < playerScore) {
-            return GameResult.LOSE;
+        if (dealerScore < playerScore) {
+            return ProfitRate.WIN;
         }
-        return GameResult.WIN;
+        return ProfitRate.LOSE;
+    }
+    
+    public int determineProfit(List<Player> players) {
+        List<Long> playersProfit = determinePlayersProfit(players);
+        return playersProfit.stream()
+                .mapToInt(Long::intValue)
+                .sum();
     }
 }

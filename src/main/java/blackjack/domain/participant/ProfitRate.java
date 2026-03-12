@@ -1,21 +1,19 @@
 package blackjack.domain.participant;
 
-public enum GameResult {
-    WIN,
-    DRAW,
-    LOSE,
+public enum ProfitRate {
+    WIN(1.0),
+    DRAW(0.0),
+    LOSE(-1.0),
+    WIN_BLACKJACK(1.5),
     ;
     
-    public GameResult opposite() {
-        if (this == WIN) {
-            return GameResult.LOSE;
-        }
-        if (this == LOSE) {
-            return GameResult.WIN;
-        }
-        return DRAW;
+    private final double rate;
+    
+    ProfitRate(double rate) {
+        this.rate = rate;
     }
     
-    public int getProfit(int bettingAmount) {
+    public long getProfit(int bettingAmount) {
+        return Math.round(rate * bettingAmount);
     }
 }
