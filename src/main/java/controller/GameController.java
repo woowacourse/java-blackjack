@@ -1,6 +1,7 @@
 package controller;
 
 import domain.Betting;
+import domain.BettingResultCalculator;
 import domain.BlackjackGame;
 import domain.Dealer;
 import domain.GameResultCalculator;
@@ -12,10 +13,12 @@ import domain.TotalFinalResult;
 import dto.DealerFinalResultDto;
 import dto.PlayerDto;
 import dto.PlayersDto;
+import dto.ProfitDto;
 import dto.ResultDto;
 import dto.TotalFinalResultsDto;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import view.InputView;
 import view.OutputView;
 
@@ -31,7 +34,6 @@ public class GameController {
     public void start() {
         List<String> names = inputView.readParticipants();
         BlackjackGame blackjackGame = BlackjackGame.start(getPlayerInfos(names, getBettingAmounts(names)));
-
         Dealer dealer = blackjackGame.getDealer();
         Players players = blackjackGame.getPlayers();
 
@@ -42,11 +44,13 @@ public class GameController {
         addPlayersCard(blackjackGame, players);
         addDealerCards(blackjackGame);
         printCardResults(ResultDto.from(dealer), PlayersDto.from(players));
-        printFinalResults(players, dealer);
+        printProfit(players, dealer);
     }
 
     private List<Integer> getBettingAmounts(List<String> names) {
-        return names.stream().map(inputView::readPlayerBettingAmount).toList();
+        return names.stream()
+                .map(inputView::readPlayerBettingAmount)
+                .toList();
     }
 
     private List<PlayerInfo> getPlayerInfos(List<String> names, List<Integer> amounts) {
@@ -89,5 +93,17 @@ public class GameController {
         TotalFinalResultsDto totalFinalResultsDto = TotalFinalResultsDto.from(totalFinalResult);
 
         outputView.printTotalResult(dealerFinalResultDto, totalFinalResultsDto);
+    }
+
+    private void printProfit(Players players, Dealer dealer) {
+        TotalFinalResult totalFinalResult = GameResultCalculator.checkGameResult(players, dealer);
+        Map<Name, Integer> playerProfits = BettingResultCalculator.calculatePlayersProfit(totalFinalResult);
+
+        ProfitDto dealerProfitDto = ProfitDto.fromDealer(BettingResultCalculator.calculateDealerProfit(playerProfits));
+        outputView.printProfitMessage();
+        outputView.printProfit(dealerProfitDto);
+        for (Map.Entry<Name, Integer> entry : playerProfits.entrySet()) {
+            outputView.printProfit(ProfitDto.fromPlayer(entry.getKey().getName(), entry.getValue()));
+        }
     }
 }
