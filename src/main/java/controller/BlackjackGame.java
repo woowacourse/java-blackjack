@@ -94,8 +94,10 @@ public class BlackjackGame {
 
     private void tryHitPlayers(Players players, Dealer dealer) {
         players.getPlayers()
-                .forEach(player -> drawPlayerCard(player, dealer));
-        // 출력해야하넹...
+                .forEach(player -> {
+                    drawPlayerCard(player, dealer);
+                    view.printParticipantHand(GamerHandDto.from(player));
+                });
     }
 
     private void tryHitDealer(Dealer dealer) {
