@@ -1,5 +1,6 @@
 package view;
 
+import domain.Player;
 import meesage.InputMessage;
 
 import java.util.Scanner;
@@ -15,6 +16,12 @@ public class InputView {
 
     public String askAddCard(String name){
         System.out.printf(InputMessage.ASK_ADD_CARD.getMessage(), name);
+        System.out.println();
+        return scanner.nextLine();
+    }
+
+    public String askBetAmount(Player player) {
+        System.out.printf("%s의 배팅 금액은?", player.getName());
         System.out.println();
         return scanner.nextLine();
     }
