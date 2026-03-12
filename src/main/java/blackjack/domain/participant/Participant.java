@@ -40,6 +40,10 @@ public class Participant {
         return nickname;
     }
     
+    public int getCardsCount() {
+        return hand.getSize();
+    }
+    
     public List<Card> getCards() {
         return hand.getCards();
     }

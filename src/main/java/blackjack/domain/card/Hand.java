@@ -26,12 +26,16 @@ public class Hand {
     }
     
     public boolean isBlackjack() {
-        return getTotalScore() == BUST_SCORE;
+        return getTotalScore() == BUST_SCORE && cards.size() == 2;
     }
     
     public boolean isBust() {
         int totalScore = getTotalScore();
         return totalScore > BUST_SCORE;
+    }
+    
+    public int getSize() {
+        return cards.size();
     }
     
     public int getTotalScore() {

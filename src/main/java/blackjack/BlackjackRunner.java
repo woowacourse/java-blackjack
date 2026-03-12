@@ -98,7 +98,7 @@ public class BlackjackRunner {
             printCurrentHand(currentPlayer);
             return;
         }
-        if (currentPlayer.getCards().size() == 2) {
+        if (currentPlayer.getCardsCount() == 2) {
             printCurrentHand(currentPlayer);
         }
         currentPlayer.stand();
