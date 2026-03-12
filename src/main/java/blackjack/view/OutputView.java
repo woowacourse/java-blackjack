@@ -73,7 +73,7 @@ public class OutputView {
         long dealerEarning = 0;
         List<Long> playerEarnings = new ArrayList<>();
         for (EarningResultDto dto : earningResultDtos) {
-            double earningRate = calculateEarningRate(dto.gameResult());
+            double earningRate = GameResult.fromName(dto.gameResult()).getEarningRate();
             long playerEarning = (long) (dto.bettingAmount() * earningRate);
             playerEarnings.add(playerEarning);
             dealerEarning += (playerEarning) * -1;
@@ -84,18 +84,5 @@ public class OutputView {
             System.out.printf("%s: %d%n", dto.name(), playerEarnings.get(idx));
             idx++;
         }
-    }
-
-    private double calculateEarningRate(String gameResult) {
-        if (gameResult.equals(GameResult.WIN.getName())) {
-            return GameResult.WIN.getEarningRate();
-        }
-        if (gameResult.equals(GameResult.TIE.getName())) {
-            return GameResult.TIE.getEarningRate();
-        }
-        if (gameResult.equals(GameResult.LOSE.getName())) {
-            return GameResult.LOSE.getEarningRate();
-        }
-        return GameResult.BLACKJACK_WIN.getEarningRate();
     }
 }
