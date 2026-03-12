@@ -25,7 +25,7 @@ public class Members {
         members.add(member);
     }
 
-    public void provideCard(String memberName, Card card) {
+    public void provideCardToMember(String memberName, Card card) {
         Member member = findByName(memberName);
         member.receiveCard(card);
     }
@@ -47,13 +47,13 @@ public class Members {
                 .orElseThrow(NoSuchElementException::new);
     }
 
-    public List<String> getAllPlayerName() {
+    public List<String> getAllMemberName() {
         return members.stream()
                 .map(Member::name)
                 .toList();
     }
 
-    public List<MatchResult> judgeDealerGameResult() {
+    public List<MatchResult> determineDealerGameResult() {
         Member dealer = findByName(Word.DEALER.getWord());
         List<Member> players = members.stream()
                 .filter(member -> !member.name().equals(Word.DEALER.getWord()))
@@ -66,19 +66,9 @@ public class Members {
         return gameResult;
     }
 
-    public Map<String, MatchResult> judgePlayerGameResult() {
+    public MatchResult determinePlayerGameResult(String name) {
         Member dealer = findByName(Word.DEALER.getWord());
-        List<Member> players = members.stream()
-                .filter(member -> !member.name().equals(Word.DEALER.getWord()))
-                .toList();
-
-        Map<String, MatchResult> gameResult = new HashMap<>();
-        for (Member player : players) {
-            String playerName = player.name();
-            gameResult.put(playerName,
-                    player.compareScoreWith(dealer));
-        }
-
-        return gameResult;
+        Member player = findByName(name);
+        return player.compareScoreWith(dealer);
     }
 }

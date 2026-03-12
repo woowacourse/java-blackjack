@@ -24,9 +24,9 @@ public class GameTable {
     }
 
     public void distributeInitCard() {
-        for (String memberName : members.getAllPlayerName()) {
-            members.provideCard(memberName, deck.draw());
-            members.provideCard(memberName, deck.draw());
+        for (String memberName : members.getAllMemberName()) {
+            members.provideCardToMember(memberName, deck.draw());
+            members.provideCardToMember(memberName, deck.draw());
         }
     }
 
@@ -35,20 +35,20 @@ public class GameTable {
     }
 
     public List<Card> drawForMember(String memberName) {
-        members.provideCard(memberName, deck.draw());
+        members.provideCardToMember(memberName, deck.draw());
         return members.findCardByName(memberName);
     }
 
     public boolean drawForDealer() {
         if (members.checkValue(Word.DEALER.getWord()) <= DEALER_DRAW_CONDITION) {
-            members.provideCard(Word.DEALER.getWord(), deck.draw());
+            members.provideCardToMember(Word.DEALER.getWord(), deck.draw());
             return true;
         }
         return false;
     }
 
     public List<MemberStatus> checkMemberStatuses() {
-        return members.getAllPlayerName()
+        return members.getAllMemberName()
                 .stream()
                 .map(name -> {
                     List<Card> cards = members.findCardByName(name);
@@ -60,14 +60,13 @@ public class GameTable {
     public List<GameResult> checkGameResult() {
         List<GameResult> gameResults = new ArrayList<>();
         gameResults.add(new GameResult(Word.DEALER.getWord(),
-                members.judgeDealerGameResult()));
+                members.determineDealerGameResult()));
 
-        Map<String, MatchResult> playerResults = members.judgePlayerGameResult();
-
-        for (String playerName : playerResults.keySet()) {
-            gameResults.add(new GameResult(playerName,
-                    List.of(playerResults.get(playerName))));
-        }
+        List<GameResult> playerResults =members.getAllMemberName().stream()
+                .filter(name -> !name.equals(Word.DEALER.getWord()))
+                .map(name -> new GameResult(name, List.of(members.determinePlayerGameResult(name))))
+                .toList();
+        gameResults.addAll(playerResults);
         return gameResults;
     }
 }
