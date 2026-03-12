@@ -3,6 +3,7 @@ package blackjack.domain;
 import java.util.List;
 
 public class Player {
+    private static final int BLACKJACK_THRESHOLD = 21;
     private final Name name;
     private final Hand hand;
 
@@ -38,11 +39,11 @@ public class Player {
     }
 
     public boolean canHit() {
-        return score() <= 21;
+        return score() <= BLACKJACK_THRESHOLD;
     }
 
     public boolean isBust() {
-        return score() > 21;
+        return score() > BLACKJACK_THRESHOLD;
     }
 
     public List<TrumpCard> getCards() {
