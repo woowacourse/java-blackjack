@@ -1,50 +1,18 @@
 package blackjack.domain.participant;
 
-import static blackjack.util.constant.Constants.BLACKJACK_NUMBER;
+import blackjack.domain.BettingAmount;
 
-import blackjack.domain.deck.Card;
-import blackjack.domain.deck.Cards;
-import java.util.List;
+public class User extends Participant {
 
-public class User {
+    private final BettingAmount bettingAmount;
 
-    private final UserName name;
-    private final Cards cards;
-
-    public User(String name) {
-        this.name = new UserName(name);
-        this.cards = new Cards();
+    public User(String name, BettingAmount bettingAmount) {
+        super(name);
+        this.bettingAmount = bettingAmount;
     }
 
-    public void add(Card card) {
-        cards.add(card);
+    public int getBettingAmount() {
+        return bettingAmount.getAmount();
     }
 
-    public String getName() {
-        return name.name();
-    }
-
-    public String getFirstCardName() {
-        return cards.getFirstName();
-    }
-
-    public List<String> getCardsName() {
-        return cards.getNames();
-    }
-
-    public int calculateCardsValue() {
-        return cards.calculateValue();
-    }
-
-    public boolean isBurst() {
-        return calculateCardsValue() > BLACKJACK_NUMBER;
-    }
-
-    private boolean isBlackjack() {
-        return calculateCardsValue() == BLACKJACK_NUMBER;
-    }
-
-    public boolean isFinished() {
-        return isBurst() || isBlackjack();
-    }
 }

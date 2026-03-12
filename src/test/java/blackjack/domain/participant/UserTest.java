@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+import blackjack.domain.BettingAmount;
 import blackjack.domain.deck.Card;
 import blackjack.domain.deck.CardShape;
 import blackjack.domain.deck.CardValue;
@@ -11,24 +12,14 @@ import org.junit.jupiter.api.Test;
 public class UserTest {
 
     @Test
-    void 유저_생성_테스트() {
-        // given
-        String name = "흑곰";
-
-        // when & then
-        assertThatCode(() -> new User(name))
-                .doesNotThrowAnyException();
-    }
-
-    @Test
     void 유저가_카드_한_장을_가져오는_테스트() {
         // given
-        User user = new User("밀란");
+        User user = new User("밀란", new BettingAmount(10000));
         Card card = new Card(CardValue.ACE, CardShape.DIAMOND);
 
         // when
         int before = user.getCardsName().size();
-        user.bring(card);
+        user.add(card);
 
         // then
         assertThat(user.getCardsName().size()).isEqualTo(before + 1);
@@ -37,9 +28,9 @@ public class UserTest {
     @Test
     void 가지고있는_카드의_합을_계산하는_기능_테스트() {
         // given
-        User user = new User("밀란");
-        user.bring(new Card(CardValue.FOUR, CardShape.DIAMOND));
-        user.bring(new Card(CardValue.TWO, CardShape.DIAMOND));
+        User user = new User("밀란", new BettingAmount(10000));
+        user.add(new Card(CardValue.FOUR, CardShape.DIAMOND));
+        user.add(new Card(CardValue.TWO, CardShape.DIAMOND));
 
         // when
         int sum = user.calculateCardsValue();
@@ -51,10 +42,10 @@ public class UserTest {
     @Test
     void ACE의_값이_1이_유리할_때_테스트() {
         // given
-        User user = new User("밀란");
-        user.bring(new Card(CardValue.ACE, CardShape.DIAMOND));
-        user.bring(new Card(CardValue.TEN, CardShape.DIAMOND));
-        user.bring(new Card(CardValue.THREE, CardShape.DIAMOND));
+        User user = new User("밀란", new BettingAmount(10000));
+        user.add(new Card(CardValue.ACE, CardShape.DIAMOND));
+        user.add(new Card(CardValue.TEN, CardShape.DIAMOND));
+        user.add(new Card(CardValue.THREE, CardShape.DIAMOND));
 
         // when
         int sum = user.calculateCardsValue();
@@ -66,9 +57,9 @@ public class UserTest {
     @Test
     void ACE의_값이_11이_유리할_때_테스트() {
         // given
-        User user = new User("밀란");
-        user.bring(new Card(CardValue.ACE, CardShape.DIAMOND));
-        user.bring(new Card(CardValue.TEN, CardShape.DIAMOND));
+        User user = new User("밀란", new BettingAmount(10000));
+        user.add(new Card(CardValue.ACE, CardShape.DIAMOND));
+        user.add(new Card(CardValue.TEN, CardShape.DIAMOND));
 
         // when
         int sum = user.calculateCardsValue();
@@ -80,10 +71,10 @@ public class UserTest {
     @Test
     void 카드_합_Burst_판단_테스트() {
         // given
-        User user = new User("밀란");
-        user.bring(new Card(CardValue.TEN, CardShape.CLOVER));
-        user.bring(new Card(CardValue.TEN, CardShape.DIAMOND));
-        user.bring(new Card(CardValue.TEN, CardShape.HEART));
+        User user = new User("밀란", new BettingAmount(10000));
+        user.add(new Card(CardValue.TEN, CardShape.CLOVER));
+        user.add(new Card(CardValue.TEN, CardShape.DIAMOND));
+        user.add(new Card(CardValue.TEN, CardShape.HEART));
 
         // when
         boolean isBurst = user.isBurst();
@@ -95,9 +86,9 @@ public class UserTest {
     @Test
     void 카드_합_Blackjack_판단_테스트() {
         // given
-        User user = new User("밀란");
-        user.bring(new Card(CardValue.ACE, CardShape.CLOVER));
-        user.bring(new Card(CardValue.TEN, CardShape.DIAMOND));
+        User user = new User("밀란", new BettingAmount(10000));
+        user.add(new Card(CardValue.ACE, CardShape.CLOVER));
+        user.add(new Card(CardValue.TEN, CardShape.DIAMOND));
 
         // when
         boolean isBlackjack = user.isFinished();

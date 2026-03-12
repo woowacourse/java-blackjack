@@ -2,6 +2,7 @@ package blackjack.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.BettingAmount;
 import blackjack.domain.deck.Card;
 import blackjack.domain.deck.CardShape;
 import blackjack.domain.deck.CardValue;
@@ -28,7 +29,7 @@ class GameServiceTest {
     @DisplayName("게임 시작 세팅 테스트")
     void gameSetting() {
         // given
-        User user = new User("흑곰");
+        User user = new User("흑곰", new BettingAmount(10000));
         Dealer dealer = new Dealer();
         Users users = new Users(List.of(user));
 
@@ -43,11 +44,11 @@ class GameServiceTest {
     @DisplayName("딜러 및 유저 승리 횟수 할당")
     void applyWinningCount() {
         // given
-        User user = new User("흑곰");
+        User user = new User("흑곰", new BettingAmount(10000));
         Dealer dealer = new Dealer();
         GameResult gameResult = new GameResult();
-        user.bring(new Card(CardValue.SEVEN, CardShape.DIAMOND));
-        dealer.bring(new Card(CardValue.EIGHT, CardShape.DIAMOND));
+        user.add(new Card(CardValue.SEVEN, CardShape.DIAMOND));
+        dealer.add(new Card(CardValue.EIGHT, CardShape.DIAMOND));
 
         // when
         gameService.applyGameResult(user, dealer, gameResult);
@@ -61,10 +62,10 @@ class GameServiceTest {
     @DisplayName("승패 판단 테스트")
     void winningJudge() {
         // given
-        User user = new User("흑곰");
+        User user = new User("흑곰", new BettingAmount(10000));
         Dealer dealer = new Dealer();
-        user.bring(new Card(CardValue.SEVEN, CardShape.DIAMOND));
-        dealer.bring(new Card(CardValue.EIGHT, CardShape.DIAMOND));
+        user.add(new Card(CardValue.SEVEN, CardShape.DIAMOND));
+        dealer.add(new Card(CardValue.EIGHT, CardShape.DIAMOND));
 
         // when
         boolean isDealerWinning = gameService.isDealerWinning(user, dealer);

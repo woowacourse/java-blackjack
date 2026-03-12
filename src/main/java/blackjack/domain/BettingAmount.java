@@ -9,6 +9,10 @@ public class BettingAmount {
         this.amount = amount;
     }
 
+    public int getAmount() {
+        return amount;
+    }
+
     private void validate(int amount) {
         minus(amount);
         zero(amount);
