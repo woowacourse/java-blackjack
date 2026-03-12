@@ -64,8 +64,10 @@ public class BlackJackController {
         InitStatusDto initStatusDto = InitStatusDto.of(dealer, players);
         OutputView.printInitMessage(initStatusDto);
 
-        players.forEach(player -> drawPlayerCard(player, deck));
-
+        // todo : player, players를 붋변객체로 만들어서 해당 로직도 불변에 맞게 수정
+        for (Player player : players) {
+            drawPlayerCard(player, deck);
+        }
         drawDealerCard(dealer, deck);
 
         return Results.of(dealer, bettings);
