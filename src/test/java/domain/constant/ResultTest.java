@@ -1,6 +1,5 @@
 package domain.constant;
 
-import domain.Bet;
 import domain.Card;
 import domain.participant.Dealer;
 import domain.Hand;
@@ -14,6 +13,8 @@ import static domain.constant.Rank.*;
 import static domain.constant.Result.*;
 import static domain.constant.Suit.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ResultTest {
 
@@ -71,6 +72,24 @@ class ResultTest {
                 .map(player -> of(dealer, player))
                 .toList();
 
-        assertThat(results).containsExactly(LOSE, DRAW, WIN,BLACKJACK);
+        assertThat(results).containsExactly(LOSE, DRAW, WIN, BLACKJACK);
+    }
+
+
+    @Test
+    void 게임_결과에_따라_베팅_금액에_대한_수익금을_계산한다() {
+        int BetAmount = 10_000;
+
+        int blackjackProfit = BLACKJACK.calculateProfit(BetAmount);
+        int winProfit = WIN.calculateProfit(BetAmount);
+        int drawProfit = DRAW.calculateProfit(BetAmount);
+        int loseProfit = LOSE.calculateProfit(BetAmount);
+
+        assertAll(
+                () -> assertEquals(15_000, blackjackProfit),
+                () -> assertEquals(10_000, winProfit),
+                () -> assertEquals(0, drawProfit),
+                () -> assertEquals(-10_000, loseProfit)
+        );
     }
 }

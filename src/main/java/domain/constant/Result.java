@@ -12,11 +12,11 @@ public enum Result {
     LOSE("패", bet -> bet * -1);
 
     private final String name;
-    private final IntUnaryOperator operator;
+    private final IntUnaryOperator profitCalculationOperator;
 
-    Result(String name, IntUnaryOperator operator) {
+    Result(String name, IntUnaryOperator profitCalculationOperator) {
         this.name = name;
-        this.operator = operator;
+        this.profitCalculationOperator = profitCalculationOperator;
     }
 
     public static Result of(Dealer dealer, Player player) {
@@ -35,6 +35,10 @@ public enum Result {
         return compareScore(dealer.getScore(), player.getScore());
     }
 
+    public int calculateProfit(int betAmount) {
+        return profitCalculationOperator.applyAsInt(betAmount);
+    }
+
     public Result reverse() {
         if (this == WIN) {
             return LOSE;
@@ -49,10 +53,6 @@ public enum Result {
 
     public String getName() {
         return name;
-    }
-
-    public int apply(int betAmount) {
-        return operator.applyAsInt(betAmount);
     }
 
     private static Result compareScore(int dealerScore, int playerScore) {

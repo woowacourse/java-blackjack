@@ -7,7 +7,7 @@ public class Profit {
     private final int amount;
 
     public Profit(int betAmount, Result result) {
-        this.amount = result.apply(betAmount);
+        this.amount = result.calculateProfit(betAmount);
     }
 
     public int getAmount() {
