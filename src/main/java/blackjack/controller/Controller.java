@@ -4,9 +4,7 @@ import blackjack.domain.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Controller {
     private static final int INITIAL_DEAL_REPEAT = 2;
