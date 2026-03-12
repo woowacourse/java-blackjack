@@ -17,4 +17,32 @@ public class PlayerTest {
 
     }
 
+    @Test
+    void 처음_두장의_합이_21이면_블랙잭이다() {
+        Player player = new Player("pobi");
+        player.recieveCard(new Card(CardPoint.ACE, CardPattern.SPADE));
+        player.recieveCard(new Card(CardPoint.KING, CardPattern.HEART));
+
+        assertThat(player.isBlackJack()).isTrue();
+    }
+
+    @Test
+    void 세장의_합이_21이어도_블랙잭이_아니다() {
+        Player player = new Player("pobi");
+        player.recieveCard(new Card(CardPoint.SEVEN, CardPattern.SPADE));
+        player.recieveCard(new Card(CardPoint.SEVEN, CardPattern.HEART));
+        player.recieveCard(new Card(CardPoint.SEVEN, CardPattern.CLUB));
+
+        assertThat(player.isBlackJack()).isFalse();
+    }
+
+    @Test
+    void 처음_두장의_합이_21이_아니면_블랙잭이_아니다() {
+        Player player = new Player("pobi");
+        player.recieveCard(new Card(CardPoint.ACE, CardPattern.SPADE));
+        player.recieveCard(new Card(CardPoint.NINE, CardPattern.HEART));
+
+        assertThat(player.isBlackJack()).isFalse();
+    }
+
 }
