@@ -61,13 +61,13 @@ class BlackjackGameTest {
         Dealer dealer = new Dealer();
 
         List<Card> playerCards = List.of(
-                new Card(Suit.SPADES, Rank.KING),
-                new Card(Suit.HEARTS, Rank.KING)
+                Card.of(Suit.SPADES, Rank.KING),
+                Card.of(Suit.HEARTS, Rank.KING)
         );
 
         List<Card> dealerCards = List.of(
-                new Card(Suit.DIAMONDS, Rank.KING),
-                new Card(Suit.HEARTS, Rank.EIGHT)
+                Card.of(Suit.DIAMONDS, Rank.KING),
+                Card.of(Suit.HEARTS, Rank.EIGHT)
         );
 
         playerCards.forEach(player::hit);
@@ -82,13 +82,13 @@ class BlackjackGameTest {
         Dealer dealer = new Dealer();
 
         List<Card> playerCards = List.of(
-                new Card(Suit.SPADES, Rank.KING),
-                new Card(Suit.HEARTS, Rank.KING)
+                Card.of(Suit.SPADES, Rank.KING),
+                Card.of(Suit.HEARTS, Rank.KING)
         );
 
         List<Card> dealerCards = List.of(
-                new Card(Suit.DIAMONDS, Rank.KING),
-                new Card(Suit.CLUBS, Rank.KING)
+                Card.of(Suit.DIAMONDS, Rank.KING),
+                Card.of(Suit.CLUBS, Rank.KING)
         );
 
         playerCards.forEach(player::hit);
@@ -103,13 +103,13 @@ class BlackjackGameTest {
         Dealer dealer = new Dealer();
 
         List<Card> playerCards = List.of(
-                new Card(Suit.SPADES, Rank.KING),
-                new Card(Suit.HEARTS, Rank.KING)
+                Card.of(Suit.SPADES, Rank.KING),
+                Card.of(Suit.HEARTS, Rank.KING)
         );
 
         List<Card> dealerCards = List.of(
-                new Card(Suit.DIAMONDS, Rank.KING),
-                new Card(Suit.CLUBS, Rank.ACE)
+                Card.of(Suit.DIAMONDS, Rank.KING),
+                Card.of(Suit.CLUBS, Rank.ACE)
         );
 
         playerCards.forEach(player::hit);
@@ -124,14 +124,14 @@ class BlackjackGameTest {
         Dealer dealer = new Dealer();
 
         List<Card> playerCards = List.of(
-                new Card(Suit.SPADES, Rank.KING),
-                new Card(Suit.HEARTS, Rank.KING),
-                new Card(Suit.CLUBS, Rank.KING)
+                Card.of(Suit.SPADES, Rank.KING),
+                Card.of(Suit.HEARTS, Rank.KING),
+                Card.of(Suit.CLUBS, Rank.KING)
         );
 
         List<Card> dealerCards = List.of(
-                new Card(Suit.DIAMONDS, Rank.KING),
-                new Card(Suit.CLUBS, Rank.TEN)
+                Card.of(Suit.DIAMONDS, Rank.KING),
+                Card.of(Suit.CLUBS, Rank.TEN)
         );
 
         playerCards.forEach(player::hit);
@@ -149,13 +149,13 @@ class BlackjackGameTest {
         Dealer dealer = new Dealer();
 
         List<Card> playerCards = List.of(
-                new Card(Suit.DIAMONDS, Rank.KING),
-                new Card(Suit.HEARTS, Rank.EIGHT)
+                Card.of(Suit.DIAMONDS, Rank.KING),
+                Card.of(Suit.HEARTS, Rank.EIGHT)
         );
 
         List<Card> dealerCards = List.of(
-                new Card(Suit.SPADES, Rank.KING),
-                new Card(Suit.HEARTS, Rank.KING)
+                Card.of(Suit.SPADES, Rank.KING),
+                Card.of(Suit.HEARTS, Rank.KING)
         );
 
         playerCards.forEach(player::hit);
@@ -170,13 +170,13 @@ class BlackjackGameTest {
         Dealer dealer = new Dealer();
 
         List<Card> playerCards = List.of(
-                new Card(Suit.SPADES, Rank.KING),
-                new Card(Suit.HEARTS, Rank.KING)
+                Card.of(Suit.SPADES, Rank.KING),
+                Card.of(Suit.HEARTS, Rank.KING)
         );
 
         List<Card> dealerCards = List.of(
-                new Card(Suit.DIAMONDS, Rank.KING),
-                new Card(Suit.CLUBS, Rank.KING)
+                Card.of(Suit.DIAMONDS, Rank.KING),
+                Card.of(Suit.CLUBS, Rank.KING)
         );
 
         playerCards.forEach(player::hit);
@@ -191,13 +191,13 @@ class BlackjackGameTest {
         Dealer dealer = new Dealer();
 
         List<Card> playerCards = List.of(
-                new Card(Suit.SPADES, Rank.KING),
-                new Card(Suit.HEARTS, Rank.KING)
+                Card.of(Suit.SPADES, Rank.KING),
+                Card.of(Suit.HEARTS, Rank.KING)
         );
 
         List<Card> dealerCards = List.of(
-                new Card(Suit.DIAMONDS, Rank.NINE),
-                new Card(Suit.CLUBS, Rank.KING)
+                Card.of(Suit.DIAMONDS, Rank.NINE),
+                Card.of(Suit.CLUBS, Rank.KING)
         );
 
         playerCards.forEach(player::hit);
@@ -212,15 +212,15 @@ class BlackjackGameTest {
         Dealer dealer = new Dealer();
 
         List<Card> playerCards = List.of(
-                new Card(Suit.SPADES, Rank.KING),
-                new Card(Suit.HEARTS, Rank.KING),
-                new Card(Suit.CLUBS, Rank.KING)
+                Card.of(Suit.SPADES, Rank.KING),
+                Card.of(Suit.HEARTS, Rank.KING),
+                Card.of(Suit.CLUBS, Rank.KING)
         );
 
         List<Card> dealerCards = List.of(
-                new Card(Suit.DIAMONDS, Rank.KING),
-                new Card(Suit.CLUBS, Rank.TEN),
-                new Card(Suit.DIAMONDS, Rank.TEN)
+                Card.of(Suit.DIAMONDS, Rank.KING),
+                Card.of(Suit.CLUBS, Rank.TEN),
+                Card.of(Suit.DIAMONDS, Rank.TEN)
         );
 
         playerCards.forEach(player::hit);

@@ -2,7 +2,6 @@ package team.blackjack.domain;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import team.blackjack.domain.rule.DefaultBlackjackRule;
 
 class ResultTest {
 

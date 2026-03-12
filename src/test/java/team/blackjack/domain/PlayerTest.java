@@ -9,7 +9,7 @@ class PlayerTest {
     @Test
     void hit하면_플레이어_핸드에_카드가_추가된다() {
         Player player = new Player("pobi");
-        Card card = new Card(Suit.HEARTS, Rank.ACE);
+        Card card = Card.of(Suit.HEARTS, Rank.ACE);
 
         player.hit(card);
 
@@ -21,8 +21,8 @@ class PlayerTest {
     void 킹과_에이스를_각각_1장씩_받은_플레이어의_점수는_21로_정상_계산된다() {
         Player player = new Player("pobi");
         List<Card> cards = List.of(
-                new Card(Suit.HEARTS, Rank.ACE),
-                new Card(Suit.CLUBS, Rank.KING)
+                Card.of(Suit.HEARTS, Rank.ACE),
+                Card.of(Suit.CLUBS, Rank.KING)
         );
 
         for (Card card : cards) {
