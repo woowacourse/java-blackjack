@@ -46,11 +46,11 @@ public class Player extends Participant {
     }
 
     private MatchResult determineGameResult(Dealer dealer) {
-        if (dealer.isBusted()) {
-            return MatchResult.WIN;
-        }
         if (hand.isBusted()) {
             return MatchResult.LOSE;
+        }
+        if (dealer.isBusted()) {
+            return MatchResult.WIN;
         }
         return compareScore(dealer.getTotalScore(), getTotalScore());
     }
