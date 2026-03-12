@@ -8,7 +8,7 @@ import dto.PlayerHandScoreDto;
 import dto.ScoreResultDto;
 
 public class OutputView {
-
+    // todo : OS 종속적이지 않은 줄바꿈 문자 사용
     public static final String HEADER_FORMAT = "딜러와 %s에게 2장을 나누었습니다.\n";
     public static final String DEALER_STATUS_FORMAT = "딜러카드: %s\n";
     public static final String PLAYER_STATUS_FORMAT = "%s카드: %s\n";
