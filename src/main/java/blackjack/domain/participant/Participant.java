@@ -9,17 +9,17 @@ import java.util.Objects;
 
 public abstract class Participant {
 
+    protected final Name name;
     protected final Hand hand;
     protected BettingAmount bettingAmount;
 
-    protected Participant(Hand hand) {
+    protected Participant(String name, Hand hand) {
+        this.name = new Name(name);
         this.hand = hand;
         this.bettingAmount = BettingAmount.initial();
     }
 
     public abstract List<Card> getInitialCards();
-
-    public abstract String getName();
 
     public final long calculateProfitRate(BettingResult bettingResult) {
         return bettingResult.getProfitRate(bettingAmount.getBettingAmount());
@@ -37,6 +37,10 @@ public abstract class Participant {
 
     public final boolean isBlackjack() {
         return hand.isBlackjack();
+    }
+
+    public final String getName() {
+        return name.getValue();
     }
 
     public final List<Card> getCards() {
