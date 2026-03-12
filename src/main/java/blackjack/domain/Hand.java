@@ -32,11 +32,9 @@ public class Hand {
     }
 
     private int getNormalPoint() {
-        int totalPoint = 0;
-        for (Card card : cards) {
-            totalPoint += card.getCardPoint();
-        }
-        return totalPoint;
+        return cards.stream()
+                .mapToInt(Card::getCardPoint)
+                .sum();
     }
 
     private int getAceCount() {
