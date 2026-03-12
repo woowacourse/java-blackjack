@@ -360,7 +360,7 @@ SRP를 완벽히 지킨 것입니다.
     - ed 를 붙여야 하는가?
     - 이미 만들어진 Players 에 대한 검증이기에 duplicated 라 생각했으나. 굳이?
     - 그 내부 상태에 대해 묻지도, 알지도 말고 그저 시켜라 그리고 내 할일을 해라
-    - BUSTED? isBusted? 이하동문
+    - BUSTED? isBust? 이하동문
 
 --- 
 
@@ -511,7 +511,7 @@ SRP를 완벽히 지킨 것입니다.
     - ## `카드`의 행위`Behavior`
     - [x] 딜러가 카드를 뽑아야 하는가 `isDealerDraw()`
     - [x] 카드를 뽑을 수 있는가(카드가 남아 있는가) `isDrawable()`
-    - [x] 카드가 `버스트` 인가 `isBusted()`
+    - [x] 카드가 `버스트` 인가 `isBust()`
     - [x] 카드 뭉치의 최종 점수 계산 `calculateTotalScore()`
     - [x] 카드 뭉치의 단순 합계 계산 `calculateScoreSum()`
     - [x] 카드 뭉치에 에이스 개수 `countAce()`

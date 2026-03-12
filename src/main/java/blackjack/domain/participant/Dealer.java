@@ -32,10 +32,10 @@ public class Dealer extends Participant {
     }
     
     public GameResult determineGameResult(Player player) {
-        if (isBusted()) {
+        if (isBust()) {
             return GameResult.LOSE;
         }
-        if (player.isBusted()) {
+        if (player.isBust()) {
             return GameResult.WIN;
         }
         return compareScore(getScore(), player.getScore());

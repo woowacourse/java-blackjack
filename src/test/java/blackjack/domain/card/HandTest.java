@@ -55,13 +55,13 @@ class HandTest {
     
     @Test
     @DisplayName("손패의 총합이 21점을 초과하면 버스트 상태로 판별한다.")
-    void isBusted_True_WhenScoreExceeds21() {
+    void isBust_True_WhenScoreExceeds21() {
         Hand hand = new Hand();
         hand.addCards(List.of(
                 new Card(Rank.TEN, Suit.SPADE),
                 new Card(Rank.TEN, Suit.HEART),
                 new Card(Rank.TWO, Suit.DIAMOND)
         ));
-        assertThat(hand.isBusted()).isTrue();
+        assertThat(hand.isBust()).isTrue();
     }
 }

@@ -9,7 +9,7 @@ public class Players {
     private final List<Player> playerList;
     
     private Players(List<Player> playerList) {
-        validateDuplicated(playerList);
+        validateDuplicate(playerList);
         this.playerList = playerList;
     }
     
@@ -31,7 +31,7 @@ public class Players {
         }
     }
     
-    private void validateDuplicated(List<Player> playerList) {
+    private void validateDuplicate(List<Player> playerList) {
         long distinctCount = playerList.stream()
                 .map(Player::getNickname)
                 .distinct()

@@ -27,7 +27,7 @@ public class Player extends Participant {
     
     @Override
     public boolean isDrawable() {
-        if (stopDrawing || isBusted()) {
+        if (stopDrawing || isBust()) {
             return false;
         }
         return !hand.isBlackjack();
