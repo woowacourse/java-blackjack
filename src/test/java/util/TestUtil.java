@@ -9,6 +9,8 @@ import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
 import domain.result.Result;
+import domain.result.Results;
+import java.util.Arrays;
 
 public class TestUtil {
 
@@ -72,5 +74,9 @@ public class TestUtil {
 
     public static Result createAmount10000Result(String name, WinningStatus winningStatus) {
         return new Result(createBetting(name, 10000), winningStatus);
+    }
+
+    public static Results createResults(Result... results) {
+        return new Results(Arrays.stream(results).toList());
     }
 }

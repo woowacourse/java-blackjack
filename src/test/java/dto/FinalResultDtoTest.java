@@ -1,93 +1,41 @@
 package dto;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static util.TestUtil.createDealer;
-import static util.TestUtil.createPlayer;
+import static util.TestUtil.createResult;
+import static util.TestUtil.createResults;
 
-import domain.Dealer;
-import domain.Player;
 import domain.WinningStatus;
-import domain.card.Rank;
-import java.util.List;
-import java.util.SortedMap;
-import java.util.TreeMap;
-import org.junit.jupiter.api.Nested;
+import domain.result.Results;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class FinalResultDtoTest {
 
-    @Test
-    void 이름과_WinningStatus로_FinalResultDto를_생성한다() {
+    @ParameterizedTest
+    @CsvSource(value = {"WIN,-1000,1000", "BLACKJACK_WIN,-1500,1500", "LOSE,1000,-1000", "DRAW,0,0"})
+    void Results로_FinalResultDto를_생성한다(WinningStatus winningStatus,
+                                       long expectedDealerProfit,
+                                       long expectedPlayerProfit) {
         // given, when
-        SortedMap<String, WinningStatus> map = new TreeMap<>();
-        map.put("봉구스", WinningStatus.WIN);
-        map.put("시오", WinningStatus.LOSE);
-
-        FinalResultDto finalResultDto = FinalResultDto.from(map);
+        Results results = createResults(createResult("봉구스", 1000, winningStatus));
+        FinalResultDto finalResultDto = FinalResultDto.from(results);
         // then
-        assertEquals(1, finalResultDto.dealerWinCount());
-        assertEquals(1, finalResultDto.dealerLoseCount());
-        assertEquals(List.of(new PlayerResultDto("봉구스", "승"),
-                        new PlayerResultDto("시오", "패")),
-                finalResultDto.playerResults());
+        assertEquals(expectedDealerProfit, finalResultDto.dealerProfit());
+        assertEquals(expectedPlayerProfit, finalResultDto.playerResultDtos().getFirst().profit());
     }
 
+
     @Test
-    void 딜러와_플레이어로_FinalResultDto를_생성한다() {
+    void 딜러의_수익을_계산한다() {
         // given
-        Dealer dealer = createDealer(Rank.JACK);
-        List<Player> players = List.of(
-                createPlayer("봉구스", Rank.FIVE),
-                createPlayer("시오", Rank.JACK),
-                createPlayer("영기", Rank.ACE));
-        FinalResultDto finalResultDto = FinalResultDto.of(dealer, players);
+        Results results = createResults(createResult("루디", 10000, WinningStatus.WIN),
+                createResult("시오", 1000, WinningStatus.BLACKJACK_WIN),
+                createResult("영기", 100, WinningStatus.LOSE),
+                createResult("제이크", 10, WinningStatus.DRAW));
+        FinalResultDto finalResultDto = FinalResultDto.from(results);
 
         // when, then
-        assertEquals(1, finalResultDto.dealerWinCount());
-        assertEquals(1, finalResultDto.dealerLoseCount());
-        assertEquals(List.of(new PlayerResultDto("봉구스", "패"),
-                        new PlayerResultDto("시오", "무"),
-                        new PlayerResultDto("영기", "승")),
-                finalResultDto.playerResults());
-    }
-
-    @Nested
-    class FinalResultDto가_올바른_값을_가진다 {
-
-        @Test
-        void 플레이어가_Bust로_패배하는_경우() {
-            // given
-            Dealer dealer = createDealer(Rank.JACK);
-            List<Player> players = List.of(
-                    createPlayer("봉구스", Rank.KING, Rank.QUEEN, Rank.JACK),
-                    createPlayer("시오"),
-                    createPlayer("영기")
-            );
-
-            FinalResultDto finalResultDto = FinalResultDto.of(dealer, players);
-
-            // when, then
-            assertEquals(3, finalResultDto.dealerWinCount());
-            assertEquals(0, finalResultDto.dealerLoseCount());
-            assertEquals("패", finalResultDto.playerResults().getFirst().winningStatus());
-        }
-
-        @Test
-        void 딜러가_Bust로_패배하는_경우() {
-            // given
-            Dealer dealer = createDealer(Rank.JACK, Rank.KING, Rank.QUEEN);
-            List<Player> players = List.of(
-                    createPlayer("봉구스", Rank.KING),
-                    createPlayer("시오"),
-                    createPlayer("영기")
-            );
-
-            FinalResultDto finalResultDto = FinalResultDto.of(dealer, players);
-
-            // when, then
-            assertEquals(0, finalResultDto.dealerWinCount());
-            assertEquals(3, finalResultDto.dealerLoseCount());
-            assertEquals("승", finalResultDto.playerResults().getFirst().winningStatus());
-        }
+        assertEquals(-10000 - 1500 + 100, finalResultDto.dealerProfit());
     }
 }
