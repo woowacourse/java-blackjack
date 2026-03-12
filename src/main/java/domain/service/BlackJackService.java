@@ -2,17 +2,19 @@ package domain.service;
 
 import domain.model.Dealer;
 import domain.model.Player;
+import domain.model.PlayerBetting;
 import dto.*;
 
 import java.util.List;
-
-import static constant.BlackJackConstant.DEALER_APPEND_CRITERIA;
 
 public class BlackJackService {
 
     private final PersonService personService;
     private final CardDistributor cardDistributor;
     private final JudgementService judgementService;
+
+    public static final int DEALER_APPEND_CRITERIA = 16;
+
 
     public BlackJackService(
             PersonService personService,
@@ -30,11 +32,16 @@ public class BlackJackService {
                 .map(Player::of)
                 .toList();
         cardDistributor.initialize(players);
-        return InitialDto.of(cardDistributor.getDealer(), players);
+        return InitialDto.of(personService.getDealer(), players);
     }
 
     public List<Player> getAllPlayers() {
         return personService.findAllPlayers();
+    }
+
+    public void createBetting(Player player, int bettingPrice) {
+        PlayerBetting playerBetting = PlayerBetting.of(player, bettingPrice);
+        personService.savePlayerBetting(playerBetting);
     }
 
     public PlayerResultDto additionalCard(Player player) {
@@ -48,7 +55,7 @@ public class BlackJackService {
 
     public boolean isDealerCanAppend() {
         Dealer dealer = personService.getDealer();
-        return dealer.calculateFinalSum() <= DEALER_APPEND_CRITERIA;
+        return dealer.getFinalDeckSum() <= DEALER_APPEND_CRITERIA;
     }
 
     public void additionalDealerCard() {

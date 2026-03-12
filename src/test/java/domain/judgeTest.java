@@ -5,6 +5,7 @@ import domain.service.JudgementService;
 import domain.service.PersonService;
 import org.junit.jupiter.api.Test;
 import repository.DealerRepository;
+import repository.PlayerBettingRepository;
 import repository.PlayerRepository;
 
 import java.util.List;
@@ -15,9 +16,11 @@ public class judgeTest {
 
     private final PlayerRepository playerRepository = new PlayerRepository();
     private final DealerRepository dealerRepository = new DealerRepository();
+    private final PlayerBettingRepository playerBettingRepository = new PlayerBettingRepository();
     private final PersonService personService = new PersonService(
             playerRepository,
-            dealerRepository
+            dealerRepository,
+            playerBettingRepository
     );
     private final JudgementService judgementService = new JudgementService(
             personService
@@ -49,7 +52,7 @@ public class judgeTest {
         judgementService.judgementWinning(player, dealer);
 
         // then
-        assertThat(player.getPlayerStatus()).isEqualTo(PlayerStatus.LOSS);
+        assertThat(player.getPlayerStatus()).isEqualTo(PlayerStatus.WIN);
     }
 
     // 플레이어 버스트
@@ -227,5 +230,32 @@ public class judgeTest {
 
         // then
         assertThat(player.getPlayerStatus()).isEqualTo(PlayerStatus.WIN);
+    }
+
+    @Test
+    void 플레이어와_딜러_모두_블랙잭일때_무승부_테스트() {
+        // given
+        Player player = Player.of("phobi");
+        playerRepository.save(player);
+        List<Card> cards1 = List.of(
+                Card.of(CardRank.ACE, CardShape.HEART),
+                Card.of(CardRank.TEN, CardShape.CLUB)
+        );
+        Deck deck1 = Deck.of(cards1);
+        player.assignDeck(deck1);
+
+        List<Card> cards2 = List.of(
+                Card.of(CardRank.ACE, CardShape.DIAMOND),
+                Card.of(CardRank.QUEEN, CardShape.CLUB)
+        );
+        Deck deck2 = Deck.of(cards2);
+        Dealer dealer = Dealer.of(deck2);
+        dealerRepository.save(dealer);
+
+        // when
+        judgementService.judgementWinning(player, dealer);
+
+        // then
+        assertThat(player.getPlayerStatus()).isEqualTo(PlayerStatus.DRAW);
     }
 }

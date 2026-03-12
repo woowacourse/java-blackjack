@@ -44,6 +44,6 @@ public class PlayerTest {
         player.assignDeck(deck1);
 
         // then
-        assertThat(player.getDeckSum()).isEqualTo(9);
+        assertThat(player.getFinalDeckSum()).isEqualTo(9);
     }
 }

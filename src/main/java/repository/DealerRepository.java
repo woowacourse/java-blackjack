@@ -5,7 +5,6 @@ import domain.model.Dealer;
 public class DealerRepository {
 
     private Dealer dealer = null;
-    // TODO: 딜러에 대한 정보 저장
 
     public DealerRepository() {
     }

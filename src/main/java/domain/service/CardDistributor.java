@@ -30,10 +30,6 @@ public class CardDistributor {
         person.appendCard(cardFactory.createCard());
     }
 
-    public Dealer getDealer() {
-        return personService.getDealer();
-    }
-
     private Deck getDeck() {
         List<Card> cards = new ArrayList<>();
         cards.add(cardFactory.createCard());

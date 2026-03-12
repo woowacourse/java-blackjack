@@ -20,16 +20,41 @@ public class BlackJackController {
     }
 
     public void run() {
+        initializeGame();
+        handleAdditionalCardPhase();
+        displayGameResult();
+    }
+
+    private void initializeGame() {
+        InitialDto initialDto = createPlayers();
+        createBets();
+        view.outputInitialMessage(initialDto);
+    }
+
+    private void createBets() {
+        blackJackService.getAllPlayers().forEach(this::createBetting);
+    }
+
+    private InitialDto createPlayers() {
         String inputPlayerNames = view.inputPlayerNames();
         InputValidator.validatePlayerNames(inputPlayerNames);
-        InitialDto initialDto = blackJackService.createPlayer(StringParser.parse(inputPlayerNames));
-        view.outputInitialMessage(initialDto);
+        return blackJackService.createPlayer(StringParser.parse(inputPlayerNames));
+    }
 
+    private void handleAdditionalCardPhase() {
         blackJackService.getAllPlayers().forEach(this::getAdditionalCard);
         getAdditionalDealerCard();
+    }
 
+    private void displayGameResult() {
         ResultDto resultDto = blackJackService.judgement();
         view.playerResultMessage(resultDto);
+    }
+
+    private void createBetting(Player player) {
+        String bettingPriceInput = view.inputPlayerBetting(player.getName());
+        InputValidator.validateBettingPrice(bettingPriceInput);
+        blackJackService.createBetting(player, Integer.parseInt(bettingPriceInput));
     }
 
     public void getAdditionalCard(Player player) {

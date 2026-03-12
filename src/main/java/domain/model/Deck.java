@@ -2,35 +2,41 @@ package domain.model;
 
 import java.util.List;
 
-import static constant.BlackJackConstant.BURST_CRITERIA;
-
 public class Deck {
 
-    private int sum = 0;
     private DeckStatus deckStatus;
     private List<Card> cards;
 
-    private Deck(List<Card> cards, int sum, DeckStatus deckStatus) {
+    public static final int BURST_CRITERIA = 21;
+    public static final int BLACKJACK_CRITERIA = 21;
+
+    private Deck(List<Card> cards, DeckStatus deckStatus) {
         this.cards = cards;
-        this.sum = sum;
         this.deckStatus = deckStatus;
     }
 
     public static Deck of(List<Card> cards) {
-        int cardSum = cards.stream()
-                .mapToInt(Card::getValue)
-                .sum();
-
-        DeckStatus deckStatus1 = judgeDeckStatus(cardSum);
-        return new Deck(cards, cardSum, deckStatus1);
+        Deck deck = new Deck(cards, DeckStatus.ALIVE);
+        deck.judgeDeckStatus();
+        return deck;
     }
 
-    public int getSum() {
-        return sum;
+    // 최종 점수 계산 메서드
+    public int calculateFinalSum() {
+        boolean hasAce = isHasAce();
+        int sum = getSumWithAceAdditionalValue();
+        if (hasAce && sum <= BURST_CRITERIA) {
+            return sum;
+        }
+        return getSumWithAceDefaultValue();
     }
 
     public List<Card> getCards() {
         return List.copyOf(cards);
+    }
+
+    public DeckStatus getDeckStatus() {
+        return deckStatus;
     }
 
     public int getSize() {
@@ -41,40 +47,21 @@ public class Deck {
         return cards.getLast();
     }
 
-    public void checkStatus() {
-        if (sum > BURST_CRITERIA) {
-            deckStatus = DeckStatus.BURST;
-        }
-    }
-
-    public void calculateSum() {
-        sum = cards.stream()
-                .mapToInt(Card::getValue)
-                .sum();
-    }
-
     public void append(Card card) {
         if (deckStatus == DeckStatus.ALIVE) {
             this.cards.add(card);
-            calculateSum();
-            checkStatus();
+            judgeDeckStatus();
         }
     }
 
-    // 최종 점수 계산 메서드
-    public int calculateFinalSum() {
-        boolean hasAce = cards.stream().anyMatch(Card::isAce);
-        if (hasAce && sum <= 11) {
-            return sum + 10;
+    private void judgeDeckStatus() {
+        if (getSize() == 2 && isHasAce() && getSumWithAceAdditionalValue() == BLACKJACK_CRITERIA) {
+            deckStatus = DeckStatus.BLACKJACK;
         }
-        return sum;
-    }
 
-    private static DeckStatus judgeDeckStatus(int sum) {
-        if (sum > BURST_CRITERIA) {
-            return DeckStatus.BURST;
+        if (getSumWithAceDefaultValue() > BURST_CRITERIA) {
+            deckStatus = DeckStatus.BURST;
         }
-        return DeckStatus.ALIVE;
     }
 
     public boolean isBurst() {
@@ -83,5 +70,25 @@ public class Deck {
 
     public boolean isAlive() {
         return deckStatus == DeckStatus.ALIVE;
+    }
+
+    public boolean isBlackJack() {
+        return deckStatus == DeckStatus.BLACKJACK;
+    }
+
+    public int getSumWithAceDefaultValue() {
+        return cards.stream()
+                .mapToInt(Card::getValue)
+                .sum();
+    }
+
+    public int getSumWithAceAdditionalValue() {
+        return cards.stream()
+                .mapToInt(Card::getAdditionalValue)
+                .sum();
+    }
+
+    private boolean isHasAce() {
+        return cards.stream().anyMatch(Card::isAce);
     }
 }
