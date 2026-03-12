@@ -13,8 +13,11 @@ public class Deck {
         this.cards = makeCards();
     }
 
-    public Card dealCard() {
+    public void shuffleCards() {
         Collections.shuffle(cards);
+    }
+
+    public Card drawCard() {
         return cards.removeFirst();
     }
 

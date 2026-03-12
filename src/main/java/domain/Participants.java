@@ -37,10 +37,11 @@ public class Participants {
     }
 
     public void dealOneCardToAll(Deck deck) {
+        deck.shuffleCards();
         for (User user : players) {
-            user.receiveCard(deck.dealCard());
+            user.receiveCard(deck.drawCard());
         }
-        dealer.receiveCard(deck.dealCard());
+        dealer.receiveCard(deck.drawCard());
     }
 
     public String getUserNames() {
@@ -72,7 +73,7 @@ public class Participants {
     }
 
     public void dealCard(Deck deck, int index) {
-        players.get(index).receiveCard(deck.dealCard());
+        players.get(index).receiveCard(deck.drawCard());
     }
 
     public void calculateUserScore(int index) {

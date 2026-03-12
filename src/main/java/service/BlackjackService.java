@@ -57,7 +57,7 @@ public class BlackjackService {
 
     public String dealExtraCardIfNeeded() {
         if (participants.shouldDealerDraw()) {
-            participants.dealCardToDealer(deck.dealCard());
+            participants.dealCardToDealer(deck.drawCard());
             return Message.DEALER_CARD_RECEIVE_ANNOUNCE;
         }
         return "";
