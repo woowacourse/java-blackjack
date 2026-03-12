@@ -3,7 +3,7 @@ package domain;
 public class Betting {
     public static final String ERROR_BET_MUST_BE_POSITIVE = "[ERROR] 베팅 금액은 0보다 커야 합니다.";
     public static final double SPECIAL_SCALE = 1.5;
-    public static final int INITITAL_AMOUNT = 0;
+    public static final int INITIAL_AMOUNT = 0;
     private final int amount;
 
     private Betting(int amount) {
@@ -11,11 +11,11 @@ public class Betting {
     }
 
     public static Betting none() {
-        return new Betting(INITITAL_AMOUNT);
+        return new Betting(INITIAL_AMOUNT);
     }
 
     public static Betting of(int amount) {
-        if (amount <= INITITAL_AMOUNT) {
+        if (amount <= INITIAL_AMOUNT) {
             throw new IllegalArgumentException(ERROR_BET_MUST_BE_POSITIVE);
         }
         return new Betting(amount);
@@ -30,7 +30,7 @@ public class Betting {
             case BLACKJACK_WIN -> amount * SPECIAL_SCALE + amount;
             case WIN -> amount + amount;
             case TIE -> amount;
-            case LOSE -> INITITAL_AMOUNT;
+            case LOSE -> INITIAL_AMOUNT;
         };
     }
 }
