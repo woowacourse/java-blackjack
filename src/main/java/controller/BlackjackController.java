@@ -58,7 +58,7 @@ public class BlackjackController {
     }
 
     private void doHitAndStand(Players players, Deck deck) {
-        for (Player player : players.getPlayers()) {
+        for (Player player : players.players()) {
             hitAndStand(player, deck);
         }
         outputView.printWhiteLine();

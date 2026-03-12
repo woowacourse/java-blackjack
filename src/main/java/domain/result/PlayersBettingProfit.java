@@ -6,6 +6,10 @@ import java.util.Map;
 
 public record PlayersBettingProfit(Map<Player, Long> playersBettingProfit) {
 
+    public PlayersBettingProfit {
+        playersBettingProfit = Map.copyOf(playersBettingProfit);
+    }
+
     @Override
     public Map<Player, Long> playersBettingProfit() {
         return Map.copyOf(playersBettingProfit);
