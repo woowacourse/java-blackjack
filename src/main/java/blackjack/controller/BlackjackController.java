@@ -2,6 +2,7 @@ package blackjack.controller;
 
 import static blackjack.util.ExceptionHandler.retryUntilSuccess;
 
+import blackjack.BlackjackGame;
 import blackjack.model.card.HitCommand;
 import blackjack.model.card.CardProvider;
 import blackjack.model.user.Dealer;
@@ -16,13 +17,15 @@ import java.util.List;
 public class BlackjackController {
 
     private final CardProvider cardProvider;
+    private final BlackjackGame blackjackGame;
 
-    public BlackjackController(CardProvider cardProvider) {
+    public BlackjackController(CardProvider cardProvider, BlackjackGame blackjackGame) {
         this.cardProvider = cardProvider;
+        this.blackjackGame = blackjackGame;
     }
 
     public void run() {
-        Users users = retryUntilSuccess(this::createUsers);
+        Users users = retryUntilSuccess(() -> blackjackGame.createUsers(InputView::readPlayerName));
 
         provideInitCardsAndPrint(users);
 
