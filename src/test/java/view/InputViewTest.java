@@ -33,4 +33,14 @@ class InputViewTest {
             InputView.askContinue(player);
         });
     }
+
+    @Test
+    @DisplayName("입력은 정수만 허용한다.")
+    void askBettingAmount_ReturnInteger() {
+        command("1000");
+        String player = "JeongKong";
+        Integer result = InputView.askBettingAmount(player);
+        assertEquals(1000, result);
+    }
 }
+

@@ -26,6 +26,13 @@ public class InputView {
         return input;
     }
 
+    public static Integer askBettingAmount(String player) {
+        System.out.println(player + "의 배팅 금액은?");
+        Scanner sc = new Scanner(System.in);
+        Integer input = sc.nextInt();
+        return input;
+    }
+
     private static List<String> getPlayerNames(String input) {
         List<String> playerNames = Arrays.stream(input.split(","))
                 .map(String::trim)
