@@ -11,9 +11,11 @@ import java.util.List;
 public class BlackjackController {
 
     private final InputView inputView;
+    private final OutputView outputView;
 
-    public BlackjackController(InputView inputView) {
+    public BlackjackController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
+        this.outputView = outputView;
     }
 
     public void run() {
@@ -44,12 +46,12 @@ public class BlackjackController {
     }
 
     private void printInitialSettings(Players players, Player dealer) {
-        OutputView.printInitialSettingsDoneMessage(dealer.getName(), players.getPlayersName());
-        OutputView.printCardResults(dealer.getName(), List.of(dealer.getFirstCardName()));
+        outputView.printInitialSettingsDoneMessage(dealer.getName(), players.getPlayersName());
+        outputView.printCardResults(dealer.getName(), List.of(dealer.getFirstCardName()));
         for (Player player : players.getPlayers()) {
-            OutputView.printCardResults(player.getName(), player.getCardsName());
+            outputView.printCardResults(player.getName(), player.getCardsName());
         }
-        OutputView.println();
+        outputView.println();
     }
 
     private void getMoreCardsForPlayers(Players players) {
@@ -62,11 +64,11 @@ public class BlackjackController {
         boolean isDraw = false;
         while (!player.isBurst() && !player.isBlackjack() && readPlayerWantMoreCard(player)) {
             player.draw(Deck.pop());
-            OutputView.printCardResults(player.getName(), player.getCardsName());
+            outputView.printCardResults(player.getName(), player.getCardsName());
             isDraw = true;
         }
         if (!isDraw) {
-            OutputView.printCardResults(player.getName(), player.getCardsName());
+            outputView.printCardResults(player.getName(), player.getCardsName());
         }
     }
 
@@ -80,20 +82,20 @@ public class BlackjackController {
         }
         while (dealer.calculateCardsValue() < 17) {
             dealer.draw(Deck.pop());
-            OutputView.printGetMoreCardsMessageForDealer(dealer.getName());
+            outputView.printGetMoreCardsMessageForDealer(dealer.getName());
         }
     }
 
     private void printGameResult(Players players, Player dealer) {
-        OutputView.println();
-        OutputView.printCardResults(dealer.getName(), dealer.getCardsName(), dealer.calculateCardsValue());
+        outputView.println();
+        outputView.printCardResults(dealer.getName(), dealer.getCardsName(), dealer.calculateCardsValue());
         for (Player player : players.getPlayers()) {
-            OutputView.printCardResults(player.getName(), player.getCardsName(), player.calculateCardsValue());
+            outputView.printCardResults(player.getName(), player.getCardsName(), player.calculateCardsValue());
         }
     }
 
     private void printWinningResult(Players players, Player dealer) {
-        OutputView.printWinningResult(WinningResult.from(players, dealer));
+        outputView.printWinningResult(WinningResult.from(players, dealer));
     }
 
 }
