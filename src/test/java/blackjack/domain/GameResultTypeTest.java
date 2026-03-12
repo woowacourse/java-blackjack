@@ -55,7 +55,7 @@ public class GameResultTypeTest {
         // when
         int result = GameResultType.DRAW.calculateProfit(input);
 
-        //then
+        // then
         assertThat(0).isEqualTo(result);
     }
 }

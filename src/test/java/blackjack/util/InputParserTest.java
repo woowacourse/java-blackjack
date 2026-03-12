@@ -14,10 +14,10 @@ public class InputParserTest {
         // given
         String input = "흑곰,밀란,로치";
 
-        //when
+        // when
         List<String> playerNames = InputParser.parseUser(input);
 
-        //then
+        // then
         assertThat(List.of("흑곰", "밀란", "로치")).isEqualTo(playerNames);
     }
 }

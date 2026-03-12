@@ -39,7 +39,6 @@ public class GameService {
         gameResult.add(user.getName(), resultType.calculateProfit(user.getBettingAmount()));
     }
 
-
     public GameResultType determineResult(User user, Dealer dealer) {
         if (user.isBurst()) {
             return GameResultType.LOSE;
