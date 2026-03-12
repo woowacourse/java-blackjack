@@ -15,7 +15,7 @@ public class Players {
     public Players(List<String> names, List<Long> bettingAmounts) {
         int playerCount = names.size();
         for (int i = 0; i < playerCount; i++) {
-            players.add(new Player(names.get(i), bettingAmounts.get(i)));
+            players.add(new Player(names.get(i), new BettingAmount(bettingAmounts.get(i))));
         }
     }
 

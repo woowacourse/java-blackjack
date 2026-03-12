@@ -3,7 +3,7 @@ package blackjack.domain;
 public class Player extends Participant {
 
     private static final int BLACKJACK_POINT = 21;
-    private long bettingAmount;
+    private BettingAmount bettingAmount;
 
     public Player(String name) {
         super(name, new Hand());
@@ -13,7 +13,7 @@ public class Player extends Participant {
         super(name, hand);
     }
 
-    public Player(String name, long bettingAmount) {
+    public Player(String name, BettingAmount bettingAmount) {
         super(name, new Hand());
         this.bettingAmount = bettingAmount;
     }
@@ -61,6 +61,6 @@ public class Player extends Participant {
     }
 
     public long getBettingAmount() {
-        return bettingAmount;
+        return bettingAmount.getBettingAmount();
     }
 }
