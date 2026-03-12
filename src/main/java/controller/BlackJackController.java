@@ -13,6 +13,7 @@ import view.OutputView;
 
 public class BlackJackController {
 
+    private static final int TARGET_NUMBER = 21;
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -56,7 +57,7 @@ public class BlackJackController {
                 continue;
             }
 
-            if (participant.calculateScore() == 21) {
+            if (participant.calculateScore() == TARGET_NUMBER) {
                 continue;
             }
 
