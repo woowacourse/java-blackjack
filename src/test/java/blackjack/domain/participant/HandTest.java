@@ -1,12 +1,12 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import blackjack.domain.GameScore;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Emblem;
 import blackjack.domain.card.Grade;
-import blackjack.domain.participant.Hand;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;

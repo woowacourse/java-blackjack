@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.betting;
 
 import static blackjack.domain.card.Emblem.CLOVER;
 import static blackjack.domain.card.Emblem.HEART;

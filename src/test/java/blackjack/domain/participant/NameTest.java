@@ -1,8 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.domain.participant.Name;
 import blackjack.exception.ExceptionMessage;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;

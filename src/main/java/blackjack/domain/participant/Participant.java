@@ -1,7 +1,7 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.BettingResult;
 import blackjack.domain.GameScore;
+import blackjack.domain.betting.BettingResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import java.util.List;

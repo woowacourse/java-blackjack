@@ -1,9 +1,9 @@
 package blackjack;
 
-import blackjack.domain.BettingProfit;
-import blackjack.domain.BettingProfitCalculator;
 import blackjack.domain.GameCommand;
 import blackjack.domain.Participants;
+import blackjack.domain.betting.BettingProfit;
+import blackjack.domain.betting.BettingProfitCalculator;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
