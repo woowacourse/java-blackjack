@@ -9,7 +9,7 @@ public class BettingAmount {
         this.amount = amount;
     }
 
-    public void validate(int amount) {
+    private void validate(int amount) {
         minus(amount);
     }
 

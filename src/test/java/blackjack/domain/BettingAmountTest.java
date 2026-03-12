@@ -18,4 +18,16 @@ public class BettingAmountTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("음수");
     }
+
+    @Test
+    @DisplayName("배팅 금액이 0원인지 검증")
+    void validate_zero() {
+        // given
+        int input = 0;
+
+        // when & then
+        assertThatThrownBy(() -> new BettingAmount(input))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("0");
+    }
 }
