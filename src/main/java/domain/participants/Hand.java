@@ -61,7 +61,7 @@ public class Hand {
         return score + ACE_ADVANTAGE_SCORE > BUST_SCORE;
     }
 
-    public boolean isBurt() {
+    public boolean isBust() {
         return getScore() > BUST_SCORE;
     }
 }

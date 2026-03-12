@@ -35,7 +35,7 @@ public class BlackjackController {
         List<State> playersState = readPlayerAndCreateState(deck);
         printCards(dealerState, playersState);
         playersState = drawPlayerHandAndPrint(playersState, deck);
-        dealerState = drawDealerHandAndPrint(dealerState, deck, playersState);
+        dealerState = drawDealerHandAndPrint(dealerState, deck);
         printAllStatus(dealerState, playersState);
     }
 
@@ -92,7 +92,7 @@ public class BlackjackController {
         return statisticsDtos;
     }
 
-    private State drawDealerHandAndPrint(State dealerState, Deck deck, List<State> playersState) {
+    private State drawDealerHandAndPrint(State dealerState, Deck deck) {
         State state = dealerState;
         while (!state.isFinished()) {
             state = dealerState.drawCard(deck, true);

@@ -9,6 +9,7 @@ import java.util.List;
 
 public abstract class State {
     private static final Integer BLACKJACK_SCORE = 21;
+
     private final Hand hand;
     private final Participant participant;
 
@@ -35,7 +36,7 @@ public abstract class State {
 
     private State draw(Deck deck) {
         hand.add(deck.drawCard());
-        if (hand.isBurt()) {
+        if (hand.isBust()) {
             return new Bust(hand, participant);
         }
         if (isFinished()) {
