@@ -1,6 +1,7 @@
 package view;
 
 import domain.player.WinStatus;
+import dto.ParticipantBetResult;
 import dto.ParticipantResult;
 
 import java.util.ArrayList;
@@ -50,6 +51,14 @@ public class ResultView {
         System.out.println("## 최종 승패");
         printDealerResult(playerResult);
         printPlayerResult(playerResult);
+    }
+
+    public static void printBetResult(List<ParticipantBetResult> betResult) {
+        System.out.println();
+        System.out.println("## 최종 수익");
+        for (ParticipantBetResult result : betResult) {
+            System.out.println(result.name() + ": " + result.profit());
+        }
     }
 
     public static void printBlankLine() {

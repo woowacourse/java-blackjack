@@ -29,6 +29,8 @@ public class GameController {
         printFinalStatus();
 
         ResultView.printResult(gameService.result());
+
+        ResultView.printBetResult(gameService.bettingResult(userBetInfo));
     }
 
     private Map<String, Integer> bettingRound() {
