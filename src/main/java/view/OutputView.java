@@ -1,14 +1,14 @@
 package view;
 
+import static domain.BlackjackGame.DEALER_DRAW_BOUND;
 import static domain.BlackjackGame.INIT_DRAW_COUNT;
-import static domain.participant.Participants.DEALER_DRAW_BOUND;
 import static domain.participant.Participants.DEALER_NAME;
 
+import domain.FinalResult;
 import domain.card.Card;
 import domain.participant.Participant;
 import domain.participant.Participants;
 import java.util.List;
-import service.FinalResult;
 
 public class OutputView {
 
@@ -31,16 +31,16 @@ public class OutputView {
         System.out.printf("%s에게 %d장을 나누었습니다.\n", playerNames, INIT_DRAW_COUNT);
     }
 
+    private static void printDealerInitHandCard(final Participant dealer) {
+        System.out.printf("%s카드: %s\n", dealer.getName(), dealer.getHand().getFirst().getCardDescription());
+    }
+
     private static void printPlayerInitHandCard(final List<Participant> players) {
         for (final Participant player : players) {
             printParticipantHandCard(player);
             System.out.println();
         }
         System.out.println();
-    }
-
-    private static void printDealerInitHandCard(final Participant dealer) {
-        System.out.printf("%s카드: %s\n", dealer.getName(), dealer.getHand().getFirst().getCardDescription());
     }
 
     private static void printParticipantHandCard(final Participant player) {
@@ -65,25 +65,25 @@ public class OutputView {
         System.out.printf("%s는 %d이하라 한장의 카드를 더 받았습니다.\n", DEALER_NAME, DEALER_DRAW_BOUND);
     }
 
-    public void printCardResults(final Participants participants) {
+    public void printHandResults(final Participants participants) {
         System.out.println();
         final Participant dealer = participants.getDealer();
         final List<Participant> players = participants.getPlayers();
 
-        printDealerCardResult(dealer);
+        printCardResult(dealer);
         printPlayerCardResult(players);
 
         System.out.println();
     }
 
-    private static void printDealerCardResult(final Participant dealer) {
+    private static void printCardResult(final Participant dealer) {
         printParticipantHandCard(dealer);
         printScore(dealer);
     }
 
     private static void printPlayerCardResult(final List<Participant> players) {
         for (final Participant player : players) {
-            printDealerCardResult(player);
+            printCardResult(player);
         }
     }
 
@@ -91,7 +91,7 @@ public class OutputView {
         System.out.printf(" - 결과: %d\n", dealer.getScore());
     }
 
-    public void printFinalResults(final List<FinalResult> finalResults) {
+    public void printGameResults(final List<FinalResult> finalResults) {
         System.out.println("\n## 최종 승패");
 
         printDealerFinalResult(finalResults);
