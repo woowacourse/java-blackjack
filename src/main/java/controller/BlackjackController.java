@@ -5,7 +5,7 @@ import dto.BlackjackResultDto;
 import dto.BlackjackStatisticsDto;
 import dto.ParticipantDto;
 import java.util.List;
-import service.BlackjackService;
+import domain.game.BlackjackGameManager;
 import util.Parser;
 import view.InputView;
 import view.OutputView;
@@ -14,18 +14,18 @@ public class BlackjackController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private final BlackjackService blackjackService;
+    private final BlackjackGameManager blackjackGameManager;
 
-    public BlackjackController(InputView inputView, OutputView outputView, BlackjackService blackjackService) {
+    public BlackjackController(InputView inputView, OutputView outputView, BlackjackGameManager blackjackGameManager) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.blackjackService = blackjackService;
+        this.blackjackGameManager = blackjackGameManager;
     }
 
     public void start() {
         initializeGame();
         inputHitOrStandOnPlayer();
-        while (blackjackService.drawDealerCard()) {
+        while (blackjackGameManager.drawDealerCard()) {
             outputView.printDealerHit();
         }
 
@@ -35,22 +35,22 @@ public class BlackjackController {
 
     private void initializeGame() {
         inputPlayers();
-        blackjackService.drawInitialCards();
+        blackjackGameManager.drawInitialCards();
 
-        List<ParticipantDto> playerDtoList = blackjackService.generatePlayerDtoList();
+        List<ParticipantDto> playerDtoList = blackjackGameManager.generatePlayerDtoList();
         outputView.printPlayers(playerDtoList);
 
-        ParticipantDto dealerDto = blackjackService.generateInitialDealerDto();
+        ParticipantDto dealerDto = blackjackGameManager.generateInitialDealerDto();
         outputView.printHandList(dealerDto, playerDtoList);
     }
 
     private void inputPlayers() {
         List<String> input = Parser.parseInput(inputView.inputPlayers());
-        blackjackService.createPlayers(input);
+        blackjackGameManager.createPlayers(input);
     }
 
     private void inputHitOrStandOnPlayer() {
-        List<ParticipantDto> playersDtoList = blackjackService.generatePlayerDtoList();
+        List<ParticipantDto> playersDtoList = blackjackGameManager.generatePlayerDtoList();
         for (ParticipantDto playerDto : playersDtoList) {
             inputHitOrStand(playerDto.name(), playerDto.hand());
         }
@@ -58,7 +58,7 @@ public class BlackjackController {
 
     private void inputHitOrStand(String name, List<String> hand) {
         HitOrStand hitOrStand = HitOrStand.from(inputView.inputHitOrStand(name));
-        if (blackjackService.isStand(hitOrStand)) {
+        if (blackjackGameManager.isStand(hitOrStand)) {
             outputView.printlnHand(name, hand);
             return;
         }
@@ -67,20 +67,20 @@ public class BlackjackController {
     }
 
     private void drawCardOnPlayer(String name, HitOrStand hitOrStand) {
-        while (blackjackService.isHit(hitOrStand)) {
-            ParticipantDto playerDto = blackjackService.updatePlayer(name);
+        while (blackjackGameManager.isHit(hitOrStand)) {
+            ParticipantDto playerDto = blackjackGameManager.updatePlayer(name);
             outputView.printlnHand(name, playerDto.hand());
             hitOrStand = HitOrStand.from(inputView.inputHitOrStand(name));
         }
     }
 
     private void printBlackjackResult() {
-        BlackjackResultDto blackjackResultDto = blackjackService.getBlackjackResult();
+        BlackjackResultDto blackjackResultDto = blackjackGameManager.getBlackjackResult();
         outputView.printBlackjackResult(blackjackResultDto);
     }
 
     private void printBlackjackStatistics() {
-        BlackjackStatisticsDto blackjackStatistics = blackjackService.getBlackjackStatistics();
+        BlackjackStatisticsDto blackjackStatistics = blackjackGameManager.getBlackjackStatistics();
         outputView.printBlackjackStatistics(blackjackStatistics);
     }
 }
