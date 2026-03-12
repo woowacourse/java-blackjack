@@ -4,7 +4,7 @@ import domain.betiing.BetAmount;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class BettingTest {
+class BettingAmountTest {
 
     @Test
     void 입력받은_배팅금액을_저장한다() {
