@@ -2,7 +2,11 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.card.Card;
+import domain.card.Rank;
+import domain.card.Suit;
 import domain.participant.Dealer;
+import domain.participant.Player;
 import domain.participant.Players;
 import dto.DealerResultInfo;
 import java.util.List;
@@ -35,5 +39,21 @@ class GameResultTest {
         assertThat(dealerResultInfo.winCount()).isEqualTo(0);
         assertThat(dealerResultInfo.tieCount()).isEqualTo(1);
         assertThat(dealerResultInfo.loseCount()).isEqualTo(0);
+    }
+
+    @Test
+    void 플레이어가_블랙잭이면_딜러의_패배_횟수에_포함된다() {
+        Players players = new Players(List.of("pobi"));
+        Player player = players.getPlayers().get(0);
+        player.receive(new Card(Rank.TEN, Suit.HEART));
+        player.receive(new Card(Rank.ACE, Suit.SPADE));
+
+        Dealer dealer = new Dealer();
+        dealer.receive(new Card(Rank.NINE, Suit.HEART));
+        dealer.receive(new Card(Rank.EIGHT, Suit.SPADE));
+
+        GameResult gameResult = new GameResult(players, dealer);
+
+        assertThat(gameResult.dealerLoseCount()).isEqualTo(1);
     }
 }

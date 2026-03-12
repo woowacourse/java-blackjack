@@ -32,6 +32,7 @@ public class GameResult {
     }
 
     public int dealerLoseCount() {
-        return frequency(playerWinningStatus.values(), WinningStatus.WIN);
+        return frequency(playerWinningStatus.values(), WinningStatus.WIN)
+                + frequency(playerWinningStatus.values(), WinningStatus.BLACKJACK_WIN);
     }
 }

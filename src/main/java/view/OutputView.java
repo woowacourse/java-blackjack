@@ -1,31 +1,25 @@
 package view;
 
-import domain.WinningStatus;
 import domain.card.Card;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
-import dto.DealerResultInfo;
 import dto.PlayerResultInfo;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OutputView {
     public static final String DEALER_ONE_MORE_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
-    private static final String FINAL_WIN_OR_LOSE_MESSAGE = "## 최종 승패";
+    private static final String FINAL_RESULT_MESSAGE = "## 최종 수익";
 
     private static final String COMMA = ", ";
-    private static final String COLON = ": ";
     private static final String SCORE_MESSAGE = " - 결과: %s";
-
     private static final String DISTRIBUTION_MESSAGE = "딜러와 %s에게 2장을 나누었습니다.";
     private static final String DEALER_CARD_PREFIX = "딜러카드: ";
     private static final String CARD_MESSAGE = "%s카드: %s";
-    private static final String DEALER_RESULT = "딜러: ";
-    private static final String WIN_MESSAGE = "승 ";
-    private static final String TIE_MESSAGE = "무 ";
-    private static final String LOSE_MESSAGE = "패 ";
+    private static final String DEALER_RESULT_FORMAT = "딜러: %s";
+    private static final String PLAYER_RESULT_FORMAT = "%s: %s";
 
     public void printInitialDistribution(Players players, Dealer dealer) {
         printDistributionMessage(players);
@@ -33,9 +27,9 @@ public class OutputView {
         printPlayersInitialCards(players);
     }
 
-    public void printGameResult(DealerResultInfo dealerResult, List<PlayerResultInfo> playersResult) {
-        printWinOrLoseMessage();
-        printDealerResult(dealerResult);
+    public void printGameResult(int dealerProfit, List<PlayerResultInfo> playersResult) {
+        printFinalResultMessage();
+        printDealerResult(dealerProfit);
         printPlayersResult(playersResult);
     }
 
@@ -83,42 +77,26 @@ public class OutputView {
         for (Card card : participant.getAllCards()) {
             cards.add(CardFormatter.format(card));
         }
-        String PossessedCards = String.join(COMMA, cards);
+        String possessedCards = String.join(COMMA, cards);
 
-        return String.format(CARD_MESSAGE, participant.name(), PossessedCards);
+        return String.format(CARD_MESSAGE, participant.name(), possessedCards);
     }
 
-    public void printWinOrLoseMessage() {
-        System.out.println(FINAL_WIN_OR_LOSE_MESSAGE);
+    public void printFinalResultMessage() {
+        System.out.println(FINAL_RESULT_MESSAGE);
     }
 
-    public void printDealerResult(DealerResultInfo dealerResult) {
-        StringBuilder stringBuilder = new StringBuilder(DEALER_RESULT);
-
-        if (dealerResult.winCount() > 0) {
-            stringBuilder.append(dealerResult.winCount()).append(WIN_MESSAGE);
-        }
-        if (dealerResult.tieCount() > 0) {
-            stringBuilder.append(dealerResult.tieCount()).append(TIE_MESSAGE);
-        }
-        if (dealerResult.loseCount() > 0) {
-            stringBuilder.append(dealerResult.loseCount()).append(LOSE_MESSAGE);
-        }
-
-        System.out.println(stringBuilder.toString().trim());
+    public void printDealerResult(int dealerProfit) {
+        System.out.println(String.format(DEALER_RESULT_FORMAT, dealerProfit));
     }
 
     public void printPlayersResult(List<PlayerResultInfo> playersResult) {
         for (PlayerResultInfo playerResult : playersResult) {
-            System.out.println(playerResult.name() + COLON + toKorean(playerResult.status()));
+            System.out.println(String.format(
+                    PLAYER_RESULT_FORMAT,
+                    playerResult.name(),
+                    playerResult.profit()
+            ));
         }
-    }
-
-    private String toKorean(WinningStatus status) {
-        return switch (status) {
-            case WinningStatus.BLACKJACK_WIN, WinningStatus.WIN -> WIN_MESSAGE;
-            case WinningStatus.TIE -> TIE_MESSAGE;
-            case WinningStatus.LOSE -> LOSE_MESSAGE;
-        };
     }
 }

@@ -44,7 +44,7 @@ public class InputView {
         return YES.equals(userChoice);
     }
 
-    public double askForBettingAmount(String name) {
+    public int askForBettingAmount(String name) {
         System.out.println(name + BETTING_MONEY_MESSAGE);
         Money money = parseMoney(scanner.nextLine());
         return money.amount();
@@ -72,7 +72,7 @@ public class InputView {
         String strippedInput = input.strip();
 
         try {
-            double amount = Double.parseDouble(strippedInput);
+            int amount = Integer.parseInt(strippedInput);
             validateNegativeAmount(amount);
             return new Money(amount);
         } catch (IllegalArgumentException e) {
@@ -80,7 +80,7 @@ public class InputView {
         }
     }
 
-    private static void validateNegativeAmount(double amount) {
+    private static void validateNegativeAmount(int amount) {
         if (amount <= ZERO) {
             throw new IllegalArgumentException();
         }

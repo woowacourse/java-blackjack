@@ -19,17 +19,17 @@ public class Player extends Participant {
         this.betting = Betting.none();
     }
 
-    public double profit() {
+    public int profit() {
         return wallet.amount();
     }
 
-    public void bet(double amount) {
+    public void bet(int amount) {
         betting = Betting.of(amount);
         wallet = wallet.minus(betting.amount());
     }
 
     public void applyRoundResult(WinningStatus status) {
-        double settleAmount = betting.settle(status);
+        int settleAmount = betting.settle(status);
         wallet = wallet.plus(settleAmount);
         betting = Betting.none();
     }

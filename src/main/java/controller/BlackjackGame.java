@@ -8,7 +8,6 @@ import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
 import domain.strategy.ShuffleStrategy;
-import dto.DealerResultInfo;
 import dto.PlayerResultInfo;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +42,7 @@ public class BlackjackGame {
     private void initializeBetting(Players players) {
         outputView.printBlankLine();
         for (Player player : players.getPlayers()) {
-            double bettingAmount = inputView.askForBettingAmount(player.name());
+            int bettingAmount = inputView.askForBettingAmount(player.name());
             player.bet(bettingAmount);
             outputView.printBlankLine();
         }
@@ -97,22 +96,31 @@ public class BlackjackGame {
         outputView.printBlankLine();
 
         GameResult gameResult = new GameResult(players, dealer);
-        DealerResultInfo dealerResultInfo = new DealerResultInfo(gameResult);
+        List<PlayerResultInfo> playerResultInfos = createPlayerResultInfos(players, gameResult);
+        int dealerProfit = calculateDealerProfit(playerResultInfos);
 
-        List<PlayerResultInfo> playerResultInfos = createPlayerResultInfos(gameResult);
-        outputView.printGameResult(dealerResultInfo, playerResultInfos);
+        outputView.printGameResult(dealerProfit, playerResultInfos);
     }
 
-    private List<PlayerResultInfo> createPlayerResultInfos(GameResult gameResult) {
+    private List<PlayerResultInfo> createPlayerResultInfos(Players players, GameResult gameResult) {
         List<PlayerResultInfo> resultInfos = new ArrayList<>();
+        Map<String, WinningStatus> playerWinningStatus = gameResult.getPlayerWinningStatus();
 
-        for (Map.Entry<String, WinningStatus> entry : gameResult.getPlayerWinningStatus().entrySet()) {
-            String name = entry.getKey();
-            WinningStatus status = entry.getValue();
-
-            resultInfos.add(new PlayerResultInfo(name, status));
+        for (Player player : players.getPlayers()) {
+            WinningStatus status = playerWinningStatus.get(player.name());
+            player.applyRoundResult(status);
+            resultInfos.add(new PlayerResultInfo(player.name(), player.profit()));
         }
 
         return resultInfos;
+    }
+
+    private int calculateDealerProfit(List<PlayerResultInfo> playerResultInfos) {
+        int dealerProfit = 0;
+        for (PlayerResultInfo playerResultInfo : playerResultInfos) {
+            dealerProfit -= playerResultInfo.profit();
+        }
+
+        return dealerProfit;
     }
 }
