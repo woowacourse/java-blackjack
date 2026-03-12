@@ -1,7 +1,5 @@
 package blackjack.model.card;
 
-import static blackjack.model.constant.ErrorMessage.ERROR_EMPTY_INPUT;
-import static blackjack.model.constant.ErrorMessage.ERROR_NOT_Y_N_INPUT;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
