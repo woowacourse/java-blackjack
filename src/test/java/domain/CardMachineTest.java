@@ -1,6 +1,7 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,20 +45,23 @@ class CardMachineTest {
                 assertThat(counts.values()).allMatch(count -> count <= 6);
                 assertThat(counts.values()).allMatch(count -> count == 6);
             }
+        }
+
+        @Nested
+        class Fail {
 
             @Test
-            void 카드가_모두_소진되면_null을_반환해야_한다() {
+            void 카드가_모두_소진되면_예외를_발생시킨다() {
 
                 // given
                 for (int i = 0; i < 312; i++) {
                     cardMachine.drawCard();
                 }
 
-                // when
-                Card actual = cardMachine.drawCard();
-
-                // then
-                assertThat(actual).isNull();
+                // when & then
+                assertThatThrownBy(cardMachine::drawCard)
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessageContaining(CardMachine.NO_EXIST_CARDS);
             }
         }
     }
