@@ -35,13 +35,22 @@ class ScoreResultDtoTest {
     }
 
     @Test
-    void 점수_결과_DTO_생성() {
+    void ScoreResultDto가_올바른_값을_가진다() {
         // given
-        ScoreResultDto scoreResultDto = new ScoreResultDto(dealer, players);
+        ScoreResultDto scoreResultDto = ScoreResultDto.of(dealer, players);
 
         // when, then
-        assertEquals("딜러카드: 4하트, 8클로버 - 결과: 12", scoreResultDto.scoreResults().get(0));
-        assertEquals("봉구스카드: A클로버, K다이아몬드 - 결과: 21", scoreResultDto.scoreResults().get(1));
-        assertEquals("시오카드: 5하트, J스페이드 - 결과: 15", scoreResultDto.scoreResults().get(2));
+        assertEquals(List.of("4하트", "8클로버"), scoreResultDto.dealerHandDto().cards());
+        assertEquals(12, scoreResultDto.dealerScore());
+
+        PlayerHandScoreDto first = scoreResultDto.playerHandScoreDtos().getFirst();
+        assertEquals("봉구스", first.name());
+        assertEquals(List.of("A클로버", "K다이아몬드"), first.hand().cards());
+        assertEquals(21, first.score());
+
+        PlayerHandScoreDto second = scoreResultDto.playerHandScoreDtos().get(1);
+        assertEquals("시오", second.name());
+        assertEquals(List.of("5하트", "J스페이드"), second.hand().cards());
+        assertEquals(15, second.score());
     }
 }

@@ -4,8 +4,8 @@ import domain.Dealer;
 import domain.Deck;
 import domain.Player;
 import domain.card.Card;
-import dto.BlackJackHandDto;
 
+// todo : 메서드 통합 및 메서드명 수정
 public class BlackJackTurnService {
 
     public void playerHit(Player player, Deck deck) {
@@ -28,9 +28,5 @@ public class BlackJackTurnService {
 
     public boolean isPlayerUnder21(Player player) {
         return player.getScore() < 21;
-    }
-
-    public BlackJackHandDto createHandDto(Player player) {
-        return BlackJackHandDto.from(player);
     }
 }

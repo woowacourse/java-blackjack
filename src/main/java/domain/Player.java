@@ -19,6 +19,14 @@ public class Player {
         return hand.isBust();
     }
 
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
+    }
+
+    public boolean isBlackjackAtFirst() {
+        return isBlackjack() && hand.size() == 2;
+    }
+
     public String getName() {
         return name;
     }

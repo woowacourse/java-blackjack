@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
+    public static final int BLACKJACK_SCORE = 21;
     private final List<Card> cards;
 
     public Hand() {
@@ -15,7 +16,7 @@ public class Hand {
         int sum = getInitSum();
         long aceCount = countAce();
 
-        while (aceCount > 0 && sum > 21) {
+        while (aceCount > 0 && sum > BLACKJACK_SCORE) {
             sum -= 10;
             aceCount--;
         }
@@ -36,7 +37,11 @@ public class Hand {
     }
 
     public boolean isBust() {
-        return getSum() > 21;
+        return getSum() > BLACKJACK_SCORE;
+    }
+
+    public boolean isBlackjack() {
+        return getSum() == BLACKJACK_SCORE;
     }
 
     public void addCard(Card card) {
@@ -45,5 +50,13 @@ public class Hand {
 
     public List<Card> getCards() {
         return cards;
+    }
+
+    public Card getFirst() {
+        return cards.getFirst();
+    }
+
+    public int size() {
+        return cards.size();
     }
 }

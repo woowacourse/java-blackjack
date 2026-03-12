@@ -3,7 +3,6 @@ package service;
 import domain.Dealer;
 import domain.Deck;
 import domain.Player;
-import dto.BlackJackInitStatusDto;
 import java.util.List;
 
 public class BlackJackInitService {
@@ -28,9 +27,5 @@ public class BlackJackInitService {
                     return player;
                 })
                 .toList();
-    }
-
-    public BlackJackInitStatusDto createInitStatusDto(Dealer dealer, List<Player> players) {
-        return new BlackJackInitStatusDto(dealer, players);
     }
 }
