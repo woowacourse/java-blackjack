@@ -1,15 +1,15 @@
 package model;
 
 public enum MatchStatus {
-    BLACKJACK("블랙잭 승", 1.5f),
-    WIN("승", 1.0f),
-    DRAW("무", 0.0f),
-    LOSE("패", -1.0f);
+    BLACKJACK("블랙잭 승", 1.5),
+    WIN("승", 1.0),
+    DRAW("무", 0.0),
+    LOSE("패", -1.0);
 
     private final String status;
-    private final float multiplier;
+    private final double multiplier;
 
-    MatchStatus(String status, float multiplier) {
+    MatchStatus(String status, double multiplier) {
         this.status = status;
         this.multiplier = multiplier;
     }
@@ -18,7 +18,7 @@ public enum MatchStatus {
         return status;
     }
 
-    public float getMultiplier() {
+    public double getMultiplier() {
         return multiplier;
     }
 
