@@ -29,11 +29,29 @@ public class InputView {
 
     public List<Integer> readBetAmounts(List<String> names) {
         return names.stream()
-                .map(name -> {
-                    System.out.println(name + "의 베팅 금액은?");
-                    return Integer.parseInt(scanner.nextLine());
-                })
+                .map(this::readBetAmount)
                 .toList();
+    }
+
+    private int readBetAmount(String name) {
+        try {
+            System.out.println(name + "의 베팅 금액은?");
+            int betAmount = Integer.parseInt(scanner.nextLine().strip());
+            validateBetAmount(betAmount);
+            return betAmount;
+        } catch (NumberFormatException e) {
+            System.out.println("[ERROR] 숫자를 입력해주세요.");
+            return readBetAmount(name);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return readBetAmount(name);
+        }
+    }
+
+    private void validateBetAmount(int betAmount) {
+        if (betAmount <= 0) {
+            throw new IllegalArgumentException("[ERROR] 베팅 금액은 1 이상이어야 합니다.");
+        }
     }
 
     private void validateHitInput(String input) {
