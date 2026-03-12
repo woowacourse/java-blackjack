@@ -2,6 +2,7 @@ package view;
 
 import domain.Hand;
 import domain.Dealer;
+import domain.GameResult;
 import domain.Outcome;
 import domain.Player;
 import domain.Players;
@@ -60,11 +61,11 @@ public class ResultView {
                 ));
     }
 
-    public void printWinner(Players players, Dealer dealer) {
+    public void printWinner(Players players, GameResult gameResult) {
         System.out.println();
         System.out.println(IOMessage.WINNING_STATISTICS.message());
-        printDealerOutcome(dealer);
-        printPlayerOutcomes(players);
+        printDealerOutcome(gameResult);
+        printPlayerOutcomes(players, gameResult);
     }
 
     private String joinPlayerNames(Players players) {
@@ -79,21 +80,21 @@ public class ResultView {
                 .collect(Collectors.joining(", "));
     }
 
-    private void printDealerOutcome(Dealer dealer) {
+    private void printDealerOutcome(GameResult gameResult) {
         System.out.print("딜러: ");
         for (Outcome outcome : Outcome.values()) {
-            System.out.print(dealer.getCount(outcome) + outcome.result() + " ");
+            System.out.print(gameResult.getDealerCount(outcome) + outcome.result() + " ");
         }
         System.out.println();
     }
 
-    private void printPlayerOutcomes(Players players) {
+    private void printPlayerOutcomes(Players players, GameResult gameResult) {
         IntStream.range(0, players.getSize())
                 .mapToObj(players::getPlayer)
-                .forEach(this::printPlayerOutcome);
+                .forEach(player -> printPlayerOutcome(player, gameResult));
     }
 
-    private void printPlayerOutcome(Player player) {
-        System.out.println(player.getName() + ": " + player.getOutcome().result());
+    private void printPlayerOutcome(Player player, GameResult gameResult) {
+        System.out.println(player.getName() + ": " + gameResult.getPlayerOutcome(player.getName()).result());
     }
 }

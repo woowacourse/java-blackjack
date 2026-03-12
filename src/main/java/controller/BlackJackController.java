@@ -3,6 +3,7 @@ package controller;
 import domain.BlackJackGame;
 import domain.Cards;
 import domain.Dealer;
+import domain.GameResult;
 import domain.Player;
 import domain.Players;
 import view.InputView;
@@ -69,7 +70,7 @@ public class BlackJackController {
     }
 
     private void printWinnerResult(Players players, Dealer dealer) {
-        players.decideWinner(dealer);
-        resultView.printWinner(players, dealer);
+        final GameResult gameResult = players.calculateResult(dealer);
+        resultView.printWinner(players, gameResult);
     }
 }
