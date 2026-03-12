@@ -6,6 +6,7 @@ import domain.card.Cards;
 import java.util.List;
 
 import static domain.BlackjackRule.BLACK_JACK;
+import static domain.BlackjackRule.INITIAL_CARDS_COUNT;
 
 public class Hand {
     public static final int ACE_ADJUST_VALUE = 10;
@@ -25,7 +26,7 @@ public class Hand {
     }
 
     public boolean isBlackjack() {
-        return score() == BLACK_JACK;
+        return score() == BLACK_JACK && size() == INITIAL_CARDS_COUNT;
     }
 
     public int score() {
