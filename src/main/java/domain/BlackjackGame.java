@@ -31,10 +31,15 @@ public class BlackjackGame {
         }
     }
 
+    public void setBetMoney(Function<Player, String> getBetMoneyFunc) {
+        players.setBetMoneyEachPlayers(getBetMoneyFunc);
+    }
+
     public void giveHand() {
         players.giveCardsToEachPlayers(deck, DEFAULT_HAND_NUMBER);
         dealer.addCards(deck.drawWithAmount(DEFAULT_HAND_NUMBER));
     }
+
 
     public void playerHitStand(Function<Player, Boolean> decideHitStandFunc, Consumer<Player> printResultFunc) {
         players.hitStandEachPlayers(decideHitStandFunc, deck, printResultFunc);

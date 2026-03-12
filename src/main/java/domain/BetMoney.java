@@ -20,6 +20,10 @@ public class BetMoney {
         return new BetMoney(value);
     }
 
+    public static BetMoney of(String value) {
+        return new BetMoney(new BigDecimal(value));
+    }
+
     public static BetMoney of(int value) {
         return new BetMoney(BigDecimal.valueOf(value));
     }

@@ -10,7 +10,7 @@ import java.util.List;
 public abstract class Participant {
     protected final Name name;
     protected final Hand hand;
-    protected final BetMoney betMoney;
+    protected BetMoney betMoney;
 
     public Participant(String name) {
         this.name = new Name(name);
@@ -25,6 +25,12 @@ public abstract class Participant {
         this.betMoney = BetMoney.ZERO;
     }
 
+    public Participant(String name, String value) {
+        this.name = new Name(name);
+        this.hand = new Hand();
+        this.betMoney = BetMoney.of(value);
+    }
+
     public Participant(String name, int value) {
         this.name = new Name(name);
         this.hand = new Hand();
@@ -35,6 +41,10 @@ public abstract class Participant {
         if (name == null || hand == null) {
             throw new IllegalArgumentException(Card.FIELD_CAN_NOT_BE_NULL);
         }
+    }
+
+    public void setBetMoney(String value) {
+        this.betMoney = BetMoney.of(value);
     }
 
     public BetMoney getResult(Participant target) {

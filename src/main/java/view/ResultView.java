@@ -1,6 +1,9 @@
 package view;
 
-import domain.*;
+import domain.BlackjackGame;
+import domain.Profits;
+import domain.RoundResult;
+import domain.Score;
 import domain.card.Card;
 import domain.participant.Dealer;
 import domain.participant.Name;
@@ -14,7 +17,6 @@ import static domain.BlackjackGame.DEALER_HIT_STAND_BOUNDARY;
 
 public class ResultView {
     private static final String DELIMITER = ", ";
-    private final List<Result> orderedResults = List.of(Result.LOSE, Result.DRAW, Result.WIN);
 
     public void printParticipantsCards(List<Player> players, Dealer dealer) {
         printEmptyLine();
@@ -64,45 +66,14 @@ public class ResultView {
         System.out.println("딜러는 " + (DEALER_HIT_STAND_BOUNDARY.add(new Score(1)).getValue()) + "이상이라 카드를 받지 않았습니다.");
     }
 
-//    public void printResult(List<RoundResult> results) {
-//        printEmptyLine();
-//        System.out.println("## 최종 승패");
-//        System.out.print("딜러: ");
-//
-//        for (Result result : orderedResults) {
-//            long resultCount = results.stream()
-//                    .filter(res -> res.result() == result)
-//                    .count();
-//
-//            System.out.print(resultCount + changeToDealerSideResult(result).getDescription() + " ");
-//        }
-//
-//        printEmptyLine();
-//        for (RoundResult roundResult : results) {
-//            System.out.println(
-//                    roundResult.player().getName().getValue() + ": " + roundResult.result().getDescription());
-//        }
-//    }
-
     public void printResult(Profits results) {
         printEmptyLine();
         System.out.println("## 최종 승패");
-        System.out.println("딜러: " + results.dealerProfit());
+        System.out.println("딜러: " + results.dealerProfit().getValue());
 
         for (RoundResult result : results.results()) {
-            System.out.println(result.player() + ": " + result.betMoney().getValue());
+            System.out.println(result.player().getName().getValue() + ": " + result.betMoney().getValue());
         }
-    }
-
-
-    private Result changeToDealerSideResult(Result result) {
-        if (result == Result.WIN) {
-            return Result.LOSE;
-        }
-        if (result == Result.LOSE) {
-            return Result.WIN;
-        }
-        return Result.DRAW;
     }
 
     public void printCardsWithResult(List<Player> players, Dealer dealer) {

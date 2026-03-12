@@ -58,14 +58,12 @@ public class Players {
         }
     }
 
-//    public List<RoundResult> getResults(Dealer dealer) {
-//        List<RoundResult> roundResults = new ArrayList<>();
-//        for (Player player : players) {
-//            Result result = Result.judge(player, dealer);
-//            roundResults.add(new RoundResult(player, result));
-//        }
-//        return roundResults;
-//    }
+    public void setBetMoneyEachPlayers(Function<Player, String> getBetMoneyFunc) {
+        for (Player player : players) {
+            String s = getBetMoneyFunc.apply(player);
+            player.setBetMoney(s);
+        }
+    }
 
     public Profits getResults(Dealer dealer) {
         List<RoundResult> roundResults = new ArrayList<>();
