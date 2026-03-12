@@ -29,9 +29,11 @@ public record Result(Betting betting, WinningStatus winningStatus) {
         WinningStatus winningStatus = calculateWinningStatus(dealer, betting.player());
         return new Result(betting, winningStatus);
     }
-    
-    // todo: 요구사항에 맞게 수정
+
     private static WinningStatus calculateWinningStatus(Dealer dealer, Player player) {
+        if (player.isBlackjackAtFirst() && !dealer.isBlackjackAtFirst()) {
+            return WinningStatus.BLACKJACK_WIN;
+        }
         if (player.isBust()) {
             return WinningStatus.LOSE;
         }
