@@ -21,4 +21,8 @@ public final class Player extends Participant {
                 .map(Card::toString)
                 .toList();
     }
+
+    public int getBetAmount() {
+        return betAmount;
+    }
 }

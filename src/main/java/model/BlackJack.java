@@ -6,24 +6,26 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import model.participant.Dealer;
 import model.participant.Participant;
+import model.participant.Player;
 import util.Randoms;
 
 public final class BlackJack {
     private static final int STARTING_CARDS = 2;
+    private static final String DEALER_NAME = "딜러";
 
     private final Participants participants;
-    private final List<Card> pickedCards = new ArrayList<>();
-    private final Map<Participant, Integer> betAmount;
+    private final List<Card> pickedCards;
     private boolean firstTurn = Boolean.TRUE;
 
-    private BlackJack(Participants participants, Map<Participant, Integer> betAmount) {
+    private BlackJack(Participants participants) {
         this.participants = participants;
-        this.betAmount = betAmount;
+        this.pickedCards = new ArrayList<>();
     }
 
-    public static BlackJack from(Participants participants, Map<Participant, Integer> betAmount) {
-        return new BlackJack(participants, betAmount);
+    public static BlackJack from(Participants participants) {
+        return new BlackJack(participants);
     }
 
     public Map<String, Integer> calculateDealerResult() {
@@ -80,28 +82,54 @@ public final class BlackJack {
     }
 
     public Map<String, Integer> calculateRevenue() {
-//        Map<String, Boolean> calculatedResult = new LinkedHashMap<>();
-        // calculatePlayerResult에서 Map<String, Boolean>으로 플레이어 결과를 담아준다.
-        Map<String, Boolean> calculatedResult = calculatePlayerResult();
+        Map<String, Integer> calculatedTotalRevenues = new LinkedHashMap<>();
+        Map<String, Integer> calculatedPlayerRevenues = new LinkedHashMap<>();
 
-        // 플레이어 기준
-        // 처음 두 장의 카드(dealOut 시) 합이 21일 경우 블랙잭이 되면 베팅 금액의 1.5배를 딜러에게 받는다.
-        // 승리 시 최종 수익 = +배팅한 금액
-        // 패배 시 최종 수익 = -배팅한 금액
-        for (Entry<String, Boolean> entry : calculatedResult.entrySet()) {
-            System.out.println(entry.getKey() + " " +  entry.getValue());
-        } // 수익을 계산하고 이름과 수익을 모두 가져와야하는데 현재는 이름과 승패만 가져오고 있음.
-        // 이름과 수익을 가져오려면 현재 BlackJack 객체에서 getter를 통해 참가자 정보를 가져와야하나?
-        // 참가자들 Participants를 가져오면 참가자들 마다의 승패가 결정되니, 각 참가자별로 Participants 객체를
-        // 순회하면서 확인되는 승/패를 통해 최종 수익을 계산할 수 있다. 단, Participant는 배팅한 금액을 알고 있게 해야한다.
-        // 따라서 현재 Participant가 갖고 있는 Money라는 현재 보유금액은 지금으로서는 보유금액이 아닌 배팅한 금액을 갖고
-        // 있도록 수정하는 것이 적절한 설계라는 생각이 들었다.
+        int dealerRevenue = 0;
+        Dealer dealer = ((Dealer) participants.getDealer());
 
+        for (Entry<String, Boolean> entry : calculatePlayerResult().entrySet()) {
+            Participant participant = participants.findByName(entry.getKey());
 
-        // * 딜러와 플레이어가 모두 동시에 블랙잭인 경우 플레이어는 배팅한 금액을 돌려받는다.
+            if (entry.getKey().equals(DEALER_NAME)) {
+                dealer = ((Dealer) participant);
 
+                continue;
+            }
 
-        // 결과를 리턴. 리턴 받는 곳에서 순회하면 최종 수익자의 이름과 수익이 계산된다.
-        return null;
+            if (isDealerAndPlayerWithBlackJack(entry, dealer, participant, calculatedTotalRevenues)) {
+                continue;
+            }
+
+            dealerRevenue = calculateTotalRevenue(entry, calculatedPlayerRevenues, (Player) participant, dealerRevenue);
+
+            calculatedTotalRevenues.put(DEALER_NAME, dealerRevenue);
+            calculatedTotalRevenues.putAll(calculatedPlayerRevenues);
+        }
+
+        return calculatedTotalRevenues;
+    }
+
+    private int calculateTotalRevenue(Entry<String, Boolean> entry, Map<String, Integer> calculatedPlayerRevenues,
+                                        Player participant, int dealerRevenue) {
+        if (entry.getValue()) {
+            calculatedPlayerRevenues.put(entry.getKey(), participant.getBetAmount());
+            dealerRevenue -= participant.getBetAmount();
+        }
+
+        if (!entry.getValue()) {
+            calculatedPlayerRevenues.put(entry.getKey(), -participant.getBetAmount());
+            dealerRevenue += participant.getBetAmount();
+        }
+        return dealerRevenue;
+    }
+
+    private boolean isDealerAndPlayerWithBlackJack(Entry<String, Boolean> entry, Dealer dealer, Participant participant,
+                                     Map<String, Integer> calculatedTotalRevenues) {
+        if (dealer.isBlackJack() && participant.isBlackJack()) {
+            calculatedTotalRevenues.put(entry.getKey(), 0);
+            return true;
+        }
+        return false;
     }
 }

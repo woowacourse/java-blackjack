@@ -1,6 +1,5 @@
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.HashMap;
 import java.util.Map;
 import model.BlackJack;
 import model.Card;
@@ -27,11 +26,7 @@ public class BlackJackTest {
         player2.draw(Card.of("하트", 5));
         player2.draw(Card.of("하트", 6));
 
-        Map<Participant, Integer> betAmount = new HashMap<>();
-        betAmount.put(player1, 10000);
-        betAmount.put(player2, 10000);
-
-        blackJack = BlackJack.from(participants, betAmount);
+        blackJack = BlackJack.from(participants);
     }
 
     @Test
@@ -54,6 +49,8 @@ public class BlackJackTest {
         Map<String, Integer> calculatedRevenue = blackJack.calculateRevenue();
 
         // then
-
+        assertThat(calculatedRevenue.get("딜러")).isEqualTo(0);
+        assertThat(calculatedRevenue.get("pobi")).isEqualTo(-1000);
+        assertThat(calculatedRevenue.get("jason")).isEqualTo(1000);
     }
 }

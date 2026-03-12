@@ -9,6 +9,8 @@ public abstract class Participant {
     private static final int BUST_THRESHOLD = 21;
     private static final int DEALER_THRESHOLD = 16;
     private static final String DEALER_NAME = "딜러";
+    private static final int BLACKJACK_SCORE = 21;
+    private static final int FIRST_TURN_CARD_COUNT = 2;
 
     private final String name;
     protected final List<Card> hands;
@@ -55,6 +57,10 @@ public abstract class Participant {
 
     public boolean isDealer() {
         return name.equals(DEALER_NAME);
+    }
+
+    public boolean isBlackJack() {
+        return hands.size() == FIRST_TURN_CARD_COUNT && calculateScore() == BLACKJACK_SCORE;
     }
 
     private int calculate() {

@@ -19,7 +19,7 @@ public class BlackJackController {
 
     public void run() {
         Participants participants = Participants.of(inputView.readParticipantNames());
-        BlackJack blackJack = BlackJack.from(participants, null);
+        BlackJack blackJack = BlackJack.from(participants);
 
         blackJack.dealOut();
         outputView.printDealOut(participants);

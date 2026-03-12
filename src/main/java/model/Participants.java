@@ -11,7 +11,7 @@ import util.InputParser;
 
 public final class Participants implements Iterable<Participant> {
     private static final String DEALER_PARTICIPANT = "딜러,";
-    private static final int DEFAULT_BET_AMOUNT = 0;
+    private static final int DEFAULT_BET_AMOUNT = 1000;
 
     private final List<Participant> values;
 
@@ -47,6 +47,24 @@ public final class Participants implements Iterable<Participant> {
         }
 
         return names;
+    }
+
+    public Participant findByName(String name) {
+        for (Participant participant : values) {
+            if (hasName(name, participant)) {
+                return participant;
+            }
+        }
+
+        throw new IllegalArgumentException("[ERROR] 해당 이름을 가진 참가자는 찾을 수 없습니다.");
+    }
+
+    private boolean hasName(String name, Participant participant) {
+        if (participant.getName().equals(name)) {
+            return true;
+        }
+
+        return false;
     }
 
     @Override
