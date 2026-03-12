@@ -1,13 +1,11 @@
 package view;
 
-import domain.dto.GameResultResponse;
 import domain.MatchResult;
+import domain.card.Card;
+import domain.dto.GameResultResponse;
 import domain.dto.ParticipantCardsResponse;
 import domain.dto.ParticipantResultResponse;
 import domain.dto.PlayerMatchResult;
-import domain.card.Card;
-import java.util.ArrayList;
-import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
