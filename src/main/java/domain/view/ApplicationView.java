@@ -3,7 +3,7 @@ package domain.view;
 import domain.answer.DrawDecision;
 import domain.betting.Money;
 import domain.betting.dto.GamerBettingProfitDto;
-import domain.common.exception.BlackjackGameException;
+import exception.BlackjackGameException;
 import domain.gamer.PlayerName;
 import domain.gamer.dto.GamerHandDto;
 import domain.gamer.dto.GamerResultDto;

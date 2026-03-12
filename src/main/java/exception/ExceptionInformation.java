@@ -1,4 +1,4 @@
-package domain.common.exception;
+package exception;
 
 public interface ExceptionInformation {
 

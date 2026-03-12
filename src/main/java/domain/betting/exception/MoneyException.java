@@ -1,7 +1,7 @@
 package domain.betting.exception;
 
-import domain.common.exception.BlackjackGameException;
-import domain.common.exception.ExceptionInformation;
+import exception.BlackjackGameException;
+import exception.ExceptionInformation;
 
 public class MoneyException extends BlackjackGameException {
 

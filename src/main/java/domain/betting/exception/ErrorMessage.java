@@ -1,6 +1,6 @@
 package domain.betting.exception;
 
-import domain.common.exception.ExceptionInformation;
+import exception.ExceptionInformation;
 
 public enum ErrorMessage implements ExceptionInformation {
 

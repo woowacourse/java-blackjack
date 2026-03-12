@@ -1,6 +1,6 @@
 package domain.answer.exception;
 
-import domain.common.exception.ExceptionInformation;
+import exception.ExceptionInformation;
 
 import static domain.answer.DrawDecision.NO;
 import static domain.answer.DrawDecision.YES;
