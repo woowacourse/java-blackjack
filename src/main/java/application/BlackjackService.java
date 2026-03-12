@@ -21,22 +21,29 @@ public class BlackjackService {
     }
 
     public RoundResult startOneRound(String memberName) {
-        List<Card> playerCards = gameTable.drawForMember(memberName);
+        List<Card> playerCards = getGameTable().drawForMember(memberName);
 
-        boolean isBust = gameTable.checkBust(memberName);
+        boolean isBust = getGameTable().checkBust(memberName);
 
         return new RoundResult(playerCards, isBust);
     }
 
     public boolean checkDealerDrawable() {
-        return gameTable.drawForDealer();
+        return getGameTable().drawForDealer();
     }
 
     public List<MemberStatus> getMemberStatuses() {
-        return gameTable.checkMemberStatuses();
+        return getGameTable().checkMemberStatuses();
     }
 
     public List<GameResult> getGameResults() {
-        return gameTable.checkGameResult();
+        return getGameTable().checkGameResult();
+    }
+
+    private GameTable getGameTable() {
+        if (gameTable == null) {
+            throw new IllegalStateException("게임이 초기화가 되지 않았습니다.");
+        }
+        return gameTable;
     }
 }

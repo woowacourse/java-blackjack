@@ -21,8 +21,8 @@ public class BlackjackController {
     }
 
     public void executeGame() {
-        List<String> playerNames = getPlayerNames();
-        InitialCards();
+        List<String> playerNames = inputView.readPlayerNames();
+        setUpGame(playerNames);
         playGame(playerNames);
         checkDrawableOfDealer();
         finalGameStatus();
@@ -52,15 +52,10 @@ public class BlackjackController {
         }
     }
 
-    private void InitialCards() {
+    private void setUpGame(List<String> playerNames) {
+        blackjackService.initializeGame(playerNames);
         List<MemberStatus> memberStatuses = blackjackService.getMemberStatuses();
         outputView.printInitialStatus(memberStatuses);
-    }
-
-    private List<String> getPlayerNames() {
-        List<String> playerNames = inputView.readPlayerNames();
-        blackjackService.initializeGame(playerNames);
-        return playerNames;
     }
 
     private void playAllRoundOfPlayer(String playerName) {
