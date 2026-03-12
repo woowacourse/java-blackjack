@@ -1,5 +1,6 @@
 package domain;
 
+import exception.BlackjackException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,6 +9,7 @@ import java.util.List;
 
 public class CardMachine {
 
+    public static final String NO_EXIST_CARDS = "더 이상 카드를 뽑을 수 없습니다.";
     private static final int DECK_COUNT = 6;
 
     private final Deque<Card> decks;
@@ -43,7 +45,7 @@ public class CardMachine {
 
     public Card drawCard() {
         if (isDrawFinished()) {
-            return null;
+            throw new BlackjackException(NO_EXIST_CARDS);
         }
 
         return this.decks.pollFirst();
