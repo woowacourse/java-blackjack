@@ -18,18 +18,4 @@ public record WinningResult(
         return new WinningResult(winningResult);
     }
 
-    public int getWinCountOfDealer() {
-        return (int) winningResult.entrySet().stream()
-                .filter(entry -> Boolean.FALSE.equals(entry.getValue()))
-                .count();
-    }
-
-    public int numberOfPlayer() {
-        return winningResult.size();
-    }
-
-    public boolean get(String playerName) {
-        return winningResult.get(playerName);
-    }
-
 }

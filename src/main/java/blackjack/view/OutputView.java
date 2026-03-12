@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.dto.WinningResult;
+import blackjack.dto.ProfitResult;
 import java.util.List;
 import java.util.StringJoiner;
 
@@ -27,11 +27,11 @@ public class OutputView {
         System.out.println(dealerName + "는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printWinningResult(WinningResult winningResult) {
+    public void printWinningResult(ProfitResult profitResult) {
         System.out.println();
         System.out.println("## 최종 승패");
-        printWinningResultOfDealer(winningResult.getProfitOfDealer());
-        printWinningResultOfPlayers(winningResult);
+        printWinningResultOfDealer(profitResult.getProfitOfDealer());
+        printWinningResultOfPlayers(profitResult);
     }
 
     public void println() {
@@ -42,8 +42,8 @@ public class OutputView {
         System.out.println("딜러: " + profitOfDealer);
     }
 
-    private void printWinningResultOfPlayers(WinningResult winningResult) {
-        winningResult.winningResult().forEach((playerName, bettingAmount) ->
+    private void printWinningResultOfPlayers(ProfitResult profitResult) {
+        profitResult.profitResult().forEach((playerName, bettingAmount) ->
                 System.out.println(playerName + ": " + bettingAmount)
         );
     }
