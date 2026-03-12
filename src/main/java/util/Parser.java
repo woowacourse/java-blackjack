@@ -1,7 +1,6 @@
 package util;
 
 import java.util.List;
-import java.util.regex.Pattern;
 import vo.Money;
 
 public class Parser {
