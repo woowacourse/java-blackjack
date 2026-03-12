@@ -8,7 +8,6 @@ public class BettingResult {
 
     private final int BLACK_JACK = 21;
     private final double BLACK_JACK_WIN_PRICE = 0.5;
-    private final int GAME_WIN_PRICE = 2;
     private List<Participant> bettingResults;
 
     public BettingResult() {

@@ -7,6 +7,7 @@ public abstract class AbstractParticipant implements Participant {
     private static final int BLACK_JACK = 21;
     private static final int ACE_BONUS_SCORE = 10;
     private static final int BLACK_JACK_REQUIREMENT = 2;
+
     private final String name;
     private final Cards cards;
     private boolean isBlackJack;
@@ -15,8 +16,38 @@ public abstract class AbstractParticipant implements Participant {
     public AbstractParticipant(String name) {
         this.name = name;
         this.cards = Cards.createEmpty();
-        isBlackJack = false;
-        profit = 0;
+        this.isBlackJack = false;
+        this.profit = 0;
+    }
+
+    @Override
+    public void addCard(Card card) {
+        this.cards.add(card);
+    }
+
+    @Override
+    public void checkBlackJack() {
+        if (calculateTotalScore() == BLACK_JACK && this.cards.size() == BLACK_JACK_REQUIREMENT) {
+            this.isBlackJack = true;
+        }
+    }
+
+    public void addProfit(long money) {
+        this.profit += money;
+    }
+
+    public void subtractProfit(long money) {
+        this.profit -= money;
+    }
+
+    @Override
+    public String name() {
+        return name;
+    }
+
+    @Override
+    public List<Card> cards() {
+        return cards.cards();
     }
 
     @Override
@@ -32,30 +63,8 @@ public abstract class AbstractParticipant implements Participant {
     }
 
     @Override
-    public void addCard(Card card) {
-        this.cards.add(card);
-    }
-
-    @Override
     public boolean canHit() {
         return calculateTotalScore() < BUST_LIMIT;
-    }
-
-    @Override
-    public String name() {
-        return name;
-    }
-
-    @Override
-    public List<Card> cards() {
-        return cards.cards();
-    }
-
-    @Override
-    public void checkBlackJack() {
-        if (calculateTotalScore() == BLACK_JACK && this.cards.size() == BLACK_JACK_REQUIREMENT) {
-            this.isBlackJack = true;
-        }
     }
 
     public boolean isBlackJack() {
@@ -64,13 +73,5 @@ public abstract class AbstractParticipant implements Participant {
 
     public long profit() {
         return this.profit;
-    }
-
-    public void addProfit(long money) {
-        this.profit += money;
-    }
-
-    public void subtractProfit(long money) {
-        this.profit -= money;
     }
 }

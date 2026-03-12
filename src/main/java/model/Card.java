@@ -6,7 +6,7 @@ public record Card(CardShape shape, CardValue value) {
         return value == CardValue.ACE;
     }
 
-    public int getScore() {
+    public int score() {
         return value.score();
     }
 }

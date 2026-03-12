@@ -8,11 +8,11 @@ public class Player extends AbstractParticipant {
         super(name);
     }
 
-    public long money() {
-        return this.bettingMoney;
-    }
-
     public void setMoney(long bettingMoney) {
         this.bettingMoney = bettingMoney;
+    }
+
+    public long money() {
+        return this.bettingMoney;
     }
 }
