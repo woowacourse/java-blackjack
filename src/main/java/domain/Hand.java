@@ -20,10 +20,11 @@ public class Hand {
     }
 
     public boolean isBlackJack() {
-        return scoreSum() == MAX_PLAYABLE_NUMBER;
+        int initCardSum = cards.getFirst().score() + cards.get(1).score();
+        return initCardSum == MAX_PLAYABLE_NUMBER;
     }
 
-    List<Card> cards() {
+    public List<Card> cards() {
         return List.copyOf(cards);
     }
 

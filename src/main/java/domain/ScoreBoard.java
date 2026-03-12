@@ -17,7 +17,7 @@ public class ScoreBoard {
     public void calculateGameResults(List<GameStatus> playersGameStatus, GameStatus dealerGameStatus) {
         int dealerScore = getDealerScore(dealerGameStatus);
         for (GameStatus gameStatus : playersGameStatus) {
-            results.add(new GameResult(gameStatus.name(), isWin(gameStatus, dealerScore)));
+            results.add(new GameResult(gameStatus.name(), isWin(gameStatus, dealerGameStatus, dealerScore)));
         }
     }
 
@@ -25,7 +25,15 @@ public class ScoreBoard {
         return results;
     }
 
-    private WinningCondition isWin(GameStatus playerGameStatus, int dealerScore) {
+    private WinningCondition isWin(GameStatus playerGameStatus, GameStatus dealerStatus, int dealerScore) {
+        if (playerGameStatus.hand().isBlackJack() && dealerStatus.hand().isBlackJack()) {
+            return WinningCondition.DRAW;
+        }
+
+        if (playerGameStatus.hand().isBlackJack()) {
+            return WinningCondition.BLACK_JACK;
+        }
+
         if (playerGameStatus.scoreSum() > BUST_NUMBER) {
             return WinningCondition.LOSE;
         }
