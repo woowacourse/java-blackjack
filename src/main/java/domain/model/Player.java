@@ -33,6 +33,10 @@ public class Player implements Person {
         return deck;
     }
 
+    public boolean isBlackJack() {
+        return deck.getDeckStatus() == DeckStatus.BLACK_JACK;
+    }
+
     public PlayerStatus getPlayerStatus() {
         return playerStatus;
     }
@@ -50,6 +54,10 @@ public class Player implements Person {
 
     public void bet(int betAmount) {
         bet = Bet.of(betAmount);
+    }
+
+    public double getFinalMoney() {
+        return bet.getFinalMoney(playerStatus);
     }
 
     // 추가 카드 부여

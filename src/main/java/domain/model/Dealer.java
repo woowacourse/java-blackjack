@@ -20,6 +20,10 @@ public class Dealer implements Person {
         return deck;
     }
 
+    public boolean isBlackJack() {
+        return deck.getDeckStatus() == DeckStatus.BLACK_JACK;
+    }
+
     public boolean isBurst() {
         return deck.getDeckStatus() == DeckStatus.BURST;
     }

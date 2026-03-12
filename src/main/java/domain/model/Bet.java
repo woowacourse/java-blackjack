@@ -11,6 +11,19 @@ public class Bet {
         return new Bet(betAmount);
     }
 
+    public double getFinalMoney(PlayerStatus playerStatus) {
+        if (playerStatus == PlayerStatus.LOSS) {
+            return betAmount * -1;
+        }
+        if (playerStatus == PlayerStatus.WIN) {
+            return betAmount;
+        } if (playerStatus == PlayerStatus.BLACK_JACK) {
+            return betAmount * 1.5;
+        }
+        // 무승부 경우
+        return 0;
+    }
+
     public int getBetAmount() {
         return betAmount;
     }

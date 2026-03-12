@@ -148,6 +148,4 @@ public class judgementServiceTest {
         // then
         assertThat(phobi.getPlayerStatus()).isEqualTo(PlayerStatus.DRAW);
     }
-
-
 }

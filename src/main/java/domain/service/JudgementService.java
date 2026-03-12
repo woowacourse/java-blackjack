@@ -39,6 +39,15 @@ public class JudgementService {
 
     public void judgementWinning(Player player, Dealer dealer) {
         // 버스트 비교
+        if (player.isBlackJack() && dealer.isBlackJack()) {
+            player.changeStatus(PlayerStatus.DRAW);
+            return;
+        }
+        if (player.isBlackJack()) {
+            player.changeStatus(PlayerStatus.BLACK_JACK);
+            return;
+        }
+        // 버스트 비교
         if (player.isBurst()) {
             player.changeStatus(PlayerStatus.LOSS);
             return;
