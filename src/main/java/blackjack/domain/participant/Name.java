@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.domain.participant;
 
 public final class Name {
     private final String cleaned;

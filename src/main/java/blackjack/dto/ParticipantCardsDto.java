@@ -1,6 +1,6 @@
 package blackjack.dto;
 
-import blackjack.model.Participant;
+import blackjack.domain.participant.Participant;
 import java.util.List;
 
 public record ParticipantCardsDto(

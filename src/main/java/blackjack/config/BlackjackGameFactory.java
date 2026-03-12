@@ -1,7 +1,7 @@
 package blackjack.config;
 
 import blackjack.core.BlackjackGame;
-import blackjack.model.ShuffledCardsGenerator;
+import blackjack.domain.card.ShuffledCardsGenerator;
 import blackjack.view.BlackjackView;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;

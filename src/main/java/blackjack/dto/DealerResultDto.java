@@ -1,6 +1,6 @@
 package blackjack.dto;
 
-import blackjack.model.GameResult;
+import blackjack.domain.result.GameResult;
 import java.util.List;
 
 public record DealerResultDto(int win, int lose, int push) {

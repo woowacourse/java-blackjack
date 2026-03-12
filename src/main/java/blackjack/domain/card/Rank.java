@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.domain.card;
 
 public enum Rank {
     ACE(1, "A"),

@@ -7,9 +7,9 @@ import blackjack.dto.InitialDealDtos;
 import blackjack.dto.ParticipantCardsDto;
 import blackjack.dto.ParticipantScoreDto;
 import blackjack.dto.GameResultDtos;
-import blackjack.model.Dealer;
-import blackjack.model.GameResult;
-import blackjack.model.Score;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.result.GameResult;
+import blackjack.domain.result.Score;
 import java.util.List;
 import java.util.Map;
 

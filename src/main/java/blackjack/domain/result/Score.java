@@ -1,5 +1,6 @@
-package blackjack.model;
+package blackjack.domain.result;
 
+import blackjack.domain.card.Card;
 import java.util.List;
 
 public record Score(int value) implements Comparable<Score> {

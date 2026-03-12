@@ -4,7 +4,7 @@ import blackjack.dto.GameResultDto;
 import blackjack.dto.InitialDealDtos;
 import blackjack.dto.ParticipantCardsDto;
 import blackjack.dto.ParticipantScoreDto;
-import blackjack.model.Dealer;
+import blackjack.domain.participant.Dealer;
 import java.util.List;
 
 public class BlackjackView {

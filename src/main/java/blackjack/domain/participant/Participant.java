@@ -1,5 +1,8 @@
-package blackjack.model;
+package blackjack.domain.participant;
 
+import blackjack.domain.card.Hand;
+import blackjack.domain.result.Score;
+import blackjack.domain.card.Card;
 import java.util.List;
 
 public abstract class Participant {

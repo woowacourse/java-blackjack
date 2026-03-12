@@ -1,4 +1,8 @@
-package blackjack.model;
+package blackjack.domain.participant;
+
+import blackjack.domain.result.GameResult;
+import blackjack.domain.card.Hand;
+import blackjack.domain.result.Score;
 
 public class Dealer extends Participant {
     private static final int HIT_THRESHOLD = 16;

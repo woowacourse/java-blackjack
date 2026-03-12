@@ -1,8 +1,8 @@
 package blackjack.dto;
 
-import blackjack.model.Card;
-import blackjack.model.Rank;
-import blackjack.model.Suit;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Rank;
+import blackjack.domain.card.Suit;
 import java.util.Map;
 
 public record CardDto(
