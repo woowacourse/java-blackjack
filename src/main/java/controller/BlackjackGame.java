@@ -13,7 +13,6 @@ import dto.PlayerResultInfo;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import util.InputParser;
 import view.InputView;
 import view.OutputView;
 
@@ -21,23 +20,19 @@ public class BlackjackGame {
     public static final String NO = "n";
     public static final int INITIAL_CARDS_COUNT = 2;
     private final InputView inputView;
-    private final InputParser inputParser;
     private final OutputView outputView;
     private final ShuffleStrategy shuffleStrategy;
 
-    public BlackjackGame(InputView inputView, InputParser inputParser, OutputView outputView,
+    public BlackjackGame(InputView inputView, OutputView outputView,
                          ShuffleStrategy shuffleStrategy) {
         this.inputView = inputView;
-        this.inputParser = inputParser;
         this.outputView = outputView;
         this.shuffleStrategy = shuffleStrategy;
     }
 
     public void run() {
-        String names = inputView.getNames();
-        List<String> parsedName = inputParser.parseName(names);
-
-        Players players = new Players(parsedName);
+        List<String> parsedNames = inputView.getParsedNames();
+        Players players = new Players(parsedNames);
         Dealer dealer = new Dealer();
 
         Deck deck = Deck.createDeck(shuffleStrategy);
@@ -75,10 +70,9 @@ public class BlackjackGame {
 
     private void playerTurn(Player player, Deck deck) {
         while (player.canDraw()) {
-            String choice = inputView.getUserChoice(player.name());
-            String userChoice = inputParser.parseUserChoice(choice);
+            String choice = inputView.getParsedUserChoice(player.name());
 
-            if (userChoice.equals(NO)) {
+            if (choice.equals(NO)) {
                 break;
             }
 
