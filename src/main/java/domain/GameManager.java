@@ -63,7 +63,7 @@ public class GameManager {
     }
 
     public void drawCardTo(Participant participant) {
-        Card card = deck.drawCardFromDeck();
+        Card card = deck.drawCard();
         participant.receiveCard(card);
     }
 
