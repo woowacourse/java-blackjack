@@ -57,7 +57,7 @@ public class Players {
         Map<Player, MatchResult> result = new HashMap<>();
 
         for (Player player : players) {
-            result.put(player, determineMatchResult(player, dealer));
+            result.put(player, MatchResult.determineMatchResult(player, dealer));
         }
 
         return result;
@@ -94,20 +94,6 @@ public class Players {
         }
 
         return playersScore;
-    }
-
-    private MatchResult determineMatchResult(Player player, Dealer dealer) {
-        if (player.isBust()) return MatchResult.LOSE;
-        if (dealer.isBust()) return MatchResult.WIN;
-        if (player.isHigherThan(dealer)) return MatchResult.WIN;
-
-        if (player.isTie(dealer)) {
-            if (player.isBlackJack() && !dealer.isBlackJack()) return MatchResult.WIN;
-            if (!player.isBlackJack() && dealer.isBlackJack()) return MatchResult.LOSE;
-            return MatchResult.DRAW;
-        }
-
-        return MatchResult.LOSE;
     }
 
     private void validateDuplicateName(List<Player> playerNames) {
