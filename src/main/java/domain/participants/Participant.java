@@ -2,8 +2,8 @@ package domain.participants;
 
 import domain.bet.Betting;
 import domain.card.vo.Card;
+import domain.state.Started;
 import domain.state.State;
-import domain.state.running.Running;
 
 public abstract class Participant {
     private static final int MIN_NAME_SIZE = 2;
@@ -45,6 +45,6 @@ public abstract class Participant {
     }
 
     public State getStartState(Hand hand) {
-        return Running.getStartState(hand);
+        return Started.getStartState(hand);
     }
 }

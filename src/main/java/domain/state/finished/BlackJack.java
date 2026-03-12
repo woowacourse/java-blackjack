@@ -13,7 +13,7 @@ public class BlackJack extends Finished {
         super(hand);
     }
 
-    public static boolean isBlackJak(Hand hand) {
+    public static boolean isBlackJack(Hand hand) {
         return hand.getSize() == HAND_SIZE && hand.getScore() == BLACKJACK_SCORE;
     }
 

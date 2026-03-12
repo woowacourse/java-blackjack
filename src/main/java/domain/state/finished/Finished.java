@@ -3,15 +3,15 @@ package domain.state.finished;
 import domain.card.vo.Card;
 import domain.participants.Hand;
 import domain.state.Result;
+import domain.state.Started;
 import domain.state.State;
 import java.util.List;
 import java.util.function.Function;
 
-public abstract class Finished implements State {
-    private final Hand hand;
+public abstract class Finished extends Started {
 
     public Finished(Hand hand) {
-        this.hand = hand;
+        super(hand);
     }
 
     abstract public Function<Integer, Integer> earningRate(Result result);
@@ -36,11 +36,6 @@ public abstract class Finished implements State {
     }
 
     @Override
-    public List<Card> getCards() {
-        return hand.getCards();
-    }
-
-    @Override
     public State stay() {
         throw new IllegalStateException(
                 "끝난 State 입니다. stay 할 수 없습니다. hand: %s, State: %s".formatted(
@@ -50,5 +45,10 @@ public abstract class Finished implements State {
     @Override
     public Integer getProfit(State dealerState, Integer betCost) {
         return earningRate(getResult(dealerState)).apply(betCost);
+    }
+
+    @Override
+    public List<Card> getCards() {
+        return hand.getCards();
     }
 }

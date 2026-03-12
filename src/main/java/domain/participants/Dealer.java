@@ -3,6 +3,8 @@ package domain.participants;
 import domain.bet.Betting;
 import domain.hitStrategy.CasinoDealerHitStrategy;
 import domain.hitStrategy.HitStrategy;
+import domain.state.State;
+import domain.state.running.Running;
 
 //추상 클래스
 public class Dealer extends Participant {
@@ -23,6 +25,14 @@ public class Dealer extends Participant {
 
     @Override
     public boolean canDraw() {
-        return hitStrategy.canHit(getState());
+        return !state.isFinished() && hitStrategy.canHit(state);
+    }
+
+    @Override
+    public State getState() {
+        if (!canDraw() && state instanceof Running) {
+            stay();
+        }
+        return state;
     }
 }

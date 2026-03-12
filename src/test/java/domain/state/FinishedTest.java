@@ -1,10 +1,13 @@
-package domain.state.finished;
+package domain.state;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.TestFixture;
 import domain.card.vo.Rank;
-import domain.state.Result;
+import domain.state.finished.BlackJack;
+import domain.state.finished.Bust;
+import domain.state.finished.Finished;
+import domain.state.finished.Stay;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;

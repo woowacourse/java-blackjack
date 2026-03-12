@@ -16,7 +16,7 @@ public class TestFixture {
     private static final List<Card> DEFAULT_CARDS = createCards();
     private static final Betting DEFAULT_BETTING = new Betting(10000);
 
-    public static Player createDefaultPlayerStateByRank(List<Rank> ranks) {
+    public static Player createDefaultPlayerByRank(List<Rank> ranks) {
         return Player.createDefaultStrategy("익명", createHandByRank(ranks), DEFAULT_BETTING);
     }
 

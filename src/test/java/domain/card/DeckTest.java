@@ -1,8 +1,8 @@
-package domain;
+package domain.card;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.card.Deck;
+import domain.TestFixture;
 import domain.card.vo.Card;
 import domain.card.vo.Rank;
 import domain.card.vo.Suit;
