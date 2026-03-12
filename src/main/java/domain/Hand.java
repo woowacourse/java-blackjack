@@ -24,6 +24,10 @@ public class Hand {
         return calculateCardScoreSum() == BUST_CRITERIA;
     }
 
+    public boolean isBlackJack() {
+        return isFull() && cards.size() == 2;
+    }
+
     public List<Card> showCards() {
         return Collections.unmodifiableList(cards);
     }

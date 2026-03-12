@@ -49,4 +49,8 @@ public abstract class Participant {
     public boolean isBust() {
         return hand.isBust();
     }
+
+    public boolean isBlackJack() {
+        return hand.isBlackJack();
+    }
 }
