@@ -13,12 +13,14 @@ public class InputView {
     }
 
     public int readBettingAmount(String name) {
+        System.out.println();
         System.out.println(name + "의 베팅 금액은?");
 
         return Integer.parseInt(readLine());
     }
 
     public boolean askHit(String name) {
+        System.out.println();
         System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
 
         return readLine().equals(HIT_ANSWER);

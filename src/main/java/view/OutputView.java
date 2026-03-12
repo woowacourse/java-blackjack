@@ -22,7 +22,6 @@ public class OutputView {
     }
 
     public void printBustState(String name, int score, int blackjackScore) {
-        System.out.println();
         System.out.printf("%s는 %d점이므로 %d점 초과로 버스트입니다.", name, score, blackjackScore);
         System.out.println();
     }
@@ -48,6 +47,7 @@ public class OutputView {
                         ""
                 ));
 
+        System.out.println();
         System.out.println(output);
     }
 }
