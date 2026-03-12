@@ -18,4 +18,10 @@ public class Players {
     public List<Player> getPlayers() {
         return List.copyOf(players);
     }
+
+    public void renewedWithBlackJack() {
+        players.stream()
+                .filter(Player::isBlackJack)
+                .forEach(Player::renewedWithBlackJack);
+    }
 }

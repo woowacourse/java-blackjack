@@ -1,22 +1,36 @@
 package domain.participant;
 
+import domain.PlayerStatus;
 import domain.card.Card;
 import domain.Hand;
+import domain.constant.Result;
 import java.util.List;
 
 public class Player {
     private final String name;
     private final Hand hand = new Hand();
-    // TODO: 베팅 기능 추가 시 베팅 금액 필드 또는 일급 객체 필요
+    private PlayerStatus status;
 
 
-    public Player(String name) {
+    public Player(String name, int bettingMoney) {
         this.name = name;
-        // TODO: 베팅 기능 추가 시 생성자에서 베팅 금액도 함께 받아야 할 수 있음
+        this.status = new PlayerStatus(bettingMoney);
     }
 
     public boolean isBust() {
         return hand.isBust();
+    }
+
+    public boolean isBlackJack() {
+        return hand.isBlackjack();
+    }
+
+    public Result getResult() {
+        return status.getResult();
+    }
+
+    public void renewedWithBlackJack() {
+        status.renewedWithBlackJack();
     }
 
     public void receiveCard(Card card) {
@@ -43,7 +57,4 @@ public class Player {
         return name;
     }
 
-    public Hand getHand() {
-        return hand;
-    }
 }

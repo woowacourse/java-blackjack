@@ -9,15 +9,15 @@ public class BettingMoneyTest {
 
     @ParameterizedTest
     @CsvSource({
-            "10000, WIN, 10000",
-            "10000, DRAW, 0",
-            "10000, LOSE, -10000",
-            "10000, BUST, -10000",
-            "10000, BLACKJACK, 15000"
+            "10000, 10000",
+            "10000, 0",
+            "10000, -10000",
+            "10000, -10000",
+            "10000, 15000"
     })
-    void 결과값에_따라_수익률을_계산하여_수익계산(int betting, Result result, double expected) {
-        BettingMoney bettingMoney = new BettingMoney(betting);
+    void 결과값에_따라_수익률을_계산하여_수익계산(int betting, double expected) {
+        PlayerStatus bettingMoney = new PlayerStatus(betting);
 
-        assertThat(bettingMoney.calculateProceeds(result)).isEqualTo(expected);
+        assertThat(bettingMoney.calculateProceeds()).isEqualTo(expected);
     }
 }

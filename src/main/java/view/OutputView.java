@@ -1,7 +1,7 @@
 package view;
 
 import domain.constant.Result;
-import domain.dto.GameFinalResultDto;
+import domain.dto.GameResultDto;
 import domain.dto.GameInitialInfoDto;
 import domain.dto.GameScoreResultDto;
 
@@ -50,10 +50,10 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printFinalResult(List<GameFinalResultDto> finalResult) {
+    public void printFinalResult(List<GameResultDto> finalResult) {
         // TODO: 베팅 기능 추가 시 정산 금액도 출력하도록 형식 수정 필요
         System.out.println("## 최종 승패");
-        GameFinalResultDto firstPlayer = finalResult.removeFirst();
+        GameResultDto firstPlayer = finalResult.removeFirst();
         Map<Result, Integer> resultCounts = new EnumMap<>(Result.class);
 
         countDealerResult(finalResult, resultCounts);
@@ -61,8 +61,8 @@ public class OutputView {
         printPlayerResult(finalResult);
     }
 
-    private void countDealerResult(List<GameFinalResultDto> finalResult, Map<Result, Integer> resultCounts) {
-        for (GameFinalResultDto result : finalResult) {
+    private void countDealerResult(List<GameResultDto> finalResult, Map<Result, Integer> resultCounts) {
+        for (GameResultDto result : finalResult) {
             if (result.getResult() == Result.WIN) {
                 resultCounts.put(Result.LOSE, resultCounts.getOrDefault(Result.LOSE, 0) + 1);
                 continue;
@@ -77,7 +77,7 @@ public class OutputView {
         }
     }
 
-    private void printDealerResult(GameFinalResultDto firstPlayer, Map<Result, Integer> resultCounts) {
+    private void printDealerResult(GameResultDto firstPlayer, Map<Result, Integer> resultCounts) {
         StringBuilder sb = new StringBuilder();
         sb.append(firstPlayer.getPlayerName()).append(": ");
         for (Result result : resultCounts.keySet()) {
@@ -86,9 +86,9 @@ public class OutputView {
         System.out.println(sb);
     }
 
-    private void printPlayerResult(List<GameFinalResultDto> finalResult) {
+    private void printPlayerResult(List<GameResultDto> finalResult) {
         // TODO: 베팅 기능 추가 시 플레이어별 베팅 금액,수익 출력 필요
-        for (GameFinalResultDto result : finalResult) {
+        for (GameResultDto result : finalResult) {
             System.out.println(MessageFormat.format(
                     FINAL_RESULT_MESSAGE,
                     result.getPlayerName(),
