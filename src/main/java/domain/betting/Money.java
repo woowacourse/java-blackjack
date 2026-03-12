@@ -4,24 +4,23 @@ import domain.betting.exception.ErrorMessage;
 import domain.betting.exception.MoneyException;
 
 public record Money(
-        double money
+        int money
 ) {
 
-    private static final double MONEY_BOUND = 0.0;
-    private static final double DEALER_PROFIT_TIMES = -1.0;
+    private static final int MONEY_BOUND = 0;
 
     public static Money from(String money) {
         validateMoneyIsNumber(money);
-        return Money.from(Double.parseDouble(money));
+        return Money.from(Integer.parseInt(money));
     }
 
-    public static Money from(double money) {
+    public static Money from(int money) {
         validateMoneyIsNegative(money);
         return new Money(money);
     }
 
     public Money applyBettingRate(BettingRate rate) {
-        return new Money(money * rate.bettingRate());
+        return new Money((int) (this.money * rate.bettingRate()));
     }
 
     public Money getMoney() {
@@ -33,21 +32,23 @@ public record Money(
     }
 
     public Money reverseMoney() {
-        return new Money(this.money * DEALER_PROFIT_TIMES);
+        return new Money(-this.money);
     }
 
     private static void validateMoneyIsNumber(String money) {
         try {
-            Double.parseDouble(money);
+            Integer.parseInt(money);
         } catch (NumberFormatException e) {
             throw new MoneyException(ErrorMessage.BETTING_MONEY_IS_NOT_STRING);
         }
     }
 
-    private static void validateMoneyIsNegative(double money) {
+    private static void validateMoneyIsNegative(int money) {
         if (money < MONEY_BOUND) {
             throw new MoneyException(ErrorMessage.BETTING_MONEY_IS_NOT_NEGATIVE);
         }
     }
+
+
 
 }

@@ -9,7 +9,7 @@ public class BettingsTest {
 
     @Test
     void 플레이어의_베팅금액을_저장한다() {
-        double tenThousand = 1000.0;
+        int tenThousand = 1000;
         Money bettingMoney = Money.from(tenThousand);
         Player testPlayer = Player.from(new PlayerName("test"));
         Bettings bettings = new Bettings();
@@ -25,7 +25,7 @@ public class BettingsTest {
 
     @Test
     void 플레이어의_베팅금액에_베팅률을_반영한다() {
-        double tenThousand = 1000.0;
+        int tenThousand = 1000;
         double testBettingRate = 2.0;
         Money bettingMoney = Money.from(tenThousand);
         Player testPlayer = Player.from(new PlayerName("test"));
@@ -36,7 +36,7 @@ public class BettingsTest {
         bettings.calculateBettingMoney(testPlayer, bettingRate);
 
         Money actualBettingMoney = bettings.getPlayerBettingMoney(testPlayer);
-        Money expectedBettingMoney = Money.from(tenThousand * testBettingRate);
+        Money expectedBettingMoney = Money.from((int)(tenThousand * testBettingRate));
 
         Assertions.assertThat(actualBettingMoney)
                 .isEqualTo(expectedBettingMoney);
@@ -44,7 +44,7 @@ public class BettingsTest {
 
     @Test
     void 딜러의_수익금을_계산한다() {
-        double tenThousand = 1000.0;
+        int tenThousand = 1000;
         Money bettingMoney = Money.from(tenThousand);
         Player testPlayer = Player.from(new PlayerName("test"));
         Bettings bettings = new Bettings();

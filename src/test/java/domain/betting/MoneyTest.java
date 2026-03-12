@@ -8,7 +8,7 @@ public class MoneyTest {
 
     @Test
     void 베팅금액은_음수일_수_없다() {
-        String negativeNumber = "-1.0";
+        String negativeNumber = "-1000";
 
         Assertions.assertThatThrownBy(() -> {
             Money.from(negativeNumber);

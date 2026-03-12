@@ -5,7 +5,7 @@ import domain.gamer.Gamer;
 
 public record GamerBettingProfitDto(
         String gamerName,
-        double bettingProfit
+        int bettingProfit
 ) {
 
     public static GamerBettingProfitDto of(Gamer gamer, Money bettingProfit) {
