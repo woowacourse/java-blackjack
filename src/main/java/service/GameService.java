@@ -7,6 +7,7 @@ import domain.card.TrumpSuit;
 import domain.player.Player;
 import domain.player.PlayerGroups;
 import domain.player.WinStatus;
+import dto.ParticipantBetResult;
 import dto.ParticipantResult;
 
 import java.util.ArrayList;
@@ -61,6 +62,23 @@ public class GameService {
     public Map<String, WinStatus> result() {
         return playerGroups.getGameResult();
     }
+
+    public List<ParticipantBetResult> bettingResult(Map<String, Integer> userBetInfo) {
+        List<ParticipantBetResult> profitResults = new ArrayList<>();
+        int dealerCost = 0;
+
+        for (Map.Entry<String, WinStatus> playerWinStatus : playerGroups.getGameResult().entrySet()) {
+            String userName = playerWinStatus.getKey();
+            int userCost = (int) (userBetInfo.get(userName) * playerWinStatus.getValue().getEarningsRate());
+
+            profitResults.add(new ParticipantBetResult(userName, userCost));
+            dealerCost -= userCost;
+        }
+
+        profitResults.addFirst(new ParticipantBetResult(playerGroups.getDealer().getName(), dealerCost));
+        return profitResults;
+    }
+
 
     public int getPlayerGroupSize() {
         return playerGroups.getPlayerGroupSize();
