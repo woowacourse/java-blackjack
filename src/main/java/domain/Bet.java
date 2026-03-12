@@ -4,6 +4,7 @@ public class Bet {
 
     private static final int UNIT_OF_BET = 1000;
     private static final int MINIMUM_BET_AMOUNT = 1000;
+
     private final int amount;
 
     public Bet(String amount) {

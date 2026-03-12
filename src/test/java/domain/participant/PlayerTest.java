@@ -47,4 +47,20 @@ class PlayerTest {
 
         assertThat(player.canReceiveCard()).isFalse();
     }
+
+    @Test
+    void 블랙잭인지_판정한다() {
+        Player player1 = new Player("pobi", new Hand(), "10000");
+        player1.receiveCard(new Card(ACE, SPADE));
+        player1.receiveCard(new Card(TEN, SPADE));
+
+        Player player2 = new Player("cary", new Hand(), "10000");
+        player2.receiveCard(new Card(JACK, SPADE));
+        player2.receiveCard(new Card(SEVEN, SPADE));
+
+        assertAll(
+                () -> assertTrue(player1.isBlackjack()),
+                () -> assertFalse(player2.isBlackjack())
+        );
+    }
 }

@@ -17,8 +17,8 @@ public class Hand {
         return cards.getFirst().getName();
     }
 
-    public int size() {
-        return cards.size();
+    public boolean hasOnlyTwoCards() {
+        return cards.size() == 2;
     }
 
     public List<String> showHand() {

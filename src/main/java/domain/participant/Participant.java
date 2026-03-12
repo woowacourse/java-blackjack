@@ -6,6 +6,8 @@ import domain.Hand;
 import java.util.List;
 
 public abstract class Participant {
+    private static final int BLACKJACK_SCORE = 21;
+
     private final String name;
     protected final Hand hand;
 
@@ -22,6 +24,10 @@ public abstract class Participant {
 
     public boolean isBust() {
         return hand.isBust();
+    }
+
+    public boolean isBlackjack() {
+        return hand.hasOnlyTwoCards() && hand.calculateScore() == BLACKJACK_SCORE;
     }
 
     public String getName() {

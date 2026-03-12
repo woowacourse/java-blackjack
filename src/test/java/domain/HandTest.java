@@ -2,6 +2,8 @@ package domain;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static domain.constant.Rank.*;
 import static domain.constant.Suit.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -84,14 +86,20 @@ public class HandTest {
     }
 
     @Test
-    void 핸드에_존재하는_카드의_숫자를_확인한다() {
-        Hand hand = new Hand();
-        hand.addCard(new Card(ACE, SPADE));
-        hand.addCard(new Card(KING, HEART));
-        hand.addCard(new Card(SEVEN, DIAMOND));
+    void 핸드에_2장의_카드만_존재하는지_확인한다() {
+        Hand hand1 = new Hand();
+        hand1.addCard(new Card(ACE, SPADE));
+        hand1.addCard(new Card(KING, HEART));
+        hand1.addCard(new Card(SEVEN, DIAMOND));
 
-        int handSize = hand.size();
+        Hand hand2 = new Hand();
+        hand1.addCard(new Card(JACK, SPADE));
+        hand1.addCard(new Card(QUEEN, HEART));
 
-        assertThat(handSize).isEqualTo(3);
+        List<Hand> hands = List.of(hand1, hand2);
+
+        assertThat(hands)
+                .extracting(Hand::hasOnlyTwoCards)
+                .containsExactly(false, true);
     }
 }
