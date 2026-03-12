@@ -29,7 +29,7 @@ public class Player extends Participant {
     public PlayerGameResult determinePlayerResult(Dealer dealer) {
         MatchResult matchResult = determineGameResult(dealer);
         double payout = determinePayout(matchResult);
-        return new PlayerGameResult(nickname, matchResult, (long) payout - amount);
+        return PlayerGameResult.of(nickname, matchResult, (long) payout - amount);
     }
 
     private double determinePayout(MatchResult matchResult) {
