@@ -28,7 +28,7 @@ class PlayerTest {
         Player pobi = createPlayer("pobi", cards, amount);
 
         // when
-        int profit = pobi.calculateBettingProfit(matchCase);
+        long profit = pobi.calculateBettingProfit(matchCase);
 
         // then
         assertThat(profit).isEqualTo(result);
