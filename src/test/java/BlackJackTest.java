@@ -10,6 +10,7 @@ import model.participant.Participant;
 import model.Participants;
 import model.participant.Player;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class BlackJackTest {
@@ -88,5 +89,30 @@ public class BlackJackTest {
 
         // then
         assertThat(calculateRevenue.get("nuno")).isEqualTo(0);
+    }
+
+    @DisplayName("플레이어가_블랙잭이면서_딜러는_블랙잭이_아니라면_플레이어는_배팅금액의_1.5배를 받는다.")
+    @Test
+    void onlyPlayerBlackJack() {
+        // given
+        Dealer dealer = Dealer.of(DEALER_NAME);
+        dealer.draw(Card.of("스페이드", 5));
+        dealer.draw(Card.of("스페이드", 3));
+        Player player = Player.of("nuno", 10000);
+        player.draw(Card.of("하트", 10));
+        player.draw(Card.of("스페이드", 11));
+
+        ArrayList<Participant> playersAndDealer = new ArrayList<>();
+        playersAndDealer.add(dealer);
+        playersAndDealer.add(player);
+
+        Participants playerAndDealerParticipants = Participants.of(playersAndDealer);
+        BlackJack blackJackGame = BlackJack.from(playerAndDealerParticipants);
+
+        // when
+        Map<String, Integer> calculateRevenue = blackJackGame.calculateRevenue();
+
+        // then
+        assertThat(calculateRevenue.get("nuno")).isEqualTo(15000);
     }
 }

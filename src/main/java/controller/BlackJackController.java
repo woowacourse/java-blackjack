@@ -35,15 +35,18 @@ public class BlackJackController {
         outputView.printDealOut(participants);
 
         playersCardDraw(participants);
+        dealerNeedDraw(participants);
 
+        outputView.printHandsAndScore(participants);
+        outputView.printResultRevenue(blackJack.calculateRevenue());
+    }
+
+    private void dealerNeedDraw(Participants participants) {
         Participant dealer = participants.getDealer();
         if (dealer.dealerNeedDraw()) {
             dealer.draw(Randoms.pick());
             outputView.printDealerDraw();
         }
-
-        outputView.printHandsAndScore(participants);
-        outputView.printResultRevenue(blackJack.calculateRevenue());
     }
 
     private List<Integer> getBetAmounts(String[] names) {
@@ -85,9 +88,6 @@ public class BlackJackController {
             return true;
         }
 
-        if (participant.calculateScore() == TARGET_NUMBER) {
-            return true;
-        }
-        return false;
+        return participant.calculateScore() == TARGET_NUMBER;
     }
 }

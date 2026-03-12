@@ -93,6 +93,13 @@ public final class BlackJack {
                 continue;
             }
 
+            if (participant.isBlackJack() && !dealer.isBlackJack()) {
+                int playerBlackJackRevenue = (int) (((Player) participant).getBetAmount() * 1.5);
+                extracted(calculatedTotalRevenues, participant, playerBlackJackRevenue);
+                dealerRevenue -= playerBlackJackRevenue;
+                continue;
+            }
+
             if (isDealerAndPlayerWithBlackJack(entry, dealer, participant, calculatedTotalRevenues)) {
                 continue;
             }
@@ -104,6 +111,11 @@ public final class BlackJack {
         }
 
         return calculatedTotalRevenues;
+    }
+
+    private static void extracted(Map<String, Integer> calculatedTotalRevenues, Participant participant,
+                                  int playerBlackJackRevenue) {
+        calculatedTotalRevenues.put(participant.getName(), playerBlackJackRevenue);
     }
 
     private int calculateTotalRevenue(Entry<String, Boolean> entry, Map<String, Integer> calculatedPlayerRevenues,
