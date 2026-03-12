@@ -26,20 +26,26 @@ public class BlackjackGame {
         return new BlackjackGame(dealer, players, deck);
     }
 
+    public static BlackjackGame create(Players playersWithBetAmounts, ShuffleStrategy strategy) {
+        Dealer dealer = Dealer.of();
+        Deck deck = Deck.create(strategy);
+        return new BlackjackGame(dealer, playersWithBetAmounts, deck);
+    }
+
+    private static Players generatePlayers(List<String> names) {
+        List<Player> players = new ArrayList<>();
+        for (int i = 0; i < names.size(); i++) {
+            players.add(Player.of(Name.of(names.get(i))));
+        }
+        return Players.of(players);
+    }
+
     private void validate(Dealer dealer, Players players, Deck deck) {
         Objects.requireNonNull(dealer, "dealer 는 null 이 올 수 없습니다.");
         Objects.requireNonNull(players, "players 는 null 이 올 수 없습니다.");
         Objects.requireNonNull(deck, "deck 은 null 이 올 수 없습니다.");
     }
 
-    private static Players generatePlayers(List<String> names) {
-        List<Player> players = new ArrayList<>();
-        for (String name : names) {
-            Player player = Player.of(Name.of(name));
-            players.add(player);
-        }
-        return Players.of(players);
-    }
 
     public void deal() {
         players.receiveCards(deck);
