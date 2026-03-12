@@ -31,7 +31,7 @@ public final class BettingAmount {
     }
 
     private static void validateMinimumAmount(int amount) {
-        if (amount <= MINIMUM_BATTING_AMOUNT) {
+        if (amount < MINIMUM_BATTING_AMOUNT) {
             throw new UnderMinimumAmountException(amount, MINIMUM_BATTING_AMOUNT);
         }
     }

@@ -8,6 +8,7 @@ import java.util.stream.Stream;
 import model.card.Card;
 import model.card.Rank;
 import model.card.Suit;
+import model.participant.exception.ForbiddenPlayerNameException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -28,10 +29,9 @@ class PlayerTest {
     @Test
     void 플레이어가_딜러라는_이름을_사용하면_예외를_발생한다() {
         assertThatThrownBy(() -> Player.of("딜러", 1000))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("'딜러'");
-
+                .isInstanceOf(ForbiddenPlayerNameException.class);
     }
+
 
     @Test
     void 플레이어의_카드_오픈_테스트() {

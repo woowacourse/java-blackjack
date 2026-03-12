@@ -3,6 +3,7 @@ package model.participant;
 import java.util.List;
 import model.card.Card;
 import model.game.BettingAmount;
+import model.participant.exception.ForbiddenPlayerNameException;
 
 public class Player extends Participant {
     private final BettingAmount bettingAmount;
@@ -25,7 +26,7 @@ public class Player extends Participant {
 
     private static void validateName(String name) {
         if (name.equals(Dealer.NAME)) {
-            throw new IllegalArgumentException("플레이어는 '" + Dealer.NAME + "'라는 이름을 사용할 수 없습니다.");
+            throw new ForbiddenPlayerNameException(name);
         }
     }
 
