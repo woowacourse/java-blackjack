@@ -20,16 +20,16 @@ public class GameContext {
         bettingResult = new BettingResult();
     }
 
+    public void setPlayers(List<Player> players) {
+        this.players = players;
+    }
+
     public Dealer dealer() {
         return this.dealer;
     }
 
     public List<Player> players() {
         return this.players;
-    }
-
-    public void setPlayers(List<Player> players) {
-        this.players = players;
     }
 
     public CardDispenser cardDispenser() {

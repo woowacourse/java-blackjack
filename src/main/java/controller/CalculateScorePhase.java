@@ -4,7 +4,7 @@ import view.OutputView;
 
 public class CalculateScorePhase implements GamePhase {
 
-    CalculateScorePhase() {
+    public CalculateScorePhase() {
     }
 
     @Override
