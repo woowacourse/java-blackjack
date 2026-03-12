@@ -7,9 +7,9 @@
 - [x] 게임에 참여할 사람의 이름 입력 받기(구분자 ,)
     - [x] 공백일 경우 `IllegalArgumentException`을 발생시킨다.
 
-- [] 플레이어에게 배팅 금액 입력 받기
-    - [] 숫자 이외의 문자를 입력할 경우 `IllegalArgumentException`을 발생시킨다.
-    - [] 공백일 경우 `IllegalArgumentException`을 발생시킨다.
+- [x] 플레이어에게 배팅 금액 입력 받기
+    - [x] 숫자 이외의 문자를 입력할 경우 `IllegalArgumentException`을 발생시킨다.
+    - [x] 공백일 경우 `IllegalArgumentException`을 발생시킨다.
 
 - [x] 플레이어에게 hit 여부 입력 받기(y,n).
     - [x] 공백일 경우 `IllegalArgumentException`을 발생시킨다.
@@ -22,8 +22,8 @@
     - [x] 중복된 이름이 존재할 경우 `IllegalArgumentException`을 발생시킨다.
 
 - 배팅 등록
-    - [] 배팅 금액은 양수 값만 입력으로 받는다.
-    - [] 배팅 금액은 1,000원 이상 1,000,000원 이하, 이외 범위는 `IllegalArgumentException`을 발생시킨다.
+    - [x] 배팅 금액은 양수 값만 입력으로 받는다.
+    - [x] 배팅 금액은 1,000원 이상 1,000,000원 이하, 이외 범위는 `IllegalArgumentException`을 발생시킨다.
 
 - 게임 초기화
     - [x] 게임 시작 시, 모든 카드를 덱에 등록하고 셔플한다.

@@ -1,7 +1,6 @@
 package util;
 
-import view.InputView;
-
+import exception.ExceptionMessage;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,7 +21,7 @@ public class Parser {
         try {
             return Integer.parseInt(input);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("[Error] 배팅 금액은 숫자만 입력 가능합니다.");
+            throw new IllegalArgumentException(ExceptionMessage.INVALID_BATTING_INPUT.getMessage());
         }
     }
 }
