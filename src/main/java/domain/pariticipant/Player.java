@@ -21,16 +21,16 @@ public class Player extends Participant {
         this.drawCard(deck);
     }
 
-    public int calculateBettingProfit(MatchCase matchCase) {
+    public long calculateBettingProfit(MatchCase matchCase) {
         if(WIN.equals(matchCase) && !isBlackjack()) {
-            return bettingAmount.getPrice();
+            return bettingAmount.bettingAmount();
         }
         if(WIN.equals(matchCase) && isBlackjack()) {
-            return (int) (bettingAmount.getPrice() * BLACKJACK_MULTIPLIER);
+            return (int) (bettingAmount.bettingAmount() * BLACKJACK_MULTIPLIER);
         }
 
         if(LOSE.equals(matchCase)) {
-            return bettingAmount.getPrice() * -1;
+            return bettingAmount.bettingAmount() * -1;
         }
 
         return 0; // 무승부인 경우

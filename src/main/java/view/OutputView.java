@@ -122,7 +122,7 @@ public class OutputView {
     public void printBettingProfit(PlayersBettingProfit playersBettingProfit) {
         System.out.println("\n## 최종 수익");
         System.out.printf("딜러: %d\n", playersBettingProfit.calculateDealerProfit());
-        Map<Player, Integer> profitMap = playersBettingProfit.playersBettingProfit();
+        Map<Player, Long> profitMap = playersBettingProfit.playersBettingProfit();
         for (Player player : profitMap.keySet()) {
             System.out.printf("%s: %d\n", player.getName(), profitMap.get(player));
         }

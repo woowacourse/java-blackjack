@@ -24,19 +24,19 @@ class PlayersBettingProfitTest {
     @DisplayName("딜러의 수익을 계산한다.")
     public void calculateDealerProfit_success() throws Exception {
         // given
-        Map<Player, Integer> playersBettingProfitMap = Map.of(
+        Map<Player, Long> playersBettingProfitMap = Map.of(
                 createPlayer("pobi",
                         List.of(createCard(HEART, TWO),
                                 createCard(SPADE, EIGHT),
-                                createCard(CLUB, ACE)), 10000), 10000,
+                                createCard(CLUB, ACE)), 10000), 10000L,
                 createPlayer("jason",
                         List.of(createCard(CLUB, SEVEN),
-                                createCard(SPADE, KING)), 20000), -20000
+                                createCard(SPADE, KING)), 20000), -20000L
         );
         PlayersBettingProfit playersBettingProfit = new PlayersBettingProfit(playersBettingProfitMap);
 
         // when
-        int dealerProfit = playersBettingProfit.calculateDealerProfit();
+        long dealerProfit = playersBettingProfit.calculateDealerProfit();
 
         // then
         Assertions.assertThat(dealerProfit).isEqualTo(10000);

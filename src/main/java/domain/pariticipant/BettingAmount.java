@@ -1,14 +1,10 @@
 package domain.pariticipant;
 
-public class BettingAmount {
+public record BettingAmount(long bettingAmount) {
 
-    private final int price;
-
-    public BettingAmount(int price) {
-        this.price = price;
-    }
-
-    public int getPrice() {
-        return price;
+    public BettingAmount {
+        if (bettingAmount <= 0 || bettingAmount > 1_000_000_000) {
+            throw new IllegalArgumentException("");
+        }
     }
 }

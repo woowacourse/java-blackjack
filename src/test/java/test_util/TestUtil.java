@@ -17,7 +17,7 @@ public class TestUtil {
         return createPlayer(name, handCards, 10000);
     }
 
-    public static Player createPlayer(String name, List<Card> handCards, int price) {
+    public static Player createPlayer(String name, List<Card> handCards, long price) {
         return new Player(
                 new Name(name),
                 new Hand(handCards),

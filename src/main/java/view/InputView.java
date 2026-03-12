@@ -42,9 +42,9 @@ public class InputView {
     public BettingAmount readBettingAmount(String name) {
         System.out.printf("\n%s의 베팅 금액은?\n", name);
 
-        int bettingAmount;
+        long bettingAmount;
         try {
-            bettingAmount = Integer.parseInt(scanner.nextLine());
+            bettingAmount = Long.parseLong(scanner.nextLine());
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException(INVALID_BETTING_AMOUNT_FORMAT_ERROR.getMessage());
         }
