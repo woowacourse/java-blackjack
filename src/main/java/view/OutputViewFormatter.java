@@ -3,6 +3,7 @@ package view;
 import dto.DealerFinalResultDto;
 import dto.FinalResultDto;
 import dto.PlayerDto;
+import dto.ProfitDto;
 import dto.ResultDto;
 import java.util.List;
 
@@ -33,5 +34,9 @@ public class OutputViewFormatter {
 
     public String formatTotalResult(FinalResultDto finalResultDto) {
         return String.format("%s: %s%n", finalResultDto.name(), finalResultDto.result());
+    }
+
+    public String formatProfit(ProfitDto profitDto) {
+        return String.format("%s: %d%n", profitDto.name(), profitDto.profit());
     }
 }

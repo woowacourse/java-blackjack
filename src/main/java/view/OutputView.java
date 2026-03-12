@@ -3,10 +3,10 @@ package view;
 import dto.DealerFinalResultDto;
 import dto.FinalResultDto;
 import dto.PlayerDto;
+import dto.ProfitDto;
 import dto.PlayersDto;
 import dto.ResultDto;
 import dto.TotalFinalResultsDto;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -67,5 +67,13 @@ public class OutputView {
         for (FinalResultDto finalResult : totalFinalResultsDto.totalResults()) {
             System.out.print(outputViewFormatter.formatTotalResult(finalResult));
         }
+    }
+
+    public void printProfitMessage() {
+        System.out.println("\n\n## 최종 수익");
+    }
+
+    public void printProfit(ProfitDto profitDto) {
+        System.out.print(outputViewFormatter.formatProfit(profitDto));
     }
 }
