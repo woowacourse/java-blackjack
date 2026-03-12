@@ -68,7 +68,7 @@ public class Controller {
 
     private void turnToOnePlayer(Deck deck, Player player) {
         while (player.canReceive()) {
-            if (inputView.getReceiveCard(player)) {
+            if (!inputView.getReceiveCard(player)) {
                 return;
             }
             player.receiveCard(deck.giveCard());
