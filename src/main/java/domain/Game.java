@@ -1,8 +1,6 @@
 package domain;
 
-import controller.GameDelegate;
-import dto.GameResultDto;
-import dto.ParticipantDto;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -19,61 +17,58 @@ public class Game {
         this.players = players;
     }
 
-    public static Game ready(GameDelegate delegate, CardCreationStrategy strategy) {
-        Deck totalDeck = Deck.createDeck(strategy);
-
-        Deck dealerDeck = Deck.createParticipantDeck(totalDeck);
-        Dealer dealer = new Dealer(dealerDeck);
-
-        List<String> playerNames = delegate.askPlayerNames();
-        Players players = Players.of(playerNames, totalDeck);
-
-        delegate.showInitialParticipantCards(
-                ParticipantDto.initialFrom(dealer),
-                ParticipantDto.listOf(players.getPlayers())
-        );
-
+    public static Game registerParticipantsAndPrepareTotalDeck(List<String> playerNames,
+                                                               CardShuffleStrategy strategy) {
+        Deck totalDeck = Deck.createTotalDeckAndShuffle(strategy);
+        Dealer dealer = new Dealer();
+        Players players = Players.of(playerNames);
         return new Game(totalDeck, dealer, players);
     }
 
-    public void play(GameDelegate observer) {
-        List<Player> individualPlayers = players.getPlayers();
-        for (Player player : individualPlayers) {
-            while (!player.isBust() && observer.askDrawCard(player.getName())) {
-                player.addCard(totalDeck);
-                observer.showPlayerCards(ParticipantDto.from(player));
-            }
-        }
-        while (dealer.addCard(totalDeck).isPresent()) {
-            observer.showDealerOneMoreCardMessage();
+    public void readyParticipantDecks() {
+        drawInitialCards(dealer, totalDeck);
+        for (Player player : players) {
+            drawInitialCards(player, totalDeck);
         }
     }
 
-    public void end(GameDelegate delegate) {
-        GameResultDto result = this.calculateResult();
-        delegate.showGameResult(result);
+    private void drawInitialCards(Participant participant, Deck totalDeck) {
+        for (int i = 0; i < 2; i++) {
+            drawCard(participant, totalDeck);
+        }
     }
 
-    private GameResultDto calculateResult() {
+    private void drawCard(Participant participant, Deck totalDeck) {
+        Card card = totalDeck.drawCard();
+        participant.addCard(card);
+    }
+
+    public boolean drawCardUnderCondition(Participant participant) {
+        boolean isDrawable = participant.isDrawable() && totalDeck.isDrawable();
+        if (isDrawable) {
+            drawCard(participant, totalDeck);
+        }
+        return isDrawable;
+    }
+
+    public Map<Result, Integer> getDealerWinTieLossResult() {
+        Map<Player, Result> playerWinTieLossResults = getPlayerWinTieLossResults();
+        Map<Result, Integer> dealerWinTieLossResults = new HashMap<>();
+        List<Player> playingPlayers = playerWinTieLossResults.keySet().stream().toList();
+        for (Player player : playingPlayers) {
+            Result dealerResult = playerWinTieLossResults.get(player).reverse();
+            int currentValue = dealerWinTieLossResults.getOrDefault(dealerResult, 0);
+            dealerWinTieLossResults.put(dealerResult, currentValue + 1);
+        }
+        return dealerWinTieLossResults;
+    }
+
+    public Map<Player, Result> getPlayerWinTieLossResults() {
         int dealerScore = dealer.calculateDeckSum();
         boolean isDealerBust = dealer.isBust();
 
-        Map<Player, Result> playerWinLossResults = consistPlayerWinLossResults(dealerScore, isDealerBust);
-        Map<Result, Integer> dealerWinLossResults = consistDealerResult(playerWinLossResults);
-
-        return GameResultDto.from(
-                dealer,
-                players,
-                dealerWinLossResults,
-                playerWinLossResults
-        );
-    }
-
-    private Map<Player, Result> consistPlayerWinLossResults(int dealerScore, boolean isDealerBust) {
         Map<Player, Result> playerWinLossResults = new LinkedHashMap<>();
-        List<Player> playingPlayers = players.getPlayers();
-
-        for (Player specificPlayer : playingPlayers) {
+        for (Player specificPlayer : players) {
             Result specificPlayerResult = determinePlayerResult(dealerScore, isDealerBust, specificPlayer);
             playerWinLossResults.put(specificPlayer, specificPlayerResult);
         }
@@ -90,14 +85,20 @@ public class Game {
         );
     }
 
-    private Map<Result, Integer> consistDealerResult(Map<Player, Result> playerWinLossResults) {
-        Map<Result, Integer> dealerWinLossResults = new HashMap<>();
-        List<Player> playingPlayers = playerWinLossResults.keySet().stream().toList();
-        for (Player player : playingPlayers) {
-            Result dealerResult = playerWinLossResults.get(player).reverse();
-            int currentValue = dealerWinLossResults.getOrDefault(dealerResult, 0);
-            dealerWinLossResults.put(dealerResult, currentValue + 1);
+    public List<Participant> getParticipants() {
+        List<Participant> participants = new ArrayList<>();
+        participants.add(dealer);
+        for (Player player : players) {
+            participants.add(player);
         }
-        return dealerWinLossResults;
+        return participants;
+    }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public Players getPlayers() {
+        return players;
     }
 }

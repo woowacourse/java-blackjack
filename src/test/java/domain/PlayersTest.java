@@ -1,67 +1,35 @@
 package domain;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.ArrayList;
+import common.ErrorMessage;
 import java.util.List;
-import java.util.Map;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PlayersTest {
-
-    Deck totalDeck;
-
-    @BeforeEach
-    void setUpTotalDeck() {
-        CardCreationStrategy totalCardCreationStrategy = this::createSampleCards;
-        totalDeck = Deck.createDeck(totalCardCreationStrategy);
-    }
-
     @Test
-    @DisplayName("생성 잘 한다")
-    void of_good() {
-        //given
-        List<String> testPlayerNames = List.of("pobi", "terry", "rati", "gump");
+    @DisplayName("플레이어가 5명 이하면 정상적으로 Players 객체를 생성한다.")
+    void shouldReturnPlayersWhenPlayerNumberIsMaximumOrLess() {
+        // given
+        List<String> testPlayerNames = List.of("pobi", "terry", "rati", "gump", "junny");
 
-        //when, then
+        // when & then
         assertDoesNotThrow(
-                () -> Players.of(testPlayerNames, totalDeck)
+                () -> Players.of(testPlayerNames)
         );
     }
 
     @Test
-    @DisplayName("getDecksPerUser에서 잘 가져온다")
-    void getDecksPerUser_success() {
-        //given
-        List<String> testPlayerNames = List.of("pobi");
-        List<Card> expectPobiCards = List.of(
-                new Card(CardShape.SPADE, CardContents.A),
-                new Card(CardShape.SPADE, CardContents.TWO)
-        );
+    @DisplayName("플레이어가 5명을 초과하면 오류가 발생한다.")
+    void shouldThrowExceptionWhenPlayerNumberOverMaximum() {
+        // given
+        List<String> testPlayerNames = List.of("pobi", "terry", "rati", "gump", "junny", "aron");
 
-        //when
-        Players players = Players.of(testPlayerNames, totalDeck);
-        Map<String, List<Card>> result = players.getDecksPerPlayer();
-
-        //then
-        assertEquals(expectPobiCards, result.get("pobi"));
+        // when & then
+        assertThatThrownBy(() -> Players.of(testPlayerNames))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(ErrorMessage.MAX_PLAYER_ERROR.getMessage());
     }
-
-    private List<Card> createSampleCards() {
-        CardShape[] shapes = CardShape.values();
-        CardContents[] contents = CardContents.values();
-
-        List<Card> sampleCards = new ArrayList<>();
-        for (CardShape cardShape : shapes) {
-            for (CardContents content : contents) {
-                sampleCards.add(new Card(cardShape, content));
-            }
-        }
-
-        return sampleCards;
-    }
-
 }

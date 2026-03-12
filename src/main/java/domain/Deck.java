@@ -2,45 +2,58 @@ package domain;
 
 import common.ErrorMessage;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
-public class Deck {
-    private static final int BUST_CRITERIA = 21;
+public class Deck implements Iterable<Card> {
+    private static final int MAXIMUM_SCORE = 21;
     private final List<Card> cards;
+
+    public Deck() {
+        this.cards = new ArrayList<>();
+    }
 
     private Deck(List<Card> cards) {
         this.cards = cards;
     }
 
-    public static Deck createDeck(CardCreationStrategy strategy) {
-        List<Card> cards = strategy.create();
+    public static Deck createTotalDeckAndShuffle(CardShuffleStrategy strategy) {
+        List<Card> cards = createAllCards();
+        shuffleCards(cards, strategy);
         return new Deck(cards);
     }
 
-    public static Deck createParticipantDeck(Deck totaldeck) {
-        List<Card> cards = new ArrayList<>(
-                List.of(
-                        totaldeck.drawCard(),
-                        totaldeck.drawCard()
-                )
-        );
-        return new Deck(cards);
-    }
-
-    public List<Card> getCards() {
+    private static List<Card> createAllCards() {
+        List<Card> cards = new ArrayList<>();
+        for (CardShape cardShape : CardShape.values()) {
+            for (CardContents cardContents : CardContents.values()) {
+                Card card = new Card(cardShape, cardContents);
+                cards.add(card);
+            }
+        }
         return cards;
+    }
+
+    private static void shuffleCards(List<Card> cards, CardShuffleStrategy strategy) {
+        strategy.shuffle(cards);
     }
 
     public Card drawCard() {
         if (cards.isEmpty()) {
-            throw new IllegalArgumentException(ErrorMessage.DRAW_CARD_OUT_OF_RANGE.getMessage());
+            throw new NoSuchElementException(ErrorMessage.DRAW_CARD_OUT_OF_RANGE.getMessage());
         }
 
         return cards.removeFirst();
     }
 
+    public boolean isLessThanMaxScore() {
+        return calculateCardScoreSum() < MAXIMUM_SCORE;
+    }
+
     public boolean isBust() {
-        return calculateCardScoreSum() > BUST_CRITERIA;
+        return calculateCardScoreSum() > MAXIMUM_SCORE;
     }
 
     public int calculateCardScoreSum() {
@@ -48,11 +61,6 @@ public class Deck {
         int sumAce = new AceScoreDiscriminator().calculateAceCardsSum(cards, sumExceptAce);
 
         return sumAce + sumExceptAce;
-    }
-
-    public int addCard(Card card) {
-        this.cards.add(card);
-        return cards.size();
     }
 
     private int calculateCardScoreSumExceptAce() {
@@ -69,5 +77,22 @@ public class Deck {
             sum += card.getCardContents().getScore();
         }
         return sum;
+    }
+
+    public boolean isDrawable() {
+        return !cards.isEmpty();
+    }
+
+    public void addCard(Card card) {
+        cards.add(card);
+    }
+
+    @Override
+    public Iterator<Card> iterator() {
+        return Collections.unmodifiableList(cards).iterator();
+    }
+
+    public List<Card> getCards() {
+        return Collections.unmodifiableList(cards);
     }
 }

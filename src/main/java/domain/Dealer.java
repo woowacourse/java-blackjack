@@ -1,26 +1,23 @@
 package domain;
 
 import java.util.List;
-import java.util.Optional;
 
 public class Dealer extends Participant {
     private static final int MINIMUM_TOTAL_SCORE = 16;
     private static final String DEALER_NAME = "딜러";
 
-    public Dealer(Deck participantDeck) {
-        super(participantDeck, DEALER_NAME);
+    public Dealer() {
+        super(DEALER_NAME);
     }
 
     @Override
     public List<Card> getInitialVisibleCards() {
-        return List.of(this.getDeck().getCards().getFirst());
+        List<Card> currentCards = super.getCards();
+        return List.of(currentCards.getFirst());
     }
 
     @Override
-    public Optional<Card> addCard(Deck totalDeck) {
-        if (super.calculateDeckSum() <= MINIMUM_TOTAL_SCORE) {
-            return super.addCard(totalDeck);
-        }
-        return Optional.empty();
+    public boolean isDrawable() {
+        return super.calculateDeckSum() <= MINIMUM_TOTAL_SCORE;
     }
 }

@@ -9,16 +9,8 @@ public class Card {
         this.cardContents = cardContents;
     }
 
-    public CardShape getCardShape() {
-        return cardShape;
-    }
-
-    public CardContents getCardContents() {
-        return cardContents;
-    }
-
     public boolean isAce() {
-        return cardContents.getNumber().equals("A");
+        return cardContents.equals(CardContents.A);
     }
 
     @Override
@@ -28,5 +20,13 @@ public class Card {
         }
         Card card = (Card) o;
         return cardShape == card.cardShape && cardContents == card.cardContents;
+    }
+
+    public CardShape getCardShape() {
+        return cardShape;
+    }
+
+    public CardContents getCardContents() {
+        return cardContents;
     }
 }

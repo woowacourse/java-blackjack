@@ -2,158 +2,121 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import common.ErrorMessage;
-import java.util.ArrayList;
 import java.util.List;
-import org.junit.jupiter.api.BeforeEach;
+import java.util.NoSuchElementException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class DeckTest {
-    Deck deck;
-    CardCreationStrategy fixedCardCreationStrategy = new CardCreationStrategy() {
-        @Override
-        public List<Card> create() {
-            Card spadeJ = new Card(CardShape.SPADE, CardContents.J);
-            Card clover5 = new Card(CardShape.CLOVER, CardContents.FIVE);
-
-            return new ArrayList<>(List.of(spadeJ, clover5));
-        }
-    };
-
-    @BeforeEach
-    void init() {
-        deck = Deck.createDeck(fixedCardCreationStrategy); //TODO : 전략 넣기
-    }
-
     @Test
-    @DisplayName("Deck를 생성할 때 오류 발생 안함")
-    void deck_create_success() {
-        assertDoesNotThrow(
-                () -> Deck.createDeck(fixedCardCreationStrategy)
-        );
-    }
-
-    @Test
-    @DisplayName("참가자의 Deck를 생성할 때 오류 발생 안함")
-    void initial_deck_create_success() {
-        assertDoesNotThrow(
-                () -> Deck.createParticipantDeck(deck)
-        );
-    }
-
-    @Test
-    @DisplayName("카드들의 점수 합을 구함")
-    void calculate_card_score_sum() {
-        CardCreationStrategy fixedCardCreationStrategy = new CardCreationStrategy() {
-            @Override
-            public List<Card> create() {
-                Card spadeJ = new Card(CardShape.SPADE, CardContents.J);
-                Card clover5 = new Card(CardShape.CLOVER, CardContents.FIVE);
-                Card diamondAce = new Card(CardShape.DIAMOND, CardContents.A);
-
-                return List.of(spadeJ, clover5, diamondAce);
-            }
-        };
-        Deck deck = Deck.createDeck(fixedCardCreationStrategy);
-        assertThat(deck.calculateCardScoreSum()).isEqualTo(16);
-    }
-
-    @Test
-    @DisplayName("덱에 카드 한장을 추가함")
-    void add_card() {
+    @DisplayName("전체 덱 생성 시 52장의 카드가 들어있는 카드 덱이 생성된다.")
+    void shouldReturnTotalDeckWithAllCards() {
         // given
-        CardCreationStrategy gameStrategy = new CardCreationStrategy() {
+        CardShuffleStrategy fixedCardShuffleStrategy = new CardShuffleStrategy() {
             @Override
-            public List<Card> create() {
-                Card spadeJ = new Card(CardShape.SPADE, CardContents.J);
-                Card clover5 = new Card(CardShape.CLOVER, CardContents.FIVE);
-                Card diamond3 = new Card(CardShape.DIAMOND, CardContents.THREE);
-
-                return new ArrayList<>(List.of(spadeJ, clover5, diamond3));
+            public void shuffle(List<Card> cards) {
             }
         };
-        Deck gameDeck = Deck.createDeck(gameStrategy);
-
-        CardCreationStrategy playerStrategy = new CardCreationStrategy() {
-            @Override
-            public List<Card> create() {
-                Card spadeA = new Card(CardShape.SPADE, CardContents.A);
-
-                return new ArrayList<>(List.of(spadeA));
-            }
-        };
-        Deck playerDeck = Deck.createDeck(playerStrategy);
+        int expected = 52;
 
         // when
-        int result = playerDeck.addCard(gameDeck.drawCard());
-        int expected = 2;
+        Deck totalDeck = Deck.createTotalDeckAndShuffle(fixedCardShuffleStrategy);
+        List<Card> cards = totalDeck.getCards();
+        int result = cards.size();
 
         // then
         assertThat(result).isEqualTo(expected);
     }
 
+    @Test
+    @DisplayName("Deck에서 카드를 한장 뽑으면 해당 카드를 리턴하고, Deck에서 카드가 한장 제거된다.")
+    void shouldReturnSingleCardAndRemoveCardFromDeck() {
+        // given
+        Card expected = new Card(CardShape.SPADE, CardContents.J);
+        Deck deck = new Deck();
+        deck.addCard(expected);
+
+        // when
+        Card result = deck.drawCard();
+
+        // then
+        assertThat(result).isEqualTo(expected);
+        assertThatThrownBy(deck::drawCard)
+                .isInstanceOf(NoSuchElementException.class)
+                .hasMessage(ErrorMessage.DRAW_CARD_OUT_OF_RANGE.getMessage());
+    }
+
     @Nested
-    class drawTest {
+    class IsLessThanMaxScoreTest {
         @Test
-        @DisplayName("Deck에서 카드를 한장 뽑아줌")
-        void draw_card_success() {
-            Card result = deck.drawCard();
-            Card expected = new Card(CardShape.SPADE, CardContents.J);
-            assertThat(result).isEqualTo(expected);
+        @DisplayName("카드의 합이 21점 미만이면 true를 반환한다.")
+        void shouldReturnTrueWhenDeckSumLessThanMaximum() {
+            // given
+            Deck deck = new Deck();
+            deck.addCard(new Card(CardShape.SPADE, CardContents.TEN));
+            deck.addCard(new Card(CardShape.HEART, CardContents.TEN));
+
+            // when & then
+            assertTrue(deck.isLessThanMaxScore());
         }
 
         @Test
-        @DisplayName("Deck에서 0이하 혹은 남은 카드 이상의 숫자 선택 시도 시 오류 발생")
-        void draw_card_fail() {
-            deck.drawCard();
-            deck.drawCard();
+        @DisplayName("카드의 합이 정확히 21점이면 false를 반환한다.")
+        void shouldReturnFalseWhenDeckSumEqualsMaximum() {
+            // given
+            Deck deck = new Deck();
+            deck.addCard(new Card(CardShape.SPADE, CardContents.TEN));
+            deck.addCard(new Card(CardShape.HEART, CardContents.TEN));
+            deck.addCard(new Card(CardShape.CLOVER, CardContents.A));
 
-            assertThatThrownBy(
-                    () -> deck.drawCard()
-            ).isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage(ErrorMessage.DRAW_CARD_OUT_OF_RANGE.getMessage());
+            // when & then
+            assertFalse(deck.isLessThanMaxScore());
+        }
+
+        @Test
+        @DisplayName("카드의 합이 21점을 초과하면 false를 반환한다.")
+        void shouldReturnFalseWhenDeckSumOverMaximum() {
+            // given
+            Deck deck = new Deck();
+            deck.addCard(new Card(CardShape.SPADE, CardContents.TEN));
+            deck.addCard(new Card(CardShape.HEART, CardContents.TEN));
+            deck.addCard(new Card(CardShape.CLOVER, CardContents.TWO));
+
+            // when & then
+            assertFalse(deck.isLessThanMaxScore());
         }
     }
 
     @Nested
-    class isBustTest {
+    class IsBustTest {
         @Test
-        @DisplayName("카드의 합이 21이 넘어가면 버스트로 판정")
-        void isBust_true() {
-            CardCreationStrategy fixedCardCreationStrategy = new CardCreationStrategy() {
-                @Override
-                public List<Card> create() {
-                    Card spadeJ = new Card(CardShape.SPADE, CardContents.J);
-                    Card cloverQ = new Card(CardShape.CLOVER, CardContents.Q);
-                    Card diamondK = new Card(CardShape.DIAMOND, CardContents.K);
+        @DisplayName("카드의 합이 21을 초과하면 버스트로 판정한다.")
+        void shouldReturnTrueWhenDeckSumOverMaximum() {
+            // given
+            Deck deck = new Deck();
+            deck.addCard(new Card(CardShape.SPADE, CardContents.TEN));
+            deck.addCard(new Card(CardShape.HEART, CardContents.TEN));
+            deck.addCard(new Card(CardShape.CLOVER, CardContents.TEN));
 
-                    return List.of(spadeJ, cloverQ, diamondK);
-                }
-            };
-            Deck deck = Deck.createDeck(fixedCardCreationStrategy);
+            // when & then
             assertTrue(deck.isBust());
         }
 
         @Test
-        @DisplayName("카드의 합이 21이 넘어가면 버스트로 판정하지 않음")
-        void isBust_false() {
-            CardCreationStrategy fixedCardCreationStrategy = new CardCreationStrategy() {
-                @Override
-                public List<Card> create() {
-                    Card spadeJ = new Card(CardShape.SPADE, CardContents.J);
-                    Card clover5 = new Card(CardShape.CLOVER, CardContents.FIVE);
-                    Card diamond3 = new Card(CardShape.DIAMOND, CardContents.THREE);
+        @DisplayName("카드의 합이 21이하라면 버스트로 판정하지 않는다.")
+        void shouldReturnFalseWhenDeckSumEqualsMaximumOrLess() {
+            // given
+            Deck deck = new Deck();
+            deck.addCard(new Card(CardShape.SPADE, CardContents.TEN));
+            deck.addCard(new Card(CardShape.HEART, CardContents.TEN));
+            deck.addCard(new Card(CardShape.HEART, CardContents.A));
 
-                    return List.of(spadeJ, clover5, diamond3);
-                }
-            };
-            Deck deck = Deck.createDeck(fixedCardCreationStrategy);
+            // when & then
             assertFalse(deck.isBust());
         }
     }
