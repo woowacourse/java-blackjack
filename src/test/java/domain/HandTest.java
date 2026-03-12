@@ -31,6 +31,47 @@ class HandTest {
     }
 
     @ParameterizedTest
+    @MethodSource("버스트_여부_판단_테스트케이스")
+    @DisplayName("플레이어는 패에 있는 카드 합이 21 초과라면 버스트다.")
+    public void 플레이어_버스트_판단(final List<Card> cards, final boolean result) {
+        // given
+        final Hand hand = new Hand();
+        for (final Card card : cards) {
+            hand.addCard(card);
+        }
+
+        // when
+        final boolean bust = hand.isBust();
+
+        // then
+        assertThat(bust).isEqualTo(result);
+
+    }
+
+    private static Stream<Arguments> 버스트_여부_판단_테스트케이스() {
+        final Card ace = new Card(CardSuit.SPADE, CardRank.ACE);
+        final Card two = new Card(CardSuit.SPADE, CardRank.TWO);
+        final Card five = new Card(CardSuit.SPADE, CardRank.FIVE);
+        final Card nine = new Card(CardSuit.SPADE, CardRank.NINE);
+
+        final Card ten = new Card(CardSuit.SPADE, CardRank.TEN);
+        final Card jack = new Card(CardSuit.SPADE, CardRank.JACK);
+        final Card queen = new Card(CardSuit.SPADE, CardRank.QUEEN);
+        final Card king = new Card(CardSuit.SPADE, CardRank.KING);
+
+        return Stream.of(
+                Arguments.of(List.of(ace, ten, ace), false),            // 합이 12
+                Arguments.of(List.of(ace, jack), false),                // 합이 21
+                Arguments.of(List.of(king, queen), false),              // 합이 20
+                Arguments.of(List.of(jack, king, ace), false),          // 합이 21
+                Arguments.of(List.of(five, queen, king), true),         // 합이 25
+                Arguments.of(List.of(jack, queen, king), true),         // 합이 30
+                Arguments.of(List.of(ace, two, queen, nine), true)      // 합이 22
+        );
+    }
+
+
+    @ParameterizedTest
     @MethodSource("블랙잭_여부_판단_테스트케이스")
     @DisplayName("가진 패의 블랙잭 여부를 판단한다.")
     public void 블랙잭_여부_판단(final List<Card> cards, final boolean result) {
