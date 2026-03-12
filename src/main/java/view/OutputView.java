@@ -1,10 +1,8 @@
 package view;
 
 import java.util.List;
-import java.util.Map;
 import model.Card;
 import model.Dealer;
-import model.GameStatus;
 import model.Participant;
 import model.Player;
 
@@ -78,10 +76,6 @@ public class OutputView {
             result.append(loseCount).append("패");
         }
         System.out.println(result.toString().trim());
-    }
-
-    public static void printResultByPlayers(Map<Player, GameStatus> result) {
-        result.forEach((player, status) -> System.out.printf("%s: %s%n", player.getName(), status.getName()));
     }
 
     public static void printBettingResultHeader() {
