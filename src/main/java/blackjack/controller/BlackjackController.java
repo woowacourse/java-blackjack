@@ -3,6 +3,7 @@ package blackjack.controller;
 import static blackjack.util.ExceptionHandler.retryUntilSuccess;
 
 import blackjack.BlackjackGame;
+import blackjack.model.BetAmount;
 import blackjack.model.card.HitCommand;
 import blackjack.model.card.CardProvider;
 import blackjack.model.user.Dealer;
@@ -26,6 +27,9 @@ public class BlackjackController {
 
     public void run() {
         Users users = retryUntilSuccess(() -> blackjackGame.createUsers(InputView::readPlayerName));
+
+        List<BetAmount> betAmounts = retryUntilSuccess(
+                () -> blackjackGame.createBetAmount(InputView::readBetAmount, users));
 
         provideInitCardsAndPrint(users);
 
