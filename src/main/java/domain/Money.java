@@ -9,6 +9,10 @@ public class Money {
         money = parseInput(moneyInput);
     }
 
+    public Money(Long money){
+        this.money = money;
+    }
+
     private long parseInput(String input){
         try{
             long value = Integer.parseInt(input);
@@ -23,5 +27,9 @@ public class Money {
         if(value <= 0){
             throw new IllegalArgumentException(ErrorMessage.NEGATIVE_MONEY.getMessage());
         }
+    }
+
+    public long getMoney() {
+        return money;
     }
 }
