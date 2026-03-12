@@ -12,10 +12,10 @@
    [예외처리] 입력값이 공백일 경우 IllegalArgumentException 예외를 발생시킨다.
 
 **2. [입력] 게임에 참여한 사람의 배팅 금액을 입력 받는다.**
+
+   [예외처리] 입력값이 공백일 경우 IllegalArgumentException 예외를 발생시킨다.
    
    [예외처리] 입력값이 숫자가 아닐 경우 IllegalArgumentException 예외를 발생시킨다.
-   
-   [예외처리] 입력값이 공백일 경우 IllegalArgumentException 예외를 발생시킨다.
    
    [예외처리] 입력값이 0 이하일 경우 IllegalArgumentException 예외를 발생시킨다.
       
