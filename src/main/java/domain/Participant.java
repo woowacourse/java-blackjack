@@ -10,7 +10,7 @@ public abstract class Participant {
     }
 
     public List<Card> getHandCards(){
-        return hand.getCards();
+        return hand.cards();
     }
 
     public Hand getHand(){
