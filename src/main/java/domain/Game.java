@@ -10,7 +10,6 @@ import domain.participant.Players;
 import java.util.List;
 
 public class Game {
-
     private final Players players;
     private final Dealer dealer;
 

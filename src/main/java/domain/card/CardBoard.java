@@ -15,7 +15,6 @@ public class CardBoard {
     }
 
     public int calculateScore() {
-
         int score = cards.stream()
                 .filter(card -> !card.rank().equals(Rank.ACE))
                 .mapToInt(Card::getRankScore)
@@ -23,11 +22,9 @@ public class CardBoard {
 
         boolean aceExist = cards.stream()
                 .anyMatch(card -> card.rank().equals(Rank.ACE));
-
         if (aceExist) {
             return (score + calculateAceScore(BLACKJACK_CRITERION - score));
         }
-
         return score;
     }
 
@@ -40,7 +37,6 @@ public class CardBoard {
         if (remainScore < minAceScore + ACE_BONUS_SCORE) {
             return minAceScore;
         }
-
         return minAceScore + ACE_BONUS_SCORE;
     }
 

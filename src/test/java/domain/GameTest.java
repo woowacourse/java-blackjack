@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 public class GameTest {
-
     @Nested
     @DisplayName("정상 경우")
     class success {

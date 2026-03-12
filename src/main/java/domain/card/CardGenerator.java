@@ -8,7 +8,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class CardGenerator {
-
     public static List<Card> generateCards() {
         List<Card> cards = new ArrayList<>(Arrays.stream(Suit.values())
                 .flatMap(suit -> Arrays.stream(Rank.values())

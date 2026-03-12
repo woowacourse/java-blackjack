@@ -10,7 +10,6 @@ import java.util.List;
 import message.ErrorMessage;
 
 public class InputParser {
-
     private static final String DELIMITER = ",";
 
     public static List<String> parseNames(String input) {

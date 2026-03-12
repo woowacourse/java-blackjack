@@ -14,7 +14,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 public class ParticipantTest {
-
     private static Stream<Arguments> safeScoreCards() {
         return Stream.of(
                 Arguments.of(List.of(new Card(Rank.FIVE, Suit.CLOVER), new Card(Rank.SIX, Suit.CLOVER)), 11),

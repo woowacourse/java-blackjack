@@ -10,7 +10,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class ResultTest {
-
     private final Player player = new Player("피즈");
     private final Dealer dealer = new Dealer();
 

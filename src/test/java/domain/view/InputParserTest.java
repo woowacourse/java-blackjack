@@ -15,7 +15,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 import view.InputParser;
 
 public class InputParserTest {
-
     private static Stream<Arguments> inputNames() {
         return Stream.of(
                 Arguments.of("pobi", List.of("pobi")),

@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import service.BlackjackService;
 
 public class BlackjackServiceTest {
-
     private final BlackjackService blackjackService = new BlackjackService();
     Map<String, BetAmount> betAmounts = new HashMap<>();
     Map<String, Result> results = new HashMap<>();

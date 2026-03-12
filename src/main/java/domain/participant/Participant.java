@@ -8,7 +8,6 @@ import domain.card.CardBoard;
 import java.util.List;
 
 public abstract class Participant {
-
     protected final CardBoard cardBoard = new CardBoard();
 
     public void addCard(Card card) {

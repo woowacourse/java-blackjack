@@ -4,17 +4,14 @@ import domain.participant.Dealer;
 import domain.participant.Player;
 
 public enum Result {
+    WIN(1),
+    WIN_BLACKJACK(1.5),
+    LOSE(-1),
+    DRAW(0);
 
-    WIN("승", 1),
-    WIN_BLACKJACK("블랙잭 승", 1.5),
-    LOSE("패", -1),
-    DRAW("무", 0);
-
-    private final String description;
     private final double rate;
 
-    Result(String description, double rate) {
-        this.description = description;
+    Result(double rate) {
         this.rate = rate;
     }
 
@@ -53,10 +50,6 @@ public enum Result {
             return WIN;
         }
         return DRAW;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     public double getRate() {

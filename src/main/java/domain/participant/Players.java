@@ -59,15 +59,6 @@ public class Players {
                 .orElseThrow(() -> new IllegalArgumentException(PLAYER_NOT_FOUND.getMessage()));
     }
 
-    public List<Result> decideAllResults(Dealer dealer) {
-        List<Result> results = new ArrayList<>();
-        for (Player player : players) {
-            Result playerResult = Result.calculatePlayerResult(dealer, player);
-            results.add(playerResult);
-        }
-        return results;
-    }
-
     public boolean checkScoreUnderCriterion(String name) {
         Player foundPlayer = findPlayerByName(name);
         return foundPlayer.checkScoreUnderCriterion();

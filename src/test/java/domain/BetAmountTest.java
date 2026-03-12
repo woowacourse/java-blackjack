@@ -10,7 +10,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 public class BetAmountTest {
-
     @ParameterizedTest
     @DisplayName("배팅 금액이 배팅 한도를 벗어날 경우 예외가 발생한다.")
     @ValueSource(ints = {900, 310000})
