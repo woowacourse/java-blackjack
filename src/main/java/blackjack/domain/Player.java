@@ -36,6 +36,10 @@ public class Player {
         return other.calculateCardsValue() < this.calculateCardsValue();
     }
 
+    public boolean canDraw() {
+        return !isBurst() && !isBlackjack();
+    }
+
     public boolean isBurst() {
         return calculateCardsValue() > 21;
     }

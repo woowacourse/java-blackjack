@@ -62,7 +62,7 @@ public class BlackjackController {
 
     private void getMoreCardsForPlayer(Player player) {
         boolean isDraw = false;
-        while (!player.isBurst() && !player.isBlackjack() && readPlayerWantMoreCard(player)) {
+        while (player.canDraw() && readPlayerWantMoreCard(player)) {
             player.draw(Deck.pop());
             outputView.printCardResults(player.getName(), player.getCardsName());
             isDraw = true;
