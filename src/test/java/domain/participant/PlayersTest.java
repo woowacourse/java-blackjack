@@ -3,6 +3,7 @@ package domain.participant;
 import static message.ErrorMessage.PLAYER_NAME_DUPLICATED;
 import static message.ErrorMessage.PLAYER_NUMBER_OUT_OF_RANGE;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -26,8 +27,10 @@ class PlayersTest {
         List<Name> allPlayersName = players.getAllPlayersName();
 
         //then
-        Assertions.assertThat(allPlayersName).contains(new Name("피즈"));
-        Assertions.assertThat(allPlayersName).contains(new Name("스타크"));
+        assertSoftly(softly -> {
+            Assertions.assertThat(allPlayersName).contains(new Name("피즈"));
+            Assertions.assertThat(allPlayersName).contains(new Name("스타크"));
+        });
     }
 
 
