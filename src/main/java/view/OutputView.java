@@ -38,11 +38,13 @@ public class OutputView {
                 player.getName(),
                 String.join(OutputMessage.DELIMITER.getMessage(), player.getCards().getCardsInfo())
         );
-        System.out.println();
+        printEmptyLine();
     }
 
     public void dealerDrawMessage() {
+        printEmptyLine();
         System.out.println(OutputMessage.DEALER_DRAW_CARD.getMessage());
+        printEmptyLine();
     }
 
     public void printFinalResult(BlackjackResult blackjackResult) {
@@ -52,21 +54,16 @@ public class OutputView {
     }
 
     private void printFinalDealerResult(BlackjackResult blackjackResult) {
-        DealerResultDto dealerResult = blackjackResult.getDealerResult();
-        System.out.printf(OutputMessage.DEALER_RESULT_FORMAT.getMessage(),
-                dealerResult.win(),
-                dealerResult.draw(),
-                dealerResult.lose()
-        );
+        System.out.printf(OutputMessage.DEALER_RESULT_FORMAT.getMessage(), blackjackResult.dealerProfit());
         printEmptyLine();
     }
 
     private void printFinalPlayerResult(BlackjackResult blackjackResult) {
-        for (Map.Entry<Player, GameResult> entry : blackjackResult.getPlayerResults().entrySet()) {
-            Player player = entry.getKey();
-            GameResult result = entry.getValue();
+        for (Map.Entry<Player, BetResult> result : blackjackResult.getPlayerBets().entrySet()) {
+            Player player = result.getKey();
+            long playerProfit = blackjackResult.playerProfit(result);
 
-            System.out.printf(OutputMessage.PLAYER_RESULT_FORMAT.getMessage(), player.getName(), result.getMessage());
+            System.out.printf(OutputMessage.PLAYER_RESULT_FORMAT.getMessage(), player.getName(), playerProfit);
             printEmptyLine();
         }
     }

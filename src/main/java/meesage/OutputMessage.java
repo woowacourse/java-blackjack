@@ -8,8 +8,8 @@ public enum OutputMessage {
     DEALER_DRAW_CARD("딜러는 16이하라 한장의 카드를 더 받았습니다."),
     RESULT_TEXT("%s카드 %s - 결과: %d"),
     FINAL_MESSAGE("## 최종 승패"),
-    DEALER_RESULT_FORMAT("딜러: %d승 %d무 %d패"),
-    PLAYER_RESULT_FORMAT("%s: %s"),
+    DEALER_RESULT_FORMAT("딜러: %d"),
+    PLAYER_RESULT_FORMAT("%s: %d"),
     DEALER("딜러"),
     ;
 
