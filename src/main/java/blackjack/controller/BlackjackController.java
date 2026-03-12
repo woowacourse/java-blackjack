@@ -50,12 +50,12 @@ public class BlackjackController {
                 .toList();
         return new Users(users);
     }
+
     private BettingAmount readBetting(String name) {
-        String userName = inputView.readBettingAmount(name);
-        int amount = InputParser.parseBettingAmount(userName);
+        String input = inputView.readBettingAmount(name);
+        int amount = InputParser.parseBettingAmount(input);
         return new BettingAmount(amount);
     }
-
 
     private void printGameSettingResult(Users users, Dealer dealer) {
         OutputView.printGameSettingMessage(dealer.getName(), users.getNames());
@@ -82,8 +82,8 @@ public class BlackjackController {
         }
     }
 
-
     private void getMoreCardsForDealer(Dealer dealer) {
+        OutputView.printEmptyLine();
         while (dealer.shouldDrawCard()) {
             OutputView.printGetMoreCardsForDealer(dealer.getName());
             gameService.getMoreCard(dealer);
