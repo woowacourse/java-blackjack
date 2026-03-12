@@ -1,11 +1,11 @@
-package config;
+package factory;
 
 import controller.BlackjackController;
 import service.BlackjackService;
 import view.InputView;
 import view.OutputView;
 
-public class ControllerConfig {
+public class BlackjackFactory {
 
     public BlackjackController blackjackController() {
         return new BlackjackController(inputView(), outputView(), blackjackService());
