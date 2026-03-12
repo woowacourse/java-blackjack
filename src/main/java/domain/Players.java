@@ -16,6 +16,12 @@ public class Players implements Iterable<Player> {
                 .sum();
     }
 
+    public void calculateScore(Dealer dealer,Players players) {
+        for (Player player : players) {
+            player.calculateBettingScore(dealer);
+        }
+    }
+
     @Override
     public Iterator<Player> iterator() {
         return players.iterator();

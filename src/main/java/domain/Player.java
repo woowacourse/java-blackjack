@@ -31,7 +31,6 @@ public class Player {
         return calculateScore() + calculateAceScore();
     }
 
-
     private int calculateAceScore() {
         if (!isAceExist() || calculateScore() > ACE_ADDITIONAL_SCORE) {
             return 0;
@@ -57,7 +56,22 @@ public class Player {
     }
 
     public void loseMoney() {
-        bettingScore -= bettingScore*2 ;
+        int minusScore = bettingScore * 2;
+        bettingScore -= minusScore;
+    }
+
+    public void calculateBettingScore(Dealer dealer) {
+        if (!dealer.isBlackjack() && isBlackjack()) {
+            bettingScore = (int) ((int) bettingScore * 1.5);
+            return;
+        }
+        if (isPlayerLose(dealer.isBust(), dealer.getFinalScore())) {
+            loseMoney();
+        }
+    }
+
+    private boolean isPlayerLose(boolean dealerBurst, int dealerTotal) {
+        return isBust() || (!dealerBurst && getFinalScore() < dealerTotal);
     }
 
     public String getName() {
@@ -71,6 +85,7 @@ public class Player {
     public int getBettingScore() {
         return bettingScore;
     }
+
     public CardContentDto toCardContentDto() {
         return new CardContentDto(this.name, this.cards);
     }
@@ -82,5 +97,9 @@ public class Player {
     public boolean isAceExist() {
         return cards.stream()
                 .anyMatch(c -> c.getCardRank().equals(CardRank.ACE));
+    }
+
+    public boolean isBlackjack() {
+        return getFinalScore() == 21 && cards.size() == 2;
     }
 }

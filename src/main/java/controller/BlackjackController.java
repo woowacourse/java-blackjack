@@ -48,7 +48,9 @@ public class BlackjackController {
 
         // 최종 승패
         BlackjackResult blackjackResult = BlackjackResult.from(dealer, players);
-        OutputView.displayMatchResult(blackjackResult.toResultDto());
+        blackjackService.calculateBettingScore(dealer, players);
+//        OutputView.displayMatchResult(blackjackResult.toResultDto());
+        OutputView.displayBettingResult(blackjackService.toBettingResultDto(dealer,players));
     }
 
     public void setPlayerBetting(Players playerList) {
