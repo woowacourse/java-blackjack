@@ -4,7 +4,7 @@ public enum GameResult {
     WIN("승", 1),
     TIE("무", 0),
     LOSE("패", -1),
-    BLACKJACK_WIN("블랙잭", 1.5);
+    BLACKJACK_WIN("블랙잭승", 1.5);
 
     private final String name;
     private final double earningRate;
