@@ -11,6 +11,7 @@ import blackjack.domain.participant.Players;
 import blackjack.domain.participant.Status;
 import blackjack.domain.trump.Card;
 import blackjack.domain.trump.Denomination;
+import blackjack.domain.trump.RandomSortBehavior;
 import blackjack.domain.trump.Suit;
 import blackjack.domain.trump.Trump;
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class DealerTest {
     @Test
     @DisplayName("플레이어에게 카드 전달 테스트")
     void 플레이어에게_카드_전달_테스트() {
-        Trump trump = new Trump();
+        Trump trump = new Trump(new RandomSortBehavior());
         Player player = new Player(new Hand(new ArrayList<>()), Status.HIT, "pobi");
         Dealer dealer = new Dealer(new Hand(new ArrayList<>()), Status.HIT, trump);
         int expected = 1;
@@ -40,7 +41,7 @@ public class DealerTest {
     @Test
     @DisplayName("딜러 자신에게 카드 전달 테스트")
     void 딜러_자신에게_카드_전달_테스트() {
-        Trump trump = new Trump();
+        Trump trump = new Trump(new RandomSortBehavior());
         Dealer dealer = new Dealer(new Hand(new ArrayList<>()), Status.HIT, trump);
         int expected = 1;
 
@@ -55,7 +56,7 @@ public class DealerTest {
     @Test
     @DisplayName("딜러 피치 테스트")
     void 딜러_피치_테스트() {
-        Trump trump = new Trump();
+        Trump trump = new Trump(new RandomSortBehavior());
         Dealer dealer = new Dealer(new Hand(new ArrayList<>()), Status.HIT, trump);
         List<Player> players = List.of(
             new Player(new Hand(new ArrayList<>()), Status.HIT, "pobi"),
@@ -91,7 +92,7 @@ public class DealerTest {
         Hand hand = new Hand(List.of(
             new Card(Suit.DIAMOND, Denomination.TEN),
             new Card(Suit.SPADE, Denomination.SIX)));
-        Trump trump = new Trump();
+        Trump trump = new Trump(new RandomSortBehavior());
         Dealer dealer = new Dealer(hand, Status.HIT, trump);
         Status expected = Status.HIT;
 
@@ -108,7 +109,7 @@ public class DealerTest {
         Hand hand = new Hand(List.of(
             new Card(Suit.DIAMOND, Denomination.TEN),
             new Card(Suit.SPADE, Denomination.SEVEN)));
-        Trump trump = new Trump();
+        Trump trump = new Trump(new RandomSortBehavior());
         Dealer dealer = new Dealer(hand, Status.HIT, trump);
         Status expected = Status.STAY;
 

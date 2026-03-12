@@ -9,18 +9,20 @@ import java.util.stream.Collectors;
 public class Trump {
 
     private final List<Card> deck;
+    private final SortBehavior sortBehavior;
 
-    public Trump() {
-        deck = generateShuffledDeck();
+    public Trump(final SortBehavior sortBehavior) {
+        this.sortBehavior = sortBehavior;
+        deck = generateDeck();
     }
 
-    private List<Card> generateShuffledDeck() {
+    private List<Card> generateDeck() {
         final List<Card> shuffledDeck = Lists.cartesianProduct(List.of(Suit.values()),
                 List.of(Denomination.values()))
             .stream()
             .map(pair -> new Card(pair.getLeft(), pair.getRight()))
             .collect(Collectors.toCollection(ArrayList::new));
-        Collections.shuffle(shuffledDeck);
+        sortBehavior.shuffle(shuffledDeck);
 
         return shuffledDeck;
     }

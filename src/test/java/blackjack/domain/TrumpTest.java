@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+import blackjack.domain.trump.RandomSortBehavior;
 import blackjack.domain.trump.Trump;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
@@ -12,7 +13,7 @@ public class TrumpTest {
     @Test
     @DisplayName("트럼프 덱 생성 테스트")
     void 트럼프_덱_생성_테스트() {
-        Trump trump = new Trump();
+        Trump trump = new Trump(new RandomSortBehavior());
         int expected = 13 * 4;
 
         assertThat(trump).extracting("deck")

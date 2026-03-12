@@ -9,6 +9,7 @@ import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.domain.participant.Status;
+import blackjack.domain.trump.RandomSortBehavior;
 import blackjack.domain.trump.Trump;
 import blackjack.dto.FinalProfitsDto;
 import blackjack.utils.Parser;
@@ -23,7 +24,7 @@ public class BlackjackController {
     public void run() {
         final Hand hand = new Hand(new ArrayList<>());
         final Players players = RetryExecutor.retry(this::readPlayers);
-        final Dealer dealer = new Dealer(hand, Status.HIT, new Trump());
+        final Dealer dealer = new Dealer(hand, Status.HIT, new Trump(new RandomSortBehavior()));
         final Participants participants = new Participants(players, dealer);
 
         handleBet(players);

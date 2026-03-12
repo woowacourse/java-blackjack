@@ -9,6 +9,7 @@ import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Status;
 import blackjack.domain.trump.Card;
 import blackjack.domain.trump.Denomination;
+import blackjack.domain.trump.RandomSortBehavior;
 import blackjack.domain.trump.Suit;
 import blackjack.domain.trump.Trump;
 import java.util.List;
@@ -25,7 +26,7 @@ class GameResultTest {
         @Test
         @DisplayName("딜러 블랙잭, 플레이어 블랙잭")
         void 딜러_블랙잭_플레이어_블랙잭() {
-            Trump trump = new Trump();
+            Trump trump = new Trump(new RandomSortBehavior());
             Hand dealerHand = new Hand(List.of(
                 new Card(Suit.DIAMOND, Denomination.ACE),
                 new Card(Suit.SPADE, Denomination.KING)));
@@ -44,7 +45,7 @@ class GameResultTest {
         @Test
         @DisplayName("딜러 블랙잭, 플레이어 스테이")
         void 딜러_블랙잭_플레이어_스테이() {
-            Trump trump = new Trump();
+            Trump trump = new Trump(new RandomSortBehavior());
             Hand dealerHand = new Hand(List.of(
                 new Card(Suit.DIAMOND, Denomination.ACE),
                 new Card(Suit.SPADE, Denomination.KING)));
@@ -63,7 +64,7 @@ class GameResultTest {
         @Test
         @DisplayName("딜러 블랙잭, 플레이어 버스트")
         void 딜러_블랙잭_플레이어_버스트() {
-            Trump trump = new Trump();
+            Trump trump = new Trump(new RandomSortBehavior());
             Hand dealerHand = new Hand(List.of(
                 new Card(Suit.DIAMOND, Denomination.ACE),
                 new Card(Suit.SPADE, Denomination.KING)));
@@ -84,7 +85,7 @@ class GameResultTest {
         @Test
         @DisplayName("딜러 스테이, 플레이어 블랙잭")
         void 딜러_스테이_플레이어_블랙잭() {
-            Trump trump = new Trump();
+            Trump trump = new Trump(new RandomSortBehavior());
             Hand dealerHand = new Hand(List.of(
                 new Card(Suit.DIAMOND, Denomination.KING),
                 new Card(Suit.SPADE, Denomination.KING)));
@@ -103,7 +104,7 @@ class GameResultTest {
         @Test
         @DisplayName("딜러 스테이, 플레이어 버스트")
         void 딜러_스테이_플레이어_버스트() {
-            Trump trump = new Trump();
+            Trump trump = new Trump(new RandomSortBehavior());
             Hand dealerHand = new Hand(List.of(
                 new Card(Suit.DIAMOND, Denomination.TEN),
                 new Card(Suit.SPADE, Denomination.TEN)));
@@ -123,7 +124,7 @@ class GameResultTest {
         @Test
         @DisplayName("딜러 버스트, 플레이어 블랙잭")
         void 딜러_버스트_플레이어_블랙잭() {
-            Trump trump = new Trump();
+            Trump trump = new Trump(new RandomSortBehavior());
             Hand dealerHand = new Hand(List.of(
                 new Card(Suit.DIAMOND, Denomination.THREE),
                 new Card(Suit.SPADE, Denomination.KING),
@@ -143,7 +144,7 @@ class GameResultTest {
         @Test
         @DisplayName("딜러 버스트, 플레이어 스테이")
         void 딜러_버스트_플레이어_스테이() {
-            Trump trump = new Trump();
+            Trump trump = new Trump(new RandomSortBehavior());
             Hand dealerHand = new Hand(List.of(
                 new Card(Suit.DIAMOND, Denomination.TEN),
                 new Card(Suit.SPADE, Denomination.SIX),
@@ -163,7 +164,7 @@ class GameResultTest {
         @Test
         @DisplayName("딜러 버스트, 플레이어 버스트")
         void 딜러_버스트_플레이어_버스트() {
-            Trump trump = new Trump();
+            Trump trump = new Trump(new RandomSortBehavior());
             Hand dealerHand = new Hand(List.of(
                 new Card(Suit.DIAMOND, Denomination.TEN),
                 new Card(Suit.SPADE, Denomination.SIX),
@@ -184,7 +185,7 @@ class GameResultTest {
         @Test
         @DisplayName("딜러 스테이, 플레이어 스테이: 플레이어 점수가 더 높은 경우")
         void 딜러_스테이_플레이어_스테이_플레이어_점수가_더_높은_경우() {
-            Trump trump = new Trump();
+            Trump trump = new Trump(new RandomSortBehavior());
             Hand dealerHand = new Hand(List.of(
                 new Card(Suit.DIAMOND, Denomination.TEN),
                 new Card(Suit.SPADE, Denomination.SEVEN)));
@@ -203,7 +204,7 @@ class GameResultTest {
         @Test
         @DisplayName("딜러 스테이, 플레이어 스테이: 플레이어 점수가 딜러와 같은 경우")
         void 딜러_스테이_플레이어_스테이_플레이어_점수가_딜러와_같은_경우() {
-            Trump trump = new Trump();
+            Trump trump = new Trump(new RandomSortBehavior());
             Hand dealerHand = new Hand(List.of(
                 new Card(Suit.DIAMOND, Denomination.TEN),
                 new Card(Suit.SPADE, Denomination.SEVEN)));
@@ -222,7 +223,7 @@ class GameResultTest {
         @Test
         @DisplayName("딜러 스테이, 플레이어 스테이: 플레이어 점수가 더 낮은 경우")
         void 딜러_스테이_플레이어_스테이_플레이어_점수가_더_낮은_경우() {
-            Trump trump = new Trump();
+            Trump trump = new Trump(new RandomSortBehavior());
             Hand dealerHand = new Hand(List.of(
                 new Card(Suit.DIAMOND, Denomination.TEN),
                 new Card(Suit.SPADE, Denomination.SEVEN)));
