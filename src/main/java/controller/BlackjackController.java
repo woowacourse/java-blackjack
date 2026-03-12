@@ -6,7 +6,8 @@ import domain.Cards;
 import domain.Dealer;
 import domain.Player;
 import domain.Players;
-import domain.WinOrLose;
+import domain.GameResult;
+import infra.RandomCardShuffler;
 import java.util.List;
 import meesage.InputMessage;
 import meesage.OutputMessage;
@@ -25,11 +26,11 @@ public class BlackjackController {
     }
 
     public void run() {
-        List<String> userNames = getUserNames();
-
         Cards deck = getDeck();
         Dealer dealer = Dealer.of(deck.drawInitialHand());
-        Players players = Players.of(deck, userNames);
+        Players players = getPlayers();
+
+        addPlayerInitialCard(players, deck);
 
         printInitialCards(players, dealer);
         addCard(players, deck, dealer);
@@ -43,7 +44,18 @@ public class BlackjackController {
     }
 
     private static Cards getDeck() {
-        return Cards.shuffled();
+        return Cards.of(new RandomCardShuffler());
+    }
+
+    private Players getPlayers() {
+        List<String> userNames = getUserNames();
+        return Players.of(userNames);
+    }
+
+    private static void addPlayerInitialCard(Players players, Cards deck) {
+        for (Player player : players.getPlayers()) {
+            player.addInitialCards(deck.drawInitialHand());
+        }
     }
 
     private List<String> getCardsInfo(List<Card> cards) {
@@ -92,7 +104,7 @@ public class BlackjackController {
 
     private void askAddCard(Player player, Cards deck) {
         String answer = InputMessage.USER_INPUT_YES.getMessage();
-        while (!player.isBust(player.calculateScore()) && answer.equals(InputMessage.USER_INPUT_YES.getMessage())) {
+        while (!player.isBust() && answer.equals(InputMessage.USER_INPUT_YES.getMessage())) {
             outputView.printfList(InputMessage.ASK_ADD_CARD.getMessage(), player.getName());
             outputView.separatorLine();
             answer = inputView.askUserInput();
@@ -111,7 +123,7 @@ public class BlackjackController {
     }
 
     private void printIfNotPrintedPlayerCardsInfo(Player player) {
-        if (player.getCards().size() == Cards.FIRST_DRAW_SIZE) {
+        if (player.hasInitialHand()) {
             outputView.println(getPlayerCardsInfo(player.getName(), getCardsInfo(player.getCards())));
         }
     }
@@ -123,12 +135,12 @@ public class BlackjackController {
 
     private void addDealerCard(Dealer dealer, Cards deck) {
         outputView.separatorLine();
-        dealer.drawUntilHit(deck);
 
-        int countAddDealerCard = dealer.getCards().size() - Cards.FIRST_DRAW_SIZE;
-        for (int i = 0; i < countAddDealerCard; i++) {
-            outputView.println(OutputMessage.DEALER_DRAW_CARD.getMessage());
+        while (dealer.isHit()) {
+            dealer.addCard(deck.draw());
         }
+
+        outputView.printRepeated(OutputMessage.DEALER_DRAW_CARD.getMessage(), dealer.getAdditionalCardCount());
     }
 
     private void printFinalCards(Dealer dealer, Players players) {
@@ -157,14 +169,16 @@ public class BlackjackController {
 
         outputView.println(OutputMessage.FINAL_MESSAGE.getMessage());
 
-        outputView.println(OutputMessage.DEALER_RESULT_FORMAT.format(blackjackResult.countDealerWinOrLoseReversePlayerResult(WinOrLose.LOSE),
-                blackjackResult.countDealerWinOrLoseReversePlayerResult(WinOrLose.DRAW), blackjackResult.countDealerWinOrLoseReversePlayerResult(WinOrLose.WIN)));
+        outputView.println(OutputMessage.DEALER_RESULT_FORMAT.format(blackjackResult.countDealerWinOrLoseReversePlayerResult(
+                        GameResult.LOSE),
+                blackjackResult.countDealerWinOrLoseReversePlayerResult(GameResult.DRAW), blackjackResult.countDealerWinOrLoseReversePlayerResult(
+                        GameResult.WIN)));
 
         printPlayersResult(players, blackjackResult);
     }
 
     private void printPlayersResult(Players players, BlackjackResult blackjackResult) {
-        List<WinOrLose> playerResult = blackjackResult.getPlayersResult();
+        List<GameResult> playerResult = blackjackResult.getPlayersResult();
         for (int i = 0; i < players.getPlayers().size(); i++) {
             outputView.println(OutputMessage.PLAYER_RESULT_FORMAT.format(players.getUserNames().get(i),
                     playerResult.get(i).getMessage()));
