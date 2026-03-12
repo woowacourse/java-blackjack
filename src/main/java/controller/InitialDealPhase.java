@@ -3,6 +3,7 @@ package controller;
 import java.util.List;
 import model.CardDispenser;
 import model.Dealer;
+import model.Participant;
 import model.Player;
 import view.OutputView;
 
@@ -20,6 +21,10 @@ public class InitialDealPhase implements GamePhase {
 
         distributeCardToDealer(gameContext.getDealer());
         distributeCardToPlayer(gameContext.getPlayers());
+        checkBlackJack(gameContext.getDealer());
+        for (Player player : gameContext.getPlayers()) {
+            checkBlackJack(player);
+        }
     }
 
     private void distributeCardToDealer(Dealer dealer) {
@@ -32,5 +37,9 @@ public class InitialDealPhase implements GamePhase {
             cardDispenser.dispenseStartingCards(player);
         }
         OutputView.printCardByPlayers(players);
+    }
+
+    private void checkBlackJack(Participant participant) {
+        participant.checkBlackJack();
     }
 }

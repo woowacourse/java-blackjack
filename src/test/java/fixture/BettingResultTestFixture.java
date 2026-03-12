@@ -40,6 +40,24 @@ public class BettingResultTestFixture {
                         List.of(card(CardValue.TEN), card(CardValue.NINE)),
                         List.of(card(CardValue.QUEEN), card(CardValue.EIGHT)),
                         1000, 2000, -1000
+                ),
+                // 6. 플레이어가 카드를 한 장 더 받아서 21이 된 경우 -> 일반 승리 판정
+                Arguments.of(
+                        List.of(card(CardValue.TEN), card(CardValue.NINE), card(CardValue.TWO)),
+                        List.of(card(CardValue.QUEEN), card(CardValue.EIGHT)),
+                        1000, 2000, -1000
+                ),
+                // 7. 플레이어가 카드를 한 장 더 받아서 21이 되었지만, 딜러가 블랙잭인 경우
+                Arguments.of(
+                        List.of(card(CardValue.TEN), card(CardValue.NINE), card(CardValue.TWO)),
+                        List.of(card(CardValue.QUEEN), card(CardValue.ACE)),
+                        1000, -1000, 1000
+                ),
+                // 8. 플레이어가 카드를 한 장 더 받아서 21이 되었고, 딜러도 카드를 더 뽑은 상황에서 카드 합이 21인 경우
+                Arguments.of(
+                        List.of(card(CardValue.TEN), card(CardValue.NINE), card(CardValue.TWO)),
+                        List.of(card(CardValue.EIGHT), card(CardValue.THREE), card(CardValue.QUEEN)),
+                        1000, 1000, 0
                 )
         );
     }

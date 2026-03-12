@@ -4,7 +4,9 @@ import java.util.List;
 
 public abstract class AbstractParticipant implements Participant {
     private static final int BUST_LIMIT = 21;
+    private static final int BLACK_JACK = 21;
     private static final int ACE_BONUS_SCORE = 10;
+    private static final int BLACK_JACK_REQUIREMENT = 2;
     private final String name;
     private final Cards cards;
     private boolean isBlackJack;
@@ -47,7 +49,14 @@ public abstract class AbstractParticipant implements Participant {
         return cards.getCards();
     }
 
-    public void blackJack() {
-        this.isBlackJack = true;
+    @Override
+    public void checkBlackJack() {
+        if (calculateTotalScore() == BLACK_JACK && this.cards.getSize() == BLACK_JACK_REQUIREMENT) {
+            this.isBlackJack = true;
+        }
+    }
+
+    public boolean getIsBlackJack() {
+        return this.isBlackJack;
     }
 }

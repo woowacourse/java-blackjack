@@ -66,4 +66,8 @@ public class Cards {
     public List<Card> getCards() {
         return List.copyOf(this.cards);
     }
+
+    public int getSize() {
+        return this.cards.size();
+    }
 }

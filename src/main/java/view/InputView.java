@@ -26,6 +26,8 @@ public class InputView {
         while (true) {
             try {
                 String input = readLine();
+                checkInputIsNumber(input);
+                checkInputBettingMoney(input);
                 return Integer.parseInt(input);
             } catch (IllegalArgumentException e) {
                 OutputView.printErrorMessage(e.getMessage());
@@ -52,6 +54,27 @@ public class InputView {
         }
         if (!input.matches("^[a-zA-Z0-9]+(,[a-zA-Z0-9]+)*$")) {
             throw new IllegalArgumentException("올바른 입력 형식이 아닙니다. 다시 입력해주세요.");
+        }
+    }
+
+    private static void checkInputIsNumber(String input) {
+        if (input == null || input.isEmpty()) {
+            throw new IllegalArgumentException("입력이 비어있습니다. 다시 입력해주세요.");
+        }
+        if (!input.matches("\\d+")) {
+            throw new IllegalArgumentException("숫자만 입력 가능합니다.");
+        }
+    }
+
+    private static void checkInputBettingMoney(String input) {
+        if (input.length() > 10) {
+            throw new IllegalArgumentException("베팅 금액은 1 이상 10억 이하만 가능합니다.");
+        }
+        if (input.length() == 10 && input.compareTo("1000000000") > 0) {
+            throw new IllegalArgumentException("베팅 금액은 1 이상 10억 이하만 가능합니다.");
+        }
+        if (input.equals("0")) {
+            throw new IllegalArgumentException("베팅 금액은 1 이상이어야 합니다.");
         }
     }
 }

@@ -26,8 +26,10 @@ public class BettingResult {
 
     private static void resolveBettingResult(int dealerScore, Player player, Dealer dealer) {
         int playerScore = player.calculateTotalScore();
-        if (playerScore == BLACK_JACK && dealerScore != BLACK_JACK) {
+        if (player.getIsBlackJack() && !dealer.getIsBlackJack()) {
             updateMoney(dealer, player, false, true);
+        } else if (!player.getIsBlackJack() && dealer.getIsBlackJack()) {
+            updateMoney(dealer, player, true, false);
         } else if (playerScore > BLACK_JACK) {
             updateMoney(dealer, player, true, false);
         } else if (playerScore < dealerScore) {
@@ -39,7 +41,7 @@ public class BettingResult {
 
     private static void updateMoney(Dealer dealer, Player player, boolean dealerWin, boolean blackJack) {
         int money = player.getMoney();
-        if (!dealerWin && blackJack) {
+        if (blackJack) {
             player.setMoney((int) (money * BLACK_JACK_WIN_PRICE));
             dealer.subtractDealerProfit((int) (money * BLACK_JACK_DEALER_LOSS));
             return;
