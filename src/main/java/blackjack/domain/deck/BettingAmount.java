@@ -1,0 +1,21 @@
+package blackjack.domain.deck;
+
+public class BettingAmount {
+
+    private final int amount;
+
+    public BettingAmount(int amount) {
+        validate(amount);
+        this.amount = amount;
+    }
+
+    public void validate(int amount) {
+        minus(amount);
+    }
+
+    private void minus(int amount) {
+        if (amount < 0) {
+            throw new IllegalArgumentException("[ERROR] 베팅 금액은 음수일 수 없습니다.");
+        }
+    }
+}
