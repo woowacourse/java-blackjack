@@ -43,7 +43,8 @@ public class BlackjackGame {
         tryHitDealer(dealer);
 
         showGamerHandResult(dealer, players);
-//        showGameResultAnalysis(players, dealer);
+
+        bettingTable.applyBettingRate(dealer, players);
     }
 
     private Dealer enterDealer() {
