@@ -4,7 +4,6 @@ import blackjack.domain.GameResult;
 import blackjack.dto.EarningResultDto;
 import blackjack.dto.ParticipantDto;
 import blackjack.dto.PlayerGameResultDto;
-import java.util.ArrayList;
 import java.util.List;
 
 public class OutputView {
@@ -70,19 +69,18 @@ public class OutputView {
     public void printEarningResult(List<EarningResultDto> earningResultDtos) {
         System.out.println("\n## 최종 수익");
 
-        long dealerEarning = 0;
-        List<Long> playerEarnings = new ArrayList<>();
-        for (EarningResultDto dto : earningResultDtos) {
-            double earningRate = GameResult.fromName(dto.gameResult()).getEarningRate();
-            long playerEarning = (long) (dto.bettingAmount() * earningRate);
-            playerEarnings.add(playerEarning);
-            dealerEarning += (playerEarning) * -1;
-        }
+        long dealerEarning = calculateDealerEarningAmount(earningResultDtos);
         System.out.println("딜러: " + dealerEarning);
-        int idx = 0;
         for (EarningResultDto dto : earningResultDtos) {
-            System.out.printf("%s: %d%n", dto.name(), playerEarnings.get(idx));
-            idx++;
+            System.out.printf("%s: %d%n", dto.name(), dto.earningAmount());
         }
+    }
+
+    private long calculateDealerEarningAmount(List<EarningResultDto> earningResultDtos) {
+        long dealerEarning = 0;
+        for (EarningResultDto dto : earningResultDtos) {
+            dealerEarning += (dto.earningAmount() * -1);
+        }
+        return dealerEarning;
     }
 }

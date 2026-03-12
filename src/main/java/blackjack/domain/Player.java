@@ -60,7 +60,7 @@ public class Player extends Participant {
         return GameResult.BLACKJACK_WIN;
     }
 
-    public long getBettingAmount() {
-        return bettingAmount.getBettingAmount();
+    public long calculateEarningAmount(GameResult gameResult) {
+        return bettingAmount.calculateEarningAmount(gameResult);
     }
 }

@@ -107,9 +107,11 @@ public class BlackJackController {
         List<EarningResultDto> earningResultDtos = new ArrayList<>();
         for (Player player : players.getPlayers()) {
             earningResultDtos.add(
-                    new EarningResultDto(player.getName(),
-                            player.compareResult(dealer).getName(),
-                            player.getBettingAmount()));
+                    new EarningResultDto(
+                            player.getName(),
+                            player.calculateEarningAmount(player.compareResult(dealer))
+                    )
+            );
         }
         outputView.printEarningResult(earningResultDtos);
     }

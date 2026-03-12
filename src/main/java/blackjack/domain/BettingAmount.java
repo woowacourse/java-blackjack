@@ -8,11 +8,6 @@ public class BettingAmount {
     }
 
 
-    public long getBettingAmount() {
-        return bettingAmount;
-    }
-
-
     public long calculateEarningAmount(GameResult gameResult) {
         return (long) (bettingAmount * gameResult.getEarningRate());
     }
