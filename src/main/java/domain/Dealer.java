@@ -17,6 +17,10 @@ public class Dealer extends Participant{
         return score <= DEALER_HIT_NUM;
     }
 
+    public int getScore() {
+        return hand.stream().mapToInt(Card::getValue).sum();
+    }
+
     public int getWinRounds() {
         return gameResults.getOrDefault(GameResult.WIN,0);
     }

@@ -3,7 +3,6 @@ package controller;
 import java.util.List;
 
 import domain.Amount;
-import domain.Card;
 import domain.Dealer;
 import domain.Player;
 import service.GameService;
@@ -86,7 +85,7 @@ public class GameController {
     }
 
     private void processDealerTurn() {
-        int sum = dealer.getHand().stream().mapToInt(Card::getValue).sum();
+        int sum = dealer.getScore();
         if(dealer.isBlackjack()) {
             outputView.printDealerBlackjack();
             return;
