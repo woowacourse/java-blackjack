@@ -1,9 +1,9 @@
 package view;
 
 import java.util.List;
-import model.DealerResult;
-import model.PlayerResult;
 import model.card.Card;
+import model.judgement.DealerResult;
+import model.judgement.PlayerResult;
 import model.paticipant.Dealer;
 import model.paticipant.Participant;
 import model.paticipant.Player;

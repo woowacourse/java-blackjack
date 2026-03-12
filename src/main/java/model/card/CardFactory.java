@@ -1,12 +1,9 @@
-package model.service;
+package model.card;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
-import model.card.Card;
-import model.card.CardShape;
-import model.card.CardValue;
 
 public class CardFactory {
 

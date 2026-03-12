@@ -1,18 +1,18 @@
 package controller;
 
 import java.util.List;
-import model.DealerResult;
-import model.PlayerResult;
 import model.card.Card;
+import model.card.CardFactory;
 import model.card.CardShuffler;
 import model.card.Deck;
 import model.card.SimpleCardShuffler;
+import model.judgement.DealerResult;
+import model.judgement.Judgement;
+import model.judgement.PlayerResult;
 import model.paticipant.Dealer;
+import model.paticipant.GameManager;
 import model.paticipant.Player;
 import model.paticipant.Players;
-import model.service.CardFactory;
-import model.service.GameManager;
-import model.service.Judgement;
 import view.InputView;
 import view.OutputView;
 

@@ -5,7 +5,7 @@ import java.util.stream.Stream;
 import model.card.Card;
 import model.card.CardShape;
 import model.card.CardValue;
-import model.GameStatus;
+import model.judgement.GameStatus;
 import org.junit.jupiter.params.provider.Arguments;
 
 public class PlayerResultTestFixture {

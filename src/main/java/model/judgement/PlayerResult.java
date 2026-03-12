@@ -1,4 +1,4 @@
-package model;
+package model.judgement;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;

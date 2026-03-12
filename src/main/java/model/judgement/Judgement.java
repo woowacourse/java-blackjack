@@ -1,14 +1,11 @@
-package model.service;
+package model.judgement;
 
-import static model.GameStatus.DRAW;
-import static model.GameStatus.LOSE;
-import static model.GameStatus.WIN;
+import static model.judgement.GameStatus.DRAW;
+import static model.judgement.GameStatus.LOSE;
+import static model.judgement.GameStatus.WIN;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import model.DealerResult;
-import model.GameStatus;
-import model.PlayerResult;
 import model.paticipant.Dealer;
 import model.paticipant.Player;
 import model.paticipant.Players;

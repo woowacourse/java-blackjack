@@ -1,4 +1,4 @@
-package model;
+package model.judgement;
 
 public enum GameStatus {
 
