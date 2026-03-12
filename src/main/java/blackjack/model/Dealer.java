@@ -3,6 +3,7 @@ package blackjack.model;
 import java.util.List;
 
 public class Dealer extends Participant {
+    private static final int HIT_THRESHOLD = 16;
 
     public Dealer(Name name, Hand hand) {
         super(name, hand);
@@ -22,10 +23,6 @@ public class Dealer extends Participant {
 
     @Override
     public boolean canHit() {
-        return getScore().value() <= 16;
-    }
-
-    public boolean isWin() {
-
+        return getScore().value() <= HIT_THRESHOLD;
     }
 }
