@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 
 public class RetryUtil {
 
-    public static <T> T retryOnInvalidInput(Supplier<T> retryableAction, Consumer< IllegalArgumentException> errorHandler) {
+    public static <T> T retryOnInvalidInput(Supplier<T> retryableAction, Consumer<IllegalArgumentException> errorHandler) {
         try {
             return retryableAction.get();
         } catch (IllegalArgumentException e) {
@@ -15,7 +15,7 @@ public class RetryUtil {
         }
     }
 
-    public static void retryOnInvalidInput(Runnable retryableAction, Consumer< IllegalArgumentException> errorHandler) {
+    public static void retryOnInvalidInput(Runnable retryableAction, Consumer<IllegalArgumentException> errorHandler) {
         try {
             retryableAction.run();
         } catch (IllegalArgumentException e) {
