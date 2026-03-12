@@ -1,18 +1,18 @@
 package blackjack.core;
 
-import blackjack.dto.DealerResultDto;
-import blackjack.dto.GameResultDto;
-import blackjack.dto.InitialDealDtos;
-import blackjack.dto.ParticipantCardsDto;
-import blackjack.dto.ParticipantScoreDto;
-import blackjack.dto.GameResultDtos;
 import blackjack.domain.card.CardsGenerator;
-import blackjack.domain.participant.Dealer;
 import blackjack.domain.card.Deck;
-import blackjack.domain.result.GameResult;
+import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
+import blackjack.domain.result.GameResult;
+import blackjack.dto.DealerResultDto;
+import blackjack.dto.GameResultDto;
+import blackjack.dto.GameResultDtos;
+import blackjack.dto.InitialDealDtos;
+import blackjack.dto.ParticipantCardsDto;
+import blackjack.dto.ParticipantScoreDto;
 import blackjack.view.BlackjackView;
 import java.util.List;
 
@@ -48,10 +48,7 @@ public class BlackjackGame {
     }
 
     private void deal(Participants participants, Deck deck) {
-        participants.getDealer().hit(deck.draw());
-        for (Player player : participants.getPlayers()) {
-            player.hit(deck.draw());
-        }
+        participants.stream().forEach(participant -> participant.hit(deck.draw()));
     }
 
     private void hitPlayers(List<Player> players, Deck deck) {
@@ -80,20 +77,10 @@ public class BlackjackGame {
     }
 
     private void printResult(Participants participants) {
-        Dealer dealer = participants.getDealer();
-        List<GameResultDtos> gameResultDtos = participants.getPlayers().stream()
-            .map(player -> convertFrom(player, dealer))
-            .toList();
-        DealerResultDto dealerResultDto = DealerResultDto.from(gameResultDtos);
-        view.printResult(new GameResultDto(dealerResultDto, gameResultDtos));
+        view.printResult(GameResultDto.from(participants));
     }
 
     private ParticipantScoreDto convertFrom(Participant participant) {
         return ParticipantScoreDto.from(participant, participant.getScore());
-    }
-
-    private GameResultDtos convertFrom(Player player, Dealer dealer) {
-        GameResult result = dealer.judgeAgainst(player);
-        return GameResultDtos.of(player, result);
     }
 }

@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.card.Hand;
+import blackjack.domain.result.Hand;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
