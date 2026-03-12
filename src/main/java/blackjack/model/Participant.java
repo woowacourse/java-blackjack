@@ -18,15 +18,15 @@ public abstract class Participant {
         }
     }
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
-    public void hit(Card card) {
+    public final void hit(Card card) {
         hand.addCard(card);
     }
 
-    public List<Card> getCards() {
+    public final List<Card> getCards() {
         return hand.getCards();
     }
 

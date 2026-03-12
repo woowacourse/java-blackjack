@@ -17,12 +17,12 @@ import blackjack.service.BlackjackService;
 import blackjack.view.BlackjackView;
 import java.util.List;
 
-public class BlackjackController {
+public class BlackjackGame {
 
     private final BlackjackView view;
     private final BlackjackService service;
 
-    public BlackjackController(BlackjackView view, BlackjackService service) {
+    public BlackjackGame(BlackjackView view, BlackjackService service) {
         this.view = view;
         this.service = service;
     }

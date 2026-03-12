@@ -1,6 +1,6 @@
 package blackjack.config;
 
-import blackjack.controller.BlackjackController;
+import blackjack.controller.BlackjackGame;
 import blackjack.model.BlackjackGameManager;
 import blackjack.model.BlackjackRule;
 import blackjack.model.BustPolicy;
@@ -21,8 +21,8 @@ public class BlackjackGameFactory {
     private final static int BUST_THRESHOLD = 21;
     private final static int DEALER_HIT_THRESHOLD = 16;
 
-    public BlackjackController controller() {
-        return new BlackjackController(output(), service());
+    public BlackjackGame controller() {
+        return new BlackjackGame(output(), service());
     }
 
     private BlackjackView output() {
@@ -36,7 +36,8 @@ public class BlackjackGameFactory {
     private BlackjackGameManager manager() {
         BustPolicy bustPolicy = bustPolicy();
         DealerHitPolicy dealerHitPolicy = dealerHitPolicy();
-        return new BlackjackGameManager(new ScoreCalculator(bustPolicy), rule(bustPolicy, dealerHitPolicy));
+        return new BlackjackGameManager(new ScoreCalculator(bustPolicy),
+            rule(bustPolicy, dealerHitPolicy));
     }
 
     private BlackjackRule rule(BustPolicy bustPolicy, DealerHitPolicy dealerHitPolicy) {
