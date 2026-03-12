@@ -2,6 +2,7 @@ package blackjack.service;
 
 import static blackjack.util.constant.Constants.INITIAL_CARD_COUNT;
 
+import blackjack.domain.GameResultType;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.GameResult;
@@ -47,4 +48,34 @@ public class GameService {
         boolean isUserWin = !isDealerWinning(user, dealer);
         gameResult.add(user.getName(), isUserWin);
     }
+
+    public GameResultType determineResult(User user, Dealer dealer) {
+        if (user.isBurst()) {
+            return GameResultType.LOSE;
+        }
+        if (user.isBlackjack() && dealer.isBlackjack()) {
+            return GameResultType.DRAW;
+        }
+        if (user.isBlackjack()) {
+            return GameResultType.BLACKJACK_WIN;
+        }
+        if (dealer.isBlackjack()) {
+            return GameResultType.LOSE;
+        }
+        if (dealer.isBurst()) {
+            return GameResultType.WIN;
+        }
+        return compareScore(user, dealer);
+    }
+
+    private GameResultType compareScore(User user, Dealer dealer) {
+        if (user.calculateCardsValue() > dealer.calculateCardsValue()) {
+            return GameResultType.WIN;
+        }
+        if (user.calculateCardsValue() == dealer.calculateCardsValue()) {
+            return GameResultType.DRAW;
+        }
+        return GameResultType.LOSE;
+    }
+
 }
