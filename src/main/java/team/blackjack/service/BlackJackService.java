@@ -18,8 +18,8 @@ import team.blackjack.domain.Result;
 public class BlackJackService {
     private BlackjackGame blackjackGame;
 
-    public void initGame(List<String> playerNames) {
-        blackjackGame = new BlackjackGame(playerNames);
+    public void initGame(Map<String,Integer> playerStakes) {
+        blackjackGame = new BlackjackGame(playerStakes);
     }
 
     /**

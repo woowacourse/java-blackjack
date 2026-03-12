@@ -1,5 +1,6 @@
 package team.blackjack.domain;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,10 +16,10 @@ public class BlackjackGame {
     private final List<Player> players;
     private final Deck deck;
 
-    public BlackjackGame(List<String> playerNames) {
+    public BlackjackGame(Map<String, Integer> playerStakes) {
         this.blackjackRule = AppConfig.getInstance().blackjackRule();
         this.dealer = new Dealer();
-        this.players = createPlayers(playerNames);
+        this.players = createPlayers(playerStakes);
         this.deck = new Deck();
     }
 
@@ -83,9 +84,12 @@ public class BlackjackGame {
         return player.getCardInAllHands();
     }
 
-    private List<Player> createPlayers(List<String> playerNames) {
-        return playerNames.stream()
-                .map(Player::new)
-                .toList();
+    private List<Player> createPlayers(Map<String, Integer> playerStakes) {
+        List<Player> players = new ArrayList<>();
+        playerStakes.forEach((name, stake) -> {
+            players.add(new Player(name, stake));
+        });
+
+        return players;
     }
 }

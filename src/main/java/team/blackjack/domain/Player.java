@@ -6,10 +6,12 @@ import java.util.List;
 public class Player implements Participant {
     private final String name;
     private final List<Hand> hands;
+    private final Bet bet;
 
-    public Player(String name) {
+    public Player(String name, int stake) {
         this.name = name;
         this.hands = initHands();
+        this.bet = Bet.from(stake);
     }
 
     public List<Hand> getHands() {
@@ -22,6 +24,10 @@ public class Player implements Participant {
 
     public List<String> getCardInAllHands() {
         return hands.getFirst().getCardNames();
+    }
+
+    public int getPayout(Result result){
+        return bet.calculatePayout(result);
     }
 
     @Override

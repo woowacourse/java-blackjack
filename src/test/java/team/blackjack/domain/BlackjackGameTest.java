@@ -3,22 +3,23 @@ package team.blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class BlackjackGameTest {
-    private List<String> playerNames;
+    private Map<String, Integer> playerSkates;
     private BlackjackGame blackjackGame;
 
     @BeforeEach
     void setUp() {
-        playerNames = List.of("pobi", "woni");
-        blackjackGame = new BlackjackGame(playerNames);
+        playerSkates = Map.of("pobi", 10000, "jason", 20000);
+        blackjackGame = new BlackjackGame(playerSkates);
     }
 
     @Test
     void 플레이어는_처음_게임_시작시에_서로_다른_2장의_카드를_받는다() {
-        Player newPlayer = new Player("pobi");
+        Player newPlayer = new Player("pobi", 10000);
 
         blackjackGame.dealInitialCardsTo(newPlayer);
 
@@ -36,7 +37,7 @@ class BlackjackGameTest {
 
     @Test
     void 플레이어에게_카드_한장을_발급한다() {
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", 10000);
 
         blackjackGame.dealCardTo(player);
 
@@ -57,7 +58,7 @@ class BlackjackGameTest {
      */
     @Test
     void 플레이어가_딜러의_점수보다_큰_경우_WIN을_반환한다() {
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", 10000);
         Dealer dealer = new Dealer();
 
         List<Card> playerCards = List.of(
@@ -78,7 +79,7 @@ class BlackjackGameTest {
 
     @Test
     void 플레이어와_딜러의_점수가_동일할때_승패를_DRAW로_반환한다() {
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", 10000);
         Dealer dealer = new Dealer();
 
         List<Card> playerCards = List.of(
@@ -99,7 +100,7 @@ class BlackjackGameTest {
 
     @Test
     void 플레이어가_딜러의_점수보다_작을때_승패를_LOSE로_반환한다() {
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", 10000);
         Dealer dealer = new Dealer();
 
         List<Card> playerCards = List.of(
@@ -120,7 +121,7 @@ class BlackjackGameTest {
 
     @Test
     void 플레이어가_버스트인_경우_플레이어는_반드시_패배한다() {
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", 10000);
         Dealer dealer = new Dealer();
 
         List<Card> playerCards = List.of(
@@ -145,7 +146,7 @@ class BlackjackGameTest {
      */
     @Test
     void 딜러가_플레이어의_점수보다_큰_경우_WIN을_반환한다() {
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", 10000);
         Dealer dealer = new Dealer();
 
         List<Card> playerCards = List.of(
@@ -166,7 +167,7 @@ class BlackjackGameTest {
 
     @Test
     void 딜러와_플레이어의_점수가_동일할때_승패를_DRAW로_반환한다() {
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", 10000);
         Dealer dealer = new Dealer();
 
         List<Card> playerCards = List.of(
@@ -187,7 +188,7 @@ class BlackjackGameTest {
 
     @Test
     void 딜러가_플레이어의_점수보다_작을때_승패를_LOSE로_반환한다() {
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", 10000);
         Dealer dealer = new Dealer();
 
         List<Card> playerCards = List.of(
@@ -208,7 +209,7 @@ class BlackjackGameTest {
 
     @Test
     void 플레이어와_딜러_모두_버스트인_경우_딜러가_승리한다() {
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", 10000);
         Dealer dealer = new Dealer();
 
         List<Card> playerCards = List.of(

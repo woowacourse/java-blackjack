@@ -16,8 +16,13 @@ public class InputView {
                 .toList();
     }
 
+    public static int readPlayerStake() {
+        return Integer.parseInt(readInput());
+    }
+
     /**
      * 플레이어가 한장의 카드를 더 받을지 여부를 입력받는다.
+     *
      * @return
      */
     public static boolean readHitDecision() {

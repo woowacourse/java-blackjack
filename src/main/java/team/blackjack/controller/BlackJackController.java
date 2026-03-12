@@ -1,6 +1,8 @@
 package team.blackjack.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import team.blackjack.service.dto.DrawResult;
 import team.blackjack.service.dto.GameResult;
 import team.blackjack.service.dto.ScoreResult;
@@ -18,7 +20,8 @@ public class BlackJackController {
 
     public void run() {
         List<String> playerNames = readPlayerNames();
-        initializeBlackjackGame(playerNames);
+        Map<String, Integer> playerStakes = readPlayerStakes(playerNames);
+        initializeBlackjackGame(playerStakes);
 
         DrawResult drawResult = blackJackService.getHandResult();
         OutputView.printDrawResult(drawResult);
@@ -42,8 +45,19 @@ public class BlackJackController {
         return InputView.readPlayerNames();
     }
 
-    private void initializeBlackjackGame(List<String> playerNames) {
-        blackJackService.initGame(playerNames);
+    private Map<String, Integer> readPlayerStakes(List<String> playerNames) {
+        Map<String, Integer> playerStakes = new HashMap<>();
+
+        for (String name : playerNames) {
+            OutputView.printPlayerStakeRequest(name);
+            playerStakes.put(name, InputView.readPlayerStake());
+        }
+
+        return playerStakes;
+    }
+
+    private void initializeBlackjackGame(Map<String, Integer> playerStakes) {
+        blackJackService.initGame(playerStakes);
         blackJackService.dealInitialCards();
     }
 
