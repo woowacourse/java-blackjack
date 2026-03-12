@@ -8,10 +8,11 @@ import domain.Dealer;
 import domain.Participants;
 import domain.Player;
 import domain.Players;
+import dto.BlackjackResultDto;
 import dto.BlackjackStatisticsDto;
-import dto.DealerResultDto;
+import dto.DealerStatisticDto;
 import dto.ParticipantDto;
-import dto.PlayerResultDto;
+import dto.PlayerStatisticDto;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,25 +31,13 @@ public class BlackjackService {
         participants = new Participants(dealer, players);
     }
 
-    public void dealInitialCards() {
+    public void drawInitialCards() {
         participants.dealer().addCard(drawCard());
         participants.dealer().addCard(drawCard());
         for (Player player : participants.players().getPlayers()) {
             player.addCard(drawCard());
             player.addCard(drawCard());
         }
-    }
-
-    public List<ParticipantDto> generateInitialParticipantDtoList() {
-        List<ParticipantDto> participantDtoList = new ArrayList<>();
-
-        ParticipantDto dealerDto = generateInitialDealerDto();
-        participantDtoList.add(dealerDto);
-
-        List<ParticipantDto> playersDto = generatePlayersDto();
-        participantDtoList.addAll(playersDto);
-
-        return participantDtoList;
     }
 
     public boolean drawDealerCard() {
@@ -65,65 +54,51 @@ public class BlackjackService {
         return cardMachine.drawCard();
     }
 
-    public List<ParticipantDto> getBlackjackResult() {
-        List<ParticipantDto> participantDtoList = new ArrayList<>();
-
-        ParticipantDto dealerDto = generateDealerDto();
-        participantDtoList.add(dealerDto);
-
-        List<ParticipantDto> playersDto = generatePlayersDto();
-        participantDtoList.addAll(playersDto);
-
-        return participantDtoList;
-    }
-
     public ParticipantDto generateInitialDealerDto() {
         Dealer dealer = participants.dealer();
-        List<String> hand = convertHandString(dealer.getOnlyFirstHand());
-        return new ParticipantDto(dealer.getName(), hand, dealer.calculateScore());
+        return ParticipantDto.from(dealer, true);
     }
 
     public ParticipantDto generateDealerDto() {
         Dealer dealer = participants.dealer();
-        List<String> hand = convertHandString(dealer.getHand());
-        return new ParticipantDto(dealer.getName(), hand, dealer.calculateScore());
+        return ParticipantDto.from(dealer);
     }
 
-    public List<ParticipantDto> generatePlayersDto() {
+    public List<ParticipantDto> generatePlayerDtoList() {
         List<ParticipantDto> playersDto = new ArrayList<>();
         for (Player player : participants.players().getPlayers()) {
-            List<String> hand = convertHandString(player.getHand());
-            playersDto.add(new ParticipantDto(player.getName(), hand, player.calculateScore()));
+            playersDto.add(ParticipantDto.from(player));
         }
         return playersDto;
     }
 
-    private List<String> convertHandString(List<Card> cards) {
-        return cards.stream()
-                .map(card -> card.rank().getRank() + card.suit().getSuit())
-                .toList();
+    public BlackjackResultDto getBlackjackResult() {
+        ParticipantDto dealerResultDto = generateDealerDto();
+        List<ParticipantDto> playerResultDtoList = generatePlayerDtoList();
+
+        return BlackjackResultDto.of(dealerResultDto, playerResultDtoList);
     }
 
     public BlackjackStatisticsDto getBlackjackStatistics() {
-        List<PlayerResultDto> playerResultDtoList = calculatePlayerResults();
+        List<PlayerStatisticDto> playerStatisticDtoList = calculatePlayerResults();
         int win = 0, draw = 0, lose = 0;
-        for (PlayerResultDto playerResultDto : playerResultDtoList) {
-            Result result = playerResultDto.result();
+        for (PlayerStatisticDto playerStatisticDto : playerStatisticDtoList) {
+            Result result = playerStatisticDto.result();
             win += judgeResult(result, Result.LOSE);
             draw += judgeResult(result, Result.DRAW);
             lose += judgeResult(result, Result.WIN);
         }
-        return new BlackjackStatisticsDto(new DealerResultDto(win, draw, lose), playerResultDtoList);
+        return new BlackjackStatisticsDto(new DealerStatisticDto(win, draw, lose), playerStatisticDtoList);
     }
 
-    public List<PlayerResultDto> calculatePlayerResults() {
+    public List<PlayerStatisticDto> calculatePlayerResults() {
         Dealer dealer = participants.dealer();
-        List<PlayerResultDto> playerResultDtoList = new ArrayList<>();
+        List<PlayerStatisticDto> playerStatisticDtoList = new ArrayList<>();
         for (Player player : participants.players().getPlayers()) {
             Result result = calculatePlayerResult(dealer, player);
-            playerResultDtoList.add(new PlayerResultDto(player.getName(), result));
+            playerStatisticDtoList.add(new PlayerStatisticDto(player.getName(), result));
         }
-        return playerResultDtoList;
+        return playerStatisticDtoList;
     }
 
     private Result calculatePlayerResult(Dealer dealer, Player player) {
@@ -152,8 +127,7 @@ public class BlackjackService {
     public ParticipantDto updatePlayer(String name) {
         Player player = participants.getPlayer(name);
         player.addCard(drawCard());
-        List<String> hand = convertHandString(player.getHand());
-        return new ParticipantDto(name, hand, player.calculateScore());
+        return ParticipantDto.from(player);
     }
 
     public boolean isHit(HitOrStand hitOrStand) {
@@ -162,9 +136,5 @@ public class BlackjackService {
 
     public boolean isStand(HitOrStand hitOrStand) {
         return hitOrStand.isStand();
-    }
-
-    public boolean isDealer(String name) {
-        return participants.dealer().isDealer(name);
     }
 }
