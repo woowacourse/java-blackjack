@@ -1,10 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.deck;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.deck.Card;
-import blackjack.domain.deck.CardShape;
-import blackjack.domain.deck.CardValue;
 import org.junit.jupiter.api.Test;
 
 public class CardTest {
