@@ -2,6 +2,6 @@ package domain;
 
 public enum ScoreStatus {
     BUST,
-    STAND,
+    STAY,
     BLACKJACK
 }

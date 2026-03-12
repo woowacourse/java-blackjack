@@ -42,7 +42,7 @@ class HandCardsTest {
         Score score = handCards.getScore();
 
         // Then
-        assertThat(score).isEqualTo(new Score(12, ScoreStatus.STAND));
+        assertThat(score).isEqualTo(new Score(12, ScoreStatus.STAY));
     }
 
 
@@ -62,7 +62,7 @@ class HandCardsTest {
         Score score = handCards.getScore();
 
         // Then
-        assertThat(score).isEqualTo(new Score(15, ScoreStatus.STAND));
+        assertThat(score).isEqualTo(new Score(15, ScoreStatus.STAY));
     }
 
     @Test
@@ -80,7 +80,7 @@ class HandCardsTest {
         Score score = handCards.getScore();
 
         // Then
-        assertThat(score).isEqualTo(new Score(15, ScoreStatus.STAND));
+        assertThat(score).isEqualTo(new Score(15, ScoreStatus.STAY));
     }
 
     @Test
@@ -98,7 +98,7 @@ class HandCardsTest {
         Score score = handCards.getScore();
 
         // Then
-        assertThat(score).isEqualTo(new Score(20, ScoreStatus.STAND));
+        assertThat(score).isEqualTo(new Score(20, ScoreStatus.STAY));
     }
 
     @Test

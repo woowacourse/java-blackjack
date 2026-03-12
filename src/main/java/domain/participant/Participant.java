@@ -5,7 +5,7 @@ import domain.card.Card;
 
 import java.util.List;
 
-public abstract class Participant {
+abstract public class Participant {
 
     private final String name;
     private final HandCards handCards;
