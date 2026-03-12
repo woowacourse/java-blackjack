@@ -69,10 +69,10 @@ public class ResultView {
     public void printResult(TotalResult results) {
         printEmptyLine();
         System.out.println("## 최종 승패");
-        System.out.println("딜러: " + results.dealerProfit().getValue());
+        System.out.println("딜러: " + results.dealerProfit().getValue().setScale(0));
 
         for (RoundResult result : results.results()) {
-            System.out.println(result.player().getName().getValue() + ": " + result.betMoney().getValue());
+            System.out.println(result.player().getName().getValue() + ": " + result.betMoney().getValue().setScale(0));
         }
     }
 
