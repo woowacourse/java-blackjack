@@ -28,25 +28,19 @@ public class OutputView {
     }
 
     public static void printWinningResult(GameResult gameResult, String dealerName) {
-        System.out.println("## 최종 승패");
+        System.out.println("## 최종 수익");
         printDealerResult(dealerName, gameResult);
         printUsersResult(gameResult);
     }
 
     private static void printDealerResult(String dealerName, GameResult gameResult) {
-        System.out.println(dealerName + ": " + gameResult.getDealerWinCount() + "승 " + gameResult.getUserWinCount() + "패");
+        System.out.println(dealerName + ": " + gameResult.getDealerProfit());
     }
 
     private static void printUsersResult(GameResult gameResult) {
-        for (Map.Entry<String, Boolean> entry : gameResult.getEntries()) {
-            System.out.println(entry.getKey() + ": " + toWinResult(entry.getValue()));
+        for (Map.Entry<String, Integer> entry : gameResult.getEntries()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
         }
     }
 
-    private static String toWinResult(boolean isWin) {
-        if (isWin) {
-            return "승";
-        }
-        return "패";
-    }
 }
