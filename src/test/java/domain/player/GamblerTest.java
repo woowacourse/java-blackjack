@@ -1,7 +1,9 @@
 package domain.player;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import domain.card.Card;
-import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -18,11 +20,9 @@ class GamblerTest {
         gambler.addCard(card);
 
         // then
-        Assertions.assertThat(gambler.getCardSize()).isEqualTo(1);
+        assertThat(gambler.getCardSize()).isEqualTo(1);
     }
 
-
-    // 버스트 확인
     @Test
     @DisplayName("카드 버스트 확인 테스트")
     void 카드_버스트_테스트() {
@@ -39,10 +39,9 @@ class GamblerTest {
         gambler.addCard(card3);
 
         // then
-        Assertions.assertThat(gambler.isBust()).isEqualTo(true);
+        assertThat(gambler.isBust()).isEqualTo(true);
     }
 
-    // 합산
     @Test
     @DisplayName("카드 값 합산")
     void 카드_값_합산_테스트() {
@@ -59,7 +58,30 @@ class GamblerTest {
         gambler.addCard(card3);
 
         // then
-        Assertions.assertThat(gambler.getTotalScore()).isEqualTo(22);
+        assertThat(gambler.getTotalScore()).isEqualTo(22);
     }
 
+    @Test
+    @DisplayName("베팅 금액이 0일 때 에러 발생 검증")
+    void 베팅_금액_0_검증() {
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> new Gambler("james", 0)
+        );
+    }
+
+    @Test
+    @DisplayName("베팅 금액이 음수 때 에러 발생 검증")
+    void 베팅_금액_음수_검증() {
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> new Gambler("james", -1)
+        );
+    }
+
+    @Test
+    @DisplayName("베팅 금액이 100억 넘을 때 에러 검증")
+    void 베팅_금액_음수_검증() {
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> new Gambler("james", 10_000_000_000L)
+        );
+    }
 }
