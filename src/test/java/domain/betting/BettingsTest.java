@@ -7,20 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class BettingsTest {
-
-    //    public Bettings() {
-//        this(List.of());
-//    }
-//
-//    public Bettings(List<Betting> bettings) {
-//        this.bettings = List.copyOf(bettings);
-//    }
-//
-//    public Bettings addBetting(Betting betting) {
-//        List<Betting> bettings = new ArrayList<>(this.bettings);
-//        bettings.add(betting);
-//        return new Bettings(bettings);
-//    }
+    
     @Test
     void 매개변수_없는_생성자로_생성이_가능하다() {
         // given
