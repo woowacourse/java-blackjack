@@ -50,6 +50,26 @@ public class GameResultTest {
     }
 
     @Test
+    public void 플레이어가_블랙잭이고_딜러가_버스트이면_블랙잭_승리이다() {
+        // given
+        List<Card> cards = List.of(new Card(Emblem.CLOVER, Grade.ACE), new Card(Emblem.HEART, Grade.JACK),
+                new Card(Emblem.HEART, Grade.JACK), new Card(Emblem.SPADE, Grade.KING),
+                new Card(Emblem.CLOVER, Grade.NINE));
+
+        Deck deck = new Deck(new FixShuffleStrategy(cards));
+        Player player = Player.from("토리", 1000);
+        player.initHand(deck);
+        Dealer dealer = new Dealer(deck);
+        dealer.playTurn(deck);
+
+        // when
+        GameResult gameResult = GameResult.judge(dealer, player);
+
+        // then
+        Assertions.assertThat(gameResult).isEqualTo(GameResult.BLACKJACK);
+    }
+
+    @Test
     public void 플레이어가_버스트인_경우_패배한다() {
         // given
         List<Card> cards = List.of(new Card(Emblem.CLOVER, Grade.KING), new Card(Emblem.HEART, Grade.JACK),

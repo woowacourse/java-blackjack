@@ -1,6 +1,5 @@
 package domain.result;
 
-import domain.participant.Participant;
 import domain.participant.Player;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -34,10 +33,6 @@ public class GameStatistics {
 
     public Map<Player, GameResult> getPlayerResult() {
         return playerResult;
-    }
-
-    public GameResult findGameResultBy(Participant player) {
-        return playerResult.get(player);
     }
 
     public Map<String, Integer> getDealerResult() {

@@ -17,15 +17,15 @@ public class Player {
         return new Player(participant, new BattingMoney(amount));
     }
 
-    public void playTurn(Deck deck){
+    public void playTurn(Deck deck) {
         participant.playTurn(deck);
     }
 
-    public String getName(){
+    public String getName() {
         return this.participant.getName();
     }
 
-    public boolean isBust(){
+    public boolean isBust() {
         return participant.isBust();
     }
 
@@ -43,5 +43,9 @@ public class Player {
 
     public void initHand(Deck deck) {
         participant.initHand(deck);
+    }
+
+    public int getBattingMoney() {
+        return battingMoney.money();
     }
 }

@@ -23,7 +23,6 @@ public class Participant {
     }
 
     public boolean isBlackJack() {
-
         return getScore() == BLACKJACK_SCORE && getCards().size() == INIT_CARD_SIZE;
     }
 
