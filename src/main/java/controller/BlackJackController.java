@@ -33,7 +33,7 @@ public class BlackJackController {
         game.settleRoundBets(judge, bettingTable);
 
         OutputView.printFinalResult(OutputDtoAssembler
-                .toFinalResultDto(game.getDealer(),game.getPlayers(), judge, bettingTable));
+                .toFinalResultDto(game.getDealer(),game.getPlayers(), bettingTable));
     }
 
     private void playPlayers(Game game){

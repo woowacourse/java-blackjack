@@ -40,13 +40,10 @@ public class OutputDtoAssembler {
 
     public static FinalResultDto toFinalResultDto(Dealer dealer,
                                                   List<Player> players,
-                                                  Judge judge,
                                                   BettingTable bettingTable) {
         List<ScoreResultDto> scoreResultDtos = createScoreResultDtos(dealer, players);
-        int dealerWinCount = judge.judgeDealerWinCount();
-        int dealerLoseCount = judge.judgeDealerLoseCount();
-        return new FinalResultDto(scoreResultDtos, dealerWinCount, dealerLoseCount,
-                convertPlayerMoneyMap(bettingTable));
+        Map<String, Long> playerMoneyMap = convertPlayerMoneyMap(bettingTable);
+        return new FinalResultDto(scoreResultDtos, bettingTable.calculateDealerProfit(), playerMoneyMap);
     }
 
     private static Map<String, Long> convertPlayerMoneyMap(BettingTable bettingTable){

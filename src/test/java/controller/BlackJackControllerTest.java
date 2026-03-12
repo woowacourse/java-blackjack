@@ -33,11 +33,13 @@ public class BlackJackControllerTest {
         Supplier<Deck> testDeckSupplier = () -> new Deck(CardFactory.createDeck());
         BlackJackController controller = new BlackJackController(testDeckSupplier);
 
-        systemIn("시오,봉구스\ny\nn\ny\nn");
+        systemIn("시오,봉구스\n1000\n1000\ny\nn\ny\nn");
         controller.run();
 
         String output = getOutput();
         assertThat(output).contains("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
+                .contains("시오의 베팅 금액은?")
+                .contains("봉구스의 베팅 금액은?")
                 .contains("딜러와 시오, 봉구스에게 2장을 나누었습니다.")
                 .contains("딜러카드 : 5하트")
                 .contains("시오카드 : A하트, 2하트")
@@ -53,9 +55,9 @@ public class BlackJackControllerTest {
                 .contains("시오카드 : A하트, 2하트, 7하트 - 결과: 20")
                 .contains("봉구스카드 : 3하트, 4하트, 8하트 - 결과: 15")
                 .contains("## 최종 승패")
-                .contains("딜러: 1승 0패")
-                .contains("시오: 무")
-                .contains("봉구스: 패");
+                .contains("딜러: 1000")
+                .contains("시오: 0")
+                .contains("봉구스: -1000");
     }
 }
 

@@ -3,7 +3,6 @@ package dto;
 import java.util.*;
 
 public record FinalResultDto(List<ScoreResultDto> scoreResultDtos,
-                             int dealerWinCount,
-                             int dealerLoseCount,
+                             long dealerProfit,
                              Map<String, Long> playerResults) {
 }
