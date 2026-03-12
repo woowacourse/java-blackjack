@@ -40,7 +40,7 @@ public class Player extends Participant {
     }
 
     public void placeBet(int amount) {
-        this.bet = new Bet(amount);
+        this.bet = Bet.of(amount);
     }
 
     public int applyMatchResultToBet(MatchResult matchResult) {

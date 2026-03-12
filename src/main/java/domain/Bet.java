@@ -12,7 +12,11 @@ public class Bet {
 
     private final int amount;
 
-    public Bet(int amount) {
+    public static Bet of(int amount) {
+        return new Bet(amount);
+    }
+
+    private Bet(int amount) {
         validateNonNegativeAmount(amount);
         validateBetUnit(amount);
         validateMaxBetAmount(amount);

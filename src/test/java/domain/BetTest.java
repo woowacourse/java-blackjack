@@ -18,7 +18,7 @@ public class BetTest {
         int amount = 3000;
 
         // when
-        Bet bet = new Bet(amount);
+        Bet bet = Bet.of(amount);
 
         // then
         assertNotNull(bet);
@@ -31,7 +31,7 @@ public class BetTest {
         int amount = -3000;
 
         // when - then
-        assertThrows(IllegalArgumentException.class, () -> new Bet(amount));
+        assertThrows(IllegalArgumentException.class, () -> Bet.of(amount));
     }
 
     @Test
@@ -41,7 +41,7 @@ public class BetTest {
         int overBetAmount = 1000_000_000;
 
         // when - then
-        assertThrows(IllegalArgumentException.class, () -> new Bet(overBetAmount));
+        assertThrows(IllegalArgumentException.class, () -> Bet.of(overBetAmount));
     }
 
     @Test
@@ -51,7 +51,7 @@ public class BetTest {
         int amount = 10500;
 
         // when - then
-        assertThrows(IllegalArgumentException.class, () -> new Bet(amount));
+        assertThrows(IllegalArgumentException.class, () -> Bet.of(amount));
     }
 
     @ParameterizedTest
@@ -67,7 +67,7 @@ public class BetTest {
         int amount = 3000;
 
         // when
-        Bet bet = new Bet(amount);
+        Bet bet = Bet.of(amount);
 
         // then
         Assertions.assertEquals(expectedProfit, bet.calculateProfit(matchResult, isBlackJack));
