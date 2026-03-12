@@ -8,7 +8,7 @@ public abstract class Member {
     protected static final int BUST_CONDITION = 21;
 
     private final String name;
-    private final Hand hand;
+    private Hand hand;
 
     public Member(String name) {
         this.name = name;
@@ -24,11 +24,11 @@ public abstract class Member {
     }
 
     public List<Card> currentCards() {
-        return hand.cards();
+        return hand.getAllCard();
     }
 
     public void receiveCard(Card card) {
-        hand.appendCard(card);
+        hand = hand.appendCard(card);
     }
 
     public abstract MatchResult compareScoreWith(Member other);

@@ -11,16 +11,22 @@ public class Hand {
     private final List<Card> cards;
 
     public Hand() {
-        cards = new ArrayList<>();
+        cards = List.of();
     }
 
-    public List<Card> cards() {
-        return cards;
+    private Hand(List<Card> cards) {
+        this.cards = cards;
     }
 
-    public void appendCard(Card card) {
+    public List<Card> getAllCard() {
+        return List.copyOf(cards);
+    }
+
+    public Hand appendCard(Card card) {
         validateDuplicate(card);
-        cards.add(card);
+        List<Card> newCards = new ArrayList<>(cards);
+        newCards.add(card);
+        return new Hand(newCards);
     }
 
     public int calculateTotalValue() {

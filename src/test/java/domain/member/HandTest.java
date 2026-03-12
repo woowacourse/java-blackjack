@@ -24,7 +24,7 @@ public class HandTest {
     @DisplayName("카드 추가 시 중복 검사 예외 테스트")
     @Test
     void appendAndDuplicateTest_holdingTwoAndAppendTwo_ThrowDuplicatedException() {
-        hand.appendCard(new Card("2", "하트"));
+        hand = hand.appendCard(new Card("2", "하트"));
 
         Assertions.assertThatThrownBy(
                         () -> hand.appendCard(new Card("2", "하트")))
@@ -34,8 +34,8 @@ public class HandTest {
     @DisplayName("카드 총합 계산 기능 테스트")
     @Test
     void calculateTest_holdTwoThree_ReturnTotalValue() {
-        hand.appendCard(new Card("2", "하트"));
-        hand.appendCard(new Card("3", "스페이드"));
+        hand = hand.appendCard(new Card("2", "하트"));
+        hand = hand.appendCard(new Card("3", "스페이드"));
 
         Assertions.assertThat(hand.calculateTotalValue())
                 .isEqualTo(5);
@@ -57,7 +57,7 @@ public class HandTest {
         Queue<String> numberQueue = new LinkedList<>(List.of(numbers.split(":")));
         Queue<String> nameQueue = new LinkedList<>(List.of(names.split(":")));
         while (!numberQueue.isEmpty()) {
-            hand.appendCard(new Card(numberQueue.poll(), nameQueue.poll()));
+            hand = hand.appendCard(new Card(numberQueue.poll(), nameQueue.poll()));
         }
         Assertions.assertThat(hand.calculateTotalValue()).isEqualTo(result);
     }
