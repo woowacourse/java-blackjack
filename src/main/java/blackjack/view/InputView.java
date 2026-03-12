@@ -53,11 +53,7 @@ public class InputView {
 
     private static int parseBettingAmount(final String input) {
         try {
-            final int amount = Integer.parseInt(input);
-            if (amount <= 0) {
-                throw new IllegalArgumentException(INVALID_BETTING_AMOUNT_MESSAGE);
-            }
-            return amount;
+            return Integer.parseInt(input);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException(INVALID_BETTING_AMOUNT_MESSAGE);
         }
