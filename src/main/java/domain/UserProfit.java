@@ -1,3 +1,3 @@
 package domain;
 
-public record UserProfit(String userName, int betAmount, GameResult gameResult, int profit) {}
+public record UserProfit(RoundBetInfo roundBetInfo, GameResult gameResult, int profit) {}
