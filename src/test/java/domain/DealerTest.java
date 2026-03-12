@@ -57,7 +57,7 @@ public class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러가 블랙잭이고, 유저가 3장으로 21점인 경우, 딜러가 승리한다.")
+    @DisplayName("딜러가 블랙잭이고, 유저가 3장으로 21점인 경우, 딜러가 블랙잭으로 승리한다.")
     void 딜러_블랙잭_유저_블랙잭_아님_테스트() {
         // given
         Dealer dealer = createDealerWithCards(List.of(
@@ -80,7 +80,7 @@ public class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러가 21점을 초과하고, 유저는 21점 이하인 경우, 무조건 승리한다.")
+    @DisplayName("딜러가 21점을 초과하고, 유저는 21점 이하인 경우, 유저가 무조건 승리한다.")
     void 딜러_버스트_유저_승리_테스트() {
         // given 딜러 26점
         Dealer dealer = createDealerWithCards(List.of(
@@ -125,7 +125,7 @@ public class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러가 18점이고, 유저가 2장으로 21점인 경우, 유저는 블랙잭으로 승리한다.")
+    @DisplayName("딜러가 18점이고, 유저가 2장으로 21점인 경우, 유저가 블랙잭으로 승리한다.")
     void 딜러_21점_미만_유저_블랙잭_테스트() {
         // given 딜러 18점
         Dealer dealer = createDealerWithCards(List.of(
@@ -147,7 +147,7 @@ public class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러가 18점이고, 유저가 3장으로 21점인 경우, 유저는 일반 승리한다.")
+    @DisplayName("딜러가 18점이고, 유저가 3장으로 21점인 경우, 유저가 일반 승리한다.")
     void 딜러_21점_미만_유저_카드_세_장_블랙잭_아님_테스트() {
         // given 딜러 18점
         Dealer dealer = createDealerWithCards(List.of(
