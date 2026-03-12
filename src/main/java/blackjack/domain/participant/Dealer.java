@@ -2,7 +2,8 @@ package blackjack.domain.participant;
 
 public class Dealer extends Participant {
 
-    private static final String DEALER_NAME = "딜러";
+    public static final String DEALER_NAME = "딜러";
+    private static final int DEALER_CAN_DRAW_THRESHOLD = 17;
 
     public Dealer() {
         super(DEALER_NAME);
@@ -10,7 +11,7 @@ public class Dealer extends Participant {
 
     @Override
     public boolean canDraw() {
-        return calculateCardsValue() < 17;
+        return calculateCardsValue() < DEALER_CAN_DRAW_THRESHOLD;
     }
 
 }

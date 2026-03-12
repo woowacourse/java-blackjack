@@ -6,6 +6,9 @@ import java.util.List;
 
 public abstract class Participant {
 
+    private static final int BLACKJACK_VALUE = 21;
+    private static final int ACE_ADVANTAGE_VALUE = 10;
+
     private final ParticipantName name;
     private final List<Card> cards;
 
@@ -38,11 +41,11 @@ public abstract class Participant {
     }
 
     public boolean isBurst() {
-        return calculateCardsValue() > 21;
+        return calculateCardsValue() > BLACKJACK_VALUE;
     }
 
     public boolean isBlackjack() {
-        return calculateCardsValue() == 21;
+        return calculateCardsValue() == BLACKJACK_VALUE;
     }
 
     public String getFirstCardName() {
@@ -66,8 +69,8 @@ public abstract class Participant {
     public abstract boolean canDraw();
 
     private int applyBestAceValue(int sum) {
-        if (hasAce() && (sum + 10) <= 21) {
-            return sum + 10;
+        if (hasAce() && (sum + ACE_ADVANTAGE_VALUE) <= BLACKJACK_VALUE) {
+            return sum + ACE_ADVANTAGE_VALUE;
         }
         return sum;
     }
@@ -75,6 +78,5 @@ public abstract class Participant {
     private boolean hasAce() {
         return cards.stream().anyMatch(Card::isAce);
     }
-
 
 }

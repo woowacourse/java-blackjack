@@ -13,6 +13,8 @@ import java.util.List;
 
 public class BlackjackController {
 
+    private static final int SIZE_OF_INITIAL_CARD = 2;
+
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -27,7 +29,7 @@ public class BlackjackController {
 
         Bettings bettings = readBettingAmounts(players);
 
-        setInitialTwoCards(players, dealer);
+        setInitialCards(players, dealer);
         printInitialSettings(players, dealer);
 
         getMoreCardsForPlayers(players);
@@ -51,9 +53,9 @@ public class BlackjackController {
         return bettings;
     }
 
-    private void setInitialTwoCards(Players players, Dealer dealer) {
+    private void setInitialCards(Players players, Dealer dealer) {
         Deck.shuffle();
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < SIZE_OF_INITIAL_CARD; i++) {
             players.draw();
             dealer.draw(Deck.pop());
         }
