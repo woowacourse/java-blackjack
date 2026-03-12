@@ -3,6 +3,7 @@ package view;
 import domain.participant.Player;
 import util.Console;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class InputView {
@@ -12,7 +13,9 @@ public class InputView {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String input = Console.readLine();
         String[] split = input.split(",");
-        return List.of(split);
+        return Arrays.stream(split)
+                .map(String::strip)
+                .toList();
     }
 
     public String readBetMoney(Player player) {
