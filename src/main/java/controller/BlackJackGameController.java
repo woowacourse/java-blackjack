@@ -53,7 +53,7 @@ public class BlackJackGameController {
 
     public void playGameWithPlayer(Player player, GameManager gameManager) {
         while (player.isContinueGame()) {
-            if (isContinueGame(player)) {
+            if (isStopGame(player)) {
                 break;
             }
             gameManager.drawCardTo(player);
@@ -61,16 +61,10 @@ public class BlackJackGameController {
         }
     }
 
-    private boolean isContinueGame(Player player) {
-        if (!isContinue(InputView.askContinue(player.getName()))) {
+    private boolean isStopGame(Player player) {
+        String response = InputView.askContinue(player.getName());
+        if (response.equals("n")) {
             printCards(player.getParticipantCardsDto());
-            return true;
-        }
-        return false;
-    }
-
-    private boolean isContinue(String response) {
-        if (response.equals("y")) {
             return true;
         }
         return false;
