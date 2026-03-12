@@ -29,7 +29,7 @@ class BettingProfitCalculatorTest {
         // then
         assertAll(
                 () -> assertThat(statistics.getDealerProfit()).isEqualTo(-15000),
-                () -> assertThat(statistics.getPlayerProfit()).containsEntry(player, 15000)
+                () -> assertThat(statistics.getPlayerProfit()).containsEntry(player, (long) 15000)
         );
     }
 

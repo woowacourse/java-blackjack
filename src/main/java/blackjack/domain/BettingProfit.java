@@ -5,19 +5,19 @@ import java.util.Map;
 
 public class BettingProfit {
 
-    private final Map<Participant, Integer> playerProfit;
-    private final int dealerProfit;
+    private final Map<Participant, Long> playerProfit;
+    private final long dealerProfit;
 
-    public BettingProfit(Map<Participant, Integer> playerProfit, int dealerProfit) {
+    public BettingProfit(Map<Participant, Long> playerProfit, Long dealerProfit) {
         this.playerProfit = playerProfit;
         this.dealerProfit = dealerProfit;
     }
 
-    public int getDealerProfit() {
+    public long getDealerProfit() {
         return dealerProfit;
     }
 
-    public Map<Participant, Integer> getPlayerProfit() {
+    public Map<Participant, Long> getPlayerProfit() {
         return playerProfit;
     }
 }

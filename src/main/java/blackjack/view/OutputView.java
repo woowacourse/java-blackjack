@@ -53,18 +53,18 @@ public final class OutputView {
         System.out.println(getCardNames(participant.getName(), participant.getCards()) + " - 결과: " + score);
     }
 
-    public static void showProfitRate(int dealerProfitRate, Map<Participant, Integer> statistics) {
+    public static void showProfitRate(long dealerProfitRate, Map<Participant, Long> statistics) {
         System.out.println(NEW_LINE + "## 최종 수익");
         showDealerResult(dealerProfitRate);
         showPlayerResult(statistics);
     }
 
-    private static void showDealerResult(int dealerResult) {
+    private static void showDealerResult(long dealerResult) {
         System.out.println("딜러: " + dealerResult);
     }
 
-    private static void showPlayerResult(Map<Participant, Integer> playerResult) {
-        for (Map.Entry<Participant, Integer> entry : playerResult.entrySet()) {
+    private static void showPlayerResult(Map<Participant, Long> playerResult) {
+        for (Map.Entry<Participant, Long> entry : playerResult.entrySet()) {
             System.out.println(entry.getKey().getName() + ": " + entry.getValue());
         }
     }

@@ -21,7 +21,7 @@ public abstract class Participant {
 
     public abstract String getName();
 
-    public final int calculateProfitRate(BettingResult bettingResult) {
+    public final long calculateProfitRate(BettingResult bettingResult) {
         return bettingResult.getProfitRate(bettingAmount.getBettingAmount());
     }
 

@@ -14,27 +14,27 @@ public class BettingProfitCalculator {
     public BettingProfit calculate(Participants participants) {
         Dealer dealer = participants.getDealer();
 
-        Map<Participant, Integer> playerProfit = calculatePlayersProfit(dealer, participants.getPlayers());
-        int dealerProfit = calculateDealerProfit(playerProfit);
+        Map<Participant, Long> playerProfit = calculatePlayersProfit(dealer, participants.getPlayers());
+        long dealerProfit = calculateDealerProfit(playerProfit);
 
         return new BettingProfit(playerProfit, dealerProfit);
     }
 
-    private Map<Participant, Integer> calculatePlayersProfit(Dealer dealer, List<Player> players) {
-        Map<Participant, Integer> playerProfit = new LinkedHashMap<>();
+    private Map<Participant, Long> calculatePlayersProfit(Dealer dealer, List<Player> players) {
+        Map<Participant, Long> playerProfit = new LinkedHashMap<>();
 
         for (Player player : players) {
             BettingResult bettingResult = BettingResult.judge(dealer, player);
-            int profitRate = player.calculateProfitRate(bettingResult);
+            long profitRate = player.calculateProfitRate(bettingResult);
             playerProfit.put(player, profitRate);
         }
         return playerProfit;
     }
 
-    private int calculateDealerProfit(Map<Participant, Integer> playerProfit) {
+    private long calculateDealerProfit(Map<Participant, Long> playerProfit) {
         return playerProfit.values()
                 .stream()
-                .mapToInt(Integer::intValue)
+                .mapToLong(Long::longValue)
                 .sum() * DEALER_PROFIT_INVERSION;
     }
 }

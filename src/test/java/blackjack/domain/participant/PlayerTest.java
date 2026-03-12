@@ -79,7 +79,7 @@ class PlayerTest {
         int bettingAmount = 10_000;
         player.bet(bettingAmount);
         // when
-        int profitRate = player.calculateProfitRate(bettingResult);
+        long profitRate = player.calculateProfitRate(bettingResult);
         // then
         assertThat(profitRate).isEqualTo(expectedProfitRate);
     }
