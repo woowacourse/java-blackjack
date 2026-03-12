@@ -24,6 +24,10 @@ public class Hand {
         return score() > BLACK_JACK;
     }
 
+    public boolean isBlackjack() {
+        return score() == BLACK_JACK;
+    }
+
     public int score() {
         int total = cards.sum();
         int aceCount = cards.countAce();
@@ -36,7 +40,7 @@ public class Hand {
         return total;
     }
 
-    public Card peek(){
+    public Card peek() {
         return cards.peek();
     }
 
