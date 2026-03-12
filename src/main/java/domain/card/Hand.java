@@ -7,6 +7,8 @@ import java.util.Objects;
 
 public class Hand {
 
+    public static final int BLACK_JACK_SCORE_CONDITION = 21;
+    public static final int BLACK_JACK_CARD_COUNT_CONDITION = 2;
     public static final int BUSTED_CONDITION = 21;
     public static final int ACE_BONUS_SCORE = 10;
 
@@ -50,6 +52,18 @@ public class Hand {
         return getBasicScore() > BUSTED_CONDITION;
     }
 
+    public boolean isBlackjack() {
+        return satisfyBlackjackCardCount() && satisfyBlackjackScore();
+    }
+
+    private boolean satisfyBlackjackCardCount() {
+        return cards.size() == BLACK_JACK_CARD_COUNT_CONDITION;
+    }
+
+    private boolean satisfyBlackjackScore() {
+        return getResultScore() == BLACK_JACK_SCORE_CONDITION;
+    }
+
     public boolean hasAce() {
         return cards.stream()
                 .anyMatch(Card::isAce);
@@ -79,4 +93,5 @@ public class Hand {
     public int hashCode() {
         return Objects.hashCode(cards);
     }
+
 }
