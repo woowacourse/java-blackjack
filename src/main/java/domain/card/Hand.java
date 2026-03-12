@@ -37,7 +37,7 @@ public class Hand {
                 .reduce(Integer::sum)
                 .orElse(0);
 
-        if (hasAce(cards) && !aceAdvantageIsBust(score)) {
+        if (hasAce(cards) && !isAceAdvantageIsBust(score)) {
             return score + ACE_ADVANTAGE_SCORE;
         }
 
@@ -57,7 +57,10 @@ public class Hand {
                 .anyMatch(Card::isAce);
     }
 
-    private boolean aceAdvantageIsBust(int score) {
+    private boolean isAceAdvantageIsBust(int score) {
+        if (!hasAce(cards)) {
+            throw new IllegalStateException("Ace 가 없을때는 AceAdvantage 를 얻을 수 없습니다.");
+        }
         return score + ACE_ADVANTAGE_SCORE > BUST_SCORE;
     }
 
