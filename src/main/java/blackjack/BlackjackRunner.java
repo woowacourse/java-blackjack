@@ -132,7 +132,7 @@ public class BlackjackRunner {
         
         TotalWinningResult totalWinningResult = determineTotalWinningResult(participants);
         
-        outputView.printWinningResults(totalWinningResult);
+        outputView.printFinalProfit(totalWinningResult);
     }
     
     private TotalWinningResult determineTotalWinningResult(Participants participants) {

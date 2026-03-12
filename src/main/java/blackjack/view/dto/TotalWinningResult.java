@@ -1,26 +1,23 @@
 package blackjack.view.dto;
 
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.GameResult;
 import blackjack.domain.participant.Player;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.IntStream;
 
 public record TotalWinningResult(
-        long dealerWinCount,
-        long dealerLossCount,
-        List<PlayerGameResult> playerResults
+        int dealerProfit,
+        List<PlayerProfit> playerResults
 ) {
     
     public static TotalWinningResult of(Dealer dealer, List<Player> players) {
-        Map<GameResult, Long> dealerResult = dealer.determineGameResult(players);
-        long dealerWinCount = dealerResult.getOrDefault(GameResult.WIN, 0L);
-        long dealerLoseCount = dealerResult.getOrDefault(GameResult.LOSE, 0L);
+        List<Integer> playersProfit = dealer.determinePlayersProfit(players);
+        int dealerProfit = dealer.determineProfit(players);
         
-        List<PlayerGameResult> playerResults = players.stream()
-                .map(player -> PlayerGameResult.of(player, dealer))
+        List<PlayerProfit> playerResults = IntStream.range(0, players.size())
+                .mapToObj(index -> PlayerProfit.of(players.get(index), playersProfit.get(index)))
                 .toList();
         
-        return new TotalWinningResult(dealerWinCount, dealerLoseCount, playerResults);
+        return new TotalWinningResult(dealerProfit, playerResults);
     }
 }

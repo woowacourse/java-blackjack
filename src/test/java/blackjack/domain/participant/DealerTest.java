@@ -50,8 +50,8 @@ class DealerTest {
         losePlayer.receiveCard(new Card(Rank.TEN, Suit.CLOVER));
         losePlayer.receiveCard(new Card(Rank.FIVE, Suit.DIAMOND));
         
-        List<GameResult> gameResults = dealer.determineGameResult(List.of(winPlayer, drawPlayer, losePlayer));
+        List<ProfitRate> profitRates = dealer.determineGameResult(List.of(winPlayer, drawPlayer, losePlayer));
         
-        assertThat(dealer.carculateProfit(gameResults)).isEqualTo(-10000 + 0 + 30000);
+        assertThat(dealer.carculateProfit(profitRates)).isEqualTo(-10000 + 30000);
     }
 }

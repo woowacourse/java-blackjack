@@ -2,9 +2,9 @@ package blackjack.view;
 
 import blackjack.domain.participant.PlayerNicknames;
 import blackjack.view.dto.DealerInitialHand;
-import blackjack.view.dto.GameResultDisplayName;
 import blackjack.view.dto.ParticipantHandScore;
 import blackjack.view.dto.PlayerHand;
+import blackjack.view.dto.PlayerProfit;
 import blackjack.view.dto.TotalWinningResult;
 import java.util.List;
 
@@ -20,6 +20,10 @@ public class OutputView {
     
     public void askGameMembers() {
         printLine("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
+    }
+    
+    public void printAskPlayerBettingAmount(String nickname) {
+        printLine(String.format("%s의 배팅 금액은?", nickname));
     }
     
     public void printInitialSetUp(PlayerNicknames playerNames) {
@@ -68,38 +72,22 @@ public class OutputView {
         printLine(String.format("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)", nickname));
     }
     
-    public void printWinningResults(TotalWinningResult totalWinningResult) {
+    public void printFinalProfit(TotalWinningResult totalWinningResult) {
         printNewLine();
         printLine("## 최종 승패");
-        printDealerWinningResults(totalWinningResult);
-        printPlayerWinningResults(totalWinningResult);
+        printDealerProfit(totalWinningResult);
+        printPlayersProfit(totalWinningResult);
     }
     
-    public void printDealerWinningResults(TotalWinningResult totalWinningResult) {
-        printDealerWinning(totalWinningResult);
+    private void printDealerProfit(TotalWinningResult totalWinningResult) {
+        printLine(String.format("딜러: %d", totalWinningResult.dealerProfit()));
     }
     
-    private void printDealerWinning(TotalWinningResult totalWinningResult) {
-        printLine(
-                String.format("딜러: %d승 %d패", totalWinningResult.dealerWinCount(),
-                        totalWinningResult.dealerLossCount()));
+    public void printPlayersProfit(TotalWinningResult totalWinningResult) {
+        totalWinningResult.playerResults().forEach(this::printPlayersProfit);
     }
     
-    public void printPlayerWinningResults(TotalWinningResult totalWinningResult) {
-        totalWinningResult.playerResults()
-                .forEach(playerGameResult -> {
-                    printPlayerWinningResult(
-                            playerGameResult.nickname(),
-                            GameResultDisplayName.from(playerGameResult.gameResult())
-                    );
-                });
-    }
-    
-    private void printPlayerWinningResult(String nickname, GameResultDisplayName from) {
-        printLine(String.format("%s: %s", nickname, from.displayName()));
-    }
-    
-    public void printAskPlayerBettingAmount(String nickname) {
-        printLine(String.format("%s의 배팅 금액은?", nickname));
+    private void printPlayersProfit(PlayerProfit playerProfit) {
+        printLine(String.format("%s: %d", playerProfit.nickname(), playerProfit.profit()));
     }
 }

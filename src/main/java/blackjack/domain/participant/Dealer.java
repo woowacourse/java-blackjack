@@ -21,13 +21,13 @@ public class Dealer extends Participant {
         return getScore() <= DEALER_SCORE;
     }
     
-    public List<Long> determinePlayersProfit(List<Player> players) {
+    public List<Integer> determinePlayersProfit(List<Player> players) {
         return players.stream()
                 .map(this::determinePlayerProfit)
                 .toList();
     }
     
-    private long determinePlayerProfit(Player player) {
+    private int determinePlayerProfit(Player player) {
         if (player.isBlackjack()) {
             return playerBlackjackProfit(player);
         }
@@ -40,7 +40,7 @@ public class Dealer extends Participant {
         return player.calculateProfit(calculateProfitRate(getScore(), player.getScore()));
     }
     
-    private long playerBlackjackProfit(Player player) {
+    private int playerBlackjackProfit(Player player) {
         if (isBlackjack()) {
             return player.calculateProfit(ProfitRate.DRAW);
         }
@@ -58,9 +58,9 @@ public class Dealer extends Participant {
     }
     
     public int determineProfit(List<Player> players) {
-        List<Long> playersProfit = determinePlayersProfit(players);
-        return playersProfit.stream()
-                .mapToInt(Long::intValue)
+        int playersTotalProfit = players.stream()
+                .mapToInt(this::determinePlayerProfit)
                 .sum();
+        return -playersTotalProfit;
     }
 }

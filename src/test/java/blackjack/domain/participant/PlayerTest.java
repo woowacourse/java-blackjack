@@ -48,8 +48,8 @@ class PlayerTest {
         player.receiveCard(new Card(Rank.TWO, Suit.CLOVER));
         Dealer dealer = new Dealer();
         
-        GameResult gameResult = dealer.determinePlayerProfit(player) = GameResult.LOSE;
-        assertThat(player.calculateProfit(gameResult)).isEqualTo(-10000);
+        ProfitRate profitRate = dealer.determinePlayerProfit(player) = ProfitRate.LOSE;
+        assertThat(player.calculateProfit(profitRate)).isEqualTo(-10000);
     }
     
     @Test
@@ -63,8 +63,8 @@ class PlayerTest {
         dealer.receiveCard(new Card(Rank.SIX, Suit.HEART));
         dealer.receiveCard(new Card(Rank.SIX, Suit.CLOVER));
         
-        GameResult gameResult = dealer.determinePlayerProfit(player) = GameResult.WIN;
-        assertThat(player.calculateProfit(gameResult)).isEqualTo(10000);
+        ProfitRate profitRate = dealer.determinePlayerProfit(player) = ProfitRate.WIN;
+        assertThat(player.calculateProfit(profitRate)).isEqualTo(10000);
     }
     
     @Test
@@ -78,7 +78,7 @@ class PlayerTest {
         dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
         dealer.receiveCard(new Card(Rank.EIGHT, Suit.HEART));
         
-        GameResult gameResult = dealer.determinePlayerProfit(player) = GameResult.WIN;
-        assertThat(player.calculateProfit(gameResult)).isEqualTo(10000);
+        ProfitRate profitRate = dealer.determinePlayerProfit(player) = ProfitRate.WIN;
+        assertThat(player.calculateProfit(profitRate)).isEqualTo(10000);
     }
 }
