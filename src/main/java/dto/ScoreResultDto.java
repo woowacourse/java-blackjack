@@ -4,6 +4,7 @@ import domain.Dealer;
 import domain.Player;
 import java.util.List;
 
+// todo: 매개변수 2개로 수정
 public record ScoreResultDto(HandDto dealerHandDto, int dealerScore, List<PlayerHandScoreDto> playerHandScoreDtos) {
 
     public static ScoreResultDto of(Dealer dealer, List<Player> players) {
