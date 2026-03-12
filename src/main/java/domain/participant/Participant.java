@@ -43,10 +43,6 @@ public abstract class Participant {
         }
     }
 
-    public void setBetMoney(String value) {
-        this.betMoney = BetMoney.of(value);
-    }
-
     public BetMoney getResult(Participant target) {
         if (isBlackjack() && target.isBlackjack()) {
             return betMoney.draw();
@@ -63,13 +59,17 @@ public abstract class Participant {
         if (target.isBust()) {
             return betMoney.win();
         }
-        Score playerScore = getTotalSum();
+        return judgeByScore(target);
+    }
+
+    private BetMoney judgeByScore(Participant target) {
+        Score score = getTotalSum();
         Score targetScore = target.getTotalSum();
 
-        if (playerScore.isEqualTo(targetScore)) {
+        if (score.isEqualTo(targetScore)) {
             return betMoney.draw();
         }
-        if (playerScore.isGreaterThan(targetScore)) {
+        if (score.isGreaterThan(targetScore)) {
             return betMoney.win();
         }
         return betMoney.lose();
@@ -101,5 +101,9 @@ public abstract class Participant {
 
     public Hand getCards() {
         return hand;
+    }
+
+    public void setBetMoney(String value) {
+        this.betMoney = BetMoney.of(value);
     }
 }
