@@ -7,7 +7,9 @@ public record PlayerGameResult(
         String playerName,
         GameResult gameResult
 ) {
+
     public static PlayerGameResult of(Player player, GameResult gameResult) {
         return new PlayerGameResult(player.getMyName(), gameResult);
     }
+
 }
