@@ -8,7 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class PlayerTest {
-    Player player;
+    private Player player;
 
     @BeforeEach
     void beforeEach() {
@@ -53,5 +53,22 @@ public class PlayerTest {
         player.addCard(new Card(Rank.ACE, Suit.SPADE));  // 11
         player.addCard(new Card(Rank.ACE, Suit.HEART));  // 1
         assertThat(player.getScore()).isEqualTo(12);
+    }
+
+    @DisplayName("점수가 21 이하면 히트할 수 있다")
+    @Test
+    void 점수가_21이하면_히트할_수_있다() {
+        player.addCard(new Card(Rank.KING, Suit.SPADE));  // 10
+        player.addCard(new Card(Rank.FIVE, Suit.HEART));  // 5
+        assertThat(player.canHit()).isTrue();
+    }
+
+    @DisplayName("점수가 22 이상이면 히트할 수 없다")
+    @Test
+    void 점수가_22이상이면_히트할_수_없다() {
+        player.addCard(new Card(Rank.KING, Suit.SPADE));   // 10
+        player.addCard(new Card(Rank.KING, Suit.HEART));   // 10
+        player.addCard(new Card(Rank.TWO, Suit.DIAMOND));  // 2
+        assertThat(player.canHit()).isFalse();
     }
 }

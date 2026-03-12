@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 public class PlayersTest {
 
-    Players players;
+    private Players players;
 
     @BeforeEach
     void beforeEach() {
