@@ -40,16 +40,6 @@ public class PlayerGroups {
         return dealer;
     }
 
-    public Map<String, Integer> getPlayerTotalScore() {
-        Map<String, Integer> scores = new LinkedHashMap<>();
-
-        for (Player player : players) {
-            scores.put(player.getName(), player.getCardSum());
-        }
-
-        return scores;
-    }
-
     public Map<String, WinStatus> getGameResult() {
         Map<String, WinStatus> result = new LinkedHashMap<>();
 
