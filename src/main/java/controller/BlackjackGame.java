@@ -30,9 +30,13 @@ public class BlackjackGame {
 
     public void run() {
         String names = inputView.getNames();
-        List<String> parsedName = InputParser.parseName(names);
+        List<String> parsedNames = InputParser.parseName(names);
 
-        Players players = new Players(parsedName);
+        Players players = new Players(parsedNames
+                .stream()
+                .map(Player::new).toList()
+        );
+
         Dealer dealer = new Dealer(DEALER_NAME);
 
         CardShuffleStrategy cardShuffleStrategy = new RandomShuffleStrategy();

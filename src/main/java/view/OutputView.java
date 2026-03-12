@@ -7,8 +7,7 @@ import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
-import dto.DealerResultInfo;
-import dto.PlayerResultInfo;
+import dto.ParticipantResultInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,8 +33,10 @@ public class OutputView {
 
     public void printGameResult(GameResult gameResult, Dealer dealer) {
         printWinOrLoseMessage();
-        printDealerResult(dealer.name(), gameResult.getDealerResult());
-        printPlayersResult(gameResult.getPlayersResult());
+
+        for (ParticipantResultInfo participantResultInfo : gameResult.participantResultInfos()) {
+            System.out.println(participantResultInfo.name() + ": " + participantResultInfo.profit());
+        }
     }
 
     public void printParticipantCards(Participant participant) {
@@ -85,41 +86,5 @@ public class OutputView {
 
     private void printWinOrLoseMessage() {
         System.out.println(FINAL_WIN_OR_LOSE_MESSAGE);
-    }
-
-    private void printDealerResult(String dealerName, DealerResultInfo dealerResult) {
-        List<String> result = new ArrayList<>();
-
-        if (dealerResult.winCount() > 0) {
-            result.add(dealerResult.winCount() + WIN);
-        }
-        if (dealerResult.tieCount() > 0) {
-            result.add(dealerResult.tieCount() + TIE);
-        }
-        if (dealerResult.loseCount() > 0) {
-            result.add(dealerResult.loseCount() + LOSE);
-        }
-
-        System.out.println(dealerName + ": " + String.join(" ", result));
-    }
-
-    private void printPlayersResult(List<PlayerResultInfo> playersResult) {
-        for (PlayerResultInfo playerResult : playersResult) {
-            printPlayerResult(playerResult);
-        }
-    }
-
-    private void printPlayerResult(PlayerResultInfo playerResult) {
-        if (playerResult.winningStatus() == WinningStatus.WIN) {
-            System.out.println(playerResult.name() + COLON + WIN);
-        }
-
-        if (playerResult.winningStatus() == WinningStatus.TIE) {
-            System.out.println(playerResult.name() + COLON + TIE);
-        }
-
-        if (playerResult.winningStatus() == WinningStatus.LOSE) {
-            System.out.println(playerResult.name() + COLON + LOSE);
-        }
     }
 }

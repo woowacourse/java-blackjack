@@ -1,45 +1,68 @@
 package domain.game;
 
 import domain.participant.Dealer;
+import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
-import dto.DealerResultInfo;
-import dto.PlayerResultInfo;
+import dto.ParticipantResultInfo;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-
-import static java.util.Collections.frequency;
 
 public class GameResult {
-    private final Map<Player, WinningStatus> playerWinningStatus = new LinkedHashMap<>();
+    private final List<ParticipantResultInfo> participantResultInfos = new ArrayList<>();
 
     public GameResult(Players players, Dealer dealer) {
+        addParticipantsResultInfo(players, dealer);
+    }
+
+    public void addParticipantsResultInfo(Players players, Dealer dealer) {
+        BigDecimal playersProfitSum = BigDecimal.ZERO;
         for (Player player : players.getPlayers()) {
-            playerWinningStatus.put(player, WinningStatus.of(player, dealer));
-        }
-    }
+            BigDecimal profit = calculatePlayerProfit(player, dealer);
+            playersProfitSum = playersProfitSum.add(calculatePlayerProfit(player, dealer));
 
-    public List<PlayerResultInfo> getPlayersResult() {
-        List<PlayerResultInfo> result = new ArrayList<>();
-
-        for (Map.Entry<Player, WinningStatus> entry : playerWinningStatus.entrySet()) {
-            String name = entry.getKey().name();
-            WinningStatus status = entry.getValue();
-
-            result.add(new PlayerResultInfo(name, status));
+            participantResultInfos.add(new ParticipantResultInfo(
+                    player.name(), profit
+            ));
         }
 
-        return result;
+        participantResultInfos.add(new ParticipantResultInfo(dealer.name(), playersProfitSum.negate()));
     }
 
-    public DealerResultInfo getDealerResult() {
-        int winCount = frequency(playerWinningStatus.values(), WinningStatus.LOSE);
-        int tieCount = frequency(playerWinningStatus.values(), WinningStatus.TIE);
-        int loseCount = frequency(playerWinningStatus.values(), WinningStatus.WIN);
+    public BigDecimal profit(Participant participant) {
+        System.out.println(participantResultInfo(participant));
+        return participantResultInfo(participant).profit();
+    }
 
-        return new DealerResultInfo(winCount, tieCount, loseCount);
+    public List<ParticipantResultInfo> participantResultInfos() {
+        return participantResultInfos;
+    }
+
+    private BigDecimal calculatePlayerProfit(Player player, Dealer dealer) {
+        WinningStatus winningStatus = WinningStatus.of(player, dealer);
+        BigDecimal betAmount = player.betAmount();
+
+        if (player.isBlackjack() && winningStatus == WinningStatus.WIN) {
+            return betAmount.multiply(BigDecimal.valueOf(1.5));
+        }
+
+        if (winningStatus == WinningStatus.WIN) {
+            return betAmount;
+        }
+
+        if (winningStatus == WinningStatus.TIE) {
+            return BigDecimal.ZERO;
+        }
+
+        return betAmount.negate();
+    }
+
+    private ParticipantResultInfo participantResultInfo(Participant participant) {
+        return participantResultInfos.stream()
+                .filter(participantResultInfo -> participantResultInfo.name().equals(participant.name()))
+                .findFirst()
+                .orElseThrow(IllegalStateException::new);
     }
 }

@@ -21,6 +21,7 @@ public enum WinningStatus {
         if (dealerScore > BLACK_JACK) {
             return WIN;
         }
+
         return compareScore(playerScore, dealerScore);
     }
 
