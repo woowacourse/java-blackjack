@@ -2,7 +2,7 @@ package domain.bet;
 
 import domain.enums.GameResult;
 import domain.participant.Name;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -11,7 +11,7 @@ public class BetProfit {
     private static final int ZERO = 0;
     private static final double BLACKJACK_YIELD = 1.5;
 
-    private final Map<Name, Integer> betProfit = new HashMap<>();
+    private final Map<Name, Integer> betProfit = new LinkedHashMap<>();
 
     public BetProfit(List<Name> playerNames) {
         playerNames.forEach(
