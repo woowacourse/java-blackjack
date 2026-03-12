@@ -9,6 +9,7 @@ public class Constants {
     public static final int HIT_THRESHOLD = 17;
     public static final int BLACKJACK_NUMBER = 21;
     public static final int MAX_LENGTH = 5;
+    public static final int INITIAL_CARD_COUNT = 2;
 
     private Constants() {
     }

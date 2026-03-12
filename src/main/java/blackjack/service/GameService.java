@@ -1,5 +1,7 @@
 package blackjack.service;
 
+import static blackjack.util.constant.Constants.INITIAL_CARD_COUNT;
+
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.GameResult;
@@ -7,8 +9,6 @@ import blackjack.domain.participant.User;
 import blackjack.domain.participant.Users;
 
 public class GameService {
-
-    private static final int INITIAL_CARD_COUNT = 2;
 
     private final Deck deck;
 
