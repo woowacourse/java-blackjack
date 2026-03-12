@@ -88,6 +88,24 @@ public class BlackJackServiceTest {
     }
 
     @Test
+    public void 딜러가_버스트이면서_플레이어가_일반_점수인_경우() {
+        participantBust(dealer);
+
+        Integer profit = blackJackService.getGameResult(new Players(List.of(player)), dealer).dealerWinning().getTotalBet();
+
+        assertThat(profit).isEqualTo(-INITIAL_BET);
+    }
+
+    @Test public void 둘_다_버스트인_경우_정상_작동() {
+        participantBust(player);
+        participantBust(dealer);
+
+        Integer profit = blackJackService.getGameResult(new Players(List.of(player)), dealer).dealerWinning().getTotalBet();
+
+        assertThat(profit).isEqualTo(0);
+    }
+
+    @Test
     public void 둘_다_일반_점수면서_플레이어_점수가_높은_경우_정상_작동() {
         dealer.addCard(new Card(Shape.DIAMOND, CardNumber.QUEEN));
         player.addCard(new Card(Shape.DIAMOND, CardNumber.ACE));
