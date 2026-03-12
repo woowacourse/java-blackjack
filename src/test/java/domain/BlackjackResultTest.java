@@ -32,10 +32,10 @@ class BlackjackResultTest {
         int playerScore = 19;
         GameResult playerResult = GameResult.DRAW;
 
-        if (dealerScore > Policy.BUST_THRESHOLD){
+        if (dealerScore > Policy.BLACKJACK_NUMBER){
             dealerScore = Policy.BUST_SCORE;
         }
-        if (playerScore > Policy.BUST_THRESHOLD){
+        if (playerScore > Policy.BLACKJACK_NUMBER){
             playerScore = Policy.BUST_SCORE;
         }
         if (playerScore > dealerScore) {
@@ -56,10 +56,10 @@ class BlackjackResultTest {
         int playerScore = 22;
         GameResult playerResult = GameResult.DRAW;
 
-        if (dealerScore > Policy.BUST_THRESHOLD){
+        if (dealerScore > Policy.BLACKJACK_NUMBER){
             dealerScore = Policy.BUST_SCORE;
         }
-        if (playerScore > Policy.BUST_THRESHOLD){
+        if (playerScore > Policy.BLACKJACK_NUMBER){
             playerScore = Policy.BUST_SCORE;
         }
         if (playerScore > dealerScore) {

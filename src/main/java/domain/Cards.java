@@ -30,7 +30,6 @@ public class Cards {
         for (int i = 0; i < aceCount; i++) {
             cardScore = adjustForAce(cardScore);
         }
-
         return cardScore;
     }
 
@@ -52,7 +51,7 @@ public class Cards {
     }
 
     public boolean isBust(int score) {
-        return score > Policy.BUST_THRESHOLD;
+        return score > Policy.BLACKJACK_NUMBER;
     }
 
     public int getScoreOrZeroIfBust() {

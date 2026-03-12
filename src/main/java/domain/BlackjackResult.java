@@ -14,8 +14,8 @@ public class BlackjackResult {
     }
 
     public void add(Player player, long betAmount) {
-        if (player.getCards().calculateScore() == 21) {
-            playerBets.put(player, BetResult.withBetAmount((long) (betAmount * 1.5)));
+        if (player.getCards().calculateScore() == Policy.BLACKJACK_NUMBER) {
+            playerBets.put(player, BetResult.withBetAmount((long) (betAmount * Policy.BLACKJACK_MULTIPLIER)));
             return;
         }
         playerBets.put(player, BetResult.withBetAmount(betAmount));
@@ -34,7 +34,7 @@ public class BlackjackResult {
     }
 
     public long dealerProfit() {
-        long dealerProfit = 0;
+        long dealerProfit = Policy.INITIAL_DEALER_PROFIT;
         for (Map.Entry<Player, BetResult> playerBet : playerBets.entrySet()) {
             dealerProfit += playerProfit(playerBet);
         }
