@@ -50,6 +50,6 @@ class ProfitTest {
         Profit negated = profit.negate();
 
         // then
-        assertThat(negated.getAmount()).isEqualTo(0);
+        assertThat(negated.getAmount()).isZero();
     }
 }

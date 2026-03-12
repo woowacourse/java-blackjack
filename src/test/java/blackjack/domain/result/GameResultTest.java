@@ -8,6 +8,7 @@ import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,7 +23,7 @@ class GameResultTest {
         dealer.receiveCard(new Card(Suit.HEART, Rank.TEN));
         dealer.receiveCard(new Card(Suit.SPADE, Rank.EIGHT));
 
-        Player player = new Player("pobi", new BettingMoney(1000));
+        Player player = new Player(new Name("pobi"), new BettingMoney(1000));
         player.receiveCard(new Card(Suit.HEART, Rank.TEN));
         player.receiveCard(new Card(Suit.SPADE, Rank.TEN));
         player.receiveCard(new Card(Suit.CLOVER, Rank.THREE));
@@ -43,7 +44,7 @@ class GameResultTest {
         dealer.receiveCard(new Card(Suit.SPADE, Rank.TEN));
         dealer.receiveCard(new Card(Suit.CLOVER, Rank.THREE));
 
-        Player player = new Player("pobi", new BettingMoney(1000));
+        Player player = new Player(new Name("pobi"), new BettingMoney(1000));
         player.receiveCard(new Card(Suit.HEART, Rank.TEN));
         player.receiveCard(new Card(Suit.SPADE, Rank.EIGHT));
 
@@ -62,7 +63,7 @@ class GameResultTest {
         dealer.receiveCard(new Card(Suit.HEART, Rank.TEN));
         dealer.receiveCard(new Card(Suit.SPADE, Rank.SEVEN));
 
-        Player player = new Player("pobi", new BettingMoney(1000));
+        Player player = new Player(new Name("pobi"), new BettingMoney(1000));
         player.receiveCard(new Card(Suit.HEART, Rank.TEN));
         player.receiveCard(new Card(Suit.SPADE, Rank.NINE));
 
@@ -81,7 +82,7 @@ class GameResultTest {
         dealer.receiveCard(new Card(Suit.HEART, Rank.TEN));
         dealer.receiveCard(new Card(Suit.SPADE, Rank.NINE));
 
-        Player player = new Player("pobi", new BettingMoney(1000));
+        Player player = new Player(new Name("pobi"), new BettingMoney(1000));
         player.receiveCard(new Card(Suit.HEART, Rank.TEN));
         player.receiveCard(new Card(Suit.SPADE, Rank.SEVEN));
 
@@ -100,7 +101,7 @@ class GameResultTest {
         dealer.receiveCard(new Card(Suit.HEART, Rank.TEN));
         dealer.receiveCard(new Card(Suit.SPADE, Rank.EIGHT));
 
-        Player player = new Player("pobi", new BettingMoney(1000));
+        Player player = new Player(new Name("pobi"), new BettingMoney(1000));
         player.receiveCard(new Card(Suit.HEART, Rank.TEN));
         player.receiveCard(new Card(Suit.SPADE, Rank.EIGHT));
 
@@ -119,7 +120,7 @@ class GameResultTest {
         dealer.receiveCard(new Card(Suit.HEART, Rank.TEN));
         dealer.receiveCard(new Card(Suit.SPADE, Rank.EIGHT));
 
-        Player player = new Player("pobi", new BettingMoney(1000));
+        Player player = new Player(new Name("pobi"), new BettingMoney(1000));
         player.receiveCard(new Card(Suit.HEART, Rank.ACE));
         player.receiveCard(new Card(Suit.SPADE, Rank.KING));
 
@@ -138,7 +139,7 @@ class GameResultTest {
         dealer.receiveCard(new Card(Suit.HEART, Rank.ACE));
         dealer.receiveCard(new Card(Suit.SPADE, Rank.KING));
 
-        Player player = new Player("pobi", new BettingMoney(1000));
+        Player player = new Player(new Name("pobi"), new BettingMoney(1000));
         player.receiveCard(new Card(Suit.CLOVER, Rank.ACE));
         player.receiveCard(new Card(Suit.DIAMOND, Rank.KING));
 
@@ -185,7 +186,7 @@ class GameResultTest {
         int profit = GameResult.DRAW.calculateProfit(bettingMoney).getAmount();
 
         // then
-        assertThat(profit).isEqualTo(0);
+        assertThat(profit).isZero();
     }
 
     @Test

@@ -24,8 +24,8 @@ class PlayersTest {
     void constructor_throwsException_whenDuplicateNames() {
         // given
         List<Player> duplicated = List.of(
-                new Player("pobi", new BettingMoney(1000)),
-                new Player("pobi", new BettingMoney(1000))
+                new Player(new Name("pobi"), new BettingMoney(1000)),
+                new Player(new Name("pobi"), new BettingMoney(1000))
         );
 
         // when & then
@@ -38,7 +38,7 @@ class PlayersTest {
     @DisplayName("플레이어가 1명이면 생성에 성공한다")
     void constructor_succeeds_whenOnePlayer() {
         // given
-        List<Player> players = List.of(new Player("pobi", new BettingMoney(1000)));
+        List<Player> players = List.of(new Player(new Name("pobi"), new BettingMoney(1000)));
 
         // when
         Players result = new Players(players);
