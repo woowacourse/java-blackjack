@@ -1,9 +1,8 @@
-import domain.GameResult;
+import domain.BlackjackResult;
 import domain.deck.CardDeck;
 import domain.player.Dealer;
 import domain.player.Gambler;
 import domain.player.Gamblers;
-import dto.BlackjackResult;
 import dto.PlayerCardInfo;
 import java.util.List;
 import parser.AmountParser;
@@ -121,10 +120,8 @@ public class BlackJack {
     private void printFinalResult(Dealer dealer, Gamblers gamblers) {
         OutputView.printFinalResultHeader();
 
-        GameResult gameResult = GameResult.from(dealer, gamblers);
-        BlackjackResult blackjackResult = BlackjackResult.from(gameResult);
+        BlackjackResult blackjackResult = BlackjackResult.from(dealer, gamblers);
 
-        OutputView.printResult(blackjackResult);
+        OutputView.printResult(dealer.getName(), blackjackResult);
     }
-
 }

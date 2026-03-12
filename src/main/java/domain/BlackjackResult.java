@@ -5,22 +5,22 @@ import domain.player.Gamblers;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class GameResult {
+public class BlackjackResult {
 
     private static final int DEALER_PROFIT_INVERSION = -1;
 
     private final Map<String, Integer> gamblerProfits;
     private final int dealerProfit;
 
-    private GameResult(Map<String, Integer> gamblerProfits, int dealerProfit) {
+    private BlackjackResult(Map<String, Integer> gamblerProfits, int dealerProfit) {
         this.gamblerProfits = gamblerProfits;
         this.dealerProfit = dealerProfit;
     }
 
-    public static GameResult from(Dealer dealer, Gamblers gamblers) {
+    public static BlackjackResult from(Dealer dealer, Gamblers gamblers) {
         Map<String, Integer> profits = calculateGamblerProfits(dealer, gamblers);
         int dealerProfit = calculateDealerProfit(profits);
-        return new GameResult(profits, dealerProfit);
+        return new BlackjackResult(profits, dealerProfit);
     }
 
     private static Map<String, Integer> calculateGamblerProfits(Dealer dealer, Gamblers gamblers) {

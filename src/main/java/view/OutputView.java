@@ -1,6 +1,6 @@
 package view;
 
-import dto.BlackjackResult;
+import domain.BlackjackResult;
 import dto.PlayerCardInfo;
 import java.util.List;
 import java.util.Map;
@@ -58,8 +58,8 @@ public class OutputView {
         System.out.println("## 최종 수익");
     }
 
-    public static void printResult(BlackjackResult result) {
-        System.out.println("딜러: " + result.dealerProfit());
+    public static void printResult(String dealerName, BlackjackResult result) {
+        System.out.println(dealerName + ": " + result.dealerProfit());
         for (Map.Entry<String, Integer> entry : result.gamblerProfits().entrySet()) {
             System.out.println(entry.getKey() + ": " + entry.getValue());
         }

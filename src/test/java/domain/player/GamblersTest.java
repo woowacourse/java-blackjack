@@ -3,12 +3,11 @@ package domain.player;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.GameResult;
+import domain.BlackjackResult;
 import domain.StubDeck;
 import domain.card.Card;
 import domain.card.CardRank;
 import domain.card.CardSuit;
-import dto.BlackjackResult;
 import expcetion.BlackjackException;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -52,10 +51,8 @@ class GamblersTest {
         dealer.deal(sd);
         gamblers.dealAll(sd);
 
-        GameResult gameResult = GameResult.from(dealer,gamblers);
-
         //when
-        BlackjackResult result = BlackjackResult.from(gameResult);
+        BlackjackResult result = BlackjackResult.from(dealer,gamblers);
 
         //then
         assertThat(result.dealerProfit()).isEqualTo(-10000);
