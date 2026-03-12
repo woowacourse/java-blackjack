@@ -5,6 +5,9 @@ import java.util.List;
 
 public class InputView {
 
+    public InputView() {
+    }
+
     public List<String> readPlayersName() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String playersName = Console.readLine();
@@ -15,8 +18,19 @@ public class InputView {
         }
     }
 
-    public String readMoreCard(String userName) {
-        System.out.println(userName + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+    public Integer readBettingAmount(String playerName) {
+        System.out.println();
+        System.out.println(playerName + "의 베팅 금액은?");
+        String bettingAmount = Console.readLine();
+        try {
+            return Integer.parseInt(bettingAmount);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("베팅 금액은 숫자로만 입력하세요.");
+        }
+    }
+
+    public String readMoreCard(String playerName) {
+        System.out.println(playerName + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         return Console.readLine();
     }
 
