@@ -1,7 +1,6 @@
-package meesage;
+package view.mesage;
 
 public enum OutputMessage {
-
     DEAL_INITIAL_CARDS("딜러와 %s에게 2장을 나누었습니다."),
     DELIMITER(", "),
     PARTICIPANT_CARDS("%s카드: %s"),
@@ -18,8 +17,6 @@ public enum OutputMessage {
     OutputMessage(String message) {
         this.message = message;
     }
-
-    public String format(Object... args) {return String.format(message, args);}
 
     public String getMessage() {
         return message;

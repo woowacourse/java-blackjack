@@ -1,11 +1,12 @@
 package domain;
 
+import domain.shuffle.CardShuffleStrategy;
+
 import static java.util.Arrays.*;
 
 import java.util.stream.Stream;
 
 public class Deck {
-
     private final Cards cards;
 
     private Deck(CardShuffleStrategy shuffleStrategy) {

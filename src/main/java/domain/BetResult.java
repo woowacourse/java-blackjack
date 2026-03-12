@@ -9,7 +9,7 @@ public class BetResult {
         this.gameResult = gameResult;
     }
 
-    public static BetResult withBetAmount(Long betAmount){
+    public static BetResult withBetAmount(Long betAmount) {
         return new BetResult(betAmount, null);
     }
 

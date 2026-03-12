@@ -22,7 +22,7 @@ public class Player {
         return cards.isBust(cards.calculateScore());
     }
 
-    public int getScoreOrZeroIfBust(){
+    public int getScoreOrZeroIfBust() {
         return cards.getScoreOrZeroIfBust();
     }
 

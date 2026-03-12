@@ -4,8 +4,9 @@ import domain.*;
 
 import java.util.List;
 
-import meesage.ErrorMessage;
-import meesage.InputMessage;
+import domain.shuffle.RandomCardStrategy;
+import view.mesage.ErrorMessage;
+import view.mesage.InputMessage;
 import utils.InputParser;
 import view.InputView;
 import view.OutputView;

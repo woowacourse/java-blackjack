@@ -1,7 +1,6 @@
-package meesage;
+package view.mesage;
 
 public enum ErrorMessage {
-
     EMPTY_NAME_INPUT("[ERROR] 사용자 이름은 공백을 입력할 수 없습니다."),
     INVALID_NAMES_EMPTY("[ERROR] 하나 이상의 사용자 이름을 입력하세요."),
     INVALID_NAMES_EXCEED_LIMIT("[ERROR] 25명 이하의 사용자 이름을 입력하세요."),

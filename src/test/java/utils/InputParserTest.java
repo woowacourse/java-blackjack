@@ -3,7 +3,7 @@ package utils;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;
-import meesage.ErrorMessage;
+import view.mesage.ErrorMessage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

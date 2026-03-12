@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Players {
-
     private final List<Player> players;
 
     private Players(Deck deck, List<String> userNames) {

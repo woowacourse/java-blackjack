@@ -1,7 +1,7 @@
 package view;
 
 import domain.*;
-import meesage.OutputMessage;
+import view.mesage.OutputMessage;
 
 import java.util.List;
 import java.util.Map;
