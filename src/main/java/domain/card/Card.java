@@ -13,11 +13,15 @@ public class Card {
         return rank.equals(Rank.ACE);
     }
 
-    public String name() {
-        return rank.getTitle() + suit.getSymbol();
+    public Rank rank() {
+        return rank;
+    }
+
+    public Suit suit() {
+        return suit;
     }
 
     public int score() {
-        return rank.getValue();
+        return rank.value();
     }
 }

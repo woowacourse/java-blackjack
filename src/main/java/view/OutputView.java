@@ -8,7 +8,6 @@ import domain.participant.Player;
 import domain.participant.Players;
 import dto.DealerResultInfo;
 import dto.PlayerResultInfo;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,8 +65,7 @@ public class OutputView {
 
     private void printDealerInitialCard(Dealer dealer) {
         Card firstCard = dealer.getFirstCard();
-        String dealerCard = firstCard.name();
-        System.out.println(DEALER_CARD_PREFIX + dealerCard);
+        System.out.println(DEALER_CARD_PREFIX + CardFormatter.format(firstCard));
     }
 
     private void printPlayersInitialCards(Players players) {
@@ -78,14 +76,12 @@ public class OutputView {
 
     private String formatParticipantCards(Participant participant) {
         List<String> cards = new ArrayList<>();
-
         for (Card card : participant.getAllCards()) {
-            cards.add(card.name());
+            cards.add(CardFormatter.format(card));
         }
+        String PossessedCards = String.join(COMMA, cards);
 
-        String joinedCards = String.join(COMMA, cards);
-
-        return String.format(CARD_MESSAGE, participant.name(), joinedCards);
+        return String.format(CARD_MESSAGE, participant.name(), PossessedCards);
     }
 
     public void printWinOrLoseMessage() {
