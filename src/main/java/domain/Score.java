@@ -9,6 +9,10 @@ public class Score {
         this.value = value;
     }
 
+    public boolean isBlackjack() {
+        return isEqualTo(Rank.BLACKJACK_MAX_SCORE);
+    }
+
     public boolean isBust() {
         return isGreaterThan(Rank.BLACKJACK_MAX_SCORE);
     }

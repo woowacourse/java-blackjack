@@ -29,6 +29,14 @@ public class Hand {
         return cards.getFirst();
     }
 
+    public boolean isBlackjack() {
+        return cards.size() == 2 && totalSum().isBlackjack();
+    }
+
+    public boolean isBust() {
+        return totalSum().isBust();
+    }
+
     public int size() {
         return cards.size();
     }

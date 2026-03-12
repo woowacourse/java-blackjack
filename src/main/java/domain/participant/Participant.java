@@ -27,8 +27,12 @@ public abstract class Participant {
         }
     }
 
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
+    }
+
     public boolean isBust() {
-        return hand.totalSum().isBust();
+        return hand.isBust();
     }
 
     public void addCard(Card card) {
