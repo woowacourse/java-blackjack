@@ -1,7 +1,7 @@
 package domain.result;
 
 import static domain.WinningStatus.WIN;
-import static util.TestUtil.createResult;
+import static util.TestUtil.createAmount10000Result;
 
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
@@ -30,7 +30,7 @@ class ResultsTest {
     @Test
     void 베팅_리스트로_생성이_가능하다() {
         // given
-        Results results = new Results(List.of(createResult("봉구스", WIN), createResult("시오", WIN)));
+        Results results = new Results(List.of(createAmount10000Result("봉구스", WIN), createAmount10000Result("시오", WIN)));
 
         // when, then
         Assertions.assertEquals(2, results.results().size());
@@ -42,7 +42,7 @@ class ResultsTest {
         Results results = new Results();
 
         // when
-        Results newResults = results.addResult(createResult("봉구스", WIN));
+        Results newResults = results.addResult(createAmount10000Result("봉구스", WIN));
 
         // then
         Assertions.assertEquals(1, newResults.results().size());
