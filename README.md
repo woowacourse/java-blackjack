@@ -310,6 +310,23 @@ SRP를 완벽히 지킨 것입니다.
 ## 🧪 구현
 
 - [x] 배팅금 `private final int bettingAmount`
+    - [x] 베팅금을 플레이어 팩토리 메서드에 추가
+        - `public static Player from(String nickname, int bettingAmount)`
+    - [x] 어떻게 유효성을 검증할 것인가?
+        - 뷰 단에서 닉네임과 배팅금의 유효성 1차 검증
+        - 교차 검증이 있어서 나쁠 것은 없다.
+        - 왜? `도메인은 자율적이어야 한다.`  
+          자신의 상태는 자신이 철저히 통제하고 방어해야 한다  
+          뷰가 정상적인 값을 보내주기를 기대하지만 말고 스스로 대응책을 마련
+        - 언제, 어디서, 어떤, 모든 접근 시도에 대해서 완벽한 유효성을 보장해야
+        - 다만, 현재 닉네임은 참가자 클래스단에서 검증
+        - 배팅금 제약조건은 명시되지 않았으니 일단은 유효한 값인지만
+        - 양수여야 한다는 규칙을 뷰가 알 필요가?
+    - [x] 어떤 예외를 처리할 것인가?
+        - 배팅금을 입력하지 않음 - `readPlayerBettingAmount`
+        - 배팅금이 숫자가 아님 - `readPlayerBettingAmount`
+        - 배팅금이 0 - `validateBettingAmount`
+        - 배팅금이 음수 - `validateBettingAmount`
 - [ ] 수익금 `public int calculateProfit(GameResult result)`
 - [ ] 딜러 수익금 계산 `public int determineProfit(List<Player> players)`
 - [ ] 참가자 수익금 계산 `record ParticipantsProfit(String nickname, int profit)`
