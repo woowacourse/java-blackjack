@@ -7,7 +7,7 @@ public record DrawResult(
     PlayingCards drewDeck
 ) {
 
-    public static DrawResult of(PlayingCards drewCards, PlayingCards playingCards) {
-        return new DrawResult(drewCards, playingCards);
+    public static DrawResult of(PlayingCards drewCard, PlayingCards drewDeck) {
+        return new DrawResult(drewCard, drewDeck);
     }
 }
