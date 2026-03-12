@@ -2,23 +2,24 @@ package domain;
 
 import common.ErrorMessage;
 import dto.ParticipantDto;
+import dto.PlayerResultDto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
-public class Players {
+public class MultiPlayers {
     private static final int MAX_PLAYER_NUMBER = 5;
 
     private final List<Player> players;
 
-    private Players(List<Player> players) {
+    private MultiPlayers(List<Player> players) {
         this.players = players;
     }
 
-    public static Players of(List<String> playerNames, Deck totalDeck) {
-        return new Players(
+    public static MultiPlayers of(List<String> playerNames, Deck totalDeck) {
+        return new MultiPlayers(
                 new ArrayList<>(createPlayers(playerNames, totalDeck))
         );
     }
@@ -68,6 +69,12 @@ public class Players {
         return players.stream()
                 .map(ParticipantDto::consistWithInitialInfo)
                 .toList();
+    }
+
+    public List<PlayerResultDto> checkPlayersGameResult(Dealer dealer) {
+        return players.stream().map(
+                player -> PlayerResultDto.from(player, dealer)
+        ).toList();
     }
 
     private Player applyAction(Player player, UnaryOperator<Player> action) {
