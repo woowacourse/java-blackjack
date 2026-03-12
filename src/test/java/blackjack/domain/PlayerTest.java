@@ -147,4 +147,12 @@ public class PlayerTest {
 
         assertThat(player.isBlackjack()).isFalse();
     }
+
+    @Test
+    void 플레이어의_배팅금액_값을_가져온다() {
+        Player player = Player.of(Name.of("handa"));
+        Player playerWithBet = player.withBetAmount(BetAmount.of(3000));
+
+        assertThat(playerWithBet.betAmount().money()).isEqualTo(3000);
+    }
 }
