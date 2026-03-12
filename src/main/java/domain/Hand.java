@@ -44,11 +44,11 @@ public class Hand {
         return getSum() > BLACKJACK_NUMBER;
     }
 
-    public boolean isLessThanBlackJack(){
+    public boolean isLessThanBlackJack() {
         return getSum() < BLACKJACK_NUMBER;
     }
 
-    public int getSize(){
+    public int getSize() {
         return cards.size();
     }
 
@@ -56,7 +56,7 @@ public class Hand {
         cards.add(card);
     }
 
-    public Card getFirstCard(){
+    public Card getFirstCard() {
         return cards.getFirst();
     }
 

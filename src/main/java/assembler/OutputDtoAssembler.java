@@ -34,8 +34,8 @@ public class OutputDtoAssembler {
                                                                   List<Player> players) {
         return new BlackJackInitStatusDto(toDealerInitHandDto(dealer),
                 players.stream()
-                .map(OutputDtoAssembler::toPlayerHandDto)
-                .toList());
+                        .map(OutputDtoAssembler::toPlayerHandDto)
+                        .toList());
     }
 
     public static FinalResultDto toFinalResultDto(Dealer dealer,
@@ -46,7 +46,7 @@ public class OutputDtoAssembler {
         return new FinalResultDto(scoreResultDtos, bettingTable.calculateDealerProfit(), playerMoneyMap);
     }
 
-    private static Map<String, Long> convertPlayerMoneyMap(BettingTable bettingTable){
+    private static Map<String, Long> convertPlayerMoneyMap(BettingTable bettingTable) {
         Map<Player, Money> moneyTable = bettingTable.getMoneyTable();
         Map<String, Long> playerMoneyMap = new LinkedHashMap<>();
         for (Map.Entry<Player, Money> entry : moneyTable.entrySet()) {

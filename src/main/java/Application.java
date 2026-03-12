@@ -1,7 +1,4 @@
 import controller.BlackJackController;
-import domain.Deck;
-
-import java.util.function.Supplier;
 
 public class Application {
 

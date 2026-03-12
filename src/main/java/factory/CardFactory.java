@@ -11,7 +11,7 @@ import java.util.List;
 public class CardFactory {
     public static List<Card> createDeck() {
         List<Card> cards = new ArrayList<>();
-        for(Suit suit : Suit.values()) {
+        for (Suit suit : Suit.values()) {
             for (Rank rank : Rank.values()) {
                 cards.add(new Card(suit, rank));
             }

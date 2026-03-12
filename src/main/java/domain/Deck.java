@@ -2,10 +2,8 @@ package domain;
 
 import domain.card.Card;
 import exception.ErrorMessage;
-import factory.CardFactory;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Deck {
@@ -20,7 +18,7 @@ public class Deck {
         return cards.removeFirst();
     }
 
-    public int getCardsSize(){
+    public int getCardsSize() {
         return cards.size();
     }
 

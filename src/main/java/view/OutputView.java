@@ -45,12 +45,12 @@ public class OutputView {
         printScoreResult(finalResultDto);
         System.out.println(FINAL_RESULT_HEADER);
         System.out.println(FINAL_RESULT_DEALER + finalResultDto.dealerProfit());
-        for(Map.Entry<String, Long> entry : finalResultDto.playerResults().entrySet()){
+        for (Map.Entry<String, Long> entry : finalResultDto.playerResults().entrySet()) {
             System.out.println(entry.getKey() + ": " + entry.getValue());
         }
     }
 
-    private static void printScoreResult(FinalResultDto finalResultDto){
+    private static void printScoreResult(FinalResultDto finalResultDto) {
         System.out.println();
         for (ScoreResultDto dto : finalResultDto.scoreResultDtos()) {
             String name = dto.handDto().name();

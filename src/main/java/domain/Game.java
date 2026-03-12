@@ -11,7 +11,7 @@ public class Game {
     private final Dealer dealer;
     private final Deck deck;
 
-    public Game(List<String> playerNames, Deck deck){
+    public Game(List<String> playerNames, Deck deck) {
         validateDuplicate(playerNames);
 
         this.deck = deck;
@@ -21,14 +21,15 @@ public class Game {
                 .toList();
         initCards();
     }
-    private static void validateDuplicate(List<String> playerNames){
+
+    private static void validateDuplicate(List<String> playerNames) {
         Set<String> set = new HashSet<>(playerNames);
-        if(set.size() != playerNames.size()){
+        if (set.size() != playerNames.size()) {
             throw new IllegalArgumentException(ErrorMessage.DUPLICATE_NAME.getMessage());
         }
     }
 
-    private void initCards(){
+    private void initCards() {
         players.forEach(player -> {
             player.draw(deck.drawCard());
             player.draw(deck.drawCard());
@@ -37,9 +38,9 @@ public class Game {
         dealer.draw(deck.drawCard());
     }
 
-    public void settleRoundBets(Judge judge, BettingTable bettingTable){
-        for(Player player : players){
-            bettingTable.settleBet(player,judge.getPlayerResult(player));
+    public void settleRoundBets(Judge judge, BettingTable bettingTable) {
+        for (Player player : players) {
+            bettingTable.settleBet(player, judge.getPlayerResult(player));
         }
     }
 
@@ -55,11 +56,11 @@ public class Game {
         return dealer.shouldHit();
     }
 
-    public int getPlayerHandSize(Player player){
+    public int getPlayerHandSize(Player player) {
         return player.getHandSize();
     }
 
-    public int getDealerHandSize(){
+    public int getDealerHandSize() {
         return dealer.getHandSize();
     }
 

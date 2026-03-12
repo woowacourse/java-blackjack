@@ -21,28 +21,28 @@ public class InputView {
                 .map(String::trim)
                 .collect(Collectors.toList());
 
-        for(String input : inputs){
+        for (String input : inputs) {
             validateInput(input);
         }
         return inputs;
     }
 
-    public static String askPlayerBettingMoney(String name){
+    public static String askPlayerBettingMoney(String name) {
         System.out.printf(BETTING_FORMAT, name);
         return sc.nextLine();
     }
 
-    public static String askPlayerCommand(String name){
+    public static String askPlayerCommand(String name) {
         System.out.printf(YN_FORMAT, name);
         String input = sc.nextLine();
-        if(input.equals("y") || input.equals("n")){
+        if (input.equals("y") || input.equals("n")) {
             return input;
         }
         throw new IllegalArgumentException(ErrorMessage.INVALID_YN.getMessage());
     }
 
     private static void validateInput(String input) {
-        if (input == null || input.isBlank()){
+        if (input == null || input.isBlank()) {
             throw new IllegalArgumentException(ErrorMessage.EMPTY_NAME.getMessage());
         }
     }

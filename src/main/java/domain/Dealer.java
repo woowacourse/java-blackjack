@@ -8,7 +8,7 @@ public class Dealer {
     private static final int HIT_LIMIT = 17;
     private final Hand hand;
 
-    public Dealer(){
+    public Dealer() {
         hand = new Hand();
     }
 
@@ -16,15 +16,15 @@ public class Dealer {
         return hand.isBurst();
     }
 
-    public void draw(Card card){
+    public void draw(Card card) {
         hand.addCard(card);
     }
 
-    public List<Card> getCards(){
+    public List<Card> getCards() {
         return hand.getCards();
     }
 
-    public Card getFirstCard(){
+    public Card getFirstCard() {
         return hand.getFirstCard();
     }
 
@@ -32,7 +32,7 @@ public class Dealer {
         return hand.getSum() < HIT_LIMIT;
     }
 
-    public int getHandSize(){
+    public int getHandSize() {
         return hand.getSize();
     }
 

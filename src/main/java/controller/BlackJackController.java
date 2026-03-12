@@ -16,7 +16,7 @@ public class BlackJackController {
         Game game = createGame();
         BettingTable bettingTable = createBettingTable(game);
         OutputView.printInitMessage(OutputDtoAssembler
-                .toBlackJackInitStatusDto(game.getDealer(),game.getPlayers()));
+                .toBlackJackInitStatusDto(game.getDealer(), game.getPlayers()));
 
         playPlayers(game);
         playDealer(game);
@@ -24,29 +24,29 @@ public class BlackJackController {
         Judge judge = createJudge(game);
         game.settleRoundBets(judge, bettingTable);
         OutputView.printFinalResult(OutputDtoAssembler
-                .toFinalResultDto(game.getDealer(),game.getPlayers(), bettingTable));
+                .toFinalResultDto(game.getDealer(), game.getPlayers(), bettingTable));
     }
 
-    private void playPlayers(Game game){
-        for(Player player : game.getPlayers()){
+    private void playPlayers(Game game) {
+        for (Player player : game.getPlayers()) {
             playPlayer(game, player);
         }
     }
 
-    private void playPlayer(Game game, Player player){
+    private void playPlayer(Game game, Player player) {
         boolean hasPrintHand = false;
 
-        while(player.canHit() && wantsToHit(player, hasPrintHand)){
+        while (player.canHit() && wantsToHit(player, hasPrintHand)) {
             game.hitPlayer(player);
             OutputView.printHandOutput(OutputDtoAssembler.toPlayerHandDto(player));
             hasPrintHand = true;
         }
     }
 
-    private boolean wantsToHit(Player player, boolean hasPrintHand){
+    private boolean wantsToHit(Player player, boolean hasPrintHand) {
         String yesNoInput = InputView.askPlayerCommand(player.getName());
 
-        if(yesNoInput.equals("n")){
+        if (yesNoInput.equals("n")) {
             printHandIfFirstTurn(player, hasPrintHand);
             return false;
         }
@@ -59,28 +59,28 @@ public class BlackJackController {
         }
     }
 
-    private void playDealer(Game game){
-        while(game.dealerShouldHit()){
+    private void playDealer(Game game) {
+        while (game.dealerShouldHit()) {
             OutputView.printDealerHitMessage();
             game.hitDealer();
         }
     }
 
-    private Game createGame(){
+    private Game createGame() {
         List<String> playerNames = InputView.askPlayerNames();
         return new Game(playerNames, new Deck(CardFactory.createDeck()));
     }
 
-    private Judge createJudge(Game game){
+    private Judge createJudge(Game game) {
         return Judge.from(game.getDealer(), game.getPlayers());
     }
 
-    private BettingTable createBettingTable(Game game){
+    private BettingTable createBettingTable(Game game) {
         Map<Player, Money> moneyTable = new LinkedHashMap<>();
-        for(Player player : game.getPlayers()){
+        for (Player player : game.getPlayers()) {
             String moneyInput = InputView.askPlayerBettingMoney(player.getName());
             Money money = new Money(moneyInput);
-            moneyTable.put(player,money);
+            moneyTable.put(player, money);
         }
         return new BettingTable(moneyTable);
     }
