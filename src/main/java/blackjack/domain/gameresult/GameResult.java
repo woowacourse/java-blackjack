@@ -35,15 +35,19 @@ public enum GameResult {
             return WIN;
         }
 
-        int playerScore = player.getScore().getScore();
-        int dealerScore = dealer.getScore().getScore();
-        if (playerScore< dealerScore) {
+        return judgeScoreResult(player, dealer);
+    }
+
+    private static GameResult judgeScoreResult(Player player, Dealer dealer) {
+        Score playerScore = player.getScore();
+        Score dealerScore = dealer.getScore();
+        if (playerScore.isGreaterThan(dealerScore)) {
+            return WIN;
+        }
+        if (dealerScore.isGreaterThan(playerScore)) {
             return LOSE;
         }
-        if (playerScore == dealerScore) {
-            return DRAW;
-        }
-        return WIN;
+        return DRAW;
     }
 
     public String getStatus() {
