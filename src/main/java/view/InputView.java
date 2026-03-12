@@ -16,6 +16,7 @@ public class InputView {
     private static final String NO = "n";
     public static final String ONE_MORE_CARD_MESSAGE = "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     public static final String DELIMITER = ",";
+    public static final int ZERO = 0;
 
     public List<String> getParsedNames() {
         System.out.println(PARTICIPANT_NAME_MESSAGE);
@@ -65,8 +66,15 @@ public class InputView {
 
         try {
             int amount = Integer.parseInt(strippedInput);
+            validateNegativeAmount(amount);
             return new Money(amount);
         } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    private static void validateNegativeAmount(int amount) {
+        if (amount <= ZERO) {
             throw new IllegalArgumentException();
         }
     }

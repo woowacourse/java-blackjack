@@ -51,4 +51,10 @@ class InputViewTest {
         assertThatThrownBy(() -> inputView.parseMoney("abc123"))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    void 입력한_돈이_음수인_경우_예외를_발생한다() {
+        assertThatThrownBy(() -> inputView.parseMoney("-100"))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }
