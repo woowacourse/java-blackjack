@@ -1,6 +1,7 @@
 package domain;
 
 import common.ErrorMessage;
+import domain.state.GameState;
 import dto.ParticipantDto;
 import dto.PlayerResultDto;
 import java.util.ArrayList;
@@ -35,7 +36,10 @@ public class MultiPlayers {
 
     private static Player createNewPlayer(Deck totalDeck, String name) {
         List<Card> twoCards = totalDeck.drawTwoCards();
-        return Player.from(name, Hand.of(twoCards.get(0), twoCards.get(1)));
+        Hand newPlayerHand = Hand.of(twoCards.get(0), twoCards.get(1));
+        return Player.from(
+                name,
+                GameState.createPlayerInitialGameState(newPlayerHand));
     }
 
     private static void validateNameUniqueness(List<String> playerNames) {
@@ -73,7 +77,7 @@ public class MultiPlayers {
 
     public List<PlayerResultDto> checkPlayersGameResult(Dealer dealer) {
         return players.stream().map(
-                player -> PlayerResultDto.from(player, dealer)
+                player -> PlayerResultDto.from(player, dealer.gameState)
         ).toList();
     }
 

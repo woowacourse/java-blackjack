@@ -9,6 +9,7 @@ public enum ErrorMessage {
     NAME_UNIQUENESS_ERR("이름은 중복되면 안됩니다"),
     PLAYER_NOT_FOUND("해당 플레이어를 찾을 수 없습니다"),
     NO_MORE_PLAYABLE_PLAYER("더 이상 게임을 진행할 수 있는 플레이어가 없습니다."),
+    NOT_ALLOW_METHOD_CALL("현재 상태에서 허용되지 않는 메소드 호출입니다"),
     MAX_PLAYER_ERROR("최대 인원을 초과했습니다.");
 
     private final String message;

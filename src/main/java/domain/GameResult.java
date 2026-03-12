@@ -1,28 +1,30 @@
 package domain;
 
+import domain.state.GameState;
+
 public enum GameResult {
     승, 무, 패;
 
-    public static GameResult decidePlayerResult(Dealer dealer, Player player) {
-        if (player.isBust()) {
+    public static GameResult decidePlayerResult(GameState playerGameState, GameState dealerGameState) {
+        if (playerGameState.isBust()) {
             return GameResult.패;
         }
-        if (dealer.isBust()) {
+        if (dealerGameState.isBust()) {
             return GameResult.승;
         }
-        if (player.isBlackJack() && dealer.isBlackJack()) {
+        if (playerGameState.isBlackJack() && dealerGameState.isBlackJack()) {
             return GameResult.무;
         }
-        if (player.isBlackJack()) {
+        if (playerGameState.isBlackJack()) {
             return GameResult.승;
         }
-        if (dealer.isBlackJack()) {
+        if (dealerGameState.isBlackJack()) {
             return GameResult.패;
         }
-        return compareScoreForCheckPlayerResult(dealer.getOwnCardsSum(), player.getOwnCardsSum());
+        return compareScoreForCheckPlayerResult(playerGameState.getCardsSum(), dealerGameState.getCardsSum());
     }
 
-    private static GameResult compareScoreForCheckPlayerResult(int dealerScore, int playerScore) {
+    private static GameResult compareScoreForCheckPlayerResult(int playerScore, int dealerScore) {
         if (dealerScore > playerScore) {
             return GameResult.패;
         }

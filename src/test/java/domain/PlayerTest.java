@@ -1,8 +1,11 @@
 package domain;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import common.ErrorMessage;
+import domain.state.GameState;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -24,7 +27,7 @@ class PlayerTest {
         String name = "pobi";
 
         assertDoesNotThrow(
-                () -> Player.from(name, playerHand)
+                () -> Player.from(name, GameState.createPlayerInitialGameState(playerHand))
         );
     }
 
@@ -43,7 +46,10 @@ class PlayerTest {
         Supplier<Card> onlyTwoTenCardSupplier = onlyTwoTenCards::poll;
 
         String testName = "gump";
-        Player testPlayerWhoHoldTotal15Cards = Player.from(testName, playerHand);
+        Player testPlayerWhoHoldTotal15Cards = Player.from(
+                testName,
+                GameState.createPlayerInitialGameState(playerHand)
+        );
 
         @Test
         @DisplayName("hit 할 수 있는 상태이면 hit를 진행한다")
@@ -62,16 +68,16 @@ class PlayerTest {
         }
 
         @Test
-        @DisplayName("hit 할 수 없는 상태이면 카드 뽑기를 내부적으로 진행하지 않는다")
+        @DisplayName("hit 할 수 없는 상태이면 카드 뽑기를 내부적으로 카드를 뽑지 못하도록 오류를 던진다")
         void hit_do_not() {
             //given
             testPlayerWhoHoldTotal15Cards = testPlayerWhoHoldTotal15Cards.hit(onlyTwoTenCardSupplier);
 
             //when
-            testPlayerWhoHoldTotal15Cards = testPlayerWhoHoldTotal15Cards.hit(onlyTwoTenCardSupplier);
-
-            //then
-            Assertions.assertThat(onlyTwoTenCardSupplier.get()).isNotNull();
+            assertThatThrownBy(
+                    () -> testPlayerWhoHoldTotal15Cards.hit(onlyTwoTenCardSupplier)
+            ).isInstanceOf(IllegalStateException.class)
+                    .hasMessage(ErrorMessage.NOT_ALLOW_METHOD_CALL.getMessage());
         }
 
         @Test
@@ -83,7 +89,10 @@ class PlayerTest {
                     new Card(CardShape.클로버, CardContents.TEN)
             );
             String testName = "gump";
-            Player testPlayer = Player.from(testName, playerHand);
+            Player testPlayer = Player.from(
+                    testName,
+                    GameState.createPlayerInitialGameState(playerHand)
+            );
             testPlayer.hit(onlyTwoTenCardSupplier);
 
             //when
@@ -103,7 +112,10 @@ class PlayerTest {
                 new Card(CardShape.클로버, CardContents.FIVE)
         );
         String testName = "gump";
-        Player testPlayer = Player.from(testName, playerHand);
+        Player testPlayer = Player.from(
+                testName,
+                GameState.createPlayerInitialGameState(playerHand)
+        );
 
         //when
         testPlayer = testPlayer.stand();
@@ -125,11 +137,14 @@ class PlayerTest {
                 new Card(CardShape.스페이드, CardContents.TWO),
                 new Card(CardShape.클로버, CardContents.THREE)
         );
-        Dealer testDealer = Dealer.from(blackJackHand);
-        Player testPlayer = Player.from(testPlayerName, notBlackJackAndNotBustHand);
+        GameState dealerGameState = GameState.createDealerInitialGameState(blackJackHand);
+        Player testPlayer = Player.from(
+                testPlayerName,
+                GameState.createPlayerInitialGameState(notBlackJackAndNotBustHand)
+        );
 
         //when
-        GameResult result = testPlayer.compare(testDealer);
+        GameResult result = testPlayer.calculateGameResult(dealerGameState);
 
         //then
         assertEquals(GameResult.class, result.getClass());
@@ -138,6 +153,7 @@ class PlayerTest {
     @Test
     @DisplayName("이름이 같으면 같은 Player로 본다")
     void equal_when_name_equal() {
+        String testName = "gump";
         Hand playerHand1 = Hand.of(
                 new Card(CardShape.스페이드, CardContents.A),
                 new Card(CardShape.클로버, CardContents.TWO)
@@ -146,11 +162,15 @@ class PlayerTest {
                 new Card(CardShape.하트, CardContents.THREE),
                 new Card(CardShape.클로버, CardContents.FOUR)
         );
-        String testName = "gump";
-        Player testPlayer1 = Player.from(testName, playerHand1);
-        Player testPlayer2 = Player.from(testName, playerHand2);
-
+        Player firstGump = Player.from(
+                testName,
+                GameState.createPlayerInitialGameState(playerHand1)
+        );
+        Player secondGump = Player.from(
+                testName,
+                GameState.createPlayerInitialGameState(playerHand2)
+        );
         //when, then
-        Assertions.assertThat(testPlayer1.equals(testPlayer2)).isTrue();
+        Assertions.assertThat(firstGump.equals(secondGump)).isTrue();
     }
 }

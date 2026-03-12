@@ -1,19 +1,18 @@
 package domain;
 
+import domain.state.GameState;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Supplier;
 
 public class Dealer extends Participant {
-    private static final int MINIMUM_TOTAL_SCORE = 16;
     private static final String DEALER_NAME = "딜러";
 
-    private Dealer(Hand hand) {
-        super(DEALER_NAME, hand);
+    private Dealer(GameState gameState) {
+        super(DEALER_NAME, gameState);
     }
 
-    public static Dealer from(Hand hand) {
-        return new Dealer(hand);
+    public static Dealer from(GameState gameState) {
+        return new Dealer(gameState);
     }
 
     @Override
@@ -22,11 +21,8 @@ public class Dealer extends Participant {
         return List.of(ownCards.getFirst());
     }
 
-    public Optional<Dealer> addCard(Supplier<Card> cardSupplier) {
-        if (hand.calculateCardScoreSum() <= MINIMUM_TOTAL_SCORE) {
-            Hand newHand = this.hand.addCard(cardSupplier.get());
-            return Optional.of(new Dealer(newHand));
-        }
-        return Optional.empty();
+    public Dealer addCard(Supplier<Card> cardSupplier) {
+        GameState newGameState = gameState.hit(cardSupplier);
+        return Dealer.from(newGameState);
     }
 }

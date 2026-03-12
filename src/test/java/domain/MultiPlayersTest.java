@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import common.ErrorMessage;
+import domain.state.GameState;
 import dto.ParticipantDto;
 import dto.PlayerResultDto;
 import java.util.ArrayDeque;
@@ -148,7 +149,10 @@ class MultiPlayersTest {
         CardCreationStrategy onlyTwoTenCardsCreationStrategy = () -> new ArrayDeque<>(onlyTwoTenCards);
         MultiPlayers multiPlayers = MultiPlayers.of(onlyOneNames, Deck.createDeck(onlyTwoTenCardsCreationStrategy));
         ParticipantDto expect = ParticipantDto.from(
-                Player.from(testerName, Hand.of(heartTen, heartJ))
+                Player.from(
+                        testerName,
+                        GameState.createPlayerInitialGameState(Hand.of(heartTen, heartJ))
+                )
         );
 
         //when
@@ -171,11 +175,16 @@ class MultiPlayersTest {
         Card heartJ = new Card(CardShape.하트, CardContents.J);
         Queue<Card> onlyTwoTenCards = new LinkedList<>(List.of(heartTen, heartJ));
 
-        Dealer testDealer = Dealer.from(Hand.of(heartTwo, heartThree));
-        Player expectedPlayer = Player.from(testerName, Hand.of(heartTen, heartJ));
+        Dealer testDealer = Dealer.from(
+                GameState.createDealerInitialGameState(Hand.of(heartTwo, heartThree))
+        );
+        Player expectedPlayer = Player.from(
+                testerName,
+                GameState.createPlayerInitialGameState(Hand.of(heartTen, heartJ))
+        );
         CardCreationStrategy onlyTwoTenCardsCreationStrategy = () -> new ArrayDeque<>(onlyTwoTenCards);
         MultiPlayers multiPlayers = MultiPlayers.of(onlyOneNames, Deck.createDeck(onlyTwoTenCardsCreationStrategy));
-        PlayerResultDto expect = PlayerResultDto.from(expectedPlayer, testDealer);
+        PlayerResultDto expect = PlayerResultDto.from(expectedPlayer, testDealer.gameState);
 
         //when
         List<PlayerResultDto> result = multiPlayers.checkPlayersGameResult(testDealer);

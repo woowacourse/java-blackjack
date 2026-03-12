@@ -1,6 +1,7 @@
 package domain;
 
 import common.ErrorMessage;
+import domain.state.GameState;
 import dto.DealerResultDto;
 import dto.GameResultDto;
 import dto.ParticipantDto;
@@ -30,9 +31,13 @@ public class BlackJackGame {
 
     private static Dealer createNewDealer(Deck totalDeck) {
         List<Card> dealersInitialCards = totalDeck.drawTwoCards();
-        Card card1 = dealersInitialCards.get(0);
-        Card card2 = dealersInitialCards.get(1);
-        return Dealer.from(Hand.of(card1, card2));
+        Hand initialDealerHand = Hand.of(
+                dealersInitialCards.get(0),
+                dealersInitialCards.get(1)
+        );
+        return Dealer.from(
+                GameState.createDealerInitialGameState(initialDealerHand)
+        );
     }
 
     public Optional<Player> whoseTurn() {
@@ -54,9 +59,9 @@ public class BlackJackGame {
     }
 
     public boolean doDealerHitOrStandProcess() {
-        Optional<Dealer> nextDealer = dealer.addCard(totalDeck::drawCard);
-        nextDealer.ifPresent(this::updateDealer);
-        return nextDealer.isPresent();
+        Dealer newDealer = dealer.addCard(totalDeck::drawCard);
+        updateDealer(newDealer);
+        return !newDealer.gameState.isFinished();
     }
 
     public List<ParticipantDto> getPlayersGameSettingStates() {
