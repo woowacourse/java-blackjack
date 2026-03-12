@@ -44,7 +44,7 @@ class TrumpCardTest {
     @Test
     void 카드의_한글_이름을_반환한다() {
         TrumpCard trumpCard = TrumpCard.of(Suit.of("하트"), Rank.of("A"));
-        assertThat(trumpCard.koreanName()).isEqualTo("하트");
+        assertThat(trumpCard.suitKoreanName()).isEqualTo("하트");
     }
 
     @Test

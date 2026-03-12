@@ -32,7 +32,7 @@ public class Hand {
 
     private int sumCardScores() {
         return cards.stream()
-                .mapToInt(TrumpCard::score)
+                .mapToInt(TrumpCard::rankScore)
                 .sum();
     }
 
