@@ -84,6 +84,21 @@ public class OutputView {
         result.forEach((player, status) -> System.out.printf("%s: %s%n", player.getName(), status.getName()));
     }
 
+    public static void printBettingResultHeader() {
+        System.out.println();
+        System.out.println("## 최종 수익");
+    }
+
+    public static void printBettingResult(List<Participant> participants) {
+        for (Participant participant : participants) {
+            if (participant instanceof Dealer dealer) {
+                System.out.println(participant.getName() + ": " + dealer.getDealerProfit());
+            } else if (participant instanceof Player player) {
+                System.out.println(participant.getName() + ": " + player.getMoney());
+            }
+        }
+    }
+
     public static void printErrorMessage(final String message) {
         System.out.printf("%s%n", message);
     }

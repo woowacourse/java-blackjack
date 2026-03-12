@@ -7,7 +7,7 @@ import model.CardShape;
 import model.CardValue;
 import org.junit.jupiter.params.provider.Arguments;
 
-public class FinalResultTestFixture {
+public class BettingResultTestFixture {
 
     public static Stream<Arguments> 플레이어의_상황별_배팅금액_정보제공() {
         return Stream.of(
