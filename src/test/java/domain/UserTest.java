@@ -39,6 +39,7 @@ public class UserTest {
         User user = new User("라이", new Money(10000));
         user.receiveCard(new Card(Suit.SPADE, Rank.ACE));
         user.receiveCard(new Card(Suit.HEART, Rank.JACK));
+        user.calculateScore();
 
         // when & then
         assertThat(user.isBlackjack()).isTrue();
@@ -52,6 +53,7 @@ public class UserTest {
         user.receiveCard(new Card(Suit.SPADE, Rank.SEVEN));
         user.receiveCard(new Card(Suit.HEART, Rank.SEVEN));
         user.receiveCard(new Card(Suit.CLUB, Rank.SEVEN));
+        user.calculateScore();
 
         // when & then
         assertThat(user.isBlackjack()).isFalse();
