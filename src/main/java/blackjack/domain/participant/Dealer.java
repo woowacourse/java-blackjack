@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import static blackjack.global.ParticipantConstants.DEALER_DISTRIBUTE_COUNT;
 import static blackjack.global.ParticipantConstants.DEALER_HIT_THRESHOLD;
 
 import blackjack.domain.trump.Trump;
@@ -28,9 +29,7 @@ public class Dealer extends Participant {
     }
 
     public void pitch(final List<Player> players) {
-        final int distributeCount = 2;
-
-        for (int i = 0; i < distributeCount; i++) {
+        for (int i = 0; i < DEALER_DISTRIBUTE_COUNT; i++) {
             players.forEach(this::giveCardTo);
             giveCardMyself();
         }

@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import static blackjack.global.ParticipantConstants.DEALER_DISTRIBUTE_COUNT;
 import static blackjack.global.ParticipantConstants.DEALER_HIT_THRESHOLD;
 
 import blackjack.domain.participant.Dealer;
@@ -13,7 +14,6 @@ import java.util.List;
 public class OutputView {
 
     private static final String ERROR_PREFIX = "[ERROR]: ";
-    private static final String START_NUMBER_OF_CARD = "2";
 
     public static void printErrorMessage(final String message) {
         System.out.println(ERROR_PREFIX + message);
@@ -24,8 +24,8 @@ public class OutputView {
             .map(Player::getNickname)
             .toList();
 
-        System.out.printf("딜러와 %s에게 %s장을 나누었습니다.\n",
-            String.join(", ", playerNicknames), START_NUMBER_OF_CARD);
+        System.out.printf("딜러와 %s에게 %d장을 나누었습니다.\n",
+            String.join(", ", playerNicknames), DEALER_DISTRIBUTE_COUNT);
 
         System.out.printf("딜러카드: %s\n", String.join(", ", dealer.getOpenCardNames()));
 
