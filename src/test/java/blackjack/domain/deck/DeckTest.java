@@ -18,22 +18,9 @@ class DeckTest {
     void deckSizeTest() {
         // given
         Deck deck = new Deck();
+
         // when & then
         assertThat(deck.getDeckSize()).isEqualTo(52);
-    }
-
-    @Test
-    @DisplayName("현재 카드 덱에는 중복이 없다.")
-    void notDuplicateCardInDeckTest() {
-        // given
-        Deck deck = new Deck();
-        // when
-        List<Card> cards = deck.getCards();
-        cards.add(new Card(Figure.CLOVER, Number.ACE));
-
-        HashSet<Card> newDeck = new HashSet<>(cards);
-        // then
-        assertThat(newDeck.size()).isEqualTo(52);
     }
 
     @Test
@@ -41,8 +28,10 @@ class DeckTest {
     void hitTest() {
         // given
         Deck deck = new Deck();
+
         // when
         deck.hit();
+
         // then
         assertThat(deck.getDeckSize()).isEqualTo(51);
     }

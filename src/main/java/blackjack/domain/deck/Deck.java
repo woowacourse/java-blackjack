@@ -27,10 +27,6 @@ public class Deck {
         return cards.getSize();
     }
 
-    public List<Card> getCards() {
-        return cards.getCards();
-    }
-
     private Cards createDeck() {
         List<Card> cards = new ArrayList<>();
 
