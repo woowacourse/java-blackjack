@@ -62,7 +62,7 @@ public class GameTest {
             onePlayer.distributeCard("피즈", new Card(Rank.FOUR, Suit.CLOVER));
             onePlayer.distributeCard("피즈", new Card(Rank.EIGHT, Suit.CLOVER));
             //then
-            onePlayerGame.playerHit("피즈", deck, true);
+            onePlayerGame.playerHit("피즈", deck, false);
 
             assertThat(onePlayer.getPlayerCards("피즈").size()).isEqualTo(4);
         }
@@ -98,9 +98,9 @@ public class GameTest {
         void 플레이어_점수_더_높으면_플레이어_승리한다() {
             Deck playerDeck = new Deck(List.of(new Card(Rank.JACK, Suit.CLOVER), new Card(Rank.QUEEN, Suit.CLOVER),
                     new Card(Rank.ACE, Suit.CLOVER)));
-            onePlayerGame.playerHit("피즈", playerDeck, true);
-            onePlayerGame.playerHit("피즈", playerDeck, true);
-            onePlayerGame.playerHit("피즈", playerDeck, true);
+            onePlayerGame.playerHit("피즈", playerDeck, false);
+            onePlayerGame.playerHit("피즈", playerDeck, false);
+            onePlayerGame.playerHit("피즈", playerDeck, false);
 
             Deck dealerDeck = new Deck(List.of(new Card(Rank.ACE, Suit.CLOVER), new Card(Rank.FOUR, Suit.CLOVER),
                     new Card(Rank.EIGHT, Suit.CLOVER), new Card(Rank.SEVEN, Suit.HEART)));
@@ -116,8 +116,8 @@ public class GameTest {
         @Test
         void 딜러가_버스트된_경우_플레이어가_승리한다() {
             Deck playerDeck = new Deck(List.of(new Card(Rank.JACK, Suit.CLOVER), new Card(Rank.QUEEN, Suit.CLOVER)));
-            onePlayerGame.playerHit("피즈", playerDeck, true);
-            onePlayerGame.playerHit("피즈", playerDeck, true);
+            onePlayerGame.playerHit("피즈", playerDeck, false);
+            onePlayerGame.playerHit("피즈", playerDeck, false);
 
             Deck dealerDeck = new Deck(List.of(new Card(Rank.JACK, Suit.HEART), new Card(Rank.SIX, Suit.HEART),
                     new Card(Rank.SEVEN, Suit.HEART)));
@@ -133,8 +133,8 @@ public class GameTest {
         @Test
         void 플레이어_점수_더_높으면_플레이어_패배한다() {
             Deck playerDeck = new Deck(List.of(new Card(Rank.JACK, Suit.CLOVER), new Card(Rank.NINE, Suit.CLOVER)));
-            onePlayerGame.playerHit("피즈", playerDeck, true);
-            onePlayerGame.playerHit("피즈", playerDeck, true);
+            onePlayerGame.playerHit("피즈", playerDeck, false);
+            onePlayerGame.playerHit("피즈", playerDeck, false);
 
             Deck dealerDeck = new Deck(List.of(new Card(Rank.JACK, Suit.HEART), new Card(Rank.SIX, Suit.HEART),
                     new Card(Rank.FOUR, Suit.HEART)));
@@ -150,8 +150,8 @@ public class GameTest {
         @Test
         void 플레이어_딜러_점수_같으면_무승부_된다() {
             Deck playerDeck = new Deck(List.of(new Card(Rank.JACK, Suit.CLOVER), new Card(Rank.NINE, Suit.CLOVER)));
-            onePlayerGame.playerHit("피즈", playerDeck, true);
-            onePlayerGame.playerHit("피즈", playerDeck, true);
+            onePlayerGame.playerHit("피즈", playerDeck, false);
+            onePlayerGame.playerHit("피즈", playerDeck, false);
 
             Deck dealerDeck = new Deck(List.of(new Card(Rank.JACK, Suit.HEART), new Card(Rank.NINE, Suit.HEART)));
             onePlayerGame.dealerHit(dealerDeck);
@@ -165,7 +165,7 @@ public class GameTest {
         @Test
         void 플레이어_딜러_카드_정상_분배_확인한다() {
             onePlayerGame.initializeGame(deck);
-            onePlayerGame.playerHit("피즈", deck, true);
+            onePlayerGame.playerHit("피즈", deck, false);
 
             List<Card> fizzCards = onePlayerGame.getPlayerCards("피즈");
             List<Card> expectedFizzCards = List.of(new Card(Rank.FIVE, Suit.CLOVER), new Card(Rank.SIX, Suit.CLOVER),
@@ -184,6 +184,20 @@ public class GameTest {
                     new Card(Rank.FOUR, Suit.SPADE), new Card(Rank.SEVEN, Suit.HEART)));
 
             assertThat(dealerCard).isEqualTo(expectedDealerCards);
+        }
+
+        @DisplayName("딜러가 처음에 받은 카드 2장으로 바로 블랙잭이 되면 카드를 추가로 더 분배 받지 않는다.")
+        @Test
+        void 딜러_처음_2장_블랙잭_카드_추가_분배_받지_않는다() {
+            Deck deck = new Deck(List.of(new Card(Rank.FIVE, Suit.CLOVER), new Card(Rank.JACK, Suit.CLOVER),
+                    new Card(Rank.FIVE, Suit.HEART), new Card(Rank.ACE, Suit.CLOVER),
+                    new Card(Rank.SEVEN, Suit.HEART), new Card(Rank.SIX, Suit.HEART)));
+            onePlayerGame.initializeGame(deck);
+            onePlayerGame.dealerHit(deck);
+            onePlayerGame.dealerHit(deck);
+
+            assertThat(onePlayerGame.getDealerScore()).isEqualTo(21);
+            assertThat(onePlayerGame.getDealerCards().size()).isEqualTo(2);
         }
     }
 }
