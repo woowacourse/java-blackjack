@@ -102,8 +102,7 @@ jason: -20000
   | 스테이 | 버스트  |       패배       |
   | 스테이 | 스테이  | 점수가 더 높은 쪽이 승리 |
 ## 실행 결과 예시
-![Image](https://github.com/user-attachments/assets/6b226113-ea4a-4af5-9aca-1725de0abee2)
-
+![Image](https://github.com/user-attachments/assets/09797264-3683-4b4d-a236-5ef207e0506b)
 
 ## 변경 로그
 - v1.0.0: 블랙잭 게임 추가
