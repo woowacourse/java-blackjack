@@ -23,44 +23,34 @@ public class Controller {
     public void run() {
         Deck deck = new Deck();
         Dealer dealer = new Dealer();
-
-        Players players = Players.from(inputView.getName());
+        Players players = createPlayers();
         List<Player> participants = players.getPlayers();
-
-        Map<Player, BettingAmount> playerAmounts = new LinkedHashMap<>();
-        for (Player participant : participants) {
-            BettingAmount amount = new BettingAmount(inputView.inputBettingAmount(participant));
-            playerAmounts.put(participant, amount);
-        }
 
         deck.shuffle();
         initializeDealToParticipants(dealer, players, deck);
+
         outputView.printFirstCardStatus(dealer, players);
 
         turnToPlayers(participants, deck);
         turnToDealer(dealer, deck);
         outputView.printScoreResult(dealer, players);
 
-        Map<Player, GameResult> playerGameResult = getPlayerGameResult(participants, dealer);
-        for (Player player : playerGameResult.keySet()) {
-            if (playerGameResult.get(player).equals(GameResult.BLACKJACK)) {
-                playerAmounts.get(player).calculateBlackjackProfit();
-            }
-            if (playerGameResult.get(player).equals(GameResult.LOSE)) {
-                playerAmounts.get(player).calculateLoseProfit();
-            }
-        }
+        GameResults gameResults = GameResults.of(dealer, players);
+        Map<Player, Integer> gameProfitResult = gameResults.getGameProfitResult();
 
-//        outputView.printGameResult(playerGameResult);
-        outputView.printGameResultProfit(playerAmounts);
+        int dealerProfit = 0;
+        for (Integer value : gameProfitResult.values()) {
+            dealerProfit -= value;
+        }
+        outputView.printGameResultProfit(dealerProfit, gameProfitResult);
     }
 
-    private static Map<Player, GameResult> getPlayerGameResult(List<Player> participants, Dealer dealer) {
-        Map<Player, GameResult> gameResult = new LinkedHashMap<>();
-        for (Player player : participants) {
-            gameResult.put(player, GameResult.matchResult(player, dealer));
-        }
-        return gameResult;
+    private Players createPlayers() {
+        List<String> playerNames = inputView.readNames();
+        List<Player> players = playerNames.stream()
+                .map(name -> new Player(name, new BettingAmount(inputView.readBettingAmount(name))))
+                .toList();
+        return new Players(players);
     }
 
     private void turnToDealer(Dealer dealer, Deck deck) {
@@ -83,7 +73,7 @@ public class Controller {
 
     private void turnToOnePlayer(Deck deck, Player player) {
         while (player.canReceive()) {
-            HitCommand command = HitCommand.from(inputView.getReceiveCard(player));
+            HitCommand command = HitCommand.from(inputView.readReceiveCard(player));
             if (!command.isHit()) {
                 return;
             }
