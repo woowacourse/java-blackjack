@@ -23,7 +23,7 @@ public class Game {
         }
     }
 
-    public GameResult judgeTotalGameResult(List<Player> players, Dealer dealer) {
+    public static GameResult judgeTotalGameResult(List<Player> players, Dealer dealer) {
         Map<ScoreCompareResult, Integer> dealerResult = new HashMap<>();
         LinkedHashMap<Player, ScoreCompareResult> playerResults = new LinkedHashMap<>();
 
@@ -36,14 +36,14 @@ public class Game {
         return new GameResult(dealerResult, playerResults);
     }
 
-    private ScoreCompareResult toPlayerResult(ScoreCompareResult result) {
+    private static ScoreCompareResult toPlayerResult(ScoreCompareResult result) {
         if (result == ScoreCompareResult.DEALER_WIN) {
             return ScoreCompareResult.PLAYER_LOSS;
         }
         return result;
     }
 
-    private ScoreCompareResult toDealerKey(ScoreCompareResult result) {
+    private static ScoreCompareResult toDealerKey(ScoreCompareResult result) {
         if (result == ScoreCompareResult.PLAYER_WIN) {
             return ScoreCompareResult.DEALER_LOSS;
         }
@@ -51,7 +51,7 @@ public class Game {
     }
 
 
-    public ScoreCompareResult compareScore(Player player, Dealer dealer) {
+    public static ScoreCompareResult compareScore(Player player, Dealer dealer) {
         boolean isPlayerBust = player.isBust();
         boolean isDealerBust = dealer.isBust();
 
@@ -63,7 +63,7 @@ public class Game {
 
     }
 
-    private ScoreCompareResult compareScoreWhenBust(boolean isPlayerBust, boolean isDealerBust) {
+    private static ScoreCompareResult compareScoreWhenBust(boolean isPlayerBust, boolean isDealerBust) {
         if (isPlayerBust && isDealerBust) {
             return ScoreCompareResult.PUSH;
         }
@@ -76,7 +76,7 @@ public class Game {
         throw new IllegalArgumentException("버스트인 사람이 1명은 포함되어야 합니다.");
     }
 
-    private ScoreCompareResult compareScoreWhenNotBust(int playerTotalScore, int dealerTotalScore) {
+    private static ScoreCompareResult compareScoreWhenNotBust(int playerTotalScore, int dealerTotalScore) {
         if (playerTotalScore > dealerTotalScore) {
             return ScoreCompareResult.PLAYER_WIN;
         }
