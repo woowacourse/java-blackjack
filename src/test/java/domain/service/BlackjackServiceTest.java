@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.BetAmount;
 import domain.enums.Result;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -48,9 +47,6 @@ public class BlackjackServiceTest {
     @Test
     void 딜러의_수익을_정확히_계산한다() {
         Map<String, Integer> playerProfits = blackjackService.calculateAllPlayerProfits(results, betAmounts);
-        List<Integer> allProfits = playerProfits.values()
-                .stream()
-                .toList();
-        assertThat(-25000).isEqualTo(blackjackService.calculateDealerProfit(allProfits));
+        assertThat(-25000).isEqualTo(blackjackService.calculateDealerProfit(playerProfits));
     }
 }
