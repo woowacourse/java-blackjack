@@ -41,13 +41,15 @@ public class BlackjackGame {
 
     private void playGame(Players players, Dealer dealer, Deck deck) {
         initParticipantsHand(players, dealer, deck);
+        outputView.printBlankLine();
 
         for (Player player : players.getPlayers()) {
             playerTurn(player, deck);
         }
 
+        outputView.printBlankLine();
         dealerTurn(dealer, deck);
-
+        outputView.printBlankLine();
         showGameResult(players, dealer);
     }
 
@@ -82,6 +84,7 @@ public class BlackjackGame {
         List<Participant> participants = new ArrayList<>(players.getPlayers());
         participants.add(dealer);
         participants.forEach(outputView::printFinalResult);
+        outputView.printBlankLine();
 
         GameResult gameResult = new GameResult(players, dealer);
         DealerResultInfo dealerResultInfo = new DealerResultInfo(gameResult);

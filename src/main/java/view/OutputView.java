@@ -43,6 +43,10 @@ public class OutputView {
         System.out.println(formatParticipantCards(participant));
     }
 
+    public void printBlankLine() {
+        System.out.println();
+    }
+
     public void printDealerReceiveMessage() {
         System.out.println(DEALER_ONE_MORE_CARD_MESSAGE);
     }
