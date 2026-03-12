@@ -3,6 +3,7 @@ package blackjack.domain;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Deck {
@@ -20,18 +21,14 @@ public class Deck {
         return new Deck(cards);
     }
 
-    public static Deck create(ShuffleStrategy strategy) {
-        List<TrumpCard> cards = Arrays.stream(Suit.values())
-                .flatMap(suit -> Arrays.stream(Rank.values())
-                        .map(rank -> TrumpCard.of(suit, rank)))
-                .collect(Collectors.toList());
-        strategy.shuffle(cards);
-        return new Deck(cards);
-    }
-
     private void validate(List<TrumpCard> cards) {
+        validateNotNull(cards);
         validateCardsCount(cards);
         validateDuplicates(cards);
+    }
+
+    private void validateNotNull(List<TrumpCard> cards) {
+        Objects.requireNonNull(cards, "cards 는 null 이 올 수 없습니다.");
     }
 
     private void validateCardsCount(List<TrumpCard> cards) {
@@ -48,6 +45,15 @@ public class Deck {
         if (uniqueCardCount != cards.size()) {
             throw new IllegalArgumentException("카드는 중복되면 안됩니다.");
         }
+    }
+
+    public static Deck create(ShuffleStrategy strategy) {
+        List<TrumpCard> cards = Arrays.stream(Suit.values())
+                .flatMap(suit -> Arrays.stream(Rank.values())
+                        .map(rank -> TrumpCard.of(suit, rank)))
+                .collect(Collectors.toList());
+        strategy.shuffle(cards);
+        return new Deck(cards);
     }
 
     public List<TrumpCard> drawInitialCards() {

@@ -11,6 +11,15 @@ import org.junit.jupiter.api.Test;
 class DeckTest {
 
     @Test
+    void null인_카드를_받으면_생성시_예외_발생한다() {
+        List<TrumpCard> cards = null;
+
+        assertThatThrownBy(() -> Deck.of(cards))
+                .isInstanceOf(NullPointerException.class)
+                .hasMessage("cards 는 null 이 올 수 없습니다.");
+    }
+
+    @Test
     void 전체_카드_수가_52장이_아니면_예외_발생한다() {
         List<TrumpCard> cards = new ArrayList<>();
         for (Suit suit : Suit.values()) {

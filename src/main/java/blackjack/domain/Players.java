@@ -1,16 +1,22 @@
 package blackjack.domain;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Players {
     private final List<Player> players;
 
     private Players(List<Player> players) {
+        validate(players);
         this.players = List.copyOf(players);
     }
 
     public static Players of(List<Player> players) {
         return new Players(players);
+    }
+
+    private void validate(List<Player> players) {
+        Objects.requireNonNull(players, "players 은 null 이 올 수 없습니다.");
     }
 
     public void receiveCards(Deck deck) {
@@ -27,15 +33,15 @@ public class Players {
         return this.players.get(playerIndex).canHit();
     }
 
-    public List<Player> getPlayers() {
-        return players;
-    }
-
     public void hitPlayer(int index, TrumpCard card) {
         players.get(index).receiveCard(card);
     }
 
     public Player playerAt(int index) {
         return players.get(index);
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 }

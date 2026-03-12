@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Dealer {
     private static final int DEALER_HIT_THRESHOLD = 16;
@@ -9,11 +10,16 @@ public class Dealer {
     private final Hand hand;
 
     private Dealer(Hand hand) {
+        validate(hand);
         this.hand = hand;
     }
 
     public static Dealer of() {
         return new Dealer(Hand.init());
+    }
+
+    private void validate(Hand hand) {
+        Objects.requireNonNull(hand, "hand 는 null 이 올 수 없습니다.");
     }
 
     public void receiveCards(List<TrumpCard> cards) {

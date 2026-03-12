@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,15 @@ public class PlayerTest {
     void setUp() {
         Name newPlayerName = Name.of("한다");
         player = Player.of(newPlayerName);
+    }
+
+    @Test
+    void 플레이어_생성시_name이_null이면_예외_발생한다() {
+        Name nullName = null;
+
+        assertThatThrownBy(() -> Player.of(nullName))
+                .isInstanceOf(NullPointerException.class)
+                .hasMessage("name 은 null 이 올 수 없습니다.");
     }
 
     @Test
