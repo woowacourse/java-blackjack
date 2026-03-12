@@ -7,4 +7,7 @@ public record BlackjackStatisticsDto(
         List<PlayerStatisticDto> playerStatisticDtoList
 ) {
 
+    public static BlackjackStatisticsDto of(DealerStatisticDto dealerStatisticDto, List<PlayerStatisticDto> playerStatisticDtoList) {
+        return new BlackjackStatisticsDto(dealerStatisticDto, playerStatisticDtoList);
+    }
 }
