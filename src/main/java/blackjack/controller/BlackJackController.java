@@ -6,6 +6,7 @@ import blackjack.domain.Deck;
 import blackjack.domain.Participant;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
+import blackjack.dto.EarningResultDto;
 import blackjack.dto.ParticipantDto;
 import blackjack.dto.PlayerGameResultDto;
 import blackjack.view.InputView;
@@ -20,11 +21,10 @@ public class BlackJackController {
 
     public void run() {
         List<String> names = inputView.readNames();
-        Players players = new Players(names);
+        List<Long> bettingAmounts = readBettingAmount(names);
+        Players players = new Players(names, bettingAmounts);
         Dealer dealer = new Dealer();
         Deck deck = new Deck();
-        
-        readBettingAmount(players);
 
         initDraw(dealer, players, deck);
 
@@ -36,13 +36,17 @@ public class BlackJackController {
 
         printFinalCardResult(dealer, players);
 
-        printFinalGameResult(dealer, players);
+        // printFinalGameResult(dealer, players); // 사이클1에서 쓴 게임 결과 출력 메서드
+
+        printFinalEarningResult(dealer, players);
     }
 
-    private void readBettingAmount(Players players) {
-        for (Player player : players.getPlayers()) {
-            inputView.readBettingAmount(player.getName());
+    private List<Long> readBettingAmount(List<String> names) {
+        List<Long> bettingAmounts = new ArrayList<>();
+        for (String name : names) {
+            bettingAmounts.add(inputView.readBettingAmount(name));
         }
+        return bettingAmounts;
     }
 
     private ParticipantDto convertToDto(Participant participant) {
@@ -78,7 +82,9 @@ public class BlackJackController {
     private void printFinalGameResult(Dealer dealer, Players players) {
         List<PlayerGameResultDto> playerGameResultDtos = new ArrayList<>();
         for (Player player : players.getPlayers()) {
-            playerGameResultDtos.add(new PlayerGameResultDto(player.getName(), player.compareResult(dealer).getName()));
+            playerGameResultDtos.add(
+                    new PlayerGameResultDto(player.getName(),
+                            player.compareResult(dealer).getName()));
         }
         outputView.printFinalGameResult(playerGameResultDtos);
     }
@@ -95,5 +101,16 @@ public class BlackJackController {
             players.receiveCard(deck);
             dealer.receiveCard(deck.draw());
         }
+    }
+
+    private void printFinalEarningResult(Dealer dealer, Players players) {
+        List<EarningResultDto> earningResultDtos = new ArrayList<>();
+        for (Player player : players.getPlayers()) {
+            earningResultDtos.add(
+                    new EarningResultDto(player.getName(),
+                            player.compareResult(dealer).getName(),
+                            player.getBettingAmount()));
+        }
+        outputView.printEarningResult(earningResultDtos);
     }
 }

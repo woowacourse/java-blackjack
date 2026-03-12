@@ -1,8 +1,10 @@
 package blackjack.view;
 
 import blackjack.domain.GameResult;
+import blackjack.dto.EarningResultDto;
 import blackjack.dto.ParticipantDto;
 import blackjack.dto.PlayerGameResultDto;
+import java.util.ArrayList;
 import java.util.List;
 
 public class OutputView {
@@ -48,7 +50,8 @@ public class OutputView {
         int tieCount = 0;
         int loseCount = 0;
         for (PlayerGameResultDto dto : playerGameResultDtos) {
-            if (dto.gameResult().equals(GameResult.WIN.getName())) {
+            if (dto.gameResult().equals(GameResult.WIN.getName()) || dto.gameResult()
+                    .equals(GameResult.BLACKJACK_WIN.getName())) {
                 loseCount++;
             }
             if (dto.gameResult().equals(GameResult.LOSE.getName())) {
@@ -64,4 +67,35 @@ public class OutputView {
         }
     }
 
+    public void printEarningResult(List<EarningResultDto> earningResultDtos) {
+        System.out.println("\n## 최종 수익");
+
+        long dealerEarning = 0;
+        List<Long> playerEarnings = new ArrayList<>();
+        for (EarningResultDto dto : earningResultDtos) {
+            double earningRate = calculateEarningRate(dto.gameResult());
+            long playerEarning = (long) (dto.bettingAmount() * earningRate);
+            playerEarnings.add(playerEarning);
+            dealerEarning += (playerEarning) * -1;
+        }
+        System.out.println("딜러: " + dealerEarning);
+        int idx = 0;
+        for (EarningResultDto dto : earningResultDtos) {
+            System.out.printf("%s: %d%n", dto.name(), playerEarnings.get(idx));
+            idx++;
+        }
+    }
+
+    private double calculateEarningRate(String gameResult) {
+        if (gameResult.equals(GameResult.WIN.getName())) {
+            return GameResult.WIN.getEarningRate();
+        }
+        if (gameResult.equals(GameResult.TIE.getName())) {
+            return GameResult.TIE.getEarningRate();
+        }
+        if (gameResult.equals(GameResult.LOSE.getName())) {
+            return GameResult.LOSE.getEarningRate();
+        }
+        return GameResult.BLACKJACK_WIN.getEarningRate();
+    }
 }

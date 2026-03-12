@@ -1,4 +1,4 @@
 package blackjack.dto;
 
-public record PlayerGameResultDto(String name, String gameResult) {
+public record EarningResultDto(String name, String gameResult, long bettingAmount) {
 }
