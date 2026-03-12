@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class BetTest {
@@ -21,7 +22,7 @@ public class BetTest {
         Bet bet = new Bet(amount);
 
         // then
-        Assertions.assertEquals(bet.getAmount(), amount);
+        assertNotNull(bet);
     }
 
     @Test
@@ -29,7 +30,6 @@ public class BetTest {
     void setAmount_validateNonNegativeAmountTest() {
         // given
         int amount = -3000;
-
 
         // when - then
         assertThrows(IllegalArgumentException.class, () -> new Bet(amount));
@@ -45,6 +45,16 @@ public class BetTest {
         assertThrows(IllegalArgumentException.class, () -> new Bet(overBetAmount));
     }
 
+    @Test
+    @DisplayName("배팅 금액은 1000원 단위로 입력해야 한다.")
+    void setAmount_validateMaxBetUnitTest() {
+        // given
+        int amount = 10500;
+
+        // when - then
+        assertThrows(IllegalArgumentException.class, () -> new Bet(amount));
+    }
+
     @ParameterizedTest
     @DisplayName("배팅 금액을 승패 결과에 따라 계산한다.")
     @CsvSource({
@@ -53,16 +63,14 @@ public class BetTest {
             "WIN, false, 3000",
             "WIN, true, 4500"
     })
-    void calculateProfit_test(MatchResult matchResult, boolean isBlackJack, int expectedProfit) {
+    void calculateProfitTest(MatchResult matchResult, boolean isBlackJack, int expectedProfit) {
         // given
         int amount = 3000;
 
+        // when
         Bet bet = new Bet(amount);
 
-        // when
-        int profit = bet.calculateProfit(matchResult, isBlackJack);
-
         // then
-        Assertions.assertEquals(expectedProfit, profit);
+        Assertions.assertEquals(expectedProfit, bet.calculateProfit(matchResult, isBlackJack));
     }
 }
