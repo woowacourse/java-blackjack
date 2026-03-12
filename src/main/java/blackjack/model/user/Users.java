@@ -9,35 +9,44 @@ import java.util.Map;
 
 public class Users {
 
-    private final List<Player> players;
-    private final Dealer dealer;
+    private static final String ERROR_DEALER_NOT_FOUND = "딜러가 존재하지 않습니다.";
+
+    private final List<User> users;
 
     public Users(List<Player> players, Dealer dealer) {
-        this.players = players;
-        this.dealer = dealer;
+        users = new ArrayList<>(players);
+        users.add(dealer);
     }
 
     public Users(String playerNames) {
-        this.players = PlayerParser.parse(playerNames);
-        this.dealer = new Dealer();
+        users = new ArrayList<>(PlayerParser.parse(playerNames));
+        users.add(new Dealer());
     }
 
     public List<Player> getPlayers() {
-        return List.copyOf(players);
+        return users.stream()
+                .filter(Player.class::isInstance)
+                .map(Player.class::cast)
+                .toList();
     }
 
     public Dealer getDealer() {
-        return dealer;
+        return users.stream()
+                .filter(Dealer.class::isInstance)
+                .map(Dealer.class::cast)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(ERROR_DEALER_NOT_FOUND));
     }
 
     public List<User> getUsers() {
-        List<User> users = new ArrayList<>(List.copyOf(players));
-        users.add(dealer);
-        return users;
+        return List.copyOf(users);
     }
 
     public PlayersGameResult determineWinner() {
         Map<Player, GameResult> result = new HashMap<>();
+        List<Player> players = getPlayers();
+        Dealer dealer = getDealer();
+
         for (Player player : players) {
             if (calculateWhenBlackjack(player, dealer, result)) {
                 continue;
