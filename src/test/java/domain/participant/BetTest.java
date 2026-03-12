@@ -1,13 +1,13 @@
-package domain;
+package domain.participant;
 
+import domain.MatchResult;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class BetTest {
 
@@ -25,10 +25,30 @@ public class BetTest {
     }
 
     @Test
-    @DisplayName("배팅 금액은 양수여야 한다.")
-    void setAmount_validateNonNegativeAmountTest() {
+    @DisplayName("배팅 금액은 양의 정수여야 한다.")
+    void validateAmount_PositiveTest() {
         // given
-        int amount = -3000;
+        int amount = 1000;
+
+        // when - then
+        assertDoesNotThrow(() -> Bet.of(amount));
+    }
+
+    @Test
+    @DisplayName("배팅 금액은 양의 정수여야 한다.")
+    void validateAmount_NegativeTest() {
+        // given
+        int amount = -1000;
+
+        // when - then
+        assertThrows(IllegalArgumentException.class, () -> Bet.of(amount));
+    }
+
+    @Test
+    @DisplayName("배팅 금액은 양의 정수여야 한다.")
+    void validateAmount_zeroTest() {
+        // given
+        int amount = 0;
 
         // when - then
         assertThrows(IllegalArgumentException.class, () -> Bet.of(amount));
@@ -36,9 +56,9 @@ public class BetTest {
 
     @Test
     @DisplayName("배팅 금액은 최대 배팅 금액을 초과할 수 없다.")
-    void setAmount_validateMaxBetAmountTest() {
+    void validateMaxBetAmountTest() {
         // given
-        int overBetAmount = 1000_000_000;
+        int overBetAmount = 1_000_000_000; // MAX_BET_AMOUNT = 1억
 
         // when - then
         assertThrows(IllegalArgumentException.class, () -> Bet.of(overBetAmount));
@@ -46,9 +66,9 @@ public class BetTest {
 
     @Test
     @DisplayName("배팅 금액은 1000원 단위로 입력해야 한다.")
-    void setAmount_validateMaxBetUnitTest() {
+    void validateMaxBetUnitTest() {
         // given
-        int amount = 10500;
+        int amount = 500;
 
         // when - then
         assertThrows(IllegalArgumentException.class, () -> Bet.of(amount));

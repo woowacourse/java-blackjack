@@ -144,7 +144,6 @@ class HandTest {
         // given
         Hand hand = new Hand();
 
-
         // when - then
         assertThrows(IllegalStateException.class, hand::getCards);
     }
@@ -154,7 +153,6 @@ class HandTest {
     void NULL_예외_처리_카드_전체() {
         // given
         Hand hand = new Hand();
-
 
         // when - then
         assertThrows(IllegalStateException.class, hand::getCards);

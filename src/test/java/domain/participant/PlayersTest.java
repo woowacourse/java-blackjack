@@ -34,12 +34,12 @@ class PlayersTest {
     void 플레이어인원수_6명이상_오류() {
         // given
         List<Player> players = List.of(
-                new Player("pobi")
-                , new Player("james")
-                , new Player("eunoh")
-                , new Player("ruro")
-                , new Player("rama")
-                , new Player("dudu"));
+                new Player("pobi"),
+                new Player("james"),
+                new Player("eunoh"),
+                new Player("ruro"),
+                new Player("rama"),
+                new Player("dudu"));
 
         // when - then
         Assertions.assertThrows(IllegalArgumentException.class, () -> new Players(players));
@@ -50,9 +50,9 @@ class PlayersTest {
     void 플레이어_이름_중복_금지() {
         // given
         List<Player> players = List.of(
-                new Player("pobi")
-                , new Player("james")
-                , new Player("pobi"));
+                new Player("pobi"),
+                new Player("james"),
+                new Player("pobi"));
 
         // when - then
         Assertions.assertThrows(IllegalArgumentException.class, () -> new Players(players));
@@ -63,9 +63,7 @@ class PlayersTest {
     void findByTest() {
         // given
         Player targetPlayer = new Player("pobi");
-        List<Player> playerNames = List.of(
-                targetPlayer
-                , new Player("james"));
+        List<Player> playerNames = List.of(targetPlayer, new Player("james"));
 
         // when - then
         Players players = new Players(playerNames);

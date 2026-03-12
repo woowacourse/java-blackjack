@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
@@ -75,91 +76,38 @@ class PlayerTest {
         Assertions.assertEquals(player.applyMatchResultToBet(MatchResult.WIN), 3000);
     }
 
-
     @ParameterizedTest
-    @DisplayName("딜러와 플레이어 패에 따라 승패를 계산한다.")
-    @MethodSource("provideGameResultCases")
-    void determineMatchResult(String description,
-                              List<Card> dealerCards,
-                              List<Card> playerCards,
-                              MatchResult expected) {
-
+    @DisplayName("플레이어의 승패 결과에 따라 돌려받는 수익을 계산한다.")
+    @CsvSource({
+            "WIN, 3000",
+            "DRAW, 0",
+            "LOSE, -3000"
+    })
+    void applyMatchResultToBetTest(MatchResult matchResult, int expectedProfit) {
         // given
-        Dealer dealer = new Dealer();
         Player player = new Player("pobi");
-
-        dealerCards.forEach(dealer::receive);
-        playerCards.forEach(player::receive);
+        player.placeBet(3000);
 
         // when
-        MatchResult result = player.determineMatchResultWithDealer(dealer);
+        int profit = player.applyMatchResultToBet(matchResult);
 
         // then
-        assertEquals(expected, result);
+        Assertions.assertEquals(expectedProfit, profit);
     }
 
-    private static Stream<Arguments> provideGameResultCases() {
-        return Stream.of(
-                Arguments.of("플레이어 버스트 패",
-                        List.of(new Card(Rank.ACE, Suit.CLOVER),
-                                new Card(Rank.KING, Suit.CLOVER)),
-                        List.of(new Card(Rank.JACK, Suit.CLOVER),
-                                new Card(Rank.SEVEN, Suit.HEART),
-                                new Card(Rank.JACK, Suit.HEART)),
-                        MatchResult.LOSE
-                ),
-                Arguments.of("딜러만 버스트 플레이어 승",
-                        List.of(new Card(Rank.JACK, Suit.CLOVER),
-                                new Card(Rank.SEVEN, Suit.HEART),
-                                new Card(Rank.JACK, Suit.HEART)),
-                        List.of(new Card(Rank.ACE, Suit.CLOVER),
-                                new Card(Rank.KING, Suit.CLOVER)),
-                        MatchResult.WIN
-                ),
-                Arguments.of("플레이어가 딜러 보다 높은 점수 플레이어 승",
-                        List.of(new Card(Rank.JACK, Suit.CLOVER),
-                                new Card(Rank.SEVEN, Suit.HEART)),
-                        List.of(new Card(Rank.QUEEN, Suit.CLOVER),
-                                new Card(Rank.KING, Suit.CLOVER)),
-                        MatchResult.WIN
-                ),
-                Arguments.of("플레이어가 딜러와 비긴 경우 무승부",
-                        List.of(new Card(Rank.JACK, Suit.CLOVER),
-                                new Card(Rank.SEVEN, Suit.HEART)),
-                        List.of(new Card(Rank.SEVEN, Suit.CLOVER),
-                                new Card(Rank.KING, Suit.CLOVER)),
-                        MatchResult.DRAW
-                ),
-                Arguments.of("동점, 플레이어만 블랙잭 플레이어 승",
-                        List.of(new Card(Rank.JACK, Suit.CLOVER),
-                                new Card(Rank.ACE, Suit.HEART),
-                                new Card(Rank.KING, Suit.HEART)),
-                        List.of(new Card(Rank.ACE, Suit.CLOVER),
-                                new Card(Rank.KING, Suit.CLOVER)),
-                        MatchResult.WIN
-                ),
-                Arguments.of("동점, 딜러만 블랙잭 딜러 승",
-                        List.of(new Card(Rank.ACE, Suit.CLOVER),
-                                new Card(Rank.KING, Suit.CLOVER)),
-                        List.of(new Card(Rank.JACK, Suit.CLOVER),
-                                new Card(Rank.ACE, Suit.HEART),
-                                new Card(Rank.KING, Suit.HEART)),
-                        MatchResult.LOSE
-                ),
-                Arguments.of("딜러와 플레이어 모두 블랙잭 무승부",
-                        List.of(new Card(Rank.ACE, Suit.CLOVER),
-                                new Card(Rank.KING, Suit.CLOVER)),
-                        List.of(new Card(Rank.JACK, Suit.CLOVER),
-                                new Card(Rank.ACE, Suit.HEART)),
-                        MatchResult.DRAW
-                ),
-                Arguments.of("플레이어가 딜러 보다 낮은 점수 플레이어 패",
-                        List.of(new Card(Rank.JACK, Suit.CLOVER),
-                                new Card(Rank.KING, Suit.CLOVER)),
-                        List.of(new Card(Rank.JACK, Suit.CLOVER),
-                                new Card(Rank.SEVEN, Suit.HEART)),
-                        MatchResult.LOSE
-                )
-        );
+    @Test
+    @DisplayName("블랙잭은 배팅금액의 1.5배를 환급받는다.")
+    void applyMatchResultToBet_BlackJackTest() {
+        // given
+        Player player = new Player("pobi");
+        player.placeBet(3000);
+
+        player.receive(new Card(Rank.ACE, Suit.CLOVER));
+        player.receive(new Card(Rank.JACK, Suit.SPADE));
+        // when
+        int profit = player.applyMatchResultToBet(MatchResult.WIN);
+
+        // then
+        Assertions.assertEquals(4500, profit);
     }
 }
