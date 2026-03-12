@@ -1,6 +1,7 @@
 package domain.participants;
 
 import domain.bet.Betting;
+import domain.card.Hand;
 import domain.hitStrategy.CasinoDealerHitStrategy;
 import domain.hitStrategy.HitStrategy;
 import domain.state.State;

@@ -2,10 +2,10 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.card.Hand;
 import domain.card.vo.Card;
 import domain.card.vo.Rank;
 import domain.card.vo.Suit;
-import domain.participants.Hand;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;

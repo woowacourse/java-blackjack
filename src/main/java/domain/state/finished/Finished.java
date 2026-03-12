@@ -1,7 +1,7 @@
 package domain.state.finished;
 
+import domain.card.Hand;
 import domain.card.vo.Card;
-import domain.participants.Hand;
 import domain.state.Result;
 import domain.state.Started;
 import domain.state.State;

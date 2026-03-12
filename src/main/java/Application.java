@@ -1,6 +1,6 @@
 import controller.BlackjackController;
-import domain.card.DeckMaker;
-import domain.card.OneRandomDeckMaker;
+import domain.card.deckMaker.DeckMaker;
+import domain.card.deckMaker.OneRandomDeckMaker;
 import view.InputView;
 import view.OutputView;
 

@@ -1,7 +1,7 @@
 package dto;
 
 import domain.bet.Betting;
-import domain.participants.Hand;
+import domain.card.Hand;
 import domain.participants.Player;
 
 public record PlayerCreateDto(

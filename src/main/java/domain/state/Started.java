@@ -1,7 +1,7 @@
 package domain.state;
 
+import domain.card.Hand;
 import domain.card.vo.Card;
-import domain.participants.Hand;
 import domain.state.finished.BlackJack;
 import domain.state.running.Hit;
 import java.util.List;

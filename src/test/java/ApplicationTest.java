@@ -1,7 +1,7 @@
 import static org.assertj.core.api.Assertions.assertThat;
 
 import controller.BlackjackController;
-import domain.card.OneDeckMaker;
+import domain.card.deckMaker.OneDeckMaker;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;

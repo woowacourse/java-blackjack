@@ -1,6 +1,5 @@
-package domain.participants;
+package domain.card;
 
-import domain.card.Deck;
 import domain.card.vo.Card;
 import java.util.ArrayList;
 import java.util.Collections;

@@ -1,4 +1,4 @@
-package domain.card;
+package domain.card.deckMaker;
 
 import domain.card.vo.Card;
 import java.util.List;

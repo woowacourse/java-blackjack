@@ -1,12 +1,13 @@
-package domain.card;
+package domain.card.deckMaker;
 
 import domain.card.vo.Card;
 import domain.card.vo.Rank;
 import domain.card.vo.Suit;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-public class OneDeckMaker implements DeckMaker {
+public class OneRandomDeckMaker implements DeckMaker {
     @Override
     public List<Card> make() {
         List<Card> cards = new LinkedList<>();
@@ -14,6 +15,7 @@ public class OneDeckMaker implements DeckMaker {
             addCards(rank, cards);
         }
 
+        Collections.shuffle(cards);
         return cards;
     }
 

@@ -1,6 +1,6 @@
 package domain.state.finished;
 
-import domain.participants.Hand;
+import domain.card.Hand;
 import domain.state.Result;
 import domain.state.State;
 import java.util.function.Function;

@@ -2,10 +2,10 @@ package controller;
 
 import domain.bet.Betting;
 import domain.card.Deck;
-import domain.card.DeckMaker;
+import domain.card.Hand;
+import domain.card.deckMaker.DeckMaker;
 import domain.hitStrategy.CasinoDealerHitStrategy;
 import domain.participants.Dealer;
-import domain.participants.Hand;
 import domain.participants.Player;
 import dto.DealerDrawDto;
 import dto.NamesDto;
