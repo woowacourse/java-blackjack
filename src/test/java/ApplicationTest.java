@@ -98,4 +98,31 @@ public class ApplicationTest {
         assertThat(output).contains("[ERROR]");
         assertThat(output).contains("영기", "라이");
     }
+
+    @Test
+    void 버스트_발생시_에러_테스트() {
+        List<Card> bustDeck = List.of(
+                new Card(Suit.SPADE, Rank.KING),
+                new Card(Suit.DIAMOND, Rank.KING),
+                new Card(Suit.HEART, Rank.JACK),
+                new Card(Suit.DIAMOND, Rank.SEVEN),
+                new Card(Suit.HEART, Rank.QUEEN)
+        );
+
+        // given
+        String input = "영기\n1000\ny\n";
+        System.setIn(new ByteArrayInputStream(input.getBytes()));
+
+        Application app = new Application(
+                new InputView(), new OutputView(),
+                new TestBlackjackGame(new Deck(bustDeck))
+        );
+
+        // when
+        app.run();
+        String output = outContent.toString();
+
+        // then
+        assertThat(output).contains("버스트 발생! 카드를 더 받을 수 없습니다.");
+    }
 }
