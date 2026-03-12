@@ -88,8 +88,7 @@ public class BettingTableTest {
 
     private Dealer createDealer(List<Card> cards) {
         TestCardGenerator testCardGenerator = TestCardGenerator.of(cards);
-        Dealer dealer = Dealer.from(CardDeck.from(testCardGenerator));
-        return dealer;
+        return Dealer.from(CardDeck.from(testCardGenerator));
     }
 
 }
