@@ -61,8 +61,6 @@ public class Main {
         }
     }
 
-
-
     private static void printResult(OutputView outputView, BlackjackGame game) {
         while (game.canDealerDraw()) {
             game.drawDealer();
