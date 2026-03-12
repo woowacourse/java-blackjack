@@ -62,8 +62,12 @@ public class TestUtil {
         return new Card(Suit.SPADES, rank);
     }
 
-    public static Betting createBetting(String name, int amount) {
+    public static Betting createBetting(String name, long amount) {
         return new Betting(createPlayer(name), new Money(amount));
+    }
+
+    public static Result createResult(String name, long amount, WinningStatus winningStatus) {
+        return new Result(createBetting(name, amount), winningStatus);
     }
 
     public static Result createAmount10000Result(String name, WinningStatus winningStatus) {
