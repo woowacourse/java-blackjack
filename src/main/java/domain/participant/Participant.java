@@ -32,8 +32,16 @@ public abstract class Participant {
         return hand.isBusted();
     }
 
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
+    }
+
     public String toDisplayMyName() {
         return name.name();
+    }
+
+    public ParticipantName getName() {
+        return name;
     }
 
     public List<String> disPlayMyCardBundle() {

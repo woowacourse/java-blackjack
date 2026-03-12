@@ -2,8 +2,10 @@ package domain.result;
 
 import static config.BlackjackGameConstant.INITIAL_CARD_DRAW_COUNT;
 
+import domain.betiing.BetAmount;
 import domain.card.*;
 import domain.participant.Dealer;
+import domain.participant.ParticipantInitialInformation;
 import domain.participant.ParticipantName;
 import domain.participant.Players;
 import domain.result.dto.GameResultDto;
@@ -30,7 +32,9 @@ class GameResultAnalyzerTest {
         Dealer dealerScore4 = Dealer.from();
 
         dealerScore4.drawCards(cardDeck, INITIAL_CARD_DRAW_COUNT);
-        Players players = Players.from(List.of(ParticipantName.from("p7"), ParticipantName.from("p11")));
+        Players players = Players.from(List.of(
+                ParticipantInitialInformation.of(ParticipantName.from("p7"), BetAmount.from(0)),
+                ParticipantInitialInformation.of( ParticipantName.from("p11"), BetAmount.from(0))));
         players.giveInitialCardBundle(cardDeck);
 
         GameResultDto analysis = GameResultAnalyzer.analyze(players, dealerScore4);

@@ -2,6 +2,7 @@ package controller;
 
 import static config.BlackjackGameConstant.*;
 
+import domain.participant.ParticipantInitialInformation;
 import domain.participant.dto.ParticipantHandDtoMapper;
 import domain.result.GameResultAnalyzer;
 import domain.result.dto.GameResultDto;
@@ -10,7 +11,6 @@ import domain.card.CardDeckInitializer;
 import config.BlackjackGameConfiguration;
 import domain.participant.Dealer;
 import domain.participant.Player;
-import domain.participant.ParticipantName;
 import domain.participant.Players;
 import domain.result.dto.ParticipantGameResultDto;
 import view.ApplicationView;
@@ -35,7 +35,8 @@ public class BlackjackGame {
 
     public void start() {
         Dealer dealer = Dealer.from();
-        Players players = Players.from(requestPlayerNames());
+        List<ParticipantInitialInformation> participantInitialInformations = requestInitialInformations();
+        Players players = Players.from(participantInitialInformations);
 
         handOutInitialCard(dealer, players);
 
@@ -91,8 +92,8 @@ public class BlackjackGame {
         view.printInitialHandOutResult(players.displayNames(), INITIAL_CARD_DRAW_COUNT);
     }
 
-    private List<ParticipantName> requestPlayerNames() {
-        return view.requestPlayerNames();
+    private List<ParticipantInitialInformation> requestInitialInformations() {
+        return view.requestInitialInformations();
     }
 
     private GameResultDto analyzeBlackjackResult(Players players, Dealer dealer) {
