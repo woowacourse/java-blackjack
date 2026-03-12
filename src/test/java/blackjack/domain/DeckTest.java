@@ -43,6 +43,5 @@ public class DeckTest {
 
         assertThat(deck.getCount()).isEqualTo(0);
     }
-
-
+    
 }

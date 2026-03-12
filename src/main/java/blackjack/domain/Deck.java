@@ -12,6 +12,10 @@ public class Deck {
         this.deck = createDeck();
     }
 
+    public Deck(List<Card> cards) {
+        this.deck = new ArrayList<>(cards);
+    }
+
     private List<Card> createDeck() {
         List<Card> deck = new ArrayList<>();
         for (CardPattern cardPattern : CardPattern.values()) {
