@@ -6,10 +6,13 @@ import domain.card.Suit;
 import exception.ErrorMessage;
 import org.junit.jupiter.api.Test;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 class GameTest {
@@ -132,5 +135,38 @@ class GameTest {
         assertThatThrownBy(() -> new Game(names, new Deck()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.DUPLICATE_NAME.getMessage());
+    }
+
+    @Test
+    void 라운드_정산시_승패에_따라_베팅_결과를_반영한다() {
+        // given
+        Deck deck = mock(Deck.class);
+        when(deck.drawCard()).thenReturn(
+                new Card(Suit.HEARTS, Rank.NUM10),
+                new Card(Suit.SPADES, Rank.NUM10),
+                new Card(Suit.CLUBS, Rank.NUM8),
+                new Card(Suit.DIAMONDS, Rank.NUM7),
+                new Card(Suit.HEARTS, Rank.NUM9),
+                new Card(Suit.CLUBS, Rank.NUM8)
+        );
+
+        Game game = new Game(List.of("시오", "봉구스"), deck);
+        Player winPlayer = game.getPlayers().get(0);
+        Player losePlayer = game.getPlayers().get(1);
+        Judge judge = new Judge(game.getDealer(), game.getPlayers());
+
+        Map<Player, Money> moneyTable = new LinkedHashMap<>();
+        moneyTable.put(winPlayer, new Money(1000L));
+        moneyTable.put(losePlayer, new Money(1000L));
+        BettingTable bettingTable = new BettingTable(moneyTable);
+
+        // when
+        game.settleRoundBets(judge, bettingTable);
+
+        // then
+        assertAll(
+                () -> assertEquals(1000L, bettingTable.getMoneyTable().get(winPlayer).getMoney()),
+                () -> assertEquals(-1000L, bettingTable.getMoneyTable().get(losePlayer).getMoney())
+        );
     }
 }
