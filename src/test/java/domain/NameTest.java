@@ -19,7 +19,7 @@ class NameTest {
 
     @Test
     @DisplayName("이름은 2글자 이상이어야한다.")
-    void validateBlank_InputOneLength_ThrowsException() {
+    void validateLength_InputOneLength_ThrowsException() {
         String name = "a";
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             new Name(name);
@@ -29,7 +29,7 @@ class NameTest {
 
     @Test
     @DisplayName("이름은 5글자 이하여야한다.")
-    void validateBlank_InputSixLength_ThrowsException() {
+    void validateLength_InputSixLength_ThrowsException() {
         String name = "abcdefg";
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             new Name(name);

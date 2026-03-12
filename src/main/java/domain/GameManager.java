@@ -3,8 +3,10 @@ package domain;
 import dto.ParticipantCardsDto;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class GameManager {
     private static final int MAX_PLAYER = 8;
@@ -79,6 +81,7 @@ public class GameManager {
     public static void validatePlayersNumber(List<String> playerNames) {
         validateMinimumPlayers(playerNames);
         validateMaximumPlayers(playerNames);
+        validateDuplicateName(playerNames);
     }
 
     private static void validateMaximumPlayers(List<String> playerNames) {
@@ -90,6 +93,13 @@ public class GameManager {
     private static void validateMinimumPlayers(List<String> playerNames) {
         if (playerNames.isEmpty()) {
             throw new IllegalArgumentException("플레이어의 수는 1명 이상이어야 합니다.");
+        }
+    }
+
+    private static void validateDuplicateName(List<String> names){
+        Set<String> uniqueNames = new HashSet<>(names);
+        if (names.size() != uniqueNames.size()) {
+            throw new IllegalArgumentException("중복된 참가자 이름이 있습니다!");
         }
     }
 }

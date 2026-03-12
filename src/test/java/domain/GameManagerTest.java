@@ -2,6 +2,7 @@ package domain;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
@@ -33,5 +34,17 @@ class GameManagerTest {
 
         assertEquals(true, pobiResult);
         assertEquals(false, crongResult);
+    }
+    @Test
+    @DisplayName("플레이어들의 이름에 중복이 있는지 검사한다.")
+    void validateDuplicateName_DuplicateName_ThrowsException() {
+        List<String> name = new ArrayList<>();
+        name.add("pobi");
+        name.add("jason");
+        name.add("pobi");
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            GameManager.validatePlayersNumber(name);
+        });
+        assertEquals("중복된 참가자 이름이 있습니다!", exception.getMessage());
     }
 }
