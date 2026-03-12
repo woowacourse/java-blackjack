@@ -29,7 +29,7 @@ public enum Number {
         return Arrays.stream(values())
                 .filter(number -> number.value == value)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("ERROR"));
+                .orElseThrow(() -> new IllegalArgumentException("카드의 숫자는 1~11 사이여야 합니다. 입력값 : " + value));
     }
 
     public int getValue() {

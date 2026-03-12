@@ -18,7 +18,8 @@ public enum Shape {
         return Arrays.stream(values())
                 .filter(shape -> shape.shapeKoreanName.equals(shapeKoreanName))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("ERROR"));
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "카드 모양은 하트, 스페이드, 다이아몬드, 클로버 중 하나여야 합니다. 입력값 : " + shapeKoreanName));
     }
 
     public String getShape() {
