@@ -22,6 +22,35 @@ public class Hand {
         updateScore(card);
     }
 
+
+    public boolean isBust() {
+        return getScore() > BUST_BOUND;
+    }
+
+    public boolean isBlackjack() {
+        return hand.size() == 2 && getScore() == BUST_BOUND;
+    }
+
+
+    public int getScore() {
+        int notBustMaxScore = 0; // 21 이하 중에 최대 점수
+
+        if (scores.isEmpty()) {
+            return 0;
+        }
+
+        for (final int score : scores) {
+            notBustMaxScore = getNotBustMaxScore(score, notBustMaxScore);
+        }
+
+        if (notBustMaxScore != 0) { // 없다면, 제일 작은거
+            return notBustMaxScore;
+        }
+
+        return Collections.min(scores);
+    }
+
+
     private void updateScore(final Card card) {
         final HashSet<Integer> newScore = new HashSet<>();
 
@@ -41,29 +70,6 @@ public class Hand {
         for (final int s : card.getCardRank().getScores()) {
             newScore.add(score + s);
         }
-    }
-
-
-    public boolean isBust() {
-        return getScore() > BUST_BOUND;
-    }
-
-    public boolean isBlackjack() {
-        return hand.size() == 2 && getScore() == BUST_BOUND;
-    }
-
-
-    public int getScore() {
-        int notBustMaxScore = 0; // 21 이하 중에 최대 점수
-        for (final int score : scores) {
-            notBustMaxScore = getNotBustMaxScore(score, notBustMaxScore);
-        }
-
-        if (notBustMaxScore != 0) { // 없다면, 제일 작은거
-            return notBustMaxScore;
-        }
-
-        return Collections.min(scores);
     }
 
     private static int getNotBustMaxScore(final int score, int notBustMaxScore) {
