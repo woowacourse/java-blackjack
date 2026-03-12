@@ -51,9 +51,11 @@ public class BlackjackGame {
 
 
     private void showCardNames(Players players, Dealer dealer) {
-        OutputView.showIntroMessage(players);
-        OutputView.showDealerCardName(dealer);
-        OutputView.showPlayerCardName(players);
+        OutputView.showIntroMessage(players.getPlayerNames());
+        OutputView.showDealerCardName(dealer.firstCardNames());
+        players.getPlayers().forEach(
+                player -> OutputView.showCardName(player.getName(), player.createCardNames())
+        );
     }
 
     private void playPlayerTurn(Players players, Deck deck) {
@@ -65,11 +67,12 @@ public class BlackjackGame {
         GameCommand gameCommand = GameCommand.from(input);
 
         if (gameCommand.isNo()) {
+            OutputView.showCardName(player.getName(), player.createCardNames());
             return;
         }
 
         player.playTurn(deck);
-        OutputView.showCardName(player);
+        OutputView.showCardName(player.getName(), player.createCardNames());
 
         if (!player.isBust()) {
             determineGameState(deck, player);
@@ -86,7 +89,10 @@ public class BlackjackGame {
     private void playTurn(Players players, Deck deck, Dealer dealer) {
         playPlayerTurn(players, deck);
         playDealerTurn(dealer, deck);
-        OutputView.showResult(dealer, players);
+        OutputView.showCardAndScore("딜러", dealer.createCardNames(), dealer.getScore());
+        players.getPlayers().forEach(
+                player -> OutputView.showCardAndScore(player.getName(), player.createCardNames(), player.getScore())
+        );
     }
 
     private void judge(Dealer dealer, Players players) {

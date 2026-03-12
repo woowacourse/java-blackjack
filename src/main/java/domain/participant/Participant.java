@@ -50,4 +50,10 @@ public class Participant {
         return hand.calculate();
     }
 
+    public List<String> createCardNames() {
+        return getCards().stream()
+                .map(Card::getCardName)
+                .toList();
+    }
+
 }

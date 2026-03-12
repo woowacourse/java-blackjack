@@ -1,6 +1,8 @@
 package domain.participant;
 
 import domain.card.Deck;
+import java.util.ArrayList;
+import java.util.List;
 
 public record Dealer(Participant dealer) {
 
@@ -31,7 +33,17 @@ public record Dealer(Participant dealer) {
         return dealer;
     }
 
-    public boolean isBust(){
+    public boolean isBust() {
         return dealer.isBust();
+    }
+
+    public List<String> firstCardNames() {
+        List<String> dealerCard = new ArrayList<>(dealer.createCardNames());
+        dealerCard.removeLast();
+        return dealerCard;
+    }
+
+    public List<String> createCardNames() {
+        return dealer.createCardNames();
     }
 }

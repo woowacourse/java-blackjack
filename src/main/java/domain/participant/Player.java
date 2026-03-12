@@ -2,6 +2,7 @@ package domain.participant;
 
 import domain.BattingMoney;
 import domain.card.Deck;
+import java.util.List;
 
 public class Player {
     private final Participant participant;
@@ -47,5 +48,9 @@ public class Player {
 
     public int getBattingMoney() {
         return battingMoney.money();
+    }
+
+    public List<String> createCardNames() {
+        return participant.createCardNames();
     }
 }
