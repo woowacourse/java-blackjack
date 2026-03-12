@@ -10,7 +10,6 @@ public class Hand {
 
     public static final int BLACKJACK_SCORE = 21;
 
-
     private final List<Card> cards;
 
     public Hand() {
@@ -26,7 +25,6 @@ public class Hand {
     }
 
     public int calculateScore() {
-
         int baseScore = cards.stream()
                 .mapToInt((card) -> card.getRank().getBaseScore())
                 .sum();
@@ -36,10 +34,9 @@ public class Hand {
                 .count();
 
         for (int i = 0; i < aceCount; i++) {
-            baseScore = convertAceToEleven(baseScore);
+            baseScore = convertAceToHigh(baseScore);
         }
         return baseScore;
-
     }
 
     public boolean isBlackjack() {
@@ -50,7 +47,7 @@ public class Hand {
         return calculateScore() > BLACKJACK_SCORE;
     }
 
-    private int convertAceToEleven(int currentScore) {
+    private int convertAceToHigh(int currentScore) {
         int aceScoreGap = Rank.ACE.getHighScore() - Rank.ACE.getBaseScore();
         if (currentScore + aceScoreGap <= BLACKJACK_SCORE) {
             return currentScore + aceScoreGap;

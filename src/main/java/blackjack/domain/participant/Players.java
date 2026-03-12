@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.result.GameJudge;
 import blackjack.domain.result.GameOutcome;
 import blackjack.domain.result.GameResult;
 import blackjack.domain.result.GameSummary;
@@ -12,6 +13,7 @@ public class Players {
 
     public Players(List<Player> allPlayers) {
         validateDuplicate(allPlayers);
+        validatePlayerCount(allPlayers);
         this.players = allPlayers;
     }
 
@@ -19,38 +21,26 @@ public class Players {
         return players;
     }
 
-    public List<GameSummary> calculateGameSummary(Dealer dealer) {
-
+    public List<GameSummary> calculateGameSummaries(Dealer dealer) {
         List<GameSummary> gameSummaries = new ArrayList<>();
-
-        GameSummary dealerSummary = GameSummary.from(dealer);
-        gameSummaries.add(dealerSummary);
-
-        for (Player player : players) {
-            GameOutcome result = GameOutcome.judge(player, dealer);
-
-            player.mark(result);
-            dealer.addResult(result.reverse());
-
-            gameSummaries.add(GameSummary.from(player));
-        }
-
+        gameSummaries.add(GameSummary.from(dealer));
+        players.forEach(player -> gameSummaries.add(GameSummary.from(player)));
         return gameSummaries;
     }
 
-    public List<GameResult> calculateGameResult(Dealer dealer) {
+    public List<GameResult> calculateGameResults(Dealer dealer) {
+        GameJudge gameJudge = new GameJudge();
         List<GameResult> gameResults = new ArrayList<>();
         int totalPlayerProfit = 0;
 
         for (Player player : players) {
-            int playerProfit = player.getBet().calculateProfit(player.getGameOutcome().getPayoutRate());
+            GameOutcome outcome = gameJudge.judge(player, dealer);
+            int playerProfit = player.getBet().calculateProfit(outcome.getPayoutRate());
             totalPlayerProfit += playerProfit;
             gameResults.add(GameResult.from(player, playerProfit));
         }
 
-        int dealerProfit = -totalPlayerProfit;
-        gameResults.addFirst(GameResult.from(dealer, dealerProfit));
-
+        gameResults.addFirst(GameResult.from(dealer, -totalPlayerProfit));
         return gameResults;
     }
 
@@ -58,6 +48,12 @@ public class Players {
         long unique = allPlayers.stream().map(Player::getName).distinct().count();
         if (unique != allPlayers.size()) {
             throw new IllegalArgumentException("플레이어 이름은 중복될 수 없습니다.");
+        }
+    }
+
+    private void validatePlayerCount(List<Player> allPlayers) {
+        if (allPlayers.size() > 7) {
+            throw new IllegalArgumentException("플레이어의 최대 인원은 7명입니다.");
         }
     }
 }

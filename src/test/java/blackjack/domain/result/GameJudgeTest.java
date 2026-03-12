@@ -13,15 +13,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class GameOutcomeTest {
-
+class GameJudgeTest {
     private List<Card> blackjackCards;
     private List<Card> bustCards;
     private List<Card> lowCards;
     private List<Card> highCards;
+    private GameJudge gameJudge;
 
     @BeforeEach
     void setup() {
+        gameJudge = new GameJudge();
         blackjackCards = List.of(new Card(Suit.CLOVER, Rank.ACE), new Card(Suit.CLOVER, Rank.JACK));
         bustCards = List.of(new Card(Suit.CLOVER, Rank.KING), new Card(Suit.CLOVER, Rank.JACK),
                 new Card(Suit.CLOVER, Rank.TWO));
@@ -51,7 +52,7 @@ class GameOutcomeTest {
     @DisplayName("플레이어만 블랙잭이면 플레이어 블랙잭 승리")
     void test_player_win_when_player_is_blackjack() {
 
-        assertThat(GameOutcome.judge(createPlayer(blackjackCards), createDealer(highCards))).isEqualTo(
+        assertThat(gameJudge.judge(createPlayer(blackjackCards), createDealer(highCards))).isEqualTo(
                 GameOutcome.BLACKJACK_WIN);
     }
 
@@ -59,7 +60,7 @@ class GameOutcomeTest {
     @DisplayName("플레이어와 딜러 모두 블랙잭이면 무승부")
     void test_draw_when_both_are_blackjack() {
 
-        assertThat(GameOutcome.judge(createPlayer(blackjackCards), createDealer(blackjackCards))).isEqualTo(
+        assertThat(gameJudge.judge(createPlayer(blackjackCards), createDealer(blackjackCards))).isEqualTo(
                 GameOutcome.DRAW);
     }
 
@@ -67,7 +68,7 @@ class GameOutcomeTest {
     @DisplayName("딜러만 블랙잭이면 플레이어 패배")
     void test_player_lose_when_dealer_is_blackjack() {
 
-        assertThat(GameOutcome.judge(createPlayer(highCards), createDealer(blackjackCards))).isEqualTo(
+        assertThat(gameJudge.judge(createPlayer(highCards), createDealer(blackjackCards))).isEqualTo(
                 GameOutcome.LOSE);
     }
 
@@ -76,21 +77,21 @@ class GameOutcomeTest {
     @DisplayName("플레이어가 버스트면 플레이어 패배")
     void test_player_lose_when_player_is_bust() {
 
-        assertThat(GameOutcome.judge(createPlayer(bustCards), createDealer(highCards))).isEqualTo(GameOutcome.LOSE);
+        assertThat(gameJudge.judge(createPlayer(bustCards), createDealer(highCards))).isEqualTo(GameOutcome.LOSE);
     }
 
     @Test
     @DisplayName("딜러만 버스트면 플레이어 승리")
     void test_player_win_when_dealer_is_bust() {
 
-        assertThat(GameOutcome.judge(createPlayer(highCards), createDealer(bustCards))).isEqualTo(GameOutcome.WIN);
+        assertThat(gameJudge.judge(createPlayer(highCards), createDealer(bustCards))).isEqualTo(GameOutcome.WIN);
     }
 
     @Test
     @DisplayName("블랙잭과 버스트 경우 외에 점수가 더 높으면 승리")
     void test_win_when_player_score_is_higher() {
 
-        assertThat(GameOutcome.judge(createPlayer(highCards), createDealer(lowCards))).isEqualTo(GameOutcome.WIN);
+        assertThat(gameJudge.judge(createPlayer(highCards), createDealer(lowCards))).isEqualTo(GameOutcome.WIN);
     }
 
 
@@ -98,7 +99,7 @@ class GameOutcomeTest {
     @DisplayName("블랙잭과 버스트 경우 외에 점수가 같으면 무승부")
     void test_draw_when_scores_are_equal() {
 
-        assertThat(GameOutcome.judge(createPlayer(highCards), createDealer(highCards))).isEqualTo(GameOutcome.DRAW);
+        assertThat(gameJudge.judge(createPlayer(highCards), createDealer(highCards))).isEqualTo(GameOutcome.DRAW);
     }
 
 }

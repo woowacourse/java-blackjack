@@ -6,8 +6,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
-import blackjack.domain.result.GameOutcome;
-import java.util.EnumMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,20 +37,5 @@ class DealerTest {
         dealer.addCard(new Card(Suit.CLOVER, Rank.SEVEN));
 
         assertThat(dealer.canHit()).isFalse();
-    }
-
-    @Test
-    @DisplayName("GameResult 기록 결과 정상")
-    void test_gameresult_add_and_count() {
-
-        dealer.addResult(GameOutcome.WIN);
-        dealer.addResult(GameOutcome.WIN);
-        dealer.addResult(GameOutcome.DRAW);
-        dealer.addResult(GameOutcome.LOSE);
-
-        EnumMap<GameOutcome, Integer> gameresults = dealer.getGameResults();
-        assertThat(gameresults.get(GameOutcome.WIN)).isEqualTo(2);
-        assertThat(gameresults.get(GameOutcome.DRAW)).isEqualTo(1);
-        assertThat(gameresults.get(GameOutcome.LOSE)).isEqualTo(1);
     }
 }

@@ -33,8 +33,8 @@ public class BlackjackController {
         initCards(players, dealer);
         hit(players, dealer);
 
-        displayGameSummary(players, dealer);
-        displayGameResult(players, dealer);
+        displayGameSummaries(players, dealer);
+        displayGameResults(players, dealer);
 
         inputView.closeScanner();
     }
@@ -76,13 +76,13 @@ public class BlackjackController {
         }
     }
 
-    private void displayGameSummary(Players players, Dealer dealer) {
-        List<GameSummary> gameSummaries = players.calculateGameSummary(dealer);
+    private void displayGameSummaries(Players players, Dealer dealer) {
+        List<GameSummary> gameSummaries = players.calculateGameSummaries(dealer);
         outputView.printGameSummary(gameSummaries);
     }
 
-    private void displayGameResult(Players players, Dealer dealer) {
-        List<GameResult> gameResults = players.calculateGameResult(dealer);
+    private void displayGameResults(Players players, Dealer dealer) {
+        List<GameResult> gameResults = players.calculateGameResults(dealer);
         outputView.printGameResult(gameResults);
     }
 
