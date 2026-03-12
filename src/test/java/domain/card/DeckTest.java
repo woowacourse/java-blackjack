@@ -45,4 +45,3 @@ public class DeckTest {
                 .hasMessage(DECK_IS_EMPTY.getMessage());
     }
 }
-
