@@ -19,6 +19,9 @@ public class OutputView {
     private static final String FINAL_RESULT = "## 최종 승패";
     private static final String DEALER_RESULT = "딜러: %d승 %d패 %d무";
     private static final String PLAYER_RESULT = "%s: %s";
+    private static final String FINAL_PROFIT = "## 최종 수익";
+    private static final String DEALER_PROFIT = "딜러: %d";
+    private static final String PLAYER_PROFIT = "%s: %d";
 
     public void printPlayers(List<Card> dealerCard, Map<Name, List<Card>> playerCards) {
         String playerNames = String.join(STRING_JOIN_DELIMITER, playerCards.keySet().toString());
@@ -74,6 +77,15 @@ public class OutputView {
         for (Name playerName : playerResults.keySet()) {
             System.out.printf(PLAYER_RESULT + LINE_SEPARATOR, playerName,
                     playerResults.get(playerName).getDescription());
+        }
+    }
+
+    public void printProfit(int dealerBetProfit, Map<Name, Integer> playerBetProfit) {
+        System.out.println(LINE_SEPARATOR + FINAL_PROFIT);
+        System.out.printf(DEALER_PROFIT + LINE_SEPARATOR, dealerBetProfit);
+
+        for (Name name : playerBetProfit.keySet()) {
+            System.out.printf(PLAYER_PROFIT + LINE_SEPARATOR, name, playerBetProfit.get(name));
         }
     }
 }
