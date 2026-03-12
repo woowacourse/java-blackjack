@@ -6,7 +6,6 @@ import domain.card.Card;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 public class Players {
 
@@ -41,12 +40,6 @@ public class Players {
         }
     }
 
-    public void dealCardToAllPlayers(Supplier<Card> cardSupplier) {
-        for (Player player : players) {
-            player.receive(cardSupplier.get());
-        }
-    }
-
     public void playTurns(Consumer<Player> action) {
         for (Player player : players) {
             action.accept(player);
@@ -57,7 +50,7 @@ public class Players {
         Map<Player, MatchResult> result = new HashMap<>();
 
         for (Player player : players) {
-            result.put(player, player.determineMatchResultWithDealer(dealer));
+            result.put(player, MatchResult.determineMatchResultWithDealer(player, dealer));
         }
 
         return result;
@@ -107,5 +100,9 @@ public class Players {
     private void validateSize(List<Player> playerNames) {
         if (playerNames.size() > MAX_PLAYER_SIZE)
             throw new IllegalArgumentException("플레이어 인원 수는 5명 이하여야 합니다.");
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 }
