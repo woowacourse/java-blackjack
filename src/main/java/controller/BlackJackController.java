@@ -5,6 +5,7 @@ import domain.service.BlackJackService;
 import dto.InitialDto;
 import dto.PlayerResultDto;
 import dto.ResultDto;
+import java.util.List;
 import util.InputValidator;
 import util.Parser;
 import view.InputView;
@@ -30,12 +31,17 @@ public class BlackJackController {
         InitialDto initialDto = blackJackService.createPlayer(stringParser.splitToDelimiter(inputPlayerNames, ","));
         outputView.outputInitialMessage(initialDto);
 
+        List<Player> players = blackJackService.getAllPlayers();
+
+        players.forEach(this::getBetMoney);
+
         // 카드 추가 분배
-        blackJackService.getAllPlayers().forEach(this::getAdditionalCard);
+        players.forEach(this::getAdditionalCard);
         // 딜러 추가 배부
         getAdditionalDealerCard();
 
         // 결과 출력
+        // TODO : 결과값 정수로 반환
         ResultDto judgement = blackJackService.judgement();
         outputView.playerResultMessage(judgement);
     }
@@ -69,6 +75,13 @@ public class BlackJackController {
             inputPlayers();
         }
         return inputPlayerNames;
+    }
+
+    public void getBetMoney(Player player) {
+        String inputMoney = inputView.inputBetMoney(player.getName());
+        int money = Integer.parseInt(inputMoney);
+        player.bet(money);
+        // TODO : 검증 & int 변환 분리
     }
 
     public String readYesOrNo(Player player) {
