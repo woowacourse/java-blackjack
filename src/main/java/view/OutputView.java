@@ -10,10 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import domain.pariticipant.*;
-import domain.result.DealerMatchResult;
-import domain.result.MatchCase;
-import domain.result.MatchResult;
-import domain.result.PlayersMatchResult;
+import domain.result.*;
 
 public class OutputView {
 
@@ -77,7 +74,6 @@ public class OutputView {
         printDealerCardResult(dealer);
         printPlayerCardResult(players);
 
-        System.out.println();
     }
 
     private static void printDealerCardResult(Participant dealer) {
@@ -120,6 +116,15 @@ public class OutputView {
         Map<Player, MatchCase> playerMatchCaseMap = playersMatchResult.playerMatchResult();
         for (Player player : playerMatchCaseMap.keySet()) {
             System.out.printf("%s: %s\n", player.getName(), playerMatchCaseMap.get(player).getDescription());
+        }
+    }
+
+    public void printBettingProfit(PlayersBettingProfit playersBettingProfit) {
+        System.out.println("\n## 최종 수익");
+        System.out.printf("딜러: %d\n", playersBettingProfit.calculateDealerProfit());
+        Map<Player, Integer> profitMap = playersBettingProfit.playersBettingProfit();
+        for (Player player : profitMap.keySet()) {
+            System.out.printf("%s: %d\n", player.getName(), profitMap.get(player));
         }
     }
 
