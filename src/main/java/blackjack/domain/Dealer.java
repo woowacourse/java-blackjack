@@ -36,7 +36,7 @@ public class Dealer extends Participant {
     }
 
     public void decideHit() {
-        int totalScore = hand.calculateScore();
+        int totalScore = getScore();
         if (totalScore > DEALER_HIT_THRESHOLD) {
             stay();
         }
@@ -44,7 +44,7 @@ public class Dealer extends Participant {
 
     public List<String> getOpenCardNames() {
         final int holeIndex = 1;
-        return hand.getCardNames(holeIndex);
+        return getCardNames(holeIndex);
     }
 
     @Override
