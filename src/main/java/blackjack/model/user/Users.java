@@ -1,6 +1,6 @@
 package blackjack.model.user;
 
-import blackjack.model.BetAmounts;
+import blackjack.model.bet.BetAmounts;
 import blackjack.model.gameresult.ProfitResult;
 import java.util.ArrayList;
 import java.util.HashMap;

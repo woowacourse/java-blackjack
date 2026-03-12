@@ -3,7 +3,7 @@ package blackjack.controller;
 import static blackjack.util.ExceptionHandler.retryUntilSuccess;
 
 import blackjack.BlackjackGame;
-import blackjack.model.BetAmounts;
+import blackjack.model.bet.BetAmounts;
 import blackjack.model.gameresult.ProfitResult;
 import blackjack.model.user.Users;
 import blackjack.view.InputView;

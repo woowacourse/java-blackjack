@@ -2,8 +2,8 @@ package blackjack;
 
 import static blackjack.util.ExceptionHandler.retryUntilSuccess;
 
-import blackjack.model.BetAmount;
-import blackjack.model.BetAmounts;
+import blackjack.model.bet.BetAmount;
+import blackjack.model.bet.BetAmounts;
 import blackjack.model.card.CardProvider;
 import blackjack.model.card.HitCommand;
 import blackjack.model.gameresult.ProfitResult;

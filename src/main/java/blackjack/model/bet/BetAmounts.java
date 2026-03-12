@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.model.bet;
 
 import blackjack.model.user.Player;
 import java.util.Map;
