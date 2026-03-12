@@ -5,7 +5,7 @@ import blackjack.domain.Dealer;
 import blackjack.domain.GameResult;
 import blackjack.domain.Participant;
 import blackjack.domain.Player;
-import blackjack.domain.PlayerBetting;
+import blackjack.domain.ProfitResults;
 import blackjack.domain.ScoreCompareResult;
 import blackjack.service.Game;
 import java.util.HashMap;
@@ -16,52 +16,39 @@ import org.junit.jupiter.api.Test;
 public class PlayerBetTest {
     @Test
     void calculate_profit_when_player_win_except_blackjack() {
-        Player player = new Player("player");
+        Player player = new Player("player", 1000);
 
-        PlayerBetting playerBetting = new PlayerBetting(player, 1000);
-
-        assertThat(playerBetting.calculateProfit(ScoreCompareResult.PLAYER_WIN)).isEqualTo(1000);
+        assertThat(player.calculateProfit(ScoreCompareResult.PLAYER_WIN)).isEqualTo(1000);
     }
 
     @Test
     void calculate_profit_when_player_win_with_blackjack() {
-        Player player = createPlayer("player", "A:스페이드", "10:하트");
+        Player player = createPlayer("player", 1000, "A:스페이드", "10:하트");
 
-        PlayerBetting playerBetting = new PlayerBetting(player, 1000);
-
-        assertThat(playerBetting.calculateProfit(ScoreCompareResult.PLAYER_WIN)).isEqualTo(1500);
+        assertThat(player.calculateProfit(ScoreCompareResult.PLAYER_WIN)).isEqualTo(1500);
     }
 
     @Test
     void calculate_profit_when_player_lose() {
-        Player player = new Player("player");
+        Player player = new Player("player", 1000);
 
-        PlayerBetting playerBetting = new PlayerBetting(player, 1000);
-
-        assertThat(playerBetting.calculateProfit(ScoreCompareResult.PLAYER_LOSE)).isEqualTo(-1000);
+        assertThat(player.calculateProfit(ScoreCompareResult.PLAYER_LOSE)).isEqualTo(-1000);
     }
 
     @Test
     void calculate_profit_when_player_draw() {
-        Player player = new Player("player");
+        Player player = new Player("player", 1000);
 
-        PlayerBetting playerBetting = new PlayerBetting(player, 1000);
-
-        assertThat(playerBetting.calculateProfit(ScoreCompareResult.PUSH)).isEqualTo(0);
+        assertThat(player.calculateProfit(ScoreCompareResult.PUSH)).isEqualTo(0);
     }
 
     @Test
     void calculate_total_profit_result() {
-        Player winningPlayer = createPlayer("winningPlayer", "Q:스페이드", "10:하트");
-        Player losingPlayer = createPlayer("losingPlayer", "9:스페이드", "8:하트");
+        Player winningPlayer = createPlayer("winningPlayer", 1000, "Q:스페이드", "10:하트");
+        Player losingPlayer = createPlayer("losingPlayer", 1500, "9:스페이드", "8:하트");
         Dealer dealer = createDealer("10:스페이드", "8:하트");
 
-        PlayerBetting winningPlayerBetting = new PlayerBetting(winningPlayer, 1000);
-        PlayerBetting losingPlayerBetting = new PlayerBetting(losingPlayer, 1500);
-
-        List<PlayerBetting> playersBetting = List.of(winningPlayerBetting, losingPlayerBetting);
-
-        Game game = new Game(playersBetting, dealer);
+        Game game = new Game(List.of(winningPlayer, losingPlayer), dealer);
         GameResult gameResult = game.judgeTotalGameResult();
 
         ProfitResults actualProfitResults = game.calculateTotalProfitResults(gameResult);
@@ -76,8 +63,8 @@ public class PlayerBetTest {
     }
 
 
-    private Player createPlayer(String name, String... cards) {
-        Player player = new Player(name);
+    private Player createPlayer(String name, int bettingAmount, String... cards) {
+        Player player = new Player(name, bettingAmount);
         for (String card : cards) {
             String[] parts = card.split(":");
             player.receiveOneCard(new Card(parts[0], parts[1]));
