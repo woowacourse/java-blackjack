@@ -5,7 +5,6 @@ import domain.Game;
 import domain.card.CardGenerator;
 import domain.card.Deck;
 import domain.enums.Result;
-import domain.participant.Players;
 import dto.CardDto;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -25,17 +24,16 @@ public class BlackjackController {
     }
 
     public void start() {
-        Players players = retryOnException(this::makePlayers);
+        List<String> names = retryOnException(this::askPlayerNames);
         Deck deck = new Deck(CardGenerator.generateCards());
-        Game game = new Game(players);
+        Game game = new Game(names);
 
         playGame(game, deck);
     }
 
-    private Players makePlayers() {
+    private List<String> askPlayerNames() {
         String input = InputView.askPlayerNames();
-        List<String> names = InputParser.parseNames(input);
-        return new Players(names);
+        return InputParser.parseNames(input);
     }
 
     private void playGame(Game game, Deck deck) {

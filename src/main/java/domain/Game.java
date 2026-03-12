@@ -8,15 +8,14 @@ import domain.enums.Result;
 import domain.participant.Dealer;
 import domain.participant.Players;
 import java.util.List;
-import java.util.Map;
 
 public class Game {
 
     private final Players players;
     private final Dealer dealer;
 
-    public Game(Players players) {
-        this.players = players;
+    public Game(List<String> names) {
+        this.players = new Players(names);
         this.dealer = new Dealer();
     }
 
@@ -66,10 +65,6 @@ public class Game {
 
     public Result getPlayerResult(String name) {
         return players.getPlayerResult(name, dealer);
-    }
-
-    public Map<Result, Integer> getDealerResult() {
-        return dealer.calculateResults(players.decideAllResults(dealer));
     }
 
     public int getPlayerScore(String name) {
