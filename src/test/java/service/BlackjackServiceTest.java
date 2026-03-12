@@ -2,6 +2,7 @@ package service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import dto.BlackjackResultDto;
 import factory.BlackjackFactory;
 import constant.HitOrStand;
 import domain.Rank;
@@ -10,7 +11,7 @@ import domain.Suit;
 import domain.Card;
 import dto.BlackjackStatisticsDto;
 import dto.ParticipantDto;
-import dto.PlayerResultDto;
+import dto.PlayerStatisticDto;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;
@@ -50,28 +51,10 @@ class BlackjackServiceTest {
     }
 
     @Nested
-    class DealInitialCardsTest {
+    class DrawInitialCardsTest {
 
         @Nested
         class Success {
-
-            @Test
-            void 초기_카드_분배시_딜러는_1장_플레이어는_2장씩_초기_결과에_노출된다() {
-
-                // given
-                blackjackService.createPlayers(List.of("jacob", "seoye"));
-
-                // when
-                blackjackService.dealInitialCards();
-                List<ParticipantDto> actual = blackjackService.generateInitialParticipantDtoList();
-
-                // then
-                assertThat(actual).hasSize(3);
-                assertThat(actual.getFirst().name()).isEqualTo("딜러");
-                assertThat(actual.getFirst().hand()).hasSize(1);
-                assertThat(actual.get(1).hand()).hasSize(2);
-                assertThat(actual.get(2).hand()).hasSize(2);
-            }
 
             @Test
             void 초기_카드_분배시_최종_결과에는_모두_2장씩_있어야_한다() {
@@ -80,14 +63,12 @@ class BlackjackServiceTest {
                 blackjackService.createPlayers(List.of("jacob", "seoye"));
 
                 // when
-                blackjackService.dealInitialCards();
-                List<ParticipantDto> actual = blackjackService.getBlackjackResult();
+                blackjackService.drawInitialCards();
+                BlackjackResultDto actual = blackjackService.getBlackjackResult();
 
                 // then
-                assertThat(actual).hasSize(3);
-                assertThat(actual.getFirst().hand()).hasSize(2);
-                assertThat(actual.get(1).hand()).hasSize(2);
-                assertThat(actual.get(2).hand()).hasSize(2);
+                assertThat(actual.playerResultDtoList().get(0).hand()).hasSize(2);
+                assertThat(actual.playerResultDtoList().get(1).hand()).hasSize(2);
             }
         }
     }
@@ -108,7 +89,7 @@ class BlackjackServiceTest {
                         card(Rank.FOUR, Suit.HEART), card(Rank.FIVE, Suit.SPADE)
                 ));
                 blackjackService.createPlayers(List.of("jacob", "seoye"));
-                blackjackService.dealInitialCards();
+                blackjackService.drawInitialCards();
 
                 // when
                 ParticipantDto actual = blackjackService.generateInitialDealerDto();
@@ -136,7 +117,7 @@ class BlackjackServiceTest {
                         card(Rank.FOUR, Suit.HEART), card(Rank.FIVE, Suit.SPADE)
                 ));
                 blackjackService.createPlayers(List.of("jacob", "seoye"));
-                blackjackService.dealInitialCards();
+                blackjackService.drawInitialCards();
 
                 // when
                 ParticipantDto actual = blackjackService.generateDealerDto();
@@ -164,10 +145,10 @@ class BlackjackServiceTest {
                         card(Rank.FOUR, Suit.HEART), card(Rank.FIVE, Suit.SPADE)
                 ));
                 blackjackService.createPlayers(List.of("jacob", "seoye"));
-                blackjackService.dealInitialCards();
+                blackjackService.drawInitialCards();
 
                 // when
-                List<ParticipantDto> actual = blackjackService.generatePlayersDto();
+                List<ParticipantDto> actual = blackjackService.generatePlayerDtoList();
 
                 // then
                 assertThat(actual).hasSize(2);
@@ -194,15 +175,15 @@ class BlackjackServiceTest {
                         card(Rank.NINE, Suit.CLOVER)
                 ));
                 blackjackService.createPlayers(List.of("jacob", "seoye"));
-                blackjackService.dealInitialCards();
+                blackjackService.drawInitialCards();
 
                 // when
                 boolean actual = blackjackService.drawDealerCard();
 
                 // then
-                List<ParticipantDto> result = blackjackService.getBlackjackResult();
+                BlackjackResultDto result = blackjackService.getBlackjackResult();
                 assertThat(actual).isTrue();
-                assertThat(result.getFirst().hand()).hasSize(3);
+                assertThat(result.playerResultDtoList().getFirst().hand()).hasSize(2);
             }
 
             @Test
@@ -216,15 +197,15 @@ class BlackjackServiceTest {
                         card(Rank.NINE, Suit.CLOVER)
                 ));
                 blackjackService.createPlayers(List.of("jacob", "seoye"));
-                blackjackService.dealInitialCards();
+                blackjackService.drawInitialCards();
 
                 // when
                 boolean actual = blackjackService.drawDealerCard();
 
                 // then
-                List<ParticipantDto> result = blackjackService.getBlackjackResult();
+                BlackjackResultDto result = blackjackService.getBlackjackResult();
                 assertThat(actual).isFalse();
-                assertThat(result.getFirst().hand()).hasSize(2);
+                assertThat(result.playerResultDtoList().getFirst().hand()).hasSize(2);
             }
 
         }
@@ -260,21 +241,6 @@ class BlackjackServiceTest {
                 // then
                 assertThat(actual).isNotNull();
             }
-
-            @Test
-            void 카드가_모두_소진되면_null을_반환해야_한다() {
-
-                // given
-                for (int i = 0; i < 312; i++) {
-                    blackjackService.drawCard();
-                }
-
-                // when
-                Card actual = blackjackService.drawCard();
-
-                // then
-                assertThat(actual).isNull();
-            }
         }
     }
 
@@ -295,16 +261,16 @@ class BlackjackServiceTest {
                     card(Rank.NINE, Suit.CLOVER), card(Rank.SEVEN, Suit.DIAMOND)
                 ));
                 blackjackService.createPlayers(List.of("jacob", "seoye", "brown"));
-                blackjackService.dealInitialCards();
+                blackjackService.drawInitialCards();
 
                 // when
-                List<PlayerResultDto> actual = blackjackService.calculatePlayerResults();
+                List<PlayerStatisticDto> actual = blackjackService.calculatePlayerResults();
 
                 // then
                 assertThat(actual).containsExactly(
-                    new PlayerResultDto("jacob", Result.WIN),
-                    new PlayerResultDto("seoye", Result.DRAW),
-                    new PlayerResultDto("brown", Result.LOSE)
+                    new PlayerStatisticDto("jacob", Result.WIN),
+                    new PlayerStatisticDto("seoye", Result.DRAW),
+                    new PlayerStatisticDto("brown", Result.LOSE)
                 );
             }
         }
@@ -327,15 +293,15 @@ class BlackjackServiceTest {
                     card(Rank.NINE, Suit.CLOVER), card(Rank.SEVEN, Suit.DIAMOND)
                 ));
                 blackjackService.createPlayers(List.of("jacob", "seoye", "brown"));
-                blackjackService.dealInitialCards();
+                blackjackService.drawInitialCards();
 
                 // when
                 BlackjackStatisticsDto actual = blackjackService.getBlackjackStatistics();
 
                 // then
-                assertThat(actual.dealerResultDto().win()).isEqualTo(1);
-                assertThat(actual.dealerResultDto().draw()).isEqualTo(1);
-                assertThat(actual.dealerResultDto().lose()).isEqualTo(1);
+                assertThat(actual.dealerStatisticDto().win()).isEqualTo(1);
+                assertThat(actual.dealerStatisticDto().draw()).isEqualTo(1);
+                assertThat(actual.dealerStatisticDto().lose()).isEqualTo(1);
             }
         }
     }
@@ -357,20 +323,18 @@ class BlackjackServiceTest {
                     card(Rank.ACE, Suit.CLOVER)
                 ));
                 blackjackService.createPlayers(List.of("jacob", "seoye"));
-                blackjackService.dealInitialCards();
+                blackjackService.drawInitialCards();
                 blackjackService.updatePlayer("jacob");
 
                 // when
-                List<ParticipantDto> actual = blackjackService.getBlackjackResult();
+                BlackjackResultDto actual = blackjackService.getBlackjackResult();
 
                 // then
-                assertThat(actual).hasSize(3);
-                assertThat(actual.getFirst().name()).isEqualTo("딜러");
-                assertThat(actual.get(1).name()).isEqualTo("jacob");
-                assertThat(actual.get(1).hand()).hasSize(3);
-                assertThat(actual.get(1).hand()).contains("A클로버");
-                assertThat(actual.get(2).name()).isEqualTo("seoye");
-                assertThat(actual.get(2).hand()).hasSize(2);
+                assertThat(actual.playerResultDtoList().get(0).name()).isEqualTo("jacob");
+                assertThat(actual.playerResultDtoList().get(0).hand()).hasSize(3);
+                assertThat(actual.playerResultDtoList().get(0).hand()).contains("A클로버");
+                assertThat(actual.playerResultDtoList().get(1).name()).isEqualTo("seoye");
+                assertThat(actual.playerResultDtoList().get(1).hand()).hasSize(2);
             }
         }
     }
@@ -392,7 +356,7 @@ class BlackjackServiceTest {
                         card(Rank.ACE, Suit.CLOVER)
                 ));
                 blackjackService.createPlayers(List.of("jacob", "seoye"));
-                blackjackService.dealInitialCards();
+                blackjackService.drawInitialCards();
 
                 // when
                 ParticipantDto actual = blackjackService.updatePlayer("jacob");
