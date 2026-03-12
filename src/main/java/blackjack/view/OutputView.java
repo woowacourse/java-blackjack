@@ -41,7 +41,7 @@ public class OutputView {
         }
     }
 
-    public void printBurst(String name) {
+    public void printBust(String name) {
         System.out.println(name + "의 점수가 버스트 되었습니다.");
     }
 

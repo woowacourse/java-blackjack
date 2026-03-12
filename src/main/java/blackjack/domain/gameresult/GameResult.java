@@ -27,10 +27,10 @@ public enum GameResult {
         if (dealer.isBlackjack()) {
             return LOSE;
         }
-        if (player.isBurst()) {
+        if (player.isBust()) {
             return LOSE;
         }
-        if (dealer.isBurst()) {
+        if (dealer.isBust()) {
             return WIN;
         }
 

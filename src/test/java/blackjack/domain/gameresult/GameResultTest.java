@@ -65,7 +65,7 @@ class GameResultTest {
 
     @Test
     @DisplayName("딜러가 버스트이고, 플레이어 카드 합이 17이면 승리이다")
-    void isWinWhenDealerIsBurstTest() {
+    void isWinWhenDealerIsBustTest() {
         // given
         Dealer dealer = createDealerWithCars(
                 new Card(Figure.CLOVER, blackjack.domain.card.Number.JACK),
@@ -82,7 +82,7 @@ class GameResultTest {
 
     @Test
     @DisplayName("딜러 카드 합이 17이고 플레이어가 버스트라면 패배이다")
-    void isLoseWhenPlayerIsBurstTest() {
+    void isLoseWhenPlayerIsBustTest() {
         // given
         Dealer dealer = createDealerWithCars(
                 new Card(Figure.CLOVER, blackjack.domain.card.Number.SEVEN),
@@ -99,7 +99,7 @@ class GameResultTest {
 
     @Test
     @DisplayName("딜러와 플레이어 모두 버스트인 경우 패 판정")
-    void isLoseWhenBothIsBurstTest() {
+    void isLoseWhenBothIsBustTest() {
         // given
         Dealer dealer = createDealerWithCars(
                 new Card(Figure.CLOVER, blackjack.domain.card.Number.JACK),

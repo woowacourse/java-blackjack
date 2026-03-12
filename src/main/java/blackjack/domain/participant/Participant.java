@@ -21,8 +21,8 @@ public abstract class Participant {
         score = hand.calculateScore();
     }
 
-    public boolean isBurst() {
-        return score.isBurst();
+    public boolean isBust() {
+        return score.isBust();
     }
 
     public int getScore() {

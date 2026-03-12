@@ -57,8 +57,8 @@ public class Controller {
         while (dealer.canReceive()) {
             outputView.printDealerReceiveCard();
             receiveCardToParticipant(dealer, deck, ONE_REPEAT);
-            if (dealer.isBurst()) {
-                outputView.printBurst("딜러");
+            if (dealer.isBust()) {
+                outputView.printBust("딜러");
                 return;
             }
         }
@@ -78,8 +78,8 @@ public class Controller {
             }
 
             receiveCardToParticipant(player, deck, ONE_REPEAT);
-            if (player.isBurst()) {
-                outputView.printBurst(player.getName());
+            if (player.isBust()) {
+                outputView.printBust(player.getName());
                 return;
             }
             outputView.printPlayerCardStatus(player, player.getCards());

@@ -9,7 +9,7 @@ public class Score {
         this.score = score;
     }
 
-    public boolean isBurst() {
+    public boolean isBust() {
         return score > BLACKJACK_NUMBER;
     }
 
