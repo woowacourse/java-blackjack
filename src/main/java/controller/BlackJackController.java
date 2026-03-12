@@ -10,7 +10,6 @@ import java.util.function.Supplier;
 import view.InputView;
 import view.OutputView;
 
-// 게임의 총 흐름을 담당.
 public class BlackJackController {
     private final InputView inputView;
     private final OutputView outputView;
