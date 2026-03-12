@@ -92,6 +92,7 @@ public class OutputView {
         }
         if (playerResult == MatchResult.DRAW) {
             System.out.println(PLAYER_GAME_DRAW.format(name));
+            return;
         }
         System.out.println(PLAYER_GAME_LOSE.format(name));
     }
