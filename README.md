@@ -33,7 +33,7 @@
 
 
 ## 피드백
-- [ ] 불필요한 주석 제거
+- [x] 불필요한 주석 제거
 - [ ] 메서드 네이밍
   - [ ] firstPlayerProcess
   - [ ] ScoreBoard 내부

@@ -1,19 +1,13 @@
 package repository;
 
+import domain.common.NameAndCardInfos;
 import domain.common.PlayedGameResult;
 import domain.gameplaying.Participants;
-import domain.common.NameAndCardInfos;
 import java.util.List;
-import service.BlackJackCommandService;
 
 public class ParticipantRepository {
 
     private Participants participants;
-
-    /**
-     * Command Side
-     * {@link BlackJackCommandService}
-     */
 
     public void setup(Participants participants) {
         this.participants = participants;
@@ -34,11 +28,6 @@ public class ParticipantRepository {
     public void dealerDrawCard() {
         participants.dealerDrawCard();
     }
-
-    /**
-     * Command Side
-     * {@link service.BlackJackQueryService}
-     */
 
     public List<String> getAllPlayerNames() {
         return participants.allPlayerNames();
