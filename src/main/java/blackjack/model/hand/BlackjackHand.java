@@ -15,7 +15,7 @@ public class BlackjackHand extends FinishedHand {
     }
 
     @Override
-    protected Hand nextState() {
+    protected Hand nextState(Collection<Card> cards) {
         return new BlackjackHand(cards);
     }
 }

@@ -17,23 +17,23 @@ public class UninitializedHand extends PlayingHand {
     }
 
     @Override
-    protected Hand nextState() {
-        if (shouldInitialize()) {
-            return initialize();
+    protected Hand nextState(Collection<Card> cards) {
+        if (shouldInitialize(cards)) {
+            return initialize(cards);
         }
 
         return new UninitializedHand(cards);
     }
 
-    private boolean shouldInitialize() {
+    private boolean shouldInitialize(Collection<Card> cards) {
         return cards.size() >= NEXT_STEP_THRESHOLD;
     }
 
-    private Hand initialize() {
-        if (calculateScore() == BLACKJACK) {
+    private Hand initialize(Collection<Card> cards) {
+        if (calculateScore(cards) == BLACKJACK) {
             return new BlackjackHand(cards);
         }
-        if (isBust()) {
+        if (isBust(cards)) {
             return new BustHand(cards);
         }
 

@@ -10,8 +10,8 @@ public class HitHand extends PlayingHand {
     }
 
     @Override
-    public Hand nextState() {
-        if (isBust()) {
+    public Hand nextState(Collection<Card> cards) {
+        if (isBust(cards)) {
             return new BustHand(cards);
         }
 

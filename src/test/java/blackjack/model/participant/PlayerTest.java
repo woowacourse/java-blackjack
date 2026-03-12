@@ -24,18 +24,18 @@ class PlayerTest {
     @BeforeEach
     void initHands() {
         lowerScoreHand = new UninitializedHand();
-        lowerScoreHand.hit(new Card(Rank.TWO, Suit.HEART));
+        lowerScoreHand = lowerScoreHand.hit(new Card(Rank.TWO, Suit.HEART));
 
         defaultHand = new UninitializedHand();
-        defaultHand.hit(new Card(Rank.THREE, Suit.HEART));
+        defaultHand = defaultHand.hit(new Card(Rank.THREE, Suit.HEART));
 
         higherScoreHand = new UninitializedHand();
-        higherScoreHand.hit(new Card(Rank.TEN, Suit.HEART));
+        higherScoreHand = higherScoreHand.hit(new Card(Rank.TEN, Suit.HEART));
 
         bustScoreHand = new UninitializedHand();
-        bustScoreHand.hit(new Card(Rank.JACK, Suit.HEART));
-        bustScoreHand.hit(new Card(Rank.QUEEN, Suit.HEART));
-        bustScoreHand.hit(new Card(Rank.KING, Suit.HEART));
+        bustScoreHand = bustScoreHand.hit(new Card(Rank.JACK, Suit.HEART));
+        bustScoreHand = bustScoreHand.hit(new Card(Rank.QUEEN, Suit.HEART));
+        bustScoreHand = bustScoreHand.hit(new Card(Rank.KING, Suit.HEART));
     }
 
     @Test

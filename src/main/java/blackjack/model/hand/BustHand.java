@@ -10,7 +10,7 @@ public class BustHand extends FinishedHand {
     }
 
     @Override
-    protected Hand nextState() {
+    protected Hand nextState(Collection<Card> cards) {
         return new BustHand(cards);
     }
 }

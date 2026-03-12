@@ -13,11 +13,11 @@ public abstract class Hand {
     protected final Collection<Card> cards;
 
     protected Hand() {
-        this.cards = new ArrayList<>();
+        this.cards = List.of();
     }
 
     protected Hand(Collection<Card> cards) {
-        this.cards = new ArrayList<>(cards);
+        this.cards = List.copyOf(cards);
     }
 
     public Collection<Card> getCards() {
@@ -25,9 +25,10 @@ public abstract class Hand {
     }
 
     public Hand hit(Card card) {
-        cards.add(card);
+        Collection<Card> newCards = new ArrayList<>(cards);
+        newCards.add(card);
 
-        return nextState();
+        return nextState(newCards);
     }
 
     public abstract boolean canHit();
@@ -40,19 +41,27 @@ public abstract class Hand {
         return isBust(calculateScore());
     }
 
-    public boolean isBust(int score) {
-        return score >= BUST_LOWER_BOUND;
+    protected boolean isBust(Collection<Card> cards) {
+        return isBust(calculateScore(cards));
     }
 
     public int calculateScore() {
-        int scoreBeforeAdjust = getScoreBeforeAdjust();
+        return calculateScore(cards);
+    }
+
+    protected int calculateScore(Collection<Card> cards) {
+        int scoreBeforeAdjust = getScoreBeforeAdjust(cards);
 
         return adjust(scoreBeforeAdjust, cards);
     }
 
-    protected abstract Hand nextState();
+    protected abstract Hand nextState(Collection<Card> cards);
 
-    private int getScoreBeforeAdjust() {
+    private boolean isBust(int score) {
+        return score >= BUST_LOWER_BOUND;
+    }
+
+    private int getScoreBeforeAdjust(Collection<Card> cards) {
         return cards.stream()
                 .mapToInt(Card::getScore)
                 .sum();
