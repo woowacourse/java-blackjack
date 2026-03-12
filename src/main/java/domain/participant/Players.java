@@ -9,7 +9,9 @@ import static message.ErrorMessage.PLAYER_NUMBER_OUT_OF_RANGE;
 import domain.card.Card;
 import domain.enums.GameResult;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class Players {
@@ -63,13 +65,12 @@ public class Players {
                 .orElseThrow(() -> new IllegalArgumentException(PLAYER_NOT_FOUND.getMessage()));
     }
 
-    public List<GameResult> decideAllResults(Dealer dealer) {
-        List<GameResult> gameResults = new ArrayList<>();
+    public Map<Name, GameResult> decidePlayerResults(Dealer dealer) {
+        Map<Name, GameResult> playerResults = new LinkedHashMap<>();
         for (Player player : players) {
-            GameResult playerGameResult = GameResult.calculatePlayerResult(player, dealer);
-            gameResults.add(playerGameResult);
+            playerResults.put(player.getName(), GameResult.calculatePlayerResult(player, dealer));
         }
-        return gameResults;
+        return Map.copyOf(playerResults);
     }
 
     public boolean checkScoreUnderCriterion(Name name) {

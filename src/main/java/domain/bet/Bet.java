@@ -19,8 +19,9 @@ public class Bet {
         betHistory.bettingMoney(playerName, bettingMoney);
     }
 
-    public void calculateProfit(Map<Name, GameResult> playerResults) {
+    public BetProfit calculateProfit(Map<Name, GameResult> playerResults) {
         betProfit.calculateProfit(playerResults, betHistory.getBetHistory());
+        return betProfit;
     }
 
     public Map<Name, Integer> getPlayerBetProfit() {

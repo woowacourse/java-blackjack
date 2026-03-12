@@ -175,6 +175,27 @@ public class ResultTest {
         });
     }
 
+    @DisplayName("플레이어와 딜러가 모두 블랙잭이면 무승부가 된다.")
+    @Test
+    void 플레이어와_딜러_모두_블랙잭이면_무승부가_된다() {
+        player.addCards(List.of(
+                        new Card(Rank.JACK, Suit.CLOVER),
+                        new Card(Rank.ACE, Suit.CLOVER)
+                )
+        );
+
+        dealer.addCard(new Card(Rank.JACK, Suit.HEART));
+        dealer.addCard(new Card(Rank.ACE, Suit.HEART));
+
+        GameResult playerResult = getPlayerResult();
+        int dealerDrawCount = getDealerResultCount(playerResult, GameResult.DRAW);
+
+        assertSoftly(softly -> {
+            assertThat(playerResult).isEqualTo(GameResult.DRAW);
+            assertThat(dealerDrawCount).isEqualTo(1);
+        });
+    }
+
     private Integer getDealerResultCount(GameResult playerResult, GameResult win) {
         return GameResult.calculateDealerResult(List.of(playerResult)).get(win);
     }
@@ -183,7 +204,6 @@ public class ResultTest {
         return GameResult.calculatePlayerResult(player, dealer);
     }
 }
-
 
 
 

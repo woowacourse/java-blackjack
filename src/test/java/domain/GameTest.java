@@ -9,7 +9,6 @@ import domain.enums.Rank;
 import domain.enums.Suit;
 import domain.participant.Dealer;
 import domain.participant.Name;
-import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -23,7 +22,7 @@ public class GameTest {
 
     private Game twoPlayerGame;
     private Game onePlayerGame;
-    private Dealer dealer = new Dealer();
+    private Dealer dealer;
     private Deck deck;
     private Deck delaerBlackjackDeck;
 
@@ -34,8 +33,10 @@ public class GameTest {
         deck = new Deck(cardGenerator1.generate());
         delaerBlackjackDeck = new Deck(cardGenerator2.generate());
 
-        twoPlayerGame = new Game(List.of("피즈", "스타크"), dealer);
-        onePlayerGame = new Game(List.of("피즈"), dealer);
+        dealer = new Dealer();
+
+        twoPlayerGame = new Game(List.of("피즈", "스타크"), dealer, deck.getCards());
+        onePlayerGame = new Game(List.of("피즈"), dealer, deck.getCards());
     }
 
     @Nested
@@ -46,7 +47,7 @@ public class GameTest {
         void 게임_시작_후_모든_플레이어_2장의_카드_분배를_받는다() {
             //given
             //when
-            twoPlayerGame.initializeGame(deck);
+            twoPlayerGame.initializeGame();
             //then
             assertSoftly(softly -> {
                 assertThat(twoPlayerGame.getPlayerCard(new Name("피즈")).size()).isEqualTo(2);
@@ -64,27 +65,32 @@ public class GameTest {
         @Test
         void 플레이어_카드_합_21_미만_히트_요청_시_한장_더_분배한다() {
             //given
-            //when
-            distributePlayerCards(onePlayerGame, new Name("피즈"),
+            List<Card> cards = List.of(
                     new Card(Rank.ACE, Suit.CLOVER),
                     new Card(Rank.FOUR, Suit.CLOVER),
-                    new Card(Rank.EIGHT, Suit.CLOVER)
+                    new Card(Rank.SIX, Suit.CLOVER),
+                    new Card(Rank.SEVEN, Suit.CLOVER),
+                    new Card(Rank.EIGHT, Suit.CLOVER),
+                    new Card(Rank.TWO, Suit.CLOVER)
             );
-            //then
-            onePlayerGame.playPlayerTurn(new Name("피즈"), deck, true);
+            Game game = new Game(List.of("피즈"), new Dealer(), cards);
 
-            assertThat(onePlayerGame.getPlayerCard(new Name("피즈")).size()).isEqualTo(4);
+            game.initializeGame();
+            game.playPlayerTurn(new Name("피즈"), true);
+            game.playPlayerTurn(new Name("피즈"), true);
+
+            assertThat(game.getPlayerCard(new Name("피즈")).size()).isEqualTo(4);
         }
 
         @DisplayName("플레이어가 히트를 원하지 않으면 카드를 추가로 받지 않는다.")
         @Test
         void 플레이어_히트_거절시_카드_추가되지_않는다() {
             //given
-            onePlayerGame.initializeGame(deck);
+            onePlayerGame.initializeGame();
             int beforeCardCount = onePlayerGame.getPlayerCard(new Name("피즈")).size();
 
             //when
-            onePlayerGame.playPlayerTurn(new Name("피즈"), deck, false);
+            onePlayerGame.playPlayerTurn(new Name("피즈"), false);
 
             //then
             assertThat(onePlayerGame.getPlayerCard(new Name("피즈")).size()).isEqualTo(beforeCardCount);
@@ -99,7 +105,7 @@ public class GameTest {
             dealer.addCard(new Card(Rank.FOUR, Suit.CLOVER));
             dealer.addCard(new Card(Rank.EIGHT, Suit.CLOVER));
             //then
-            onePlayerGame.playDealerTurn(deck);
+            onePlayerGame.playDealerTurn();
 
             assertThat(dealer.getHand().size()).isEqualTo(4);
         }
@@ -108,10 +114,10 @@ public class GameTest {
         @Test
         void 플레이어_딜러_카드_정상_분배_확인한다() {
             //given
-            onePlayerGame.initializeGame(deck);
+            onePlayerGame.initializeGame();
             //when
-            onePlayerGame.playPlayerTurn(new Name("피즈"), deck, true);
-            onePlayerGame.playDealerTurn(deck);
+            onePlayerGame.playPlayerTurn(new Name("피즈"), true);
+            onePlayerGame.playDealerTurn();
             //then
             assertCardDistribution(
                     onePlayerGame.getPlayerCard(new Name("피즈")),
@@ -130,11 +136,12 @@ public class GameTest {
         @Test
         void 딜러_처음_2장_블랙잭_카드_추가_분배_받지_않는다() {
             //given
-            onePlayerGame.initializeGame(delaerBlackjackDeck);
+            Game blackjackGame = new Game(List.of("피즈"), dealer, delaerBlackjackDeck.getCards());
+            blackjackGame.initializeGame();
             //when
             //then
-            onePlayerGame.playDealerTurn(delaerBlackjackDeck);
-            onePlayerGame.playDealerTurn(delaerBlackjackDeck);
+            blackjackGame.playDealerTurn();
+            blackjackGame.playDealerTurn();
 
             assertSoftly(softly -> {
                 assertThat(dealer.getScore()).isEqualTo(21);
@@ -150,13 +157,6 @@ public class GameTest {
                     assertThat(cards.get(finalI).getSuitString()).isEqualTo(expectedSuit.get(finalI));
                 });
             }
-        }
-    }
-
-    private void distributePlayerCards(Game game, Name name, Card... cards) {
-        Deck testDeck = new Deck(Arrays.asList(cards));
-        for (int i = 0; i < cards.length; i++) {
-            game.playPlayerTurn(name, testDeck, true);
         }
     }
 }
