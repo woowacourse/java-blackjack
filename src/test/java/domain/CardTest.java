@@ -61,4 +61,20 @@ public class CardTest {
             assertFalse(result);
         }
     }
+
+    @Test
+    @DisplayName("컨텐츠가 같으면 같은 카드로 인식한다")
+    void same_content_same_card() {
+        //given
+        CardContents aceCardContents = CardContents.A;
+        CardShape cardShapeHeart = CardShape.하트;
+        Card card1 = new Card(cardShapeHeart, aceCardContents);
+        Card card2 = new Card(cardShapeHeart, aceCardContents);
+
+        //when
+        boolean result = card1.equals(card2);
+
+        //then
+        assertTrue(result);
+    }
 }
