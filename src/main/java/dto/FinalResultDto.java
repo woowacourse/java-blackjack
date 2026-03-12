@@ -10,7 +10,7 @@ public record FinalResultDto(long dealerProfit, List<PlayerResultDto> playerResu
 
         long dealerProfit = playerResultDtos.stream()
                 .mapToLong(PlayerResultDto::profit)
-                .sum();
+                .sum() * -1;
 
         return new FinalResultDto(dealerProfit, playerResultDtos);
     }
