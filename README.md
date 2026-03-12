@@ -334,6 +334,7 @@ SRP를 완벽히 지킨 것입니다.
     - [x] `사이드 이펙트 솔루션`
         - 마침 플레이어 닉네임들을 저장하는 DTO가 있다 `PlayerNames`
         - 이 DTO를 도메인 계층으로 올려 검증을 담당하도록
+- ----------------------------------------1차 래핑----------------------------------------
 - [ ] 수익금 `public int calculateProfit(GameResult result)`
 - [ ] 딜러 수익금 계산 `public int determineProfit(List<Player> players)`
 - [ ] 참가자 수익금 계산 `record ParticipantsProfit(String nickname, int profit)`
@@ -354,6 +355,12 @@ SRP를 완벽히 지킨 것입니다.
 ---
 
 ## 🔍 분석
+
+- `시그니처` by [아이큐]()
+    - ed 를 붙여야 하는가?
+    - 이미 만들어진 Players 에 대한 검증이기에 duplicated 라 생각했으나. 굳이?
+    - 그 내부 상태에 대해 묻지도, 알지도 말고 그저 시켜라 그리고 내 할일을 해라
+    - BUSTED? isBusted? 이하동문
 
 --- 
 
