@@ -1,16 +1,19 @@
 package blackjack.controller;
 
-import blackjack.dto.GameResultDto;
-import blackjack.exception.ErrorMessage;
-import blackjack.model.*;
+import blackjack.dto.ProfitsDto;
+import blackjack.model.Dealer;
+import blackjack.model.Deck;
+import blackjack.model.Participant;
+import blackjack.model.Player;
+import blackjack.model.Players;
+import blackjack.model.Profits;
+import blackjack.model.Referee;
 import blackjack.util.Splitter;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Controller {
 
@@ -24,7 +27,6 @@ public class Controller {
         this.outputView = outputView;
     }
 
-    // TODO: 전체 리팩토링 (2026. 3. 9.)
     public void run() {
         Deck deck = new Deck();
         Referee referee = new Referee();
@@ -32,63 +34,16 @@ public class Controller {
         Players players = createPlayer();
 
         deck.shuffle();
-        initializeDealToParticipants(dealer, players, deck);
+        dealFirstTwoCards(dealer, players, deck);
         outputView.printFirstCardStatus(dealer, players);
 
         turnToPlayers(players, deck);
         turnToDealer(dealer, deck);
         outputView.printScoreResult(dealer, players);
 
-        GameResultDto gameResultDto = getPlayerGameResult(players, dealer, referee);
-        Map<Player, GameResult> gameResult = gameResultDto.getGameResult();
-        double dealerAmount = 0;
-        for (Player player : gameResult.keySet()) {
-            dealerAmount += -player.getBettingAmount(gameResult.get(player));
-        }
-        outputView.printGameResult(gameResultDto, dealerAmount);
-    }
-
-    private static GameResultDto getPlayerGameResult(Players players, Dealer dealer, Referee referee) {
-        Map<Player, GameResult> gameResult = new LinkedHashMap<>();
-        for (Player player : players.getPlayers()) {
-            gameResult.put(player, referee.judge(player, dealer));
-        }
-        return new GameResultDto(gameResult);
-    }
-
-    private void turnToDealer(Dealer dealer, Deck deck) {
-        while (dealer.canReceive()) {
-            outputView.printDealerReceiveCard();
-            receiveCardToParticipant(dealer, deck, ONE_REPEAT);
-            if (dealer.isBust()) {
-                outputView.printBurst("딜러");
-                return;
-            }
-        }
-    }
-
-    private void turnToPlayers(Players players, Deck deck) {
-        for (Player player : players.getPlayers()) {
-            turnToOnePlayer(deck, player);
-        }
-    }
-
-    private void turnToOnePlayer(Deck deck, Player player) {
-        while (player.canReceive()) {
-            String receiveCard = inputView.getReceiveCard(player);
-            if (receiveCard.equals("n")) {
-                return;
-            }
-            if (!receiveCard.equals("y")) {
-                throw new IllegalArgumentException(ErrorMessage.INVALID_INPUT.getMessage());
-            }
-            receiveCardToParticipant(player, deck, ONE_REPEAT);
-            if (player.isBust()) {
-                outputView.printBurst(player.getName());
-                return;
-            }
-            outputView.printPlayerCardStatus(player, player.getHandCards());
-        }
+        Profits profits = new Profits(players.judgeAll(dealer, referee));
+        ProfitsDto profitsDto = profits.toDto();
+        outputView.printGameResult(profitsDto);
     }
 
     private Players createPlayer() {
@@ -100,11 +55,31 @@ public class Controller {
         return new Players(players);
     }
 
-    private void initializeDealToParticipants(Dealer dealer, Players players, Deck deck) {
+    private void dealFirstTwoCards(Dealer dealer, Players players, Deck deck) {
         receiveCardToParticipant(dealer, deck, INITIAL_DEAL_REPEAT);
+        players.giveTwoCards(deck);
+    }
 
+    private void turnToPlayers(Players players, Deck deck) {
         for (Player player : players.getPlayers()) {
-            receiveCardToParticipant(player, deck, INITIAL_DEAL_REPEAT);
+            turnToOnePlayer(deck, player);
+        }
+    }
+
+    private void turnToOnePlayer(Deck deck, Player player) {
+        while (player.canReceive()) {
+            if (inputView.getReceiveCard(player)) {
+                return;
+            }
+            player.receiveCard(deck.giveCard());
+            outputView.printPlayerCardStatus(player, player.getHandCards());
+        }
+    }
+
+    private void turnToDealer(Dealer dealer, Deck deck) {
+        while (dealer.canReceive()) {
+            outputView.printDealerReceiveCard();
+            receiveCardToParticipant(dealer, deck, ONE_REPEAT);
         }
     }
 

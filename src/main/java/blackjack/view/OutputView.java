@@ -1,10 +1,13 @@
 package blackjack.view;
 
-import blackjack.dto.GameResultDto;
-import blackjack.model.*;
+import blackjack.dto.ProfitsDto;
+import blackjack.model.Card;
+import blackjack.model.Dealer;
+import blackjack.model.Participant;
+import blackjack.model.Player;
+import blackjack.model.Players;
 
 import java.util.List;
-import java.util.Map;
 
 public class OutputView {
     public void printFirstCardStatus(Dealer dealer, Players players) {
@@ -44,12 +47,11 @@ public class OutputView {
                 " - 결과: " + participant.getScore().getScore());
     }
 
-    public void printGameResult(GameResultDto gameResultDto, double dealerAmount) {
-        Map<Player, GameResult> gameResult = gameResultDto.getGameResult();
+    public void printGameResult(ProfitsDto profitsDto) {
         System.out.println("\n## 최종 수익");
-        System.out.println("딜러 : " + (int) dealerAmount);
-        for (Player player : gameResultDto.getGameResult().keySet()) {
-            System.out.println(player.getName() + ": " + (int) player.getBettingAmount(gameResult.get(player)));
+        System.out.println("딜러 : " + (int) profitsDto.getDealerProfit());
+        for (String playerName : profitsDto.getPlayerProfits().keySet()) {
+            System.out.println(playerName + ": " + profitsDto.getPlayerProfits().get(playerName).intValue());
         }
     }
 }
