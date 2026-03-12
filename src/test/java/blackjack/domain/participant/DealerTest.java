@@ -13,8 +13,8 @@ public class DealerTest {
     void 딜러_점수가_17미만이면_카드를_더_받아야_한다() {
         // given
         Dealer dealer = new Dealer();
-        dealer.bring(new Card(CardValue.SIX, CardShape.DIAMOND));
-        dealer.bring(new Card(CardValue.TEN, CardShape.DIAMOND));
+        dealer.add(new Card(CardValue.SIX, CardShape.DIAMOND));
+        dealer.add(new Card(CardValue.TEN, CardShape.DIAMOND));
 
         // when & then
         assertThat(dealer.shouldDrawCard()).isTrue();
@@ -24,12 +24,10 @@ public class DealerTest {
     void 딜러_점수가_17이상이면_카드를_받지_않는다() {
         // given
         Dealer dealer = new Dealer();
-        dealer.bring(new Card(CardValue.SEVEN, CardShape.DIAMOND));
-        dealer.bring(new Card(CardValue.TEN, CardShape.DIAMOND));
+        dealer.add(new Card(CardValue.SEVEN, CardShape.DIAMOND));
+        dealer.add(new Card(CardValue.TEN, CardShape.DIAMOND));
 
         // when & then
         assertThat(dealer.shouldDrawCard()).isFalse();
     }
-
-
 }
