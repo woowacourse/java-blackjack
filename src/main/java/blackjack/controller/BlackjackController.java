@@ -71,21 +71,17 @@ public class BlackjackController {
     }
 
     private void processUserTurn(User user) {
-        boolean drew = drawIfWanted(user);
-        if (!drew) {
+        drawIfWanted(user);
+        OutputView.printSettingCardsResult(user.getName(), user.getCardsName());
+    }
+
+    private void drawIfWanted(User user) {
+        while (!user.isFinished() && GET_MORE_CARD_BUTTON.equals(inputView.readMoreCard(user.getName()))) {
+            gameService.getMoreCard(user);
             OutputView.printSettingCardsResult(user.getName(), user.getCardsName());
         }
     }
 
-    private boolean drawIfWanted(User user) {
-        boolean drew = false;
-        while (!user.isFinished() && GET_MORE_CARD_BUTTON.equals(inputView.readMoreCard(user.getName()))) {
-            gameService.getMoreCard(user);
-            OutputView.printSettingCardsResult(user.getName(), user.getCardsName());
-            drew = true;
-        }
-        return drew;
-    }
 
     private void getMoreCardsForDealer(Dealer dealer) {
         while (dealer.shouldDrawCard()) {
