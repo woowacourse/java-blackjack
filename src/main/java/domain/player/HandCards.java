@@ -45,6 +45,10 @@ public class HandCards {
         return sum;
     }
 
+    public int quantity() {
+        return cards.size();
+    }
+
     private boolean canPlusBonusScore(int sum) {
         return containsAce() && sum + ACE_BONUS_SCORE <= MAX_SCORE;
     }
