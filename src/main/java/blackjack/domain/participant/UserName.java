@@ -7,8 +7,8 @@ public record UserName(
     private static final int MAX_LENGTH = 5;
 
     public UserName {
-        name = name.strip();
         validate(name);
+        name = name.strip();
     }
 
     private void validate(String name) {
