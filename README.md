@@ -295,7 +295,7 @@ SRP를 완벽히 지킨 것입니다.
         - 기존의 기능 `public Map<GameResult, Long> determineGameResult(List<Player> players)`
         - ↘️ 아래로 변경 `public int determineProfit(List<Player> players)`
     - ⬆️ 참가자의 수익금 결과를 표현할 `DTO` `참가자 수익금` ⭕
-        - `record PlayerGameResult(String nickname, GameResult gameResult)`
+        - `record PlayerGameResult(String nickname, GameResult profitRate)`
         - ↘️ 아래로 변경 `record ParticipantsProfit(String nickname, int profit)`
         - ↘️ 아래로 변경 `ParticipantsProfit.from(player.getNickname(), player.calculateProfit())`
     - ⬆️ 최종 게임 결과를 통합 표현할 `DTO` `최종 게임 결과` ⭕
@@ -335,16 +335,25 @@ SRP를 완벽히 지킨 것입니다.
         - 마침 플레이어 닉네임들을 저장하는 DTO가 있다 `PlayerNames`
         - 이 DTO를 도메인 계층으로 올려 검증을 담당하도록
 - ----------------------------------------1차 래핑----------------------------------------
-- [x] 수익금 `public int calculateProfit(GameResult result)`
+- [x] 수익금 `public long calculateProfit(List<Player> players)` - `Dealer`
     - [x] 수익금, 닉네임, 게임 결과를 한 번에 저장해야 하는가? ㄴㄴ
     - [x] 수익금, 닉네임만 궁금하지 게임 결과 리턴할 필요가 없다
     - [x] GameResult 제거해버리고 그 때 수익금 대신 을 계산하게,
+        - 제거 대신 변형,
+        - 도메인 로직(수익금 계산)을 담당하도록
+        - 직접 계산을 담당하고, 플레이어는 계산을 지시하도록
     - [x] 플레이어의 수익금 * -1 == 딜러의 수익금
     - [x] 딜러의 수익금을 별도로 저장/계산하기보단
         - 플레이어 수익금 목록(닉네임, 수익금)을 기반으로 DTO가 추론하기
         - 그냥 값 꺼내서 더하는건데 이건 도메인의 로직을 조작하는게 아니니
-- [ ] 딜러 수익금 계산 `public int determineProfit(List<Player> players)`
-- [ ] 참가자 수익금 계산 `record ParticipantsProfit(String nickname, int profit)`
+- [x] 딜러 수익금 계산 `public long determineProfit(List<Player> players)` - `Dealer` ⭕
+    - int 가 long 이 된 것만 빼면 정답
+    - 알아서 계산한다
+    - 플레이어 수익금 목록 계산과 함께 실행되지만 값은 딜러 수익금만 반환
+- [x] 플레이어들 수익금 계산 `public List<Long> determinePlayersProfit(List<Player> players)` - `Dealer`
+    - `플레이어들`의 수익금 목록을 계산한다
+- [x] 각각의 계산된 수익금, 수익금들을 각각 반환한다. 조립은 컨트롤러의 역할/책임
+- [x] 참가자 수익금 계산 `public long calculateProfit(ProfitRate profitRate)` - `Player`
 - [ ] 참가자 수익금 DTO `ParticipantsProfit.from(player.getNickname(), player.calculateProfit())`
 - [ ] 최종 게임 결과 DTO `record TotalWinningResult(ParticipantsProfit dealerProfit, ParticipantsProfit playerProfit)`
 

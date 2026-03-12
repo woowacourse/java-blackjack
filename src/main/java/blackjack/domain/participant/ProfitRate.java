@@ -15,4 +15,7 @@ public enum GameResult {
         }
         return DRAW;
     }
+    
+    public int getProfit(int bettingAmount) {
+    }
 }
