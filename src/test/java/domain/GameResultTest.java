@@ -2,10 +2,9 @@ package domain;
 
 import domain.dto.GameFinalResultDto;
 import domain.participant.Dealer;
-import domain.participant.Player;
+import domain.participant.Players;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
 import java.util.Map;
 
 import static domain.constant.Rank.*;
@@ -23,19 +22,20 @@ public class GameResultTest {
         dealer.receiveCard(new Card(KING, HEART));
         dealer.receiveCard(new Card(TEN, SPADE));
 
-        Player player1 = new Player("pobi", new Hand(), "10000");
-        player1.receiveCard(new Card(EIGHT, HEART));
-        player1.receiveCard(new Card(NINE, HEART));
+        Players players = new Players();
+        players.register("pobi", "10000");
+        players.drawCardTo("pobi", new Card(EIGHT, HEART));
+        players.drawCardTo("pobi", new Card(NINE, HEART));
 
-        Player player2 = new Player("cary", new Hand(), "10000");
-        player2.receiveCard(new Card(TEN, HEART));
-        player2.receiveCard(new Card(JACK, HEART));
+        players.register("cary", "10000");
+        players.drawCardTo("cary", new Card(TEN, HEART));
+        players.drawCardTo("cary", new Card(JACK, HEART));
 
-        Player player3 = new Player("jason", new Hand(), "10000");
-        player3.receiveCard(new Card(ACE, HEART));
-        player3.receiveCard(new Card(QUEEN, HEART));
+        players.register("jason", "10000");
+        players.drawCardTo("jason", new Card(ACE, HEART));
+        players.drawCardTo("jason", new Card(QUEEN, HEART));
 
-        GameResult gameResult = new GameResult(dealer, List.of(player1, player2, player3));
+        GameResult gameResult = GameResult.of(dealer, players);
 
         GameFinalResultDto finalResult = GameFinalResultDto.of(dealer, gameResult);
 

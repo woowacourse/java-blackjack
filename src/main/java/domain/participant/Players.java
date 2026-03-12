@@ -1,9 +1,7 @@
 package domain.participant;
 
-import domain.Bet;
 import domain.Card;
 import domain.Hand;
-import domain.dto.GameScoreResultDto;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -21,12 +19,6 @@ public class Players {
         Player targetPlayer = players.get(playerName);
         targetPlayer.receiveCard(card);
         return targetPlayer.showHand();
-    }
-
-    public List<GameScoreResultDto> getScoreResults() {
-        return players.values().stream()
-                .map(GameScoreResultDto::from)
-                .toList();
     }
 
     public boolean canReceiveCard(String playerName) {

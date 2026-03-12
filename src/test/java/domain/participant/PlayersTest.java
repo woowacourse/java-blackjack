@@ -65,7 +65,7 @@ public class PlayersTest {
         players.drawCardTo("cary", new Card(SIX, HEART));
         players.drawCardTo("cary", new Card(TEN, CLUB));
 
-        List<GameScoreResultDto> scoreResults = players.getScoreResults();
+        List<GameScoreResultDto> scoreResults = GameScoreResultDto.from(players);
 
         assertThat(scoreResults)
                 .extracting(

@@ -8,7 +8,7 @@ import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
 
-import java.util.*;
+import java.util.List;
 
 public class GameManager {
     private final Deck deck;
@@ -31,11 +31,7 @@ public class GameManager {
     }
 
     public GameInitialInfoDto getInitialInfo() {
-        return new GameInitialInfoDto(
-                dealer.getName(),
-                dealer.getOpenCard(),
-                players.getScoreResults()
-        );
+        return GameInitialInfoDto.of(dealer, players);
     }
 
     public boolean canPlayerReceiveCard(String playerName) {
@@ -55,16 +51,11 @@ public class GameManager {
     }
 
     public List<GameScoreResultDto> getScoreResults() {
-        List<GameScoreResultDto> results = new ArrayList<>();
-        results.add(createDealerScoreResult());
-        results.addAll(createPlayerScoreResults());
-
-        return results;
+        return GameScoreResultDto.createGameScoreResults(dealer, players);
     }
 
     public GameFinalResultDto getFinalResult() {
-        GameResult gameResult = new GameResult(dealer, players.getAll());
-
+        GameResult gameResult = GameResult.of(dealer, players);
         return GameFinalResultDto.of(dealer, gameResult);
     }
 
@@ -75,13 +66,5 @@ public class GameManager {
             }
             dealer.receiveCard(deck.draw());
         }
-    }
-
-    private GameScoreResultDto createDealerScoreResult() {
-        return GameScoreResultDto.from(dealer);
-    }
-
-    private List<GameScoreResultDto> createPlayerScoreResults() {
-        return players.getScoreResults();
     }
 }
