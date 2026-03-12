@@ -39,7 +39,7 @@ public class BlackjackController {
 
     private void dealAndPrintResult(BlackjackGame blackjackGame) {
         blackjackGame.deal();
-        DealResult dealResult = DealResult.from(blackjackGame.getPlayers(), blackjackGame.getDealer());
+        DealResult dealResult = DealResult.from(blackjackGame);
         OutputView.printDealResult(dealResult);
     }
 
