@@ -1,4 +1,6 @@
-package domain;
+package domain.player;
+
+import domain.card.Card;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,7 +43,7 @@ public abstract class Player {
     }
 
     public int getAceBonus(int sum) {
-        if (sum > 10) {
+        if (sum > 11) {
             return 0;
         }
         return 10;

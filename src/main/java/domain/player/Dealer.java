@@ -1,4 +1,7 @@
-package domain;
+package domain.player;
+
+import domain.result.GameResult;
+import domain.card.Card;
 
 import java.util.HashMap;
 import java.util.Map;

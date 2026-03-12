@@ -1,5 +1,8 @@
-import domain.Dealer;
-import domain.User;
+import domain.player.Dealer;
+import domain.result.DealerProfit;
+import domain.result.RoundBetInfo;
+import domain.player.User;
+import domain.result.UserProfit;
 import view.InputParser;
 import view.InputView;
 import view.OutputView;
@@ -21,18 +24,31 @@ public class GameController {
         this.dealer = new Dealer();
     }
 
+    private static final int INITIAL_ROUND = 1;
+
     public void run() {
-        List<User> users = setUpUsers();
+        List<RoundBetInfo> roundBetInfos = setUpRoundBetInfos();
+        List<User> users = extractUsers(roundBetInfos);
         initDeal(users);
         processUserTurns(users);
         processDealerTurn();
         showCardResult(users);
-        showGameRecord(users);
+        List<UserProfit> userProfits = gameService.settleResult(roundBetInfos, dealer);
+        showGameRecord(userProfits);
+        processTotalProfit(userProfits);
     }
 
-    private List<User> setUpUsers(){
+    private List<RoundBetInfo> setUpRoundBetInfos() {
         String input = inputView.readUsers();
-        return InputParser.parseUsers(input);
+        List<String> names = InputParser.parseToList(input);
+        List<Integer> betAmounts = inputView.readBetAmounts(names);
+        return InputParser.parseToRoundBetInfos(names, betAmounts, INITIAL_ROUND);
+    }
+
+    private List<User> extractUsers(List<RoundBetInfo> roundBetInfos) {
+        return roundBetInfos.stream()
+                .map(RoundBetInfo::user)
+                .toList();
     }
 
     private void initDeal(List<User> users){
@@ -69,8 +85,12 @@ public class GameController {
         outputView.printCardResult(users, dealer);
     }
 
-    private void showGameRecord(List<User> users){
-        gameService.settleResult(users, dealer);
-        outputView.printGameRecord(users, dealer);
+    private void showGameRecord(List<UserProfit> userProfits) {
+        outputView.printGameRecord(userProfits, dealer);
+    }
+
+    private void processTotalProfit(List<UserProfit> userProfits) {
+        DealerProfit dealerProfit = gameService.upsertDealerProfit(userProfits);
+        outputView.printTotalProfit(userProfits, dealerProfit);
     }
 }

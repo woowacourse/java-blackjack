@@ -1,12 +1,24 @@
-import domain.*;
+import domain.card.Card;
+import domain.card.CardDeck;
+import domain.card.ShuffleStrategy;
+import domain.player.Dealer;
+import domain.player.User;
+import domain.result.DealerProfit;
+import domain.result.GameResult;
+import domain.result.RoundBetInfo;
+import domain.result.UserProfit;
+import strategy.BettingRule;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameService {
 
     private final CardDeck cardDeck;
+    private final BettingRule bettingRule;
 
-    public GameService(ShuffleStrategy strategy) {
+    public GameService(ShuffleStrategy strategy, BettingRule bettingRule) {
+        this.bettingRule = bettingRule;
         this.cardDeck = new CardDeck(strategy);
     }
 
@@ -23,14 +35,18 @@ public class GameService {
         return cardDeck.deal();
     }
 
-    public void settleResult(List<User> users, Dealer dealer) {
+
+    public List<UserProfit> settleResult(List<RoundBetInfo> roundBetInfos, Dealer dealer) {
         dealer.calculateScore();
-        for (User user : users) {
+        List<UserProfit> userProfits = new ArrayList<>();
+        for (RoundBetInfo roundBetInfo : roundBetInfos) {
+            User user = roundBetInfo.user();
             user.calculateScore();
             GameResult result = decideResult(user, dealer);
-            user.setGameResult(result);
             dealer.recordRounds(result.opposite());
+            userProfits.add(createEachUserProfit(roundBetInfo, result));
         }
+        return userProfits;
     }
 
     private GameResult decideResult(User user, Dealer dealer) {
@@ -60,5 +76,18 @@ public class GameService {
             return GameResult.LOSE;
         }
         return GameResult.DRAW;
+    }
+
+    private UserProfit createEachUserProfit(RoundBetInfo roundBetInfo, GameResult gameResult) {
+        int eachProfit = bettingRule.calculateBetAmount(roundBetInfo, gameResult);
+        return roundBetInfo.toUserProfit(gameResult, eachProfit);
+    }
+
+    public DealerProfit upsertDealerProfit(List<UserProfit> userProfits) {
+        int dealerProfit = 0;
+        for (UserProfit each : userProfits) {
+            dealerProfit += each.profit() * (-1);
+        }
+        return new DealerProfit(dealerProfit);
     }
 }

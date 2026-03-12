@@ -1,9 +1,8 @@
-package domain;
+package domain.player;
 
 public class User extends Player {
 
     private final String name;
-    private GameResult gameResult;
 
     private User(String name) {
         this.name = name;
@@ -25,11 +24,4 @@ public class User extends Player {
         return name;
     }
 
-    public void setGameResult(GameResult gameResult) {
-        this.gameResult = gameResult;
-    }
-
-    public GameResult getGameResult() {
-        return gameResult;
-    }
 }

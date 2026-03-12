@@ -1,5 +1,7 @@
 package domain;
 
+import domain.card.Card;
+import domain.player.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -52,15 +54,15 @@ class PlayerTest {
         int aceScore = user.getAceBonus(sum);
 
         //then
-        assertThat(aceScore).isEqualTo(11);
+        assertThat(aceScore).isEqualTo(10);
     }
 
     @Test
-    @DisplayName("Ace를 제외한 점수의 합이 11 이상이면 Ace 점수는 1이 된다.")
+    @DisplayName("Ace를 제외한 점수의 합이 12 이상이면 Ace 점수는 1이 된다.")
     public void if_remain_score_over11_ace_score_1() {
         //given
         User user = User.from("abc");
-        int sum = 11;
+        int sum = 12;
         int aceScore = user.getAceBonus(sum);
         assertThat(aceScore).isEqualTo(0);
     }
