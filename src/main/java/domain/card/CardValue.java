@@ -23,10 +23,6 @@ public enum CardValue {
         this.value = value;
     }
 
-    public static int fromScore(CardValue cardValue) {
-        return cardValue.value;
-    }
-
     public String getName() {
         return name;
     }

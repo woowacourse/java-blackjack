@@ -19,10 +19,6 @@ public class Card {
         return cardSuit;
     }
 
-    public int getScore() {
-        return CardValue.fromScore(cardValue);
-    }
-
     @Override
     public boolean equals(Object object) {
         if (object == null || getClass() != object.getClass()) {
