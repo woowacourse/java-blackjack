@@ -42,6 +42,19 @@
 | Burst     | 카드 총합이 21을 초과할 경우     |
 | Blackjack | 카드 총합이 21인 경우         |
 
+### 수익 (Profit)
+
+| 용어     | 설명                         |
+|--------|----------------------------|
+| Profit | 플레이어가 얼마나 벌었는지를 금액으로 나타낸 것 |
+
+### 베팅 (Betting)
+
+| 용어             | 설명                                      | 
+|----------------|-----------------------------------------|
+| Betting        | 플레이어가 승패에 거는 돈                          |
+| Betting Amount | 베팅에 거는 돈의 양 (최소 1,000원 ~ 최대 1,000,000원) |
+
 ## 기능 요구 사항
 
 > 블랙잭 게임을 변형한 프로그램을 구현한다. <br> 블랙잭 게임은 딜러와 플레이어 중 카드의 합이 21 또는 21에 가장 가까운 숫자를 가지는 쪽이 이기는 게임이다.
@@ -93,35 +106,37 @@ jason: 패
 
 ### 게임 준비 (Player Name 입력 단계)
 
-- [ ] 공백 입력은 허용하지 않는다.
-- [ ] 숫자와 특수문자, 끝에 쉼표를 허용하지 않는다.
+- [x] 공백 입력은 허용하지 않는다.
 - [x] 쉼표를 기준으로 Player Name을 분리한다.
 - [x] 5자를 넘는 Player Name은 허용하지 않는다.
-- [ ] Player는 최대 5명이다.
+- [x] Player는 최대 5명이다.
 
-### 게임 시작 (Deck 생성 및 Card 세팅 단계)
+### 게임 시작 (베팅, Deck 셔플 및 Card 세팅 단계)
 
-- [x] Deck을 생성한다.
+- [ ] Player는 게임을 시작할 때 Betting Amount을 정해야 한다.
+    - [ ] Betting Amount을은 최소 1,000원 ~ 최대 1,000,000원 이다.
+    - [ ] Betting Amount을은 쉼표로 구분되지 않는 숫자로만 입력이 가능하다.
+
 - [x] Deck을 셔플한다.
-- [X] 모두에게 Card를 두 장씩 나눠준다.
+- [X] 딜러를 포함안 플레이어 모두에게 Card를 두 장씩 나눠준다.
 
 ### 게임 중 (Rule에 따라 각 Player가 Card를 뽑는 단계)
 
-- [x] 각 Player는 Card를 받을지 말지 선택한다.
+- [x] 각 Player는 Card를 더 받을지 말지 선택할 수 있다.
+    - [ ] 카드를 추가로 뽑아 Burst가 될 경우 Betting Amount를 모두 잃게 된다.
     - [x] Stay나 Burst가 나올 경우 다음 Player로 넘어간다.
     - [x] 만약 다음 Player가 없을 경우 다음 단계로 넘어간다.
 
 - [x] 모두 Burst 상태인 경우 결과를 보여준다.
 - [x] 아니라면 Dealer는 Card를 뽑는다.
-
-- [x] Dealer는 Card 합계가 17점 이상일 때 까지 카드를 받는다.
+    - [x] Dealer는 Card 합계가 17점 이상일 때 까지 카드를 받는다.
 
 - [x] 모든 참여자의 게임 결과를 보여준다.
     - 게임 결과는 각 참여자가 뽑은 카드와 총 합을 보여주는 것이다.
 
 ### 게임 종료 (Dealer와 Player의 State 또는 Card 총합을 비교하고 출력하는 단계)
 
-- [x] Dealer와 각 Player의 승패 정보를 출력한다.
+- [x] Dealer와 각 Player의 승패 정보를 확인하고 최종 수익을 출력한다.
     - [x] Dealer가 Burst일 때
         - Player가 Burst면 Player 패, Dealer 승
         - Player가 Stay면 Player 승, Dealer 패
@@ -129,4 +144,11 @@ jason: 패
     - [x] Dealer가 Stay일 때
         - Player가 Burst면 Player 패, Dealer 승
         - Player가 Stay면 Card 총합을 비교하여 승패를 비교한다.
-            - Card 총합이 같다면 (무승부)이면 유저 승, 딜러 패
+            - Card 총합이 같다면 무승부이다. (모두 돈을 잃지 않았기 때문이다.)
+
+- [ ] 승자는 Betting Amount 만큼 수익을 얻는다.
+- [ ] 패자는 Betting Amount를 모두 잃는다.
+- [ ] Dealer는 Player의 승패에 따라 Profit이 결정된다.
+    - 모든 Player의 Profit을 Dealer의 Profit으로 한다.
+
+- [ ] Player가 Blackjack이면 Betting Amount의 1.5배를 Profit으로 얻는다.
