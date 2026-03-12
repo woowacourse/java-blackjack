@@ -1,7 +1,7 @@
 package repository;
 
 import domain.common.PlayedGameResult;
-import domain.game_playing.Participants;
+import domain.gameplaying.Participants;
 import domain.common.NameAndCardInfos;
 import java.util.List;
 import service.BlackJackCommandService;

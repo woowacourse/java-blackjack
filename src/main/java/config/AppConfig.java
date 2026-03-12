@@ -1,8 +1,8 @@
 package config;
 
 import controller.BlackJackController;
-import domain.game_playing.DrawStrategy;
-import domain.game_playing.strategy.OneDeckStrategy;
+import domain.gameplaying.DrawStrategy;
+import domain.gameplaying.strategy.OneDeckStrategy;
 import repository.ParticipantRepository;
 import repository.ScoreRepository;
 import service.BlackJackCommandService;

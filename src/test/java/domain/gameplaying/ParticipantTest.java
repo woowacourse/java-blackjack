@@ -1,10 +1,10 @@
-package domain.game_playing;
+package domain.gameplaying;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
-import domain.game_playing.strategy.RandomStrategy;
-import domain.game_playing.strategy.AceDrawStrategy;
+import domain.gameplaying.strategy.RandomStrategy;
+import domain.gameplaying.strategy.AceDrawStrategy;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;

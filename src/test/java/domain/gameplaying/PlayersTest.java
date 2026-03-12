@@ -1,8 +1,8 @@
-package domain.game_playing;
+package domain.gameplaying;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import domain.game_playing.strategy.RandomStrategy;
+import domain.gameplaying.strategy.RandomStrategy;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;

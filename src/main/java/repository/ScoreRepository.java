@@ -1,9 +1,9 @@
 package repository;
 
-import domain.game_result.vo.PlayerWinningInfo;
-import domain.game_result.ScoreBoard;
+import domain.result.vo.PlayerWinningInfo;
+import domain.result.ScoreBoard;
 import domain.common.PlayedGameResult;
-import domain.game_result.vo.DealerWinningScore;
+import domain.result.vo.DealerWinningScore;
 import java.util.List;
 import service.BlackJackCommandService;
 import service.BlackJackQueryService;

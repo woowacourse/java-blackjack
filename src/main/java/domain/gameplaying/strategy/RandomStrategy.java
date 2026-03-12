@@ -1,9 +1,9 @@
-package domain.game_playing.strategy;
+package domain.gameplaying.strategy;
 
-import domain.game_playing.Card;
-import domain.game_playing.CardMark;
-import domain.game_playing.CardRank;
-import domain.game_playing.DrawStrategy;
+import domain.gameplaying.Card;
+import domain.gameplaying.CardMark;
+import domain.gameplaying.CardRank;
+import domain.gameplaying.DrawStrategy;
 import java.util.Random;
 
 public class RandomStrategy implements DrawStrategy {

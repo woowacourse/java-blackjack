@@ -1,9 +1,9 @@
-package domain.game_result;
+package domain.result;
 
 import domain.common.BlackJackRule;
-import domain.game_result.vo.DealerWinningScore;
+import domain.result.vo.DealerWinningScore;
 import domain.common.PlayedGameResult;
-import domain.game_result.vo.PlayerWinningInfo;
+import domain.result.vo.PlayerWinningInfo;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;

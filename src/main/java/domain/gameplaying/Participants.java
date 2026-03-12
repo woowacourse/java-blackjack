@@ -1,4 +1,4 @@
-package domain.game_playing;
+package domain.gameplaying;
 
 import domain.common.NameAndCardInfos;
 import domain.common.PlayedGameResult;

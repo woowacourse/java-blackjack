@@ -1,8 +1,8 @@
-package domain.game_playing;
+package domain.gameplaying;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import domain.game_playing.strategy.RandomStrategy;
+import domain.gameplaying.strategy.RandomStrategy;
 import domain.common.CardInfo;
 import java.util.ArrayList;
 import java.util.List;

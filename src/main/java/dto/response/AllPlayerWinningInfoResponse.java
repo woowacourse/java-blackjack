@@ -1,6 +1,6 @@
 package dto.response;
 
-import domain.game_result.vo.PlayerWinningInfo;
+import domain.result.vo.PlayerWinningInfo;
 import java.util.List;
 
 public record AllPlayerWinningInfoResponse(List<PlayerWinningInfoResponse> playerWinningInfoResponses) {

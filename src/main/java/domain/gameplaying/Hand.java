@@ -1,4 +1,4 @@
-package domain.game_playing;
+package domain.gameplaying;
 
 import domain.common.BlackJackRule;
 import domain.common.CardInfo;

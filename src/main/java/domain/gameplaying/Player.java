@@ -1,4 +1,4 @@
-package domain.game_playing;
+package domain.gameplaying;
 
 class Player extends Participant {
 

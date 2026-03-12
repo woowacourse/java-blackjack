@@ -1,4 +1,4 @@
-package domain.game_result.vo;
+package domain.result.vo;
 
 public record DealerWinningScore(int winCount, int drawCount, int loseCount) {
 }

@@ -1,9 +1,9 @@
 package service;
 
 import domain.common.PlayedGameResult;
-import domain.game_playing.DrawStrategy;
-import domain.game_playing.Participants;
-import domain.game_result.ScoreBoard;
+import domain.gameplaying.DrawStrategy;
+import domain.gameplaying.Participants;
+import domain.result.ScoreBoard;
 import java.util.List;
 import repository.ParticipantRepository;
 import repository.ScoreRepository;
