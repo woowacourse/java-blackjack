@@ -1,7 +1,5 @@
 package model.game;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.List;
 import model.card.Card;
 import model.card.Deck;
@@ -33,18 +31,4 @@ public class BlackjackTest {
 
         blackjack = Blackjack.of(participants, simpleDeck);
     }
-
-//    @Test
-//    void 전체_참여자들의_승패를_계산한다() {
-//        // when
-//        Map<String, Integer> dealerResult = blackjack.calculateDealerResult();
-//        Map<String, Long> playerResult = blackjack.calculateFinalResult();
-//
-//        assertThat(dealerResult.get("승")).isEqualTo(1);
-//        assertThat(dealerResult.get("패")).isEqualTo(1);
-//
-//        assertThat(playerResult.get("pobi")).isFalse();
-//        assertThat(playerResult.get("pobi")).isFalse();
-//        assertThat(playerResult.get("jason")).isTrue();
-//    }
 }

@@ -2,7 +2,6 @@ package view;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import model.participant.Dealer;
 
@@ -20,16 +19,6 @@ public class OutputView {
 
     public void printHandsWithScore(String participantName, List<String> hand, int score) {
         System.out.println(participantName + "카드: " + String.join(", ", hand) + " - 결과: " + score);
-    }
-
-    public void printFinalResult(Map<String, Integer> dealerResult, Map<String, Boolean> playerResult) {
-        System.out.println();
-        System.out.println("## 최종 승패");
-        System.out.printf("딜러: %d승 %d패%s", dealerResult.getOrDefault("승", 0), dealerResult.getOrDefault("패", 0),
-                LINE_SEPARATOR);
-        for (Entry<String, Boolean> entry : playerResult.entrySet()) {
-            System.out.printf("%s: %s%s", entry.getKey(), entry.getValue() ? "승" : "패", LINE_SEPARATOR);
-        }
     }
 
     public void printBustState(String name, int score, int blackjackScore) {

@@ -41,24 +41,6 @@ public class Dealer extends Participant {
         return this.calculateScore() <= DRAW_THRESHOLD;
     }
 
-    public Map<String, Integer> calculateStatistics(List<Player> players) {
-        return players.stream()
-                .map(this::judgeResult)
-                .collect(Collectors.toMap(
-                        key -> key,
-                        key -> 1,
-                        Integer::sum
-                ));
-    }
-
-    private String judgeResult(Player player) {
-        if (beats(player)) {
-            return "승";
-        }
-
-        return "패";
-    }
-
     @Override
     public String toString() {
         return "Dealer{" +
