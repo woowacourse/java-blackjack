@@ -88,7 +88,7 @@ public class BlackjackGameManager {
             draw += judgeResult(result, Result.DRAW);
             lose += judgeResult(result, Result.WIN);
         }
-        return new BlackjackStatisticsDto(new DealerStatisticDto(win, draw, lose), playerStatisticDtoList);
+        return BlackjackStatisticsDto.of(DealerStatisticDto.of(win, draw, lose), playerStatisticDtoList);
     }
 
     public List<PlayerStatisticDto> calculatePlayerResults() {
@@ -96,7 +96,7 @@ public class BlackjackGameManager {
         List<PlayerStatisticDto> playerStatisticDtoList = new ArrayList<>();
         for (Player player : participants.players().getPlayers()) {
             Result result = calculatePlayerResult(dealer, player);
-            playerStatisticDtoList.add(new PlayerStatisticDto(player.getName(), result));
+            playerStatisticDtoList.add(PlayerStatisticDto.of(player, result));
         }
         return playerStatisticDtoList;
     }
