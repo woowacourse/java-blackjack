@@ -1,10 +1,16 @@
 package domain.result;
 
+import domain.Dealer;
 import domain.Money;
+import domain.Player;
 import domain.WinningStatus;
 import domain.betting.Betting;
 
 public record Result(Betting betting, WinningStatus winningStatus) {
+
+    public Player getPlayer() {
+        return betting.player();
+    }
 
     public Money getProfit() {
         if (winningStatus == WinningStatus.WIN) {
@@ -17,5 +23,27 @@ public record Result(Betting betting, WinningStatus winningStatus) {
             return betting.money().multiply(-1);
         }
         return betting.money().multiply(0);
+    }
+
+    public static Result of(Dealer dealer, Betting betting) {
+        WinningStatus winningStatus = calculateWinningStatus(dealer, betting.player());
+        return new Result(betting, winningStatus);
+    }
+    
+    // todo: 요구사항에 맞게 수정
+    private static WinningStatus calculateWinningStatus(Dealer dealer, Player player) {
+        if (player.isBust()) {
+            return WinningStatus.LOSE;
+        }
+        if (dealer.isBust()) {
+            return WinningStatus.WIN;
+        }
+        if (dealer.getScore() > player.getScore()) {
+            return WinningStatus.LOSE;
+        }
+        if (dealer.getScore() == player.getScore()) {
+            return WinningStatus.DRAW;
+        }
+        return WinningStatus.WIN;
     }
 }
