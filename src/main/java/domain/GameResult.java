@@ -12,12 +12,18 @@ public class GameResult {
     private final Map<String, Integer> gamblerProfits;
     private final int dealerProfit;
 
-    public GameResult(Dealer dealer, Gamblers gamblers) {
-        this.gamblerProfits = calculateGamblerProfits(dealer, gamblers);
-        this.dealerProfit = calculateDealerProfit(gamblerProfits);
+    private GameResult(Map<String, Integer> gamblerProfits, int dealerProfit) {
+        this.gamblerProfits = gamblerProfits;
+        this.dealerProfit = dealerProfit;
     }
 
-    private Map<String, Integer> calculateGamblerProfits(Dealer dealer, Gamblers gamblers) {
+    public static GameResult from(Dealer dealer, Gamblers gamblers) {
+        Map<String, Integer> profits = calculateGamblerProfits(dealer, gamblers);
+        int dealerProfit = calculateDealerProfit(profits);
+        return new GameResult(profits, dealerProfit);
+    }
+
+    private static Map<String, Integer> calculateGamblerProfits(Dealer dealer, Gamblers gamblers) {
         Map<String, Integer> profits = new LinkedHashMap<>();
 
         gamblers.forEach(gambler -> {
@@ -29,7 +35,7 @@ public class GameResult {
         return profits;
     }
 
-    private int calculateDealerProfit(Map<String, Integer> gamblerProfits) {
+    private static int calculateDealerProfit(Map<String, Integer> gamblerProfits) {
         int totalGamblerProfit = gamblerProfits.values().stream()
                 .mapToInt(Integer::intValue)
                 .sum();

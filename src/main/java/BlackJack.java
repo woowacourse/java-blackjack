@@ -60,8 +60,8 @@ public class BlackJack {
     }
 
     private void printInitialDealInfo(Dealer dealer, Gamblers gamblers) {
-        OutputView.printInitMessage(dealer.getName() ,gamblers.getNames());
-        OutputView.printDealerFirstCard(dealer.getName() ,dealer.firstCard());
+        OutputView.printInitMessage(dealer.getName(), gamblers.getNames());
+        OutputView.printDealerFirstCard(dealer.getName(), dealer.firstCard());
 
         gamblers.forEach(this::printGamblerCardInfo);
     }
@@ -75,11 +75,14 @@ public class BlackJack {
     }
 
     private void gamblerTurn(Gambler gambler) {
-        while (!gambler.isBust() && !gambler.isBlackJack() && askHit(gambler.getName())) {
+        if (checkBlackJack(gambler)) {
+            return;
+        }
+
+        while (!gambler.isBust() && askHit(gambler.getName())) {
             gambler.deal(cardDeck);
             OutputView.printGamblerCards(gambler.getName(), PlayerCardInfo.from(gambler));
         }
-
         if (gambler.isBust()) {
             OutputView.printPlayerBust(gambler.getName());
         }
@@ -107,7 +110,7 @@ public class BlackJack {
     }
 
     private void printFinalPlayerInfo(Dealer dealer, Gamblers gamblers) {
-        OutputView.printFinalPlayer(dealer.getName() ,PlayerCardInfo.from(dealer));
+        OutputView.printFinalPlayer(dealer.getName(), PlayerCardInfo.from(dealer));
         gamblers.forEach(this::printFinalGamblerCardInfo);
     }
 
@@ -118,7 +121,7 @@ public class BlackJack {
     private void printFinalResult(Dealer dealer, Gamblers gamblers) {
         OutputView.printFinalResultHeader();
 
-        GameResult gameResult = new GameResult(dealer, gamblers);
+        GameResult gameResult = GameResult.from(dealer, gamblers);
         BlackjackResult blackjackResult = BlackjackResult.from(gameResult);
 
         OutputView.printResult(blackjackResult);

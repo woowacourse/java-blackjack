@@ -52,7 +52,7 @@ class GamblersTest {
         dealer.deal(sd);
         gamblers.dealAll(sd);
 
-        GameResult gameResult = new GameResult(dealer, gamblers);
+        GameResult gameResult = GameResult.from(dealer,gamblers);
 
         //when
         BlackjackResult result = BlackjackResult.from(gameResult);
