@@ -7,18 +7,15 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
 public enum GameResult {
-
-    BLACKJACK("블랙잭", 1.5),
-    WIN("승", 1.0),
-    DRAW("무", 0.0),
-    LOSE("패", -1.0),
+    BLACKJACK(1.5),
+    WIN(1.0),
+    DRAW(0.0),
+    LOSE(-1.0),
     ;
 
-    private final String displayName;
     private final double profitMultiplier;
 
-    GameResult(final String displayName, final double profitMultiplier) {
-        this.displayName = displayName;
+    GameResult(final double profitMultiplier) {
         this.profitMultiplier = profitMultiplier;
     }
 
