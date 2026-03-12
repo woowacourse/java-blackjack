@@ -51,9 +51,9 @@ public class BlackJackTest {
     void 딜러와_참가자들의_최종_수익을_계산한다() {
         // given
         // when
-//        blackJack.calculateRevenue();
-
+        Map<String, Integer> calculatedRevenue = blackJack.calculateRevenue();
 
         // then
+
     }
 }
