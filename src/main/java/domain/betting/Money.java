@@ -7,6 +7,8 @@ public record Money(
         double money
 ) {
 
+    private static final double MONEY_BOUND = 0.0;
+
     public static Money from(String money) {
         validateMoneyIsNumber(money);
         return Money.from(Double.parseDouble(money));
@@ -14,6 +16,7 @@ public record Money(
 
     public static Money from(double money) {
         validateMoneyIsNegative(money);
+        validateMoneyIsZero(money);
         return new Money(money);
     }
 
@@ -41,9 +44,15 @@ public record Money(
         }
     }
 
-    private static  void validateMoneyIsNegative(double money) {
-        if (money < 0) {
+    private static void validateMoneyIsNegative(double money) {
+        if (money < MONEY_BOUND) {
             throw new MoneyException(ErrorMessage.BETTING_MONEY_IS_NOT_NEGATIVE);
+        }
+    }
+
+    private static void validateMoneyIsZero(double money) {
+        if (money == MONEY_BOUND) {
+            throw new MoneyException(ErrorMessage.BETTING_MONEY_IS_NOT_ZERO);
         }
     }
 

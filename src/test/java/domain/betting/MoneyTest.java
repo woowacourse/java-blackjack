@@ -24,4 +24,14 @@ public class MoneyTest {
         }).isInstanceOf(MoneyException.class);
     }
 
+
+    @Test
+    void 베팅금액은_0원일_수_없다() {
+        String zeroNumber = "0";
+
+        Assertions.assertThatThrownBy(() -> {
+            Money.from(zeroNumber);
+        }).isInstanceOf(MoneyException.class);
+    }
+
 }
