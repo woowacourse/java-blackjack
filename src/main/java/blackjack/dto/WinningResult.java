@@ -1,5 +1,6 @@
 package blackjack.dto;
 
+import blackjack.domain.Dealer;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
 import java.util.LinkedHashMap;
@@ -9,7 +10,7 @@ public record WinningResult(
         Map<String, Boolean> winningResult
 ) {
 
-    public static WinningResult from(Players players, Player dealer) {
+    public static WinningResult from(Players players, Dealer dealer) {
         Map<String, Boolean> winningResult = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
             winningResult.put(player.getName(), player.winsAgainst(dealer));
