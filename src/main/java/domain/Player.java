@@ -5,7 +5,7 @@ public class Player {
     private final Cards cards;
     private final String name;
 
-    public Player(Cards cards, String name) {
+    private Player(Cards cards, String name) {
         this.cards = cards;
         this.name = name;
     }
