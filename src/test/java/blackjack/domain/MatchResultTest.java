@@ -14,8 +14,8 @@ class MatchResultTest {
         player.receiveCard(TrumpCard.of(Suit.DIAMOND, Rank.FIVE));
 
         Dealer dealer = Dealer.of();
-        dealer.receive(TrumpCard.of(Suit.CLOVER, Rank.TEN));
-        dealer.receive(TrumpCard.of(Suit.SPADE, Rank.SEVEN));
+        dealer.receiveCard(TrumpCard.of(Suit.CLOVER, Rank.TEN));
+        dealer.receiveCard(TrumpCard.of(Suit.SPADE, Rank.SEVEN));
 
         assertThat(MatchResult.of(player, dealer)).isEqualTo(MatchResult.LOSE);
     }
@@ -27,9 +27,9 @@ class MatchResultTest {
         player.receiveCard(TrumpCard.of(Suit.HEART, Rank.SEVEN));
 
         Dealer dealer = Dealer.of();
-        dealer.receive(TrumpCard.of(Suit.CLOVER, Rank.TEN));
-        dealer.receive(TrumpCard.of(Suit.DIAMOND, Rank.TEN));
-        dealer.receive(TrumpCard.of(Suit.SPADE, Rank.FIVE));
+        dealer.receiveCard(TrumpCard.of(Suit.CLOVER, Rank.TEN));
+        dealer.receiveCard(TrumpCard.of(Suit.DIAMOND, Rank.TEN));
+        dealer.receiveCard(TrumpCard.of(Suit.SPADE, Rank.FIVE));
 
         assertThat(MatchResult.of(player, dealer)).isEqualTo(MatchResult.WIN);
     }
@@ -41,8 +41,8 @@ class MatchResultTest {
         player.receiveCard(TrumpCard.of(Suit.HEART, Rank.TEN));
 
         Dealer dealer = Dealer.of();
-        dealer.receive(TrumpCard.of(Suit.CLOVER, Rank.TEN));
-        dealer.receive(TrumpCard.of(Suit.SPADE, Rank.SEVEN));
+        dealer.receiveCard(TrumpCard.of(Suit.CLOVER, Rank.TEN));
+        dealer.receiveCard(TrumpCard.of(Suit.SPADE, Rank.SEVEN));
 
         assertThat(MatchResult.of(player, dealer)).isEqualTo(MatchResult.WIN);
     }
@@ -54,8 +54,8 @@ class MatchResultTest {
         player.receiveCard(TrumpCard.of(Suit.HEART, Rank.SEVEN));
 
         Dealer dealer = Dealer.of();
-        dealer.receive(TrumpCard.of(Suit.CLOVER, Rank.TEN));
-        dealer.receive(TrumpCard.of(Suit.DIAMOND, Rank.SEVEN));
+        dealer.receiveCard(TrumpCard.of(Suit.CLOVER, Rank.TEN));
+        dealer.receiveCard(TrumpCard.of(Suit.DIAMOND, Rank.SEVEN));
 
         assertThat(MatchResult.of(player, dealer)).isEqualTo(MatchResult.DRAW);
     }

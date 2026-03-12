@@ -70,7 +70,7 @@ public class BlackjackGame {
 
     public void dealerDraw() {
         TrumpCard drawn = deck.draw();
-        dealer.receive(drawn);
+        dealer.receiveCard(drawn);
     }
 
     public GameResult generateGameResult() {
