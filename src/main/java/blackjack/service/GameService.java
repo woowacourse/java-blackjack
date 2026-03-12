@@ -2,7 +2,7 @@ package blackjack.service;
 
 import static blackjack.util.constant.Constants.INITIAL_CARD_COUNT;
 
-import blackjack.domain.GameResultType;
+import blackjack.domain.GameResultStatus;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.GameResult;
@@ -35,36 +35,36 @@ public class GameService {
     }
 
     public void applyGameResult(User user, Dealer dealer, GameResult gameResult) {
-        GameResultType resultType = determineResult(user, dealer);
+        GameResultStatus resultType = determineResult(user, dealer);
         gameResult.add(user.getName(), resultType.calculateProfit(user.getBettingAmount()));
     }
 
-    public GameResultType determineResult(User user, Dealer dealer) {
+    public GameResultStatus determineResult(User user, Dealer dealer) {
         if (user.isBurst()) {
-            return GameResultType.LOSE;
+            return GameResultStatus.LOSE;
         }
         if (user.isBlackjack() && dealer.isBlackjack()) {
-            return GameResultType.DRAW;
+            return GameResultStatus.DRAW;
         }
         if (user.isBlackjack()) {
-            return GameResultType.BLACKJACK_WIN;
+            return GameResultStatus.BLACKJACK_WIN;
         }
         if (dealer.isBlackjack()) {
-            return GameResultType.LOSE;
+            return GameResultStatus.LOSE;
         }
         if (dealer.isBurst()) {
-            return GameResultType.WIN;
+            return GameResultStatus.WIN;
         }
         return compareScore(user, dealer);
     }
 
-    private GameResultType compareScore(User user, Dealer dealer) {
+    private GameResultStatus compareScore(User user, Dealer dealer) {
         if (user.calculateCardsValue() > dealer.calculateCardsValue()) {
-            return GameResultType.WIN;
+            return GameResultStatus.WIN;
         }
         if (user.calculateCardsValue() == dealer.calculateCardsValue()) {
-            return GameResultType.DRAW;
+            return GameResultStatus.DRAW;
         }
-        return GameResultType.LOSE;
+        return GameResultStatus.LOSE;
     }
 }

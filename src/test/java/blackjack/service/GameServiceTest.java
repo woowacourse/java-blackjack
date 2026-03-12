@@ -3,7 +3,7 @@ package blackjack.service;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.BettingAmount;
-import blackjack.domain.GameResultType;
+import blackjack.domain.GameResultStatus;
 import blackjack.domain.deck.Card;
 import blackjack.domain.deck.CardShape;
 import blackjack.domain.deck.CardValue;
@@ -51,10 +51,10 @@ class GameServiceTest {
         user.add(new Card(CardValue.TEN, CardShape.CLOVER));
 
         // when
-        GameResultType result = gameService.determineResult(user, dealer);
+        GameResultStatus result = gameService.determineResult(user, dealer);
 
         // then
-        assertThat(result).isEqualTo(GameResultType.LOSE);
+        assertThat(result).isEqualTo(GameResultStatus.LOSE);
     }
 
     @Test
@@ -69,10 +69,10 @@ class GameServiceTest {
         dealer.add(new Card(CardValue.TEN, CardShape.HEART));
 
         // when
-        GameResultType result = gameService.determineResult(user, dealer);
+        GameResultStatus result = gameService.determineResult(user, dealer);
 
         // then
-        assertThat(result).isEqualTo(GameResultType.DRAW);
+        assertThat(result).isEqualTo(GameResultStatus.DRAW);
     }
 
     @Test
@@ -87,10 +87,10 @@ class GameServiceTest {
         dealer.add(new Card(CardValue.NINE, CardShape.HEART));
 
         // when
-        GameResultType result = gameService.determineResult(user, dealer);
+        GameResultStatus result = gameService.determineResult(user, dealer);
 
         // then
-        assertThat(result).isEqualTo(GameResultType.BLACKJACK_WIN);
+        assertThat(result).isEqualTo(GameResultStatus.BLACKJACK_WIN);
     }
 
     @Test
@@ -105,10 +105,10 @@ class GameServiceTest {
         dealer.add(new Card(CardValue.TEN, CardShape.HEART));
 
         // when
-        GameResultType result = gameService.determineResult(user, dealer);
+        GameResultStatus result = gameService.determineResult(user, dealer);
 
         // then
-        assertThat(result).isEqualTo(GameResultType.LOSE);
+        assertThat(result).isEqualTo(GameResultStatus.LOSE);
     }
 
     @Test
@@ -124,10 +124,10 @@ class GameServiceTest {
         dealer.add(new Card(CardValue.TEN, CardShape.DIAMOND));
 
         // when
-        GameResultType result = gameService.determineResult(user, dealer);
+        GameResultStatus result = gameService.determineResult(user, dealer);
 
         // then
-        assertThat(result).isEqualTo(GameResultType.WIN);
+        assertThat(result).isEqualTo(GameResultStatus.WIN);
     }
 
     @Test
@@ -142,10 +142,10 @@ class GameServiceTest {
         dealer.add(new Card(CardValue.EIGHT, CardShape.HEART));
 
         // when
-        GameResultType result = gameService.determineResult(user, dealer);
+        GameResultStatus result = gameService.determineResult(user, dealer);
 
         // then
-        assertThat(result).isEqualTo(GameResultType.WIN);
+        assertThat(result).isEqualTo(GameResultStatus.WIN);
     }
 
     @Test
@@ -160,10 +160,10 @@ class GameServiceTest {
         dealer.add(new Card(CardValue.EIGHT, CardShape.HEART));
 
         // when
-        GameResultType result = gameService.determineResult(user, dealer);
+        GameResultStatus result = gameService.determineResult(user, dealer);
 
         // then
-        assertThat(result).isEqualTo(GameResultType.DRAW);
+        assertThat(result).isEqualTo(GameResultStatus.DRAW);
     }
 
     @Test
@@ -178,9 +178,9 @@ class GameServiceTest {
         dealer.add(new Card(CardValue.EIGHT, CardShape.HEART));
 
         // when
-        GameResultType result = gameService.determineResult(user, dealer);
+        GameResultStatus result = gameService.determineResult(user, dealer);
 
         // then
-        assertThat(result).isEqualTo(GameResultType.LOSE);
+        assertThat(result).isEqualTo(GameResultStatus.LOSE);
     }
 }

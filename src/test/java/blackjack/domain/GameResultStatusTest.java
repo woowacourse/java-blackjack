@@ -5,7 +5,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class GameResultTypeTest {
+public class GameResultStatusTest {
 
     @Test
     @DisplayName("승리일 경우 상금 반환")
@@ -14,7 +14,7 @@ public class GameResultTypeTest {
         int input = 10000;
 
         // when
-        int result = GameResultType.WIN.calculateProfit(input);
+        int result = GameResultStatus.WIN.calculateProfit(input);
 
         //then
         assertThat(10000).isEqualTo(result);
@@ -27,7 +27,7 @@ public class GameResultTypeTest {
         int input = 10000;
 
         // when
-        int result = GameResultType.BLACKJACK_WIN.calculateProfit(input);
+        int result = GameResultStatus.BLACKJACK_WIN.calculateProfit(input);
 
         //then
         assertThat(15000).isEqualTo(result);
@@ -40,7 +40,7 @@ public class GameResultTypeTest {
         int input = 10000;
 
         // when
-        int result = GameResultType.LOSE.calculateProfit(input);
+        int result = GameResultStatus.LOSE.calculateProfit(input);
 
         //then
         assertThat(-10000).isEqualTo(result);
@@ -53,7 +53,7 @@ public class GameResultTypeTest {
         int input = 10000;
 
         // when
-        int result = GameResultType.DRAW.calculateProfit(input);
+        int result = GameResultStatus.DRAW.calculateProfit(input);
 
         // then
         assertThat(0).isEqualTo(result);
