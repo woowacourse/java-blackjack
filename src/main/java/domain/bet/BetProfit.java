@@ -9,7 +9,6 @@ import java.util.Set;
 
 public class BetProfit {
     private static final int ZERO = 0;
-    private static final double BLACKJACK_YIELD = 1.5;
 
     private final Map<Name, Integer> betProfit = new LinkedHashMap<>();
 
@@ -46,27 +45,7 @@ public class BetProfit {
     }
 
     private int calculateBetAmount(GameResult gameResult, int betAmount) {
-        if (gameResult == GameResult.LOSE) {
-            betAmount = negateBetAmount(betAmount);
-        }
-
-        if (gameResult == GameResult.DRAW) {
-            betAmount = ZERO;
-        }
-
-        if (gameResult == GameResult.BLACKJACK_WIN) {
-            betAmount = blackjackAmount(betAmount);
-        }
-
-        return betAmount;
-    }
-
-    private int blackjackAmount(int betAmount) {
-        return (int) (betAmount * BLACKJACK_YIELD);
-    }
-
-    private int negateBetAmount(int betAmount) {
-        return -betAmount;
+        return (int) (betAmount * gameResult.getProfitRatio());
     }
 
     public Map<Name, Integer> getPlayerBetProfit() {
@@ -80,5 +59,9 @@ public class BetProfit {
                 .sum();
 
         return negateBetAmount(playerProfitSum);
+    }
+
+    private int negateBetAmount(int betAmount) {
+        return -betAmount;
     }
 }
