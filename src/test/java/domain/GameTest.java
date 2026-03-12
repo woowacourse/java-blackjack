@@ -4,6 +4,7 @@ import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
 import exception.ErrorMessage;
+import factory.CardFactory;
 import org.junit.jupiter.api.Test;
 
 import java.util.LinkedHashMap;
@@ -132,7 +133,7 @@ class GameTest {
         List<String> names = List.of("시오","시오");
 
         // when, then
-        assertThatThrownBy(() -> new Game(names, new Deck()))
+        assertThatThrownBy(() -> new Game(names, new Deck(CardFactory.createDeck())))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.DUPLICATE_NAME.getMessage());
     }

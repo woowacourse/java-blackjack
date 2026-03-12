@@ -5,6 +5,7 @@ import domain.card.Rank;
 import domain.card.Suit;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CardFactory {
@@ -15,6 +16,7 @@ public class CardFactory {
                 cards.add(new Card(suit, rank));
             }
         }
+        Collections.shuffle(cards);
         return cards;
     }
 }
