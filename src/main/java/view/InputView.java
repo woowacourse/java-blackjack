@@ -8,6 +8,7 @@ public class InputView {
 
     private static final String COMMA_DELIMITER = ",";
     private static final String BINARY_REGEX = "[yn]";
+    private static final String BINARY_Y = "y";
 
     private final Scanner sc = new Scanner(System.in);
 
@@ -42,7 +43,7 @@ public class InputView {
             throw new IllegalArgumentException("잘못된 입력입니다. 다시 입력해주세요.");
         }
 
-        return userInput.equals("y");
+        return userInput.equals(BINARY_Y);
     }
 
     private String userInput() {
