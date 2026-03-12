@@ -21,7 +21,8 @@ class DealerTest {
             DealerHitPolicy alwaysHitPolicy = (score) -> true;
             Dealer dealer = new Dealer("딜러", emptyHand);
             // when
-            boolean shouldDraw = dealer.shouldHit(alwaysHitPolicy, scoreCalculator.calculateOptimalTotal(dealer.getCards()));
+            boolean shouldDraw = dealer.shouldHit(alwaysHitPolicy,
+                scoreCalculator.calculateOptimalTotal(dealer.getCards()));
             // then
             assertThat(shouldDraw).isTrue();
         }
@@ -32,7 +33,8 @@ class DealerTest {
             DealerHitPolicy neverHitPolicy = (score) -> false;
             Dealer dealer = new Dealer("딜러", emptyHand);
             // when
-            boolean shouldDraw = dealer.shouldHit(neverHitPolicy, scoreCalculator.calculateOptimalTotal(dealer.getCards()));
+            boolean shouldDraw = dealer.shouldHit(neverHitPolicy,
+                scoreCalculator.calculateOptimalTotal(dealer.getCards()));
             // then
             assertThat(shouldDraw).isFalse();
         }

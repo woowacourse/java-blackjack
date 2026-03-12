@@ -4,8 +4,12 @@ import java.util.List;
 
 public class Player extends Participant {
 
-    public Player(String name, Hand hand) {
+    public Player(Name name, Hand hand) {
         super(name, hand);
+    }
+
+    public Player(String name, Hand hand) {
+        super(new Name(name), hand);
     }
 
     @Override

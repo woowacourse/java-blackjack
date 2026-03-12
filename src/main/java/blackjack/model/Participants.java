@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 
 public class Participants implements Iterable<Participant> {
     private static final String DELIMITER = ",";
-    private static final String DEALER_NAME = "딜러";
+    private static final Name DEALER_NAME = new Name("딜러");
     private static final int INCLUDE_EMPTY_ELEMENT = -1;
 
     private final Dealer dealer;
@@ -22,7 +22,7 @@ public class Participants implements Iterable<Participant> {
         List<String> playerNames = Arrays.asList(rawPlayerNames.split(DELIMITER, INCLUDE_EMPTY_ELEMENT));
         validateDuplicatedNames(playerNames);
         List<Player> players = playerNames.stream()
-            .map(playerName -> new Player(playerName.strip(), new Hand())).toList();
+            .map(playerName -> new Player(playerName, new Hand())).toList();
         return new Participants(players);
     }
 
