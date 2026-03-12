@@ -8,6 +8,7 @@ import java.util.Set;
 
 public class Hand {
 
+    public static final int BLACKJACK_CARD_COUNT = 2;
     public static final int BUST_BOUND = 21;
 
     private final List<Card> hand;
@@ -28,7 +29,7 @@ public class Hand {
     }
 
     public boolean isBlackjack() {
-        return hand.size() == 2 && getScore() == BUST_BOUND;
+        return hand.size() == BLACKJACK_CARD_COUNT && getScore() == BUST_BOUND;
     }
 
 
@@ -66,13 +67,13 @@ public class Hand {
         scores.addAll(newScore);
     }
 
-    private static void addScore(final Card card, final Integer score, final HashSet<Integer> newScore) {
+    private void addScore(final Card card, final Integer score, final HashSet<Integer> newScore) {
         for (final int s : card.getCardRank().getScores()) {
             newScore.add(score + s);
         }
     }
 
-    private static int getNotBustMaxScore(final int score, int notBustMaxScore) {
+    private int getNotBustMaxScore(final int score, int notBustMaxScore) {
         if (score <= BUST_BOUND && score > notBustMaxScore) {
             notBustMaxScore = score;
         }
