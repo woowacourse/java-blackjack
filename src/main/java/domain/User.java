@@ -8,7 +8,6 @@ public class User {
     private final String userName;
     private final Hand hand;
     private final Money bettingMoney;
-    private Money profit = new Money(0);
 
     public User(String name, Money bettingMoney) {
         this.userName = name;
@@ -45,9 +44,7 @@ public class User {
     }
 
     public Money updateProfitBy(GameResult gameResult) {
-        Money earnedMoney = gameResult.calculateProfit(this.bettingMoney);
-        this.profit = earnedMoney;
-        return earnedMoney;
+        return gameResult.calculateProfit(this.bettingMoney);
     }
 
     public boolean isBlackjack() {
