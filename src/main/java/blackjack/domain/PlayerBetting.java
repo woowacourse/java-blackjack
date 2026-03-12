@@ -9,10 +9,17 @@ public class PlayerBetting {
         this.bettingAmount = bettingAmount;
     }
 
-    public int calculateProfit(ScoreCompareResult compareResult) {
+    public double calculateProfit(ScoreCompareResult compareResult) {
         if (compareResult == ScoreCompareResult.PLAYER_WIN) {
-            return bettingAmount;
+            return calculateProfitWhenPlayerWins();
         }
         return 0;
+    }
+
+    private double calculateProfitWhenPlayerWins() {
+        if (player.isBlackjack()) {
+            return (bettingAmount * 1.5);
+        }
+        return bettingAmount;
     }
 }
