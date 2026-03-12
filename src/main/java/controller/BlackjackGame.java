@@ -37,9 +37,7 @@ public class BlackjackGame {
                 .map(Player::new).toList()
         );
 
-        players.getPlayers().forEach(player -> {
-            player.bet(inputView.getBetAmount(player.name()));
-        });
+        players.getPlayers().forEach(player -> player.bet(inputView.getBetAmount(player.name())));
 
         Dealer dealer = new Dealer(DEALER_NAME);
 
