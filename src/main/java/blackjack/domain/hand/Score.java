@@ -21,7 +21,7 @@ public class Score {
         return this.score < score;
     }
 
-    public boolean isBlackjack() {
+    public boolean isBlackjackNumber() {
         return score == BLACKJACK_NUMBER;
     }
 }
