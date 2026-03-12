@@ -31,6 +31,19 @@
 5. ScoreBoard
 - [x] 승패 집계
 
+
+## 피드백
+- [ ] 불필요한 주석 제거
+- [ ] 메서드 네이밍
+  - [ ] firstPlayerProcess
+  - [ ] ScoreBoard 내부
+- [ ] 사용하지 않는 import문
+- [x] 패키지 네이밍
+- [ ] Participant 사용
+- [ ] ScoreBoard 리팩토링
+- [ ] ParticiapntTest
+
+
 ## 리팩토링
 - [x] GameTable 분해 및 책임 분리
   - [x] Repository, Service 정리
