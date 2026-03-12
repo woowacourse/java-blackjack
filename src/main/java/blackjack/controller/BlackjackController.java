@@ -12,6 +12,7 @@ import blackjack.domain.participant.Status;
 import blackjack.domain.trump.RandomSortBehavior;
 import blackjack.domain.trump.Trump;
 import blackjack.dto.FinalProfitsDto;
+import blackjack.dto.StartMessageDto;
 import blackjack.utils.Parser;
 import blackjack.utils.RetryExecutor;
 import blackjack.view.InputView;
@@ -29,7 +30,7 @@ public class BlackjackController {
 
         handleBet(players);
         dealer.pitch(players.all());
-        OutputView.printStartMessage(players.all(), dealer);
+        OutputView.printStartMessage(StartMessageDto.of(players, dealer));
         handleAllActions(players, dealer);
         printResult(participants, players);
     }
