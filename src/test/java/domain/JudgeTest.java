@@ -85,6 +85,60 @@ class JudgeTest {
     }
 
     @Test
+    void 플레이어의_시작_손패의_합이_21이면_블랙잭이다() {
+        // given
+        Dealer dealer = new Dealer();
+        dealer.draw(new Card(Suit.HEARTS, Rank.NUM10));
+        dealer.draw(new Card(Suit.HEARTS, Rank.NUM8));
+
+        Player player = new Player("시오");
+        player.draw(new Card(Suit.CLUBS, Rank.ACE));
+        player.draw(new Card(Suit.CLUBS, Rank.KING));
+
+        // when
+        Judge judge = Judge.from(dealer, List.of(player));
+
+        // then
+        assertEquals(WinningStatus.BLACKJACK_WIN, judge.getPlayerResult(player));
+    }
+
+    @Test
+    void 딜러의_시작_손패의_합이_21이고_플레이어의_시작_손패의_합이_21이_아니면_패배한다() {
+        // given
+        Dealer dealer = new Dealer();
+        dealer.draw(new Card(Suit.HEARTS, Rank.ACE));
+        dealer.draw(new Card(Suit.HEARTS, Rank.JACK));
+
+        Player player = new Player("시오");
+        player.draw(new Card(Suit.CLUBS, Rank.ACE));
+        player.draw(new Card(Suit.CLUBS, Rank.NUM2));
+
+        // when
+        Judge judge = Judge.from(dealer, List.of(player));
+
+        // then
+        assertEquals(WinningStatus.LOSE, judge.getPlayerResult(player));
+    }
+
+    @Test
+    void 딜러의_시작_손패의_합이_21이고_플레이어의_시작_손패의_합이_21이면_무승부다() {
+        // given
+        Dealer dealer = new Dealer();
+        dealer.draw(new Card(Suit.HEARTS, Rank.ACE));
+        dealer.draw(new Card(Suit.HEARTS, Rank.JACK));
+
+        Player player = new Player("시오");
+        player.draw(new Card(Suit.CLUBS, Rank.ACE));
+        player.draw(new Card(Suit.CLUBS, Rank.QUEEN));
+
+        // when
+        Judge judge = Judge.from(dealer, List.of(player));
+
+        // then
+        assertEquals(WinningStatus.DRAW, judge.getPlayerResult(player));
+    }
+
+    @Test
     void 딜러의_승수와_패수를_계산한다() {
         // given
         Dealer dealer = new Dealer();
