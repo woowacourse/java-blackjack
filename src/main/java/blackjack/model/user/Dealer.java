@@ -1,10 +1,12 @@
 package blackjack.model.user;
 
-import blackjack.model.constant.Constant;
 import blackjack.model.gameresult.GameResult;
 import java.util.EnumMap;
 
 public class Dealer extends User {
+
+    private static final int DEALER_ADD_CARD_STAND = 17;
+
     private final EnumMap<GameResult, Integer> gameResults;
 
     public Dealer() {
@@ -22,6 +24,6 @@ public class Dealer extends User {
 
     @Override
     public boolean isHitAvailable() {
-        return totalScore() < Constant.DEALER_ADD_CARD_STAND;
+        return totalScore() < DEALER_ADD_CARD_STAND;
     }
 }

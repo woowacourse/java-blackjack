@@ -1,7 +1,5 @@
 package blackjack.view;
 
-import static blackjack.model.constant.Constant.BLACKJACK_SCORE;
-
 import blackjack.model.card.Card;
 import blackjack.model.user.Dealer;
 import blackjack.model.gameresult.GameResult;
@@ -15,6 +13,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
+
+    private static final int BLACKJACK_SCORE = 21;
+
     public static void printInitCards(Users users) {
         List<Player> players = users.getPlayers();
         Dealer dealer = users.getDealer();

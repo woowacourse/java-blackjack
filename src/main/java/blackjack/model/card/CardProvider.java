@@ -1,8 +1,5 @@
 package blackjack.model.card;
 
-import static blackjack.model.constant.Constant.INIT_CARDS_END_IDX;
-import static blackjack.model.constant.Constant.INIT_CARDS_START_IDX;
-
 import blackjack.model.user.Dealer;
 import blackjack.model.user.Player;
 import blackjack.model.user.User;
@@ -14,6 +11,9 @@ import java.util.List;
 import java.util.Queue;
 
 public class CardProvider {
+
+    private static final int INIT_CARDS_START_IDX = 0;
+    private static final int INIT_CARDS_END_IDX = 2;
 
     private final Queue<Card> deck = new LinkedList<>();
 

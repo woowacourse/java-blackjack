@@ -1,17 +1,17 @@
 package blackjack.model.card;
 
-import static blackjack.model.constant.Constant.ACE_SCORE_ELEVEN;
-import static blackjack.model.constant.Constant.ACE_SCORE_ONE;
-import static blackjack.model.constant.Constant.INIT_CARDS_END_IDX;
-import static blackjack.model.constant.Constant.INIT_CARDS_START_IDX;
-import static blackjack.model.constant.Constant.BLACKJACK_SCORE;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Hand {
+
+    private static final int BLACKJACK_SCORE = 21;
+    private static final int INIT_CARDS_START_IDX = 0;
+    private static final int INIT_CARDS_END_IDX = 2;
+    private static final int ACE_SCORE_ONE = 1;
+    private static final int ACE_SCORE_ELEVEN = 11;
 
     private final List<Card> cards;
 
