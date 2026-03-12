@@ -9,21 +9,29 @@ public class Players {
     private final List<Player> playerList;
     
     private Players(List<Player> playerList) {
-        validate(playerList);
+        validateDuplicated(playerList);
         this.playerList = playerList;
     }
     
-    public static Players fromNameAndBettingAmounts(List<String> playerNames, List<Integer> playerBettingAmounts) {
-        if (playerNames.size() != playerBettingAmounts.size()) {
-            throw new IllegalArgumentException("플레이어의 수와 동일한 수의 배팅금이 필요합니다.");
-        }
-        List<Player> players = IntStream.range(0, playerNames.size())
-                .mapToObj(index -> Player.from(playerNames.get(index), playerBettingAmounts.get(index)))
+    public static Players fromNameAndBettingAmounts(List<String> playerNicknames, List<Integer> playerBettingAmounts) {
+        validate(playerNicknames, playerBettingAmounts);
+        
+        List<Player> players = IntStream.range(0, playerNicknames.size())
+                .mapToObj(index -> Player.from(playerNicknames.get(index), playerBettingAmounts.get(index)))
                 .toList();
         return new Players(players);
     }
     
-    private void validate(List<Player> playerList) {
+    private static void validate(List<String> playerNicknames, List<Integer> playerBettingAmounts) {
+        if (playerNicknames.isEmpty()) {
+            throw new IllegalArgumentException("한 명 이상의 플레이어 닉네임을 입력해주세요");
+        }
+        if (playerNicknames.size() != playerBettingAmounts.size()) {
+            throw new IllegalArgumentException("플레이어의 수와 동일한 수의 배팅금이 필요합니다.");
+        }
+    }
+    
+    private void validateDuplicated(List<Player> playerList) {
         long distinctCount = playerList.stream()
                 .map(Player::getNickname)
                 .distinct()
