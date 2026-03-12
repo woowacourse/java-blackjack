@@ -2,6 +2,8 @@ package domain.view;
 
 import domain.analyzer.dto.ResultAnalysisDto;
 import domain.answer.DrawDecision;
+import domain.betting.Money;
+import domain.betting.dto.GamerBettingProfitDto;
 import domain.gamer.PlayerName;
 import domain.gamer.dto.GamerHandDto;
 import domain.gamer.dto.GamerResultDto;
@@ -31,6 +33,14 @@ public class ApplicationView {
                     .map(String::trim)
                     .map(PlayerName::new)
                     .toList();
+        });
+    }
+
+    public Money askBettingMoney(String playerName) {
+        return retry(() -> {
+            writer.printBettingGuideMessage(playerName);
+            String money = reader.readInput();
+            return Money.from(money);
         });
     }
 

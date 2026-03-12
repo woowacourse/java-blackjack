@@ -3,6 +3,9 @@ package controller;
 import domain.analyzer.ResultAnalyzer;
 import domain.analyzer.dto.ResultAnalysisDto;
 import domain.answer.DrawDecision;
+import domain.betting.BettingTable;
+import domain.betting.Money;
+import domain.betting.dto.GamerBettingProfitDto;
 import domain.card.CardDeck;
 import domain.card.CardGenerator;
 import domain.gamer.Dealer;
@@ -30,6 +33,9 @@ public class BlackjackGame {
         Dealer dealer = enterDealer();
         Players players = enterPlayers();
 
+        BettingTable bettingTable = setBettingTable();
+        askBettingMoney(bettingTable, players);
+
         dealInitialCard(dealer, players);
         showGamerHands(players, dealer);
 
@@ -37,7 +43,7 @@ public class BlackjackGame {
         tryHitDealer(dealer);
 
         showGamerHandResult(dealer, players);
-        showGameResultAnalysis(players, dealer);
+//        showGameResultAnalysis(players, dealer);
     }
 
     private Dealer enterDealer() {
@@ -54,6 +60,17 @@ public class BlackjackGame {
 
     private List<PlayerName> requestPlayerNames() {
         return view.requestPlayerNames();
+    }
+
+    private BettingTable setBettingTable() {
+        return new BettingTable();
+    }
+
+    private void askBettingMoney(BettingTable bettingTable, Players players) {
+        players.getPlayers().forEach(player -> {
+            Money bettingMoney = view.askBettingMoney(player.getMyName());
+            bettingTable.bet(player, bettingMoney);
+        });
     }
 
     private void dealInitialCard(Dealer dealer, Players players) {
@@ -76,6 +93,7 @@ public class BlackjackGame {
     private void tryHitPlayers(Players players, Dealer dealer) {
         players.getPlayers()
                 .forEach(player -> drawPlayerCard(player, dealer));
+        // 출력해야하넹...
     }
 
     private void tryHitDealer(Dealer dealer) {
