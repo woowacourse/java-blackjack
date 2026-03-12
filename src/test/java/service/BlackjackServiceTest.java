@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
 // TODO: 경계값 및 예외 테스트 등 추가 필요
 class BlackjackServiceTest {
 
-    private final BlackjackGame blackjackGame = new BlackjackGame(initParticipants());
+    private final BlackjackGame blackjackGame = new BlackjackGame(initParticipants(), new StubShuffler());
 
 
     @Test
@@ -35,7 +35,7 @@ class BlackjackServiceTest {
 //        assertThat(deck).extracting(Deck::getDeck).has;
     }
 
-    static class FakeShuffler implements Shuffler {
+    static class StubShuffler implements Shuffler {
 
         @Override
         public void shuffle(final List<Card> list) {

@@ -1,6 +1,7 @@
 package domain;
 
 import domain.card.Deck;
+import domain.card.Shuffler;
 import domain.participant.Participant;
 import domain.participant.Participants;
 import java.util.ArrayList;
@@ -20,13 +21,18 @@ public class BlackjackGame {
         this.participants = participants;
     }
 
+    public BlackjackGame(final Participants participants, final Shuffler shuffler) {
+        this.deck = new Deck(shuffler);
+        this.participants = participants;
+    }
+
     public void initDraw() {
         for (final Participant participant : participants.getPlayers()) {
             drawCards(participant, INIT_DRAW_COUNT);
         }
     }
 
-    // FIXME: Player랑 Dealer 구분 필요한가 - hit 하나에서 공통으로 처리할 수 있게?
+    // FIXME: Player랑 Dealer 구분할까, hit 하나에서 공통으로 처리할 수 있게?
     public void hitPlayer(final Participant player) {
         drawCards(player, HIT_DRAW_COUNT);
     }

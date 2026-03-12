@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
 
-// TODO: draw() 책임을 갖도록 리팩터링
 public class Deck {
     private final Deque<Card> deck;
 
