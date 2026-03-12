@@ -10,12 +10,17 @@ public class Dealer extends Participant {
     private static final int STAND_SCORE = 17;
 
     public Dealer(Hand hand) {
-        super(NAME_VALUE, hand);
+        super(hand);
     }
 
     @Override
     public List<Card> getInitialCards() {
         return List.of(hand.getFirstCard());
+    }
+
+    @Override
+    public String getName() {
+        return NAME_VALUE;
     }
 
     public boolean isStand() {
