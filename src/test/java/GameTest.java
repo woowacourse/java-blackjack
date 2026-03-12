@@ -44,8 +44,7 @@ public class GameTest {
         dealer.receiveOneCard(new Card("10", "하트"));
         dealer.receiveOneCard(new Card("7", "스페이드"));
 
-        Game game = new Game();
-        assertThat(game.compareScore(player, dealer)).isEqualTo(ScoreCompareResult.PLAYER_WIN);
+        assertThat(Game.compareScore(player, dealer)).isEqualTo(ScoreCompareResult.PLAYER_WIN);
     }
 
     @Test
@@ -59,8 +58,7 @@ public class GameTest {
         dealer.receiveOneCard(new Card("10", "하트"));
         dealer.receiveOneCard(new Card("9", "스페이드"));
 
-        Game game = new Game();
-        assertThat(game.compareScore(player, dealer)).isEqualTo(ScoreCompareResult.DEALER_WIN);
+        assertThat(Game.compareScore(player, dealer)).isEqualTo(ScoreCompareResult.DEALER_WIN);
     }
 
     @Test
@@ -74,8 +72,7 @@ public class GameTest {
         dealer.receiveOneCard(new Card("10", "하트"));
         dealer.receiveOneCard(new Card("A", "스페이드"));
 
-        Game game = new Game();
-        assertThat(game.compareScore(player, dealer)).isEqualTo(ScoreCompareResult.PUSH);
+        assertThat(Game.compareScore(player, dealer)).isEqualTo(ScoreCompareResult.PUSH);
     }
 
     @Test
@@ -85,7 +82,7 @@ public class GameTest {
         Player brown = createPlayer("brown", "10:하트", "10:클로버");
         Dealer dealer = createDealer("3:다이아몬드", "9:클로버", "8:다이아몬드");
 
-        Game game = new Game();
+        Game game = new Game(List.of(pobi, jason, brown), dealer);
 
         Map<ScoreCompareResult, Integer> dealerResult = Map.of(
                 ScoreCompareResult.DEALER_WIN, 1,
@@ -103,7 +100,7 @@ public class GameTest {
                 playerResults
         );
 
-        GameResult actual = game.judgeTotalGameResult(List.of(pobi, jason, brown), dealer);
+        GameResult actual = game.judgeTotalGameResult();
 
         assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
     }

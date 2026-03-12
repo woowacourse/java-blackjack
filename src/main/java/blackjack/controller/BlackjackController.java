@@ -20,13 +20,11 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class BlackjackController {
-    private final CardDistributor cardDistributor;
-    private final Game game;
     private static final RetryInput retryInput = new RetryInput();
+    private final CardDistributor cardDistributor;
 
     public BlackjackController(CardDistributor cardDistributor) {
         this.cardDistributor = cardDistributor;
-        this.game = new Game();
     }
 
     public void startGame() {
@@ -39,8 +37,10 @@ public class BlackjackController {
         processTurn(players); // 플레이어 hit or stand
         playDealerTurn(dealer);
 
+        Game game = new Game(players, dealer);
+
         calculateFinalScore(players, dealer);
-        calculateFinalGameResult(players, dealer);
+        calculateFinalGameResult(game);
     }
 
     private void setupInitialHand(List<Player> players, Dealer dealer, List<String> playerNames) {
@@ -55,8 +55,8 @@ public class BlackjackController {
         );
     }
 
-    private void calculateFinalGameResult(List<Player> players, Dealer dealer) {
-        GameResult gameResult = game.judgeTotalGameResult(players, dealer);
+    private void calculateFinalGameResult(Game game) {
+        GameResult gameResult = game.judgeTotalGameResult();
         Map<ScoreCompareResult, Integer> dealerResult = gameResult.dealerResult();
 
         LinkedHashMap<Player, ScoreCompareResult> playerResult = gameResult.playerResults();

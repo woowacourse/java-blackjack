@@ -10,14 +10,16 @@ import java.util.List;
 import java.util.Map;
 
 public class Game {
-//    private final List<Player> players;
-//    private final Dealer dealer;
+    private final List<Player> players;
+    private final Dealer dealer;
 
 
-    public Game() {
+    public Game(List<Player> players, Dealer dealer) {
+        this.players = players;
+        this.dealer = dealer;
     }
 
-    public static GameResult judgeTotalGameResult(List<Player> players, Dealer dealer) {
+    public GameResult judgeTotalGameResult() {
         Map<ScoreCompareResult, Integer> dealerResult = new HashMap<>();
         LinkedHashMap<Player, ScoreCompareResult> playerResults = new LinkedHashMap<>();
 
