@@ -1,5 +1,8 @@
 package controller;
 
+import domain.Bet;
+import domain.BettingBoard;
+import domain.BettingParser;
 import domain.HitCommand;
 import domain.Deck;
 import domain.GameManager;
@@ -30,6 +33,13 @@ public class GameController {
     public void run() {
         Participants participants = new Participants(getPlayers(), new Dealer());
         GameManager gameManager = getManager();
+        BettingBoard bettingBoard = new BettingBoard();
+
+        for (Player player : participants.getPlayers()) {
+            Bet bet = BettingParser.parse(inputView.readBettingAmount(player.getName()));
+            bettingBoard.addBetting(player, bet);
+            outputView.printNewLine();
+        }
 
         initializeGame(gameManager, participants);
         playGame(gameManager, participants);
