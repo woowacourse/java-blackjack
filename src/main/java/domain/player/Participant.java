@@ -23,6 +23,10 @@ public class Participant {
         return handCards.getCardScoreSum() > MAX_SCORE;
     }
 
+    public boolean isBlackJack() {
+        return handCards.getCardScoreSum() == MAX_SCORE;
+    }
+
     public String getName() {
         return name.getName();
     }

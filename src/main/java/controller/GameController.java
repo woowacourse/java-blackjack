@@ -66,7 +66,7 @@ public class GameController {
         while (InputView.askHit(player.getName())) {
             gameService.hit(player);
 
-            if (player.isBust()) {
+            if (player.isBust() || player.isBlackJack()) {
                 break;
             }
 
