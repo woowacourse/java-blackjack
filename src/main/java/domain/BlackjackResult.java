@@ -45,12 +45,12 @@ public class BlackjackResult {
         BetResult betResult = playerBet.getValue();
         GameResult gameResult = betResult.getGameResult();
         if (gameResult == GameResult.WIN) {
-            return betResult.getBetAmount();
+            return Policy.WIN_MULTIPLIER * betResult.getBetAmount();
         }
         if (gameResult == GameResult.LOSE) {
-            return -1 * betResult.getBetAmount();
+            return Policy.LOSE_MULTIPLIER * betResult.getBetAmount();
         }
-        return 0;
+        return Policy.DRAW_MULTIPLIER;
     }
 
     public Map<Player, BetResult> getPlayerBets() {
