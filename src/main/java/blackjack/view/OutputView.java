@@ -14,11 +14,11 @@ public class OutputView {
         System.out.println(dealerName + "와 " + stringJoinWithComma(playersName) + "에게 2장을 나누었습니다.");
     }
 
-    public void printCardResults(String playerName, List<String> cards) {
+    public void printCards(String playerName, List<String> cards) {
         System.out.println(playerName + "카드: " + stringJoinWithComma(cards));
     }
 
-    public void printCardResults(String playerName, List<String> cards, int score) {
+    public void printCards(String playerName, List<String> cards, int score) {
         System.out.println(playerName + "카드: " + stringJoinWithComma(cards) + " - 결과: " + score);
     }
 
@@ -27,22 +27,22 @@ public class OutputView {
         System.out.println(dealerName + "는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printWinningResult(ProfitResult profitResult) {
+    public void printResult(ProfitResult profitResult) {
         System.out.println();
-        System.out.println("## 최종 승패");
-        printWinningResultOfDealer(profitResult.getProfitOfDealer());
-        printWinningResultOfPlayers(profitResult);
+        System.out.println("## 최종 수익");
+        printResultOfDealer(profitResult.getProfitOfDealer());
+        printResultOfPlayers(profitResult);
     }
 
     public void println() {
         System.out.println();
     }
 
-    private void printWinningResultOfDealer(int profitOfDealer) {
+    private void printResultOfDealer(int profitOfDealer) {
         System.out.println("딜러: " + profitOfDealer);
     }
 
-    private void printWinningResultOfPlayers(ProfitResult profitResult) {
+    private void printResultOfPlayers(ProfitResult profitResult) {
         profitResult.profitResult().forEach((playerName, bettingAmount) ->
                 System.out.println(playerName + ": " + bettingAmount)
         );
