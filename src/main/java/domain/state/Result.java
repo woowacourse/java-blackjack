@@ -34,7 +34,7 @@ public enum Result {
         if (dealerState.getScore().equals(playerState.getScore())) {
             return Result.DRAW;
         }
-        throw new IllegalArgumentException("Result 뭔가 잘못된거같아...");
+        throw new IllegalStateException("Result 뭔가 잘못된거같아...");
     }
 
     public Integer getEarnCost(int n) {
