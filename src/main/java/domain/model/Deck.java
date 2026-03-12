@@ -68,5 +68,8 @@ public class Deck {
         if (sum > BURST_CRITERIA) {
             deckStatus = DeckStatus.BURST;
         }
+        if (sum == 21) {
+            deckStatus = DeckStatus.BLACK_JACK;
+        }
     }
 }
