@@ -34,10 +34,9 @@ public class GameResults {
     }
 
     public Profit getDealerProfit() {
-        final int sum = playerProfits.values().stream()
-                .mapToInt(Profit::getAmount)
-                .sum();
-        return new Profit(sum).negate();
+        return playerProfits.values().stream()
+                .reduce(new Profit(0), Profit::add)
+                .negate();
     }
 
     public Map<Player, Profit> getProfitsByPlayer() {

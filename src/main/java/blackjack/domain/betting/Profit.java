@@ -8,6 +8,10 @@ public class Profit {
         this.amount = amount;
     }
 
+    public Profit add(final Profit other) {
+        return new Profit(this.amount + other.amount);
+    }
+
     public Profit negate() {
         return new Profit(-amount);
     }
