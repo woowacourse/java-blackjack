@@ -28,7 +28,7 @@ public abstract class Participant {
         return cards.calculateScore();
     }
 
-    public boolean isBurst() {
+    public boolean isBust() {
         if (this.getScore() > BURST_THRESHOLD) {
             return true;
         }

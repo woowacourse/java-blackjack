@@ -15,10 +15,10 @@ public class Player extends Participant {
     }
 
     public boolean isWin(Dealer dealer) {
-        if (this.isBurst()) {
+        if (this.isBust()) {
             return false;
         }
-        if (dealer.isBurst()) {
+        if (dealer.isBust()) {
             return true;
         }
         return this.getScore() >= dealer.getScore();
