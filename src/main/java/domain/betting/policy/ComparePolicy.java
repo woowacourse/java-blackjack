@@ -8,7 +8,7 @@ import domain.gamer.Player;
 public class ComparePolicy extends BettingPolicy{
 
     public ComparePolicy() {
-        super(BettingResult.COMPARE_WIN);
+        super(BettingResult.PLAYER_WIN);
     }
 
     @Override

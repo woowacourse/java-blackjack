@@ -79,7 +79,7 @@ public class BettingPolicyTest {
         dealer.hitMyself();
 
         BettingRate actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
-        BettingRate expectedBettingRate = BettingResult.DOUBLE_BUST.bettingRate();
+        BettingRate expectedBettingRate = BettingResult.PLAYER_WIN.bettingRate();
 
         Assertions.assertThat(actualBettingRate)
                 .isEqualTo(expectedBettingRate);
@@ -94,7 +94,7 @@ public class BettingPolicyTest {
         dealer.hitIfRequired();
 
         BettingRate actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
-        BettingRate expectedBettingRate = BettingResult.DEALER_BUST.bettingRate();
+        BettingRate expectedBettingRate = BettingResult.PLAYER_WIN.bettingRate();
 
         Assertions.assertThat(actualBettingRate)
                 .isEqualTo(expectedBettingRate);
@@ -108,7 +108,7 @@ public class BettingPolicyTest {
         dealer.dealMyself();
 
         BettingRate actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
-        BettingRate expectedBettingRate = BettingResult.PLAYER_BUST.bettingRate();
+        BettingRate expectedBettingRate = BettingResult.PLAYER_LOSE.bettingRate();
 
         Assertions.assertThat(actualBettingRate)
                 .isEqualTo(expectedBettingRate);
@@ -122,7 +122,7 @@ public class BettingPolicyTest {
         dealer.dealMyself();
 
         BettingRate actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
-        BettingRate expectedBettingRate = BettingResult.COMPARE_WIN.bettingRate();
+        BettingRate expectedBettingRate = BettingResult.PLAYER_WIN.bettingRate();
 
         Assertions.assertThat(actualBettingRate)
                 .isEqualTo(expectedBettingRate);
@@ -136,7 +136,7 @@ public class BettingPolicyTest {
         dealer.dealMyself();
 
         BettingRate actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
-        BettingRate expectedBettingRate = BettingResult.COMPARE_LOSE.bettingRate();
+        BettingRate expectedBettingRate = BettingResult.PLAYER_LOSE.bettingRate();
 
         Assertions.assertThat(actualBettingRate)
                 .isEqualTo(expectedBettingRate);

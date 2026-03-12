@@ -8,7 +8,7 @@ import domain.gamer.Player;
 public class BustPolicy extends BettingPolicy{
 
     public BustPolicy() {
-        super(BettingResult.PLAYER_BUST);
+        super(BettingResult.PLAYER_LOSE);
     }
 
     @Override

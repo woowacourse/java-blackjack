@@ -8,7 +8,7 @@ import domain.gamer.Player;
 public class DoubleBustPolicy extends BettingPolicy{
 
     public DoubleBustPolicy() {
-        super(BettingResult.DOUBLE_BUST);
+        super(BettingResult.PLAYER_WIN);
     }
 
     @Override

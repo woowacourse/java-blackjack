@@ -21,7 +21,7 @@ public class BettingTableTest {
     CardBundle blackJackBundle;
     CardBundle lossDealerBundle;
     BettingRate blackJackRate = BettingResult.BLACK_JACK.bettingRate();
-    BettingRate loseRate = BettingResult.COMPARE_LOSE.bettingRate();
+    BettingRate loseRate = BettingResult.PLAYER_LOSE.bettingRate();
     Money thousandWon = Money.from("1000");
     Player testPlayer = Player.from(new PlayerName("test"));
 
