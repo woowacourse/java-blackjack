@@ -95,7 +95,7 @@ public class BlackjackController {
     private State drawDealerHandAndPrint(State dealerState, Deck deck) {
         State state = dealerState;
         while (!state.isFinished()) {
-            state = dealerState.drawCard(deck, true);
+            state = state.drawCard(deck, true);
             outputView.drawDealer(
                     new DealerDrawDto(dealerState.getParticipantName(), CasinoDealerHitStrategy.BOUNDARY));
             outputView.showCards(PlayerCardsDto.fromState(dealerState));
