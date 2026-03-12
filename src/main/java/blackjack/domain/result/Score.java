@@ -36,10 +36,6 @@ public record Score(int value) implements Comparable<Score> {
         return this.value > BUST_THRESHOLD;
     }
 
-    public boolean isBiggerThan(Score score) {
-        return this.value > score.value;
-    }
-
     @Override
     public int compareTo(Score other) {
         return Integer.compare(this.value, other.value);

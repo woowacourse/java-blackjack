@@ -1,15 +1,16 @@
 package blackjack.view;
 
-import blackjack.dto.CardDto;
-import blackjack.dto.DealerResultDto;
-import blackjack.dto.GameResultDto;
-import blackjack.dto.InitialDealDtos;
-import blackjack.dto.ParticipantCardsDto;
-import blackjack.dto.ParticipantScoreDto;
-import blackjack.dto.GameResultDtos;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.result.GameResult;
 import blackjack.domain.result.Score;
+import blackjack.dto.CardDto;
+import blackjack.dto.DealerResultDto;
+import blackjack.dto.GameResultDto;
+import blackjack.dto.GameResultDtos;
+import blackjack.dto.InitialDealDtos;
+import blackjack.dto.ParticipantCardsDto;
+import blackjack.dto.ParticipantScoreDto;
+import blackjack.dto.ParticipantScoreDtos;
 import java.util.List;
 import java.util.Map;
 
@@ -62,9 +63,10 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printScore(List<ParticipantScoreDto> participantScoreDtos) {
-        for (ParticipantScoreDto participantScoreDto : participantScoreDtos) {
-            printPlayerScore(participantScoreDto.participantName(), participantScoreDto.cards(),
+    public void printScore(ParticipantScoreDtos participantScoreDtos) {
+        for (ParticipantScoreDto participantScoreDto : participantScoreDtos.scoreDtos()) {
+            printPlayerScore(participantScoreDto.participantName(),
+                participantScoreDto.cards(),
                 participantScoreDto.score());
         }
         System.out.println();

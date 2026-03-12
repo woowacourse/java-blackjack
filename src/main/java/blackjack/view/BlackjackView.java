@@ -3,9 +3,8 @@ package blackjack.view;
 import blackjack.dto.GameResultDto;
 import blackjack.dto.InitialDealDtos;
 import blackjack.dto.ParticipantCardsDto;
-import blackjack.dto.ParticipantScoreDto;
 import blackjack.domain.participant.Dealer;
-import java.util.List;
+import blackjack.dto.ParticipantScoreDtos;
 
 public class BlackjackView {
     private final InputView inputView;
@@ -38,7 +37,7 @@ public class BlackjackView {
         outputView.printDealerHit(dealer);
     }
 
-    public void printScore(List<ParticipantScoreDto> participantScoreDtos) {
+    public void printScore(ParticipantScoreDtos participantScoreDtos) {
         outputView.printScore(participantScoreDtos);
     }
 

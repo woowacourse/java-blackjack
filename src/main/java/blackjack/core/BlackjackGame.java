@@ -3,16 +3,12 @@ package blackjack.core;
 import blackjack.domain.card.CardsGenerator;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
-import blackjack.domain.result.GameResult;
-import blackjack.dto.DealerResultDto;
 import blackjack.dto.GameResultDto;
-import blackjack.dto.GameResultDtos;
 import blackjack.dto.InitialDealDtos;
 import blackjack.dto.ParticipantCardsDto;
-import blackjack.dto.ParticipantScoreDto;
+import blackjack.dto.ParticipantScoreDtos;
 import blackjack.view.BlackjackView;
 import java.util.List;
 
@@ -70,17 +66,10 @@ public class BlackjackGame {
     }
 
     private void printScore(Participants participants) {
-        List<ParticipantScoreDto> participantScoreDtos = participants.stream()
-            .map(this::convertFrom)
-            .toList();
-        view.printScore(participantScoreDtos);
+        view.printScore(ParticipantScoreDtos.from(participants));
     }
 
     private void printResult(Participants participants) {
         view.printResult(GameResultDto.from(participants));
-    }
-
-    private ParticipantScoreDto convertFrom(Participant participant) {
-        return ParticipantScoreDto.from(participant, participant.getScore());
     }
 }
