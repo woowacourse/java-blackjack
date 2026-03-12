@@ -5,10 +5,9 @@ import static blackjack.util.ExceptionHandler.retryUntilSuccess;
 import blackjack.BlackjackGame;
 import blackjack.model.BetAmount;
 import blackjack.model.card.HitCommand;
-import blackjack.model.card.CardProvider;
+import blackjack.model.gameresult.PlayersGameResult;
 import blackjack.model.user.Dealer;
 import blackjack.model.user.Player;
-import blackjack.model.gameresult.PlayersGameResult;
 import blackjack.model.user.Users;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -17,11 +16,9 @@ import java.util.List;
 
 public class BlackjackController {
 
-    private final CardProvider cardProvider;
     private final BlackjackGame blackjackGame;
 
-    public BlackjackController(CardProvider cardProvider, BlackjackGame blackjackGame) {
-        this.cardProvider = cardProvider;
+    public BlackjackController(BlackjackGame blackjackGame) {
         this.blackjackGame = blackjackGame;
     }
 
@@ -33,7 +30,7 @@ public class BlackjackController {
 
         provideInitCardsAndPrint(users);
 
-        hit(users);
+        blackjackGame.hit(users, InputView::readHitCommand);
 
         printHandStatus(users);
 
@@ -42,31 +39,9 @@ public class BlackjackController {
         InputView.closeScanner();
     }
 
-    private Users createUsers() {
-        String input = InputView.readPlayerName();
-        return new Users(input);
-    }
-
     private void provideInitCardsAndPrint(Users users) {
-        cardProvider.provideInitCards(users);
+        blackjackGame.provideInitCards(users);
         OutputView.printInitCards(users);
-    }
-
-    private void hit(Users users) {
-        List<Player> players = users.getPlayers();
-        Dealer dealer = users.getDealer();
-
-        for (Player player : players) {
-            while (retryUntilSuccess(() -> checkY(player)) && checkAddCard(player)) {
-                cardProvider.provideOneCard(player);
-                OutputView.printPlayerCards(player);
-            }
-        }
-
-        while (dealer.isHitAvailable()) {
-            cardProvider.provideOneCard(dealer);
-            OutputView.printDealerHit();
-        }
     }
 
     private void printHandStatus(Users users) {
@@ -76,19 +51,5 @@ public class BlackjackController {
     private void printGameResult(Users users) {
         PlayersGameResult playersGameResult = users.determineWinner();
         OutputView.printGameResult(playersGameResult, users);
-    }
-
-    private boolean checkY(Player player) {
-        String input = InputView.readCardAdd(player).trim();
-        HitCommand hitCommand = new HitCommand(input);
-        return hitCommand.isY();
-    }
-
-    private boolean checkAddCard(Player player) {
-        if (player.isHitAvailable()) {
-            return true;
-        }
-        OutputView.printCantHit();
-        return false;
     }
 }
