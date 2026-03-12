@@ -1,5 +1,7 @@
 package domain.bet;
 
+import static message.ErrorMessage.PLAYER_NOT_IN_BETTING;
+
 import domain.enums.GameResult;
 import domain.participant.Name;
 import java.util.LinkedHashMap;
@@ -40,7 +42,7 @@ public class BetProfit {
                 .allMatch(betProfit::containsKey);
 
         if (!match) {
-            throw new IllegalArgumentException("[ERROR] 배팅에 참여한 플레이어만 수익 계산이 가능합니다.");
+            throw new IllegalArgumentException(PLAYER_NOT_IN_BETTING.getMessage());
         }
     }
 

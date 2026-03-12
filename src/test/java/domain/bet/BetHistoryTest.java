@@ -1,5 +1,8 @@
 package domain.bet;
 
+import static message.ErrorMessage.BETTING_MONEY_MUST_BE_MULTIPLE_OF_100;
+import static message.ErrorMessage.BETTING_MONEY_NOT_AVAILABLE;
+import static message.ErrorMessage.PLAYER_NOT_IN_BETTING;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
@@ -36,16 +39,25 @@ class BetHistoryTest {
 
             assertThatThrownBy(() -> betHistory.bettingMoney(unknownPlayer, 10_000))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("[ERROR] 게임에 참여한 플레이어만 배팅이 가능합니다.");
+                    .hasMessage(PLAYER_NOT_IN_BETTING.getMessage());
         }
 
         @DisplayName("플레이어는 양수 이외의 값을 배팅할 수 없다.")
         @ParameterizedTest
         @ValueSource(ints = {-10_000, 0})
-        void 플레이어_금액_배팅_테스트(int bettingMoney) {
+        void 플레이어_금액_배팅_테스트_1(int bettingMoney) {
             assertThatThrownBy(() -> betHistory.bettingMoney(firstPlayer, bettingMoney))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("[ERROR] 배팅 금액은 양수값만 가능합니다.");
+                    .hasMessage(BETTING_MONEY_NOT_AVAILABLE.getMessage());
+        }
+
+        @DisplayName("플레이어는 100원 단위의 배팅이 아닌 값을 배팅할 경우 예외가 발생한다.")
+        @ParameterizedTest
+        @ValueSource(ints = {130, 50, 230})
+        void 플레이어_금액_배팅_테스트_2(int bettingMoney) {
+            assertThatThrownBy(() -> betHistory.bettingMoney(firstPlayer, bettingMoney))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage(BETTING_MONEY_MUST_BE_MULTIPLE_OF_100.getMessage());
         }
     }
 

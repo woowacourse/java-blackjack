@@ -1,5 +1,9 @@
 package domain.bet;
 
+import static message.ErrorMessage.BETTING_MONEY_MUST_BE_MULTIPLE_OF_100;
+import static message.ErrorMessage.BETTING_MONEY_NOT_AVAILABLE;
+import static message.ErrorMessage.PLAYER_NOT_IN_GAME;
+
 import domain.participant.Name;
 import java.util.HashMap;
 import java.util.List;
@@ -26,12 +30,16 @@ public class BetHistory {
         return betHistory.keySet().stream()
                 .filter(name -> name.equals(playerName))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 게임에 참여한 플레이어만 배팅이 가능합니다."));
+                .orElseThrow(() -> new IllegalArgumentException(PLAYER_NOT_IN_GAME.getMessage()));
     }
 
     private void validateBettingMoney(int bettingMoney) {
         if (bettingMoney <= 0) {
-            throw new IllegalArgumentException("[ERROR] 배팅 금액은 양수값만 가능합니다.");
+            throw new IllegalArgumentException(BETTING_MONEY_NOT_AVAILABLE.getMessage());
+        }
+
+        if (bettingMoney % 100 != 0) {
+            throw new IllegalArgumentException(BETTING_MONEY_MUST_BE_MULTIPLE_OF_100.getMessage());
         }
     }
 
