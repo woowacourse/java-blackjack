@@ -64,6 +64,12 @@ public class BettingResultTestFixture {
                         List.of(card(CardValue.TEN), card(CardValue.NINE)),
                         List.of(card(CardValue.EIGHT), card(CardValue.SEVEN), card(CardValue.QUEEN)),
                         1000, 1000, -1000
+                ),
+                // 10. 일반 무승부
+                Arguments.of(
+                        List.of(card(CardValue.TEN), card(CardValue.NINE)),
+                        List.of(card(CardValue.EIGHT), card(CardValue.ACE)),
+                        1000, 0, 0
                 )
         );
     }
