@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.model.Player;
+import blackjack.domain.participant.Player;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 

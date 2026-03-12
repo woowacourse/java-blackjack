@@ -1,4 +1,7 @@
-package blackjack.model;
+package blackjack.domain.result;
+
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
 
 public enum GameOutcome {
     BLACKJACK_WIN("승(블랙잭)", 1.5),

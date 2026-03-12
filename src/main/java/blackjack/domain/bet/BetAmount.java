@@ -1,11 +1,11 @@
-package blackjack.model;
+package blackjack.domain.bet;
 
-public class Bet {
-    private final int betAmount;
+public class BetAmount {
+    private final int amount;
 
-    public Bet(int betAmount) {
-        validatePositive(betAmount);
-        this.betAmount = betAmount;
+    public BetAmount(int amount) {
+        validatePositive(amount);
+        this.amount = amount;
     }
 
     private void validatePositive(int input) {
@@ -15,6 +15,6 @@ public class Bet {
     }
 
     public int calculateProfit(double payoutRate) {
-        return (int) (betAmount * payoutRate);
+        return (int) (amount * payoutRate);
     }
 }

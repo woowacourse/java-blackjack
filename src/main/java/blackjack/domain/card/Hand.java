@@ -1,6 +1,6 @@
-package blackjack.model;
+package blackjack.domain.card;
 
-import static blackjack.model.Deck.INITIAL_CARD_COUNT;
+import static blackjack.domain.deck.Deck.INITIAL_CARD_COUNT;
 
 import java.util.ArrayList;
 import java.util.Collections;

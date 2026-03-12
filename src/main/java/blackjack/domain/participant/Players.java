@@ -1,5 +1,8 @@
-package blackjack.model;
+package blackjack.domain.participant;
 
+import blackjack.domain.result.GameOutcome;
+import blackjack.domain.result.GameResult;
+import blackjack.domain.result.GameSummary;
 import java.util.ArrayList;
 import java.util.List;
 

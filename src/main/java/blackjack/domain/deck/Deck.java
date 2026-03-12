@@ -1,5 +1,12 @@
-package blackjack.model;
+package blackjack.domain.deck;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Rank;
+import blackjack.domain.card.Suit;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
+import blackjack.domain.participant.User;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;

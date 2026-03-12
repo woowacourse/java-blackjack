@@ -1,6 +1,8 @@
-package blackjack.model;
+package blackjack.domain.participant;
 
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Hand;
 import java.util.List;
 import java.util.regex.Pattern;
 

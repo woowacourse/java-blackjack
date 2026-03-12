@@ -2,11 +2,11 @@ package blackjack.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.model.Card;
-import blackjack.model.Deck;
-import blackjack.model.FixShuffleStrategy;
-import blackjack.model.Rank;
-import blackjack.model.Suit;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Rank;
+import blackjack.domain.card.Suit;
+import blackjack.domain.deck.Deck;
+import blackjack.domain.deck.FixShuffleStrategy;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.io.ByteArrayInputStream;

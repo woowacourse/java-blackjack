@@ -1,11 +1,11 @@
 package blackjack.controller;
 
-import blackjack.model.Dealer;
-import blackjack.model.Deck;
-import blackjack.model.GameResult;
-import blackjack.model.GameSummary;
-import blackjack.model.Player;
-import blackjack.model.Players;
+import blackjack.domain.deck.Deck;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
+import blackjack.domain.result.GameResult;
+import blackjack.domain.result.GameSummary;
 import blackjack.view.InputParser;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;

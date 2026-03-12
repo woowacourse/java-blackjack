@@ -1,8 +1,8 @@
 package blackjack;
 
 import blackjack.controller.BlackjackController;
-import blackjack.model.Deck;
-import blackjack.model.RandomShuffleStrategy;
+import blackjack.domain.deck.Deck;
+import blackjack.domain.deck.RandomShuffleStrategy;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 

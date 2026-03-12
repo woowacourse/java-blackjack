@@ -1,21 +1,24 @@
-package blackjack.model;
+package blackjack.domain.participant;
 
 
-import static blackjack.model.Hand.BLACKJACK_SCORE;
+import static blackjack.domain.card.Hand.BLACKJACK_SCORE;
+
+import blackjack.domain.bet.BetAmount;
+import blackjack.domain.result.GameOutcome;
 
 public class Player extends User {
 
     private GameOutcome gameOutcome;
-    private final Bet bet;
+    private final BetAmount betAmount;
 
     public Player(String name, int betAmount) {
         super(name);
         this.gameOutcome = GameOutcome.DRAW;
-        this.bet = new Bet(betAmount);
+        this.betAmount = new BetAmount(betAmount);
     }
 
-    public Bet getBet() {
-        return bet;
+    public BetAmount getBet() {
+        return betAmount;
     }
 
     public GameOutcome getGameOutcome() {
