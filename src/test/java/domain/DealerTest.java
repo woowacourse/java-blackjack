@@ -2,6 +2,7 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import infra.FixedCardShuffler;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -9,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 class DealerTest {
 
-    private final Cards deck = Cards.of();
+    private final Cards deck = Cards.of(new FixedCardShuffler());
     private final Dealer dealer = Dealer.of(deck.drawInitialHand());
 
     @Test
@@ -19,16 +20,35 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러 합계가 16이하이면 카드 1장 추가 테스트")
-    void add_one_card_test() {
+    @DisplayName("딜러 합계가 16이하이면 true")
+    void calculateScore_isHit_true() {
         List<Card> initialCards = new ArrayList<>(List.of(
                 Card.of(Rank.ACE, Suit.DIAMOND),
                 Card.of(Rank.FOUR, Suit.CLOVER)));
         Dealer dealer = Dealer.of(initialCards);
 
-        dealer.drawUntilHit(deck);
+        assertThat(dealer.isHit()).isTrue();
+    }
+
+    @Test
+    @DisplayName("딜러 카드 1장 추가 정상 동작 테스트")
+    void add_one_card_test() {
+        dealer.addCard(Card.of(Rank.FOUR, Suit.CLOVER));
 
         assertThat(dealer.getCards()).hasSize(3);
+    }
+
+    @Test
+    @DisplayName("딜러 카드 합이 16 이하가 아닐 때까지 카드를 추가한다.")
+    void addCard_isAce_isHit_more_addCard() {
+        List<Card> cards = new ArrayList<>(
+                List.of(Card.of(Rank.ACE, Suit.DIAMOND), Card.of(Rank.J, Suit.CLOVER), Card.of(Rank.K, Suit.HEART)));
+
+        while (dealer.isHit()) {
+            dealer.addCard(cards.removeFirst());
+        }
+
+        assertThat(dealer.getCards()).hasSize(5);
     }
 
     @Test
