@@ -1,7 +1,8 @@
 package domain.result;
 
-import domain.Money;
 import domain.Player;
+import domain.WinningStatus;
 
-public record Result(Player player, Money money) {
+public record Result(Player player, WinningStatus winningStatus) {
+
 }

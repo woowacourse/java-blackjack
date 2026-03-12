@@ -1,5 +1,6 @@
 package domain.result;
 
+import static domain.WinningStatus.WIN;
 import static util.TestUtil.createResult;
 
 import java.util.List;
@@ -29,7 +30,7 @@ class ResultsTest {
     @Test
     void 베팅_리스트로_생성이_가능하다() {
         // given
-        Results results = new Results(List.of(createResult("봉구스", 10000), createResult("시오", 20000)));
+        Results results = new Results(List.of(createResult("봉구스", WIN), createResult("시오", WIN)));
 
         // when, then
         Assertions.assertEquals(2, results.results().size());
@@ -41,7 +42,7 @@ class ResultsTest {
         Results results = new Results();
 
         // when
-        Results newResults = results.addResult(createResult("봉구스", 10000));
+        Results newResults = results.addResult(createResult("봉구스", WIN));
 
         // then
         Assertions.assertEquals(1, newResults.results().size());

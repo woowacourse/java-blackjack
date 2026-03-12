@@ -3,6 +3,7 @@ package util;
 import domain.Dealer;
 import domain.Money;
 import domain.Player;
+import domain.WinningStatus;
 import domain.betting.Betting;
 import domain.card.Card;
 import domain.card.Rank;
@@ -65,7 +66,7 @@ public class TestUtil {
         return new Betting(createPlayer(name), new Money(amount));
     }
 
-    public static Result createResult(String name, int amount) {
-        return new Result(createPlayer(name), new Money(amount));
+    public static Result createResult(String name, WinningStatus winningStatus) {
+        return new Result(createPlayer(name), winningStatus);
     }
 }
