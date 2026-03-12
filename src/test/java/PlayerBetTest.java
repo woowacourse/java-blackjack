@@ -34,6 +34,15 @@ public class PlayerBetTest {
         assertThat(playerBetting.calculateProfit(ScoreCompareResult.PLAYER_LOSE)).isEqualTo(-1000);
     }
 
+    @Test
+    void calculate_profit_when_player_draw() {
+        Player player = new Player("player");
+
+        PlayerBetting playerBetting = new PlayerBetting(player, 1000);
+
+        assertThat(playerBetting.calculateProfit(ScoreCompareResult.PUSH)).isEqualTo(0);
+    }
+
 
     private Player createPlayer(String name, String... cards) {
         Player player = new Player(name);
