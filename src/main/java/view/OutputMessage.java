@@ -7,7 +7,10 @@ public enum OutputMessage {
 
     RESULT_HEADER("## 최종 승패"),
     DEALER_WINNING_CONDITION("딜러: %d승 %d무 %d패"),
-    PLAYER_WINNING_CONDITION("%s: %s"),
+
+    RESULT_PROFIT_HEADER("## 최종 수익"),
+    DEALER_PROFIT("딜러: %d"),
+    PLAYER_PROFIT("%s: %d"),
 
     GAME_LOG("%s카드: %s"),
     ;

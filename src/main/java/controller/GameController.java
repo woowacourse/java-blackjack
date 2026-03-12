@@ -61,7 +61,7 @@ public class GameController {
         OutputView.participantsResults(gameStatuses);
 
         List<GameResult> result = gameTable.results();
-//        OutputView.gameResult(result);
+        OutputView.gameResult(result, bet);
     }
 
     private void displayInitCard() {

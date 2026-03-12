@@ -1,8 +1,8 @@
 package view;
 
+import domain.Bet;
 import domain.Card;
 import domain.ParticipantsRole;
-import domain.WinningCondition;
 import dto.GameResult;
 import dto.GameStatus;
 import java.util.ArrayList;
@@ -11,6 +11,7 @@ import java.util.List;
 public class OutputView {
     private static final String WIN = "승";
     private static final String CARD_JOINER = ", ";
+    private static final int CHANGE_NEGATIVE = -1;
 
     public static void divideCards(List<String> participants) {
         String players = String.join(CARD_JOINER, participants);
@@ -41,24 +42,27 @@ public class OutputView {
         printTaskDivider();
     }
 
-    public static void gameResult(List<GameResult> gameResults) {
-        System.out.println(OutputMessage.RESULT_HEADER.description());
+    public static void gameResult(List<GameResult> gameResults, Bet bet) {
+        System.out.println(OutputMessage.RESULT_PROFIT_HEADER.description());
 
-        statisticDealer(gameResults);
-        playersWinningLog(gameResults);
+        statisticDealer(gameResults, bet);
+        playersWinningLog(gameResults, bet);
     }
 
-    private static void playersWinningLog(List<GameResult> gameResults) {
-        gameResults.forEach(c -> System.out.println(
-                OutputMessage.PLAYER_WINNING_CONDITION.description(c.name(), c.winningCondition().message())));
+    private static void playersWinningLog(List<GameResult> gameResults, Bet bet) {
+        for (GameResult gameResult : gameResults) {
+            int resultProfit = (int) bet.calculateEarningPrize(gameResult.name(), gameResult.winningCondition());
+            System.out.println(
+                    OutputMessage.PLAYER_PROFIT.description(gameResult.name(), resultProfit));
+        }
     }
 
-    private static void statisticDealer(List<GameResult> gameResults) {
-        long playersWin = gameResults.stream().filter(cond -> cond.winningCondition().equals(WinningCondition.WIN)).count();
-        long playersDraw = gameResults.stream().filter(cond -> cond.winningCondition().equals(WinningCondition.DRAW)).count();
-
-        System.out.println(
-                OutputMessage.DEALER_WINNING_CONDITION.description(gameResults.size() - playersWin - playersDraw, playersDraw, playersWin));
+    private static void statisticDealer(List<GameResult> gameResults, Bet bet) {
+        int playerProfit = 0;
+        for (GameResult gameResult : gameResults) {
+            playerProfit += (int) bet.calculateEarningPrize(gameResult.name(), gameResult.winningCondition());
+        }
+        System.out.printf(OutputMessage.DEALER_PROFIT.description() + System.lineSeparator(), playerProfit * CHANGE_NEGATIVE);
     }
 
     public static void printTaskDivider() {
