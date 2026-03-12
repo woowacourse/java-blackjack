@@ -14,8 +14,8 @@ import org.junit.jupiter.api.Test;
 
 class ParticipantsTest {
 
-    @DisplayName("초기 분배 시 플레이어에게 두 장의 카드가 분배된다.")
     @Test
+    @DisplayName("초기 분배 시 플레이어에게 두 장의 카드가 분배된다.")
     void distributeCardsSuccessfully() {
         PlayerBettingRequest playerBettingRequest = PlayerBettingRequest.of("pobi", "1000");
         PlayersBettingRequest playersBettingRequest = PlayersBettingRequest.from(List.of(playerBettingRequest));
@@ -31,8 +31,8 @@ class ParticipantsTest {
         assertThat(playerCards).hasSize(2);
     }
 
-    @DisplayName("덱에 남은 카드가 부족할 때 초기 분배를 시도하면 예외가 발생한다.")
     @Test
+    @DisplayName("덱에 남은 카드가 부족할 때 초기 분배를 시도하면 예외가 발생한다.")
     void distributeCardsThrowsExceptionOnShortDeck() {
         PlayerBettingRequest pobiRequest = PlayerBettingRequest.of("pobi", "1000");
         PlayerBettingRequest jasonRequest = PlayerBettingRequest.of("jason", "2000");
@@ -49,8 +49,8 @@ class ParticipantsTest {
             .hasMessage("뽑을 카드가 남아있지 않습니다.");
     }
 
-    @DisplayName("딜러가 카드를 더 받아야 하는 상황인지 정확히 판단한다.")
     @Test
+    @DisplayName("딜러가 카드를 더 받아야 하는 상황인지 정확히 판단한다.")
     void isDealerDrawWorksCorrectly() {
         PlayerBettingRequest playerBettingRequest = PlayerBettingRequest.of("pobi", "1000");
         PlayersBettingRequest playersBettingRequest = PlayersBettingRequest.from(List.of(playerBettingRequest));
