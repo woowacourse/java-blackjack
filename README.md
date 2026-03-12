@@ -327,6 +327,13 @@ SRP를 완벽히 지킨 것입니다.
         - 배팅금이 숫자가 아님 - `readPlayerBettingAmount`
         - 배팅금이 0 - `validateBettingAmount`
         - 배팅금이 음수 - `validateBettingAmount`
+    - [x] `사이드 이펙트`
+        - 배팅금을 입력받기 위해 닉네임이 필요,
+        - 중복된 닉네임을 먼저 검사해야 할 필요성 존재
+        - View 단에서 distinct 한 Nicknames 를 입력받로고 수정
+    - [x] `사이드 이펙트 솔루션`
+        - 마침 플레이어 닉네임들을 저장하는 DTO가 있다 `PlayerNames`
+        - 이 DTO를 도메인 계층으로 올려 검증을 담당하도록
 - [ ] 수익금 `public int calculateProfit(GameResult result)`
 - [ ] 딜러 수익금 계산 `public int determineProfit(List<Player> players)`
 - [ ] 참가자 수익금 계산 `record ParticipantsProfit(String nickname, int profit)`
