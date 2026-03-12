@@ -4,7 +4,7 @@ import model.Card;
 import model.CardNumber;
 import model.Suits;
 
-public final class Randoms {
+public final class RandomNumberPicker {
     public static Card pick() {
         int randomNum = (int) (Math.random() * Suits.values().length);
         Suits suits = Suits.values()[randomNum];

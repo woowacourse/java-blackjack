@@ -7,7 +7,7 @@ import model.factory.ParticipantsFactory;
 import model.participant.Participant;
 import model.Participants;
 import util.InputParser;
-import util.Randoms;
+import util.RandomNumberPicker;
 import view.InputView;
 import view.OutputView;
 
@@ -44,7 +44,7 @@ public class BlackJackController {
     private void dealerNeedDraw(Participants participants) {
         Participant dealer = participants.getDealer();
         if (dealer.dealerNeedDraw()) {
-            dealer.draw(Randoms.pick());
+            dealer.draw(RandomNumberPicker.pick());
             outputView.printDealerDraw();
         }
     }
@@ -71,7 +71,7 @@ public class BlackJackController {
                     outputView.printHands(participant);
                     break;
                 }
-                participant.draw(Randoms.pick());
+                participant.draw(RandomNumberPicker.pick());
                 if (participant.isBust()) {
                     outputView.printBustState(participant.getName(), participant.calculateScore());
                     outputView.printHands(participant);

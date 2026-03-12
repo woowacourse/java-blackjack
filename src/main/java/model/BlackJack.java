@@ -10,7 +10,7 @@ import java.util.Set;
 import model.participant.Dealer;
 import model.participant.Participant;
 import model.participant.Player;
-import util.Randoms;
+import util.RandomNumberPicker;
 
 public final class BlackJack {
     private static final int STARTING_CARDS = 2;
@@ -67,9 +67,9 @@ public final class BlackJack {
     public void dealOut() {
         for (Participant participant : participants) {
             for (int i = 0; i < STARTING_CARDS; i++) {
-                Card pick = Randoms.pick();
+                Card pick = RandomNumberPicker.pick();
                 while (pickedCards.contains(pick)) {
-                    pick = Randoms.pick();
+                    pick = RandomNumberPicker.pick();
                 }
                 pickedCards.add(pick);
                 participant.draw(pick);
