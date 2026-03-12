@@ -7,6 +7,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Judgement {
+    private static final int BLACKJACK_SCORE = 21;
+
     public Map<String, GameResult> judgePlayerResults(Players players, Dealer dealer) {
         Map<String, GameResult> playerResults = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
@@ -17,9 +19,9 @@ public class Judgement {
     }
 
     private GameResult judge(int playerScore, int dealerScore) {
-        if (playerScore > 21 && dealerScore > 21) { return GameResult.DRAW; }
-        if (playerScore > 21) { return GameResult.LOSE; }
-        if (dealerScore > 21) { return GameResult.WIN; }
+        if (playerScore > BLACKJACK_SCORE && dealerScore > BLACKJACK_SCORE) { return GameResult.DRAW; }
+        if (playerScore > BLACKJACK_SCORE) { return GameResult.LOSE; }
+        if (dealerScore > BLACKJACK_SCORE) { return GameResult.WIN; }
         if (playerScore > dealerScore) { return GameResult.WIN; }
         if (playerScore == dealerScore) { return GameResult.DRAW; }
         return GameResult.LOSE;
