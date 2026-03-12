@@ -3,7 +3,7 @@ package blackjack.view;
 import static blackjack.global.ParticipantConstants.DEALER_DISTRIBUTE_COUNT;
 import static blackjack.global.ParticipantConstants.DEALER_HIT_THRESHOLD;
 
-import blackjack.domain.participant.Participant;
+import blackjack.dto.CardStatusDto;
 import blackjack.dto.FinalProfitsDto;
 import blackjack.dto.FinalStatusDto;
 import blackjack.dto.StartMessageDto;
@@ -26,8 +26,8 @@ public class OutputView {
             System.out.printf("%s카드: %s\n", playerNickname, String.join(", ", cardNames)));
     }
 
-    public static void printCardStatus(final Participant participant) {
-        System.out.println(participantHandFormat(participant));
+    public static void printCardStatus(final CardStatusDto dto) {
+        System.out.println(participantHandFormat(dto));
     }
 
 
@@ -46,19 +46,13 @@ public class OutputView {
     public static void printFinalProfits(final FinalProfitsDto dto) {
         System.out.println("## 최종 수익");
         System.out.printf("딜러: %d\n", dto.dealerProfit());
-        dto.nicknameProfitMap().forEach((nickname, profit) -> {
-            System.out.printf("%s: %d\n", nickname, profit);
-        });
+        dto.nicknameProfitMap().forEach((nickname, profit) ->
+            System.out.printf("%s: %d\n", nickname, profit));
     }
 
-    private static String participantHandFormat(final Participant participant) {
+    private static String participantHandFormat(final CardStatusDto dto) {
         return String.format("%s카드: %s",
-            participant.getNickname(),
-            String.join(", ", participant.getAllCardNames())
-        );
-    }
-
-    private static String participantScoreResultFormat(final Participant participant) {
-        return String.format("결과: %d", participant.getScore());
+            dto.nickname(),
+            String.join(", ", dto.cardNames()));
     }
 }

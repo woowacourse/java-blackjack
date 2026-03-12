@@ -1,7 +1,7 @@
 package blackjack.controller;
 
-import blackjack.domain.participant.Answer;
 import blackjack.domain.bet.Bet;
+import blackjack.domain.participant.Answer;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.GameResult;
 import blackjack.domain.participant.Hand;
@@ -11,6 +11,7 @@ import blackjack.domain.participant.Players;
 import blackjack.domain.participant.Status;
 import blackjack.domain.trump.RandomSortBehavior;
 import blackjack.domain.trump.Trump;
+import blackjack.dto.CardStatusDto;
 import blackjack.dto.FinalProfitsDto;
 import blackjack.dto.FinalStatusDto;
 import blackjack.dto.StartMessageDto;
@@ -68,7 +69,7 @@ public class BlackjackController {
         while (player.isHit()) {
             final Answer answer = RetryExecutor.retry(this::readAnswer, player.getNickname());
             handleAnswer(player, dealer, answer);
-            OutputView.printCardStatus(player);
+            OutputView.printCardStatus(CardStatusDto.from(player));
         }
     }
 
