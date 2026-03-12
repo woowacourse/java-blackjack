@@ -8,8 +8,8 @@ import java.util.List;
 
 public class Players {
 
-    public static final int PLAYER_MIN_COUNT = 2;
-    public static final int PLAYER_MAX_COUNT = 8;
+    private static final int PLAYER_MIN_COUNT = 2;
+    private static final int PLAYER_MAX_COUNT = 8;
     public static final String PLAYER_DUPLICATED = "게임 참가자의 이름은 중복 되어선 안됩니다.";
     public static final String PLAYER_COUNT_OUT_OF_RANGE =
             String.format("게임 참가자의 수는 %d~%d명 사이여야 합니다.", PLAYER_MIN_COUNT, PLAYER_MAX_COUNT);
