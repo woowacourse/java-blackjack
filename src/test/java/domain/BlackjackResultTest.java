@@ -28,12 +28,12 @@ class BlackjackResultTest {
     @Test
     @DisplayName("플레이어들 승리 결과, 딜러는 플레이어 승/패 횟수의 반대 결과")
     void player_isBust_result_lose() {
-        assertThat(blackjackResult.getPlayersResult()).isEqualTo(List.of(WinOrLose.LOSE, WinOrLose.LOSE));
+        assertThat(blackjackResult.getPlayersResult()).isEqualTo(List.of(GameResult.LOSE, GameResult.LOSE));
     }
 
     @Test
     @DisplayName("딜러의 결과는 플레이어들 승/패 여부 횟수의 반대이다.")
     void dealer_result() {
-        assertThat(blackjackResult.countDealerWinOrLoseReversePlayerResult(WinOrLose.LOSE)).isEqualTo(2);
+        assertThat(blackjackResult.countDealerWinOrLoseReversePlayerResult(GameResult.LOSE)).isEqualTo(2);
     }
 }

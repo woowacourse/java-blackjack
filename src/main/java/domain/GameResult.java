@@ -1,6 +1,6 @@
 package domain;
 
-public enum WinOrLose {
+public enum GameResult {
 
     WIN("승"),
     LOSE("패"),
@@ -9,7 +9,7 @@ public enum WinOrLose {
 
     private final String message;
 
-    WinOrLose(String message) {
+    GameResult(String message) {
         this.message = message;
     }
 
