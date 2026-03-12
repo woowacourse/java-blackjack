@@ -38,19 +38,22 @@ public class Bet {
     }
 
     public void decidePayoutPolicy(final GameResult gameResult) {
+        if (this.payoutPolicy == null) {
+            this.payoutPolicy = calculatePayoutPolicy(gameResult);
+        }
+    }
+
+    private PayoutPolicy calculatePayoutPolicy(final GameResult gameResult) {
         if (gameResult == GameResult.WIN) {
-            this.payoutPolicy = new WinPayoutPolicy();
-            return;
+            return new WinPayoutPolicy();
         }
         if (gameResult == GameResult.BLACKJACK) {
-            this.payoutPolicy = new BlackjackPayoutPolicy();
-            return;
+            return new BlackjackPayoutPolicy();
         }
         if (gameResult == GameResult.DRAW) {
-            this.payoutPolicy = new DrawPayoutPolicy();
-            return;
+            return new DrawPayoutPolicy();
         }
-        this.payoutPolicy = new LosePayoutPolicy();
+        return new LosePayoutPolicy();
     }
 
     public int calculateProfit() {
