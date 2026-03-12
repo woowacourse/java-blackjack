@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OutputView {
-    private static final String WIN = "승";
     private static final String CARD_JOINER = ", ";
     private static final int CHANGE_NEGATIVE = -1;
 

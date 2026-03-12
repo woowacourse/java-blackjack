@@ -27,9 +27,4 @@ public final class InputView {
         System.out.printf(formatter + System.lineSeparator(), name);
         return scanner.nextLine();
     }
-
-    private static String readLine() {
-        System.out.println(InfoMessage.PLAYER_INPUT.message());
-        return scanner.nextLine();
-    }
 }

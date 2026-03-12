@@ -5,9 +5,6 @@ public enum OutputMessage {
     DEALER_DRAW("딜러는 16이하라 한장의 카드를 더 받았습니다."),
     PARTICIPANTS_RESULT("%s - 결과: %d"),
 
-    RESULT_HEADER("## 최종 승패"),
-    DEALER_WINNING_CONDITION("딜러: %d승 %d무 %d패"),
-
     RESULT_PROFIT_HEADER("## 최종 수익"),
     DEALER_PROFIT("딜러: %d"),
     PLAYER_PROFIT("%s: %d"),
