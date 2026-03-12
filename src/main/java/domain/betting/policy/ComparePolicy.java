@@ -6,7 +6,6 @@ import domain.gamer.Dealer;
 import domain.gamer.Player;
 
 public class ComparePolicy extends BettingPolicy{
-
     public ComparePolicy() {
         super(BettingResult.COMPARE_WIN);
     }
@@ -28,5 +27,4 @@ public class ComparePolicy extends BettingPolicy{
         BettingResult lose = bettingResult.reverseResult();
         return lose.bettingRate();
     }
-
 }

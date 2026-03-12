@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class CardBundle {
-
     private static final int BUSTED_CONDITION = 21;
     private static final int ACE_BONUS_SCORE = 10;
 
@@ -83,5 +82,4 @@ public class CardBundle {
     public boolean isStop() {
         return !isBlackjack() && !isBusted();
     }
-
 }

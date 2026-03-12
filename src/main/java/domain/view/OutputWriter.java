@@ -1,18 +1,14 @@
 package domain.view;
 
 public class OutputWriter {
-
     private final String LINE_SEPARATOR = System.lineSeparator();
     private final String INPUT_NAME_GUIDE_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     private final String DEAL_INITIAL_CARD_MESSAGE = "딜러와 %s에게 2장을 나누었습니다.";
     private final String ASK_DRAW_CARD_GUIDE_MESSAGE = "%s는 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private final String DEALER_ADDITIONAL_DRAW_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private final String BETTING_GUIDE_MESSAGE = "%s의 배팅 금액은?";
-    private final String FINAL_RESULT_TITLE_MESSAGE = "## 최종 승패";
     private final String FINAL_PROFIT_TITLE_MESSAGE = "## 최종 수익";
-    private final String FINAL_RESULT_PLAYER =  "%s: %s";
-    private final String GAMER_PROFIT_FORMAT =  "%s: %.0f";
-    private final String FINAL_RESULT_DEALER = "딜러: %s";
+    private final String GAMER_PROFIT_FORMAT = "%s: %.0f";
     private final String PLAYER_HAND_MESSAGE = "%s카드: %s";
     private final String CARD_SUM_RESULT_MESSAGE = "%s카드: %s - 결과: %d";
     private final String ERROR_MESSAGE_PREFIX = "[ERROR] ";
@@ -26,7 +22,7 @@ public class OutputWriter {
     }
 
     public void printBettingGuideMessage(String name) {
-        System.out.printf(BETTING_GUIDE_MESSAGE , name);
+        System.out.printf(BETTING_GUIDE_MESSAGE, name);
         printLineSeparator();
     }
 
@@ -53,16 +49,6 @@ public class OutputWriter {
         printLineSeparator();
     }
 
-    public void printFinalResultTitleMessage() {
-        printLineSeparator();
-        System.out.printf(FINAL_RESULT_TITLE_MESSAGE);
-    }
-
-    public void printFinalResultOfPlayer(String playerName, String status) {
-        System.out.printf(FINAL_RESULT_PLAYER, playerName, status);
-        printLineSeparator();
-    }
-
     public void printProfitTitleMessage() {
         printLineSeparator();
         System.out.println(FINAL_PROFIT_TITLE_MESSAGE);
@@ -70,12 +56,6 @@ public class OutputWriter {
 
     public void printGamerProfit(String playerName, double profit) {
         System.out.printf(GAMER_PROFIT_FORMAT, playerName, profit);
-        printLineSeparator();
-    }
-
-    public void printFinalResultOfDealer(String status) {
-        printLineSeparator();
-        System.out.printf(FINAL_RESULT_DEALER, status);
         printLineSeparator();
     }
 
@@ -87,5 +67,4 @@ public class OutputWriter {
     private void printLineSeparator() {
         System.out.print(LINE_SEPARATOR);
     }
-
 }

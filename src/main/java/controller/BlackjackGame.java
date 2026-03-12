@@ -20,7 +20,6 @@ import domain.view.ApplicationView;
 import java.util.List;
 
 public class BlackjackGame {
-
     public ApplicationView view;
     public CardDeck cardDeck;
 
@@ -125,15 +124,6 @@ public class BlackjackGame {
         });
     }
 
-    private void showGameResultAnalysis(Players players, Dealer dealer) {
-        ResultAnalysisDto analysis = analyzeBlackjackResult(players, dealer);
-        view.printFinalResultMessage(analysis);
-    }
-
-    private ResultAnalysisDto analyzeBlackjackResult(Players players, Dealer dealer) {
-        return ResultAnalyzer.analyze(players.getPlayers(), dealer);
-    }
-
     private List<GamerBettingProfitDto> calculateProfit(BettingTable bettingTable, Players players) {
         return players.getPlayers().stream()
                 .map(player -> {
@@ -151,5 +141,4 @@ public class BlackjackGame {
     private void showGamerProfit(List<GamerBettingProfitDto> playersProfit, GamerBettingProfitDto dealerProfit) {
         view.printGamerProfit(dealerProfit, playersProfit);
     }
-
 }

@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class CardTest {
-
     @Test
     void 카드를_생성한다() {
         CardDenomination emblem = CardDenomination.TWO;
@@ -17,5 +16,4 @@ public class CardTest {
                 Card.of(CardDenomination.TWO, CardEmblem.DIAMOND)
         );
     }
-
 }

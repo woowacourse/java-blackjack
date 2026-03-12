@@ -10,7 +10,6 @@ import utils.CardDeckBuilder;
 import java.util.List;
 
 class PlayersTest {
-
     private PlayerName testPlayerName;
     private Player testPlayer;
 
@@ -40,5 +39,4 @@ class PlayersTest {
         Assertions.assertThat(playersHand.getFirst())
                 .isEqualTo(GamerHandDto.from(testPlayer));
     }
-
 }

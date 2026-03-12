@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class ApplicationView {
-
     private static final String PLAYER_NAME_DELIMITER = ",";
 
     public InputReader reader;
@@ -71,19 +70,6 @@ public class ApplicationView {
         writer.printDealerAdditionalDrawCardMessage();
     }
 
-    public void printFinalResultMessage(ResultAnalysisDto resultAnalysis) {
-        writer.printFinalResultTitleMessage();
-        writer.printFinalResultOfDealer(resultAnalysis.getDealerResult());
-        printAllPlayersResult(resultAnalysis);
-    }
-
-    private void printAllPlayersResult(ResultAnalysisDto resultAnalysis) {
-        resultAnalysis.playerGameResults()
-                .forEach(player -> {
-                    writer.printFinalResultOfPlayer(player.playerName(), player.gameResult().displayName());
-                });
-    }
-
     public void printGamerProfit(GamerBettingProfitDto dealerProfit, List<GamerBettingProfitDto> playersProfit) {
         writer.printProfitTitleMessage();
         writer.printGamerProfit(dealerProfit.gamerName(), dealerProfit.bettingProfit());
@@ -110,5 +96,4 @@ public class ApplicationView {
             }
         }
     }
-
 }

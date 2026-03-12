@@ -6,7 +6,6 @@ import domain.gamer.exception.PlayerException;
 public record PlayerName(
         String name
 ) {
-
     public PlayerName{
         validateNameIsBlank(name);
         validateNameLength(name);
@@ -23,5 +22,4 @@ public record PlayerName(
             throw new PlayerException(ErrorMessage.NAME_LENGTH_ERROR);
         }
     }
-
 }

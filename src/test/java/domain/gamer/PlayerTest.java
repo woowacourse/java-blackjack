@@ -11,7 +11,6 @@ import utils.CardDeckBuilder;
 import java.util.List;
 
 public class PlayerTest {
-
     private PlayerName testPlayerName;
     private Player testPlayer;
 
@@ -99,5 +98,4 @@ public class PlayerTest {
 
         Assertions.assertThat(testPlayer.isBusted()).isTrue();
     }
-
 }

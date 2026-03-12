@@ -10,7 +10,6 @@ public record GamerHandDto(
         String playerName,
         String handOnCards
 ) {
-
     public static GamerHandDto from(Gamer gamer) {
         return new GamerHandDto(gamer.getMyName(), joining(openGamerCards(gamer)));
     }
@@ -28,5 +27,4 @@ public record GamerHandDto(
                 .map(Card::openCard)
                 .toList();
     }
-
 }

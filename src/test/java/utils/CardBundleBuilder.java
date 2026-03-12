@@ -6,7 +6,6 @@ import domain.card.CardBundle;
 import java.util.List;
 
 public class CardBundleBuilder {
-
     private List<Card> cards = List.of();
 
     public CardBundleBuilder cards(Card... cards) {
@@ -22,5 +21,4 @@ public class CardBundleBuilder {
     public CardBundle build() {
         return CardBundle.from(cards);
     }
-
 }

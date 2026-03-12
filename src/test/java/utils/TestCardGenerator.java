@@ -6,7 +6,6 @@ import domain.card.CardGenerator;
 import java.util.List;
 
 public class TestCardGenerator implements CardGenerator {
-
     private final List<Card> cardList;
 
     private TestCardGenerator(List<Card> cardList) {
@@ -21,5 +20,4 @@ public class TestCardGenerator implements CardGenerator {
     public List<Card> generate() {
         return this.cardList;
     }
-
 }

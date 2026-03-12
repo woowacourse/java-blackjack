@@ -11,7 +11,6 @@ import java.util.stream.Stream;
 
 // THINK Has state and method -> SingleTone?
 public class BettingPolicyManager {
-
     List<BettingPolicy> policies;
 
     public BettingPolicyManager() {
@@ -41,5 +40,4 @@ public class BettingPolicyManager {
                 .findFirst()
                 .orElse(new BustPolicy());
     }
-
 }

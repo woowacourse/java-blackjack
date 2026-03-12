@@ -6,7 +6,6 @@ import domain.betting.exception.MoneyException;
 public record Money(
         double money
 ) {
-
     public static Money from(String money) {
         validateMoneyIsNumber(money);
         return Money.from(Double.parseDouble(money));
@@ -46,5 +45,4 @@ public record Money(
             throw new MoneyException(ErrorMessage.BETTING_MONEY_IS_NOT_NEGATIVE);
         }
     }
-
 }

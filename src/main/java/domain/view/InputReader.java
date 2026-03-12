@@ -3,7 +3,6 @@ package domain.view;
 import java.util.Scanner;
 
 public class InputReader {
-
     private Scanner scanner;
 
     public InputReader() {
@@ -13,5 +12,4 @@ public class InputReader {
     public String readInput() {
         return scanner.nextLine();
     }
-
 }

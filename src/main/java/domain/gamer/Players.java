@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class Players {
-
     private final List<Player> players;
 
     private Players(List<Player> players) {
@@ -22,5 +21,4 @@ public class Players {
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }
-
 }

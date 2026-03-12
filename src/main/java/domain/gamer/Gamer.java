@@ -6,7 +6,6 @@ import domain.card.CardBundle;
 import java.util.List;
 
 public abstract class Gamer {
-
     protected final PlayerName name;
     protected CardBundle cardBundle;
 
@@ -42,5 +41,4 @@ public abstract class Gamer {
     public boolean isStop() {
         return cardBundle.isStop();
     }
-
 }

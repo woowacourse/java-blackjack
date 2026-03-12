@@ -6,7 +6,6 @@ import domain.gamer.Dealer;
 import domain.gamer.Player;
 
 public class DoubleBustPolicy extends BettingPolicy{
-
     public DoubleBustPolicy() {
         super(BettingResult.DOUBLE_BUST);
     }
@@ -20,5 +19,4 @@ public class DoubleBustPolicy extends BettingPolicy{
     public BettingRate getBettingRate(Dealer dealer, Player player) {
         return bettingResult.bettingRate();
     }
-
 }
