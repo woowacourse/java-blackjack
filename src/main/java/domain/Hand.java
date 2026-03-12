@@ -7,20 +7,21 @@ import java.util.List;
 public class Hand {
     private final List<Card> cards;
     private Score score;
-    private int aceCount;
+    private AceCount aceCount;
 
     public Hand() {
         this.cards = new ArrayList<>();
         this.score = new Score();
-        this.aceCount = 0;
+        this.aceCount = AceCount.zero();
     }
 
     public void addCard(Card card) {
         this.cards.add(card);
         score = score.addScore(card.getScore());
         if (card.isAce()) {
-            aceCount++;
+            aceCount = aceCount.increase();
         }
+        adjustAceScore();
     }
 
     public Score getScore() {
@@ -32,11 +33,14 @@ public class Hand {
     }
 
     public boolean checkBust() {
-        while (score.getScore() > 21 && aceCount > 0) {
-            score = score.subScore(10);
-            aceCount--;
-        }
         return score.isBust();
+    }
+
+    private void adjustAceScore() {
+        while (score.getScore() > GameRule.BLACKJACK_SCORE && aceCount.hasAny()) {
+            score = score.subScore(GameRule.ACE_SCORE);
+            aceCount = aceCount.decrease();
+        }
     }
 
     public int size() {

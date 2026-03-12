@@ -30,4 +30,8 @@ public enum Rank {
     public int value(){
         return value;
     }
+
+    public boolean isAce(){
+        return this == ACE;
+    }
 }

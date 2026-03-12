@@ -1,9 +1,6 @@
 package domain;
 
 public final class Score {
-    private static final int BLACKJACK_SCORE = 21;
-    private static final int DEALER_SCORE = 16;
-
     private final int score;
 
     public Score() {
@@ -27,10 +24,10 @@ public final class Score {
     }
 
     public boolean isBust() {
-        return score > BLACKJACK_SCORE;
+        return score > GameRule.BLACKJACK_SCORE;
     }
 
     public boolean isDealerDraw() {
-        return score <= DEALER_SCORE;
+        return score <= GameRule.DEALER_SCORE;
     }
 }
