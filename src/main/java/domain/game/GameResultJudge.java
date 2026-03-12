@@ -13,22 +13,26 @@ public class GameResultJudge {
     }
 
     public static List<GameResultDto> judge(Dealer dealer, Players players) {
-        // TODO: 베팅 기능 추가 시 승/패/무 뿐 아니라 정산 금액까지 포함한 결과 생성 필요
         List<GameResultDto> results = new ArrayList<>();
-        results.add(new GameResultDto(dealer.getName()));
+
         addPlayerResults(results, dealer, players);
+
+        double dealerProceeds = calculateDealerProceeds(results);
+        results.add(0, new GameResultDto(dealer.getName(), dealerProceeds));
+
         return results;
     }
 
     private static void addPlayerResults(List<GameResultDto> results, Dealer dealer, Players players) {
-        for (Player player : players.getNonNaturalBlackJackPlayers()) {
+        for (Player player : players.getPlayers()) {
             results.add(judgePlayer(player, dealer));
         }
     }
 
     private static GameResultDto judgePlayer(Player player, Dealer dealer) {
         Result result = calculateResult(player, dealer);
-        return new GameResultDto(player.getName(), result);
+        double proceeds = player.calculateProceeds(result);
+        return new GameResultDto(player.getName(), result, proceeds);
     }
 
     private static Result calculateResult(Player player, Dealer dealer) {
@@ -36,11 +40,11 @@ public class GameResultJudge {
         int dealerScore = dealer.getScore();
 
         if (player.isBust()) {
-            return Result.LOSE;
+            return Result.BUST;
         }
 
-        if (dealer.isBust()) {
-            return Result.WIN;
+        if (player.isNaturalBlackJack()) {
+            return Result.BLACKJACK;
         }
 
         if (playerScore > dealerScore) {
@@ -52,5 +56,11 @@ public class GameResultJudge {
         }
 
         return Result.DRAW;
+    }
+
+    private static double calculateDealerProceeds(List<GameResultDto> results) {
+        return -results.stream()
+                .mapToDouble(GameResultDto::getProceeds)
+                .sum();
     }
 }

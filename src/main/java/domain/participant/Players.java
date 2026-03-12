@@ -15,6 +15,10 @@ public class Players {
         players.forEach(player -> player.receiveCard(card));
     }
 
+    public List<Player> getPlayers() {
+        return List.copyOf(players);
+    }
+
     public List<Player> getNonNaturalBlackJackPlayers() {
         return players.stream()
                 .filter(player -> !player.isNaturalBlackJack())
