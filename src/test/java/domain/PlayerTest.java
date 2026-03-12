@@ -1,7 +1,9 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.in;
 
+import infra.FixedCardShuffler;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -10,12 +12,14 @@ import org.junit.jupiter.api.Test;
 class PlayerTest {
 
     private final String userName = "pobi";
-    private final Cards cards = Cards.of();
+    private final Cards cards = Cards.of(new FixedCardShuffler());
 
     @Test
     @DisplayName("플레이어 객체 생성 시 2장의 카드를 보유한지 테스트")
     void holding_two_card_success() {
-        Player player = Player.of(Cards.of().drawInitialHand(), userName);
+        Player player = Player.of(userName);
+
+        player.addInitialCards(cards.drawInitialHand());
 
         assertThat(player.getCards()).hasSize(2);
     }
@@ -23,7 +27,8 @@ class PlayerTest {
     @Test
     @DisplayName("플레이어 합계가 21 초과 여부 테스트")
     void isBust_player_score_success() {
-        Player player = Player.of(cards.drawInitialHand(), userName);
+        Player player = Player.of(userName);
+        player.addInitialCards(cards.drawInitialHand());
 
         player.addCard(Card.of(Rank.J, Suit.SPADE));
         player.addCard(Card.of(Rank.Q, Suit.SPADE));
@@ -37,12 +42,13 @@ class PlayerTest {
         List<Card> initialCards = new ArrayList<>(List.of(
                 Card.of(Rank.TEN, Suit.DIAMOND),
                 Card.of(Rank.FIVE, Suit.CLOVER)));
+        Player player = Player.of(userName);
 
-        Player player = Player.of(initialCards, userName);
+        player.addInitialCards(initialCards);
 
-        List<Card> expect = List.of(Card.of(Rank.TEN, Suit.DIAMOND),
+        List<Card> expectCards = List.of(Card.of(Rank.TEN, Suit.DIAMOND),
                 Card.of(Rank.FIVE, Suit.CLOVER));
-        assertThat(player.getCards()).isEqualTo(expect);
+        assertThat(player.getCards()).isEqualTo(expectCards);
     }
 
     @Test
@@ -53,7 +59,9 @@ class PlayerTest {
                 Card.of(Rank.NINE, Suit.CLOVER),
                 Card.of(Rank.EIGHT, Suit.DIAMOND),
                 Card.of(Rank.ACE, Suit.HEART));
-        Player player = Player.of(cards, userName);
+        Player player = Player.of(userName);
+
+        player.addInitialCards(cards);
 
         int cardScore = player.calculateScore();
 
@@ -67,7 +75,9 @@ class PlayerTest {
                 Card.of(Rank.FIVE, Suit.DIAMOND),
                 Card.of(Rank.NINE, Suit.CLOVER),
                 Card.of(Rank.EIGHT, Suit.DIAMOND));
-        Player player = Player.of(cards, userName);
+        Player player = Player.of(userName);
+
+        player.addInitialCards(cards);
 
         assertThat(player.isBust()).isTrue();
     }
@@ -75,7 +85,8 @@ class PlayerTest {
     @Test
     @DisplayName("플레이어 카드 1장 추가 테스트")
     void add_one_card_test() {
-        Player player = Player.of(cards.drawInitialHand(), userName);
+        Player player = Player.of(userName);
+        player.addInitialCards(cards.drawInitialHand());
 
         player.addCard(cards.draw());
 
