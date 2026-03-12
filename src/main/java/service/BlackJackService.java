@@ -18,6 +18,7 @@ public class BlackJackService {
     private static final int BUST_NUMBER = 21;
     private static final int BLACKJACK_SCORE = 21;
     private static final int BLACKJACK_HAND_SIZE = 2;
+    private static final int MIN_DEALER_DRAW_SCORE = 16;
 
     private final BlackJackDeck cards;
 
@@ -29,6 +30,10 @@ public class BlackJackService {
     public void draw(Participant participant) {
         Card card = cards.draw();
         participant.draw(card);
+    }
+
+    public boolean isDealerDraw(Dealer dealer) {
+        return dealer.getScore() <= MIN_DEALER_DRAW_SCORE;
     }
 
     public boolean isBust(Participant participant) {

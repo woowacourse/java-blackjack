@@ -12,7 +12,6 @@ import view.OutputView;
 
 public class BlackJackController {
     private static final int INITIAL_DRAW_QUANTITY = 2;
-    private static final int MIN_DEALER_DRAW_SCORE = 16;
 
     private final InputController inputController;
     private final BlackJackService blackJackService;
@@ -77,7 +76,7 @@ public class BlackJackController {
     }
 
     private void drawDealer(Dealer dealer) {
-        while (dealer.getScore() <= MIN_DEALER_DRAW_SCORE) {
+        while (blackJackService.isDealerDraw(dealer)) {
             blackJackService.draw(dealer);
             OutputView.printDealerCardDrawMessage();
         }
