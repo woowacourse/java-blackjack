@@ -44,7 +44,9 @@ public class GameManager {
     public void dealInitialCardsToParticipants() {
         for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
             dealCardToDealer();
-            players.dealCardToAllPlayers(deck::drawCard);
+            for (Player player : players.getPlayers()) {
+                dealCardTo(player);
+            }
         }
     }
 
