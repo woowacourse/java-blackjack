@@ -28,7 +28,7 @@ public class ApplicationView {
     public List<PlayerName> requestPlayerNames() {
         return retry(() -> {
             writer.printInputNameGuideMessage();
-            String names = reader.readInput();
+            String names = readInput();
             return Arrays.stream(names.split(PLAYER_NAME_DELIMITER))
                     .map(String::trim)
                     .map(PlayerName::new)
@@ -39,7 +39,7 @@ public class ApplicationView {
     public Money askBettingMoney(String playerName) {
         return retry(() -> {
             writer.printBettingGuideMessage(playerName);
-            String money = reader.readInput();
+            String money = readInput();
             return Money.from(money);
         });
     }
@@ -47,7 +47,7 @@ public class ApplicationView {
     public DrawDecision askDrawCard(String playerName) {
         return retry(() -> {
             writer.printDrawCardGuideMessage(playerName);
-            String userDecision = reader.readInput();
+            String userDecision = readInput();
             return DrawDecision.from(userDecision);
         });
     }
@@ -96,6 +96,10 @@ public class ApplicationView {
                 writer.printErrorMessage(e.getMessage());
             }
         }
+    }
+
+    private String readInput() {
+        return reader.readInput();
     }
 
 }
