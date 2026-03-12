@@ -1,5 +1,6 @@
 package view;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -14,6 +15,16 @@ public class InputView {
                 .map(String::trim)
                 .toList();
         return playerName;
+    }
+
+    public List<Integer> inputBetAmount(List<String> names) {
+        List<Integer> betAmounts = new ArrayList<>();
+        for (String name : names) {
+            System.out.println(name + "의 배팅 금액은?");
+            int rawBetAmount = sc.nextInt();
+            betAmounts.add(rawBetAmount);
+        }
+        return betAmounts;
     }
 
     public boolean askHit(String playerName) {
