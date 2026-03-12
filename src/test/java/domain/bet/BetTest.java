@@ -1,9 +1,8 @@
-package domain;
+package domain.bet;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
-import domain.bet.Bet;
 import domain.enums.GameResult;
 import domain.participant.Name;
 import java.util.List;
