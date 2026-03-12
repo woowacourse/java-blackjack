@@ -51,23 +51,4 @@ public class PlayersTest {
         assertThat(result.get(0).countCards()).isEqualTo(2);
         assertThat(result.get(1).countCards()).isEqualTo(2);
     }
-
-    @Test
-    void 특정_플레이어가_카드를_추가로_받는다() {
-        Players players = Players.of(playerList);
-        players.receiveCards(deck);
-
-        TrumpCard newCard = deck.draw();
-        players.hitPlayer(0, newCard);
-
-        List<Player> result = players.getPlayers();
-        assertThat(result.get(0).countCards()).isEqualTo(3);
-        assertThat(result.get(1).countCards()).isEqualTo(2);
-    }
-
-    @Test
-    void 특정_플레이어가_카드를_더_받을_수_있는지_확인한다() {
-        Players players = Players.of(playerList);
-        assertThat(players.canHit(0)).isTrue();
-    }
 }

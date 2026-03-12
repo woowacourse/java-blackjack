@@ -29,14 +29,6 @@ public class Players {
         return this.players.size();
     }
 
-    public boolean canHit(int playerIndex) {
-        return this.players.get(playerIndex).canHit();
-    }
-
-    public void hitPlayer(int index, TrumpCard card) {
-        players.get(index).receiveCard(card);
-    }
-
     public Player playerAt(int index) {
         return players.get(index);
     }
