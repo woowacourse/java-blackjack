@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class PlayingCards {
 
-    private final int BUSTED_SCORE = 21;
+    private static final int BUSTED_SCORE = 21;
     private final List<Card> cards;
 
     private PlayingCards(List<Card> cards) {
