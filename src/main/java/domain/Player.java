@@ -22,11 +22,11 @@ public class Player extends Participant {
         }
 
         Hand newHand = hand.addCard(cardSupplier.get());
-        return new Player(this.name, newHand, false);
+        return new Player(this.participantName.name(), newHand, false);
     }
 
     public Player stand() {
-        return new Player(this.name, this.hand, true);
+        return new Player(this.participantName.name(), this.hand, true);
     }
 
     public boolean isFinished() {
