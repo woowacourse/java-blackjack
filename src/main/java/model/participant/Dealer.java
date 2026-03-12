@@ -4,7 +4,8 @@ import java.util.List;
 import model.Card;
 
 public final class Dealer extends Participant {
-    private boolean isFirstTurn = true;
+
+    private static final int FIRST_TURN_CARD_COUNT = 2;
 
     private Dealer(String name) {
         super(name);
@@ -16,8 +17,7 @@ public final class Dealer extends Participant {
 
     @Override
     public List<String> open() {
-        if (isFirstTurn) {
-            isFirstTurn = false;
+        if (hands.size() == FIRST_TURN_CARD_COUNT) {
             return List.of(hands.getFirst().toString());
         }
         return hands.stream()

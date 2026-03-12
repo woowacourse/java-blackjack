@@ -57,11 +57,7 @@ public class BlackJackController {
 
     private void playersCardDraw(Participants participants) {
         for (Participant participant : participants) {
-            if (participant.isDealer()) {
-                continue;
-            }
-
-            if (participant.calculateScore() == TARGET_NUMBER) {
+            if (isDealerOrReachTargetNumber(participant)) {
                 continue;
             }
 
@@ -82,5 +78,16 @@ public class BlackJackController {
 
             } while (input.equals("y"));
         }
+    }
+
+    private boolean isDealerOrReachTargetNumber(Participant participant) {
+        if (participant.isDealer()) {
+            return true;
+        }
+
+        if (participant.calculateScore() == TARGET_NUMBER) {
+            return true;
+        }
+        return false;
     }
 }
