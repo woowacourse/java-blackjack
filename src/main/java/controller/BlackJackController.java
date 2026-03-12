@@ -3,6 +3,7 @@ package controller;
 import domain.BlackJackGame;
 import domain.CardCreationStrategy;
 import domain.Player;
+import dto.GameResultDto;
 import dto.ParticipantDto;
 import java.util.List;
 import java.util.function.Supplier;
@@ -15,7 +16,9 @@ public class BlackJackController {
     private final OutputView outputView;
     private final CardCreationStrategy strategy;
 
-    public BlackJackController(InputView inputView, OutputView outputView, CardCreationStrategy strategy) {
+    public BlackJackController(InputView inputView,
+                               OutputView outputView,
+                               CardCreationStrategy strategy) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.strategy = strategy;
@@ -30,6 +33,9 @@ public class BlackJackController {
 
         playPlayersTurn(game);
         playDealerTurn(game);
+
+        GameResultDto gameResults = game.getGameResults();
+        outputView.printGameResult(gameResults);
     }
 
     private BlackJackGame readyGame() {
@@ -48,6 +54,11 @@ public class BlackJackController {
         while (game.whoseTurn().isPresent()) {
             Player currentPlayer = game.whoseTurn().get();
 
+            if (currentPlayer.isFinished()) {
+                handlePlayerStandProcess(game);
+                continue;
+            }
+
             outputView.printHitOrStandPrompt(currentPlayer.getName());
             String hitOrStandInfo = retry(inputView::readHitOrStand);
             doHitOrStand(hitOrStandInfo, game);
@@ -57,9 +68,9 @@ public class BlackJackController {
     private void doHitOrStand(String hitOrStand, BlackJackGame game) {
         if (hitOrStand.equals("y")) {
             handlePlayerHitProcess(game);
-            return;
+        } else {
+            handlePlayerStandProcess(game);
         }
-        handlePlayerStandProcess(game);
     }
 
     private void handlePlayerStandProcess(BlackJackGame game) {

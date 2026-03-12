@@ -1,119 +1,113 @@
-//package controller;
-//
-//import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-//import static org.mockito.Mockito.times;
-//import static org.mockito.Mockito.verify;
-//import static org.mockito.Mockito.when;
-//
-//import domain.Card;
-//import domain.CardContents;
-//import domain.CardCreationStrategy;
-//import domain.CardShape;
-//import domain.Deck;
-//import domain.Player;
-//import dto.ParticipantDto;
-//import java.util.ArrayList;
-//import java.util.List;
-//import org.assertj.core.api.Assertions;
-//import org.junit.jupiter.api.DisplayName;
-//import org.junit.jupiter.api.Nested;
-//import org.junit.jupiter.api.Test;
-//import org.junit.jupiter.api.extension.ExtendWith;
-//import org.mockito.InjectMocks;
-//import org.mockito.Mock;
-//import org.mockito.junit.jupiter.MockitoExtension;
-//import view.InputView;
-//import view.OutputView;
-//
-//@ExtendWith(MockitoExtension.class)
-//class BlackJackControllerTest {
-//    private static final String TEST_NAME = "tester";
-//
-//    @Mock
-//    private InputView inputView;
-//
-//    @Mock
-//    private OutputView outputView;
-//
-//    @Mock
-//    private CardCreationStrategy strategy;
-//
-//    @InjectMocks
-//    private BlackJackController controller;
-//
-//    @Test
-//    @DisplayName("이름 잘 물어봄")
-//    void askPlayerNames_success() {
-//        //given
-//        when(inputView.readNames()).thenReturn(List.of("pobi", "gump"));
-//
-//        //when
-//        List<String> result = controller.askPlayerNames();
-//
-//        //then
-//        verify(outputView, times(1)).printNamePrompt();
-//        verify(inputView, times(1)).readNames();
-//    }
-//
-//    @Test
-//    @DisplayName("카드 내용 출력 전달 잘함")
-//    void showPlayerCards_success() {
-//        //given
-//        List<Card> testCards = List.of(
-//                new Card(CardShape.하트, CardContents.TWO),
-//                new Card(CardShape.하트, CardContents.THREE),
-//                new Card(CardShape.하트, CardContents.FOUR)
-//        );
-//        CardCreationStrategy strategy = new CardCreationStrategy() {
-//            @Override
-//            public List<Card> create() {
-//                return new ArrayList<>(testCards);
-//            }
-//        };
-//
-//        Deck totalDeck = Deck.createDeck(strategy);
-//        Deck playerDeck = Deck.createParticipantDeck(totalDeck);
-//        Player PLAYER = new Player(playerDeck, TEST_NAME);
-//        ParticipantDto PARTICIPANT_DTO = ParticipantDto.from(PLAYER);
-//
-//        //when && then
-//        assertDoesNotThrow(
-//                () -> controller.showPlayerCards(PARTICIPANT_DTO)
-//        );
-//    }
-//
-//    @Nested
-//    class addDrawCardTest {
-//        @Test
-//        @DisplayName("질문해서 y 면 true 반환")
-//        void askDrawCard_true() {
-//            //given
-//            when(inputView.readHitOrStand()).thenReturn("y");
-//
-//            //when
-//            boolean result = controller.askDrawCard(TEST_NAME);
-//
-//            //then
-//            Assertions.assertThat(result).isTrue();
-//        }
-//
-//        @Test
-//        @DisplayName("질문해서 n이면 false 반환")
-//        void askDrawCard_false() {
-//            //given
-//            when(inputView.readHitOrStand()).thenReturn("n");
-//
-//            //when
-//            boolean result = controller.askDrawCard(TEST_NAME);
-//
-//            //then
-//            Assertions.assertThat(result).isFalse();
-//        }
-//    }
-//
-//    //private List<Card> createSampleCards() {
-/// /        CardShape[] shapes = CardShape.values(); /        CardContents[] contents = CardContents.values(); / /
-///   List<Card> sampleCards = new ArrayList<>(); /        for (CardShape cardShape : shapes) { /            for
-/// (CardContents content : contents) { /                sampleCards.add(new Card(cardShape, content)); /            } /
-///        } / /        return sampleCards; /    }
-//}
+package controller;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
+import domain.Card;
+import domain.CardContents;
+import domain.CardCreationStrategy;
+import domain.CardShape;
+import dto.GameResultDto;
+import dto.ParticipantDto;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import view.InputView;
+import view.OutputView;
+
+class BlackJackControllerTest {
+    private static final String TEST_NAME = "tester";
+
+    private BlackJackController controller;
+
+    @BeforeEach
+    void setUpGame() {
+        controller = new BlackJackController(
+                new TestInputViewImpl(),
+                new TestOutputViewImpl(),
+                new TestCardCreationStrategy()
+        );
+    }
+
+    @Test
+    @DisplayName("게임이 정상적으로 수행되면 오류가 발생하지 않는다")
+    void askPlayerNames_success() {
+        //when, then
+        assertDoesNotThrow(
+                () -> controller.doGameProcess()
+        );
+    }
+
+    class TestInputViewImpl implements InputView {
+
+        private static final Deque<String> hitOrStandOrder = new ArrayDeque<>(List.of("y", "n", "n", "n"));
+
+        @Override
+        public List<String> readNames() {
+            return List.of("pobi", "jason", "gump");
+        }
+
+        @Override
+        public String readHitOrStand() {
+            return hitOrStandOrder.poll();
+        }
+    }
+
+    class TestOutputViewImpl implements OutputView {
+
+        @Override
+        public void printErrorMessage(Exception e) {
+        }
+
+        @Override
+        public void printNamePrompt() {
+        }
+
+        @Override
+        public void printInitialStates(ParticipantDto dealerDto, List<ParticipantDto> players) {
+        }
+
+        @Override
+        public void printHitOrStandPrompt(String name) {
+        }
+
+        @Override
+        public void printUserState(ParticipantDto participantDto) {
+        }
+
+        @Override
+        public void printDealerAddCardNotice() {
+        }
+
+        @Override
+        public void printGameResult(GameResultDto gameResultDto) {
+        }
+    }
+
+    class TestCardCreationStrategy implements CardCreationStrategy {
+
+        @Override
+        public Deque<Card> create() {
+            List<Card> candidateCard = List.of(
+                    new Card(CardShape.하트, CardContents.A),
+                    new Card(CardShape.하트, CardContents.TWO),
+                    new Card(CardShape.하트, CardContents.THREE),
+                    new Card(CardShape.하트, CardContents.FOUR),
+                    new Card(CardShape.하트, CardContents.FIVE),
+                    new Card(CardShape.하트, CardContents.SIX),
+                    new Card(CardShape.하트, CardContents.SEVEN),
+                    new Card(CardShape.하트, CardContents.EIGHT),
+                    new Card(CardShape.하트, CardContents.NINE),
+                    new Card(CardShape.하트, CardContents.TEN),
+                    new Card(CardShape.하트, CardContents.J),
+                    new Card(CardShape.하트, CardContents.Q),
+                    new Card(CardShape.하트, CardContents.K)
+            );
+
+            return new ArrayDeque<>(candidateCard);
+        }
+    }
+
+}

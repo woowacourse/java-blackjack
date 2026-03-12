@@ -1,15 +1,15 @@
 import controller.BlackJackController;
 import domain.CardCreationStrategy;
 import domain.RandomCardCreationStrategy;
-import view.InputView;
-import view.OutputView;
+import view.InputViewImpl;
+import view.OutputViewImpl;
 
 public class Main {
     public static void main(String[] args) {
-        InputView inputView = new InputView();
-        OutputView outputView = new OutputView();
+        InputViewImpl inputViewImpl = new InputViewImpl();
+        OutputViewImpl outputViewImpl = new OutputViewImpl();
         CardCreationStrategy strategy = new RandomCardCreationStrategy();
 
-        new BlackJackController(inputView, outputView, strategy).doGameProcess();
+        new BlackJackController(inputViewImpl, outputViewImpl, strategy).doGameProcess();
     }
 }
