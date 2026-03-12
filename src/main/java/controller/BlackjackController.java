@@ -73,9 +73,9 @@ public class BlackjackController {
     }
 
     private void printCards(Dealer dealer, List<Player> players) {
-        outputView.drawCard(NamesDto.fromState(dealer, players));
+        outputView.drawCard(NamesDto.fromDealerAndPlayers(dealer, players));
         outputView.showOnlyOneCard(PlayerCardsDto.fromParticipant(dealer));
-        outputView.showPlayersCards(PlayersCardsDto.fromStates(players));
+        outputView.showPlayersCards(PlayersCardsDto.fromPlayers(players));
     }
 
     private List<StatisticsDto> getStatisticsDtos(Dealer dealer, List<Player> players) {
