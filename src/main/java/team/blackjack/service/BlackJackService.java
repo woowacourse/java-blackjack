@@ -82,6 +82,10 @@ public class BlackJackService {
         return new GameResult(dealerResult, playerResults);
     }
 
+    /**
+     * 내부 헬퍼 메소드
+     * @return
+     */
     private Map<String, PlayerResult> calculatePlayersResult() {
         final Map<String, PlayerResult> playerResults = new HashMap<>();
 

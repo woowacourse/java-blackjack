@@ -72,7 +72,7 @@ public class BlackjackGame {
     }
 
     public Result getPlayerResult(Player player, Dealer dealer) {
-        return blackjackRule.judgePlayerResult(player.getScore(), dealer.getScore());
+        return blackjackRule.judgePlayerResult(player.getHands().getFirst(), dealer.getHand());
     }
 
     public Result getDealerResult(Dealer dealer, Player player) {

@@ -1,6 +1,7 @@
 package team.blackjack.domain;
 
 public enum Result {
+    BLACKJACK("블랙잭"),
     WIN("승"),
     DRAW("무"),
     LOSE("패");
@@ -12,11 +13,14 @@ public enum Result {
         this.name = name;
     }
 
-    public String getName(){
+    public String getName() {
         return this.name;
     }
 
-    public Result reverse(){
+    public Result reverse() {
+        if (this == BLACKJACK) {
+            return LOSE;
+        }
         if (this == WIN) {
             return LOSE;
         }

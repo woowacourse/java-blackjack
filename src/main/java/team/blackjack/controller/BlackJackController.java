@@ -1,8 +1,6 @@
 package team.blackjack.controller;
 
 import java.util.List;
-import team.blackjack.config.AppConfig;
-import team.blackjack.domain.rule.BlackjackRule;
 import team.blackjack.service.dto.DrawResult;
 import team.blackjack.service.dto.GameResult;
 import team.blackjack.service.dto.ScoreResult;
@@ -12,11 +10,9 @@ import team.blackjack.view.InputView;
 import team.blackjack.view.OutputView;
 
 public class BlackJackController {
-    private final BlackjackRule blackjackRule;
     private final BlackJackService blackJackService;
 
     public BlackJackController(BlackJackService blackJackService) {
-        this.blackjackRule = AppConfig.getInstance().blackjackRule();
         this.blackJackService = blackJackService;
     }
 
@@ -56,7 +52,7 @@ public class BlackJackController {
     }
 
     private void processHit(Player player) {
-        while (!blackjackRule.isBust(player.getScore())) {
+        while (!player.getHands().getFirst().isBust()) {
             OutputView.printAskDrawCard(player.getName());
 
             if (!InputView.readHitDecision()) {
