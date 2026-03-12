@@ -67,6 +67,6 @@ public class TestUtil {
     }
 
     public static Result createResult(String name, WinningStatus winningStatus) {
-        return new Result(createPlayer(name), winningStatus);
+        return new Result(createBetting(name, 10000), winningStatus);
     }
 }
