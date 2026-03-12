@@ -10,7 +10,7 @@ public record PlayerResultDto(
         String playerName,
         List<CardDto> cardDtos,
         int sum,
-        double finalMoney
+        int finalMoney
 ) {
     public static PlayerResultDto of(Player player, int finalScore) {
         List<Card> cards = player.getDeck().getCards();

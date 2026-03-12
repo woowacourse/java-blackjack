@@ -56,8 +56,8 @@ public class Player implements Person {
         bet = Bet.of(betAmount);
     }
 
-    public double getFinalMoney() {
-        return bet.getFinalMoney(playerStatus);
+    public int getFinalMoney() {
+        return (int)bet.getFinalMoney(playerStatus);
     }
 
     // 추가 카드 부여

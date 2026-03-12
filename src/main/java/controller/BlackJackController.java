@@ -41,7 +41,6 @@ public class BlackJackController {
         getAdditionalDealerCard();
 
         // 결과 출력
-        // TODO : 결과값 정수로 반환
         ResultDto judgement = blackJackService.judgement();
         outputView.playerResultMessage(judgement);
     }
