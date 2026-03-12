@@ -2,8 +2,8 @@ package repository;
 
 import domain.common.PlayedGameResult;
 import domain.result.ScoreBoard;
-import domain.result.vo.DealerWinningScore;
-import domain.result.vo.PlayerWinningInfo;
+import domain.result.DealerWinningScore;
+import domain.result.PlayerWinningInfo;
 import java.util.List;
 
 public class ScoreRepository {

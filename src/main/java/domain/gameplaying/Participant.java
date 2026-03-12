@@ -5,7 +5,7 @@ import domain.common.CardInfo;
 import domain.common.NameAndCardInfos;
 import java.util.List;
 
-public abstract class Participant {
+abstract class Participant {
 
     protected static final String DEALER_NAME = "딜러";
 

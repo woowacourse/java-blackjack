@@ -2,8 +2,8 @@ package service;
 
 import domain.common.NameAndCardInfos;
 import domain.common.PlayedGameResult;
-import domain.result.vo.DealerWinningScore;
-import domain.result.vo.PlayerWinningInfo;
+import domain.result.DealerWinningScore;
+import domain.result.PlayerWinningInfo;
 import dto.request.PlayerNamesResponse;
 import dto.response.AllPlayerWinningInfoResponse;
 import dto.response.AllPlayersNameAndCardsResponse;

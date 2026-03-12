@@ -39,7 +39,6 @@
   - [x] ScoreBoard 내부
 - [x] 사용하지 않는 import문
 - [x] 패키지 네이밍
-- [ ] Participant 사용
 - [x] ScoreBoard 리팩토링
 - [x] ParticiapntTest 람다
 
