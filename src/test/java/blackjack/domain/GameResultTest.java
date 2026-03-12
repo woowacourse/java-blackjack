@@ -9,10 +9,11 @@ public class GameResultTest {
 
     @ParameterizedTest
     @EnumSource(GameResult.class)
-    void 게임결과는_승_무_패_만있다(
+    void 게임결과는_승__블랙잭승_무_패_만있다(
             GameResult gameResult
     ) {
         assertTrue(gameResult == GameResult.WIN
+                || gameResult == GameResult.BACKJACK_WIN
                 || gameResult == GameResult.TIE
                 || gameResult == GameResult.LOSE
 
