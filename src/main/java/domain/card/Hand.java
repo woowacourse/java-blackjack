@@ -1,7 +1,5 @@
 package domain.card;
 
-import static domain.BlackjackGame.BUST_BOUND;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -9,6 +7,8 @@ import java.util.List;
 import java.util.Set;
 
 public class Hand {
+
+    public static final int BUST_BOUND = 21;
 
     private final List<Card> hand;
     private final Set<Integer> scores = new HashSet<>();

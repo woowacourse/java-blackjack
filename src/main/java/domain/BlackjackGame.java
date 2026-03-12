@@ -10,7 +10,6 @@ public class BlackjackGame {
 
     public static final int INIT_DRAW_COUNT = 2;
     public static final int HIT_DRAW_COUNT = 1;
-    public static final int BUST_BOUND = 21;
     public static final int DEALER_DRAW_BOUND = 16;
 
     private final Deck deck;
@@ -38,7 +37,7 @@ public class BlackjackGame {
 
 
     public boolean canPlayerDraw(final Participant player) {
-        return !player.isBust() && player.getScore() != BUST_BOUND;
+        return !player.isBust();
     }
 
     public boolean canDealerDraw() {
