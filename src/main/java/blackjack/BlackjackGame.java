@@ -3,6 +3,7 @@ package blackjack;
 import blackjack.domain.betting.BettingMoney;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.domain.result.GameResults;
@@ -25,7 +26,7 @@ public class BlackjackGame {
         final List<String> names = InputView.readPlayerNames();
         final List<Integer> amounts = InputView.readBettingAmounts(names);
         final List<Player> participants = IntStream.range(0, names.size())
-                .mapToObj(i -> new Player(names.get(i), new BettingMoney(amounts.get(i))))
+                .mapToObj(i -> new Player(new Name(names.get(i)), new BettingMoney(amounts.get(i))))
                 .toList();
         return new Players(participants);
     }

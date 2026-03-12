@@ -9,8 +9,8 @@ public class Player extends Participant {
     private final BettingMoney bettingMoney;
     private boolean isStayed = false;
 
-    public Player(final String name, final BettingMoney bettingMoney) {
-        super(new Name(name));
+    public Player(final Name name, final BettingMoney bettingMoney) {
+        super(name);
         this.bettingMoney = bettingMoney;
     }
 
