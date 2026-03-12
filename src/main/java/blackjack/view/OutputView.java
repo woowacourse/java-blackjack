@@ -64,7 +64,7 @@ public class OutputView {
     public void printParticipantsHandScore(List<ParticipantHandScore> participantsHandScore) {
         printNewLine();
         printDealerHandScore(participantsHandScore.getFirst());
-        participantsHandScore.forEach(this::printPlayerHandScore);
+        participantsHandScore.subList(1, participantsHandScore.size()).forEach(this::printPlayerHandScore);
     }
     
     public void printDealerHandScore(ParticipantHandScore playerStatus) {
