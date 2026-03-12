@@ -1,5 +1,7 @@
 package view;
 
+import domain.betiing.BetAmount;
+import domain.participant.ParticipantInitialInformation;
 import domain.result.dto.GameResultDto;
 import domain.participant.ParticipantName;
 import domain.participant.dto.ParticipantHandDto;
@@ -26,8 +28,20 @@ public class ApplicationView {
         return new ApplicationView(reader, writer);
     }
 
-    public List<ParticipantName> requestPlayerNames() {
+    public List<ParticipantInitialInformation> requestInitialInformations() {
+        List<ParticipantName> participantNames = requestPlayerNames();
+        return participantNames.stream().map(name -> {
+            BetAmount betAmount = requestBetAmount(name.name());
+            return ParticipantInitialInformation.of(name, betAmount);
+        }).toList();
+    }
+
+    private List<ParticipantName> requestPlayerNames() {
         return retry(this::readPlayerNames);
+    }
+
+    private BetAmount requestBetAmount(String name) {
+        return retry(() -> readBetAmounts(name));
     }
 
     private List<ParticipantName> readPlayerNames() {
@@ -37,6 +51,11 @@ public class ApplicationView {
         return names.stream().map(ParticipantName::from).toList();
     }
 
+    private BetAmount readBetAmounts(String participantName) {
+        writer.printInputBetAmountGuideMessage(participantName);
+        int betAmount = reader.readInteger();
+        return BetAmount.from(betAmount);
+    }
     public boolean requestDrawCardIntention(String playerName) {
         return retry(() -> readDrawCardIntention(playerName));
     }

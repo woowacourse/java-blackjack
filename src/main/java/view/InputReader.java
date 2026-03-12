@@ -16,6 +16,11 @@ public class InputReader {
         return scanner.nextLine();
     }
 
+    public int readInteger() {
+        String input = readInput();
+        return Integer.parseInt(input);
+    }
+
     public List<String> readInputBasedOnSeparator(String separator) {
         String input = readInput();
         return Arrays.stream(input.split(separator))
