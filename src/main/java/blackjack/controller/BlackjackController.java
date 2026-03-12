@@ -4,10 +4,7 @@ import static blackjack.util.ExceptionHandler.retryUntilSuccess;
 
 import blackjack.BlackjackGame;
 import blackjack.model.BetAmount;
-import blackjack.model.card.HitCommand;
 import blackjack.model.gameresult.PlayersGameResult;
-import blackjack.model.user.Dealer;
-import blackjack.model.user.Player;
 import blackjack.model.user.Users;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -49,7 +46,7 @@ public class BlackjackController {
     }
 
     private void printGameResult(Users users) {
-        PlayersGameResult playersGameResult = users.determineWinner();
+        PlayersGameResult playersGameResult = blackjackGame.determineWinner(users);
         OutputView.printGameResult(playersGameResult, users);
     }
 }

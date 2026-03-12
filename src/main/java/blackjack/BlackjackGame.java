@@ -5,6 +5,7 @@ import static blackjack.util.ExceptionHandler.retryUntilSuccess;
 import blackjack.model.BetAmount;
 import blackjack.model.card.CardProvider;
 import blackjack.model.card.HitCommand;
+import blackjack.model.gameresult.PlayersGameResult;
 import blackjack.model.user.Dealer;
 import blackjack.model.user.Player;
 import blackjack.model.user.Users;
@@ -58,6 +59,10 @@ public class BlackjackGame {
             cardProvider.provideOneCard(dealer);
             OutputView.printDealerHit();
         }
+    }
+
+    public PlayersGameResult determineWinner(Users users) {
+        return users.determineWinner();
     }
 
     private boolean checkY(Player player, Function<Player, String> readHitCommand) {
