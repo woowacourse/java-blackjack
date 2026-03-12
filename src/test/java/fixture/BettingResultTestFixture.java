@@ -15,13 +15,13 @@ public class BettingResultTestFixture {
                 Arguments.of(
                         List.of(card(CardValue.TEN), card(CardValue.ACE)),
                         List.of(card(CardValue.SEVEN), card(CardValue.TEN)),
-                        1000, 1500, -500
+                        1000, 500, -500
                 ),
                 // 2. 플레이어와 딜러 둘 다 블랙잭
                 Arguments.of(
                         List.of(card(CardValue.TEN), card(CardValue.ACE)),
                         List.of(card(CardValue.TEN), card(CardValue.ACE)),
-                        1000, 1000, 0
+                        1000, 0, 0
                 ),
                 // 3. 플레이어 버스트(점수 합 21 초과, 이때 딜러의 카드는 상관이 없다.)
                 Arguments.of(
@@ -39,13 +39,13 @@ public class BettingResultTestFixture {
                 Arguments.of(
                         List.of(card(CardValue.TEN), card(CardValue.NINE)),
                         List.of(card(CardValue.QUEEN), card(CardValue.EIGHT)),
-                        1000, 2000, -1000
+                        1000, 1000, -1000
                 ),
                 // 6. 플레이어가 카드를 한 장 더 받아서 21이 된 경우 -> 일반 승리 판정
                 Arguments.of(
                         List.of(card(CardValue.TEN), card(CardValue.NINE), card(CardValue.TWO)),
                         List.of(card(CardValue.QUEEN), card(CardValue.EIGHT)),
-                        1000, 2000, -1000
+                        1000, 1000, -1000
                 ),
                 // 7. 플레이어가 카드를 한 장 더 받아서 21이 되었지만, 딜러가 블랙잭인 경우
                 Arguments.of(
@@ -57,7 +57,7 @@ public class BettingResultTestFixture {
                 Arguments.of(
                         List.of(card(CardValue.TEN), card(CardValue.NINE), card(CardValue.TWO)),
                         List.of(card(CardValue.EIGHT), card(CardValue.THREE), card(CardValue.QUEEN)),
-                        1000, 1000, 0
+                        1000, 0, 0
                 )
         );
     }

@@ -86,9 +86,9 @@ public class OutputView {
     public static void printBettingResult(List<Participant> participants) {
         for (Participant participant : participants) {
             if (participant instanceof Dealer dealer) {
-                System.out.println(participant.getName() + ": " + dealer.getDealerProfit());
+                System.out.println(participant.getName() + ": " + dealer.getProfit());
             } else if (participant instanceof Player player) {
-                System.out.println(participant.getName() + ": " + player.getMoney());
+                System.out.println(participant.getName() + ": " + player.getProfit());
             }
         }
     }

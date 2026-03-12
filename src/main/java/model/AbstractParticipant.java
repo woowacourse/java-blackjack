@@ -10,11 +10,13 @@ public abstract class AbstractParticipant implements Participant {
     private final String name;
     private final Cards cards;
     private boolean isBlackJack;
+    private int profit;
 
     public AbstractParticipant(String name) {
         this.name = name;
         this.cards = Cards.createEmpty();
         isBlackJack = false;
+        profit = 0;
     }
 
     @Override
@@ -58,5 +60,17 @@ public abstract class AbstractParticipant implements Participant {
 
     public boolean getIsBlackJack() {
         return this.isBlackJack;
+    }
+
+    public int getProfit() {
+        return this.profit;
+    }
+
+    public void addProfit(int money) {
+        this.profit += money;
+    }
+
+    public void subtractProfit(int money) {
+        this.profit -= money;
     }
 }
