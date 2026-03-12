@@ -1,6 +1,5 @@
 package domain.game;
 
-import constant.HitOrStand;
 import constant.Result;
 import domain.card.Card;
 import domain.card.CardMachine;

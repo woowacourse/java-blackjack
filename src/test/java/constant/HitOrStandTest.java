@@ -2,6 +2,7 @@ package constant;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.game.HitOrStand;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 

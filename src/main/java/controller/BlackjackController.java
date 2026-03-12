@@ -1,6 +1,6 @@
 package controller;
 
-import constant.HitOrStand;
+import domain.game.HitOrStand;
 import dto.BlackjackResultDto;
 import dto.BlackjackStatisticsDto;
 import dto.ParticipantDto;
