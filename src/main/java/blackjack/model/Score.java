@@ -24,7 +24,7 @@ public record Score(int value) {
     }
 
     private static boolean containsAce(List<Card> cards) {
-        return cards.stream().anyMatch(card -> card.rank() == Rank.ACE);
+        return cards.stream().anyMatch(Card::isAce);
     }
 
     private static boolean canApplyAceAmount(final int sum) {

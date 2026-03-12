@@ -1,7 +1,5 @@
 package blackjack.model;
 
-import java.util.List;
-
 public class Player extends Participant {
 
     public Player(Name name, Hand hand) {
@@ -13,10 +11,6 @@ public class Player extends Participant {
     }
 
     @Override
-    public List<Card> getInitialVisibleCards() {
-        return getCards();
-    }
-
     public boolean canHit() {
         return !getScore().isBust();
     }

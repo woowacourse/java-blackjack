@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Map;
 
 public class OutputView {
+    private static final String YES = "y";
+    private static final String NO = "n";
 
     private static final Map<Suit, String> SUIT_NAMES = Map.of(
         Suit.DIAMOND, "다이아몬드",
@@ -28,6 +30,10 @@ public class OutputView {
         PlayerBlackjackResult.LOSE, "패",
         PlayerBlackjackResult.PUSH, "푸시"
     );
+
+    public void askPlayerNames() {
+        System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
+    }
 
     public void printInitialDeal(InitialDealDtos initialDealDtos) {
         List<String> playerNames = initialDealDtos.playerCardsDtos().stream()
@@ -52,6 +58,10 @@ public class OutputView {
         String joinedCards = String.join(", ", cardOutputs);
 
         System.out.println(participantCardsDto.participantName() + "카드: " + joinedCards);
+    }
+
+    public void askHit(String playerName) {
+        System.out.println(playerName + "은 한장의 카드를 더 받겠습니까?(예는 " + YES + ", 아니오는 " + NO + ")");
     }
 
     public void printDealerHit(Dealer dealer) {

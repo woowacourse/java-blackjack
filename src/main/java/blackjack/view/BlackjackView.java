@@ -4,7 +4,6 @@ import blackjack.dto.GameResultDto;
 import blackjack.dto.InitialDealDtos;
 import blackjack.dto.ParticipantCardsDto;
 import blackjack.dto.ParticipantScoreDto;
-import blackjack.model.Answer;
 import blackjack.model.Dealer;
 import java.util.List;
 
@@ -18,11 +17,13 @@ public class BlackjackView {
     }
 
     public String readPlayers() {
+        outputView.askPlayerNames();
         return inputView.readPlayerNames();
     }
 
-    public Answer askHit(final String playerName) {
-        return inputView.askHit(playerName);
+    public boolean isHitAnswer(final String playerName) {
+        outputView.askHit(playerName);
+        return inputView.isHitAnswer();
     }
 
     public void printInitialDeal(InitialDealDtos initialDealDtos) {

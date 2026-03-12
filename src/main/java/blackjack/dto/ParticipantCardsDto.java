@@ -7,13 +7,14 @@ public record ParticipantCardsDto(
     String participantName,
     List<CardDto> cards
 ) {
-    public static ParticipantCardsDto fromAllCards(Participant participant) {
+    public static ParticipantCardsDto from(Participant participant) {
         List<CardDto> cards = participant.getCards().stream().map(CardDto::from).toList();
         return new ParticipantCardsDto(participant.getName(), cards);
     }
 
-    public static ParticipantCardsDto fromVisibleCards(Participant participant) {
-        List<CardDto> cards = participant.getInitialVisibleCards().stream()
+    public static ParticipantCardsDto of(Participant participant, long size) {
+        List<CardDto> cards = participant.getCards().stream()
+            .limit(size)
             .map(CardDto::from).toList();
         return new ParticipantCardsDto(participant.getName(), cards);
     }

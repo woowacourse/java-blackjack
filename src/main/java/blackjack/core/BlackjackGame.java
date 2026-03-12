@@ -60,9 +60,9 @@ public class BlackjackGame {
     }
 
     private void hitPlayer(Player player, Deck deck) {
-        while (player.canHit() && view.askHit(player.getName()) == Answer.YES) {
+        while (player.canHit() && view.isHitAnswer(player.getName())) {
             player.hit(deck.draw());
-            view.printPlayerCards(ParticipantCardsDto.fromAllCards(player));
+            view.printPlayerCards(ParticipantCardsDto.from(player));
         }
     }
 

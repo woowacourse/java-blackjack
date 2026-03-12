@@ -32,6 +32,4 @@ public abstract class Participant {
     }
 
     public abstract boolean canHit();
-
-    public abstract List<Card> getInitialVisibleCards();
 }
