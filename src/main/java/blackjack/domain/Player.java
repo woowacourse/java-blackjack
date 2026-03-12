@@ -27,6 +27,10 @@ public class Player extends Participant {
             return GameResult.WIN;
         }
 
+        if (isBlackJack()) {
+            return judgeBlackJackResult(dealer);
+        }
+
         return judgeNearestBlackJackPoint(dealer);
     }
 
@@ -42,5 +46,12 @@ public class Player extends Participant {
             return GameResult.LOSE;
         }
         return GameResult.TIE;
+    }
+
+    private GameResult judgeBlackJackResult(Dealer dealer) {
+        if (dealer.isBlackJack()) {
+            return GameResult.TIE;
+        }
+        return GameResult.BLACKJACK_WIN;
     }
 }
