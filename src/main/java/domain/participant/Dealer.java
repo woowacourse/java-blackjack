@@ -19,6 +19,6 @@ public class Dealer extends Participant {
 
     public boolean isReceiveCard() {
         Score score = getScore();
-        return (score.getScoreStatus().equals(ScoreStatus.STAND)) && (score.getValue() <= 16);
+        return (score.getScoreStatus().equals(ScoreStatus.STAY)) && (score.getValue() <= 16);
     }
 }

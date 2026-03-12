@@ -36,7 +36,7 @@ public class HandCards {
         if (isBust()) {
             return new Score(score, ScoreStatus.BUST);
         }
-        return new Score(score, ScoreStatus.STAND);
+        return new Score(score, ScoreStatus.STAY);
     }
 
     private int calculateScore() {
