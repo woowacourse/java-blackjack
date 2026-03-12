@@ -2,6 +2,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import domain.Card;
 import domain.Dealer;
+import domain.GameResult;
 import domain.Outcome;
 import domain.Participant;
 import domain.Player;
@@ -26,9 +27,9 @@ public class CheckWinnerTest {
                 new Card(Suit.DIAMOND, Rank.JACK),
                 new Card(Suit.CLUB, Rank.KING));
 
-        players.decideWinner(dealer);
+        GameResult gameResult = players.calculateResult(dealer);
 
-        assertEquals(Outcome.DRAW, player.getOutcome());
+        assertEquals(Outcome.DRAW, gameResult.getPlayerOutcome(player.getName()));
     }
 
     @Test
@@ -44,9 +45,9 @@ public class CheckWinnerTest {
                 new Card(Suit.DIAMOND, Rank.TEN),
                 new Card(Suit.CLUB, Rank.EIGHT));
 
-        players.decideWinner(dealer);
+        GameResult gameResult = players.calculateResult(dealer);
 
-        assertEquals(Outcome.LOSE, player.getOutcome());
+        assertEquals(Outcome.LOSE, gameResult.getPlayerOutcome(player.getName()));
     }
 
     @Test
@@ -62,9 +63,9 @@ public class CheckWinnerTest {
                 new Card(Suit.DIAMOND, Rank.KING),
                 new Card(Suit.CLUB, Rank.QUEEN));
 
-        players.decideWinner(dealer);
+        GameResult gameResult = players.calculateResult(dealer);
 
-        assertEquals(Outcome.WIN, player.getOutcome());
+        assertEquals(Outcome.WIN, gameResult.getPlayerOutcome(player.getName()));
     }
 
     private void addCards(Participant participant, Card... cards) {
