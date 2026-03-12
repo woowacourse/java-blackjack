@@ -1,7 +1,7 @@
 package domain;
 
 public enum CardContents {
-    A("A", Integer.MAX_VALUE),
+    A("A", 1),
     TWO("2", 2),
     THREE("3", 3),
     FOUR("4", 4),
