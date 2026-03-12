@@ -30,4 +30,8 @@ public class BetAmount {
             throw new IllegalArgumentException("배팅 금액은 최대 100000원 이하이어야 합니다.");
         }
     }
+
+    public int money() {
+        return money;
+    }
 }
