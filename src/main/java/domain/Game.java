@@ -34,7 +34,9 @@ public class Game {
     }
 
     public boolean playDealerTurn(Deck deck) {
-        dealer.addCard(deck.drawCard());
+        if (dealer.checkScoreUnderCriterion()) {
+            dealer.addCard(deck.drawCard());
+        }
 
         return !dealer.checkScoreUnderCriterion();
     }

@@ -17,6 +17,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import service.CardGenerator;
+import service.DealerBlackjackCardGenerator;
 import service.TestCardGenerator;
 
 public class GameTest {
@@ -25,11 +26,14 @@ public class GameTest {
     private Game onePlayerGame;
     private Dealer dealer = new Dealer();
     private Deck deck;
+    private Deck delaerBlackjackDeck;
 
     @BeforeEach
     void setUp() {
-        CardGenerator cardGenerator = new TestCardGenerator();
-        deck = new Deck(cardGenerator.generate());
+        CardGenerator cardGenerator1 = new TestCardGenerator();
+        CardGenerator cardGenerator2 = new DealerBlackjackCardGenerator();
+        deck = new Deck(cardGenerator1.generate());
+        delaerBlackjackDeck = new Deck(cardGenerator2.generate());
 
         twoPlayerGame = new Game(List.of("피즈", "스타크"), dealer);
         onePlayerGame = new Game(List.of("피즈"), dealer);
@@ -121,6 +125,22 @@ public class GameTest {
                     List.of(Rank.SIX, Rank.SEVEN, Rank.SEVEN),
                     List.of("클로버", "클로버", "하트")
             );
+        }
+
+        @DisplayName("딜러가 처음에 받은 카드 2장으로 바로 블랙잭이 되면 카드를 추가로 더 분배 받지 않는다.")
+        @Test
+        void 딜러_처음_2장_블랙잭_카드_추가_분배_받지_않는다() {
+            //given
+            onePlayerGame.initializeGame(delaerBlackjackDeck);
+            //when
+            //then
+            onePlayerGame.playDealerTurn(delaerBlackjackDeck);
+            onePlayerGame.playDealerTurn(delaerBlackjackDeck);
+
+            assertSoftly(softly -> {
+                assertThat(onePlayerGame.getDealerScore()).isEqualTo(21);
+                assertThat(onePlayerGame.getDealerCard().size()).isEqualTo(2);
+            });
         }
 
         private void assertCardDistribution(List<Card> cards, List<Rank> expectedRank, List<String> expectedSuit) {
