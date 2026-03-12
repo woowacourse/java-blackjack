@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.Objects;
+
 public class Name {
     private static final int NAME_LIMIT_LENGTH = 20;
 
@@ -33,5 +35,22 @@ public class Name {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Name name1 = (Name) obj;
+        return Objects.equals(name, name1.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

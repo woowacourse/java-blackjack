@@ -26,15 +26,22 @@ class BettingResultCalculatorTest {
                             Card.of(CardNumber.Q, CardShape.CLOVER),
                             Card.of(CardNumber.K, CardShape.DIAMOND)))), ResultType.LOSE);
 
+    FinalResult draw = FinalResult.from(
+            Player.of(Name.from("kang"), new Betting(10000),
+                    new Hand(List.of(
+                            Card.of(CardNumber.J, CardShape.CLOVER),
+                            Card.of(CardNumber.K, CardShape.DIAMOND)))), ResultType.DRAW);
+
     @Test
     void 플레이어들의_최종_수익_계산_테스트() {
-        TotalFinalResult totalFinalResult = TotalFinalResult.from(List.of(normal, blackjack, bust));
+        TotalFinalResult totalFinalResult = TotalFinalResult.from(List.of(normal, blackjack, bust, draw));
 
         Map<Name, Integer> result = BettingResultCalculator.calculatePlayersProfit(totalFinalResult);
 
         assertThat(result).containsEntry(Name.from("pobi"), 10000)
                 .containsEntry(Name.from("jun"), 15000)
-                .containsEntry(Name.from("min"), -10000);
+                .containsEntry(Name.from("min"), -10000)
+                .containsEntry(Name.from("kang"), 0);
     }
 
     @Test
