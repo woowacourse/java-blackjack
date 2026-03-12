@@ -16,26 +16,20 @@ class PlayerTest {
     static final Name DEFAULT_NAME = new Name("name");
     static final Bet DEFAULT_BET = new Bet(10000);
 
-    Hand lowerScoreHand;
-    Hand defaultHand;
-    Hand higherScoreHand;
-    Hand bustScoreHand;
+    Hand loseHand;
+    Hand pushHand;
+    Hand winHand;
 
     @BeforeEach
     void initHands() {
-        lowerScoreHand = new UninitializedHand();
-        lowerScoreHand = lowerScoreHand.hit(new Card(Rank.TWO, Suit.HEART));
+        loseHand = new UninitializedHand();
+        loseHand = loseHand.hit(new Card(Rank.TWO, Suit.HEART));
 
-        defaultHand = new UninitializedHand();
-        defaultHand = defaultHand.hit(new Card(Rank.THREE, Suit.HEART));
+        pushHand = new UninitializedHand();
+        pushHand = pushHand.hit(new Card(Rank.THREE, Suit.HEART));
 
-        higherScoreHand = new UninitializedHand();
-        higherScoreHand = higherScoreHand.hit(new Card(Rank.TEN, Suit.HEART));
-
-        bustScoreHand = new UninitializedHand();
-        bustScoreHand = bustScoreHand.hit(new Card(Rank.JACK, Suit.HEART));
-        bustScoreHand = bustScoreHand.hit(new Card(Rank.QUEEN, Suit.HEART));
-        bustScoreHand = bustScoreHand.hit(new Card(Rank.KING, Suit.HEART));
+        winHand = new UninitializedHand();
+        winHand = winHand.hit(new Card(Rank.TEN, Suit.HEART));
     }
 
     @Test
@@ -51,12 +45,12 @@ class PlayerTest {
     }
 
     @Nested
-    class 딜러_손패와_비교하여_수익을_계산한다 {
+    class 결과를_통해_수익을_계산한다 {
         @Test
-        void 둘_다_버스트가_아니면서_본인의_점수가_더_높다면_베팅금만큼_얻는다() {
+        void 승리했다면_베팅금만큼_얻는다() {
             // given
-            Player player = new Player(DEFAULT_NAME, DEFAULT_BET, higherScoreHand);
-            Dealer dealer = new Dealer(lowerScoreHand);
+            Player player = new Player(DEFAULT_NAME, DEFAULT_BET, winHand);
+            Dealer dealer = new Dealer(loseHand);
 
             double expectedProfit = DEFAULT_BET.amount();
 
@@ -68,10 +62,10 @@ class PlayerTest {
         }
 
         @Test
-        void 둘_다_버스트가_아니면서_본인의_점수가_더_낮다면_베팅금만큼_잃는다() {
+        void 패배했다면_베팅금만큼_잃는다() {
             // given
-            Player player = new Player(DEFAULT_NAME, DEFAULT_BET, lowerScoreHand);
-            Dealer dealer = new Dealer(higherScoreHand);
+            Player player = new Player(DEFAULT_NAME, DEFAULT_BET, loseHand);
+            Dealer dealer = new Dealer(winHand);
 
             double expectedProfit = DEFAULT_BET.amount() * -1;
 
@@ -83,57 +77,12 @@ class PlayerTest {
         }
 
         @Test
-        void 둘_다_버스트가_아니면서_점수가_같다면_얻지도_잃지도_않는다() {
+        void 푸시했다면_얻지도_잃지도_않는다() {
             // given
-            Player player = new Player(DEFAULT_NAME, DEFAULT_BET, defaultHand);
-            Dealer dealer = new Dealer(defaultHand);
+            Player player = new Player(DEFAULT_NAME, DEFAULT_BET, pushHand);
+            Dealer dealer = new Dealer(pushHand);
 
             double expectedProfit = 0;
-
-            // when
-            double actualProfit = player.calculateProfit(dealer.getHand());
-
-            // then
-            assertThat(actualProfit).isEqualTo(expectedProfit);
-        }
-
-        @Test
-        void 본인이_버스트라면_베팅금만큼_잃는다() {
-            // given
-            Player player = new Player(DEFAULT_NAME, DEFAULT_BET, bustScoreHand);
-            Dealer dealer = new Dealer(defaultHand);
-
-            double expectedProfit = DEFAULT_BET.amount() * -1;
-
-            // when
-            double actualProfit = player.calculateProfit(dealer.getHand());
-
-            // then
-            assertThat(actualProfit).isEqualTo(expectedProfit);
-        }
-
-        @Test
-        void 딜러만_버스트라면_베팅금만큼_얻는다() {
-            // given
-            Player player = new Player(DEFAULT_NAME, DEFAULT_BET, defaultHand);
-            Dealer dealer = new Dealer(bustScoreHand);
-
-            double expectedProfit = DEFAULT_BET.amount();
-
-            // when
-            double actualProfit = player.calculateProfit(dealer.getHand());
-
-            // then
-            assertThat(actualProfit).isEqualTo(expectedProfit);
-        }
-
-        @Test
-        void 둘_다_버스트라면_베팅금만큼_잃는다() {
-            // given
-            Player player = new Player(DEFAULT_NAME, DEFAULT_BET, bustScoreHand);
-            Dealer dealer = new Dealer(bustScoreHand);
-
-            double expectedProfit = DEFAULT_BET.amount() * -1;
 
             // when
             double actualProfit = player.calculateProfit(dealer.getHand());

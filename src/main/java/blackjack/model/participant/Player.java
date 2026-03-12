@@ -25,28 +25,8 @@ public class Player extends Participant {
     }
 
     public double calculateProfit(Hand dealerHand) {
-        BlackjackResult result = calculateResult(dealerHand);
+        BlackjackResult result = BlackjackResult.judge(this.hand, dealerHand);
 
         return result.calculateProfit(bet, hand.getEarningRate());
-    }
-
-    private BlackjackResult calculateResult(Hand dealerHand) {
-        if (hand.isBust()) {
-            return BlackjackResult.LOSE;
-        }
-        if (dealerHand.isBust()) {
-            return BlackjackResult.WIN;
-        }
-
-        int playerScore = hand.calculateScore();
-        int dealerScore = dealerHand.calculateScore();
-        if (playerScore > dealerScore) {
-            return BlackjackResult.WIN;
-        }
-        if (playerScore == dealerScore) {
-            return BlackjackResult.PUSH;
-        }
-
-        return BlackjackResult.LOSE;
     }
 }
