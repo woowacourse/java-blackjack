@@ -28,7 +28,7 @@ public class Hand {
     public int calculateScore() {
 
         int baseScore = cards.stream()
-                .mapToInt((card) -> card.getRank().getScore().get(0))
+                .mapToInt((card) -> card.getRank().getBaseScore())
                 .sum();
 
         int aceCount = (int) cards.stream()
@@ -51,7 +51,7 @@ public class Hand {
     }
 
     private int convertAceToEleven(int currentScore) {
-        int aceScoreGap = Rank.ACE.getScore().get(1) - Rank.ACE.getScore().get(0);
+        int aceScoreGap = Rank.ACE.getHighScore() - Rank.ACE.getBaseScore();
         if (currentScore + aceScoreGap <= BLACKJACK_SCORE) {
             return currentScore + aceScoreGap;
         }
