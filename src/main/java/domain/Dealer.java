@@ -22,10 +22,6 @@ public class Dealer extends Participant {
         return DEALER_NAME;
     }
 
-    public boolean isDealer(String name) {
-        return name.equals(DEALER_NAME);
-    }
-
     public boolean shouldHit() {
         return this.calculateScore() <= DEALER_HIT_MAX_SCORE;
     }
