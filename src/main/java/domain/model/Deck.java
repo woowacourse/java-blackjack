@@ -68,6 +68,7 @@ public class Deck {
         if (sum > BURST_CRITERIA) {
             deckStatus = DeckStatus.BURST;
         }
+        // TODO : 매직 넘버 제거
         if (sum == 21) {
             deckStatus = DeckStatus.BLACK_JACK;
         }

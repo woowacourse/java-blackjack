@@ -30,7 +30,7 @@ public class PlayerTest {
     );
 
     @Test
-    void 플레이어_셍성_테스트() {
+    void 플레이어_생성_테스트() {
         // given
         String playerNamesInput = "phobi,jason";
         Parser parser = new StringParser();

@@ -10,6 +10,7 @@ public class Player implements Person {
     private final String name;
     private Deck deck;
     private PlayerStatus playerStatus = PlayerStatus.NONE;
+    private Bet bet;
 
     private Player(String name, Deck deck) {
         this.name = name;
@@ -40,9 +41,15 @@ public class Player implements Person {
         return deck.getCards();
     }
 
+    public int getBetAmount() {return bet.getBetAmount(); }
+
     // 플레이어에게 초기 생성된 카드 2개가 있는 덱을 부여
     public void assignDeck(Deck deck) {
         this.deck = deck;
+    }
+
+    public void bet(int betAmount) {
+        bet = Bet.of(betAmount);
     }
 
     // 추가 카드 부여
