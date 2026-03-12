@@ -26,7 +26,7 @@ class JudgeTest {
         Judge judge = new Judge(dealer, List.of(player));
 
         // then
-        assertEquals(WinningStatus.LOSE, judge.getPlayerResults().get("시오"));
+        assertEquals(WinningStatus.LOSE, judge.getPlayerResult(player));
     }
 
     @Test
@@ -45,7 +45,7 @@ class JudgeTest {
         Judge judge = new Judge(dealer, List.of(player));
 
         // then
-        assertEquals(WinningStatus.WIN, judge.getPlayerResults().get("시오"));
+        assertEquals(WinningStatus.WIN, judge.getPlayerResult(player));
     }
 
     @Test
@@ -63,7 +63,7 @@ class JudgeTest {
         Judge judge = new Judge(dealer, List.of(player));
 
         // then
-        assertEquals(WinningStatus.WIN, judge.getPlayerResults().get("시오"));
+        assertEquals(WinningStatus.WIN, judge.getPlayerResult(player));
     }
 
     @Test
@@ -81,7 +81,7 @@ class JudgeTest {
         Judge judge = new Judge(dealer, List.of(player));
 
         // then
-        assertEquals(WinningStatus.DRAW, judge.getPlayerResults().get("시오"));
+        assertEquals(WinningStatus.DRAW, judge.getPlayerResult(player));
     }
 
     @Test
