@@ -1,5 +1,6 @@
 package view;
 
+import domain.Money;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -56,6 +57,17 @@ public class InputView {
     private void validateUserChoice(String userChoice) {
         if (!YES.equals(userChoice) && !NO.equals(userChoice)) {
             throw new IllegalArgumentException(ERROR_INCORRECT_CHOICE);
+        }
+    }
+
+    public Money parseMoney(String input) {
+        String strippedInput = input.strip();
+
+        try {
+            int amount = Integer.parseInt(strippedInput);
+            return new Money(amount);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException();
         }
     }
 }
