@@ -17,8 +17,7 @@ public class OutputView {
         String dealerFirstCard = dealerDto.cardNames().getFirst();
 
         System.out.printf("딜러카드: %s%n", dealerFirstCard);
-
-        //플레이어 카드 출력
+        
         for (ParticipantDto playerDto : playerDtos) {
             System.out.printf("%s카드: %s%n", playerDto.name(), String.join(", ", playerDto.cardNames()));
         }

@@ -28,7 +28,6 @@ public abstract class Participant {
         return hand.getCards();
     }
 
-
     public int getTotalPoint() {
         return hand.getTotalPoint();
     }
