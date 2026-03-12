@@ -5,28 +5,31 @@ import java.util.Collections;
 import java.util.List;
 
 public class Deck {
-    private final List<Card> cards = new ArrayList<>();
+    private static final List<Card> STANDARD_CARDS = createStandardCards();
+    private final List<Card> cards;
 
     public Deck() {
-        for(Suit suit : Suit.values()){
-            for (Rank rank : Rank.values()) {
-                cards.add(new Card(suit,rank));
-            }
-        }
-
+        this.cards = new ArrayList<>(STANDARD_CARDS);
         shuffle();
     }
 
     public Card draw() {
-        shuffle();
-        try {
-            return cards.getFirst();
-        } finally {
-            cards.removeFirst();
-        }
+        return cards.removeFirst();
     }
 
-    private void shuffle(){
-        Collections.shuffle(this.cards);
+    private static List<Card> createStandardCards() {
+        List<Card> defaultCards = new ArrayList<>();
+
+        for (Suit suit : Suit.values()) {
+            for (Rank rank : Rank.values()) {
+                defaultCards.add(new Card(suit, rank));
+            }
+        }
+
+        return defaultCards;
+    }
+
+    private void shuffle() {
+        Collections.shuffle(cards);
     }
 }
