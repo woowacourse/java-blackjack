@@ -40,10 +40,14 @@ public class Hand {
     
     public int getTotalScore() {
         int scoreSum = calculateScoreSum();
-        if (hasAce() && (scoreSum + ACE_SCORE <= BLACKJACK_SCORE)) {
+        if (canAddAceScore(scoreSum)) {
             return scoreSum + ACE_SCORE;
         }
         return scoreSum;
+    }
+    
+    private boolean canAddAceScore(int scoreSum) {
+        return hasAce() && scoreSum + ACE_SCORE <= BLACKJACK_SCORE;
     }
     
     private int calculateScoreSum() {
