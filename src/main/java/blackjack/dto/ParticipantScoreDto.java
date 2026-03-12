@@ -10,7 +10,9 @@ public record ParticipantScoreDto(
     Score score
 ) {
     public static ParticipantScoreDto from(Participant participant, Score score) {
-        List<CardDto> cards = participant.getCards().stream().map(CardDto::from).toList();
+        List<CardDto> cards = participant.getCards().stream()
+            .map(CardDto::from)
+            .toList();
         return new ParticipantScoreDto(participant.getName(), cards, score);
     }
 }

@@ -4,6 +4,6 @@ import java.util.List;
 
 public record GameResultDto(
     DealerResultDto dealerResultDto,
-    List<PlayerResultDto> playerResultDtos
+    List<GameResultDtos> gameResultDtos
 ) {
 }

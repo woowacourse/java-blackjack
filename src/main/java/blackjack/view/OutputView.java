@@ -6,7 +6,7 @@ import blackjack.dto.GameResultDto;
 import blackjack.dto.InitialDealDtos;
 import blackjack.dto.ParticipantCardsDto;
 import blackjack.dto.ParticipantScoreDto;
-import blackjack.dto.PlayerResultDto;
+import blackjack.dto.GameResultDtos;
 import blackjack.model.Dealer;
 import blackjack.model.GameResult;
 import blackjack.model.Score;
@@ -17,7 +17,7 @@ public class OutputView {
     private static final String YES = "y";
     private static final String NO = "n";
 
-    private static final Map<GameResult, String> PLAYER_RESULT_NAMES = Map.of(
+    private static final Map<GameResult, String> PLAYER_RESULT_KOREANS = Map.of(
         GameResult.PLAYER_WIN, "승",
         GameResult.DEALER_WIN, "패",
         GameResult.PUSH, "푸시"
@@ -58,7 +58,6 @@ public class OutputView {
     }
 
     public void printDealerHit(Dealer dealer) {
-        System.out.println();
         System.out.println(dealer.getName() + "는 16이하라 한장의 카드를 더 받았습니다.");
         System.out.println();
     }
@@ -84,12 +83,12 @@ public class OutputView {
         System.out.printf("딜러: %d승 %d패 %d무\n", dealerResult.win(), dealerResult.lose(),
             dealerResult.push());
 
-        resultDto.playerResultDtos().forEach(this::printResult);
+        resultDto.gameResultDtos().forEach(this::printResult);
     }
 
-    public void printResult(PlayerResultDto playerResultDto) {
-        System.out.println(playerResultDto.playerName() + ": " + PLAYER_RESULT_NAMES.get(
-            playerResultDto.result()));
+    public void printResult(GameResultDtos gameResultDtos) {
+        System.out.println(gameResultDtos.playerName() + ": " + PLAYER_RESULT_KOREANS.get(
+            gameResultDtos.result()));
     }
 
     private List<String> parseCardsToOutputs(List<CardDto> cards) {

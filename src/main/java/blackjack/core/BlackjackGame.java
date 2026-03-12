@@ -5,7 +5,7 @@ import blackjack.dto.GameResultDto;
 import blackjack.dto.InitialDealDtos;
 import blackjack.dto.ParticipantCardsDto;
 import blackjack.dto.ParticipantScoreDto;
-import blackjack.dto.PlayerResultDto;
+import blackjack.dto.GameResultDtos;
 import blackjack.model.CardsGenerator;
 import blackjack.model.Dealer;
 import blackjack.model.Deck;
@@ -13,7 +13,6 @@ import blackjack.model.GameResult;
 import blackjack.model.Participant;
 import blackjack.model.Participants;
 import blackjack.model.Player;
-import blackjack.model.Score;
 import blackjack.view.BlackjackView;
 import java.util.List;
 
@@ -49,8 +48,9 @@ public class BlackjackGame {
     }
 
     private void deal(Participants participants, Deck deck) {
-        for (Participant participant : participants) {
-            participant.hit(deck.draw());
+        participants.getDealer().hit(deck.draw());
+        for (Player player : participants.getPlayers()) {
+            player.hit(deck.draw());
         }
     }
 
@@ -66,7 +66,7 @@ public class BlackjackGame {
     }
 
     private void hitDealer(Dealer dealer, Deck deck) {
-        if (dealer.canHit()) {
+        while (dealer.canHit()) {
             dealer.hit(deck.draw());
             view.printDealerHit(dealer);
         }
@@ -74,23 +74,26 @@ public class BlackjackGame {
 
     private void printScore(Participants participants) {
         List<ParticipantScoreDto> participantScoreDtos = participants.stream()
-            .map(participant -> {
-                Score score = participant.getScore();
-                return ParticipantScoreDto.from(participant, score);
-            })
+            .map(this::convertFrom)
             .toList();
         view.printScore(participantScoreDtos);
     }
 
     private void printResult(Participants participants) {
         Dealer dealer = participants.getDealer();
-        List<PlayerResultDto> playerResultDtos = participants.getPlayers().stream()
-            .map(player -> {
-                    GameResult result = dealer.judgeAgainst(player);
-                    return PlayerResultDto.of(player, result);
-                }
-            ).toList();
-        DealerResultDto dealerResultDto = DealerResultDto.from(playerResultDtos);
-        view.printResult(new GameResultDto(dealerResultDto, playerResultDtos));
+        List<GameResultDtos> gameResultDtos = participants.getPlayers().stream()
+            .map(player -> convertFrom(player, dealer))
+            .toList();
+        DealerResultDto dealerResultDto = DealerResultDto.from(gameResultDtos);
+        view.printResult(new GameResultDto(dealerResultDto, gameResultDtos));
+    }
+
+    private ParticipantScoreDto convertFrom(Participant participant) {
+        return ParticipantScoreDto.from(participant, participant.getScore());
+    }
+
+    private GameResultDtos convertFrom(Player player, Dealer dealer) {
+        GameResult result = dealer.judgeAgainst(player);
+        return GameResultDtos.of(player, result);
     }
 }
