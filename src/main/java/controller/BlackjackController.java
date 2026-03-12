@@ -84,9 +84,7 @@ public class BlackjackController {
     }
 
     private void playDealerTurn(Game game, Deck deck) {
-        boolean isBust = false;
-        while (!isBust) {
-            isBust = game.playDealerTurn(deck);
+        while (game.playDealerTurn(deck)) {
             outputView.printDealerHit();
         }
     }

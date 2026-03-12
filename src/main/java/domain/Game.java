@@ -34,11 +34,11 @@ public class Game {
     }
 
     public boolean playDealerTurn(Deck deck) {
-        if (dealer.checkScoreUnderCriterion()) {
-            dealer.addCard(deck.drawCard());
+        if (!dealer.checkScoreUnderCriterion()) {
+            return false;
         }
-
-        return !dealer.checkScoreUnderCriterion();
+        dealer.addCard(deck.drawCard());
+        return true;
     }
 
     public List<Name> getAllPlayersName() {
