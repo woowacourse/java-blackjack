@@ -2,7 +2,6 @@ package blackjack.domain.trump;
 
 import blackjack.utils.Lists;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,7 +21,7 @@ public class Trump {
             .stream()
             .map(pair -> new Card(pair.getLeft(), pair.getRight()))
             .collect(Collectors.toCollection(ArrayList::new));
-        sortBehavior.shuffle(shuffledDeck);
+        sortBehavior.sort(shuffledDeck);
 
         return shuffledDeck;
     }

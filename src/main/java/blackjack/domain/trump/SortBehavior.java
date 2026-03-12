@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface SortBehavior {
 
-    void shuffle(List<Card> cards);
+    void sort(List<Card> cards);
 }
