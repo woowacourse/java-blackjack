@@ -1,7 +1,7 @@
 package strategy;
 
-import domain.GameResult;
-import domain.RoundBetInfo;
+import domain.result.GameResult;
+import domain.result.RoundBetInfo;
 
 public class DefaultBettingRule implements BettingRule {
     private static final double BLACKJACK_MULTIPLIER = 1.5;

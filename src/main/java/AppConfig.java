@@ -1,5 +1,5 @@
-import domain.RandomShuffle;
-import domain.ShuffleStrategy;
+import domain.card.RandomShuffle;
+import domain.card.ShuffleStrategy;
 import strategy.BettingRule;
 import strategy.DefaultBettingRule;
 import view.InputView;

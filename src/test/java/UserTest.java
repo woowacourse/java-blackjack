@@ -1,9 +1,9 @@
-import domain.Card;
-import domain.CardDeck;
-import domain.ShuffleStrategy;
+import domain.card.Card;
+import domain.card.CardDeck;
+import domain.card.ShuffleStrategy;
 import strategy.BettingRule;
 import strategy.DefaultBettingRule;
-import domain.User;
+import domain.player.User;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

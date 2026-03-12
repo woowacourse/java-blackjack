@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import domain.RoundBetInfo;
-import domain.User;
+import domain.result.RoundBetInfo;
+import domain.player.User;
 
 public class InputParser {
 

@@ -1,8 +1,8 @@
-import domain.Dealer;
-import domain.DealerProfit;
-import domain.RoundBetInfo;
-import domain.User;
-import domain.UserProfit;
+import domain.player.Dealer;
+import domain.result.DealerProfit;
+import domain.result.RoundBetInfo;
+import domain.player.User;
+import domain.result.UserProfit;
 import view.InputParser;
 import view.InputView;
 import view.OutputView;

@@ -1,7 +1,7 @@
 package strategy;
 
-import domain.GameResult;
-import domain.RoundBetInfo;
+import domain.result.GameResult;
+import domain.result.RoundBetInfo;
 
 public interface BettingRule {
     int calculateBetAmount(RoundBetInfo roundBetInfo, GameResult gameResult);

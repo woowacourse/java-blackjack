@@ -1,9 +1,9 @@
 package strategy;
 
-import domain.Card;
-import domain.GameResult;
-import domain.RoundBetInfo;
-import domain.User;
+import domain.card.Card;
+import domain.result.GameResult;
+import domain.result.RoundBetInfo;
+import domain.player.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

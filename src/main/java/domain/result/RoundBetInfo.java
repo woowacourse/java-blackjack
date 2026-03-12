@@ -1,4 +1,6 @@
-package domain;
+package domain.result;
+
+import domain.player.User;
 
 public record RoundBetInfo(int round, User user, int betAmount) {
 

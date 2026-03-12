@@ -1,4 +1,6 @@
-package domain;
+package domain.player;
+
+import domain.card.Card;
 
 import java.util.ArrayList;
 import java.util.Collections;

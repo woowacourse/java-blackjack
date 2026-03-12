@@ -1,10 +1,10 @@
 package view;
 
-import domain.Card;
-import domain.Dealer;
-import domain.DealerProfit;
-import domain.User;
-import domain.UserProfit;
+import domain.card.Card;
+import domain.player.Dealer;
+import domain.result.DealerProfit;
+import domain.player.User;
+import domain.result.UserProfit;
 
 import java.util.List;
 import java.util.StringJoiner;
