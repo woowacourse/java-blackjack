@@ -1,13 +1,13 @@
-package service;
+package domain.game;
 
 import constant.HitOrStand;
 import constant.Result;
-import domain.Card;
-import domain.CardMachine;
-import domain.Dealer;
-import domain.Participants;
-import domain.Player;
-import domain.Players;
+import domain.card.Card;
+import domain.card.CardMachine;
+import domain.participant.Dealer;
+import domain.participant.Participants;
+import domain.participant.Player;
+import domain.participant.Players;
 import dto.BlackjackResultDto;
 import dto.BlackjackStatisticsDto;
 import dto.DealerStatisticDto;
@@ -16,12 +16,12 @@ import dto.PlayerStatisticDto;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlackjackService {
+public class BlackjackGameManager {
 
     private final CardMachine cardMachine;
     private Participants participants;
 
-    public BlackjackService() {
+    public BlackjackGameManager() {
         this.cardMachine = new CardMachine();
     }
 
