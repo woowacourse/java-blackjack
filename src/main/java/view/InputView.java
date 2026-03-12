@@ -11,8 +11,8 @@ public class InputView {
     public static final String PARTICIPANT_NAME_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     public static final String ERROR_NAMES_EMPTY = "[ERROR] 이름은 비어있을 수 없습니다.";
     public static final String ERROR_INCORRECT_CHOICE = "[ERROR] y 또는 n을 입력해주세요.";
-    public static final String YES = "y";
-    public static final String NO = "n";
+    private static final String YES = "y";
+    private static final String NO = "n";
     public static final String ONE_MORE_CARD_MESSAGE = "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     public static final String DELIMITER = ",";
 
@@ -34,11 +34,11 @@ public class InputView {
         return names;
     }
 
-    public String getParsedUserChoice(String name) {
+    public boolean askForOneMoreCard(String name) {
         System.out.println(name + ONE_MORE_CARD_MESSAGE);
         String userChoice = scanner.nextLine();
         validateUserChoice(userChoice);
-        return userChoice;
+        return YES.equals(userChoice);
     }
 
     private void validateEmptyInput(List<String> names) {

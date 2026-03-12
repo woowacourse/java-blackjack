@@ -17,7 +17,6 @@ import view.InputView;
 import view.OutputView;
 
 public class BlackjackGame {
-    public static final String NO = "n";
     public static final int INITIAL_CARDS_COUNT = 2;
     private final InputView inputView;
     private final OutputView outputView;
@@ -70,9 +69,7 @@ public class BlackjackGame {
 
     private void playerTurn(Player player, Deck deck) {
         while (player.canDraw()) {
-            String choice = inputView.getParsedUserChoice(player.name());
-
-            if (choice.equals(NO)) {
+            if (!inputView.askForOneMoreCard(player.name())) {
                 break;
             }
 
