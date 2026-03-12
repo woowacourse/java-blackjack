@@ -10,7 +10,7 @@ public abstract class AbstractParticipant implements Participant {
     private final String name;
     private final Cards cards;
     private boolean isBlackJack;
-    private int profit;
+    private long profit;
 
     public AbstractParticipant(String name) {
         this.name = name;
@@ -62,15 +62,15 @@ public abstract class AbstractParticipant implements Participant {
         return this.isBlackJack;
     }
 
-    public int getProfit() {
+    public long getProfit() {
         return this.profit;
     }
 
-    public void addProfit(int money) {
+    public void addProfit(long money) {
         this.profit += money;
     }
 
-    public void subtractProfit(int money) {
+    public void subtractProfit(long money) {
         this.profit -= money;
     }
 }

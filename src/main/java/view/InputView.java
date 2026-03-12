@@ -21,14 +21,14 @@ public class InputView {
         }
     }
 
-    public static int readPlayerBettingMoney(String playerName) {
-        System.out.println("\n" + playerName + "의 베팅 금액은?");
+    public static long readPlayerBettingMoney(String playerName) {
+        System.out.println("\n" + playerName + "의 베팅 금액은? (최소 베팅금액: 100, 최대 베팅금액: 10억");
         while (true) {
             try {
                 String input = readLine();
                 checkInputIsNumber(input);
                 checkInputBettingMoney(input);
-                return Integer.parseInt(input);
+                return Long.parseLong(input);
             } catch (IllegalArgumentException e) {
                 OutputView.printErrorMessage(e.getMessage());
             }
@@ -68,13 +68,13 @@ public class InputView {
 
     private static void checkInputBettingMoney(String input) {
         if (input.length() > 10) {
-            throw new IllegalArgumentException("베팅 금액은 1 이상 10억 이하만 가능합니다.");
+            throw new IllegalArgumentException("베팅 금액은 100 이상 10억 이하만 가능합니다.");
         }
         if (input.length() == 10 && input.compareTo("1000000000") > 0) {
-            throw new IllegalArgumentException("베팅 금액은 1 이상 10억 이하만 가능합니다.");
+            throw new IllegalArgumentException("베팅 금액은 100 이상 10억 이하만 가능합니다.");
         }
-        if (input.equals("0")) {
-            throw new IllegalArgumentException("베팅 금액은 1 이상이어야 합니다.");
+        if (Long.parseLong(input) < 100) {
+            throw new IllegalArgumentException("베팅 금액은 100 이상이어야 합니다.");
         }
     }
 }

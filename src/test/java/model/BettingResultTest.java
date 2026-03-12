@@ -14,9 +14,9 @@ public class BettingResultTest {
     void 다양한_게임_상황에서_베팅_결과가_올바르게_적용된다(
             List<Card> playerCards,
             List<Card> dealerCards,
-            int playerStartMoney,
-            int playerResultMoney,
-            int dealerResultMoney
+            long playerStartMoney,
+            long playerResultMoney,
+            long dealerResultMoney
     ) {
         // given
         Dealer dealer = new Dealer();
@@ -31,8 +31,8 @@ public class BettingResultTest {
         // when
         BettingResult bettingResult = new BettingResult();
         bettingResult.calculateBettingMoney(dealer, List.of(player));
-        int playerMoney = player.getProfit();
-        int dealerMoney = dealer.getProfit();
+        long playerMoney = player.getProfit();
+        long dealerMoney = dealer.getProfit();
 
         // then
         assertAll(

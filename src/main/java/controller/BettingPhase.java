@@ -11,7 +11,7 @@ public class BettingPhase implements GamePhase {
     @Override
     public void execute(GameContext gameContext) {
         for (Player player : gameContext.getPlayers()) {
-            int bettingMoney = InputView.readPlayerBettingMoney(player.getName());
+            long bettingMoney = InputView.readPlayerBettingMoney(player.getName());
             player.setMoney(bettingMoney);
         }
     }
