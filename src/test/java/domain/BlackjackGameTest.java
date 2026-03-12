@@ -3,8 +3,9 @@ package domain;
 import static domain.BlackjackGame.HIT_DRAW_COUNT;
 import static domain.BlackjackGame.INIT_DRAW_COUNT;
 import static domain.participant.Dealer.DEALER_NAME;
+import static domain.result.GameResult.LOSE;
+import static domain.result.GameResult.WIN;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.tuple;
 
 import domain.card.Card;
 import domain.card.CardRank;
@@ -16,6 +17,9 @@ import domain.participant.Name;
 import domain.participant.Participant;
 import domain.participant.Participants;
 import domain.participant.Player;
+import domain.result.DealerResult;
+import domain.result.GameResults;
+import domain.result.PlayerResult;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -61,26 +65,23 @@ class BlackjackGameTest {
 
     @Test
     @DisplayName("딜러와 플레이어들의 카드를 비교해서 딜러의 결과를 반환한다.")
-    public void 딜러_결과_계산_성공() {
+    void 딜러_결과_계산_성공() {
         // given
         final Participants participants = initParticipants();
         final BlackjackGame blackjackGame = new BlackjackGame(participants);
 
         // when
-        final List<FinalResult> finalResults = blackjackGame.getGameResults();
+        final GameResults results = blackjackGame.getGameResults();
 
         // then
-        assertThat(finalResults).extracting(
-                FinalResult::name,
-                FinalResult::winCount,
-                FinalResult::drawCount,
-                FinalResult::loseCount,
-                FinalResult::isDealer
-        ).containsExactlyInAnyOrder(
-                tuple(DEALER_NAME, 1, 0, 1, true),
-                tuple("포비", 1, 0, 0, false),
-                tuple("제이슨", 0, 0, 1, false)
-        );
+        assertThat(results.dealerResult())
+                .isEqualTo(new DealerResult(DEALER_NAME, 1, 0, 1));
+
+        assertThat(results.playerResults())
+                .containsExactlyInAnyOrder(
+                        new PlayerResult("포비", WIN),
+                        new PlayerResult("제이슨", LOSE)
+                );
     }
 
     private static Participants initParticipants() {

@@ -1,11 +1,11 @@
 package controller;
 
 import domain.BlackjackGame;
-import domain.FinalResult;
 import domain.card.Hand;
 import domain.participant.Name;
 import domain.participant.Participants;
 import domain.participant.Player;
+import domain.result.GameResults;
 import java.util.ArrayList;
 import java.util.List;
 import view.InputView;
@@ -93,7 +93,7 @@ public class BlackjackController {
 
         outputView.printHandResults(participants);
 
-        final List<FinalResult> results = game.getGameResults();
+        final GameResults results = game.getGameResults();
         outputView.printGameResults(results);
     }
 }

@@ -4,12 +4,14 @@ import static domain.BlackjackGame.INIT_DRAW_COUNT;
 import static domain.participant.Dealer.DEALER_DRAW_BOUND;
 import static domain.participant.Dealer.DEALER_NAME;
 
-import domain.FinalResult;
 import domain.card.Card;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;
 import domain.participant.Player;
+import domain.result.DealerResult;
+import domain.result.GameResults;
+import domain.result.PlayerResult;
 import java.util.List;
 
 public class OutputView {
@@ -50,12 +52,12 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printGameResults(final List<FinalResult> finalResults) {
+    public void printGameResults(final GameResults results) {
         System.out.println();
         System.out.println("## 최종 승패");
 
-        printDealerFinalResult(finalResults);
-        printPlayerFinalResult(finalResults);
+        printDealerResult(results.dealerResult());
+        printPlayerResults(results.playerResults());
     }
 
 
@@ -109,48 +111,25 @@ public class OutputView {
         System.out.printf(" - 결과: %d%s", dealer.getScore(), NEW_LINE);
     }
 
-    private static void printDealerFinalResult(final List<FinalResult> finalResults) {
-        for (final FinalResult finalResult : finalResults) {
-            if (finalResult.isDealer()) {
-                System.out.printf("%s: ", finalResult.name());
+    private void printDealerResult(final DealerResult result) {
+        System.out.printf("%s: ", result.name());
 
-                printDealerResultDetail(finalResult);
-                break;
-            }
+        if (result.winCount() != 0) {
+            System.out.printf("%d승 ", result.winCount());
         }
-    }
-
-    private static void printPlayerFinalResult(final List<FinalResult> finalResults) {
-        for (final FinalResult finalResult : finalResults) {
-            if (!finalResult.isDealer()) {
-                System.out.printf("%s: ", finalResult.name());
-                printPlayerResultDetail(finalResult);
-            }
+        if (result.drawCount() != 0) {
+            System.out.printf("%d무 ", result.drawCount());
         }
-    }
-
-    private static void printDealerResultDetail(final FinalResult finalResult) {
-        if (finalResult.winCount() != 0) {
-            System.out.printf("%d승 ", finalResult.winCount());
-        }
-        if (finalResult.drawCount() != 0) {
-            System.out.printf("%d무 ", finalResult.drawCount());
-        }
-        if (finalResult.loseCount() != 0) {
-            System.out.printf("%d패", finalResult.loseCount());
+        if (result.loseCount() != 0) {
+            System.out.printf("%d패", result.loseCount());
         }
         System.out.println();
     }
 
-    private static void printPlayerResultDetail(final FinalResult finalResult) {
-        if (finalResult.winCount() != 0) {
-            System.out.println("승");
-        }
-        if (finalResult.drawCount() != 0) {
-            System.out.println("무");
-        }
-        if (finalResult.loseCount() != 0) {
-            System.out.println("패");
+    private void printPlayerResults(final List<PlayerResult> results) {
+        for (final PlayerResult result : results) {
+            System.out.printf("%s: %s", result.name(), result.result().getDescription());
+            System.out.println();
         }
     }
 }

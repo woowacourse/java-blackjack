@@ -1,9 +1,17 @@
 package domain;
 
+import static domain.result.GameResult.DRAW;
+import static domain.result.GameResult.LOSE;
+import static domain.result.GameResult.WIN;
+
 import domain.card.Deck;
 import domain.card.Shuffler;
 import domain.participant.Participant;
 import domain.participant.Participants;
+import domain.result.DealerResult;
+import domain.result.GameResult;
+import domain.result.GameResults;
+import domain.result.PlayerResult;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,11 +51,10 @@ public class BlackjackGame {
     }
 
     // FIXME: 10줄 넘는다
-    public List<FinalResult> getGameResults() {
+    public GameResults getGameResults() {
 
         final Participant dealer = participants.getDealer();
-
-        final List<FinalResult> results = new ArrayList<>();
+        final List<PlayerResult> playerResults = new ArrayList<>();
 
         int dealerWinCount = 0;
         int dealerDrawCount = 0;
@@ -56,22 +63,22 @@ public class BlackjackGame {
 
             final GameResult result = judge(dealer, player);
 
-            if (GameResult.WIN.equals(result)) {
+            playerResults.add(new PlayerResult(player.getName(), result));
+
+            if (result == WIN) {
                 dealerLoseCount++;
-                results.add(new FinalResult(player.getName(), 1, 0, 0, false));
             }
-            if (GameResult.DRAW.equals(result)) {
+            if (result == DRAW) {
                 dealerDrawCount++;
-                results.add(new FinalResult(player.getName(), 0, 1, 0, false));
             }
-            if (GameResult.LOSE.equals(result)) {
+            if (result == LOSE) {
                 dealerWinCount++;
-                results.add(new FinalResult(player.getName(), 0, 0, 1, false));
             }
         }
-        results.add(new FinalResult(dealer.getName(), dealerWinCount, dealerDrawCount, dealerLoseCount, true));
+        final DealerResult dealerResult =
+                new DealerResult(dealer.getName(), dealerWinCount, dealerDrawCount, dealerLoseCount);
 
-        return results;
+        return new GameResults(dealerResult, playerResults);
     }
 
 
@@ -81,35 +88,37 @@ public class BlackjackGame {
         }
     }
 
-    // FIXME: 10줄 넘는다
     private GameResult judge(final Participant dealer, final Participant player) {
         if (player.isBust()) {
-            return GameResult.LOSE;
+            return LOSE;
         }
-
         if (dealer.isBust()) {
-            return GameResult.WIN;
+            return WIN;
         }
 
+        if (player.isBlackjack() && !dealer.isBlackjack()) {
+            return WIN;
+        }
         if (dealer.isBlackjack() && !player.isBlackjack()) {
-            return GameResult.LOSE;
+            return LOSE;
         }
 
-        if (!dealer.isBlackjack() && player.isBlackjack()) {
-            return GameResult.WIN;
-        }
+        return compareScore(dealer, player);
+    }
+
+    private GameResult compareScore(final Participant dealer, final Participant player) {
 
         final int dealerScore = dealer.getScore();
         final int playerScore = player.getScore();
 
-        if (dealerScore > playerScore) {
-            return GameResult.LOSE;
-        }
-
         if (dealerScore < playerScore) {
-            return GameResult.WIN;
+            return WIN;
+        }
+        if (dealerScore > playerScore) {
+            return LOSE;
         }
 
-        return GameResult.DRAW;
+        return DRAW;
     }
 }
+
