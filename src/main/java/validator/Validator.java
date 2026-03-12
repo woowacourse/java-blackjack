@@ -7,7 +7,6 @@ import exception.InvalidInputException;
 import java.util.Set;
 
 public interface Validator {
-
     static void validateNotBlank(String input) {
         if (input.isBlank()) {
             throw new BlankInputException();
@@ -26,4 +25,3 @@ public interface Validator {
 
     void validate(String input);
 }
-

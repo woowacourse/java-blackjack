@@ -23,14 +23,6 @@ public class MatchJudge {
         this.player = player;
     }
 
-    public MatchCase judge() {
-        return JUDGE_CRITERIA.entrySet().stream()
-                .filter(entry -> entry.getValue().test(this.dealer, this.player))
-                .map(Map.Entry::getKey)
-                .findFirst()
-                .orElse(MatchCase.WIN);
-    }
-
     private static boolean isPlayerWinWithBlackjack(Dealer dealer, Player player) {
         return !dealer.isBlackjack() && !isPlayerLose(dealer, player) && player.isBlackjack();
     }
@@ -41,5 +33,13 @@ public class MatchJudge {
 
     private static boolean isPlayerScoreEqualsDealer(Dealer dealer, Player player) {
         return !(player.isBust() || dealer.isBust()) && (player.getFinalScore() == dealer.getFinalScore());
+    }
+
+    public MatchCase judge() {
+        return JUDGE_CRITERIA.entrySet().stream()
+                .filter(entry -> entry.getValue().test(this.dealer, this.player))
+                .map(Map.Entry::getKey)
+                .findFirst()
+                .orElse(MatchCase.WIN);
     }
 }

@@ -1,6 +1,5 @@
 package domain.result;
 
-import domain.participant.Bet;
 import domain.participant.BetMap;
 import domain.participant.Dealer;
 import domain.participant.Player;

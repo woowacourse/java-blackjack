@@ -16,16 +16,4 @@ public class DealerMatchCount {
     public void increaseLoseCount() {
         this.loseCount++;
     }
-
-    public int getWinningCount() {
-        return winningCount;
-    }
-
-    public int getDrawCount() {
-        return drawCount;
-    }
-
-    public int getLoseCount() {
-        return loseCount;
-    }
 }

@@ -1,11 +1,10 @@
 package view;
 
 import domain.participant.Bet;
+import exception.BlankInputException;
 import utils.Parser;
 import validator.NumberRangeValidator;
 import validator.Validator;
-
-import exception.BlankInputException;
 
 import java.util.List;
 import java.util.NoSuchElementException;
