@@ -13,9 +13,8 @@ import org.junit.jupiter.api.Test;
 class DeckTest {
 
     @Test
-    @DisplayName("트럼프 카드 덱을 초기화한다.")
-    public void 트럼프_덱_초기화_성공() {
-
+    @DisplayName("트럼프 카드 52장으로 덱을 초기화한다.")
+    public void 트럼프_카드로_덱_초기화_성공() {
         // when
         final Deck deck = new Deck();
 
@@ -29,5 +28,4 @@ class DeckTest {
             }
         }
     }
-
 }
