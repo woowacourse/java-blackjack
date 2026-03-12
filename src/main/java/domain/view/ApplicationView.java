@@ -84,6 +84,18 @@ public class ApplicationView {
                 });
     }
 
+    public void printGamerProfit(GamerBettingProfitDto dealerProfit, List<GamerBettingProfitDto> playersProfit) {
+        writer.printProfitTitleMessage();
+        writer.printGamerProfit(dealerProfit.gamerName(), dealerProfit.bettingProfit());
+        printAllPlayerProfit(playersProfit);
+    }
+
+    private void printAllPlayerProfit(List<GamerBettingProfitDto> playersProfit) {
+        playersProfit.forEach(profit ->
+                writer.printGamerProfit(profit.gamerName(), profit.bettingProfit())
+        );
+    }
+
     public void printFinalResultMessage(GamerResultDto playerResult) {
         GamerHandDto playerHand = playerResult.playerHand();
         writer.printFinalResultMessage(playerHand.playerName(), playerHand.handOnCards(), playerResult.resultScore());

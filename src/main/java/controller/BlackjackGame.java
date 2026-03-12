@@ -45,6 +45,7 @@ public class BlackjackGame {
         showGamerHandResult(dealer, players);
 
         bettingTable.applyBettingRate(dealer, players);
+        showGamerProfit(calculateProfit(bettingTable, players), calculateProfit(bettingTable, dealer));
     }
 
     private Dealer enterDealer() {
@@ -129,6 +130,24 @@ public class BlackjackGame {
 
     private ResultAnalysisDto analyzeBlackjackResult(Players players, Dealer dealer) {
         return ResultAnalyzer.analyze(players.getPlayers(), dealer);
+    }
+
+    private List<GamerBettingProfitDto> calculateProfit(BettingTable bettingTable, Players players) {
+        return players.getPlayers().stream()
+                .map(player -> {
+                    Money playerProfit = bettingTable.getPlayerProfit(player);
+                    return GamerBettingProfitDto.of(player, playerProfit);
+                })
+                .toList();
+    }
+
+    private GamerBettingProfitDto calculateProfit(BettingTable bettingTable, Dealer dealer) {
+        Money dealerProfit = bettingTable.getDealerProfit();
+        return GamerBettingProfitDto.of(dealer, dealerProfit);
+    }
+
+    private void showGamerProfit(List<GamerBettingProfitDto> playersProfit, GamerBettingProfitDto dealerProfit) {
+        view.printGamerProfit(dealerProfit, playersProfit);
     }
 
 }

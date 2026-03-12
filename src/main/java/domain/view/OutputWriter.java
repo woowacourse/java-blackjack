@@ -63,6 +63,16 @@ public class OutputWriter {
         printLineSeparator();
     }
 
+    public void printProfitTitleMessage() {
+        printLineSeparator();
+        System.out.println(FINAL_PROFIT_TITLE_MESSAGE);
+    }
+
+    public void printGamerProfit(String playerName, double profit) {
+        System.out.printf(GAMER_PROFIT_FORMAT, playerName, profit);
+        printLineSeparator();
+    }
+
     public void printFinalResultOfDealer(String status) {
         printLineSeparator();
         System.out.printf(FINAL_RESULT_DEALER, status);
