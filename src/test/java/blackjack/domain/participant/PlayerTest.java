@@ -48,7 +48,8 @@ class PlayerTest {
         player.receiveCard(new Card(Rank.TWO, Suit.CLOVER));
         Dealer dealer = new Dealer();
         
-        assertThat(dealer.determineGameResult(player).opposite()).isEqualTo(GameResult.LOSE);
+        GameResult gameResult = dealer.determinePlayerProfit(player) = GameResult.LOSE;
+        assertThat(player.calculateProfit(gameResult)).isEqualTo(-10000);
     }
     
     @Test
@@ -62,7 +63,8 @@ class PlayerTest {
         dealer.receiveCard(new Card(Rank.SIX, Suit.HEART));
         dealer.receiveCard(new Card(Rank.SIX, Suit.CLOVER));
         
-        assertThat(dealer.determineGameResult(player).opposite()).isEqualTo(GameResult.WIN);
+        GameResult gameResult = dealer.determinePlayerProfit(player) = GameResult.WIN;
+        assertThat(player.calculateProfit(gameResult)).isEqualTo(10000);
     }
     
     @Test
@@ -70,12 +72,13 @@ class PlayerTest {
     void calculateResult_Win_WhenScoreIsHigherThanDealer() {
         Player player = Player.from("pobi", 10000);
         player.receiveCard(new Card(Rank.TEN, Suit.SPADE));
-        player.receiveCard(new Card(Rank.NINE, Suit.HEART)); // 19
+        player.receiveCard(new Card(Rank.NINE, Suit.HEART));
         
         Dealer dealer = new Dealer();
         dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
-        dealer.receiveCard(new Card(Rank.EIGHT, Suit.HEART)); // 18
+        dealer.receiveCard(new Card(Rank.EIGHT, Suit.HEART));
         
-        assertThat(dealer.determineGameResult(player).opposite()).isEqualTo(GameResult.WIN);
+        GameResult gameResult = dealer.determinePlayerProfit(player) = GameResult.WIN;
+        assertThat(player.calculateProfit(gameResult)).isEqualTo(10000);
     }
 }
