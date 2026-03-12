@@ -67,7 +67,7 @@ class DealerTest {
                 Card.of(Rank.EIGHT, Suit.DIAMOND));
         Dealer dealer = Dealer.of(cards);
 
-        assertThat(dealer.isBust(dealer.calculateScore())).isTrue();
+        assertThat(dealer.isBust()).isTrue();
     }
 
 

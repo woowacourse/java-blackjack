@@ -25,7 +25,10 @@ class PlayerTest {
     void isBust_player_score_success() {
         Player player = Player.of(cards.drawInitialHand(), userName);
 
-        assertThat(player.isBust(22)).isTrue();
+        player.addCard(Card.of(Rank.J, Suit.SPADE));
+        player.addCard(Card.of(Rank.Q, Suit.SPADE));
+
+        assertThat(player.isBust()).isTrue();
     }
 
     @Test
@@ -50,8 +53,9 @@ class PlayerTest {
                 Card.of(Rank.NINE, Suit.CLOVER),
                 Card.of(Rank.EIGHT, Suit.DIAMOND),
                 Card.of(Rank.ACE, Suit.HEART));
+        Player player = Player.of(cards, userName);
 
-        int cardScore = Player.of(cards, userName).calculateScore();
+        int cardScore = player.calculateScore();
 
         assertThat(cardScore).isEqualTo(20);
     }
@@ -65,7 +69,7 @@ class PlayerTest {
                 Card.of(Rank.EIGHT, Suit.DIAMOND));
         Player player = Player.of(cards, userName);
 
-        assertThat(player.isBust(player.calculateScore())).isTrue();
+        assertThat(player.isBust()).isTrue();
     }
 
     @Test

@@ -9,7 +9,6 @@ import java.util.stream.Stream;
 
 public class Cards {
 
-    public static final int FIRST_DRAW_SIZE = 2;
 
     private final List<Card> cards;
 
@@ -40,7 +39,7 @@ public class Cards {
 
     public List<Card> drawInitialHand() {
         return new ArrayList<>(Stream.generate(this::draw)
-                .limit(FIRST_DRAW_SIZE)
+                .limit(BlackjackRule.INITIAL_HAND_SIZE)
                 .toList());
     }
 

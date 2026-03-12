@@ -4,9 +4,9 @@ import java.util.List;
 
 public class Dealer {
 
-    public static final int DEALER_HIT_THRESHOLD = 16;
-    public static final int ACE_HIGH_LOW_DIFF = 10;
-    public static final int BUST_THRESHOLD = 21;
+    private static final int DEALER_HIT_THRESHOLD = 16;
+    private static final int ACE_HIGH_LOW_DIFF = 10;
+    private static final int BUST_THRESHOLD = 21;
 
     private final List<Card> cards;
 
@@ -25,7 +25,7 @@ public class Dealer {
     }
 
     private boolean isHit() {
-        return calculateScore() < DEALER_HIT_THRESHOLD;
+        return calculateScore() <= DEALER_HIT_THRESHOLD;
     }
 
     private void addCard(Card card) {
@@ -54,14 +54,19 @@ public class Dealer {
     }
 
     private int adjustForAce(int cardScore) {
-        if (isBust(cardScore)) {
-            cardScore -= ACE_HIGH_LOW_DIFF;
+        if (cardScore > BUST_THRESHOLD) {
+            return cardScore - ACE_HIGH_LOW_DIFF;
         }
+
         return cardScore;
     }
 
-    public boolean isBust(int score) {
-        return score > BUST_THRESHOLD;
+    public boolean isBust() {
+        return calculateScore() > BUST_THRESHOLD;
+    }
+
+    public int getAdditionalCardCount() {
+        return cards.size() - BlackjackRule.INITIAL_HAND_SIZE;
     }
 
     public List<Card> getCards() {
