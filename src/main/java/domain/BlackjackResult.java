@@ -10,16 +10,16 @@ public class BlackjackResult {
     private static final int DEALER_PROFIT_INVERSION = -1;
 
     private final Map<String, Integer> gamblerProfits;
-    private final int dealerProfit;
+    private final long dealerProfit;
 
-    private BlackjackResult(Map<String, Integer> gamblerProfits, int dealerProfit) {
+    private BlackjackResult(Map<String, Integer> gamblerProfits, long dealerProfit) {
         this.gamblerProfits = gamblerProfits;
         this.dealerProfit = dealerProfit;
     }
 
     public static BlackjackResult from(Dealer dealer, Gamblers gamblers) {
         Map<String, Integer> profits = calculateGamblerProfits(dealer, gamblers);
-        int dealerProfit = calculateDealerProfit(profits);
+        long dealerProfit = calculateDealerProfit(profits);
         return new BlackjackResult(profits, dealerProfit);
     }
 
@@ -35,9 +35,9 @@ public class BlackjackResult {
         return profits;
     }
 
-    private static int calculateDealerProfit(Map<String, Integer> gamblerProfits) {
-        int totalGamblerProfit = gamblerProfits.values().stream()
-                .mapToInt(Integer::intValue)
+    private static long calculateDealerProfit(Map<String, Integer> gamblerProfits) {
+        long totalGamblerProfit = gamblerProfits.values().stream()
+                .mapToLong(Long::valueOf)
                 .sum();
 
         return totalGamblerProfit * DEALER_PROFIT_INVERSION;
@@ -47,7 +47,7 @@ public class BlackjackResult {
         return Map.copyOf(gamblerProfits);
     }
 
-    public int dealerProfit() {
+    public long dealerProfit() {
         return dealerProfit;
     }
 }
