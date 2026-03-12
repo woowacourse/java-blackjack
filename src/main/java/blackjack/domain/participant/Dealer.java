@@ -5,6 +5,6 @@ public class Dealer extends Participant {
 
     @Override
     public boolean canReceive() {
-        return score.isLess(MIN_CARD_SUM);
+        return isLowerThan(MIN_CARD_SUM);
     }
 }

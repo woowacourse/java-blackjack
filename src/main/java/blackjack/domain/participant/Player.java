@@ -23,6 +23,6 @@ public class Player extends Participant {
 
     @Override
     public boolean canReceive() {
-        return score.isLess(MAX_CARD_SUM);
+        return isLowerThan(MAX_CARD_SUM);
     }
 }

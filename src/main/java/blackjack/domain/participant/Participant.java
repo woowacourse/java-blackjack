@@ -9,7 +9,7 @@ import java.util.List;
 
 public abstract class Participant {
     private final Hand hand;
-    protected Score score;
+    private Score score;
 
     public Participant() {
         this.hand = new Hand();
@@ -39,6 +39,10 @@ public abstract class Participant {
 
     public boolean isBlackjack() {
         return hand.getSize() == 2 && score.isBlackjack();
+    }
+
+    protected final boolean isLowerThan(int standard) {
+        return score.isLess(standard);
     }
 
     public abstract boolean canReceive();
