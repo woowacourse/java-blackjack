@@ -55,4 +55,8 @@ public class Hand {
     public Card getFirst() {
         return cards.getFirst();
     }
+
+    public int size() {
+        return cards.size();
+    }
 }

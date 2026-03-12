@@ -16,6 +16,10 @@ public class Dealer {
     public boolean isBlackjack() {
         return hand.isBlackjack();
     }
+    
+    public boolean isBlackjackAtFirst() {
+        return isBlackjack() && hand.size() == 2;
+    }
 
     public void draw(Card card) {
         hand.addCard(card);
