@@ -6,7 +6,7 @@ import blackjack.domain.deck.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.dto.WinningResult;
+import blackjack.dto.ProfitResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -111,7 +111,7 @@ public class BlackjackController {
     }
 
     private void printWinningResult(Bettings bettings, Players players, Dealer dealer) {
-        outputView.printWinningResult(WinningResult.from(players, dealer, bettings));
+        outputView.printWinningResult(ProfitResult.from(bettings, players, dealer));
     }
 
 }

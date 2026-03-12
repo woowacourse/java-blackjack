@@ -1,6 +1,5 @@
 package blackjack.dto;
 
-import blackjack.domain.betting.Bettings;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
@@ -8,23 +7,21 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public record WinningResult(
-        Map<String, Integer> winningResult
+        Map<String, Boolean> winningResult
 ) {
 
-    public static WinningResult from(Players players, Dealer dealer, Bettings bettings) {
-        Map<String, Integer> winningResult = new LinkedHashMap<>();
+    public static WinningResult from(Players players, Dealer dealer) {
+        Map<String, Boolean> winningResult = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
-            if (player.winsAgainst(dealer)) {
-                winningResult.put(player.getName(), bettings.findByPlayer(player).amount());
-            }
+            winningResult.put(player.getName(), player.winsAgainst(dealer));
         }
         return new WinningResult(winningResult);
     }
 
-    public int getProfitOfDealer() {
-        return -winningResult.values().stream()
-                .mapToInt(integer -> integer)
-                .sum();
-    }
+//    public int getProfitOfDealer() {
+//        return -winningResult.values().stream()
+//                .mapToInt(integer -> integer)
+//                .sum();
+//    }
 
 }
