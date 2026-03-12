@@ -29,12 +29,10 @@ public class BlackjackController {
         Dealer dealer = new Dealer();
 
         Bettings bettings = readBettingAmounts(players);
-
         setInitialCards(players, dealer);
         printInitialSettings(players, dealer);
 
-        getMoreCardsOfPlayers(players);
-        getMoreCardsOfDealer(dealer, players);
+        getMoreCardsOfParticipants(players, dealer);
 
         printCardsOfParticipants(players, dealer);
         printResult(bettings, players, dealer);
@@ -69,6 +67,11 @@ public class BlackjackController {
             outputView.printCards(player.getName(), player.getCardsName());
         }
         outputView.println();
+    }
+
+    private void getMoreCardsOfParticipants(Players players, Dealer dealer) {
+        getMoreCardsOfPlayers(players);
+        getMoreCardsOfDealer(dealer, players);
     }
 
     private void getMoreCardsOfPlayers(Players players) {
