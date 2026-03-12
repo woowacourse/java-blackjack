@@ -51,12 +51,12 @@ public class BlackJackServiceTest {
         participantBust(player);
         Integer profit1 = blackJackService.getGameResult(new Players(List.of(player)), dealer).dealerWinning().getTotalBet();
 
-        assertThat(profit1).isEqualTo(INITIAL_BET);
+        assertThat(profit1).isEqualTo(0);
 
         participantBust(dealer);
 
         Integer profit2 = blackJackService.getGameResult(new Players(List.of(player)), dealer).dealerWinning().getTotalBet();
-        assertThat(profit2).isEqualTo(INITIAL_BET);
+        assertThat(profit2).isEqualTo(0);
     }
 
     @Test

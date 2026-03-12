@@ -81,16 +81,8 @@ public class BlackJackService {
     }
 
     private BigDecimal calculateBustBetAmount(Player player, Dealer dealer) {
-        if(player.isBust() && dealer.isBust()) {
-            return BigDecimal.ZERO;
-        }
-
         if(player.isBust()) {
-            return new BigDecimal(-player.getBetAmount());
-        }
-
-        if(dealer.isBust()) {
-            return new BigDecimal(player.getBetAmount());
+            return BigDecimal.ZERO;
         }
 
         return calculateBlackJackBetAmount(player, dealer);
@@ -109,7 +101,7 @@ public class BlackJackService {
     }
 
     private BigDecimal calculateRegularBetAmount(Player player, Dealer dealer) {
-        if(player.isMoreScore(dealer)) {
+        if(player.isMoreScore(dealer) || dealer.isBust()) {
             return BigDecimal.valueOf(player.getBetAmount());
         }
 
