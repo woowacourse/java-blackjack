@@ -1,7 +1,7 @@
 package view.input;
 
-import dto.AgreementRequestDto;
-import dto.NameRequestDto;
+import dto.request.AgreementRequestDto;
+import dto.request.NameRequestDto;
 
 public interface InputView {
     NameRequestDto askGamblerNames();

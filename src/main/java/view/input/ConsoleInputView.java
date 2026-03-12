@@ -1,7 +1,7 @@
 package view.input;
 
-import dto.AgreementRequestDto;
-import dto.NameRequestDto;
+import dto.request.AgreementRequestDto;
+import dto.request.NameRequestDto;
 import java.util.Scanner;
 
 public class ConsoleInputView implements InputView {

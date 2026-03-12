@@ -1,9 +1,9 @@
 package view.output;
 
-import dto.DealerResultDto;
-import dto.ParticipantHandResponseDto;
-import dto.ParticipantsGameInfoDto;
-import dto.ParticipantsHandResponseDto;
+import dto.response.DealerResultDto;
+import dto.response.ParticipantHandResponseDto;
+import dto.response.ParticipantsGameInfoDto;
+import dto.response.ParticipantsHandResponseDto;
 import java.util.List;
 import java.util.Map;
 
