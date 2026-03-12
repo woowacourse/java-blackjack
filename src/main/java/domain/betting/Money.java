@@ -8,6 +8,7 @@ public record Money(
 ) {
 
     private static final double MONEY_BOUND = 0.0;
+    private static final double DEALER_PROFIT_TIMES = -1.0;
 
     public static Money from(String money) {
         validateMoneyIsNumber(money);
@@ -16,7 +17,6 @@ public record Money(
 
     public static Money from(double money) {
         validateMoneyIsNegative(money);
-        validateMoneyIsZero(money);
         return new Money(money);
     }
 
@@ -33,7 +33,7 @@ public record Money(
     }
 
     public Money reverseMoney() {
-        return new Money(this.money * -1);
+        return new Money(this.money * DEALER_PROFIT_TIMES);
     }
 
     private static void validateMoneyIsNumber(String money) {
@@ -47,12 +47,6 @@ public record Money(
     private static void validateMoneyIsNegative(double money) {
         if (money < MONEY_BOUND) {
             throw new MoneyException(ErrorMessage.BETTING_MONEY_IS_NOT_NEGATIVE);
-        }
-    }
-
-    private static void validateMoneyIsZero(double money) {
-        if (money == MONEY_BOUND) {
-            throw new MoneyException(ErrorMessage.BETTING_MONEY_IS_NOT_ZERO);
         }
     }
 
