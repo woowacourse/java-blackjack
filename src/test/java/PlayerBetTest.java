@@ -1,6 +1,7 @@
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import blackjack.domain.Player;
+import blackjack.domain.PlayerBetting;
 import blackjack.domain.ScoreCompareResult;
 import org.junit.jupiter.api.Test;
 
