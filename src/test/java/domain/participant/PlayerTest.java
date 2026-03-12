@@ -75,7 +75,7 @@ class PlayerTest {
 
     @DisplayName("Bust 여부 판단 - bust")
     @Test
-    void Burst_여부_판단_bust_정상_테스트() {
+    void Bust_여부_판단_bust_정상_테스트() {
         player.add(new Card(CardShape.SPADE, CardRank.TEN));
         player.add(new Card(CardShape.HEART, CardRank.TWO));
         player.add(new Card(CardShape.HEART, CardRank.TEN));
@@ -86,7 +86,7 @@ class PlayerTest {
 
     @DisplayName("Bust 여부 판단 - not Bust")
     @Test
-    void Burst_여부_판단_not_bust_정상_테스트() {
+    void Bust_여부_판단_not_bust_정상_테스트() {
         player.add(new Card(CardShape.SPADE, CardRank.TEN));
         player.add(new Card(CardShape.HEART, CardRank.TWO));
 
