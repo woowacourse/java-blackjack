@@ -37,8 +37,9 @@ class GameResultTest {
         Cards playerCards = new Cards(List.of(new Card(Rank.ACE, Suit.HEART), new Card(Rank.JACK, Suit.HEART)));
         pobi.receiveInitialCards(playerCards);
 
-        Cards dealerCards = new Cards(List.of(new Card(Rank.ACE, Suit.HEART), new Card(Rank.TWO, Suit.HEART)));
+        Cards dealerCards = new Cards(List.of(new Card(Rank.SEVEN, Suit.HEART), new Card(Rank.EIGHT, Suit.HEART)));
         dealer.receiveInitialCards(dealerCards);
+        dealer.receive(new Card(Rank.SIX, Suit.HEART));
 
         GameResult gameResult = new GameResult(players, dealer);
 
@@ -51,7 +52,7 @@ class GameResultTest {
         Cards playerCards = new Cards(List.of(new Card(Rank.ACE, Suit.HEART), new Card(Rank.NINE, Suit.HEART)));
         pobi.receiveInitialCards(playerCards);
 
-        Cards dealerCards = new Cards(List.of(new Card(Rank.THREE, Suit.HEART), new Card(Rank.TWO, Suit.HEART)));
+        Cards dealerCards = new Cards(List.of(new Card(Rank.THREE, Suit.HEART), new Card(Rank.FOUR, Suit.HEART)));
         dealer.receiveInitialCards(dealerCards);
 
         GameResult gameResult = new GameResult(players, dealer);
@@ -65,8 +66,9 @@ class GameResultTest {
         Cards playerCards = new Cards(List.of(new Card(Rank.ACE, Suit.HEART), new Card(Rank.TWO, Suit.HEART)));
         pobi.receiveInitialCards(playerCards);
 
-        Cards dealerCards = new Cards(List.of(new Card(Rank.ACE, Suit.HEART), new Card(Rank.THREE, Suit.HEART)));
+        Cards dealerCards = new Cards(List.of(new Card(Rank.ACE, Suit.CLOVER), new Card(Rank.THREE, Suit.HEART)));
         dealer.receiveInitialCards(dealerCards);
+        dealer.receive(new Card(Rank.FOUR, Suit.HEART));
 
         GameResult gameResult = new GameResult(players, dealer);
 

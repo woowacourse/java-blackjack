@@ -32,6 +32,7 @@ public enum WinningStatus {
         if (playerScore < dealerScore) {
             return LOSE;
         }
+
         return TIE;
     }
 }

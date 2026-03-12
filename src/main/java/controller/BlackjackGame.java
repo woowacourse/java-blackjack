@@ -37,6 +37,10 @@ public class BlackjackGame {
                 .map(Player::new).toList()
         );
 
+        players.getPlayers().forEach(player -> {
+            player.bet(inputView.getBetAmount(player.name()));
+        });
+
         Dealer dealer = new Dealer(DEALER_NAME);
 
         CardShuffleStrategy cardShuffleStrategy = new RandomShuffleStrategy();
@@ -96,6 +100,6 @@ public class BlackjackGame {
         participants.forEach(outputView::printFinalResult);
 
         GameResult gameResult = new GameResult(players, dealer);
-        outputView.printGameResult(gameResult, dealer);
+        outputView.printGameResult(gameResult);
     }
 }

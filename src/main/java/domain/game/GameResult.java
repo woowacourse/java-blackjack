@@ -14,10 +14,6 @@ public class GameResult {
     private final List<ParticipantResultInfo> participantResultInfos = new ArrayList<>();
 
     public GameResult(Players players, Dealer dealer) {
-        addParticipantsResultInfo(players, dealer);
-    }
-
-    public void addParticipantsResultInfo(Players players, Dealer dealer) {
         BigDecimal playersProfitSum = BigDecimal.ZERO;
         for (Player player : players.getPlayers()) {
             BigDecimal profit = calculatePlayerProfit(player, dealer);
