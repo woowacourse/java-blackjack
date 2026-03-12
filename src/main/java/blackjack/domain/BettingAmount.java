@@ -6,7 +6,7 @@ public class BettingAmount {
     public static final int MIN_BETTING_AMOUNT = 1000;
     public static final int MAX_BETTING_AMOUNT = 50000;
 
-    private int amount;
+    private final int amount;
 
     public BettingAmount(int amount) {
         validateBettingAmountRange(amount);
@@ -17,12 +17,8 @@ public class BettingAmount {
         return amount;
     }
 
-    public void calculateBlackjackProfit() {
-        amount = (int) (amount * 1.5);
-    }
-
-    public void calculateLoseProfit() {
-        amount = amount * (-1);
+    public int calculateProfit(double ratio) {
+        return (int) (amount * ratio);
     }
 
     private void validateBettingAmountRange(int amount) {
