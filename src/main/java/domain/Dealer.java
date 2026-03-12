@@ -21,6 +21,6 @@ public class Dealer extends Participant {
 
     @Override
     public GameStatus status() {
-        return new GameStatus(ParticipantsRole.DEALER, this.name(), hand.cards(), scoreSum());
+        return new GameStatus(ParticipantsRole.DEALER, this.name(), hand, scoreSum());
     }
 }
