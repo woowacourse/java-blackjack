@@ -1,7 +1,6 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.in;
 
 import infra.FixedCardShuffler;
 import java.util.ArrayList;
@@ -15,7 +14,7 @@ class PlayerTest {
     private final Cards cards = Cards.of(new FixedCardShuffler());
 
     @Test
-    @DisplayName("플레이어 객체 생성 시 2장의 카드를 보유한지 테스트")
+    @DisplayName("플레이어 초기 카드 추가 시 2장의 카드를 보유한지 테스트")
     void holding_two_card_success() {
         Player player = Player.of(userName);
 
