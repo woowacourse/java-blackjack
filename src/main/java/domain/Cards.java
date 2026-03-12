@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
+    private static final int BUST_SCORE = 21;
     private final List<Card> cards;
 
     public Cards(List<Card> cards) {
@@ -11,13 +12,9 @@ public class Cards {
     }
 
     public int calculateOptimalScore() {
-        int aceCount = (int) cards.stream()
-                .filter(Card::isAce)
-                .count();
         int sum = calculateScore();
-        while (aceCount != 0 && isBust(sum)) {
+        for (int i = countAce(); i > 0 && isBust(sum); i--) {
             sum -= 10;
-            aceCount--;
         }
         return sum;
     }
@@ -31,21 +28,25 @@ public class Cards {
         return !isBust(sum) && sum < bustThreshold;
     }
 
-    private int calculateScore() {
-        int sum = 0;
-        for (Card card : cards) {
-            sum += card.getScore();
-        }
-        return sum;
-    }
-
     public List<String> getCardsInfo() {
         return cards.stream()
                 .map(Card::getCardInfo)
                 .toList();
     }
 
+    private int countAce() {
+        return (int) cards.stream()
+                .filter(Card::isAce)
+                .count();
+    }
+
+    private int calculateScore() {
+        return cards.stream()
+                .mapToInt(Card::getScore)
+                .sum();
+    }
+
     private boolean isBust(int score) {
-        return score > 21;
+        return score > BUST_SCORE;
     }
 }
