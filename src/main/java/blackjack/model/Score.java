@@ -2,7 +2,7 @@ package blackjack.model;
 
 import java.util.List;
 
-public record Score(int value) {
+public record Score(int value) implements Comparable<Score> {
     private static final int ACE_ADJUST_AMOUNT = 10;
     private static final int BUST_THRESHOLD = 21;
 
@@ -37,5 +37,10 @@ public record Score(int value) {
 
     public boolean isBiggerThan(Score score) {
         return this.value > score.value;
+    }
+
+    @Override
+    public int compareTo(Score other) {
+        return Integer.compare(this.value, other.value);
     }
 }

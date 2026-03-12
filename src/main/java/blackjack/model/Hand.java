@@ -8,7 +8,11 @@ public class Hand {
     private final List<Card> cards;
 
     public Hand() {
-        this.cards = new ArrayList<>();
+        this(new ArrayList<>());
+    }
+
+    public Hand(List<Card> cards) {
+        this.cards = cards;
     }
 
     public List<Card> getCards() {

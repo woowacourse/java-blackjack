@@ -6,14 +6,13 @@ import blackjack.dto.InitialDealDtos;
 import blackjack.dto.ParticipantCardsDto;
 import blackjack.dto.ParticipantScoreDto;
 import blackjack.dto.PlayerResultDto;
-import blackjack.model.Answer;
 import blackjack.model.CardsGenerator;
 import blackjack.model.Dealer;
 import blackjack.model.Deck;
+import blackjack.model.GameResult;
 import blackjack.model.Participant;
 import blackjack.model.Participants;
 import blackjack.model.Player;
-import blackjack.model.PlayerBlackjackResult;
 import blackjack.model.Score;
 import blackjack.view.BlackjackView;
 import java.util.List;
@@ -84,31 +83,14 @@ public class BlackjackGame {
     }
 
     private void printResult(Participants participants) {
+        Dealer dealer = participants.getDealer();
         List<PlayerResultDto> playerResultDtos = participants.getPlayers().stream()
             .map(player -> {
-                    PlayerBlackjackResult result = judge(player.getScore(),
-                        participants.getDealer().getScore());
+                    GameResult result = dealer.judgeAgainst(player);
                     return PlayerResultDto.of(player, result);
                 }
             ).toList();
         DealerResultDto dealerResultDto = DealerResultDto.from(playerResultDtos);
         view.printResult(new GameResultDto(dealerResultDto, playerResultDtos));
-    }
-
-
-    public PlayerBlackjackResult judge(Score playerScore, Score dealerScore) {
-        if (playerScore.isBust()) {
-            return PlayerBlackjackResult.LOSE;
-        }
-        if (dealerScore.isBust()) {
-            return PlayerBlackjackResult.WIN;
-        }
-        if (playerScore.isBiggerThan(dealerScore)) {
-            return PlayerBlackjackResult.WIN;
-        }
-        if (playerScore.equals(dealerScore)) {
-            return PlayerBlackjackResult.PUSH;
-        }
-        return PlayerBlackjackResult.LOSE;
     }
 }
