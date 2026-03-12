@@ -5,12 +5,19 @@ import blackjack.model.Hands;
 
 public class Player extends Participant {
 
-    private Player(String name, Hands hands) {
+    private final int prize;
+
+    private Player(String name, Hands hands, int prize) {
         super(name, hands);
+        this.prize = prize;
     }
 
-    public static Player of(String name) {
-        return new Player(name, Hands.empty());
+    public static Player of(String name, int betAmount) {
+        return new Player(
+                name,
+                Hands.empty(),
+                betAmount
+        );
     }
 
     @Override
@@ -19,10 +26,27 @@ public class Player extends Participant {
         hands.addCard(cardDeck.pick());
     }
 
-    @Override
-    public boolean canPick() {
-        return !hands.isTotalScoreOver(BLACKJACK_SCORE);
+    public Player bust() {
+        int negativeMultiplier = -1;
+
+        return new Player(
+                name,
+                hands,
+                negativeMultiplier * prize
+        );
     }
 
+    public Player blackjack() {
+        double blackjackProfitRate = 1.5;
 
+        return new Player(
+                name,
+                hands,
+                (int) (prize * blackjackProfitRate)
+        );
+    }
+
+    public int getPrize() {
+        return prize;
+    }
 }

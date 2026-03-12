@@ -1,10 +1,12 @@
 package blackjack.controller;
 
+import blackjack.model.card.Card;
+import blackjack.model.card.Rank;
+import blackjack.model.card.Suit;
 import blackjack.model.cardDeck.CardDeck;
-import blackjack.model.participant.Dealer;
 import blackjack.model.cardDeck.PickStrategy;
+import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Player;
-import blackjack.model.result.TotalResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -46,33 +48,38 @@ public class BlackjackController {
     }
 
     public void run() {
-        List<Player> players = initPlayers();
+        List<Player> players = createPlayers();
         Dealer dealer = new Dealer();
 
         CardDeck cardDeck = CardDeck.of(pickStrategy);
         distributeInitialCards(dealer, players, cardDeck);
 
+        players = applyBlackjackToPlayers(players);
+
         players.forEach(
                 player -> askHitOrStand(cardDeck, player)
         );
+        players = applyBustToPlayers(players);
 
-        if (dealer.canPick()) {
-            dealer.pickAdditionalCard(cardDeck);
-            outputView.printDealerPicksCard();
-        }
+       drawUntilSeventeen(dealer, cardDeck);
+       players = dealer.award(players);
 
         openDealerHands(dealer);
         openPlayersHands(players);
 
-        printGameResult(players, dealer);
+        outputView.printPlayerPrizes(players, dealer.getName());
     }
 
-    private List<Player> initPlayers() {
+    private List<Player> createPlayers() {
         outputView.printPlayerNamesInputPrompt();
         List<String> names = inputView.inputPlayerNames();
 
         return names.stream()
-                .map(Player::of).toList();
+                .map(name -> {
+                    outputView.printBetAmountInputPrompt(name);
+                    int amount = inputView.inputBetAmount();
+                    return Player.of(name, amount);
+                }).toList();
     }
     
     private void distributeInitialCards(
@@ -97,24 +104,54 @@ public class BlackjackController {
                         player.getOpenedCards()
                 )
         );
+    }
 
-        outputView.printNewLine();
+    private List<Player> applyBlackjackToPlayers(List<Player> players) {
+        return players.stream()
+                .map(player -> {
+                    if (player.isBlackjack()) {
+                        return player.blackjack();
+                    }
+
+                    return player;
+                })
+                .toList();
     }
 
     private void askHitOrStand(
             CardDeck cardDeck,
             Player player
     ) {
-        while (player.canPick() && inputIsContinued(player)) {
+        while (!player.isBust() && inputIsContinued(player)) {
             player.pickAdditionalCard(cardDeck);
             outputView.printParticipantCards(player.getName(), player.getAllCard());
         }
-
     }
 
     private boolean inputIsContinued(Player player) {
         outputView.printMoreCardInputPrompt(player.getName());
         return inputView.inputMoreCard();
+    }
+
+    public List<Player> applyBustToPlayers(List<Player> players) {
+        return players.stream()
+                .map(player -> {
+                    if (player.isBust()) {
+                        return player.bust();
+                    }
+
+                    return player;
+                }).toList();
+    }
+
+    private void drawUntilSeventeen(
+            Dealer dealer,
+            CardDeck cardDeck
+    ) {
+        while (dealer.canPick()) {
+            dealer.pickAdditionalCard(cardDeck);
+            outputView.printDealerPicksCard();
+        }
     }
 
     private void openDealerHands(Dealer dealer) {
@@ -126,22 +163,10 @@ public class BlackjackController {
     }
 
     private void openPlayersHands(List<Player> players) {
-        for (Player player : players) {
-            outputView.printParticipantCardsWithScore(
-                    player.getName(),
-                    player.getAllCard(),
-                    player.getCurrentTotalScore()
-            );
-        }
-    }
-
-    private void printGameResult(
-            List<Player> players,
-            Dealer dealer
-    ) {
-        outputView.printResult(
-                TotalResult.of(players, dealer),
-                dealer.getName()
-        );
+        players.forEach(player -> outputView.printParticipantCardsWithScore(
+                player.getName(),
+                player.getAllCard(),
+                player.getCurrentTotalScore()
+        ));
     }
 }

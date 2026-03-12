@@ -16,7 +16,7 @@ class InputValidatorTest {
             "player ",
             " player "
     })
-    @DisplayName("플레이어 이름이 공백으로 시작하거나 끝나면 예외 발생")
+    @DisplayName("플레이어 이름이 공백으로 시작하거나 끝나면 예외가 발생한다.")
     void spaceInNameTest(String name) {
         // when & then
         assertThatThrownBy(() -> InputValidator.validatePlayerNames(List.of(name)))
@@ -26,7 +26,7 @@ class InputValidatorTest {
 
 
     @Test
-    @DisplayName("중복 이름이 존재하면 예외 발생")
+    @DisplayName("중복 이름이 존재하면 예외가 발생한다.")
     void duplicatedNamesTest() {
         // given
         List<String> names = List.of("pobi", "jun", "pobi");
@@ -35,5 +35,29 @@ class InputValidatorTest {
         assertThatThrownBy(() -> InputValidator.validatePlayerNames(names))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("중복된 플레이어 이름이 존재합니다.");
+    }
+
+    @Test
+    @DisplayName("이름이 하나도 입력되지 않으면 예외가 발생한다.")
+    void nullNames() {
+        assertThatThrownBy(() -> InputValidator.validatePlayerNames(null))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("names가 null입니다.");
+    }
+
+    @Test
+    @DisplayName("배팅 금액이 자연수가 아니면 예외가 발생한다.")
+    void not_natural_number() {
+        assertThatThrownBy(() -> InputValidator.validateBetAmount(-100))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("100원 단위 자연수가 아닙니다.");
+    }
+
+    @Test
+    @DisplayName("배팅 금액이 100원 단위가 아니면 예외가 발생한다.")
+    void not_100() {
+        assertThatThrownBy(() -> InputValidator.validateBetAmount(101))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("100원 단위 자연수가 아닙니다.");
     }
 }

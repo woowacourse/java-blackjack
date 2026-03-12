@@ -61,11 +61,5 @@ class ParticipantTest {
         public void pickInitialCards(CardDeck cardDeck) {
             // do nothing
         }
-
-        @Override
-        public boolean canPick() {
-            return false;
-        }
-
     }
 }
