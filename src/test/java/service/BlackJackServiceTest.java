@@ -24,8 +24,7 @@ public class BlackJackServiceTest {
 
     @Test
     public void 카드_뽑기_정상_작동() {
-        BlackJackDeck cards = new BlackJackDeck(CardFactory.createShuffledCards());
-        BlackJackService blackJackService = new BlackJackService(cards);
+        BlackJackService blackJackService = new BlackJackService();
         Player player = new Player(new PlayerName("player1"), new BettingMoney("10000"));
         blackJackService.draw(player);
         assertThat(player.getResult().score()).isGreaterThan(0);
@@ -50,7 +49,7 @@ public class BlackJackServiceTest {
     @ParameterizedTest
     @MethodSource("bustCases")
     public void 버스트_판정(List<Card> cards, boolean expected) {
-        BlackJackService service = new BlackJackService(new BlackJackDeck(CardFactory.createShuffledCards()));
+        BlackJackService service = new BlackJackService();
         Player player = new Player(new PlayerName("player"), new BettingMoney("10000"));
         cards.forEach(player::draw);
         assertThat(service.isBust(player)).isEqualTo(expected);
@@ -82,7 +81,7 @@ public class BlackJackServiceTest {
     @ParameterizedTest
     @MethodSource("isBlackJackCases")
     public void 블랙잭_판정(List<Card> cards, boolean expected) {
-        BlackJackService service = new BlackJackService(new BlackJackDeck(CardFactory.createShuffledCards()));
+        BlackJackService service = new BlackJackService();
         Player player = new Player(new PlayerName("player1"), new BettingMoney("10000"));
         cards.forEach(player::draw);
         assertThat(service.isBlackJack(player)).isEqualTo(expected);
@@ -141,7 +140,7 @@ public class BlackJackServiceTest {
     @ParameterizedTest
     @MethodSource("scoreMatchCases")
     public void 승패무_판정(List<Card> playerCards, List<Card> dealerCards, int expectedProfit) {
-        BlackJackService service = new BlackJackService(new BlackJackDeck(CardFactory.createShuffledCards()));
+        BlackJackService service = new BlackJackService();
         Player player = new Player(new PlayerName("player1"), new BettingMoney("10000"));
         playerCards.forEach(player::draw);
         Dealer dealer = new Dealer();
@@ -152,7 +151,7 @@ public class BlackJackServiceTest {
 
     @Test
     public void 플레이어_블랙잭_딜러_블랙잭_무() {
-        BlackJackService service = new BlackJackService(new BlackJackDeck(CardFactory.createShuffledCards()));
+        BlackJackService service = new BlackJackService();
         Player player = new Player(new PlayerName("player1"), new BettingMoney("10000"));
         player.draw(new Card(Shape.HEART, CardNumber.ACE));
         player.draw(new Card(Shape.HEART, CardNumber.KING));
@@ -165,7 +164,7 @@ public class BlackJackServiceTest {
 
     @Test
     public void 플레이어_블랙잭_딜러_일반_블랙잭승() {
-        BlackJackService service = new BlackJackService(new BlackJackDeck(CardFactory.createShuffledCards()));
+        BlackJackService service = new BlackJackService();
         Player player = new Player(new PlayerName("player1"), new BettingMoney("10000"));
         player.draw(new Card(Shape.HEART, CardNumber.ACE));
         player.draw(new Card(Shape.HEART, CardNumber.KING));
@@ -178,7 +177,7 @@ public class BlackJackServiceTest {
 
     @Test
     public void 딜러_블랙잭_플레이어_일반_패() {
-        BlackJackService service = new BlackJackService(new BlackJackDeck(CardFactory.createShuffledCards()));
+        BlackJackService service = new BlackJackService();
         Player player = new Player(new PlayerName("player1"), new BettingMoney("10000"));
         player.draw(new Card(Shape.CLOVER, CardNumber.TEN));
         player.draw(new Card(Shape.HEART, CardNumber.QUEEN));
@@ -191,7 +190,7 @@ public class BlackJackServiceTest {
 
     @Test
     public void 딜러_블랙잭_플레이어_버스트_패() {
-        BlackJackService service = new BlackJackService(new BlackJackDeck(CardFactory.createShuffledCards()));
+        BlackJackService service = new BlackJackService();
         Player player = new Player(new PlayerName("player1"), new BettingMoney("10000"));
         player.draw(new Card(Shape.CLOVER, CardNumber.TEN));
         player.draw(new Card(Shape.HEART, CardNumber.TEN));
@@ -205,7 +204,7 @@ public class BlackJackServiceTest {
 
     @Test
     public void ACE_소프트_21_블랙잭_아님_일반승() {
-        BlackJackService service = new BlackJackService(new BlackJackDeck(CardFactory.createShuffledCards()));
+        BlackJackService service = new BlackJackService();
         Player player = new Player(new PlayerName("player1"), new BettingMoney("10000"));
         player.draw(new Card(Shape.HEART, CardNumber.ACE));
         player.draw(new Card(Shape.HEART, CardNumber.FIVE));
@@ -219,7 +218,7 @@ public class BlackJackServiceTest {
 
     @Test
     public void ACE_하드_버스트_방지() {
-        BlackJackService service = new BlackJackService(new BlackJackDeck(CardFactory.createShuffledCards()));
+        BlackJackService service = new BlackJackService();
         Player player = new Player(new PlayerName("player1"), new BettingMoney("10000"));
         player.draw(new Card(Shape.HEART, CardNumber.ACE));
         player.draw(new Card(Shape.HEART, CardNumber.TEN));
@@ -229,7 +228,7 @@ public class BlackJackServiceTest {
 
     @Test
     public void 딜러_수익은_플레이어_수익의_합산_반대() {
-        BlackJackService service = new BlackJackService(new BlackJackDeck(CardFactory.createShuffledCards()));
+        BlackJackService service = new BlackJackService();
 
         Player player1 = new Player(new PlayerName("player1"), new BettingMoney("10000"));
         player1.draw(new Card(Shape.CLOVER, CardNumber.TEN));

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import model.BlackJackDeck;
+import model.CardFactory;
 import model.Dealer;
 import model.MatchStatus;
 import model.Participant;
@@ -20,8 +21,8 @@ public class BlackJackService {
 
     private final BlackJackDeck cards;
 
-    public BlackJackService(BlackJackDeck cards) {
-        this.cards = cards;
+    public BlackJackService() {
+        this.cards = new BlackJackDeck(CardFactory.createShuffledCards());
     }
 
 
