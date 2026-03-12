@@ -12,6 +12,8 @@ import java.util.List;
 
 public class OutputView {
 
+    private static final String NEW_LINE = System.lineSeparator();
+
     public void printInitHandCard(final Participants participants) {
         final Participant dealer = participants.getDealer();
         final List<Participant> players = participants.getPlayers();
@@ -28,7 +30,7 @@ public class OutputView {
     }
 
     public void printDealerAdditionalDraw() {
-        System.out.printf("%s는 %d이하라 한장의 카드를 더 받았습니다.\n", DEALER_NAME, DEALER_DRAW_BOUND);
+        System.out.printf("%s는 %d이하라 한장의 카드를 더 받았습니다.%s", DEALER_NAME, DEALER_DRAW_BOUND, NEW_LINE);
     }
 
     public void printHandResults(final Participants participants) {
@@ -47,7 +49,8 @@ public class OutputView {
     }
 
     public void printGameResults(final List<FinalResult> finalResults) {
-        System.out.println("\n## 최종 승패");
+        System.out.println();
+        System.out.println("## 최종 승패");
 
         printDealerFinalResult(finalResults);
         printPlayerFinalResult(finalResults);
@@ -56,16 +59,17 @@ public class OutputView {
 
     private static void printInitHandCardInfo(final Participant dealer, final List<Participant> players) {
         final StringBuilder playerNames = new StringBuilder();
-        System.out.printf("\n%s와 ", dealer.getName());
+        System.out.println();
+        System.out.printf("%s와 ", dealer.getName());
         for (final Participant player : players) {
             playerNames.append(player.getName()).append(", ");
         }
         playerNames.delete(playerNames.length() - 2, playerNames.length());
-        System.out.printf("%s에게 %d장을 나누었습니다.\n", playerNames, INIT_DRAW_COUNT);
+        System.out.printf("%s에게 %d장을 나누었습니다.%s", playerNames, INIT_DRAW_COUNT, NEW_LINE);
     }
 
     private static void printDealerInitHandCard(final Participant dealer) {
-        System.out.printf("%s카드: %s\n", dealer.getName(), dealer.getHand().getFirst().getCardDescription());
+        System.out.printf("%s카드: %s%s", dealer.getName(), dealer.getHand().getFirst().getCardDescription(), NEW_LINE);
     }
 
     private static void printPlayerInitHandCard(final List<Participant> players) {
@@ -100,7 +104,7 @@ public class OutputView {
     }
 
     private static void printScore(final Participant dealer) {
-        System.out.printf(" - 결과: %d\n", dealer.getScore());
+        System.out.printf(" - 결과: %d%s", dealer.getScore(), NEW_LINE);
     }
 
     private static void printDealerFinalResult(final List<FinalResult> finalResults) {
