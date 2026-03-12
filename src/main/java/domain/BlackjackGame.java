@@ -20,6 +20,10 @@ public class BlackjackGame {
         return gameTable.getDealerName();
     }
 
+    public boolean isNotDealer(String memberName) {
+        return !gameTable.checkDealer(memberName);
+    }
+
     public void initialDeal() {
         gameTable.getMemberNames().forEach(name -> {
                 gameTable.draw(name, deck.draw());
@@ -68,11 +72,11 @@ public class BlackjackGame {
         return !gameTable.checkBust(playerName);
     }
 
-    public boolean hasBlackjack() {
-        return gameTable.checkBlackjack();
+    public boolean hasBlackjack(String playerName) {
+        return gameTable.checkBlackjack(playerName);
     }
 
-    public void applyBlackjackBonus() {
-        gameTable.applyBlackjackBonus();
+    public void applyBlackjackBonus(String playerName) {
+        gameTable.applyBlackjackBonus(playerName);
     }
 }

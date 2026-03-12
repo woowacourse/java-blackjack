@@ -16,7 +16,10 @@ public class Main {
         game.initialDeal();
         outputView.printInitialStatus(game.getDealerName(), memberFirstHands(game));
         checkBlackjackBonus(game);
-        playerNames.forEach(playerName -> askToDraw(playerName, inputView, outputView, game));
+        game.getMemberNames().stream()
+                .filter(game::isNotDealer)
+                .filter(playerName -> !game.hasBlackjack(playerName))
+                .forEach(playerName -> askToDraw(playerName, inputView, outputView, game));
         printResult(outputView, game);
     }
 
@@ -30,9 +33,10 @@ public class Main {
     }
 
     private static void checkBlackjackBonus(BlackjackGame game) {
-        if (game.hasBlackjack()) {
-            game.applyBlackjackBonus();
-        }
+        game.getMemberNames().stream()
+                .filter(game::isNotDealer)
+                .filter(game::hasBlackjack)
+                .forEach(game::applyBlackjackBonus);
     }
 
     private static List<MemberStatus> memberFirstHands(BlackjackGame game) {
@@ -56,6 +60,8 @@ public class Main {
             outputView.printHandCard(playerName, game.getCardNames(playerName));
         }
     }
+
+
 
     private static void printResult(OutputView outputView, BlackjackGame game) {
         while (game.canDealerDraw()) {

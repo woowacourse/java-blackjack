@@ -31,18 +31,12 @@ public class GameTable {
         return members.getValue(memberName) > BLACKJACK;
     }
 
-    public boolean checkBlackjack() {
-        return members.getMemberNames()
-                .stream()
-                .filter(memberName -> !members.getDealerName().equals(memberName))
-                .anyMatch(memberName -> members.getValue(memberName) == BLACKJACK);
+    public boolean checkBlackjack(String playerName) {
+        return members.getValue(playerName) == BLACKJACK;
     }
 
-    public void applyBlackjackBonus() {
-        members.getMemberNames()
-                .stream()
-                .filter(memberName -> !members.getDealerName().equals(memberName))
-                .forEach(members::applyBlackjackBonus);
+    public void applyBlackjackBonus(String playerName) {
+        members.applyBlackjackBonus(playerName);
     }
 
     public Map<String, Integer> checkGameResult() {
@@ -57,6 +51,10 @@ public class GameTable {
             );
         }
         return result;
+    }
+
+    public boolean checkDealer(String memberName) {
+        return members.isDealer(memberName);
     }
 
     public List<String> getMemberNames() {
