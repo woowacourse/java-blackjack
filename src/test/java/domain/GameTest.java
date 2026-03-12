@@ -13,7 +13,6 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 class GameTest {
@@ -154,7 +153,7 @@ class GameTest {
         Game game = new Game(List.of("시오", "봉구스"), deck);
         Player winPlayer = game.getPlayers().get(0);
         Player losePlayer = game.getPlayers().get(1);
-        Judge judge = new Judge(game.getDealer(), game.getPlayers());
+        Judge judge = Judge.from(game.getDealer(), game.getPlayers());
 
         Map<Player, Money> moneyTable = new LinkedHashMap<>();
         moneyTable.put(winPlayer, new Money(1000L));

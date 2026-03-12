@@ -23,7 +23,7 @@ class JudgeTest {
         player.draw(new Card(Suit.CLUBS, Rank.JACK));
 
         // when
-        Judge judge = new Judge(dealer, List.of(player));
+        Judge judge = Judge.from(dealer, List.of(player));
 
         // then
         assertEquals(WinningStatus.LOSE, judge.getPlayerResult(player));
@@ -42,7 +42,7 @@ class JudgeTest {
         player.draw(new Card(Suit.CLUBS, Rank.NUM8));
 
         // when
-        Judge judge = new Judge(dealer, List.of(player));
+        Judge judge = Judge.from(dealer, List.of(player));
 
         // then
         assertEquals(WinningStatus.WIN, judge.getPlayerResult(player));
@@ -60,7 +60,7 @@ class JudgeTest {
         player.draw(new Card(Suit.CLUBS, Rank.NUM8));
 
         // when
-        Judge judge = new Judge(dealer, List.of(player));
+        Judge judge = Judge.from(dealer, List.of(player));
 
         // then
         assertEquals(WinningStatus.WIN, judge.getPlayerResult(player));
@@ -78,7 +78,7 @@ class JudgeTest {
         player.draw(new Card(Suit.CLUBS, Rank.NUM8));
 
         // when
-        Judge judge = new Judge(dealer, List.of(player));
+        Judge judge = Judge.from(dealer, List.of(player));
 
         // then
         assertEquals(WinningStatus.DRAW, judge.getPlayerResult(player));
@@ -104,7 +104,7 @@ class JudgeTest {
         losePlayer.draw(new Card(Suit.DIAMONDS, Rank.NUM7));
 
         // when
-        Judge judge = new Judge(dealer, List.of(winPlayer, drawPlayer, losePlayer));
+        Judge judge = Judge.from(dealer, List.of(winPlayer, drawPlayer, losePlayer));
 
         // then
         assertAll(

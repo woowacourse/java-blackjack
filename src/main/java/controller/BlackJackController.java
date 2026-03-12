@@ -72,7 +72,7 @@ public class BlackJackController {
     }
 
     private Judge createJudge(Game game){
-        return new Judge(game.getDealer(), game.getPlayers());
+        return Judge.from(game.getDealer(), game.getPlayers());
     }
 
     private BettingTable createBettingTable(Game game){

@@ -9,14 +9,19 @@ public class Judge {
     private static final int BLACKJACK_HAND_SIZE = 2;
     private final Map<Player, WinningStatus> playerResults;
 
-    public Judge(Dealer dealer, List<Player> players){
-        playerResults = new HashMap<>();
+    public Judge(Map<Player, WinningStatus> playerResults){
+        this.playerResults = playerResults;
+    }
+
+    public static Judge from(Dealer dealer, List<Player> players){
+        Map<Player, WinningStatus> playerResults = new HashMap<>();
         for(Player player: players){
             playerResults.put(player, calculateWinningStatus(dealer, player));
         }
+        return new Judge(playerResults);
     }
 
-    private WinningStatus calculateWinningStatus(Dealer dealer, Player player){
+    private static WinningStatus calculateWinningStatus(Dealer dealer, Player player){
         WinningStatus blackJackResult = resolveBlackJack(player, dealer);
         if(blackJackResult != null){
             return blackJackResult;
@@ -28,15 +33,15 @@ public class Judge {
         return compareResult(player, dealer);
     }
 
-    private boolean isBlackJack(Player player){
+    private static boolean isBlackJack(Player player){
         return player.getHandSize() == BLACKJACK_HAND_SIZE && player.getScore() == BLACKJACK_NUMBER;
     }
 
-    private boolean isBlackJack(Dealer dealer){
+    private static boolean isBlackJack(Dealer dealer){
         return dealer.getHandSize() == BLACKJACK_HAND_SIZE && dealer.getScore() == BLACKJACK_NUMBER;
     }
 
-    private WinningStatus resolveBlackJack(Player player, Dealer dealer){
+    private static WinningStatus resolveBlackJack(Player player, Dealer dealer){
         boolean playerBlackJack = isBlackJack(player);
         boolean dealerBlackJack = isBlackJack(dealer);
 
@@ -49,7 +54,7 @@ public class Judge {
         return null;
     }
 
-    private WinningStatus resolveBurst(Player player, Dealer dealer){
+    private static WinningStatus resolveBurst(Player player, Dealer dealer){
         if (player.isBurst()) {
             return WinningStatus.LOSE;
         }
@@ -59,7 +64,7 @@ public class Judge {
         return null;
     }
 
-    private WinningStatus compareResult(Player player, Dealer dealer){
+    private static WinningStatus compareResult(Player player, Dealer dealer){
         if (player.getScore() > dealer.getScore()) {
             return WinningStatus.WIN;
         }
