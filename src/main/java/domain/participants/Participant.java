@@ -2,9 +2,8 @@ package domain.participants;
 
 import domain.bet.Betting;
 import domain.card.vo.Card;
-import domain.hitStrategy.HitStrategy;
 import domain.state.State;
-import domain.state.running.Hit;
+import domain.state.running.Running;
 
 public abstract class Participant {
     private static final int MIN_NAME_SIZE = 2;
@@ -27,6 +26,8 @@ public abstract class Participant {
         }
     }
 
+    abstract public boolean canDraw();
+
     public String getName() {
         return name;
     }
@@ -39,15 +40,11 @@ public abstract class Participant {
         state = state.stay();
     }
 
-    public boolean canDraw() {
-        return !state.isFinished();
-    }
-
     public void drawCard(Card card) {
         this.state = getState().drawCard(card);
     }
 
-    abstract protected Hit getStartState(Hand hand);
-
-    abstract public HitStrategy getHitStrategy();
+    public State getStartState(Hand hand) {
+        return Running.getStartState(hand);
+    }
 }

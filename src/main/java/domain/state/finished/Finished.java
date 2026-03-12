@@ -14,9 +14,9 @@ public abstract class Finished implements State {
         this.hand = hand;
     }
 
-    abstract public Function<Integer, Integer> earningRate();
+    abstract public Function<Integer, Integer> earningRate(Result result);
 
-    abstract public Result getResult(Finished dealerState);
+    abstract public Result getResult(State dealerState);
 
     @Override
     public boolean isFinished() {
@@ -48,7 +48,7 @@ public abstract class Finished implements State {
     }
 
     @Override
-    public Integer getProfit(Integer betCost) {
-        return earningRate().apply(betCost);
+    public Integer getProfit(State dealerState, Integer betCost) {
+        return earningRate(getResult(dealerState)).apply(betCost);
     }
 }

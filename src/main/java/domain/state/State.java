@@ -14,5 +14,5 @@ public interface State {
 
     State stay();
 
-    Integer getProfit(Integer betCost);
+    Integer getProfit(State dealerState, Integer betCost);
 }

@@ -3,7 +3,6 @@ package domain.participants;
 import domain.bet.Betting;
 import domain.hitStrategy.HitStrategy;
 import domain.hitStrategy.UntilBustHitStrategy;
-import domain.state.running.Hit;
 
 public class Player extends Participant {
     private static final HitStrategy DEFAULT_HIT_STRATEGY = new UntilBustHitStrategy();
@@ -19,18 +18,12 @@ public class Player extends Participant {
         return new Player(name, hand, cost, DEFAULT_HIT_STRATEGY);
     }
 
-    @Override
-    protected Hit getStartState(Hand hand) {
-        return Hit.getStartState(hand, hitStrategy);
-    }
-
-
-    @Override
-    public HitStrategy getHitStrategy() {
-        return hitStrategy;
-    }
-
     public Integer getProfit(Dealer dealer) {
-        return state.getProfit(super.betting.amount());
+        return state.getProfit(dealer.getState(), super.betting.amount());
+    }
+
+    @Override
+    public boolean canDraw() {
+        return hitStrategy.canHit(state);
     }
 }

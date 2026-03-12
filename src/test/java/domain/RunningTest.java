@@ -5,12 +5,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.card.vo.Card;
 import domain.card.vo.Rank;
 import domain.card.vo.Suit;
-import domain.participants.Player;
+import domain.participants.Participant;
 import domain.state.finished.BlackJack;
 import domain.state.finished.Bust;
 import domain.state.finished.Stay;
 import domain.state.running.Hit;
-import domain.state.running.Running;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -36,8 +35,8 @@ class RunningTest {
     @ParameterizedTest
     @DisplayName("getStartState(): 첫 카드가 21이라면 블랙잭을 아니라면 Hit를 반환한다.")
     @MethodSource
-    void getStartState(Running running, Class<?> clazz) {
-        assertThat(running).isInstanceOf(clazz);
+    void getStartState(Participant participant, Class<?> clazz) {
+        assertThat(participant.getState()).isInstanceOf(clazz);
     }
 
     @Nested
@@ -73,7 +72,7 @@ class RunningTest {
         @ParameterizedTest(name = "{4}'{'K 추가'}' \t 핸드 점수'{'{5}'}'  hit'{'{2}'}' -> {3}")
         @DisplayName("힛 여부에 따라 다음 상태를 반환한다.")
         @MethodSource
-        void drawCard(Player participant, Card card, Class<?> clazz, String participantName,
+        void drawCard(Participant participant, Card card, Class<?> clazz, String participantName,
                       String score) {
             participant.drawCard(card);
             assertThat(participant.getState()).isInstanceOf(clazz);

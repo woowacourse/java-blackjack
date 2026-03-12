@@ -2,6 +2,7 @@ package domain.state.finished;
 
 import domain.participants.Hand;
 import domain.state.Result;
+import domain.state.State;
 import java.util.function.Function;
 
 public class Bust extends Finished {
@@ -10,12 +11,12 @@ public class Bust extends Finished {
     }
 
     @Override
-    public Function<Integer, Integer> earningRate() {
+    public Function<Integer, Integer> earningRate(Result result) {
         return (n) -> -n;
     }
 
     @Override
-    public Result getResult(Finished dealerState) {
+    public Result getResult(State dealerState) {
         return Result.LOSE;
     }
 }

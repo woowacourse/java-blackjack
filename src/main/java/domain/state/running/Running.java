@@ -1,9 +1,9 @@
 package domain.state.running;
 
 import domain.card.vo.Card;
-import domain.hitStrategy.HitStrategy;
 import domain.participants.Hand;
 import domain.state.State;
+import domain.state.finished.BlackJack;
 import domain.state.finished.Stay;
 import java.util.List;
 
@@ -15,16 +15,12 @@ public abstract class Running implements State {
         this.hand = hand;
     }
 
-    public static Hit getStartState(Hand hand, HitStrategy hitStrategy) {
-        return new Hit(hand, hitStrategy);
+    public static State getStartState(Hand hand) {
+        if (BlackJack.isBlackJak(hand)) {
+            return new BlackJack(hand);
+        }
+        return new Hit(hand);
     }
-
-//    public static Running getStartState(Hand hand, Participant participant, HitStrategy hitStrategy) {
-//        if (hand.getScore().equals(BLACKJACK_SCORE)) {
-//            return new BlackJack(hand, participant);
-//        }
-//        return new Hit(hand, participant, hitStrategy);
-//    }
 
     @Override
     public boolean isFinished() {
@@ -47,7 +43,7 @@ public abstract class Running implements State {
     }
 
     @Override
-    public Integer getProfit(Integer betCost) {
+    public Integer getProfit(State DealerState, Integer betCost) {
         throw new IllegalStateException("Running은 수익금 반환을 못합니다!");
     }
 }
