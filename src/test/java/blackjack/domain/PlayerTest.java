@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 public class PlayerTest {
 
     @Test
-    void 유저_생성_테스트() {
+    void 플레이어_생성_테스트() {
         // given
         String name = "흑곰";
 
@@ -18,7 +18,7 @@ public class PlayerTest {
     }
 
     @Test
-    void 유저가_카드_한_장을_가져오는_테스트() {
+    void 플레이어가_카드_한_장을_가져오는_테스트() {
         // given
         Player player = new Player("밀란");
         Card card = new Card(CardValue.ACE, CardShape.DIAMOND);
@@ -32,7 +32,7 @@ public class PlayerTest {
     }
 
     @Test
-    void 가지고있는_카드의_합을_계산하는_기능_테스트() {
+    void 플레이어가_가지고있는_카드의_합을_계산하는_기능_테스트() {
         // given
         Player player = new Player("밀란");
         player.draw(new Card(CardValue.FOUR, CardShape.DIAMOND));
@@ -61,7 +61,7 @@ public class PlayerTest {
     }
 
     @Test
-    void 가지고_있는_카드의_핪이_버스트인지_확인하는_테스트() {
+    void 플레이어가_가지고_있는_카드의_핪이_버스트인지_확인하는_테스트() {
         // given
         Player player = new Player("밀란");
         player.draw(new Card(CardValue.TEN, CardShape.DIAMOND));
@@ -147,6 +147,34 @@ public class PlayerTest {
 
         // then
         assertThat(firstCardName).isEqualTo(firstCard.getName());
+    }
+
+    @Test
+    void 플레이어_카드의_합이_21일때_카드를_뽑을_수_있는_상태인지_확인하는_기능_테스트() {
+        // given
+        Player player = new Player("밀란");
+        player.draw(new Card(CardValue.ACE, CardShape.CLOVER));
+        player.draw(new Card(CardValue.TEN, CardShape.DIAMOND));
+
+        // when
+        boolean canDraw = player.canDraw();
+
+        // then
+        assertThat(canDraw).isFalse();
+    }
+
+    @Test
+    void 플레이어_카드의_합이_20일때_카드를_뽑을_수_있는_상태인지_확인하는_기능_테스트() {
+        // given
+        Player player = new Player("밀란");
+        player.draw(new Card(CardValue.TEN, CardShape.CLOVER));
+        player.draw(new Card(CardValue.TEN, CardShape.DIAMOND));
+
+        // when
+        boolean canDraw = player.canDraw();
+
+        // then
+        assertThat(canDraw).isTrue();
     }
 
 }
