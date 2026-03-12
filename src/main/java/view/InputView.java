@@ -22,6 +22,7 @@ public class InputView {
         for (String name : names) {
             System.out.println(name + "의 배팅 금액은?");
             int rawBetAmount = sc.nextInt();
+            sc.nextLine();
             betAmounts.add(rawBetAmount);
         }
         return betAmounts;
