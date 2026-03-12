@@ -37,4 +37,8 @@ public class Player extends Participant {
     public boolean canHit() {
         return score() <= BLACKJACK_THRESHOLD;
     }
+
+    public BetAmount betAmount() {
+        return betAmount;
+    }
 }
