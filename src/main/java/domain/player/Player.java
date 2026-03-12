@@ -32,5 +32,6 @@ public abstract class Player {
         return handCard.isBlackJack();
     }
 
+    public abstract String getName();
 }
 

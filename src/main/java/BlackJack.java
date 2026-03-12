@@ -60,8 +60,8 @@ public class BlackJack {
     }
 
     private void printInitialDealInfo(Dealer dealer, Gamblers gamblers) {
-        OutputView.printInitMessage(gamblers.getNames());
-        OutputView.printDealerFirstCard(dealer.firstCard());
+        OutputView.printInitMessage(dealer.getName() ,gamblers.getNames());
+        OutputView.printDealerFirstCard(dealer.getName() ,dealer.firstCard());
 
         gamblers.forEach(this::printGamblerCardInfo);
     }
@@ -75,7 +75,7 @@ public class BlackJack {
     }
 
     private void gamblerTurn(Gambler gambler) {
-        while (!gambler.isBust() && askHit(gambler.getName()) && !isBlackJack(gambler)) {
+        while (!gambler.isBust() && !gambler.isBlackJack() && askHit(gambler.getName())) {
             gambler.deal(cardDeck);
             OutputView.printGamblerCards(gambler.getName(), PlayerCardInfo.from(gambler));
         }
@@ -85,7 +85,7 @@ public class BlackJack {
         }
     }
 
-    private boolean isBlackJack(Gambler gambler) {
+    private boolean checkBlackJack(Gambler gambler) {
         if (gambler.isBlackJack()) {
             OutputView.printPlayerBlackJack(gambler.getName());
             return true;
@@ -101,18 +101,18 @@ public class BlackJack {
 
     private void dealerTurn(Dealer dealer) {
         while (!dealer.canStand()) {
-            OutputView.printDealerHit();
+            OutputView.printDealerHit(dealer.getName());
             dealer.deal(cardDeck);
         }
     }
 
     private void printFinalPlayerInfo(Dealer dealer, Gamblers gamblers) {
-        OutputView.printFinalDealer(PlayerCardInfo.from(dealer));
+        OutputView.printFinalPlayer(dealer.getName() ,PlayerCardInfo.from(dealer));
         gamblers.forEach(this::printFinalGamblerCardInfo);
     }
 
     private void printFinalGamblerCardInfo(Gambler gambler) {
-        OutputView.printFinalGambler(gambler.getName(), PlayerCardInfo.from(gambler));
+        OutputView.printFinalPlayer(gambler.getName(), PlayerCardInfo.from(gambler));
     }
 
     private void printFinalResult(Dealer dealer, Gamblers gamblers) {

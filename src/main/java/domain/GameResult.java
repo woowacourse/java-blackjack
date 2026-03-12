@@ -7,6 +7,8 @@ import java.util.Map;
 
 public class GameResult {
 
+    private static final int DEALER_PROFIT_INVERSION = -1;
+
     private final Map<String, Integer> gamblerProfits;
     private final int dealerProfit;
 
@@ -32,7 +34,7 @@ public class GameResult {
                 .mapToInt(Integer::intValue)
                 .sum();
 
-        return -(totalGamblerProfit);
+        return totalGamblerProfit * DEALER_PROFIT_INVERSION;
     }
 
     public Map<String, Integer> gamblerProfits() {

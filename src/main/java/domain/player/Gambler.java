@@ -13,12 +13,13 @@ public class Gambler extends Player {
         this.betting = new Betting(amount);
     }
 
-    public String getName() {
-        return name.name();
-    }
-
     public int calculateReward(MatchResult matchResult) {
         return matchResult.calculateReward(betting.amount());
+    }
+
+    @Override
+    public String getName() {
+        return name.name();
     }
 
 }
