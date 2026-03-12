@@ -1,10 +1,11 @@
 package domain.gameplaying;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import domain.gameplaying.strategy.RandomStrategy;
-import domain.gameplaying.strategy.AceDrawStrategy;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -71,7 +72,7 @@ class ParticipantTest {
     @DisplayName("A카드 드로우 시 버스트 상태라면 1로 처리한다.")
     void A카드_1처리_확인() {
         Hand customHand = new Hand(
-                new AceDrawStrategy(),
+                () -> new Card(CardRank.ACE, CardMark.SPADE),
                 List.of(new Card(CardRank.QUEEN, CardMark.SPADE),
                         new Card(CardRank.EIGHT, CardMark.HEART)));
 

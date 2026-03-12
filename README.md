@@ -41,7 +41,7 @@
 - [x] 패키지 네이밍
 - [ ] Participant 사용
 - [ ] ScoreBoard 리팩토링
-- [x] ParticiapntTest
+- [x] ParticiapntTest 람다
 
 
 ## 리팩토링
