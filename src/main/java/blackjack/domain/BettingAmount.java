@@ -1,5 +1,8 @@
 package blackjack.domain;
 
+import static blackjack.util.constant.ErrorMessage.AMOUNT_MINUS;
+import static blackjack.util.constant.ErrorMessage.AMOUNT_ZERO;
+
 public class BettingAmount {
 
     private final int amount;
@@ -20,13 +23,13 @@ public class BettingAmount {
 
     private void minus(int amount) {
         if (amount < 0) {
-            throw new IllegalArgumentException("[ERROR] 베팅 금액은 음수일 수 없습니다.");
+            throw new IllegalArgumentException(AMOUNT_MINUS);
         }
     }
 
     private void zero(int amount) {
         if (amount == 0) {
-            throw new IllegalArgumentException("[ERROR] 배팅 금액은 0일 수 없습니다.");
+            throw new IllegalArgumentException(AMOUNT_ZERO);
         }
     }
 }

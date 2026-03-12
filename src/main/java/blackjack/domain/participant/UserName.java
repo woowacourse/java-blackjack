@@ -1,6 +1,8 @@
 package blackjack.domain.participant;
 
 import static blackjack.util.constant.Constants.MAX_LENGTH;
+import static blackjack.util.constant.ErrorMessage.USER_NAME_EMPTY;
+import static blackjack.util.constant.ErrorMessage.USER_NAME_LENGTH;
 
 public record UserName(
         String name
@@ -13,10 +15,10 @@ public record UserName(
 
     private void validate(String name) {
         if (name.isBlank()) {
-            throw new IllegalArgumentException("[ERROR] 플레이어 이름은 공백이 될 수 없습니다.");
+            throw new IllegalArgumentException(USER_NAME_EMPTY);
         }
         if (name.length() > MAX_LENGTH) {
-            throw new IllegalArgumentException("[ERROR] 플레이어 이름은 5자가 넘을 수 없습니다.");
+            throw new IllegalArgumentException(USER_NAME_LENGTH);
         }
     }
 }

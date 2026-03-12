@@ -1,5 +1,7 @@
 package blackjack.view;
 
+import static blackjack.util.constant.ErrorMessage.ERROR_MESSAGE_PREFIX;
+
 import blackjack.domain.GameResult;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +13,10 @@ public class OutputView {
 
     public static void printEmptyLine() {
         System.out.println();
+    }
+
+    public static void printErrorMessage(String errorMessage) {
+        System.out.println(ERROR_MESSAGE_PREFIX + errorMessage);
     }
 
     public static void printGameSettingMessage(String dealerName, List<String> playersName) {

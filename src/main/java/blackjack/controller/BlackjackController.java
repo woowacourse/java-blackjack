@@ -24,19 +24,23 @@ public class BlackjackController {
     }
 
     public void run() {
-        Users users = createUsers();
-        Dealer dealer = new Dealer();
+        try {
+            Users users = createUsers();
+            Dealer dealer = new Dealer();
 
-        gameService.settingCards(users, dealer);
-        printGameSettingResult(users, dealer);
+            gameService.settingCards(users, dealer);
+            printGameSettingResult(users, dealer);
 
-        getMoreCards(users);
-        if (!users.isAllBurst()) {
-            getMoreCardsForDealer(dealer);
+            getMoreCards(users);
+            if (!users.isAllBurst()) {
+                getMoreCardsForDealer(dealer);
+            }
+
+            printGameResult(users, dealer);
+            printWinningResult(users, dealer);
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
         }
-
-        printGameResult(users, dealer);
-        printWinningResult(users, dealer);
     }
 
     private Users createUsers() {
