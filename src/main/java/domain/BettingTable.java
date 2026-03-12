@@ -26,6 +26,10 @@ public class BettingTable {
         return -totalPlayerProfit;
     }
 
+    public long getPlayerMoneyAmount(Player player){
+        return moneyTable.get(player).getMoney();
+    }
+
     public Map<Player, Money> getMoneyTable() {
         return new LinkedHashMap<>(moneyTable);
     }
