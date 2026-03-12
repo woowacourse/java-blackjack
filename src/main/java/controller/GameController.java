@@ -26,15 +26,15 @@ public class GameController {
     }
 
     public void run() {
-        Players players = getPlayers();
+        Players players = readPlayers();
         Dealer dealer = new Dealer();
 
-        initializeGame(gameManager, dealer, players);
-        playGame(players, gameManager, dealer);
-        resultPhase(players, dealer);
+        readyPhase(dealer, players);
+        playPhase(dealer, players);
+        resultPhase(dealer, players);
     }
 
-    private void resultPhase(Players players, Dealer dealer) {
+    private void resultPhase(Dealer dealer, Players players) {
         Referee referee = new Referee();
         Map<String, Integer> scoreByPlayerNames = new LinkedHashMap<>();
         for (Player player : players) {
@@ -44,12 +44,12 @@ public class GameController {
         outputView.printResult(gameResultDto);
     }
 
-    private void playGame(Players players, GameManager gameManager, Dealer dealer) {
-        playPlayersTurn(players, gameManager);
-        playDealerTurn(players, gameManager, dealer);
+    private void playPhase(Dealer dealer, Players players) {
+        playPlayersTurn(players);
+        playDealerTurn(players, dealer);
     }
 
-    private void playDealerTurn(Players players, GameManager gameManager, Dealer dealer) {
+    private void playDealerTurn(Players players, Dealer dealer) {
         while (dealer.canReceive()) {
             gameManager.dealCard(dealer);
             outputView.printCompleteDealerTurn();
@@ -65,16 +65,16 @@ public class GameController {
         outputView.printNewLine();
     }
 
-    private void playPlayersTurn(Players players, GameManager gameManager) {
+    private void playPlayersTurn(Players players) {
         for (Player player : players) {
-            playPlayerTurn(gameManager, player);
+            playPlayerTurn(player);
         }
         outputView.printNewLine();
     }
 
-    private void playPlayerTurn(GameManager gameManager, Player player) {
+    private void playPlayerTurn(Player player) {
         while (shouldDrawCard(player)) {
-            drawAndPrint(gameManager, player);
+            drawAndPrint(player);
         }
     }
 
@@ -90,13 +90,13 @@ public class GameController {
         return !command.isNo();
     }
 
-    private void drawAndPrint(GameManager gameManager, Player player) {
+    private void drawAndPrint(Player player) {
         gameManager.dealCard(player);
         outputView.printParticipantCard(player.getName(),
                 gameManager.getCardsResult(player).getFormattedCards());
     }
 
-    private void initializeGame(GameManager gameManager, Dealer dealer, Players players) {
+    private void readyPhase(Dealer dealer, Players players) {
         gameManager.dealStartingCards(dealer);
         gameManager.dealCardTo(players, 2);
 
@@ -110,7 +110,7 @@ public class GameController {
         outputView.printNewLine();
     }
 
-    private Players getPlayers() {
+    private Players readPlayers() {
         String rawPlayerName = inputView.readPlayerName();
         return PlayerParser.parseToPlayers(rawPlayerName);
     }
