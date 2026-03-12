@@ -59,9 +59,8 @@ class PlayerTest {
         
         Dealer dealer = new Dealer();
         dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
-        dealer.receiveCard(new Card(Rank.TEN, Suit.HEART));
-        System.out.println(dealer.getScore());
-        dealer.receiveCard(new Card(Rank.TWO, Suit.CLOVER));
+        dealer.receiveCard(new Card(Rank.SIX, Suit.HEART));
+        dealer.receiveCard(new Card(Rank.SIX, Suit.CLOVER));
         
         assertThat(dealer.determineGameResult(player).opposite()).isEqualTo(GameResult.WIN);
     }
