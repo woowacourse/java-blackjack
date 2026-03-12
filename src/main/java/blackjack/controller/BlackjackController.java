@@ -3,9 +3,12 @@ package blackjack.controller;
 import static blackjack.util.Parser.splitDelimiter;
 import static blackjack.view.InputView.readPlayNames;
 
+import blackjack.domain.BetAmount;
 import blackjack.domain.BlackjackGame;
 import blackjack.domain.MatchResult;
+import blackjack.domain.Name;
 import blackjack.domain.Player;
+import blackjack.domain.Players;
 import blackjack.dto.DealResult;
 import blackjack.dto.GameResult;
 import blackjack.dto.PlayerHandResult;
@@ -13,6 +16,7 @@ import blackjack.service.RandomShuffleStrategy;
 import blackjack.util.Parser;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -27,14 +31,33 @@ public class BlackjackController {
 
     private BlackjackGame readyBlackjackGame() {
         List<String> playerNames = inputName();
-        RandomShuffleStrategy shuffleStrategy = new RandomShuffleStrategy();
-        return BlackjackGame.create(playerNames, shuffleStrategy);
+        Players players = generatePlayers(playerNames);
+        Players playersWithBetAmount = inputBettingAmounts(players);
+        return BlackjackGame.create(playersWithBetAmount, new RandomShuffleStrategy());
     }
 
     private List<String> inputName() {
         String input = readPlayNames();
         Parser.notEmpty(input);
         return splitDelimiter(input);
+    }
+
+    private Players generatePlayers(List<String> playerNames) {
+        List<Player> players = new ArrayList<>();
+        for (String playerName : playerNames) {
+            players.add(Player.of(Name.of(playerName)));
+        }
+        return Players.of(players);
+    }
+
+    private Players inputBettingAmounts(Players players) {
+        List<Player> playersWithBet = new ArrayList<>();
+        for (Player player : players.getPlayers()) {
+            Player playerWithBet = player.withBetAmount(
+                    BetAmount.of(Parser.parseAmount(InputView.readBettingAmount(player.name()))));
+            playersWithBet.add(playerWithBet);
+        }
+        return Players.of(playersWithBet);
     }
 
     private void dealAndPrintResult(BlackjackGame blackjackGame) {
