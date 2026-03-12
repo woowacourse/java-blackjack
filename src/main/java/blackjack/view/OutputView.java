@@ -87,7 +87,7 @@ public class OutputView {
     
     public void printFinalProfit(TotalWinningResult totalWinningResult) {
         printNewLine();
-        printLine("## 최종 승패");
+        printLine("## 최종 수익");
         printDealerProfit(totalWinningResult);
         printPlayersProfit(totalWinningResult);
     }
