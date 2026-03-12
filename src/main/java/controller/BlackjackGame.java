@@ -4,7 +4,10 @@ import static config.BlackjackGameConstant.*;
 
 import domain.participant.ParticipantInitialInformation;
 import domain.participant.dto.ParticipantHandDtoMapper;
+import domain.result.BettingResult;
+import domain.result.BettingResultAnalyzer;
 import domain.result.GameResultAnalyzer;
+import domain.result.dto.BettingProfitDto;
 import domain.result.dto.GameResultDto;
 import domain.card.CardDeck;
 import domain.card.CardDeckInitializer;
@@ -46,7 +49,14 @@ public class BlackjackGame {
         proceedDealersTurn(dealer);
 
         printAllParticipantsFinalHandResult(dealer, players);
-        printFinalWinningStatistic(players, dealer);
+       //printFinalWinningStatistic(players, dealer);
+        printBettingResult(players, dealer);
+    }
+
+    private void printBettingResult(Players players, Dealer dealer) {
+        List<BettingResult> bettingResults = BettingResultAnalyzer.analyze(players, dealer);
+        List<BettingProfitDto> bettingProfitDtos = bettingResults.stream().map(BettingProfitDto::from).toList();
+        view.printFinalBettingResult(bettingProfitDtos);
     }
 
     private void printFinalWinningStatistic(Players players, Dealer dealer) {

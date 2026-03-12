@@ -13,8 +13,10 @@ public class OutputWriter {
     private static final String ASK_DRAW_CARD_GUIDE_MESSAGE = "%s는 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private static final String DEALER_ADDITIONAL_DRAW_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String FINAL_RESULT_TITLE_MESSAGE = "## 최종 승패";
+    private static final String FINAL_BETTING_RESULT_TITLE_MESSAGE = "## 최종 수익";
     private static final String FINAL_RESULT_PLAYER = "%s: %s";
     private static final String FINAL_RESULT_DEALER = "딜러: %s";
+    private static final String FINAL_BETTING_RESULT = "%s: %d";
     private static final String PLAYER_HAND_MESSAGE = "%s카드: %s";
     private static final String CARD_SUM_RESULT_MESSAGE = "%s카드: %s - 결과: %d";
     private static final String ERROR_MESSAGE_PREFIX = "[ERROR] ";
@@ -82,4 +84,13 @@ public class OutputWriter {
         System.out.print(LINE_SEPARATOR);
     }
 
+    public void printFinalBettingResultTitleMessage() {
+        System.out.print(LINE_SEPARATOR);
+        System.out.println(FINAL_BETTING_RESULT_TITLE_MESSAGE);
+    }
+
+    public void printBettingResult(String playerName, long profit) {
+        System.out.printf(FINAL_BETTING_RESULT, playerName, profit);
+        System.out.print(LINE_SEPARATOR);
+    }
 }

@@ -1,8 +1,8 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.card.Hand;
 import domain.card.CardDeck;
+import domain.card.Hand;
 import java.util.List;
 
 public abstract class Participant {

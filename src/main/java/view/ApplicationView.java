@@ -2,6 +2,7 @@ package view;
 
 import domain.betiing.BetAmount;
 import domain.participant.ParticipantInitialInformation;
+import domain.result.dto.BettingProfitDto;
 import domain.result.dto.GameResultDto;
 import domain.participant.ParticipantName;
 import domain.participant.dto.ParticipantHandDto;
@@ -86,6 +87,12 @@ public class ApplicationView {
         writer.printDealerAdditionalDrawCardMessage();
     }
 
+    public void printFinalBettingResult(List<BettingProfitDto> bettingProfitDtos) {
+        writer.printFinalBettingResultTitleMessage();
+        bettingProfitDtos.forEach(bettingProfitDto ->
+                writer.printBettingResult(bettingProfitDto.playerName(), bettingProfitDto.totalProfit()));
+    }
+
     public void printFinalResultMessage(GameResultDto resultAnalysis) {
         writer.printFinalResultTitleMessage();
         printAllPlayersResult(resultAnalysis);
@@ -116,5 +123,4 @@ public class ApplicationView {
             }
         }
     }
-
 }
