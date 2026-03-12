@@ -41,39 +41,38 @@ public class BlackJackGameController {
     }
 
     private List<Player> initPlayer(List<String> playerNames) {
-        List<Player> players = playerNames.stream()
-                .map(Player::from)
-                .toList();
+        List<Player> players = playerNames.stream().map(Player::from).toList();
         return players;
     }
 
     private void playGame(BlackJackGame blackJackGame) {
-        for (Player player : blackJackGame.getPlayers()) {
-            while (blackJackGame.canPlayerReceiveCard(player)) {
-                if (isStopGame(player)) {
-                    break;
-                }
-                blackJackGame.playGameWithPlayer(player);
-                OutputView.printCards(ParticipantCardsDto.from(player));
-            }
-        }
+        blackJackGame.getPlayers().forEach(player -> playGameWithPlayer(blackJackGame, player));
         if (blackJackGame.canDealerReceiveCard()) {
             blackJackGame.playGameWithDealer();
             OutputView.printDealerMessage();
         }
     }
 
-    private static void endGame(BlackJackGame blackJackGame,
-                                Result gameResult) {
+    private void playGameWithPlayer(BlackJackGame blackJackGame, Player player) {
+        while (blackJackGame.canPlayerReceiveCard(player)) {
+            if (isStopGame(player)) {
+                break;
+            }
+            blackJackGame.playGameWithPlayer(player);
+            OutputView.printCards(ParticipantCardsDto.from(player));
+        }
+    }
+
+    private static void endGame(BlackJackGame blackJackGame, Result gameResult) {
         OutputView.printFinalCards(ParticipantCardsDto.from(blackJackGame.getDealer()));
         printFinalScores(blackJackGame);
         OutputView.printGameResult(gameResult.getGameResult());
     }
 
     private static void printFinalScores(BlackJackGame blackJackGame) {
-        for (Player player : blackJackGame.getPlayers()) {
-            OutputView.printFinalCards(ParticipantCardsDto.from(player));
-        }
+        blackJackGame.getPlayers().stream()
+                .map(ParticipantCardsDto::from)
+                .forEach(OutputView::printFinalCards);
     }
 
     private boolean isStopGame(Player player) {
