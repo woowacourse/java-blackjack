@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.Test;
 
-class PlayerNameTest {
+class ParticipantNameTest {
 
     @Test
     void 유저_이름이_공백일_경우_예외_발생() {
@@ -12,7 +12,7 @@ class PlayerNameTest {
         String name = " ";
 
         // when & then
-        assertThatThrownBy(() -> new PlayerName(name))
+        assertThatThrownBy(() -> new ParticipantName(name))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("공백");
     }
@@ -23,7 +23,7 @@ class PlayerNameTest {
         String name = "흑곰흑곰흑곰";
 
         // when & then
-        assertThatThrownBy(() -> new PlayerName(name))
+        assertThatThrownBy(() -> new ParticipantName(name))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("5자");
     }

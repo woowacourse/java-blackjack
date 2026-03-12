@@ -1,12 +1,12 @@
 package blackjack.domain;
 
-public record PlayerName(
+public record ParticipantName(
         String name
 ) {
 
     private static final int MAX_NAME_LENGTH = 5;
 
-    public PlayerName {
+    public ParticipantName {
         validate(name);
     }
 
