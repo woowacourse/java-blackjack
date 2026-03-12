@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Map;
 import model.BlackJack;
 import model.Card;
-import model.CardNumber;
-import model.Suits;
 import model.participant.Dealer;
 import model.participant.Participant;
 import model.Participants;

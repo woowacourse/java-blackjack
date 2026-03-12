@@ -1,11 +1,12 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import model.participant.Dealer;
 import model.participant.Participant;
 import model.participant.Player;
@@ -16,11 +17,11 @@ public final class BlackJack {
     private static final String DEALER_NAME = "딜러";
 
     private final Participants participants;
-    private final List<Card> pickedCards;
+    private final Set<Card> pickedCards;
 
     private BlackJack(Participants participants) {
         this.participants = participants;
-        this.pickedCards = new ArrayList<>();
+        this.pickedCards = new HashSet<>();
     }
 
     public static BlackJack from(Participants participants) {
