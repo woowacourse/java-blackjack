@@ -11,9 +11,11 @@ import blackjack.view.OutputView;
 import blackjack.view.dto.DealerInitialHand;
 import blackjack.view.dto.ParticipantHandScore;
 import blackjack.view.dto.PlayerHand;
+import blackjack.view.dto.PlayerProfit;
 import blackjack.view.dto.TotalWinningResult;
 import java.util.List;
 import java.util.function.Supplier;
+import java.util.stream.IntStream;
 
 public class BlackjackRunner {
     
@@ -138,8 +140,13 @@ public class BlackjackRunner {
     private TotalWinningResult determineTotalWinningResult(Participants participants) {
         Dealer dealer = participants.getDealer();
         List<Player> players = participants.getPlayers();
+        List<Integer> playersProfit = dealer.determinePlayersProfit(players);
+        int dealerProfit = dealer.determineProfit(players);
         
-        return TotalWinningResult.of(dealer, players);
+        List<PlayerProfit> playerResults = IntStream.range(0, players.size())
+                .mapToObj(index -> PlayerProfit.of(players.get(index), playersProfit.get(index)))
+                .toList();
+        return new TotalWinningResult(dealerProfit, playerResults);
     }
     
     private <T> T retry(Supplier<T> supplier) {
