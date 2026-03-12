@@ -28,12 +28,12 @@ public class Player extends Participant {
             return GameResult.LOSE;
         }
 
-        if (dealer.isBust()) {
-            return GameResult.WIN;
-        }
-
         if (isBlackJack()) {
             return judgeBlackJackResult(dealer);
+        }
+
+        if (dealer.isBust()) {
+            return GameResult.WIN;
         }
 
         return judgeNearestBlackJackPoint(dealer);
