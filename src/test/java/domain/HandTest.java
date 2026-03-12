@@ -71,4 +71,27 @@ public class HandTest {
 
         assertThat(hand.isBust()).isFalse();
     }
+
+    @Test
+    void 첫_번째_카드를_확인한다() {
+        Hand hand = new Hand();
+        hand.addCard(new Card(ACE, SPADE));
+        hand.addCard(new Card(KING, HEART));
+
+        String firstCard = hand.getFirstCard();
+
+        assertThat(firstCard).isEqualTo("A스페이드");
+    }
+
+    @Test
+    void 핸드에_존재하는_카드의_숫자를_확인한다() {
+        Hand hand = new Hand();
+        hand.addCard(new Card(ACE, SPADE));
+        hand.addCard(new Card(KING, HEART));
+        hand.addCard(new Card(SEVEN, DIAMOND));
+
+        int handSize = hand.size();
+
+        assertThat(handSize).isEqualTo(3);
+    }
 }

@@ -104,7 +104,7 @@ class GameManagerTest {
 
         manager.drawDealerCard();
 
-        assertThat(dealer.showHand().size()).isEqualTo(1);
+        assertThat(dealer.showHand()).hasSize(1);
     }
 
     @Test

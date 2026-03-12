@@ -10,7 +10,7 @@ public class Dealer extends Participant {
     }
 
     public String getOpenCard() {
-        return hand.showHand().getFirst();
+        return hand.getFirstCard();
     }
 
     @Override

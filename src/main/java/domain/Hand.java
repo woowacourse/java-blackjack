@@ -13,6 +13,14 @@ public class Hand {
         cards.add(card);
     }
 
+    public String getFirstCard() {
+        return cards.getFirst().getName();
+    }
+
+    public int size() {
+        return cards.size();
+    }
+
     public List<String> showHand() {
         return cards.stream()
                 .map(Card::getName)
