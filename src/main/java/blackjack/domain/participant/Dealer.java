@@ -5,8 +5,6 @@ import static blackjack.util.constant.Constants.HIT_THRESHOLD;
 
 public class Dealer extends User {
 
-
-
     public Dealer() {
         super(DEALER_NAME);
     }
