@@ -85,8 +85,11 @@ public class BlackjackController {
     }
 
     private boolean canContinueTurn(Player player) {
+        if (player.isBust()) {
+            return false;
+        }
         String hitOrStand = InputView.askHitOrStand(player.getName());
-        return isHit(hitOrStand) && !player.isBust();
+        return isHit(hitOrStand);
     }
 
     private void drawCard(Player player) {
