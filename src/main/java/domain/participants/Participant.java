@@ -1,6 +1,5 @@
 package domain.participants;
 
-import domain.bet.Betting;
 import domain.card.Hand;
 import domain.card.vo.Card;
 import domain.state.Started;
@@ -11,13 +10,11 @@ public abstract class Participant {
     private static final int MAX_NAME_SIZE = 7;
 
     protected final String name;
-    protected final Betting betting;
     protected State state;
 
-    protected Participant(String name, Hand hand, Betting betting) {
+    protected Participant(String name, Hand hand) {
         validateNameLength(name);
         this.name = name;
-        this.betting = betting;
         this.state = getStartState(hand);
     }
 

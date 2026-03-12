@@ -8,10 +8,12 @@ import domain.hitStrategy.UntilBustHitStrategy;
 public class Player extends Participant {
     private static final HitStrategy DEFAULT_HIT_STRATEGY = new UntilBustHitStrategy();
 
+    protected final Betting betting;
     private final HitStrategy hitStrategy;
 
-    public Player(String name, Hand hand, Betting cost, HitStrategy hitStrategy) {
-        super(name, hand, cost);
+    public Player(String name, Hand hand, Betting betting, HitStrategy hitStrategy) {
+        super(name, hand);
+        this.betting = betting;
         this.hitStrategy = hitStrategy;
     }
 
@@ -20,7 +22,7 @@ public class Player extends Participant {
     }
 
     public Integer getProfit(Dealer dealer) {
-        return state.getProfit(dealer.getState(), super.betting.amount());
+        return state.getProfit(dealer.getState(), betting.amount());
     }
 
     @Override
