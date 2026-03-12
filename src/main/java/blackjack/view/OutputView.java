@@ -43,8 +43,8 @@ public class OutputView {
     }
 
     private void printResultOfPlayers(ProfitResult profitResult) {
-        profitResult.profitResult().forEach((playerName, bettingAmount) ->
-                System.out.println(playerName + ": " + bettingAmount)
+        profitResult.profitResult().forEach((playerName, profit) ->
+                System.out.println(playerName + ": " + profit)
         );
     }
 
