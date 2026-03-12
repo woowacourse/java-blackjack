@@ -1,6 +1,8 @@
 package blackjack.domain;
 
 import blackjack.dto.GameResult;
+import blackjack.dto.PlayerProfitResult;
+import blackjack.dto.ProfitResult;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -97,6 +99,26 @@ public class BlackjackGame {
                 "패", countMatchResult(playerResult, MatchResult.WIN),
                 "무", countMatchResult(playerResult, MatchResult.DRAW)
         );
+    }
+
+    public ProfitResult calculateProfits() {
+        List<PlayerProfitResult> playerProfits = new ArrayList<>();
+
+        for (Player player : players.getPlayers()) {
+            playerProfits.add(calculatePlayerProfit(player));
+        }
+
+        double dealerProfit = playerProfits.stream()
+                .mapToDouble(PlayerProfitResult::profit)
+                .sum() * -1;
+
+        return new ProfitResult(dealerProfit, playerProfits);
+    }
+
+    private PlayerProfitResult calculatePlayerProfit(Player player) {
+        BettingResult outcome = BettingResult.of(MatchResult.of(player, dealer), player);
+        double profit = outcome.calculateProfit(player.betAmount());
+        return new PlayerProfitResult(player.name(), profit);
     }
 
     private long countMatchResult(Map<Player, MatchResult> playerResults, MatchResult target) {
