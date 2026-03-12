@@ -76,7 +76,10 @@ public class BlackjackGame {
         return gameTable.checkBlackjack(playerName);
     }
 
-    public void applyBlackjackBonus(String playerName) {
-        gameTable.applyBlackjackBonus(playerName);
+    public void applyBlackjackBonus() {
+        getMemberNames().stream()
+                .filter(this::isNotDealer)
+                .filter(this::hasBlackjack)
+                .forEach(gameTable::applyBlackjackBonus);
     }
 }

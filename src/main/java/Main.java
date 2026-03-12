@@ -15,7 +15,7 @@ public class Main {
         BlackjackGame game = new BlackjackGame(initPlayer(inputView, playerNames));
         game.initialDeal();
         outputView.printInitialStatus(game.getDealerName(), memberFirstHands(game));
-        checkBlackjackBonus(game);
+        game.applyBlackjackBonus();
         game.getMemberNames().stream()
                 .filter(game::isNotDealer)
                 .filter(playerName -> !game.hasBlackjack(playerName))
@@ -30,13 +30,6 @@ public class Main {
             players.put(playerName, amount);
         }
         return players;
-    }
-
-    private static void checkBlackjackBonus(BlackjackGame game) {
-        game.getMemberNames().stream()
-                .filter(game::isNotDealer)
-                .filter(game::hasBlackjack)
-                .forEach(game::applyBlackjackBonus);
     }
 
     private static List<MemberStatus> memberFirstHands(BlackjackGame game) {
