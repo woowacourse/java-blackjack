@@ -1,8 +1,11 @@
 package domain.participant;
 
+import domain.GameResult;
 import domain.Money;
+import domain.WinningStatus;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -34,6 +37,28 @@ public class Players {
 
     public List<Player> getPlayers() {
         return players;
+    }
+
+    public void applyRoundResults(GameResult gameResult) {
+        Map<String, WinningStatus> statuses = gameResult.getPlayerWinningStatus();
+
+        for (Player player : players) {
+            WinningStatus status = statuses.get(player.name());
+            player.applyRoundResult(status);
+        }
+    }
+
+    public int totalProfit() {
+        int profit = 0;
+        for (Player player : players) {
+            profit += player.profit();
+        }
+
+        return profit;
+    }
+
+    public int dealerProfit() {
+        return -totalProfit();
     }
 
     private void validatePlayerCount(List<Player> players) {

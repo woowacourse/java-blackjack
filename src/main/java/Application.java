@@ -8,9 +8,8 @@ public class Application {
     public static void main(String[] args) {
         InputView inputView = new InputView();
         OutputView outputView = new OutputView();
-        ShuffleStrategy shuffleStrategy = new RandomShuffleStrategy();
 
-        BlackjackGame blackjackGame = new BlackjackGame(inputView, outputView, shuffleStrategy);
+        BlackjackGame blackjackGame = new BlackjackGame(inputView, outputView);
         blackjackGame.run();
     }
 }

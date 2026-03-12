@@ -2,16 +2,14 @@ package controller;
 
 import domain.Deck;
 import domain.GameResult;
-import domain.WinningStatus;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
-import domain.strategy.ShuffleStrategy;
+import domain.strategy.RandomShuffleStrategy;
 import dto.PlayerResultInfo;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import view.InputView;
 import view.OutputView;
 
@@ -19,13 +17,10 @@ public class BlackjackGame {
     public static final int INITIAL_CARDS_COUNT = 2;
     private final InputView inputView;
     private final OutputView outputView;
-    private final ShuffleStrategy shuffleStrategy;
 
-    public BlackjackGame(InputView inputView, OutputView outputView,
-                         ShuffleStrategy shuffleStrategy) {
+    public BlackjackGame(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.shuffleStrategy = shuffleStrategy;
     }
 
     public void run() {
@@ -34,7 +29,7 @@ public class BlackjackGame {
         Dealer dealer = new Dealer();
         initializeBetting(players);
 
-        Deck deck = Deck.createDeck(shuffleStrategy);
+        Deck deck = Deck.createDeck(new RandomShuffleStrategy());
 
         playGame(players, dealer, deck);
     }
@@ -96,31 +91,19 @@ public class BlackjackGame {
         outputView.printBlankLine();
 
         GameResult gameResult = new GameResult(players, dealer);
-        List<PlayerResultInfo> playerResultInfos = createPlayerResultInfos(players, gameResult);
-        int dealerProfit = calculateDealerProfit(playerResultInfos);
+        players.applyRoundResults(gameResult);
+
+        List<PlayerResultInfo> playerResultInfos = createPlayerResultInfos(players);
+        int dealerProfit = players.dealerProfit();
 
         outputView.printGameResult(dealerProfit, playerResultInfos);
     }
 
-    private List<PlayerResultInfo> createPlayerResultInfos(Players players, GameResult gameResult) {
+    private List<PlayerResultInfo> createPlayerResultInfos(Players players) {
         List<PlayerResultInfo> resultInfos = new ArrayList<>();
-        Map<String, WinningStatus> playerWinningStatus = gameResult.getPlayerWinningStatus();
-
         for (Player player : players.getPlayers()) {
-            WinningStatus status = playerWinningStatus.get(player.name());
-            player.applyRoundResult(status);
             resultInfos.add(new PlayerResultInfo(player.name(), player.profit()));
         }
-
         return resultInfos;
-    }
-
-    private int calculateDealerProfit(List<PlayerResultInfo> playerResultInfos) {
-        int dealerProfit = 0;
-        for (PlayerResultInfo playerResultInfo : playerResultInfos) {
-            dealerProfit -= playerResultInfo.profit();
-        }
-
-        return dealerProfit;
     }
 }
