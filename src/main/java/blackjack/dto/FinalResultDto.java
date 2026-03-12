@@ -3,11 +3,10 @@ package blackjack.dto;
 import blackjack.domain.Dealer;
 import blackjack.domain.DealerResult;
 import blackjack.domain.GameResult;
-import blackjack.domain.Player;
 
+import blackjack.domain.Players;
 import java.util.Collection;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 public record FinalResultDto(
@@ -15,10 +14,10 @@ public record FinalResultDto(
         DealerResult dealerResult
 ) {
 
-    public static FinalResultDto of(List<Player> players, Dealer dealer) {
+    public static FinalResultDto of(Players players, Dealer dealer) {
         Map<String, GameResult> playerGameResultMap = new LinkedHashMap<>();
-        players.forEach(player ->
-                playerGameResultMap.put(player.getNickname(), player.calculateGameResult(dealer)));
+        players.all().forEach(player ->
+                playerGameResultMap.put(player.getName().toString(), player.calculateGameResult(dealer)));
         long dealerWinCount = countByGameResult(playerGameResultMap.values(), GameResult.LOSE);
         long dealerDrawCount = countByGameResult(playerGameResultMap.values(), GameResult.DRAW);
         long dealerLoseCount = countByGameResult(playerGameResultMap.values(), GameResult.WIN);
