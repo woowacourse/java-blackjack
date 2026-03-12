@@ -1,6 +1,6 @@
 package domain;
 
-import constant.PolicyConstant;
+import exception.BlackjackException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -32,14 +32,13 @@ public class Players {
 
     private void validatePlayerDuplication(List<String> names) {
         if (new HashSet<>(names).size() != names.size()) {
-            throw new IllegalArgumentException(PolicyConstant.ERROR_PREFIX + PLAYER_DUPLICATED);
+            throw new BlackjackException(PLAYER_DUPLICATED);
         }
     }
 
     private void validatePlayerCount(int playerCount) {
-        if (!(PLAYER_MIN_COUNT <= playerCount
-                && playerCount <= PLAYER_MAX_COUNT)) {
-            throw new IllegalArgumentException(PolicyConstant.ERROR_PREFIX + PLAYER_COUNT_OUT_OF_RANGE);
+        if (!(PLAYER_MIN_COUNT <= playerCount && playerCount <= PLAYER_MAX_COUNT)) {
+            throw new BlackjackException(PLAYER_COUNT_OUT_OF_RANGE);
         }
     }
 

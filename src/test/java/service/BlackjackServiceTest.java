@@ -2,7 +2,7 @@ package service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import config.ControllerConfig;
+import factory.BlackjackFactory;
 import constant.HitOrStand;
 import domain.Rank;
 import constant.Result;
@@ -23,8 +23,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class BlackjackServiceTest {
 
-    private final ControllerConfig controllerConfig = new ControllerConfig();
-    private final BlackjackService blackjackService = controllerConfig.blackjackService();
+    private final BlackjackFactory blackjackFactory = new BlackjackFactory();
+    private final BlackjackService blackjackService = blackjackFactory.blackjackService();
 
     @Nested
     class CreatePlayersTest {

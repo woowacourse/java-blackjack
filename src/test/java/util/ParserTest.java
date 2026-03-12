@@ -18,7 +18,7 @@ class ParserTest {
             String delimiter = ",";
 
             // when
-            List<String> actuals = Parser.parseInput(input, delimiter);
+            List<String> actuals = Parser.parseInput(input);
 
             // then
             List<String> expecteds = List.of("a", "b", "c");
@@ -35,7 +35,7 @@ class ParserTest {
             String delimiter = ",";
 
             // when
-            List<String> actuals = Parser.parseInput(input, delimiter);
+            List<String> actuals = Parser.parseInput(input);
 
             // then
             List<String> expecteds = List.of("a", "b", "c");
@@ -52,7 +52,7 @@ class ParserTest {
             String delimiter = ",";
 
             // when
-            List<String> actuals = Parser.parseInput(input, delimiter);
+            List<String> actuals = Parser.parseInput(input);
 
             // then
             List<String> expecteds = List.of("a b", "b  c", "c   d");

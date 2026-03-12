@@ -1,6 +1,6 @@
 package domain;
 
-import constant.PolicyConstant;
+import exception.BlackjackException;
 
 public record PlayerName(String name) {
 
@@ -21,13 +21,13 @@ public record PlayerName(String name) {
 
     private void validatePlayerNameLength(String name) {
         if (!(PLAYER_NAME_MIN_LENGTH <= name.length() && name.length() <= PLAYER_NAME_MAX_LENGTH)) {
-            throw new IllegalArgumentException(PolicyConstant.ERROR_PREFIX + PLAYER_NAME_LENGTH_OUT_OF_RANGE);
+            throw new BlackjackException(PLAYER_NAME_LENGTH_OUT_OF_RANGE);
         }
     }
 
     private void validateNotBlank(String name) {
         if (name.isBlank()) {
-            throw new IllegalArgumentException(PolicyConstant.ERROR_PREFIX + PLAYER_NAME_BLANK);
+            throw new BlackjackException(PLAYER_NAME_BLANK);
         }
     }
 }

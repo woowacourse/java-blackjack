@@ -1,5 +1,6 @@
 package constant;
 
+import exception.BlackjackException;
 import java.util.Arrays;
 
 public enum HitOrStand {
@@ -19,7 +20,7 @@ public enum HitOrStand {
         return Arrays.stream(values())
                 .filter(hs -> hs.getHitOrStand().equals(hitOrStand.strip()))
                 .findFirst()
-                .orElseThrow(() -> new IllegalAccessError(PolicyConstant.ERROR_PREFIX + INVALID_YES_NO_INPUT));
+                .orElseThrow(() -> new BlackjackException(INVALID_YES_NO_INPUT));
     }
 
     public String getHitOrStand() {
