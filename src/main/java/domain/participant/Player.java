@@ -25,6 +25,20 @@ public class Player extends Participant {
         return getScore() == dealer.getScore();
     }
 
+    public MatchResult determineMatchResultWithDealer(Dealer dealer) {
+        if (isBust()) return MatchResult.LOSE;
+        if (dealer.isBust()) return MatchResult.WIN;
+        if (isHigherThan(dealer)) return MatchResult.WIN;
+
+        if (isTie(dealer)) {
+            if (isBlackJack() && !dealer.isBlackJack()) return MatchResult.WIN;
+            if (!isBlackJack() && dealer.isBlackJack()) return MatchResult.LOSE;
+            return MatchResult.DRAW;
+        }
+
+        return MatchResult.LOSE;
+    }
+
     public void placeBet(int amount) {
         this.bet = new Bet(amount);
     }

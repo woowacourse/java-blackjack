@@ -57,7 +57,7 @@ public class Players {
         Map<Player, MatchResult> result = new HashMap<>();
 
         for (Player player : players) {
-            result.put(player, MatchResult.determineMatchResult(player, dealer));
+            result.put(player, player.determineMatchResultWithDealer(dealer));
         }
 
         return result;
