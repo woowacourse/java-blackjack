@@ -25,7 +25,7 @@ public class BlackjackController {
     public void run() {
         List<String> names = inputView.inputPlayers();
         List<Integer> betAmounts = inputView.inputBetAmount(names);
-        Players players = new Players(names);
+        Players players = new Players(names,betAmounts);
         Dealer dealer = new Dealer("딜러");
         Deck deck = new Deck();
         dealInitialCards(dealer, players, deck);
@@ -59,13 +59,8 @@ public class BlackjackController {
     }
 
     private void playPlayerTurn(Player player, Deck deck) {
-        boolean cardShown = false;
         while (player.canHit() && inputView.askHit(player.getName())) {
             player.addCard(deck.draw());
-            outputView.printPlayerCards(player);
-            cardShown = true;
-        }
-        if (!cardShown) {
             outputView.printPlayerCards(player);
         }
     }

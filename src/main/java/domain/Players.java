@@ -7,11 +7,13 @@ import java.util.List;
 public class Players {
     private final List<Player> playerList;
 
-    public Players(List<String> names) {
+    public Players(List<String> names,List<Integer> betAmounts) {
         validateDuplicate(names);
+        //입력값이 유효 범위인지 검증하는 메서드 필요
+        //이름 = 베팅 금액 일치 여부 검증
         playerList = new ArrayList<>();
         for (String name : names) {
-            playerList.add(new Player(name));
+            playerList.add(new Player(name, betAmounts.get(names.indexOf(name))));
         }
     }
 
