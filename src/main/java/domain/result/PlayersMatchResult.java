@@ -7,6 +7,10 @@ import java.util.Map;
 
 public record PlayersMatchResult(Map<Player, MatchCase> playerMatchResult) {
 
+    public PlayersMatchResult {
+        playerMatchResult = Map.copyOf(playerMatchResult);
+    }
+
     public PlayersBettingProfit calculateBettingProfit() {
         Map<Player, Long> bettingResult = new LinkedHashMap<>();
 

@@ -25,7 +25,7 @@ public class OutputView {
     private static void printInitHandCardInfo(Participant dealer, Players players) {
         StringBuilder playerNames = new StringBuilder();
         System.out.printf("\n%s와 ", dealer.getName());
-        for (Participant player : players.getPlayers()) {
+        for (Participant player : players.players()) {
             playerNames.append(player.getName() + ", ");
         }
         playerNames.delete(playerNames.length() - 2, playerNames.length());
@@ -33,7 +33,7 @@ public class OutputView {
     }
 
     private static void printPlayerInitHandCard(Players players) {
-        for (Participant player : players.getPlayers()) {
+        for (Participant player : players.players()) {
             printParticipantHandCard(player);
             System.out.println();
         }
@@ -82,7 +82,7 @@ public class OutputView {
     }
 
     private static void printPlayerCardResult(Players players) {
-        for (Participant player : players.getPlayers()) {
+        for (Participant player : players.players()) {
             printDealerCardResult(player);
         }
     }
