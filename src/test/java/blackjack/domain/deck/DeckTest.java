@@ -1,13 +1,7 @@
 package blackjack.domain.deck;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.Figure;
-import blackjack.domain.card.Number;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.HashSet;
-import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
