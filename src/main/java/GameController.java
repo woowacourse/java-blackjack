@@ -1,5 +1,6 @@
 import domain.Dealer;
 import domain.DealerProfit;
+import domain.RoundBetInfo;
 import domain.User;
 import domain.UserProfit;
 import view.InputParser;
@@ -23,22 +24,31 @@ public class GameController {
         this.dealer = new Dealer();
     }
 
+    private static final int INITIAL_ROUND = 1;
+
     public void run() {
-        List<User> users = setUpUsers();
+        List<RoundBetInfo> roundBetInfos = setUpRoundBetInfos();
+        List<User> users = extractUsers(roundBetInfos);
         initDeal(users);
         processUserTurns(users);
         processDealerTurn();
         showCardResult(users);
-        List<UserProfit> userProfits = gameService.settleResult(users, dealer);
+        List<UserProfit> userProfits = gameService.settleResult(roundBetInfos, dealer);
         showGameRecord(userProfits);
         processTotalProfit(userProfits);
     }
 
-    private List<User> setUpUsers(){
+    private List<RoundBetInfo> setUpRoundBetInfos() {
         String input = inputView.readUsers();
         List<String> names = InputParser.parseToList(input);
         List<Integer> betAmounts = inputView.readBetAmounts(names);
-        return InputParser.parseToUsers(names, betAmounts);
+        return InputParser.parseToRoundBetInfos(names, betAmounts, INITIAL_ROUND);
+    }
+
+    private List<User> extractUsers(List<RoundBetInfo> roundBetInfos) {
+        return roundBetInfos.stream()
+                .map(RoundBetInfo::user)
+                .toList();
     }
 
     private void initDeal(List<User> users){

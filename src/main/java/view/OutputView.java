@@ -68,7 +68,7 @@ public class OutputView {
         if (sj.length() > 0) {
             System.out.println("딜러: " + sj.toString());
             for (UserProfit userProfit : userProfits) {
-                System.out.println(userProfit.userName() + ": " + userProfit.gameResult().getName());
+                System.out.println(userProfit.roundBetInfo().user().getName() + ": " + userProfit.gameResult().getName());
             }
         }
     }
@@ -77,7 +77,7 @@ public class OutputView {
         System.out.println('\n' + "## 최종 수익");
         System.out.println("딜러: " + dealerProfit.profit());
         for (UserProfit userProfit : userProfits) {
-            System.out.println(userProfit.userName() + ": " + userProfit.profit());
+            System.out.println(userProfit.roundBetInfo().user().getName() + ": " + userProfit.profit());
         }
     }
 }

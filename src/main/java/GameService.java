@@ -27,14 +27,16 @@ public class GameService {
         return cardDeck.deal();
     }
 
-    public List<UserProfit> settleResult(List<User> users, Dealer dealer) {
+
+    public List<UserProfit> settleResult(List<RoundBetInfo> roundBetInfos, Dealer dealer) {
         dealer.calculateScore();
         List<UserProfit> userProfits = new ArrayList<>();
-        for (User user : users) {
+        for (RoundBetInfo roundBetInfo : roundBetInfos) {
+            User user = roundBetInfo.user();
             user.calculateScore();
             GameResult result = decideResult(user, dealer);
             dealer.recordRounds(result.opposite());
-            userProfits.add(createEachUserProfit(user, result));
+            userProfits.add(createEachUserProfit(roundBetInfo, result));
         }
         return userProfits;
     }
@@ -68,13 +70,9 @@ public class GameService {
         return GameResult.DRAW;
     }
 
-    private UserProfit createEachUserProfit(User user, GameResult gameResult) {
-        String eachName = user.getName();
-        int eachBetAmount = user.getBetAmount();
-        boolean eachIsBlackjack = user.isBlackjack();
-        int eachProfit = bettingRule.calculateBetAmount(eachBetAmount, gameResult, eachIsBlackjack);
-
-        return new UserProfit(eachName, eachBetAmount, gameResult, eachProfit);
+    private UserProfit createEachUserProfit(RoundBetInfo roundBetInfo, GameResult gameResult) {
+        int eachProfit = bettingRule.calculateBetAmount(roundBetInfo, gameResult);
+        return roundBetInfo.toUserProfit(gameResult, eachProfit);
     }
 
     public DealerProfit upsertDealerProfit(List<UserProfit> userProfits) {

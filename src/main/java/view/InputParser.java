@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import domain.RoundBetInfo;
 import domain.User;
 
 public class InputParser {
@@ -14,9 +15,9 @@ public class InputParser {
                 .toList();
     }
 
-    public static List<User> parseToUsers(List<String> names, List<Integer> betAmounts) {
+    public static List<RoundBetInfo> parseToRoundBetInfos(List<String> names, List<Integer> betAmounts, int round) {
         return IntStream.range(0, names.size())
-                .mapToObj(i -> User.from(names.get(i), betAmounts.get(i)))
+                .mapToObj(i -> new RoundBetInfo(round, User.from(names.get(i)), betAmounts.get(i)))
                 .toList();
     }
 }

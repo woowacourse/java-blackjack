@@ -1,7 +1,8 @@
 package strategy;
 
 import domain.GameResult;
+import domain.RoundBetInfo;
 
 public interface BettingRule {
-    int calculateBetAmount(int betAmount, GameResult gameResult, boolean isBlackjack);
+    int calculateBetAmount(RoundBetInfo roundBetInfo, GameResult gameResult);
 }
