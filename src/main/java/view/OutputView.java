@@ -87,4 +87,15 @@ public final class OutputView {
             System.out.println(entry.getKey().getName() + ": " + entry.getValue().getDescription());
         }
     }
+
+    public static void showDealerProfitResult(int dealerProfitResult) {
+        System.out.println(NEW_LINE + "## 최종 수익");
+        System.out.println("딜러: " + dealerProfitResult);
+    }
+
+    public static void showPlayerProfitResult(Map<String, Integer> profitResult) {
+        for (Map.Entry<String, Integer> entry : profitResult.entrySet()) {
+            System.out.printf("%s: %d %s", entry.getKey(), entry.getValue(), NEW_LINE);
+        }
+    }
 }
