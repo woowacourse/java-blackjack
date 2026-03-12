@@ -78,11 +78,7 @@ public class BlackjackController {
 
     private void displayGameSummary(Players players, Dealer dealer) {
         List<GameSummary> gameSummaries = players.calculateGameSummary(dealer);
-
-        for (GameSummary gameSummary : gameSummaries) {
-            outputView.printGameSummary(gameSummary);
-        }
-
+        outputView.printGameSummary(gameSummaries);
     }
 
     private void displayGameResult(Players players, Dealer dealer) {

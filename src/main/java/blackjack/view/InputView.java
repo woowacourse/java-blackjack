@@ -16,6 +16,7 @@ public class InputView {
     }
 
     public int readBetAmount(String name) {
+        System.out.println();
         System.out.println(name + "의 배팅 금액은?");
         String input = sc.nextLine().trim();
         validateBlank(input);

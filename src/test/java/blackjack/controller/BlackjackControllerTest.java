@@ -17,6 +17,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class BlackjackControllerTest {
+
+    private static final String NEW_LINE = System.lineSeparator();
+
     private String run(String input, List<Card> fixCards) {
         System.setIn(new ByteArrayInputStream(input.getBytes()));
         ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -42,7 +45,7 @@ class BlackjackControllerTest {
                 new Card(Suit.CLOVER, Rank.TEN)
         );
 
-        String result = run("pobi\n1000\nn\n", fixCards);
+        String result = run("pobi" + NEW_LINE + "1000" + NEW_LINE + "n" + NEW_LINE, fixCards);
         assertThat(result).contains("딜러: -1000");
         assertThat(result).contains("pobi: 1000");
     }
@@ -57,7 +60,7 @@ class BlackjackControllerTest {
                 new Card(Suit.CLOVER, Rank.TEN)
         );
 
-        String result = run("pobi\n1000\nn\n", fixCards);
+        String result = run("pobi" + NEW_LINE + "1000" + NEW_LINE + "n" + NEW_LINE, fixCards);
         assertThat(result).contains("딜러: 1000");
         assertThat(result).contains("pobi: -1000");
     }
@@ -73,7 +76,7 @@ class BlackjackControllerTest {
                 new Card(Suit.DIAMOND, Rank.SIX)
         );
 
-        String result = run("pobi\n1000\ny\n", fixCards);
+        String result = run("pobi" + NEW_LINE + "1000" + NEW_LINE + "y" + NEW_LINE, fixCards);
         assertThat(result).contains("딜러: 1000");
         assertThat(result).contains("pobi: -1000");
     }
@@ -90,7 +93,7 @@ class BlackjackControllerTest {
                 new Card(Suit.CLOVER, Rank.SIX)
         );
 
-        String result = run("pobi\n1000\nn\n", fixCards);
+        String result = run("pobi" + NEW_LINE + "1000" + NEW_LINE + "n" + NEW_LINE, fixCards);
         assertThat(result).contains("딜러는 16이하라 한장의 카드를 더 받았습니다");
     }
 
