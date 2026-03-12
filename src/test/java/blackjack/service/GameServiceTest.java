@@ -46,13 +46,11 @@ class GameServiceTest {
         // given
         User user = new User("흑곰", new BettingAmount(1000));
         Dealer dealer = new Dealer();
-
-        // when
         user.add(new Card(CardValue.TEN, CardShape.DIAMOND));
         user.add(new Card(CardValue.TEN, CardShape.HEART));
         user.add(new Card(CardValue.TEN, CardShape.CLOVER));
 
-        // then
+        // when & then
         assertThat(gameService.determineResult(user, dealer)).isEqualTo(GameResultType.LOSE);
     }
 
@@ -62,14 +60,12 @@ class GameServiceTest {
         // given
         User user = new User("흑곰", new BettingAmount(1000));
         Dealer dealer = new Dealer();
-
-        // when
         user.add(new Card(CardValue.ACE, CardShape.DIAMOND));
         user.add(new Card(CardValue.TEN, CardShape.DIAMOND));
         dealer.add(new Card(CardValue.ACE, CardShape.HEART));
         dealer.add(new Card(CardValue.TEN, CardShape.HEART));
 
-        // then
+        // when & then
         assertThat(gameService.determineResult(user, dealer)).isEqualTo(GameResultType.DRAW);
     }
 
@@ -79,14 +75,12 @@ class GameServiceTest {
         // given
         User user = new User("흑곰", new BettingAmount(1000));
         Dealer dealer = new Dealer();
-
-        // when
         user.add(new Card(CardValue.ACE, CardShape.DIAMOND));
         user.add(new Card(CardValue.TEN, CardShape.DIAMOND));
         dealer.add(new Card(CardValue.EIGHT, CardShape.HEART));
         dealer.add(new Card(CardValue.NINE, CardShape.HEART));
 
-        // then
+        // when & then
         assertThat(gameService.determineResult(user, dealer)).isEqualTo(GameResultType.BLACKJACK_WIN);
     }
 
@@ -96,14 +90,12 @@ class GameServiceTest {
         // given
         User user = new User("흑곰", new BettingAmount(1000));
         Dealer dealer = new Dealer();
-
-        // when
         user.add(new Card(CardValue.EIGHT, CardShape.DIAMOND));
         user.add(new Card(CardValue.NINE, CardShape.DIAMOND));
         dealer.add(new Card(CardValue.ACE, CardShape.HEART));
         dealer.add(new Card(CardValue.TEN, CardShape.HEART));
 
-        // then
+        // when & then
         assertThat(gameService.determineResult(user, dealer)).isEqualTo(GameResultType.LOSE);
     }
 
@@ -113,15 +105,13 @@ class GameServiceTest {
         // given
         User user = new User("흑곰", new BettingAmount(1000));
         Dealer dealer = new Dealer();
-
-        // when
         user.add(new Card(CardValue.EIGHT, CardShape.DIAMOND));
         user.add(new Card(CardValue.NINE, CardShape.DIAMOND));
         dealer.add(new Card(CardValue.TEN, CardShape.HEART));
         dealer.add(new Card(CardValue.TEN, CardShape.CLOVER));
         dealer.add(new Card(CardValue.TEN, CardShape.DIAMOND));
 
-        // then
+        // when & then
         assertThat(gameService.determineResult(user, dealer)).isEqualTo(GameResultType.WIN);
     }
 
@@ -131,14 +121,12 @@ class GameServiceTest {
         // given
         User user = new User("흑곰", new BettingAmount(1000));
         Dealer dealer = new Dealer();
-
-        // when
         user.add(new Card(CardValue.TEN, CardShape.DIAMOND));
         user.add(new Card(CardValue.NINE, CardShape.DIAMOND));
         dealer.add(new Card(CardValue.TEN, CardShape.HEART));
         dealer.add(new Card(CardValue.EIGHT, CardShape.HEART));
 
-        // then
+        // when & then
         assertThat(gameService.determineResult(user, dealer)).isEqualTo(GameResultType.WIN);
     }
 
@@ -148,14 +136,12 @@ class GameServiceTest {
         // given
         User user = new User("흑곰", new BettingAmount(1000));
         Dealer dealer = new Dealer();
-
-        // when
         user.add(new Card(CardValue.TEN, CardShape.DIAMOND));
         user.add(new Card(CardValue.EIGHT, CardShape.DIAMOND));
         dealer.add(new Card(CardValue.TEN, CardShape.HEART));
         dealer.add(new Card(CardValue.EIGHT, CardShape.HEART));
 
-        // then
+        // when & then
         assertThat(gameService.determineResult(user, dealer)).isEqualTo(GameResultType.DRAW);
     }
 
@@ -165,14 +151,12 @@ class GameServiceTest {
         // given
         User user = new User("흑곰", new BettingAmount(1000));
         Dealer dealer = new Dealer();
-
-        // when
         user.add(new Card(CardValue.TEN, CardShape.DIAMOND));
         user.add(new Card(CardValue.SEVEN, CardShape.DIAMOND));
         dealer.add(new Card(CardValue.TEN, CardShape.HEART));
         dealer.add(new Card(CardValue.EIGHT, CardShape.HEART));
 
-        // then
+        // when & then
         assertThat(gameService.determineResult(user, dealer)).isEqualTo(GameResultType.LOSE);
     }
 }
