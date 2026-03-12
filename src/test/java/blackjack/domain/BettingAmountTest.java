@@ -18,6 +18,5 @@ public class BettingAmountTest {
         assertThatThrownBy(() -> new BettingAmount(input))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("음수");
-
     }
 }
