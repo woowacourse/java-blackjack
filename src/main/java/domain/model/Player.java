@@ -2,10 +2,9 @@ package domain.model;
 
 import static constant.BlackJackConstant.BURST_CRITERIA;
 
-import constant.BlackJackConstant;
 import java.util.List;
 
-public class Player implements Person {
+public class Player implements WithDeck {
 
     private final String name;
     private Deck deck;

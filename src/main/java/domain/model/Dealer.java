@@ -1,6 +1,6 @@
 package domain.model;
 
-public class Dealer implements Person {
+public class Dealer implements WithDeck {
 
     private Deck deck;
 

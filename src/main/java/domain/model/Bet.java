@@ -17,7 +17,8 @@ public class Bet {
         }
         if (playerStatus == PlayerStatus.WIN) {
             return betAmount;
-        } if (playerStatus == PlayerStatus.BLACK_JACK) {
+        }
+        if (playerStatus == PlayerStatus.BLACK_JACK) {
             return betAmount * 1.5;
         }
         // 무승부 경우

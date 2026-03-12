@@ -69,7 +69,7 @@ public class Deck {
         if (sum > BURST_CRITERIA) {
             deckStatus = DeckStatus.BURST;
         }
-        if (sum == BLACK_JACK) {
+        if (sum == BLACK_JACK && cards.size() == 2) {
             deckStatus = DeckStatus.BLACK_JACK;
         }
     }

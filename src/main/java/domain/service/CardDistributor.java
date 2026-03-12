@@ -40,8 +40,8 @@ public class CardDistributor {
         return Deck.of(cards);
     }
 
-    public void distributeAdditionalCard(Person person) {
-        person.appendCard(cardFactory.createCard());
+    public void distributeAdditionalCard(WithDeck withDeck) {
+        withDeck.appendCard(cardFactory.createCard());
     }
 
     public Dealer getDealer() {
