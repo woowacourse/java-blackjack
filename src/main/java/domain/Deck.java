@@ -1,11 +1,13 @@
 package domain;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.List;
 
 public class Deck {
-    private final List<Card> cards;
+    private final Deque<Card> cards;
 
     public Deck() {
         List<Card> beforeShuffledCards = generateDeck();
@@ -27,9 +29,9 @@ public class Deck {
         return cards;
     }
 
-    private List<Card> shuffleCards(List<Card> cards) {
-        List<Card> shuffledCards = new ArrayList<>(cards);
-        Collections.shuffle(shuffledCards);
-        return shuffledCards;
+    private Deque<Card> shuffleCards(List<Card> cards) {
+        List<Card> shuffled = new ArrayList<>(cards);
+        Collections.shuffle(shuffled);
+        return new ArrayDeque<>(shuffled);
     }
 }
