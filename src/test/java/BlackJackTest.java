@@ -1,20 +1,34 @@
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import model.BlackJack;
 import model.Card;
+import model.CardNumber;
+import model.Suits;
+import model.participant.Dealer;
 import model.participant.Participant;
 import model.Participants;
+import model.participant.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class BlackJackTest {
+    private static final String DEALER_NAME = "딜러";
+
     BlackJack blackJack;
     Participants participants;
 
     @BeforeEach
     void setUp() {
-        participants = Participants.of("pobi,jason");
+        List<Participant> rawParticipants = new ArrayList<>();
+
+        rawParticipants.add(Dealer.of("딜러"));
+        rawParticipants.add(Player.of("pobi", 10000));
+        rawParticipants.add(Player.of("jason", 20000));
+        participants = Participants.of(rawParticipants);
+
         Participant dealer = participants.getDealer();
         dealer.draw(Card.of("스페이드", 1));
         dealer.draw(Card.of("스페이드", 3));
@@ -49,8 +63,32 @@ public class BlackJackTest {
         Map<String, Integer> calculatedRevenue = blackJack.calculateRevenue();
 
         // then
-        assertThat(calculatedRevenue.get("딜러")).isEqualTo(0);
-        assertThat(calculatedRevenue.get("pobi")).isEqualTo(-1000);
-        assertThat(calculatedRevenue.get("jason")).isEqualTo(1000);
+        assertThat(calculatedRevenue.get("딜러")).isEqualTo(-10000);
+        assertThat(calculatedRevenue.get("pobi")).isEqualTo(-10000);
+        assertThat(calculatedRevenue.get("jason")).isEqualTo(20000);
+    }
+
+    @Test
+    void 딜러와_플레이어가_동시에_블랙잭이면_플레이어는_베팅한_금액을_돌려받는다() {
+        // given
+        Dealer dealer = Dealer.of(DEALER_NAME);
+        dealer.draw(Card.of("스페이드", 10));
+        dealer.draw(Card.of("스페이드", 11));
+        Player player = Player.of("nuno", 10000);
+        player.draw(Card.of("하트", 10));
+        player.draw(Card.of("스페이드", 11));
+
+        ArrayList<Participant> playersAndDealer = new ArrayList<>();
+        playersAndDealer.add(dealer);
+        playersAndDealer.add(player);
+
+        Participants playerAndDealerParticipants = Participants.of(playersAndDealer);
+        BlackJack blackJackGame = BlackJack.from(playerAndDealerParticipants);
+
+        // when
+        Map<String, Integer> calculateRevenue = blackJackGame.calculateRevenue();
+
+        // then
+        assertThat(calculateRevenue.get("nuno")).isEqualTo(0);
     }
 }
