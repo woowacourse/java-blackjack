@@ -4,7 +4,7 @@ import static view.reader.Console.readLine;
 
 import java.util.Arrays;
 import java.util.List;
-import model.Player;
+import model.paticipant.Player;
 
 public class InputView {
 

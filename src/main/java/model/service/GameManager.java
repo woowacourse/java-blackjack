@@ -1,9 +1,9 @@
 package model.service;
 
-import model.Dealer;
-import model.Participant;
-import model.Players;
 import model.card.Deck;
+import model.paticipant.Dealer;
+import model.paticipant.Participant;
+import model.paticipant.Players;
 
 public class GameManager {
 

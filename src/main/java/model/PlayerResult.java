@@ -3,6 +3,7 @@ package model;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import model.paticipant.Player;
 
 public class PlayerResult {
 

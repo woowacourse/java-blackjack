@@ -1,4 +1,4 @@
-package model;
+package model.paticipant;
 
 public class Dealer extends Participant {
 

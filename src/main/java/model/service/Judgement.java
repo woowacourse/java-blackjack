@@ -6,12 +6,12 @@ import static model.GameStatus.WIN;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import model.Dealer;
 import model.DealerResult;
 import model.GameStatus;
-import model.Player;
 import model.PlayerResult;
-import model.Players;
+import model.paticipant.Dealer;
+import model.paticipant.Player;
+import model.paticipant.Players;
 
 public class Judgement {
 

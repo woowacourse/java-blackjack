@@ -2,10 +2,10 @@ package fixture;
 
 import java.util.List;
 import java.util.stream.Stream;
-import model.Dealer;
 import model.card.Card;
 import model.card.CardShape;
 import model.card.CardValue;
+import model.paticipant.Dealer;
 import org.junit.jupiter.params.provider.Arguments;
 
 public class CardsTestFixture {

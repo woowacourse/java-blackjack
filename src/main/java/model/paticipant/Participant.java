@@ -1,4 +1,4 @@
-package model;
+package model.paticipant;
 
 import java.util.List;
 import model.card.Card;
