@@ -3,9 +3,11 @@ package model.card;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import model.card.exception.InvalidDeckSizeException;
+import model.card.exception.NoMoreCardException;
 
 public class RandomDeck implements Deck {
-    private static final int DECK_SIZE = 52;
+    public static final int REQUIRED_DECK_SIZE = 52;
 
     private final Iterator<Card> cards;
 
@@ -21,9 +23,8 @@ public class RandomDeck implements Deck {
     }
 
     private static void validateDeckSize(List<Card> cards) {
-        if (cards.size() != DECK_SIZE) {
-            throw new IllegalArgumentException(
-                    "덱은 " + DECK_SIZE + "개의 카드를 가져야 합니다(현재 " + cards.size() + "개).");
+        if (cards.size() != REQUIRED_DECK_SIZE) {
+            throw new InvalidDeckSizeException(cards.size());
         }
     }
 
@@ -32,7 +33,7 @@ public class RandomDeck implements Deck {
         try {
             return cards.next();
         } catch (NoSuchElementException e) {
-            throw new IllegalStateException("덱이 비었습니다.", e);
+            throw new NoMoreCardException(e);
         }
     }
 }
