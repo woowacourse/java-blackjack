@@ -21,8 +21,7 @@ public class BettingPolicyManager {
                         new DealerBustPolicy(),
                         new BustPolicy(),
                         new ComparePolicy()
-                ).sorted()
-                .toList();
+                ).toList();
     }
 
     public BettingRate gainBettingRate(Dealer dealer, Player player) {
