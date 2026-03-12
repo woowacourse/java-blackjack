@@ -34,6 +34,7 @@ public class BlackjackController {
         playAllPlayerTurns(players, deck);
         playDealerTurn(dealer, deck);
         printFinalState(dealer, players);
+        printResult(dealer, players);
     }
 
     private void playAllPlayerTurns(Players players, Deck deck) {
@@ -78,6 +79,10 @@ public class BlackjackController {
         for (Player player : players.getGamePlayers()) {
             outputView.printFinalCards(player);
         }
+
+    }
+
+    private void printResult(Dealer dealer, Players players) {
         Referee referee = new Referee();
         Map<Player, Result> results = new LinkedHashMap<>();
         for (Player player : players.getGamePlayers()) {
