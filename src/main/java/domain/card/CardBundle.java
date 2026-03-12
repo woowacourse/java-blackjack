@@ -82,7 +82,7 @@ public class CardBundle {
         return cardBundle.size() == NUMBER_OF_BLACKJACK_CARD && getResultScore() == BLACKJACK_CONDITION;
     }
 
-    public boolean isStop() {
+    public boolean isStand() {
         return !isBlackjack() && !isBusted();
     }
 

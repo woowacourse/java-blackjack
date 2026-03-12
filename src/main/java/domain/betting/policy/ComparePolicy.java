@@ -13,7 +13,7 @@ public class ComparePolicy extends BettingPolicy{
 
     @Override
     public boolean isPolicyApplied(Dealer dealer, Player player) {
-        return player.isStop() && dealer.isStop();
+        return player.isStand() && dealer.isStand();
     }
 
     @Override

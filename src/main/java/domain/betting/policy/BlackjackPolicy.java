@@ -13,7 +13,7 @@ public class BlackjackPolicy extends BettingPolicy{
 
     @Override
     public boolean isPolicyApplied(Dealer dealer, Player player) {
-        return player.isBlackjack() && (dealer.isBusted() || dealer.isStop());
+        return player.isBlackjack() && (dealer.isBusted() || dealer.isStand());
     }
 
     @Override

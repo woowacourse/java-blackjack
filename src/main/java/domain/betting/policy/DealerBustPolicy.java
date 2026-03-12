@@ -13,7 +13,7 @@ public class DealerBustPolicy extends BettingPolicy {
 
     @Override
     public boolean isPolicyApplied(Dealer dealer, Player player) {
-        return dealer.isBusted() && player.isStop();
+        return dealer.isBusted() && player.isStand();
     }
 
     @Override
