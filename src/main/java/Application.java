@@ -1,4 +1,6 @@
 import controller.GameController;
+import domain.Deck;
+import domain.GameManager;
 import java.util.Scanner;
 import view.InputView;
 import view.OutputView;
@@ -8,7 +10,12 @@ public class Application {
         Scanner scanner = new Scanner(System.in);
         InputView inputView = new InputView(scanner);
         OutputView outputView = new OutputView();
-        GameController gameController = new GameController(inputView, outputView);
+
+        Deck deck = Deck.create();
+        deck.shuffle();
+        GameManager gameManager = GameManager.createWith(deck);
+
+        GameController gameController = new GameController(inputView, outputView, gameManager);
 
         gameController.run();
     }

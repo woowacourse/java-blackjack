@@ -10,8 +10,12 @@ public class GameManager {
     private static final int STARTING_CARD_COUNT = 2;
     private final Deck deck;
 
-    public GameManager(Deck deck) {
+    private GameManager(Deck deck) {
         this.deck = deck;
+    }
+
+    public static GameManager createWith(Deck deck) {
+        return new GameManager(deck);
     }
 
     public void dealCard(Participant participant) {

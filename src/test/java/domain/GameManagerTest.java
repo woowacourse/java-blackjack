@@ -14,7 +14,7 @@ public class GameManagerTest {
 
     @Test
     void 딜러에게_2장의_카드를_지급한다() {
-        GameManager manager = new GameManager(Deck.create());
+        GameManager manager = GameManager.createWith(Deck.create());
         Dealer dealer = new Dealer();
 
         manager.dealStartingCards(dealer);
@@ -26,7 +26,7 @@ public class GameManagerTest {
 
     @Test
     void 플레이어에게_2장의_카드를_지급한다() {
-        GameManager manager = new GameManager(Deck.create());
+        GameManager manager = GameManager.createWith(Deck.create());
         Player player = new Player(Name.from("나무"));
 
         manager.dealStartingCards(player);
@@ -38,7 +38,7 @@ public class GameManagerTest {
 
     @Test
     void 전체_플레이어에게_2장의_카드를_지급한다() {
-        GameManager manager = new GameManager(Deck.create());
+        GameManager manager = GameManager.createWith(Deck.create());
         Player player1 = new Player(Name.from("나무"));
         Player player2 = new Player(Name.from("고래"));
 

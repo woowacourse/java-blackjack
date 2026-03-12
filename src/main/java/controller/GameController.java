@@ -1,7 +1,6 @@
 package controller;
 
 import domain.Command;
-import domain.Deck;
 import domain.GameManager;
 import domain.GameResultDto;
 import domain.Referee;
@@ -18,16 +17,17 @@ import view.OutputView;
 public class GameController {
     private final InputView inputView;
     private final OutputView outputView;
+    private final GameManager gameManager;
 
-    public GameController(InputView inputView, OutputView outputView) {
+    public GameController(InputView inputView, OutputView outputView, GameManager manager) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.gameManager = manager;
     }
 
     public void run() {
         Players players = getPlayers();
         Dealer dealer = new Dealer();
-        GameManager gameManager = getManager();
 
         initializeGame(gameManager, dealer, players);
         playGame(players, gameManager, dealer);
@@ -108,12 +108,6 @@ public class GameController {
 
         outputView.printGameInitResult(result);
         outputView.printNewLine();
-    }
-
-    private GameManager getManager() {
-        Deck deck = Deck.create();
-        deck.shuffle();
-        return new GameManager(deck);
     }
 
     private Players getPlayers() {
