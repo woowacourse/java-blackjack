@@ -37,20 +37,18 @@ public final class OutputView {
         System.out.println();
     }
 
-    public void printResult(Map<String, Integer> dealerResult, Map<String, Boolean> playerResult) {
-        System.out.println("## 최종 승패");
-        System.out.printf("딜러: %d승 %d패%s", dealerResult.getOrDefault("승", 0), dealerResult.getOrDefault("패", 0),
-                LINE_SEPARATOR);
-        for (Entry<String, Boolean> entry : playerResult.entrySet()) {
-            System.out.printf("%s: %s%s", entry.getKey(), entry.getValue() ? "승" : "패", LINE_SEPARATOR);
-        }
-    }
-
     public void printBustState(String name, int score) {
         System.out.printf("%s는 %d점이므로 21점 초과로 버스트입니다.%s", name, score, LINE_SEPARATOR);
     }
 
     public void printDealerDraw() {
         System.out.println(LINE_SEPARATOR + "딜러는 16이하라 한장의 카드를 더 받았습니다." + LINE_SEPARATOR);
+    }
+
+    public void printResultRevenue(Map<String, Integer> calculatedRevenue) {
+        System.out.println("## 최종 수익");
+        for (Entry<String, Integer> entry : calculatedRevenue.entrySet()) {
+            System.out.printf("%s: %d%s", entry.getKey(), entry.getValue(), LINE_SEPARATOR);
+        }
     }
 }
