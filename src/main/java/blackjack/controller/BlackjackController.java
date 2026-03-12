@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import blackjack.domain.betting.BettingAmount;
 import blackjack.domain.betting.BettingRepository;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.participant.Dealer;
@@ -8,9 +9,7 @@ import blackjack.domain.participant.Players;
 import blackjack.dto.WinningResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class BlackjackController {
 
@@ -46,8 +45,8 @@ public class BlackjackController {
     private BettingRepository readBettingAmounts(Players players) {
         BettingRepository bettingRepository = new BettingRepository();
         for (Player player : players.getPlayers()) {
-            String playerName = player.getName();
-            bettingRepository.put(playerName, inputView.readBettingAmount(playerName));
+            Integer bettingAmount = inputView.readBettingAmount(player.getName());
+            bettingRepository.put(player, new BettingAmount(bettingAmount));
         }
         return bettingRepository;
     }
@@ -110,13 +109,7 @@ public class BlackjackController {
     }
 
     private void printWinningResult(BettingRepository bettingRepository, Players players, Dealer dealer) {
-        Map<String, Integer> winningResult = new LinkedHashMap<>();
-        for (Player player : players.getPlayers()) {
-            if (player.winsAgainst(dealer)) {
-                winningResult.put(player.getName(), bettingRepository.findByName(player.getName()));
-            }
-        }
-        outputView.printWinningResult(WinningResult.from(winningResult));
+        outputView.printWinningResult(WinningResult.from(players, dealer, bettingRepository));
     }
 
 }
