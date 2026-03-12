@@ -25,8 +25,10 @@ class BlackjackGameTest {
 
         // then
         final Participant zakie = blackjackGame.getParticipants().getPlayers().getFirst();
+        final Participant dealer = blackjackGame.getParticipants().getDealer();
         assertThat(zakie.getHand()).hasSize(INIT_DRAW_COUNT);
+        assertThat(dealer.getHand()).hasSize(INIT_DRAW_COUNT);
     }
 
-    
+
 }

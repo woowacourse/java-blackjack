@@ -30,6 +30,7 @@ public class BlackjackGame {
         for (final Participant participant : participants.getPlayers()) {
             drawCards(participant, INIT_DRAW_COUNT);
         }
+        drawCards(participants.getDealer(), INIT_DRAW_COUNT);
     }
 
     // FIXME: Player랑 Dealer 구분할까, hit 하나에서 공통으로 처리할 수 있게?
