@@ -48,17 +48,14 @@ public class Participants {
         int dealerLoseCount = 0;
         Map<Player, MatchCase> playerMatchResult = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
-
             if (isDealerWin(player)) { // 딜러승, 플레이어 패배
                 dealerWinCount = ifDealerWin(player, dealerWinCount, playerMatchResult);
                 continue;
             }
-
             if (isDealerDraw(player)) { // 무승부
                 dealerDrawCount = ifDealerDraw(player, dealerDrawCount, playerMatchResult);
                 continue;
             }
-
             dealerLoseCount = ifDealerLose(player, dealerLoseCount, playerMatchResult);
         }
 

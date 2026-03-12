@@ -61,7 +61,6 @@ public class Hand {
         List<CardRank> cardRanks = hands.stream()
                 .map(Card::getCardRank)
                 .toList();
-
         return cardRanks.contains(ACE) &&
                 (cardRanks.contains(TEN) || cardRanks.contains(JACK)
                         || cardRanks.contains(QUEEN) || cardRanks.contains(KING));

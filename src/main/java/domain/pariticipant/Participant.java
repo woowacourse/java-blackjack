@@ -31,10 +31,6 @@ public abstract class Participant {
         hand.addCard(deck.draw());
     }
 
-    public void addHandCard(Card card) {
-        hand.addCard(card);
-    }
-
     public boolean isBust() {
         return hand.isBust();
     }
