@@ -25,13 +25,22 @@ public class Dealer extends Participant {
     
     public Map<GameResult, Long> determineGameResult(List<Player> players) {
         return players.stream()
-                .map(this::determineGameResult)
+                .map(this::determinePlayerProfit)
                 .collect(Collectors.groupingBy(
                         result -> result, Collectors.counting()
                 ));
     }
     
-    public GameResult determineGameResult(Player player) {
+    public int determineProfit(List<Player> players) {
+        List<GameResult> gameResults = players.stream()
+                .map(this::determinePlayerProfit)
+                .toList();
+    }
+    
+    public int determinePlayerProfit(Player player) {
+        if (player.isBlackjack()) {
+            return blackjackProfit(player);
+        }
         if (isBust()) {
             return GameResult.LOSE;
         }
@@ -39,6 +48,13 @@ public class Dealer extends Participant {
             return GameResult.WIN;
         }
         return compareScore(getScore(), player.getScore());
+    }
+    
+    private int blackjackProfit(Player player) {
+        if (isBlackjack()) {
+            return 0;
+        }
+        return player.calculateProfit()
     }
     
     private GameResult compareScore(int score, int playerScore) {

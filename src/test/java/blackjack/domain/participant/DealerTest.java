@@ -6,7 +6,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
 import java.util.List;
-import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -51,9 +50,8 @@ class DealerTest {
         losePlayer.receiveCard(new Card(Rank.TEN, Suit.CLOVER));
         losePlayer.receiveCard(new Card(Rank.FIVE, Suit.DIAMOND));
         
-        Map<GameResult, Long> dealerResult = dealer.determineGameResult(List.of(winPlayer, drawPlayer, losePlayer));
+        List<GameResult> gameResults = dealer.determineGameResult(List.of(winPlayer, drawPlayer, losePlayer));
         
-        assertThat(dealerResult.get(GameResult.LOSE)).isEqualTo(1L);
-        assertThat(dealerResult.get(GameResult.WIN)).isEqualTo(1L);
+        assertThat(dealer.carculateProfit(gameResults)).isEqualTo(-10000 + 0 + 30000);
     }
 }
