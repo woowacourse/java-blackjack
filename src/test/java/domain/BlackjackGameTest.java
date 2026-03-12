@@ -11,6 +11,7 @@ import domain.card.CardRank;
 import domain.card.CardSuit;
 import domain.card.Hand;
 import domain.card.Shuffler;
+import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Participant;
 import domain.participant.Participants;
@@ -33,8 +34,8 @@ class BlackjackGameTest {
         blackjackGame.initDraw();
 
         // then
-        final Participant zakie = blackjackGame.getParticipants().getPlayers().getFirst();
-        final Participant dealer = blackjackGame.getParticipants().getDealer();
+        final Player zakie = blackjackGame.getParticipants().getPlayers().getFirst();
+        final Dealer dealer = blackjackGame.getParticipants().getDealer();
         assertThat(zakie.getHand()).hasSize(INIT_DRAW_COUNT);
         assertThat(dealer.getHand()).hasSize(INIT_DRAW_COUNT);
     }
