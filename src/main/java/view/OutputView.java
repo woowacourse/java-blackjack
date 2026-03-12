@@ -48,8 +48,8 @@ public class OutputView {
         System.out.printf(FINAL_RESULT_DEALER_FORMAT,
                 finalResultDto.dealerWinCount(),
                 finalResultDto.dealerLoseCount());
-        for(Map.Entry<String, WinningStatus> entry : finalResultDto.playerResults().entrySet()){
-            System.out.println(entry.getKey() + ": " + entry.getValue().getDescription());
+        for(Map.Entry<String, Long> entry : finalResultDto.playerResults().entrySet()){
+            System.out.println(entry.getKey() + ": " + entry.getValue());
         }
     }
 

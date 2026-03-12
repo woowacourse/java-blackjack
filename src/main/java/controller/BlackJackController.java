@@ -22,9 +22,7 @@ public class BlackJackController {
         List<String> playerNames = InputView.askPlayerNames();
         Game game = new Game(playerNames, deckSupplier.get());
 
-        Map<Player, Money> moneyTable = createMoneyTable(game);
-        BettingTable bettingTable = new BettingTable(moneyTable);
-
+        BettingTable bettingTable = createBettingTable(game);
         OutputView.printInitMessage(OutputDtoAssembler
                 .toBlackJackInitStatusDto(game.getDealer(),game.getPlayers()));
 
@@ -32,8 +30,10 @@ public class BlackJackController {
         playDealer(game);
 
         Judge judge = new Judge(game.getDealer(), game.getPlayers());
+        game.settleRoundBets(judge, bettingTable);
+
         OutputView.printFinalResult(OutputDtoAssembler
-                .toFinalResultDto(game.getDealer(),game.getPlayers(), judge));
+                .toFinalResultDto(game.getDealer(),game.getPlayers(), judge, bettingTable));
     }
 
     private void playPlayers(Game game){
@@ -75,13 +75,13 @@ public class BlackJackController {
         }
     }
 
-    private Map<Player, Money> createMoneyTable(Game game){
+    private BettingTable createBettingTable(Game game){
         Map<Player, Money> moneyTable = new LinkedHashMap<>();
         for(Player player : game.getPlayers()){
             String moneyInput = InputView.askPlayerBettingMoney(player.getName());
             Money money = new Money(moneyInput);
             moneyTable.put(player,money);
         }
-        return moneyTable;
+        return new BettingTable(moneyTable);
     }
 }
