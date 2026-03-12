@@ -1,6 +1,7 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import domain.card.Card;
 import domain.card.Deck;
@@ -20,24 +21,23 @@ import service.TestCardGenerator;
 
 public class GameTest {
 
+    private Game twoPlayerGame;
+    private Game onePlayerGame;
+    private Dealer dealer = new Dealer();
+    private Deck deck;
+
+    @BeforeEach
+    void setUp() {
+        CardGenerator cardGenerator = new TestCardGenerator();
+        deck = new Deck(cardGenerator.generate());
+
+        twoPlayerGame = new Game(List.of("피즈", "스타크"), dealer);
+        onePlayerGame = new Game(List.of("피즈"), dealer);
+    }
+
     @Nested
-    @DisplayName("정상 경우")
-    class success {
-
-        private Game twoPlayerGame;
-        private Game onePlayerGame;
-        private Dealer dealer = new Dealer();
-        private Deck deck;
-
-        @BeforeEach
-        void setUp() {
-            CardGenerator cardGenerator = new TestCardGenerator();
-            deck = new Deck(cardGenerator.generate());
-
-            twoPlayerGame = new Game(List.of("피즈", "스타크"), dealer);
-            onePlayerGame = new Game(List.of("피즈"), dealer);
-        }
-
+    @DisplayName("게임 정상 초기화")
+    class gameInitializeSuccess {
         @DisplayName("게임 시작 후 모든 플레이어가 2장의 카드를 분배 받는다.")
         @Test
         void 게임_시작_후_모든_플레이어_2장의_카드_분배를_받는다() {
@@ -45,13 +45,18 @@ public class GameTest {
             //when
             twoPlayerGame.initializeGame(deck);
             //then
+            assertSoftly(softly -> {
+                assertThat(twoPlayerGame.getPlayerCard(new Name("피즈")).size()).isEqualTo(2);
+                assertThat(twoPlayerGame.getPlayerCard(new Name("스타크")).size()).isEqualTo(2);
 
-            assertThat(twoPlayerGame.getPlayerCard(new Name("피즈")).size()).isEqualTo(2);
-            assertThat(twoPlayerGame.getPlayerCard(new Name("스타크")).size()).isEqualTo(2);
-
-            assertThat(dealer.getHand().size()).isEqualTo(2);
+                assertThat(dealer.getHand().size()).isEqualTo(2);
+            });
         }
+    }
 
+    @Nested
+    @DisplayName("카드 정상 분배")
+    class cardDistributionSuccess {
         @DisplayName("플레이어의 카드 총합이 21미만이고 히트 요청 시 한장을 더 분배한다.")
         @Test
         void 플레이어_카드_합_21_미만_히트_요청_시_한장_더_분배한다() {
@@ -96,6 +101,42 @@ public class GameTest {
             assertThat(dealer.getHand().size()).isEqualTo(4);
         }
 
+        @DisplayName("플레이어와 딜러가 분배된 카드를 알맞게 가지고 있는지 확인한다.")
+        @Test
+        void 플레이어_딜러_카드_정상_분배_확인한다() {
+            //given
+            onePlayerGame.initializeGame(deck);
+            //when
+            onePlayerGame.playPlayerTurn(new Name("피즈"), deck, true);
+            onePlayerGame.playDealerTurn(deck);
+            //then
+            assertCardDistribution(
+                    onePlayerGame.getPlayerCard(new Name("피즈")),
+                    List.of(Rank.FIVE, Rank.FIVE, Rank.FOUR),
+                    List.of("클로버", "하트", "스페이드")
+            );
+
+            assertCardDistribution(
+                    onePlayerGame.getDealerCard(),
+                    List.of(Rank.SIX, Rank.SEVEN, Rank.SEVEN),
+                    List.of("클로버", "클로버", "하트")
+            );
+        }
+
+        private void assertCardDistribution(List<Card> cards, List<Rank> expectedRank, List<String> expectedSuit) {
+            for (int i = 0; i < cards.size(); i++) {
+                int finalI = i;
+                assertSoftly(softly -> {
+                    assertThat(cards.get(finalI).getRank()).isEqualTo(expectedRank.get(finalI));
+                    assertThat(cards.get(finalI).getSuitString()).isEqualTo(expectedSuit.get(finalI));
+                });
+            }
+        }
+    }
+
+    @Nested
+    @DisplayName("게임 결과 정상 판정")
+    class gameResultJudgementSuccess {
         @DisplayName("플레이어가 버스트 되면 플레이어는 패배하고 딜러는 승리한다.")
         @Test
         void 플레이어_버스트_시_무조건_플레이어는_패배한다() {
@@ -105,8 +146,10 @@ public class GameTest {
                     new Card(Rank.EIGHT, Suit.CLOVER)
             );
 
-            assertThat(onePlayerGame.getPlayerResult(new Name("피즈"))).isEqualTo(GameResult.LOSE);
-            assertThat(onePlayerGame.getDealerResult().get(GameResult.WIN)).isEqualTo(1);
+            assertSoftly(softly -> {
+                assertThat(onePlayerGame.getPlayerResult(new Name("피즈"))).isEqualTo(GameResult.LOSE);
+                assertThat(onePlayerGame.getDealerResult().get(GameResult.WIN)).isEqualTo(1);
+            });
         }
 
         @DisplayName("플레이어가 버스트 되지 않았을 때 플레이어의 점수가 더 높으면 플레이어가 승리하고 딜러는 패배한다.")
@@ -121,8 +164,10 @@ public class GameTest {
             dealer.addCard(new Card(Rank.JACK, Suit.HEART));
             dealer.addCard(new Card(Rank.QUEEN, Suit.HEART));
 
-            assertThat(onePlayerGame.getPlayerResult(new Name("피즈"))).isEqualTo(GameResult.WIN);
-            assertThat(onePlayerGame.getDealerResult().get(GameResult.LOSE)).isEqualTo(1);
+            assertSoftly(softly -> {
+                assertThat(onePlayerGame.getPlayerResult(new Name("피즈"))).isEqualTo(GameResult.WIN);
+                assertThat(onePlayerGame.getDealerResult().get(GameResult.LOSE)).isEqualTo(1);
+            });
         }
 
         @DisplayName("플레이어가 버스트 되지 않았을 때 딜러가 버스트된 경우 플레이어가 승리한다.")
@@ -138,8 +183,10 @@ public class GameTest {
             dealer.addCard(new Card(Rank.SIX, Suit.HEART));
             dealer.addCard(new Card(Rank.SEVEN, Suit.HEART));
 
-            assertThat(onePlayerGame.getPlayerResult(new Name("피즈"))).isEqualTo(GameResult.WIN);
-            assertThat(onePlayerGame.getDealerResult().get(GameResult.LOSE)).isEqualTo(1);
+            assertSoftly(softly -> {
+                assertThat(onePlayerGame.getPlayerResult(new Name("피즈"))).isEqualTo(GameResult.WIN);
+                assertThat(onePlayerGame.getDealerResult().get(GameResult.LOSE)).isEqualTo(1);
+            });
         }
 
         @DisplayName("플레이어가 버스트 되지 않았을 때 플레이어의 점수가 더 낮으면 플레이어가 패배하고 딜러는 승리한다.")
@@ -153,8 +200,10 @@ public class GameTest {
             dealer.addCard(new Card(Rank.JACK, Suit.HEART));
             dealer.addCard(new Card(Rank.QUEEN, Suit.HEART));
 
-            assertThat(onePlayerGame.getPlayerResult(new Name("피즈"))).isEqualTo(GameResult.LOSE);
-            assertThat(onePlayerGame.getDealerResult().get(GameResult.WIN)).isEqualTo(1);
+            assertSoftly(softly -> {
+                assertThat(onePlayerGame.getPlayerResult(new Name("피즈"))).isEqualTo(GameResult.LOSE);
+                assertThat(onePlayerGame.getDealerResult().get(GameResult.WIN)).isEqualTo(1);
+            });
         }
 
         @DisplayName("플레이어가 버스트 되지 않았을 때 플레이어와 딜러의 점수가 같으면 무승부가 된다.")
@@ -170,8 +219,10 @@ public class GameTest {
             dealer.addCard(new Card(Rank.QUEEN, Suit.HEART));
 
             //then
-            assertThat(onePlayerGame.getPlayerResult(new Name("피즈"))).isEqualTo(GameResult.DRAW);
-            assertThat(onePlayerGame.getDealerResult().get(GameResult.DRAW)).isEqualTo(1);
+            assertSoftly(softly -> {
+                assertThat(onePlayerGame.getPlayerResult(new Name("피즈"))).isEqualTo(GameResult.DRAW);
+                assertThat(onePlayerGame.getDealerResult().get(GameResult.DRAW)).isEqualTo(1);
+            });
         }
 
         @DisplayName("플레이어가 카드 2장으로 블랙잭이 되어 승리하면 BLACKJACK_WIN이 된다")
@@ -186,44 +237,17 @@ public class GameTest {
             dealer.addCard(new Card(Rank.JACK, Suit.HEART));
             dealer.addCard(new Card(Rank.QUEEN, Suit.HEART));
 
-            assertThat(onePlayerGame.getPlayerResult(new Name("피즈"))).isEqualTo(GameResult.BLACKJACK_WIN);
-            assertThat(onePlayerGame.getDealerResult().get(GameResult.LOSE)).isEqualTo(1);
+            assertSoftly(softly -> {
+                assertThat(onePlayerGame.getPlayerResult(new Name("피즈"))).isEqualTo(GameResult.BLACKJACK_WIN);
+                assertThat(onePlayerGame.getDealerResult().get(GameResult.LOSE)).isEqualTo(1);
+            });
         }
+    }
 
-        private void distributePlayerCards(Game game, Name name, Card... cards) {
-            Deck testDeck = new Deck(Arrays.asList(cards));
-            for (int i = 0; i < cards.length; i++) {
-                game.playPlayerTurn(name, testDeck, true);
-            }
-        }
-
-        @DisplayName("플레이어와 딜러가 분배된 카드를 알맞게 가지고 있는지 확인한다.")
-        @Test
-        void 플레이어_딜러_카드_정상_분배_확인한다() {
-            //given
-            onePlayerGame.initializeGame(deck);
-            //when
-            onePlayerGame.playPlayerTurn(new Name("피즈"), deck, true);
-            onePlayerGame.playDealerTurn(deck);
-            //then
-
-            List<Card> fizzCard = onePlayerGame.getPlayerCard(new Name("피즈"));
-            List<Rank> expectedFizzRank = List.of(Rank.FIVE, Rank.FIVE, Rank.FOUR);
-            List<String> expectedFizzSuit = List.of("클로버", "하트", "스페이드");
-
-            for (int i = 0; i < 3; i++) {
-                assertThat(fizzCard.get(i).getRank()).isEqualTo(expectedFizzRank.get(i));
-                assertThat(fizzCard.get(i).getSuitString()).isEqualTo(expectedFizzSuit.get(i));
-            }
-
-            List<Card> dealerCard = onePlayerGame.getDealerCard();
-            List<Rank> expectedDealerRank = List.of(Rank.SIX, Rank.SEVEN, Rank.SEVEN);
-            List<String> expectedDealerSuit = List.of("클로버", "클로버", "하트");
-
-            for (int i = 0; i < 3; i++) {
-                assertThat(dealerCard.get(i).getRank()).isEqualTo(expectedDealerRank.get(i));
-                assertThat(dealerCard.get(i).getSuitString()).isEqualTo(expectedDealerSuit.get(i));
-            }
+    private void distributePlayerCards(Game game, Name name, Card... cards) {
+        Deck testDeck = new Deck(Arrays.asList(cards));
+        for (int i = 0; i < cards.length; i++) {
+            game.playPlayerTurn(name, testDeck, true);
         }
     }
 }
