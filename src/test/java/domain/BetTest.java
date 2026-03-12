@@ -11,7 +11,7 @@ public class BetTest {
     void 베팅_금액을_저장한다() {
         Bet bet = new Bet("30000");
 
-        int betAmount = bet.getBetAmount();
+        int betAmount = bet.getAmount();
 
         assertThat(betAmount).isEqualTo(30000);
     }

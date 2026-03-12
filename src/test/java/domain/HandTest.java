@@ -93,8 +93,8 @@ public class HandTest {
         hand1.addCard(new Card(SEVEN, DIAMOND));
 
         Hand hand2 = new Hand();
-        hand1.addCard(new Card(JACK, SPADE));
-        hand1.addCard(new Card(QUEEN, HEART));
+        hand2.addCard(new Card(JACK, SPADE));
+        hand2.addCard(new Card(QUEEN, HEART));
 
         List<Hand> hands = List.of(hand1, hand2);
 

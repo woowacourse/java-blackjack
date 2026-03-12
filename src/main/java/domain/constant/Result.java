@@ -3,18 +3,29 @@ package domain.constant;
 import domain.participant.Dealer;
 import domain.participant.Player;
 
+import java.util.function.IntUnaryOperator;
+
 public enum Result {
-    WIN("승"), DRAW("무"), LOSE("패");
+    BLACKJACK("블랙잭", bet -> bet + bet / 2),
+    WIN("승", bet -> bet),
+    DRAW("무", bet -> 0),
+    LOSE("패", bet -> bet * -1);
 
-    private String name;
+    private final String name;
+    private final IntUnaryOperator operator;
 
-    Result(String name) {
+    Result(String name, IntUnaryOperator operator) {
         this.name = name;
+        this.operator = operator;
     }
 
     public static Result of(Dealer dealer, Player player) {
         if (player.isBust()) {
             return LOSE;
+        }
+
+        if (player.isBlackjack() && !dealer.isBlackjack()) {
+            return BLACKJACK;
         }
 
         if (dealer.isBust()) {
@@ -38,6 +49,10 @@ public enum Result {
 
     public String getName() {
         return name;
+    }
+
+    public int apply(int betAmount) {
+        return operator.applyAsInt(betAmount);
     }
 
     private static Result compareScore(int dealerScore, int playerScore) {

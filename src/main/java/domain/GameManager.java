@@ -21,8 +21,8 @@ public class GameManager {
         this.players = players;
     }
 
-    public void registerPlayer(String name) {
-        players.register(name);
+    public void registerPlayer(String name, String betAmount) {
+        players.register(name, betAmount);
     }
 
     public void startGame() {
@@ -65,7 +65,7 @@ public class GameManager {
     public GameFinalResultDto getFinalResult() {
         GameResult gameResult = new GameResult(dealer, players.getAll());
 
-        return gameResult.convertToDto();
+        return GameFinalResultDto.of(dealer, gameResult);
     }
 
     private void drawInitialCards() {

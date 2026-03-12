@@ -23,10 +23,10 @@ class GameManagerTest {
     @Test
     void 플레이어어_등록_테스트() {
         GameManager manager = new GameManager(new Deck(new RandomShuffle()), new Dealer(), new Players());
-        manager.registerPlayer("pobi");
-        manager.registerPlayer("cary");
+        manager.registerPlayer("pobi", "1000");
+        manager.registerPlayer("cary", "1000");
 
-        assertThat(manager.getFinalResult().getPlayerResults())
+        assertThat(manager.getFinalResult().getPlayerResults().entrySet())
                 .extracting(Map.Entry::getKey)
                 .containsExactly("pobi", "cary");
     }
@@ -38,8 +38,8 @@ class GameManagerTest {
                 new Dealer(),
                 new Players());
 
-        manager.registerPlayer("pobi");
-        manager.registerPlayer("cary");
+        manager.registerPlayer("pobi", "1000");
+        manager.registerPlayer("cary", "1000");
 
         manager.startGame();
 
@@ -58,8 +58,8 @@ class GameManagerTest {
     void 처음_핸드_공개_시_딜러는_1장_플레이어는_2장의_카드를_공개한다() {
         Dealer dealer = new Dealer();
         GameManager manager = new GameManager(new Deck(new RandomShuffle()), dealer, new Players());
-        manager.registerPlayer("pobi");
-        manager.registerPlayer("cary");
+        manager.registerPlayer("pobi", "1000");
+        manager.registerPlayer("cary", "1000");
 
         manager.startGame();
         GameInitialInfoDto initialInfo = manager.getInitialInfo();
@@ -76,8 +76,8 @@ class GameManagerTest {
     @Test
     void 플레이어_카드_드로우_테스트() {
         GameManager manager = new GameManager(new Deck(new RandomShuffle()), new Dealer(), new Players());
-        manager.registerPlayer("pobi");
-        manager.registerPlayer("cary");
+        manager.registerPlayer("pobi", "1000");
+        manager.registerPlayer("cary", "1000");
 
         manager.drawPlayerCard("pobi");
         manager.drawPlayerCard("cary");
@@ -137,7 +137,7 @@ class GameManagerTest {
     @Test
     void 플레이어가_추가로_카드를_받을_수_있는지_확인한다() {
         Players players = new Players();
-        players.register("pobi");
+        players.register("pobi", "10000");
         players.drawCardTo("pobi", new Card(ACE, SPADE));
         players.drawCardTo("pobi", new Card(QUEEN, SPADE));
 

@@ -37,16 +37,16 @@ public class GameResultTest {
 
         GameResult gameResult = new GameResult(dealer, List.of(player1, player2, player3));
 
-        GameFinalResultDto finalResult = gameResult.convertToDto();
+        GameFinalResultDto finalResult = GameFinalResultDto.of(dealer, gameResult);
 
-        assertThat(finalResult.getPlayerResults())
+        assertThat(finalResult.getPlayerResults().entrySet())
                 .extracting(
                         Map.Entry::getKey,
                         Map.Entry::getValue
                 ).containsExactly(
-                        tuple("pobi", "패"),
-                        tuple("cary", "무"),
-                        tuple("jason", "승")
+                        tuple("pobi", -10000),
+                        tuple("cary", 0),
+                        tuple("jason", 15000)
                 );
     }
 }

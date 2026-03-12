@@ -14,6 +14,10 @@ public class Player extends Participant {
         this.bet = new Bet(betAmount);
     }
 
+    public int getBetAmount() {
+        return bet.getAmount();
+    }
+
     @Override
     public boolean canReceiveCard() {
         return hand.calculateScore() < MAX_PLAYER_CAN_RECEIVE_SCORE;

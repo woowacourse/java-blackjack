@@ -11,7 +11,7 @@ public class Bet {
         this.amount = validate(amount);
     }
 
-    public int getBetAmount() {
+    public int getAmount() {
         return amount;
     }
 

@@ -13,8 +13,8 @@ public class Players {
 
     private final Map<String, Player> players = new LinkedHashMap<>();
 
-    public void register(String playerName) {
-        players.put(playerName, new Player(playerName, new Hand(), "10000"));
+    public void register(String playerName, String betAmount) {
+        players.put(playerName, new Player(playerName, new Hand(), betAmount));
     }
 
     public List<String> drawCardTo(String playerName, Card card) {

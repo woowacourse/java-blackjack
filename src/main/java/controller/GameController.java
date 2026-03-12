@@ -31,7 +31,8 @@ public class GameController {
         List<String> playerNames = inputView.readPlayerName();
 
         for (String playerName : playerNames) {
-            manager.registerPlayer(playerName);
+            String betAmount = inputView.readBetAmount(playerName);
+            manager.registerPlayer(playerName, betAmount);
         }
 
         return playerNames;

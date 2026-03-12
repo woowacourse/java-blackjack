@@ -49,25 +49,28 @@ class ResultTest {
     void 딜러와_플레이어의_점수를_비교하여_승패를_결정한다() {
         Dealer dealer = new Dealer();
         dealer.receiveCard(new Card(KING, HEART));
-        dealer.receiveCard(new Card(TEN, SPADE));
+        dealer.receiveCard(new Card(NINE, SPADE));
 
         Player player1 = new Player("pobi", new Hand(), "10000");
         player1.receiveCard(new Card(EIGHT, HEART));
         player1.receiveCard(new Card(NINE, HEART));
 
         Player player2 = new Player("cary", new Hand(), "10000");
-        player2.receiveCard(new Card(TEN, HEART));
-        player2.receiveCard(new Card(JACK, HEART));
+        player2.receiveCard(new Card(ACE, SPADE));
+        player2.receiveCard(new Card(EIGHT, DIAMOND));
 
         Player player3 = new Player("jason", new Hand(), "10000");
-        player3.receiveCard(new Card(ACE, HEART));
-        player3.receiveCard(new Card(QUEEN, HEART));
+        player3.receiveCard(new Card(JACK, HEART));
+        player3.receiveCard(new Card(QUEEN, SPADE));
 
-        List<Result> results = Stream.of(player1, player2, player3)
+        Player player4 = new Player("jason", new Hand(), "10000");
+        player4.receiveCard(new Card(ACE, HEART));
+        player4.receiveCard(new Card(QUEEN, HEART));
+
+        List<Result> results = Stream.of(player1, player2, player3, player4)
                 .map(player -> of(dealer, player))
                 .toList();
 
-        assertThat(results).containsExactly(LOSE, DRAW, WIN);
-
+        assertThat(results).containsExactly(LOSE, DRAW, WIN,BLACKJACK);
     }
 }
