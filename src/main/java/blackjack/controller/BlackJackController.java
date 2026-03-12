@@ -1,6 +1,5 @@
 package blackjack.controller;
 
-import blackjack.domain.BlackJackGame;
 import blackjack.domain.Card;
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
@@ -24,8 +23,7 @@ public class BlackJackController {
         Dealer dealer = new Dealer();
         Deck deck = new Deck();
 
-        BlackJackGame blackJackGame = new BlackJackGame(players, dealer, deck);
-        blackJackGame.initDraw();
+        dealer.initDraw(players, deck);
 
         printInitDrawResult(dealer, players);
 
