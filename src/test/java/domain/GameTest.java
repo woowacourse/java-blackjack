@@ -262,6 +262,25 @@ public class GameTest {
                 assertThat(onePlayerGame.getDealerResult().get(GameResult.LOSE)).isEqualTo(1);
             });
         }
+
+        @DisplayName("딜러가 블랙잭이고 플레이어가 카드 3장으로 21점이 되면 플레이어가 패배한다.")
+        @Test
+        void 딜러_블랙잭_플레이어_패배() {
+            //given
+            distributePlayerCards(onePlayerGame, new Name("피즈"),
+                    new Card(Rank.JACK, Suit.CLOVER),
+                    new Card(Rank.EIGHT, Suit.CLOVER),
+                    new Card(Rank.THREE, Suit.CLOVER)
+            );
+
+            dealer.addCard(new Card(Rank.JACK, Suit.HEART));
+            dealer.addCard(new Card(Rank.ACE, Suit.HEART));
+
+            assertSoftly(softly -> {
+                assertThat(onePlayerGame.getPlayerResult(new Name("피즈"))).isEqualTo(GameResult.LOSE);
+                assertThat(onePlayerGame.getDealerResult().get(GameResult.WIN)).isEqualTo(1);
+            });
+        }
     }
 
     private void distributePlayerCards(Game game, Name name, Card... cards) {
