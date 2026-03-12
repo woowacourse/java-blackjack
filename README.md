@@ -132,11 +132,11 @@ jason: -20000
 
 ### 게임 시작 (베팅, Deck 셔플 및 Card 세팅 단계)
 
-- [ ] Player는 게임을 시작할 때 Betting Amount을 정해야 한다.
-    - [ ] Betting Amount을은 최소 1,000원 ~ 최대 1,000,000원 이다.
-    - [ ] Betting Amount을은 쉼표로 구분되지 않는 숫자로만 입력이 가능하다.
+- [x] Player는 게임을 시작할 때 Betting Amount을 정해야 한다.
+    - [x] Betting Amount는 최소 1,000원 ~ 최대 1,000,000원 이다.
+    - [x] Betting Amount는 숫자로만 입력이 가능하다.
 
-- [x] Deck을 Shuffle한다.
+- [x] Deck은 Shuffle할 수 있다.
 - [X] Participants에게 Card를 두 장씩 나눠준다.
 
 ### 게임 중 (Rule에 따라 각 Player가 Card를 뽑는 단계)
@@ -165,9 +165,9 @@ jason: -20000
         - Player가 Stay면 Card 총합을 비교하여 승패를 비교한다.
             - Card 총합이 같다면 무승부이다. (모두 돈을 잃지 않았기 때문이다.)
 
-- [ ] 승자는 Betting Amount 만큼 수익을 얻는다.
-- [ ] 패자는 Betting Amount를 모두 잃는다.
-- [ ] Dealer는 Player의 승패에 따라 Profit이 결정된다.
+- [x] 승자는 Betting Amount 만큼 수익을 얻는다.
+- [x] 패자는 Betting Amount를 모두 잃는다.
+- [x] Dealer는 Player의 승패에 따라 Profit이 결정된다.
     - `-1 * (Sum of Players's Profit)`을 Dealer의 Profit으로 한다.
 
 - [ ] Player가 Blackjack이면 Betting Amount의 1.5배를 Profit으로 얻는다.
