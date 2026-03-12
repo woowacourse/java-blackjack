@@ -80,6 +80,31 @@ public class BlackjackGame {
         return getPlayerResult(player, dealer).reverse();
     }
 
+    public Map<String, Integer> calculatePlayerPayout() {
+        Map<String, Integer> playerPayouts = new HashMap<>();
+
+        Hand dealerHand = dealer.getHand();
+        for (Player player : players) {
+            Hand playerHand = player.getHands().getFirst();
+            playerPayouts.put(player.getName(),
+                    player.getPayout(blackjackRule.judgePlayerResult(playerHand, dealerHand)));
+        }
+
+        return playerPayouts;
+    }
+
+    public int calculateDealerPayout(Map<String, Integer> playerPayouts) {
+        int sum = playerPayouts.values()
+                .stream()
+                .mapToInt(Integer::intValue)
+                .sum();
+
+        return -sum;
+    }
+
+    /**
+     * 헬퍼 메소드
+     */
     private List<String> getPlayerCardInAllHand(Player player) {
         return player.getCardInAllHands();
     }

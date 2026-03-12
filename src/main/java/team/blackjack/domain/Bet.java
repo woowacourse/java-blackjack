@@ -1,10 +1,10 @@
 package team.blackjack.domain;
 
 public final class Bet {
-    private static final double BLACKJACK_PAYOUT_RATIO = 2.5;
-    private static final double WIN_PAYOUT_RATIO = 2.0;
-    private static final double DRAW_PAYOUT_RATIO = 1.0;
-    private static final double LOSE_PAYOUT_RATIO = 0.0;
+    private static final double BLACKJACK_PAYOUT_RATIO = 1.5;
+    private static final double WIN_PAYOUT_RATIO = 1.0;
+    private static final double DRAW_PAYOUT_RATIO = 0.0;
+    private static final double LOSE_PAYOUT_RATIO = -1.0;
 
     private final int stake;
 

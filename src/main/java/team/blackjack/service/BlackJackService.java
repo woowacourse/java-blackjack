@@ -9,6 +9,7 @@ import team.blackjack.service.dto.DrawResult;
 import team.blackjack.service.dto.GameResult;
 import team.blackjack.service.dto.GameResult.DealerResult;
 import team.blackjack.service.dto.GameResult.PlayerResult;
+import team.blackjack.service.dto.PayoutResult;
 import team.blackjack.service.dto.ScoreResult;
 import team.blackjack.domain.BlackjackGame;
 import team.blackjack.domain.Dealer;
@@ -18,7 +19,7 @@ import team.blackjack.domain.Result;
 public class BlackJackService {
     private BlackjackGame blackjackGame;
 
-    public void initGame(Map<String,Integer> playerStakes) {
+    public void initGame(Map<String, Integer> playerStakes) {
         blackjackGame = new BlackjackGame(playerStakes);
     }
 
@@ -82,8 +83,16 @@ public class BlackJackService {
         return new GameResult(dealerResult, playerResults);
     }
 
+    public PayoutResult getPayoutResult() {
+        Map<String, Integer> playerPayouts = blackjackGame.calculatePlayerPayout();
+        int dealerPayout = blackjackGame.calculateDealerPayout(playerPayouts);
+
+        return new PayoutResult(dealerPayout, playerPayouts);
+    }
+
     /**
      * 내부 헬퍼 메소드
+     *
      * @return
      */
     private Map<String, PlayerResult> calculatePlayersResult() {

@@ -7,6 +7,7 @@ import team.blackjack.service.dto.DrawResult;
 import team.blackjack.service.dto.GameResult;
 import team.blackjack.service.dto.GameResult.DealerResult;
 import team.blackjack.service.dto.GameResult.PlayerResult;
+import team.blackjack.service.dto.PayoutResult;
 import team.blackjack.service.dto.ScoreResult;
 import team.blackjack.domain.Result;
 
@@ -72,6 +73,14 @@ public class OutputView {
                 .map(entry -> "%s: %s".formatted(entry.getKey(), entry.getValue().result().getName()))
                 .forEach(OutputView::println);
 
+    }
+
+    public static void printParticipantPayoutResult(PayoutResult result) {
+        println("## 최종 수익");
+        println("딜러: %d".formatted(result.dealerPayout()));
+        result.playerPayouts().entrySet().stream()
+                .map(entry -> "%s: %s".formatted(entry.getKey(), entry.getValue()))
+                .forEach(OutputView::println);
     }
 
     public static void printBustMessage() {
