@@ -23,15 +23,15 @@ public class GameResultTest {
         dealer.receiveCard(new Card(KING, HEART));
         dealer.receiveCard(new Card(TEN, SPADE));
 
-        Player player1 = new Player("pobi", new Hand());
+        Player player1 = new Player("pobi", new Hand(), "10000");
         player1.receiveCard(new Card(EIGHT, HEART));
         player1.receiveCard(new Card(NINE, HEART));
 
-        Player player2 = new Player("cary", new Hand());
+        Player player2 = new Player("cary", new Hand(), "10000");
         player2.receiveCard(new Card(TEN, HEART));
         player2.receiveCard(new Card(JACK, HEART));
 
-        Player player3 = new Player("jason", new Hand());
+        Player player3 = new Player("jason", new Hand(), "10000");
         player3.receiveCard(new Card(ACE, HEART));
         player3.receiveCard(new Card(QUEEN, HEART));
 

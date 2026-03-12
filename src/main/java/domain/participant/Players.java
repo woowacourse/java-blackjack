@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.Bet;
 import domain.Card;
 import domain.Hand;
 import domain.dto.GameScoreResultDto;
@@ -13,7 +14,7 @@ public class Players {
     private final Map<String, Player> players = new LinkedHashMap<>();
 
     public void register(String playerName) {
-        players.put(playerName, new Player(playerName, new Hand()));
+        players.put(playerName, new Player(playerName, new Hand(), "10000"));
     }
 
     public List<String> drawCardTo(String playerName, Card card) {

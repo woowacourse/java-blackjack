@@ -1,5 +1,6 @@
 package domain.constant;
 
+import domain.Bet;
 import domain.Card;
 import domain.participant.Dealer;
 import domain.Hand;
@@ -20,7 +21,7 @@ class ResultTest {
     void 플레이어가_버스트면_결과는_패다() {
         Dealer dealer = new Dealer();
 
-        Player player = new Player("pobi", new Hand());
+        Player player = new Player("pobi", new Hand(), "10000");
         player.receiveCard(new Card(TEN, SPADE));
         player.receiveCard(new Card(TEN, HEART));
         player.receiveCard(new Card(FIVE, HEART));
@@ -37,7 +38,7 @@ class ResultTest {
         dealer.receiveCard(new Card(TEN, HEART));
         dealer.receiveCard(new Card(FIVE, HEART));
 
-        Player player = new Player("pobi", new Hand());
+        Player player = new Player("pobi", new Hand(), "10000");
 
         Result result = of(dealer, player);
 
@@ -50,15 +51,15 @@ class ResultTest {
         dealer.receiveCard(new Card(KING, HEART));
         dealer.receiveCard(new Card(TEN, SPADE));
 
-        Player player1 = new Player("pobi", new Hand());
+        Player player1 = new Player("pobi", new Hand(), "10000");
         player1.receiveCard(new Card(EIGHT, HEART));
         player1.receiveCard(new Card(NINE, HEART));
 
-        Player player2 = new Player("cary", new Hand());
+        Player player2 = new Player("cary", new Hand(), "10000");
         player2.receiveCard(new Card(TEN, HEART));
         player2.receiveCard(new Card(JACK, HEART));
 
-        Player player3 = new Player("jason", new Hand());
+        Player player3 = new Player("jason", new Hand(), "10000");
         player3.receiveCard(new Card(ACE, HEART));
         player3.receiveCard(new Card(QUEEN, HEART));
 
