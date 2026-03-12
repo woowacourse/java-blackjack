@@ -26,6 +26,6 @@ class BettingAmountRequestDtoTest {
     @DisplayName("베팅 금액 입력 문자열이 숫자가 아닌 문자면 에러 발생 검증")
     void 베팅_금액_숫자_검증_테스트() {
         Assertions.assertThrows(IllegalArgumentException.class,
-                () -> new BettingAmountRequestDto("123"));
+                () -> new BettingAmountRequestDto("QWER"));
     }
 }
