@@ -35,7 +35,10 @@ class HandTest {
     @DisplayName("가진 패의 블랙잭 여부를 판단한다.")
     public void 블랙잭_여부_판단(final List<Card> cards, final boolean result) {
         // given
-        final Hand hand = new Hand(cards);
+        final Hand hand = new Hand();
+        for (final Card card : cards) {
+            hand.addCard(card);
+        }
 
         // when
         final boolean isBlackjack = hand.isBlackjack();
@@ -54,13 +57,13 @@ class HandTest {
         final Card two = new Card(CardSuit.SPADE, CardRank.TWO);
 
         return Stream.of(
-                Arguments.of(
-                        List.of(ace, ten), true,
-                        List.of(ace, jack), true,
-                        List.of(ace, queen), true,
-                        List.of(ace, king), true,
-                        List.of(ace, two), false
-                )
+                Arguments.of(List.of(ace, ten), true),
+                Arguments.of(List.of(ace, jack), true),
+                Arguments.of(List.of(ace, queen), true),
+                Arguments.of(List.of(ace, king), true),
+                Arguments.of(List.of(ace, two), false),
+                Arguments.of(List.of(ace), false),
+                Arguments.of(List.of(ace, two, queen), false)
         );
     }
 

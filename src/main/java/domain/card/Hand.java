@@ -17,10 +17,6 @@ public class Hand {
         this.hand = new ArrayList<>();
     }
 
-    public Hand(final List<Card> cards) {
-        hand = new ArrayList<>(cards);
-    }
-
     public void addCard(final Card card) {
         hand.add(card);
         updateScore(card);
