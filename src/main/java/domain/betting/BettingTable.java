@@ -34,7 +34,6 @@ public class BettingTable {
         return bettings.calculateDealerProfit();
     }
 
-
     public Money getPlayerProfit(Player player) {
         return bettings.getPlayerBettingMoney(player);
     }
