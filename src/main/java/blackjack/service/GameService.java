@@ -24,12 +24,12 @@ public class GameService {
     }
 
     private void distributeOneCard(Users users, Dealer dealer) {
-        users.forEach(user -> user.bring(deck.bringTopCard()));
-        dealer.bring(deck.bringTopCard());
+        users.forEach(user -> user.add(deck.bringTopCard()));
+        dealer.add(deck.bringTopCard());
     }
 
     public void getMoreCard(User user) {
-        user.bring(deck.bringTopCard());
+        user.add(deck.bringTopCard());
     }
 
     public boolean isDealerWinning(User user, Dealer dealer) {

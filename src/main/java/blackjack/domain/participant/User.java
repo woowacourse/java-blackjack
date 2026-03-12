@@ -16,7 +16,7 @@ public class User {
         this.cards = new Cards();
     }
 
-    public void bring(Card card) {
+    public void add(Card card) {
         cards.add(card);
     }
 
