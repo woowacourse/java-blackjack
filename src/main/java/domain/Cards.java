@@ -3,7 +3,6 @@ package domain;
 import static java.util.Arrays.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -12,22 +11,12 @@ public class Cards {
 
     private final List<Card> cards;
 
-    private Cards() {
-        this.cards = generateCards();
+    private Cards(CardShuffler cardShuffler) {
+        this.cards = cardShuffler.shuffle(generateCards());
     }
 
-    public static Cards of() {
-        return new Cards();
-    }
-
-    public static Cards shuffled() {
-        Cards deck = Cards.of();
-        deck.shuffle();
-        return deck;
-    }
-
-    private void shuffle() {
-        Collections.shuffle(this.cards);
+    public static Cards of(CardShuffler cardShuffler) {
+        return new Cards(cardShuffler);
     }
 
     private List<Card> generateCards() {
