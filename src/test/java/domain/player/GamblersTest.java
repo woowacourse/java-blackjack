@@ -8,7 +8,7 @@ import domain.card.Card;
 import domain.card.CardRank;
 import domain.card.CardSuit;
 import dto.BlackjackResult;
-import expcetion.BlackjackException;
+import exception.BlackjackException;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;

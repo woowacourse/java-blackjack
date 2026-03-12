@@ -2,8 +2,8 @@ package domain.player;
 
 import domain.MatchResult;
 import domain.card.Card;
-import expcetion.BlackjackException;
-import expcetion.ExceptionMessage;
+import exception.BlackjackException;
+import exception.ExceptionMessage;
 import java.util.List;
 
 public class Gambler extends Player {
