@@ -70,8 +70,15 @@ public class BlackjackGame {
 
     private void playerTurn(Player player, Deck deck) {
         while (player.canDraw()) {
-            if (inputView.getChoice(player.name()).equals("n")) {
+            String playerName = player.name();
+            String choice = inputView.getChoice(playerName);
+
+            if (choice.equals("n")) {
                 break;
+            }
+
+            if (!choice.equals("y")) {
+                throw new IllegalArgumentException();
             }
 
             player.receive(deck.draw());
