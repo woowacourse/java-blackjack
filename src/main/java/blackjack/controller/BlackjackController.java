@@ -97,7 +97,7 @@ public class BlackjackController {
         if (players.isAllPlayersBurst()) {
             return;
         }
-        while (dealer.calculateCardsValue() < 17) {
+        while (dealer.canDraw()) {
             dealer.draw(Deck.pop());
             outputView.printGetMoreCardsMessageForDealer(dealer.getName());
         }
