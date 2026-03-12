@@ -50,6 +50,11 @@ public class Hand {
         return cards.getFirst().getName();
     }
 
+    public boolean isBlackJack() {
+        return cards.size() == 2 && getTotalPoint() == 21;
+    }
+
+
     public String getCardNames() {
 
         List<String> names = new ArrayList<>();

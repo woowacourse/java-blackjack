@@ -44,5 +44,7 @@ public abstract class Participant {
 
     public abstract boolean shouldDraw();
 
-
+    public boolean isBlackJack() {
+        return hand.isBlackJack();
+    }
 }
