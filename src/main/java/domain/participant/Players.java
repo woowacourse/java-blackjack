@@ -63,10 +63,10 @@ public class Players {
                 .orElseThrow(() -> new IllegalArgumentException(PLAYER_NOT_FOUND.getMessage()));
     }
 
-    public List<GameResult> decideAllResults(int dealerScore, boolean dealerBurst) {
+    public List<GameResult> decideAllResults(Dealer dealer) {
         List<GameResult> gameResults = new ArrayList<>();
         for (Player player : players) {
-            GameResult playerGameResult = GameResult.calculatePlayerResult(player, dealerScore, dealerBurst);
+            GameResult playerGameResult = GameResult.calculatePlayerResult(player, dealer);
             gameResults.add(playerGameResult);
         }
         return gameResults;
@@ -82,9 +82,9 @@ public class Players {
         return foundPlayer.getHand();
     }
 
-    public GameResult getPlayerResult(Name name, int dealerScore, boolean dealerBust) {
+    public GameResult getPlayerResult(Name name, Dealer dealer) {
         Player foundPlayer = findPlayerByName(name);
-        return GameResult.calculatePlayerResult(foundPlayer, dealerScore, dealerBust);
+        return GameResult.calculatePlayerResult(foundPlayer, dealer);
     }
 
     public int getPlayerScore(Name name) {

@@ -174,6 +174,22 @@ public class GameTest {
             assertThat(onePlayerGame.getDealerResult().get(GameResult.DRAW)).isEqualTo(1);
         }
 
+        @DisplayName("플레이어가 카드 2장으로 블랙잭이 되어 승리하면 BLACKJACK_WIN이 된다")
+        @Test
+        void 플레이어_카드_2장_블랙잭_승리_시_블랙잭_승리_된다() {
+            //given
+            distributePlayerCards(onePlayerGame, new Name("피즈"),
+                    new Card(Rank.JACK, Suit.CLOVER),
+                    new Card(Rank.ACE, Suit.CLOVER)
+            );
+
+            dealer.addCard(new Card(Rank.JACK, Suit.HEART));
+            dealer.addCard(new Card(Rank.QUEEN, Suit.HEART));
+
+            assertThat(onePlayerGame.getPlayerResult(new Name("피즈"))).isEqualTo(GameResult.BLACKJACK_WIN);
+            assertThat(onePlayerGame.getDealerResult().get(GameResult.LOSE)).isEqualTo(1);
+        }
+
         private void distributePlayerCards(Game game, Name name, Card... cards) {
             Deck testDeck = new Deck(Arrays.asList(cards));
             for (int i = 0; i < cards.length; i++) {

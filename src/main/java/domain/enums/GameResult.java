@@ -1,5 +1,7 @@
 package domain.enums;
 
+import constant.GameRule;
+import domain.participant.Dealer;
 import domain.participant.Player;
 import java.util.HashMap;
 import java.util.List;
@@ -18,14 +20,19 @@ public enum GameResult {
         this.description = description;
     }
 
-    public static GameResult calculatePlayerResult(Player player, int dealerScore, boolean dealerBust) {
+    public static GameResult calculatePlayerResult(Player player, Dealer dealer) {
         int playerScore = player.getScore();
+        int dealerScore = dealer.getScore();
+        boolean dealerBust = dealer.isBust();
 
         if (player.isBust() || (playerScore < dealerScore && !dealerBust)) {
             return GameResult.LOSE;
         }
         if (playerScore == dealerScore) {
             return GameResult.DRAW;
+        }
+        if (player.getHand().size() == 2 && playerScore == GameRule.BLACKJACK_CRITERION) {
+            return GameResult.BLACKJACK_WIN;
         }
         return GameResult.WIN;
     }
@@ -42,7 +49,7 @@ public enum GameResult {
     }
 
     private static GameResult getOpposite(GameResult gameResult) {
-        if (gameResult.equals(WIN)) {
+        if (gameResult.equals(WIN) || gameResult.equals(BLACKJACK_WIN)) {
             return LOSE;
         }
 

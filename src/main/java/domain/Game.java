@@ -44,15 +44,11 @@ public class Game {
     }
 
     public GameResult getPlayerResult(Name name) {
-        int dealerScore = dealer.getScore();
-        boolean dealerBurst = dealer.isBust();
-        return players.getPlayerResult(name, dealerScore, dealerBurst);
+        return players.getPlayerResult(name, dealer);
     }
 
     public Map<GameResult, Integer> getDealerResult() {
-        int dealerScore = dealer.getScore();
-        boolean dealerBurst = dealer.isBust();
-        return GameResult.calculateDealerResult(players.decideAllResults(dealerScore, dealerBurst));
+        return GameResult.calculateDealerResult(players.decideAllResults(dealer));
     }
 
     public List<Card> getPlayerCard(Name name) {
