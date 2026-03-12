@@ -1,15 +1,15 @@
 package domain.participant;
 
-public class Dealer extends Player {
-    private final int DEALER_DRAW_CONDITION = 16;
+public class Dealer extends Participant {
+    private static final int DEALER_DRAW_CONDITION = 16;
 
     public Dealer() {
-        super("딜러", 1000);
+        super("딜러");
     }
 
     @Override
-    public boolean canDraw(){
-        return this.getScore() <= DEALER_DRAW_CONDITION;
+    public boolean canDraw() {
+        return getScore() <= DEALER_DRAW_CONDITION;
     }
 
     public String getOpenCard() {

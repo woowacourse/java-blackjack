@@ -1,60 +1,30 @@
 package domain.participant;
 
 import domain.PlayerStatus;
-import domain.card.Card;
-import domain.Hand;
 import domain.constant.Result;
-import java.util.List;
 
-public class Player {
-    private final String name;
-    private final Hand hand = new Hand();
-    private PlayerStatus status;
-
+public class Player extends Participant {
+    private final PlayerStatus status;
 
     public Player(String name, int bettingMoney) {
-        this.name = name;
+        super(name);
         this.status = new PlayerStatus(bettingMoney);
     }
 
-    public boolean isBust() {
-        return hand.isBust();
+    public boolean isNaturalBlackJack() {
+        return status.isNaturalBlackJack();
     }
 
-    public boolean isBlackJack() {
-        return hand.isBlackjack();
+    public void markNaturalBlackJack() {
+        status.markNaturalBlackJack();
     }
 
-    public Result getResult() {
-        return status.getResult();
+    public double calculateProceeds(Result result) {
+        return status.calculateProceeds(result);
     }
 
-    public void renewedWithBlackJack() {
-        status.renewedWithBlackJack();
-    }
-
-    public void receiveCard(Card card) {
-        hand.add(card);
-    }
-
+    @Override
     public boolean canDraw() {
-        return !(isBust()|| hand.isBlackjack());
+        return !(isBust() || isNaturalBlackJack());
     }
-
-    public int handSize() {
-        return hand.size();
-    }
-
-    public List<String> getHandToString() {
-        return hand.toStringList();
-    }
-
-    public int getScore(){
-        return hand.calculateScore();
-    }
-
-    public String getName() {
-        return name;
-    }
-
 }
