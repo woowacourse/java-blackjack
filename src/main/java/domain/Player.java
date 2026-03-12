@@ -1,14 +1,14 @@
 package domain;
 
 
-public class User extends Participant{
+public class Player extends Participant{
 
     private final String name;
     private Amount amount;
 
     private GameResult gameResult;
 
-    public User(String name) {
+    public Player(String name) {
         this.name = name;
     }
 

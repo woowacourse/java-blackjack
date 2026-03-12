@@ -16,24 +16,24 @@ public class GameService {
         return cardDeck.deal();
     }
 
-    public void initDeal(List<User> users, Dealer dealer) {
+    public void initDeal(List<Player> players, Dealer dealer) {
         for (int i = 0; i < 2; i++) {
-            for (User user : users) {
-                user.receiveCard(deal());
+            for (Player player : players) {
+                player.receiveCard(deal());
             }
             dealer.receiveCard(deal());
         }
     }
 
-    public void determineResult(List<User> users, Dealer dealer) {
+    public void determineResult(List<Player> players, Dealer dealer) {
         int dealerScore = dealer.calculateScore();
         boolean dealerBurst = dealer.isBurst(dealerScore);
 
-        for (User user : users) {
-            int userScore = user.calculateScore();
-            boolean userBurst = user.isBurst(userScore);
-            GameResult userResult = judge(user.isBlackjack(), dealer.isBlackjack(), userScore, dealerScore, userBurst, dealerBurst);
-            user.setGameResult(userResult);
+        for (Player player : players) {
+            int userScore = player.calculateScore();
+            boolean userBurst = player.isBurst(userScore);
+            GameResult userResult = judge(player.isBlackjack(), dealer.isBlackjack(), userScore, dealerScore, userBurst, dealerBurst);
+            player.setGameResult(userResult);
             dealer.setRounds(userResult.reverse());
         }
     }

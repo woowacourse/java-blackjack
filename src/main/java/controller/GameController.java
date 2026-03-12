@@ -5,7 +5,7 @@ import java.util.List;
 import domain.Amount;
 import domain.Card;
 import domain.Dealer;
-import domain.User;
+import domain.Player;
 import service.GameService;
 import util.InputParser;
 import view.InputView;
@@ -26,61 +26,61 @@ public class GameController {
     }
 
     public void run() {
-        List<User> users = setUpUsers();
-        processBet(users);
-        initDeal(users);
-        processBlackjack(users);
-        processUserTurns(users);
+        List<Player> players = setUpUsers();
+        processBet(players);
+        initDeal(players);
+        processBlackjack(players);
+        processUserTurns(players);
         processDealerTurn();
-        showCardResult(users);
-        showGameRecord(users);
+        showCardResult(players);
+        showGameRecord(players);
     }
 
-    private List<User> setUpUsers(){
+    private List<Player> setUpUsers(){
         String input = inputView.readUsers();
         return InputParser.parseUsers(input);
     }
 
-    private void processBet(List<User> users) {
-        for(User user : users) {
-            String input = inputView.readBetAmount(user);
+    private void processBet(List<Player> players) {
+        for(Player player : players) {
+            String input = inputView.readBetAmount(player);
             Amount amount = new Amount(InputParser.parseAmount(input));
-            user.bet(amount);
+            player.bet(amount);
         }
     }
 
-    private void initDeal(List<User> users){
-        gameService.initDeal(users, dealer);
-        outputView.printInitialDeal(users, dealer);
+    private void initDeal(List<Player> players){
+        gameService.initDeal(players, dealer);
+        outputView.printInitialDeal(players, dealer);
     }
 
-    private void processBlackjack(List<User> users) {
-        for(User user: users) {
-            boolean userIsBlackjack = user.isBlackjack();
+    private void processBlackjack(List<Player> players) {
+        for(Player player : players) {
+            boolean userIsBlackjack = player.isBlackjack();
             boolean dealerIsBlackjack = dealer.isBlackjack();
             if(userIsBlackjack && !dealerIsBlackjack) {
-                outputView.printBlackjackWin(user);
+                outputView.printBlackjackWin(player);
                 continue;
             }
             if(userIsBlackjack) {
-                outputView.printBlackjackDraw(user);
+                outputView.printBlackjackDraw(player);
             }
         }
     }
 
-    private void processUserTurns(List<User> users) {
-        for (User user : users) {
-            if(user.isBlackjack()) {
+    private void processUserTurns(List<Player> players) {
+        for (Player player : players) {
+            if(player.isBlackjack()) {
                 continue;
             }
             boolean hitAtLeastOnce = false;
-            while (inputView.readWillHit(user.getName())) {
+            while (inputView.readWillHit(player.getName())) {
                 hitAtLeastOnce = true;
-                user.receiveCard(gameService.deal());
-                outputView.printHand(user);
+                player.receiveCard(gameService.deal());
+                outputView.printHand(player);
             }
             if (!hitAtLeastOnce) {
-                outputView.printHand(user);
+                outputView.printHand(player);
             }
         }
     }
@@ -99,12 +99,12 @@ public class GameController {
         outputView.printDealerStand();
     }
 
-    private void showCardResult(List<User> users) {
-        outputView.printCardResult(users, dealer);
+    private void showCardResult(List<Player> players) {
+        outputView.printCardResult(players, dealer);
     }
 
-    private void showGameRecord(List<User> users){
-        gameService.determineResult(users, dealer);
-        outputView.printGameRecord(users, dealer);
+    private void showGameRecord(List<Player> players){
+        gameService.determineResult(players, dealer);
+        outputView.printGameRecord(players, dealer);
     }
 }

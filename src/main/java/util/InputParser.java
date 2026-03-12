@@ -1,15 +1,15 @@
 package util;
 
-import domain.User;
+import domain.Player;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class InputParser {
 
-    public static List<User> parseUsers(String input) {
+    public static List<Player> parseUsers(String input) {
         return Arrays.stream(input.split(","))
-                .map(User::new)
+                .map(Player::new)
                 .toList();
     }
 
