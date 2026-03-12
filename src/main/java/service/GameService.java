@@ -12,16 +12,12 @@ public class GameService {
         this.cardDeck = new CardDeck();
     }
 
-    public Card deal() {
-        return cardDeck.deal();
-    }
-
     public void initDeal(List<Player> players, Dealer dealer) {
         for (int i = 0; i < 2; i++) {
             for (Player player : players) {
-                player.receiveCard(deal());
+                player.receiveCard(cardDeck.draw());
             }
-            dealer.receiveCard(deal());
+            dealer.receiveCard(cardDeck.draw());
         }
     }
 

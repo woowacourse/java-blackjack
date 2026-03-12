@@ -27,8 +27,8 @@ public class DealerTest {
     public void dealer_should_open_1_card (){
         Dealer dealer = new Dealer();
         List<Card> cards = new ArrayList<>();
-        cards.add(cardDeck.deal());
-        cards.add(cardDeck.deal());
+        cards.add(cardDeck.draw());
+        cards.add(cardDeck.draw());
         dealer.receiveInitCard(cards);
         assertThat(dealer.getHand().size()).isEqualTo(2);
     }

@@ -28,7 +28,7 @@ public class CardTest {
     public void deal_card_decrease_deck_card_1(){
         CardDeck deck = new CardDeck();
         List<Card> cards = new ArrayList<>(deck.getCards());
-        deck.deal();
+        deck.draw();
         assertThat(deck.getCards().size()).isEqualTo(cards.size() - 1);
     }
 
@@ -36,6 +36,6 @@ public class CardTest {
     @DisplayName("카드를 분배하면 덱의 맨 앞 카드가 나온다.")
     public void deal_card_match_first(){
         CardDeck deck = new CardDeck();
-        assertThat(deck.getCards().getFirst()).isEqualTo(deck.deal());
+        assertThat(deck.getCards().getFirst()).isEqualTo(deck.draw());
     }
 }
