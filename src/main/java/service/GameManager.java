@@ -12,8 +12,6 @@ import dto.ProfitResultDto;
 
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
-import java.util.function.Function;
 
 public class GameManager {
 
@@ -37,8 +35,8 @@ public class GameManager {
         this.players = new Players(players);
     }
 
-    public void forEachPlayerPlaceBet(Function<String, Integer> action) {
-        players.placeBetAllPlayers(action);
+    public void placeBet(Player player, int amount) {
+        players.findBy(player).placeBet(amount);
     }
 
     public void dealInitialCardsToParticipants() {
@@ -50,16 +48,16 @@ public class GameManager {
         }
     }
 
-    public void forEachPlayer(Consumer<Player> action) {
-        players.playTurns(action);
-    }
-
     public void dealCardTo(Player player) {
         players.findBy(player).receive(deck.drawCard());
     }
 
     public void dealCardToDealer() {
         dealer.receive(deck.drawCard());
+    }
+
+    public boolean canPlayerToHit(Player player) {
+        return !player.isBust();
     }
 
     public boolean isDealerShouldHit() {
@@ -87,5 +85,9 @@ public class GameManager {
         int dealerProfitResult = dealer.calculateProfitResult(playersProfitResult);
 
         return new ProfitResultDto(dealerProfitResult, playersProfitResult);
+    }
+
+    public List<Player> getPlayers() {
+        return players.getPlayers();
     }
 }

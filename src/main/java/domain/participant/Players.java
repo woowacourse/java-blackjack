@@ -4,8 +4,6 @@ import domain.MatchResult;
 import domain.card.Card;
 
 import java.util.*;
-import java.util.function.Consumer;
-import java.util.function.Function;
 
 public class Players {
 
@@ -31,19 +29,6 @@ public class Players {
         }
 
         throw new IllegalArgumentException("존재하지 않는 플레이어입니다.");
-    }
-
-    public void placeBetAllPlayers(Function<String, Integer> action) {
-        for (Player player : players) {
-            int betAmount = action.apply(player.getName());
-            player.placeBet(betAmount);
-        }
-    }
-
-    public void playTurns(Consumer<Player> action) {
-        for (Player player : players) {
-            action.accept(player);
-        }
     }
 
     public Map<Player, MatchResult> calculateMatchResult(Dealer dealer) {

@@ -30,12 +30,15 @@ public class BlackJackController {
     }
 
     private void playBlackJack() {
-        gameManager.forEachPlayer(this::playPlayerTurn);
+        for (Player player : gameManager.getPlayers()) {
+            playPlayerTurn(player);
+        }
+
         playDealerTurn();
     }
 
     private void playPlayerTurn(Player player) {
-        while (!player.isBust()) {
+        while (gameManager.canPlayerToHit(player)) {
             if (!inputView.readPlayerToHitUntilValid(player.getName())) break;
 
             gameManager.dealCardTo(player);
@@ -67,7 +70,10 @@ public class BlackJackController {
     private void readPlayerBetAmountUntilValid() {
         while (true) {
             try {
-                gameManager.forEachPlayerPlaceBet(inputView::readPlayerBetAmount);
+                for (Player player : gameManager.getPlayers()) {
+                    int amount = inputView.readPlayerBetAmount(player.getName());
+                    gameManager.placeBet(player, amount);
+                }
                 return;
             } catch (IllegalArgumentException e) {
                 OutputView.printErrorMessage(e.getMessage());
