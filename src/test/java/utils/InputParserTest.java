@@ -35,9 +35,9 @@ public class InputParserTest {
             assertThatIllegalArgumentException()
                     .isThrownBy(() -> {
                         if (input.isEmpty())
-                            throw new IllegalArgumentException(ErrorMessage.EMPTY_INPUT.getMessage());
+                            throw new IllegalArgumentException(ErrorMessage.EMPTY_NAME_INPUT.getMessage());
                     })
-                    .withMessage(ErrorMessage.EMPTY_INPUT.getMessage());
+                    .withMessage(ErrorMessage.EMPTY_NAME_INPUT.getMessage());
         }
     }
 }
