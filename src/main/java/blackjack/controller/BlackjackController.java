@@ -67,7 +67,7 @@ public class BlackjackController {
 
     private boolean drawIfWanted(User user) {
         boolean drew = false;
-        while (!user.isFinished() && GET_MORE_CARD_BUTTON.equals(inputView.readMoreCard(user.getName()))) {
+        while (!user.isBurst() && GET_MORE_CARD_BUTTON.equals(inputView.readMoreCard(user.getName()))) {
             gameService.getMoreCard(user);
             OutputView.printSettingCardsResult(user.getName(), user.getCardsName());
             drew = true;

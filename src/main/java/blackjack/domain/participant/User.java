@@ -14,5 +14,4 @@ public class User extends Participant {
     public int getBettingAmount() {
         return bettingAmount.getAmount();
     }
-
 }

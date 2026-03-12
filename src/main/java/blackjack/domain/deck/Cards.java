@@ -23,6 +23,10 @@ public class Cards {
                 .toList();
     }
 
+    public int getCardsSize() {
+        return cards.size();
+    }
+
     public String getFirstName() {
         return cards.getFirst().getName();
     }

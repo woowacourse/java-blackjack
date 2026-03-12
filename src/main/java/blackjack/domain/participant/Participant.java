@@ -40,12 +40,7 @@ public class Participant {
         return calculateCardsValue() > BLACKJACK_NUMBER;
     }
 
-    private boolean isBlackjack() {
-        return calculateCardsValue() == BLACKJACK_NUMBER;
+    public boolean isBlackjack() {
+        return calculateCardsValue() == BLACKJACK_NUMBER && cards.getCardsSize() == 2;
     }
-
-    public boolean isFinished() {
-        return isBurst() || isBlackjack();
-    }
-
 }
