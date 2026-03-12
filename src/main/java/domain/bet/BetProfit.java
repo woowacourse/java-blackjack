@@ -4,6 +4,7 @@ import static message.ErrorMessage.PLAYER_NOT_IN_BETTING;
 
 import domain.enums.GameResult;
 import domain.participant.Name;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,7 +52,7 @@ public class BetProfit {
     }
 
     public Map<Name, Integer> getPlayerBetProfit() {
-        return Map.copyOf(betProfit);
+        return Collections.unmodifiableMap(new LinkedHashMap<>(betProfit));
     }
 
     public int getDealerBetProfit() {

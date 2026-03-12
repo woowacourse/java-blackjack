@@ -70,7 +70,7 @@ public class Players {
         for (Player player : players) {
             playerResults.put(player.getName(), GameResult.calculatePlayerResult(player, dealer));
         }
-        return Map.copyOf(playerResults);
+        return playerResults;
     }
 
     public boolean checkScoreUnderCriterion(Name name) {
