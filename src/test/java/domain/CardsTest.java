@@ -13,7 +13,7 @@ class CardsTest {
     @DisplayName("카드를 52장 생성한다.")
     void createCards_Returns52() {
         Cards standardCards = Cards.createCards();
-        int actualValue = Cards.getCardsSize(standardCards);
+        int actualValue = standardCards.getSize();
         assertEquals(52, actualValue);
     }
 

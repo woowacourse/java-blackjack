@@ -27,8 +27,8 @@ public class Cards {
         Collections.shuffle(beforeShuffle.cards);
     }
 
-    public static Integer getCardsSize(Cards targetCards) {
-        return targetCards.cards.size();
+    public Integer getSize() {
+        return this.cards.size();
     }
 
     public List<Card> getCards() {
