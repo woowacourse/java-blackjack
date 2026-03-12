@@ -33,8 +33,8 @@ public class Deck {
         return card;
     }
 
-    public void shuffle() {
-        Collections.shuffle(this.cards);
+    public void shuffle(DeckShuffler shuffler) {
+        shuffler.shuffle(this.cards);
     }
 
     public List<Card> getCards() {

@@ -2,6 +2,7 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Collections;
 import org.junit.jupiter.api.Test;
 
 public class DeckTest {
@@ -18,7 +19,7 @@ public class DeckTest {
         Deck origin = Deck.create();
         Deck deck = Deck.create();
 
-        deck.shuffle();
+        deck.shuffle(Collections::shuffle);
 
         assertThat(origin.getCards()).isNotEqualTo(deck.getCards());
     }
