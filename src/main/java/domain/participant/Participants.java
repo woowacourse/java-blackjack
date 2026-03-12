@@ -34,8 +34,7 @@ public class Participants {
     }
 
 
-    // TODO: 검증에 대한 테스트 필요
-    private static void validatePlayerCounts(final List<Participant> participants) {
+    private void validatePlayerCounts(final List<Participant> participants) {
         if (participants.size() < MINIMUM_BOUND || participants.size() > MAXIMUM_BOUND) {
             throw new IllegalArgumentException(PLAYER_COUNT_OUT_OF_RANGE.getMessage());
         }

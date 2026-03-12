@@ -13,7 +13,7 @@ public record Name(
     }
 
 
-    private static void validateNameLength(final String name) {
+    private void validateNameLength(final String name) {
         if ((name.length() < MINIMUM_BOUND) || (name.length() > MAXIMUM_BOUND)) {
             throw new IllegalArgumentException(PLAYER_NAME_LENGTH_ERROR.getMessage());
         }

@@ -34,7 +34,7 @@ public class Deck {
     }
 
 
-    private static List<Card> initCards() {
+    private List<Card> initCards() {
         final List<Card> cards = new ArrayList<>();
         for (final CardSuit suit : CardSuit.values()) {
             addCard(suit, cards);
@@ -42,7 +42,7 @@ public class Deck {
         return cards;
     }
 
-    private static void addCard(final CardSuit suit, final List<Card> cards) {
+    private void addCard(final CardSuit suit, final List<Card> cards) {
         for (final CardRank rank : CardRank.values()) {
             cards.add(new Card(suit, rank));
         }
