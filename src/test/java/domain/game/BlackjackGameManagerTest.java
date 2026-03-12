@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import dto.BlackjackResultDto;
 import factory.BlackjackControllerFactory;
 import domain.card.Rank;
-import constant.Result;
 import domain.card.Suit;
 import domain.card.Card;
 import dto.BlackjackStatisticsDto;

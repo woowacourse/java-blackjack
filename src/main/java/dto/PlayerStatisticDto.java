@@ -1,6 +1,6 @@
 package dto;
 
-import constant.Result;
+import domain.game.Result;
 import domain.participant.Player;
 
 public record PlayerStatisticDto(

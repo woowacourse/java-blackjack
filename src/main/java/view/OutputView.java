@@ -1,6 +1,6 @@
 package view;
 
-import constant.Result;
+import domain.game.Result;
 import dto.BlackjackResultDto;
 import dto.BlackjackStatisticsDto;
 import dto.DealerStatisticDto;
