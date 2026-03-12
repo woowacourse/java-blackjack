@@ -4,14 +4,19 @@ import domain.pariticipant.Player;
 
 import java.util.Map;
 
-public class PlayersBettingProfit {
-    private final Map<Player, Integer> playersBettingProfit;
+public record PlayersBettingProfit(Map<Player, Integer> playersBettingProfit) {
 
-    public PlayersBettingProfit(Map<Player, Integer> playersBettingProfit) {
-        this.playersBettingProfit = playersBettingProfit;
+    @Override
+    public Map<Player, Integer> playersBettingProfit() {
+        return Map.copyOf(playersBettingProfit);
     }
 
-    public Map<Player, Integer> getPlayersBettingProfit() {
-        return Map.copyOf(playersBettingProfit);
+    public int calculateDealerProfit() {
+        int dealerProfit = 0;
+        for (Player player : playersBettingProfit.keySet()) {
+            dealerProfit += playersBettingProfit.get(player) * -1;
+        }
+
+        return dealerProfit;
     }
 }

@@ -1,6 +1,5 @@
 package controller;
 
-import domain.card.Card;
 import domain.card.CardShuffler;
 import domain.card.Deck;
 import domain.card.Hand;
@@ -57,12 +56,6 @@ public class BlackjackController {
         outputView.printInitHandCard(participants);
     }
 
-    private static void addHandCard(Participant participant, List<Card> drawnCards) {
-        for (Card drawedCard : drawnCards) {
-            participant.addHandCard(drawedCard);
-        }
-    }
-
     private void doHitAndStand(Players players, Deck deck) {
         for (Player player : players.getPlayers()) {
             hitAndStand(player, deck);
@@ -98,7 +91,10 @@ public class BlackjackController {
 
     private void printResult(Participants participants) {
         outputView.printCardResults(participants);
+
         MatchResult matchResult = participants.calculateMatchResult();
-        outputView.printFinalResults(matchResult);
+//        outputView.printFinalResults(matchResult);
+
+        outputView.printBettingProfit(matchResult.calculateBettingProfit());
     }
 }
