@@ -3,19 +3,23 @@ package domain;
 public enum GameResult {
     승, 무, 패;
 
-    public static GameResult determinePlayerResult(
-            int dealerScore,
-            int playerScore,
-            boolean isDealerBust,
-            boolean isPlayerBust
-    ) {
-        if (isDealerBust) {
-            return GameResult.승;
-        }
-        if (isPlayerBust) {
+    public static GameResult decidePlayerResult(Dealer dealer, Player player) {
+        if (player.isBust()) {
             return GameResult.패;
         }
-        return compareScoreForCheckPlayerResult(dealerScore, playerScore);
+        if (dealer.isBust()) {
+            return GameResult.승;
+        }
+        if (player.isBlackJack() && dealer.isBlackJack()) {
+            return GameResult.무;
+        }
+        if (player.isBlackJack()) {
+            return GameResult.승;
+        }
+        if (dealer.isBlackJack()) {
+            return GameResult.패;
+        }
+        return compareScoreForCheckPlayerResult(dealer.getOwnCardsSum(), player.getOwnCardsSum());
     }
 
     private static GameResult compareScoreForCheckPlayerResult(int dealerScore, int playerScore) {
