@@ -1,7 +1,6 @@
 package domain.participant;
 
 import domain.MatchResult;
-import domain.Bet;
 
 import java.util.Objects;
 
@@ -15,28 +14,6 @@ public class Player extends Participant {
     public Player(String name) {
         validateNameLength(name);
         this.name = name;
-    }
-
-    public boolean isHigherThan(Dealer dealer) {
-        return getScore() > dealer.getScore();
-    }
-
-    public boolean isTie(Dealer dealer) {
-        return getScore() == dealer.getScore();
-    }
-
-    public MatchResult determineMatchResultWithDealer(Dealer dealer) {
-        if (isBust()) return MatchResult.LOSE;
-        if (dealer.isBust()) return MatchResult.WIN;
-        if (isHigherThan(dealer)) return MatchResult.WIN;
-
-        if (isTie(dealer)) {
-            if (isBlackJack() && !dealer.isBlackJack()) return MatchResult.WIN;
-            if (!isBlackJack() && dealer.isBlackJack()) return MatchResult.LOSE;
-            return MatchResult.DRAW;
-        }
-
-        return MatchResult.LOSE;
     }
 
     public void placeBet(int amount) {
