@@ -27,7 +27,7 @@ class PlayerNicknamesResultTest {
         PlayerNicknamesResult playerNicknamesResult = PlayerNicknamesResult.from(participants);
 
         // then
-        assertThat(playerNicknamesResult.nicknames()).isEqualTo(List.of("boye", "sumin"));
+        assertThat(playerNicknamesResult.nicknames()).containsExactly("boye", "sumin");
     }
 
 }
