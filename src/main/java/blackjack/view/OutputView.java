@@ -17,7 +17,6 @@ public class OutputView {
     }
 
     public static void printStartMessage(final StartMessageDto dto) {
-
         System.out.printf("딜러와 %s에게 %d장을 나누었습니다.\n",
             String.join(", ", dto.playerNicknames()), DEALER_DISTRIBUTE_COUNT);
 

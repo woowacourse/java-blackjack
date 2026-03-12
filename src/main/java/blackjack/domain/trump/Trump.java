@@ -19,7 +19,7 @@ public class Trump {
         final List<Card> shuffledDeck = Lists.cartesianProduct(List.of(Suit.values()),
                 List.of(Denomination.values()))
             .stream()
-            .map(pair -> new Card(pair.getLeft(), pair.getRight()))
+            .map(pair -> new Card(pair.left(), pair.right()))
             .collect(Collectors.toCollection(ArrayList::new));
         sortBehavior.sort(shuffledDeck);
 

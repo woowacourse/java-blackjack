@@ -3,8 +3,8 @@ package blackjack.domain.participant;
 import static blackjack.global.ParticipantConstants.DEALER_DISTRIBUTE_COUNT;
 import static blackjack.global.ParticipantConstants.DEALER_HIT_THRESHOLD;
 
-import blackjack.domain.trump.Trump;
 import blackjack.domain.trump.Card;
+import blackjack.domain.trump.Trump;
 import java.util.List;
 
 public class Dealer extends Participant {

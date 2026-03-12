@@ -23,7 +23,8 @@ public record FinalStatusDto(
         participants.all().forEach(participant ->
             participantScoreMap.put(participant.getNickname(), participant.getScore()));
 
-        return new FinalStatusDto(participantNicknames, participantCardNamesMap, participantScoreMap);
+        return new FinalStatusDto(participantNicknames, participantCardNamesMap,
+            participantScoreMap);
     }
 
 }

@@ -1,20 +1,5 @@
 package blackjack.global;
 
-public class Pair<T, U> {
+public record Pair<T, U>(T left, U right) {
 
-    private final T left;
-    private final U right;
-
-    public Pair(final T left, final U right) {
-        this.left = left;
-        this.right = right;
-    }
-
-    public T getLeft() {
-        return left;
-    }
-
-    public U getRight() {
-        return right;
-    }
 }
