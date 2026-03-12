@@ -2,6 +2,7 @@ package domain;
 
 import domain.card.Card;
 import domain.card.Deck;
+import domain.dto.TotalResult;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
@@ -31,7 +32,7 @@ public class BlackjackGame {
         }
     }
 
-    public void setBetMoney(Function<Player, String> getBetMoneyFunc) {
+    public void setBetMoney(Function<Player, Long> getBetMoneyFunc) {
         players.setBetMoneyEachPlayers(getBetMoneyFunc);
     }
 
@@ -57,7 +58,7 @@ public class BlackjackGame {
         }
     }
 
-    public Profits getResult() {
+    public TotalResult getResult() {
         return players.getResults(dealer);
     }
 

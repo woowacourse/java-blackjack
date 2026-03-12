@@ -103,7 +103,7 @@ public abstract class Participant {
         return hand;
     }
 
-    public void setBetMoney(String value) {
+    public void setBetMoney(long value) {
         this.betMoney = BetMoney.of(value);
     }
 }

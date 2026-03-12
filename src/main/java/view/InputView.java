@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class InputView {
+    private static final String VALUE_SHOULD_BE_POSITIVE = "[ERROR] 배팅 금액은 양수여야 합니다.";
     private static final String INVALID_HIT_STAND_RESPONSE = "[ERROR] 입력은 y 또는 n으로만 입력해야 합니다.";
 
     public List<String> readPlayerNames() {
@@ -18,10 +19,16 @@ public class InputView {
                 .toList();
     }
 
-    public String readBetMoney(Player player) {
+    public long readBetMoney(Player player) {
         printEmptyLine();
         System.out.println(player.getName().getValue() + "의 배팅 금액은?");
-        return Console.readLine();
+        String input = Console.readLine();
+        long value = Long.parseLong(input);
+
+        if (value <= 0) {
+            throw new IllegalArgumentException(VALUE_SHOULD_BE_POSITIVE);
+        }
+        return value;
     }
 
     private void printEmptyLine() {

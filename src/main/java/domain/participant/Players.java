@@ -1,9 +1,9 @@
 package domain.participant;
 
 import domain.BetMoney;
-import domain.Profits;
-import domain.RoundResult;
 import domain.card.Deck;
+import domain.dto.RoundResult;
+import domain.dto.TotalResult;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -58,14 +58,13 @@ public class Players {
         }
     }
 
-    public void setBetMoneyEachPlayers(Function<Player, String> getBetMoneyFunc) {
+    public void setBetMoneyEachPlayers(Function<Player, Long> getBetMoneyFunc) {
         for (Player player : players) {
-            String s = getBetMoneyFunc.apply(player);
-            player.setBetMoney(s);
+            player.setBetMoney(getBetMoneyFunc.apply(player));
         }
     }
 
-    public Profits getResults(Dealer dealer) {
+    public TotalResult getResults(Dealer dealer) {
         List<RoundResult> roundResults = new ArrayList<>();
         BetMoney dealerProfit = BetMoney.ZERO;
         for (Player player : players) {
@@ -73,7 +72,7 @@ public class Players {
             dealerProfit = dealerProfit.sub(result);
             roundResults.add(new RoundResult(player, result));
         }
-        return new Profits(roundResults, dealerProfit);
+        return new TotalResult(roundResults, dealerProfit);
     }
 
     public List<Player> getPlayers() {

@@ -1,10 +1,10 @@
 package view;
 
 import domain.BlackjackGame;
-import domain.Profits;
-import domain.RoundResult;
 import domain.Score;
 import domain.card.Card;
+import domain.dto.RoundResult;
+import domain.dto.TotalResult;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Participant;
@@ -66,7 +66,7 @@ public class ResultView {
         System.out.println("딜러는 " + (DEALER_HIT_STAND_BOUNDARY.add(new Score(1)).getValue()) + "이상이라 카드를 받지 않았습니다.");
     }
 
-    public void printResult(Profits results) {
+    public void printResult(TotalResult results) {
         printEmptyLine();
         System.out.println("## 최종 승패");
         System.out.println("딜러: " + results.dealerProfit().getValue());
