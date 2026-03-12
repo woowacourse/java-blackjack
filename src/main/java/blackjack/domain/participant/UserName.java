@@ -1,10 +1,10 @@
 package blackjack.domain.participant;
 
+import static blackjack.util.constant.Constants.MAX_LENGTH;
+
 public record UserName(
         String name
 ) {
-
-    private static final int MAX_LENGTH = 5;
 
     public UserName {
         validate(name);

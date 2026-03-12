@@ -1,5 +1,7 @@
 package blackjack.controller;
 
+import static blackjack.util.constant.Constants.GET_MORE_CARD_BUTTON;
+
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.GameResult;
 import blackjack.domain.participant.User;
@@ -65,7 +67,7 @@ public class BlackjackController {
 
     private boolean drawIfWanted(User user) {
         boolean drew = false;
-        while (!user.isFinished() && "y".equals(inputView.readMoreCard(user.getName()))) {
+        while (!user.isFinished() && GET_MORE_CARD_BUTTON.equals(inputView.readMoreCard(user.getName()))) {
             gameService.getMoreCard(user);
             OutputView.printSettingCardsResult(user.getName(), user.getCardsName());
             drew = true;

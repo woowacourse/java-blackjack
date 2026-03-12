@@ -1,5 +1,7 @@
 package blackjack.domain.deck;
 
+import static blackjack.util.constant.Constants.BLACKJACK_NUMBER;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +36,7 @@ public class Cards {
     }
 
     private int applyBestAceValue(int sum) {
-        if (hasAce() && (sum + 10) <= 21) {
+        if (hasAce() && (sum + 10) <= BLACKJACK_NUMBER) {
             return sum + 10;
         }
 

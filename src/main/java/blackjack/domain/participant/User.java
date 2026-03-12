@@ -1,5 +1,7 @@
 package blackjack.domain.participant;
 
+import static blackjack.util.constant.Constants.BLACKJACK_NUMBER;
+
 import blackjack.domain.deck.Card;
 import blackjack.domain.deck.Cards;
 import java.util.List;
@@ -35,11 +37,11 @@ public class User {
     }
 
     public boolean isBurst() {
-        return calculateCardsValue() > 21;
+        return calculateCardsValue() > BLACKJACK_NUMBER;
     }
 
     private boolean isBlackjack() {
-        return calculateCardsValue() == 21;
+        return calculateCardsValue() == BLACKJACK_NUMBER;
     }
 
     public boolean isFinished() {
