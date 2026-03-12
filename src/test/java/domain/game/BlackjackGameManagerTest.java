@@ -1,8 +1,7 @@
-package service;
+package domain.game;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.game.BlackjackGameManager;
 import dto.BlackjackResultDto;
 import factory.BlackjackControllerFactory;
 import constant.HitOrStand;
