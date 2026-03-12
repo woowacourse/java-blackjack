@@ -52,7 +52,7 @@ public class BlackjackGame {
         }
     }
 
-    public List<RoundResult> getResult() {
+    public Profits getResult() {
         return players.getResults(dealer);
     }
 

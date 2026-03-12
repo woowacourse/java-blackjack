@@ -37,7 +37,7 @@ public abstract class Participant {
         }
     }
 
-    public BetMoney getProfit(Participant target) {
+    public BetMoney getResult(Participant target) {
         if (isBlackjack() && target.isBlackjack()) {
             return betMoney.draw();
         }

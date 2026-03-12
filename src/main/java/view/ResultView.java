@@ -1,9 +1,6 @@
 package view;
 
-import domain.BlackjackGame;
-import domain.Result;
-import domain.RoundResult;
-import domain.Score;
+import domain.*;
 import domain.card.Card;
 import domain.participant.Dealer;
 import domain.participant.Name;
@@ -67,25 +64,36 @@ public class ResultView {
         System.out.println("딜러는 " + (DEALER_HIT_STAND_BOUNDARY.add(new Score(1)).getValue()) + "이상이라 카드를 받지 않았습니다.");
     }
 
-    public void printResult(List<RoundResult> results) {
+//    public void printResult(List<RoundResult> results) {
+//        printEmptyLine();
+//        System.out.println("## 최종 승패");
+//        System.out.print("딜러: ");
+//
+//        for (Result result : orderedResults) {
+//            long resultCount = results.stream()
+//                    .filter(res -> res.result() == result)
+//                    .count();
+//
+//            System.out.print(resultCount + changeToDealerSideResult(result).getDescription() + " ");
+//        }
+//
+//        printEmptyLine();
+//        for (RoundResult roundResult : results) {
+//            System.out.println(
+//                    roundResult.player().getName().getValue() + ": " + roundResult.result().getDescription());
+//        }
+//    }
+
+    public void printResult(Profits results) {
         printEmptyLine();
         System.out.println("## 최종 승패");
-        System.out.print("딜러: ");
+        System.out.println("딜러: " + results.dealerProfit());
 
-        for (Result result : orderedResults) {
-            long resultCount = results.stream()
-                    .filter(res -> res.result() == result)
-                    .count();
-
-            System.out.print(resultCount + changeToDealerSideResult(result).getDescription() + " ");
-        }
-
-        printEmptyLine();
-        for (RoundResult roundResult : results) {
-            System.out.println(
-                    roundResult.player().getName().getValue() + ": " + roundResult.result().getDescription());
+        for (RoundResult result : results.results()) {
+            System.out.println(result.player() + ": " + result.betMoney().getValue());
         }
     }
+
 
     private Result changeToDealerSideResult(Result result) {
         if (result == Result.WIN) {

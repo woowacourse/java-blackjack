@@ -1,6 +1,7 @@
 package domain.participant;
 
-import domain.Result;
+import domain.BetMoney;
+import domain.Profits;
 import domain.RoundResult;
 import domain.card.Deck;
 
@@ -57,13 +58,24 @@ public class Players {
         }
     }
 
-    public List<RoundResult> getResults(Dealer dealer) {
+//    public List<RoundResult> getResults(Dealer dealer) {
+//        List<RoundResult> roundResults = new ArrayList<>();
+//        for (Player player : players) {
+//            Result result = Result.judge(player, dealer);
+//            roundResults.add(new RoundResult(player, result));
+//        }
+//        return roundResults;
+//    }
+
+    public Profits getResults(Dealer dealer) {
         List<RoundResult> roundResults = new ArrayList<>();
+        BetMoney dealerProfit = BetMoney.ZERO;
         for (Player player : players) {
-            Result result = Result.judge(player, dealer);
+            BetMoney result = player.getResult(dealer);
+            dealerProfit = dealerProfit.sub(result);
             roundResults.add(new RoundResult(player, result));
         }
-        return roundResults;
+        return new Profits(roundResults, dealerProfit);
     }
 
     public List<Player> getPlayers() {

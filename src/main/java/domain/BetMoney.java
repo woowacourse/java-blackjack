@@ -44,6 +44,10 @@ public class BetMoney {
         return BetMoney.of(value.multiply(LOSE_ODDS));
     }
 
+    public BetMoney sub(BetMoney target) {
+        return BetMoney.of(value.subtract(target.value));
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

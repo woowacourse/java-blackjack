@@ -83,41 +83,41 @@ public class PlayerTest {
 
     @Test
     void 플레이어만_블랙잭이면_블랙잭으로_승리한다() {
-        Assertions.assertThat(PLAYER_BLACKJACK.getProfit(DEALER_20)).isEqualTo(BetMoney.of(15000.0));
+        Assertions.assertThat(PLAYER_BLACKJACK.getResult(DEALER_20)).isEqualTo(BetMoney.of(15000.0));
     }
 
     @Test
     void 둘_다_블랙잭이면_무승부로_처리한다() {
-        Assertions.assertThat(PLAYER_BLACKJACK.getProfit(DEALER_BLACKJACK)).isEqualTo(BetMoney.of(0));
+        Assertions.assertThat(PLAYER_BLACKJACK.getResult(DEALER_BLACKJACK)).isEqualTo(BetMoney.of(0));
     }
 
     @Test
     void 딜러만_블랙잭이면_패배한다() {
-        Assertions.assertThat(PLAYER_20.getProfit(DEALER_BLACKJACK)).isEqualTo(BetMoney.of(-10000));
+        Assertions.assertThat(PLAYER_20.getResult(DEALER_BLACKJACK)).isEqualTo(BetMoney.of(-10000));
     }
 
     @Test
     void 플레이어가_버스트이면_패배한다() {
-        Assertions.assertThat(PLAYER_BUST.getProfit(DEALER_BLACKJACK)).isEqualTo(BetMoney.of(-10000));
+        Assertions.assertThat(PLAYER_BUST.getResult(DEALER_BLACKJACK)).isEqualTo(BetMoney.of(-10000));
     }
 
     @Test
     void 플레이어가_버스트가_아닐때_딜러가_버스트이면_승리한다() {
-        Assertions.assertThat(PLAYER_20.getProfit(DEALER_BUST)).isEqualTo(BetMoney.of(10000.0));
+        Assertions.assertThat(PLAYER_20.getResult(DEALER_BUST)).isEqualTo(BetMoney.of(10000.0));
     }
 
     @Test
     void 둘_다_버스트가_아니고_스코어가_같으면_무승부로_처리한다() {
-        Assertions.assertThat(PLAYER_20.getProfit(DEALER_20)).isEqualTo(BetMoney.of(0));
+        Assertions.assertThat(PLAYER_20.getResult(DEALER_20)).isEqualTo(BetMoney.of(0));
     }
 
     @Test
     void 둘_다_버스트가_아니고_플레이어의_스코어가_더_높으면_승리한다() {
-        Assertions.assertThat(PLAYER_21.getProfit(DEALER_20)).isEqualTo(BetMoney.of(10000.0));
+        Assertions.assertThat(PLAYER_21.getResult(DEALER_20)).isEqualTo(BetMoney.of(10000.0));
     }
 
     @Test
     void 둘_다_버스트가_아니고_딜러의_스코어가_더_높으면_패배한다() {
-        Assertions.assertThat(PLAYER_20.getProfit(DEALER_21)).isEqualTo(BetMoney.of(-10000));
+        Assertions.assertThat(PLAYER_20.getResult(DEALER_21)).isEqualTo(BetMoney.of(-10000));
     }
 }
