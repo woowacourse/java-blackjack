@@ -48,7 +48,7 @@ public class OutputView {
         System.out.println("딜러는 " + Dealer.DRAW_THRESHOLD + "을 초과하여 카드를 더 받지 않았습니다." + LINE_SEPARATOR);
     }
 
-    public void printFinalProfit(Map<String, Integer> profitByParticipant) {
+    public void printFinalProfit(Map<String, Long> profitByParticipant) {
         final String header = "## 최종 수익" + System.lineSeparator();
         String output = profitByParticipant.entrySet()
                 .stream()

@@ -1,8 +1,7 @@
-package model;
+package model.game;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 import model.card.Card;
 import model.card.Cards;
 import model.card.Deck;
@@ -50,19 +49,20 @@ public class Blackjack {
         return deck.draw();
     }
 
-    public Map<String, Integer> calculateDealerResult() {
-        return participants.getDealer()
-                .calculateStatistics(participants.getPlayers());
-    }
-
-    public Map<String, Boolean> calculatePlayerResult() {
+    public Map<String, Long> calculateFinalResult() {
         Dealer dealer = participants.getDealer();
 
-        return participants.getPlayers()
-                .stream()
-                .collect(Collectors.toMap(
-                        Player::getName,
-                        player -> player.beats(dealer)
-                ));
+        long dealerProfit = 0;
+        LinkedHashMap<String, Long> profitByName = new LinkedHashMap<>();
+
+        for (Player player : participants.getPlayers()) {
+            GameResult gameResult = GameResult.calculateResult(dealer, player);
+            profitByName.put(player.getName(), gameResult.getProfitFrom(player.getBettingAmount()));
+            dealerProfit += (-gameResult.getProfitFrom(player.getBettingAmount()));
+        }
+
+        profitByName.putFirst(dealer.getName(), dealerProfit);
+
+        return profitByName;
     }
 }

@@ -4,12 +4,21 @@ import java.util.List;
 import model.card.Card;
 
 public class Player extends Participant {
-    private Player(String name) {
+    private final BettingAmount bettingAmount;
+
+    private Player(String name, BettingAmount bettingAmount) {
         super(name);
+        this.bettingAmount = bettingAmount;
     }
 
     public static Player from(String input) {
-        return new Player(input);
+        return new Player(input, BettingAmount.from(1000));
+    }
+
+    public static Player of(String name, int bettingAmount) {
+        BettingAmount amount = BettingAmount.from(bettingAmount);
+
+        return new Player(name, amount);
     }
 
     @Override
@@ -40,6 +49,10 @@ public class Player extends Participant {
         }
 
         return calculateScore() >= participant.calculateScore();
+    }
+
+    public BettingAmount getBettingAmount() {
+        return this.bettingAmount;
     }
 
     @Override

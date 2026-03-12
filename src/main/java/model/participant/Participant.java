@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 import model.card.Card;
 import model.card.Cards;
+import model.game.GameStatus;
 
 public abstract class Participant {
     private final String name;

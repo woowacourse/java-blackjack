@@ -1,7 +1,7 @@
-package model.participant;
+package model.game;
 
-import static model.Blackjack.BLACKJACK_SCORE;
-import static model.Blackjack.DEALOUT_DRAW_COUNT;
+import static model.game.Blackjack.BLACKJACK_SCORE;
+import static model.game.Blackjack.DEALOUT_DRAW_COUNT;
 
 import model.card.Cards;
 

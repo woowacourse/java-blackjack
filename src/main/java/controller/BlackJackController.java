@@ -1,7 +1,7 @@
 package controller;
 
-import static model.Blackjack.BLACKJACK_SCORE;
-import static model.Blackjack.DEALOUT_DRAW_COUNT;
+import static model.game.Blackjack.BLACKJACK_SCORE;
+import static model.game.Blackjack.DEALOUT_DRAW_COUNT;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
-import model.Blackjack;
+import model.game.Blackjack;
 import model.card.Card;
 import model.card.Cards;
 import model.card.Deck;
@@ -135,6 +135,6 @@ public class BlackJackController {
             outputView.printHandsWithScore(participant.getName(), result, participant.calculateScore());
         }
 
-        outputView.printFinalResult(blackjack.calculateDealerResult(), blackjack.calculatePlayerResult());
+        outputView.printFinalProfit(blackjack.calculateFinalResult());
     }
 }

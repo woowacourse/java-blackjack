@@ -1,6 +1,6 @@
 package model.card;
 
-import static model.Blackjack.BLACKJACK_SCORE;
+import static model.game.Blackjack.BLACKJACK_SCORE;
 
 import java.util.ArrayList;
 import java.util.List;
