@@ -4,13 +4,13 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
+import blackjack.domain.participant.PlayerNicknames;
 import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.dto.DealerInitialHand;
 import blackjack.view.dto.ParticipantHandScore;
 import blackjack.view.dto.PlayerHand;
-import blackjack.view.dto.PlayerNames;
 import blackjack.view.dto.TotalWinningResult;
 import java.util.List;
 import java.util.function.Supplier;
@@ -43,15 +43,15 @@ public class BlackjackRunner {
     }
     
     private Players makePlayers() {
-        List<String> playerNames = inputView.readPlayerNames();
-        List<Integer> playerBettingAmounts = playerNames.stream()
-                .map(playerName -> {
-                    outputView.printAskPlayerBettingAmount(playerName);
+        List<String> playerNicknames = inputView.readPlayerNicknames();
+        PlayerNicknames nicknames = new PlayerNicknames(playerNicknames);
+        List<Integer> playerBettingAmounts = nicknames.nicknames().stream()
+                .map(nickname -> {
+                    outputView.printAskPlayerBettingAmount(nickname);
                     return inputView.readPlayerBettingAmount();
                 })
                 .toList();
-        Players players = Players.fromNameAndBettingAmounts(playerNames, playerBettingAmounts);
-        return players;
+        return Players.fromNameAndBettingAmounts(playerNicknames, playerBettingAmounts);
     }
     
     private void playerTurn(Participants participants, Deck deck) {
@@ -72,7 +72,7 @@ public class BlackjackRunner {
     
     private void printParticipantsNames(Participants participants) {
         List<Player> players = participants.getPlayers();
-        outputView.printInitialSetUp(PlayerNames.from(players));
+        outputView.printInitialSetUp(PlayerNicknames.from(players));
     }
     
     private void printInitialHand(Participants participants) {

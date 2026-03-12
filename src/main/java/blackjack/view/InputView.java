@@ -14,7 +14,7 @@ public class InputView {
         return scanner.nextLine();
     }
     
-    public List<String> readPlayerNames() {
+    public List<String> readPlayerNicknames() {
         return Arrays.stream(readLine().split(DELIMITER))
                 .map(String::trim)
                 .toList();

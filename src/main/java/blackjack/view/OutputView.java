@@ -1,10 +1,10 @@
 package blackjack.view;
 
+import blackjack.domain.participant.PlayerNicknames;
 import blackjack.view.dto.DealerInitialHand;
 import blackjack.view.dto.GameResultDisplayName;
 import blackjack.view.dto.ParticipantHandScore;
 import blackjack.view.dto.PlayerHand;
-import blackjack.view.dto.PlayerNames;
 import blackjack.view.dto.TotalWinningResult;
 import java.util.List;
 
@@ -22,9 +22,9 @@ public class OutputView {
         printLine("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
     }
     
-    public void printInitialSetUp(PlayerNames playerNames) {
+    public void printInitialSetUp(PlayerNicknames playerNames) {
         printNewLine();
-        String playerNicknames = String.join(", ", playerNames.playerNames());
+        String playerNicknames = String.join(", ", playerNames.nicknames());
         printLine(String.format("딜러와 %s에게 2장을 나누었습니다.", playerNicknames));
     }
     
