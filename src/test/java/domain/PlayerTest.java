@@ -8,27 +8,27 @@ import org.junit.jupiter.api.Test;
 class PlayerTest {
 
     @Test
-    @DisplayName("플레이어의 점수가 21점을 초과하면 isBurst는 true를 반환한다.")
-    void isBurst_Score22_ReturnTrue() {
+    @DisplayName("플레이어의 점수가 21점을 초과하면 isBust는 true를 반환한다.")
+    void isBust_Score22_ReturnTrue() {
         Player player = new Player(new Name("pobi"));
         player.receiveCard(new Card(Shape.SPADE, Number.TEN));
         player.receiveCard(new Card(Shape.HEART, Number.JACK));
         player.receiveCard(new Card(Shape.DIAMOND, Number.TWO));
 
-        boolean result = player.isBurst();
+        boolean result = player.isBust();
 
         assertEquals(true, result);
     }
 
     @Test
-    @DisplayName("플레이어의 점수가 21점이면 isBurst는 false를 반환한다.")
-    void isBurst_Score21_ReturnFalse() {
+    @DisplayName("플레이어의 점수가 21점이면 isBust는 false를 반환한다.")
+    void isBust_Score21_ReturnFalse() {
         Player player = new Player(new Name("pobi"));
         player.receiveCard(new Card(Shape.SPADE, Number.NINE));
         player.receiveCard(new Card(Shape.HEART, Number.JACK));
         player.receiveCard(new Card(Shape.DIAMOND, Number.TWO));
 
-        boolean result = player.isBurst();
+        boolean result = player.isBust();
 
         assertEquals(false, result);
     }
