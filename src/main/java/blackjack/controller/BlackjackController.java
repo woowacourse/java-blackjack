@@ -26,7 +26,7 @@ public class BlackjackController {
         dealAndPrintResult(blackjackGame);
         playPlayerTurn(blackjackGame);
         playDealerTurn(blackjackGame);
-        generateAndPrintPlayResult(blackjackGame);
+        generateAndPrintProfitResult(blackjackGame);
     }
 
     private BlackjackGame readyBlackjackGame() {
@@ -53,10 +53,12 @@ public class BlackjackController {
     private Players inputBettingAmounts(Players players) {
         List<Player> playersWithBet = new ArrayList<>();
         for (Player player : players.getPlayers()) {
+            OutputView.printLineBreak();
             Player playerWithBet = player.withBetAmount(
                     BetAmount.of(Parser.parseAmount(InputView.readBettingAmount(player.name()))));
             playersWithBet.add(playerWithBet);
         }
+        OutputView.printLineBreak();
         return Players.of(playersWithBet);
     }
 
@@ -101,11 +103,27 @@ public class BlackjackController {
     }
 
     private void generateAndPrintPlayResult(BlackjackGame blackjackGame) {
+        printGameResult(blackjackGame);
+        printPlayResult(blackjackGame);
+    }
+
+    private void generateAndPrintProfitResult(BlackjackGame blackjackGame) {
+        printGameResult(blackjackGame);
+        printProfitResult(blackjackGame);
+    }
+
+    private void printGameResult(BlackjackGame blackjackGame) {
         GameResult gameResult = blackjackGame.generateGameResult();
         OutputView.printGameResult(gameResult);
+    }
 
+    private void printPlayResult(BlackjackGame blackjackGame) {
         Map<Player, MatchResult> playerFinalResult = blackjackGame.getPlayerFinalResult();
         Map<String, Long> dealerFinalResult = blackjackGame.getDealerFinalResult(playerFinalResult);
         OutputView.printFinalResult(playerFinalResult, dealerFinalResult);
+    }
+
+    private void printProfitResult(BlackjackGame blackjackGame) {
+        OutputView.printFinalResult(blackjackGame.calculateProfits());
     }
 }

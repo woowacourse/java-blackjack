@@ -18,4 +18,15 @@ public record DealResult(
         CardInfo dealerCard = CardInfo.from(dealer.getOpenCard());
         return new DealResult(playerHands, dealerCard);
     }
+
+    public String playersNames() {
+        StringBuilder builder = new StringBuilder();
+        for (PlayerHandResult handResult : playerHands) {
+            builder.append(" ");
+            builder.append(handResult.name());
+            builder.append(",");
+        }
+        builder.deleteCharAt(builder.lastIndexOf(","));
+        return builder.toString();
+    }
 }

@@ -7,7 +7,9 @@ import blackjack.dto.DealResult;
 import blackjack.dto.DealerScoreResult;
 import blackjack.dto.GameResult;
 import blackjack.dto.PlayerHandResult;
+import blackjack.dto.PlayerProfitResult;
 import blackjack.dto.PlayerScoreResult;
+import blackjack.dto.ProfitResult;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -17,6 +19,7 @@ public class OutputView {
     }
 
     public static void printDealResult(DealResult dealResult) {
+        System.out.println("딜러와" + dealResult.playersNames() + "에게 2장을 나누었습니다.");
         System.out.println("딜러카드: " + dealResult.dealerOpenCard().display());
         for (PlayerHandResult playerHand : dealResult.playerHands()) {
             printCurrentPlayerHand(playerHand);
@@ -62,6 +65,14 @@ public class OutputView {
         printDealerFinalResult(dealerFinalResult.get("승"), dealerFinalResult.get("패"));
         for (Player player : playerFinalResult.keySet()) {
             printPlayerFinalResult(player.name(), playerFinalResult.get(player).getDisplay());
+        }
+    }
+
+    public static void printFinalResult(ProfitResult result) {
+        System.out.println("## 최종 수익");
+        System.out.println("딜러: " + result.dealerProfit());
+        for (PlayerProfitResult playerProfitResult : result.playerProfits()) {
+            System.out.println(playerProfitResult.name() + ": " + playerProfitResult.profit());
         }
     }
 
