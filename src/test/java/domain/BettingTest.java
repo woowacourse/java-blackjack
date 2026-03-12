@@ -76,6 +76,18 @@ public class BettingTest {
     }
 
     @Test
+    void 처음_두_장이_아닌_블랙잭이면_일반_승리_배당을_받는다() {
+        Player player = createPlayer(10000, ACE, NINE, ACE);
+        Dealer dealer = createDealer(TEN, EIGHT);
+
+        WinningStatus status = WinningStatus.of(player, dealer);
+        player.applyRoundResult(status);
+
+        assertThat(status).isEqualTo(WinningStatus.WIN);
+        assertThat(player.profit()).isEqualTo(10000);
+    }
+
+    @Test
     void 딜러가_블랙잭을_초과하면_플레이어는_베팅_금액을_받는다() {
         Player player1 = createPlayer(10000, TEN, NINE);
         Player player2 = createPlayer(20000, TEN, TEN, TEN);

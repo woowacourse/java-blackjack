@@ -60,6 +60,16 @@ class WinningStatusTest {
         assertThat(status).isEqualTo(WinningStatus.WIN);
     }
 
+    @Test
+    void 처음_두_장이_아닌_21점은_블랙잭_승리가_아니다() {
+        Player player = createPlayer(Rank.ACE, Rank.NINE, Rank.ACE);
+        Dealer dealer = createDealer(Rank.TEN, Rank.EIGHT);
+
+        WinningStatus status = WinningStatus.of(player, dealer);
+
+        assertThat(status).isEqualTo(WinningStatus.WIN);
+    }
+
     private Player createPlayer(Rank... ranks) {
         Player player = new Player("pobi");
         for (Rank rank : ranks) {

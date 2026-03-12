@@ -7,6 +7,7 @@ public enum WinningStatus {
     WIN, TIE, LOSE, BLACKJACK_WIN;
 
     public static final int BLACK_JACK = 21;
+    public static final int INITIAL_CARD_COUNT = 2;
 
     public static WinningStatus of(Player player, Dealer dealer) {
         int playerScore = player.score();
@@ -15,11 +16,11 @@ public enum WinningStatus {
         if (playerScore > BLACK_JACK) {
             return LOSE;
         }
+        if (isInitialBlackjack(player) && dealerScore != BLACK_JACK) {
+            return BLACKJACK_WIN;
+        }
         if (dealerScore > BLACK_JACK) {
             return WIN;
-        }
-        if (playerScore == BLACK_JACK && dealerScore != BLACK_JACK) {
-            return BLACKJACK_WIN;
         }
         return compareScore(playerScore, dealerScore);
     }
@@ -32,5 +33,9 @@ public enum WinningStatus {
             return LOSE;
         }
         return TIE;
+    }
+
+    private static boolean isInitialBlackjack(Player player) {
+        return player.handSize() == INITIAL_CARD_COUNT && player.score() == BLACK_JACK;
     }
 }
