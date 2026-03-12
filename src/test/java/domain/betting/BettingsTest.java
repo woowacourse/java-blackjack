@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class BettingsTest {
-    
+
     @Test
     void 매개변수_없는_생성자로_생성이_가능하다() {
         // given
