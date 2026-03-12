@@ -59,6 +59,7 @@ public class BlackjackController {
         users.forEach(user ->
                 OutputView.printSettingCardsResult(user.getName(), user.getCardsName())
         );
+        OutputView.printEmptyLine();
     }
 
     private void getMoreCards(Users users) {
@@ -98,6 +99,7 @@ public class BlackjackController {
 
     private void printWinningResult(Users users, Dealer dealer) {
         GameResult gameResult = new GameResult();
+        OutputView.printEmptyLine();
         users.forEach(user ->
                 gameService.applyGameResult(user, dealer, gameResult)
         );

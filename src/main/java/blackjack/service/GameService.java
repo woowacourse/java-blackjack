@@ -34,16 +34,6 @@ public class GameService {
         participant.add(deck.bringTopCard());
     }
 
-    public boolean isDealerWinning(User user, Dealer dealer) {
-        if (user.isBurst()) {
-            return true;
-        }
-        if (dealer.isBurst()) {
-            return false;
-        }
-        return user.calculateCardsValue() < dealer.calculateCardsValue();
-    }
-
     public void applyGameResult(User user, Dealer dealer, GameResult gameResult) {
         GameResultType resultType = determineResult(user, dealer);
         gameResult.add(user.getName(), resultType.calculateProfit(user.getBettingAmount()));

@@ -15,6 +15,7 @@ public class InputView {
     }
 
     public String readBettingAmount(String userName) {
+        System.out.println();
         System.out.println(userName + "의 배팅 금액은?");
         return Console.readLine();
     }

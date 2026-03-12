@@ -9,6 +9,10 @@ public class OutputView {
     private OutputView() {
     }
 
+    public static void printEmptyLine() {
+        System.out.println();
+    }
+
     public static void printGameSettingMessage(String dealerName, List<String> playersName) {
         System.out.println();
         System.out.println(dealerName + "와 " + String.join(", ", playersName) + "에게 2장을 나누었습니다.");
@@ -42,5 +46,4 @@ public class OutputView {
             System.out.println(entry.getKey() + ": " + entry.getValue());
         }
     }
-
 }
