@@ -28,7 +28,7 @@ class BetTest {
     }
 
     @Test
-    void 플레이어가_블랙잭으로_승리한_경우_반환금액은_배팅금액의_1_5배가_된다() {
+    void 플레이어가_블랙잭으로_승리한_경우_수익_금액은_배팅금액의_1_5배가_된다() {
         int payout = player.getPayout(Result.BLACKJACK);
 
         assertThat(payout).isEqualTo(15000);
@@ -39,9 +39,9 @@ class BetTest {
      * BlackjackRule 테스트에 작성한다.
      */
     @Test
-    void 플레이어가_무승부인_경우_배팅금액을_그대로_돌려받는다() {
+    void 플레이어가_무승부인_경우_수익_금액은_없다() {
         int payout = player.getPayout(Result.DRAW);
 
-        assertThat(payout).isEqualTo(10000);
+        assertThat(payout).isEqualTo(0);
     }
 }

@@ -1,20 +1,14 @@
 package team.blackjack.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import team.blackjack.domain.Card;
 import team.blackjack.service.dto.DrawResult;
-import team.blackjack.service.dto.GameResult;
-import team.blackjack.service.dto.GameResult.DealerResult;
-import team.blackjack.service.dto.GameResult.PlayerResult;
 import team.blackjack.service.dto.PayoutResult;
 import team.blackjack.service.dto.ScoreResult;
 import team.blackjack.domain.BlackjackGame;
 import team.blackjack.domain.Dealer;
 import team.blackjack.domain.Player;
-import team.blackjack.domain.Result;
 
 public class BlackJackService {
     private BlackjackGame blackjackGame;
@@ -76,50 +70,10 @@ public class BlackJackService {
         );
     }
 
-    public GameResult getGameResult() {
-        final Map<String, PlayerResult> playerResults = calculatePlayersResult();
-        final DealerResult dealerResult = calculateDealerResult();
-
-        return new GameResult(dealerResult, playerResults);
-    }
-
     public PayoutResult getPayoutResult() {
         Map<String, Integer> playerPayouts = blackjackGame.calculatePlayerPayout();
         int dealerPayout = blackjackGame.calculateDealerPayout(playerPayouts);
 
         return new PayoutResult(dealerPayout, playerPayouts);
-    }
-
-    /**
-     * 내부 헬퍼 메소드
-     *
-     * @return
-     */
-    private Map<String, PlayerResult> calculatePlayersResult() {
-        final Map<String, PlayerResult> playerResults = new HashMap<>();
-
-        final Dealer dealer = blackjackGame.getDealer();
-        final List<Player> players = blackjackGame.getPlayers();
-
-        for (Player player : players) {
-            PlayerResult playerResult = new PlayerResult(blackjackGame.getPlayerResult(player, dealer));
-            playerResults.put(player.getName(), playerResult);
-        }
-
-        return playerResults;
-    }
-
-    private DealerResult calculateDealerResult() {
-        List<Result> dealerResults = new ArrayList<>();
-
-        final Dealer dealer = blackjackGame.getDealer();
-        final List<Player> players = blackjackGame.getPlayers();
-
-        for (Player player : players) {
-            Result dealerResult = blackjackGame.getDealerResult(dealer, player);
-            dealerResults.add(dealerResult);
-        }
-
-        return new DealerResult(dealerResults);
     }
 }

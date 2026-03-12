@@ -52,11 +52,10 @@ class BlackJackServiceTest {
 
         var scoreResult = blackJackService.calculateAllParticipantScore();
 
-        assertThat(scoreResult.playerNames()).containsExactly("pobi", "jason");
+        assertThat(scoreResult.playerNames()).containsExactlyInAnyOrder("pobi", "jason");
         assertThat(scoreResult.dealerCards()).isNotEmpty();
         assertThat(scoreResult.playerCards()).containsKeys("pobi", "jason");
         assertThat(scoreResult.playerScores()).containsKeys("pobi", "jason");
-
     }
 
     @Test

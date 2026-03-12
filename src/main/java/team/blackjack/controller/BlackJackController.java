@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import team.blackjack.service.dto.DrawResult;
-import team.blackjack.service.dto.GameResult;
 import team.blackjack.service.dto.PayoutResult;
 import team.blackjack.service.dto.ScoreResult;
 import team.blackjack.domain.Player;
@@ -36,9 +35,6 @@ public class BlackJackController {
 
         ScoreResult scoreResult = blackJackService.calculateAllParticipantScore();
         OutputView.printParticipantScoreResult(scoreResult);
-
-        GameResult gameResult = blackJackService.getGameResult();
-        OutputView.printGameResult(gameResult);
 
         PayoutResult payoutResult = blackJackService.getPayoutResult();
         OutputView.printParticipantPayoutResult(payoutResult);
