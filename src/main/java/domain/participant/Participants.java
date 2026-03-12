@@ -18,7 +18,7 @@ public class Participants {
 
     public Participants(final List<Participant> players) {
         validatePlayerCounts(players);
-        // TODO: 플레이어 이름 중복 검증 및 딜러 이름과 같은지 검증
+        // TODO: 플레이어 이름 중복 검증 및 딜러 이름과 같은지 검증 추가
 
         dealer = new Participant(new Name(DEALER_NAME), new Hand());
         this.players = new ArrayList<>(players);

@@ -27,7 +27,7 @@ public class BlackjackGame {
         }
     }
 
-    // FIXME: Player랑 Dealer 구분 필요 - hit 하나에서 공통으로 처리할 수 있게
+    // FIXME: Player랑 Dealer 구분 필요한가 - hit 하나에서 공통으로 처리할 수 있게?
     public void hitPlayer(final Participant player) {
         drawCards(player, HIT_DRAW_COUNT);
     }
@@ -50,6 +50,7 @@ public class BlackjackGame {
         return participants;
     }
 
+    // FIXME: 10줄 넘는다
     public List<FinalResult> getGameResults() {
 
         final Participant dealer = participants.getDealer();
@@ -88,6 +89,7 @@ public class BlackjackGame {
         }
     }
 
+    // FIXME: 10줄 넘는다
     private GameResult judge(final Participant dealer, final Participant player) {
         if (player.isBust()) {
             return GameResult.LOSE;

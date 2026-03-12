@@ -40,7 +40,7 @@ public class BlackjackController {
         return new BlackjackGame(participants);
     }
 
-    // TODO: inputView와 outputView
+    // TODO: inputView와 outputView 명확히 분리하기 (inputView에서 출력도 섞이는 중)
     private List<Participant> readPlayers() {
         final List<Name> playerNames = inputView.readPlayers();
 

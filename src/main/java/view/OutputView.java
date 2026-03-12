@@ -21,6 +21,39 @@ public class OutputView {
         printPlayerInitHandCard(players);
     }
 
+
+    public void printCurrentHandCard(final Participant participant) {
+        printParticipantHandCard(participant);
+        System.out.println();
+    }
+
+    public void printDealerAdditionalDraw() {
+        System.out.printf("%s는 %d이하라 한장의 카드를 더 받았습니다.\n", DEALER_NAME, DEALER_DRAW_BOUND);
+    }
+
+    public void printHandResults(final Participants participants) {
+        System.out.println();
+        final Participant dealer = participants.getDealer();
+        final List<Participant> players = participants.getPlayers();
+
+        printCardResult(dealer);
+        printPlayerCardResult(players);
+
+        System.out.println();
+    }
+
+    public void printWhiteLine() {
+        System.out.println();
+    }
+
+    public void printGameResults(final List<FinalResult> finalResults) {
+        System.out.println("\n## 최종 승패");
+
+        printDealerFinalResult(finalResults);
+        printPlayerFinalResult(finalResults);
+    }
+
+
     private static void printInitHandCardInfo(final Participant dealer, final List<Participant> players) {
         final StringBuilder playerNames = new StringBuilder();
         System.out.printf("\n%s와 ", dealer.getName());
@@ -55,27 +88,6 @@ public class OutputView {
         System.out.print(cardDescriptions);
     }
 
-
-    public void printCurrentHandCard(final Participant participant) {
-        printParticipantHandCard(participant);
-        System.out.println();
-    }
-
-    public void printDealerAdditionalDraw() {
-        System.out.printf("%s는 %d이하라 한장의 카드를 더 받았습니다.\n", DEALER_NAME, DEALER_DRAW_BOUND);
-    }
-
-    public void printHandResults(final Participants participants) {
-        System.out.println();
-        final Participant dealer = participants.getDealer();
-        final List<Participant> players = participants.getPlayers();
-
-        printCardResult(dealer);
-        printPlayerCardResult(players);
-
-        System.out.println();
-    }
-
     private static void printCardResult(final Participant dealer) {
         printParticipantHandCard(dealer);
         printScore(dealer);
@@ -89,13 +101,6 @@ public class OutputView {
 
     private static void printScore(final Participant dealer) {
         System.out.printf(" - 결과: %d\n", dealer.getScore());
-    }
-
-    public void printGameResults(final List<FinalResult> finalResults) {
-        System.out.println("\n## 최종 승패");
-
-        printDealerFinalResult(finalResults);
-        printPlayerFinalResult(finalResults);
     }
 
     private static void printDealerFinalResult(final List<FinalResult> finalResults) {
@@ -141,9 +146,5 @@ public class OutputView {
         if (finalResult.loseCount() != 0) {
             System.out.println("패");
         }
-    }
-
-    public void printWhiteLine() {
-        System.out.println();
     }
 }

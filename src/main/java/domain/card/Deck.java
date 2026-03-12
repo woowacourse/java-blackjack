@@ -29,6 +29,7 @@ public class Deck {
         return deck.pollFirst();
     }
 
+
     public List<Card> getDeck() {
         return List.copyOf(deck);
     }

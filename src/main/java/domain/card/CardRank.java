@@ -25,6 +25,7 @@ public enum CardRank {
         this.scores = scores;
     }
 
+    
     public List<Integer> getScores() {
         return scores;
     }
