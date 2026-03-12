@@ -58,13 +58,8 @@ public class BlackjackController {
     }
 
     private void playPlayerTurn(Player player, Deck deck) {
-        boolean cardShown = false;
         while (player.canHit() && inputView.askHit(player.getName())) {
             player.addCard(deck.draw());
-            outputView.printPlayerCards(player);
-            cardShown = true;
-        }
-        if (!cardShown) {
             outputView.printPlayerCards(player);
         }
     }
