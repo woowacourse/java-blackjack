@@ -41,7 +41,7 @@ public class BlackJackGameController {
         playGameWithDealer(gameManager);
     }
 
-    public static void playGameWithDealer(GameManager gameManager) {
+    public void playGameWithDealer(GameManager gameManager) {
         while (gameManager.getDealer().isContinueGame()) {
             if (!gameManager.getDealer().isContinueGame()) {
                 break;
@@ -51,7 +51,7 @@ public class BlackJackGameController {
         }
     }
 
-    public static void playGameWithPlayer(Player player, GameManager gameManager) {
+    public void playGameWithPlayer(Player player, GameManager gameManager) {
         while (player.isContinueGame()) {
             if (isContinueGame(player)) {
                 break;
@@ -61,7 +61,7 @@ public class BlackJackGameController {
         }
     }
 
-    private static boolean isContinueGame(Player player) {
+    private boolean isContinueGame(Player player) {
         if (!isContinue(InputView.askContinue(player.getName()))) {
             printCards(player.getParticipantCardsDto());
             return true;
@@ -69,14 +69,14 @@ public class BlackJackGameController {
         return false;
     }
 
-    private static boolean isContinue(String response) {
+    private boolean isContinue(String response) {
         if (response.equals("y")) {
             return true;
         }
         return false;
     }
 
-    private static void printParticipantCards(GameManager gameManager) {
+    private void printParticipantCards(GameManager gameManager) {
         ParticipantCardsDto dealerDto = gameManager.getDealerDto();
         OutputView.printCards(dealerDto);
         List<ParticipantCardsDto> playerDtos = gameManager.getPlayerDtos();
@@ -85,14 +85,14 @@ public class BlackJackGameController {
         }
     }
 
-    private static void endGame(GameManager gameManager, List<Player> players, Map<String, Boolean> gameResult) {
+    private void endGame(GameManager gameManager, List<Player> players, Map<String, Boolean> gameResult) {
         OutputView.printFinalCards(gameManager.getDealerDto());
         printFinalScores(players);
         OutputView.printGameResult(gameResult);
     }
 
 
-    private static void printFinalScores(List<Player> players) {
+    private void printFinalScores(List<Player> players) {
         for (Player player : players) {
             OutputView.printFinalCards(player.getParticipantCardsDto());
         }
