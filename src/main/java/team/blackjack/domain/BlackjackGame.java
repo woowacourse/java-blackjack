@@ -1,10 +1,8 @@
 package team.blackjack.domain;
 
-
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import team.blackjack.domain.rule.DefaultBlackjackRule;
 
 public class BlackjackGame {
@@ -25,17 +23,31 @@ public class BlackjackGame {
         this.dealer.hit(dealer.draw(deck));
     }
 
-    public Map<String, Result> calculatePlayersResultMap() {
-        return players.getPlayerList().stream()
-                .collect(Collectors.toMap(
-                        Player::getName,
-                        player -> DefaultBlackjackRule.judgeResult(player.getScore(), dealer.getScore()),
-                        (existing, replacement) -> existing,
-                        LinkedHashMap::new
-                ));
+    public Map<String, Double> calculateAllPlayerRevenue() {
+        final LinkedHashMap<String, Double> result = new LinkedHashMap<>();
+        for (Player player : players.getPlayerList()) {
+            result.put(player.getName(), calculateMoney(player));
+        }
+
+        return result;
     }
 
-    public boolean shouldPlayerHit(String name) {
+    public double calculateDealerRevenue() {
+        return calculateAllPlayerRevenue().values().stream()
+                .mapToDouble(Double::doubleValue)
+                .sum() * -1;
+    }
+
+    private double calculateMoney(Player player) {
+        final Result result = DefaultBlackjackRule.judge(player, dealer);
+        return result.getOdds() * player.getBatMoney();
+    }
+
+    public void batMoney(String name, int money) {
+        this.players.getPlayerByName(name).bat(money);
+    }
+
+    public boolean isPlayerBust(String name) {
         return this.players.getPlayerByName(name).isBust();
     }
 
@@ -45,8 +57,7 @@ public class BlackjackGame {
     }
 
     public boolean shouldDealerHit() {
-        final int score = this.dealer.getScore();
-        return DefaultBlackjackRule.isDealerMustDraw(score);
+        return DefaultBlackjackRule.shouldDealerHit(this.dealer.getScore());
     }
 
     public void hitDealer() {

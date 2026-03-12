@@ -1,15 +1,21 @@
 package team.blackjack.domain.rule;
 
+import static team.blackjack.domain.Result.BLACKJACK;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import team.blackjack.domain.Card;
+import team.blackjack.domain.Participant;
 import team.blackjack.domain.Result;
 
 public class DefaultBlackjackRule {
     private static final int BLACKJACK = 21;
     private static final int BLACKJACK_CARD_COUNT = 2;
     private static final int DEALER_STAND_SCORE = 17;
+
+    private DefaultBlackjackRule() {
+    }
 
     public static boolean isBust(int score) {
         return score > BLACKJACK;
@@ -22,7 +28,7 @@ public class DefaultBlackjackRule {
         return score == BLACKJACK;
     }
 
-    public static boolean isDealerMustDraw(int score) {
+    public static boolean shouldDealerHit(int score) {
         return score < DEALER_STAND_SCORE;
     }
 
@@ -30,16 +36,30 @@ public class DefaultBlackjackRule {
         return currentSum <= 10;
     }
 
-    public static Result judgeResult(int myScore, int targetScore) {
-        if(myScore > BLACKJACK){
+    public static Result judge(Participant me, Participant target) {
+        if (me.isBust()) {
             return Result.LOSE;
         }
-        if(myScore > targetScore){
+
+        if (target.isBust()) {
             return Result.WIN;
         }
-        if(myScore < targetScore){
+
+        final int score = me.getScore();
+        final int targetScore = target.getScore();
+
+        if (score < targetScore) {
             return Result.LOSE;
         }
+
+        if (me.isBlackjack() && !target.isBlackjack()) {
+            return Result.BLACKJACK;
+        }
+
+        if (score > targetScore) {
+            return Result.WIN;
+        }
+
         return Result.DRAW;
     }
 

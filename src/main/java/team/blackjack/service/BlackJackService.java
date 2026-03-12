@@ -1,6 +1,5 @@
 package team.blackjack.service;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -9,9 +8,8 @@ import team.blackjack.domain.Card;
 import team.blackjack.domain.Dealer;
 import team.blackjack.domain.Player;
 import team.blackjack.domain.Players;
-import team.blackjack.domain.Result;
 import team.blackjack.service.dto.DrawResult;
-import team.blackjack.service.dto.MatchResult;
+import team.blackjack.service.dto.RevenueResult;
 import team.blackjack.service.dto.ScoreResult;
 
 public class BlackJackService {
@@ -31,7 +29,7 @@ public class BlackJackService {
     }
 
     public boolean isPlayerBust(String name) {
-        return blackjackGame.shouldPlayerHit(name);
+        return blackjackGame.isPlayerBust(name);
     }
 
     public void hitPlayer(String name) {
@@ -97,20 +95,14 @@ public class BlackJackService {
         return new DrawResult(playerNames, cards.getFirst().getCardName(), playerCards);
     }
 
-    public MatchResult getGameResult() {
-        final Map<String, Result> playerResults = blackjackGame.calculatePlayersResultMap();
-        final Collection<Result> playerResultList = playerResults.values();
-        final long winCnt = countBy(playerResultList, Result.WIN);
-        final long loseCnt = countBy(playerResultList, Result.LOSE);
-        final long drawCnt = countBy(playerResultList, Result.DRAW);
+    public RevenueResult getRevenueResult() {
+        final double dealerRevenue = blackjackGame.calculateDealerRevenue();
+        final Map<String, Double> allPlayerRevenue = blackjackGame.calculateAllPlayerRevenue();
 
-        return new MatchResult(winCnt, loseCnt, drawCnt, playerResults);
+        return new RevenueResult(dealerRevenue, allPlayerRevenue);
     }
 
-    private long countBy(Collection<Result> results, Result target) {
-        return results.stream()
-                .map(Result::reverse)
-                .filter(result -> result == target)
-                .count();
+    public void batMoney(String playerName, int battingMoney) {
+        this.blackjackGame.batMoney(playerName, battingMoney);
     }
 }

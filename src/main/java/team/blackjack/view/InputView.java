@@ -19,4 +19,8 @@ public class InputView {
     public static String readHitDecision() {
         return readInput();
     }
+
+    public static int readPlayerBattingMoney() {
+        return Integer.parseInt(readInput());
+    }
 }

@@ -26,4 +26,13 @@ public class Hand {
     public int getScore(){
         return DefaultBlackjackRule.calculateBestScore(this.getCards());
     }
+
+    public boolean isBust() {
+        return DefaultBlackjackRule.isBust(getScore());
+    }
+
+    public boolean isBlackjack() {
+        return DefaultBlackjackRule.isBlackjack(getScore(), cards.size());
+    }
+
 }

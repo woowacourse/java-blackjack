@@ -1,7 +1,6 @@
 package team.blackjack.domain;
 
 import java.util.List;
-import team.blackjack.domain.rule.DefaultBlackjackRule;
 
 public class Participant {
     private final Hand hand;
@@ -15,6 +14,10 @@ public class Participant {
     }
 
     public void hit(Card card) {
+        if (isBust()) {
+            throw new IllegalStateException("이미 Bust 상태입니다.");
+        }
+
         this.hand.addCard(card);
     }
 
@@ -23,6 +26,10 @@ public class Participant {
     }
 
     public boolean isBust() {
-        return DefaultBlackjackRule.isBust(getScore());
+        return hand.isBust();
+    }
+
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
     }
 }
