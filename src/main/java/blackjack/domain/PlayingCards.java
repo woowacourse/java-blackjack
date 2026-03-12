@@ -68,13 +68,6 @@ public class PlayingCards {
         return DrawResult.of(from(drewCards), from(copiedCards));
     }
 
-    private Card draw(List<Card> copiedCards) {
-        if (copiedCards.isEmpty()) {
-            throw new IllegalArgumentException("뽑을 카드가 남아있지 않습니다.");
-        }
-        return copiedCards.removeFirst();
-    }
-
     public Card getFirstCard() {
         return getCards().getFirst();
     }
@@ -86,10 +79,6 @@ public class PlayingCards {
 
     public boolean isDrawable() {
         return calculateTotalScore() < BUSTED_SCORE;
-    }
-
-    private boolean isRawSumBusted() {
-        return calculateScoreSum() > BUSTED_SCORE;
     }
 
     public boolean isBusted() {
@@ -108,6 +97,17 @@ public class PlayingCards {
 
     public String getStatusByDisplayName() {
         return cards.stream().map(Card::getDisplayName).collect(Collectors.joining(", "));
+    }
+
+    private boolean isRawSumBusted() {
+        return calculateScoreSum() > BUSTED_SCORE;
+    }
+
+    private Card draw(List<Card> copiedCards) {
+        if (copiedCards.isEmpty()) {
+            throw new IllegalArgumentException("뽑을 카드가 남아있지 않습니다.");
+        }
+        return copiedCards.removeFirst();
     }
 
     private static void matchDenominationWithSymbol(Rank rank, List<Suit> suits, List<Card> deck) {
