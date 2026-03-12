@@ -21,4 +21,9 @@ public class FinalIncome {
     public Map<Player, Integer> getPlayerIncomeResults() {
         return Collections.unmodifiableMap(playerIncomeResults);
     }
+
+    public int getIncomeOf(Player player) {
+        return playerIncomeResults.get(player);
+    }
+
 }

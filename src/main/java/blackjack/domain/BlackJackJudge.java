@@ -4,7 +4,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class BlackJackJudge {
-    private static final int BLACKJACK_POINT = 21;
 
 
     public FinalIncome judge(Players players, Dealer dealer) {
@@ -51,7 +50,7 @@ public class BlackJackJudge {
             return GameResult.TIE;
         }
 
-        if (playerTotalPoint == BLACKJACK_POINT) {
+        if (player.isBlackJack()) {
             return GameResult.BACKJACK_WIN;
         }
 

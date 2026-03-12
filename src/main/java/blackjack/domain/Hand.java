@@ -51,7 +51,7 @@ public class Hand {
     }
 
     public boolean isBlackJack() {
-        return cards.size() == 2 && getTotalPoint() == 21;
+        return cards.size() == 2 && getTotalPoint() == BLACKJACK_POINT;
     }
 
 
