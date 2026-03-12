@@ -46,14 +46,19 @@ public class Main {
     }
 
     private static void askToDraw(String playerName, InputView inputView, OutputView outputView, BlackjackGame game) {
-        while (game.isContinuable(playerName) && inputView.playContinue(playerName)) {
+        boolean canContinue = inputView.playContinue(playerName);
+        while (game.isContinuable(playerName) && canContinue) {
             game.drawPlayer(playerName);
+            outputView.printHandCard(playerName, game.getCardNames(playerName));
+            canContinue = inputView.playContinue(playerName);
+        }
+        if (!game.isContinuable(playerName) || !canContinue) {
             outputView.printHandCard(playerName, game.getCardNames(playerName));
         }
     }
 
     private static void printResult(OutputView outputView, BlackjackGame game) {
-        if (game.canDealerDraw()) {
+        while (game.canDealerDraw()) {
             game.drawDealer();
             outputView.printDealerDrawResult();
         }
