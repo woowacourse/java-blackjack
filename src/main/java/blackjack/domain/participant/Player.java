@@ -45,7 +45,7 @@ public class Player extends Participant {
         return amount * 2;
     }
 
-    public MatchResult determineGameResult(Dealer dealer) {
+    private MatchResult determineGameResult(Dealer dealer) {
         if (dealer.isBusted()) {
             return MatchResult.WIN;
         }
