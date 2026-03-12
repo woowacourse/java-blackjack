@@ -24,7 +24,9 @@ public class OutputView {
     private static final String PLAYER_PROFIT = "%s: %d";
 
     public void printPlayers(List<Card> dealerCard, Map<Name, List<Card>> playerCards) {
-        String playerNames = String.join(STRING_JOIN_DELIMITER, playerCards.keySet().toString());
+        String playerNames = playerCards.keySet().stream()
+                .map(Name::toString)
+                .collect(Collectors.joining(", "));
 
         System.out.printf(LINE_SEPARATOR + DISTRIBUTE_INITIAL_CARD + LINE_SEPARATOR, playerNames);
         printDealerFirstCard(dealerCard.getFirst());
