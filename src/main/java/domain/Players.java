@@ -7,17 +7,16 @@ public class Players {
 
     private final List<Player> players;
 
-    private Players(Cards cards, List<String> userNames) {
+    private Players(List<String> userNames) {
         List<Player> players = new ArrayList<>();
-
         for (String userName : userNames) {
-            players.add(Player.of(cards.drawInitialHand(), userName));
+            players.add(Player.of(userName));
         }
         this.players = players;
     }
 
-    public static Players of(Cards cards, List<String> userNames) {
-        return new Players(cards, userNames);
+    public static Players of(List<String> userNames) {
+        return new Players(userNames);
     }
 
     public List<String> getUserNames() {

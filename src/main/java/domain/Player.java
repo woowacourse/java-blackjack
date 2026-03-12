@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
@@ -7,16 +8,19 @@ public class Player {
     private static final int ACE_HIGH_LOW_DIFF = 10;
     private static final int BUST_THRESHOLD = 21;
 
-    private final List<Card> cards;
+    private final List<Card> cards = new ArrayList<>();
     private final String name;
 
-    private Player(List<Card> cards, String name) {
-        this.cards = cards;
+    private Player(String name) {
         this.name = name;
     }
 
-    public static Player of(List<Card> cards, String name) {
-        return new Player(cards, name);
+    public static Player of(String name) {
+        return new Player(name);
+    }
+
+    public void addInitialCards(List<Card> cards) {
+        cards.forEach(this::addCard);
     }
 
     public void addCard(Card card) {

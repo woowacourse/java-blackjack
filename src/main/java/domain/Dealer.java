@@ -18,17 +18,11 @@ public class Dealer {
         return new Dealer(cards);
     }
 
-    public void drawUntilHit(Cards deck) {
-        while (isHit()) {
-            addCard(deck.draw());
-        }
-    }
-
-    private boolean isHit() {
+    public boolean isHit() {
         return calculateScore() <= DEALER_HIT_THRESHOLD;
     }
 
-    private void addCard(Card card) {
+    public void addCard(Card card) {
         cards.add(card);
     }
 
