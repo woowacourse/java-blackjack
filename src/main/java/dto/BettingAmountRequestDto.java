@@ -7,6 +7,7 @@ public record BettingAmountRequestDto(String bettingAmount) {
     public BettingAmountRequestDto {
         validateBettingAmountIsNotNullAndNotBlank(bettingAmount);
         validateBettingAmountIsDigit(bettingAmount);
+        validateBettingAmountIsPositive(bettingAmount);
     }
 
     private void validateBettingAmountIsNotNullAndNotBlank(String bettingAmount) {
@@ -20,5 +21,11 @@ public record BettingAmountRequestDto(String bettingAmount) {
             Integer.parseInt(bettingAmount);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("[ERROR] 숫자만 입력 가능합니다.");        }
+    }
+
+    private void validateBettingAmountIsPositive(String bettingAmount) {
+        if(Integer.parseInt(bettingAmount) <= 0) {
+            throw new IllegalArgumentException("[ERROR] 양수만 입력 가능합니다.");
+        }
     }
 }
