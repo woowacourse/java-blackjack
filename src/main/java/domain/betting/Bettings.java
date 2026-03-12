@@ -9,7 +9,7 @@ public class Bettings {
 
     private static final int DEALER_INITIAL_PROFIT = 0;
 
-    private Map<Player, Money> bettings;
+    private final Map<Player, Money> bettings;
 
     public Bettings() {
         this.bettings = new LinkedHashMap<>();
