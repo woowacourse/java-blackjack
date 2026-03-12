@@ -1,5 +1,6 @@
 package view;
 
+import static domain.constant.GameRule.INIT_CARD_COUNT;
 import static view.constant.ViewRule.LINE_SEPARATOR;
 
 import dto.CardDto;
@@ -9,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class OutputView {
     private static final String STRING_JOIN_DELIMITER = ", ";
-    private static final String DISTRIBUTE_INITIAL_CARD = "딜러와 %s에게 2장을 나누었습니다.";
+    private static final String DISTRIBUTE_INITIAL_CARD = "딜러와 %s에게 %s장을 나누었습니다.";
     private static final String DEALER_CARD = "딜러카드: %s";
     private static final String PLAYER_CARD = "%s카드: %s";
     private static final String SCORE = " - 결과: %d";
@@ -37,7 +38,7 @@ public class OutputView {
 
     private static void printDistributeComplete(List<String> playerNames) {
         System.out.printf(LINE_SEPARATOR + DISTRIBUTE_INITIAL_CARD + LINE_SEPARATOR,
-                String.join(STRING_JOIN_DELIMITER, playerNames));
+                String.join(STRING_JOIN_DELIMITER, playerNames), INIT_CARD_COUNT);
     }
 
     private static void printDealerFirstCard(List<CardDto> dealerCards) {
