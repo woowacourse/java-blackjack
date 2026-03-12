@@ -8,6 +8,7 @@ import java.util.List;
 public class Hand {
     public static final int ACE_MAX_CONDITION = 11;
     public static final int ACE_DIFFERENCE = 10;
+    public static final int BLACKJACK_CARD_COUNTS = 2;
 
     private final List<Card> cards;
 
@@ -46,15 +47,11 @@ public class Hand {
         return cards.getFirst();
     }
 
-    public int getSize() {
-        return cards.size();
-    }
-
     public boolean isBust() {
         return calculateScore().isBust();
     }
 
     public boolean isBlackjack() {
-        return cards.size() == 2 && calculateScore().isBlackjack();
+        return cards.size() == BLACKJACK_CARD_COUNTS && calculateScore().isBlackjackNumber();
     }
 }
