@@ -2,6 +2,7 @@ package blackjack.controller;
 
 import static blackjack.util.constant.Constants.GET_MORE_CARD_BUTTON;
 
+import blackjack.domain.BettingAmount;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.GameResult;
 import blackjack.domain.participant.User;
@@ -41,10 +42,16 @@ public class BlackjackController {
     private Users createUsers() {
         List<String> userNames = InputParser.parseUser(inputView.readUserName());
         List<User> users = userNames.stream()
-                .map(User::new)
+                .map(name -> new User(name, readBetting(name)))
                 .toList();
         return new Users(users);
     }
+    private BettingAmount readBetting(String name) {
+        String userName = inputView.readBettingAmount(name);
+        int amount = InputParser.parseBettingAmount(userName);
+        return new BettingAmount(amount);
+    }
+
 
     private void printGameSettingResult(Users users, Dealer dealer) {
         OutputView.printGameSettingMessage(dealer.getName(), users.getNames());
@@ -67,7 +74,7 @@ public class BlackjackController {
 
     private boolean drawIfWanted(User user) {
         boolean drew = false;
-        while (!user.isBurst() && GET_MORE_CARD_BUTTON.equals(inputView.readMoreCard(user.getName()))) {
+        while (!user.isFinished() && GET_MORE_CARD_BUTTON.equals(inputView.readMoreCard(user.getName()))) {
             gameService.getMoreCard(user);
             OutputView.printSettingCardsResult(user.getName(), user.getCardsName());
             drew = true;

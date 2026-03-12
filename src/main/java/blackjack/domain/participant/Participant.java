@@ -43,4 +43,8 @@ public class Participant {
     public boolean isBlackjack() {
         return calculateCardsValue() == BLACKJACK_NUMBER && cards.getCardsSize() == 2;
     }
+
+    public boolean isFinished() {
+        return isBurst() || isBlackjack();
+    }
 }
