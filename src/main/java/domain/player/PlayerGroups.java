@@ -61,6 +61,10 @@ public class PlayerGroups {
     }
 
     private WinStatus getResultOf(Player player) {
+        if (player.isBlackJack() && !dealer.isBlackJack()) {
+            return WinStatus.BLACKJACK_WIN;
+        }
+
         if (player.isBust()) {
             return WinStatus.LOSE;
         }
