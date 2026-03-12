@@ -26,7 +26,7 @@ public class BlackjackController {
 
     public BlackjackController(CardDistributor cardDistributor) {
         this.cardDistributor = cardDistributor;
-        this.game = new Game(cardDistributor);
+        this.game = new Game();
     }
 
     public void startGame() {
@@ -68,7 +68,7 @@ public class BlackjackController {
     }
 
     private void playDealerTurn(Dealer dealer) {
-        game.dealerDrawsCardsUntilDone(dealer);
+        cardDistributor.distributeCardsToDealerUntilScoreAtLeast(dealer);
         OutputView.printDealerCardDrawnResult(dealer.getAdditionalDrawnCardCount());
     }
 
@@ -93,7 +93,7 @@ public class BlackjackController {
     }
 
     private void drawCard(Player player) {
-        cardDistributor.distributeCardToPlayer(player);
+        cardDistributor.distributeCardsToParticipant(player, 1);
         OutputView.printDrawnCards(player.getName(), player.getCardNames());
     }
 
@@ -128,9 +128,9 @@ public class BlackjackController {
 
     private void distributeInitialCards(List<Player> players, Dealer dealer) {
         for (Player player : players) {
-            cardDistributor.distributeTwoCardsToPlayer(player);
+            cardDistributor.distributeCardsToParticipant(player, 2);
         }
-        cardDistributor.distributeTwoCardsToDealer(dealer);
+        cardDistributor.distributeCardsToParticipant(dealer, 2);
     }
 
     private boolean isHit(String hitOrStand) {

@@ -19,7 +19,7 @@ import blackjack.service.RandomCardPicker;
 public class GameTest {
 
     @Test
-    void dealer_should_draw_card_until_score_at_least_17() {
+    void dealer_should_draw_card_until_score_at_least_17() { // TODO: 책임 CardDistributor로 이동
         Dealer dealer = new Dealer();
         Random mockRandom = mock(Random.class);
         RandomCardPicker randomCardPicker = new RandomCardPicker(mockRandom);
@@ -28,8 +28,7 @@ public class GameTest {
         // 2 하트, 2 스페이드, 2 클로버, 2 다이아몬드, 3 하트, 3 스페이드, 3 클로버, 3 다이아몬드, ...
         when(mockRandom.nextInt(52)).thenReturn(0);
 
-        Game game = new Game(cardDistributor);
-        game.dealerDrawsCardsUntilDone(dealer);
+        cardDistributor.distributeCardsToDealerUntilScoreAtLeast(dealer);
 
         assertThat(dealer.calculateTotalScore()).isEqualTo(17);
     }
@@ -45,7 +44,7 @@ public class GameTest {
         dealer.receiveOneCard(new Card("10", "하트"));
         dealer.receiveOneCard(new Card("7", "스페이드"));
 
-        Game game = new Game(null);
+        Game game = new Game();
         assertThat(game.compareScore(player, dealer)).isEqualTo(ScoreCompareResult.PLAYER_WIN);
     }
 
@@ -60,7 +59,7 @@ public class GameTest {
         dealer.receiveOneCard(new Card("10", "하트"));
         dealer.receiveOneCard(new Card("9", "스페이드"));
 
-        Game game = new Game(null);
+        Game game = new Game();
         assertThat(game.compareScore(player, dealer)).isEqualTo(ScoreCompareResult.DEALER_WIN);
     }
 
@@ -75,7 +74,7 @@ public class GameTest {
         dealer.receiveOneCard(new Card("10", "하트"));
         dealer.receiveOneCard(new Card("A", "스페이드"));
 
-        Game game = new Game(null);
+        Game game = new Game();
         assertThat(game.compareScore(player, dealer)).isEqualTo(ScoreCompareResult.PUSH);
     }
 
@@ -86,7 +85,7 @@ public class GameTest {
         Player brown = createPlayer("brown", "10:하트", "10:클로버");
         Dealer dealer = createDealer("3:다이아몬드", "9:클로버", "8:다이아몬드");
 
-        Game game = new Game(null);
+        Game game = new Game();
 
         Map<ScoreCompareResult, Integer> dealerResult = Map.of(
                 ScoreCompareResult.DEALER_WIN, 1,

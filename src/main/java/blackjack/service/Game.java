@@ -10,17 +10,11 @@ import java.util.List;
 import java.util.Map;
 
 public class Game {
+//    private final List<Player> players;
+//    private final Dealer dealer;
 
-    private final CardDistributor cardDistributor;
 
-    public Game(CardDistributor cardDistributor) {
-        this.cardDistributor = cardDistributor;
-    }
-
-    public void dealerDrawsCardsUntilDone(Dealer dealer) {
-        while (!dealer.isDealerDone()) {
-            cardDistributor.distributeCardToDealer(dealer);
-        }
+    public Game() {
     }
 
     public static GameResult judgeTotalGameResult(List<Player> players, Dealer dealer) {
