@@ -54,9 +54,29 @@ class WinningStatusTest {
     }
 
     @Test
+    void 플레이어가_처음_받은_카드_두_장의_합이_21이고_딜러는_아닐_경우_플레이어가_승리한다(){
+        Player player = createPlayer(Rank.TEN, Rank.ACE);
+        Dealer dealer = createDealer(Rank.EIGHT, Rank.JACK, Rank.THREE);
+
+        WinningStatus status = WinningStatus.of(player, dealer);
+
+        assertThat(status).isEqualTo(WinningStatus.WIN);
+    }
+
+    @Test
+    void 딜러가_처음_받은_카드_두_장의_합이_21이고_플레이어는_아닐_경우_딜러가_승리한다(){
+        Player player = createPlayer(Rank.EIGHT, Rank.JACK, Rank.THREE);
+        Dealer dealer = createDealer(Rank.TEN, Rank.ACE);
+
+        WinningStatus status = WinningStatus.of(player, dealer);
+
+        assertThat(status).isEqualTo(WinningStatus.LOSE);
+    }
+
+    @Test
     void 딜러와_플레이어의_카드의_합이_동일한_경우_무승부로_처리한다() {
-        Player player = createPlayer(Rank.TEN, Rank.TWO);
-        Dealer dealer = createDealer(Rank.TEN, Rank.TWO);
+        Player player = createPlayer(Rank.TEN, Rank.ACE);
+        Dealer dealer = createDealer(Rank.TEN, Rank.ACE);
 
         WinningStatus status = WinningStatus.of(player, dealer);
 

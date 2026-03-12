@@ -33,7 +33,7 @@ class GameResultTest {
     }
 
     @Test
-    void 플레이어가_블랙잭으로_승리할_경우_자신이_베팅한_금액의_1_5배를_딜러에게_받는다() {
+    void 플레이어가_처음_받은_카드_두_장의_합이_21이고_딜러는_아닐_경우_자신이_베팅한_금액의_1_5배를_딜러에게_받는다() {
         Cards playerCards = new Cards(List.of(new Card(Rank.ACE, Suit.HEART), new Card(Rank.JACK, Suit.HEART)));
         pobi.receiveInitialCards(playerCards);
 
