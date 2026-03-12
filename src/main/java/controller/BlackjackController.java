@@ -1,8 +1,10 @@
 package controller;
 
 import domain.Game;
+import domain.bet.Bet;
 import domain.bet.BetProfit;
 import domain.card.Card;
+import domain.card.Deck;
 import domain.enums.GameResult;
 import domain.participant.Dealer;
 import domain.participant.Name;
@@ -25,20 +27,27 @@ public class BlackjackController {
     }
 
     public void start() {
+        Deck deck = initDeck();
         Game game = initGame();
         List<Name> playersName = game.getAllPlayersName();
-        askPlayerBet(game, playersName);
-        game.initializeGame();
+        Bet bet = new Bet(playersName);
+
+        askPlayerBet(bet, playersName);
+        game.initializeGame(deck);
         outputView.printPlayers(game.getDealerCard(), getPlayerCards(game, playersName));
 
-        playTurn(game, playersName);
+        playTurn(game, playersName, deck);
         printResult(game, playersName);
-        printProfit(game);
+        printProfit(game, bet);
+    }
+
+    private Deck initDeck() {
+        CardGenerator cardGenerator = new ShuffledCardGenerator();
+        return new Deck(cardGenerator.generate());
     }
 
     private Game initGame() {
-        CardGenerator cardGenerator = new ShuffledCardGenerator();
-        return new Game(parsePlayerNames(), new Dealer(), cardGenerator.generate());
+        return new Game(parsePlayerNames(), new Dealer());
     }
 
     private List<String> parsePlayerNames() {
@@ -46,11 +55,11 @@ public class BlackjackController {
         return InputParser.parseNames(input);
     }
 
-    private void askPlayerBet(Game game, List<Name> playersName) {
+    private void askPlayerBet(Bet bet, List<Name> playersName) {
         for (Name name : playersName) {
             String input = inputView.askPlayerBet(name);
             int playerMoney = InputParser.parseMoney(input);
-            game.bettingMoney(name, playerMoney);
+            bet.bettingMoney(name, playerMoney);
         }
     }
 
@@ -62,19 +71,19 @@ public class BlackjackController {
         return playerCards;
     }
 
-    private void playTurn(Game game, List<Name> playersName) {
+    private void playTurn(Game game, List<Name> playersName, Deck deck) {
         for (Name name : playersName) {
-            playPlayerTurn(game, name);
+            playPlayerTurn(game, name, deck);
         }
-        playDealerTurn(game);
+        playDealerTurn(game, deck);
     }
 
-    private void playPlayerTurn(Game game, Name name) {
+    private void playPlayerTurn(Game game, Name name, Deck deck) {
         boolean shouldContinue = true;
         boolean isBust = false;
         while (shouldContinue && !isBust) {
             shouldContinue = isPlayerWantHit(name);
-            isBust = game.playPlayerTurn(name, shouldContinue);
+            isBust = game.playPlayerTurn(name, deck, shouldContinue);
             outputView.printPlayerCard(name, game.getPlayerCard(name));
         }
     }
@@ -84,8 +93,8 @@ public class BlackjackController {
         return InputParser.parseHitAnswer(input);
     }
 
-    private void playDealerTurn(Game game) {
-        while (game.playDealerTurn()) {
+    private void playDealerTurn(Game game, Deck deck) {
+        while (game.playDealerTurn(deck)) {
             outputView.printDealerHit();
         }
     }
@@ -101,8 +110,8 @@ public class BlackjackController {
         outputView.printGameResult(game.getDealerResult(), allPlayersResult);
     }
 
-    private void printProfit(Game game) {
-        BetProfit betProfit = game.calculateProfit();
+    private void printProfit(Game game, Bet bet) {
+        BetProfit betProfit = bet.calculateProfit(game.getAllPlayersResult());
         outputView.printProfit(betProfit.getDealerBetProfit(), betProfit.getPlayerBetProfit());
     }
 }
