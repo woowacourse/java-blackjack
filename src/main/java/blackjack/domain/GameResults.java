@@ -1,31 +1,34 @@
 package blackjack.domain;
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class GameResults {
-    private final Map<Player, GameResult> gameResults;
+    private final Map<Player, Integer> gameResults;
 
-    private GameResults(Map<Player, GameResult> gameResults) {
+    private GameResults(Map<Player, Integer> gameResults) {
         this.gameResults = gameResults;
     }
 
     public static GameResults of(Dealer dealer, Players players) {
-        Map<Player, GameResult> results = new LinkedHashMap<>();
+        Map<Player, Integer> results = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
             GameResult gameResult = GameResult.matchResult(player, dealer);
-            results.put(player, gameResult);
+            results.put(player, player.calculateProfit(gameResult.getRatio()));
         }
         return new GameResults(results);
     }
 
-    public Map<Player, Integer> getGameProfitResult() {
-        Map<Player, Integer> results = new LinkedHashMap<>();
-        for (Map.Entry<Player, GameResult> entry : gameResults.entrySet()) {
-            Player player = entry.getKey();
-            double ratio = entry.getValue().getRatio();
-            results.put(player, player.calculateProfit(ratio));
+    public Map<Player, Integer> getPlayersProfit() {
+        return Collections.unmodifiableMap(gameResults);
+    }
+
+    public int getDealerProfit() {
+        int dealerProfit = 0;
+        for (Integer profit : gameResults.values()) {
+            dealerProfit -= profit;
         }
-        return results;
+        return dealerProfit;
     }
 }

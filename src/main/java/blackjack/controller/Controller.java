@@ -36,13 +36,8 @@ public class Controller {
         outputView.printScoreResult(dealer, players);
 
         GameResults gameResults = GameResults.of(dealer, players);
-        Map<Player, Integer> gameProfitResult = gameResults.getGameProfitResult();
 
-        int dealerProfit = 0;
-        for (Integer value : gameProfitResult.values()) {
-            dealerProfit -= value;
-        }
-        outputView.printGameResultProfit(dealerProfit, gameProfitResult);
+        outputView.printGameResultProfit(gameResults);
     }
 
     private Players createPlayers() {
@@ -54,7 +49,6 @@ public class Controller {
     }
 
     private void turnToDealer(Dealer dealer, Deck deck) {
-
         while (dealer.canReceive()) {
             outputView.printDealerReceiveCard();
             receiveCardToParticipant(dealer, deck, ONE_REPEAT);

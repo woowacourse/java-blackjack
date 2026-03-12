@@ -45,11 +45,13 @@ public class OutputView {
         System.out.println(name + "의 점수가 버스트 되었습니다.");
     }
 
-    public void printGameResultProfit(int dealerProfit, Map<Player, Integer> gameProfitResult) {
+    public void printGameResultProfit(GameResults gameResults) {
+        Map<Player, Integer> playersProfit = gameResults.getPlayersProfit();
+
         System.out.println("\n## 최종 수익");
-        System.out.println("딜러: " + dealerProfit);
-        for (Player player : gameProfitResult.keySet()) {
-            System.out.println(player.getName() + ": " + gameProfitResult.get(player));
+        System.out.println("딜러: " + gameResults.getDealerProfit());
+        for (Player player : playersProfit.keySet()) {
+            System.out.println(player.getName() + ": " + playersProfit.get(player));
         }
     }
 
