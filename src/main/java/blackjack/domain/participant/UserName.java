@@ -12,11 +12,11 @@ public record UserName(
     }
 
     private void validate(String name) {
-        if (name.isEmpty()) {
-            throw new IllegalArgumentException("플레이어 이름은 공백이 될 수 없습니다.");
+        if (name.isBlank()) {
+            throw new IllegalArgumentException("[ERROR] 플레이어 이름은 공백이 될 수 없습니다.");
         }
         if (name.length() > MAX_LENGTH) {
-            throw new IllegalArgumentException("플레이어 이름은 5자가 넘을 수 없습니다.");
+            throw new IllegalArgumentException("[ERROR] 플레이어 이름은 5자가 넘을 수 없습니다.");
         }
     }
 }
