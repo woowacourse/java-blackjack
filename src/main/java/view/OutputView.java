@@ -42,7 +42,7 @@ public class OutputView {
 
     private static void printDealerFirstCard(List<CardDto> dealerCards) {
         CardDto firstCard = dealerCards.getFirst();
-        System.out.printf(DEALER_CARD + LINE_SEPARATOR, firstCard.rank().getRank() + firstCard.suit().getSuit());
+        System.out.printf(DEALER_CARD + LINE_SEPARATOR, firstCard.rank() + firstCard.suit());
     }
 
     public static void printPlayerCards(String name, List<CardDto> playerCards) {
@@ -53,7 +53,7 @@ public class OutputView {
 
     private static String collectCards(List<CardDto> cards) {
         return cards.stream()
-                .map(cardDto -> cardDto.rank().getRank() + cardDto.suit().getSuit())
+                .map(cardDto -> cardDto.rank() + cardDto.suit())
                 .collect(Collectors.joining(STRING_JOIN_DELIMITER));
     }
 
