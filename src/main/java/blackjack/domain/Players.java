@@ -12,6 +12,13 @@ public class Players {
         }
     }
 
+    public Players(List<String> names, List<Long> bettingAmounts) {
+        int playerCount = names.size();
+        for (int i = 0; i < playerCount; i++) {
+            players.add(new Player(names.get(i), bettingAmounts.get(i)));
+        }
+    }
+
     public void receiveCard(Deck deck) {
         for (Player player : players) {
             player.receiveCard(deck.draw());
