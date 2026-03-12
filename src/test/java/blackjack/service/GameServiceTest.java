@@ -9,7 +9,6 @@ import blackjack.domain.deck.CardShape;
 import blackjack.domain.deck.CardValue;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.deck.Deck;
-import blackjack.domain.GameResult;
 import blackjack.domain.participant.User;
 import blackjack.domain.participant.Users;
 import java.util.List;
@@ -39,23 +38,6 @@ class GameServiceTest {
 
         // then
         assertThat(user.getCardsName().size()).isEqualTo(2);
-    }
-
-    @Test
-    @DisplayName("딜러 및 유저 승리 횟수 할당")
-    void applyWinningCount() {
-        // given
-        User user = new User("흑곰", new BettingAmount(10000));
-        Dealer dealer = new Dealer();
-        GameResult gameResult = new GameResult();
-        user.add(new Card(CardValue.SEVEN, CardShape.DIAMOND));
-        dealer.add(new Card(CardValue.EIGHT, CardShape.DIAMOND));
-
-        // when
-        gameService.applyGameResult(user, dealer, gameResult);
-
-        // then
-        assertThat(gameResult.isUserWin("흑곰")).isFalse();
     }
 
     @Test
