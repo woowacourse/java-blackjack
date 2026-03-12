@@ -78,6 +78,48 @@ class PlayerTest {
             assertThat(player.beats(dealer)).isSameAs(expected);
         }
 
+        @Nested
+        class 카드를_받을수_있는_경우_판정 {
+            @Test
+            void 카드의_합이_21이_아니면_추가로_카드를_받을_수_있다() {
+                Player playerWithScore20 = createPlayerWithScore20();
+
+                boolean canReceive = playerWithScore20.canReceive();
+
+                assertThat(canReceive).isTrue();
+            }
+        }
+
+        @Nested
+        class 카드를_받을_수_없는_경우_판정 {
+            @Test
+            void 블랙잭이면_추가로_카드를_받을_수_없다() {
+                Player playerWithBlackjack = createPlayerWithBlackjack();
+
+                boolean canReceive = playerWithBlackjack.canReceive();
+
+                assertThat(canReceive).isFalse();
+            }
+
+            @Test
+            void 블랙잭이_아니더라도_카드의_합이_21이면_추가로_카드를_받을_수_없다() {
+                Player playerWithScore21 = createPlayerWithScore21();
+
+                boolean canReceive = playerWithScore21.canReceive();
+
+                assertThat(canReceive).isFalse();
+            }
+
+            @Test
+            void 버스트라면_추가로_카드를_받을_수_없다() {
+                Player playerWithBust = createPlayerWithBust();
+
+                boolean canReceive = playerWithBust.canReceive();
+
+                assertThat(canReceive).isFalse();
+            }
+        }
+
         private static Stream<Arguments> provideAllCase() {
             return Stream.of(
                     Arguments.of(createPlayerWithScore21(), createDealerWithScore20(), true),
@@ -86,6 +128,23 @@ class PlayerTest {
                     Arguments.of(createPlayerWithScore20(), createDealerWithScore20(), true),
                     Arguments.of(createPlayerWithScore19(), createDealerWithScore20(), false)
             );
+        }
+
+        private static Player createPlayerWithBlackjack() {
+            Player player = Player.from("player");
+            player.receive(Card.of(Suit.SPADE, Rank.ACE));
+            player.receive(Card.of(Suit.SPADE, Rank.JACK));
+
+            return player;
+        }
+
+        private static Player createPlayerWithBust() {
+            Player player = Player.from("player");
+            player.receive(Card.of(Suit.SPADE, Rank.KING));
+            player.receive(Card.of(Suit.SPADE, Rank.QUEEN));
+            player.receive(Card.of(Suit.SPADE, Rank.JACK));
+
+            return player;
         }
 
         private static Player createPlayerWithScore21() {

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
+import model.participant.Dealer;
 
 public class OutputView {
     private static final String LINE_SEPARATOR = System.lineSeparator();
@@ -37,14 +38,14 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printDealerDrawResult(boolean draw, int dealerDrawThreshold) {
+    public void printDealerDrawResult(boolean draw) {
         System.out.println();
         if (draw) {
-            System.out.println("딜러는 " + dealerDrawThreshold + "이하라 한장의 카드를 더 받았습니다." + LINE_SEPARATOR);
+            System.out.println("딜러는 " + Dealer.DRAW_THRESHOLD + "이하라 한장의 카드를 더 받았습니다." + LINE_SEPARATOR);
             return;
         }
 
-        System.out.println("딜러는 " + dealerDrawThreshold + "을 초과하여 카드를 더 받지 않았습니다." + LINE_SEPARATOR);
+        System.out.println("딜러는 " + Dealer.DRAW_THRESHOLD + "을 초과하여 카드를 더 받지 않았습니다." + LINE_SEPARATOR);
     }
 
     public void printFinalProfit(Map<String, Integer> profitByParticipant) {

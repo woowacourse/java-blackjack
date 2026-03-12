@@ -94,7 +94,7 @@ public class BlackJackController {
 
     private void proceedPlayerTurns(Blackjack blackjack, List<Player> players) {
         for (Player player : players) {
-            while (player.canHit() && inputView.askHit(player.getName())) {
+            while (player.canReceive() && inputView.askHit(player.getName())) {
                 blackjack.giveCardTo(player);
 
                 List<Card> hand = player.open();
@@ -114,7 +114,7 @@ public class BlackJackController {
     private void proceedDealerTurn(Blackjack blackjack, Dealer dealer) {
         boolean draw = dealer.needDraw();
 
-        outputView.printDealerDrawResult(draw, Dealer.DRAW_THRESHOLD);
+        outputView.printDealerDrawResult(draw);
 
         if (draw) {
             blackjack.giveCardTo(dealer);
