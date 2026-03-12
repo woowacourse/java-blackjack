@@ -5,8 +5,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import java.util.List;
 import java.util.stream.Stream;
 import model.BettingMoney;
-import model.BlackJackDeck;
-import model.CardFactory;
 import model.CardNumber;
 import model.Dealer;
 import model.Player;

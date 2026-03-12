@@ -6,4 +6,3 @@ public class GameException extends IllegalArgumentException {
         super(message);
     }
 }
-
