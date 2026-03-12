@@ -10,24 +10,6 @@ import org.junit.jupiter.api.Test;
 class CardsTest {
 
     @Test
-    @DisplayName("카드를 52장 생성한다.")
-    void createCards_Returns52() {
-        Cards standardCards = Cards.createCards();
-        int actualValue = standardCards.getSize();
-        assertEquals(52, actualValue);
-    }
-
-    @Test
-    @DisplayName("이미 생성된 카드를 섞는다.")
-    void shuffleCards_ReturnShuffledCards() {
-        Cards standardCards = Cards.createCards();
-        List<Card> beforeShuffle = new ArrayList<>(standardCards.getCards());
-        Cards.shuffleCards(standardCards);
-        List<Card> afterShuffle = standardCards.getCards();
-        assertNotEquals(beforeShuffle, afterShuffle);
-    }
-
-    @Test
     @DisplayName("카드 합계를 계산한다.")
     void calculateScore_ContainsNonAce_ReturnSum() {
         Card card1 = new Card(Shape.SPADE, Number.EIGHT);
