@@ -6,7 +6,14 @@ public class Money {
     private final int value;
 
     public Money(int value) {
+        validatePositive(value);
         this.value = value;
+    }
+
+    private void validatePositive(int value) {
+        if (value < 0) {
+            throw new IllegalArgumentException("[ERROR] 금액은 음수가 될 수 없습니다.");
+        }
     }
 
     public int  getValue() {
