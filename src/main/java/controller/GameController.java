@@ -1,5 +1,6 @@
 package controller;
 
+import domain.Money;
 import domain.card.Card;
 import domain.participant.Dealer;
 import domain.card.Deck;
@@ -32,6 +33,7 @@ public class GameController {
         Deck deck = new Deck();
         Dealer dealer = new Dealer(new ArrayList<>(List.of(deck.draw(), deck.draw())));
         Players players = getPlayers(playerNames, deck);
+        getMoney(players);
 
         printGameStart(playerNames, dealer, players);
         receiveMoreCard(players, dealer, deck);
@@ -52,6 +54,13 @@ public class GameController {
             players.add(player);
         }
         return new Players(players);
+    }
+
+    private void getMoney(Players players) {
+        for (Player player : players.getPlayers()) {
+            String money = inputView.readMoney(player.getName());
+            player.addMoney(new Money(InputParser.parseMoney(money)));
+        }
     }
 
     private void printGameStart(List<String> playerNames, Dealer dealer, Players players) {

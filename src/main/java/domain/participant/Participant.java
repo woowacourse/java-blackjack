@@ -37,6 +37,8 @@ public abstract class Participant {
         return isAceExist && (results + 10) <= 21;
     }
 
+
+
     public List<Card> getHand() {
         return List.copyOf(hand);
     }
