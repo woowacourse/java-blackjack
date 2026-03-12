@@ -171,7 +171,7 @@ class GameResultTest {
     }
 
     private Player createPlayerWithCars(Card... cards) {
-        Player player = new Player("usher");
+        Player player = new Player("usher", new BettingAmount(15000));
         for (Card card : cards) {
             player.receiveCard(card);
         }

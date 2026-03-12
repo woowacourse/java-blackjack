@@ -9,7 +9,7 @@ class ParticipantTest {
     @DisplayName("카드가 2장이고, 점수가 21이면 블랙잭이다")
     void isBlackjackTest() {
         // given
-        Participant participant = new Player("usher");
+        Participant participant = new Player("usher", new BettingAmount(15000));
         participant.receiveCard(new Card(Figure.DIAMOND, Number.ACE));
         participant.receiveCard(new Card(Figure.DIAMOND, Number.KING));
 

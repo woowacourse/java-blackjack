@@ -15,8 +15,8 @@ class PlayersTest {
     @DisplayName("플레이어는 2명 이상 5명이어야 한다")
     void createPlayersTest() {
         // given
-        Player playerOne = new Player("luke");
-        Player playerTwo = new Player("usher");
+        Player playerOne = new Player("luke", new BettingAmount(10000));
+        Player playerTwo = new Player("usher", new BettingAmount(15000));
 
         // when
         Players players = new Players(List.of(playerOne, playerTwo));
@@ -31,7 +31,7 @@ class PlayersTest {
     @DisplayName("플레이어는 2명 이상 5명 이하가 아닌 경우 예외를 발생한다")
     void createPlayersErrorTest() {
         // given
-        Player playerOne = new Player("luke");
+        Player playerOne = new Player("luke", new BettingAmount(10000));
 
         // when & then
         assertThatThrownBy(() -> new Players(List.of(playerOne)))
