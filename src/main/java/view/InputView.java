@@ -29,6 +29,15 @@ public class InputView {
         throw new IllegalArgumentException("[ERROR] y와 n만 입력가능합니다.");
     }
 
+    public static int getBettingCost(String name) {
+        System.out.println(name + "의 배팅 금액은?");
+        String userInput = sc.nextLine();
+
+        int cost = Integer.parseInt(userInput);
+
+        return cost;
+    }
+
     private static List<String> splitComma(String input) {
         List<String> names = Arrays.stream(input.split(","))
                 .map(String::trim)

@@ -6,7 +6,9 @@ import service.GameService;
 import view.InputView;
 import view.ResultView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GameController {
     private final GameService gameService;
@@ -17,6 +19,9 @@ public class GameController {
 
     public void run() {
         startGame();
+
+        Map<String, Integer> userBetInfo = bettingRound();
+
         printInitialCards();
 
         hitRound();
@@ -24,6 +29,19 @@ public class GameController {
         printFinalStatus();
 
         ResultView.printResult(gameService.result());
+    }
+
+    private Map<String, Integer> bettingRound() {
+        List<Player> players = gameService.getPlayers();
+        Map<String, Integer> userBetCost = new HashMap<>();
+        for (Player player : players) {
+            String playerName = player.getName();
+            int bettingCost = InputView.getBettingCost(playerName);
+
+            userBetCost.put(playerName, bettingCost);
+        }
+
+        return userBetCost;
     }
 
     private void printFinalStatus() {
