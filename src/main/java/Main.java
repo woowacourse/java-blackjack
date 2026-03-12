@@ -1,7 +1,5 @@
 import controller.BlackJackController;
 import controller.InputController;
-import model.BlackJackDeck;
-import model.CardFactory;
 import service.BlackJackService;
 
 public class Main {
