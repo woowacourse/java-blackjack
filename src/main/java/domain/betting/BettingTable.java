@@ -1,7 +1,9 @@
 package domain.betting;
 
 import domain.betting.manager.BettingPolicyManager;
+import domain.gamer.Dealer;
 import domain.gamer.Player;
+import domain.gamer.Players;
 
 public class BettingTable {
 
@@ -15,6 +17,17 @@ public class BettingTable {
 
     public void bet(Player player, Money bettingMoney) {
         bettings.bet(player, bettingMoney);
+    }
+
+    public void applyBettingRate(Dealer dealer, Players players) {
+        players.getPlayers().forEach(
+                player -> progressBetting(dealer, player)
+        );
+    }
+
+    private void progressBetting(Dealer dealer, Player player) {
+        BettingRate bettingRate = bettingManager.gainBettingRate(dealer, player);
+        bettings.calculateBettingMoney(player, bettingRate);
     }
 
     public Money getPlayerProfit(Player player) {
