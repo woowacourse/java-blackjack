@@ -20,11 +20,11 @@ public class GameContext {
         bettingResult = new BettingResult();
     }
 
-    public Dealer getDealer() {
+    public Dealer dealer() {
         return this.dealer;
     }
 
-    public List<Player> getPlayers() {
+    public List<Player> players() {
         return this.players;
     }
 
@@ -32,11 +32,11 @@ public class GameContext {
         this.players = players;
     }
 
-    public CardDispenser getCardDispenser() {
+    public CardDispenser cardDispenser() {
         return this.cardDispenser;
     }
 
-    public BettingResult getBettingResult() {
+    public BettingResult bettingResult() {
         return this.bettingResult;
     }
 }

@@ -60,5 +60,4 @@ public class BettingResult {
         player.addProfit(money);
         dealer.subtractProfit(money);
     }
-
 }

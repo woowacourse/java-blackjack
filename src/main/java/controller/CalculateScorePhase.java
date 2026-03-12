@@ -10,7 +10,7 @@ public class CalculateScorePhase implements GamePhase {
     @Override
     public void execute(GameContext gameContext) {
         OutputView.printBlank();
-        OutputView.printCardByPlayerWithScore(gameContext.getDealer());
-        gameContext.getPlayers().forEach(OutputView::printCardByPlayerWithScore);
+        OutputView.printCardByPlayerWithScore(gameContext.dealer());
+        gameContext.players().forEach(OutputView::printCardByPlayerWithScore);
     }
 }

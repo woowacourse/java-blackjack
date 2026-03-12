@@ -16,13 +16,13 @@ public class InitialDealPhase implements GamePhase {
 
     @Override
     public void execute(GameContext gameContext) {
-        this.cardDispenser = gameContext.getCardDispenser();
-        OutputView.printCardOpen(gameContext.getPlayers());
+        this.cardDispenser = gameContext.cardDispenser();
+        OutputView.printCardOpen(gameContext.players());
 
-        distributeCardToDealer(gameContext.getDealer());
-        distributeCardToPlayer(gameContext.getPlayers());
-        checkBlackJack(gameContext.getDealer());
-        for (Player player : gameContext.getPlayers()) {
+        distributeCardToDealer(gameContext.dealer());
+        distributeCardToPlayer(gameContext.players());
+        checkBlackJack(gameContext.dealer());
+        for (Player player : gameContext.players()) {
             checkBlackJack(player);
         }
     }

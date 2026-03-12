@@ -11,8 +11,8 @@ public class DealerTurnPhase implements GamePhase {
 
     @Override
     public void execute(GameContext gameContext) {
-        Dealer dealer = gameContext.getDealer();
-        CardDispenser cardDispenser = gameContext.getCardDispenser();
+        Dealer dealer = gameContext.dealer();
+        CardDispenser cardDispenser = gameContext.cardDispenser();
         while (dealer.canHit()) {
             OutputView.printToOpenDealerNewCard(dealer.getName());
             cardDispenser.dispenseOneCard(dealer);

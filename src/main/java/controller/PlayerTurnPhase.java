@@ -14,8 +14,8 @@ public class PlayerTurnPhase implements GamePhase {
 
     @Override
     public void execute(GameContext gameContext) {
-        this.cardDispenser = gameContext.getCardDispenser();
-        for (Player player : gameContext.getPlayers()) {
+        this.cardDispenser = gameContext.cardDispenser();
+        for (Player player : gameContext.players()) {
             chooseHitOrStand(player);
         }
     }

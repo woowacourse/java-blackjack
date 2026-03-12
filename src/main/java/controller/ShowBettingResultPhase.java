@@ -7,7 +7,7 @@ public class ShowBettingResultPhase implements GamePhase {
 
     @Override
     public void execute(GameContext gameContext) {
-        gameContext.getBettingResult().calculateBettingMoney(gameContext.getDealer(), gameContext.getPlayers());
-        gameContext.getBettingResult().printBettingResult();
+        gameContext.bettingResult().calculateBettingMoney(gameContext.dealer(), gameContext.players());
+        gameContext.bettingResult().printBettingResult();
     }
 }
