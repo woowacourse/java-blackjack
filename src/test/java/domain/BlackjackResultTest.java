@@ -135,9 +135,9 @@ class BlackjackResultTest {
     }
 
 
-    @DisplayName("참가자가 bust되면 배팅금액이 0이 된다.")
+    @DisplayName("참가자가 bust되면 배팅금액이 마이너스가 된다.")
     @Test
-    void 참가자_bust_배팅금액_리셋() {
+    void 참가자_bust_배팅금액_마이너스() {
         Player player = PlayerTestUtil.createPlayer(List.of(
                 new Card(CardShape.SPADE, CardRank.TEN),
                 new Card(CardShape.SPADE, CardRank.NINE),
@@ -152,7 +152,8 @@ class BlackjackResultTest {
 
         assertThat(player.getBettingScore()).isEqualTo(10000);
         BlackjackResult blackjackResult = BlackjackResult.from(dealer, createSinglePlayerSet(player));
-        assertThat(player.getBettingScore()).isEqualTo(0);
+        assertThat(player.getBettingScore()).isEqualTo(-10000);
+        assertThat(dealer.getBettingScore()).isEqualTo(10000);
     }
 
     private Players createSinglePlayerSet(Player player) {
