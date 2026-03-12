@@ -22,7 +22,7 @@ public enum Result {
         if (playerState instanceof Bust) {
             return Result.LOSE;
         }
-        if (playerState instanceof BlackJack && !(dealerState instanceof BlackJack)) {
+        if (playerState instanceof BlackJack) {
             return Result.BLACKJACK;
         }
         if (dealerState instanceof Bust || playerState.getScore() > dealerState.getScore()) {

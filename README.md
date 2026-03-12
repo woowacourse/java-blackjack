@@ -110,3 +110,30 @@
 
 - 금액을 관리한다.
 - Result 객체에서 결과에 따라 profit을 반환한다.
+
+# 나만의 기록
+
+- 비즈니스 로직을 Domain 에서 관리함으로써 Controller의 책임이 줄어들었다.(단일책임)
+    - Stay, Bust, Hit 과 같은 상태를 도메인으로 관리한다.
+- OCP 위반. 다른 도메인의 상태를 다 알고 있다.
+
+```java
+public static Result getResult(State dealerState, State playerState) {
+    if (playerState instanceof Bust) {
+        return Result.LOSE;
+    }
+    if (playerState instanceof BlackJack) {
+        return Result.BLACKJACK;
+    }
+    if (dealerState instanceof Bust || playerState.getScore() > dealerState.getScore()) {
+        return Result.WIN;
+    }
+    if (dealerState.getScore() > playerState.getScore()) {
+        return LOSE;
+    }
+    if (dealerState.getScore().equals(playerState.getScore())) {
+        return Result.DRAW;
+    }
+    throw new IllegalArgumentException("Result 뭔가 잘못된거같아...");
+}
+```

@@ -5,6 +5,7 @@ import domain.card.vo.Card;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class Hand {
     public static final int ACE_ADVANTAGE_SCORE = 10;
@@ -20,8 +21,8 @@ public class Hand {
 
     public static Hand createFromDeck(Deck deck) {
         List<Card> cards = new ArrayList<>();
-        cards.add(deck.drawCard());
-        cards.add(deck.drawCard());
+        IntStream.range(0, MIN_SIZE)
+                .forEach((i) -> cards.add(deck.drawCard()));
         return new Hand(cards);
     }
 

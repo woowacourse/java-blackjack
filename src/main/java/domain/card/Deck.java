@@ -18,7 +18,7 @@ public class Deck {
     }
 
     public static Deck createFromDeckMaker(DeckMaker deckMaker) {
-        Deque<Card> deque = new ArrayDeque<Card>(deckMaker.make());
+        Deque<Card> deque = new ArrayDeque<>(deckMaker.make());
         return new Deck(deque);
     }
 
