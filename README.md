@@ -4,13 +4,15 @@
 ## 기능 요구사항
 
 ---
-블랙잭 게임을 변형한 프로그램을 구현한다. 블랙잭 게임은 **딜러**와 **플레이어** 중 카드의 합이 **21** 또는 **21에 가장 가까운 숫자**를 가지는 쪽이 이기는 게임이다.
+블랙잭 게임을 변형한 프로그램을 구현한다. 블랙잭 게임은 딜러와 플레이어 중 카드의 합이 21 또는 21에 가장 가까운 숫자를 가지는 쪽이 이기는 게임이다.
 
+플레이어는 게임을 시작할 때 배팅 금액을 정해야 한다.
 카드의 숫자 계산은 카드 숫자를 기본으로 하며, 예외로 Ace는 1 또는 11로 계산할 수 있으며, King, Queen, Jack은 각각 10으로 계산한다.  
-게임을 시작하면 플레이어는 **두 장의 카드**를 지급 받으며, 두 장의 카드 숫자를 합쳐 21을 초과하지 않으면서 21에 가깝게 만들면 이긴다.  
-21을 넘지 않을 경우 원한다면 얼마든지 카드를 계속 뽑을 수 있다.  
-딜러는 처음에 받은 2장의 합계가 **16이하**이면 반드시 1장의 카드를 추가로 받아야 하고, **17점 이상**이면 추가로 받을 수 없다.  
-게임을 완료한 후 각 플레이어별로 승패를 출력한다.
+게임을 시작하면 플레이어는 두 장의 카드를 지급 받으며, 두 장의 카드 숫자를 합쳐 21을 초과하지 않으면서 21에 가깝게 만들면 이긴다. 
+21을 넘지 않을 경우 원한다면 얼마든지 카드를 계속 뽑을 수 있다. 단, 카드를 추가로 뽑아 21을 초과할 경우 배팅 금액을 모두 잃게 된다.  
+처음 두 장의 카드 합이 21일 경우 블랙잭이 되면 베팅 금액의 1.5 배를 딜러에게 받는다. 딜러와 플레이어가 모두 동시에 블랙잭인 경우 플레이어는 베팅한 금액을 돌려받는다.  
+딜러는 처음에 받은 2장의 합계가 16이하이면 반드시 1장의 카드를 추가로 받아야 하고, 17점 이상이면 추가로 받을 수 없다.   
+딜러가 21을 초과하면 그 시점까지 남아 있던 플레이어들은 가지고 있는 패에 상관 없이 승리해 베팅 금액을 받는다.
 
 ### Card
 #### field
@@ -23,31 +25,66 @@
 ### Hand(1급 컬렉션)
 #### field
 - List Card
-- 카드 주인
 #### method
-- Append Card (카드 추가)
-- 전체 값(필드로 두지는 않고, 계산으로 반환) 계산 calculate
-- 문양과 숫자가 중복되는지 검사
-- Ace 값을 결정?
+- appendCard() 카드 추가
+- calculateTotalValue() 손 안의 카드 값 총합 계산
+- hasAce() ace를 가지고 있는지 판단
 ---
-### Member
+### Deck
+### field
+queue 전체 카드
+#### method
+- init() 카드 초기화
+- draw() 카드 뽑기
+- makeCard() 카드 만들기
+---
+### Member(추상 클래스)
 #### field
 - Hand
-- Role(player | dealer)
+- Name
 
 #### method
-- receive
-- roleIsDealer 딜러인지 확인 후 카드 뽑을지
-- decideWinner(Member(역할이 dealer))
+- showFirstCards() 처음 카드를 분배 받고 결과 반환
+- isDealer() 딜러인지 확인
+- getBettingAmount() 배팅 금액 조회
+- applyBlackjackBonus() 블랙잭 보너스인 1.5배 적용
+- handValue() 가지고 있는 카드의 총합
+- receiveCard() 카드 뽑기
+- handCards() 손에 들고 있는 카드 조회
+---
+### Dealer(Member 상속)
+#### method
+Member의 메서드 상속해서 구현
+isDealer()
+showFirstCards() - 한장의 카드만 조회
+getBettingAmount() - player의 기능 지원하지 않음을 예외처리
+applyBlackjackBonus() - player의 기능 지원하지 않음을 예외처리
+---
+### Player
+#### field
+BettingAmount 배팅 금액
+#### method
+isDealer()
+showFirstCards() 처음 받은 2장의 카드 조회
+getBettingAmount() 배팅 금액 조회
+applyBlackjackBonus() 보너스 적용
+---
+### BettingAmount
+#### method
+applyBonus 보너스 적용
+getAmount 배팅 금액 반환
 ---
 ### GameTable
 #### field
 - Members(일급 컬렉션)
 
 #### method
-- join : player 추가
-- CardResult playRound()
-- List<Card> draw(memberName, Card)
+- draw(memberName, card) 카드 뽑기
+- canDealerDraw() 딜러가 카드를 더 뽑을 수 있는지 확인
+- checkBust(memberName) 카드 총합이 버스트인지 확인
+- checkBlackjack() 블랙잭인지 확인
+- applyBlackjackBonus
+- checkGameResult
 
 ```
 딜러카드: 3다이아몬드, 9클로버, 8다이아몬드 - 결과: 20
@@ -62,10 +99,6 @@ jason카드: 7클로버, K스페이드 - 결과: 17
   jason: 패
  ```
 ---
-### Deck
-#### method
-- draw
-- Card Generator 52 queue에 초기화
 
 ## 실행 결과
 
