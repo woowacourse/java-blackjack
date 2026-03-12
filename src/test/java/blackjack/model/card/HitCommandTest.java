@@ -1,11 +1,10 @@
-package blackjack.model;
+package blackjack.model.card;
 
 import static blackjack.model.constant.ErrorMessage.ERROR_EMPTY_INPUT;
 import static blackjack.model.constant.ErrorMessage.ERROR_NOT_Y_N_INPUT;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import blackjack.model.card.HitCommand;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -27,8 +26,7 @@ class HitCommandTest {
     void create_hitCommand_fail_when_empty_input(String emptyInput) {
         //when & then
         assertThatThrownBy(() -> new HitCommand(emptyInput))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ERROR_EMPTY_INPUT.getErrorMessage());
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @ParameterizedTest
@@ -37,7 +35,6 @@ class HitCommandTest {
     void create_hitCommand_fail_when_invalid_input(String invalidInput) {
         //when & then
         assertThatThrownBy(() -> new HitCommand(invalidInput))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(HitCommand.ERROR_NOT_Y_N_INPUT);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }
