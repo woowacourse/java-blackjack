@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Hand {
     private static final int BLACKJACK_POINT = 21;
+    private static final int BLACKJACK_CARD_COUNT = 2;
     private static final int ACE_OFFSET_POINT = 10;
 
     private final List<Card> cards = new ArrayList<>();
@@ -47,5 +48,9 @@ public class Hand {
 
     public List<Card> getCards() {
         return cards;
+    }
+
+    public boolean isBlackJack() {
+        return (getCount() == BLACKJACK_CARD_COUNT && getTotalPoint() == BLACKJACK_POINT);
     }
 }
