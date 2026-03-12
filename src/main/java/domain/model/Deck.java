@@ -2,6 +2,7 @@ package domain.model;
 
 import java.util.List;
 
+import static constant.BlackJackConstant.BLACK_JACK;
 import static constant.BlackJackConstant.BURST_CRITERIA;
 
 public class Deck {
@@ -68,8 +69,7 @@ public class Deck {
         if (sum > BURST_CRITERIA) {
             deckStatus = DeckStatus.BURST;
         }
-        // TODO : 매직 넘버 제거
-        if (sum == 21) {
+        if (sum == BLACK_JACK) {
             deckStatus = DeckStatus.BLACK_JACK;
         }
     }
