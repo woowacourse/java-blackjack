@@ -5,6 +5,7 @@ import domain.Dealer;
 import domain.Deck;
 import domain.Player;
 import domain.Result;
+import dto.ParticipantCardsDto;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
@@ -24,15 +25,15 @@ public class BlackJackGameController {
 
         OutputView.printGameInitialMessage(playerNames);
 
-        OutputView.printInitialDealerCards(blackJackGame.getDealerCardsDto());
-        for (Player player : players) {
-            OutputView.printInitialPlayerCards(blackJackGame.getPlayerCardsDto(player));
+        OutputView.printInitialDealerCards(ParticipantCardsDto.from(blackJackGame.getDealer()));
+        for (Player player : blackJackGame.getPlayers()) {
+            OutputView.printInitialPlayerCards(ParticipantCardsDto.from(player));
         }
 
-        playGame(blackJackGame, players);
+        playGame(blackJackGame);
 
         Result gameResult = blackJackGame.getGameResult();
-        endGame(blackJackGame, players, gameResult);
+        endGame(blackJackGame, gameResult);
     }
 
     private List<String> getPlayerNames() {
@@ -46,14 +47,14 @@ public class BlackJackGameController {
         return players;
     }
 
-    private void playGame(BlackJackGame blackJackGame, List<Player> players) {
-        for (Player player : players) {
+    private void playGame(BlackJackGame blackJackGame) {
+        for (Player player : blackJackGame.getPlayers()) {
             while (blackJackGame.canPlayerReceiveCard(player)) {
-                if (isStopGame(blackJackGame, player)) {
+                if (isStopGame(player)) {
                     break;
                 }
                 blackJackGame.playGameWithPlayer(player);
-                OutputView.printCards(blackJackGame.getPlayerCardsDto(player));
+                OutputView.printCards(ParticipantCardsDto.from(player));
             }
         }
         if (blackJackGame.canDealerReceiveCard()) {
@@ -62,22 +63,22 @@ public class BlackJackGameController {
         }
     }
 
-    private static void endGame(BlackJackGame blackJackGame, List<Player> players,
+    private static void endGame(BlackJackGame blackJackGame,
                                 Result gameResult) {
-        OutputView.printFinalCards(blackJackGame.getDealerCardsDto());
-        printFinalScores(blackJackGame, players);
+        OutputView.printFinalCards(ParticipantCardsDto.from(blackJackGame.getDealer()));
+        printFinalScores(blackJackGame);
         OutputView.printGameResult(gameResult.getGameResult());
     }
 
-    private static void printFinalScores(BlackJackGame blackJackGame, List<Player> players) {
-        for (Player player : players) {
-            OutputView.printFinalCards(blackJackGame.getPlayerCardsDto(player));
+    private static void printFinalScores(BlackJackGame blackJackGame) {
+        for (Player player : blackJackGame.getPlayers()) {
+            OutputView.printFinalCards(ParticipantCardsDto.from(player));
         }
     }
 
-    private boolean isStopGame(BlackJackGame blackJackGame, Player player) {
+    private boolean isStopGame(Player player) {
         if (!isContinue(InputView.askContinue(player.getName()))) {
-            OutputView.printCards(blackJackGame.getPlayerCardsDto(player));
+            OutputView.printCards(ParticipantCardsDto.from(player));
             return true;
         }
         return false;

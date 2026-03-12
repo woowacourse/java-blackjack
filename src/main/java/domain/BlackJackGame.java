@@ -1,6 +1,5 @@
 package domain;
 
-import dto.ParticipantCardsDto;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,21 +39,20 @@ public class BlackJackGame {
         return new Result(gameResult);
     }
 
-
-    public ParticipantCardsDto getDealerCardsDto() {
-        return dealer.getParticipantCardsDto();
-    }
-
-    public ParticipantCardsDto getPlayerCardsDto(Player player) {
-        return player.getParticipantCardsDto();
-    }
-
     public boolean canPlayerReceiveCard(Player player) {
         return player.canReceiveCard();
     }
 
     public boolean canDealerReceiveCard() {
         return dealer.canReceiveCard();
+    }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public List<Player> getPlayers() {
+        return List.copyOf(players);
     }
 
     private void distributeInitialCard(Participant participant) {
@@ -69,8 +67,12 @@ public class BlackJackGame {
     }
 
     private boolean isPlayerWin(int playerScore, int dealerScore) {
-        if (playerScore > 21) return false;
-        if (dealerScore > 21) return true;
+        if (playerScore > 21) {
+            return false;
+        }
+        if (dealerScore > 21) {
+            return true;
+        }
         return playerScore > dealerScore;
     }
 }

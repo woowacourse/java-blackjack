@@ -1,8 +1,7 @@
 package domain;
 
-import dto.ParticipantCardsDto;
-
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Participant {
     private final Name name;
@@ -31,7 +30,7 @@ public abstract class Participant {
         return cards.calculateOptimalScore();
     }
 
-    public ParticipantCardsDto getParticipantCardsDto() {
-        return new ParticipantCardsDto(name.getName(), cards.getCardsInfo(), getScore());
+    public List<String> getCardsInfo() {
+        return cards.getCardsInfo();
     }
 }
