@@ -96,4 +96,31 @@ public class PlayerTest {
         assertThat(result).isEqualTo(GameResult.LOSE);
     }
 
+    @Test
+    void 딜러와_플레이어의_포인트를_비교한다_플레이어_블랙잭승() {
+        Player player = new Player("이산");
+        player.receiveCard(new Card(CardPoint.ACE, CardPattern.DIAMOND));
+        player.receiveCard(new Card(CardPoint.KING, CardPattern.CLUB));
+
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(CardPoint.ACE, CardPattern.CLUB));
+        dealer.receiveCard(new Card(CardPoint.NINE, CardPattern.DIAMOND));
+
+        GameResult result = player.compareResult(dealer);
+        assertThat(result).isEqualTo(GameResult.BLACKJACK_WIN);
+    }
+
+    @Test
+    void 딜러와_플레이어의_포인트를_비교한다_플레이어_블랙잭무승부() {
+        Player player = new Player("이산");
+        player.receiveCard(new Card(CardPoint.ACE, CardPattern.DIAMOND));
+        player.receiveCard(new Card(CardPoint.KING, CardPattern.CLUB));
+
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(CardPoint.ACE, CardPattern.CLUB));
+        dealer.receiveCard(new Card(CardPoint.JACK, CardPattern.DIAMOND));
+
+        GameResult result = player.compareResult(dealer);
+        assertThat(result).isEqualTo(GameResult.TIE);
+    }
 }
