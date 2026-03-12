@@ -19,10 +19,9 @@ public class OutputView {
     private static final String PRINT_BLACKJACK_STATISTICS_DEALER_MESSAGE = "딜러:%s%s%s\n";
     private static final String PRINT_BLACKJACK_STATISTICS_PLAYER_MESSAGE = "%s: %s\n";
 
-    public void printPlayers(List<ParticipantDto> platerDtoList) {
-        List<String> names = platerDtoList.stream()
+    public void printPlayers(List<ParticipantDto> playerDtoList) {
+        List<String> names = playerDtoList.stream()
             .map(ParticipantDto::name)
-            .filter(name -> !name.equals(PolicyConstant.DEALER_NAME))
             .toList();
         System.out.printf(PRINT_PLAYERS_MESSAGE, String.join(DELIMITER, names));
     }
