@@ -23,13 +23,15 @@ public abstract class Participant {
         hand.addCard(card);
     }
 
-    public final int getHandSum() {
-        return hand.getSum();
+    public final Score getScore() {
+        return hand.getScore();
     }
 
-    public final boolean hasAce() {
-        return hand.hasAce();
+    public final boolean isBust() {
+        return hand.getScore().isBust();
     }
+
+    public abstract boolean canHit();
 
     public abstract List<Card> getInitialVisibleCards();
 }

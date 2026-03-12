@@ -19,4 +19,13 @@ public class Dealer extends Participant {
         }
         return List.of(getCards().getFirst());
     }
+
+    @Override
+    public boolean canHit() {
+        return getScore().value() <= 16;
+    }
+
+    public boolean isWin() {
+
+    }
 }

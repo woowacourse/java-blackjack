@@ -16,4 +16,8 @@ public class Player extends Participant {
     public List<Card> getInitialVisibleCards() {
         return getCards();
     }
+
+    public boolean canHit() {
+        return !getScore().isBust();
+    }
 }
