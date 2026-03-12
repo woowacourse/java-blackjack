@@ -2,7 +2,7 @@ package controller;
 
 import java.util.List;
 import model.Dealer;
-import model.GameStatus;
+import model.DealerResult;
 import model.Player;
 import model.PlayerResult;
 import model.Players;
@@ -12,6 +12,7 @@ import model.card.Deck;
 import model.card.SimpleCardShuffler;
 import model.service.CardFactory;
 import model.service.GameManager;
+import model.service.Judgement;
 import view.InputView;
 import view.OutputView;
 
@@ -20,12 +21,10 @@ public class BlackjackController {
     private final GameManager gameManager;
 
     public BlackjackController() {
-        CardFactory cardFactory = new CardFactory();
         CardShuffler cardShuffler = new SimpleCardShuffler();
-
-        List<Card> fullCards = cardFactory.createFullCards();
-        List<Card> shuffledCard = cardShuffler.shuffle(fullCards);
-        Deck deck = new Deck(shuffledCard);
+        List<Card> fullCards = CardFactory.createFullCards();
+        List<Card> shuffledCards = cardShuffler.shuffle(fullCards);
+        Deck deck = new Deck(shuffledCards);
         this.gameManager = new GameManager(deck);;
     }
 
@@ -41,7 +40,7 @@ public class BlackjackController {
 
         players.forEach(this::chooseHitOrStand);
         while (dealer.canHit()) {
-            OutputView.printToOpenDealerNewCard(dealer.getName());
+            OutputView.printToOpenDealerNewCard(dealer);
             gameManager.distributeCard(dealer);
         }
 
@@ -54,7 +53,7 @@ public class BlackjackController {
     }
 
     private Continuation readContinuation(Player player) {
-        String inputCommand = InputView.readMoreCard(player.getName());
+        String inputCommand = InputView.readMoreCard(player);
         return Continuation.from(inputCommand);
     }
 
@@ -78,13 +77,11 @@ public class BlackjackController {
     }
 
     private void printGameResult(Dealer dealer, Players players) {
-        PlayerResult playerResult = PlayerResult.judgeByPlayer(dealer, players.getPlayers());
-        int winCount = playerResult.countByStatus(GameStatus.LOSE);
-        int loseCount = playerResult.countByStatus(GameStatus.WIN);
-        int drawCount = playerResult.countByStatus(GameStatus.DRAW);
+        PlayerResult playerResult = Judgement.judgeByPlayer(dealer, players);
+        DealerResult dealerResult = Judgement.judgeByDealer(playerResult);
 
         OutputView.printFinalResultHeader();
-        OutputView.printDealerResult(winCount, loseCount, drawCount);
-        OutputView.printResultByPlayers(playerResult.getResult());
+        OutputView.printResultByDealer(dealerResult);
+        OutputView.printResultByPlayers(playerResult);
     }
 }

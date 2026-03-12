@@ -10,10 +10,10 @@ import model.card.CardValue;
 
 public class CardFactory {
 
-    private final List<Card> fullCards;
+    private static final List<Card> FULL_CARDS = createInitCards();
 
-    public CardFactory() {
-        this.fullCards = Arrays.stream(CardShape.values())
+    private static List<Card> createInitCards() {
+        return Arrays.stream(CardShape.values())
                 .flatMap(CardFactory::combinate)
                 .toList();
     }
@@ -23,7 +23,7 @@ public class CardFactory {
                 .map(value -> new Card(shape, value));
     }
 
-    public List<Card> createFullCards() {
-        return new ArrayList<>(fullCards);
+    public static List<Card> createFullCards() {
+        return new ArrayList<>(FULL_CARDS);
     }
 }

@@ -1,11 +1,11 @@
 package view;
 
 import java.util.List;
-import java.util.Map;
 import model.Dealer;
-import model.GameStatus;
+import model.DealerResult;
 import model.Participant;
 import model.Player;
+import model.PlayerResult;
 import model.Players;
 import model.card.Card;
 
@@ -57,9 +57,9 @@ public class OutputView {
         return card.value().getSymbol() + card.shape().getShape();
     }
 
-    public static void printToOpenDealerNewCard(String name) {
+    public static void printToOpenDealerNewCard(Dealer dealer) {
         System.out.println();
-        System.out.printf("%s는 16 이하라 한장의 카드를 더 받았습니다.%n", name);
+        System.out.printf("%s는 16 이하라 한장의 카드를 더 받았습니다.%n", dealer.getName());
     }
 
     public static void printBlank() {
@@ -71,22 +71,23 @@ public class OutputView {
         System.out.println("##최종 승패");
     }
 
-    public static void printDealerResult(int winCount, int loseCount, int drawCount) {
+    public static void printResultByDealer(DealerResult dealerResult) {
         System.out.print("딜러: ");
         StringBuilder result = new StringBuilder();
-        if (winCount > 0) {
-            result.append(winCount).append("승 ");
+        if (dealerResult.winCount() > 0) {
+            result.append(dealerResult.winCount()).append("승 ");
         }
-        if (drawCount > 0) {
-            result.append(drawCount).append("무 ");
+        if (dealerResult.drawCount() > 0) {
+            result.append(dealerResult.drawCount()).append("무 ");
         }
-        if (loseCount > 0) {
-            result.append(loseCount).append("패");
+        if (dealerResult.loseCount() > 0) {
+            result.append(dealerResult.loseCount()).append("패");
         }
         System.out.println(result.toString().trim());
     }
 
-    public static void printResultByPlayers(Map<String, GameStatus> result) {
-        result.forEach((name, status) -> System.out.printf("%s: %s%n", name, status.getName()));
+    public static void printResultByPlayers(PlayerResult playerResult) {
+        playerResult.getResult()
+                .forEach((player, status) -> System.out.printf("%s: %s%n", player.getName(), status.getName()));
     }
 }

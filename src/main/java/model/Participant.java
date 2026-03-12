@@ -28,6 +28,10 @@ public abstract class Participant {
         return score;
     }
 
+    public boolean isBust() {
+        return calculateTotalScore() > BUST_LIMIT;
+    }
+
     public void addCard(Card card) {
         this.hand.add(card);
     }

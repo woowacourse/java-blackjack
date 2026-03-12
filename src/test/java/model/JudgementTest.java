@@ -5,10 +5,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import model.card.Card;
+import model.service.Judgement;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class PlayerResultTest {
+public class JudgementTest {
 
     @ParameterizedTest(name = "플레이어 {0}, 딜러 {1}일 때 결과는 {2}이다")
     @MethodSource("fixture.PlayerResultTestFixture#플레이어의_상황별_승_패_정보제공")
@@ -25,7 +26,7 @@ public class PlayerResultTest {
         playerCards.forEach(player::addCard);
 
         // when
-        PlayerResult playerResult = PlayerResult.judgeByPlayer(dealer, List.of(player));
+        PlayerResult playerResult = Judgement.judgeByPlayer(dealer, new Players(List.of(player)));
 
         // then
         assertThat(playerResult.countByStatus(status)).isEqualTo(1);
