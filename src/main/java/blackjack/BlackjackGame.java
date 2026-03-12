@@ -1,34 +1,20 @@
 package blackjack;
 
-import blackjack.domain.betting.BettingMoney;
-import blackjack.domain.deck.Deck;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.domain.result.GameResults;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.List;
-import java.util.stream.IntStream;
 
 public class BlackjackGame {
 
     private final Dealer dealer;
     private final Players players;
 
-    public BlackjackGame() {
-        this.dealer = new Dealer(new Deck());
-        this.players = createPlayers();
-    }
-
-    private Players createPlayers() {
-        final List<String> names = InputView.readPlayerNames();
-        final List<Integer> amounts = InputView.readBettingAmounts(names);
-        final List<Player> participants = IntStream.range(0, names.size())
-                .mapToObj(i -> new Player(new Name(names.get(i)), new BettingMoney(amounts.get(i))))
-                .toList();
-        return new Players(participants);
+    public BlackjackGame(final Dealer dealer, final Players players) {
+        this.dealer = dealer;
+        this.players = players;
     }
 
     public void start() {
