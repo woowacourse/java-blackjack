@@ -20,21 +20,38 @@ public enum GameResult {
     }
 
     public static GameResult calculatePlayerResult(Player player, Dealer dealer) {
-        int playerScore = player.getScore();
-        int dealerScore = dealer.getScore();
-        boolean dealerBust = dealer.isBust();
-
-        if (player.isBust() || (playerScore < dealerScore && !dealerBust) || dealer.isBlackjack()) {
-            return GameResult.LOSE;
+        if (player.isBlackjack() || dealer.isBlackjack()) {
+            return calculateBlackjackResult(player, dealer);
         }
-        if (playerScore == dealerScore) {
-            return GameResult.DRAW;
+        if (player.isBust()) {
+            return LOSE;
+        }
+        if (dealer.isBust()) {
+            return WIN;
+        }
+        return calculateScoreResult(player, dealer);
+    }
+
+    private static GameResult calculateBlackjackResult(Player player, Dealer dealer) {
+        if (player.isBlackjack() && dealer.isBlackjack()) {
+            return DRAW;
         }
         if (player.isBlackjack()) {
-            return GameResult.BLACKJACK_WIN;
+            return BLACKJACK_WIN;
         }
-        return GameResult.WIN;
+        return LOSE;
     }
+
+    private static GameResult calculateScoreResult(Player player, Dealer dealer) {
+        if (player.getScore() > dealer.getScore()) {
+            return WIN;
+        }
+        if (player.getScore() == dealer.getScore()) {
+            return DRAW;
+        }
+        return LOSE;
+    }
+
 
     public static Map<GameResult, Integer> calculateDealerResult(List<GameResult> playerGameResults) {
         Map<GameResult, Integer> results = new HashMap<>();
