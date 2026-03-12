@@ -38,7 +38,7 @@ public class GameController {
                 validatePlayerNames(playerNames);
 
                 for (String playerName : playerNames) {
-                    manager.addPlayer(playerName);
+                    manager.addPlayer(playerName, 1000);
                 }
                 return;
 

@@ -4,9 +4,9 @@ import java.util.List;
 
 public class GameInitialInfoDto {
 
-    private final String playerName;
-    private final int initialHandSize;
-    private final List<String> hand;
+    private String playerName;
+    private int initialHandSize;
+    private List<String> hand;
 
     public GameInitialInfoDto(String playerName, int initialHandSize, List<String> hand) {
         this.playerName = playerName;

@@ -18,6 +18,10 @@ public class Hand {
         hand.add(card);
     }
 
+    public List<Card> getHand() {
+        return List.copyOf(hand);
+    }
+
     public List<String> toStringList() {
         return hand.stream()
                 .map(Card::toString)
@@ -56,4 +60,7 @@ public class Hand {
         return calculateScore() == BLACKJACK_SCORE;
     }
 
+    public int size() {
+        return hand.size();
+    }
 }

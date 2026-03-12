@@ -2,7 +2,7 @@ package domain.game;
 
 import domain.DtoFactory;
 import domain.card.Deck;
-import domain.dto.GameFinalResultDto;
+import domain.dto.GameResultDto;
 import domain.dto.GameInitialInfoDto;
 import domain.dto.GameScoreResultDto;
 
@@ -29,6 +29,7 @@ public class GameManager {
             players.receiveCard(deck.draw());
             dealer.receiveCard(deck.draw());
         }
+        players.renewedWithBlackJack();
     }
 
     public List<String> drawPlayerCard(Player player) {
@@ -36,9 +37,8 @@ public class GameManager {
         return player.getHandToString();
     }
 
-    public void addPlayer(String name) {
-        // TODO: 베팅 기능 추가 시 이름만이 아니라 베팅 금액도 함께 받도록 수정 필요
-        players.add(new Player(name));
+    public void addPlayer(String name, int bettingMoney) {
+        players.add(new Player(name, bettingMoney));
     }
 
     public List<Player> getPlayerSequence() {
@@ -63,7 +63,7 @@ public class GameManager {
         return true;
     }
 
-    public List<GameFinalResultDto> getFinalResult() {
+    public List<GameResultDto> getFinalResult() {
         return GameResultJudge.judge(dealer, players);
     }
 

@@ -4,7 +4,7 @@ import domain.card.Card;
 import domain.card.Rank;
 import domain.constant.Result;
 import domain.card.Suit;
-import domain.dto.GameFinalResultDto;
+import domain.dto.GameResultDto;
 import domain.game.GameResultJudge;
 import domain.participant.Dealer;
 import domain.participant.Player;
@@ -23,14 +23,14 @@ class GameResultJudgeTest {
         dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
         dealer.receiveCard(new Card(Rank.SEVEN, Suit.HEART));
 
-        Player player = new Player("pobi");
+        Player player = new Player("pobi",1000);
         player.receiveCard(new Card(Rank.TEN, Suit.CLUB));
         player.receiveCard(new Card(Rank.NINE, Suit.DIAMOND));
 
         Players players = new Players();
         players.add(player);
 
-        List<GameFinalResultDto> result = GameResultJudge.judge(dealer, players);
+        List<GameResultDto> result = GameResultJudge.judge(dealer, players);
 
         assertThat(result).hasSize(2);
         assertThat(result.get(1).getPlayerName()).isEqualTo("pobi");
@@ -43,14 +43,14 @@ class GameResultJudgeTest {
         dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
         dealer.receiveCard(new Card(Rank.NINE, Suit.HEART));
 
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", 1000);
         player.receiveCard(new Card(Rank.TEN, Suit.CLUB));
         player.receiveCard(new Card(Rank.SEVEN, Suit.DIAMOND));
 
         Players players = new Players();
         players.add(player);
 
-        List<GameFinalResultDto> result = GameResultJudge.judge(dealer, players);
+        List<GameResultDto> result = GameResultJudge.judge(dealer, players);
 
         assertThat(result.get(1).getResult()).isEqualTo(Result.LOSE);
     }
@@ -61,14 +61,14 @@ class GameResultJudgeTest {
         dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
         dealer.receiveCard(new Card(Rank.EIGHT, Suit.HEART));
 
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", 1000);
         player.receiveCard(new Card(Rank.NINE, Suit.CLUB));
         player.receiveCard(new Card(Rank.NINE, Suit.DIAMOND));
 
         Players players = new Players();
         players.add(player);
 
-        List<GameFinalResultDto> result = GameResultJudge.judge(dealer, players);
+        List<GameResultDto> result = GameResultJudge.judge(dealer, players);
 
         assertThat(result.get(1).getResult()).isEqualTo(Result.DRAW);
     }
@@ -79,7 +79,7 @@ class GameResultJudgeTest {
         dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
         dealer.receiveCard(new Card(Rank.SEVEN, Suit.HEART));
 
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", 1000);
         player.receiveCard(new Card(Rank.KING, Suit.CLUB));
         player.receiveCard(new Card(Rank.QUEEN, Suit.DIAMOND));
         player.receiveCard(new Card(Rank.TWO, Suit.HEART));
@@ -87,7 +87,7 @@ class GameResultJudgeTest {
         Players players = new Players();
         players.add(player);
 
-        List<GameFinalResultDto> result = GameResultJudge.judge(dealer, players);
+        List<GameResultDto> result = GameResultJudge.judge(dealer, players);
 
         assertThat(result.get(1).getResult()).isEqualTo(Result.LOSE);
     }
@@ -99,14 +99,14 @@ class GameResultJudgeTest {
         dealer.receiveCard(new Card(Rank.QUEEN, Suit.HEART));
         dealer.receiveCard(new Card(Rank.TWO, Suit.CLUB));
 
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", 1000);
         player.receiveCard(new Card(Rank.TEN, Suit.DIAMOND));
         player.receiveCard(new Card(Rank.SEVEN, Suit.HEART));
 
         Players players = new Players();
         players.add(player);
 
-        List<GameFinalResultDto> result = GameResultJudge.judge(dealer, players);
+        List<GameResultDto> result = GameResultJudge.judge(dealer, players);
 
         assertThat(result.get(1).getResult()).isEqualTo(Result.WIN);
     }
@@ -115,9 +115,9 @@ class GameResultJudgeTest {
     void 최종결과_첫번째에는_딜러가_포함된다() {
         Dealer dealer = new Dealer();
         Players players = new Players();
-        players.add(new Player("pobi"));
+        players.add(new Player("pobi", 1000));
 
-        List<GameFinalResultDto> result = GameResultJudge.judge(dealer, players);
+        List<GameResultDto> result = GameResultJudge.judge(dealer, players);
 
         assertThat(result.getFirst().getPlayerName()).isEqualTo("딜러");
     }

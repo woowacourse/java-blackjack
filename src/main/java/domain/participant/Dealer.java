@@ -4,7 +4,7 @@ public class Dealer extends Player {
     private final int DEALER_DRAW_CONDITION = 16;
 
     public Dealer() {
-        super("딜러");
+        super("딜러", 1000);
     }
 
     @Override

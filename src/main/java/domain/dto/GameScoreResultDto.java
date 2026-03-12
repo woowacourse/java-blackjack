@@ -3,9 +3,9 @@ package domain.dto;
 import java.util.List;
 
 public class GameScoreResultDto {
-    private final String playerName;
-    private final List<String> hand;
-    private final int result;
+    String playerName;
+    List<String> hand;
+    int result;
 
     public GameScoreResultDto(String playerName, List<String> hand, int result) {
         this.playerName = playerName;
@@ -17,12 +17,24 @@ public class GameScoreResultDto {
         return playerName;
     }
 
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+
     public List<String> getHand() {
         return hand;
     }
 
+    public void setHand(List<String> hand) {
+        this.hand = hand;
+    }
+
     public int getResult() {
         return result;
+    }
+
+    public void setResult(int result) {
+        this.result = result;
     }
 
     @Override

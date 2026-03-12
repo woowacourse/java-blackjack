@@ -1,7 +1,7 @@
 package domain;
 
 import domain.card.Deck;
-import domain.dto.GameFinalResultDto;
+import domain.dto.GameResultDto;
 import domain.dto.GameInitialInfoDto;
 import domain.dto.GameScoreResultDto;
 import domain.game.GameManager;
@@ -18,8 +18,8 @@ class GameManagerTest {
     void 등록된_플레이어와_딜러_순서대로_카드를_돌린다() {
         GameManager manager = new GameManager(new Deck());
 
-        manager.addPlayer("pobi");
-        manager.addPlayer("cary");
+        manager.addPlayer("pobi", 1000);
+        manager.addPlayer("cary", 1000);
 
         manager.startGame();
         List<GameScoreResultDto> scoreResults = manager.getScoreResults();
@@ -36,7 +36,7 @@ class GameManagerTest {
     void 딜러의_카드는_한_장만_공개한다() {
         GameManager manager = new GameManager(new Deck());
 
-        manager.addPlayer("pobi");
+        manager.addPlayer("pobi",1000);
 
         manager.startGame();
         List<GameInitialInfoDto> initialInfo = manager.getInitialInfo();
@@ -48,7 +48,7 @@ class GameManagerTest {
     void 플레이어의_카드는_두_장_공개한다() {
         GameManager manager = new GameManager(new Deck());
 
-        manager.addPlayer("pobi");
+        manager.addPlayer("pobi", 1000);
 
         manager.startGame();
         List<GameInitialInfoDto> initialInfo = manager.getInitialInfo();
@@ -59,7 +59,7 @@ class GameManagerTest {
     @Test
     void 플레이어를_한명_등록한다() {
         GameManager manager = new GameManager(new Deck());
-        manager.addPlayer("pobi");
+        manager.addPlayer("pobi",1000);
 
         List<Player> result = manager.getPlayerSequence();
 
@@ -73,7 +73,7 @@ class GameManagerTest {
         List<String> playerNames = List.of("pobi", "cary", "rudy");
 
         for (String playerName : playerNames) {
-            manager.addPlayer(playerName);
+            manager.addPlayer(playerName, 1000);
         }
 
         List<Player> result = manager.getPlayerSequence();
@@ -85,18 +85,18 @@ class GameManagerTest {
     @Test
     void 플레이어가_카드를_한장_더_받는다() {
         GameManager manager = new GameManager(new Deck());
-        manager.addPlayer("pobi");
+        manager.addPlayer("pobi", 1000);
 
         manager.startGame();
         Player player = manager.getPlayerSequence().getFirst();
 
-        int before = player.getScore();
+        int before = player.handSize();
 
         manager.drawPlayerCard(player);
 
-        int after = player.getScore();
+        int after = player.handSize();
 
-        assertThat(after).isGreaterThan(before);
+        assertThat(after).isEqualTo(before + 1);
     }
 
     @Test
@@ -111,10 +111,10 @@ class GameManagerTest {
     @Test
     void 게임_최종_결과에는_딜러와_모든_플레이어_결과가_포함된다() {
         GameManager manager = new GameManager(new Deck());
-        manager.addPlayer("pobi");
-        manager.addPlayer("cary");
+        manager.addPlayer("pobi", 1000);
+        manager.addPlayer("cary", 1000);
 
-        List<GameFinalResultDto> result = manager.getFinalResult();
+        List<GameResultDto> result = manager.getFinalResult();
 
         assertThat(result).hasSize(3);
         assertThat(result.get(0).getPlayerName()).isEqualTo("딜러");
@@ -152,7 +152,7 @@ class GameManagerTest {
 
         manager.startGame();
 
-        List<GameFinalResultDto> result = manager.getFinalResult();
+        List<GameResultDto> result = manager.getFinalResult();
 
         assertThat(result).hasSize(1);
         assertThat(result.getFirst().getPlayerName()).isEqualTo("딜러");
