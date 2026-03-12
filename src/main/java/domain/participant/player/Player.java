@@ -6,25 +6,38 @@ import domain.participant.WinStatus;
 import domain.vo.Name;
 
 public class Player extends Participant {
-    private WinStatus winStatus = WinStatus.DRAW;
+    private final Name name;
+    private WinStatus winStatus;
 
     public Player(Name name, HandCards handCards) {
         super(handCards);
         this.name = name;
     }
 
+    public String getName() {
+        return name.getName();
+    }
+
     public WinStatus getWinStatus() {
         return winStatus;
     }
 
-    @Override
-    public void finalizeResult(int dealerScore) {
-        if (isBust() || getScore() < dealerScore) {
+    public void calculateResult(Participant dealer) {
+        if (isBust()) {
             winStatus = WinStatus.LOSS;
+            return;
         }
 
-        if (getScore() > dealerScore) {
+        if (dealer.isBust() || getScore() > dealer.getScore()) {
             winStatus = WinStatus.WIN;
+            return;
         }
+
+        if (getScore() == dealer.getScore()) {
+            winStatus = WinStatus.DRAW;
+            return;
+        }
+
+        winStatus = WinStatus.LOSS;
     }
 }

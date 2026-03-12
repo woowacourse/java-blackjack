@@ -1,96 +1,78 @@
 package controller;
 
-import dto.DealerInfoDto;
-import dto.PlayerInfoDto;
-import service.GameService;
+import domain.participant.player.Player;
+import service.BlackjackService;
+import service.PlayerManager;
 import view.InputView;
 import view.ResultView;
 
 import java.util.List;
 
 public class GameController {
-    private GameService gameService;
+    private final BlackjackService blackjackService;
+    private final PlayerManager playerManager;
 
-    public GameController(GameService gameService) {
-        this.gameService = gameService;
+    public GameController(BlackjackService blackjackService, PlayerManager playerManager) {
+        this.blackjackService = blackjackService;
+        this.playerManager = playerManager;
     }
 
     public void run() {
-        registerPlayers();
-        initAllParticipantsCard();
-        printInitialCardResult();
+        gameSetup();
+        ResultView.printStartPlayersCards(blackjackService.getDealerInfo(), playerManager.getAllPlayersInfo());
 
-        playerGroupHit();
-        dealerHit();
+        participantsHit();
 
         finalizeGameResult();
-        printFinalCardResult();
-        printRankResult();
+
+        ResultView.printCardsAndScoreResult(blackjackService.getDealerInfo(), playerManager.getAllPlayersInfo());
+        ResultView.printRankResult(blackjackService.getDealerInfo(), playerManager.getAllPlayersInfo());
     }
 
-    private void registerPlayers() {
+    private void gameSetup() {
         List<String> names = InputView.askName();
-        gameService.registerPlayers(names);
-    }
+        playerManager.registerPlayers(names);
 
-    private void initAllParticipantsCard() {
-        gameService.initAllParticipantsCard();
-    }
+        blackjackService.dealDealerCardsOut();
 
-    private void printInitialCardResult() {
-        DealerInfoDto dealerInfoDto = gameService.getDealerInfo();
-        List<PlayerInfoDto> playerInfoDtos = gameService.getAllPlayersInfo();
-        ResultView.printStartPlayersCards(dealerInfoDto, playerInfoDtos);
-    }
-
-    private void playerGroupHit() {
-        while (gameService.isRemainPlayer()) {
-            playerHit();
-            gameService.nextPlayer();
+        for (Player player : playerManager.getPlayers()) {
+            blackjackService.dealPlayerCardsOut(player);
         }
     }
 
-    private void playerHit() {
-        while(canHitAndDraw()){
-            ResultView.printPlayerCards(gameService.getCurrentPlayerName(), gameService.getCurrentPlayerCards());
-        }
-    }
-
-    private boolean canHitAndDraw(){
-        if (gameService.isCurrentPlayerBust()) {
-            return false;
+    private void participantsHit() {
+        for (Player player : playerManager.getPlayers()) {
+            playerHit(player);
         }
 
-        if (InputView.askHit(gameService.getCurrentPlayerName())){
-            gameService.currentPlayerHit();
-            return true;
-        }
-
-        ResultView.printPlayerCards(gameService.getCurrentPlayerName(), gameService.getCurrentPlayerCards());
-        return false;
-    }
-
-    private void finalizeGameResult() {
-        gameService.finalizeGameResult();
-    }
-
-    private void printFinalCardResult() {
-        DealerInfoDto dealerInfoDto = gameService.getDealerInfo();
-        List<PlayerInfoDto> playerInfoDtos = gameService.getAllPlayersInfo();
-
-        ResultView.printCardsAndScoreResult(dealerInfoDto, playerInfoDtos);
-    }
-
-    private void dealerHit() {
-        if (gameService.isDealerHit()) {
+        if (blackjackService.isDealerHit()) {
             ResultView.printDealerOneMoreCard();
         }
     }
 
-    private void printRankResult() {
-        DealerInfoDto dealerInfoDto = gameService.getDealerInfo();
-        List<PlayerInfoDto> playerInfoDtos = gameService.getAllPlayersInfo();
+    private void playerHit(Player player) {
+        while (canHitAndDraw(player)) {
+            ResultView.printPlayerCards(player.getName(), player.getCards());
+        }
+    }
 
-        ResultView.printRankResult(dealerInfoDto, playerInfoDtos);
+    private void finalizeGameResult() {
+        for (Player player : playerManager.getPlayers()) {
+            blackjackService.finalizeGameResult(player);
+        }
+    }
+
+    private boolean canHitAndDraw(Player player) {
+        if (player.isBust()) {
+            return false;
+        }
+
+        if (InputView.askHit(player.getName())) {
+            blackjackService.playerHit(player);
+            return true;
+        }
+
+        ResultView.printPlayerCards(player.getName(), player.getCards());
+        return false;
     }
 }

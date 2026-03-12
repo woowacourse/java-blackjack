@@ -6,13 +6,12 @@ import java.util.List;
 import java.util.Map;
 
 public class DealerInfoDto {
-    private String name;
-    private List<String> cards;
-    private int score;
-    private Map<WinStatus, Integer> record;
+    private final String name = "딜러";
+    private final List<String> cards;
+    private final int score;
+    private final Map<WinStatus, Integer> record;
 
-    public DealerInfoDto(String name, List<String> cards, int score, Map<WinStatus, Integer> record) {
-        this.name = name;
+    public DealerInfoDto(List<String> cards, int score, Map<WinStatus, Integer> record) {
         this.cards = cards;
         this.score = score;
         this.record = record;

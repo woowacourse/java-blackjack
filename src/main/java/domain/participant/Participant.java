@@ -1,13 +1,11 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.vo.Name;
 
 import java.util.List;
 
-public abstract class Participant {
-    private static final int BUST_CONDITION = 22;
-    protected Name name;
+public class Participant {
+    protected static final int BLACKJACK_CONDITION = 21;
     protected HandCards handCards;
 
     public Participant(HandCards handCards) {
@@ -19,11 +17,7 @@ public abstract class Participant {
     }
 
     public boolean isBust() {
-        return handCards.calculateCardsScore() >= BUST_CONDITION;
-    }
-
-    public String getName() {
-        return name.getName();
+        return handCards.calculateCardsScore() > BLACKJACK_CONDITION;
     }
 
     public List<String> getCards() {
@@ -33,6 +27,4 @@ public abstract class Participant {
     public int getScore() {
         return handCards.calculateCardsScore();
     }
-
-    public abstract void finalizeResult(int score);
 }
