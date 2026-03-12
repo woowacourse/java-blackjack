@@ -3,8 +3,8 @@ package blackjack.domain;
 public enum GameResult {
     BLACKJACK("블랙잭", 1.5),
     WIN("승", 1.0),
-    LOSE("패", 0.0),
-    DRAW("무", -1.0);
+    LOSE("패", -1.0),
+    DRAW("무", 0.0);
 
     private final String status;
     private final double ratio;
