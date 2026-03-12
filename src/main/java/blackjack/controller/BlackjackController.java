@@ -1,5 +1,6 @@
 package blackjack.controller;
 
+import blackjack.domain.betting.Bettings;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
@@ -23,6 +24,8 @@ public class BlackjackController {
         Players players = readPlayers();
         Dealer dealer = new Dealer();
 
+        Bettings bettingAmounts = readBettingAmounts(players);
+
         setInitialTwoCards(players, dealer);
         printInitialSettings(players, dealer);
 
@@ -30,7 +33,7 @@ public class BlackjackController {
         getMoreCardsForDealer(dealer, players);
 
         printGameResult(players, dealer);
-        printWinningResult(players, dealer);
+        printWinningResult(bettingAmounts, players, dealer);
     }
 
     private Players readPlayers() {
@@ -95,8 +98,14 @@ public class BlackjackController {
         }
     }
 
-    private void printWinningResult(Players players, Dealer dealer) {
-        outputView.printWinningResult(WinningResult.from(players, dealer));
+    private void printWinningResult(BettingAmounts bettingAmounts, Players players, Dealer dealer) {
+        Map<String, Integer> winningResult = new LinkedHashMap<>();
+        for (Player player : players.getPlayers()) {
+            if (player.winsAgainst(dealer)) {
+                winningResult.put(player.getName(), bettingAmounts.findByName(player.getName()));
+            }
+        }
+        outputView.printWinningResult(WinningResult.from(winningResult));
     }
 
 }
