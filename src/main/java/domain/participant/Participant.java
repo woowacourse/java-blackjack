@@ -5,6 +5,8 @@ import domain.card.CardValue;
 import java.util.List;
 
 public abstract class Participant {
+    private static final int BLACKJACK_SCORE = 21;
+
     private final List<Card> hand;
 
     public Participant(List<Card> hand) {
@@ -18,7 +20,7 @@ public abstract class Participant {
     public int calculateScore() {
         int results = 0;
         for (Card holdCard : hand) {
-            results += holdCard.getScore();
+            results += holdCard.getCardNumber().getValue();
         }
 
         boolean isAceExist = hand.stream()
@@ -30,15 +32,15 @@ public abstract class Participant {
     }
 
     public boolean isBlackjack() {
-        return hand.size() == 2 && calculateScore() == 21;
+        return hand.size() == 2 && calculateScore() == BLACKJACK_SCORE;
     }
 
     public boolean isBust() {
-        return calculateScore() > 21;
+        return calculateScore() > BLACKJACK_SCORE;
     }
 
     public boolean isSoftHand(boolean isAceExist, int results) {
-        return isAceExist && (results + 10) <= 21;
+        return isAceExist && (results + 10) <= BLACKJACK_SCORE;
     }
 
     public List<Card> getHand() {
