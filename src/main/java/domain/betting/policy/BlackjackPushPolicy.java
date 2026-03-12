@@ -1,7 +1,7 @@
 package domain.betting.policy;
 
 
-import domain.analyzer.BettingResult;
+import domain.betting.BettingResult;
 import domain.betting.BettingRate;
 import domain.gamer.Dealer;
 import domain.gamer.Player;

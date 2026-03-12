@@ -1,6 +1,6 @@
-package domain.analyzer;
+package domain.betting;
 
-import domain.betting.BettingRate;
+import domain.analyzer.GameResult;
 
 // THINK 이 ENUM들을 그냥 BettingState로..? 상태패턴...?
 public enum BettingResult {

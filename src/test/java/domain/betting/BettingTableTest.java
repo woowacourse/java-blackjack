@@ -1,6 +1,5 @@
 package domain.betting;
 
-import domain.analyzer.BettingResult;
 import domain.card.*;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
