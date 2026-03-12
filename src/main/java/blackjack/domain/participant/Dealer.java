@@ -31,11 +31,11 @@ public class Dealer extends Participant {
         if (player.isBlackjack()) {
             return playerBlackjackProfit(player);
         }
-        if (isBust()) {
-            return player.calculateProfit(ProfitRate.WIN);
-        }
         if (player.isBust()) {
             return player.calculateProfit(ProfitRate.LOSE);
+        }
+        if (isBust()) {
+            return player.calculateProfit(ProfitRate.WIN);
         }
         return player.calculateProfit(calculateProfitRate(getScore(), player.getScore()));
     }
