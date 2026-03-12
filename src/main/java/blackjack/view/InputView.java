@@ -19,11 +19,9 @@ public class InputView {
     public static List<String> readPlayerNames() {
         return ConsoleInput.readWithRetry(() -> {
             System.out.println(READ_PLAYER_NAMES_MESSAGE);
-            final List<String> names = Arrays.stream(ConsoleInput.readLine().split(DELIMITER))
+            return Arrays.stream(ConsoleInput.readLine().split(DELIMITER))
                     .map(String::strip)
                     .toList();
-            InputFormatValidator.validateNamesFormat(names);
-            return names;
         });
     }
 
