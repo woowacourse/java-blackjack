@@ -23,6 +23,10 @@ public class Card {
         return number;
     }
 
+    public boolean isAce() {
+        return number.isAce();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
