@@ -28,4 +28,14 @@ public class InputView {
         }
     }
 
+    public int readBetAmount(String name) {
+        System.out.printf("%s의 베팅 금액은?%n", name);
+        String input = sc.nextLine();
+
+        int betAmount = Integer.parseInt(input);
+
+        return betAmount;
+    }
+
+
 }

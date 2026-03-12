@@ -1,7 +1,5 @@
 package blackjack.domain;
 
-import java.util.Map;
-
 public class BlackJackGame {
     private static final int INIT_DRAW_CARD_COUNT = 2;
     private final Players players;
@@ -21,7 +19,7 @@ public class BlackJackGame {
         }
     }
 
-    public Map<Player, GameResult> judgeGameResult() {
+    public FinalIncome judgeGameResult() {
         BlackJackJudge blackJackJudge = new BlackJackJudge();
         return blackJackJudge.judge(players, dealer);
     }

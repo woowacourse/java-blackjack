@@ -1,7 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.Dealer;
-import blackjack.domain.GameResult;
+import blackjack.domain.FinalIncome;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
 import java.util.Map;
@@ -40,27 +40,16 @@ public class OutputView {
 
     }
 
-    public void printFinalGameResult(Map<Player, GameResult> result) {
-        System.out.println("\n## 최종 승패");
+    public void printFinalGameResult(FinalIncome finalIncome) {
+        System.out.println("\n## 최종 수익");
 
-        int winCount = 0;
-        int tieCount = 0;
-        int loseCount = 0;
-        for (Map.Entry<Player, GameResult> entry : result.entrySet()) {
-            if (entry.getValue() == GameResult.WIN) {
-                loseCount++;
-            }
-            if (entry.getValue() == GameResult.LOSE) {
-                winCount++;
-            }
-            if (entry.getValue() == GameResult.TIE) {
-                tieCount++;
-            }
+        System.out.println("딜러: " + finalIncome.getDealerIncome());
+
+        for (Map.Entry<Player, Integer> entry : finalIncome.getPlayerIncomeResults().entrySet()) {
+            System.out.println(entry.getKey().getName() + ": " + entry.getValue());
         }
-        System.out.printf("딜러: %d승 %d무 %d패%n", winCount, tieCount, loseCount);
-        for (Map.Entry<Player, GameResult> entry : result.entrySet()) {
-            System.out.printf("%s: %s%n", entry.getKey().getName(), entry.getValue().getName());
-        }
+
+
     }
 
 }
