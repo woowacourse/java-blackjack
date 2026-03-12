@@ -3,6 +3,7 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
+import domain.participant.PlayerName;
 import exception.BlackjackException;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Nested;

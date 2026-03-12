@@ -1,8 +1,8 @@
 package dto;
 
-import domain.Card;
-import domain.Dealer;
-import domain.Player;
+import domain.card.Card;
+import domain.participant.Dealer;
+import domain.participant.Player;
 import java.util.List;
 
 public record ParticipantDto(
