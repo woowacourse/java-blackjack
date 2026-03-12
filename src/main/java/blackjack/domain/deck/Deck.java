@@ -15,6 +15,7 @@ import java.util.Queue;
 public class Deck {
 
     public static final int INITIAL_CARD_COUNT = 2;
+    private static final int DECK_COUNT = 6;
 
     private final Queue<Card> deck = new LinkedList<>();
 
@@ -23,14 +24,26 @@ public class Deck {
     }
 
     private void initDeck(CardShuffleStrategy shuffleStrategy) {
+        List<Card> cards = createCards();
+        this.deck.addAll(shuffleStrategy.shuffle(cards));
+    }
+
+    private List<Card> createCards() {
         List<Card> cards = new ArrayList<>();
+        for (int i = 0; i < DECK_COUNT; i++) {
+            cards.addAll(addOneDeck());
+        }
+        return cards;
+    }
+
+    private List<Card> addOneDeck() {
+        List<Card> oneDeck = new ArrayList<>();
         for (Suit suit : Suit.values()) {
             for (Rank rank : Rank.values()) {
-                cards.add(new Card(suit, rank));
+                oneDeck.add(new Card(suit, rank));
             }
         }
-        List<Card> shuffleCards = shuffleStrategy.shuffle(cards);
-        this.deck.addAll(shuffleCards);
+        return oneDeck;
     }
 
     public void provideInitCards(Players players, Dealer dealer) {
