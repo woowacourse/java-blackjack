@@ -112,13 +112,13 @@ public class BlackjackGame {
                 .mapToDouble(PlayerProfitResult::profit)
                 .sum() * -1;
 
-        return new ProfitResult(dealerProfit, playerProfits);
+        return new ProfitResult((int) dealerProfit, playerProfits);
     }
 
     private PlayerProfitResult calculatePlayerProfit(Player player) {
         BettingResult outcome = BettingResult.of(MatchResult.of(player, dealer), player);
         double profit = outcome.calculateProfit(player.betAmount());
-        return new PlayerProfitResult(player.name(), profit);
+        return new PlayerProfitResult(player.name(), (int) profit);
     }
 
     private long countMatchResult(Map<Player, MatchResult> playerResults, MatchResult target) {

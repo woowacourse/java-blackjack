@@ -114,7 +114,7 @@ class BlackjackGameTest {
 
         ProfitResult result = game.calculateProfits();
 
-        assertThat(result.playerProfits().getFirst().profit()).isEqualTo(10000.0);
+        assertThat(result.playerProfits().getFirst().profit()).isEqualTo(10000);
     }
 
     @Test
@@ -131,7 +131,7 @@ class BlackjackGameTest {
 
         ProfitResult result = game.calculateProfits();
 
-        assertThat(result.playerProfits().getFirst().profit()).isEqualTo(15000.0);
+        assertThat(result.playerProfits().getFirst().profit()).isEqualTo(15000);
     }
 
     @Test
@@ -148,7 +148,7 @@ class BlackjackGameTest {
 
         ProfitResult result = game.calculateProfits();
 
-        assertThat(result.playerProfits().getFirst().profit()).isEqualTo(-10000.0);
+        assertThat(result.playerProfits().getFirst().profit()).isEqualTo(-10000);
     }
 
     @Test
@@ -165,7 +165,7 @@ class BlackjackGameTest {
 
         ProfitResult result = game.calculateProfits();
 
-        assertThat(result.playerProfits().getFirst().profit()).isEqualTo(0.0);
+        assertThat(result.playerProfits().getFirst().profit()).isEqualTo(0);
     }
 
     @Test
@@ -182,7 +182,7 @@ class BlackjackGameTest {
 
         ProfitResult result = game.calculateProfits();
 
-        assertThat(result.dealerProfit()).isEqualTo(-10000.0);
+        assertThat(result.dealerProfit()).isEqualTo(-10000);
     }
 
     @Test
@@ -203,6 +203,6 @@ class BlackjackGameTest {
 
         ProfitResult result = game.calculateProfits();
 
-        assertThat(result.dealerProfit()).isEqualTo((-1) * 10000.0);
+        assertThat(result.dealerProfit()).isEqualTo((-1) * 10000);
     }
 }
