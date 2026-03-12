@@ -12,6 +12,7 @@ public class InputView {
     public static final String PARTICIPANT_NAME_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     public static final String ERROR_NAMES_EMPTY = "[ERROR] 이름은 비어있을 수 없습니다.";
     public static final String ERROR_INCORRECT_CHOICE = "[ERROR] y 또는 n을 입력해주세요.";
+    public static final String BETTING_MONEY_MESSAGE = "의 배팅 금액은?";
     private static final String YES = "y";
     private static final String NO = "n";
     public static final String ONE_MORE_CARD_MESSAGE = "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
@@ -43,6 +44,12 @@ public class InputView {
         return YES.equals(userChoice);
     }
 
+    public double askForBettingAmount(String name) {
+        System.out.println(name + BETTING_MONEY_MESSAGE);
+        Money money = parseMoney(scanner.nextLine());
+        return money.amount();
+    }
+
     private void validateEmptyInput(List<String> names) {
         if (names.isEmpty()) {
             throw new IllegalArgumentException(ERROR_NAMES_EMPTY);
@@ -65,7 +72,7 @@ public class InputView {
         String strippedInput = input.strip();
 
         try {
-            int amount = Integer.parseInt(strippedInput);
+            double amount = Double.parseDouble(strippedInput);
             validateNegativeAmount(amount);
             return new Money(amount);
         } catch (IllegalArgumentException e) {
@@ -73,7 +80,7 @@ public class InputView {
         }
     }
 
-    private static void validateNegativeAmount(int amount) {
+    private static void validateNegativeAmount(double amount) {
         if (amount <= ZERO) {
             throw new IllegalArgumentException();
         }

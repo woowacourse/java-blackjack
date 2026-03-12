@@ -17,7 +17,7 @@ public class Money {
         return new Money(amount + value);
     }
 
-    public Money minus(int value) {
+    public Money minus(double value) {
         return new Money(amount - value);
     }
 }

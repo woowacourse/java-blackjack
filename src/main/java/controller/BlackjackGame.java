@@ -33,10 +33,20 @@ public class BlackjackGame {
         List<String> parsedNames = inputView.getParsedNames();
         Players players = new Players(parsedNames);
         Dealer dealer = new Dealer();
+        initializeBetting(players);
 
         Deck deck = Deck.createDeck(shuffleStrategy);
 
         playGame(players, dealer, deck);
+    }
+
+    private void initializeBetting(Players players) {
+        outputView.printBlankLine();
+        for (Player player : players.getPlayers()) {
+            double bettingAmount = inputView.askForBettingAmount(player.name());
+            player.bet(bettingAmount);
+            outputView.printBlankLine();
+        }
     }
 
     private void playGame(Players players, Dealer dealer, Deck deck) {
