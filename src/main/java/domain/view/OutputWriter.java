@@ -11,14 +11,13 @@ public class OutputWriter {
     private final String GAMER_PROFIT_FORMAT = "%s: %.0f";
     private final String PLAYER_HAND_MESSAGE = "%s카드: %s";
     private final String CARD_SUM_RESULT_MESSAGE = "%s카드: %s - 결과: %d";
-    private final String ERROR_MESSAGE_PREFIX = "[ERROR] ";
 
     public void printInputNameGuideMessage() {
         System.out.println(INPUT_NAME_GUIDE_MESSAGE);
     }
 
     public void printErrorMessage(String errorMessage) {
-        System.out.println(ERROR_MESSAGE_PREFIX + errorMessage);
+        System.out.println(errorMessage);
     }
 
     public void printBettingGuideMessage(String name) {

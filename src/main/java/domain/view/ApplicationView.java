@@ -4,6 +4,7 @@ import domain.analyzer.dto.ResultAnalysisDto;
 import domain.answer.DrawDecision;
 import domain.betting.Money;
 import domain.betting.dto.GamerBettingProfitDto;
+import domain.common.exception.BlackjackGameException;
 import domain.gamer.PlayerName;
 import domain.gamer.dto.GamerHandDto;
 import domain.gamer.dto.GamerResultDto;
@@ -91,7 +92,7 @@ public class ApplicationView {
         while (true) {
             try {
                 return task.get();
-            } catch (IllegalArgumentException e) {
+            } catch (BlackjackGameException e) {
                 writer.printErrorMessage(e.getMessage());
             }
         }
