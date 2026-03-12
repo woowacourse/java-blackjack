@@ -2,7 +2,6 @@ package view;
 
 import static view.constant.ViewRule.LINE_SEPARATOR;
 
-import domain.enums.Result;
 import dto.CardDto;
 import java.util.List;
 import java.util.Map;
@@ -15,8 +14,8 @@ public class OutputView {
     private static final String PLAYER_CARD = "%s카드: %s";
     private static final String SCORE = " - 결과: %d";
     private static final String DEALER_DRAW = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
-    private static final String FINAL_RESULT = "## 최종 승패";
-    private static final String DEALER_RESULT = "딜러: %d승 %d패 %d무";
+    private static final String FINAL_RESULT = "## 최종 수익";
+    private static final String DEALER_RESULT = "딜러: %d";
     private static final String PLAYER_RESULT = "%s: %s";
 
     private OutputView() {
@@ -74,17 +73,13 @@ public class OutputView {
         System.out.println(LINE_SEPARATOR + DEALER_DRAW);
     }
 
-    public static void printGameResult(Map<Result, Integer> dealerResult, Map<String, Result> playerResults) {
+    public static void printGameResult(int dealerResult, Map<String, Integer> playerResults) {
         System.out.println(LINE_SEPARATOR + FINAL_RESULT);
 
-        int winCount = dealerResult.getOrDefault(Result.WIN, 0);
-        int loseCount = dealerResult.getOrDefault(Result.LOSE, 0);
-        int drawCount = dealerResult.getOrDefault(Result.DRAW, 0);
+        System.out.printf(DEALER_RESULT + LINE_SEPARATOR, dealerResult);
 
-        System.out.printf(DEALER_RESULT + LINE_SEPARATOR, winCount, loseCount, drawCount);
         for (String playerName : playerResults.keySet()) {
-            System.out.printf(PLAYER_RESULT + LINE_SEPARATOR, playerName,
-                    playerResults.get(playerName).getDescription());
+            System.out.printf(PLAYER_RESULT + LINE_SEPARATOR, playerName, playerResults.get(playerName));
         }
     }
 }

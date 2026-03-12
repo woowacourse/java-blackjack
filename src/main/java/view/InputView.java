@@ -22,7 +22,7 @@ public class InputView {
     }
 
     public static String askBetAmount(String name) {
-        System.out.printf(ENTER_PLAYER_BET_AMOUNT + LINE_SEPARATOR, name);
+        System.out.printf(LINE_SEPARATOR + ENTER_PLAYER_BET_AMOUNT + LINE_SEPARATOR, name);
         return SCANNER.nextLine();
     }
 
