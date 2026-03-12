@@ -17,7 +17,12 @@ public final class OutputView {
 
         for (Participant participant : participants) {
             String replaced = participant.open().toString().replaceAll("[]\\[]", "");
-            System.out.printf("%s카드: %s", participant.getName(), replaced + LINE_SEPARATOR);
+            if (participant.isDealer()) {
+                System.out.printf("%s: %s", participant.getName(), replaced + LINE_SEPARATOR);
+            }
+            if (!participant.isDealer()) {
+                System.out.printf("%s카드: %s", participant.getName(), replaced + LINE_SEPARATOR);
+            }
         }
 
         System.out.println();
@@ -25,12 +30,19 @@ public final class OutputView {
 
     public void printHands(Participant participant) {
         String replaced = participant.open().toString().replaceAll("[]\\[]", "");
-        System.out.printf("%s카드: %s", participant.getName(), replaced + LINE_SEPARATOR);
+        if (participant.isDealer()) {
+            System.out.printf("%s 카드: %s%s", participant.getName(), replaced, LINE_SEPARATOR);
+        }
+        if (!participant.isDealer()) {
+            System.out.printf("%s카드: %s%s", participant.getName(), replaced, LINE_SEPARATOR);
+        }
     }
 
     public void printHandsAndScore(Participants participants) {
+        System.out.println();
         for (Participant participant : participants) {
-            System.out.printf("%s카드: %s - 결과: %d%s", participant.getName(), participant.open(),
+            String openedCards = participant.open().toString().replaceAll("[]\\[]", "");
+            System.out.printf("%s카드: %s - 결과: %d%s", participant.getName(), openedCards,
                     participant.calculateScore(), LINE_SEPARATOR);
         }
 
@@ -42,7 +54,7 @@ public final class OutputView {
     }
 
     public void printDealerDraw() {
-        System.out.println(LINE_SEPARATOR + "딜러는 16이하라 한장의 카드를 더 받았습니다." + LINE_SEPARATOR);
+        System.out.println(LINE_SEPARATOR + "딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
     public void printResultRevenue(Map<String, Integer> calculatedRevenue) {
