@@ -1,6 +1,7 @@
 package domain.result;
 
 import domain.participant.Player;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -25,7 +26,7 @@ public class GameProfit {
     }
 
     public Map<String, Integer> getPlayerProfit() {
-        return profitMoney;
+        return Collections.unmodifiableMap(profitMoney);
     }
 
     public int getDealerProfit() {

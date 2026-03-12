@@ -2,6 +2,7 @@ package domain.result;
 
 import domain.participant.Player;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -15,7 +16,6 @@ public class GameStatistics {
         this.dealerResult = initializeMap();
         initializeDealerResult();
     }
-
 
     private LinkedHashMap<String, Integer> initializeMap() {
         LinkedHashMap<String, Integer> dealerResult = new LinkedHashMap<>();
@@ -35,11 +35,15 @@ public class GameStatistics {
         dealerResult.put(gameResult.getDescription(), dealerResult.getOrDefault(gameResult.getDescription(), 0) + 1);
     }
 
-    public Map<Player, GameResult> getPlayerResult() {
-        return playerResult;
+    public Map<String, String> getPlayerResult() {
+        Map<String, String> result = new LinkedHashMap<>();
+        for (Map.Entry<Player, GameResult> entry : playerResult.entrySet()) {
+            result.put(entry.getKey().getName(), entry.getValue().getDescription());
+        }
+        return Collections.unmodifiableMap(result);
     }
 
     public Map<String, Integer> getDealerResult() {
-        return dealerResult;
+        return Collections.unmodifiableMap(dealerResult);
     }
 }

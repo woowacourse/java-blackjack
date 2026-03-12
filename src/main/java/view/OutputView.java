@@ -1,8 +1,5 @@
 package view;
 
-import domain.participant.Player;
-import domain.result.GameResult;
-import domain.result.GameStatistics;
 import java.util.List;
 import java.util.Map;
 
@@ -37,25 +34,24 @@ public final class OutputView {
         System.out.println(getCardNames(name, cardNames) + " - 결과: " + score);
     }
 
-    public static void showGameResult(GameStatistics statistics) {
+    public static void showGameResult(Map<String, String> playerStatistics, Map<String, Integer> dealerStatistics) {
         System.out.println(NEW_LINE + "## 최종 승패");
-        showDealerResult(statistics);
+        showDealerResult(dealerStatistics);
         System.out.println();
 
-        showPlayerResult(statistics);
+        showPlayerResult(playerStatistics);
     }
 
-    private static void showDealerResult(GameStatistics statistics) {
+    private static void showDealerResult(Map<String, Integer> dealerStatistics) {
         System.out.print("딜러: ");
-        for (Map.Entry<String, Integer> entry : statistics.getDealerResult().entrySet()) {
+        for (Map.Entry<String, Integer> entry : dealerStatistics.entrySet()) {
             System.out.print(entry.getValue() + entry.getKey() + " ");
         }
     }
 
-    private static void showPlayerResult(GameStatistics statistics) {
-        Map<Player, GameResult> playerResult = statistics.getPlayerResult();
-        for (Map.Entry<Player, GameResult> entry : playerResult.entrySet()) {
-            System.out.println(entry.getKey().getName() + ": " + entry.getValue().getDescription());
+    private static void showPlayerResult(Map<String, String> playerStatistics) {
+        for (Map.Entry<String, String> entry : playerStatistics.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
         }
     }
 
