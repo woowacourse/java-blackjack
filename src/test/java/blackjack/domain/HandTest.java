@@ -83,4 +83,21 @@ public class HandTest {
         assertFalse(hand.isBust());
     }
 
+    @Test
+    void 블랙잭인_경우() {
+        Hand hand = new Hand();
+        hand.addCard(new Card(CardPoint.ACE, CardPattern.SPADE));
+        hand.addCard(new Card(CardPoint.QUEEN, CardPattern.DIAMOND));
+        assertTrue(hand.isBlackJack());
+    }
+
+    @Test
+    void 포인트가_21점이지만_2장_이상으로_블랙잭이_아닌_경우() {
+        Hand hand = new Hand();
+        hand.addCard(new Card(CardPoint.FOUR, CardPattern.SPADE));
+        hand.addCard(new Card(CardPoint.SEVEN, CardPattern.CLUB));
+        hand.addCard(new Card(CardPoint.QUEEN, CardPattern.DIAMOND));
+        assertFalse(hand.isBlackJack());
+    }
+
 }
