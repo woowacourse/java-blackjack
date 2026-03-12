@@ -37,7 +37,6 @@ public class BlackJackController {
         OutputView.printTaskDivider();
     }
 
-
     private void setupGameTable() {
         PlayerNamesRequest request = InputView.readPlayers();
         commandService.setupPlayers(request.names());
@@ -97,7 +96,7 @@ public class BlackJackController {
     }
 
     private void dealerGamePhase() {
-        if(queryService.isDealerPlayable()) {
+        if (queryService.isDealerPlayable()) {
             runDealerGameLoop();
             commandService.recordDealerGameResult();
             OutputView.printTaskDivider();
