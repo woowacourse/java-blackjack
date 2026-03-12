@@ -44,6 +44,9 @@ public class Players {
                                     Consumer<Player> printResultFunc) {
         for (Player player : players) {
             while (true) {
+                if (player.isBust()) {
+                    break;
+                }
                 if (!hitStandDecisionFunc.apply(player)) {
                     printResultFunc.accept(player);
                     break;

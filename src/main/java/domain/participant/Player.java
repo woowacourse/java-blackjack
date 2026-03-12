@@ -10,4 +10,8 @@ public class Player extends Participant {
     public Player(Player player) {
         super(player.name, new Hand(player.hand));
     }
+
+    public Player(String name, int betMoney) {
+        super(name, betMoney);
+    }
 }
