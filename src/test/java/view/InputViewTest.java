@@ -66,7 +66,7 @@ class InputViewTest {
         void 유효한_금액을_입력하면_정상적으로_파싱된다() {
             Money money = inputView.parseMoney("10000");
 
-            int amount = money.amount;
+            double amount = money.amount();
 
             assertThat(amount).isEqualTo(10000);
         }

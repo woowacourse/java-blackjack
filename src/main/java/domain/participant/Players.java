@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.Money;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -13,11 +14,13 @@ public class Players {
     private final List<Player> players = new ArrayList<>();
 
     public Players(List<String> names) {
-        for (String name : names) {
-            Player player = new Player(name);
-            players.add(player);
-        }
+        this(names, new Money(0));
+    }
 
+    public Players(List<String> names, Money wallet) {
+        for (String name : names) {
+            players.add(new Player(name, wallet));
+        }
         validatePlayerCount(players);
         validateDuplicatedName(players);
     }

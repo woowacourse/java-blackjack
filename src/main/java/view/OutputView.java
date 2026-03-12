@@ -112,7 +112,7 @@ public class OutputView {
 
     private String toKorean(WinningStatus status) {
         return switch (status) {
-            case WinningStatus.WIN -> WIN_MESSAGE;
+            case WinningStatus.BLACKJACK_WIN, WinningStatus.WIN -> WIN_MESSAGE;
             case WinningStatus.TIE -> TIE_MESSAGE;
             case WinningStatus.LOSE -> LOSE_MESSAGE;
         };

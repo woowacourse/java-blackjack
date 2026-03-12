@@ -1,11 +1,10 @@
-// /Users/jaeheon/Desktop/Programming/WoowaCourse/java-blackjack/src/main/java/domain/WinningStatus.java
 package domain;
 
 import domain.participant.Dealer;
 import domain.participant.Player;
 
 public enum WinningStatus {
-    WIN, TIE, LOSE;
+    WIN, TIE, LOSE, BLACKJACK_WIN;
 
     public static final int BLACK_JACK = 21;
 
@@ -18,6 +17,9 @@ public enum WinningStatus {
         }
         if (dealerScore > BLACK_JACK) {
             return WIN;
+        }
+        if (playerScore == BLACK_JACK && dealerScore != BLACK_JACK) {
+            return BLACKJACK_WIN;
         }
         return compareScore(playerScore, dealerScore);
     }
