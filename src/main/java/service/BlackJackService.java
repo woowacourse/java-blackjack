@@ -64,7 +64,7 @@ public class BlackJackService {
     }
 
     private Integer getDealerResult(List<PlayerProfit> playersWinning) {
-        return -playersWinning.stream().mapToInt(PlayerProfit::profit).sum();
+        return Math.negateExact(playersWinning.stream().mapToInt(PlayerProfit::profit).sum());
     }
 
     private MatchStatus getPlayerResult(Player player, Dealer dealer) {
