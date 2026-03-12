@@ -5,6 +5,7 @@ import domain.Deck;
 import domain.Player;
 import domain.card.Card;
 
+// todo : 메서드 통합 및 메서드명 수정
 public class BlackJackTurnService {
 
     public void playerHit(Player player, Deck deck) {
