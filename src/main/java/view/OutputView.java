@@ -63,7 +63,7 @@ public class OutputView {
     }
 
     public void printDealerAdditionalDraw() {
-        System.out.printf("%s는 %d이하라 한장의 카드를 더 받았습니다.\n", DEALER_NAME, DEALER_DRAW_BOUND);
+        System.out.printf("%s은(는) %d이하라 한장의 카드를 더 받았습니다.\n", DEALER_NAME, DEALER_DRAW_BOUND);
     }
 
     public void printCardResults(Participants participants) {
