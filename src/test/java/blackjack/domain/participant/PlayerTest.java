@@ -15,8 +15,8 @@ import org.junit.jupiter.api.Test;
 
 class PlayerTest {
 
-    @DisplayName("플레이어가 정상적으로 생성된다.")
     @Test
+    @DisplayName("플레이어가 정상적으로 생성된다.")
     void createPlayer() {
         // given
         Player player = new Player("pobi", Role.PLAYER, 1000);
@@ -28,8 +28,8 @@ class PlayerTest {
         );
     }
 
-    @DisplayName("플레이어의 점수가 21점 미만이면 카드를 받을 수 있다.")
     @Test
+    @DisplayName("플레이어의 점수가 21점 미만이면 카드를 받을 수 있다.")
     void isDrawableWhenNotBustedOrNotBlackjack() {
         // given
         Player player = new Player("pobi", Role.PLAYER, 1000);
@@ -45,8 +45,8 @@ class PlayerTest {
         assertThat(player.isDrawable()).isTrue();
     }
 
-    @DisplayName("플레이어의 점수가 21점 이상이면 더 이상 카드를 받을 수 없다.")
     @Test
+    @DisplayName("플레이어의 점수가 21점 이상이면 더 이상 카드를 받을 수 없다.")
     void isNotDrawableWhenBustedOrBlackjack() {
         // given
         Player player = new Player("pobi", Role.PLAYER, 1000);
@@ -62,8 +62,8 @@ class PlayerTest {
         assertThat(player.isDrawable()).isFalse();
     }
 
-    @DisplayName("플레이어가 명시적으로 stop()을 호출하면 점수와 상관없이 카드를 받을 수 없다.")
     @Test
+    @DisplayName("플레이어가 명시적으로 stop()을 호출하면 점수와 상관없이 카드를 받을 수 없다.")
     void stopDrawing() {
         // given
         Player player = new Player("pobi", Role.PLAYER, 1000);
