@@ -1,7 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.betting.BettingAmount;
-import blackjack.domain.betting.BettingRepository;
+import blackjack.domain.betting.Bettings;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
@@ -25,7 +25,7 @@ public class BlackjackController {
         Players players = readPlayers();
         Dealer dealer = new Dealer();
 
-        BettingRepository bettingRepository = readBettingAmounts(players);
+        Bettings bettings = readBettingAmounts(players);
 
         setInitialTwoCards(players, dealer);
         printInitialSettings(players, dealer);
@@ -34,7 +34,7 @@ public class BlackjackController {
         getMoreCardsForDealer(dealer, players);
 
         printGameResult(players, dealer);
-        printWinningResult(bettingRepository, players, dealer);
+        printWinningResult(bettings, players, dealer);
     }
 
     private Players readPlayers() {
@@ -42,13 +42,13 @@ public class BlackjackController {
         return Players.from(playersName);
     }
 
-    private BettingRepository readBettingAmounts(Players players) {
-        BettingRepository bettingRepository = new BettingRepository();
+    private Bettings readBettingAmounts(Players players) {
+        Bettings bettings = new Bettings();
         for (Player player : players.getPlayers()) {
             Integer bettingAmount = inputView.readBettingAmount(player.getName());
-            bettingRepository.put(player, new BettingAmount(bettingAmount));
+            bettings.put(player, new BettingAmount(bettingAmount));
         }
-        return bettingRepository;
+        return bettings;
     }
 
     private void setInitialTwoCards(Players players, Dealer dealer) {
@@ -108,8 +108,8 @@ public class BlackjackController {
         }
     }
 
-    private void printWinningResult(BettingRepository bettingRepository, Players players, Dealer dealer) {
-        outputView.printWinningResult(WinningResult.from(players, dealer, bettingRepository));
+    private void printWinningResult(Bettings bettings, Players players, Dealer dealer) {
+        outputView.printWinningResult(WinningResult.from(players, dealer, bettings));
     }
 
 }

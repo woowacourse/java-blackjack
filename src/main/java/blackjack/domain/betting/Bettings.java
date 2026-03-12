@@ -4,21 +4,21 @@ import blackjack.domain.participant.Player;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BettingRepository {
+public class Bettings {
 
     // TODO: key는 String(PlayerName)이 좋을까? Player가 좋을까?
-    private final Map<Player, BettingAmount> bettingRepository;
+    private final Map<Player, BettingAmount> bettings;
 
-    public BettingRepository() {
-        this.bettingRepository = new HashMap<>();
+    public Bettings() {
+        this.bettings = new HashMap<>();
     }
 
     public void put(Player playerName, BettingAmount bettingAmount) {
-        bettingRepository.put(playerName, bettingAmount);
+        bettings.put(playerName, bettingAmount);
     }
 
     public BettingAmount findByPlayer(Player player) {
-        return bettingRepository.get(player);
+        return bettings.get(player);
     }
 
 }
