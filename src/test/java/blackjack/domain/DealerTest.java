@@ -80,4 +80,39 @@ class DealerTest {
 
         assertThat(dealer.getOpenCard()).isEqualTo(spadeKing);
     }
+
+    @Test
+    void 처음_두장의_합이_21이면_블랙잭이다() {
+        TrumpCard spadeAce = TrumpCard.of(Suit.SPADE, Rank.ACE);
+        TrumpCard heartKing = TrumpCard.of(Suit.HEART, Rank.KING);
+
+        dealer.receiveCard(spadeAce);
+        dealer.receiveCard(heartKing);
+
+        assertThat(dealer.isBlackjack()).isTrue();
+    }
+
+    @Test
+    void 세장_이상으로_합이_21이면_블랙잭이_아니다() {
+        TrumpCard spadeAce = TrumpCard.of(Suit.SPADE, Rank.ACE);
+        TrumpCard heartKing = TrumpCard.of(Suit.HEART, Rank.KING);
+        TrumpCard cloverKing = TrumpCard.of(Suit.CLOVER, Rank.KING);
+
+        dealer.receiveCard(spadeAce);
+        dealer.receiveCard(heartKing);
+        dealer.receiveCard(cloverKing);
+
+        assertThat(dealer.isBlackjack()).isFalse();
+    }
+
+    @Test
+    void 두장이지만_합이_21이_아니면_블랙잭이_아니다() {
+        TrumpCard spadeJack = TrumpCard.of(Suit.SPADE, Rank.JACK);
+        TrumpCard heartKing = TrumpCard.of(Suit.HEART, Rank.KING);
+
+        dealer.receiveCard(spadeJack);
+        dealer.receiveCard(heartKing);
+
+        assertThat(dealer.isBlackjack()).isFalse();
+    }
 }
