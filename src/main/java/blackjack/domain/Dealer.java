@@ -16,11 +16,4 @@ public class Dealer extends Participant {
     public boolean canHit() {
         return getTotalPoint() < DEALER_STAND_POINT;
     }
-
-    public void initDraw(Players players, Deck deck) {
-        for (int i = 0; i < INIT_DRAW_CARD_COUNT; i++) {
-            players.receiveCard(deck);
-            receiveCard(deck.draw());
-        }
-    }
 }

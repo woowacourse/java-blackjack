@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BlackJackController {
+    private static final int INIT_DRAW_CARD_COUNT = 2;
     private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView();
 
@@ -23,7 +24,7 @@ public class BlackJackController {
         Dealer dealer = new Dealer();
         Deck deck = new Deck();
 
-        dealer.initDraw(players, deck);
+        initDraw(dealer, players, deck);
 
         printInitDrawResult(dealer, players);
 
@@ -78,6 +79,13 @@ public class BlackJackController {
         while (!player.isBust() && inputView.readHitAnswer(player.getName())) {
             player.receiveCard(deck.draw());
             outputView.printCard(convertToDto(player));
+        }
+    }
+
+    private void initDraw(Dealer dealer, Players players, Deck deck) {
+        for (int i = 0; i < INIT_DRAW_CARD_COUNT; i++) {
+            players.receiveCard(deck);
+            dealer.receiveCard(deck.draw());
         }
     }
 }
