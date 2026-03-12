@@ -23,6 +23,8 @@ public class BlackJackController {
         Players players = new Players(names);
         Dealer dealer = new Dealer();
         Deck deck = new Deck();
+        
+        readBettingAmount(players);
 
         initDraw(dealer, players, deck);
 
@@ -35,6 +37,12 @@ public class BlackJackController {
         printFinalCardResult(dealer, players);
 
         printFinalGameResult(dealer, players);
+    }
+
+    private void readBettingAmount(Players players) {
+        for (Player player : players.getPlayers()) {
+            inputView.readBettingAmount(player.getName());
+        }
     }
 
     private ParticipantDto convertToDto(Participant participant) {

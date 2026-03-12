@@ -18,4 +18,9 @@ public class InputView {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", name);
         return sc.nextLine().equals("y");
     }
+
+    public long readBettingAmount(String name) {
+        System.out.printf("%n%s의 배팅 금액은?%n", name);
+        return Long.parseLong(sc.nextLine());
+    }
 }
