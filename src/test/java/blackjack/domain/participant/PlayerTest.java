@@ -79,4 +79,29 @@ class PlayerTest {
         // then
         assertThat(result).isTrue();
     }
+
+    @Test
+    @DisplayName("초기 2장보다 카드가 많으면 추가 카드를 받은 것이다")
+    void hasAdditionalCard_returnsTrue_whenCardCountExceedsInitial() {
+        // given
+        Player player = new Player(new Name("pobi"), new BettingMoney(1000));
+        player.receiveCard(new Card(Suit.HEART, Rank.TWO));
+        player.receiveCard(new Card(Suit.SPADE, Rank.THREE));
+        player.receiveCard(new Card(Suit.CLOVER, Rank.FOUR));
+
+        // when & then
+        assertThat(player.hasAdditionalCard()).isTrue();
+    }
+
+    @Test
+    @DisplayName("카드가 정확히 2장이면 추가 카드를 받지 않은 것이다")
+    void hasAdditionalCard_returnsFalse_whenCardCountIsInitial() {
+        // given
+        Player player = new Player(new Name("pobi"), new BettingMoney(1000));
+        player.receiveCard(new Card(Suit.HEART, Rank.TWO));
+        player.receiveCard(new Card(Suit.SPADE, Rank.THREE));
+
+        // when & then
+        assertThat(player.hasAdditionalCard()).isFalse();
+    }
 }
