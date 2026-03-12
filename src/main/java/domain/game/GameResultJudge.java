@@ -21,7 +21,7 @@ public class GameResultJudge {
     }
 
     private static void addPlayerResults(List<GameResultDto> results, Dealer dealer, Players players) {
-        for (Player player : players.getPlayers()) {
+        for (Player player : players.getNonNaturalBlackJackPlayers()) {
             results.add(judgePlayer(player, dealer));
         }
     }

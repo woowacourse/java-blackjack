@@ -37,7 +37,7 @@ public class DtoFactory {
     }
 
     private static void addPlayerScoreResults(List<GameScoreResultDto> results, Players players) {
-        for (Player player : players.getPlayers()) {
+        for (Player player : players.getNonNaturalBlackJackPlayers()) {
             results.add(new GameScoreResultDto(
                     player.getName(),
                     player.getHandToString(),
@@ -55,7 +55,7 @@ public class DtoFactory {
     }
 
     private static void addPlayerInitialInfos(List<GameInitialInfoDto> results, Players players) {
-        for (Player player : players.getPlayers()) {
+        for (Player player : players.getNonNaturalBlackJackPlayers()) {
             results.add(new GameInitialInfoDto(
                     player.getName(),
                     INITIAL_HAND_SIZE,

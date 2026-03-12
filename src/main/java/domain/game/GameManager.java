@@ -5,14 +5,13 @@ import domain.card.Deck;
 import domain.dto.GameResultDto;
 import domain.dto.GameInitialInfoDto;
 import domain.dto.GameScoreResultDto;
-
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
 import java.util.List;
 
 public class GameManager {
-    private final int FIRST_DRAW_CARDS = 2;
+    private static final int FIRST_DRAW_CARDS = 2;
 
     private final Deck deck;
     private final Players players;
@@ -29,7 +28,7 @@ public class GameManager {
             players.receiveCard(deck.draw());
             dealer.receiveCard(deck.draw());
         }
-        players.renewedWithBlackJack();
+        players.updateNaturalBlackJackStatus();
     }
 
     public List<String> drawPlayerCard(Player player) {
@@ -41,8 +40,8 @@ public class GameManager {
         players.add(new Player(name, bettingMoney));
     }
 
-    public List<Player> getPlayerSequence() {
-        return players.getPlayers();
+    public List<Player> getPlayersToPlay() {
+        return players.getNonNaturalBlackJackPlayers();
     }
 
     public List<GameScoreResultDto> getScoreResults() {
@@ -52,7 +51,6 @@ public class GameManager {
     public List<GameInitialInfoDto> getInitialInfo() {
         return DtoFactory.toInitialInfo(dealer, players);
     }
-
 
     public boolean proceedDealerTurn() {
         if (!dealer.canDraw()) {
@@ -66,5 +64,4 @@ public class GameManager {
     public List<GameResultDto> getFinalResult() {
         return GameResultJudge.judge(dealer, players);
     }
-
 }

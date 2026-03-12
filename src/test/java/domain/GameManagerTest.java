@@ -61,7 +61,7 @@ class GameManagerTest {
         GameManager manager = new GameManager(new Deck());
         manager.addPlayer("pobi",1000);
 
-        List<Player> result = manager.getPlayerSequence();
+        List<Player> result = manager.getPlayersToPlay();
 
         assertThat(result.size()).isEqualTo(1);
         assertThat(result.getFirst().getName()).isEqualTo("pobi");
@@ -76,7 +76,7 @@ class GameManagerTest {
             manager.addPlayer(playerName, 1000);
         }
 
-        List<Player> result = manager.getPlayerSequence();
+        List<Player> result = manager.getPlayersToPlay();
 
         assertThat(result.size()).isEqualTo(3);
     }
@@ -88,7 +88,7 @@ class GameManagerTest {
         manager.addPlayer("pobi", 1000);
 
         manager.startGame();
-        Player player = manager.getPlayerSequence().getFirst();
+        Player player = manager.getPlayersToPlay().getFirst();
 
         int before = player.handSize();
 

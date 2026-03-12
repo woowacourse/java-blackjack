@@ -4,21 +4,21 @@ import domain.constant.Result;
 
 public class PlayerStatus {
     private final int bettingMoney;
-    private Result result;
+    private boolean naturalBlackJack;
 
     public PlayerStatus(int bettingMoney) {
         this.bettingMoney = bettingMoney;
     }
 
-    public double calculateProceeds() {
+    public void markNaturalBlackJack() {
+        naturalBlackJack = true;
+    }
+
+    public boolean isNaturalBlackJack() {
+        return naturalBlackJack;
+    }
+
+    public double calculateProceeds(Result result) {
         return bettingMoney * result.getAllocation();
-    }
-
-    public void renewedWithBlackJack() {
-        result = Result.BLACKJACK;
-    }
-
-    public Result getResult() {
-        return result;
     }
 }

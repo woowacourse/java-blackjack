@@ -3,7 +3,6 @@ package domain;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
-import domain.constant.Result;
 import domain.participant.Player;
 import domain.participant.Players;
 import org.junit.jupiter.api.Test;
@@ -15,18 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PlayersTest {
 
     @Test
-    void 플레이어를_등록한다() {
-        Players players = new Players();
-        players.add(new Player("pobi", 1000));
-        players.add(new Player("abc", 1000));
-
-        List<Player> records = players.getPlayers();
-
-        assertThat(records).anyMatch(player -> player.getName().equals("abc"));
-    }
-
-    @Test
-    void 블랙잭인_플레이어는_Result를_플레이어로_변경() {
+    void 초기_블랙잭인_플레이어는_naturalBlackJack_상태가_true가_된다() {
         Players players = new Players();
         Player blackJackPlayer = new Player("pobi", 1000);
         Player normalPlayer = new Player("jason", 1000);
@@ -40,9 +28,9 @@ public class PlayersTest {
         players.add(blackJackPlayer);
         players.add(normalPlayer);
 
-        players.renewedWithBlackJack();
+        players.updateNaturalBlackJackStatus();
 
-        assertThat(blackJackPlayer.getResult()).isEqualTo(Result.BLACKJACK);
-        assertThat(normalPlayer.getResult()).isNotEqualTo(Result.BLACKJACK);
+        assertThat(blackJackPlayer.isNaturalBlackJack()).isTrue();
+        assertThat(normalPlayer.isNaturalBlackJack()).isFalse();
     }
 }

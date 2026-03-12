@@ -56,7 +56,7 @@ public class GameController {
     }
 
     private void playPlayerTurn() {
-        for (Player player : manager.getPlayerSequence()) {
+        for (Player player : manager.getPlayersToPlay()) {
             playSinglePlayerTurn(player);
         }
     }
@@ -67,6 +67,8 @@ public class GameController {
             outputView.printHand(playerHand, player.getName());
         }
     }
+
+
 
     private boolean wantsToDraw(Player player) {
         return !inputView.readCommand(player.getName()).equals("n");
