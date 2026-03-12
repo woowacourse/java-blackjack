@@ -37,7 +37,7 @@ class Players {
     NameAndCardInfos currentPlayerCardInfos() {
         return currentPlayer().infos();
     }
-
+    
     List<NameAndCardInfos> allPlayerCardInfos() {
         return players.stream()
                 .map(Player::infos)
@@ -73,7 +73,17 @@ class Players {
     }
 
     PlayedGameResult currentPlayerResult() {
-        Player currentPlayer = players.poll();
-        return new PlayedGameResult(currentPlayer.infos(), currentPlayer.scoreSum());
+        requireCurrentPlayerExists();
+        Player gameFinishedPlayer = players.poll();
+        return PlayedGameResult.from(
+                gameFinishedPlayer.name(),
+                gameFinishedPlayer.cardInfos(),
+                gameFinishedPlayer.scoreSum());
+    }
+
+    private void requireCurrentPlayerExists() {
+        if(players.isEmpty()) {
+            throw new IllegalStateException("플레이어를 가져올 수 없습니다.");
+        }
     }
 }

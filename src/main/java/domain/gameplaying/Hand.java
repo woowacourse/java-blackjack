@@ -5,7 +5,7 @@ import domain.common.CardInfo;
 import java.util.ArrayList;
 import java.util.List;
 
-class Hand {
+public class Hand {
 
     private final DrawStrategy drawStrategy;
     private final List<Card> cards;

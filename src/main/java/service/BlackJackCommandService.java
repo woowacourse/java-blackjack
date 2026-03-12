@@ -35,7 +35,7 @@ public class BlackJackCommandService {
         participantRepository.distributeInitialCards();
     }
 
-    public void currentPlayerDrawCard() {
+    public void currentPlayerDrawsCard() {
         participantRepository.currentPlayerDrawCard();
     }
 

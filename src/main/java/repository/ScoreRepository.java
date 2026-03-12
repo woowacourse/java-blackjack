@@ -15,11 +15,11 @@ public class ScoreRepository {
     }
 
     public void recordCurrentGameResult(PlayedGameResult currentPlayersResult) {
-        scoreBoard.record(currentPlayersResult);
+        this.scoreBoard.record(currentPlayersResult);
     }
 
     public void recordDealerGameResult(PlayedGameResult dealerNameAndCardInfos) {
-        scoreBoard.record(dealerNameAndCardInfos);
+        scoreBoard = this.scoreBoard.recordDealerResult(dealerNameAndCardInfos);
     }
 
     public List<PlayedGameResult> getPlayerGameResults() {

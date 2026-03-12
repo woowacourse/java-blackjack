@@ -1,24 +1,23 @@
 package dto.response;
 
 import domain.common.PlayedGameResult;
-import domain.common.CardInfo;
-import domain.common.NameAndCardInfos;
 import java.util.List;
 
-public record PlayedGameResultResponse(String name, List<String> cardInfos, int scoreSum) {
+public record PlayedGameResultResponse(NameAndCardInfos infos, int scoreSum) {
 
     public static PlayedGameResultResponse from(PlayedGameResult result) {
-        NameAndCardInfos infos = result.infos();
-        return new PlayedGameResultResponse(infos.name(), parse(infos.cardInfos()), result.scoreSum());
+        NameAndCardInfos infos = new NameAndCardInfos(result.name(), result.cardInfos());
+        return new PlayedGameResultResponse(infos, result.scoreSum());
     }
 
-    private static List<String> parse(List<CardInfo> infos) {
-        return infos.stream()
-                .map(PlayedGameResultResponse::parseCardInfo)
-                .toList();
+    public String name() {
+        return infos.name();
     }
 
-    private static String parseCardInfo(CardInfo info) {
-        return info.cardLabel() + info.cardMark();
+    public List<String> cardInfos() {
+        return infos.cardInfos();
+    }
+
+    private record NameAndCardInfos(String name, List<String> cardInfos) {
     }
 }

@@ -1,100 +1,100 @@
 package domain.result;
 
 import domain.common.BlackJackRule;
-import domain.result.vo.DealerWinningScore;
 import domain.common.PlayedGameResult;
+import domain.result.vo.DealerWinningScore;
 import domain.result.vo.PlayerWinningInfo;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class ScoreBoard {
 
+    private final PlayedGameResult dealerResult;
     private final List<PlayedGameResult> gameResults;
 
     public ScoreBoard() {
+        this.dealerResult = null;
         this.gameResults = new ArrayList<>();
     }
 
-    public void record(PlayedGameResult playedGameResult) {
-        gameResults.add(playedGameResult);
+    private ScoreBoard(PlayedGameResult dealerResult, List<PlayedGameResult> playerResults) {
+        this.dealerResult = dealerResult;
+        this.gameResults = List.copyOf(playerResults);
+    }
+
+    public void record(PlayedGameResult playerGameResult) {
+        gameResults.add(playerGameResult);
+    }
+
+    public ScoreBoard recordDealerResult(PlayedGameResult dealerResult) {
+        return new ScoreBoard(dealerResult, this.gameResults);
     }
 
     public List<PlayedGameResult> playerGameResults() {
-        return gameResults.stream()
-                .filter(this::isPlayerResult)
-                .toList();
-    }
-
-    private boolean isPlayerResult(PlayedGameResult result) {
-        return !result.infos()
-                .name()
-                .equals("딜러");
+        return List.copyOf(gameResults);
     }
 
     public PlayedGameResult dealerGameResult() {
-        return gameResults.stream()
-                .filter(result -> result.infos().name().equals("딜러"))
-                .findFirst()
-                .orElseThrow();
+        requireDealerGameResultExists();
+        return dealerResult;
     }
 
     public DealerWinningScore dealerWinningScore() {
-        Map<WinningCondition, Integer> statistics = statisticsOfWinningConditions();
+        Map<WinningCondition, Long> statistics = statisticsOfWinningConditions();
 
-        return new DealerWinningScore(
-                statistics.get(WinningCondition.WIN),
-                statistics.get(WinningCondition.DRAW),
-                statistics.get(WinningCondition.LOSE)
+        return DealerWinningScore.of(
+                statistics.getOrDefault(WinningCondition.WIN, 0L),
+                statistics.getOrDefault(WinningCondition.DRAW, 0L),
+                statistics.getOrDefault(WinningCondition.LOSE, 0L)
         );
     }
 
-    private Map<WinningCondition, Integer> statisticsOfWinningConditions() {
-        Map<WinningCondition, Integer> countMap = new LinkedHashMap<>();
-        Arrays.stream(WinningCondition.values())
-                .forEach(condition -> countMap.putIfAbsent(condition, 0));
-
-        playerGameResults().stream()
-                .map(this::playerConditionToDealerCondition)
-                .forEach(condition -> countMap.merge(condition, 1, Integer::sum));
-
-        return countMap;
+    private Map<WinningCondition, Long> statisticsOfWinningConditions() {
+        return playerGameResults().stream()
+                .map(this::determinePlayerWinningCondition)
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
     }
 
-    private WinningCondition playerConditionToDealerCondition(PlayedGameResult playerResult) {
-        if (playerWinningCondition(playerResult) == WinningCondition.WIN) {
+    private WinningCondition determineDealerWinningCondition(PlayedGameResult playerResult) {
+        if (determinePlayerWinningCondition(playerResult) == WinningCondition.WIN) {
             return WinningCondition.LOSE;
         }
 
-        if (playerWinningCondition(playerResult) == WinningCondition.LOSE) {
+        if (determinePlayerWinningCondition(playerResult) == WinningCondition.LOSE) {
             return WinningCondition.WIN;
         }
 
         return WinningCondition.DRAW;
     }
 
+    private void requireDealerGameResultExists() {
+        if (dealerResult == null) {
+            throw new IllegalStateException("딜러 기록이 저장되지 않았습니다.");
+        }
+    }
+
     public List<PlayerWinningInfo> playerWinningInfos() {
         return gameResults.stream()
-                .filter(this::isPlayerResult)
                 .map(this::playerWinningInfo)
                 .toList();
     }
 
     private PlayerWinningInfo playerWinningInfo(PlayedGameResult playerResult) {
-        return new PlayerWinningInfo(playerResult.infos().name(), playerWinningCondition(playerResult).description());
+        return new PlayerWinningInfo(playerResult.name(), determinePlayerWinningCondition(playerResult).description());
     }
 
-    private WinningCondition playerWinningCondition(PlayedGameResult playedGameResult) {
+    private WinningCondition determinePlayerWinningCondition(PlayedGameResult playedGameResult) {
         if (playerWinningConditionIfPlayerBusted(playedGameResult)) {
             return WinningCondition.LOSE;
         }
 
-        return playerWinningConditionIfPlayerNotBusted(playedGameResult);
+        return determinePlayerWinningConditionIfPlayerNotBusted(playedGameResult);
     }
 
-    private WinningCondition playerWinningConditionIfPlayerNotBusted(PlayedGameResult playedGameResult) {
+    private WinningCondition determinePlayerWinningConditionIfPlayerNotBusted(PlayedGameResult playedGameResult) {
         int dealerScore = dealerGameResult().scoreSum();
 
         if (dealerScore > BlackJackRule.BUST_NUMBER.value()) {

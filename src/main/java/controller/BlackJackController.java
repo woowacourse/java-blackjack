@@ -55,17 +55,17 @@ public class BlackJackController {
 
     private void playerGamePhase() {
         while (queryService.hasWaitingPlayers()) {
-            playerGameProcess();
+            runPlayerGameProcesses();
         }
         OutputView.printTaskDivider();
     }
 
-    private void playerGameProcess() {
+    private void runPlayerGameProcesses() {
         SelectRequest select = playerSelect();
-        firstPlayerGameProcess(select);
+        runPlayerInitGameProcess(select);
 
         if (select.isPositive()) {
-            playerGameLoop();
+            runPlayerGameLoop();
         }
         commandService.recordCurrentGameResult();
     }
@@ -74,44 +74,44 @@ public class BlackJackController {
         return InputView.readSelect(queryService.currentPlayerName());
     }
 
-    private void firstPlayerGameProcess(SelectRequest select) {
+    private void runPlayerInitGameProcess(SelectRequest select) {
         if (select.isPositive()) {
-            commandService.currentPlayerDrawCard();
+            commandService.currentPlayerDrawsCard();
         }
         OutputView.playerCardInfos(queryService.currentPlayerCards());
     }
 
-    private void playerGameLoop() {
+    private void runPlayerGameLoop() {
         boolean wantMoreCard = true;
         while (wantMoreCard && queryService.isCurrentPlayerPlayable()) {
             wantMoreCard = playerSelect().isPositive();
-            playerGameLoopProcess(wantMoreCard);
+            runPlayerGameLoopProcess(wantMoreCard);
         }
     }
 
-    private void playerGameLoopProcess(boolean isRequestedMoreCard) {
+    private void runPlayerGameLoopProcess(boolean isRequestedMoreCard) {
         if (isRequestedMoreCard) {
-            commandService.currentPlayerDrawCard();
+            commandService.currentPlayerDrawsCard();
             OutputView.playerCardInfos(queryService.currentPlayerCards());
         }
     }
 
     private void dealerGamePhase() {
         if(queryService.isDealerPlayable()) {
-            dealerGameLoop();
+            runDealerGameLoop();
             commandService.recordDealerGameResult();
             OutputView.printTaskDivider();
         }
         commandService.recordDealerGameResult();
     }
 
-    private void dealerGameLoop() {
+    private void runDealerGameLoop() {
         while (queryService.isDealerPlayable()) {
-            dealerGameLoopProcess();
+            runDealerGameLoopProcess();
         }
     }
 
-    private void dealerGameLoopProcess() {
+    private void runDealerGameLoopProcess() {
         if (queryService.isDealerPlayable()) {
             commandService.dealerDrawCard();
             OutputView.dealerDrawCard();

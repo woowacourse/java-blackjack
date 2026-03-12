@@ -5,7 +5,7 @@ import domain.common.CardInfo;
 import domain.common.NameAndCardInfos;
 import java.util.List;
 
-abstract class Participant {
+public abstract class Participant {
 
     protected static final String DEALER_NAME = "딜러";
 
@@ -46,7 +46,7 @@ abstract class Participant {
         return name;
     }
 
-    private List<CardInfo> cardInfos() {
+    List<CardInfo> cardInfos() {
         return hand.cardInfos();
     }
 

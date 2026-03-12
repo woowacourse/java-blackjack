@@ -2,14 +2,14 @@ package service;
 
 import domain.common.NameAndCardInfos;
 import domain.common.PlayedGameResult;
-import domain.result.vo.PlayerWinningInfo;
 import domain.result.vo.DealerWinningScore;
+import domain.result.vo.PlayerWinningInfo;
+import dto.request.PlayerNamesResponse;
 import dto.response.AllPlayerWinningInfoResponse;
 import dto.response.AllPlayersNameAndCardsResponse;
 import dto.response.DealerWinningStatisticsResponse;
 import dto.response.NameAndCardsResponse;
 import dto.response.NameResponse;
-import dto.request.PlayerNamesResponse;
 import dto.response.PlayedGameResultResponse;
 import dto.response.PlayerGameResultsResponse;
 import java.util.List;
@@ -65,7 +65,8 @@ public class BlackJackQueryService {
     }
 
     public PlayedGameResultResponse dealerResult() {
-        return PlayedGameResultResponse.from(participantRepository.getDealerResult());
+        PlayedGameResult dealerResult = participantRepository.getDealerResult();
+        return PlayedGameResultResponse.from(dealerResult);
     }
 
     public PlayerGameResultsResponse playerResults() {

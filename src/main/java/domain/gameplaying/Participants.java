@@ -72,7 +72,7 @@ public class Participants {
     }
 
     public PlayedGameResult dealerResult() {
-        return new PlayedGameResult(dealer.infos(), dealer.scoreSum());
+        return PlayedGameResult.from(dealer.name(), dealer.cardInfos(), dealer.scoreSum());
     }
 
     public boolean isDealerPlayable() {
