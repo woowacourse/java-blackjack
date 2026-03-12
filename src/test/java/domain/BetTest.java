@@ -29,4 +29,11 @@ public class BetTest {
                 () -> new Bet("1500")
         ).isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    void 최소_베팅_금액은_1000원이다() {
+        assertThatThrownBy(
+                () -> new Bet("0")
+        ).isInstanceOf(IllegalArgumentException.class);
+    }
 }
