@@ -30,6 +30,19 @@ public class Player {
         return cards.size() == Policy.FIRST_DRAW_SIZE;
     }
 
+    public GameResult compareResult(Dealer dealer) {
+        int playerScore = getScoreOrZeroIfBust();
+        int dealerScore = dealer.getScoreOrZeroIfBust();
+
+        if (playerScore > dealerScore) {
+            return GameResult.WIN;
+        }
+        if (playerScore < dealerScore) {
+            return GameResult.LOSE;
+        }
+        return GameResult.DRAW;
+    }
+
     public String getName() {
         return name;
     }

@@ -29,21 +29,8 @@ public class BlackjackResult {
 
     private void resolveResult(Player player, Dealer dealer) {
         BetResult betResult = playerBets.get(player);
-        GameResult gameResult = compareResult(dealer, player);
+        GameResult gameResult = player.compareResult(dealer);
         playerBets.put(player, betResult.withGameResult(gameResult));
-    }
-
-    public GameResult compareResult(Dealer dealer, Player player) {
-        int playerScore = player.getScoreOrZeroIfBust();
-        int dealerScore = dealer.getScoreOrZeroIfBust();
-
-        if (playerScore > dealerScore) {
-            return GameResult.WIN;
-        }
-        if (playerScore < dealerScore) {
-            return GameResult.LOSE;
-        }
-        return GameResult.DRAW;
     }
 
     public long dealerProfit() {
