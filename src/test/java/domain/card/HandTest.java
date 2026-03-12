@@ -64,7 +64,7 @@ class HandTest {
                 hand.addCard(new Card(Rank.THREE, Suit.SPADE));
 
                 // when
-                int actual = hand.calculateScore();
+                int actual = hand.calculateTotalScore();
 
                 // then
                 assertThat(actual).isEqualTo(13);
@@ -80,7 +80,7 @@ class HandTest {
                 hand.addCard(new Card(Rank.THREE, Suit.DIAMOND));
 
                 // when
-                int actual = hand.calculateScore();
+                int actual = hand.calculateTotalScore();
 
                 // then
                 assertThat(actual).isEqualTo(14);
@@ -96,7 +96,7 @@ class HandTest {
                 hand.addCard(new Card(Rank.NINE, Suit.DIAMOND));
 
                 // when
-                int actual = hand.calculateScore();
+                int actual = hand.calculateTotalScore();
 
                 // then
                 assertThat(actual).isEqualTo(21);

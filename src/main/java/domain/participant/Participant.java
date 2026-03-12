@@ -21,7 +21,7 @@ public class Participant {
     }
 
     public int calculateScore() {
-        return hand.calculateScore();
+        return hand.calculateTotalScore();
     }
 
     public List<Card> getHand() {
