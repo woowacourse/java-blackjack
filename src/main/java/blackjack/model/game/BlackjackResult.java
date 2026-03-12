@@ -6,7 +6,7 @@ import java.util.function.BiFunction;
 
 public enum BlackjackResult {
     WIN(((bet, earningRate) -> bet.amount() * earningRate)),
-    LOSE((bet, earningRate) -> bet.amount() * earningRate * -1),
+    LOSS((bet, earningRate) -> bet.amount() * earningRate * -1),
     PUSH((bet, earningRate) -> 0.0);
 
     private final BiFunction<Bet, Double, Double> profitCalculator;
@@ -17,7 +17,7 @@ public enum BlackjackResult {
 
     public static BlackjackResult judge(Hand playerHand, Hand dealerHand) {
         if (playerHand.isBust()) {
-            return BlackjackResult.LOSE;
+            return BlackjackResult.LOSS;
         }
         if (dealerHand.isBust()) {
             return BlackjackResult.WIN;
@@ -32,7 +32,7 @@ public enum BlackjackResult {
             return BlackjackResult.PUSH;
         }
 
-        return BlackjackResult.LOSE;
+        return BlackjackResult.LOSS;
     }
 
     public double calculateProfit(Bet bet, double earningRate) {

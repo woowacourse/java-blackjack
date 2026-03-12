@@ -1,6 +1,6 @@
 package blackjack.model.game;
 
-import static blackjack.model.game.BlackjackResult.LOSE;
+import static blackjack.model.game.BlackjackResult.LOSS;
 import static blackjack.model.game.BlackjackResult.PUSH;
 import static blackjack.model.game.BlackjackResult.WIN;
 import static blackjack.model.game.BlackjackResult.judge;
@@ -64,7 +64,7 @@ class BlackjackResultTest {
             BlackjackResult result = judge(playerHand, dealerHand);
 
             // then
-            assertThat(result).isEqualTo(LOSE);
+            assertThat(result).isEqualTo(LOSS);
         }
 
         @Test
@@ -90,7 +90,7 @@ class BlackjackResultTest {
             BlackjackResult result = judge(playerHand, dealerHand);
 
             // then
-            assertThat(result).isEqualTo(LOSE);
+            assertThat(result).isEqualTo(LOSS);
         }
 
         @Test
@@ -116,7 +116,7 @@ class BlackjackResultTest {
             BlackjackResult result = judge(playerHand, dealerHand);
 
             // then
-            assertThat(result).isEqualTo(LOSE);
+            assertThat(result).isEqualTo(LOSS);
         }
     }
 }
