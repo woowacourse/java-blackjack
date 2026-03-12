@@ -4,6 +4,7 @@ import domain.gamer.Dealer;
 import domain.gamer.Player;
 
 public enum GameResult {
+
     WIN("승"),
     LOSS("패"),
     DRAW("무"),
@@ -54,4 +55,5 @@ public enum GameResult {
 
         return this;
     }
+
 }

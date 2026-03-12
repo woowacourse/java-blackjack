@@ -8,6 +8,7 @@ import domain.gamer.Player;
 import java.util.List;
 
 public class ResultAnalyzer {
+
     private ResultAnalyzer() {
     }
 
@@ -25,4 +26,5 @@ public class ResultAnalyzer {
     public static ResultAnalysisDto analyze(List<PlayerGameResult> gameResults) {
         return ResultAnalysisDto.from(gameResults);
     }
+
 }

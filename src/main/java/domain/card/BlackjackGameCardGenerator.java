@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class BlackjackGameCardGenerator implements CardGenerator {
+
     @Override
     public List<Card> generate() {
         List<Card> cards = generateAllCards();
@@ -28,4 +29,5 @@ public class BlackjackGameCardGenerator implements CardGenerator {
     private void shuffle(List<Card> blackjackGameCards) {
         Collections.shuffle(blackjackGameCards);
     }
+
 }

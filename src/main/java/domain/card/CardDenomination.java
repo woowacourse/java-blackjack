@@ -1,6 +1,7 @@
 package domain.card;
 
 public enum CardDenomination {
+
     ACE("A", 1),
     TWO("2",2),
     THREE("3", 3),
@@ -35,4 +36,5 @@ public enum CardDenomination {
     public boolean isAce() {
         return this == CardDenomination.ACE;
     }
+
 }

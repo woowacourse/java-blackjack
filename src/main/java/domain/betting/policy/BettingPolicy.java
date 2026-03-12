@@ -26,6 +26,7 @@ import domain.gamer.Player;
  * */
 
 public abstract class BettingPolicy implements Comparable<BettingPolicy>{
+
     protected BettingResult bettingResult;
 
     public BettingPolicy(BettingResult bettingResult) {
@@ -40,4 +41,5 @@ public abstract class BettingPolicy implements Comparable<BettingPolicy>{
     public int compareTo(BettingPolicy o) {
         return this.bettingResult.policyOrder() - o.bettingResult.policyOrder();
     }
+
 }

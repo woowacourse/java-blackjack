@@ -5,6 +5,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class MoneyTest {
+
     @Test
     void 베팅금액은_음수일_수_없다() {
         String negativeNumber = "-1.0";
@@ -22,4 +23,5 @@ public class MoneyTest {
             Money.from(negativeNumber);
         }).isInstanceOf(MoneyException.class);
     }
+
 }

@@ -6,6 +6,7 @@ import domain.view.InputReader;
 import domain.view.OutputWriter;
 
 public class Application {
+
     public static void main(String[] args) {
         InputReader reader = new InputReader();
         OutputWriter writer = new OutputWriter();
@@ -15,4 +16,5 @@ public class Application {
         BlackjackGame blackjackGame = new BlackjackGame(applicationView, gameCardGenerator);
         blackjackGame.start();
     }
+
 }

@@ -15,6 +15,7 @@ import utils.TestCardGenerator;
 import java.util.List;
 
 public class BettingTableTest {
+
     Card cloverAce = Card.of(CardDenomination.ACE, CardEmblem.CLOVER);
     Card spadeJack = Card.of(CardDenomination.JACK, CardEmblem.SPADE);
     Card spadeNine = Card.of(CardDenomination.NINE, CardEmblem.SPADE);
@@ -91,4 +92,5 @@ public class BettingTableTest {
         Dealer dealer = Dealer.from(CardDeck.from(testCardGenerator));
         return dealer;
     }
+
 }

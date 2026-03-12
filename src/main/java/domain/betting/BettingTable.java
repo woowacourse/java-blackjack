@@ -6,6 +6,7 @@ import domain.gamer.Player;
 import domain.gamer.Players;
 
 public class BettingTable {
+
     private final Bettings bettings;
     private final BettingPolicyManager bettingManager;
 
@@ -37,4 +38,5 @@ public class BettingTable {
     public Money getPlayerProfit(Player player) {
         return bettings.getPlayerBettingMoney(player);
     }
+
 }

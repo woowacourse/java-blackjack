@@ -3,6 +3,7 @@ package domain.gamer;
 import domain.card.CardBundle;
 
 public class Player extends Gamer{
+
     private Player(PlayerName name) {
         super(name);
     }
@@ -15,4 +16,5 @@ public class Player extends Gamer{
         cardBundle = cardBundle.add(newCardBundle);
         return cardBundle;
     }
+
 }

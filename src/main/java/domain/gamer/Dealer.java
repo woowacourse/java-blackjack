@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public class Dealer extends Gamer {
+
     private static final String DEFAULT_DEALER_NAME = "딜러";
     private static final int ADDITIONAL_DRAW_CONDITION = 16;
     private static final int INITIAL_DEAL_COUNT = 2;
@@ -82,4 +83,5 @@ public class Dealer extends Gamer {
     private Card drawCard() {
         return cardDeck.drawCard();
     }
+
 }

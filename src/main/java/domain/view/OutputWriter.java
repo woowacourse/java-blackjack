@@ -1,6 +1,7 @@
 package domain.view;
 
 public class OutputWriter {
+
     private final String LINE_SEPARATOR = System.lineSeparator();
     private final String INPUT_NAME_GUIDE_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     private final String DEAL_INITIAL_CARD_MESSAGE = "딜러와 %s에게 2장을 나누었습니다.";
@@ -70,4 +71,5 @@ public class OutputWriter {
     private void printLineSeparator() {
         System.out.print(LINE_SEPARATOR);
     }
+
 }

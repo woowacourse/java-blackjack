@@ -6,6 +6,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class BettingsTest {
+
     @Test
     void 플레이어의_베팅금액을_저장한다() {
         double tenThousand = 1000.0;
@@ -55,4 +56,5 @@ public class BettingsTest {
         Assertions.assertThat(actualDealerProfit)
                 .isEqualTo(expectedDealerProfit);
     }
+
 }

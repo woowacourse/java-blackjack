@@ -20,6 +20,7 @@ import domain.view.ApplicationView;
 import java.util.List;
 
 public class BlackjackGame {
+
     public ApplicationView view;
     public CardDeck cardDeck;
 
@@ -141,4 +142,5 @@ public class BlackjackGame {
     private void showGamerProfit(List<GamerBettingProfitDto> playersProfit, GamerBettingProfitDto dealerProfit) {
         view.printGamerProfit(dealerProfit, playersProfit);
     }
+
 }

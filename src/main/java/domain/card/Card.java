@@ -4,6 +4,7 @@ public record Card(
         CardDenomination denomination,
         CardEmblem emblem
 ) {
+
     public static Card of(CardDenomination denomination, CardEmblem emblem) {
         return new Card(denomination, emblem);
     }
@@ -19,4 +20,5 @@ public record Card(
     public boolean isAce() {
         return denomination.isAce();
     }
+
 }

@@ -13,6 +13,7 @@ import utils.CardDeckBuilder;
 import java.util.List;
 
 public class DealerTest {
+
     private PlayerName testPlayerName;
     private Player testPlayer;
 
@@ -116,4 +117,5 @@ public class DealerTest {
         Assertions.assertThat(dealer.hitIfRequired())
                 .isTrue();
     }
+
 }

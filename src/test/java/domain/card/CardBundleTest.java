@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import utils.CardBundleBuilder;
 
 public class CardBundleTest {
+
     private static final int ACE_BONUS_SCORE = 10;
 
     private CardBundle cardBundle;
@@ -47,4 +48,5 @@ public class CardBundleTest {
         Assertions.assertThat(cardBundle.isBlackjack())
                 .isTrue();
     }
+
 }

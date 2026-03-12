@@ -6,6 +6,7 @@ import domain.gamer.Dealer;
 import domain.gamer.Player;
 
 public class BlackjackPolicy extends BettingPolicy{
+
     public BlackjackPolicy() {
         super(BettingResult.BLACK_JACK);
     }
@@ -19,4 +20,5 @@ public class BlackjackPolicy extends BettingPolicy{
     public BettingRate getBettingRate(Dealer dealer, Player player) {
         return bettingResult.bettingRate();
     }
+
 }
