@@ -8,6 +8,7 @@ import model.card.Suit;
 import model.participant.Dealer;
 import model.participant.Participant;
 import model.participant.Participants;
+import model.participant.Player;
 import org.junit.jupiter.api.BeforeEach;
 
 public class BlackjackTest {
@@ -17,7 +18,7 @@ public class BlackjackTest {
 
     @BeforeEach
     void setUp() {
-        participants = Participants.from(List.of("pobi", "jason"));
+        participants = Participants.from(List.of(Player.of("pobi", 1000), Player.of("jason", 1000)));
         Dealer dealer = participants.getDealer();
         dealer.receive(Card.of(Suit.SPADE, Rank.TWO));
         dealer.receive(Card.of(Suit.SPADE, Rank.FOUR));

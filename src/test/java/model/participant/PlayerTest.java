@@ -9,6 +9,7 @@ import model.card.Card;
 import model.card.Rank;
 import model.card.Suit;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -21,6 +22,15 @@ class PlayerTest {
     @BeforeEach
     void setUp() {
         player = Player.from("pobi");
+    }
+
+    @DisplayName("플레이어가 '딜러'라는 이름을 사용하면 예외를 발생한다")
+    @Test
+    void 플레이어가_딜러라는_이름을_사용하면_예외를_발생한다() {
+        assertThatThrownBy(() -> Player.of("딜러", 1000))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("'딜러'");
+
     }
 
     @Test
@@ -181,7 +191,7 @@ class PlayerTest {
         }
 
         private static Dealer createDealerWithBust() {
-            Dealer dealer = Dealer.from("딜러");
+            Dealer dealer = Dealer.create();
             dealer.receive(Card.of(Suit.SPADE, Rank.JACK));
             dealer.receive(Card.of(Suit.SPADE, Rank.QUEEN));
             dealer.receive(Card.of(Suit.SPADE, Rank.KING));
@@ -190,7 +200,7 @@ class PlayerTest {
         }
 
         private static Dealer createDealerWithBlackjack() {
-            Dealer dealer = Dealer.from("딜러");
+            Dealer dealer = Dealer.create();
             dealer.receive(Card.of(Suit.SPADE, Rank.ACE));
             dealer.receive(Card.of(Suit.SPADE, Rank.JACK));
 
@@ -198,7 +208,7 @@ class PlayerTest {
         }
 
         private static Dealer createDealerWithScore20() {
-            Dealer dealer = Dealer.from("딜러");
+            Dealer dealer = Dealer.create();
             dealer.receive(Card.of(Suit.SPADE, Rank.JACK));
             dealer.receive(Card.of(Suit.SPADE, Rank.QUEEN));
 

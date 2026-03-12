@@ -16,9 +16,16 @@ public class Player extends Participant {
     }
 
     public static Player of(String name, int bettingAmount) {
+        validateName(name);
         BettingAmount amount = BettingAmount.from(bettingAmount);
 
         return new Player(name, amount);
+    }
+
+    private static void validateName(String name) {
+        if (name.equals(Dealer.NAME)) {
+            throw new IllegalArgumentException("플레이어는 '" + Dealer.NAME + "'라는 이름을 사용할 수 없습니다.");
+        }
     }
 
     @Override

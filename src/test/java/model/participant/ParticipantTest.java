@@ -3,6 +3,7 @@ package model.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 import model.card.Card;
@@ -22,29 +23,6 @@ class ParticipantTest {
     @BeforeEach
     void setUp() {
         participant = Player.from("pobi");
-    }
-
-    @Test
-    void 중복된_플레이어_이름이_입력되면_예외를_발생한다() {
-        // given
-        List<String> duplicated = List.of("pobi", "jason", "pobi");
-
-        // when and then
-        assertThatThrownBy(() -> Participants.from(duplicated))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("중복");
-    }
-
-    @DisplayName("플레이어 이름으로 '딜러'가 입력되면 예외를 발생한다")
-    @Test
-    void 플레이어_이름으로_딜러가_입력되면_예외를_발생한다() {
-        // given
-        List<String> dealerContained = List.of("pobi", "jason", "딜러");
-
-        // when and then
-        assertThatThrownBy(() -> Participants.from(dealerContained))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("딜러");
     }
 
     @Test

@@ -1,11 +1,10 @@
 package model.participant;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 import model.card.Card;
 
 public class Dealer extends Participant {
+    public static final String NAME = "딜러";
     public static final int DRAW_THRESHOLD = 16;
 
     private boolean firstTurn = true;
@@ -14,8 +13,8 @@ public class Dealer extends Participant {
         super(name);
     }
 
-    public static Dealer from(String input) {
-        return new Dealer(input);
+    public static Dealer create() {
+        return new Dealer(NAME);
     }
 
     @Override

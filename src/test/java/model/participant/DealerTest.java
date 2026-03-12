@@ -15,7 +15,7 @@ class DealerTest {
 
     @BeforeEach
     void setUp() {
-        dealer = Dealer.from("딜러");
+        dealer = Dealer.create();
     }
 
     @Test
@@ -26,7 +26,7 @@ class DealerTest {
 
     @Test
     void 딜러와_승패를_판정하는_상대가_플레이어가_아니면_예외를_발생한다() {
-        assertThatThrownBy(() -> dealer.beats(Dealer.from("또 다른 딜러")))
+        assertThatThrownBy(() -> dealer.beats(Dealer.create()))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

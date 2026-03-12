@@ -20,6 +20,7 @@ import model.participant.Participant;
 import model.participant.Participants;
 import model.participant.Dealer;
 import model.participant.Player;
+import model.participant.PlayerNames;
 import util.InputParser;
 import view.InputView;
 import view.OutputView;
@@ -50,8 +51,16 @@ public class BlackJackController {
     private Participants setUpParticipants() {
         String rawNames = inputView.readPlayerNames();
         List<String> parsed = InputParser.parseName(rawNames);
+        PlayerNames playerNames = PlayerNames.from(parsed);
 
-        return Participants.from(parsed);
+        List<Player> players = new ArrayList<>();
+        for (String playerName : playerNames.asList()) {
+            int bettingAmount = inputView.readBettingAmount(playerName);
+            Player player = Player.of(playerName, bettingAmount);
+            players.add(player);
+        }
+
+        return Participants.from(players);
     }
 
     private Deck setUpDeck() {
