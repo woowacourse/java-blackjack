@@ -26,7 +26,7 @@ public class Player extends Participant {
 
     private void validateNameLength(String name) {
         if (name.isEmpty() || name.length() > MAX_NAME_LENGTH) {
-            throw new IllegalArgumentException("잘못된 이름: " + name + " (플레이어 이름은 1자 이상 8자 이하여야 합니다.)");
+            throw new IllegalArgumentException(String.format("잘못된 이름: %s (플레이어 이름은 1자 이상 8자 이하여야 합니다.)", name));
         }
     }
 

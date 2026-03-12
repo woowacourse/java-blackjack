@@ -28,7 +28,7 @@ public class Players {
             }
         }
 
-        throw new IllegalArgumentException("존재하지 않는 플레이어입니다.");
+        throw new IllegalArgumentException(String.format("%s는(은) 존재하지 않는 플레이어입니다.", targetPlayer.getName()));
     }
 
     public Map<Player, MatchResult> calculateMatchResult(Dealer dealer) {
@@ -74,17 +74,21 @@ public class Players {
         return playersScore;
     }
 
-    private void validateDuplicateName(List<Player> playerNames) {
-        Set<Player> uniqueNames = new HashSet<>(playerNames);
+    private void validateDuplicateName(List<Player> players) {
+        Set<Player> uniquePlayers = new HashSet<>();
 
-        if (uniqueNames.size() != playerNames.size()) {
-            throw new IllegalArgumentException("플레이어 이름은 중복될 수 없습니다.");
+        for (Player player : players) {
+            if (!uniquePlayers.add(player)) {
+                throw new IllegalArgumentException(
+                        String.format("중복된 플레이어 이름: %s (플레이어 이름은 중복될 수 없습니다.)", player.getName())
+                );
+            }
         }
     }
 
     private void validateSize(List<Player> playerNames) {
         if (playerNames.size() > MAX_PLAYER_SIZE)
-            throw new IllegalArgumentException("플레이어 인원 수는 5명 이하여야 합니다.");
+            throw new IllegalArgumentException(String.format("현재 인원 수: %d (플레이어 인원 수는 5명 이하여야 합니다.)", playerNames.size()));
     }
 
     public List<Player> getPlayers() {
