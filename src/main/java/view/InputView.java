@@ -31,7 +31,7 @@ public class InputView {
     }
 
     public int readBettingPrice(String name) {
-        System.out.println(name + "의 배팅 금액은?\n");
+        System.out.println(name + "의 배팅 금액은?");
         String input = readInput(List.of(
                 Validator::validateNotBlank,
                 Validator::validateInteger

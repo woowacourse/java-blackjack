@@ -32,6 +32,7 @@ public class BlackjackResult {
         for (Player player : players) {
             determinePlayerResult(player, dealerBurst, dealerTotal);
         }
+        dealer.updateBettingScore(players.getTotalBettingScore());
     }
 
     private void determinePlayerResult(Player player, boolean dealerBust, int dealerTotal) {

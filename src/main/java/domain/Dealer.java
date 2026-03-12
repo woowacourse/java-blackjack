@@ -10,6 +10,10 @@ public class Dealer extends Player {
         super(DEALER_NAME);
     }
 
+    public void updateBettingScore(int money) {
+        betMoney(-money);
+    }
+
     public boolean needAdditionalCard() {
         return this.calculateScore() <= ADDITIONAL_THRESHOLD;
     }
