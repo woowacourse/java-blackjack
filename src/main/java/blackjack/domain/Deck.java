@@ -11,21 +11,6 @@ public class Deck {
         this.cards = createDeck();
     }
 
-    public Cards createDeck() {
-        List<Card> cards = new ArrayList<>();
-
-        for (Figure figure : Figure.values()) {
-            cards.addAll(matchNumbersWith(figure));
-        }
-        return new Cards(cards);
-    }
-    
-    private List<Card> matchNumbersWith(Figure figure) {
-        return Arrays.stream(Number.values())
-                .map(number -> new Card(figure, number))
-                .toList();
-    }
-
     public void shuffle() {
         cards.shuffle();
     }
@@ -40,5 +25,20 @@ public class Deck {
 
     public List<Card> getCards() {
         return cards.getCards();
+    }
+
+    private Cards createDeck() {
+        List<Card> cards = new ArrayList<>();
+
+        for (Figure figure : Figure.values()) {
+            cards.addAll(matchNumbersWith(figure));
+        }
+        return new Cards(cards);
+    }
+
+    private List<Card> matchNumbersWith(Figure figure) {
+        return Arrays.stream(Number.values())
+                .map(number -> new Card(figure, number))
+                .toList();
     }
 }
