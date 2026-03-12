@@ -1,7 +1,7 @@
 package factory;
 
 import controller.BlackjackController;
-import service.BlackjackService;
+import domain.game.BlackjackGameManager;
 import view.InputView;
 import view.OutputView;
 
@@ -11,8 +11,8 @@ public class BlackjackFactory {
         return new BlackjackController(inputView(), outputView(), blackjackService());
     }
 
-    public BlackjackService blackjackService() {
-        return new BlackjackService();
+    public BlackjackGameManager blackjackService() {
+        return new BlackjackGameManager();
     }
 
     private InputView inputView() {
