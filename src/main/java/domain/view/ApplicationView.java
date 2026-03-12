@@ -71,6 +71,11 @@ public class ApplicationView {
         writer.printDealerAdditionalDrawCardMessage();
     }
 
+    public void printFinalResultMessage(GamerResultDto playerResult) {
+        GamerHandDto playerHand = playerResult.playerHand();
+        writer.printFinalResultMessage(playerHand.playerName(), playerHand.handOnCards(), playerResult.resultScore());
+    }
+
     public void printGamerProfit(GamerBettingProfitDto dealerProfit, List<GamerBettingProfitDto> playersProfit) {
         writer.printProfitTitleMessage();
         writer.printGamerProfit(dealerProfit.gamerName(), dealerProfit.bettingProfit());
@@ -81,11 +86,6 @@ public class ApplicationView {
         playersProfit.forEach(profit ->
                 writer.printGamerProfit(profit.gamerName(), profit.bettingProfit())
         );
-    }
-
-    public void printFinalResultMessage(GamerResultDto playerResult) {
-        GamerHandDto playerHand = playerResult.playerHand();
-        writer.printFinalResultMessage(playerHand.playerName(), playerHand.handOnCards(), playerResult.resultScore());
     }
 
     private <T> T retry(Supplier<T> task) {

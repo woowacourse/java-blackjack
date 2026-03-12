@@ -13,11 +13,13 @@ public class OutputWriter {
     private final String CARD_SUM_RESULT_MESSAGE = "%s카드: %s - 결과: %d";
 
     public void printInputNameGuideMessage() {
-        System.out.println(INPUT_NAME_GUIDE_MESSAGE);
+        System.out.print(INPUT_NAME_GUIDE_MESSAGE);
+        printLineSeparator();
     }
 
     public void printErrorMessage(String errorMessage) {
-        System.out.println(errorMessage);
+        System.out.print(errorMessage);
+        printLineSeparator();
     }
 
     public void printBettingGuideMessage(String name) {
@@ -44,13 +46,15 @@ public class OutputWriter {
 
     public void printDealerAdditionalDrawCardMessage() {
         printLineSeparator();
-        System.out.println(DEALER_ADDITIONAL_DRAW_MESSAGE);
+        System.out.print(DEALER_ADDITIONAL_DRAW_MESSAGE);
+        printLineSeparator();
         printLineSeparator();
     }
 
     public void printProfitTitleMessage() {
         printLineSeparator();
-        System.out.println(FINAL_PROFIT_TITLE_MESSAGE);
+        System.out.print(FINAL_PROFIT_TITLE_MESSAGE);
+        printLineSeparator();
     }
 
     public void printGamerProfit(String playerName, double profit) {
