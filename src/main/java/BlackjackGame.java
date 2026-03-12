@@ -1,11 +1,12 @@
 import domain.GameCommand;
 import domain.card.Deck;
-import java.util.List;
+import domain.card.RandomShuffleStrategy;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
 import domain.result.GameStatistics;
 import domain.result.Referee;
+import java.util.List;
 import util.Parser;
 import view.InputView;
 import view.OutputView;
@@ -13,7 +14,7 @@ import view.OutputView;
 public class BlackjackGame {
 
     public void run() {
-        Deck deck = new Deck();
+        Deck deck = new Deck(new RandomShuffleStrategy());
         Players players = createPlayers(deck);
         Dealer dealer = new Dealer(deck);
 

@@ -3,7 +3,6 @@ package domain.card;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
 
@@ -11,9 +10,9 @@ public class Deck {
 
     private final Deque<Card> cards;
 
-    public Deck() {
+    public Deck(ShuffleStrategy shuffleStrategy) {
         List<Card> cards = initialize();
-        Collections.shuffle(cards);
+        shuffleStrategy.shuffle(cards);
         this.cards = new ArrayDeque<>(cards);
     }
 
