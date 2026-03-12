@@ -115,4 +115,30 @@ public class BlackJackTest {
         // then
         assertThat(calculateRevenue.get("nuno")).isEqualTo(15000);
     }
+
+    @Test
+    void 딜러가_버스트면_남아있는_플레이어들은_플레이어의_승패에_상관없이_베팅금액을_받는다() {
+        // given
+        Dealer dealer = Dealer.of(DEALER_NAME);
+        dealer.draw(Card.of("스페이드", 10));
+        dealer.draw(Card.of("스페이드", 10));
+        dealer.draw(Card.of("스페이드", 10));
+        Player player = Player.of("nuno", 10000);
+        player.draw(Card.of("하트", 2));
+        player.draw(Card.of("스페이드", 3));
+
+        ArrayList<Participant> playersAndDealer = new ArrayList<>();
+        playersAndDealer.add(dealer);
+        playersAndDealer.add(player);
+
+        Participants playerAndDealerParticipants = Participants.of(playersAndDealer);
+        BlackJack blackJackGame = BlackJack.from(playerAndDealerParticipants);
+
+        // when
+        Map<String, Integer> calculateRevenue = blackJackGame.calculateRevenue();
+
+        // then
+        assertThat(calculateRevenue.get("nuno")).isEqualTo(10000);
+        assertThat(calculateRevenue.get(DEALER_NAME)).isEqualTo(-10000);
+    }
 }

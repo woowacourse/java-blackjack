@@ -93,6 +93,13 @@ public final class BlackJack {
                 continue;
             }
 
+            if (dealer.isBust() && !participant.isBust()) {
+                calculatedTotalRevenues.put(participant.getName(), ((Player) participant).getBetAmount());
+                dealerRevenue -= ((Player) participant).getBetAmount();
+                calculatedTotalRevenues.merge(DEALER_NAME, dealerRevenue, Integer::sum);
+                continue;
+            }
+
             if (participant.isBlackJack() && !dealer.isBlackJack()) {
                 int playerBlackJackRevenue = (int) (((Player) participant).getBetAmount() * 1.5);
                 extracted(calculatedTotalRevenues, participant, playerBlackJackRevenue);
@@ -104,7 +111,7 @@ public final class BlackJack {
                 continue;
             }
 
-            dealerRevenue = calculateTotalRevenue(entry, calculatedPlayerRevenues, (Player) participant, dealerRevenue);
+            dealerRevenue = calculateTotalRevenue(entry, calculatedPlayerRevenues, (Player) participant, dealerRevenue, dealer);
 
             calculatedTotalRevenues.put(DEALER_NAME, dealerRevenue);
             calculatedTotalRevenues.putAll(calculatedPlayerRevenues);
@@ -119,8 +126,8 @@ public final class BlackJack {
     }
 
     private int calculateTotalRevenue(Entry<String, Boolean> entry, Map<String, Integer> calculatedPlayerRevenues,
-                                        Player participant, int dealerRevenue) {
-        if (entry.getValue()) {
+                                      Player participant, int dealerRevenue, Dealer dealer) {
+        if (entry.getValue() || dealer.isBust()) {
             calculatedPlayerRevenues.put(entry.getKey(), participant.getBetAmount());
             dealerRevenue -= participant.getBetAmount();
         }
