@@ -1,12 +1,12 @@
 package domain;
 
 import domain.card.Card;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
     public static final int BLACK_JACK = 21;
+    public static final String ERROR_CARD_NOT_EXIST = "[ERROR] 카드가 존재하지 않습니다.";
 
     private final List<Card> cards;
 
@@ -32,6 +32,13 @@ public class Hand {
         }
 
         return total;
+    }
+
+    public Card firstCard() {
+        if (cards.isEmpty()) {
+            throw new IllegalStateException(ERROR_CARD_NOT_EXIST);
+        }
+        return cards.getFirst();
     }
 
     private int countAce() {

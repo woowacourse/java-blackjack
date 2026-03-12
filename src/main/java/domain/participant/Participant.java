@@ -4,7 +4,6 @@ import domain.Hand;
 import domain.Name;
 import domain.card.Card;
 import domain.strategy.DrawStrategy;
-
 import java.util.List;
 
 public abstract class Participant {
@@ -36,6 +35,10 @@ public abstract class Participant {
 
     public String name() {
         return name.getName();
+    }
+
+    protected Card firstCard() {
+        return hand.firstCard();
     }
 
     public List<Card> getAllCards() {
