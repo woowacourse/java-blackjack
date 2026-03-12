@@ -12,12 +12,12 @@ public class GameStatistics {
 
     public GameStatistics(Map<Player, GameResult> gameResultMap) {
         this.playerResult = gameResultMap;
-        this.dealerResult = initialize();
-        initializeDealer();
+        this.dealerResult = initializeMap();
+        initializeDealerResult();
     }
 
 
-    private LinkedHashMap<String, Integer> initialize() {
+    private LinkedHashMap<String, Integer> initializeMap() {
         LinkedHashMap<String, Integer> dealerResult = new LinkedHashMap<>();
         for (String gameResult : Arrays.stream(GameResult.values()).map(GameResult::getDescription).toList()) {
             dealerResult.put(gameResult, 0);
@@ -25,7 +25,7 @@ public class GameStatistics {
         return dealerResult;
     }
 
-    public void initializeDealer() {
+    public void initializeDealerResult() {
         for (Map.Entry<Player, GameResult> playerResult : playerResult.entrySet()) {
             addDealerResult(playerResult.getValue().reverse());
         }

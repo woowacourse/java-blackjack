@@ -20,7 +20,7 @@ public class GameProfit {
     public void addProfitMoney(Player player, GameResult gameResult) {
         double profit = gameResult.getProfit();
         int battingMoney = player.getBattingMoney();
-        int battingResult = (int) profit * battingMoney;
+        int battingResult = (int) (profit * battingMoney);
         profitMoney.put(player.getName(), battingResult);
     }
 
