@@ -9,24 +9,21 @@ import java.util.List;
 
 public abstract class Participant {
     private final Hand hand;
-    private Score score;
 
     public Participant() {
         this.hand = new Hand();
-        this.score = new Score(0);
     }
 
     public void receiveCard(Card card) {
         hand.add(card);
-        score = hand.calculateScore();
     }
 
     public boolean isBust() {
-        return score.isBust();
+        return hand.isBust();
     }
 
-    public int getScore() {
-        return score.getScore();
+    public Score getScore() {
+        return hand.calculateScore();
     }
 
     public String getInitialCards() {
@@ -38,11 +35,7 @@ public abstract class Participant {
     }
 
     public boolean isBlackjack() {
-        return hand.getSize() == 2 && score.isBlackjack();
-    }
-
-    protected final boolean isLowerThan(int standard) {
-        return score.isLess(standard);
+        return hand.isBlackjack();
     }
 
     public abstract boolean canReceive();

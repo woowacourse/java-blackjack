@@ -1,5 +1,6 @@
 package blackjack.domain.gameresult;
 
+import blackjack.domain.hand.Score;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
@@ -34,9 +35,9 @@ public enum GameResult {
             return WIN;
         }
 
-        int playerScore = player.getScore();
-        int dealerScore = dealer.getScore();
-        if (playerScore < dealerScore) {
+        int playerScore = player.getScore().getScore();
+        int dealerScore = dealer.getScore().getScore();
+        if (playerScore< dealerScore) {
             return LOSE;
         }
         if (playerScore == dealerScore) {

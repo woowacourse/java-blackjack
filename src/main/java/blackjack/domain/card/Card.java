@@ -19,10 +19,6 @@ public class Card {
         return number.getValue();
     }
 
-    public Number getNumber() {
-        return number;
-    }
-
     public boolean isAce() {
         return number.isAce();
     }

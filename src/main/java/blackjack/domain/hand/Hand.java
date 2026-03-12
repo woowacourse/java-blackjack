@@ -49,4 +49,12 @@ public class Hand {
     public int getSize() {
         return cards.size();
     }
+
+    public boolean isBust() {
+        return calculateScore().isBust();
+    }
+
+    public boolean isBlackjack() {
+        return cards.size() == 2 && calculateScore().isBlackjack();
+    }
 }
