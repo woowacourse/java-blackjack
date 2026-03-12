@@ -17,11 +17,11 @@ public abstract class Participant {
         this.cards = new ArrayList<>();
     }
 
-    public void draw(Card card) {
+    public final void draw(Card card) {
         cards.add(card);
     }
 
-    public int calculateCardsValue() {
+    public final int calculateCardsValue() {
         int sum = cards.stream()
                 .mapToInt(Card::getCardValue)
                 .sum();
@@ -29,7 +29,7 @@ public abstract class Participant {
         return applyBestAceValue(sum);
     }
 
-    public boolean winsAgainst(Participant other) {
+    public final boolean winsAgainst(Participant other) {
         if (other.isBurst()) {
             return true;
         }
@@ -40,27 +40,27 @@ public abstract class Participant {
         return other.calculateCardsValue() < this.calculateCardsValue();
     }
 
-    public boolean isBurst() {
+    public final boolean isBurst() {
         return calculateCardsValue() > BLACKJACK_VALUE;
     }
 
-    public boolean isBlackjack() {
+    public final boolean isBlackjack() {
         return calculateCardsValue() == BLACKJACK_VALUE;
     }
 
-    public String getFirstCardName() {
+    public final String getFirstCardName() {
         return cards.getFirst().getName();
     }
 
-    public String getName() {
+    public final String getName() {
         return name.name();
     }
 
-    public List<Card> getCards() {
+    public final List<Card> getCards() {
         return cards;
     }
 
-    public List<String> getCardsName() {
+    public final List<String> getCardsName() {
         return cards.stream()
                 .map(Card::getName)
                 .toList();
