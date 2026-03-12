@@ -25,7 +25,8 @@ public class Dealer extends Participant {
     }
 
     private void dealRoundTo(final Players players) {
-        players.getPlayers().forEach(player -> player.receiveCard(deck.draw()));
+        players.getPlayers()
+                .forEach(player -> player.receiveCard(deck.draw()));
     }
 
     public void dealCardTo(final Player player) {

@@ -24,10 +24,10 @@ public class BlackjackGame {
     private Players createPlayers() {
         final List<String> names = InputView.readPlayerNames();
         final List<Integer> amounts = InputView.readBettingAmounts(names);
-        final List<Player> players = IntStream.range(0, names.size())
+        final List<Player> participants = IntStream.range(0, names.size())
                 .mapToObj(i -> new Player(names.get(i), new BettingMoney(amounts.get(i))))
                 .toList();
-        return new Players(players);
+        return new Players(participants);
     }
 
     public void start() {
