@@ -4,6 +4,7 @@ import java.util.List;
 import model.card.Card;
 import model.game.BettingAmount;
 import model.participant.exception.ForbiddenPlayerNameException;
+import model.participant.exception.UnmatchableParticipantsException;
 
 public class Player extends Participant {
     private final BettingAmount bettingAmount;
@@ -38,7 +39,7 @@ public class Player extends Participant {
     @Override
     public boolean beats(Participant participant) {
         if (!(participant instanceof Dealer dealer)) {
-            throw new IllegalArgumentException("플레이어는 딜러와의 승패만 판정할 수 있습니다.");
+            throw new UnmatchableParticipantsException(getName(), participant.getName());
         }
 
         if (isBust()) {

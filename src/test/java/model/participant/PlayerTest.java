@@ -9,6 +9,7 @@ import model.card.Card;
 import model.card.Rank;
 import model.card.Suit;
 import model.participant.exception.ForbiddenPlayerNameException;
+import model.participant.exception.UnmatchableParticipantsException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -57,8 +58,7 @@ class PlayerTest {
         void 플레이어와의_승패_판정_대상이_딜러가_아니면_예외를_발생한다() {
             Participant otherPlayer = Player.from("jason");
             assertThatThrownBy(() -> player.beats(otherPlayer))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("딜러");
+                    .isInstanceOf(UnmatchableParticipantsException.class);
         }
 
         @ParameterizedTest
