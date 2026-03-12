@@ -2,6 +2,7 @@ package model.participant;
 
 import java.util.List;
 import java.util.Set;
+import model.participant.exception.DuplicatePlayerNameException;
 
 public final class PlayerNames {
     private final List<String> values;
@@ -19,7 +20,7 @@ public final class PlayerNames {
 
     private static void validateDuplicateNames(List<String> names) {
         if (Set.copyOf(names).size() != names.size()) {
-            throw new IllegalArgumentException("플레이어의 이름은 서로 중복될 수 없습니다. 현재 이름 목록: " + names);
+            throw new DuplicatePlayerNameException(names);
         }
     }
 

@@ -3,6 +3,7 @@ package model.participant;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
+import model.participant.exception.DuplicatePlayerNameException;
 import org.junit.jupiter.api.Test;
 
 public class PlayerNamesTest {
@@ -13,7 +14,6 @@ public class PlayerNamesTest {
 
         // when and then
         assertThatThrownBy(() -> PlayerNames.from(duplicated))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("중복");
+                .isInstanceOf(DuplicatePlayerNameException.class);
     }
 }
