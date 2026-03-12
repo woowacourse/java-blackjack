@@ -28,7 +28,7 @@ public class BlackJackController {
         this.blackJackTurnService = blackJackTurnService;
     }
 
-    public void run() {
+    public void start() {
         List<String> names = InputView.askPlayerNames();
 
         Deck deck = blackJackInitService.createDeck();

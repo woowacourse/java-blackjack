@@ -7,6 +7,6 @@ public class Application {
         AppConfig appConfig = new AppConfig();
         BlackJackController blackJackController = appConfig.blackJackController();
 
-        blackJackController.run();
+        blackJackController.start();
     }
 }

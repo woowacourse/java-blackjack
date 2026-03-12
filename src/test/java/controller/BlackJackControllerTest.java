@@ -85,7 +85,7 @@ public class BlackJackControllerTest {
         @Test
         void 출력_형식을_지켜야_한다() {
             // when
-            blackJackController.run();
+            blackJackController.start();
 
             // then
             String output = getOutput();
@@ -109,7 +109,7 @@ public class BlackJackControllerTest {
         @Test
         void 로직이_정상적으로_동작한다() {
             // when
-            blackJackController.run();
+            blackJackController.start();
 
             // then
             String output = getOutput();
