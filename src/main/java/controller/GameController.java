@@ -2,17 +2,13 @@ package controller;
 
 import domain.Money;
 import domain.card.Card;
-import domain.participant.Dealer;
 import domain.card.Deck;
-import domain.GameResult;
-import domain.Judgement;
+import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
 import dto.ParticipantDto;
-import dto.PlayerResultDto;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import view.InputParser;
 import view.InputValidator;
 import view.InputView;
@@ -39,7 +35,9 @@ public class GameController {
         receiveMoreCard(players, dealer, deck);
 
         printFinalScore(players, dealer);
-        printFinalResults(players, dealer);
+
+        outputView.printDealerFinalProfit(dealer.finalProfit(players));
+        outputView.printPlayerFinalProfit(players.getPlayers(), dealer);
     }
 
     private List<String> getPlayerNames() {
@@ -91,16 +89,8 @@ public class GameController {
                 ParticipantDto.of("딜러", dealer), participantDtos);
     }
 
-    private void printFinalResults(Players players, Dealer dealer) {
-        Judgement judgement = new Judgement();
-        Map<String, GameResult> playerResults = judgement.judgePlayerResults(players, dealer);
-        Map<GameResult, Integer> dealerResults = judgement.judgeDealerResults(playerResults);
-        outputView.printDealerFinalCount(dealerResults);
-        outputView.printPlayerFinalResults(PlayerResultDto.from(playerResults));
-    }
-
     private void processRound(Player player, Deck deck) {
-        while (!player.isBust()) {
+        while (!player.isBust() && !player.isBlackjack()) {
             String hitOption = inputView.readHitOption(player.getName());
             InputValidator.validateHitOption(hitOption);
             if (hitOption.equals("n")) {

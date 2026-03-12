@@ -2,12 +2,12 @@ package view;
 
 import domain.GameResult;
 import domain.card.Card;
-import domain.card.CardValue;
 import domain.card.CardSuit;
+import domain.card.CardValue;
+import domain.participant.Dealer;
+import domain.participant.Player;
 import dto.ParticipantDto;
-import dto.PlayerResultDto;
 import java.util.List;
-import java.util.Map;
 
 public class OutputView {
 
@@ -17,7 +17,7 @@ public class OutputView {
     }
 
     public void printDealerStartCard(CardValue cardValue, CardSuit cardSuit) {
-        System.out.println("딜러카드: " + cardValue.getValue() + getCardSuit(cardSuit));
+        System.out.println("딜러카드: " + cardValue.getName() + getCardSuit(cardSuit));
     }
 
     public void printStartCard(List<ParticipantDto> playerDtos) {
@@ -44,18 +44,15 @@ public class OutputView {
         }
     }
 
-    public void printDealerFinalCount(Map<GameResult, Integer> dealerResults) {
+    public void printDealerFinalProfit(int dealerFinalProfit) {
         System.out.println();
-        System.out.println("## 최종 승패");
-        System.out.println("딜러: "
-                + dealerResults.getOrDefault(GameResult.WIN, 0) + "승 "
-                + dealerResults.getOrDefault(GameResult.DRAW, 0) + "무 "
-                + dealerResults.getOrDefault(GameResult.LOSE, 0) + "패");
+        System.out.println("## 최종 수익");
+        System.out.println("딜러: " + dealerFinalProfit);
     }
 
-    public void printPlayerFinalResults(List<PlayerResultDto> playerResultDtos) {
-        for (PlayerResultDto playerResult : playerResultDtos) {
-            System.out.println(playerResult.name() + ": " + playerResult.result());
+    public void printPlayerFinalProfit(List<Player> players, Dealer dealer) {
+        for (Player player : players) {
+            System.out.println(player.getName() + ": " + player.finalProfit(dealer));
         }
     }
 
@@ -64,7 +61,7 @@ public class OutputView {
     }
 
     private String cardsToString(List<Card> hand) {
-        return String.join(", ", hand.stream().map(card -> card.getCardNumber().getValue() + getCardSuit(card.getCardSuit())).toList());
+        return String.join(", ", hand.stream().map(card -> card.getCardNumber().getName() + getCardSuit(card.getCardSuit())).toList());
     }
 
     private String getCardSuit(CardSuit cardSuit) {

@@ -16,15 +16,6 @@ public class Judgement {
         return playerResults;
     }
 
-    public Map<GameResult, Integer> judgeDealerResults(Map<String, GameResult> playerResults) {
-        Map<GameResult, Integer> dealerResults = new LinkedHashMap<>();
-        for (GameResult result : playerResults.values()) {
-            GameResult dealerResult = result.toDealerResult();
-            dealerResults.put(dealerResult, dealerResults.getOrDefault(dealerResult, 0) + 1);
-        }
-        return dealerResults;
-    }
-
     private GameResult judge(int playerScore, int dealerScore) {
         if (playerScore > 21 && dealerScore > 21) { return GameResult.DRAW; }
         if (playerScore > 21) { return GameResult.LOSE; }

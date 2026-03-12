@@ -11,4 +11,12 @@ public class Dealer extends Participant {
     public boolean canReceiveCard() {
         return calculateScore() <= 16;
     }
+
+    public int finalProfit(Players players) {
+        int result = 0;
+        for (Player player : players.getPlayers()) {
+            result += player.finalProfit(this);
+        }
+        return -result;
+    }
 }

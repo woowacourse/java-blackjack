@@ -27,6 +27,10 @@ public enum CardValue {
         return cardValue.value;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public int getValue() {
         return value;
     }

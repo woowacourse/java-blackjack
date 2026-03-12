@@ -29,6 +29,10 @@ public abstract class Participant {
         return results;
     }
 
+    public boolean isBlackjack() {
+        return hand.size() == 2 && calculateScore() == 21;
+    }
+
     public boolean isBust() {
         return calculateScore() > 21;
     }
@@ -36,8 +40,6 @@ public abstract class Participant {
     public boolean isSoftHand(boolean isAceExist, int results) {
         return isAceExist && (results + 10) <= 21;
     }
-
-
 
     public List<Card> getHand() {
         return List.copyOf(hand);
