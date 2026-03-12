@@ -18,7 +18,7 @@ public class InputView {
 
     private static final Map<String, HitAnswer> ANSWERS = Map.of(
             "y", HitAnswer.HIT,
-            "n", HitAnswer.STAND
+            "n", HitAnswer.STAY
     );
 
     private final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
