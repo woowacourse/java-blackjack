@@ -46,6 +46,9 @@ public class Game {
     }
 
     public void dealerHit(Deck deck) {
+        if (isDealerEnd()) {
+            return;
+        }
         dealer.addCard(deck.drawCard());
     }
 
@@ -62,15 +65,11 @@ public class Game {
     }
 
     public Result getPlayerResult(String name) {
-        int dealerScore = dealer.calculateScore();
-        boolean dealerBust = dealer.isBust();
-        return players.getPlayerResult(name, dealerScore, dealerBust);
+        return players.getPlayerResult(name, dealer);
     }
 
     public Map<Result, Integer> getDealerResult() {
-        int dealerScore = dealer.calculateScore();
-        boolean dealerBust = dealer.isBust();
-        return dealer.calculateResults(players.decideAllResults(dealerScore, dealerBust));
+        return dealer.calculateResults(players.decideAllResults(dealer));
     }
 
     public int getPlayerScore(String name) {
@@ -78,6 +77,6 @@ public class Game {
     }
 
     public int getDealerScore() {
-        return dealer.calculateScore();
+        return dealer.getScore();
     }
 }
