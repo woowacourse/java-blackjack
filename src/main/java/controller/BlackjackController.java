@@ -4,6 +4,7 @@ import domain.*;
 
 import java.util.List;
 
+import meesage.ErrorMessage;
 import meesage.InputMessage;
 import utils.InputParser;
 import view.InputView;
@@ -25,11 +26,14 @@ public class BlackjackController {
 
         Dealer dealer = Dealer.of(deck.drawInitialHand());
         Players players = Players.of(deck, userNames);
+        BlackjackResult blackjackResult = BlackjackResult.of();
 
+        askPlayerBets(players, blackjackResult);
         printInitialCards(players, dealer);
         askPlayerAddCard(players, deck, dealer);
+        blackjackResult.resolveResults(players, dealer);
 
-        printGameResult(dealer, players);
+        printGameResult(blackjackResult);
     }
 
     private List<String> getUserNames() {
@@ -47,6 +51,35 @@ public class BlackjackController {
         } catch (IllegalArgumentException exception) {
             outputView.printLine(exception.getMessage());
             return null;
+        }
+    }
+
+    private void askPlayerBets(Players players, BlackjackResult blackjackResult) {
+        for (Player player : players.getPlayers()) {
+            long betAmount = askBetAmount(player);
+            blackjackResult.add(player, betAmount);
+        }
+    }
+
+    private long askBetAmount(Player player) {
+        System.out.println();
+        while (true) {
+            try {
+                String betAmount = inputView.askBetAmount(player);
+                validateBetAmount(betAmount);
+                return Long.parseLong(betAmount);
+            } catch (IllegalArgumentException exception) {
+                outputView.printLine(exception.getMessage());
+            }
+        }
+    }
+
+    private void validateBetAmount(String betAmount) {
+        if (betAmount == null) {
+            throw new IllegalArgumentException(ErrorMessage.EMPTY_BET_AMOUNT_INPUT.getMessage());
+        }
+        if (!betAmount.matches("[1-9][0-9]*")) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_BET_AMOUNT.getMessage());
         }
     }
 
@@ -117,9 +150,7 @@ public class BlackjackController {
         }
     }
 
-    private void printGameResult(Dealer dealer, Players players) {
-        outputView.printEmptyLine();
-        BlackjackResult blackjackResult = BlackjackResult.of(dealer, players);
+    private void printGameResult(BlackjackResult blackjackResult) {
         outputView.printFinalResult(blackjackResult);
     }
 }
