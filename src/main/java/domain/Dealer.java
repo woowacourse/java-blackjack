@@ -13,6 +13,10 @@ public class Dealer {
         return hand.isBust();
     }
 
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
+    }
+
     public void draw(Card card) {
         hand.addCard(card);
     }

@@ -3,6 +3,7 @@ package domain;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static util.TestUtil.createSpadesCard;
 
 import domain.card.Card;
 import domain.card.Rank;
@@ -48,5 +49,30 @@ class DealerTest {
 
         // then
         assertFalse(dealer.isBust());
+    }
+
+    @Test
+    void 딜러가_블랙잭이면_isBlackjack이_true를_반환한다() {
+        // given
+        Dealer dealer = new Dealer();
+
+        // when
+        dealer.draw(createSpadesCard(Rank.ACE));
+        dealer.draw(createSpadesCard(Rank.QUEEN));
+
+        // then
+        assertTrue(dealer.isBlackjack());
+    }
+
+    @Test
+    void 딜러가_블랙잭이면_isBlackjack이_false를_반환한다() {
+        // given
+        Dealer dealer = new Dealer();
+
+        // when
+        dealer.draw(createSpadesCard(Rank.ACE));
+
+        // then
+        assertFalse(dealer.isBlackjack());
     }
 }
