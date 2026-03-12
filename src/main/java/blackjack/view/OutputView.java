@@ -3,13 +3,10 @@ package blackjack.view;
 import static blackjack.global.ParticipantConstants.DEALER_DISTRIBUTE_COUNT;
 import static blackjack.global.ParticipantConstants.DEALER_HIT_THRESHOLD;
 
-import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Participants;
-import blackjack.domain.participant.Player;
 import blackjack.dto.FinalProfitsDto;
+import blackjack.dto.FinalStatusDto;
 import blackjack.dto.StartMessageDto;
-import java.util.List;
 
 public class OutputView {
 
@@ -38,12 +35,12 @@ public class OutputView {
         System.out.printf("딜러는 %d이하라 한장의 카드를 더 받았습니다.\n", DEALER_HIT_THRESHOLD);
     }
 
-    public static void printFinalStatus(final Participants participants) {
-        final String delimiter = " - ";
-        participants.all().forEach(participant ->
-            System.out.println(participantHandFormat(participant) + delimiter +
-                participantScoreResultFormat(participant))
-        );
+    public static void printFinalStatus(final FinalStatusDto dto) {
+        dto.participantNicknames().forEach(nickname ->
+            System.out.printf("%s 카드: %s - 결과: %s\n",
+                nickname,
+                String.join(", ", dto.participantCardNamesMap().get(nickname)),
+                dto.participantScoreMap().get(nickname)));
     }
 
     public static void printFinalProfits(final FinalProfitsDto dto) {

@@ -12,6 +12,7 @@ import blackjack.domain.participant.Status;
 import blackjack.domain.trump.RandomSortBehavior;
 import blackjack.domain.trump.Trump;
 import blackjack.dto.FinalProfitsDto;
+import blackjack.dto.FinalStatusDto;
 import blackjack.dto.StartMessageDto;
 import blackjack.utils.Parser;
 import blackjack.utils.RetryExecutor;
@@ -37,7 +38,7 @@ public class BlackjackController {
 
     private void printResult(final Participants participants, final Players players) {
         final FinalProfitsDto finalProfitsDto = FinalProfitsDto.from(players);
-        OutputView.printFinalStatus(participants);
+        OutputView.printFinalStatus(FinalStatusDto.from(participants));
         OutputView.printFinalProfits(finalProfitsDto);
     }
 
