@@ -15,13 +15,21 @@ public abstract class Participant {
         return name.getCleaned();
     }
 
-    public final void hit(Card card) {
-        hand.addCard(card);
-    }
-
     public final List<Card> getCards() {
         return hand.getCards();
     }
 
-    public abstract List<Card> getVisibleCards();
+    public final void hit(Card card) {
+        hand.addCard(card);
+    }
+
+    public final int getHandSum() {
+        return hand.getSum();
+    }
+
+    public final boolean hasAce() {
+        return hand.hasAce();
+    }
+
+    public abstract List<Card> getInitialVisibleCards();
 }

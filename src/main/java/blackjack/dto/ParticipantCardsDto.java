@@ -13,7 +13,8 @@ public record ParticipantCardsDto(
     }
 
     public static ParticipantCardsDto fromVisibleCards(Participant participant) {
-        List<CardDto> cards = participant.getVisibleCards().stream().map(CardDto::from).toList();
+        List<CardDto> cards = participant.getInitialVisibleCards().stream()
+            .map(CardDto::from).toList();
         return new ParticipantCardsDto(participant.getName(), cards);
     }
 }

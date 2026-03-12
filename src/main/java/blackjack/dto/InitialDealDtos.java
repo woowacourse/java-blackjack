@@ -8,9 +8,11 @@ public record InitialDealDtos(
     List<ParticipantCardsDto> playerCardsDtos
 ) {
     public static InitialDealDtos from(Participants participants) {
-        ParticipantCardsDto dealerCardsDto = ParticipantCardsDto.fromVisibleCards(participants.getDealer());
+        ParticipantCardsDto dealerCardsDto = ParticipantCardsDto.fromVisibleCards(
+            participants.getDealer());
         List<ParticipantCardsDto> playerCardsDto = participants.getPlayers().stream()
-            .map(ParticipantCardsDto::fromVisibleCards).toList();
+            .map(ParticipantCardsDto::fromVisibleCards)
+            .toList();
         return new InitialDealDtos(dealerCardsDto, playerCardsDto);
     }
 }

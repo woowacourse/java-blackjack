@@ -13,7 +13,7 @@ public class Player extends Participant {
     }
 
     @Override
-    public List<Card> getVisibleCards() {
+    public List<Card> getInitialVisibleCards() {
         return getCards();
     }
 }

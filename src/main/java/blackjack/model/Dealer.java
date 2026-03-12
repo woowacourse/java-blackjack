@@ -13,11 +13,10 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public List<Card> getVisibleCards() {
+    public List<Card> getInitialVisibleCards() {
+        if (getCards().isEmpty()) {
+            return List.of();
+        }
         return List.of(getCards().getFirst());
-    }
-
-    public boolean shouldHit(DealerHitPolicy dealerHitPolicy, Score score) {
-        return dealerHitPolicy.shouldHit(score);
     }
 }

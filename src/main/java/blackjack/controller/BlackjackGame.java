@@ -18,7 +18,6 @@ import blackjack.view.BlackjackView;
 import java.util.List;
 
 public class BlackjackGame {
-
     private final BlackjackView view;
     private final BlackjackService service;
 
@@ -51,14 +50,14 @@ public class BlackjackGame {
 
     private void hitPlayer(Player player, Deck deck) {
         while (service.canHit(player) && view.askHit(player.getName()) == Answer.YES) {
-            service.hitPlayer(player, deck);
+            service.hit(player, deck);
             view.printPlayerCards(ParticipantCardsDto.fromAllCards(player));
         }
     }
 
     private void hitDealer(Dealer dealer, Deck deck) {
         if (service.shouldHit(dealer)) {
-            service.hitDealer(dealer, deck);
+            service.hit(dealer, deck);
             view.printDealerHit(dealer);
         }
     }
@@ -66,7 +65,7 @@ public class BlackjackGame {
     private void printScore(Participants participants) {
         List<ParticipantScoreDto> participantScoreDtos = participants.stream()
             .map(participant -> {
-                Score score = service.calculate(participant.getCards());
+                Score score = service.calculateScoreOf(participant);
                 return ParticipantScoreDto.from(participant, score);
             })
             .toList();

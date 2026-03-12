@@ -18,4 +18,12 @@ public class Hand {
     public void addCard(Card card) {
         this.cards.add(card);
     }
+
+    public int getSum() {
+        return cards.stream().mapToInt(Card::getValue).sum();
+    }
+
+    public boolean hasAce() {
+        return cards.stream().anyMatch(card -> card.rank() == Rank.ACE);
+    }
 }
