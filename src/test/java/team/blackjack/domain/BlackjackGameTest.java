@@ -230,4 +230,16 @@ class BlackjackGameTest {
         assertThat(blackjackGame.getPlayerResult(player, dealer)).isEqualTo(Result.LOSE);
         assertThat(blackjackGame.getDealerResult(dealer, player)).isEqualTo(Result.WIN);
     }
+
+    /**
+     * 수익 금액 계산 테스트
+     */
+    @Test
+    void 딜러의_수익금액은_플레이어의_수익합산의_음수이다(){
+        Map<String, Integer> playerPayouts = Map.of("pobi", -10000, "jason", 20000);
+
+        int dealerPayout = blackjackGame.calculateDealerPayout(playerPayouts);
+
+        assertThat(dealerPayout).isEqualTo(-10000);
+    }
 }
