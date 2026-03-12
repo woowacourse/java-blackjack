@@ -64,7 +64,7 @@ class DealerTest {
     }
     
     @Test
-    @DisplayName("딜러와 플레이어가 모두 Bust일 경우 플레이어가 승리한다.")
+    @DisplayName("딜러와 플레이어가 모두 Bust일 경우 딜러가 승리한다.")
     void determinePlayerProfit_Win_WhenBothBust() {
         Player player = Player.from("pobi", 10000);
         player.receiveCard(new Card(Rank.TEN, Suit.SPADE));
@@ -78,7 +78,7 @@ class DealerTest {
         
         List<Integer> profits = dealer.determinePlayersProfit(List.of(player));
         
-        assertThat(profits.getFirst()).isEqualTo(10000);
+        assertThat(profits.getFirst()).isEqualTo(-10000);
     }
     
     @Test
