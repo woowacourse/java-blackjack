@@ -7,7 +7,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
 import blackjack.domain.deck.Deck;
-import blackjack.domain.deck.RandomCardShuffler;
+import blackjack.domain.deck.shuffler.RandomCardShuffler;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;

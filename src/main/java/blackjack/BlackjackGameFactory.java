@@ -1,7 +1,7 @@
 package blackjack;
 
 import blackjack.domain.deck.Deck;
-import blackjack.domain.deck.RandomCardShuffler;
+import blackjack.domain.deck.shuffler.RandomCardShuffler;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.PlayerFactory;
 import blackjack.domain.participant.Players;
