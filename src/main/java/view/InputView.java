@@ -17,11 +17,10 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public String readDealDecision() {
+    public boolean readDealDecision() {
         String answer = scanner.nextLine();
         validateDealDecisionAnswer(answer);
-
-        return answer;
+        return answer.equalsIgnoreCase("y");
     }
 
     public void validateDealDecisionAnswer(String answer) {
