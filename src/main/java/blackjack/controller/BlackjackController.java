@@ -32,11 +32,11 @@ public class BlackjackController {
         setInitialCards(players, dealer);
         printInitialSettings(players, dealer);
 
-        getMoreCardsForPlayers(players);
-        getMoreCardsForDealer(dealer, players);
+        getMoreCardsOfPlayers(players);
+        getMoreCardsOfDealer(dealer, players);
 
-        printGameResult(players, dealer);
-        printWinningResult(bettings, players, dealer);
+        printCardsOfParticipants(players, dealer);
+        printResult(bettings, players, dealer);
     }
 
     private Players readPlayers() {
@@ -63,14 +63,14 @@ public class BlackjackController {
 
     private void printInitialSettings(Players players, Dealer dealer) {
         outputView.printInitialSettingsDoneMessage(dealer.getName(), players.getPlayersName());
-        outputView.printCardResults(dealer.getName(), List.of(dealer.getFirstCardName()));
+        outputView.printCards(dealer.getName(), List.of(dealer.getFirstCardName()));
         for (Player player : players.getPlayers()) {
-            outputView.printCardResults(player.getName(), player.getCardsName());
+            outputView.printCards(player.getName(), player.getCardsName());
         }
         outputView.println();
     }
 
-    private void getMoreCardsForPlayers(Players players) {
+    private void getMoreCardsOfPlayers(Players players) {
         for (Player player : players.getPlayers()) {
             getMoreCardsForPlayer(player);
         }
@@ -80,11 +80,11 @@ public class BlackjackController {
         boolean isDraw = false;
         while (player.canDraw() && readPlayerWantMoreCard(player)) {
             player.draw(Deck.pop());
-            outputView.printCardResults(player.getName(), player.getCardsName());
+            outputView.printCards(player.getName(), player.getCardsName());
             isDraw = true;
         }
         if (!isDraw) {
-            outputView.printCardResults(player.getName(), player.getCardsName());
+            outputView.printCards(player.getName(), player.getCardsName());
         }
     }
 
@@ -92,7 +92,7 @@ public class BlackjackController {
         return "y".equals(inputView.readMoreCard(player.getName()));
     }
 
-    private void getMoreCardsForDealer(Dealer dealer, Players players) {
+    private void getMoreCardsOfDealer(Dealer dealer, Players players) {
         if (players.isAllPlayersBurst()) {
             return;
         }
@@ -102,16 +102,16 @@ public class BlackjackController {
         }
     }
 
-    private void printGameResult(Players players, Dealer dealer) {
+    private void printCardsOfParticipants(Players players, Dealer dealer) {
         outputView.println();
-        outputView.printCardResults(dealer.getName(), dealer.getCardsName(), dealer.calculateCardsValue());
+        outputView.printCards(dealer.getName(), dealer.getCardsName(), dealer.calculateCardsValue());
         for (Player player : players.getPlayers()) {
-            outputView.printCardResults(player.getName(), player.getCardsName(), player.calculateCardsValue());
+            outputView.printCards(player.getName(), player.getCardsName(), player.calculateCardsValue());
         }
     }
 
-    private void printWinningResult(Bettings bettings, Players players, Dealer dealer) {
-        outputView.printWinningResult(ProfitResult.from(bettings, players, dealer));
+    private void printResult(Bettings bettings, Players players, Dealer dealer) {
+        outputView.printResult(ProfitResult.from(bettings, players, dealer));
     }
 
 }
