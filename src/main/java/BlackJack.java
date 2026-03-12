@@ -1,8 +1,10 @@
+import domain.BettingMoney;
 import domain.deck.Deck;
 import domain.deck.StandardDeck;
 import domain.player.Dealer;
 import domain.player.Gambler;
 import domain.player.Gamblers;
+import java.util.ArrayList;
 import java.util.List;
 import parser.AnswerParser;
 import parser.PlayerNameParser;
@@ -20,7 +22,7 @@ public class BlackJack {
 
     public void start() {
         Dealer dealer = new Dealer();
-        Gamblers gamblers = new Gamblers(getPlayerNames());
+        Gamblers gamblers = new Gamblers(createGambler());
 
         initialDeal(dealer, gamblers);
         printInitialDealInfo(dealer, gamblers);
@@ -34,6 +36,17 @@ public class BlackJack {
     private List<String> getPlayerNames() {
         OutputView.printStartMessage();
         return PlayerNameParser.splitNames(InputView.readLine());
+    }
+
+    private List<Gambler> createGambler() {
+        List<Gambler> gamblers = new ArrayList<>();
+        List<String> names = getPlayerNames();
+        for (String name : names) {
+            OutputView.requestBettingMoney(name);
+            int money = Integer.parseInt(InputView.readLine());
+            gamblers.add(new Gambler(name, new BettingMoney(money)));
+        }
+        return gamblers;
     }
 
     private void initialDeal(Dealer dealer, Gamblers gamblers) {

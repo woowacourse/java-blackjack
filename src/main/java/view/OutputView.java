@@ -74,4 +74,8 @@ public class OutputView {
                 .map(OutputView::formatCard)
                 .collect(Collectors.joining(", "));
     }
+
+    public static void requestBettingMoney(String name) {
+        System.out.printf("%s의 배팅 금액은?%n", name);
+    }
 }

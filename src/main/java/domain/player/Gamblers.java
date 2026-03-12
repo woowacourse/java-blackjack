@@ -13,21 +13,20 @@ import java.util.Set;
 public class Gamblers {
     private final List<Gambler> gamblers;
 
-    public Gamblers(List<String> names) {
-        validateNonDuplicate(names);
-        gamblers = new ArrayList<>();
-        init(names);
+    public Gamblers(List<Gambler> gamblers) {
+        validateNonDuplicateNames(gamblers);
+        this.gamblers = gamblers;
     }
 
-    private void validateNonDuplicate(List<String> names) {
-        Set<String> namesSet = new HashSet<>(names);
-        if (namesSet.size() != names.size()) {
+    private void validateNonDuplicateNames(List<Gambler> gamblers) {
+        List<String> names = gamblers.stream()
+                .map(Gambler::getName)
+                .toList();
+
+        Set<String> targetNames = new HashSet<>(names);
+        if (targetNames.size() != names.size()) {
             throw new BlackjackException(ExceptionMessage.INPUT_ERROR);
         }
-    }
-
-    private void init(List<String> names) {
-        names.stream().map(Gambler::new).forEach(gamblers::add);
     }
 
     public List<Gambler> getGamblers() {

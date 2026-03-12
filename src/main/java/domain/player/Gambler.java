@@ -1,5 +1,6 @@
 package domain.player;
 
+import domain.BettingMoney;
 import domain.MatchResult;
 import domain.card.Card;
 import exception.BlackjackException;
@@ -13,13 +14,14 @@ public class Gambler extends Player {
     private static final String RESULT_FORMAT = "%s:%s";
 
     private final String name;
+    private final BettingMoney bettingMoney;
 
-    public Gambler(String name) {
+    public Gambler(String name, BettingMoney bettingMoney) {
         super();
+        this.bettingMoney = bettingMoney;
         validate(name);
         this.name = name;
     }
-
 
     private void validate(String name) {
         validateContainsNumber(name);
@@ -51,13 +53,17 @@ public class Gambler extends Player {
         return MatchResult.DRAW;
     }
 
+    public int calculateFinalIncome(Dealer dealer) {
+        MatchResult matchResult = getResult(dealer);
+        return matchResult.calculateIncome(this.bettingMoney);
+    }
+
     private int normalize(int score) {
         if (score > BLACKJACK_MAX_LIMIT) {
             return 0;
         }
         return score;
     }
-
 
     public String showResult(MatchResult result) {
         return String.format(RESULT_FORMAT, name, result.getName());
