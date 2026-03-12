@@ -1,10 +1,10 @@
 package blackjack;
 
-import blackjack.controller.BlackjackController;
+import blackjack.config.AppConfig;
 
 public class Application {
     public static void main(String[] args) {
-        BlackjackController blackjackController = new BlackjackController();
-        blackjackController.run();
+        AppConfig appConfig = new AppConfig();
+        appConfig.run();
     }
 }
