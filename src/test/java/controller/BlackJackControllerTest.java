@@ -18,8 +18,6 @@ import view.InputView;
 import view.OutputView;
 
 class BlackJackControllerTest {
-    private static final String TEST_NAME = "tester";
-
     private BlackJackController controller;
 
     @BeforeEach
@@ -40,7 +38,7 @@ class BlackJackControllerTest {
         );
     }
 
-    class TestInputViewImpl implements InputView {
+    static class TestInputViewImpl implements InputView {
 
         private static final Deque<String> hitOrStandOrder = new ArrayDeque<>(List.of("y", "n", "n", "n"));
 
@@ -55,7 +53,7 @@ class BlackJackControllerTest {
         }
     }
 
-    class TestOutputViewImpl implements OutputView {
+    static class TestOutputViewImpl implements OutputView {
 
         @Override
         public void printErrorMessage(Exception e) {
@@ -86,7 +84,7 @@ class BlackJackControllerTest {
         }
     }
 
-    class TestCardCreationStrategy implements CardCreationStrategy {
+    static class TestCardCreationStrategy implements CardCreationStrategy {
 
         @Override
         public Deque<Card> create() {
