@@ -22,7 +22,7 @@ public class BlackjackGame {
     }
 
     private void processPlayersTurn() {
-        board.getPlayers().getPlayers()
+        board.getPlayers()
                 .forEach(this::processPlayerTurn);
     }
 

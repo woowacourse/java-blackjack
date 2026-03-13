@@ -4,6 +4,7 @@ import static java.util.stream.Collectors.toSet;
 
 import java.util.List;
 import java.util.Set;
+import java.util.function.Consumer;
 
 public class Players {
 
@@ -35,6 +36,10 @@ public class Players {
         if (uniqueNames.size() != players.size()) {
             throw new IllegalArgumentException(DUPLICATE_NAME_MESSAGE);
         }
+    }
+
+    public void forEach(final Consumer<Player> action) {
+        values.forEach(action);
     }
 
     public List<Player> getPlayers() {
