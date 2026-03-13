@@ -1,11 +1,12 @@
 package controller;
 
 import java.util.ArrayList;
-import model.BettingMoney;
-import model.PlayerName;
 import java.util.List;
 import model.Agreement;
+import model.BettingMoney;
 import model.Player;
+import model.PlayerName;
+import model.PlayerNames;
 import model.Players;
 import view.InputView;
 
@@ -14,15 +15,25 @@ public class InputController {
     private static final String NAME_SPLIT_REGEX = ",";
 
     public Players getPlayersName() {
-        List<String> stringPlayers = List.of(InputView.getNameRequest().split(NAME_SPLIT_REGEX));
+        PlayerNames playerNames = getValidatedPlayerNames();
         List<Player> players = new ArrayList<>();
 
-        for (String player : stringPlayers) {
-            String bettingMoneyInput = InputView.getBettingRequest(player);
-            players.add(new Player(new PlayerName(player), new BettingMoney(bettingMoneyInput)));
+        for (PlayerName playerName : playerNames.getPlayerNames()) {
+            String bettingMoneyInput = InputView.getBettingRequest(playerName.value());
+            players.add(new Player(playerName, new BettingMoney(bettingMoneyInput)));
         }
 
         return new Players(players);
+    }
+
+    private PlayerNames getValidatedPlayerNames() {
+        List<String> stringPlayers = List.of(InputView.getNameRequest().split(NAME_SPLIT_REGEX, -1));
+        List<PlayerName> playerNames = new ArrayList<>();
+
+        for (String player : stringPlayers) {
+            playerNames.add(new PlayerName(player));
+        }
+        return new PlayerNames(playerNames);
     }
 
     public boolean getCondition(PlayerName name) {
