@@ -32,7 +32,7 @@ public class ProfitCalculator {
     }
 
     private static BigDecimal calculateRegularBetAmount(DealerStatus dealer, PlayerStatus player) {
-        if(player.score() > dealer.score() ) {
+        if(player.score() > dealer.score() || dealer.isBust()) {
             return BigDecimal.valueOf(player.bet());
         }
 
