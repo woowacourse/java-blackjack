@@ -6,7 +6,9 @@ import controller.input.PlayerReader;
 import controller.result.BettingResultReporter;
 import controller.result.NonBettingResultReporter;
 import controller.result.ResultReporter;
+import model.judgement.Judgement;
 import model.judgement.PlayerResult;
+import model.paticipant.Dealer;
 import model.paticipant.Players;
 
 public class GameMode {
@@ -31,7 +33,8 @@ public class GameMode {
         return playerReader.readPlayers();
     }
 
-    public void reportResult(PlayerResult playerResult) {
+    public void reportResult(Dealer dealer, Players players) {
+        PlayerResult playerResult = Judgement.judgeByPlayer(dealer, players);
         resultReporter.report(playerResult);
     }
 }

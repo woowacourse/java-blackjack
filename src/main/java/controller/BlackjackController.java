@@ -1,8 +1,6 @@
 package controller;
 
 import model.BlackjackService;
-import model.judgement.Judgement;
-import model.judgement.PlayerResult;
 import model.paticipant.Dealer;
 import model.paticipant.Player;
 import model.paticipant.Players;
@@ -25,9 +23,9 @@ public class BlackjackController {
 
         drawInitCards(dealer, players);
         drawMoreCardByPlayer(dealer, players);
-
         printFinalCards(dealer, players);
-        reportResult(dealer, players);
+
+        gameMode.reportResult(dealer, players);
     }
 
     private void drawMoreCardByPlayer(Dealer dealer, Players players) {
@@ -75,10 +73,5 @@ public class BlackjackController {
         OutputView.printBlank();
         OutputView.printCardByPlayerWithScore(dealer);
         players.forEach(OutputView::printCardByPlayerWithScore);
-    }
-
-    private void reportResult(Dealer dealer, Players players) {
-        PlayerResult playerResult = Judgement.judgeByPlayer(dealer, players);
-        gameMode.reportResult(playerResult);
     }
 }
