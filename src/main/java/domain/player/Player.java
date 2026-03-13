@@ -4,47 +4,51 @@ import domain.card.Card;
 import java.util.List;
 
 public class Player {
-
     private final Name name;
-    private final PlayerStatus playerStatus;
+    private final BettingHand bettingHand;
 
-    private Player(String name, PlayerStatus playerStatus) {
-        this.name = new Name(name);
-        this.playerStatus = playerStatus;
+    private Player(Name name, BettingHand bettingHand) {
+        this.name = name;
+        this.bettingHand = bettingHand;
     }
 
-    public static Player create(String name, Hand hand, int amount) {
-        Money money = new Money(amount);
-        Bet bet = new Bet(money);
-        PlayerStatus playerStatus = new PlayerStatus(hand, bet);
-        return new Player(name, playerStatus);
+    public static Player of(Name name, BettingHand bettingHand) {
+        return new Player(name, bettingHand);
+    }
+
+    public boolean hasSameName(String otherName) {
+        return name.getName().equals(otherName);
     }
 
     public boolean isBust() {
-        return playerStatus.isBust();
-    }
-
-    public List<Card> getCards() {
-        return playerStatus.getCards();
-    }
-
-    public void addHand(Card card) {
-        playerStatus.addHand(card);
-    }
-
-    public String getName() {
-        return name.getName();
-    }
-
-    public int getTotalScore() {
-        return playerStatus.getTotalScore();
+        return bettingHand.isBust();
     }
 
     public boolean isBlackjack() {
-        return playerStatus.isBlackjack();
+        return bettingHand.isBlackjack();
+    }
+
+    public boolean canHit() {
+        return !bettingHand.isBust();
+    }
+
+    public void hit(Card card) {
+        bettingHand.addCard(card);
+    }
+
+    public List<Card> cards() {
+        return bettingHand.cards();
+    }
+
+    public String name() {
+        return name.getName();
+    }
+
+    public int totalScore() {
+        return bettingHand.totalScore();
     }
 
     public int calculateProfit(Dealer dealer) {
-        return playerStatus.calculateProfit(dealer);
+        return bettingHand.calculateProfit(dealer);
     }
 }
