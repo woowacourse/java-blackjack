@@ -1,12 +1,11 @@
 package controller;
 
+import controller.result.ResultReporter;
 import java.util.ArrayList;
 import java.util.List;
 import model.BlackjackService;
-import model.judgement.DealerResult;
 import model.judgement.Judgement;
 import model.judgement.PlayerResult;
-import model.judgement.Profit;
 import model.paticipant.Dealer;
 import model.paticipant.Player;
 import model.paticipant.Players;
@@ -16,9 +15,11 @@ import view.OutputView;
 public class BlackjackController {
 
     private final BlackjackService blackjackService;
+    private final ResultReporter resultReporter;
 
-    public BlackjackController(BlackjackService blackjackService) {
+    public BlackjackController(BlackjackService blackjackService, ResultReporter resultReporter) {
         this.blackjackService = blackjackService;
+        this.resultReporter = resultReporter;
     }
 
     public void run() {
@@ -29,8 +30,7 @@ public class BlackjackController {
         drawMoreCardByPlayer(dealer, players);
 
         printFinalCards(dealer, players);
-        //judgeGame(dealer, players);
-        printProfits(dealer, players);
+        reportResult(dealer, players);
     }
 
     private Players createPlayers() {
@@ -86,21 +86,8 @@ public class BlackjackController {
         players.forEach(OutputView::printCardByPlayerWithScore);
     }
 
-    private void judgeGame(Dealer dealer, Players players) {
+    private void reportResult(Dealer dealer, Players players) {
         PlayerResult playerResult = Judgement.judgeByPlayer(dealer, players);
-        DealerResult dealerResult = Judgement.judgeByDealer(playerResult);
-
-        OutputView.printFinalResultHeader();
-        OutputView.printResultByDealer(dealerResult);
-        OutputView.printResultByPlayers(playerResult);
-    }
-
-    private void printProfits(Dealer dealer, Players players) {
-        PlayerResult playerResult = Judgement.judgeByPlayer(dealer, players);
-        Profit dealerProfit = playerResult.calculateDealerProfit();
-
-        OutputView.printFinalProfitHeader();
-        OutputView.printProfitByDealer(dealerProfit);
-        OutputView.printProfitByPlayers(playerResult.calculateProfits());
+        resultReporter.report(playerResult);
     }
 }

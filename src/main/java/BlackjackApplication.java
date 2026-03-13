@@ -1,4 +1,6 @@
 import controller.BlackjackController;
+import controller.result.ProfitReporter;
+import controller.result.ResultReporter;
 import java.util.List;
 import model.BlackjackService;
 import model.card.Card;
@@ -16,7 +18,8 @@ public class BlackjackApplication {
         Deck deck = new Deck(shuffledCards);
         BlackjackService blackjackService = new BlackjackService(deck);
 
-        BlackjackController controller = new BlackjackController(blackjackService);
+        ResultReporter resultReporter = new ProfitReporter();
+        BlackjackController controller = new BlackjackController(blackjackService, resultReporter);
         controller.run();
     }
 }
