@@ -14,11 +14,15 @@ public class BlackjackResult {
     }
 
     public void add(Player player, long betAmount) {
-        if (player.getCards().calculateScore() == Policy.BLACKJACK_NUMBER) {
+        if (isBlackjack(player)) {
             playerBets.put(player, BetResult.withBetAmount((long) (betAmount * Policy.BLACKJACK_MULTIPLIER)));
             return;
         }
         playerBets.put(player, BetResult.withBetAmount(betAmount));
+    }
+
+    private boolean isBlackjack(Player player) {
+        return player.getCards().calculateScore() == Policy.BLACKJACK_NUMBER;
     }
 
     public void resolveResults(Players players, Dealer dealer) {
