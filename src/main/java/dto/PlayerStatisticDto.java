@@ -1,14 +1,13 @@
 package dto;
 
-import domain.game.Result;
 import domain.participant.Player;
 
 public record PlayerStatisticDto(
         String name,
-        Result result
+        int profit
 ) {
 
-    public static PlayerStatisticDto of(Player player, Result result) {
-        return new PlayerStatisticDto(player.getName(), result);
+    public static PlayerStatisticDto of(Player player, int profit) {
+        return new PlayerStatisticDto(player.getName(), profit);
     }
 }
