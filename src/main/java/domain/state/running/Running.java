@@ -2,6 +2,7 @@ package domain.state.running;
 
 import domain.card.Hand;
 import domain.card.vo.Card;
+import domain.hitStrategy.HitStrategy;
 import domain.state.Started;
 import domain.state.State;
 import domain.state.finished.Stay;
@@ -9,13 +10,13 @@ import java.util.List;
 
 public abstract class Running extends Started {
 
-    protected Running(Hand hand) {
-        super(hand);
+    protected Running(Hand hand, HitStrategy hitStrategy) {
+        super(hand, hitStrategy);
     }
 
     @Override
     public boolean isFinished() {
-        return false;
+        return !hitStrategy.canHit(this);
     }
 
     @Override

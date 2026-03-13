@@ -9,6 +9,7 @@ import domain.card.vo.Suit;
 import domain.participants.Participant;
 import domain.state.finished.BlackJack;
 import domain.state.finished.Bust;
+import domain.state.finished.Stay;
 import domain.state.running.Hit;
 import java.util.List;
 import java.util.stream.Stream;
@@ -58,11 +59,11 @@ class RunningTest {
                     Arguments.of(TestFixture.createDefaultDealer(List.of(Rank.KING, Rank.SIX)),
                             new Card(Rank.KING, Suit.SPADE),
                             Bust.class, "Dealer", "16"),
-//                    // 16 이하이면 무조건 드로우 한다. -> 16 넘으면 Stay 반환 -> Dealer 에서 진행
-//                    // 도저히 Hit 객체안에 넣을 수가 없다. ㅠㅠㅠㅠㅠㅠㅠ
-//                    Arguments.of(TestFixture.createDefaultDealer(List.of(Rank.THREE, Rank.FOUR)),
-//                            new Card(Rank.KING, Suit.SPADE),
-//                            Stay.class, "Dealer", "14"),
+                    // 16 이하이면 무조건 드로우 한다. -> 16 넘으면 Stay 반환 -> Dealer 에서 진행
+                    // 도저히 Hit 객체안에 넣을 수가 없다. ㅠㅠㅠㅠㅠㅠㅠ -> 드디어 넣었다 하....
+                    Arguments.of(TestFixture.createDefaultDealer(List.of(Rank.THREE, Rank.FOUR)),
+                            new Card(Rank.KING, Suit.SPADE),
+                            Stay.class, "Dealer", "14"),
                     // 16 이하이면 무조건 드로우 한다. -> 16이하라면 Hit 반환
                     Arguments.of(TestFixture.createDefaultDealer(List.of(Rank.THREE, Rank.THREE)),
                             new Card(Rank.KING, Suit.SPADE),

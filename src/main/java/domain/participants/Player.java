@@ -22,9 +22,4 @@ public class Player extends Participant {
     public Integer getProfit(Participant dealer) {
         return state.getProfit(dealer.getState(), betting.amount());
     }
-
-    @Override
-    public boolean canDraw() {
-        return hitStrategy.canHit(state);
-    }
 }

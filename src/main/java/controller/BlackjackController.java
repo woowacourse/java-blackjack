@@ -57,15 +57,16 @@ public class BlackjackController {
 
     private void drawPlayerHandAndPrint(List<Participant> players, Deck deck) {
         for (Participant player : players) {
-            while (player.canDraw()) {
-                if (!inputView.readNeedToHit(player.getName())) {
-                    player.stay();
-                    break;
-                }
-                player.drawCard(deck.drawCard());
-                outputView.showCards(PlayerCardsDto.fromParticipant(player));
-            }
+            askToDrawCard(deck, player);
         }
+    }
+
+    private void askToDrawCard(Deck deck, Participant player) {
+        while (player.canDraw() && inputView.readNeedToHit(player.getName())) {
+            player.drawCard(deck.drawCard());
+            outputView.showCards(PlayerCardsDto.fromParticipant(player));
+        }
+        player.stay();
     }
 
     private void printAllStatus(Participant dealer, List<Participant> players) {
@@ -94,8 +95,7 @@ public class BlackjackController {
     private void drawDealerHandAndPrint(Participant dealer, Deck deck) {
         while (dealer.canDraw()) {
             dealer.drawCard(deck.drawCard());
-            outputView.drawDealer(
-                    new DealerDrawDto(dealer.getName(), CasinoDealerHitStrategy.BOUNDARY));
+            outputView.drawDealer(new DealerDrawDto(dealer.getName(), CasinoDealerHitStrategy.BOUNDARY));
             outputView.showCards(PlayerCardsDto.fromParticipant(dealer));
         }
         dealer.stay();

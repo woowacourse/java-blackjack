@@ -11,14 +11,12 @@ public abstract class Participant {
     private static final int MAX_NAME_SIZE = 7;
 
     protected final String name;
-    protected final HitStrategy hitStrategy;
     protected State state;
 
     protected Participant(String name, Hand hand, HitStrategy hitStrategy) {
         validateNameLength(name);
         this.name = name;
-        this.state = getStartState(hand);
-        this.hitStrategy = hitStrategy;
+        this.state = getStartState(hand, hitStrategy);
     }
 
     private void validateNameLength(String name) {
@@ -27,14 +25,16 @@ public abstract class Participant {
         }
     }
 
-    abstract public boolean canDraw();
-
     public String getName() {
         return name;
     }
 
     public State getState() {
         return state;
+    }
+
+    public boolean canDraw() {
+        return !state.isFinished();
     }
 
     public void stay() {
@@ -45,7 +45,7 @@ public abstract class Participant {
         this.state = getState().drawCard(card);
     }
 
-    public State getStartState(Hand hand) {
-        return Started.getStartState(hand);
+    public State getStartState(Hand hand, HitStrategy hitStrategy) {
+        return Started.getStartState(hand, hitStrategy);
     }
 }

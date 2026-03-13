@@ -17,9 +17,4 @@ public class Dealer extends Participant {
     public static HitStrategy getDefaultHitStrategy() {
         return DEFAULT_HIT_STRATEGY;
     }
-
-    @Override
-    public boolean canDraw() {
-        return !state.isFinished() && super.hitStrategy.canHit(state);
-    }
 }

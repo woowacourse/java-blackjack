@@ -11,7 +11,7 @@ import java.util.function.Function;
 public abstract class Finished extends Started {
 
     public Finished(Hand hand) {
-        super(hand);
+        super(hand, null);
     }
 
     abstract public Function<Integer, Integer> earningRate(Result result);
