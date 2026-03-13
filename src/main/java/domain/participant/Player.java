@@ -37,8 +37,4 @@ public class Player extends Participant {
     public String getName() {
         return name;
     }
-
-    public int getMoney() {
-        return money.getBetAmount();
-    }
 }
