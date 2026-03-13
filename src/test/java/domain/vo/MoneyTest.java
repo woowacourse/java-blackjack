@@ -23,7 +23,7 @@ class MoneyTest {
     void 정상_생성_테스트(String input, int value) {
         Money result = new Money(input);
 
-        assertThat(result).isEqualTo(value);
+        assertThat(result.getValueOf()).isEqualTo(value);
     }
 
     @ParameterizedTest
