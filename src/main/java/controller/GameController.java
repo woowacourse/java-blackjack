@@ -2,16 +2,22 @@ package controller;
 
 import domain.Players;
 import domain.batting.Money;
+import domain.batting.Profit;
 import domain.participant.Dealer;
 import domain.participant.Player;
+import dto.BattingResultDto;
 import dto.GameStartDto;
+import dto.HandDto;
 import dto.HandScoreDto;
+import service.BattingCalculateService;
 import service.GameService;
 import util.HitOption;
 import util.InputBattingParser;
 import util.InputHitOptionParser;
 import view.InputView;
 import view.OutputView;
+
+import java.util.List;
 
 public class GameController {
     private final InputView inputView;
@@ -24,7 +30,9 @@ public class GameController {
 
     public void run() {
         Players players = inputPlayers();
-        GameService gameService = new GameService(players);
+        Dealer dealer = new Dealer();
+        GameService gameService = new GameService(players, dealer);
+        BattingCalculateService battingCalculateService = new BattingCalculateService(players, dealer);
 
         playerBatting(players);
 
@@ -32,9 +40,10 @@ public class GameController {
         outputView.printStartGame(gameStartDTO);
 
         processGame(gameService);
-
-        outputView.printResults(gameService.calculateResults());
         outputView.printScore(gameService.getTotalScore());
+
+        BattingResultDto battingResult = battingCalculateService.getBattingResult();
+        outputView.printBattingResults(battingResult);
     }
 
     private Players inputPlayers() {
@@ -81,13 +90,13 @@ public class GameController {
         // 플레이어가 턴이 끝나지 않았고(Bust나 Blackjack이 아님), Hit을 원할 때까지 반복
         while (!player.isFinished() && inputHitOption(player) == HitOption.YES) {
             gameService.hit(player);
-            outputView.printHandCardWithScore(HandScoreDto.from(player));
+            outputView.printHandCard(HandDto.from(player));
         }
 
         // 반복문이 끝났는데 아직 안 끝난 상태(Hit 상태)라면 Stay 처리
         if (!player.isFinished()) {
             gameService.stay(player);
-            outputView.printHandCardWithScore(HandScoreDto.from(player));
+            outputView.printHandCard(HandDto.from(player));
         }
     }
 
@@ -96,8 +105,9 @@ public class GameController {
 
         while (!dealer.isFinished() && dealer.isReceiveCard()) {
             gameService.hit(dealer);
-
+            outputView.printDealerReceiveCard();
         }
+
         if (!dealer.isFinished()) {
             gameService.stay(dealer);
         }

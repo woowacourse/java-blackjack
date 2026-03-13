@@ -25,7 +25,17 @@ public class OutputView {
     }
 
     public void printHandCardWithScore(HandScoreDto handScoreDto) {
-        System.out.println(handScoreDto.name() + "카드: " + convertListToString(handScoreDto.handCards()) + " - 결과: " + handScoreDto.score());
+        System.out.println(handScoreDto.name() + "카드: " + convertListToString(handScoreDto.handCards()) + " - 결과: " + printScore(handScoreDto));
+    }
+
+    private String printScore(HandScoreDto handScoreDto) {
+        if (handScoreDto.isBlackJack()) {
+            return "블랙잭";
+        }
+        if (handScoreDto.isBust()) {
+            return "버스트";
+        }
+        return String.valueOf(handScoreDto.score());
     }
 
     public void printDealerReceiveCard() {
@@ -41,17 +51,21 @@ public class OutputView {
             printHandCardWithScore(player);
         }
     }
-    public void printResults(GameResultDto gameResultDto) {
-        DealerResultDto dealerResultDto = gameResultDto.dealerResultDto();
-        List<PlayerResultDto> playerResultDtos = gameResultDto.playerResultDtos();
-        System.out.println();
-        System.out.println("## 최종 승패");
-        System.out.println("딜러: " + dealerResultDto.win() + "승 " + dealerResultDto.draw() + "무 " + dealerResultDto.lose()+"패");
 
-        for (PlayerResultDto playerResultDto : playerResultDtos) {
-            System.out.println(playerResultDto.name() + ": " + playerResultDto.result());
+    public void printBattingResults(BattingResultDto battingResultDto) {
+        long dealerProfit = battingResultDto.dealerProfit();
+
+        List<PlayerProfitDto> playerProfitDtos = battingResultDto.playerProfitDtos();
+
+        System.out.println();
+        System.out.println("## 최종 수익");
+        System.out.println("딜러: " + dealerProfit);
+
+        for (PlayerProfitDto playerProfitDto : playerProfitDtos) {
+            System.out.println(playerProfitDto.name() + ": " + playerProfitDto.profit());
         }
     }
+
 
     private String convertListToString(List<String> list) {
         return String.join(", ", list);
