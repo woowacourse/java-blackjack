@@ -26,11 +26,11 @@ public class Hand {
 
     public int calculateScore() {
         int baseScore = cards.stream()
-                .mapToInt((card) -> card.getRank().getBaseScore())
+                .mapToInt(card -> card.getRank().getBaseScore())
                 .sum();
 
-        int aceCount = (int) cards.stream()
-                .filter((card) -> card.isAce())
+        long aceCount = cards.stream()
+                .filter(Card::isAce)
                 .count();
 
         for (int i = 0; i < aceCount; i++) {
