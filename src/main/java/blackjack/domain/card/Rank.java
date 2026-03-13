@@ -1,7 +1,6 @@
 package blackjack.domain.card;
 
 public enum Rank {
-
     ACE("A", 1),
 
     TWO("2", 2),
@@ -27,15 +26,15 @@ public enum Rank {
         this.value = value;
     }
 
+    public boolean isAce() {
+        return this == ACE;
+    }
+
     public String getName() {
         return name;
     }
 
     public int getValue() {
         return value;
-    }
-
-    public boolean isAce() {
-        return this == ACE;
     }
 }

@@ -22,16 +22,20 @@ public abstract class Participant {
         return hand.calculateScore();
     }
 
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
+    }
+
     public boolean isBust() {
         return hand.isBust();
     }
 
-    public List<Card> getCards() {
-        return hand.getCards();
-    }
-
     public String getName() {
         return name.getName();
+    }
+
+    public List<Card> getCards() {
+        return hand.getCards();
     }
 
     public abstract boolean canReceiveCard();

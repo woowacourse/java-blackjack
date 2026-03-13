@@ -25,7 +25,8 @@ public class Dealer extends Participant {
     }
 
     private void dealRoundTo(final Players players) {
-        players.getPlayers().forEach(player -> player.receiveCard(deck.draw()));
+        players.getPlayers()
+                .forEach(player -> player.receiveCard(deck.draw()));
     }
 
     public void dealCardTo(final Player player) {
@@ -36,12 +37,12 @@ public class Dealer extends Participant {
         receiveCard(deck.draw());
     }
 
+    public Card getOpenCard() {
+        return getCards().getFirst();
+    }
+
     @Override
     public boolean canReceiveCard() {
         return calculateScore().isLessThanOrEqualTo(HIT_THRESHOLD_SCORE);
-    }
-
-    public Card getOpenCard() {
-        return getCards().getFirst();
     }
 }
