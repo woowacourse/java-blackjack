@@ -47,23 +47,24 @@ public class OutputView {
         printEmptyLine();
     }
 
-    public void printFinalResult(BlackjackResult blackjackResult) {
+    public void printFinalResult(List<PlayerResultDto> playerResults) {
         System.out.println(OutputMessage.FINAL_MESSAGE.getMessage());
-        printFinalDealerResult(blackjackResult);
-        printFinalPlayerResult(blackjackResult);
+
+        long dealerProfit = -1 * playerResults.stream()
+                .mapToLong(PlayerResultDto::profit)
+                .sum();
+        printFinalDealerResult(dealerProfit);
+        printFinalPlayerResult(playerResults);
     }
 
-    private void printFinalDealerResult(BlackjackResult blackjackResult) {
-        System.out.printf(OutputMessage.DEALER_RESULT_FORMAT.getMessage(), blackjackResult.dealerProfit());
+    private void printFinalDealerResult(long profit) {
+        System.out.printf(OutputMessage.DEALER_RESULT_FORMAT.getMessage(), profit);
         printEmptyLine();
     }
 
-    private void printFinalPlayerResult(BlackjackResult blackjackResult) {
-        for (Map.Entry<Player, BetResult> result : blackjackResult.getPlayerBets().entrySet()) {
-            Player player = result.getKey();
-            long playerProfit = blackjackResult.playerProfit(result);
-
-            System.out.printf(OutputMessage.PLAYER_RESULT_FORMAT.getMessage(), player.getName(), playerProfit);
+    private void printFinalPlayerResult(List<PlayerResultDto> playerResults) {
+        for (PlayerResultDto playerResult : playerResults) {
+            System.out.printf(OutputMessage.PLAYER_RESULT_FORMAT.getMessage(), playerResult.name(), playerResult.profit());
             printEmptyLine();
         }
     }
