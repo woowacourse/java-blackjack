@@ -28,7 +28,7 @@ public class BlackjackResult {
 
         gamblers.forEach(gambler -> {
             MatchResult matchResult = MatchResult.of(gambler, dealer);
-            long reward = gambler.calculateReward(matchResult);
+            long reward = gambler.calculateReward(matchResult.getRate());
             profits.put(gambler.getName(), reward);
         });
 

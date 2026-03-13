@@ -13,8 +13,8 @@ public class Gambler extends Player {
         this.betting = new Betting(amount);
     }
 
-    public long calculateReward(MatchResult matchResult) {
-        return matchResult.calculateReward(betting.amount());
+    public int calculateReward(double rate) {
+        return  (int)(betting.amount() * rate);
     }
 
     @Override

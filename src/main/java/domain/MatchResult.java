@@ -17,6 +17,10 @@ public enum MatchResult {
         this.rate = rate;
     }
 
+    public double getRate(){
+        return rate;
+    }
+
 
     public static MatchResult of(Gambler gambler, Dealer dealer) {
         if (isBothBlackJack(gambler, dealer)) {
@@ -65,7 +69,5 @@ public enum MatchResult {
         return DRAW;
     }
 
-    public long calculateReward(int amount) {
-        return (long) (amount * rate);
-    }
+
 }
