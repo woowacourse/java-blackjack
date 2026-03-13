@@ -3,7 +3,6 @@ package blackjack.view;
 import blackjack.domain.PlayerCardsName;
 import blackjack.domain.PlayerFinalCardsScore;
 import blackjack.domain.PlayerProfitResultDto;
-import blackjack.domain.ScoreCompareResult;
 import java.util.List;
 
 public class OutputView {

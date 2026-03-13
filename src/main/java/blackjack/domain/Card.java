@@ -36,11 +36,11 @@ public record Card(String rank, String shape) {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Card card)) {
+        if (!(o instanceof Card(String rank1, String shape1))) {
             return false;
         }
-        return rank.equals(card.rank) &&
-                shape.equals(card.shape);
+        return rank.equals(rank1) &&
+                shape.equals(shape1);
     }
 
 }
