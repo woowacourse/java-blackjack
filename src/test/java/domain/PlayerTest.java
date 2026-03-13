@@ -72,6 +72,7 @@ class PlayerTest {
         // when
         player.bet(30000);
 
+        // then
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> player.bet(20000));
     }
