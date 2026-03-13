@@ -32,12 +32,8 @@ public class BlackjackGame {
 
     public void registPlayers(List<String> names) {
         for (String name : names) {
-            registPlayer(name);
+            players.add(new Player(name));
         }
-    }
-
-    private void registPlayer(String name) {
-        players.add(new Player(name));
     }
 
     public void giveHand() {
