@@ -1,75 +1,54 @@
 package domain;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class CardsTest {
 
-    @Test
-    @DisplayName("카드 합계를 계산합니다.")
-    void calculate_card_score() {
-        Card card1 = new Card(Shape.from("스페이드"), Number.from(8));
-        Card card2 = new Card(Shape.from("하트"), Number.from(8));
+    @ParameterizedTest(name = "{0}")
+    @MethodSource("canReceiveCardTestCased")
+    @DisplayName("카드를 받을 수 있을지 확인한다.")
+    void canReceiveCard(String description, List<Integer> numbers, boolean expected) {
+        Cards cards = createCards(numbers);
+        assertThat(expected).isEqualTo(cards.canReceiveCard(21));
+    }
 
-        List<Card> cards = new ArrayList<>();
-        cards.add(card1);
-        cards.add(card2);
-
-        Cards realCards = new Cards(cards);
-        assertEquals(16, realCards.calculateOptimalScore());
+    static Stream<Arguments> canReceiveCardTestCased() {
+        return Stream.of(
+                Arguments.of("Ace 2개면 카드를 받을 수 있다.", List.of(11, 11), true),
+                Arguments.of("King,9,Ace,Ace면 카드를 받을 수 없다.", List.of(10, 9, 11, 11), false),
+                Arguments.of("King 3개면 카드를 받을 수 없다.", List.of(10, 10, 10), false)
+        );
     }
 
     @Test
-    @DisplayName("Ace가 2개일 경우")
-    void two_ace() {
-        Card card1 = new Card(Shape.from("스페이드"), Number.from(11));
-        Card card2 = new Card(Shape.from("하트"), Number.from(11));
-        List<Card> cards = new ArrayList<>();
-        Cards realCards = new Cards(cards);
+    @DisplayName("Ace를 두 장을 받을 경우의 점수 합은 12가 된다.")
+    void calculateOptimalScore() {
+        List<Integer> numbers = new ArrayList<>(List.of(11, 11));
+        Cards cards = createCards(numbers);
 
-        realCards.addCard(card1);
-        realCards.addCard(card2);
+        assertThat(12).isEqualTo(cards.calculateOptimalScore());
+    }
 
-        assertEquals(true, realCards.canReceiveCard(21));
+    private Cards createCards(List<Integer> numbers) {
+        Cards cards = new Cards(new ArrayList<>());
+        numbers.forEach(number -> cards.addCard(new Card(Shape.from("스페이드"), Number.from(number))));
+        return cards;
     }
 
     @Test
-    @DisplayName("King,9,Ace,Ace일경우")
-    void king_nine_two_ace() {
-        Card card1 = new Card(Shape.from("스페이드"), Number.from(10));
-        Card card2 = new Card(Shape.from("하트"), Number.from(9));
-        Card card3 = new Card(Shape.from("스페이드"), Number.from(11));
-        Card card4 = new Card(Shape.from("하트"), Number.from(11));
-
-        List<Card> cards = new ArrayList<>();
-        Cards realCards = new Cards(cards);
-
-        realCards.addCard(card1);
-        realCards.addCard(card2);
-        realCards.addCard(card3);
-        realCards.addCard(card4);
-
-        assertEquals(false, realCards.canReceiveCard(21));
+    void addCard() {
     }
 
     @Test
-    @DisplayName("King,King,King 일경우")
-    void three_king() {
-        Card card1 = new Card(Shape.from("스페이드"), Number.from(10));
-        Card card2 = new Card(Shape.from("하트"), Number.from(10));
-        Card card3 = new Card(Shape.from("스페이드"), Number.from(10));
-
-        List<Card> cards = new ArrayList<>();
-        Cards realCards = new Cards(cards);
-
-        realCards.addCard(card1);
-        realCards.addCard(card2);
-        realCards.addCard(card3);
-
-        assertEquals(false, realCards.canReceiveCard(21));
+    void getCardsInfo() {
     }
 }
