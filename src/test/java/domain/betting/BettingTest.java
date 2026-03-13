@@ -32,7 +32,6 @@ class BettingTest {
         );
     }
 
-
     @Test
     @DisplayName("이름 중복 없음 테스트")
     void 이름_중복_없음_테스트() {
