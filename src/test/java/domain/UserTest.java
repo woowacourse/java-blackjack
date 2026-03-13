@@ -26,7 +26,7 @@ public class UserTest {
         User user = new User("라이", new Money(10000));
 
         // when
-        Money profit = user.updateProfitBy(gameResult);
+        Money profit = user.calculateProfit(gameResult);
 
         // then
         assertThat(profit).isEqualTo(new Money(expectedAmount));
