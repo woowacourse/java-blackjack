@@ -12,18 +12,33 @@ public class Participants {
     private final Dealer dealer;
     private final List<Player> players;
 
+    public Participants(List<Player> players) {
+        this(Dealer.create(), players);
+    }
+
     public Participants(Dealer dealer, List<Player> players) {
         this.dealer = dealer;
         this.players = players;
     }
 
-    public Participants(List<Player> players) {
-        this(Dealer.create(), players);
-    }
-
     public static Participants from(final String rawPlayerNames) {
         List<Player> players = parsePlayersFrom(rawPlayerNames);
         return new Participants(players);
+    }
+
+    public List<Player> getPlayers() {
+        return List.copyOf(players);
+    }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public Stream<Participant> stream() {
+        return Stream.concat(
+            Stream.of(dealer),
+            players.stream()
+        );
     }
 
     private static List<Player> parsePlayersFrom(String rawPlayerNames) {
@@ -61,20 +76,5 @@ public class Participants {
         return playerNames.stream()
             .map(playerName -> new Player(playerName, new Hand()))
             .toList();
-    }
-
-    public List<Player> getPlayers() {
-        return List.copyOf(players);
-    }
-
-    public Dealer getDealer() {
-        return dealer;
-    }
-
-    public Stream<Participant> stream() {
-        return Stream.concat(
-            Stream.of(dealer),
-            players.stream()
-        );
     }
 }

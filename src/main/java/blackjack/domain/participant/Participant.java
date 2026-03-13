@@ -15,7 +15,7 @@ public abstract class Participant {
     }
 
     public final String getName() {
-        return name.getCleaned();
+        return name.getValue();
     }
 
     public final List<Card> getCards() {

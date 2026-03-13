@@ -11,7 +11,6 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 class DealerTest {
-    private static final String DEALER_NAME = "딜러";
     private static final String PLAYER_NAME = "플레이어";
 
     private static final Hand LOWER_SCORE_HAND =
@@ -52,7 +51,7 @@ class DealerTest {
     @Test
     void 둘_다_버스트가_아니면서_플레이어가_점수가_더_높다면_플레이어가_승리한다() {
         // given
-        Dealer dealer = new Dealer(DEALER_NAME, LOWER_SCORE_HAND);
+        Dealer dealer = new Dealer(LOWER_SCORE_HAND);
         Player player = new Player(PLAYER_NAME, HIGHER_SCORE_HAND);
         // when
         GameResult result = dealer.judgeAgainst(player);
@@ -63,7 +62,7 @@ class DealerTest {
     @Test
     void 둘_다_버스트가_아니면서_딜러가_점수가_더_높다면_딜러가_승리한다() {
         // given
-        Dealer dealer = new Dealer(DEALER_NAME, HIGHER_SCORE_HAND);
+        Dealer dealer = new Dealer(HIGHER_SCORE_HAND);
         Player player = new Player(PLAYER_NAME, LOWER_SCORE_HAND);
         // when
         GameResult result = dealer.judgeAgainst(player);
@@ -74,7 +73,7 @@ class DealerTest {
     @Test
     void 둘_다_버스트가_아니면서_점수가_같다면_무승부한다() {
         // given
-        Dealer dealer = new Dealer(DEALER_NAME, DEFAULT_SCORE_HAND);
+        Dealer dealer = new Dealer(DEFAULT_SCORE_HAND);
         Player player = new Player(PLAYER_NAME, DEFAULT_SCORE_HAND);
         // when
         GameResult result = dealer.judgeAgainst(player);
@@ -85,7 +84,7 @@ class DealerTest {
     @Test
     void 플레이어가_버스트라면_딜러가_승리한다() {
         // given
-        Dealer dealer = new Dealer(DEALER_NAME, DEFAULT_SCORE_HAND);
+        Dealer dealer = new Dealer(DEFAULT_SCORE_HAND);
         Player player = new Player(PLAYER_NAME, BUST_SCORE_HAND);
         // when
         GameResult result = dealer.judgeAgainst(player);
@@ -96,7 +95,7 @@ class DealerTest {
     @Test
     void 딜러만_버스트라면_플레이어가_승리한다() {
         // given
-        Dealer dealer = new Dealer(DEALER_NAME, BUST_SCORE_HAND);
+        Dealer dealer = new Dealer(BUST_SCORE_HAND);
         Player player = new Player(PLAYER_NAME, DEFAULT_SCORE_HAND);
         // when
         GameResult result = dealer.judgeAgainst(player);
@@ -107,7 +106,7 @@ class DealerTest {
     @Test
     void 둘_다_버스트라면_딜러가_승리한다() {
         // given
-        Dealer dealer = new Dealer(DEALER_NAME, BUST_SCORE_HAND);
+        Dealer dealer = new Dealer(BUST_SCORE_HAND);
         Player player = new Player(PLAYER_NAME, BUST_SCORE_HAND);
         // when
         GameResult result = dealer.judgeAgainst(player);

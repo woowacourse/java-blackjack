@@ -8,39 +8,35 @@ public class Dealer extends Participant {
     private static final Name DEALER_NAME = new Name("딜러");
     private static final int HIT_THRESHOLD = 16;
 
-    public Dealer(Name name, Hand hand) {
-        super(name, hand);
-    }
-
-    public Dealer(String name, Hand hand) {
-        super(new Name(name), hand);
+    public Dealer(Hand hand) {
+        super(DEALER_NAME, hand);
     }
 
     public static Dealer create() {
-        return new Dealer(DEALER_NAME, new Hand());
-    }
-
-    @Override
-    public boolean canHit() {
-        return !getScore().isBiggerThan(HIT_THRESHOLD);
+        return new Dealer(new Hand());
     }
 
     public static boolean isDealerName(Name name) {
         return DEALER_NAME.equals(name);
     }
 
+    @Override
+    public boolean canHit() {
+        return getScore().isLessThanOrEqual(HIT_THRESHOLD);
+    }
+
     public GameResult judgeAgainst(Player player) {
         if (player.isBust()) {
             return GameResult.DEALER_WIN;
         }
-        if (this.isBust()) {
+        if (isBust()) {
             return GameResult.PLAYER_WIN;
         }
         return competeScoreWith(player);
     }
 
     private GameResult competeScoreWith(Player player) {
-        Score dealerScore = this.getScore();
+        Score dealerScore = getScore();
         Score playerScore = player.getScore();
 
         if (dealerScore.isBiggerThan(playerScore)) {

@@ -14,4 +14,8 @@ public record Score(int value) implements Comparable<Score> {
     public boolean isBiggerThan(int otherValue) {
         return isBiggerThan(new Score(otherValue));
     }
+
+    public boolean isLessThanOrEqual(int hitThreshold) {
+        return !isBiggerThan(hitThreshold);
+    }
 }

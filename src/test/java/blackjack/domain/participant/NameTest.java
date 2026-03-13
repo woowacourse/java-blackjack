@@ -15,7 +15,7 @@ class NameTest {
         // when
         Name name = new Name(rawName);
         // then
-        assertThat(name.getCleaned()).isEqualTo(cleanedName);
+        assertThat(name.getValue()).isEqualTo(cleanedName);
     }
 
     @Test

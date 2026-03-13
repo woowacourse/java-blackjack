@@ -3,21 +3,15 @@ package blackjack.domain.participant;
 import java.util.Objects;
 
 public final class Name {
-    private final String cleaned;
+    private final String value;
 
     public Name(final String rawValue) {
         validate(rawValue);
-        this.cleaned = rawValue.strip();
+        this.value = rawValue.strip();
     }
 
-    private void validate(final String rawValue) {
-        if (rawValue == null || rawValue.isBlank()) {
-            throw new IllegalArgumentException("참가자 이름은 null 이거나 empty 일 수 없습니다.");
-        }
-    }
-
-    public String getCleaned() {
-        return cleaned;
+    public String getValue() {
+        return value;
     }
 
     @Override
@@ -28,11 +22,17 @@ public final class Name {
         if (!(other instanceof Name name)) {
             return false;
         }
-        return cleaned.equals(name.cleaned);
+        return value.equals(name.value);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(cleaned);
+        return Objects.hashCode(value);
+    }
+
+    private void validate(final String rawValue) {
+        if (rawValue == null || rawValue.isBlank()) {
+            throw new IllegalArgumentException("참가자 이름은 null 이거나 empty 일 수 없습니다.");
+        }
     }
 }

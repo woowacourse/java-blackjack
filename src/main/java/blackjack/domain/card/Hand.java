@@ -26,31 +26,31 @@ public class Hand {
         this.cards.add(card);
     }
 
+    public boolean isBust() {
+        return getScore().isBiggerThan(BUST_THRESHOLD);
+    }
+
     public Score getScore() {
-        int sum = calculateSum(cards);
-        boolean containsAce = containsAce(cards);
-        if (containsAce && canApplyAceAmount(sum)) {
+        int sum = calculateSum();
+        boolean containsAce = containsAce();
+        if (containsAce && canApplyAceAmount()) {
             return new Score(sum + ACE_ADJUST_AMOUNT);
         }
         return new Score(sum);
     }
 
-    private int calculateSum(List<Card> cards) {
+    private int calculateSum() {
         return cards.stream()
             .mapToInt(Card::getValue)
             .sum();
     }
 
-    private boolean containsAce(List<Card> cards) {
+    private boolean containsAce() {
         return cards.stream()
             .anyMatch(Card::isAce);
     }
 
-    private boolean canApplyAceAmount(final int sum) {
-        return (sum + ACE_ADJUST_AMOUNT) <= BUST_THRESHOLD;
-    }
-
-    public boolean isBust() {
-        return getScore().value() > BUST_THRESHOLD;
+    private boolean canApplyAceAmount() {
+        return (calculateSum() + ACE_ADJUST_AMOUNT) <= BUST_THRESHOLD;
     }
 }
