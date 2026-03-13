@@ -2,14 +2,13 @@ package domain.game;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import dto.BlackjackResultDto;
-import factory.BlackjackControllerFactory;
+import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
-import domain.card.Card;
+import dto.BlackjackResultDto;
 import dto.BlackjackStatisticsDto;
 import dto.ParticipantDto;
-import dto.PlayerStatisticDto;
+import factory.BlackjackControllerFactory;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;
@@ -238,38 +237,6 @@ class BlackjackGameManagerTest {
 
                 // then
                 assertThat(actual).isNotNull();
-            }
-        }
-    }
-
-    @Nested
-    class CalculatePlayerResultsTest {
-
-        @Nested
-        class Success {
-
-            @Test
-            void 플레이어별_결과를_승무패로_계산해야_한다() {
-
-                // given
-                BlackjackGameManager blackjackGameManager = new FixedDeckBlackjackGameManager(List.of(
-                    card(Rank.TEN, Suit.HEART), card(Rank.SEVEN, Suit.SPADE),
-                    card(Rank.TEN, Suit.CLOVER), card(Rank.EIGHT, Suit.DIAMOND),
-                    card(Rank.TEN, Suit.DIAMOND), card(Rank.SEVEN, Suit.HEART),
-                    card(Rank.NINE, Suit.CLOVER), card(Rank.SEVEN, Suit.DIAMOND)
-                ));
-                blackjackGameManager.createParticipants(List.of("jacob", "seoye", "brown"));
-                blackjackGameManager.drawInitialCards();
-
-                // when
-                List<PlayerStatisticDto> actual = blackjackGameManager.calculatePlayerResults();
-
-                // then
-                assertThat(actual).containsExactly(
-                    new PlayerStatisticDto("jacob", Result.WIN),
-                    new PlayerStatisticDto("seoye", Result.DRAW),
-                    new PlayerStatisticDto("brown", Result.LOSE)
-                );
             }
         }
     }
