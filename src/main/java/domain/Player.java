@@ -1,9 +1,8 @@
 package domain;
 
-
 import java.util.List;
 
-import constant.GameConstant;
+import domain.enums.MatchCase;
 
 public class Player {
     private static final int ACE_ADDITIONAL_SCORE = 11;
@@ -18,8 +17,8 @@ public class Player {
         this.cards = new Cards();
     }
 
-    public boolean isBust() {
-        return cards.getFinalScore() > GameConstant.GAME_OVER_THRESHOLD_SCORE;
+    public void add(Card card) {
+        cards.addCard(card);
     }
 
     public void addInitializedCard(Deck deck) {
@@ -27,33 +26,25 @@ public class Player {
         add(deck.pop());
     }
 
-    public void add(Card card) {
-        cards.addCard(card);
-    }
-
     public MatchCase calculateMatchCase(int dealerTotal) {
-        if (cards.getFinalScore()>dealerTotal){
+        if (cards.getFinalScore() > dealerTotal) {
             return MatchCase.WIN;
         }
-        if (cards.getFinalScore()==dealerTotal){
+        if (cards.getFinalScore() == dealerTotal) {
             return MatchCase.DRAW;
         }
-        if (cards.getFinalScore()<dealerTotal){
+        if (cards.getFinalScore() < dealerTotal) {
             return MatchCase.LOSE;
         }
         throw new IllegalArgumentException("[ERROR] 일치하는 enum이 없습니다.");
     }
 
-    public void betMoney(int money) {
-        bettingScore = money;
-    }
-
     public void calculateMoney(MatchCase matchCase, boolean isDealerBlackjack) {
-        if (cards.isBlackjack() && !isDealerBlackjack){
+        if (cards.isBlackjack() && !isDealerBlackjack) {
             bettingScore = (int) ((int) bettingScore * 1.5);
             return;
         }
-        if (matchCase.equals(MatchCase.LOSE)){
+        if (matchCase.equals(MatchCase.LOSE)) {
             loseMoney();
             return;
         }
@@ -62,6 +53,14 @@ public class Player {
     public void loseMoney() {
         int minusScore = bettingScore * 2;
         bettingScore -= minusScore;
+    }
+
+    public void betMoney(int money) {
+        bettingScore = money;
+    }
+
+    public boolean isBust() {
+        return cards.getFinalScore() > Game.BLACKJACK_VALUE;
     }
 
     public boolean isDealerBlackjack() {
@@ -76,7 +75,7 @@ public class Player {
         return cards.getCards();
     }
 
-    public int getCardsTotalSum(){
+    public int getCardsTotalSum() {
         return cards.getFinalScore();
     }
 

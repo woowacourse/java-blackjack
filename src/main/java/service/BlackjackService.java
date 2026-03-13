@@ -6,13 +6,13 @@ import java.util.Map;
 
 import domain.Deck;
 import domain.Game;
-import domain.MatchCase;
 import domain.Player;
 import domain.Players;
 import domain.dto.BettingResultDto;
 import domain.dto.CardContentDto;
 import domain.dto.FinalCardDto;
 import domain.dto.MatchResultDto;
+import domain.enums.MatchCase;
 import utils.generator.CardsGenerator;
 import utils.generator.ShuffledCardsGenerator;
 
@@ -60,11 +60,11 @@ public class BlackjackService {
     public MatchResultDto getPlayerResultDto(Game game) {
         Map<String, MatchCase> playerResult = game.calculateMatch();
         Map<MatchCase, Integer> dealerResult = game.calculateDealerMatch(playerResult);
-        return new MatchResultDto(dealerResult , playerResult);
+        return new MatchResultDto(dealerResult, playerResult);
 
     }
 
-    public BettingResultDto getBettingScore(Game game) {
+    public BettingResultDto getBettingScoreDto(Game game) {
         return new BettingResultDto(game.getTotalMoney(), game.getBettingScore(game));
     }
 

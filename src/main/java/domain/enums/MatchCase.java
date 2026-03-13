@@ -1,7 +1,7 @@
-package domain;
+package domain.enums;
 
 public enum MatchCase {
-    WIN("승","패"), DRAW("무","무"), LOSE("패","승");
+    WIN("승", "패"), DRAW("무", "무"), LOSE("패", "승");
 
     private final String korResult;
     private final String reverseResult;

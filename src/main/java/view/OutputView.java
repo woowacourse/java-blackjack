@@ -6,11 +6,11 @@ import java.util.Map;
 
 import domain.Card;
 import domain.Game;
-import domain.MatchCase;
 import domain.dto.BettingResultDto;
 import domain.dto.CardContentDto;
 import domain.dto.FinalCardDto;
 import domain.dto.MatchResultDto;
+import domain.enums.MatchCase;
 
 public final class OutputView {
     public static void displayCardDistribution(List<String> names) {
@@ -26,12 +26,10 @@ public final class OutputView {
             }
             System.out.printf("%s카드: %s\n", dto.name(), String.join(", ", cardContents));
         }
-
     }
 
     public static void displayDealerCard() {
-        System.out.printf("%s는 %d 이하라 한장의 카드를 더 받았습니다.\n",Game.DEALER_NAME, Game.ADDITIONAL_THRESHOLD);
-
+        System.out.printf("%s는 %d 이하라 한장의 카드를 더 받았습니다.\n", Game.DEALER_NAME, Game.ADDITIONAL_THRESHOLD);
     }
 
     public static void displayFinalCard(List<FinalCardDto> finalCardDto) {
@@ -40,7 +38,6 @@ public final class OutputView {
             for (Card card : dto.cards()) {
                 cardContents.add(card.getCardRank().getName() + card.getCardShape().getName());
             }
-
             System.out.printf("%s카드: %s - 결과: %d\n", dto.name(), String.join(", ", cardContents), dto.total());
         }
     }
@@ -50,13 +47,13 @@ public final class OutputView {
         Map<MatchCase, Integer> dealerMap = matchResultDto.dealerResult();
         Map<String, MatchCase> playerMap = matchResultDto.playerResult();
 
-        System.out.printf("## 최종 승패\n%s: ",Game.DEALER_NAME);
+        System.out.printf("## 최종 승패\n%s: ", Game.DEALER_NAME);
         for (Map.Entry<MatchCase, Integer> matchcase : dealerMap.entrySet()) {
             System.out.printf("%d%s ", matchcase.getValue().intValue(), matchcase.getKey().getReversedKorResult());
         }
 
         for (Map.Entry<String, MatchCase> playerName : playerMap.entrySet()) {
-            System.out.printf("\n%s: %s", playerName.getKey(),playerName.getValue().getKorResult());
+            System.out.printf("\n%s: %s", playerName.getKey(), playerName.getValue().getKorResult());
         }
     }
 
@@ -70,5 +67,9 @@ public final class OutputView {
         for (Map.Entry<String, Integer> playerName : resultMap.entrySet()) {
             System.out.printf("%s: %d\n", playerName.getKey(), playerName.getValue().intValue());
         }
+    }
+
+    public static void printError(String error) {
+        System.out.println(error);
     }
 }

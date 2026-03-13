@@ -5,8 +5,8 @@ import java.util.Collections;
 import java.util.List;
 
 import domain.Card;
-import domain.CardRank;
-import domain.CardShape;
+import domain.enums.CardRank;
+import domain.enums.CardShape;
 
 public final class ShuffledCardsGenerator implements CardsGenerator {
     @Override

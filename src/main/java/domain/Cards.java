@@ -3,8 +3,12 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import domain.enums.CardRank;
+
 public class Cards {
     public static final int ACE_ADDITIONAL_SCORE = 11;
+    public static final int CARD_COUNT = 2;
+
     private final List<Card> cards;
 
     public Cards() {
@@ -21,7 +25,7 @@ public class Cards {
     }
 
     public boolean isBlackjack() {
-        return calculateScore() == Game.BLACKJACK_VALUE && cards.size() == Game.CARD_COUNT;
+        return calculateScore() == Game.BLACKJACK_VALUE && cards.size() == CARD_COUNT;
     }
 
     public int calculateScore() {

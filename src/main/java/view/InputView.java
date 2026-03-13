@@ -9,7 +9,6 @@ import validator.Validator;
 
 
 public class InputView {
-
     private static final String DELIMITER = ",";
 
     public List<String> readNames() {
@@ -26,7 +25,6 @@ public class InputView {
                 Validator::validateNotBlank,
                 Validator::validateChoice
         ));
-
         return input.equals("y");
     }
 
@@ -36,7 +34,6 @@ public class InputView {
                 Validator::validateNotBlank,
                 Validator::validateInteger
         ));
-
         return Integer.parseInt(input);
     }
 

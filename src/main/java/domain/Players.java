@@ -33,5 +33,4 @@ public class Players implements Iterable<Player> {
         return players.get(index);
     }
 
-
 }
