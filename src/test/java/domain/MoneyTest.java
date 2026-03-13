@@ -8,6 +8,17 @@ import org.junit.jupiter.api.Test;
 class MoneyTest {
 
     @Test
+    @DisplayName("돈은 음수가 될 수 없다.")
+    void 돈이_음수인_경우_에러() {
+        // given
+        int negativeMoney = -3000;
+
+        // when & then
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> new Money(negativeMoney));
+    }
+
+    @Test
     @DisplayName("베팅금액이 1.5배 되어야 한다.")
     void 베팅금액을_1점5배로_계산() {
         // given
