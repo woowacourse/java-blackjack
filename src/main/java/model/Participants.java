@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import model.participant.Dealer;
 import model.participant.Participant;
-import model.participant.Player;
-import util.InputParser;
 
 public final class Participants implements Iterable<Participant> {
     private final List<Participant> values;

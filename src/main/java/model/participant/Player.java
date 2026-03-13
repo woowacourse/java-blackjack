@@ -2,16 +2,17 @@ package model.participant;
 
 import java.util.List;
 import model.Card;
+import model.vo.BetAmount;
 
 public final class Player extends Participant {
-    private final int betAmount;
+    private final BetAmount betAmount;
 
-    private Player(String name, int betAmount) {
+    private Player(String name, BetAmount betAmount) {
         super(name);
         this.betAmount = betAmount;
     }
 
-    public static Player of(String input, int betAmount) {
+    public static Player of(String input, BetAmount betAmount) {
         return new Player(input, betAmount);
     }
 
@@ -23,6 +24,6 @@ public final class Player extends Participant {
     }
 
     public int getBetAmount() {
-        return betAmount;
+        return betAmount.getAmount();
     }
 }
