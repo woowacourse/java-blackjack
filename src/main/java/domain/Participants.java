@@ -27,7 +27,7 @@ public class Participants {
         this.dealer = new Dealer();
     }
 
-    static void validateParticipantsNumbers(List<ParticipantsInitDTO> participantsInitDTOS) {
+    private void validateParticipantsNumbers(List<ParticipantsInitDTO> participantsInitDTOS) {
         if (participantsInitDTOS.size() > MAXIMUM_NUMBER_OF_PARTICIPANTS) {
             throw new IllegalArgumentException("[ERROR] 최대 참가 인원은 16명 이하여야 합니다.");
         }
