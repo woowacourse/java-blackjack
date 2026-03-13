@@ -1,4 +1,4 @@
-package domain;
+package domain.batting;
 
 import domain.card.Card;
 import domain.card.CardNumber;
@@ -201,29 +201,5 @@ class BattingResultTest {
 
         // Then
         assertThat(earningsRate).isEqualTo(-1.0);
-    }
-
-    @Test
-    @DisplayName("")
-    void temp() {
-        // Given
-        Player player = new Player("플레이어1");
-        Dealer dealer = new Dealer();
-
-        List<Card> playerInitHands = List.of(new Card(CardNumber.ACE, CardShape.CLUB), new Card(CardNumber.KING, CardShape.SPADE));
-        List<Card> dealerInitHands = List.of(new Card(CardNumber.THREE, CardShape.CLUB), new Card(CardNumber.QUEEN, CardShape.DIAMOND));
-
-        player.drawInitialCards(playerInitHands);
-
-        dealer.drawInitialCards(dealerInitHands);
-        dealer.draw(new Card(CardNumber.TWO, CardShape.CLUB));
-        dealer.draw(new Card(CardNumber.JACK, CardShape.CLUB));
-
-
-        // When
-        double earningsRate = player.getStatus().earningsRate(dealer.getStatus());
-
-        // Then
-        assertThat(earningsRate).isEqualTo(1.5);
     }
 }
