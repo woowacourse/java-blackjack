@@ -1,6 +1,8 @@
 package model.paticipant;
 
 import model.judgement.BetAmount;
+import model.judgement.Profit;
+import model.judgement.ResultStatus;
 
 public class Player extends Participant {
 
@@ -18,7 +20,7 @@ public class Player extends Participant {
         return calculateTotalScore() < PLAYER_HIT_THRESHOLD;
     }
 
-    public BetAmount getBetAmount() {
-        return betAmount;
+    public Profit calculateProfit(ResultStatus resultStatus) {
+        return resultStatus.calculateProfit(betAmount);
     }
 }

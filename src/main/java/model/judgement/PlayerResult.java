@@ -22,9 +22,7 @@ public class PlayerResult {
 
     public Map<Player, Profit> calculateProfits() {
         Map<Player, Profit> profits = new LinkedHashMap<>();
-        result.forEach((player, status) -> 
-                profits.put(player, status.calculateProfit(player.getBetAmount()))
-        );
+        result.forEach((player, status) -> profits.put(player, player.calculateProfit(status)));
         return profits;
     }
 
