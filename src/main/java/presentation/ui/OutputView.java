@@ -34,18 +34,7 @@ public class OutputView {
 
     public void printGameResult(GameResult gameResult) {
         System.out.println("## 최종 수익");
-        printDealerGameResult(
-                gameResult.dealerAmount()
-        );
-        printPlayerGameResult(gameResult.playerAmounts());
-    }
-
-    private void printDealerGameResult(int amount) {
-        System.out.printf("딜러: %d\n", amount);
-    }
-
-    private void printPlayerGameResult(Map<String, Integer> roundResults) {
-        for (Entry<String, Integer> round : roundResults.entrySet()) {
+        for (Entry<String, Integer> round : gameResult.memberAmount().entrySet()) {
             System.out.printf("%s: %d\n", round.getKey(), round.getValue());
         }
     }

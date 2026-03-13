@@ -74,11 +74,6 @@ public class Main {
     }
 
     private static void printGameResult(OutputView outputView, BlackjackGame game) {
-        Map<String, Integer> gameResults = game.getGameResults();
-        int dealerAmount = gameResults.values().stream()
-                .mapToInt(result -> -1 * result)
-                .sum();
-
-        outputView.printGameResult(new GameResult(dealerAmount, gameResults));
+        outputView.printGameResult(new GameResult(game.getGameResults()));
     }
 }
