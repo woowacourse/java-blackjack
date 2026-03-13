@@ -4,8 +4,9 @@ import common.ErrorMessage;
 import domain.state.GameState;
 import dto.ParticipantDto;
 import dto.PlayerResultDto;
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
@@ -13,25 +14,22 @@ import java.util.function.UnaryOperator;
 public class MultiPlayers {
     private static final int MAX_PLAYER_NUMBER = 5;
 
-    private final List<Player> players;
+    private final Map<String, Player> players;
 
-    private MultiPlayers(List<Player> players) {
+    private MultiPlayers(Map<String, Player> players) {
         this.players = players;
     }
 
     public static MultiPlayers of(List<String> playerNames, Deck totalDeck) {
-        return new MultiPlayers(
-                new ArrayList<>(createPlayers(playerNames, totalDeck))
-        );
-    }
-
-    private static List<Player> createPlayers(List<String> playerNames, Deck totalDeck) {
         validateUserCountLimit(playerNames);
         validateNameUniqueness(playerNames);
 
-        return playerNames.stream()
-                .map(name -> createNewPlayer(totalDeck, name))
-                .toList();
+        Map<String, Player> newPlayers = new LinkedHashMap<>();
+        for (String name : playerNames) {
+            newPlayers.put(name, createNewPlayer(totalDeck, name));
+        }
+
+        return new MultiPlayers(newPlayers);
     }
 
     private static Player createNewPlayer(Deck totalDeck, String name) {
@@ -39,7 +37,8 @@ public class MultiPlayers {
         Hand newPlayerHand = Hand.of(twoCards.get(0), twoCards.get(1));
         return Player.from(
                 name,
-                GameState.createPlayerInitialGameState(newPlayerHand));
+                GameState.createPlayerInitialGameState(newPlayerHand)
+        );
     }
 
     private static void validateNameUniqueness(List<String> playerNames) {
@@ -56,39 +55,39 @@ public class MultiPlayers {
     }
 
     public Optional<Player> findNotStayPlayer() {
-        return players.stream()
+        return players.values().stream()
                 .filter(Player::isPlayable)
                 .findFirst();
     }
 
     public Player executeHit(Player player, Supplier<Card> cardSupplier) {
-        return applyAction(player, p -> p.hit(cardSupplier));
+        return applyAction(player.getName(), p -> p.hit(cardSupplier));
     }
 
     public Player executeStand(Player player) {
-        return applyAction(player, Player::stand);
+        return applyAction(player.getName(), Player::stand);
     }
 
     public List<ParticipantDto> getInitialStates() {
-        return players.stream()
+        return players.values().stream()
                 .map(ParticipantDto::consistWithInitialInfo)
                 .toList();
     }
 
     public List<PlayerResultDto> checkPlayersGameResult(Dealer dealer) {
-        return players.stream().map(
-                player -> PlayerResultDto.from(player, dealer.gameState)
-        ).toList();
+        return players.values().stream()
+                .map(player -> PlayerResultDto.from(player, dealer.gameState))
+                .toList();
     }
 
-    private Player applyAction(Player player, UnaryOperator<Player> action) {
-        int index = players.indexOf(player);
-        if (index == -1) {
+    private Player applyAction(String name, UnaryOperator<Player> action) {
+        Player player = players.get(name);
+        if (player == null) {
             throw new IllegalArgumentException(ErrorMessage.PLAYER_NOT_FOUND.getMessage());
         }
 
-        Player newPlayer = action.apply(player);
-        players.set(index, newPlayer);
-        return newPlayer;
+        Player updatedPlayer = action.apply(player);
+        players.put(name, updatedPlayer);
+        return updatedPlayer;
     }
 }
