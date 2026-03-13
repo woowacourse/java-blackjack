@@ -8,7 +8,6 @@ import domain.participant.Dealer;
 import domain.participant.ParticipantInitialInformation;
 import domain.participant.ParticipantName;
 import domain.participant.Players;
-import domain.result.dto.GameResultDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -37,10 +36,10 @@ class WinningStatusAnalyzerTest {
                 ParticipantInitialInformation.of( ParticipantName.from("p11"), BetAmount.from(0))));
         players.giveInitialCardBundle(cardDeck);
 
-        GameResultDto analysis = GameResultAnalyzer.analyze(players, dealerScore4);
+        List<PlayerWinningResult> playerPlayerWinningResults = WinningResultAnalyzer.analyzePlayerResults(players, dealerScore4);
 
-        Assertions.assertThat(analysis.dealerGameResultDto()
-                .resultStatistic()).containsEntry(WinningStatus.LOSS, 2);
+        Assertions.assertThat(playerPlayerWinningResults.get(0).winningStatus()).isEqualTo(WinningStatus.WIN);
+        Assertions.assertThat(playerPlayerWinningResults.get(1).winningStatus()).isEqualTo(WinningStatus.WIN);
     }
 
 }
