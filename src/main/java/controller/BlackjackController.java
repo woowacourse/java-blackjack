@@ -35,6 +35,7 @@ public class BlackjackController {
 
     private void initializeGame() {
         inputPlayers();
+        inputBetAmounts();
         blackjackGameManager.drawInitialCards();
 
         List<ParticipantDto> playerDtoList = blackjackGameManager.generatePlayerDtoList();
@@ -42,6 +43,14 @@ public class BlackjackController {
 
         ParticipantDto dealerDto = blackjackGameManager.generateInitialDealerDto();
         outputView.printHandList(dealerDto, playerDtoList);
+    }
+
+    private void inputBetAmounts() {
+        List<ParticipantDto> playerDtoList = blackjackService.getPlayerDtoList();
+        for (ParticipantDto participantDto : playerDtoList) {
+            String betAmountInput = inputView.inputBetAmount(participantDto.name());
+            blackjackService.setBetAmount(participantDto.name(), new BetAmount(betAmountInput));
+        }
     }
 
     private void inputPlayers() {
