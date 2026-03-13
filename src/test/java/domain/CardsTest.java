@@ -24,7 +24,7 @@ class CardsTest {
     static Stream<Arguments> canReceiveCardTestCased() {
         return Stream.of(
                 Arguments.of("Ace 2개면 카드를 받을 수 있다.", List.of(11, 11), true),
-                Arguments.of("King,9,Ace,Ace면 카드를 받을 수 없다.", List.of(10, 9, 11, 11), false),
+                Arguments.of("King,9,Ace,Ace면 카드를 받을 수 있다.", List.of(10, 9, 11, 11), true),
                 Arguments.of("King 3개면 카드를 받을 수 없다.", List.of(10, 10, 10), false)
         );
     }

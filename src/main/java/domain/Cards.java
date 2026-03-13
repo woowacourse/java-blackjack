@@ -49,6 +49,6 @@ public class Cards {
     }
 
     private boolean isLessThanBustScore(int score) {
-        return score < BLACKJACK_SCORE;
+        return score <= BLACKJACK_SCORE;
     }
 }
