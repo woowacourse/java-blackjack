@@ -5,7 +5,7 @@ import java.util.Collection;
 
 public abstract class PlayingHand extends Hand {
 
-    public PlayingHand() {
+    protected PlayingHand() {
         super();
     }
 
