@@ -1,9 +1,7 @@
 package view;
 
-import domain.game.Result;
 import dto.BlackjackResultDto;
 import dto.BlackjackStatisticsDto;
-import dto.DealerStatisticDto;
 import dto.ParticipantDto;
 import dto.PlayerStatisticDto;
 import java.util.List;
@@ -15,14 +13,14 @@ public class OutputView {
     private static final String PRINT_HAND_MESSAGE = "%s카드: %s";
     private static final String PRINT_DEALER_HIT = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String PRINT_BLACKJACK_RESULT_MESSAGE = " - 결과: %d\n";
-    private static final String PRINT_BLACKJACK_STATISTICS_HEADER_MESSAGE = "## 최종 승패";
-    private static final String PRINT_BLACKJACK_STATISTICS_DEALER_MESSAGE = "딜러:%s%s%s\n";
-    private static final String PRINT_BLACKJACK_STATISTICS_PLAYER_MESSAGE = "%s: %s\n";
+    private static final String PRINT_BLACKJACK_STATISTICS_HEADER_MESSAGE = "## 최종 수익";
+    private static final String PRINT_BLACKJACK_STATISTICS_DEALER_MESSAGE = "딜러: %d\n";
+    private static final String PRINT_BLACKJACK_STATISTICS_PLAYER_MESSAGE = "%s: %d\n";
 
     public void printPlayers(List<ParticipantDto> playerDtoList) {
         List<String> names = playerDtoList.stream()
-            .map(ParticipantDto::name)
-            .toList();
+                .map(ParticipantDto::name)
+                .toList();
         System.out.printf(PRINT_PLAYERS_MESSAGE, String.join(DELIMITER, names));
     }
 
@@ -61,16 +59,11 @@ public class OutputView {
     }
 
     public void printBlackjackStatistics(BlackjackStatisticsDto blackjackStatistics) {
-        DealerStatisticDto dealerStatisticDto = blackjackStatistics.dealerStatisticDto();
-        List<PlayerStatisticDto> playerStatisticDtoList = blackjackStatistics.playerStatisticDtoList();
         System.out.println(PRINT_BLACKJACK_STATISTICS_HEADER_MESSAGE);
-        System.out.printf(PRINT_BLACKJACK_STATISTICS_DEALER_MESSAGE,
-            printResult(dealerStatisticDto.win(), Result.WIN.getResult()),
-            printResult(dealerStatisticDto.draw(), Result.DRAW.getResult()),
-            printResult(dealerStatisticDto.lose(), Result.LOSE.getResult()));
-        for (PlayerStatisticDto playerStatisticDto : playerStatisticDtoList) {
-            System.out.printf(PRINT_BLACKJACK_STATISTICS_PLAYER_MESSAGE, playerStatisticDto.name(),
-                playerStatisticDto.result().getResult());
+        System.out.printf(PRINT_BLACKJACK_STATISTICS_DEALER_MESSAGE, blackjackStatistics.dealerProfit());
+        for (PlayerStatisticDto playerStatisticDto : blackjackStatistics.playerStatisticDtoList()) {
+            System.out.printf(PRINT_BLACKJACK_STATISTICS_PLAYER_MESSAGE,
+                    playerStatisticDto.name(), playerStatisticDto.profit());
         }
     }
 
