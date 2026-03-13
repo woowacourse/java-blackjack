@@ -22,11 +22,11 @@ public class Player extends Member {
         return false;
     }
 
-    public int getBettingAmount() {
-        return amount.getAmount();
-    }
-
     public void applyBlackjackBonus() {
         amount = amount.applyBonus();
+    }
+
+    public int getBettingAmount() {
+        return amount.getAmount();
     }
 }
