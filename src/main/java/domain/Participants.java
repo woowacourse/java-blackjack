@@ -3,7 +3,10 @@ package domain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+import vo.Bet;
+import vo.Name;
 
 public class Participants {
     private static final Integer MAX_PLAYER_COUNT = 16;
@@ -11,28 +14,16 @@ public class Participants {
     private final List<User> participants;
     private final Dealer dealer;
 
-    public Participants(String participantsName) {
+    public Participants(List<Name> names, Map<Name, Bet> bets) {
         this.participants = new ArrayList<>();
         this.dealer = new Dealer();
-        saveUsers(participantsName);
+        saveUsers(names, bets);
     }
 
-    private void saveUsers(String participantsName) {
-        parseName(participantsName)
-                .forEach(name -> participants.add(new User(name.trim())));
-    }
-
-    private List<String> parseName(String participantsName) {
-        List<String> parsedName = List.of(participantsName.split(","));
-        validateParticipantsNumbers(parsedName);
-
-        return parsedName;
-    }
-
-    private void validateParticipantsNumbers(List<String> parsedName) {
-        if (parsedName.size() > MAX_PLAYER_COUNT) {
-            throw new IllegalArgumentException("[ERROR] 최대 참가 인원은 16명 이하여야 합니다.");
-        }
+    private void saveUsers(List<Name> names, Map<Name, Bet> bets) {
+        names.forEach(name -> {
+            participants.add(new User(name, bets.get(name)));
+        });
     }
 
     public List<User> getUsers() {
@@ -41,6 +32,10 @@ public class Participants {
 
     public Dealer getDealer() {
         return dealer;
+    }
+
+    public Integer getDealerScore() {
+        return dealer.getScore();
     }
 
     public List<String> getParticipantNames() {
@@ -66,5 +61,9 @@ public class Participants {
 
     public void dealCardToDealer(Card card) {
         dealer.receiveCard(card);
+    }
+
+    public boolean isDealerBlackjack() {
+        return dealer.isBlackjack();
     }
 }

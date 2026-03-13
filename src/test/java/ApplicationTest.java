@@ -42,7 +42,7 @@ public class ApplicationTest {
     @Test
     void 게임_전체_흐름_출력_검증() {
         // given
-        String input = "영기,라이\nn\nn\n";
+        String input = "영기,라이\n1000\n1000\nn\nn\n";
         System.setIn(new ByteArrayInputStream(input.getBytes()));
 
         Application app = new Application(
@@ -57,13 +57,13 @@ public class ApplicationTest {
         // then
         assertThat(output).contains("영기", "라이", "딜러");
         assertThat(output).contains("K스페이드", "A스페이드");
-        assertThat(output).contains("승", "패");
+        assertThat(output).contains("최종 수익");
     }
 
     @Test
     void 초기_카드_배분_메시지_출력() {
         // given
-        String input = "영기,라이\nn\nn\n";
+        String input = "영기,라이\n1000\n1000\nn\nn\n";
         System.setIn(new ByteArrayInputStream(input.getBytes()));
 
         Application app = new Application(
@@ -82,7 +82,7 @@ public class ApplicationTest {
     @Test
     void 잘못된_참가자_입력_재시도() {
         // given
-        String input = "123\n영기,라이\nn\nn\n";
+        String input = "123\n영기,라이\n1000\n1000\nn\nn\n";
         System.setIn(new ByteArrayInputStream(input.getBytes()));
 
         Application app = new Application(
@@ -97,5 +97,32 @@ public class ApplicationTest {
         // then
         assertThat(output).contains("[ERROR]");
         assertThat(output).contains("영기", "라이");
+    }
+
+    @Test
+    void 버스트_발생시_에러_테스트() {
+        List<Card> bustDeck = List.of(
+                new Card(Suit.SPADE, Rank.KING),
+                new Card(Suit.DIAMOND, Rank.KING),
+                new Card(Suit.HEART, Rank.JACK),
+                new Card(Suit.DIAMOND, Rank.SEVEN),
+                new Card(Suit.HEART, Rank.QUEEN)
+        );
+
+        // given
+        String input = "영기\n1000\ny\n";
+        System.setIn(new ByteArrayInputStream(input.getBytes()));
+
+        Application app = new Application(
+                new InputView(), new OutputView(),
+                new TestBlackjackGame(new Deck(bustDeck))
+        );
+
+        // when
+        app.run();
+        String output = outContent.toString();
+
+        // then
+        assertThat(output).contains("버스트 발생! 카드를 더 받을 수 없습니다.");
     }
 }

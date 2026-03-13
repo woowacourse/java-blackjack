@@ -2,10 +2,15 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.math.BigDecimal;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import vo.Bet;
 import vo.GameResult;
+import vo.Name;
 import vo.Rank;
 import vo.Suit;
 
@@ -25,7 +30,10 @@ public class BlackjackGameFlowTest {
                 new Card(Suit.CLUB, Rank.TEN)
         ));
         blackjackGame = new TestBlackjackGame(fixedDeck);
-        blackjackGame.prepare("영기,라이");
+        List<Name> names = List.of(new Name("영기"), new Name("라이"));
+        Map<Name, Bet> bets = new LinkedHashMap<>();
+        names.forEach(name -> bets.put(name, new Bet("1000")));
+        blackjackGame.prepare(names, bets);
     }
 
     @Test
@@ -72,9 +80,10 @@ public class BlackjackGameFlowTest {
     void 영기_블랙잭으로_승리() {
         // given
         blackjackGame.dealToDealer();
+        User user = blackjackGame.getUsers().getFirst();
 
         // when & then
-        assertThat(blackjackGame.getResult().getUserResults().get("영기")).isEqualTo(GameResult.WIN);
+        assertThat(blackjackGame.getResult().getUserResults().get(user)).isEqualTo(GameResult.BLACKJACK);
     }
 
     @Test
@@ -82,13 +91,14 @@ public class BlackjackGameFlowTest {
         // given
         blackjackGame.processPlayerDecision(blackjackGame.getUsers().get(1));
         blackjackGame.dealToDealer();
+        User user = blackjackGame.getUsers().get(1);
 
         // when & then
-        assertThat(blackjackGame.getResult().getUserResults().get("라이")).isEqualTo(GameResult.LOSE);
+        assertThat(blackjackGame.getResult().getUserResults().get(user)).isEqualTo(GameResult.LOSE);
     }
 
     @Test
-    void 딜러_결과에_승패_집계_포함() {
+    void 영기_블랙잭_딜러_수익_마이너스() {
         // given
         blackjackGame.dealToDealer();
 
@@ -96,6 +106,6 @@ public class BlackjackGameFlowTest {
         GameSummary summary = blackjackGame.getResult();
 
         // then
-        assertThat(summary.getDealerWinCount() + summary.getDealerLoseCount()).isEqualTo(2);
+        assertThat(summary.getDealerProfit()).isEqualTo(new BigDecimal("-500.0"));
     }
 }

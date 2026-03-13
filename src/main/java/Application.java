@@ -1,10 +1,14 @@
 import domain.BlackjackGame;
 import domain.User;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
 import view.InputView;
 import view.Message;
 import view.OutputView;
+import vo.Bet;
+import vo.Name;
 
 public class Application {
     private final OutputView outputView;
@@ -26,7 +30,7 @@ public class Application {
     }
 
     public void run() {
-        readParticipants();
+        prepareParticipants();
         printInitialCardInformation();
         selectToDealExtraCard();
         dealDealerCard();
@@ -34,12 +38,29 @@ public class Application {
         printWinningResult();
     }
 
-    public void readParticipants() {
-        retryUntilSuccess(() -> {
+    public void prepareParticipants() {
+        List<Name> names = readParticipants();
+        Map<Name, Bet> bets = readBetAmount(names);
+        blackjackGame.prepare(names, bets);
+    }
+
+    private List<Name> readParticipants() {
+        return retryUntilSuccess(() -> {
             outputView.printMessage(Message.INPUT_PARTICIPANTS_MESSAGE);
-            blackjackGame.prepare(inputView.readParticipantsName());
-            return null;
+            return inputView.readParticipantsName();
         });
+    }
+
+    private Map<Name, Bet> readBetAmount(List<Name> names) {
+        Map<Name, Bet> bets = new LinkedHashMap<>();
+        for (Name name : names) {
+            Bet bet = retryUntilSuccess(() -> {
+                outputView.printAskBetAmount(name.getName());
+                return inputView.readBetAmount();
+            });
+            bets.put(name, bet);
+        }
+        return bets;
     }
 
     private void printInitialCardInformation() {
@@ -52,22 +73,6 @@ public class Application {
         List<User> participants = blackjackGame.getUsers();
         for (User participant : participants) {
             askCardToPlayer(participant);
-        }
-    }
-
-    private void askCardToPlayer(User user) {
-        String answer;
-        do {
-            outputView.printAskExtraCard(user.getName());
-            answer = retryUntilSuccess(inputView::readDealDecision);
-            dealMoreCard(answer, user);
-        } while (answer.equalsIgnoreCase("y"));
-    }
-
-    private void dealMoreCard(String answer, User user) {
-        if (answer.equalsIgnoreCase("y")) {
-            blackjackGame.processPlayerDecision(user);
-            outputView.printUserCards(user);
         }
     }
 
@@ -85,6 +90,26 @@ public class Application {
     private void printWinningResult() {
         outputView.printMessage(Message.FINAL_RESULT_ANNOUNCE);
         outputView.printWinningResults(blackjackGame.getResult());
+    }
+
+    private void askCardToPlayer(User user) {
+        while (wantExtraCard(user)) {
+            dealMoreCard(user);
+        }
+    }
+
+    private boolean wantExtraCard(User user) {
+        if (user.checkBust()) {
+            outputView.printMessage(Message.BUST_ANNOUNCE);
+            return false;
+        }
+        outputView.printAskExtraCard(user.getName());
+        return retryUntilSuccess(inputView::readDealDecision);
+    }
+
+    private void dealMoreCard(User user) {
+        blackjackGame.processPlayerDecision(user);
+        outputView.printUserCards(user);
     }
 
     private <T> T retryUntilSuccess(Supplier<T> action) {

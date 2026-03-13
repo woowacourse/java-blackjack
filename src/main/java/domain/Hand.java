@@ -38,6 +38,10 @@ public class Hand {
         return totalScore;
     }
 
+    public Boolean isBlackjack() {
+        return cards.size() == 2 && calculateTotalScore() == BUST_THRESHOLD;
+    }
+
     private int adjustContainAce(int totalScore) {
         for (Card card : cards) {
             totalScore = adjustAce(totalScore, card);

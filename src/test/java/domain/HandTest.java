@@ -8,7 +8,6 @@ import vo.Rank;
 import vo.Suit;
 
 public class HandTest {
-
     private Hand hand;
 
     @BeforeEach

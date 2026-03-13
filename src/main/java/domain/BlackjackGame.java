@@ -1,29 +1,29 @@
 package domain;
 
+import java.math.BigDecimal;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import vo.Bet;
 import vo.GameResult;
+import vo.Name;
 
 public class BlackjackGame {
     private final static Integer FIRST_CARD_DEAL_COUNT = 2;
 
     private final GameJudge gameJudge = new GameJudge();
     private Participants participants;
-    private Deck deck;
+    protected Deck deck;
 
-    public void prepare(String participantsName) {
-        participants = new Participants(participantsName);
+    public void prepare(List<Name> names, Map<Name, Bet> bets) {
+        participants = new Participants(names, bets);
         makeDeck();
         dealCards();
     }
 
+    // 지워?
     public void makeDeck() {
         deck = new Deck();
-    }
-
-    void setDeck(Deck deck) {
-        this.deck = deck;
     }
 
     public void dealCards() {
@@ -44,6 +44,20 @@ public class BlackjackGame {
         return participants.getDealer();
     }
 
+    public GameSummary getResult() {
+        Map<User, GameResult> userResults = new LinkedHashMap<>();
+        Map<User, BigDecimal> betAmounts = new LinkedHashMap<>();
+        int dealerScore = participants.getDealerScore();
+        boolean isDealerBlackjack = participants.isDealerBlackjack();
+
+        for (User user : participants.getUsers()) {
+            userResults.put(user,
+                    gameJudge.judge(dealerScore, user.getScore(), isDealerBlackjack, user.isBlackjack()));
+            betAmounts.put(user, user.getBetAmount());
+        }
+        return new GameSummary(userResults, betAmounts);
+    }
+
     public void processPlayerDecision(User user) {
         participants.dealCard(deck, user);
     }
@@ -54,16 +68,5 @@ public class BlackjackGame {
             return true;
         }
         return false;
-    }
-
-    public GameSummary getResult() {
-        Map<String, GameResult> userResults = new LinkedHashMap<>();
-        List<User> users = participants.getUsers();
-        Dealer dealer = participants.getDealer();
-
-        for (User user : users) {
-            userResults.put(user.getName(), gameJudge.judge(dealer.getScore(), user.getScore()));
-        }
-        return new GameSummary(userResults);
     }
 }

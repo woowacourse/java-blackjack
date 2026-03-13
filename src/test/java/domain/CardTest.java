@@ -7,8 +7,6 @@ import vo.Rank;
 import vo.Suit;
 
 public class CardTest {
-    public static final String ERROR_PREFIX = "[ERROR] ";
-
     @Test
     void 에이스_카드_점수는_11() {
         // given
