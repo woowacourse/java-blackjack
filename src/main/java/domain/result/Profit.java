@@ -1,6 +1,4 @@
-package domain;
-
-import domain.constant.Result;
+package domain.result;
 
 public class Profit {
 

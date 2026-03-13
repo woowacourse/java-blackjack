@@ -1,5 +1,6 @@
 package domain;
 
+import domain.card.Card;
 import domain.deck.Deck;
 import domain.deck.RandomShuffle;
 import domain.dto.GameInitialInfoDto;
@@ -11,9 +12,9 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Map;
 
-import static domain.constant.Rank.*;
-import static domain.constant.Suit.DIAMOND;
-import static domain.constant.Suit.SPADE;
+import static domain.card.Rank.*;
+import static domain.card.Suit.DIAMOND;
+import static domain.card.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 import static org.junit.jupiter.api.Assertions.assertAll;

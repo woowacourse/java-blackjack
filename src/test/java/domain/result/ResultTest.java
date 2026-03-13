@@ -1,6 +1,6 @@
-package domain.constant;
+package domain.result;
 
-import domain.Card;
+import domain.card.Card;
 import domain.participant.Dealer;
 import domain.Hand;
 import domain.participant.Player;
@@ -9,9 +9,9 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static domain.constant.Rank.*;
-import static domain.constant.Result.*;
-import static domain.constant.Suit.*;
+import static domain.card.Rank.*;
+import static domain.result.Result.*;
+import static domain.card.Suit.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;

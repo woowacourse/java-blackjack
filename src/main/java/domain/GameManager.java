@@ -7,6 +7,7 @@ import domain.dto.GameScoreResultDto;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
+import domain.result.GameResult;
 
 import java.util.List;
 
@@ -65,10 +66,14 @@ public class GameManager {
 
     private void drawInitialCards() {
         for (int i = 0; i < 2; i++) {
-            for (Player player : players.getAll()) {
-                player.receiveCard(deck.draw());
-            }
-            dealer.receiveCard(deck.draw());
+            drawCardToParticipants();
         }
+    }
+
+    private void drawCardToParticipants() {
+        for (Player player : players.getAll()) {
+            player.receiveCard(deck.draw());
+        }
+        dealer.receiveCard(deck.draw());
     }
 }

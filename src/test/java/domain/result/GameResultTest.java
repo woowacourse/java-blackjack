@@ -1,5 +1,6 @@
-package domain;
+package domain.result;
 
+import domain.card.Card;
 import domain.dto.GameFinalResultDto;
 import domain.participant.Dealer;
 import domain.participant.Players;
@@ -7,10 +8,10 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
-import static domain.constant.Rank.*;
-import static domain.constant.Rank.NINE;
-import static domain.constant.Suit.HEART;
-import static domain.constant.Suit.SPADE;
+import static domain.card.Rank.*;
+import static domain.card.Rank.NINE;
+import static domain.card.Suit.HEART;
+import static domain.card.Suit.SPADE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 

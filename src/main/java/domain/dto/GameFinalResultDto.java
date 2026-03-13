@@ -1,6 +1,6 @@
 package domain.dto;
 
-import domain.GameResult;
+import domain.result.GameResult;
 import domain.participant.Dealer;
 
 import java.util.LinkedHashMap;

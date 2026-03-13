@@ -1,10 +1,10 @@
 package domain.participant;
 
-import domain.Card;
+import domain.card.Card;
 import org.junit.jupiter.api.Test;
 
-import static domain.constant.Rank.*;
-import static domain.constant.Suit.*;
+import static domain.card.Rank.*;
+import static domain.card.Suit.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class DealerTest {

@@ -1,4 +1,4 @@
-package domain.constant;
+package domain.result;
 
 import domain.participant.Dealer;
 import domain.participant.Player;

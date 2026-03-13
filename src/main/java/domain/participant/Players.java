@@ -1,6 +1,6 @@
 package domain.participant;
 
-import domain.Card;
+import domain.card.Card;
 import domain.Hand;
 
 import java.util.LinkedHashMap;

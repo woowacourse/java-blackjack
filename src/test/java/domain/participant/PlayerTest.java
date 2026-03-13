@@ -1,12 +1,11 @@
 package domain.participant;
 
-import domain.Bet;
-import domain.Card;
+import domain.card.Card;
 import domain.Hand;
 import org.junit.jupiter.api.Test;
 
-import static domain.constant.Rank.*;
-import static domain.constant.Suit.*;
+import static domain.card.Rank.*;
+import static domain.card.Suit.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
