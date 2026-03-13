@@ -79,6 +79,10 @@ public class OutputView {
         System.out.printf(INPUT_PLAYER_BETTING_MONEY, name);
     }
 
+    public static void printLine() {
+        System.out.println();
+    }
+
     private static String dealerCardPrint(Dealer dealer) {
         return dealer.getHand().getNowHand().stream()
                 .map(card -> card.getCardCode() + card.getCardShape())

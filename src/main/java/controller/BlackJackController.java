@@ -82,7 +82,7 @@ public class BlackJackController {
 
     private void progressGame(CardDeck cardDeck, Player player) {
         if (player.isMaxScore()) {
-            System.out.println();
+            OutputView.printLine();
         }
 
         while (canPlayerDraw(player)) {
