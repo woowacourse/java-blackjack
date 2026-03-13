@@ -4,7 +4,7 @@ import team.blackjack.domain.Hand;
 import team.blackjack.domain.Result;
 
 public class DefaultBlackjackRule implements BlackjackRule {
-    public static final int DEALER_STAND_SCORE = 17;
+    private static final int DEALER_STAND_SCORE = 17;
 
     @Override
     public boolean isDealerMustDraw(int score) {

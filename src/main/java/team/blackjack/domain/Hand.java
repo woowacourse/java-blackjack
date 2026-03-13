@@ -6,20 +6,20 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Hand {
-    public static final int BLACKJACK = 21;
-    public static final int BLACKJACK_CARD_COUNT = 2;
-    public static final int ACE_UPGRADE_SCORE_THRESHOLD = 10;
+    private static final int BLACKJACK = 21;
+    private static final int BLACKJACK_CARD_COUNT = 2;
+    private static final int ACE_UPGRADE_SCORE_THRESHOLD = 10;
 
     private final List<Card> cards;
 
-    public Hand(){
+    public Hand() {
         this.cards = new ArrayList<>();
     }
 
     public void addCard(Card card) {
         cards.add(card);
     }
- 
+
     public List<Card> getCards() {
         return this.cards;
     }
@@ -47,7 +47,7 @@ public class Hand {
         return getScore() == BLACKJACK;
     }
 
-    public List<String> getCardNames(){
+    public List<String> getCardNames() {
         return cards.stream()
                 .map(Card::getCardName)
                 .toList();
