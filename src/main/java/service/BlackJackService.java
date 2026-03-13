@@ -15,13 +15,13 @@ public class BlackJackService {
     public Result calculateResult(Dealer dealer, Players players) {
         Map<Player, GameResult> playersResult = new HashMap<>();
         for (Player player : players.getPlayers()) {
-            playersResult.put(player, calculatePlayerWinDefeatDraw(dealer, player));
+            playersResult.put(player, calculatePlayerResults(dealer, player));
         }
 
         return new Result(playersResult);
     }
 
-    private GameResult calculatePlayerWinDefeatDraw(Dealer dealer, Player player) {
+    private GameResult calculatePlayerResults(Dealer dealer, Player player) {
         int dealerTotalScore = dealer.getTotalCardScore();
         int playerTotalScore = player.getTotalCardScore();
 
