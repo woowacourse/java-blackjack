@@ -18,7 +18,7 @@ public record UniqueNames(
                 .count();
 
         if (uniqueNameCount != playerNames.size()) {
-            throw new IllegalArgumentException("참가자의 이름은 중복될 수 없습니다.");
+            throw new IllegalArgumentException("이름은 중복될 수 없습니다.");
         }
     }
 }
