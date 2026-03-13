@@ -10,6 +10,19 @@ public class Player extends Participant {
     }
 
     public GameResult calculateGameResult(Dealer dealer) {
+        if (isBlackjack() && dealer.isBlackjack()) {
+            return GameResult.DRAW;
+        }
+        if (isBlackjack()) {
+            return GameResult.BLACKJACK;
+        }
+        if (dealer.isBlackjack()) {
+            return GameResult.LOSE;
+        }
+        return calculateScoreResult(dealer);
+    }
+
+    private GameResult calculateScoreResult(Dealer dealer) {
         if (isBurst()) {
             return GameResult.LOSE;
         }
@@ -26,5 +39,4 @@ public class Player extends Participant {
     public Name getName() {
         return nickname;
     }
-
 }

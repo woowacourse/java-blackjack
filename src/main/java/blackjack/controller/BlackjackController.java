@@ -10,14 +10,16 @@ import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.domain.Status;
 import blackjack.domain.Trump;
-import blackjack.dto.FinalResultDto;
+import blackjack.dto.FinalProfitDto;
 import blackjack.strategy.ShuffleStrategy;
 import blackjack.utils.Parser;
 import blackjack.utils.RetryExecutor;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BlackjackController {
 
@@ -36,7 +38,7 @@ public class BlackjackController {
 
         dealer.pitch(players.all());
         OutputView.printStartMessage(players.all(), dealer);
-
+        players.all().forEach(this::handleBlackjack);
         players.all().forEach(player -> handlePlayerAction(player, dealer));
         handleDealerAction(dealer);
 
@@ -66,8 +68,8 @@ public class BlackjackController {
 
     private void printResult(Participants participants, BettingMoneyInfo bettingMoneyInfo) {
         OutputView.printFinalStatus(participants);
-        FinalResultDto finalResultDto = FinalResultDto.of(players.all(), dealer);
-        OutputView.printFinalResult(finalResultDto);
+        FinalProfitDto finalProfitDto = FinalProfitDto.of(participants, bettingMoneyInfo);
+        OutputView.printProfit(finalProfitDto);
     }
 
     private void handleDealerAction(Dealer dealer) {
@@ -78,6 +80,10 @@ public class BlackjackController {
             OutputView.printDealerHitMessage();
         }
         dealer.handleBurst();
+    }
+
+    private void handleBlackjack(Player player) {
+        player.handleBlackjack();
     }
 
     private void handlePlayerAction(Player player, Dealer dealer) {
