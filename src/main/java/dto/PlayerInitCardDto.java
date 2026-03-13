@@ -8,6 +8,6 @@ public record PlayerInitCardDto(
         List<String> card
 ) {
     public static PlayerInitCardDto from(Player player) {
-        return new PlayerInitCardDto(player.getName(), player.getOpenCards());
+        return new PlayerInitCardDto(player.getName(), player.getInitialCards());
     }
 }

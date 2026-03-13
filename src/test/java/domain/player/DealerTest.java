@@ -26,7 +26,7 @@ public class DealerTest {
         dealer.deal(sd);
 
         //when
-        List<String> startPrintResult = dealer.getOpenCards();
+        List<String> startPrintResult = dealer.getInitialCards();
 
         //then
         assertThat(startPrintResult.size()).isEqualTo(1);

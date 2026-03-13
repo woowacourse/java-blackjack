@@ -32,10 +32,10 @@ public abstract class Player {
         return handCard.isBlackJack();
     }
 
-    protected abstract int getOpenCardCount();
+    protected abstract int getInitialCardCount();
 
-    public List<String> getOpenCards() {
-        return handCard.getOpenCards(getOpenCardCount());
+    public List<String> getInitialCards() {
+        return handCard.getOpenCards(getInitialCardCount());
     }
 
     public abstract String getName();

@@ -2,7 +2,7 @@ package domain.player;
 
 public class Gambler extends Player {
 
-    private static final int OPEN_CARD_COUNT = 2;
+    private static final int INITIAL_CARD_COUNT = 2;
 
     private final Name name;
     private final Betting betting;
@@ -23,7 +23,7 @@ public class Gambler extends Player {
     }
 
     @Override
-    protected int getOpenCardCount() {
-        return OPEN_CARD_COUNT;
+    protected int getInitialCardCount() {
+        return INITIAL_CARD_COUNT;
     }
 }

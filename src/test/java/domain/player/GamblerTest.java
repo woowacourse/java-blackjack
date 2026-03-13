@@ -78,7 +78,7 @@ class GamblerTest {
         gambler.deal(deck);
 
         // when
-        List<String> result = gambler.getOpenCards();
+        List<String> result = gambler.getInitialCards();
 
         // then
         assertThat(result).hasSize(2);

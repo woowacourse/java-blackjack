@@ -3,7 +3,7 @@ package domain.player;
 
 public class Dealer extends Player {
 
-    private static final int OPEN_CARD_COUNT = 1;
+    private static final int INITIAL_CARD_COUNT = 1;
     private static final int DEALER_STOP_SCORE = 17;
     private static final String DEALER_NAME = "딜러";
 
@@ -21,7 +21,7 @@ public class Dealer extends Player {
     }
 
     @Override
-    protected int getOpenCardCount() {
-        return OPEN_CARD_COUNT;
+    protected int getInitialCardCount() {
+        return INITIAL_CARD_COUNT;
     }
 }
