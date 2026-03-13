@@ -17,6 +17,14 @@ public class InputParser {
                 .toList();
     }
 
+    public static int convertNumber(String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("[ERROR] 숫자 이외의 값은 입력할 수 없습니다.");
+        }
+    }
+
     private static void validateNameEmpty(String name) {
         if (name.trim().isEmpty()) {
             throw new IllegalArgumentException("[ERROR] 플레이어 이름은 공백이 될 수 없습니다.");
