@@ -8,16 +8,16 @@ import java.util.Scanner;
 public class InputView {
     private static final String DELIMITER = ",";
     private static final List<String> HIT_OR_STAND = List.of("y", "n");
-    private static final Scanner sc = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
 
     public List<String> readNames() {
-        String line = sc.nextLine();
+        String line = scanner.nextLine();
         validateIsBlank(line);
         return Arrays.stream(line.split(DELIMITER)).toList();
     }
 
     public String readHitOrStand() {
-        String input = sc.nextLine().trim();
+        String input = scanner.nextLine().trim();
         validateIsBlank(input);
         validateHitOrStandValue(input);
         return input;

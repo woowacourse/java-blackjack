@@ -19,17 +19,25 @@ public class Cards implements Iterable<Card> {
         cards.add(card);
     }
 
+
     public int calculateCardScoreSum() {
-        int scoreSumWithBasicAceScore = cards.stream()
-                .mapToInt(Card::getCardScore)
-                .sum();
-        boolean hasAce = cards.stream().anyMatch(Card::isAce);
-        int scoreSumWithMaxAceScore = scoreSumWithBasicAceScore + ACE_EXTRA_SCORE;
-        boolean canApplyMaxAceScore = scoreSumWithMaxAceScore <= BUST_CRITERIA;
-        if (hasAce && canApplyMaxAceScore) {
-            scoreSumWithBasicAceScore += ACE_EXTRA_SCORE;
+        int scoreSum = getScoreSumWithBasicAceScore();
+        if (hasAce() && canApplyMaxAceScore(scoreSum)) {
+            scoreSum += ACE_EXTRA_SCORE;
         }
-        return scoreSumWithBasicAceScore;
+        return scoreSum;
+    }
+
+    private int getScoreSumWithBasicAceScore() {
+        return cards.stream().mapToInt(Card::getCardScore).sum();
+    }
+
+    private boolean hasAce() {
+        return cards.stream().anyMatch(Card::isAce);
+    }
+
+    private boolean canApplyMaxAceScore(int scoreSum) {
+        return scoreSum + ACE_EXTRA_SCORE <= BUST_CRITERIA;
     }
 
     public boolean isLessThanMaxScore() {

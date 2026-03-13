@@ -84,7 +84,7 @@ public class OutputView {
     public void printWinTieLossResult(GameResultDto gameResultDto) {
         System.out.println("## 최종 승패");
 
-        String dealerWinTieLossResult = consistDealerWinTieLossResult(gameResultDto);
+        String dealerWinTieLossResult = consistDealerWinTieLossResult(gameResultDto.dealerWinTieLossResult());
         System.out.println(dealerWinTieLossResult);
 
         List<String> playerWinTieLossResults = consistPlayerWinTieLossResults(gameResultDto);
@@ -93,10 +93,9 @@ public class OutputView {
         }
     }
 
-    private String consistDealerWinTieLossResult(GameResultDto gameResultDto) {
+    private String consistDealerWinTieLossResult(Map<String, Integer> dealerWinTieLossResult) {
         List<String> dealerResult = new ArrayList<>();
-        Map<String, Integer> dealerWinLossResult = gameResultDto.dealerWinTieLossResult();
-        for (Entry<String, Integer> result : dealerWinLossResult.entrySet()) {
+        for (Entry<String, Integer> result : dealerWinTieLossResult.entrySet()) {
             int count = result.getValue();
             String winTieLoss = result.getKey();
             String resultInFormat = String.format("%d%s", count, winTieLoss);

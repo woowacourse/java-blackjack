@@ -21,12 +21,15 @@ public class Deck {
     private static List<Card> createAllCards() {
         List<Card> cards = new ArrayList<>();
         for (CardShape cardShape : CardShape.values()) {
-            for (CardContents cardContents : CardContents.values()) {
-                Card card = new Card(cardShape, cardContents);
-                cards.add(card);
-            }
+            addCardsByShape(cards, cardShape);
         }
         return cards;
+    }
+
+    private static void addCardsByShape(List<Card> cards, CardShape cardShape) {
+        for (CardContents cardContents : CardContents.values()) {
+            cards.add(new Card(cardShape, cardContents));
+        }
     }
 
     private static void shuffleCards(List<Card> cards, CardShuffleStrategy strategy) {
@@ -37,7 +40,6 @@ public class Deck {
         if (totalDeck.isEmpty()) {
             throw new NoSuchElementException(ErrorMessage.DRAW_CARD_OUT_OF_RANGE.getMessage());
         }
-
         return totalDeck.removeFirst();
     }
 
