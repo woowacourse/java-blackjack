@@ -12,7 +12,7 @@ public class Players {
 
     public Players(List<Player> players) {
         validate(players);
-        this.players = players;
+        this.players = List.copyOf(players);
     }
 
     private void validate(List<Player> players) {
