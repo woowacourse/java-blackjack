@@ -3,11 +3,11 @@ package dto;
 import java.util.List;
 
 public record BlackjackStatisticsDto(
-        DealerStatisticDto dealerStatisticDto,
+        int dealerProfit,
         List<PlayerStatisticDto> playerStatisticDtoList
 ) {
 
-    public static BlackjackStatisticsDto of(DealerStatisticDto dealerStatisticDto, List<PlayerStatisticDto> playerStatisticDtoList) {
-        return new BlackjackStatisticsDto(dealerStatisticDto, playerStatisticDtoList);
+    public static BlackjackStatisticsDto of(int dealerProfit, List<PlayerStatisticDto> playerStatisticDtoList) {
+        return new BlackjackStatisticsDto(dealerProfit, playerStatisticDtoList);
     }
 }
