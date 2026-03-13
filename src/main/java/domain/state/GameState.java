@@ -11,25 +11,27 @@ public interface GameState {
         if (hand.isBlackJack()) {
             return new BlackJackGameState(hand);
         }
-        return new PlayerCanHitGameState(hand);
+        return new PlayerPlayableGameState(hand);
     }
 
     static GameState createDealerInitialGameState(Hand hand) {
         if (hand.isBlackJack()) {
             return new BlackJackGameState(hand);
         }
-        return new DealerCanHitGameState(hand);
+        return new DealerPlayableGameState(hand);
     }
 
     GameState hit(Supplier<Card> cardSupplier);
 
     GameState stay();
 
+    boolean isPlayable();
+
+    boolean isFinished();
+
     boolean isBlackJack();
 
     boolean isBust();
-
-    boolean isFinished();
 
     List<Card> showOwnCards();
 

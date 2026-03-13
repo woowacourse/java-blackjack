@@ -4,8 +4,8 @@ import domain.Card;
 import domain.Hand;
 import java.util.function.Supplier;
 
-public class PlayerCanHitGameState extends CanHitGameState {
-    public PlayerCanHitGameState(Hand hand) {
+public class PlayerPlayableGameState extends PlayableGameState {
+    public PlayerPlayableGameState(Hand hand) {
         super(hand);
     }
 
@@ -15,7 +15,16 @@ public class PlayerCanHitGameState extends CanHitGameState {
         if (newHand.isBust()) {
             return new BustGameState(newHand);
         }
-        return new PlayerCanHitGameState(newHand);
+
+        if (newHand.isBlackJack()) {
+            return new BlackJackGameState(newHand);
+        }
+
+        if (newHand.isFull()) {
+            return new StayGameState(newHand);
+        }
+
+        return new PlayerPlayableGameState(newHand);
     }
 
     @Override

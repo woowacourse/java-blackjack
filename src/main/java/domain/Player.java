@@ -30,6 +30,10 @@ public class Player extends Participant {
         );
     }
 
+    public boolean isPlayable() {
+        return gameState.isPlayable();
+    }
+
     public boolean isFinished() {
         return gameState.isFinished();
     }

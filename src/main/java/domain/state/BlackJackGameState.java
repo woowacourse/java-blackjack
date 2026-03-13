@@ -6,4 +6,9 @@ public class BlackJackGameState extends EndGameState {
     public BlackJackGameState(Hand hand) {
         super(hand);
     }
+
+    @Override
+    public boolean isPlayable() {
+        return false;
+    }
 }

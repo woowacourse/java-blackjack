@@ -24,4 +24,9 @@ public abstract class EndGameState extends CommonGameState {
     public boolean isFinished() {
         return true;
     }
+
+    @Override
+    public boolean isPlayable() {
+        return false;
+    }
 }

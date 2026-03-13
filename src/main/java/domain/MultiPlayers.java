@@ -57,7 +57,7 @@ public class MultiPlayers {
 
     public Optional<Player> findNotStayPlayer() {
         return players.stream()
-                .filter(player -> !player.isFinished())
+                .filter(Player::isPlayable)
                 .findFirst();
     }
 

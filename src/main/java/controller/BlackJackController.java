@@ -49,12 +49,6 @@ public class BlackJackController {
     private void playPlayersTurn(BlackJackGame game) {
         while (game.whoseTurn().isPresent()) {
             Player currentPlayer = game.whoseTurn().get();
-
-            if (currentPlayer.isFinished()) {
-                handlePlayerStandProcess(game);
-                continue;
-            }
-
             outputView.printHitOrStandPrompt(currentPlayer.getName());
             boolean wantToHit = retry(inputView::wantToHit);
             doHitOrStand(wantToHit, game);

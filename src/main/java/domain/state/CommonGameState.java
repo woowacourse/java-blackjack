@@ -20,6 +20,12 @@ public abstract class CommonGameState implements GameState {
     public abstract GameState stay();
 
     @Override
+    public abstract boolean isPlayable();
+
+    @Override
+    public abstract boolean isFinished();
+
+    @Override
     public boolean isBlackJack() {
         return hand.isBlackJack();
     }
@@ -28,9 +34,6 @@ public abstract class CommonGameState implements GameState {
     public boolean isBust() {
         return hand.isBust();
     }
-
-    @Override
-    public abstract boolean isFinished();
 
     @Override
     public List<Card> showOwnCards() {

@@ -4,10 +4,10 @@ import domain.Card;
 import domain.Hand;
 import java.util.function.Supplier;
 
-public class DealerCanHitGameState extends CanHitGameState {
+public class DealerPlayableGameState extends PlayableGameState {
     private static final int MINIMUM_TOTAL_SCORE = 16;
 
-    public DealerCanHitGameState(Hand hand) {
+    public DealerPlayableGameState(Hand hand) {
         super(hand);
     }
 
@@ -18,11 +18,11 @@ public class DealerCanHitGameState extends CanHitGameState {
             return new BustGameState(newHand);
         }
 
-        if (newHand.calculateCardScoreSum() > MINIMUM_TOTAL_SCORE) {
+        if (newHand.calculateCardScoreSum() >= MINIMUM_TOTAL_SCORE) {
             return new StayGameState(newHand);
         }
 
-        return new DealerCanHitGameState(newHand);
+        return new DealerPlayableGameState(newHand);
     }
 
     @Override
