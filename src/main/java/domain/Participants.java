@@ -1,5 +1,6 @@
 package domain;
 
+import dto.ParticipantsInitDTO;
 import dto.ProfitResultDTO;
 import dto.UserCardsDTO;
 import java.util.ArrayList;
@@ -18,23 +19,16 @@ public class Participants {
     private final List<User> players;
     private final Dealer dealer;
 
-    public Participants(List<String> parsedParticipantsName, List<Money> parsedBetAmounts) {
-        this.players = new ArrayList<>();
+    public Participants(List<ParticipantsInitDTO> participantsInitDTOS) {
+        validateParticipantsNumbers(participantsInitDTOS);
+        this.players = participantsInitDTOS.stream()
+                .map(dto -> new User(dto.getUserName(), dto.getBettingMoney()))
+                .collect(Collectors.toList());
         this.dealer = new Dealer();
-        validateParticipantsNumbers(parsedParticipantsName);
-        saveUsers(parsedParticipantsName, parsedBetAmounts);
     }
 
-    private void saveUsers(List<String> parsedParticipantsName, List<Money> parsedBetAmounts) {
-        for (int i = 0; i < parsedParticipantsName.size(); i++) {
-            String userName = parsedParticipantsName.get(i);
-            Money betAmount = parsedBetAmounts.get(i);
-            players.add(new User(userName, betAmount));
-        }
-    }
-
-    static void validateParticipantsNumbers(List<String> parsedParticipantsName) {
-        if (parsedParticipantsName.size() > MAXIMUM_NUMBER_OF_PARTICIPANTS) {
+    static void validateParticipantsNumbers(List<ParticipantsInitDTO> participantsInitDTOS) {
+        if (participantsInitDTOS.size() > MAXIMUM_NUMBER_OF_PARTICIPANTS) {
             throw new IllegalArgumentException("[ERROR] 최대 참가 인원은 16명 이하여야 합니다.");
         }
     }

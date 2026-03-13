@@ -2,16 +2,16 @@ package service;
 
 import domain.Deck;
 import domain.Participants;
+import dto.ParticipantsInitDTO;
 import java.util.List;
 import view.Message;
-import vo.Money;
 
 public class BlackjackService {
     private Participants participants;
     private Deck deck;
 
-    public void saveParticipants(List<String> parsedParticipantsName, List<Money> parsedBetAmounts) {
-        participants = new Participants(parsedParticipantsName, parsedBetAmounts);
+    public void initParticipant(List<ParticipantsInitDTO> participantsInitDTOS) {
+        participants = new Participants(participantsInitDTOS);
     }
 
     public void makeDeck() {
