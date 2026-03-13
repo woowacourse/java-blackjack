@@ -1,7 +1,6 @@
 package controller.result;
 
 import model.judgement.DealerResult;
-import model.judgement.Judgement;
 import model.judgement.PlayerResult;
 import view.WinLossReportView;
 
@@ -9,7 +8,7 @@ public class NonBettingResultReporter implements ResultReporter {
 
     @Override
     public void report(PlayerResult playerResult) {
-        DealerResult dealerResult = Judgement.judgeByDealer(playerResult);
+        DealerResult dealerResult = playerResult.calculateDealerResult();
 
         WinLossReportView.printFinalResultHeader();
         WinLossReportView.printResultByDealer(dealerResult);

@@ -57,11 +57,4 @@ public class Judgement {
         }
         return LOSE;
     }
-
-    public static DealerResult judgeByDealer(PlayerResult playerResult) {
-        int dealerWinCount = playerResult.countByStatus(ResultStatus.LOSE);
-        int dealerLoseCount = playerResult.countByStatus(ResultStatus.WIN) + playerResult.countByStatus(ResultStatus.BLACKJACK);
-        int dealerDrawCount = playerResult.countByStatus(ResultStatus.DRAW);
-        return new DealerResult(dealerWinCount, dealerLoseCount, dealerDrawCount);
-    }
 }

@@ -1,23 +1,20 @@
 package model.judgement;
 
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import model.paticipant.Player;
 
-public class PlayerResult {
-
-    private final Map<Player, ResultStatus> result;
+public record PlayerResult(Map<Player, ResultStatus> result) {
 
     public PlayerResult(Map<Player, ResultStatus> result) {
-        this.result = new LinkedHashMap<>(result);
+        this.result = Map.copyOf(result);
     }
 
-    public int countByStatus(ResultStatus resultStatus) {
-        return (int) result.values()
-                .stream()
-                .filter(status -> status == resultStatus)
-                .count();
+    public DealerResult calculateDealerResult() {
+        int dealerWinCount = countByStatus(ResultStatus.LOSE);
+        int dealerLoseCount = countByStatus(ResultStatus.WIN) + countByStatus(ResultStatus.BLACKJACK);
+        int dealerDrawCount = countByStatus(ResultStatus.DRAW);
+        return new DealerResult(dealerWinCount, dealerLoseCount, dealerDrawCount);
     }
 
     public Map<Player, Profit> calculateProfits() {
@@ -32,7 +29,10 @@ public class PlayerResult {
                 .reduce(Profit.ZERO, (sum, profit) -> sum.add(profit.negate()));
     }
 
-    public Map<Player, ResultStatus> getResult() {
-        return Collections.unmodifiableMap(result);
+    private int countByStatus(ResultStatus resultStatus) {
+        return (int) result.values()
+                .stream()
+                .filter(status -> status == resultStatus)
+                .count();
     }
 }

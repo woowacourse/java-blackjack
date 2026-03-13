@@ -43,7 +43,7 @@ public class WinLossReportView {
     }
 
     public static void printResultByPlayers(PlayerResult playerResult) {
-        playerResult.getResult()
+        playerResult.result()
                 .forEach((player, status) ->
                         System.out.printf("%s: %s%n", player.getName(), EnumMapper.RESULT_STATUS_MAPPER.get(status)));
     }
