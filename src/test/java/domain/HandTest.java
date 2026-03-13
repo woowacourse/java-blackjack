@@ -54,7 +54,7 @@ class HandTest {
         hand.addCard(new Card(Suit.SPADES, Rank.ACE));
 
         // when, then
-        assertTrue(hand.getCards().contains(new Card(Suit.SPADES, Rank.ACE)));
+        assertTrue(hand.getCardsList().contains(new Card(Suit.SPADES, Rank.ACE)));
     }
 
     @Test

@@ -18,7 +18,7 @@ public record HandDto(List<String> cards) {
     }
 
     public static HandDto from(Hand hand) {
-        List<String> cards = hand.getCards().stream()
+        List<String> cards = hand.getCardsList().stream()
                 .map(Card::getCardName)
                 .toList();
         return new HandDto(cards);
