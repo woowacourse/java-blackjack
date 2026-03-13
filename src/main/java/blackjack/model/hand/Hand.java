@@ -4,6 +4,7 @@ import blackjack.model.card.Card;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Stream;
 
 public abstract class Hand {
 
@@ -16,20 +17,16 @@ public abstract class Hand {
         this.cards = List.of();
     }
 
-    protected Hand(Collection<Card> cards) {
-        this.cards = List.copyOf(cards);
+    protected Hand(Collection<Card> existCards, Card newCard) {
+        this.cards = Stream.concat(existCards.stream(), Stream.of(newCard))
+                .toList();
     }
 
     public Collection<Card> getCards() {
         return List.copyOf(cards);
     }
 
-    public Hand hit(Card card) {
-        Collection<Card> newCards = new ArrayList<>(cards);
-        newCards.add(card);
-
-        return nextState(newCards);
-    }
+    public abstract Hand hit(Card newCard);
 
     public abstract boolean canHit();
 
@@ -41,28 +38,34 @@ public abstract class Hand {
         return isBust(calculateScore());
     }
 
-    protected boolean isBust(Collection<Card> cards) {
-        return isBust(calculateScore(cards));
+    protected boolean isBustWith(Card newCard) {
+        return isBust(calculateScoreWith(newCard));
     }
 
     public int calculateScore() {
-        return calculateScore(cards);
-    }
-
-    protected int calculateScore(Collection<Card> cards) {
-        int scoreBeforeAdjust = getScoreBeforeAdjust(cards);
+        int scoreBeforeAdjust = getScoreBeforeAdjust();
 
         return adjust(scoreBeforeAdjust);
     }
 
-    protected abstract Hand nextState(Collection<Card> cards);
+    protected int calculateScoreWith(Card newCard) {
+        int scoreBeforeAdjust = getScoreBeforeAdjustWith(newCard);
+
+        return adjust(scoreBeforeAdjust);
+    }
 
     private boolean isBust(int score) {
         return score >= BUST_LOWER_BOUND;
     }
 
-    private int getScoreBeforeAdjust(Collection<Card> cards) {
+    private int getScoreBeforeAdjust() {
         return cards.stream()
+                .mapToInt(Card::getScore)
+                .sum();
+    }
+
+    private int getScoreBeforeAdjustWith(Card newCard) {
+        return Stream.concat(cards.stream(), Stream.of(newCard))
                 .mapToInt(Card::getScore)
                 .sum();
     }

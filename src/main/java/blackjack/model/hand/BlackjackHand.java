@@ -5,8 +5,8 @@ import java.util.Collection;
 
 public class BlackjackHand extends FinishedHand {
 
-    public BlackjackHand(Collection<Card> cards) {
-        super(cards);
+    public BlackjackHand(Collection<Card> existCards, Card newCard) {
+        super(existCards, newCard);
     }
 
     @Override
@@ -15,7 +15,11 @@ public class BlackjackHand extends FinishedHand {
     }
 
     @Override
-    protected Hand nextState(Collection<Card> cards) {
-        return new BlackjackHand(cards);
+    public Hand hit(Card newCard) {
+        if (isBustWith(newCard)) {
+            return new BustHand(cards, newCard);
+        }
+
+        return new BlackjackHand(cards, newCard);
     }
 }

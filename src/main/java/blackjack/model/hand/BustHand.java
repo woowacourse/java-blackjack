@@ -5,12 +5,12 @@ import java.util.Collection;
 
 public class BustHand extends FinishedHand {
 
-    public BustHand(Collection<Card> cards) {
-        super(cards);
+    public BustHand(Collection<Card> existCards, Card newCard) {
+        super(existCards, newCard);
     }
 
     @Override
-    protected Hand nextState(Collection<Card> cards) {
-        return new BustHand(cards);
+    public Hand hit(Card newCard) {
+        return new BustHand(cards, newCard);
     }
 }

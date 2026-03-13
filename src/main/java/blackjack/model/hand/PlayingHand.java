@@ -9,8 +9,8 @@ public abstract class PlayingHand extends Hand {
         super();
     }
 
-    protected PlayingHand(Collection<Card> cards) {
-        super(cards);
+    protected PlayingHand(Collection<Card> existCards, Card newCard) {
+        super(existCards, newCard);
     }
 
     @Override

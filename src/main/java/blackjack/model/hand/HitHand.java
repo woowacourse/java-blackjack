@@ -5,16 +5,16 @@ import java.util.Collection;
 
 public class HitHand extends PlayingHand {
 
-    public HitHand(Collection<Card> cards) {
-        super(cards);
+    public HitHand(Collection<Card> existCards, Card newCard) {
+        super(existCards, newCard);
     }
 
     @Override
-    public Hand nextState(Collection<Card> cards) {
-        if (isBust(cards)) {
-            return new BustHand(cards);
+    public Hand hit(Card newCard) {
+        if (isBustWith(newCard)) {
+            return new BustHand(cards, newCard);
         }
 
-        return new HitHand(cards);
+        return new HitHand(cards, newCard);
     }
 }
