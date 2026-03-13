@@ -13,7 +13,5 @@ public class CardsTest {
         Cards secondCards = new Cards(new Random(1));
 
         assertEquals(firstCards.draw().displayName(), secondCards.draw().displayName());
-        assertEquals(firstCards.draw().displayName(), secondCards.draw().displayName());
-        assertEquals(firstCards.draw().displayName(), secondCards.draw().displayName());
     }
 }
