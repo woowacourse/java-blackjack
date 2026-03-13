@@ -26,7 +26,7 @@ public class Player extends Participant {
             return bettingAmount.bettingAmount();
         }
         if(WIN.equals(matchCase) && isBlackjack()) {
-            return (int) (bettingAmount.bettingAmount() * BLACKJACK_MULTIPLIER);
+            return (long) (bettingAmount.bettingAmount() * BLACKJACK_MULTIPLIER);
         }
 
         if(LOSE.equals(matchCase)) {
