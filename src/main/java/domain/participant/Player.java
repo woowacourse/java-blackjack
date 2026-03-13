@@ -34,10 +34,6 @@ public class Player {
         return participant.isBlackJack();
     }
 
-    public Participant getPlayer() {
-        return this.participant;
-    }
-
     public int getScore() {
         return participant.getScore();
     }
@@ -52,5 +48,9 @@ public class Player {
 
     public List<String> createCardNames() {
         return participant.createCardNames();
+    }
+
+    public int calculateBattingProfit(double profit) {
+        return battingMoney.calculateBattingProfit(profit);
     }
 }

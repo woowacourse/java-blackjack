@@ -20,6 +20,4 @@ public class Referee {
         }
         return Collections.unmodifiableMap(judgeMap);
     }
-
-
 }

@@ -15,4 +15,8 @@ public record BattingMoney(int money) {
             throw new IllegalArgumentException(ExceptionMessage.BATTING_MONEY_RANGE.getMessage());
         }
     }
+
+    public int calculateBattingProfit(double profit) {
+        return (int) (profit * money);
+    }
 }

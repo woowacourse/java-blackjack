@@ -19,9 +19,7 @@ public class GameProfit {
     }
 
     public void addProfitMoney(Player player, GameResult gameResult) {
-        double profit = gameResult.getProfit();
-        int battingMoney = player.getBattingMoney();
-        int battingResult = (int) (profit * battingMoney);
+        int battingResult = player.calculateBattingProfit(gameResult.getProfit());
         profitMoney.put(player.getName(), battingResult);
     }
 
@@ -32,9 +30,9 @@ public class GameProfit {
     public int getDealerProfit() {
         int dealerProfit = 0;
         for (Map.Entry<String, Integer> player : profitMoney.entrySet()) {
-            dealerProfit -= player.getValue();
+            dealerProfit += player.getValue();
         }
-        return dealerProfit;
+        return -dealerProfit;
     }
 
 
