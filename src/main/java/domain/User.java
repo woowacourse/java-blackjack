@@ -43,7 +43,7 @@ public class User {
         return hand.getHandTotalScore();
     }
 
-    public Money updateProfitBy(GameResult gameResult) {
+    public Money calculateProfit(GameResult gameResult) {
         return gameResult.calculateProfit(this.bettingMoney);
     }
 

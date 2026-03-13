@@ -133,7 +133,7 @@ public class Participants {
 
         for (User user : players) {
             GameResult isUserWin = dealer.judgeResultForUser(user);
-            Money earnedMoney = user.updateProfitBy(isUserWin);
+            Money earnedMoney = user.calculateProfit(isUserWin);
             dealerProfit = dealerProfit.subtract(earnedMoney);
             participantsProfit.put(user.getName(), earnedMoney);
         }
