@@ -1,6 +1,5 @@
 package service;
 
-import domain.PlayerGameResult;
 import domain.Players;
 
 import domain.card.Deck;
