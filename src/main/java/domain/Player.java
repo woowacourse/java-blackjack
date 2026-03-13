@@ -48,6 +48,7 @@ public class Player {
             loseMoney();
             return;
         }
+        bettingScore=0;
     }
 
     public void loseMoney() {

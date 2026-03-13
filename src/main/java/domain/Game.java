@@ -14,11 +14,12 @@ public class Game {
     private final Player dealer;
     private final Players players;
 
-    public Game(Deck deck, Players players) {
+    public Game(Deck deck, Players players, Player dealer) {
         this.deck = deck;
         this.players = players;
-        this.dealer = new Player(DEALER_NAME);
-        dealer.addInitializedCard(deck);
+        this.dealer = dealer;
+//        this.dealer = new Player(DEALER_NAME);
+//        dealer.addInitializedCard(deck);
     }
 
     public Map<MatchCase, Integer> calculateDealerMatch(Map<String, MatchCase> playerResult) {

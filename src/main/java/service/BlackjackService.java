@@ -34,7 +34,9 @@ public class BlackjackService {
     }
 
     public Game createGame(Deck deck, Players players) {
-        return new Game(deck, players);
+        Player dealer = new Player(Game.DEALER_NAME);
+        dealer.addInitializedCard(deck);
+        return new Game(deck, players, dealer);
     }
 
     public List<CardContentDto> getCardContentDtos(Game game) {
