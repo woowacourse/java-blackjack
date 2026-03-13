@@ -2,13 +2,18 @@ package domain;
 
 import domain.card.Card;
 import domain.card.Deck;
-import domain.enums.Result;
+import domain.enums.GameResult;
 import domain.participant.Dealer;
+import domain.participant.Name;
 import domain.participant.Players;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Game {
+
+    private static final int INITIAL_CARD_COUNT = 2;
 
     private final Players players;
     private final Dealer dealer;
@@ -20,12 +25,20 @@ public class Game {
 
     public void initializeGame(Deck deck) {
         players.getAllPlayersName().forEach(name ->
-                players.distributeCards(name, List.of(deck.drawCard(), deck.drawCard()))
+                players.distributeCards(name, initCards(deck))
         );
-        dealer.addCards(List.of(deck.drawCard(), deck.drawCard()));
+        dealer.addCards(initCards(deck));
     }
 
-    public boolean playPlayerTurn(String name, Deck deck, boolean wantHit) {
+    private List<Card> initCards(Deck deck) {
+        List<Card> initialCards = new ArrayList<>();
+        for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
+            initialCards.add(deck.drawCard());
+        }
+        return initialCards;
+    }
+
+    public boolean playPlayerTurn(Name name, Deck deck, boolean wantHit) {
         if (wantHit) {
             players.distributeCard(name, deck.drawCard());
         }
@@ -33,28 +46,32 @@ public class Game {
     }
 
     public boolean playDealerTurn(Deck deck) {
+        if (!dealer.checkScoreUnderCriterion()) {
+            return false;
+        }
         dealer.addCard(deck.drawCard());
-
-        return !dealer.checkScoreUnderCriterion();
+        return true;
     }
 
-    public List<String> getAllPlayersName() {
+    public List<Name> getAllPlayersName() {
         return players.getAllPlayersName();
     }
 
-    public Result getPlayerResult(String name) {
-        int dealerScore = dealer.getScore();
-        boolean dealerBurst = dealer.isBust();
-        return players.getPlayerResult(name, dealerScore, dealerBurst);
+    public Map<Name, GameResult> getAllPlayersResult() {
+        Map<Name, GameResult> playerResults = new LinkedHashMap<>();
+        players.getAllPlayersName().forEach(
+                name -> playerResults.put(name, players.getPlayerResult(name, dealer))
+        );
+        return playerResults;
     }
 
-    public Map<Result, Integer> getDealerResult() {
-        int dealerScore = dealer.getScore();
-        boolean dealerBurst = dealer.isBust();
-        return Result.calculateDealerResult(players.decideAllResults(dealerScore, dealerBurst));
+    public Map<GameResult, Integer> getDealerResult() {
+        return GameResult.calculateDealerResult(players.decidePlayerResults(dealer).values()
+                .stream()
+                .toList());
     }
 
-    public List<Card> getPlayerCard(String name) {
+    public List<Card> getPlayerCard(Name name) {
         return players.getPlayerCards(name);
     }
 
@@ -62,7 +79,7 @@ public class Game {
         return dealer.getHand();
     }
 
-    public int getPlayerScore(String name) {
+    public int getPlayerScore(Name name) {
         return players.getPlayerScore(name);
     }
 

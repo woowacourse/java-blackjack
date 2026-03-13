@@ -7,9 +7,11 @@ import static message.ErrorMessage.PLAYER_NOT_FOUND;
 import static message.ErrorMessage.PLAYER_NUMBER_OUT_OF_RANGE;
 
 import domain.card.Card;
-import domain.enums.Result;
+import domain.enums.GameResult;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class Players {
@@ -22,7 +24,7 @@ public class Players {
                 .toList());
     }
 
-    public List<String> getAllPlayersName() {
+    public List<Name> getAllPlayersName() {
         return players.stream()
                 .map(Player::getName)
                 .toList();
@@ -46,48 +48,47 @@ public class Players {
         }
     }
 
-    public void distributeCard(String name, Card card) {
+    public void distributeCard(Name name, Card card) {
         Player foundPlayer = findPlayerByName(name);
         foundPlayer.addCard(card);
     }
 
-    public void distributeCards(String name, List<Card> cards) {
+    public void distributeCards(Name name, List<Card> cards) {
         Player foundPlayer = findPlayerByName(name);
         foundPlayer.addCards(cards);
     }
 
-    private Player findPlayerByName(String name) {
+    private Player findPlayerByName(Name name) {
         return players.stream()
                 .filter(player -> player.getName().equals(name))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(PLAYER_NOT_FOUND.getMessage()));
     }
 
-    public List<Result> decideAllResults(int dealerScore, boolean dealerBurst) {
-        List<Result> results = new ArrayList<>();
+    public Map<Name, GameResult> decidePlayerResults(Dealer dealer) {
+        Map<Name, GameResult> playerResults = new LinkedHashMap<>();
         for (Player player : players) {
-            Result playerResult = Result.calculatePlayerResult(player, dealerScore, dealerBurst);
-            results.add(playerResult);
+            playerResults.put(player.getName(), GameResult.calculatePlayerResult(player, dealer));
         }
-        return results;
+        return playerResults;
     }
 
-    public boolean checkScoreUnderCriterion(String name) {
+    public boolean checkScoreUnderCriterion(Name name) {
         Player foundPlayer = findPlayerByName(name);
         return foundPlayer.checkScoreUnderCriterion();
     }
 
-    public List<Card> getPlayerCards(String name) {
+    public List<Card> getPlayerCards(Name name) {
         Player foundPlayer = findPlayerByName(name);
         return foundPlayer.getHand();
     }
 
-    public Result getPlayerResult(String name, int dealerScore, boolean dealerBust) {
+    public GameResult getPlayerResult(Name name, Dealer dealer) {
         Player foundPlayer = findPlayerByName(name);
-        return Result.calculatePlayerResult(foundPlayer, dealerScore, dealerBust);
+        return GameResult.calculatePlayerResult(foundPlayer, dealer);
     }
 
-    public int getPlayerScore(String name) {
+    public int getPlayerScore(Name name) {
         Player foundPlayer = findPlayerByName(name);
         return foundPlayer.getScore();
     }

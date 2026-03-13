@@ -17,4 +17,12 @@ public class InputParser {
     public static boolean parseHitAnswer(String input) {
         return YES_ANSWER.contains(input);
     }
+
+    public static int parseMoney(String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("[ERROR] 정수형 숫자만 입력 가능합니다.");
+        }
+    }
 }
