@@ -1,37 +1,9 @@
 package domain;
 
 import domain.card.Card;
+import domain.participant.Participant;
 
-public class Dealer {
-    private final Hand hand;
-
-    public Dealer() {
-        hand = new Hand();
-    }
-
-    public boolean isBust() {
-        return hand.isBust();
-    }
-
-    public boolean isBlackjack() {
-        return hand.isBlackjack();
-    }
-    
-    public boolean isBlackjackAtFirst() {
-        return isBlackjack() && hand.size() == 2;
-    }
-
-    public void draw(Card card) {
-        hand.addCard(card);
-    }
-
-    public Hand getHand() {
-        return hand;
-    }
-
-    public int getScore() {
-        return hand.getSum();
-    }
+public class Dealer extends Participant {
 
     public Card getFirstCard() {
         return hand.getFirst();
