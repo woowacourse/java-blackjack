@@ -18,4 +18,23 @@ public class BlackjackTest {
 
         assertThat(pobi.isBlackjack()).isEqualTo(true);
     }
+
+    @Test
+    void 플레이어_초기카드_합_21_아닌경우_1() {
+        Player pobi = new Player("pobi");
+        pobi.receiveOneCard(new Card(Rank.TWO, Shape.HEART));
+        pobi.receiveOneCard(new Card(Rank.TEN, Shape.SPADE));
+
+        assertThat(pobi.isBlackjack()).isEqualTo(false);
+    }
+
+    @Test
+    void 플레이어_초기카드_합_21_아닌경우_2() {
+        Player pobi = new Player("pobi");
+        pobi.receiveOneCard(new Card(Rank.TWO, Shape.HEART));
+        pobi.receiveOneCard(new Card(Rank.TEN, Shape.SPADE));
+        pobi.receiveOneCard(new Card(Rank.NINE, Shape.SPADE));
+
+        assertThat(pobi.isBlackjack()).isEqualTo(false);
+    }
 }
