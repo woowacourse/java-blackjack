@@ -3,9 +3,7 @@ package blackjack.view;
 import blackjack.dto.GameResultDto;
 import blackjack.dto.InitialDealDtos;
 import blackjack.dto.ParticipantCardsDto;
-import blackjack.domain.participant.Dealer;
 import blackjack.dto.ParticipantScoreDtos;
-import java.util.Spliterator.OfInt;
 
 public class BlackjackView {
     private final InputView inputView;

@@ -20,12 +20,12 @@ public class InputView {
         return isYes(readStrippedLine());
     }
 
-    private boolean isYes(String rawAnswer) {
+    private boolean isYes(final String rawAnswer) {
         validateAnswer(rawAnswer);
         return YES.equals(rawAnswer);
     }
 
-    private void validateAnswer(String rawAnswer) {
+    private void validateAnswer(final String rawAnswer) {
         if (!YES.equals(rawAnswer) && !NO.equals(rawAnswer)) {
             throw new IllegalArgumentException(YES + " 또는 " + NO + "만 입력 가능합니다.");
         }

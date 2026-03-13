@@ -5,7 +5,7 @@ import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
 import java.util.Map;
 
-public record CardDto(
+public record CardNameDto(
     String cardName
 ) {
     private static final Map<Suit, String> SUIT_KOREANS = Map.of(
@@ -31,7 +31,7 @@ public record CardDto(
         Map.entry(Rank.KING, "K")
     );
 
-    public static CardDto from(Card card) {
-        return new CardDto(RANK_SYMBOLS.get(card.rank()) + SUIT_KOREANS.get(card.suit()));
+    public static CardNameDto from(Card card) {
+        return new CardNameDto(RANK_SYMBOLS.get(card.rank()) + SUIT_KOREANS.get(card.suit()));
     }
 }

@@ -2,7 +2,7 @@ package blackjack.view;
 
 import blackjack.domain.result.GameResult;
 import blackjack.domain.result.Score;
-import blackjack.dto.CardDto;
+import blackjack.dto.CardNameDto;
 import blackjack.dto.DealerResultDto;
 import blackjack.dto.GameResultDto;
 import blackjack.dto.GameResultDtos;
@@ -74,7 +74,7 @@ public class OutputView {
         System.out.println();
     }
 
-    private void printPlayerScore(final String playerName, List<CardDto> cards, Score score) {
+    private void printPlayerScore(final String playerName, List<CardNameDto> cards, Score score) {
         List<String> cardOutputs = parseCardsToOutputs(cards);
         String joinedCards = String.join(", ", cardOutputs);
         System.out.println(playerName + "카드: " + joinedCards + " - 결과: " + score.value());
@@ -95,9 +95,9 @@ public class OutputView {
             gameResultDtos.result()));
     }
 
-    private List<String> parseCardsToOutputs(List<CardDto> cards) {
+    private List<String> parseCardsToOutputs(List<CardNameDto> cards) {
         return cards.stream()
-            .map(CardDto::cardName)
+            .map(CardNameDto::cardName)
             .toList();
     }
 }

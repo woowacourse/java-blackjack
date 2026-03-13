@@ -5,19 +5,19 @@ import java.util.List;
 
 public record ParticipantCardsDto(
     String participantName,
-    List<CardDto> cards
+    List<CardNameDto> cards
 ) {
     public static ParticipantCardsDto from(Participant participant) {
-        List<CardDto> cards = participant.getCards().stream()
-            .map(CardDto::from)
+        List<CardNameDto> cards = participant.getCards().stream()
+            .map(CardNameDto::from)
             .toList();
         return new ParticipantCardsDto(participant.getName(), cards);
     }
 
     public static ParticipantCardsDto of(Participant participant, long size) {
-        List<CardDto> cards = participant.getCards().stream()
+        List<CardNameDto> cards = participant.getCards().stream()
             .limit(size)
-            .map(CardDto::from)
+            .map(CardNameDto::from)
             .toList();
         return new ParticipantCardsDto(participant.getName(), cards);
     }

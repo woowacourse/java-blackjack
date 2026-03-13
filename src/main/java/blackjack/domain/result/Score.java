@@ -11,11 +11,11 @@ public record Score(int value) implements Comparable<Score> {
         return compareTo(other) > 0;
     }
 
-    public boolean isBiggerThan(int otherValue) {
+    public boolean isBiggerThan(final int otherValue) {
         return isBiggerThan(new Score(otherValue));
     }
 
-    public boolean isLessThanOrEqual(int hitThreshold) {
-        return !isBiggerThan(hitThreshold);
+    public boolean isLessThanOrEqual(final int otherValue) {
+        return !isBiggerThan(otherValue);
     }
 }
