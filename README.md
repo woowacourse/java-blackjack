@@ -47,10 +47,24 @@ classDiagram
         -Deck totalDeck
         -Dealer dealer
         -Players players
+        +readyParticipantDecks()
+        +drawCardUnderCondition(Participant)
+        +generateGameResult() GameResult
+    }
+    class GameResult {
+        -Map~Player, Result~ playerResults
+        -Map~Result, Integer~ dealerResult
+        +calculate(Dealer, Players)$ GameResult
     }
     class Participant {
         <<abstract>>
-        -Deck deck
+        -Name name
+        -Cards cards
+        +getInitialVisibleCards()*
+        +isDrawable()*
+    }
+    class Name {
+        <<record>>
         -String name
     }
     class Player {
@@ -60,8 +74,12 @@ classDiagram
     class Players {
         -List~Player~ players
     }
-    class Deck {
+    class Cards {
         -List~Card~ cards
+        +calculateCardScoreSum() int
+    }
+    class Deck {
+        -List~Card~ totalDeck
     }
     class Card {
         -CardShape cardShape
@@ -75,42 +93,48 @@ classDiagram
         -String number
         -int score
     }
-    class CardCreationStrategy {
-        <<interface>>
+    class Result {
+        <<enumeration>>
+        WIN, TIE, LOSS
+        +determinePlayerResult(...)$ Result
+        +reverse() Result
     }
-    class RandomCardCreationStrategy {
+    class CardShuffleStrategy {
+        <<interface>>
+        +shuffle(List~Card~)
+    }
+    class RandomCardShuffleStrategy {
     }
 
 %% 2. 컨트롤러 및 뷰 클래스 선언
     class Main {
     }
-    class GameDelegate {
-        <<interface>>
-    }
     class BlackJackController {
         -InputView inputView
         -OutputView outputView
-        -CardCreationStrategy strategy
+        -CardShuffleStrategy strategy
+        +doGame()
     }
     class InputView {
-        -Scanner sc
+        -Scanner scanner
     }
     class OutputView {
     }
 
 %% 3. DTO 클래스 선언
     class GameResultDto {
-        -ParticipantDto dealerDto
-        -List~ParticipantDto~ playerDtos
-        -Map dealerWinLossResults
-        -Map playerWinLossResults
+        <<record>>
+        -Map~String, Integer~ dealerWinTieLossResult
+        -Map~String, String~ playerWinTieLossResults
     }
     class ParticipantDto {
+        <<record>>
         -String name
         -List~CardDto~ cards
         -int score
     }
     class CardDto {
+        <<record>>
         -String cardShape
         -String cardContentNumber
     }
@@ -120,22 +144,25 @@ classDiagram
     Game --> Deck
     Game --> Dealer
     Game --> Players
+    Game ..> GameResult : generates
     Participant <|-- Player
     Participant <|-- Dealer
+    Participant --> Name
+    Participant --> Cards
     Players --> Player
+    Cards --> Card
     Deck --> Card
     Card --> CardShape
     Card --> CardContents
-    CardCreationStrategy <|.. RandomCardCreationStrategy
+    GameResult --> Result
+    CardShuffleStrategy <|.. RandomCardShuffleStrategy
+
 %% 컨트롤러 및 뷰 관계
     Main --> BlackJackController
-    GameDelegate <|.. BlackJackController
     BlackJackController --> InputView
     BlackJackController --> OutputView
-    BlackJackController --> CardCreationStrategy
+    BlackJackController --> CardShuffleStrategy
+
 %% DTO 관계
     GameResultDto --> ParticipantDto
     ParticipantDto --> CardDto
-```
-
-
