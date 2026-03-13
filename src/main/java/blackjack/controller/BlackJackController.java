@@ -8,7 +8,6 @@ import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.dto.EarningResultDto;
 import blackjack.dto.ParticipantDto;
-import blackjack.dto.PlayerGameResultDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
@@ -35,8 +34,6 @@ public class BlackJackController {
         dealerTurn(dealer, deck);
 
         printFinalCardResult(dealer, players);
-
-        // printFinalGameResult(dealer, players); // 사이클1에서 쓴 게임 결과 출력 메서드
 
         printFinalEarningResult(dealer, players);
     }
@@ -77,16 +74,6 @@ public class BlackJackController {
         ParticipantDto dealerDto = convertToDto(dealer);
         List<ParticipantDto> playerDtos = players.getPlayers().stream().map(this::convertToDto).toList();
         outputView.printFinalCardResult(dealerDto, playerDtos);
-    }
-
-    private void printFinalGameResult(Dealer dealer, Players players) {
-        List<PlayerGameResultDto> playerGameResultDtos = new ArrayList<>();
-        for (Player player : players.getPlayers()) {
-            playerGameResultDtos.add(
-                    new PlayerGameResultDto(player.getName(),
-                            player.compareResult(dealer).getName()));
-        }
-        outputView.printFinalGameResult(playerGameResultDtos);
     }
 
     private void drawCardUntilStop(Player player, Deck deck) {

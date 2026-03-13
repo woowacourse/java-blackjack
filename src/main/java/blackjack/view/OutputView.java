@@ -1,9 +1,7 @@
 package blackjack.view;
 
-import blackjack.domain.GameResult;
 import blackjack.dto.EarningResultDto;
 import blackjack.dto.ParticipantDto;
-import blackjack.dto.PlayerGameResultDto;
 import java.util.List;
 
 public class OutputView {
@@ -17,7 +15,7 @@ public class OutputView {
         String dealerFirstCard = dealerDto.cardNames().getFirst();
 
         System.out.printf("딜러카드: %s%n", dealerFirstCard);
-        
+
         for (ParticipantDto playerDto : playerDtos) {
             System.out.printf("%s카드: %s%n", playerDto.name(), String.join(", ", playerDto.cardNames()));
         }
@@ -38,30 +36,6 @@ public class OutputView {
         for (ParticipantDto playerDto : playerDtos) {
             System.out.printf("%s카드: %s - 결과: %d%n", playerDto.name(), String.join(", ", playerDto.cardNames()),
                     playerDto.point());
-        }
-    }
-
-    public void printFinalGameResult(List<PlayerGameResultDto> playerGameResultDtos) {
-        System.out.println("\n## 최종 승패");
-
-        int winCount = 0;
-        int tieCount = 0;
-        int loseCount = 0;
-        for (PlayerGameResultDto dto : playerGameResultDtos) {
-            if (dto.gameResult().equals(GameResult.WIN.getName()) || dto.gameResult()
-                    .equals(GameResult.BLACKJACK_WIN.getName())) {
-                loseCount++;
-            }
-            if (dto.gameResult().equals(GameResult.LOSE.getName())) {
-                winCount++;
-            }
-            if (dto.gameResult().equals(GameResult.TIE.getName())) {
-                tieCount++;
-            }
-        }
-        System.out.printf("딜러: %d승 %d무 %d패%n", winCount, tieCount, loseCount);
-        for (PlayerGameResultDto dto : playerGameResultDtos) {
-            System.out.printf("%s: %s%n", dto.name(), dto.gameResult());
         }
     }
 
