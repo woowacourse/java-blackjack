@@ -6,6 +6,7 @@ import blackjack.domain.BettingAmount;
 import blackjack.domain.deck.Card;
 import blackjack.domain.deck.CardShape;
 import blackjack.domain.deck.CardValue;
+import java.math.BigDecimal;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +15,7 @@ class UsersTest {
     @Test
     void 유저_이름_목록_반환() {
         // given
-        Users users = new Users(List.of(new User("흑곰", new BettingAmount(10000)), new User("밀란", new BettingAmount(10000))));
+        Users users = new Users(List.of(new User("흑곰", new BettingAmount(new BigDecimal("10000"))), new User("밀란", new BettingAmount(new BigDecimal("10000")))));
 
         // when & then
         assertThat(users.getNames())
@@ -24,8 +25,8 @@ class UsersTest {
     @Test
     void 전원_버스트일_때_true_반환() {
         // given
-        User userA = new User("흑곰", new BettingAmount(10000));
-        User userB = new User("밀란", new BettingAmount(10000));
+        User userA = new User("흑곰", new BettingAmount(new BigDecimal("10000")));
+        User userB = new User("밀란", new BettingAmount(new BigDecimal("10000")));
         userA.add(new Card(CardValue.TEN, CardShape.DIAMOND));
         userA.add(new Card(CardValue.TEN, CardShape.HEART));
         userA.add(new Card(CardValue.TEN, CardShape.CLOVER));
@@ -41,8 +42,8 @@ class UsersTest {
     @Test
     void 한_명이라도_버스트_아니면_false_반환() {
         // given
-        User userA = new User("흑곰", new BettingAmount(10000));
-        User userB = new User("밀란", new BettingAmount(10000));
+        User userA = new User("흑곰", new BettingAmount(new BigDecimal("10000")));
+        User userB = new User("밀란", new BettingAmount(new BigDecimal("10000")));
         userA.add(new Card(CardValue.TEN, CardShape.DIAMOND));
         userA.add(new Card(CardValue.TEN, CardShape.HEART));
         userA.add(new Card(CardValue.TEN, CardShape.CLOVER));
@@ -57,7 +58,7 @@ class UsersTest {
     @Test
     void 아무도_버스트_아닐_때_false_반환() {
         // given
-        Users users = new Users(List.of(new User("흑곰", new BettingAmount(10000)), new User("밀란", new BettingAmount(10000))));
+        Users users = new Users(List.of(new User("흑곰", new BettingAmount(new BigDecimal("10000"))), new User("밀란", new BettingAmount(new BigDecimal("10000")))));
 
         // when & then
         assertThat(users.isAllBurst()).isFalse();

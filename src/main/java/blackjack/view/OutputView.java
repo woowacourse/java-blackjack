@@ -1,6 +1,7 @@
 package blackjack.view;
 
 import blackjack.domain.GameResult;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -48,7 +49,7 @@ public class OutputView {
     }
 
     private static void printUsersResult(GameResult gameResult) {
-        for (Map.Entry<String, Integer> entry : gameResult.getEntries()) {
+        for (Map.Entry<String, BigDecimal> entry : gameResult.getEntries()) {
             System.out.println(entry.getKey() + ": " + entry.getValue());
         }
     }

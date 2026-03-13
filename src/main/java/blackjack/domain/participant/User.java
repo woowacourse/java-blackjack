@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.BettingAmount;
+import java.math.BigDecimal;
 
 public class User extends Participant {
 
@@ -11,7 +12,7 @@ public class User extends Participant {
         this.bettingAmount = bettingAmount;
     }
 
-    public int getBettingAmount() {
+    public BigDecimal getBettingAmount() {
         return bettingAmount.getAmount();
     }
 }

@@ -1,5 +1,6 @@
 package blackjack.util;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class InputParser {
@@ -13,7 +14,7 @@ public class InputParser {
         return List.of(userName.split(COMMA));
     }
 
-    public static int parseBettingAmount(String bettingAmount) {
-        return Integer.parseInt(bettingAmount);
+    public static BigDecimal parseBettingAmount(String bettingAmount) {
+        return new BigDecimal(bettingAmount);
     }
 }

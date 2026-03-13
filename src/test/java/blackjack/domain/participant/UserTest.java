@@ -6,6 +6,7 @@ import blackjack.domain.BettingAmount;
 import blackjack.domain.deck.Card;
 import blackjack.domain.deck.CardShape;
 import blackjack.domain.deck.CardValue;
+import java.math.BigDecimal;
 import org.junit.jupiter.api.Test;
 
 public class UserTest {
@@ -13,7 +14,7 @@ public class UserTest {
     @Test
     void 유저가_카드_한_장을_가져오는_테스트() {
         // given
-        User user = new User("밀란", new BettingAmount(10000));
+        User user = new User("밀란", new BettingAmount(new BigDecimal("10000")));
         Card card = new Card(CardValue.ACE, CardShape.DIAMOND);
 
         // when
@@ -27,7 +28,7 @@ public class UserTest {
     @Test
     void 가지고있는_카드의_합을_계산하는_기능_테스트() {
         // given
-        User user = new User("밀란", new BettingAmount(10000));
+        User user = new User("밀란", new BettingAmount(new BigDecimal("10000")));
         user.add(new Card(CardValue.FOUR, CardShape.DIAMOND));
         user.add(new Card(CardValue.TWO, CardShape.DIAMOND));
 
@@ -41,7 +42,7 @@ public class UserTest {
     @Test
     void ACE의_값이_1이_유리할_때_테스트() {
         // given
-        User user = new User("밀란", new BettingAmount(10000));
+        User user = new User("밀란", new BettingAmount(new BigDecimal("10000")));
         user.add(new Card(CardValue.ACE, CardShape.DIAMOND));
         user.add(new Card(CardValue.TEN, CardShape.DIAMOND));
         user.add(new Card(CardValue.THREE, CardShape.DIAMOND));
@@ -56,7 +57,7 @@ public class UserTest {
     @Test
     void ACE의_값이_11이_유리할_때_테스트() {
         // given
-        User user = new User("밀란", new BettingAmount(10000));
+        User user = new User("밀란", new BettingAmount(new BigDecimal("10000")));
         user.add(new Card(CardValue.ACE, CardShape.DIAMOND));
         user.add(new Card(CardValue.TEN, CardShape.DIAMOND));
 
@@ -70,7 +71,7 @@ public class UserTest {
     @Test
     void 카드_합_Burst_판단_테스트() {
         // given
-        User user = new User("밀란", new BettingAmount(10000));
+        User user = new User("밀란", new BettingAmount(new BigDecimal("10000")));
         user.add(new Card(CardValue.TEN, CardShape.CLOVER));
         user.add(new Card(CardValue.TEN, CardShape.DIAMOND));
         user.add(new Card(CardValue.TEN, CardShape.HEART));
@@ -85,7 +86,7 @@ public class UserTest {
     @Test
     void 카드_합_Blackjack_판단_테스트() {
         // given
-        User user = new User("밀란", new BettingAmount(10000));
+        User user = new User("밀란", new BettingAmount(new BigDecimal("10000")));
         user.add(new Card(CardValue.ACE, CardShape.CLOVER));
         user.add(new Card(CardValue.TEN, CardShape.DIAMOND));
 

@@ -9,6 +9,7 @@ import blackjack.service.GameService;
 import blackjack.util.InputParser;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class BlackjackController {
@@ -53,7 +54,7 @@ public class BlackjackController {
 
     private BettingAmount readBetting(String name) {
         String input = inputView.readBettingAmount(name);
-        int amount = InputParser.parseBettingAmount(input);
+        BigDecimal amount = InputParser.parseBettingAmount(input);
         return new BettingAmount(amount);
     }
 
