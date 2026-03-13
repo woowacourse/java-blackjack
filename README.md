@@ -11,13 +11,20 @@
 
 ### 🏗️ 도메인 구조 및 역할
 
-- **Card, Shape, Number**: 카드의 구성 요소(모양, 숫자)를 캡슐화한 Value Object(VO)입니다.
-- **Deck**: 52장의 카드를 생성하고 섞으며, 게임 중 카드를 분배하는 상태를 관리합니다.
-- **Cards**: 참가자가 보유한 카드 컬렉션을 래핑한 일급 컬렉션입니다. **에이스(Ace)를 1 또는 11로 유동적으로 계산**하는 핵심 로직을 포함합니다.
-- **Participant (Dealer, Player)**: 게임 참가자의 공통 속성을 가진 추상 클래스와 이를 상속받은 구체 클래스입니다.
-    - `Dealer`: 점수 합계가 16 이하일 때만 카드를 추가로 받는 자동화 규칙을 가집니다.
-    - `Player`: 21 이하일 때 사용자의 선택에 따라 카드를 추가로 받을 수 있습니다.
-- **Result**: 최종 점수를 비교하여 승패(Win/Loss)를 판정하는 도메인 서비스 역할을 수행합니다.
+- **Card, Shape, Number**: 카드의 구성 요소(모양, 숫자)를 캡슐화한 Value Object(VO)입니다. `Number`는 `displayName` 필드를 통해 출력용 이름(J, Q, K 등)
+  을 관리합니다.
+- **Deck**: 52장의 카드를 `Deque<Card>`로 생성·셔플하며, 게임 중 카드를 분배하는 상태를 관리합니다.
+- **Cards**: 참가자가 보유한 카드 컬렉션을 래핑한 일급 컬렉션입니다. **에이스(Ace)를 1 또는 11로 유동적으로 계산**하는 핵심 로직(`calculateOptimalScore`)을 포함하며,
+  `canReceiveCard(hitThreshold)`로 추가 수령 가능 여부를 판단합니다.
+- **Participant (Dealer, Player)**: 게임 참가자의 공통 속성을 가진 추상 클래스와 이를 상속받은 구체 클래스입니다. 각 구체 클래스는 `getHitThreshold()`를 오버라이드하여
+  카드 수령 기준을 정의합니다.
+    - `Dealer`: 점수 합계가 16 이하(`HIT_THRESHOLD = 16`)일 때만 카드를 추가로 받는 자동화 규칙을 가집니다.
+    - `Player`: 점수 합계가 20 이하(`HIT_THRESHOLD = 20`)일 때 사용자의 선택에 따라 카드를 추가로 받을 수 있습니다.
+- **BlackJackGame**: 게임의 전체 흐름(카드 분배, 턴 진행)을 관리하는 도메인 서비스입니다. 승패 판정은 `Referee`에 위임합니다.
+- **Referee**: 딜러와 플레이어들의 최종 점수를 비교하여 승/패/무승부를 판정하는 심판 역할의 도메인 서비스입니다.
+- **MatchResult**: 승(WIN), 패(LOSE), 무승부(DRAW)를 나타내는 열거형입니다.
+- **Result**: `Referee`가 판정한 각 플레이어의 `MatchResult`를 `Map<String, MatchResult>`로 보관하는 결과 객체입니다. 불변 복사본(`Map.copyOf`)을
+  반환하여 캡슐화를 유지합니다.
 
 ### ⚖️ 핵심 도메인 규칙
 
@@ -27,7 +34,7 @@
 2. **승패 판정**:
     - 21을 초과(Bust)한 참가자는 패배합니다.
     - 딜러가 Bust되면 남은 플레이어는 모두 승리합니다.
-    - 딜러와 점수가 같을 경우, 현재 로직상 딜러가 승리하는 규칙을 따릅니다 (무승부 없음).
+    - 딜러와 점수가 같을 경우 무승부(Draw)로 처리합니다.
 
 ---
 
@@ -69,7 +76,8 @@
 ### 1. MVC 패턴 및 DTO 활용
 
 - `Controller`가 도메인 모델과 뷰 사이의 흐름을 제어합니다.
-- `ParticipantCardsDto` (Record)를 활용하여 도메인 객체의 캡슐화를 깨뜨리지 않고 UI 계층에 데이터를 안전하게 전달합니다.
+- `ParticipantCardsDto`, `CardInfoDto`, `ParticipantGameResultDto` (Record)를 활용하여 도메인 객체의 캡슐화를 깨뜨리지 않고 UI 계층에 데이터를 안전하게
+  전달합니다.
 
 ### 2. 원시값 포장 (Value Object)
 
@@ -77,4 +85,5 @@
 
 ### 3. 전략적인 테스트 코드
 
-- `CardsTest`, `DeckTest`, `ResultTest` 등을 통해 핵심 도메인 로직(점수 계산, 승패 판정)의 신뢰성을 확보했습니다.
+- `CardsTest`, `DealerTest`, `DeckTest`, `NameTest`, `PlayerTest`, `RefereeTest`, `ResultTest` 총 7개의 테스트 클래스를 통해 핵심 도메인
+  로직(점수 계산, 승패 판정, 입력 검증 등)의 신뢰성을 확보했습니다.
