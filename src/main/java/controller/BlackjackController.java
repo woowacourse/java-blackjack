@@ -56,16 +56,20 @@ public class BlackjackController {
     }
 
     private void chooseHitOrStand(Player player) {
-        boolean printed = false;
+        boolean didDraw = drawMoreCard(player);
+        if (!didDraw) {
+            OutputView.printCardByPlayer(player);
+        }
+    }
+
+    private boolean drawMoreCard(Player player) {
+        boolean didDraw = false;
         while (canHitMore(player)) {
             blackjackService.drawOneCard(player);
             OutputView.printCardByPlayer(player);
-            printed = true;
+            didDraw = true;
         }
-
-        if (!printed) {
-            OutputView.printCardByPlayer(player);
-        }
+        return didDraw;
     }
 
     private void printFinalCards(Dealer dealer, Players players) {
