@@ -18,6 +18,8 @@ public class InputView {
     public static final String ONE_MORE_CARD_MESSAGE = "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     public static final String DELIMITER = ",";
     public static final int ZERO = 0;
+    public static final String ERROR_INVALID_NUMBER = "[ERROR] 정상적인 숫자를 입력해주세요.";
+    public static final String ERROR_NEGATIVE_NUMBER = "[ERROR] 숫자가 0 미만입니다.";
 
     public List<String> getParsedNames() {
         System.out.println(PARTICIPANT_NAME_MESSAGE);
@@ -68,21 +70,21 @@ public class InputView {
         }
     }
 
-    public Money parseMoney(String input) {
+    Money parseMoney(String input) {
         String strippedInput = input.strip();
 
         try {
             int amount = Integer.parseInt(strippedInput);
             validateNegativeAmount(amount);
             return new Money(amount);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException();
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(ERROR_INVALID_NUMBER);
         }
     }
 
     private static void validateNegativeAmount(int amount) {
         if (amount <= ZERO) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(ERROR_NEGATIVE_NUMBER);
         }
     }
 }
