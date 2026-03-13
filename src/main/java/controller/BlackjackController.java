@@ -5,7 +5,6 @@ import domain.card.Deck;
 import domain.dto.BlackjackResultDto;
 import domain.dto.FinalPlayerCardDto;
 import domain.dto.PlayerCardDto;
-import domain.participant.BetMap;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
@@ -35,31 +34,33 @@ public class BlackjackController {
     public void run() {
         Deck cards = blackjackService.generateCards();
         List<String> names = readNames();
-        BetMap betMap = readBets(names);
+        Players players = createPlayers(names);
 
         Dealer dealer = blackjackService.createDealer(cards);
-        Players players = initializePlayers(names, cards);
+        distributeInitialCards(dealer, players, cards, names);
         playRound(dealer, players, cards);
 
         displayFinalCards(dealer, players);
-        showFinalResult(dealer, players, betMap);
+        showFinalResult(dealer, players);
     }
 
     private List<String> readNames() {
         return doRetry(inputView::readNames);
     }
 
-    private BetMap readBets(List<String> names) {
-        BetMap betMap = new BetMap();
+    private Players createPlayers(List<String> names) {
+        List<Player> playerList = new ArrayList<>();
         for (String name : names) {
-            betMap.addBetAmountOf(name, doRetry(() -> inputView.readBet(name)));
+            domain.participant.Bet bet = doRetry(() -> inputView.readBet(name));
+            playerList.add(new Player(name, bet));
         }
-        return betMap;
+        return new Players(playerList);
     }
 
-    private Players initializePlayers(List<String> names, Deck cards) {
+    private void distributeInitialCards(Dealer dealer, Players players, Deck cards, List<String> names) {
         outputView.displayCardDistribution(names);
-        return blackjackService.createPlayers(names, cards);
+        blackjackService.giveInitialCards(cards, dealer);
+        blackjackService.distributeInitialCards(players, cards);
     }
 
     private void playRound(Dealer dealer, Players players, Deck cards) {
@@ -119,9 +120,9 @@ public class BlackjackController {
         outputView.displayFinalCard(finalCards);
     }
 
-    private void showFinalResult(Dealer dealer, Players players, BetMap betMap) {
+    private void showFinalResult(Dealer dealer, Players players) {
         BlackjackResult blackjackResult = BlackjackResult.from(dealer, players);
-        ProfitResult profitResult = ProfitResult.from(blackjackResult, betMap);
+        ProfitResult profitResult = ProfitResult.from(blackjackResult);
         outputView.displayMatchResult(BlackjackResultDto.from(profitResult));
     }
 
@@ -138,5 +139,3 @@ public class BlackjackController {
         throw new BlackjackException("입력 횟수를 초과했습니다.");
     }
 }
-
-

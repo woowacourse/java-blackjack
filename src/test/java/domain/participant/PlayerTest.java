@@ -16,7 +16,7 @@ class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        this.player = new Player("요크");
+        this.player = new Player("요크", new Bet(1000));
     }
 
     @DisplayName("카드 합계 구하기")
@@ -106,7 +106,7 @@ class PlayerTest {
     }
 
     private Player createPlayerFromCards(List<Card> cards) {
-        Player player = new Player("aaaa");
+        Player player = new Player("aaaa", new Bet(1000));
         for (Card card : cards) {
             player.add(card);
         }

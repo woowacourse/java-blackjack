@@ -8,7 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class BlackjackResult {
-    private final Map<String, MatchCase> playerResultMap = new LinkedHashMap<>();
+    private final Map<Player, MatchCase> playerResultMap = new LinkedHashMap<>();
     private final DealerMatchCount dealerMatchCount = new DealerMatchCount();
 
     private BlackjackResult(Dealer dealer, Players players) {
@@ -28,7 +28,7 @@ public class BlackjackResult {
     private void determinePlayerResult(Dealer dealer, Player player) {
         MatchJudge matchJudge = new MatchJudge(dealer, player);
         MatchCase matchCase = matchJudge.judge();
-        playerResultMap.put(player.getName(), matchCase);
+        playerResultMap.put(player, matchCase);
         matchCase.increaseMatchCountOf(this);
     }
 
@@ -44,7 +44,7 @@ public class BlackjackResult {
         this.dealerMatchCount.increaseLoseCount();
     }
 
-    public Map<String, MatchCase> getPlayerResultMap() {
+    public Map<Player, MatchCase> getPlayerResultMap() {
         return Map.copyOf(playerResultMap);
     }
 }

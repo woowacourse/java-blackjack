@@ -4,13 +4,11 @@ import domain.card.Card;
 import domain.card.CardRank;
 import domain.card.CardShape;
 import domain.dto.BlackjackResultDto;
-import domain.participant.BetMap;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import testutil.BetTestUtil;
 import testutil.PlayerTestUtil;
 
 import java.util.List;
@@ -39,15 +37,13 @@ class BlackjackResultTest {
                 new Card(CardShape.SPADE, CardRank.ACE)
         )); // 21
 
-        BetMap betMap = BetTestUtil.createSinglePlayerSet(player);
-
         // when
         BlackjackResult blackjackResult = BlackjackResult.from(dealer, createSinglePlayerSet(player));
-        ProfitResult profitResult = ProfitResult.from(blackjackResult, betMap);
+        ProfitResult profitResult = ProfitResult.from(blackjackResult);
         BlackjackResultDto blackjackResultDto = BlackjackResultDto.from(profitResult);
 
         // then
-        long expected = BetTestUtil.DEFAULT_BET_AMOUNT;
+        long expected = PlayerTestUtil.DEFAULT_BET_AMOUNT;
         assertThat(blackjackResultDto.dealerBenefit()).isEqualTo(expected);
         assertThat(blackjackResultDto.playerProfitMap().get(player.getName())).isEqualTo(-expected);
     }
@@ -67,15 +63,13 @@ class BlackjackResultTest {
                 new Card(CardShape.SPADE, CardRank.JACK)
         )); // 20
 
-        BetMap betMap = BetTestUtil.createSinglePlayerSet(player);
-
         // when
         BlackjackResult blackjackResult = BlackjackResult.from(dealer, createSinglePlayerSet(player));
-        ProfitResult profitResult = ProfitResult.from(blackjackResult, betMap);
+        ProfitResult profitResult = ProfitResult.from(blackjackResult);
         BlackjackResultDto blackjackResultDto = BlackjackResultDto.from(profitResult);
 
         // then
-        long expected = BetTestUtil.DEFAULT_BET_AMOUNT;
+        long expected = PlayerTestUtil.DEFAULT_BET_AMOUNT;
         assertThat(blackjackResultDto.dealerBenefit()).isEqualTo(-expected);
         assertThat(blackjackResultDto.playerProfitMap().get(player.getName())).isEqualTo(expected);
     }
@@ -91,15 +85,13 @@ class BlackjackResultTest {
                 new Card(CardShape.SPADE, CardRank.JACK)
         )); // 20
 
-        BetMap betMap = BetTestUtil.createSinglePlayerSet(player);
-
         // when
         BlackjackResult blackjackResult = BlackjackResult.from(dealer, createSinglePlayerSet(player));
-        ProfitResult profitResult = ProfitResult.from(blackjackResult, betMap);
+        ProfitResult profitResult = ProfitResult.from(blackjackResult);
         BlackjackResultDto blackjackResultDto = BlackjackResultDto.from(profitResult);
 
         // then
-        long expected = (long) (BetTestUtil.DEFAULT_BET_AMOUNT * 1.5);
+        long expected = (long) (PlayerTestUtil.DEFAULT_BET_AMOUNT * 1.5);
         assertThat(blackjackResultDto.dealerBenefit()).isEqualTo(-expected);
         assertThat(blackjackResultDto.playerProfitMap().get(player.getName())).isEqualTo(expected);
     }
@@ -112,11 +104,9 @@ class BlackjackResultTest {
 
         Dealer dealer = PlayerTestUtil.createDealer(BLACKJACK_CARDS); // 20
 
-        BetMap betMap = BetTestUtil.createSinglePlayerSet(player);
-
         // when
         BlackjackResult blackjackResult = BlackjackResult.from(dealer, createSinglePlayerSet(player));
-        ProfitResult profitResult = ProfitResult.from(blackjackResult, betMap);
+        ProfitResult profitResult = ProfitResult.from(blackjackResult);
         BlackjackResultDto blackjackResultDto = BlackjackResultDto.from(profitResult);
 
         // then
@@ -139,11 +129,9 @@ class BlackjackResultTest {
                 new Card(CardShape.SPADE, CardRank.ACE)
         )); // 21
 
-        BetMap betMap = BetTestUtil.createSinglePlayerSet(player);
-
         // when
         BlackjackResult blackjackResult = BlackjackResult.from(dealer, createSinglePlayerSet(player));
-        ProfitResult profitResult = ProfitResult.from(blackjackResult, betMap);
+        ProfitResult profitResult = ProfitResult.from(blackjackResult);
         BlackjackResultDto blackjackResultDto = BlackjackResultDto.from(profitResult);
 
         // then
@@ -166,15 +154,13 @@ class BlackjackResultTest {
                 new Card(CardShape.SPADE, CardRank.TWO)
         )); // 2
 
-        BetMap betMap = BetTestUtil.createSinglePlayerSet(player);
-
         // when
         BlackjackResult blackjackResult = BlackjackResult.from(dealer, createSinglePlayerSet(player));
-        ProfitResult profitResult = ProfitResult.from(blackjackResult, betMap);
+        ProfitResult profitResult = ProfitResult.from(blackjackResult);
         BlackjackResultDto blackjackResultDto = BlackjackResultDto.from(profitResult);
 
         // then
-        long expected = BetTestUtil.DEFAULT_BET_AMOUNT;
+        long expected = PlayerTestUtil.DEFAULT_BET_AMOUNT;
         assertThat(blackjackResultDto.dealerBenefit()).isEqualTo(expected);
         assertThat(blackjackResultDto.playerProfitMap().get(player.getName())).isEqualTo(-expected);
     }
@@ -193,15 +179,13 @@ class BlackjackResultTest {
                 new Card(CardShape.SPADE, CardRank.TWO)
         )); // 2
 
-        BetMap betMap = BetTestUtil.createSinglePlayerSet(player);
-
         // when
         BlackjackResult blackjackResult = BlackjackResult.from(dealer, createSinglePlayerSet(player));
-        ProfitResult profitResult = ProfitResult.from(blackjackResult, betMap);
+        ProfitResult profitResult = ProfitResult.from(blackjackResult);
         BlackjackResultDto blackjackResultDto = BlackjackResultDto.from(profitResult);
 
         // then
-        long expected = BetTestUtil.DEFAULT_BET_AMOUNT;
+        long expected = PlayerTestUtil.DEFAULT_BET_AMOUNT;
         assertThat(blackjackResultDto.dealerBenefit()).isEqualTo(-expected);
         assertThat(blackjackResultDto.playerProfitMap().get(player.getName())).isEqualTo(expected);
     }
@@ -236,20 +220,18 @@ class BlackjackResultTest {
                 new Card(CardShape.SPADE, CardRank.TWO)
         )); // 22
 
-        BetMap betMap = BetTestUtil.createMultiPlayerSet(players);
-
         // when
         BlackjackResult blackjackResult = BlackjackResult.from(dealer, players);
-        ProfitResult profitResult = ProfitResult.from(blackjackResult, betMap);
+        ProfitResult profitResult = ProfitResult.from(blackjackResult);
         BlackjackResultDto blackjackResultDto = BlackjackResultDto.from(profitResult);
 
         // then
 
         // 딜러는 참가자 2명에게 패배, 1명에게 승
-        assertThat(blackjackResultDto.dealerBenefit()).isEqualTo(-BetTestUtil.DEFAULT_BET_AMOUNT);
-        assertThat(blackjackResultDto.playerProfitMap().get(player1.getName())).isEqualTo(BetTestUtil.DEFAULT_BET_AMOUNT);
-        assertThat(blackjackResultDto.playerProfitMap().get(player2.getName())).isEqualTo(-BetTestUtil.DEFAULT_BET_AMOUNT);
-        assertThat(blackjackResultDto.playerProfitMap().get(player3.getName())).isEqualTo(BetTestUtil.DEFAULT_BET_AMOUNT);
+        assertThat(blackjackResultDto.dealerBenefit()).isEqualTo(-PlayerTestUtil.DEFAULT_BET_AMOUNT);
+        assertThat(blackjackResultDto.playerProfitMap().get(player1.getName())).isEqualTo(PlayerTestUtil.DEFAULT_BET_AMOUNT);
+        assertThat(blackjackResultDto.playerProfitMap().get(player2.getName())).isEqualTo(-PlayerTestUtil.DEFAULT_BET_AMOUNT);
+        assertThat(blackjackResultDto.playerProfitMap().get(player3.getName())).isEqualTo(PlayerTestUtil.DEFAULT_BET_AMOUNT);
     }
 
     @DisplayName("딜러의 손실액은 참가자들 수익 합계와 반대 부호")
@@ -283,11 +265,9 @@ class BlackjackResultTest {
                 new Card(CardShape.SPADE, CardRank.ACE)
         )); // 21
 
-        BetMap betMap = BetTestUtil.createMultiPlayerSet(players);
-
         // when
         BlackjackResult blackjackResult = BlackjackResult.from(dealer, players);
-        ProfitResult profitResult = ProfitResult.from(blackjackResult, betMap);
+        ProfitResult profitResult = ProfitResult.from(blackjackResult);
         BlackjackResultDto blackjackResultDto = BlackjackResultDto.from(profitResult);
 
         // then

@@ -3,7 +3,7 @@ package domain.participant;
 import constant.GameConstant;
 import domain.card.Card;
 
-public class Dealer extends Player {
+public class Dealer extends Participant {
     public static final String DEALER_NAME = "딜러";
 
     public Dealer(String name) {

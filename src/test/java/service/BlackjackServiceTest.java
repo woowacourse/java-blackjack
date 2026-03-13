@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import domain.card.Deck;
+import domain.participant.Bet;
 import domain.participant.Player;
 import domain.participant.Players;
 
@@ -32,7 +33,11 @@ class BlackjackServiceTest {
     @Test
     void 초기_카드_2장_배부_테스트() {
         Deck cards = blackjackService.generateCards();
-        Players players = blackjackService.createPlayers(List.of("요크", "아티"), cards);
+        Players players = new Players(List.of(
+                new Player("요크", new Bet(1000)),
+                new Player("아티", new Bet(1000))
+        ));
+        blackjackService.distributeInitialCards(players, cards);
 
         for (Player player : players) {
             assertThat(player.getCardCount()).isEqualTo(2);
