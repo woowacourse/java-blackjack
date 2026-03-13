@@ -2,6 +2,7 @@ package domain.game;
 
 import domain.card.Card;
 import domain.card.CardMachine;
+import domain.participant.BetAmount;
 import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;
@@ -111,5 +112,14 @@ public class BlackjackGameManager {
 
     public boolean isStand(HitOrStand hitOrStand) {
         return hitOrStand.isStand();
+    }
+
+    public List<ParticipantDto> getPlayerDtoList() {
+        return ParticipantDto.from(participants.players());
+    }
+
+    public void setBetAmount(String name, BetAmount betAmount) {
+        Player player = participants.getPlayer(name);
+        player.setBetAmount(betAmount);
     }
 }
