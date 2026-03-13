@@ -4,22 +4,34 @@ import domain.card.Card;
 import java.util.List;
 
 public class Dealer {
+    public static final int HIT_BOUNDARY = 16;
     private static final String NAME = "딜러";
-    private static final int BOUNDARY = 16;
 
     private final Name name;
     private final Hand hand;
 
-    public Dealer(Hand hand) {
+    private Dealer(Hand hand) {
         this.name = new Name(NAME);
         this.hand = hand;
     }
 
-    public boolean needsToHit() {
-        return hand.getTotalScore() <= BOUNDARY;
+    public static Dealer from(Hand hand) {
+        return new Dealer(hand);
     }
 
-    public List<Card> getCards() {
+    public boolean needsToHit() {
+        return hand.calculateTotalScore() <= HIT_BOUNDARY;
+    }
+
+    public void addCard(Card card) {
+        hand.addCard(card);
+    }
+
+    public List<Card> openFirstCard() {
+        return List.of(hand.getCards().getFirst());
+    }
+
+    public List<Card> cards() {
         return hand.getCards();
     }
 
@@ -27,23 +39,15 @@ public class Dealer {
         return hand.isBust();
     }
 
-    public void addHand(Card card) {
-        hand.add(card);
-    }
-
-    public int getTotalScore() {
-        return hand.getTotalScore();
-    }
-
     public boolean isBlackjack() {
         return hand.isBlackjack();
     }
 
-    public int getBoundary() {
-        return BOUNDARY;
+    public int totalScore() {
+        return hand.calculateTotalScore();
     }
 
-    public String getName() {
+    public String name() {
         return name.getName();
     }
 }
