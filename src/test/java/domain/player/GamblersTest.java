@@ -24,16 +24,4 @@
 //
 //        Assertions.assertThat(allContainName).isEqualTo(true);
 //    }
-//
-//    @Test
-//    @DisplayName("이름 중복 없음 테스트")
-//    void 이름_중복_없음_테스트() {
-//        // given
-//        List<String> names = List.of("pobi", "coco", "coco", "kaiya");
-//
-//        // then
-//        assertThrows(IllegalArgumentException.class, () -> {
-//            new Gamblers(names);
-//        });
-//    }
 //}

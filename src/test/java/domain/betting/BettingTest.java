@@ -2,8 +2,11 @@ package domain.betting;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import domain.player.Gamblers;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -27,6 +30,18 @@ class BettingTest {
                 () -> assertThat(betting.getBettingAmountByName("woni"))
                         .isEqualTo(new BettingAmount(20000))
         );
+    }
+
+
+    @Test
+    @DisplayName("이름 중복 없음 테스트")
+    void 이름_중복_없음_테스트() {
+        // given
+        List<String> names = List.of("pobi", "coco", "coco", "kaiya");
+        // then
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Betting(names);
+        });
     }
 
 }

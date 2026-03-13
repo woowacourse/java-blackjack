@@ -8,6 +8,7 @@ public class Betting {
     private final Map<String, BettingAmount> values = new HashMap<>();
 
     public Betting(List<String> names) {
+
         for(String name : names) {
             values.put(name, null);
         }
