@@ -8,6 +8,7 @@ import domain.enums.MatchCase;
 public class Game {
     public static final int ADDITIONAL_THRESHOLD = 16;
     public static final int BLACKJACK_VALUE = 21;
+    public static final double BLACKJACK_BONUS = 1.5;
     public static final String DEALER_NAME = "딜러";
 
     private final Deck deck;

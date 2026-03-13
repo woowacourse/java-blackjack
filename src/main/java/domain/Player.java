@@ -40,7 +40,7 @@ public class Player {
 
     public void calculateMoney(MatchCase matchCase, boolean isDealerBlackjack) {
         if (cards.isBlackjack() && !isDealerBlackjack) {
-            bettingScore = (int) ((int) bettingScore * 1.5);
+            bettingScore = (int) ((int) bettingScore * Game.BLACKJACK_BONUS);
             return;
         }
         if (matchCase.equals(MatchCase.LOSE)) {
