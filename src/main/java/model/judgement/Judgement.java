@@ -1,8 +1,8 @@
 package model.judgement;
 
-import static model.judgement.GameStatus.DRAW;
-import static model.judgement.GameStatus.LOSE;
-import static model.judgement.GameStatus.WIN;
+import static model.judgement.ResultStatus.DRAW;
+import static model.judgement.ResultStatus.LOSE;
+import static model.judgement.ResultStatus.WIN;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -13,12 +13,12 @@ import model.paticipant.Players;
 public class Judgement {
 
     public static PlayerResult judgeByPlayer(Dealer dealer, Players players) {
-        Map<Player, GameStatus> result = new LinkedHashMap<>();
+        Map<Player, ResultStatus> result = new LinkedHashMap<>();
         players.forEach(player -> result.put(player, decide(dealer, player)));
         return new PlayerResult(result);
     }
 
-    private static GameStatus decide(Dealer dealer, Player player) {
+    private static ResultStatus decide(Dealer dealer, Player player) {
         if (player.isBust()) {
             return LOSE;
         }
@@ -29,7 +29,7 @@ public class Judgement {
         return decideByScore(dealer, player);
     }
 
-    private static GameStatus decideByScore(Dealer dealer, Player player) {
+    private static ResultStatus decideByScore(Dealer dealer, Player player) {
         int dealerScore = dealer.calculateTotalScore();
         int playerScore = player.calculateTotalScore();
 
@@ -43,9 +43,9 @@ public class Judgement {
     }
 
     public static DealerResult judgeByDealer(PlayerResult playerResult) {
-        int dealerWinCount = playerResult.countByStatus(GameStatus.LOSE);
-        int dealerLoseCount = playerResult.countByStatus(GameStatus.WIN);
-        int dealerDrawCount = playerResult.countByStatus(GameStatus.DRAW);
+        int dealerWinCount = playerResult.countByStatus(ResultStatus.LOSE);
+        int dealerLoseCount = playerResult.countByStatus(ResultStatus.WIN);
+        int dealerDrawCount = playerResult.countByStatus(ResultStatus.DRAW);
         return new DealerResult(dealerWinCount, dealerLoseCount, dealerDrawCount);
     }
 }

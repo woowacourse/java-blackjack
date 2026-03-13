@@ -13,13 +13,6 @@ public class Players {
         this.players = new ArrayList<>(players);
     }
 
-    public static Players from(List<String> playerNames) {
-        List<Player> players = playerNames.stream()
-                .map(Player::new)
-                .toList();
-        return new Players(players);
-    }
-
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }

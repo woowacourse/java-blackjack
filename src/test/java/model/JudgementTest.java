@@ -5,9 +5,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import model.card.Card;
-import model.judgement.GameStatus;
 import model.judgement.Judgement;
 import model.judgement.PlayerResult;
+import model.judgement.ResultStatus;
 import model.paticipant.Dealer;
 import model.paticipant.Player;
 import model.paticipant.Players;
@@ -21,13 +21,13 @@ public class JudgementTest {
     void 다양한_게임_상황에서_승패를_올바르게_판정한다(
             List<Card> playerCards,
             List<Card> dealerCards,
-            GameStatus status
+            ResultStatus status
     ) {
         // given
         Dealer dealer = createDealer();
         dealerCards.forEach(dealer::addCard);
 
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", 10000);
         playerCards.forEach(player::addCard);
 
         // when

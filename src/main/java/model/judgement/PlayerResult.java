@@ -7,20 +7,34 @@ import model.paticipant.Player;
 
 public class PlayerResult {
 
-    private final Map<Player, GameStatus> result;
+    private final Map<Player, ResultStatus> result;
 
-    public PlayerResult(Map<Player, GameStatus> result) {
+    public PlayerResult(Map<Player, ResultStatus> result) {
         this.result = new LinkedHashMap<>(result);
     }
 
-    public int countByStatus(GameStatus gameStatus) {
+    public int countByStatus(ResultStatus resultStatus) {
         return (int) result.values()
                 .stream()
-                .filter(status -> status == gameStatus)
+                .filter(status -> status == resultStatus)
                 .count();
     }
 
-    public Map<Player, GameStatus> getResult() {
+    public Map<Player, Profit> calculateProfits() {
+        Map<Player, Profit> profits = new LinkedHashMap<>();
+        result.forEach((player, status) -> 
+                profits.put(player, status.calculateProfit(player.getBetAmount()))
+        );
+        return profits;
+    }
+
+    public Profit calculateDealerProfit() {
+        return calculateProfits().values()
+                .stream()
+                .reduce(Profit.ZERO, (sum, profit) -> sum.add(profit.negate()));
+    }
+
+    public Map<Player, ResultStatus> getResult() {
         return Collections.unmodifiableMap(result);
     }
 }

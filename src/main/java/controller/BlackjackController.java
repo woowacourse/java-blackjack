@@ -1,10 +1,12 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import model.BlackjackService;
 import model.judgement.DealerResult;
 import model.judgement.Judgement;
 import model.judgement.PlayerResult;
+import model.judgement.Profit;
 import model.paticipant.Dealer;
 import model.paticipant.Player;
 import model.paticipant.Players;
@@ -16,7 +18,7 @@ public class BlackjackController {
     private final BlackjackService blackjackService;
 
     public BlackjackController(BlackjackService blackjackService) {
-        this.blackjackService = blackjackService;;
+        this.blackjackService = blackjackService;
     }
 
     public void run() {
@@ -27,12 +29,18 @@ public class BlackjackController {
         drawMoreCardByPlayer(dealer, players);
 
         printFinalCards(dealer, players);
-        judgeGame(dealer, players);
+        //judgeGame(dealer, players);
+        printProfits(dealer, players);
     }
 
     private Players createPlayers() {
         List<String> names = InputView.readPlayerNames();
-        return Players.from(names);
+        List<Player> players = new ArrayList<>();
+        for (String name : names) {
+            int betAmount = InputView.readBetAmount(name);
+            players.add(new Player(name, betAmount));
+        }
+        return new Players(players);
     }
 
     private void drawMoreCardByPlayer(Dealer dealer, Players players) {
@@ -85,5 +93,14 @@ public class BlackjackController {
         OutputView.printFinalResultHeader();
         OutputView.printResultByDealer(dealerResult);
         OutputView.printResultByPlayers(playerResult);
+    }
+
+    private void printProfits(Dealer dealer, Players players) {
+        PlayerResult playerResult = Judgement.judgeByPlayer(dealer, players);
+        Profit dealerProfit = playerResult.calculateDealerProfit();
+
+        OutputView.printFinalProfitHeader();
+        OutputView.printProfitByDealer(dealerProfit);
+        OutputView.printProfitByPlayers(playerResult.calculateProfits());
     }
 }
