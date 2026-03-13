@@ -3,11 +3,8 @@ package domain;
 import view.mesage.ErrorMessage;
 
 public class BettingValidator {
-    public static BettingValidator of() {
-        return new BettingValidator();
-    }
 
-    public void validateBetAmount(String betInput) {
+    public static void validateBetAmount(String betInput) {
         if (betInput == null) {
             throw new IllegalArgumentException(ErrorMessage.EMPTY_BET_AMOUNT_INPUT.getMessage());
         }
