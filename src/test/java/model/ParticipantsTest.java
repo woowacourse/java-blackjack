@@ -7,16 +7,16 @@ import constant.ErrorMessage;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-public class PlayersTest {
+public class ParticipantsTest {
 
     @Test
     public void 정상_작동() {
         Player player = new Player(new PlayerName("player1"));
         Player player2 = new Player(new PlayerName("player2"));
 
-        Players players = new Players(List.of(player,player2));
+        Participants participants = new Participants(List.of(player,player2));
 
-        List<Player> playerList = players.getPlayers();
+        List<Player> playerList = participants.getPlayers();
 
         assertThat(playerList.size()).isEqualTo(2);
         assertThat(playerList.getFirst()).isEqualTo(player);
@@ -30,7 +30,7 @@ public class PlayersTest {
         Player player = new Player(playerName);
         Player player2 = new Player(playerName);
 
-        assertThatThrownBy(() -> new Players(List.of(player,player2)))
+        assertThatThrownBy(() -> new Participants(List.of(player,player2)))
                 .isExactlyInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.DUPLICATED_NAME.getMessage());
     }

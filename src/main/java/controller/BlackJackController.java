@@ -3,98 +3,92 @@ package controller;
 import java.util.List;
 import model.Agreement;
 import model.BetPrice;
-import model.Dealer;
 import model.Player;
-import model.Players;
 import model.PlayerName;
 import model.dto.ParticipantWinning;
 import model.dto.PlayerResult;
-import service.BlackJackService;
+import model.BlackJackGame;
 import view.InputView;
 import view.OutputView;
 
 public class BlackJackController {
-    private final BlackJackService blackJackService;
+    private final BlackJackGame blackJackGame;
 
-    public BlackJackController(BlackJackService blackJackService) {
-        this.blackJackService = blackJackService;
+    public BlackJackController(BlackJackGame blackJackGame) {
+        this.blackJackGame = blackJackGame;
     }
 
     public void playBlackJackGame() {
-        Players players = getParticipantsName();
-        getBet(players);
+        registerParticipant();
+        addBet();
 
-        Dealer dealer = new Dealer();
-
-        initGame(dealer, players);
-        participantTurn(dealer, players);
-
-        displayResult(dealer.getResult(), players.getPlayersResult(), blackJackService.getGameResult(players, dealer));
+        initGame();
+        participantTurn();
+        displayResult();
     }
 
-    private Players getParticipantsName() {
+    private void registerParticipant() {
         List<String> playerNamesInput = InputView.getPlayerNames();
-        List<Player> players = playerNamesInput.stream().map(playerNameInput -> new Player(new PlayerName(playerNameInput))).toList();
-
-        return new Players(players);
+        playerNamesInput.forEach(name -> {
+            PlayerName playerName = new PlayerName(name);
+            Player player = new Player(playerName);
+            blackJackGame.registerPlayer(player);
+        });
     }
 
-    private void getBet(Players players) {
-        for(Player player : players.getPlayers()) {
-            addBet(player);
+    private void addBet() {
+        for(String player : blackJackGame.getPlayerNames()) {
+            BetPrice betPrice = new BetPrice(InputView.getBet(player));
+            blackJackGame.setBet(player, betPrice);
         }
     }
 
-    private void addBet(Player player) {
-        BetPrice betPrice = new BetPrice(InputView.getBet(player.getName()));
-        player.setBetAmount(betPrice.value());
+    private void initGame() {
+        blackJackGame.initGame();
+        OutputView.printInitDeck(blackJackGame.getPlayerResults(), blackJackGame.getDealerFirstCard());
     }
 
-    private void initGame(Dealer dealer, Players players) {
-        blackJackService.initGame(dealer, players);
-        OutputView.printInitDeck(players.getPlayersResult(), dealer.getFirstCard());
+    private void participantTurn() {
+        drawPlayersTurn();
+        drawDealerTurn();
     }
 
-    private void participantTurn(Dealer dealer, Players players) {
-        drawPlayersTurn(players);
-        drawDealerTurn(dealer);
-    }
-
-    private void drawPlayersTurn(Players players) {
-        for(Player player : players.getPlayers()) {
-            drawPlayerTurns(player);
+    private void drawPlayersTurn() {
+        for(String playerName : blackJackGame.getPlayerNames()) {
+            drawPlayerTurns(playerName);
         }
         OutputView.printNewLine();
     }
 
-    private void drawPlayerTurns(Player player) {
-        while(drawPlayerTurn(player));
+    private void drawPlayerTurns(String playerName) {
+        while(drawPlayerTurn(playerName));
     }
 
-    private boolean drawPlayerTurn(Player player) {
-        if(!getCondition(player.getName())) {
+    private boolean drawPlayerTurn(String playerName) {
+        if(!getCondition(playerName)) {
             return false;
         }
 
-        blackJackService.draw(player);
-        OutputView.printPlayerCurrentDeck(player.getResult());
+        blackJackGame.drawPlayer(playerName);
+        OutputView.printPlayerCurrentDeck(blackJackGame.getPlayerResult(playerName));
 
-        return !player.isBust();
+        return !blackJackGame.isBust(playerName);
     }
 
     private boolean getCondition(String name) {
         return new Agreement(InputView.getDrawCondition(name)).get();
     }
 
-    private void drawDealerTurn(Dealer dealer) {
-        while (dealer.canDraw()) {
-            blackJackService.draw(dealer);
-            OutputView.printDealerCardDrawMessage();
-        }
+    private void drawDealerTurn() {
+        blackJackGame.drawDealer(OutputView::printDealerCardDrawMessage);
     }
 
-    private void displayResult(PlayerResult dealerResult, List<PlayerResult> playerResults, ParticipantWinning result) {
+    private void displayResult() {
+        List<PlayerResult> playerResults = blackJackGame.getPlayerResults();
+        PlayerResult dealerResult = blackJackGame.getDealerResult();
+        ParticipantWinning gameResult = blackJackGame.getGameResult();
+
         OutputView.printPlayersScore(dealerResult, playerResults);
-        OutputView.printResult(result);
+        OutputView.printResult(gameResult);
     }
 }

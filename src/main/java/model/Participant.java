@@ -21,7 +21,7 @@ public class Participant {
 
     public PlayerResult getResult() {
         List<String> cards = participantHand.getDeck().stream().map(Card::getString).toList();
-        return new PlayerResult(getName(), cards, participantHand.getScore());
+        return new PlayerResult(getName(), cards, participantHand.getScore(), 0);
     }
 
     public void addCard(Card card) {
@@ -30,6 +30,14 @@ public class Participant {
 
     public boolean isMoreThanScore(Integer threshold) {
         return participantHand.getScore() > threshold;
+    }
+
+    public boolean isMoreThanScore(Participant other) {
+        return participantHand.getScore() > other.participantHand.getScore();
+    }
+
+    public boolean isLessThanScore(Participant other) {
+        return participantHand.getScore() < other.participantHand.getScore();
     }
 
     public boolean isBust() {
@@ -44,7 +52,4 @@ public class Participant {
         return participantHand.getFirstCard();
     }
 
-    public boolean isMoreScore(Participant other) {
-        return this.participantHand.getScore() > other.participantHand.getScore();
-    }
 }
