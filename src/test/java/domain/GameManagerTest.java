@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 class GameManagerTest {
     @Test
     void 플레이어들의_점수를_딜러와_비교해_승패를_반환한다() {
+        // TODO: 단위 테스트라기보다 얇은 통합 테스트 느낌 추후 리팩토링 예정
         Player pobi = new Player(new Name("pobi"));
         Player crong = new Player(new Name("crong"));
         Players players = new Players(List.of(pobi, crong));
