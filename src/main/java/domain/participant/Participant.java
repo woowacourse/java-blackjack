@@ -31,8 +31,9 @@ public class Participant {
         return hand.getSum();
     }
 
+    // todo : Participant도 불변으로 변경
     public void draw(Card card) {
-        hand.addCard(card);
+        hand = hand.addCard(card);
     }
 
 }
