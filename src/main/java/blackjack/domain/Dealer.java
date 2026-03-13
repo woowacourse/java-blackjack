@@ -2,7 +2,6 @@ package blackjack.domain;
 
 public class Dealer extends Participant {
     private static final int DEALER_STAND_POINT = 17;
-    private static final int INIT_DRAW_CARD_COUNT = 2;
 
     public Dealer() {
         super("딜러", new Hand());
