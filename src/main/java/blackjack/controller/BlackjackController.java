@@ -5,6 +5,7 @@ import blackjack.domain.BettingMoney;
 import blackjack.domain.BettingMoneyInfo;
 import blackjack.domain.Dealer;
 import blackjack.domain.Hand;
+import blackjack.domain.Name;
 import blackjack.domain.Participants;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
@@ -89,7 +90,7 @@ public class BlackjackController {
     private void handlePlayerAction(Player player, Dealer dealer) {
         while (player.isHit()) {
             Answer answer =
-                    RetryExecutor.retry(this::readAnswer, player.getNickname());
+                    RetryExecutor.retry(this::readAnswer, player.getName().toString());
             handleAnswer(player, dealer, answer);
             OutputView.printCardStatus(player);
         }
