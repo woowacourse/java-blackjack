@@ -3,10 +3,10 @@ package blackjack.model.participant;
 import java.util.Collection;
 import java.util.List;
 
-public record Names(
+public record UniqueNames(
         Collection<Name> names
 ) {
-    public Names(Collection<Name> names) {
+    public UniqueNames(Collection<Name> names) {
         validateDuplicatedNames(names);
 
         this.names = List.copyOf(names);

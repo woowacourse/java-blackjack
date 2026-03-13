@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-class NamesTest {
+class UniqueNamesTest {
 
     @Test
     void 이름이_중복되면_예외를_던진다() {
@@ -16,7 +16,7 @@ class NamesTest {
         );
 
         // when
-        assertThatThrownBy(() -> new Names(duplicatedNames))
+        assertThatThrownBy(() -> new UniqueNames(duplicatedNames))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

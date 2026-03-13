@@ -2,11 +2,10 @@ package blackjack.controller;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.Deck;
-import blackjack.model.game.BlackjackResult;
 import blackjack.model.participant.Bet;
 import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Name;
-import blackjack.model.participant.Names;
+import blackjack.model.participant.UniqueNames;
 import blackjack.model.participant.Player;
 import blackjack.util.RetryUtil;
 import blackjack.view.InputView;
@@ -48,8 +47,8 @@ public class BlackjackController {
     private List<Player> readPlayers() {
         ArrayList<Player> players = new ArrayList<>();
 
-        Names playerNames = retryOnIllegalArgument(inputView::readPlayerNames);
-        for (Name playerName : playerNames.get()) {
+        UniqueNames playerUniqueNames = retryOnIllegalArgument(inputView::readPlayerNames);
+        for (Name playerName : playerUniqueNames.get()) {
             Bet bet = retryOnIllegalArgument(() -> inputView.readBet(playerName));
             players.add(new Player(playerName, bet));
         }

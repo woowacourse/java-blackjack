@@ -3,7 +3,7 @@ package blackjack.view;
 import blackjack.model.game.HitAnswer;
 import blackjack.model.participant.Bet;
 import blackjack.model.participant.Name;
-import blackjack.model.participant.Names;
+import blackjack.model.participant.UniqueNames;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -23,7 +23,7 @@ public class InputView {
 
     private final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-    public Names readPlayerNames() {
+    public UniqueNames readPlayerNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String rawNames = readLine();
         System.out.println();
@@ -32,7 +32,7 @@ public class InputView {
                 .map(Name::new)
                 .toList();
 
-        return new Names(names);
+        return new UniqueNames(names);
     }
 
     public Bet readBet(final Name playerName) {
