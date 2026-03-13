@@ -5,7 +5,7 @@ import java.util.List;
 
 public abstract class Participant {
     private final Name name;
-    protected final Cards cards;
+    private final Cards cards;
 
     public Participant(Name name) {
         this.name = name;
@@ -20,7 +20,7 @@ public abstract class Participant {
         return cards.canReceiveCard(getHitThreshold());
     }
 
-    public abstract int getHitThreshold();
+    protected abstract int getHitThreshold();
 
     public String getName() {
         return name.getName();

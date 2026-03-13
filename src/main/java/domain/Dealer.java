@@ -13,7 +13,7 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public int getHitThreshold() {
+    protected int getHitThreshold() {
         return HIT_THRESHOLD;
     }
 }
