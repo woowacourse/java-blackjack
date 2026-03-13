@@ -3,7 +3,7 @@ package controller.result;
 import model.judgement.DealerResult;
 import model.judgement.Judgement;
 import model.judgement.PlayerResult;
-import view.OutputView;
+import view.WinLossReportView;
 
 public class WinLossReporter implements ResultReporter {
 
@@ -11,8 +11,8 @@ public class WinLossReporter implements ResultReporter {
     public void report(PlayerResult playerResult) {
         DealerResult dealerResult = Judgement.judgeByDealer(playerResult);
 
-        OutputView.printFinalResultHeader();
-        OutputView.printResultByDealer(dealerResult);
-        OutputView.printResultByPlayers(playerResult);
+        WinLossReportView.printFinalResultHeader();
+        WinLossReportView.printResultByDealer(dealerResult);
+        WinLossReportView.printResultByPlayers(playerResult);
     }
 }

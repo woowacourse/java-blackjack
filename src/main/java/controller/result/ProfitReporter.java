@@ -2,7 +2,7 @@ package controller.result;
 
 import model.judgement.PlayerResult;
 import model.judgement.Profit;
-import view.OutputView;
+import view.ProfitReportView;
 
 public class ProfitReporter implements ResultReporter {
 
@@ -10,8 +10,8 @@ public class ProfitReporter implements ResultReporter {
     public void report(PlayerResult playerResult) {
         Profit dealerProfit = playerResult.calculateDealerProfit();
 
-        OutputView.printFinalProfitHeader();
-        OutputView.printProfitByDealer(dealerProfit);
-        OutputView.printProfitByPlayers(playerResult.calculateProfits());
+        ProfitReportView.printFinalProfitHeader();
+        ProfitReportView.printProfitByDealer(dealerProfit);
+        ProfitReportView.printProfitByPlayers(playerResult.calculateProfits());
     }
 }

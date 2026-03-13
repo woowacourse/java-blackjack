@@ -37,5 +37,5 @@ public class EnumMapper {
             CardShape.DIAMOND, "다이아몬드"
     );
 
-    public EnumMapper(){}
+    private EnumMapper(){}
 }

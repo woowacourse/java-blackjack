@@ -1,11 +1,7 @@
 package view;
 
 import java.util.List;
-import java.util.Map;
 import model.card.Card;
-import model.judgement.DealerResult;
-import model.judgement.PlayerResult;
-import model.judgement.Profit;
 import model.paticipant.Dealer;
 import model.paticipant.Participant;
 import model.paticipant.Player;
@@ -76,46 +72,5 @@ public class OutputView {
 
     public static void printBlank() {
         System.out.println();
-    }
-
-    public static void printFinalResultHeader() {
-        System.out.println();
-        System.out.println("## 최종 승패");
-    }
-
-    public static void printResultByDealer(DealerResult dealerResult) {
-        System.out.print("딜러: ");
-        StringBuilder result = new StringBuilder();
-        if (dealerResult.winCount() > 0) {
-            result.append(dealerResult.winCount()).append("승 ");
-        }
-        if (dealerResult.drawCount() > 0) {
-            result.append(dealerResult.drawCount()).append("무 ");
-        }
-        if (dealerResult.loseCount() > 0) {
-            result.append(dealerResult.loseCount()).append("패");
-        }
-        System.out.println(result.toString().trim());
-    }
-
-    public static void printResultByPlayers(PlayerResult playerResult) {
-        playerResult.getResult()
-                .forEach((player, status) ->
-                        System.out.printf("%s: %s%n", player.getName(), EnumMapper.RESULT_STATUS_MAPPER.get(status)));
-    }
-
-    public static void printFinalProfitHeader() {
-        System.out.println();
-        System.out.println("## 최종 수익");
-    }
-
-    public static void printProfitByDealer(Profit profit) {
-        System.out.printf("딜러: %d%n", profit.value());
-    }
-
-    public static void printProfitByPlayers(Map<Player, Profit> profits) {
-        profits.forEach((player, profit) -> 
-                System.out.printf("%s: %d%n", player.getName(), profit.value())
-        );
     }
 }
