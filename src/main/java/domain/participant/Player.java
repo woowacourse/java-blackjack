@@ -1,4 +1,4 @@
-package domain;
+package domain.participant;
 
 public class Player extends Participant {
     private static final int BUST_THRESHOLD = 21;

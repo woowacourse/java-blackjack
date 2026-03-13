@@ -1,11 +1,11 @@
 package view;
 
-import domain.Card;
-import domain.Participant;
-import domain.Player;
-import domain.Rank;
-import domain.Result;
-import domain.Suit;
+import domain.card.Card;
+import domain.participant.Participant;
+import domain.participant.Player;
+import domain.card.Rank;
+import domain.game.Result;
+import domain.card.Suit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

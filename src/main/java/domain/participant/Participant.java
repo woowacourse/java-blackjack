@@ -1,5 +1,7 @@
-package domain;
+package domain.participant;
 
+import domain.card.Card;
+import domain.card.CardBundle;
 import java.util.List;
 
 public abstract class Participant {

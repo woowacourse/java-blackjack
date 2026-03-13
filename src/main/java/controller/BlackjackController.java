@@ -1,11 +1,11 @@
 package controller;
 
-import domain.Dealer;
-import domain.Deck;
-import domain.Player;
-import domain.Players;
-import domain.Referee;
-import domain.Result;
+import domain.participant.Dealer;
+import domain.card.Deck;
+import domain.participant.Player;
+import domain.participant.Players;
+import domain.game.Referee;
+import domain.game.Result;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
