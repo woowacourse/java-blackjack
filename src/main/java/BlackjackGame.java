@@ -53,13 +53,13 @@ public class BlackjackGame {
     private void showCardNames(Players players, Dealer dealer) {
         OutputView.showIntroMessage(players.getPlayerNames());
         OutputView.showDealerCardName(dealer.firstCardNames());
-        players.getPlayers().forEach(
+        players.players().forEach(
                 player -> OutputView.showCardName(player.getName(), player.createCardNames())
         );
     }
 
     private void playPlayerTurn(Players players, Deck deck) {
-        players.getPlayers().forEach(player -> determineGameState(deck, player));
+        players.players().forEach(player -> determineGameState(deck, player));
     }
 
     private void determineGameState(Deck deck, Player player) {
@@ -90,7 +90,7 @@ public class BlackjackGame {
         playPlayerTurn(players, deck);
         playDealerTurn(dealer, deck);
         OutputView.showCardAndScore("딜러", dealer.createCardNames(), dealer.getScore());
-        players.getPlayers().forEach(
+        players.players().forEach(
                 player -> OutputView.showCardAndScore(player.getName(), player.createCardNames(), player.getScore())
         );
     }

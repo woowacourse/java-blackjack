@@ -14,7 +14,7 @@ public class Referee {
 
     public Map<Player, GameResult> judge(Dealer dealer, Players players) {
         Map<Player, GameResult> judgeMap = new LinkedHashMap<>();
-        for (Player player : players.getPlayers()) {
+        for (Player player : players.players()) {
             GameResult playerResult = GameResult.judge(dealer, player);
             judgeMap.put(player, playerResult);
         }

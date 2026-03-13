@@ -1,14 +1,11 @@
 package domain.participant;
 
 import exception.ExceptionMessage;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Players {
-    private final List<Player> players;
-
+public record Players(List<Player> players) {
     public Players(List<Player> players) {
         validateUnique(players);
         this.players = new ArrayList<>(players);
@@ -25,7 +22,8 @@ public class Players {
         }
     }
 
-    public List<Player> getPlayers() {
+    @Override
+    public List<Player> players() {
         return Collections.unmodifiableList(players);
     }
 

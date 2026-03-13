@@ -17,7 +17,7 @@ public class GameStatistics {
         initializeDealerResult();
     }
 
-    private LinkedHashMap<String, Integer> initializeMap() {
+    private Map<String, Integer> initializeMap() {
         LinkedHashMap<String, Integer> dealerResult = new LinkedHashMap<>();
         for (String gameResult : Arrays.stream(GameResult.values()).map(GameResult::getDescription).toList()) {
             dealerResult.put(gameResult, 0);
