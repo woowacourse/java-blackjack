@@ -9,27 +9,27 @@ public class Bettings {
 
     private static final int DEALER_INITIAL_PROFIT = 0;
 
-    private final Map<Player, Money> bettings;
+    private final Map<Player, Money> bettingMoneyByPlayer;
 
     public Bettings() {
-        this.bettings = new LinkedHashMap<>();
+        this.bettingMoneyByPlayer = new LinkedHashMap<>();
     }
 
     public void bet(Player player, Money money) {
-        bettings.put(player, money);
+        bettingMoneyByPlayer.put(player, money);
     }
 
     public Money getPlayerBettingMoney(Player player) {
-        return bettings.get(player);
+        return bettingMoneyByPlayer.get(player);
     }
 
     public Money calculateBettingMoney(Player player, BettingRate bettingRate) {
-        Money money = bettings.get(player);
-        return bettings.put(player, bettingRate.payOut(money));
+        Money money = bettingMoneyByPlayer.get(player);
+        return bettingMoneyByPlayer.put(player, bettingRate.payOut(money));
     }
 
     public Money calculateDealerProfit() {
-        return bettings.values()
+        return bettingMoneyByPlayer.values()
                 .stream()
                 .reduce(Money.from(DEALER_INITIAL_PROFIT), Money::addMoney)
                 .reverseMoney();
