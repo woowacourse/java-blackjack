@@ -13,4 +13,8 @@ public class Player extends Participant {
     public boolean canHit() {
         return getScore() <= BUST_THRESHOLD;
     }
+
+    public int getBetAmount() {
+        return betAmount;
+    }
 }
