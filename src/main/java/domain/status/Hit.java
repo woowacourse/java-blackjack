@@ -1,5 +1,6 @@
 package domain.status;
 
+import domain.BlackJackInfo;
 import domain.participant.HandCards;
 import domain.card.Card;
 
@@ -14,7 +15,7 @@ public final class Hit extends Running {
         if (cards.isBust()) {
             return new Bust(cards);
         }
-        if (cards.calculateScore() == 21) {
+        if (cards.calculateScore() == BlackJackInfo.BLACKJACK_SCORE) {
             return new Stay(cards);
         }
         return new Hit(cards);

@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.BlackJackInfo;
 import domain.card.Card;
 
 public class Dealer extends Participant {
@@ -12,6 +13,6 @@ public class Dealer extends Participant {
     }
 
     public boolean isReceiveCard() {
-        return !isFinished() && getScore() <= 16;
+        return !isFinished() && getScore() <= BlackJackInfo.DEALER_THRESHOLD_SCORE;
     }
 }

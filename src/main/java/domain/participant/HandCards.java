@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.BlackJackInfo;
 import domain.card.Card;
 import domain.card.CardNumber;
 
@@ -37,8 +38,8 @@ public class HandCards {
         int score = baseCardScore;
         boolean isAceExist = cards.stream()
                 .anyMatch(handCard -> handCard.getCardNumber() == CardNumber.ACE);
-        if (isAceExist && (baseCardScore + 10) <= 21) {
-            score += 10;
+        if (isAceExist && (baseCardScore + BlackJackInfo.SOFT_HAND_PROCESS_SCORE) <= BlackJackInfo.BLACKJACK_SCORE) {
+            score += BlackJackInfo.SOFT_HAND_PROCESS_SCORE;
         }
         return score;
     }
@@ -48,11 +49,11 @@ public class HandCards {
     }
 
     public boolean isBust() {
-        return calculateScore() > 21;
+        return calculateScore() > BlackJackInfo.BLACKJACK_SCORE;
     }
 
     public boolean isBlackJack() {
-        return cards.size() == 2 && calculateScore() == 21;
+        return cards.size() == BlackJackInfo.FIRST_CARD_COUNT && calculateScore() == BlackJackInfo.BLACKJACK_SCORE;
     }
 
     public Card getFirst() {
