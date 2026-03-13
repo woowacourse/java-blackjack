@@ -1,46 +1,49 @@
 package domain.participant;
 
-import domain.Score;
 import domain.card.Card;
+import domain.status.Start;
+import domain.status.Status;
+import domain.Score;
 
+import java.util.Arrays;
 import java.util.List;
 
 abstract public class Participant {
 
     private final String name;
-    private final HandCards handCards;
+    protected Status status;
 
     public Participant(String name) {
         this.name = name;
-        this.handCards = new HandCards();
+        this.status = new Start(new HandCards());
     }
 
-    public Participant(String name, HandCards handCards) {
-        this.name = name;
-        this.handCards = handCards;
+    public void drawInitialCards(List<Card> cards) {
+        this.status =  status.drawInitialCards(cards);
     }
 
-    public void receiveInitialCards(List<Card> firstHandCards) {
-        handCards.receiveInitialCards(firstHandCards);
+    public void draw(Card card) {
+        this.status = this.status.draw(card);
     }
 
-    public void receiveHitCard(Card card) {
-        handCards.receiveHitCard(card);
+    public void stay() {
+        this.status = this.status.stay();
     }
 
-    public boolean isBust() {
-        return handCards.isBust();
-    }
-
-    public Score getScore() {
-        return handCards.getScore();
-    }
-
-    public List<Card> getHandCards() {
-        return handCards.getCards();
+    public boolean isFinished() {
+        return this.status.isFinished();
     }
 
     public String getName() {
         return name;
+    }
+
+    // Status에 위임하여 정보 획득
+    public Score getScore() {
+        return this.status.getCards().getScore();
+    }
+
+    public List<Card> getHandCards() {
+        return status.getCards().getCards();
     }
 }

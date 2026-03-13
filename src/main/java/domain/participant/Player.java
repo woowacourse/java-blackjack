@@ -10,10 +10,6 @@ public class Player extends Participant {
         super(name);
     }
 
-    public Player(String name, HandCards handCards) {
-        super(name, handCards);
-    }
-
     public void battingMoney(Money money) {
         this.money = money;
     }

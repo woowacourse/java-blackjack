@@ -15,9 +15,6 @@ public record HandScoreDTO(String name, List<String> handCards, String score) {
     }
 
     private static String getStringScore(Participant participant) {
-        if (participant.isBust()) {
-            return "버스트";
-        }
-        return String.valueOf(participant.getScore());
+        return String.valueOf(participant.getScore().getValue());
     }
 }

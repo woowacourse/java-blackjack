@@ -31,13 +31,6 @@ public class Players implements Iterable<Player>{
                 .toList();
     }
 
-    public void receiveInitialCards(Deck deck) {
-        for (Player player : players) {
-            List<Card> firstHandCards = deck.dealFirstHandCards();
-            player.receiveInitialCards(firstHandCards);
-        }
-    }
-
     @Override
     public Iterator<Player> iterator() {
         return players.iterator();
