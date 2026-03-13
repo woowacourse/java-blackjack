@@ -14,7 +14,7 @@ class GamblerTest {
     void 카드_정상적으로_받기_테스트() {
         // given
         Card card = new Card("2", "하트");
-        Gambler gambler = new Gambler("coco");
+        Gambler gambler = new Gambler("coco", "10000");
 
         // when
         gambler.addCard(card);
@@ -31,7 +31,7 @@ class GamblerTest {
         Card card2 = new Card("K", "다이아몬드");
         Card card3 = new Card("K", "클로버");
 
-        Gambler gambler = new Gambler("coco");
+        Gambler gambler = new Gambler("coco", "10000");
 
         // when
         gambler.addCard(card1);
@@ -50,7 +50,7 @@ class GamblerTest {
         Card card2 = new Card("K", "다이아몬드");
         Card card3 = new Card("K", "클로버");
 
-        Gambler gambler = new Gambler("coco");
+        Gambler gambler = new Gambler("coco", "10000");
 
         // when
         gambler.addCard(card1);
@@ -65,7 +65,7 @@ class GamblerTest {
     @DisplayName("베팅 금액이 0일 때 에러 발생 검증")
     void 베팅_금액_0_검증() {
         Assertions.assertThrows(IllegalArgumentException.class,
-                () -> new Gambler("james", 0)
+                () -> new Gambler("james", "0")
         );
     }
 
@@ -73,15 +73,15 @@ class GamblerTest {
     @DisplayName("베팅 금액이 음수 때 에러 발생 검증")
     void 베팅_금액_음수_검증() {
         Assertions.assertThrows(IllegalArgumentException.class,
-                () -> new Gambler("james", -1)
+                () -> new Gambler("james", "-1")
         );
     }
 
     @Test
     @DisplayName("베팅 금액이 100억 넘을 때 에러 검증")
-    void 베팅_금액_음수_검증() {
+    void 베팅_금액_100억_검증() {
         Assertions.assertThrows(IllegalArgumentException.class,
-                () -> new Gambler("james", 10_000_000_000L)
+                () -> new Gambler("james", "10_000_000_000")
         );
     }
 }
