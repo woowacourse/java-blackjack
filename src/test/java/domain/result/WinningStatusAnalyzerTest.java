@@ -36,7 +36,7 @@ class WinningStatusAnalyzerTest {
                 ParticipantInitialInformation.of( ParticipantName.from("p11"), BetAmount.from(0))));
         players.giveInitialCardBundle(cardDeck);
 
-        List<PlayerWinningResult> playerPlayerWinningResults = WinningResultAnalyzer.analyzePlayerResults(players, dealerScore4);
+        List<PlayerWinningResult> playerPlayerWinningResults = GameResultAnalyzer.analyzePlayerWinningResults(players, dealerScore4);
 
         Assertions.assertThat(playerPlayerWinningResults.get(0).winningStatus()).isEqualTo(WinningStatus.WIN);
         Assertions.assertThat(playerPlayerWinningResults.get(1).winningStatus()).isEqualTo(WinningStatus.WIN);

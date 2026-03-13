@@ -1,17 +1,21 @@
 package domain.result;
 
+import static config.BlackjackGameConstant.DEALER_DISPLAY_NAME;
+
+import domain.betiing.BettingProfit;
+import domain.participant.ParticipantName;
 import domain.participant.Player;
 import domain.participant.Dealer;
 import domain.participant.Players;
 
 import java.util.List;
 
-public class WinningResultAnalyzer {
+public class GameResultAnalyzer {
 
-    private WinningResultAnalyzer() {
+    private GameResultAnalyzer() {
     }
 
-    public static List<PlayerWinningResult> analyzePlayerResults(Players players, Dealer dealer) {
+    public static List<PlayerWinningResult> analyzePlayerWinningResults(Players players, Dealer dealer) {
         return players.stream()
                 .map(player -> {
                     WinningStatus winningStatus = judgePlayerGameResult(dealer, player);
@@ -21,7 +25,9 @@ public class WinningResultAnalyzer {
     }
 
     private static WinningStatus judgePlayerGameResult(Dealer dealer, Player player) {
-        if(dealer.isBusted()) return player.isBusted() ? WinningStatus.DRAW : WinningStatus.WIN;
+        if (dealer.isBusted()) {
+            return player.isBusted() ? WinningStatus.DRAW : WinningStatus.WIN;
+        }
 
         if (player.isBlackjack() && dealer.isBlackjack()) {
             return WinningStatus.DRAW;
@@ -53,4 +59,24 @@ public class WinningResultAnalyzer {
         return WinningStatus.DRAW;
     }
 
+    public static List<BettingResult> analyzePlayerBettingResults(Players players, Dealer dealer) {
+        return players.stream().map(player -> {
+                    WinningStatus winningStatus = judgePlayerGameResult(dealer, player);
+                    return BettingResult.of(player.getName(), BettingProfit.of(winningStatus, player.getBetAmount()));
+                }
+        ).toList();
+    }
+
+    public static BettingResult analyzeDealerBettingResult(List<BettingResult> playerBettingResults) {
+        double sum = playerBettingResults.stream()
+                .mapToDouble(BettingResult::getProfit)
+                .sum();
+
+        double dealerProfit = negate(sum);
+        return BettingResult.of(ParticipantName.from(DEALER_DISPLAY_NAME), BettingProfit.from(dealerProfit));
+    }
+
+    private static double negate(double value) {
+        return -value;
+    }
 }

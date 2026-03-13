@@ -5,7 +5,7 @@ import static config.BlackjackGameConstant.*;
 import domain.participant.ParticipantInitialInformation;
 import domain.participant.dto.ParticipantHandDtoMapper;
 import domain.result.BettingResult;
-import domain.result.BettingResultAnalyzer;
+import domain.result.GameResultAnalyzer;
 import domain.result.dto.BettingProfitDto;
 import domain.card.CardDeck;
 import domain.card.CardDeckInitializer;
@@ -51,8 +51,8 @@ public class BlackjackGame {
     }
 
     private void printBettingResult(Players players, Dealer dealer) {
-        List<BettingResult> playerBettingResults = BettingResultAnalyzer.analyze(players, dealer);
-        BettingResult dealerBettingResult = BettingResultAnalyzer.analyzeDealerBettingResult(playerBettingResults);
+        List<BettingResult> playerBettingResults = GameResultAnalyzer.analyzePlayerBettingResults(players, dealer);
+        BettingResult dealerBettingResult = GameResultAnalyzer.analyzeDealerBettingResult(playerBettingResults);
         BettingProfitDto dealerBettingResultDto = BettingProfitDto.from(dealerBettingResult);
         List<BettingProfitDto> playerBettingResultDtos = playerBettingResults.stream()
                 .map(BettingProfitDto::from)
