@@ -50,12 +50,6 @@ class BlackJackGameTest {
         assertTrue(result.isPresent());
     }
 
-    //    //
-    //    //    public void doBetProcess(String betAmountValue) {
-    //    //        Player target = multiPlayers.findNotBetPlayer()
-    //    //                .orElseThrow(() -> new IllegalStateException(ErrorMessage.NO_MORE_BETTABLE_PLAYER.getMessage()));
-    //    //        multiPlayers.executeBet(target, betAmountValue);
-    //    //    }
     @Test
     @DisplayName("bet을 시켜도 오류가 안난다")
     void doBetProcess_success() {
