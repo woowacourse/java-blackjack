@@ -5,7 +5,6 @@ import domain.*;
 import java.util.List;
 
 import domain.shuffle.RandomCardStrategy;
-import view.mesage.ErrorMessage;
 import view.mesage.InputMessage;
 import utils.InputParser;
 import view.InputView;
@@ -64,23 +63,15 @@ public class BlackjackController {
 
     private long askBetAmount(Player player) {
         System.out.println();
+        BettingValidator bettingValidator = BettingValidator.of();
         while (true) {
             try {
                 String betAmount = inputView.askBetAmount(player);
-                validateBetAmount(betAmount);
+                bettingValidator.validateBetAmount(betAmount);
                 return Long.parseLong(betAmount);
             } catch (IllegalArgumentException exception) {
                 outputView.printLine(exception.getMessage());
             }
-        }
-    }
-
-    private void validateBetAmount(String betAmount) {
-        if (betAmount == null) {
-            throw new IllegalArgumentException(ErrorMessage.EMPTY_BET_AMOUNT_INPUT.getMessage());
-        }
-        if (!betAmount.matches("[1-9][0-9]*")) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_BET_AMOUNT.getMessage());
         }
     }
 
