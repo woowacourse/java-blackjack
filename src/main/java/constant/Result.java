@@ -4,37 +4,53 @@ import domain.participant.Dealer;
 import domain.participant.Player;
 
 public enum Result {
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패"),
-    ;
+    LOSE(-1),
+    PUSH(0),
+    WIN(1),
+    BLACKJACK(1.5);
 
-    private final String result;
+    private final double result;
 
-    Result(String result) {
+    Result(double result) {
         this.result = result;
     }
 
-    public String getResult() {
+    public double getResult() {
         return result;
     }
 
     public static Result from(Dealer dealer, Player player) {
-        if (dealer.isBust() && player.isBust()) {
-            return Result.LOSE;
-        }
-        if (dealer.isBust() && !player.isBust()) {
-            return Result.WIN;
-        }
         if (player.isBust()) {
             return Result.LOSE;
         }
-        if (player.calculateScore() > dealer.calculateScore()) {
-            return Result.WIN;
+        if (dealer.isBust()) {
+            return Result.WIN; // 원금의 1배 수익
         }
-        if (player.calculateScore() == dealer.calculateScore()) {
-            return Result.DRAW;
+
+        // 아래부턴 플레이어 및 딜러가 버스트가 아님
+
+        boolean dealerBlackjack = dealer.isBlackjack();
+        boolean playerBlackjack = player.isBlackjack();
+
+        if (dealerBlackjack && !playerBlackjack) {
+            return Result.LOSE;
         }
-        return Result.LOSE;
+        if (dealerBlackjack && playerBlackjack) {
+            return Result.PUSH;
+        }
+        if (playerBlackjack) {
+            return Result.BLACKJACK;
+        }
+
+        // 딜러 및 플레이어가 블랙잭 아닌 경우
+        int dealerScore = dealer.calculateScore();
+        int playerScore = player.calculateScore();
+        if (dealerScore == playerScore) {
+            return Result.PUSH;
+        }
+        if (dealerScore > playerScore) {
+            return Result.LOSE;
+        }
+        return Result.WIN;
     }
 }

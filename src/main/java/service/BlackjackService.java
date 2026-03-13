@@ -4,12 +4,13 @@ import constant.PlayerAction;
 import constant.PolicyConstant;
 import constant.Result;
 import domain.CardMachine;
+import domain.bet.Money;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
+import dto.BlackjackProfitDto;
 import dto.BlackjackResultDto;
-import dto.DealerResultDto;
 import dto.ParticipantDto;
 import dto.PlayerResultDto;
 import java.util.ArrayList;
@@ -27,6 +28,13 @@ public class BlackjackService {
         this.players = players;
         this.dealer = new Dealer();
     }
+
+    // TODO: TEST
+    public void receivePlayerBets(int playerIndex, Money money) {
+        Player player = players.getPlayerByIndex(playerIndex);
+        player.placeBet(money);
+    }
+
 
     public List<String> getAllPlayerNames() {
         return players.getAllPlayers().stream()
@@ -61,32 +69,17 @@ public class BlackjackService {
         return false;
     }
 
-    public List<PlayerResultDto> calculatePlayerResults() {
+    public BlackjackProfitDto calculateBlackjackResult() {
+        double dealerProfit = 0;
         List<PlayerResultDto> playerResultDtoList = new ArrayList<>();
         for (Player player : players.value()) {
-            Result result = Result.from(dealer, player);
-            playerResultDtoList.add(new PlayerResultDto(player.getName(), result));
+            double profit = player.getBetAmount() * Result.from(dealer, player).getResult();
+            if (profit < 0) {
+                dealerProfit += profit * (-1);
+            }
+            playerResultDtoList.add(new PlayerResultDto(player.getName(), profit));
         }
-        return playerResultDtoList;
-    }
-
-    public DealerResultDto calculateDealerResult() {
-        List<PlayerResultDto> playerResultDtoList = calculatePlayerResults();
-        int win = 0, draw = 0, lose = 0;
-        for (PlayerResultDto playerResultDto : playerResultDtoList) {
-            Result result = playerResultDto.result();
-            win += judgeResult(result, Result.LOSE);
-            draw += judgeResult(result, Result.DRAW);
-            lose += judgeResult(result, Result.WIN);
-        }
-        return new DealerResultDto(win, draw, lose);
-    }
-
-    private int judgeResult(Result result, Result playerResult) {
-        if (result.equals(playerResult)) {
-            return 1;
-        }
-        return 0;
+        return new BlackjackProfitDto(dealerProfit, playerResultDtoList);
     }
 
     public ParticipantDto createPlayerDto(int playerIndex) {

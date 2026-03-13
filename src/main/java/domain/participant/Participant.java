@@ -36,4 +36,8 @@ public class Participant {
     public int calculateScore() {
         return hand.calculateScore();
     }
+
+    public boolean isBlackjack() {
+        return hand.calculateScore() == PolicyConstant.BLACKJACK_SCORE && hand.getCardNames().size() == 2;
+    }
 }

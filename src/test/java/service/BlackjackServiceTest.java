@@ -5,16 +5,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import constant.PlayerAction;
 import constant.PolicyConstant;
 import constant.Rank;
-import constant.Result;
 import constant.Suit;
 import domain.Card;
 import domain.participant.Names;
 import domain.participant.Participant;
 import domain.participant.Players;
 import dto.BlackjackResultDto;
-import dto.DealerResultDto;
 import dto.ParticipantDto;
-import dto.PlayerResultDto;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -106,57 +103,6 @@ class BlackjackServiceTest {
                 return;
             }
             assertThat(afterSize).isEqualTo(beforeSize);
-        }
-    }
-
-    @Nested
-    class CalculatePlayerResultsTest {
-
-        @Test
-        void 참가자_결과는_참가자_수와_이름_순서를_유지한다() {
-
-            // given
-            blackjackService.dealInitialCards();
-
-            // when
-            List<PlayerResultDto> actual = blackjackService.calculatePlayerResults();
-
-            // then
-            assertThat(actual).hasSize(blackjackService.getPlayerCount());
-            assertThat(actual.stream().map(PlayerResultDto::name).toList())
-                .containsExactlyElementsOf(blackjackService.getAllPlayerNames());
-        }
-    }
-
-    @Nested
-    class CalculateDealerResultTest {
-
-        @Test
-        void 딜러_승무패_집계는_참가자_결과와_일관되어야_한다() {
-
-            // given
-            blackjackService.dealInitialCards();
-            List<PlayerResultDto> playerResults = blackjackService.calculatePlayerResults();
-
-            // when
-            DealerResultDto actual = blackjackService.calculateDealerResult();
-
-            // then
-            int expectedWin = (int) playerResults.stream()
-                .filter(playerResultDto -> playerResultDto.result() == Result.LOSE)
-                .count();
-            int expectedDraw = (int) playerResults.stream()
-                .filter(playerResultDto -> playerResultDto.result() == Result.DRAW)
-                .count();
-            int expectedLose = (int) playerResults.stream()
-                .filter(playerResultDto -> playerResultDto.result() == Result.WIN)
-                .count();
-
-            assertThat(actual.win()).isEqualTo(expectedWin);
-            assertThat(actual.draw()).isEqualTo(expectedDraw);
-            assertThat(actual.lose()).isEqualTo(expectedLose);
-            assertThat(actual.win() + actual.draw() + actual.lose())
-                .isEqualTo(blackjackService.getPlayerCount());
         }
     }
 
