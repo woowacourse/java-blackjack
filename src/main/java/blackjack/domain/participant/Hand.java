@@ -49,10 +49,7 @@ public class Hand {
     }
 
     public boolean isBlackjack() {
-        if (calculateScore() == BURST_THRESHOLD && cards.size() == BLACKJACK_CARDS_SIZE) {
-            return true;
-        }
-        return false;
+        return calculateScore() == BURST_THRESHOLD && cards.size() == BLACKJACK_CARDS_SIZE;
     }
 
     public List<String> getCardNames(final int startInclusive) {
