@@ -8,7 +8,6 @@ import blackjack.model.Player;
 import blackjack.model.Players;
 import blackjack.model.Profits;
 import blackjack.model.Referee;
-import blackjack.util.Splitter;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -48,7 +47,7 @@ public class Controller {
 
     private Players createPlayer() {
         List<Player> players = new ArrayList<>();
-        List<String> playerNames = Splitter.split(inputView.getName()).stream().toList();
+        List<String> playerNames = inputView.getName();
         for (String name : playerNames) {
             players.add(new Player(name, inputView.getBettingAmount(name)));
         }
