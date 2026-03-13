@@ -1,5 +1,6 @@
 package blackjack.model.card;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -34,5 +35,33 @@ class HitCommandTest {
         //when & then
         assertThatThrownBy(() -> new HitCommand(invalidInput))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"y", "Y"})
+    @DisplayName("입력값이 y 또는 Y일 경우 true 반환")
+    void isY_return_true_when_y_Y(String hitCommandInput) {
+        // given
+        HitCommand hitCommand = new HitCommand(hitCommandInput);
+
+        //when
+        boolean result = hitCommand.isY();
+
+        // then
+        assertThat(result).isTrue();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"n", "N"})
+    @DisplayName("입력값이 n 또는 N일 경우 false 반환")
+    void isY_return_false_when_n_N(String hitCommandInput) {
+        // given
+        HitCommand hitCommand = new HitCommand(hitCommandInput);
+
+        //when
+        boolean result = hitCommand.isY();
+
+        // then
+        assertThat(result).isFalse();
     }
 }

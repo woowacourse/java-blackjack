@@ -1,8 +1,7 @@
-package blackjack.model;
+package blackjack.model.bet;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import blackjack.model.bet.BetAmount;
 import blackjack.model.user.Player;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
