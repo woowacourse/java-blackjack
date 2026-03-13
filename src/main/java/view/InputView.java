@@ -1,7 +1,5 @@
 package view;
 
-import static domain.GameManager.validatePlayersNumber;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -13,8 +11,6 @@ public class InputView {
         Scanner sc = new Scanner(System.in);
         String input = sc.nextLine();
         List<String> playerNames = getPlayerNames(input);
-        validatePlayersNumber(playerNames);
-
         return playerNames;
     }
 

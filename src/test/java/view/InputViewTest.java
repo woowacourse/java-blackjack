@@ -16,15 +16,6 @@ class InputViewTest {
     }
 
     @Test
-    @DisplayName("플레이어의 수는 8명을 넘을 수 없다.")
-    void askPlayerNames_NinePlayers_ThrowsException() {
-        command("가,나,다,라,마,바,사,아,차");
-        assertThrows(IllegalArgumentException.class, () -> {
-            InputView.askPlayerNames();
-        });
-    }
-
-    @Test
     @DisplayName("입력은 y와 n만 허용한다.")
     void askContinue_InputOtherThanYAndN_ThrowsException() {
         command("dongkey");

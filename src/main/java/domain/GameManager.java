@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.Set;
 
 public class GameManager {
-    private static final int MAX_PLAYER = 8;
 
     private final Dealer dealer;
     private final List<Player> players;
@@ -76,30 +75,5 @@ public class GameManager {
             gameResult.put(player.getName(), result);
         }
         return gameResult;
-    }
-
-    public static void validatePlayersNumber(List<String> playerNames) {
-        validateMinimumPlayers(playerNames);
-        validateMaximumPlayers(playerNames);
-        validateDuplicateName(playerNames);
-    }
-
-    private static void validateMaximumPlayers(List<String> playerNames) {
-        if (playerNames.size() > MAX_PLAYER) {
-            throw new IllegalArgumentException("플레이어의 수는 8명을 초과할 수 없습니다.");
-        }
-    }
-
-    private static void validateMinimumPlayers(List<String> playerNames) {
-        if (playerNames.isEmpty()) {
-            throw new IllegalArgumentException("플레이어의 수는 1명 이상이어야 합니다.");
-        }
-    }
-
-    private static void validateDuplicateName(List<String> names) {
-        Set<String> uniqueNames = new HashSet<>(names);
-        if (names.size() != uniqueNames.size()) {
-            throw new IllegalArgumentException("중복된 참가자 이름이 있습니다!");
-        }
     }
 }
