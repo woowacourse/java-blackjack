@@ -44,11 +44,13 @@ public class BlackjackGame {
     }
 
     private void deal(Participants participants, Deck deck) {
-        participants.stream().forEach(participant -> participant.hit(deck.draw()));
+        participants.stream().forEach(participant ->
+            participant.hit(deck.draw()));
     }
 
     private void hitPlayers(List<Player> players, Deck deck) {
-        players.forEach(player -> hitPlayer(player, deck));
+        players.forEach(player ->
+            hitPlayer(player, deck));
     }
 
     private void hitPlayer(Player player, Deck deck) {
@@ -61,7 +63,7 @@ public class BlackjackGame {
     private void hitDealer(Dealer dealer, Deck deck) {
         while (dealer.canHit()) {
             dealer.hit(deck.draw());
-            view.printDealerHit(dealer);
+            view.printDealerHit(dealer.getName());
         }
     }
 

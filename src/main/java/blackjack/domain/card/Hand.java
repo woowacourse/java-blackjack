@@ -36,11 +36,14 @@ public class Hand {
     }
 
     private int calculateSum(List<Card> cards) {
-        return cards.stream().mapToInt(Card::getValue).sum();
+        return cards.stream()
+            .mapToInt(Card::getValue)
+            .sum();
     }
 
     private boolean containsAce(List<Card> cards) {
-        return cards.stream().anyMatch(Card::isAce);
+        return cards.stream()
+            .anyMatch(Card::isAce);
     }
 
     private boolean canApplyAceAmount(final int sum) {

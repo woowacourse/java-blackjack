@@ -46,7 +46,8 @@ public class Participants {
     }
 
     private static boolean containsDealerName(List<Name> playerNames) {
-        return playerNames.stream().anyMatch(Dealer::isDealerName);
+        return playerNames.stream()
+            .anyMatch(Dealer::isDealerName);
     }
 
     private static boolean isDuplicated(List<Name> playerNames) {

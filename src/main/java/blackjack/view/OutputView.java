@@ -1,6 +1,5 @@
 package blackjack.view;
 
-import blackjack.domain.participant.Dealer;
 import blackjack.domain.result.GameResult;
 import blackjack.domain.result.Score;
 import blackjack.dto.CardDto;
@@ -18,7 +17,7 @@ public class OutputView {
     private static final String YES = "y";
     private static final String NO = "n";
 
-    private static final Map<GameResult, String> PLAYER_RESULT_KOREANS = Map.of(
+    private static final Map<GameResult, String> GAME_RESULT_MESSAGES = Map.of(
         GameResult.PLAYER_WIN, "승",
         GameResult.DEALER_WIN, "패",
         GameResult.PUSH, "푸시"
@@ -30,11 +29,14 @@ public class OutputView {
 
     public void printInitialDeal(InitialDealDtos initialDealDtos) {
         List<String> playerNames = initialDealDtos.playerCardsDtos().stream()
-            .map(ParticipantCardsDto::participantName).toList();
+            .map(ParticipantCardsDto::participantName)
+            .toList();
         String joinedPlayerNames = String.join(", ", playerNames);
-        System.out.println(
-            initialDealDtos.dealerCardsDto().participantName() + "와 " + joinedPlayerNames
-                + "에게 2장을 나누었습니다.");
+        System.out.printf(
+            "%s와 %s에게 2장을 나누었습니다.%n",
+            initialDealDtos.dealerCardsDto().participantName(),
+            joinedPlayerNames
+        );
 
         printParticipantInitialCards(initialDealDtos);
         System.out.println();
@@ -54,12 +56,12 @@ public class OutputView {
         System.out.println(participantCardsDto.participantName() + "카드: " + joinedCards);
     }
 
-    public void askHit(String playerName) {
+    public void askHit(final String playerName) {
         System.out.println(playerName + "은 한장의 카드를 더 받겠습니까?(예는 " + YES + ", 아니오는 " + NO + ")");
     }
 
-    public void printDealerHit(Dealer dealer) {
-        System.out.println(dealer.getName() + "는 16이하라 한장의 카드를 더 받았습니다.");
+    public void printDealerHit(final String dealerName) {
+        System.out.println(dealerName + "는 16이하라 한장의 카드를 더 받았습니다.");
         System.out.println();
     }
 
@@ -89,7 +91,7 @@ public class OutputView {
     }
 
     public void printResult(GameResultDtos gameResultDtos) {
-        System.out.println(gameResultDtos.playerName() + ": " + PLAYER_RESULT_KOREANS.get(
+        System.out.println(gameResultDtos.playerName() + ": " + GAME_RESULT_MESSAGES.get(
             gameResultDtos.result()));
     }
 

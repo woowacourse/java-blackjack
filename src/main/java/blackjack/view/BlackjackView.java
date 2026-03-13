@@ -5,6 +5,7 @@ import blackjack.dto.InitialDealDtos;
 import blackjack.dto.ParticipantCardsDto;
 import blackjack.domain.participant.Dealer;
 import blackjack.dto.ParticipantScoreDtos;
+import java.util.Spliterator.OfInt;
 
 public class BlackjackView {
     private final InputView inputView;
@@ -33,8 +34,8 @@ public class BlackjackView {
         outputView.printParticipantCards(participantCardsDto);
     }
 
-    public void printDealerHit(Dealer dealer) {
-        outputView.printDealerHit(dealer);
+    public void printDealerHit(final String dealerName) {
+        outputView.printDealerHit(dealerName);
     }
 
     public void printScore(ParticipantScoreDtos participantScoreDtos) {
