@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 public class InputParser {
     private static final String DELIMITER = ",";
-    private static final String NUMBER_FORMAT_EXCEPTION_MESSAGE = "[ERROR] 숫자가 아닙니다.";
+    private static final String NUMBER_FORMAT_EXCEPTION_MESSAGE = "[ERROR] [%s]은/는 숫자가 아닙니다.";
 
     public static List<String> separateBySeparator(String input) {
 
@@ -20,7 +20,7 @@ public class InputParser {
         try {
             return new BigDecimal(input);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(NUMBER_FORMAT_EXCEPTION_MESSAGE);
+            throw new IllegalArgumentException(NUMBER_FORMAT_EXCEPTION_MESSAGE.formatted(input));
         }
     }
 }
