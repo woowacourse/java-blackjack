@@ -7,14 +7,10 @@ import domain.card.Deck;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
-import dto.DealerResultDto;
-import dto.GameResultDto;
+
 import dto.GameScoreDto;
 import dto.GameStartDto;
-import dto.PlayerResultDto;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class GameService {
     private final Players players;
@@ -22,9 +18,9 @@ public class GameService {
     private final Deck deck = new Deck();
 
 
-    public GameService(Players players) {
+    public GameService(Players players, Dealer dealer) {
         this.players = players;
-        this.dealer = new Dealer();
+        this.dealer = dealer;
     }
 
     public GameStartDto startGame() {
@@ -54,29 +50,5 @@ public class GameService {
 
     public GameScoreDto getTotalScore() {
         return GameScoreDto.from(players, dealer);
-    }
-
-    public GameResultDto calculateResults() {
-        List<PlayerResultDto> playerResultDTOs = new ArrayList<>();
-        int dealerWinCount = 0;
-        int dealerDrawCount = 0;
-        int dealerLoseCount = 0;
-
-        for (Player player : players) {
-            PlayerGameResult playerResult = PlayerGameResult.from(player, dealer);
-            if (playerResult == PlayerGameResult.WIN) {
-                dealerLoseCount++;
-            }
-            if (playerResult == PlayerGameResult.DRAW) {
-                dealerDrawCount++;
-            }
-            if (playerResult == PlayerGameResult.LOSE) {
-                dealerWinCount++;
-            }
-            playerResultDTOs.add(new PlayerResultDto(player.getName(), playerResult.getValue()));
-        }
-
-        return new GameResultDto(playerResultDTOs, new DealerResultDto(dealerWinCount, dealerDrawCount, dealerLoseCount));
-
     }
 }
