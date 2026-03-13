@@ -10,12 +10,12 @@ public record Money(
     private static final int MONEY_BOUND = 0;
 
     public static Money from(String money) {
-        validateMoneyIsNumber(money);
+        validateNumericFormat(money);
         return Money.from(Integer.parseInt(money));
     }
 
     public static Money from(int money) {
-        validateMoneyIsNegative(money);
+        validateMoneyIsNotNegative(money);
         return new Money(money);
     }
 
@@ -35,7 +35,7 @@ public record Money(
         return new Money(-this.money);
     }
 
-    private static void validateMoneyIsNumber(String money) {
+    private static void validateNumericFormat(String money) {
         try {
             Integer.parseInt(money);
         } catch (NumberFormatException e) {
@@ -43,7 +43,7 @@ public record Money(
         }
     }
 
-    private static void validateMoneyIsNegative(int money) {
+    private static void validateMoneyIsNotNegative(int money) {
         if (money < MONEY_BOUND) {
             throw new MoneyException(ErrorMessage.BETTING_MONEY_IS_NOT_NEGATIVE);
         }
