@@ -16,16 +16,11 @@ public final class PlayerTestUtil {
         return player;
     }
 
-//    public static Dealer createDealer(List<Card> cards) {
-//        Dealer dealer = new Dealer();
-//        cards.forEach(dealer::add);
-//        return dealer;
-//    }
-
     public static class FakeShuffledCardsGenerator implements CardsGenerator {
         @Override
         public List<Card> generateShuffledCards() {
-            return new ArrayList<>(List.of(new Card(CardShape.SPADE, CardRank.ACE),
+            return new ArrayList<>(
+                    List.of(new Card(CardShape.SPADE, CardRank.ACE),
                     new Card(CardShape.SPADE, CardRank.TWO),
                     new Card(CardShape.SPADE, CardRank.THREE),
                     new Card(CardShape.SPADE, CardRank.FOUR),
