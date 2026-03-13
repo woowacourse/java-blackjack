@@ -3,7 +3,6 @@ package blackjack.view;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
-import blackjack.view.dto.CardDisplayName;
 import java.util.Map;
 
 public class CardMapper {
@@ -23,10 +22,10 @@ public class CardMapper {
             Suit.CLUBS, "클로버"
     );
 
-    public static CardDisplayName toDisplayName(Card card) {
+    public static String toDisplayName(Card card) {
         String rankName = translateRank(card.getRank());
         String suitName = SUIT_NAMES.get(card.getSuit());
-        return new CardDisplayName(rankName + suitName);
+        return String.join(rankName, suitName);
     }
 
     private static String translateRank(Rank rank) {

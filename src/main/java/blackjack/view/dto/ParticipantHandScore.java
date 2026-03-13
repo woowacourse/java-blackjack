@@ -27,7 +27,6 @@ public record ParticipantHandScore(
     private static List<String> toCardDisplayNames(Participant participant) {
         return participant.getCards().stream()
                 .map(CardMapper::toDisplayName)
-                .map(CardDisplayName::displayName)
                 .toList();
     }
 }
