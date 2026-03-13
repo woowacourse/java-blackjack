@@ -1,9 +1,6 @@
 package blackjackTest.service;
 
-import blackjack.domain.Card;
-import blackjack.domain.Player;
-import blackjack.domain.Rank;
-import blackjack.domain.Shape;
+import blackjack.domain.*;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -36,5 +33,19 @@ public class BlackjackTest {
         pobi.receiveOneCard(new Card(Rank.NINE, Shape.SPADE));
 
         assertThat(pobi.isBlackjack()).isEqualTo(false);
+    }
+
+    @Test
+    void 플레이어_초기카드_합_21이면_배팅금액의_1_5배_지급() {
+        Money bettingAmount = new Money(10000);
+        Player pobi = new Player("pobi", bettingAmount);
+        Dealer dealer = new Dealer();
+
+        pobi.receiveOneCard(new Card(Rank.ACE, Shape.HEART));
+        pobi.receiveOneCard(new Card(Rank.TEN, Shape.SPADE));
+
+        int profit = pobi.calculateFinalProfit(dealer);
+
+        assertThat(profit).isEqualTo(15000);
     }
 }
