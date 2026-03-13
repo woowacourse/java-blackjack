@@ -63,7 +63,7 @@ public class BlackJackService {
     }
 
     private double getDealerResult(List<PlayerProfit> playersWinning) {
-        return -playersWinning.stream().mapToDouble(PlayerProfit::profit).sum();
+        return playersWinning.stream().mapToDouble(PlayerProfit::profit).sum() * -1;
     }
 
     private MatchStatus getPlayerResult(Player player, Dealer dealer) {
