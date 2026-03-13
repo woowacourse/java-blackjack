@@ -3,9 +3,9 @@ package service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import domain.Dealer;
+import domain.participant.Dealer;
 import domain.Deck;
-import domain.Player;
+import domain.participant.Player;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

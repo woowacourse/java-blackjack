@@ -1,8 +1,8 @@
 package service;
 
-import domain.Dealer;
+import domain.participant.Dealer;
 import domain.Deck;
-import domain.Player;
+import domain.participant.Player;
 import domain.card.Card;
 
 // todo : 메서드 통합 및 메서드명 수정

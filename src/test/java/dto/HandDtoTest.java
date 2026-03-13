@@ -2,7 +2,7 @@ package dto;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import domain.Player;
+import domain.participant.Player;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;

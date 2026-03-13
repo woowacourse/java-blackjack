@@ -1,7 +1,7 @@
 package dto;
 
-import domain.Dealer;
-import domain.Player;
+import domain.participant.Dealer;
+import domain.participant.Player;
 import java.util.List;
 
 public record InitStatusDto(List<String> names, HandDto dealerHandDto, List<PlayerHandDto> playerHandDtos) {

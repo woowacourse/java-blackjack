@@ -1,6 +1,4 @@
-package domain;
-
-import domain.participant.Participant;
+package domain.participant;
 
 public class Player extends Participant {
 

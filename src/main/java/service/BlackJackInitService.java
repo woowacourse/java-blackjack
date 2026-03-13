@@ -1,8 +1,8 @@
 package service;
 
-import domain.Dealer;
+import domain.participant.Dealer;
 import domain.Deck;
-import domain.Player;
+import domain.participant.Player;
 import java.util.List;
 
 public class BlackJackInitService {

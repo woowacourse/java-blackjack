@@ -1,6 +1,6 @@
 package domain.betting;
 
-import domain.Player;
+import domain.participant.Player;
 import java.util.ArrayList;
 import java.util.List;
 

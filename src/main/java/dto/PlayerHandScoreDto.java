@@ -1,6 +1,6 @@
 package dto;
 
-import domain.Player;
+import domain.participant.Player;
 
 public record PlayerHandScoreDto(String name, HandDto hand, int score) {
 

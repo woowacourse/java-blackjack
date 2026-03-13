@@ -1,7 +1,7 @@
 package domain.betting;
 
 import domain.Money;
-import domain.Player;
+import domain.participant.Player;
 
 public record Betting(Player player, Money money) {
 }

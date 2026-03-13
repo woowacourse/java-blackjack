@@ -1,7 +1,6 @@
-package domain;
+package domain.participant;
 
 import domain.card.Card;
-import domain.participant.Participant;
 
 public class Dealer extends Participant {
 

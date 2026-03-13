@@ -1,7 +1,7 @@
 package dto;
 
-import domain.Dealer;
-import domain.Player;
+import domain.participant.Dealer;
+import domain.participant.Player;
 import java.util.List;
 
 // todo: 매개변수 2개로 수정

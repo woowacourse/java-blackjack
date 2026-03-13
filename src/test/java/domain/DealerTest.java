@@ -9,6 +9,7 @@ import static util.TestUtil.createSpadesCard;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
+import domain.participant.Dealer;
 import org.junit.jupiter.api.Test;
 
 class DealerTest {

@@ -6,9 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static util.TestUtil.createDealer;
 import static util.TestUtil.createPlayer;
 
-import domain.Dealer;
+import domain.participant.Dealer;
 import domain.Deck;
-import domain.Player;
+import domain.participant.Player;
 import domain.card.Rank;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;

@@ -1,8 +1,8 @@
 package util;
 
-import domain.Dealer;
+import domain.participant.Dealer;
 import domain.Money;
-import domain.Player;
+import domain.participant.Player;
 import domain.WinningStatus;
 import domain.betting.Betting;
 import domain.card.Card;
