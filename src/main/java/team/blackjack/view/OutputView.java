@@ -1,13 +1,10 @@
 package team.blackjack.view;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 import team.blackjack.service.dto.DrawResult;
-import team.blackjack.service.dto.MatchResult;
 import team.blackjack.service.dto.RevenueResult;
 import team.blackjack.service.dto.ScoreResult;
-import team.blackjack.domain.Result;
 
 public class OutputView {
 
@@ -50,20 +47,6 @@ public class OutputView {
                     scoreResult.playerScores().get(playerName)));
         }
     }
-
-     public static void printGameResult(MatchResult result) {
-         final Map<String, Result> playeredResultMap = result.playerResultMap();
-         println("");
-         println("## 최종 승패:");
-         println("딜러: %d승 %d패 %d무"
-                 .formatted(result.dealerWinCount(), result.dealerLoseCount(), result.dealerDrawCount()));
-
-         playeredResultMap.entrySet().stream()
-                 .map(entry -> "%s: %s".formatted(entry.getKey(), entry.getValue().getName()))
-                 .forEach(OutputView::println);
-
-    }
-
     public static void printBustMessage() {
         println("버스트 되었습니다. 더 이상 카드를 받을 수 없습니다.");
     }
