@@ -30,9 +30,10 @@ public class BetTest {
         // given
         bet.bettingMoney(firstPlayer, 10_000);
         // when
-        bet.calculateProfit(Map.of(firstPlayer, GameResult.WIN));
+        BetProfit betProfit = bet.calculateProfit(Map.of(firstPlayer, GameResult.WIN));
+        Map<Name, Integer> playerBetProfit = betProfit.getPlayerBetProfit();
         // then
-        assertThat(bet.getPlayerBetProfit().get(firstPlayer)).isEqualTo(10_000);
+        assertThat(playerBetProfit.get(firstPlayer)).isEqualTo(10_000);
     }
 
     @DisplayName("여러 플레이어의 배팅 기록으로 플레이어와 딜러의 수익을 계산한다.")
@@ -42,15 +43,15 @@ public class BetTest {
         bet.bettingMoney(firstPlayer, 10_000);
         bet.bettingMoney(secondPlayer, 20_000);
         // when
-        bet.calculateProfit(Map.of(
+        BetProfit betProfit = bet.calculateProfit(Map.of(
                 firstPlayer, GameResult.WIN,
                 secondPlayer, GameResult.LOSE
         ));
         // then
         assertSoftly(softAssertions -> {
-            softAssertions.assertThat(bet.getPlayerBetProfit().get(firstPlayer)).isEqualTo(10_000);
-            softAssertions.assertThat(bet.getPlayerBetProfit().get(secondPlayer)).isEqualTo(-20_000);
-            softAssertions.assertThat(bet.getDealerBetProfit()).isEqualTo(10_000);
+            softAssertions.assertThat(betProfit.getPlayerBetProfit().get(firstPlayer)).isEqualTo(10_000);
+            softAssertions.assertThat(betProfit.getPlayerBetProfit().get(secondPlayer)).isEqualTo(-20_000);
+            softAssertions.assertThat(betProfit.getDealerBetProfit()).isEqualTo(10_000);
         });
     }
 }

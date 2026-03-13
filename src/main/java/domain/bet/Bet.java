@@ -23,12 +23,4 @@ public class Bet {
         betProfit.calculateProfit(playerResults, betHistory.getBetHistory());
         return betProfit;
     }
-
-    public Map<Name, Integer> getPlayerBetProfit() {
-        return betProfit.getPlayerBetProfit();
-    }
-
-    public int getDealerBetProfit() {
-        return betProfit.getDealerBetProfit();
-    }
 }
