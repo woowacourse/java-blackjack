@@ -52,11 +52,9 @@ public class BlackjackGameManager {
     }
 
     public List<ParticipantDto> generatePlayerDtoList() {
-        List<ParticipantDto> playersDto = new ArrayList<>();
-        for (Player player : participants.players().getPlayers()) {
-            playersDto.add(ParticipantDto.from(player));
-        }
-        return playersDto;
+        return participants.players().getPlayers().stream()
+                .map(ParticipantDto::from)
+                .toList();
     }
 
     public BlackjackResultDto getBlackjackResult() {
