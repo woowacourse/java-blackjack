@@ -1,8 +1,13 @@
 package model;
 
 import java.util.List;
-import model.dto.ParticipantWinning;
-import model.dto.PlayerResult;
+import model.card.BlackJackDeck;
+import model.card.Card;
+import dto.result.ParticipantWinning;
+import dto.result.PlayerResult;
+import model.participant.BetPrice;
+import model.participant.Participants;
+import model.participant.Player;
 
 public class BlackJackGame {
     private static final Integer INITIAL_DRAW_QUANTITY = 2;

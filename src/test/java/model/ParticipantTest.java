@@ -2,7 +2,12 @@ package model;
 
 
 import java.util.List;
-import model.dto.PlayerResult;
+import model.card.Card;
+import model.card.CardNumber;
+import model.card.Shape;
+import dto.result.PlayerResult;
+import model.participant.Participant;
+import model.participant.PlayerName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;

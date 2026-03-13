@@ -1,7 +1,7 @@
-package model.dto;
+package dto;
 
-import model.CardNumber;
-import model.Shape;
+import model.card.CardNumber;
+import model.card.Shape;
 
 public record Card(Shape shape, CardNumber cardNumber) {
     public String getString() {

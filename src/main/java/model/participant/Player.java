@@ -1,13 +1,14 @@
-package model;
+package model.participant;
 
-import static model.Dealer.DEALER_NAME;
+import static model.participant.Dealer.DEALER_NAME;
 
 import constant.ErrorMessage;
 import java.util.Objects;
-import model.dto.DealerStatus;
-import model.dto.PlayerResult;
-import model.dto.PlayerStatus;
-import model.dto.PlayerWinning;
+import model.result.ProfitCalculator;
+import dto.status.DealerStatus;
+import dto.result.PlayerResult;
+import dto.status.PlayerStatus;
+import dto.result.PlayerWinning;
 
 public class Player extends Participant {
     private Integer betAmount = 0;

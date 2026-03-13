@@ -1,4 +1,4 @@
-package model;
+package model.participant;
 
 public class Score {
     private Integer score = 0;

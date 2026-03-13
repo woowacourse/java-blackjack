@@ -1,8 +1,8 @@
-package model;
+package model.result;
 
 import java.util.ArrayList;
 import java.util.List;
-import model.dto.PlayerWinning;
+import dto.result.PlayerWinning;
 
 public class PlayersWinning {
 

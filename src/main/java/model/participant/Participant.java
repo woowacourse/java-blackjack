@@ -1,7 +1,8 @@
-package model;
+package model.participant;
 
 import java.util.List;
-import model.dto.PlayerResult;
+import model.card.Card;
+import dto.result.PlayerResult;
 
 public class Participant {
     private final PlayerName name;

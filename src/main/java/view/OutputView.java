@@ -1,11 +1,11 @@
 package view;
 
 import java.util.List;
-import model.DealerWinning;
-import model.PlayersWinning;
-import model.dto.ParticipantWinning;
-import model.dto.PlayerResult;
-import model.dto.PlayerWinning;
+import model.result.DealerWinning;
+import model.result.PlayersWinning;
+import dto.result.ParticipantWinning;
+import dto.result.PlayerResult;
+import dto.result.PlayerWinning;
 
 public class OutputView {
     private static final String JOIN_DELIMITER = ", ";

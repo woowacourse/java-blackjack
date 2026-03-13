@@ -1,13 +1,16 @@
-package model;
+package model.participant;
 
 import constant.ErrorMessage;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import model.dto.DealerStatus;
-import model.dto.ParticipantWinning;
-import model.dto.PlayerResult;
-import model.dto.PlayerWinning;
+import model.result.DealerWinning;
+import model.result.PlayersWinning;
+import model.card.Card;
+import dto.status.DealerStatus;
+import dto.result.ParticipantWinning;
+import dto.result.PlayerResult;
+import dto.result.PlayerWinning;
 
 public class Participants {
     private final Dealer dealer = new Dealer();

@@ -1,12 +1,12 @@
 package controller;
 
 import java.util.List;
-import model.Agreement;
-import model.BetPrice;
-import model.Player;
-import model.PlayerName;
-import model.dto.ParticipantWinning;
-import model.dto.PlayerResult;
+import model.participant.Agreement;
+import model.participant.BetPrice;
+import model.participant.Player;
+import model.participant.PlayerName;
+import dto.result.ParticipantWinning;
+import dto.result.PlayerResult;
 import model.BlackJackGame;
 import view.InputView;
 import view.OutputView;

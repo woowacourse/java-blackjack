@@ -1,4 +1,4 @@
-package model;
+package model.card;
 
 public enum CardNumber {
     ACE("A", 1),

@@ -1,5 +1,5 @@
 import controller.BlackJackController;
-import model.BlackJackDeck;
+import model.card.BlackJackDeck;
 import model.BlackJackGame;
 
 public class Main {

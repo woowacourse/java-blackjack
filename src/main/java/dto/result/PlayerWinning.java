@@ -1,3 +1,3 @@
-package model.dto;
+package dto.result;
 
 public record PlayerWinning(String name, Integer profit) {}

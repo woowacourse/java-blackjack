@@ -2,6 +2,7 @@ package model;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+import model.participant.Score;
 import org.junit.jupiter.api.Test;
 
 public class ScoreTest {

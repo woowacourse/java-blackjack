@@ -1,8 +1,10 @@
-package model;
+package model.participant;
 
 import constant.ErrorMessage;
 import java.util.List;
 import java.util.Objects;
+import model.card.Card;
+import model.card.Cards;
 
 public class ParticipantHand {
     private static final Integer MAX_ACE_SCORE = 11;

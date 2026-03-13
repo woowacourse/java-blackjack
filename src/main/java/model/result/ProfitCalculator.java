@@ -1,8 +1,8 @@
-package model;
+package model.result;
 
 import java.math.BigDecimal;
-import model.dto.DealerStatus;
-import model.dto.PlayerStatus;
+import dto.status.DealerStatus;
+import dto.status.PlayerStatus;
 
 public class ProfitCalculator {
     public static Integer calculateBetAmount(DealerStatus dealer, PlayerStatus player) {
@@ -37,7 +37,7 @@ public class ProfitCalculator {
         if(player.score() < dealer.score()) {
             return BigDecimal.valueOf(-player.bet());
         }
-        
+
         return BigDecimal.ZERO;
     }
 }

@@ -2,6 +2,9 @@ package model;
 
 import static org.assertj.core.api.Assertions.*;
 
+import model.card.Card;
+import model.card.CardNumber;
+import model.card.Shape;
 import org.junit.jupiter.api.Test;
 
 public class CardTest {

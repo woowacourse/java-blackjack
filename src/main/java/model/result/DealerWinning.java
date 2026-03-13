@@ -1,4 +1,4 @@
-package model;
+package model.result;
 
 public class DealerWinning {
     private Integer totalBet = 0;
