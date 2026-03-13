@@ -2,12 +2,10 @@ package blackjack.model.hand;
 
 import blackjack.model.card.Card;
 import java.util.Collection;
-import java.util.List;
 
 public class UninitializedHand extends PlayingHand {
 
     private static final int NEXT_STEP_THRESHOLD = 2;
-    private static final int BLACKJACK = 21;
 
     public UninitializedHand() {
         super();
@@ -31,7 +29,7 @@ public class UninitializedHand extends PlayingHand {
     }
 
     private Hand initialize(Card newCard) {
-        if (calculateScoreWith(newCard) == BLACKJACK) {
+        if (isBlackjackWith(newCard)) {
             return new BlackjackHand(cards, newCard);
         }
         if (isBustWith(newCard)) {

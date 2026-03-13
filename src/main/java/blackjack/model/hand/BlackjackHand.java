@@ -7,6 +7,8 @@ public class BlackjackHand extends FinishedHand {
 
     public BlackjackHand(Collection<Card> existCards, Card newCard) {
         super(existCards, newCard);
+
+        validateBlackjack();
     }
 
     @Override
@@ -21,5 +23,11 @@ public class BlackjackHand extends FinishedHand {
         }
 
         return new BlackjackHand(cards, newCard);
+    }
+
+    private void validateBlackjack() {
+        if (!isBlackjack()) {
+            throw new IllegalStateException("패가 블랙잭이지 않습니다.");
+        }
     }
 }

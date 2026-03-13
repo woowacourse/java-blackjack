@@ -1,6 +1,7 @@
 package blackjack.model.hand;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.Rank;
@@ -11,19 +12,16 @@ import org.junit.jupiter.api.Test;
 
 class BlackjackHandTest {
 
-    static final Collection<Card> DEFAULT_EXIST_CARDS = List.of();
+    static final Collection<Card> DEFAULT_EXIST_CARDS = List.of(new Card(Rank.TEN, Suit.HEART));
     static final Card DEFAULT_NEW_CARD = new Card(Rank.ACE, Suit.HEART);
 
     @Test
-    void 카드를_추가해도_버스트가_아니라면_상태를_유지한다() {
-        // given
-        Hand hand = new BlackjackHand(DEFAULT_EXIST_CARDS, DEFAULT_NEW_CARD);
+    void 생성_시_블랙잭이_아니라면_예외를_던진다() {
+        List<Card> notBlackjackCards = List.of();
+        Card notBlackjackCard = new Card(Rank.TWO, Suit.HEART);
 
-        // when
-        hand = hand.hit(new Card(Rank.ACE, Suit.HEART));
-
-        // then
-        assertThat(hand).isInstanceOf(BlackjackHand.class);
+        assertThatThrownBy(() -> new BlackjackHand(notBlackjackCards, notBlackjackCard))
+                .isInstanceOf(IllegalStateException.class);
     }
 
     @Test

@@ -1,7 +1,6 @@
 package blackjack.model.hand;
 
 import blackjack.model.card.Card;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
@@ -10,6 +9,7 @@ public abstract class Hand {
 
     private static final int BUST_LOWER_BOUND = 22;
     private static final int ACE_ADJUST_SCORE = 10;
+    private static final int BLACKJACK = 21;
 
     protected final Collection<Card> cards;
 
@@ -52,6 +52,14 @@ public abstract class Hand {
         int scoreBeforeAdjust = getScoreBeforeAdjustWith(newCard);
 
         return adjust(scoreBeforeAdjust);
+    }
+
+    protected boolean isBlackjack() {
+        return calculateScore() == BLACKJACK;
+    }
+
+    protected boolean isBlackjackWith(Card newCard) {
+        return calculateScoreWith(newCard) == BLACKJACK;
     }
 
     private boolean isSoftHand(int scoreAfterAdjust) {
