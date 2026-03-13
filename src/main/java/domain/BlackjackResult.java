@@ -17,7 +17,7 @@ public class BlackjackResult {
         this.dealerProfit = dealerProfit;
     }
 
-    public static BlackjackResult from(Dealer dealer, Gamblers gamblers) {
+    public static BlackjackResult of(Dealer dealer, Gamblers gamblers) {
         Map<String, Long> profits = calculateGamblerProfits(dealer, gamblers);
         long dealerProfit = calculateDealerProfit(profits);
         return new BlackjackResult(profits, dealerProfit);

@@ -46,7 +46,7 @@ public class BlackjackResultTest {
         dealer.deal(sd);
         gamblers.dealAll(sd);
 
-        BlackjackResult result = BlackjackResult.from(dealer, gamblers);
+        BlackjackResult result = BlackjackResult.of(dealer, gamblers);
 
         assertThat(result.dealerProfit()).isEqualTo(-10000);
         assertThat(result.gamblerProfits().get("tobi")).isEqualTo(-10000);
@@ -69,7 +69,7 @@ public class BlackjackResultTest {
         dealer.deal(sd);
         gamblers.dealAll(sd);
 
-        BlackjackResult result = BlackjackResult.from(dealer, gamblers);
+        BlackjackResult result = BlackjackResult.of(dealer, gamblers);
 
         assertThat(result.dealerProfit()).isEqualTo(0);
         assertThat(result.gamblerProfits().get("tobi")).isEqualTo(0);
@@ -94,7 +94,7 @@ public class BlackjackResultTest {
         gamblers.dealAll(sd);
 
         // when
-        BlackjackResult result = BlackjackResult.from(dealer, gamblers);
+        BlackjackResult result = BlackjackResult.of(dealer, gamblers);
 
         // then
         assertThat(result.dealerProfit()).isEqualTo(10000);
@@ -118,7 +118,7 @@ public class BlackjackResultTest {
         gamblers.dealAll(sd);
 
         // when
-        BlackjackResult result = BlackjackResult.from(dealer, gamblers);
+        BlackjackResult result = BlackjackResult.of(dealer, gamblers);
 
         // then
         assertThat(result.gamblerProfits().get("tobi")).isEqualTo(15000);

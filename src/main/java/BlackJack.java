@@ -122,7 +122,7 @@ public class BlackJack {
     private void printFinalResult(Dealer dealer, Gamblers gamblers) {
         OutputView.printFinalResultHeader();
 
-        BlackjackResult blackjackResult = BlackjackResult.from(dealer, gamblers);
+        BlackjackResult blackjackResult = BlackjackResult.of(dealer, gamblers);
 
         OutputView.printResult(dealer.getName(), blackjackResult);
     }
