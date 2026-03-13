@@ -1,5 +1,7 @@
 package domain.game;
 
 public enum Result {
-    WIN, LOSE, TIE
+    WIN,
+    LOSE,
+    TIE
 }
