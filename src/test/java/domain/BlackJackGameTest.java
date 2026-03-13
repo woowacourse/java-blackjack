@@ -38,7 +38,7 @@ class BlackJackGameTest {
     void whoseTure_success() {
         BlackJackGame testGame = BlackJackGame.ready(TEST_PLAYER_NAMES, this::createSampleCards);
 
-        Optional<Player> result = testGame.whoseTurn();
+        Optional<Player> result = testGame.whosePlayTurn();
 
         assertTrue(result.isPresent());
     }

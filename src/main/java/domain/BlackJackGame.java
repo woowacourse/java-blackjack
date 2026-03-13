@@ -41,8 +41,18 @@ public class BlackJackGame {
         );
     }
 
-    public Optional<Player> whoseTurn() {
+    public Optional<Player> whoseBettingTurn() {
+        return multiPlayers.findNotBetPlayer();
+    }
+
+    public Optional<Player> whosePlayTurn() {
         return multiPlayers.findNotStayPlayer();
+    }
+
+    public void doBetProcess(String betAmountValue) {
+        Player target = multiPlayers.findNotBetPlayer()
+                .orElseThrow(() -> new IllegalStateException(ErrorMessage.NO_MORE_BETTABLE_PLAYER.getMessage()));
+        multiPlayers.executeBet(target, betAmountValue);
     }
 
     public ParticipantDto doHitProcess() {

@@ -9,6 +9,8 @@ public interface OutputView {
 
     void printNamePrompt();
 
+    void printBetAmountPrompt(String name);
+
     void printInitialStates(GameStateDto gameStateDto);
 
     void printHitOrStandPrompt(String name);

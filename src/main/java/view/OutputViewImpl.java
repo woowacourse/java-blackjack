@@ -31,8 +31,8 @@ public class OutputViewImpl implements OutputView {
         System.out.println(NAME_PROMPT);
     }
 
-    public void printBetAmountPrompt(ParticipantDto participantDto) {
-        System.out.printf(BET_AMOUNT_PROMPT, participantDto.name());
+    public void printBetAmountPrompt(String name) {
+        System.out.printf(BET_AMOUNT_PROMPT, name);
     }
 
     public void printInitialStates(GameStateDto gameStateDto) {

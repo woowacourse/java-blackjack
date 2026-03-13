@@ -66,6 +66,10 @@ class BlackJackControllerTest {
         }
 
         @Override
+        public void printBetAmountPrompt(String name) {
+        }
+
+        @Override
         public void printInitialStates(GameStateDto gameStateDto) {
         }
 

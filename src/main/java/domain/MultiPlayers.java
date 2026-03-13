@@ -54,6 +54,16 @@ public class MultiPlayers {
         }
     }
 
+    public Optional<Player> findNotBetPlayer() {
+        return players.values().stream()
+                .filter(player -> !player.isBet())
+                .findFirst();
+    }
+
+    public void executeBet(Player player, String betMoneyValue) {
+        applyAction(player.getName(), p -> p.bet(betMoneyValue));
+    }
+
     public Optional<Player> findNotStayPlayer() {
         return players.values().stream()
                 .filter(Player::isPlayable)

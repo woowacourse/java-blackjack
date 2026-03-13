@@ -27,11 +27,22 @@ public class BlackJackController {
         BlackJackGame game = retry(this::readyGame);
         outputView.printInitialStates(game.getGameSettingState());
 
+        betPlayers(game);
+
         playPlayersTurn(game);
         playDealerTurn(game);
 
         GameResultDto gameResults = game.getGameResults();
         outputView.printGameResult(gameResults);
+    }
+
+    private void betPlayers(BlackJackGame game) {
+        while (game.whoseBettingTurn().isPresent()) {
+            Player currentPlayer = game.whoseBettingTurn().get();
+            outputView.printBetAmountPrompt(currentPlayer.getName());
+            String betAmountValue = retry(inputView::readBetAmountValue);
+            game.doBetProcess(betAmountValue);
+        }
     }
 
     private BlackJackGame readyGame() {
@@ -47,8 +58,8 @@ public class BlackJackController {
     }
 
     private void playPlayersTurn(BlackJackGame game) {
-        while (game.whoseTurn().isPresent()) {
-            Player currentPlayer = game.whoseTurn().get();
+        while (game.whosePlayTurn().isPresent()) {
+            Player currentPlayer = game.whosePlayTurn().get();
             outputView.printHitOrStandPrompt(currentPlayer.getName());
             boolean wantToHit = retry(inputView::wantToHit);
             doHitOrStand(wantToHit, game);

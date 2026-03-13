@@ -6,20 +6,27 @@ import java.util.Objects;
 import java.util.function.Supplier;
 
 public class Player extends Participant {
+    private final BetAmount betAmount;
+
     private Player(String name, GameState gameState, BetAmount betAmount) {
-        super(name, gameState, betAmount);
+        super(name, gameState);
+        this.betAmount = betAmount;
     }
 
     public static Player from(String name, GameState gameState) {
         return new Player(name, gameState, BetAmount.empty());
     }
 
-    public Player bet(int amount) {
+    public Player bet(String betAmountValue) {
         return new Player(
                 this.participantName.name(),
                 this.gameState,
-                BetAmount.of(amount)
+                BetAmount.of(betAmountValue)
         );
+    }
+
+    public boolean isBet() {
+        return betAmount.isBetPlaced();
     }
 
     public Player hit(Supplier<Card> cardSupplier) {
