@@ -11,7 +11,7 @@ public class BlackjackGame {
 
     private final GameJudge gameJudge = new GameJudge();
     private Participants participants;
-    private Deck deck;
+    protected Deck deck;
 
     public void prepare(String participantsName) {
         participants = new Participants(participantsName);
@@ -68,9 +68,5 @@ public class BlackjackGame {
             return true;
         }
         return false;
-    }
-
-    void setDeck(Deck deck) {
-        this.deck = deck;
     }
 }

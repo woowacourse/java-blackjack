@@ -4,7 +4,9 @@
 
 ## ✅ 리팩토링 할 것 목록
 
-- [ ] **1. BlackjackGame의 setter 지양하기**
+- [x] **1. BlackjackGame의 setter 지양하기**
+  - setter를 지우고, protected로 바꿔서 테스트용 덱을 주입하게 수정해보기
+  - 추후에 생성자에서 deck을 주입받는 방식을 사용하면, 필드를 private final로 바꾸고 수정해야 함.
 - [ ] **2. 블랙잭을 일반 21보다 더 높은 족보로 두어서, GameJudge에 반영하기**
 - [x] **3. GameSummary의 getter 사용과, 원시값 사용 부분 수정**
   - User 자체를 key로 쓰면 됨.

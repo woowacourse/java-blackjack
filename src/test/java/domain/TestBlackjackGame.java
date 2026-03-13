@@ -9,6 +9,6 @@ public class TestBlackjackGame extends BlackjackGame {
 
     @Override
     public void makeDeck() {
-        setDeck(fixedDeck);
+        this.deck = fixedDeck;
     }
 }

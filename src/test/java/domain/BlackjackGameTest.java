@@ -15,7 +15,6 @@ public class BlackjackGameTest {
         blackjackGame = new BlackjackGame();
         blackjackGame.prepare("영기,라이");
         blackjackGame.getUsers().forEach(user -> blackjackGame.placeBet(user, "1000"));
-        blackjackGame.makeDeck();
     }
 
     @Test
