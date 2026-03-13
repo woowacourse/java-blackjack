@@ -21,7 +21,7 @@ class DeckTest {
     @DisplayName("초기 카드는 두 장씩 나누어준다.")
     void dealFirstHandCardsTest() {
         Deck deck = new Deck();
-        List<Card> cards = deck.dealFirstHandCards();
+        List<Card> cards = deck.drawInitialCards();
         assertThat(cards.size()).isEqualTo(2);
     }
 

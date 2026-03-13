@@ -2,7 +2,11 @@ package controller;
 
 import domain.Players;
 import domain.batting.Money;
+import domain.participant.Dealer;
 import domain.participant.Player;
+import dto.GameStartDTO;
+import dto.HandDTO;
+import dto.HandScoreDTO;
 import service.GameService;
 import util.HitOption;
 import util.InputBattingParser;
@@ -22,12 +26,16 @@ public class GameController {
     public void run() {
         Players players = inputPlayers();
         GameService gameService = new GameService(players);
-        outputView.printStartGame(gameService.startGame());
+
+        playerBatting(players);
+
+        GameStartDTO gameStartDTO = gameService.startGame();
+        outputView.printStartGame(gameStartDTO);
 
         processGame(gameService);
 
-        outputView.printScore(gameService.getTotalScore());
         outputView.printResults(gameService.calculateResults());
+        outputView.printScore(gameService.getTotalScore());
     }
 
     private Players inputPlayers() {
@@ -71,18 +79,33 @@ public class GameController {
     }
 
     private void playerTurn(Player player, GameService gameService) {
-        while (!player.isBust() && inputHitOption(player) == HitOption.YES) {
-            outputView.printHandCard(gameService.playerHit(player));
+        // 플레이어가 턴이 끝나지 않았고(Bust나 Blackjack이 아님), Hit을 원할 때까지 반복
+        while (!player.isFinished() && inputHitOption(player) == HitOption.YES) {
+            gameService.playerHit(player);
+            outputView.printHandCardWithScore(HandScoreDTO.from(player));
         }
-        if (!player.isBust()) {
-            outputView.printHandCard(gameService.getCurrentHand(player));
+
+        // 반복문이 끝났는데 아직 안 끝난 상태(Hit 상태)라면 Stay 처리
+        if (!player.isFinished()) {
+            gameService.playerStay(player);
+            outputView.printHandCardWithScore(HandScoreDTO.from(player));
         }
     }
 
     private void dealerTurn(GameService gameService) {
-        while (gameService.getDealer().isReceiveCard()) {
+        Dealer dealer = gameService.getDealer();
+
+        while (!dealer.isFinished() && dealer.isReceiveCard()) {
             gameService.dealerHit();
-            outputView.printDealerReceiveCard();
+        }
+        if (!dealer.isFinished()) {
+            gameService.dealerStay();
+        }
+    }
+
+    private void playerBatting(Players players) {
+        for (Player player : players) {
+            player.battingMoney(inputBattingMoney(player));
         }
     }
 }

@@ -18,3 +18,4 @@ public record GameScoreDTO(List<HandScoreDTO> players, HandScoreDTO dealer) {
         return new GameScoreDTO(playerHandDTOs, dealerHandDTO);
     }
 }
+

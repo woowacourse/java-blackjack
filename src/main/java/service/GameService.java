@@ -1,20 +1,19 @@
 package service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import domain.PlayerGameResult;
 import domain.Players;
+
 import domain.card.Deck;
 import domain.participant.Dealer;
 import domain.participant.Player;
-
-import dto.GameStartDTO;
-import dto.HandDTO;
-import dto.GameScoreDTO;
-import dto.PlayerResultDTO;
-import dto.GameResultDTO;
 import dto.DealerResultDTO;
+import dto.GameResultDTO;
+import dto.GameScoreDTO;
+import dto.GameStartDTO;
+import dto.PlayerResultDTO;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameService {
     private final Players players;
@@ -28,22 +27,36 @@ public class GameService {
     }
 
     public GameStartDTO startGame() {
-        players.receiveInitialCards(deck);
-        dealer.receiveInitialCards(deck.dealFirstHandCards());
+        for (Player player : players) {
+            player.drawInitialCards(deck.drawInitialCards());
+        }
+        dealer.drawInitialCards(deck.drawInitialCards());
+
         return GameStartDTO.from(players, dealer);
     }
 
-    public HandDTO playerHit(Player player) {
-        player.receiveHitCard(deck.drawCard());
-        return getCurrentHand(player);
+    public void playerHit(Player player) {
+        player.draw(deck.drawCard());
     }
 
-    public HandDTO getCurrentHand(Player player) {
-        return HandDTO.from(player);
+    public void playerStay(Player player) {
+        player.stay();
     }
 
     public void dealerHit() {
-        dealer.receiveHitCard(deck.drawCard());
+        dealer.draw(deck.drawCard());
+    }
+
+    public void dealerStay() {
+        dealer.stay();
+    }
+
+    public Players getPlayers() {
+        return players;
+    }
+
+    public Dealer getDealer() {
+        return dealer;
     }
 
     public GameScoreDTO getTotalScore() {
@@ -72,13 +85,5 @@ public class GameService {
 
         return new GameResultDTO(playerResultDTOs, new DealerResultDTO(dealerWinCount, dealerDrawCount, dealerLoseCount));
 
-    }
-
-    public Players getPlayers() {
-        return players;
-    }
-
-    public Dealer getDealer() {
-        return dealer;
     }
 }

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class HandCards {
-    List<Card> cards;
+    private final List<Card> cards;
 
     public HandCards() {
         this.cards = new ArrayList<>();
@@ -21,7 +21,6 @@ public class HandCards {
 
     public void receiveInitialCards(List<Card> firstHandCards) {
         cards.addAll(firstHandCards);
-        cards = firstHandCards;
     }
 
     public void receiveHitCard(Card card) {
@@ -67,5 +66,9 @@ public class HandCards {
 
     public boolean isBlackJack() {
         return cards.size() == 2 && calculateScore() == 21;
+    }
+
+    public Card getFirst() {
+        return cards.getFirst();
     }
 }

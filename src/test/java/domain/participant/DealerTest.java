@@ -21,9 +21,9 @@ class DealerTest {
                 new Card(CardNumber.FOUR, CardShape.CLUB)
         );
 
-        HandCards handCards = new HandCards(cards);
-        Dealer dealer = new Dealer(handCards);
+        Dealer dealer = new Dealer();
 
+        dealer.drawInitialCards(cards);
         // When
         boolean isReceiveCard = dealer.isReceiveCard();
 

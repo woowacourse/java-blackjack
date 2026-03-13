@@ -1,3 +1,4 @@
+
 package dto;
 
 import domain.participant.Dealer;
@@ -8,3 +9,4 @@ public record DealerInitialHandDTO(String firstHandCard) {
         return new DealerInitialHandDTO(CardMapper.cardToKorean(dealer.getFirstCard()));
     }
 }
+
