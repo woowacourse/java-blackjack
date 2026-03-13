@@ -38,14 +38,14 @@ public abstract class Hand {
         return isBust(calculateScore());
     }
 
-    protected boolean isBustWith(Card newCard) {
-        return isBust(calculateScoreWith(newCard));
-    }
-
     public int calculateScore() {
         int scoreBeforeAdjust = getScoreBeforeAdjust();
 
         return adjust(scoreBeforeAdjust);
+    }
+
+    protected boolean isBustWith(Card newCard) {
+        return isBust(calculateScoreWith(newCard));
     }
 
     protected int calculateScoreWith(Card newCard) {
@@ -54,8 +54,19 @@ public abstract class Hand {
         return adjust(scoreBeforeAdjust);
     }
 
+    private boolean isSoftHand(int scoreAfterAdjust) {
+        boolean containAce = cards.stream()
+                .anyMatch(Card::isAce);
+
+        return isNotBust(scoreAfterAdjust) && containAce;
+    }
+
     private boolean isBust(int score) {
         return score >= BUST_LOWER_BOUND;
+    }
+
+    private boolean isNotBust(int score) {
+        return !isBust(score);
     }
 
     private int getScoreBeforeAdjust() {
@@ -78,16 +89,5 @@ public abstract class Hand {
         }
 
         return scoreBeforeAdjust;
-    }
-
-    private boolean isSoftHand(int scoreAfterAdjust) {
-        boolean containAce = cards.stream()
-                .anyMatch(Card::isAce);
-
-        return isNotBust(scoreAfterAdjust) && containAce;
-    }
-
-    private boolean isNotBust(int score) {
-        return !isBust(score);
     }
 }
