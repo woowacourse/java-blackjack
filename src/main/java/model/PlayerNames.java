@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 
 public class PlayerNames {
-    private static final String DUPLICATED_NAME = "중복된 이름이 있습니다.";
 
     private final List<PlayerName> playerNames;
 
@@ -16,7 +15,7 @@ public class PlayerNames {
 
     private void validate(List<PlayerName> playerNames) {
         if (new HashSet<>(playerNames).size() != playerNames.size()) {
-            throw new GameException(DUPLICATED_NAME);
+            throw new GameException("중복된 이름이 있습니다.");
         }
     }
 
@@ -24,4 +23,3 @@ public class PlayerNames {
         return List.copyOf(playerNames);
     }
 }
-

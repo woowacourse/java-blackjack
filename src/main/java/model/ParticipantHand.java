@@ -7,7 +7,6 @@ import java.util.List;
 
 public class ParticipantHand {
 
-    private static final String DUPLICATED_CARD_IN_DECK = "덱에 중복된 카드가 있습니다.";
     private static final int ADDITIONAL_ACE_SCORE = 10;
     private static final int BLACKJACK_SCORE = 21;
 
@@ -43,7 +42,7 @@ public class ParticipantHand {
 
     private void validateCardDuplicate(Card card) {
         if (hand.contains(card)) {
-            throw new GameException(DUPLICATED_CARD_IN_DECK);
+            throw new GameException("덱에 중복된 카드가 있습니다.");
         }
     }
 }
