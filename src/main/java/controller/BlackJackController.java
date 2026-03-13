@@ -1,12 +1,12 @@
 package controller;
 
+import dto.PlayerResult;
 import java.util.ArrayList;
 import java.util.List;
 import model.Dealer;
 import model.Participant;
 import model.Player;
 import model.Players;
-import dto.PlayerResult;
 import service.BlackJackService;
 import view.OutputView;
 
@@ -40,10 +40,10 @@ public class BlackJackController {
 
         for (Player player : players.getPlayers()) {
             initParticipantDraw(player);
-            playersResult.add(player.getResult());
+            playersResult.add(toPlayerResult(player));
         }
 
-        OutputView.printInitDeck(playersResult, dealer.getResult());
+        OutputView.printInitDeck(playersResult, toPlayerResult(dealer));
     }
 
     private void initParticipantDraw(Participant participant) {
@@ -61,7 +61,7 @@ public class BlackJackController {
 
     private void drawPlayerTurns(Player player) {
         while (drawPlayerTurn(player)) {
-            OutputView.printPlayerCurrentDeck(player.getResult());
+            OutputView.printPlayerCurrentDeck(toPlayerResult(player));
         }
     }
 
@@ -85,14 +85,17 @@ public class BlackJackController {
 
     private void printPlayersScore(Dealer dealer, Players players) {
         List<PlayerResult> playerResults = new ArrayList<>();
-        playerResults.add(dealer.getResult());
+        playerResults.add(toPlayerResult(dealer));
 
         for (Player player : players.getPlayers()) {
-            playerResults.add(player.getResult());
+            playerResults.add(toPlayerResult(player));
         }
 
         OutputView.printPlayersScore(playerResults);
     }
 
+    private PlayerResult toPlayerResult(Participant participant) {
+        return new PlayerResult(participant.getNameValue(), participant.getHand(), participant.getScore());
+    }
 
 }

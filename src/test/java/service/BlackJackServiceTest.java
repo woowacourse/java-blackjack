@@ -26,8 +26,8 @@ public class BlackJackServiceTest {
         BlackJackService blackJackService = new BlackJackService();
         Player player = new Player(new PlayerName("player1"), new BettingMoney("10000"));
         blackJackService.draw(player);
-        assertThat(player.getResult().score()).isGreaterThan(0);
-        assertThat(player.getResult().hand().size()).isEqualTo(1);
+        assertThat(player.getScore()).isGreaterThan(0);
+        assertThat(player.getHand().size()).isEqualTo(1);
     }
 
     static Stream<Arguments> bustCases() {

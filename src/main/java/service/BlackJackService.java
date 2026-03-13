@@ -56,7 +56,7 @@ public class BlackJackService {
             MatchStatus matchStatus = getPlayerResult(player, dealer);
             BigDecimal profit = BigDecimal.valueOf(player.getBettingMoney().get())
                     .multiply(matchStatus.getMultiplier());
-            playersWinning.add(new PlayerProfit(player.getResult().name(), profit));
+            playersWinning.add(new PlayerProfit(player.getNameValue(), profit));
         }
 
         return playersWinning;

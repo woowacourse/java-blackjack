@@ -12,7 +12,7 @@ public class PlayerTest {
         String name = "player1";
         Player player = new Player(new PlayerName(name), new BettingMoney("10000"));
 
-        assertThat(player.getResult().name()).isEqualTo(name);
+        assertThat(player.getNameValue()).isEqualTo(name);
     }
 
     @Test
