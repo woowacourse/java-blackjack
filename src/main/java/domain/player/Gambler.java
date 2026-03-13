@@ -65,10 +65,6 @@ public class Gambler extends Player {
         return score;
     }
 
-    public String showResult(MatchResult result) {
-        return String.format(RESULT_FORMAT, name, result.getName());
-    }
-
     public String getName() {
         return name;
     }
