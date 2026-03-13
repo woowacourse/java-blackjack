@@ -17,24 +17,12 @@ public class GameScoreResultDto {
         return playerName;
     }
 
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
-    }
-
     public List<String> getHand() {
         return hand;
     }
 
-    public void setHand(List<String> hand) {
-        this.hand = hand;
-    }
-
     public int getResult() {
         return result;
-    }
-
-    public void setResult(int result) {
-        this.result = result;
     }
 
     @Override
