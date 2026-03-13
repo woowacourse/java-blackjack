@@ -1,7 +1,7 @@
 package domain.betiing;
 
 
-import domain.result.GameResult;
+import domain.result.WinningStatus;
 
 public class BettingProfit {
 
@@ -16,17 +16,17 @@ public class BettingProfit {
         this.profit = profit;
     }
 
-    public static BettingProfit of(GameResult gameResult, BetAmount betAmount) {
+    public static BettingProfit of(WinningStatus winningStatus, BetAmount betAmount) {
         int amount = betAmount.amount();
-        if (gameResult.equals(GameResult.BLCAKJACK)) {
+        if (winningStatus.equals(WinningStatus.BLCAKJACK)) {
             return new BettingProfit(calculateFinalProfit(amount, BLACKJACK_ODDS));
         }
 
-        if (gameResult.equals(GameResult.WIN)) {
+        if (winningStatus.equals(WinningStatus.WIN)) {
             return new BettingProfit(calculateFinalProfit(amount, WINNING_ODDS));
         }
 
-        if (gameResult.equals(GameResult.DRAW)) {
+        if (winningStatus.equals(WinningStatus.DRAW)) {
             return new BettingProfit(calculateFinalProfit(amount, DRAW_ODDS));
         }
         return new BettingProfit(calculateFinalProfit(amount, LOSS_ODDS));

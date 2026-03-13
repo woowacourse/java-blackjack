@@ -1,6 +1,6 @@
 package domain.result;
 
-public enum GameResult {
+public enum WinningStatus {
 
     WIN("승"),
     LOSS("패"),
@@ -10,7 +10,7 @@ public enum GameResult {
 
     private final String result;
 
-    GameResult(String result) {
+    WinningStatus(String result) {
         this.result = result;
     }
 
@@ -18,7 +18,7 @@ public enum GameResult {
         return result;
     }
 
-    public GameResult reverseResult() {
+    public WinningStatus reverseResult() {
         if (this == WIN) {
             return LOSS;
         }

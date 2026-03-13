@@ -26,40 +26,40 @@ public class GameResultAnalyzer {
 
     private static PlayerGameResultDto judgePlayerGameResult(Dealer dealer, Player player) {
         if (player.isBusted()) {
-            return PlayerGameResultDto.of(player, GameResult.LOSS);
+            return PlayerGameResultDto.of(player, WinningStatus.LOSS);
         }
 
         if (dealer.isBusted()) {
-            return PlayerGameResultDto.of(player, GameResult.WIN);
+            return PlayerGameResultDto.of(player, WinningStatus.WIN);
         }
 
         int dealerResultScore = dealer.getResultScore();
-        GameResult gameResult = judge(dealerResultScore, player.getResultScore());
+        WinningStatus winningStatus = judge(dealerResultScore, player.getResultScore());
 
-        return PlayerGameResultDto.of(player, gameResult);
+        return PlayerGameResultDto.of(player, winningStatus);
     }
 
-    private static GameResult judge(int dealerScore, int playerScore) {
+    private static WinningStatus judge(int dealerScore, int playerScore) {
         if (dealerScore > playerScore) {
-            return GameResult.LOSS;
+            return WinningStatus.LOSS;
         }
 
         if (dealerScore == playerScore) {
-            return GameResult.DRAW;
+            return WinningStatus.DRAW;
         }
 
-        return GameResult.WIN;
+        return WinningStatus.WIN;
     }
 
     private static DealerGameResultDto makeDealerResult(List<PlayerGameResultDto> playerGameResultDtos) {
-        EnumMap<GameResult, Integer> dealerGameResult = new EnumMap<>(GameResult.class);
-        List<GameResult> list = playerGameResultDtos.stream()
-                .map(PlayerGameResultDto::gameResult)
-                .map(GameResult::reverseResult)
+        EnumMap<WinningStatus, Integer> dealerGameResult = new EnumMap<>(WinningStatus.class);
+        List<WinningStatus> list = playerGameResultDtos.stream()
+                .map(PlayerGameResultDto::winningStatus)
+                .map(WinningStatus::reverseResult)
                 .toList();
 
-        for (GameResult gameResult : list) {
-            dealerGameResult.put(gameResult, dealerGameResult.getOrDefault(gameResult, 0) + 1);
+        for (WinningStatus winningStatus : list) {
+            dealerGameResult.put(winningStatus, dealerGameResult.getOrDefault(winningStatus, 0) + 1);
         }
         return DealerGameResultDto.from(dealerGameResult);
     }

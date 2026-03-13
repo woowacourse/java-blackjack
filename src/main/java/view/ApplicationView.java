@@ -102,7 +102,7 @@ public class ApplicationView {
     private void printAllPlayersResult(GameResultDto resultAnalysis) {
         writer.printFinalResultOfDealer(resultAnalysis.dealerGameResultDto().resultStatistic());
         resultAnalysis.playerGameResultDtos().forEach(player ->
-                writer.printFinalResultOfPlayer(player.playerName(), player.gameResult().displayName())
+                writer.printFinalResultOfPlayer(player.playerName(), player.winningStatus().displayName())
         );
     }
 

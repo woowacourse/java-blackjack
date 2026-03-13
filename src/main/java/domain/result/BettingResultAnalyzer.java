@@ -16,8 +16,8 @@ public class BettingResultAnalyzer {
 
     public static List<BettingResult> analyze(Players players, Dealer dealer) {
         return players.stream().map(player -> {
-                    GameResult gameResult = judgeGameResult(dealer, player);
-                    return BettingResult.of(player.getName(), BettingProfit.of(gameResult, player.getBetAmount()));
+                    WinningStatus winningStatus = judgeGameResult(dealer, player);
+                    return BettingResult.of(player.getName(), BettingProfit.of(winningStatus, player.getBetAmount()));
                 }
         ).toList();
     }
@@ -31,34 +31,34 @@ public class BettingResultAnalyzer {
         return BettingResult.of(ParticipantName.from(DEALER_DISPLAY_NAME), BettingProfit.from(dealerProfit));
     }
 
-    private static GameResult judgeGameResult(Dealer dealer, Player player) {
-        if(dealer.isBusted()) return player.isBusted() ? GameResult.DRAW : GameResult.WIN;
+    private static WinningStatus judgeGameResult(Dealer dealer, Player player) {
+        if(dealer.isBusted()) return player.isBusted() ? WinningStatus.DRAW : WinningStatus.WIN;
 
         if (player.isBlackjack() && dealer.isBlackjack()) {
-            return GameResult.DRAW;
+            return WinningStatus.DRAW;
         }
 
         if (player.isBlackjack()) {
-            return GameResult.BLCAKJACK;
+            return WinningStatus.BLCAKJACK;
         }
 
         if (dealer.isBlackjack()) {
-            return GameResult.LOSS;
+            return WinningStatus.LOSS;
         }
 
         return judgeByScore(dealer.getResultScore(), player.getResultScore());
     }
 
-    private static GameResult judgeByScore(int dealerScore, int playerScore) {
+    private static WinningStatus judgeByScore(int dealerScore, int playerScore) {
         if (dealerScore > playerScore) {
-            return GameResult.LOSS;
+            return WinningStatus.LOSS;
         }
 
         if (dealerScore == playerScore) {
-            return GameResult.DRAW;
+            return WinningStatus.DRAW;
         }
 
-        return GameResult.WIN;
+        return WinningStatus.WIN;
     }
 
     private static double negate(double value) {

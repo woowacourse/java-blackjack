@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-class GameResultAnalyzerTest {
+class WinningStatusAnalyzerTest {
 
     @Test
     void 최종_승패_결과를_계산한다() {
@@ -40,7 +40,7 @@ class GameResultAnalyzerTest {
         GameResultDto analysis = GameResultAnalyzer.analyze(players, dealerScore4);
 
         Assertions.assertThat(analysis.dealerGameResultDto()
-                .resultStatistic()).containsEntry(GameResult.LOSS, 2);
+                .resultStatistic()).containsEntry(WinningStatus.LOSS, 2);
     }
 
 }
