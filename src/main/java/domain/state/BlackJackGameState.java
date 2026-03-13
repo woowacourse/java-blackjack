@@ -2,13 +2,8 @@ package domain.state;
 
 import domain.Hand;
 
-public class BlackJackGameState extends EndGameState {
+public class BlackJackGameState extends FinishedGameState {
     public BlackJackGameState(Hand hand) {
         super(hand);
-    }
-
-    @Override
-    public boolean isPlayable() {
-        return false;
     }
 }

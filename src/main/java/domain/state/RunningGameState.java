@@ -4,8 +4,9 @@ import domain.Card;
 import domain.Hand;
 import java.util.function.Supplier;
 
-public class PlayerPlayableGameState extends PlayableGameState {
-    public PlayerPlayableGameState(Hand hand) {
+public class RunningGameState extends StartedGameState {
+
+    public RunningGameState(Hand hand) {
         super(hand);
     }
 
@@ -24,11 +25,21 @@ public class PlayerPlayableGameState extends PlayableGameState {
             return new StayGameState(newHand);
         }
 
-        return new PlayerPlayableGameState(newHand);
+        return new RunningGameState(newHand);
     }
 
     @Override
     public GameState stay() {
         return new StayGameState(hand);
+    }
+
+    @Override
+    public boolean isPlayable() {
+        return true;
+    }
+
+    @Override
+    public boolean isFinished() {
+        return false;
     }
 }

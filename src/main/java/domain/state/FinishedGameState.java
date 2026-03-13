@@ -5,8 +5,8 @@ import domain.Card;
 import domain.Hand;
 import java.util.function.Supplier;
 
-public abstract class EndGameState extends CommonGameState {
-    public EndGameState(Hand hand) {
+public abstract class FinishedGameState extends StartedGameState {
+    protected FinishedGameState(Hand hand) {
         super(hand);
     }
 
