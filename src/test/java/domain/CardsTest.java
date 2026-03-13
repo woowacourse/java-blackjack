@@ -45,10 +45,9 @@ class CardsTest {
     }
 
     @Test
-    void addCard() {
-    }
-
-    @Test
-    void getCardsInfo() {
+    @DisplayName("버스트 후 Ace를 1로 조정한 점수를 반환한다.")
+    void calculateOptimalScore_aceAdjustment() {
+        Cards cards = createCards(List.of(11, 10, 10));
+        assertThat(cards.calculateOptimalScore()).isEqualTo(21);
     }
 }
