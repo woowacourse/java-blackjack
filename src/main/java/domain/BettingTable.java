@@ -10,24 +10,32 @@ public class BettingTable {
         this.moneyTable = moneyTable;
     }
 
+    public static BettingTable from(Map<Player, BetAmount> moneyTable){
+        Map<Player, Money> moneyMap = new LinkedHashMap<>();
+        for(Player player : moneyTable.keySet()){
+            moneyMap.put(player,new Money(moneyTable.get(player).getAmount()));
+        }
+        return new BettingTable(moneyMap);
+    }
+
     public void settleBet(Player player, WinningStatus winningStatus) {
         Money money = new Money(calculateMoney(player, winningStatus));
         moneyTable.put(player, money);
     }
 
     private long calculateMoney(Player player, WinningStatus winningStatus) {
-        return (long) (moneyTable.get(player).getMoney() * winningStatus.getPayoutRatio());
+        return (long) (moneyTable.get(player).money() * winningStatus.getPayoutRatio());
     }
 
     public long calculateDealerProfit() {
         long totalPlayerProfit = moneyTable.values().stream()
-                .mapToLong(Money::getMoney)
+                .mapToLong(Money::money)
                 .sum();
         return -totalPlayerProfit;
     }
 
     public long getPlayerMoneyAmount(Player player) {
-        return moneyTable.get(player).getMoney();
+        return moneyTable.get(player).money();
     }
 
     public Map<Player, Money> getMoneyTable() {

@@ -54,7 +54,7 @@ public class OutputDtoAssembler {
             Money value = entry.getValue();
 
             String name = Key.getName();
-            Long money = value.getMoney();
+            Long money = value.money();
             playerMoneyMap.put(name, money);
         }
         return playerMoneyMap;

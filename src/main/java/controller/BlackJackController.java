@@ -76,12 +76,12 @@ public class BlackJackController {
     }
 
     private BettingTable createBettingTable(Game game) {
-        Map<Player, Money> moneyTable = new LinkedHashMap<>();
+        Map<Player, BetAmount> moneyTable = new LinkedHashMap<>();
         for (Player player : game.getPlayers()) {
             String moneyInput = InputView.askPlayerBettingMoney(player.getName());
-            Money money = new Money(moneyInput);
-            moneyTable.put(player, money);
+            BetAmount amount = new BetAmount(moneyInput);
+            moneyTable.put(player, amount);
         }
-        return new BettingTable(moneyTable);
+        return BettingTable.from(moneyTable);
     }
 }
