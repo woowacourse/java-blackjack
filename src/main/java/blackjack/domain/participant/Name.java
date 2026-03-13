@@ -10,8 +10,10 @@ public final class Name {
         this.value = rawValue.strip();
     }
 
-    public String getValue() {
-        return value;
+    private void validate(final String rawValue) {
+        if (rawValue == null || rawValue.isBlank()) {
+            throw new IllegalArgumentException("참가자 이름은 null 이거나 empty 일 수 없습니다.");
+        }
     }
 
     @Override
@@ -30,9 +32,7 @@ public final class Name {
         return Objects.hashCode(value);
     }
 
-    private void validate(final String rawValue) {
-        if (rawValue == null || rawValue.isBlank()) {
-            throw new IllegalArgumentException("참가자 이름은 null 이거나 empty 일 수 없습니다.");
-        }
+    public String getValue() {
+        return value;
     }
 }

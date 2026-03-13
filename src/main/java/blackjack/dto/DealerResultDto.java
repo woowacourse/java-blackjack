@@ -11,8 +11,10 @@ public record DealerResultDto(int win, int lose, int push) {
         return new DealerResultDto(winCount, loseCount, pushCount);
     }
 
-    private static int getPushCount(int playerCount, int loseCount, int winCount) {
-        return playerCount - loseCount - winCount;
+    private static int getPlayerWinCount(List<GameResultDtos> gameResultDtos) {
+        return (int) gameResultDtos.stream()
+            .filter(gameResultDto -> gameResultDto.result() == GameResult.DEALER_WIN)
+            .count();
     }
 
     private static int getPlayerLoseCount(List<GameResultDtos> gameResultDtos) {
@@ -21,9 +23,7 @@ public record DealerResultDto(int win, int lose, int push) {
             .count();
     }
 
-    private static int getPlayerWinCount(List<GameResultDtos> gameResultDtos) {
-        return (int) gameResultDtos.stream()
-            .filter(gameResultDto -> gameResultDto.result() == GameResult.DEALER_WIN)
-            .count();
+    private static int getPushCount(int playerCount, int loseCount, int winCount) {
+        return playerCount - loseCount - winCount;
     }
 }

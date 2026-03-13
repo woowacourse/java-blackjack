@@ -80,6 +80,12 @@ public class OutputView {
         System.out.println(playerName + "카드: " + joinedCards + " - 결과: " + score.value());
     }
 
+    private List<String> parseCardsToOutputs(List<CardNameDto> cards) {
+        return cards.stream()
+            .map(CardNameDto::cardName)
+            .toList();
+    }
+
     public void printResults(GameResultDto resultDto) {
         System.out.println("## 최종 승패");
 
@@ -93,11 +99,5 @@ public class OutputView {
     public void printResult(GameResultDtos gameResultDtos) {
         System.out.println(gameResultDtos.playerName() + ": " + GAME_RESULT_MESSAGES.get(
             gameResultDtos.result()));
-    }
-
-    private List<String> parseCardsToOutputs(List<CardNameDto> cards) {
-        return cards.stream()
-            .map(CardNameDto::cardName)
-            .toList();
     }
 }

@@ -26,6 +26,16 @@ public class Participants {
         return new Participants(players);
     }
 
+    private static List<Player> parsePlayersFrom(String rawPlayerNames) {
+        List<Name> playerNames = Arrays.stream(
+                rawPlayerNames.split(DELIMITER, INCLUDE_EMPTY_ELEMENT))
+            .map(Name::new)
+            .toList();
+        validateDuplicatedNames(playerNames);
+
+        return parsePlayersFrom(playerNames);
+    }
+
     public List<Player> getPlayers() {
         return List.copyOf(players);
     }
@@ -39,16 +49,6 @@ public class Participants {
             Stream.of(dealer),
             players.stream()
         );
-    }
-
-    private static List<Player> parsePlayersFrom(String rawPlayerNames) {
-        List<Name> playerNames = Arrays.stream(
-                rawPlayerNames.split(DELIMITER, INCLUDE_EMPTY_ELEMENT))
-            .map(Name::new)
-            .toList();
-        validateDuplicatedNames(playerNames);
-
-        return parsePlayersFrom(playerNames);
     }
 
     private static void validateDuplicatedNames(List<Name> playerNames) {

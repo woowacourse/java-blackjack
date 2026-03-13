@@ -20,6 +20,14 @@ public class InputView {
         return isYes(readStrippedLine());
     }
 
+    private String readStrippedLine() {
+        try {
+            return reader.readLine().strip();
+        } catch (IOException e) {
+            throw new RuntimeException();
+        }
+    }
+
     private boolean isYes(final String rawAnswer) {
         validateAnswer(rawAnswer);
         return YES.equals(rawAnswer);
@@ -28,14 +36,6 @@ public class InputView {
     private void validateAnswer(final String rawAnswer) {
         if (!YES.equals(rawAnswer) && !NO.equals(rawAnswer)) {
             throw new IllegalArgumentException(YES + " 또는 " + NO + "만 입력 가능합니다.");
-        }
-    }
-
-    private String readStrippedLine() {
-        try {
-            return reader.readLine().strip();
-        } catch (IOException e) {
-            throw new RuntimeException();
         }
     }
 }
