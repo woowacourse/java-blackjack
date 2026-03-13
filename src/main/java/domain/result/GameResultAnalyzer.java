@@ -33,22 +33,21 @@ public class GameResultAnalyzer {
             return PlayerGameResultDto.of(player, WinningStatus.WIN);
         }
 
-        int dealerResultScore = dealer.getResultScore();
-        WinningStatus winningStatus = judge(dealerResultScore, player.getResultScore());
+        WinningStatus winningStatus = judgePlayerWinningStatusByScore(player, dealer);
 
         return PlayerGameResultDto.of(player, winningStatus);
     }
 
-    private static WinningStatus judge(int dealerScore, int playerScore) {
-        if (dealerScore > playerScore) {
+    private static WinningStatus judgePlayerWinningStatusByScore(Player player, Dealer dealer) {
+        int playerScore = player.getResultScore();
+        int dealerScore = dealer.getResultScore();
+        if (playerScore < dealerScore) {
             return WinningStatus.LOSS;
         }
-
-        if (dealerScore == playerScore) {
-            return WinningStatus.DRAW;
+        if (playerScore > dealerScore) {
+            return WinningStatus.WIN;
         }
-
-        return WinningStatus.WIN;
+        return WinningStatus.DRAW;
     }
 
     private static DealerGameResultDto makeDealerResult(List<PlayerGameResultDto> playerGameResultDtos) {
