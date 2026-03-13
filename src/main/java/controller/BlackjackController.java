@@ -35,6 +35,7 @@ public class BlackjackController {
         playDealerTurn(dealer, deck);
         printFinalState(dealer, players);
         printResult(dealer, players);
+        printProfit(dealer, players);
     }
 
     private void playAllPlayerTurns(Players players, Deck deck) {
@@ -79,7 +80,6 @@ public class BlackjackController {
         for (Player player : players.getGamePlayers()) {
             outputView.printFinalCards(player);
         }
-
     }
 
     private void printResult(Dealer dealer, Players players) {
@@ -89,5 +89,18 @@ public class BlackjackController {
             results.put(player, referee.judge(player.getScore(), dealer.getScore()));
         }
         outputView.printFinalResult(dealer, results);
+    }
+
+    private void printProfit(Dealer dealer, Players players) {
+        Referee referee = new Referee();
+        Map<Player, Integer> profit = new LinkedHashMap<>();
+        double dealerProfit = 0;
+        for (Player player : players.getGamePlayers()) {
+            Result result = referee.judge(player.getScore(), dealer.getScore());
+            int playerProfit = (int) referee.calculateProfit(result, player.getBetAmount());
+            dealerProfit -= playerProfit;
+            profit.put(player, playerProfit);
+        }
+        outputView.printFinalProfit(dealer, dealerProfit, profit);
     }
 }
