@@ -1,11 +1,11 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.result.Hand;
+import blackjack.domain.card.Hand;
 
 public class Player extends Participant {
 
-    public Player(Name name, Hand hand) {
-        super(name, hand);
+    public Player(Name NAme, Hand hand) {
+        super(NAme, hand);
     }
 
     public Player(String name, Hand hand) {
@@ -14,6 +14,6 @@ public class Player extends Participant {
 
     @Override
     public boolean canHit() {
-        return !getScore().isBust();
+        return !isBust();
     }
 }

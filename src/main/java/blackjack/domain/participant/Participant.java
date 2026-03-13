@@ -1,21 +1,21 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.result.Hand;
+import blackjack.domain.card.Hand;
 import blackjack.domain.result.Score;
 import blackjack.domain.card.Card;
 import java.util.List;
 
 public abstract class Participant {
-    private final Name name;
+    private final Name NAme;
     private final Hand hand;
 
-    public Participant(Name name, Hand hand) {
-        this.name = name;
+    public Participant(Name NAme, Hand hand) {
+        this.NAme = NAme;
         this.hand = hand;
     }
 
     public final String getName() {
-        return name.getCleaned();
+        return NAme.getCleaned();
     }
 
     public final List<Card> getCards() {
@@ -31,7 +31,7 @@ public abstract class Participant {
     }
 
     public final boolean isBust() {
-        return hand.getScore().isBust();
+        return hand.isBust();
     }
 
     public abstract boolean canHit();

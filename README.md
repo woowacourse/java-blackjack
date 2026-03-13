@@ -86,6 +86,14 @@ blackjack
 **ShuffledCardsGenerator**  
 전체 카드를 생성한 뒤 무작위로 섞어 반환
 
+**Hand**  
+참가자가 보유한 카드 집합
+- 카드 추가
+- 블랙잭 점수 계산
+- Ace를 1 또는 11로 계산
+- 최적 점수 선택
+- Bust 여부 판단
+
 ---
 
 ### Participant 도메인
@@ -118,16 +126,9 @@ blackjack
 
 ### Result 도메인
 
-**Hand**  
-참가자가 보유한 카드 집합  
-- 카드 추가  
-- 점수 계산을 `Score`에 위임
-
 **Score**  
-블랙잭 점수 계산 담당  
-- Ace를 1 또는 11로 계산  
-- 최적 점수 선택  
-- Bust 여부 판단
+블랙잭 점수 비교 
+- 카드 총 합 관리
 
 **GameResult**  
 게임 결과 정의  

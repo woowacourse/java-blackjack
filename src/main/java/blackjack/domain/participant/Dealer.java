@@ -1,14 +1,14 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.result.GameResult;
-import blackjack.domain.result.Hand;
+import blackjack.domain.card.Hand;
 import blackjack.domain.result.Score;
 
 public class Dealer extends Participant {
     private static final int HIT_THRESHOLD = 16;
 
-    public Dealer(Name name, Hand hand) {
-        super(name, hand);
+    public Dealer(Name NAme, Hand hand) {
+        super(NAme, hand);
     }
 
     public Dealer(String name, Hand hand) {
@@ -17,7 +17,7 @@ public class Dealer extends Participant {
 
     @Override
     public boolean canHit() {
-        return getScore().value() <= HIT_THRESHOLD;
+        return !getScore().isBiggerThan(HIT_THRESHOLD);
     }
 
     public GameResult judgeAgainst(Player player) {
@@ -31,15 +31,15 @@ public class Dealer extends Participant {
     }
 
     private GameResult competeScoreWith(Player player) {
+        Score dealerScore = this.getScore();
         Score playerScore = player.getScore();
-        int compare = this.getScore().compareTo(playerScore);
 
-        if (compare > 0) {
+        if (dealerScore.isBiggerThan(playerScore)) {
             return GameResult.DEALER_WIN;
         }
-        if (compare == 0) {
-            return GameResult.PUSH;
+        if (playerScore.isBiggerThan(dealerScore)) {
+            return GameResult.PLAYER_WIN;
         }
-        return GameResult.PLAYER_WIN;
+        return GameResult.PUSH;
     }
 }

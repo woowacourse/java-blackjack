@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.result.Hand;
+import blackjack.domain.card.Hand;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
@@ -13,24 +13,32 @@ public class Participants {
     private final Dealer dealer;
     private final List<Player> players;
 
-    public Participants(List<Player> players) {
-        this.dealer = new Dealer(DEALER_NAME, new Hand());
+    public Participants(Dealer dealer, List<Player> players) {
+        this.dealer = dealer;
         this.players = players;
     }
 
-    public static Participants from(final String rawPlayerNames) {
-        List<String> playerNames = Arrays.asList(
-            rawPlayerNames.split(DELIMITER, INCLUDE_EMPTY_ELEMENT));
-        validateDuplicatedNames(playerNames);
+    public Participants(List<Player> players) {
+        this(new Dealer(DEALER_NAME, new Hand()), players);
+    }
 
-        List<Player> players = playerNames.stream()
-            .map(playerName -> new Player(playerName, new Hand()))
-            .toList();
+    public static Participants from(final String rawPlayerNames) {
+        List<Player> players = parsePlayersFrom(rawPlayerNames);
         return new Participants(players);
     }
 
-    private static void validateDuplicatedNames(List<String> playerNames) {
-        if (playerNames.contains(DEALER_NAME.getCleaned())) {
+    private static List<Player> parsePlayersFrom(String rawPlayerNames) {
+        List<Name> playerNames = Arrays.stream(
+                rawPlayerNames.split(DELIMITER, INCLUDE_EMPTY_ELEMENT))
+            .map(Name::new)
+            .toList();
+        validateDuplicatedNames(playerNames);
+
+        return parsePlayersFrom(playerNames);
+    }
+
+    private static void validateDuplicatedNames(List<Name> playerNames) {
+        if (playerNames.contains(DEALER_NAME)) {
             throw new IllegalArgumentException("참가자의 이름은 딜러의 이름과 동일할 수 없습니다.");
         }
         if (isDuplicated(playerNames)) {
@@ -38,8 +46,17 @@ public class Participants {
         }
     }
 
-    private static boolean isDuplicated(List<String> playerNames) {
-        return playerNames.stream().map(String::strip).distinct().count() != playerNames.size();
+    private static boolean isDuplicated(List<Name> playerNames) {
+        long playerNameCount = playerNames.stream()
+            .distinct()
+            .count();
+        return playerNameCount != playerNames.size();
+    }
+
+    private static List<Player> parsePlayersFrom(List<Name> playerNames) {
+        return playerNames.stream()
+            .map(playerName -> new Player(playerName, new Hand()))
+            .toList();
     }
 
     public List<Player> getPlayers() {

@@ -3,7 +3,7 @@ package blackjack.domain.participant;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-import blackjack.domain.result.Hand;
+import blackjack.domain.card.Hand;
 import org.junit.jupiter.api.Test;
 
 class PlayerTest {

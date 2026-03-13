@@ -17,7 +17,9 @@ class ParticipantsTest {
         // when
         Participants participants = Participants.from(rawPlayerNames);
         // then
-        List<String> actualPlayerNames = participants.getPlayers().stream().map(Participant::getName).toList();
+        List<String> actualPlayerNames = participants.getPlayers().stream()
+            .map(Participant::getName)
+            .toList();
         assertThat(actualPlayerNames).contains("pobi", "jason");
     }
 
