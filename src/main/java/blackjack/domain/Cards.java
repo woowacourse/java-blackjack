@@ -46,12 +46,6 @@ public class Cards {
     }
 
     private int countAces() {
-        int count = 0;
-        for (Card card : cards) {
-            if (card.rank().equals("A")) {
-                count++;
-            }
-        }
-        return count;
+        return (int) cards.stream().filter(card -> card.rank().equals("A")).count();
     }
 }
