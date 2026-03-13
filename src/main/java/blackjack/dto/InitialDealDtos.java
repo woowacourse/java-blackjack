@@ -1,6 +1,7 @@
 package blackjack.dto;
 
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
 import blackjack.domain.participant.PlayerGroup;
 import java.util.List;
 
@@ -10,11 +11,11 @@ public record InitialDealDtos(
 ) {
     private static final int DEALER_VISIBLE_CARD_SIZE = 1;
 
-    public static InitialDealDtos of(Dealer dealer, PlayerGroup playerGroup) {
+    public static InitialDealDtos of(Dealer dealer, List<Player> players) {
         ParticipantCardsDto dealerCardsDto = ParticipantCardsDto.of(
             dealer, DEALER_VISIBLE_CARD_SIZE);
 
-        List<ParticipantCardsDto> playerCardsDto = playerGroup.players().stream()
+        List<ParticipantCardsDto> playerCardsDto = players.stream()
             .map(ParticipantCardsDto::from)
             .toList();
         return new InitialDealDtos(dealerCardsDto, playerCardsDto);
