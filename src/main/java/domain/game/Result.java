@@ -1,18 +1,8 @@
 package domain.game;
 
 public enum Result {
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패"),
+    WIN,
+    DRAW,
+    LOSE,
     ;
-
-    private final String result;
-
-    Result(String result) {
-        this.result = result;
-    }
-
-    public String getResult() {
-        return result;
-    }
 }
