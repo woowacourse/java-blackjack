@@ -2,6 +2,7 @@ package blackjack;
 
 import blackjack.core.BlackjackGame;
 import blackjack.domain.card.ShuffledCardsGenerator;
+import blackjack.domain.participant.Player;
 import blackjack.dto.GameResultDtos;
 import blackjack.dto.InitialDealDtos;
 import blackjack.dto.ParticipantCardsDto;
@@ -11,28 +12,59 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class BlackjackApplication {
-    public static void main(String[] args) {
-        BlackjackView view = new BlackjackView(new InputView(), new OutputView());
-        BlackjackGame game = BlackjackGame.create(new ShuffledCardsGenerator(), view.readPlayers());
+    private final BlackjackView view;
+    private final BlackjackGame game;
 
+    public BlackjackApplication(BlackjackView view, BlackjackGame game) {
+        this.view = view;
+        this.game = game;
+    }
+
+    public void run() {
+        initialDeal();
+        playPlayers();
+        playDealer();
+        printScore();
+        printResult();
+    }
+
+    private void initialDeal() {
         game.initialDeal();
         view.printInitialDeal(InitialDealDtos.of(game.getDealer(), game.getPlayers()));
+    }
 
-        game.getPlayers().forEach(player -> {
-            while (game.canHit(player) && view.isHitAnswer(player.getName())) {
-                game.hit(player);
-                view.printPlayerCards(ParticipantCardsDto.from(player));
-            }
-        });
+    private void playPlayers() {
+        game.getPlayers().forEach(this::playPlayer);
+    }
 
+    private void playPlayer(Player player) {
+        while (game.canHit(player) && view.isHitAnswer(player.getName())) {
+            game.hit(player);
+            view.printPlayerCards(ParticipantCardsDto.from(player));
+        }
+    }
+
+    private void playDealer() {
         while (game.canHitDealer()) {
             game.hitDealer();
             view.printDealerHit(game.getDealerName());
         }
+    }
 
+    private void printScore() {
         view.printScore(
             ParticipantScoreDtos.of(game.getDealer(), game.getPlayers()));
+    }
+
+    private void printResult() {
         view.printResult(
             GameResultDtos.of(game.getDealer(), game.getPlayers()));
+    }
+
+    public static void main(String[] args) {
+        BlackjackView view = new BlackjackView(new InputView(), new OutputView());
+        BlackjackGame game = BlackjackGame.create(new ShuffledCardsGenerator(), view.readPlayers());
+
+        new BlackjackApplication(view, game).run();
     }
 }
