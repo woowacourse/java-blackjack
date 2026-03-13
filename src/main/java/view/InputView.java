@@ -1,7 +1,7 @@
 package view;
 
-import expcetion.BlackjackException;
-import expcetion.ExceptionMessage;
+import exception.BlackjackException;
+import exception.ExceptionMessage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;

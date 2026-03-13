@@ -33,5 +33,4 @@ public class HandCardTest {
         //then
         assertThat(result).isEqualTo(21);
     }
-
 }
