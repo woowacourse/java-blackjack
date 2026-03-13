@@ -1,61 +1,54 @@
 package blackjack.view;
 
-import blackjack.dto.WinningResult;
+import blackjack.dto.ProfitResult;
 import java.util.List;
 import java.util.StringJoiner;
 
 public class OutputView {
 
-    private OutputView() {
+    public OutputView() {
     }
 
-    public static void printInitialSettingsDoneMessage(String dealerName, List<String> playersName) {
+    public void printInitialSettingsDoneMessage(String dealerName, List<String> playersName) {
         System.out.println();
         System.out.println(dealerName + "와 " + stringJoinWithComma(playersName) + "에게 2장을 나누었습니다.");
     }
 
-    public static void printCardResults(String playerName, List<String> cards) {
+    public void printCards(String playerName, List<String> cards) {
         System.out.println(playerName + "카드: " + stringJoinWithComma(cards));
     }
 
-    public static void printCardResults(String playerName, List<String> cards, int score) {
+    public void printCardsWithScore(String playerName, List<String> cards, int score) {
         System.out.println(playerName + "카드: " + stringJoinWithComma(cards) + " - 결과: " + score);
     }
 
-    public static void printGetMoreCardsMessageForDealer(String dealerName) {
+    public void printGetMoreCardsMessageForDealer(String dealerName) {
         System.out.println();
         System.out.println(dealerName + "는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printWinningResult(WinningResult winningResult) {
+    public void printResult(ProfitResult profitResult) {
         System.out.println();
-        System.out.println("## 최종 승패");
-        printWinningResultOfDealer(winningResult.getWinCountOfDealer(), winningResult.numberOfPlayer());
-        printWinningResultOfPlayers(winningResult);
+        System.out.println("## 최종 수익");
+        printResultOfDealer(profitResult.getProfitOfDealer());
+        printResultOfPlayers(profitResult);
     }
 
-    public static void println() {
+    public void println() {
         System.out.println();
     }
 
-    private static void printWinningResultOfDealer(int winCountOfDealer, int numberOfPlayer) {
-        System.out.println("딜러: " + winCountOfDealer + "승 " + (numberOfPlayer - winCountOfDealer) + "패");
+    private void printResultOfDealer(int profitOfDealer) {
+        System.out.println("딜러: " + profitOfDealer);
     }
 
-    private static void printWinningResultOfPlayers(WinningResult winningResult) {
-        for (String playerName : winningResult.winningResult().keySet()) {
-            System.out.println(playerName + ": " + convertToString(winningResult.get(playerName)));
-        }
+    private void printResultOfPlayers(ProfitResult profitResult) {
+        profitResult.profitResult().forEach((playerName, profit) ->
+                System.out.println(playerName + ": " + profit)
+        );
     }
 
-    private static String convertToString(boolean isWin) {
-        if (isWin) {
-            return "승";
-        }
-        return "패";
-    }
-
-    private static String stringJoinWithComma(List<String> strings) {
+    private String stringJoinWithComma(List<String> strings) {
         StringJoiner stringJoiner = new StringJoiner(",");
         strings.forEach(stringJoiner::add);
 

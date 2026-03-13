@@ -1,14 +1,17 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardShape;
+import blackjack.domain.card.CardValue;
 import org.junit.jupiter.api.Test;
 
 public class PlayerTest {
 
     @Test
-    void 유저_생성_테스트() {
+    void 플레이어_생성_테스트() {
         // given
         String name = "흑곰";
 
@@ -18,28 +21,28 @@ public class PlayerTest {
     }
 
     @Test
-    void 유저가_카드_한_장을_가져오는_테스트() {
+    void 플레이어가_카드_한_장을_가져오는_테스트() {
         // given
         Player player = new Player("밀란");
         Card card = new Card(CardValue.ACE, CardShape.DIAMOND);
 
         // when
-        int before = player.getCards().size();
+        int before = player.getCardsName().size();
         player.draw(card);
 
         // then
-        assertThat(player.getCards().size()).isEqualTo(before + 1);
+        assertThat(player.getCardsName().size()).isEqualTo(before + 1);
     }
 
     @Test
-    void 가지고있는_카드의_합을_계산하는_기능_테스트() {
+    void 플레이어가_가지고있는_카드의_합을_계산하는_기능_테스트() {
         // given
         Player player = new Player("밀란");
         player.draw(new Card(CardValue.FOUR, CardShape.DIAMOND));
         player.draw(new Card(CardValue.TWO, CardShape.DIAMOND));
 
         // when
-        int sum = player.calculateCardsValue();
+        int sum = player.getSumOfCards();
 
         // then
         assertThat(sum).isEqualTo(6);
@@ -61,7 +64,7 @@ public class PlayerTest {
     }
 
     @Test
-    void 가지고_있는_카드의_핪이_버스트인지_확인하는_테스트() {
+    void 플레이어가_가지고_있는_카드의_핪이_버스트인지_확인하는_테스트() {
         // given
         Player player = new Player("밀란");
         player.draw(new Card(CardValue.TEN, CardShape.DIAMOND));
@@ -84,7 +87,7 @@ public class PlayerTest {
         player.draw(new Card(CardValue.THREE, CardShape.DIAMOND));
 
         // when
-        int sum = player.calculateCardsValue();
+        int sum = player.getSumOfCards();
 
         // then
         assertThat(sum).isEqualTo(14);
@@ -98,7 +101,7 @@ public class PlayerTest {
         player.draw(new Card(CardValue.TEN, CardShape.DIAMOND));
 
         // when
-        int sum = player.calculateCardsValue();
+        int sum = player.getSumOfCards();
 
         // then
         assertThat(sum).isEqualTo(21);
@@ -147,6 +150,34 @@ public class PlayerTest {
 
         // then
         assertThat(firstCardName).isEqualTo(firstCard.getName());
+    }
+
+    @Test
+    void 플레이어_카드의_합이_21일때_카드를_뽑을_수_있는_상태인지_확인하는_기능_테스트() {
+        // given
+        Player player = new Player("밀란");
+        player.draw(new Card(CardValue.ACE, CardShape.CLOVER));
+        player.draw(new Card(CardValue.TEN, CardShape.DIAMOND));
+
+        // when
+        boolean canDraw = player.canDraw();
+
+        // then
+        assertThat(canDraw).isFalse();
+    }
+
+    @Test
+    void 플레이어_카드의_합이_20일때_카드를_뽑을_수_있는_상태인지_확인하는_기능_테스트() {
+        // given
+        Player player = new Player("밀란");
+        player.draw(new Card(CardValue.TEN, CardShape.CLOVER));
+        player.draw(new Card(CardValue.TEN, CardShape.DIAMOND));
+
+        // when
+        boolean canDraw = player.canDraw();
+
+        // then
+        assertThat(canDraw).isTrue();
     }
 
 }
