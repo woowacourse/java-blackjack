@@ -8,6 +8,7 @@ import blackjack.domain.Name;
 import blackjack.domain.Participant;
 import blackjack.domain.Participants;
 import blackjack.domain.Player;
+import blackjack.dto.FinalProfitDto;
 import blackjack.dto.FinalResultDto;
 import java.util.List;
 
@@ -60,6 +61,14 @@ public class OutputView {
         dto.playerGameResultMap()
             .forEach((key, value) ->
                 System.out.printf("%s: %s\n", key, value.getName()));
+    }
+
+    public static void printProfit(FinalProfitDto dto) {
+        System.out.println("## 최종 수익");
+        System.out.printf("딜러: %.1f\n", dto.profitByDealer());
+        dto.bettingMoneyInfo()
+                .forEach((key, value) ->
+                        System.out.printf("%s: %s\n", key, value));
     }
 
     private static String participantHandFormat(final Participant participant) {

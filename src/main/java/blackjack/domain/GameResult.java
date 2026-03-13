@@ -5,14 +5,17 @@ import java.util.Objects;
 
 public enum GameResult {
 
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패");
+    BLACKJACK("블랙잭", 1.5),
+    WIN("승", 1.0),
+    DRAW("무", 0),
+    LOSE("패", -1.0);
 
     private final String name;
+    private final double dividendRate;
 
-    GameResult(String name) {
+    GameResult(String name, double dividendRate) {
         this.name = name;
+        this.dividendRate = dividendRate;
     }
 
     public String getName() {
@@ -26,6 +29,11 @@ public enum GameResult {
     public static GameResult pick(String name) {
         return all().stream()
             .filter(gameResult -> Objects.equals(name, gameResult.name))
-            .findFirst().orElse(DRAW);
+            .findFirst()
+            .orElse(DRAW);
+    }
+
+    public double calculateProfit(BettingMoney bettingMoney) {
+        return bettingMoney.multiply(dividendRate);
     }
 }
