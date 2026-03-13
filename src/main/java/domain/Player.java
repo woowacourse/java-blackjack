@@ -5,7 +5,6 @@ import java.util.List;
 import domain.enums.MatchCase;
 
 public class Player {
-    private static final int ACE_ADDITIONAL_SCORE = 11;
 
     private final Cards cards;
     private final String name;
@@ -48,7 +47,12 @@ public class Player {
             loseMoney();
             return;
         }
-        bettingScore=0;
+
+        if (matchCase.equals(MatchCase.WIN)) {
+            return;
+        }
+
+        bettingScore = 0;
     }
 
     public void loseMoney() {

@@ -15,17 +15,21 @@ import domain.enums.MatchCase;
 public final class OutputView {
     public static void displayCardDistribution(List<String> names) {
         String nameContent = String.join(", ", names);
-        System.out.printf("%s가 %s에게 2장을 나누었습니다.\n", Game.DEALER_NAME, nameContent);
+        System.out.printf("%s와 %s에게 2장을 나누었습니다.\n", Game.DEALER_NAME, nameContent);
     }
 
-    public static void displayCardContent(List<CardContentDto> cardContentDto) {
+    public static void displayCardContents(List<CardContentDto> cardContentDto) {
         for (CardContentDto dto : cardContentDto) {
-            List<String> cardContents = new ArrayList<>();
-            for (Card card : dto.cards()) {
-                cardContents.add(card.getCardRank().getName() + card.getCardShape().getName());
-            }
-            System.out.printf("%s카드: %s\n", dto.name(), String.join(", ", cardContents));
+            displayCardContent(dto);
         }
+    }
+
+    public static void displayCardContent(CardContentDto dto) {
+        List<String> cardContents = new ArrayList<>();
+        for (Card card : dto.cards()) {
+            cardContents.add(card.getCardRank().getName() + card.getCardShape().getName());
+        }
+        System.out.printf("%s카드: %s\n", dto.name(), String.join(", ", cardContents));
     }
 
     public static void displayDealerCard() {

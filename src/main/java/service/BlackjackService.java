@@ -33,17 +33,26 @@ public class BlackjackService {
         return new Players(playerList);
     }
 
-    public Game createGame(Deck deck, Players players) {
+    public Player createDealer(Deck deck) {
         Player dealer = new Player(Game.DEALER_NAME);
         dealer.addInitializedCard(deck);
+        return dealer;
+    }
+
+    public Game createGame(Deck deck, Players players) {
+        Player dealer = createDealer(deck);
         return new Game(deck, players, dealer);
+    }
+
+    public CardContentDto getCardContentDto(Player player) {
+        return new CardContentDto(player.getName(), player.getCards());
     }
 
     public List<CardContentDto> getCardContentDtos(Game game) {
         List<CardContentDto> firstCardContents = new ArrayList<>();
         firstCardContents.add(new CardContentDto(Game.DEALER_NAME, List.of(game.getDealerFirstCard())));
         for (Player player : game.getPlayers()) {
-            firstCardContents.add(new CardContentDto(player.getName(), player.getCards()));
+            firstCardContents.add(getCardContentDto(player));
         }
         return firstCardContents;
     }

@@ -45,10 +45,10 @@ public class BlackjackController {
         Players players = blackjackService.createPlayers(names, deck);
         Game game = blackjackService.createGame(deck, players);
         setPlayerBetting(players);
-        List<CardContentDto> firstCardContents = blackjackService.getCardContentDtos(game);
-
         OutputView.displayCardDistribution(names);
-        OutputView.displayCardContent(firstCardContents);
+
+        List<CardContentDto> firstCardContents = blackjackService.getCardContentDtos(game);
+        OutputView.displayCardContents(firstCardContents);
         return game;
     }
 
@@ -62,6 +62,7 @@ public class BlackjackController {
     }
 
     public void addAdditionalCard(Game game) {
+        OutputView.displayCardContents(blackjackService.getCardContentDtos(game));
         for (Player player : game.getPlayers()) {
             boolean hasCard = hasAdditionalCard(player.getName());
 
@@ -70,7 +71,7 @@ public class BlackjackController {
                     break;
                 }
                 game.addCard(player);
-                OutputView.displayCardContent(blackjackService.getCardContentDtos(game));
+                OutputView.displayCardContent(blackjackService.getCardContentDto(player));
                 hasCard = hasAdditionalCard(player.getName());
             }
         }
