@@ -12,7 +12,7 @@ public record Names(
         this.names = List.copyOf(names);
     }
 
-    public Collection<Name> get() {
+    public List<Name> get() {
         return List.copyOf(names);
     }
 

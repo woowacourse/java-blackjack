@@ -22,7 +22,7 @@ public abstract class Hand {
                 .toList();
     }
 
-    public Collection<Card> getCards() {
+    public List<Card> getCards() {
         return List.copyOf(cards);
     }
 
