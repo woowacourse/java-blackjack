@@ -21,31 +21,46 @@ public class GameJudgeTest {
 
     @Test
     void 딜러_버스트_유저_WIN() {
-        assertThat(gameJudge.judge(22, 18, false)).isEqualTo(GameResult.WIN);
+        assertThat(gameJudge.judge(22, 18, false, false)).isEqualTo(GameResult.WIN);
     }
 
     @Test
     void 유저_점수_높으면_WIN() {
-        assertThat(gameJudge.judge(15, 18, false)).isEqualTo(GameResult.WIN);
+        assertThat(gameJudge.judge(15, 18, false, false)).isEqualTo(GameResult.WIN);
     }
 
     @Test
     void 유저_점수_낮으면_LOSE() {
-        assertThat(gameJudge.judge(18, 15, false)).isEqualTo(GameResult.LOSE);
+        assertThat(gameJudge.judge(18, 15, false, false)).isEqualTo(GameResult.LOSE);
     }
 
     @Test
     void 동점이면_PUSH() {
-        assertThat(gameJudge.judge(18, 18, false)).isEqualTo(GameResult.PUSH);
+        assertThat(gameJudge.judge(18, 18, false, false)).isEqualTo(GameResult.PUSH);
+    }
+
+    @Test
+    void 동점_21이면_PUSH() {
+        assertThat(gameJudge.judge(21, 21, false, false)).isEqualTo(GameResult.PUSH);
     }
 
     @Test
     void 유저_블랙잭_BLACKJACK() {
-        assertThat(gameJudge.judge(17, 21, true)).isEqualTo(GameResult.BLACKJACK);
+        assertThat(gameJudge.judge(17, 21, false, true)).isEqualTo(GameResult.BLACKJACK);
     }
 
     @Test
     void 양쪽_모두_블랙잭_PUSH() {
-        assertThat(gameJudge.judge(21, 21, true)).isEqualTo(GameResult.PUSH);
+        assertThat(gameJudge.judge(21, 21, true, true)).isEqualTo(GameResult.PUSH);
+    }
+
+    @Test
+    void 유저_21_딜러_블랙잭_LOSE() {
+        assertThat(gameJudge.judge(21, 21, true, false)).isEqualTo(GameResult.LOSE);
+    }
+
+    @Test
+    void 유저_블랙잭_딜러_21_BLACKJACK() {
+        assertThat(gameJudge.judge(21, 21, false, true)).isEqualTo(GameResult.BLACKJACK);
     }
 }
