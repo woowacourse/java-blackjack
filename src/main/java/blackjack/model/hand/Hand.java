@@ -52,7 +52,7 @@ public abstract class Hand {
     protected int calculateScore(Collection<Card> cards) {
         int scoreBeforeAdjust = getScoreBeforeAdjust(cards);
 
-        return adjust(scoreBeforeAdjust, cards);
+        return adjust(scoreBeforeAdjust);
     }
 
     protected abstract Hand nextState(Collection<Card> cards);
@@ -67,16 +67,21 @@ public abstract class Hand {
                 .sum();
     }
 
-    private int adjust(int scoreBeforeAdjust, Collection<Card> cards) {
-        boolean containAce = cards.stream()
-                .anyMatch(Card::isAce);
+    private int adjust(int scoreBeforeAdjust) {
         int scoreAfterAdjust = scoreBeforeAdjust + ACE_ADJUST_SCORE;
 
-        if (isNotBust(scoreAfterAdjust) && containAce) {
+        if (isSoftHand(scoreAfterAdjust)) {
             return scoreAfterAdjust;
         }
 
         return scoreBeforeAdjust;
+    }
+
+    private boolean isSoftHand(int scoreAfterAdjust) {
+        boolean containAce = cards.stream()
+                .anyMatch(Card::isAce);
+
+        return isNotBust(scoreAfterAdjust) && containAce;
     }
 
     private boolean isNotBust(int score) {
