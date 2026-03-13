@@ -10,7 +10,6 @@ import java.util.List;
 
 public class BlackjackGame {
     public static final int INITIAL_CARD_COUNT = 2;
-    public static int DEALER_HIT_STAND_BOUNDARY = 16;
     private final List<Player> players;
     private final Dealer dealer;
     private final Deck deck;
@@ -54,9 +53,8 @@ public class BlackjackGame {
         participant.add(card);
     }
 
-    // 고민) 이 메서드가 여기 있는게 맞나?
     public boolean dealerHitsStand() {
-        if (dealer.decideHitStand(DEALER_HIT_STAND_BOUNDARY)) {
+        if (dealer.decideHitStand()) {
             giveCard(dealer);
             return true;
         }
