@@ -76,7 +76,7 @@ public class BlackJackController {
     }
 
     private boolean getCondition(String name) {
-        return new Agreement(InputView.getDrawCondition(name)).get();
+        return new Agreement(InputView.getDrawCondition(name)).value();
     }
 
     private void drawDealerTurn() {
