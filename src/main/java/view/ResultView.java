@@ -1,8 +1,8 @@
 package view;
 
-import static domain.BlackjackGame.DEALER_HIT_STAND_BOUNDARY;
 import static domain.BlackjackGame.INITIAL_CARD_COUNT;
 import static domain.Constant.DELIMITER;
+import static domain.participant.Dealer.DEALER_HIT_STAND_BOUNDARY;
 
 import domain.Result;
 import dto.DealerDto;

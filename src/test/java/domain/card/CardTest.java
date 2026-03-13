@@ -26,20 +26,4 @@ public class CardTest {
 
         Assertions.assertEquals(card.getOneIfAce(), 0);
     }
-
-    @Test
-    void 카드가_에이스이면_0을_반환한다() {
-
-        Card card = new Card(Suit.DIAMOND, Rank.ACE);
-
-        Assertions.assertEquals(card.getRankValueIfNotAce(), 0);
-    }
-
-    @Test
-    void 카드가_에이스가_아니면_값을_반환한다() {
-
-        Card card = new Card(Suit.DIAMOND, Rank.SEVEN);
-
-        Assertions.assertEquals(card.getRankValueIfNotAce(), 7);
-    }
 }

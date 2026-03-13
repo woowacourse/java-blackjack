@@ -1,34 +1,71 @@
 package domain;
 
-import java.util.stream.Stream;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 
 public class ResultTest {
-    @ParameterizedTest
-    @MethodSource("provideConditions")
-    void 정확한_승패로_판정되어야_한다(int playerSum, int dealerSum, Result result){
+    @Test
+    void 플레이어_점수가_21_이하이고_딜러보다_높으면_승리한다() {
+        // given
+        int playerSum = 21;
+        int dealerSum = 20;
+
+        // when
         Result judgement = Result.judge(playerSum, dealerSum);
-        Assertions.assertEquals(judgement, result);
+
+        //then
+        Assertions.assertEquals(Result.WIN, judgement);
     }
 
-    static Stream<Arguments> provideConditions(){
-        return Stream.of(
-                Arguments.of(21, 20, Result.WIN),
-                Arguments.of(24, 21, Result.LOSE),
-                Arguments.of(19, 20, Result.LOSE),
-                Arguments.of(20, 20, Result.DRAW),
-                Arguments.of(23, 24, Result.DRAW)
-        );
-    }
-    // 21, 20 -> 플레이어가 이긴다
-    // 24, 21 -> 플레이어가 진다.
-    // 19, 20 -> 플레이어가 진다.
-    // 20, 20 -> 무승부
-    // 23, 24 -> 무승부
+    @Test
+    void 플레이어_점수가_21을_초과하면_패배한다() {
+        // given
+        int playerSum = 24;
+        int dealerSum = 21;
 
-    // 성공 실패 예외 엣지
+        // when
+        Result judgement = Result.judge(playerSum, dealerSum);
+
+        //then
+        Assertions.assertEquals(Result.LOSE, judgement);
+    }
+
+    @Test
+    void 플레이어_점수가_21_이하이고_딜러보다_낮으면_패배한다() {
+        // given
+        int playerSum = 19;
+        int dealerSum = 20;
+
+        // when
+        Result judgement = Result.judge(playerSum, dealerSum);
+
+        //then
+        Assertions.assertEquals(Result.LOSE, judgement);
+    }
+
+    @Test
+    void 플레이어와_딜러의_점수가_같고_21_이하하면_무승부이다() {
+        // given
+        int playerSum = 20;
+        int dealerSum = 20;
+
+        // when
+        Result judgement = Result.judge(playerSum, dealerSum);
+
+        //then
+        Assertions.assertEquals(Result.DRAW, judgement);
+    }
+
+    @Test
+    void 플레이어와_딜러가_21을_초과하면_무승부이다() {
+        // given
+        int playerSum = 23;
+        int dealerSum = 24;
+
+        // when
+        Result judgement = Result.judge(playerSum, dealerSum);
+
+        //then
+        Assertions.assertEquals(Result.DRAW, judgement);
+    }
 }
