@@ -52,6 +52,6 @@ public class CardBundle {
     }
 
     public List<Card> getCards() {
-        return cards;
+        return List.copyOf(cards);
     }
 }
