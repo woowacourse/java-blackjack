@@ -53,6 +53,10 @@ public class BlackjackController {
     }
 
     private void chooseHitOrStand(Player player) {
+        if (player.isBlackjack()) {
+            return;
+        }
+
         boolean didDraw = drawMoreCard(player);
         if (!didDraw) {
             OutputView.printCardByPlayer(player);
