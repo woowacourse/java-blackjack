@@ -2,7 +2,7 @@ import domain.card.Card;
 import domain.card.Pattern;
 import domain.card.Rank;
 import domain.game.Result;
-import domain.game.ResultInfo;
+import domain.game.GameResult;
 import domain.participant.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -41,22 +41,22 @@ public class BlackJackServiceTest {
     @Test
     void 딜러의_총합이_플레이어의_총합보다_낮으면_플레이어가_승리한다() {
         Result result = blackJackService.calculateResult(dealer, players);
-        ResultInfo info = result.getPlayersResult().get(winPlayer);
-        assertThat(info).isEqualTo(ResultInfo.WIN);
+        GameResult info = result.getPlayersResult().get(winPlayer);
+        assertThat(info).isEqualTo(GameResult.WIN);
     }
 
     @Test
     void 딜러의_총합이_플레이어의_총합보다_높으면_플레이어가_패배한다() {
         Result result = blackJackService.calculateResult(dealer, players);
-        ResultInfo info = result.getPlayersResult().get(defeatPlayer);
-        assertThat(info).isEqualTo(ResultInfo.DEFEAT);
+        GameResult info = result.getPlayersResult().get(defeatPlayer);
+        assertThat(info).isEqualTo(GameResult.DEFEAT);
     }
 
     @Test
     void 딜러의_총합과_플레이어의_총합이_같으면_비긴다() {
         Result result = blackJackService.calculateResult(dealer, players);
-        ResultInfo info = result.getPlayersResult().get(drawPlayer);
-        assertThat(info).isEqualTo(ResultInfo.DRAW);
+        GameResult info = result.getPlayersResult().get(drawPlayer);
+        assertThat(info).isEqualTo(GameResult.PUSH);
     }
 
     @Test
@@ -68,8 +68,8 @@ public class BlackJackServiceTest {
         dealer.keepCard(new Card(Rank.KING, Pattern.HEART));
         dealer.keepCard(new Card(Rank.QUEEN, Pattern.HEART));
 
-        ResultInfo info = result.getPlayersResult().get(bustPlayer);
-        assertThat(info).isEqualTo(ResultInfo.DEFEAT);
+        GameResult info = result.getPlayersResult().get(bustPlayer);
+        assertThat(info).isEqualTo(GameResult.DEFEAT);
     }
 
     @Test
@@ -78,7 +78,7 @@ public class BlackJackServiceTest {
         dealer.keepCard(new Card(Rank.QUEEN, Pattern.HEART));
         Result result = blackJackService.calculateResult(dealer, players);
 
-        ResultInfo info = result.getPlayersResult().get(defeatPlayer);
-        assertThat(info).isEqualTo(ResultInfo.WIN);
+        GameResult info = result.getPlayersResult().get(defeatPlayer);
+        assertThat(info).isEqualTo(GameResult.WIN);
     }
 }

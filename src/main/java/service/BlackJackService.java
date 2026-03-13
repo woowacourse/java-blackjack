@@ -1,7 +1,7 @@
 package service;
 
 import domain.game.Result;
-import domain.game.ResultInfo;
+import domain.game.GameResult;
 import domain.participant.*;
 
 import java.util.HashMap;
@@ -13,7 +13,7 @@ public class BlackJackService {
     }
 
     public Result calculateResult(Dealer dealer, Players players) {
-        Map<Player, ResultInfo> playersResult = new HashMap<>();
+        Map<Player, GameResult> playersResult = new HashMap<>();
         for (Player player : players.getPlayers()) {
             playersResult.put(player, calculatePlayerWinDefeatDraw(dealer, player));
         }
@@ -21,16 +21,16 @@ public class BlackJackService {
         return new Result(playersResult);
     }
 
-    private ResultInfo calculatePlayerWinDefeatDraw(Dealer dealer, Player player) {
+    private GameResult calculatePlayerWinDefeatDraw(Dealer dealer, Player player) {
         int dealerTotalScore = dealer.getTotalCardScore();
         int playerTotalScore = player.getTotalCardScore();
 
-        if (player.isBlackJack() && dealer.isBlackJack()) return ResultInfo.DRAW;
-        if (player.isBlackJack()) return ResultInfo.BLACKJACK_WIN;
-        if (player.getHand().isBust()) return ResultInfo.DEFEAT;
-        if (dealer.getHand().isBust()) return ResultInfo.WIN;
-        if (dealerTotalScore < playerTotalScore) return ResultInfo.WIN;
-        if (dealerTotalScore > playerTotalScore) return ResultInfo.DEFEAT;
-        return ResultInfo.DRAW;
+        if (player.isBlackJack() && dealer.isBlackJack()) return GameResult.PUSH;
+        if (player.isBlackJack()) return GameResult.BLACKJACK_WIN;
+        if (player.getHand().isBust()) return GameResult.DEFEAT;
+        if (dealer.getHand().isBust()) return GameResult.WIN;
+        if (dealerTotalScore < playerTotalScore) return GameResult.WIN;
+        if (dealerTotalScore > playerTotalScore) return GameResult.DEFEAT;
+        return GameResult.PUSH;
     }
 }
