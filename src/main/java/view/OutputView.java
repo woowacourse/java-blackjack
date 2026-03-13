@@ -10,6 +10,7 @@ import model.paticipant.Dealer;
 import model.paticipant.Participant;
 import model.paticipant.Player;
 import model.paticipant.Players;
+import view.mapper.EnumMapper;
 
 public class OutputView {
 
@@ -65,7 +66,7 @@ public class OutputView {
     }
 
     private static String convert(Card card) {
-        return card.value().getSymbol() + card.shape().getShape();
+        return EnumMapper.CARD_VALUE_MAPPER.get(card.value()) + EnumMapper.CARD_SHAPE_MAPPER.get(card.shape());
     }
 
     public static void printToOpenDealerNewCard(Dealer dealer) {
@@ -99,7 +100,8 @@ public class OutputView {
 
     public static void printResultByPlayers(PlayerResult playerResult) {
         playerResult.getResult()
-                .forEach((player, status) -> System.out.printf("%s: %s%n", player.getName(), status.getName()));
+                .forEach((player, status) ->
+                        System.out.printf("%s: %s%n", player.getName(), EnumMapper.RESULT_STATUS_MAPPER.get(status)));
     }
 
     public static void printFinalProfitHeader() {
