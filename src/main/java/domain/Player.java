@@ -12,7 +12,7 @@ public class Player extends Participant {
     }
 
     @Override
-    protected int getHitThreshold() {
+    public int getHitThreshold() {
         return HIT_THRESHOLD;
     }
 }

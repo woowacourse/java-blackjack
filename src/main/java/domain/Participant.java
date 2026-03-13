@@ -20,7 +20,7 @@ public abstract class Participant {
         return cards.canReceiveCard(getHitThreshold());
     }
 
-    protected abstract int getHitThreshold();
+    public abstract int getHitThreshold();
 
     public String getName() {
         return name.getName();
