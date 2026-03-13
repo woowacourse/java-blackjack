@@ -3,8 +3,8 @@ package view;
 import domain.card.Card;
 import domain.player.Dealer;
 import domain.player.Gambler;
-import dto.BlackjackResult;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -22,12 +22,12 @@ public class OutputView {
     }
 
     public static void printDealerFirstCard(Card card) {
-        System.out.println("딜러카드: " + formatCard(card));
+        System.out.println("딜러: " + formatCard(card));
     }
 
     public static void printPlayerCards(Gambler gambler) {
         String gamblerCards = formatCards(gambler.getCardInfo());
-        System.out.println(gambler.getName() + " " + gamblerCards);
+        System.out.println(gambler.getName() + "카드: " + gamblerCards);
     }
 
     public static void printPlayerBust(String name) {
@@ -39,7 +39,7 @@ public class OutputView {
     }
 
     public static void printDealerHit() {
-        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
     }
 
     public static void printFinalDealer(Dealer dealer, int score) {
@@ -53,13 +53,15 @@ public class OutputView {
 
     public static void printFinalResultHeader() {
         System.out.println();
-        System.out.println("## 최종 승패");
+        System.out.println("## 최종 수익");
     }
 
-    public static void printResult(BlackjackResult result) {
-        System.out.println("딜러: " + result.winCount() + "승 " + result.lossCount() + "패 " + result.drawCount() + "무");
-        for (String gamblerResult : result.logs()) {
-            System.out.println(gamblerResult);
+    public static void printResult(Map<String, Integer> result, int dealerFinalIncome) {
+        System.out.printf("딜러: %d%n", dealerFinalIncome);
+        for (Map.Entry<String, Integer> entry : result.entrySet()) {
+            String name = entry.getKey();
+            Integer gamblerFinalIncome = entry.getValue();
+            System.out.println(name + ": " + gamblerFinalIncome);
         }
     }
 
@@ -76,6 +78,10 @@ public class OutputView {
     }
 
     public static void requestBettingMoney(String name) {
-        System.out.printf("%s의 배팅 금액은?%n", name);
+        System.out.printf("%n%s의 배팅 금액은?%n", name);
+    }
+
+    public static void addNewLine() {
+        System.out.println();
     }
 }

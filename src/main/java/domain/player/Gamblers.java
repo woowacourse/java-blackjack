@@ -1,13 +1,12 @@
 package domain.player;
 
-import domain.MatchResult;
 import domain.deck.Deck;
-import dto.BlackjackResult;
 import exception.BlackjackException;
 import exception.ExceptionMessage;
-import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class Gamblers {
@@ -37,21 +36,22 @@ public class Gamblers {
         gamblers.forEach(gambler -> gambler.deal(deck));
     }
 
-    public BlackjackResult getResult(Dealer dealer) {
-        int winCount = 0;
-        int loseCount = 0;
-        List<String> logs = new ArrayList<>();
+    public Map<String, Integer> getResult(Dealer dealer) {
+        Map<String, Integer> gamblersResult = new LinkedHashMap<>();
         for (Gambler gambler : gamblers) {
-            MatchResult result = gambler.getResult(dealer);
-            if (result == MatchResult.WIN) {
-                loseCount++;
-            }
-            if (result == MatchResult.LOSE) {
-                winCount++;
-            }
-            logs.add(gambler.showResult(result));
+            String name = gambler.getName();
+            int finalIncomeMoney = gambler.calculateFinalIncome(dealer);
+            gamblersResult.put(name, finalIncomeMoney);
         }
-        return new BlackjackResult(winCount, loseCount, gamblers.size() - winCount - loseCount, logs);
+        return gamblersResult;
+    }
+
+    public int dealerFinalIncome(Dealer dealer) {
+        int dealerFinalIncome = 0;
+        for (Gambler gambler : gamblers) {
+            dealerFinalIncome += gambler.calculateFinalIncome(dealer);
+        }
+        return dealerFinalIncome * -1;
     }
 
     public List<String> getNames() {

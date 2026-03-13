@@ -8,9 +8,9 @@ import domain.FixedDeck;
 import domain.card.Card;
 import domain.card.CardRank;
 import domain.card.CardSuit;
-import dto.BlackjackResult;
 import exception.BlackjackException;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -46,20 +46,19 @@ class GamblersTest {
         Card sevenClover = new Card(CardRank.SEVEN, CardSuit.CLOVER); // tobi
         Card nine = new Card(CardRank.NINE, CardSuit.DIAMOND); // quda
 
-        FixedDeck sd = new FixedDeck(List.of(jack, eight, ten, sevenDiamond, sevenClover, nine));
-        dealer.deal(sd);
-        gamblers.dealAll(sd);
-        dealer.deal(sd);
-        gamblers.dealAll(sd);
+        FixedDeck fixedDeck = new FixedDeck(List.of(jack, eight, ten, sevenDiamond, sevenClover, nine));
+        dealer.deal(fixedDeck);
+        gamblers.dealAll(fixedDeck);
+        dealer.deal(fixedDeck);
+        gamblers.dealAll(fixedDeck);
 
         //when
-        BlackjackResult result = gamblers.getResult(dealer);
+        Map<String, Integer> result = gamblers.getResult(dealer);
 
         //then
-        assertThat(result.winCount()).isEqualTo(1);
-        assertThat(result.lossCount()).isEqualTo(1);
-        assertThat(result.drawCount()).isEqualTo(0);
-        assertThat(result.logs().get(0)).isEqualTo("tobi:패");
-        assertThat(result.logs().get(1)).isEqualTo("quda:승");
+        assertThat(result)
+                .hasSize(2)
+                .containsEntry("tobi", -1000)
+                .containsEntry("quda", 1000);
     }
 }
