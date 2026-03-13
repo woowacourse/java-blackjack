@@ -1,6 +1,6 @@
 package domain.result;
 
-import static domain.WinningStatus.WIN;
+import static domain.result.WinningStatus.WIN;
 import static util.TestUtil.createAmount10000Result;
 
 import java.util.List;

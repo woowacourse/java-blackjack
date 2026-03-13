@@ -1,10 +1,9 @@
 package domain.result;
 
-import domain.participant.Dealer;
 import domain.Money;
-import domain.participant.Player;
-import domain.WinningStatus;
 import domain.betting.Betting;
+import domain.participant.Dealer;
+import domain.participant.Player;
 
 public record Result(Betting betting, WinningStatus winningStatus) {
 

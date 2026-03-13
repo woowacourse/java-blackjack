@@ -1,15 +1,15 @@
 package util;
 
-import domain.participant.Dealer;
 import domain.Money;
-import domain.participant.Player;
-import domain.WinningStatus;
 import domain.betting.Betting;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
+import domain.participant.Dealer;
+import domain.participant.Player;
 import domain.result.Result;
 import domain.result.Results;
+import domain.result.WinningStatus;
 import java.util.Arrays;
 
 public class TestUtil {

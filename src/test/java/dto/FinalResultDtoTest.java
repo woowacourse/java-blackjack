@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static util.TestUtil.createResult;
 import static util.TestUtil.createResults;
 
-import domain.WinningStatus;
 import domain.result.Results;
+import domain.result.WinningStatus;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
