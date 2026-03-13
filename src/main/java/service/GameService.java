@@ -5,6 +5,7 @@ import domain.Players;
 
 import domain.card.Deck;
 import domain.participant.Dealer;
+import domain.participant.Participant;
 import domain.participant.Player;
 import dto.DealerResultDto;
 import dto.GameResultDto;
@@ -35,20 +36,12 @@ public class GameService {
         return GameStartDto.from(players, dealer);
     }
 
-    public void playerHit(Player player) {
-        player.draw(deck.drawCard());
+    public void hit(Participant participant) {
+        participant.draw(deck.drawCard());
     }
 
-    public void playerStay(Player player) {
-        player.stay();
-    }
-
-    public void dealerHit() {
-        dealer.draw(deck.drawCard());
-    }
-
-    public void dealerStay() {
-        dealer.stay();
+    public void stay(Participant participant) {
+        participant.stay();
     }
 
     public Players getPlayers() {
