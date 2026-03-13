@@ -11,7 +11,8 @@ class GameManagerTest {
     void 플레이어들의_점수를_딜러와_비교해_승패를_반환한다() {
         Player pobi = new Player(new Name("pobi"));
         Player crong = new Player(new Name("crong"));
-        GameManager gameManager = new GameManager(List.of(pobi, crong));
+        Players players = new Players(List.of(pobi, crong));
+        GameManager gameManager = new GameManager(players);
 
         Dealer dealer = gameManager.getDealer();
 

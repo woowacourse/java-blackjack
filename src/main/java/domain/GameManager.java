@@ -11,10 +11,10 @@ import java.util.Set;
 public class GameManager {
 
     private final Dealer dealer;
-    private final List<Player> players;
+    private final Players players;
     private final Deck deck;
 
-    public GameManager(List<Player> players) {
+    public GameManager(Players players) {
         this.dealer = initDealer();
         this.players = players;
         this.deck = new Deck();
@@ -39,10 +39,10 @@ public class GameManager {
         distributeInitialCards(dealer);
     }
 
-    private void distributeCardToPlayers(List<Player> players) {
-        for (Player player : players) {
-            distributeInitialCards(player);
-        }
+    private void distributeCardToPlayers(Players players) {
+        // ToDo: getPlayers를 쓰면 캡슐화가 약해진다. 바깥에서 내부구현 List<Player>에 의존하게 된다.
+        // TODO: 그래서 Iterable이나 forEach 순회 메서드를 만드는 게 낫다.
+        players.forEach(this::distributeInitialCards);
     }
 
     private void distributeInitialCards(Participant participant) {
@@ -55,11 +55,9 @@ public class GameManager {
     }
 
     public List<ParticipantCardsDto> getPlayerDtos() {
+        // ToDo: 추후 책임 분리 하면 좋을 듯
         List<ParticipantCardsDto> participantCardsDtos = new ArrayList<>();
-        for (Player player : players) {
-            participantCardsDtos.add(player.getParticipantCardsDto());
-        }
-
+        players.forEach(player -> participantCardsDtos.add(player.getParticipantCardsDto()));
         return participantCardsDtos;
     }
 
@@ -70,10 +68,10 @@ public class GameManager {
 
     public Map<String, GameResult> getGameResult() {
         Map<String, GameResult> gameResult = new HashMap<>();
-        for (Player player : players) {
-            GameResult result = player.judgeResult(this.dealer);
+        players.forEach(player -> {
+            GameResult result = player.judgeResult(dealer);
             gameResult.put(player.getName(), result);
-        }
+        });
         return gameResult;
     }
 }

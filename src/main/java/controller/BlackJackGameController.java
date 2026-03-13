@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import static view.OutputView.printCards;
+import static view.OutputView.printFinalCards;
 
 public class BlackJackGameController {
 
@@ -17,7 +18,7 @@ public class BlackJackGameController {
     }
 
     public void run() {
-        List<Player> players = initPlayer();
+        Players players = initPlayer();
         GameManager gameManager = new GameManager(players);
 
         List<String> playersNames = getPlayerNames(players);
@@ -33,10 +34,8 @@ public class BlackJackGameController {
         endGame(gameManager, players, gameResult);
     }
 
-    private void playGame(List<Player> players, GameManager gameManager) {
-        for (Player player : players) {
-            playGameWithPlayer(player, gameManager);
-        }
+    private void playGame(Players players, GameManager gameManager) {
+        players.forEach(player -> playGameWithPlayer(player, gameManager));
         playGameWithDealer(gameManager);
     }
 
@@ -78,23 +77,25 @@ public class BlackJackGameController {
         }
     }
 
-    private void endGame(GameManager gameManager, List<Player> players, Map<String, GameResult> gameResult) {
+    private void endGame(GameManager gameManager, Players players, Map<String, GameResult> gameResult) {
         OutputView.printFinalCards(gameManager.getDealerDto());
         printFinalScores(players);
         OutputView.printGameResult(gameResult);
     }
 
-    private void printFinalScores(List<Player> players) {
-        for (Player player : players) {
-            OutputView.printFinalCards(player.getParticipantCardsDto());
-        }
+    private void printFinalScores(Players players) {
+        // TODO: 나중에 getParticipantCardsDto 책임 분리하면 좋을 듯
+        players.forEach(player -> printFinalCards(player.getParticipantCardsDto()));
     }
 
-    private List<String> getPlayerNames(List<Player> players) {
-        return players.stream().map(Participant::getName).toList();
+    private List<String> getPlayerNames(Players players) {
+        List<String> playerNames = new ArrayList<>();
+        players.forEach(player -> playerNames.add(player.getName()));
+        return playerNames;
+
     }
 
-    private List<Player> initPlayer() {
+    private Players initPlayer() {
         List<Player> players = new ArrayList<>();
         List<String> playerNames = getPlayerNames();
 
@@ -102,7 +103,7 @@ public class BlackJackGameController {
             Name playerName = new Name(name);
             players.add(new Player(playerName));
         }
-        return players;
+        return new Players(players);
     }
 
     private List<String> getPlayerNames() {
