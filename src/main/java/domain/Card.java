@@ -2,6 +2,9 @@ package domain;
 
 import java.util.Objects;
 
+import domain.enums.CardRank;
+import domain.enums.CardShape;
+
 public class Card {
     private final CardShape cardShape;
     private final CardRank cardRank;

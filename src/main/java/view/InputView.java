@@ -9,7 +9,6 @@ import validator.Validator;
 
 
 public class InputView {
-
     private static final String DELIMITER = ",";
 
     public List<String> readNames() {
@@ -26,8 +25,16 @@ public class InputView {
                 Validator::validateNotBlank,
                 Validator::validateChoice
         ));
-
         return input.equals("y");
+    }
+
+    public int readBettingPrice(String name) {
+        System.out.println(name + "의 배팅 금액은?");
+        String input = readInput(List.of(
+                Validator::validateNotBlank,
+                Validator::validateInteger
+        ));
+        return Integer.parseInt(input);
     }
 
     private String readInput(List<Validator> validators) {

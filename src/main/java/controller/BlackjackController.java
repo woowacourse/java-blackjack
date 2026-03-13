@@ -1,23 +1,21 @@
 package controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
-import domain.BlackjackResult;
-import domain.Cards;
-import domain.Dealer;
+import domain.Deck;
+import domain.Game;
 import domain.Player;
 import domain.Players;
 import domain.dto.CardContentDto;
 import domain.dto.FinalCardDto;
 import service.BlackjackService;
-import utils.generator.ShuffledCardsGenerator;
 import view.InputView;
 import view.OutputView;
 
 public class BlackjackController {
     private static final int MAX_RETRY = 10;
+
     private final InputView inputView;
     private final BlackjackService blackjackService;
 
@@ -27,65 +25,64 @@ public class BlackjackController {
     }
 
     public void run() {
-        Cards cards = blackjackService.generateCards(new ShuffledCardsGenerator());
+        Game game = doInitialGameSetting();
+
+        addAdditionalCard(game);
+        addDealerAdditionalCard(game);
+
+        List<FinalCardDto> finalCards = blackjackService.getFinalCardDtos(game);
+        OutputView.displayFinalCard(finalCards);
+
+        // 최종 결과 출력
+        OutputView.displayMatchResult(blackjackService.getPlayerResultDto(game));
+        OutputView.displayBettingResult(blackjackService.getBettingScoreDto(game));
+    }
+
+    private Game doInitialGameSetting() {
+        Deck deck = blackjackService.generateCards();
         List<String> names = inputNames();
 
-        Dealer dealer = blackjackService.createDealer(cards);
+        Players players = blackjackService.createPlayers(names, deck);
+        Game game = blackjackService.createGame(deck, players);
+        setPlayerBetting(players);
         OutputView.displayCardDistribution(names);
-        Players playerList = blackjackService.createPlayers(names, cards);
 
-        List<CardContentDto> firstCardContents = getCardContentDtos(dealer, playerList);
-        OutputView.displayCardContent(firstCardContents);
-        Players players = addAdditionalCard(playerList, cards);
-
-        if (!players.isAllPlayerBurst()) {
-            blackjackService.determineAdditionalCardOfDealer(dealer, cards);
-        }
-
-        printFinalCards(dealer, players);
-
-        // 최종 승패
-        BlackjackResult blackjackResult = BlackjackResult.from(dealer, players);
-        OutputView.displayMatchResult(blackjackResult.toResultDto());
+        List<CardContentDto> firstCardContents = blackjackService.getCardContentDtos(game);
+        OutputView.displayCardContents(firstCardContents);
+        return game;
     }
 
-    public List<CardContentDto> getCardContentDtos(Dealer dealer, Players playerList) {
-        List<CardContentDto> firstCardContents = new ArrayList<>();
-        firstCardContents.add(new CardContentDto(dealer.getName(), List.of(dealer.getFirstCard())));
-        for (Player player : playerList) {
-            firstCardContents.add(new CardContentDto(player.getName(), player.getCards()));
-        }
-        return firstCardContents;
-    }
-
-    public Players addAdditionalCard(Players players, Cards cards) {
-        for (Player player : players) {
-            String name = player.getName();
-            boolean hasCard = hasAdditionalCard(name);
-            handCardWithRetry(player, hasCard, cards, name);
-        }
-        return players;
-    }
-
-
-    private void handCardWithRetry(Player player, boolean hasCard, Cards cards, String name) {
-        while (hasCard) {
-            if (player.isBust()) {
-                break;
+    private void addDealerAdditionalCard(Game game) {
+        if (!game.isAllPlayerBurst()) {
+            while (game.needAdditionalCard()) {
+                game.addDealerAdditionalCard();
+                OutputView.displayDealerCard();
             }
-            player.add(cards.pop());
-            OutputView.displayCardContent(List.of(player.toCardContentDto()));
-            hasCard = hasAdditionalCard(name);
         }
     }
 
-    public void printFinalCards(Dealer dealer, Players players) {
-        List<FinalCardDto> finalCards = new ArrayList<>();
-        finalCards.add(dealer.toFinalCardDto());
-        for (Player player : players) {
-            finalCards.add(player.toFinalCardDto());
+    public void addAdditionalCard(Game game) {
+        OutputView.displayCardContents(blackjackService.getCardContentDtos(game));
+        for (Player player : game.getPlayers()) {
+            boolean hasCard = hasAdditionalCard(player.getName());
+
+            while (hasCard) {
+                if (player.isBust()) {
+                    break;
+                }
+                game.addCard(player);
+                OutputView.displayCardContent(blackjackService.getCardContentDto(player));
+                hasCard = hasAdditionalCard(player.getName());
+            }
         }
-        OutputView.displayFinalCard(finalCards);
+    }
+
+
+    public void setPlayerBetting(Players playerList) {
+        for (Player player : playerList) {
+            int bettingScore = inputBettingPrice(player.getName());
+            player.betMoney(bettingScore);
+        }
     }
 
     private List<String> inputNames() {
@@ -94,8 +91,18 @@ public class BlackjackController {
         );
     }
 
+    public int inputBettingPrice(String name) {
+        return doRetry(
+                () -> {
+                    return inputView.readBettingPrice(name);
+                }
+        );
+    }
+
     private boolean hasAdditionalCard(String name) {
-        return doRetry(() -> inputView.readAdditionalCard(name));
+        return doRetry(
+                () -> inputView.readAdditionalCard(name)
+        );
     }
 
     private <T> T doRetry(Supplier<T> action) {
@@ -105,8 +112,7 @@ public class BlackjackController {
                 return action.get();
             } catch (IllegalArgumentException e) {
                 retry++;
-                System.out.println(e.getMessage());
-
+                OutputView.printError(e.getMessage());
                 if (retry >= MAX_RETRY) {
                     throw new IllegalStateException("입력 횟수를 초과했습니다.");
                 }

@@ -10,6 +10,16 @@ public class Players implements Iterable<Player> {
         this.players = players;
     }
 
+    public void addAdditionalCard(Player player, Card card) {
+        player.add(card);
+    }
+
+    public int getTotalBettingScore(){
+        return players.stream()
+                .mapToInt(Player::getBettingScore)
+                .sum();
+    }
+
     @Override
     public Iterator<Player> iterator() {
         return players.iterator();
@@ -22,6 +32,5 @@ public class Players implements Iterable<Player> {
     public Player getPlayer(int index){
         return players.get(index);
     }
-
 
 }

@@ -8,6 +8,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import domain.enums.CardRank;
+import domain.enums.CardShape;
+
 class PlayerTest {
     private Player player;
 
@@ -23,7 +26,7 @@ class PlayerTest {
         player.add(new Card(CardShape.SPADE, CardRank.THREE));
         player.add(new Card(CardShape.SPADE, CardRank.TWO));
 
-        int result = player.calculateScore();
+        int result = player.getCardsTotalSum();
 
         assertThat(result).isEqualTo(5);
     }
@@ -34,7 +37,7 @@ class PlayerTest {
         player.add(new Card(CardShape.SPADE, CardRank.ACE));
         player.add(new Card(CardShape.SPADE, CardRank.TWO));
 
-        int result = player.getFinalScore();
+        int result = player.getCardsTotalSum();
         assertThat(result).isEqualTo(13);
     }
 
@@ -45,7 +48,7 @@ class PlayerTest {
         player.add(new Card(CardShape.SPADE, CardRank.NINE));
         player.add(new Card(CardShape.SPADE, CardRank.TWO));
 
-        int result = player.getFinalScore();
+        int result = player.getCardsTotalSum();
         assertThat(result).isEqualTo(12);
     }
 
@@ -56,7 +59,7 @@ class PlayerTest {
         player.add(new Card(CardShape.SPADE, CardRank.ACE));
         player.add(new Card(CardShape.SPADE, CardRank.NINE));
 
-        int result = player.getFinalScore();
+        int result = player.getCardsTotalSum();
         assertThat(result).isEqualTo(21);
     }
 
@@ -67,7 +70,7 @@ class PlayerTest {
         player.add(new Card(CardShape.SPADE, CardRank.ACE));
         player.add(new Card(CardShape.SPADE, CardRank.TEN));
 
-        int result = player.getFinalScore();
+        int result = player.getCardsTotalSum();
         assertThat(result).isEqualTo(12);
     }
 
@@ -100,7 +103,7 @@ class PlayerTest {
                 new Card(CardShape.HEART, CardRank.QUEEN),
                 new Card(CardShape.HEART, CardRank.JACK)
         ));
-        assertThat(player1.getFinalScore()).isEqualTo(30);
+        assertThat(player1.getCardsTotalSum()).isEqualTo(30);
     }
 
     private Player createPlayerFromCards(List<Card> cards) {
