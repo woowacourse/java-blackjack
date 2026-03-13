@@ -11,7 +11,7 @@ class MoneyTest {
     @DisplayName("베팅 액수는 양수이다.")
     void validValueTest() {
         Money money = new Money(1000);
-        int value = money.getValue();
+        long value = money.getValue();
         assertThat(value).isEqualTo(1000);
     }
 

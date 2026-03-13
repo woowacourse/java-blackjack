@@ -3,18 +3,18 @@ package domain.betting;
 import java.util.Objects;
 
 public class Money {
-    private final int value;
+    private final long value;
 
-    public Money(int value) {
+    public Money(long value) {
         validateMoney(value);
         this.value = value;
     }
 
-    public int getValue() {
+    public long getValue() {
         return value;
     }
 
-    private void validateMoney(int value) {
+    private void validateMoney(long value) {
         if (value < 0) {
             throw new IllegalArgumentException("베팅 금액은 양수입니다.");
         }

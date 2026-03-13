@@ -8,7 +8,7 @@ public class InputBattingParser {
 
     public static Money parseBattingParser(String inputBattingMoney) {
         try {
-            int battingMoney = Integer.parseInt(inputBattingMoney);
+            long battingMoney = Long.parseLong(inputBattingMoney);
             return new Money(battingMoney);
         } catch (IllegalArgumentException exception) {
             throw new IllegalArgumentException(exception.getMessage());
