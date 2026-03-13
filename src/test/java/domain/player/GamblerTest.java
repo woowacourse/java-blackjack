@@ -90,8 +90,8 @@ class GamblerTest {
         Deck dealerDeck = new FixedDeck(dealerCards);
 
         pobi.deal(pobiDeck);
-        pobi.deal(pobiDeck);
         dealer.deal(dealerDeck);
+        pobi.deal(pobiDeck);
         dealer.deal(dealerDeck);
 
         //when
