@@ -1,6 +1,9 @@
 package domain;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import vo.GameResult;
 
 public class BlackjackGame {
     private final static Integer FIRST_CARD_DEAL_COUNT = 2;
@@ -38,7 +41,16 @@ public class BlackjackGame {
     }
 
     public GameSummary getResult() {
-        return participants.judgeAll(gameJudge);
+        Map<User, GameResult> userResults = new LinkedHashMap<>();
+        Map<User, Long> betAmounts = new LinkedHashMap<>();
+        int dealerScore = participants.getDealerScore();
+
+        for (User user : participants.getUsers()) {
+            userResults.put(user,
+                    gameJudge.judge(dealerScore, user.getScore(), user.isBlackjack()));
+            betAmounts.put(user, user.getBetAmount());
+        }
+        return new GameSummary(userResults, betAmounts);
     }
 
     public void placeBet(User user, String betAmount) {

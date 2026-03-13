@@ -6,16 +6,16 @@ import java.util.Map;
 import vo.GameResult;
 
 public class GameSummary {
-    private final Map<String, GameResult> userResults;
-    private final Map<String, Long> betAmounts;
+    private final Map<User, GameResult> userResults;
+    private final Map<User, Long> betAmounts;
 
-    public GameSummary(Map<String, GameResult> userResults, Map<String, Long> betAmounts) {
+    public GameSummary(Map<User, GameResult> userResults, Map<User, Long> betAmounts) {
         this.userResults = new LinkedHashMap<>(userResults);
         this.betAmounts = new LinkedHashMap<>(betAmounts);
     }
 
-    public long getUserProfit(String name) {
-        return userResults.get(name).calculateProfit(betAmounts.get(name));
+    public long getUserProfit(User user) {
+        return userResults.get(user).calculateProfit(betAmounts.get(user));
     }
 
     public long getDealerProfit() {
@@ -24,7 +24,7 @@ public class GameSummary {
                 .sum();
     }
 
-    public Map<String, GameResult> getUserResults() {
+    public Map<User, GameResult> getUserResults() {
         return Collections.unmodifiableMap(userResults);
     }
 }

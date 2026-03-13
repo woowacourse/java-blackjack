@@ -72,13 +72,16 @@ public class BlackjackGameTest {
     void 게임_결과에_각_참가자_이름_포함() {
         // given
         blackjackGame.dealCards();
+        List<User> users = blackjackGame.getUsers();
 
         // when
         GameSummary summary = blackjackGame.getResult();
+        User user1 = users.get(0);
+        User user2 = users.get(1);
 
         // then
-        assertThat(summary.getUserResults()).containsKey("영기");
-        assertThat(summary.getUserResults()).containsKey("라이");
+        assertThat(summary.getUserResults()).containsKey(user1);
+        assertThat(summary.getUserResults()).containsKey(user2);
     }
 
     @Test

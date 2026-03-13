@@ -73,9 +73,10 @@ public class BlackjackGameFlowTest {
     void 영기_블랙잭으로_승리() {
         // given
         blackjackGame.dealToDealer();
+        User user = blackjackGame.getUsers().getFirst();
 
         // when & then
-        assertThat(blackjackGame.getResult().getUserResults().get("영기")).isEqualTo(GameResult.BLACKJACK);
+        assertThat(blackjackGame.getResult().getUserResults().get(user)).isEqualTo(GameResult.BLACKJACK);
     }
 
     @Test
@@ -83,9 +84,10 @@ public class BlackjackGameFlowTest {
         // given
         blackjackGame.processPlayerDecision(blackjackGame.getUsers().get(1));
         blackjackGame.dealToDealer();
+        User user = blackjackGame.getUsers().get(1);
 
         // when & then
-        assertThat(blackjackGame.getResult().getUserResults().get("라이")).isEqualTo(GameResult.LOSE);
+        assertThat(blackjackGame.getResult().getUserResults().get(user)).isEqualTo(GameResult.LOSE);
     }
 
     @Test

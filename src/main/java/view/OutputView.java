@@ -48,7 +48,7 @@ public class OutputView {
     public void printWinningResults(GameSummary summary) {
         printMessage("딜러: " + summary.getDealerProfit());
         summary.getUserResults().keySet()
-                .forEach(name -> printMessage(name + ": " + summary.getUserProfit(name)));
+                .forEach(user -> printMessage(user.getName() + ": " + summary.getUserProfit(user)));
     }
 
     private String formatCard(Card card) {
