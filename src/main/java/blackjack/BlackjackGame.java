@@ -15,10 +15,14 @@ public class BlackjackGame {
 
     public void start() {
         board.dealInitialCards();
-        OutputView.printInitialDeal(board.getPlayers(), board.getDealer());
+        printInitialDeal();
         processPlayersTurn();
         processDealerTurn();
         printResults();
+    }
+
+    private void printInitialDeal() {
+        OutputView.printInitialDeal(board.getPlayers(), board.getDealer());
     }
 
     private void processPlayersTurn() {
