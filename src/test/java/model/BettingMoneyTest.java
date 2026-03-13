@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 public class BettingMoneyTest {
 
     @Test
-    public void 정상_동작() {
+    public void 배팅금_생성_확인() {
         BettingMoney money = new BettingMoney("1000");
 
         assertThat(money.get()).isEqualTo(1000);
