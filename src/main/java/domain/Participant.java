@@ -30,7 +30,7 @@ public abstract class Participant {
         return cards.calculateOptimalScore();
     }
 
-    public List<String> getCardsInfo() {
-        return cards.getCardsInfo();
+    public List<Card> getCards() {
+        return cards.getCards();
     }
 }

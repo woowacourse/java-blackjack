@@ -3,8 +3,13 @@ package dto;
 import domain.Participant;
 import java.util.List;
 
-public record ParticipantCardsDto(String name, List<String> cardsInfo, int totalScore) {
+public record ParticipantCardsDto(String name, List<CardInfoDto> cardsInfo, int totalScore) {
     public static ParticipantCardsDto from(Participant participant) {
-        return new ParticipantCardsDto(participant.getName(), participant.getCardsInfo(), participant.getScore());
+        List<CardInfoDto> cardInfoDtos = participant.getCards()
+                .stream()
+                .map(card -> CardInfoDto.from(card.getNumber(), card.getShape()))
+                .toList();
+
+        return new ParticipantCardsDto(participant.getName(), cardInfoDtos, participant.getScore());
     }
 };

@@ -13,8 +13,12 @@ public class Card {
         return number.getValue();
     }
 
-    public String getCardInfo() {
-        return number.getDisplayName() + shape.getShape();
+    public String getShape() {
+        return shape.getShape();
+    }
+
+    public int getNumber() {
+        return number.getValue();
     }
 
     public boolean isAce() {

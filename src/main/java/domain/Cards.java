@@ -28,10 +28,8 @@ public class Cards {
         return !isBust(sum) && sum < bustThreshold;
     }
 
-    public List<String> getCardsInfo() {
-        return cards.stream()
-                .map(Card::getCardInfo)
-                .toList();
+    public List<Card> getCards() {
+        return List.copyOf(cards);
     }
 
     private int countAce() {
