@@ -3,9 +3,7 @@ package domain.participant;
 import domain.card.Card;
 import domain.status.Start;
 import domain.status.Status;
-import domain.Score;
 
-import java.util.Arrays;
 import java.util.List;
 
 abstract public class Participant {
@@ -39,11 +37,15 @@ abstract public class Participant {
     }
 
     // Status에 위임하여 정보 획득
-    public Score getScore() {
-        return this.status.getCards().getScore();
+    public int getScore() {
+        return this.status.getCards().calculateScore();
     }
 
     public List<Card> getHandCards() {
         return status.getCards().getCards();
+    }
+
+    public Status getStatus() {
+        return status;
     }
 }

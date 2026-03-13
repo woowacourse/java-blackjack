@@ -1,7 +1,5 @@
 package domain.participant;
 
-import domain.Score;
-import domain.ScoreStatus;
 import domain.card.Card;
 import domain.card.CardNumber;
 
@@ -27,18 +25,7 @@ public class HandCards {
         cards.add(card);
     }
 
-    public Score getScore() {
-        int score = calculateScore();
-        if (isBlackJack()) {
-            return new Score(score, ScoreStatus.BLACKJACK);
-        }
-        if (isBust()) {
-            return new Score(score, ScoreStatus.BUST);
-        }
-        return new Score(score, ScoreStatus.STAY);
-    }
-
-    private int calculateScore() {
+    public int calculateScore() {
         int baseCardScore = cards.stream()
                 .map(Card::getBaseScore)
                 .reduce(0, Integer::sum);

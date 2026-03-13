@@ -1,6 +1,5 @@
 package domain.participant;
 
-import domain.Score;
 import domain.card.Card;
 
 public class Dealer extends Participant {
@@ -13,7 +12,6 @@ public class Dealer extends Participant {
     }
 
     public boolean isReceiveCard() {
-        Score score = getScore();
-        return !isFinished() && getScore().getValue() <= 16;
+        return !isFinished() && getScore() <= 16;
     }
 }

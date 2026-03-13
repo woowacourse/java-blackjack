@@ -2,6 +2,9 @@ package domain;
 
 import domain.participant.Dealer;
 import domain.participant.Player;
+import domain.status.Blackjack;
+import domain.status.Bust;
+import domain.status.Status;
 
 public enum PlayerGameResult {
     WIN("승"), DRAW("무"), LOSE("패");
@@ -17,15 +20,36 @@ public enum PlayerGameResult {
     }
 
     public static PlayerGameResult from(Player player, Dealer dealer) {
-        return compareScore(player.getScore(), dealer.getScore());
+        return compareScore(player, dealer);
     }
 
 
-    private static PlayerGameResult compareScore(Score playerScore, Score dealerScore) {
-        if (playerScore.compareTo(dealerScore) > 0) {
+    private static PlayerGameResult compareScore(Player player, Dealer dealer) {
+        Status playerStatus = player.getStatus();
+        Status dealerStatus = dealer.getStatus();
+        if (playerStatus instanceof Blackjack && dealerStatus instanceof Blackjack) {
+            return DRAW;
+        }
+        if (playerStatus instanceof Blackjack) {
             return WIN;
         }
-        if (playerScore.compareTo(dealerScore) == 0) {
+        if (dealerStatus instanceof Blackjack) {
+            return LOSE;
+        }
+
+        if (playerStatus instanceof Bust && dealerStatus instanceof Bust) {
+            return DRAW;
+        }
+        if (dealerStatus instanceof Bust) {
+            return WIN;
+        }
+        if (playerStatus instanceof Bust) {
+            return LOSE;
+        }
+        if(player.getScore() > dealer.getScore()) {
+            return WIN;
+        }
+        if(player.getScore() == dealer.getScore()) {
             return DRAW;
         }
         return LOSE;

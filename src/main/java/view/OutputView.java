@@ -46,7 +46,7 @@ public class OutputView {
         List<PlayerResultDto> playerResultDtos = gameResultDto.playerResultDtos();
         System.out.println();
         System.out.println("## 최종 승패");
-        System.out.println("딜러: " + dealerResultDto.win() + "승 " + dealerResultDto.draw() + "무 " + dealerResultDto.draw()+"패");
+        System.out.println("딜러: " + dealerResultDto.win() + "승 " + dealerResultDto.draw() + "무 " + dealerResultDto.lose()+"패");
 
         for (PlayerResultDto playerResultDto : playerResultDtos) {
             System.out.println(playerResultDto.name() + ": " + playerResultDto.result());

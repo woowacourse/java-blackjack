@@ -15,6 +15,6 @@ public record HandScoreDto(String name, List<String> handCards, String score) {
     }
 
     private static String getStringScore(Participant participant) {
-        return String.valueOf(participant.getScore().getValue());
+        return String.valueOf(participant.getScore());
     }
 }
