@@ -1,5 +1,6 @@
 package controller;
 
+import domain.BlackjackRule;
 import domain.Deck;
 import domain.GameResult;
 import domain.participant.Dealer;
@@ -14,7 +15,6 @@ import view.InputView;
 import view.OutputView;
 
 public class BlackjackGame {
-    public static final int INITIAL_CARDS_COUNT = 2;
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -61,7 +61,10 @@ public class BlackjackGame {
         List<Participant> participants = new ArrayList<>(players.getPlayers());
         participants.add(dealer);
         participants.forEach(
-                participant -> participant.receiveInitialCards(deck.drawInitialCards(INITIAL_CARDS_COUNT)));
+                participant -> participant.receiveInitialCards(
+                        deck.drawInitialCards(BlackjackRule.INITIAL_CARD_COUNT)
+                )
+        );
 
         outputView.printInitialDistribution(players, dealer);
     }

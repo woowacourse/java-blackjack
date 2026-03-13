@@ -6,20 +6,17 @@ import domain.participant.Player;
 public enum WinningStatus {
     WIN, TIE, LOSE, BLACKJACK_WIN;
 
-    public static final int BLACK_JACK = 21;
-    public static final int INITIAL_CARD_COUNT = 2;
-
     public static WinningStatus of(Player player, Dealer dealer) {
         int playerScore = player.score();
         int dealerScore = dealer.score();
 
-        if (playerScore > BLACK_JACK) {
+        if (playerScore > BlackjackRule.BLACKJACK_SCORE) {
             return LOSE;
         }
-        if (isInitialBlackjack(player) && dealerScore != BLACK_JACK) {
+        if (isInitialBlackjack(player) && dealerScore != BlackjackRule.BLACKJACK_SCORE) {
             return BLACKJACK_WIN;
         }
-        if (dealerScore > BLACK_JACK) {
+        if (dealerScore > BlackjackRule.BLACKJACK_SCORE) {
             return WIN;
         }
         return compareScore(playerScore, dealerScore);
@@ -36,6 +33,7 @@ public enum WinningStatus {
     }
 
     private static boolean isInitialBlackjack(Player player) {
-        return player.handSize() == INITIAL_CARD_COUNT && player.score() == BLACK_JACK;
+        return player.handSize() == BlackjackRule.INITIAL_CARD_COUNT
+                && player.score() == BlackjackRule.BLACKJACK_SCORE;
     }
 }
