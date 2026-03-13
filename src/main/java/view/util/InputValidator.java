@@ -6,7 +6,7 @@ public class InputValidator {
     private static final String HIT_COMMAND = "y";
     private static final String STAND_COMMAND = "n";
     private static final String INVALID_DECIMAL_INPUT_MESSAGE = "[ERROR] 배팅금은 양수로 입력해주세요";
-    private static final String MONEY_REGEX = "^[0-9]+$";
+    private static final String POSITIVE_REGEX = "^[0-9]+$";
 
     public static void validateInput(String input) {
         if (input != null && input.isBlank()) {
@@ -21,11 +21,11 @@ public class InputValidator {
 
     public static void validateMoneyInput(String input) {
         validateInput(input);
-        validateInteger(input);
+        validateMoneyAmount(input);
     }
 
-    private static void validateInteger(String input) {
-        if (!input.matches(MONEY_REGEX)) {
+    private static void validateMoneyAmount(String input) {
+        if (!input.matches(POSITIVE_REGEX)) {
             throw new IllegalArgumentException(INVALID_DECIMAL_INPUT_MESSAGE);
         }
     }
