@@ -5,6 +5,8 @@ import dto.status.DealerStatus;
 import dto.status.PlayerStatus;
 
 public class ProfitCalculator {
+    private static final Double BLACK_JACK_BAT_RATE = 1.5;
+
     public static Integer calculateBetAmount(DealerStatus dealer, PlayerStatus player) {
         return calculateBustBetAmount(dealer, player).intValue();
     }
@@ -23,7 +25,7 @@ public class ProfitCalculator {
         }
 
         if(player.isBlackJack()) {
-            return BigDecimal.valueOf(player.bet()).multiply(BigDecimal.valueOf(1.5));
+            return BigDecimal.valueOf(player.bet()).multiply(BigDecimal.valueOf(BLACK_JACK_BAT_RATE));
         }
 
         return calculateRegularBetAmount(dealer, player);
