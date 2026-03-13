@@ -5,10 +5,10 @@ import util.CardMapper;
 
 import java.util.List;
 
-public record HandDTO(String name, List<String> handCards) {
+public record HandDto(String name, List<String> handCards) {
 
-    public static HandDTO from(Participant participant) {
-        return new HandDTO(
+    public static HandDto from(Participant participant) {
+        return new HandDto(
                 participant.getName(), participant.getHandCards().stream()
                 .map(CardMapper::cardToKorean)
                 .toList());
