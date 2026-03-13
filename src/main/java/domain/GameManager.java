@@ -38,8 +38,12 @@ public class GameManager {
         return players.canReceiveCard(playerName);
     }
 
-    public List<String> drawPlayerCard(String playerName) {
-        return players.drawCardTo(playerName, deck.draw());
+    public void drawPlayerCard(String playerName) {
+        players.drawCardTo(playerName, deck.draw());
+    }
+
+    public List<String> getPlayerHand(String playerName) {
+        return players.showPlayerHand(playerName);
     }
 
     public boolean canDealerReceiveCard() {

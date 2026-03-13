@@ -28,4 +28,8 @@ public class Players {
     public List<Player> getAll() {
         return players.values().stream().toList();
     }
+
+    public List<String> showPlayerHand(String playerName) {
+        return players.get(playerName).showHand();
+    }
 }
