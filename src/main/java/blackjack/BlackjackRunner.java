@@ -61,18 +61,21 @@ public class BlackjackRunner {
         outputView.askGameMembers();
         String playerNamesInput = inputView.readLine();
         List<String> playerNames = PlayerNameParser.parsePlayerNames(playerNamesInput);
-        PlayersBettingRequest playersBettingRequest = betPlayers(playerNames);
+        PlayersBettingRequest initialRequest = PlayersBettingRequest.createInitialRequest(playerNames);
+        PlayersBettingRequest playersBettingRequest = betPlayers(initialRequest);
         Players players = Players.makePlayers(playersBettingRequest);
         Dealer dealer = Dealer.from();
         return new Participants(players, dealer);
     }
 
-    private PlayersBettingRequest betPlayers(List<String> playerNames) {
+    private PlayersBettingRequest betPlayers(PlayersBettingRequest initialRequest) {
         List<PlayerBettingRequest> playerBettingRequests = new ArrayList<>();
-        for (String playerName : playerNames) {
-            outputView.askBetAmount(playerName);
+        List<PlayerBettingRequest> value = initialRequest.value();
+        for (PlayerBettingRequest playerBettingRequest : value) {
+            String playerNickname = playerBettingRequest.playerNickname();
+            outputView.askBetAmount(playerNickname);
             String amount = inputView.readLine();
-            playerBettingRequests.add(PlayerBettingRequest.of(playerName, amount));
+            playerBettingRequests.add(PlayerBettingRequest.of(playerNickname, amount));
         }
         return PlayersBettingRequest.from(playerBettingRequests);
     }

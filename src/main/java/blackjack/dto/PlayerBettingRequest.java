@@ -5,9 +5,15 @@ public record PlayerBettingRequest(
     long amount
 ) {
 
+    private static final long INITIAL_AMOUNT = 0;
+
+    public static PlayerBettingRequest createInitialRequest(String playerName) {
+        validateNickname(playerName);
+        return new PlayerBettingRequest(playerName, INITIAL_AMOUNT);
+    }
+
     public static PlayerBettingRequest of(String playerNickname, String rawAmount) {
         long amount = validateAmount(rawAmount);
-        validateNickname(playerNickname);
         return new PlayerBettingRequest(playerNickname, amount);
     }
 
