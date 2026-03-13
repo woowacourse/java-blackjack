@@ -43,7 +43,7 @@ public class Players {
     }
 
     public List<Player> getPlayers() {
-        return players;
+        return List.copyOf(players);
     }
 
     private void validateNumberOfPlayers(List<String> playersName) {

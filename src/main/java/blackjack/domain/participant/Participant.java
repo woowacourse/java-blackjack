@@ -25,7 +25,6 @@ public abstract class Participant {
         int sum = cards.stream()
                 .mapToInt(Card::getCardValue)
                 .sum();
-
         return applyBestAceValue(sum);
     }
 
@@ -36,7 +35,6 @@ public abstract class Participant {
         if (this.isBurst()) {
             return false;
         }
-
         return other.calculateCardsValue() < this.calculateCardsValue();
     }
 
@@ -57,7 +55,7 @@ public abstract class Participant {
     }
 
     public final List<Card> getCards() {
-        return cards;
+        return List.copyOf(cards);
     }
 
     public final List<String> getCardsName() {
