@@ -41,11 +41,11 @@
 ### TO-DO
 - [x] Enum 출력값 변경
   - [x] 승패 출력값 변경
-  - [x] domain.card.Suit 출력값 변경
+  - [x] Suit 출력값 변경
 - [x] 딜러 승패 판정 오류 수정
 - [x] 버스트인데 hit/stand 질문
 - [x] Ace, Jack, Queen, King 이름이 값(1,10)으로 출력되는 문제
-- [x] domain.GameManager 리팩터링
+- [x] GameManager 리팩터링
 - [x] 패키지 정리
 - [x] 규칙 적용
 - [x] 테스트 케이스 추가
