@@ -1,5 +1,6 @@
 package model.judgement;
 
+import static model.judgement.ResultStatus.BLACKJACK;
 import static model.judgement.ResultStatus.DRAW;
 import static model.judgement.ResultStatus.LOSE;
 import static model.judgement.ResultStatus.WIN;
@@ -26,7 +27,22 @@ public class Judgement {
             return WIN;
         }
 
+        if (dealer.isBlackjack()) {
+            return decideWhenDealerBlackjack(player);
+        }
+
+        if (player.isBlackjack()) {
+            return BLACKJACK;
+        }
+
         return decideByScore(dealer, player);
+    }
+
+    private static ResultStatus decideWhenDealerBlackjack(Player player) {
+        if (player.isBlackjack()) {
+            return DRAW;
+        }
+        return LOSE;
     }
 
     private static ResultStatus decideByScore(Dealer dealer, Player player) {
@@ -44,7 +60,7 @@ public class Judgement {
 
     public static DealerResult judgeByDealer(PlayerResult playerResult) {
         int dealerWinCount = playerResult.countByStatus(ResultStatus.LOSE);
-        int dealerLoseCount = playerResult.countByStatus(ResultStatus.WIN);
+        int dealerLoseCount = playerResult.countByStatus(ResultStatus.WIN) + playerResult.countByStatus(ResultStatus.BLACKJACK);
         int dealerDrawCount = playerResult.countByStatus(ResultStatus.DRAW);
         return new DealerResult(dealerWinCount, dealerLoseCount, dealerDrawCount);
     }

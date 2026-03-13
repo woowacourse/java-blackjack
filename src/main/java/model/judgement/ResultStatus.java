@@ -19,6 +19,12 @@ public enum ResultStatus {
         public Profit calculateProfit(BetAmount betAmount) {
             return Profit.ZERO;
         }
+    },
+    BLACKJACK("승") {
+        @Override
+        public Profit calculateProfit(BetAmount betAmount) {
+            return betAmount.toBlackjackProfit();
+        }
     };
 
     private final String name;

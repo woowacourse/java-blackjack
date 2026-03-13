@@ -53,4 +53,16 @@ class BetAmountTest {
         // then
         assertThat(profit).isEqualTo(new Profit(-1000));
     }
+
+    @Test
+    void 블랙잭일_경우_베팅_금액의_1점_5배를_수익으로_변환한다() {
+        // given
+        BetAmount betAmount = new BetAmount(10000);
+
+        // when
+        Profit profit = betAmount.toBlackjackProfit();
+
+        // then
+        assertThat(profit).isEqualTo(new Profit(15000));
+    }
 }

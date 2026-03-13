@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import model.card.Card;
+import model.card.CardShape;
+import model.card.CardValue;
 import model.judgement.Judgement;
 import model.judgement.PlayerResult;
 import model.judgement.ResultStatus;
@@ -12,6 +14,7 @@ import model.paticipant.Dealer;
 import model.paticipant.BettingPlayer;
 import model.paticipant.Player;
 import model.paticipant.Players;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -36,5 +39,60 @@ public class JudgementTest {
 
         // then
         assertThat(playerResult.countByStatus(status)).isEqualTo(1);
+    }
+
+    @Test
+    void 플레이어가_블랙잭이고_딜러가_블랙잭이_아니면_BLACKJACK_결과이다() {
+        // given
+        Dealer dealer = new Dealer();
+        dealer.addCard(new Card(CardShape.HEART, CardValue.TEN));
+        dealer.addCard(new Card(CardShape.HEART, CardValue.NINE));
+
+        Player player = new BettingPlayer("pobi", 10000);
+        player.addCard(new Card(CardShape.HEART, CardValue.ACE));
+        player.addCard(new Card(CardShape.HEART, CardValue.KING));
+
+        // when
+        PlayerResult playerResult = Judgement.judgeByPlayer(dealer, new Players(List.of(player)));
+
+        // then
+        assertThat(playerResult.countByStatus(ResultStatus.BLACKJACK)).isEqualTo(1);
+    }
+
+    @Test
+    void 플레이어와_딜러_모두_블랙잭이면_DRAW_결과이다() {
+        // given
+        Dealer dealer = new Dealer();
+        dealer.addCard(new Card(CardShape.HEART, CardValue.ACE));
+        dealer.addCard(new Card(CardShape.HEART, CardValue.KING));
+
+        Player player = new BettingPlayer("pobi", 10000);
+        player.addCard(new Card(CardShape.DIAMOND, CardValue.ACE));
+        player.addCard(new Card(CardShape.DIAMOND, CardValue.KING));
+
+        // when
+        PlayerResult playerResult = Judgement.judgeByPlayer(dealer, new Players(List.of(player)));
+
+        // then
+        assertThat(playerResult.countByStatus(ResultStatus.DRAW)).isEqualTo(1);
+    }
+
+    @Test
+    void 딜러가_블랙잭이고_플레이어가_블랙잭이_아니면_LOSE_결과이다() {
+        // given
+        Dealer dealer = new Dealer();
+        dealer.addCard(new Card(CardShape.HEART, CardValue.ACE));
+        dealer.addCard(new Card(CardShape.HEART, CardValue.KING));
+
+        Player player = new BettingPlayer("pobi", 10000);
+        player.addCard(new Card(CardShape.HEART, CardValue.TEN));
+        player.addCard(new Card(CardShape.HEART, CardValue.FIVE));
+        player.addCard(new Card(CardShape.HEART, CardValue.SIX));
+
+        // when
+        PlayerResult playerResult = Judgement.judgeByPlayer(dealer, new Players(List.of(player)));
+
+        // then
+        assertThat(playerResult.countByStatus(ResultStatus.LOSE)).isEqualTo(1);
     }
 }

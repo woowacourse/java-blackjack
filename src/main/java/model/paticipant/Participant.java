@@ -8,6 +8,7 @@ public abstract class Participant {
 
     private static final int BUST_LIMIT = 21;
     private static final int ACE_BONUS_SCORE = 10;
+    private static final int BLACKJACK_CARD_COUNT = 2;
 
     private final Name name;
     private final Hand hand;
@@ -30,6 +31,10 @@ public abstract class Participant {
 
     public boolean isBust() {
         return calculateTotalScore() > BUST_LIMIT;
+    }
+
+    public boolean isBlackjack() {
+        return hand.size() == BLACKJACK_CARD_COUNT && calculateTotalScore() == BUST_LIMIT;
     }
 
     public void addCard(Card card) {

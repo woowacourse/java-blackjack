@@ -4,6 +4,7 @@ public record BetAmount(int amount) {
 
     private static final int MIN_BET_AMOUNT = 1;
     private static final int MAX_BET_AMOUNT = 1_000_000;
+    private static final double BLACKJACK_MULTIPLIER = 1.5;
 
     public BetAmount {
         validate(amount);
@@ -23,5 +24,9 @@ public record BetAmount(int amount) {
 
     public Profit toNegativeProfit() {
         return new Profit(-amount);
+    }
+
+    public Profit toBlackjackProfit() {
+        return new Profit((int) (amount * BLACKJACK_MULTIPLIER));
     }
 }

@@ -10,7 +10,8 @@ public class ResultStatusTestFixture {
         return Stream.of(
                 Arguments.of(ResultStatus.WIN, 1000),       // 수익 금액 그대로
                 Arguments.of(ResultStatus.LOSE, -1000),     // 수익 금액 반대 - 손실
-                Arguments.of(ResultStatus.DRAW, 0)          // 무승부 시 수익 없음
+                Arguments.of(ResultStatus.DRAW, 0),         // 무승부 시 수익 없음
+                Arguments.of(ResultStatus.BLACKJACK, 1500)  // 블랙잭 시 1.5배 수익
         );
     }
 

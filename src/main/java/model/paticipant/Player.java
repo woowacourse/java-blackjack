@@ -1,5 +1,9 @@
 package model.paticipant;
 
+import static model.judgement.Profit.ZERO;
+
+import java.util.List;
+import model.card.Card;
 import model.judgement.Profit;
 import model.judgement.ResultStatus;
 
@@ -15,9 +19,11 @@ public interface Player {
 
     boolean isBust();
 
-    java.util.List<model.card.Card> getCards();
+    boolean isBlackjack();
+
+    List<Card> getCards();
 
     default Profit calculateProfit(ResultStatus resultStatus) {
-        return model.judgement.Profit.ZERO;
+        return ZERO;
     }
 }
