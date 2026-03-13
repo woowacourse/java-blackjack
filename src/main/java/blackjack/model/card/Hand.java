@@ -55,13 +55,15 @@ public class Hand {
 
     private int addAceScore(List<Card> aceCards, int totalScore) {
         for (int i = 0; i < aceCards.size(); i++) {
-            if (totalScore + ACE_SCORE_ELEVEN > BLACKJACK_SCORE) {
-                totalScore += ACE_SCORE_ONE;
-                continue;
-            }
-            totalScore += ACE_SCORE_ELEVEN;
+            totalScore += calculateAceScore(totalScore);
         }
-
         return totalScore;
+    }
+
+    private static int calculateAceScore(int totalScore) {
+        if (totalScore + ACE_SCORE_ELEVEN > BLACKJACK_SCORE) {
+            return ACE_SCORE_ONE;
+        }
+        return ACE_SCORE_ELEVEN;
     }
 }

@@ -49,10 +49,7 @@ public class BlackjackGame {
     public void hitPlayers(List<Player> players, Function<Player, String> readHitCommand,
                            Consumer<Player> printPlayerCards) {
         for (Player player : players) {
-            while (retryUntilSuccess(() -> checkY(player, readHitCommand)) && checkAddCard(player)) {
-                cardProvider.provideOneCard(player);
-                printPlayerCards.accept(player);
-            }
+            hitPlayer(player, readHitCommand, printPlayerCards);
         }
     }
 
@@ -69,6 +66,13 @@ public class BlackjackGame {
 
     public void end(Runnable closeScanner) {
         closeScanner.run();
+    }
+
+    private void hitPlayer(Player player, Function<Player, String> readHitCommand, Consumer<Player> printPlayerCards) {
+        while (retryUntilSuccess(() -> checkY(player, readHitCommand)) && checkAddCard(player)) {
+            cardProvider.provideOneCard(player);
+            printPlayerCards.accept(player);
+        }
     }
 
     private boolean checkY(Player player, Function<Player, String> readHitCommand) {
