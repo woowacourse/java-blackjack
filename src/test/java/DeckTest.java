@@ -1,12 +1,12 @@
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.RandomValueGenerator;
-import domain.RandomValueGeneratorImpl;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.card.Rank;
 import domain.card.Suit;
+import domain.random.RandomValueGenerator;
+import domain.random.RandomValueGeneratorImpl;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
