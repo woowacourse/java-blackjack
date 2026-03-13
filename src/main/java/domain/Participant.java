@@ -1,8 +1,7 @@
 package domain;
 
-import dto.ParticipantCardsDto;
-
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Participant {
     private static final int BUST_THRESHOLD = 21;
@@ -35,7 +34,7 @@ public abstract class Participant {
         return false;
     }
 
-    public ParticipantCardsDto getParticipantCardsDto() {
-        return new ParticipantCardsDto(name.getName(), participantCards.getCardsInfo(), getScore());
+    public List<String> getCardsInfo() {
+        return participantCards.getCardsInfo();
     }
 }

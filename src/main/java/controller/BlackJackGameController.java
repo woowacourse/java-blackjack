@@ -56,14 +56,14 @@ public class BlackJackGameController {
                 break;
             }
             gameManager.drawCardTo(player);
-            printCards(player.getParticipantCardsDto());
+            printCards(toParticipantCardsDto(player));
         }
     }
 
     private boolean isStopGame(Player player) {
         String response = InputView.askContinue(player.getName());
         if (response.equals("n")) {
-            printCards(player.getParticipantCardsDto());
+            printCards(toParticipantCardsDto(player));
             return true;
         }
         return false;
@@ -86,7 +86,7 @@ public class BlackJackGameController {
 
     private void printFinalScores(Players players) {
         // TODO: 나중에 getParticipantCardsDto 책임 분리하면 좋을 듯
-        players.forEach(player -> printFinalCards(player.getParticipantCardsDto()));
+        players.forEach(player -> printFinalCards(toParticipantCardsDto(player)));
     }
 
     private List<String> getPlayerNames(Players players) {
@@ -109,5 +109,13 @@ public class BlackJackGameController {
 
     private List<String> getPlayerNames() {
         return InputView.askPlayerNames();
+    }
+
+    private ParticipantCardsDto toParticipantCardsDto(Participant participant) {
+        return new ParticipantCardsDto(
+                participant.getName(),
+                participant.getCardsInfo(),
+                participant.getScore()
+        );
     }
 }
