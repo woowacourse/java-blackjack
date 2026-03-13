@@ -13,6 +13,7 @@ public class Cards {
 
     public Cards(List<Card> cards) {
         this.cards = cards;
+        this.hasAce = cards.stream().anyMatch(Card::isAce);
     }
 
     public void add(Card card) {
