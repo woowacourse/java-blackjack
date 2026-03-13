@@ -6,13 +6,14 @@ import blackjack.domain.Player;
 import blackjack.domain.PlayerCardsName;
 import blackjack.domain.PlayerFinalCardsScore;
 import blackjack.domain.PlayerFinalResult;
+import blackjack.domain.PlayerProfitResultDto;
+import blackjack.domain.ProfitResults;
 import blackjack.domain.ScoreCompareResult;
 import blackjack.service.CardDistributor;
 import blackjack.service.Game;
 import blackjack.utils.InputParser;
 import blackjack.utils.RetryInput;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -40,7 +41,7 @@ public class BlackjackController {
         Game game = new Game(players, dealer);
 
         calculateFinalScore(players, dealer);
-        calculateFinalGameResult(game);
+        calculateFinalGameProfitResult(game);
     }
 
     private void setupInitialHand(List<Player> players, Dealer dealer, List<String> playerNames) {
@@ -55,16 +56,18 @@ public class BlackjackController {
         );
     }
 
-    private void calculateFinalGameResult(Game game) {
+    private void calculateFinalGameProfitResult(Game game) {
         GameResult gameResult = game.judgeTotalGameResult();
-        Map<ScoreCompareResult, Integer> dealerResult = gameResult.dealerResult();
+        ProfitResults profitResults = game.calculateTotalProfitResults(gameResult);
 
-        LinkedHashMap<Player, ScoreCompareResult> playerResult = gameResult.playerResults();
-        List<PlayerFinalResult> playerNameResult = new ArrayList<>();
-        for (Entry<Player, ScoreCompareResult> entry : playerResult.entrySet()) {
-            playerNameResult.add(new PlayerFinalResult(entry.getKey().getName(), entry.getValue()));
+        double dealerProfit = profitResults.dealerProfit();
+        Map<Player, Double> playerProfit = profitResults.playerProfit();
+
+        List<PlayerProfitResultDto> playerNameProfitResult = new ArrayList<>();
+        for (Entry<Player, Double> entry : playerProfit.entrySet()) {
+            playerNameProfitResult.add(PlayerProfitResultDto.from(entry.getKey(), entry.getValue()));
         }
-        OutputView.printFinalResult(dealerResult, playerNameResult);
+        OutputView.printFinalProfitResult(dealerProfit, playerNameProfitResult);
     }
 
     private void playDealerTurn(Dealer dealer) {

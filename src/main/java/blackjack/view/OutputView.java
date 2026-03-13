@@ -2,10 +2,9 @@ package blackjack.view;
 
 import blackjack.domain.PlayerCardsName;
 import blackjack.domain.PlayerFinalCardsScore;
-import blackjack.domain.PlayerFinalResult;
+import blackjack.domain.PlayerProfitResultDto;
 import blackjack.domain.ScoreCompareResult;
 import java.util.List;
-import java.util.Map;
 
 public class OutputView {
 
@@ -51,30 +50,15 @@ public class OutputView {
         }
     }
 
-    public static void printFinalResult(
-            Map<ScoreCompareResult, Integer> dealerResult,
-            List<PlayerFinalResult> playerResults) {
+    public static void printFinalProfitResult(
+            double dealerProfit,
+            List<PlayerProfitResultDto> playersProfitResults) {
         System.out.println();
-        System.out.println("## 최종 승패");
-        int wins = dealerResult.getOrDefault(ScoreCompareResult.DEALER_WIN, 0);
-        int loses = dealerResult.getOrDefault(ScoreCompareResult.DEALER_LOSE, 0);
-        int pushes = dealerResult.getOrDefault(ScoreCompareResult.PUSH, 0);
-        System.out.printf("딜러: %d승 %d무 %d패%n", wins, pushes, loses);
+        System.out.println("## 최종 수익");
+        System.out.printf("딜러: %d%n", (int) dealerProfit);
 
-        for (PlayerFinalResult playerResult : playerResults) {
-            System.out.println(playerResult.name() + ": " + toKorean(playerResult.scoreCompareResult()));
+        for (PlayerProfitResultDto playerProfitResult : playersProfitResults) {
+            System.out.println(playerProfitResult.playerName() + ": " + (int) playerProfitResult.profit());
         }
     }
-
-    private static String toKorean(ScoreCompareResult result) {
-        if (result == ScoreCompareResult.PLAYER_WIN) {
-            return "승";
-        }
-        if (result == ScoreCompareResult.PLAYER_LOSE) {
-            return "패";
-        }
-        return "무";
-    }
-
-
 }
