@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 public class OutputViewImpl implements OutputView {
     private static final String DELIMITER = ", ";
     private static final String NAME_PROMPT = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
+    private static final String BET_AMOUNT_PROMPT = "\n%s의 배팅 금액은?\n";
     private static final String INITIAL_CARD_SHARE = "\n딜러와 %s에게 2장을 나누었습니다.\n";
     private static final String HIT_OR_STAND_PROMPT = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n";
     private static final String DEALER_ADD_CARD_NOTICE = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n";
@@ -30,7 +31,10 @@ public class OutputViewImpl implements OutputView {
         System.out.println(NAME_PROMPT);
     }
 
-    @Override
+    public void printBetAmountPrompt(ParticipantDto participantDto) {
+        System.out.printf(BET_AMOUNT_PROMPT, participantDto.name());
+    }
+
     public void printInitialStates(GameStateDto gameStateDto) {
         List<ParticipantDto> playersDtos = gameStateDto.multiPlayersDtos();
         ParticipantDto dealerDto = gameStateDto.dealerDto();

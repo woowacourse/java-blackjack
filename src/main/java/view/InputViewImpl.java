@@ -16,6 +16,12 @@ public class InputViewImpl implements InputView {
         return Arrays.stream(line.split(DELIMITER)).toList();
     }
 
+    public String readBetAmountValue() {
+        String line = sc.nextLine();
+        validateIsBlank(line);
+        return line;
+    }
+
     public Boolean wantToHit() {
         String input = sc.nextLine().trim();
         validateIsBlank(input);
