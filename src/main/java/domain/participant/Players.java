@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.function.Supplier;
+import domain.card.Card;
 
 public class Players {
 
@@ -13,6 +15,7 @@ public class Players {
     public static final String PLAYER_DUPLICATED = "게임 참가자의 이름은 중복 되어선 안됩니다.";
     public static final String PLAYER_COUNT_OUT_OF_RANGE =
             String.format("게임 참가자의 수는 %d~%d명 사이여야 합니다.", PLAYER_MIN_COUNT, PLAYER_MAX_COUNT);
+    public static final String NOT_FOUND_PLAYER = "플레이어를 찾을 수 없습니다.";
 
     private final List<Player> players;
 
@@ -46,10 +49,22 @@ public class Players {
         return players.stream()
                 .filter(player -> player.getName().equals(name))
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new BlackjackException(NOT_FOUND_PLAYER));
     }
 
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
+    }
+
+    public void drawInitialCards(Supplier<Card> cardSupplier) {
+        for (Player player : players) {
+            player.addCard(cardSupplier.get());
+            player.addCard(cardSupplier.get());
+        }
+    }
+
+    public void addCard(String name, Card card) {
+        Player player = getPlayer(name);
+        player.addCard(card);
     }
 }

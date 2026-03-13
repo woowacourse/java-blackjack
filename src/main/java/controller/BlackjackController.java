@@ -46,7 +46,7 @@ public class BlackjackController {
 
     private void inputPlayers() {
         List<String> input = Parser.parseInput(inputView.inputPlayers());
-        blackjackGameManager.createPlayers(input);
+        blackjackGameManager.createParticipants(input);
     }
 
     private void inputHitOrStandOnPlayer() {

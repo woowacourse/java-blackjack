@@ -36,7 +36,7 @@ class BlackjackGameManagerTest {
             void 게임_참가자_조건이_맞으면_정상_작동_해야한다(List<String> input) {
 
                 // when & then
-                blackjackGameManager.createPlayers(input);
+                blackjackGameManager.createParticipants(input);
             }
 
             static Stream<Arguments> successCases() {
@@ -58,7 +58,7 @@ class BlackjackGameManagerTest {
             void 초기_카드_분배시_최종_결과에는_모두_2장씩_있어야_한다() {
 
                 // given
-                blackjackGameManager.createPlayers(List.of("jacob", "seoye"));
+                blackjackGameManager.createParticipants(List.of("jacob", "seoye"));
 
                 // when
                 blackjackGameManager.drawInitialCards();
@@ -86,7 +86,7 @@ class BlackjackGameManagerTest {
                         card(Rank.TWO, Suit.CLOVER), card(Rank.THREE, Suit.DIAMOND),
                         card(Rank.FOUR, Suit.HEART), card(Rank.FIVE, Suit.SPADE)
                 ));
-                blackjackGameManager.createPlayers(List.of("jacob", "seoye"));
+                blackjackGameManager.createParticipants(List.of("jacob", "seoye"));
                 blackjackGameManager.drawInitialCards();
 
                 // when
@@ -114,7 +114,7 @@ class BlackjackGameManagerTest {
                         card(Rank.TWO, Suit.CLOVER), card(Rank.THREE, Suit.DIAMOND),
                         card(Rank.FOUR, Suit.HEART), card(Rank.FIVE, Suit.SPADE)
                 ));
-                blackjackGameManager.createPlayers(List.of("jacob", "seoye"));
+                blackjackGameManager.createParticipants(List.of("jacob", "seoye"));
                 blackjackGameManager.drawInitialCards();
 
                 // when
@@ -142,7 +142,7 @@ class BlackjackGameManagerTest {
                         card(Rank.TWO, Suit.CLOVER), card(Rank.THREE, Suit.DIAMOND),
                         card(Rank.FOUR, Suit.HEART), card(Rank.FIVE, Suit.SPADE)
                 ));
-                blackjackGameManager.createPlayers(List.of("jacob", "seoye"));
+                blackjackGameManager.createParticipants(List.of("jacob", "seoye"));
                 blackjackGameManager.drawInitialCards();
 
                 // when
@@ -172,7 +172,7 @@ class BlackjackGameManagerTest {
                         card(Rank.FOUR, Suit.HEART), card(Rank.FIVE, Suit.SPADE),
                         card(Rank.NINE, Suit.CLOVER)
                 ));
-                blackjackGameManager.createPlayers(List.of("jacob", "seoye"));
+                blackjackGameManager.createParticipants(List.of("jacob", "seoye"));
                 blackjackGameManager.drawInitialCards();
 
                 // when
@@ -194,7 +194,7 @@ class BlackjackGameManagerTest {
                         card(Rank.FOUR, Suit.HEART), card(Rank.FIVE, Suit.SPADE),
                         card(Rank.NINE, Suit.CLOVER)
                 ));
-                blackjackGameManager.createPlayers(List.of("jacob", "seoye"));
+                blackjackGameManager.createParticipants(List.of("jacob", "seoye"));
                 blackjackGameManager.drawInitialCards();
 
                 // when
@@ -258,7 +258,7 @@ class BlackjackGameManagerTest {
                     card(Rank.TEN, Suit.DIAMOND), card(Rank.SEVEN, Suit.HEART),
                     card(Rank.NINE, Suit.CLOVER), card(Rank.SEVEN, Suit.DIAMOND)
                 ));
-                blackjackGameManager.createPlayers(List.of("jacob", "seoye", "brown"));
+                blackjackGameManager.createParticipants(List.of("jacob", "seoye", "brown"));
                 blackjackGameManager.drawInitialCards();
 
                 // when
@@ -290,7 +290,7 @@ class BlackjackGameManagerTest {
                     card(Rank.TEN, Suit.DIAMOND), card(Rank.SEVEN, Suit.HEART),
                     card(Rank.NINE, Suit.CLOVER), card(Rank.SEVEN, Suit.DIAMOND)
                 ));
-                blackjackGameManager.createPlayers(List.of("jacob", "seoye", "brown"));
+                blackjackGameManager.createParticipants(List.of("jacob", "seoye", "brown"));
                 blackjackGameManager.drawInitialCards();
 
                 // when
@@ -320,7 +320,7 @@ class BlackjackGameManagerTest {
                     card(Rank.FOUR, Suit.HEART), card(Rank.FIVE, Suit.SPADE),
                     card(Rank.ACE, Suit.CLOVER)
                 ));
-                blackjackGameManager.createPlayers(List.of("jacob", "seoye"));
+                blackjackGameManager.createParticipants(List.of("jacob", "seoye"));
                 blackjackGameManager.drawInitialCards();
                 blackjackGameManager.updatePlayer("jacob");
 
@@ -353,7 +353,7 @@ class BlackjackGameManagerTest {
                         card(Rank.FOUR, Suit.HEART), card(Rank.FIVE, Suit.SPADE),
                         card(Rank.ACE, Suit.CLOVER)
                 ));
-                blackjackGameManager.createPlayers(List.of("jacob", "seoye"));
+                blackjackGameManager.createParticipants(List.of("jacob", "seoye"));
                 blackjackGameManager.drawInitialCards();
 
                 // when

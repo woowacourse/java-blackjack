@@ -5,7 +5,6 @@ import domain.card.CardMachine;
 import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;
-import domain.participant.Players;
 import dto.BlackjackResultDto;
 import dto.BlackjackStatisticsDto;
 import dto.DealerStatisticDto;
@@ -23,25 +22,17 @@ public class BlackjackGameManager {
         this.cardMachine = new CardMachine();
     }
 
-    public void createPlayers(List<String> names) {
-        Dealer dealer = new Dealer();
-        Players players = new Players(names);
-        participants = new Participants(dealer, players);
+    public void createParticipants(List<String> names) {
+        participants = Participants.from(names);
     }
 
     public void drawInitialCards() {
-        participants.dealer().addCard(drawCard());
-        participants.dealer().addCard(drawCard());
-        for (Player player : participants.players().getPlayers()) {
-            player.addCard(drawCard());
-            player.addCard(drawCard());
-        }
+        participants.drawInitialCards(this::drawCard);
     }
 
     public boolean drawDealerCard() {
-        Dealer dealer = participants.dealer();
-        if (dealer.shouldHit()) {
-            dealer.addCard(drawCard());
+        if (participants.dealerShouldHit()) {
+            participants.drawCardsByDealer(this::drawCard);
             return true;
         }
 
@@ -53,13 +44,11 @@ public class BlackjackGameManager {
     }
 
     public ParticipantDto generateInitialDealerDto() {
-        Dealer dealer = participants.dealer();
-        return ParticipantDto.from(dealer, true);
+        return ParticipantDto.from(participants.dealer(), true);
     }
 
     public ParticipantDto generateDealerDto() {
-        Dealer dealer = participants.dealer();
-        return ParticipantDto.from(dealer);
+        return ParticipantDto.from(participants.dealer());
     }
 
     public List<ParticipantDto> generatePlayerDtoList() {
@@ -90,10 +79,9 @@ public class BlackjackGameManager {
     }
 
     public List<PlayerStatisticDto> calculatePlayerResults() {
-        Dealer dealer = participants.dealer();
         List<PlayerStatisticDto> playerStatisticDtoList = new ArrayList<>();
         for (Player player : participants.players().getPlayers()) {
-            Result result = calculatePlayerResult(dealer, player);
+            Result result = calculatePlayerResult(participants.dealer(), player);
             playerStatisticDtoList.add(PlayerStatisticDto.of(player, result));
         }
         return playerStatisticDtoList;
@@ -123,8 +111,7 @@ public class BlackjackGameManager {
     }
 
     public ParticipantDto updatePlayer(String name) {
-        Player player = participants.getPlayer(name);
-        player.addCard(drawCard());
+        Player player = participants.drawCardsByPlayer(name, this::drawCard);
         return ParticipantDto.from(player);
     }
 
