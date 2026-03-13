@@ -3,7 +3,6 @@ package model;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-import dto.Card;
 import exception.GameException;
 import java.util.List;
 import org.junit.jupiter.api.Test;

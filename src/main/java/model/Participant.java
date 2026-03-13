@@ -1,6 +1,5 @@
 package model;
 
-import dto.Card;
 import dto.PlayerResult;
 
 public class Participant {

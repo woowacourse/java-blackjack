@@ -2,7 +2,6 @@ package model;
 
 import static org.assertj.core.api.Assertions.*;
 
-import dto.Card;
 import org.junit.jupiter.api.Test;
 
 public class CardTest {

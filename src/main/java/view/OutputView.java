@@ -1,6 +1,6 @@
 package view;
 
-import dto.Card;
+import model.Card;
 import dto.ParticipantWinning;
 import dto.PlayerProfit;
 import dto.PlayerResult;

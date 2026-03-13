@@ -12,7 +12,7 @@ import model.Player;
 import model.PlayerName;
 import model.Players;
 import model.Shape;
-import dto.Card;
+import model.Card;
 import dto.ParticipantWinning;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

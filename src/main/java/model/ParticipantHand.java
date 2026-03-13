@@ -1,7 +1,6 @@
 package model;
 
 import exception.GameException;
-import dto.Card;
 import java.util.ArrayList;
 import java.util.List;
 
