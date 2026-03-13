@@ -2,6 +2,7 @@ package blackjack.view;
 
 import blackjack.common.error.ErrorCode;
 import blackjack.util.InputValidator;
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -22,6 +23,10 @@ public class InputView {
         InputValidator.validatePlayerNames(names);
 
         return names;
+    }
+
+    public double inputBettingAmount() {
+        return Long.parseLong(scanner.nextLine());
     }
 
     public boolean inputMoreCard() {

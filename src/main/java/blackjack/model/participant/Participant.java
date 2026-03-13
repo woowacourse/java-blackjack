@@ -25,6 +25,9 @@ public abstract class Participant {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException(ErrorCode.NO_NAME_PARTICIPANT_NAME.getMessage());
         }
+        if (name.startsWith(" ") || name.endsWith(" ")) {
+            throw new IllegalArgumentException(ErrorCode.NAME_STARTS_OR_ENDS_WITH_SPACE.getMessage());
+        }
     }
 
     private void validateHands(Hands hands) {
@@ -46,6 +49,10 @@ public abstract class Participant {
 
     public boolean isBust() {
         return hands.hasScoreHigherThan(BLACKJACK_SCORE);
+    }
+
+    protected boolean checkBonus() {
+        return hands.calculateTotalScore() == BLACKJACK_SCORE && hands.getAllCards().size() == 2;
     }
 
     public boolean hasHigherScoreThan(Participant other) {

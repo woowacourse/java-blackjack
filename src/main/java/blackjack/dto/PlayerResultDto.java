@@ -1,6 +1,6 @@
 package blackjack.dto;
 
-import blackjack.model.result.PlayerResult;
+import blackjack.model.money.Money;
 
-public record PlayerResultDto(String name, PlayerResult playerResult) {
+public record PlayerResultDto(String name, Money profit) {
 }

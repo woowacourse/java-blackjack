@@ -1,12 +1,16 @@
 package blackjack.controller;
 
+import blackjack.dto.PlayerResultDto;
+import blackjack.dto.PlayerResultsDto;
 import blackjack.model.cardDeck.CardDeck;
 import blackjack.model.cardDeck.RandomPickStrategy;
+import blackjack.model.money.Money;
 import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Player;
-import blackjack.dto.PlayerResultsDto;
+import blackjack.model.result.PlayerResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BlackjackController {
@@ -24,6 +28,8 @@ public class BlackjackController {
         Dealer dealer = Dealer.create();
         CardDeck cardDeck = CardDeck.of(new RandomPickStrategy());
 
+        setupPlayersBettingMoney(players);
+
         distributeInitCards(dealer, cardDeck, players);
 
         askPlayersHitOrStand(players, cardDeck);
@@ -33,6 +39,16 @@ public class BlackjackController {
         openPlayersHands(players);
 
         printResult(players, dealer);
+    }
+
+    private void setupPlayersBettingMoney(List<Player> players) {
+        players.forEach(this::setupBettingMoney);
+    }
+
+    private void setupBettingMoney(Player player) {
+        outputView.printBettingAmountInputPlayer(player.getName());
+        double amount = inputView.inputBettingAmount();
+        player.bet(amount);
     }
 
     private List<Player> setupPlayers() {
@@ -95,6 +111,14 @@ public class BlackjackController {
     }
 
     private void printResult(List<Player> players, Dealer dealer) {
-        outputView.printResult(PlayerResultsDto.of(players, dealer));
+        List<PlayerResultDto> results = new ArrayList<>();
+
+        for (Player player : players) {
+            PlayerResult result = dealer.judgePlayerResult(player);
+            Money profit = player.calculateProfit(result);
+            results.add(new PlayerResultDto(player.getName(), profit));
+        }
+
+        outputView.printResult(new PlayerResultsDto(results));
     }
 }

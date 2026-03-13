@@ -3,7 +3,6 @@ package blackjack.view;
 import blackjack.dto.CardDto;
 import blackjack.dto.PlayerResultsDto;
 import blackjack.model.participant.Player;
-import blackjack.model.result.PlayerResult;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,22 +44,18 @@ public class OutputView {
     }
 
     public void printResult(PlayerResultsDto playerResults) {
-        System.out.println("## 최종 승패");
+        System.out.println("## 최종 수익");
         printDealerResult(playerResults);
         printAllPlayerResult(playerResults);
     }
 
     private void printDealerResult(PlayerResultsDto dealerResult) {
-        System.out.printf("딜러: %s승 %d무 %d\n",
-                dealerResult.countOf(PlayerResult.LOSE),
-                dealerResult.countOf(PlayerResult.DRAW),
-                dealerResult.countOf(PlayerResult.WIN)
-        );
+        System.out.printf("딜러: %s\n", dealerResult.getDealerProfit());
     }
 
     private void printAllPlayerResult(PlayerResultsDto playerResults) {
         String results = playerResults.results().stream()
-                .map(result -> result.name() + ": " + result.playerResult().getDisplayName())
+                .map(result -> result.name() + ": " + result.profit())
                 .collect(Collectors.joining("\n"));
         System.out.println(results);
     }
@@ -71,5 +66,9 @@ public class OutputView {
                 .toList();
 
         return String.join(", ", cardNames);
+    }
+
+    public void printBettingAmountInputPlayer(String name) {
+        System.out.println(name + "의 베팅 금액은?");
     }
 }

@@ -1,10 +1,15 @@
 package blackjack.model.participant;
 
-import blackjack.model.card.Hands;
 import blackjack.dto.CardDto;
+import blackjack.model.card.Hands;
+import blackjack.model.money.Money;
+import blackjack.model.result.PlayerResult;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class Player extends Participant {
+
+    private Money bettingMoney;
 
     private Player(String name, Hands hands) {
         super(name, hands);
@@ -17,5 +22,26 @@ public class Player extends Participant {
     @Override
     public List<CardDto> getInitCards() {
         return hands.getAllCards();
+    }
+
+    public void bet(double amount) {
+        this.bettingMoney = Money.of(BigDecimal.valueOf(amount));
+    }
+
+    public Money calculateProfit(PlayerResult result) {
+        if (result == PlayerResult.WIN) {
+            return calculateBlackjackBonus();
+        }
+        if (result == PlayerResult.LOSE) {
+            return bettingMoney.multiply(BigDecimal.valueOf(-1));
+        }
+        return Money.zero();
+    }
+
+    private Money calculateBlackjackBonus() {
+        if (checkBonus()) {
+            return bettingMoney.multiply(BigDecimal.valueOf(1.5));
+        }
+        return bettingMoney;
     }
 }
