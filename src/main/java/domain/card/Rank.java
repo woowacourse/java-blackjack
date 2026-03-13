@@ -24,15 +24,15 @@ public enum Rank {
         this.score = score;
     }
 
-    public boolean isAce() {
-        return this.equals(Rank.ACE);
-    }
-
     public String getRank() {
         return rank;
     }
 
     public int getScore() {
         return score;
+    }
+
+    public boolean isAce() {
+        return this.equals(Rank.ACE);
     }
 }
