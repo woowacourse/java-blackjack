@@ -56,6 +56,5 @@ class MatchResultTest {
 
         //then
         assertThat(blackJackMoney).isEqualTo(1500);
-
     }
 }
