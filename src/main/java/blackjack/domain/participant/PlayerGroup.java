@@ -1,29 +1,17 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
 
-public class Participants {
+public record PlayerGroup(List<Player> players) {
     private static final String DELIMITER = ",";
     private static final int INCLUDE_EMPTY_ELEMENT = -1;
 
-    private final Dealer dealer;
-    private final List<Player> players;
-
-    public Participants(List<Player> players) {
-        this(Dealer.create(), players);
-    }
-
-    public Participants(Dealer dealer, List<Player> players) {
-        this.dealer = dealer;
-        this.players = players;
-    }
-
-    public static Participants from(final String rawPlayerNames) {
+    public static PlayerGroup from(final String rawPlayerNames) {
         List<Player> players = parsePlayersFrom(rawPlayerNames);
-        return new Participants(players);
+        return new PlayerGroup(players);
     }
 
     private static List<Player> parsePlayersFrom(String rawPlayerNames) {
@@ -36,21 +24,6 @@ public class Participants {
         return parsePlayersFrom(playerNames);
     }
 
-    public List<Player> getPlayers() {
-        return List.copyOf(players);
-    }
-
-    public Dealer getDealer() {
-        return dealer;
-    }
-
-    public Stream<Participant> stream() {
-        return Stream.concat(
-            Stream.of(dealer),
-            players.stream()
-        );
-    }
-
     private static void validateDuplicatedNames(List<Name> playerNames) {
         if (containsDealerName(playerNames)) {
             throw new IllegalArgumentException("플레이어의 이름은 딜러의 이름과 동일할 수 없습니다.");
@@ -61,20 +34,25 @@ public class Participants {
     }
 
     private static boolean containsDealerName(List<Name> playerNames) {
-        return playerNames.stream()
-            .anyMatch(Dealer::isDealerName);
+        return playerNames.stream().anyMatch(Dealer::isDealerName);
     }
 
     private static boolean isDuplicated(List<Name> playerNames) {
-        long playerNameCount = playerNames.stream()
-            .distinct()
-            .count();
-        return playerNameCount != playerNames.size();
+        return playerNames.stream().distinct().count() != playerNames.size();
     }
 
     private static List<Player> parsePlayersFrom(List<Name> playerNames) {
         return playerNames.stream()
             .map(playerName -> new Player(playerName, new Hand()))
             .toList();
+    }
+
+    @Override
+    public List<Player> players() {
+        return List.copyOf(players);
+    }
+
+    public void deal(Deck deck) {
+        players.forEach(participant -> participant.hit(deck.draw()));
     }
 }

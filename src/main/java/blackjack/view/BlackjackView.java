@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.dto.GameResultDto;
+import blackjack.dto.GameResultDtos;
 import blackjack.dto.InitialDealDtos;
 import blackjack.dto.ParticipantCardsDto;
 import blackjack.dto.ParticipantScoreDtos;
@@ -40,7 +40,7 @@ public class BlackjackView {
         outputView.printScore(participantScoreDtos);
     }
 
-    public void printResult(GameResultDto resultDto) {
+    public void printResult(GameResultDtos resultDto) {
         outputView.printResults(resultDto);
     }
 }

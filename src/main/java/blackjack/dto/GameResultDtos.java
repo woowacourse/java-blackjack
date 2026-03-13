@@ -1,13 +1,26 @@
 package blackjack.dto;
 
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.PlayerGroup;
 import blackjack.domain.participant.Player;
 import blackjack.domain.result.GameResult;
+import java.util.List;
 
 public record GameResultDtos(
-    String playerName,
-    GameResult result
+    DealerResultDto dealerResultDto,
+    List<GameResultDto> gameResultDtos
 ) {
-    public static GameResultDtos of(Player player, GameResult gameResult) {
-        return new GameResultDtos(player.getName(), gameResult);
+    public static GameResultDtos of(Dealer dealer, PlayerGroup playerGroup) {
+        List<GameResultDto> gameResultDtos = playerGroup.players().stream()
+            .map(player -> convertFrom(dealer, player))
+            .toList();
+
+        DealerResultDto dealerResultDto = DealerResultDto.from(gameResultDtos);
+        return new GameResultDtos(dealerResultDto, gameResultDtos);
+    }
+
+    private static GameResultDto convertFrom(Dealer dealer, Player player) {
+        GameResult result = dealer.judgeAgainst(player);
+        return GameResultDto.of(player, result);
     }
 }

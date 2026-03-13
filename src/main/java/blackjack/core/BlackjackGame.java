@@ -3,14 +3,13 @@ package blackjack.core;
 import blackjack.domain.card.CardsGenerator;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.PlayerGroup;
 import blackjack.domain.participant.Player;
-import blackjack.dto.GameResultDto;
+import blackjack.dto.GameResultDtos;
 import blackjack.dto.InitialDealDtos;
 import blackjack.dto.ParticipantCardsDto;
 import blackjack.dto.ParticipantScoreDtos;
 import blackjack.view.BlackjackView;
-import java.util.List;
 
 public class BlackjackGame {
     private static final int INITIAL_DEAL_COUNT = 2;
@@ -24,33 +23,29 @@ public class BlackjackGame {
     }
 
     public void run() {
-        Participants participants = Participants.from(view.readPlayers());
+        PlayerGroup playerGroup = PlayerGroup.from(view.readPlayers());
+        Dealer dealer = Dealer.create();
         Deck deck = Deck.create(cardsGenerator);
 
-        initialDeal(participants, deck);
+        initialDeal(dealer, playerGroup, deck);
 
-        hitPlayers(participants.getPlayers(), deck);
-        hitDealer(participants.getDealer(), deck);
+        hitPlayers(playerGroup, deck);
+        hitDealer(dealer, deck);
 
-        printScore(participants);
-        printResult(participants);
+        printScore(dealer, playerGroup);
+        printResult(dealer, playerGroup);
     }
 
-    private void initialDeal(Participants participants, Deck deck) {
+    private void initialDeal(Dealer dealer, PlayerGroup playerGroup, Deck deck) {
         for (int i = 0; i < INITIAL_DEAL_COUNT; i++) {
-            deal(participants, deck);
+            dealer.hit(deck.draw());
+            playerGroup.deal(deck);
         }
-        view.printInitialDeal(InitialDealDtos.from(participants));
+        view.printInitialDeal(InitialDealDtos.of(dealer, playerGroup));
     }
 
-    private void deal(Participants participants, Deck deck) {
-        participants.stream().forEach(participant ->
-            participant.hit(deck.draw()));
-    }
-
-    private void hitPlayers(List<Player> players, Deck deck) {
-        players.forEach(player ->
-            hitPlayer(player, deck));
+    private void hitPlayers(PlayerGroup playerGroup, Deck deck) {
+        playerGroup.players().forEach(player -> hitPlayer(player, deck));
     }
 
     private void hitPlayer(Player player, Deck deck) {
@@ -67,11 +62,11 @@ public class BlackjackGame {
         }
     }
 
-    private void printScore(Participants participants) {
-        view.printScore(ParticipantScoreDtos.from(participants));
+    private void printScore(Dealer dealer, PlayerGroup playerGroup) {
+        view.printScore(ParticipantScoreDtos.of(dealer, playerGroup));
     }
 
-    private void printResult(Participants participants) {
-        view.printResult(GameResultDto.from(participants));
+    private void printResult(Dealer dealer, PlayerGroup playerGroup) {
+        view.printResult(GameResultDtos.of(dealer, playerGroup));
     }
 }

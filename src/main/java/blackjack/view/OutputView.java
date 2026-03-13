@@ -4,8 +4,8 @@ import blackjack.domain.result.GameResult;
 import blackjack.domain.result.Score;
 import blackjack.dto.CardNameDto;
 import blackjack.dto.DealerResultDto;
-import blackjack.dto.GameResultDto;
 import blackjack.dto.GameResultDtos;
+import blackjack.dto.GameResultDto;
 import blackjack.dto.InitialDealDtos;
 import blackjack.dto.ParticipantCardsDto;
 import blackjack.dto.ParticipantScoreDto;
@@ -86,7 +86,7 @@ public class OutputView {
             .toList();
     }
 
-    public void printResults(GameResultDto resultDto) {
+    public void printResults(GameResultDtos resultDto) {
         System.out.println("## 최종 승패");
 
         DealerResultDto dealerResult = resultDto.dealerResultDto();
@@ -96,8 +96,8 @@ public class OutputView {
         resultDto.gameResultDtos().forEach(this::printResult);
     }
 
-    public void printResult(GameResultDtos gameResultDtos) {
-        System.out.println(gameResultDtos.playerName() + ": " + GAME_RESULT_MESSAGES.get(
-            gameResultDtos.result()));
+    public void printResult(GameResultDto gameResultDto) {
+        System.out.println(gameResultDto.playerName() + ": " + GAME_RESULT_MESSAGES.get(
+            gameResultDto.result()));
     }
 }

@@ -4,20 +4,20 @@ import blackjack.domain.result.GameResult;
 import java.util.List;
 
 public record DealerResultDto(int win, int lose, int push) {
-    public static DealerResultDto from(List<GameResultDtos> gameResultDtos) {
+    public static DealerResultDto from(List<GameResultDto> gameResultDtos) {
         int winCount = getPlayerWinCount(gameResultDtos);
         int loseCount = getPlayerLoseCount(gameResultDtos);
         int pushCount = getPushCount(gameResultDtos.size(), loseCount, winCount);
         return new DealerResultDto(winCount, loseCount, pushCount);
     }
 
-    private static int getPlayerWinCount(List<GameResultDtos> gameResultDtos) {
+    private static int getPlayerWinCount(List<GameResultDto> gameResultDtos) {
         return (int) gameResultDtos.stream()
             .filter(gameResultDto -> gameResultDto.result() == GameResult.DEALER_WIN)
             .count();
     }
 
-    private static int getPlayerLoseCount(List<GameResultDtos> gameResultDtos) {
+    private static int getPlayerLoseCount(List<GameResultDto> gameResultDtos) {
         return (int) gameResultDtos.stream()
             .filter(gameResultDto -> gameResultDto.result() == GameResult.PLAYER_WIN)
             .count();
