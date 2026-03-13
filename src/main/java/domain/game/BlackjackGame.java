@@ -38,17 +38,14 @@ public class BlackjackGame {
     private static List<Player> createPlayers(List<String> names, List<Integer> amounts, Deck deck) {
         return IntStream.range(0, names.size())
                 .mapToObj(i -> {
-                    // 안쪽 부품부터 차례대로 조립
                     Name name = new Name(names.get(i));
                     Money money = new Money(amounts.get(i));
                     Bet bet = new Bet(money);
 
                     Hand initialHand = createInitialHand(deck);
 
-                    // 중간 부품 조립
                     BettingHand bettingHand = BettingHand.of(initialHand, bet);
 
-                    // 최종 완제품(Player) 조립
                     return Player.of(name, bettingHand);
                 })
                 .toList();
