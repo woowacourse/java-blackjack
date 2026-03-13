@@ -12,6 +12,7 @@ import domain.result.GameResult;
 import java.util.List;
 
 public class GameManager {
+
     private final Deck deck;
     private final Dealer dealer;
     private final Players players;
@@ -40,7 +41,7 @@ public class GameManager {
     }
 
     public void drawPlayerCard(String playerName) {
-        players.drawCardTo(playerName, deck.draw());
+        players.drawCardToPlayer(playerName, deck.draw());
     }
 
     public List<String> getPlayerHand(String playerName) {

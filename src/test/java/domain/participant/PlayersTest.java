@@ -35,7 +35,7 @@ public class PlayersTest {
         Players players = new Players();
         players.register("pobi", "10000");
 
-        List<String> hand = players.drawCardTo("pobi", new Card(ACE, SPADE));
+        List<String> hand = players.drawCardToPlayer("pobi", new Card(ACE, SPADE));
 
         assertThat(players.getAll())
                 .extracting(
@@ -48,8 +48,8 @@ public class PlayersTest {
     void 이름에_해당하는_플레이어가_추가로_카드를_받을_수_있는지_확인한다() {
         Players players = new Players();
         players.register("pobi", "10000");
-        players.drawCardTo("pobi", new Card(ACE, SPADE));
-        players.drawCardTo("pobi", new Card(QUEEN, SPADE));
+        players.drawCardToPlayer("pobi", new Card(ACE, SPADE));
+        players.drawCardToPlayer("pobi", new Card(QUEEN, SPADE));
 
         assertThat(players.canReceiveCard("pobi")).isFalse();
     }
@@ -58,12 +58,12 @@ public class PlayersTest {
     void 모든_플레이어의_점수결과를_확인한다() {
         Players players = new Players();
         players.register("pobi", "10000");
-        players.drawCardTo("pobi", new Card(ACE, SPADE));
-        players.drawCardTo("pobi", new Card(KING, DIAMOND));
+        players.drawCardToPlayer("pobi", new Card(ACE, SPADE));
+        players.drawCardToPlayer("pobi", new Card(KING, DIAMOND));
 
         players.register("cary", "10000");
-        players.drawCardTo("cary", new Card(SIX, HEART));
-        players.drawCardTo("cary", new Card(TEN, CLUB));
+        players.drawCardToPlayer("cary", new Card(SIX, HEART));
+        players.drawCardToPlayer("cary", new Card(TEN, CLUB));
 
         List<GameScoreResultDto> scoreResults = GameScoreResultDto.from(players);
 
@@ -76,5 +76,17 @@ public class PlayersTest {
                         tuple("pobi", List.of("A스페이드", "K다이아몬드"), 21),
                         tuple("cary", List.of("6하트", "10클로버"), 16));
 
+    }
+
+    @Test
+    void 플레이어의_핸드를_보여준다() {
+        Players players = new Players();
+        players.register("pobi", "10000");
+        players.drawCardToPlayer("pobi", new Card(ACE, SPADE));
+        players.drawCardToPlayer("pobi", new Card(KING, DIAMOND));
+
+        List<String> hand = players.showPlayerHand("pobi");
+
+        assertThat(hand).containsExactly("A스페이드", "K다이아몬드");
     }
 }

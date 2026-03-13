@@ -1,7 +1,6 @@
 package domain;
 
 public class Bet {
-
     private static final String NUMBER_FORMAT_ERROR_MESSAGE = "[ERROR] 베팅 금액은 숫자만 입력 가능합니다.";
     private static final String BET_UNIT_ERROR_MESSAGE = "[ERROR] 베팅 금액은 1000원 단위로만 입력 가능합니다.";
     private static final String MINIMUM_BET_AMOUNT_ERROR_MESSAGE = "[ERROR] 최소 베팅 금액은 1000원입니다.";

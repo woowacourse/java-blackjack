@@ -7,6 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class GameFinalResultDto {
+
     private final DealerResultDto dealerResult;
     private final Map<String, Integer> playerResults;
 

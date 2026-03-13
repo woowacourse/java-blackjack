@@ -15,7 +15,7 @@ public class Players {
         players.put(playerName, new Player(playerName, new Hand(), betAmount));
     }
 
-    public List<String> drawCardTo(String playerName, Card card) {
+    public List<String> drawCardToPlayer(String playerName, Card card) {
         Player targetPlayer = players.get(playerName);
         targetPlayer.receiveCard(card);
         return targetPlayer.showHand();

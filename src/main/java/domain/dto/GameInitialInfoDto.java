@@ -7,9 +7,9 @@ import java.util.List;
 
 public class GameInitialInfoDto {
 
-    private String dealerName;
-    private String dealerOpenCard;
-    private List<GameScoreResultDto> playerResults;
+    private final String dealerName;
+    private final String dealerOpenCard;
+    private final List<GameScoreResultDto> playerResults;
 
     private GameInitialInfoDto(String dealerName, String dealerOpenCard, List<GameScoreResultDto> playerResults) {
         this.dealerName = dealerName;

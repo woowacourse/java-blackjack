@@ -25,16 +25,16 @@ public class GameResultTest {
 
         Players players = new Players();
         players.register("pobi", "10000");
-        players.drawCardTo("pobi", new Card(EIGHT, HEART));
-        players.drawCardTo("pobi", new Card(NINE, HEART));
+        players.drawCardToPlayer("pobi", new Card(EIGHT, HEART));
+        players.drawCardToPlayer("pobi", new Card(NINE, HEART));
 
         players.register("cary", "10000");
-        players.drawCardTo("cary", new Card(TEN, HEART));
-        players.drawCardTo("cary", new Card(JACK, HEART));
+        players.drawCardToPlayer("cary", new Card(TEN, HEART));
+        players.drawCardToPlayer("cary", new Card(JACK, HEART));
 
         players.register("jason", "10000");
-        players.drawCardTo("jason", new Card(ACE, HEART));
-        players.drawCardTo("jason", new Card(QUEEN, HEART));
+        players.drawCardToPlayer("jason", new Card(ACE, HEART));
+        players.drawCardToPlayer("jason", new Card(QUEEN, HEART));
 
         GameResult gameResult = GameResult.of(dealer, players);
 

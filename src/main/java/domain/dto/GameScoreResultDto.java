@@ -7,9 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameScoreResultDto {
-    String playerName;
-    List<String> hand;
-    int score;
+
+    private final String playerName;
+    private final List<String> hand;
+    private final int score;
 
     private GameScoreResultDto(String playerName, List<String> hand, int result) {
         this.playerName = playerName;

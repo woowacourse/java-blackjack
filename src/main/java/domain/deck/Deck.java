@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Deck {
     private final Shuffle shuffle;
-    List<Card> cards = new ArrayList<>();
+    private final List<Card> cards = new ArrayList<>();
 
     public Deck(Shuffle shuffle) {
         this.shuffle = shuffle;
