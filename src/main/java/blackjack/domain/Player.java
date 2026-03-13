@@ -9,22 +9,17 @@ public class Player extends Participant {
         this.money = money;
     }
 
+    @Override
     public int calculateFinalProfit(Participant dealer) {
-        if (this.isBlackjack() && dealer.isBlackjack()) {
+        if (isBlackjack() && dealer.isBlackjack()) {
             return money.getBettingMoney();
         }
-
-        if (this.isBlackjack() && !dealer.isBlackjack()) {
+        if (isBlackjack()) {
             return (int) (money.getBettingMoney() * 1.5);
         }
-
-        if (this.isBust() || dealer.isBlackjack()) {
+        if (isBust() || dealer.isBlackjack() || (calculateTotalScore() < dealer.calculateTotalScore() && !dealer.isBust())) {
             return -money.getBettingMoney();
         }
-
-        if (this.calculateTotalScore() > dealer.calculateTotalScore()) {
-            return money.getBettingMoney();
-        }
-        return 0;
+        return money.getBettingMoney();
     }
 }

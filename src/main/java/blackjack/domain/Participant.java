@@ -52,4 +52,8 @@ public abstract class Participant {
     public GameResult judgeResult(List<Participant> players, Participant dealer) {
         return new GameResult(new HashMap<>(), new HashMap<>());
     }
+
+    public int calculateFinalProfit(Participant dealer) {
+        return 0;
+    }
 }
