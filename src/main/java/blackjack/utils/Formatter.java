@@ -4,12 +4,12 @@ import java.text.DecimalFormat;
 
 public final class Formatter {
 
+    private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("###,###");
     private Formatter() {
 
     }
 
     public static String amountFormat(final int amount) {
-        final DecimalFormat decimalFormat = new DecimalFormat("###,###");
-        return decimalFormat.format(amount);
+        return DECIMAL_FORMAT.format(amount);
     }
 }
