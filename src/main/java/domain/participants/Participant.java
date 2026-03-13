@@ -2,6 +2,7 @@ package domain.participants;
 
 import domain.card.Hand;
 import domain.card.vo.Card;
+import domain.hitStrategy.HitStrategy;
 import domain.state.Started;
 import domain.state.State;
 
@@ -10,12 +11,14 @@ public abstract class Participant {
     private static final int MAX_NAME_SIZE = 7;
 
     protected final String name;
+    protected final HitStrategy hitStrategy;
     protected State state;
 
-    protected Participant(String name, Hand hand) {
+    protected Participant(String name, Hand hand, HitStrategy hitStrategy) {
         validateNameLength(name);
         this.name = name;
         this.state = getStartState(hand);
+        this.hitStrategy = hitStrategy;
     }
 
     private void validateNameLength(String name) {

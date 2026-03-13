@@ -37,9 +37,7 @@ public abstract class Finished extends Started {
 
     @Override
     public State stay() {
-        throw new IllegalStateException(
-                "끝난 State 입니다. stay 할 수 없습니다. hand: %s, State: %s".formatted(
-                        hand.toString(), toString()));
+        return this;
     }
 
     @Override

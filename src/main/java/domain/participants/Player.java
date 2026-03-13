@@ -9,19 +9,17 @@ public class Player extends Participant {
     private static final HitStrategy DEFAULT_HIT_STRATEGY = new UntilBustHitStrategy();
 
     protected final Betting betting;
-    private final HitStrategy hitStrategy;
 
     public Player(String name, Hand hand, Betting betting, HitStrategy hitStrategy) {
-        super(name, hand);
+        super(name, hand, hitStrategy);
         this.betting = betting;
-        this.hitStrategy = hitStrategy;
     }
 
-    public static Player createDefaultStrategy(String name, Hand hand, Betting cost) {
-        return new Player(name, hand, cost, DEFAULT_HIT_STRATEGY);
+    public static HitStrategy getDefaultHitStrategy() {
+        return DEFAULT_HIT_STRATEGY;
     }
 
-    public Integer getProfit(Dealer dealer) {
+    public Integer getProfit(Participant dealer) {
         return state.getProfit(dealer.getState(), betting.amount());
     }
 

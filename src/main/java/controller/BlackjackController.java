@@ -5,7 +5,9 @@ import domain.card.Deck;
 import domain.card.Hand;
 import domain.card.deckMaker.DeckMaker;
 import domain.hitStrategy.CasinoDealerHitStrategy;
+import domain.hitStrategy.HitStrategy;
 import domain.participants.Dealer;
+import domain.participants.Participant;
 import domain.participants.Player;
 import dto.DealerDrawDto;
 import dto.NamesDto;
@@ -29,11 +31,11 @@ public class BlackjackController {
         this.outputView = outputView;
     }
 
-    public void start(final DeckMaker deckMaker) {
+    public void start(final DeckMaker deckMaker, HitStrategy dealerStrategy, HitStrategy playerHitStrategy) {
         Deck deck = Deck.createFromDeckMaker(deckMaker);
-        Dealer dealer = Dealer.createDefaultStrategy(Hand.createFromDeck(deck));
-        List<Player> players = readPlayersInfo().stream()
-                .map(player -> player.toDefaultStrategyPlayer(Hand.createFromDeck(deck)))
+        Participant dealer = new Dealer(Hand.createFromDeck(deck), dealerStrategy);
+        List<Participant> players = readPlayersInfo().stream()
+                .map(player -> player.toDefaultStrategyPlayer(Hand.createFromDeck(deck), playerHitStrategy))
                 .toList();
 
         printCards(dealer, players);
@@ -53,8 +55,8 @@ public class BlackjackController {
         return playerCreateDtos;
     }
 
-    private void drawPlayerHandAndPrint(List<Player> players, Deck deck) {
-        for (Player player : players) {
+    private void drawPlayerHandAndPrint(List<Participant> players, Deck deck) {
+        for (Participant player : players) {
             while (player.canDraw()) {
                 if (!inputView.readNeedToHit(player.getName())) {
                     player.stay();
@@ -66,35 +68,36 @@ public class BlackjackController {
         }
     }
 
-    private void printAllStatus(Dealer dealer, List<Player> players) {
+    private void printAllStatus(Participant dealer, List<Participant> players) {
         outputView.showCardsAndScore(PlayerCardsDto.fromParticipant(dealer));
         players.forEach(player -> outputView.showCardsAndScore(PlayerCardsDto.fromParticipant(player)));
         outputView.showResultStatistics(getStatisticsDtos(dealer, players), dealer.getName());
     }
 
-    private void printCards(Dealer dealer, List<Player> players) {
+    private void printCards(Participant dealer, List<Participant> players) {
         outputView.drawCard(NamesDto.fromDealerAndPlayers(dealer, players));
         outputView.showOnlyOneCard(PlayerCardsDto.fromParticipant(dealer));
         outputView.showPlayersCards(PlayersCardsDto.fromPlayers(players));
     }
 
-    private List<StatisticsDto> getStatisticsDtos(Dealer dealer, List<Player> players) {
+    private List<StatisticsDto> getStatisticsDtos(Participant dealer, List<Participant> players) {
         List<StatisticsDto> statisticsDtos = new ArrayList<>();
-        for (Player player : players) {
+        for (Participant player : players) {
             String playerName = player.getName();
-            StatisticsDto statisticsDto = new StatisticsDto(playerName, player.getProfit(dealer));
+            StatisticsDto statisticsDto = new StatisticsDto(playerName, ((Player) player).getProfit(dealer));
             statisticsDtos.add(statisticsDto);
         }
 
         return statisticsDtos;
     }
 
-    private void drawDealerHandAndPrint(Dealer dealer, Deck deck) {
+    private void drawDealerHandAndPrint(Participant dealer, Deck deck) {
         while (dealer.canDraw()) {
             dealer.drawCard(deck.drawCard());
             outputView.drawDealer(
                     new DealerDrawDto(dealer.getName(), CasinoDealerHitStrategy.BOUNDARY));
             outputView.showCards(PlayerCardsDto.fromParticipant(dealer));
         }
+        dealer.stay();
     }
 }

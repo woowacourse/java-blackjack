@@ -17,11 +17,11 @@ public class TestFixture {
     private static final Betting DEFAULT_BETTING = new Betting(10000);
 
     public static Player createDefaultPlayerByRank(List<Rank> ranks) {
-        return Player.createDefaultStrategy("익명", createHandByRank(ranks), DEFAULT_BETTING);
+        return new Player("익명", createHandByRank(ranks), DEFAULT_BETTING, Player.getDefaultHitStrategy());
     }
 
     public static Dealer createDefaultDealer(List<Rank> ranks) {
-        return Dealer.createDefaultStrategy(createHandByRank(ranks));
+        return new Dealer(createHandByRank(ranks), Dealer.getDefaultHitStrategy());
     }
 
     public static Hand createHandByRank(List<Rank> ranks) {

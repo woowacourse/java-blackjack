@@ -1,6 +1,8 @@
 import controller.BlackjackController;
 import domain.card.deckMaker.DeckMaker;
 import domain.card.deckMaker.OneRandomDeckMaker;
+import domain.participants.Dealer;
+import domain.participants.Player;
 import view.InputView;
 import view.OutputView;
 
@@ -12,6 +14,6 @@ public class Application {
         DeckMaker deckMaker = new OneRandomDeckMaker();
         BlackjackController controller = new BlackjackController(inputView, outputView);
 
-        controller.start(deckMaker);
+        controller.start(deckMaker, Player.getDefaultHitStrategy(), Dealer.getDefaultHitStrategy());
     }
 }

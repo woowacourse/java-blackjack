@@ -2,6 +2,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import controller.BlackjackController;
 import domain.card.deckMaker.OneDeckMaker;
+import domain.participants.Dealer;
+import domain.participants.Player;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -75,7 +77,7 @@ class ApplicationTest {
         BlackjackController blackjackController = new BlackjackController(
                 new InputView(inputArrayInputStream), new OutputView(new PrintStream(byteArrayOutputStream)));
 
-        blackjackController.start(new OneDeckMaker());
+        blackjackController.start(new OneDeckMaker(), Dealer.getDefaultHitStrategy(), Player.getDefaultHitStrategy());
         String outputString = byteArrayOutputStream.toString();
 
         assertThat(outputString).contains(expected.toArray(new String[0]));
