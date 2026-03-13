@@ -2,6 +2,7 @@ package blackjack.view;
 
 import blackjack.dto.EarningResultDto;
 import blackjack.dto.ParticipantDto;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class OutputView {
@@ -42,17 +43,17 @@ public class OutputView {
     public void printEarningResult(List<EarningResultDto> earningResultDtos) {
         System.out.println("\n## 최종 수익");
 
-        long dealerEarning = calculateDealerEarningAmount(earningResultDtos);
+        BigDecimal dealerEarning = calculateDealerEarningAmount(earningResultDtos);
         System.out.println("딜러: " + dealerEarning);
         for (EarningResultDto dto : earningResultDtos) {
-            System.out.printf("%s: %d%n", dto.name(), dto.earningAmount());
+            System.out.printf("%s: %s%n", dto.name(), dto.earningAmount());
         }
     }
 
-    private long calculateDealerEarningAmount(List<EarningResultDto> earningResultDtos) {
-        long dealerEarning = 0;
+    private BigDecimal calculateDealerEarningAmount(List<EarningResultDto> earningResultDtos) {
+        BigDecimal dealerEarning = BigDecimal.ZERO;
         for (EarningResultDto dto : earningResultDtos) {
-            dealerEarning += (dto.earningAmount() * -1);
+            dealerEarning = dealerEarning.add(dto.earningAmount().multiply(new BigDecimal("-1")));
         }
         return dealerEarning;
     }

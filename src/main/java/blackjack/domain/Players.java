@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ public class Players {
         }
     }
 
-    public Players(List<String> names, List<Long> bettingAmounts) {
+    public Players(List<String> names, List<BigDecimal> bettingAmounts) {
         int playerCount = names.size();
         for (int i = 0; i < playerCount; i++) {
             players.add(new Player(names.get(i), new BettingAmount(bettingAmounts.get(i))));

@@ -1,15 +1,17 @@
 package blackjack.domain;
 
+import java.math.BigDecimal;
+
 public enum GameResult {
-    WIN("승", 1),
-    TIE("무", 0),
-    LOSE("패", -1),
-    BLACKJACK_WIN("블랙잭승", 1.5);
+    WIN("승", new BigDecimal("1")),
+    TIE("무", new BigDecimal("0")),
+    LOSE("패", new BigDecimal("-1")),
+    BLACKJACK_WIN("블랙잭승", new BigDecimal("1.5"));
 
     private final String name;
-    private final double earningRate;
+    private final BigDecimal earningRate;
 
-    GameResult(String name, double earningRate) {
+    GameResult(String name, BigDecimal earningRate) {
         this.name = name;
         this.earningRate = earningRate;
     }
@@ -18,7 +20,7 @@ public enum GameResult {
         return name;
     }
 
-    public double getEarningRate() {
+    public BigDecimal getEarningRate() {
         return earningRate;
     }
 }

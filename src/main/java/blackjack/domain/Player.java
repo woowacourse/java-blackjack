@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import java.math.BigDecimal;
+
 public class Player extends Participant {
 
     private static final int BLACKJACK_POINT = 21;
@@ -60,7 +62,7 @@ public class Player extends Participant {
         return GameResult.BLACKJACK_WIN;
     }
 
-    public long calculateEarningAmount(Dealer dealer) {
+    public BigDecimal calculateEarningAmount(Dealer dealer) {
         GameResult gameResult = compareResult(dealer);
         return bettingAmount.calculateEarningAmount(gameResult);
     }

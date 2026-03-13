@@ -1,20 +1,22 @@
 package blackjack.domain;
 
-public class BettingAmount {
-    private final long bettingAmount;
-    private final int MINIMUM_AMOUNT = 0;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
-    public BettingAmount(long bettingAmount) {
+public class BettingAmount {
+    private final BigDecimal bettingAmount;
+
+    public BettingAmount(BigDecimal bettingAmount) {
         validate(bettingAmount);
         this.bettingAmount = bettingAmount;
     }
 
-    public long calculateEarningAmount(GameResult gameResult) {
-        return (long) (bettingAmount * gameResult.getEarningRate());
+    public BigDecimal calculateEarningAmount(GameResult gameResult) {
+        return gameResult.getEarningRate().multiply(bettingAmount).setScale(0, RoundingMode.DOWN);
     }
 
-    private void validate(long bettingAmount) {
-        if (bettingAmount <= MINIMUM_AMOUNT) {
+    private void validate(BigDecimal bettingAmount) {
+        if (bettingAmount.compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("[ERROR]: 0원 초과의 값을 입력하세요.");
         }
     }

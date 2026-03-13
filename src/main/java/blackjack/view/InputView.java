@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -19,8 +20,8 @@ public class InputView {
         return sc.nextLine().equals("y");
     }
 
-    public long readBettingAmount(String name) {
+    public BigDecimal readBettingAmount(String name) {
         System.out.printf("%n%s의 배팅 금액은?%n", name);
-        return Long.parseLong(sc.nextLine());
+        return new BigDecimal(sc.nextLine());
     }
 }

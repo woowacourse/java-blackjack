@@ -10,6 +10,7 @@ import blackjack.dto.EarningResultDto;
 import blackjack.dto.ParticipantDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class BlackJackController {
 
     public void run() {
         List<String> names = inputView.readNames();
-        List<Long> bettingAmounts = readBettingAmount(names);
+        List<BigDecimal> bettingAmounts = readBettingAmount(names);
         Players players = new Players(names, bettingAmounts);
         Dealer dealer = new Dealer();
         Deck deck = new Deck();
@@ -38,8 +39,8 @@ public class BlackJackController {
         printFinalEarningResult(dealer, players);
     }
 
-    private List<Long> readBettingAmount(List<String> names) {
-        List<Long> bettingAmounts = new ArrayList<>();
+    private List<BigDecimal> readBettingAmount(List<String> names) {
+        List<BigDecimal> bettingAmounts = new ArrayList<>();
         for (String name : names) {
             bettingAmounts.add(inputView.readBettingAmount(name));
         }
