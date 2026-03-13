@@ -17,6 +17,8 @@ public class Participants {
     private final Map<String, Player> players = new ConcurrentHashMap<>();
 
     public void addPlayer(Player player) {
+        dealer.validateSameName(player.getName());
+
         if(players.containsKey(player.getName())) {
             throw new IllegalArgumentException((ErrorMessage.DUPLICATED_NAME.getMessage()));
         }

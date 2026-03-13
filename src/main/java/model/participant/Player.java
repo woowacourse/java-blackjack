@@ -1,8 +1,5 @@
 package model.participant;
 
-import static model.participant.Dealer.DEALER_NAME;
-
-import constant.ErrorMessage;
 import java.util.Objects;
 import model.result.ProfitCalculator;
 import dto.status.DealerStatus;
@@ -14,7 +11,7 @@ public class Player extends Participant {
     private Integer betAmount = 0;
 
     public Player(PlayerName name) {
-        super(validate(name));
+        super(name);
     }
 
     @Override
@@ -44,12 +41,5 @@ public class Player extends Participant {
         PlayerStatus playerStatus = new PlayerStatus(super.getName(), super.getScore(), betAmount, super.isBust(), super.isBlackJack());
         Integer profit = ProfitCalculator.calculateBetAmount(dealerStatus, playerStatus);
         return new PlayerWinning(getName(), profit);
-    }
-
-    private static PlayerName validate(PlayerName name) {
-        if(name.getName().equals(DEALER_NAME)) {
-            throw new IllegalArgumentException(ErrorMessage.NO_PLAYER_NAME_DEALER.getMessage());
-        }
-        return name;
     }
 }

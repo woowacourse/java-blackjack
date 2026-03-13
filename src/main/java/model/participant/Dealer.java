@@ -1,9 +1,10 @@
 package model.participant;
 
+import constant.ErrorMessage;
 import dto.status.DealerStatus;
 
 public class Dealer extends Participant {
-    public static final String DEALER_NAME = "딜러";
+    private static final String DEALER_NAME = "딜러";
     private static final Integer CARD_DRAW_THRESHOLD = 16;
 
     public Dealer() {
@@ -13,6 +14,12 @@ public class Dealer extends Participant {
     @Override
     public String getFirstCard() {
         return super.getFirstCard();
+    }
+
+    public void validateSameName(String name) {
+        if(name.equals(DEALER_NAME)) {
+            throw new IllegalArgumentException(ErrorMessage.NO_PLAYER_NAME_DEALER.getMessage());
+        }
     }
 
     public boolean canDraw() {
