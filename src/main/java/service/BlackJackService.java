@@ -1,8 +1,8 @@
 package service;
 
 import model.Card;
-import dto.ParticipantWinning;
-import dto.PlayerProfit;
+import dto.ParticipantWinningResponse;
+import dto.PlayerProfitResponse;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,28 +43,28 @@ public class BlackJackService {
         return participant.getHandSize() == BLACKJACK_HAND_SIZE && participant.getScore() == BLACKJACK_SCORE;
     }
 
-    public ParticipantWinning getGameResult(Players players, Dealer dealer) {
-        List<PlayerProfit> playersWinning = getPlayersResult(players, dealer);
+    public ParticipantWinningResponse getGameResult(Players players, Dealer dealer) {
+        List<PlayerProfitResponse> playersWinning = getPlayersResult(players, dealer);
 
-        return new ParticipantWinning(getDealerResult(playersWinning), playersWinning);
+        return new ParticipantWinningResponse(getDealerResult(playersWinning), playersWinning);
     }
 
-    private List<PlayerProfit> getPlayersResult(Players players, Dealer dealer) {
-        List<PlayerProfit> playersWinning = new ArrayList<>();
+    private List<PlayerProfitResponse> getPlayersResult(Players players, Dealer dealer) {
+        List<PlayerProfitResponse> playersWinning = new ArrayList<>();
 
         for (Player player : players.getPlayers()) {
             MatchStatus matchStatus = getPlayerResult(player, dealer);
             BigDecimal profit = BigDecimal.valueOf(player.getBettingMoney().get())
                     .multiply(matchStatus.getMultiplier());
-            playersWinning.add(new PlayerProfit(player.getNameValue(), profit));
+            playersWinning.add(new PlayerProfitResponse(player.getNameValue(), profit));
         }
 
         return playersWinning;
     }
 
-    private BigDecimal getDealerResult(List<PlayerProfit> playersWinning) {
+    private BigDecimal getDealerResult(List<PlayerProfitResponse> playersWinning) {
         return playersWinning.stream()
-                .map(PlayerProfit::profit)
+                .map(PlayerProfitResponse::profit)
                 .reduce(BigDecimal.ZERO, BigDecimal::add)
                 .negate();
     }

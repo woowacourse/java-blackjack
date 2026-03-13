@@ -1,6 +1,6 @@
 package controller;
 
-import dto.PlayerResult;
+import dto.PlayerResultResponse;
 import java.util.ArrayList;
 import java.util.List;
 import model.Dealer;
@@ -36,7 +36,7 @@ public class BlackJackController {
 
     private void initDraw(Dealer dealer, Players players) {
         initParticipantDraw(dealer);
-        List<PlayerResult> playersResult = new ArrayList<>();
+        List<PlayerResultResponse> playersResult = new ArrayList<>();
 
         for (Player player : players.getPlayers()) {
             initParticipantDraw(player);
@@ -84,18 +84,18 @@ public class BlackJackController {
     }
 
     private void printPlayersScore(Dealer dealer, Players players) {
-        List<PlayerResult> playerResults = new ArrayList<>();
-        playerResults.add(toPlayerResult(dealer));
+        List<PlayerResultResponse> playerResultResponses = new ArrayList<>();
+        playerResultResponses.add(toPlayerResult(dealer));
 
         for (Player player : players.getPlayers()) {
-            playerResults.add(toPlayerResult(player));
+            playerResultResponses.add(toPlayerResult(player));
         }
 
-        OutputView.printPlayersScore(playerResults);
+        OutputView.printPlayersScore(playerResultResponses);
     }
 
-    private PlayerResult toPlayerResult(Participant participant) {
-        return new PlayerResult(participant.getNameValue(), participant.getHand(), participant.getScore());
+    private PlayerResultResponse toPlayerResult(Participant participant) {
+        return new PlayerResultResponse(participant.getNameValue(), participant.getHand(), participant.getScore());
     }
 
 }

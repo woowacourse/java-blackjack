@@ -13,7 +13,7 @@ import model.PlayerName;
 import model.Players;
 import model.Shape;
 import model.Card;
-import dto.ParticipantWinning;
+import dto.ParticipantWinningResponse;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -148,7 +148,7 @@ public class BlackJackServiceTest {
         playerCards.forEach(player::draw);
         Dealer dealer = new Dealer();
         dealerCards.forEach(dealer::draw);
-        ParticipantWinning result = service.getGameResult(new Players(List.of(player)), dealer);
+        ParticipantWinningResponse result = service.getGameResult(new Players(List.of(player)), dealer);
         assertThat(result.playersWinning().getFirst().profit()).isEqualByComparingTo(expectedProfit);
     }
 
@@ -161,7 +161,7 @@ public class BlackJackServiceTest {
         Dealer dealer = new Dealer();
         dealer.draw(new Card(Shape.SPADE, CardNumber.ACE));
         dealer.draw(new Card(Shape.SPADE, CardNumber.KING));
-        ParticipantWinning result = service.getGameResult(new Players(List.of(player)), dealer);
+        ParticipantWinningResponse result = service.getGameResult(new Players(List.of(player)), dealer);
         assertThat(result.playersWinning().getFirst().profit()).isEqualByComparingTo(money(0));
     }
 
@@ -174,7 +174,7 @@ public class BlackJackServiceTest {
         Dealer dealer = new Dealer();
         dealer.draw(new Card(Shape.CLOVER, CardNumber.TEN));
         dealer.draw(new Card(Shape.CLOVER, CardNumber.QUEEN));
-        ParticipantWinning result = service.getGameResult(new Players(List.of(player)), dealer);
+        ParticipantWinningResponse result = service.getGameResult(new Players(List.of(player)), dealer);
         assertThat(result.playersWinning().getFirst().profit()).isEqualByComparingTo(money(15000));
     }
 
@@ -187,7 +187,7 @@ public class BlackJackServiceTest {
         Dealer dealer = new Dealer();
         dealer.draw(new Card(Shape.SPADE, CardNumber.ACE));
         dealer.draw(new Card(Shape.SPADE, CardNumber.KING));
-        ParticipantWinning result = service.getGameResult(new Players(List.of(player)), dealer);
+        ParticipantWinningResponse result = service.getGameResult(new Players(List.of(player)), dealer);
         assertThat(result.playersWinning().getFirst().profit()).isEqualByComparingTo(money(-10000));
     }
 
@@ -201,7 +201,7 @@ public class BlackJackServiceTest {
         Dealer dealer = new Dealer();
         dealer.draw(new Card(Shape.SPADE, CardNumber.ACE));
         dealer.draw(new Card(Shape.SPADE, CardNumber.KING));
-        ParticipantWinning result = service.getGameResult(new Players(List.of(player)), dealer);
+        ParticipantWinningResponse result = service.getGameResult(new Players(List.of(player)), dealer);
         assertThat(result.playersWinning().getFirst().profit()).isEqualByComparingTo(money(-10000));
     }
 
@@ -215,7 +215,7 @@ public class BlackJackServiceTest {
         Dealer dealer = new Dealer();
         dealer.draw(new Card(Shape.CLOVER, CardNumber.TEN));
         dealer.draw(new Card(Shape.CLOVER, CardNumber.NINE));
-        ParticipantWinning result = service.getGameResult(new Players(List.of(player)), dealer);
+        ParticipantWinningResponse result = service.getGameResult(new Players(List.of(player)), dealer);
         assertThat(result.playersWinning().getFirst().profit()).isEqualByComparingTo(money(10000));
     }
 
@@ -244,7 +244,7 @@ public class BlackJackServiceTest {
         dealer.draw(new Card(Shape.DIAMOND, CardNumber.TEN));
         dealer.draw(new Card(Shape.DIAMOND, CardNumber.EIGHT));
 
-        ParticipantWinning result = service.getGameResult(new Players(List.of(player1, player2)), dealer);
+        ParticipantWinningResponse result = service.getGameResult(new Players(List.of(player1, player2)), dealer);
         assertThat(result.dealerProfit()).isEqualByComparingTo(money(-5000));
     }
 }
