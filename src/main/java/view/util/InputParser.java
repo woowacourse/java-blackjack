@@ -1,5 +1,6 @@
 package view.util;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,9 +16,9 @@ public class InputParser {
                 .collect(Collectors.toList());
     }
 
-    public static int parseInt(String input) {
+    public static BigDecimal parseBigDecimal(String input) {
         try {
-            return Integer.parseInt(input.trim());
+            return new BigDecimal(input);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException(NUMBER_FORMAT_EXCEPTION_MESSAGE);
         }

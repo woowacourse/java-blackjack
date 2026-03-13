@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import service.BlackJackService;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -25,10 +26,10 @@ public class BlackJackServiceTest {
     @BeforeEach
     void init() {
         dealer = new Dealer();
-        winPlayer = new Player(new ParticipantInfo("이김", new Hand()), new Money(0));
-        defeatPlayer = new Player(new ParticipantInfo("짐", new Hand()), new Money(0));
-        drawPlayer = new Player(new ParticipantInfo("비김", new Hand()), new Money(0));
-        bustPlayer = new Player(new ParticipantInfo("버스트", new Hand()), new Money(0));
+        winPlayer = new Player(new ParticipantInfo("이김", new Hand()), new Money(BigDecimal.valueOf(0)));
+        defeatPlayer = new Player(new ParticipantInfo("짐", new Hand()), new Money(BigDecimal.valueOf(0)));
+        drawPlayer = new Player(new ParticipantInfo("비김", new Hand()), new Money(BigDecimal.valueOf(0)));
+        bustPlayer = new Player(new ParticipantInfo("버스트", new Hand()), new Money(BigDecimal.valueOf(0)));
         dealer.keepCard(new Card(Rank.FIVE, Pattern.CLOVER));
         winPlayer.keepCard(new Card(Rank.SIX, Pattern.CLOVER));
         defeatPlayer.keepCard(new Card(Rank.FOUR, Pattern.CLOVER));

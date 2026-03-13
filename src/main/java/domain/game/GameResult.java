@@ -1,16 +1,18 @@
 package domain.game;
 
+import java.math.BigDecimal;
+
 public enum GameResult {
 
-    WIN("승", 1.0),
-    PUSH("무", 0.0),
-    DEFEAT("패", -1.0),
-    BLACKJACK_WIN("블랙잭승", 1.5);
+    WIN("승", BigDecimal.valueOf(1.0)),
+    PUSH("무", BigDecimal.valueOf(0.0)),
+    DEFEAT("패", BigDecimal.valueOf(-1.0)),
+    BLACKJACK_WIN("블랙잭승", BigDecimal.valueOf(1.5));
 
     private final String info;
-    private final Double yield;
+    private final BigDecimal yield;
 
-    GameResult(String info, Double yield) {
+    GameResult(String info, BigDecimal yield) {
         this.info = info;
         this.yield = yield;
     }
@@ -19,7 +21,7 @@ public enum GameResult {
         return info;
     }
 
-    public Double getYield() {
+    public BigDecimal getYield() {
         return yield;
     }
 }

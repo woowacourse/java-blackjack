@@ -2,11 +2,12 @@ package domain.game;
 
 import domain.participant.Player;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 public class Result {
     private final Map<Player, GameResult> playersResult;
-    private final int dealerResult;
+    private final BigDecimal dealerResult;
 
     public Result(Map<Player, GameResult> playersResult) {
         this.playersResult = playersResult;
@@ -17,26 +18,26 @@ public class Result {
         return Collections.unmodifiableMap(playersResult);
     }
 
-    public int getDealerResult() {
+    public BigDecimal getDealerResult() {
         return dealerResult;
     }
 
-    private int calculateDealerResult(Map<Player, GameResult> playersResult) {
-        int dealerResult = 0;
+    private BigDecimal calculateDealerResult(Map<Player, GameResult> playersResult) {
+        BigDecimal dealerResult = BigDecimal.ZERO;
         for (Player player : playersResult.keySet()) {
             GameResult playerOutcome = playersResult.get(player);
-            int playerBettingMoney = player.getBettingMoney();
-            double playerYield = playerOutcome.getYield();
-            dealerResult += (int) (playerBettingMoney * playerYield);
+            BigDecimal playerBettingMoney = player.getBettingMoney();
+            BigDecimal playerYield = playerOutcome.getYield();
+            dealerResult=dealerResult.add(playerBettingMoney.multiply(playerYield));
         }
-        return -dealerResult;
+        return dealerResult.multiply(BigDecimal.valueOf(-1));
     }
 
-    public Map<String, Integer> calculatePlayerYield(Map<Player, GameResult> playersResult) {
-        Map<String, Integer> playerYield = new HashMap<>();
+    public Map<String, BigDecimal> calculatePlayerYield(Map<Player, GameResult> playersResult) {
+        Map<String, BigDecimal> playerYield = new HashMap<>();
         for (Player player : playersResult.keySet()) {
             playerYield.put(player.getName(),
-                    (int) ((double) player.getBettingMoney() * playersResult.get(player).getYield()));
+                    player.getBettingMoney().multiply(playersResult.get(player).getYield()));
         }
         return playerYield;
     }

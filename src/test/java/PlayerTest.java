@@ -9,6 +9,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class PlayerTest {
@@ -23,7 +25,7 @@ public class PlayerTest {
         dummyHand = new Hand();
         name = "제발";
         participantInfo = new ParticipantInfo(name, dummyHand);
-        bettingMoney = new Money(0);
+        bettingMoney = new Money(BigDecimal.valueOf(0));
     }
 
     @Test
@@ -54,9 +56,9 @@ public class PlayerTest {
 
     @Test
     void 플레이어는_배팅한_금액을_알고있다() {
-        Player player = new Player(participantInfo, new Money(10000));
-        int amount = player.getBettingMoney();
+        Player player = new Player(participantInfo, new Money(BigDecimal.valueOf(10000)));
+        BigDecimal amount = player.getBettingMoney();
 
-        assertThat(amount).isEqualTo(10000);
+        assertThat(amount).isEqualTo(BigDecimal.valueOf(10000));
     }
 }

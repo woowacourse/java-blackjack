@@ -2,6 +2,8 @@ package domain.participant;
 
 import domain.card.Card;
 
+import java.math.BigDecimal;
+
 public abstract class Participant {
     private final ParticipantInfo participantInfo;
     private final Money bettingMoney;
@@ -33,7 +35,7 @@ public abstract class Participant {
         return participantInfo.getHand();
     }
 
-    public int getBettingMoney() {
+    public BigDecimal getBettingMoney() {
         return bettingMoney.getBettingMoney();
     }
 

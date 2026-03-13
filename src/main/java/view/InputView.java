@@ -3,6 +3,7 @@ package view;
 import view.util.InputParser;
 import view.util.InputValidator;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Scanner;
 
@@ -22,10 +23,10 @@ public class InputView {
         return HIT_COMMAND.equals(input);
     }
 
-    public static int inputBettingMoney() {
+    public static BigDecimal inputBettingMoney() {
         String input = readLine();
         InputValidator.validateMoneyInput(input);
-        return InputParser.parseInt(input);
+        return InputParser.parseBigDecimal(input);
     }
 
     private static String readLine() {
