@@ -7,6 +7,7 @@ public class Hand {
 
     private static final int BLACKJACK_SCORE = 21;
     private static final int REDUCED_SCORE_FROM_ACE = 10;
+    private static final int INITIAL_CARD_COUNT = 2;
 
     private final List<Card> cards;
 
@@ -39,7 +40,7 @@ public class Hand {
     }
 
     private Integer calculateInitialBaseScore() {
-        return cards.subList(0, 2).stream()
+        return cards.subList(0, INITIAL_CARD_COUNT).stream()
                 .map(Card::getScore)
                 .reduce(0, Integer::sum);
     }
