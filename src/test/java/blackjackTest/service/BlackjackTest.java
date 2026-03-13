@@ -95,4 +95,22 @@ public class BlackjackTest {
 
         assertThat(profit).isEqualTo(10000);
     }
+
+    @Test
+    void 플레이어가_딜러보다_점수가_높으면_배팅금액_돌려받음() {
+        Money bettingAmount = new Money(10000);
+        Player pobi = new Player("pobi", bettingAmount);
+        Dealer dealer = new Dealer();
+
+        pobi.receiveOneCard(new Card(Rank.TEN, Shape.HEART));
+        pobi.receiveOneCard(new Card(Rank.TWO, Shape.SPADE));
+        pobi.receiveOneCard(new Card(Rank.EIGHT, Shape.CLOVER));
+
+        dealer.receiveOneCard(new Card(Rank.EIGHT, Shape.CLOVER));
+        dealer.receiveOneCard(new Card(Rank.QUEEN, Shape.SPADE));
+
+        int profit = pobi.calculateFinalProfit(dealer);
+
+        assertThat(profit).isEqualTo(10000);
+    }
 }
