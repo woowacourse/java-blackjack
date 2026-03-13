@@ -1,11 +1,9 @@
-package model;
+package model.participant;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import constant.ErrorMessage;
-import model.participant.Player;
-import model.participant.PlayerName;
 import org.junit.jupiter.api.Test;
 
 public class PlayerTest {

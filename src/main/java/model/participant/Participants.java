@@ -87,9 +87,8 @@ public class Participants {
 
     private Player getPlayer(String playerName) {
         if(!players.containsKey(playerName)) {
-            throw new IllegalArgumentException("없");
+            throw new IllegalArgumentException(ErrorMessage.NO_PLAYER_NAME.getMessage());
         }
         return players.get(playerName);
     }
-
 }

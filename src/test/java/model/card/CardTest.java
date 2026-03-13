@@ -1,10 +1,7 @@
-package model;
+package model.card;
 
 import static org.assertj.core.api.Assertions.*;
 
-import model.card.Card;
-import model.card.CardNumber;
-import model.card.Shape;
 import org.junit.jupiter.api.Test;
 
 public class CardTest {
@@ -20,4 +17,12 @@ public class CardTest {
 
     }
 
+    @Test
+    public void ACE_카드_구분_정상_작동() {
+        Card card1 = new Card(Shape.DIAMOND, CardNumber.NINE);
+        Card card2 = new Card(Shape.DIAMOND, CardNumber.ACE);
+
+        assertThat(card1.isAce()).isFalse();
+        assertThat(card2.isAce()).isTrue();
+    }
 }

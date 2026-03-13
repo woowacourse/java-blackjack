@@ -1,40 +1,58 @@
-package model;
+package model.participant;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
+import constant.ErrorMessage;
 import java.util.List;
 import model.card.Card;
 import model.card.CardNumber;
 import model.card.Shape;
-import dto.result.PlayerResult;
-import model.participant.Participant;
-import model.participant.PlayerName;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
-
-public class ParticipantTest {
-
+public class ParticipantHandTest {
     @Test
-    public void 결과_출력_정상_작동() {
-        Participant participant = new Participant(new PlayerName("jason"));
+    public void 카드_넣기_정상_작동() {
+        ParticipantHand participantHand = new ParticipantHand();
 
-        PlayerResult result = participant.getResult();
+        participantHand.addDeck(new Card(Shape.CLOVER, CardNumber.ACE));
 
-        assertThat(result.name()).isEqualTo("jason");
-        assertThat(result.deck().isEmpty()).isTrue();
-        assertThat(result.score()).isEqualTo(0);
+        List<Card> cards = participantHand.getDeck();
+        Card firstCard = cards.getFirst();
+
+        assertThat(cards.size()).isEqualTo(1);
+        assertThat(firstCard.shape()).isEqualTo(Shape.CLOVER);
+        assertThat(firstCard.cardNumber()).isEqualTo(CardNumber.ACE);
     }
 
     @Test
-    public void 카드_받기_정상_작동() {
-        Card card = new Card(Shape.CLOVER, CardNumber.EIGHT);
-        Participant participant = new Participant(new PlayerName("jason"));
-        participant.addCard(card);
+    public void 카드_점수_정상_작동() {
+        ParticipantHand participantHand = new ParticipantHand();
 
-        List<String> deck = participant.getResult().deck();
+        participantHand.addDeck(new Card(Shape.CLOVER, CardNumber.ACE));
+        assertThat(participantHand.getScore()).isEqualTo(11);
 
-        assertThat(deck).contains(card.getString());
-        assertThat(deck.size()).isEqualTo(1);
+        participantHand.addDeck(new Card(Shape.CLOVER, CardNumber.KING));
+        assertThat(participantHand.getScore()).isEqualTo(21);
+
+        participantHand.addDeck(new Card(Shape.DIAMOND, CardNumber.ACE));
+        assertThat(participantHand.getScore()).isEqualTo(12);
+    }
+
+    @Test
+    public void 중복_카드_추가_예외() {
+        ParticipantHand participantHand = new ParticipantHand();
+        Card card = new Card(Shape.CLOVER, CardNumber.ACE);
+
+        participantHand.addDeck(card);
+        assertThatThrownBy(() -> participantHand.addDeck(card))
+                .isExactlyInstanceOf(IllegalArgumentException.class)
+                .hasMessage(ErrorMessage.DUPLICATED_CARD_IN_DECK.getMessage());
+
+        assertThatThrownBy(() -> participantHand.addDeck(new Card(Shape.CLOVER, CardNumber.ACE)))
+                .isExactlyInstanceOf(IllegalArgumentException.class)
+                .hasMessage(ErrorMessage.DUPLICATED_CARD_IN_DECK.getMessage());
     }
 
     @Test
@@ -43,11 +61,11 @@ public class ParticipantTest {
 
         participant.addCard(new Card(Shape.DIAMOND, CardNumber.NINE));
 
-        assertThat(participant.getResult().score()).isEqualTo(9);
+        Assertions.assertThat(participant.getResult().score()).isEqualTo(9);
 
         participant.addCard(new Card(Shape.DIAMOND, CardNumber.QUEEN));
 
-        assertThat(participant.getResult().score()).isEqualTo(19);
+        Assertions.assertThat(participant.getResult().score()).isEqualTo(19);
     }
 
     @Test
@@ -56,7 +74,7 @@ public class ParticipantTest {
 
         participant.addCard(new Card(Shape.DIAMOND, CardNumber.ACE));
 
-        assertThat(participant.getResult().score()).isEqualTo(11);
+        Assertions.assertThat(participant.getResult().score()).isEqualTo(11);
     }
 
     @Test
@@ -66,7 +84,7 @@ public class ParticipantTest {
         participant.addCard(new Card(Shape.DIAMOND, CardNumber.ACE));
         participant.addCard(new Card(Shape.HEART, CardNumber.ACE));
 
-        assertThat(participant.getResult().score()).isEqualTo(12);
+        Assertions.assertThat(participant.getResult().score()).isEqualTo(12);
     }
 
     @Test
@@ -77,7 +95,7 @@ public class ParticipantTest {
         participant.addCard(new Card(Shape.DIAMOND, CardNumber.QUEEN));
         participant.addCard(new Card(Shape.DIAMOND, CardNumber.ACE));
 
-        assertThat(participant.getResult().score()).isEqualTo(20);
+        Assertions.assertThat(participant.getResult().score()).isEqualTo(20);
     }
 
     @Test
@@ -87,7 +105,7 @@ public class ParticipantTest {
         participant.addCard(new Card(Shape.DIAMOND, CardNumber.NINE));
         participant.addCard(new Card(Shape.DIAMOND, CardNumber.ACE));
 
-        assertThat(participant.getResult().score()).isEqualTo(20);
+        Assertions.assertThat(participant.getResult().score()).isEqualTo(20);
     }
 
     @Test
@@ -97,11 +115,11 @@ public class ParticipantTest {
         participant.addCard(new Card(Shape.DIAMOND, CardNumber.KING));
         participant.addCard(new Card(Shape.DIAMOND, CardNumber.ACE));
 
-        assertThat(participant.isBust()).isFalse();
+        Assertions.assertThat(participant.isBust()).isFalse();
 
         participant.addCard(new Card(Shape.CLOVER, CardNumber.ACE));
 
-        assertThat(participant.isBust()).isTrue();
+        Assertions.assertThat(participant.isBust()).isTrue();
     }
 
     @Test
@@ -111,7 +129,7 @@ public class ParticipantTest {
         participant.addCard(new Card(Shape.DIAMOND, CardNumber.QUEEN));
         participant.addCard(new Card(Shape.DIAMOND, CardNumber.ACE));
 
-        assertThat(participant.isBlackJack()).isTrue();
+        Assertions.assertThat(participant.isBlackJack()).isTrue();
 
         Participant participant2 = new Participant(new PlayerName("player2"));
 
@@ -119,6 +137,6 @@ public class ParticipantTest {
         participant2.addCard(new Card(Shape.DIAMOND, CardNumber.NINE));
         participant2.addCard(new Card(Shape.HEART, CardNumber.ACE));
 
-        assertThat(participant2.isBlackJack()).isFalse();
+        Assertions.assertThat(participant2.isBlackJack()).isFalse();
     }
 }

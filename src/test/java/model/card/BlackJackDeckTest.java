@@ -1,12 +1,9 @@
-package model;
+package model.card;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import constant.ErrorMessage;
-import model.card.BlackJackDeck;
-import model.card.CardNumber;
-import model.card.Shape;
 import org.junit.jupiter.api.Test;
 
 public class BlackJackDeckTest {
