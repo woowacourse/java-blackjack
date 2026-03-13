@@ -18,8 +18,6 @@ public class Game {
         this.deck = deck;
         this.players = players;
         this.dealer = dealer;
-//        this.dealer = new Player(DEALER_NAME);
-//        dealer.addInitializedCard(deck);
     }
 
     public Map<MatchCase, Integer> calculateDealerMatch(Map<String, MatchCase> playerResult) {

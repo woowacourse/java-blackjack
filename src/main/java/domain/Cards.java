@@ -25,7 +25,7 @@ public class Cards {
     }
 
     public boolean isBlackjack() {
-        return calculateScore() == Game.BLACKJACK_VALUE && cards.size() == CARD_COUNT;
+        return getFinalScore() == Game.BLACKJACK_VALUE && cards.size() == CARD_COUNT;
     }
 
     public int calculateScore() {
