@@ -10,11 +10,7 @@ import org.junit.jupiter.api.Test;
 
 class GameTest {
     private static final List<String> PLAYER_NAMES = List.of("pobi", "terry", "rati", "gump");
-    private static final CardShuffleStrategy FIXED_SHUFFLE_STRATEGY = new CardShuffleStrategy() {
-        @Override
-        public void shuffle(List<Card> cards) {
-            //TODO: Mockito 사용으로 더미 구현 코드 제거 고민해볼 것
-        }
+    private static final CardShuffleStrategy FIXED_SHUFFLE_STRATEGY = cards -> {
     };
     private Game game;
 

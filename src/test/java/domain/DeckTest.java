@@ -4,16 +4,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import common.ErrorMessage;
-import java.util.List;
 import java.util.NoSuchElementException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class DeckTest {
-    private static final CardShuffleStrategy FIXED_CARD_SHUFFLE_STRATEGY = new CardShuffleStrategy() {
-        @Override
-        public void shuffle(List<Card> cards) {
-        }
+    private static final CardShuffleStrategy FIXED_CARD_SHUFFLE_STRATEGY = cards -> {
     };
 
     @Test

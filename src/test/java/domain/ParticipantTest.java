@@ -23,7 +23,6 @@ class ParticipantTest {
     }
 
     private static class TestParticipant extends Participant {
-        //TODO: Mockito 사용으로 더미 구현 코드 제거 고민해볼 것
         public TestParticipant(String name) {
             super(name);
         }
