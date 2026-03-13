@@ -14,6 +14,7 @@ public enum ErrorMessage {
     INPUT_WRONG("입력값은 'y' or 'n' 이어야 합니다."),
     HANDS_CARDS_SIZE("처음 게임 시작 시, 두장을 나눠줘야한다."),
     MONEY_RANGE("%d원 이상 배팅해야 합니다.".formatted(MIN_BETTING_MONEY)),
+    EXIST_PLAYER("존재하지 않는 플레이어입니다."),
     ;
 
 
