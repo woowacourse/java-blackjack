@@ -52,7 +52,7 @@ class GamblersTest {
         gamblers.dealAll(sd);
 
         //when
-        BlackjackResult result = BlackjackResult.from(dealer,gamblers);
+        BlackjackResult result = BlackjackResult.from(dealer, gamblers);
 
         //then
         assertThat(result.dealerProfit()).isEqualTo(-10000);

@@ -24,14 +24,21 @@ public abstract class Player {
         return handCard.isBust();
     }
 
-    public List<String> getCardInfo() {
-        return handCard.cardInfos();
+    public List<String> cards() {
+        return handCard.cards();
     }
 
     public boolean isBlackJack() {
         return handCard.isBlackJack();
     }
 
+    protected abstract int getOpenCardCount();
+
+    public List<String> getOpenCards() {
+        return handCard.getOpenCards(getOpenCardCount());
+    }
+
     public abstract String getName();
+
 }
 

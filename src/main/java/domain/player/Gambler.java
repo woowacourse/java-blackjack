@@ -1,8 +1,8 @@
 package domain.player;
 
-import domain.MatchResult;
-
 public class Gambler extends Player {
+
+    private static final int OPEN_CARD_COUNT = 2;
 
     private final Name name;
     private final Betting betting;
@@ -14,7 +14,7 @@ public class Gambler extends Player {
     }
 
     public int calculateReward(double rate) {
-        return  (int)(betting.amount() * rate);
+        return (int) (betting.amount() * rate);
     }
 
     @Override
@@ -22,4 +22,8 @@ public class Gambler extends Player {
         return name.name();
     }
 
+    @Override
+    protected int getOpenCardCount() {
+        return OPEN_CARD_COUNT;
+    }
 }

@@ -43,14 +43,10 @@ public class HandCard {
         cards.add(card);
     }
 
-    public List<String> cardInfos() {
+    public List<String> cards() {
         return cards.stream()
                 .map(Card::getCardInfo)
                 .toList();
-    }
-
-    public String firstCard() {
-        return cards.getFirst().getCardInfo();
     }
 
     public boolean isBust() {
@@ -59,6 +55,13 @@ public class HandCard {
 
     public boolean isBlackJack() {
         return cards.size() == INITIAL_CARD_COUNT && score() == BLACKJACK_MAX_LIMIT;
+    }
+
+    public List<String> getOpenCards(int openCardCount) {
+        return cards.stream()
+                .map(Card::getCardInfo)
+                .limit(openCardCount)
+                .toList();
     }
 
 }

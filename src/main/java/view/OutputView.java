@@ -1,7 +1,8 @@
 package view;
 
 import domain.BlackjackResult;
-import dto.PlayerCardInfo;
+import dto.PlayerCardDto;
+import dto.PlayerInitCardDto;
 import java.util.List;
 import java.util.Map;
 
@@ -23,12 +24,12 @@ public class OutputView {
         System.out.println(dealerName + "와 " + String.join(", ", gamblerNames) + "에게 2장을 나누었습니다.");
     }
 
-    public static void printDealerFirstCard(String dealerName, String card) {
-        System.out.println(dealerName + "카드: " + card);
+    public static void printPlayerInitCards(PlayerInitCardDto playerInitCardDto) {
+        System.out.println(playerInitCardDto.name() + "카드 : " + String.join(", ", playerInitCardDto.card()));
     }
 
-    public static void printGamblerCards(String name, PlayerCardInfo playerCardInfo) {
-        System.out.println(name + "카드 : " + String.join(", ", playerCardInfo.card()));
+    public static void printPlayerCards(PlayerCardDto playerCardDto) {
+        System.out.println(playerCardDto.name() + "카드 : " + String.join(", ", playerCardDto.card()));
     }
 
     public static void printPlayerBust(String name) {
@@ -47,9 +48,9 @@ public class OutputView {
         System.out.println(dealerName + "는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printFinalPlayer(String name, PlayerCardInfo playerCardInfo) {
-        System.out.println(name + "카드: " +
-                String.join(", ", playerCardInfo.card()) + " - 결과: " + playerCardInfo.score());
+    public static void printFinalPlayer(PlayerCardDto playerCardDto) {
+        System.out.println(playerCardDto.name() + "카드: " +
+                String.join(", ", playerCardDto.card()) + " - 결과: " + playerCardDto.score());
     }
 
 
@@ -64,4 +65,5 @@ public class OutputView {
             System.out.println(entry.getKey() + ": " + entry.getValue());
         }
     }
+
 }

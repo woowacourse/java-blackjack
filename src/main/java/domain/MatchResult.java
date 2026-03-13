@@ -17,11 +17,6 @@ public enum MatchResult {
         this.rate = rate;
     }
 
-    public double getRate(){
-        return rate;
-    }
-
-
     public static MatchResult of(Gambler gambler, Dealer dealer) {
         if (isBothBlackJack(gambler, dealer)) {
             return DRAW;
@@ -39,7 +34,6 @@ public enum MatchResult {
     private static boolean isBothBlackJack(Gambler gambler, Dealer dealer) {
         return gambler.isBlackJack() && dealer.isBlackJack();
     }
-
 
     private static MatchResult compareScore(int gamblerScore, int dealerScore) {
         if (isBust(gamblerScore)) {
@@ -67,6 +61,10 @@ public enum MatchResult {
         }
 
         return DRAW;
+    }
+
+    public double getRate() {
+        return rate;
     }
 
 
