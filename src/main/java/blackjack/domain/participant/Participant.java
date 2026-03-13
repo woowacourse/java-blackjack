@@ -39,6 +39,10 @@ public abstract class Participant {
         return hand.isBlackjack();
     }
 
+    public final boolean hasHigherScore(Participant other) {
+        return getScore().isBiggerThan(other.getScore());
+    }
+
     public final String getName() {
         return name.getValue();
     }

@@ -1,6 +1,5 @@
 package blackjack.domain.betting;
 
-import blackjack.domain.GameScore;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
@@ -42,13 +41,10 @@ public enum BettingResult {
     }
 
     private static BettingResult compareScore(Player player, Dealer dealer) {
-        GameScore playerScore = player.getScore();
-        GameScore dealerScore = dealer.getScore();
-
-        if (playerScore.isBiggerThan(dealerScore)) {
+        if (player.hasHigherScore(dealer)) {
             return BettingResult.WIN;
         }
-        if (dealerScore.isBiggerThan(playerScore)) {
+        if (dealer.hasHigherScore(player)) {
             return BettingResult.LOSE;
         }
         return BettingResult.PUSH;
