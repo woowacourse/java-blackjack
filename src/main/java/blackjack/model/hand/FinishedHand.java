@@ -10,6 +10,11 @@ public abstract class FinishedHand extends Hand {
     }
 
     @Override
+    public final Hand hit(Card newCard) {
+        throw new IllegalStateException("힛이 불가능한 상태입니다.");
+    }
+
+    @Override
     public boolean canHit() {
         return false;
     }

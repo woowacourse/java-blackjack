@@ -16,15 +16,6 @@ public class BlackjackHand extends FinishedHand {
         return 1.5;
     }
 
-    @Override
-    public Hand hit(Card newCard) {
-        if (isBustWith(newCard)) {
-            return new BustHand(cards, newCard);
-        }
-
-        return new BlackjackHand(cards, newCard);
-    }
-
     private void validateBlackjack() {
         if (!isBlackjack()) {
             throw new IllegalStateException("패가 블랙잭이지 않습니다.");

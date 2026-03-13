@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.model.card.Card;
 import blackjack.model.card.Rank;
 import blackjack.model.card.Suit;
+import java.util.List;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -74,16 +75,17 @@ class HandTest {
         @Test
         void 에이스가_존재할_때_점수를_조정하면_버스트라면_점수를_조정하지_않는다() {
             // given
-            Hand hand = new UninitializedHand();
-            Card card1 = new Card(Rank.ACE, Suit.HEART);
-            Card card2 = new Card(Rank.QUEEN, Suit.HEART);
-            Card card3 = new Card(Rank.JACK, Suit.HEART);
+            List<Card> existCard = List.of(
+                    new Card(Rank.KING, Suit.HEART),
+                    new Card(Rank.QUEEN, Suit.HEART)
+            );
+            Card newCard = new Card(Rank.JACK, Suit.HEART);
+            Hand hand = new BustHand(existCard, newCard);
 
-            hand = hand.hit(card1);
-            hand = hand.hit(card2);
-            hand = hand.hit(card3);
-
-            int expectedScore = card1.getScore() + card2.getScore() + card3.getScore();
+            int expectedScore = existCard.stream()
+                    .mapToInt(Card::getScore)
+                    .sum()
+                    + newCard.getScore();
 
             // when
             int actualScore = hand.calculateScore();

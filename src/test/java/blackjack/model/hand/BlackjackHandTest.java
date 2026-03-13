@@ -25,20 +25,6 @@ class BlackjackHandTest {
     }
 
     @Test
-    void 카드를_추가해_버스트가_된다면_전이한다() {
-        // given
-        Hand hand = new BlackjackHand(DEFAULT_EXIST_CARDS, DEFAULT_NEW_CARD);
-
-        // when
-        hand = hand.hit(new Card(Rank.JACK, Suit.HEART));
-        hand = hand.hit(new Card(Rank.QUEEN, Suit.HEART));
-        hand = hand.hit(new Card(Rank.KING, Suit.HEART));
-
-        // then
-        assertThat(hand).isInstanceOf(BustHand.class);
-    }
-
-    @Test
     void 블랙잭_수익률을_제공한다() {
         // given
         Hand hand = new BlackjackHand(DEFAULT_EXIST_CARDS, DEFAULT_NEW_CARD);

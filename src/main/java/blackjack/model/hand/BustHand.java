@@ -11,11 +11,6 @@ public class BustHand extends FinishedHand {
         validateBust();
     }
 
-    @Override
-    public Hand hit(Card newCard) {
-        return new BustHand(cards, newCard);
-    }
-
     private void validateBust() {
         if (!isBust()) {
             throw new IllegalStateException("패가 버스트이지 않습니다.");
