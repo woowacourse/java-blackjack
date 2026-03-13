@@ -32,7 +32,7 @@ public class BlackjackController {
 
         printProfitResult(users, betAmounts);
 
-        InputView.closeScanner();
+        blackjackGame.end(InputView::closeScanner);
     }
 
     private void provideInitCardsAndPrint(Users users) {

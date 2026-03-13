@@ -65,6 +65,10 @@ public class BlackjackGame {
         return users.determineWinner(betAmounts);
     }
 
+    public void end(Runnable closeScanner) {
+        closeScanner.run();
+    }
+
     private boolean checkY(Player player, Function<Player, String> readHitCommand) {
         String input = readHitCommand.apply(player);
         HitCommand hitCommand = new HitCommand(input);
