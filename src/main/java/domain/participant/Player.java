@@ -42,10 +42,6 @@ public class Player {
         participant.initHand(deck);
     }
 
-    public int getBattingMoney() {
-        return battingMoney.money();
-    }
-
     public List<String> createCardNames() {
         return participant.createCardNames();
     }

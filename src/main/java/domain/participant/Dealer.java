@@ -28,11 +28,7 @@ public record Dealer(Participant dealer) {
     public boolean isBlackJack() {
         return dealer.isBlackJack();
     }
-
-    public Participant getDealer() {
-        return dealer;
-    }
-
+    
     public boolean isBust() {
         return dealer.isBust();
     }
