@@ -6,7 +6,6 @@ import domain.gamer.Dealer;
 import domain.gamer.Player;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 // THINK Has state and method -> SingleTone?
 public class BettingPolicyManager {
@@ -14,14 +13,12 @@ public class BettingPolicyManager {
     List<BettingPolicy> policies;
 
     public BettingPolicyManager() {
-        this.policies = Stream.of(
-                        new BlackjackPushPolicy(),
-                        new BlackjackPolicy(),
-                        new DoubleBustPolicy(),
-                        new DealerBustPolicy(),
-                        new BustPolicy(),
-                        new ComparePolicy()
-                ).toList();
+        this.policies = List.of(
+                new BlackjackPushPolicy(),
+                new BlackjackPolicy(),
+                new PlayerLosePolicy(),
+                new PlayerWinPolicy()
+        );
     }
 
     public BettingRate gainBettingRate(Dealer dealer, Player player) {
