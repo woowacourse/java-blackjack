@@ -1,6 +1,6 @@
 package view;
 
-import dto.DealerDto;
+import dto.DealerDrawDto;
 import dto.NamesDto;
 import dto.ParticipantsCardsDto;
 import dto.StatisticsDto;
@@ -22,38 +22,30 @@ public class OutputView {
     }
 
     public void showCard(ParticipantsCardsDto playerCardsDto) {
-        System.out.printf((SHOW_CARD) + "%n", playerCardsDto.name(), String.join(", ", playerCardsDto.cards()));
+        System.out.printf(SHOW_CARD + "%n", playerCardsDto.name(), String.join(", ", playerCardsDto.cards()));
     }
 
     public void showCardsAndScore(ParticipantsCardsDto playerCardsDto, Integer totalScore) {
-        System.out.printf((SHOW_RESULT) + "%n", playerCardsDto.name(), String.join(", ", playerCardsDto.cards())
-                , totalScore);
+        System.out.printf(SHOW_RESULT + "%n",
+                playerCardsDto.name(),
+                String.join(", ", playerCardsDto.cards()),
+                totalScore);
     }
 
-    public void drawDealer(DealerDto dealerDto) {
-        System.out.printf(DRAW_DEALER + "%n", dealerDto.dealerName(), dealerDto.boundary());
+    public void drawDealer(DealerDrawDto dealerDrawDto) {
+        System.out.printf(DRAW_DEALER + "%n", dealerDrawDto.dealerName(), dealerDrawDto.boundary());
     }
 
-    public void showResultStatistics(List<StatisticsDto> statisticsDtos, String dealerName) {
+    public void showResultStatistics(List<StatisticsDto> statisticsDtos, String dealerName, int dealerProfit) {
         System.out.println(PRINT_RESULT_PHRASE);
-        int dealerProfit = calculateDealerProfit(statisticsDtos);
-
-        System.out.printf((DEALER_RECORD_FORMAT) + "%n", dealerName, dealerProfit);
+        System.out.printf(DEALER_RECORD_FORMAT + "%n", dealerName, dealerProfit);
 
         for (StatisticsDto statisticsDto : statisticsDtos) {
-            System.out.printf((STATISTICS_FORMAT) + "%n", statisticsDto.name(), statisticsDto.profit());
+            System.out.printf(STATISTICS_FORMAT + "%n", statisticsDto.name(), statisticsDto.profit());
         }
     }
 
-    private int calculateDealerProfit(List<StatisticsDto> statisticsDtos) {
-        int totalPlayerProfit = statisticsDtos.stream()
-                .mapToInt(StatisticsDto::profit)
-                .sum();
-        return -totalPlayerProfit;
-    }
-
-
     public void congratulateBlackjack(String name) {
-        System.out.printf((CONGRATULATE_BLACKJACK) + "%n", name);
+        System.out.printf(CONGRATULATE_BLACKJACK + "%n", name);
     }
 }
