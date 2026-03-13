@@ -9,7 +9,7 @@ public class BlackjackTest {
 
     @Test
     void 플레이어_초기카드_합_21인지_확인() {
-        Player pobi = new Player("pobi");
+        Player pobi = new Player("pobi", new Money(10000));
         pobi.receiveOneCard(new Card(Rank.ACE, Shape.HEART));
         pobi.receiveOneCard(new Card(Rank.TEN, Shape.SPADE));
 
@@ -18,7 +18,7 @@ public class BlackjackTest {
 
     @Test
     void 플레이어_초기카드_합_21_아닌경우_1() {
-        Player pobi = new Player("pobi");
+        Player pobi = new Player("pobi", new Money(10000));
         pobi.receiveOneCard(new Card(Rank.TWO, Shape.HEART));
         pobi.receiveOneCard(new Card(Rank.TEN, Shape.SPADE));
 
@@ -27,7 +27,7 @@ public class BlackjackTest {
 
     @Test
     void 플레이어_초기카드_합_21_아닌경우_2() {
-        Player pobi = new Player("pobi");
+        Player pobi = new Player("pobi", new Money(10000));
         pobi.receiveOneCard(new Card(Rank.TWO, Shape.HEART));
         pobi.receiveOneCard(new Card(Rank.TEN, Shape.SPADE));
         pobi.receiveOneCard(new Card(Rank.NINE, Shape.SPADE));

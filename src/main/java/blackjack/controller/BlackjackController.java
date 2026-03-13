@@ -23,8 +23,7 @@ public class BlackjackController {
 
     public void startGame() {
         List<String> playerNames = getPlayerNames();
-        List<Participant> players = getPlayers(playerNames);
-
+        List<Participant> players = createPlayers(playerNames);
         Participant dealer = Participant.createDealer();
 
         setupInitialHand(players, dealer, playerNames);
@@ -35,15 +34,17 @@ public class BlackjackController {
         calculateFinalGameResult(players, dealer);
     }
 
-    private static List<String> getPlayerNames() {
-        String playerNamesStr = InputView.askPlayerNames();
-        return InputParser.splitPlayerNames(playerNamesStr);
+    private List<String> getPlayerNames() {
+        String names = InputView.askPlayerNames();
+        return InputParser.splitPlayerNames(names);
     }
 
-    private List<Participant> getPlayers(List<String> playerNames) {
+    private List<Participant> createPlayers(List<String> playerNames) {
         List<Participant> players = new ArrayList<>();
         for (String playerName : playerNames) {
-            players.add(Participant.createPlayer(playerName));
+            String amountStr = InputView.askPlayerBettingAmount(playerName);
+            int amount = InputParser.convertNumber(amountStr);
+            players.add(Participant.createPlayer(playerName, new Money(amount)));
         }
         return players;
     }

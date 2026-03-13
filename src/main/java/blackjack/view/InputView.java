@@ -19,7 +19,7 @@ public class InputView {
     }
 
     public static String askPlayerBettingAmount(String playerName) {
-        System.out.printf("%s의 배팅 금액은?", playerName);
+        System.out.printf("%n%s의 배팅 금액은?%n", playerName);
         return scanner.nextLine();
     }
 }

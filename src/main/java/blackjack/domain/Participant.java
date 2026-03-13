@@ -21,8 +21,8 @@ public abstract class Participant {
         return false;
     }
 
-    public static Participant createPlayer(String name) {
-        return new Player(name);
+    public static Participant createPlayer(String name, Money money) {
+        return new Player(name, money);
     }
 
     public static Participant createDealer() {

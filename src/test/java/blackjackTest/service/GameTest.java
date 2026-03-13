@@ -55,7 +55,7 @@ public class GameTest {
     }
 
     private Player createPlayer(String name, String... cards) {
-        Player player = new Player(name);
+        Player player = new Player(name, new Money(10000));
         for (String card : cards) {
             String[] parts = card.split(":");
             Rank rank = Rank.from(parts[0]);
