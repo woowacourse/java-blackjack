@@ -1,14 +1,10 @@
 package team.blackjack.view;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 import team.blackjack.service.dto.DrawResult;
-import team.blackjack.service.dto.MatchResult;
-import team.blackjack.service.dto.MatchResult.DealerResult;
-import team.blackjack.service.dto.MatchResult.PlayerResult;
+import team.blackjack.service.dto.RevenueResult;
 import team.blackjack.service.dto.ScoreResult;
-import team.blackjack.domain.Result;
 
 public class OutputView {
 
@@ -51,34 +47,32 @@ public class OutputView {
                     scoreResult.playerScores().get(playerName)));
         }
     }
-
-     public static void printGameResult(MatchResult result) {
-         final DealerResult dealerResult = result.dealerResult();
-         final Map<String, PlayerResult> playeredResultMap = result.playerResultMap();
-
-         println("");
-         println("## 최종 승패:");
-         println("딜러: %d승 %d패 %d무".formatted(
-                 dealerResult.countBy(Result.WIN),
-                 dealerResult.countBy(Result.LOSE),
-                 dealerResult.countBy(Result.DRAW))
-         );
-
-         playeredResultMap.entrySet().stream()
-                 .map(entry -> "%s: %s".formatted(entry.getKey(), entry.getValue().result().getName()))
-                 .forEach(OutputView::println);
-
-    }
-
     public static void printBustMessage() {
         println("버스트 되었습니다. 더 이상 카드를 받을 수 없습니다.");
     }
 
-    public static void printWrongInputMessage() {
+    public static void printWrongDecisionInputMessage() {
         println("잘못된 입력입니다. y, n 중 하나를 입력해주세요.");
     }
 
     public static void printDuplicatedNameMessage() {
         println("중복된 이름은 허용되지 않습니다. 다시 입력해주세요.");
+    }
+
+    public static void printAskBettingMoney(String playerName) {
+        println("%s의 의 배팅 금액은?".formatted(playerName));
+    }
+
+    public static void printWrongBattingMoneyInputMessage() {
+        println("잘못된 입력입니다. 양수인 숫자를 입력해주세요.");
+    }
+
+    public static void printRevenueResult(RevenueResult revenueResult) {
+        println("");
+        println("## 최종 수익:");
+        println("딜러: %.2f".formatted(revenueResult.dealerRevenue()));
+        for (Entry<String, Double> entry : revenueResult.playerRevenueMap().entrySet()) {
+            println("%s: %.2f".formatted(entry.getKey(), entry.getValue()));
+        }
     }
 }

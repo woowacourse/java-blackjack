@@ -16,11 +16,11 @@ public class InputView {
                 .toList();
     }
 
-    /**
-     * 플레이어가 한장의 카드를 더 받을지 여부를 입력받는다.
-     * @return
-     */
     public static String readHitDecision() {
         return readInput();
+    }
+
+    public static int readPlayerBattingMoney() {
+        return Integer.parseInt(readInput());
     }
 }

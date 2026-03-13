@@ -34,7 +34,7 @@ class BlackJackServiceTest {
         blackJackService.drawInitialCards();
 
         List<String> playerCards = blackJackService.findPlayerCardNamesByName(pobi);
-        assertThat(playerCards.getFirst()).hasSize(2);
+        assertThat(playerCards).hasSize(2);
 
         ScoreResult scoreResult = blackJackService.calculateAllParticipantScore();
         assertThat(scoreResult.dealerCard()).hasSize(2);
