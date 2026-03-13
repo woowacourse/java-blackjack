@@ -17,4 +17,12 @@ public class Player extends Participant {
     public void setBetAmount(BetAmount betAmount) {
         this.betAmount = betAmount;
     }
+
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
+    }
+
+    public int getBetAmount() {
+        return betAmount.getBetAmount();
+    }
 }
