@@ -17,8 +17,8 @@
   - 위 방법들이 다 싫으면 Name class 자체를 없애고, validation을 input view에서 해야 함.
   - 이게 아니면, Name class를 그대로 두고, validation만 input view로 넘기거나.
     - 근데 이렇게 하면 리뷰어님이 말씀하신 대로 Name class를 만든 이유가 없음. 
-- [ ] **6. Bet test code 작성**
-  - [ ] 딜러 수익 관련해서 테스트 확장
+- [x] **6. Bet test code 작성**
+  - [x] 딜러 수익 관련해서 테스트 확장
 - [x] **7. 돈 계산 BigDecimal 이용하도록 수정**
   - 부동 소수점이라 금액 계산에서 오차 발생할 수 있음.
 - [x] **8. 배율 계산 로직 타입 캐스팅 수정**
