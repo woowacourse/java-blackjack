@@ -32,8 +32,7 @@ public class Hand {
 
     public Score getScore() {
         int sum = calculateSum();
-        boolean containsAce = containsAce();
-        if (containsAce && canApplyAceAmount()) {
+        if (canApplyAceAmount(sum)) {
             return new Score(sum + ACE_ADJUST_AMOUNT);
         }
         return new Score(sum);
@@ -45,12 +44,11 @@ public class Hand {
             .sum();
     }
 
-    private boolean containsAce() {
-        return cards.stream()
-            .anyMatch(Card::isAce);
+    private boolean canApplyAceAmount(int sum) {
+        return containsAce() && (sum + ACE_ADJUST_AMOUNT) <= BUST_THRESHOLD;
     }
 
-    private boolean canApplyAceAmount() {
-        return (calculateSum() + ACE_ADJUST_AMOUNT) <= BUST_THRESHOLD;
+    private boolean containsAce() {
+        return cards.stream().anyMatch(Card::isAce);
     }
 }
