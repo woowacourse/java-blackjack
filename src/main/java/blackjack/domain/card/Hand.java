@@ -46,13 +46,13 @@ public class Hand {
     
     public int getTotalScore() {
         int scoreSum = calculateScoreSum();
-        if (canAddAceScore(scoreSum)) {
+        if (isSoftHand(scoreSum)) {
             return scoreSum + ACE_SCORE;
         }
         return scoreSum;
     }
     
-    private boolean canAddAceScore(int scoreSum) {
+    private boolean isSoftHand(int scoreSum) {
         return hasAce() && scoreSum + ACE_SCORE <= BLACKJACK_SCORE;
     }
     
