@@ -58,4 +58,8 @@ public class Gamblers {
     public List<Gambler> getGamblers() {
         return gamblers;
     }
+
+    public int getGamblersSize() {
+        return gamblers.size();
+    }
 }
