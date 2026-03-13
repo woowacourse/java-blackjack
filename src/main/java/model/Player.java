@@ -3,9 +3,10 @@ package model;
 import static model.Dealer.DEALER_NAME;
 
 import constant.ErrorMessage;
-import java.math.BigDecimal;
 import java.util.Objects;
+import model.dto.DealerStatus;
 import model.dto.PlayerResult;
+import model.dto.PlayerStatus;
 import model.dto.PlayerWinning;
 
 public class Player extends Participant {
@@ -38,8 +39,9 @@ public class Player extends Participant {
         this.betAmount = betPrice.value();
     }
 
-    public PlayerWinning getBetResult(Dealer dealer) {
-        Integer profit = calculateBetAmount(dealer);
+    public PlayerWinning getBetResult(DealerStatus dealerStatus) {
+        PlayerStatus playerStatus = new PlayerStatus(super.getName(), super.getScore(), betAmount, super.isBust(), super.isBlackJack());
+        Integer profit = ProfitCalculator.calculateBetAmount(dealerStatus, playerStatus);
         return new PlayerWinning(getName(), profit);
     }
 
@@ -48,41 +50,5 @@ public class Player extends Participant {
             throw new IllegalArgumentException(ErrorMessage.NO_PLAYER_NAME_DEALER.getMessage());
         }
         return name;
-    }
-
-    private Integer calculateBetAmount(Dealer dealer) {
-        return calculateBustBetAmount(dealer).intValue();
-    }
-
-    private BigDecimal calculateBustBetAmount(Dealer dealer) {
-        if(super.isBust()) {
-            return BigDecimal.valueOf(-betAmount);
-        }
-
-        return calculateBlackJackBetAmount(dealer);
-    }
-
-    private BigDecimal calculateBlackJackBetAmount(Dealer dealer) {
-
-        if(super.isBlackJack() && dealer.isBlackJack()) {
-            return BigDecimal.ZERO;
-        }
-
-        if(super.isBlackJack()) {
-            return BigDecimal.valueOf(betAmount).multiply(BigDecimal.valueOf(1.5));
-        }
-
-        return calculateRegularBetAmount(dealer);
-    }
-
-    private BigDecimal calculateRegularBetAmount(Dealer dealer) {
-        if(super.isMoreThanScore(dealer) || dealer.isBust()) {
-            return BigDecimal.valueOf(betAmount);
-        }
-
-        if(super.isLessThanScore(dealer)) {
-            return BigDecimal.valueOf(betAmount);
-        }
-        return BigDecimal.ZERO;
     }
 }

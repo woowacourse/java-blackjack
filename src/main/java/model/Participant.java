@@ -1,13 +1,9 @@
 package model;
 
 import java.util.List;
-import java.util.Objects;
 import model.dto.PlayerResult;
 
 public class Participant {
-    private static final Integer BUST_SCORE = 21;
-    private static final Integer BLACK_JACK_CARD_SIZE = 2;
-
     private final PlayerName name;
     private final ParticipantHand participantHand = new ParticipantHand();
 
@@ -28,28 +24,19 @@ public class Participant {
         participantHand.addDeck(card);
     }
 
-    public boolean isMoreThanScore(Integer threshold) {
-        return participantHand.getScore() > threshold;
-    }
-
-    public boolean isMoreThanScore(Participant other) {
-        return participantHand.getScore() > other.participantHand.getScore();
-    }
-
-    public boolean isLessThanScore(Participant other) {
-        return participantHand.getScore() < other.participantHand.getScore();
+    public Integer getScore() {
+        return participantHand.getScore();
     }
 
     public boolean isBust() {
-        return isMoreThanScore(BUST_SCORE);
+        return participantHand.isBust();
     }
 
     public boolean isBlackJack() {
-        return participantHand.getDeck().size() == BLACK_JACK_CARD_SIZE && Objects.equals(participantHand.getScore(), BUST_SCORE);
+        return participantHand.isBlackJack();
     }
 
-    public String getFirstCard() {
+    protected String getFirstCard() {
         return participantHand.getFirstCard();
     }
-
 }
