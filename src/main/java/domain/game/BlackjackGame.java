@@ -11,7 +11,6 @@ import domain.player.Name;
 import domain.player.Player;
 import domain.player.Players;
 import domain.random.RandomValueGenerator;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 import util.CardsCreator;
@@ -52,10 +51,7 @@ public class BlackjackGame {
     }
 
     private static Hand createInitialHand(Deck deck) {
-        List<Card> cards = new ArrayList<>();
-        cards.add(deck.drawCard());
-        cards.add(deck.drawCard());
-        return new Hand(cards);
+        return new Hand(deck.drawTwoCards());
     }
 
     public int calculateDealerProfit() {
