@@ -1,14 +1,14 @@
-package domain;
+package domain.participant;
 
+import domain.card.Card;
+import domain.result.Score;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Hand {
-    private final List<Card> cards;
-
+public record Hand(List<Card> cards) {
     public Hand() {
-        this.cards = new ArrayList<>();
+        this(new ArrayList<>());
     }
 
     public Hand(List<Card> cards) {
@@ -20,20 +20,16 @@ public class Hand {
     }
 
     public Score calculateScore() {
-        int totalScore = 0;
-        int aceCount = 0;
-        for (Card card : cards) {
-            totalScore += card.getScore();
-            if (card.isAce()) {
-                aceCount++;
-            }
-        }
-
+        int totalScore = cards.stream()
+                .mapToInt(Card::getScore)
+                .sum();
+        int aceCount = (int) cards.stream()
+                .filter(Card::isAce)
+                .count();
         while (canLowerAceScore(totalScore, aceCount)) {
             totalScore -= 10;
             aceCount--;
         }
-
         return new Score(totalScore);
     }
 
@@ -45,7 +41,8 @@ public class Hand {
         return score > 21 && aceCount > 0;
     }
 
-    public List<Card> getCards() {
+    @Override
+    public List<Card> cards() {
         return Collections.unmodifiableList(cards);
     }
 }
