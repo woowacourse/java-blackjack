@@ -6,11 +6,7 @@ import java.util.Random;
 
 public class RandomPickStrategy implements PickStrategy {
 
-    private final Random random;
-
-    public RandomPickStrategy() {
-        random = new Random();
-    }
+    private static Random random;
 
     @Override
     public Card pick(List<Card> cards) {
