@@ -23,13 +23,13 @@ public class BlackjackController {
 
         drawInitCards(dealer, players);
         drawMoreCardByPlayer(dealer, players);
-        printFinalCards(dealer, players);
 
         gameMode.reportResult(dealer, players);
     }
 
     private void drawMoreCardByPlayer(Dealer dealer, Players players) {
         players.forEach(this::chooseHitOrStand);
+
         while (dealer.canHit()) {
             OutputView.printToOpenDealerNewCard(dealer);
             blackjackService.drawOneCard(dealer);
@@ -71,11 +71,5 @@ public class BlackjackController {
             didDraw = true;
         }
         return didDraw;
-    }
-
-    private void printFinalCards(Dealer dealer, Players players) {
-        OutputView.printBlank();
-        OutputView.printCardByPlayerWithScore(dealer);
-        players.forEach(OutputView::printCardByPlayerWithScore);
     }
 }
