@@ -8,7 +8,6 @@ import domain.participant.Participants;
 import domain.participant.Player;
 import dto.BlackjackResultDto;
 import dto.BlackjackStatisticsDto;
-import dto.DealerStatisticDto;
 import dto.ParticipantDto;
 import dto.PlayerStatisticDto;
 import java.util.ArrayList;
@@ -67,18 +66,18 @@ public class BlackjackGameManager {
 
     public BlackjackStatisticsDto getBlackjackStatistics() {
         List<PlayerStatisticDto> playerStatisticDtoList = new ArrayList<>();
-        int win = 0, draw = 0, lose = 0;
+        int dealerProfit = 0;
         for (Player player : participants.players().getPlayers()) {
-            Result result = calculatePlayerResult(participants.dealer(), player);
-            win += judgeResult(result, Result.LOSE);
-            draw += judgeResult(result, Result.DRAW);
-            lose += judgeResult(result, Result.WIN);
-            playerStatisticDtoList.add(PlayerStatisticDto.of(player, result));
+            Result result = judgePlayerResult(participants.dealer(), player);
+            int playerProfit = calculatePlayerProfit(player, result);
+            dealerProfit += playerProfit * -1;
+            playerStatisticDtoList.add(PlayerStatisticDto.of(player, playerProfit));
         }
-        return BlackjackStatisticsDto.of(DealerStatisticDto.of(win, draw, lose), playerStatisticDtoList);
+
+        return BlackjackStatisticsDto.of(dealerProfit, playerStatisticDtoList);
     }
 
-    private Result calculatePlayerResult(Dealer dealer, Player player) {
+    private Result judgePlayerResult(Dealer dealer, Player player) {
         if (player.isBust()) {
             return Result.LOSE;
         }
@@ -94,9 +93,15 @@ public class BlackjackGameManager {
         return Result.LOSE;
     }
 
-    private int judgeResult(Result result, Result playerResult) {
-        if (result.equals(playerResult)) {
-            return 1;
+    private int calculatePlayerProfit(Player player, Result result) {
+        if (result.equals(Result.WIN) && player.isBlackjack()) {
+            return player.getBetAmount() + player.getBetAmount() / 2;
+        }
+        if (result.equals(Result.WIN)) {
+            return player.getBetAmount();
+        }
+        if (result.equals(Result.LOSE)) {
+            return player.getBetAmount() * -1;
         }
         return 0;
     }
