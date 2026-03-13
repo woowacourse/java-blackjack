@@ -1,4 +1,4 @@
-package expcetion;
+package exception;
 
 public enum ExceptionMessage {
     EMPTY_CARD_DECK("[ERROR] 카드가 모두 소진되었습니다."),

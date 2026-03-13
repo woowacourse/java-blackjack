@@ -1,8 +1,8 @@
 package domain.player;
 
 import domain.deck.CardDeck;
-import expcetion.BlackjackException;
-import expcetion.ExceptionMessage;
+import exception.BlackjackException;
+import exception.ExceptionMessage;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;

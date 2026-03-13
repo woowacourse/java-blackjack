@@ -1,7 +1,7 @@
 package domain.player;
 
-import expcetion.BlackjackException;
-import expcetion.ExceptionMessage;
+import exception.BlackjackException;
+import exception.ExceptionMessage;
 
 public record Name(String name) {
 

@@ -3,7 +3,7 @@ package domain.parser;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import expcetion.BlackjackException;
+import exception.BlackjackException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import parser.AnswerParser;
