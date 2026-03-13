@@ -47,7 +47,7 @@ public class BlackjackController {
     }
 
     private void inputBetAmounts() {
-        List<ParticipantDto> playerDtoList = blackjackGameManager.getPlayerDtoList();
+        List<ParticipantDto> playerDtoList = blackjackGameManager.generatePlayerDtoList();
         for (ParticipantDto participantDto : playerDtoList) {
             String betAmountInput = inputView.inputBetAmount(participantDto.name());
             blackjackGameManager.setBetAmount(participantDto.name(), new BetAmount(betAmountInput));

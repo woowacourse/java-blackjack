@@ -43,6 +43,11 @@ public class BlackjackGameManager {
         return cardMachine.drawCard();
     }
 
+    public ParticipantDto updatePlayer(String name) {
+        Player player = participants.drawCardsByPlayer(name, this::drawCard);
+        return ParticipantDto.from(player);
+    }
+
     public ParticipantDto generateInitialDealerDto() {
         return ParticipantDto.from(participants.dealer(), true);
     }
@@ -106,21 +111,12 @@ public class BlackjackGameManager {
         return 0;
     }
 
-    public ParticipantDto updatePlayer(String name) {
-        Player player = participants.drawCardsByPlayer(name, this::drawCard);
-        return ParticipantDto.from(player);
-    }
-
     public boolean isHit(HitOrStand hitOrStand) {
         return hitOrStand.isHit();
     }
 
     public boolean isStand(HitOrStand hitOrStand) {
         return hitOrStand.isStand();
-    }
-
-    public List<ParticipantDto> getPlayerDtoList() {
-        return ParticipantDto.from(participants.players());
     }
 
     public void setBetAmount(String name, BetAmount betAmount) {
