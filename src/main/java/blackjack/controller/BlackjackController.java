@@ -48,7 +48,7 @@ public class BlackjackController {
         ArrayList<Player> players = new ArrayList<>();
 
         UniqueNames playerUniqueNames = retryOnIllegalArgument(inputView::readPlayerNames);
-        for (Name playerName : playerUniqueNames.get()) {
+        for (Name playerName : playerUniqueNames.names()) {
             Bet bet = retryOnIllegalArgument(() -> inputView.readBet(playerName));
             players.add(new Player(playerName, bet));
         }

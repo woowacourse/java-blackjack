@@ -12,10 +12,6 @@ public record UniqueNames(
         this.names = List.copyOf(names);
     }
 
-    public List<Name> get() {
-        return List.copyOf(names);
-    }
-
     private void validateDuplicatedNames(Collection<Name> playerNames) {
         long uniqueNameCount = playerNames.stream()
                 .distinct()
