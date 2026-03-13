@@ -1,6 +1,6 @@
 package domain.card;
 
-import domain.RandomValueGenerator;
+import domain.random.RandomValueGenerator;
 import java.util.HashSet;
 import java.util.List;
 import util.ErrorMessage;

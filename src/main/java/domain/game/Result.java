@@ -1,4 +1,4 @@
-package domain;
+package domain.game;
 
 public enum Result {
     WIN("승"),
