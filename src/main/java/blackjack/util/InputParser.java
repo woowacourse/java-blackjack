@@ -11,7 +11,7 @@ public class InputParser {
     }
 
     public static List<String> parseUser(String userName) {
-        return List.of(userName.split(COMMA));
+        return List.of(userName.strip().split(COMMA));
     }
 
     public static BigDecimal parseBettingAmount(String bettingAmount) {
