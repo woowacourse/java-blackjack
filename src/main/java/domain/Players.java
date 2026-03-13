@@ -16,9 +16,9 @@ public class Players implements Iterable<Player> {
                 .sum();
     }
 
-    public void calculateScore(Dealer dealer,Players players) {
+    public void calculateScore(Players players,boolean isDealerBlackjack) {
         for (Player player : players) {
-            player.calculateBettingScore(dealer);
+            player.calculateBettingScore(isDealerBlackjack);
         }
     }
 

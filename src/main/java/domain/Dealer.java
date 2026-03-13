@@ -1,24 +1,24 @@
-package domain;
-
-import constant.GameConstant;
-
-public class Dealer extends Player {
-    public static final String DEALER_NAME = "딜러";
-    public static final int ADDITIONAL_THRESHOLD = 16;
-
-    public Dealer() {
-        super(DEALER_NAME);
-    }
-
-    public void updateBettingScore(int money) {
-        betMoney(-money);
-    }
-
-    public boolean needAdditionalCard() {
-        return this.calculateScore() <= ADDITIONAL_THRESHOLD;
-    }
-
-    public Card getFirstCard() {
-        return cards.getFirst();
-    }
-}
+//package domain;
+//
+//import constant.GameConstant;
+//
+//public class Dealer extends Player {
+//    public static final String DEALER_NAME = "딜러";
+//    public static final int ADDITIONAL_THRESHOLD = 16;
+//
+//    public Dealer() {
+//        super(DEALER_NAME);
+//    }
+//
+//    public void updateBettingScore(int money) {
+//        betMoney(-money);
+//    }
+//
+//    public boolean needAdditionalCard() {
+//        return this.calculateScore() <= ADDITIONAL_THRESHOLD;
+//    }
+//
+//    public Card getFirstCard() {
+//        return cards.getFirst();
+//    }
+//}

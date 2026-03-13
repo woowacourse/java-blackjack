@@ -1,7 +1,10 @@
 package utils.generator;
 
+import java.util.List;
+
+import domain.Card;
 import domain.Cards;
 
 public interface CardsGenerator {
-    Cards generateShuffledCards();
+    List<Card> generateShuffledCards();
 }

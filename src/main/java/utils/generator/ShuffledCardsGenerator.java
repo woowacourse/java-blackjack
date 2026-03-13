@@ -1,31 +1,31 @@
 package utils.generator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import domain.Card;
 import domain.CardRank;
 import domain.CardShape;
-import domain.Cards;
 
 public final class ShuffledCardsGenerator implements CardsGenerator {
     @Override
-    public Cards generateShuffledCards() {
-        Cards cards = generate();
+    public List<Card> generateShuffledCards() {
+        List<Card> cards = generate();
         shuffleCards(cards);
         return cards;
     }
 
-    public void shuffleCards(Cards cards) {
-        cards.shuffle();
+    public void shuffleCards(List<Card> cards) {
+        Collections.shuffle(cards);
     }
 
-    private Cards generate() {
+    private List<Card> generate() {
         List<Card> cards = new ArrayList<>();
         for (CardShape cardShape : CardShape.values()) {
             cards.addAll(createCardsFromRank(cardShape));
         }
-        return new Cards(cards);
+        return cards;
     }
 
     private List<Card> createCardsFromRank(CardShape cardShape) {

@@ -1,63 +1,75 @@
 package service;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
-import domain.Cards;
-import domain.Dealer;
+import domain.Deck;
+import domain.Game;
 import domain.Player;
 import domain.Players;
-import domain.dto.BettingResultDto;
+import domain.dto.CardContentDto;
 import utils.generator.CardsGenerator;
-import view.OutputView;
+import utils.generator.ShuffledCardsGenerator;
 
 public class BlackjackService {
 
-    public Cards generateCards(CardsGenerator cardsGenerator) {
-        return cardsGenerator.generateShuffledCards();
+    public Deck generateCards() {
+        CardsGenerator cardsGenerator = new ShuffledCardsGenerator();
+        return new Deck(cardsGenerator);
     }
 
-    public void giveInitialedCard(Cards cards, Dealer dealer) {
-        dealer.addInitializedCard(cards);
-    }
-
-    public Players createPlayers(List<String> names, Cards cards) {
+    public Players createPlayers(List<String> names, Deck deck) {
         List<Player> playerList = new ArrayList<>();
         for (String name : names) {
             Player player = new Player(name);
-            player.addInitializedCard(cards);
+            player.addInitializedCard(deck);
             playerList.add(player);
         }
         return new Players(playerList);
     }
 
-    public Dealer createDealer(Cards cards) {
-        Dealer dealer = new Dealer();
-        giveInitialedCard(cards, dealer);
-        return dealer;
+    public Game createGame(Deck deck, Players players) {
+        return new Game(deck, players);
     }
 
-    public void determineAdditionalCardOfDealer(Dealer dealer, Cards cards) {
-        while (dealer.needAdditionalCard()) {
-            dealer.add(cards.pop());
-            OutputView.displayDealerCard();
+    public List<CardContentDto> getCardContentDtos(Game game) {
+        List<CardContentDto> firstCardContents = new ArrayList<>();
+        firstCardContents.add(new CardContentDto(Game.DEALER_NAME, List.of(game.getDealerFirstCard())));
+        for (Player player : game.getPlayers()) {
+            firstCardContents.add(new CardContentDto(player.getName(), player.getCards()));
         }
+        return firstCardContents;
     }
 
-    public void calculateBettingScore(Dealer dealer, Players players) {
-        players.calculateScore(dealer,players);
-    }
+//    public void giveInitialedCard(Cards cards, Dealer dealer) {
+//        dealer.addInitializedCard(cards);
+//    }
 
-    public BettingResultDto toBettingResultDto(Dealer dealer, Players players) {
-        // todo: 실제 값으로 넣기
-        Map<String, Integer> dealerWinningMap = new LinkedHashMap<>();
-        dealerWinningMap.put(Dealer.DEALER_NAME, dealer.getBettingScore());
-        for  (Player player : players) {
-            dealerWinningMap.put(player.getName(), player.getBettingScore());
-        }
-        return new BettingResultDto(dealerWinningMap);
-    }
+//    public Dealer createDealer(Cards cards) {
+//        Dealer dealer = new Dealer();
+//        giveInitialedCard(cards, dealer);
+//        return dealer;
+//    }
+//
+//    public void determineAdditionalCardOfDealer(Dealer dealer, Cards cards) {
+//        while (dealer.needAdditionalCard()) {
+//            dealer.add(cards.pop());
+//            OutputView.displayDealerCard();
+//        }
+//    }
+//
+//    public void calculateBettingScore(Dealer dealer, Players players) {
+//        players.calculateScore(dealer,players);
+//    }
+//
+//    public BettingResultDto toBettingResultDto(Dealer dealer, Players players) {
+//        // todo: 실제 값으로 넣기
+//        Map<String, Integer> dealerWinningMap = new LinkedHashMap<>();
+//        dealerWinningMap.put(Dealer.DEALER_NAME, dealer.getBettingScore());
+//        for  (Player player : players) {
+//            dealerWinningMap.put(player.getName(), player.getBettingScore());
+//        }
+//        return new BettingResultDto(dealerWinningMap);
+//    }
 
 }

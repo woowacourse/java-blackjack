@@ -10,45 +10,51 @@ import domain.dto.FinalCardDto;
 
 public class Player {
     private static final int ACE_ADDITIONAL_SCORE = 11;
-    protected final List<Card> cards = new ArrayList<>();
+
+    private final Cards cards;
     private final String name;
     private int bettingScore;
 
     public Player(String name) {
         this.name = name;
         this.bettingScore = 0;
+        this.cards = new Cards();
     }
 
-    protected int calculateScore() {
-        int total = 0;
-        for (Card card : cards) {
-            total += card.getCardRank().getNumber();
-        }
-        return total;
-    }
-
-    public int getFinalScore() {
-        return calculateScore() + calculateAceScore();
-    }
-
-    private int calculateAceScore() {
-        if (!isAceExist() || calculateScore() > ACE_ADDITIONAL_SCORE) {
-            return 0;
-        }
-        return ACE_ADDITIONAL_SCORE - 1;
-    }
+//    protected int calculateScore() {
+//        int total = 0;
+//        for (Card card : cards) {
+//            total += card.getCardRank().getNumber();
+//        }
+//        return total;
+//    }
+//
+//    public int getFinalScore() {
+//        return calculateScore() + calculateAceScore();
+//    }
+//
+//    private int calculateAceScore() {
+//        if (!isAceExist() || calculateScore() > ACE_ADDITIONAL_SCORE) {
+//            return 0;
+//        }
+//        return ACE_ADDITIONAL_SCORE - 1;
+//    }
 
     public boolean isBust() {
-        return getFinalScore() > GameConstant.GAME_OVER_THRESHOLD_SCORE;
+        return cards.getFinalScore() > GameConstant.GAME_OVER_THRESHOLD_SCORE;
+    }
+
+    private boolean isPlayerLose(boolean dealerBurst, int dealerTotal) {
+        return isBust() || (!dealerBurst && cards.getFinalScore() < dealerTotal);
+    }
+
+    public void addInitializedCard(Deck deck) {
+        add(deck.pop());
+        add(deck.pop());
     }
 
     public void add(Card card) {
-        cards.add(card);
-    }
-
-    public void addInitializedCard(Cards totalCards) {
-        cards.add(totalCards.pop());
-        cards.add(totalCards.pop());
+        cards.addCard(card);
     }
 
     public void betMoney(int money) {
@@ -60,8 +66,8 @@ public class Player {
         bettingScore -= minusScore;
     }
 
-    public void calculateBettingScore(Dealer dealer) {
-        if (!dealer.isBlackjack() && isBlackjack()) {
+    public void calculateBettingScore(boolean isDealerBlackjack) {
+        if (!isDealerBlackjack && cards.isBlackjack()) {
             bettingScore = (int) ((int) bettingScore * 1.5);
             return;
         }
@@ -70,36 +76,24 @@ public class Player {
 //        }
     }
 
-    private boolean isPlayerLose(boolean dealerBurst, int dealerTotal) {
-        return isBust() || (!dealerBurst && getFinalScore() < dealerTotal);
-    }
 
     public String getName() {
         return name;
     }
 
     public List<Card> getCards() {
-        return cards;
+        return cards.getCards();
     }
 
     public int getBettingScore() {
         return bettingScore;
     }
 
-    public CardContentDto toCardContentDto() {
-        return new CardContentDto(this.name, this.cards);
-    }
-
-    public FinalCardDto toFinalCardDto() {
-        return new FinalCardDto(this.name, this.cards, getFinalScore());
-    }
-
-    public boolean isAceExist() {
-        return cards.stream()
-                .anyMatch(c -> c.getCardRank().equals(CardRank.ACE));
-    }
-
-    public boolean isBlackjack() {
-        return getFinalScore() == 21 && cards.size() == 2;
-    }
+//    public CardContentDto toCardContentDto() {
+//        return new CardContentDto(this.name, this.cards);
+//    }
+//
+//    public FinalCardDto toFinalCardDto() {
+//        return new FinalCardDto(this.name, this.cards, getFinalScore());
+//    }
 }
