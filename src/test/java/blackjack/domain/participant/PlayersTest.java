@@ -39,7 +39,7 @@ class PlayersTest {
     }
 
     @Test
-    @DisplayName("플레이어 인원 7명 초과할 경우 예외 발생")
+    @DisplayName("플레이어 인원 제한 초과할 경우 예외 발생")
     void test_fail_player_count_over() {
         List<String> playerNames = List.of("one", "two", "three", "four", "five", "six", "seven", "eight");
         List<Player> allPlayers = new ArrayList<>();

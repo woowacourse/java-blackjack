@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Players {
+    private static final int PLAYER_LIMIT = 7;
 
     private final List<Player> players;
 
@@ -52,7 +53,7 @@ public class Players {
     }
 
     private void validatePlayerCount(List<Player> allPlayers) {
-        if (allPlayers.size() > 7) {
+        if (allPlayers.size() > PLAYER_LIMIT) {
             throw new IllegalArgumentException("플레이어의 최대 인원은 7명입니다.");
         }
     }
