@@ -23,7 +23,6 @@ public class Player extends Participant {
         return status.calculateProceeds(result);
     }
 
-    @Override
     public boolean canDraw() {
         return !(isBust() || isNaturalBlackJack());
     }

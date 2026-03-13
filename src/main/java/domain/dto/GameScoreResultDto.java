@@ -3,9 +3,9 @@ package domain.dto;
 import java.util.List;
 
 public class GameScoreResultDto {
-    String playerName;
-    List<String> hand;
-    int result;
+    final String playerName;
+    final List<String> hand;
+    final int result;
 
     public GameScoreResultDto(String playerName, List<String> hand, int result) {
         this.playerName = playerName;

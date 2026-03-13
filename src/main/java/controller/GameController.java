@@ -63,9 +63,18 @@ public class GameController {
     }
 
     private void playSinglePlayerTurn(Player player) {
-        while (player.canDraw() && wantsToDraw(player)) {
-            List<String> playerHand = manager.drawPlayerCard(player);
+        while (player.canDraw()) {
+            boolean wantsToDraw = wantsToDraw(player);
+
+            List<String> playerHand = player.getHandToString();
+            if(wantsToDraw){
+                playerHand = manager.drawPlayerCard(player);
+            }
             outputView.printHand(playerHand, player.getName());
+
+            if(!wantsToDraw) {
+                break;
+            }
         }
     }
 

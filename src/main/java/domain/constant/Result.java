@@ -7,16 +7,12 @@ public enum Result {
     BLACKJACK("블랙잭", 1.5),
     BUST("버스트", -1);
 
-    private String name;
-    private double allocation;
+    private final String name;
+    private final double allocation;
 
     Result(String name, double allocation) {
         this.name = name;
         this.allocation = allocation;
-    }
-
-    public String getName() {
-        return name + " ";
     }
 
     public double getAllocation() {

@@ -7,7 +7,6 @@ public class Dealer extends Participant {
         super("딜러");
     }
 
-    @Override
     public boolean canDraw() {
         return getScore() <= DEALER_DRAW_CONDITION;
     }

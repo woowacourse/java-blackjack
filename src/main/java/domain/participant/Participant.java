@@ -40,5 +40,4 @@ public abstract class Participant {
         return hand.size();
     }
 
-    public abstract boolean canDraw();
 }
