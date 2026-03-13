@@ -96,7 +96,6 @@ public class BlackjackController {
 
         PlayersMatchResult playersMatchResult = participants.calculatePlayersMatchResult();
         MatchResult matchResult = new MatchResult(playersMatchResult, playersMatchResult.calculateDealerMatchResult());
-//        outputView.printFinalResults(matchResult);
 
         outputView.printBettingProfit(matchResult.calculateBettingProfit());
     }
