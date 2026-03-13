@@ -2,20 +2,26 @@ package model.participant;
 
 import java.util.List;
 import model.Card;
+import model.vo.BetAmount;
 
-public class Player extends Participant {
-    private Player(String name) {
+public final class Player extends Participant {
+    private final BetAmount betAmount;
+
+    private Player(String name, BetAmount betAmount) {
         super(name);
+        this.betAmount = betAmount;
     }
 
-    public static Player of(String input) {
-        return new Player(input);
+    public static Player of(String input, BetAmount betAmount) {
+        return new Player(input, betAmount);
     }
 
     @Override
     public List<String> open() {
-        return hands.stream()
-                .map(Card::toString)
-                .toList();
+        return hands.open();
+    }
+
+    public int getBetAmount() {
+        return betAmount.getAmount();
     }
 }

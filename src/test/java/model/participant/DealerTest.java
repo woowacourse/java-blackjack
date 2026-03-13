@@ -1,11 +1,9 @@
 package model.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 import model.Card;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -48,16 +46,22 @@ class DealerTest {
         // given
         Card card1 = Card.of("스페이드", 3);
         Card card2 = Card.of("스페이드", 4);
+        Card card3 = Card.of("스페이드", 5);
         dealer.draw(card1);
         dealer.draw(card2);
+
+        Dealer dealer2 = Dealer.of("딜러2");
+        dealer2.draw(card1);
+        dealer2.draw(card2);
+        dealer2.draw(card3);
 
         // when
         dealer.open();
         List<String> opened = dealer.open();
+        List<String> opened2 = dealer2.open();
 
         // then
-        assertThat(opened).contains(card1.toString(), card2.toString());
-        assertThat(opened).containsAll(List.of(card1.toString(), card2.toString()));
-        assertThat(opened).hasSize(2);
+        assertThat(opened).hasSize(1);
+        assertThat(opened2).hasSize(3);
     }
 }

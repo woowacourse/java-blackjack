@@ -1,15 +1,20 @@
 package controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import model.BlackJack;
+import model.factory.ParticipantsFactory;
+import model.participant.Dealer;
 import model.participant.Participant;
 import model.Participants;
 import util.InputParser;
-import util.Randoms;
+import util.RandomNumberPicker;
 import view.InputView;
 import view.OutputView;
 
 public class BlackJackController {
 
+    private static final int TARGET_NUMBER = 21;
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -19,23 +24,44 @@ public class BlackJackController {
     }
 
     public void run() {
-        String rawParticipants = "딜러,";
-        rawParticipants += inputView.readParticipantNames();
-        String[] parsedName = InputParser.parseName(rawParticipants);
+        String inputNames = inputView.readParticipantNames();
+        String[] names = InputParser.parseName(inputNames);
 
-        Participants participants = Participants.of(parsedName);
+        List<Integer> betAmounts = getBetAmounts(names);
+
+        Participants participants = ParticipantsFactory.create(names, betAmounts);
         BlackJack blackJack = BlackJack.from(participants);
 
         blackJack.dealOut();
         outputView.printDealOut(participants);
-        blackJack.setFirstTurn();
 
+        playersCardDraw(participants);
+        dealerNeedDraw(participants);
+
+        outputView.printHandsAndScore(participants);
+        outputView.printResultRevenue(blackJack.calculateRevenue());
+    }
+
+    private void dealerNeedDraw(Participants participants) {
+        Participant dealer = participants.getDealer();
+        if (dealer.dealerNeedDraw()) {
+            dealer.draw(RandomNumberPicker.pick());
+            outputView.printDealerDraw();
+        }
+    }
+
+    private List<Integer> getBetAmounts(String[] names) {
+        List<Integer> betAmounts = new ArrayList<>();
+        for (int i = 0; i < names.length; i++) {
+            String bettingAmount = inputView.readBettingAmount(names[i]);
+            betAmounts.add(Integer.parseInt(bettingAmount));
+        }
+        return betAmounts;
+    }
+
+    private void playersCardDraw(Participants participants) {
         for (Participant participant : participants) {
-            if (participant.isDealer()) {
-                continue;
-            }
-
-            if (participant.calculateScore() == 21) {
+            if (isDealerOrReachTargetNumber(participant)) {
                 continue;
             }
 
@@ -46,7 +72,7 @@ public class BlackJackController {
                     outputView.printHands(participant);
                     break;
                 }
-                participant.draw(Randoms.pick());
+                participant.draw(RandomNumberPicker.pick());
                 if (participant.isBust()) {
                     outputView.printBustState(participant.getName(), participant.calculateScore());
                     outputView.printHands(participant);
@@ -56,14 +82,13 @@ public class BlackJackController {
 
             } while (input.equals("y"));
         }
+    }
 
-        Participant dealer = participants.getDealer();
-        if (dealer.dealerNeedDraw()) {
-            dealer.draw(Randoms.pick());
-            outputView.printDealerDraw();
+    private boolean isDealerOrReachTargetNumber(Participant participant) {
+        if (participant instanceof Dealer) {
+            return true;
         }
 
-        outputView.printHandsAndScore(participants);
-        outputView.printResult(blackJack.calculateDealerResult(), blackJack.calculatePlayerResult());
+        return participant.calculateScore() == TARGET_NUMBER;
     }
 }

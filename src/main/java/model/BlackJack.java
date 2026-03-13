@@ -1,21 +1,27 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import model.participant.Dealer;
 import model.participant.Participant;
-import util.Randoms;
+import model.participant.Player;
+import util.RandomNumberPicker;
 
-public class BlackJack {
+public final class BlackJack {
     private static final int STARTING_CARDS = 2;
+    private static final String DEALER_NAME = "딜러";
 
-    private Participants participants;
-    private boolean firstTurn = Boolean.TRUE;
-    private List<Card> pickedCards = new ArrayList<>();
+    private final Participants participants;
+    private final Set<Card> pickedCards;
 
     private BlackJack(Participants participants) {
         this.participants = participants;
+        this.pickedCards = new HashSet<>();
     }
 
     public static BlackJack from(Participants participants) {
@@ -41,7 +47,7 @@ public class BlackJack {
     }
 
     public Map<String, Boolean> calculatePlayerResult() {
-        Map<String, Boolean> resultMap = new HashMap<>();
+        Map<String, Boolean> resultMap = new LinkedHashMap<>();
 
         Participant dealer = participants.getDealer();
         List<Participant> players = participants.getPlayers();
@@ -61,9 +67,9 @@ public class BlackJack {
     public void dealOut() {
         for (Participant participant : participants) {
             for (int i = 0; i < STARTING_CARDS; i++) {
-                Card pick = Randoms.pick();
+                Card pick = RandomNumberPicker.pick();
                 while (pickedCards.contains(pick)) {
-                    pick = Randoms.pick();
+                    pick = RandomNumberPicker.pick();
                 }
                 pickedCards.add(pick);
                 participant.draw(pick);
@@ -71,11 +77,74 @@ public class BlackJack {
         }
     }
 
-    public boolean isFirstTurn() {
-        return firstTurn;
+    public Map<String, Integer> calculateRevenue() {
+        Map<String, Integer> calculatedTotalRevenues = new LinkedHashMap<>();
+        Map<String, Integer> calculatedPlayerRevenues = new LinkedHashMap<>();
+
+        int dealerRevenue = 0;
+        Dealer dealer = ((Dealer) participants.getDealer());
+
+        for (Entry<String, Boolean> entry : calculatePlayerResult().entrySet()) {
+            Participant participant = participants.findByName(entry.getKey());
+
+            if (entry.getKey().equals(DEALER_NAME)) {
+                dealer = ((Dealer) participant);
+
+                continue;
+            }
+
+            if (dealer.isBust() && !participant.isBust()) {
+                calculatedTotalRevenues.put(participant.getName(), ((Player) participant).getBetAmount());
+                dealerRevenue -= ((Player) participant).getBetAmount();
+                calculatedTotalRevenues.merge(DEALER_NAME, dealerRevenue, Integer::sum);
+                continue;
+            }
+
+            if (participant.isBlackJack() && !dealer.isBlackJack()) {
+                int playerBlackJackRevenue = (int) (((Player) participant).getBetAmount() * 1.5);
+                extracted(calculatedTotalRevenues, participant, playerBlackJackRevenue);
+                dealerRevenue -= playerBlackJackRevenue;
+                continue;
+            }
+
+            if (isDealerAndPlayerWithBlackJack(entry, dealer, participant, calculatedTotalRevenues)) {
+                continue;
+            }
+
+            dealerRevenue = calculateTotalRevenue(entry, calculatedPlayerRevenues, (Player) participant, dealerRevenue, dealer);
+
+            calculatedTotalRevenues.put(DEALER_NAME, dealerRevenue);
+            calculatedTotalRevenues.putAll(calculatedPlayerRevenues);
+        }
+
+        return calculatedTotalRevenues;
     }
 
-    public void setFirstTurn() {
-        this.firstTurn = Boolean.FALSE;
+    private static void extracted(Map<String, Integer> calculatedTotalRevenues, Participant participant,
+                                  int playerBlackJackRevenue) {
+        calculatedTotalRevenues.put(participant.getName(), playerBlackJackRevenue);
+    }
+
+    private int calculateTotalRevenue(Entry<String, Boolean> entry, Map<String, Integer> calculatedPlayerRevenues,
+                                      Player participant, int dealerRevenue, Dealer dealer) {
+        if (entry.getValue() || dealer.isBust()) {
+            calculatedPlayerRevenues.put(entry.getKey(), participant.getBetAmount());
+            dealerRevenue -= participant.getBetAmount();
+        }
+
+        if (!entry.getValue()) {
+            calculatedPlayerRevenues.put(entry.getKey(), -participant.getBetAmount());
+            dealerRevenue += participant.getBetAmount();
+        }
+        return dealerRevenue;
+    }
+
+    private boolean isDealerAndPlayerWithBlackJack(Entry<String, Boolean> entry, Dealer dealer, Participant participant,
+                                     Map<String, Integer> calculatedTotalRevenues) {
+        if (dealer.isBlackJack() && participant.isBlackJack()) {
+            calculatedTotalRevenues.put(entry.getKey(), 0);
+            return true;
+        }
+        return false;
     }
 }
