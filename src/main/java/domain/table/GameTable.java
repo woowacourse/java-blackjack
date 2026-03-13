@@ -1,5 +1,6 @@
 package domain.table;
 
+import domain.member.Member;
 import domain.vo.RoundResult;
 import domain.card.Card;
 import domain.member.Members;
@@ -20,41 +21,42 @@ public class GameTable {
     }
 
     public void draw(String memberName, Card card) {
-        members.draw(memberName, card);
+        Member member = members.findByName(memberName);
+        members.draw(member, card);
     }
 
     public boolean canDealerDraw() {
-        return members.getValue(getDealerName()) <= DEALER_DRAW_CONDITION;
+        Member dealer = members.findDealer();
+        return members.getValue(dealer) <= DEALER_DRAW_CONDITION;
     }
 
     public boolean checkBust(String memberName) {
-        return members.getValue(memberName) > BLACKJACK;
+        Member member = members.findByName(memberName);
+        return members.getValue(member) > BLACKJACK;
     }
 
     public boolean checkBlackjack(String playerName) {
-        return members.getValue(playerName) == BLACKJACK;
+        Member player = members.findByName(playerName);
+        return members.getValue(player) == BLACKJACK;
     }
 
     public void applyBlackjackBonus(String playerName) {
-        members.applyBlackjackBonus(playerName);
+        Member player = members.findByName(playerName);
+        members.applyBlackjackBonus(player);
     }
 
     public Map<String, Integer> checkGameResult() {
-        Map<String, Integer> result = new LinkedHashMap<>();
-        for (Entry<String, RoundResult> player : members.judgeGameResults().entrySet()) {
-            String playerName = player.getKey();
-            int bettingAmount = members.getBettingAmount(playerName);
-            result.put(
-                    player.getKey(),
-                    player.getValue()
-                            .calculateProfit(bettingAmount)
-            );
-        }
-        return result;
+        LinkedHashMap<String, Integer> results = getPlayerResult();
+        int dealerAmount = results.values().stream()
+                .mapToInt(result -> -1 * result)
+                .sum();
+        results.putFirst(members.getDealerName(), dealerAmount);
+        return results;
     }
 
     public boolean checkDealer(String memberName) {
-        return members.isDealer(memberName);
+        Member member = members.findByName(memberName);
+        return members.isDealer(member);
     }
 
     public List<String> getMemberNames() {
@@ -65,15 +67,32 @@ public class GameTable {
         return members.getDealerName();
     }
 
-    public List<Card> getCards(String playerName) {
-        return members.findCardByName(playerName);
+    public List<Card> getCards(String memberName) {
+        Member member = members.findByName(memberName);
+        return members.findCard(member);
     }
 
     public List<Card> getFirstCards(String memberName) {
-        return members.getFirstCards(memberName);
+        Member member = members.findByName(memberName);
+        return members.getFirstCards(member);
     }
 
     public int memberPoint(String playerName) {
-        return members.getValue(playerName);
+        Member player = members.findByName(playerName);
+        return members.getValue(player);
+    }
+
+    private LinkedHashMap<String, Integer> getPlayerResult() {
+        LinkedHashMap<String, Integer> results = new LinkedHashMap<>();
+        for (Entry<String, RoundResult> player : members.judgeGameResults().entrySet()) {
+            String playerName = player.getKey();
+            int bettingAmount = members.getBettingAmount(playerName);
+            results.put(
+                    player.getKey(),
+                    player.getValue()
+                            .calculateProfit(bettingAmount)
+            );
+        }
+        return results;
     }
 }
