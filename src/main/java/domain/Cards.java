@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Cards {
     private static final int BLACKJACK_SCORE = 21;
+    private static final int ACE_ADJUSTMENT = 10;
 
     private final List<Card> cards;
 
@@ -18,7 +19,7 @@ public class Cards {
             if (isLessThanBustScore(sum)) {
                 break;
             }
-            sum -= 10;
+            sum -= ACE_ADJUSTMENT;
         }
         return sum;
     }
