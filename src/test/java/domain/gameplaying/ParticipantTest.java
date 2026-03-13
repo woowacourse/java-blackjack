@@ -89,7 +89,7 @@ class ParticipantTest {
     @MethodSource("participantsBustedHand")
     @DisplayName("게임 진행이 불가능할 때, 카드를 뽑는다면 예외를 발생시켜야 한다.")
     void 게임_진행_불가능에_드로우_시_예외_발생(Participant participant) {
-        assertThatThrownBy(participant::draw).isInstanceOf(IllegalStateException.class);
+        assertThatThrownBy(participant::draw).isExactlyInstanceOf(IllegalStateException.class);
     }
 
     private static Stream<Arguments> participantsAndNames() {

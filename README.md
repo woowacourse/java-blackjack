@@ -34,7 +34,7 @@
 
 ## 피드백
 - [ ] HandTest isBusted() 테스트 추가하기
-- [ ] isExactlyInstanceOf로 변경
+- [x] isExactlyInstanceOf()로 변경
 - [ ] PlayedGameResult Dto화
 - [ ] BlackJackRule 관련
 - [ ] AppConfig 에 DrawStrategy 변경
