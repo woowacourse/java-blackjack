@@ -17,14 +17,6 @@ public abstract class Member {
 
     public abstract boolean isDealer();
 
-    public abstract int getBettingAmount();
-
-    public abstract void applyBlackjackBonus();
-
-    public String getName() {
-        return name.getValue();
-    }
-
     public int handValue() {
         return hand.calculateTotalValue();
     }
@@ -35,5 +27,13 @@ public abstract class Member {
 
     public void receiveCard(Card card) {
         hand.appendCard(card);
+    }
+
+    public boolean hasName(String name) {
+        return this.name.isName(name);
+    }
+
+    public String getName() {
+        return name.getValue();
     }
 }

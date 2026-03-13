@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Player extends Member {
 
-    private final BettingAmount amount;
+    private BettingAmount amount;
 
     public Player(String name, int amount) {
         super(name);
@@ -22,13 +22,11 @@ public class Player extends Member {
         return false;
     }
 
-    @Override
     public int getBettingAmount() {
         return amount.getAmount();
     }
 
-    @Override
     public void applyBlackjackBonus() {
-        amount.applyBonus();
+        amount = amount.applyBonus();
     }
 }
