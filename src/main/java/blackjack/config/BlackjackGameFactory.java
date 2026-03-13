@@ -9,10 +9,10 @@ import blackjack.view.OutputView;
 public class BlackjackGameFactory {
 
     public BlackjackGame createGame() {
-        return new BlackjackGame(output(), new ShuffledCardsGenerator());
+        return new BlackjackGame(view(), new ShuffledCardsGenerator());
     }
 
-    private BlackjackView output() {
+    private BlackjackView view() {
         return new BlackjackView(new InputView(), new OutputView());
     }
 }
