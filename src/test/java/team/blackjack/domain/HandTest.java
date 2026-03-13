@@ -42,7 +42,7 @@ class HandTest {
     }
 
     @Test
-    void 다른_카드들의_총합이_10인_이하인_경우_에이스가_11로_계산된다() {
+    void ACE를_제외한_다른_카드들의_총합이_10인_이하인_경우_에이스를_11로_해석한다() {
         Hand hand = new Hand();
         List<Card> cards = List.of(
                 Card.of(Suit.HEARTS, Rank.FIVE),
@@ -58,7 +58,7 @@ class HandTest {
     }
 
     @Test
-    void 다른_카드들의_총합이_10인인_경우_에이스가_11로_계산된다() {
+    void ACE를_제외한_다른_카드들의_총합이_10인_경우_에이스를_11로_해석한다() {
         Hand hand = new Hand();
         List<Card> cards = List.of(
                 Card.of(Suit.HEARTS, Rank.SIX),
@@ -74,7 +74,7 @@ class HandTest {
     }
 
     @Test
-    void 다른_카드들의_총합이_11_이상인_경우_에이스가_1로_계산된다() {
+    void ACE를_제외한_다른_카드들의_총합이_11_이상인_경우_에이스를_1로_해석한다() {
         Hand hand = new Hand();
         List<Card> cards = List.of(
                 Card.of(Suit.HEARTS, Rank.ACE),
@@ -90,7 +90,7 @@ class HandTest {
     }
 
     @Test
-    void 다른_카드들의_총합이_11인인_경우_에이스가_1로_계산된다() {
+    void ACE를_제외한_다른_카드들의_총합이_11인_경우_에이스를_1로_해석한다() {
         Hand hand = new Hand();
         List<Card> cards = List.of(
                 Card.of(Suit.HEARTS, Rank.FIVE),
