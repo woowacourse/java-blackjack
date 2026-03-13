@@ -4,7 +4,6 @@ import static model.game.Blackjack.BLACKJACK_SCORE;
 import static model.game.Blackjack.DEALOUT_DRAW_COUNT;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -71,8 +70,6 @@ public class BlackJackController {
                 cards.add(Card.of(suit, rank));
             }
         }
-
-        Collections.shuffle(cards);
 
         return RandomDeck.from(cards);
     }
