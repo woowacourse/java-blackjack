@@ -6,6 +6,7 @@ import static domain.card.Rank.FIVE;
 import static domain.card.Rank.NINE;
 import static domain.card.Rank.TEN;
 import static domain.card.Suit.HEART;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
@@ -15,6 +16,13 @@ import domain.participant.Player;
 import org.junit.jupiter.api.Test;
 
 public class BettingTest {
+    @Test
+    void 베팅_금액은_만_원_단위여야_한다() {
+        assertThatThrownBy(() -> Betting.of(15000))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(Betting.ERROR_BET_MONEY_SCALE);
+    }
+
     @Test
     void 참가자_카드가_21을_초과하는_경우_배팅_금액을_잃는다() {
         Player player = createPlayer(10000, TEN, TEN, FIVE);
@@ -105,8 +113,9 @@ public class BettingTest {
     }
 
     private Player createPlayer(int amount, Rank... ranks) {
+        Money money = new Money(amount);
         Player player = new Player("pobi");
-        player.bet(amount);
+        player.bet(money);
 
         for (Rank rank : ranks) {
             player.receive(new Card(rank, HEART));

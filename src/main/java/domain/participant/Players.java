@@ -3,6 +3,7 @@ package domain.participant;
 import domain.GameResult;
 import domain.Money;
 import domain.WinningStatus;
+import dto.PlayerResultInfo;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -46,6 +47,18 @@ public class Players {
             WinningStatus status = statuses.get(player.name());
             player.applyRoundResult(status);
         }
+    }
+
+    public List<PlayerResultInfo> resultInfos() {
+        return players.stream()
+                .map(player -> new PlayerResultInfo(player.name(), player.profit()))
+                .toList();
+    }
+
+    public int totalProfit() {
+        return players.stream()
+                .mapToInt(Player::profit)
+                .sum();
     }
 
     private void validatePlayerCount(List<Player> players) {

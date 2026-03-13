@@ -1,6 +1,5 @@
 package view;
 
-import domain.Money;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -17,9 +16,7 @@ public class InputView {
     private static final String NO = "n";
     public static final String ONE_MORE_CARD_MESSAGE = "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     public static final String DELIMITER = ",";
-    public static final int ZERO = 0;
     public static final String ERROR_INVALID_NUMBER = "[ERROR] 정상적인 숫자를 입력해주세요.";
-    public static final String ERROR_NEGATIVE_NUMBER = "[ERROR] 숫자가 0 미만입니다.";
 
     public List<String> getParsedNames() {
         System.out.println(PARTICIPANT_NAME_MESSAGE);
@@ -48,8 +45,7 @@ public class InputView {
 
     public int askForBettingAmount(String name) {
         System.out.println(name + BETTING_MONEY_MESSAGE);
-        Money money = parseMoney(scanner.nextLine());
-        return money.amount();
+        return parseAmount(scanner.nextLine());
     }
 
     private void validateEmptyInput(List<String> names) {
@@ -70,21 +66,14 @@ public class InputView {
         }
     }
 
-    Money parseMoney(String input) {
+    int parseAmount(String input) {
         String strippedInput = input.strip();
 
         try {
             int amount = Integer.parseInt(strippedInput);
-            validateNegativeAmount(amount);
-            return new Money(amount);
+            return amount;
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException(ERROR_INVALID_NUMBER);
-        }
-    }
-
-    private static void validateNegativeAmount(int amount) {
-        if (amount <= ZERO) {
-            throw new IllegalArgumentException(ERROR_NEGATIVE_NUMBER);
         }
     }
 }

@@ -3,12 +3,12 @@ package controller;
 import domain.BlackjackRule;
 import domain.Deck;
 import domain.GameResult;
+import domain.Money;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
 import domain.strategy.RandomShuffleStrategy;
-import dto.PlayerResultInfo;
 import java.util.ArrayList;
 import java.util.List;
 import view.InputView;
@@ -37,8 +37,8 @@ public class BlackjackGame {
     private void initializeBetting(Players players) {
         outputView.printBlankLine();
         for (Player player : players.getPlayers()) {
-            int bettingAmount = inputView.askForBettingAmount(player.name());
-            player.bet(bettingAmount);
+            int amount = inputView.askForBettingAmount(player.name());
+            player.bet(new Money(amount));
             outputView.printBlankLine();
         }
     }
@@ -96,30 +96,12 @@ public class BlackjackGame {
         GameResult gameResult = new GameResult(players, dealer);
         players.applyRoundResults(gameResult);
 
-        List<PlayerResultInfo> playerResultInfos = createPlayerResultInfos(players);
-        int dealerProfit = dealerProfit(players.getPlayers());
+        int dealerProfit = calculateDealerProfit(players);
 
-        outputView.printGameResult(dealerProfit, playerResultInfos);
+        outputView.printGameResult(dealerProfit, players.resultInfos());
     }
 
-    private List<PlayerResultInfo> createPlayerResultInfos(Players players) {
-        List<PlayerResultInfo> resultInfos = new ArrayList<>();
-        for (Player player : players.getPlayers()) {
-            resultInfos.add(new PlayerResultInfo(player.name(), player.profit()));
-        }
-        return resultInfos;
-    }
-
-    public int totalProfit(List<Player> players) {
-        int profit = 0;
-        for (Player player : players) {
-            profit += player.profit();
-        }
-
-        return profit;
-    }
-
-    public int dealerProfit(List<Player> players) {
-        return -totalProfit(players);
+    private static int calculateDealerProfit(Players players) {
+        return -players.totalProfit();
     }
 }

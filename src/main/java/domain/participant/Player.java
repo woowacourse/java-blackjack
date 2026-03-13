@@ -23,8 +23,8 @@ public class Player extends Participant {
         return wallet.amount();
     }
 
-    public void bet(int amount) {
-        betting = Betting.of(amount);
+    public void bet(Money money) {
+        betting = Betting.of(money.amount());
         wallet = wallet.minus(betting.amount());
     }
 
