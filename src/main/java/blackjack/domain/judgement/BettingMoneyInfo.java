@@ -1,5 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.judgement;
 
+import blackjack.domain.participant.Name;
 import java.util.Map;
 
 public class BettingMoneyInfo {

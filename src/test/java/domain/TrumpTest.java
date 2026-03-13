@@ -2,15 +2,14 @@ package domain;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-import blackjack.domain.Card;
-import blackjack.domain.Denomination;
-import blackjack.domain.Suit;
-import blackjack.domain.Trump;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Suit;
+import blackjack.domain.card.Trump;
 import blackjack.strategy.ShuffleStrategy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

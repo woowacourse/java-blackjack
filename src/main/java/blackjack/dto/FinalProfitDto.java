@@ -1,12 +1,12 @@
 package blackjack.dto;
 
-import blackjack.domain.BettingMoneyInfo;
-import blackjack.domain.Dealer;
-import blackjack.domain.Name;
-import blackjack.domain.Participants;
+import blackjack.domain.judgement.BettingMoneyInfo;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Name;
+import blackjack.domain.participant.Participants;
 
-import blackjack.domain.Player;
-import blackjack.domain.Players;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 import java.util.Map;
 import java.util.stream.Collectors;
 
