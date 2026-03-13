@@ -46,27 +46,29 @@ public class BlackjackGame {
         cardProvider.provideInitCards(users);
     }
 
-    public void hit(Users users, Function<Player, String> readHitCommand, Consumer<Player> printPlayerCards, Runnable printDealerHit) {
-        for (Player player : users.getPlayers()) {
-            while (retryUntilSuccess(() -> checkY(player, readHitCommand)) && checkAddCard(player)) {
-                cardProvider.provideOneCard(player);
-                printPlayerCards.accept(player);
-            }
-        }
-
-        Dealer dealer = users.getDealer();
-        while (dealer.isHitAvailable()) {
-            cardProvider.provideOneCard(dealer);
-            printDealerHit.run();
-        }
-    }
-
     public ProfitResult determineWinner(Users users, BetAmounts betAmounts) {
         return users.determineWinner(betAmounts);
     }
 
     public void end(Runnable closeScanner) {
         closeScanner.run();
+    }
+
+    public void hitPlayers(List<Player> players, Function<Player, String> readHitCommand,
+                           Consumer<Player> printPlayerCards) {
+        for (Player player : players) {
+            while (retryUntilSuccess(() -> checkY(player, readHitCommand)) && checkAddCard(player)) {
+                cardProvider.provideOneCard(player);
+                printPlayerCards.accept(player);
+            }
+        }
+    }
+
+    public void hitDealer(Dealer dealer, Runnable printDealerHit) {
+        while (dealer.isHitAvailable()) {
+            cardProvider.provideOneCard(dealer);
+            printDealerHit.run();
+        }
     }
 
     private boolean checkY(Player player, Function<Player, String> readHitCommand) {

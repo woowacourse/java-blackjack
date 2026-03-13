@@ -26,7 +26,7 @@ public class BlackjackController {
 
         provideInitCardsAndPrint(users);
 
-        blackjackGame.hit(users, InputView::readHitCommand, OutputView::printPlayerCards, OutputView::printDealerHit);
+        hit(users);
 
         printHandStatus(users);
 
@@ -38,6 +38,11 @@ public class BlackjackController {
     private void provideInitCardsAndPrint(Users users) {
         blackjackGame.provideInitCards(users);
         OutputView.printInitCards(users);
+    }
+
+    private void hit(Users users) {
+        blackjackGame.hitPlayers(users.getPlayers(), InputView::readHitCommand, OutputView::printPlayerCards);
+        blackjackGame.hitDealer(users.getDealer(), OutputView::printDealerHit);
     }
 
     private void printHandStatus(Users users) {
