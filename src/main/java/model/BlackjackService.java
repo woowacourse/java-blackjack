@@ -3,6 +3,7 @@ package model;
 import model.card.Deck;
 import model.paticipant.Dealer;
 import model.paticipant.Participant;
+import model.paticipant.Player;
 import model.paticipant.Players;
 
 public class BlackjackService {
@@ -18,16 +19,26 @@ public class BlackjackService {
 
     public void drawTwoCards(Dealer dealer, Players players) {
         drawCardByParticipant(dealer, INITIAL_DISPENSE_COUNT);
-        players.forEach(player -> drawCardByParticipant(player, INITIAL_DISPENSE_COUNT));
+        players.forEach(player -> drawCardByPlayer(player, INITIAL_DISPENSE_COUNT));
     }
 
     public void drawOneCard(Participant participant) {
         drawCardByParticipant(participant, BASE_DISPENSE_COUNT);
     }
 
+    public void drawOneCard(Player player) {
+        drawCardByPlayer(player, BASE_DISPENSE_COUNT);
+    }
+
     private void drawCardByParticipant(Participant participant, int count) {
         for (int i = 0; i < count; i++) {
             participant.addCard(deck.draw());
+        }
+    }
+
+    private void drawCardByPlayer(Player player, int count) {
+        for (int i = 0; i < count; i++) {
+            player.addCard(deck.draw());
         }
     }
 }

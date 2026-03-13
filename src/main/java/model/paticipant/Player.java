@@ -1,26 +1,23 @@
 package model.paticipant;
 
-import model.judgement.BetAmount;
 import model.judgement.Profit;
 import model.judgement.ResultStatus;
 
-public class Player extends Participant {
+public interface Player {
 
-    private static final int PLAYER_HIT_THRESHOLD = 21;
+    String getName();
 
-    private final BetAmount betAmount;
+    int calculateTotalScore();
 
-    public Player(String name, int betAmount) {
-        super(name);
-        this.betAmount = new BetAmount(betAmount);
-    }
+    boolean canHit();
 
-    @Override
-    public boolean canHit() {
-        return calculateTotalScore() < PLAYER_HIT_THRESHOLD;
-    }
+    void addCard(model.card.Card card);
 
-    public Profit calculateProfit(ResultStatus resultStatus) {
-        return resultStatus.calculateProfit(betAmount);
+    boolean isBust();
+
+    java.util.List<model.card.Card> getCards();
+
+    default Profit calculateProfit(ResultStatus resultStatus) {
+        return model.judgement.Profit.ZERO;
     }
 }

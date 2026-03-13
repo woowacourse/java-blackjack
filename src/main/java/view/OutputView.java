@@ -55,6 +55,15 @@ public class OutputView {
         System.out.printf("%s 카드: %s - 결과: %d%n", participant.getName(), String.join(", ", cards), sum);
     }
 
+    public static void printCardByPlayerWithScore(Player player) {
+        int sum = player.calculateTotalScore();
+        List<String> cards = player.getCards()
+                .stream()
+                .map(OutputView::convert)
+                .toList();
+        System.out.printf("%s 카드: %s - 결과: %d%n", player.getName(), String.join(", ", cards), sum);
+    }
+
     private static String convert(Card card) {
         return card.value().getSymbol() + card.shape().getShape();
     }

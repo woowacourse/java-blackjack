@@ -9,6 +9,7 @@ import model.judgement.Judgement;
 import model.judgement.PlayerResult;
 import model.judgement.ResultStatus;
 import model.paticipant.Dealer;
+import model.paticipant.BettingPlayer;
 import model.paticipant.Player;
 import model.paticipant.Players;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -27,7 +28,7 @@ public class JudgementTest {
         Dealer dealer = createDealer();
         dealerCards.forEach(dealer::addCard);
 
-        Player player = new Player("pobi", 10000);
+        Player player = new BettingPlayer("pobi", 10000);
         playerCards.forEach(player::addCard);
 
         // when

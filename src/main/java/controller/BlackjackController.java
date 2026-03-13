@@ -1,8 +1,6 @@
 package controller;
 
-import controller.result.ResultReporter;
-import java.util.ArrayList;
-import java.util.List;
+import controller.mode.GameMode;
 import model.BlackjackService;
 import model.judgement.Judgement;
 import model.judgement.PlayerResult;
@@ -15,32 +13,22 @@ import view.OutputView;
 public class BlackjackController {
 
     private final BlackjackService blackjackService;
-    private final ResultReporter resultReporter;
+    private final GameMode gameMode;
 
-    public BlackjackController(BlackjackService blackjackService, ResultReporter resultReporter) {
+    public BlackjackController(BlackjackService blackjackService, GameMode gameMode) {
         this.blackjackService = blackjackService;
-        this.resultReporter = resultReporter;
+        this.gameMode = gameMode;
     }
 
     public void run() {
         Dealer dealer = new Dealer();
-        Players players = createPlayers();
+        Players players = gameMode.createPlayers();
 
         drawInitCards(dealer, players);
         drawMoreCardByPlayer(dealer, players);
 
         printFinalCards(dealer, players);
         reportResult(dealer, players);
-    }
-
-    private Players createPlayers() {
-        List<String> names = InputView.readPlayerNames();
-        List<Player> players = new ArrayList<>();
-        for (String name : names) {
-            int betAmount = InputView.readBetAmount(name);
-            players.add(new Player(name, betAmount));
-        }
-        return new Players(players);
     }
 
     private void drawMoreCardByPlayer(Dealer dealer, Players players) {
@@ -88,6 +76,6 @@ public class BlackjackController {
 
     private void reportResult(Dealer dealer, Players players) {
         PlayerResult playerResult = Judgement.judgeByPlayer(dealer, players);
-        resultReporter.report(playerResult);
+        gameMode.reportResult(playerResult);
     }
 }
