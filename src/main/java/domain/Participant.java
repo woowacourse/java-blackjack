@@ -11,7 +11,7 @@ public abstract class Participant {
 
     public Participant(Name name) {
         this.name = name;
-        participantCards = new ParticipantCards(new ArrayList<>());
+        participantCards = new ParticipantCards(new Cards(new ArrayList<>()));
     }
 
     public void receiveCard(Card card) {

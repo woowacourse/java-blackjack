@@ -1,48 +1,27 @@
 package domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ParticipantCards {
-    private final List<Card> cards;
+    private final Cards cards;
     private int changeAvailableAceCount;
 
-    public ParticipantCards(List<Card> cards) {
-        this.cards = new ArrayList<>(cards);
-        changeAvailableAceCount = 0;
-    }
-
-    public Integer getSize() {
-        return this.cards.size();
-    }
-
-    public List<Card> getCards() {
-        return cards.stream()
-                .toList();
+    public ParticipantCards(Cards cards) {
+        this.cards = cards;
+        this.changeAvailableAceCount = 0;
     }
 
     public List<String> getCardsInfo() {
-        return cards.stream()
-                .map(Card::getCardInfo)
-                .toList();
-    }
-
-    public Card removeFirst() {
-        return cards.removeFirst();
+        return cards.getCardsInfo();
     }
 
     public int calculateScore() {
-        int sum = 0;
-        for (Card card : cards) {
-            sum += card.getScore();
-        }
-
+        int sum = cards.sumScore();
         int availableAceCount = changeAvailableAceCount;
         while (availableAceCount > 0 && sum > 21) {
             sum -= 10;
             availableAceCount -= 1;
         }
-
         return sum;
     }
 
