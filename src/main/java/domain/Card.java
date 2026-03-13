@@ -17,10 +17,6 @@ public class Card {
         return shape.getShape();
     }
 
-    public int getNumber() {
-        return number.getValue();
-    }
-
     public boolean isAce() {
         return number == Number.ACE;
     }

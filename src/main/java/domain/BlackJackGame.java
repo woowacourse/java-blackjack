@@ -3,7 +3,6 @@ package domain;
 import java.util.List;
 
 public class BlackJackGame {
-    private static final int BUST_THRESHOLD = 21;
     private static final int INITIAL_CARD_COUNT = 2;
     private final Deck deck;
     private final List<Player> players;

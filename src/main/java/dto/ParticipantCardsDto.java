@@ -7,7 +7,7 @@ public record ParticipantCardsDto(String name, List<CardInfoDto> cardsInfo, int 
     public static ParticipantCardsDto from(Participant participant) {
         List<CardInfoDto> cardInfoDtos = participant.getCards()
                 .stream()
-                .map(card -> CardInfoDto.from(card.getNumber(), card.getShape()))
+                .map(card -> CardInfoDto.from(card.getScore(), card.getShape()))
                 .toList();
 
         return new ParticipantCardsDto(participant.getName(), cardInfoDtos, participant.getScore());
