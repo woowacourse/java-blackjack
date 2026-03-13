@@ -1,19 +1,10 @@
 package domain.participant;
 
-import domain.MatchResult;
-import domain.card.Card;
-import domain.card.Rank;
-import domain.card.Suit;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -69,33 +60,5 @@ class PlayersTest {
         Players players = new Players(playerNames);
 
         assertEquals(players.findBy(targetPlayer), targetPlayer);
-    }
-
-    @Test
-    @DisplayName("모든 플레이어의 승패 결과를 계산한다.")
-    void calculateMatchResultTest() {
-        // given
-        Dealer dealer = new Dealer();
-
-        Player player1 = new Player("pobi");
-        Player player2 = new Player("jason");
-
-        Players players = new Players(List.of(player1, player2));
-
-        dealer.receive(new Card(Rank.JACK, Suit.CLOVER));
-        dealer.receive(new Card(Rank.SEVEN, Suit.HEART)); // 17
-
-        player1.receive(new Card(Rank.KING, Suit.CLOVER));
-        player1.receive(new Card(Rank.QUEEN, Suit.HEART)); // 20 -> WIN
-
-        player2.receive(new Card(Rank.TEN, Suit.CLOVER));
-        player2.receive(new Card(Rank.SEVEN, Suit.CLOVER)); // 17 -> DRAW
-
-        // when
-        Map<Player, MatchResult> result = players.calculateMatchResult(dealer);
-
-        // then
-        assertEquals(MatchResult.WIN, result.get(player1));
-        assertEquals(MatchResult.DRAW, result.get(player2));
     }
 }

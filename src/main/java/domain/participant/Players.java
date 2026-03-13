@@ -1,6 +1,5 @@
 package domain.participant;
 
-import domain.MatchResult;
 import domain.card.Card;
 
 import java.util.*;
@@ -10,10 +9,6 @@ public class Players {
     private static final int MAX_PLAYER_SIZE = 5;
 
     private final List<Player> players;
-
-    public Players() {
-        this.players = new ArrayList<>();
-    }
 
     public Players(List<Player> players) {
         validateSize(players);
@@ -29,29 +24,6 @@ public class Players {
         }
 
         throw new IllegalArgumentException(String.format("%s는(은) 존재하지 않는 플레이어입니다.", targetPlayer.getName()));
-    }
-
-    public Map<Player, MatchResult> calculateMatchResult(Dealer dealer) {
-        Map<Player, MatchResult> result = new HashMap<>();
-
-        for (Player player : players) {
-            result.put(player, MatchResult.determineMatchResultWithDealer(player, dealer));
-        }
-
-        return result;
-    }
-
-    public Map<Player, Integer> calculateProfitResult(Map<Player, MatchResult> playersMatchResult) {
-        Map<Player, Integer> profitResult = new HashMap<>();
-
-        for (Map.Entry<Player, MatchResult> matchResultEntry : playersMatchResult.entrySet()) {
-            Player player = matchResultEntry.getKey();
-            MatchResult matchResult = matchResultEntry.getValue();
-
-            profitResult.put(player, player.applyMatchResultToBet(matchResult));
-        }
-
-        return profitResult;
     }
 
     public Map<Player, List<Card>> getPlayersHand() {

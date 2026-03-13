@@ -1,4 +1,4 @@
-package domain;
+package domain.match;
 
 import domain.participant.Dealer;
 import domain.participant.Player;

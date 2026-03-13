@@ -1,5 +1,6 @@
 package domain;
 
+import domain.card.CardDistributor;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
@@ -9,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-class GameManagerTest {
+class CardDistributorTest {
 
     @Test
     @DisplayName("딜러와 모든 플레이어는 게임 시작 시, 2장의 카드를 받는다.")
@@ -17,10 +18,10 @@ class GameManagerTest {
         // given
         Players players = new Players(List.of(new Player("pobi"), new Player("james")));
         Dealer dealer = new Dealer();
-        GameManager gameManager = new GameManager();
+        CardDistributor cardDistributor = new CardDistributor();
 
         // when
-        gameManager.dealInitialCardsToParticipants(dealer, players);
+        cardDistributor.dealInitialCardsToParticipants(dealer, players);
 
         // then
         Assertions.assertEquals(dealer.getCards().size(), 2);
@@ -34,10 +35,10 @@ class GameManagerTest {
     void dealCardToDealerTest() {
         // given
         Dealer dealer = new Dealer();
-        GameManager gameManager = new GameManager();
+        CardDistributor cardDistributor = new CardDistributor();
 
         // when
-        gameManager.dealCardTo(dealer);
+        cardDistributor.dealCardTo(dealer);
 
         // then
         Assertions.assertEquals(dealer.getCards().size(), 1);
@@ -48,10 +49,10 @@ class GameManagerTest {
     void dealCardToPlayerTest() {
         // given
         Player player = new Player("pobi");
-        GameManager gameManager = new GameManager();
+        CardDistributor cardDistributor = new CardDistributor();
 
         // when
-        gameManager.dealCardTo(player);
+        cardDistributor.dealCardTo(player);
 
         // then
         Assertions.assertEquals(player.getCards().size(), 1);

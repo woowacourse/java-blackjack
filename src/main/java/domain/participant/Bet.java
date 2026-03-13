@@ -1,6 +1,6 @@
 package domain.participant;
 
-import domain.MatchResult;
+import domain.match.MatchResult;
 
 public class Bet {
 

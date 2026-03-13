@@ -1,12 +1,7 @@
 package view;
 
-import domain.MatchResult;
 import domain.card.Card;
-import dto.DealerDto;
-import dto.GameResultDto;
-import dto.PlayersDto;
-import dto.ProfitResultDto;
-import view.message.MatchResultMessage;
+import dto.*;
 import view.message.RankMessage;
 import view.message.SuitMessage;
 
@@ -35,9 +30,9 @@ public class OutputView {
         System.out.println();
     }
 
-    public void showPlayerHand(String name, PlayersDto playersDto) {
-        List<Card> cards = playersDto.getPlayersHand().get(name);
-        System.out.printf("%s카드: %s\n", name, formatCards(cards));
+    public void showPlayerHand(PlayerDto playerDto) {
+        List<Card> cards = playerDto.getPlayerHand();
+        System.out.printf("%s카드: %s\n", playerDto.getName(), formatCards(cards));
     }
 
     public void showDealerHitMessage() {
@@ -61,23 +56,6 @@ public class OutputView {
             int score = playersDto.getPlayersScore().get(name);
 
             System.out.printf("%s카드: %s - 결과: %d\n", name, formatCards(cards), score);
-        }
-    }
-
-    public void showMatchResult(GameResultDto gameResultDto) {
-        System.out.println("\n## 최종 승패");
-
-        String dealerResult = gameResultDto.getDealerResult().entrySet().stream()
-                .filter(entry -> entry.getValue() > 0)
-                .map(entry -> entry.getValue() + MatchResultMessage.of(entry.getKey()))
-                .collect(java.util.stream.Collectors.joining(SPACE_SEPARATOR));
-
-        System.out.printf("%s: %s\n", DEALER_DISPLAY_NAME, dealerResult);
-
-        for (Map.Entry<String, MatchResult> playersResult : gameResultDto.getPlayersResult().entrySet()) {
-            String name = playersResult.getKey();
-            String matchResult = MatchResultMessage.of(playersResult.getValue());
-            System.out.printf("%s: %s\n", name, matchResult);
         }
     }
 

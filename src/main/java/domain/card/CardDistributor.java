@@ -1,6 +1,5 @@
-package domain;
+package domain.card;
 
-import domain.card.Deck;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
