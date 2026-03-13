@@ -8,10 +8,10 @@ import view.OutputView;
 public class BlackjackControllerFactory {
 
     public BlackjackController blackjackController() {
-        return new BlackjackController(inputView(), outputView(), blackjackService());
+        return new BlackjackController(inputView(), outputView(), blackjackGameManager());
     }
 
-    public BlackjackGameManager blackjackService() {
+    public BlackjackGameManager blackjackGameManager() {
         return new BlackjackGameManager();
     }
 
