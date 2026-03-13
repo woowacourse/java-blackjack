@@ -1,11 +1,14 @@
 package domain;
 
 import dto.ProfitResultDTO;
+import dto.UserCardsDTO;
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import util.DisplayFormatter;
 import vo.GameResult;
 import vo.Money;
 
@@ -63,7 +66,7 @@ public class Participants {
     }
 
     private String makeOneUserCardDisplay(User user) {
-        return user.getName() + "카드: " + user.getCardsDisplay();
+        return DisplayFormatter.formatUserCardsDisplay(UserCardsDTO.fromUser(user));
     }
 
     public List<String> askGetExtraCard() {
