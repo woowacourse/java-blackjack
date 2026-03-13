@@ -11,7 +11,7 @@ public class MoneyTest {
     @Test
     void 배팅금이_양수가_아니면_오류가_발생한다() {
         Assertions.assertThatThrownBy(() -> new Money(BigDecimal.valueOf(-10)))
-                .hasMessageContaining("[ERROR] 배팅금은 0보다 커야 합니다!");
+                .hasMessageContaining("[ERROR] [-10원]은 입력할 수 없습니다.");
     }
 
     @Test
