@@ -13,8 +13,8 @@ class HandTest {
     void getTotalScore_WithoutAce() {
         Hand hand = new Hand();
         hand.addCards(List.of(
-                new Card(Rank.TEN, Suit.SPADE),
-                new Card(Rank.EIGHT, Suit.HEART)
+                new Card(Rank.TEN, Suit.SPADES),
+                new Card(Rank.EIGHT, Suit.HEARTS)
         ));
         assertThat(hand.getTotalScore()).isEqualTo(18);
     }
@@ -24,8 +24,8 @@ class HandTest {
     void getTotalScore_WithAce_AsEleven() {
         Hand hand = new Hand();
         hand.addCards(List.of(
-                new Card(Rank.ACE, Suit.SPADE),
-                new Card(Rank.NINE, Suit.HEART)
+                new Card(Rank.ACE, Suit.SPADES),
+                new Card(Rank.NINE, Suit.HEARTS)
         ));
         assertThat(hand.getTotalScore()).isEqualTo(20);
     }
@@ -35,9 +35,9 @@ class HandTest {
     void getTotalScore_WithAce_AsOne_WhenExceedBustScore() {
         Hand hand = new Hand();
         hand.addCards(List.of(
-                new Card(Rank.ACE, Suit.SPADE),
-                new Card(Rank.TEN, Suit.HEART),
-                new Card(Rank.NINE, Suit.DIAMOND)
+                new Card(Rank.ACE, Suit.SPADES),
+                new Card(Rank.TEN, Suit.HEARTS),
+                new Card(Rank.NINE, Suit.DIAMONDS)
         ));
         assertThat(hand.getTotalScore()).isEqualTo(20);
     }
@@ -47,8 +47,8 @@ class HandTest {
     void isBlackjack_True_WhenScoreIsExactly21() {
         Hand hand = new Hand();
         hand.addCards(List.of(
-                new Card(Rank.ACE, Suit.SPADE),
-                new Card(Rank.KING, Suit.HEART)
+                new Card(Rank.ACE, Suit.SPADES),
+                new Card(Rank.KING, Suit.HEARTS)
         ));
         assertThat(hand.isBlackjack()).isTrue();
     }
@@ -58,9 +58,9 @@ class HandTest {
     void isBust_True_WhenScoreExceeds21() {
         Hand hand = new Hand();
         hand.addCards(List.of(
-                new Card(Rank.TEN, Suit.SPADE),
-                new Card(Rank.TEN, Suit.HEART),
-                new Card(Rank.TWO, Suit.DIAMOND)
+                new Card(Rank.TEN, Suit.SPADES),
+                new Card(Rank.TEN, Suit.HEARTS),
+                new Card(Rank.TWO, Suit.DIAMONDS)
         ));
         assertThat(hand.isBust()).isTrue();
     }

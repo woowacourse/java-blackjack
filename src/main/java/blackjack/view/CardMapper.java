@@ -17,10 +17,10 @@ public class CardMapper {
     );
     
     private static final Map<Suit, String> SUIT_NAMES = Map.of(
-            Suit.SPADE, "스페이드",
-            Suit.DIAMOND, "다이아몬드",
-            Suit.HEART, "하트",
-            Suit.CLOVER, "클로버"
+            Suit.SPADES, "스페이드",
+            Suit.DIAMONDS, "다이아몬드",
+            Suit.HEARTS, "하트",
+            Suit.CLUBS, "클로버"
     );
     
     public static CardDisplayName toDisplayName(Card card) {

@@ -17,7 +17,7 @@ class PlayerTest {
     @ParameterizedTest
     @ValueSource(ints = {0, -1, -10000})
     void validateBettingAmount_Exception_WhenInvalidAmount(int invalidAmount) {
-        assertThatThrownBy(() -> Player.from("pobi", invalidAmount))
+        assertThatThrownBy(() -> new Player("pobi", invalidAmount))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("배팅 금액");
     }
@@ -25,7 +25,7 @@ class PlayerTest {
     @Test
     @DisplayName("플레이어가 Stand를 선언하면 카드를 뽑을 수 없다.")
     void isDrawable_False_WhenStand() {
-        Player player = Player.from("pobi", 10000);
+        Player player = new Player("pobi", 10000);
         
         player.stand();
         
@@ -35,10 +35,10 @@ class PlayerTest {
     @Test
     @DisplayName("플레이어가 Bust 상태이면 카드를 뽑을 수 없다.")
     void isDrawable_False_WhenBust() {
-        Player player = Player.from("pobi", 10000);
-        player.receiveCard(new Card(Rank.TEN, Suit.SPADE));
-        player.receiveCard(new Card(Rank.TEN, Suit.HEART));
-        player.receiveCard(new Card(Rank.TWO, Suit.CLOVER));
+        Player player = new Player("pobi", 10000);
+        player.receiveCard(new Card(Rank.TEN, Suit.SPADES));
+        player.receiveCard(new Card(Rank.TEN, Suit.HEARTS));
+        player.receiveCard(new Card(Rank.TWO, Suit.CLUBS));
         
         assertThat(player.isDrawable()).isFalse();
     }
@@ -46,9 +46,9 @@ class PlayerTest {
     @Test
     @DisplayName("처음 두 장으로 블랙잭이 되면 카드를 뽑을 수 없다.")
     void isDrawable_False_WhenBlackjack() {
-        Player player = Player.from("pobi", 10000);
-        player.receiveCard(new Card(Rank.ACE, Suit.SPADE));
-        player.receiveCard(new Card(Rank.KING, Suit.HEART));
+        Player player = new Player("pobi", 10000);
+        player.receiveCard(new Card(Rank.ACE, Suit.SPADES));
+        player.receiveCard(new Card(Rank.KING, Suit.HEARTS));
         
         assertThat(player.isDrawable()).isFalse();
     }
@@ -56,7 +56,7 @@ class PlayerTest {
     @Test
     @DisplayName("전달받은 수익률에 자신의 배팅금을 곱해 최종 수익금을 반환한다.")
     void calculateProfit_ReturnsCorrectAmount() {
-        Player player = Player.from("pobi", 10000);
+        Player player = new Player("pobi", 10000);
         
         assertThat(player.calculateProfit(ProfitRate.WIN_BLACKJACK)).isEqualTo(15000);
         assertThat(player.calculateProfit(ProfitRate.WIN)).isEqualTo(10000);
