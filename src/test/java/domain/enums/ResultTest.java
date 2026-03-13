@@ -105,6 +105,22 @@ public class ResultTest {
         assertThat(Result.getOpposite(playerResult)).isEqualTo(Result.LOSE);
     }
 
+    @DisplayName("딜러만 블랙잭이면 플레이어는 패배하고 딜러는 승리한다.")
+    @Test
+    void 딜러만_블랙잭이면_플레이어는_패배하고_딜러는_승리한다() {
+        List<Card> playerCards = List.of(new Card(Rank.SEVEN, Suit.SPADE), new Card(Rank.QUEEN, Suit.SPADE),
+                (new Card(Rank.FOUR, Suit.SPADE)));
+        playerCards.forEach(player::addCard);
+
+        List<Card> dealerCards = List.of(new Card(Rank.ACE, Suit.CLOVER), new Card(Rank.QUEEN, Suit.CLOVER));
+        dealerCards.forEach(dealer::addCard);
+
+        Result playerResult = Result.calculatePlayerResult(dealer, player);
+
+        assertThat(playerResult).isEqualTo(Result.LOSE);
+        assertThat(Result.getOpposite(playerResult)).isEqualTo(Result.WIN);
+    }
+
     @DisplayName("플레이어와 딜러 모두 블랙잭이면 무승부가 된다.")
     @Test
     void 플레이어와_딜러_모두_블랙잭이면_무승부_된다() {

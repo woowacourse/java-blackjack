@@ -32,6 +32,9 @@ public enum Result {
         if (player.isBust()) {
             return true;
         }
+        if (!player.isBlackjack() && dealer.isBlackjack()) {
+            return true;
+        }
         return !dealer.isBust() && (player.getScore() < dealer.getScore());
     }
 
