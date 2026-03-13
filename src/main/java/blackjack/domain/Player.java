@@ -23,7 +23,7 @@ public class Player extends Participant {
         return getTotalPoint() < BLACKJACK_POINT;
     }
 
-    public GameResult compareResult(Dealer dealer) {
+    private GameResult compareResult(Dealer dealer) {
         if (this.isBust()) {
             return GameResult.LOSE;
         }
@@ -60,7 +60,8 @@ public class Player extends Participant {
         return GameResult.BLACKJACK_WIN;
     }
 
-    public long calculateEarningAmount(GameResult gameResult) {
+    public long calculateEarningAmount(Dealer dealer) {
+        GameResult gameResult = compareResult(dealer);
         return bettingAmount.calculateEarningAmount(gameResult);
     }
 }

@@ -96,7 +96,7 @@ public class BlackJackController {
             earningResultDtos.add(
                     new EarningResultDto(
                             player.getName(),
-                            player.calculateEarningAmount(player.compareResult(dealer))
+                            player.calculateEarningAmount(dealer)
                     )
             );
         }
