@@ -5,7 +5,7 @@ import model.judgement.Judgement;
 import model.judgement.PlayerResult;
 import view.WinLossReportView;
 
-public class WinLossReporter implements ResultReporter {
+public class NonBettingResultReporter implements ResultReporter {
 
     @Override
     public void report(PlayerResult playerResult) {

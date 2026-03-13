@@ -1,6 +1,5 @@
 import controller.BlackjackController;
-import controller.mode.BettingGameMode;
-import controller.mode.GameMode;
+import controller.GameMode;
 import java.util.List;
 import model.BlackjackService;
 import model.card.Card;
@@ -18,7 +17,7 @@ public class BlackjackApplication {
         Deck deck = new Deck(shuffledCards);
         BlackjackService blackjackService = new BlackjackService(deck);
 
-        GameMode gameMode = new BettingGameMode();
+        GameMode gameMode = GameMode.toBettingMode();
 
         BlackjackController controller = new BlackjackController(blackjackService, gameMode);
         controller.run();

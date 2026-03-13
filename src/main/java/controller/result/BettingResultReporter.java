@@ -4,7 +4,7 @@ import model.judgement.PlayerResult;
 import model.judgement.Profit;
 import view.ProfitReportView;
 
-public class ProfitReporter implements ResultReporter {
+public class BettingResultReporter implements ResultReporter {
 
     @Override
     public void report(PlayerResult playerResult) {
