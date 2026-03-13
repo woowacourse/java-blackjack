@@ -13,8 +13,8 @@ public class AgreementTest {
         Agreement agreement1 = new Agreement("n");
         Agreement agreement2 = new Agreement("y");
 
-        assertThat(agreement1.get()).isFalse();
-        assertThat(agreement2.get()).isTrue();
+        assertThat(agreement1.value()).isFalse();
+        assertThat(agreement2.value()).isTrue();
     }
 
     @Test
