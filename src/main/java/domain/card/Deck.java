@@ -1,6 +1,7 @@
 package domain.card;
 
 import domain.random.RandomValueGenerator;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import util.ErrorMessage;
@@ -37,6 +38,13 @@ public class Deck {
         cards.remove(idx);
 
         return card;
+    }
+
+    public List<Card> drawTwoCards() {
+        List<Card> cards = new ArrayList<>();
+        cards.add(drawCard());
+        cards.add(drawCard());
+        return cards;
     }
 
     public boolean contains(Card card) {
