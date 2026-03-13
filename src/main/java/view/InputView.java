@@ -1,11 +1,11 @@
 package view;
 
-import static exception.ErrorMessage.INPUT_EMPTY_ERROR;
-import static exception.ErrorMessage.INVALID_HIT_STAND_INPUT_ERROR;
-
+import domain.pariticipant.BettingAmount;
 import domain.pariticipant.Name;
 import java.util.List;
 import java.util.Scanner;
+
+import static exception.ErrorMessage.*;
 
 public class InputView {
     Scanner scanner = new Scanner(System.in);
@@ -20,13 +20,13 @@ public class InputView {
     }
 
     public boolean readHitOrStand(String name) {
-        System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+        System.out.println(name + "은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         String input = scanner.nextLine();
 
         validateIsBlank(input);
         input = input.trim();
 
-        if (!input.matches("[y|n]")) {
+        if (!input.matches("[yn]")) {
             throw new IllegalArgumentException(INVALID_HIT_STAND_INPUT_ERROR.getMessage());
         }
         return "y".equals(input);
@@ -37,5 +37,21 @@ public class InputView {
         if (input == null || input.isBlank()) {
             throw new IllegalArgumentException(INPUT_EMPTY_ERROR.getMessage());
         }
+    }
+
+    public BettingAmount readBettingAmount(String name) {
+        System.out.printf("\n%s의 베팅 금액은?\n", name);
+        long bettingAmount = getBettingAmount();
+        return new BettingAmount(bettingAmount);
+    }
+
+    private long getBettingAmount() {
+        long bettingAmount;
+        try {
+            bettingAmount = Long.parseLong(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(INVALID_BETTING_AMOUNT_FORMAT_ERROR.getMessage());
+        }
+        return bettingAmount;
     }
 }

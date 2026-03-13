@@ -10,10 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import domain.pariticipant.*;
-import domain.result.DealerMatchResult;
-import domain.result.MatchCase;
-import domain.result.MatchResult;
-import domain.result.PlayerMatchResult;
+import domain.result.*;
 
 public class OutputView {
 
@@ -28,7 +25,7 @@ public class OutputView {
     private static void printInitHandCardInfo(Participant dealer, Players players) {
         StringBuilder playerNames = new StringBuilder();
         System.out.printf("\n%s와 ", dealer.getName());
-        for (Participant player : players.getPlayers()) {
+        for (Participant player : players.players()) {
             playerNames.append(player.getName() + ", ");
         }
         playerNames.delete(playerNames.length() - 2, playerNames.length());
@@ -36,7 +33,7 @@ public class OutputView {
     }
 
     private static void printPlayerInitHandCard(Players players) {
-        for (Participant player : players.getPlayers()) {
+        for (Participant player : players.players()) {
             printParticipantHandCard(player);
             System.out.println();
         }
@@ -66,7 +63,7 @@ public class OutputView {
     }
 
     public void printDealerAdditionalDraw() {
-        System.out.printf("%s는 %d이하라 한장의 카드를 더 받았습니다.\n", DEALER_NAME, DEALER_DRAW_BOUND);
+        System.out.printf("%s은(는) %d이하라 한장의 카드를 더 받았습니다.\n", DEALER_NAME, DEALER_DRAW_BOUND);
     }
 
     public void printCardResults(Participants participants) {
@@ -77,7 +74,6 @@ public class OutputView {
         printDealerCardResult(dealer);
         printPlayerCardResult(players);
 
-        System.out.println();
     }
 
     private static void printDealerCardResult(Participant dealer) {
@@ -86,7 +82,7 @@ public class OutputView {
     }
 
     private static void printPlayerCardResult(Players players) {
-        for (Participant player : players.getPlayers()) {
+        for (Participant player : players.players()) {
             printDealerCardResult(player);
         }
     }
@@ -98,7 +94,7 @@ public class OutputView {
     public void printFinalResults(MatchResult matchResult) {
         System.out.println("\n## 최종 승패");
         printDealerResult(matchResult.dealerMatchResult());
-        printPlayerResult(matchResult.playerMatchResult());
+        printPlayerResult(matchResult.playersMatchResult());
     }
 
 
@@ -116,14 +112,27 @@ public class OutputView {
         System.out.println();
     }
 
-    private static void printPlayerResult(PlayerMatchResult playerMatchResult) {
-        Map<Player, MatchCase> playerMatchCaseMap = playerMatchResult.playerMatchResult();
+    private static void printPlayerResult(PlayersMatchResult playersMatchResult) {
+        Map<Player, MatchCase> playerMatchCaseMap = playersMatchResult.playerMatchResult();
         for (Player player : playerMatchCaseMap.keySet()) {
             System.out.printf("%s: %s\n", player.getName(), playerMatchCaseMap.get(player).getDescription());
         }
     }
 
+    public void printBettingProfit(PlayersBettingProfit playersBettingProfit) {
+        System.out.println("\n## 최종 수익");
+        System.out.printf("딜러: %d\n", playersBettingProfit.calculateDealerProfit());
+        Map<Player, Long> profitMap = playersBettingProfit.playersBettingProfit();
+        for (Player player : profitMap.keySet()) {
+            System.out.printf("%s: %d\n", player.getName(), profitMap.get(player));
+        }
+    }
+
     public void printWhiteLine() {
         System.out.println();
+    }
+
+    public void printErrorMessage(String errorMessage) {
+        System.out.println(errorMessage);
     }
 }

@@ -8,10 +8,7 @@ import static domain.card.CardRank.KING;
 import static domain.card.CardRank.QUEEN;
 import static domain.card.CardRank.TEN;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Hand {
 
@@ -19,7 +16,7 @@ public class Hand {
     private final Set<Integer> scores = new HashSet<>();
 
     public Hand(List<Card> hands) {
-        this.hands = hands;
+        this.hands = new ArrayList<>(hands);
         for (Card card : hands) {
             updateScore(card);
         }
@@ -64,7 +61,6 @@ public class Hand {
         List<CardRank> cardRanks = hands.stream()
                 .map(Card::getCardRank)
                 .toList();
-
         return cardRanks.contains(ACE) &&
                 (cardRanks.contains(TEN) || cardRanks.contains(JACK)
                         || cardRanks.contains(QUEEN) || cardRanks.contains(KING));

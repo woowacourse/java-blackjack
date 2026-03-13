@@ -1,6 +1,5 @@
 package controller;
 
-import domain.card.Card;
 import domain.card.CardShuffler;
 import domain.card.Deck;
 import domain.card.Hand;
@@ -8,8 +7,10 @@ import domain.pariticipant.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 import domain.result.MatchResult;
+import domain.result.PlayersMatchResult;
 import view.InputView;
 import view.OutputView;
 
@@ -29,8 +30,7 @@ public class BlackjackController {
 
     public void run() {
         Participants participants = addParticipants();
-
-        Deck deck = Deck.initCardDeck();
+        Deck deck = Deck.initCardDeck(cardShuffler);
 
         drawInitCard(participants, deck);
 
@@ -42,27 +42,24 @@ public class BlackjackController {
     }
 
     private Participants addParticipants() {
-        List<Name> playerNames = inputView.readPlayers();
+        List<Name> playerNames = readUntilSuccess(inputView::readPlayers);
+
         List<Player> players = new ArrayList<>();
         for (Name name : playerNames) {
-            players.add(new Player(name, new Hand(new ArrayList<>())));
+            BettingAmount bettingAmount =
+                    readUntilSuccess(() -> inputView.readBettingAmount(name.name())); // 베팅 금액 입력 받기
+            players.add(new Player(name, new Hand(new ArrayList<>()), bettingAmount));
         }
         return new Participants(new Players(players));
     }
 
     private void drawInitCard(Participants participants, Deck deck) {
-        participants.drawInitialCards(deck, cardShuffler);
+        participants.drawInitialCards(deck);
         outputView.printInitHandCard(participants);
     }
 
-    private static void addHandCard(Participant participant, List<Card> drawnCards) {
-        for (Card drawedCard : drawnCards) {
-            participant.addHandCard(drawedCard);
-        }
-    }
-
     private void doHitAndStand(Players players, Deck deck) {
-        for (Player player : players.getPlayers()) {
+        for (Player player : players.players()) {
             hitAndStand(player, deck);
         }
         outputView.printWhiteLine();
@@ -79,10 +76,10 @@ public class BlackjackController {
     }
 
     private boolean doHit(Player player, Deck deck) {
-        boolean isHit = inputView.readHitOrStand(player.getName());  // 더 받을 지 물어봄
+        boolean isHit = readUntilSuccess(() -> inputView.readHitOrStand(player.getName()));  // 더 받을 지 물어봄
         if (isHit) {
             // 히트인 경우 카드 더 뽑아 추가하기
-            player.hitCard(deck, cardShuffler);
+            player.hitCard(deck);
         }
         return isHit;
     }
@@ -90,13 +87,26 @@ public class BlackjackController {
     private void drawDealerAdditionalCard(Dealer dealer, Deck deck) {
         while (dealer.shouldHit()) {
             outputView.printDealerAdditionalDraw();
-            dealer.drawAdditionalCard(deck, cardShuffler);
+            dealer.drawAdditionalCard(deck);
         }
     }
 
     private void printResult(Participants participants) {
         outputView.printCardResults(participants);
-        MatchResult matchResult = participants.calculateMatchResult();
-        outputView.printFinalResults(matchResult);
+
+        PlayersMatchResult playersMatchResult = participants.calculatePlayersMatchResult();
+        MatchResult matchResult = new MatchResult(playersMatchResult, playersMatchResult.calculateDealerMatchResult());
+
+        outputView.printBettingProfit(matchResult.calculateBettingProfit());
+    }
+
+    private <T> T readUntilSuccess(Supplier<T> action) {
+        while (true) {
+            try {
+                return action.get();
+            } catch (RuntimeException e) {
+                outputView.printErrorMessage(e.getMessage());
+            }
+        }
     }
 }

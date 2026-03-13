@@ -10,17 +10,22 @@
 - 카드 출력 규칙
     - **히트/스탠드 여부와 상관없이 최초 1회 출력한다.**
     - **히트(Hit)로 카드를 새로 받을 때마다 다시 출력한다.**
-
+- 베팅 금액 범위
+  - 베팅 금액은 0보다 크고 100만원이하여야 한다.
 ---
 
 ## ⚙️ 기능 정리
 
-### 1️⃣ 참여자 이름을 입력 받는 기능
+### 1️⃣ 플레이어들의 이름을 입력 받는 기능
 
 - 각 플레이어 이름은 쉼표 `,`로 구분해서 받는다.
     - 이름 길이는 2자 이상 10자 이하여야 한다.
 
-### 2️⃣ 최초 카드 패를 분배하는 기능
+### 2️⃣ 플레이어들의 베팅 금액을 입력받는다. (사이클 2 추가)
+
+- 베팅 금액은 0보다 크고 100만원이하여야 한다.
+
+### 3️⃣최초 카드 패를 분배하는 기능
 
 - 최초의 카드 덱은 카드 52장이 섞여있어야 한다.
 - 딜러와 플레이어에게 카드를 2장씩 나눠준다.
@@ -28,7 +33,7 @@
     - 딜러의 카드는 1장만 공개한다.
 - 각 플레이어의 **블랙잭 여부(A + 10 / J / Q / K)**를 확인한다.
 
-### 3️⃣ 히트 & 스탠드 처리 기능
+### 4️⃣히트 & 스탠드 처리 기능
 
 - 각 플레이어에게 카드를 더 받을지 여부를 입력받는다. ****(Hit: ‘y’, Stand: ‘n’)
     - 플레이어 이름을 입력 받은 순서대로 반복을 진행한다.
@@ -41,14 +46,14 @@
 
 ---
 
-### 4️⃣ 딜러 추가 뽑기 기능
+### 5️⃣ 딜러 추가 뽑기 기능
 
 - 딜러 패가 **16 이하일 경우 17 이상이 될 때까지 카드 1장을 계속 뽑는다.**
     - 추가될 때마다 ‘딜러는 16이하라 한장의 카드를 더 받았습니다.’ 메시지를 출력한다.
 
 ---
 
-### 5️⃣ 결과 계산
+### 5️⃣결과 계산
 
 - 각 플레이어와 딜러의 카드 점수를 합산한다.
     - 플레이어의 점수 계산 시, A가 패에 있다면 플레이어에게 유리하도록 계산한다.
@@ -56,48 +61,49 @@
         - 21 초과 버스트라면 21에 가장 가까운 점수를 선택한다.
 - 카드 종류와 점수를 출력한다.
     - 딜러를 가장 먼저 출력하고, 플레이어는 입력받은 순서대로 출력한다.
-- 딜러 기준으로 승 / 무 / 패를 계산하고 출력한다.
-    - 플레이어는 딜러와의 단순 승 / 무 / 패만 출력한다.
-
+- ~~딜러 기준으로 승 / 무 / 패를 계산하고 출력한다.~~ (사이클1)
+    - ~~플레이어는 딜러와의 단순 승 / 무 / 패만 출력한다.~~
+- 딜러 및 각 플레이어의 베팅 수익을 계산한다. (사이클 2추가)
+  - 이때, 플레이어가 블랙잭인 경우 베팅금액의 1.5배를 돌려받는다.
 ---
 
-## 📂 프로젝트 디렉토리 구조
+## 📂 프로젝트 디렉토리 구조 (최종)
 
 ```
-java-blackjack
-│
-├── Application.java
-│
-├── constant/
-│   └── BlackjackConstant.java
-│
-├── controller/
-│   └── BlackjackController.java
-│
-├── domain/
-│   ├── Card.java
-│   ├── CardDeck.java
-│   ├── CardRank.java
-│   ├── CardResult.java
-│   ├── CardShufflerImpl.java
-│   ├── CardSuit.java
-│   ├── HandCards.java
-│   ├── Name.java
-│   ├── Participant.java
-│   └── Participants.java
-│
-├── exception/
-│   └── ErrorMessage.java
-│
-├── infra/
-│   └── CardShuffler.java
-│
-├── service/
-│   ├── BlackjackService.java
-│   └── FinalResult.java
-│
-└── view/
-    ├── InputParser.java
-    ├── InputView.java
-    └── OutputView.java
+📁 java
+├── 📄 Application.java
+├── 📁 constant
+│   └── 📄 BlackjackConstant.java
+├── 📁 controller
+│   └── 📄 BlackjackController.java
+├── 📁 domain
+│   ├── 📁 card
+│   │   ├── 📄 Card.java
+│   │   ├── 📄 CardRank.java
+│   │   ├── 📄 CardShuffler.java
+│   │   ├── 📄 CardSuit.java
+│   │   ├── 📄 Deck.java
+│   │   └── 📄 Hand.java
+│   ├── 📁 pariticipant
+│   │   ├── 📄 BettingAmount.java
+│   │   ├── 📄 Dealer.java
+│   │   ├── 📄 Name.java
+│   │   ├── 📄 Participant.java
+│   │   ├── 📄 Participants.java
+│   │   ├── 📄 Player.java
+│   │   └── 📄 Players.java
+│   └── 📁 result
+│       ├── 📄 DealerMatchResult.java
+│       ├── 📄 MatchCase.java
+│       ├── 📄 MatchResult.java
+│       ├── 📄 PlayersBettingProfit.java
+│       └── 📄 PlayersMatchResult.java
+├── 📁 exception
+│   └── 📄 ErrorMessage.java
+├── 📁 infra
+│   └── 📄 CardShufflerImpl.java
+└── 📁 view
+    ├── 📄 InputParser.java
+    ├── 📄 InputView.java
+    └── 📄 OutputView.java
 ```

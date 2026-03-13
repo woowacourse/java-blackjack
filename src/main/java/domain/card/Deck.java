@@ -4,18 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Deck {
-    private final List<Card> cardDeck;
+    private final List<Card> deck;
+    private final CardShuffler cardShuffler;
 
-    private Deck(List<Card> cardDeck) {
-        this.cardDeck = cardDeck;
+    private Deck(List<Card> deck, CardShuffler cardShuffler) {
+        this.deck = deck;
+        this.cardShuffler = cardShuffler;
     }
 
-    public static Deck initCardDeck() {
+    public static Deck initCardDeck(CardShuffler cardShuffler) {
         List<Card> cards = new ArrayList<>();
         for (CardSuit suit : CardSuit.values()) {
             addCard(suit, cards);
         }
-        return new Deck(cards);
+        return new Deck(cards, cardShuffler);
     }
 
     private static void addCard(CardSuit suit, List<Card> cards) {
@@ -24,15 +26,17 @@ public class Deck {
         }
     }
 
-    public List<Card> getCardDeck() {
-        return List.copyOf(cardDeck);
+    public List<Card> getDeck() {
+        return List.copyOf(deck);
     }
 
     public int getDeckSize() {
-        return cardDeck.size();
+        return deck.size();
     }
 
-    public Card draw(int index) {
-        return cardDeck.remove(index);
+    public Card draw() {
+        return deck.remove(cardShuffler.getRandomCardIndex(deck.size()));
     }
+
+
 }

@@ -8,22 +8,23 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Stream;
 
 import static constant.BlackjackConstant.DEALER_NAME;
 import static constant.BlackjackConstant.INIT_DRAW_COUNT;
+import static test_util.TestUtil.createPlayer;
+import static test_util.TestUtil.creteDealer;
 
 class ParticipantTest {
     @ParameterizedTest
     @MethodSource("참가자_초기_카드_뽑기_테스트_케이스")
-    @DisplayName("참가자의 초기 카드를 INIT_DRAW_COUNT만큼 뽑는다.")
+    @DisplayName("참가자의 초기 카드를 " + INIT_DRAW_COUNT + " 만큼 뽑는다.")
     public void drawInitialCards(Participant participant) throws Exception {
-        Deck deck = Deck.initCardDeck();
+        Deck deck = Deck.initCardDeck(new FakeCardShuffler());
         CardShuffler cardShuffler = new FakeCardShuffler();
 
         // when
-        participant.drawInitialCards(deck, cardShuffler);
+        participant.drawInitialCards(deck);
 
         // then
         Hand hand = participant.getHand();
@@ -37,20 +38,4 @@ class ParticipantTest {
                 creteDealer(DEALER_NAME, new ArrayList<>())
         );
     }
-
-
-    private static Player createPlayer(String name, List<Card> handCards) {
-        return new Player(
-                new Name(name),
-                new Hand(handCards));
-    }
-    private static Dealer creteDealer(String name, List<Card> handCards) {
-        return new Dealer(
-                new Name(name),
-                new Hand(handCards));
-    }
-    private static Card createCard(CardSuit cardSuit, CardRank cardRank) {
-        return new Card(cardSuit, cardRank);
-    }
-
 }
