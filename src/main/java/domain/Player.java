@@ -32,7 +32,7 @@ public class Player {
     }
 
     public MatchCase calculateMatchCase(int dealerTotal) {
-        if (cards.getFinalScore()<dealerTotal){
+        if (cards.getFinalScore()>dealerTotal){
             return MatchCase.WIN;
         }
         if (cards.getFinalScore()==dealerTotal){
@@ -48,8 +48,15 @@ public class Player {
         bettingScore = money;
     }
 
-    private boolean isPlayerLose(boolean dealerBurst, int dealerTotal) {
-        return isBust() || (!dealerBurst && cards.getFinalScore() < dealerTotal);
+    public void calculateMoney(MatchCase matchCase, boolean isDealerBlackjack) {
+        if (cards.isBlackjack() && !isDealerBlackjack){
+            bettingScore = (int) ((int) bettingScore * 1.5);
+            return;
+        }
+        if (matchCase.equals(MatchCase.LOSE)){
+            loseMoney();
+            return;
+        }
     }
 
     public void loseMoney() {
@@ -57,16 +64,9 @@ public class Player {
         bettingScore -= minusScore;
     }
 
-//    public void calculateBettingScore(boolean isDealerBlackjack) {
-//        if (!isDealerBlackjack && cards.isBlackjack()) {
-//            bettingScore = (int) ((int) bettingScore * 1.5);
-//            return;
-//        }
-////        if (isPlayerLose(dealer.isBust(), dealer.getFinalScore())) {
-////            loseMoney();
-////        }
-//    }
-
+    public boolean isDealerBlackjack() {
+        return cards.isBlackjack();
+    }
 
     public String getName() {
         return name;

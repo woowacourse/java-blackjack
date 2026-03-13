@@ -1,6 +1,5 @@
 package domain;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -37,6 +36,7 @@ public class Game {
         if (players.isAllPlayerBurst()){
             for (Player player : players){
                 matchResult.put(player.getName(), MatchCase.LOSE);
+                player.calculateMoney(MatchCase.LOSE,  dealer.isDealerBlackjack());
             }
             return matchResult;
         }
@@ -44,11 +44,13 @@ public class Game {
         // 2. 딜러가 burst이면 살아남은 참가자는 우승이다.
         if (dealer.isBust()){
             for (Player player : players){
-                if (player.isBust()){
+                if (!player.isBust()){
                     matchResult.put(player.getName(), MatchCase.WIN);
+                    player.calculateMoney(MatchCase.WIN,  dealer.isDealerBlackjack());
                     continue;
                 }
                 matchResult.put(player.getName(), MatchCase.LOSE);
+                player.calculateMoney(MatchCase.LOSE,  dealer.isDealerBlackjack());
 
             }
             return matchResult;
@@ -58,11 +60,22 @@ public class Game {
         for  (Player player : players){
             MatchCase matchCase = player.calculateMatchCase(dealer.getCardsTotalSum());
             matchResult.put(player.getName(), matchCase);
+            player.calculateMoney(matchCase, dealer.isDealerBlackjack());
         }
-
         return matchResult;
+    }
 
 
+    public Map<String, Integer> getBettingScore(Game game) {
+        Map<String, Integer> bettingResult = new LinkedHashMap<>();
+        for(Player player : players){
+            bettingResult.put(player.getName(), player.getBettingScore());
+        }
+        return bettingResult;
+    }
+
+    public int getTotalMoney(){
+        return players.getTotalBettingScore();
     }
 
 //    private static boolean isPlayerLose(Player player, boolean dealerBurst, int dealerTotal) {

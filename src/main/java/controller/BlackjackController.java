@@ -1,6 +1,5 @@
 package controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -40,10 +39,7 @@ public class BlackjackController {
 
         // 최종 승패
         OutputView.displayMatchResult(blackjackService.getPlayerResultDto(game));
-//        BlackjackResult blackjackResult = BlackjackResult.from(dealer, players);
-//        blackjackService.calculateBettingScore(dealer, players);
-//        OutputView.displayMatchResult(blackjackResult.toResultDto());
-//        OutputView.displayBettingResult(blackjackService.toBettingResultDto(dealer,players));
+        OutputView.displayBettingResult(blackjackService.getBettingScore(game));
     }
 
 
@@ -103,16 +99,6 @@ public class BlackjackController {
     private boolean hasAdditionalCard(String name) {
         return doRetry(() -> inputView.readAdditionalCard(name));
     }
-
-//    public void getFinalCardContentDto(Players players) {
-//        List<FinalCardDto> finalCards = new ArrayList<>();
-//        finalCards.add(dealer.toFinalCardDto());
-//        for (Player player : players) {
-//            finalCards.add(player.toFinalCardDto());
-//        }
-//        OutputView.displayFinalCard(finalCards);
-//    }
-
 
     private <T> T doRetry(Supplier<T> action) {
         int retry = 0;

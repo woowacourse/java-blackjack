@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
-    public static final int ACE_ADDITIONAL_SCORE = 10;
+    public static final int ACE_ADDITIONAL_SCORE = 11;
     private final List<Card> cards;
 
     public Cards() {

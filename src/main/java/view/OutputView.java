@@ -62,8 +62,11 @@ public final class OutputView {
 
     // 사이클 2의 결과값
     public static void displayBettingResult(BettingResultDto resultDto) {
-        System.out.println("## 최종 수익");
         Map<String, Integer> resultMap = resultDto.bettingResult();
+
+        System.out.println("\n## 최종 수익");
+        System.out.printf("%s: %d\n", Game.DEALER_NAME, -resultDto.totalMoney());
+
         for (Map.Entry<String, Integer> playerName : resultMap.entrySet()) {
             System.out.printf("%s: %d\n", playerName.getKey(), playerName.getValue().intValue());
         }

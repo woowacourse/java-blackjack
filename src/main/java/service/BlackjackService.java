@@ -9,6 +9,7 @@ import domain.Game;
 import domain.MatchCase;
 import domain.Player;
 import domain.Players;
+import domain.dto.BettingResultDto;
 import domain.dto.CardContentDto;
 import domain.dto.FinalCardDto;
 import domain.dto.MatchResultDto;
@@ -63,19 +64,8 @@ public class BlackjackService {
 
     }
 
-
-//    public void calculateBettingScore(Dealer dealer, Players players) {
-//        players.calculateScore(dealer,players);
-//    }
-//
-//    public BettingResultDto toBettingResultDto(Dealer dealer, Players players) {
-//        // todo: 실제 값으로 넣기
-//        Map<String, Integer> dealerWinningMap = new LinkedHashMap<>();
-//        dealerWinningMap.put(Dealer.DEALER_NAME, dealer.getBettingScore());
-//        for  (Player player : players) {
-//            dealerWinningMap.put(player.getName(), player.getBettingScore());
-//        }
-//        return new BettingResultDto(dealerWinningMap);
-//    }
+    public BettingResultDto getBettingScore(Game game) {
+        return new BettingResultDto(game.getTotalMoney(), game.getBettingScore(game));
+    }
 
 }

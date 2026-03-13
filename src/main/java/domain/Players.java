@@ -14,18 +14,11 @@ public class Players implements Iterable<Player> {
         player.add(card);
     }
 
-
     public int getTotalBettingScore(){
         return players.stream()
                 .mapToInt(Player::getBettingScore)
                 .sum();
     }
-
-//    public void calculateScore(Players players,boolean isDealerBlackjack) {
-//        for (Player player : players) {
-//            player.calculateBettingScore(isDealerBlackjack);
-//        }
-//    }
 
     @Override
     public Iterator<Player> iterator() {
