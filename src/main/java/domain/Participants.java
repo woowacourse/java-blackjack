@@ -71,4 +71,8 @@ public class Participants {
     public void dealCardToDealer(Card card) {
         dealer.receiveCard(card);
     }
+
+    public boolean isDealerBlackjack() {
+        return dealer.isBlackjack();
+    }
 }

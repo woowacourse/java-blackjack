@@ -16,7 +16,7 @@ public class GameJudgeTest {
 
     @Test
     void 유저_버스트_BUST() {
-        assertThat(gameJudge.judge(17, 22, false)).isEqualTo(GameResult.BUST);
+        assertThat(gameJudge.judge(17, 22, false, false)).isEqualTo(GameResult.BUST);
     }
 
     @Test
