@@ -2,14 +2,12 @@ package domain;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PlayerTest {
 
     @Test
-    @DisplayName("플레이어의 점수가 21점을 초과하면 isBust는 true를 반환한다.")
-    void isBust_Score22_ReturnTrue() {
+    void 점수가_21점을_초과하면_버스트이다() {
         Player player = new Player(new Name("pobi"));
         player.receiveCard(new Card(Shape.SPADE, Number.TEN));
         player.receiveCard(new Card(Shape.HEART, Number.JACK));
@@ -21,8 +19,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어의 점수가 21점이면 isBust는 false를 반환한다.")
-    void isBust_Score21_ReturnFalse() {
+    void 점수가_21점이면_버스트가_아니다() {
         Player player = new Player(new Name("pobi"));
         player.receiveCard(new Card(Shape.SPADE, Number.NINE));
         player.receiveCard(new Card(Shape.HEART, Number.JACK));
@@ -34,9 +31,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어는 점수가 21점 미만일 때 카드를 더 받을 수 있다.")
-    void isContinueGame_UnderScore21_ReturnTrue() {
-
+    void 점수가_21점_미만이면_카드를_추가로_받을_수_있다() {
         Player player = new Player(new Name("pobi"));
         player.receiveCard(new Card(Shape.SPADE, Number.EIGHT));
         player.receiveCard(new Card(Shape.HEART, Number.JACK));
@@ -48,9 +43,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어는 점수가 21점 이상일 때 카드를 더 받을 수 없다.")
-    void isContinueGame_OverScore21_ReturnFalse() {
-
+    void 점수가_21점_이상이면_카드를_추가로_받을_수_없다() {
         Player player = new Player(new Name("pobi"));
         player.receiveCard(new Card(Shape.SPADE, Number.NINE));
         player.receiveCard(new Card(Shape.HEART, Number.JACK));
@@ -62,8 +55,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("둘 다 버스트되지 않고, 플레이어 점수가 딜러 점수보다 높으면 플레이어가 승리한다.")
-    void judgeResult_PlayerScoreHigher_ReturnTrue() {
+    void 딜러보다_점수가_높으면_승리한다() {
         Player player = new Player(new Name("pobi"));
         Dealer dealer = new Dealer(new Name("딜러"));
 
@@ -79,8 +71,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("둘 다 버스트되지 않고, 플레이어 점수와 딜러 점수가 같으면 비긴다.")
-    void judgeResult_PlayerScoreSame_ReturnTrue() {
+    void 딜러와_점수가_같으면_무승부이다() {
         Player player = new Player(new Name("pobi"));
         Dealer dealer = new Dealer(new Name("딜러"));
 
@@ -96,8 +87,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("둘 다 버스트되지 않고, 플레이어 점수보다 딜러 점수가 높으면 플레이어가 패배한다.")
-    void judgeResult_DealerScoreHigher_ReturnFalse() {
+    void 딜러보다_점수가_낮으면_패배한다() {
         Player player = new Player(new Name("pobi"));
         Dealer dealer = new Dealer(new Name("딜러"));
 
@@ -112,8 +102,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어가 버스트 되면, 딜러 점수 상관없이 패배한다.")
-    void judgeResult_PlayerBurst_ReturnFalse() {
+    void 플레이어가_버스트이면_패배한다() {
         Player player = new Player(new Name("pobi"));
         Dealer dealer = new Dealer(new Name("딜러"));
 
@@ -130,8 +119,7 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어가 버스트 되지 않을 때, 딜러가 버스트되면 플레이어가 승리한다.")
-    void judgeResult_DealerBurst_ReturnTrue() {
+    void 딜러가_버스트이면_승리한다() {
         Player player = new Player(new Name("pobi"));
         Dealer dealer = new Dealer(new Name("딜러"));
 

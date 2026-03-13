@@ -4,14 +4,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class CardsTest {
 
     @Test
-    @DisplayName("카드 합계를 계산한다.")
-    void calculateScore_ContainsNonAce_ReturnSum() {
+    void 에이스가_없으면_카드_숫자의_합을_반환한다() {
         Card card1 = new Card(Shape.SPADE, Number.EIGHT);
         Card card2 = new Card(Shape.HEART, Number.EIGHT);
 
@@ -25,8 +23,7 @@ class CardsTest {
     }
 
     @Test
-    @DisplayName("ACE가 포함되었을 때 카드 합계를 계산한다.")
-    void calculateScore_ContainsAce_ReturnSum() {
+    void 에이스가_있으면_상황에_맞는_최대_합을_반환한다() {
         Card card1 = new Card(Shape.SPADE, Number.ACE);
         Card card2 = new Card(Shape.HEART, Number.FIVE);
         Card card3 = new Card(Shape.CLUB, Number.EIGHT);
