@@ -1,13 +1,7 @@
-package domain;
+package domain.result;
 
-public final class Score {
+public record Score(int score) {
     private static final int BLACKJACK_SCORE = 21;
-
-    private final int score;
-
-    public Score(int score) {
-        this.score = score;
-    }
 
     public int getGameScore() {
         return score;
