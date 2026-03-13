@@ -19,7 +19,7 @@ public class BetAmount {
 
     public int calculateProfit(BigDecimal payoutRate) {
         return amount.multiply(payoutRate)
-                .setScale(0, RoundingMode.FLOOR)
+                .setScale(0, RoundingMode.DOWN)
                 .intValue();
     }
 }

@@ -4,9 +4,9 @@ import java.math.BigDecimal;
 
 public enum GameOutcome {
     BLACKJACK_WIN(new BigDecimal("1.5")),
-    WIN(new BigDecimal("1")),
-    DRAW(new BigDecimal("0")),
-    LOSE(new BigDecimal("-1")),
+    WIN(BigDecimal.ONE),
+    DRAW(BigDecimal.ZERO),
+    LOSE(BigDecimal.valueOf(-1)),
     ;
 
     private final BigDecimal payoutRate;
