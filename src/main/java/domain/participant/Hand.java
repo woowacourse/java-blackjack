@@ -14,6 +14,10 @@ public class Hand {
         this.cards.add(card);
     }
 
+    public void addAll(List<Card> cards) {
+        this.cards.addAll(cards);
+    }
+
     public int calculateScore() {
         int score = 0;
         for (Card card : cards) {

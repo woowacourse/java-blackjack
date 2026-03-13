@@ -33,6 +33,18 @@ public class Deck {
         return card;
     }
 
+    public List<Card> draw(int count) {
+        //TODO: validate 카드 잔량 검증
+        List<Card> drawnCards = new ArrayList<>();
+
+        for (int i = 0; i < count; i++) {
+            drawnCards.add(cards.getLast());
+            cards.removeLast();
+        }
+
+        return drawnCards;
+    }
+
     public void shuffle(DeckShuffler shuffler) {
         shuffler.shuffle(this.cards);
     }

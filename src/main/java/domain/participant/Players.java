@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.Deck;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -22,7 +23,7 @@ public class Players implements Iterable<Player> {
 
     @Override
     public Iterator<Player> iterator() {
-         return players.iterator();
+        return players.iterator();
     }
 
     private static void validate(List<Player> players) {
@@ -47,5 +48,11 @@ public class Players implements Iterable<Player> {
         Set<Player> uniquePlayers = new HashSet<>(players);
 
         return players.size() != uniquePlayers.size();
+    }
+
+    public void distributeCardsToAll(Deck deck, int cardCount) {
+        for (Player player : players) {
+            player.addAll(deck.draw(cardCount));
+        }
     }
 }

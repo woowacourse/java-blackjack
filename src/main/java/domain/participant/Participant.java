@@ -2,6 +2,7 @@ package domain.participant;
 
 import domain.card.Card;
 import domain.card.CardsSnapshot;
+import java.util.List;
 import java.util.Objects;
 
 public abstract class Participant {
@@ -13,9 +14,15 @@ public abstract class Participant {
         this.name = name;
     }
 
-    public void addCard(Card card) {
+    public void add(Card card) {
         hand.add(card);
     }
+
+    //TODO distributeCards로 수정
+    public void addAll(List<Card> cards) {
+        hand.addAll(cards);
+    }
+
 
     public CardsSnapshot handInfo() {
         return hand.snapshot();

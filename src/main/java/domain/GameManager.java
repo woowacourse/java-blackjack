@@ -19,7 +19,7 @@ public class GameManager {
     }
 
     public void dealCard(Participant participant) {
-        participant.addCard(deck.pop());
+        participant.add(deck.pop());
     }
 
     public void dealCardTo(Players players, int count) {
@@ -40,7 +40,11 @@ public class GameManager {
 
     public void dealStartingCards(Participant participant) {
         for (int i = 0; i < STARTING_CARD_COUNT; i++) {
-            participant.addCard(deck.pop());
+            participant.add(deck.pop());
         }
     }
+
+//    public void dealStartingCardsNew(Participants participants) {
+//        participants.distributeCardsToAll(deck, STARTING_CARD_COUNT);
+//    }
 }

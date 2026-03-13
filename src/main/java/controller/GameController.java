@@ -34,6 +34,27 @@ public class GameController {
         resultPhase(dealer, players);
     }
 
+    private void readyPhase(Dealer dealer, Players players) {
+        gameManager.dealStartingCards(dealer);
+        gameManager.dealCardTo(players, 2);
+
+        Map<String, CardsSnapshot> result = new LinkedHashMap<>();
+        result.put(dealer.getName(), gameManager.getStartingCard(dealer));
+        for (Player player : players) {
+            result.put(player.getName(), gameManager.getCardsResult(player));
+        }
+
+        outputView.printGameInitResult(result);
+        outputView.printNewLine();
+    }
+
+//    private void readyPhaseNew(Participants participants) {
+//        gameManager.dealStartingCardsNew(participants);
+//        ParticipantCards startingCards = gameManager.getParticipantsCards(participants);
+//
+//        outputView.printParticipantCardNew(startingCards);
+//    }
+
     private void resultPhase(Dealer dealer, Players players) {
         Referee referee = new Referee();
         Map<String, Integer> scoreByPlayerNames = new LinkedHashMap<>();
@@ -94,20 +115,6 @@ public class GameController {
         gameManager.dealCard(player);
         outputView.printParticipantCard(player.getName(),
                 gameManager.getCardsResult(player).getFormattedCards());
-    }
-
-    private void readyPhase(Dealer dealer, Players players) {
-        gameManager.dealStartingCards(dealer);
-        gameManager.dealCardTo(players, 2);
-
-        Map<String, CardsSnapshot> result = new LinkedHashMap<>();
-        result.put(dealer.getName(), gameManager.getStartingCard(dealer));
-        for (Player player : players) {
-            result.put(player.getName(), gameManager.getCardsResult(player));
-        }
-
-        outputView.printGameInitResult(result);
-        outputView.printNewLine();
     }
 
     private Players readPlayers() {
