@@ -1,5 +1,7 @@
 package model.judgement;
 
+import model.paticipant.BetAmount;
+
 public enum ResultStatus {
 
     WIN {

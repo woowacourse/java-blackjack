@@ -2,6 +2,7 @@ package model.judgement;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import model.paticipant.BetAmount;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 

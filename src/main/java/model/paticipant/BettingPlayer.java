@@ -1,6 +1,5 @@
 package model.paticipant;
 
-import model.judgement.BetAmount;
 import model.judgement.Profit;
 import model.judgement.ResultStatus;
 

@@ -1,4 +1,6 @@
-package model.judgement;
+package model.paticipant;
+
+import model.judgement.Profit;
 
 public record BetAmount(int amount) {
 
