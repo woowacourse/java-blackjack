@@ -1,11 +1,12 @@
 package controller;
 
+import domain.game.BlackjackGameManager;
 import domain.game.HitOrStand;
+import domain.participant.BetAmount;
 import dto.BlackjackResultDto;
 import dto.BlackjackStatisticsDto;
 import dto.ParticipantDto;
 import java.util.List;
-import domain.game.BlackjackGameManager;
 import util.Parser;
 import view.InputView;
 import view.OutputView;
@@ -46,10 +47,10 @@ public class BlackjackController {
     }
 
     private void inputBetAmounts() {
-        List<ParticipantDto> playerDtoList = blackjackService.getPlayerDtoList();
+        List<ParticipantDto> playerDtoList = blackjackGameManager.getPlayerDtoList();
         for (ParticipantDto participantDto : playerDtoList) {
             String betAmountInput = inputView.inputBetAmount(participantDto.name());
-            blackjackService.setBetAmount(participantDto.name(), new BetAmount(betAmountInput));
+            blackjackGameManager.setBetAmount(participantDto.name(), new BetAmount(betAmountInput));
         }
     }
 
