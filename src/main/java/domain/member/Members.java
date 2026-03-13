@@ -22,45 +22,30 @@ public class Members {
         }
     }
 
-    public List<Card> getFirstCards(String memberName) {
-        Member member = findByName(memberName);
-        return member.showFirstCards();
-    }
-
-    public List<Card> findCardByName(String memberName) {
-        Member member = findByName(memberName);
-        return member.handCards();
-    }
-
-    public void draw(String memberName, Card card) {
-        Member member = findByName(memberName);
-        member.receiveCard(card);
-    }
-
-    private Member findByName(String memberName) {
+    public Member findByName(String memberName) {
         return members.stream()
-                .filter(member -> member.getName().equals(memberName))
+                .filter(member -> member.hasName(memberName))
                 .findAny()
                 .orElseThrow(NoSuchElementException::new);
     }
 
-    public int getValue(String memberName) {
-        Member member = findByName(memberName);
-        return member.handValue();
-    }
-
-    public List<String> getMemberNames() {
+    public Member findDealer() {
         return members.stream()
-                .map(Member::getName)
-                .toList();
+                .filter(Member::isDealer)
+                .findFirst()
+                .orElseThrow(NoSuchElementException::new);
     }
 
-    public String getDealerName() {
-        return findDealer().getName();
+    public List<Card> findCard(Member member) {
+        return member.handCards();
     }
 
-    public boolean isDealer(String memberName) {
-        return findByName(memberName).isDealer();
+    public void draw(Member member, Card card) {
+        member.receiveCard(card);
+    }
+
+    public boolean isDealer(Member member) {
+        return member.isDealer();
     }
 
     public Map<String, RoundResult> judgeGameResults() {
@@ -79,20 +64,37 @@ public class Members {
                 );
     }
 
+    public void applyBlackjackBonus(Member member) {
+        if (!member.isDealer()) {
+            Player player = (Player) member;
+            player.applyBlackjackBonus();
+        }
+    }
+
+    public int getValue(Member member) {
+        return member.handValue();
+    }
+
+    public List<String> getMemberNames() {
+        return members.stream()
+                .map(Member::getName)
+                .toList();
+    }
+
+    public String getDealerName() {
+        return findDealer().getName();
+    }
+
     public int getBettingAmount(String playerName) {
         Member member = findByName(playerName);
-        return member.getBettingAmount();
+        if (member.isDealer()) {
+            throw new UnsupportedOperationException("딜러는 배팅 금액을 가질 수 없습니다.");
+        }
+        Player player = (Player) member;
+        return player.getBettingAmount();
     }
 
-    public void applyBlackjackBonus(String playerName) {
-        Member member = findByName(playerName);
-        member.applyBlackjackBonus();
-    }
-
-    private Member findDealer() {
-        return members.stream()
-                .filter(Member::isDealer)
-                .findFirst()
-                .orElseThrow(NoSuchElementException::new);
+    public List<Card> getFirstCards(Member member) {
+        return member.showFirstCards();
     }
 }
