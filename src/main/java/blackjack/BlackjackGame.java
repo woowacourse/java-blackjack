@@ -14,6 +14,7 @@ import blackjack.view.OutputView;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -45,20 +46,18 @@ public class BlackjackGame {
         cardProvider.provideInitCards(users);
     }
 
-    public void hit(Users users, Function<Player, String> readHitCommand) {
-        List<Player> players = users.getPlayers();
-        Dealer dealer = users.getDealer();
-
-        for (Player player : players) {
+    public void hit(Users users, Function<Player, String> readHitCommand, Consumer<Player> printPlayerCards, Runnable printDealerHit) {
+        for (Player player : users.getPlayers()) {
             while (retryUntilSuccess(() -> checkY(player, readHitCommand)) && checkAddCard(player)) {
                 cardProvider.provideOneCard(player);
-                OutputView.printPlayerCards(player);
+                printPlayerCards.accept(player);
             }
         }
 
+        Dealer dealer = users.getDealer();
         while (dealer.isHitAvailable()) {
             cardProvider.provideOneCard(dealer);
-            OutputView.printDealerHit();
+            printDealerHit.run();
         }
     }
 

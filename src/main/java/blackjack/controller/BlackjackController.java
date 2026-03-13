@@ -26,7 +26,7 @@ public class BlackjackController {
 
         provideInitCardsAndPrint(users);
 
-        blackjackGame.hit(users, InputView::readHitCommand);
+        blackjackGame.hit(users, InputView::readHitCommand, OutputView::printPlayerCards, OutputView::printDealerHit);
 
         printHandStatus(users);
 

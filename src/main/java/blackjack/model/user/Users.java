@@ -1,6 +1,7 @@
 package blackjack.model.user;
 
 import blackjack.model.bet.BetAmounts;
+import blackjack.model.gameresult.GameResult;
 import blackjack.model.gameresult.ProfitResult;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,65 +39,24 @@ public class Users {
                 .orElseThrow(() -> new IllegalArgumentException(ERROR_DEALER_NOT_FOUND));
     }
 
-    public List<User> getUsers() {
-        return List.copyOf(users);
-    }
-
     public ProfitResult determineWinner(BetAmounts betAmounts) {
         Map<Player, Integer> result = new HashMap<>();
-        int dealerPayout = 0;
         List<Player> players = getPlayers();
         Dealer dealer = getDealer();
 
         for (Player player : players) {
-            if (player.isBust()) {
-                result.put(player, betAmounts.calculateLosePayout(player));
-                dealerPayout += betAmounts.calculateWinPayout(player);
-                continue;
-            }
-
-            if (player.isBlackjack() && dealer.isBlackjack()) {
-                result.put(player, betAmounts.calculateDrawPayout());
-                dealerPayout += betAmounts.calculateDrawPayout();
-                continue;
-            }
-
-            if (player.isBlackjack()) {
-                result.put(player, betAmounts.calculateBlackjackPayout(player));
-                dealerPayout -= betAmounts.calculateBlackjackPayout(player);
-                continue;
-            }
-
-            if (dealer.isBlackjack()) {
-                result.put(player, betAmounts.calculateLosePayout(player));
-                dealerPayout += betAmounts.calculateWinPayout(player);
-                continue;
-            }
-
-            if (dealer.isBust()) {
-                result.put(player, betAmounts.calculateWinPayout(player));
-                dealerPayout -= betAmounts.calculateWinPayout(player);
-                continue;
-            }
-
-            if (dealer.totalScore() == player.totalScore()) {
-                result.put(player, betAmounts.calculateDrawPayout());
-                dealerPayout += betAmounts.calculateDrawPayout();
-                continue;
-            }
-
-            if (dealer.totalScore() > player.totalScore()) {
-                result.put(player, betAmounts.calculateLosePayout(player));
-                dealerPayout += betAmounts.calculateWinPayout(player);
-                continue;
-            }
-
-            if (dealer.totalScore() < player.totalScore()) {
-                result.put(player, betAmounts.calculateWinPayout(player));
-                dealerPayout -= betAmounts.calculateWinPayout(player);
-            }
+            GameResult gameResult = GameResult.judge(dealer, player);
+            int profit = betAmounts.calculateProfit(player, gameResult);
+            result.put(player, profit);
         }
+        int dealerPayout = -getTotalPlayerProfit(result);
 
         return new ProfitResult(result, dealerPayout);
+    }
+
+    private static int getTotalPlayerProfit(Map<Player, Integer> result) {
+        return result.values().stream()
+                .mapToInt(Integer::intValue)
+                .sum();
     }
 }

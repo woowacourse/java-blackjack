@@ -1,5 +1,6 @@
 package blackjack.model.bet;
 
+import blackjack.model.gameresult.GameResult;
 import blackjack.model.user.Player;
 import java.util.Map;
 
@@ -11,22 +12,20 @@ public class BetAmounts {
         this.betAmounts = betAmounts;
     }
 
-    public int calculateWinPayout(Player player) {
+    public int calculateProfit(Player player, GameResult gameResult) {
         BetAmount betAmount = betAmounts.get(player);
-        return betAmount.getAmount();
-    }
+        if (gameResult == GameResult.BLACKJACK_WIN) {
+            return (int) Math.round(betAmount.getAmount() * 1.5);
+        }
 
-    public int calculateLosePayout(Player player) {
-        BetAmount betAmount = betAmounts.get(player);
-        return -betAmount.getAmount();
-    }
+        if (gameResult == GameResult.WIN) {
+            return betAmount.getAmount();
+        }
 
-    public int calculateBlackjackPayout(Player player) {
-        BetAmount betAmount = betAmounts.get(player);
-        return (int) Math.round(betAmount.getAmount() * 1.5);
-    }
+        if (gameResult == GameResult.LOSE) {
+            return -betAmount.getAmount();
+        }
 
-    public int calculateDrawPayout() {
         return 0;
     }
 }
