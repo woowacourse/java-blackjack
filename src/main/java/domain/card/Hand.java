@@ -25,11 +25,11 @@ public class Hand {
         return calculateTotalScoreWithAceCalculation(baseScore, aceCount);
     }
 
-    private int calculateAceCount() {
-        return cards.stream()
-                .filter(Card::isAce)
-                .toList()
-                .size();
+    private int calculateInitialScore() {
+        int baseScore = calculateInitialBaseScore();
+        int aceCount = calculateAceCount();
+
+        return calculateTotalScoreWithAceCalculation(baseScore, aceCount);
     }
 
     private Integer calculateBaseScore() {
@@ -42,6 +42,13 @@ public class Hand {
         return cards.subList(0, 2).stream()
                 .map(Card::getScore)
                 .reduce(0, Integer::sum);
+    }
+
+    private int calculateAceCount() {
+        return cards.stream()
+                .filter(Card::isAce)
+                .toList()
+                .size();
     }
 
     private int calculateTotalScoreWithAceCalculation(int score, int aceCount) {
@@ -68,12 +75,5 @@ public class Hand {
 
     public boolean isBlackjack() {
         return calculateInitialScore() == BLACKJACK_SCORE;
-    }
-
-    private int calculateInitialScore() {
-        int baseScore = calculateInitialBaseScore();
-        int aceCount = calculateAceCount();
-
-        return calculateTotalScoreWithAceCalculation(baseScore, aceCount);
     }
 }
