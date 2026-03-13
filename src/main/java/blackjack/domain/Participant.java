@@ -41,6 +41,10 @@ public abstract class Participant {
         return drawnCards.sumScore() > 21;
     }
 
+    public boolean isBlackjack() {
+        return drawnCards.sumScore() == 21 && drawnCards.getSize() == 2;
+    }
+
     public int calculateTotalScore() {
         return drawnCards.sumScore();
     }

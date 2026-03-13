@@ -41,4 +41,8 @@ public class Cards {
         }
         return cardNames;
     }
+
+    public int getSize() {
+        return cards.size();
+    }
 }
