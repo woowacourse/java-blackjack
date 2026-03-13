@@ -12,4 +12,4 @@ public record ParticipantCardsDto(String name, List<CardInfoDto> cardsInfo, int 
 
         return new ParticipantCardsDto(participant.getName(), cardInfoDtos, participant.getScore());
     }
-};
+}
