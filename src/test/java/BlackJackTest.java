@@ -9,6 +9,7 @@ import model.participant.Dealer;
 import model.participant.Participant;
 import model.Participants;
 import model.participant.Player;
+import model.vo.BetAmount;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,8 +25,8 @@ public class BlackJackTest {
         List<Participant> rawParticipants = new ArrayList<>();
 
         rawParticipants.add(Dealer.of("딜러"));
-        rawParticipants.add(Player.of("pobi", 10000));
-        rawParticipants.add(Player.of("jason", 20000));
+        rawParticipants.add(Player.of("pobi", BetAmount.of(10000)));
+        rawParticipants.add(Player.of("jason", BetAmount.of(20000)));
         participants = Participants.of(rawParticipants);
 
         Participant dealer = participants.getDealer();
@@ -73,7 +74,7 @@ public class BlackJackTest {
         Dealer dealer = Dealer.of(DEALER_NAME);
         dealer.draw(Card.of("스페이드", 10));
         dealer.draw(Card.of("스페이드", 11));
-        Player player = Player.of("nuno", 10000);
+        Player player = Player.of("nuno", BetAmount.of(10000));
         player.draw(Card.of("하트", 10));
         player.draw(Card.of("스페이드", 11));
 
@@ -98,7 +99,7 @@ public class BlackJackTest {
         Dealer dealer = Dealer.of(DEALER_NAME);
         dealer.draw(Card.of("스페이드", 5));
         dealer.draw(Card.of("스페이드", 3));
-        Player player = Player.of("nuno", 10000);
+        Player player = Player.of("nuno", BetAmount.of(10000));
         player.draw(Card.of("하트", 10));
         player.draw(Card.of("스페이드", 11));
 
@@ -123,7 +124,7 @@ public class BlackJackTest {
         dealer.draw(Card.of("스페이드", 10));
         dealer.draw(Card.of("스페이드", 10));
         dealer.draw(Card.of("스페이드", 10));
-        Player player = Player.of("nuno", 10000);
+        Player player = Player.of("nuno", BetAmount.of(10000));
         player.draw(Card.of("하트", 2));
         player.draw(Card.of("스페이드", 3));
 

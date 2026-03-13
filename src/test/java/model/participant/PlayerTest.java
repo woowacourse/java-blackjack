@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import model.Card;
+import model.vo.BetAmount;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +13,7 @@ class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        player = Player.of("pobi", 10000);
+        player = Player.of("pobi", BetAmount.of(10000));
     }
 
     @Test

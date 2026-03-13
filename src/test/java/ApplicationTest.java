@@ -2,6 +2,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import model.participant.Participant;
 import model.participant.Player;
+import model.vo.BetAmount;
 import org.junit.jupiter.api.Test;
 
 class ApplicationTest {
@@ -11,7 +12,7 @@ class ApplicationTest {
         String input = "pobi";
 
         //when
-        Participant from = Player.of(input, 10000);
+        Participant from = Player.of(input, BetAmount.of(10000));
 
         //then
         assertThat(from.getName()).isEqualTo(input);
