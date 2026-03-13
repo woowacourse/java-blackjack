@@ -48,4 +48,19 @@ public class BlackjackTest {
 
         assertThat(profit).isEqualTo(15000);
     }
+
+    @Test
+    void 플레이어_카드합_21_넘으면_배팅금액_모두_읾음() {
+        Money bettingAmount = new Money(10000);
+        Player pobi = new Player("pobi", bettingAmount);
+        Dealer dealer = new Dealer();
+
+        pobi.receiveOneCard(new Card(Rank.TEN, Shape.HEART));
+        pobi.receiveOneCard(new Card(Rank.TEN, Shape.SPADE));
+        pobi.receiveOneCard(new Card(Rank.TWO, Shape.CLOVER));
+
+        int profit = pobi.calculateFinalProfit(dealer);
+
+        assertThat(profit).isEqualTo(-10000);
+    }
 }
