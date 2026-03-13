@@ -3,6 +3,7 @@ package domain;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
+import domain.match.MatchResult;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import org.junit.jupiter.api.DisplayName;
@@ -20,10 +21,10 @@ public class MatchResultTest {
     @ParameterizedTest
     @DisplayName("딜러와 플레이어 패에 따라 승패를 계산한다.")
     @MethodSource("provideGameResultCases")
-    void determineMatchResult(String description,
-                              List<Card> dealerCards,
-                              List<Card> playerCards,
-                              MatchResult expected) {
+    void judge(String description,
+               List<Card> dealerCards,
+               List<Card> playerCards,
+               MatchResult expected) {
 
         // given
         Dealer dealer = new Dealer();
@@ -33,7 +34,7 @@ public class MatchResultTest {
         playerCards.forEach(player::receive);
 
         // when
-        MatchResult result = MatchResult.determineMatchResultWithDealer(player, dealer);
+        MatchResult result = MatchResult.judge(player, dealer);
 
         // then
         assertEquals(expected, result);

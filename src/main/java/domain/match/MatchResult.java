@@ -9,14 +9,7 @@ public enum MatchResult {
     DRAW,
     LOSE;
 
-    public static MatchResult reverse(MatchResult matchResult) {
-        if (matchResult == WIN) return LOSE;
-        if (matchResult == LOSE) return WIN;
-
-        return DRAW;
-    }
-
-    public static MatchResult determineMatchResultWithDealer(Player player, Dealer dealer) {
+    public static MatchResult judge(Player player, Dealer dealer) {
         if (player.isBust()) return MatchResult.LOSE;
         if (dealer.isBust()) return MatchResult.WIN;
         if (player.getScore() > dealer.getScore()) return MatchResult.WIN;
