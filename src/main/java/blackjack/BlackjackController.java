@@ -8,6 +8,7 @@ import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.domain.result.GameResults;
+import blackjack.dto.*;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -40,16 +41,26 @@ public class BlackjackController {
         Map<Player, Money> wagers = placeWagers(players);
 
         dealInitialCards(deck, players, dealer);
-        outputView.printInitialDeal(players, dealer);
+        outputView.printInitialDeal(new InitialDealDto(players, dealer));
 
         processPlayersTurn(deck, players);
         processDealerTurn(deck, dealer);
 
-        GameResults gameResults = resolveGameResults(players, dealer);
-        printGameResults(gameResults);
+        List<ParticipantFinalDto> finalCards = buildFinalCards(players, dealer);
+        outputView.printFinalCards(finalCards);
 
-        Map<Participant, Money> profits = calculateProfit(gameResults, wagers, dealer);
-        printProfits(profits);
+        GameResults gameResults = GameResults.create(players, dealer);
+        outputView.printFinalResults(new GameResultsDto(gameResults));
+
+        Map<Participant, Money> profits = gameResults.calculateProfits(wagers, dealer);
+        outputView.printProfits(ProfitsDto.from(profits));
+    }
+
+    private List<ParticipantFinalDto> buildFinalCards(Players players, Dealer dealer) {
+        List<ParticipantFinalDto> finalCards = new ArrayList<>();
+        finalCards.add(new ParticipantFinalDto(dealer));
+        players.players().forEach(p -> finalCards.add(new ParticipantFinalDto(p)));
+        return finalCards;
     }
 
     private Map<Player, Money> placeWagers(Players players) {
@@ -59,14 +70,6 @@ public class BlackjackController {
             wagers.put(player, new Money(amount));
         }
         return wagers;
-    }
-
-    private void printProfits(Map<Participant, Money> profits) {
-        outputView.printProfits(profits);
-    }
-
-    private Map<Participant, Money> calculateProfit(GameResults gameResults, Map<Player, Money> wagers, Dealer dealer) {
-        return gameResults.calculateProfits(wagers, dealer);
     }
 
     private Players createPlayers() {
@@ -115,7 +118,7 @@ public class BlackjackController {
 
     private void printCardsIfNeverHit(final Player player, final boolean hasHit) {
         if (!hasHit) {
-            outputView.printPlayerCards(player);
+            outputView.printPlayerCards(new PlayerCardsDto(player));
         }
     }
 
@@ -126,7 +129,7 @@ public class BlackjackController {
             return false;
         }
         player.receiveCard(deck.draw());
-        outputView.printPlayerCards(player);
+        outputView.printPlayerCards(new PlayerCardsDto(player));
         return true;
     }
 
@@ -135,14 +138,5 @@ public class BlackjackController {
             dealer.receiveCard(deck.draw());
             outputView.printDealerHit();
         }
-    }
-
-    private GameResults resolveGameResults(final Players players, final Dealer dealer) {
-        outputView.printFinalCards(players, dealer);
-        return GameResults.create(players, dealer);
-    }
-
-    private void printGameResults(final GameResults gameResults) {
-        outputView.printFinalResults(gameResults);
     }
 }
