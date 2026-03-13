@@ -29,12 +29,10 @@ public class BlackjackService {
         this.dealer = new Dealer();
     }
 
-    // TODO: TEST
     public void receivePlayerBets(int playerIndex, Money money) {
         Player player = players.getPlayerByIndex(playerIndex);
         player.placeBet(money);
     }
-
 
     public List<String> getAllPlayerNames() {
         return players.getAllPlayers().stream()

@@ -7,6 +7,7 @@ import constant.PolicyConstant;
 import constant.Rank;
 import constant.Suit;
 import domain.Card;
+import domain.bet.Money;
 import domain.participant.Names;
 import domain.participant.Participant;
 import domain.participant.Players;
@@ -16,6 +17,8 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class BlackjackServiceTest {
 
@@ -197,6 +200,29 @@ class BlackjackServiceTest {
 
             // then
             assertThat(actual).isFalse();
+        }
+    }
+
+    @Nested
+    class ReceivePlayerBetsTest {
+
+        @Nested
+        class Success {
+
+            @ParameterizedTest
+            @ValueSource(ints = {0, 1, 2})
+            void 플레이어_인덱스에_맞게_베팅금액이_저장된다(int playerIndex) {
+
+                // given
+                Money betAmount = Money.from("1000");
+
+                // when
+                blackjackService.receivePlayerBets(playerIndex, betAmount);
+
+                // then
+                assertThat(players.getPlayerByIndex(playerIndex).getBetAmount()).isEqualTo(1000);
+            }
+
         }
     }
 
