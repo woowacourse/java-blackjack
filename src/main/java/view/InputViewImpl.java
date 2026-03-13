@@ -16,11 +16,11 @@ public class InputViewImpl implements InputView {
         return Arrays.stream(line.split(DELIMITER)).toList();
     }
 
-    public String readHitOrStand() {
+    public Boolean wantToHit() {
         String input = sc.nextLine().trim();
         validateIsBlank(input);
         validateHitOrStandValue(input);
-        return input;
+        return input.equals("y");
     }
 
     private void validateIsBlank(String line) {

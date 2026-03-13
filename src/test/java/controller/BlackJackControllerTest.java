@@ -40,7 +40,8 @@ class BlackJackControllerTest {
 
     static class TestInputViewImpl implements InputView {
 
-        private static final Deque<String> hitOrStandOrder = new ArrayDeque<>(List.of("y", "n", "n", "n"));
+        private static final Deque<Boolean> hitOrStandOrder = new ArrayDeque<>(
+                List.of(Boolean.TRUE, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE));
 
         @Override
         public List<String> readNames() {
@@ -48,7 +49,7 @@ class BlackJackControllerTest {
         }
 
         @Override
-        public String readHitOrStand() {
+        public Boolean wantToHit() {
             return hitOrStandOrder.poll();
         }
     }

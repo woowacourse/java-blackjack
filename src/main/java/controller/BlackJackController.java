@@ -59,13 +59,13 @@ public class BlackJackController {
             }
 
             outputView.printHitOrStandPrompt(currentPlayer.getName());
-            String hitOrStandInfo = retry(inputView::readHitOrStand);
-            doHitOrStand(hitOrStandInfo, game);
+            boolean wantToHit = retry(inputView::wantToHit);
+            doHitOrStand(wantToHit, game);
         }
     }
 
-    private void doHitOrStand(String hitOrStand, BlackJackGame game) {
-        if (hitOrStand.equals("y")) {
+    private void doHitOrStand(boolean wantToHit, BlackJackGame game) {
+        if (wantToHit) {
             handlePlayerHitProcess(game);
         } else {
             handlePlayerStandProcess(game);
