@@ -25,12 +25,24 @@ public class BlackJackService {
         int dealerTotalScore = dealer.getTotalCardScore();
         int playerTotalScore = player.getTotalCardScore();
 
-        if (player.isBlackJack() && dealer.isBlackJack()) return GameResult.PUSH;
-        if (player.isBlackJack()) return GameResult.BLACKJACK_WIN;
-        if (player.getHand().isBust()) return GameResult.DEFEAT;
-        if (dealer.getHand().isBust()) return GameResult.WIN;
-        if (dealerTotalScore < playerTotalScore) return GameResult.WIN;
-        if (dealerTotalScore > playerTotalScore) return GameResult.DEFEAT;
+        if (player.isBlackJack() && dealer.isBlackJack()) {
+            return GameResult.PUSH;
+        }
+        if (player.isBlackJack()) {
+            return GameResult.BLACKJACK_WIN;
+        }
+        if (player.getHand().isBust()) {
+            return GameResult.DEFEAT;
+        }
+        if (dealer.getHand().isBust()) {
+            return GameResult.WIN;
+        }
+        if (dealerTotalScore < playerTotalScore) {
+            return GameResult.WIN;
+        }
+        if (dealerTotalScore > playerTotalScore) {
+            return GameResult.DEFEAT;
+        }
         return GameResult.PUSH;
     }
 }
