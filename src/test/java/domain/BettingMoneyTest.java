@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import exception.BlackjackException;
 import exception.ExceptionMessage;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -30,5 +31,14 @@ public class BettingMoneyTest {
 
         //then
         assertThat(bettingMoney.getMoney()).isEqualTo(validMoney);
+    }
+
+    @Test
+    @DisplayName("돈의 단위는 100으로 한다.")
+    void 단위는_1000이다() {
+        // when & then
+        assertThatThrownBy(() -> new BettingMoney(1020))
+                .isInstanceOf(BlackjackException.class)
+                .hasMessageContaining(ExceptionMessage.MONEY_UNIT_ERROR.message());
     }
 }
