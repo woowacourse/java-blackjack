@@ -80,13 +80,13 @@ public class GameController {
     private void playerTurn(Player player, GameService gameService) {
         // 플레이어가 턴이 끝나지 않았고(Bust나 Blackjack이 아님), Hit을 원할 때까지 반복
         while (!player.isFinished() && inputHitOption(player) == HitOption.YES) {
-            gameService.playerHit(player);
+            gameService.hit(player);
             outputView.printHandCardWithScore(HandScoreDto.from(player));
         }
 
         // 반복문이 끝났는데 아직 안 끝난 상태(Hit 상태)라면 Stay 처리
         if (!player.isFinished()) {
-            gameService.playerStay(player);
+            gameService.stay(player);
             outputView.printHandCardWithScore(HandScoreDto.from(player));
         }
     }
@@ -95,10 +95,11 @@ public class GameController {
         Dealer dealer = gameService.getDealer();
 
         while (!dealer.isFinished() && dealer.isReceiveCard()) {
-            gameService.dealerHit();
+            gameService.hit(dealer);
+
         }
         if (!dealer.isFinished()) {
-            gameService.dealerStay();
+            gameService.stay(dealer);
         }
     }
 
