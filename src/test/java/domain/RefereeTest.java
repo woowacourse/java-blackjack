@@ -14,7 +14,7 @@ class RefereeTest {
 
     @ParameterizedTest(name = "{0}")
     @MethodSource("playerScoreTestCases")
-    @DisplayName("플레이어의 점수가 딜러보다 높으면 이기고, 낮으면 진다. 또한 동점이면 딜러가 이긴다.")
+    @DisplayName("플레이어의 점수가 딜러보다 높으면 이기고, 낮으면 진다.")
     void player_score_compare(String description, List<Number> dealerCards, List<Number> playerCards,
                               MatchResult expected) {
         Dealer dealer = createDealer(dealerCards);
@@ -34,17 +34,13 @@ class RefereeTest {
                 Arguments.of("플레이어 점수가 낮으면 진다",
                         List.of(Number.TEN, Number.NINE),
                         List.of(Number.TEN, Number.SEVEN),
-                        MatchResult.LOSE),
-                Arguments.of("동점이면 무승부다.",
-                        List.of(Number.TEN, Number.NINE),
-                        List.of(Number.TEN, Number.NINE),
-                        MatchResult.DRAW));
+                        MatchResult.LOSE));
     }
 
     @ParameterizedTest(name = "{0}")
     @MethodSource("playerBustTestCases")
     @DisplayName("플레이어의 점수가 버스트되면 딜러의 점수와 무관하게 패배한다.")
-    void judge(String description, List<Number> dealerCards, List<Number> playerCards, MatchResult expected) {
+    void player_bust(String description, List<Number> dealerCards, List<Number> playerCards, MatchResult expected) {
         Dealer dealer = createDealer(dealerCards);
         Player player = Player.from("pobi");
         playerCards.forEach(number -> player.receiveCard(new Card(Shape.HEART, number)));
@@ -75,6 +71,18 @@ class RefereeTest {
 
         Result result = new Referee().judge(dealer, List.of(player));
         assertThat(result.getPlayerResults().get("pobi")).isEqualTo(MatchResult.WIN);
+    }
+
+    @Test
+    @DisplayName("동점이면 무승부다.")
+    void player_dealer_draw() {
+        Dealer dealer = createDealer(List.of(Number.TEN, Number.NINE));
+        Player player = Player.from("pobi");
+        player.receiveCard(new Card(Shape.HEART, Number.TEN));
+        player.receiveCard(new Card(Shape.HEART, Number.NINE));
+
+        Result result = new Referee().judge(dealer, List.of(player));
+        assertThat(result.getPlayerResults().get("pobi")).isEqualTo(MatchResult.DRAW);
     }
 
     private Dealer createDealer(List<Number> numbers) {
