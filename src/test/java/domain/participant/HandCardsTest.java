@@ -1,7 +1,5 @@
 package domain.participant;
 
-import domain.Score;
-import domain.ScoreStatus;
 import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardShape;
@@ -39,10 +37,10 @@ class HandCardsTest {
 
         HandCards handCards = new HandCards(cards);
         // When
-        Score score = handCards.getScore();
+        int score = handCards.calculateScore();
 
         // Then
-        assertThat(score).isEqualTo(new Score(12, ScoreStatus.STAY));
+        assertThat(score).isEqualTo(12);
     }
 
 
@@ -59,10 +57,10 @@ class HandCardsTest {
         HandCards handCards = new HandCards(cards);
 
         // When
-        Score score = handCards.getScore();
+        int score = handCards.calculateScore();
 
         // Then
-        assertThat(score).isEqualTo(new Score(15, ScoreStatus.STAY));
+        assertThat(score).isEqualTo(15);
     }
 
     @Test
@@ -77,10 +75,10 @@ class HandCardsTest {
         HandCards handCards = new HandCards(cards);
 
         // When
-        Score score = handCards.getScore();
+        int score = handCards.calculateScore();
 
         // Then
-        assertThat(score).isEqualTo(new Score(15, ScoreStatus.STAY));
+        assertThat(score).isEqualTo(15);
     }
 
     @Test
@@ -95,10 +93,10 @@ class HandCardsTest {
         HandCards handCards = new HandCards(cards);
 
         // When
-        Score score = handCards.getScore();
+        int score = handCards.calculateScore();
 
         // Then
-        assertThat(score).isEqualTo(new Score(20, ScoreStatus.STAY));
+        assertThat(score).isEqualTo(20);
     }
 
     @Test
