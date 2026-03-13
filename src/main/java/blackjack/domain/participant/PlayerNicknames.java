@@ -3,7 +3,7 @@ package blackjack.domain.participant;
 import java.util.List;
 
 public record PlayerNicknames(List<String> nicknames) {
-    
+
     public PlayerNicknames {
         if (nicknames == null || nicknames.isEmpty()) {
             throw new IllegalArgumentException("한 명 이상의 플레이어 닉네임을 입력해주세요,");
@@ -15,7 +15,7 @@ public record PlayerNicknames(List<String> nicknames) {
             throw new IllegalArgumentException("플레이어 이름은 중복될 수 없습니다.");
         }
     }
-    
+
     public static PlayerNicknames from(List<Player> players) {
         return new PlayerNicknames(
                 players.stream()

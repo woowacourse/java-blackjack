@@ -6,13 +6,13 @@ public enum ProfitRate {
     LOSE(-1.0),
     WIN_BLACKJACK(1.5),
     ;
-    
+
     private final double rate;
-    
+
     ProfitRate(double rate) {
         this.rate = rate;
     }
-    
+
     public int getProfit(int bettingAmount) {
         return (int) Math.round(rate * bettingAmount);
     }

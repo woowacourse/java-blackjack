@@ -7,7 +7,7 @@ public record DealerInitialHand(
         String nickname,
         String cardDisplayName
 ) {
-    
+
     public static DealerInitialHand from(Dealer dealer) {
         return new DealerInitialHand(
                 dealer.getNickname(),

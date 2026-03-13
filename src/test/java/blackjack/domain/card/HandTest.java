@@ -7,7 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class HandTest {
-    
+
     @Test
     @DisplayName("ACE가 없는 손패의 점수를 정확히 합산한다.")
     void getTotalScore_WithoutAce() {
@@ -18,7 +18,7 @@ class HandTest {
         ));
         assertThat(hand.getTotalScore()).isEqualTo(18);
     }
-    
+
     @Test
     @DisplayName("ACE를 11로 계산했을 때 21 이하이면 11로 계산한다.")
     void getTotalScore_WithAce_AsEleven() {
@@ -29,7 +29,7 @@ class HandTest {
         ));
         assertThat(hand.getTotalScore()).isEqualTo(20);
     }
-    
+
     @Test
     @DisplayName("ACE를 11로 계산했을 때 21을 초과하면 1로 계산한다.")
     void getTotalScore_WithAce_AsOne_WhenExceedBustScore() {
@@ -41,7 +41,7 @@ class HandTest {
         ));
         assertThat(hand.getTotalScore()).isEqualTo(20);
     }
-    
+
     @Test
     @DisplayName("손패의 총합이 21점이면 블랙잭 상태로 판별한다.")
     void isBlackjack_True_WhenScoreIsExactly21() {
@@ -52,7 +52,7 @@ class HandTest {
         ));
         assertThat(hand.isBlackjack()).isTrue();
     }
-    
+
     @Test
     @DisplayName("손패의 총합이 21점을 초과하면 버스트 상태로 판별한다.")
     void isBust_True_WhenScoreExceeds21() {

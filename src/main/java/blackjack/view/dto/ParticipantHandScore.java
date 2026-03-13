@@ -9,7 +9,7 @@ public record ParticipantHandScore(
         List<String> cardDisplayNames,
         int totalScore
 ) {
-    
+
     public static ParticipantHandScore from(Participant participant) {
         return new ParticipantHandScore(
                 participant.getNickname(),
@@ -17,13 +17,13 @@ public record ParticipantHandScore(
                 participant.getScore()
         );
     }
-    
+
     public static List<ParticipantHandScore> listOf(List<Participant> participants) {
         return participants.stream()
                 .map(ParticipantHandScore::from)
                 .toList();
     }
-    
+
     private static List<String> toCardDisplayNames(Participant participant) {
         return participant.getCards().stream()
                 .map(CardMapper::toDisplayName)
