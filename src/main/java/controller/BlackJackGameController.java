@@ -26,7 +26,7 @@ public class BlackJackGameController {
         OutputView.printGameInitialMessage(playersNames);
 
         gameManager.distributeInitialCards();
-        printParticipantCards(gameManager);
+        printParticipantCards(gameManager.getDealer(), players);
 
         playGame(players, gameManager);
 
@@ -69,17 +69,13 @@ public class BlackJackGameController {
         return false;
     }
 
-    private void printParticipantCards(GameManager gameManager) {
-        ParticipantCardsDto dealerDto = gameManager.getDealerDto();
-        OutputView.printCards(dealerDto);
-        List<ParticipantCardsDto> playerDtos = gameManager.getPlayerDtos();
-        for (ParticipantCardsDto playerDto : playerDtos) {
-            OutputView.printCards(playerDto);
-        }
+    private void printParticipantCards(Dealer dealer, Players players) {
+        OutputView.printCards(toParticipantCardsDto(dealer));
+        players.forEach(player -> OutputView.printCards(toParticipantCardsDto(player)));
     }
 
     private void endGame(GameManager gameManager, Players players, Map<String, GameResult> gameResult) {
-        OutputView.printFinalCards(gameManager.getDealerDto());
+        OutputView.printFinalCards(toParticipantCardsDto(gameManager.getDealer()));
         printFinalScores(players);
         OutputView.printGameResult(gameResult);
     }

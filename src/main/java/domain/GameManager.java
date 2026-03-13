@@ -50,17 +50,6 @@ public class GameManager {
         drawCardTo(participant);
     }
 
-    public ParticipantCardsDto getDealerDto() {
-        return dealer.getParticipantCardsDto();
-    }
-
-    public List<ParticipantCardsDto> getPlayerDtos() {
-        // ToDo: 추후 책임 분리 하면 좋을 듯
-        List<ParticipantCardsDto> participantCardsDtos = new ArrayList<>();
-        players.forEach(player -> participantCardsDtos.add(player.getParticipantCardsDto()));
-        return participantCardsDtos;
-    }
-
     public void drawCardTo(Participant participant) {
         Card card = deck.drawCard();
         participant.receiveCard(card);
