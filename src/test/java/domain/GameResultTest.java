@@ -34,7 +34,7 @@ class GameResultTest {
         class blackJackCaseTest {
 
             @Test
-            @DisplayName("플레이어가 블랙잭이면 플레이어가 이긴 결과를 도출한다")
+            @DisplayName("플레이어가 블랙잭이면 플레이어가 블랙잭으로 이긴 결과를 도출한다")
             void decidePlayerResult_player_blackjack() {
                 //given
                 Dealer testDealer = Dealer.from(GameState.createInitialGameState(normalHand));
@@ -44,7 +44,7 @@ class GameResultTest {
                 GameResult result = GameResult.decidePlayerResult(testPlayer, testDealer);
 
                 //then
-                assertEquals(GameResult.승, result);
+                assertEquals(GameResult.블랙잭, result);
             }
 
             @Test

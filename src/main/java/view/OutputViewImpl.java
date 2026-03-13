@@ -1,14 +1,14 @@
 package view;
 
-import domain.GameResult;
 import dto.CardDto;
 import dto.DealerResultDto;
 import dto.GameResultDto;
 import dto.GameStateDto;
 import dto.ParticipantDto;
 import dto.PlayerResultDto;
+import java.text.NumberFormat;
 import java.util.List;
-import java.util.Map;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 public class OutputViewImpl implements OutputView {
@@ -21,7 +21,7 @@ public class OutputViewImpl implements OutputView {
     private static final String PARTICIPANT_CARD_INFO_FORMAT = "%s카드: %s";
     private static final String WIN_LOSS_RESULT_HEADER = "\n## 최종 승패";
     private static final String PARTICIPANT_CARD_INFO_WITH_SUM_FORMAT = "%s - 결과: %d\n";
-    private static final String WIN_LOSS_RESULT_FORMAT = "%s: %s\n";
+    private static final String RESULT_FORMAT = "%s: %s\n";
 
     public void printErrorMessage(Exception e) {
         System.out.println(e.getMessage());
@@ -85,9 +85,7 @@ public class OutputViewImpl implements OutputView {
         System.out.print(formatDealerResult(dealerResultDto));
 
         List<PlayerResultDto> playerResultDtos = gameResultDto.playerResultDto();
-        playerResultDtos.forEach(dto ->
-                System.out.printf(WIN_LOSS_RESULT_FORMAT, dto.playerDto().name(), dto.result().name())
-        );
+        playerResultDtos.forEach(dto -> System.out.printf(formatPlayerResult(dto)));
     }
 
     private String formatParticipantCards(ParticipantDto participantDto) {
@@ -103,18 +101,20 @@ public class OutputViewImpl implements OutputView {
 
     private String formatDealerResult(DealerResultDto dealerResultDto) {
         String dealerName = dealerResultDto.dealerDto().name();
-        String resultString = formatDealerResultInfo(dealerResultDto.dealerResult());
-        return String.format(WIN_LOSS_RESULT_FORMAT, dealerName, resultString);
+        double dealerEarnMoney = dealerResultDto.dealerEarnMoney();
+        String formattedDealerEarnMoney = formatToKoreanCurrencyInstance(dealerEarnMoney);
+        return String.format(RESULT_FORMAT, dealerName, formattedDealerEarnMoney);
     }
 
-    private String formatDealerResultInfo(Map<GameResult, Integer> dealerGameResult) {
-        StringBuilder sb = new StringBuilder();
-        for (GameResult result : GameResult.values()) {
-            int count = dealerGameResult.getOrDefault(result, 0);
-            if (count > 0) {
-                sb.append(count).append(result.name()).append(" ");
-            }
-        }
-        return sb.toString().trim();
+    private String formatPlayerResult(PlayerResultDto playerResultDto) {
+        String dealerName = playerResultDto.playerDto().name();
+        double dealerEarnMoney = playerResultDto.playerEarnMoney();
+        String formattedPlayerEarnMoney = formatToKoreanCurrencyInstance(dealerEarnMoney);
+        return String.format(RESULT_FORMAT, dealerName, formattedPlayerEarnMoney);
+    }
+
+    private String formatToKoreanCurrencyInstance(double money) {
+        NumberFormat krwFormat = NumberFormat.getCurrencyInstance(Locale.KOREA);
+        return krwFormat.format(money);
     }
 }

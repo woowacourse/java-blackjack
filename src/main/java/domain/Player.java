@@ -29,6 +29,10 @@ public class Player extends Participant {
         return betAmount.isBetPlaced();
     }
 
+    public int getBetAmount() {
+        return betAmount.betAmount();
+    }
+
     public Player hit(Supplier<Card> cardSupplier) {
         GameState newGameState = gameState.hit(cardSupplier);
         return new Player(

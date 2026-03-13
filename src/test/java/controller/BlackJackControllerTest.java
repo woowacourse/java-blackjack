@@ -50,6 +50,11 @@ class BlackJackControllerTest {
         }
 
         @Override
+        public String readBetAmountValue() {
+            return "100000";
+        }
+
+        @Override
         public Boolean wantToHit() {
             return hitOrStandOrder.poll();
         }
