@@ -2,8 +2,8 @@ package model;
 
 public final class Card {
 
-    private Suits suits;
-    private CardNumber cardNumber;
+    private final Suits suits;
+    private final CardNumber cardNumber;
 
     private Card(Suits suits, CardNumber cardNumber) {
         this.suits = suits;

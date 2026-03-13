@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import java.util.stream.Stream;
 import model.Card;
+import model.Cards;
+import model.vo.BetAmount;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,7 +29,7 @@ class ParticipantTest {
 
     @BeforeEach
     void setUp() {
-         participant = Player.of("pobi", 10000);
+         participant = Player.of("pobi", BetAmount.of(10000));
     }
 
     @Test
@@ -36,17 +38,17 @@ class ParticipantTest {
         Card card = Card.of("스페이드", 3);
 
         // when
-        List<Card> cards = participant.draw(card);
+        Cards cards = participant.draw(card);
 
         // then
-        Assertions.assertThat(cards.getFirst()).isEqualTo(card);
+        Assertions.assertThat(cards.contains(card)).isTrue();
     }
 
     @Test
     void 참가자의_점수가_버스트인지_확인하는_테스트() {
         // given
-        Participant jason = Player.of("jason", 10000);
-        Participant gump = Player.of("gump", 10000);
+        Participant jason = Player.of("jason", BetAmount.of(10000));
+        Participant gump = Player.of("gump", BetAmount.of(10000));
 
         Card card1 = Card.of("스페이드", 10);
         Card card2 = Card.of("스페이드", 9);

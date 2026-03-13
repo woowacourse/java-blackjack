@@ -18,9 +18,7 @@ public final class Player extends Participant {
 
     @Override
     public List<String> open() {
-        return hands.stream()
-                .map(Card::toString)
-                .toList();
+        return hands.open();
     }
 
     public int getBetAmount() {
