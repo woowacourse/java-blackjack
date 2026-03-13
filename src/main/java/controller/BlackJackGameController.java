@@ -6,6 +6,7 @@ import domain.Deck;
 import domain.Player;
 import domain.Result;
 import dto.ParticipantCardsDto;
+import dto.ParticipantGameResultDto;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
@@ -27,7 +28,7 @@ public class BlackJackGameController {
 
         OutputView.printInitialDealerCards(ParticipantCardsDto.from(blackJackGame.getDealer()));
         for (Player player : blackJackGame.getPlayers()) {
-            OutputView.printInitialPlayerCards(ParticipantCardsDto.from(player));
+            OutputView.printCards(ParticipantCardsDto.from(player));
         }
 
         playGame(blackJackGame);
@@ -66,7 +67,7 @@ public class BlackJackGameController {
     private static void endGame(BlackJackGame blackJackGame, Result gameResult) {
         OutputView.printFinalCards(ParticipantCardsDto.from(blackJackGame.getDealer()));
         printFinalScores(blackJackGame);
-        OutputView.printGameResult(gameResult.getGameResult());
+        OutputView.printGameResult(ParticipantGameResultDto.from(gameResult));
     }
 
     private static void printFinalScores(BlackJackGame blackJackGame) {

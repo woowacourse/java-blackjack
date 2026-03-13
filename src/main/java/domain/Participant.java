@@ -18,7 +18,7 @@ public abstract class Participant {
 
     public boolean canReceiveCard() {
         return cards.canReceiveCard(getHitThreshold());
-    };
+    }
 
     protected abstract int getHitThreshold();
 

@@ -2,8 +2,8 @@ package view;
 
 import dto.CardInfoDto;
 import dto.ParticipantCardsDto;
+import dto.ParticipantGameResultDto;
 import java.util.List;
-import java.util.Map;
 
 public class OutputView {
 
@@ -25,29 +25,17 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public static void printGameResult(Map<String, Boolean> gameResult) {
-        StringBuilder resultMessage = new StringBuilder();
-        int winCount = 0;
-        int loseCount = 0;
+    public static void printGameResult(List<ParticipantGameResultDto> participantGameResultDtos) {
+        System.out.println("## 최종 승패");
 
-        for (Map.Entry<String, Boolean> entry : gameResult.entrySet()) {
-            if (entry.getValue().equals(true)) {
-                resultMessage.append(entry.getKey()).append(": ").append("승\n");
-                winCount += 1;
+        for (ParticipantGameResultDto participantGameResultDto : participantGameResultDtos) {
+            if (participantGameResultDto.name().equals("딜러")) {
+                System.out.println(toDealerGameResultString(participantGameResultDto));
                 continue;
             }
 
-            resultMessage.append(entry.getKey()).append(": ").append("패\n");
-            loseCount += 1;
+            System.out.println(toPlayerGameResultString(participantGameResultDto));
         }
-
-        System.out.println("## 최종 승패");
-        System.out.println("딜러: " + loseCount + "승" + " " + winCount + "패");
-        System.out.printf(resultMessage.toString());
-    }
-
-    public static void printInitialPlayerCards(ParticipantCardsDto participantCardsDto) {
-        System.out.printf("%s: %s%n", participantCardsDto.name(), toCardsInfoString(participantCardsDto));
     }
 
     private static String toCardsInfoString(ParticipantCardsDto participantCardsDto) {
@@ -56,6 +44,22 @@ public class OutputView {
 
         String cardsInfoString = String.join(",", cardsInfo);
         return cardsInfoString;
+    }
+
+    private static String toDealerGameResultString(ParticipantGameResultDto participantGameResultDto) {
+        return String.format("%s: %d승 %d패", participantGameResultDto.name(), participantGameResultDto.win(),
+                participantGameResultDto.lose());
+    }
+
+    private static String toPlayerGameResultString(ParticipantGameResultDto dto) {
+        StringBuilder sb = new StringBuilder(dto.name() + ": ");
+        if (dto.win() > 0) {
+            sb.append(dto.win()).append("승 ");
+        }
+        if (dto.lose() > 0) {
+            sb.append(dto.lose()).append("패");
+        }
+        return sb.toString().trim();
     }
 
     public static void printInitialDealerCards(ParticipantCardsDto participantCardsDto) {

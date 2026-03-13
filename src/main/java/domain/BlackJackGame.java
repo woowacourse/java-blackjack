@@ -1,8 +1,6 @@
 package domain;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class BlackJackGame {
     private static final int BUST_THRESHOLD = 21;
@@ -30,16 +28,6 @@ public class BlackJackGame {
         distributeCard(player);
     }
 
-    public Result getGameResult() {
-        Map<String, Boolean> gameResult = new HashMap<>();
-        int dealerScore = dealer.getScore();
-
-        for (Player player : players) {
-            gameResult.put(player.getName(), isPlayerWin(player.getScore(), dealerScore));
-        }
-        return new Result(gameResult);
-    }
-
     public boolean canPlayerReceiveCard(Player player) {
         return player.canReceiveCard();
     }
@@ -56,6 +44,10 @@ public class BlackJackGame {
         return List.copyOf(players);
     }
 
+    public Result getGameResult() {
+        return new Referee().judge(dealer, players);
+    }
+
     private void distributeInitialCard(Participant participant) {
         for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
             distributeCard(participant);
@@ -65,15 +57,5 @@ public class BlackJackGame {
     private void distributeCard(Participant participant) {
         Card card = deck.distributeCard();
         participant.receiveCard(card);
-    }
-
-    private boolean isPlayerWin(int playerScore, int dealerScore) {
-        if (playerScore > BUST_THRESHOLD) {
-            return false;
-        }
-        if (dealerScore > BUST_THRESHOLD) {
-            return true;
-        }
-        return playerScore > dealerScore;
     }
 }
