@@ -2,7 +2,7 @@ package domain.player.attribute;
 
 import static util.Constants.ACE_HIGH_SCORE;
 import static util.Constants.ACE_LOW_SCORE;
-import static util.Constants.BLACK_JACK;
+import static util.Constants.BLACK_JACK_SCORE;
 
 import domain.card.Card;
 import java.util.ArrayList;
@@ -26,14 +26,14 @@ public class Hand {
     }
 
     public boolean isBust() {
-        return calculateScore() > BLACK_JACK;
+        return calculateScore() > BLACK_JACK_SCORE;
     }
 
     public int calculateScore() {
         int sum = calculateBaseScore();
         int aceCount = countAce();
 
-        while (sum > BLACK_JACK && aceCount > 0) {
+        while (sum > BLACK_JACK_SCORE && aceCount > 0) {
             sum -= (ACE_HIGH_SCORE - ACE_LOW_SCORE);
             aceCount--;
         }
@@ -59,6 +59,10 @@ public class Hand {
         }
 
         return sum;
+    }
+
+    public boolean isBlackJack() {
+        return getCardsSize() == 2 && calculateScore() == BLACK_JACK_SCORE;
     }
 
     private int countAce() {

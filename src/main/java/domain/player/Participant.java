@@ -1,6 +1,6 @@
 package domain.player;
 
-import static util.Constants.BLACK_JACK;
+import static util.Constants.BLACK_JACK_SCORE;
 
 import domain.card.Card;
 import domain.player.attribute.Hand;
@@ -55,6 +55,10 @@ public class Participant {
     }
 
     public boolean isBlackJack() {
-        return hand.calculateScore() == BLACK_JACK;
+        return hand.isBlackJack();
+    }
+
+    public boolean canHit() {
+        return !isBlackJack() && !isBust();
     }
 }

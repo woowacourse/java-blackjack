@@ -73,6 +73,6 @@ public class Game {
     }
 
     public GamblersGameResult getResult(){
-        return new GamblersGameResult(dealer.getTotalScore(), gamblers.getParticipantTotalScore());
+        return new GamblersGameResult(dealer, gamblers);
     }
 }
