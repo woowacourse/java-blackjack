@@ -46,14 +46,6 @@ public class BlackjackGame {
         cardProvider.provideInitCards(users);
     }
 
-    public ProfitResult determineWinner(Users users, BetAmounts betAmounts) {
-        return users.determineWinner(betAmounts);
-    }
-
-    public void end(Runnable closeScanner) {
-        closeScanner.run();
-    }
-
     public void hitPlayers(List<Player> players, Function<Player, String> readHitCommand,
                            Consumer<Player> printPlayerCards) {
         for (Player player : players) {
@@ -69,6 +61,14 @@ public class BlackjackGame {
             cardProvider.provideOneCard(dealer);
             printDealerHit.run();
         }
+    }
+
+    public ProfitResult determineWinner(Users users, BetAmounts betAmounts) {
+        return users.determineWinner(betAmounts);
+    }
+
+    public void end(Runnable closeScanner) {
+        closeScanner.run();
     }
 
     private boolean checkY(Player player, Function<Player, String> readHitCommand) {
