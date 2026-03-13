@@ -48,7 +48,11 @@ public class BlackJackGameController {
 
     private void playGame(BlackJackGame blackJackGame) {
         blackJackGame.getPlayers().forEach(player -> playGameWithPlayer(blackJackGame, player));
-        if (blackJackGame.canDealerReceiveCard()) {
+        playGameWithDealer(blackJackGame);
+    }
+
+    private void playGameWithDealer(BlackJackGame blackJackGame) {
+        while (blackJackGame.canDealerReceiveCard()) {
             blackJackGame.playGameWithDealer();
             OutputView.printDealerMessage();
         }

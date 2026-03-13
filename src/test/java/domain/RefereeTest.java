@@ -15,7 +15,8 @@ class RefereeTest {
     @ParameterizedTest(name = "{0}")
     @MethodSource("playerScoreTestCases")
     @DisplayName("플레이어의 점수가 딜러보다 높으면 이기고, 낮으면 진다. 또한 동점이면 딜러가 이긴다.")
-    void player_score_compare(List<Integer> dealerCards, List<Integer> playerCards, boolean expected) {
+    void player_score_compare(String description, List<Integer> dealerCards, List<Integer> playerCards,
+                              boolean expected) {
         Dealer dealer = createDealer(dealerCards);
         Player player = Player.from("pobi");
         playerCards.forEach(number -> player.receiveCard(new Card(Shape.HEART, Number.from(number))));
@@ -25,11 +26,9 @@ class RefereeTest {
     }
 
     static Stream<Arguments> playerScoreTestCases() {
-        return Stream.of(
-                Arguments.of("플레이어 점수가 높으면 이긴다", List.of(10, 7), List.of(10, 9), true),
+        return Stream.of(Arguments.of("플레이어 점수가 높으면 이긴다", List.of(10, 7), List.of(10, 9), true),
                 Arguments.of("플레이어 점수가 낮으면 진다", List.of(10, 9), List.of(10, 7), false),
-                Arguments.of("동점이면 딜러가 이긴다", List.of(10, 9), List.of(10, 9), false)
-        );
+                Arguments.of("동점이면 딜러가 이긴다", List.of(10, 9), List.of(10, 9), false));
     }
 
     @ParameterizedTest(name = "{0}")
@@ -45,11 +44,9 @@ class RefereeTest {
     }
 
     static Stream<Arguments> playerBustTestCases() {
-        return Stream.of(
-                Arguments.of("플레이어 버스트면 진다", List.of(10, 8), List.of(10, 10, 10), false),
+        return Stream.of(Arguments.of("플레이어 버스트면 진다", List.of(10, 8), List.of(10, 10, 10), false),
                 Arguments.of("딜러의 점수가 버스트되었더라도 플레이어의 점수가 버스트되면 플레이어의 패배다.", List.of(10, 8, 10), List.of(10, 10, 10),
-                        false)
-        );
+                        false));
     }
 
     @Test
