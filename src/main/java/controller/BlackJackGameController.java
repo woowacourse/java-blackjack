@@ -85,7 +85,6 @@ public class BlackJackGameController {
     }
 
     private void printFinalScores(Players players) {
-        // TODO: 나중에 getParticipantCardsDto 책임 분리하면 좋을 듯
         players.forEach(player -> printFinalCards(toParticipantCardsDto(player)));
     }
 
