@@ -22,6 +22,7 @@ public class BlackJackGameController {
         GameManager gameManager = new GameManager(players);
 
         List<String> playersNames = getPlayerNames(players);
+        // TODO: 베팅금액 입력 로직
         OutputView.printGameInitialMessage(playersNames);
 
         gameManager.distributeInitialCards();

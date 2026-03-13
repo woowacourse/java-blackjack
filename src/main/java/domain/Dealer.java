@@ -8,7 +8,7 @@ public class Dealer extends Participant {
     }
 
     public boolean isContinueGame() {
-        if (cards.calculateScore() >= CAN_RECEIVE_CARD_THRESHOLD) {
+        if (participantCards.calculateScore() >= CAN_RECEIVE_CARD_THRESHOLD) {
             return false;
         }
         return true;

@@ -7,15 +7,15 @@ import java.util.ArrayList;
 public abstract class Participant {
     private static final int BUST_THRESHOLD = 21;
     private final Name name;
-    protected final Cards cards;
+    protected final ParticipantCards participantCards;
 
     public Participant(Name name) {
         this.name = name;
-        cards = new Cards(new ArrayList<>());
+        participantCards = new ParticipantCards(new ArrayList<>());
     }
 
     public void receiveCard(Card card) {
-        cards.addCard(card);
+        participantCards.addCard(card);
     }
 
     public abstract boolean isContinueGame();
@@ -25,7 +25,7 @@ public abstract class Participant {
     }
 
     public int getScore() {
-        return cards.calculateScore();
+        return participantCards.calculateScore();
     }
 
     public boolean isBust() {
@@ -36,6 +36,6 @@ public abstract class Participant {
     }
 
     public ParticipantCardsDto getParticipantCardsDto() {
-        return new ParticipantCardsDto(name.getName(), cards.getCardsInfo(), getScore());
+        return new ParticipantCardsDto(name.getName(), participantCards.getCardsInfo(), getScore());
     }
 }

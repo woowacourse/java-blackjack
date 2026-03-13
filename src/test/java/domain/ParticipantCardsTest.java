@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-class CardsTest {
+class ParticipantCardsTest {
 
     @Test
     void 에이스가_없으면_카드_숫자의_합을_반환한다() {
@@ -14,12 +14,12 @@ class CardsTest {
         Card card2 = new Card(Shape.HEART, Number.EIGHT);
 
         List<Card> cards = new ArrayList<>();
-        Cards testCards = new Cards(cards);
+        ParticipantCards testParticipantCards = new ParticipantCards(cards);
 
-        testCards.addCard(card1);
-        testCards.addCard(card2);
+        testParticipantCards.addCard(card1);
+        testParticipantCards.addCard(card2);
 
-        assertEquals(16, testCards.calculateScore());
+        assertEquals(16, testParticipantCards.calculateScore());
     }
 
     @Test
@@ -29,12 +29,12 @@ class CardsTest {
         Card card3 = new Card(Shape.CLUB, Number.EIGHT);
 
         List<Card> cards = new ArrayList<>();
-        Cards testCards = new Cards(cards);
+        ParticipantCards testParticipantCards = new ParticipantCards(cards);
 
-        testCards.addCard(card1);
-        testCards.addCard(card2);
-        testCards.addCard(card3);
+        testParticipantCards.addCard(card1);
+        testParticipantCards.addCard(card2);
+        testParticipantCards.addCard(card3);
 
-        assertEquals(14, testCards.calculateScore());
+        assertEquals(14, testParticipantCards.calculateScore());
     }
 }

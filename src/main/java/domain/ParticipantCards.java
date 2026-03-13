@@ -1,14 +1,13 @@
 package domain;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-public class Cards {
+public class ParticipantCards {
     private final List<Card> cards;
     private int changeAvailableAceCount;
 
-    public Cards(List<Card> cards) {
+    public ParticipantCards(List<Card> cards) {
         this.cards = new ArrayList<>(cards);
         changeAvailableAceCount = 0;
     }

@@ -5,25 +5,25 @@ import java.util.Collections;
 import java.util.List;
 
 public class Deck {
-    private final Cards cards;
+    private final ParticipantCards participantCards;
 
     public Deck() {
-        this.cards = createDeck();
+        this.participantCards = createDeck();
     }
 
     public Card drawCard() {
         validateDeckSize();
-        Card card = cards.removeFirst();
+        Card card = participantCards.removeFirst();
         return card;
     }
 
     private void validateDeckSize() {
-        if (cards.getSize() == 0) {
+        if (participantCards.getSize() == 0) {
             throw new IllegalArgumentException("덱에 카드가 없습니다.");
         }
     }
 
-    private Cards createDeck() {
+    private ParticipantCards createDeck() {
         List<Card> cards = new ArrayList<>();
         for (Shape shape : Shape.values()) {
             for (Number number : Number.values()) {
@@ -31,6 +31,6 @@ public class Deck {
             }
         }
         Collections.shuffle(cards);
-        return new Cards(cards);
+        return new ParticipantCards(cards);
     }
 }
