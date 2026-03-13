@@ -6,11 +6,11 @@ import domain.Players;
 import domain.card.Deck;
 import domain.participant.Dealer;
 import domain.participant.Player;
-import dto.DealerResultDTO;
-import dto.GameResultDTO;
-import dto.GameScoreDTO;
-import dto.GameStartDTO;
-import dto.PlayerResultDTO;
+import dto.DealerResultDto;
+import dto.GameResultDto;
+import dto.GameScoreDto;
+import dto.GameStartDto;
+import dto.PlayerResultDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,13 +26,13 @@ public class GameService {
         this.dealer = new Dealer();
     }
 
-    public GameStartDTO startGame() {
+    public GameStartDto startGame() {
         for (Player player : players) {
             player.drawInitialCards(deck.drawInitialCards());
         }
         dealer.drawInitialCards(deck.drawInitialCards());
 
-        return GameStartDTO.from(players, dealer);
+        return GameStartDto.from(players, dealer);
     }
 
     public void playerHit(Player player) {
@@ -59,12 +59,12 @@ public class GameService {
         return dealer;
     }
 
-    public GameScoreDTO getTotalScore() {
-        return GameScoreDTO.from(players, dealer);
+    public GameScoreDto getTotalScore() {
+        return GameScoreDto.from(players, dealer);
     }
 
-    public GameResultDTO calculateResults() {
-        List<PlayerResultDTO> playerResultDTOs = new ArrayList<>();
+    public GameResultDto calculateResults() {
+        List<PlayerResultDto> playerResultDTOs = new ArrayList<>();
         int dealerWinCount = 0;
         int dealerDrawCount = 0;
         int dealerLoseCount = 0;
@@ -80,10 +80,10 @@ public class GameService {
             if (playerResult == PlayerGameResult.LOSE) {
                 dealerWinCount++;
             }
-            playerResultDTOs.add(new PlayerResultDTO(player.getName(), playerResult.getValue()));
+            playerResultDTOs.add(new PlayerResultDto(player.getName(), playerResult.getValue()));
         }
 
-        return new GameResultDTO(playerResultDTOs, new DealerResultDTO(dealerWinCount, dealerDrawCount, dealerLoseCount));
+        return new GameResultDto(playerResultDTOs, new DealerResultDto(dealerWinCount, dealerDrawCount, dealerLoseCount));
 
     }
 }

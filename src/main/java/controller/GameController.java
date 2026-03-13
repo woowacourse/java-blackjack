@@ -4,9 +4,8 @@ import domain.Players;
 import domain.batting.Money;
 import domain.participant.Dealer;
 import domain.participant.Player;
-import dto.GameStartDTO;
-import dto.HandDTO;
-import dto.HandScoreDTO;
+import dto.GameStartDto;
+import dto.HandScoreDto;
 import service.GameService;
 import util.HitOption;
 import util.InputBattingParser;
@@ -29,7 +28,7 @@ public class GameController {
 
         playerBatting(players);
 
-        GameStartDTO gameStartDTO = gameService.startGame();
+        GameStartDto gameStartDTO = gameService.startGame();
         outputView.printStartGame(gameStartDTO);
 
         processGame(gameService);
@@ -82,13 +81,13 @@ public class GameController {
         // 플레이어가 턴이 끝나지 않았고(Bust나 Blackjack이 아님), Hit을 원할 때까지 반복
         while (!player.isFinished() && inputHitOption(player) == HitOption.YES) {
             gameService.playerHit(player);
-            outputView.printHandCardWithScore(HandScoreDTO.from(player));
+            outputView.printHandCardWithScore(HandScoreDto.from(player));
         }
 
         // 반복문이 끝났는데 아직 안 끝난 상태(Hit 상태)라면 Stay 처리
         if (!player.isFinished()) {
             gameService.playerStay(player);
-            outputView.printHandCardWithScore(HandScoreDTO.from(player));
+            outputView.printHandCardWithScore(HandScoreDto.from(player));
         }
     }
 
