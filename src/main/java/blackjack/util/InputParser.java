@@ -1,10 +1,10 @@
 package blackjack.util;
 
-import static blackjack.util.constant.Constants.COMMA;
-
 import java.util.List;
 
 public class InputParser {
+
+    private static final String COMMA = ",";
 
     private InputParser() {
     }

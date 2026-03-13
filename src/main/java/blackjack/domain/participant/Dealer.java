@@ -1,9 +1,9 @@
 package blackjack.domain.participant;
 
-import static blackjack.util.constant.Constants.DEALER_NAME;
-import static blackjack.util.constant.Constants.HIT_THRESHOLD;
-
 public class Dealer extends Participant {
+
+    private static final String DEALER_NAME = "딜러";
+    private static final int HIT_THRESHOLD = 17;
 
     public Dealer() {
         super(DEALER_NAME);

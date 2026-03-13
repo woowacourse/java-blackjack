@@ -1,12 +1,12 @@
 package blackjack.view;
 
-import static blackjack.util.constant.ErrorMessage.ERROR_MESSAGE_PREFIX;
-
 import blackjack.domain.GameResult;
 import java.util.List;
 import java.util.Map;
 
 public class OutputView {
+
+    private static final String ERROR_MESSAGE_PREFIX = "[ERROR] ";
 
     private OutputView() {
     }

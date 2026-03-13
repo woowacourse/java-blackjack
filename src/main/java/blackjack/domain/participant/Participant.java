@@ -1,12 +1,12 @@
 package blackjack.domain.participant;
 
-import static blackjack.util.constant.Constants.BLACKJACK_NUMBER;
-
 import blackjack.domain.deck.Card;
 import blackjack.domain.deck.Cards;
 import java.util.List;
 
 public abstract class Participant {
+
+    private static final int BLACKJACK_NUMBER = 21;
 
     private final UserName name;
     private final Cards cards;

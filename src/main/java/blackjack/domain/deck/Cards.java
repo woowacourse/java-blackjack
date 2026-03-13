@@ -1,11 +1,11 @@
 package blackjack.domain.deck;
 
-import static blackjack.util.constant.Constants.BLACKJACK_NUMBER;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
+
+    private static final int BLACKJACK_NUMBER = 21;
 
     private final List<Card> cards;
 

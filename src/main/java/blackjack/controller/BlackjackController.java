@@ -1,7 +1,5 @@
 package blackjack.controller;
 
-import static blackjack.util.constant.Constants.GET_MORE_CARD_BUTTON;
-
 import blackjack.domain.BettingAmount;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.GameResult;
@@ -14,6 +12,8 @@ import blackjack.view.OutputView;
 import java.util.List;
 
 public class BlackjackController {
+
+    private static final String GET_MORE_CARD_BUTTON = "y";
 
     private final GameService gameService;
     private final InputView inputView;
