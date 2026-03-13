@@ -10,6 +10,9 @@ public class Referee {
         if (dealerScore > BUST_THRESHOLD) {
             return Result.WIN;
         }
+        if (playerScore == BUST_THRESHOLD) {
+            return Result.BLACKJACK;
+        }
         if (playerScore > dealerScore) {
             return Result.WIN;
         }
@@ -18,4 +21,9 @@ public class Referee {
         }
         return Result.LOSE;
     }
+
+    public double calculateProfit(Result result, int betAmount) {
+        return result.getProfitRate() * betAmount;
+    }
+
 }
