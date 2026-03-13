@@ -1,11 +1,13 @@
-package blackjack.model;
+package blackjack.domain.participant;
 
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Hand;
 import java.util.List;
 import java.util.regex.Pattern;
 
 public class User {
-    private static final String PLAYER_NAME_REGEX = "^[a-zA-Z가-힣]+$";
+    private static final Pattern PLAYER_NAME_PATTERN = Pattern.compile("^[a-zA-Z가-힣]+$");
 
     private final String name;
     private final Hand hand;
@@ -40,18 +42,9 @@ public class User {
         return hand.isBlackjack();
     }
 
-    public GameSummary toSummary() {
-        return new GameSummary(
-                this,
-                getScore(),
-                isBust(),
-                isBlackjack()
-        );
-    }
-
     private void validate(String input) {
         validateBlank(input);
-        validateRegex(input);
+        validatePattern(input);
     }
 
     private void validateBlank(String input) {
@@ -60,10 +53,11 @@ public class User {
         }
     }
 
-    private void validateRegex(String input) {
-        if (!Pattern.matches(PLAYER_NAME_REGEX, input)) {
+    private void validatePattern(String input) {
+        if (!PLAYER_NAME_PATTERN.matcher(input).matches()) {
             throw new IllegalArgumentException("플레이어의 이름은 영어 or 한글로만 이루어질 수 있습니다.");
         }
     }
+
 }
 

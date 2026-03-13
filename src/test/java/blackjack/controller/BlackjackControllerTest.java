@@ -2,11 +2,11 @@ package blackjack.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.model.Card;
-import blackjack.model.Deck;
-import blackjack.model.FixShuffleStrategy;
-import blackjack.model.Rank;
-import blackjack.model.Suit;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Rank;
+import blackjack.domain.card.Suit;
+import blackjack.domain.deck.Deck;
+import blackjack.domain.deck.FixShuffleStrategy;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.io.ByteArrayInputStream;
@@ -17,6 +17,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class BlackjackControllerTest {
+
+    private static final String NEW_LINE = System.lineSeparator();
+
     private String run(String input, List<Card> fixCards) {
         System.setIn(new ByteArrayInputStream(input.getBytes()));
         ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -42,9 +45,9 @@ class BlackjackControllerTest {
                 new Card(Suit.CLOVER, Rank.TEN)
         );
 
-        String result = run("pobi\nn\n", fixCards);
-        assertThat(result).contains("딜러: 0승 0무 1패");
-        assertThat(result).contains("pobi: 승");
+        String result = run("pobi" + NEW_LINE + "1000" + NEW_LINE + "n" + NEW_LINE, fixCards);
+        assertThat(result).contains("딜러: -1000");
+        assertThat(result).contains("pobi: 1000");
     }
 
     @Test
@@ -57,9 +60,9 @@ class BlackjackControllerTest {
                 new Card(Suit.CLOVER, Rank.TEN)
         );
 
-        String result = run("pobi\nn\n", fixCards);
-        assertThat(result).contains("딜러: 1승 0무 0패");
-        assertThat(result).contains("pobi: 패");
+        String result = run("pobi" + NEW_LINE + "1000" + NEW_LINE + "n" + NEW_LINE, fixCards);
+        assertThat(result).contains("딜러: 1000");
+        assertThat(result).contains("pobi: -1000");
     }
 
     @Test
@@ -73,9 +76,9 @@ class BlackjackControllerTest {
                 new Card(Suit.DIAMOND, Rank.SIX)
         );
 
-        String result = run("pobi\ny\n", fixCards);
-        assertThat(result).contains("딜러: 1승 0무 0패");
-        assertThat(result).contains("pobi: 패");
+        String result = run("pobi" + NEW_LINE + "1000" + NEW_LINE + "y" + NEW_LINE, fixCards);
+        assertThat(result).contains("딜러: 1000");
+        assertThat(result).contains("pobi: -1000");
     }
 
     @Test
@@ -90,7 +93,7 @@ class BlackjackControllerTest {
                 new Card(Suit.CLOVER, Rank.SIX)
         );
 
-        String result = run("pobi\nn\n", fixCards);
+        String result = run("pobi" + NEW_LINE + "1000" + NEW_LINE + "n" + NEW_LINE, fixCards);
         assertThat(result).contains("딜러는 16이하라 한장의 카드를 더 받았습니다");
     }
 

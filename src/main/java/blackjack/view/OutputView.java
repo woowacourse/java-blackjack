@@ -1,25 +1,19 @@
 package blackjack.view;
 
-import blackjack.model.Dealer;
-import blackjack.model.GameResult;
-import blackjack.model.GameSummary;
-import blackjack.model.Player;
-import blackjack.model.Players;
-import blackjack.model.User;
-import java.util.EnumMap;
+import blackjack.domain.card.Card;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
+import blackjack.domain.result.GameResult;
+import blackjack.domain.result.GameSummary;
 import java.util.List;
 
 public class OutputView {
     public void printInitCards(List<Player> players, Dealer dealer) {
+        System.out.println();
         List<String> names = players.stream()
                 .map(Player::getName)
                 .toList();
-        StringBuilder sb = new StringBuilder();
-        sb.append("\n");
-        sb.append("딜러와 ");
-        sb.append(String.join(", ", names));
-        sb.append("에게 2장을 나누었습니다.");
-        System.out.println(sb);
+        System.out.println(String.format("딜러와 %s에게 2장을 나누었습니다.", String.join(", ", names)));
 
         printDealerCard(dealer);
         for (Player player : players) {
@@ -29,52 +23,39 @@ public class OutputView {
     }
 
     private void printDealerCard(Dealer dealer) {
-        System.out.println(
-                "딜러카드: " + dealer.cards().getFirst().getRank().getName() + dealer.cards().getFirst().getSuit()
-                        .getName());
+        Card card = dealer.cards().getFirst();
+        System.out.println(String.format("딜러카드: %s%s", card.getRank().getName(), card.getSuit().getName()));
     }
 
     public void printPlayerCards(Player player) {
         List<String> formats = player.cards().stream()
-                .map(card -> {
-                    return card.getRank().getName() + card.getSuit().getName();
-                })
+                .map(card -> card.getRank().getName() + card.getSuit().getName())
                 .toList();
-
-        System.out.println(player.getName() + "카드: " + String.join(", ", formats));
+        System.out.println(String.format("%s카드: %s", player.getName(), String.join(", ", formats)));
     }
 
 
     public void printDealerHit() {
-        System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n");
-    }
-
-    public void printCardStatus(GameSummary gameSummary) {
-        User user = gameSummary.user();
-
-        StringBuilder sb = new StringBuilder();
-        sb.append(user.getName() + "카드: ");
-        List<String> cardFormats = user.cards().stream()
-                .map(card -> card.getSuit().getName() + card.getRank().getName()).toList();
-        sb.append(String.join(", ", cardFormats));
-        sb.append(" - 결과: " + gameSummary.score());
-
-        System.out.println(sb);
-    }
-
-    public void printGameResult(Players players, Dealer dealer) {
         System.out.println();
-        System.out.println("## 최종 승패");
+        System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
 
-        EnumMap<GameResult, Integer> dealerGameResult = dealer.getGameResults();
-        System.out.println(
-                dealer.getName() + ": " + dealerGameResult.getOrDefault(GameResult.WIN, 0) + "승 " +
-                        dealerGameResult.getOrDefault(GameResult.DRAW, 0) + "무 " + dealerGameResult.getOrDefault(
-                        GameResult.LOSE, 0) + "패");
+    public void printGameSummary(List<GameSummary> gameSummaries) {
+        System.out.println();
+        for (GameSummary gameSummary : gameSummaries) {
+            List<String> cardFormats = gameSummary.cards().stream()
+                    .map(card -> card.getRank().getName() + card.getSuit().getName())
+                    .toList();
+            System.out.println(String.format("%s카드: %s - 결과: %d", gameSummary.name(), String.join(", ", cardFormats),
+                    gameSummary.score()));
+        }
+    }
 
-        for (Player player : players.all()) {
-            System.out.print(player.getName() + ": ");
-            System.out.println(player.getGameResult().getFormat());
+    public void printGameResult(List<GameResult> gameResults) {
+        System.out.println();
+        System.out.println("## 최종 수익");
+        for (GameResult gameResult : gameResults) {
+            System.out.println(String.format("%s: %d", gameResult.name(), gameResult.profit()));
         }
     }
 
