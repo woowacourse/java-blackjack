@@ -1,6 +1,8 @@
 package blackjack.controller;
 
 import blackjack.domain.Answer;
+import blackjack.domain.BettingMoney;
+import blackjack.domain.BettingMoneyInfo;
 import blackjack.domain.Dealer;
 import blackjack.domain.Hand;
 import blackjack.domain.Participants;
@@ -30,13 +32,15 @@ public class BlackjackController {
         Players players = RetryExecutor.retry(this::readPlayers);
         Participants participants = new Participants(players, dealer);
 
+        BettingMoneyInfo bettingMoneyInfo = readBettingMoney(players);
+
         dealer.pitch(players.all());
         OutputView.printStartMessage(players.all(), dealer);
 
         players.all().forEach(player -> handlePlayerAction(player, dealer));
         handleDealerAction(dealer);
 
-        printResult(participants, players, dealer);
+        printResult(participants, bettingMoneyInfo);
     }
 
     private Dealer readyGame() {
@@ -45,7 +49,22 @@ public class BlackjackController {
         return new Dealer(emptyHand, Status.HIT, trump);
     }
 
-    private void printResult(Participants participants, Players players, Dealer dealer) {
+    private BettingMoneyInfo readBettingMoney(Players players) {
+        Map<Name, BettingMoney> bettingMoneyByPlayer = new HashMap<>();
+        players.all().forEach(player -> {
+            BettingMoney bettingMoney = RetryExecutor.retry(this::readBettingMoneyByPlayer, player);
+            bettingMoneyByPlayer.put(player.getName(), bettingMoney);
+        });
+
+        return new BettingMoneyInfo(bettingMoneyByPlayer);
+    }
+
+    private BettingMoney readBettingMoneyByPlayer(Player player) {
+        String rawBettingMoney = InputView.readBettingMoney(player.getName().toString());
+        return new BettingMoney(rawBettingMoney);
+    }
+
+    private void printResult(Participants participants, BettingMoneyInfo bettingMoneyInfo) {
         OutputView.printFinalStatus(participants);
         FinalResultDto finalResultDto = FinalResultDto.of(players.all(), dealer);
         OutputView.printFinalResult(finalResultDto);

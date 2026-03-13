@@ -1,39 +1,45 @@
 package blackjack.dto;
 
+import blackjack.domain.BettingMoneyInfo;
 import blackjack.domain.Dealer;
-import blackjack.domain.GameResult;
+import blackjack.domain.Name;
 import blackjack.domain.Participants;
 
-import java.util.HashMap;
+import blackjack.domain.Player;
+import blackjack.domain.Players;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public record FinalProfitDto(
-        Map<String, Integer> profitByPlayer,
-        int profitByDealer
+        Map<Name, Double> bettingMoneyInfo,
+        double profitByDealer
 ) {
 
-    public static FinalProfitDto of(Participants participants, Map<String, Integer> bettingMoneyByPlayer) {
-        Map<String, Integer> profitByPlayer = new HashMap<>();
-        Dealer dealer = participants.dealer();
-        participants.players().all().forEach(player -> {
-                    GameResult gameResult = player.calculateGameResult(dealer);
-                    if (gameResult == GameResult.WIN) {
-                        profitByPlayer.put(player.getNickname(), bettingMoneyByPlayer.get(player.getNickname()));
-                    }
-                    if (gameResult == GameResult.DRAW) {
-                        profitByPlayer.put(player.getNickname(), 0);
-                    }
-                    if (gameResult == GameResult.LOSE) {
-                        profitByPlayer.put(player.getNickname(), -bettingMoneyByPlayer.get(player.getNickname()));
-                    }
-                }
-        );
+    public static FinalProfitDto of(Participants participants, BettingMoneyInfo bettingMoneyInfo) {
+        Map<Name, Double> profitByPlayer = calculatePlayerProfit(participants, bettingMoneyInfo);
 
-        int profitByDealer = profitByPlayer.values().stream()
-                .mapToInt(money -> -money)
-                .sum();
+        double profitByDealer = calculateDealerProfit(profitByPlayer);
 
         return new FinalProfitDto(profitByPlayer, profitByDealer);
     }
+
+    private static Map<Name, Double> calculatePlayerProfit(Participants participants, BettingMoneyInfo bettingMoneyInfo) {
+        Players players = participants.players();
+        Dealer dealer = participants.dealer();
+        return players.all().stream()
+                .collect(Collectors.toUnmodifiableMap(
+                                Player::getName,
+                                player -> player.calculateGameResult(dealer)
+                                        .calculateProfit(bettingMoneyInfo.findMoneyByName(player.getName()))
+                        )
+                );
+    }
+
+    private static double calculateDealerProfit(Map<Name, Double> profitByPlayer) {
+        return profitByPlayer.values().stream()
+                .mapToDouble(money -> -money)
+                .sum();
+    }
+
 
 }
