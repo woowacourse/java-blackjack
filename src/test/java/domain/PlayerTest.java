@@ -146,5 +146,65 @@ public class PlayerTest {
 
             assertThat(actual).isEqualTo(expected);
         }
+
+        @Test
+        @DisplayName("딜러 스테이, 플레이어 스테이: 둘 다 블랙잭인 경우")
+        void 딜러_스테이_플레이어_스테이_둘_다_블랙잭인_경우() {
+            Hand dealerHand = new Hand(List.of(
+                    new Card(Suit.DIAMOND, Denomination.TEN),
+                    new Card(Suit.SPADE, Denomination.ACE)));
+            Dealer dealer = new Dealer(dealerHand, Status.STAY, trump);
+
+            Hand playerHand = new Hand(List.of(
+                    new Card(Suit.SPADE, Denomination.TEN),
+                    new Card(Suit.DIAMOND, Denomination.ACE)));
+            Player player = new Player(playerHand, Status.STAY, "pobi");
+
+            GameResult expected = GameResult.DRAW;
+
+            GameResult actual = player.calculateGameResult(dealer);
+
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        @Test
+        @DisplayName("딜러 스테이, 플레이어 스테이: 플레이어만 블랙잭인 경우")
+        void 딜러_스테이_플레이어_스테이_플레이어만_블랙잭인_경우() {
+            Hand dealerHand = new Hand(List.of(
+                    new Card(Suit.DIAMOND, Denomination.TEN),
+                    new Card(Suit.SPADE, Denomination.NINE)));
+            Dealer dealer = new Dealer(dealerHand, Status.STAY, trump);
+
+            Hand playerHand = new Hand(List.of(
+                    new Card(Suit.SPADE, Denomination.TEN),
+                    new Card(Suit.DIAMOND, Denomination.ACE)));
+            Player player = new Player(playerHand, Status.STAY, "pobi");
+
+            GameResult expected = GameResult.BLACKJACK;
+
+            GameResult actual = player.calculateGameResult(dealer);
+
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        @Test
+        @DisplayName("딜러 스테이, 플레이어 스테이: 딜러만 블랙잭인 경우")
+        void 딜러_스테이_플레이어_스테이_딜러만_블랙잭인_경우() {
+            Hand dealerHand = new Hand(List.of(
+                    new Card(Suit.DIAMOND, Denomination.TEN),
+                    new Card(Suit.SPADE, Denomination.ACE)));
+            Dealer dealer = new Dealer(dealerHand, Status.STAY, trump);
+
+            Hand playerHand = new Hand(List.of(
+                    new Card(Suit.SPADE, Denomination.TEN),
+                    new Card(Suit.DIAMOND, Denomination.NINE)));
+            Player player = new Player(playerHand, Status.STAY, "pobi");
+
+            GameResult expected = GameResult.LOSE;
+
+            GameResult actual = player.calculateGameResult(dealer);
+
+            assertThat(actual).isEqualTo(expected);
+        }
     }
 }
