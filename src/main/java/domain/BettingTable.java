@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -7,7 +8,7 @@ public class BettingTable {
     private final Map<Player, Money> moneyTable;
 
     public BettingTable(Map<Player, Money> moneyTable) {
-        this.moneyTable = moneyTable;
+        this.moneyTable = new HashMap<>(moneyTable);
     }
 
     public static BettingTable from(Map<Player, BetAmount> moneyTable){

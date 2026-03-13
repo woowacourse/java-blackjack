@@ -10,7 +10,7 @@ public class Judge {
     private final Map<Player, WinningStatus> playerResults;
 
     public Judge(Map<Player, WinningStatus> playerResults) {
-        this.playerResults = playerResults;
+        this.playerResults = new HashMap<>(playerResults);
     }
 
     public static Judge from(Dealer dealer, List<Player> players) {
