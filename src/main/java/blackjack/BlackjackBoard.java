@@ -19,16 +19,16 @@ public class BlackjackBoard {
         dealer.dealInitialCards(players);
     }
 
+    public void hitDealer() {
+        dealer.drawAndReceive();
+    }
+
     public void hitPlayer(final Player player) {
         dealer.dealCardTo(player);
     }
 
     public void stayPlayer(final Player player) {
         player.stay();
-    }
-
-    public void hitDealer() {
-        dealer.drawAndReceive();
     }
 
     public boolean dealerCanReceiveCard() {
