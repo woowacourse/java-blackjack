@@ -113,4 +113,18 @@ class HandsTest {
         // when & then
         assertThat(hands.getOpenedCards().size()).isEqualTo(1);
     }
+
+    @Test
+    @DisplayName("핸즈에 있는 초기 2 장의 카드의 점수를 반환한다.")
+    void calculateInitialCardScore() {
+        //given
+        Hands hands = Hands.empty();
+
+        hands.addCard(Card.createOpenedCard(Rank.TEN, Suit.CLOVER));
+        hands.addCard(Card.createOpenedCard(Rank.TWO, Suit.CLOVER));
+        hands.addCard(Card.createOpenedCard(Rank.K, Suit.CLOVER));
+
+        //when & then
+        assertThat(hands.calculateInitialCardScore()).isEqualTo(12);
+    }
 }

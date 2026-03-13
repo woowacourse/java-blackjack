@@ -28,7 +28,7 @@ public abstract class Participant {
     }
 
     public boolean isBlackjack() {
-        return hands.calculateTotalScore() == BLACKJACK_SCORE;
+        return hands.calculateInitialCardScore() == BLACKJACK_SCORE;
     }
 
     public List<Card> getOpenedCards() {
