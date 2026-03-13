@@ -10,6 +10,10 @@ public class Player extends Participant {
     }
 
     public int calculateFinalProfit(Participant dealer) {
+        if (this.isBlackjack() && dealer.isBlackjack()) {
+            return money.getBettingMoney();
+        }
+
         if (this.isBlackjack() && !dealer.isBlackjack()) {
             return (int) (money.getBettingMoney() * 1.5);
         }
