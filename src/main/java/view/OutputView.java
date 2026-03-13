@@ -3,12 +3,14 @@ package view;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import model.participant.Dealer;
 import model.participant.Participant;
 import model.Participants;
 
 public final class OutputView {
 
     private static final String LINE_SEPARATOR = System.lineSeparator();
+    private static final String BRACKET_DEL_REGEX = "[]\\[]";
 
     public void printDealOut(Participants participants) {
         List<String> names = participants.getNames();
@@ -16,7 +18,7 @@ public final class OutputView {
         System.out.println(LINE_SEPARATOR + "딜러와 " + joinedNames + "에게 2장을 나누었습니다.");
 
         for (Participant participant : participants) {
-            String replaced = participant.open().toString().replaceAll("[]\\[]", "");
+            String replaced = participant.open().toString().replaceAll(BRACKET_DEL_REGEX, "");
             if (participant.isDealer()) {
                 System.out.printf("%s: %s", participant.getName(), replaced + LINE_SEPARATOR);
             }

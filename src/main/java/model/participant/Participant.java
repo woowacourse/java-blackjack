@@ -8,11 +8,10 @@ import model.CardNumber;
 public abstract class Participant {
     private static final int BUST_THRESHOLD = 21;
     private static final int DEALER_THRESHOLD = 16;
-    private static final String DEALER_NAME = "딜러";
     private static final int BLACKJACK_SCORE = 21;
     private static final int FIRST_TURN_CARD_COUNT = 2;
 
-    private final String name;
+    protected final String name;
     protected final List<Card> hands;
 
     protected Participant(String name) {
@@ -56,7 +55,7 @@ public abstract class Participant {
     }
 
     public boolean isDealer() {
-        return name.equals(DEALER_NAME);
+        return false;
     }
 
     public boolean isBlackJack() {

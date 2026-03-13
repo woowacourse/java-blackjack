@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import model.BlackJack;
 import model.factory.ParticipantsFactory;
+import model.participant.Dealer;
 import model.participant.Participant;
 import model.Participants;
 import util.InputParser;
@@ -84,7 +85,7 @@ public class BlackJackController {
     }
 
     private boolean isDealerOrReachTargetNumber(Participant participant) {
-        if (participant.isDealer()) {
+        if (participant instanceof Dealer) {
             return true;
         }
 
