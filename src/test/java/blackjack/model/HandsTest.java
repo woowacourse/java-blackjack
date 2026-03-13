@@ -2,6 +2,7 @@ package blackjack.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.dto.CardDto;
 import blackjack.model.card.Card;
 import blackjack.model.card.Hands;
 import blackjack.model.card.Rank;
@@ -14,10 +15,8 @@ class HandsTest {
     @Test
     @DisplayName("빈 핸즈를 반환한다.")
     void empty() {
-        assertThat(
-                Hands.empty()
-                        .getAllCards()
-        ).isEmpty();
+        // given & when & then
+        assertThat(Hands.empty().getAllCards()).isEmpty();
     }
 
     @Test
@@ -86,5 +85,21 @@ class HandsTest {
         hands.addCard(Card.of(Rank.ACE, Suit.CLOVER));
 
         assertThat(hands.hasScoreHigherThan(16)).isTrue();
+    }
+
+    @Test
+    @DisplayName("첫 번째 카드 반환")
+    void getFirstCardTest() {
+        // given
+        Hands hands = Hands.empty();
+        hands.addCard(Card.of(Rank.SIX, Suit.CLOVER));
+        hands.addCard(Card.of(Rank.ACE, Suit.CLOVER));
+
+        // when
+        CardDto firstCard = hands.getFirstCard();
+
+        // then
+        assertThat(firstCard.rank()).isEqualTo(Rank.SIX);
+        assertThat(firstCard.suit()).isEqualTo(Suit.CLOVER);
     }
 }

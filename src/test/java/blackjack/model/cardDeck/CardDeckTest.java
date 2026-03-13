@@ -2,7 +2,9 @@ package blackjack.model.cardDeck;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.common.error.ErrorCode;
 import blackjack.model.card.Card;
 import blackjack.model.card.Rank;
 import blackjack.model.card.Suit;
@@ -31,5 +33,20 @@ class CardDeckTest {
 
         // then
         assertThat(card.isAce()).isTrue();
+    }
+
+    @Test
+    @DisplayName("카드 덱에 카드가 없는데 뽑으려고 하면 예외가 발생")
+    void emptyCardDeckExceptionTest() {
+        // given
+        CardDeck cardDeck = CardDeck.of(new RandomPickStrategy());
+        for (int i = 0; i < 52; i++) {
+            cardDeck.pick();
+        }
+
+        // when & then
+        assertThatThrownBy(cardDeck::pick)
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessageContaining(ErrorCode.EMPTY_CARD_DECK.getMessage());
     }
 }
