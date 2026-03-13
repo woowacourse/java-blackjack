@@ -1,7 +1,6 @@
 package team.blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
 import java.util.Map;
@@ -63,6 +62,88 @@ class BlackjackGameTest {
         assertThat(game.calculateDealerRevenue()).isEqualTo(expectedDealerRevenue);
     }
 
+    @Test
+    void 플레이어_승_시_수익은_100프로() {
+        hitCards(pobi, Card.KING_OF_HEARTS, Card.QUEEN_OF_HEARTS);   // 20
+        hitCards(dealer, Card.KING_OF_CLUBS, Card.EIGHT_OF_CLUBS);   // 18
+        game.batMoney("pobi", 1000);
+
+        Map<String, Double> revenue = game.calculateAllPlayerRevenue();
+
+        assertThat(revenue.get("pobi")).isEqualTo(1000.0);  // WIN odds 1
+    }
+
+    @Test
+    void 플레이어_패_시_수익은_전체_마이너스_100프로() {
+        hitCards(pobi, Card.KING_OF_HEARTS, Card.EIGHT_OF_HEARTS);   // 18
+        hitCards(dealer, Card.KING_OF_CLUBS, Card.QUEEN_OF_CLUBS);   // 20
+        game.batMoney("pobi", 1000);
+
+        Map<String, Double> revenue = game.calculateAllPlayerRevenue();
+
+        assertThat(revenue.get("pobi")).isEqualTo(-1000.0);  // LOSE odds -1
+    }
+
+    @Test
+    void 동점_시_무_수익은_제로() {
+        hitCards(pobi, Card.KING_OF_HEARTS, Card.SEVEN_OF_HEARTS);  // 17
+        hitCards(dealer, Card.KING_OF_CLUBS, Card.SEVEN_OF_CLUBS);   // 17
+        game.batMoney("pobi", 1000);
+
+        Map<String, Double> revenue = game.calculateAllPlayerRevenue();
+
+        assertThat(revenue.get("pobi")).isEqualTo(0.0);  // DRAW odds 0
+    }
+
+    @Test
+    void 플레이어_버스트_할_경우_수익은_전체_손실() {
+        hitCards(pobi, Card.KING_OF_HEARTS, Card.SEVEN_OF_HEARTS, Card.FIVE_OF_HEARTS);  // 22
+        hitCards(dealer, Card.KING_OF_CLUBS, Card.QUEEN_OF_CLUBS);   // 20
+        game.batMoney("pobi", 1000);
+
+        Map<String, Double> revenue = game.calculateAllPlayerRevenue();
+
+        assertThat(revenue.get("pobi")).isEqualTo(-1000.0);  // LOSE (bust)
+    }
+
+    @Test
+    void 플레이어_블랙잭_딜러는_블랙잭이_아닌경우_수익_150프로() {
+        hitCards(pobi, Card.ACE_OF_HEARTS, Card.KING_OF_HEARTS);    // blackjack
+        hitCards(dealer, Card.KING_OF_CLUBS, Card.NINE_OF_CLUBS);   // 19
+        game.batMoney("pobi", 1000);
+
+        Map<String, Double> revenue = game.calculateAllPlayerRevenue();
+
+        assertThat(revenue.get("pobi")).isEqualTo(1500.0);  // BLACKJACK odds 1.5
+    }
+
+    @Test
+    void 딜러_버스트_시_버스트가_아닌_플레이어는_승리() {
+        hitCards(pobi, Card.KING_OF_HEARTS, Card.TEN_OF_HEARTS);   // 20
+        hitCards(dealer, Card.KING_OF_CLUBS, Card.SEVEN_OF_CLUBS, Card.SIX_OF_CLUBS);  // 23
+        game.batMoney("pobi", 1000);
+
+        Map<String, Double> revenue = game.calculateAllPlayerRevenue();
+
+        assertThat(revenue.get("pobi")).isEqualTo(1000.0);  // WIN (dealer bust)
+    }
+
+    @Test
+    void 딜러가_버스트_여도_이미_버스트였던_플레이어는_패배() {
+        hitCards(jason, Card.KING_OF_SPADES,Card.KING_OF_DIAMONDS, Card.FIVE_OF_HEARTS);   // 25
+        hitCards(dealer, Card.KING_OF_CLUBS, Card.SEVEN_OF_CLUBS, Card.SIX_OF_CLUBS);  // 23
+        game.batMoney("jason", 1000);
+
+        Map<String, Double> revenue = game.calculateAllPlayerRevenue();
+
+        assertThat(revenue.get("jason")).isEqualTo(-1000.0);  // WIN (dealer bust)
+    }
+
+    private void hitCards(Participant participant, Card... cards) {
+        for (Card card : cards) {
+            participant.hit(card);
+        }
+    }
 
     @Test
     void _30과_20에_대한_버스트_여부를_반환한다() {

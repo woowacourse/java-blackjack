@@ -1,11 +1,13 @@
 package team.blackjack.domain;
 
+import static team.blackjack.domain.rule.DefaultBlackjackRule.DEALER_STAND_SCORE;
+
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import team.blackjack.domain.rule.DefaultBlackjackRule;
 
 public class BlackjackGame {
+
     private final Dealer dealer;
     private final Players players;
     private final Deck deck;
@@ -39,8 +41,31 @@ public class BlackjackGame {
     }
 
     private double calculateMoney(Player player) {
-        final Result result = DefaultBlackjackRule.judge(player, dealer);
+        final Result result = judge(player);
         return result.getOdds() * player.getBatMoney();
+    }
+
+    private Result judge(Player player) {
+        if (player.isBust()) {
+            return Result.LOSE;
+        }
+        if (dealer.isBust()) {
+            return Result.WIN;
+        }
+
+        final int score = player.getScore();
+        final int dealerScore = dealer.getScore();
+
+        if (score < dealerScore) {
+            return Result.LOSE;
+        }
+        if (player.isBlackjack() && !dealer.isBlackjack()) {
+            return Result.BLACKJACK;
+        }
+        if (score > dealerScore) {
+            return Result.WIN;
+        }
+        return Result.DRAW;
     }
 
     public void batMoney(String name, int money) {
@@ -57,7 +82,7 @@ public class BlackjackGame {
     }
 
     public boolean shouldDealerHit() {
-        return DefaultBlackjackRule.shouldDealerHit(this.dealer.getScore());
+        return this.dealer.getScore() < DEALER_STAND_SCORE;
     }
 
     public void hitDealer() {
