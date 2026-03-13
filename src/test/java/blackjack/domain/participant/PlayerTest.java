@@ -27,11 +27,11 @@ public class PlayerTest {
         Card card = new Card(CardValue.ACE, CardShape.DIAMOND);
 
         // when
-        int before = player.getCards().size();
+        int before = player.getCardsName().size();
         player.draw(card);
 
         // then
-        assertThat(player.getCards().size()).isEqualTo(before + 1);
+        assertThat(player.getCardsName().size()).isEqualTo(before + 1);
     }
 
     @Test
@@ -42,7 +42,7 @@ public class PlayerTest {
         player.draw(new Card(CardValue.TWO, CardShape.DIAMOND));
 
         // when
-        int sum = player.calculateCardsValue();
+        int sum = player.getSumOfCards();
 
         // then
         assertThat(sum).isEqualTo(6);
@@ -87,7 +87,7 @@ public class PlayerTest {
         player.draw(new Card(CardValue.THREE, CardShape.DIAMOND));
 
         // when
-        int sum = player.calculateCardsValue();
+        int sum = player.getSumOfCards();
 
         // then
         assertThat(sum).isEqualTo(14);
@@ -101,7 +101,7 @@ public class PlayerTest {
         player.draw(new Card(CardValue.TEN, CardShape.DIAMOND));
 
         // when
-        int sum = player.calculateCardsValue();
+        int sum = player.getSumOfCards();
 
         // then
         assertThat(sum).isEqualTo(21);
