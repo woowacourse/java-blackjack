@@ -11,9 +11,9 @@ public class Participant {
 
     protected Hand hand;
 
-    public Participant(String name) {
-        this.name = new Name(name);
-        this.hand = new Hand();
+    public Participant(Name name, Hand hand) {
+        this.name = name;
+        this.hand = hand;
     }
 
     public void addCard(Card card) {
