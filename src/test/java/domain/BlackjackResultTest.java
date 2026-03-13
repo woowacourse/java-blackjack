@@ -142,7 +142,7 @@ class BlackjackResultTest {
                 new Card(CardShape.SPADE, CardRank.TEN),
                 new Card(CardShape.SPADE, CardRank.NINE),
                 new Card(CardShape.SPADE, CardRank.EIGHT)
-        )); // 21
+        )); // 27
         player.betMoney(10000);
 
         Dealer dealer = PlayerTestUtil.createDealer(List.of(
@@ -153,6 +153,26 @@ class BlackjackResultTest {
         assertThat(player.getBettingScore()).isEqualTo(10000);
         BlackjackResult blackjackResult = BlackjackResult.from(dealer, createSinglePlayerSet(player));
         assertThat(player.getBettingScore()).isEqualTo(-10000);
+        assertThat(dealer.getBettingScore()).isEqualTo(10000);
+    }
+
+    @DisplayName("참가자가 블랙잭이 되면 배팅금액이 1.5배가 된다.")
+    @Test
+    void 참가자_블랙잭_배팅금액_보너스() {
+        Player player = PlayerTestUtil.createPlayer(List.of(
+                new Card(CardShape.SPADE, CardRank.TEN),
+                new Card(CardShape.SPADE, CardRank.ACE)
+        )); // 21
+        player.betMoney(10000);
+
+        Dealer dealer = PlayerTestUtil.createDealer(List.of(
+                new Card(CardShape.SPADE, CardRank.TEN),
+                new Card(CardShape.SPADE, CardRank.ACE)
+        )); // 21
+
+        assertThat(player.getBettingScore()).isEqualTo(10000);
+        BlackjackResult blackjackResult = BlackjackResult.from(dealer, createSinglePlayerSet(player));
+        assertThat(player.getBettingScore()).isEqualTo(15000);
         assertThat(dealer.getBettingScore()).isEqualTo(10000);
     }
 
