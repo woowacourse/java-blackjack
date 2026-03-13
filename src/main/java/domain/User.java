@@ -6,14 +6,11 @@ import vo.Name;
 
 public class User extends Participant {
     private final Name name;
-    private Bet bet;
+    private final Bet bet;
 
-    public User(String name) {
-        this.name = new Name(name);
-    }
-
-    public void placeBet(String betAmount) {
-        this.bet = new Bet(betAmount);
+    public User(Name name, Bet bet) {
+        this.name = name;
+        this.bet = bet;
     }
 
     public BigDecimal getBetAmount() {

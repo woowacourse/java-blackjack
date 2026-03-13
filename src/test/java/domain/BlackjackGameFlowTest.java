@@ -3,10 +3,14 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.math.BigDecimal;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import vo.Bet;
 import vo.GameResult;
+import vo.Name;
 import vo.Rank;
 import vo.Suit;
 
@@ -26,8 +30,10 @@ public class BlackjackGameFlowTest {
                 new Card(Suit.CLUB, Rank.TEN)
         ));
         blackjackGame = new TestBlackjackGame(fixedDeck);
-        blackjackGame.prepare("영기,라이");
-        blackjackGame.getUsers().forEach(user -> blackjackGame.placeBet(user, "1000"));
+        List<Name> names = List.of(new Name("영기"), new Name("라이"));
+        Map<Name, Bet> bets = new LinkedHashMap<>();
+        names.forEach(name -> bets.put(name, new Bet("1000")));
+        blackjackGame.prepare(names, bets);
     }
 
     @Test

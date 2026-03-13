@@ -1,10 +1,14 @@
 import domain.BlackjackGame;
 import domain.User;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
 import view.InputView;
 import view.Message;
 import view.OutputView;
+import vo.Bet;
+import vo.Name;
 
 public class Application {
     private final OutputView outputView;
@@ -26,8 +30,7 @@ public class Application {
     }
 
     public void run() {
-        readParticipants();
-        readBetAmount();
+        prepareParticipants();
         printInitialCardInformation();
         selectToDealExtraCard();
         dealDealerCard();
@@ -35,22 +38,29 @@ public class Application {
         printWinningResult();
     }
 
-    public void readParticipants() {
-        retryUntilSuccess(() -> {
+    public void prepareParticipants() {
+        List<Name> names = readParticipants();
+        Map<Name, Bet> bets = readBetAmount(names);
+        blackjackGame.prepare(names, bets);
+    }
+
+    private List<Name> readParticipants() {
+        return retryUntilSuccess(() -> {
             outputView.printMessage(Message.INPUT_PARTICIPANTS_MESSAGE);
-            blackjackGame.prepare(inputView.readParticipantsName());
-            return null;
+            return inputView.readParticipantsName();
         });
     }
 
-    private void readBetAmount() {
-        blackjackGame.getUsers().forEach(user -> {
-            retryUntilSuccess(() -> {
-                outputView.printAskBetAmount(user.getName());
-                blackjackGame.placeBet(user, inputView.readBetAmount());
-                return null;
+    private Map<Name, Bet> readBetAmount(List<Name> names) {
+        Map<Name, Bet> bets = new LinkedHashMap<>();
+        for (Name name : names) {
+            Bet bet = retryUntilSuccess(() -> {
+                outputView.printAskBetAmount(name.getName());
+                return inputView.readBetAmount();
             });
-        });
+            bets.put(name, bet);
+        }
+        return bets;
     }
 
     private void printInitialCardInformation() {

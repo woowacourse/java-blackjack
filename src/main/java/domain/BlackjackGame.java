@@ -4,7 +4,9 @@ import java.math.BigDecimal;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import vo.Bet;
 import vo.GameResult;
+import vo.Name;
 
 public class BlackjackGame {
     private final static Integer FIRST_CARD_DEAL_COUNT = 2;
@@ -13,12 +15,13 @@ public class BlackjackGame {
     private Participants participants;
     protected Deck deck;
 
-    public void prepare(String participantsName) {
-        participants = new Participants(participantsName);
+    public void prepare(List<Name> names, Map<Name, Bet> bets) {
+        participants = new Participants(names, bets);
         makeDeck();
         dealCards();
     }
 
+    // 지워?
     public void makeDeck() {
         deck = new Deck();
     }
@@ -53,10 +56,6 @@ public class BlackjackGame {
             betAmounts.put(user, user.getBetAmount());
         }
         return new GameSummary(userResults, betAmounts);
-    }
-
-    public void placeBet(User user, String betAmount) {
-        user.placeBet(betAmount);
     }
 
     public void processPlayerDecision(User user) {

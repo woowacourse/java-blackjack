@@ -11,7 +11,7 @@
 - [x] **3. GameSummary의 getter 사용과, 원시값 사용 부분 수정**
   - User 자체를 key로 쓰면 됨.
 - [x] **4. participants의 judge all을 BlackjackGame으로 옮길 것.**
-- [ ] **5. 처음에 이름 view에서 파싱해서 넘겨주고, bet을 다 받은 후에 객체 생성하도록 수정**
+- [x] **5. 처음에 이름 view에서 파싱해서 넘겨주고, bet을 다 받은 후에 객체 생성하도록 수정**
   - 이렇게 하려면 Parse를 inputView에서 한다고 했을 때, 이름에 대한 validation이 Name에서 진행되고 있으니, InputView에서 Name을 만들어야 함.
     - 그런데 이렇게 하면 view가 도메인 객체를 알게 되는 구조가 됨.
   - Name을 만들지 않으면, 이름 자체에 대한 검증이 배팅이 끝나고 User 객체가 만들어지는 시점까지 밀리게 됨.
@@ -24,6 +24,3 @@
 - [x] **7. 돈 계산 BigDecimal 이용하도록 수정**
   - 부동 소수점이라 금액 계산에서 오차 발생할 수 있음.
 - [x] **8. 배율 계산 로직 타입 캐스팅 수정**
-- [ ] **9. BlackjackGame의 객체들 final로 변경**
-  - constructor에서 초기화하도록 수정해야 함.
-  - 이를 위해서 객체 생성 시점 새로 짜야 함.
