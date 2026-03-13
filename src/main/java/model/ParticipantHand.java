@@ -2,10 +2,14 @@ package model;
 
 import constant.ErrorMessage;
 import java.util.List;
+import java.util.Objects;
 
 public class ParticipantHand {
     private static final Integer MAX_ACE_SCORE = 11;
     private static final Integer ADDITIONAL_ACE_SCORE = 10;
+    private static final Integer BUST_SCORE = 21;
+    private static final Integer BLACK_JACK_SCORE = 21;
+    private static final Integer BLACK_JACK_CARD_SIZE = 2;
 
     private final Score score = new Score();
     private final Cards deck = new Cards();
@@ -29,6 +33,16 @@ public class ParticipantHand {
 
     public String getFirstCard() {
         return deck.getFirstCard().getString();
+    }
+
+    public boolean isBust() {
+        Integer score = getScore();
+        return score > BUST_SCORE;
+    }
+
+    public boolean isBlackJack() {
+        Integer score = getScore();
+        return Objects.equals(score, BLACK_JACK_SCORE) && Objects.equals(deck.getSize(), BLACK_JACK_CARD_SIZE);
     }
 
     private void validateCardDuplicate(Card card) {

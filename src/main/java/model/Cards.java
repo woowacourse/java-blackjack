@@ -33,4 +33,8 @@ public class Cards {
     public boolean hasAce() {
         return hasAce;
     }
+
+    public Integer getSize() {
+        return cards.size();
+    }
 }

@@ -4,6 +4,7 @@ import constant.ErrorMessage;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import model.dto.DealerStatus;
 import model.dto.ParticipantWinning;
 import model.dto.PlayerResult;
 import model.dto.PlayerWinning;
@@ -70,8 +71,10 @@ public class Participants {
         DealerWinning dealerWinning = new DealerWinning();
         PlayersWinning playersWinning = new PlayersWinning();
 
+        DealerStatus dealerStatus = dealer.getDealerStatus();
+
         players.values().forEach(player -> {
-           PlayerWinning result = player.getBetResult(dealer);
+           PlayerWinning result = player.getBetResult(dealerStatus);
            playersWinning.add(result);
            dealerWinning.increase(-result.profit());
         });
