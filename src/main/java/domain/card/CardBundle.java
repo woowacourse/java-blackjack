@@ -7,8 +7,8 @@ import java.util.Objects;
 
 public class CardBundle {
 
-    private static final int BUSTED_CONDITION = 22;
     private static final int BLACKJACK_CONDITION = 21;
+    private static final int BUSTED_CONDITION = BLACKJACK_CONDITION + 1;
     private static final int NUMBER_OF_BLACKJACK_CARD = 2;
     private static final int ACE_BONUS_SCORE = 10;
 
