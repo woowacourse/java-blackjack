@@ -1,7 +1,7 @@
 package blackjack.view;
 
 import blackjack.model.card.Card;
-import blackjack.model.participant.Player;
+import blackjack.model.participant.Players;
 import java.util.List;
 
 public class OutputView {
@@ -27,25 +27,25 @@ public class OutputView {
         System.out.printf(BET_AMOUNT_INPUT_PROMPT + NEW_LINE, name);
     }
 
-    public void printCardDistributionCompleted(List<Player> players, String dealerName) {
-        List<String> names = players.stream()
-                .map(Player::getName)
-                .toList();
-
-        System.out.printf(CARD_DISTRIBUTION_COMPLETED + NEW_LINE,
+    public void printCardDistributionCompleted(
+            List<String> playerNames,
+            String dealerName
+    ) {
+        System.out.printf(
+                CARD_DISTRIBUTION_COMPLETED + NEW_LINE,
                 dealerName,
-                String.join(COMMA_AND_SPACE, names)
+                String.join(COMMA_AND_SPACE, playerNames)
         );
-
     }
 
     public void printParticipantCards(String name, List<Card> openedCards) {
         List<String> cardNames = openedCards.stream()
                 .map(Card::toString)
                 .toList();
-
         String joinedCardNames = String.join(COMMA_AND_SPACE, cardNames);
-        System.out.printf(PARTICIPANT_CARDS + NEW_LINE,
+
+        System.out.printf(
+                PARTICIPANT_CARDS + NEW_LINE,
                 name,
                 joinedCardNames
         );
@@ -59,37 +59,31 @@ public class OutputView {
         System.out.println(DEALER_PICK_CARD);
     }
 
-    public void printParticipantCardsWithScore(String name, List<Card> cards, int score) {
+    public void printParticipantCardsWithScore(
+            String name,
+            List<Card> cards,
+            int score
+    ) {
         List<String> cardNames = cards.stream()
                 .map(Card::toString)
                 .toList();
-
         String joinedCardNames = String.join(COMMA_AND_SPACE, cardNames);
 
-        System.out.printf(PARTICIPANT_CARDS + RESULT + NEW_LINE,
+        System.out.printf(
+                PARTICIPANT_CARDS + RESULT + NEW_LINE,
                 name,
                 joinedCardNames,
                 score
         );
     }
 
-    public void printPlayerPrizes(List<Player> players, String dealerName) {
+    public void printPlayerPrizes(Players players, String dealerName) {
         System.out.println(FINAL_PRIZE);
-
-        printDealerProfit(players, dealerName);
-        players.forEach(player -> System.out.printf(
+        System.out.printf(PLAYER_PRIZE + NEW_LINE, dealerName, players.getDealerProfit());
+        players.perform(player -> System.out.printf(
                 PLAYER_PRIZE + NEW_LINE,
                 player.getName(),
                 player.getPrize())
         );
-    }
-
-    private void printDealerProfit(List<Player> players, String dealerName) {
-        int negativeMultiplier = -1;
-        int dealerProfit = negativeMultiplier * players.stream()
-                .mapToInt(Player::getPrize)
-                .sum();
-
-        System.out.printf(PLAYER_PRIZE + NEW_LINE, dealerName, dealerProfit);
     }
 }
