@@ -28,7 +28,7 @@ public class Result {
             GameResult playerOutcome = playersResult.get(player);
             BigDecimal playerBettingMoney = player.getBettingMoney();
             BigDecimal playerYield = playerOutcome.getYield();
-            dealerResult=dealerResult.add(playerBettingMoney.multiply(playerYield));
+            dealerResult = dealerResult.add(playerBettingMoney.multiply(playerYield));
         }
         return dealerResult.multiply(BigDecimal.valueOf(-1));
     }
