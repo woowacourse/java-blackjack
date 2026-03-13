@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 import domain.result.MatchResult;
+import domain.result.PlayersMatchResult;
 import view.InputView;
 import view.OutputView;
 
@@ -93,8 +94,8 @@ public class BlackjackController {
     private void printResult(Participants participants) {
         outputView.printCardResults(participants);
 
-        MatchResult matchResult = null;
-//        MatchResult matchResult = participants.calculatePlayersMatchResult();
+        PlayersMatchResult playersMatchResult = participants.calculatePlayersMatchResult();
+        MatchResult matchResult = new MatchResult(playersMatchResult, playersMatchResult.calculateDealerMatchResult());
 //        outputView.printFinalResults(matchResult);
 
         outputView.printBettingProfit(matchResult.calculateBettingProfit());
