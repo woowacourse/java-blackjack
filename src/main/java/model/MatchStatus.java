@@ -1,15 +1,17 @@
 package model;
 
+import java.math.BigDecimal;
+
 public enum MatchStatus {
-    BLACKJACK("블랙잭 승", 1.5),
-    WIN("승", 1.0),
-    DRAW("무", 0.0),
-    LOSE("패", -1.0);
+    BLACKJACK("블랙잭 승", new BigDecimal("1.5")),
+    WIN("승", BigDecimal.ONE),
+    DRAW("무", BigDecimal.ZERO),
+    LOSE("패", BigDecimal.ONE.negate());
 
     private final String status;
-    private final double multiplier;
+    private final BigDecimal multiplier;
 
-    MatchStatus(String status, double multiplier) {
+    MatchStatus(String status, BigDecimal multiplier) {
         this.status = status;
         this.multiplier = multiplier;
     }
@@ -18,7 +20,7 @@ public enum MatchStatus {
         return status;
     }
 
-    public double getMultiplier() {
+    public BigDecimal getMultiplier() {
         return multiplier;
     }
 

@@ -2,8 +2,9 @@ package view;
 
 import dto.Card;
 import dto.ParticipantWinning;
-import dto.PlayerResult;
 import dto.PlayerProfit;
+import dto.PlayerResult;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class OutputView {
@@ -76,7 +77,7 @@ public class OutputView {
                 + playerResult.score());
     }
 
-    private static void printDealerResult(double dealerProfit) {
+    private static void printDealerResult(BigDecimal dealerProfit) {
         System.out.println(DEALER_TEXT + RESULT_DELIMITER + formatProfit(dealerProfit));
     }
 
@@ -90,11 +91,8 @@ public class OutputView {
         System.out.println(playerProfit.name() + RESULT_DELIMITER + formatProfit(playerProfit.profit()));
     }
 
-    private static String formatProfit(double profit) {
-        if (profit == Math.floor(profit)) {
-            return String.valueOf((long) profit);
-        }
-        return String.valueOf(profit);
+    private static String formatProfit(BigDecimal profit) {
+        return profit.stripTrailingZeros().toPlainString();
     }
 
 }

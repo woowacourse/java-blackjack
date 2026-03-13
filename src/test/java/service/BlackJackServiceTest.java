@@ -1,7 +1,8 @@
 package service;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Stream;
 import model.BettingMoney;
@@ -85,43 +86,47 @@ public class BlackJackServiceTest {
         assertThat(service.isBlackJack(player)).isEqualTo(expected);
     }
 
+    private static BigDecimal money(long value) {
+        return BigDecimal.valueOf(value);
+    }
+
     static Stream<Arguments> scoreMatchCases() {
         return Stream.of(
                 Arguments.of(
                         List.of(new Card(Shape.CLOVER, CardNumber.TEN)),
                         List.of(new Card(Shape.HEART, CardNumber.TEN)),
-                        0
+                        money(0)
                 ),
                 Arguments.of(
                         List.of(new Card(Shape.CLOVER, CardNumber.JACK),
                                 new Card(Shape.HEART, CardNumber.ACE)),
                         List.of(new Card(Shape.HEART, CardNumber.TEN)),
-                        15000
+                        money(15000)
                 ),
                 Arguments.of(
                         List.of(new Card(Shape.CLOVER, CardNumber.NINE),
                                 new Card(Shape.HEART, CardNumber.FIVE)),
                         List.of(new Card(Shape.HEART, CardNumber.TEN)),
-                        10000
+                        money(10000)
                 ),
                 Arguments.of(
                         List.of(new Card(Shape.CLOVER, CardNumber.FIVE)),
                         List.of(new Card(Shape.HEART, CardNumber.TEN)),
-                        -10000
+                        money(-10000)
                 ),
                 Arguments.of(
                         List.of(new Card(Shape.CLOVER, CardNumber.TEN),
                                 new Card(Shape.HEART, CardNumber.TEN),
                                 new Card(Shape.SPADE, CardNumber.TWO)),
                         List.of(new Card(Shape.HEART, CardNumber.ACE)),
-                        -10000
+                        money(-10000)
                 ),
                 Arguments.of(
                         List.of(new Card(Shape.CLOVER, CardNumber.TWO)),
                         List.of(new Card(Shape.HEART, CardNumber.TEN),
                                 new Card(Shape.SPADE, CardNumber.TEN),
                                 new Card(Shape.CLOVER, CardNumber.TWO)),
-                        10000
+                        money(10000)
                 ),
                 Arguments.of(
                         List.of(new Card(Shape.CLOVER, CardNumber.TEN),
@@ -130,21 +135,21 @@ public class BlackJackServiceTest {
                         List.of(new Card(Shape.HEART, CardNumber.NINE),
                                 new Card(Shape.SPADE, CardNumber.NINE),
                                 new Card(Shape.CLOVER, CardNumber.FOUR)),
-                        -10000
+                        money(-10000)
                 )
         );
     }
 
     @ParameterizedTest
     @MethodSource("scoreMatchCases")
-    public void 승패무_판정(List<Card> playerCards, List<Card> dealerCards, int expectedProfit) {
+    public void 승패무_판정(List<Card> playerCards, List<Card> dealerCards, BigDecimal expectedProfit) {
         BlackJackService service = new BlackJackService();
         Player player = new Player(new PlayerName("player1"), new BettingMoney("10000"));
         playerCards.forEach(player::draw);
         Dealer dealer = new Dealer();
         dealerCards.forEach(dealer::draw);
         ParticipantWinning result = service.getGameResult(new Players(List.of(player)), dealer);
-        assertThat(result.playersWinning().getFirst().profit()).isEqualTo(expectedProfit);
+        assertThat(result.playersWinning().getFirst().profit()).isEqualByComparingTo(expectedProfit);
     }
 
     @Test
@@ -157,7 +162,7 @@ public class BlackJackServiceTest {
         dealer.draw(new Card(Shape.SPADE, CardNumber.ACE));
         dealer.draw(new Card(Shape.SPADE, CardNumber.KING));
         ParticipantWinning result = service.getGameResult(new Players(List.of(player)), dealer);
-        assertThat(result.playersWinning().getFirst().profit()).isEqualTo(0);
+        assertThat(result.playersWinning().getFirst().profit()).isEqualByComparingTo(money(0));
     }
 
     @Test
@@ -170,7 +175,7 @@ public class BlackJackServiceTest {
         dealer.draw(new Card(Shape.CLOVER, CardNumber.TEN));
         dealer.draw(new Card(Shape.CLOVER, CardNumber.QUEEN));
         ParticipantWinning result = service.getGameResult(new Players(List.of(player)), dealer);
-        assertThat(result.playersWinning().getFirst().profit()).isEqualTo(15000);
+        assertThat(result.playersWinning().getFirst().profit()).isEqualByComparingTo(money(15000));
     }
 
     @Test
@@ -183,7 +188,7 @@ public class BlackJackServiceTest {
         dealer.draw(new Card(Shape.SPADE, CardNumber.ACE));
         dealer.draw(new Card(Shape.SPADE, CardNumber.KING));
         ParticipantWinning result = service.getGameResult(new Players(List.of(player)), dealer);
-        assertThat(result.playersWinning().getFirst().profit()).isEqualTo(-10000);
+        assertThat(result.playersWinning().getFirst().profit()).isEqualByComparingTo(money(-10000));
     }
 
     @Test
@@ -197,7 +202,7 @@ public class BlackJackServiceTest {
         dealer.draw(new Card(Shape.SPADE, CardNumber.ACE));
         dealer.draw(new Card(Shape.SPADE, CardNumber.KING));
         ParticipantWinning result = service.getGameResult(new Players(List.of(player)), dealer);
-        assertThat(result.playersWinning().getFirst().profit()).isEqualTo(-10000);
+        assertThat(result.playersWinning().getFirst().profit()).isEqualByComparingTo(money(-10000));
     }
 
     @Test
@@ -211,7 +216,7 @@ public class BlackJackServiceTest {
         dealer.draw(new Card(Shape.CLOVER, CardNumber.TEN));
         dealer.draw(new Card(Shape.CLOVER, CardNumber.NINE));
         ParticipantWinning result = service.getGameResult(new Players(List.of(player)), dealer);
-        assertThat(result.playersWinning().getFirst().profit()).isEqualTo(10000);
+        assertThat(result.playersWinning().getFirst().profit()).isEqualByComparingTo(money(10000));
     }
 
     @Test
@@ -240,6 +245,6 @@ public class BlackJackServiceTest {
         dealer.draw(new Card(Shape.DIAMOND, CardNumber.EIGHT));
 
         ParticipantWinning result = service.getGameResult(new Players(List.of(player1, player2)), dealer);
-        assertThat(result.dealerProfit()).isEqualTo(-5000);
+        assertThat(result.dealerProfit()).isEqualByComparingTo(money(-5000));
     }
 }

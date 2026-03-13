@@ -1,4 +1,6 @@
 package dto;
 
-public record PlayerProfit(String name, double profit) {
+import java.math.BigDecimal;
+
+public record PlayerProfit(String name, BigDecimal profit) {
 }

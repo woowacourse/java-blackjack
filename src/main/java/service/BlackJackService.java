@@ -1,5 +1,9 @@
 package service;
 
+import dto.Card;
+import dto.ParticipantWinning;
+import dto.PlayerProfit;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import model.BlackJackDeck;
@@ -9,9 +13,6 @@ import model.MatchStatus;
 import model.Participant;
 import model.Player;
 import model.Players;
-import dto.Card;
-import dto.ParticipantWinning;
-import dto.PlayerProfit;
 
 public class BlackJackService {
     private static final int BUST_NUMBER = 21;
@@ -24,7 +25,6 @@ public class BlackJackService {
     public BlackJackService() {
         this.cards = new BlackJackDeck(CardFactory.createShuffledCards());
     }
-
 
     public void draw(Participant participant) {
         Card card = cards.draw();
@@ -43,7 +43,6 @@ public class BlackJackService {
         return participant.getHandSize() == BLACKJACK_HAND_SIZE && participant.getScore() == BLACKJACK_SCORE;
     }
 
-
     public ParticipantWinning getGameResult(Players players, Dealer dealer) {
         List<PlayerProfit> playersWinning = getPlayersResult(players, dealer);
 
@@ -55,15 +54,19 @@ public class BlackJackService {
 
         for (Player player : players.getPlayers()) {
             MatchStatus matchStatus = getPlayerResult(player, dealer);
-            double profit = player.getBettingMoney().get() * matchStatus.getMultiplier();
+            BigDecimal profit = BigDecimal.valueOf(player.getBettingMoney().get())
+                    .multiply(matchStatus.getMultiplier());
             playersWinning.add(new PlayerProfit(player.getResult().name(), profit));
         }
 
         return playersWinning;
     }
 
-    private double getDealerResult(List<PlayerProfit> playersWinning) {
-        return playersWinning.stream().mapToDouble(PlayerProfit::profit).sum() * -1;
+    private BigDecimal getDealerResult(List<PlayerProfit> playersWinning) {
+        return playersWinning.stream()
+                .map(PlayerProfit::profit)
+                .reduce(BigDecimal.ZERO, BigDecimal::add)
+                .negate();
     }
 
     private MatchStatus getPlayerResult(Player player, Dealer dealer) {
@@ -97,6 +100,4 @@ public class BlackJackService {
         }
         return MatchStatus.DRAW;
     }
-
-
 }
