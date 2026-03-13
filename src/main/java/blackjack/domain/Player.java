@@ -21,6 +21,10 @@ public class Player extends Participant {
         if (this.isBust() || dealer.isBlackjack()) {
             return -money.getBettingMoney();
         }
+
+        if (this.calculateTotalScore() > dealer.calculateTotalScore()) {
+            return money.getBettingMoney();
+        }
         return 0;
     }
 }
