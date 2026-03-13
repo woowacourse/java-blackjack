@@ -13,7 +13,7 @@ class MoneyTest {
         // given
         int negativeMoney = -3000;
 
-        // when & then
+        // when - then
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> new Money(negativeMoney));
     }
