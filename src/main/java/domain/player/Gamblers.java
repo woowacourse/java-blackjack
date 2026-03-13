@@ -37,7 +37,7 @@ public class Gamblers {
                 .toList();
     }
 
-    public void forEach(Consumer<Gambler> consumer) {
+    public void forEachGambler(Consumer<Gambler> consumer) {
         gamblers.forEach(consumer);
     }
 

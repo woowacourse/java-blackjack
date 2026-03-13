@@ -64,7 +64,7 @@ public class BlackJack {
         OutputView.printInitMessage(dealer.getName(), gamblers.getNames());
         printPlayerCardInfo(dealer);
 
-        gamblers.forEach(this::printPlayerCardInfo);
+        gamblers.forEachGambler(this::printPlayerCardInfo);
     }
 
     private void printPlayerCardInfo(Player player) {
@@ -72,7 +72,7 @@ public class BlackJack {
     }
 
     private void gamblersTurn(Gamblers gamblers) {
-        gamblers.forEach(this::gamblerTurn);
+        gamblers.forEachGambler(this::gamblerTurn);
     }
 
     private void gamblerTurn(Gambler gambler) {
@@ -112,7 +112,7 @@ public class BlackJack {
 
     private void printFinalPlayerInfo(Dealer dealer, Gamblers gamblers) {
         printFinalPlayerCardInfo(dealer);
-        gamblers.forEach(this::printFinalPlayerCardInfo);
+        gamblers.forEachGambler(this::printFinalPlayerCardInfo);
     }
 
 

@@ -26,7 +26,7 @@ public class BlackjackResult {
     private static Map<String, Long> calculateGamblerProfits(Dealer dealer, Gamblers gamblers) {
         Map<String, Long> profits = new LinkedHashMap<>();
 
-        gamblers.forEach(gambler -> {
+        gamblers.forEachGambler(gambler -> {
             MatchResult matchResult = MatchResult.of(gambler, dealer);
             long reward = gambler.calculateReward(matchResult.getRate());
             profits.put(gambler.getName(), reward);
