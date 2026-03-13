@@ -125,7 +125,7 @@ public class BlackJackController {
         List<ParticipantDto> participantDtos = ParticipantDto.listOf(participants);
         outputView.printCardInfosWithSum(participantDtos);
 
-        GameResultDto gameResultDto = GameResultDto.from(game);
+        GameResultDto gameResultDto = GameResultDto.from(game.generateGameResult());
         outputView.printWinTieLossResult(gameResultDto);
     }
 }
