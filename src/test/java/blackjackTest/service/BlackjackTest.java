@@ -50,7 +50,7 @@ public class BlackjackTest {
     }
 
     @Test
-    void 플레이어_카드합_21_넘으면_배팅금액_모두_읾음() {
+    void 플레이어_카드합_21_넘으면_배팅금액_모두_잃음() {
         Money bettingAmount = new Money(10000);
         Player pobi = new Player("pobi", bettingAmount);
         Dealer dealer = new Dealer();
@@ -58,6 +58,22 @@ public class BlackjackTest {
         pobi.receiveOneCard(new Card(Rank.TEN, Shape.HEART));
         pobi.receiveOneCard(new Card(Rank.TEN, Shape.SPADE));
         pobi.receiveOneCard(new Card(Rank.TWO, Shape.CLOVER));
+
+        int profit = pobi.calculateFinalProfit(dealer);
+
+        assertThat(profit).isEqualTo(-10000);
+    }
+
+    @Test
+    void 딜러_초기카드_합_21이면_배팅금액_모두_잃음() {
+        Money bettingAmount = new Money(10000);
+        Player pobi = new Player("pobi", bettingAmount);
+        Dealer dealer = new Dealer();
+
+        pobi.receiveOneCard(new Card(Rank.TEN, Shape.HEART));
+        pobi.receiveOneCard(new Card(Rank.TEN, Shape.SPADE));
+        dealer.receiveOneCard(new Card(Rank.ACE, Shape.CLOVER));
+        dealer.receiveOneCard(new Card(Rank.QUEEN, Shape.SPADE));
 
         int profit = pobi.calculateFinalProfit(dealer);
 
