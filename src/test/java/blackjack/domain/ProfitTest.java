@@ -3,6 +3,7 @@ package blackjack.domain;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import blackjack.domain.bet.Bet;
+import blackjack.domain.bet.Profit;
 import blackjack.domain.participant.GameResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -19,10 +20,9 @@ class ProfitTest {
         void 승리한_경우_베팅금만큼_수익이_발생한다() {
             Bet bet = new Bet(10000);
             GameResult gameResult = GameResult.WIN;
-            Profit profit = new Profit(bet, gameResult);
             int expected = 10000;
 
-            int actual = profit.calculate();
+            int actual = Profit.calculate(bet, gameResult);
 
             assertThat(actual).isEqualTo(expected);
         }
@@ -32,10 +32,9 @@ class ProfitTest {
         void 블랙잭으로_인한_승리를_한_경우_베팅금의_절반만큼_수익이_발생한다() {
             Bet bet = new Bet(10000);
             GameResult gameResult = GameResult.BLACKJACK;
-            Profit profit = new Profit(bet, gameResult);
             int expected = 5000;
 
-            int actual = profit.calculate();
+            int actual = Profit.calculate(bet, gameResult);
 
             assertThat(actual).isEqualTo(expected);
         }
@@ -45,10 +44,9 @@ class ProfitTest {
         void 무승부인_경우_수익이_발생하지_않는다() {
             Bet bet = new Bet(10000);
             GameResult gameResult = GameResult.DRAW;
-            Profit profit = new Profit(bet, gameResult);
             int expected = 0;
 
-            int actual = profit.calculate();
+            int actual = Profit.calculate(bet, gameResult);
 
             assertThat(actual).isEqualTo(expected);
         }
@@ -58,10 +56,9 @@ class ProfitTest {
         void 패배한_경우_베팅금의_마이너스만큼_수익이_발생한다() {
             Bet bet = new Bet(10000);
             GameResult gameResult = GameResult.LOSE;
-            Profit profit = new Profit(bet, gameResult);
             int expected = -10000;
 
-            int actual = profit.calculate();
+            int actual = Profit.calculate(bet, gameResult);
 
             assertThat(actual).isEqualTo(expected);
         }

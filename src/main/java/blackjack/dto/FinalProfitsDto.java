@@ -1,5 +1,9 @@
 package blackjack.dto;
 
+import blackjack.domain.bet.Bet;
+import blackjack.domain.bet.Profit;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.GameResult;
 import blackjack.domain.participant.Players;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -9,10 +13,13 @@ public record FinalProfitsDto(
     int dealerProfit
 ) {
 
-    public static FinalProfitsDto from(final Players players) {
+    public static FinalProfitsDto of(final Players players, final Dealer dealer) {
         final Map<String, Integer> nicknameProfitMap = new LinkedHashMap<>();
-        players.all().forEach(player ->
-            nicknameProfitMap.put(player.getNickname(), player.getProfit()));
+        players.all().forEach(player -> {
+            final Bet bet = player.getBet();
+            final GameResult gameResult = GameResult.calculate(player, dealer);
+            nicknameProfitMap.put(player.getNickname(), Profit.calculate(bet, gameResult));
+        });
         final int dealerProfit = nicknameProfitMap.values().stream()
             .mapToInt(Integer::intValue)
             .sum() * -1;

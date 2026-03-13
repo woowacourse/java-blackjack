@@ -34,11 +34,12 @@ public class BlackjackController {
         dealer.pitch(players.all());
         OutputView.printStartMessage(StartMessageDto.of(players, dealer));
         handleAllActions(players, dealer);
-        printResult(participants, players);
+        printResult(participants);
     }
 
-    private void printResult(final Participants participants, final Players players) {
-        final FinalProfitsDto finalProfitsDto = FinalProfitsDto.from(players);
+    private void printResult(final Participants participants) {
+        final FinalProfitsDto finalProfitsDto = FinalProfitsDto.of(participants.getPlayers(),
+            participants.getDealer());
         OutputView.printFinalStatus(FinalStatusDto.from(participants));
         OutputView.printFinalProfits(finalProfitsDto);
     }
@@ -51,8 +52,6 @@ public class BlackjackController {
     private void handleAllActions(final Players players, final Dealer dealer) {
         players.all().forEach(player -> handlePlayerAction(player, dealer));
         handleDealerAction(dealer);
-
-        players.all().forEach(player -> decidePayoutPolicy(player, dealer));
     }
 
     private void handleDealerAction(final Dealer dealer) {
@@ -105,8 +104,4 @@ public class BlackjackController {
         player.handleBurst();
     }
 
-    private void decidePayoutPolicy(final Player player, final Dealer dealer) {
-        final GameResult gameResult = GameResult.calculate(player, dealer);
-        player.decidePayoutPolicy(gameResult);
-    }
 }

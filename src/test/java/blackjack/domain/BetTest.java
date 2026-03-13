@@ -54,16 +54,4 @@ class BetTest {
                 .hasMessage("베팅금은 1,000 단위여야 합니다.");
         }
     }
-
-    @Test
-    @DisplayName("수익금 계산 테스트")
-    void 수익금_계산_테스트() {
-        Bet bet = new Bet(10000);
-        bet.decidePayoutPolicy(GameResult.WIN);
-        int expected = 10000;
-
-        int actual = bet.calculateProfit();
-
-        assertThat(actual).isEqualTo(expected);
-    }
 }

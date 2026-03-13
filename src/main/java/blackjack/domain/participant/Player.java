@@ -26,10 +26,6 @@ public class Player extends Participant {
         }
     }
 
-    public int getProfit() {
-        return bet.calculateProfit();
-    }
-
     public void bet(final Bet bet) {
         if (this.bet != null) {
             throw new IllegalStateException("해당 플레이어는 이미 베팅금을 입력하였습니다.");
@@ -37,8 +33,11 @@ public class Player extends Participant {
         this.bet = bet;
     }
 
-    public void decidePayoutPolicy(final GameResult gameResult) {
-        bet.decidePayoutPolicy(gameResult);
+    public Bet getBet() {
+        if (this.bet == null) {
+            throw new IllegalStateException("해당 플레이어는 아직 베팅금을 입력하지 않았습니다.");
+        }
+        return bet;
     }
 
     @Override

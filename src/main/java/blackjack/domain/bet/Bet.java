@@ -1,7 +1,5 @@
 package blackjack.domain.bet;
 
-import blackjack.domain.participant.DrawPayoutPolicy;
-import blackjack.domain.participant.GameResult;
 import blackjack.utils.Formatter;
 
 public class Bet {
@@ -11,7 +9,6 @@ public class Bet {
     private static final int BET_MAXIMUM_AMOUNT = 100_000_000;
 
     private final int amount;
-    private PayoutPolicy payoutPolicy;
 
     public Bet(final int amount) {
         validateAmountUnit(amount);
@@ -37,30 +34,7 @@ public class Bet {
         }
     }
 
-    public void decidePayoutPolicy(final GameResult gameResult) {
-        if (this.payoutPolicy == null) {
-            this.payoutPolicy = calculatePayoutPolicy(gameResult);
-        }
-    }
-
-    private PayoutPolicy calculatePayoutPolicy(final GameResult gameResult) {
-        if (gameResult == GameResult.WIN) {
-            return new WinPayoutPolicy();
-        }
-        if (gameResult == GameResult.BLACKJACK) {
-            return new BlackjackPayoutPolicy();
-        }
-        if (gameResult == GameResult.DRAW) {
-            return new DrawPayoutPolicy();
-        }
-        return new LosePayoutPolicy();
-    }
-
-    public int calculateProfit() {
-        return calculatePayout() - amount;
-    }
-
-    private int calculatePayout() {
-        return payoutPolicy.payout(amount);
+    public int getAmount() {
+        return amount;
     }
 }
