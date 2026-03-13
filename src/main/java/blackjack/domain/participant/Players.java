@@ -17,7 +17,7 @@ public class Players {
         validate(playerNicknames, playerBettingAmounts);
         
         List<Player> players = IntStream.range(0, playerNicknames.size())
-                .mapToObj(index -> Player.from(playerNicknames.get(index), playerBettingAmounts.get(index)))
+                .mapToObj(index -> new Player(playerNicknames.get(index), playerBettingAmounts.get(index)))
                 .toList();
         return new Players(players);
     }

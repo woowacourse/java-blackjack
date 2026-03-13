@@ -5,15 +5,11 @@ public class Player extends Participant {
     private final int bettingAmount;
     private boolean stopDrawing;
     
-    private Player(String nickname, int bettingAmount) {
+    public Player(String nickname, int bettingAmount) {
         super(nickname);
         validateBettingAmount(bettingAmount);
         this.stopDrawing = false;
         this.bettingAmount = bettingAmount;
-    }
-    
-    public static Player from(String nickname, int bettingAmount) {
-        return new Player(nickname, bettingAmount);
     }
     
     private void validateBettingAmount(int bettingAmount) {
