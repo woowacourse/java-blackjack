@@ -7,7 +7,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 class PlayersTest {
-
+    // TODO: 나중에 커스텀 예외로 변경. 현재는 예외가 터지는 것만 검증됨.
     @Test
     void 플레이어가_0명이면_예외가_발생한다() {
         List<Player> players = new ArrayList<>();

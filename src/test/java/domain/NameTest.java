@@ -6,7 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class NameTest {
-
+    // TODO: 나중에 커스텀 예외로 변경. 현재는 예외가 터지는 것만 검증됨.
     @Test
     @DisplayName("이름은 비어있거나 공백일 수 없다.")
     void validateBlank_InputBlank_ThrowsException() {
