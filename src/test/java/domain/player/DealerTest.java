@@ -26,10 +26,11 @@ public class DealerTest {
         dealer.deal(sd);
 
         //when
-        String startPrintResult = dealer.firstCard();
+        List<String> startPrintResult = dealer.getOpenCards();
 
         //then
-        assertThat(startPrintResult).isEqualTo("5클로버");
+        assertThat(startPrintResult.size()).isEqualTo(1);
+        assertThat(startPrintResult.getFirst()).isEqualTo("5클로버");
     }
 
     @Test

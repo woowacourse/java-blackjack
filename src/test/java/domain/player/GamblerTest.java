@@ -64,4 +64,23 @@ class GamblerTest {
         assertThat(tobiResult).isEqualTo(-1000L);
         assertThat(qudaResult).isEqualTo(0L);
     }
+
+    @Test
+    @DisplayName("도박사의 첫 카드 오픈은 2장이어야 한다.")
+    void 도박사_오픈_카드_2장() {
+        // given
+        Gambler gambler = new Gambler("tobi", 10000);
+
+        Card card = new Card(CardRank.TEN, CardSuit.CLOVER);
+        StubDeck deck = new StubDeck(List.of(card, card, card));
+        gambler.deal(deck);
+        gambler.deal(deck);
+        gambler.deal(deck);
+
+        // when
+        List<String> result = gambler.getOpenCards();
+
+        // then
+        assertThat(result).hasSize(2);
+    }
 }
