@@ -1,4 +1,4 @@
-package domain;
+package domain.participant;
 
 public class Dealer extends Participant {
     private static final int DEALER_DRAW_BOUND = 16;
