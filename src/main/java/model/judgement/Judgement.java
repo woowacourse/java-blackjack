@@ -1,17 +1,22 @@
 package model.judgement;
 
-import static model.judgement.ResultStatus.BLACKJACK;
-import static model.judgement.ResultStatus.DRAW;
-import static model.judgement.ResultStatus.LOSE;
-import static model.judgement.ResultStatus.WIN;
-
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import model.judgement.strategy.BlackjackStrategy;
+import model.judgement.strategy.BustStrategy;
+import model.judgement.strategy.ScoreComparisonStrategy;
 import model.paticipant.Dealer;
 import model.paticipant.Player;
 import model.paticipant.Players;
 
 public class Judgement {
+
+    private static final List<JudgeStrategy> STRATEGIES = List.of(
+            new BustStrategy(),
+            new BlackjackStrategy(),
+            new ScoreComparisonStrategy()
+    );
 
     public static PlayerResult judgeByPlayer(Dealer dealer, Players players) {
         Map<Player, ResultStatus> result = new LinkedHashMap<>();
@@ -20,41 +25,10 @@ public class Judgement {
     }
 
     private static ResultStatus decide(Dealer dealer, Player player) {
-        if (player.isBust()) {
-            return LOSE;
-        }
-        if (dealer.isBust()) {
-            return WIN;
-        }
-
-        if (dealer.isBlackjack()) {
-            return decideWhenDealerBlackjack(player);
-        }
-
-        if (player.isBlackjack()) {
-            return BLACKJACK;
-        }
-
-        return decideByScore(dealer, player);
-    }
-
-    private static ResultStatus decideWhenDealerBlackjack(Player player) {
-        if (player.isBlackjack()) {
-            return DRAW;
-        }
-        return LOSE;
-    }
-
-    private static ResultStatus decideByScore(Dealer dealer, Player player) {
-        int dealerScore = dealer.calculateTotalScore();
-        int playerScore = player.calculateTotalScore();
-
-        if (playerScore > dealerScore) {
-            return WIN;
-        }
-        if (playerScore == dealerScore) {
-            return DRAW;
-        }
-        return LOSE;
+        return STRATEGIES.stream()
+                .filter(strategy -> strategy.isApplicable(dealer, player))
+                .findFirst()
+                .map(strategy -> strategy.getResult(dealer, player))
+                .orElse(ResultStatus.LOSE);
     }
 }
