@@ -96,4 +96,21 @@ public class BlackJackServiceTest {
 
         assertThat(info).isEqualTo(GameResult.WIN);
     }
+
+    @Test
+    void 딜러가_블랙잭이면_플레이어가_21을_달성해도_딜러의_승리다() {
+        Player player = dummyPlayer("21이어도짐");
+        Players players = new Players(List.of(player));
+        player.keepCard(new Card(Rank.FIVE, Pattern.HEART));
+        player.keepCard(new Card(Rank.TEN, Pattern.HEART));
+        player.keepCard(new Card(Rank.SIX, Pattern.HEART));
+        dealer.keepCard(new Card(Rank.ACE, Pattern.CLOVER));
+        dealer.keepCard(new Card(Rank.JACK, Pattern.CLOVER));
+
+        Result result = blackJackService.calculateResult(dealer, players);
+        GameResult info = result.getPlayersResult().get(player);
+
+        assertThat(info).isEqualTo(GameResult.DEFEAT);
+
+    }
 }

@@ -28,6 +28,9 @@ public class BlackJackService {
         if (player.isBlackJack() && dealer.isBlackJack()) {
             return GameResult.PUSH;
         }
+        if (dealer.isBlackJack()) {
+            return GameResult.DEFEAT;
+        }
         if (player.isBlackJack()) {
             return GameResult.BLACKJACK_WIN;
         }
