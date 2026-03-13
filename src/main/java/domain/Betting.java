@@ -3,9 +3,11 @@ package domain;
 public class Betting {
     public static final String ERROR_BET_MUST_BE_POSITIVE = "[ERROR] 베팅 금액은 0보다 커야 합니다.";
     public static final String ERROR_BET_MONEY_SCALE = "[ERROR] 돈의 단위를 잘못 입력하였습니다.";
-    public static final double SPECIAL_SCALE = 1.5;
     public static final int INITIAL_AMOUNT = 0;
     public static final int BET_UNIT = 10000;
+    public static final int NUMERATOR = 5;
+    public static final int DENOMINATOR = 2;
+    public static final int ZERO = 0;
     private final int amount;
 
     private Betting(int amount) {
@@ -35,11 +37,11 @@ public class Betting {
     }
 
     public int settle(WinningStatus status) {
-        return (int) switch (status) {
-            case BLACKJACK_WIN -> amount * SPECIAL_SCALE + amount;
-            case WIN -> amount + amount;
+        return switch (status) {
+            case BLACKJACK_WIN -> amount * NUMERATOR / DENOMINATOR;
+            case WIN -> amount * 2;
             case TIE -> amount;
-            case LOSE -> INITIAL_AMOUNT;
+            case LOSE -> ZERO;
         };
     }
 }

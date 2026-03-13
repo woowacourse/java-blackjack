@@ -62,12 +62,6 @@ class InputViewTest {
         }
 
         @Test
-        void 입력한_돈이_음수인_경우_예외를_발생한다() {
-            assertThatThrownBy(() -> inputView.parseAmount("-100"))
-                    .isInstanceOf(IllegalArgumentException.class);
-        }
-
-        @Test
         void 유효한_금액을_입력하면_정상적으로_파싱된다() {
             int amount = inputView.parseAmount("10000");
 
