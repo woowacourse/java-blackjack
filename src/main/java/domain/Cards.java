@@ -11,18 +11,9 @@ public class Cards {
         this.cards = new ArrayList<>();
     }
 
-//    public void shuffle() {
-//        Collections.shuffle(cards);
-//    }
     public void addCard(Card card) {
         this.cards.add(card);
     }
-
-//    public Card pop() {
-//        return cards.removeFirst();
-//
-//        // 리스트 비었을 때 처리 필요
-//    }
 
     public boolean isAceExist() {
         return cards.stream()

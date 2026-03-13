@@ -18,7 +18,6 @@ public class Deck {
             cards.addAll(cardsGenerator.generateShuffledCards());
         }
         return cards.removeFirst();
-        // 리스트 비었을 때 처리 필요
     }
 
     public List<Card> getCards() {

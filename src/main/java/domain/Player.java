@@ -1,12 +1,9 @@
 package domain;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 import constant.GameConstant;
-import domain.dto.CardContentDto;
-import domain.dto.FinalCardDto;
 
 public class Player {
     private static final int ACE_ADDITIONAL_SCORE = 11;
@@ -21,31 +18,8 @@ public class Player {
         this.cards = new Cards();
     }
 
-//    protected int calculateScore() {
-//        int total = 0;
-//        for (Card card : cards) {
-//            total += card.getCardRank().getNumber();
-//        }
-//        return total;
-//    }
-//
-//    public int getFinalScore() {
-//        return calculateScore() + calculateAceScore();
-//    }
-//
-//    private int calculateAceScore() {
-//        if (!isAceExist() || calculateScore() > ACE_ADDITIONAL_SCORE) {
-//            return 0;
-//        }
-//        return ACE_ADDITIONAL_SCORE - 1;
-//    }
-
     public boolean isBust() {
         return cards.getFinalScore() > GameConstant.GAME_OVER_THRESHOLD_SCORE;
-    }
-
-    private boolean isPlayerLose(boolean dealerBurst, int dealerTotal) {
-        return isBust() || (!dealerBurst && cards.getFinalScore() < dealerTotal);
     }
 
     public void addInitializedCard(Deck deck) {
@@ -57,8 +31,25 @@ public class Player {
         cards.addCard(card);
     }
 
+    public MatchCase calculateMatchCase(int dealerTotal) {
+        if (cards.getFinalScore()<dealerTotal){
+            return MatchCase.WIN;
+        }
+        if (cards.getFinalScore()==dealerTotal){
+            return MatchCase.DRAW;
+        }
+        if (cards.getFinalScore()<dealerTotal){
+            return MatchCase.LOSE;
+        }
+        throw new IllegalArgumentException("[ERROR] 일치하는 enum이 없습니다.");
+    }
+
     public void betMoney(int money) {
         bettingScore = money;
+    }
+
+    private boolean isPlayerLose(boolean dealerBurst, int dealerTotal) {
+        return isBust() || (!dealerBurst && cards.getFinalScore() < dealerTotal);
     }
 
     public void loseMoney() {
@@ -66,15 +57,15 @@ public class Player {
         bettingScore -= minusScore;
     }
 
-    public void calculateBettingScore(boolean isDealerBlackjack) {
-        if (!isDealerBlackjack && cards.isBlackjack()) {
-            bettingScore = (int) ((int) bettingScore * 1.5);
-            return;
-        }
-//        if (isPlayerLose(dealer.isBust(), dealer.getFinalScore())) {
-//            loseMoney();
+//    public void calculateBettingScore(boolean isDealerBlackjack) {
+//        if (!isDealerBlackjack && cards.isBlackjack()) {
+//            bettingScore = (int) ((int) bettingScore * 1.5);
+//            return;
 //        }
-    }
+////        if (isPlayerLose(dealer.isBust(), dealer.getFinalScore())) {
+////            loseMoney();
+////        }
+//    }
 
 
     public String getName() {
@@ -85,15 +76,11 @@ public class Player {
         return cards.getCards();
     }
 
+    public int getCardsTotalSum(){
+        return cards.getFinalScore();
+    }
+
     public int getBettingScore() {
         return bettingScore;
     }
-
-//    public CardContentDto toCardContentDto() {
-//        return new CardContentDto(this.name, this.cards);
-//    }
-//
-//    public FinalCardDto toFinalCardDto() {
-//        return new FinalCardDto(this.name, this.cards, getFinalScore());
-//    }
 }

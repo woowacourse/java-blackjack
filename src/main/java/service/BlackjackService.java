@@ -2,12 +2,16 @@ package service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import domain.Deck;
 import domain.Game;
+import domain.MatchCase;
 import domain.Player;
 import domain.Players;
 import domain.dto.CardContentDto;
+import domain.dto.FinalCardDto;
+import domain.dto.MatchResultDto;
 import utils.generator.CardsGenerator;
 import utils.generator.ShuffledCardsGenerator;
 
@@ -41,23 +45,25 @@ public class BlackjackService {
         return firstCardContents;
     }
 
-//    public void giveInitialedCard(Cards cards, Dealer dealer) {
-//        dealer.addInitializedCard(cards);
-//    }
+    public List<FinalCardDto> getFinalCardDtos(Game game) {
+        List<FinalCardDto> finalCards = new ArrayList<>();
+        Player dealer = game.getDealer();
+        finalCards.add(new FinalCardDto(dealer.getName(), dealer.getCards(), dealer.getCardsTotalSum()));
 
-//    public Dealer createDealer(Cards cards) {
-//        Dealer dealer = new Dealer();
-//        giveInitialedCard(cards, dealer);
-//        return dealer;
-//    }
-//
-//    public void determineAdditionalCardOfDealer(Dealer dealer, Cards cards) {
-//        while (dealer.needAdditionalCard()) {
-//            dealer.add(cards.pop());
-//            OutputView.displayDealerCard();
-//        }
-//    }
-//
+        for (Player player : game.getPlayers()) {
+            finalCards.add(new FinalCardDto(player.getName(), player.getCards(), player.getCardsTotalSum()));
+        }
+        return finalCards;
+    }
+
+    public MatchResultDto getPlayerResultDto(Game game) {
+        Map<String, MatchCase> playerResult = game.calculateMatch();
+        Map<MatchCase, Integer> dealerResult = game.calculateDealerMatch(playerResult);
+        return new MatchResultDto(dealerResult , playerResult);
+
+    }
+
+
 //    public void calculateBettingScore(Dealer dealer, Players players) {
 //        players.calculateScore(dealer,players);
 //    }

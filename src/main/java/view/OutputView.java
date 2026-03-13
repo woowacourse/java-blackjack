@@ -8,9 +8,9 @@ import domain.Card;
 import domain.Game;
 import domain.MatchCase;
 import domain.dto.BettingResultDto;
-import domain.dto.BlackjackResultDto;
 import domain.dto.CardContentDto;
 import domain.dto.FinalCardDto;
+import domain.dto.MatchResultDto;
 
 public final class OutputView {
     public static void displayCardDistribution(List<String> names) {
@@ -24,7 +24,6 @@ public final class OutputView {
             for (Card card : dto.cards()) {
                 cardContents.add(card.getCardRank().getName() + card.getCardShape().getName());
             }
-
             System.out.printf("%s카드: %s\n", dto.name(), String.join(", ", cardContents));
         }
 
@@ -32,6 +31,7 @@ public final class OutputView {
 
     public static void displayDealerCard() {
         System.out.printf("%s는 %d 이하라 한장의 카드를 더 받았습니다.\n",Game.DEALER_NAME, Game.ADDITIONAL_THRESHOLD);
+
     }
 
     public static void displayFinalCard(List<FinalCardDto> finalCardDto) {
@@ -46,11 +46,17 @@ public final class OutputView {
     }
 
     // 사이클 1의 결과값
-    public static void displayMatchResult(BlackjackResultDto resultDto) {
-        System.out.printf("## 최종 승패\n딜러: %d승 %d패\n", resultDto.winCount(), resultDto.loseCount());
-        Map<String, MatchCase> resultMap = resultDto.matchResultMap();
-        for (Map.Entry<String, MatchCase> playerName : resultMap.entrySet()) {
-            System.out.printf("%s: %s\n", playerName.getKey(), playerName.getValue().name());
+    public static void displayMatchResult(MatchResultDto matchResultDto) {
+        Map<MatchCase, Integer> dealerMap = matchResultDto.dealerResult();
+        Map<String, MatchCase> playerMap = matchResultDto.playerResult();
+
+        System.out.printf("## 최종 승패\n%s: ",Game.DEALER_NAME);
+        for (Map.Entry<MatchCase, Integer> matchcase : dealerMap.entrySet()) {
+            System.out.printf("%d%s ", matchcase.getValue().intValue(), matchcase.getKey().getReversedKorResult());
+        }
+
+        for (Map.Entry<String, MatchCase> playerName : playerMap.entrySet()) {
+            System.out.printf("\n%s: %s", playerName.getKey(),playerName.getValue().getKorResult());
         }
     }
 
