@@ -8,20 +8,29 @@ public class Referee {
     private static final int BUST_THRESHOLD = 21;
 
     public Result judge(Dealer dealer, List<Player> players) {
-        Map<String, Boolean> gameResult = new HashMap<>();
+        Map<String, MatchResult> gameResult = new HashMap<>();
         for (Player player : players) {
             gameResult.put(player.getName(), isPlayerWin(player.getScore(), dealer.getScore()));
         }
         return new Result(dealer, gameResult);
     }
 
-    private boolean isPlayerWin(int playerScore, int dealerScore) {
+    private MatchResult isPlayerWin(int playerScore, int dealerScore) {
         if (playerScore > BUST_THRESHOLD) {
-            return false;
+            return MatchResult.LOSE;
         }
         if (dealerScore > BUST_THRESHOLD) {
-            return true;
+            return MatchResult.WIN;
         }
-        return playerScore > dealerScore;
+
+        if (dealerScore == playerScore) {
+            return MatchResult.DRAW;
+        }
+
+        if (dealerScore > playerScore) {
+            return MatchResult.LOSE;
+        }
+
+        return MatchResult.WIN;
     }
 }

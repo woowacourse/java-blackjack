@@ -47,8 +47,8 @@ public class OutputView {
     }
 
     private static String toDealerGameResultString(ParticipantGameResultDto participantGameResultDto) {
-        return String.format("%s: %d승 %d패", participantGameResultDto.name(), participantGameResultDto.win(),
-                participantGameResultDto.lose());
+        return String.format("%s: %d승 %d패 %d무", participantGameResultDto.name(), participantGameResultDto.win(),
+                participantGameResultDto.lose(), participantGameResultDto.draw());
     }
 
     private static String toPlayerGameResultString(ParticipantGameResultDto dto) {
@@ -57,7 +57,10 @@ public class OutputView {
             sb.append(dto.win()).append("승 ");
         }
         if (dto.lose() > 0) {
-            sb.append(dto.lose()).append("패");
+            sb.append(dto.lose()).append("패 ");
+        }
+        if (dto.draw() > 0) {
+            sb.append(dto.draw()).append("무");
         }
         return sb.toString().trim();
     }
