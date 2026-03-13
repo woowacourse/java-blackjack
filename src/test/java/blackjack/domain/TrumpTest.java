@@ -1,12 +1,10 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.registerCustomDateFormat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.trump.Card;
 import blackjack.domain.trump.Denomination;
-import blackjack.domain.trump.OrderedSortBehavior;
 import blackjack.domain.trump.RandomSortBehavior;
 import blackjack.domain.trump.Suit;
 import blackjack.domain.trump.Trump;

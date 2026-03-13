@@ -1,5 +1,7 @@
-package blackjack.domain.trump;
+package blackjack.domain;
 
+import blackjack.domain.trump.Card;
+import blackjack.domain.trump.SortBehavior;
 import java.util.List;
 import java.util.stream.IntStream;
 
