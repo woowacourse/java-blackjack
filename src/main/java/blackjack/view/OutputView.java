@@ -1,13 +1,13 @@
 package blackjack.view;
 
-import static blackjack.domain.Dealer.DEALER_HIT_THRESHOLD;
+import static blackjack.domain.participant.Dealer.DEALER_HIT_THRESHOLD;
 
-import blackjack.domain.Dealer;
-import blackjack.domain.DealerResult;
-import blackjack.domain.Name;
-import blackjack.domain.Participant;
-import blackjack.domain.Participants;
-import blackjack.domain.Player;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.judgement.DealerResult;
+import blackjack.domain.participant.Name;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Player;
 import blackjack.dto.FinalProfitDto;
 import blackjack.dto.FinalResultDto;
 import java.util.List;

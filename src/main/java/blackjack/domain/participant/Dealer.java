@@ -1,5 +1,9 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Hand;
+import blackjack.domain.judgement.Status;
+import blackjack.domain.card.Trump;
 import java.util.List;
 import java.util.stream.IntStream;
 

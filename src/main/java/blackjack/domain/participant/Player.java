@@ -1,4 +1,8 @@
-package blackjack.domain;
+package blackjack.domain.participant;
+
+import blackjack.domain.judgement.GameResult;
+import blackjack.domain.card.Hand;
+import blackjack.domain.judgement.Status;
 
 public class Player extends Participant {
 

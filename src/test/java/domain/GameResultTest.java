@@ -2,8 +2,8 @@ package domain;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-import blackjack.domain.BettingMoney;
-import blackjack.domain.GameResult;
+import blackjack.domain.judgement.BettingMoney;
+import blackjack.domain.judgement.GameResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

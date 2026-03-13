@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 public class Nickname implements Name{
     private static final int NICKNAME_MINIMUM_LENGTH = 4;

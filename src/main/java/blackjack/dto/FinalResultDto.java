@@ -1,10 +1,10 @@
 package blackjack.dto;
 
-import blackjack.domain.Dealer;
-import blackjack.domain.DealerResult;
-import blackjack.domain.GameResult;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.judgement.DealerResult;
+import blackjack.domain.judgement.GameResult;
 
-import blackjack.domain.Players;
+import blackjack.domain.participant.Players;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;

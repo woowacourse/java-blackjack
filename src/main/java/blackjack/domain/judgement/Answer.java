@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.judgement;
 
 import java.util.List;
 import java.util.Objects;

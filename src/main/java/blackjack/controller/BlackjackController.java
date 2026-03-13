@@ -1,16 +1,16 @@
 package blackjack.controller;
 
-import blackjack.domain.Answer;
-import blackjack.domain.BettingMoney;
-import blackjack.domain.BettingMoneyInfo;
-import blackjack.domain.Dealer;
-import blackjack.domain.Hand;
-import blackjack.domain.Name;
-import blackjack.domain.Participants;
-import blackjack.domain.Player;
-import blackjack.domain.Players;
-import blackjack.domain.Status;
-import blackjack.domain.Trump;
+import blackjack.domain.judgement.Answer;
+import blackjack.domain.judgement.BettingMoney;
+import blackjack.domain.judgement.BettingMoneyInfo;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.card.Hand;
+import blackjack.domain.participant.Name;
+import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
+import blackjack.domain.judgement.Status;
+import blackjack.domain.card.Trump;
 import blackjack.dto.FinalProfitDto;
 import blackjack.strategy.ShuffleStrategy;
 import blackjack.utils.Parser;
