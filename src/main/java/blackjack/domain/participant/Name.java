@@ -25,10 +25,10 @@ public final class Name {
         if (this == other) {
             return true;
         }
-        if (!(other instanceof Name NAme)) {
+        if (!(other instanceof Name name)) {
             return false;
         }
-        return cleaned.equals(NAme.cleaned);
+        return cleaned.equals(name.cleaned);
     }
 
     @Override

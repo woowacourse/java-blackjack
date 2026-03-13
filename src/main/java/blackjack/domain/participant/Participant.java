@@ -6,16 +6,16 @@ import blackjack.domain.card.Card;
 import java.util.List;
 
 public abstract class Participant {
-    private final Name NAme;
+    private final Name name;
     private final Hand hand;
 
-    public Participant(Name NAme, Hand hand) {
-        this.NAme = NAme;
+    public Participant(Name name, Hand hand) {
+        this.name = name;
         this.hand = hand;
     }
 
     public final String getName() {
-        return NAme.getCleaned();
+        return name.getCleaned();
     }
 
     public final List<Card> getCards() {

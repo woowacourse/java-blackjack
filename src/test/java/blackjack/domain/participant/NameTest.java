@@ -13,9 +13,9 @@ class NameTest {
         String rawName = " Player Name ";
         String cleanedName = "Player Name";
         // when
-        Name NAme = new Name(rawName);
+        Name name = new Name(rawName);
         // then
-        assertThat(NAme.getCleaned()).isEqualTo(cleanedName);
+        assertThat(name.getCleaned()).isEqualTo(cleanedName);
     }
 
     @Test

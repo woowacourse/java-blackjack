@@ -7,7 +7,6 @@ import java.util.stream.Stream;
 
 public class Participants {
     private static final String DELIMITER = ",";
-    private static final Name DEALER_NAME = new Name("딜러");
     private static final int INCLUDE_EMPTY_ELEMENT = -1;
 
     private final Dealer dealer;
@@ -19,7 +18,7 @@ public class Participants {
     }
 
     public Participants(List<Player> players) {
-        this(new Dealer(DEALER_NAME, new Hand()), players);
+        this(Dealer.create(), players);
     }
 
     public static Participants from(final String rawPlayerNames) {
@@ -38,12 +37,16 @@ public class Participants {
     }
 
     private static void validateDuplicatedNames(List<Name> playerNames) {
-        if (playerNames.contains(DEALER_NAME)) {
-            throw new IllegalArgumentException("참가자의 이름은 딜러의 이름과 동일할 수 없습니다.");
+        if (containsDealerName(playerNames)) {
+            throw new IllegalArgumentException("플레이어의 이름은 딜러의 이름과 동일할 수 없습니다.");
         }
         if (isDuplicated(playerNames)) {
-            throw new IllegalArgumentException("참가자의 이름은 중복될 수 없습니다.");
+            throw new IllegalArgumentException("플레이어의 이름은 중복될 수 없습니다.");
         }
+    }
+
+    private static boolean containsDealerName(List<Name> playerNames) {
+        return playerNames.stream().anyMatch(Dealer::isDealerName);
     }
 
     private static boolean isDuplicated(List<Name> playerNames) {
