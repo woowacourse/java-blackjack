@@ -7,6 +7,7 @@ import domain.CardContents;
 import domain.CardCreationStrategy;
 import domain.CardShape;
 import dto.GameResultDto;
+import dto.GameStateDto;
 import dto.ParticipantDto;
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -65,7 +66,7 @@ class BlackJackControllerTest {
         }
 
         @Override
-        public void printInitialStates(ParticipantDto dealerDto, List<ParticipantDto> players) {
+        public void printInitialStates(GameStateDto gameStateDto) {
         }
 
         @Override

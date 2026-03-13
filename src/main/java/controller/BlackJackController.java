@@ -25,10 +25,7 @@ public class BlackJackController {
 
     public void doGameProcess() {
         BlackJackGame game = retry(this::readyGame);
-        outputView.printInitialStates(
-                game.getDealerGameSettingState(),
-                game.getPlayersGameSettingStates()
-        );
+        outputView.printInitialStates(game.getGameSettingState());
 
         playPlayersTurn(game);
         playDealerTurn(game);
@@ -94,4 +91,3 @@ public class BlackJackController {
         }
     }
 }
-

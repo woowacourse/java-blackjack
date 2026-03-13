@@ -4,6 +4,7 @@ import domain.GameResult;
 import dto.CardDto;
 import dto.DealerResultDto;
 import dto.GameResultDto;
+import dto.GameStateDto;
 import dto.ParticipantDto;
 import dto.PlayerResultDto;
 import java.util.List;
@@ -29,15 +30,17 @@ public class OutputViewImpl implements OutputView {
         System.out.println(NAME_PROMPT);
     }
 
-    public void printInitialStates(ParticipantDto dealerDto, List<ParticipantDto> players) {
-        String playerNames = players.stream()
+    @Override
+    public void printInitialStates(GameStateDto gameStateDto) {
+        List<ParticipantDto> playersDtos = gameStateDto.multiPlayersDtos();
+        ParticipantDto dealerDto = gameStateDto.dealerDto();
+        String playerNames = playersDtos.stream()
                 .map(ParticipantDto::name)
                 .collect(Collectors.joining(DELIMITER));
 
         System.out.printf(INITIAL_CARD_SHARE, playerNames);
-
         printUserState(dealerDto);
-        players.forEach(this::printUserState);
+        playersDtos.forEach(this::printUserState);
 
         System.out.println();
     }
