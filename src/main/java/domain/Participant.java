@@ -8,12 +8,12 @@ public abstract class Participant {
     private static final Pattern NAME_PATTERN = Pattern.compile("^[a-zA-Z가-힣]+$");
 
     private final String name;
-    private final Deck deck;
+    private final Cards cards;
 
     protected Participant(String name) {
         validateName(name);
         this.name = name;
-        this.deck = new Deck();
+        this.cards = new Cards();
     }
 
     private static void validateName(String name) {
@@ -38,19 +38,19 @@ public abstract class Participant {
     public abstract boolean isDrawable();
 
     public boolean isLessThanMaxScore() {
-        return deck.isLessThanMaxScore();
+        return cards.isLessThanMaxScore();
     }
 
     public boolean isBust() {
-        return deck.isBust();
+        return cards.isBust();
     }
 
     public void addCard(Card newCard) {
-        deck.addCard(newCard);
+        cards.addCard(newCard);
     }
 
     public int calculateDeckSum() {
-        return deck.calculateCardScoreSum();
+        return cards.calculateCardScoreSum();
     }
 
     public String getName() {
@@ -58,6 +58,6 @@ public abstract class Participant {
     }
 
     public List<Card> getCards() {
-        return deck.getCards();
+        return cards.getCards();
     }
 }

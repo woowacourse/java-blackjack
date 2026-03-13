@@ -2,21 +2,14 @@ package domain;
 
 import common.ErrorMessage;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public class Deck implements Iterable<Card> {
-    private static final int MAXIMUM_SCORE = 21;
-    private final List<Card> cards;
-
-    public Deck() {
-        this.cards = new ArrayList<>();
-    }
+public class Deck {
+    private final List<Card> totalDeck;
 
     private Deck(List<Card> cards) {
-        this.cards = cards;
+        this.totalDeck = cards;
     }
 
     public static Deck createTotalDeckAndShuffle(CardShuffleStrategy strategy) {
@@ -41,58 +34,14 @@ public class Deck implements Iterable<Card> {
     }
 
     public Card drawCard() {
-        if (cards.isEmpty()) {
+        if (totalDeck.isEmpty()) {
             throw new NoSuchElementException(ErrorMessage.DRAW_CARD_OUT_OF_RANGE.getMessage());
         }
 
-        return cards.removeFirst();
-    }
-
-    public boolean isLessThanMaxScore() {
-        return calculateCardScoreSum() < MAXIMUM_SCORE;
-    }
-
-    public boolean isBust() {
-        return calculateCardScoreSum() > MAXIMUM_SCORE;
-    }
-
-    public int calculateCardScoreSum() {
-        int sumExceptAce = calculateCardScoreSumExceptAce();
-        int sumAce = new AceScoreDiscriminator().calculateAceCardsSum(cards, sumExceptAce);
-
-        return sumAce + sumExceptAce;
-    }
-
-    private int calculateCardScoreSumExceptAce() {
-        int sum = 0;
-        for (Card card : cards) {
-            sum = addCardScoreExceptAce(card, sum);
-        }
-
-        return sum;
-    }
-
-    private int addCardScoreExceptAce(Card card, int sum) {
-        if (!card.isAce()) {
-            sum += card.getCardContents().getScore();
-        }
-        return sum;
+        return totalDeck.removeFirst();
     }
 
     public boolean isDrawable() {
-        return !cards.isEmpty();
-    }
-
-    public void addCard(Card card) {
-        cards.add(card);
-    }
-
-    @Override
-    public Iterator<Card> iterator() {
-        return Collections.unmodifiableList(cards).iterator();
-    }
-
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+        return !totalDeck.isEmpty();
     }
 }

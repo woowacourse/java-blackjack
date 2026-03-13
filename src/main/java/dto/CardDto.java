@@ -6,8 +6,8 @@ import java.util.List;
 
 public record CardDto(String cardShape, String cardContentNumber) {
     public static CardDto from(Card card) {
-        String cardShape = card.getCardShape().getName();
-        String cardContents = card.getCardContents().getNumber();
+        String cardShape = card.getCardShapeName();
+        String cardContents = card.getCardNumber();
         return new CardDto(cardShape, cardContents);
     }
 
