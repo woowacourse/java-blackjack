@@ -7,7 +7,7 @@ import util.ErrorMessage;
 
 public class Hand {
     public static final int ACE_PROFIT_VALUE = 10;
-    public static final int BLACKJACK_MAX_SCORE = 21;
+    private static final int BLACKJACK_MAX_SCORE = 21;
     private static final int MIN_SIZE = 2;
 
     private final List<Card> cards;
