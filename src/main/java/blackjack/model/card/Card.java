@@ -1,7 +1,5 @@
 package blackjack.model.card;
 
-import blackjack.dto.CardDto;
-
 public class Card {
 
     private final Rank rank;
@@ -24,7 +22,11 @@ public class Card {
         return rank.getDefaultScore();
     }
 
-    public CardDto toDto() {
-        return new CardDto(this.rank, this.suit);
+    public Rank getRank() {
+        return rank;
+    }
+
+    public Suit getSuit() {
+        return suit;
     }
 }

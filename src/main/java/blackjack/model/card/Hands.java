@@ -44,12 +44,12 @@ public class Hands {
 
     public CardDto getFirstCard() {
         Card firstCard = cards.getFirst();
-        return firstCard.toDto();
+        return CardDto.from(firstCard);
     }
 
     public List<CardDto> getAllCards() {
         return this.cards.stream()
-                .map(Card::toDto)
+                .map(CardDto::from)
                 .toList();
     }
 }
