@@ -3,8 +3,6 @@ package dto;
 import domain.card.Card;
 import domain.participant.Dealer;
 import domain.participant.Player;
-import domain.participant.Players;
-import java.util.ArrayList;
 import java.util.List;
 
 public record ParticipantDto(
@@ -27,15 +25,6 @@ public record ParticipantDto(
 
     public static ParticipantDto from(Player player) {
         return new ParticipantDto(player.getName(), convertHandString(player.getHand()), player.calculateScore());
-    }
-
-    public static List<ParticipantDto> from(Players players) {
-        List<ParticipantDto> playersDto = new ArrayList<>();
-        for (Player player : players.getPlayers()) {
-            List<String> hand = convertHandString(player.getHand());
-            playersDto.add(new ParticipantDto(player.getName(), hand, player.calculateScore()));
-        }
-        return playersDto;
     }
 
     private static List<String> convertHandString(List<Card> cards) {
