@@ -71,6 +71,43 @@ class MultiPlayersTest {
     }
 
     @Nested
+    class findNotBetPlayer {
+        @Test
+        @DisplayName("isBet가 False인 사용자가 있으면 Player를 반환한다")
+        void findNotStayPlayer_exist() {
+            //given
+            MultiPlayers testMultiPlayers = MultiPlayers.of(TEST_PLAYER_NAMES, totalDeck);
+
+            //when
+            Optional<Player> result = testMultiPlayers.findNotStayPlayer();
+
+            //then
+            assertTrue(result.isPresent());
+        }
+
+        @Test
+        @DisplayName("모든 플레이어가 베팅을 끝내면 없으면 빈 Optional를 반환한다")
+        void findNotStayPlayer_not_exist() {
+            //given
+            String commonBetAmountValue = "1000";
+            MultiPlayers testMultiPlayers = MultiPlayers.of(TEST_PLAYER_NAMES, totalDeck);
+            while (true) {
+                Optional<Player> findResult = testMultiPlayers.findNotBetPlayer();
+                if (findResult.isEmpty()) {
+                    break;
+                }
+                testMultiPlayers.executeBet(findResult.get(), commonBetAmountValue);
+            }
+
+            //when
+            Optional<Player> result = testMultiPlayers.findNotBetPlayer();
+
+            //then
+            assertTrue(result.isEmpty());
+        }
+    }
+
+    @Nested
     class findNotStayPlayerTest {
         @Test
         @DisplayName("stay가 아닌 사용자가 있으면 Player를 반환한다")
@@ -86,7 +123,7 @@ class MultiPlayersTest {
         }
 
         @Test
-        @DisplayName("stay가 아닌 사용자가 없으면 빈 Optional를 반환한다")
+        @DisplayName("모든 Player가 종료된 상태가 되면 빈 Optional를 반환한다")
         void findNotStayPlayer_not_exist() {
             //given
             MultiPlayers testMultiPlayers = MultiPlayers.of(TEST_PLAYER_NAMES, totalDeck);
@@ -134,6 +171,20 @@ class MultiPlayersTest {
 
             //then
             assertEquals(Player.class, result.getClass());
+        }
+
+        @Test
+        @DisplayName("양수의 금액으로 bet를 플레이이에게 요청 시 오류가 발생하지 않는다.")
+        void executeBet_good() {
+            //given
+            String betMoney = "10000";
+            MultiPlayers testMultiPlayers = MultiPlayers.of(TEST_PLAYER_NAMES, totalDeck);
+            Player testPlayer = testMultiPlayers.findNotStayPlayer().get();
+
+            //when, then
+            assertDoesNotThrow(
+                    () -> testMultiPlayers.executeBet(testPlayer, betMoney)
+            );
         }
     }
 

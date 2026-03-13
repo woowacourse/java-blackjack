@@ -24,9 +24,6 @@ class BlackJackGameTest {
     @Test
     @DisplayName("생성 잘 한다")
     void ready_good() {
-        //given
-        Deck sampleDeck = Deck.createDeck(this::createSampleCards);
-
         //when, then
         assertDoesNotThrow(
                 () -> BlackJackGame.ready(TEST_PLAYER_NAMES, this::createSampleCards)
@@ -34,13 +31,40 @@ class BlackJackGameTest {
     }
 
     @Test
+    @DisplayName("베팅을 안한 사용자가 있으면 제공한다")
+    void whoseBettingTurn_exist() {
+        BlackJackGame testGame = BlackJackGame.ready(TEST_PLAYER_NAMES, this::createSampleCards);
+
+        Optional<Player> result = testGame.whoseBettingTurn();
+
+        assertTrue(result.isPresent());
+    }
+
+    @Test
     @DisplayName("다음 턴의 사용자가 있으면 제공한다")
-    void whoseTure_success() {
+    void whosePlayTurn_exist() {
         BlackJackGame testGame = BlackJackGame.ready(TEST_PLAYER_NAMES, this::createSampleCards);
 
         Optional<Player> result = testGame.whosePlayTurn();
 
         assertTrue(result.isPresent());
+    }
+
+    //    //
+    //    //    public void doBetProcess(String betAmountValue) {
+    //    //        Player target = multiPlayers.findNotBetPlayer()
+    //    //                .orElseThrow(() -> new IllegalStateException(ErrorMessage.NO_MORE_BETTABLE_PLAYER.getMessage()));
+    //    //        multiPlayers.executeBet(target, betAmountValue);
+    //    //    }
+    @Test
+    @DisplayName("bet을 시켜도 오류가 안난다")
+    void doBetProcess_success() {
+        String betAmountValue = "1000";
+        BlackJackGame testGame = BlackJackGame.ready(TEST_PLAYER_NAMES, this::createSampleCards);
+
+        assertDoesNotThrow(
+                () -> testGame.doBetProcess(betAmountValue)
+        );
     }
 
     @Test

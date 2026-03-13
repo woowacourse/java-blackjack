@@ -6,6 +6,7 @@ import java.util.function.Supplier;
 
 public class Dealer extends Participant {
     private static final String DEALER_NAME = "딜러";
+    private static final int DEALER_CARD_SUM_MIN = 16;
 
     private Dealer(GameState gameState) {
         super(DEALER_NAME, gameState);
@@ -22,7 +23,7 @@ public class Dealer extends Participant {
     }
 
     public Dealer addCard(Supplier<Card> cardSupplier) {
-        if (gameState.getCardsSum() <= 16) {
+        if (gameState.getCardsSum() <= DEALER_CARD_SUM_MIN) {
             GameState newGameState = gameState.hit(cardSupplier);
             return Dealer.from(newGameState);
         }
