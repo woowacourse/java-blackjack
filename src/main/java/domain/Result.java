@@ -10,21 +10,21 @@ public enum Result {
     }
 
     public static Result determinePlayerResult(
-            int dealerScore,
-            int playerScore,
             boolean isDealerBust,
-            boolean isPlayerBust
+            boolean isPlayerBust,
+            int dealerScore,
+            int playerScore
     ) {
-        if (isDealerBust) {
-            return Result.WIN;
-        }
         if (isPlayerBust) {
             return Result.LOSS;
         }
-        return compareScoreForCheckPlayerResult(dealerScore, playerScore);
+        if (isDealerBust) {
+            return Result.WIN;
+        }
+        return comparePlayerScoreWithDealerScore(dealerScore, playerScore);
     }
 
-    private static Result compareScoreForCheckPlayerResult(int dealerScore, int playerScore) {
+    private static Result comparePlayerScoreWithDealerScore(int dealerScore, int playerScore) {
         if (dealerScore > playerScore) {
             return Result.LOSS;
         }
@@ -39,11 +39,11 @@ public enum Result {
     }
 
     public Result reverse() {
-        if (this.equals(Result.WIN)) {
+        if (this == Result.WIN) {
             return Result.LOSS;
         }
 
-        if (this.equals(Result.LOSS)) {
+        if (this == Result.LOSS) {
             return Result.WIN;
         }
 

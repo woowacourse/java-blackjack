@@ -49,7 +49,7 @@ public abstract class Participant {
         cards.addCard(newCard);
     }
 
-    public int calculateDeckSum() {
+    public int getCardsSum() {
         return cards.calculateCardScoreSum();
     }
 

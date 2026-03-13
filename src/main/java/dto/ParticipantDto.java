@@ -16,7 +16,7 @@ public record ParticipantDto(String name, List<CardDto> cards, int score) {
             cardsDtos.add(CardDto.from(card));
         }
 
-        int score = participant.calculateDeckSum();
+        int score = participant.getCardsSum();
         return new ParticipantDto(name, cardsDtos, score);
     }
 
@@ -26,7 +26,7 @@ public record ParticipantDto(String name, List<CardDto> cards, int score) {
         List<Card> cards = participant.getInitialVisibleCards();
         List<CardDto> cardDtos = CardDto.listOf(cards);
 
-        int score = participant.calculateDeckSum();
+        int score = participant.getCardsSum();
 
         return new ParticipantDto(name, cardDtos, score);
     }

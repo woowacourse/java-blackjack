@@ -1,7 +1,7 @@
 package domain;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,38 +51,36 @@ public class Game {
         return isDrawable;
     }
 
+    public Map<Player, Result> getPlayerWinTieLossResults() {
+        int dealerScore = dealer.getCardsSum();
+        boolean isDealerBust = dealer.isBust();
+        Map<Player, Result> playerWinTieLossResults = new LinkedHashMap<>();
+        for (Player player : players) {
+            Result playerResult = getPlayerWinTieLossResult(isDealerBust, dealerScore, player);
+            playerWinTieLossResults.put(player, playerResult);
+        }
+        return playerWinTieLossResults;
+    }
+
+    private Result getPlayerWinTieLossResult(boolean isDealerBust, int dealerScore, Player player) {
+        return Result.determinePlayerResult(
+                isDealerBust,
+                player.isBust(),
+                dealerScore,
+                player.getCardsSum()
+        );
+    }
+
     public Map<Result, Integer> getDealerWinTieLossResult() {
         Map<Player, Result> playerWinTieLossResults = getPlayerWinTieLossResults();
-        Map<Result, Integer> dealerWinTieLossResults = new HashMap<>();
-        List<Player> playingPlayers = playerWinTieLossResults.keySet().stream().toList();
-        for (Player player : playingPlayers) {
-            Result dealerResult = playerWinTieLossResults.get(player).reverse();
+        Map<Result, Integer> dealerWinTieLossResults = new EnumMap<>(Result.class);
+        for (Player player : players) {
+            Result playerResult = playerWinTieLossResults.get(player);
+            Result dealerResult = playerResult.reverse();
             int currentValue = dealerWinTieLossResults.getOrDefault(dealerResult, 0);
             dealerWinTieLossResults.put(dealerResult, currentValue + 1);
         }
         return dealerWinTieLossResults;
-    }
-
-    public Map<Player, Result> getPlayerWinTieLossResults() {
-        int dealerScore = dealer.calculateDeckSum();
-        boolean isDealerBust = dealer.isBust();
-
-        Map<Player, Result> playerWinLossResults = new LinkedHashMap<>();
-        for (Player specificPlayer : players) {
-            Result specificPlayerResult = determinePlayerResult(dealerScore, isDealerBust, specificPlayer);
-            playerWinLossResults.put(specificPlayer, specificPlayerResult);
-        }
-
-        return playerWinLossResults;
-    }
-
-    private Result determinePlayerResult(int dealerScore, boolean isDealerBust, Player specificPlayer) {
-        return Result.determinePlayerResult(
-                dealerScore,
-                specificPlayer.calculateDeckSum(),
-                isDealerBust,
-                specificPlayer.isBust()
-        );
     }
 
     public List<Participant> getParticipants() {

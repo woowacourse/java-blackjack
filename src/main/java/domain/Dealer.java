@@ -18,6 +18,6 @@ public class Dealer extends Participant {
 
     @Override
     public boolean isDrawable() {
-        return super.calculateDeckSum() <= MINIMUM_TOTAL_SCORE;
+        return super.getCardsSum() <= MINIMUM_TOTAL_SCORE;
     }
 }
