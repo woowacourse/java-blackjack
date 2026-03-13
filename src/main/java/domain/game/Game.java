@@ -2,6 +2,8 @@ package domain.game;
 
 import static util.Constants.DEFAULT_START_CARD_COUNT;
 
+import domain.betting.Betting;
+import domain.betting.BettingAmount;
 import domain.card.Card;
 import domain.card.GameCards;
 import domain.player.Dealer;
@@ -19,9 +21,9 @@ public class Game {
     private final Gamblers gamblers;
     private final GameCards gameCards;
 
-    public Game(String dealerName, List<String> names, int amount) {
+    public Game(String dealerName, Map<String, BettingAmount> gamblersNameAndBettingInfo, int amount) {
         this.dealer = new Dealer(dealerName);
-        this.gamblers = new Gamblers(names);
+        this.gamblers = new Gamblers(gamblersNameAndBettingInfo);
         this.gameCards = new GameCards(amount);
     }
 
