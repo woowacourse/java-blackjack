@@ -18,7 +18,7 @@ public class OutputView {
         System.out.println(playerName + "카드: " + stringJoinWithComma(cards));
     }
 
-    public void printCards(String playerName, List<String> cards, int score) {
+    public void printCardsWithScore(String playerName, List<String> cards, int score) {
         System.out.println(playerName + "카드: " + stringJoinWithComma(cards) + " - 결과: " + score);
     }
 

@@ -108,9 +108,9 @@ public class BlackjackController {
 
     private void printCardsOfParticipants(Players players, Dealer dealer) {
         outputView.println();
-        outputView.printCards(dealer.getName(), dealer.getCardsName(), dealer.calculateCardsValue());
+        outputView.printCardsWithScore(dealer.getName(), dealer.getCardsName(), dealer.calculateCardsValue());
         for (Player player : players.getPlayers()) {
-            outputView.printCards(player.getName(), player.getCardsName(), player.calculateCardsValue());
+            outputView.printCardsWithScore(player.getName(), player.getCardsName(), player.calculateCardsValue());
         }
     }
 
