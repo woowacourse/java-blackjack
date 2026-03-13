@@ -35,4 +35,17 @@ public class Player extends Participant {
 
         return 0; // 무승부인 경우
     }
+
+    public boolean isDraw(Dealer dealer) {
+        return !dealer.isBust()
+                && (dealer.getScore() == getScore())
+                && ((isBlackjack() && dealer.isBlackjack())
+                || (!isBlackjack() && !dealer.isBlackjack()));
+    }
+
+    public boolean isLose(Dealer dealer) {
+        return isBust()
+                || (!dealer.isBust() && dealer.getScore() > getScore())
+                || (dealer.isBlackjack() && !isBlackjack());
+    }
 }
