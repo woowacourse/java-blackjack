@@ -3,7 +3,6 @@ package blackjack.controller;
 import blackjack.domain.bet.Bet;
 import blackjack.domain.participant.Answer;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.GameResult;
 import blackjack.domain.participant.Hand;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
