@@ -40,7 +40,7 @@ class HandTest {
             List<Card> cards = List.of(firstCard, secondCard);
             Hand hand = new Hand(cards);
 
-            assertThat(hand.getTotalScore()).isEqualTo(cardsSum);
+            assertThat(hand.calculateTotalScore()).isEqualTo(cardsSum);
         }
 
         @Test
@@ -49,9 +49,9 @@ class HandTest {
             List<Card> cards = TestDefaults.getCardsByRanks(List.of(Rank.ACE, Rank.JACK));
             Hand hand = new Hand(cards);
 
-            hand.add(TestDefaults.getCardByRank(Rank.KING));
+            hand.addCard(TestDefaults.getCardByRank(Rank.KING));
 
-            assertThat(hand.getTotalScore()).isEqualTo(21);
+            assertThat(hand.calculateTotalScore()).isEqualTo(21);
         }
     }
 
@@ -64,7 +64,7 @@ class HandTest {
         void isBlackjack() {
             Hand hand = new Hand(TestDefaults.getCardsByRanks(List.of(Rank.ACE, Rank.QUEEN)));
 
-            assertThat(hand.isBlackjack()).isEqualTo(true);
+            assertThat(hand.isBlackjack()).isTrue();
         }
 
         @Test
@@ -72,9 +72,9 @@ class HandTest {
         void notBlackjack() {
             Hand hand = new Hand(TestDefaults.getCardsByRanks(List.of(Rank.KING, Rank.QUEEN)));
 
-            hand.add(TestDefaults.getCardByRank(Rank.ACE));
+            hand.addCard(TestDefaults.getCardByRank(Rank.ACE));
 
-            assertThat(hand.isBlackjack()).isEqualTo(false);
+            assertThat(hand.isBlackjack()).isFalse();
         }
     }
 
@@ -88,7 +88,7 @@ class HandTest {
         void returnsTrueWhenTotalScoreIsOver21() {
             Hand hand = new Hand(TestDefaults.getCardsByRanks(List.of(Rank.KING, Rank.QUEEN)));
 
-            hand.add(TestDefaults.getCardByRank(Rank.TWO));
+            hand.addCard(TestDefaults.getCardByRank(Rank.TWO));
 
             assertThat(hand.isBust()).isTrue();
         }

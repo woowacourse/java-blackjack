@@ -18,7 +18,7 @@ public class Hand {
     }
 
     public boolean isBust() {
-        return getTotalScore() > BLACKJACK_MAX_SCORE;
+        return calculateTotalScore() > BLACKJACK_MAX_SCORE;
     }
 
     private void validateCardsSize(List<Card> cards) { //테스트 작성
@@ -27,7 +27,7 @@ public class Hand {
         }
     }
 
-    public int getTotalScore() {    // 테스트
+    public int calculateTotalScore() {
         int totalScore = cards.stream()
                 .map(Card::getScore)
                 .reduce(Integer::sum)
@@ -41,14 +41,14 @@ public class Hand {
     }
 
     public boolean isBlackjack() {
-        return (cards.size() == MIN_SIZE) && (getTotalScore() == BLACKJACK_MAX_SCORE);
+        return (cards.size() == MIN_SIZE) && (calculateTotalScore() == BLACKJACK_MAX_SCORE);
     }
 
     public int getHandsSize() {
         return cards.size();
     }
 
-    public void add(Card card) {
+    public void addCard(Card card) {
         cards.add(card);
     }
 
