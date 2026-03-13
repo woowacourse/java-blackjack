@@ -48,19 +48,6 @@ public class Players {
         }
     }
 
-    public int totalProfit() {
-        int profit = 0;
-        for (Player player : players) {
-            profit += player.profit();
-        }
-
-        return profit;
-    }
-
-    public int dealerProfit() {
-        return -totalProfit();
-    }
-
     private void validatePlayerCount(List<Player> players) {
         if (players.size() > PLAYER_THRESHOLD) {
             throw new IllegalArgumentException(ERROR_PLAYER_COUNT_OVER);

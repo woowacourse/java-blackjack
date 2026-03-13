@@ -94,7 +94,7 @@ public class BlackjackGame {
         players.applyRoundResults(gameResult);
 
         List<PlayerResultInfo> playerResultInfos = createPlayerResultInfos(players);
-        int dealerProfit = players.dealerProfit();
+        int dealerProfit = dealerProfit(players.getPlayers());
 
         outputView.printGameResult(dealerProfit, playerResultInfos);
     }
@@ -105,5 +105,18 @@ public class BlackjackGame {
             resultInfos.add(new PlayerResultInfo(player.name(), player.profit()));
         }
         return resultInfos;
+    }
+
+    public int totalProfit(List<Player> players) {
+        int profit = 0;
+        for (Player player : players) {
+            profit += player.profit();
+        }
+
+        return profit;
+    }
+
+    public int dealerProfit(List<Player> players) {
+        return -totalProfit(players);
     }
 }
