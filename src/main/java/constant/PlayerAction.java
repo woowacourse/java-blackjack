@@ -33,6 +33,10 @@ public enum PlayerAction {
     }
 
     private static void validate(String input) {
+        validateYesNoActionInput(input);
+    }
+
+    private static void validateYesNoActionInput(String input) {
         String normalized = input.strip();
         if (!normalized.equals(PlayerAction.HIT.getAction()) && !normalized
             .equals(PlayerAction.STAND.getAction())) {
