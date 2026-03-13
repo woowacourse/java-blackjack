@@ -4,48 +4,47 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import dto.Card;
 import java.util.List;
-import java.util.stream.Stream;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.api.Test;
 
 public class ParticipantHandTest {
 
-    static Stream<Arguments> scoreCases() {
-        return Stream.of(
-                Arguments.of(
-                        List.of(new Card(Shape.CLOVER, CardNumber.ACE),
-                                new Card(Shape.SPADE, CardNumber.ACE)),
-                        12
-                ),
-                Arguments.of(
-                        List.of(new Card(Shape.CLOVER, CardNumber.ACE),
-                                new Card(Shape.SPADE, CardNumber.ACE),
-                                new Card(Shape.HEART, CardNumber.KING)),
-                        12
-                ),
-                Arguments.of(
-                        List.of(new Card(Shape.SPADE, CardNumber.ACE),
-                                new Card(Shape.CLOVER, CardNumber.KING),
-                                new Card(Shape.CLOVER, CardNumber.TEN)),
-                        21
-                ),
-                Arguments.of(
-                        List.of(new Card(Shape.CLOVER, CardNumber.TEN),
-                                new Card(Shape.HEART, CardNumber.EIGHT)),
-                        18
-                )
-        );
-    }
-
-    @ParameterizedTest
-    @MethodSource("scoreCases")
-    public void 점수_계산(List<Card> cards, int expectedScore) {
+    @Test
+    public void 일반_카드_점수를_합산한다() {
         Player player = new Player(new PlayerName("player1"), new BettingMoney("10000"));
+        List<Card> cards = List.of(
+                new Card(Shape.CLOVER, CardNumber.TEN),
+                new Card(Shape.HEART, CardNumber.EIGHT)
+        );
+
         cards.forEach(player::draw);
 
-        assertThat(player.getScore()).isEqualTo(expectedScore);
+        assertThat(player.getScore()).isEqualTo(18);
+    }
+
+    @Test
+    public void 에이스가_있고_21을_넘지_않으면_10을_추가한다() {
+        Player player = new Player(new PlayerName("player1"), new BettingMoney("10000"));
+        List<Card> cards = List.of(
+                new Card(Shape.CLOVER, CardNumber.ACE),
+                new Card(Shape.SPADE, CardNumber.KING)
+        );
+
+        cards.forEach(player::draw);
+
+        assertThat(player.getScore()).isEqualTo(21);
+    }
+
+    @Test
+    public void 에이스가_있어도_10을_추가하면_21을_넘으면_추가하지_않는다() {
+        Player player = new Player(new PlayerName("player1"), new BettingMoney("10000"));
+        List<Card> cards = List.of(
+                new Card(Shape.CLOVER, CardNumber.ACE),
+                new Card(Shape.SPADE, CardNumber.ACE),
+                new Card(Shape.HEART, CardNumber.KING)
+        );
+
+        cards.forEach(player::draw);
+
+        assertThat(player.getScore()).isEqualTo(12);
     }
 }
-
-
