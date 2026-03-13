@@ -6,6 +6,7 @@ import java.util.List;
 public class Hand {
 
     private static final int BLACKJACK_SCORE = 21;
+    private static final int REDUCED_SCORE_FROM_ACE = 10;
 
     private final List<Card> cards;
 
@@ -39,7 +40,7 @@ public class Hand {
 
     private int calculateTotalScoreWithAceCalculation(int score, int aceCount) {
         while (score > BLACKJACK_SCORE && aceCount > 0) {
-            score -= 10;
+            score -= REDUCED_SCORE_FROM_ACE;
             aceCount--;
         }
 
