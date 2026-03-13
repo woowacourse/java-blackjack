@@ -28,7 +28,6 @@ public class GameResult {
     }
 
     public BigDecimal profit(Participant participant) {
-        System.out.println(participantResultInfo(participant));
         return participantResultInfo(participant).profit();
     }
 
