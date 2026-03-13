@@ -45,12 +45,12 @@ public class OutputView {
     }
 
     private static void printDealerResult(String dealerName, GameResult gameResult) {
-        System.out.println(dealerName + ": " + gameResult.getDealerProfit());
+        System.out.println(dealerName + ": " + gameResult.getDealerProfit().stripTrailingZeros().toPlainString());
     }
 
     private static void printUsersResult(GameResult gameResult) {
         for (Map.Entry<String, BigDecimal> entry : gameResult.getEntries()) {
-            System.out.println(entry.getKey() + ": " + entry.getValue());
+            System.out.println(entry.getKey() + ": " + entry.getValue().stripTrailingZeros().toPlainString());
         }
     }
 }
