@@ -1,5 +1,6 @@
 package domain.player;
 
+import domain.betting.BettingAmount;
 import domain.card.Card;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -12,7 +13,7 @@ class GamblerTest {
     void 카드_정상적으로_받기_테스트() {
         // given
         Card card = new Card("2", "하트");
-        Gambler gambler = new Gambler("coco");
+        Gambler gambler = new Gambler("coco", );
 
         // when
         gambler.addCard(card);

@@ -1,10 +1,13 @@
 package view;
 
+import domain.betting.BettingAmount;
 import dto.AgreementRequestDto;
+import dto.BettingAmountRequestDto;
 import dto.NameRequestDto;
 import java.util.Scanner;
 
 public class InputView {
+
     private Scanner sc = new Scanner(System.in);
 
     public NameRequestDto askGamblerNames() {
@@ -17,4 +20,8 @@ public class InputView {
         return new AgreementRequestDto(sc.nextLine());
     }
 
+    public BettingAmountRequestDto askBettingAmount(String name) {
+        System.out.println(name + "의 배팅 금액은?");
+        return new BettingAmountRequestDto(sc.nextLine());
+    }
 }
