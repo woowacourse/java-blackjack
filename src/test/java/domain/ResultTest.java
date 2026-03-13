@@ -1,34 +1,32 @@
 package domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class ResultTest {
 
     @Test
-    @DisplayName("")
-    void calculateResult() {
+    @DisplayName("딜러의 승 수는 플레이어가 진 수와 같다.")
+    void getDealerWin() {
         Dealer dealer = Dealer.create();
-        Player pobi = Player.from("fobi");
-        Player jason = Player.from("jason");
+        Map<String, Boolean> playerResults = Map.of("pobi", false, "jason", false);
 
-        dealer.receiveCard(new Card(Shape.HEART, Number.ACE));
-        dealer.receiveCard(new Card(Shape.HEART, Number.JACK));
-        dealer.receiveCard(new Card(Shape.HEART, Number.QUEEN));
+        Result result = new Result(dealer, playerResults);
 
-        pobi.receiveCard(new Card(Shape.HEART, Number.ACE));
-        pobi.receiveCard(new Card(Shape.HEART, Number.JACK));
-        pobi.receiveCard(new Card(Shape.HEART, Number.QUEEN));
+        assertThat(result.getDealerWin()).isEqualTo(2);
+    }
 
-        jason.receiveCard(new Card(Shape.HEART, Number.ACE));
-        jason.receiveCard(new Card(Shape.HEART, Number.JACK));
-        jason.receiveCard(new Card(Shape.HEART, Number.QUEEN));
+    @Test
+    @DisplayName("딜러의 패 수는 플레이어가 이긴 수와 같다.")
+    void getDealerLose() {
+        Dealer dealer = Dealer.create();
+        Map<String, Boolean> playerResults = Map.of("pobi", true, "jason", false);
 
-        Map<Participant, Integer> participantScores = new HashMap<>();
+        Result result = new Result(dealer, playerResults);
+
+        assertThat(result.getDealerLose()).isEqualTo(1);
     }
 }
