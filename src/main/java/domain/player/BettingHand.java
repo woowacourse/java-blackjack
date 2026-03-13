@@ -13,8 +13,8 @@ public class BettingHand {
         this.bet = bet;
     }
 
-    public static BettingHand of(Hand hand, int amount) {
-        return new BettingHand(hand, new Bet(new Money(amount)));
+    public static BettingHand of(Hand hand, Bet bet) {
+        return new BettingHand(hand, bet);
     }
 
     public void addCard(Card card) {

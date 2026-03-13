@@ -28,7 +28,7 @@ class BettingHandTest {
         @ParameterizedTest
         @MethodSource("calculateResultCases")
         void calculateResult(Hand playerHand, Hand dealerHand, Result expected) {
-            BettingHand bettingHand = BettingHand.of(playerHand, 1000);
+            BettingHand bettingHand = BettingHand.of(playerHand, bet(1000));
             Dealer dealer = Dealer.from(dealerHand);
 
             // when
@@ -58,7 +58,7 @@ class BettingHandTest {
             Hand playerHand = hand(Rank.KING, Rank.QUEEN);
             playerHand.addCard(TestDefaults.getCardByRank(Rank.TWO));
 
-            BettingHand bettingHand = BettingHand.of(playerHand, 1000);
+            BettingHand bettingHand = BettingHand.of(playerHand, bet(1000));
             Dealer dealer = Dealer.from(hand(Rank.TEN, Rank.NINE));
 
             //when
@@ -70,7 +70,7 @@ class BettingHandTest {
         @DisplayName("딜러가 버스트이면 플레이어가 승리한다")
         @Test
         void calculateResultWinWhenDealerBust() {
-            BettingHand bettingHand = BettingHand.of(hand(Rank.TEN, Rank.NINE), 1000);
+            BettingHand bettingHand = BettingHand.of(hand(Rank.TEN, Rank.NINE), bet(1000));
 
             Hand dealerHand = hand(Rank.KING, Rank.QUEEN);
             dealerHand.addCard(TestDefaults.getCardByRank(Rank.TWO));
@@ -91,7 +91,7 @@ class BettingHandTest {
         @ParameterizedTest
         @MethodSource("calculateProfitCases")
         void calculateProfit(Hand playerHand, Hand dealerHand, int expected) {
-            BettingHand bettingHand = BettingHand.of(playerHand, 1000);
+            BettingHand bettingHand = BettingHand.of(playerHand, bet(1000));
             Dealer dealer = Dealer.from(dealerHand);
 
             // when
