@@ -1,5 +1,9 @@
 package model;
 
+import java.util.List;
+import model.card.Card;
+import model.card.CardFactory;
+import model.card.CardShuffler;
 import model.card.Deck;
 import model.paticipant.Dealer;
 import model.paticipant.Participant;
@@ -15,6 +19,13 @@ public class BlackjackService {
 
     public BlackjackService(Deck deck) {
         this.deck = deck;
+    }
+
+    public static BlackjackService createDefaultService(CardShuffler cardShuffler) {
+        List<Card> fullCards = CardFactory.createFullCards();
+        List<Card> shuffledCards = cardShuffler.shuffle(fullCards);
+        Deck deck = new Deck(shuffledCards);
+        return new BlackjackService(deck);
     }
 
     public void drawTwoCards(Dealer dealer, Players players) {
