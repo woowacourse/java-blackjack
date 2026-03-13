@@ -12,8 +12,8 @@ import org.junit.jupiter.api.Test;
 
 class PlayerTest {
 
-    CardDeck mustPickFive = CardDeck.of(cards -> Card.openedCard(Rank.FIVE, Suit.CLOVER));
-    CardDeck mustPickTen = CardDeck.of(cards -> Card.openedCard(Rank.TEN, Suit.CLOVER));
+    CardDeck mustPickFive = CardDeck.of(cards -> Card.createOpenedCard(Rank.FIVE, Suit.CLOVER));
+    CardDeck mustPickTen = CardDeck.of(cards -> Card.createOpenedCard(Rank.TEN, Suit.CLOVER));
 
     @Test
     @DisplayName("플레이어는 2 장의 오픈된 카드를 뽑는다.")

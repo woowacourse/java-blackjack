@@ -48,8 +48,8 @@ class ParticipantTest {
         assertThat(participant2.isBust()).isFalse();
     }
 
-    PickStrategy mustPickTen = cards -> Card.openedCard(Rank.TEN, Suit.CLOVER);
-    PickStrategy mustPickAce = cards -> Card.openedCard(Rank.ACE, Suit.CLOVER);
+    PickStrategy mustPickTen = cards -> Card.createOpenedCard(Rank.TEN, Suit.CLOVER);
+    PickStrategy mustPickAce = cards -> Card.createOpenedCard(Rank.ACE, Suit.CLOVER);
 
     static class TestParticipant extends Participant {
 

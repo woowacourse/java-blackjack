@@ -26,7 +26,7 @@ class HandsTest {
         Hands hands = Hands.empty();
 
         //when
-        hands.addCard(Card.openedCard(Rank.TEN, Suit.CLOVER));
+        hands.addCard(Card.createOpenedCard(Rank.TEN, Suit.CLOVER));
 
         // then
         assertThat(hands.getAllCard().size()).isEqualTo(1);
@@ -38,8 +38,8 @@ class HandsTest {
         // given
         Hands hands = Hands.empty();
 
-        hands.addCard(Card.openedCard(Rank.TEN, Suit.CLOVER));
-        hands.addCard(Card.openedCard(Rank.J, Suit.CLOVER));
+        hands.addCard(Card.createOpenedCard(Rank.TEN, Suit.CLOVER));
+        hands.addCard(Card.createOpenedCard(Rank.J, Suit.CLOVER));
 
         // when & then
         assertThat(hands.calculateTotalScore()).isEqualTo(20);
@@ -50,9 +50,9 @@ class HandsTest {
     void calculateTotalScoreWithAceOf1() {
         // given
         Hands hands = Hands.empty();
-        hands.addCard(Card.openedCard(Rank.TEN, Suit.CLOVER));
-        hands.addCard(Card.openedCard(Rank.TWO, Suit.CLOVER));
-        hands.addCard(Card.openedCard(Rank.ACE, Suit.CLOVER));
+        hands.addCard(Card.createOpenedCard(Rank.TEN, Suit.CLOVER));
+        hands.addCard(Card.createOpenedCard(Rank.TWO, Suit.CLOVER));
+        hands.addCard(Card.createOpenedCard(Rank.ACE, Suit.CLOVER));
 
         // when
         int totalScore = hands.calculateTotalScore();
@@ -66,8 +66,8 @@ class HandsTest {
     void calculateTotalScoreWithAceOf11() {
         // given
         Hands hands = Hands.empty();
-        hands.addCard(Card.openedCard(Rank.TEN, Suit.CLOVER));
-        hands.addCard(Card.openedCard(Rank.ACE, Suit.CLOVER));
+        hands.addCard(Card.createOpenedCard(Rank.TEN, Suit.CLOVER));
+        hands.addCard(Card.createOpenedCard(Rank.ACE, Suit.CLOVER));
 
         // when
         int totalScore = hands.calculateTotalScore();
@@ -81,8 +81,8 @@ class HandsTest {
     void isTotalScoreOverTrue() {
         // given
         Hands hands = Hands.empty();
-        hands.addCard(Card.openedCard(Rank.SIX, Suit.CLOVER));
-        hands.addCard(Card.openedCard(Rank.ACE, Suit.CLOVER));
+        hands.addCard(Card.createOpenedCard(Rank.SIX, Suit.CLOVER));
+        hands.addCard(Card.createOpenedCard(Rank.ACE, Suit.CLOVER));
 
         assertThat(hands.isTotalScoreOver(16)).isTrue();
     }
@@ -92,8 +92,8 @@ class HandsTest {
     void isTotalScoreOverFalse() {
         // given
         Hands hands = Hands.empty();
-        hands.addCard(Card.openedCard(Rank.SIX, Suit.CLOVER));
-        hands.addCard(Card.openedCard(Rank.ACE, Suit.CLOVER));
+        hands.addCard(Card.createOpenedCard(Rank.SIX, Suit.CLOVER));
+        hands.addCard(Card.createOpenedCard(Rank.ACE, Suit.CLOVER));
 
         assertThat(hands.isTotalScoreOver(17)).isFalse();
     }
@@ -103,9 +103,9 @@ class HandsTest {
     void getOpenedCards() {
         // given
         Hands hands = Hands.empty();
-        hands.addCard(Card.openedCard(Rank.SIX, Suit.CLOVER));
+        hands.addCard(Card.createOpenedCard(Rank.SIX, Suit.CLOVER));
 
-        Card closed = Card.openedCard(Rank.ACE, Suit.CLOVER);
+        Card closed = Card.createOpenedCard(Rank.ACE, Suit.CLOVER);
         closed.flip();
 
         hands.addCard(closed);

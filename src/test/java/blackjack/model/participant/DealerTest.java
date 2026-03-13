@@ -12,9 +12,9 @@ import org.junit.jupiter.api.Test;
 
 class DealerTest {
 
-    CardDeck mustPickTen = CardDeck.of(cards -> Card.openedCard(Rank.TEN, Suit.CLOVER));
-    CardDeck mustPickAce = CardDeck.of(cards -> Card.openedCard(Rank.ACE, Suit.CLOVER));
-    CardDeck mustPickFive = CardDeck.of(cards -> Card.openedCard(Rank.FIVE, Suit.CLOVER));
+    CardDeck mustPickTen = CardDeck.of(cards -> Card.createOpenedCard(Rank.TEN, Suit.CLOVER));
+    CardDeck mustPickAce = CardDeck.of(cards -> Card.createOpenedCard(Rank.ACE, Suit.CLOVER));
+    CardDeck mustPickFive = CardDeck.of(cards -> Card.createOpenedCard(Rank.FIVE, Suit.CLOVER));
 
     @Test
     @DisplayName("딜러가 뽑은 두 장의 카드 중 한 장만 오픈돼 있다.")

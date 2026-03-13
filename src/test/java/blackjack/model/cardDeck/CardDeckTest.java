@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 class CardDeckTest {
 
     PickStrategy mustPickAceStrategy =
-            cards -> Card.openedCard(Rank.ACE, Suit.CLOVER);
+            cards -> Card.createOpenedCard(Rank.ACE, Suit.CLOVER);
 
     @Test
     @DisplayName("카드 덱을 에러 없이 생성한다.")
