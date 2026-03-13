@@ -19,17 +19,12 @@ public class CardFactory {
     private static List<Card> createCards() {
         List<Card> cards = new ArrayList<>();
         for (Shape shape : Shape.values()) {
-            cards.addAll(createCardsByShape(shape));
+            for(CardNumber cardNumber : CardNumber.values()) {
+                cards.add(new Card(shape,cardNumber));
+            }
         }
         return cards;
     }
 
-    private static List<Card> createCardsByShape(Shape shape) {
-        List<Card> cards = new ArrayList<>();
-        for (CardNumber cardNumber : CardNumber.values()) {
-            cards.add(new Card(shape, cardNumber));
-        }
-        return cards;
-    }
 
 }
