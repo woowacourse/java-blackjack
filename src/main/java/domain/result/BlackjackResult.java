@@ -1,26 +1,22 @@
 package domain.result;
 
-import domain.participant.BetMap;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class BlackjackResult {
-    private final ProfitMap playerProfitMap;
-    private final BetMap betMap;
-    private final DealerMatchCount dealerMatchCount;
+    private final Map<String, MatchCase> playerResultMap = new LinkedHashMap<>();
+    private final DealerMatchCount dealerMatchCount = new DealerMatchCount();
 
-    private BlackjackResult(Dealer dealer, Players players, BetMap betMap) {
-        this.playerProfitMap = new ProfitMap();
-        this.betMap = betMap;
-        this.dealerMatchCount = new DealerMatchCount();
+    private BlackjackResult(Dealer dealer, Players players) {
         calculateMatchResult(dealer, players);
     }
 
-    public static BlackjackResult from(Dealer dealer, Players players, BetMap betMap) {
-        return new BlackjackResult(dealer, players, betMap);
+    public static BlackjackResult from(Dealer dealer, Players players) {
+        return new BlackjackResult(dealer, players);
     }
 
     private void calculateMatchResult(Dealer dealer, Players players) {
@@ -31,16 +27,9 @@ public class BlackjackResult {
 
     private void determinePlayerResult(Dealer dealer, Player player) {
         MatchJudge matchJudge = new MatchJudge(dealer, player);
-        addMatchResult(player.getName(), matchJudge.judge());
-    }
-
-    private void addMatchResult(String playerName, MatchCase matchCase) {
-        playerProfitMap.addProfitOf(playerName, calculateProfit(playerName, matchCase));
+        MatchCase matchCase = matchJudge.judge();
+        playerResultMap.put(player.getName(), matchCase);
         matchCase.increaseMatchCountOf(this);
-    }
-
-    private Long calculateProfit(String playerName, MatchCase matchCase) {
-        return betMap.calculateProfit(playerName, matchCase);
     }
 
     public void increaseDealerWinCount() {
@@ -55,11 +44,7 @@ public class BlackjackResult {
         this.dealerMatchCount.increaseLoseCount();
     }
 
-    public Map<String, Long> getPlayerProfitMap() {
-        return playerProfitMap.getMap();
-    }
-
-    public long getDealerBenefit() {
-        return (-1) * playerProfitMap.sumProfits();
+    public Map<String, MatchCase> getPlayerResultMap() {
+        return Map.copyOf(playerResultMap);
     }
 }

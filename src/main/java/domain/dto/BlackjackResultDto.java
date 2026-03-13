@@ -1,6 +1,6 @@
 package domain.dto;
 
-import domain.result.BlackjackResult;
+import domain.result.ProfitResult;
 
 import java.util.Map;
 
@@ -8,10 +8,10 @@ public record BlackjackResultDto(
         long dealerBenefit,
         PlayerResultDto matchResultMap
 ) {
-    public static BlackjackResultDto from(BlackjackResult blackjackResult) {
+    public static BlackjackResultDto from(ProfitResult profitResult) {
         return new BlackjackResultDto(
-                blackjackResult.getDealerBenefit(),
-                PlayerResultDto.from(blackjackResult)
+                profitResult.getDealerBenefit(),
+                PlayerResultDto.from(profitResult)
         );
     }
 

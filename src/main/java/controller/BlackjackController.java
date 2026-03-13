@@ -10,6 +10,7 @@ import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
 import domain.result.BlackjackResult;
+import domain.result.ProfitResult;
 import exception.BlackjackException;
 import service.BlackjackService;
 import view.InputView;
@@ -119,8 +120,9 @@ public class BlackjackController {
     }
 
     private void showFinalResult(Dealer dealer, Players players, BetMap betMap) {
-        BlackjackResult blackjackResult = BlackjackResult.from(dealer, players, betMap);
-        outputView.displayMatchResult(BlackjackResultDto.from(blackjackResult));
+        BlackjackResult blackjackResult = BlackjackResult.from(dealer, players);
+        ProfitResult profitResult = ProfitResult.from(blackjackResult, betMap);
+        outputView.displayMatchResult(BlackjackResultDto.from(profitResult));
     }
 
     private <T> T doRetry(Supplier<T> action) {

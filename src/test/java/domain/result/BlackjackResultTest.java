@@ -42,8 +42,9 @@ class BlackjackResultTest {
         BetMap betMap = BetTestUtil.createSinglePlayerSet(player);
 
         // when
-        BlackjackResult blackjackResult = BlackjackResult.from(dealer, createSinglePlayerSet(player), betMap);
-        BlackjackResultDto blackjackResultDto = BlackjackResultDto.from(blackjackResult);
+        BlackjackResult blackjackResult = BlackjackResult.from(dealer, createSinglePlayerSet(player));
+        ProfitResult profitResult = ProfitResult.from(blackjackResult, betMap);
+        BlackjackResultDto blackjackResultDto = BlackjackResultDto.from(profitResult);
 
         // then
         long expected = BetTestUtil.DEFAULT_BET_AMOUNT;
@@ -69,8 +70,9 @@ class BlackjackResultTest {
         BetMap betMap = BetTestUtil.createSinglePlayerSet(player);
 
         // when
-        BlackjackResult blackjackResult = BlackjackResult.from(dealer, createSinglePlayerSet(player), betMap);
-        BlackjackResultDto blackjackResultDto = BlackjackResultDto.from(blackjackResult);
+        BlackjackResult blackjackResult = BlackjackResult.from(dealer, createSinglePlayerSet(player));
+        ProfitResult profitResult = ProfitResult.from(blackjackResult, betMap);
+        BlackjackResultDto blackjackResultDto = BlackjackResultDto.from(profitResult);
 
         // then
         long expected = BetTestUtil.DEFAULT_BET_AMOUNT;
@@ -92,8 +94,9 @@ class BlackjackResultTest {
         BetMap betMap = BetTestUtil.createSinglePlayerSet(player);
 
         // when
-        BlackjackResult blackjackResult = BlackjackResult.from(dealer, createSinglePlayerSet(player), betMap);
-        BlackjackResultDto blackjackResultDto = BlackjackResultDto.from(blackjackResult);
+        BlackjackResult blackjackResult = BlackjackResult.from(dealer, createSinglePlayerSet(player));
+        ProfitResult profitResult = ProfitResult.from(blackjackResult, betMap);
+        BlackjackResultDto blackjackResultDto = BlackjackResultDto.from(profitResult);
 
         // then
         long expected = (long) (BetTestUtil.DEFAULT_BET_AMOUNT * 1.5);
@@ -112,8 +115,9 @@ class BlackjackResultTest {
         BetMap betMap = BetTestUtil.createSinglePlayerSet(player);
 
         // when
-        BlackjackResult blackjackResult = BlackjackResult.from(dealer, createSinglePlayerSet(player), betMap);
-        BlackjackResultDto blackjackResultDto = BlackjackResultDto.from(blackjackResult);
+        BlackjackResult blackjackResult = BlackjackResult.from(dealer, createSinglePlayerSet(player));
+        ProfitResult profitResult = ProfitResult.from(blackjackResult, betMap);
+        BlackjackResultDto blackjackResultDto = BlackjackResultDto.from(profitResult);
 
         // then
         final int noBenefit = 0;
@@ -138,8 +142,9 @@ class BlackjackResultTest {
         BetMap betMap = BetTestUtil.createSinglePlayerSet(player);
 
         // when
-        BlackjackResult blackjackResult = BlackjackResult.from(dealer, createSinglePlayerSet(player), betMap);
-        BlackjackResultDto blackjackResultDto = BlackjackResultDto.from(blackjackResult);
+        BlackjackResult blackjackResult = BlackjackResult.from(dealer, createSinglePlayerSet(player));
+        ProfitResult profitResult = ProfitResult.from(blackjackResult, betMap);
+        BlackjackResultDto blackjackResultDto = BlackjackResultDto.from(profitResult);
 
         // then
         final int noBenefit = 0;
@@ -164,8 +169,9 @@ class BlackjackResultTest {
         BetMap betMap = BetTestUtil.createSinglePlayerSet(player);
 
         // when
-        BlackjackResult blackjackResult = BlackjackResult.from(dealer, createSinglePlayerSet(player), betMap);
-        BlackjackResultDto blackjackResultDto = BlackjackResultDto.from(blackjackResult);
+        BlackjackResult blackjackResult = BlackjackResult.from(dealer, createSinglePlayerSet(player));
+        ProfitResult profitResult = ProfitResult.from(blackjackResult, betMap);
+        BlackjackResultDto blackjackResultDto = BlackjackResultDto.from(profitResult);
 
         // then
         long expected = BetTestUtil.DEFAULT_BET_AMOUNT;
@@ -190,8 +196,9 @@ class BlackjackResultTest {
         BetMap betMap = BetTestUtil.createSinglePlayerSet(player);
 
         // when
-        BlackjackResult blackjackResult = BlackjackResult.from(dealer, createSinglePlayerSet(player), betMap);
-        BlackjackResultDto blackjackResultDto = BlackjackResultDto.from(blackjackResult);
+        BlackjackResult blackjackResult = BlackjackResult.from(dealer, createSinglePlayerSet(player));
+        ProfitResult profitResult = ProfitResult.from(blackjackResult, betMap);
+        BlackjackResultDto blackjackResultDto = BlackjackResultDto.from(profitResult);
 
         // then
         long expected = BetTestUtil.DEFAULT_BET_AMOUNT;
@@ -232,8 +239,9 @@ class BlackjackResultTest {
         BetMap betMap = BetTestUtil.createMultiPlayerSet(players);
 
         // when
-        BlackjackResult blackjackResult = BlackjackResult.from(dealer, players, betMap);
-        BlackjackResultDto blackjackResultDto = BlackjackResultDto.from(blackjackResult);
+        BlackjackResult blackjackResult = BlackjackResult.from(dealer, players);
+        ProfitResult profitResult = ProfitResult.from(blackjackResult, betMap);
+        BlackjackResultDto blackjackResultDto = BlackjackResultDto.from(profitResult);
 
         // then
 
@@ -278,8 +286,9 @@ class BlackjackResultTest {
         BetMap betMap = BetTestUtil.createMultiPlayerSet(players);
 
         // when
-        BlackjackResult blackjackResult = BlackjackResult.from(dealer, players, betMap);
-        BlackjackResultDto blackjackResultDto = BlackjackResultDto.from(blackjackResult);
+        BlackjackResult blackjackResult = BlackjackResult.from(dealer, players);
+        ProfitResult profitResult = ProfitResult.from(blackjackResult, betMap);
+        BlackjackResultDto blackjackResultDto = BlackjackResultDto.from(profitResult);
 
         // then
         long summation = blackjackResultDto.playerProfitMap().values().stream()
