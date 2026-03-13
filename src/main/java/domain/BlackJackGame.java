@@ -37,7 +37,7 @@ public class BlackJackGame {
                 dealersInitialCards.get(1)
         );
         return Dealer.from(
-                GameState.createDealerInitialGameState(initialDealerHand)
+                GameState.createInitialGameState(initialDealerHand)
         );
     }
 

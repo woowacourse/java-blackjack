@@ -151,7 +151,7 @@ class MultiPlayersTest {
         ParticipantDto expect = ParticipantDto.from(
                 Player.from(
                         testerName,
-                        GameState.createPlayerInitialGameState(Hand.of(heartTen, heartJ))
+                        GameState.createInitialGameState(Hand.of(heartTen, heartJ))
                 )
         );
 
@@ -176,15 +176,15 @@ class MultiPlayersTest {
         Queue<Card> onlyTwoTenCards = new LinkedList<>(List.of(heartTen, heartJ));
 
         Dealer testDealer = Dealer.from(
-                GameState.createDealerInitialGameState(Hand.of(heartTwo, heartThree))
+                GameState.createInitialGameState(Hand.of(heartTwo, heartThree))
         );
         Player expectedPlayer = Player.from(
                 testerName,
-                GameState.createPlayerInitialGameState(Hand.of(heartTen, heartJ))
+                GameState.createInitialGameState(Hand.of(heartTen, heartJ))
         );
         CardCreationStrategy onlyTwoTenCardsCreationStrategy = () -> new ArrayDeque<>(onlyTwoTenCards);
         MultiPlayers multiPlayers = MultiPlayers.of(onlyOneNames, Deck.createDeck(onlyTwoTenCardsCreationStrategy));
-        PlayerResultDto expect = PlayerResultDto.from(expectedPlayer, testDealer.gameState);
+        PlayerResultDto expect = PlayerResultDto.from(expectedPlayer, testDealer);
 
         //when
         List<PlayerResultDto> result = multiPlayers.checkPlayersGameResult(testDealer);

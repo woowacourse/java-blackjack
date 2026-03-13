@@ -12,6 +12,9 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class GameResultTest {
+
+    private static final String GUMP = "gump";
+
     Hand normalHand = Hand.of(
             new Card(CardShape.다이아몬드, CardContents.A),
             new Card(CardShape.다이아몬드, CardContents.TWO)
@@ -34,11 +37,11 @@ class GameResultTest {
             @DisplayName("플레이어가 블랙잭이면 플레이어가 이긴 결과를 도출한다")
             void decidePlayerResult_player_blackjack() {
                 //given
-                GameState dealerInitialGameState = GameState.createDealerInitialGameState(normalHand);
-                GameState playerInitialGameState = GameState.createPlayerInitialGameState(blackJackHand);
+                Dealer testDealer = Dealer.from(GameState.createInitialGameState(normalHand));
+                Player testPlayer = Player.from(GUMP, GameState.createInitialGameState(blackJackHand));
 
                 //when
-                GameResult result = GameResult.decidePlayerResult(playerInitialGameState, dealerInitialGameState);
+                GameResult result = GameResult.decidePlayerResult(testPlayer, testDealer);
 
                 //then
                 assertEquals(GameResult.승, result);
@@ -48,11 +51,11 @@ class GameResultTest {
             @DisplayName("딜러가 블랙잭이면 플레이어가 진 결과를 도출한다")
             void decidePlayerResult_dealer_blackjack() {
                 //given
-                GameState dealerGameState = GameState.createDealerInitialGameState(blackJackHand);
-                GameState playerGameState = GameState.createPlayerInitialGameState(normalHand);
+                Dealer testDealer = Dealer.from(GameState.createInitialGameState(blackJackHand));
+                Player testPlayer = Player.from(GUMP, GameState.createInitialGameState(normalHand));
 
                 //when
-                GameResult result = GameResult.decidePlayerResult(playerGameState, dealerGameState);
+                GameResult result = GameResult.decidePlayerResult(testPlayer, testDealer);
 
                 //then
                 assertEquals(GameResult.패, result);
@@ -67,11 +70,11 @@ class GameResultTest {
                         new Card(CardShape.하트, CardContents.TEN)
                 );
 
-                GameState dealerGameState = GameState.createDealerInitialGameState(blackJackHand);
-                GameState playerGameState = GameState.createPlayerInitialGameState(anotherBlackJackHand);
+                Dealer testDealer = Dealer.from(GameState.createInitialGameState(blackJackHand));
+                Player testPlayer = Player.from(GUMP, GameState.createInitialGameState(anotherBlackJackHand));
 
                 //when
-                GameResult result = GameResult.decidePlayerResult(playerGameState, dealerGameState);
+                GameResult result = GameResult.decidePlayerResult(testPlayer, testDealer);
 
                 //then
                 assertEquals(GameResult.무, result);
@@ -93,16 +96,13 @@ class GameResultTest {
             @DisplayName("플레이어가 bust 이면 패 결과를 반환")
             void player_bust_case() {
                 //given
-                GameState dealerGameState = GameState.createDealerInitialGameState(normalHand);
-                GameState playerGameState = GameState.createPlayerInitialGameState(handThatValue16);
-                Player testPlayer = Player.from(
-                        "gump",
-                        playerGameState
-                );
+
+                Player testPlayer = Player.from(GUMP, GameState.createInitialGameState(handThatValue16));
+                Dealer testDealer = Dealer.from(GameState.createInitialGameState(normalHand));
                 testPlayer = testPlayer.hit(testTotalDeck::drawCard);
 
                 //when
-                GameResult result = GameResult.decidePlayerResult(testPlayer.gameState, dealerGameState);
+                GameResult result = GameResult.decidePlayerResult(testPlayer, testDealer);
 
                 //then
                 assertEquals(GameResult.패, result);
@@ -112,15 +112,13 @@ class GameResultTest {
             @DisplayName("딜러가 bust 이면 승 결과를 반환")
             void dealer_bust_case() {
                 //given
-                GameState dealerGameState = GameState.createDealerInitialGameState(handThatValue16);
-                GameState playerGameState = GameState.createPlayerInitialGameState(normalHand);
-                Dealer testDealer = Dealer.from(
-                        dealerGameState
-                );
-                Dealer newDealer = testDealer.addCard(testTotalDeck::drawCard);
+                Player testPlayer = Player.from(GUMP, GameState.createInitialGameState(normalHand));
+                Dealer testDealer = Dealer.from(GameState.createInitialGameState(handThatValue16));
+
+                testDealer = testDealer.addCard(testTotalDeck::drawCard);
 
                 //when
-                GameResult result = GameResult.decidePlayerResult(playerGameState, newDealer.gameState);
+                GameResult result = GameResult.decidePlayerResult(testPlayer, testDealer);
 
                 //then
                 assertEquals(GameResult.승, result);

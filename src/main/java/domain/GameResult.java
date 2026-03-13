@@ -5,7 +5,10 @@ import domain.state.GameState;
 public enum GameResult {
     승, 무, 패;
 
-    public static GameResult decidePlayerResult(GameState playerGameState, GameState dealerGameState) {
+    public static GameResult decidePlayerResult(Player player, Dealer dealer) {
+        GameState playerGameState = player.gameState;
+        GameState dealerGameState = dealer.gameState;
+        
         if (playerGameState.isBust()) {
             return GameResult.패;
         }

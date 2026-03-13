@@ -6,19 +6,28 @@ import java.util.Objects;
 import java.util.function.Supplier;
 
 public class Player extends Participant {
-    private Player(String name, GameState gameState) {
-        super(name, gameState);
+    private Player(String name, GameState gameState, BetAmount betAmount) {
+        super(name, gameState, betAmount);
     }
 
     public static Player from(String name, GameState gameState) {
-        return new Player(name, gameState);
+        return new Player(name, gameState, BetAmount.empty());
+    }
+
+    public Player bet(int amount) {
+        return new Player(
+                this.participantName.name(),
+                this.gameState,
+                BetAmount.of(amount)
+        );
     }
 
     public Player hit(Supplier<Card> cardSupplier) {
         GameState newGameState = gameState.hit(cardSupplier);
         return new Player(
                 this.participantName.name(),
-                newGameState
+                newGameState,
+                this.betAmount
         );
     }
 
@@ -26,7 +35,8 @@ public class Player extends Participant {
         GameState newStandGameState = gameState.stay();
         return new Player(
                 this.participantName.name(),
-                newStandGameState
+                newStandGameState,
+                this.betAmount
         );
     }
 
@@ -38,8 +48,8 @@ public class Player extends Participant {
         return gameState.isFinished();
     }
 
-    public GameResult calculateGameResult(GameState dealerGameState) {
-        return gameState.compare(gameState, dealerGameState);
+    public GameResult calculateGameResult(Dealer dealer) {
+        return GameResult.decidePlayerResult(this, dealer);
     }
 
     @Override

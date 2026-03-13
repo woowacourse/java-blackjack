@@ -37,7 +37,7 @@ public class MultiPlayers {
         Hand newPlayerHand = Hand.of(twoCards.get(0), twoCards.get(1));
         return Player.from(
                 name,
-                GameState.createPlayerInitialGameState(newPlayerHand)
+                GameState.createInitialGameState(newPlayerHand)
         );
     }
 
@@ -76,7 +76,7 @@ public class MultiPlayers {
 
     public List<PlayerResultDto> checkPlayersGameResult(Dealer dealer) {
         return players.values().stream()
-                .map(player -> PlayerResultDto.from(player, dealer.gameState))
+                .map(player -> PlayerResultDto.from(player, dealer))
                 .toList();
     }
 

@@ -7,12 +7,19 @@ import java.util.function.Supplier;
 public class Dealer extends Participant {
     private static final String DEALER_NAME = "딜러";
 
-    private Dealer(GameState gameState) {
-        super(DEALER_NAME, gameState);
+    private Dealer(GameState gameState, BetAmount betAmount) {
+        super(DEALER_NAME, gameState, betAmount);
     }
 
     public static Dealer from(GameState gameState) {
-        return new Dealer(gameState);
+        return new Dealer(gameState, BetAmount.empty());
+    }
+
+    public Dealer bet(int amount) {
+        return new Dealer(
+                this.gameState,
+                BetAmount.of(amount)
+        );
     }
 
     @Override

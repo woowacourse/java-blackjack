@@ -27,7 +27,7 @@ class PlayerTest {
         String name = "pobi";
 
         assertDoesNotThrow(
-                () -> Player.from(name, GameState.createPlayerInitialGameState(playerHand))
+                () -> Player.from(name, GameState.createInitialGameState(playerHand))
         );
     }
 
@@ -48,7 +48,7 @@ class PlayerTest {
         String testName = "gump";
         Player testPlayerWhoHoldTotal15Cards = Player.from(
                 testName,
-                GameState.createPlayerInitialGameState(playerHand)
+                GameState.createInitialGameState(playerHand)
         );
 
         @Test
@@ -91,7 +91,7 @@ class PlayerTest {
             String testName = "gump";
             Player testPlayer = Player.from(
                     testName,
-                    GameState.createPlayerInitialGameState(playerHand)
+                    GameState.createInitialGameState(playerHand)
             );
             testPlayer.hit(onlyTwoTenCardSupplier);
 
@@ -114,7 +114,7 @@ class PlayerTest {
         String testName = "gump";
         Player testPlayer = Player.from(
                 testName,
-                GameState.createPlayerInitialGameState(playerHand)
+                GameState.createInitialGameState(playerHand)
         );
 
         //when
@@ -137,14 +137,14 @@ class PlayerTest {
                 new Card(CardShape.스페이드, CardContents.TWO),
                 new Card(CardShape.클로버, CardContents.THREE)
         );
-        GameState dealerGameState = GameState.createDealerInitialGameState(blackJackHand);
+        Dealer testDealer = Dealer.from(GameState.createInitialGameState(blackJackHand));
         Player testPlayer = Player.from(
                 testPlayerName,
-                GameState.createPlayerInitialGameState(notBlackJackAndNotBustHand)
+                GameState.createInitialGameState(notBlackJackAndNotBustHand)
         );
 
         //when
-        GameResult result = testPlayer.calculateGameResult(dealerGameState);
+        GameResult result = testPlayer.calculateGameResult(testDealer);
 
         //then
         assertEquals(GameResult.class, result.getClass());
@@ -164,11 +164,11 @@ class PlayerTest {
         );
         Player firstGump = Player.from(
                 testName,
-                GameState.createPlayerInitialGameState(playerHand1)
+                GameState.createInitialGameState(playerHand1)
         );
         Player secondGump = Player.from(
                 testName,
-                GameState.createPlayerInitialGameState(playerHand2)
+                GameState.createInitialGameState(playerHand2)
         );
         //when, then
         Assertions.assertThat(firstGump.equals(secondGump)).isTrue();
