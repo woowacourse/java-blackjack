@@ -22,7 +22,7 @@ public class InputParser {
 
     public static int parseBetAmount(String input) {
         try {
-            int amount = Integer.parseInt(input.trim());
+            int amount = Integer.parseInt(input);
             if (amount <= 0) {
                 throw new IllegalArgumentException("[ERROR] 베팅 금액은 양수여야 합니다. 다시 입력해주세요.");
             }

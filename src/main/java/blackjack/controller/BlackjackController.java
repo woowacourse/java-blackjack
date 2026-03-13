@@ -108,9 +108,8 @@ public class BlackjackController {
     private List<Player> createPlayersWithBettingAmounts(List<String> playerNames) {
         List<Player> players = new ArrayList<>();
         for (String playerName : playerNames) {
-            String bettingAmountInput = InputView.askToPlayerBettingAmount(playerName);
             int bettingAmount = retryInput.read(
-                    () -> InputParser.parseBetAmount(bettingAmountInput));
+                    () -> InputParser.parseBetAmount(InputView.askToPlayerBettingAmount(playerName)));
             players.add(new Player(playerName, bettingAmount));
         }
         return players;
