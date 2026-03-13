@@ -1,7 +1,7 @@
 package domain;
 
 public class Player extends Participant {
-    private static final int BUST_THRESHOLD = 21;
+    private static final int HIT_THRESHOLD = 20;
 
     private Player(Name name) {
         super(name);
@@ -12,5 +12,7 @@ public class Player extends Participant {
     }
 
     @Override
-    protected int getBustThreshold() { return BUST_THRESHOLD; }
+    protected int getHitThreshold() {
+        return HIT_THRESHOLD;
+    }
 }

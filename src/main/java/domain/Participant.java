@@ -17,10 +17,10 @@ public abstract class Participant {
     }
 
     public boolean canReceiveCard() {
-        return cards.canReceiveCard(getBustThreshold());
+        return cards.canReceiveCard(getHitThreshold());
     };
 
-    protected abstract int getBustThreshold();
+    protected abstract int getHitThreshold();
 
     public String getName() {
         return name.getName();

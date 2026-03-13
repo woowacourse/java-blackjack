@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
-    private static final int BUST_SCORE = 21;
+    private static final int BLACKJACK_SCORE = 21;
+
     private final List<Card> cards;
 
     public Cards(List<Card> cards) {
@@ -13,7 +14,10 @@ public class Cards {
 
     public int calculateOptimalScore() {
         int sum = calculateScore();
-        for (int i = countAce(); i > 0 && isBust(sum); i--) {
+        for (int i = countAce(); i > 0; i--) {
+            if (isLessThanBustScore(sum)) {
+                break;
+            }
             sum -= 10;
         }
         return sum;
@@ -23,9 +27,9 @@ public class Cards {
         cards.add(card);
     }
 
-    public boolean canReceiveCard(int bustThreshold) {
+    public boolean canReceiveCard(int hitThreshold) {
         int sum = calculateOptimalScore();
-        return !isBust(sum) && sum < bustThreshold;
+        return isLessThanBustScore(sum) && sum <= hitThreshold;
     }
 
     public List<Card> getCards() {
@@ -44,7 +48,7 @@ public class Cards {
                 .sum();
     }
 
-    private boolean isBust(int score) {
-        return score > BUST_SCORE;
+    private boolean isLessThanBustScore(int score) {
+        return score < BLACKJACK_SCORE;
     }
 }

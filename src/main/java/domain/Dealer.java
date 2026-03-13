@@ -1,7 +1,7 @@
 package domain;
 
 public class Dealer extends Participant {
-    private static final int BUST_THRESHOLD = 17;
+    private static final int HIT_THRESHOLD = 16;
     private static final String DEALER_NAME = "딜러";
 
     private Dealer(Name name) {
@@ -13,7 +13,7 @@ public class Dealer extends Participant {
     }
 
     @Override
-    protected int getBustThreshold() {
-        return BUST_THRESHOLD;
+    protected int getHitThreshold() {
+        return HIT_THRESHOLD;
     }
 }
