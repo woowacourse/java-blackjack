@@ -1,5 +1,6 @@
 package domain;
 
+import java.math.BigDecimal;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,7 +43,7 @@ public class BlackjackGame {
 
     public GameSummary getResult() {
         Map<User, GameResult> userResults = new LinkedHashMap<>();
-        Map<User, Long> betAmounts = new LinkedHashMap<>();
+        Map<User, BigDecimal> betAmounts = new LinkedHashMap<>();
         int dealerScore = participants.getDealerScore();
 
         for (User user : participants.getUsers()) {

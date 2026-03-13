@@ -2,6 +2,7 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.math.BigDecimal;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -99,6 +100,6 @@ public class BlackjackGameFlowTest {
         GameSummary summary = blackjackGame.getResult();
 
         // then
-        assertThat(summary.getDealerProfit()).isEqualTo(-500);
+        assertThat(summary.getDealerProfit()).isEqualTo(new BigDecimal("-500.0"));
     }
 }

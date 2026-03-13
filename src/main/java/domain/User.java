@@ -1,5 +1,6 @@
 package domain;
 
+import java.math.BigDecimal;
 import vo.Bet;
 import vo.Name;
 
@@ -15,7 +16,7 @@ public class User extends Participant {
         this.bet = new Bet(betAmount);
     }
 
-    public long getBetAmount() {
+    public BigDecimal getBetAmount() {
         return bet.getAmount();
     }
 

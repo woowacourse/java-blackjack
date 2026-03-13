@@ -1,11 +1,13 @@
 package vo;
 
+import java.math.BigDecimal;
+
 public class Bet {
-    private final long amount;
+    private final BigDecimal amount;
 
     public Bet(String betAmount) {
         validate(betAmount);
-        this.amount = Long.parseLong(betAmount);
+        this.amount = new BigDecimal(betAmount);
     }
 
     private void validate(String betAmount) {
@@ -32,7 +34,7 @@ public class Bet {
         }
     }
 
-    public long getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 }

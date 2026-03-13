@@ -2,6 +2,7 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.math.BigDecimal;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -91,11 +92,11 @@ public class BlackjackGameTest {
 
         // when
         GameSummary summary = blackjackGame.getResult();
-        long userProfitSum = summary.getUserResults().keySet().stream()
-                .mapToLong(summary::getUserProfit)
-                .sum();
+        BigDecimal userProfitSum = summary.getUserResults().keySet().stream()
+                .map(summary::getUserProfit)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         // then
-        assertThat(summary.getDealerProfit()).isEqualTo(-userProfitSum);
+        assertThat(summary.getDealerProfit()).isEqualTo(userProfitSum.negate());
     }
 }
