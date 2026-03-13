@@ -29,7 +29,7 @@ public class BlackjackController {
 
     public void startGame() {
         List<String> playerNames = getPlayerNames();
-        List<Player> players = getPlayers(playerNames);
+        List<Player> players = createPlayersWithBettingAmounts(playerNames);
         Dealer dealer = new Dealer();
 
         setupInitialHand(players, dealer, playerNames); // 2장씩 카드 분배
@@ -105,10 +105,13 @@ public class BlackjackController {
         OutputView.printAllUserCards(playersCardsName, dealer.getOneCardName());
     }
 
-    private List<Player> getPlayers(List<String> playerNames) {
+    private List<Player> createPlayersWithBettingAmounts(List<String> playerNames) {
         List<Player> players = new ArrayList<>();
         for (String playerName : playerNames) {
-            players.add(new Player(playerName));
+            String bettingAmountInput = InputView.askToPlayerBettingAmount(playerName);
+            int bettingAmount = retryInput.read(
+                    () -> InputParser.parseBetAmount(bettingAmountInput));
+            players.add(new Player(playerName, bettingAmount));
         }
         return players;
     }
@@ -142,5 +145,4 @@ public class BlackjackController {
         }
         throw new IllegalArgumentException("잘못된 입력입니다. y 또는 n을 입력해주세요");
     }
-
 }
