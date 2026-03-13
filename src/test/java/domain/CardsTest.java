@@ -16,38 +16,42 @@ class CardsTest {
     @ParameterizedTest(name = "{0}")
     @MethodSource("canReceiveCardTestCased")
     @DisplayName("카드를 받을 수 있을지 확인한다.")
-    void canReceiveCard(String description, List<Integer> numbers, boolean expected) {
+    void canReceiveCard(String description, List<Number> numbers, boolean expected) {
         Cards cards = createCards(numbers);
         assertThat(expected).isEqualTo(cards.canReceiveCard(21));
     }
 
     static Stream<Arguments> canReceiveCardTestCased() {
         return Stream.of(
-                Arguments.of("Ace 2개면 카드를 받을 수 있다.", List.of(11, 11), true),
-                Arguments.of("King,9,Ace,Ace면 카드를 받을 수 있다.", List.of(10, 9, 11, 11), true),
-                Arguments.of("King 3개면 카드를 받을 수 없다.", List.of(10, 10, 10), false)
+                Arguments.of("Ace 2개면 카드를 받을 수 있다.",
+                        List.of(Number.ACE, Number.ACE), true),
+                Arguments.of("King,9,Ace,Ace면 카드를 받을 수 있다.",
+                        List.of(Number.KING, Number.NINE, Number.ACE, Number.ACE), true),
+                Arguments.of("King 3개면 카드를 받을 수 없다.",
+                        List.of(Number.TEN, Number.TEN, Number.TEN), false)
         );
     }
 
     @Test
     @DisplayName("Ace를 두 장을 받을 경우의 점수 합은 12가 된다.")
     void calculateOptimalScore() {
-        List<Integer> numbers = new ArrayList<>(List.of(11, 11));
+        List<Number> numbers = new ArrayList<>(List.of(Number.ACE, Number.ACE));
         Cards cards = createCards(numbers);
 
         assertThat(12).isEqualTo(cards.calculateOptimalScore());
     }
 
-    private Cards createCards(List<Integer> numbers) {
+    private Cards createCards(List<Number> numbers) {
         Cards cards = new Cards(new ArrayList<>());
-        numbers.forEach(number -> cards.addCard(new Card(Shape.from("스페이드"), Number.from(number))));
+        numbers.forEach(number -> cards.addCard(new Card(Shape.SPADE, number)));
         return cards;
     }
 
     @Test
     @DisplayName("버스트 후 Ace를 1로 조정한 점수를 반환한다.")
     void calculateOptimalScore_aceAdjustment() {
-        Cards cards = createCards(List.of(11, 10, 10));
+        Cards cards = createCards(
+                List.of(Number.ACE, Number.JACK, Number.QUEEN));
         assertThat(cards.calculateOptimalScore()).isEqualTo(21);
     }
 }

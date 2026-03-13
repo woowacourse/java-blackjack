@@ -15,55 +15,71 @@ class RefereeTest {
     @ParameterizedTest(name = "{0}")
     @MethodSource("playerScoreTestCases")
     @DisplayName("플레이어의 점수가 딜러보다 높으면 이기고, 낮으면 진다. 또한 동점이면 딜러가 이긴다.")
-    void player_score_compare(String description, List<Integer> dealerCards, List<Integer> playerCards,
+    void player_score_compare(String description, List<Number> dealerCards, List<Number> playerCards,
                               MatchResult expected) {
         Dealer dealer = createDealer(dealerCards);
         Player player = Player.from("pobi");
-        playerCards.forEach(number -> player.receiveCard(new Card(Shape.HEART, Number.from(number))));
+        playerCards.forEach(number -> player.receiveCard(new Card(Shape.HEART, number)));
 
         Result result = new Referee().judge(dealer, List.of(player));
         assertThat(result.getPlayerResults().get("pobi")).isEqualTo(expected);
     }
 
     static Stream<Arguments> playerScoreTestCases() {
-        return Stream.of(Arguments.of("플레이어 점수가 높으면 이긴다", List.of(10, 7), List.of(10, 9), MatchResult.WIN),
-                Arguments.of("플레이어 점수가 낮으면 진다", List.of(10, 9), List.of(10, 7), MatchResult.LOSE),
-                Arguments.of("동점이면 무승부다.", List.of(10, 9), List.of(10, 9), MatchResult.DRAW));
+        return Stream.of(
+                Arguments.of("플레이어 점수가 높으면 이긴다",
+                        List.of(Number.TEN, Number.SEVEN),
+                        List.of(Number.TEN, Number.NINE),
+                        MatchResult.WIN),
+                Arguments.of("플레이어 점수가 낮으면 진다",
+                        List.of(Number.TEN, Number.NINE),
+                        List.of(Number.TEN, Number.SEVEN),
+                        MatchResult.LOSE),
+                Arguments.of("동점이면 무승부다.",
+                        List.of(Number.TEN, Number.NINE),
+                        List.of(Number.TEN, Number.NINE),
+                        MatchResult.DRAW));
     }
 
     @ParameterizedTest(name = "{0}")
     @MethodSource("playerBustTestCases")
     @DisplayName("플레이어의 점수가 버스트되면 딜러의 점수와 무관하게 패배한다.")
-    void judge(String description, List<Integer> dealerCards, List<Integer> playerCards, MatchResult expected) {
+    void judge(String description, List<Number> dealerCards, List<Number> playerCards, MatchResult expected) {
         Dealer dealer = createDealer(dealerCards);
         Player player = Player.from("pobi");
-        playerCards.forEach(number -> player.receiveCard(new Card(Shape.HEART, Number.from(number))));
+        playerCards.forEach(number -> player.receiveCard(new Card(Shape.HEART, number)));
 
         Result result = new Referee().judge(dealer, List.of(player));
         assertThat(result.getPlayerResults().get("pobi")).isEqualTo(expected);
     }
 
     static Stream<Arguments> playerBustTestCases() {
-        return Stream.of(Arguments.of("플레이어 버스트면 진다", List.of(10, 8), List.of(10, 10, 10), MatchResult.LOSE),
-                Arguments.of("딜러의 점수가 버스트되었더라도 플레이어의 점수가 버스트되면 플레이어의 패배다.", List.of(10, 8, 10), List.of(10, 10, 10),
+        return Stream.of(
+                Arguments.of("플레이어 버스트면 진다",
+                        List.of(Number.TEN, Number.EIGHT),
+                        List.of(Number.TEN, Number.TEN, Number.TEN),
+                        MatchResult.LOSE),
+                Arguments.of("딜러의 점수가 버스트되었더라도 플레이어의 점수가 버스트되면 플레이어의 패배다.",
+                        List.of(Number.TEN, Number.EIGHT, Number.TEN),
+                        List.of(Number.TEN, Number.TEN, Number.TEN),
                         MatchResult.LOSE));
     }
 
     @Test
     @DisplayName("딜러가 버스트면 플레이어가 이긴다.")
     void dealer_bust() {
-        Dealer dealer = createDealer(List.of(10, 10, 10));
+        Dealer dealer = createDealer(List.of(Number.TEN, Number.JACK, Number.QUEEN));
         Player player = Player.from("pobi");
-        player.receiveCard(new Card(Shape.HEART, Number.from(10)));
-        player.receiveCard(new Card(Shape.HEART, Number.from(8)));
+        player.receiveCard(new Card(Shape.HEART, Number.TEN));
+        player.receiveCard(new Card(Shape.HEART, Number.EIGHT));
 
         Result result = new Referee().judge(dealer, List.of(player));
         assertThat(result.getPlayerResults().get("pobi")).isEqualTo(MatchResult.WIN);
     }
 
-    private Dealer createDealer(List<Integer> numbers) {
+    private Dealer createDealer(List<Number> numbers) {
         Dealer dealer = Dealer.create();
-        numbers.forEach(n -> dealer.receiveCard(new Card(Shape.HEART, Number.from(n))));
+        numbers.forEach(number -> dealer.receiveCard(new Card(Shape.HEART, number)));
         return dealer;
     }
 }

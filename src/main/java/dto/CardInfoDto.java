@@ -1,8 +1,8 @@
 package dto;
 
-public record CardInfoDto(int number, String shapeKoreanName) {
+public record CardInfoDto(String numberDisplayName, String shape) {
 
-    public static CardInfoDto from(int number, String shapeKoreanName) {
-        return new CardInfoDto(number, shapeKoreanName);
+    public static CardInfoDto from(String numberDisplayName, String shape) {
+        return new CardInfoDto(numberDisplayName, shape);
     }
 }

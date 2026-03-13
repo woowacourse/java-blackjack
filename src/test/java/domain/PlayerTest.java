@@ -15,18 +15,18 @@ class PlayerTest {
     @ParameterizedTest(name = "{0}")
     @MethodSource("canReceiveCardTestCases")
     @DisplayName("플레이어가 카드를 받을 수 있는지 확인한다.")
-    void canReceiveCard(String description, List<Integer> numbers, boolean expected) {
+    void canReceiveCard(String description, List<Number> numbers, boolean expected) {
         Player player = Player.from("pobi");
-        numbers.forEach(number -> player.receiveCard(new Card(Shape.HEART, Number.from(number))));
+        numbers.forEach(number -> player.receiveCard(new Card(Shape.HEART, number)));
 
         assertThat(player.canReceiveCard()).isEqualTo(expected);
     }
 
     static Stream<Arguments> canReceiveCardTestCases() {
         return Stream.of(
-                Arguments.of("20 이하면 카드를 받을 수 있다", List.of(10, 9), true),
-                Arguments.of("21이면 카드를 받을 수 없다", List.of(10, 11), false),
-                Arguments.of("버스트면 카드를 받을 수 없다", List.of(10, 10, 10), false)
+                Arguments.of("20 이하면 카드를 받을 수 있다", List.of(Number.QUEEN, Number.NINE), true),
+                Arguments.of("21이면 카드를 받을 수 없다", List.of(Number.QUEEN, Number.ACE), false),
+                Arguments.of("버스트면 카드를 받을 수 없다", List.of(Number.KING, Number.JACK, Number.TEN), false)
         );
     }
 }

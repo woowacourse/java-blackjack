@@ -40,7 +40,7 @@ public class OutputView {
 
     private static String toCardsInfoString(ParticipantCardsDto participantCardsDto) {
         List<String> cardsInfo = participantCardsDto.cardsInfo().stream()
-                .map(cardInfoDto -> cardInfoDto.shapeKoreanName() + cardInfoDto.number()).toList();
+                .map(cardInfoDto -> cardInfoDto.numberDisplayName() + cardInfoDto.shape()).toList();
 
         String cardsInfoString = String.join(",", cardsInfo);
         return cardsInfoString;
@@ -67,7 +67,7 @@ public class OutputView {
 
     public static void printInitialDealerCards(ParticipantCardsDto participantCardsDto) {
         CardInfoDto dealerCard = participantCardsDto.cardsInfo().getFirst();
-        String cardInfoString = dealerCard.shapeKoreanName() + dealerCard.number();
+        String cardInfoString = dealerCard.numberDisplayName() + dealerCard.shape();
         System.out.printf("%s: %s%n", participantCardsDto.name(), cardInfoString);
     }
 }

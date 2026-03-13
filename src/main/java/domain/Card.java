@@ -13,6 +13,10 @@ public class Card {
         return number.getValue();
     }
 
+    public String getNumberDisplayName() {
+        return number.getDisplayName();
+    }
+
     public String getShape() {
         return shape.getShape();
     }
