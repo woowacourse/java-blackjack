@@ -72,12 +72,17 @@ public class BlackjackService {
         List<PlayerResultDto> playerResultDtoList = new ArrayList<>();
         for (Player player : players.value()) {
             double profit = player.getBetAmount() * Result.from(dealer, player).getResult();
-            if (profit < 0) {
-                dealerProfit += profit * (-1);
-            }
+            dealerProfit += calculateDealerProfit(profit);
             playerResultDtoList.add(new PlayerResultDto(player.getName(), profit));
         }
         return new BlackjackProfitDto(dealerProfit, playerResultDtoList);
+    }
+
+    private double calculateDealerProfit(double profit) {
+        if (profit < 0) {
+            return profit * (-1);
+        }
+        return 0;
     }
 
     public ParticipantDto createPlayerDto(int playerIndex) {

@@ -14,6 +14,7 @@ import domain.participant.Players;
 import dto.BlackjackResultDto;
 import dto.ParticipantDto;
 import java.util.List;
+import org.assertj.core.groups.Tuple;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -200,6 +201,60 @@ class BlackjackServiceTest {
 
             // then
             assertThat(actual).isFalse();
+        }
+    }
+
+    @Nested
+    class CalculateBlackjackResultTest {
+
+        @Test
+        void 플레이어_결과별_수익과_딜러_수익을_계산한다() {
+
+            // given
+            blackjackService.receivePlayerBets(0, Money.from("1000"));
+            blackjackService.receivePlayerBets(1, Money.from("2000"));
+            blackjackService.receivePlayerBets(2, Money.from("3000"));
+
+            addCards(players.getPlayerByIndex(0), Rank.TEN, Rank.TEN, Rank.TWO);
+            addCards(players.getPlayerByIndex(1), Rank.TEN, Rank.NINE);
+            addCards(players.getPlayerByIndex(2), Rank.ACE, Rank.K);
+
+            // when
+            var actual = blackjackService.calculateBlackjackResult();
+
+            // then
+            assertThat(actual.dealerProfit()).isEqualTo(1000);
+            assertThat(actual.playerResultDtoList())
+                .extracting("name", "profit")
+                .containsExactly(
+                    Tuple.tuple("aa", -1000.0),
+                    Tuple.tuple("bb", 2000.0),
+                    Tuple.tuple("cc", 4500.0)
+                );
+        }
+
+        @Test
+        void 무승부는_0원_처리되고_딜러_수익에는_패배한_플레이어만_합산된다() {
+
+            // given
+            blackjackService.receivePlayerBets(0, Money.from("1000"));
+            blackjackService.receivePlayerBets(1, Money.from("2000"));
+            blackjackService.receivePlayerBets(2, Money.from("3000"));
+
+            addCards(players.getPlayerByIndex(1), Rank.K, Rank.Q, Rank.TWO);
+
+            // when
+            var actual = blackjackService.calculateBlackjackResult();
+
+            // then
+            assertThat(actual.dealerProfit()).isEqualTo(2000);
+            assertThat(actual.playerResultDtoList())
+                .extracting("name", "profit")
+                .containsExactly(
+                    Tuple.tuple("aa", 0.0),
+                    Tuple.tuple("bb", -2000.0),
+                    Tuple.tuple("cc", 0.0)
+                );
         }
     }
 
