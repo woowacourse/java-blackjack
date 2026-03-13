@@ -17,4 +17,9 @@ public class InputView {
         System.out.printf(ASK_HIT_OR_STAND, playerName);
         return scanner.nextLine();
     }
+
+    public static int askPlayerBettingAmount(String playerName) {
+        System.out.printf("%s의 배팅 금액은?", playerName);
+        return scanner.nextInt();
+    }
 }
