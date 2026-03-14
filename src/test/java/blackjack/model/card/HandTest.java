@@ -11,6 +11,18 @@ class HandTest {
     private static final int ACE_ADJUST_VALUE = 10;
 
     @Test
+    void 처음_생성하면_카드를_지니지_않는다() {
+        // given
+        Hand hand = new Hand();
+
+        // when
+        List<Card> cards = hand.getCards();
+
+        // then
+        assertThat(cards).isEmpty();
+    }
+
+    @Test
     void 한장의_카드를_받아서_손패에_추가한다() {
         // given
         Hand hand = new Hand();
