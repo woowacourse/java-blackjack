@@ -3,7 +3,7 @@ package blackjack.view.dto;
 import java.util.List;
 
 public record TotalWinningResult(
-        int dealerProfit,
+        long dealerProfit,
         List<PlayerProfit> playerResults
 ) {
 }
