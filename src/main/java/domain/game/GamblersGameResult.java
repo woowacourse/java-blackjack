@@ -1,5 +1,7 @@
 package domain.game;
 
+import static util.Constants.REVERSE_SIGN;
+
 import domain.player.Gambler;
 import domain.player.Gamblers;
 import domain.player.Participant;
@@ -10,17 +12,10 @@ import java.util.stream.Collectors;
 
 public class GamblersGameResult {
 
-    private Map<String, GameResult> gamblersResult;
+    private Map<String, Profit> participantProfits;
 
     public GamblersGameResult(Participant dealer, Gamblers gamblers) {
-        gamblersResult = new HashMap<>();
-        for(Participant gambler : gamblers.getGamblers()) {
-            GameResult result = GameResult.determine(dealer, gambler);
-            gamblersResult.put(gambler.getName(), result);
-        }
-    }
-
-    public GameResult getMatchResult(String name) {
-        return gamblersResult.get(name);
+        this.participantProfits = new HashMap<>();
+        calculateProfits(dealer, gamblers);
     }
 }

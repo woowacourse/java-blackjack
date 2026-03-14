@@ -26,6 +26,8 @@ public class Constants {
 
     public static final int MAXIMUM_NAME_LENGTH = 10;
 
+    public static final int REVERSE_SIGN = -1;
+
     private Constants() {
     }
 }

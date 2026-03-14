@@ -1,34 +1,50 @@
-//package domain.game;
-//
-//import static util.Constants.DEALER_NAME;
-//
-//import domain.card.Card;
-//import domain.player.Dealer;
-//import java.util.HashMap;
-//import java.util.Map;
-//import org.assertj.core.api.Assertions;
-//import org.junit.jupiter.api.DisplayName;
-//import org.junit.jupiter.api.Test;
-//
-//class GamblersGameResultTest {
-//
-//    @Test
-//    @DisplayName("승패 결과 저장 검증")
-//    void 승패_결과_저장_검증() {
-//        // given
-//        Map<String, Integer> gamblers = new HashMap<>();
-//        gamblers.put("pobi",10);
-//        gamblers.put("coco", 21);
-//        gamblers.put("kaiya", 20);
-//        Dealer dealer = new Dealer(DEALER_NAME);
-//        dealer.addCard(new Card("K", "다이아몬드"));
-//
-//        // when
-//        GamblersGameResult gameResult = new GamblersGameResult(dealer, gamblers);
-//
-//        // then
-//        Assertions.assertThat(gameResult.getMatchResult("pobi")).isEqualTo(GameResult.LOSE);
-//        Assertions.assertThat(gameResult.getMatchResult("coco")).isEqualTo(GameResult.WIN);
-//        Assertions.assertThat(gameResult.getMatchResult("kaiya")).isEqualTo(GameResult.DRAW);
-//    }
-//}
+package domain.game;
+
+import static util.Constants.DEALER_NAME;
+
+import domain.betting.BettingAmount;
+import domain.card.Card;
+import domain.player.Dealer;
+import domain.player.Gambler;
+import domain.player.Gamblers;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+class GamblersGameResultTest {
+
+    @Test
+    @DisplayName("딜러, 참여자들의 수익을 정산")
+    void 딜러_참여자들_수익_정산() {
+        // given
+        Dealer dealer = new Dealer(DEALER_NAME);
+        dealer.addCard(new Card("K", "하트"));
+        dealer.addCard(new Card("Q", "하트"));
+
+        Gambler pobi = new Gambler("pobi", new BettingAmount(10000));
+        pobi.addCard(new Card("A", "스페이드"));
+        pobi.addCard(new Card("J", "클로버"));
+
+        Gambler coco = new Gambler("coco", new BettingAmount(20000));
+        coco.addCard(new Card("7", "하트"));
+        coco.addCard(new Card("Q", "스페이드"));
+
+        Gambler kaiya = new Gambler("kaiya", new BettingAmount(30000));
+        kaiya.addCard(new Card("J", "하트"));
+        kaiya.addCard(new Card("Q", "다이아몬드"));
+
+        Gamblers gamblers = new Gamblers(List.of(pobi, coco, kaiya));
+
+        // when
+        GamblersGameResult gameResult = new GamblersGameResult(dealer, gamblers);
+
+        // then
+        Assertions.assertThat(gameResult.getDealerProfit()).isEqualTo(new Profit(5000));
+        Assertions.assertThat(gameResult.getMatchProfits("pobi")).isEqualTo(new Profit(15000));
+        Assertions.assertThat(gameResult.getMatchProfits("coco")).isEqualTo(new Profit(-20000));
+        Assertions.assertThat(gameResult.getMatchProfits("kaiya")).isEqualTo(new Profit(0));
+    }
+}

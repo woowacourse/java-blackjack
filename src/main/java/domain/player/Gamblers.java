@@ -18,6 +18,9 @@ public class Gamblers {
                 .collect(Collectors.toList());
     }
 
+    public Gamblers(List<Gambler> gamblerList) {
+        this.gamblers = gamblerList;
+    }
     public boolean containGambler(String name) {
         return gamblers.stream()
                 .anyMatch(gambler -> gambler.isEqualName(name));

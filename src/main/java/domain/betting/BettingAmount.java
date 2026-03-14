@@ -21,4 +21,8 @@ public class BettingAmount {
     public int hashCode() {
         return Objects.hash(bettingAmount);
     }
+
+    public int getBettingAmount() {
+        return bettingAmount;
+    }
 }
