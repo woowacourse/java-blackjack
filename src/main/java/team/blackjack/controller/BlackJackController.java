@@ -1,10 +1,11 @@
 package team.blackjack.controller;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import team.blackjack.service.dto.DrawResult;
 import team.blackjack.service.dto.PayoutResult;
+import team.blackjack.service.dto.PlayerRequest;
 import team.blackjack.service.dto.ScoreResult;
 import team.blackjack.domain.Player;
 import team.blackjack.service.BlackJackService;
@@ -20,8 +21,8 @@ public class BlackJackController {
 
     public void run() {
         List<String> playerNames = readPlayerNames();
-        Map<String, Integer> playerStakes = readPlayerStakes(playerNames);
-        initializeBlackjackGame(playerStakes);
+        List<PlayerRequest> playerRequests = readPlayerStakes(playerNames);
+        initializeBlackjackGame(playerRequests);
 
         DrawResult drawResult = blackJackService.getHandResult();
         OutputView.printDrawResult(drawResult);
@@ -45,19 +46,19 @@ public class BlackJackController {
         return InputView.readPlayerNames();
     }
 
-    private Map<String, Integer> readPlayerStakes(List<String> playerNames) {
-        Map<String, Integer> playerStakes = new HashMap<>();
+    private List<PlayerRequest> readPlayerStakes(List<String> playerNames) {
+        List<PlayerRequest> playerRequests = new ArrayList<>();
 
         for (String name : playerNames) {
             OutputView.printPlayerStakeRequest(name);
-            playerStakes.put(name, InputView.readPlayerStake());
+            playerRequests.add(new PlayerRequest(name, InputView.readPlayerStake()));
         }
 
-        return playerStakes;
+        return playerRequests;
     }
 
-    private void initializeBlackjackGame(Map<String, Integer> playerStakes) {
-        blackJackService.initGame(playerStakes);
+    private void initializeBlackjackGame(List<PlayerRequest> playerRequests) {
+        blackJackService.initGame(playerRequests);
         blackJackService.dealInitialCards();
     }
 

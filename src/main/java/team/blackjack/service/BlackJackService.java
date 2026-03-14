@@ -5,6 +5,7 @@ import java.util.Map;
 import team.blackjack.domain.Card;
 import team.blackjack.service.dto.DrawResult;
 import team.blackjack.service.dto.PayoutResult;
+import team.blackjack.service.dto.PlayerRequest;
 import team.blackjack.service.dto.ScoreResult;
 import team.blackjack.domain.BlackjackGame;
 import team.blackjack.domain.Dealer;
@@ -13,8 +14,8 @@ import team.blackjack.domain.Player;
 public class BlackJackService {
     private BlackjackGame blackjackGame;
 
-    public void initGame(Map<String, Integer> playerStakes) {
-        blackjackGame = new BlackjackGame(playerStakes);
+    public void initGame(List<PlayerRequest> playerRequests) {
+        blackjackGame = new BlackjackGame(playerRequests);
     }
 
     /**

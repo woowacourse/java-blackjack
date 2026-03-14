@@ -6,15 +6,17 @@ import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import team.blackjack.service.dto.PlayerRequest;
 
 class BlackjackGameTest {
-    private Map<String, Integer> playerSkates;
+    private List<PlayerRequest> playerRequests;
     private BlackjackGame blackjackGame;
 
     @BeforeEach
     void setUp() {
-        playerSkates = Map.of("pobi", 10000, "jason", 20000);
-        blackjackGame = new BlackjackGame(playerSkates);
+        playerRequests = List.of(new PlayerRequest("pobi", 10000),
+                new PlayerRequest("pobi", 20000));
+        blackjackGame = new BlackjackGame(playerRequests);
     }
 
     @Test

@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import team.blackjack.config.AppConfig;
 import team.blackjack.domain.rule.BlackjackRule;
+import team.blackjack.service.dto.PlayerRequest;
 
 public class BlackjackGame {
     private static final int INITIAL_CARD_COUNT = 2;
@@ -16,10 +17,10 @@ public class BlackjackGame {
     private final List<Player> players;
     private final Deck deck;
 
-    public BlackjackGame(Map<String, Integer> playerStakes) {
+    public BlackjackGame(List<PlayerRequest> playerRequests) {
         this.blackjackRule = AppConfig.getInstance().blackjackRule();
         this.dealer = new Dealer();
-        this.players = createPlayers(playerStakes);
+        this.players = createPlayers(playerRequests);
         this.deck = new Deck();
     }
 
@@ -109,11 +110,11 @@ public class BlackjackGame {
         return player.getCardInAllHands();
     }
 
-    private List<Player> createPlayers(Map<String, Integer> playerStakes) {
+    private List<Player> createPlayers(List<PlayerRequest> playerRequests) {
         List<Player> players = new ArrayList<>();
-        playerStakes.forEach((name, stake) -> {
-            players.add(new Player(name, stake));
-        });
+        playerRequests.forEach(
+                playerRequest -> players.add(
+                        new Player(playerRequest.name(), playerRequest.stake())));
 
         return players;
     }
