@@ -18,42 +18,42 @@ class HitTest {
     void 카드를_추가해도_버스트가_아니라면_상태를_유지한다() {
         // given
         Hand hand = new Hand(DEFAULT_HITTABLE_CARDS);
-        BlackjackState state = new Hit(hand);
+        Hit hit = new Hit(hand);
 
         // when
-        state = state.hit(new Card(Rank.ACE, Suit.HEART));
+        BlackjackState nextState = hit.hit(new Card(Rank.ACE, Suit.HEART));
 
         // then
-        assertThat(state).isInstanceOf(Hit.class);
+        assertThat(nextState).isInstanceOf(Hit.class);
     }
 
     @Test
     void 카드를_추가해_버스트가_된다면_전이한다() {
         // given
         Hand hand = new Hand(DEFAULT_HITTABLE_CARDS);
-        BlackjackState state = new Hit(hand);
+        Hit hit = new Hit(hand);
 
         // when
-        state = state.hit(new Card(Rank.JACK, Suit.HEART));
-        state = state.hit(new Card(Rank.QUEEN, Suit.HEART));
-        state = state.hit(new Card(Rank.KING, Suit.HEART));
+        BlackjackState nextState = hit.hit(new Card(Rank.JACK, Suit.HEART))
+                .hit(new Card(Rank.QUEEN, Suit.HEART))
+                .hit(new Card(Rank.KING, Suit.HEART));
 
         // then
-        assertThat(state).isInstanceOf(Bust.class);
+        assertThat(nextState).isInstanceOf(Bust.class);
     }
 
     @Test
     void 카드를_추가해_블랙잭이_된다면_전이한다() {
         // given
         Hand hand = new Hand(DEFAULT_HITTABLE_CARDS);
-        BlackjackState state = new Hit(hand);
+        Hit hit = new Hit(hand);
 
         // when
-        state = state.hit(new Card(Rank.TEN, Suit.HEART));
-        state = state.hit(new Card(Rank.ACE, Suit.HEART));
+        BlackjackState nextState = hit.hit(new Card(Rank.TEN, Suit.HEART))
+                .hit(new Card(Rank.ACE, Suit.HEART));
 
         // then
-        assertThat(state).isInstanceOf(Blackjack.class);
+        assertThat(nextState).isInstanceOf(Blackjack.class);
     }
 
     @Test
