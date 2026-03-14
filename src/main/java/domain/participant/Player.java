@@ -19,12 +19,12 @@ public class Player extends Participant {
     }
 
     public int finalProfit(Dealer dealer) {
-        if (dealer.isBlackjack() && isBlackjack()) { return money.draw(); }
-        if (isBlackjack()) { return money.blackjack(); }
-        if (isBust()) { return money.bust(); }
-        if (dealer.isBust()) { return money.win(); }
-        if (calculateScore() > dealer.calculateScore()) { return money.win(); }
-        if (calculateScore() == dealer.calculateScore()) { return money.draw(); }
+        if (dealer.isBlackjack() && isBlackjack()) { return money.getBack(); }
+        if (isBlackjack()) { return money.earnOnePointFiveTimes(); }
+        if (isBust()) { return money.lose(); }
+        if (dealer.isBust()) { return money.earn(); }
+        if (calculateScore() > dealer.calculateScore()) { return money.earn(); }
+        if (calculateScore() == dealer.calculateScore()) { return money.getBack(); }
         return money.lose();
     }
 

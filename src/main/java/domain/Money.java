@@ -17,15 +17,11 @@ public class Money {
         }
     }
 
-    public int blackjack() {
+    public int earnOnePointFiveTimes() {
         return (int) (betAmount * 1.5);
     }
 
-    public int bust() {
-        return -betAmount;
-    }
-
-    public int win() {
+    public int earn() {
         return betAmount;
     }
 
@@ -33,11 +29,7 @@ public class Money {
         return -betAmount;
     }
 
-    public int draw() {
+    public int getBack() {
         return 0;
-    }
-
-    public int getBetAmount() {
-        return betAmount;
     }
 }
