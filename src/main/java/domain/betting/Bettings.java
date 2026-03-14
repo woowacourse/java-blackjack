@@ -26,7 +26,7 @@ public class Bettings {
         return bettingMoneyByPlayer.get(player);
     }
 
-    public void settleBettingMoney(Player player, BettingRate bettingRate) {
+    public void settleBettingMoney(Player player, double bettingRate) {
         BettingMoney bettingMoney = bettingMoneyByPlayer.get(player);
         profitByPlayer.put(player, bettingMoney.withRate(bettingRate));
     }

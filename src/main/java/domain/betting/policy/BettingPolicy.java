@@ -1,7 +1,6 @@
 package domain.betting.policy;
 
 import domain.betting.BettingResult;
-import domain.betting.BettingRate;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
 
@@ -15,6 +14,6 @@ public abstract class BettingPolicy {
 
     public abstract boolean isPolicyApplied(Dealer dealer, Player player);
 
-    public abstract BettingRate getBettingRate(Dealer dealer, Player player);
+    public abstract double getBettingRate(Dealer dealer, Player player);
 
 }

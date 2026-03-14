@@ -18,8 +18,8 @@ public class BettingTableTest {
     private final Card cloverAce = Card.of(CardDenomination.ACE, CardEmblem.CLOVER);
     private final Card spadeJack = Card.of(CardDenomination.JACK, CardEmblem.SPADE);
     private final Card spadeNine = Card.of(CardDenomination.NINE, CardEmblem.SPADE);
-    private final BettingRate blackJackRate = BettingResult.BLACK_JACK.bettingRate();
-    private final BettingRate loseRate = BettingResult.PLAYER_LOSE.bettingRate();
+    private final double blackJackRate = BettingResult.BLACK_JACK.bettingRate();
+    private final double loseRate = BettingResult.PLAYER_LOSE.bettingRate();
     private final BettingMoney thousandWon = BettingMoney.bet("1000");
     private final Player testPlayer = Player.from(new PlayerName("test"));
     private CardBundle blackJackBundle;

@@ -31,7 +31,7 @@ public class BettingsTest {
         Bettings bettings = new Bettings();
 
         bettings.bet(testPlayer, bettingMoney);
-        bettings.settleBettingMoney(testPlayer, new BettingRate(1.0));
+        bettings.settleBettingMoney(testPlayer, 1.0);
 
         Profit actualDealerProfit = bettings.calculateDealerProfit();
         Profit expectedDealerProfit = new Profit(tenThousand).reverseProfit();

@@ -1,6 +1,5 @@
 package domain.betting.manager;
 
-import domain.betting.BettingRate;
 import domain.betting.policy.*;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
@@ -21,7 +20,7 @@ public class BettingPolicyManager {
         );
     }
 
-    public BettingRate gainBettingRate(Dealer dealer, Player player) {
+    public double gainBettingRate(Dealer dealer, Player player) {
         BettingPolicy bettingPolicy = findBettingPolicy(dealer, player);
         return bettingPolicy.getBettingRate(dealer, player);
     }

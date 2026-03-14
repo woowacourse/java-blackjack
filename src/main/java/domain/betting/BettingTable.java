@@ -30,7 +30,7 @@ public class BettingTable {
     }
 
     private void progressBetting(Dealer dealer, Player player) {
-        BettingRate bettingRate = bettingManager.gainBettingRate(dealer, player);
+        double bettingRate = bettingManager.gainBettingRate(dealer, player);
         bettings.settleBettingMoney(player, bettingRate);
     }
 

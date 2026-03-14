@@ -48,8 +48,8 @@ public class BettingPolicyTest {
         Dealer dealer = createDealer(blackjackBundle.openMyCards());
         dealer.dealMyself();
 
-        BettingRate actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
-        BettingRate expectedBettingRate = BettingResult.BLACK_JACK_PUSH.bettingRate();
+        double actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
+        double expectedBettingRate = BettingResult.BLACK_JACK_PUSH.bettingRate();
 
         Assertions.assertThat(actualBettingRate)
                 .isEqualTo(expectedBettingRate);
@@ -62,8 +62,8 @@ public class BettingPolicyTest {
         Dealer dealer = createDealer(List.of(spadeFive, spadeEight));
         dealer.dealMyself();
 
-        BettingRate actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
-        BettingRate expectedBettingRate = BettingResult.BLACK_JACK.bettingRate();
+        double actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
+        double expectedBettingRate = BettingResult.BLACK_JACK.bettingRate();
 
         Assertions.assertThat(actualBettingRate)
                 .isEqualTo(expectedBettingRate);
@@ -78,8 +78,8 @@ public class BettingPolicyTest {
         dealer.dealMyself();
         dealer.hitMyself();
 
-        BettingRate actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
-        BettingRate expectedBettingRate = BettingResult.PLAYER_WIN.bettingRate();
+        double actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
+        double expectedBettingRate = BettingResult.PLAYER_WIN.bettingRate();
 
         Assertions.assertThat(actualBettingRate)
                 .isEqualTo(expectedBettingRate);
@@ -93,8 +93,8 @@ public class BettingPolicyTest {
         dealer.dealMyself();
         dealer.hitIfRequired();
 
-        BettingRate actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
-        BettingRate expectedBettingRate = BettingResult.PLAYER_WIN.bettingRate();
+        double actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
+        double expectedBettingRate = BettingResult.PLAYER_WIN.bettingRate();
 
         Assertions.assertThat(actualBettingRate)
                 .isEqualTo(expectedBettingRate);
@@ -107,8 +107,8 @@ public class BettingPolicyTest {
         Dealer dealer = createDealer(nonBustBundle.openMyCards());
         dealer.dealMyself();
 
-        BettingRate actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
-        BettingRate expectedBettingRate = BettingResult.PLAYER_LOSE.bettingRate();
+        double actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
+        double expectedBettingRate = BettingResult.PLAYER_LOSE.bettingRate();
 
         Assertions.assertThat(actualBettingRate)
                 .isEqualTo(expectedBettingRate);
@@ -121,8 +121,8 @@ public class BettingPolicyTest {
         Dealer dealer = createDealer(nonBustBundle.openMyCards());
         dealer.dealMyself();
 
-        BettingRate actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
-        BettingRate expectedBettingRate = BettingResult.PLAYER_WIN.bettingRate();
+        double actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
+        double expectedBettingRate = BettingResult.PLAYER_WIN.bettingRate();
 
         Assertions.assertThat(actualBettingRate)
                 .isEqualTo(expectedBettingRate);
@@ -135,8 +135,8 @@ public class BettingPolicyTest {
         Dealer dealer = createDealer(biggerBundle.openMyCards());
         dealer.dealMyself();
 
-        BettingRate actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
-        BettingRate expectedBettingRate = BettingResult.PLAYER_LOSE.bettingRate();
+        double actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
+        double expectedBettingRate = BettingResult.PLAYER_LOSE.bettingRate();
 
         Assertions.assertThat(actualBettingRate)
                 .isEqualTo(expectedBettingRate);
