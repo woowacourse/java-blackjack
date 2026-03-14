@@ -1,8 +1,10 @@
 package view;
 
-import domain.card.CardsSnapshot;
 import domain.GameResultDto;
 import domain.MatchResult;
+import domain.card.CardsSnapshot;
+import domain.dto.InitialDealingResult;
+import domain.dto.ParticipantCards;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
@@ -10,6 +12,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
+    private static final String LINE_FEED = "\n";
 
     public void printGameInitResult(Map<String, CardsSnapshot> result) {
         String playersName = result.keySet().stream()
@@ -63,5 +66,28 @@ public class OutputView {
         for (Map.Entry<String, MatchResult> entry : stringMatchResultMap.entrySet()) {
             System.out.printf("%s: %s%n", entry.getKey(), entry.getValue().getResultName());
         }
+    }
+
+    public void printInitialDealingResult(InitialDealingResult initialDealingResult) {
+        ParticipantCards dealer = initialDealingResult.dealerUpCard();
+        printlnMessage(Formatter.participantCards(dealer));
+
+        List<ParticipantCards> allPlayerCardInHand = initialDealingResult.allPlayerCardInHand();
+        printlnMessage(Formatter.participantCards(allPlayerCardInHand));
+
+        println();
+    }
+
+    private void printMessage(String message) {
+        System.out.print(message);
+    }
+
+    private void println() {
+        printMessage(LINE_FEED);
+    }
+
+    private void printlnMessage(String message) {
+        printMessage(message);
+        println();
     }
 }

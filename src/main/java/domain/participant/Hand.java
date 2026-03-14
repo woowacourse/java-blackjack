@@ -21,7 +21,7 @@ public class Hand {
     public int calculateScore() {
         int score = 0;
         for (Card card : cards) {
-            score += card.cardNumber().getPoint();
+            score += card.rank().getPoint();
         }
 
         for (Card card : cards) {
@@ -46,10 +46,18 @@ public class Hand {
         return new CardsSnapshot(List.of(cards.getFirst()));
     }
 
+    public Card firstCard() {
+        return cards.getFirst();
+    }
+
     private int calculateAcePoint(int currentScore) {
         if (currentScore > BUST_THRESHOLD) {
             return currentScore - ACE_ADJUST_SCORE;
         }
         return currentScore;
+    }
+
+    public List<Card> cards() {
+        return List.copyOf(cards);
     }
 }

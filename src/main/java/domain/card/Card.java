@@ -1,11 +1,11 @@
 package domain.card;
 
-public record Card(Suit suit, Rank cardNumber) {
+public record Card(Rank rank, Suit suit) {
     public boolean isAce() {
-        return this.cardNumber == Rank.ACE;
+        return this.rank == Rank.ACE;
     }
 
-    public String symbol() {
-        return this.cardNumber.getSymbol();
+    public String rankSymbol() {
+        return this.rank.getSymbol();
     }
 }

@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.card.Card;
 import domain.card.CardsSnapshot;
 
 public class Dealer extends Participant {
@@ -16,5 +17,9 @@ public class Dealer extends Participant {
 
     public boolean canReceive() {
         return getScore() <= HIT_THRESHOLD;
+    }
+
+    public Card upCard() {
+        return firstCardInHand();
     }
 }

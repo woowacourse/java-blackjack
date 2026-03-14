@@ -19,7 +19,7 @@ public class Deck {
 
         for (Suit suit : Suit.values()) {
             for (Rank cardNumber : Rank.values()) {
-                cards.add(new Card(suit, cardNumber));
+                cards.add(new Card(cardNumber, suit));
             }
         }
 

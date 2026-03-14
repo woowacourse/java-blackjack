@@ -1,6 +1,7 @@
 package domain.participant;
 
 import domain.Deck;
+import java.util.List;
 
 public class Participants {
     private final Dealer dealer;
@@ -19,13 +20,12 @@ public class Participants {
         return dealer;
     }
 
-    public Players getPlayers() {
-        return players;
+    public List<Player> players() {
+        return players.getPlayers();
     }
 
     public void distributeCardsToAll(Deck deck, int cardCount) {
         dealer.addAll(deck.draw(cardCount));
         players.distributeCardsToAll(deck, cardCount);
     }
-
 }

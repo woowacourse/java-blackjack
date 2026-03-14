@@ -23,7 +23,6 @@ public abstract class Participant {
         hand.addAll(cards);
     }
 
-
     public CardsSnapshot handInfo() {
         return hand.snapshot();
     }
@@ -52,5 +51,17 @@ public abstract class Participant {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    public List<Card> cardsInHand() {
+        return hand.cards();
+    }
+
+    public String name() {
+        return name.value();
+    }
+
+    public Card firstCardInHand() {
+        return hand.firstCard();
     }
 }

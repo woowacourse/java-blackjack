@@ -12,6 +12,10 @@ public class Players implements Iterable<Player> {
     private static final int MAX_PLAYER_COUNT = 7;
     private final List<Player> players;
 
+    public List<Player> getPlayers() {
+        return List.copyOf(players);
+    }
+
     private Players(List<Player> players) {
         this.players = List.copyOf(players);
     }

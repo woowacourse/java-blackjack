@@ -5,7 +5,9 @@ import domain.GameManager;
 import domain.GameResultDto;
 import domain.Referee;
 import domain.card.CardsSnapshot;
+import domain.dto.InitialDealingResult;
 import domain.participant.Dealer;
+import domain.participant.Participants;
 import domain.participant.Player;
 import domain.participant.PlayerParser;
 import domain.participant.Players;
@@ -28,8 +30,9 @@ public class GameController {
     public void run() {
         Players players = readPlayers();
         Dealer dealer = new Dealer();
+        Participants participants = Participants.of(dealer, players);
 
-        readyPhase(dealer, players);
+        readyPhase(participants);
         playPhase(dealer, players);
         resultPhase(dealer, players);
     }
@@ -48,12 +51,12 @@ public class GameController {
         outputView.printNewLine();
     }
 
-//    private void readyPhaseNew(Participants participants) {
-//        gameManager.dealStartingCardsNew(participants);
-//        ParticipantCards startingCards = gameManager.getParticipantsCards(participants);
-//
-//        outputView.printParticipantCardNew(startingCards);
-//    }
+    private void readyPhase(Participants participants) {
+        gameManager.dealStartingCards(participants);
+
+        InitialDealingResult initialDealingResult = InitialDealingResult.from(participants);
+        outputView.printInitialDealingResult(initialDealingResult);
+    }
 
     private void resultPhase(Dealer dealer, Players players) {
         Referee referee = new Referee();

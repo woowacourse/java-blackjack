@@ -3,6 +3,7 @@ package domain;
 import domain.card.CardsSnapshot;
 import domain.participant.Dealer;
 import domain.participant.Participant;
+import domain.participant.Participants;
 import domain.participant.Player;
 import domain.participant.Players;
 
@@ -44,7 +45,7 @@ public class GameManager {
         }
     }
 
-//    public void dealStartingCardsNew(Participants participants) {
-//        participants.distributeCardsToAll(deck, STARTING_CARD_COUNT);
-//    }
+    public void dealStartingCards(Participants participants) {
+        participants.distributeCardsToAll(deck, STARTING_CARD_COUNT);
+    }
 }
