@@ -1,10 +1,8 @@
-package blackjack.domain.gameresult;
+package blackjack.domain.game;
 
 import blackjack.domain.hand.Score;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-
-import java.math.BigDecimal;
 
 public enum GameResult {
     BLACKJACK("블랙잭", "1.5"),
