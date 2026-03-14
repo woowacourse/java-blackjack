@@ -9,9 +9,7 @@ public enum ViewMessage {
     PLAYER_NAME_MESSAGE("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"),
     PLAYER_BET_AMOUNT_MESSAGE("%s의 배팅 금액은?"),
     FINAL_GAME_RESULT_MESSAGE("## 최종 승패"),
-    PLAYER_GAME_WIN("%s: 승"),
-    PLAYER_GAME_DRAW("%s: 무"),
-    PLAYER_GAME_LOSE("%s: 패");
+    MEMBER_GAME_RESULT_MESSAGE("%s: %d");
 
     private final String word;
 

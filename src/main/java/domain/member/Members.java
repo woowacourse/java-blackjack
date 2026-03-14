@@ -1,9 +1,12 @@
 package domain.member;
 
-import domain.MatchResult;
 import domain.card.Card;
-import java.util.ArrayList;
+import domain.state.DealerHit;
+import domain.state.Hit;
+
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 public class Members {
@@ -11,10 +14,10 @@ public class Members {
     private final Dealer dealer;
     private final List<Player> players;
 
-    public Members(List<String> playerNames) {
-        this.dealer = new Dealer();
-        this.players = playerNames.stream()
-                .map(Player::new)
+    public Members(Map<String, Money> playerBets) {
+        this.dealer = new Dealer(new DealerHit(new Hand()));
+        this.players = playerBets.entrySet().stream()
+                .map(entry -> new Player(entry.getKey(), entry.getValue(), new Hit(new Hand())))
                 .toList();
     }
 
@@ -45,8 +48,8 @@ public class Members {
         return dealer.currentScore();
     }
 
-    public boolean isMeetTheDrawConditionForDealer() {
-        return dealer.isMeetTheDrawCondition();
+    public boolean canTheDealerDraw() {
+        return !dealer.isFinished();
     }
 
     public List<String> getAllPlayerName() {
@@ -55,22 +58,39 @@ public class Members {
                 .toList();
     }
 
-    public List<MatchResult> determineDealerGameResult() {
-        List<MatchResult> gameResult = new ArrayList<>();
-        players.forEach(player -> gameResult.add(dealer.compareScoreWith(player)));
-        return List.copyOf(gameResult);
+    public Map<String, Integer> calculateFinalProfits() {
+        validateFinished();
+        Map<String, Integer> totalResults = new LinkedHashMap<>();
+        players.forEach(player ->
+                totalResults.put(player.name(), player.calculateProfit(dealer)));
+        int totalPlayerProfit = totalResults.values()
+                .stream()
+                .mapToInt(Integer::intValue)
+                .sum();
+        totalResults.put(dealer.name(), -1 * totalPlayerProfit);
+        return totalResults;
     }
 
-    public MatchResult determinePlayerGameResult(String name) {
-        Member player = findByPlayerName(name);
-        return player.compareScoreWith(dealer);
+    private void validateFinished() {
+        if (!dealer.isFinished() || players.stream()
+                .anyMatch(player -> !player.isFinished())) {
+            throw new IllegalArgumentException("게임이 끝나지 않은 사람이 있습니다.");
+        }
+    }
+
+    public boolean isPlayerBust(String name) {
+        return findByPlayerName(name).isBust();
+    }
+
+    public void changePlayerStateToStay(String playerName) {
+        findByPlayerName(playerName).changeToStay();
     }
 
     public String getDealerName() {
         return dealer.name();
     }
 
-    private Member findByPlayerName(String playerName) {
+    private Player findByPlayerName(String playerName) {
         return players.stream()
                 .filter(player -> player.name().equals(playerName))
                 .findAny()

@@ -18,6 +18,10 @@ public class Hand {
         this.cards = cards;
     }
 
+    public int size() {
+        return cards.size();
+    }
+
     public List<Card> getAllCard() {
         return List.copyOf(cards);
     }
