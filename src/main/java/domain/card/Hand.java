@@ -2,19 +2,27 @@ package domain.card;
 
 import domain.Rank;
 import domain.Score;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
+    private static final int BLACKJACK_CARD_COUNT = 2;
     private final List<Card> cards;
 
-    public Hand() {
+    private Hand() {
         this.cards = new ArrayList<>();
     }
 
-    public Hand(Hand hand) {
-        this.cards = List.copyOf(hand.getCards());
+    private Hand(List<Card> cards) {
+        this.cards = cards;
+    }
+
+    public static Hand createEmpty() {
+        return new Hand();
+    }
+
+    public static Hand copyOf(Hand hand) {
+        return new Hand(hand.getCards());
     }
 
     public void add(Card card) {
@@ -29,17 +37,17 @@ public class Hand {
         return cards.getFirst();
     }
 
-    public int size() {
-        return cards.size();
+    public boolean isBlackjack() {
+        return cards.size() == BLACKJACK_CARD_COUNT && totalSum().isBlackjack();
     }
 
     public Score totalSum() {
-        return Rank.totalSum(getAceAmount(), getSumWithoutAce());
+        return Rank.sumWithAce(getAceAmount(), getSumWithoutAce());
     }
 
     private int getAceAmount() {
         return (int) cards.stream()
-                .filter(card -> card.isAce())
+                .filter(Card::isAce)
                 .count();
     }
 
@@ -47,7 +55,15 @@ public class Hand {
         return cards.stream()
                 .filter(card -> !card.isAce())
                 .map(card -> card.getRank().getScore())
-                .reduce(new Score(0), Score::add);
+                .reduce(Score.ZERO, Score::add);
+    }
+
+    public boolean isBust() {
+        return totalSum().isBust();
+    }
+
+    public int size() {
+        return cards.size();
     }
 
     public List<Card> getCards() {

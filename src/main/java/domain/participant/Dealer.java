@@ -4,15 +4,18 @@ import domain.Score;
 import domain.card.Card;
 
 public class Dealer extends Participant {
-    public Dealer(String name) {
-        super(name);
+    private Dealer() {
+    }
+
+    public static Dealer createReady() {
+        return new Dealer();
     }
 
     public Card getFirstCard() {
         return hand.peek();
     }
 
-    public boolean decideHitStand(Score boundary) {
+    public boolean isHittable(Score boundary) {
         return getTotalSum().isLessThanOrEqualTo(boundary);
     }
 }

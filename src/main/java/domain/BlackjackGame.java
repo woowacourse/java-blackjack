@@ -1,59 +1,64 @@
 package domain;
 
-import domain.card.Card;
 import domain.card.Deck;
+import domain.dto.PlayerResult;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
-
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class BlackjackGame {
-    public static final int DEFAULT_HAND_NUMBER = 2;
-    public static final String DEALER_NAME = "딜러";
-    public static final Score DEALER_HIT_STAND_BOUNDARY = new Score(16);
+    public static final int INITIAL_CARD_COUNT = 2;
     private final Players players;
     private final Dealer dealer;
     private final Deck deck;
 
-    public BlackjackGame(List<String> players) {
-        validate(players);
-        this.players = Players.from(players);
-        this.dealer = new Dealer(DEALER_NAME);
-        this.deck = new Deck();
+    private BlackjackGame(Players players, Dealer dealer, Deck deck) {
+        this.players = players;
+        this.dealer = dealer;
+        this.deck = deck;
     }
 
-    private void validate(List<String> players) {
-        if (players == null) {
-            throw new IllegalArgumentException(Card.FIELD_CAN_NOT_BE_NULL);
-        }
+    public static BlackjackGame createNewGame(List<Player> players) {
+        return new BlackjackGame(Players.from(players), Dealer.createReady(), Deck.createWithAllCards());
     }
 
     public void giveHand() {
-        players.giveCardsToEachPlayers(deck, DEFAULT_HAND_NUMBER);
-        dealer.addCards(deck.drawWithAmount(DEFAULT_HAND_NUMBER));
+        players.giveCardsToEachPlayers(deck, INITIAL_CARD_COUNT);
+        dealer.addCards(deck.drawWithAmount(INITIAL_CARD_COUNT));
     }
 
-    public void playerHitStand(Function<Player, Boolean> decideHitStandFunc, Consumer<Player> printResultFunc) {
-        players.hitStandEachPlayers(decideHitStandFunc, deck, printResultFunc);
+    public void hitStandEachPlayers(Predicate<Player> decideHitStandFunc, Consumer<Player> printResultFunc) {
+        players.hitStandEachPlayers(player -> hitStandPlayer(deck, decideHitStandFunc, printResultFunc, player));
     }
 
-    public void dealerHitStand(Consumer<Boolean> printDecisionOutput) {
-        while (true) {
-            boolean dealerHitStand = dealer.decideHitStand(DEALER_HIT_STAND_BOUNDARY);
-            if (!dealerHitStand) {
-                printDecisionOutput.accept(dealerHitStand);
-                break;
-            }
-            dealer.addCard(deck.draw());
-            printDecisionOutput.accept(dealerHitStand);
+    private void hitStandPlayer(Deck deck, Predicate<Player> hitStandDecisionFunc,
+                                Consumer<Player> printResultFunc, Player player) {
+        while (!player.isBust() && hitStandDecisionFunc.test(player)) {
+            player.addCard(deck.draw());
+            printResultFunc.accept(player);
         }
+        printResultFunc.accept(player);
     }
 
-    public List<RoundResult> getResult() {
-        return players.getResults(dealer);
+    public void hitStandDealer(Consumer<Boolean> printDecisionOutput) {
+        while (dealer.isHittable(Score.DEALER_HIT_STAND_BOUNDARY)) {
+            dealer.addCard(deck.draw());
+            printDecisionOutput.accept(true);
+        }
+        printDecisionOutput.accept(false);
+    }
+
+    public List<PlayerResult> collectPlayerProfits() {
+        return players.collectResults(dealer);
+    }
+
+    public BetMoney calculateDealerResult(List<PlayerResult> playerResults) {
+        return playerResults.stream()
+                .map(PlayerResult::betMoney)
+                .reduce(BetMoney.ZERO, BetMoney::sub);
     }
 
     public Players getPlayers() {
