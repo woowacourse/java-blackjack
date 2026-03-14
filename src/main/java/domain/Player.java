@@ -6,6 +6,8 @@ public class Player extends Participant{
     private final String name;
     private final Amount amount;
 
+    private static final double BLACKJACK_BONUS_MULTIPLIER = 1.5;
+
     private GameResult gameResult;
 
     public Player(String name, Amount amount) {
@@ -19,7 +21,7 @@ public class Player extends Participant{
         }
         if (gameResult == GameResult.WIN) {
             if (isBlackjack()) {
-                return (int) (amount.amount() * 1.5);
+                return (int) (amount.amount() * BLACKJACK_BONUS_MULTIPLIER);
             }
             return amount.amount();
         }

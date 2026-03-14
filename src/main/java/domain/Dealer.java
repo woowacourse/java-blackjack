@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class Dealer extends Participant{
 
-    private final int DEALER_HIT_NUM = 16;
+    private static final int DEALER_HIT_NUM = 16;
 
     private final Map<GameResult, Integer> gameResults = new HashMap<>();
 
