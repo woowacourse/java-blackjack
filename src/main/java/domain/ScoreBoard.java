@@ -6,54 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ScoreBoard {
-    private static final int BUST_NUMBER = 21;
-
-    private final List<GameResult> results;
-
-    public ScoreBoard() {
-        results = new ArrayList<>();
-    }
-
-    public void calculateGameResults(List<GameStatus> playersGameStatus, GameStatus dealerGameStatus) {
-        int dealerScore = getDealerScore(dealerGameStatus);
+    public static List<GameResult> calculateGameResults(List<GameStatus> playersGameStatus, GameStatus dealerGameStatus) {
+        List<GameResult> results = new ArrayList<>();
         for (GameStatus gameStatus : playersGameStatus) {
-            results.add(new GameResult(gameStatus.name(), isWin(gameStatus, dealerGameStatus, dealerScore)));
+            WinningCondition condition = WinningCondition.from(gameStatus, dealerGameStatus);
+            results.add(new GameResult(gameStatus.name(), condition));
         }
-    }
-
-    public List<GameResult> results() {
         return results;
-    }
-
-    private WinningCondition isWin(GameStatus playerGameStatus, GameStatus dealerStatus, int dealerScore) {
-        if (playerGameStatus.hand().isBlackJack() && dealerStatus.hand().isBlackJack()) {
-            return WinningCondition.DRAW;
-        }
-
-        if (playerGameStatus.hand().isBlackJack()) {
-            return WinningCondition.BLACK_JACK;
-        }
-
-        if (playerGameStatus.scoreSum() > BUST_NUMBER) {
-            return WinningCondition.LOSE;
-        }
-
-        if (dealerScore > BUST_NUMBER) {
-            return WinningCondition.WIN;
-        }
-
-        if (playerGameStatus.scoreSum() == dealerScore) {
-            return WinningCondition.DRAW;
-        }
-
-        if (playerGameStatus.scoreSum() < dealerScore) {
-            return WinningCondition.LOSE;
-        }
-
-        return WinningCondition.WIN;
-    }
-
-    private int getDealerScore(GameStatus dealerStatus) {
-        return dealerStatus.scoreSum();
     }
 }

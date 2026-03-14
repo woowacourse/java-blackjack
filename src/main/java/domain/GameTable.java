@@ -71,11 +71,9 @@ public class GameTable {
     }
 
     public List<GameResult> results() {
-        ScoreBoard scoreBoard = new ScoreBoard();
         List<GameStatus> playersGameStatus = playerStatuses();
         GameStatus dealerGameStatus = dealer().status();
-        scoreBoard.calculateGameResults(playersGameStatus, dealerGameStatus);
-        return scoreBoard.results();
+        return ScoreBoard.calculateGameResults(playersGameStatus, dealerGameStatus);
     }
 
     public String currentPlayerName() {
