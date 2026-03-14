@@ -1,6 +1,6 @@
 package domain.game;
 
-import static util.Constants.BLACK_JACK;
+import static util.Constants.BLACK_JACK_NUMBER;
 
 public enum GameResult {
 
@@ -15,8 +15,8 @@ public enum GameResult {
     }
 
     public static GameResult determine(int dealerScore, int gamblerScore) {
-        if(gamblerScore > BLACK_JACK) return LOSE;
-        if(dealerScore > BLACK_JACK) return WIN;
+        if(gamblerScore > BLACK_JACK_NUMBER) return LOSE;
+        if(dealerScore > BLACK_JACK_NUMBER) return WIN;
 
         if(dealerScore < gamblerScore) {
             return WIN;

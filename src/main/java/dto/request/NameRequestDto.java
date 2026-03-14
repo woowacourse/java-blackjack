@@ -1,4 +1,4 @@
-package dto;
+package dto.request;
 
 public record NameRequestDto(String name) {
 
