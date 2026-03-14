@@ -1,8 +1,14 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public record Hand(List<Card> cards) {
+public class Hand {
+    private final List<Card> cards;
+
+    public Hand(List<Card> cards) {
+        this.cards = new ArrayList<>(cards);
+    }
 
     public void addCard(Card card) {
         cards.add(card);
@@ -24,8 +30,7 @@ public record Hand(List<Card> cards) {
         return getScore().isBust();
     }
 
-    @Override
-    public List<Card> cards() {
+    public List<Card> getCards() {
         return List.copyOf(cards);
     }
 }
