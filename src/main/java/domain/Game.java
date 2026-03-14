@@ -53,7 +53,7 @@ public class Game {
     }
 
     public boolean dealerShouldHit() {
-        return dealer.shouldHit();
+        return dealer.canHit();
     }
 
     public int getPlayerHandSize(Player player) {

@@ -4,16 +4,21 @@ import domain.card.Card;
 
 import java.util.List;
 
-public class Dealer {
+public class Dealer extends Participant {
     private static final int HIT_LIMIT = 17;
-    private final Hand hand;
+    private static final String DEALER_NAME = "딜러";
 
     public Dealer() {
-        hand = new Hand();
+        super(DEALER_NAME);
     }
 
     public boolean isBurst() {
         return hand.isBurst();
+    }
+
+    @Override
+    public boolean canHit() {
+        return hand.getSum() < HIT_LIMIT;
     }
 
     public void draw(Card card) {
@@ -26,10 +31,6 @@ public class Dealer {
 
     public Card getFirstCard() {
         return hand.getFirstCard();
-    }
-
-    public boolean shouldHit() {
-        return hand.getSum() < HIT_LIMIT;
     }
 
     public int getHandSize() {
