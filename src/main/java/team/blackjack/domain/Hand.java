@@ -21,7 +21,7 @@ public class Hand {
     }
 
     public List<Card> getCards() {
-        return this.cards;
+        return new ArrayList<>(cards);
     }
 
     public int getScore() {
