@@ -1,6 +1,4 @@
 import controller.BlackjackGame;
-import domain.strategy.RandomShuffleStrategy;
-import domain.strategy.ShuffleStrategy;
 import view.InputView;
 import view.OutputView;
 

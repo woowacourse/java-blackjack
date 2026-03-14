@@ -27,11 +27,15 @@ public class BlackjackGame {
         List<String> parsedNames = inputView.getParsedNames();
         Players players = new Players(parsedNames);
         Dealer dealer = new Dealer();
-        initializeBetting(players);
-
         Deck deck = Deck.createDeck(new RandomShuffleStrategy());
 
-        playGame(players, dealer, deck);
+        initializeBetting(players);
+
+        initParticipantsHand(players, dealer, deck);
+
+        proceedEachTurnWith(players, dealer, deck);
+
+        showGameResult(players, dealer);
     }
 
     private void initializeBetting(Players players) {
@@ -43,21 +47,17 @@ public class BlackjackGame {
         }
     }
 
-    private void playGame(Players players, Dealer dealer, Deck deck) {
-        initParticipantsHand(players, dealer, deck);
-        outputView.printBlankLine();
-
+    private void proceedEachTurnWith(Players players, Dealer dealer, Deck deck) {
         for (Player player : players.getPlayers()) {
             playerTurn(player, deck);
         }
-
         outputView.printBlankLine();
         dealerTurn(dealer, deck);
         outputView.printBlankLine();
-        showGameResult(players, dealer);
     }
 
     private void initParticipantsHand(Players players, Dealer dealer, Deck deck) {
+        outputView.printBlankLine();
         List<Participant> participants = new ArrayList<>(players.getPlayers());
         participants.add(dealer);
         participants.forEach(
