@@ -22,7 +22,7 @@ public class ResultJudge {
 
         if (player.isBlackjack() && dealer.isBlackjack()) return ResultInfo.DRAW;
         if (playerTotalScore > BLACKJACK_LIMIT_NUMBER) return ResultInfo.DEFEAT;
-        if (dealerTotalScore > BLACKJACK_LIMIT_NUMBER) return ResultInfo.WIN;
+        if (!player.isBlackjack() && dealerTotalScore > BLACKJACK_LIMIT_NUMBER) return ResultInfo.WIN;
         if (player.isBlackjack()) return ResultInfo.BLACKJACK_WIN;
         if (dealerTotalScore < playerTotalScore) return ResultInfo.WIN;
         if (dealerTotalScore > playerTotalScore) return ResultInfo.DEFEAT;
