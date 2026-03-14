@@ -15,11 +15,7 @@ public class Profit {
         return name;
     }
 
-    public Money getMoney() {
-        return money;
-    }
-
-    public double getEarningRate() {
-        return earningRate;
+    public long calculateProfit() {
+        return (long) (earningRate * money.getValue());
     }
 }

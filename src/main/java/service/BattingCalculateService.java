@@ -47,7 +47,7 @@ public class BattingCalculateService {
         List<Profit> profits = calculatePlayersProfit();
         long dealerProfit = 0L;
         for (Profit profit : profits) {
-            dealerProfit -= (long) (profit.getMoney().getValue() * profit.getEarningRate());
+            dealerProfit -= profit.calculateProfit();
         }
         return dealerProfit;
     }
