@@ -7,7 +7,6 @@ import domain.participant.Player;
 import domain.participant.Players;
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class BlackjackGame {
@@ -16,21 +15,10 @@ public class BlackjackGame {
     private final Dealer dealer;
     private final Deck deck;
 
-    public BlackjackGame(List<String> players) {
-        validate(players);
+    public BlackjackGame(List<Player> players) {
         this.players = Players.from(players);
         this.dealer = Dealer.createReady();
         this.deck = Deck.createWithAllCards();
-    }
-
-    private void validate(List<String> players) {
-        if (players == null) {
-            throw new IllegalArgumentException(CommonExceptionMessage.FIELD_CAN_NOT_BE_NULL.getMessage());
-        }
-    }
-
-    public void setBetMoney(Function<Player, Long> getBetMoneyFunc) {
-        players.setBetMoneyEachPlayers(getBetMoneyFunc);
     }
 
     public void giveHand() {

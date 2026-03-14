@@ -41,7 +41,7 @@ public class PlayerTest {
 
     @Test
     void 플레이어가_정상적으로_생성되어야_한다() {
-        assertDoesNotThrow(() -> Player.createReady("jeje"));
+        assertDoesNotThrow(() -> Player.of("jeje", "1000"));
     }
 
     @Test

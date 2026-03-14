@@ -1,5 +1,7 @@
 package domain.participant;
 
+import java.util.Objects;
+
 public class Name {
     private static final int NAME_MIN_LENGTH = 1;
     private static final int NAME_MAX_LENGTH = 10;
@@ -24,6 +26,23 @@ public class Name {
         if (name.length() < NAME_MIN_LENGTH || name.length() > NAME_MAX_LENGTH) {
             throw new IllegalArgumentException(NAME_OUT_OF_RANGE);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Name name = (Name) o;
+        return Objects.equals(value, name.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
     }
 
     public String getValue() {

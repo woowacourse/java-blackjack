@@ -1,14 +1,13 @@
 package domain.participant;
 
 import domain.BetMoney;
+import domain.CommonExceptionMessage;
 import domain.card.Deck;
 import domain.dto.RoundResult;
 import domain.dto.TotalResult;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 public class Players {
     private static final String ALREADY_EXIST_NAME = "[ERROR] 이름은 중복될 수 없습니다.";
@@ -19,17 +18,28 @@ public class Players {
         this.players = players;
     }
 
-    public static Players from(List<String> players) {
+    public static Players from(List<Player> players) {
         validate(players);
-        return new Players(players.stream()
-                .map(Player::createReady)
-                .toList());
+        return new Players(List.copyOf(players));
     }
 
-    private static void validate(List<String> players) {
-        HashSet<String> uniqueNames = new HashSet<>(players);
+    private static void validate(List<Player> players) {
+        validateIsNotNull(players);
+        validateIsNotUnique(players);
+    }
 
-        if (uniqueNames.size() != players.size()) {
+    private static void validateIsNotNull(List<Player> players) {
+        if (players == null) {
+            throw new IllegalArgumentException(CommonExceptionMessage.FIELD_CAN_NOT_BE_NULL.getMessage());
+        }
+    }
+
+    private static void validateIsNotUnique(List<Player> players) {
+        long count = players.stream()
+                .map(Player::getName)
+                .distinct()
+                .count();
+        if (players.size() != count) {
             throw new IllegalArgumentException(ALREADY_EXIST_NAME);
         }
     }
@@ -43,12 +53,6 @@ public class Players {
     public void hitStandEachPlayers(Consumer<Player> hitStandFunc) {
         for (Player player : players) {
             hitStandFunc.accept(player);
-        }
-    }
-
-    public void setBetMoneyEachPlayers(Function<Player, Long> getBetMoneyFunc) {
-        for (Player player : players) {
-            player.setBetMoney(getBetMoneyFunc.apply(player));
         }
     }
 

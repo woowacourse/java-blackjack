@@ -38,7 +38,6 @@ public class Card {
         return suit.getValue() + rank.getDisplayValue();
     }
 
-
     public static Card of(Suit suit, Rank rank) {
         validate(suit, rank);
         return CACHE.get(toKey(suit, rank));

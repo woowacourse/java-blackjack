@@ -6,7 +6,7 @@ import domain.card.Hand;
 
 public class Player extends Participant {
     private final Name name;
-    private BetMoney betMoney;
+    private final BetMoney betMoney;
 
     private Player(Name name, BetMoney betMoney) {
         this.name = name;
@@ -21,10 +21,6 @@ public class Player extends Participant {
 
     public static Player of(String name, String betMoney) {
         return new Player(Name.valueOf(name), BetMoney.valueOf(betMoney));
-    }
-
-    public static Player createReady(String name) {
-        return new Player(Name.valueOf(name), BetMoney.ZERO);
     }
 
     public static Player copyOf(Player player) {
@@ -61,10 +57,6 @@ public class Player extends Participant {
             return betMoney.win();
         }
         return betMoney.lose();
-    }
-
-    public void setBetMoney(long value) {
-        this.betMoney = BetMoney.valueOf(value);
     }
 
     public Name getName() {

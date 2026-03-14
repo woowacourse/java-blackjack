@@ -1,34 +1,77 @@
 package view;
 
 import domain.participant.Player;
-import util.Console;
-
 import java.util.Arrays;
 import java.util.List;
+import util.Console;
 
 public class InputView {
-    private static final String VALUE_SHOULD_BE_POSITIVE = "[ERROR] 배팅 금액은 양수여야 합니다.";
+    private static final int NAME_MIN_LENGTH = 1;
+    private static final int NAME_MAX_LENGTH = 10;
+    private static final String BLANK_NAME_NOT_ALLOWED = "[ERROR] 빈 값을 입력할 수 없습니다.";
+    private static final String NAME_OUT_OF_RANGE = String.format("[ERROR] 이름은 %d ~ %d자 내여야 합니다.", NAME_MIN_LENGTH,
+            NAME_MAX_LENGTH);
+    private static final String INVALID_NUMBER_FORMAT = "[ERROR] 배팅 금액은 숫자만 입력할 수 있습니다.";
     private static final String INVALID_HIT_STAND_RESPONSE = "[ERROR] 입력은 y 또는 n으로만 입력해야 합니다.";
+    private static final String DUPLICATE_NAME_NOT_ALLOWED = "[ERROR] 닉네임은 중복될 수 없습니다.";
 
     public List<String> readPlayerNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         String input = Console.readLine();
-        String[] split = input.split(",");
-        return Arrays.stream(split)
+        List<String> names = Arrays.stream(input.split(","))
                 .map(String::strip)
+                .toList();
+
+        names.forEach(this::validate);
+        validateIsUnique(names);
+        return names;
+    }
+
+    private void validate(String name) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException(BLANK_NAME_NOT_ALLOWED);
+        }
+        if (name.length() < NAME_MIN_LENGTH || name.length() > NAME_MAX_LENGTH) {
+            throw new IllegalArgumentException(NAME_OUT_OF_RANGE);
+        }
+    }
+
+    private void validateIsUnique(List<String> names) {
+        long uniqueNames = names.stream()
+                .distinct()
+                .count();
+
+        if (uniqueNames != names.size()) {
+            throw new IllegalArgumentException(DUPLICATE_NAME_NOT_ALLOWED);
+        }
+    }
+
+    public List<String> readBetMoney(List<String> names) {
+        printEmptyLine();
+        return names.stream()
+                .map(this::readBetMoney)
                 .toList();
     }
 
-    public long readBetMoney(Player player) {
-        printEmptyLine();
-        System.out.println(player.getName().getValue() + "의 배팅 금액은?");
+    private String readBetMoney(String name) {
+        System.out.println(name + "의 배팅 금액은?");
         String input = Console.readLine();
-        long value = Long.parseLong(input);
 
-        if (value <= 0) {
-            throw new IllegalArgumentException(VALUE_SHOULD_BE_POSITIVE);
+        validateIsNumber(input);
+        return input;
+    }
+
+    private void validateIsNumber(String input) {
+        for (char c : input.toCharArray()) {
+            validateIsDigit(c);
         }
-        return value;
+
+    }
+
+    private static void validateIsDigit(char c) {
+        if (Character.isDigit(c)) {
+            throw new IllegalArgumentException(INVALID_NUMBER_FORMAT);
+        }
     }
 
     private void printEmptyLine() {
