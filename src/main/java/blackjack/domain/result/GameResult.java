@@ -15,16 +15,6 @@ public enum GameResult {
         this.multiplier = multiplier;
     }
 
-    public GameResult reverse() {
-        if (this == WIN || this == BLACKJACK) {
-            return LOSE;
-        }
-        if (this == LOSE) {
-            return WIN;
-        }
-        return DRAW;
-    }
-
     public Money profitOf(Money wager) {
         return wager.multiply(multiplier);
     }

@@ -51,8 +51,12 @@ public class OutputView {
         );
     }
 
-    public void printProfits(ProfitsDto dto) {
+    public void printDealerProfit(DealerProfitDto dto) {
         System.out.println(FINAL_PROFITS_HEADER);
+        System.out.printf(PLAYER_RESULT_FORMAT, dto.name(), dto.profit());
+    }
+
+    public void printPlayerProfits(PlayerProfitsDto dto) {
         dto.profits().forEach((name, profit) -> System.out.printf(PLAYER_RESULT_FORMAT, name, profit)
         );
     }

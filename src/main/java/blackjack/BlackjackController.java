@@ -29,7 +29,9 @@ public class BlackjackController {
         dealAndPrintInitialCards(game);
         processAllPlayersTurn(game);
         processDealerTurn(game);
-        printResults(game);
+
+        printGameResults(game);
+        printProfitResults(game);
     }
 
     private void placeWagers(final BlackjackGame game) {
@@ -67,9 +69,13 @@ public class BlackjackController {
         }
     }
 
-    private void printResults(final BlackjackGame game) {
+    private void printGameResults(final BlackjackGame game) {
         outputView.printFinalCards(game.getFinalCards());
         outputView.printFinalResults(game.resolveResults());
-        outputView.printProfits(game.calculateProfits());
+    }
+
+    private void printProfitResults(final BlackjackGame game) {
+        outputView.printDealerProfit(game.calculateDealerProfit());
+        outputView.printPlayerProfits(game.calculatePlayerProfits());
     }
 }

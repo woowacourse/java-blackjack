@@ -7,20 +7,22 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
+import blackjack.domain.profit.ProfitCalculator;
+import blackjack.domain.profit.ProfitResults;
 import blackjack.domain.result.GameResults;
+import blackjack.domain.wager.Wager;
+import blackjack.domain.wager.Wagers;
 import blackjack.dto.*;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class BlackjackGame {
 
     private final Deck deck;
     private final Players players;
     private final Dealer dealer;
-    private final Map<Player, Money> wagers = new LinkedHashMap<>();
+    private final Wagers wagers = new Wagers();
 
     public BlackjackGame(List<String> playerNames, ShuffleStrategy shuffleStrategy) {
         this.deck = new Deck();
@@ -37,7 +39,7 @@ public class BlackjackGame {
 
     public void placeWager(String playerName, int amount) {
         Player player = findPlayer(playerName);
-        wagers.put(player, new Money(amount));
+        wagers.add(new Wager(player, new Money(amount)));
     }
 
     public InitialDealDto dealInitialCards() {
@@ -78,14 +80,27 @@ public class BlackjackGame {
     }
 
     public GameResultsDto resolveResults() {
-        GameResults results = GameResults.create(players, dealer);
-        return new GameResultsDto(results);
+        GameResults gameResults = GameResults.create(players, dealer);
+        return new GameResultsDto(gameResults);
     }
 
-    public ProfitsDto calculateProfits() {
-        GameResults results = GameResults.create(players, dealer);
-        Map<Participant, Money> profits = results.calculateProfits(wagers, dealer);
-        return ProfitsDto.from(profits);
+    public PlayerProfitsDto calculatePlayerProfits() {
+        ProfitResults profitResults = getProfitResults();
+
+        return PlayerProfitsDto.from(profitResults);
+    }
+
+    public DealerProfitDto calculateDealerProfit() {
+        ProfitResults profitResults = getProfitResults();
+
+        return new DealerProfitDto(dealer.getName(), profitResults.dealerProfit().value());
+    }
+
+    private ProfitResults getProfitResults() {
+        GameResults gameResults = GameResults.create(players, dealer);
+
+        final ProfitCalculator profitCalculator = new ProfitCalculator();
+        return profitCalculator.calculate(gameResults, wagers);
     }
 
     private Player findPlayer(String name) {
