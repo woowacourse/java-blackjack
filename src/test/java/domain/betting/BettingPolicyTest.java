@@ -42,7 +42,7 @@ public class BettingPolicyTest {
     }
 
     @Test
-    void 블랙잭_푸쉬가일어나는_경우를_테스트한다() {
+    void 플레이어와_딜러가_모두_블랙잭일때_블랙잭푸쉬의_베팅률을_구한다() {
         Player testPlayer = Player.from(new PlayerName("test"));
         testPlayer.addCardBundle(blackjackBundle);
         Dealer dealer = createDealer(blackjackBundle.openMyCards());
@@ -56,7 +56,7 @@ public class BettingPolicyTest {
     }
 
     @Test
-    void 블랙잭_승리가_일어나는_경우를_테스트한다() {
+    void 플레이어가_블랙잭으로_승리할때_블랙잭의_베팅률을_구한다() {
         Player testPlayer = Player.from(new PlayerName("test"));
         testPlayer.addCardBundle(blackjackBundle);
         Dealer dealer = createDealer(List.of(spadeFive, spadeEight));
@@ -70,7 +70,7 @@ public class BettingPolicyTest {
     }
 
     @Test
-    void 플레이어와_딜러_둘다_버스트인_경우를_테스트한다() {
+    void 플레이어와_딜러_둘다_버스트일때_플레이어승리의_베팅률을_구한다() {
         Player testPlayer = Player.from(new PlayerName("test"));
         testPlayer.addCardBundle(bustBundle);
         Dealer dealer = createDealer(bustBundle.openMyCards());
@@ -86,7 +86,7 @@ public class BettingPolicyTest {
     }
 
     @Test
-    void 딜러가_버스트이고_플레이어가_스탠드인_경우를_테스트한다() {
+    void 딜러가_버스트이고_플레이어가_스탠드일때_플레이어승리의_베팅률을_구한다() {
         Player testPlayer = Player.from(new PlayerName("test"));
         testPlayer.addCardBundle(nonBustBundle);
         Dealer dealer = createDealer(bustBundle.openMyCards());
@@ -101,7 +101,7 @@ public class BettingPolicyTest {
     }
 
     @Test
-    void 플레이어가_버스트인_경우를_테스트한다() {
+    void 플레이어가_버스트일때_플레이어패배의_베팅률을_구한다() {
         Player testPlayer = Player.from(new PlayerName("test"));
         testPlayer.addCardBundle(bustBundle);
         Dealer dealer = createDealer(nonBustBundle.openMyCards());
@@ -115,7 +115,7 @@ public class BettingPolicyTest {
     }
 
     @Test
-    void 플레이어가_딜러보다_합이_큰_경우를_테스트한다() {
+    void 플레이어가_딜러보다_합이_클때_플레이어승리의_베팅률을_구한다() {
         Player testPlayer = Player.from(new PlayerName("test"));
         testPlayer.addCardBundle(biggerBundle);
         Dealer dealer = createDealer(nonBustBundle.openMyCards());
@@ -129,7 +129,7 @@ public class BettingPolicyTest {
     }
 
     @Test
-    void 플레이어가_딜러보다_합이_작은_경우를_테스트한다() {
+    void 플레이어가_딜러보다_합이_작을때_플레이어패배의_베팅률을_구한다() {
         Player testPlayer = Player.from(new PlayerName("test"));
         testPlayer.addCardBundle(nonBustBundle);
         Dealer dealer = createDealer(biggerBundle.openMyCards());

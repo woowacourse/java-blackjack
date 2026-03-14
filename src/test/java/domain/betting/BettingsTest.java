@@ -24,7 +24,7 @@ public class BettingsTest {
     }
 
     @Test
-    void 딜러의_수익금을_계산한다() {
+    void 딜러의_수익금을_구할때는_플레이어_수익금_누적합에_마이너스1을_곱한다() {
         int tenThousand = 1000;
         BettingMoney bettingMoney = BettingMoney.bet(tenThousand);
         Player testPlayer = Player.from(new PlayerName("test"));
