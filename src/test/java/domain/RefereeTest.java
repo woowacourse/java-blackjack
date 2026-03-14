@@ -161,6 +161,8 @@ class RefereeTest {
         GameManager gameManager = new GameManager(deck);
         gameManager.dealCard(participant);
         gameManager.dealCard(participant);
+
+        participant.stay();
     }
 
     private void makeNormalBlackjack(Participant participant) {
@@ -175,6 +177,8 @@ class RefereeTest {
         gameManager.dealCard(participant);
         gameManager.dealCard(participant);
         gameManager.dealCard(participant);
+
+        participant.stay();
     }
 
     private void makeBust(Participant participant) {

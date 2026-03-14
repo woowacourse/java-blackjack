@@ -2,6 +2,8 @@ package controller;
 
 import domain.Bet;
 import domain.BettingBoard;
+import domain.state.Started;
+import domain.state.State;
 import util.BettingParser;
 import domain.Deck;
 import domain.GameManager;
@@ -69,6 +71,9 @@ public class GameController {
             gameManager.dealCard(player);
             outputView.printParticipantCard(new ParticipantCardsResponse(player.getName(), player.getCards()));
         }
+        if (player.canReceive()) {
+            player.stay();
+        }
     }
 
     private boolean wantsToHit(Player player) {
@@ -83,6 +88,9 @@ public class GameController {
         while (dealer.canReceive()) {
             gameManager.dealCard(dealer);
             outputView.printCompleteDealerTurn();
+        }
+        if (dealer.canReceive()) {
+            dealer.stay();
         }
 
         outputView.printDealerTurn(createResultResponses(dealer, players));
