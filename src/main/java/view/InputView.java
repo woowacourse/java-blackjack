@@ -17,6 +17,18 @@ public class InputView {
         return splitPlayerNames(userInput());
     }
 
+    public int readBettingAmount(String name) {
+        while (true) {
+            try {
+                System.out.printf("%s의 배팅 금액은?%n", name);
+                String money = userInput();
+                return Integer.parseInt(money);
+            } catch (IllegalArgumentException e) {
+                OutputView.printErrorMessage("잘못된 입력입니다. 다시 입력해주세요.");
+            }
+        }
+    }
+
     public boolean readPlayerToHitUntilValid(String name) {
         while (true) {
             try {

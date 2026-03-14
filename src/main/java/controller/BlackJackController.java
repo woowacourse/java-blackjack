@@ -27,6 +27,7 @@ public class BlackJackController {
         Deck deck = new Deck(new DefaultShuffleStrategy());
         Dealer dealer = new Dealer();
         Players players = readUntilValidPlayers();
+        readUntilValidMoney(players);
 
         BlackJackService blackJackService = new BlackJackService(deck, dealer, players);
         blackJackService.initHand();
@@ -75,5 +76,12 @@ public class BlackJackController {
             }
         }
         return new Players(players);
+    }
+
+    private void readUntilValidMoney(Players players) {
+        for (Player player : players.getPlayers()) {
+            int betAmount = inputView.readBettingAmount(player.getName());
+            player.bet(betAmount);
+        }
     }
 }
