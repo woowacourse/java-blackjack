@@ -1,7 +1,5 @@
 package domain;
 
-import domain.card.Card;
-import domain.card.Deck;
 import domain.participant.Player;
 import util.InputNameParser;
 import util.InputNameValidator;
@@ -29,10 +27,6 @@ public class Players implements Iterable<Player>{
         return players.stream()
                 .map(Player::getName)
                 .toList();
-    }
-
-    public List<Player> getPlayers() {
-        return players;
     }
 
     @Override
