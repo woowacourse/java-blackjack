@@ -18,4 +18,24 @@ public class GamblersGameResult {
         this.participantProfits = new HashMap<>();
         calculateProfits(dealer, gamblers);
     }
+
+    private void calculateProfits(Participant dealer, Gamblers gamblers) {
+        for (Gambler gambler : gamblers.getGamblers()) {
+            GameResult result = GameResult.determine(dealer, gambler);
+            Profit profit = result.calculateProfit(gambler.getBettingAmount());
+            participantProfits.put(gambler.getName(), profit);
+        }
+    }
+
+    public Profit getMatchProfits(String name) {
+        return participantProfits.get(name);
+    }
+
+
+    public Profit getDealerProfit() {
+        int totalProfit = participantProfits.values().stream()
+                .mapToInt(Profit::getProfit)
+                .sum();
+        return new Profit(totalProfit * REVERSE_SIGN);
+    }
 }
