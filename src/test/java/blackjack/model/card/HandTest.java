@@ -10,23 +10,20 @@ class HandTest {
 
     private static final int ACE_ADJUST_VALUE = 10;
 
-    @Nested
-    class 카드를_받아서_손패에_추가한다 {
-        @Test
-        void 한장의_카드를_받아서_손패에_추가한다() {
-            // given
-            Hand hand = new Hand();
-            Card card = new Card(Rank.ACE, Suit.CLUB);
+    @Test
+    void 한장의_카드를_받아서_손패에_추가한다() {
+        // given
+        Hand hand = new Hand();
+        Card card = new Card(Rank.ACE, Suit.CLUB);
 
-            int expectedCardsCount = hand.getCards().size() + 1;
+        int expectedCardsCount = hand.getCards().size() + 1;
 
-            // when
-            hand = hand.addCard(card);
+        // when
+        hand = hand.addCard(card);
 
-            // then
-            int actualCardsCount = hand.getCards().size();
-            assertThat(actualCardsCount).isEqualTo(expectedCardsCount);
-        }
+        // then
+        int actualCardsCount = hand.getCards().size();
+        assertThat(actualCardsCount).isEqualTo(expectedCardsCount);
     }
 
     @Nested
