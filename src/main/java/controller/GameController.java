@@ -9,7 +9,6 @@ import service.BattingCalculateService;
 import service.GameService;
 import util.HitOption;
 import util.InputBattingParser;
-import util.InputHitOptionParser;
 import view.InputView;
 import view.OutputView;
 
@@ -52,7 +51,7 @@ public class GameController {
         while (true) {
             try {
                 String rawHitOption = inputView.readHitOption(player.getName());
-                return InputHitOptionParser.parseHitOption(rawHitOption);
+                return HitOption.of(rawHitOption);
             } catch (IllegalArgumentException exception) {
                 outputView.printErrorMessage(exception.getMessage());
             }
