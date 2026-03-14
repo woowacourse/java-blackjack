@@ -6,15 +6,12 @@ import java.util.List;
 
 public class Player extends Participant {
     private final String name;
-    private Money money;
+    private final Money money;
 
-    public Player(String name, List<Card> hand) {
+    public Player(List<Card> hand, String name, Money money) {
         super(hand);
         validateEmptyNames(name);
         this.name = name;
-    }
-
-    public void addMoney(Money money) {
         this.money = money;
     }
 

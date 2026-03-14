@@ -19,12 +19,12 @@ public class PlayerTest {
     void calculateNumberTotalScoreTest() {
         List<Card> cards1 = List.of(new Card(CardValue.EIGHT, CardSuit.CLUB),
                 new Card(CardValue.FOUR, CardSuit.CLUB));
-        Player player1 = new Player("pobi", cards1);
+        Player player1 = new Player(cards1, "pobi", new Money(1000));
 
         int totalScore1 = player1.calculateScore();
 
         List<Card> cards2 = List.of(new Card(CardValue.EIGHT, CardSuit.CLUB), new Card(CardValue.TWO, CardSuit.CLUB));
-        Player player2 = new Player("woni", cards2);
+        Player player2 = new Player(cards2, "woni", new Money(1000));
 
         int totalScore2 = player2.calculateScore();
 
@@ -37,7 +37,7 @@ public class PlayerTest {
     void calculateAlphabetTotalScoreTest() {
         List<Card> cards = List.of(new Card(CardValue.JACK, CardSuit.CLUB), new Card(CardValue.FOUR, CardSuit.CLUB));
 
-        Player player = new Player("pobi", cards);
+        Player player = new Player(cards, "pobi", new Money(1000));
 
         int totalScore = player.calculateScore();
 
@@ -49,13 +49,13 @@ public class PlayerTest {
     void judgeAceTest() {
         List<Card> cards1 = new ArrayList(
                 List.of(new Card(CardValue.JACK, CardSuit.CLUB), new Card(CardValue.FOUR, CardSuit.CLUB)));
-        Player player1 = new Player("pobi", cards1);
+        Player player1 = new Player(cards1, "pobi", new Money(1000));
         player1.addCard(new Card(CardValue.ACE, CardSuit.CLUB));
         int player1TotalScore = player1.calculateScore();
 
         List<Card> cards2 = new ArrayList(
                 List.of(new Card(CardValue.FOUR, CardSuit.CLUB), new Card(CardValue.ACE, CardSuit.CLUB)));
-        Player player2 = new Player("woni", cards2);
+        Player player2 = new Player(cards2, "woni", new Money(1000));
         int player2TotalScore = player2.calculateScore();
 
         Assertions.assertThat(player1TotalScore).isEqualTo(15);
@@ -67,13 +67,13 @@ public class PlayerTest {
     void judgeManyAceTest() {
         List<Card> cards1 = new ArrayList<>(
                 List.of(new Card(CardValue.EIGHT, CardSuit.CLUB), new Card(CardValue.ACE, CardSuit.CLUB)));
-        Player player1 = new Player("pobi", cards1);
+        Player player1 = new Player(cards1, "pobi", new Money(1000));
         player1.addCard(new Card(CardValue.ACE, CardSuit.SPADE));
         int player1TotalScore = player1.calculateScore();
 
         List<Card> cards2 = new ArrayList<>(
                 List.of(new Card(CardValue.FOUR, CardSuit.CLUB), new Card(CardValue.ACE, CardSuit.CLUB)));
-        Player player2 = new Player("woni", cards2);
+        Player player2 = new Player(cards2, "woni", new Money(1000));
         player2.addCard(new Card(CardValue.ACE, CardSuit.SPADE));
         player2.addCard(new Card(CardValue.ACE, CardSuit.HEART));
         int player2TotalScore = player2.calculateScore();
@@ -87,7 +87,7 @@ public class PlayerTest {
     void judgeBustTest() {
         List<Card> cards = new ArrayList<>(
                 List.of(new Card(CardValue.JACK, CardSuit.CLUB), new Card(CardValue.FOUR, CardSuit.CLUB)));
-        Player player = new Player("pobi", cards);
+        Player player = new Player(cards, "pobi", new Money(1000));
         player.addCard(new Card(CardValue.EIGHT, CardSuit.CLUB));
         boolean isBust = player.isBust();
 
@@ -117,10 +117,7 @@ public class PlayerTest {
                 new Card(CardValue.ACE, CardSuit.CLUB),
                 new Card(CardValue.KING, CardSuit.HEART)
         ));
-        Player player = new Player("pobi", cards);
-
-        Money money = new Money(1000);
-        player.addMoney(money);
+        Player player = new Player(cards, "pobi", new Money(1000));
 
         Assertions.assertThat(player.isBlackjack()).isTrue();
         Assertions.assertThat(player.finalProfit(dealer)).isEqualTo(1500);
@@ -138,10 +135,7 @@ public class PlayerTest {
                 new Card(CardValue.ACE, CardSuit.HEART),
                 new Card(CardValue.KING, CardSuit.CLUB)
         ));
-        Player player = new Player("pobi", cards);
-
-        Money money = new Money(1000);
-        player.addMoney(money);
+        Player player = new Player(cards, "pobi", new Money(1000));
 
         Assertions.assertThat(dealer.isBlackjack()).isTrue();
         Assertions.assertThat(player.isBlackjack()).isTrue();
@@ -161,11 +155,8 @@ public class PlayerTest {
                 new Card(CardValue.KING, CardSuit.CLUB),
                 new Card(CardValue.JACK, CardSuit.SPADE)
         ));
-        Player player = new Player("pobi", cards);
+        Player player = new Player(cards, "pobi", new Money(1000));
         player.addCard(new Card(CardValue.FIVE, CardSuit.HEART));
-
-        Money money = new Money(1000);
-        player.addMoney(money);
 
         Assertions.assertThat(player.isBust()).isTrue();
         Assertions.assertThat(player.finalProfit(dealer)).isEqualTo(-1000);
@@ -185,20 +176,14 @@ public class PlayerTest {
                         new Card(CardValue.TWO, CardSuit.CLUB),
                         new Card(CardValue.THREE, CardSuit.CLUB)
                 ));
-        Player player1 = new Player("pobi", player1Cards);
-
-        Money player1Money = new Money(1000);
-        player1.addMoney(player1Money);
+        Player player1 = new Player(player1Cards, "pobi", new Money(1000));
 
         List<Card> player2Cards = new ArrayList<>(
                 List.of(
                         new Card(CardValue.TWO, CardSuit.HEART),
                         new Card(CardValue.THREE, CardSuit.HEART)
                 ));
-        Player player2 = new Player("woni", player2Cards);
-
-        Money player2Money = new Money(2000);
-        player2.addMoney(player2Money);
+        Player player2 = new Player(player2Cards, "woni", new Money(2000));
 
         Assertions.assertThat(dealer.isBust()).isTrue();
         Assertions.assertThat(player1.finalProfit(dealer)).isEqualTo(1000);

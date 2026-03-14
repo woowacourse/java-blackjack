@@ -61,7 +61,7 @@ public class OutputView {
     }
 
     private String cardsToString(List<Card> hand) {
-        return String.join(", ", hand.stream().map(card -> card.getCardNumber().getName() + getCardSuit(card.getCardSuit())).toList());
+        return String.join(", ", hand.stream().map(card -> card.getCardValue().getName() + getCardSuit(card.getCardSuit())).toList());
     }
 
     private String getCardSuit(CardSuit cardSuit) {

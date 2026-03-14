@@ -25,11 +25,10 @@ public class GameController {
     }
 
     public void run() {
-        List<String> playerNames = getPlayerNames();
         Deck deck = new Deck();
         Dealer dealer = new Dealer(new ArrayList<>(List.of(deck.draw(), deck.draw())));
+        List<String> playerNames = getPlayerNames();
         Players players = getPlayers(playerNames, deck);
-        getMoney(players);
 
         printGameStart(playerNames, dealer, players);
         receiveMoreCard(players, dealer, deck);
@@ -40,32 +39,31 @@ public class GameController {
         outputView.printPlayerFinalProfit(players.getPlayers(), dealer);
     }
 
-    private List<String> getPlayerNames() {
-        String rawPlayerNames = inputView.readPlayerName();
-        return InputParser.parsePlayerNames(rawPlayerNames);
-    }
-
     private Players getPlayers(List<String> playerNames, Deck deck) {
         List<Player> players = new ArrayList<>();
         for (String playerName : playerNames) {
-            Player player = new Player(playerName, new ArrayList<>(List.of(deck.draw(), deck.draw())));
+            Money money = getMoney(playerName);
+            Player player = new Player(new ArrayList<>(List.of(deck.draw(), deck.draw())), playerName, money);
             players.add(player);
         }
         return new Players(players);
     }
 
-    private void getMoney(Players players) {
-        for (Player player : players.getPlayers()) {
-            String money = inputView.readMoney(player.getName());
-            player.addMoney(new Money(InputParser.parseMoney(money)));
-        }
+    private List<String> getPlayerNames() {
+        String input = inputView.readPlayerName();
+        return InputParser.parsePlayerNames(input);
+    }
+
+    private Money getMoney(String playerName) {
+        String input = inputView.readMoney(playerName);
+        return new Money(InputParser.parseMoney(input));
     }
 
     private void printGameStart(List<String> playerNames, Dealer dealer, Players players) {
         outputView.printStartCardMessage(playerNames);
 
         Card dealerFirstCard = dealer.getHand().getFirst();
-        outputView.printDealerStartCard(dealerFirstCard.getCardNumber(), dealerFirstCard.getCardSuit());
+        outputView.printDealerStartCard(dealerFirstCard.getCardValue(), dealerFirstCard.getCardSuit());
         outputView.printStartCard(
                 players.getPlayers().stream().map(player -> ParticipantDto.of(player.getName(), player)).toList());
     }

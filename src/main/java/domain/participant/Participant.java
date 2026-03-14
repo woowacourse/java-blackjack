@@ -20,11 +20,11 @@ public abstract class Participant {
     public int calculateScore() {
         int results = 0;
         for (Card holdCard : hand) {
-            results += holdCard.getCardNumber().getValue();
+            results += holdCard.getCardValue().getValue();
         }
 
         boolean isAceExist = hand.stream()
-                .anyMatch(holdCard -> holdCard.getCardNumber() == CardValue.ACE);
+                .anyMatch(holdCard -> holdCard.getCardValue() == CardValue.ACE);
         if (isSoftHand(isAceExist, results)) {
             return results + 10;
         }

@@ -37,7 +37,7 @@ public class JudgementTest {
                 new Card(CardValue.TEN, CardSuit.CLUB),
                 new Card(CardValue.TEN, CardSuit.SPADE),
                 new Card(CardValue.TEN, CardSuit.HEART)));
-        Player player = new Player("pobi", playerCards);
+        Player player = new Player(playerCards, "pobi", new Money(1000));
         Players players = new Players(List.of(player));
 
         Dealer dealer = createDealer(CardValue.TEN, CardSuit.CLUB, CardValue.TEN, CardSuit.SPADE);
@@ -54,7 +54,7 @@ public class JudgementTest {
                 new Card(CardValue.TEN, CardSuit.CLUB),
                 new Card(CardValue.TEN, CardSuit.SPADE),
                 new Card(CardValue.TEN, CardSuit.HEART)));
-        Player player = new Player("pobi", playerCards);
+        Player player = new Player(playerCards, "pobi", new Money(1000));
         Players players = new Players(List.of(player));
 
         Dealer dealer = createDealer(CardValue.TEN, CardSuit.CLUB, CardValue.SEVEN, CardSuit.SPADE);
@@ -69,7 +69,7 @@ public class JudgementTest {
         List<Card> playerCards = new ArrayList<>(List.of(
                 new Card(CardValue.TEN, CardSuit.CLUB),
                 new Card(CardValue.SEVEN, CardSuit.SPADE)));
-        Player player = new Player("pobi", playerCards);
+        Player player = new Player(playerCards, "pobi", new Money(1000));
         Players players = new Players(List.of(player));
 
         Dealer dealer = createDealer(CardValue.TEN, CardSuit.CLUB, CardValue.TEN, CardSuit.SPADE);
@@ -85,7 +85,7 @@ public class JudgementTest {
         List<Card> playerCards = new ArrayList<>(List.of(
                 new Card(CardValue.TEN, CardSuit.CLUB),
                 new Card(CardValue.NINE, CardSuit.SPADE)));
-        Player player = new Player("pobi", playerCards);
+        Player player = new Player(playerCards, "pobi", new Money(1000));
         Players players = new Players(List.of(player));
 
         Dealer dealer = createDealer(CardValue.TEN, CardSuit.CLUB, CardValue.SEVEN, CardSuit.SPADE);
@@ -100,7 +100,7 @@ public class JudgementTest {
         List<Card> playerCards = new ArrayList<>(List.of(
                 new Card(CardValue.TEN, CardSuit.CLUB),
                 new Card(CardValue.SEVEN, CardSuit.SPADE)));
-        Player player = new Player("pobi", playerCards);
+        Player player = new Player(playerCards, "pobi", new Money(1000));
         Players players = new Players(List.of(player));
 
         Dealer dealer = createDealer(CardValue.TEN, CardSuit.CLUB, CardValue.SEVEN, CardSuit.SPADE);
@@ -115,7 +115,7 @@ public class JudgementTest {
         List<Card> playerCards = new ArrayList<>(List.of(
                 new Card(CardValue.TEN, CardSuit.CLUB),
                 new Card(CardValue.FIVE, CardSuit.SPADE)));
-        Player player = new Player("pobi", playerCards);
+        Player player = new Player(playerCards, "pobi", new Money(1000));
         Players players = new Players(List.of(player));
 
         Dealer dealer = createDealer(CardValue.TEN, CardSuit.CLUB, CardValue.SEVEN, CardSuit.SPADE);
