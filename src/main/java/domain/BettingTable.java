@@ -25,18 +25,18 @@ public class BettingTable {
     }
 
     private long calculateMoney(Player player, WinningStatus winningStatus) {
-        return (long) (moneyTable.get(player).money() * winningStatus.getPayoutRatio());
+        return (long) (moneyTable.get(player).amount() * winningStatus.getPayoutRatio());
     }
 
     public long calculateDealerProfit() {
         long totalPlayerProfit = moneyTable.values().stream()
-                .mapToLong(Money::money)
+                .mapToLong(Money::amount)
                 .sum();
         return -totalPlayerProfit;
     }
 
     public long getPlayerMoneyAmount(Player player) {
-        return moneyTable.get(player).money();
+        return moneyTable.get(player).amount();
     }
 
     public Map<Player, Money> getMoneyTable() {

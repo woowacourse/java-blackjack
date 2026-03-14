@@ -165,8 +165,8 @@ class GameTest {
 
         // then
         assertAll(
-                () -> assertEquals(1000L, bettingTable.getMoneyTable().get(winPlayer).money()),
-                () -> assertEquals(-1000L, bettingTable.getMoneyTable().get(losePlayer).money())
+                () -> assertEquals(1000L, bettingTable.getMoneyTable().get(winPlayer).amount()),
+                () -> assertEquals(-1000L, bettingTable.getMoneyTable().get(losePlayer).amount())
         );
     }
 }

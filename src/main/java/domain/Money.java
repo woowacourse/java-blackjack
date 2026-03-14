@@ -1,4 +1,4 @@
 package domain;
 
-public record Money(long money) {
+public record Money(long amount) {
 }
