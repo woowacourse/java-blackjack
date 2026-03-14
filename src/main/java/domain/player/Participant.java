@@ -51,4 +51,12 @@ public class Participant {
     public boolean isEqualName(String name) {
         return this.name.isEqualName(name);
     }
+
+    public boolean isBlackJack() {
+        return hand.isBlackJack();
+    }
+
+    public boolean canHit() {
+        return !isBlackJack() && !isBust();
+    }
 }

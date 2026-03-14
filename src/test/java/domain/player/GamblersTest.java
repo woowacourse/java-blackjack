@@ -1,8 +1,8 @@
 package domain.player;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import java.util.List;
+import domain.betting.BettingAmount;
+import java.util.HashMap;
+import java.util.Map;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,30 +10,18 @@ import org.junit.jupiter.api.Test;
 class GamblersTest {
 
     @Test
-    @DisplayName("이름 리스트를 통해 player 객체들이 제대로 생성되는지 테스트")
-    void 이름_정상_저장_테스트() {
+    @DisplayName("이름, 베팅금액 정상 저장 테스트")
+    void 겜블러_이름_베팅금액_정상_저장_생성_테스트() {
         // given
-        List<String> names = List.of("pobi", "coco");
+        Map<String, BettingAmount> gamblerBettingInfo = new HashMap<String, BettingAmount>() {
+        };
+        gamblerBettingInfo.put("pobi", new BettingAmount(10000));
+        gamblerBettingInfo.put("coco", new BettingAmount(20000));
 
         // when
-        Gamblers gamblers = new Gamblers(names);
+        Gamblers gamblers = new Gamblers(gamblerBettingInfo);
 
         // then
-        boolean allContainName = names.stream()
-                .allMatch(name -> gamblers.containGambler(name));
-
-        Assertions.assertThat(allContainName).isEqualTo(true);
-    }
-
-    @Test
-    @DisplayName("이름 중복 없음 테스트")
-    void 이름_중복_없음_테스트() {
-        // given
-        List<String> names = List.of("pobi", "coco", "coco", "kaiya");
-
-        // then
-        assertThrows(IllegalArgumentException.class, () -> {
-            new Gamblers(names);
-        });
+        Assertions.assertThat(gamblers.getGamblersSize()).isEqualTo(2);
     }
 }

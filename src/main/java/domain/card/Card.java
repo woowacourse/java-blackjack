@@ -1,6 +1,7 @@
 package domain.card;
 
 public class Card {
+
     private final CardScore score;
     private final CardKind kind;
 

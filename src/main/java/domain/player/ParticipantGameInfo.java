@@ -6,4 +6,5 @@ public record ParticipantGameInfo(
         String name,
         List<String> cards,
         int score) {
+
 }

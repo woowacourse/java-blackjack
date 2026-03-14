@@ -9,13 +9,16 @@ import java.util.stream.IntStream;
 
 public class GameCards {
 
+    public static final int DEFAULT_CARD_SET = 1;
+    public static final int DEFAULT_START_CARD_COUNT = 2;
+
     private List<Card> cards;
 
-    public GameCards(int amount) {
+    public GameCards(int DEFAULT_CARD_SET) {
         this.cards = Arrays.stream(CardKind.values())
                 .flatMap(cardKind -> Arrays.stream(CardScore.values())
                         .flatMap(cardScore ->
-                                IntStream.range(0, amount)
+                                IntStream.range(0, DEFAULT_CARD_SET)
                                         .mapToObj(card -> new Card(cardScore.getScore(),
                                                 cardKind.getKind()))
                         ))

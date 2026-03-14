@@ -1,5 +1,6 @@
 package domain.player;
 
+import domain.betting.BettingAmount;
 import domain.card.GameCards;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -10,11 +11,15 @@ public class Gamblers {
 
     private List<Gambler> gamblers;
 
-    public Gamblers(List<String> names) {
-        validateDuplicateNames(names);
-        this.gamblers = names.stream()
-                .map(Gambler::new)
+    public Gamblers(Map<String, BettingAmount> gamblerNameAndBettingInfo) {
+        this.gamblers = gamblerNameAndBettingInfo.entrySet()
+                .stream()
+                .map(entry -> new Gambler(entry.getKey(), entry.getValue()))
                 .collect(Collectors.toList());
+    }
+
+    public Gamblers(List<Gambler> gamblerList) {
+        this.gamblers = gamblerList;
     }
 
     public boolean containGambler(String name) {
@@ -58,11 +63,7 @@ public class Gamblers {
         return gamblers;
     }
 
-    public void validateDuplicateNames(List<String> names) {
-        List<String> distinctNamesCount = names.stream().
-                distinct().collect(Collectors.toList());
-        if(distinctNamesCount.size() != names.size()) {
-            throw new IllegalArgumentException("중복된 이름이 입력됩니다.");
-        }
+    public int getGamblersSize() {
+        return gamblers.size();
     }
 }

@@ -1,55 +1,42 @@
 package domain.game;
 
+import domain.player.Gambler;
+import domain.player.Gamblers;
+import domain.player.Participant;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class GamblersGameResult {
 
-    private Map<String, GameResult> gamblersResult;
+    public static final int REVERSE_SIGN = -1;
 
-    public GamblersGameResult(int dealerScore, Map<String, Integer> gameResults) {
-        this.gamblersResult = gameResults.entrySet()
-                .stream()
-                .collect(Collectors.toMap(Map.Entry::getKey,
-                        entry -> GameResult.determine(
-                                dealerScore,
-                                entry.getValue()),
-                                (a, b) -> a, LinkedHashMap::new));
+    private Map<String, Profit> participantProfits;
+
+    public GamblersGameResult(Participant dealer, Gamblers gamblers) {
+        this.participantProfits = new LinkedHashMap<>();
+        calculateProfits(dealer, gamblers);
     }
 
-    public GameResult getMatchResult(String name) {
-        return gamblersResult.get(name);
+    private void calculateProfits(Participant dealer, Gamblers gamblers) {
+        for (Gambler gambler : gamblers.getGamblers()) {
+            GameResult result = GameResult.determine(dealer, gambler);
+            Profit profit = result.calculateProfit(gambler.getBettingAmount());
+            participantProfits.put(gambler.getName(), profit);
+        }
     }
 
-    public int countDealerWin() {
-        return (int) gamblersResult.values()
-                .stream()
-                .filter(result -> result == GameResult.LOSE)
-                .count();
+    public Profit getMatchProfits(String name) {
+        return participantProfits.get(name);
     }
 
-    public int countDealerLose() {
-        return (int) gamblersResult.values()
-                .stream()
-                .filter(result -> result == GameResult.WIN)
-                .count();
+    public Map<String, Profit> getParticipantProfits() {
+        return participantProfits;
     }
 
-    public int countDealerDraw() {
-        return (int) gamblersResult
-                .values()
-                .stream()
-                .filter(result -> result == GameResult.DRAW)
-                .count();
-    }
-
-    public Map<String, String> getResultInfo() {
-        return gamblersResult.entrySet()
-                .stream()
-                .collect(Collectors.toMap(Map.Entry::getKey,
-                        entry -> entry.getValue().getGameResult(),
-                        (a, b) -> a, LinkedHashMap::new
-                ));
+    public Profit getDealerProfit() {
+        int totalProfit = participantProfits.values().stream()
+                .mapToInt(Profit::getProfit)
+                .sum();
+        return new Profit(totalProfit * REVERSE_SIGN);
     }
 }

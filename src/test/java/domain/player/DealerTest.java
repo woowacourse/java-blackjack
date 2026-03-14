@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class DealerTest {
+
     @Test
     @DisplayName("딜러 카드 값의 합이 드로우 임계치 미만일 때 true를 정상적으로 반환함을 테스트")
     void 딜러_카드_합_드로우_임계치_미만_true_반환_테스트() {
