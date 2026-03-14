@@ -19,7 +19,7 @@ class BetTest {
         }
 
         @ParameterizedTest
-        @ValueSource(strings = {"123", "5000", "213213"})
+        @ValueSource(strings = {"100", "5000", "30000"})
         void 베팅_금액이_숫자라면_정상적으로_생성된다(String stringAmount) {
             assertThatCode(() -> Bet.from(stringAmount))
                     .doesNotThrowAnyException();
@@ -36,8 +36,15 @@ class BetTest {
         }
 
         @ParameterizedTest
-        @ValueSource(ints = {1, 1000, Integer.MAX_VALUE})
-        void 베팅_금액이_0보다_크다면_정상적으로_생성된다(int positiveAmount) {
+        @ValueSource(ints = {1, 10, 150, 1234})
+        void 베팅_금액이_100으로_나누어_떨어지지_않는다면_예외를_던진다(int notDivisibleAmount) {
+            assertThatThrownBy(() -> new Bet(notDivisibleAmount))
+                    .isInstanceOf(IllegalArgumentException.class);
+        }
+
+        @ParameterizedTest
+        @ValueSource(ints = {100, 1000, 5000})
+        void 베팅_금액이_0보다_크고_100의_배수라면_정상적으로_생성된다(int positiveAmount) {
             assertThatCode(() -> new Bet(positiveAmount))
                     .doesNotThrowAnyException();
         }
