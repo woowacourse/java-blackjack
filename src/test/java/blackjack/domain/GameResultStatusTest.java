@@ -17,8 +17,8 @@ public class GameResultStatusTest {
         // when
         BigDecimal result = GameResultStatus.WIN.calculateProfit(input);
 
-        //then
-        assertThat(new BigDecimal("10000")).isEqualByComparingTo(result);
+        // then
+        assertThat(result).isEqualByComparingTo(new BigDecimal("10000"));
     }
 
     @Test
@@ -30,8 +30,8 @@ public class GameResultStatusTest {
         // when
         BigDecimal result = GameResultStatus.BLACKJACK_WIN.calculateProfit(input);
 
-        //then
-        assertThat(new BigDecimal("15000")).isEqualByComparingTo(result);
+        // then
+        assertThat(result).isEqualByComparingTo(new BigDecimal("15000"));
     }
 
     @Test
@@ -43,8 +43,8 @@ public class GameResultStatusTest {
         // when
         BigDecimal result = GameResultStatus.LOSE.calculateProfit(input);
 
-        //then
-        assertThat(new BigDecimal("-10000")).isEqualByComparingTo(result);
+        // then
+        assertThat(result).isEqualByComparingTo(new BigDecimal("-10000"));
     }
 
     @Test
@@ -57,6 +57,6 @@ public class GameResultStatusTest {
         BigDecimal result = GameResultStatus.DRAW.calculateProfit(input);
 
         // then
-        assertThat(BigDecimal.ZERO).isEqualByComparingTo(result);
+        assertThat(result).isEqualByComparingTo(BigDecimal.ZERO);
     }
 }
