@@ -27,6 +27,7 @@ public class OutputView {
     }
 
     public static void printDealerMessage() {
+        System.out.println();
         System.out.println(DEALER + "는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
@@ -45,7 +46,7 @@ public class OutputView {
             resultMessage.append(entry.getKey()).append(": ").append("패%n");
             loseCount += 1;
         }
-
+        System.out.println();
         System.out.println("## 최종 승패");
         System.out.println(DEALER + ": " + loseCount + "승" + " " + winCount + "패");
         System.out.printf(resultMessage.toString());

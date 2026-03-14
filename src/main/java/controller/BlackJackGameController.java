@@ -22,7 +22,7 @@ public class BlackJackGameController {
         GameManager gameManager = new GameManager(players);
 
         List<String> playersNames = getPlayerNames(players);
-        // TODO: 베팅금액 입력 로직
+        // TODO: 베팅금액 입력 로직 - return 값 아직 활용 안함
         players.forEach(player -> InputView.askBettingAmount(player.getName()));
         OutputView.printGameInitialMessage(playersNames);
 

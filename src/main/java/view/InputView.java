@@ -15,6 +15,7 @@ public class InputView {
     }
 
     public static String askContinue(String player) {
+        System.out.println();
         System.out.println(player + "는 한장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)");
         Scanner sc = new Scanner(System.in);
         String input = sc.nextLine();
