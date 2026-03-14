@@ -1,5 +1,7 @@
 package view;
 
+import static domain.BlackjackGame.DEALER_HIT_STAND_BOUNDARY;
+
 import domain.BlackjackGame;
 import domain.Score;
 import domain.card.Card;
@@ -9,11 +11,8 @@ import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Participant;
 import domain.participant.Player;
-
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static domain.BlackjackGame.DEALER_HIT_STAND_BOUNDARY;
 
 public class ResultView {
     private static final String DELIMITER = ", ";
@@ -21,7 +20,8 @@ public class ResultView {
     public void printParticipantsCards(List<Player> players, Dealer dealer) {
         printEmptyLine();
         System.out.println(
-                dealer.getName().getValue() + "와 " + joinPlayersNameByDelimiter(players) + "에게 " + BlackjackGame.DEFAULT_HAND_NUMBER
+                dealer.getName().getValue() + "와 " + joinPlayersNameByDelimiter(players) + "에게 "
+                        + BlackjackGame.DEFAULT_HAND_NUMBER
                         + "장을 나누었습니다.");
         Card dealerCard = dealer.getFirstCard();
         System.out.println("딜러카드: " + dealerCard.getRank().getDisplayValue() + dealerCard.getSuit().getValue());
@@ -60,10 +60,10 @@ public class ResultView {
     public void printDealerHitStand(boolean value) {
         printEmptyLine();
         if (value) {
-            System.out.println("딜러는 " + DEALER_HIT_STAND_BOUNDARY.getValue() + "이하라 한장의 카드를 더 받았습니다.");
+            System.out.println("딜러는 " + DEALER_HIT_STAND_BOUNDARY.value() + "이하라 한장의 카드를 더 받았습니다.");
             return;
         }
-        System.out.println("딜러는 " + (DEALER_HIT_STAND_BOUNDARY.add(new Score(1)).getValue()) + "이상이라 카드를 받지 않았습니다.");
+        System.out.println("딜러는 " + (DEALER_HIT_STAND_BOUNDARY.add(new Score(1)).value()) + "이상이라 카드를 받지 않았습니다.");
     }
 
     public void printResult(TotalResult results) {
@@ -89,6 +89,6 @@ public class ResultView {
         System.out.println(
                 participant.getName().getValue() + "카드: " + cardsToString(
                         participant.getCards().getCards()) + " - 결과: "
-                        + participant.getTotalSum().getValue());
+                        + participant.getTotalSum().value());
     }
 }
