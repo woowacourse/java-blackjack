@@ -20,8 +20,8 @@ public class BettingTableTest {
     private final Card cloverAce = Card.of(CardDenomination.ACE, CardEmblem.CLOVER);
     private final Card spadeJack = Card.of(CardDenomination.JACK, CardEmblem.SPADE);
     private final Card spadeNine = Card.of(CardDenomination.NINE, CardEmblem.SPADE);
-    private final double blackJackRate = BettingRate.BLACK_JACK.bettingRate();
-    private final double loseRate = BettingRate.PLAYER_LOSE.bettingRate();
+    private final BettingRate blackJackRate = BettingRate.BLACK_JACK;
+    private final BettingRate loseRate = BettingRate.PLAYER_LOSE;
     private final BettingMoney thousandWon = BettingMoney.bet("1000");
     private final Player testPlayer = Player.from(new PlayerName("test"));
     private CardBundle blackJackBundle;
@@ -59,7 +59,7 @@ public class BettingTableTest {
         bettingTable.applyBettingRate(dealer, players);
 
         Profit actualProfit = bettingTable.getPlayerProfit(testPlayer);
-        Profit expectedProfit = thousandWon.withRate(blackJackRate);
+        Profit expectedProfit = thousandWon.withRate(blackJackRate.getBettingRate());
 
         Assertions.assertThat(actualProfit)
                 .isEqualTo(expectedProfit);
@@ -77,7 +77,7 @@ public class BettingTableTest {
 
         Profit actualDealerProfit = bettingTable.getDealerProfit();
         Profit expectedDealerProfit = thousandWon
-                .withRate(blackJackRate)
+                .withRate(blackJackRate.getBettingRate())
                 .reverseProfit();
 
         Assertions.assertThat(actualDealerProfit)

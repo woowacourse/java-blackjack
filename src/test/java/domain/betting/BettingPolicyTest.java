@@ -48,8 +48,8 @@ public class BettingPolicyTest {
         Dealer dealer = createDealer(blackjackBundle.openMyCards());
         dealer.dealMyself();
 
-        double actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
-        double expectedBettingRate = BettingRate.BLACK_JACK_PUSH.bettingRate();
+        BettingRate actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
+        BettingRate expectedBettingRate = BettingRate.BLACK_JACK_PUSH;
 
         Assertions.assertThat(actualBettingRate)
                 .isEqualTo(expectedBettingRate);
@@ -62,8 +62,8 @@ public class BettingPolicyTest {
         Dealer dealer = createDealer(List.of(spadeFive, spadeEight));
         dealer.dealMyself();
 
-        double actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
-        double expectedBettingRate = BettingRate.BLACK_JACK.bettingRate();
+        BettingRate actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
+        BettingRate expectedBettingRate = BettingRate.BLACK_JACK;
 
         Assertions.assertThat(actualBettingRate)
                 .isEqualTo(expectedBettingRate);
@@ -78,8 +78,8 @@ public class BettingPolicyTest {
         dealer.dealMyself();
         dealer.hitMyself();
 
-        double actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
-        double expectedBettingRate = BettingRate.PLAYER_WIN.bettingRate();
+        BettingRate actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
+        BettingRate expectedBettingRate = BettingRate.PLAYER_WIN;
 
         Assertions.assertThat(actualBettingRate)
                 .isEqualTo(expectedBettingRate);
@@ -93,8 +93,8 @@ public class BettingPolicyTest {
         dealer.dealMyself();
         dealer.hitIfRequired();
 
-        double actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
-        double expectedBettingRate = BettingRate.PLAYER_WIN.bettingRate();
+        BettingRate actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
+        BettingRate expectedBettingRate = BettingRate.PLAYER_WIN;
 
         Assertions.assertThat(actualBettingRate)
                 .isEqualTo(expectedBettingRate);
@@ -107,8 +107,8 @@ public class BettingPolicyTest {
         Dealer dealer = createDealer(nonBustBundle.openMyCards());
         dealer.dealMyself();
 
-        double actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
-        double expectedBettingRate = BettingRate.PLAYER_LOSE.bettingRate();
+        BettingRate actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
+        BettingRate expectedBettingRate = BettingRate.PLAYER_LOSE;
 
         Assertions.assertThat(actualBettingRate)
                 .isEqualTo(expectedBettingRate);
@@ -121,8 +121,8 @@ public class BettingPolicyTest {
         Dealer dealer = createDealer(nonBustBundle.openMyCards());
         dealer.dealMyself();
 
-        double actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
-        double expectedBettingRate = BettingRate.PLAYER_WIN.bettingRate();
+        BettingRate actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
+        BettingRate expectedBettingRate = BettingRate.PLAYER_WIN;
 
         Assertions.assertThat(actualBettingRate)
                 .isEqualTo(expectedBettingRate);
@@ -135,8 +135,8 @@ public class BettingPolicyTest {
         Dealer dealer = createDealer(biggerBundle.openMyCards());
         dealer.dealMyself();
 
-        double actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
-        double expectedBettingRate = BettingRate.PLAYER_LOSE.bettingRate();
+        BettingRate actualBettingRate = policyManager.gainBettingRate(dealer, testPlayer);
+        BettingRate expectedBettingRate = BettingRate.PLAYER_LOSE;
 
         Assertions.assertThat(actualBettingRate)
                 .isEqualTo(expectedBettingRate);

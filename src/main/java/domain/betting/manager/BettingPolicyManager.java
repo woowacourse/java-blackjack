@@ -21,10 +21,9 @@ public final class BettingPolicyManager {
         );
     }
 
-    public double gainBettingRate(Dealer dealer, Player player) {
+    public BettingRate gainBettingRate(Dealer dealer, Player player) {
         BettingPolicy bettingPolicy = findBettingPolicy(dealer, player);
-        BettingRate bettingRate = bettingPolicy.getBettingRate(dealer, player);
-        return bettingRate.getBettingRate();
+        return bettingPolicy.getBettingRate(dealer, player);
     }
 
     private BettingPolicy findBettingPolicy(Dealer dealer, Player player) {
