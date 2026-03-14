@@ -90,11 +90,11 @@ class GameManagerTest {
         manager.startGame();
         Player player = manager.getPlayersToPlay().getFirst();
 
-        int before = player.handSize();
+        int before = player.getHandToString().size();
 
         manager.drawPlayerCard(player);
 
-        int after = player.handSize();
+        int after = player.getHandToString().size();
 
         assertThat(after).isEqualTo(before + 1);
     }

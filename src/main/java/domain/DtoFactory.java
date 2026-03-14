@@ -49,7 +49,6 @@ public class DtoFactory {
     private static void addDealerInitialInfo(List<GameInitialInfoDto> results, Dealer dealer) {
         results.add(new GameInitialInfoDto(
                 dealer.getName(),
-                INITIAL_HAND_SIZE,
                 List.of(dealer.getOpenCard())
         ));
     }
@@ -58,7 +57,6 @@ public class DtoFactory {
         for (Player player : players.getNonNaturalBlackJackPlayers()) {
             results.add(new GameInitialInfoDto(
                     player.getName(),
-                    INITIAL_HAND_SIZE,
                     player.getHandToString()
             ));
         }

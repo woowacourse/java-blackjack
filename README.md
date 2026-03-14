@@ -170,3 +170,18 @@
 
 ## 고민
 - Players를 copyOf로 해도 얕은 복사라 Player 자체에는 접근이 가능해진다. Player 자체의 변동 가능성은?
+
+
+---
+
+## PR 리뷰 후 추가 수정 사항
+- [X] 사용하지 않는 Result enum 필드 제거
+- [X] DTO의 intialHandSize 제거
+- [ ] 동일한 카드가 플레이어에게 드로우되는 문제 해결
+- [ ] Players 인스턴스 생성 및 추가 방식 수정
+- [ ] splitPlayerNameInput 스트림 불변 리스트로 수정(toList)
+- [ ] 테스트에서만 쓰이는 handSize 메서드 제거
+- [ ] 기록 내용 README.md 추가
+- [ ] 컨트롤러게 매니저를 상태로 들고있는 구조 개선
+- [ ] Result와 배당 수익금 비율 분리
+- [ ] PlayerStatus에서 수익 계산 하는 부분 분리하기
