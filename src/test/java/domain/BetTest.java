@@ -2,15 +2,13 @@ package domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.ArrayList;
-import java.util.List;
+import dto.GameResult;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import strategy.AceDrawStrategy;
 
 class BetTest {
     static Bet bet = new Bet();
@@ -25,19 +23,19 @@ class BetTest {
     @ParameterizedTest
     @MethodSource("results")
     @DisplayName("플레이어 상황에 따라 수익을 반환해야한다.")
-    void 플레이어_승_딜러_손해(double expected, String player, WinningCondition condition) {
+    void 플레이어_승_딜러_손해(double expected, GameResult result) {
 
-        double actual = bet.calculateEarningPrize(player, condition);
+        double actual = ScoreBoard.calculateEarningPrize(result, bet);
 
         assertEquals(expected, actual);
     }
 
     private static Stream<Arguments> results() {
         return Stream.of(
-                Arguments.arguments(10000, "1", WinningCondition.WIN),
-                Arguments.arguments(0, "2", WinningCondition.DRAW),
-                Arguments.arguments(60000, "3", WinningCondition.BLACK_JACK),
-                Arguments.arguments(15000, "1", WinningCondition.BLACK_JACK)
+                Arguments.arguments(10000, new GameResult("1", WinningCondition.WIN)),
+                Arguments.arguments(0, new GameResult("2", WinningCondition.DRAW)),
+                Arguments.arguments(60000, new GameResult("3", WinningCondition.BLACK_JACK)),
+                Arguments.arguments(15000, new GameResult("1", WinningCondition.BLACK_JACK))
         );
     }
 }

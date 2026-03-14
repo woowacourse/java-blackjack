@@ -3,6 +3,7 @@ package view;
 import domain.Bet;
 import domain.Card;
 import domain.ParticipantsRole;
+import domain.ScoreBoard;
 import dto.GameResult;
 import dto.GameStatus;
 import java.util.ArrayList;
@@ -10,7 +11,6 @@ import java.util.List;
 
 public class OutputView {
     private static final String CARD_JOINER = ", ";
-    private static final int CHANGE_NEGATIVE = -1;
 
     public static void divideCards(List<String> participants) {
         String players = String.join(CARD_JOINER, participants);
@@ -36,7 +36,8 @@ public class OutputView {
     public static void participantsResults(List<GameStatus> gameStatuses) {
         for (GameStatus gameStatus : gameStatuses) {
             System.out.println(
-                    OutputMessage.PARTICIPANTS_RESULT.description(getGameLog(gameStatus), gameStatus.hand().scoreSum()));
+                    OutputMessage.PARTICIPANTS_RESULT.description(getGameLog(gameStatus),
+                            gameStatus.score()));
         }
         printTaskDivider();
     }
@@ -50,18 +51,15 @@ public class OutputView {
 
     private static void playersWinningLog(List<GameResult> gameResults, Bet bet) {
         for (GameResult gameResult : gameResults) {
-            int resultProfit = (int) bet.calculateEarningPrize(gameResult.name(), gameResult.winningCondition());
             System.out.println(
-                    OutputMessage.PLAYER_PROFIT.description(gameResult.name(), resultProfit));
+                    OutputMessage.PLAYER_PROFIT.description(gameResult.name(),
+                            ScoreBoard.calculateEarningPrize(gameResult, bet)));
         }
     }
 
     private static void statisticDealer(List<GameResult> gameResults, Bet bet) {
-        int playerProfit = 0;
-        for (GameResult gameResult : gameResults) {
-            playerProfit += (int) bet.calculateEarningPrize(gameResult.name(), gameResult.winningCondition());
-        }
-        System.out.printf(OutputMessage.DEALER_PROFIT.description() + System.lineSeparator(), playerProfit * CHANGE_NEGATIVE);
+        System.out.printf(OutputMessage.DEALER_PROFIT.description() + System.lineSeparator(),
+                ScoreBoard.calculateDealerProfit(gameResults, bet));
     }
 
     public static void printTaskDivider() {

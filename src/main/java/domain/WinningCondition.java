@@ -1,5 +1,6 @@
 package domain;
 
+import dto.GameResult;
 import dto.GameStatus;
 
 public enum WinningCondition {
@@ -23,8 +24,8 @@ public enum WinningCondition {
         return compareResult(player, dealer);
     }
 
-    public double rate() {
-        return rate;
+    public double earning(int betAmount) {
+        return rate * betAmount;
     }
 
     private static boolean isBlackJackCase(GameStatus player, GameStatus dealer) {
