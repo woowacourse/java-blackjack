@@ -19,7 +19,7 @@ import model.participant.Participant;
 import model.participant.Participants;
 import model.participant.Dealer;
 import model.participant.Player;
-import model.participant.PlayerNames;
+import util.PlayerNamesValidator;
 import util.InputParser;
 import view.InputView;
 import view.OutputView;
@@ -49,11 +49,11 @@ public class BlackJackController {
 
     private Participants setUpParticipants() {
         String rawNames = inputView.readPlayerNames();
-        List<String> parsed = InputParser.parseName(rawNames);
-        PlayerNames playerNames = PlayerNames.from(parsed);
+        List<String> playerNames = InputParser.parseName(rawNames);
+        PlayerNamesValidator.validate(playerNames);
 
         List<Player> players = new ArrayList<>();
-        for (String playerName : playerNames.asList()) {
+        for (String playerName : playerNames) {
             int bettingAmount = inputView.readBettingAmount(playerName);
             Player player = Player.of(playerName, bettingAmount);
             players.add(player);
