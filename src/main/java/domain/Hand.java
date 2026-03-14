@@ -36,7 +36,7 @@ public class Hand {
         return score > MAX_PLAYABLE_NUMBER;
     }
 
-    int scoreSum() {
+    public int scoreSum() {
         int total = rawScoreSum();
         if (isOvercome()) {
             total -= aceCount() * ACE_WEIGHT;

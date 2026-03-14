@@ -75,10 +75,10 @@ public enum WinningCondition {
     }
 
     private static boolean isDraw(GameStatus player, GameStatus dealer) {
-        return player.scoreSum() == dealer.scoreSum();
+        return player.hand().scoreSum() == dealer.hand().scoreSum();
     }
 
     private static boolean isLose(GameStatus player, GameStatus dealer) {
-        return player.scoreSum() < dealer.scoreSum();
+        return player.hand().scoreSum() < dealer.hand().scoreSum();
     }
 }

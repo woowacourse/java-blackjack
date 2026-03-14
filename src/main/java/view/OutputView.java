@@ -36,7 +36,7 @@ public class OutputView {
     public static void participantsResults(List<GameStatus> gameStatuses) {
         for (GameStatus gameStatus : gameStatuses) {
             System.out.println(
-                    OutputMessage.PARTICIPANTS_RESULT.description(getGameLog(gameStatus), gameStatus.scoreSum()));
+                    OutputMessage.PARTICIPANTS_RESULT.description(getGameLog(gameStatus), gameStatus.hand().scoreSum()));
         }
         printTaskDivider();
     }
