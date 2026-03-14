@@ -78,10 +78,11 @@ public class BlackjackController {
             outputView.printFinalCards(player);
         }
         Referee referee = new Referee();
-        Map<Player, Result> results = new LinkedHashMap<>();
+        Map<Player, Result> playerResults = new LinkedHashMap<>();
         for (Player player : players.getGamePlayers()) {
-            results.put(player, referee.judge(player.getScore(), dealer.getScore()));
+            playerResults.put(player, referee.judge(player.getScore(), dealer.getScore()));
         }
-        outputView.printFinalResult(dealer, results);
+        Map<Result, Integer> dealerResult = referee.countDealerResult(playerResults);
+        outputView.printFinalResult(dealer.getName(), dealerResult, playerResults);
     }
 }
