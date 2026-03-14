@@ -9,8 +9,9 @@ import domain.participant.ParticipantGroup;
 import domain.participant.Player;
 import domain.participant.PlayerName;
 import domain.participant.Players;
+import domain.profit.ProfitCalculator;
+import domain.profit.ProfitTable;
 import domain.result.GameState;
-import domain.result.ProfitCalculator;
 import domain.result.Result;
 import domain.result.ResultJudge;
 import service.BlackJackService;
@@ -138,17 +139,20 @@ public class BlackJackController {
     private void showResult(GameState gameState, BetTable betTable) {
         OutputView.scoreStatisticsMessage(gameState.getDealer(), gameState.getPlayers());
         Result result = resultJudge.calculateResult(gameState.getDealer(), gameState.getPlayers());
-        ProfitCalculator calculator = new ProfitCalculator(betTable);
 
-        savePlayerProfits(gameState, calculator, result);
+        ProfitCalculator profitCalculator = new ProfitCalculator(betTable);
+        ProfitTable profitTable = savePlayerProfits(gameState, profitCalculator, result);
 
-        int dealerProfit = calculator.dealerCalculateProfit();
-        OutputView.gameProfitResultMessage(betTable, dealerProfit);
+        int dealerProfit = profitTable.dealerCalculateProfit();
+        OutputView.gameProfitResultMessage(profitTable, dealerProfit);
     }
 
-    private void savePlayerProfits(GameState gameState, ProfitCalculator calculator, Result result) {
-        for (Player player : gameState.getPlayers().getAllPlayers()) {
-            calculator.playerCalculateProfit(result.getGameResult().get(player.getName()), player);
+    private ProfitTable savePlayerProfits(GameState gameState, ProfitCalculator calculator, Result result) {
+        ProfitTable profitTable = new ProfitTable();
+        for (Player player : gameState.findAllPlayers()) {
+            int profit = calculator.playerCalculateProfit(result, player);
+            profitTable.recodeProfit(player, profit);
         }
+        return profitTable;
     }
 }

@@ -1,10 +1,10 @@
 package view;
 
-import domain.bet.BetTable;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
+import domain.profit.ProfitTable;
 
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -65,11 +65,11 @@ public class OutputView {
         System.out.println(player.getName() + "의 배팅금액은?");
     }
 
-    public static void gameProfitResultMessage(BetTable betTable, int dealerProfit) {
+    public static void gameProfitResultMessage(ProfitTable profitTable, int dealerProfit) {
         System.out.printf(FINAL_PROFIT_MESSAGE);
         System.out.printf(DEALER_PROFIT_RESULT, dealerProfit);
 
-        for (Map.Entry<String, Integer> entry : betTable.getBettingTable().entrySet()) {
+        for (Map.Entry<String, Integer> entry : profitTable.findProfitTableEntry()) {
             System.out.printf(PLAYER_PROFIT_RESULT, entry.getKey(), entry.getValue());
         }
     }

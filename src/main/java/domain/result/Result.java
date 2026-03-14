@@ -1,5 +1,7 @@
 package domain.result;
 
+import domain.participant.Player;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -29,6 +31,10 @@ public class Result {
             calculateDealerResultBoard(entry, dealerResultBoard);
         }
         return dealerResultBoard;
+    }
+
+    public ResultInfo findPlayerResult(Player player) {
+        return gameResult.get(player.getName());
     }
 
     private void calculateDealerResultBoard(Map.Entry<String, ResultInfo> entry, List<Integer> dealerResultBoard) {

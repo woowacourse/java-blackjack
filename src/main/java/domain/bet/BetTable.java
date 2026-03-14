@@ -1,5 +1,7 @@
 package domain.bet;
 
+import domain.participant.Player;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,8 +17,8 @@ public class BetTable {
         bettingTable.put(name, amount);
     }
 
-    public int getAmountByName(String name) {
-        return bettingTable.get(name);
+    public int findBetAmount(Player player) {
+        return bettingTable.get(player.getName());
     }
 
     public List<Integer> getAmountByPlayers() {

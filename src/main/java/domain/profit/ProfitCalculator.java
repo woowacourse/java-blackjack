@@ -1,7 +1,9 @@
-package domain.result;
+package domain.profit;
 
 import domain.bet.BetTable;
 import domain.participant.Player;
+import domain.result.Result;
+import domain.result.ResultInfo;
 
 public class ProfitCalculator {
     private final BetTable betTable;
@@ -10,15 +12,9 @@ public class ProfitCalculator {
         this.betTable = betTable;
     }
 
-    public void playerCalculateProfit(ResultInfo resultInfo, Player player) {
-        int betAmount = betTable.getAmountByName(player.getName());
-        int calculatedProfit = resultInfo.calculateProfit(betAmount);
-        betTable.recodeAmount(player.getName(), calculatedProfit);
-    }
-
-    public int dealerCalculateProfit() {
-        return betTable.getAmountByPlayers().stream()
-                .mapToInt(value -> -value)
-                .sum();
+    public int playerCalculateProfit(Result result, Player player) {
+        ResultInfo resultInfo = result.findPlayerResult(player);
+        int betAmount = betTable.findBetAmount(player);
+        return resultInfo.calculateProfit(betAmount);
     }
 }
