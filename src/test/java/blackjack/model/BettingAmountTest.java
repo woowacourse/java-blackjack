@@ -1,9 +1,11 @@
 package blackjack.model;
 
+import blackjack.exception.ErrorMessage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BettingAmountTest {
 
@@ -41,5 +43,27 @@ class BettingAmountTest {
         Player player = new Player("luke", 1000);
         // when & then
         assertThat(player.getBettingAmount(GameResult.BLACKJACK)).isEqualTo(1500);
+    }
+
+    @Test
+    @DisplayName("배팅 금액이 0원 초과이면 통과")
+    void reateSuccessWhenAmountIsPositive() {
+        // given
+        BettingAmount bettingAmount = new BettingAmount(1);
+        // when & then
+        assertThat(bettingAmount.getMoney()).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("배팅 금액이 0원 이하면 예외처리한다.")
+    void createFailWhenAmountIsZeroOrLess() {
+        // when & then
+        assertThatThrownBy(() -> new BettingAmount(0))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(ErrorMessage.AMOUNT_NOT_ZERO.getMessage());
+
+        assertThatThrownBy(() -> new BettingAmount(-1000))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(ErrorMessage.AMOUNT_NOT_ZERO.getMessage());
     }
 }

@@ -71,20 +71,20 @@ class HandCardsTest {
     }
 
     @Test
-    @DisplayName("카드 2장으로 21이되면 블랙잭이다.")
-    void isBlackjackTest() {
+    @DisplayName("카드가 2장이면 성공")
+    void isInitialCardSizeTest() {
         // given
         HandCards handCards = new HandCards();
         // when
         handCards.addCard(new Card(Figure.SPADE, Number.ACE));
         handCards.addCard(new Card(Figure.SPADE, Number.TEN));
         // then
-        assertThat(handCards.isBlackjack()).isTrue();
+        assertThat(handCards.isInitialCardSize()).isTrue();
     }
 
     @Test
-    @DisplayName("카드 2장 이상이며, 21이되면 블랙잭이 아니다.")
-    void isNotBlackjackTest() {
+    @DisplayName("카드가 2장을 초과하면 실패")
+    void isNotInitialCardSizeTest() {
         // given
         HandCards handCards = new HandCards();
         // when
@@ -92,6 +92,6 @@ class HandCardsTest {
         handCards.addCard(new Card(Figure.SPADE, Number.TEN));
         handCards.addCard(new Card(Figure.SPADE, Number.TEN));
         // then
-        assertThat(handCards.isBlackjack()).isFalse();
+        assertThat(handCards.isInitialCardSize()).isFalse();
     }
 }

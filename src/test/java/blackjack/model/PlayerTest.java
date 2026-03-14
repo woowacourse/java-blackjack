@@ -1,11 +1,9 @@
 package blackjack.model;
 
-import blackjack.exception.ErrorMessage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PlayerTest {
 
@@ -60,15 +58,32 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("배팅 금액이 0원 이하면 예외처리한다.")
-    void bettingAmountTest() {
-        // when & then
-        assertThatThrownBy(() -> new Player("luke", 0))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ErrorMessage.AMOUNT_NOT_ZERO.getMessage());
+    @DisplayName("처음 받은 2장의 합이 21점이면 블랙잭이다")
+    void isBlackjackTrue() {
+        // given
+        Player player = new Player("luke", 1000);
+        Card cardTen = new Card(Figure.SPADE, Number.TEN);
+        Card cardAce = new Card(Figure.SPADE, Number.ACE);
+        // when
+        player.receiveCard(cardTen);
+        player.receiveCard(cardAce);
+        // then
+        assertThat(player.isBlackjack()).isTrue();
+    }
 
-        assertThatThrownBy(() -> new Player("luke", -1000))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ErrorMessage.AMOUNT_NOT_ZERO.getMessage());
+    @Test
+    @DisplayName("3장 이상의 합이 21점이면 블랙잭이 아니다")
+    void isBlackjackFalse() {
+        // given
+        Player player = new Player("luke", 1000);
+        Card cardTen = new Card(Figure.SPADE, Number.TEN);
+        Card cardJack = new Card(Figure.SPADE, Number.JACK);
+        Card cardAce = new Card(Figure.SPADE, Number.ACE);
+        // when
+        player.receiveCard(cardTen);
+        player.receiveCard(cardJack);
+        player.receiveCard(cardAce);
+        // then
+        assertThat(player.isBlackjack()).isFalse();
     }
 }

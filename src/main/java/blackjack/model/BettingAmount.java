@@ -14,6 +14,10 @@ public class BettingAmount {
         return money * gameResult.getPayout();
     }
 
+    public double getMoney() {
+        return money;
+    }
+
     private void validateMoney(double money) {
         if (money <= 0) {
             throw new IllegalArgumentException(ErrorMessage.AMOUNT_NOT_ZERO.getMessage());

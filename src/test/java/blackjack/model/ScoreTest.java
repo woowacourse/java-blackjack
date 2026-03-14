@@ -24,4 +24,24 @@ class ScoreTest {
         // when & then
         assertThat(score.isBust()).isFalse();
     }
+
+    @Test
+    @DisplayName("스코어가 21점이면 통과")
+    void isMaxScoreTest() {
+        // given
+        Score score = new Score(21);
+        // when & then
+        assertThat(score.isMaxScore()).isTrue();
+    }
+
+    @Test
+    @DisplayName("스코어가 21점이 아니면 실패")
+    void isNotMaxScoreTest() {
+        // given
+        Score score1 = new Score(22);
+        Score score2 = new Score(20);
+        // when & then
+        assertThat(score1.isMaxScore()).isFalse();
+        assertThat(score2.isMaxScore()).isFalse();
+    }
 }
