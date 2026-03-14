@@ -8,9 +8,9 @@ import domain.gamer.Player;
 import java.util.List;
 
 // THINK Has state and method -> SingleTone?
-public class BettingPolicyManager {
+public final class BettingPolicyManager {
 
-    List<BettingPolicy> policies;
+    private final List<BettingPolicy> policies;
 
     public BettingPolicyManager() {
         this.policies = List.of(
