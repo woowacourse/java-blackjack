@@ -1,9 +1,6 @@
 package domain.card;
 
-import domain.Rank;
-import domain.Suit;
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Queue;
@@ -20,19 +17,9 @@ public class Deck {
     }
 
     public static Deck createWithAllCards() {
-        List<Card> generatedCards = getAllCards();
-        Collections.shuffle(generatedCards);
-        return new Deck(new ArrayDeque<>(generatedCards));
-    }
-
-    private static List<Card> getAllCards() {
-        List<Card> cards = new ArrayList<>();
-        for (Suit suit : Suit.values()) {
-            for (Rank rank : Rank.values()) {
-                cards.add(new Card(suit, rank));
-            }
-        }
-        return cards;
+        List<Card> cards = Card.getAllTypesOfCard();
+        Collections.shuffle(cards);
+        return new Deck(new ArrayDeque<>(cards));
     }
 
     public Card draw() {

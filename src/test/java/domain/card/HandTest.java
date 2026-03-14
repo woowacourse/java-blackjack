@@ -16,7 +16,7 @@ public class HandTest {
     @Test
     void 카드가_정상적으로_추가되어야_한다() {
         //given
-        Card card = new Card(Suit.SPADE, Rank.ACE);
+        Card card = Card.of(Suit.SPADE, Rank.ACE);
         Hand hand = Hand.createEmpty();
 
         //when

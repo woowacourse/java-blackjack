@@ -8,7 +8,7 @@ public class Name {
             NAME_MAX_LENGTH);
     private final String value;
 
-    public Name(String name) {
+    private Name(String name) {
         this.value = name;
     }
 

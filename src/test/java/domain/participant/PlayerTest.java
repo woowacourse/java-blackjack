@@ -22,12 +22,12 @@ public class PlayerTest {
 
     static {
 
-        List<Card> scoreBlackjackCards = List.of(new Card(Suit.CLUB, Rank.Q), new Card(Suit.HEART, Rank.ACE));
-        List<Card> scoreBustCards = List.of(new Card(Suit.CLUB, Rank.Q), new Card(Suit.HEART, Rank.Q),
-                new Card(Suit.DIAMOND, Rank.Q));
-        List<Card> score20Cards = List.of(new Card(Suit.CLUB, Rank.Q), new Card(Suit.HEART, Rank.Q));
-        List<Card> score21Cards = List.of(new Card(Suit.CLUB, Rank.EIGHT), new Card(Suit.CLUB, Rank.TWO),
-                new Card(Suit.HEART, Rank.ACE));
+        List<Card> scoreBlackjackCards = List.of(Card.of(Suit.CLUB, Rank.Q), Card.of(Suit.HEART, Rank.ACE));
+        List<Card> scoreBustCards = List.of(Card.of(Suit.CLUB, Rank.Q), Card.of(Suit.HEART, Rank.Q),
+                Card.of(Suit.DIAMOND, Rank.Q));
+        List<Card> score20Cards = List.of(Card.of(Suit.CLUB, Rank.Q), Card.of(Suit.HEART, Rank.Q));
+        List<Card> score21Cards = List.of(Card.of(Suit.CLUB, Rank.EIGHT), Card.of(Suit.CLUB, Rank.TWO),
+                Card.of(Suit.HEART, Rank.ACE));
 
         DEALER_BLACKJACK.addCards(scoreBlackjackCards);
         DEALER_BUST.addCards(scoreBustCards);

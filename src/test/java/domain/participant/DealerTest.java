@@ -19,20 +19,20 @@ public class DealerTest {
     void 딜러_카드_중_첫번째_카드만_반환해야_한다() {
         Dealer dealer = Dealer.createReady();
 
-        dealer.addCard(new Card(Suit.CLUB, Rank.K));
-        dealer.addCard(new Card(Suit.CLUB, Rank.ACE));
-        dealer.addCard(new Card(Suit.CLUB, Rank.NINE));
+        dealer.addCard(Card.of(Suit.CLUB, Rank.K));
+        dealer.addCard(Card.of(Suit.CLUB, Rank.ACE));
+        dealer.addCard(Card.of(Suit.CLUB, Rank.NINE));
         Card firstCard = dealer.getFirstCard();
 
-        Assertions.assertEquals(firstCard, new Card(Suit.CLUB, Rank.K));
+        Assertions.assertEquals(firstCard, Card.of(Suit.CLUB, Rank.K));
     }
 
     @Test
     void 딜러의_합계가_기준보다_작으면_참을_반환해야_한다() {
         Dealer dealer = Dealer.createReady();
 
-        dealer.addCard(new Card(Suit.CLUB, Rank.FOUR));
-        dealer.addCard(new Card(Suit.CLUB, Rank.ACE));
+        dealer.addCard(Card.of(Suit.CLUB, Rank.FOUR));
+        dealer.addCard(Card.of(Suit.CLUB, Rank.ACE));
 
         Assertions.assertEquals(dealer.isHittable(DEALER_HIT_STAND_BOUNDARY), true);
     }
@@ -41,8 +41,8 @@ public class DealerTest {
     void 딜러의_합계가_기준보다_크면_거짓을_반환해야_한다() {
         Dealer dealer = Dealer.createReady();
 
-        dealer.addCard(new Card(Suit.CLUB, Rank.SIX));
-        dealer.addCard(new Card(Suit.CLUB, Rank.ACE));
+        dealer.addCard(Card.of(Suit.CLUB, Rank.SIX));
+        dealer.addCard(Card.of(Suit.CLUB, Rank.ACE));
 
         Assertions.assertEquals(dealer.isHittable(DEALER_HIT_STAND_BOUNDARY), false);
     }
