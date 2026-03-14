@@ -19,11 +19,11 @@ public class Dealer extends Participant {
         return newHand;
     }
 
-    public String getName() {
-        return DEALER_NAME;
-    }
-
     public boolean shouldHit() {
         return this.calculateScore() <= DEALER_HIT_MAX_SCORE;
+    }
+
+    public String getName() {
+        return DEALER_NAME;
     }
 }
