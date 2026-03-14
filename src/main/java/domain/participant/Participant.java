@@ -27,4 +27,8 @@ public class Participant {
     public int getScore() {
         return handCards.calculateCardsScore();
     }
+
+    public boolean isBlackjack() {
+        return handCards.getHandCardsSize() == 2 && getScore() == BLACKJACK_CONDITION;
+    }
 }
