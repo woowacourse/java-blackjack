@@ -6,7 +6,6 @@ import java.util.List;
 import model.participant.Agreement;
 import model.participant.BetPrice;
 import model.participant.Player;
-import model.participant.PlayerName;
 import model.BlackJackGame;
 import view.InputView;
 import view.OutputView;
@@ -30,8 +29,7 @@ public class BlackJackController {
     private void registerParticipant() {
         List<String> playerNamesInput = InputView.getPlayerNames();
         playerNamesInput.forEach(name -> {
-            PlayerName playerName = new PlayerName(name);
-            Player player = new Player(playerName);
+            Player player = new Player(name);
             blackJackGame.registerPlayer(player);
         });
     }

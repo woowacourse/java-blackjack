@@ -3,7 +3,7 @@ package model.participant;
 import java.util.Objects;
 
 public class Player extends Participant {
-    public Player(PlayerName name) {
+    public Player(String name) {
         super(name);
     }
 

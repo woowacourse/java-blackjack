@@ -7,8 +7,8 @@ public class Participant {
     private final PlayerName name;
     private final ParticipantHand participantHand = new ParticipantHand();
 
-    public Participant(PlayerName name) {
-        this.name = name;
+    public Participant(String playerName) {
+        this.name = new PlayerName(playerName);
     }
 
     public String getName() {
