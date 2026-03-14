@@ -38,7 +38,7 @@ class DealerTest {
         dealer.receiveCard(new Card(Figure.CLOVER, Number.ACE));
 
         // when
-        String card = dealer.getInitialCards();
+        String card = dealer.getFirstCard();
 
         // then
         assertThat(card).isEqualTo("A클로버");

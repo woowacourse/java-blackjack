@@ -26,7 +26,7 @@ public abstract class Participant {
         return hand.calculateScore();
     }
 
-    public String getInitialCards() {
+    public String getFirstCard() {
         return hand.getFirst().getCardName();
     }
 
