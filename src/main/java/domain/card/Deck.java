@@ -40,11 +40,20 @@ public class Deck {
         return card;
     }
 
-    public List<Card> drawTwoCards() {
-        List<Card> cards = new ArrayList<>();
-        cards.add(drawCard());
-        cards.add(drawCard());
-        return cards;
+    public List<Card> drawCards(int n) {
+        validateCardsCount(n);
+        List<Card> drawnCards = new ArrayList<>();
+
+        for (int i = 0; i < n; i++) {
+            drawnCards.add(drawCard());
+        }
+        return drawnCards;
+    }
+
+    private void validateCardsCount(int n) {
+        if (n <= 0 || n > cards.size()) {
+            throw new IllegalArgumentException(ErrorMessage.INDEX_RANGE.getMessage());
+        }
     }
 
     public boolean contains(Card card) {

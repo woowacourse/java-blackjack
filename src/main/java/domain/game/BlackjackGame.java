@@ -18,6 +18,8 @@ import util.DeckCreator;
 
 public class BlackjackGame {
 
+    private static final int FIRST_DRAW_CARDS_NUM = 2;
+
     private final Deck deck;
     private final Table table;
 
@@ -51,7 +53,7 @@ public class BlackjackGame {
     }
 
     private static Hand createInitialHand(Deck deck) {
-        return new Hand(deck.drawTwoCards());
+        return new Hand(deck.drawCards(FIRST_DRAW_CARDS_NUM));
     }
 
     public int calculateDealerProfit() {
