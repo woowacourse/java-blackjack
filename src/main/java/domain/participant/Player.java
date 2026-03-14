@@ -20,11 +20,11 @@ public class Player extends Participant {
     }
 
     public static Player of(String name, String betMoney) {
-        return new Player(new Name(name), BetMoney.of(betMoney));
+        return new Player(Name.valueOf(name), BetMoney.of(betMoney));
     }
 
     public static Player createReady(String name) {
-        return new Player(new Name(name), BetMoney.ZERO);
+        return new Player(Name.valueOf(name), BetMoney.ZERO);
     }
 
     public static Player copyOf(Player player) {

@@ -9,11 +9,15 @@ public class Name {
     private final String value;
 
     public Name(String name) {
-        validate(name);
         this.value = name;
     }
 
-    private void validate(String name) {
+    public static Name valueOf(String name) {
+        validate(name);
+        return new Name(name);
+    }
+
+    private static void validate(String name) {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException(BLANK_NAME_NOT_ALLOWED);
         }
