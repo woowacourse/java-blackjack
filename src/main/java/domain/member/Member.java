@@ -8,7 +8,6 @@ import java.util.List;
 
 public abstract class Member {
     protected static final String DEALER_NAME = "딜러";
-    protected static final int BUST_CONDITION = 21;
 
     private final String name;
     protected State state;
