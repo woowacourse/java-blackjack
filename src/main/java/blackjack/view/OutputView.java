@@ -35,11 +35,11 @@ public class OutputView {
     }
 
     public static void printFinalStatus(final FinalStatusDto finalStatusDto) {
-        finalStatusDto.participantNicknames().forEach(nickname ->
+        finalStatusDto.nicknames().forEach(nickname ->
             System.out.printf("%s 카드: %s - 결과: %s\n",
                 nickname,
-                String.join(", ", finalStatusDto.participantCardNamesMap().get(nickname)),
-                finalStatusDto.participantScoreMap().get(nickname)));
+                String.join(", ", finalStatusDto.nicknameCardNamesMap().get(nickname)),
+                finalStatusDto.nicknameScoreMap().get(nickname)));
     }
 
     public static void printFinalProfits(final FinalProfitsDto finalProfitsDto) {
