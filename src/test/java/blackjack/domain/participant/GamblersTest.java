@@ -14,7 +14,7 @@ class ParticipantsTest {
     void distributeCards_GiveTwoCardsToAllParticipants() {
         List<String> names = List.of("pobi", "jason");
         List<Integer> bettingAmounts = List.of(10000, 20000);
-        Players players = Players.fromNameAndBettingAmounts(names, bettingAmounts);
+        Players players = Players.fromPlayerNicknames(names, bettingAmounts);
 
         Dealer dealer = new Dealer();
         Participants participants = new Participants(players, dealer);
@@ -33,7 +33,7 @@ class ParticipantsTest {
     void getParticipants_ReturnDealerAndPlayersInOrder() {
         List<String> names = List.of("pobi", "jason");
         List<Integer> bettingAmounts = List.of(10000, 20000);
-        Players players = Players.fromNameAndBettingAmounts(names, bettingAmounts);
+        Players players = Players.fromPlayerNicknames(names, bettingAmounts);
 
         Dealer dealer = new Dealer();
         Participants participants = new Participants(players, dealer);
