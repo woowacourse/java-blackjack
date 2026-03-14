@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -96,11 +96,9 @@ public class BlackjackController {
     }
 
     private void calculateFinalScore(List<Participant> players, Participant dealer) {
-        List<ParticipantResult> playerResults = new ArrayList<>();
-        for (Participant player : players) {
-            ParticipantResult participantResult = new ParticipantResult(player.getName(), player.getCardNames(), player.calculateTotalScore());
-            playerResults.add(participantResult);
-        }
+        List<ParticipantResult> playerResults = players.stream()
+                .map(player -> new ParticipantResult(player.getName(), player.getCardNames(), player.calculateTotalScore()))
+                .collect(Collectors.toList());
 
         ParticipantResult dealerResult = new ParticipantResult(dealer.getName(), dealer.getCardNames(), dealer.calculateTotalScore());
         OutputView.printFinalCardScores(playerResults, dealerResult);
@@ -109,13 +107,11 @@ public class BlackjackController {
     public void calculateFinalGameProfit(List<Participant> players, Participant dealer) {
         HashMap<String, Integer> playersProfit = new HashMap<>();
         int totalPlayerProfit = 0;
-
         for (Participant player : players) {
             int profit = player.calculateFinalProfit(dealer);
             playersProfit.put(player.getName(), profit);
             totalPlayerProfit += profit;
         }
-
         int dealerProfit = -totalPlayerProfit;
         OutputView.printFinalProfit(dealerProfit, playersProfit);
     }
