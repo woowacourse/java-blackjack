@@ -1,22 +1,28 @@
 package domain.game;
 
+import domain.card.CardBundle;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Referee {
-    private static final int BUST_THRESHOLD = 21;
 
-    public Result judge(int playerScore, int dealerScore) {
-        if (playerScore > BUST_THRESHOLD) {
+    public Result judge(CardBundle playerBundle, CardBundle dealerBundle) {
+        if (playerBundle.isBlackjack() && dealerBundle.isBlackjack()) {
+            return Result.TIE;
+        }
+        if (playerBundle.isBlackjack()) {
+            return Result.BLACKJACK_WIN;
+        }
+        if (playerBundle.isBust()) {
             return Result.LOSE;
         }
-        if (dealerScore > BUST_THRESHOLD) {
+        if (dealerBundle.isBust()) {
             return Result.WIN;
         }
-        if (playerScore > dealerScore) {
+        if (playerBundle.calculateScore() > dealerBundle.calculateScore()) {
             return Result.WIN;
         }
-        if (playerScore == dealerScore) {
+        if (playerBundle.calculateScore() == dealerBundle.calculateScore()) {
             return Result.TIE;
         }
         return Result.LOSE;
@@ -24,8 +30,10 @@ public class Referee {
 
     public Map<Result, Integer> countDealerResult(Map<?, Result> playerResults) {
         Map<Result, Integer> dealerResult = new LinkedHashMap<>();
-        dealerResult.put(Result.WIN, countByResult(playerResults, Result.LOSE));
-        dealerResult.put(Result.LOSE, countByResult(playerResults, Result.WIN));
+        dealerResult.put(Result.WIN,
+                countByResult(playerResults, Result.LOSE));
+        dealerResult.put(Result.LOSE,
+                countByResult(playerResults, Result.WIN) + countByResult(playerResults, Result.BLACKJACK_WIN));
         dealerResult.put(Result.TIE, countByResult(playerResults, Result.TIE));
         return dealerResult;
     }
