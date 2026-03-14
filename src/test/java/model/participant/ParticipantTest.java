@@ -1,11 +1,10 @@
 package model.participant;
 
-
+import dto.result.ParticipantCurrentHand;
 import java.util.List;
 import model.card.Card;
 import model.card.CardNumber;
 import model.card.Shape;
-import dto.result.PlayerResult;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
@@ -16,7 +15,7 @@ public class ParticipantTest {
     public void 결과_출력_정상_작동() {
         Participant participant = new Participant(new PlayerName("jason"));
 
-        PlayerResult result = participant.getResult();
+        ParticipantCurrentHand result = participant.getCurrentHand();
 
         assertThat(result.name()).isEqualTo("jason");
         assertThat(result.deck().isEmpty()).isTrue();
@@ -29,7 +28,7 @@ public class ParticipantTest {
         Participant participant = new Participant(new PlayerName("jason"));
         participant.addCard(card);
 
-        List<String> deck = participant.getResult().deck();
+        List<String> deck = participant.getCurrentHand().deck();
 
         assertThat(deck).contains(card.getString());
         assertThat(deck.size()).isEqualTo(1);
