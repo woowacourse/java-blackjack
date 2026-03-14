@@ -5,7 +5,7 @@ import blackjack.dto.CardDto;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class Card {
+public final class Card {
 
     private static final Map<Suit, Map<Denomination, Card>> CACHE;
 
