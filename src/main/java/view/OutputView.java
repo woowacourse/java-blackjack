@@ -1,6 +1,13 @@
 package view;
 
-import dto.*;
+import dto.BattingResultDto;
+import dto.DealerHandScoreDto;
+import dto.DealerInitialHandDto;
+import dto.GameScoreDto;
+import dto.GameStartDto;
+import dto.PlayerHandDto;
+import dto.PlayerHandScoreDto;
+import dto.PlayerProfitDto;
 
 import java.util.List;
 
@@ -75,7 +82,7 @@ public class OutputView {
         return String.join(", ", list);
     }
 
-    public void printErrorMessage(String errorMessage) {
+    public void printInputErrorMessage(String errorMessage) {
         System.out.printf("%s 다시 입력해주세요\n", errorMessage);
     }
 }
