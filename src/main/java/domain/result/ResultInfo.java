@@ -34,10 +34,6 @@ public enum ResultInfo {
         this.code = code;
     }
 
-    public String getInfo() {
-        return info;
-    }
-
     public int getCode() {
         return code;
     }
