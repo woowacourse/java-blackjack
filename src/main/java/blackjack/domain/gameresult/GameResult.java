@@ -4,16 +4,18 @@ import blackjack.domain.hand.Score;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
+import java.math.BigDecimal;
+
 public enum GameResult {
-    BLACKJACK("블랙잭", 1.5),
-    WIN("승", 1.0),
-    LOSE("패", -1.0),
-    DRAW("무", 0.0);
+    BLACKJACK("블랙잭", "1.5"),
+    WIN("승", "1.0"),
+    LOSE("패", "-1.0"),
+    DRAW("무", "0.0");
 
     private final String status;
-    private final double ratio;
+    private final String ratio;
 
-    GameResult(String status, double ratio) {
+    GameResult(String status, String ratio) {
         this.status = status;
         this.ratio = ratio;
     }
@@ -50,11 +52,7 @@ public enum GameResult {
         return DRAW;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public double getRatio() {
+    public String getRatio() {
         return ratio;
     }
 }

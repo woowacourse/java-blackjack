@@ -2,6 +2,8 @@ package blackjack.domain.betting;
 
 import blackjack.exception.ErrorMessage;
 
+import java.math.BigDecimal;
+
 public class BettingAmount {
     public static final int MIN_BETTING_AMOUNT = 1000;
     public static final int MAX_BETTING_AMOUNT = 50000;
@@ -17,8 +19,9 @@ public class BettingAmount {
         return amount;
     }
 
-    public int calculateProfit(double ratio) {
-        return (int) (amount * ratio);
+    public BigDecimal calculateProfit(String ratio) {
+        return new BigDecimal(ratio)
+                .multiply(BigDecimal.valueOf(amount));
     }
 
     private void validateBettingAmountRange(int amount) {

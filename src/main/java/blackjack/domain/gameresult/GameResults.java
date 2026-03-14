@@ -19,7 +19,7 @@ public class GameResults {
         Map<Player, Integer> results = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
             GameResult gameResult = GameResult.matchResult(player, dealer);
-            results.put(player, player.calculateProfit(gameResult.getRatio()));
+            results.put(player, player.calculateProfit(gameResult.getRatio()).intValue());
         }
         return new GameResults(results);
     }

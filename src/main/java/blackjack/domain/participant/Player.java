@@ -2,6 +2,8 @@ package blackjack.domain.participant;
 
 import blackjack.domain.betting.BettingAmount;
 
+import java.math.BigDecimal;
+
 public class Player extends Participant {
     private static final int MAX_CARD_SUM = 21;
 
@@ -17,7 +19,7 @@ public class Player extends Participant {
         return name.getName();
     }
 
-    public int calculateProfit(double ratio) {
+    public BigDecimal calculateProfit(String ratio) {
         return bettingAmount.calculateProfit(ratio);
     }
 
