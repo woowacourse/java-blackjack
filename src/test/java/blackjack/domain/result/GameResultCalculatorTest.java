@@ -79,4 +79,30 @@ class GameResultCalculatorTest {
 
         assertThat(calculator.calculate(player, dealer)).isEqualTo(GameResult.DRAW);
     }
+
+    @Test
+    void 플레이어와_딜러_모두_블랙잭이면_무승부이다() {
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(Suit.CLUB, Rank.ACE));
+        dealer.receiveCard(new Card(Suit.CLUB, Rank.JACK));
+
+        Player player = new Player("pobi");
+        player.receiveCard(new Card(Suit.DIAMOND, Rank.QUEEN));
+        player.receiveCard(new Card(Suit.DIAMOND, Rank.ACE));
+
+        assertThat(calculator.calculate(player, dealer)).isEqualTo(GameResult.DRAW);
+    }
+
+    @Test
+    void 플레이어만_블랙잭이면_게임_결과는_블랙잭이다() {
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(Suit.CLUB, Rank.EIGHT));
+        dealer.receiveCard(new Card(Suit.CLUB, Rank.JACK));
+
+        Player player = new Player("pobi");
+        player.receiveCard(new Card(Suit.DIAMOND, Rank.QUEEN));
+        player.receiveCard(new Card(Suit.DIAMOND, Rank.ACE));
+
+        assertThat(calculator.calculate(player, dealer)).isEqualTo(GameResult.BLACKJACK);
+    }
 }
