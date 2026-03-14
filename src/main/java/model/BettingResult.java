@@ -30,19 +30,37 @@ public class BettingResult {
 
     private void resolveBettingResult(int dealerScore, Player player, Dealer dealer) {
         int playerScore = player.calculateTotalScore();
-        if (player.isBlackJack() && !dealer.isBlackJack()) {
-            updateProfit(dealer, player, false, true);
-        } else if (!player.isBlackJack() && dealer.isBlackJack()) {
-            updateProfit(dealer, player, true, false);
-        } else if (playerScore > BLACK_JACK) {
-            updateProfit(dealer, player, true, false);
-        } else if (dealerScore > BLACK_JACK) {
-            updateProfit(dealer, player, false, false);
-        } else if (playerScore < dealerScore) {
-            updateProfit(dealer, player, true, false);
-        } else if (playerScore > dealerScore) {
+        if (applyBlackJackWinIfSatisfied(player, dealer)) {
+            return;
+        }
+        if (applyDealerWinIfSatisfied(player, dealer, playerScore, dealerScore)) {
+            return;
+        }
+        if (isPlayerWin(playerScore, dealerScore)) {
             updateProfit(dealer, player, false, false);
         }
+    }
+
+    private boolean applyBlackJackWinIfSatisfied(Player player, Dealer dealer) {
+        if (player.isBlackJack() && !dealer.isBlackJack()) {
+            updateProfit(dealer, player, false, true);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean applyDealerWinIfSatisfied(Player player, Dealer dealer, int playerScore, int dealerScore) {
+        if ((!player.isBlackJack() && dealer.isBlackJack())
+                || playerScore > BLACK_JACK
+                || (dealerScore <= BLACK_JACK && playerScore < dealerScore)) {
+            updateProfit(dealer, player, true, false);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isPlayerWin(int playerScore, int dealerScore) {
+        return dealerScore > BLACK_JACK || playerScore > dealerScore;
     }
 
     private void updateProfit(Dealer dealer, Player player, boolean dealerWin, boolean blackJack) {
