@@ -1,7 +1,5 @@
 package blackjack.view;
 
-import blackjack.domain.participant.Player;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -35,8 +33,8 @@ public class InputView {
         return input.equals(HIT_INPUT);
     }
 
-    public Integer readWager(final Player player) {
-        System.out.printf(READ_PLAYER_WAGER_MESSAGE, player.getName());
+    public Integer readWager(final String name) {
+        System.out.printf(READ_PLAYER_WAGER_MESSAGE, name);
         String input = scanner.nextLine().trim();
         validNumber(input);
         return Integer.parseInt(input);

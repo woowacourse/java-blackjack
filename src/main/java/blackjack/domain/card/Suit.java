@@ -7,13 +7,13 @@ public enum Suit {
     SPADE("스페이드"),
     CLUB("클로버");
 
-    private final String displayName;
+    private final String name;
 
-    Suit(final String displayName) {
-        this.displayName = displayName;
+    Suit(final String name) {
+        this.name = name;
     }
 
-    public String getDisplayName() {
-        return displayName;
+    public String getName() {
+        return name;
     }
 }
