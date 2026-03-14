@@ -6,31 +6,30 @@ import domain.WinningStatus;
 import domain.strategy.PlayerDrawStrategy;
 
 public class Player extends Participant {
-    private Money wallet;
+    private Money profit;
     private Betting betting;
 
     public Player(String name) {
         this(name, new Money(0));
     }
 
-    public Player(String name, Money wallet) {
+    public Player(String name, Money initialProfit) {
         super(name, new PlayerDrawStrategy());
-        this.wallet = wallet;
+        this.profit = initialProfit;
         this.betting = Betting.none();
     }
 
     public int profit() {
-        return wallet.amount();
+        return profit.amount();
     }
 
     public void bet(Money money) {
         betting = Betting.of(money.amount());
-        wallet = wallet.minus(betting.amount());
     }
 
     public void applyRoundResult(WinningStatus status) {
-        int settleAmount = betting.settle(status);
-        wallet = wallet.plus(settleAmount);
+        int profitAmount = betting.profit(status);
+        profit = profit.plus(profitAmount);
         betting = Betting.none();
     }
 }

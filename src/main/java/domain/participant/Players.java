@@ -21,9 +21,9 @@ public class Players {
         this(names, new Money(0));
     }
 
-    public Players(List<String> names, Money wallet) {
+    public Players(List<String> names, Money initialProfit) {
         for (String name : names) {
-            players.add(new Player(name, wallet));
+            players.add(new Player(name, initialProfit));
         }
         validatePlayerCount(players);
         validateDuplicatedName(players);

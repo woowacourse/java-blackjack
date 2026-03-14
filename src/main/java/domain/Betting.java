@@ -5,8 +5,8 @@ public class Betting {
     public static final String ERROR_BET_MONEY_SCALE = "[ERROR] 돈의 단위를 잘못 입력하였습니다.";
     public static final int INITIAL_AMOUNT = 0;
     public static final int BET_UNIT = 10000;
-    public static final int NUMERATOR = 5;
-    public static final int DENOMINATOR = 2;
+    public static final int BLACKJACK_NUMERATOR = 3;
+    public static final int BLACKJACK_DENOMINATOR = 2;
     public static final int ZERO = 0;
     private final int amount;
 
@@ -32,16 +32,12 @@ public class Betting {
         }
     }
 
-    public int amount() {
-        return amount;
-    }
-
-    public int settle(WinningStatus status) {
+    public int profit(WinningStatus status) {
         return switch (status) {
-            case BLACKJACK_WIN -> amount * NUMERATOR / DENOMINATOR;
-            case WIN -> amount * 2;
-            case TIE -> amount;
-            case LOSE -> ZERO;
+            case BLACKJACK_WIN -> amount * BLACKJACK_NUMERATOR / BLACKJACK_DENOMINATOR;
+            case WIN -> amount;
+            case TIE -> ZERO;
+            case LOSE -> -amount;
         };
     }
 }
