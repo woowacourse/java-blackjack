@@ -4,7 +4,11 @@ import application.BlackjackService;
 import dto.RoundResult;
 import dto.GameResult;
 import dto.MemberStatus;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import presentation.ui.InputView;
 import presentation.ui.OutputView;
 
@@ -53,7 +57,12 @@ public class BlackjackController {
     }
 
     private void setUpGame(List<String> playerNames) {
-        blackjackService.initializeGame(playerNames);
+        Map<String, Integer> playerBets = new HashMap<>();
+        for (String playerName : playerNames) {
+            int betAmount = inputView.readPlayerBetAmount(playerName);
+            playerBets.put(playerName, betAmount);
+        }
+        blackjackService.initializeGame(playerBets);
         List<MemberStatus> memberStatuses = blackjackService.getMemberStatuses();
         outputView.printInitialStatus(memberStatuses);
     }
