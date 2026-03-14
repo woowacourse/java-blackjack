@@ -15,6 +15,10 @@ public class Dealer {
         hand.saveCard(card);
     }
 
+    public String getOneCardDisplay() {
+        return hand.getOneCardDisplay();
+    }
+
     public String getCardsDisplay() {
         return hand.getCardsDisplay();
     }

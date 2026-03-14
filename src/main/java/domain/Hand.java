@@ -25,6 +25,10 @@ public class Hand {
         }
     }
 
+    public String getOneCardDisplay() {
+        return cards.getFirst().getDisplayName();
+    }
+
     public String getCardsDisplay() {
         return cards.stream()
                 .map(Card::getDisplayName)

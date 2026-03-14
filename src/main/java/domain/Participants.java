@@ -45,6 +45,10 @@ public class Participants {
         return players.stream().map(User::getName).collect(Collectors.joining(", "));
     }
 
+    public String getDealerOneCardDisplay() {
+        return dealer.getOneCardDisplay();
+    }
+
     public String getDealerCardsDisplay() {
         return dealer.getCardsDisplay();
     }

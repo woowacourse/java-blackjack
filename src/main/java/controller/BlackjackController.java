@@ -74,7 +74,7 @@ public class BlackjackController {
 
     private void printDealResult() {
         outputView.printMessage(blackjackService.makeUserNameFormat());
-        outputView.printMessage(blackjackService.makeDealerCardsDisplay());
+        outputView.printMessage(blackjackService.makeDealerOneCardDisplay());
         blackjackService.getUserCardsDisplays().forEach(outputView::printMessage);
     }
 
