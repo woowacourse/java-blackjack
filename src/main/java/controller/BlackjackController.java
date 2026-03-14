@@ -1,8 +1,8 @@
 package controller;
 
 import domain.Game;
-import domain.card.CardGenerator;
 import domain.card.Deck;
+import domain.card.ShuffledCardGenerator;
 import domain.enums.Result;
 import domain.participant.BetAmounts;
 import dto.CardDto;
@@ -16,7 +16,7 @@ import view.OutputView;
 
 public class BlackjackController {
     public void start() {
-        Deck deck = new Deck(CardGenerator.generateCards());
+        Deck deck = new Deck(new ShuffledCardGenerator());
         Game game = retryOnException(() -> makeGame(deck));
 
         playGame(game, deck);

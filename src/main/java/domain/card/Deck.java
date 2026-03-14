@@ -11,7 +11,8 @@ import java.util.Queue;
 public class Deck {
     private final Queue<Card> cards = new ArrayDeque<>();
 
-    public Deck(List<Card> cards) {
+    public Deck(CardGenerator cardGenerator) {
+        List<Card> cards = cardGenerator.generate();
         validateDuplicatedCards(cards);
         this.cards.addAll(cards);
     }
