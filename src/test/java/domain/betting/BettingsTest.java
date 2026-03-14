@@ -10,33 +10,14 @@ public class BettingsTest {
     @Test
     void 플레이어의_베팅금액을_저장한다() {
         int tenThousand = 1000;
-        Money bettingMoney = Money.from(tenThousand);
+        BettingMoney bettingMoney = BettingMoney.bet(tenThousand);
         Player testPlayer = Player.from(new PlayerName("test"));
         Bettings bettings = new Bettings();
 
         bettings.bet(testPlayer, bettingMoney);
 
-        Money actualBettingMoney = bettings.getPlayerBettingMoney(testPlayer);
-        Money expectedBettingMoney = Money.from(tenThousand);
-
-        Assertions.assertThat(actualBettingMoney)
-                .isEqualTo(expectedBettingMoney);
-    }
-
-    @Test
-    void 플레이어의_베팅금액에_베팅률을_반영한다() {
-        int tenThousand = 1000;
-        double testBettingRate = 2.0;
-        Money bettingMoney = Money.from(tenThousand);
-        Player testPlayer = Player.from(new PlayerName("test"));
-        BettingRate bettingRate = new BettingRate(testBettingRate);
-        Bettings bettings = new Bettings();
-
-        bettings.bet(testPlayer, bettingMoney);
-        bettings.calculateBettingMoney(testPlayer, bettingRate);
-
-        Money actualBettingMoney = bettings.getPlayerBettingMoney(testPlayer);
-        Money expectedBettingMoney = Money.from((int)(tenThousand * testBettingRate));
+        BettingMoney actualBettingMoney = bettings.getPlayerBettingMoney(testPlayer);
+        BettingMoney expectedBettingMoney = BettingMoney.bet(tenThousand);
 
         Assertions.assertThat(actualBettingMoney)
                 .isEqualTo(expectedBettingMoney);
@@ -45,13 +26,15 @@ public class BettingsTest {
     @Test
     void 딜러의_수익금을_계산한다() {
         int tenThousand = 1000;
-        Money bettingMoney = Money.from(tenThousand);
+        BettingMoney bettingMoney = BettingMoney.bet(tenThousand);
         Player testPlayer = Player.from(new PlayerName("test"));
         Bettings bettings = new Bettings();
-        bettings.bet(testPlayer, bettingMoney);
 
-        Money actualDealerProfit = bettings.calculateDealerProfit();
-        Money expectedDealerProfit = bettingMoney.reverseMoney();
+        bettings.bet(testPlayer, bettingMoney);
+        bettings.settleBettingMoney(testPlayer, new BettingRate(1.0));
+
+        Profit actualDealerProfit = bettings.calculateDealerProfit();
+        Profit expectedDealerProfit = new Profit(tenThousand).reverseProfit();
 
         Assertions.assertThat(actualDealerProfit)
                 .isEqualTo(expectedDealerProfit);

@@ -20,7 +20,7 @@ public class BettingTableTest {
     private final Card spadeNine = Card.of(CardDenomination.NINE, CardEmblem.SPADE);
     private final BettingRate blackJackRate = BettingResult.BLACK_JACK.bettingRate();
     private final BettingRate loseRate = BettingResult.PLAYER_LOSE.bettingRate();
-    private final Money thousandWon = Money.from("1000");
+    private final BettingMoney thousandWon = BettingMoney.bet("1000");
     private final Player testPlayer = Player.from(new PlayerName("test"));
     private CardBundle blackJackBundle;
     private CardBundle lossDealerBundle;
@@ -41,8 +41,8 @@ public class BettingTableTest {
         BettingTable bettingTable = new BettingTable();
 
         bettingTable.bet(testPlayer, thousandWon);
-        Money actualPlayerMoney = bettingTable.getPlayerProfit(testPlayer);
-        Money expectedPlayerMoney = thousandWon.getMoney();
+        BettingMoney actualPlayerMoney = bettingTable.getBettingMoney(testPlayer);
+        BettingMoney expectedPlayerMoney = thousandWon.getBettingProfit();
 
         Assertions.assertThat(actualPlayerMoney)
                 .isEqualTo(expectedPlayerMoney);
@@ -59,8 +59,8 @@ public class BettingTableTest {
         bettingTable.bet(testPlayer, thousandWon);
         bettingTable.applyBettingRate(dealer, players);
 
-        Money actualProfit = bettingTable.getPlayerProfit(testPlayer);
-        Money expectedProfit = thousandWon.applyBettingRate(blackJackRate);
+        Profit actualProfit = bettingTable.getPlayerProfit(testPlayer);
+        Profit expectedProfit = thousandWon.withRate(blackJackRate);
 
         Assertions.assertThat(actualProfit)
                 .isEqualTo(expectedProfit);
@@ -77,10 +77,10 @@ public class BettingTableTest {
         bettingTable.bet(testPlayer, thousandWon);
         bettingTable.applyBettingRate(dealer, players);
 
-        Money actualDealerProfit = bettingTable.getDealerProfit();
-        Money expectedDealerProfit = thousandWon
-                .applyBettingRate(blackJackRate)
-                .applyBettingRate(loseRate);
+        Profit actualDealerProfit = bettingTable.getDealerProfit();
+        Profit expectedDealerProfit = thousandWon
+                .withRate(blackJackRate)
+                .reverseProfit();
 
         Assertions.assertThat(actualDealerProfit)
                 .isEqualTo(expectedDealerProfit);

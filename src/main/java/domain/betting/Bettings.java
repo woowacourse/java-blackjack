@@ -7,32 +7,39 @@ import java.util.Map;
 
 public class Bettings {
 
-    private static final int DEALER_INITIAL_PROFIT = 0;
+    private static final int PREFIX_INITIAL_PROFIT = 0;
 
-    private final Map<Player, Money> bettingMoneyByPlayer;
+    private final Map<Player, BettingMoney> bettingMoneyByPlayer;
+    private final Map<Player, Profit> profitByPlayer;
 
     public Bettings() {
-        this.bettingMoneyByPlayer = new LinkedHashMap<>();
+        this.profitByPlayer = new LinkedHashMap<>(); // TODO HashMap
+        this.bettingMoneyByPlayer = new LinkedHashMap<>(); // TODO HashMap
     }
 
-    public void bet(Player player, Money money) {
-        bettingMoneyByPlayer.put(player, money);
+    public void bet(Player player, BettingMoney bettingMoney) {
+        // TODO 베팅 두번 제한 로직
+        bettingMoneyByPlayer.put(player, bettingMoney);
     }
 
-    public Money getPlayerBettingMoney(Player player) {
+    public BettingMoney getPlayerBettingMoney(Player player) {
         return bettingMoneyByPlayer.get(player);
     }
 
-    public Money calculateBettingMoney(Player player, BettingRate bettingRate) {
-        Money money = bettingMoneyByPlayer.get(player);
-        return bettingMoneyByPlayer.put(player, bettingRate.payOut(money));
+    public void settleBettingMoney(Player player, BettingRate bettingRate) {
+        BettingMoney bettingMoney = bettingMoneyByPlayer.get(player);
+        profitByPlayer.put(player, bettingMoney.withRate(bettingRate));
     }
 
-    public Money calculateDealerProfit() {
-        return bettingMoneyByPlayer.values()
+    public Profit calculateDealerProfit() {
+        return profitByPlayer.values()
                 .stream()
-                .reduce(Money.from(DEALER_INITIAL_PROFIT), Money::addMoney)
-                .reverseMoney();
+                .reduce(new Profit(PREFIX_INITIAL_PROFIT), Profit::addProfit)
+                .reverseProfit();
+    }
+
+    public Profit getPlayerProfit(Player player) {
+        return profitByPlayer.get(player);
     }
 
 }

@@ -1,7 +1,7 @@
 package domain.view;
 
 import domain.answer.DrawDecision;
-import domain.betting.Money;
+import domain.betting.BettingMoney;
 import domain.betting.dto.GamerBettingProfitDto;
 import exception.BlackjackGameException;
 import domain.gamer.PlayerName;
@@ -36,11 +36,11 @@ public class ApplicationView {
         });
     }
 
-    public Money askBettingMoney(String playerName) {
+    public BettingMoney askBettingMoney(String playerName) {
         return retry(() -> {
             writer.printBettingGuideMessage(playerName);
             String money = readInput();
-            return Money.from(money);
+            return BettingMoney.bet(money);
         });
     }
 

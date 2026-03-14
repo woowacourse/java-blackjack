@@ -2,7 +2,8 @@ package controller;
 
 import domain.answer.DrawDecision;
 import domain.betting.BettingTable;
-import domain.betting.Money;
+import domain.betting.BettingMoney;
+import domain.betting.Profit;
 import domain.betting.dto.GamerBettingProfitDto;
 import domain.card.CardDeck;
 import domain.card.CardGenerator;
@@ -68,7 +69,7 @@ public class BlackjackGame {
 
     private void askBettingMoney(BettingTable bettingTable, Players players) {
         players.getPlayers().forEach(player -> {
-            Money bettingMoney = view.askBettingMoney(player.getMyName());
+            BettingMoney bettingMoney = view.askBettingMoney(player.getMyName());
             bettingTable.bet(player, bettingMoney);
         });
     }
@@ -126,14 +127,14 @@ public class BlackjackGame {
     private List<GamerBettingProfitDto> calculateProfit(BettingTable bettingTable, Players players) {
         return players.getPlayers().stream()
                 .map(player -> {
-                    Money playerProfit = bettingTable.getPlayerProfit(player);
+                    Profit playerProfit = bettingTable.getPlayerProfit(player);
                     return GamerBettingProfitDto.of(player, playerProfit);
                 })
                 .toList();
     }
 
     private GamerBettingProfitDto calculateProfit(BettingTable bettingTable, Dealer dealer) {
-        Money dealerProfit = bettingTable.getDealerProfit();
+        Profit dealerProfit = bettingTable.getDealerProfit();
         return GamerBettingProfitDto.of(dealer, dealerProfit);
     }
 

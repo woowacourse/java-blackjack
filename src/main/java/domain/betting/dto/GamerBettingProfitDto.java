@@ -1,6 +1,6 @@
 package domain.betting.dto;
 
-import domain.betting.Money;
+import domain.betting.Profit;
 import domain.gamer.Gamer;
 
 public record GamerBettingProfitDto(
@@ -8,8 +8,8 @@ public record GamerBettingProfitDto(
         int bettingProfit
 ) {
 
-    public static GamerBettingProfitDto of(Gamer gamer, Money bettingProfit) {
-        return new GamerBettingProfitDto(gamer.getMyName(), bettingProfit.money());
+    public static GamerBettingProfitDto of(Gamer gamer, Profit profit) {
+        return new GamerBettingProfitDto(gamer.getMyName(), profit.getProfit());
     }
 
 }
