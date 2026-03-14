@@ -3,7 +3,7 @@ package domain.game;
 import static org.junit.jupiter.api.Assertions.*;
 
 import domain.betting.BettingAmount;
-import domain.betting.BettingManager;
+import domain.betting.BettingAmounts;
 import domain.betting.CalculateProfit;
 import domain.card.Card;
 import domain.card.Number;
@@ -38,7 +38,7 @@ class GameResultManagerTest {
         Map<Name, BettingAmount> bettingAmounts = new HashMap<>();
         players.forEach(player -> bettingAmounts.put(player.getName(), new BettingAmount(1000)));
 
-        BettingManager bettingManager = new BettingManager(bettingAmounts);
+        BettingAmounts bettingManager = new BettingAmounts(bettingAmounts);
         CalculateProfit calculateProfit = new CalculateProfit(bettingManager);
         GameResultManager gameResultManager = new GameResultManager(calculateProfit, players, dealer);
 

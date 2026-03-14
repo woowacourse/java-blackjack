@@ -17,8 +17,8 @@ class CalculateProfitTest {
         Player player = new Player(name);
         Map<Name, BettingAmount> amountMap = new HashMap<>();
         amountMap.put(player.getName(), new BettingAmount(1000));
-        BettingManager bettingManager = new BettingManager(amountMap);
-        CalculateProfit calculateProfit = new CalculateProfit(bettingManager);
+        BettingAmounts bettingAmounts = new BettingAmounts(amountMap);
+        CalculateProfit calculateProfit = new CalculateProfit(bettingAmounts);
         int expected = -1000;
         assertEquals(expected, calculateProfit.calculate(name, GameResult.LOSE).getMoney());
     }
@@ -29,8 +29,8 @@ class CalculateProfitTest {
         Player player = new Player(name);
         Map<Name, BettingAmount> amountMap = new HashMap<>();
         amountMap.put(player.getName(), new BettingAmount(1000));
-        BettingManager bettingManager = new BettingManager(amountMap);
-        CalculateProfit calculateProfit = new CalculateProfit(bettingManager);
+        BettingAmounts bettingAmounts = new BettingAmounts(amountMap);
+        CalculateProfit calculateProfit = new CalculateProfit(bettingAmounts);
         int expected = 1000;
         assertEquals(expected, calculateProfit.calculate(name, GameResult.WIN).getMoney());
     }
@@ -41,8 +41,8 @@ class CalculateProfitTest {
         Player player = new Player(name);
         Map<Name, BettingAmount> amountMap = new HashMap<>();
         amountMap.put(player.getName(), new BettingAmount(1000));
-        BettingManager bettingManager = new BettingManager(amountMap);
-        CalculateProfit calculateProfit = new CalculateProfit(bettingManager);
+        BettingAmounts bettingAmounts = new BettingAmounts(amountMap);
+        CalculateProfit calculateProfit = new CalculateProfit(bettingAmounts);
         int expected = 1500;
         assertEquals(expected, calculateProfit.calculate(name, GameResult.BLACKJACK).getMoney());
     }
@@ -53,8 +53,8 @@ class CalculateProfitTest {
         Player player = new Player(name);
         Map<Name, BettingAmount> amountMap = new HashMap<>();
         amountMap.put(player.getName(), new BettingAmount(1000));
-        BettingManager bettingManager = new BettingManager(amountMap);
-        CalculateProfit calculateProfit = new CalculateProfit(bettingManager);
+        BettingAmounts bettingAmounts = new BettingAmounts(amountMap);
+        CalculateProfit calculateProfit = new CalculateProfit(bettingAmounts);
         int expected = 0;
         assertEquals(expected, calculateProfit.calculate(name, GameResult.DRAW).getMoney());
     }

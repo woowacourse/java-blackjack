@@ -5,14 +5,14 @@ import domain.participant.Name;
 
 public class CalculateProfit {
     private static final double PROFIT_RATE = 1.5;
-    private final BettingManager bettingManager;
+    private final BettingAmounts bettingAmounts;
 
-    public CalculateProfit(BettingManager bettingManager) {
-        this.bettingManager = bettingManager;
+    public CalculateProfit(BettingAmounts bettingAmounts) {
+        this.bettingAmounts = bettingAmounts;
     }
 
     public Revenue calculate(Name name, GameResult gameResult) {
-        BettingAmount amount = bettingManager.getAmount(name);
+        BettingAmount amount = bettingAmounts.getAmount(name);
         return calculateRevenue(gameResult, amount);
     }
 

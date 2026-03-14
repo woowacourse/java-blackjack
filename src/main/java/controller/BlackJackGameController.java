@@ -1,11 +1,10 @@
 package controller;
 
 import domain.betting.BettingAmount;
-import domain.betting.BettingManager;
+import domain.betting.BettingAmounts;
 import domain.betting.CalculateProfit;
 import domain.betting.Revenue;
 import domain.game.GameManager;
-import domain.game.GameResult;
 import domain.game.GameResultManager;
 import domain.participant.Dealer;
 import domain.participant.Name;
@@ -34,12 +33,12 @@ public class BlackJackGameController {
         Players players = initPlayer();
         GameManager gameManager = new GameManager(players);
         List<String> playersNames = getPlayerNames(players);
-        BettingManager bettingManager = initBettingManager(players);
+        BettingAmounts bettingAmounts = initBettingManager(players);
         OutputView.printGameInitialMessage(playersNames);
         gameManager.distributeInitialCards();
         printParticipantCards(gameManager.getDealer(), players);
         playGame(players, gameManager);
-        CalculateProfit calculateProfit = new CalculateProfit(bettingManager);
+        CalculateProfit calculateProfit = new CalculateProfit(bettingAmounts);
         GameResultManager gameResultManager =
                 new GameResultManager(calculateProfit, players, gameManager.getDealer());
         //TODO: 여기 아래 가 변경되어야 함. 지금 gameResuㅣㅅ
@@ -50,13 +49,13 @@ public class BlackJackGameController {
         endGame(gameManager, players, revenueDtos);
     }
 
-    private BettingManager initBettingManager(Players players) {
+    private BettingAmounts initBettingManager(Players players) {
         Map<Name, BettingAmount> bettingAmounts = new HashMap<>();
         players.forEach(player -> {
             int amount = InputView.askBettingAmount(player.getName().getName());
             bettingAmounts.put(player.getName(), new BettingAmount(amount));
         });
-        return new BettingManager(bettingAmounts);
+        return new BettingAmounts(bettingAmounts);
     }
 
     private List<ParticipantRevenueDto> toParticipantRevenueDtos(Map<Name, Revenue> profits) {

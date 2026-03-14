@@ -4,10 +4,10 @@ import domain.participant.Name;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RevenueManager {
+public class Revenues {
     private final Map<Name, Revenue> finalRevenue;
 
-    public RevenueManager(Map<Name, Revenue> finalRevenue) {
+    public Revenues(Map<Name, Revenue> finalRevenue) {
         this.finalRevenue = new HashMap<>(finalRevenue);
     }
 }
