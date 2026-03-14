@@ -1,4 +1,4 @@
-package domain;
+package domain.participant;
 
 import static message.ErrorMessage.BET_AMOUNT_INVALID_UNIT;
 import static message.ErrorMessage.BET_AMOUNT_OUT_OF_RANGE;

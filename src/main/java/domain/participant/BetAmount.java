@@ -1,4 +1,4 @@
-package domain;
+package domain.participant;
 
 import static domain.constant.GameRule.BET_AMOUNT_UNIT;
 import static domain.constant.GameRule.MAX_BET_AMOUNT;

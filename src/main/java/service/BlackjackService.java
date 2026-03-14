@@ -1,13 +1,12 @@
 package service;
 
-import domain.BetAmount;
 import domain.Game;
 import domain.enums.Result;
+import domain.participant.BetAmounts;
 import dto.CardDto;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 public class BlackjackService {
     public Map<String, List<CardDto>> makePlayerCardDtos(Game game) {
@@ -27,18 +26,8 @@ public class BlackjackService {
     }
 
     public Map<String, Integer> calculateAllPlayerProfits(Map<String, Result> playerResults,
-                                                          Map<String, BetAmount> betAmounts) {
-        Map<String, Integer> profits = new LinkedHashMap<>();
-        for (Entry<String, BetAmount> entry : betAmounts.entrySet()) {
-            int profit = calculatePlayerProfit(playerResults.get(entry.getKey()), entry.getValue());
-            profits.put(entry.getKey(), profit);
-        }
-        return profits;
-    }
-
-    private int calculatePlayerProfit(Result result, BetAmount betAmount) {
-        double profit = betAmount.amount() * result.getRate();
-        return (int) profit;
+                                                          BetAmounts betAmounts) {
+        return betAmounts.calculateProfits(playerResults);
     }
 
     public int calculateDealerProfit(Map<String, Integer> allPlayerProfits) {

@@ -2,9 +2,10 @@ package domain.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.BetAmount;
 import domain.enums.Result;
+import domain.participant.BetAmounts;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -13,16 +14,16 @@ import service.BlackjackService;
 
 public class BlackjackServiceTest {
     private final BlackjackService blackjackService = new BlackjackService();
-    Map<String, BetAmount> betAmounts = new HashMap<>();
+    BetAmounts betAmounts = new BetAmounts(List.of("피즈", "이삭", "러키", "쿠다"));
     Map<String, Result> results = new HashMap<>();
     Map<String, Integer> expectedProfits = new HashMap<>();
 
     @BeforeEach
     void setUp() {
-        betAmounts.put("피즈", new BetAmount(10000));
-        betAmounts.put("이삭", new BetAmount(20000));
-        betAmounts.put("러키", new BetAmount(10000));
-        betAmounts.put("쿠다", new BetAmount(15000));
+        betAmounts.addBetAmount("피즈", 10000);
+        betAmounts.addBetAmount("이삭", 20000);
+        betAmounts.addBetAmount("러키", 10000);
+        betAmounts.addBetAmount("쿠다", 15000);
 
         results.put("피즈", Result.LOSE);
         results.put("이삭", Result.WIN);

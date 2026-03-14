@@ -1,12 +1,11 @@
 package controller;
 
-import domain.BetAmount;
 import domain.Game;
 import domain.card.CardGenerator;
 import domain.card.Deck;
 import domain.enums.Result;
+import domain.participant.BetAmounts;
 import dto.CardDto;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -37,20 +36,24 @@ public class BlackjackController {
     }
 
     private void playGame(Game game, Deck deck) {
-        Map<String, BetAmount> betAmounts = retryOnException(() -> makeBetAmounts(game));
+        BetAmounts betAmounts = makeBetAmounts(game);
         printParticipantCards(game);
         playTurn(game, deck);
         printResult(game, betAmounts);
     }
 
-    private Map<String, BetAmount> makeBetAmounts(Game game) {
-        Map<String, BetAmount> betAmounts = new LinkedHashMap<>();
+    private BetAmounts makeBetAmounts(Game game) {
+        BetAmounts betAmounts = new BetAmounts(game.getAllPlayerNames());
         for (String name : game.getAllPlayerNames()) {
-            String input = InputView.askBetAmount(name);
-            int amount = InputParser.parseBetAmount(input);
-            betAmounts.put(name, new BetAmount(amount));
+            int amount = retryOnException(() -> askBetAmount(name));
+            betAmounts.addBetAmount(name, amount);
         }
         return betAmounts;
+    }
+
+    private int askBetAmount(String name) {
+        String input = InputView.askBetAmount(name);
+        return InputParser.parseBetAmount(input);
     }
 
     private void printParticipantCards(Game game) {
@@ -86,7 +89,7 @@ public class BlackjackController {
         }
     }
 
-    private void printResult(Game game, Map<String, BetAmount> betAmounts) {
+    private void printResult(Game game, BetAmounts betAmounts) {
         OutputView.printDealerCardsWithScore(CardDto.fromCards(game.getDealerCards()), game.getDealerScore());
         printFinalCards(game);
         printProfits(game, betAmounts);
@@ -98,7 +101,7 @@ public class BlackjackController {
         }
     }
 
-    private void printProfits(Game game, Map<String, BetAmount> betAmounts) {
+    private void printProfits(Game game, BetAmounts betAmounts) {
         Map<String, Result> playerResults = blackjackService.makePlayerResults(game);
         Map<String, Integer> playerProfits = blackjackService.calculateAllPlayerProfits(playerResults, betAmounts);
         int dealerProfit = blackjackService.calculateDealerProfit(playerProfits);
