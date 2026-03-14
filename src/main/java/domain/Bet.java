@@ -3,9 +3,9 @@ package domain;
 import java.math.BigDecimal;
 
 public record Bet(BigDecimal amount) {
-    private static final BigDecimal MINIMUM_BETTING_AMOUNT = new BigDecimal("10");
+    private static final BigDecimal MINIMUM_BETTING_AMOUNT = new BigDecimal("100");
     private static final BigDecimal MAXIMUM_BETTING_AMOUNT = new BigDecimal("1000000000");
-    private static final BigDecimal UNIT = new BigDecimal("10");
+    private static final BigDecimal UNIT = new BigDecimal("100");
 
     public Bet {
         validateNull(amount);

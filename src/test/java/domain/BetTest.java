@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 class BetTest {
 
     @ParameterizedTest
-    @ValueSource(strings = {"10", "10000", "1000000000"})
+    @ValueSource(strings = {"100", "10000", "1000000000"})
     void 베팅_금액_생성_성공(String amount) {
         assertThatCode(() -> new Bet(new BigDecimal(amount)))
                 .doesNotThrowAnyException();
