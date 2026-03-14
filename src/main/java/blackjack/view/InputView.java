@@ -33,7 +33,7 @@ public class InputView {
         return input.equals(HIT_INPUT);
     }
 
-    public Integer readWager(final String name) {
+    public int readWager(final String name) {
         System.out.printf(READ_PLAYER_WAGER_MESSAGE, name);
         String input = scanner.nextLine().trim();
         validNumber(input);
