@@ -1,6 +1,6 @@
 package domain.betting;
 
-import domain.betting.exception.MoneyException;
+import domain.betting.exception.BettingException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +12,7 @@ public class BettingMoneyTest {
 
         Assertions.assertThatThrownBy(() -> {
             BettingMoney.bet(negativeNumber);
-        }).isInstanceOf(MoneyException.class);
+        }).isInstanceOf(BettingException.class);
     }
 
     @Test
@@ -21,7 +21,7 @@ public class BettingMoneyTest {
 
         Assertions.assertThatThrownBy(() -> {
             BettingMoney.bet(negativeNumber);
-        }).isInstanceOf(MoneyException.class);
+        }).isInstanceOf(BettingException.class);
     }
 
 }

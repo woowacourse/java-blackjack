@@ -1,7 +1,7 @@
 package domain.betting;
 
 import domain.betting.exception.ErrorMessage;
-import domain.betting.exception.MoneyException;
+import domain.betting.exception.BettingException;
 
 
 public record BettingMoney(
@@ -32,13 +32,13 @@ public record BettingMoney(
         try {
             Integer.parseInt(money);
         } catch (NumberFormatException e) {
-            throw new MoneyException(ErrorMessage.BETTING_MONEY_IS_NOT_STRING);
+            throw new BettingException(ErrorMessage.BETTING_MONEY_IS_NOT_STRING);
         }
     }
 
     private static void validateBettingMoneyIsNotNegative(int money) {
         if (money < BET_BOUND) {
-            throw new MoneyException(ErrorMessage.BETTING_MONEY_IS_NOT_NEGATIVE);
+            throw new BettingException(ErrorMessage.BETTING_MONEY_IS_NOT_NEGATIVE);
         }
     }
 }

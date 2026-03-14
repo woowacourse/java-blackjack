@@ -3,9 +3,9 @@ package domain.betting.exception;
 import exception.BlackjackGameException;
 import exception.ExceptionInformation;
 
-public class MoneyException extends BlackjackGameException {
+public class BettingException extends BlackjackGameException {
 
-    public MoneyException(ExceptionInformation exceptionInformation) {
+    public BettingException(ExceptionInformation exceptionInformation) {
         super(exceptionInformation);
     }
 
