@@ -1,11 +1,10 @@
 package domain.member;
 
-import domain.MatchResult;
 import domain.card.Card;
+import domain.state.DealerHit;
 import domain.state.Hit;
-import domain.state.Stay;
 
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -16,7 +15,7 @@ public class Members {
     private final List<Player> players;
 
     public Members(Map<String, Money> playerBets) {
-        this.dealer = new Dealer(new Hit(new Hand()));
+        this.dealer = new Dealer(new DealerHit(new Hand()));
         this.players = playerBets.entrySet().stream()
                 .map(entry -> new Player(entry.getKey(), entry.getValue(), new Hit(new Hand())))
                 .toList();
@@ -70,21 +69,39 @@ public class Members {
 //        return player.compareScoreWith(dealer);
 //    }
 
-    public List<Integer> calculatePlayerProfits() {
-        return players.stream()
-                .map(Player::calculateProfit)
-                .toList();
+    public Map<String, Integer> calculateFinalProfits() {
+        validateFinished();
+        Map<String, Integer> totalResults = new LinkedHashMap<>();
+        players.forEach(player ->
+                totalResults.put(player.name(), player.calculateProfit(dealer)));
+        int totalPlayerProfit = totalResults.values()
+                .stream()
+                .mapToInt(Integer::intValue)
+                .sum();
+        totalResults.put(dealer.name(), -1 * totalPlayerProfit);
+        return totalResults;
+    }
+
+    private void validateFinished() {
+        if (!dealer.isFinished() || players.stream()
+                .anyMatch(player -> !player.isFinished())) {
+            throw new IllegalArgumentException("게임이 끝나지 않은 사람이 있습니다.");
+        }
     }
 
     public boolean isPlayerFinished(String name) {
         return findByPlayerName(name).isFinished();
     }
 
+    public void changePlayerStateToStay(String playerName) {
+        findByPlayerName(playerName).changeToStay();
+    }
+
     public String getDealerName() {
         return dealer.name();
     }
 
-    private Member findByPlayerName(String playerName) {
+    private Player findByPlayerName(String playerName) {
         return players.stream()
                 .filter(player -> player.name().equals(playerName))
                 .findAny()

@@ -18,6 +18,6 @@ public abstract class Running extends Started {
 
     @Override
     public double earningRate(State dealerState) {
-        return 0;
+        throw new IllegalStateException("게임이 끝나지 않은 상태에서는 수익률을 계산할 수 없습니다.");
     }
 }

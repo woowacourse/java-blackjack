@@ -33,6 +33,10 @@ public class GameTable {
         return members.isPlayerFinished(memberName);
     }
 
+    public void changePlayerState(String playerName) {
+        members.changePlayerStateToStay(playerName);
+    }
+
     public List<Card> drawForMember(String memberName) {
         members.provideCardToPlayer(memberName, deck.draw());
         return members.findCardByName(memberName);

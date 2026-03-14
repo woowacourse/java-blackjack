@@ -74,5 +74,8 @@ public class BlackjackController {
             outputView.printCurrentCard(playerName, roundResult);
             isBust = roundResult.isBust();
         }
+        if (!isBust) {
+            blackjackService.endPlayerRound(playerName);
+        }
     }
 }

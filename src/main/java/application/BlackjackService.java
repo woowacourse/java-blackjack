@@ -37,6 +37,10 @@ public class BlackjackService {
         return new RoundResult(playerCards, isBust);
     }
 
+    public void endPlayerRound(String playerName) {
+        getGameTable().changePlayerState(playerName);
+    }
+
     public boolean checkDealerDrawable() {
         return getGameTable().drawForDealer();
     }
