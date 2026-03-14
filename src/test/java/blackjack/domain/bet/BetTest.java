@@ -21,14 +21,14 @@ class BetTest {
     @Test
     @DisplayName("배팅 금액이 최대 한도를 초과하면 예외가 발생한다.")
     void create_ThrowsException_WhenAmountExceedsLimit() {
-        assertThatThrownBy(() -> new Bet(1431665765))
+        assertThatThrownBy(() -> new Bet(1000100))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("배팅 금액은 1,431,665,764 이하여야 합니다");
+                .hasMessageContaining("배팅 금액은 1,000,000 이하여야 합니다");
     }
 
     @DisplayName("정상적인 배팅 금액과 경계값으로 배팅을 생성할 수 있다.")
     @ParameterizedTest
-    @ValueSource(ints = {1, 1000, 1431665764})
+    @ValueSource(ints = {100, 1000, 1000000})
     void create_Success_WithValidAmounts(int validAmount) {
         Bet bet = new Bet(validAmount);
 
