@@ -269,10 +269,10 @@ class BlackjackServiceTest {
             void 플레이어_인덱스에_맞게_베팅금액이_저장된다(int playerIndex) {
 
                 // given
-                Money betAmount = Money.from("1000");
+                Money money = Money.from("1000");
 
                 // when
-                blackjackService.receivePlayerBets(playerIndex, betAmount);
+                blackjackService.receivePlayerBets(playerIndex, money);
 
                 // then
                 assertThat(players.getPlayerByIndex(playerIndex).getBetAmount()).isEqualTo(1000);

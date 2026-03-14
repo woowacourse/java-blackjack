@@ -1,8 +1,11 @@
 package domain.bet;
 
+import exception.ErrorMessage;
+
 public record Money(
     int value
 ) {
+
 
     public static Money from(String input) {
         validate(input);
@@ -17,7 +20,7 @@ public record Money(
 
     private static void validateMoneyIsNumber(String input) {
         if (!isNumber(input)) {
-            throw new IllegalArgumentException("[ERROR] 베팅 금액은 숫자여야 합니다.");
+            throw new IllegalArgumentException(ErrorMessage.MONEY_NOT_NUMBER.getMessage());
         }
     }
 
@@ -26,16 +29,16 @@ public record Money(
         try {
             money = Integer.parseInt(input);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("[ERROR] 베팅 금액은 0원 초과 100000000원 이하여야 합니다.");
+            throw new IllegalArgumentException(ErrorMessage.MONEY_OUT_OF_RANGE.getMessage());
         }
         if (!(0 < money && money <= 100_000_000)) {
-            throw new IllegalArgumentException("[ERROR] 베팅 금액은 0원 초과 100000000원 이하여야 합니다.");
+            throw new IllegalArgumentException(ErrorMessage.MONEY_OUT_OF_RANGE.getMessage());
         }
     }
 
     private static void validateMoneyUnit(int money) {
         if (money % 10 != 0) {
-            throw new IllegalArgumentException("[ERROR] 베팅 금액의 단위는 10원 입니다.");
+            throw new IllegalArgumentException(ErrorMessage.INVALID_MONEY_UNIT.getMessage());
         }
     }
 

@@ -2,6 +2,7 @@ package domain.bet;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
+import exception.ErrorMessage;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -45,7 +46,7 @@ class MoneyTest {
                     Money.from(input);
                 })
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("[ERROR] 베팅 금액은 숫자여야 합니다.");
+                    .hasMessageContaining(ErrorMessage.MONEY_NOT_NUMBER.getMessage());
 
             }
 
@@ -58,7 +59,7 @@ class MoneyTest {
                     Money.from(input);
                 })
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("[ERROR] 베팅 금액은 0원 초과 100000000원 이하여야 합니다.");
+                    .hasMessageContaining(ErrorMessage.MONEY_OUT_OF_RANGE.getMessage());
             }
 
             @Test
@@ -72,7 +73,7 @@ class MoneyTest {
                     Money.from(input);
                 })
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("[ERROR] 베팅 금액의 단위는 10원 입니다.");
+                    .hasMessageContaining(ErrorMessage.INVALID_MONEY_UNIT.getMessage());
             }
         }
     }

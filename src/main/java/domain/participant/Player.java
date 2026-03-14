@@ -4,17 +4,17 @@ import domain.bet.Money;
 
 public class Player extends Participant {
 
-    private Money betAmount;
+    private Money bet;
 
     public Player(Name name) {
         super(name);
     }
 
-    public void placeBet(Money betAmount) {
-        this.betAmount = betAmount;
+    public void placeBet(Money money) {
+        this.bet = money;
     }
 
     public int getBetAmount() {
-        return betAmount.value();
+        return bet.value();
     }
 }

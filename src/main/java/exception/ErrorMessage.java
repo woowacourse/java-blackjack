@@ -13,6 +13,9 @@ public enum ErrorMessage {
         String.format("게임 참가자의 이름은 %d~%d글자 사이여야 합니다.", PolicyConstant.PLAYER_NAME_MIN_LENGTH,
             PolicyConstant.PLAYER_NAME_MAX_LENGTH)),
     PLAYER_NAME_BLANK("게임 참가자의 이름은 공백이 될 수 없습니다."),
+    MONEY_NOT_NUMBER("베팅 금액은 숫자여야 합니다."),
+    MONEY_OUT_OF_RANGE("베팅 금액은 0원 초과 100000000원 이하여야 합니다."),
+    INVALID_MONEY_UNIT("베팅 금액의 단위는 10원 입니다."),
     ;
 
     private static final String PREFIX = "[ERROR] ";

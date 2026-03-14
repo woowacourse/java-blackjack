@@ -10,9 +10,7 @@ public class PolicyConstant {
     public static final int PLAYER_MAX_COUNT = 8;
     public static final int PLAYER_NAME_MIN_LENGTH = 2;
     public static final int PLAYER_NAME_MAX_LENGTH = 5;
-
-    public static final int JQK = 10;
-    public static final int ACE = 11;
+    
     public static final int DECK_COUNT = 6;
     public static final int DECK_SIZE = 52;
     public static final int BLACKJACK_SCORE = 21;
