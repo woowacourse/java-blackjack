@@ -38,12 +38,20 @@ public class BlackjackGame {
         dealer.addCards(deck.drawWithAmount(DEFAULT_HAND_NUMBER));
     }
 
-
-    public void playerHitStand(Function<Player, Boolean> decideHitStandFunc, Consumer<Player> printResultFunc) {
-        players.hitStandEachPlayers(deck, decideHitStandFunc, printResultFunc);
+    public void hitStandEachPlayers(Function<Player, Boolean> decideHitStandFunc, Consumer<Player> printResultFunc) {
+        players.hitStandEachPlayers(player -> hitStandPlayer(deck, decideHitStandFunc, printResultFunc, player));
     }
 
-    public void dealerHitStand(Consumer<Boolean> printDecisionOutput) {
+    private void hitStandPlayer(Deck deck, Function<Player, Boolean> hitStandDecisionFunc,
+                                Consumer<Player> printResultFunc, Player player) {
+        while (!player.isBust() && hitStandDecisionFunc.apply(player)) {
+            player.addCard(deck.draw());
+            printResultFunc.accept(player);
+        }
+        printResultFunc.accept(player);
+    }
+
+    public void hitStandDealer(Consumer<Boolean> printDecisionOutput) {
         while (dealer.isHittable(DEALER_HIT_STAND_BOUNDARY)) {
             dealer.addCard(deck.draw());
             printDecisionOutput.accept(true);

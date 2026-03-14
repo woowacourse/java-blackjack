@@ -2,10 +2,7 @@ package domain.participant;
 
 import domain.BetMoney;
 import domain.Score;
-import domain.card.Deck;
 import domain.card.Hand;
-import java.util.function.Consumer;
-import java.util.function.Function;
 
 public class Player extends Participant {
     private final Name name;
@@ -32,15 +29,6 @@ public class Player extends Participant {
 
     public static Player copyOf(Player player) {
         return new Player(player.name, player.betMoney, Hand.copyOf(player.hand));
-    }
-
-    public void hitStand(Deck deck, Function<Player, Boolean> hitStandDecisionFunc,
-                         Consumer<Player> printResultFunc) {
-        while (!isBust() && hitStandDecisionFunc.apply(this)) {
-            addCard(deck.draw());
-            printResultFunc.accept(this);
-        }
-        printResultFunc.accept(this);
     }
 
     public BetMoney getResult(Participant target) {
