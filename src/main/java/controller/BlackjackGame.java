@@ -55,15 +55,7 @@ public class BlackjackGame {
     }
 
     private Players enterPlayers() {
-        return Players.from(requestPlayerNames()
-                .stream()
-                .map(Player::from)
-                .toList()
-        );
-    }
-
-    private List<PlayerName> requestPlayerNames() {
-        return view.requestPlayerNames();
+        return view.enterPlayers();
     }
 
     private void askBettingMoney(BettingTable bettingTable, Players players) {

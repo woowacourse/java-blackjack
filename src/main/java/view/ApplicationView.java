@@ -26,17 +26,6 @@ public class ApplicationView {
         this.writer = writer;
     }
 
-    public List<PlayerName> requestPlayerNames() {
-        return retry(() -> {
-            writer.printInputNameGuideMessage();
-            String names = readInput();
-            return Arrays.stream(names.split(PLAYER_NAME_DELIMITER))
-                    .map(String::trim)
-                    .map(PlayerName::new)
-                    .toList();
-        });
-    }
-
     public Players enterPlayers() {
         return retry(() -> {
             writer.printInputNameGuideMessage();
