@@ -56,4 +56,33 @@ class HandTest {
 
         assertThat(hand.isBust()).isTrue();
     }
+
+    @Test
+    void 두_장의_카드와_카드의_합이_21이면_블랙잭이다() {
+        Hand hand = new Hand();
+        hand.add(new Card(Suit.HEART, Rank.ACE));
+        hand.add(new Card(Suit.SPADE, Rank.KING));
+
+        assertThat(hand.isBlackjack()).isTrue();
+    }
+
+    @Test
+    void 경계_값인_세_장의_카드와_카드의_합이_21이면_블랙잭이_아니다() {
+        Hand hand = new Hand();
+        hand.add(new Card(Suit.HEART, Rank.ACE));
+        hand.add(new Card(Suit.SPADE, Rank.FOUR));
+        hand.add(new Card(Suit.DIAMOND, Rank.SIX));
+
+        assertThat(hand.isBlackjack()).isFalse();
+    }
+
+    @Test
+    void 한_장의_카드만_찾으면_숫자와_문양을_합친_문자열이_나온다() {
+        Hand hand = new Hand();
+        hand.add(new Card(Suit.HEART, Rank.ACE));
+        hand.add(new Card(Suit.SPADE, Rank.FOUR));
+        hand.add(new Card(Suit.DIAMOND, Rank.SIX));
+
+        assertThat(hand.getFirstCard()).isEqualTo("A하트");
+    }
 }
