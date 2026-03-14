@@ -90,14 +90,18 @@ public class BlackjackController {
         }
     }
 
-    private void printProfitResult(Dealer dealer, Players players) {
+    private ProfitResult calculateProfits(Dealer dealer, Players players) {
         BlackjackRule rule = new BlackjackRule();
         Map<Player, Integer> playerProfits = new LinkedHashMap<>();
         for (Player player : players.getGamePlayers()) {
             Outcome outcome = rule.judge(player, dealer);
             playerProfits.put(player, player.calculateProfit(outcome));
         }
-        ProfitResult profitResult = new ProfitResult(playerProfits);
+        return new ProfitResult(playerProfits);
+    }
+
+    private void printProfitResult(Dealer dealer, Players players) {
+        ProfitResult profitResult = calculateProfits(dealer, players);
         outputView.printProfitResult(dealer.getName(), profitResult);
     }
 }
