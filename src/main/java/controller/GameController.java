@@ -1,5 +1,6 @@
 package controller;
 
+import domain.card.RandomShuffleStrategy;
 import domain.player.Player;
 import dto.ParticipantResult;
 import service.GameService;
@@ -74,6 +75,7 @@ public class GameController {
     private void startGame() {
         List<String> names = InputView.askName();
         gameService.joinPlayers(names);
+        gameService.createDeck(new RandomShuffleStrategy());
         gameService.initAllPlayerCard();
     }
 

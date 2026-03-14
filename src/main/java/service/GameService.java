@@ -19,7 +19,7 @@ public class GameService {
     private static final int CARDS_PER_PLAYER_AT_START = 2;
 
     private PlayerGroups playerGroups;
-    private final CardDeck cardDeck = initCardDeck();
+    private CardDeck cardDeck;
 
     public void joinPlayers(List<String> playerNames) {
         playerGroups = new PlayerGroups(playerNames);
@@ -88,16 +88,7 @@ public class GameService {
         return playerGroups.getDealerResult();
     }
 
-    private CardDeck initCardDeck() {
-        List<Card> cards = new ArrayList<>();
-        for (TrumpSuit suit : TrumpSuit.values()) {
-            for (TrumpNumber number : TrumpNumber.values()) {
-                cards.add(new Card(suit, number));
-            }
-        }
-
-        Collections.shuffle(cards);
-
-        return new CardDeck(cards);
+    public void createDeck(ShuffleStrategy shuffleStrategy) {
+        cardDeck = new CardDeck(shuffleStrategy);
     }
 }
