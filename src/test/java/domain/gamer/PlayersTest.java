@@ -2,6 +2,7 @@ package domain.gamer;
 
 import domain.card.*;
 import domain.gamer.dto.GamerHandDto;
+import domain.gamer.exception.PlayerException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,7 @@ import java.util.List;
 class PlayersTest {
 
     private final PlayerName testPlayerName  = new PlayerName("test");
+    private final PlayerName duplicatedPlayerName  = new PlayerName("test");
     private final Player testPlayer = Player.from(testPlayerName);;
 
     @Test
@@ -32,6 +34,13 @@ class PlayersTest {
 
         Assertions.assertThat(playersHand.getFirst())
                 .isEqualTo(GamerHandDto.from(testPlayer));
+    }
+
+    @Test
+    void 플레이어간_이름_중복을_허용하지않는다() {
+        Assertions.assertThatThrownBy(() -> {
+            Players.enterByPlayerNames(List.of(testPlayerName, duplicatedPlayerName));
+        }).isInstanceOf(PlayerException.class);
     }
 
 }
