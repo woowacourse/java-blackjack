@@ -4,6 +4,7 @@ import domain.Deck;
 import domain.Participants;
 import dto.ParticipantsInitDTO;
 import java.util.List;
+import util.RandomShuffleStrategy;
 import view.Message;
 
 public class BlackjackService {
@@ -15,7 +16,7 @@ public class BlackjackService {
     }
 
     public void makeDeck() {
-        deck = new Deck();
+        deck = new Deck(new RandomShuffleStrategy());
     }
 
     public void dealInitialCards() {

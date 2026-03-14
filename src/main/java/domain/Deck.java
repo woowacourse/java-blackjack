@@ -1,21 +1,22 @@
 package domain;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 import vo.Rank;
 import vo.Suit;
 
 public class Deck {
+    private final ShuffleStrategy shuffleStrategy;
     private final List<Card> cards;
 
-    public Deck() {
+    public Deck(ShuffleStrategy shuffleStrategy) {
+        this.shuffleStrategy = shuffleStrategy;
         this.cards = makeCards();
     }
 
     public void shuffleCards() {
-        Collections.shuffle(cards);
+        shuffleStrategy.shuffle(cards);
     }
 
     public Card drawCard() {
