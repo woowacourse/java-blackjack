@@ -30,19 +30,23 @@ class BlackjackGameTest {
 
     @Test
     @DisplayName("모든 플레이어가 버스트면 딜러는 카드를 더 뽑지 않는다")
-    void 모든_플레이어_버스트면_딜러는_카드뽑는걸_중단한다(){
+    void 모든_플레이어_버스트면_딜러는_카드뽑는걸_중단한다() {
         List<PlayerInfo> playerInfos = List.of(
                 new PlayerInfo(Name.from("pobi"), new Betting(10000)),
                 new PlayerInfo(Name.from("jason"), new Betting(20000)));
 
         BlackjackGame blackjackGame = BlackjackGame.start(playerInfos);
-        Player player = blackjackGame.getPlayers().getPlayers().getFirst();
-
-        while (!player.isBust()) {
-            blackjackGame.addPlayerCard(player);
+        for (Player player : blackjackGame.getPlayers().getPlayers()) {
+            makePlayerBust(blackjackGame, player);
         }
 
         boolean result = blackjackGame.shouldDealerDraw();
         assertThat(result).isFalse();
+    }
+
+    private void makePlayerBust(BlackjackGame blackjackGame, Player player) {
+        while (!player.isBust()) {
+            blackjackGame.addPlayerCard(player);
+        }
     }
 }

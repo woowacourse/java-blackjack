@@ -7,33 +7,14 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 class BettingResultCalculatorTest {
-    FinalResult normal = FinalResult.from(
-            Player.of(Name.from("pobi"), new Betting(10000),
-                    new Hand(List.of(
-                            Card.of(CardNumber.J, CardShape.CLOVER),
-                            Card.of(CardNumber.Q, CardShape.CLOVER)))), ResultType.WIN);
-
-    FinalResult blackjack = FinalResult.from(
-            Player.of(Name.from("jun"), new Betting(10000),
-                    new Hand(List.of(
-                            Card.of(CardNumber.J, CardShape.CLOVER),
-                            Card.of(CardNumber.ACE, CardShape.CLOVER)))), ResultType.BLACKJACK_WIN);
-
-    FinalResult bust = FinalResult.from(
-            Player.of(Name.from("min"), new Betting(10000),
-                    new Hand(List.of(
-                            Card.of(CardNumber.J, CardShape.CLOVER),
-                            Card.of(CardNumber.Q, CardShape.CLOVER),
-                            Card.of(CardNumber.K, CardShape.DIAMOND)))), ResultType.LOSE);
-
-    FinalResult draw = FinalResult.from(
-            Player.of(Name.from("kang"), new Betting(10000),
-                    new Hand(List.of(
-                            Card.of(CardNumber.J, CardShape.CLOVER),
-                            Card.of(CardNumber.K, CardShape.DIAMOND)))), ResultType.DRAW);
 
     @Test
     void 플레이어들의_최종_수익_계산_테스트() {
+        FinalResult normal = FinalResult.from(PlayerFixture.createDefault("pobi"), ResultType.WIN);
+        FinalResult blackjack = FinalResult.from(PlayerFixture.createBlackjack("jun"), ResultType.BLACKJACK_WIN);
+        FinalResult bust = FinalResult.from(PlayerFixture.createBust("min"), ResultType.LOSE);
+        FinalResult draw = FinalResult.from(PlayerFixture.createDefault("kang"), ResultType.DRAW);
+
         TotalFinalResult totalFinalResult = TotalFinalResult.from(List.of(normal, blackjack, bust, draw));
 
         Map<Name, Integer> result = BettingResultCalculator.calculatePlayersProfit(totalFinalResult);
@@ -46,7 +27,12 @@ class BettingResultCalculatorTest {
 
     @Test
     void 딜러의_총_수익_계산_테스트() {
+        FinalResult normal = FinalResult.from(PlayerFixture.createDefault("pobi"), ResultType.WIN);
+        FinalResult blackjack = FinalResult.from(PlayerFixture.createBlackjack("jun"), ResultType.BLACKJACK_WIN);
+        FinalResult bust = FinalResult.from(PlayerFixture.createBust("min"), ResultType.LOSE);
+
         TotalFinalResult totalFinalResult = TotalFinalResult.from(List.of(normal, blackjack, bust));
+
         Map<Name, Integer> result = BettingResultCalculator.calculatePlayersProfit(totalFinalResult);
 
         assertThat(BettingResultCalculator.calculateDealerProfit(result)).isEqualTo(-15000);

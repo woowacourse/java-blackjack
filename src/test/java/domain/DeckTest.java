@@ -21,7 +21,9 @@ public class DeckTest {
     void 덱에_카드_없을_경우_예외_발생() {
         Deck deck = Deck.createDeck();
         List<Card> cards = deck.getCards();
-        cards.clear();
+        for (int i = 0; i < 52; i++) {
+            deck.draw();
+        }
         assertThatThrownBy(deck::draw).isInstanceOf(IllegalArgumentException.class);
     }
 }
