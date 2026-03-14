@@ -347,7 +347,7 @@ SRP를 완벽히 지킨 것입니다.
     - int 가 long 이 된 것만 빼면 정답
     - 알아서 계산한다
     - 플레이어 수익금 목록 계산과 함께 실행되지만 값은 딜러 수익금만 반환
-- [x] 플레이어들 수익금 계산 `public List<Long> determinePlayersProfit(List<Player> players)` - `Dealer`
+- [x] 플레이어들 수익금 계산 `public List<Long> determineplayerProfits(List<Player> players)` - `Dealer`
     - `플레이어들`의 수익금 목록을 계산한다
 - [x] 각각의 계산된 수익금, 수익금들을 각각 반환한다. 조립은 컨트롤러의 역할/책임
 - [x] 참가자 수익금 계산 `public long calculateProfit(ProfitRate profitRate)` - `Player`
