@@ -54,21 +54,13 @@ public class BlackjackGame {
         participant.hit(deck.draw());
     }
 
-    public int playDealer() {
-        int dealerHitCount = 0;
-        while (canHitDealer()) {
+    public int playDealerTurn() {
+        int hitCount = 0;
+        while (dealer.canHit()) {
             hit(dealer);
-            dealerHitCount++;
+            hitCount++;
         }
-        return dealerHitCount;
-    }
-
-    public boolean canHit(Player player) {
-        return player.canHit();
-    }
-
-    public boolean canHitDealer() {
-        return dealer.canHit();
+        return hitCount;
     }
 
     public GameResult judge(Player player) {

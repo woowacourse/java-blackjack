@@ -28,8 +28,8 @@ public class BlackjackApplication {
     public void run() {
         initialDeal();
 
-        playPlayers();
-        playDealer();
+        playPlayersTurn();
+        playDealerTurn();
 
         printScore();
         printResult();
@@ -40,19 +40,19 @@ public class BlackjackApplication {
         view.printInitialDeal(InitialDealDtos.of(game.getDealer(), game.getPlayers()));
     }
 
-    private void playPlayers() {
-        game.getPlayers().forEach(this::play);
+    private void playPlayersTurn() {
+        game.getPlayers().forEach(this::playTurn);
     }
 
-    private void play(Player player) {
-        while (game.canHit(player) && view.isHitAnswer(player.getName())) {
+    private void playTurn(Player player) {
+        while (player.canHit() && view.isHitAnswer(player.getName())) {
             game.hit(player);
             view.printPlayerCards(ParticipantCardsDto.from(player));
         }
     }
 
-    private void playDealer() {
-        int dealerHitCount = game.playDealer();
+    private void playDealerTurn() {
+        int dealerHitCount = game.playDealerTurn();
         view.printDealerHit(
             DealerHitDto.of(game.getDealer(), dealerHitCount));
     }
