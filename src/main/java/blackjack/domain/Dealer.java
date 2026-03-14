@@ -1,47 +1,18 @@
 package blackjack.domain;
 
-import java.util.List;
-import java.util.Objects;
-
-public class Dealer {
+public class Dealer extends Participant{
     private static final int DEALER_HIT_THRESHOLD = 16;
 
-    private final Hand hand;
-
-    private Dealer(Hand hand) {
-        validate(hand);
-        this.hand = hand;
-    }
-
-    private void validate(Hand hand) {
-        Objects.requireNonNull(hand, "딜러 덱(카드)는 null일 수 없습니다.");
+    private Dealer(Name name, Hand hand) {
+        super(name, hand);
     }
 
     public static Dealer of() {
-        return new Dealer(Hand.init());
+        return new Dealer(Name.of("딜러"), Hand.init());
     }
 
-    public void hit(TrumpCard card) {
-        hand.add(card);
-    }
-
-    public int score() {
-        return hand.calculateScore();
-    }
-
-    public List<TrumpCard> getCards() {
-        return hand.getCards();
-    }
-
-    public boolean shouldHit() {
+    @Override
+    public boolean canHit() {
         return score() <= DEALER_HIT_THRESHOLD;
-    }
-
-    public boolean isBust() {
-        return score() > 21;
-    }
-
-    public int countCards() {
-        return hand.countCards();
     }
 }
