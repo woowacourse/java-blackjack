@@ -10,7 +10,7 @@ public class InputParser {
                 .toList();
     }
 
-    public static Integer parseMoney(String money) {
+    public static int parseMoney(String money) {
         try {
             return Integer.parseInt(money);
         } catch (NumberFormatException exception) {
