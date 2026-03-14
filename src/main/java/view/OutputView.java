@@ -1,11 +1,9 @@
 package view;
 
+import dto.result.ParticipantProfit;
+import dto.result.ProfitResult;
 import java.util.List;
-import model.result.DealerWinning;
-import model.result.PlayersWinning;
-import dto.result.ParticipantWinning;
-import dto.result.PlayerResult;
-import dto.result.PlayerWinning;
+import dto.result.ParticipantCurrentHand;
 
 public class OutputView {
     private static final String JOIN_DELIMITER = ", ";
@@ -18,18 +16,20 @@ public class OutputView {
     private static final String INIT_DECK_TEXT = "에게 2장을 나누었습니다.";
     private static final String DEALER_CARD_TEXT = "딜러카드: ";
     private static final String SCORE_TEXT = " - 결과: ";
-    private static final String DEALER_TEXT = "딜러: ";
 
-    public static void printInitDeck(List<PlayerResult> players, String dealerFirstCard) {
-        List<String> playerNames = players.stream().map(PlayerResult::name).toList();
+    public static void printInitDeck(List<ParticipantCurrentHand> players, String dealerFirstCard) {
+        List<String> playerNames = players.stream()
+                .map(ParticipantCurrentHand::name)
+                .toList();
+
         printInitDeckDrawMessage(playerNames);
         printDealerInitDeck(dealerFirstCard);
         printPlayersCurrentDeck(players);
         printNewLine();
     }
 
-    public static void printPlayerCurrentDeck(PlayerResult playerResult) {
-        System.out.println(playerResult.name() + CARD_TEXT + String.join(JOIN_DELIMITER, playerResult.deck()));
+    public static void printPlayerCurrentDeck(ParticipantCurrentHand participantHand) {
+        System.out.println(participantHand.name() + CARD_TEXT + String.join(JOIN_DELIMITER, participantHand.deck()));
     }
 
     public static void printDealerCardDrawMessage() {
@@ -37,10 +37,10 @@ public class OutputView {
         printNewLine();
     }
 
-    public static void printPlayersScore(PlayerResult dealerResult, List<PlayerResult> players) {
-        printPlayerScore(dealerResult);
-        for(PlayerResult playerResult : players) {
-            printPlayerScore(playerResult);
+    public static void printParticipantHandWithScore(ParticipantCurrentHand dealerResult, List<ParticipantCurrentHand> players) {
+        printPlayerHandWithScore(dealerResult);
+        for(ParticipantCurrentHand participantResult : players) {
+            printPlayerHandWithScore(participantResult);
         }
         printNewLine();
     }
@@ -49,10 +49,10 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printResult(ParticipantWinning participantWinning) {
+    public static void printProfitResult(ProfitResult profitResult) {
         System.out.println(FINAL_RESULT_TEXT);
-        printDealerResult(participantWinning.dealerWinning());
-        printPlayersResult(participantWinning.playersWinning());
+        printDealerResult(profitResult.dealerProfit());
+        printPlayersProfit(profitResult.playerProfit());
     }
 
     private static void printInitDeckDrawMessage(List<String> players) {
@@ -63,28 +63,23 @@ public class OutputView {
         System.out.println(DEALER_CARD_TEXT + firstCard);
     }
 
-    private static void printPlayersCurrentDeck(List<PlayerResult> players) {
-        for(PlayerResult playerResult : players) {
-            printPlayerCurrentDeck(playerResult);
+    private static void printPlayersCurrentDeck(List<ParticipantCurrentHand> players) {
+        for(ParticipantCurrentHand participantHand : players) {
+            printPlayerCurrentDeck(participantHand);
         }
     }
 
-    private static void printPlayerScore(PlayerResult playerResult) {
-        System.out.println(playerResult.name() + CARD_TEXT + String.join(JOIN_DELIMITER, playerResult.deck()) + SCORE_TEXT + playerResult.score());
+    private static void printPlayerHandWithScore(ParticipantCurrentHand participantResult) {
+        System.out.println(
+                participantResult.name() + CARD_TEXT + String.join(JOIN_DELIMITER, participantResult.deck()) + SCORE_TEXT + participantResult.score());
     }
 
-    private static void printDealerResult(DealerWinning dealerWinning) {
-        System.out.println(DEALER_TEXT + dealerWinning.getTotalBet());
+    private static void printDealerResult(ParticipantProfit dealerProfit) {
+        System.out.println(dealerProfit.name() + ": " + dealerProfit.profit());
     }
 
-    private static void printPlayersResult(PlayersWinning playersWinning) {
-        for(PlayerWinning playerWinning : playersWinning.getFormattedPlayersWinnings()) {
-            printPlayerResult(playerWinning);
-        }
-    }
-
-    private static void printPlayerResult(PlayerWinning playerWinning) {
-        System.out.println(playerWinning.name() + RESULT_DELIMITER + playerWinning.profit());
+    private static void printPlayersProfit(List<ParticipantProfit> playersProfit) {
+       playersProfit.forEach(playerProfit -> System.out.println(playerProfit.name() + RESULT_DELIMITER + playerProfit.profit()));
     }
 
 }
