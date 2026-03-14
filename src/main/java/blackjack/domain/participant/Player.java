@@ -2,6 +2,8 @@ package blackjack.domain.participant;
 
 import blackjack.domain.bet.Bet;
 
+import java.util.Optional;
+
 public class Player extends Participant {
 
     private static final int NICKNAME_MINIMUM_LENGTH = 4;
@@ -33,11 +35,8 @@ public class Player extends Participant {
         this.bet = bet;
     }
 
-    public Bet getBet() {
-        if (this.bet == null) {
-            throw new IllegalStateException("해당 플레이어는 아직 베팅금을 입력하지 않았습니다.");
-        }
-        return bet;
+    public Optional<Bet> getBet() {
+        return Optional.of(bet);
     }
 
     @Override

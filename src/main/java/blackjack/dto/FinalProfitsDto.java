@@ -16,7 +16,8 @@ public record FinalProfitsDto(
     public static FinalProfitsDto of(final Players players, final Dealer dealer) {
         final Map<String, Integer> nicknameProfitMap = new LinkedHashMap<>();
         players.all().forEach(player -> {
-            final Bet bet = player.getBet();
+            final Bet bet = player.getBet()
+                    .orElseThrow(() -> new IllegalStateException("Bet 객체가 아직 초기화되지 않았습니다."));
             final GameResult gameResult = GameResult.calculate(player, dealer);
             nicknameProfitMap.put(player.getNickname(), Profit.calculate(bet, gameResult));
         });

@@ -9,6 +9,8 @@ import blackjack.domain.participant.Hand;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Status;
 import java.util.ArrayList;
+import java.util.Optional;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -52,9 +54,10 @@ public class PlayerTest {
             Hand hand = new Hand(new ArrayList<>());
             Status status = Status.HIT;
             Player player = new Player(hand, status, "pobi");
-            Bet expected = new Bet(10000);
+            Bet bet = new Bet(10000);
+            Optional<Bet> expected = Optional.of(new Bet(10000));
 
-            player.bet(expected);
+            player.bet(bet);
 
             assertThat(player).extracting("bet")
                 .usingRecursiveComparison()
