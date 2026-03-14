@@ -5,6 +5,7 @@ import domain.betting.BettingTable;
 import domain.betting.BettingMoney;
 import domain.betting.Profit;
 import domain.betting.dto.GamerBettingProfitDto;
+import domain.betting.manager.BettingPolicyManager;
 import domain.card.CardDeck;
 import domain.card.CardGenerator;
 import domain.gamer.Dealer;
@@ -22,17 +23,19 @@ public class BlackjackGame {
 
     public ApplicationView view;
     public CardDeck cardDeck;
+    public BettingPolicyManager policyManager;
 
-    public BlackjackGame(ApplicationView view, CardGenerator cardGenerator) {
+    public BlackjackGame(ApplicationView view, CardGenerator cardGenerator, BettingPolicyManager policyManager) {
         this.view = view;
         this.cardDeck = CardDeck.from(cardGenerator);
+        this.policyManager = policyManager;
     }
 
     public void start() {
         Dealer dealer = enterDealer();
         Players players = enterPlayers();
 
-        BettingTable bettingTable = setBettingTable();
+        BettingTable bettingTable = new BettingTable(policyManager);
         askBettingMoney(bettingTable, players);
 
         dealInitialCard(dealer, players);
@@ -61,10 +64,6 @@ public class BlackjackGame {
 
     private List<PlayerName> requestPlayerNames() {
         return view.requestPlayerNames();
-    }
-
-    private BettingTable setBettingTable() {
-        return new BettingTable();
     }
 
     private void askBettingMoney(BettingTable bettingTable, Players players) {

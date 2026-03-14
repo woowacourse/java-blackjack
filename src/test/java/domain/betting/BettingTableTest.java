@@ -1,5 +1,6 @@
 package domain.betting;
 
+import domain.betting.manager.BettingPolicyManager;
 import domain.card.*;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
@@ -15,6 +16,7 @@ import java.util.List;
 
 public class BettingTableTest {
 
+    private final BettingTable bettingTable = new BettingTable(new BettingPolicyManager());
     private final Card cloverAce = Card.of(CardDenomination.ACE, CardEmblem.CLOVER);
     private final Card spadeJack = Card.of(CardDenomination.JACK, CardEmblem.SPADE);
     private final Card spadeNine = Card.of(CardDenomination.NINE, CardEmblem.SPADE);
@@ -38,8 +40,6 @@ public class BettingTableTest {
 
     @Test
     void 베팅테이블에_베팅금액을_올린다() {
-        BettingTable bettingTable = new BettingTable();
-
         bettingTable.bet(testPlayer, thousandWon);
         BettingMoney actualPlayerMoney = bettingTable.getBettingMoney(testPlayer);
         BettingMoney expectedPlayerMoney = thousandWon.getBettingProfit();
@@ -50,7 +50,6 @@ public class BettingTableTest {
 
     @Test
     void 베팅테이블에서_베팅률을_반영한다() {
-        BettingTable bettingTable = new BettingTable();
         testPlayer.addCardBundle(blackJackBundle);
         Players players = Players.from(List.of(testPlayer));
         Dealer dealer = createDealer(lossDealerBundle.openMyCards());
@@ -68,7 +67,6 @@ public class BettingTableTest {
 
     @Test
     void 베팅테이블에서_딜러의_수익을_계산한다() {
-        BettingTable bettingTable = new BettingTable();
         testPlayer.addCardBundle(blackJackBundle);
         Players players = Players.from(List.of(testPlayer));
         Dealer dealer = createDealer(lossDealerBundle.openMyCards());

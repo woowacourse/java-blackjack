@@ -10,9 +10,9 @@ public class BettingTable {
     private final Bettings bettings;
     private final BettingPolicyManager bettingManager;
 
-    public BettingTable() {
+    public BettingTable(BettingPolicyManager policyManager) {
         this.bettings = new Bettings();
-        this.bettingManager = new BettingPolicyManager();
+        this.bettingManager = policyManager;
     }
 
     public void bet(Player player, BettingMoney bettingMoney) {
