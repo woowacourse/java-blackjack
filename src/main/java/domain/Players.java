@@ -22,7 +22,7 @@ public class Players implements Iterable<Player> {
 
     private static void validatePlayersCount(List<String> playerNames) {
         if (playerNames.size() > MAX_PLAYER_NUMBER) {
-            throw new IllegalArgumentException("[ERROR] 플레이 가능한 최대 인원을 초과했습니다.");
+            throw new IllegalArgumentException("플레이 가능한 최대 인원을 초과했습니다.");
         }
     }
 

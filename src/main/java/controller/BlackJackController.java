@@ -119,7 +119,7 @@ public class BlackJackController {
         }
     }
 
-    public void showGameResult(Game game) {
+    private void showGameResult(Game game) {
         List<Participant> participants = game.getParticipants();
         List<ParticipantDto> participantDtos = ParticipantDto.listOf(participants);
         outputView.printCardInfosWithSum(participantDtos);

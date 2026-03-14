@@ -11,7 +11,7 @@ public record Name(String name) {
 
     private static void validateKoreanAndEnglish(String name) {
         if (!NAME_PATTERN.matcher(name).matches()) {
-            throw new IllegalArgumentException("[ERROR] 이름은 영어 또는 한국어만 가능합니다.");
+            throw new IllegalArgumentException("이름은 영어 또는 한국어만 가능합니다.");
         }
     }
 }

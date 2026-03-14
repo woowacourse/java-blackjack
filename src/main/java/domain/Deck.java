@@ -37,7 +37,7 @@ public class Deck {
 
     public Card drawCard() {
         if (totalDeck.isEmpty()) {
-            throw new NoSuchElementException("[ERROR] 더 이상 뽑을 수 있는 카드가 없습니다.");
+            throw new NoSuchElementException("더 이상 뽑을 수 있는 카드가 없습니다.");
         }
         return totalDeck.removeFirst();
     }

@@ -12,7 +12,7 @@ public class OutputView {
     private static final String DELIMITER = ", ";
 
     public void printErrorMessage(Exception e) {
-        System.out.println(e.getMessage());
+        System.out.println("[ERROR] " + e.getMessage());
     }
 
     public void printNamePrompt() {

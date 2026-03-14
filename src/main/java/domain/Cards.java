@@ -18,8 +18,7 @@ public class Cards implements Iterable<Card> {
     public void addCard(Card card) {
         cards.add(card);
     }
-
-
+    
     public int calculateCardScoreSum() {
         int scoreSum = getScoreSumWithBasicAceScore();
         if (hasAce() && canApplyMaxAceScore(scoreSum)) {

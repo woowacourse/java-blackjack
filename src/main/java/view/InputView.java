@@ -24,12 +24,12 @@ public class InputView {
         if (input.equals("n")) {
             return false;
         }
-        throw new IllegalArgumentException("[ERROR] y 혹은 n만 입력 가능합니다.");
+        throw new IllegalArgumentException("y 혹은 n만 입력 가능합니다.");
     }
 
     private void validateIsBlank(String input) {
         if (input.isBlank()) {
-            throw new IllegalArgumentException("[ERROR] 공백은 허용되지 않습니다");
+            throw new IllegalArgumentException("공백은 허용되지 않습니다");
         }
     }
 }
