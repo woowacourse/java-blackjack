@@ -2,7 +2,6 @@ package blackjack.model.participant;
 
 import blackjack.model.card.Card;
 import blackjack.model.state.BlackjackState;
-import blackjack.model.card.Hand;
 import java.util.Collection;
 
 public abstract class Participant {
@@ -23,10 +22,6 @@ public abstract class Participant {
 
     public BlackjackState getState() {
         return state;
-    }
-
-    public Hand getHand() {
-        return state.getHand();
     }
 
     public Collection<Card> getCards() {

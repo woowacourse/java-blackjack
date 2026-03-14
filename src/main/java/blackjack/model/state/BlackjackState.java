@@ -16,10 +16,6 @@ public abstract class BlackjackState {
         return new Hit(new Hand());
     }
 
-    public Hand getHand() {
-        return hand;
-    }
-
     public List<Card> getCards() {
         return hand.getCards();
     }
