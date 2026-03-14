@@ -14,6 +14,12 @@ class GameTest {
     };
     private Game game;
 
+    private void addCardsToPlayerDeck(Participant participant, Card... cards) {
+        for (Card card : cards) {
+            participant.addCard(card);
+        }
+    }
+
     @BeforeEach
     void setUp() {
         game = Game.registerParticipantsAndPrepareTotalDeck(PLAYER_NAMES, FIXED_SHUFFLE_STRATEGY);
@@ -63,11 +69,5 @@ class GameTest {
         // then
         assertTrue(dealerResult);
         assertTrue(playerResult);
-    }
-
-    private void addCardsToPlayerDeck(Participant participant, Card... cards) {
-        for (Card card : cards) {
-            participant.addCard(card);
-        }
     }
 }

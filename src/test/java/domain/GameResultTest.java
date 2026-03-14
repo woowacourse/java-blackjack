@@ -1,21 +1,30 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class GameResultTest {
+
+    private void addCardsToParticipantDeck(Participant participant, Card... cards) {
+        for (Card card : cards) {
+            participant.addCard(card);
+        }
+    }
+
     @Test
     @DisplayName("최종 승패 결과 계산이 정확하게 수행된다.")
     void shouldReturnWinTieLossResult() {
         // given
         Dealer dealer = new Dealer();
-        addCardsToPlayerDeck(dealer,
+        addCardsToParticipantDeck(dealer,
                 new Card(CardShape.HEART, CardContents.J),
                 new Card(CardShape.HEART, CardContents.EIGHT)
         );
@@ -25,22 +34,22 @@ class GameResultTest {
         Iterator<Player> playerIterator = players.iterator();
 
         Player player1 = playerIterator.next();
-        addCardsToPlayerDeck(player1,
+        addCardsToParticipantDeck(player1,
                 new Card(CardShape.DIAMOND, CardContents.J),
                 new Card(CardShape.DIAMOND, CardContents.THREE)
         );
         Player player2 = playerIterator.next();
-        addCardsToPlayerDeck(player2,
+        addCardsToParticipantDeck(player2,
                 new Card(CardShape.SPADE, CardContents.J),
                 new Card(CardShape.SPADE, CardContents.THREE)
         );
         Player player3 = playerIterator.next();
-        addCardsToPlayerDeck(player3,
+        addCardsToParticipantDeck(player3,
                 new Card(CardShape.CLOVER, CardContents.J),
                 new Card(CardShape.CLOVER, CardContents.NINE)
         );
         Player player4 = playerIterator.next();
-        addCardsToPlayerDeck(player4,
+        addCardsToParticipantDeck(player4,
                 new Card(CardShape.HEART, CardContents.K),
                 new Card(CardShape.HEART, CardContents.NINE)
         );
@@ -61,13 +70,44 @@ class GameResultTest {
         Map<Result, Integer> dealerResults = gameResult.getDealerResult();
 
         // then
-        assertThat(playerResults).containsAllEntriesOf(expectPlayerWinLossResults);
-        assertThat(dealerResults).containsAllEntriesOf(expectDealerWinLossResults);
+        assertThat(playerResults).isEqualTo(expectPlayerWinLossResults);
+        assertThat(dealerResults).isEqualTo(expectDealerWinLossResults);
     }
 
-    private void addCardsToPlayerDeck(Participant participant, Card... cards) {
-        for (Card card : cards) {
-            participant.addCard(card);
+    @Nested
+    class GenerateGameResultTest {
+        @Test
+        @DisplayName("딜러의 카드 합계가 16 미만인 상태로 게임 결과 계산을 시도하는 경우 예외가 발생한다.")
+        void shouldThrowExceptionWhenDealerScoreUnderMinimum() {
+            // given
+            Dealer dealer = new Dealer();
+            addCardsToParticipantDeck(dealer,
+                    new Card(CardShape.SPADE, CardContents.TWO),
+                    new Card(CardShape.CLOVER, CardContents.THREE)
+            );
+            List<String> playerNames = List.of("pobi", "terry");
+            Players players = Players.of(playerNames);
+
+            // when & then
+            assertThatThrownBy(() -> GameResult.calculate(dealer, players))
+                    .isInstanceOf(IllegalStateException.class);
+        }
+
+        @Test
+        @DisplayName("딜러의 카드 합계가 16인 상태로 게임 결과 계산을 시도하는 경우 예외가 발생한다.")
+        void shouldThrowExceptionWhenDealerScoreEqualsMinimum() {
+            // given
+            Dealer dealer = new Dealer();
+            addCardsToParticipantDeck(dealer,
+                    new Card(CardShape.SPADE, CardContents.TEN),
+                    new Card(CardShape.CLOVER, CardContents.SIX)
+            );
+            List<String> playerNames = List.of("pobi", "terry");
+            Players players = Players.of(playerNames);
+
+            // when & then
+            assertThatThrownBy(() -> GameResult.calculate(dealer, players))
+                    .isInstanceOf(IllegalStateException.class);
         }
     }
 }

@@ -15,9 +15,16 @@ public class GameResult {
     }
 
     public static GameResult calculate(Dealer dealer, Players players) {
+        validateCalculatable(dealer);
         Map<Player, Result> playerResults = calculatePlayerResults(dealer, players);
         Map<Result, Integer> dealerResult = calculateDealerResult(playerResults);
         return new GameResult(playerResults, dealerResult);
+    }
+
+    private static void validateCalculatable(Dealer dealer) {
+        if (dealer.isDrawable()) {
+            throw new IllegalStateException("딜러의 카드 합계가 16 이하이므로 아직 게임 결과를 계산할 수 없습니다.");
+        }
     }
 
     private static Map<Player, Result> calculatePlayerResults(Dealer dealer, Players players) {
