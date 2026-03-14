@@ -1,10 +1,7 @@
-package domain;
+package domain.participant;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import domain.participant.Name;
-import domain.participant.Player;
-import domain.participant.Players;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;

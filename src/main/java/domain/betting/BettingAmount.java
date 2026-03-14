@@ -1,5 +1,7 @@
 package domain.betting;
 
+import java.util.Objects;
+
 public class BettingAmount {
     private final Integer money;
 
@@ -16,5 +18,19 @@ public class BettingAmount {
 
     public Integer getMoney() {
         return money;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        BettingAmount that = (BettingAmount) o;
+        return Objects.equals(money, that.money);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(money);
     }
 }

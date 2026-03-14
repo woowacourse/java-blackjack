@@ -1,8 +1,7 @@
-package domain;
+package domain.betting;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import domain.betting.BettingAmount;
 import org.junit.jupiter.api.Test;
 
 class BettingAmountTest {

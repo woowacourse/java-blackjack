@@ -1,4 +1,4 @@
-package domain;
+package domain.participant;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -6,7 +6,6 @@ import domain.card.Card;
 import domain.card.Cards;
 import domain.card.Number;
 import domain.card.Shape;
-import domain.participant.ParticipantCards;
 import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 

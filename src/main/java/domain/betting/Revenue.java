@@ -9,6 +9,10 @@ public class Revenue {
         this.money = money;
     }
 
+    public int getMoney() {
+        return money;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) {

@@ -4,11 +4,10 @@ import domain.game.GameResult;
 import domain.participant.Name;
 
 public class CalculateProfit {
-    private final Revenue revenue;
+    private static final Integer PROFIT_RATE = 3 / 2;
     private final BettingManager bettingManager;
 
-    public CalculateProfit(Revenue revenue, BettingManager bettingManager) {
-        this.revenue = revenue;
+    public CalculateProfit(BettingManager bettingManager) {
         this.bettingManager = bettingManager;
     }
 
@@ -19,7 +18,7 @@ public class CalculateProfit {
 
     private static Revenue calculateRevenue(GameResult gameResult, BettingAmount amount) {
         if (gameResult == GameResult.BLACKJACK) {
-            return new Revenue(amount.getMoney() / 2);
+            return new Revenue(amount.getMoney() * PROFIT_RATE);
         }
         if (gameResult == GameResult.WIN) {
             return new Revenue(amount.getMoney());

@@ -1,4 +1,4 @@
-package domain;
+package domain.participant;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -6,9 +6,6 @@ import domain.card.Card;
 import domain.card.Number;
 import domain.card.Shape;
 import domain.game.GameResult;
-import domain.participant.Dealer;
-import domain.participant.Name;
-import domain.participant.Player;
 import org.junit.jupiter.api.Test;
 
 class PlayerTest {

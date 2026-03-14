@@ -1,12 +1,10 @@
-package domain;
+package domain.game;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import domain.card.Card;
 import domain.card.Number;
 import domain.card.Shape;
-import domain.game.GameManager;
-import domain.game.GameResult;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Player;
