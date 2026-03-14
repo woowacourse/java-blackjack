@@ -2,16 +2,9 @@ package model.participant;
 
 import constant.ErrorMessage;
 
-public class PlayerName {
-    private final String name;
-
-    public PlayerName(String name) {
+public record PlayerName(String name) {
+    public PlayerName {
         validate(name);
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
     }
 
     private void validate(String name) {
@@ -19,7 +12,7 @@ public class PlayerName {
     }
 
     private void validateNameEmpty(String name) {
-        if(name == null || name.isBlank()) {
+        if (name == null || name.isBlank()) {
             throw new IllegalArgumentException(ErrorMessage.NO_EMPTY_NAME.getMessage());
         }
     }

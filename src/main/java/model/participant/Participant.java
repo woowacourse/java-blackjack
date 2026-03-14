@@ -12,7 +12,7 @@ public class Participant {
     }
 
     public String getName() {
-        return this.name.getName();
+        return this.name.name();
     }
 
     public void addCard(Card card) {
@@ -24,7 +24,7 @@ public class Participant {
     }
 
     public ParticipantCurrentHand getCurrentHand() {
-        return new ParticipantCurrentHand(name.getName(), participantHand.getDeck(), participantHand.getScore());
+        return new ParticipantCurrentHand(name.name(), participantHand.getDeck(), participantHand.getScore());
     }
 
     public boolean isBust() {

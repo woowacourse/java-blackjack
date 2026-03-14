@@ -11,7 +11,7 @@ public class PlayerNameTest {
     public void 정상_이름_작동() {
         String name = "player";
         PlayerName playerName = new PlayerName(name);
-        assertThat(playerName.getName()).isEqualTo(name);
+        assertThat(playerName.name()).isEqualTo(name);
     }
 
     @Test
