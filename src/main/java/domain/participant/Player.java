@@ -31,6 +31,10 @@ public class Player extends Participant {
         return name;
     }
 
+    public Money getMoney() {
+        return money;
+    }
+
     private void validateNameLength(String name) {
         if (name.isEmpty() || name.length() > MAX_NAME_LENGTH) {
             throw new IllegalArgumentException("플레이어 이름은 1글자 이상 8글자 이하여야 합니다.");

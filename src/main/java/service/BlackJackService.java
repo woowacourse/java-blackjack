@@ -5,6 +5,7 @@ import domain.card.MatchResult;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
+import domain.money.BettingResult;
 
 import java.util.EnumMap;
 import java.util.LinkedHashMap;
@@ -45,11 +46,30 @@ public class BlackJackService {
         return playerResults;
     }
 
+    public Map<String, BettingResult> calculateBettingResults() {
+        Map<String, MatchResult> matchResults = calculateResults();
+        Map<String, BettingResult> bettingResults = new LinkedHashMap<>();
+
+        for (Player player : players.getPlayers()) {
+            MatchResult matchResult = matchResults.get(player.getName());
+
+            BettingResult result = BettingResult.from(
+                    player.getMoney().getValue(),
+                    matchResult,
+                    player.getHand().isBlackJack()
+            );
+            bettingResults.put(player.getName(), result);
+        }
+
+        return bettingResults;
+    }
+
     public Map<MatchResult, Integer> calculateDealerResult(Map<String, MatchResult> playerResults) {
         Map<MatchResult, Integer> dealerResult = new EnumMap<>(MatchResult.class);
 
         for (MatchResult matchResult : playerResults.values()) {
-            dealerResult.put(matchResult.reverse(), dealerResult.getOrDefault(matchResult.reverse(), 0) + 1);
+            MatchResult reversedResult = matchResult.reverse();
+            dealerResult.put(reversedResult, dealerResult.getOrDefault(reversedResult, 0) + 1);
         }
 
         return dealerResult;

@@ -2,16 +2,15 @@ package domain.money;
 
 public class Money {
 
-    private Integer money;
+    private final Integer money;
 
     public Money(Integer money) {
         validate(money);
         this.money = money;
     }
 
-    public Integer applyBlackjack() {
-        this.money = (int) (this.money * 1.5);
-        return this.money;
+    public Integer getValue() {
+        return money;
     }
 
     private void validate(Integer money) {

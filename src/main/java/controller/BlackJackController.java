@@ -2,10 +2,10 @@ package controller;
 
 import domain.card.Deck;
 import domain.card.DefaultShuffleStrategy;
-import domain.card.MatchResult;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
+import domain.money.BettingResult;
 import service.BlackJackService;
 import view.InputView;
 import view.OutputView;
@@ -35,9 +35,7 @@ public class BlackJackController {
         playRound(deck, dealer, players);
         outputView.showHandsResult(dealer, players);
 
-        Map<String, MatchResult> playerResults = blackJackService.calculateResults();
-        outputView.showDealerResult(blackJackService.calculateDealerResult(playerResults));
-        outputView.showPlayerGameResult(playerResults);
+        Map<String, BettingResult> bettingResults = blackJackService.calculateBettingResults();
     }
 
     private void playRound(Deck deck, Dealer dealer, Players players) {

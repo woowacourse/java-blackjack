@@ -5,6 +5,7 @@ import domain.card.DefaultShuffleStrategy;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
+import domain.money.BettingResult;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -250,5 +251,114 @@ class BlackJackServiceTest {
         Assertions.assertEquals(3, matchResults.get(MatchResult.LOSE));
         Assertions.assertEquals(1, matchResults.get(MatchResult.DRAW));
         Assertions.assertEquals(1, matchResults.get(MatchResult.WIN));
+    }
+
+    @Test
+    @DisplayName("플레이어가 일반 승리한 경우 베팅 금액을 받는다.")
+    void 플레이어_승리_베팅결과() {
+        // given
+        Dealer dealer = new Dealer();
+        String name = "pobi";
+        Players players = new Players(List.of(name));
+
+        BlackJackService blackJackService = new BlackJackService(
+                new Deck(new DefaultShuffleStrategy()), dealer, players);
+
+        dealer.hit(new Card(Rank.JACK, Suit.CLOVER));
+        dealer.hit(new Card(Rank.SEVEN, Suit.HEART));
+
+        Player player = players.getPlayers().getFirst();
+        player.bet(10000);
+
+        player.hit(new Card(Rank.NINE, Suit.HEART));
+        player.hit(new Card(Rank.KING, Suit.CLOVER));
+
+        // when
+        Map<String, BettingResult> results = blackJackService.calculateBettingResults();
+
+        // then
+        Assertions.assertEquals(10000, results.get(name).getEarnings());
+    }
+
+    @Test
+    @DisplayName("플레이어가 블랙잭으로 승리한 경우 베팅 금액의 1.5배를 받는다.")
+    void 플레이어_블랙잭_승리_베팅결과() {
+        // given
+        Dealer dealer = new Dealer();
+        String name = "pobi";
+        Players players = new Players(List.of(name));
+
+        BlackJackService blackJackService = new BlackJackService(
+                new Deck(new DefaultShuffleStrategy()), dealer, players);
+
+        dealer.hit(new Card(Rank.JACK, Suit.CLOVER));
+        dealer.hit(new Card(Rank.SEVEN, Suit.HEART));
+
+        Player player = players.getPlayers().getFirst();
+        int money = 10000;
+        player.bet(money);
+
+        player.hit(new Card(Rank.ACE, Suit.CLOVER));
+        player.hit(new Card(Rank.KING, Suit.CLOVER));
+
+        // when
+        Map<String, BettingResult> results = blackJackService.calculateBettingResults();
+
+        // then
+        Assertions.assertEquals(money * (1.5), results.get(name).getEarnings());
+    }
+
+    @Test
+    @DisplayName("플레이어가 패배한 경우 베팅 금액을 잃는다.")
+    void 플레이어_패배_베팅결과() {
+        // given
+        Dealer dealer = new Dealer();
+        String name = "pobi";
+        Players players = new Players(List.of(name));
+
+        BlackJackService blackJackService = new BlackJackService(
+                new Deck(new DefaultShuffleStrategy()), dealer, players);
+
+        dealer.hit(new Card(Rank.ACE, Suit.CLOVER));
+        dealer.hit(new Card(Rank.KING, Suit.CLOVER));
+
+        Player player = players.getPlayers().getFirst();
+        int money = 10000;
+        player.bet(money);
+        player.hit(new Card(Rank.JACK, Suit.CLOVER));
+        player.hit(new Card(Rank.SEVEN, Suit.HEART));
+
+        // when
+        Map<String, BettingResult> results = blackJackService.calculateBettingResults();
+
+        // then
+        Assertions.assertEquals(money * (-1), results.get(name).getEarnings());
+    }
+
+    @Test
+    @DisplayName("플레이어가 무승부인 경우 베팅 금액을 돌려받는다.")
+    void 플레이어_무승부_베팅결과() {
+        // given
+        Dealer dealer = new Dealer();
+        String name = "pobi";
+        Players players = new Players(List.of(name));
+
+        BlackJackService blackJackService = new BlackJackService(
+                new Deck(new DefaultShuffleStrategy()), dealer, players);
+
+        dealer.hit(new Card(Rank.JACK, Suit.CLOVER));
+        dealer.hit(new Card(Rank.SEVEN, Suit.HEART));
+
+        Player player = players.getPlayers().getFirst();
+        int money = 10000;
+        player.bet(money);
+        player.hit(new Card(Rank.NINE, Suit.CLOVER));
+        player.hit(new Card(Rank.EIGHT, Suit.CLOVER));
+
+        // when
+        Map<String, BettingResult> results = blackJackService.calculateBettingResults();
+
+        // then
+        Assertions.assertEquals(0, results.get(name).getEarnings());
     }
 }
