@@ -14,7 +14,7 @@ public class DealerTest {
     @Test
     @DisplayName("Dealer를 생성할 때 오류 발생 안함")
     void dealer_create_success() {
-        GameState dealerGameState = GameState.createDealerInitialGameState(
+        GameState dealerGameState = GameState.createInitialGameState(
                 Hand.of(
                         new Card(CardShape.스페이드, CardContents.J),
                         new Card(CardShape.클로버, CardContents.FIVE)
@@ -34,7 +34,7 @@ public class DealerTest {
         };
         Deck totalDeck = Deck.createDeck(onlyJCardCreation);
 
-        GameState dealerGameState = GameState.createDealerInitialGameState(
+        GameState dealerGameState = GameState.createInitialGameState(
                 Hand.of(
                         new Card(CardShape.하트, CardContents.SIX),
                         new Card(CardShape.스페이드, CardContents.TEN)

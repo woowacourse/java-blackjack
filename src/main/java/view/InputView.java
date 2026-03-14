@@ -5,5 +5,7 @@ import java.util.List;
 public interface InputView {
     List<String> readNames();
 
-    String readHitOrStand();
+    String readBetAmountValue();
+
+    Boolean wantToHit();
 }

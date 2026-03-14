@@ -25,16 +25,23 @@ public class BlackJackController {
 
     public void doGameProcess() {
         BlackJackGame game = retry(this::readyGame);
-        outputView.printInitialStates(
-                game.getDealerGameSettingState(),
-                game.getPlayersGameSettingStates()
-        );
+        betPlayers(game);
+        outputView.printInitialStates(game.getGameSettingState());
 
         playPlayersTurn(game);
         playDealerTurn(game);
 
         GameResultDto gameResults = game.getGameResults();
         outputView.printGameResult(gameResults);
+    }
+
+    private void betPlayers(BlackJackGame game) {
+        while (game.whoseBettingTurn().isPresent()) {
+            Player currentPlayer = game.whoseBettingTurn().get();
+            outputView.printBetAmountPrompt(currentPlayer.getName());
+            String betAmountValue = retry(inputView::readBetAmountValue);
+            game.doBetProcess(betAmountValue);
+        }
     }
 
     private BlackJackGame readyGame() {
@@ -50,22 +57,16 @@ public class BlackJackController {
     }
 
     private void playPlayersTurn(BlackJackGame game) {
-        while (game.whoseTurn().isPresent()) {
-            Player currentPlayer = game.whoseTurn().get();
-
-            if (currentPlayer.isFinished()) {
-                handlePlayerStandProcess(game);
-                continue;
-            }
-
+        while (game.whosePlayTurn().isPresent()) {
+            Player currentPlayer = game.whosePlayTurn().get();
             outputView.printHitOrStandPrompt(currentPlayer.getName());
-            String hitOrStandInfo = retry(inputView::readHitOrStand);
-            doHitOrStand(hitOrStandInfo, game);
+            boolean wantToHit = retry(inputView::wantToHit);
+            doHitOrStand(wantToHit, game);
         }
     }
 
-    private void doHitOrStand(String hitOrStand, BlackJackGame game) {
-        if (hitOrStand.equals("y")) {
+    private void doHitOrStand(boolean wantToHit, BlackJackGame game) {
+        if (wantToHit) {
             handlePlayerHitProcess(game);
         } else {
             handlePlayerStandProcess(game);
@@ -94,4 +95,3 @@ public class BlackJackController {
         }
     }
 }
-

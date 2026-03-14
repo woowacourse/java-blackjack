@@ -1,15 +1,17 @@
 package view;
 
 import dto.GameResultDto;
+import dto.GameStateDto;
 import dto.ParticipantDto;
-import java.util.List;
 
 public interface OutputView {
     void printErrorMessage(Exception e);
 
     void printNamePrompt();
 
-    void printInitialStates(ParticipantDto dealerDto, List<ParticipantDto> players);
+    void printBetAmountPrompt(String name);
+
+    void printInitialStates(GameStateDto gameStateDto);
 
     void printHitOrStandPrompt(String name);
 

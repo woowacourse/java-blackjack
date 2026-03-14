@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import dto.GameResultDto;
+import dto.GameStateDto;
 import dto.ParticipantDto;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -23,9 +24,6 @@ class BlackJackGameTest {
     @Test
     @DisplayName("생성 잘 한다")
     void ready_good() {
-        //given
-        Deck sampleDeck = Deck.createDeck(this::createSampleCards);
-
         //when, then
         assertDoesNotThrow(
                 () -> BlackJackGame.ready(TEST_PLAYER_NAMES, this::createSampleCards)
@@ -33,13 +31,34 @@ class BlackJackGameTest {
     }
 
     @Test
-    @DisplayName("다음 턴의 사용자가 있으면 제공한다")
-    void whoseTure_success() {
+    @DisplayName("베팅을 안한 사용자가 있으면 제공한다")
+    void whoseBettingTurn_exist() {
         BlackJackGame testGame = BlackJackGame.ready(TEST_PLAYER_NAMES, this::createSampleCards);
 
-        Optional<Player> result = testGame.whoseTurn();
+        Optional<Player> result = testGame.whoseBettingTurn();
 
         assertTrue(result.isPresent());
+    }
+
+    @Test
+    @DisplayName("다음 턴의 사용자가 있으면 제공한다")
+    void whosePlayTurn_exist() {
+        BlackJackGame testGame = BlackJackGame.ready(TEST_PLAYER_NAMES, this::createSampleCards);
+
+        Optional<Player> result = testGame.whosePlayTurn();
+
+        assertTrue(result.isPresent());
+    }
+
+    @Test
+    @DisplayName("bet을 시켜도 오류가 안난다")
+    void doBetProcess_success() {
+        String betAmountValue = "1000";
+        BlackJackGame testGame = BlackJackGame.ready(TEST_PLAYER_NAMES, this::createSampleCards);
+
+        assertDoesNotThrow(
+                () -> testGame.doBetProcess(betAmountValue)
+        );
     }
 
     @Test
@@ -125,21 +144,16 @@ class BlackJackGameTest {
     }
 
     @Test
-    @DisplayName("플레이어들의 게임 초기 상태를 인원 수 대로 잘 가져온다")
-    void getPlayersGameSettingStates_good() {
-        BlackJackGame testGame = BlackJackGame.ready(TEST_PLAYER_NAMES, this::createSampleCards);
-
-        int expectSize = TEST_PLAYER_NAMES.size();
-        int resultSize = testGame.getPlayersGameSettingStates().size();
-        assertEquals(expectSize, resultSize);
-    }
-
-    @Test
-    @DisplayName("딜러의 게임 초기 상태를 ParticipantDto 형태로 잘 받는다")
+    @DisplayName("게임 초기 상태를 GameStateDto 형태로 잘 받고, 플레이어 정보도 인원 수 만큼 존재한다")
     void getDealerGameSettingState_good() {
         BlackJackGame testGame = BlackJackGame.ready(TEST_PLAYER_NAMES, this::createSampleCards);
+        int expectMultiPlayersCount = TEST_PLAYER_NAMES.size();
 
-        assertEquals(ParticipantDto.class, testGame.getDealerGameSettingState().getClass());
+        GameStateDto gameSettingState = testGame.getGameSettingState();
+
+        int resultMultiPlayerCount = gameSettingState.multiPlayersDtos().size();
+        assertEquals(GameStateDto.class, gameSettingState.getClass());
+        assertEquals(expectMultiPlayersCount, resultMultiPlayerCount);
     }
 
     @Test

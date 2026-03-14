@@ -4,6 +4,7 @@ import common.ErrorMessage;
 import domain.state.GameState;
 import dto.DealerResultDto;
 import dto.GameResultDto;
+import dto.GameStateDto;
 import dto.ParticipantDto;
 import dto.PlayerResultDto;
 import java.util.List;
@@ -36,12 +37,22 @@ public class BlackJackGame {
                 dealersInitialCards.get(1)
         );
         return Dealer.from(
-                GameState.createDealerInitialGameState(initialDealerHand)
+                GameState.createInitialGameState(initialDealerHand)
         );
     }
 
-    public Optional<Player> whoseTurn() {
+    public Optional<Player> whoseBettingTurn() {
+        return multiPlayers.findNotBetPlayer();
+    }
+
+    public Optional<Player> whosePlayTurn() {
         return multiPlayers.findNotStayPlayer();
+    }
+
+    public void doBetProcess(String betAmountValue) {
+        Player target = multiPlayers.findNotBetPlayer()
+                .orElseThrow(() -> new IllegalStateException(ErrorMessage.NO_MORE_BETTABLE_PLAYER.getMessage()));
+        multiPlayers.executeBet(target, betAmountValue);
     }
 
     public ParticipantDto doHitProcess() {
@@ -64,12 +75,11 @@ public class BlackJackGame {
         return !newDealer.gameState.isFinished();
     }
 
-    public List<ParticipantDto> getPlayersGameSettingStates() {
-        return multiPlayers.getInitialStates();
-    }
-
-    public ParticipantDto getDealerGameSettingState() {
-        return ParticipantDto.consistWithInitialInfo(dealer);
+    public GameStateDto getGameSettingState() {
+        return GameStateDto.from(
+                ParticipantDto.consistWithInitialInfo(dealer),
+                multiPlayers.getInitialStates()
+        );
     }
 
     public GameResultDto getGameResults() {
