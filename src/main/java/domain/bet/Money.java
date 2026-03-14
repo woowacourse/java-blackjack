@@ -5,8 +5,7 @@ import exception.ErrorMessage;
 public record Money(
     int value
 ) {
-
-
+    
     public static Money from(String input) {
         validate(input);
         return new Money(Integer.parseInt(input));
