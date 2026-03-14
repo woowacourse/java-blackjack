@@ -97,8 +97,8 @@ classDiagram
         +generateGameResult() GameResult
     }
     class GameResult {
-        -Map~Player, Result~ playerResults
-        -Map~Result, Integer~ dealerResult
+        -Map~Player, Profit~ playerProfits
+        -Profit dealerProfit
         +calculate(Dealer, Players)$ GameResult
     }
     class Participant {
@@ -113,6 +113,12 @@ classDiagram
         -String name
     }
     class Player {
+        -BetMoney betMoney
+        +calculateBettingProfit(double) Long
+    }
+    class BetMoney {
+        <<record>>
+        -int betAmount
     }
     class Dealer {
     }
@@ -138,11 +144,15 @@ classDiagram
         -String number
         -int score
     }
-    class Result {
+    class PlayerResult {
         <<enumeration>>
-        WIN, TIE, LOSS
-        +determinePlayerResult(...)$ Result
-        +reverse() Result
+        BLACKJACK, WIN, TIE, LOSS
+        -double returnRate
+        +determinePlayerResult(Dealer, Player)$ PlayerResult
+    }
+    class Profit {
+        <<record>>
+        -long profit
     }
     class CardShuffleStrategy {
         <<interface>>
@@ -157,8 +167,7 @@ classDiagram
     class BlackJackController {
         -InputView inputView
         -OutputView outputView
-        -CardShuffleStrategy strategy
-        +doGame()
+        +doGame(CardShuffleStrategy strategy)
     }
     class InputView {
         -Scanner scanner
@@ -169,8 +178,8 @@ classDiagram
 %% 3. DTO 클래스 선언
     class GameResultDto {
         <<record>>
-        -Map~String, Integer~ dealerWinTieLossResult
-        -Map~String, String~ playerWinTieLossResults
+        -Map~String, Long~ playerWinTieLossResults
+        -long dealerWinTieLossResult
     }
     class ParticipantDto {
         <<record>>
@@ -189,25 +198,25 @@ classDiagram
     Game --> Deck
     Game --> Dealer
     Game --> Players
-    Game ..> GameResult : generates
+    Game ..> GameResult: generates
     Participant <|-- Player
     Participant <|-- Dealer
     Participant --> Name
     Participant --> Cards
+    Player --> BetMoney
     Players --> Player
     Cards --> Card
     Deck --> Card
     Card --> CardShape
     Card --> CardContents
-    GameResult --> Result
+    GameResult --> Profit
+    GameResult ..> PlayerResult: uses
     CardShuffleStrategy <|.. RandomCardShuffleStrategy
-
 %% 컨트롤러 및 뷰 관계
     Main --> BlackJackController
     BlackJackController --> InputView
     BlackJackController --> OutputView
-    BlackJackController --> CardShuffleStrategy
-
+    BlackJackController ..> CardShuffleStrategy: uses
 %% DTO 관계
-    GameResultDto --> ParticipantDto
     ParticipantDto --> CardDto
+```
