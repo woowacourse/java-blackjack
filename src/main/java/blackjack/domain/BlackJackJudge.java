@@ -43,15 +43,19 @@ public class BlackJackJudge {
             return GameResult.WIN;
         }
 
-        int playerTotalPoint = player.getTotalPoint();
-        int dealerTotalPoint = dealer.getTotalPoint();
-
-        if (playerTotalPoint == dealerTotalPoint) {
+        if (player.isBlackJack() && dealer.isBlackJack()) {
             return GameResult.TIE;
         }
 
         if (player.isBlackJack()) {
             return GameResult.BACKJACK_WIN;
+        }
+
+        int playerTotalPoint = player.getTotalPoint();
+        int dealerTotalPoint = dealer.getTotalPoint();
+
+        if (playerTotalPoint == dealerTotalPoint) {
+            return GameResult.TIE;
         }
 
         if (playerTotalPoint > dealerTotalPoint) {
