@@ -1,8 +1,6 @@
 package domain.member;
 
-import domain.MatchResult;
 import domain.card.Card;
-import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.DisplayName;
@@ -38,18 +36,53 @@ public class MembersTest {
         assertThat(members.findCardByName(playerName)).contains(card);
     }
 
-    @DisplayName("수익 정산 로직이 정상적으로 작동하는지 테스트")
+    @DisplayName("모든 멤버의 수익 정산이 정상적으로 작동하는지 테스트")
     @Test
-    void calculatePlayerProfits_GameOver_ReturnsCorrectProfits() {
-//        String player = "pobi";
-//        Members members = new Members(Map.of(player, new Money(10000)));
-//
-//        members.provideCardToDealer(Card.from("6", "하트"));
-//        members.provideCardToDealer(Card.from("4", "하트"));
-//
-//        members.provideCardToPlayer(player, Card.from("Q", "하트"));
-//        members.provideCardToPlayer(player, Card.from("K", "하트"));
-//
-//        assertThat(members.calculatePlayerProfits()).containsExactly(10000);
+    void calculateFinalProfits_GameOver_ReturnsCorrectResults() {
+        String playerName = "pobi";
+        Members members = new Members(Map.of(playerName, new Money(10000)));
+        members.provideCardToPlayer(playerName, Card.from("Q", "하트"));
+        members.provideCardToPlayer(playerName, Card.from("K", "하트"));
+        members.changePlayerStateToStay(playerName);
+        members.provideCardToDealer(Card.from("6", "하트"));
+        members.provideCardToDealer(Card.from("4", "하트"));
+        members.provideCardToDealer(Card.from("7", "하트"));
+        Map<String, Integer> results = members.calculateFinalProfits();
+
+        assertThat(results.get(playerName)).isEqualTo(10000);
+        assertThat(results.get(members.getDealerName())).isEqualTo(-10000);
+    }
+
+    @DisplayName("딜러와 플레이어가 모두 블랙잭이면 수익은 0원이다")
+    @Test
+    void calculateFinalProfits_BothBlackjack_ReturnsZero() {
+        String playerName = "pobi";
+        Members members = new Members(Map.of(playerName, new Money(10000)));
+        members.provideCardToPlayer(playerName, Card.from("A", "하트"));
+        members.provideCardToPlayer(playerName, Card.from("K", "하트"));
+        members.provideCardToDealer(Card.from("A", "스페이드"));
+        members.provideCardToDealer(Card.from("Q", "스페이드"));
+
+        Map<String, Integer> results = members.calculateFinalProfits();
+
+        assertThat(results.get(playerName)).isEqualTo(0);
+        assertThat(results.get(members.getDealerName())).isEqualTo(0);
+    }
+
+    @DisplayName("딜러가 버스트되면 Bust되지 않은 플레이어는 무조건 승리한다")
+    @Test
+    void calculateFinalProfits_DealerBust_PlayerWins() {
+        String playerName = "pobi";
+        Members members = new Members(Map.of(playerName, new Money(10000)));
+        members.provideCardToPlayer(playerName, Card.from("2", "하트"));
+        members.provideCardToPlayer(playerName, Card.from("Q", "하트"));
+        members.changePlayerStateToStay(playerName);
+        members.provideCardToDealer(Card.from("10", "하트"));
+        members.provideCardToDealer(Card.from("6", "하트"));
+        members.provideCardToDealer(Card.from("7", "하트"));
+        Map<String, Integer> results = members.calculateFinalProfits();
+
+        assertThat(results.get(playerName)).isEqualTo(10000);
+        assertThat(results.get(members.getDealerName())).isEqualTo(-10000);
     }
 }
