@@ -3,14 +3,11 @@ package domain.participant;
 public class Player extends Participant {
 
     private final PlayerName playerName;
-    private BetAmount betAmount;
+    private final BetAmount betAmount;
 
-    public Player(String name) {
+    public Player(String name, BetAmount betAmount) {
         super();
         this.playerName = new PlayerName(name);
-    }
-
-    public void setBetAmount(BetAmount betAmount) {
         this.betAmount = betAmount;
     }
 
