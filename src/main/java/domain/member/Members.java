@@ -1,59 +1,51 @@
 package domain.member;
 
+import domain.card.Deck;
 import domain.vo.RoundResult;
 import domain.card.Card;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public class Members {
 
-    private final List<Member> members;
+    private static final String DEALER_DEFAULT_NAME = "딜러";
+    private static final int DEALER_DRAW_CONDITION = 16;
 
-    public Members(Map<String, Integer> players) {
-        members = new ArrayList<>();
-        members.add(new Dealer());
-        for (Entry<String, Integer> player : players.entrySet()) {
-            members.add(new Player(player.getKey(), player.getValue()));
-        }
+    private final List<Member> players;
+    private final Member dealer;
+
+    public Members(List<Member> players) {
+        this.players = players;
+        dealer = new Member(new Name(DEALER_DEFAULT_NAME), new DealerRole());
     }
-
-    public Member findByName(String memberName) {
-        return members.stream()
-                .filter(member -> member.hasName(memberName))
-                .findAny()
-                .orElseThrow(NoSuchElementException::new);
-    }
-
-    public Member findDealer() {
-        return members.stream()
-                .filter(Member::isDealer)
-                .findFirst()
-                .orElseThrow(NoSuchElementException::new);
-    }
-
-    public List<Card> findCard(Member member) {
-        return member.handCards();
+    public void initDraw(Deck deck) {
+        dealer.initDraw(deck);
+        players.forEach(member -> member.initDraw(deck));
     }
 
     public void draw(Member member, Card card) {
         member.receiveCard(card);
     }
 
-    public boolean isDealer(Member member) {
-        return member.isDealer();
+    public boolean hasBust(Member member) {
+        return member.hasBust();
     }
 
-    public Map<String, RoundResult> judgeGameResults() {
-        Member dealer = findDealer();
-        return members.stream()
-                .filter(member -> !member.isDealer())
+    public boolean hasBlackjack(Member member) {
+        return member.hasBlackjack();
+    }
+
+    public boolean canDealerDraw() {
+        return dealer.handValue() <= DEALER_DRAW_CONDITION;
+    }
+
+    public Map<Member, RoundResult> judgeGameResults() {
+        return players.stream()
                 .collect(Collectors.toMap(
-                                Member::getName,
+                                player -> player,
                                 player -> RoundResult.judgeAgainst(
                                         dealer.handValue(),
                                         player.handValue()
@@ -65,36 +57,14 @@ public class Members {
     }
 
     public void applyBlackjackBonus(Member member) {
-        if (!member.isDealer()) {
-            Player player = (Player) member;
-            player.applyBlackjackBonus();
-        }
+        member.applyBlackjackBonus();
     }
 
-    public int getValue(Member member) {
-        return member.handValue();
+    public List<Member> getPlayers() {
+        return Collections.unmodifiableList(players);
     }
 
-    public List<String> getMemberNames() {
-        return members.stream()
-                .map(Member::getName)
-                .toList();
-    }
-
-    public String getDealerName() {
-        return findDealer().getName();
-    }
-
-    public int getBettingAmount(String playerName) {
-        Member member = findByName(playerName);
-        if (member.isDealer()) {
-            throw new UnsupportedOperationException("딜러는 배팅 금액을 가질 수 없습니다.");
-        }
-        Player player = (Player) member;
-        return player.getBettingAmount();
-    }
-
-    public List<Card> getFirstCards(Member member) {
-        return member.showFirstCards();
+    public Member getDealer() {
+        return dealer;
     }
 }

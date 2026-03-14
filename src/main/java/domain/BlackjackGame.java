@@ -1,85 +1,82 @@
 package domain;
 
-import domain.table.GameTable;
+import domain.member.Member;
+import domain.member.Members;
 import domain.card.Deck;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 public class BlackjackGame {
 
-    private final GameTable gameTable;
     private final Deck deck;
+    private final Members members;
 
-    public BlackjackGame(Map<String, Integer> players) {
-        this.gameTable = new GameTable(players);
+    public BlackjackGame(Members members) {
+        this.members = members;
         this.deck = new Deck();
         this.deck.init();
     }
 
-    public String getDealerName() {
-        return gameTable.getDealerName();
+    public void initGame() {
+        members.initDraw(deck);
     }
 
-    public boolean isNotDealer(String memberName) {
-        return !gameTable.checkDealer(memberName);
-    }
-
-    public void initialDeal() {
-        gameTable.getMemberNames().forEach(name -> {
-                gameTable.draw(name, deck.draw());
-                gameTable.draw(name, deck.draw());
-            }
-        );
-    }
-
-    public void drawPlayer(String playerName) {
-        gameTable.draw(playerName, deck.draw());
-    }
-
-    public List<String> getCardNames(String memberName) {
-        return gameTable.getCards(memberName).stream()
-                .map(card -> card.getCourt() + card.getPattern())
-                .toList();
-    }
-
-    public List<String> getFirstCardNames(String memberName) {
-        return gameTable.getFirstCards(memberName).stream()
-                .map(card -> card.getCourt() + card.getPattern())
-                .toList();
-    }
-
-    public boolean canDealerDraw() {
-        return gameTable.canDealerDraw();
+    public void drawPlayer(Member player) {
+        members.draw(player, deck.draw());
     }
 
     public void drawDealer() {
-        gameTable.draw(getDealerName(), deck.draw());
+        members.draw(members.getDealer(), deck.draw());
     }
 
-    public List<String> getMemberNames() {
-        return gameTable.getMemberNames();
+    public boolean canDealerDraw() {
+        return members.canDealerDraw();
     }
 
-    public int getMemberPoint(String memberName) {
-        return gameTable.memberPoint(memberName);
-    }
-
-    public Map<String, Integer> getGameResults() {
-        return gameTable.checkGameResult();
-    }
-
-    public boolean isContinuable(String playerName) {
-        return !gameTable.checkBust(playerName);
-    }
-
-    public boolean hasBlackjack(String playerName) {
-        return gameTable.checkBlackjack(playerName);
+    public boolean isContinuable(Member member) {
+        return !members.hasBust(member);
     }
 
     public void applyBlackjackBonus() {
-        getMemberNames().stream()
-                .filter(this::isNotDealer)
-                .filter(this::hasBlackjack)
-                .forEach(gameTable::applyBlackjackBonus);
+        getPlayers().stream()
+                .filter(members::hasBlackjack)
+                .forEach(members::applyBlackjackBonus);
+    }
+
+    public boolean checkBust(Member player) {
+        return members.hasBust(player);
+    }
+
+    public boolean checkBlackjack(Member member) {
+        return members.hasBlackjack(member);
+    }
+
+    public List<Member> getPlayers() {
+        return Collections.unmodifiableList(members.getPlayers());
+    }
+
+    public Member getDealer() {
+        return members.getDealer();
+    }
+
+    public Map<Member, Integer> getPlayerProfits() {
+        return members.judgeGameResults().entrySet().stream()
+                .collect(Collectors.toMap(
+                        Entry::getKey,
+                        entry -> entry.getKey()
+                                .calculateProfit(entry.getValue()),
+                        (oldValue, newValue) -> oldValue,
+                        LinkedHashMap::new
+                ));
+    }
+
+    public int getDealerProfit() {
+        return getPlayerProfits().values().stream()
+                .mapToInt(result -> -result)
+                .sum();
     }
 }
