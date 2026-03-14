@@ -87,14 +87,6 @@ public class GameController {
         outputView.printCardResult(resultDto, playersDto);
     }
 
-    private void printFinalResults(Players players, Dealer dealer) {
-        TotalFinalResult totalFinalResult = GameResultCalculator.checkGameResult(players, dealer);
-        DealerFinalResultDto dealerFinalResultDto = DealerFinalResultDto.from(totalFinalResult);
-        TotalFinalResultsDto totalFinalResultsDto = TotalFinalResultsDto.from(totalFinalResult);
-
-        outputView.printTotalResult(dealerFinalResultDto, totalFinalResultsDto);
-    }
-
     private void printProfit(Players players, Dealer dealer) {
         TotalFinalResult totalFinalResult = GameResultCalculator.checkGameResult(players, dealer);
         Map<Name, Integer> playerProfits = BettingResultCalculator.calculatePlayersProfit(totalFinalResult);

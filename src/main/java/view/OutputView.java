@@ -16,6 +16,7 @@ public class OutputView {
         this.outputViewFormatter = outputViewFormatter;
     }
 
+    // TODO OutputViewFormatter로 이동
     public void printHandOutMessage(PlayersDto playersDto) {
         String playersName = playersDto.playersDto().stream()
                 .map(PlayerDto::name)
@@ -57,15 +58,6 @@ public class OutputView {
     private void printPlayersCardResult(PlayersDto playersDto) {
         for (PlayerDto playerDto : playersDto.playersDto()) {
             System.out.print(outputViewFormatter.formatCardResult(playerDto.name(), playerDto.resultDto()));
-        }
-    }
-
-    public void printTotalResult(DealerFinalResultDto dealerFinalResultDto,
-                                        TotalFinalResultsDto totalFinalResultsDto) {
-        System.out.println("\n\n## 최종 승패");
-        System.out.print(outputViewFormatter.formatDealerResult(dealerFinalResultDto));
-        for (FinalResultDto finalResult : totalFinalResultsDto.totalResults()) {
-            System.out.print(outputViewFormatter.formatTotalResult(finalResult));
         }
     }
 
