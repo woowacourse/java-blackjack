@@ -11,7 +11,7 @@ public class HitTest {
 
     @DisplayName("Hit 상태에서 카드를 뽑아 21 이하이면 다시 Hit 상태를 반환한다")
     @Test
-    void draw_Under21_ReturnHit() {
+    void draw_TotalScoreLessThanOrEqualTo21_ReturnHit() {
         State state = new Hit(new Hand());
 
         State nextState = state.draw(Card.from("2", "스페이드"));
@@ -21,10 +21,9 @@ public class HitTest {
 
     @DisplayName("Hit 상태에서 카드를 뽑아 21을 초과하면 Bust 상태를 반환한다")
     @Test
-    void draw_Over21_ReturnBust() {
-        Hand hand = new Hand();
-        hand.appendCard(Card.from("10", "스페이드"));
-        hand.appendCard(Card.from("10", "하트"));
+    void draw_TotalScoreGreaterThan21_ReturnBust() {
+        Hand hand = new Hand().appendCard(Card.from("10", "스페이드"))
+                .appendCard(Card.from("10", "하트"));
         State state = new Hit(hand);
 
         State nextState = state.draw(Card.from("2", "클로버"));
@@ -34,7 +33,7 @@ public class HitTest {
 
     @DisplayName("Hit 상태에서 stay를 호출하면 Stay 상태를 반환한다")
     @Test
-    void stay_ReturnStay() {
+    void stay_Always_ReturnStay() {
         State state = new Hit(new Hand());
         State nextState = state.stay();
 
