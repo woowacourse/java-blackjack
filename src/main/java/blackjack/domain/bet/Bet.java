@@ -2,7 +2,7 @@ package blackjack.domain.bet;
 
 import blackjack.utils.Formatter;
 
-public class Bet {
+public final class Bet {
 
     private static final int BET_AMOUNT_UNIT = 1000;
     private static final int BET_MINIMUM_AMOUNT = 5000;
