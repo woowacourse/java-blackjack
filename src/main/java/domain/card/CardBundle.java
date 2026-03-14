@@ -51,6 +51,14 @@ public class CardBundle {
         cards.add(card);
     }
 
+    public boolean isBlackjack() {
+        return cards.size() == 2 && calculateScore() == BUST_THRESHOLD;
+    }
+
+    public boolean isBust() {
+        return calculateScore() > BUST_THRESHOLD;
+    }
+
     public List<Card> getCards() {
         return List.copyOf(cards);
     }
