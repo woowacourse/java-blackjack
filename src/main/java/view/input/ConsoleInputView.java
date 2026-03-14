@@ -17,6 +17,7 @@ public class ConsoleInputView implements InputView {
 
     @Override
     public BetAmountRequestDto askGamblerBetAmount(String name) {
+        System.out.println();
         System.out.println(name + "의 배팅 금액은?");
         return new BetAmountRequestDto(sc.nextLine());
     }

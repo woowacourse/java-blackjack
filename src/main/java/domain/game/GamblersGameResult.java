@@ -28,7 +28,7 @@ public class GamblersGameResult {
     }
 
     public Long getDealerResult() {
-        return gamblersResult.values()
+        return -gamblersResult.values()
                 .stream()
                 .mapToLong(Long::longValue)
                 .sum();
