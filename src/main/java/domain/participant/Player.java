@@ -1,14 +1,22 @@
 package domain.participant;
 
-public class Player extends Participant {
-    private static final int BUST_THRESHOLD = 21;
+import domain.bet.BettingMoney;
+import domain.game.Result;
 
-    public Player(String name) {
+public class Player extends Participant {
+    private final BettingMoney bettingMoney;
+
+    public Player(String name, BettingMoney bettingMoney) {
         super(name);
+        this.bettingMoney = bettingMoney;
     }
 
     @Override
     public boolean canHit() {
-        return getScore() <= BUST_THRESHOLD;
+        return !isBust() && !isBlackjack();
+    }
+
+    public int calculateProfit(Result result) {
+        return bettingMoney.calculateProfit(result);
     }
 }

@@ -30,4 +30,16 @@ public abstract class Participant {
     public int getScore() {
         return cardBundle.calculateScore();
     }
+
+    public boolean isBlackjack() {
+        return cardBundle.isBlackjack();
+    }
+
+    public boolean isBust() {
+        return cardBundle.isBust();
+    }
+
+    public CardBundle getCardBundle() {
+        return cardBundle;
+    }
 }
