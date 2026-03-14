@@ -32,32 +32,4 @@ class PlayersTest {
 
         assertThat(players.getPlayers()).hasSize(2);
     }
-
-    @Test
-    @DisplayName("카드를 뽑을 수 있는 첫 번째 플레이어를 반환한다.")
-    void getDrawablePlayer_ReturnsFirstDrawablePlayer() {
-        Players players = Players.fromPlayerNicknames(List.of("pobi", "jason"));
-        Player pobi = players.getPlayers().get(0);
-
-        assertThat(players.getDrawablePlayer()).isEqualTo(pobi);
-    }
-
-    @Test
-    @DisplayName("첫 번째 플레이어가 Stand 상태이면 그 다음 플레이어를 반환한다.")
-    void getDrawablePlayer_ReturnsNextPlayer_WhenFirstPlayerStands() {
-        Players players = Players.fromPlayerNicknames(List.of("pobi", "jason"));
-        players.getPlayers().get(0).stand();
-        Player jason = players.getPlayers().get(1);
-
-        assertThat(players.getDrawablePlayer()).isEqualTo(jason);
-    }
-
-    @Test
-    @DisplayName("모든 플레이어가 카드를 뽑을 수 없으면 null을 반환한다.")
-    void getDrawablePlayer_ReturnsNull_WhenAllPlayersCannotDraw() {
-        Players players = Players.fromPlayerNicknames(List.of("pobi", "jason"));
-        players.getPlayers().forEach(Player::stand);
-
-        assertThat(players.getDrawablePlayer()).isNull();
-    }
 }

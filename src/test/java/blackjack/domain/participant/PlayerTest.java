@@ -30,16 +30,6 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어가 Stand를 선언하면 더 이상 카드를 뽑을 수 없다.")
-    void isDrawable_False_WhenStand() {
-        Player player = new Player("pobi");
-
-        player.stand();
-
-        assertThat(player.isDrawable()).isFalse();
-    }
-
-    @Test
     @DisplayName("플레이어의 점수가 정확히 21점 이상이면 카드를 뽑을 수 없다.")
     void isDrawable_False_WhenScoreIs21OrMore() {
         Player player = new Player("pobi");

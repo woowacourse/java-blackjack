@@ -38,11 +38,4 @@ public class Players {
     public List<Player> getPlayers() {
         return List.copyOf(players);
     }
-
-    public Player getDrawablePlayer() {
-        return players.stream()
-                .filter(Player::isDrawable)
-                .findFirst()
-                .orElse(null);
-    }
 }

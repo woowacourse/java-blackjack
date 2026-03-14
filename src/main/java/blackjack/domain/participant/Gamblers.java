@@ -30,10 +30,6 @@ public class Gamblers {
         return bets.getBets();
     }
 
-    public Player getCurrentPlayer() {
-        return players.getDrawablePlayer();
-    }
-
     public long getDealerProfit(Map<Player, Integer> playerProfits) {
         return -playerProfits.values().stream()
                 .mapToLong(Integer::longValue)
