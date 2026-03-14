@@ -1,10 +1,12 @@
 package domain.card;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Queue;
+import java.util.stream.Collectors;
 
 public class StandardDeck implements Deck {
 
@@ -16,16 +18,12 @@ public class StandardDeck implements Deck {
     }
 
     private void init() {
-        for (CardPattern cardPattern : CardPattern.values()) {
-            makeCard(cardPattern.getName());
-        }
-        Collections.shuffle((List<?>) queue);
-    }
-
-    private void makeCard(String cardPattern) {
-        for (CardNumber cardNumber : CardNumber.values()) {
-            queue.add(new Card(cardNumber.getCourt(), cardPattern));
-        }
+        List<Card> cards = Arrays.stream(CardPattern.values())
+                .flatMap(pattern -> Arrays.stream(CardNumber.values())
+                        .map(number -> new Card(number.getCourt(), pattern.getName())))
+                .collect(Collectors.toList());
+        Collections.shuffle(cards);
+        queue.addAll(cards);
     }
 
     @Override
