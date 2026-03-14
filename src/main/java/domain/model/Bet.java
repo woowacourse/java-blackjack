@@ -11,7 +11,7 @@ public class Bet {
         return new Bet(betAmount);
     }
 
-    public double getFinalMoney(PlayerStatus playerStatus) {
+    public int getFinalMoney(PlayerStatus playerStatus) {
         if (playerStatus == PlayerStatus.LOSS) {
             return betAmount * -1;
         }
@@ -19,7 +19,7 @@ public class Bet {
             return betAmount;
         }
         if (playerStatus == PlayerStatus.BLACK_JACK) {
-            return betAmount * 1.5;
+            return betAmount * 3 / 2;
         }
         // 무승부 경우
         return 0;

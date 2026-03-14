@@ -1,5 +1,6 @@
 package util;
 
+import static constant.ErrorMessage.INVALID_BET_AMOUNT_UNIT;
 import static constant.ErrorMessage.INVALID_INPUT_PATTERN;
 import static constant.Pattern.INPUT_ADDITIONAL_YN_PATTERN;
 import static constant.Pattern.INPUT_NUMBER_PATTERN;
@@ -25,6 +26,9 @@ public class InputValidator {
         }
         if (!betAmount.matches(INPUT_NUMBER_PATTERN)) {
             throw new IllegalArgumentException(INVALID_INPUT_PATTERN.getMessage());
+        }
+        if (Integer.parseInt(betAmount) % 10 != 0) {
+            throw new IllegalArgumentException(INVALID_BET_AMOUNT_UNIT.getMessage());
         }
     }
 }

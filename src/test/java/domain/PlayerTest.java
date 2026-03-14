@@ -1,6 +1,7 @@
 package domain;
 
 import domain.model.Player;
+import domain.model.PlayerStatus;
 import domain.service.CardDistributor;
 import domain.service.CardFactory;
 import org.junit.jupiter.api.Test;
@@ -57,5 +58,19 @@ public class PlayerTest {
 
         // when
         cardDistributor.distributeAdditionalCard(phobi);
+    }
+
+    @Test
+    void 플레이어_최종_수익_테스트() {
+        // given
+        Player jason = Player.of("jason");
+        jason.bet(20000);
+        jason.changeStatus(PlayerStatus.BLACK_JACK);
+
+        // then
+        int finalMoney = jason.getFinalMoney();
+
+        // when
+        assertThat(finalMoney).isEqualTo(30000);
     }
 }
