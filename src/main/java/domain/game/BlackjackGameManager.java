@@ -22,8 +22,8 @@ public class BlackjackGameManager {
         this.cardMachine = new CardMachine();
     }
 
-    public void createParticipants(List<String> names) {
-        participants = Participants.from(names);
+    public void createParticipants(List<String> playerNames, List<BetAmount> betAmounts) {
+        participants = Participants.of(playerNames, betAmounts);
     }
 
     public void drawInitialCards() {
@@ -123,10 +123,5 @@ public class BlackjackGameManager {
 
     public boolean isStand(HitOrStand hitOrStand) {
         return hitOrStand.isStand();
-    }
-
-    public void setBetAmount(String name, BetAmount betAmount) {
-        Player player = participants.getPlayer(name);
-        player.setBetAmount(betAmount);
     }
 }
