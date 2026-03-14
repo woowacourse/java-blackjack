@@ -42,7 +42,7 @@ class GamblersTest {
 
         long dealerProfit = gamblers.getDealerProfit(playerProfits);
 
-        assertThat(dealerProfit).isEqualTo(0L);
+        assertThat(dealerProfit).isZero();
     }
 
     @Test
@@ -55,6 +55,6 @@ class GamblersTest {
 
         long dealerProfit = gamblers.getDealerProfit(playerProfits);
 
-        assertThat(dealerProfit).isEqualTo(0L);
+        assertThat(dealerProfit).isZero();
     }
 }
