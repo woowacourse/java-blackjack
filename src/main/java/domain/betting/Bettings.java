@@ -19,7 +19,6 @@ public class Bettings {
     }
 
     public void bet(PlayerName playerName, BettingMoney bettingMoney) {
-        // TODO 베팅 두번 제한 로직
         bettingMoneyByPlayer.put(playerName, bettingMoney);
     }
 
