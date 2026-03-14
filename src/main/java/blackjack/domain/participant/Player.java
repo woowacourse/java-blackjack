@@ -17,8 +17,4 @@ public class Player extends Participant {
     public void stand() {
         stand = true;
     }
-
-    public boolean isStand() {
-        return stand;
-    }
 }
