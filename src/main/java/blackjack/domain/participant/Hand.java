@@ -1,6 +1,8 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.trump.Card;
+import blackjack.dto.CardDto;
+
 import java.util.List;
 
 public class Hand {
@@ -52,9 +54,9 @@ public class Hand {
         return calculateScore() == BURST_THRESHOLD && cards.size() == BLACKJACK_CARDS_SIZE;
     }
 
-    public List<String> getCardNames(final int startInclusive) {
+    public List<CardDto> getCardNames(final int startInclusive) {
         return cards.subList(startInclusive, cards.size()).stream()
-            .map(Card::getName)
+            .map(Card::toDto)
             .toList();
     }
 }

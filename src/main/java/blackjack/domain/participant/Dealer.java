@@ -5,6 +5,8 @@ import static blackjack.global.ParticipantConstants.DEALER_HIT_THRESHOLD;
 
 import blackjack.domain.trump.Card;
 import blackjack.domain.trump.Trump;
+import blackjack.dto.CardDto;
+
 import java.util.List;
 
 public class Dealer extends Participant {
@@ -41,7 +43,7 @@ public class Dealer extends Participant {
         }
     }
 
-    public List<String> getOpenCardNames() {
+    public List<CardDto> getOpenCardNames() {
         final int holeIndex = 1;
         return hand.getCardNames(holeIndex);
     }

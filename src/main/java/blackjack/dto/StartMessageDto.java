@@ -9,19 +9,19 @@ import java.util.Map;
 
 public record StartMessageDto(
     List<String> playerNicknames,
-    List<String> dealerOpenedCardNames,
-    Map<String, List<String>> playerCardNamesMap
+    Map<String, List<CardDto>> participantCardDtosMap
 ) {
 
     public static StartMessageDto of(final Players players, final Dealer dealer) {
         final List<String> playerNicknames = players.all().stream()
             .map(Player::getNickname)
             .toList();
-        final List<String> dealerOpenedCardNames = dealer.getOpenCardNames();
-        final Map<String, List<String>> playerCardNamesMap = new LinkedHashMap<>();
-        players.all().forEach(player ->
-            playerCardNamesMap.put(player.getNickname(), player.getAllCardNames()));
+        final Map<String, List<CardDto>> participantCardDtosMap = new LinkedHashMap<>();
 
-        return new StartMessageDto(playerNicknames, dealerOpenedCardNames, playerCardNamesMap);
+        participantCardDtosMap.put(dealer.getNickname(), dealer.getOpenCardNames());
+        players.all().forEach(player ->
+            participantCardDtosMap.put(player.getNickname(), player.getAllCardNames()));
+
+        return new StartMessageDto(playerNicknames, participantCardDtosMap);
     }
 }

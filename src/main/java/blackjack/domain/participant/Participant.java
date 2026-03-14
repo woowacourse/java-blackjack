@@ -1,6 +1,8 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.trump.Card;
+import blackjack.dto.CardDto;
+
 import java.util.List;
 
 public abstract class Participant {
@@ -45,7 +47,7 @@ public abstract class Participant {
         }
     }
 
-    public List<String> getAllCardNames() {
+    public List<CardDto> getAllCardNames() {
         final int startIndex = 0;
         return hand.getCardNames(startIndex);
     }

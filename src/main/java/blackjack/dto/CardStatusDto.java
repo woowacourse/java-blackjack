@@ -5,7 +5,7 @@ import java.util.List;
 
 public record CardStatusDto(
     String nickname,
-    List<String> cardNames
+    List<CardDto> cardDtos
 ) {
 
     public static CardStatusDto from(final Player player) {
