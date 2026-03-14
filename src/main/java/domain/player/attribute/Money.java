@@ -14,6 +14,7 @@ public class Money {
 
     private Long validateBetAmount(String betAmountInput) {
         Long betAmount = validateNumericAmount(betAmountInput);
+        validateThousandUnit(betAmount);
         validateBetAmountIsPositive(betAmount);
         validateAmountDoesNotExceedMaxAmount(betAmount);
 
@@ -25,6 +26,12 @@ public class Money {
             return Long.parseLong(betAmountInput);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("베팅 금액은 정수여야 한다.");
+        }
+    }
+
+    private void validateThousandUnit(Long betAmount) {
+        if (betAmount % 1000 != 0) {
+            throw new IllegalArgumentException("베팅 금액은 1000원 단위여야 합니다.");
         }
     }
 
