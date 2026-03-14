@@ -35,6 +35,7 @@ public class InputView {
 
     public int readPlayerBetAmount(String name) {
         try {
+            System.out.println();
             System.out.println(PLAYER_BET_AMOUNT_MESSAGE.format(name));
             String inputBetAmount = bufferedReader.readLine();
             return Integer.parseInt(inputBetAmount);

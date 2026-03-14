@@ -38,7 +38,12 @@ public class OutputView {
 
     public void printGameResult(List<GameResult> gameResults) {
         System.out.println(FINAL_GAME_RESULT_MESSAGE.format());
-        gameResults.forEach(this::printMemberResult);
+        gameResults.stream()
+                .filter(result -> result.name().equals(DEALER_NAME))
+                .forEach(this::printMemberResult);
+        gameResults.stream()
+                .filter(result -> !result.name().equals(DEALER_NAME))
+                .forEach(this::printMemberResult);
     }
 
     private void printDistributeMessage(List<MemberStatus> playerStatuses) {
@@ -78,42 +83,7 @@ public class OutputView {
 
     private void printMemberResult(GameResult gameResult) {
         String name = gameResult.name();
-        List<MatchResult> results = gameResult.result();
-        if (name.equals(DEALER_NAME)) {
-            printDealerResult(results, name);
-            return;
-        }
-        printPlayerResult(results.getFirst(), name);
-    }
-
-    private void printPlayerResult(MatchResult playerResult, String name) {
-        if (playerResult == MatchResult.WIN) {
-            System.out.println(PLAYER_GAME_WIN.format(name));
-            return;
-        }
-        if (playerResult == MatchResult.DRAW) {
-            System.out.println(PLAYER_GAME_DRAW.format(name));
-            return;
-        }
-        System.out.println(PLAYER_GAME_LOSE.format(name));
-    }
-
-    private void printDealerResult(List<MatchResult> results, String name) {
-        int win = countResult(results, MatchResult.WIN);
-        int draw = countResult(results, MatchResult.DRAW);
-        int lose = countResult(results, MatchResult.LOSE);
-
-        StringBuilder dealerResult = new StringBuilder();
-        dealerResult.append(name).append(": ");
-        if (win > 0) dealerResult.append(win).append("승 ");
-        if (draw > 0) dealerResult.append(draw).append("무 ");
-        if (lose > 0) dealerResult.append(lose).append("패 ");
-        System.out.println(dealerResult);
-    }
-
-    private int countResult(List<MatchResult> results, MatchResult target) {
-        return (int) results.stream()
-                .filter(result -> result == target)
-                .count();
+        int result = gameResult.result();
+        System.out.println(MEMBER_GAME_RESULT_MESSAGE.format(name, result));
     }
 }
