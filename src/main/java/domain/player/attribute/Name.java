@@ -1,9 +1,9 @@
 package domain.player.attribute;
 
-import static util.Constants.MAXIMUM_NAME_LENGTH;
-import static util.Constants.MINIMUM_NAME_LENGTH;
-
 public class Name {
+
+    public static final int MINIMUM_NAME_LENGTH = 2;
+    public static final int MAXIMUM_NAME_LENGTH = 10;
     private final String name;
 
     public Name(String name) {

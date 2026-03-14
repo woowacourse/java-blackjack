@@ -33,7 +33,7 @@ public enum CardScore {
         return this.score;
     }
 
-    public static CardScore of(final String score){
+    public static CardScore of(final String score) {
         return Arrays.stream(values())
                 .filter(val -> val.score.equals(score))
                 .findFirst()

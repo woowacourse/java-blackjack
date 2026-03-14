@@ -1,8 +1,5 @@
 package domain.game;
 
-import static util.Constants.DEFAULT_START_CARD_COUNT;
-
-import domain.betting.Betting;
 import domain.betting.BettingAmount;
 import domain.card.Card;
 import domain.card.GameCards;
@@ -21,14 +18,15 @@ public class Game {
     private final Gamblers gamblers;
     private final GameCards gameCards;
 
-    public Game(String dealerName, Map<String, BettingAmount> gamblersNameAndBettingInfo, int DEFAULT_CARD_SET) {
+    public Game(String dealerName, Map<String, BettingAmount> gamblersNameAndBettingInfo,
+            int DEFAULT_CARD_SET) {
         this.dealer = new Dealer(dealerName);
         this.gamblers = new Gamblers(gamblersNameAndBettingInfo);
         this.gameCards = new GameCards(DEFAULT_CARD_SET);
     }
 
     public void initializeGame() {
-        for (int i = 0; i < DEFAULT_START_CARD_COUNT; i++) {
+        for (int i = 0; i < GameCards.DEFAULT_START_CARD_COUNT; i++) {
             dealer.addCard(gameCards.drawCard());
             gamblers.receiveCards(gameCards);
         }
@@ -72,7 +70,7 @@ public class Game {
         return gamblers.getHandSize();
     }
 
-    public GamblersGameResult getResult(){
+    public GamblersGameResult getResult() {
         return new GamblersGameResult(dealer, gamblers);
     }
 }

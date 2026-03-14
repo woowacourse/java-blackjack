@@ -1,11 +1,13 @@
 package domain.player;
 
-import static util.Constants.DEALER_REFERENCE_POINT;
-
 public class Dealer extends Participant {
 
-    public Dealer(String name) {
-        super(name);
+    public static final String DEALER_NAME = "딜러";
+    public static final int DEALER_REFERENCE_POINT = 16;
+
+
+    public Dealer(String DEALER_NAME) {
+        super(DEALER_NAME);
     }
 
     public boolean isBelowDrawThreshold() {

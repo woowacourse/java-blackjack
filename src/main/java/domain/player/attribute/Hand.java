@@ -1,15 +1,16 @@
 package domain.player.attribute;
 
-import static util.Constants.ACE_HIGH_SCORE;
-import static util.Constants.ACE_LOW_SCORE;
-import static util.Constants.BLACK_JACK_SCORE;
-
 import domain.card.Card;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Hand {
+
+    public static final int ACE_HIGH_SCORE = 11;
+    public static final int ACE_LOW_SCORE = 1;
+
+    public static final int BLACK_JACK_SCORE = 21;
 
     private final List<Card> cards;
 

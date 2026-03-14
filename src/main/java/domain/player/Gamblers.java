@@ -21,6 +21,7 @@ public class Gamblers {
     public Gamblers(List<Gambler> gamblerList) {
         this.gamblers = gamblerList;
     }
+
     public boolean containGambler(String name) {
         return gamblers.stream()
                 .anyMatch(gambler -> gambler.isEqualName(name));

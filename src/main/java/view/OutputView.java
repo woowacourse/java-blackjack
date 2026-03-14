@@ -1,13 +1,11 @@
 package view;
 
-import domain.betting.BettingAmount;
 import domain.game.Profit;
 import domain.player.ParticipantGameInfo;
-import dto.BettingAmountRequestDto;
-import dto.DealerResultDto;
-import dto.ParticipantHandResponseDto;
-import dto.ParticipantsGameInfoDto;
-import dto.ParticipantsHandResponseDto;
+import view.responseDto.DealerResultDto;
+import view.responseDto.ParticipantHandResponseDto;
+import view.responseDto.ParticipantsGameInfoDto;
+import view.responseDto.ParticipantsHandResponseDto;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -17,12 +15,12 @@ public class OutputView {
     public void printInitialDeal(List<String> names) {
         System.out.println();
         System.out.println("딜러와 "
-        + String.join(", ", names)
-        + "에게 2장을 나누었습니다.");
+                + String.join(", ", names)
+                + "에게 2장을 나누었습니다.");
     }
 
     public void printParticipantsInfo(ParticipantsHandResponseDto responseDto) {
-        for(Entry<String, List<String>> gamblers : responseDto.gamblersInfo().entrySet()) {
+        for (Entry<String, List<String>> gamblers : responseDto.gamblersInfo().entrySet()) {
             System.out.println(gamblers.getKey() + "카드: " +
                     String.join(", ", gamblers.getValue()));
         }
@@ -50,7 +48,7 @@ public class OutputView {
 
     public void printDealerResult(DealerResultDto resultDto) {
         System.out.println("## 최종 수익");
-        System.out.print("딜러: " +  resultDto.dealerProfit());
+        System.out.print("딜러: " + resultDto.dealerProfit());
         System.out.println();
     }
 

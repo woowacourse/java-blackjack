@@ -1,15 +1,11 @@
 package domain.game;
 
-import static util.Constants.DEALER_NAME;
-
 import domain.betting.BettingAmount;
 import domain.card.Card;
 import domain.player.Dealer;
 import domain.player.Gambler;
 import domain.player.Gamblers;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +16,7 @@ class GamblersGameResultTest {
     @DisplayName("딜러, 참여자들의 수익을 정산")
     void 딜러_참여자들_수익_정산() {
         // given
-        Dealer dealer = new Dealer(DEALER_NAME);
+        Dealer dealer = new Dealer(Dealer.DEALER_NAME);
         dealer.addCard(new Card("K", "하트"));
         dealer.addCard(new Card("Q", "하트"));
 

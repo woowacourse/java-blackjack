@@ -2,7 +2,6 @@ package domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.card.Card;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -54,7 +53,7 @@ class CardTest {
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> {
                     new Card("14", "하트");
-        });
+                });
     }
 
     @Test
@@ -63,7 +62,7 @@ class CardTest {
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> {
                     new Card("10", "별");
-        });
+                });
     }
 
     @Test

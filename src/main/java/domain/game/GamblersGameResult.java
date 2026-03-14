@@ -1,16 +1,14 @@
 package domain.game;
 
-import static util.Constants.REVERSE_SIGN;
-
 import domain.player.Gambler;
 import domain.player.Gamblers;
 import domain.player.Participant;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class GamblersGameResult {
+
+    public static final int REVERSE_SIGN = -1;
 
     private Map<String, Profit> participantProfits;
 

@@ -1,7 +1,6 @@
 package domain.game;
 
 import domain.betting.BettingAmount;
-import domain.player.Gambler;
 import domain.player.Participant;
 
 public enum GameResult {
@@ -18,11 +17,11 @@ public enum GameResult {
     }
 
     public static GameResult determine(Participant dealer, Participant gambler) {
-        if(gambler.isBust()) {
+        if (gambler.isBust()) {
             return LOSE;
         }
 
-        if(dealer.isBust()) {
+        if (dealer.isBust()) {
             return WIN;
         }
         if (dealer.isBlackJack() && gambler.isBlackJack()) {
@@ -42,14 +41,15 @@ public enum GameResult {
         }
         return DRAW;
     }
+
     public Profit calculateProfit(BettingAmount bettingAmount) {
-        if(this == BLACK_JACK) {
-            return new Profit((bettingAmount.getBettingAmount() * 3)/2);
+        if (this == BLACK_JACK) {
+            return new Profit((bettingAmount.getBettingAmount() * 3) / 2);
         }
-        if(this == WIN) {
+        if (this == WIN) {
             return new Profit(bettingAmount.getBettingAmount());
         }
-        if(this == DRAW) {
+        if (this == DRAW) {
             return new Profit(0);
         }
         return new Profit(-bettingAmount.getBettingAmount());

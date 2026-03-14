@@ -1,4 +1,4 @@
-package dto;
+package view.responseDto;
 
 import domain.player.ParticipantGameInfo;
 import java.util.List;

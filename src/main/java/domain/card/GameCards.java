@@ -1,7 +1,5 @@
 package domain.card;
 
-import static util.Constants.DEFAULT_CARD_SET;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -10,6 +8,9 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class GameCards {
+
+    public static final int DEFAULT_CARD_SET = 1;
+    public static final int DEFAULT_START_CARD_COUNT = 2;
 
     private List<Card> cards;
 
