@@ -8,8 +8,9 @@ public class Main {
     public static void main(String[] args) {
         InputView inputView = new InputView();
         OutputView outputView = new OutputView();
-        CardShuffleStrategy strategy = new RandomCardShuffleStrategy();
+        BlackJackController controller = new BlackJackController(inputView, outputView);
 
-        new BlackJackController(inputView, outputView, strategy).doGame();
+        CardShuffleStrategy strategy = new RandomCardShuffleStrategy();
+        controller.doGame(strategy);
     }
 }

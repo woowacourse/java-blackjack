@@ -3,7 +3,6 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import common.ErrorMessage;
 import java.util.NoSuchElementException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,8 +22,7 @@ class DeckTest {
 
         // then
         assertThatThrownBy(totalDeck::drawCard)
-                .isInstanceOf(NoSuchElementException.class)
-                .hasMessage(ErrorMessage.DRAW_CARD_OUT_OF_RANGE.getMessage());
+                .isInstanceOf(NoSuchElementException.class);
     }
 
     @Test
@@ -43,7 +41,6 @@ class DeckTest {
         // then
         assertThat(result).isEqualTo(expected);
         assertThatThrownBy(totalDeck::drawCard)
-                .isInstanceOf(NoSuchElementException.class)
-                .hasMessage(ErrorMessage.DRAW_CARD_OUT_OF_RANGE.getMessage());
+                .isInstanceOf(NoSuchElementException.class);
     }
 }

@@ -1,13 +1,16 @@
 package controller;
 
+import domain.BetMoney;
 import domain.CardShuffleStrategy;
 import domain.Dealer;
 import domain.Game;
+import domain.Name;
 import domain.Participant;
 import domain.Player;
 import domain.Players;
 import dto.GameResultDto;
 import dto.ParticipantDto;
+import java.util.ArrayList;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
@@ -15,16 +18,14 @@ import view.OutputView;
 public class BlackJackController {
     private final InputView inputView;
     private final OutputView outputView;
-    private final CardShuffleStrategy strategy;
 
-    public BlackJackController(InputView inputView, OutputView outputView, CardShuffleStrategy strategy) {
+    public BlackJackController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.strategy = strategy;
     }
 
-    public void doGame() {
-        Game game = setUpGame();
+    public void doGame(CardShuffleStrategy strategy) {
+        Game game = setUpGame(strategy);
 
         drawInitialCardsAndShowResult(game);
 
@@ -35,12 +36,22 @@ public class BlackJackController {
         showGameResult(game);
     }
 
-    private Game setUpGame() {
-        List<String> playerNames = repeatAskPlayerNamesUntilSuccess();
-        return Game.registerParticipantsAndPrepareTotalDeck(playerNames, strategy);
+    private Game setUpGame(CardShuffleStrategy strategy) {
+        Players players = generatePlayers();
+        return Game.registerParticipantsAndPrepareTotalDeck(players, strategy);
     }
 
-    private List<String> repeatAskPlayerNamesUntilSuccess() {
+    private Players generatePlayers() {
+        List<Name> playerNames = repeatAskPlayerNamesUntilSuccess();
+        List<Player> players = new ArrayList<>();
+        for (Name playerName : playerNames) {
+            Player player = generatePlayer(playerName);
+            players.add(player);
+        }
+        return Players.of(players);
+    }
+
+    private List<Name> repeatAskPlayerNamesUntilSuccess() {
         try {
             return askPlayerNames();
         } catch (IllegalArgumentException e) {
@@ -49,9 +60,33 @@ public class BlackJackController {
         }
     }
 
-    private List<String> askPlayerNames() {
+    private List<Name> askPlayerNames() {
         outputView.printNamePrompt();
-        return inputView.readNames();
+        List<String> playerNames = inputView.readNames();
+        Players.validatePlayersCount(playerNames.size());
+        return playerNames.stream()
+                .map(Name::new)
+                .toList();
+    }
+
+    private Player generatePlayer(Name playerName) {
+        BetMoney betMoney = repeatAskBetMoneyUntilSuccess(playerName);
+        return new Player(playerName, betMoney);
+    }
+
+    private BetMoney repeatAskBetMoneyUntilSuccess(Name playerName) {
+        try {
+            return askBetAmount(playerName);
+        } catch (IllegalArgumentException e) {
+            outputView.printErrorMessage(e);
+            return repeatAskBetMoneyUntilSuccess(playerName);
+        }
+    }
+
+    private BetMoney askBetAmount(Name playerName) {
+        outputView.printBetMoneyPrompt(playerName.name());
+        int betAmount = inputView.readBetAmount();
+        return new BetMoney(betAmount);
     }
 
     private void drawInitialCardsAndShowResult(Game game) {
@@ -77,8 +112,19 @@ public class BlackJackController {
     }
 
     private void drawCardUntilBustOrStand(Game game, Player player) {
-        while (player.isDrawable() && wantToHit(player)) {
-            drawCardAndPrintResult(game, player);
+        boolean isPlayerDrawingCard = player.isDrawable();
+        while (isPlayerDrawingCard) {
+            boolean wantToHit = wantToHit(player);
+            drawCardIfDrawableAndWantToHit(game, player, wantToHit);
+            isPlayerDrawingCard = player.isDrawable() && wantToHit;
+            ParticipantDto updatedPlayerDto = ParticipantDto.from(player);
+            showPlayerCards(updatedPlayerDto);
+        }
+    }
+
+    private void drawCardIfDrawableAndWantToHit(Game game, Player player, boolean wantToHit) {
+        if (wantToHit) {
+            game.drawCardUnderCondition(player);
         }
     }
 
@@ -98,14 +144,7 @@ public class BlackJackController {
 
     private boolean askDrawCard(ParticipantDto participantDto) {
         outputView.printHitOrStandPrompt(participantDto);
-        String input = inputView.readHitOrStand();
-        return input.equals("y");
-    }
-
-    private void drawCardAndPrintResult(Game game, Player player) {
-        game.drawCardUnderCondition(player);
-        ParticipantDto updatedPlayerDto = ParticipantDto.from(player);
-        showPlayerCards(updatedPlayerDto);
+        return inputView.readHitOrStand();
     }
 
     private void showPlayerCards(ParticipantDto participantDto) {
@@ -114,13 +153,19 @@ public class BlackJackController {
 
     private void checkAndAdjustDealerCards(Game game) {
         Dealer dealer = game.getDealer();
-        boolean hasDealerDrawnMoreCard = game.drawCardUnderCondition(dealer);
+        while (dealer.isDrawable()) {
+            boolean hasDealerDrawnMoreCard = game.drawCardUnderCondition(dealer);
+            printDescriptionIfDealerDrewCard(hasDealerDrawnMoreCard);
+        }
+    }
+
+    private void printDescriptionIfDealerDrewCard(boolean hasDealerDrawnMoreCard) {
         if (hasDealerDrawnMoreCard) {
             outputView.printAdditionalCardForDealerDescription();
         }
     }
 
-    public void showGameResult(Game game) {
+    private void showGameResult(Game game) {
         List<Participant> participants = game.getParticipants();
         List<ParticipantDto> participantDtos = ParticipantDto.listOf(participants);
         outputView.printCardInfosWithSum(participantDtos);

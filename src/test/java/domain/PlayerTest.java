@@ -49,7 +49,7 @@ class PlayerTest {
     }
 
     private Player createPlayerWithCards(Card... cards) {
-        Player player = new Player("pobi");
+        Player player = new Player(new Name("pobi"), new BetMoney(1000));
         for (Card card : cards) {
             player.addCard(card);
         }

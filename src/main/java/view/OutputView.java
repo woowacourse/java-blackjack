@@ -12,11 +12,16 @@ public class OutputView {
     private static final String DELIMITER = ", ";
 
     public void printErrorMessage(Exception e) {
-        System.out.println(e.getMessage());
+        System.out.println("[ERROR] " + e.getMessage());
     }
 
     public void printNamePrompt() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
+    }
+
+    public void printBetMoneyPrompt(String playerName) {
+        System.out.println();
+        System.out.printf("%s의 배팅 금액은?\n", playerName);
     }
 
     public void printInitialCardShare(List<ParticipantDto> playerDtos) {
@@ -36,10 +41,10 @@ public class OutputView {
             String playerCardInfo = consistParticipantCardInfo(playerDto);
             System.out.println(playerCardInfo);
         }
-        System.out.println();
     }
 
     public void printHitOrStandPrompt(ParticipantDto playerDto) {
+        System.out.println();
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n", playerDto.name());
     }
 
@@ -51,15 +56,14 @@ public class OutputView {
     public void printAdditionalCardForDealerDescription() {
         System.out.println();
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
-        System.out.println();
     }
 
     public void printCardInfosWithSum(List<ParticipantDto> participantDtos) {
+        System.out.println();
         for (ParticipantDto participantDto : participantDtos) {
             String participantCardInfoWithSum = consistParticipantCardInfoWithSum(participantDto);
             System.out.println(participantCardInfoWithSum);
         }
-        System.out.println();
     }
 
     private String consistParticipantCardInfoWithSum(ParticipantDto participantDto) {
@@ -82,7 +86,8 @@ public class OutputView {
     }
 
     public void printWinTieLossResult(GameResultDto gameResultDto) {
-        System.out.println("## 최종 승패");
+        System.out.println();
+        System.out.println("## 최종 수익");
 
         String dealerWinTieLossResult = consistDealerWinTieLossResult(gameResultDto.dealerWinTieLossResult());
         System.out.println(dealerWinTieLossResult);
@@ -93,24 +98,17 @@ public class OutputView {
         }
     }
 
-    private String consistDealerWinTieLossResult(Map<String, Integer> dealerWinTieLossResult) {
-        List<String> dealerResult = new ArrayList<>();
-        for (Entry<String, Integer> result : dealerWinTieLossResult.entrySet()) {
-            int count = result.getValue();
-            String winTieLoss = result.getKey();
-            String resultInFormat = String.format("%d%s", count, winTieLoss);
-            dealerResult.add(resultInFormat);
-        }
-        return String.format("딜러: %s", String.join(" ", dealerResult));
+    private String consistDealerWinTieLossResult(Long dealerWinTieLossResult) {
+        return String.format("딜러: %d", dealerWinTieLossResult);
     }
 
     private List<String> consistPlayerWinTieLossResults(GameResultDto gameResultDto) {
         List<String> playerResult = new ArrayList<>();
-        Map<String, String> playerWinLossResults = gameResultDto.playerWinTieLossResults();
-        for (Entry<String, String> result : playerWinLossResults.entrySet()) {
+        Map<String, Long> playerWinLossResults = gameResultDto.playerWinTieLossResults();
+        for (Entry<String, Long> result : playerWinLossResults.entrySet()) {
             String name = result.getKey();
-            String winTieLoss = result.getValue();
-            String resultInFormat = String.format("%s: %s", name, winTieLoss);
+            Long winTieLoss = result.getValue();
+            String resultInFormat = String.format("%s: %d", name, winTieLoss);
             playerResult.add(resultInFormat);
         }
         return playerResult;

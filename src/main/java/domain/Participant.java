@@ -6,8 +6,8 @@ public abstract class Participant {
     private final Name name;
     private final Cards cards;
 
-    protected Participant(String name) {
-        this.name = new Name(name);
+    protected Participant(Name name) {
+        this.name = name;
         this.cards = new Cards();
     }
 
@@ -27,12 +27,16 @@ public abstract class Participant {
         cards.addCard(newCard);
     }
 
-    public int getCardsSum() {
-        return cards.calculateCardScoreSum();
+    public boolean isBlackJack() {
+        return cards.isBlackJack();
     }
 
     public String getName() {
         return name.name();
+    }
+
+    public int getCardsSum() {
+        return cards.calculateCardScoreSum();
     }
 
     public List<Card> getCards() {
