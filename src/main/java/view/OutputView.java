@@ -12,12 +12,6 @@ public class OutputView {
         System.out.printf(outputMessage, value);
     }
 
-    public void printRepeated(String outputMessage, int repeatCount) {
-        for (int i = 0; i < repeatCount; i++) {
-            println(outputMessage);
-        }
-    }
-
     public void separatorLine() {
         System.out.print(lineSeparator);
     }
