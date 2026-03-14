@@ -3,6 +3,7 @@ package domain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 import vo.Rank;
 import vo.Suit;
 
@@ -18,6 +19,9 @@ public class Deck {
     }
 
     public Card drawCard() {
+        if (cards.isEmpty()) {
+            throw new NoSuchElementException("[ERROR] 더 이상의 카드를 꺼낼 수 없습니다.");
+        }
         return cards.removeFirst();
     }
 
