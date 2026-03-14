@@ -20,7 +20,7 @@ public class StandardDeck implements Deck {
     private void init() {
         List<Card> cards = Arrays.stream(CardPattern.values())
                 .flatMap(pattern -> Arrays.stream(CardNumber.values())
-                        .map(number -> new Card(number.getCourt(), pattern.getName())))
+                        .map(number -> Card.from(number.getCourt(), pattern.getName())))
                 .collect(Collectors.toList());
         Collections.shuffle(cards);
         queue.addAll(cards);
