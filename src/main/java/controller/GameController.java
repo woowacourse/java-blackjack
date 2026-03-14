@@ -1,6 +1,7 @@
 package controller;
 
 import domain.participant.player.Player;
+import domain.vo.Money;
 import service.BlackjackService;
 import service.PlayerManager;
 import view.InputView;
@@ -19,14 +20,12 @@ public class GameController {
 
     public void run() {
         gameSetup();
-        ResultView.printStartPlayersCards(blackjackService.getDealerInfo(), playerManager.getAllPlayersInfo());
+        askBettingMoney();
 
         participantsHit();
-
         finalizeGameResult();
 
-        ResultView.printCardsAndScoreResult(blackjackService.getDealerInfo(), playerManager.getAllPlayersInfo());
-        ResultView.printRankResult(blackjackService.getDealerInfo(), playerManager.getAllPlayersInfo());
+        printProfits();
     }
 
     private void gameSetup() {
@@ -37,6 +36,14 @@ public class GameController {
 
         for (Player player : playerManager.getPlayers()) {
             blackjackService.dealPlayerCardsOut(player);
+        }
+
+        ResultView.printStartPlayersCards(blackjackService.getDealerInfo(), playerManager.getAllPlayersInfo());
+    }
+
+    private void askBettingMoney() {
+        for (Player player : playerManager.getPlayers()) {
+            blackjackService.placeBet(player, new Money(InputView.askBettingMoney(player.getName().getValueOf())));
         }
     }
 
@@ -52,7 +59,7 @@ public class GameController {
 
     private void playerHit(Player player) {
         while (canHitAndDraw(player)) {
-            ResultView.printPlayerCards(player.getName(), player.getCards());
+            ResultView.printPlayerCards(player.getName().getValueOf(), player.getCards());
         }
     }
 
@@ -60,6 +67,9 @@ public class GameController {
         for (Player player : playerManager.getPlayers()) {
             blackjackService.finalizeGameResult(player);
         }
+
+        ResultView.printCardsAndScoreResult(blackjackService.getDealerInfo(), playerManager.getAllPlayersInfo());
+        ResultView.printRankResult(blackjackService.getDealerInfo(), playerManager.getAllPlayersInfo());
     }
 
     private boolean canHitAndDraw(Player player) {
@@ -67,12 +77,21 @@ public class GameController {
             return false;
         }
 
-        if (InputView.askHit(player.getName())) {
+        if (InputView.askHit(player.getName().getValueOf())) {
             blackjackService.playerHit(player);
             return true;
         }
 
-        ResultView.printPlayerCards(player.getName(), player.getCards());
+        ResultView.printPlayerCards(player.getName().getValueOf(), player.getCards());
         return false;
+    }
+
+    private void printProfits() {
+        ResultView.printDealerProfit(blackjackService.getDealerProfit());
+
+        for (Player player : playerManager.getPlayers()) {
+            ResultView.printPlayerProfit(player.getName(), blackjackService.getProfit(player))
+            ;
+        }
     }
 }
