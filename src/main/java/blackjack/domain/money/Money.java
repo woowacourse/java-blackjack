@@ -7,7 +7,7 @@ public record Money(int value) {
     }
 
     public Money multiply(double multiplier) {
-        return new Money((int) (value * multiplier));
+        return new Money((int) Math.round(value * multiplier));
     }
 
     public Money negate() {
