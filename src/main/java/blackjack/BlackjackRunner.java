@@ -61,7 +61,6 @@ public class BlackjackRunner {
         Bets bets = new Bets();
         players.getPlayers()
                 .forEach(player -> {
-                    outputView.printAskPlayerBettingAmount(player.getNickname());
                     int betAmount = readPlayerBettingAmount(player);
                     bets.playerBet(player, betAmount);
                 });
@@ -104,26 +103,32 @@ public class BlackjackRunner {
     }
 
     private void playerTurn(Gamblers gamblers, Deck deck) {
-        while (true) {
-            Player currentPlayer = gamblers.getCurrentPlayer();
-            if (currentPlayer == null) {
-                break;
-            }
-            playerDraw(currentPlayer, deck);
-        }
+        gamblers.getPlayers()
+                .forEach(player -> playerDraw(player, deck));
     }
 
     private void playerDraw(Player currentPlayer, Deck deck) {
-        boolean hit = askHitOrStand(currentPlayer);
-        if (hit) {
-            currentPlayer.receiveCard(deck.drawCard());
-            printCurrentHand(currentPlayer);
+        if (!currentPlayer.isDrawable()) {
             return;
         }
+        boolean hit = askHitOrStand(currentPlayer);
+        if (!hit) {
+            playerEndsDraw(currentPlayer);
+            return;
+        }
+        dealCard(currentPlayer, deck);
+    }
+
+    private void dealCard(Player currentPlayer, Deck deck) {
+        currentPlayer.receiveCard(deck.drawCard());
+        printCurrentHand(currentPlayer);
+        playerDraw(currentPlayer, deck);
+    }
+
+    private void playerEndsDraw(Player currentPlayer) {
         if (currentPlayer.getCardsCount() == 2) {
             printCurrentHand(currentPlayer);
         }
-        currentPlayer.stand();
     }
 
     private boolean askHitOrStand(Player currentPlayer) {
