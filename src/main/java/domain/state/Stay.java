@@ -1,5 +1,6 @@
 package domain.state;
 
+import domain.MatchResult;
 import domain.member.Hand;
 
 public class Stay extends Finished {
@@ -9,9 +10,20 @@ public class Stay extends Finished {
     }
 
     @Override
-    public double earningRate() {
-        // 기본 수익률만 작성
-        // 이후 딜러와 비교하는 로직을 추가할 예정
-        return 1.0;
+    public double earningRate(State dealerState) {
+        if (dealerState instanceof Bust) {
+            return MatchResult.WIN.profitRate();
+        }
+        if (dealerState instanceof Blackjack) {
+            return MatchResult.LOSE.profitRate();
+        }
+        return judgeScore(dealerState.hand().calculateTotalValue());
+    }
+
+    private double judgeScore(int dealerScore) {
+        int myScore = hand.calculateTotalValue();
+        if (myScore > dealerScore) return MatchResult.WIN.profitRate();
+        if (myScore < dealerScore) return MatchResult.LOSE.profitRate();
+        return MatchResult.DRAW.profitRate();
     }
 }

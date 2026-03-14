@@ -17,7 +17,7 @@ public abstract class Running extends Started {
     }
 
     @Override
-    public double earningRate() {
+    public double earningRate(State dealerState) {
         return 0;
     }
 }

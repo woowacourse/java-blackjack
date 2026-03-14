@@ -1,5 +1,6 @@
 package domain.state;
 
+import domain.MatchResult;
 import domain.member.Hand;
 
 public class Blackjack extends Finished {
@@ -9,7 +10,10 @@ public class Blackjack extends Finished {
     }
 
     @Override
-    public double earningRate() {
-        return 1.5;
+    public double earningRate(State dealerState) {
+        if (dealerState instanceof Blackjack) {
+            return MatchResult.DRAW.profitRate();
+        }
+        return MatchResult.BLACKJACK_WIN.profitRate();
     }
 }

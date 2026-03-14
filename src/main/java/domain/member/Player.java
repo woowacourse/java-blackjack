@@ -10,7 +10,7 @@ public class Player extends Member {
         this.betMoney = betMoney;
     }
 
-    public int calculateProfit() {
-        return betMoney.calculateProfit(state.earningRate());
+    public int calculateProfit(Member member) {
+        return betMoney.calculateProfit(state.earningRate(member.state));
     }
 }

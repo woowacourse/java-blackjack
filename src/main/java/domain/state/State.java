@@ -5,7 +5,7 @@ import domain.member.Hand;
 
 public interface State {
     boolean isFinished();
-    double earningRate();
+    double earningRate(State dealerState);
     State draw(Card card);
     State stay();
     Hand hand();
