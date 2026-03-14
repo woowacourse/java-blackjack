@@ -7,7 +7,6 @@ import domain.participant.Players;
 import domain.game.Referee;
 import domain.game.Result;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import view.InputView;
@@ -84,11 +83,14 @@ public class BlackjackController {
             outputView.printFinalCards(player);
         }
         Referee referee = new Referee();
-        Map<Player, Result> playerResults = new LinkedHashMap<>();
+        Map<Player, Integer> playerProfits = new LinkedHashMap<>();
+        int dealerProfit = 0;
         for (Player player : players.getGamePlayers()) {
-            playerResults.put(player, referee.judge(player, dealer));
+            Result result = referee.judge(player, dealer);
+            int profit = player.calculateProfit(result);
+            playerProfits.put(player, profit);
+            dealerProfit -= profit;
         }
-        Map<Result, Integer> dealerResult = referee.countDealerResult(playerResults);
-        outputView.printFinalResult(dealer.getName(), dealerResult, playerResults);
+        outputView.printProfitResult(dealer.getName(), dealerProfit, playerProfits);
     }
 }

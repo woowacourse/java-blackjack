@@ -4,7 +4,6 @@ import domain.card.Card;
 import domain.participant.Participant;
 import domain.participant.Player;
 import domain.card.Rank;
-import domain.game.Result;
 import domain.card.Suit;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,12 +23,6 @@ public class OutputView {
             Rank.JACK, "J",
             Rank.QUEEN, "Q",
             Rank.KING, "K"
-    );
-
-    private static final Map<Result, String> RESULT_NAME = Map.of(
-            Result.WIN, "승",
-            Result.LOSE, "패",
-            Result.TIE, "무"
     );
 
     public void printInitialDeal(List<String> playerNames) {
@@ -53,14 +46,12 @@ public class OutputView {
                 + " - 결과: " + participant.getScore());
     }
 
-    public void printFinalResult(String dealerName, Map<Result, Integer> dealerResult,
-                                  Map<Player, Result> playerResults) {
-        System.out.println("\n## 최종 승패");
-        System.out.println(dealerName + ": "
-                + dealerResult.get(Result.WIN) + "승 "
-                + dealerResult.get(Result.LOSE) + "패");
-        for (Map.Entry<Player, Result> entry : playerResults.entrySet()) {
-            System.out.println(entry.getKey().getName() + ": " + RESULT_NAME.get(entry.getValue()));
+    public void printProfitResult(String dealerName, int dealerProfit,
+                                   Map<Player, Integer> playerProfits) {
+        System.out.println("\n## 최종 수익");
+        System.out.println(dealerName + ": " + dealerProfit);
+        for (Map.Entry<Player, Integer> entry : playerProfits.entrySet()) {
+            System.out.println(entry.getKey().getName() + ": " + entry.getValue());
         }
     }
 
