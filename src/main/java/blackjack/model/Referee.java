@@ -1,30 +1,38 @@
 package blackjack.model;
 
+import java.util.List;
+
 public class Referee {
 
+    private final List<JudgementRule> rules;
+
+    public Referee() {
+        this.rules = List.of(
+                this::blackjackJudgement,
+                this::bustJudgement,
+                this::scoreJudgement
+        );
+    }
+
     public GameResult judge(Player player, Dealer dealer) {
-        Score playerScore = player.getScore();
-        Score dealerScore = dealer.getScore();
-
-        GameResult blackjackResult = blackjackJudgement(player, dealer);
-        if (blackjackResult != null) {
-            return blackjackResult;
+        for (JudgementRule rule : rules) {
+            GameResult result = rule.apply(player, dealer);
+            if (result != null) {
+                return result;
+            }
         }
-
-        GameResult bustResult = bustJudgement(player, dealer);
-        if (bustResult != null) {
-            return bustResult;
-        }
-
-        GameResult scoreResult = ScoreJudgement(playerScore, dealerScore);
-        if (scoreResult != null) {
-            return scoreResult;
-        }
-
         return GameResult.WIN;
     }
 
-    private GameResult ScoreJudgement(Score playerScore, Score dealerScore) {
+    @FunctionalInterface
+    public interface JudgementRule {
+        GameResult apply(Player player, Dealer dealer);
+    }
+
+    private GameResult scoreJudgement(Player player, Dealer dealer) {
+        Score playerScore = player.getScore();
+        Score dealerScore = dealer.getScore();
+
         if (playerScore.isSame(dealerScore)) {
             return GameResult.DRAW;
         }
