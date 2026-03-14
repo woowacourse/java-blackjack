@@ -11,7 +11,7 @@ public abstract class Hand {
     private static final int ACE_ADJUST_SCORE = 10;
     private static final int BLACKJACK = 21;
 
-    protected final Collection<Card> cards;
+    protected final List<Card> cards;
 
     protected Hand() {
         this.cards = List.of();

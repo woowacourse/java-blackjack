@@ -4,12 +4,14 @@ import java.util.Collection;
 import java.util.List;
 
 public record UniqueNames(
-        Collection<Name> names
+        List<Name> names
 ) {
-    public UniqueNames(Collection<Name> names) {
+    public UniqueNames {
         validateDuplicatedNames(names);
+    }
 
-        this.names = List.copyOf(names);
+    public static UniqueNames from(Collection<Name> names) {
+        return new UniqueNames(List.copyOf(names));
     }
 
     private void validateDuplicatedNames(Collection<Name> playerNames) {
