@@ -16,7 +16,7 @@ public enum Rank {
         return this == ACE;
     }
 
-    int getValue() {
+    public int getValue() {
         return value;
     }
 }

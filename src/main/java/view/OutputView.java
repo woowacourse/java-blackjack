@@ -1,12 +1,7 @@
 package view;
 
-import domain.MatchResult;
 import domain.card.Card;
-import domain.participant.Dealer;
-import domain.participant.Player;
-import domain.participant.Players;
-import dto.GameResultDto;
-import view.message.MatchResultMessage;
+import dto.*;
 import view.message.RankMessage;
 import view.message.SuitMessage;
 
@@ -15,66 +10,70 @@ import java.util.Map;
 
 public class OutputView {
 
-    public void showInitialHands(Dealer dealer, Players players) {
-        String playerNames = players.getPlayers().stream()
-                .map(Player::getName)
-                .collect(java.util.stream.Collectors.joining(", "));
+    private static final String COMMA_SEPARATOR = ", ";
+    private static final String DEALER_DISPLAY_NAME = "딜러";
 
-        System.out.printf("\n딜러와 %s에게 2장을 나누었습니다.\n", playerNames);
+    public void showInitialHandsOfParticipants(DealerDto dealerDto, PlayersDto playersDto) {
+        String playerNames = String.join(COMMA_SEPARATOR, playersDto.getPlayersHand().keySet());
+        System.out.printf("\n%s와 %s에게 2장을 나누었습니다.\n", DEALER_DISPLAY_NAME, playerNames);
 
-        Card firstCard = dealer.getFirstCard();
-        System.out.printf("딜러카드: %s%s\n", RankMessage.of(firstCard.getRank()), SuitMessage.of(firstCard.getSuit()));
+        Card firstCard = dealerDto.getFirstOpenCard();
+        System.out.printf("%s카드: %s%s\n", DEALER_DISPLAY_NAME, RankMessage.of(firstCard.getRank()), SuitMessage.of(firstCard.getSuit()));
 
-        for (Player player : players.getPlayers()) {
-            showPlayerHand(player);
+        for (Map.Entry<String, List<Card>> playerInfo : playersDto.getPlayersHand().entrySet()) {
+            String name = playerInfo.getKey();
+            List<Card> cards = playerInfo.getValue();
+            System.out.printf("%s카드: %s\n", name, formatCards(cards));
         }
 
         System.out.println();
     }
 
-    public void showPlayerHand(Player player) {
-        System.out.printf("%s카드: %s\n", player.getName(), formatCards(player.getCards()));
+    public void showPlayerHand(PlayerDto playerDto) {
+        List<Card> cards = playerDto.getPlayerHand();
+        System.out.printf("%s카드: %s\n", playerDto.getName(), formatCards(cards));
     }
 
     public void showDealerHitMessage() {
-        System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.printf("\n%s는 16이하라 한장의 카드를 더 받았습니다.\n", DEALER_DISPLAY_NAME);
     }
 
     public void showDealerStandMessage() {
-        System.out.println("\n딜러는 17이상이므로 카드를 받지 않았습니다.");
+        System.out.printf("\n%s는 17이상이므로 카드를 받지 않았습니다.\n", DEALER_DISPLAY_NAME);
     }
 
-    public void showDealerHand(Dealer dealer) {
-        System.out.printf("딜러카드: %s\n", formatCards(dealer.getCards()));
+    public void showDealerHand(DealerDto dealerDto) {
+        System.out.printf("%s카드: %s\n", DEALER_DISPLAY_NAME, formatCards(dealerDto.getDealerHand()));
     }
 
-    public void showHandResults(Dealer dealer, Players players) {
-        System.out.printf("\n딜러카드: %s - 결과: %d\n", formatCards(dealer.getCards()), dealer.getScore());
+    public void showHandResultsOfParticipants(DealerDto dealerDto, PlayersDto playersDto) {
+        System.out.printf("\n%s카드: %s - 결과: %d\n", DEALER_DISPLAY_NAME, formatCards(dealerDto.getDealerHand()), dealerDto.getScore());
 
-        for (Player player : players.getPlayers()) {
-            System.out.printf("%s카드: %s - 결과: %d\n", player.getName(), formatCards(player.getCards()), player.getScore());
+        for (Map.Entry<String, List<Card>> playerInfo : playersDto.getPlayersHand().entrySet()) {
+            String name = playerInfo.getKey();
+            List<Card> cards = playerInfo.getValue();
+            int score = playersDto.getPlayersScore().get(name);
+
+            System.out.printf("%s카드: %s - 결과: %d\n", name, formatCards(cards), score);
         }
     }
 
-    public void showGameResult(GameResultDto gameResultDto) {
-        System.out.println("\n## 최종 승패");
+    public void showProfitResult(ProfitResultDto profitResultDto) {
+        System.out.println("\n## 최종 수익");
 
-        String dealerResult = gameResultDto.getDealerResult().entrySet().stream()
-                .filter(entry -> entry.getValue() > 0)
-                .map(entry -> entry.getValue() + MatchResultMessage.of(entry.getKey()))
-                .collect(java.util.stream.Collectors.joining(" "));
+        System.out.printf("%s: %,d\n", DEALER_DISPLAY_NAME, profitResultDto.getDealerProfitResult());
 
-        System.out.printf("딜러: %s\n", dealerResult);
-
-        for (Map.Entry<String, MatchResult> playersResult : gameResultDto.getPlayersResult().entrySet()) {
-            System.out.printf("%s: %s\n", playersResult.getKey(), MatchResultMessage.of(playersResult.getValue()));
+        for (Map.Entry<String, Integer> playersProfitResult : profitResultDto.getPlayersProfitResult().entrySet()) {
+            String name = playersProfitResult.getKey();
+            int profit = playersProfitResult.getValue();
+            System.out.printf("%s: %,d\n", name, profit);
         }
     }
 
     private String formatCards(List<Card> cards) {
         return cards.stream()
                 .map(card -> RankMessage.of(card.getRank()) + SuitMessage.of(card.getSuit()))
-                .collect(java.util.stream.Collectors.joining(", "));
+                .collect(java.util.stream.Collectors.joining(COMMA_SEPARATOR));
     }
 
     public static void printErrorMessage(String message) {

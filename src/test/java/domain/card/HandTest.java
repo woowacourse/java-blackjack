@@ -1,5 +1,6 @@
 package domain.card;
 
+import domain.participant.Hand;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,7 +35,8 @@ class HandTest {
         );
     }
 
-    @ParameterizedTest(name = "{0}")
+    @ParameterizedTest
+    @DisplayName("Ace는 1 또는 11로 계산할 수 있으며, King, Queen, Jack은 각각 10으로 계산한다.")
     @MethodSource("handScoreProvider")
     void calculateScoreTests(HandScoreTestCase testCase) {
         // given
@@ -143,7 +145,6 @@ class HandTest {
         // given
         Hand hand = new Hand();
 
-
         // when - then
         assertThrows(IllegalStateException.class, hand::getCards);
     }
@@ -153,7 +154,6 @@ class HandTest {
     void NULL_예외_처리_카드_전체() {
         // given
         Hand hand = new Hand();
-
 
         // when - then
         assertThrows(IllegalStateException.class, hand::getCards);

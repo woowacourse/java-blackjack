@@ -6,13 +6,15 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class PlayersTest {
 
     @Test
     @DisplayName("플레이어 인원 수는 5명 이하여야 합니다.")
     void 플레이어인원수_5명이하_성공() {
         // given
-        List<String> players = List.of("pobi", "james");
+        List<Player> players = List.of(new Player("pobi", Bet.of(10000)), new Player("james", Bet.of(10000)));
 
         // when - then
         Assertions.assertDoesNotThrow(() -> new Players(players));
@@ -22,7 +24,13 @@ class PlayersTest {
     @DisplayName("플레이어 인원 수는 6명 이상인 경우 오류가 발생해야 한다.")
     void 플레이어인원수_6명이상_오류() {
         // given
-        List<String> players = List.of("pobi", "james", "eunoh", "ruro", "ruro1", "ruro2");
+        List<Player> players = List.of(
+                new Player("pobi", Bet.of(10000)),
+                new Player("james", Bet.of(10000)),
+                new Player("eunoh", Bet.of(10000)),
+                new Player("ruro", Bet.of(10000)),
+                new Player("rama", Bet.of(10000)),
+                new Player("dudu", Bet.of(10000)));
 
         // when - then
         Assertions.assertThrows(IllegalArgumentException.class, () -> new Players(players));
@@ -32,9 +40,25 @@ class PlayersTest {
     @DisplayName("플레이어 이름이 중복되는 경우 오류가 발생해야 한다.")
     void 플레이어_이름_중복_금지() {
         // given
-        List<String> players = List.of("pobi", "james", "eunoh", "ruro", "ruro");
+        List<Player> players = List.of(
+                new Player("pobi", Bet.of(10000)),
+                new Player("james", Bet.of(10000)),
+                new Player("pobi", Bet.of(10000)));
 
         // when - then
         Assertions.assertThrows(IllegalArgumentException.class, () -> new Players(players));
+    }
+
+    @Test
+    @DisplayName("플레이어를 정확하게 찾는지 검증한다.")
+    void findByTest() {
+        // given
+        Player targetPlayer = new Player("pobi", Bet.of(10000));
+        List<Player> playerNames = List.of(targetPlayer, new Player("james", Bet.of(10000)));
+
+        // when - then
+        Players players = new Players(playerNames);
+
+        assertEquals(players.findBy(targetPlayer), targetPlayer);
     }
 }
