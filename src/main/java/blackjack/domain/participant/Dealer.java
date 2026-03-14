@@ -11,7 +11,7 @@ public class Dealer extends Participant {
         super(DEALER_NICKNAME);
     }
 
-    public Card getFirstCard() {
+    public Card getUpcard() {
         return getCards().getFirst();
     }
 

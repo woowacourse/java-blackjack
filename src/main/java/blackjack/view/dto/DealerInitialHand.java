@@ -11,7 +11,7 @@ public record DealerInitialHand(
     public static DealerInitialHand from(Dealer dealer) {
         return new DealerInitialHand(
                 dealer.getNickname(),
-                CardMapper.toDisplayName(dealer.getFirstCard())
+                CardMapper.toDisplayName(dealer.getUpcard())
         );
     }
 }
