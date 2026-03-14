@@ -16,4 +16,9 @@ public class Blackjack extends Finished {
         }
         return MatchResult.BLACKJACK_WIN.profitRate();
     }
+
+    @Override
+    public State stay() {
+        return this;
+    }
 }

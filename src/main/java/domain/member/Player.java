@@ -1,7 +1,6 @@
 package domain.member;
 
 import domain.state.State;
-import domain.state.Stay;
 
 public class Player extends Member {
     private final Money betMoney;
@@ -12,7 +11,7 @@ public class Player extends Member {
     }
 
     public void changeToStay() {
-        state = new Stay(state.hand());
+        this.state = state.stay();
     }
 
     public int calculateProfit(Member member) {

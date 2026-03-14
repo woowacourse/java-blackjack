@@ -12,4 +12,9 @@ public class Bust extends Finished {
     public double earningRate(State dealerState) {
         return -1.0;
     }
+
+    @Override
+    public State stay() {
+        return this;
+    }
 }
