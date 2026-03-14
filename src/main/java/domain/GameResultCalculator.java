@@ -13,11 +13,13 @@ public class GameResultCalculator {
     }
 
     private static ResultType getResultType(Hand playerHand, Hand dealerHand) {
-        if (playerHand.isBlackjack() || (playerHand.getScore().value() < dealerHand.getScore().value()
-                && !dealerHand.isBust())) {
+        if (playerHand.isBust() || (dealerHand.isBlackjack() && !playerHand.isBlackjack() || (
+                playerHand.getScore().value() < dealerHand.getScore().value()
+                        && !dealerHand.isBust()))) {
             return ResultType.LOSE;
         }
-        if (dealerHand.isBust() || playerHand.getScore().value() > dealerHand.getScore().value()) {
+        if (dealerHand.isBust() || (playerHand.isBlackjack() && !dealerHand.isBlackjack())
+                || playerHand.getScore().value() > dealerHand.getScore().value()) {
             return checkBlackjackWin(playerHand);
         }
         return ResultType.DRAW;
