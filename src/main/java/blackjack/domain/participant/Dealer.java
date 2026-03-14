@@ -1,7 +1,11 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.bet.Bet;
+import blackjack.domain.bet.ProfitRate;
 import blackjack.domain.card.Card;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Set;
 
 public class Dealer extends Participant {
 
@@ -21,33 +25,48 @@ public class Dealer extends Participant {
         return getScore() <= DEALER_SCORE;
     }
 
-    public List<Integer> determinePlayersProfit(List<Player> players) {
-        return players.stream()
+    public long determineProfit(Set<Entry<Player, Bet>> playerBets) {
+        long playersTotalProfit = playerBets.stream()
+                .mapToLong(this::determinePlayerProfit)
+                .sum();
+        return -playersTotalProfit;
+    }
+
+    public List<Integer> determinePlayerProfits(Set<Entry<Player, Bet>> playerBets) {
+        return playerBets.stream()
                 .map(this::determinePlayerProfit)
                 .toList();
     }
 
-    private int determinePlayerProfit(Player player) {
+    private int determinePlayerProfit(Entry<Player, Bet> playerBet) {
+        Player player = playerBet.getKey();
+        Bet bet = playerBet.getValue();
+        ProfitRate profitRate = calculateProfitRate(player);
+        return bet.calculateProfit(profitRate);
+    }
+
+    private ProfitRate calculateProfitRate(Player player) {
+        if (player.isStand()) {
+            return calculateStandProfitRate(getScore(), player.getScore());
+        }
+        return calculateProfitRateAboveBlackjackScore(player);
+    }
+
+    private ProfitRate calculateProfitRateAboveBlackjackScore(Player player) {
         if (player.isBlackjack()) {
-            return playerBlackjackProfit(player);
+            return playerBlackjackProfitRate();
         }
-        if (player.isBust()) {
-            return player.calculateProfit(ProfitRate.LOSE);
-        }
-        if (isBust()) {
-            return player.calculateProfit(ProfitRate.WIN);
-        }
-        return player.calculateProfit(calculateProfitRate(getScore(), player.getScore()));
+        return ProfitRate.LOSE;
     }
 
-    private int playerBlackjackProfit(Player player) {
+    private ProfitRate playerBlackjackProfitRate() {
         if (isBlackjack()) {
-            return player.calculateProfit(ProfitRate.DRAW);
+            return ProfitRate.DRAW;
         }
-        return player.calculateProfit(ProfitRate.WIN_BLACKJACK);
+        return ProfitRate.WIN_BLACKJACK;
     }
 
-    private ProfitRate calculateProfitRate(int dealerScore, int playerScore) {
+    private ProfitRate calculateStandProfitRate(int dealerScore, int playerScore) {
         if (dealerScore == playerScore) {
             return ProfitRate.DRAW;
         }
@@ -55,12 +74,5 @@ public class Dealer extends Participant {
             return ProfitRate.WIN;
         }
         return ProfitRate.LOSE;
-    }
-
-    public int determineProfit(List<Player> players) {
-        int playersTotalProfit = players.stream()
-                .mapToInt(this::determinePlayerProfit)
-                .sum();
-        return -playersTotalProfit;
     }
 }

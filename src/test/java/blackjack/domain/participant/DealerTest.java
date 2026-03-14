@@ -42,7 +42,7 @@ class DealerTest {
         dealer.receiveCard(new Card(Rank.TEN, Suit.SPADES));
         dealer.receiveCard(new Card(Rank.NINE, Suit.HEARTS));
 
-        List<Integer> profits = dealer.determinePlayersProfit(List.of(player));
+        List<Integer> profits = dealer.determinePlayerProfits(List.of(player));
 
         assertThat(profits.getFirst()).isEqualTo(15000);
     }
@@ -58,7 +58,7 @@ class DealerTest {
         dealer.receiveCard(new Card(Rank.ACE, Suit.CLUBS));
         dealer.receiveCard(new Card(Rank.KING, Suit.DIAMONDS));
 
-        List<Integer> profits = dealer.determinePlayersProfit(List.of(player));
+        List<Integer> profits = dealer.determinePlayerProfits(List.of(player));
 
         assertThat(profits.getFirst()).isEqualTo(0);
     }
@@ -76,7 +76,7 @@ class DealerTest {
         dealer.receiveCard(new Card(Rank.SIX, Suit.CLUBS));
         dealer.receiveCard(new Card(Rank.SIX, Suit.SPADES));
 
-        List<Integer> profits = dealer.determinePlayersProfit(List.of(player));
+        List<Integer> profits = dealer.determinePlayerProfits(List.of(player));
 
         assertThat(profits.getFirst()).isEqualTo(-10000);
     }

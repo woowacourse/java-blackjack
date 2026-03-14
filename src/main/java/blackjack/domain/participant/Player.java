@@ -2,14 +2,12 @@ package blackjack.domain.participant;
 
 public class Player extends Participant {
 
-    private final int bettingAmount;
-    private boolean stopDrawing;
+    private boolean stand;
 
     public Player(String nickname, int bettingAmount) {
         super(nickname);
         validateBettingAmount(bettingAmount);
-        this.stopDrawing = false;
-        this.bettingAmount = bettingAmount;
+        this.stand = false;
     }
 
     private void validateBettingAmount(int bettingAmount) {
@@ -23,14 +21,14 @@ public class Player extends Participant {
 
     @Override
     public boolean isDrawable() {
-        return !stopDrawing && super.isDrawable();
+        return !stand && super.isDrawable();
     }
 
     public void stand() {
-        stopDrawing = true;
+        stand = true;
     }
 
-    public int calculateProfit(ProfitRate profitRate) {
-        return profitRate.getProfit(bettingAmount);
+    public boolean isStand() {
+        return stand;
     }
 }

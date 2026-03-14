@@ -1,4 +1,4 @@
-package blackjack.domain.participant;
+package blackjack.domain.bet;
 
 public enum ProfitRate {
     WIN(1.0),
