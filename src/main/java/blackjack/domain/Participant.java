@@ -5,16 +5,16 @@ import java.util.List;
 
 public abstract class Participant {
 
-    protected final String name;
+    protected final Name name;
     protected final Cards drawnCards;
 
     protected Participant(String name) {
-        this.name = name;
+        this.name = new Name(name);
         this.drawnCards = new Cards();
     }
 
     public String getName() {
-        return name;
+        return name.getName();
     }
 
     public boolean isDealerNotDone() {

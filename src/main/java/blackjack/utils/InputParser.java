@@ -1,18 +1,16 @@
 package blackjack.utils;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 public class InputParser {
 
     public static List<String> splitPlayerNames(String input) {
         if (input == null || input.trim().isEmpty()) {
-            throw new IllegalArgumentException("[ERROR] 플레이어 이름을 입력해주세요.");
+            throw new IllegalArgumentException("[ERROR] 이름을 정확하게 입력해주세요.");
         }
         String[] names = input.split(",");
-        for (String name : names) {
-            validateNameEmpty(name);
-        }
-        return List.of(names).stream()
+        return Stream.of(names)
                 .map(String::trim)
                 .toList();
     }
@@ -22,12 +20,6 @@ public class InputParser {
             return Integer.parseInt(input);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("[ERROR] 숫자 이외의 값은 입력할 수 없습니다.");
-        }
-    }
-
-    private static void validateNameEmpty(String name) {
-        if (name.trim().isEmpty()) {
-            throw new IllegalArgumentException("[ERROR] 플레이어 이름은 공백이 될 수 없습니다.");
         }
     }
 }
