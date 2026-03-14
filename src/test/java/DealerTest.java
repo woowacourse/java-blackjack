@@ -4,7 +4,6 @@ import domain.Dealer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import service.GameService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,13 +12,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class DealerTest {
 
-    private GameService gameService;
     private CardDeck cardDeck;
 
     @BeforeEach
     void setUp() {
         cardDeck = new CardDeck();
-        gameService = new GameService();
     }
 
     @Test
@@ -72,18 +69,18 @@ public class DealerTest {
     @Test
     @DisplayName("딜러는 처음 받은 2장의 합이 16 이하면 1장을 추가로 받아야 한다")
     public void if_dealer_card_sum_under16_must_one_more(){
-        int score = 16;
         Dealer dealer = new Dealer();
-        boolean result = dealer.isHit(score);
+        dealer.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_SIX));
+        boolean result = dealer.isHit();
         assertThat(result).isTrue();
     }
 
     @Test
     @DisplayName("딜러는 처음 받은 2장의 합이 17 이상이면 추가로 받을 수 없다")
     public void if_dealer_card_sum_over17_stop(){
-        int score = 18;
         Dealer dealer = new Dealer();
-        boolean result = dealer.isHit(score);
+        dealer.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_SEVEN));
+        boolean result = dealer.isHit();
         assertThat(result).isFalse();
     }
 }

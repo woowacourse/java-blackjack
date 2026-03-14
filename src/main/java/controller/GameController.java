@@ -5,6 +5,7 @@ import java.util.List;
 import domain.Amount;
 import domain.Dealer;
 import domain.Player;
+import domain.Players;
 import service.GameService;
 import util.InputParser;
 import view.InputView;
@@ -25,85 +26,82 @@ public class GameController {
     }
 
     public void run() {
-        List<Player> players = setUpUsers();
-        processBet(players);
+        Players players = setUp();
+        play(players);
+        showResult(players);
+    }
+
+    private Players setUp() {
+        Players players = setUpUsers();
         initDeal(players);
+        return players;
+    }
+
+    private void play(Players players) {
         processBlackjack(players);
-        processUserTurns(players);
+        processPlayerTurns(players);
         processDealerTurn();
+    }
+
+    private void showResult(Players players) {
         showCardResult(players);
         showGameRecord(players);
     }
 
-    private List<Player> setUpUsers(){
-        String input = inputView.readUsers();
-        return InputParser.parseUsers(input);
+    private Players setUpUsers(){
+        List<String> userNames = readUserNames();
+        List<Player> players = userNames.stream()
+                .map(name -> new Player(name, readUserAmounts(name)))
+                .toList();
+        return new Players(players);
     }
 
-    private void processBet(List<Player> players) {
-        for(Player player : players) {
-            String input = inputView.readBetAmount(player);
-            Amount amount = new Amount(InputParser.parseAmount(input));
-            player.bet(amount);
-        }
+    private List<String> readUserNames() {
+        String input = inputView.readUserNames();
+        return InputParser.parseUserNames(input);
     }
 
-    private void initDeal(List<Player> players){
+    private Amount readUserAmounts(String name) {
+        String input = inputView.readBetAmount(name);
+        return new Amount(InputParser.parseAmount(input));
+    }
+
+    private void initDeal(Players players){
         gameService.initDeal(players, dealer);
         outputView.printInitialDeal(players, dealer);
     }
 
-    private void processBlackjack(List<Player> players) {
-        for(Player player : players) {
-            boolean userIsBlackjack = player.isBlackjack();
-            boolean dealerIsBlackjack = dealer.isBlackjack();
-            if(userIsBlackjack && !dealerIsBlackjack) {
-                outputView.printBlackjackWin(player);
-                continue;
-            }
-            if(userIsBlackjack) {
-                outputView.printBlackjackDraw(player);
-            }
+    private void processBlackjack(Players players) {
+        outputView.printBlackjackWin(players);
+    }
+
+    private void processPlayerTurns(Players players) {
+        for(Player player : players.getPlayers()) {
+            processPlayerTurn(player);
         }
     }
 
-    private void processUserTurns(List<Player> players) {
-        for (Player player : players) {
-            if(player.isBlackjack()) {
-                continue;
-            }
-            boolean hitAtLeastOnce = false;
-            while (inputView.readWillHit(player.getName())) {
-                hitAtLeastOnce = true;
-                player.receiveCard(gameService.deal());
-                outputView.printHand(player);
-            }
-            if (!hitAtLeastOnce) {
-                outputView.printHand(player);
-            }
+    private void processPlayerTurn(Player player) {
+        while (!player.isBlackjack() && inputView.readWillHit(player.getName())) {
+            gameService.deal(player);
+            outputView.printHand(player);
         }
+        outputView.printHand(player);
     }
 
     private void processDealerTurn() {
-        int sum = dealer.getScore();
-        if(dealer.isBlackjack()) {
-            outputView.printDealerBlackjack();
-            return;
-        }
-        if(dealer.isHit(sum)) {
-            dealer.receiveCard(gameService.deal());
+        while (dealer.isHit()) {
+            gameService.deal(dealer);
             outputView.printDealerHit();
-            return;
         }
-        outputView.printDealerStand();
     }
 
-    private void showCardResult(List<Player> players) {
+    private void showCardResult(Players players) {
         outputView.printCardResult(players, dealer);
     }
 
-    private void showGameRecord(List<Player> players){
+    private void showGameRecord(Players players){
         gameService.determineResult(players, dealer);
-        outputView.printGameRecord(players, dealer);
+        outputView.printGameRecord(players);
     }
 }

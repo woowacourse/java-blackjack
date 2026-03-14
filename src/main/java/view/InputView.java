@@ -1,6 +1,5 @@
 package view;
 
-import domain.Player;
 
 import java.util.Scanner;
 
@@ -8,7 +7,7 @@ public class InputView {
 
     private final Scanner scanner = new Scanner(System.in);
 
-    public String readUsers() {
+    public String readUserNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         return scanner.nextLine();
     }
@@ -31,8 +30,8 @@ public class InputView {
         }
     }
 
-    public String readBetAmount(Player player) {
-        System.out.println(player.getName() + "의 배팅 금액은?");
+    public String readBetAmount(String name) {
+        System.out.println("\n" + name + "의 배팅 금액은?");
         return scanner.nextLine();
     }
 }

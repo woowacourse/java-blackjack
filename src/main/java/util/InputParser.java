@@ -1,16 +1,13 @@
 package util;
 
-import domain.Player;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class InputParser {
 
-    public static List<Player> parseUsers(String input) {
-        return Arrays.stream(input.split(","))
-                .map(Player::new)
-                .toList();
+    public static List<String> parseUserNames(String input) {
+        return Arrays.stream(input.split(",")).toList();
     }
 
     public static int parseAmount(String amount) {

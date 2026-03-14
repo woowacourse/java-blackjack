@@ -13,11 +13,11 @@ public class Dealer extends Participant{
         return hand.getFirst();
     }
 
-    public boolean isHit(int score) {
-        return score <= DEALER_HIT_NUM;
+    public boolean isHit() {
+        return getScore() <= DEALER_HIT_NUM;
     }
 
-    public int getScore() {
+    private int getScore() {
         return hand.stream().mapToInt(Card::getValue).sum();
     }
 

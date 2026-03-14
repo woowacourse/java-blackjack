@@ -2,7 +2,6 @@ package service;
 
 import domain.*;
 
-import java.util.List;
 
 public class GameService {
 
@@ -12,20 +11,22 @@ public class GameService {
         this.cardDeck = new CardDeck();
     }
 
-    public void initDeal(List<Player> players, Dealer dealer) {
+    public void initDeal(Players players, Dealer dealer) {
         for (int i = 0; i < 2; i++) {
-            for (Player player : players) {
-                player.receiveCard(cardDeck.draw());
-            }
+            players.receiveCardAll(cardDeck::draw);
             dealer.receiveCard(cardDeck.draw());
         }
     }
 
-    public void determineResult(List<Player> players, Dealer dealer) {
+    public void deal(Participant participant) {
+        participant.receiveCard(cardDeck.draw());
+    }
+
+    public void determineResult(Players players, Dealer dealer) {
         int dealerScore = dealer.calculateScore();
         boolean dealerBurst = dealer.isBurst(dealerScore);
 
-        for (Player player : players) {
+        for (Player player : players.getPlayers()) {
             int userScore = player.calculateScore();
             boolean userBurst = player.isBurst(userScore);
             GameResult userResult = judge(player.isBlackjack(), dealer.isBlackjack(), userScore, dealerScore, userBurst, dealerBurst);

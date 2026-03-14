@@ -4,15 +4,12 @@ package domain;
 public class Player extends Participant{
 
     private final String name;
-    private Amount amount;
+    private final Amount amount;
 
     private GameResult gameResult;
 
-    public Player(String name) {
+    public Player(String name, Amount amount) {
         this.name = name;
-    }
-
-    public void bet(Amount amount) {
         this.amount = amount;
     }
 
@@ -28,7 +25,6 @@ public class Player extends Participant{
         }
         return -amount.amount();
     }
-
 
     public String getName() {
         return name;
