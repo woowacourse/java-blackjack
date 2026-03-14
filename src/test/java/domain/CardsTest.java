@@ -67,6 +67,21 @@ class CardsTest {
             assertThatThrownBy(() -> cards.addCard(newCard))
                     .isInstanceOf(IllegalStateException.class);
         }
+
+        @Test
+        @DisplayName("카드 목록에 이미 존재하는 카드를 중복으로 추가하면 예외가 발생한다.")
+        void shouldThrowExceptionForDuplicatedCard() {
+            // given
+            Cards cards = createCardsWithCards(
+                    new Card(CardShape.DIAMOND, CardContents.TWO)
+            );
+
+            Card duplicatedCard = new Card(CardShape.DIAMOND, CardContents.TWO);
+
+            // when & then
+            assertThatThrownBy(() -> cards.addCard(duplicatedCard))
+                    .isInstanceOf(IllegalArgumentException.class);
+        }
     }
 
     @Nested
