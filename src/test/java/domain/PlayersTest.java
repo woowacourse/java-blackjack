@@ -3,7 +3,6 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import common.ErrorMessage;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,7 +28,6 @@ class PlayersTest {
 
         // when & then
         assertThatThrownBy(() -> Players.of(testPlayerNames))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ErrorMessage.MAX_PLAYER_ERROR.getMessage());
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

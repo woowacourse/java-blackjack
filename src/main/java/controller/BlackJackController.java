@@ -98,8 +98,7 @@ public class BlackJackController {
 
     private boolean askDrawCard(ParticipantDto participantDto) {
         outputView.printHitOrStandPrompt(participantDto);
-        String input = inputView.readHitOrStand();
-        return input.equals("y");
+        return inputView.readHitOrStand();
     }
 
     private void drawCardAndPrintResult(Game game, Player player) {

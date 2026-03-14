@@ -1,6 +1,5 @@
 package domain;
 
-import common.ErrorMessage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -38,7 +37,7 @@ public class Deck {
 
     public Card drawCard() {
         if (totalDeck.isEmpty()) {
-            throw new NoSuchElementException(ErrorMessage.DRAW_CARD_OUT_OF_RANGE.getMessage());
+            throw new NoSuchElementException("[ERROR] 더 이상 뽑을 수 있는 카드가 없습니다.");
         }
         return totalDeck.removeFirst();
     }
