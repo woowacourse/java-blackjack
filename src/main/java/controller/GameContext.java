@@ -8,10 +8,10 @@ import model.Dealer;
 import model.Player;
 
 public class GameContext {
-    private Dealer dealer;
+    private final Dealer dealer;
+    private final CardDispenser cardDispenser;
+    private final BettingResult bettingResult;
     private List<Player> players;
-    private CardDispenser cardDispenser;
-    private BettingResult bettingResult;
 
     public GameContext() {
         dealer = new Dealer();
