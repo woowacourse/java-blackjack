@@ -19,7 +19,7 @@ public class BlackJackController {
     }
 
     public void run() {
-        final String participant = inputView.getParticipant();
+        final String participant = inputView.getPlayerNames();
         final BlackJackGame game = BlackJackGame.startGame(participant);
         final Players players = game.players();
         final Dealer dealer = game.dealer();
@@ -38,7 +38,7 @@ public class BlackJackController {
     }
 
     private void drawPlayerTurn(Player player, Cards cards) {
-        while (inputView.getMoreCards(player)) {
+        while (inputView.askHitOrStand(player)) {
             player.drawCard(cards);
             resultView.printPlayerCards(player.getName(), resultView.joinCardNames(player.getCardList()));
             if (player.checkBust()) {

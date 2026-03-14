@@ -24,7 +24,7 @@ public class ResultView {
     }
 
     public void printDealerDrawMessage() {
-        System.out.println(IOMessage.DEALER_ONE_CARD.message());
+        System.out.println(IOMessage.DEALER_HIT_ONE_CARD.message());
     }
 
     public void printDealerBust() {
