@@ -8,10 +8,12 @@ import domain.gamer.Players;
 public class BettingTable {
 
     private final Bettings bettings;
+    private final Profits profits;
     private final BettingPolicyManager bettingManager;
 
     public BettingTable(BettingPolicyManager policyManager) {
         this.bettings = new Bettings();
+        this.profits = new Profits();
         this.bettingManager = policyManager;
     }
 
@@ -31,14 +33,15 @@ public class BettingTable {
 
     private void progressBetting(Dealer dealer, Player player) {
         BettingRate bettingRate = bettingManager.gainBettingRate(dealer, player);
-        bettings.settleBettingMoney(player.getGamerName(), bettingRate.getBettingRate());
+        BettingMoney bettingMoney = bettings.getPlayerBettingMoney(player.getGamerName());
+        profits.settleProfit(player.getGamerName(), bettingMoney.withRate(bettingRate.getBettingRate()));
     }
 
     public Profit getDealerProfit() {
-        return bettings.calculateDealerProfit();
+        return profits.calculateDealerProfit();
     }
 
     public Profit getPlayerProfit(Player player) {
-        return bettings.getPlayerProfit(player.getGamerName());
+        return profits.getProfit(player.getGamerName());
     }
 }
