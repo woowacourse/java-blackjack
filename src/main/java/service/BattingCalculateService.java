@@ -1,8 +1,8 @@
 package service;
 
 import domain.Players;
-import domain.batting.Money;
-import domain.batting.Profit;
+import domain.betting.Money;
+import domain.betting.Profit;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import dto.BattingResultDto;
@@ -23,7 +23,7 @@ public class BattingCalculateService {
     private List<Profit> calculatePlayersProfit() {
         List<Profit> playersProfit = new ArrayList<>();
         for (Player player : players) {
-            Money battingMoney = player.getBattingMoney();
+            Money battingMoney = player.getBettingMoney();
             double earningsRate = player.getStatus().earningsRate(dealer.getStatus());
             playersProfit.add(new Profit(player.getName(), battingMoney, earningsRate));
         }

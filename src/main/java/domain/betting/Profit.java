@@ -1,4 +1,4 @@
-package domain.batting;
+package domain.betting;
 
 public class Profit {
     private final String name;

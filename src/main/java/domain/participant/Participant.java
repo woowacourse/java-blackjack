@@ -36,7 +36,6 @@ abstract public class Participant {
         return name;
     }
 
-    // Status에 위임하여 정보 획득
     public int getScore() {
         return this.status.getCards().calculateScore();
     }

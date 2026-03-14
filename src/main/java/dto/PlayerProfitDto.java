@@ -1,6 +1,6 @@
 package dto;
 
-import domain.batting.Profit;
+import domain.betting.Profit;
 
 public record PlayerProfitDto(String name, long profit) {
     public static PlayerProfitDto from(Profit profit) {

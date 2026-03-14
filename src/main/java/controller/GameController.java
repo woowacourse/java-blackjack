@@ -1,14 +1,12 @@
 package controller;
 
 import domain.Players;
-import domain.batting.Money;
-import domain.batting.Profit;
+import domain.betting.Money;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import dto.BattingResultDto;
 import dto.GameStartDto;
 import dto.HandDto;
-import dto.HandScoreDto;
 import service.BattingCalculateService;
 import service.GameService;
 import util.HitOption;
@@ -16,8 +14,6 @@ import util.InputBattingParser;
 import util.InputHitOptionParser;
 import view.InputView;
 import view.OutputView;
-
-import java.util.List;
 
 public class GameController {
     private final InputView inputView;
@@ -32,7 +28,7 @@ public class GameController {
         Players players = inputPlayers();
         Dealer dealer = new Dealer();
         GameService gameService = new GameService(players, dealer);
-        BattingCalculateService battingCalculateService = new BattingCalculateService(players, dealer);
+        BattingCalculateService bettingCalculateService = new BattingCalculateService(players, dealer);
 
         playerBatting(players);
 
@@ -42,8 +38,8 @@ public class GameController {
         processGame(gameService);
         outputView.printScore(gameService.getTotalScore());
 
-        BattingResultDto battingResult = battingCalculateService.getBattingResult();
-        outputView.printBattingResults(battingResult);
+        BattingResultDto bettingResult = bettingCalculateService.getBattingResult();
+        outputView.printBattingResults(bettingResult);
     }
 
     private Players inputPlayers() {
@@ -115,7 +111,7 @@ public class GameController {
 
     private void playerBatting(Players players) {
         for (Player player : players) {
-            player.battingMoney(inputBattingMoney(player));
+            player.bettingMoney(inputBattingMoney(player));
         }
     }
 }
