@@ -3,51 +3,47 @@ package controller;
 import java.util.List;
 
 import domain.Amount;
-import domain.Dealer;
 import domain.Player;
 import domain.Players;
-import service.GameService;
+import domain.BlackjackGame;
 import view.InputView;
 import view.OutputView;
 
 public class GameController {
 
-    private final GameService gameService;
     private final InputView inputView;
     private final OutputView outputView;
+    private BlackjackGame blackjackGame;
 
-    private final Dealer dealer = new Dealer();
-
-    public GameController(InputView inputView, OutputView outputVIew, GameService gameService) {
+    public GameController(InputView inputView, OutputView outputVIew) {
         this.inputView = inputView;
         this.outputView = outputVIew;
-        this.gameService = gameService;
     }
 
     public void run() {
-        Players players = setUp();
-        play(players);
-        showResult(players);
+        setUp();
+        play();
+        showResult();
     }
 
-    private Players setUp() {
-        Players players = setUpUsers();
-        initDeal(players);
-        return players;
+    private void setUp() {
+        Players players = createUsers();
+        this.blackjackGame = new BlackjackGame(players);
+        initDeal();
     }
 
-    private void play(Players players) {
-        processBlackjack(players);
-        processPlayerTurns(players);
+    private void play() {
+        processBlackjack();
+        processPlayerTurns();
         processDealerTurn();
     }
 
-    private void showResult(Players players) {
-        showCardResult(players);
-        showGameRecord(players);
+    private void showResult() {
+        showCardResult();
+        showGameRecord();
     }
 
-    private Players setUpUsers(){
+    private Players createUsers(){
         List<String> userNames = readUserNames();
         List<Player> players = userNames.stream()
                 .map(name -> new Player(name, readUserAmounts(name)))
@@ -63,43 +59,43 @@ public class GameController {
         return new Amount(inputView.readBetAmount(name));
     }
 
-    private void initDeal(Players players){
-        gameService.initDeal(players, dealer);
-        outputView.printInitialDeal(players, dealer);
+    private void initDeal(){
+        blackjackGame.initDeal();
+        outputView.printInitialDeal(blackjackGame.getPlayers(), blackjackGame.getDealer());
     }
 
-    private void processBlackjack(Players players) {
-        List<Player> blackjackPlayers = gameService.getBlackjackPlayers(players);
+    private void processBlackjack() {
+        List<Player> blackjackPlayers = blackjackGame.getBlackjackPlayers();
         outputView.printBlackjacks(blackjackPlayers);
     }
 
-    private void processPlayerTurns(Players players) {
-        for(Player player : players.getPlayers()) {
+    private void processPlayerTurns() {
+        for(Player player : blackjackGame.getPlayers()) {
             processPlayerTurn(player);
         }
     }
 
     private void processPlayerTurn(Player player) {
         while (!player.isBlackjack() && inputView.readWillHit(player.getName())) {
-            gameService.deal(player);
+            blackjackGame.deal(player);
             outputView.printHand(player);
         }
         outputView.printHand(player);
     }
 
     private void processDealerTurn() {
-        while (dealer.isHit()) {
-            gameService.deal(dealer);
+        while (blackjackGame.getDealer().isHit()) {
+            blackjackGame.deal(blackjackGame.getDealer());
             outputView.printDealerHit();
         }
     }
 
-    private void showCardResult(Players players) {
-        outputView.printCardResult(players, dealer);
+    private void showCardResult() {
+        outputView.printCardResult(blackjackGame.getPlayers(), blackjackGame.getDealer());
     }
 
-    private void showGameRecord(Players players){
-        gameService.determineResult(players, dealer);
-        outputView.printGameRecord(players);
+    private void showGameRecord(){
+        blackjackGame.determineResult();
+        outputView.printGameRecord(blackjackGame.getPlayers());
     }
 }

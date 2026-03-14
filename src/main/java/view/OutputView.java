@@ -7,11 +7,11 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    public void printInitialDeal(Players players, Dealer dealer) {
-        List<String> names = players.getPlayers().stream().map(Player::getName).toList();
+    public void printInitialDeal(List<Player> players, Dealer dealer) {
+        List<String> names = players.stream().map(Player::getName).toList();
         System.out.println("\n" + "딜러와 " + String.join(", ", names) + "에게 2장을 나누었습니다.");
         System.out.println("딜러: " + dealer.reveal().getDisplayName());
-        for(Player player : players.getPlayers()) {
+        for(Player player : players) {
             printHand(player);
         }
         System.out.println();
@@ -34,10 +34,10 @@ public class OutputView {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printCardResult(Players players, Dealer dealer) {
+    public void printCardResult(List<Player> players, Dealer dealer) {
         System.out.println();
         System.out.println(formatHandResult("딜러", dealer));
-        players.getPlayers().forEach(player ->
+        players.forEach(player ->
                 System.out.println(formatHandResult(player.getName(), player))
         );
     }
@@ -49,13 +49,13 @@ public class OutputView {
         return  name + "카드: " + cards + " - 결과: " + participant.calculateScore();
     }
 
-    public void printGameRecord(Players players) {
+    public void printGameRecord(List<Player> players) {
         System.out.println('\n' + "## 최종 수익");
-        int dealerProfit = players.getPlayers().stream()
+        int dealerProfit = players.stream()
                 .mapToInt(Player::calculateProfit)
                 .sum() * -1;
         System.out.println("딜러: " + dealerProfit);
-        for (Player player : players.getPlayers()) {
+        for (Player player : players) {
             System.out.println(player.getName() + ": " + player.calculateProfit());
         }
     }

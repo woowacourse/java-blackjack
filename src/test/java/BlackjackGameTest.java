@@ -1,22 +1,12 @@
-
 import domain.*;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import service.GameService;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
-class GameServiceTest {
-
-    private GameService gameService;
-
-    @BeforeEach
-    void setUp() {
-        gameService = new GameService();
-    }
+class BlackjackGameTest {
 
     @Test
     @DisplayName("일반 카드들의 합산 점수를 계산한다")
@@ -64,43 +54,49 @@ class GameServiceTest {
 
     @Test
     @DisplayName("처음 카드를 분배받으면 각 게임 참가자들은 패를 2장씩 가지고 있어야 한다.")
-    public void when_init_deal_each_must_have_2cards() {
-        Dealer dealer = new Dealer();
+    void when_init_deal_each_must_have_2cards() {
         Player player1 = new Player("json", new Amount(10000));
         Player player2 = new Player("poby", new Amount(10000));
         Players players = new Players(List.of(player1, player2));
 
-        gameService.initDeal(players,dealer);
-        assertThat(dealer.getHand().size()).isEqualTo(2);
+        BlackjackGame game = new BlackjackGame(players);
+        game.initDeal();
+
+        assertThat(game.getDealer().getHand().size()).isEqualTo(2);
         assertThat(player1.getHand().size()).isEqualTo(2);
         assertThat(player2.getHand().size()).isEqualTo(2);
     }
 
     @Test
     @DisplayName("딜러의 최종 승패는 각 플레이어들의 결과를 합쳐서 계산된다.")
-    public void calculate_dealer_final_result_by_sum_of_users_result(){
-        Dealer dealer = new Dealer();
+    void calculate_dealer_final_result_by_sum_of_users_result() {
         Player winPlayer = new Player("json", new Amount(10000));
         Player losePlayer = new Player("poby", new Amount(10000));
         Player drawPlayer = new Player("draw", new Amount(10000));
         Players players = new Players(List.of(winPlayer, losePlayer, drawPlayer));
 
-        dealer.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_NINE));
+        BlackjackGame game = new BlackjackGame(players);
+
+        game.getDealer().receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_NINE));
         winPlayer.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_SEVEN));
         losePlayer.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_ACE));
         drawPlayer.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_NINE));
 
-        gameService.determineResult(players, dealer);
-        long totalUserWinRounds = players.getPlayers().stream().filter(player -> player.getGameResult() == GameResult.WIN)
-                        .count();
-        long totalUserLoseRounds = players.getPlayers().stream().filter(player -> player.getGameResult() == GameResult.LOSE)
-                        .count();
-        long totalUserDrawRounds = players.getPlayers().stream().filter(player -> player.getGameResult() == GameResult.DRAW)
+        game.determineResult();
+
+        long totalUserWinRounds = players.getPlayers().stream()
+                .filter(player -> player.getGameResult() == GameResult.WIN)
+                .count();
+        long totalUserLoseRounds = players.getPlayers().stream()
+                .filter(player -> player.getGameResult() == GameResult.LOSE)
+                .count();
+        long totalUserDrawRounds = players.getPlayers().stream()
+                .filter(player -> player.getGameResult() == GameResult.DRAW)
                 .count();
 
-        assertThat(dealer.getWinRounds()).isEqualTo(totalUserLoseRounds);
-        assertThat(dealer.getLoseRounds()).isEqualTo(totalUserWinRounds);
-        assertThat(dealer.getDrawRounds()).isEqualTo(totalUserDrawRounds);
+        assertThat(game.getDealer().getWinRounds()).isEqualTo(totalUserLoseRounds);
+        assertThat(game.getDealer().getLoseRounds()).isEqualTo(totalUserWinRounds);
+        assertThat(game.getDealer().getDrawRounds()).isEqualTo(totalUserDrawRounds);
     }
 
     @Test
@@ -112,10 +108,11 @@ class GameServiceTest {
         Player player2 = new Player("park", new Amount(10000));
         player2.receiveInitCard(List.of(Card.CLUB_ACE, Card.CLUB_TEN));
 
-        Dealer dealer = new Dealer();
-        dealer.receiveInitCard(List.of(Card.HEART_ACE, Card.HEART_TEN));
+        Players players = new Players(List.of(player1, player2));
+        BlackjackGame game = new BlackjackGame(players);
 
-        gameService.determineResult(new Players(List.of(player1, player2)), dealer);
+        game.getDealer().receiveInitCard(List.of(Card.HEART_ACE, Card.HEART_TEN));
+        game.determineResult();
 
         assertThat(player1.getGameResult()).isEqualTo(GameResult.DRAW);
         assertThat(player2.getGameResult()).isEqualTo(GameResult.DRAW);
@@ -132,17 +129,17 @@ class GameServiceTest {
         Player player2 = new Player("park", new Amount(5000));
         player2.receiveInitCard(List.of(Card.SPADE_SEVEN, Card.CLUB_SEVEN, Card.HEART_SEVEN));
 
-        Dealer dealer = new Dealer();
-        dealer.receiveInitCard(List.of(Card.CLUB_ACE, Card.CLUB_TEN));
+        Players players = new Players(List.of(player1, player2));
+        BlackjackGame game = new BlackjackGame(players);
 
-        gameService.determineResult(new Players(List.of(player1, player2)), dealer);
+        game.getDealer().receiveInitCard(List.of(Card.CLUB_ACE, Card.CLUB_TEN));
+        game.determineResult();
 
         assertThat(player1.getGameResult()).isEqualTo(GameResult.LOSE);
         assertThat(player2.getGameResult()).isEqualTo(GameResult.LOSE);
         assertThat(player1.calculateProfit()).isEqualTo(-10000);
         assertThat(player2.calculateProfit()).isEqualTo(-5000);
     }
-
 
     @Test
     @DisplayName("플레이어만 블랙잭이면 배팅금의 1.5배를 받는다")
@@ -153,10 +150,11 @@ class GameServiceTest {
         Player player2 = new Player("park", new Amount(5000));
         player2.receiveInitCard(List.of(Card.HEART_ACE, Card.HEART_FIVE));
 
-        Dealer dealer = new Dealer();
-        dealer.receiveInitCard(List.of(Card.SPADE_NINE, Card.SPADE_TEN));
+        Players players = new Players(List.of(player1, player2));
+        BlackjackGame game = new BlackjackGame(players);
 
-        gameService.determineResult(new Players(List.of(player1, player2)), dealer);
+        game.getDealer().receiveInitCard(List.of(Card.SPADE_NINE, Card.SPADE_TEN));
+        game.determineResult();
 
         assertThat(player1.getGameResult()).isEqualTo(GameResult.WIN);
         assertThat(player2.getGameResult()).isEqualTo(GameResult.LOSE);

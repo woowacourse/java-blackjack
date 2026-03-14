@@ -1,19 +1,21 @@
-package service;
-
-import domain.*;
+package domain;
 
 import java.util.List;
 
 
-public class GameService {
+public class BlackjackGame {
 
     private final CardDeck cardDeck;
+    private final Dealer dealer;
+    private final Players players;
 
-    public GameService() {
+    public BlackjackGame(Players players) {
         this.cardDeck = new CardDeck();
+        this.dealer = new Dealer();
+        this.players = players;
     }
 
-    public void initDeal(Players players, Dealer dealer) {
+    public void initDeal() {
         for (int i = 0; i < 2; i++) {
             players.receiveCardAll(cardDeck::draw);
             dealer.receiveCard(cardDeck.draw());
@@ -24,11 +26,11 @@ public class GameService {
         participant.receiveCard(cardDeck.draw());
     }
 
-    public List<Player> getBlackjackPlayers(Players players) {
-        return players.getBlackjackPlayers();
+    public List<Player> getBlackjackPlayers() {
+        return this.players.getBlackjackPlayers();
     }
 
-    public void determineResult(Players players, Dealer dealer) {
+    public void determineResult() {
         int dealerScore = dealer.calculateScore();
         boolean dealerBurst = dealer.isBurst(dealerScore);
 
@@ -39,6 +41,14 @@ public class GameService {
             player.setGameResult(userResult);
             dealer.setRounds(userResult.reverse());
         }
+    }
+
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public List<Player> getPlayers() {
+        return players.getPlayers();
     }
 
     private GameResult judge(boolean userIsBlackjack, boolean dealerIsBlackjack, int userScore, int dealerScore, boolean userBurst, boolean dealerBurst) {
