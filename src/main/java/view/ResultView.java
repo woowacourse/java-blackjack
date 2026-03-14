@@ -9,6 +9,7 @@ import domain.dto.PlayerResult;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Player;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -68,10 +69,11 @@ public class ResultView {
     public void printProfits(List<PlayerResult> playerResults, BetMoney dealerProfit) {
         printEmptyLine();
         System.out.println("## 최종 승패");
-        System.out.println("딜러: " + dealerProfit.getValue().setScale(0));
+        System.out.println("딜러: " + dealerProfit.getValue().setScale(0, RoundingMode.DOWN));
 
         for (PlayerResult result : playerResults) {
-            System.out.println(result.player().getName().getValue() + ": " + result.betMoney().getValue().setScale(0));
+            System.out.println(result.player().getName().getValue() + ": " + result.betMoney().getValue()
+                    .setScale(0, RoundingMode.DOWN));
         }
     }
 
@@ -89,7 +91,7 @@ public class ResultView {
 
     private void printCardWithResult(Player player) {
         System.out.println(
-                "카드: " + cardsToString(
+                player.getName().getValue() + "카드: " + cardsToString(
                         player.getHand().getCards()) + " - 결과: "
                         + player.getTotalSum().value());
     }
