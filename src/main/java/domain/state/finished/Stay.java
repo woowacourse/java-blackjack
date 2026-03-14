@@ -27,10 +27,10 @@ public class Stay extends Finished {
     @Override
     public Result getResult(State dealerState) {
         if (dealerState instanceof Bust
-                || dealerState.getScore() < getScore()) {
+                || this.getScore().isHigher(dealerState.getScore())) {
             return Result.WIN;
         }
-        if (dealerState.getScore() > getScore()) {
+        if (dealerState.getScore().isHigher(this.getScore())) {
             return Result.LOSE;
         }
         return Result.DRAW;

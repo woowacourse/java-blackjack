@@ -1,6 +1,7 @@
 package domain.state.running;
 
 import domain.card.Hand;
+import domain.score.Score;
 import domain.state.Started;
 import domain.state.State;
 import domain.state.finished.Stay;
@@ -17,7 +18,7 @@ public abstract class Running extends Started {
     }
 
     @Override
-    public Integer getScore() {
+    public Score getScore() {
         return hand.getScore();
     }
 

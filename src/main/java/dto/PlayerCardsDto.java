@@ -7,7 +7,7 @@ import java.util.List;
 public record PlayerCardsDto(String name, List<String> cards, Integer totalScore) {
     public static PlayerCardsDto fromParticipant(Participant participant) {
         return new PlayerCardsDto(participant.getName(), cardToString(participant.getState().getCards()),
-                participant.getState().getScore());
+                participant.getState().getScore().value());
     }
 
     private static List<String> cardToString(List<Card> hands) {

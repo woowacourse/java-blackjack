@@ -1,15 +1,16 @@
 package domain.card;
 
 import domain.card.vo.Card;
+import domain.score.Score;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
 
 public class Hand {
-    public static final int ACE_ADVANTAGE_SCORE = 10;
+    public static final Score ACE_ADVANTAGE = new Score(10);
     public static final int MIN_SIZE = 2;
-    private static final int BUST_SCORE = 21;
+    private static final Score BUST_BOUND_SCORE = new Score(21);
     private final List<Card> cards;
 
     public Hand(List<Card> cards) {
@@ -30,14 +31,14 @@ public class Hand {
         }
     }
 
-    public Integer getScore() {
-        int score = cards.stream()
+    public Score getScore() {
+        Score score = cards.stream()
                 .map(Card::getScore)
-                .reduce(Integer::sum)
-                .orElse(0);
+                .reduce(Score::sum)
+                .orElseThrow(() -> new IllegalStateException("card 값을 더할 수 없어 getScore()를 실행할 수 없습니다."));
 
         if (hasAce(cards) && !isAceAdvantageIsBust(score)) {
-            return score + ACE_ADVANTAGE_SCORE;
+            return score.sum(ACE_ADVANTAGE);
         }
 
         return score;
@@ -56,15 +57,15 @@ public class Hand {
                 .anyMatch(Card::isAce);
     }
 
-    private boolean isAceAdvantageIsBust(int score) {
+    private boolean isAceAdvantageIsBust(Score score) {
         if (!hasAce(cards)) {
             throw new IllegalStateException("Ace 가 없을때는 AceAdvantage 를 얻을 수 없습니다.");
         }
-        return score + ACE_ADVANTAGE_SCORE > BUST_SCORE;
+        return score.sum(ACE_ADVANTAGE).isHigher(BUST_BOUND_SCORE);
     }
 
     public boolean isBust() {
-        return getScore() > BUST_SCORE;
+        return getScore().isHigher(BUST_BOUND_SCORE);
     }
 
     public int getSize() {

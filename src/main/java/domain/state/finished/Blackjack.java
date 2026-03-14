@@ -1,20 +1,21 @@
 package domain.state.finished;
 
 import domain.card.Hand;
+import domain.score.Score;
 import domain.state.Result;
 import domain.state.State;
 import java.util.function.Function;
 
 public class Blackjack extends Finished {
     private static final int HAND_SIZE = 2;
-    private static final int BLACKJACK_SCORE = 21;
+    private static final Score BLACKJACK_SCORE = new Score(21);
 
     public Blackjack(Hand hand) {
         super(hand);
     }
 
     public static boolean isBlackJack(Hand hand) {
-        return hand.getSize() == HAND_SIZE && hand.getScore() == BLACKJACK_SCORE;
+        return hand.getSize() == HAND_SIZE && hand.getScore().isEqual(BLACKJACK_SCORE);
     }
 
     @Override

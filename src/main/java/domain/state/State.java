@@ -1,6 +1,7 @@
 package domain.state;
 
 import domain.card.vo.Card;
+import domain.score.Score;
 import java.util.List;
 
 public interface State {
@@ -8,7 +9,7 @@ public interface State {
 
     State drawCard(Card card);
 
-    Integer getScore();
+    Score getScore();
 
     List<Card> getCards();
 
