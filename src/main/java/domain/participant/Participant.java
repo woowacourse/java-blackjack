@@ -4,7 +4,6 @@ import domain.BetMoney;
 import domain.Score;
 import domain.card.Card;
 import domain.card.Hand;
-
 import java.util.List;
 
 public abstract class Participant {
@@ -23,12 +22,6 @@ public abstract class Participant {
         this.name = name;
         this.hand = hand;
         this.betMoney = BetMoney.ZERO;
-    }
-
-    public Participant(String name, String value) {
-        this.name = new Name(name);
-        this.hand = new Hand();
-        this.betMoney = BetMoney.of(value);
     }
 
     public Participant(String name, int value) {
