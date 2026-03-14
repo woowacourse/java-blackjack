@@ -10,19 +10,14 @@ public class Hand {
 
     private final List<Card> cards;
     private int handTotalScore;
-    private boolean hasAce;
 
     public Hand() {
         cards = new ArrayList<>();
         handTotalScore = 0;
-        hasAce = false;
     }
 
     public void saveCard(Card card) {
         cards.add(card);
-        if (card.isAceCard()) {
-            hasAce = true;
-        }
     }
 
     public String getOneCardDisplay() {
@@ -36,14 +31,29 @@ public class Hand {
     }
 
     public void calculateHandScore() {
-        this.handTotalScore = 0;
-        for (Card card : cards) {
-            handTotalScore += card.getCardScore();
-        }
+        int initialScore = calculateInitialScore();
+        int aceCount = countAces();
+        this.handTotalScore = applyAceRule(initialScore, aceCount);
+    }
 
-        if (hasAce && handTotalScore > MAXIMUM_TOTAL_SCORE) {
-            handTotalScore -= 10;
+    private int calculateInitialScore() {
+        return cards.stream()
+                .mapToInt(Card::getCardScore)
+                .sum();
+    }
+
+    private int countAces() {
+        return (int) cards.stream()
+                .filter(Card::isAceCard)
+                .count();
+    }
+
+    private int applyAceRule(int score, int aceCount) {
+        while ((score > MAXIMUM_TOTAL_SCORE) && (aceCount > 0)) {
+            score -= 10;
+            aceCount--;
         }
+        return score;
     }
 
     public Boolean determineDealerDealMore() {
