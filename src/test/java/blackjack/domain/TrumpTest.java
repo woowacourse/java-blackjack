@@ -30,26 +30,23 @@ public class TrumpTest {
     @DisplayName("카드 드로우 테스트")
     void 카드_드로우_테스트() {
         List<Card> order = List.of(
-            new Card(Suit.HEART, Denomination.TEN),
-            new Card(Suit.SPADE, Denomination.FIVE),
-            new Card(Suit.DIAMOND, Denomination.EIGHT));
+            Card.valueOf(Suit.HEART, Denomination.TEN),
+            Card.valueOf(Suit.SPADE, Denomination.FIVE),
+            Card.valueOf(Suit.DIAMOND, Denomination.EIGHT));
         Trump trump = new Trump(new OrderedSortBehavior(order));
         List<Card> expected = List.of(
-            new Card(Suit.HEART, Denomination.TEN),
-            new Card(Suit.SPADE, Denomination.FIVE),
-            new Card(Suit.DIAMOND, Denomination.EIGHT));
+            Card.valueOf(Suit.HEART, Denomination.TEN),
+            Card.valueOf(Suit.SPADE, Denomination.FIVE),
+            Card.valueOf(Suit.DIAMOND, Denomination.EIGHT));
 
         List<Card> actual = List.of(trump.draw(), trump.draw(), trump.draw());
 
         assertAll(
             () -> assertThat(actual.get(0))
-                .usingRecursiveComparison()
                 .isEqualTo(expected.get(0)),
             () -> assertThat(actual.get(1))
-                .usingRecursiveComparison()
                 .isEqualTo(expected.get(1)),
             () -> assertThat(actual.get(2))
-                .usingRecursiveComparison()
                 .isEqualTo(expected.get(2))
         );
     }

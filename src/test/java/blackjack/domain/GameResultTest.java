@@ -28,12 +28,12 @@ class GameResultTest {
         void 딜러_블랙잭_플레이어_블랙잭() {
             Trump trump = new Trump(new RandomSortBehavior());
             Hand dealerHand = new Hand(List.of(
-                new Card(Suit.DIAMOND, Denomination.ACE),
-                new Card(Suit.SPADE, Denomination.KING)));
+                Card.valueOf(Suit.DIAMOND, Denomination.ACE),
+                Card.valueOf(Suit.SPADE, Denomination.KING)));
             Dealer dealer = new Dealer(dealerHand, Status.STAY, trump);
             Hand playerHand = new Hand(List.of(
-                new Card(Suit.SPADE, Denomination.ACE),
-                new Card(Suit.HEART, Denomination.KING)));
+                Card.valueOf(Suit.SPADE, Denomination.ACE),
+                Card.valueOf(Suit.HEART, Denomination.KING)));
             Player player = new Player(playerHand, Status.STAY, "pobi");
             GameResult expected = GameResult.DRAW;
 
@@ -47,12 +47,12 @@ class GameResultTest {
         void 딜러_블랙잭_플레이어_스테이() {
             Trump trump = new Trump(new RandomSortBehavior());
             Hand dealerHand = new Hand(List.of(
-                new Card(Suit.DIAMOND, Denomination.ACE),
-                new Card(Suit.SPADE, Denomination.KING)));
+                Card.valueOf(Suit.DIAMOND, Denomination.ACE),
+                Card.valueOf(Suit.SPADE, Denomination.KING)));
             Dealer dealer = new Dealer(dealerHand, Status.STAY, trump);
             Hand playerHand = new Hand(List.of(
-                new Card(Suit.SPADE, Denomination.ACE),
-                new Card(Suit.HEART, Denomination.EIGHT)));
+                Card.valueOf(Suit.SPADE, Denomination.ACE),
+                Card.valueOf(Suit.HEART, Denomination.EIGHT)));
             Player player = new Player(playerHand, Status.STAY, "pobi");
             GameResult expected = GameResult.LOSE;
 
@@ -66,14 +66,14 @@ class GameResultTest {
         void 딜러_블랙잭_플레이어_버스트() {
             Trump trump = new Trump(new RandomSortBehavior());
             Hand dealerHand = new Hand(List.of(
-                new Card(Suit.DIAMOND, Denomination.ACE),
-                new Card(Suit.SPADE, Denomination.KING)));
+                Card.valueOf(Suit.DIAMOND, Denomination.ACE),
+                Card.valueOf(Suit.SPADE, Denomination.KING)));
             Dealer dealer = new Dealer(dealerHand, Status.STAY, trump);
             Hand playerHand = new Hand(List.of(
-                new Card(Suit.SPADE, Denomination.TWO),
-                new Card(Suit.HEART, Denomination.KING),
-                new Card(Suit.SPADE, Denomination.FIVE),
-                new Card(Suit.HEART, Denomination.FIVE)));
+                Card.valueOf(Suit.SPADE, Denomination.TWO),
+                Card.valueOf(Suit.HEART, Denomination.KING),
+                Card.valueOf(Suit.SPADE, Denomination.FIVE),
+                Card.valueOf(Suit.HEART, Denomination.FIVE)));
             Player player = new Player(playerHand, Status.BURST, "pobi");
             GameResult expected = GameResult.LOSE;
 
@@ -87,12 +87,12 @@ class GameResultTest {
         void 딜러_스테이_플레이어_블랙잭() {
             Trump trump = new Trump(new RandomSortBehavior());
             Hand dealerHand = new Hand(List.of(
-                new Card(Suit.DIAMOND, Denomination.KING),
-                new Card(Suit.SPADE, Denomination.KING)));
+                Card.valueOf(Suit.DIAMOND, Denomination.KING),
+                Card.valueOf(Suit.SPADE, Denomination.KING)));
             Dealer dealer = new Dealer(dealerHand, Status.STAY, trump);
             Hand playerHand = new Hand(List.of(
-                new Card(Suit.SPADE, Denomination.ACE),
-                new Card(Suit.HEART, Denomination.KING)));
+                Card.valueOf(Suit.SPADE, Denomination.ACE),
+                Card.valueOf(Suit.HEART, Denomination.KING)));
             Player player = new Player(playerHand, Status.STAY, "pobi");
             GameResult expected = GameResult.BLACKJACK;
 
@@ -106,13 +106,13 @@ class GameResultTest {
         void 딜러_스테이_플레이어_버스트() {
             Trump trump = new Trump(new RandomSortBehavior());
             Hand dealerHand = new Hand(List.of(
-                new Card(Suit.DIAMOND, Denomination.TEN),
-                new Card(Suit.SPADE, Denomination.TEN)));
+                Card.valueOf(Suit.DIAMOND, Denomination.TEN),
+                Card.valueOf(Suit.SPADE, Denomination.TEN)));
             Dealer dealer = new Dealer(dealerHand, Status.STAY, trump);
             Hand playerHand = new Hand(List.of(
-                new Card(Suit.DIAMOND, Denomination.TEN),
-                new Card(Suit.SPADE, Denomination.SIX),
-                new Card(Suit.DIAMOND, Denomination.KING)));
+                Card.valueOf(Suit.DIAMOND, Denomination.TEN),
+                Card.valueOf(Suit.SPADE, Denomination.SIX),
+                Card.valueOf(Suit.DIAMOND, Denomination.KING)));
             Player player = new Player(playerHand, Status.BURST, "pobi");
             GameResult expected = GameResult.LOSE;
 
@@ -126,13 +126,13 @@ class GameResultTest {
         void 딜러_버스트_플레이어_블랙잭() {
             Trump trump = new Trump(new RandomSortBehavior());
             Hand dealerHand = new Hand(List.of(
-                new Card(Suit.DIAMOND, Denomination.THREE),
-                new Card(Suit.SPADE, Denomination.KING),
-                new Card(Suit.SPADE, Denomination.NINE)));
+                Card.valueOf(Suit.DIAMOND, Denomination.THREE),
+                Card.valueOf(Suit.SPADE, Denomination.KING),
+                Card.valueOf(Suit.SPADE, Denomination.NINE)));
             Dealer dealer = new Dealer(dealerHand, Status.BURST, trump);
             Hand playerHand = new Hand(List.of(
-                new Card(Suit.SPADE, Denomination.ACE),
-                new Card(Suit.HEART, Denomination.KING)));
+                Card.valueOf(Suit.SPADE, Denomination.ACE),
+                Card.valueOf(Suit.HEART, Denomination.KING)));
             Player player = new Player(playerHand, Status.STAY, "pobi");
             GameResult expected = GameResult.BLACKJACK;
 
@@ -146,13 +146,13 @@ class GameResultTest {
         void 딜러_버스트_플레이어_스테이() {
             Trump trump = new Trump(new RandomSortBehavior());
             Hand dealerHand = new Hand(List.of(
-                new Card(Suit.DIAMOND, Denomination.TEN),
-                new Card(Suit.SPADE, Denomination.SIX),
-                new Card(Suit.DIAMOND, Denomination.KING)));
+                Card.valueOf(Suit.DIAMOND, Denomination.TEN),
+                Card.valueOf(Suit.SPADE, Denomination.SIX),
+                Card.valueOf(Suit.DIAMOND, Denomination.KING)));
             Dealer dealer = new Dealer(dealerHand, Status.BURST, trump);
             Hand playerHand = new Hand(List.of(
-                new Card(Suit.DIAMOND, Denomination.TEN),
-                new Card(Suit.SPADE, Denomination.SIX)));
+                Card.valueOf(Suit.DIAMOND, Denomination.TEN),
+                Card.valueOf(Suit.SPADE, Denomination.SIX)));
             Player player = new Player(playerHand, Status.STAY, "pobi");
             GameResult expected = GameResult.WIN;
 
@@ -166,14 +166,14 @@ class GameResultTest {
         void 딜러_버스트_플레이어_버스트() {
             Trump trump = new Trump(new RandomSortBehavior());
             Hand dealerHand = new Hand(List.of(
-                new Card(Suit.DIAMOND, Denomination.TEN),
-                new Card(Suit.SPADE, Denomination.SIX),
-                new Card(Suit.DIAMOND, Denomination.KING)));
+                Card.valueOf(Suit.DIAMOND, Denomination.TEN),
+                Card.valueOf(Suit.SPADE, Denomination.SIX),
+                Card.valueOf(Suit.DIAMOND, Denomination.KING)));
             Dealer dealer = new Dealer(dealerHand, Status.BURST, trump);
             Hand playerHand = new Hand(List.of(
-                new Card(Suit.DIAMOND, Denomination.TEN),
-                new Card(Suit.SPADE, Denomination.SIX),
-                new Card(Suit.DIAMOND, Denomination.KING)));
+                Card.valueOf(Suit.DIAMOND, Denomination.TEN),
+                Card.valueOf(Suit.SPADE, Denomination.SIX),
+                Card.valueOf(Suit.DIAMOND, Denomination.KING)));
             Player player = new Player(playerHand, Status.BURST, "pobi");
             GameResult expected = GameResult.LOSE;
 
@@ -187,12 +187,12 @@ class GameResultTest {
         void 딜러_스테이_플레이어_스테이_플레이어_점수가_더_높은_경우() {
             Trump trump = new Trump(new RandomSortBehavior());
             Hand dealerHand = new Hand(List.of(
-                new Card(Suit.DIAMOND, Denomination.TEN),
-                new Card(Suit.SPADE, Denomination.SEVEN)));
+                Card.valueOf(Suit.DIAMOND, Denomination.TEN),
+                Card.valueOf(Suit.SPADE, Denomination.SEVEN)));
             Dealer dealer = new Dealer(dealerHand, Status.STAY, trump);
             Hand playerHand = new Hand(List.of(
-                new Card(Suit.DIAMOND, Denomination.TEN),
-                new Card(Suit.SPADE, Denomination.TEN)));
+                Card.valueOf(Suit.DIAMOND, Denomination.TEN),
+                Card.valueOf(Suit.SPADE, Denomination.TEN)));
             Player player = new Player(playerHand, Status.STAY, "pobi");
             GameResult expected = GameResult.WIN;
 
@@ -206,12 +206,12 @@ class GameResultTest {
         void 딜러_스테이_플레이어_스테이_플레이어_점수가_딜러와_같은_경우() {
             Trump trump = new Trump(new RandomSortBehavior());
             Hand dealerHand = new Hand(List.of(
-                new Card(Suit.DIAMOND, Denomination.TEN),
-                new Card(Suit.SPADE, Denomination.SEVEN)));
+                Card.valueOf(Suit.DIAMOND, Denomination.TEN),
+                Card.valueOf(Suit.SPADE, Denomination.SEVEN)));
             Dealer dealer = new Dealer(dealerHand, Status.STAY, trump);
             Hand playerHand = new Hand(List.of(
-                new Card(Suit.DIAMOND, Denomination.TEN),
-                new Card(Suit.SPADE, Denomination.SEVEN)));
+                Card.valueOf(Suit.DIAMOND, Denomination.TEN),
+                Card.valueOf(Suit.SPADE, Denomination.SEVEN)));
             Player player = new Player(playerHand, Status.STAY, "pobi");
             GameResult expected = GameResult.DRAW;
 
@@ -225,12 +225,12 @@ class GameResultTest {
         void 딜러_스테이_플레이어_스테이_플레이어_점수가_더_낮은_경우() {
             Trump trump = new Trump(new RandomSortBehavior());
             Hand dealerHand = new Hand(List.of(
-                new Card(Suit.DIAMOND, Denomination.TEN),
-                new Card(Suit.SPADE, Denomination.SEVEN)));
+                Card.valueOf(Suit.DIAMOND, Denomination.TEN),
+                Card.valueOf(Suit.SPADE, Denomination.SEVEN)));
             Dealer dealer = new Dealer(dealerHand, Status.STAY, trump);
             Hand playerHand = new Hand(List.of(
-                new Card(Suit.DIAMOND, Denomination.TEN),
-                new Card(Suit.SPADE, Denomination.SIX)));
+                Card.valueOf(Suit.DIAMOND, Denomination.TEN),
+                Card.valueOf(Suit.SPADE, Denomination.SIX)));
             Player player = new Player(playerHand, Status.STAY, "pobi");
             GameResult expected = GameResult.LOSE;
 

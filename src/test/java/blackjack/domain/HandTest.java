@@ -18,9 +18,8 @@ public class HandTest {
     @DisplayName("점수 합계 테스트")
     void 점수_합계_테스트() {
         List<Card> cards = List.of(
-            new Card(Suit.DIAMOND, Denomination.JACK),
-            new Card(Suit.DIAMOND, Denomination.TEN)
-        );
+            Card.valueOf(Suit.DIAMOND, Denomination.JACK),
+            Card.valueOf(Suit.DIAMOND, Denomination.TEN));
         Hand hand = new Hand(new ArrayList<>());
         cards.forEach(hand::add);
 
@@ -34,9 +33,9 @@ public class HandTest {
     @DisplayName("버스트 판정 테스트: 점수 합계가 21 초과인 경우")
     void 버스트_판정_테스트_점수_합계가_21_초과인_경우() {
         List<Card> cards = List.of(
-            new Card(Suit.DIAMOND, Denomination.JACK),
-            new Card(Suit.DIAMOND, Denomination.TEN),
-            new Card(Suit.DIAMOND, Denomination.FIVE));
+            Card.valueOf(Suit.DIAMOND, Denomination.JACK),
+            Card.valueOf(Suit.DIAMOND, Denomination.TEN),
+            Card.valueOf(Suit.DIAMOND, Denomination.FIVE));
         Hand hand = new Hand(new ArrayList<>());
         cards.forEach(hand::add);
         boolean expected = true;
@@ -50,9 +49,9 @@ public class HandTest {
     @DisplayName("버스트 판정 테스트: 점수 합계가 21 이하인 경우")
     void 버스트_판정_테스트_점수_합계가_21_이하인_경우() {
         List<Card> cards = List.of(
-            new Card(Suit.DIAMOND, Denomination.JACK),
-            new Card(Suit.DIAMOND, Denomination.NINE),
-            new Card(Suit.DIAMOND, Denomination.TWO));
+            Card.valueOf(Suit.DIAMOND, Denomination.JACK),
+            Card.valueOf(Suit.DIAMOND, Denomination.NINE),
+            Card.valueOf(Suit.DIAMOND, Denomination.TWO));
         Hand hand = new Hand(new ArrayList<>());
         cards.forEach(hand::add);
         boolean expected = false;
@@ -66,8 +65,8 @@ public class HandTest {
     @DisplayName("ACE 처리 테스트: 버스트가 되지 않은 경우")
     void ACE_처리_테스트_버스트가_되지_않은_경우() {
         List<Card> cards = List.of(
-            new Card(Suit.DIAMOND, Denomination.NINE),
-            new Card(Suit.DIAMOND, Denomination.ACE));
+            Card.valueOf(Suit.DIAMOND, Denomination.NINE),
+            Card.valueOf(Suit.DIAMOND, Denomination.ACE));
         Hand hand = new Hand(new ArrayList<>());
         cards.forEach(hand::add);
         int expected = 20;
@@ -81,8 +80,8 @@ public class HandTest {
     @DisplayName("ACE 처리 테스트: 버스트가 된 경우")
     void ACE_처리_테스트_버스트가_된_경우() {
         List<Card> cards = List.of(
-            new Card(Suit.DIAMOND, Denomination.ACE),
-            new Card(Suit.DIAMOND, Denomination.ACE));
+            Card.valueOf(Suit.DIAMOND, Denomination.ACE),
+            Card.valueOf(Suit.HEART, Denomination.ACE));
         Hand hand = new Hand(new ArrayList<>());
         cards.forEach(hand::add);
         int expected = 12;
@@ -100,8 +99,8 @@ public class HandTest {
         @DisplayName("정상 테스트")
         void 정상_테스트() {
             List<Card> cards = List.of(
-                new Card(Suit.DIAMOND, Denomination.KING),
-                new Card(Suit.HEART, Denomination.ACE));
+                Card.valueOf(Suit.DIAMOND, Denomination.KING),
+                Card.valueOf(Suit.HEART, Denomination.ACE));
             Hand hand = new Hand(cards);
             boolean expected = true;
 
@@ -114,8 +113,8 @@ public class HandTest {
         @DisplayName("카드가 2장이고 카드 점수 합이 21이 아닌 경우")
         void 카드가_2장이고_카드_점수_합이_21이_아닌_경우() {
             List<Card> cards = List.of(
-                new Card(Suit.DIAMOND, Denomination.TWO),
-                new Card(Suit.HEART, Denomination.ACE));
+                Card.valueOf(Suit.DIAMOND, Denomination.NINE),
+                Card.valueOf(Suit.HEART, Denomination.ACE));
             Hand hand = new Hand(cards);
             boolean expected = false;
 
@@ -128,9 +127,9 @@ public class HandTest {
         @DisplayName("카드가 3장이고 카드 점수 합이 21인 경우")
         void 카드가_3장이고_카드_점수_합이_21인_경우() {
             List<Card> cards = List.of(
-                new Card(Suit.DIAMOND, Denomination.TWO),
-                new Card(Suit.HEART, Denomination.ACE),
-                new Card(Suit.HEART, Denomination.EIGHT));
+                Card.valueOf(Suit.DIAMOND, Denomination.TWO),
+                Card.valueOf(Suit.HEART, Denomination.ACE),
+                Card.valueOf(Suit.HEART, Denomination.EIGHT));
             Hand hand = new Hand(cards);
             boolean expected = false;
 

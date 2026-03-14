@@ -90,8 +90,8 @@ public class DealerTest {
     @DisplayName("딜러 히트 여부 결정 테스트: 카드 합계가 16 이하인 경우")
     void 딜러_히트_여부_결정_테스트_카드_합계가_16_이하인_경우() {
         Hand hand = new Hand(List.of(
-            new Card(Suit.DIAMOND, Denomination.TEN),
-            new Card(Suit.SPADE, Denomination.SIX)));
+            Card.valueOf(Suit.DIAMOND, Denomination.TEN),
+            Card.valueOf(Suit.SPADE, Denomination.SIX)));
         Trump trump = new Trump(new RandomSortBehavior());
         Dealer dealer = new Dealer(hand, Status.HIT, trump);
         Status expected = Status.HIT;
@@ -107,8 +107,8 @@ public class DealerTest {
     @DisplayName("딜러 히트 여부 결정 테스트: 카드 합계가 16 초과인 경우")
     void 딜러_히트_여부_결정_테스트_카드_합계가_16_초과인_경우() {
         Hand hand = new Hand(List.of(
-            new Card(Suit.DIAMOND, Denomination.TEN),
-            new Card(Suit.SPADE, Denomination.SEVEN)));
+            Card.valueOf(Suit.DIAMOND, Denomination.TEN),
+            Card.valueOf(Suit.SPADE, Denomination.SEVEN)));
         Trump trump = new Trump(new RandomSortBehavior());
         Dealer dealer = new Dealer(hand, Status.HIT, trump);
         Status expected = Status.STAY;

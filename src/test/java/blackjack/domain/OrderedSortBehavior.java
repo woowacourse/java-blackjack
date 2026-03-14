@@ -16,9 +16,7 @@ public class OrderedSortBehavior implements SortBehavior {
 
     @Override
     public void sort(final List<Card> cards) {
-        IntStream.range(0, cards.size())
-            .filter(index -> order.contains(cards.get(index)))
-            .forEach(cards::remove);
+        cards.removeAll(order);
         cards.addAll(order.reversed());
     }
 }
