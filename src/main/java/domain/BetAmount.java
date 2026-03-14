@@ -16,7 +16,9 @@ public class BetAmount {
 
     private long parseInput(String input) {
         try {
-            return Long.parseLong(input);
+            long value = Long.parseLong(input);
+            validateNegative(value);
+            return value;
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_MONEY.getMessage());
         }
