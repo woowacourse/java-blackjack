@@ -9,7 +9,7 @@ public record ProfitsResultResponse(List<ProfitResponse> results) {
         List<ProfitResponse> results = profits.getParticipantProfits().entrySet().stream()
                 .map(entry -> new ProfitResponse(
                         entry.getKey().getName(),
-                        entry.getValue().toInt()
+                        entry.getValue().value()
                 ))
                 .toList();
 

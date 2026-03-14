@@ -11,6 +11,7 @@ import domain.participant.Participant;
 import domain.participant.Participants;
 import domain.participant.Player;
 import domain.participant.Players;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,20 +32,20 @@ class RefereeTest {
         dealer = new Dealer();
         participants = new Participants(new Players(List.of(player)), dealer);
         bettingBoard = new BettingBoard();
-        bettingBoard.addBetting(player, new Bet(10000));
+        bettingBoard.addBetting(player, new Bet(new BigDecimal("10000")));
     }
 
     @Test
     @DisplayName("딜러와 플레이어가 내츄럴 블랙잭이면 무승부로 처리되어 모두 수익이 0이다.")
     void bothBlackjack() {
-        makeNormalBlackjack(player);
-        makeNormalBlackjack(dealer);
+        makeNatualBlackjack(player);
+        makeNatualBlackjack(dealer);
 
         Profits profits = referee.calculateProfits(participants, bettingBoard);
         Map<Participant, Profit> result = profits.getParticipantProfits();
 
-        assertThat(result.get(player).value()).isEqualTo(0.0);
-        assertThat(result.get(dealer).value()).isEqualTo(0.0);
+        assertThat(result.get(player).value()).isEqualByComparingTo("0");
+        assertThat(result.get(dealer).value()).isEqualByComparingTo("0");
     }
 
     @Test
@@ -56,8 +57,8 @@ class RefereeTest {
         Profits profits = referee.calculateProfits(participants, bettingBoard);
         Map<Participant, Profit> result = profits.getParticipantProfits();
 
-        assertThat(result.get(player).value()).isEqualTo(15000.0);
-        assertThat(result.get(dealer).value()).isEqualTo(-15000.0);
+        assertThat(result.get(player).value()).isEqualByComparingTo("15000");
+        assertThat(result.get(dealer).value()).isEqualByComparingTo("-15000");
     }
 
     @Test
@@ -69,8 +70,8 @@ class RefereeTest {
         Profits profits = referee.calculateProfits(participants, bettingBoard);
         Map<Participant, Profit> result = profits.getParticipantProfits();
 
-        assertThat(result.get(player).value()).isEqualTo(-10000.0);
-        assertThat(result.get(dealer).value()).isEqualTo(10000.0);
+        assertThat(result.get(player).value()).isEqualByComparingTo("-10000");
+        assertThat(result.get(dealer).value()).isEqualByComparingTo("10000");
     }
 
     @Test
@@ -82,8 +83,8 @@ class RefereeTest {
         Profits profits = referee.calculateProfits(participants, bettingBoard);
         Map<Participant, Profit> result = profits.getParticipantProfits();
 
-        assertThat(result.get(player).value()).isEqualTo(-10000.0);
-        assertThat(result.get(dealer).value()).isEqualTo(10000.0);
+        assertThat(result.get(player).value()).isEqualByComparingTo("-10000");
+        assertThat(result.get(dealer).value()).isEqualByComparingTo("10000");
     }
 
     @Test
@@ -95,8 +96,8 @@ class RefereeTest {
         Profits profits = referee.calculateProfits(participants, bettingBoard);
         Map<Participant, Profit> result = profits.getParticipantProfits();
 
-        assertThat(result.get(player).value()).isEqualTo(10000.0);
-        assertThat(result.get(dealer).value()).isEqualTo(-10000.0);
+        assertThat(result.get(player).value()).isEqualByComparingTo("10000");
+        assertThat(result.get(dealer).value()).isEqualByComparingTo("-10000");
     }
 
     @Test
@@ -108,8 +109,8 @@ class RefereeTest {
         Profits profits = referee.calculateProfits(participants, bettingBoard);
         Map<Participant, Profit> result = profits.getParticipantProfits();
 
-        assertThat(result.get(player).value()).isEqualTo(10000.0);
-        assertThat(result.get(dealer).value()).isEqualTo(-10000.0);
+        assertThat(result.get(player).value()).isEqualByComparingTo("10000");
+        assertThat(result.get(dealer).value()).isEqualByComparingTo("-10000");
     }
 
     @Test
@@ -121,8 +122,8 @@ class RefereeTest {
         Profits profits = referee.calculateProfits(participants, bettingBoard);
         Map<Participant, Profit> result = profits.getParticipantProfits();
 
-        assertThat(result.get(player).value()).isEqualTo(-10000.0);
-        assertThat(result.get(dealer).value()).isEqualTo(10000.0);
+        assertThat(result.get(player).value()).isEqualByComparingTo("-10000");
+        assertThat(result.get(dealer).value()).isEqualByComparingTo("10000");
     }
 
     @Test
@@ -134,8 +135,8 @@ class RefereeTest {
         Profits profits = referee.calculateProfits(participants, bettingBoard);
         Map<Participant, Profit> result = profits.getParticipantProfits();
 
-        assertThat(result.get(player).value()).isEqualTo(0.0);
-        assertThat(result.get(dealer).value()).isEqualTo(0.0);
+        assertThat(result.get(player).value()).isEqualByComparingTo("0");
+        assertThat(result.get(dealer).value()).isEqualByComparingTo("0");
     }
 
     private void makeNatualBlackjack(Participant participant) {

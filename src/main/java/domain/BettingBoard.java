@@ -1,6 +1,7 @@
 package domain;
 
 import domain.participant.Player;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,9 +12,9 @@ public class BettingBoard {
         betsByPlayer.put(player, bet);
     }
 
-    public Profit calculateProfit(Player player, double profitRate) {
+    public Profit calculateProfit(Player player, BigDecimal profitRate) {
         Bet originalBet = betsByPlayer.get(player);
-        return new Profit(originalBet.amount() * profitRate);
+        return new Profit(originalBet.amount().multiply(profitRate));
     }
 
     public Bet getBet(Player player) {

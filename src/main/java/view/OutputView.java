@@ -56,7 +56,10 @@ public class OutputView {
     public void printProfitsResult( ProfitsResultResponse profitsResultResponse) {
         System.out.println("## 최종 수익");
         for (ProfitResponse profitResponse : profitsResultResponse.results()) {
-            System.out.printf("%s: %d%n", profitResponse.name(), profitResponse.profit());
+            String formattedProfit = profitResponse.profit()
+                    .stripTrailingZeros()
+                    .toPlainString();
+            System.out.printf("%s: %s%n", profitResponse.name(), formattedProfit);
         }
     }
 }

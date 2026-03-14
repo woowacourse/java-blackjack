@@ -5,6 +5,7 @@ import domain.participant.Participant;
 import domain.participant.Participants;
 import domain.participant.Player;
 import domain.participant.Players;
+import java.math.BigDecimal;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -28,9 +29,9 @@ public class Referee {
     }
 
     private Profit calculateDealerProfit(Map<Participant, Profit> playerProfits) {
-        double totalPlayerProfit = playerProfits.values().stream()
-                .mapToDouble(Profit::value)
-                .sum();
+        BigDecimal totalPlayerProfit = playerProfits.values().stream()
+                .map(Profit::value)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         return new Profit(totalPlayerProfit).negate();
     }
