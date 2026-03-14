@@ -28,7 +28,7 @@ public class BlackjackController {
         Dealer dealer = Dealer.create();
         CardDeck cardDeck = CardDeck.of(new RandomPickStrategy());
 
-        setupPlayersBettingMoney(players);
+        askPlayersBetMoney(players);
 
         distributeInitCards(dealer, cardDeck, players);
 
@@ -41,11 +41,11 @@ public class BlackjackController {
         printResult(players, dealer);
     }
 
-    private void setupPlayersBettingMoney(List<Player> players) {
-        players.forEach(this::setupBettingMoney);
+    private void askPlayersBetMoney(List<Player> players) {
+        players.forEach(this::betMoney);
     }
 
-    private void setupBettingMoney(Player player) {
+    private void betMoney(Player player) {
         outputView.printBettingAmountInputPlayer(player.getName());
         double amount = inputView.inputBettingAmount();
         player.bet(amount);
