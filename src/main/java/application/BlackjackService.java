@@ -46,11 +46,14 @@ public class BlackjackService {
     }
 
     public List<MemberStatus> getMemberStatuses() {
-        return getGameTable().checkMemberStatuses();
+        return getGameTable().getMemberStatuses();
     }
 
     public List<GameResult> getGameResults() {
-        return getGameTable().checkGameResult();
+        Map<String, Integer> profits = gameTable.getFinalProfits();
+        return profits.entrySet().stream()
+                .map(entry -> new GameResult(entry.getKey(), entry.getValue()))
+                .toList();
     }
 
     private GameTable getGameTable() {

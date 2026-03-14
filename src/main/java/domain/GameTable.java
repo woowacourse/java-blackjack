@@ -3,7 +3,6 @@ package domain;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.member.Money;
-import dto.GameResult;
 import dto.MemberStatus;
 import domain.member.Members;
 import java.util.ArrayList;
@@ -50,7 +49,7 @@ public class GameTable {
         return false;
     }
 
-    public List<MemberStatus> checkMemberStatuses() {
+    public List<MemberStatus> getMemberStatuses() {
         List<MemberStatus> memberStatuses = new ArrayList<>();
         memberStatuses.add(
                 new MemberStatus(members.getDealerName(), members.findDealerCards(), members.checkDealerScore()));
@@ -61,8 +60,7 @@ public class GameTable {
         return List.copyOf(memberStatuses);
     }
 
-    public List<GameResult> checkGameResult() {
-        // 컴파일 에러를 막기 위해 기존 구조만 유지
-        return new ArrayList<>();
+    public Map<String, Integer> getFinalProfits() {
+        return members.calculateFinalProfits();
     }
 }
