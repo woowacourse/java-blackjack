@@ -2,41 +2,31 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Deck;
 import java.util.List;
-import java.util.stream.IntStream;
 
 public class Players {
 
     private final List<Player> players;
 
     private Players(List<Player> players) {
-        validateDuplicate(players);
         this.players = players;
     }
 
-    public static Players fromNameAndBettingAmounts(List<String> playerNicknames, List<Integer> playerBettingAmounts) {
-        validate(playerNicknames, playerBettingAmounts);
-
-        List<Player> players = IntStream.range(0, playerNicknames.size())
-                .mapToObj(index -> new Player(playerNicknames.get(index), playerBettingAmounts.get(index)))
+    public static Players fromPlayerNicknames(List<String> playerNicknames) {
+        validate(playerNicknames);
+        List<Player> players = playerNicknames.stream()
+                .map(Player::new)
                 .toList();
         return new Players(players);
     }
 
-    private static void validate(List<String> playerNicknames, List<Integer> playerBettingAmounts) {
+    private static void validate(List<String> playerNicknames) {
         if (playerNicknames.isEmpty()) {
             throw new IllegalArgumentException("한 명 이상의 플레이어 닉네임을 입력해주세요");
         }
-        if (playerNicknames.size() != playerBettingAmounts.size()) {
-            throw new IllegalArgumentException("플레이어의 수와 동일한 수의 배팅금이 필요합니다.");
-        }
-    }
-
-    private void validateDuplicate(List<Player> playerList) {
-        long distinctCount = playerList.stream()
-                .map(Player::getNickname)
+        long distinctCount = playerNicknames.stream()
                 .distinct()
                 .count();
-        if (distinctCount != playerList.size()) {
+        if (distinctCount != playerNicknames.size()) {
             throw new IllegalArgumentException("플레이어 이름은 중복될 수 없습니다.");
         }
     }
