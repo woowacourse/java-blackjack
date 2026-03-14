@@ -85,4 +85,8 @@ public class OutputView {
     public void printInputErrorMessage(String errorMessage) {
         System.out.printf("%s 다시 입력해주세요\n", errorMessage);
     }
+
+    public void printDealerBlackJack() {
+        System.out.println("딜러가 블랙잭입니다. 즉시 점수 계산을 시작합니다.");
+    }
 }

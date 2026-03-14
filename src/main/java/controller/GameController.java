@@ -30,7 +30,10 @@ public class GameController {
         playerBatting(players);
         outputView.printStartGame(gameService.startGame());
 
-        processGame(gameService);
+        boolean dealerIsBlackJack = processDealerBlackJack(gameService);
+        if (!dealerIsBlackJack) {
+            processGame(gameService);
+        }
 
         outputView.printScore(gameService.getTotalScore());
         outputView.printBattingResults(bettingCalculateService.getBattingResult());
@@ -76,8 +79,29 @@ public class GameController {
         dealerTurn(gameService);
     }
 
+    private boolean processDealerBlackJack(GameService gameService) {
+        Dealer dealer = gameService.getDealer();
+        if (dealer.isBlackJack()) {
+            endGameImmediately(gameService.getPlayers());
+            outputView.printDealerBlackJack();
+            return true;
+        }
+        return false;
+    }
+
+    private void endGameImmediately(Players players) {
+        for (Player player : players) {
+            forceStay(player);
+        }
+    }
+
+    private void forceStay(Player player) {
+        if (player.isRunning()) {
+            player.stay();
+        }
+    }
+
     private void playerTurn(Player player, GameService gameService) {
-        // 플레이어가 턴이 끝나지 않았고(Bust나 Blackjack이 아님), Hit을 원할 때까지 반복
         while (player.isRunning() && inputHitOption(player) == HitOption.YES) {
             gameService.hit(player);
             outputView.printHandCard(PlayerHandDto.from(player));
