@@ -1,23 +1,17 @@
 package domain.participant;
 
+import domain.bet.BettingMoney;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 public class Players {
     private final List<Player> playerList;
 
-    public Players(List<String> names) {
-        validateDuplicate(names);
+    public Players(Map<String, Integer> nameToBet) {
         playerList = new ArrayList<>();
-        for (String name : names) {
-            playerList.add(new Player(name));
-        }
-    }
-
-    private void validateDuplicate(List<String> names) {
-        if (names.size() != new HashSet<>(names).size()) {
-            throw new IllegalArgumentException("중복된 이름이 존재합니다.");
+        for (Map.Entry<String, Integer> entry : nameToBet.entrySet()) {
+            playerList.add(new Player(entry.getKey(), new BettingMoney(entry.getValue())));
         }
     }
 

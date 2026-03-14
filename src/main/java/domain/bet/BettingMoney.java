@@ -1,5 +1,7 @@
 package domain.bet;
 
+import domain.game.Result;
+
 public class BettingMoney {
     private final int amount;
 
@@ -12,6 +14,10 @@ public class BettingMoney {
         if (amount <= 0) {
             throw new IllegalArgumentException("베팅 금액이 0이하 일 수 없습니다.");
         }
+    }
+
+    public int calculateProfit(Result result) {
+        return (int) (amount * result.getProfitRate());
     }
 
     public int getAmount() {

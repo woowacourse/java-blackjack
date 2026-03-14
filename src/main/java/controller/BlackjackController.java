@@ -7,6 +7,7 @@ import domain.participant.Players;
 import domain.game.Referee;
 import domain.game.Result;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import view.InputView;
@@ -24,7 +25,12 @@ public class BlackjackController {
 
     public void run() {
         List<String> names = inputView.inputPlayers();
-        Players players = new Players(names);
+        Map<String, Integer> nameToBet = new LinkedHashMap<>();
+        for (String name : names) {
+            int amount = inputView.inputBettingAmount(name);
+            nameToBet.put(name, amount);
+        }
+        Players players = new Players(nameToBet);
         Dealer dealer = new Dealer("딜러");
         Deck deck = new Deck();
         dealInitialCards(dealer, players, deck);
@@ -80,7 +86,7 @@ public class BlackjackController {
         Referee referee = new Referee();
         Map<Player, Result> playerResults = new LinkedHashMap<>();
         for (Player player : players.getGamePlayers()) {
-            playerResults.put(player, referee.judge(player.getScore(), dealer.getScore()));
+            playerResults.put(player, referee.judge(player, dealer));
         }
         Map<Result, Integer> dealerResult = referee.countDealerResult(playerResults);
         outputView.printFinalResult(dealer.getName(), dealerResult, playerResults);

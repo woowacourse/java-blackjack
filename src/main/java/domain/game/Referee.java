@@ -1,28 +1,28 @@
 package domain.game;
 
-import domain.card.CardBundle;
+import domain.participant.Participant;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Referee {
 
-    public Result judge(CardBundle playerBundle, CardBundle dealerBundle) {
-        if (playerBundle.isBlackjack() && dealerBundle.isBlackjack()) {
+    public Result judge(Participant player, Participant dealer) {
+        if (player.isBlackjack() && dealer.isBlackjack()) {
             return Result.TIE;
         }
-        if (playerBundle.isBlackjack()) {
+        if (player.isBlackjack()) {
             return Result.BLACKJACK_WIN;
         }
-        if (playerBundle.isBust()) {
+        if (player.isBust()) {
             return Result.LOSE;
         }
-        if (dealerBundle.isBust()) {
+        if (dealer.isBust()) {
             return Result.WIN;
         }
-        if (playerBundle.calculateScore() > dealerBundle.calculateScore()) {
+        if (player.getScore() > dealer.getScore()) {
             return Result.WIN;
         }
-        if (playerBundle.calculateScore() == dealerBundle.calculateScore()) {
+        if (player.getScore() == dealer.getScore()) {
             return Result.TIE;
         }
         return Result.LOSE;
