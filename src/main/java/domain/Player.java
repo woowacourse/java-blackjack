@@ -3,9 +3,11 @@ package domain;
 import java.util.List;
 
 public class Player extends Participant {
+    private final BetMoney betMoney;
 
-    public Player(String name) {
+    public Player(Name name, BetMoney betMoney) {
         super(name);
+        this.betMoney = betMoney;
     }
 
     @Override

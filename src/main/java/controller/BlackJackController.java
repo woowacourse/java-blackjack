@@ -1,13 +1,16 @@
 package controller;
 
+import domain.BetMoney;
 import domain.CardShuffleStrategy;
 import domain.Dealer;
 import domain.Game;
+import domain.Name;
 import domain.Participant;
 import domain.Player;
 import domain.Players;
 import dto.GameResultDto;
 import dto.ParticipantDto;
+import java.util.ArrayList;
 import java.util.List;
 import view.InputView;
 import view.OutputView;
@@ -36,11 +39,21 @@ public class BlackJackController {
     }
 
     private Game setUpGame() {
-        List<String> playerNames = repeatAskPlayerNamesUntilSuccess();
-        return Game.registerParticipantsAndPrepareTotalDeck(playerNames, strategy);
+        Players players = generatePlayers();
+        return Game.registerParticipantsAndPrepareTotalDeck(players, strategy);
     }
 
-    private List<String> repeatAskPlayerNamesUntilSuccess() {
+    private Players generatePlayers() {
+        List<Name> playerNames = repeatAskPlayerNamesUntilSuccess();
+        List<Player> players = new ArrayList<>();
+        for (Name playerName : playerNames) {
+            Player player = generatePlayer(playerName);
+            players.add(player);
+        }
+        return Players.of(players);
+    }
+
+    private List<Name> repeatAskPlayerNamesUntilSuccess() {
         try {
             return askPlayerNames();
         } catch (IllegalArgumentException e) {
@@ -49,9 +62,33 @@ public class BlackJackController {
         }
     }
 
-    private List<String> askPlayerNames() {
+    private List<Name> askPlayerNames() {
         outputView.printNamePrompt();
-        return inputView.readNames();
+        List<String> playerNames = inputView.readNames();
+        Players.validatePlayersCount(playerNames.size());
+        return playerNames.stream()
+                .map(Name::new)
+                .toList();
+    }
+
+    private Player generatePlayer(Name playerName) {
+        BetMoney betMoney = repeatAskBetMoneyUntilSuccess(playerName);
+        return new Player(playerName, betMoney);
+    }
+
+    private BetMoney repeatAskBetMoneyUntilSuccess(Name playerName) {
+        try {
+            return askBetAmount(playerName);
+        } catch (IllegalArgumentException e) {
+            outputView.printErrorMessage(e);
+            return repeatAskBetMoneyUntilSuccess(playerName);
+        }
+    }
+
+    private BetMoney askBetAmount(Name playerName) {
+        outputView.printBetMoneyPrompt(playerName.name());
+        int betAmount = inputView.readBetAmount();
+        return new BetMoney(betAmount);
     }
 
     private void drawInitialCardsAndShowResult(Game game) {

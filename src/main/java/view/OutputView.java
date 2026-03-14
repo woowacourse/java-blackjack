@@ -19,6 +19,11 @@ public class OutputView {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
     }
 
+    public void printBetMoneyPrompt(String playerName) {
+        System.out.println();
+        System.out.printf("%s의 배팅 금액은?\n", playerName);
+    }
+
     public void printInitialCardShare(List<ParticipantDto> playerDtos) {
         List<String> playerNames = new ArrayList<>();
         for (ParticipantDto participantDto : playerDtos) {
@@ -46,20 +51,20 @@ public class OutputView {
     public void printCardShareDetail(ParticipantDto participantDto) {
         String participantCardInfo = consistParticipantCardInfo(participantDto);
         System.out.println(participantCardInfo);
+        System.out.println();
     }
 
     public void printAdditionalCardForDealerDescription() {
         System.out.println();
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
-        System.out.println();
     }
 
     public void printCardInfosWithSum(List<ParticipantDto> participantDtos) {
+        System.out.println();
         for (ParticipantDto participantDto : participantDtos) {
             String participantCardInfoWithSum = consistParticipantCardInfoWithSum(participantDto);
             System.out.println(participantCardInfoWithSum);
         }
-        System.out.println();
     }
 
     private String consistParticipantCardInfoWithSum(ParticipantDto participantDto) {
@@ -82,6 +87,7 @@ public class OutputView {
     }
 
     public void printWinTieLossResult(GameResultDto gameResultDto) {
+        System.out.println();
         System.out.println("## 최종 승패");
 
         String dealerWinTieLossResult = consistDealerWinTieLossResult(gameResultDto.dealerWinTieLossResult());

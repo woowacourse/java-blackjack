@@ -3,6 +3,7 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -12,6 +13,15 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class GameResultTest {
+
+    private Players createDummyPlayer(List<String> playerNames) {
+        List<Player> players = new ArrayList<>();
+        for (String playerName : playerNames) {
+            Player player = new Player(new Name(playerName), new BetMoney(1000));
+            players.add(player);
+        }
+        return Players.of(players);
+    }
 
     private void addCardsToParticipantDeck(Participant participant, Card... cards) {
         for (Card card : cards) {
@@ -30,7 +40,7 @@ class GameResultTest {
         );
 
         List<String> playerNames = List.of("pobi", "terry", "rati", "gump");
-        Players players = Players.of(playerNames);
+        Players players = createDummyPlayer(playerNames);
         Iterator<Player> playerIterator = players.iterator();
 
         Player player1 = playerIterator.next();
@@ -86,7 +96,7 @@ class GameResultTest {
                     new Card(CardShape.CLOVER, CardContents.THREE)
             );
             List<String> playerNames = List.of("pobi", "terry");
-            Players players = Players.of(playerNames);
+            Players players = createDummyPlayer(playerNames);
 
             // when & then
             assertThatThrownBy(() -> GameResult.calculate(dealer, players))
@@ -103,7 +113,7 @@ class GameResultTest {
                     new Card(CardShape.CLOVER, CardContents.SIX)
             );
             List<String> playerNames = List.of("pobi", "terry");
-            Players players = Players.of(playerNames);
+            Players players = createDummyPlayer(playerNames);
 
             // when & then
             assertThatThrownBy(() -> GameResult.calculate(dealer, players))

@@ -3,6 +3,7 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -14,6 +15,15 @@ class GameTest {
     };
     private Game game;
 
+    private Players createDummyPlayer() {
+        List<Player> players = new ArrayList<>();
+        for (String playerName : PLAYER_NAMES) {
+            Player player = new Player(new Name(playerName), new BetMoney(1000));
+            players.add(player);
+        }
+        return Players.of(players);
+    }
+
     private void addCardsToPlayerDeck(Participant participant, Card... cards) {
         for (Card card : cards) {
             participant.addCard(card);
@@ -22,7 +32,7 @@ class GameTest {
 
     @BeforeEach
     void setUp() {
-        game = Game.registerParticipantsAndPrepareTotalDeck(PLAYER_NAMES, FIXED_SHUFFLE_STRATEGY);
+        game = Game.registerParticipantsAndPrepareTotalDeck(createDummyPlayer(), FIXED_SHUFFLE_STRATEGY);
     }
 
     @Test
