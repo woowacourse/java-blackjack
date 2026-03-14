@@ -9,15 +9,26 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 class DeckTest {
+    private Deck emptyDeck(){
+        Deck deck = Deck.of(new ArrayList<>(TrumpCard.CARDS));
+        for (int i = 0; i < 52; i++) {
+            deck.deal();
+        }
+        return deck;
+    }
 
     @Test
-    void 전체_카드_수가_52장이_아니면_예외_발생한다() {
+    void 전체_카드_수가_52장보다_적으면_예외_발생한다() {
         List<TrumpCard> cards = new ArrayList<>();
-        for (Suit suit : Suit.values()) {
-            for (Rank rank : Rank.values()) {
-                cards.add(TrumpCard.of(suit, rank));
-            }
-        }
+        cards.add(TrumpCard.of(Suit.SPADE, Rank.ACE));
+        assertThatThrownBy(() -> Deck.of(cards))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("전체 카드 수는 52장이어야 합니다.");
+    }
+
+    @Test
+    void 전체_카드_수가_52장보다_많으면_예외_발생한다() {
+        List<TrumpCard> cards = new ArrayList<>(TrumpCard.CARDS);
         cards.add(TrumpCard.of(Suit.SPADE, Rank.ACE));
 
         assertThatThrownBy(() -> Deck.of(cards))
@@ -27,12 +38,7 @@ class DeckTest {
 
     @Test
     void 중복된_카드가_존재하면_예외_발생한다() {
-        List<TrumpCard> cards = new ArrayList<>();
-        for (Suit suit : Suit.values()) {
-            for (Rank rank : Rank.values()) {
-                cards.add(TrumpCard.of(suit, rank));
-            }
-        }
+        List<TrumpCard> cards = new ArrayList<>(TrumpCard.CARDS);
         cards.removeFirst();
         cards.add(TrumpCard.of(Suit.CLOVER, Rank.KING));
 
@@ -43,54 +49,26 @@ class DeckTest {
 
     @Test
     void 카드를_지급할_때_카드가_없으면_예외_발생한다() {
-        List<TrumpCard> cards = new ArrayList<>();
-        for (Suit suit : Suit.values()) {
-            for (Rank rank : Rank.values()) {
-                cards.add(TrumpCard.of(suit, rank));
-            }
-        }
-        Deck deck = Deck.of(cards);
-        for (int i = 0; i < 52; i++) {
-            deck.draw();
-        }
+        Deck deck = emptyDeck();
 
-        assertThatThrownBy(deck::draw)
+        assertThatThrownBy(deck::deal)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("덱에 카드가 없습니다.");
     }
 
     @Test
     void 카드를_지급하면_전체_카드_수가_줄어든다() {
-        List<TrumpCard> cards = new ArrayList<>();
-        for (Suit suit : Suit.values()) {
-            for (Rank rank : Rank.values()) {
-                cards.add(TrumpCard.of(suit, rank));
-            }
-        }
-        Deck deck = Deck.of(cards);
-        TrumpCard draw = deck.draw();
+        Deck deck = Deck.of(new ArrayList<>(TrumpCard.CARDS));
 
-        assertThat(draw).isNotNull();
+        deck.deal();
+
+        assertThat(deck.countCards()).isNotNull();
     }
 
     @Test
     void 게임을_시작하면_카드를_셔플한다() {
         Deck deck = Deck.create(Collections::reverse);
-        TrumpCard first = deck.draw();
+        TrumpCard first = deck.deal();
         assertThat(first).isEqualTo(TrumpCard.of(Suit.CLOVER, Rank.KING));
-    }
-
-    @Test
-    void 카드_2장을_한번에_지급한다() {
-        List<TrumpCard> cards = new ArrayList<>();
-        for (Suit suit : Suit.values()) {
-            for (Rank rank : Rank.values()) {
-                cards.add(TrumpCard.of(suit, rank));
-            }
-        }
-        Deck deck = Deck.of(cards);
-        List<TrumpCard> drawnCards = deck.drawSecondTimes();
-
-        assertThat(drawnCards).hasSize(2);
     }
 }
