@@ -58,7 +58,7 @@ public class Main {
         printBustOrStay(player, game, outputView);
     }
 
-    private static void printBustOrStay( Member player, BlackjackGame game, OutputView outputView) {
+    private static void printBustOrStay(Member player, BlackjackGame game, OutputView outputView) {
         if (game.checkBust(player)) {
             outputView.printBustMessage(player.getName());
             return;
