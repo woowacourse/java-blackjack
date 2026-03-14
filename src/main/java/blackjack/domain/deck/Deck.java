@@ -6,6 +6,7 @@ import blackjack.domain.card.Number;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Deck {
     private final Cards cards;
@@ -30,7 +31,7 @@ public class Deck {
         List<Card> cards = Arrays.stream(Figure.values())
                 .flatMap(figure -> Arrays.stream(Number.values())
                         .map(number -> new Card(figure, number)))
-                .toList();
+                .collect(Collectors.toList());
         return new Cards(cards);
     }
 }
