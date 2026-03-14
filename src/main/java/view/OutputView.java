@@ -11,7 +11,6 @@ import java.util.Map;
 public class OutputView {
 
     private static final String COMMA_SEPARATOR = ", ";
-    private static final String SPACE_SEPARATOR = " ";
     private static final String DEALER_DISPLAY_NAME = "딜러";
 
     public void showInitialHandsOfParticipants(DealerDto dealerDto, PlayersDto playersDto) {
