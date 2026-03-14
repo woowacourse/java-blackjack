@@ -1,5 +1,7 @@
 package model.result;
 
+import dto.result.ParticipantProfit;
+
 public class DealerProfit {
     private Integer profit = 0;
 
@@ -7,7 +9,7 @@ public class DealerProfit {
         profit += betAmount;
     }
 
-    public Integer getTotalProfit() {
-        return profit;
+    public ParticipantProfit getDealerProfit(String dealerName) {
+        return new ParticipantProfit(dealerName, profit);
     }
 }

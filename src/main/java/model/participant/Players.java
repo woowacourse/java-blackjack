@@ -6,13 +6,13 @@ import dto.result.ParticipantProfit;
 import dto.result.ProfitResult;
 import dto.status.DealerStatus;
 import dto.status.PlayerStatus;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import model.card.Card;
 import model.result.DealerProfit;
+import model.result.PlayerProfits;
 import model.result.ProfitCalculator;
 
 public class Players {
@@ -59,17 +59,17 @@ public class Players {
 
     public ProfitResult getProfitResult(DealerStatus dealerStatus) {
         DealerProfit dealerProfit = new DealerProfit();
-        List<ParticipantProfit> playerProfit = new ArrayList<>();
+        PlayerProfits playerProfit = new PlayerProfits();
 
         players.values().forEach(player -> {
             PlayerStatus playerStatus = getPlayerStatus(player);
             Integer profit = ProfitCalculator.calculateBetAmount(dealerStatus, playerStatus);
 
-            playerProfit.add(new ParticipantProfit(player.getName(), profit));
+            playerProfit.addPlayerProfit(new ParticipantProfit(player.getName(), profit));
             dealerProfit.increase(-profit);
         });
 
-        return new ProfitResult(new ParticipantProfit(dealerStatus.name(), dealerProfit.getTotalProfit()), playerProfit);
+        return new ProfitResult(dealerProfit.getDealerProfit(dealerStatus.name()), playerProfit.getPlayerProfits());
     }
 
     private Player getPlayer(String playerName) {

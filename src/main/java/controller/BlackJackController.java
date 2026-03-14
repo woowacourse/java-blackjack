@@ -19,17 +19,12 @@ public class BlackJackController {
     }
 
     public void playBlackJackGame() {
-        try {
-            registerParticipant();
-            addBet();
+        registerParticipant();
+        addBet();
 
-            initGame();
-            participantTurn();
-            displayResult();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
+        initGame();
+        participantTurn();
+        displayResult();
     }
 
     private void registerParticipant() {
