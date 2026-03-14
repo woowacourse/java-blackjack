@@ -24,7 +24,7 @@ public class Player extends Participant {
     }
 
     public static Player copyOf(Player player) {
-        return new Player(player.name, player.betMoney, Hand.copyOf(player.hand));
+        return new Player(player.name, player.betMoney, player.getCards());
     }
 
     public BetMoney getResult(Participant target) {
