@@ -1,10 +1,13 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 public class DealerTest {
@@ -29,30 +32,102 @@ public class DealerTest {
                 .containsExactly(card1);
     }
 
-    @Test
-    @DisplayName("딜러는 카드의 합이 16 이하면 카드를 더 뽑을 수 있다.")
-    void shouldReturnTrueWhenCardScoreSumIsMinimumOrLess() {
-        // given
-        Dealer testDealer = createDealerWithCards(
-                new Card(CardShape.HEART, CardContents.FIVE),
-                new Card(CardShape.HEART, CardContents.SIX)
-        );
+    @Nested
+    class IsDrawableTest {
+        @Test
+        @DisplayName("딜러는 카드의 합이 16 미만이면 카드를 더 뽑을 수 있다.")
+        void shouldReturnTrueWhenCardScoreSumLessThanMinimum() {
+            // given
+            Dealer testDealer = createDealerWithCards(
+                    new Card(CardShape.HEART, CardContents.FIVE),
+                    new Card(CardShape.HEART, CardContents.SIX)
+            );
 
-        // when & then
-        assertTrue(testDealer.isDrawable());
+            // when & then
+            assertTrue(testDealer.isDrawable());
+        }
+
+        @Test
+        @DisplayName("딜러는 카드의 합이 16이면 카드를 더 뽑을 수 있다.")
+        void shouldReturnTrueWhenCardScoreSumEqualsMinimum() {
+            // given
+            Dealer testDealer = createDealerWithCards(
+                    new Card(CardShape.HEART, CardContents.TEN),
+                    new Card(CardShape.HEART, CardContents.SIX)
+            );
+
+            // when & then
+            assertTrue(testDealer.isDrawable());
+        }
+
+        @Test
+        @DisplayName("딜러는 카드의 합이 16을 초과하면 카드를 더 이상 뽑을 수 없다.")
+        void shouldReturnFalseWheCardScoreSumOverMinimum() {
+            // given
+            Dealer testDealer = createDealerWithCards(
+                    new Card(CardShape.HEART, CardContents.TEN),
+                    new Card(CardShape.CLOVER, CardContents.SIX),
+                    new Card(CardShape.SPADE, CardContents.FIVE)
+            );
+
+            // when & then
+            assertFalse(testDealer.isDrawable());
+        }
     }
 
-    @Test
-    @DisplayName("딜러는 카드의 합이 16 이상이면 카드를 더 이상 뽑을 수 없다.")
-    void shouldReturnFalseWhenNotBust() {
-        // given
-        Dealer testDealer = createDealerWithCards(
-                new Card(CardShape.HEART, CardContents.TEN),
-                new Card(CardShape.CLOVER, CardContents.TEN),
-                new Card(CardShape.SPADE, CardContents.TEN)
-        );
+    @Nested
+    class AddCardTest {
+        @Test
+        @DisplayName("딜러는 카드의 합이 16 미만일 때 카드를 정상적으로 추가할 수 있다.")
+        void shouldAddCardWhenDeckSumLessThanMinimum() {
+            // given
+            Dealer testDealer = createDealerWithCards(
+                    new Card(CardShape.HEART, CardContents.FIVE),
+                    new Card(CardShape.HEART, CardContents.SIX)
+            );
+            Card newCard = new Card(CardShape.CLOVER, CardContents.SIX);
 
-        // when & then
-        assertFalse(testDealer.isDrawable());
+            // when
+            testDealer.addCard(newCard);
+
+            // then
+            List<Card> cards = testDealer.getCards();
+            assertThat(cards).hasSize(3);
+            assertThat(cards).contains(newCard);
+        }
+
+        @Test
+        @DisplayName("딜러는 카드의 합이 16일 때 카드를 정상적으로 추가할 수 있다.")
+        void shouldAddCardWhenDeckSumEqualsMinimum() {
+            // given
+            Dealer testDealer = createDealerWithCards(
+                    new Card(CardShape.HEART, CardContents.TEN),
+                    new Card(CardShape.HEART, CardContents.SIX)
+            );
+            Card newCard = new Card(CardShape.CLOVER, CardContents.SIX);
+
+            // when
+            testDealer.addCard(newCard);
+
+            // then
+            List<Card> cards = testDealer.getCards();
+            assertThat(cards).hasSize(3);
+            assertThat(cards).contains(newCard);
+        }
+
+        @Test
+        @DisplayName("딜러는 카드의 합이 16을 초과하면 카드를 더 이상 뽑을 수 없다.")
+        void shouldThrowExceptionWhenDeckSumOverMinimum() {
+            // given
+            Dealer testDealer = createDealerWithCards(
+                    new Card(CardShape.HEART, CardContents.TEN),
+                    new Card(CardShape.HEART, CardContents.EIGHT)
+            );
+            Card newCard = new Card(CardShape.CLOVER, CardContents.SIX);
+
+            // when & then
+            assertThatThrownBy(() -> testDealer.addCard(newCard))
+                    .isInstanceOf(IllegalStateException.class);
+        }
     }
 }
