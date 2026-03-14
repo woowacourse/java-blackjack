@@ -69,4 +69,14 @@ class DeckTest {
     }
 
 
+    @Test
+    @DisplayName("덱이 비었으면 카드를 뽑을 수 없다.")
+    void drawCard_whenDeckEmpty_thenException() {
+        Deck deck = TestDefaults.createDeck(new RandomValueGeneratorImpl());
+
+        deck.drawCards(52);
+
+        assertThatThrownBy(deck::drawCard)
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }

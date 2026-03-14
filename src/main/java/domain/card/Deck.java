@@ -32,12 +32,10 @@ public class Deck {
     }
 
     public Card drawCard() {
+        validateCardsIsEmpty();
         int idx = randomValueGenerator.generate(cards.size());
 
-        Card card = cards.get(idx);
-        cards.remove(idx);
-
-        return card;
+        return cards.remove(idx);
     }
 
     public List<Card> drawCards(int n) {
@@ -48,6 +46,12 @@ public class Deck {
             drawnCards.add(drawCard());
         }
         return drawnCards;
+    }
+
+    private void validateCardsIsEmpty() {
+        if (cards.isEmpty()) {
+            throw new IllegalArgumentException(ErrorMessage.CARDS_IS_EMPTY.getMessage());
+        }
     }
 
     private void validateCardsCount(int n) {
