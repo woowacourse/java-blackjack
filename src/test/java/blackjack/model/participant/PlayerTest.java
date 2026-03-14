@@ -11,8 +11,8 @@ import org.junit.jupiter.api.Test;
 
 class PlayerTest {
 
-    static final Name DEFAULT_NAME = new Name("name");
-    static final Bet DEFAULT_BET = new Bet(10000);
+    private static final Name DEFAULT_NAME = new Name("name");
+    private static final Bet DEFAULT_BET = new Bet(10000);
 
     private final BlackjackState loseState = BlackjackState.init()
             .hit(new Card(Rank.TWO, Suit.HEART));
