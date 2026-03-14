@@ -7,6 +7,9 @@ import blackjack.domain.bet.Bet;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class BetTest {
 
@@ -14,32 +17,31 @@ class BetTest {
     @DisplayName("생성 테스트")
     class 생성_테스트 {
 
-        @Test
+        @ParameterizedTest
         @DisplayName("정상 테스트")
-        void 정상_테스트() {
-            int amount = 10000;
-
+        @ValueSource(ints = {5000, 100_000_000})
+        void 정상_테스트(int amount) {
             assertDoesNotThrow(() -> new Bet(amount));
         }
 
         @Test
-        @DisplayName("베팅금이 5,000 미만인 경우")
-        void 베팅금이_5000_미만인_경우() {
-            int amount = 1000;
+        @DisplayName("베팅금 하한 테스트")
+        void 베팅금_하한_테스트() {
+            int amount = 4999;
 
             assertThatThrownBy(() -> new Bet(amount))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("베팅금은 5,000 이상이어야 합니다.");
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("베팅금은 5,000 이상이어야 합니다.");
         }
 
         @Test
-        @DisplayName("베팅금이 100,000,000 초과인 경우")
-        void 베팅금이_100_000_000_초과인_경우() {
-            int amount = 100_001_000;
+        @DisplayName("베팅금 상한 테스트")
+        void 베팅금_상한_테스트() {
+            int amount = 100_000_001;
 
             assertThatThrownBy(() -> new Bet(amount))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("베팅금은 100,000,000 이하여야 합니다.");
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("베팅금은 100,000,000 이하여야 합니다.");
         }
 
         @Test
@@ -48,8 +50,8 @@ class BetTest {
             int amount = 5001;
 
             assertThatThrownBy(() -> new Bet(amount))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("베팅금은 1,000 단위여야 합니다.");
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("베팅금은 1,000 단위여야 합니다.");
         }
     }
 }
