@@ -9,23 +9,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import presentation.ui.BlackjackView;
 import presentation.ui.InputView;
 import presentation.ui.OutputView;
 
 public class BlackjackController {
 
     private final BlackjackService blackjackService;
-    private final InputView inputView;
-    private final OutputView outputView;
+    private final BlackjackView blackjackView;
 
-    public BlackjackController(BlackjackService blackjackService, InputView inputView, OutputView outputView) {
+    public BlackjackController(BlackjackService blackjackService, BlackjackView blackjackView) {
         this.blackjackService = blackjackService;
-        this.inputView = inputView;
-        this.outputView = outputView;
+        this.blackjackView = blackjackView;
     }
 
     public void executeGame() {
-        List<String> playerNames = inputView.readPlayerNames();
+        List<String> playerNames = blackjackView.inputView().readPlayerNames();
         setUpGame(playerNames);
         playGame(playerNames);
         checkDrawableOfDealer();
@@ -35,18 +34,18 @@ public class BlackjackController {
 
     private void finalGameResult() {
         List<GameResult> gameResults = blackjackService.getGameResults();
-        outputView.printGameResult(gameResults);
+        blackjackView.outputView().printGameResult(gameResults);
     }
 
     private void finalGameStatus() {
         List<MemberStatus> statuses = blackjackService.getMemberStatuses();
-        outputView.printFinalMemberStatus(statuses);
+        blackjackView.outputView().printFinalMemberStatus(statuses);
     }
 
     private void checkDrawableOfDealer() {
         boolean dealerDrawable = blackjackService.checkDealerDrawable();
         if (dealerDrawable) {
-            outputView.printDealerDrawOut();
+            blackjackView.outputView().printDealerDrawOut();
         }
     }
 
@@ -59,19 +58,19 @@ public class BlackjackController {
     private void setUpGame(List<String> playerNames) {
         Map<String, Integer> playerBets = new HashMap<>();
         for (String playerName : playerNames) {
-            int betAmount = inputView.readPlayerBetAmount(playerName);
+            int betAmount = blackjackView.inputView().readPlayerBetAmount(playerName);
             playerBets.put(playerName, betAmount);
         }
         blackjackService.initializeGame(playerBets);
         List<MemberStatus> memberStatuses = blackjackService.getMemberStatuses();
-        outputView.printInitialStatus(memberStatuses);
+        blackjackView.outputView().printInitialStatus(memberStatuses);
     }
 
     private void playAllRoundOfPlayer(String playerName) {
         boolean isBust = false;
-        while (!isBust && inputView.playContinue(playerName)) {
+        while (!isBust && blackjackView.inputView().playContinue(playerName)) {
             RoundResult roundResult = blackjackService.startOneRound(playerName);
-            outputView.printCurrentCard(playerName, roundResult);
+            blackjackView.outputView().printCurrentCard(playerName, roundResult);
             isBust = roundResult.isBust();
         }
         if (!isBust) {
