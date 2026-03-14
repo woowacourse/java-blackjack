@@ -77,7 +77,7 @@ public class GameController {
     }
 
     private void addDealerCards(BlackjackGame blackjackGame) {
-        if (blackjackGame.shouldDealerDraw()) {
+        while (blackjackGame.shouldDealerDraw()) {
             outputView.printAddDealerCardMessage();
             blackjackGame.playDealerTurn();
         }

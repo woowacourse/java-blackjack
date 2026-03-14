@@ -50,9 +50,7 @@ public class BlackjackGame {
     }
 
     public void playDealerTurn() {
-        while (getDealer().checkThreshold()) {
-            getDealer().addHandCard(deck.draw());
-        }
+        getDealer().addHandCard(deck.draw());
     }
 
     public Dealer getDealer() {
