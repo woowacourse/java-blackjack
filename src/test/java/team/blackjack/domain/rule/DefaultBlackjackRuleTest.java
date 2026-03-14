@@ -1,13 +1,14 @@
 package team.blackjack.domain.rule;
 
 import java.util.List;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import team.blackjack.domain.Card;
 import team.blackjack.domain.Hand;
 import team.blackjack.domain.Rank;
 import team.blackjack.domain.Result;
 import team.blackjack.domain.Suit;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class DefaultBlackjackRuleTest {
     private static final BlackjackRule blackjackRule = new DefaultBlackjackRule();
@@ -20,7 +21,7 @@ class DefaultBlackjackRuleTest {
         int dealerScore = 16;
         boolean isDealerMustDraw = blackjackRule.isDealerMustDraw(dealerScore);
 
-        Assertions.assertEquals(true, isDealerMustDraw);
+        assertThat(isDealerMustDraw).isEqualTo(true);
     }
 
     @Test
@@ -28,7 +29,7 @@ class DefaultBlackjackRuleTest {
         int dealerScore = 17;
         boolean isDealerMustDraw = blackjackRule.isDealerMustDraw(dealerScore);
 
-        Assertions.assertEquals(false, isDealerMustDraw);
+        assertThat(isDealerMustDraw).isEqualTo(false);
     }
 
     /**
@@ -59,7 +60,7 @@ class DefaultBlackjackRuleTest {
             dealerHand.addCard(card);
         }
 
-        Assertions.assertEquals(Result.WIN, blackjackRule.judgePlayerResult(playerHand, dealerHand));
+        assertThat(blackjackRule.judgePlayerResult(playerHand, dealerHand)).isEqualTo(Result.WIN);
     }
 
     @Test
@@ -84,7 +85,7 @@ class DefaultBlackjackRuleTest {
             dealerHand.addCard(card);
         }
 
-        Assertions.assertEquals(Result.LOSE, blackjackRule.judgePlayerResult(playerHand, dealerHand));
+        assertThat(blackjackRule.judgePlayerResult(playerHand, dealerHand)).isEqualTo(Result.LOSE);
     }
 
     @Test
@@ -105,7 +106,7 @@ class DefaultBlackjackRuleTest {
             dealerHand.addCard(card);
         }
 
-        Assertions.assertEquals(Result.LOSE, blackjackRule.judgePlayerResult(playerHand, dealerHand));
+        assertThat(blackjackRule.judgePlayerResult(playerHand, dealerHand)).isEqualTo(Result.LOSE);
     }
 
     /**
@@ -132,7 +133,7 @@ class DefaultBlackjackRuleTest {
             dealerHand.addCard(card);
         }
 
-        Assertions.assertEquals(Result.BLACKJACK, blackjackRule.judgePlayerResult(playerHand, dealerHand));
+        assertThat(blackjackRule.judgePlayerResult(playerHand, dealerHand)).isEqualTo(Result.BLACKJACK);
     }
 
     @Test
@@ -156,7 +157,7 @@ class DefaultBlackjackRuleTest {
             dealerHand.addCard(card);
         }
 
-        Assertions.assertEquals(Result.LOSE, blackjackRule.judgePlayerResult(playerHand, dealerHand));
+        assertThat(blackjackRule.judgePlayerResult(playerHand, dealerHand)).isEqualTo(Result.LOSE);
     }
 
     @Test
@@ -176,7 +177,7 @@ class DefaultBlackjackRuleTest {
             dealerHand.addCard(card);
         }
 
-        Assertions.assertEquals(Result.DRAW, blackjackRule.judgePlayerResult(playerHand, dealerHand));
+        assertThat(blackjackRule.judgePlayerResult(playerHand, dealerHand)).isEqualTo(Result.DRAW);
     }
 
     /**
@@ -203,7 +204,7 @@ class DefaultBlackjackRuleTest {
             dealerHand.addCard(card);
         }
 
-        Assertions.assertEquals(Result.LOSE, blackjackRule.judgePlayerResult(playerHand, dealerHand));
+        assertThat(blackjackRule.judgePlayerResult(playerHand, dealerHand)).isEqualTo(Result.LOSE);
     }
 
     @Test
@@ -227,7 +228,7 @@ class DefaultBlackjackRuleTest {
             dealerHand.addCard(card);
         }
 
-        Assertions.assertEquals(Result.WIN, blackjackRule.judgePlayerResult(playerHand, dealerHand));
+        assertThat(blackjackRule.judgePlayerResult(playerHand, dealerHand)).isEqualTo(Result.WIN);
     }
 
     @Test
@@ -247,6 +248,6 @@ class DefaultBlackjackRuleTest {
             dealerHand.addCard(card);
         }
 
-        Assertions.assertEquals(Result.DRAW, blackjackRule.judgePlayerResult(playerHand, dealerHand));
+        assertThat(blackjackRule.judgePlayerResult(playerHand, dealerHand)).isEqualTo(Result.DRAW);
     }
 }

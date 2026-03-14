@@ -1,6 +1,5 @@
 package team.blackjack.domain;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -169,7 +168,7 @@ class HandTest {
             hand.addCard(card);
         }
 
-        Assertions.assertEquals(true, hand.isBust());
+        assertThat(hand.isBust()).isEqualTo(true);
     }
 
     @Test
@@ -184,7 +183,7 @@ class HandTest {
             hand.addCard(card);
         }
 
-        Assertions.assertEquals(false, hand.isBust());
+        assertThat(hand.isBust()).isEqualTo(false);
     }
 
     /**
@@ -202,7 +201,7 @@ class HandTest {
             hand.addCard(card);
         }
 
-        Assertions.assertEquals(true, hand.isBlackjack());
+        assertThat(hand.isBlackjack()).isEqualTo(true);
     }
 
     @Test
@@ -218,7 +217,7 @@ class HandTest {
             hand.addCard(card);
         }
 
-        Assertions.assertEquals(false, hand.isBlackjack());
+        assertThat(hand.isBlackjack()).isEqualTo(false);
     }
 
     @Test
@@ -233,6 +232,6 @@ class HandTest {
             hand.addCard(card);
         }
 
-        Assertions.assertEquals(false, hand.isBlackjack());
+        assertThat(hand.isBlackjack()).isEqualTo(false);
     }
 }
