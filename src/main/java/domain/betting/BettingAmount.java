@@ -17,12 +17,4 @@ public class BettingAmount {
     public Integer getMoney() {
         return money;
     }
-
-    public static BettingAmount zero() {
-        return new BettingAmount(0);
-    }
-
-    public BettingAmount oneAndAHalfAmount() {
-        return new BettingAmount(money * 3 / 2);
-    }
 }
