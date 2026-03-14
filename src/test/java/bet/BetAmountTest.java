@@ -13,7 +13,7 @@ class BetAmountTest {
 
     @ParameterizedTest
     @ValueSource(ints = {112, 224, 33545})
-    @DisplayName("100원 단위가 아니면 생성되지 않는다")
+    @DisplayName("베팅금이 100의 배수가 아니면 예외가 발생한다.")
     void constructor_throwsException_whenAmountIsNotMultipleOf100(int amount) {
         assertThatThrownBy(() -> new BetAmount(amount))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -22,8 +22,8 @@ class BetAmountTest {
 
     @ParameterizedTest
     @ValueSource(ints = {1000, 2000, 23000})
-    @DisplayName("100원 단위면 잘 생성된다")
-    void constructor_successFullyCreate_whenAmountIsNotMultipleOf100(int amount) {
+    @DisplayName("베팅금이 100의 배수이면 생성에 성공한다.")
+    void constructor_successFullyCreate_whenAmountIsMultipleOf100(int amount) {
         BetAmount betAmount = new BetAmount(amount);
         assertThat(betAmount.getBetAmount()).isEqualTo(amount);
     }
