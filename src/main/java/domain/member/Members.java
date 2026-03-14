@@ -2,8 +2,12 @@ package domain.member;
 
 import domain.MatchResult;
 import domain.card.Card;
+import domain.state.Hit;
+import domain.state.Stay;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 public class Members {
@@ -11,10 +15,10 @@ public class Members {
     private final Dealer dealer;
     private final List<Player> players;
 
-    public Members(List<String> playerNames) {
-        this.dealer = new Dealer();
-        this.players = playerNames.stream()
-                .map(Player::new)
+    public Members(Map<String, Money> playerBets) {
+        this.dealer = new Dealer(new Hit(new Hand()));
+        this.players = playerBets.entrySet().stream()
+                .map(entry -> new Player(entry.getKey(), entry.getValue(), new Hit(new Hand())))
                 .toList();
     }
 
@@ -55,15 +59,25 @@ public class Members {
                 .toList();
     }
 
-    public List<MatchResult> determineDealerGameResult() {
-        List<MatchResult> gameResult = new ArrayList<>();
-        players.forEach(player -> gameResult.add(dealer.compareScoreWith(player)));
-        return List.copyOf(gameResult);
+//    public List<MatchResult> determineDealerGameResult() {
+//        List<MatchResult> gameResult = new ArrayList<>();
+//        players.forEach(player -> gameResult.add(dealer.compareScoreWith(player)));
+//        return List.copyOf(gameResult);
+//    }
+//
+//    public MatchResult determinePlayerGameResult(String name) {
+//        Member player = findByPlayerName(name);
+//        return player.compareScoreWith(dealer);
+//    }
+
+    public List<Integer> calculatePlayerProfits() {
+        return players.stream()
+                .map(Player::calculateProfit)
+                .toList();
     }
 
-    public MatchResult determinePlayerGameResult(String name) {
-        Member player = findByPlayerName(name);
-        return player.compareScoreWith(dealer);
+    public boolean isPlayerFinished(String name) {
+        return findByPlayerName(name).isFinished();
     }
 
     public String getDealerName() {

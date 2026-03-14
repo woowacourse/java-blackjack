@@ -2,21 +2,21 @@ package domain;
 
 import domain.card.Card;
 import domain.card.Deck;
+import domain.member.Money;
 import dto.GameResult;
 import dto.MemberStatus;
 import domain.member.Members;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class GameTable {
-
-    private static final int BLACKJACK = 21;
 
     private final Members members;
     private final Deck deck;
 
-    public GameTable(List<String> playerNames, Deck deck) {
-        this.members = new Members(playerNames);
+    public GameTable(Map<String, Money> playerBets, Deck deck) {
+        this.members = new Members(playerBets);
         this.deck = deck;
     }
 
@@ -29,8 +29,8 @@ public class GameTable {
         }
     }
 
-    public boolean checkBust(String memberName) {
-        return members.checkPlayerScore(memberName) > BLACKJACK;
+    public boolean isPlayerBust(String memberName) {
+        return members.isPlayerFinished(memberName);
     }
 
     public List<Card> drawForMember(String memberName) {
@@ -58,14 +58,7 @@ public class GameTable {
     }
 
     public List<GameResult> checkGameResult() {
-        List<GameResult> gameResults = new ArrayList<>();
-        gameResults.add(new GameResult(members.getDealerName(),
-                members.determineDealerGameResult()));
-
-        List<GameResult> playerResults = members.getAllPlayerName().stream()
-                .map(name -> new GameResult(name, List.of(members.determinePlayerGameResult(name))))
-                .toList();
-        gameResults.addAll(playerResults);
-        return gameResults;
+        // 컴파일 에러를 막기 위해 기존 구조만 유지
+        return new ArrayList<>();
     }
 }
