@@ -16,8 +16,8 @@ public abstract class Finished extends Status {
     }
 
     @Override
-    public boolean isFinished() {
-        return true;
+    public boolean isRunning() {
+        return false;
     }
     @Override
     public Status draw(Card card) {

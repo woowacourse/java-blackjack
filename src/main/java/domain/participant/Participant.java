@@ -28,8 +28,8 @@ abstract public class Participant {
         this.status = this.status.stay();
     }
 
-    public boolean isFinished() {
-        return this.status.isFinished();
+    public boolean isRunning() {
+        return this.status.isRunning();
     }
 
     public String getName() {
