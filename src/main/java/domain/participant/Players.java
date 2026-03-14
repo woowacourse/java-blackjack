@@ -4,7 +4,6 @@ import domain.BetMoney;
 import domain.card.Deck;
 import domain.dto.RoundResult;
 import domain.dto.TotalResult;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -23,7 +22,7 @@ public class Players {
     public static Players from(List<String> players) {
         validate(players);
         return new Players(players.stream()
-                .map(name -> new Player(name))
+                .map(Player::createReady)
                 .toList());
     }
 
@@ -77,7 +76,7 @@ public class Players {
 
     public List<Player> getPlayers() {
         return players.stream()
-                .map(player -> new Player(player))
+                .map(Player::copyOf)
                 .toList();
     }
 }

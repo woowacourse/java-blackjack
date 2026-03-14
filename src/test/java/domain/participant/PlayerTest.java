@@ -15,10 +15,10 @@ public class PlayerTest {
     private static final Dealer DEALER_BUST = new Dealer();
     private static final Dealer DEALER_21 = new Dealer();
     private static final Dealer DEALER_20 = new Dealer();
-    private static final Player PLAYER_BLACKJACK = new Player("BLACKJACK", 10000);
-    private static final Player PLAYER_BUST = new Player("BUST", 10000);
-    private static final Player PLAYER_21 = new Player("21", 10000);
-    private static final Player PLAYER_20 = new Player("20", 10000);
+    private static final Player PLAYER_BLACKJACK = Player.of("BLACKJACK", "10000");
+    private static final Player PLAYER_BUST = Player.of("BUST", "10000");
+    private static final Player PLAYER_21 = Player.of("21", "10000");
+    private static final Player PLAYER_20 = Player.of("20", "10000");
 
     static {
 
@@ -41,43 +41,27 @@ public class PlayerTest {
 
     @Test
     void 플레이어가_정상적으로_생성되어야_한다() {
-        assertDoesNotThrow(() -> new Player("minseo"));
+        assertDoesNotThrow(() -> Player.createReady("jeje"));
     }
 
     @Test
     void 블랙잭_여부를_확인할_수_있다_성공() {
-        Player player = new Player("jeje");
-
-        player.addCard(new Card(Suit.CLUB, Rank.Q));
-        player.addCard(new Card(Suit.CLUB, Rank.ACE));
-        Assertions.assertThat(player.isBlackjack()).isEqualTo(true);
+        Assertions.assertThat(PLAYER_BLACKJACK.isBlackjack()).isEqualTo(true);
     }
 
     @Test
     void 블랙잭_여부를_확인할_수_있다_실패() {
-        Player player = new Player("jeje");
-
-        player.addCard(new Card(Suit.CLUB, Rank.TWO));
-        player.addCard(new Card(Suit.CLUB, Rank.ACE));
-        Assertions.assertThat(player.isBlackjack()).isEqualTo(false);
+        Assertions.assertThat(PLAYER_20.isBlackjack()).isEqualTo(false);
     }
 
     @Test
     void 버스트_여부를_확인할_수_있다_성공() {
-        Player player = new Player("jeje");
-
-        player.addCard(new Card(Suit.CLUB, Rank.Q));
-        player.addCard(new Card(Suit.CLUB, Rank.K));
-        player.addCard(new Card(Suit.CLUB, Rank.J));
-        Assertions.assertThat(player.isBust()).isEqualTo(true);
+        Assertions.assertThat(PLAYER_BUST.isBust()).isEqualTo(true);
     }
 
     @Test
     void 버스트_여부를_확인할_수_있다_실패() {
-        Player player = new Player("jeje");
-
-        player.addCard(new Card(Suit.CLUB, Rank.ACE));
-        Assertions.assertThat(player.isBust()).isEqualTo(false);
+        Assertions.assertThat(PLAYER_20.isBust()).isEqualTo(false);
     }
 
     @Test

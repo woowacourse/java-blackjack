@@ -8,19 +8,27 @@ public class Player extends Participant {
     private final Name name;
     private BetMoney betMoney;
 
-    public Player(String name) {
-        this.name = new Name(name);
+    private Player(Name name, BetMoney betMoney) {
+        this.name = name;
+        this.betMoney = betMoney;
     }
 
-    public Player(Player player) {
-        super(new Hand(player.hand));
-        this.name = player.name;
+    private Player(Name name, BetMoney betMoney, Hand hand) {
+        super(hand);
+        this.name = name;
+        this.betMoney = betMoney;
     }
 
-    public Player(String name, int betMoney) {
-        super();
-        this.name = new Name(name);
-        this.betMoney = BetMoney.of(betMoney);
+    public static Player of(String name, String betMoney) {
+        return new Player(new Name(name), BetMoney.of(betMoney));
+    }
+
+    public static Player createReady(String name) {
+        return new Player(new Name(name), BetMoney.ZERO);
+    }
+
+    public static Player copyOf(Player player) {
+        return new Player(player.name, player.betMoney, new Hand(player.hand));
     }
 
     public BetMoney getResult(Participant target) {
