@@ -42,7 +42,7 @@ public class PlayersTest {
                 player("dalsu")
         ));
         List<String> names = new ArrayList<>();
-        players.forEach(p -> names.add(p.name()));
+        players.forEach(p -> names.add(p.getName()));
 
         assertThat(names).containsExactly("handa", "dalsu");
     }

@@ -45,7 +45,7 @@ class DealerTest {
                 card(Suit.SPADE, Rank.KING),
                 card(Suit.HEART, Rank.FIVE)
         );
-        assertThat(dealer.shouldHit()).isTrue();
+        assertThat(dealer.canHit()).isTrue();
     }
 
     @Test
@@ -54,6 +54,6 @@ class DealerTest {
                 card(Suit.SPADE, Rank.KING),
                 card(Suit.HEART, Rank.SEVEN)
         );
-        assertThat(dealer.shouldHit()).isFalse();
+        assertThat(dealer.canHit()).isFalse();
     }
 }

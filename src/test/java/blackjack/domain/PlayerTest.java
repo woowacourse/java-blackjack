@@ -20,7 +20,7 @@ public class PlayerTest {
     @Test
     void 플레이어는_이름을_가진다(){
         Player player = Player.of(Name.of("한다"));
-        assertThat(player.name()).isEqualTo("한다");
+        assertThat(player.getName()).isEqualTo("한다");
     }
 
     @Test
