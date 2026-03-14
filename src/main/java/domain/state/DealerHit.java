@@ -5,7 +5,6 @@ import domain.member.Hand;
 
 public class DealerHit extends Running {
     private static final int DEALER_DRAW_CONDITION = 16;
-    private static final int INITIAL_CARDS_COUNT = 2;
 
     public DealerHit(Hand hand) {
         super(hand);
@@ -15,14 +14,15 @@ public class DealerHit extends Running {
     public State draw(Card card) {
         Hand newHand = hand.appendCard(card);
         int score = newHand.calculateTotalValue();
+        int newHandSize = newHand.size();
 
         if (score >= BUST_CONDITION) {
             return new Bust(newHand);
         }
-        if (newHand.size() < INITIAL_CARDS_COUNT) {
+        if (newHandSize < INITIAL_CARDS_COUNT) {
             return new DealerHit(newHand);
         }
-        if (newHand.size() == INITIAL_CARDS_COUNT) {
+        if (newHandSize == INITIAL_CARDS_COUNT) {
             return judgeInitialState(newHand, score);
         }
         return new Stay(newHand);

@@ -12,11 +12,22 @@ public class Hit extends Running {
     @Override
     public State draw(Card card) {
         Hand newHand = hand.appendCard(card);
+        int score = newHand.calculateTotalValue();
 
-        if (newHand.calculateTotalValue() > BUST_CONDITION) {
+        if (score >= BUST_CONDITION) {
             return new Bust(newHand);
         }
+        if (score == BLACKJACK_CONDITION) {
+            return judgeInitialState(newHand);
+        }
         return new Hit(newHand);
+    }
+
+    private State judgeInitialState(Hand newHand) {
+        if (newHand.size() == INITIAL_CARDS_COUNT) {
+            return new Blackjack(newHand);
+        }
+        return new Stay(newHand);
     }
 
     @Override
