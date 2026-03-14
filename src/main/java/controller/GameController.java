@@ -1,12 +1,16 @@
 package controller;
 
+import domain.card.RandomShuffleStrategy;
 import domain.player.Player;
+import domain.vo.Cost;
 import dto.ParticipantResult;
 import service.GameService;
 import view.InputView;
 import view.ResultView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GameController {
     private final GameService gameService;
@@ -17,13 +21,31 @@ public class GameController {
 
     public void run() {
         startGame();
+
+        Map<String, Cost> userBetInfo = bettingRound();
+
         printInitialCards();
 
         hitRound();
 
         printFinalStatus();
 
-        ResultView.printResult(gameService.result());
+//        ResultView.printResult(gameService.result());
+
+        ResultView.printBetResult(gameService.bettingResult(userBetInfo));
+    }
+
+    private Map<String, Cost> bettingRound() {
+        List<Player> players = gameService.getPlayers();
+        Map<String, Cost> userBetCost = new HashMap<>();
+        for (Player player : players) {
+            String playerName = player.getName();
+            Cost bettingCost = new Cost(InputView.getBettingCost(playerName));
+
+            userBetCost.put(playerName, bettingCost);
+        }
+
+        return userBetCost;
     }
 
     private void printFinalStatus() {
@@ -54,6 +76,7 @@ public class GameController {
     private void startGame() {
         List<String> names = InputView.askName();
         gameService.joinPlayers(names);
+        gameService.createDeck(new RandomShuffleStrategy());
         gameService.initAllPlayerCard();
     }
 
@@ -66,7 +89,7 @@ public class GameController {
         while (InputView.askHit(player.getName())) {
             gameService.hit(player);
 
-            if (player.isBust()) {
+            if (player.isBust() || player.isBlackJack()) {
                 break;
             }
 

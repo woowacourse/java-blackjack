@@ -29,6 +29,14 @@ public class InputView {
         throw new IllegalArgumentException("[ERROR] y와 n만 입력가능합니다.");
     }
 
+    public static int getBettingCost(String name) {
+        System.out.println(name + "의 배팅 금액은?");
+        String userInput = sc.nextLine();
+        validateInteger(userInput);
+
+        return Integer.parseInt(userInput);
+    }
+
     private static List<String> splitComma(String input) {
         List<String> names = Arrays.stream(input.split(","))
                 .map(String::trim)
@@ -44,6 +52,14 @@ public class InputView {
 
         if (set.size() != names.size()) {
             throw new IllegalArgumentException("[ERROR] 중복된 이름이 존재합니다.");
+        }
+    }
+
+    private static void validateInteger(String input) {
+        try {
+            int number = Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException("[ERROR] 숫자만 입력 가능합니다.");
         }
     }
 }

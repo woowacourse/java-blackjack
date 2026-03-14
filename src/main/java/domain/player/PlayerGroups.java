@@ -40,14 +40,8 @@ public class PlayerGroups {
         return dealer;
     }
 
-    public Map<String, Integer> getPlayerTotalScore() {
-        Map<String, Integer> scores = new LinkedHashMap<>();
-
-        for (Player player : players) {
-            scores.put(player.getName(), player.getCardSum());
-        }
-
-        return scores;
+    public String getDealerName() {
+        return dealer.getName();
     }
 
     public Map<String, WinStatus> getGameResult() {
@@ -61,6 +55,10 @@ public class PlayerGroups {
     }
 
     private WinStatus getResultOf(Player player) {
+        if (player.isBlackJack() && !dealer.isBlackJack()) {
+            return WinStatus.BLACKJACK_WIN;
+        }
+
         if (player.isBust()) {
             return WinStatus.LOSE;
         }

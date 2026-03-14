@@ -30,4 +30,25 @@ class ParticipantTest {
 
         assertThat(participant.isBust()).isTrue();
     }
+
+    @Test
+    void 카드가_2장이면서_점수가_21점일때_블랙잭() {
+        Participant participant = new Participant(new Name("eian"));
+
+        participant.addCard(new Card(TrumpSuit.HEART, TrumpNumber.KING));
+        participant.addCard(new Card(TrumpSuit.SPADE, TrumpNumber.ACE));
+
+        assertThat(participant.isBlackJack()).isTrue();
+    }
+
+    @Test
+    void 점수가_21점이지만_카드가_2장이아닐경우() {
+        Participant participant = new Participant(new Name("eian"));
+
+        participant.addCard(new Card(TrumpSuit.HEART, TrumpNumber.TEN));
+        participant.addCard(new Card(TrumpSuit.SPADE, TrumpNumber.FOUR));
+        participant.addCard(new Card(TrumpSuit.SPADE, TrumpNumber.SEVEN));
+
+        assertThat(participant.isBlackJack()).isFalse();
+    }
 }

@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Participant {
     private static final int MAX_SCORE = 21;
+    private static final int BLACKJACK_CARD_QUANTITY = 2;
 
     private final Name name;
     private final HandCards handCards = new HandCards();
@@ -21,6 +22,10 @@ public class Participant {
 
     public boolean isBust() {
         return handCards.getCardScoreSum() > MAX_SCORE;
+    }
+
+    public boolean isBlackJack() {
+        return (handCards.quantity() == BLACKJACK_CARD_QUANTITY) && (handCards.getCardScoreSum() == MAX_SCORE);
     }
 
     public String getName() {

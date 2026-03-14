@@ -1,16 +1,15 @@
 package service;
 
-import domain.card.Card;
 import domain.card.CardDeck;
-import domain.card.TrumpNumber;
-import domain.card.TrumpSuit;
+import domain.card.ShuffleStrategy;
 import domain.player.Player;
 import domain.player.PlayerGroups;
 import domain.player.WinStatus;
+import domain.vo.Cost;
+import dto.ParticipantBetResult;
 import dto.ParticipantResult;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +17,7 @@ public class GameService {
     private static final int CARDS_PER_PLAYER_AT_START = 2;
 
     private PlayerGroups playerGroups;
-    private final CardDeck cardDeck = initCardDeck();
+    private CardDeck cardDeck;
 
     public void joinPlayers(List<String> playerNames) {
         playerGroups = new PlayerGroups(playerNames);
@@ -62,6 +61,22 @@ public class GameService {
         return playerGroups.getGameResult();
     }
 
+    public List<ParticipantBetResult> bettingResult(Map<String, Cost> userBetInfo) {
+        List<ParticipantBetResult> profitResults = new ArrayList<>();
+        int dealerCost = 0;
+
+        for (Map.Entry<String, WinStatus> playerWinStatus : playerGroups.getGameResult().entrySet()) {
+            String userName = playerWinStatus.getKey();
+            int userCost = (int) (userBetInfo.get(userName).getCost() * playerWinStatus.getValue().getEarningsRate());
+
+            profitResults.add(new ParticipantBetResult(userName, userCost));
+            dealerCost -= userCost;
+        }
+
+        profitResults.addFirst(new ParticipantBetResult(playerGroups.getDealerName(), dealerCost));
+        return profitResults;
+    }
+
     public int getPlayerGroupSize() {
         return playerGroups.getPlayerGroupSize();
     }
@@ -70,16 +85,7 @@ public class GameService {
         return playerGroups.getDealerResult();
     }
 
-    private CardDeck initCardDeck() {
-        List<Card> cards = new ArrayList<>();
-        for (TrumpSuit suit : TrumpSuit.values()) {
-            for (TrumpNumber number : TrumpNumber.values()) {
-                cards.add(new Card(suit, number));
-            }
-        }
-
-        Collections.shuffle(cards);
-
-        return new CardDeck(cards);
+    public void createDeck(ShuffleStrategy shuffleStrategy) {
+        cardDeck = new CardDeck(shuffleStrategy);
     }
 }
