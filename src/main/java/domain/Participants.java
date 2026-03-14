@@ -145,6 +145,10 @@ public class Participants {
     private String formatUserProfitDisplay(String userName, Money userProfit) {
         return userName + ": " + userProfit.getValue();
     }
+
+    public boolean isBust(int index) {
+        return players.get(index).isBust();
+    }
 }
 
 

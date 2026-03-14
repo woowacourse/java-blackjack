@@ -79,4 +79,8 @@ public class BlackjackService {
     public List<String> evaluateGame() {
         return participants.makeProfitResultDisplays();
     }
+
+    public boolean isBust(int index) {
+        return participants.isBust(index);
+    }
 }

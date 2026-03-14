@@ -37,14 +37,12 @@ public class BlackjackController {
     }
 
     private void initParticipants() {
-        List<String> participantsNames = readParticipantsName();
+        List<String> participantsNames = readPlayersName();
         List<ParticipantsInitDTO> participantsInitDTOS = new ArrayList<>();
-
         for (String userName : participantsNames) {
             Money bettingMoney = readBettingMoney(userName);
             participantsInitDTOS.add(new ParticipantsInitDTO(userName, bettingMoney));
         }
-
         blackjackService.initParticipant(participantsInitDTOS);
     }
 
@@ -80,13 +78,13 @@ public class BlackjackController {
         blackjackService.getUserCardsDisplays().forEach(outputView::printMessage);
     }
 
-    private List<String> readParticipantsName() {
+    private List<String> readPlayersName() {
         while (true) {
             try {
                 outputView.printMessage(Message.INPUT_PARTICIPANTS_MESSAGE);
-                String participantsName = inputView.readParticipantsName();
-                validator.validateParticipantsName(participantsName);
-                return parser.parseParticipantsName(participantsName);
+                String playersName = inputView.readPlayersName();
+                validator.validateParticipantsName(playersName);
+                return parser.parseParticipantsName(playersName);
             } catch (IllegalArgumentException e) {
                 outputView.printErrorMessage(e.getMessage());
             }
@@ -95,7 +93,6 @@ public class BlackjackController {
 
     private Money readBettingMoney(String userName) {
         String getBettingMoneyRequestMessage = bettingMoneyRequest(userName);
-
         while (true) {
             try {
                 outputView.printMessage(getBettingMoneyRequestMessage);
@@ -112,18 +109,29 @@ public class BlackjackController {
 
     private void processAllPlayersHitOrStand() {
         List<String> getUsersRequestMessages = extraCardRequest();
-
         for (int index = 0; index < getUsersRequestMessages.size(); index++) {
             while (true) {
-                try {
-                    outputView.printMessage(getUsersRequestMessages.get(index));
-                    String answer = inputView.readYesOrNo();
-                    validator.validateAnswer(answer);
+                    if (blackjackService.isBust(index)) {
+                        break;
+                    }
+                    String answer = readHitOrStand(getUsersRequestMessages.get(index));
                     processHitOrStand(answer, index);
-                    break;
-                } catch (IllegalArgumentException e) {
-                    outputView.printErrorMessage(e.getMessage());
-                }
+                    if (answer.equalsIgnoreCase("n")) {
+                        break;
+                    }
+            }
+        }
+    }
+
+    private String readHitOrStand(String message) {
+        while (true) {
+            try {
+                outputView.printMessage(message);
+                String answer = inputView.readYesOrNo();
+                validator.validateAnswer(answer);
+                return answer;
+            } catch (IllegalArgumentException e) {
+                outputView.printErrorMessage(e.getMessage());
             }
         }
     }
