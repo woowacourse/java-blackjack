@@ -124,4 +124,51 @@ public class BlackjackResultTest {
         assertThat(result.gamblerProfits().get("tobi")).isEqualTo(15000);
         assertThat(result.dealerProfit()).isEqualTo(-15000);
     }
+
+    @Test
+    @DisplayName("딜러가 블랙잭이고 사용자가 블랙잭이면 무승부")
+    void 딜러_블랙잭_사용자_블랙잭() {
+        // given
+        Card king = new Card(CardRank.KING, CardSuit.HEART);
+        Card ace = new Card(CardRank.ACE, CardSuit.SPADE);
+
+        StubDeck sd = new StubDeck(List.of(king, king, ace, ace));
+
+        dealer.deal(sd);
+        gamblers.dealAll(sd);
+        dealer.deal(sd);
+        gamblers.dealAll(sd);
+
+        // when
+        BlackjackResult result = BlackjackResult.of(dealer, gamblers);
+
+        // then
+        assertThat(result.gamblerProfits().get("tobi")).isEqualTo(0);
+        assertThat(result.dealerProfit()).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("딜러가 블랙잭이고 사용자가 21이면 사용자 패배")
+    void 딜러_블랙잭_사용자_21() {
+        // given
+        Card king = new Card(CardRank.KING, CardSuit.HEART);
+        Card ace = new Card(CardRank.ACE, CardSuit.SPADE);
+        Card five = new Card(CardRank.FIVE, CardSuit.CLOVER);
+        Card six = new Card(CardRank.SIX, CardSuit.CLOVER);
+
+        StubDeck sd = new StubDeck(List.of(king, king, ace, five, six));
+
+        dealer.deal(sd);
+        gamblers.dealAll(sd);
+        dealer.deal(sd);
+        gamblers.dealAll(sd);
+        gamblers.dealAll(sd);
+
+        // when
+        BlackjackResult result = BlackjackResult.of(dealer, gamblers);
+
+        // then
+        assertThat(result.gamblerProfits().get("tobi")).isEqualTo(-10000);
+        assertThat(result.dealerProfit()).isEqualTo(10000);
+    }
 }
