@@ -1,21 +1,22 @@
 package blackjack;
 
+import blackjack.domain.bet.Bets;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Gamblers;
 import blackjack.domain.participant.Player;
-import blackjack.domain.participant.PlayerNicknames;
 import blackjack.domain.participant.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.dto.DealerInitialHand;
 import blackjack.view.dto.ParticipantHandScore;
 import blackjack.view.dto.PlayerHand;
+import blackjack.view.dto.PlayerNicknames;
 import blackjack.view.dto.PlayerProfit;
 import blackjack.view.dto.TotalWinningResult;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
-import java.util.stream.IntStream;
 
 public class BlackjackRunner {
 
@@ -28,58 +29,54 @@ public class BlackjackRunner {
     }
 
     public void execute() {
-        Participants participants = makeParticipants();
+        Gamblers gamblers = makeGamblers();
+        Dealer dealer = new Dealer();
         Deck deck = new Deck();
-        initializeGame(participants, deck);
+        initializeGame(gamblers, dealer, deck);
 
-        playerTurn(participants, deck);
-        dealerTurn(participants, deck);
-        gameEnd(participants);
+        playerTurn(gamblers, deck);
+        dealerTurn(dealer, deck);
+        gameEnd(gamblers, dealer);
     }
 
-    private Participants makeParticipants() {
-        outputView.askGameMembers();
+    private Gamblers makeGamblers() {
         Players players = makePlayers();
-        Dealer dealer = new Dealer();
-        return new Participants(players, dealer);
+        Bets bets = makeBets(players);
+        return new Gamblers(players, bets);
     }
 
     private Players makePlayers() {
+        outputView.askGameMembers();
         List<String> playerNicknames = inputView.readPlayerNicknames();
-        PlayerNicknames nicknames = new PlayerNicknames(playerNicknames);
-        List<Integer> playerBettingAmounts = nicknames.nicknames().stream()
-                .map(nickname -> {
-                    outputView.printAskPlayerBettingAmount(nickname);
-                    return inputView.readPlayerBettingAmount();
-                })
-                .toList();
-        return Players.fromNameAndBettingAmounts(playerNicknames, playerBettingAmounts);
+        return Players.fromPlayerNicknames(playerNicknames);
     }
 
-    private void playerTurn(Participants participants, Deck deck) {
-        while (true) {
-            Player currentPlayer = participants.getCurrentPlayer();
-            if (currentPlayer == null) {
-                break;
-            }
-            playerDraw(currentPlayer, deck);
-        }
+    private Bets makeBets(Players players) {
+        Bets bets = new Bets();
+        players.getPlayers()
+                .forEach(player -> {
+                    outputView.printAskPlayerBettingAmount(player.getNickname());
+                    int betAmount = inputView.readPlayerBettingAmount();
+                    bets.playerBet(player, betAmount);
+                });
+        return bets;
     }
 
-    private void initializeGame(Participants participants, Deck deck) {
-        printParticipantsNames(participants);
-        participants.distributeCards(deck);
-        printInitialHand(participants);
+    private void initializeGame(Gamblers gamblers, Dealer dealer, Deck deck) {
+        printParticipantsNames(gamblers);
+        dealer.drawInitialCards(deck);
+        gamblers.distributeCards(deck);
+        printInitialHand(gamblers, dealer);
     }
 
-    private void printParticipantsNames(Participants participants) {
-        List<Player> players = participants.getPlayers();
-        outputView.printInitialSetUp(PlayerNicknames.from(players));
+    private void printParticipantsNames(Gamblers gamblers) {
+        List<Player> players = gamblers.getPlayers();
+        PlayerNicknames playerNicknames = PlayerNicknames.from(players);
+        outputView.printInitialSetUp(playerNicknames);
     }
 
-    private void printInitialHand(Participants participants) {
-        Dealer dealer = participants.getDealer();
-        List<Player> players = participants.getPlayers();
+    private void printInitialHand(Gamblers gamblers, Dealer dealer) {
+        List<Player> players = gamblers.getPlayers();
 
         printDealerInitialHand(dealer);
         printPlayersInitialHand(players);
@@ -91,6 +88,16 @@ public class BlackjackRunner {
 
     private void printPlayersInitialHand(List<Player> players) {
         outputView.printPlayersInitialHand(PlayerHand.listOf(players));
+    }
+
+    private void playerTurn(Gamblers gamblers, Deck deck) {
+        while (true) {
+            Player currentPlayer = gamblers.getCurrentPlayer();
+            if (currentPlayer == null) {
+                break;
+            }
+            playerDraw(currentPlayer, deck);
+        }
     }
 
     private void playerDraw(Player currentPlayer, Deck deck) {
@@ -113,40 +120,34 @@ public class BlackjackRunner {
         });
     }
 
-    private void dealerTurn(Participants participants, final Deck deck) {
-        Dealer dealer = participants.getDealer();
+    private void printCurrentHand(Player player) {
+        outputView.printParticipantInitialHand(PlayerHand.from(player));
+    }
+
+    private void dealerTurn(Dealer dealer, Deck deck) {
         while (dealer.isDrawable()) {
             outputView.printDealerTurn();
             dealer.receiveCard(deck.drawCard());
         }
     }
 
-    private void printCurrentHand(Player player) {
-        outputView.printParticipantInitialHand(PlayerHand.from(player));
-    }
+    private void gameEnd(Gamblers gamblers, Dealer dealer) {
+        printHandScores(gamblers, dealer);
 
-    private void gameEnd(Participants participants) {
-        printGameResult(participants);
-    }
-
-    public void printGameResult(Participants participants) {
-        outputView.printParticipantsHandScore(ParticipantHandScore.listOf(participants.getParticipants()));
-
-        TotalWinningResult totalWinningResult = determineTotalWinningResult(participants);
+        TotalWinningResult totalWinningResult = determineTotalWinningResult(gamblers, dealer);
 
         outputView.printFinalProfit(totalWinningResult);
     }
 
-    private TotalWinningResult determineTotalWinningResult(Participants participants) {
-        Dealer dealer = participants.getDealer();
-        List<Player> players = participants.getPlayers();
-        List<Integer> playersProfit = dealer.determinePlayersProfit(players);
-        int dealerProfit = dealer.determineProfit(players);
+    private void printHandScores(Gamblers gamblers, Dealer dealer) {
+        outputView.printParticipantsHandScore(ParticipantHandScore.listOf(gamblers.getPlayers(), dealer));
+    }
 
-        List<PlayerProfit> playerResults = IntStream.range(0, players.size())
-                .mapToObj(index -> PlayerProfit.of(players.get(index), playersProfit.get(index)))
-                .toList();
-        return new TotalWinningResult(dealerProfit, playerResults);
+    private TotalWinningResult determineTotalWinningResult(Gamblers gamblers, Dealer dealer) {
+        Map<Player, Integer> playerProfits = gamblers.determinePlayerProfits(dealer);
+        long dealerProfit = gamblers.getDealerProfit(playerProfits);
+
+        return new TotalWinningResult(dealerProfit, PlayerProfit.listFrom(playerProfits));
     }
 
     private <T> T retry(Supplier<T> supplier) {

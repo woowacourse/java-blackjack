@@ -1,9 +1,9 @@
 package blackjack.view;
 
-import blackjack.domain.participant.PlayerNicknames;
 import blackjack.view.dto.DealerInitialHand;
 import blackjack.view.dto.ParticipantHandScore;
 import blackjack.view.dto.PlayerHand;
+import blackjack.view.dto.PlayerNicknames;
 import blackjack.view.dto.PlayerProfit;
 import blackjack.view.dto.TotalWinningResult;
 import java.util.List;
@@ -89,18 +89,18 @@ public class OutputView {
         printNewLine();
         printLine("## 최종 수익");
         printDealerProfit(totalWinningResult);
-        printPlayersProfit(totalWinningResult);
+        printplayerProfits(totalWinningResult);
     }
 
     private void printDealerProfit(TotalWinningResult totalWinningResult) {
         printLine(String.format("딜러: %d", totalWinningResult.dealerProfit()));
     }
 
-    public void printPlayersProfit(TotalWinningResult totalWinningResult) {
-        totalWinningResult.playerResults().forEach(this::printPlayersProfit);
+    public void printplayerProfits(TotalWinningResult totalWinningResult) {
+        totalWinningResult.playerResults().forEach(this::printplayerProfits);
     }
 
-    private void printPlayersProfit(PlayerProfit playerProfit) {
+    private void printplayerProfits(PlayerProfit playerProfit) {
         printLine(String.format("%s: %d", playerProfit.nickname(), playerProfit.profit()));
     }
 }
