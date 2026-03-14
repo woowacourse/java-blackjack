@@ -52,7 +52,7 @@ public class GameManager {
         Map<String, GameResult> gameResult = new HashMap<>();
         players.forEach(player -> {
             GameResult result = player.judgeResult(dealer);
-            gameResult.put(player.getName(), result);
+            gameResult.put(player.getName().getName(), result);
         });
         return gameResult;
     }

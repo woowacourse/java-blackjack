@@ -20,19 +20,14 @@ public class BlackJackGameController {
     public void run() {
         Players players = initPlayer();
         GameManager gameManager = new GameManager(players);
-
         List<String> playersNames = getPlayerNames(players);
         // TODO: 베팅금액 입력 로직 - return 값 아직 활용 안함
-        players.forEach(player -> InputView.askBettingAmount(player.getName()));
+        players.forEach(player -> InputView.askBettingAmount(player.getName().getName()));
         OutputView.printGameInitialMessage(playersNames);
-
         gameManager.distributeInitialCards();
         printParticipantCards(gameManager.getDealer(), players);
-
         playGame(players, gameManager);
-
         Map<String, GameResult> gameResult = gameManager.getGameResult();
-
         endGame(gameManager, players, gameResult);
     }
 
@@ -62,7 +57,7 @@ public class BlackJackGameController {
     }
 
     private boolean isStopGame(Player player) {
-        String response = InputView.askContinue(player.getName());
+        String response = InputView.askContinue(player.getName().getName());
         if (response.equals("n")) {
             printCards(toParticipantCardsDto(player));
             return true;
@@ -87,7 +82,7 @@ public class BlackJackGameController {
 
     private List<String> getPlayerNames(Players players) {
         List<String> playerNames = new ArrayList<>();
-        players.forEach(player -> playerNames.add(player.getName()));
+        players.forEach(player -> playerNames.add(player.getName().getName()));
         return playerNames;
 
     }
@@ -109,7 +104,7 @@ public class BlackJackGameController {
 
     private ParticipantCardsDto toParticipantCardsDto(Participant participant) {
         return new ParticipantCardsDto(
-                participant.getName(),
+                participant.getName().getName(),
                 participant.getCardsInfo(),
                 participant.getScore()
         );

@@ -15,18 +15,18 @@ public class Player extends Participant {
     }
 
     public GameResult judgeResult(Dealer dealer) {
-        if (this.isBust()) {
+        if (this.isBust()) { // TODO: 배팅 금액을 모두 잃는다.
             return GameResult.LOSE;
         }
-        if (dealer.isBust()) {
+        if (dealer.isBust()) { // TODO: 배팅 금액을 받는다.
             return GameResult.WIN;
         }
         if (this.getScore() > dealer.getScore()) {
-            return GameResult.WIN;
+            return GameResult.WIN; // TODO: 배팅 금액을 받는다.
         }
         if (this.getScore() < dealer.getScore()) {
-            return GameResult.LOSE;
+            return GameResult.LOSE; // TODO: 배팅 금액을 모두 잃는다.
         }
-        return GameResult.DRAW;
+        return GameResult.DRAW; // TODO: 배팅 금액을 돌려 받는다.
     }
 }

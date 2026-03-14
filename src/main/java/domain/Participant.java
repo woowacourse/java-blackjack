@@ -19,8 +19,8 @@ public abstract class Participant {
 
     public abstract boolean isContinueGame();
 
-    public String getName() {
-        return name.getName();
+    public Name getName() {
+        return this.name;
     }
 
     public int getScore() {
