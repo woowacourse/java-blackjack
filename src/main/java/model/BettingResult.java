@@ -46,7 +46,7 @@ public class BettingResult {
     }
 
     private void updateProfit(Dealer dealer, Player player, boolean dealerWin, boolean blackJack) {
-        long money = player.money();
+        long money = player.bettingMoney();
         if (blackJack) {
             player.addProfit((int) (money * BLACK_JACK_WIN_PRICE));
             dealer.subtractProfit((int) (money * BLACK_JACK_WIN_PRICE));
@@ -59,5 +59,4 @@ public class BettingResult {
         player.addProfit(money);
         dealer.subtractProfit(money);
     }
-
 }

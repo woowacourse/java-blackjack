@@ -25,7 +25,7 @@ public class BettingResultTest {
 
         Player player = new Player("pobi");
         playerCards.forEach(player::addCard);
-        player.setMoney(playerStartMoney);
+        player.setMoney(new BettingMoney(playerStartMoney));
         player.checkBlackJack();
 
         // when

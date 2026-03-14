@@ -2,17 +2,17 @@ package model;
 
 public class Player extends AbstractParticipant {
 
-    private long bettingMoney;
+    private BettingMoney bettingMoney;
 
     public Player(String name) {
         super(name);
     }
 
-    public void setMoney(long bettingMoney) {
+    public void setMoney(BettingMoney bettingMoney) {
         this.bettingMoney = bettingMoney;
     }
 
-    public long money() {
-        return this.bettingMoney;
+    public long bettingMoney() {
+        return this.bettingMoney.bettingMoney();
     }
 }
