@@ -12,7 +12,7 @@ public abstract class Running extends Status {
 
     @Override
     public Status drawInitialCards(List<Card> cards) {
-        throw new IllegalStateException("게임이 이미 시작되었습니다.");
+        throw new IllegalStateException("이미 게임이 진행 중입니다. 초기 카드를 받을 수 없습니다.");
     }
 
     @Override
