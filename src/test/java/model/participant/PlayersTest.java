@@ -18,8 +18,8 @@ public class PlayersTest {
 
     @Test
     public void 플레이어_등록_정상_작동() {
-        Player player = new Player(new PlayerName("player1"));
-        Player player2 = new Player(new PlayerName("player2"));
+        Player player = new Player("player1");
+        Player player2 = new Player("player2");
 
         players.addPlayer(player);
         players.addPlayer(player2);
@@ -33,17 +33,12 @@ public class PlayersTest {
 
     @Test
     public void 중복_이름_참가자_예외() {
-        PlayerName playerName = new PlayerName("player");
-        Player player1 = new Player(playerName);
-        Player player2 = new Player(new PlayerName("player"));
-        Player player3 = new Player(playerName);
+        Player player1 = new Player("player");
+        Player player2 = new Player("player");
 
         players.addPlayer(player1);
 
         assertThatThrownBy(() -> players.addPlayer(player2))
-                .isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ErrorMessage.DUPLICATED_NAME.getMessage());
-        assertThatThrownBy(() -> players.addPlayer(player3))
                 .isExactlyInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.DUPLICATED_NAME.getMessage());
     }

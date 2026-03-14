@@ -13,7 +13,7 @@ public class ParticipantTest {
 
     @Test
     public void 결과_출력_정상_작동() {
-        Participant participant = new Participant(new PlayerName("jason"));
+        Participant participant = new Participant("jason");
 
         ParticipantCurrentHand result = participant.getCurrentHand();
 
@@ -25,7 +25,7 @@ public class ParticipantTest {
     @Test
     public void 카드_받기_정상_작동() {
         Card card = new Card(Shape.CLOVER, CardNumber.EIGHT);
-        Participant participant = new Participant(new PlayerName("jason"));
+        Participant participant = new Participant("jason");
         participant.addCard(card);
 
         List<String> deck = participant.getCurrentHand().deck();

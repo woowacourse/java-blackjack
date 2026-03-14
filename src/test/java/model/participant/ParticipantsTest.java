@@ -14,13 +14,13 @@ public class ParticipantsTest {
     @BeforeEach
     void setUp() {
         participants = new Participants();
-        participants.addPlayer(new Player(new PlayerName("player1")));
+        participants.addPlayer(new Player("player1"));
     }
 
 
     @Test
     public void 정상_작동() {
-        participants.addPlayer(new Player(new PlayerName("player2")));
+        participants.addPlayer(new Player("player2"));
 
         List<String> playerNames = participants.getPlayerNames();
 
@@ -31,7 +31,7 @@ public class ParticipantsTest {
 
     @Test
     public void 딜러_이름_참가자_예외() {
-        Player player = new Player(new PlayerName("딜러"));
+        Player player = new Player("딜러");
         assertThatThrownBy(() -> participants.addPlayer(player))
                 .isExactlyInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.NO_PLAYER_NAME_DEALER.getMessage());
