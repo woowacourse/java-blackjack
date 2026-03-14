@@ -39,6 +39,6 @@ public class OutputViewFormatter {
     }
 
     public String formatErrorMessage(String message) {
-        return String.format("[ERROR]: %s%n", message);
+        return String.format("[ERROR] %s 다시 입력해주세요.%n", message);
     }
 }

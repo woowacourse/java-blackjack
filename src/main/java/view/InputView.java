@@ -31,6 +31,13 @@ public class InputView {
 
     public boolean checkAddCard(String name) {
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n", name);
-        return scanner.nextLine().equalsIgnoreCase("y");
+        String input = scanner.nextLine();
+        if (input.equalsIgnoreCase("y")) {
+            return true;
+        }
+        if (input.equalsIgnoreCase("n")) {
+            return false;
+        }
+        throw new IllegalArgumentException("y 또는 n만 입력 가능합니다.");
     }
 }

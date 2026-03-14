@@ -79,7 +79,7 @@ public class GameController {
             int amount = inputView.readPlayerBettingAmount(name.getName());
             return new Betting(amount);
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            outputView.printErrorMessage(e.getMessage());
             return inputBettingAmount(name);
         }
     }
@@ -109,6 +109,7 @@ public class GameController {
         try {
             return inputView.checkAddCard(player.getName().getName());
         } catch (IllegalArgumentException e) {
+            outputView.printErrorMessage(e.getMessage());
             return inputAddCard(player);
         }
     }
@@ -131,6 +132,7 @@ public class GameController {
         ProfitDto dealerProfitDto = ProfitDto.fromDealer(BettingResultCalculator.calculateDealerProfit(playerProfits));
         outputView.printProfitMessage();
         outputView.printProfit(dealerProfitDto);
+
         for (Map.Entry<Name, Integer> entry : playerProfits.entrySet()) {
             outputView.printProfit(ProfitDto.fromPlayer(entry.getKey().getName(), entry.getValue()));
         }
