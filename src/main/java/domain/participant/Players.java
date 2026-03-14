@@ -64,6 +64,16 @@ public class Players {
         return foundPlayer.checkScoreUnderCriterion();
     }
 
+    public Result calculatePlayerResult(String name, Dealer dealer) {
+        Player foundPlayer = findPlayerByName(name);
+        return Result.calculatePlayerResult(dealer, foundPlayer);
+    }
+
+    public int calculatePlayerScore(String name) {
+        Player foundPlayer = findPlayerByName(name);
+        return foundPlayer.calculateScore();
+    }
+
     public List<String> getAllPlayerNames() {
         return players.stream()
                 .map(Player::getName)
@@ -73,15 +83,5 @@ public class Players {
     public List<Card> getPlayerCards(String name) {
         Player foundPlayer = findPlayerByName(name);
         return foundPlayer.getCards();
-    }
-
-    public Result getPlayerResult(String name, Dealer dealer) {
-        Player foundPlayer = findPlayerByName(name);
-        return Result.calculatePlayerResult(dealer, foundPlayer);
-    }
-
-    public int calculatePlayerScore(String name) {
-        Player foundPlayer = findPlayerByName(name);
-        return foundPlayer.calculateScore();
     }
 }

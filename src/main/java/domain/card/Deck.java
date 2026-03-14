@@ -26,14 +26,14 @@ public class Deck {
         }
     }
 
-    public List<Card> getCards() {
-        return List.copyOf(cards);
-    }
-
     public Card drawCard() {
         if (cards.isEmpty()) {
             throw new NoSuchElementException(DECK_IS_EMPTY.getMessage());
         }
         return cards.poll();
+    }
+
+    public List<Card> getCards() {
+        return List.copyOf(cards);
     }
 }

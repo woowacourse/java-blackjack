@@ -22,10 +22,6 @@ public abstract class Participant {
         return cardBoard.calculateScore() <= BLACKJACK_CRITERION;
     }
 
-    public List<Card> getCards() {
-        return cardBoard.getCards();
-    }
-
     public boolean isBust() {
         return cardBoard.isBust();
     }
@@ -35,5 +31,9 @@ public abstract class Participant {
             return false;
         }
         return cardBoard.calculateScore() == BLACKJACK_CRITERION;
+    }
+
+    public List<Card> getCards() {
+        return cardBoard.getCards();
     }
 }

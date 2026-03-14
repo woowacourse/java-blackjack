@@ -53,22 +53,10 @@ public class Game {
         dealer.addCard(deck.drawCard());
     }
 
-    public List<Card> getPlayerCards(String name) {
-        return players.getPlayerCards(name);
-    }
-
-    public List<Card> getDealerCards() {
-        return dealer.getCards();
-    }
-
-    public List<String> getAllPlayerNames() {
-        return players.getAllPlayerNames();
-    }
-
     public Map<String, Result> calculateAllPlayerResults() {
         Map<String, Result> playerResults = new LinkedHashMap<>();
         for (String name : players.getAllPlayerNames()) {
-            playerResults.put(name, players.getPlayerResult(name, dealer));
+            playerResults.put(name, players.calculatePlayerResult(name, dealer));
         }
         return playerResults;
     }
@@ -79,5 +67,17 @@ public class Game {
 
     public int calculateDealerScore() {
         return dealer.calculateScore();
+    }
+
+    public List<Card> getPlayerCards(String name) {
+        return players.getPlayerCards(name);
+    }
+
+    public List<Card> getDealerCards() {
+        return dealer.getCards();
+    }
+
+    public List<String> getAllPlayerNames() {
+        return players.getAllPlayerNames();
     }
 }

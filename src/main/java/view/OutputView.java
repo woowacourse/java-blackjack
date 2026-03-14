@@ -42,7 +42,6 @@ public class OutputView {
 
     public static void printPlayerCards(String name, List<CardDto> playerCards) {
         String card = collectCards(playerCards);
-
         System.out.printf(PLAYER_CARD + LINE_SEPARATOR, name, card);
     }
 
@@ -52,20 +51,18 @@ public class OutputView {
                 .collect(Collectors.joining(STRING_JOIN_DELIMITER));
     }
 
+    public static void printDealerHit() {
+        System.out.println(LINE_SEPARATOR + DEALER_DRAW);
+    }
+
     public static void printDealerCardsWithScore(List<CardDto> dealerCard, int score) {
         String card = collectCards(dealerCard);
-
         System.out.printf(LINE_SEPARATOR + DEALER_CARD + SCORE + LINE_SEPARATOR, card, score);
     }
 
     public static void printPlayerCardsWithScore(String name, List<CardDto> playerCards, int score) {
         String card = collectCards(playerCards);
-
         System.out.printf(PLAYER_CARD + SCORE + LINE_SEPARATOR, name, card, score);
-    }
-
-    public static void printDealerHit() {
-        System.out.println(LINE_SEPARATOR + DEALER_DRAW);
     }
 
     public static void printGameResult(int dealerResult, Map<String, Integer> playerResults) {
