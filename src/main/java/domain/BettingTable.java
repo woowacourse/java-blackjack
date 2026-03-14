@@ -33,8 +33,4 @@ public class BettingTable {
                 .mapToInt(money -> money.getValueOf())
                 .sum());
     }
-
-    public Money getBettingMoneyByPlayerName(Player targetPlayer) {
-        return bettingTable.get(targetPlayer);
-    }
 }
