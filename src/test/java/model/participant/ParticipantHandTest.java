@@ -14,16 +14,17 @@ import org.junit.jupiter.api.Test;
 public class ParticipantHandTest {
     @Test
     public void 카드_넣기_정상_작동() {
+
         ParticipantHand participantHand = new ParticipantHand();
 
-        participantHand.addDeck(new Card(Shape.CLOVER, CardNumber.ACE));
+        Card card = new Card(Shape.CLOVER, CardNumber.ACE);
+        participantHand.addDeck(card);
 
-        List<Card> cards = participantHand.getDeck();
-        Card firstCard = cards.getFirst();
+        List<String> cards = participantHand.getDeck();
+        String firstCard = cards.getFirst();
 
         assertThat(cards.size()).isEqualTo(1);
-        assertThat(firstCard.shape()).isEqualTo(Shape.CLOVER);
-        assertThat(firstCard.cardNumber()).isEqualTo(CardNumber.ACE);
+        assertThat(card.getString()).isEqualTo(firstCard);
     }
 
     @Test
@@ -61,11 +62,11 @@ public class ParticipantHandTest {
 
         participant.addCard(new Card(Shape.DIAMOND, CardNumber.NINE));
 
-        Assertions.assertThat(participant.getResult().score()).isEqualTo(9);
+        Assertions.assertThat(participant.getScore()).isEqualTo(9);
 
         participant.addCard(new Card(Shape.DIAMOND, CardNumber.QUEEN));
 
-        Assertions.assertThat(participant.getResult().score()).isEqualTo(19);
+        Assertions.assertThat(participant.getScore()).isEqualTo(19);
     }
 
     @Test
@@ -74,7 +75,7 @@ public class ParticipantHandTest {
 
         participant.addCard(new Card(Shape.DIAMOND, CardNumber.ACE));
 
-        Assertions.assertThat(participant.getResult().score()).isEqualTo(11);
+        Assertions.assertThat(participant.getScore()).isEqualTo(11);
     }
 
     @Test
@@ -84,7 +85,7 @@ public class ParticipantHandTest {
         participant.addCard(new Card(Shape.DIAMOND, CardNumber.ACE));
         participant.addCard(new Card(Shape.HEART, CardNumber.ACE));
 
-        Assertions.assertThat(participant.getResult().score()).isEqualTo(12);
+        Assertions.assertThat(participant.getScore()).isEqualTo(12);
     }
 
     @Test
@@ -95,7 +96,7 @@ public class ParticipantHandTest {
         participant.addCard(new Card(Shape.DIAMOND, CardNumber.QUEEN));
         participant.addCard(new Card(Shape.DIAMOND, CardNumber.ACE));
 
-        Assertions.assertThat(participant.getResult().score()).isEqualTo(20);
+        Assertions.assertThat(participant.getScore()).isEqualTo(20);
     }
 
     @Test
@@ -105,7 +106,7 @@ public class ParticipantHandTest {
         participant.addCard(new Card(Shape.DIAMOND, CardNumber.NINE));
         participant.addCard(new Card(Shape.DIAMOND, CardNumber.ACE));
 
-        Assertions.assertThat(participant.getResult().score()).isEqualTo(20);
+        Assertions.assertThat(participant.getScore()).isEqualTo(20);
     }
 
     @Test

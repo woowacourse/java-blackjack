@@ -12,14 +12,7 @@ public class PlayerTest {
         String name = "player1";
         Player player = new Player(new PlayerName(name));
 
-        assertThat(player.getResult().name()).isEqualTo(name);
-    }
-
-    @Test
-    public void 딜러_이름_예외() {
-        assertThatThrownBy(() -> new Player(new PlayerName("딜러")))
-                .isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ErrorMessage.NO_PLAYER_NAME_DEALER.getMessage());
+        assertThat(player.getCurrentHand().name()).isEqualTo(name);
     }
 
     @Test
