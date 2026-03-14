@@ -25,7 +25,7 @@ public class CardMapper {
     public static String toDisplayName(Card card) {
         String rankName = translateRank(card.getRank());
         String suitName = SUIT_NAMES.get(card.getSuit());
-        return String.join(rankName, suitName);
+        return rankName + suitName;
     }
 
     private static String translateRank(Rank rank) {
