@@ -9,33 +9,37 @@ public class OutputView {
         System.out.println("딜러와 " + convertListToString(gameStartDto.playerNames()) + "에게 2장을 나누었습니다.");
         printDealerInitialHandCard(gameStartDto.dealer());
 
-        List<HandDto> players = gameStartDto.players();
-        for (HandDto player : players) {
+        List<PlayerHandDto> players = gameStartDto.players();
+        for (PlayerHandDto player : players) {
             printHandCard(player);
         }
         System.out.println();
     }
 
     private void printDealerInitialHandCard(DealerInitialHandDto dealerInitialHandDto) {
-        System.out.println("딜러카드: " + dealerInitialHandDto.firstHandCard());
+        System.out.println("딜러: " + dealerInitialHandDto.firstHandCard());
     }
 
-    public void printHandCard(HandDto playerHandDto) {
+    public void printHandCard(PlayerHandDto playerHandDto) {
         System.out.println(playerHandDto.name() + "카드: " + convertListToString(playerHandDto.handCards()));
     }
 
-    public void printHandCardWithScore(HandScoreDto handScoreDto) {
-        System.out.println(handScoreDto.name() + "카드: " + convertListToString(handScoreDto.handCards()) + " - 결과: " + printScore(handScoreDto));
+    private void printDealerHandCardWithScore(DealerHandScoreDto handScoreDto) {
+        System.out.println("딜러 카드: " + convertListToString(handScoreDto.handCards()) + " - 결과: " + printScore(handScoreDto.isBlackJack(), handScoreDto.isBust(), handScoreDto.score()));
     }
 
-    private String printScore(HandScoreDto handScoreDto) {
-        if (handScoreDto.isBlackJack()) {
+    private void printPlayerHandCardWithScore(PlayerHandScoreDto handScoreDto) {
+        System.out.println(handScoreDto.name() + "카드: " + convertListToString(handScoreDto.handCards()) + " - 결과: " + printScore(handScoreDto.isBlackJack(), handScoreDto.isBust(), handScoreDto.score()));
+    }
+
+    private String printScore(boolean isBlackJack, boolean isBust, int score) {
+        if (isBlackJack) {
             return "블랙잭";
         }
-        if (handScoreDto.isBust()) {
+        if (isBust) {
             return "버스트";
         }
-        return String.valueOf(handScoreDto.score());
+        return String.valueOf(score);
     }
 
     public void printDealerReceiveCard() {
@@ -44,11 +48,11 @@ public class OutputView {
 
     public void printScore(GameScoreDto gameResultDto) {
         System.out.println();
-        printHandCardWithScore(gameResultDto.dealer());
+        printDealerHandCardWithScore(gameResultDto.dealer());
 
-        List<HandScoreDto> players = gameResultDto.players();
-        for (HandScoreDto player : players) {
-            printHandCardWithScore(player);
+        List<PlayerHandScoreDto> players = gameResultDto.players();
+        for (PlayerHandScoreDto player : players) {
+            printPlayerHandCardWithScore(player);
         }
     }
 

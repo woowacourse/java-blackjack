@@ -1,4 +1,3 @@
-
 package dto;
 
 import domain.participant.Dealer;
