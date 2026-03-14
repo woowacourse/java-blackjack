@@ -36,6 +36,8 @@ public class BlackJackController {
         outputView.showHandsResult(dealer, players);
 
         Map<String, BettingResult> bettingResults = blackJackService.calculateBettingResults();
+        outputView.showDealerResult(blackJackService.calculateDealerResult(bettingResults));
+        outputView.showPlayerGameResult(bettingResults);
     }
 
     private void playRound(Deck deck, Dealer dealer, Players players) {

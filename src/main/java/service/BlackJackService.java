@@ -64,12 +64,12 @@ public class BlackJackService {
         return bettingResults;
     }
 
-    public Map<MatchResult, Integer> calculateDealerResult(Map<String, MatchResult> playerResults) {
-        Map<MatchResult, Integer> dealerResult = new EnumMap<>(MatchResult.class);
+    public Integer calculateDealerResult(Map<String, BettingResult> playerResults) {
+        int dealerResult = 0;
 
-        for (MatchResult matchResult : playerResults.values()) {
-            MatchResult reversedResult = matchResult.reverse();
-            dealerResult.put(reversedResult, dealerResult.getOrDefault(reversedResult, 0) + 1);
+        for (BettingResult bettingResult : playerResults.values()) {
+            int reversedResult = bettingResult.reverse();
+            dealerResult += reversedResult;
         }
 
         return dealerResult;

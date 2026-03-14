@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -225,32 +224,6 @@ class BlackJackServiceTest {
         for (Map.Entry<String, MatchResult> matchResultEntry : matchResult.entrySet()) {
             Assertions.assertEquals(MatchResult.LOSE, matchResultEntry.getValue());
         }
-    }
-
-    @Test
-    @DisplayName("딜러의 승패를 올바르게 판단한다.")
-    void 딜러_승패_판단() {
-        // given
-        Dealer dealer = new Dealer();
-        Players players = new Players(List.of());
-        BlackJackService blackJackService = new BlackJackService(
-                new Deck(new DefaultShuffleStrategy()), dealer, players);
-
-        Map<String, MatchResult> playerResults = new HashMap<>();
-
-        playerResults.put("pobi", MatchResult.WIN);
-        playerResults.put("sisi", MatchResult.WIN);
-        playerResults.put("ao", MatchResult.WIN);
-        playerResults.put("james", MatchResult.DRAW);
-        playerResults.put("lala", MatchResult.LOSE);
-
-        // when
-        Map<MatchResult, Integer> matchResults = blackJackService.calculateDealerResult(playerResults);
-
-        // then
-        Assertions.assertEquals(3, matchResults.get(MatchResult.LOSE));
-        Assertions.assertEquals(1, matchResults.get(MatchResult.DRAW));
-        Assertions.assertEquals(1, matchResults.get(MatchResult.WIN));
     }
 
     @Test

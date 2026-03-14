@@ -26,4 +26,8 @@ public class BettingResult {
     public int getEarnings() {
         return earnings;
     }
+
+    public int reverse() {
+        return earnings * (-1);
+    }
 }
