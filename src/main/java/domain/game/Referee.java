@@ -13,6 +13,9 @@ public class Referee {
         if (player.isBlackjack()) {
             return Result.BLACKJACK_WIN;
         }
+        if (dealer.isBlackjack()) {
+            return Result.LOSE;
+        }
         if (player.isBust()) {
             return Result.LOSE;
         }

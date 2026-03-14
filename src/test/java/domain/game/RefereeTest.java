@@ -8,6 +8,8 @@ import domain.card.Rank;
 import domain.card.Suit;
 import domain.participant.Dealer;
 import domain.participant.Player;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -119,6 +121,36 @@ public class RefereeTest {
         dealer.addCard(new Card(Rank.TWO, Suit.DIAMOND));
 
         assertThat(referee.judge(player, dealer)).isEqualTo(Result.WIN);
+    }
+
+    @DisplayName("딜러만 블랙잭이고 플레이어가 3장 21점이면 패배한다")
+    @Test
+    void 딜러만_블랙잭이면_플레이어가_패배한다() {
+        Player player = createPlayer("플레이어");
+        player.addCard(new Card(Rank.FIVE, Suit.SPADE));
+        player.addCard(new Card(Rank.SIX, Suit.HEART));
+        player.addCard(new Card(Rank.KING, Suit.DIAMOND));
+
+        Dealer dealer = new Dealer("딜러");
+        dealer.addCard(new Card(Rank.ACE, Suit.HEART));
+        dealer.addCard(new Card(Rank.KING, Suit.SPADE));
+
+        assertThat(referee.judge(player, dealer)).isEqualTo(Result.LOSE);
+    }
+
+    @DisplayName("블랙잭 승리는 딜러 패배로 카운트된다")
+    @Test
+    void 블랙잭_승리는_딜러_패배로_카운트된다() {
+        Map<Player, Result> playerResults = new LinkedHashMap<>();
+        playerResults.put(createPlayer("a"), Result.BLACKJACK_WIN);
+        playerResults.put(createPlayer("b"), Result.WIN);
+        playerResults.put(createPlayer("c"), Result.LOSE);
+
+        Map<Result, Integer> dealerResult = referee.countDealerResult(playerResults);
+
+        assertThat(dealerResult.get(Result.WIN)).isEqualTo(1);
+        assertThat(dealerResult.get(Result.LOSE)).isEqualTo(2);
+        assertThat(dealerResult.get(Result.TIE)).isEqualTo(0);
     }
 
     private Player createPlayer(String name) {

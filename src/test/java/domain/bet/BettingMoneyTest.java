@@ -48,4 +48,18 @@ public class BettingMoneyTest {
         BettingMoney money = new BettingMoney(10000);
         assertThat(money.calculateProfit(Result.TIE)).isEqualTo(0);
     }
+
+    @DisplayName("베팅 금액이 0이면 예외가 발생한다")
+    @Test
+    void 베팅_금액이_0이면_예외가_발생한다() {
+        assertThatThrownBy(() -> new BettingMoney(0))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("홀수 금액의 블랙잭 승리는 소수점을 버린다")
+    @Test
+    void 홀수_금액의_블랙잭_승리는_소수점을_버린다() {
+        BettingMoney money = new BettingMoney(999);
+        assertThat(money.calculateProfit(Result.BLACKJACK_WIN)).isEqualTo(1498);
+    }
 }
