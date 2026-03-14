@@ -24,6 +24,17 @@ public class ValidatorTest {
     }
 
     @Test
+    @DisplayName("참가자 이름에 공백이 포함되는 경우, 공백을 잘라 정상 동작한다.")
+    void 참가자_이름_공백_허용_테스트() {
+        // given
+        String participantsName = "라이, 영기";
+
+        // when
+        assertThatCode(() -> validator.validatePlayersName(participantsName))
+                .doesNotThrowAnyException();
+    }
+
+    @Test
     @DisplayName("참가자 이름이 비어있는 경우, IllegalArgumentException이 발생한다.")
     void 빈_참가자_이름_예외_테스트() {
         // given

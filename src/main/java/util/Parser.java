@@ -1,11 +1,14 @@
 package util;
 
+import java.util.Arrays;
 import java.util.List;
 import vo.Money;
 
 public class Parser {
     public List<String> parsePlayersName(String playersName) {
-        return List.of(playersName.split(","));
+        return Arrays.stream(playersName.split(","))
+                .map(String::trim)
+                .toList();
     }
 
     public Money parseBettingMoney(String bettingMoney) {

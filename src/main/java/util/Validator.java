@@ -4,7 +4,7 @@ import java.util.regex.Pattern;
 
 public class Validator {
     private static final Pattern CONTAINS_DIGIT = Pattern.compile(".*\\d.*");
-    private static final Pattern VALID_INPUT = Pattern.compile("^[a-zA-Z가-힣,]+$");
+    private static final Pattern VALID_INPUT = Pattern.compile("^[a-zA-Z가-힣, ]+$");
 
     public void validatePlayersName(String playersName) {
         validateEmptyNameInput(playersName);
