@@ -78,20 +78,26 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러의 블랙잭 여부를 판단할 수 있다.")
-    void isBlackjack_returnsTrue_whenPlayerHasBlackjack() {
+    @DisplayName("딜러가 블랙잭인 경우 true를 반환한다.")
+    void isBlackjack_returnsTrue_whenDealerHasBlackjack() {
         Dealer blackJackDealer = new Dealer(dummyHand);
         blackJackDealer.keepCard(new Card(Rank.ACE, Pattern.CLOVER));
         blackJackDealer.keepCard(new Card(Rank.JACK, Pattern.CLOVER));
 
+        boolean success = blackJackDealer.isBlackjack();
+
+        assertThat(success).isTrue();
+    }
+
+    @Test
+    @DisplayName("딜러가 블랙잭이 아닌 경우 false를 반환한다")
+    void isBlackjack_returnsFalse_whenDealerHasNotBlackjack() {
         Dealer blackJackDealer2 = new Dealer(new Hand());
         blackJackDealer2.keepCard(new Card(Rank.ACE, Pattern.HEART));
         blackJackDealer2.keepCard(new Card(Rank.EIGHT, Pattern.HEART));
 
-        boolean success = blackJackDealer.isBlackjack();
         boolean fail = blackJackDealer2.isBlackjack();
 
-        assertThat(success).isTrue();
         assertThat(fail).isFalse();
     }
 }
