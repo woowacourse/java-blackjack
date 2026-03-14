@@ -51,7 +51,7 @@ public abstract class Hand {
     protected int calculateScoreWith(Card newCard) {
         int scoreBeforeAdjust = getScoreBeforeAdjustWith(newCard);
 
-        return adjust(scoreBeforeAdjust);
+        return adjustWith(scoreBeforeAdjust, newCard);
     }
 
     protected boolean isBlackjack() {
@@ -64,6 +64,13 @@ public abstract class Hand {
 
     private boolean isSoftHand(int scoreAfterAdjust) {
         boolean containAce = cards.stream()
+                .anyMatch(Card::isAce);
+
+        return isNotBust(scoreAfterAdjust) && containAce;
+    }
+
+    private boolean isSoftHandWith(int scoreAfterAdjust, Card newCard) {
+        boolean containAce = Stream.concat(cards.stream(), Stream.of(newCard))
                 .anyMatch(Card::isAce);
 
         return isNotBust(scoreAfterAdjust) && containAce;
@@ -93,6 +100,16 @@ public abstract class Hand {
         int scoreAfterAdjust = scoreBeforeAdjust + ACE_ADJUST_SCORE;
 
         if (isSoftHand(scoreAfterAdjust)) {
+            return scoreAfterAdjust;
+        }
+
+        return scoreBeforeAdjust;
+    }
+
+    private int adjustWith(int scoreBeforeAdjust, Card newCard) {
+        int scoreAfterAdjust = scoreBeforeAdjust + ACE_ADJUST_SCORE;
+
+        if (isSoftHandWith(scoreAfterAdjust, newCard)) {
             return scoreAfterAdjust;
         }
 
