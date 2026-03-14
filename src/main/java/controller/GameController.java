@@ -2,7 +2,7 @@ package controller;
 
 import domain.Bet;
 import domain.BettingBoard;
-import domain.BettingParser;
+import util.BettingParser;
 import domain.Deck;
 import domain.GameManager;
 import domain.HitCommand;
@@ -14,7 +14,7 @@ import domain.dto.ProfitsResultResponse;
 import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;
-import domain.participant.PlayerParser;
+import util.PlayerParser;
 import domain.participant.Players;
 import java.util.ArrayList;
 import java.util.Collections;

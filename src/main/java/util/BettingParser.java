@@ -1,5 +1,6 @@
-package domain;
+package util;
 
+import domain.Bet;
 import java.math.BigDecimal;
 
 public class BettingParser {
