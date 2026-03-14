@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.TestFixture;
 import domain.card.vo.Rank;
-import domain.state.finished.BlackJack;
+import domain.state.finished.Blackjack;
 import domain.state.finished.Stay;
 import domain.state.running.Hit;
 import java.util.List;
@@ -19,7 +19,7 @@ class DealerTest {
         return Stream.of(
                 Arguments.of(TestFixture.createDefaultDealer(List.of(Rank.KING, Rank.SEVEN)), Stay.class),
                 Arguments.of(TestFixture.createDefaultDealer(List.of(Rank.KING, Rank.SIX)), Hit.class),
-                Arguments.of(TestFixture.createDefaultDealer(List.of(Rank.KING, Rank.ACE)), BlackJack.class)
+                Arguments.of(TestFixture.createDefaultDealer(List.of(Rank.KING, Rank.ACE)), Blackjack.class)
         );
     }
 

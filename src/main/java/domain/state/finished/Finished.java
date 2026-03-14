@@ -5,7 +5,6 @@ import domain.card.vo.Card;
 import domain.state.Result;
 import domain.state.Started;
 import domain.state.State;
-import java.util.List;
 import java.util.function.Function;
 
 public abstract class Finished extends Started {
@@ -43,10 +42,5 @@ public abstract class Finished extends Started {
     @Override
     public Integer getProfit(State dealerState, Integer betCost) {
         return earningRate(getResult(dealerState)).apply(betCost);
-    }
-
-    @Override
-    public List<Card> getCards() {
-        return hand.getCards();
     }
 }

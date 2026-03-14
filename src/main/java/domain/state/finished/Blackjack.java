@@ -5,11 +5,11 @@ import domain.state.Result;
 import domain.state.State;
 import java.util.function.Function;
 
-public class BlackJack extends Finished {
+public class Blackjack extends Finished {
     private static final int HAND_SIZE = 2;
     private static final int BLACKJACK_SCORE = 21;
 
-    public BlackJack(Hand hand) {
+    public Blackjack(Hand hand) {
         super(hand);
     }
 
@@ -19,6 +19,9 @@ public class BlackJack extends Finished {
 
     @Override
     public Function<Integer, Integer> earningRate(Result result) {
+        if (Result.LOSE.equals(result)) {
+            throw new IllegalStateException("Blackjack은 질수 없습니다.");
+        }
         if (Result.DRAW.equals(result)) {
             return (n) -> 0;
         }
@@ -27,7 +30,7 @@ public class BlackJack extends Finished {
 
     @Override
     public Result getResult(State dealerState) {
-        if (dealerState instanceof BlackJack) {
+        if (dealerState instanceof Blackjack) {
             return Result.DRAW;
         }
         return Result.WIN;

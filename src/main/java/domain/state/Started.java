@@ -3,7 +3,7 @@ package domain.state;
 import domain.card.Hand;
 import domain.card.vo.Card;
 import domain.hitStrategy.HitStrategy;
-import domain.state.finished.BlackJack;
+import domain.state.finished.Blackjack;
 import domain.state.running.Hit;
 import java.util.List;
 
@@ -17,8 +17,8 @@ public abstract class Started implements State {
     }
 
     public static State getStartState(Hand hand, HitStrategy hitStrategy) {
-        if (BlackJack.isBlackJack(hand)) {
-            return new BlackJack(hand);
+        if (Blackjack.isBlackJack(hand)) {
+            return new Blackjack(hand);
         }
         Hit hit = new Hit(hand, hitStrategy);
         if (hit.isFinished()) {

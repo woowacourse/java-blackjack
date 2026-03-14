@@ -7,7 +7,7 @@ import domain.TestFixture;
 import domain.bet.Betting;
 import domain.card.vo.Rank;
 import domain.hitStrategy.UntilBustHitStrategy;
-import domain.state.finished.BlackJack;
+import domain.state.finished.Blackjack;
 import domain.state.running.Hit;
 import java.util.List;
 import java.util.stream.Stream;
@@ -23,7 +23,7 @@ class PlayerTest {
         return Stream.of(
                 Arguments.of(TestFixture.createDefaultPlayerByRank(List.of(Rank.KING, Rank.SEVEN)), Hit.class),
                 Arguments.of(TestFixture.createDefaultPlayerByRank(List.of(Rank.KING, Rank.SIX)), Hit.class),
-                Arguments.of(TestFixture.createDefaultPlayerByRank(List.of(Rank.KING, Rank.ACE)), BlackJack.class)
+                Arguments.of(TestFixture.createDefaultPlayerByRank(List.of(Rank.KING, Rank.ACE)), Blackjack.class)
         );
     }
 
