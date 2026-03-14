@@ -4,22 +4,17 @@ import blackjack.model.game.HitAnswer;
 import blackjack.model.participant.Bet;
 import blackjack.model.participant.Name;
 import blackjack.model.participant.UniqueNames;
+import blackjack.view.label.AnswerLabel;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 public class InputView {
 
     private static final String DELIMITER = ",";
     private static final int INCLUDE_EMPTY_ELEMENT = -1;
-
-    private static final Map<String, HitAnswer> ANSWERS = Map.of(
-            "y", HitAnswer.HIT,
-            "n", HitAnswer.STAY
-    );
 
     private final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
@@ -46,7 +41,7 @@ public class InputView {
     public HitAnswer askHit(final String playerName) {
         System.out.println(playerName + "은 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
 
-        return ANSWERS.get(readLine());
+        return AnswerLabel.asHitAnswer(readLine());
     }
 
     private String readLine() {
