@@ -15,10 +15,14 @@ public class BlackjackGame {
     private final Dealer dealer;
     private final Deck deck;
 
-    public BlackjackGame(List<Player> players) {
-        this.players = Players.from(players);
-        this.dealer = Dealer.createReady();
-        this.deck = Deck.createWithAllCards();
+    private BlackjackGame(Players players, Dealer dealer, Deck deck) {
+        this.players = players;
+        this.dealer = dealer;
+        this.deck = deck;
+    }
+
+    public static BlackjackGame createNewGame(List<Player> players) {
+        return new BlackjackGame(Players.from(players), Dealer.createReady(), Deck.createWithAllCards());
     }
 
     public void giveHand() {

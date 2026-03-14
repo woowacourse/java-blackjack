@@ -41,6 +41,6 @@ public class BlackjackController {
             players.add(Player.of(names.get(i), betMoneys.get(i)));
         }
 
-        return new BlackjackGame(players);
+        return BlackjackGame.createNewGame(players);
     }
 }
