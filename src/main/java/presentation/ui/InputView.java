@@ -12,17 +12,21 @@ import java.util.stream.Stream;
 public class InputView {
 
     private final BufferedReader bufferedReader;
+    private final ValidatedInput validatedInput;
 
     public InputView() {
         this.bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        this.validatedInput = new ValidatedInput();
     }
 
     public List<String> readPlayerNames() {
         try {
             System.out.println(PLAYER_NAME_MESSAGE.format());
-            return Stream.of(bufferedReader.readLine().split(","))
-                    .map(String::trim)
+            List<String> playerNames = Stream.of(bufferedReader.readLine().split(","))
+                    .map(String::strip)
                     .toList();
+            validatedInput.validatePlayerName(playerNames);
+            return playerNames;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
