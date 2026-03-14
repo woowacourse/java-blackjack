@@ -1,45 +1,50 @@
 package domain.participant;
 
 import domain.card.Card;
+import domain.status.Blackjack;
+import domain.status.Start;
+import domain.status.Status;
 
 import java.util.List;
 
-public abstract class Participant {
+abstract public class Participant {
 
-    private final String name;
-    private final HandCards handCards;
+    protected Status status;
 
-    public Participant(String name) {
-        this.name = name;
-        this.handCards = new HandCards();
+    public Participant() {
+        this.status = new Start(new HandCards());
     }
 
-    public Participant(String name, HandCards handCards) {
-        this.name = name;
-        this.handCards = handCards;
+    public void drawInitialCards(List<Card> cards) {
+        this.status =  status.drawInitialCards(cards);
     }
 
-    public void receiveInitialCards(List<Card> firstHandCards) {
-        handCards.receiveInitialCards(firstHandCards);
+    public void draw(Card card) {
+        this.status = this.status.draw(card);
     }
 
-    public void receiveHitCard(Card card) {
-        handCards.receiveHitCard(card);
+    public void stay() {
+        this.status = this.status.stay();
     }
 
-    public boolean isBust() {
-        return handCards.isBust();
+    public boolean isRunning() {
+        return this.status.isRunning();
     }
 
-    public int calculateScore() {
-        return handCards.calculateScore();
+    public boolean isBlackJack() {
+        return this.status instanceof Blackjack;
+    }
+
+
+    public int getScore() {
+        return this.status.getCards().calculateScore();
     }
 
     public List<Card> getHandCards() {
-        return handCards.getCards();
+        return status.getCards().getCards();
     }
 
-    public String getName() {
-        return name;
+    public Status getStatus() {
+        return status;
     }
 }
