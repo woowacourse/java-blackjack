@@ -84,10 +84,7 @@ public class GameController {
     }
 
     private void processDealerTurn() {
-        while (blackjackGame.getDealer().isHit()) {
-            blackjackGame.deal(blackjackGame.getDealer());
-            outputView.printDealerHit();
-        }
+        blackjackGame.processDealerTurn(outputView::printDealerHit);
     }
 
     private void showCardResult() {

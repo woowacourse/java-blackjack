@@ -26,6 +26,13 @@ public class BlackjackGame {
         participant.receiveCard(cardDeck.draw());
     }
 
+    public void processDealerTurn(Runnable onHit) {
+        while (dealer.isHit()) {
+            deal(dealer);
+            onHit.run();
+        }
+    }
+
     public List<Player> getBlackjackPlayers() {
         return this.players.getBlackjackPlayers();
     }
