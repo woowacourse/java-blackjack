@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,21 +13,32 @@ public class CardBundle {
     }
 
     public int calculateScore() {
-        int score = 0;
-        boolean hasAce = false;
+        int basicScore = calculateBasicScore();
+        boolean hasAce = hasAce();
 
+        return applyAceBonus(basicScore, hasAce);
+    }
+
+    private int calculateBasicScore() {
+        int score = 0;
         for (Card card : cards) {
             score += card.getScore();
+        }
+        return score;
+    }
+
+    private boolean hasAce() {
+        for (Card card : cards) {
             if (card.isAce()) {
-                hasAce = true;
+                return true;
             }
         }
-        return applyAceBonus(score, hasAce);
+        return false;
     }
 
     private int applyAceBonus(int score, boolean hasAce) {
         if (isSoftHand(score, hasAce)) {
-            return score + 10;
+            return score + ACE_BONUS;
         }
         return score;
     }
@@ -40,7 +51,15 @@ public class CardBundle {
         cards.add(card);
     }
 
+    public boolean isBlackjack() {
+        return cards.size() == 2 && calculateScore() == BUST_THRESHOLD;
+    }
+
+    public boolean isBust() {
+        return calculateScore() > BUST_THRESHOLD;
+    }
+
     public List<Card> getCards() {
-        return cards;
+        return List.copyOf(cards);
     }
 }

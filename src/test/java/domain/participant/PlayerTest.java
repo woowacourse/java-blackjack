@@ -1,8 +1,11 @@
-package domain;
+package domain.participant;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
+import domain.card.Card;
+import domain.card.Rank;
+import domain.card.Suit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,13 +15,13 @@ public class PlayerTest {
 
     @BeforeEach
     void beforeEach() {
-        player = new Player("아나키");
+        player = new Player("아나키", new BettingMoney(1000));
     }
 
     @DisplayName("공백이 들어오면 예외처리한다")
     @Test
     void 공백_들어오면_예외처리한다() {
-        assertThatThrownBy(() -> new Player(" "))
+        assertThatThrownBy(() -> new Player(" ", new BettingMoney(1000)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -69,6 +72,14 @@ public class PlayerTest {
         player.addCard(new Card(Rank.KING, Suit.SPADE));   // 10
         player.addCard(new Card(Rank.KING, Suit.HEART));   // 10
         player.addCard(new Card(Rank.TWO, Suit.DIAMOND));  // 2
+        assertThat(player.canHit()).isFalse();
+    }
+
+    @DisplayName("블랙잭이면 히트할 수 없다")
+    @Test
+    void 블랙잭이면_히트할_수_없다() {
+        player.addCard(new Card(Rank.ACE, Suit.SPADE));
+        player.addCard(new Card(Rank.KING, Suit.HEART));
         assertThat(player.canHit()).isFalse();
     }
 }

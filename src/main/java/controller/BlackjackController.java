@@ -1,11 +1,12 @@
 package controller;
 
-import domain.Dealer;
-import domain.Deck;
-import domain.Player;
-import domain.Players;
-import domain.Referee;
-import domain.Result;
+import domain.participant.Dealer;
+import domain.card.Deck;
+import domain.participant.Player;
+import domain.participant.Players;
+import domain.game.BlackjackRule;
+import domain.game.Outcome;
+import domain.game.ProfitResult;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,28 +25,32 @@ public class BlackjackController {
 
     public void run() {
         List<String> names = inputView.inputPlayers();
-        Players players = new Players(names);
+        Players players = new Players(inputBets(names));
         Dealer dealer = new Dealer("딜러");
         Deck deck = new Deck();
-        dealInitialCards(dealer, players, deck);
-        dealInitialCards(dealer, players, deck);
+        dealInitialTwoCards(dealer, players, deck);
         printInitialState(dealer, players, names);
         playAllPlayerTurns(players, deck);
         playDealerTurn(dealer, deck);
-        printFinalState(dealer, players);
+        printFinalCards(dealer, players);
+        printProfitResult(dealer, players);
     }
 
-    private void playAllPlayerTurns(Players players, Deck deck) {
-        for (Player player : players.getGamePlayers()) {
-            playPlayerTurn(player, deck);
+    private Map<String, Integer> inputBets(List<String> names) {
+        Map<String, Integer> nameToBet = new LinkedHashMap<>();
+        for (String name : names) {
+            nameToBet.put(name, inputView.inputBettingAmount(name));
         }
+        return nameToBet;
     }
 
-    private void dealInitialCards(Dealer dealer, Players players, Deck deck) {
-        for (Player player : players.getGamePlayers()) {
-            player.addCard(deck.draw());
+    private void dealInitialTwoCards(Dealer dealer, Players players, Deck deck) {
+        for (int i = 0; i < 2; i++) {
+            for (Player player : players.getGamePlayers()) {
+                player.addCard(deck.draw());
+            }
+            dealer.addCard(deck.draw());
         }
-        dealer.addCard(deck.draw());
     }
 
     private void printInitialState(Dealer dealer, Players players, List<String> names) {
@@ -54,7 +59,13 @@ public class BlackjackController {
         for (Player player : players.getGamePlayers()) {
             outputView.printPlayerCards(player);
         }
-        System.out.println();
+        outputView.printNewLine();
+    }
+
+    private void playAllPlayerTurns(Players players, Deck deck) {
+        for (Player player : players.getGamePlayers()) {
+            playPlayerTurn(player, deck);
+        }
     }
 
     private void playPlayerTurn(Player player, Deck deck) {
@@ -71,17 +82,26 @@ public class BlackjackController {
         }
     }
 
-    private void printFinalState(Dealer dealer, Players players) {
-        System.out.println();
+    private void printFinalCards(Dealer dealer, Players players) {
+        outputView.printNewLine();
         outputView.printFinalCards(dealer);
         for (Player player : players.getGamePlayers()) {
             outputView.printFinalCards(player);
         }
-        Referee referee = new Referee();
-        Map<Player, Result> results = new LinkedHashMap<>();
+    }
+
+    private ProfitResult calculateProfits(Dealer dealer, Players players) {
+        BlackjackRule rule = new BlackjackRule();
+        Map<Player, Integer> playerProfits = new LinkedHashMap<>();
         for (Player player : players.getGamePlayers()) {
-            results.put(player, referee.judge(player.getScore(), dealer.getScore()));
+            Outcome outcome = rule.judge(player, dealer);
+            playerProfits.put(player, player.calculateProfit(outcome));
         }
-        outputView.printFinalResult(dealer, results);
+        return new ProfitResult(playerProfits);
+    }
+
+    private void printProfitResult(Dealer dealer, Players players) {
+        ProfitResult profitResult = calculateProfits(dealer, players);
+        outputView.printProfitResult(dealer.getName(), profitResult);
     }
 }
