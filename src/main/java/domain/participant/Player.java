@@ -18,10 +18,10 @@ public class Player extends Participant {
 
     public GameResult judgeResult(Dealer dealer) {
         if(this.isBlackJack() && dealer.isBlackJack()) {
-            return GameResult.BLACKJACK;
+            return GameResult.DRAW; // TODO: 배팅 금액을 돌려 받는다
         }
         if(this.isBlackJack()) {
-            return GameResult.BLACKJACK;
+            return GameResult.BLACKJACK; // TODO: 배팅 금액 1.5배
         }
         if (this.isBust()) { // TODO: 배팅 금액을 모두 잃는다.
             return GameResult.LOSE;
