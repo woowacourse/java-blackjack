@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 class HandTest {
 
-    static final int ACE_ADJUST_VALUE = 10;
+    private static final int ACE_ADJUST_VALUE = 10;
 
     @Nested
     class 카드를_받아서_손패에_추가한다 {
@@ -75,17 +75,16 @@ class HandTest {
         @Test
         void 에이스가_존재할_때_점수를_조정하면_버스트라면_점수를_조정하지_않는다() {
             // given
-            List<Card> existCard = List.of(
+            List<Card> bustCards = List.of(
                     new Card(Rank.KING, Suit.HEART),
-                    new Card(Rank.QUEEN, Suit.HEART)
+                    new Card(Rank.QUEEN, Suit.HEART),
+                    new Card(Rank.JACK, Suit.HEART)
             );
-            Card newCard = new Card(Rank.JACK, Suit.HEART);
-            Hand hand = new BustHand(existCard, newCard);
+            Hand hand = new BustHand(bustCards);
 
-            int expectedScore = existCard.stream()
+            int expectedScore = bustCards.stream()
                     .mapToInt(Card::getScore)
-                    .sum()
-                    + newCard.getScore();
+                    .sum();
 
             // when
             int actualScore = hand.calculateScore();

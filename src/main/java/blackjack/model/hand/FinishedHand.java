@@ -5,8 +5,8 @@ import java.util.Collection;
 
 public abstract class FinishedHand extends Hand {
 
-    protected FinishedHand(Collection<Card> existsCards, Card newCard) {
-        super(existsCards, newCard);
+    protected FinishedHand(Collection<Card> cards) {
+        super(cards);
     }
 
     @Override

@@ -17,9 +17,8 @@ public abstract class Hand {
         this.cards = List.of();
     }
 
-    protected Hand(Collection<Card> existCards, Card newCard) {
-        this.cards = Stream.concat(existCards.stream(), Stream.of(newCard))
-                .toList();
+    protected Hand(Collection<Card> cards) {
+        this.cards = List.copyOf(cards);
     }
 
     public List<Card> getCards() {
@@ -58,6 +57,11 @@ public abstract class Hand {
 
     protected boolean isBlackjackWith(Card newCard) {
         return calculateScoreWith(newCard) == BLACKJACK;
+    }
+
+    protected List<Card> getNextCards(Card newCard) {
+        return Stream.concat(cards.stream(), Stream.of(newCard))
+                .toList();
     }
 
     private boolean isSoftHand(int scoreAfterAdjust) {

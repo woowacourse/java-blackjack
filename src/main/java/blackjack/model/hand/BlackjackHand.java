@@ -5,8 +5,8 @@ import java.util.Collection;
 
 public class BlackjackHand extends FinishedHand {
 
-    public BlackjackHand(Collection<Card> existCards, Card newCard) {
-        super(existCards, newCard);
+    public BlackjackHand(Collection<Card> cards) {
+        super(cards);
 
         validateBlackjack();
     }

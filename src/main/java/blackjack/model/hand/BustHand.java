@@ -5,8 +5,8 @@ import java.util.Collection;
 
 public class BustHand extends FinishedHand {
 
-    public BustHand(Collection<Card> existCards, Card newCard) {
-        super(existCards, newCard);
+    public BustHand(Collection<Card> cards) {
+        super(cards);
 
         validateBust();
     }

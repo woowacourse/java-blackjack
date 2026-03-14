@@ -12,22 +12,23 @@ import org.junit.jupiter.api.Test;
 
 class BlackjackHandTest {
 
-    static final Collection<Card> DEFAULT_EXIST_CARDS = List.of(new Card(Rank.TEN, Suit.HEART));
-    static final Card DEFAULT_NEW_CARD = new Card(Rank.ACE, Suit.HEART);
+    private static final Collection<Card> DEFAULT_BLACKJACK_CARDS = List.of(
+            new Card(Rank.ACE, Suit.HEART),
+            new Card(Rank.TEN, Suit.HEART)
+    );
 
     @Test
     void 생성_시_블랙잭이_아니라면_예외를_던진다() {
         List<Card> notBlackjackCards = List.of();
-        Card notBlackjackCard = new Card(Rank.TWO, Suit.HEART);
 
-        assertThatThrownBy(() -> new BlackjackHand(notBlackjackCards, notBlackjackCard))
+        assertThatThrownBy(() -> new BlackjackHand(notBlackjackCards))
                 .isInstanceOf(IllegalStateException.class);
     }
 
     @Test
     void 블랙잭_수익률을_제공한다() {
         // given
-        Hand hand = new BlackjackHand(DEFAULT_EXIST_CARDS, DEFAULT_NEW_CARD);
+        Hand hand = new BlackjackHand(DEFAULT_BLACKJACK_CARDS);
 
         // when
         double earningRate = hand.getEarningRate();

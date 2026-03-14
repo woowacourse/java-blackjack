@@ -2,6 +2,7 @@ package blackjack.model.hand;
 
 import blackjack.model.card.Card;
 import java.util.Collection;
+import java.util.List;
 
 public class UninitializedHand extends PlayingHand {
 
@@ -11,8 +12,8 @@ public class UninitializedHand extends PlayingHand {
         super();
     }
 
-    private UninitializedHand(Collection<Card> existCards, Card newCard) {
-        super(existCards, newCard);
+    private UninitializedHand(Collection<Card> cards) {
+        super(cards);
     }
 
     @Override
@@ -21,7 +22,7 @@ public class UninitializedHand extends PlayingHand {
             return initialize(newCard);
         }
 
-        return new UninitializedHand(cards, newCard);
+        return new UninitializedHand(getNextCards(newCard));
     }
 
     @Override
@@ -34,13 +35,14 @@ public class UninitializedHand extends PlayingHand {
     }
 
     private Hand initialize(Card newCard) {
+        List<Card> nextCards = getNextCards(newCard);
         if (isBlackjackWith(newCard)) {
-            return new BlackjackHand(cards, newCard);
+            return new BlackjackHand(nextCards);
         }
         if (isBustWith(newCard)) {
-            return new BustHand(cards, newCard);
+            return new BustHand(nextCards);
         }
 
-        return new HitHand(cards, newCard);
+        return new HitHand(nextCards);
     }
 }

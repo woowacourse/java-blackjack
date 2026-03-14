@@ -13,7 +13,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class UninitializedHandTest {
 
-    static final Card DEFAULT_CARD = new Card(Rank.TWO, Suit.HEART);
+    private static final Card DEFAULT_CARD = new Card(Rank.TWO, Suit.HEART);
 
     @Test
     void 처음_생성하면_카드를_지니지_않는다() {

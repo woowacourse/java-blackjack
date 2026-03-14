@@ -14,9 +14,8 @@ class BustHandTest {
     @Test
     void 생성_시_버스트가_아니라면_예외를_던진다() {
         List<Card> notBustCards = List.of();
-        Card notBustCard = new Card(Rank.TWO, Suit.HEART);
 
-        assertThatThrownBy(() -> new BustHand(notBustCards, notBustCard))
+        assertThatThrownBy(() -> new BustHand(notBustCards))
                 .isInstanceOf(IllegalStateException.class);
     }
 
@@ -28,9 +27,8 @@ class BustHandTest {
                 new Card(Rank.QUEEN, Suit.HEART),
                 new Card(Rank.JACK, Suit.HEART)
         );
-        Card newCard = new Card(Rank.TEN, Suit.HEART);
 
-        BustHand hand = new BustHand(bustCards, newCard);
+        BustHand hand = new BustHand(bustCards);
 
         // when
         double earningRate = hand.getEarningRate();
