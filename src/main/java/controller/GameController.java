@@ -6,16 +6,15 @@ import domain.BlackjackGame;
 import domain.Dealer;
 import domain.GameResultCalculator;
 import domain.Name;
+import domain.Names;
 import domain.Player;
 import domain.PlayerInfo;
 import domain.Players;
 import domain.TotalFinalResult;
-import dto.DealerFinalResultDto;
 import dto.PlayerDto;
 import dto.PlayersDto;
 import dto.ProfitDto;
 import dto.ResultDto;
-import dto.TotalFinalResultsDto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +37,7 @@ public class GameController {
     }
 
     private BlackjackGame initGame() {
-        List<Name> names = inputPlayerNames();
+        Names names = inputPlayerNames();
         BlackjackGame blackjackGame = BlackjackGame.start(getPlayerInfos(names));
         Dealer dealer = blackjackGame.getDealer();
         Players players = blackjackGame.getPlayers();
@@ -62,12 +61,13 @@ public class GameController {
         printProfit(players, dealer);
     }
 
-    private List<Name> inputPlayerNames() {
+    private Names inputPlayerNames() {
         try {
             List<String> inputNames = inputView.readParticipants();
-            return inputNames.stream()
+            List<Name> names = inputNames.stream()
                     .map(Name::from)
                     .toList();
+            return new Names(names);
         } catch (IllegalArgumentException e) {
             outputView.printErrorMessage(e.getMessage());
             return inputPlayerNames();
@@ -84,9 +84,9 @@ public class GameController {
         }
     }
 
-    private List<PlayerInfo> getPlayerInfos(List<Name> names) {
+    private List<PlayerInfo> getPlayerInfos(Names names) {
         List<PlayerInfo> playerInfos = new ArrayList<>();
-        for (Name name : names) {
+        for (Name name : names.getNames()) {
             playerInfos.add(new PlayerInfo(name, inputBettingAmount(name)));
         }
         return playerInfos;
