@@ -40,6 +40,10 @@ public class PlayerGroups {
         return dealer;
     }
 
+    public String getDealerName() {
+        return dealer.getName();
+    }
+
     public Map<String, WinStatus> getGameResult() {
         Map<String, WinStatus> result = new LinkedHashMap<>();
 

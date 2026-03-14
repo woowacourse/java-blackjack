@@ -1,17 +1,15 @@
 package service;
 
-import domain.card.Card;
 import domain.card.CardDeck;
-import domain.card.TrumpNumber;
-import domain.card.TrumpSuit;
+import domain.card.ShuffleStrategy;
 import domain.player.Player;
 import domain.player.PlayerGroups;
 import domain.player.WinStatus;
+import domain.vo.Cost;
 import dto.ParticipantBetResult;
 import dto.ParticipantResult;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -63,22 +61,21 @@ public class GameService {
         return playerGroups.getGameResult();
     }
 
-    public List<ParticipantBetResult> bettingResult(Map<String, Integer> userBetInfo) {
+    public List<ParticipantBetResult> bettingResult(Map<String, Cost> userBetInfo) {
         List<ParticipantBetResult> profitResults = new ArrayList<>();
         int dealerCost = 0;
 
         for (Map.Entry<String, WinStatus> playerWinStatus : playerGroups.getGameResult().entrySet()) {
             String userName = playerWinStatus.getKey();
-            int userCost = (int) (userBetInfo.get(userName) * playerWinStatus.getValue().getEarningsRate());
+            int userCost = (int) (userBetInfo.get(userName).getCost() * playerWinStatus.getValue().getEarningsRate());
 
             profitResults.add(new ParticipantBetResult(userName, userCost));
             dealerCost -= userCost;
         }
 
-        profitResults.addFirst(new ParticipantBetResult(playerGroups.getDealer().getName(), dealerCost));
+        profitResults.addFirst(new ParticipantBetResult(playerGroups.getDealerName(), dealerCost));
         return profitResults;
     }
-
 
     public int getPlayerGroupSize() {
         return playerGroups.getPlayerGroupSize();

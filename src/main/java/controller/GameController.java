@@ -2,6 +2,7 @@ package controller;
 
 import domain.card.RandomShuffleStrategy;
 import domain.player.Player;
+import domain.vo.Cost;
 import dto.ParticipantResult;
 import service.GameService;
 import view.InputView;
@@ -21,7 +22,7 @@ public class GameController {
     public void run() {
         startGame();
 
-        Map<String, Integer> userBetInfo = bettingRound();
+        Map<String, Cost> userBetInfo = bettingRound();
 
         printInitialCards();
 
@@ -34,12 +35,12 @@ public class GameController {
         ResultView.printBetResult(gameService.bettingResult(userBetInfo));
     }
 
-    private Map<String, Integer> bettingRound() {
+    private Map<String, Cost> bettingRound() {
         List<Player> players = gameService.getPlayers();
-        Map<String, Integer> userBetCost = new HashMap<>();
+        Map<String, Cost> userBetCost = new HashMap<>();
         for (Player player : players) {
             String playerName = player.getName();
-            int bettingCost = InputView.getBettingCost(playerName);
+            Cost bettingCost = new Cost(InputView.getBettingCost(playerName));
 
             userBetCost.put(playerName, bettingCost);
         }

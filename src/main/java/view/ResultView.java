@@ -57,7 +57,7 @@ public class ResultView {
         System.out.println();
         System.out.println("## 최종 수익");
         for (ParticipantBetResult result : betResult) {
-            System.out.println(result.name() + ": " + result.profit());
+            System.out.println(result.name() + ": " + result.cost());
         }
     }
 
