@@ -6,26 +6,26 @@ public class Validator {
     private static final Pattern CONTAINS_DIGIT = Pattern.compile(".*\\d.*");
     private static final Pattern VALID_INPUT = Pattern.compile("^[a-zA-Z가-힣,]+$");
 
-    public void validateParticipantsName(String participantsName) {
-        validateEmptyNameInput(participantsName);
-        validateNonLiteralInput(participantsName);
-        validateInvalidSymbolInput(participantsName);
+    public void validatePlayersName(String playersName) {
+        validateEmptyNameInput(playersName);
+        validateNonLiteralInput(playersName);
+        validateInvalidSymbolInput(playersName);
     }
 
-    private void validateEmptyNameInput(String participantsName) {
-        if (participantsName.trim().isEmpty()) {
+    private void validateEmptyNameInput(String playersName) {
+        if (playersName.trim().isEmpty()) {
             throw new IllegalArgumentException("[ERROR] 참가자 이름은 비어 있을 수 없습니다.");
         }
     }
 
-    private void validateNonLiteralInput(String participantsName) {
-        if (CONTAINS_DIGIT.matcher(participantsName).matches()) {
+    private void validateNonLiteralInput(String playersName) {
+        if (CONTAINS_DIGIT.matcher(playersName).matches()) {
             throw new IllegalArgumentException("[ERROR] 참가자 이름에는 숫자를 포함할 수 없습니다.");
         }
     }
 
-    private void validateInvalidSymbolInput(String participantsName) {
-        if (!VALID_INPUT.matcher(participantsName).matches()) {
+    private void validateInvalidSymbolInput(String playersName) {
+        if (!VALID_INPUT.matcher(playersName).matches()) {
             throw new IllegalArgumentException("[ERROR] 참가자 이름에는 쉼표를 제외한 특수문자를 사용할 수 없습니다.");
         }
     }

@@ -4,8 +4,8 @@ import java.util.List;
 import vo.Money;
 
 public class Parser {
-    public List<String> parseParticipantsName(String participantsName) {
-        return List.of(participantsName.split(","));
+    public List<String> parsePlayersName(String playersName) {
+        return List.of(playersName.split(","));
     }
 
     public Money parseBettingMoney(String bettingMoney) {

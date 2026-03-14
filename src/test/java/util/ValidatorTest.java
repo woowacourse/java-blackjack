@@ -19,7 +19,7 @@ public class ValidatorTest {
         String participantsName = "라이";
 
         // when & then
-        assertThatCode(() -> validator.validateParticipantsName(participantsName))
+        assertThatCode(() -> validator.validatePlayersName(participantsName))
                 .doesNotThrowAnyException();
     }
 
@@ -31,7 +31,7 @@ public class ValidatorTest {
 
         // when & then
         assertThatThrownBy(() ->
-                validator.validateParticipantsName(participantsName))
+                validator.validatePlayersName(participantsName))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageStartingWith(ERROR_PREFIX);
     }
@@ -43,7 +43,7 @@ public class ValidatorTest {
         String participantsName = "라이";
 
         // when & then
-        assertThatCode(() -> validator.validateParticipantsName(participantsName))
+        assertThatCode(() -> validator.validatePlayersName(participantsName))
                 .doesNotThrowAnyException();
     }
 
@@ -55,7 +55,7 @@ public class ValidatorTest {
 
         // when & then
         assertThatThrownBy(() ->
-                validator.validateParticipantsName(participantsName))
+                validator.validatePlayersName(participantsName))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageStartingWith(ERROR_PREFIX);
     }
@@ -67,7 +67,7 @@ public class ValidatorTest {
         String participantsName = "라이,영기";
 
         // when & then
-        assertThatCode(() -> validator.validateParticipantsName(participantsName))
+        assertThatCode(() -> validator.validatePlayersName(participantsName))
                 .doesNotThrowAnyException();
     }
 
@@ -79,7 +79,7 @@ public class ValidatorTest {
 
         // when & then
         assertThatThrownBy(() ->
-                validator.validateParticipantsName(participantsName))
+                validator.validatePlayersName(participantsName))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageStartingWith(ERROR_PREFIX);
     }

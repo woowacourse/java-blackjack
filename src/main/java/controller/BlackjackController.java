@@ -83,8 +83,8 @@ public class BlackjackController {
             try {
                 outputView.printMessage(Message.INPUT_PARTICIPANTS_MESSAGE);
                 String playersName = inputView.readPlayersName();
-                validator.validateParticipantsName(playersName);
-                return parser.parseParticipantsName(playersName);
+                validator.validatePlayersName(playersName);
+                return parser.parsePlayersName(playersName);
             } catch (IllegalArgumentException e) {
                 outputView.printErrorMessage(e.getMessage());
             }
