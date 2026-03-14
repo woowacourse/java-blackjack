@@ -10,8 +10,8 @@ public class BettingAmount {
         this.money = money;
     }
 
-    public double calculateProfit(GameResult gameResult) {
-        return money * gameResult.getPayout();
+    public Profit calculateProfit(GameResult gameResult) {
+        return new Profit(money * gameResult.getPayout());
     }
 
     public double getMoney() {

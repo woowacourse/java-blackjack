@@ -9,7 +9,7 @@ public class Player extends Participant {
         this.bettingAmount = new BettingAmount(money);
     }
 
-    public double getBettingAmount(GameResult gameResult) {
+    public Profit calculateProfit(GameResult gameResult) {
         return bettingAmount.calculateProfit(gameResult);
     }
 

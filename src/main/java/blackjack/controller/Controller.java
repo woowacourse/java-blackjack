@@ -6,8 +6,8 @@ import blackjack.model.Deck;
 import blackjack.model.Participant;
 import blackjack.model.Player;
 import blackjack.model.Players;
-import blackjack.model.Profits;
 import blackjack.model.Referee;
+import blackjack.model.Settlement;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
@@ -40,9 +40,8 @@ public class Controller {
         turnToDealer(dealer, deck);
         outputView.printScoreResult(dealer, players);
 
-        Profits profits = new Profits(players.judgeAll(dealer, referee));
-        ProfitsDto profitsDto = profits.toDto();
-        outputView.printGameResult(profitsDto);
+        Settlement settlement = new Settlement(players.judgeAll(dealer, referee));
+        outputView.printGameResult(ProfitsDto.from(settlement));
     }
 
     private Players createPlayer() {
