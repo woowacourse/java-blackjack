@@ -8,12 +8,20 @@ import java.util.List;
 public class Hand {
     private final List<Card> cards;
 
-    public Hand() {
+    private Hand() {
         this.cards = new ArrayList<>();
     }
 
-    public Hand(Hand hand) {
-        this.cards = List.copyOf(hand.getCards());
+    private Hand(List<Card> cards) {
+        this.cards = cards;
+    }
+
+    public static Hand createEmpty() {
+        return new Hand();
+    }
+
+    public static Hand copyOf(Hand hand) {
+        return new Hand(List.copyOf(hand.getCards()));
     }
 
     public void add(Card card) {

@@ -9,7 +9,7 @@ public abstract class Participant {
     protected final Hand hand;
 
     protected Participant() {
-        this.hand = new Hand();
+        this.hand = Hand.createEmpty();
     }
 
     protected Participant(Hand hand) {
