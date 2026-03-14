@@ -19,7 +19,7 @@ class PlayerTest {
         String name = "pobi";
 
         // when - then
-        Assertions.assertDoesNotThrow(() -> new Player(name));
+        Assertions.assertDoesNotThrow(() -> new Player(name, Bet.of(10000)));
     }
 
     @Test
@@ -29,7 +29,7 @@ class PlayerTest {
         String name = "";
 
         // when - then
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new Player(name));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new Player(name, Bet.of(10000)));
     }
 
     @Test
@@ -39,33 +39,20 @@ class PlayerTest {
         String name = "pobipobip";
 
         // when - then
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new Player(name));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new Player(name, Bet.of(10000)));
     }
 
     @Test
     @DisplayName("hit 처리 시, 1장을 뽑는다.")
     void Hand에_1장_추가() {
         // given
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", Bet.of(10000));
 
         // when
         player.receive(new Card(Rank.ACE, Suit.DIAMOND));
 
         // then
         Assertions.assertEquals(player.getCards().size(), 1);
-    }
-
-    @Test
-    @DisplayName("플레이어의 승패 결과에 따라 돌려받는 수익을 계산한다.")
-    void applyMatchResultToBetTest() {
-        // given
-        Player player = new Player("pobi");
-
-        // when
-        player.placeBet(3000);
-
-        // then
-        Assertions.assertEquals(player.applyMatchResultToBet(MatchResult.WIN), 3000);
     }
 
     @ParameterizedTest
@@ -77,8 +64,7 @@ class PlayerTest {
     })
     void applyMatchResultToBetTest(MatchResult matchResult, int expectedProfit) {
         // given
-        Player player = new Player("pobi");
-        player.placeBet(3000);
+        Player player = new Player("pobi", Bet.of(3000));
 
         // when
         int profit = player.applyMatchResultToBet(matchResult);
@@ -91,8 +77,7 @@ class PlayerTest {
     @DisplayName("블랙잭은 배팅금액의 1.5배를 환급받는다.")
     void applyMatchResultToBet_BlackJackTest() {
         // given
-        Player player = new Player("pobi");
-        player.placeBet(3000);
+        Player player = new Player("pobi", Bet.of(3000));
 
         player.receive(new Card(Rank.ACE, Suit.CLOVER));
         player.receive(new Card(Rank.JACK, Suit.SPADE));

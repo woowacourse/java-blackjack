@@ -9,15 +9,12 @@ public class Player extends Participant {
     private static final int MAX_NAME_LENGTH = 8;
 
     private final String name;
-    private Bet bet;
+    private final Bet bet;
 
-    public Player(String name) {
+    public Player(String name, Bet bet) {
         validateNameLength(name);
         this.name = name;
-    }
-
-    public void placeBet(int amount) {
-        this.bet = Bet.of(amount);
+        this.bet = bet;
     }
 
     public int applyMatchResultToBet(MatchResult matchResult) {

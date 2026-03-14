@@ -1,22 +1,28 @@
 package view;
 
 import view.message.BinaryOptionMessage;
+import view.validator.InputValidator;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
-import java.util.regex.Pattern;
+import java.util.*;
 
 public class InputView {
 
     private static final String COMMA_DELIMITER = ",";
-    private static final String NUMBER_REGEX = "^\\d+$";
 
     private final Scanner sc = new Scanner(System.in);
 
     public List<String> readPlayers() {
-        System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
-        return splitPlayerNames(userInput());
+        while (true) {
+            try {
+                System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
+                List<String> names = splitPlayerNames(userInput());
+                InputValidator.validateSize(names);
+                InputValidator.validateDuplicate(names);
+                return names;
+            } catch (IllegalArgumentException e) {
+                OutputView.printErrorMessage(e.getMessage());
+            }
+        }
     }
 
     public boolean readPlayerToHitUntilValid(String name) {
@@ -34,23 +40,17 @@ public class InputView {
         while (true) {
             try {
                 System.out.printf("\n%s의 배팅 금액은?\n", name);
-                return validateNumber(userInput());
+                return InputValidator.validateNumber(userInput());
             } catch (IllegalArgumentException e) {
                 OutputView.printErrorMessage(e.getMessage());
             }
         }
     }
 
-    private List<String> splitPlayerNames(String playerNames) {
-        return Arrays.stream(playerNames.split(COMMA_DELIMITER)).toList();
-    }
-
-    private int validateNumber(String userInput) {
-        if (!Pattern.matches(NUMBER_REGEX, userInput)) {
-            throw new IllegalArgumentException("배팅 금액은 숫자만 입력 가능합니다. 다시 입력해주세요.");
-        }
-
-        return Integer.parseInt(userInput);
+    private List<String> splitPlayerNames(String userInput) {
+        List<String> names = Arrays.stream(userInput.split(COMMA_DELIMITER)).toList();
+        for (String name : names) InputValidator.validateNameLength(name);
+        return names;
     }
 
     private String userInput() {

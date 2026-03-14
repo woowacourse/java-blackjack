@@ -60,7 +60,7 @@ public class Players {
 
     private void validateSize(List<Player> playerNames) {
         if (playerNames.size() > MAX_PLAYER_SIZE)
-            throw new IllegalArgumentException(String.format("현재 인원 수: %d (플레이어 인원 수는 5명 이하여야 합니다.)", playerNames.size()));
+            throw new IllegalArgumentException(String.format("현재 인원 수: %d (플레이어 인원 수는 %d명 이하여야 합니다.)", playerNames.size(), MAX_PLAYER_SIZE));
     }
 
     public List<Player> getPlayers() {

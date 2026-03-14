@@ -3,6 +3,7 @@ package domain.match;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
+import domain.participant.Bet;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
@@ -19,14 +20,10 @@ class GameResultTest {
     @DisplayName("플레이어의 승패 결과에 따라 수익을 계산한다.")
     void calculatePlayersProfitTest() {
         // given
-        Player pobi = new Player("pobi");
-        Player james = new Player("james");
-
-        pobi.placeBet(10000);
-        james.placeBet(10000);
-
         Dealer dealer = new Dealer();
-        Players players = new Players(List.of(pobi, james));
+        Players players = new Players(List.of(
+                new Player("pobi", Bet.of(10000)),
+                new Player("james", Bet.of(10000))));
 
         GameResult gameResult = new GameResult(players, dealer);
 
@@ -41,15 +38,10 @@ class GameResultTest {
     @DisplayName("플레이어 수익의 총합에 따라 딜러의 수익을 계산한다.")
     void calculateDealerProfit_dealerLoseTest() {
         // given
-        Player winWithBlackJack = new Player("pobi");
-        Player win = new Player("james");
-        Player draw = new Player("lala");
-        Player lose = new Player("jeje");
-
-        winWithBlackJack.placeBet(10000);
-        win.placeBet(10000);
-        draw.placeBet(10000);
-        lose.placeBet(10000);
+        Player winWithBlackJack = new Player("pobi", Bet.of(10000));
+        Player win = new Player("james", Bet.of(10000));
+        Player draw = new Player("lala", Bet.of(10000));
+        Player lose = new Player("jeje", Bet.of(10000));
 
         winWithBlackJack.receive(new Card(Rank.ACE, Suit.DIAMOND));
         winWithBlackJack.receive(new Card(Rank.JACK, Suit.HEART));

@@ -14,7 +14,7 @@ class PlayersTest {
     @DisplayName("플레이어 인원 수는 5명 이하여야 합니다.")
     void 플레이어인원수_5명이하_성공() {
         // given
-        List<Player> players = List.of(new Player("pobi"), new Player("james"));
+        List<Player> players = List.of(new Player("pobi", Bet.of(10000)), new Player("james", Bet.of(10000)));
 
         // when - then
         Assertions.assertDoesNotThrow(() -> new Players(players));
@@ -25,12 +25,12 @@ class PlayersTest {
     void 플레이어인원수_6명이상_오류() {
         // given
         List<Player> players = List.of(
-                new Player("pobi"),
-                new Player("james"),
-                new Player("eunoh"),
-                new Player("ruro"),
-                new Player("rama"),
-                new Player("dudu"));
+                new Player("pobi", Bet.of(10000)),
+                new Player("james", Bet.of(10000)),
+                new Player("eunoh", Bet.of(10000)),
+                new Player("ruro", Bet.of(10000)),
+                new Player("rama", Bet.of(10000)),
+                new Player("dudu", Bet.of(10000)));
 
         // when - then
         Assertions.assertThrows(IllegalArgumentException.class, () -> new Players(players));
@@ -41,9 +41,9 @@ class PlayersTest {
     void 플레이어_이름_중복_금지() {
         // given
         List<Player> players = List.of(
-                new Player("pobi"),
-                new Player("james"),
-                new Player("pobi"));
+                new Player("pobi", Bet.of(10000)),
+                new Player("james", Bet.of(10000)),
+                new Player("pobi", Bet.of(10000)));
 
         // when - then
         Assertions.assertThrows(IllegalArgumentException.class, () -> new Players(players));
@@ -53,8 +53,8 @@ class PlayersTest {
     @DisplayName("플레이어를 정확하게 찾는지 검증한다.")
     void findByTest() {
         // given
-        Player targetPlayer = new Player("pobi");
-        List<Player> playerNames = List.of(targetPlayer, new Player("james"));
+        Player targetPlayer = new Player("pobi", Bet.of(10000));
+        List<Player> playerNames = List.of(targetPlayer, new Player("james", Bet.of(10000)));
 
         // when - then
         Players players = new Players(playerNames);

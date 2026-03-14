@@ -1,6 +1,7 @@
 package controller;
 
 import domain.match.GameResult;
+import domain.participant.Bet;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
@@ -11,7 +12,10 @@ import mapper.ProfitResultMapper;
 import view.InputView;
 import view.OutputView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BlackJackController {
 
@@ -28,7 +32,6 @@ public class BlackJackController {
     public void playGame() {
         Dealer dealer = new Dealer();
         Players players = readPlayersUntilValid();
-        readPlayerBetAmountUntilValid(players);
 
         playBlackJack(players, dealer);
 
@@ -68,10 +71,13 @@ public class BlackJackController {
         outputView.showDealerStandMessage();
     }
 
-    private Players convertAndCreatePlayers(List<String> names) {
-        List<Player> players = names.stream()
-                .map(Player::new)
-                .toList();
+    private Players convertAndCreatePlayers(Map<String, Bet> playersInfo) {
+        List<Player> players = new ArrayList<>();
+
+        for (Map.Entry<String, Bet> playerInfo : playersInfo.entrySet()) {
+            Player player = new Player(playerInfo.getKey(), playerInfo.getValue());
+            players.add(player);
+        }
 
         return new Players(players);
     }
@@ -79,22 +85,22 @@ public class BlackJackController {
     private Players readPlayersUntilValid() {
         while (true) {
             try {
+                Map<String, Bet> playersInfo = new HashMap<>();
                 List<String> names = inputView.readPlayers();
-                return convertAndCreatePlayers(names);
+
+                for (String name : names) playersInfo.put(name, readPlayerBetAmountUntilValid(name));
+
+                return convertAndCreatePlayers(playersInfo);
             } catch (IllegalArgumentException e) {
                 OutputView.printErrorMessage(e.getMessage());
             }
         }
     }
 
-    private void readPlayerBetAmountUntilValid(Players players) {
+    private Bet readPlayerBetAmountUntilValid(String name) {
         while (true) {
             try {
-                for (Player player : players.getPlayers()) {
-                    player.placeBet(inputView.readPlayerBetAmount(player.getName()));
-                }
-
-                return;
+                return Bet.of(inputView.readPlayerBetAmount(name));
             } catch (IllegalArgumentException e) {
                 OutputView.printErrorMessage(e.getMessage());
             }
