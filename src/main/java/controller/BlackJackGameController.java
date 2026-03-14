@@ -1,13 +1,18 @@
 package controller;
 
+import domain.betting.BettingAmount;
+import domain.betting.BettingManager;
+import domain.betting.CalculateProfit;
 import domain.game.GameManager;
 import domain.game.GameResult;
+import domain.game.GameResultManager;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
 import dto.ParticipantCardsDto;
+import java.util.HashMap;
 import view.InputView;
 import view.OutputView;
 
@@ -27,14 +32,25 @@ public class BlackJackGameController {
         Players players = initPlayer();
         GameManager gameManager = new GameManager(players);
         List<String> playersNames = getPlayerNames(players);
-        // TODO: 베팅금액 입력 로직 - return 값 아직 활용 안함
-        players.forEach(player -> InputView.askBettingAmount(player.getName().getName()));
+        BettingManager bettingManager = initBettingManager(players);
         OutputView.printGameInitialMessage(playersNames);
         gameManager.distributeInitialCards();
         printParticipantCards(gameManager.getDealer(), players);
         playGame(players, gameManager);
-        Map<String, GameResult> gameResult = gameManager.getGameResult();
+        CalculateProfit calculateProfit = new CalculateProfit(bettingManager);
+        GameResultManager gameResultManager =
+                new GameResultManager(calculateProfit, players, gameManager.getDealer());
+        Map<String, GameResult> gameResult = gameResultManager.getGameResult();
         endGame(gameManager, players, gameResult);
+    }
+
+    private BettingManager initBettingManager(Players players) {
+        Map<Name, BettingAmount> bettingAmounts = new HashMap<>();
+        players.forEach(player -> {
+            int amount = InputView.askBettingAmount(player.getName().getName());
+            bettingAmounts.put(player.getName(), new BettingAmount(amount));
+        });
+        return new BettingManager(bettingAmounts);
     }
 
     private void playGame(Players players, GameManager gameManager) {

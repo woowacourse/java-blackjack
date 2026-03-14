@@ -2,6 +2,9 @@ package domain.game;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import domain.betting.BettingAmount;
+import domain.betting.BettingManager;
+import domain.betting.CalculateProfit;
 import domain.card.Card;
 import domain.card.Number;
 import domain.card.Shape;
@@ -9,19 +12,18 @@ import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Player;
 import domain.participant.Players;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 
-class GameManagerTest {
+class GameResultManagerTest {
     @Test
     void 플레이어들의_점수를_딜러와_비교해_승패를_반환한다() {
-        // TODO: 단위 테스트라기보다 얇은 통합 테스트 느낌 추후 리팩토링 예정
         Player pobi = new Player(new Name("pobi"));
         Player crong = new Player(new Name("crong"));
         Players players = new Players(List.of(pobi, crong));
         GameManager gameManager = new GameManager(players);
-
         Dealer dealer = gameManager.getDealer();
 
         dealer.receiveCard(new Card(Shape.SPADE, domain.card.Number.TEN));
@@ -33,12 +35,16 @@ class GameManagerTest {
         crong.receiveCard(new Card(Shape.SPADE, domain.card.Number.NINE));
         crong.receiveCard(new Card(Shape.HEART, Number.SEVEN));
 
-        Map<String, GameResult> result = gameManager.getGameResult();
+        Map<Name, BettingAmount> bettingAmounts = new HashMap<>();
+        players.forEach(player -> bettingAmounts.put(player.getName(), new BettingAmount(1000)));
 
-        GameResult pobiResult = result.get("pobi");
-        GameResult crongResult = result.get("crong");
+        BettingManager bettingManager = new BettingManager(bettingAmounts);
+        CalculateProfit calculateProfit = new CalculateProfit(bettingManager);
+        GameResultManager gameResultManager = new GameResultManager(calculateProfit, players, dealer);
 
-        assertEquals(GameResult.WIN, pobiResult);
-        assertEquals(GameResult.LOSE, crongResult);
+        Map<String, GameResult> result = gameResultManager.getGameResult();
+
+        assertEquals(GameResult.WIN, result.get("pobi"));
+        assertEquals(GameResult.LOSE, result.get("crong"));
     }
 }
