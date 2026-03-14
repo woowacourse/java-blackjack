@@ -1,22 +1,23 @@
 package domain;
 
+import static domain.Score.ACE_MAX;
+import static domain.Score.ACE_MIN;
+import static domain.Score.BLACKJACK;
+
 public enum Rank {
-    ACE("A", new Score(1)),
-    TWO("2", new Score(2)),
-    THREE("3", new Score(3)),
-    FOUR("4", new Score(4)),
-    FIVE("5", new Score(5)),
-    SIX("6", new Score(6)),
-    SEVEN("7", new Score(7)),
-    EIGHT("8", new Score(8)),
-    NINE("9", new Score(9)),
-    TEN("10", new Score(10)),
-    J("J", new Score(10)),
-    Q("Q", new Score(10)),
-    K("K", new Score(10));
-    public static final Score BLACKJACK_MAX_SCORE = new Score(21);
-    public static final Score ACE_MAX_SCORE = new Score(11);
-    public static final Score ACE_MIN_SCORE = new Score(1);
+    ACE("A", Score.ONE),
+    TWO("2", Score.TWO),
+    THREE("3", Score.THREE),
+    FOUR("4", Score.FOUR),
+    FIVE("5", Score.FIVE),
+    SIX("6", Score.SIX),
+    SEVEN("7", Score.SEVEN),
+    EIGHT("8", Score.EIGHT),
+    NINE("9", Score.NINE),
+    TEN("10", Score.TEN),
+    J("J", Score.TEN),
+    Q("Q", Score.TEN),
+    K("K", Score.TEN);
 
     private final String displayValue;
     private final Score score;
@@ -34,11 +35,11 @@ public enum Rank {
     }
 
     private static Score decideAceValue(Score sum, int leftAce) {
-        if (sum.add(ACE_MAX_SCORE).isLessThanOrEqualTo(BLACKJACK_MAX_SCORE)
-                && BLACKJACK_MAX_SCORE.sub(sum.add(ACE_MAX_SCORE)).isGreaterThanOrEqualTo(leftAce)) {
-            return ACE_MAX_SCORE;
+        if (sum.add(ACE_MAX).isLessThanOrEqualTo(BLACKJACK)
+                && BLACKJACK.sub(sum.add(ACE_MAX)).isGreaterThanOrEqualTo(leftAce)) {
+            return ACE_MAX;
         }
-        return ACE_MIN_SCORE;
+        return ACE_MIN;
     }
 
     public boolean isAce() {

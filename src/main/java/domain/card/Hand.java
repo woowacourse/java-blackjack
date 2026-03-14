@@ -2,7 +2,6 @@ package domain.card;
 
 import domain.Rank;
 import domain.Score;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,7 +54,7 @@ public class Hand {
         return cards.stream()
                 .filter(card -> !card.isAce())
                 .map(card -> card.getRank().getScore())
-                .reduce(new Score(0), Score::add);
+                .reduce(Score.ZERO, Score::add);
     }
 
     public List<Card> getCards() {

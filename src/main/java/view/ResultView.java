@@ -63,7 +63,7 @@ public class ResultView {
             System.out.println("딜러는 " + DEALER_HIT_STAND_BOUNDARY.value() + "이하라 한장의 카드를 더 받았습니다.");
             return;
         }
-        System.out.println("딜러는 " + (DEALER_HIT_STAND_BOUNDARY.add(new Score(1)).value()) + "이상이라 카드를 받지 않았습니다.");
+        System.out.println("딜러는 " + (DEALER_HIT_STAND_BOUNDARY.add(Score.ONE).value()) + "이상이라 카드를 받지 않았습니다.");
     }
 
     public void printResult(TotalResult results) {
