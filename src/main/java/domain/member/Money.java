@@ -1,4 +1,4 @@
-package domain.card;
+package domain.member;
 
 import java.util.Objects;
 
