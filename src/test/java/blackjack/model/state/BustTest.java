@@ -12,6 +12,10 @@ import org.junit.jupiter.api.Test;
 
 class BustTest {
 
+    private static final List<Card> DEFAULT_BUST_CARDS = List.of(new Card(Rank.KING, Suit.HEART),
+            new Card(Rank.QUEEN, Suit.HEART),
+            new Card(Rank.JACK, Suit.HEART));
+
     @Test
     void 생성_시_버스트가_아니라면_예외를_던진다() {
         Hand notBustHand = new Hand();
@@ -23,11 +27,7 @@ class BustTest {
     @Test
     void 현재_상태에_대한_수익률을_제공한다() {
         // given
-        List<Card> bustCards = List.of(new Card(Rank.KING, Suit.HEART),
-                new Card(Rank.QUEEN, Suit.HEART),
-                new Card(Rank.JACK, Suit.HEART));
-        Hand bustHand = new Hand(bustCards);
-
+        Hand bustHand = new Hand(DEFAULT_BUST_CARDS);
         Bust bust = new Bust(bustHand);
 
         // when
