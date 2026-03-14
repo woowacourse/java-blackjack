@@ -85,8 +85,4 @@ public class Judge {
     public WinningStatus getPlayerResult(Player player) {
         return playerResults.get(player);
     }
-
-    public Map<Player, WinningStatus> getPlayerResults() {
-        return new HashMap<>(playerResults);
-    }
 }
