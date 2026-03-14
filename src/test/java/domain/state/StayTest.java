@@ -18,7 +18,7 @@ public class StayTest {
 
     @DisplayName("Stay 상태의 기본 수익률은 1.0이다")
     @Test
-    void earningRate_Always_ReturnOnePointZero() {
+    void stayEarningRate_Always_ReturnOnePointZero() {
         State state = new Stay(new Hand());
         assertThat(state.earningRate()).isEqualTo(1.0);
     }
