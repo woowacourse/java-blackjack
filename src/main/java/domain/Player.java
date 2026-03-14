@@ -59,10 +59,6 @@ public class Player {
         return calculateScore() > BUST_THRESHOLD;
     }
 
-    public boolean hasInitialHand() {
-        return cards.size() == BlackjackRule.INITIAL_HAND_SIZE;
-    }
-
     public List<Card> getCards() {
         return List.copyOf(cards);
     }

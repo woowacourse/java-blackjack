@@ -59,10 +59,6 @@ public class Dealer {
         return calculateScore() > BUST_THRESHOLD;
     }
 
-    public int getAdditionalCardCount() {
-        return cards.size() - BlackjackRule.INITIAL_HAND_SIZE;
-    }
-
     public List<Card> getCards() {
         return List.copyOf(cards);
     }
