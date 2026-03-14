@@ -6,6 +6,7 @@ import domain.card.GameCards;
 import domain.player.Dealer;
 import domain.player.Gambler;
 import domain.player.Gamblers;
+import domain.player.Participant;
 import domain.player.ParticipantGameInfo;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -39,16 +40,19 @@ public class Game {
         return info;
     }
 
+    public Dealer getDealer() {
+        return dealer;
+    }
     public boolean shouldDealerDraw() {
         return dealer.isBelowDrawThreshold();
     }
 
-    public void addDealerCard() {
-        dealer.addCard(pickCard());
-    }
-
     public Card pickCard() {
         return gameCards.drawCard();
+    }
+
+    public void drawCardTo(Participant participant) {
+        participant.addCard(pickCard());
     }
 
     public List<Gambler> getGamblersList() {

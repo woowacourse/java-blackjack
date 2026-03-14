@@ -81,7 +81,7 @@ public class BlackJackController {
         while (!gambler.isBust()) {
             AgreementRequestDto agreementRequestDto = inputView.askHitOrStand(gambler.getName());
             if (agreementRequestDto.agreement().equals(InputView.HIT)) {
-                gambler.addCard(game.pickCard());
+                game.drawCardTo(gambler);
                 outputView.printParticipantInfo(
                         new ParticipantHandResponseDto(gambler.getName(), gambler.getHandInfo()));
             }
@@ -94,7 +94,7 @@ public class BlackJackController {
     private void checkDealerHand(Game game) {
         if (game.shouldDealerDraw()) {
             outputView.printDealerCardIsBelowDrawThreshold();
-            game.addDealerCard();
+            game.drawCardTo(game.getDealer());
         }
     }
 

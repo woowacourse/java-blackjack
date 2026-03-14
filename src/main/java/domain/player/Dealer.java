@@ -5,7 +5,6 @@ public class Dealer extends Participant {
     public static final String DEALER_NAME = "딜러";
     public static final int DEALER_REFERENCE_POINT = 16;
 
-
     public Dealer(String DEALER_NAME) {
         super(DEALER_NAME);
     }
