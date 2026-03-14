@@ -3,6 +3,7 @@ package controller;
 import domain.game.BlackjackGameManager;
 import domain.game.HitOrStand;
 import domain.participant.BetAmount;
+import domain.participant.PlayerName;
 import dto.BlackjackResultDto;
 import dto.BlackjackStatisticsDto;
 import dto.ParticipantDto;
@@ -36,8 +37,10 @@ public class BlackjackController {
     }
 
     private void initializeGame() {
-        List<String> playerNames = inputPlayerNames();
-        inputBetAmounts(playerNames);
+        List<PlayerName> playerNames = inputPlayerNames();
+        List<BetAmount> betAmounts = inputBetAmounts(playerNames);
+        blackjackGameManager.createParticipants(playerNames, betAmounts);
+
         blackjackGameManager.drawInitialCards();
 
         List<ParticipantDto> playerDtoList = blackjackGameManager.generatePlayerDtoList();
@@ -47,17 +50,22 @@ public class BlackjackController {
         outputView.printHandList(dealerDto, playerDtoList);
     }
 
-    private void inputBetAmounts(List<String> playerNames) {
+    private List<BetAmount> inputBetAmounts(List<PlayerName> playerNames) {
         List<BetAmount> betAmounts = new ArrayList<>();
-        for (String playerName : playerNames) {
-            String betAmountInput = inputView.inputBetAmount(playerName);
+        for (PlayerName playerName : playerNames) {
+            String betAmountInput = inputView.inputBetAmount(playerName.name());
             betAmounts.add(new BetAmount(betAmountInput));
         }
-        blackjackGameManager.createParticipants(playerNames, betAmounts);
+        return betAmounts;
     }
 
-    private List<String> inputPlayerNames() {
-        return Parser.parseInput(inputView.inputPlayers());
+    private List<PlayerName> inputPlayerNames() {
+        List<String> names = Parser.parseInput(inputView.inputPlayers());
+        List<PlayerName> playerNames = new ArrayList<>();
+        for (String name : names) {
+            playerNames.add(new PlayerName(name));
+        }
+        return playerNames;
     }
 
     private void inputHitOrStandOnPlayer() {
