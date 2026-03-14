@@ -21,7 +21,7 @@ public class BettingAmount {
 
     private void validate(int amount) {
         if (amount <= 0) {
-            throw new IllegalArgumentException("배팅 금액은 음수일 수 없습니다.");
+            throw new IllegalArgumentException("배팅 금액은 0이거나 음수일 수 없습니다.");
         }
     }
 }
