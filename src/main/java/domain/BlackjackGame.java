@@ -37,22 +37,10 @@ public class BlackjackGame {
         return members.canDealerDraw();
     }
 
-    public boolean isContinuable(Member member) {
-        return !members.hasBust(member);
-    }
-
     public void applyBlackjackBonus() {
         getPlayers().stream()
-                .filter(members::hasBlackjack)
-                .forEach(members::applyBlackjackBonus);
-    }
-
-    public boolean checkBust(Member player) {
-        return members.hasBust(player);
-    }
-
-    public boolean checkBlackjack(Member member) {
-        return members.hasBlackjack(member);
+                .filter(Member::hasBlackjack)
+                .forEach(Member::applyBlackjackBonus);
     }
 
     public List<Member> getPlayers() {

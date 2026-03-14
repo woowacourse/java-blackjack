@@ -46,20 +46,20 @@ public class Main {
         outputView.printInitialStatus(HitInfo.firstCardFrom(game.getDealer()), HitInfo.firstCardFrom(game.getPlayers()));
         game.applyBlackjackBonus();
         game.getPlayers().stream()
-                .filter(member -> !game.checkBlackjack(member))
+                .filter(member -> !member.hasBlackjack())
                 .forEach(member -> askToDraw(member, inputView, outputView, game));
     }
 
     private static void askToDraw(Member player, InputView inputView, OutputView outputView, BlackjackGame game) {
-        while (game.isContinuable(player) && inputView.playContinue(player.getName())) {
+        while (!player.hasBust() && inputView.playContinue(player.getName())) {
             game.drawPlayer(player);
             outputView.printHandCard(HitInfo.from(player));
         }
-        printBustOrStay(player, game, outputView);
+        printBustOrStay(player, outputView);
     }
 
-    private static void printBustOrStay(Member player, BlackjackGame game, OutputView outputView) {
-        if (game.checkBust(player)) {
+    private static void printBustOrStay(Member player, OutputView outputView) {
+        if (player.hasBust()) {
             outputView.printBustMessage(player.getName());
             return;
         }

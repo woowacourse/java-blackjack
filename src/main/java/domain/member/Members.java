@@ -30,14 +30,6 @@ public class Members {
         member.receiveCard(card);
     }
 
-    public boolean hasBust(Member member) {
-        return member.hasBust();
-    }
-
-    public boolean hasBlackjack(Member member) {
-        return member.hasBlackjack();
-    }
-
     public boolean canDealerDraw() {
         return dealer.handValue() <= DEALER_DRAW_CONDITION;
     }
@@ -47,17 +39,13 @@ public class Members {
                 .collect(Collectors.toMap(
                                 player -> player,
                                 player -> RoundResult.judgeAgainst(
-                                        dealer.handValue(),
-                                        player.handValue()
+                                        dealer,
+                                        player
                                 ),
                                 (existing, replacement) -> existing,
                                 LinkedHashMap::new
                         )
                 );
-    }
-
-    public void applyBlackjackBonus(Member member) {
-        member.applyBlackjackBonus();
     }
 
     public List<Member> getPlayers() {
