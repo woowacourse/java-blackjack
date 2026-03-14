@@ -46,7 +46,7 @@ class GameResultTest {
         Player player1 = playerIterator.next();
         addCardsToParticipantDeck(player1,
                 new Card(CardShape.DIAMOND, CardContents.J),
-                new Card(CardShape.DIAMOND, CardContents.THREE)
+                new Card(CardShape.DIAMOND, CardContents.A)
         );
         Player player2 = playerIterator.next();
         addCardsToParticipantDeck(player2,
@@ -65,12 +65,12 @@ class GameResultTest {
         );
 
         Map<Player, Long> expectPlayerWinLossResults = new LinkedHashMap<>();
-        expectPlayerWinLossResults.put(player1, -1000L);
+        expectPlayerWinLossResults.put(player1, 1500L);
         expectPlayerWinLossResults.put(player2, -1000L);
         expectPlayerWinLossResults.put(player3, 1000L);
         expectPlayerWinLossResults.put(player4, 1000L);
 
-        long expectDealerWinLossResults = 0L;
+        long expectDealerWinLossResults = -2500L;
 
         // when
         GameResult gameResult = GameResult.calculate(dealer, players);

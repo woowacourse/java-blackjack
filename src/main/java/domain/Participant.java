@@ -27,6 +27,10 @@ public abstract class Participant {
         cards.addCard(newCard);
     }
 
+    public boolean isBlackJack() {
+        return cards.isBlackJack();
+    }
+
     public String getName() {
         return name.name();
     }

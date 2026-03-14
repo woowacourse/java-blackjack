@@ -13,6 +13,9 @@ public enum PlayerResult {
         if (player.isBust()) {
             return PlayerResult.LOSS;
         }
+        if (player.isBlackJack() && !dealer.isBlackJack()) {
+            return PlayerResult.BLACKJACK;
+        }
         if (dealer.isBust()) {
             return PlayerResult.WIN;
         }

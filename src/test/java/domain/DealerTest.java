@@ -116,7 +116,7 @@ public class DealerTest {
         }
 
         @Test
-        @DisplayName("딜러는 카드의 합이 16을 초과하면 카드를 더 이상 뽑을 수 없다.")
+        @DisplayName("딜러가 카드의 합이 16을 초과한 상태로 카드를 뽑으려고 하면 예외가 발생한다.")
         void shouldThrowExceptionWhenDeckSumOverMinimum() {
             // given
             Dealer testDealer = createDealerWithCards(
