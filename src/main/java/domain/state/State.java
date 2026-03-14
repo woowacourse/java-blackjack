@@ -1,45 +1,19 @@
 package domain.state;
 
-import domain.card.Deck;
-import domain.card.Hand;
 import domain.card.vo.Card;
-import domain.participants.Participant;
+import domain.score.Score;
 import java.util.List;
 
-public abstract class State {
-    private final Hand hand;
-    private final Participant participant;
+public interface State {
+    boolean isFinished();
 
-    abstract public boolean isFinished();
+    State drawCard(Card card);
 
-    protected State(Hand hand, Participant participant) {
-        this.hand = hand;
-        this.participant = participant;
-    }
+    Score getScore();
 
-    public State drawCard(Deck deck, boolean toHit) {
-        if (!toHit) {
-            return new Stay(hand, participant);
-        }
-        hand.add(deck.drawCard());
-        if (hand.isBurst()) {
-            return new Burst(hand, participant);
-        }
-        if (isFinished()) {
-            return new Stay(hand, participant);
-        }
-        return new Hit(hand, participant, participant.getHitStrategy());
-    }
+    List<Card> getCards();
 
-    public Integer getScore() {
-        return hand.getScore();
-    }
+    State stay();
 
-    public String getParticipantName() {
-        return participant.getName();
-    }
-
-    public List<Card> getCards() {
-        return hand.getCards();
-    }
+    Integer getProfit(State dealerState, Integer betCost);
 }

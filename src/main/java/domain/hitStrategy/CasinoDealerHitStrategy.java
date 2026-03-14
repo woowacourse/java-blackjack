@@ -1,13 +1,12 @@
 package domain.hitStrategy;
 
-import domain.state.Burst;
-import domain.state.State;
+import domain.score.Score;
 
 public class CasinoDealerHitStrategy implements HitStrategy {
     public static final int BOUNDARY = 16;
 
     @Override
-    public boolean canHit(State state) {
-        return !(state instanceof Burst) && state.getScore() < BOUNDARY;
+    public boolean canHit(Score score) {
+        return score.value() <= BOUNDARY;
     }
 }

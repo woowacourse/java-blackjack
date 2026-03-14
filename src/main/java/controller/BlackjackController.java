@@ -1,16 +1,19 @@
 package controller;
 
+import domain.bet.Betting;
 import domain.card.Deck;
-import domain.card.DeckMaker;
 import domain.card.Hand;
+import domain.card.deckMaker.DeckMaker;
 import domain.hitStrategy.CasinoDealerHitStrategy;
+import domain.hitStrategy.HitStrategy;
 import domain.participants.Dealer;
+import domain.participants.Participant;
 import domain.participants.Player;
-import domain.score.Result;
-import domain.state.State;
+import domain.state.generator.FinishedStateGenerator;
 import dto.DealerDrawDto;
 import dto.NamesDto;
 import dto.PlayerCardsDto;
+import dto.PlayerCreateDto;
 import dto.PlayersCardsDto;
 import dto.StatisticsDto;
 import java.util.ArrayList;
@@ -29,67 +32,77 @@ public class BlackjackController {
         this.outputView = outputView;
     }
 
-    public void start(final DeckMaker deckMaker) {
+    public void start(final DeckMaker deckMaker, HitStrategy dealerStrategy, HitStrategy playerHitStrategy,
+                      List<FinishedStateGenerator> finishedStateGenerators) {
         Deck deck = Deck.createFromDeckMaker(deckMaker);
-        List<String> playerNames = Parser.parse(inputView.readPlayerName());
+        Participant dealer = new Dealer(dealerStrategy);
+        dealer.startState(finishedStateGenerators, Hand.createFromDeck(deck));
 
-        Dealer dealer = Dealer.createDefaultStrategy(Hand.createFromDeck(deck));
-        List<Player> players = playerNames.stream()
-                .map(playerName -> Player.createDefaultStrategy(playerName, Hand.createFromDeck(deck)))
+        List<Participant> players = readPlayersInfo().stream()
+                .map(player -> player.toDefaultStrategyPlayer(playerHitStrategy))
                 .toList();
-        State dealerState = dealer.getStartState();
-        List<State> playersState = players.stream().map(Player::getStartState).toList();
-        printCards(dealerState, playersState);
+        players.forEach(p -> p.startState(finishedStateGenerators, Hand.createFromDeck(deck)));
 
-        playersState = drawPlayerHandAndPrint(playersState, deck);
-        dealerState = drawDealerHandAndPrint(dealerState, deck, playersState);
-        printAllStatus(dealerState, playersState);
+        printCards(dealer, players);
+        drawPlayerHandAndPrint(players, deck);
+        drawDealerHandAndPrint(dealer, deck);
+        printAllStatus(dealer, players);
     }
 
-    private List<State> drawPlayerHandAndPrint(List<State> playersState, Deck deck) {
-        List<State> states = new ArrayList<>();
-        for (State state : playersState) {
-            while (!state.isFinished()) {
-                state = state.drawCard(deck, inputView.readNeedToHit(state.getParticipantName()));
-                outputView.showCards(PlayerCardsDto.fromState(state));
-            }
-            states.add(state);
+    private List<PlayerCreateDto> readPlayersInfo() {
+        List<String> playerNames = Parser.parse(inputView.readPlayerName());
+        List<PlayerCreateDto> playerCreateDtos = new ArrayList<>();
+        for (String playerName : playerNames) {
+            Integer betting = Parser.toInteger(inputView.readBettingCost(playerName));
+            playerCreateDtos.add(new PlayerCreateDto(playerName, new Betting(betting)));
         }
-        return states;
+
+        return playerCreateDtos;
     }
 
-    private void printAllStatus(State dealerState, List<State> playersState) {
-        outputView.showCardsAndScore(PlayerCardsDto.fromState(dealerState));
-        playersState.forEach(player -> outputView.showCardsAndScore(PlayerCardsDto.fromState(player)));
-        outputView.showResultStatistics(getStatisticsDtos(playersState, dealerState), dealerState.getParticipantName());
+    private void drawPlayerHandAndPrint(List<Participant> players, Deck deck) {
+        for (Participant player : players) {
+            askToDrawCard(deck, player);
+        }
     }
 
-    private void printCards(State dealerState, List<State> playersState) {
-        outputView.drawCard(NamesDto.fromState(dealerState, playersState));
-        outputView.showOnlyOneCard(PlayerCardsDto.fromState(dealerState));
-        outputView.showPlayersCards(PlayersCardsDto.fromStates(playersState));
+    private void askToDrawCard(Deck deck, Participant player) {
+        while (player.canDraw() && inputView.readNeedToHit(player.getName())) {
+            player.drawCard(deck.drawCard());
+            outputView.showCards(PlayerCardsDto.fromParticipant(player));
+        }
+        player.stay();
     }
 
-    private List<StatisticsDto> getStatisticsDtos(List<State> playersState, State dealerState) {
+    private void printAllStatus(Participant dealer, List<Participant> players) {
+        outputView.showCardsAndScore(PlayerCardsDto.fromParticipant(dealer));
+        players.forEach(player -> outputView.showCardsAndScore(PlayerCardsDto.fromParticipant(player)));
+        outputView.showResultStatistics(getStatisticsDtos(dealer, players), dealer.getName());
+    }
+
+    private void printCards(Participant dealer, List<Participant> players) {
+        outputView.drawCard(NamesDto.fromDealerAndPlayers(dealer, players));
+        outputView.showOnlyOneCard(PlayerCardsDto.fromParticipant(dealer));
+        outputView.showPlayersCards(PlayersCardsDto.fromPlayers(players));
+    }
+
+    private List<StatisticsDto> getStatisticsDtos(Participant dealer, List<Participant> players) {
         List<StatisticsDto> statisticsDtos = new ArrayList<>();
-        for (State playerState : playersState) {
-            String playerName = playerState.getParticipantName();
-            Result result = Result.getResult(dealerState, playerState);
-            StatisticsDto statisticsDto = new StatisticsDto(playerName, result.getDisplayName());
+        for (Participant player : players) {
+            String playerName = player.getName();
+            StatisticsDto statisticsDto = new StatisticsDto(playerName, ((Player) player).getProfit(dealer));
             statisticsDtos.add(statisticsDto);
         }
 
         return statisticsDtos;
     }
 
-    private State drawDealerHandAndPrint(State dealerState, Deck deck, List<State> playersState) {
-        State state = dealerState;
-        while (!state.isFinished()) {
-            state = dealerState.drawCard(deck, true);
-            outputView.drawDealer(
-                    new DealerDrawDto(dealerState.getParticipantName(), CasinoDealerHitStrategy.BOUNDARY));
-            outputView.showCards(PlayerCardsDto.fromState(dealerState));
+    private void drawDealerHandAndPrint(Participant dealer, Deck deck) {
+        while (dealer.canDraw()) {
+            dealer.drawCard(deck.drawCard());
+            outputView.drawDealer(new DealerDrawDto(dealer.getName(), CasinoDealerHitStrategy.BOUNDARY));
+            outputView.showCards(PlayerCardsDto.fromParticipant(dealer));
         }
-        return state;
+        dealer.stay();
     }
 }

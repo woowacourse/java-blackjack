@@ -1,33 +1,24 @@
 package domain.participants;
 
-import domain.card.Hand;
+import domain.bet.Betting;
 import domain.hitStrategy.HitStrategy;
-import domain.hitStrategy.UntilBurstHitStrategy;
-import domain.state.Hit;
-import domain.state.State;
+import domain.hitStrategy.UntilBustHitStrategy;
 
 public class Player extends Participant {
-    private static final HitStrategy DEFAULT_HIT_STRATEGY = new UntilBurstHitStrategy();
+    private static final HitStrategy DEFAULT_HIT_STRATEGY = new UntilBustHitStrategy();
 
-    private final HitStrategy hitStrategy;
-    //아마 여기에 금액추가.
+    protected final Betting betting;
 
-    public Player(String name, Hand hand, HitStrategy hitStrategy) {
-        super(name, hand);
-        this.hitStrategy = hitStrategy;
+    public Player(String name, Betting betting, HitStrategy hitStrategy) {
+        super(name, hitStrategy);
+        this.betting = betting;
     }
 
-    public static Player createDefaultStrategy(String name, Hand hand) {
-        return new Player(name, hand, DEFAULT_HIT_STRATEGY);
+    public static HitStrategy getDefaultHitStrategy() {
+        return DEFAULT_HIT_STRATEGY;
     }
 
-    @Override
-    public State getStartState() {
-        return new Hit(hand, this, hitStrategy);
-    }
-
-    @Override
-    public HitStrategy getHitStrategy() {
-        return hitStrategy;
+    public Integer getProfit(Participant dealer) {
+        return state.getProfit(dealer.getState(), betting.amount());
     }
 }

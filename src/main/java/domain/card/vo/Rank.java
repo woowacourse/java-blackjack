@@ -1,5 +1,7 @@
 package domain.card.vo;
 
+import domain.score.Score;
+
 public enum Rank {
     ACE(1, "A"),
     TWO(2, "2"),
@@ -16,11 +18,11 @@ public enum Rank {
     KING(10, "K"),
     ;
 
-    private final Integer score;
+    private final Score score;
     private final String displayName;
 
-    Rank(Integer score, String displayName) {
-        this.score = score;
+    Rank(int score, String displayName) {
+        this.score = new Score(score);
         this.displayName = displayName;
     }
 
@@ -28,7 +30,7 @@ public enum Rank {
         return rank.equals(ACE);
     }
 
-    public Integer getScore() {
+    public Score getScore() {
         return score;
     }
 

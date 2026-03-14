@@ -24,34 +24,28 @@
 -[x] 이름과, 블랙잭 핸드를 관리한다.
 -[x] 핸드 값이 16 이하라면 카드를 받아야 함을 알린다.(자동)
 
-### 블랙잭핸드
+### 핸드
 
 -[x] 받은 카드를 저장한다.
 -[x] 카드의 총합을 반환한다.
-    - A는 1, FACE(J,Q,K)카드는 10으로 처리해서 더한 값을 Score 타입으로 전환해서 전달한다.
+    - A 포함의 경우: 우선 A는 1로 취급한다.
+        - 11 이하라면 +10을 해서 전달한다.
+        - 11 초과한다면 그냥 전달한다.
+    - A 미포함의 경우: FaceCard(J,Q,K)는 10으로 나머지는 숫자에 맞게 더해서 전달한다.
 
-### 스코어
-
--[x] 카드의 총합을 관리한다.
-    - ACE가 포함되어있는지 저장한다.
--[x] 11이하면서 A가 포함되어 있다면 +10 해서 전달한다.
 -[x] 버스트인지 확인하다 (A 값처리 후에 21을 초과하는지 확인한다.)
--[x] 딜러의 스코어와 비교해서 승,패,무 결과를 반환한다.
-    - Enum으로 관리한다.
 
 ### 덱
 
 -[x] 52장의 카드를 저장한다.
-    - 카드를 리스트로 관리한다.
--[x] 랜덤값을 주입받아 카드를 전달한다.
-    - 카드는 삭제된다. (LinkedList 로 구현해서 O(1))
-    - 랜덤값은 0 ~ (size-1) 까지이다.
--[x] 카드의 사이즈를 전달한다.
--[x] 카드가 있는지 확인한다(동치)
+    - 랜덤으로 셔플된 카드들을 주입받아 카드를 저장한다.
+    - 중복된 카드가 있으면 예외를 반환한다.
+-[x] 첫번째 카드를 전달한다.
+    - 카드는 삭제된다. Deque 관리하기 때문에 O(1)
 
 ### 카드 생성기
 
--[x] ENUM(문양), ENUM(숫자, J/K/Q, A) 두 ENUM 각각을 조합해서 56개의 카드를 생성한다. - 카드 객체
+-[x] ENUM(문양), ENUM(숫자, J/K/Q, A) 두 ENUM 각각을 조합해서 56개의 카드를 생성한다.
 
 ### 카드
 
@@ -61,28 +55,52 @@
 -[x] 카드가 ACE인지 확인한다.
 -[x] 카드가 FACE 카드인지 확인한다.
 
+### 상태
+
+| 유형             | State <- Started    | State <- Started |
+|----------------|---------------------|------------------|
+| abstract class | Finished            | Running          |
+| 구현체            | Blackjack,Bust,Stay | Hit              |
+
+위와 같은 구조로 상속하고 있다.
+
+- Runnung -> 패의 상태에 따라 다음 상태를 반환한다.
+- 각 상태별로 카드를 뽑을 수 있는지 확인 할 수 있다.
+- Hit: 힛 전략에 따라 다르다. 플레이어는 **버스트** 날때까지 **원한다면**, 딜러는 **16이하라면 무조건**
+- 상태를 객체로 저장해서 객체가 일을 하도록 시킨다.
+
 ### 입출력
 
 - 플레이어 이름은 `,`로 구분한다.
 
-# 페어프로그래밍 기록
+# 나만의 기록
 
-- 테스트에서 자주 사용되는 값을 TestFixture 통해서 관리한다.
-  이유: 다양한 클래스에서 자주 사용하기 때문에.
+- 비즈니스 로직을 Domain 에서 관리함으로써 Controller의 책임이 줄어들었다.(단일책임)
+    - Stay, Bust, Hit 과 같은 상태를 도메인으로 관리한다.
+- OCP 위반. 다른 도메인의 상태를 다 알고 있다.
 
-- 랜덤값 테스트가 어려워서 원래 설계에서 변경(덱셔플 -> 덱의 idx 값을 가져오도록 변경)
-    - 추후 idx 값을 주입받는다.
+```java
+public static Result getResult(State dealerRunning, State playerRunning) {
+    if (playerRunning instanceof Bust) {
+        return Result.LOSE;
+    }
+    if (playerRunning instanceof BlackJack) {
+        return Result.BLACKJACK;
+    }
+    if (dealerRunning instanceof Bust || playerRunning.getScore() > dealerRunning.getScore()) {
+        return Result.WIN;
+    }
+    if (dealerRunning.getScore() > playerRunning.getScore()) {
+        return LOSE;
+    }
+    if (dealerRunning.getScore().equals(playerRunning.getScore())) {
+        return Result.DRAW;
+    }
+    throw new IllegalArgumentException("Result 뭔가 잘못된거같아...");
+}
+```
 
-- 동일한 호출이 하위 클래스에서 상위 클래스로 반복될것 같다면 캡슐화가 깨졌는지 확인하자.
-  ex) Card에서 domain.card.vo.Rank.equals()를 통해 FaceCard(J/Q/K) 확인 -> 해당 값을 가장 잘 아는 Rank에게 책임 맡김
-- domain.card.Hand 에서 카드 값의 총합을 반환하는 메서드를 만들려고 했다.
-    - 하나의 카드 값을 반환하는 메서드를 만들었다.
-    - domain.card.Hand <- domain.card.vo.Card <- domain.card.vo.Rank 순으로 값을 포장만 하고 넘기는 케이스가 발생
-    - domain.card.vo.Card 값자체를 가장 잘 아는 Card에게 책임을 넘기고 domain.card.Hand 는 함수를 사용했다.
-- 테스트 주도 개발에서 테스트를 안한 케이스
-  enum과 같이 get만을 이용한 상수는 테스트를 진행하지 않았다.
-  이유: 상수이기 때문에 테스트 할 필요 없다. (로직이 아니다.)
-- 아이디어가 떠올라서 막 구현하다보니 단위테스트가 제대로 진행되지 않았다.(domain.card.Hand)
-    - 설계 구조가 바뀌면서 테스트를 진행하기보다 구조가 명확해진 후에 테스트를 진행하려고 했다.
-
-- 내비게이터가 TODO 리스트 작성하는것 좋은것 같다.
+- 모든 원시값을 포장하라는 말은 무슨말일까?
+    1. Wrapper로 감싸라는 말일까?
+    2. 의미있는 객체를 사용하라는 걸까? -> Score를 객체로 감싸야 하나? -> 그런데 Score를 구현하면 Result와 다를게 없다. 반드시 객체를 참조해야 하고 OCP를 위배하게 된다.
+       -> Score 객체는 의미있는 역할을 하기 힘들다.
