@@ -46,31 +46,28 @@ public class BlackjackRunner {
     }
 
     private Players makePlayers() {
-        List<String> playerNicknames = readPlayerNicknames();
-        return Players.fromPlayerNicknames(playerNicknames);
+        return readPlayerNicknames();
     }
 
-    private List<String> readPlayerNicknames() {
+    private Players readPlayerNicknames() {
         return retry(() -> {
             outputView.askGameMembers();
-            return inputView.readPlayerNicknames();
+            return Players.fromPlayerNicknames(inputView.readPlayerNicknames());
         });
     }
 
     private Bets makeBets(Players players) {
         Bets bets = new Bets();
-        players.getPlayers()
-                .forEach(player -> {
-                    int betAmount = readPlayerBettingAmount(player);
-                    bets.playerBet(player, betAmount);
-                });
+        players.getPlayers().forEach(player -> makeBetWithReadPlayerBettingAmount(player, bets));
         return bets;
     }
 
-    private int readPlayerBettingAmount(Player player) {
-        return retry(() -> {
+    private void makeBetWithReadPlayerBettingAmount(Player player, Bets bets) {
+        retry(() -> {
             outputView.printAskPlayerBettingAmount(player.getNickname());
-            return inputView.readPlayerBettingAmount();
+            int betAmount = inputView.readPlayerBettingAmount();
+            bets.playerBet(player, betAmount);
+            return true;
         });
     }
 

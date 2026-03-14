@@ -13,7 +13,7 @@ public class Bet {
     }
 
     private void validate(int amount) {
-        if (amount < 0) {
+        if (amount <= 0) {
             throw new IllegalArgumentException("배팅 금액은 1 이상의 양수여야 합니다.");
         }
         if (amount % UNIT_AMOUNT != 0) {
