@@ -1,5 +1,7 @@
 package domain.player;
 
+import static util.Constants.BLACK_JACK_NUMBER;
+
 import domain.card.Card;
 import domain.player.attribute.Hand;
 import domain.player.attribute.Name;
@@ -26,6 +28,10 @@ public class Participant {
 
     public boolean isBust() {
         return hand.isBust();
+    }
+
+    public boolean isBlackJack() {
+        return hand.getCardsSize() == 2 && getTotalScore() == BLACK_JACK_NUMBER;
     }
 
     public String getName() {

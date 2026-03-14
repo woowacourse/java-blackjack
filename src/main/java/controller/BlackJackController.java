@@ -128,12 +128,7 @@ public class BlackJackController {
     }
 
     private void determineFinalGameResult(GamblersGameResult gamblersGameResult) {
-        outputView.printDealerResult(
-                new DealerResultDto(gamblersGameResult.countDealerWin(),
-                        gamblersGameResult.countDealerLose(),
-                        gamblersGameResult.countDealerDraw()));
-        outputView.printGamblerResult(
-                gamblersGameResult.getResultInfo()
-        );
+        outputView.printDealerResult(new DealerResultDto(gamblersGameResult.getDealerResult()));
+        outputView.printGamblerResult(gamblersGameResult.getResultInfo());
     }
 }

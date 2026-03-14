@@ -8,6 +8,10 @@ public class Money {
         this.betAmount = validateBetAmount(betAmountInput);
     }
 
+    public Long getBetAmount() {
+        return this.betAmount;
+    }
+
     private Long validateBetAmount(String betAmountInput) {
         Long betAmount = validateNumericAmount(betAmountInput);
         validateBetAmountIsPositive(betAmount);

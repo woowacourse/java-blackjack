@@ -12,4 +12,8 @@ public class Gambler extends Participant{
         super(name, hand);
         this.betAmount = betAmount;
     }
+
+    public Long getAmount() {
+        return betAmount.getBetAmount();
+    }
 }

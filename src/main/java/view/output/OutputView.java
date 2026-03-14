@@ -14,5 +14,5 @@ public interface OutputView {
     void printParticipantInfo(ParticipantHandResponseDto responseDto);
     void printParticipantsGameInfo(ParticipantsGameInfoDto responseDto);
     void printDealerResult(DealerResultDto resultDto);
-    void printGamblerResult(Map<String, String> gamblersResult);
+    void printGamblerResult(Map<String, Long> gamblersResult);
 }

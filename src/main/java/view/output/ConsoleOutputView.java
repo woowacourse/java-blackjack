@@ -53,22 +53,13 @@ public class ConsoleOutputView implements OutputView{
     @Override
     public void printDealerResult(DealerResultDto resultDto) {
         System.out.println("## 최종 승패");
-        System.out.print("딜러: ");
-        if (resultDto.dealerWinCount() > 0) {
-            System.out.print(resultDto.dealerWinCount() + "승 ");
-        }
-        if (resultDto.dealerLoseCount() > 0) {
-            System.out.print(resultDto.dealerLoseCount() + "패 ");
-        }
-        if (resultDto.dealerDrawCount() > 0) {
-            System.out.print(resultDto.dealerLoseCount() + "무 ");
-        }
+        System.out.print("딜러: " + resultDto.amount());
         System.out.println();
     }
 
     @Override
-    public void printGamblerResult(Map<String, String> gamblersResult) {
-        for (Entry<String, String> result : gamblersResult.entrySet()) {
+    public void printGamblerResult(Map<String, Long> gamblersResult) {
+        for (Entry<String, Long> result : gamblersResult.entrySet()) {
             System.out.println(result.getKey() + ": " + result.getValue());
         }
     }
