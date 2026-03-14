@@ -87,7 +87,7 @@ class BetsTest {
 
         Map<Player, Integer> profits = bets.determinePlayerProfits(dealer);
 
-        assertThat(profits).containsEntry(player, 10000);
+        assertThat(profits).containsEntry(player, -10000);
     }
 
     @Test
@@ -105,7 +105,7 @@ class BetsTest {
 
         Map<Player, Integer> profits = bets.determinePlayerProfits(dealer);
 
-        assertThat(profits.get(player)).isEqualTo(10000);
+        assertThat(profits).containsEntry(player, 10000);
     }
 
     @Test
