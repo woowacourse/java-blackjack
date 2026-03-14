@@ -7,7 +7,6 @@ import domain.Dealer;
 import domain.Player;
 import domain.Players;
 import service.GameService;
-import util.InputParser;
 import view.InputView;
 import view.OutputView;
 
@@ -57,13 +56,11 @@ public class GameController {
     }
 
     private List<String> readUserNames() {
-        String input = inputView.readUserNames();
-        return InputParser.parseUserNames(input);
+        return inputView.readUserNames();
     }
 
     private Amount readUserAmounts(String name) {
-        String input = inputView.readBetAmount(name);
-        return new Amount(InputParser.parseAmount(input));
+        return new Amount(inputView.readBetAmount(name));
     }
 
     private void initDeal(Players players){
