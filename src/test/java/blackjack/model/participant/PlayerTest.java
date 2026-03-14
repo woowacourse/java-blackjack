@@ -3,42 +3,23 @@ package blackjack.model.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.model.card.Card;
-import blackjack.model.card.Hand;
 import blackjack.model.card.Rank;
 import blackjack.model.card.Suit;
-import blackjack.model.game.BlackjackResult;
-import java.util.List;
-import org.junit.jupiter.api.BeforeEach;
+import blackjack.model.state.BlackjackState;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class PlayerTest {
 
-    static final Name DEFAULT_NAME = new Name("name");
+    private static final Name DEFAULT_NAME = new Name("name");
+    private static final Bet DEFAULT_BET = new Bet(10000);
 
-    Hand lowerScoreHand;
-    Hand defaultHand;
-    Hand higherScoreHand;
-    Hand bustScoreHand;
-
-    @BeforeEach
-    void initHands() {
-        lowerScoreHand = new Hand();
-        lowerScoreHand.addCard(new Card(Rank.TWO, Suit.HEART));
-
-        defaultHand = new Hand();
-        defaultHand.addCard(new Card(Rank.THREE, Suit.HEART));
-
-        higherScoreHand = new Hand();
-        higherScoreHand.addCard(new Card(Rank.TEN, Suit.HEART));
-
-        bustScoreHand = new Hand();
-        bustScoreHand.addCards(List.of(
-                new Card(Rank.JACK, Suit.HEART),
-                new Card(Rank.QUEEN, Suit.HEART),
-                new Card(Rank.KING, Suit.HEART)
-        ));
-    }
+    private final BlackjackState loseState = BlackjackState.init()
+            .hit(new Card(Rank.TWO, Suit.HEART));
+    private final BlackjackState pushState = BlackjackState.init()
+            .hit(new Card(Rank.THREE, Suit.HEART));
+    private final BlackjackState winState = BlackjackState.init()
+            .hit(new Card(Rank.TEN, Suit.HEART));
 
     @Test
     void 본인의_이름을_반환한다() {
@@ -46,90 +27,57 @@ class PlayerTest {
         Name playerName = new Name("Player Name");
 
         // when
-        Player player = new Player(playerName);
+        Player player = new Player(playerName, DEFAULT_BET);
 
         // then
         assertThat(player.getName()).isEqualTo(playerName.get());
     }
 
     @Nested
-    class 딜러_손패와_비교하여_결과를_판정한다 {
+    class 결과를_통해_수익을_계산한다 {
         @Test
-        void 둘_다_버스트가_아니면서_본인의_점수가_더_높다면_승리한다() {
+        void 승리했다면_베팅금만큼_얻는다() {
             // given
-            Player player = new Player(DEFAULT_NAME, higherScoreHand);
-            Dealer dealer = new Dealer(lowerScoreHand);
+            Player player = new Player(DEFAULT_NAME, DEFAULT_BET, winState);
+            Dealer dealer = new Dealer(loseState);
+
+            double expectedProfit = DEFAULT_BET.amount();
 
             // when
-            BlackjackResult result = player.calculateResult(dealer.getHand());
+            double actualProfit = player.calculateProfit(dealer.getState());
 
             // then
-            assertThat(result).isEqualTo(BlackjackResult.WIN);
+            assertThat(actualProfit).isEqualTo(expectedProfit);
         }
 
         @Test
-        void 둘_다_버스트가_아니면서_본인의_점수가_더_낮다면_패배한다() {
+        void 패배했다면_베팅금만큼_잃는다() {
             // given
-            Player player = new Player(DEFAULT_NAME, lowerScoreHand);
-            Dealer dealer = new Dealer(higherScoreHand);
+            Player player = new Player(DEFAULT_NAME, DEFAULT_BET, loseState);
+            Dealer dealer = new Dealer(winState);
+
+            double expectedProfit = DEFAULT_BET.amount() * -1;
 
             // when
-            BlackjackResult result = player.calculateResult(dealer.getHand());
+            double actualProfit = player.calculateProfit(dealer.getState());
 
             // then
-            assertThat(result).isEqualTo(BlackjackResult.LOSE);
+            assertThat(actualProfit).isEqualTo(expectedProfit);
         }
 
         @Test
-        void 둘_다_버스트가_아니면서_점수가_같다면_무승부한다() {
+        void 푸시했다면_얻지도_잃지도_않는다() {
             // given
-            Player player = new Player(DEFAULT_NAME, defaultHand);
-            Dealer dealer = new Dealer(defaultHand);
+            Player player = new Player(DEFAULT_NAME, DEFAULT_BET, pushState);
+            Dealer dealer = new Dealer(pushState);
+
+            double expectedProfit = 0;
 
             // when
-            BlackjackResult result = player.calculateResult(dealer.getHand());
+            double actualProfit = player.calculateProfit(dealer.getState());
 
             // then
-            assertThat(result).isEqualTo(BlackjackResult.PUSH);
-        }
-
-        @Test
-        void 본인이_버스트라면_패배한다() {
-            // given
-            Player player = new Player(DEFAULT_NAME, bustScoreHand);
-            Dealer dealer = new Dealer(defaultHand);
-
-            // when
-            BlackjackResult result = player.calculateResult(dealer.getHand());
-
-            // then
-            assertThat(result).isEqualTo(BlackjackResult.LOSE);
-        }
-
-        @Test
-        void 딜러만_버스트라면_승리한다() {
-            // given
-            Player player = new Player(DEFAULT_NAME, defaultHand);
-            Dealer dealer = new Dealer(bustScoreHand);
-
-            // when
-            BlackjackResult result = player.calculateResult(dealer.getHand());
-
-            // then
-            assertThat(result).isEqualTo(BlackjackResult.WIN);
-        }
-
-        @Test
-        void 둘_다_버스트라면_패배한다() {
-            // given
-            Player player = new Player(DEFAULT_NAME, bustScoreHand);
-            Dealer dealer = new Dealer(bustScoreHand);
-
-            // when
-            BlackjackResult result = player.calculateResult(dealer.getHand());
-
-            // then
-            assertThat(result).isEqualTo(BlackjackResult.LOSE);
+            assertThat(actualProfit).isEqualTo(expectedProfit);
         }
     }
 }

@@ -1,12 +1,12 @@
 package blackjack.controller;
 
-import blackjack.model.game.HitAnswer;
-import blackjack.model.game.BlackjackResult;
 import blackjack.model.card.Card;
-import blackjack.model.participant.Dealer;
 import blackjack.model.card.Deck;
+import blackjack.model.participant.Bet;
+import blackjack.model.participant.Dealer;
+import blackjack.model.participant.Name;
+import blackjack.model.participant.UniqueNames;
 import blackjack.model.participant.Player;
-import blackjack.model.participant.Players;
 import blackjack.util.RetryUtil;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
@@ -16,6 +16,7 @@ import blackjack.view.dto.PlayerDto;
 import blackjack.view.dto.PlayerScoreDto;
 import blackjack.view.dto.ResultDto;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -33,7 +34,7 @@ public class BlackjackController {
     }
 
     public void run() {
-        Players players = retryOnIllegalArgument(this::readPlayers);
+        Collection<Player> players = retryOnIllegalArgument(this::readPlayers);
         Dealer dealer = new Dealer();
         Deck deck = Deck.unique();
 
@@ -43,21 +44,19 @@ public class BlackjackController {
         printResult(players, dealer);
     }
 
-    private <T> T retryOnIllegalArgument(Supplier<T> retryableAction) {
-        return RetryUtil.retryOnInvalidInput(retryableAction, outputView::printErrorMessage);
+    private List<Player> readPlayers() {
+        ArrayList<Player> players = new ArrayList<>();
+
+        UniqueNames playerUniqueNames = retryOnIllegalArgument(inputView::readPlayerNames);
+        for (Name playerName : playerUniqueNames.names()) {
+            Bet bet = retryOnIllegalArgument(() -> inputView.readBet(playerName));
+            players.add(new Player(playerName, bet));
+        }
+
+        return players;
     }
 
-    private void retryOnIllegalArgument(Runnable retryableAction) {
-        RetryUtil.retryOnInvalidInput(retryableAction, outputView::printErrorMessage);
-    }
-
-    private Players readPlayers() {
-        String rawPlayerNames = inputView.readPlayerNames();
-
-        return Players.from(rawPlayerNames);
-    }
-
-    private void initialDeal(Players players, Dealer dealer, Deck deck) {
+    private void initialDeal(Collection<Player> players, Dealer dealer, Deck deck) {
         deal(players, dealer, deck);
         deal(players, dealer, deck);
 
@@ -67,14 +66,14 @@ public class BlackjackController {
         );
     }
 
-    private void deal(Players players, Dealer dealer, Deck deck) {
+    private void deal(Collection<Player> players, Dealer dealer, Deck deck) {
         for (Player player : players) {
             player.addCard(deck.draw());
         }
         dealer.addCard(deck.draw());
     }
 
-    private void hit(Players players, Dealer dealer, Deck deck) {
+    private void hit(Collection<Player> players, Dealer dealer, Deck deck) {
         for (Player player : players) {
             retryOnIllegalArgument(() -> playerHit(player, deck));
         }
@@ -84,7 +83,7 @@ public class BlackjackController {
     }
 
     private void playerHit(Player player, Deck deck) {
-        while (!player.isBust() && inputView.askHit(player.getName()) == HitAnswer.HIT) {
+        while (player.isPlaying() && inputView.askHit(player.getName()).isHit()) {
             player.addCard(deck.draw());
             outputView.printPlayerCards(player.getName(), cardsToDtos(player.getCards()));
         }
@@ -97,7 +96,7 @@ public class BlackjackController {
         }
     }
 
-    private void printScore(Players players, Dealer dealer) {
+    private void printScore(Collection<Player> players, Dealer dealer) {
         DealerScoreDto dealerDto = DealerScoreDto.from(dealer);
         List<PlayerScoreDto> playerDtos = players.stream()
                 .map(PlayerScoreDto::from)
@@ -106,23 +105,31 @@ public class BlackjackController {
         outputView.printScore(dealerDto, playerDtos);
     }
 
-    private void printResult(Players players, Dealer dealer) {
+    private void printResult(Collection<Player> players, Dealer dealer) {
         List<ResultDto> resultDtos = new ArrayList<>();
         for (Player player : players) {
-            BlackjackResult result = player.calculateResult(dealer.getHand());
-            resultDtos.add(new ResultDto(player.getName(), result));
+            double profit = player.calculateProfit(dealer.getState());
+            resultDtos.add(new ResultDto(player.getName(), profit));
         }
 
         outputView.printResult(resultDtos);
     }
 
-    private List<CardDto> cardsToDtos(List<Card> cards) {
+    private <T> T retryOnIllegalArgument(Supplier<T> retryableAction) {
+        return RetryUtil.retryOnInvalidInput(retryableAction, outputView::printErrorMessage);
+    }
+
+    private void retryOnIllegalArgument(Runnable retryableAction) {
+        RetryUtil.retryOnInvalidInput(retryableAction, outputView::printErrorMessage);
+    }
+
+    private List<CardDto> cardsToDtos(Collection<Card> cards) {
         return cards.stream()
                 .map(CardDto::from)
                 .toList();
     }
 
-    private List<PlayerDto> playersToDots(Players players) {
+    private List<PlayerDto> playersToDots(Collection<Player> players) {
         return players.stream()
                 .map(PlayerDto::from)
                 .toList();

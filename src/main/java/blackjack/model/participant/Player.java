@@ -1,43 +1,32 @@
 package blackjack.model.participant;
 
 import blackjack.model.game.BlackjackResult;
-import blackjack.model.card.Hand;
+import blackjack.model.state.BlackjackState;
 
 public class Player extends Participant {
 
     private final Name name;
+    private final Bet bet;
 
-    public Player(Name name) {
+    public Player(Name name, Bet bet) {
         super();
         this.name = name;
+        this.bet = bet;
     }
 
-    public Player(Name name, Hand hand) {
-        super(hand);
+    public Player(Name name, Bet bet, BlackjackState state) {
+        super(state);
         this.name = name;
+        this.bet = bet;
     }
 
     public String getName() {
         return name.get();
     }
 
-    public BlackjackResult calculateResult(Hand dealerHand) {
-        if (hand.isBust()) {
-            return BlackjackResult.LOSE;
-        }
-        if (dealerHand.isBust()) {
-            return BlackjackResult.WIN;
-        }
+    public double calculateProfit(BlackjackState dealerState) {
+        BlackjackResult result = BlackjackResult.judge(this.state, dealerState);
 
-        int playerScore = hand.calculateScore();
-        int dealerScore = dealerHand.calculateScore();
-        if (playerScore > dealerScore) {
-            return BlackjackResult.WIN;
-        }
-        if (playerScore == dealerScore) {
-            return BlackjackResult.PUSH;
-        }
-
-        return BlackjackResult.LOSE;
+        return result.calculateProfit(bet, state.getEarningRate());
     }
 }
