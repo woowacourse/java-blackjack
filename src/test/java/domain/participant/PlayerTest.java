@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import domain.BetMoney;
 import domain.Rank;
+import domain.Score;
 import domain.Suit;
 import domain.card.Card;
 import java.util.List;
@@ -37,6 +38,11 @@ public class PlayerTest {
         PLAYER_BUST.addCards(scoreBustCards);
         PLAYER_21.addCards(score21Cards);
         PLAYER_20.addCards(score20Cards);
+    }
+
+    @Test
+    void 합계는_정확해야_한다() {
+        Assertions.assertThat(PLAYER_20.getTotalSum()).isEqualTo(new Score(20));
     }
 
     @Test
