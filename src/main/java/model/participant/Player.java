@@ -14,10 +14,6 @@ public class Player extends Participant {
         this.bettingAmount = bettingAmount;
     }
 
-    public static Player from(String input) {
-        return new Player(input, BettingAmount.from(1000));
-    }
-
     public static Player of(String name, int bettingAmount) {
         validateName(name);
         BettingAmount amount = BettingAmount.from(bettingAmount);

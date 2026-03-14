@@ -23,7 +23,7 @@ class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        player = Player.from("pobi");
+        player = Player.of("pobi", 1000);
     }
 
     @DisplayName("플레이어가 '딜러'라는 이름을 사용하면 예외를 발생한다")
@@ -56,7 +56,7 @@ class PlayerTest {
     class 승패_판정 {
         @Test
         void 플레이어와의_승패_판정_대상이_딜러가_아니면_예외를_발생한다() {
-            Participant otherPlayer = Player.from("jason");
+            Participant otherPlayer = Player.of("jason", 1000);
             assertThatThrownBy(() -> player.beats(otherPlayer))
                     .isInstanceOf(UnmatchableParticipantsException.class);
         }
@@ -64,7 +64,7 @@ class PlayerTest {
         @ParameterizedTest
         @MethodSource("provideDealerCases")
         void 플레이어가_버스트이면_딜러의_패와_관계없이_패배한다(Dealer dealer) {
-            Participant playerWithBust = Player.from("playerWithBust");
+            Participant playerWithBust = Player.of("playerWithBust", 1000);
             playerWithBust.receive(Card.of(Suit.SPADE, Rank.JACK));
             playerWithBust.receive(Card.of(Suit.SPADE, Rank.QUEEN));
             playerWithBust.receive(Card.of(Suit.SPADE, Rank.KING));
@@ -75,7 +75,7 @@ class PlayerTest {
         @ParameterizedTest
         @MethodSource("provideDealerCases")
         void 플레이어가_블랙잭이면_딜러의_패와_관계없이_승리한다(Dealer dealer) {
-            Participant playerWithBlackjack = Player.from("playerWithBlackjack");
+            Participant playerWithBlackjack = Player.of("playerWithBlackjack", 1000);
             playerWithBlackjack.receive(Card.of(Suit.SPADE, Rank.ACE));
             playerWithBlackjack.receive(Card.of(Suit.SPADE, Rank.JACK));
 
@@ -141,7 +141,7 @@ class PlayerTest {
         }
 
         private static Player createPlayerWithBlackjack() {
-            Player player = Player.from("player");
+            Player player = Player.of("player", 1000);
             player.receive(Card.of(Suit.SPADE, Rank.ACE));
             player.receive(Card.of(Suit.SPADE, Rank.JACK));
 
@@ -149,7 +149,7 @@ class PlayerTest {
         }
 
         private static Player createPlayerWithBust() {
-            Player player = Player.from("player");
+            Player player = Player.of("player", 1000);
             player.receive(Card.of(Suit.SPADE, Rank.KING));
             player.receive(Card.of(Suit.SPADE, Rank.QUEEN));
             player.receive(Card.of(Suit.SPADE, Rank.JACK));
@@ -158,7 +158,7 @@ class PlayerTest {
         }
 
         private static Player createPlayerWithScore21() {
-            Player player = Player.from("player");
+            Player player = Player.of("player", 1000);
             player.receive(Card.of(Suit.SPADE, Rank.ACE));
             player.receive(Card.of(Suit.SPADE, Rank.JACK));
             player.receive(Card.of(Suit.SPADE, Rank.QUEEN));
@@ -167,7 +167,7 @@ class PlayerTest {
         }
 
         private static Player createPlayerWithScore20() {
-            Player player = Player.from("player");
+            Player player = Player.of("player", 1000);
             player.receive(Card.of(Suit.SPADE, Rank.JACK));
             player.receive(Card.of(Suit.SPADE, Rank.QUEEN));
 
@@ -175,7 +175,7 @@ class PlayerTest {
         }
 
         private static Player createPlayerWithScore19() {
-            Player player = Player.from("player");
+            Player player = Player.of("player", 1000);
             player.receive(Card.of(Suit.SPADE, Rank.JACK));
             player.receive(Card.of(Suit.SPADE, Rank.NINE));
 
