@@ -21,7 +21,7 @@ public class Hand {
         return calculateTotalScore() > BLACKJACK_MAX_SCORE;
     }
 
-    private void validateCardsSize(List<Card> cards) { //테스트 작성
+    private void validateCardsSize(List<Card> cards) {
         if (cards.size() != MIN_SIZE) {
             throw new IllegalArgumentException(ErrorMessage.HANDS_CARDS_SIZE.getMessage());
         }
