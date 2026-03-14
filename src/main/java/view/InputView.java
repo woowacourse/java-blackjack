@@ -13,7 +13,11 @@ public class InputView {
 
     public List<String> readParticipants() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
-        return NameParser.parse(scanner.nextLine());
+        List<String> names = NameParser.parse(scanner.nextLine());
+        if (names.isEmpty()) {
+            throw new IllegalArgumentException("유효한 이름이 입력되지 않았습니다.");
+        }
+        return names;
     }
 
     public int readPlayerBettingAmount(String name) {

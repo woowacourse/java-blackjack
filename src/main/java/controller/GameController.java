@@ -32,8 +32,14 @@ public class GameController {
     }
 
     public void start() {
-        List<String> names = inputView.readParticipants();
-        BlackjackGame blackjackGame = BlackjackGame.start(getPlayerInfos(names, getBettingAmounts(names)));
+        BlackjackGame blackjackGame = initGame();
+        playGame(blackjackGame);
+        printGameResult(blackjackGame);
+    }
+
+    private BlackjackGame initGame() {
+        List<Name> names = inputPlayerNames();
+        BlackjackGame blackjackGame = BlackjackGame.start(getPlayerInfos(names));
         Dealer dealer = blackjackGame.getDealer();
         Players players = blackjackGame.getPlayers();
 
@@ -41,24 +47,47 @@ public class GameController {
         outputView.printHandOutMessage(playersDto);
         outputView.printCardStatus(playersDto, ResultDto.from(dealer));
 
-        addPlayersCard(blackjackGame, players);
+        return blackjackGame;
+    }
+
+    private void playGame(BlackjackGame blackjackGame) {
+        addPlayersCard(blackjackGame, blackjackGame.getPlayers());
         addDealerCards(blackjackGame);
+    }
+
+    private void printGameResult(BlackjackGame blackjackGame) {
+        Dealer dealer = blackjackGame.getDealer();
+        Players players = blackjackGame.getPlayers();
         printCardResults(ResultDto.from(dealer), PlayersDto.from(players));
         printProfit(players, dealer);
     }
 
-    private List<Integer> getBettingAmounts(List<String> names) {
-        return names.stream()
-                .map(inputView::readPlayerBettingAmount)
-                .toList();
+    private List<Name> inputPlayerNames() {
+        try {
+            List<String> inputNames = inputView.readParticipants();
+            return inputNames.stream()
+                    .map(Name::from)
+                    .toList();
+        } catch (IllegalArgumentException e) {
+            outputView.printErrorMessage(e.getMessage());
+            return inputPlayerNames();
+        }
     }
 
-    private List<PlayerInfo> getPlayerInfos(List<String> names, List<Integer> amounts) {
+    private Betting inputBettingAmount(Name name) {
+        try {
+            int amount = inputView.readPlayerBettingAmount(name.getName());
+            return new Betting(amount);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return inputBettingAmount(name);
+        }
+    }
+
+    private List<PlayerInfo> getPlayerInfos(List<Name> names) {
         List<PlayerInfo> playerInfos = new ArrayList<>();
-        for (int i = 0; i < names.size(); i++) {
-            Name name = Name.from(names.get(i));
-            Betting amount = new Betting(amounts.get(i));
-            playerInfos.add(new PlayerInfo(name, amount));
+        for (Name name : names) {
+            playerInfos.add(new PlayerInfo(name, inputBettingAmount(name)));
         }
         return playerInfos;
     }
@@ -70,9 +99,17 @@ public class GameController {
     }
 
     private void addPlayerCards(BlackjackGame blackjackGame, Player player) {
-        while (!player.isBust() && inputView.checkAddCard(player.getName().getName())) {
+        while (!player.isBust() && inputAddCard(player)) {
             blackjackGame.addPlayerCard(player);
             outputView.printPlayerCardStatus(PlayerDto.from(player));
+        }
+    }
+
+    private boolean inputAddCard(Player player) {
+        try {
+            return inputView.checkAddCard(player.getName().getName());
+        } catch (IllegalArgumentException e) {
+            return inputAddCard(player);
         }
     }
 

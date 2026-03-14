@@ -34,11 +34,11 @@ public class OutputViewFormatter {
         return String.format("%n%s카드: %s - 결과: %d", name, getCardStatusFormat(resultDto.cards()), resultDto.score());
     }
 
-    public String formatTotalResult(FinalResultDto finalResultDto) {
-        return String.format("%s: %s%n", finalResultDto.name(), finalResultDto.result());
-    }
-
     public String formatProfit(ProfitDto profitDto) {
         return String.format("%s: %d%n", profitDto.name(), profitDto.profit());
+    }
+
+    public String formatErrorMessage(String message) {
+        return String.format("[ERROR]: %s%n", message);
     }
 }

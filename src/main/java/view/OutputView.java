@@ -63,4 +63,8 @@ public class OutputView {
     public void printProfit(ProfitDto profitDto) {
         System.out.print(outputViewFormatter.formatProfit(profitDto));
     }
+
+    public void printErrorMessage(String message) {
+        System.out.print(outputViewFormatter.formatErrorMessage(message));
+    }
 }
