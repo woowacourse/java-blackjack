@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
 import blackjack.domain.vo.MatchResult;
 import org.junit.jupiter.api.Test;
 
