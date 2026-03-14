@@ -15,8 +15,6 @@ public class Players {
     }
 
     public void forEach(Consumer<Player> action) {
-        //TODO: Player 객체 리스트의 forEach를 위임.
-        //TODO: Consumer-값을 받아서 소비만하고 아무것도 반환하지 않는 함수. action은 각각의 player에 대해 수행할 행위 그 자체.
         players.forEach(action);
     }
 

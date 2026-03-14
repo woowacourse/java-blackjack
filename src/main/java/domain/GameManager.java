@@ -1,12 +1,7 @@
 package domain;
 
-import dto.ParticipantCardsDto;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class GameManager {
 
@@ -40,8 +35,6 @@ public class GameManager {
     }
 
     private void distributeCardToPlayers(Players players) {
-        // ToDo: getPlayers를 쓰면 캡슐화가 약해진다. 바깥에서 내부구현 List<Player>에 의존하게 된다.
-        // TODO: 그래서 Iterable이나 forEach 순회 메서드를 만드는 게 낫다.
         players.forEach(this::distributeInitialCards);
     }
 
