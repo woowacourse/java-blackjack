@@ -44,7 +44,9 @@ public class BlackJackController {
     }
 
     public void getAdditionalCard(Player player) {
-        if (player.isBurst()) return;
+        if (player.isBurst()) {
+            return;
+        }
 
         String isTrue = readYesOrNo(player);
         if (isTrue.equals("y")) {
@@ -68,7 +70,7 @@ public class BlackJackController {
         try {
             InputValidator.validatePlayerNames(inputPlayerNames);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            outputView.outputErrorMessage(e.getMessage());
             inputPlayers();
         }
         return inputPlayerNames;
@@ -80,7 +82,7 @@ public class BlackJackController {
         try {
             money = Parser.toInt(inputMoney);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            outputView.outputErrorMessage(e.getMessage());
             getBetMoney(player);
         }
         player.bet(money);
@@ -91,7 +93,7 @@ public class BlackJackController {
         try {
             InputValidator.validateAdditionalCard(isTrue);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            outputView.outputErrorMessage(e.getMessage());
             readYesOrNo(player);
         }
 
