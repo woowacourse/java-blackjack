@@ -50,7 +50,7 @@ class HandTest {
     }
 
     @Nested
-    class CalculateScoreTest {
+    class CalculateTotalScoreTest {
 
         @Nested
         class Success {
@@ -105,41 +105,81 @@ class HandTest {
     }
 
     @Nested
-    class GetCardTest {
+    class IsBustTest {
 
         @Nested
         class Success {
 
             @Test
-            void 손패가_비어있다면_빈_목록을_반환해야_한다() {
+            void 최종_점수가_21_초과이면_버스트이다() {
 
                 // given
                 Hand hand = new Hand();
+                hand.addCard(new Card(Rank.THREE, Suit.HEART));
+                hand.addCard(new Card(Rank.K, Suit.SPADE));
+                hand.addCard(new Card(Rank.NINE, Suit.DIAMOND));
 
                 // when
-                var actual = hand.getCard();
+                boolean actual = hand.isBust();
 
                 // then
-                assertThat(actual).isEmpty();
+                assertThat(actual).isTrue();
             }
 
             @Test
-            void 손패의_카드들을_이름_목록으로_반환해야_한다() {
+            void 최종_점수가_21_이하이면_버스트가_아니다() {
 
                 // given
                 Hand hand = new Hand();
-                Card firstCard = new Card(Rank.FIVE, Suit.HEART);
-                Card secondCard = new Card(Rank.J, Suit.DIAMOND);
-                hand.addCard(firstCard);
-                hand.addCard(secondCard);
+                hand.addCard(new Card(Rank.TWO, Suit.HEART));
+                hand.addCard(new Card(Rank.K, Suit.SPADE));
+                hand.addCard(new Card(Rank.NINE, Suit.DIAMOND));
 
                 // when
-                var actual = hand.getCard();
+                boolean actual = hand.isBust();
 
                 // then
-                assertThat(actual)
-                    .hasSize(2)
-                    .containsExactly(firstCard, secondCard);
+                assertThat(actual).isFalse();
+            }
+        }
+    }
+
+    @Nested
+    class IsBlackjackTest {
+
+        @Nested
+        class Success {
+
+            @Test
+            void 처음_받은_2장_카드의_최종_점수가_21이면_블랙잭이다() {
+
+                // given
+                Hand hand = new Hand();
+                hand.addCard(new Card(Rank.ACE, Suit.HEART));
+                hand.addCard(new Card(Rank.K, Suit.SPADE));
+
+                // when
+                boolean actual = hand.isBlackjack();
+
+                // then
+                assertThat(actual).isTrue();
+            }
+
+            @Test
+            void 세장_이상을_받아서_최종_점수가_21이면_블랙잭이_아니다() {
+
+                // given
+                Hand hand = new Hand();
+                hand.addCard(new Card(Rank.TEN, Suit.HEART));
+                hand.addCard(new Card(Rank.K, Suit.SPADE));
+                hand.addCard(new Card(Rank.ACE, Suit.SPADE));
+                hand.addCard(new Card(Rank.ACE, Suit.SPADE));
+
+                // when
+                boolean actual = hand.isBlackjack();
+
+                // then
+                assertThat(actual).isFalse();
             }
         }
     }
