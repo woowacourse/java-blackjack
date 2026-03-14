@@ -28,6 +28,8 @@ public class Constants {
 
     public static final int REVERSE_SIGN = -1;
 
+    public static final int MINIMUM_BETTING_AMOUNT = 10;
+
     private Constants() {
     }
 }

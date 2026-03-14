@@ -1,12 +1,13 @@
 package domain.betting;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Betting {
-    private final Map<String, BettingAmount> values = new HashMap<>();
+    private final Map<String, BettingAmount> values = new LinkedHashMap<>();
 
     public Betting(List<String> names) {
         validateDuplicateNames(names);
@@ -21,6 +22,10 @@ public class Betting {
 
     public BettingAmount getBettingAmountByName(String name) {
         return values.get(name);
+    }
+
+    public Map<String, BettingAmount> getBettingAmounts() {
+        return values;
     }
 
     public void validateDuplicateNames(List<String> names) {

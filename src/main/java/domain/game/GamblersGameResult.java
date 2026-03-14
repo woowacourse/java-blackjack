@@ -15,7 +15,7 @@ public class GamblersGameResult {
     private Map<String, Profit> participantProfits;
 
     public GamblersGameResult(Participant dealer, Gamblers gamblers) {
-        this.participantProfits = new HashMap<>();
+        this.participantProfits = new LinkedHashMap<>();
         calculateProfits(dealer, gamblers);
     }
 
@@ -31,6 +31,9 @@ public class GamblersGameResult {
         return participantProfits.get(name);
     }
 
+    public Map<String, Profit> getParticipantProfits() {
+        return participantProfits;
+    }
 
     public Profit getDealerProfit() {
         int totalProfit = participantProfits.values().stream()

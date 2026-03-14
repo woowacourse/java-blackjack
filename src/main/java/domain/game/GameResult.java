@@ -18,6 +18,13 @@ public enum GameResult {
     }
 
     public static GameResult determine(Participant dealer, Participant gambler) {
+        if(gambler.isBust()) {
+            return LOSE;
+        }
+
+        if(dealer.isBust()) {
+            return WIN;
+        }
         if (dealer.isBlackJack() && gambler.isBlackJack()) {
             return DRAW;
         }

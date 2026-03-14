@@ -32,12 +32,10 @@ public class Hand {
     public int calculateScore() {
         int sum = calculateBaseScore();
         int aceCount = countAce();
-
         while (sum > BLACK_JACK_SCORE && aceCount > 0) {
             sum -= (ACE_HIGH_SCORE - ACE_LOW_SCORE);
             aceCount--;
         }
-
         return sum;
     }
 
@@ -53,11 +51,9 @@ public class Hand {
 
     private int calculateBaseScore() {
         int sum = 0;
-
         for (Card card : cards) {
             sum += getCardScore(card);
         }
-
         return sum;
     }
 
@@ -67,11 +63,9 @@ public class Hand {
 
     private int countAce() {
         int aceCount = 0;
-
         for (Card card : cards) {
             aceCount += getAceToInt(card);
         }
-
         return aceCount;
     }
 
