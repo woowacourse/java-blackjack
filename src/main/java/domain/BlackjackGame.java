@@ -1,7 +1,7 @@
 package domain;
 
 import domain.card.Deck;
-import domain.dto.TotalResult;
+import domain.dto.PlayerResult;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
@@ -51,8 +51,14 @@ public class BlackjackGame {
         printDecisionOutput.accept(false);
     }
 
-    public TotalResult getResult() {
-        return players.getResults(dealer);
+    public List<PlayerResult> collectPlayerProfits() {
+        return players.collectResults(dealer);
+    }
+
+    public BetMoney calculateDealerResult(List<PlayerResult> playerResults) {
+        return playerResults.stream()
+                .map(PlayerResult::betMoney)
+                .reduce(BetMoney.ZERO, BetMoney::sub);
     }
 
     public Players getPlayers() {

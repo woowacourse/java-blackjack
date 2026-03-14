@@ -7,6 +7,12 @@ import org.junit.jupiter.api.Test;
 
 public class PlayersTest {
     @Test
+    void 생성자에_null이_입력된_경우_예외가_발생해야_한다() {
+        Assertions.assertThatThrownBy(() -> Players.from(null))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
     void 중복된_플레이어_이름은_등록할_수_없다() {
         // given
         List<Player> duplicatedNames = List.of(Player.of("jeje", "1000"), Player.of("mingu", "1000"),

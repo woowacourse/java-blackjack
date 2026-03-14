@@ -1,11 +1,11 @@
 package view;
 
 
+import domain.BetMoney;
 import domain.BlackjackGame;
 import domain.Score;
 import domain.card.Card;
-import domain.dto.RoundResult;
-import domain.dto.TotalResult;
+import domain.dto.PlayerResult;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Player;
@@ -64,12 +64,13 @@ public class ResultView {
         System.out.println("딜러는 " + (Score.DEALER_HIT_STAND_BOUNDARY.add(Score.ONE).value()) + "이상이라 카드를 받지 않았습니다.");
     }
 
-    public void printResult(TotalResult results) {
+
+    public void printProfits(List<PlayerResult> playerResults, BetMoney dealerProfit) {
         printEmptyLine();
         System.out.println("## 최종 승패");
-        System.out.println("딜러: " + results.dealerProfit().getValue().setScale(0));
+        System.out.println("딜러: " + dealerProfit.getValue().setScale(0));
 
-        for (RoundResult result : results.results()) {
+        for (PlayerResult result : playerResults) {
             System.out.println(result.player().getName().getValue() + ": " + result.betMoney().getValue().setScale(0));
         }
     }

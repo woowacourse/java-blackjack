@@ -27,7 +27,7 @@ public class Player extends Participant {
         return new Player(player.name, player.betMoney, player.getCards());
     }
 
-    public BetMoney getResult(Participant target) {
+    public BetMoney judgeResult(Participant target) {
         if (isBlackjack() && target.isBlackjack()) {
             return betMoney.draw();
         }

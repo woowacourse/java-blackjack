@@ -3,8 +3,7 @@ package domain.participant;
 import domain.BetMoney;
 import domain.CommonExceptionMessage;
 import domain.card.Deck;
-import domain.dto.RoundResult;
-import domain.dto.TotalResult;
+import domain.dto.PlayerResult;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -14,7 +13,7 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(List<Player> players) {
+    private Players(List<Player> players) {
         this.players = players;
     }
 
@@ -56,15 +55,13 @@ public class Players {
         }
     }
 
-    public TotalResult getResults(Dealer dealer) {
-        List<RoundResult> roundResults = new ArrayList<>();
-        BetMoney dealerProfit = BetMoney.ZERO;
+    public List<PlayerResult> collectResults(Dealer dealer) {
+        List<PlayerResult> playerResults = new ArrayList<>();
         for (Player player : players) {
-            BetMoney result = player.getResult(dealer);
-            dealerProfit = dealerProfit.sub(result);
-            roundResults.add(new RoundResult(player, result));
+            BetMoney result = player.judgeResult(dealer);
+            playerResults.add(new PlayerResult(player, result));
         }
-        return new TotalResult(roundResults, dealerProfit);
+        return playerResults;
     }
 
     public List<Player> getPlayers() {

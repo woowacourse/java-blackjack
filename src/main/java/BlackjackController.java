@@ -1,4 +1,6 @@
+import domain.BetMoney;
 import domain.BlackjackGame;
+import domain.dto.PlayerResult;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
@@ -29,7 +31,11 @@ public class BlackjackController {
 
         resultView.printCardsWithResult(players.getPlayers(), dealer);
 
-        resultView.printResult(blackjackGame.getResult());
+        List<PlayerResult> playerResults = blackjackGame.collectPlayerProfits();
+        BetMoney dealerProfit = blackjackGame.calculateDealerResult(playerResults);
+
+        resultView.printProfits(playerResults, dealerProfit);
+
     }
 
     private BlackjackGame readPlayerInfos() {
