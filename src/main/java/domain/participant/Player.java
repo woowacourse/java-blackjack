@@ -10,15 +10,15 @@ public class Player extends Participant {
         this.playerName = new PlayerName(name);
     }
 
-    public String getName() {
-        return playerName.name();
-    }
-
     public void setBetAmount(BetAmount betAmount) {
         this.betAmount = betAmount;
     }
 
     public int getBetAmount() {
         return betAmount.getBetAmount();
+    }
+
+    public String getName() {
+        return playerName.name();
     }
 }
