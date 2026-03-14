@@ -89,8 +89,8 @@ public class Members {
         }
     }
 
-    public boolean isPlayerFinished(String name) {
-        return findByPlayerName(name).isFinished();
+    public boolean isPlayerBust(String name) {
+        return findByPlayerName(name).isBust();
     }
 
     public void changePlayerStateToStay(String playerName) {

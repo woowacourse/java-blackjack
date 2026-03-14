@@ -30,7 +30,7 @@ public class GameTable {
     }
 
     public boolean isPlayerBust(String memberName) {
-        return members.isPlayerFinished(memberName);
+        return members.isPlayerBust(memberName);
     }
 
     public void changePlayerState(String playerName) {

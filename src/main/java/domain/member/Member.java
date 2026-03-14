@@ -2,6 +2,7 @@ package domain.member;
 
 import domain.MatchResult;
 import domain.card.Card;
+import domain.state.Bust;
 import domain.state.State;
 
 import java.util.List;
@@ -36,5 +37,9 @@ public abstract class Member {
 
     public void receiveCard(Card card) {
         state = state.draw(card);
+    }
+
+    public boolean isBust() {
+        return state instanceof Bust;
     }
 }
