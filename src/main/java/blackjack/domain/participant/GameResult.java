@@ -18,6 +18,10 @@ public enum GameResult {
         this.payoutCoefficient = payoutCoefficient;
     }
 
+    public double getPayoutCoefficient() {
+        return payoutCoefficient;
+    }
+
     public static GameResult calculate(final Player player, final Dealer dealer) {
         return Arrays.stream(values())
                 .filter(gameResult -> gameResult.conditionChecker.test(player, dealer))
