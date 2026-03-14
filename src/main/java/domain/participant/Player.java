@@ -28,23 +28,32 @@ public class Player extends Participant {
     }
 
     public BetMoney judgeResult(Participant target) {
+        if (isBlackjack() || target.isBlackjack()) {
+            return judgeBlackjack(target);
+        }
+        if (isBust() || target.isBust()) {
+            return judgeBust();
+        }
+        return judgeByScore(target);
+    }
+
+    private BetMoney judgeBlackjack(Participant target) {
         if (isBlackjack() && target.isBlackjack()) {
             return betMoney.draw();
         }
         if (isBlackjack()) {
             return betMoney.blackjack();
         }
-        if (target.isBlackjack()) {
-            return betMoney.lose();
-        }
+        return betMoney.lose();
+    }
+
+    private BetMoney judgeBust() {
         if (isBust()) {
             return betMoney.lose();
         }
-        if (target.isBust()) {
-            return betMoney.win();
-        }
-        return judgeByScore(target);
+        return betMoney.win();
     }
+
 
     private BetMoney judgeByScore(Participant target) {
         Score score = getTotalSum();
