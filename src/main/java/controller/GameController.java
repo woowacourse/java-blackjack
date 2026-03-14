@@ -42,7 +42,7 @@ public class GameController {
                 String rawPlayerNames = inputView.readPlayerNames();
                 return Players.fromString(rawPlayerNames);
             } catch (IllegalArgumentException exception) {
-                outputView.printErrorMessage(exception.getMessage());
+                outputView.printInputErrorMessage(exception.getMessage());
             }
         }
     }
@@ -53,7 +53,7 @@ public class GameController {
                 String rawHitOption = inputView.readHitOption(player.getName());
                 return HitOption.of(rawHitOption);
             } catch (IllegalArgumentException exception) {
-                outputView.printErrorMessage(exception.getMessage());
+                outputView.printInputErrorMessage(exception.getMessage());
             }
         }
     }
@@ -64,7 +64,7 @@ public class GameController {
                 String rawBattingMoney = inputView.readBatting(player.getName());
                 return InputBattingParser.parseBattingParser(rawBattingMoney);
             } catch (IllegalArgumentException exception) {
-                outputView.printErrorMessage(exception.getMessage());
+                outputView.printInputErrorMessage(exception.getMessage());
             }
         }
     }
