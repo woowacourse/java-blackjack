@@ -60,6 +60,6 @@ public class InputView {
         return Arrays.stream(s.split(","))
                 .map(String::trim)
                 .filter(c -> !c.isEmpty())
-                .collect(Collectors.toList());
+                .toList();
     }
 }
