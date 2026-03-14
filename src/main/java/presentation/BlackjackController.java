@@ -10,8 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 import presentation.ui.BlackjackView;
-import presentation.ui.InputView;
-import presentation.ui.OutputView;
 
 public class BlackjackController {
 
@@ -67,14 +65,10 @@ public class BlackjackController {
     }
 
     private void playAllRoundOfPlayer(String playerName) {
-        boolean isBust = false;
-        while (!isBust && blackjackView.inputView().playContinue(playerName)) {
+        while (!blackjackService.isFinishedByName(playerName) && blackjackView.inputView().playContinue(playerName)) {
             RoundResult roundResult = blackjackService.startOneRound(playerName);
             blackjackView.outputView().printCurrentCard(playerName, roundResult);
-            isBust = roundResult.isBust();
         }
-        if (!isBust) {
-            blackjackService.endPlayerRound(playerName);
-        }
+        blackjackService.endPlayerRound(playerName);
     }
 }

@@ -29,6 +29,10 @@ public class BlackjackService {
         gameTable.distributeInitCard();
     }
 
+    public boolean isFinishedByName(String playerName) {
+        return gameTable.isPlayerFinished(playerName);
+    }
+
     public RoundResult startOneRound(String memberName) {
         List<Card> playerCards = getGameTable().drawForMember(memberName);
 

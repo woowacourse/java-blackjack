@@ -21,6 +21,6 @@ public abstract class Finished extends Started {
 
     @Override
     public State stay() {
-        throw new IllegalArgumentException("이미 종료된 상태입니다.");
+        return this;
     }
 }

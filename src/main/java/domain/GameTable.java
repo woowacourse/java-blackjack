@@ -23,23 +23,27 @@ public class GameTable {
     public void distributeInitCard() {
         members.provideCardToDealer(deck.draw());
         members.provideCardToDealer(deck.draw());
-        for (String memberName : members.getAllPlayerName()) {
-            members.provideCardToPlayer(memberName, deck.draw());
-            members.provideCardToPlayer(memberName, deck.draw());
+        for (String playerName : members.getAllPlayerName()) {
+            members.provideCardToPlayer(playerName, deck.draw());
+            members.provideCardToPlayer(playerName, deck.draw());
         }
     }
 
-    public boolean isPlayerBust(String memberName) {
-        return members.isPlayerBust(memberName);
+    public boolean isPlayerBust(String playerName) {
+        return members.isPlayerBust(playerName);
+    }
+
+    public boolean isPlayerFinished(String playerName) {
+        return members.isPlayerFinishedByName(playerName);
     }
 
     public void changePlayerState(String playerName) {
         members.changePlayerStateToStay(playerName);
     }
 
-    public List<Card> drawForMember(String memberName) {
-        members.provideCardToPlayer(memberName, deck.draw());
-        return members.findCardByName(memberName);
+    public List<Card> drawForMember(String playerName) {
+        members.provideCardToPlayer(playerName, deck.draw());
+        return members.findCardByName(playerName);
     }
 
     public boolean drawForDealer() {
