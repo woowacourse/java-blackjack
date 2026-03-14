@@ -40,9 +40,11 @@ public class PlayersTest {
 
         players.addPlayer(player1);
 
-        assertThatThrownBy(() -> players.addPlayer(player2)).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage(
-                ErrorMessage.DUPLICATED_NAME.getMessage());
-        assertThatThrownBy(() -> players.addPlayer(player3)).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage(
-                ErrorMessage.DUPLICATED_NAME.getMessage());
+        assertThatThrownBy(() -> players.addPlayer(player2))
+                .isExactlyInstanceOf(IllegalArgumentException.class)
+                .hasMessage(ErrorMessage.DUPLICATED_NAME.getMessage());
+        assertThatThrownBy(() -> players.addPlayer(player3))
+                .isExactlyInstanceOf(IllegalArgumentException.class)
+                .hasMessage(ErrorMessage.DUPLICATED_NAME.getMessage());
     }
 }

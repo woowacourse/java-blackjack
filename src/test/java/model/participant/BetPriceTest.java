@@ -17,12 +17,15 @@ public class BetPriceTest {
     @Test
     public void 음수_및_제로_입력_예외() {
         assertAll(
-                () -> assertThatThrownBy(() -> new BetPrice(0)).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage(
-                        ErrorMessage.OUT_OF_RANGE_BET.getMessage()),
-                () -> assertThatThrownBy(() -> new BetPrice(-10000)).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage(
-                        ErrorMessage.OUT_OF_RANGE_BET.getMessage()),
-                () -> assertThatThrownBy(() -> new BetPrice(1200000000)).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage(
-                        ErrorMessage.OUT_OF_RANGE_BET.getMessage())
+                () -> assertThatThrownBy(() -> new BetPrice(0))
+                        .isExactlyInstanceOf(IllegalArgumentException.class)
+                        .hasMessage(ErrorMessage.OUT_OF_RANGE_BET.getMessage()),
+                () -> assertThatThrownBy(() -> new BetPrice(-10000))
+                        .isExactlyInstanceOf(IllegalArgumentException.class)
+                        .hasMessage(ErrorMessage.OUT_OF_RANGE_BET.getMessage()),
+                () -> assertThatThrownBy(() -> new BetPrice(1200000000))
+                        .isExactlyInstanceOf(IllegalArgumentException.class)
+                        .hasMessage(ErrorMessage.OUT_OF_RANGE_BET.getMessage())
         );
     }
 }

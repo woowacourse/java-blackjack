@@ -23,7 +23,8 @@ public class BlackJackDeckTest {
             blackJackDeck.draw();
         }
 
-        assertThatThrownBy(blackJackDeck::draw).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage(
-                ErrorMessage.NO_CARD_IN_DECK.getMessage());
+        assertThatThrownBy(blackJackDeck::draw)
+                .isExactlyInstanceOf(IllegalArgumentException.class)
+                .hasMessage(ErrorMessage.NO_CARD_IN_DECK.getMessage());
     }
 }

@@ -9,7 +9,6 @@ public class ScoreTest {
     @Test
     public void 점수_불러오기_정상_작동() {
         Score score = new Score();
-
         assertThat(score.getScore()).isEqualTo(0);
     }
 
