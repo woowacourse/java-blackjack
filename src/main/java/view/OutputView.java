@@ -88,7 +88,7 @@ public class OutputView {
 
     public void printWinTieLossResult(GameResultDto gameResultDto) {
         System.out.println();
-        System.out.println("## 최종 승패");
+        System.out.println("## 최종 수익");
 
         String dealerWinTieLossResult = consistDealerWinTieLossResult(gameResultDto.dealerWinTieLossResult());
         System.out.println(dealerWinTieLossResult);
@@ -99,24 +99,17 @@ public class OutputView {
         }
     }
 
-    private String consistDealerWinTieLossResult(Map<String, Integer> dealerWinTieLossResult) {
-        List<String> dealerResult = new ArrayList<>();
-        for (Entry<String, Integer> result : dealerWinTieLossResult.entrySet()) {
-            int count = result.getValue();
-            String winTieLoss = result.getKey();
-            String resultInFormat = String.format("%d%s", count, winTieLoss);
-            dealerResult.add(resultInFormat);
-        }
-        return String.format("딜러: %s", String.join(" ", dealerResult));
+    private String consistDealerWinTieLossResult(Long dealerWinTieLossResult) {
+        return String.format("딜러: %d", dealerWinTieLossResult);
     }
 
     private List<String> consistPlayerWinTieLossResults(GameResultDto gameResultDto) {
         List<String> playerResult = new ArrayList<>();
-        Map<String, String> playerWinLossResults = gameResultDto.playerWinTieLossResults();
-        for (Entry<String, String> result : playerWinLossResults.entrySet()) {
+        Map<String, Long> playerWinLossResults = gameResultDto.playerWinTieLossResults();
+        for (Entry<String, Long> result : playerWinLossResults.entrySet()) {
             String name = result.getKey();
-            String winTieLoss = result.getValue();
-            String resultInFormat = String.format("%s: %s", name, winTieLoss);
+            Long winTieLoss = result.getValue();
+            String resultInFormat = String.format("%s: %d", name, winTieLoss);
             playerResult.add(resultInFormat);
         }
         return playerResult;

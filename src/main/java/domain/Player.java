@@ -19,4 +19,8 @@ public class Player extends Participant {
     public boolean isDrawable() {
         return super.isLessThanMaxScore();
     }
+
+    public Long calculateBettingProfit(double returnRate) {
+        return (long) (betMoney.betAmount() * returnRate);
+    }
 }

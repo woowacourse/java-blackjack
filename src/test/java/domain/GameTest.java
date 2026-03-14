@@ -24,7 +24,7 @@ class GameTest {
         return Players.of(players);
     }
 
-    private void addCardsToPlayerDeck(Participant participant, Card... cards) {
+    private void addCardsToParticipantDeck(Participant participant, Card... cards) {
         for (Card card : cards) {
             participant.addCard(card);
         }
@@ -61,13 +61,13 @@ class GameTest {
     void shouldReturnTrueWhenParticipantsCanDrawCardUnderCondition() {
         // given
         Dealer dealer = game.getDealer();
-        addCardsToPlayerDeck(dealer,
+        addCardsToParticipantDeck(dealer,
                 new Card(CardShape.SPADE, CardContents.TWO),
                 new Card(CardShape.CLOVER, CardContents.THREE)
         );
 
         Player player = game.getPlayers().iterator().next();
-        addCardsToPlayerDeck(player,
+        addCardsToParticipantDeck(player,
                 new Card(CardShape.HEART, CardContents.TWO),
                 new Card(CardShape.HEART, CardContents.THREE)
         );

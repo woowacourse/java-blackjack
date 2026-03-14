@@ -1,22 +1,21 @@
 package domain;
 
-import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class GameResult {
-    private final Map<Player, Result> playerResults;
-    private final Map<Result, Integer> dealerResult;
+    private final Map<Player, Long> playerResults;
+    private final long dealerResult;
 
-    private GameResult(Map<Player, Result> playerResults, Map<Result, Integer> dealerResult) {
+    private GameResult(Map<Player, Long> playerResults, long dealerResult) {
         this.playerResults = playerResults;
         this.dealerResult = dealerResult;
     }
 
     public static GameResult calculate(Dealer dealer, Players players) {
         validateCalculatable(dealer);
-        Map<Player, Result> playerResults = calculatePlayerResults(dealer, players);
-        Map<Result, Integer> dealerResult = calculateDealerResult(playerResults);
+        Map<Player, Long> playerResults = calculatePlayerResults(dealer, players);
+        long dealerResult = calculateDealerResult(playerResults);
         return new GameResult(playerResults, dealerResult);
     }
 
@@ -26,40 +25,30 @@ public class GameResult {
         }
     }
 
-    private static Map<Player, Result> calculatePlayerResults(Dealer dealer, Players players) {
-        boolean isDealerBust = dealer.isBust();
-        int dealerScore = dealer.getCardsSum();
-        Map<Player, Result> playerWinTieLossResults = new LinkedHashMap<>();
+    private static Map<Player, Long> calculatePlayerResults(Dealer dealer, Players players) {
+        Map<Player, Long> playerWinTieLossResults = new LinkedHashMap<>();
         for (Player player : players) {
-            Result playerResult = calculatePlayerResult(isDealerBust, dealerScore, player);
-            playerWinTieLossResults.put(player, playerResult);
+            PlayerResult playerResult = PlayerResult.determinePlayerResult(dealer, player);
+            double rate = playerResult.getReturnRate();
+            long profit = player.calculateBettingProfit(rate);
+            playerWinTieLossResults.put(player, profit);
         }
         return playerWinTieLossResults;
     }
 
-    private static Result calculatePlayerResult(boolean isDealerBust, int dealerScore, Player player) {
-        return Result.determinePlayerResult(
-                isDealerBust,
-                player.isBust(),
-                dealerScore,
-                player.getCardsSum()
-        );
-    }
-
-    private static Map<Result, Integer> calculateDealerResult(Map<Player, Result> playerResults) {
-        Map<Result, Integer> dealerResult = new EnumMap<>(Result.class);
-        for (Result playerResult : playerResults.values()) {
-            Result reversed = playerResult.reverse();
-            dealerResult.put(reversed, dealerResult.getOrDefault(reversed, 0) + 1);
+    private static long calculateDealerResult(Map<Player, Long> playerResults) {
+        long playerBettingProfits = 0;
+        for (long playerResult : playerResults.values()) {
+            playerBettingProfits += playerResult;
         }
-        return dealerResult;
+        return playerBettingProfits * (-1);
     }
 
-    public Map<Player, Result> getPlayerResults() {
+    public Map<Player, Long> getPlayerResults() {
         return Map.copyOf(playerResults);
     }
 
-    public Map<Result, Integer> getDealerResult() {
-        return Map.copyOf(dealerResult);
+    public long getDealerResult() {
+        return dealerResult;
     }
 }
