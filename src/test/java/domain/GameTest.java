@@ -103,7 +103,7 @@ class GameTest {
         Game game = new Game(List.of("시오", "봉구스"), deck);
 
         // then
-        assertTrue(game.dealerShouldHit());
+        assertTrue(game.dealerCanHit());
     }
 
     @Test
@@ -123,7 +123,7 @@ class GameTest {
         Game game = new Game(List.of("시오", "봉구스"), deck);
 
         // then
-        assertFalse(game.dealerShouldHit());
+        assertFalse(game.dealerCanHit());
     }
 
     @Test

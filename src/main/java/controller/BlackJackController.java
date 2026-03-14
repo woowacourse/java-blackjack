@@ -60,7 +60,7 @@ public class BlackJackController {
     }
 
     private void playDealer(Game game) {
-        while (game.dealerShouldHit()) {
+        while (game.dealerCanHit()) {
             OutputView.printDealerHitMessage();
             game.hitDealer();
         }

@@ -52,7 +52,7 @@ public class Game {
         dealer.draw(deck.drawCard());
     }
 
-    public boolean dealerShouldHit() {
+    public boolean dealerCanHit() {
         return dealer.canHit();
     }
 
