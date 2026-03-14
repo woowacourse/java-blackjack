@@ -1,10 +1,9 @@
 package domain.participant;
 
 import domain.card.Deck;
+import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 public class PlayersTest {
     @Test
@@ -29,7 +28,7 @@ public class PlayersTest {
     void getter로_받은_Player는_수정할_수_없다() {
         //given
         Players players = Players.from(List.of("jeje", "mingu", "minseo"));
-        Deck deck = new Deck();
+        Deck deck = Deck.createWithAllCards();
         players.giveCardsToEachPlayers(deck, 2);
 
         Player player = players.getPlayers().get(0);

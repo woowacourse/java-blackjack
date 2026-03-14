@@ -21,7 +21,7 @@ public class BlackjackGame {
         validate(players);
         this.players = Players.from(players);
         this.dealer = Dealer.createReady();
-        this.deck = new Deck();
+        this.deck = Deck.createWithAllCards();
     }
 
     private void validate(List<String> players) {
