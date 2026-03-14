@@ -1,12 +1,12 @@
 package domain.vo;
 
+import domain.member.Member;
+
 public enum RoundResult {
 
     WIN(1),
     LOSE(-1),
     DRAW(0);
-
-    private static final int BUST_CONDITION = 21;
 
     private final double profitRate;
 
@@ -14,11 +14,11 @@ public enum RoundResult {
         this.profitRate = profitRate;
     }
 
-    public static RoundResult judgeAgainst(int dealerScore, int playerScore) {
-        if (playerScore > BUST_CONDITION) return RoundResult.LOSE;
-        if (dealerScore > BUST_CONDITION) return RoundResult.WIN;
-        if (playerScore > dealerScore) return RoundResult.WIN;
-        if (playerScore < dealerScore) return RoundResult.LOSE;
+    public static RoundResult judgeAgainst(Member dealer, Member player) {
+        if (player.hasBust()) return RoundResult.LOSE;
+        if (dealer.hasBust()) return RoundResult.WIN;
+        if (player.isBiggerThan(dealer)) return RoundResult.WIN;
+        if (dealer.isBiggerThan(player)) return RoundResult.LOSE;
         return RoundResult.DRAW;
     }
 
