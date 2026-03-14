@@ -27,12 +27,17 @@ public class Bet {
 
     public int calculateProfit(MatchResult result, boolean isBlackJack) {
         if (result == MatchResult.WIN) {
-            if (isBlackJack) return (int) (amount * WIN_WITH_BLACKJACK_PAYOUT_RATIO);
+            if (isBlackJack) {
+                return (int) (amount * WIN_WITH_BLACKJACK_PAYOUT_RATIO);
+            }
 
             return amount * WIN_PAYOUT_RATIO;
         }
 
-        if (result == MatchResult.DRAW) return amount * DRAW_PAYOUT_RATIO;
+        if (result == MatchResult.DRAW) {
+            return amount * DRAW_PAYOUT_RATIO;
+        }
+
         return amount * LOSE_PAYOUT_RATIO;
     }
 

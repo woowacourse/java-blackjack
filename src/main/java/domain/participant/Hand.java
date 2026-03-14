@@ -23,7 +23,9 @@ public class Hand {
 
         for (Card card : cards) {
             sum += card.getRank().getValue();
-            if (card.isAce()) aceCount++;
+            if (card.isAce()) {
+                aceCount++;
+            }
         }
 
         sum = adjustAceValue(sum, aceCount);

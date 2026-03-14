@@ -88,7 +88,9 @@ public class BlackJackController {
                 Map<String, Bet> playersInfo = new HashMap<>();
                 List<String> names = inputView.readPlayers();
 
-                for (String name : names) playersInfo.put(name, readPlayerBetAmountUntilValid(name));
+                for (String name : names) {
+                    playersInfo.put(name, readPlayerBetAmountUntilValid(name));
+                }
 
                 return convertAndCreatePlayers(playersInfo);
             } catch (IllegalArgumentException e) {

@@ -49,7 +49,11 @@ public class InputView {
 
     private List<String> splitPlayerNames(String userInput) {
         List<String> names = Arrays.stream(userInput.split(COMMA_DELIMITER)).toList();
-        for (String name : names) InputValidator.validateNameLength(name);
+
+        for (String name : names) {
+            InputValidator.validateNameLength(name);
+        }
+
         return names;
     }
 

@@ -10,9 +10,17 @@ public enum MatchResult {
     LOSE;
 
     public static MatchResult judge(Player player, Dealer dealer) {
-        if (player.isBust()) return MatchResult.LOSE;
-        if (dealer.isBust()) return MatchResult.WIN;
-        if (player.getScore() > dealer.getScore()) return MatchResult.WIN;
+        if (player.isBust()) {
+            return MatchResult.LOSE;
+        }
+
+        if (dealer.isBust()) {
+            return MatchResult.WIN;
+        }
+
+        if (player.getScore() > dealer.getScore()) {
+            return MatchResult.WIN;
+        }
 
         if (player.getScore() == dealer.getScore()) {
             if (player.isBlackJack() && !dealer.isBlackJack()) return MatchResult.WIN;
