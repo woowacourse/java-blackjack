@@ -129,6 +129,11 @@ public class BlackJackService {
             playerResults.put(player.getName(), MatchResult.DRAW);
             return true;
         }
+        if (player.getHand().isBlackJack() && dealer.getHand().isBlackJack()) {
+            playerResults.put(player.getName(), MatchResult.DRAW);
+            return true;
+        }
+
         return false;
     }
 }

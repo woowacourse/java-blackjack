@@ -227,6 +227,32 @@ class BlackJackServiceTest {
     }
 
     @Test
+    @DisplayName("딜러와 플레이어가 둘 다 블랙잭일 경우 무승부이다.")
+    void 동점_블랙잭_무승_판단() {
+        // given
+        Dealer dealer = new Dealer();
+        Players players = new Players(List.of("pobi"));
+        BlackJackService blackJackService = new BlackJackService(
+                new Deck(new DefaultShuffleStrategy()), dealer, players);
+
+        dealer.hit(new Card(Rank.ACE, Suit.CLOVER));
+        dealer.hit(new Card(Rank.KING, Suit.CLOVER));
+
+        for (Player player : players.getPlayers()) {
+            player.hit(new Card(Rank.ACE, Suit.HEART));
+            player.hit(new Card(Rank.JACK, Suit.CLOVER));
+        }
+
+        // when
+        Map<String, MatchResult> matchResult = blackJackService.calculateResults();
+
+        // then
+        for (Map.Entry<String, MatchResult> matchResultEntry : matchResult.entrySet()) {
+            Assertions.assertEquals(MatchResult.DRAW, matchResultEntry.getValue());
+        }
+    }
+
+    @Test
     @DisplayName("플레이어가 일반 승리한 경우 베팅 금액을 받는다.")
     void 플레이어_승리_베팅결과() {
         // given
