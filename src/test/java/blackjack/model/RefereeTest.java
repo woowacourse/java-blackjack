@@ -76,7 +76,7 @@ class RefereeTest {
 
     @Test
     @DisplayName("딜러가 버스트이고, 플레이어가 버스트가 아니면 승 판정")
-    void isWinWhenDealerIsBurstTest() {
+    void isWinWhenDealerIsBustTest() {
         // given
         Referee referee = new Referee();
         Dealer dealer = new Dealer();
@@ -101,7 +101,7 @@ class RefereeTest {
 
     @Test
     @DisplayName("딜러가 버스트가 아니고, 플레이어가 버스트라면 패 판정")
-    void isLoseWhenPlayerIsBurstTest() {
+    void isLoseWhenPlayerIsBustTest() {
         // given
         Referee referee = new Referee();
         Dealer dealer = new Dealer();
@@ -126,7 +126,7 @@ class RefereeTest {
 
     @Test
     @DisplayName("딜러와 플레이어 모두 버스트인 경우 플레이어의 패 판정")
-    void isDrawWhenBothIsBurstTest() {
+    void isDrawWhenBothIsBustTest() {
         // given
         Referee referee = new Referee();
         Dealer dealer = new Dealer();

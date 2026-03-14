@@ -25,7 +25,7 @@ public class Score {
         return score <= BUST_BOUNDARY;
     }
 
-    public boolean isBurst() {
+    public boolean isBust() {
         return score > BUST_BOUNDARY;
     }
 

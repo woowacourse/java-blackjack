@@ -19,7 +19,7 @@ public abstract class Participant {
     }
 
     public final boolean isBust() {
-        return getScore().isBurst();
+        return getScore().isBust();
     }
 
     public boolean isBlackjack() {
