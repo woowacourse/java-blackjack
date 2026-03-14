@@ -23,6 +23,7 @@ public class InputView {
     }
 
     public static Integer askBettingAmount(String player) {
+        System.out.println();
         System.out.println(player + "의 배팅 금액은?");
         Scanner sc = new Scanner(System.in);
         Integer input = sc.nextInt();

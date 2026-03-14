@@ -11,6 +11,7 @@ public class OutputView {
 
     public static void printGameInitialMessage(List<String> playersNames) {
         String playersNamesMessage = String.join(",", playersNames);
+        System.out.println();
         System.out.printf(DEALER + "와 %s에게 2장을 나누었습니다.%n", playersNamesMessage);
     }
 
