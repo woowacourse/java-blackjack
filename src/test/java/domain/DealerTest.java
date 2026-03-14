@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 class DealerTest {
 
-    private final Cards deck = Cards.of(new FixedCardShuffler());
+    private final Deck deck = Deck.of(new FixedCardShuffler());
     private final Dealer dealer = Dealer.of(deck.drawInitialHand());
 
     @Test

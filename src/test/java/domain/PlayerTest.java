@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 class PlayerTest {
 
     private final String userName = "pobi";
-    private final Cards cards = Cards.of(new FixedCardShuffler());
+    private final Deck cards = Deck.of(new FixedCardShuffler());
 
     @Test
     @DisplayName("플레이어 초기 카드 추가 시 2장의 카드를 보유한지 테스트")
