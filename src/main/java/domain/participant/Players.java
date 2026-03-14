@@ -40,20 +40,10 @@ public class Players {
         }
     }
 
-    public void hitStandEachPlayers(Function<Player, Boolean> hitStandDecisionFunc, Deck deck,
+    public void hitStandEachPlayers(Deck deck, Function<Player, Boolean> hitStandDecisionFunc,
                                     Consumer<Player> printResultFunc) {
         for (Player player : players) {
-            while (true) {
-                if (player.isBust()) {
-                    break;
-                }
-                if (!hitStandDecisionFunc.apply(player)) {
-                    printResultFunc.accept(player);
-                    break;
-                }
-                player.addCard(deck.draw());
-                printResultFunc.accept(player);
-            }
+            player.hitStand(deck, hitStandDecisionFunc, printResultFunc);
         }
     }
 

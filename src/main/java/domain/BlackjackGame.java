@@ -40,7 +40,7 @@ public class BlackjackGame {
 
 
     public void playerHitStand(Function<Player, Boolean> decideHitStandFunc, Consumer<Player> printResultFunc) {
-        players.hitStandEachPlayers(decideHitStandFunc, deck, printResultFunc);
+        players.hitStandEachPlayers(deck, decideHitStandFunc, printResultFunc);
     }
 
     public void dealerHitStand(Consumer<Boolean> printDecisionOutput) {
