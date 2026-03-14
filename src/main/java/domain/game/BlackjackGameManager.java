@@ -87,10 +87,16 @@ public class BlackjackGameManager {
             return Result.LOSE;
         }
         if (dealer.isBust()) {
-            return Result.WIN;
+            return Result.BLACKJACK_WIN;
+        }
+        if (player.isBlackjack() && dealer.isBlackjack()) {
+            return Result.DRAW;
+        }
+        if (player.isBlackjack()) {
+            return Result.BLACKJACK_WIN;
         }
         if (player.calculateScore() > dealer.calculateScore()) {
-            return Result.WIN;
+            return Result.BLACKJACK_WIN;
         }
         if (player.calculateScore() == dealer.calculateScore()) {
             return Result.DRAW;
@@ -99,7 +105,7 @@ public class BlackjackGameManager {
     }
 
     private int calculatePlayerProfit(Player player, Result result) {
-        if (result.equals(Result.WIN) && player.isBlackjack()) {
+        if (result.equals(Result.BLACKJACK_WIN)) {
             return player.getBetAmount() + player.getBetAmount() / 2;
         }
         if (result.equals(Result.WIN)) {
