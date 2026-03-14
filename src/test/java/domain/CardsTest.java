@@ -35,40 +35,6 @@ class CardsTest {
         }
 
         @Test
-        @DisplayName("카드 합계가 21점일 때 카드를 추가로 뽑으면 예외가 발생한다.")
-        void shouldThrowExceptionWhenDeckSumEqualsMaximum() {
-            // given
-            Cards cards = createCardsWithCards(
-                    new Card(CardShape.SPADE, CardContents.TEN),
-                    new Card(CardShape.CLOVER, CardContents.TEN),
-                    new Card(CardShape.DIAMOND, CardContents.A)
-            );
-
-            Card newCard = new Card(CardShape.HEART, CardContents.THREE);
-
-            // when & then
-            assertThatThrownBy(() -> cards.addCard(newCard))
-                    .isInstanceOf(IllegalStateException.class);
-        }
-
-        @Test
-        @DisplayName("카드 합계가 21점을 초과할 때 카드를 추가로 뽑으면 예외가 발생한다.")
-        void shouldThrowExceptionWhenDeckSumOverMaximum() {
-            // given
-            Cards cards = createCardsWithCards(
-                    new Card(CardShape.SPADE, CardContents.TEN),
-                    new Card(CardShape.CLOVER, CardContents.TEN),
-                    new Card(CardShape.DIAMOND, CardContents.TWO)
-            );
-
-            Card newCard = new Card(CardShape.HEART, CardContents.THREE);
-
-            // when & then
-            assertThatThrownBy(() -> cards.addCard(newCard))
-                    .isInstanceOf(IllegalStateException.class);
-        }
-
-        @Test
         @DisplayName("카드 목록에 이미 존재하는 카드를 중복으로 추가하면 예외가 발생한다.")
         void shouldThrowExceptionForDuplicatedCard() {
             // given

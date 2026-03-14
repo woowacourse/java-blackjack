@@ -114,8 +114,19 @@ public class BlackJackController {
     }
 
     private void drawCardUntilBustOrStand(Game game, Player player) {
-        while (player.isDrawable() && wantToHit(player)) {
-            drawCardAndPrintResult(game, player);
+        boolean isPlayerDrawingCard = player.isDrawable();
+        while (isPlayerDrawingCard) {
+            boolean wantToHit = wantToHit(player);
+            drawCardIfDrawableAndWantToHit(game, player, wantToHit);
+            isPlayerDrawingCard = player.isDrawable() && wantToHit;
+            ParticipantDto updatedPlayerDto = ParticipantDto.from(player);
+            showPlayerCards(updatedPlayerDto);
+        }
+    }
+
+    private void drawCardIfDrawableAndWantToHit(Game game, Player player, boolean wantToHit) {
+        if (wantToHit) {
+            game.drawCardUnderCondition(player);
         }
     }
 
@@ -138,19 +149,19 @@ public class BlackJackController {
         return inputView.readHitOrStand();
     }
 
-    private void drawCardAndPrintResult(Game game, Player player) {
-        game.drawCardUnderCondition(player);
-        ParticipantDto updatedPlayerDto = ParticipantDto.from(player);
-        showPlayerCards(updatedPlayerDto);
-    }
-
     private void showPlayerCards(ParticipantDto participantDto) {
         outputView.printCardShareDetail(participantDto);
     }
 
     private void checkAndAdjustDealerCards(Game game) {
         Dealer dealer = game.getDealer();
-        boolean hasDealerDrawnMoreCard = game.drawCardUnderCondition(dealer);
+        while (dealer.isDrawable()) {
+            boolean hasDealerDrawnMoreCard = game.drawCardUnderCondition(dealer);
+            printDescriptionIfDealerDrewCard(hasDealerDrawnMoreCard);
+        }
+    }
+
+    private void printDescriptionIfDealerDrewCard(boolean hasDealerDrawnMoreCard) {
         if (hasDealerDrawnMoreCard) {
             outputView.printAdditionalCardForDealerDescription();
         }

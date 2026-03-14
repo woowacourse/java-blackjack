@@ -41,17 +41,16 @@ public class OutputView {
             String playerCardInfo = consistParticipantCardInfo(playerDto);
             System.out.println(playerCardInfo);
         }
-        System.out.println();
     }
 
     public void printHitOrStandPrompt(ParticipantDto playerDto) {
+        System.out.println();
         System.out.printf("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)\n", playerDto.name());
     }
 
     public void printCardShareDetail(ParticipantDto participantDto) {
         String participantCardInfo = consistParticipantCardInfo(participantDto);
         System.out.println(participantCardInfo);
-        System.out.println();
     }
 
     public void printAdditionalCardForDealerDescription() {

@@ -20,9 +20,6 @@ public class Cards {
     }
 
     private void validateAddable(Card card) {
-        if (calculateCardScoreSum() >= BUST_CRITERIA) {
-            throw new IllegalStateException("이미 카드 합계가 21 이상입니다. 카드를 추가할 수 없습니다.");
-        }
         if (cards.contains(card)) {
             throw new IllegalArgumentException("이미 보유하고 있는 카드입니다. 중복 추가할 수 없습니다.");
         }
