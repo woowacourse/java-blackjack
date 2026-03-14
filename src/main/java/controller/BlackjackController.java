@@ -107,8 +107,8 @@ public class BlackjackController {
 
     private void printProfits(Game game, BetAmounts betAmounts) {
         Map<String, Result> playerResults = blackjackService.makePlayerResults(game);
-        Map<String, Integer> playerProfits = blackjackService.calculateAllPlayerProfits(playerResults, betAmounts);
-        int dealerProfit = blackjackService.calculateDealerProfit(playerProfits);
+        Map<String, Integer> playerProfits = betAmounts.calculatePlayerProfits(playerResults);
+        int dealerProfit = betAmounts.calculateDealerProfit(playerProfits);
         OutputView.printGameResult(dealerProfit, playerProfits);
     }
 

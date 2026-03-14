@@ -2,7 +2,6 @@ package service;
 
 import domain.Game;
 import domain.enums.Result;
-import domain.participant.BetAmounts;
 import dto.CardDto;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -23,18 +22,5 @@ public class BlackjackService {
             playerResults.put(name, game.getPlayerResult(name));
         }
         return playerResults;
-    }
-
-    public Map<String, Integer> calculateAllPlayerProfits(Map<String, Result> playerResults,
-                                                          BetAmounts betAmounts) {
-        return betAmounts.calculateProfits(playerResults);
-    }
-
-    public int calculateDealerProfit(Map<String, Integer> allPlayerProfits) {
-        int dealerProfit = 0;
-        for (int profit : allPlayerProfits.values()) {
-            dealerProfit += -profit;
-        }
-        return dealerProfit;
     }
 }

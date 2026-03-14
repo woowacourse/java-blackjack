@@ -17,17 +17,25 @@ public class BetAmounts {
         betAmounts.put(name, new BetAmount(amount));
     }
 
-    public Map<String, Integer> calculateProfits(Map<String, Result> playerResults) {
+    public Map<String, Integer> calculatePlayerProfits(Map<String, Result> playerResults) {
         Map<String, Integer> profits = new LinkedHashMap<>();
         for (String name : playerResults.keySet()) {
-            int profit = calculatePlayerProfit(playerResults.get(name), betAmounts.get(name));
+            int profit = calculateProfit(playerResults.get(name), betAmounts.get(name));
             profits.put(name, profit);
         }
         return profits;
     }
 
-    private int calculatePlayerProfit(Result result, BetAmount betAmount) {
+    private int calculateProfit(Result result, BetAmount betAmount) {
         double profit = betAmount.amount() * result.getRate();
         return (int) profit;
+    }
+
+    public int calculateDealerProfit(Map<String, Integer> allPlayerProfits) {
+        int dealerProfit = 0;
+        for (int profit : allPlayerProfits.values()) {
+            dealerProfit += -profit;
+        }
+        return dealerProfit;
     }
 }

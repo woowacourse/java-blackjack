@@ -1,19 +1,16 @@
-package domain.service;
+package domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.enums.Result;
-import domain.participant.BetAmounts;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import service.BlackjackService;
 
-public class BlackjackServiceTest {
-    private final BlackjackService blackjackService = new BlackjackService();
+public class BetAmountsTest {
     BetAmounts betAmounts = new BetAmounts(List.of("피즈", "이삭", "러키", "쿠다"));
     Map<String, Result> results = new HashMap<>();
     Map<String, Integer> expectedProfits = new HashMap<>();
@@ -39,14 +36,14 @@ public class BlackjackServiceTest {
     @DisplayName("모든 플레이어의 수익을 정확히 계산한다.")
     @Test
     void 모든_플레이어의_수익을_정확히_계산한다() {
-        Map<String, Integer> playerProfits = blackjackService.calculateAllPlayerProfits(results, betAmounts);
+        Map<String, Integer> playerProfits = betAmounts.calculatePlayerProfits(results);
         assertThat(playerProfits).isEqualTo(expectedProfits);
     }
 
     @DisplayName("딜러의 수익을 정확히 계산한다.")
     @Test
     void 딜러의_수익을_정확히_계산한다() {
-        Map<String, Integer> playerProfits = blackjackService.calculateAllPlayerProfits(results, betAmounts);
-        assertThat(-25000).isEqualTo(blackjackService.calculateDealerProfit(playerProfits));
+        Map<String, Integer> playerProfits = betAmounts.calculatePlayerProfits(results);
+        assertThat(-25000).isEqualTo(betAmounts.calculateDealerProfit(playerProfits));
     }
 }
