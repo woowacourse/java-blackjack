@@ -6,6 +6,7 @@ import domain.participant.BetAmount;
 import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;
+import domain.participant.PlayerName;
 import dto.BlackjackResultDto;
 import dto.BlackjackStatisticsDto;
 import dto.ParticipantDto;
@@ -22,7 +23,7 @@ public class BlackjackGameManager {
         this.cardMachine = new CardMachine();
     }
 
-    public void createParticipants(List<String> playerNames, List<BetAmount> betAmounts) {
+    public void createParticipants(List<PlayerName> playerNames, List<BetAmount> betAmounts) {
         participants = Participants.of(playerNames, betAmounts);
     }
 
