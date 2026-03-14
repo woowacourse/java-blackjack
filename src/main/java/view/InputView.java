@@ -65,11 +65,10 @@ public class InputView {
         for (char c : input.toCharArray()) {
             validateIsDigit(c);
         }
-
     }
 
     private static void validateIsDigit(char c) {
-        if (Character.isDigit(c)) {
+        if (!Character.isDigit(c)) {
             throw new IllegalArgumentException(INVALID_NUMBER_FORMAT);
         }
     }
