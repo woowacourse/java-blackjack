@@ -1,38 +1,25 @@
 package model.participant;
 
-import constant.ErrorMessage;
+import dto.result.ParticipantCurrentHand;
+import dto.result.ProfitResult;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import model.result.DealerWinning;
-import model.result.PlayersWinning;
 import model.card.Card;
-import dto.status.DealerStatus;
-import dto.result.ParticipantWinning;
-import dto.result.PlayerResult;
-import dto.result.PlayerWinning;
 
 public class Participants {
     private final Dealer dealer = new Dealer();
-    private final Map<String, Player> players = new ConcurrentHashMap<>();
+    private final Players players = new Players();
 
     public void addPlayer(Player player) {
         dealer.validateSameName(player.getName());
-
-        if(players.containsKey(player.getName())) {
-            throw new IllegalArgumentException((ErrorMessage.DUPLICATED_NAME.getMessage()));
-        }
-        players.put(player.getName(), player);
+        players.addPlayer(player);
     }
 
     public List<String> getPlayerNames() {
-        return List.copyOf(players.keySet());
+        return List.copyOf(players.getPlayerNames());
     }
 
     public void addBet(String playerName, BetPrice bet) {
-        Player player = getPlayer(playerName);
-
-        player.setBetAmount(bet);
+        players.setBet(playerName, bet);
     }
 
     public void drawDealer(Card card) {
@@ -40,57 +27,34 @@ public class Participants {
     }
 
     public void drawPlayer(String playerName, Card card) {
-        Player player = getPlayer(playerName);
-
-        player.addCard(card);
+        players.drawCard(playerName, card);
     }
 
-    public PlayerResult getPlayerResult(String playerName) {
-        Player player = getPlayer(playerName);
-        return player.getResult();
+    public ParticipantCurrentHand getPlayerCurrentHand(String playerName) {
+        return players.getPlayersCurrentHand(playerName);
     }
 
-    public PlayerResult getDealerResult() {
-        return dealer.getResult();
+    public List<ParticipantCurrentHand> getPlayersHand() {
+        return players.getPlayersHand();
     }
 
     public String getDealerFirstCard() {
         return dealer.getFirstCard();
     }
 
-    public boolean isPlayerBust(String playerName) {
-        Player player = getPlayer(playerName);
+    public ParticipantCurrentHand getDealerHand() {
+        return dealer.getCurrentHand();
+    }
 
-        return player.isBust();
+    public boolean isPlayerBust(String playerName) {
+        return players.isPlayerBust(playerName);
     }
 
     public boolean isDealerCanDraw() {
         return dealer.canDraw();
     }
 
-    public List<PlayerResult> getPlayerResults() {
-        return List.copyOf(players.values().stream().map(Participant::getResult).toList());
-    }
-
-    public ParticipantWinning getGameResult() {
-        DealerWinning dealerWinning = new DealerWinning();
-        PlayersWinning playersWinning = new PlayersWinning();
-
-        DealerStatus dealerStatus = dealer.getDealerStatus();
-
-        players.values().forEach(player -> {
-           PlayerWinning result = player.getBetResult(dealerStatus);
-           playersWinning.add(result);
-           dealerWinning.increase(-result.profit());
-        });
-
-        return new ParticipantWinning(dealerWinning, playersWinning);
-    }
-
-    private Player getPlayer(String playerName) {
-        if(!players.containsKey(playerName)) {
-            throw new IllegalArgumentException(ErrorMessage.NO_PLAYER_NAME.getMessage());
-        }
-        return players.get(playerName);
+    public ProfitResult getProfitResult() {
+        return players.getProfitResult(dealer.getDealerStatus());
     }
 }

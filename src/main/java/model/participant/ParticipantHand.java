@@ -29,8 +29,10 @@ public class ParticipantHand {
         return score.getScore();
     }
 
-    public List<Card> getDeck() {
-        return deck.get();
+    public List<String> getDeck() {
+        return deck.get().stream()
+                .map(Card::getString)
+                .toList();
     }
 
     public String getFirstCard() {

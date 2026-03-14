@@ -1,12 +1,12 @@
 package controller;
 
+import dto.result.ParticipantCurrentHand;
+import dto.result.ProfitResult;
 import java.util.List;
 import model.participant.Agreement;
 import model.participant.BetPrice;
 import model.participant.Player;
 import model.participant.PlayerName;
-import dto.result.ParticipantWinning;
-import dto.result.PlayerResult;
 import model.BlackJackGame;
 import view.InputView;
 import view.OutputView;
@@ -19,12 +19,17 @@ public class BlackJackController {
     }
 
     public void playBlackJackGame() {
-        registerParticipant();
-        addBet();
+        try {
+            registerParticipant();
+            addBet();
 
-        initGame();
-        participantTurn();
-        displayResult();
+            initGame();
+            participantTurn();
+            displayResult();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
     }
 
     private void registerParticipant() {
@@ -45,7 +50,7 @@ public class BlackJackController {
 
     private void initGame() {
         blackJackGame.initGame();
-        OutputView.printInitDeck(blackJackGame.getPlayerResults(), blackJackGame.getDealerFirstCard());
+        OutputView.printInitDeck(blackJackGame.getPlayerCurrentHands(), blackJackGame.getDealerFirstCard());
     }
 
     private void participantTurn() {
@@ -69,8 +74,8 @@ public class BlackJackController {
             return false;
         }
 
-        blackJackGame.drawPlayer(playerName);
-        OutputView.printPlayerCurrentDeck(blackJackGame.getPlayerResult(playerName));
+        ParticipantCurrentHand currentHand = blackJackGame.drawPlayer(playerName);
+        OutputView.printPlayerCurrentDeck(currentHand);
 
         return !blackJackGame.isBust(playerName);
     }
@@ -84,11 +89,12 @@ public class BlackJackController {
     }
 
     private void displayResult() {
-        List<PlayerResult> playerResults = blackJackGame.getPlayerResults();
-        PlayerResult dealerResult = blackJackGame.getDealerResult();
-        ParticipantWinning gameResult = blackJackGame.getGameResult();
+        List<ParticipantCurrentHand> playerHands = blackJackGame.getPlayerCurrentHands();
+        ParticipantCurrentHand dealerHand = blackJackGame.getDealerCurrentHand();
 
-        OutputView.printPlayersScore(dealerResult, playerResults);
-        OutputView.printResult(gameResult);
+        ProfitResult profitResult = blackJackGame.getProfitResult();
+
+        OutputView.printParticipantHandWithScore(dealerHand, playerHands);
+        OutputView.printProfitResult(profitResult);
     }
 }

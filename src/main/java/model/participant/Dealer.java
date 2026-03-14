@@ -27,6 +27,6 @@ public class Dealer extends Participant {
     }
 
     public DealerStatus getDealerStatus() {
-        return new DealerStatus(super.getScore(), super.isBust(), super.isBlackJack());
+        return new DealerStatus(DEALER_NAME, super.getScore(), super.isBust(), super.isBlackJack());
     }
 }
