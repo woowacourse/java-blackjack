@@ -31,7 +31,7 @@ public final class Start extends Status{
     }
 
     @Override
-    public boolean isFinished() {
+    public boolean isRunning() {
         return false;
     }
 

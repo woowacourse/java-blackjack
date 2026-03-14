@@ -18,7 +18,7 @@ public abstract class Status {
 
     public abstract Status stay();
 
-    public abstract boolean isFinished();
+    public abstract boolean isRunning();
 
     public abstract double earningsRate(Status dealerStatus);
 

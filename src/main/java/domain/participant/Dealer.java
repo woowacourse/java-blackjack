@@ -13,6 +13,6 @@ public class Dealer extends Participant {
     }
 
     public boolean isReceiveCard() {
-        return !isFinished() && getScore() <= BlackJackInfo.DEALER_THRESHOLD_SCORE;
+        return getScore() <= BlackJackInfo.DEALER_THRESHOLD_SCORE;
     }
 }

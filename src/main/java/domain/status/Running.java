@@ -16,8 +16,8 @@ public abstract class Running extends Status {
     }
 
     @Override
-    public boolean isFinished() {
-        return false;
+    public boolean isRunning() {
+        return true;
     }
 
     @Override
