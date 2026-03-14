@@ -10,6 +10,15 @@ public class Money {
         this.money = value;
     }
 
+    public Money(int input) {
+        this.money = input;
+    }
+
+    public Money(double input) {
+        int value = (int) (input);
+        this.money = value;
+    }
+
     private int validateAndParse(String input) {
         try {
             return Integer.parseInt(input);
