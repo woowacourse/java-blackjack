@@ -70,18 +70,6 @@ public class Judge {
         return WinningStatus.LOSE;
     }
 
-    public int judgeDealerWinCount() {
-        return (int) playerResults.values().stream()
-                .filter(status -> status == WinningStatus.LOSE)
-                .count();
-    }
-
-    public int judgeDealerLoseCount() {
-        return (int) playerResults.values().stream()
-                .filter(status -> status == WinningStatus.WIN)
-                .count();
-    }
-
     public WinningStatus getPlayerResult(Player player) {
         return playerResults.get(player);
     }

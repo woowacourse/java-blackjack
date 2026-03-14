@@ -137,33 +137,4 @@ class JudgeTest {
         // then
         assertEquals(WinningStatus.DRAW, judge.getPlayerResult(player));
     }
-
-    @Test
-    void 딜러의_승수와_패수를_계산한다() {
-        // given
-        Dealer dealer = new Dealer();
-        dealer.draw(new Card(Suit.HEARTS, Rank.NUM10));
-        dealer.draw(new Card(Suit.HEARTS, Rank.NUM8));
-
-        Player winPlayer = new Player("시오");
-        winPlayer.draw(new Card(Suit.CLUBS, Rank.KING));
-        winPlayer.draw(new Card(Suit.CLUBS, Rank.NUM9));
-
-        Player drawPlayer = new Player("봉구스");
-        drawPlayer.draw(new Card(Suit.SPADES, Rank.KING));
-        drawPlayer.draw(new Card(Suit.SPADES, Rank.NUM8));
-
-        Player losePlayer = new Player("비밥");
-        losePlayer.draw(new Card(Suit.DIAMONDS, Rank.NUM10));
-        losePlayer.draw(new Card(Suit.DIAMONDS, Rank.NUM7));
-
-        // when
-        Judge judge = Judge.from(dealer, List.of(winPlayer, drawPlayer, losePlayer));
-
-        // then
-        assertAll(
-                () -> assertEquals(1, judge.judgeDealerWinCount()),
-                () -> assertEquals(1, judge.judgeDealerLoseCount())
-        );
-    }
 }
