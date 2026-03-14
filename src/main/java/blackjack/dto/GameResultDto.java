@@ -1,7 +1,7 @@
 package blackjack.dto;
 
-import blackjack.domain.participant.Player;
-import blackjack.domain.result.GameResult;
+import blackjack.domain.participants.Player;
+import blackjack.domain.game.GameResult;
 
 public record GameResultDto(
     String playerName,

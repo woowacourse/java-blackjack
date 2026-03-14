@@ -1,4 +1,4 @@
-package blackjack.domain.participant;
+package blackjack.domain.participants;
 
 import blackjack.domain.card.Deck;
 import blackjack.domain.card.Hand;
@@ -47,7 +47,6 @@ public record PlayerGroup(List<Player> players) {
             .toList();
     }
 
-    @Override
     public List<Player> players() {
         return List.copyOf(players);
     }

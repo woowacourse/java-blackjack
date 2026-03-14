@@ -1,10 +1,10 @@
 package blackjack;
 
-import blackjack.core.BlackjackGame;
+import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.card.ShuffledCardsGenerator;
-import blackjack.domain.participant.Player;
-import blackjack.domain.result.BlackjackGameReferee;
-import blackjack.domain.result.GameResult;
+import blackjack.domain.participants.Player;
+import blackjack.domain.game.BlackjackGameReferee;
+import blackjack.domain.game.GameResult;
 import blackjack.dto.DealerHitDto;
 import blackjack.dto.GameResultDtos;
 import blackjack.dto.InitialDealDtos;

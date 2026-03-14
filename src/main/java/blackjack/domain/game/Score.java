@@ -1,4 +1,4 @@
-package blackjack.domain.result;
+package blackjack.domain.game;
 
 public record Score(int value) {
 

@@ -1,4 +1,4 @@
-package blackjack.domain.result;
+package blackjack.domain.game;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -6,10 +6,9 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
+import blackjack.domain.participants.Dealer;
+import blackjack.domain.participants.Player;
 import java.util.List;
-import javax.security.auth.RefreshFailedException;
 import org.junit.jupiter.api.Test;
 
 class BlackjackGameRefereeTest {
@@ -92,5 +91,4 @@ class BlackjackGameRefereeTest {
         // then
         assertThat(result).isEqualTo(GameResult.DEALER_WIN);
     }
-
 }

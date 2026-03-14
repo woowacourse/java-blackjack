@@ -1,7 +1,7 @@
-package blackjack.domain.result;
+package blackjack.domain.game;
 
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
+import blackjack.domain.participants.Dealer;
+import blackjack.domain.participants.Player;
 
 public class BlackjackGameReferee implements GameReferee {
     @Override

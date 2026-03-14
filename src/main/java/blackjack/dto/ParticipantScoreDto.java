@@ -1,7 +1,7 @@
 package blackjack.dto;
 
-import blackjack.domain.participant.Participant;
-import blackjack.domain.result.Score;
+import blackjack.domain.participants.Participant;
+import blackjack.domain.game.Score;
 import java.util.List;
 
 public record ParticipantScoreDto(

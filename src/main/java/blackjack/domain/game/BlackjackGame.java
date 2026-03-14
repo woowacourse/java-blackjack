@@ -1,13 +1,10 @@
-package blackjack.core;
+package blackjack.domain.game;
 
 import blackjack.domain.card.CardsGenerator;
 import blackjack.domain.card.Deck;
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Participant;
-import blackjack.domain.participant.Player;
-import blackjack.domain.participant.PlayerGroup;
-import blackjack.domain.result.GameReferee;
-import blackjack.domain.result.GameResult;
+import blackjack.domain.participants.Dealer;
+import blackjack.domain.participants.Player;
+import blackjack.domain.participants.PlayerGroup;
 import java.util.List;
 
 public class BlackjackGame {
@@ -45,19 +42,19 @@ public class BlackjackGame {
 
     public void initialDeal() {
         for (int i = 0; i < INITIAL_DEAL_COUNT; i++) {
-            hit(dealer);
+            dealer.hit(deck.draw());
             playerGroup.deal(deck);
         }
     }
 
-    public void hit(Participant participant) {
-        participant.hit(deck.draw());
+    public void hit(Player player) {
+        player.hit(deck.draw());
     }
 
     public int playDealerTurn() {
         int hitCount = 0;
         while (dealer.canHit()) {
-            hit(dealer);
+            dealer.hit(deck.draw());
             hitCount++;
         }
         return hitCount;
