@@ -28,7 +28,20 @@ public class BettingManagerTest {
         amountMap.put(player.getName(), bettingAmount);
         BettingManager bettingManager = new BettingManager(amountMap);
         bettingManager.win(player.getName());
-        int expected = 2000;
+        int expected = 1000;
+        int actual = bettingManager.getAmount(player.getName()).getMoney();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void 참가자가_블랙잭이면_배팅금액을_받는다() {
+        Player player = new Player(new Name("pobi"));
+        Map<Name, BettingAmount> amountMap = new HashMap<>();
+        BettingAmount bettingAmount = new BettingAmount(1000);
+        amountMap.put(player.getName(), bettingAmount);
+        BettingManager bettingManager = new BettingManager(amountMap);
+        bettingManager.blackJackWin(player.getName());
+        int expected = 1500;
         int actual = bettingManager.getAmount(player.getName()).getMoney();
         assertEquals(expected, actual);
     }

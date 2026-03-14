@@ -31,4 +31,8 @@ public class ParticipantCards {
         }
         cards.add(card);
     }
+
+    public int getCardSize() {
+        return cards.getSize();
+    }
 }

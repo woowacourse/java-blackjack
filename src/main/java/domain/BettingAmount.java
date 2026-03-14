@@ -22,7 +22,7 @@ public class BettingAmount {
         return new BettingAmount(0);
     }
 
-    public BettingAmount doubleAmount() {
-        return new BettingAmount(money * 2);
+    public BettingAmount oneAndAHalfAmount() {
+        return new BettingAmount(money * 3 / 2);
     }
 }

@@ -31,6 +31,40 @@ class PlayerTest {
     }
 
     @Test
+    void 에이스와_10점카드를_받으면_블랙잭이다() {
+        Player player = new Player(new Name("pobi"));
+        player.receiveCard(new Card(Shape.SPADE, Number.ACE));
+        player.receiveCard(new Card(Shape.HEART, Number.JACK));
+
+        boolean result = player.isBlackJack();
+
+        assertEquals(true, result);
+    }
+
+    @Test
+    void 두장의_합이_21이아니면_블랙잭이_아니다() {
+        Player player = new Player(new Name("pobi"));
+        player.receiveCard(new Card(Shape.SPADE, Number.JACK));
+        player.receiveCard(new Card(Shape.HEART, Number.JACK));
+
+        boolean result = player.isBlackJack();
+
+        assertEquals(false, result);
+    }
+
+    @Test
+    void 세장의_합이_21이어도_블랙잭이_아니다() {
+        Player player = new Player(new Name("pobi"));
+        player.receiveCard(new Card(Shape.SPADE, Number.EIGHT));
+        player.receiveCard(new Card(Shape.HEART, Number.JACK));
+        player.receiveCard(new Card(Shape.HEART, Number.THREE));
+
+        boolean result = player.isBlackJack();
+
+        assertEquals(false, result);
+    }
+
+    @Test
     void 점수가_21점_미만이면_카드를_추가로_받을_수_있다() {
         Player player = new Player(new Name("pobi"));
         player.receiveCard(new Card(Shape.SPADE, Number.EIGHT));

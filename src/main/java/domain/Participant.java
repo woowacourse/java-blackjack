@@ -34,6 +34,10 @@ public abstract class Participant {
         return false;
     }
 
+    public boolean isBlackJack() {
+        return participantCards.getCardSize() == 2 && getScore() == 21;
+    }
+
     public List<String> getCardsInfo() {
         return participantCards.getCardsInfo();
     }

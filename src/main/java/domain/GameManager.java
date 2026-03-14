@@ -48,6 +48,7 @@ public class GameManager {
         participant.receiveCard(card);
     }
 
+    //TODO: 나중에 getGameResult랑 judgeResult와 함께하는 클래스를 하나 만들어야 할듯
     public Map<String, GameResult> getGameResult() {
         Map<String, GameResult> gameResult = new HashMap<>();
         players.forEach(player -> {

@@ -13,7 +13,6 @@ class ParticipantCardsTest {
         Card card1 = new Card(Shape.SPADE, Number.EIGHT);
         Card card2 = new Card(Shape.HEART, Number.EIGHT);
 
-        List<Card> cards = new ArrayList<>();
         ParticipantCards testParticipantCards = new ParticipantCards(new Cards(new ArrayList<>()));
 
         testParticipantCards.addCard(card1);
@@ -28,7 +27,6 @@ class ParticipantCardsTest {
         Card card2 = new Card(Shape.HEART, Number.FIVE);
         Card card3 = new Card(Shape.CLUB, Number.EIGHT);
 
-        List<Card> cards = new ArrayList<>();
         ParticipantCards testParticipantCards = new ParticipantCards(new Cards(new ArrayList<>()));
 
         testParticipantCards.addCard(card1);

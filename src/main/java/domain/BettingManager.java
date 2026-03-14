@@ -20,6 +20,11 @@ public class BettingManager {
 
     public void win(Name name) {
         BettingAmount amount = getAmount(name);
-        bettingAmounts.put(name, amount.doubleAmount());
+        bettingAmounts.put(name, amount);
+    }
+
+    public void blackJackWin(Name name) {
+        BettingAmount amount = getAmount(name);
+        bettingAmounts.put(name, amount.oneAndAHalfAmount());
     }
 }
