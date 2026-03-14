@@ -1,16 +1,16 @@
 package blackjack.view;
 
-import static blackjack.domain.Dealer.DEALER_HIT_THRESHOLD;
+import static blackjack.domain.participant.Dealer.DEALER_HIT_THRESHOLD;
 
-import blackjack.domain.Dealer;
-import blackjack.domain.DealerResult;
-import blackjack.domain.Participant;
-import blackjack.domain.Participants;
-import blackjack.domain.Player;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.judgement.DealerResult;
+import blackjack.domain.participant.Name;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Player;
+import blackjack.dto.FinalProfitDto;
 import blackjack.dto.FinalResultDto;
-import java.io.FilterOutputStream;
 import java.util.List;
-import java.util.Map;
 
 public class OutputView {
 
@@ -23,7 +23,8 @@ public class OutputView {
 
     public static void printStartMessage(final List<Player> players, final Dealer dealer) {
         List<String> playerNicknames = players.stream()
-            .map(Player::getNickname)
+            .map(Player::getName)
+            .map(Name::toString)
             .toList();
 
         System.out.printf("딜러와 %s에게 %s장을 나누었습니다.\n",
@@ -62,9 +63,17 @@ public class OutputView {
                 System.out.printf("%s: %s\n", key, value.getName()));
     }
 
+    public static void printProfit(FinalProfitDto dto) {
+        System.out.println("## 최종 수익");
+        System.out.printf("딜러: %.1f\n", dto.profitByDealer());
+        dto.bettingMoneyInfo()
+                .forEach((key, value) ->
+                        System.out.printf("%s: %s\n", key, value));
+    }
+
     private static String participantHandFormat(final Participant participant) {
         return String.format("%s카드: %s",
-            participant.getNickname(),
+            participant.getName(),
             String.join(", ", participant.getCardNames())
         );
     }

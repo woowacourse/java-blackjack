@@ -1,18 +1,23 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Hand;
+import blackjack.domain.judgement.Status;
+import blackjack.domain.card.Trump;
 import java.util.List;
 import java.util.stream.IntStream;
 
 public class Dealer extends Participant {
 
     public static final int DEALER_HIT_THRESHOLD = 16;
-    public static final String DEALER_NICKNAME = "딜러";
 
     private final Trump trump;
+    private final Name nickname;
 
     public Dealer(final Hand hand, final Status status, final Trump trump) {
         super(hand, status);
         this.trump = trump;
+        nickname = new DealerName();
     }
 
     public void giveCard(final Player player) {
@@ -28,14 +33,14 @@ public class Dealer extends Participant {
     public void pitch(final List<Player> players) {
         final int distributeCount = 2;
         IntStream.range(0, distributeCount)
-            .forEach(round -> {
-                players.forEach(this::giveCard);
-                giveCard();
-            });
+                .forEach(round -> {
+                    players.forEach(this::giveCard);
+                    giveCard();
+                });
     }
 
     public void decideHit() {
-        int totalScore = hand.calculateScore();
+        int totalScore = getScore();
         if (totalScore > DEALER_HIT_THRESHOLD) {
             stay();
         }
@@ -43,11 +48,11 @@ public class Dealer extends Participant {
 
     public List<String> getOpenCardNames() {
         final int holeIndex = 1;
-        return hand.getCardNames(holeIndex);
+        return getCardNames(holeIndex);
     }
 
     @Override
-    public String getNickname() {
-        return DEALER_NICKNAME;
+    public Name getName() {
+        return nickname;
     }
 }

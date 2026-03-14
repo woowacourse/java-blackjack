@@ -15,4 +15,9 @@ public class InputView {
         return Console.readLine();
     }
 
+    public static String readBettingMoney(String nickname) {
+        System.out.println(nickname + "의 배팅 금액은?");
+        return Console.readLine();
+    }
+
 }

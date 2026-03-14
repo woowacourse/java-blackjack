@@ -1,0 +1,35 @@
+package blackjack.domain.judgement;
+
+public class BettingMoney {
+
+    private final Integer money;
+
+    public BettingMoney(String rawBettingMoney) {
+        int money = parseInt(rawBettingMoney);
+        validatePositive(money);
+        this.money = money;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(money);
+    }
+
+    private int parseInt(String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("배팅 금액은 정수를 입력해 주세요.");
+        }
+    }
+
+    private void validatePositive(Integer money) {
+        if (money < 0) {
+            throw new IllegalArgumentException("배팅 금액은 음수일 수 없습니다.");
+        }
+    }
+
+    public double multiply(double dividendRate) {
+        return money * dividendRate;
+    }
+}
