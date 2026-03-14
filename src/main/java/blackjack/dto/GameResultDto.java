@@ -1,5 +1,6 @@
 package blackjack.dto;
 
+import blackjack.domain.BlackjackGame;
 import blackjack.domain.Dealer;
 import blackjack.domain.Players;
 
@@ -9,12 +10,12 @@ public record GameResultDto(
         List<PlayerScoreDto> playerResults,
         DealerScoreDto dealerResult
 ) {
-    public static GameResultDto from(Players players, Dealer dealer) {
-        List<PlayerScoreDto> playerResults = players.getPlayers().stream()
+    public static GameResultDto from(BlackjackGame game) {
+        List<PlayerScoreDto> playerResults = game.getPlayers().getPlayers().stream()
                 .map(PlayerScoreDto::from)
                 .toList();
 
-        DealerScoreDto dealerResult = DealerScoreDto.from(dealer);
+        DealerScoreDto dealerResult = DealerScoreDto.from(game.getDealer());
         return new GameResultDto(playerResults, dealerResult);
     }
 }

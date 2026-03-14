@@ -33,7 +33,7 @@ public class Hand {
 
     private int sumCardScores() {
         return cards.stream()
-                .mapToInt(TrumpCard::score)
+                .mapToInt(TrumpCard::getScore)
                 .sum();
     }
 
@@ -54,14 +54,13 @@ public class Hand {
 
     public List<String> cardNames() {
         return cards.stream()
-                .map(TrumpCard::koreanName)
+                .map(TrumpCard::name)
                 .toList();
     }
 
     public int countCards() {
         return cards.size();
     }
-
 
     public List<TrumpCard> getCards() {
         return List.copyOf(cards);

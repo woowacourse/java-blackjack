@@ -1,13 +1,12 @@
 package blackjack.domain;
 
-import blackjack.dto.GameResultDto;
+import blackjack.domain.vo.MatchResult;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
-
 
 public class BlackjackGame {
     private final Dealer dealer;
@@ -41,51 +40,40 @@ public class BlackjackGame {
     }
 
     public void deal() {
-        players.receiveCards(deck);
-        dealer.receiveCards(deck.drawSecondTimes());
+        players.forEach(
+                player -> {
+                    player.hit(deck.deal());
+                    player.hit(deck.deal());
+                });
+        dealer.hit(deck.deal());
+        dealer.hit(deck.deal());
     }
 
-    public int playerCount() {
-        return players.count();
+    public void playPlayerTurns(HitDecision decision, TurnDisplay display) {
+        players.forEach(player -> {
+            while (player.canHit()) {
+                if (!decision.wantsHit(player.getName())) {
+                    display.show(player.getName(), player.getCardNames());
+                    break;
+                }
+                player.hit(deck.deal());
+                display.show(player.getName(), player.getCardNames());
+            }
+        });
     }
 
-    public boolean canPlayerHit(int index) {
-        return players.playerAt(index).canHit();
-    }
-
-    public String playerNameByIndex(int index) {
-        return players.playerAt(index).name();
-    }
-
-    public Player playerDraw(int index) {
-        TrumpCard drawn = deck.draw();
-        players.playerAt(index).receiveCard(drawn);
-        return players.playerAt(index);
-    }
-
-    public boolean canDealerHit() {
-        return dealer.shouldHit();
-    }
-
-    public void dealerDraw() {
-        TrumpCard drawn = deck.draw();
-        dealer.receive(drawn);
-    }
-
-    public GameResultDto generateGameResult() {
-        return GameResultDto.from(players, dealer);
-    }
-
-    public Map<Player, MatchResult> getPlayerFinalResult() {
-        Map<Player, MatchResult> playerResult = new LinkedHashMap<>();
-        for (Player player : players.getPlayers()) {
-            playerResult.put(player, MatchResult.playerResult(player, dealer));
+    public void playDealerTurn() {
+        while (dealer.canHit()) {
+            dealer.hit(deck.deal());
         }
-        return playerResult;
     }
 
-    public Map<String, Long> getDealerFinalResult(Map<Player, MatchResult> playerResult) {
-        return MatchResult.dealerResult(playerResult);
+    public Map<String, MatchResult> matchResults() {
+        Map<String, MatchResult> results = new LinkedHashMap<>();
+        players.forEach(player ->
+                results.put(player.getName(), MatchResult.playerResult(player, dealer))
+        );
+        return results;
     }
 
     public Players getPlayers() {

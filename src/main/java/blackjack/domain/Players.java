@@ -1,5 +1,6 @@
 package blackjack.domain;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -29,5 +30,9 @@ public class Players {
 
     public int count() {
         return players.size();
+    }
+
+    public List<Player> getPlayers() {
+        return List.copyOf(players);
     }
 }

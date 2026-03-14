@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.MatchResult;
+import blackjack.domain.vo.MatchResult;
 import blackjack.domain.Player;
 import blackjack.dto.CardDto;
 import blackjack.dto.DealResultDto;
@@ -30,6 +30,11 @@ public class OutputView {
         System.out.println(playerHand.name() + "카드: " + cards);
     }
 
+    public static void printPlayerHand(String name, List<String> cards) {
+        String cardDisplay = String.join(", ", cards);
+        System.out.println(name + "카드: " + cardDisplay);
+    }
+
     public static void printGameResult(GameResultDto gameResultDto) {
         DealerScoreDto dealer = gameResultDto.dealerResult();
         System.out.println("딜러카드: " + formatCards(dealer.cards())
@@ -53,16 +58,20 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printFinalResult(Map<Player, MatchResult> playerFinalResult, Map<String, Long> dealerFinalResult) {
+    public static void printFinalResult(Map<String, MatchResult> matchResults) {
         System.out.println("## 최종 승패");
-        printDealerFinalResult(dealerFinalResult.get("승"), dealerFinalResult.get("패"));
-        for (Player player : playerFinalResult.keySet()) {
-            printPlayerFinalResult(player.name(), playerFinalResult.get(player).getDisplay());
-        }
+        printDealerFinalResult(matchResults);
+        matchResults.forEach((name, result) ->
+                System.out.println(name + ": " + result.getDisplay())
+        );
     }
 
-    private static void printDealerFinalResult(long dealerWinCount, long dealerLoseCount) {
-        System.out.println("딜러: " + dealerWinCount + "승 " + dealerLoseCount + "패");
+    private static void printDealerFinalResult(Map<String, MatchResult> matchResults) {
+        long winCount = matchResults.values().stream()
+                .filter(r -> r == MatchResult.LOSE).count();
+        long loseCount = matchResults.values().stream()
+                .filter(r -> r == MatchResult.WIN).count();
+        System.out.println("딜러: " + winCount + "승 " + loseCount + "패");
     }
 
     private static void printPlayerFinalResult(String playerName, String result) {

@@ -32,16 +32,12 @@ public class TrumpCard {
         return rank == Rank.ACE;
     }
 
-    public String koreanName() {
-        return suit.getKoreanName();
-    }
-
-    public int score() {
+    public int getScore() {
         return rank.getScore();
     }
 
-    public String symbol() {
-        return rank.getSymbol();
+    public String name() {
+        return rank.getSymbol() + suit.getKoreanName();
     }
 
     @Override
