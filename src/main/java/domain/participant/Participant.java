@@ -44,10 +44,6 @@ public abstract class Participant {
         return name.value();
     }
 
-    public boolean isBlackjack() {
-        return state.isBlackjack();
-    }
-
     public boolean isFinished() {
         return state.isFinished();
     }
