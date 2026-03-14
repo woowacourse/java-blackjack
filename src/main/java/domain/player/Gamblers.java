@@ -1,12 +1,8 @@
 package domain.player;
 
-import domain.MatchResult;
 import domain.deck.CardDeck;
-import dto.BlackjackResult;
-import dto.MatchResultLog;
-import expcetion.BlackjackException;
-import expcetion.ExceptionMessage;
-import java.util.HashSet;
+import exception.BlackjackException;
+import exception.ExceptionMessage;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -16,17 +12,17 @@ public class Gamblers {
 
     private final List<Gambler> gamblers;
 
-    public Gamblers(List<String> names) {
-        validateNonDuplicate(names);
-
-        gamblers = names.stream()
-                .map(Gambler::new)
-                .collect(Collectors.toList());
+    public Gamblers(List<Gambler> gamblers) {
+        validateNonDuplicate(gamblers);
+        this.gamblers = gamblers.stream().toList();
     }
 
-    private void validateNonDuplicate(List<String> names) {
-        Set<String> namesSet = new HashSet<>(names);
-        if (namesSet.size() != names.size()) {
+    private void validateNonDuplicate(List<Gambler> gamblers) {
+        Set<String> names = gamblers.stream()
+                .map(Gambler::getName)
+                .collect(Collectors.toSet());
+
+        if (names.size() != gamblers.size()) {
             throw new BlackjackException(ExceptionMessage.NAME_DUPLICATE_ERROR);
         }
     }
@@ -35,31 +31,13 @@ public class Gamblers {
         gamblers.forEach(gambler -> gambler.deal(cardDeck));
     }
 
-    public BlackjackResult getResult(int dealerScore) {
-        List<MatchResultLog> matchResultLogs = gamblers.stream()
-                .map(g -> new MatchResultLog(g.getName(), g.getResult(dealerScore)))
-                .toList();
-
-        int dealerWinCount = count(matchResultLogs, MatchResult.LOSE);
-        int dealerLoseCount = count(matchResultLogs, MatchResult.WIN);
-        int drawCount = matchResultLogs.size() - dealerWinCount - dealerLoseCount;
-
-        return new BlackjackResult(dealerWinCount, dealerLoseCount, drawCount, matchResultLogs);
-    }
-
-    private int count(List<MatchResultLog> logs, MatchResult result) {
-        return (int) logs.stream()
-                .filter(log -> log.matchResult() == result)
-                .count();
-    }
-
     public List<String> getNames() {
         return gamblers.stream()
                 .map(Gambler::getName)
                 .toList();
     }
 
-    public void forEach(Consumer<Gambler> consumer) {
+    public void forEachGambler(Consumer<Gambler> consumer) {
         gamblers.forEach(consumer);
     }
 

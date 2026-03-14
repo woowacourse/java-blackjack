@@ -3,14 +3,11 @@ package domain.player;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.MatchResult;
 import domain.StubDeck;
 import domain.card.Card;
 import domain.card.CardRank;
 import domain.card.CardSuit;
-import dto.BlackjackResult;
-import expcetion.BlackjackException;
-import java.util.ArrayList;
+import exception.BlackjackException;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,42 +17,53 @@ class GamblersTest {
     @Test
     @DisplayName("이름이 중복되면 안된다.")
     void 이름이_중복될_시() {
-        //given
-        List<String> names = new ArrayList<>(List.of("tobi", "tobi"));
+        // given
+        List<Gambler> gamblers = List.of(
+                new Gambler("tobi", 1000),
+                new Gambler("tobi", 2000)
+        );
 
-        //when & then
-        assertThatThrownBy(() -> new Gamblers(names))
+        // when & then
+        assertThatThrownBy(() -> new Gamblers(gamblers))
                 .isInstanceOf(BlackjackException.class);
     }
 
     @Test
-    @DisplayName("딜러 및 사용자 승패 결과 도출")
-    void 딜러와_사용자_승패결과_도출() {
-        //given
-        Dealer dealer = new Dealer();
-        Gamblers gamblers = new Gamblers(List.of("tobi", "quda")); // 사용자 두명
+    @DisplayName("도박사의 이름 목록을 반환한다")
+    void 이름_목록_반환() {
+        // given
+        Gambler gambler1 = new Gambler("tobi", 10000);
+        Gambler gambler2 = new Gambler("quda", 20000);
 
-        Card jack = new Card(CardRank.JACK, CardSuit.CLOVER); // 딜러
-        Card eight = new Card(CardRank.EIGHT, CardSuit.DIAMOND); // tobi
-        Card ten = new Card(CardRank.TEN, CardSuit.CLOVER); // quda
-        Card sevenDiamond = new Card(CardRank.SEVEN, CardSuit.DIAMOND); //딜러
-        Card sevenClover = new Card(CardRank.SEVEN, CardSuit.CLOVER); // tobi
-        Card nine = new Card(CardRank.NINE, CardSuit.DIAMOND); // quda
+        Gamblers gamblers = new Gamblers(List.of(gambler1, gambler2));
 
-        StubDeck sd = new StubDeck(List.of(jack, eight, ten, sevenDiamond, sevenClover, nine));
-        dealer.deal(sd);
-        gamblers.dealAll(sd);
-        dealer.deal(sd);
-        gamblers.dealAll(sd);
+        // when
+        List<String> names = gamblers.getNames();
 
-        //when
-        BlackjackResult result = gamblers.getResult(dealer.score());
-
-        //then
-        assertThat(result.winCount()).isEqualTo(1);
-        assertThat(result.lossCount()).isEqualTo(1);
-        assertThat(result.drawCount()).isEqualTo(0);
-        assertThat(result.matchResultLog().get(0).matchResult()).isEqualTo(MatchResult.LOSE);
-        assertThat(result.matchResultLog().get(1).matchResult()).isEqualTo(MatchResult.WIN);
+        // then
+        assertThat(names).containsExactly("tobi", "quda");
     }
+
+    @Test
+    @DisplayName("모든 도박사에게 카드를 배분한다")
+    void 모든_도박사에게_카드_배분() {
+        // given
+        Gambler gambler1 = new Gambler("tobi", 10000);
+        Gambler gambler2 = new Gambler("quda", 20000);
+
+        Gamblers gamblers = new Gamblers(List.of(gambler1, gambler2));
+
+        Card card1 = new Card(CardRank.TEN, CardSuit.CLOVER);
+        Card card2 = new Card(CardRank.NINE, CardSuit.DIAMOND);
+
+        StubDeck deck = new StubDeck(List.of(card1, card2));
+
+        // when
+        gamblers.dealAll(deck);
+
+        // then
+        assertThat(gambler1.cards()).hasSize(1);
+        assertThat(gambler2.cards()).hasSize(1);
+    }
+
 }
