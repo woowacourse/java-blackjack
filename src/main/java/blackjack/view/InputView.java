@@ -14,7 +14,7 @@ public class InputView {
     private static final String INVALID_HIT_DECISION_MESSAGE = "y 또는 n만 입력할 수 있습니다.";
     private static final String READ_PLAYER_WAGER_MESSAGE = "%s의 배팅 금액은?%n";
     private static final String INVALID_WAGER_REGEX_MESSAGE = "양수 범위 내의 숫자만 입력할 수 있습니다.%n";
-    private static final String NUMBER_REGEX = "^[0-9]+$";
+    private static final String NUMBER_REGEX = "^[1-9][0-9]*$";
 
     private final Scanner scanner = new Scanner(System.in);
 
