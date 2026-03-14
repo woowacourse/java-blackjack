@@ -16,13 +16,8 @@ public class OutputView {
         this.outputViewFormatter = outputViewFormatter;
     }
 
-    // TODO OutputViewFormatter로 이동
     public void printHandOutMessage(PlayersDto playersDto) {
-        String playersName = playersDto.playersDto().stream()
-                .map(PlayerDto::name)
-                .collect(Collectors.joining(","));
-
-        System.out.print("\n딜러와 " + playersName + "에게 2장을 나누었습니다.");
+        System.out.print(outputViewFormatter.formatHandOutMessage(playersDto));
     }
 
     public void printDealerCardStatus(ResultDto resultDto) {
