@@ -1,5 +1,7 @@
 package blackjack.controller;
 
+import blackjack.dto.InitialStatusDto;
+import blackjack.dto.ParticipantResultDto;
 import blackjack.dto.ProfitsDto;
 import blackjack.model.Dealer;
 import blackjack.model.Deck;
@@ -34,11 +36,15 @@ public class Controller {
 
         deck.shuffle();
         dealFirstTwoCards(dealer, players, deck);
-        outputView.printFirstCardStatus(dealer, players);
+        InitialStatusDto initialStatusDto = InitialStatusDto.from(dealer, players);
+        outputView.printFirstCardStatus(initialStatusDto);
 
         turnToPlayers(players, deck);
         turnToDealer(dealer, deck);
-        outputView.printScoreResult(dealer, players);
+
+        ParticipantResultDto dealerDto = ParticipantResultDto.from("딜러", dealer);
+        List<ParticipantResultDto> playerDtos = ParticipantResultDto.from(players);
+        outputView.printScoreResult(dealerDto, playerDtos);
 
         Settlement settlement = new Settlement(players.judgeAll(dealer, referee));
         outputView.printGameResult(ProfitsDto.from(settlement));
@@ -66,11 +72,11 @@ public class Controller {
 
     private void turnToOnePlayer(Deck deck, Player player) {
         while (player.canReceive()) {
-            if (!inputView.getReceiveCard(player)) {
+            if (!inputView.getReceiveCard(ParticipantResultDto.from(player.getName(), player))) {
                 return;
             }
             player.receiveCard(deck.giveCard());
-            outputView.printPlayerCardStatus(player, player.getHandCards());
+            outputView.printPlayerCardStatus(ParticipantResultDto.from(player.getName(), player));
         }
     }
 

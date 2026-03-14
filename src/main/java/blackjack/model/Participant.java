@@ -34,5 +34,9 @@ public abstract class Participant {
         return handCards.getCards();
     }
 
+    public int totalScore() {
+        return getScore().getScore();
+    }
+
     public abstract boolean canReceive();
 }

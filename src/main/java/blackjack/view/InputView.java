@@ -1,7 +1,7 @@
 package blackjack.view;
 
+import blackjack.dto.ParticipantResultDto;
 import blackjack.exception.ErrorMessage;
-import blackjack.model.Player;
 
 import java.util.Arrays;
 import java.util.List;
@@ -23,8 +23,8 @@ public class InputView {
                 .toList();
     }
 
-    public boolean getReceiveCard(Player player) {
-        System.out.println(player.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+    public boolean getReceiveCard(ParticipantResultDto participantResultDto) {
+        System.out.println(participantResultDto.getName() + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         String input = sc.nextLine();
         if (input.equals("n")) {
             return false;
