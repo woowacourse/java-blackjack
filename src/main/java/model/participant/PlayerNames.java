@@ -12,10 +12,9 @@ public final class PlayerNames {
     }
 
     public static PlayerNames from(List<String> names) {
-        List<String> copied = List.copyOf(names);
-        validateDuplicateNames(copied);
+        validateDuplicateNames(names);
 
-        return new PlayerNames(copied);
+        return new PlayerNames(names);
     }
 
     private static void validateDuplicateNames(List<String> names) {
