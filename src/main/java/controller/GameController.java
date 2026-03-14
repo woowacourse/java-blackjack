@@ -3,6 +3,7 @@ package controller;
 import domain.Betting;
 import domain.BettingResultCalculator;
 import domain.BlackjackGame;
+import domain.CardShuffler;
 import domain.Dealer;
 import domain.GameResultCalculator;
 import domain.Name;
@@ -30,15 +31,15 @@ public class GameController {
         this.outputView = outputView;
     }
 
-    public void start() {
-        BlackjackGame blackjackGame = initGame();
+    public void start(CardShuffler cardShuffler) {
+        BlackjackGame blackjackGame = initGame(cardShuffler);
         playGame(blackjackGame);
         printGameResult(blackjackGame);
     }
 
-    private BlackjackGame initGame() {
+    private BlackjackGame initGame(CardShuffler cardShuffler) {
         Names names = inputPlayerNames();
-        BlackjackGame blackjackGame = BlackjackGame.start(getPlayerInfos(names));
+        BlackjackGame blackjackGame = BlackjackGame.start(getPlayerInfos(names), cardShuffler);
         Dealer dealer = blackjackGame.getDealer();
         Players players = blackjackGame.getPlayers();
 

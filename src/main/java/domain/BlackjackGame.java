@@ -14,8 +14,8 @@ public class BlackjackGame {
         this.participants = participants;
     }
 
-    public static BlackjackGame start(List<PlayerInfo> playerInfos) {
-        Deck deck = Deck.createDeck();
+    public static BlackjackGame start(List<PlayerInfo> playerInfos, CardShuffler cardShuffler) {
+        Deck deck = Deck.createDeck(cardShuffler);
         Dealer dealer = Dealer.from(new Hand(initCards(deck)));
         Players players = createPlayers(playerInfos, deck);
         return new BlackjackGame(deck, GameParticipants.of(dealer, players));
