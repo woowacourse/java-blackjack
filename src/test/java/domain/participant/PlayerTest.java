@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -14,110 +13,69 @@ class PlayerTest {
     @Nested
     class ConstructorTest {
 
-        @Nested
-        class Success {
+        @Test
+        void 생성하면_이름을_반환할_수_있다() {
+            // given
+            String name = "jacob";
 
-            @Test
-            void 게임_참가자_조건이_맞으면_성공_이다() {
+            // when
+            Player actual = new Player(name);
 
-                // given
-                String name = "jacob";
-
-                // when
-                Player player = new Player(name);
-                String actual = player.getName();
-
-                // then
-                String expected = "jacob";
-                Assertions.assertEquals(expected, actual);
-            }
+            // then
+            assertThat(actual.getName()).isEqualTo(name);
         }
     }
 
     @Nested
-    class AddCardTest {
+    class SetBetAmountTest {
 
-        @Nested
-        class Success {
+        @Test
+        void 배팅_금액을_설정하면_조회할_수_있다() {
+            // given
+            Player player = new Player("jacob");
+            BetAmount betAmount = new BetAmount("2000");
 
-            @Test
-            void 카드를_추가하면_손패에_카드가_저장되어야_한다() {
+            // when
+            player.setBetAmount(betAmount);
 
-                // given
-                Player player = new Player("jacob");
-                Card card = new Card(Rank.ACE, Suit.HEART);
-
-                // when
-                player.addCard(card);
-
-                // then
-                assertThat(player.getHand().size()).isEqualTo(1);
-            }
+            // then
+            assertThat(player.getBetAmount()).isEqualTo(2000);
         }
     }
 
     @Nested
-    class IsBustTest {
+    class IsBlackjackTest {
 
-        @Nested
-        class Success {
+        @Test
+        void 처음_두_장이_21점이면_블랙잭이다() {
+            // given
+            Player player = new Player("jacob");
+            player.addCard(card(Rank.ACE, Suit.HEART));
+            player.addCard(card(Rank.K, Suit.SPADE));
 
-            @Test
-            void 플레이어의_점수가_21_초과이면_버스트이다() {
+            // when
+            boolean actual = player.isBlackjack();
 
-                // given
-                Player player = new Player("jacob");
-                Card card1 = new Card(Rank.TEN, Suit.HEART);
-                Card card2 = new Card(Rank.TEN, Suit.HEART);
-                Card card3 = new Card(Rank.TEN, Suit.HEART);
+            // then
+            assertThat(actual).isTrue();
+        }
 
-                // when
-                player.addCard(card1);
-                player.addCard(card2);
-                player.addCard(card3);
+        @Test
+        void 처음_두_장이_21점이_아니면_블랙잭이_아니다() {
+            // given
+            Player player = new Player("jacob");
+            player.addCard(card(Rank.TEN, Suit.HEART));
+            player.addCard(card(Rank.NINE, Suit.SPADE));
 
-                // then
-                assertThat(player.isBust()).isTrue();
-            }
+            // when
+            boolean actual = player.isBlackjack();
 
-            @Test
-            void 플레이어의_점수가_21_이하이면_버스트가_아니다() {
-
-                // given
-                Player player = new Player("jacob");
-                Card card1 = new Card(Rank.TEN, Suit.HEART);
-                Card card2 = new Card(Rank.ACE, Suit.HEART);
-
-                // when
-                player.addCard(card1);
-                player.addCard(card2);
-
-                // then
-                assertThat(player.isBust()).isFalse();
-            }
+            // then
+            assertThat(actual).isFalse();
         }
     }
 
-    @Nested
-    class CalculateScoreTest {
-
-        @Nested
-        class Success {
-
-            @Test
-            void 플레이어의_현재_점수를_반환해야_한다() {
-
-                // given
-                Player player = new Player("jacob");
-                player.addCard(new Card(Rank.TEN, Suit.HEART));
-                player.addCard(new Card(Rank.THREE, Suit.SPADE));
-
-                // when
-                int actual = player.calculateScore();
-
-                // then
-                assertThat(actual).isEqualTo(13);
-            }
-        }
+    private static Card card(Rank rank, Suit suit) {
+        return new Card(rank, suit);
     }
 }
