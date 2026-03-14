@@ -41,11 +41,8 @@ public class BlackJackGameController {
         CalculateProfit calculateProfit = new CalculateProfit(bettingAmounts);
         GameResultManager gameResultManager =
                 new GameResultManager(calculateProfit, players, gameManager.getDealer());
-        //TODO: 여기 아래 가 변경되어야 함. 지금 gameResuㅣㅅ
-        //Map<String, GameResult> gameResult = gameResultManager.getGameResult();
         Map<Name, Revenue> profits = gameResultManager.getParticipantsProfit();
         List<ParticipantRevenueDto> revenueDtos = toParticipantRevenueDtos(profits);
-
         endGame(gameManager, players, revenueDtos);
     }
 
@@ -68,8 +65,6 @@ public class BlackJackGameController {
         }
         return revenueDtos;
     }
-
-
 
     private void playGame(Players players, GameManager gameManager) {
         players.forEach(player -> playGameWithPlayer(player, gameManager));
@@ -113,7 +108,6 @@ public class BlackJackGameController {
     private void endGame(GameManager gameManager, Players players, List<ParticipantRevenueDto> participantRevenueDtos) {
         OutputView.printFinalCards(toParticipantCardsDto(gameManager.getDealer()));
         printFinalScores(players);
-        // OutputView.printGameResult(gameResult);
         OutputView.printParticipantRevenues(participantRevenueDtos);
     }
 
