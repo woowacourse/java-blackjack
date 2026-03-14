@@ -21,10 +21,6 @@ public class Bets {
         bets.put(player, new Bet(betAmount));
     }
 
-    public Set<Entry<Player, Bet>> getBets() {
-        return Collections.unmodifiableSet(bets.entrySet());
-    }
-
     public Map<Player, Integer> determinePlayerProfits(Dealer dealer) {
         return getBets().stream()
                 .collect(Collectors.toMap(
@@ -70,5 +66,9 @@ public class Bets {
             return ProfitRate.DRAW;
         }
         return ProfitRate.WIN_BLACKJACK;
+    }
+
+    public Set<Entry<Player, Bet>> getBets() {
+        return Collections.unmodifiableSet(bets.entrySet());
     }
 }
