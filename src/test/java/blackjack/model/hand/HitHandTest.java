@@ -39,4 +39,16 @@ class HitHandTest {
         // then
         assertThat(hand).isInstanceOf(BustHand.class);
     }
+
+    @Test
+    void 현재_상태에_대한_수익률을_제공한다() {
+        // given
+        Hand hand = new HitHand(DEFAULT_EXIST_CARDS, DEFAULT_NEW_CARD);
+
+        // when
+        double earningRate = hand.getEarningRate();
+
+        // then
+        assertThat(earningRate).isEqualTo(1);
+    }
 }

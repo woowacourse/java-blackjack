@@ -30,9 +30,7 @@ public abstract class Hand {
 
     public abstract boolean canHit();
 
-    public double getEarningRate() {
-        return 1;
-    }
+    public abstract double getEarningRate();
 
     public boolean isBust() {
         return isBust(calculateScore());

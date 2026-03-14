@@ -16,4 +16,9 @@ public class BustHand extends FinishedHand {
             throw new IllegalStateException("패가 버스트이지 않습니다.");
         }
     }
+
+    @Override
+    public double getEarningRate() {
+        return 1;
+    }
 }

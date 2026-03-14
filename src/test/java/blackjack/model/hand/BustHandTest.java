@@ -1,5 +1,6 @@
 package blackjack.model.hand;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import blackjack.model.card.Card;
@@ -17,5 +18,24 @@ class BustHandTest {
 
         assertThatThrownBy(() -> new BustHand(notBustCards, notBustCard))
                 .isInstanceOf(IllegalStateException.class);
+    }
+
+    @Test
+    void 현재_상태에_대한_수익률을_제공한다() {
+        // given
+        List<Card> bustCards = List.of(
+                new Card(Rank.KING, Suit.HEART),
+                new Card(Rank.QUEEN, Suit.HEART),
+                new Card(Rank.JACK, Suit.HEART)
+        );
+        Card newCard = new Card(Rank.TEN, Suit.HEART);
+
+        BustHand hand = new BustHand(bustCards, newCard);
+
+        // when
+        double earningRate = hand.getEarningRate();
+
+        // then
+        assertThat(earningRate).isEqualTo(1);
     }
 }

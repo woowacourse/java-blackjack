@@ -24,6 +24,11 @@ public class UninitializedHand extends PlayingHand {
         return new UninitializedHand(cards, newCard);
     }
 
+    @Override
+    public double getEarningRate() {
+        return 1;
+    }
+
     private boolean shouldInitialize() {
         return cards.size() + 1 >= NEXT_STEP_THRESHOLD;
     }

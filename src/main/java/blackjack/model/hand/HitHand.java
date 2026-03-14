@@ -17,4 +17,9 @@ public class HitHand extends PlayingHand {
 
         return new HitHand(cards, newCard);
     }
+
+    @Override
+    public double getEarningRate() {
+        return 1;
+    }
 }
