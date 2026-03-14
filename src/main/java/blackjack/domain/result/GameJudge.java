@@ -4,7 +4,7 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
 public class GameJudge {
-    public GameResult getResult(Dealer dealer, Player player) {
+    public static GameResult of(Dealer dealer, Player player) {
         if (player.isBust()) {
             return GameResult.DEALER_WIN;
         }
@@ -14,7 +14,7 @@ public class GameJudge {
         return competeScoreWith(dealer, player);
     }
 
-    private GameResult competeScoreWith(Dealer dealer, Player player) {
+    private static GameResult competeScoreWith(Dealer dealer, Player player) {
         Score dealerScore = dealer.getScore();
         Score playerScore = player.getScore();
 

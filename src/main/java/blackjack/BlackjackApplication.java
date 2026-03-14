@@ -3,6 +3,7 @@ package blackjack;
 import blackjack.core.BlackjackGame;
 import blackjack.domain.card.ShuffledCardsGenerator;
 import blackjack.domain.participant.Player;
+import blackjack.domain.result.GameResult;
 import blackjack.dto.DealerHitDto;
 import blackjack.dto.GameResultDtos;
 import blackjack.dto.InitialDealDtos;
@@ -11,6 +12,8 @@ import blackjack.dto.ParticipantScoreDtos;
 import blackjack.view.BlackjackView;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BlackjackApplication {
     private final BlackjackView view;
@@ -59,8 +62,16 @@ public class BlackjackApplication {
     }
 
     private void printResult() {
-        view.printResult(
-            GameResultDtos.of(game.getPlayersResults()));
+        Map<Player, GameResult> playerResults = parseResultMap();
+        view.printResult(GameResultDtos.of(playerResults));
+    }
+
+    private Map<Player, GameResult> parseResultMap() {
+        return game.getPlayers().stream()
+            .collect(Collectors.toMap(
+                player -> player,
+                game::judge
+            ));
     }
 
     public static void main(String[] args) {

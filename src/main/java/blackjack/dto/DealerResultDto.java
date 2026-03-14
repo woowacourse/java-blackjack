@@ -1,24 +1,25 @@
 package blackjack.dto;
 
+import blackjack.domain.participant.Player;
 import blackjack.domain.result.GameResult;
-import blackjack.domain.result.PlayerResults;
+import java.util.Map;
 
 public record DealerResultDto(int win, int lose, int push) {
-    public static DealerResultDto from(PlayerResults results) {
+    public static DealerResultDto from(Map<Player, GameResult> results) {
         int winCount = getPlayerWinCount(results);
         int loseCount = getPlayerLoseCount(results);
-        int pushCount = getPushCount(results.entries().size(), loseCount, winCount);
+        int pushCount = getPushCount(results.size(), loseCount, winCount);
         return new DealerResultDto(winCount, loseCount, pushCount);
     }
 
-    private static int getPlayerWinCount(PlayerResults results) {
-        return (int) results.entries().values().stream()
+    private static int getPlayerWinCount(Map<Player, GameResult> results) {
+        return (int) results.values().stream()
             .filter(result -> result == GameResult.DEALER_WIN)
             .count();
     }
 
-    private static int getPlayerLoseCount(PlayerResults results) {
-        return (int) results.entries().values().stream()
+    private static int getPlayerLoseCount(Map<Player, GameResult> results) {
+        return (int) results.values().stream()
             .filter(result -> result == GameResult.PLAYER_WIN)
             .count();
     }

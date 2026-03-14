@@ -6,7 +6,8 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.PlayerGroup;
-import blackjack.domain.result.PlayerResults;
+import blackjack.domain.result.GameJudge;
+import blackjack.domain.result.GameResult;
 import java.util.List;
 
 public class BlackjackGame {
@@ -65,7 +66,7 @@ public class BlackjackGame {
         return dealer.canHit();
     }
 
-    public PlayerResults getPlayersResults() {
-        return PlayerResults.of(dealer, playerGroup);
+    public GameResult judge(Player player) {
+        return GameJudge.of(dealer, player);
     }
 }
