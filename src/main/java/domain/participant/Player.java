@@ -1,4 +1,6 @@
-package domain;
+package domain.participant;
+
+import domain.game.GameResult;
 
 public class Player extends Participant {
     private static final int CAN_RECEIVE_CARD_THRESHOLD = 21;

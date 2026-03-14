@@ -2,6 +2,15 @@ package domain;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import domain.card.Card;
+import domain.card.Number;
+import domain.card.Shape;
+import domain.game.GameManager;
+import domain.game.GameResult;
+import domain.participant.Dealer;
+import domain.participant.Name;
+import domain.participant.Player;
+import domain.participant.Players;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
@@ -17,13 +26,13 @@ class GameManagerTest {
 
         Dealer dealer = gameManager.getDealer();
 
-        dealer.receiveCard(new Card(Shape.SPADE, Number.TEN));
-        dealer.receiveCard(new Card(Shape.HEART, Number.EIGHT));
+        dealer.receiveCard(new Card(Shape.SPADE, domain.card.Number.TEN));
+        dealer.receiveCard(new Card(Shape.HEART, domain.card.Number.EIGHT));
 
-        pobi.receiveCard(new Card(Shape.DIAMOND, Number.TEN));
-        pobi.receiveCard(new Card(Shape.CLUB, Number.TEN));
+        pobi.receiveCard(new Card(Shape.DIAMOND, domain.card.Number.TEN));
+        pobi.receiveCard(new Card(Shape.CLUB, domain.card.Number.TEN));
 
-        crong.receiveCard(new Card(Shape.SPADE, Number.NINE));
+        crong.receiveCard(new Card(Shape.SPADE, domain.card.Number.NINE));
         crong.receiveCard(new Card(Shape.HEART, Number.SEVEN));
 
         Map<String, GameResult> result = gameManager.getGameResult();

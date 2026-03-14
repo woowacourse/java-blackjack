@@ -1,4 +1,4 @@
-package domain;
+package domain.participant;
 
 public class Dealer extends Participant {
     private static final int CAN_RECEIVE_CARD_THRESHOLD = 17;

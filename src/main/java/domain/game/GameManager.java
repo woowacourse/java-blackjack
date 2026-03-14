@@ -1,5 +1,11 @@
-package domain;
+package domain.game;
 
+import domain.card.Card;
+import domain.participant.Dealer;
+import domain.card.Deck;
+import domain.participant.Name;
+import domain.participant.Participant;
+import domain.participant.Players;
 import java.util.HashMap;
 import java.util.Map;
 

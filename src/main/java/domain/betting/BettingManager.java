@@ -1,5 +1,6 @@
-package domain;
+package domain.betting;
 
+import domain.participant.Name;
 import java.util.HashMap;
 import java.util.Map;
 

@@ -2,6 +2,7 @@ package domain;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import domain.card.Deck;
 import org.junit.jupiter.api.Test;
 
 class DeckTest {

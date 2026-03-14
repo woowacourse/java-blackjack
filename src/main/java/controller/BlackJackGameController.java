@@ -1,6 +1,12 @@
 package controller;
 
-import domain.*;
+import domain.game.GameManager;
+import domain.game.GameResult;
+import domain.participant.Dealer;
+import domain.participant.Name;
+import domain.participant.Participant;
+import domain.participant.Player;
+import domain.participant.Players;
 import dto.ParticipantCardsDto;
 import view.InputView;
 import view.OutputView;

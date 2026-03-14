@@ -2,6 +2,10 @@ package domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import domain.betting.BettingAmount;
+import domain.betting.BettingManager;
+import domain.participant.Name;
+import domain.participant.Player;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.Test;

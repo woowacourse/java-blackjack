@@ -2,6 +2,13 @@ package domain;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import domain.card.Card;
+import domain.card.Number;
+import domain.card.Shape;
+import domain.game.GameResult;
+import domain.participant.Dealer;
+import domain.participant.Name;
+import domain.participant.Player;
 import org.junit.jupiter.api.Test;
 
 class PlayerTest {
@@ -9,9 +16,9 @@ class PlayerTest {
     @Test
     void 점수가_21점을_초과하면_버스트이다() {
         Player player = new Player(new Name("pobi"));
-        player.receiveCard(new Card(Shape.SPADE, Number.TEN));
-        player.receiveCard(new Card(Shape.HEART, Number.JACK));
-        player.receiveCard(new Card(Shape.DIAMOND, Number.TWO));
+        player.receiveCard(new Card(Shape.SPADE, domain.card.Number.TEN));
+        player.receiveCard(new Card(Shape.HEART, domain.card.Number.JACK));
+        player.receiveCard(new Card(Shape.DIAMOND, domain.card.Number.TWO));
 
         boolean result = player.isBust();
 
@@ -21,9 +28,9 @@ class PlayerTest {
     @Test
     void 점수가_21점이면_버스트가_아니다() {
         Player player = new Player(new Name("pobi"));
-        player.receiveCard(new Card(Shape.SPADE, Number.NINE));
-        player.receiveCard(new Card(Shape.HEART, Number.JACK));
-        player.receiveCard(new Card(Shape.DIAMOND, Number.TWO));
+        player.receiveCard(new Card(Shape.SPADE, domain.card.Number.NINE));
+        player.receiveCard(new Card(Shape.HEART, domain.card.Number.JACK));
+        player.receiveCard(new Card(Shape.DIAMOND, domain.card.Number.TWO));
 
         boolean result = player.isBust();
 
@@ -33,8 +40,8 @@ class PlayerTest {
     @Test
     void 에이스와_10점카드를_받으면_블랙잭이다() {
         Player player = new Player(new Name("pobi"));
-        player.receiveCard(new Card(Shape.SPADE, Number.ACE));
-        player.receiveCard(new Card(Shape.HEART, Number.JACK));
+        player.receiveCard(new Card(Shape.SPADE, domain.card.Number.ACE));
+        player.receiveCard(new Card(Shape.HEART, domain.card.Number.JACK));
 
         boolean result = player.isBlackJack();
 
@@ -44,8 +51,8 @@ class PlayerTest {
     @Test
     void 두장의_합이_21이아니면_블랙잭이_아니다() {
         Player player = new Player(new Name("pobi"));
-        player.receiveCard(new Card(Shape.SPADE, Number.JACK));
-        player.receiveCard(new Card(Shape.HEART, Number.JACK));
+        player.receiveCard(new Card(Shape.SPADE, domain.card.Number.JACK));
+        player.receiveCard(new Card(Shape.HEART, domain.card.Number.JACK));
 
         boolean result = player.isBlackJack();
 
@@ -55,9 +62,9 @@ class PlayerTest {
     @Test
     void 세장의_합이_21이어도_블랙잭이_아니다() {
         Player player = new Player(new Name("pobi"));
-        player.receiveCard(new Card(Shape.SPADE, Number.EIGHT));
-        player.receiveCard(new Card(Shape.HEART, Number.JACK));
-        player.receiveCard(new Card(Shape.HEART, Number.THREE));
+        player.receiveCard(new Card(Shape.SPADE, domain.card.Number.EIGHT));
+        player.receiveCard(new Card(Shape.HEART, domain.card.Number.JACK));
+        player.receiveCard(new Card(Shape.HEART, domain.card.Number.THREE));
 
         boolean result = player.isBlackJack();
 
@@ -67,9 +74,9 @@ class PlayerTest {
     @Test
     void 점수가_21점_미만이면_카드를_추가로_받을_수_있다() {
         Player player = new Player(new Name("pobi"));
-        player.receiveCard(new Card(Shape.SPADE, Number.EIGHT));
-        player.receiveCard(new Card(Shape.HEART, Number.JACK));
-        player.receiveCard(new Card(Shape.DIAMOND, Number.TWO));
+        player.receiveCard(new Card(Shape.SPADE, domain.card.Number.EIGHT));
+        player.receiveCard(new Card(Shape.HEART, domain.card.Number.JACK));
+        player.receiveCard(new Card(Shape.DIAMOND, domain.card.Number.TWO));
 
         boolean result = player.isContinueGame();
 
@@ -79,9 +86,9 @@ class PlayerTest {
     @Test
     void 점수가_21점_이상이면_카드를_추가로_받을_수_없다() {
         Player player = new Player(new Name("pobi"));
-        player.receiveCard(new Card(Shape.SPADE, Number.NINE));
-        player.receiveCard(new Card(Shape.HEART, Number.JACK));
-        player.receiveCard(new Card(Shape.DIAMOND, Number.TWO));
+        player.receiveCard(new Card(Shape.SPADE, domain.card.Number.NINE));
+        player.receiveCard(new Card(Shape.HEART, domain.card.Number.JACK));
+        player.receiveCard(new Card(Shape.DIAMOND, domain.card.Number.TWO));
 
         boolean result = player.isContinueGame();
 
@@ -93,11 +100,11 @@ class PlayerTest {
         Player player = new Player(new Name("pobi"));
         Dealer dealer = new Dealer(new Name("딜러"));
 
-        player.receiveCard(new Card(Shape.SPADE, Number.TEN));
-        player.receiveCard(new Card(Shape.HEART, Number.JACK));
+        player.receiveCard(new Card(Shape.SPADE, domain.card.Number.TEN));
+        player.receiveCard(new Card(Shape.HEART, domain.card.Number.JACK));
 
-        dealer.receiveCard(new Card(Shape.DIAMOND, Number.TEN));
-        dealer.receiveCard(new Card(Shape.CLUB, Number.EIGHT));
+        dealer.receiveCard(new Card(Shape.DIAMOND, domain.card.Number.TEN));
+        dealer.receiveCard(new Card(Shape.CLUB, domain.card.Number.EIGHT));
 
         GameResult result = player.judgeResult(dealer);
 
@@ -109,11 +116,11 @@ class PlayerTest {
         Player player = new Player(new Name("pobi"));
         Dealer dealer = new Dealer(new Name("딜러"));
 
-        player.receiveCard(new Card(Shape.SPADE, Number.TEN));
-        player.receiveCard(new Card(Shape.HEART, Number.JACK));
+        player.receiveCard(new Card(Shape.SPADE, domain.card.Number.TEN));
+        player.receiveCard(new Card(Shape.HEART, domain.card.Number.JACK));
 
-        dealer.receiveCard(new Card(Shape.DIAMOND, Number.TEN));
-        dealer.receiveCard(new Card(Shape.CLUB, Number.JACK));
+        dealer.receiveCard(new Card(Shape.DIAMOND, domain.card.Number.TEN));
+        dealer.receiveCard(new Card(Shape.CLUB, domain.card.Number.JACK));
 
         GameResult result = player.judgeResult(dealer);
 
@@ -125,10 +132,10 @@ class PlayerTest {
         Player player = new Player(new Name("pobi"));
         Dealer dealer = new Dealer(new Name("딜러"));
 
-        player.receiveCard(new Card(Shape.SPADE, Number.TEN));
+        player.receiveCard(new Card(Shape.SPADE, domain.card.Number.TEN));
 
-        dealer.receiveCard(new Card(Shape.DIAMOND, Number.TEN));
-        dealer.receiveCard(new Card(Shape.CLUB, Number.JACK));
+        dealer.receiveCard(new Card(Shape.DIAMOND, domain.card.Number.TEN));
+        dealer.receiveCard(new Card(Shape.CLUB, domain.card.Number.JACK));
 
         GameResult result = player.judgeResult(dealer);
 
@@ -140,12 +147,12 @@ class PlayerTest {
         Player player = new Player(new Name("pobi"));
         Dealer dealer = new Dealer(new Name("딜러"));
 
-        player.receiveCard(new Card(Shape.SPADE, Number.TWO));
-        player.receiveCard(new Card(Shape.HEART, Number.JACK));
-        player.receiveCard(new Card(Shape.CLUB, Number.JACK));
+        player.receiveCard(new Card(Shape.SPADE, domain.card.Number.TWO));
+        player.receiveCard(new Card(Shape.HEART, domain.card.Number.JACK));
+        player.receiveCard(new Card(Shape.CLUB, domain.card.Number.JACK));
 
-        dealer.receiveCard(new Card(Shape.DIAMOND, Number.TEN));
-        dealer.receiveCard(new Card(Shape.CLUB, Number.EIGHT));
+        dealer.receiveCard(new Card(Shape.DIAMOND, domain.card.Number.TEN));
+        dealer.receiveCard(new Card(Shape.CLUB, domain.card.Number.EIGHT));
 
         GameResult result = player.judgeResult(dealer);
 
@@ -157,11 +164,11 @@ class PlayerTest {
         Player player = new Player(new Name("pobi"));
         Dealer dealer = new Dealer(new Name("딜러"));
 
-        player.receiveCard(new Card(Shape.SPADE, Number.TEN));
-        player.receiveCard(new Card(Shape.HEART, Number.JACK));
+        player.receiveCard(new Card(Shape.SPADE, domain.card.Number.TEN));
+        player.receiveCard(new Card(Shape.HEART, domain.card.Number.JACK));
 
-        dealer.receiveCard(new Card(Shape.DIAMOND, Number.TEN));
-        dealer.receiveCard(new Card(Shape.CLUB, Number.TWO));
+        dealer.receiveCard(new Card(Shape.DIAMOND, domain.card.Number.TEN));
+        dealer.receiveCard(new Card(Shape.CLUB, domain.card.Number.TWO));
         dealer.receiveCard(new Card(Shape.HEART, Number.TEN));
 
         GameResult result = player.judgeResult(dealer);

@@ -1,6 +1,6 @@
 package view;
 
-import domain.GameResult;
+import domain.game.GameResult;
 import dto.ParticipantCardsDto;
 
 import java.util.List;
