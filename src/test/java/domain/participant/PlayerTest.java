@@ -1,22 +1,20 @@
 package domain.participant;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 import domain.BetMoney;
-import domain.BlackjackGame;
 import domain.Rank;
 import domain.Suit;
 import domain.card.Card;
+import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-
 public class PlayerTest {
-    private static final Dealer DEALER_BLACKJACK = new Dealer(BlackjackGame.DEALER_NAME);
-    private static final Dealer DEALER_BUST = new Dealer(BlackjackGame.DEALER_NAME);
-    private static final Dealer DEALER_21 = new Dealer(BlackjackGame.DEALER_NAME);
-    private static final Dealer DEALER_20 = new Dealer(BlackjackGame.DEALER_NAME);
+    private static final Dealer DEALER_BLACKJACK = new Dealer();
+    private static final Dealer DEALER_BUST = new Dealer();
+    private static final Dealer DEALER_21 = new Dealer();
+    private static final Dealer DEALER_20 = new Dealer();
     private static final Player PLAYER_BLACKJACK = new Player("BLACKJACK", 10000);
     private static final Player PLAYER_BUST = new Player("BUST", 10000);
     private static final Player PLAYER_21 = new Player("21", 10000);
@@ -25,10 +23,11 @@ public class PlayerTest {
     static {
 
         List<Card> scoreBlackjackCards = List.of(new Card(Suit.CLUB, Rank.Q), new Card(Suit.HEART, Rank.ACE));
-        List<Card> scoreBustCards = List.of(new Card(Suit.CLUB, Rank.Q), new Card(Suit.HEART, Rank.Q), new Card(Suit.DIAMOND, Rank.Q));
+        List<Card> scoreBustCards = List.of(new Card(Suit.CLUB, Rank.Q), new Card(Suit.HEART, Rank.Q),
+                new Card(Suit.DIAMOND, Rank.Q));
         List<Card> score20Cards = List.of(new Card(Suit.CLUB, Rank.Q), new Card(Suit.HEART, Rank.Q));
-        List<Card> score21Cards = List.of(new Card(Suit.CLUB, Rank.EIGHT), new Card(Suit.CLUB, Rank.TWO), new Card(Suit.HEART, Rank.ACE));
-
+        List<Card> score21Cards = List.of(new Card(Suit.CLUB, Rank.EIGHT), new Card(Suit.CLUB, Rank.TWO),
+                new Card(Suit.HEART, Rank.ACE));
 
         DEALER_BLACKJACK.addCards(scoreBlackjackCards);
         DEALER_BUST.addCards(scoreBustCards);

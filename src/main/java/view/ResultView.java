@@ -9,7 +9,6 @@ import domain.dto.RoundResult;
 import domain.dto.TotalResult;
 import domain.participant.Dealer;
 import domain.participant.Name;
-import domain.participant.Participant;
 import domain.participant.Player;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,7 +19,7 @@ public class ResultView {
     public void printParticipantsCards(List<Player> players, Dealer dealer) {
         printEmptyLine();
         System.out.println(
-                dealer.getName().getValue() + "와 " + joinPlayersNameByDelimiter(players) + "에게 "
+                "딜러와 " + joinPlayersNameByDelimiter(players) + "에게 "
                         + BlackjackGame.DEFAULT_HAND_NUMBER
                         + "장을 나누었습니다.");
         Card dealerCard = dealer.getFirstCard();
@@ -78,17 +77,20 @@ public class ResultView {
 
     public void printCardsWithResult(List<Player> players, Dealer dealer) {
         printEmptyLine();
-        printCardWithResult(dealer);
+        System.out.println(
+                "딜러카드: " + cardsToString(
+                        dealer.getCards().getCards()) + " - 결과: "
+                        + dealer.getTotalSum().value());
 
         for (Player player : players) {
             printCardWithResult(player);
         }
     }
 
-    private void printCardWithResult(Participant participant) {
+    private void printCardWithResult(Player player) {
         System.out.println(
-                participant.getName().getValue() + "카드: " + cardsToString(
-                        participant.getCards().getCards()) + " - 결과: "
-                        + participant.getTotalSum().value());
+                "카드: " + cardsToString(
+                        player.getCards().getCards()) + " - 결과: "
+                        + player.getTotalSum().value());
     }
 }

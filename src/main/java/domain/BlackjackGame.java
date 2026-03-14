@@ -12,7 +12,6 @@ import java.util.function.Function;
 
 public class BlackjackGame {
     public static final int DEFAULT_HAND_NUMBER = 2;
-    public static final String DEALER_NAME = "딜러";
     public static final Score DEALER_HIT_STAND_BOUNDARY = new Score(16);
     private final Players players;
     private final Dealer dealer;
@@ -21,7 +20,7 @@ public class BlackjackGame {
     public BlackjackGame(List<String> players) {
         validate(players);
         this.players = Players.from(players);
-        this.dealer = new Dealer(DEALER_NAME);
+        this.dealer = new Dealer();
         this.deck = new Deck();
     }
 
