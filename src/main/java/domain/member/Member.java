@@ -1,21 +1,29 @@
 package domain.member;
 
 import domain.card.Card;
+import domain.card.Deck;
+import domain.vo.RoundResult;
 import java.util.List;
 
-public abstract class Member {
+public class Member {
 
     private final Hand hand;
     private final Name name;
+    private final MemberRole role;
 
-    public Member(String name) {
-        this.name = new Name(name);
+    public Member(Name name, MemberRole role) {
+        this.name = name;
         this.hand = new Hand();
+        this.role = role;
     }
 
-    public abstract List<Card> showFirstCards();
+    public int calculateProfit(RoundResult result) {
+        return result.calculateProfit(role.getBettingAmount());
+    }
 
-    public abstract boolean isDealer();
+    public void applyBlackjackBonus() {
+        role.applyBonus();
+    }
 
     public int handValue() {
         return hand.calculateTotalValue();
@@ -29,8 +37,21 @@ public abstract class Member {
         hand.appendCard(card);
     }
 
-    public boolean hasName(String name) {
-        return this.name.isName(name);
+    public boolean hasBust() {
+        return hand.isBust();
+    }
+
+    public boolean hasBlackjack() {
+        return hand.isBlackjack();
+    }
+
+    public List<Card> showFirstCards() {
+        return role.showFirstCards(hand.getCards());
+    }
+
+    public void initDraw(Deck deck) {
+        receiveCard(deck.draw());
+        receiveCard(deck.draw());
     }
 
     public String getName() {
