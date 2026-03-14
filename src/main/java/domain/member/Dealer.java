@@ -1,18 +1,22 @@
 package domain.member;
 
-import constant.Word;
 import domain.MatchResult;
 
 public class Dealer extends Member {
+    private static final int DEALER_DRAW_CONDITION = 16;
 
     public Dealer() {
-        super(Word.DEALER.getWord());
+        super(DEALER_NAME);
+    }
+
+    public boolean isMeetTheDrawCondition() {
+        return currentScore() <= DEALER_DRAW_CONDITION;
     }
 
     @Override
     public MatchResult compareScoreWith(Member player) {
-        int dealerScore = currentValue();
-        int playerScore = player.currentValue();
+        int dealerScore = currentScore();
+        int playerScore = player.currentScore();
         if (playerScore > BUST_CONDITION) {
             return MatchResult.WIN;
         }

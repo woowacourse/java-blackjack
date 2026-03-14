@@ -5,6 +5,7 @@ import domain.card.Card;
 import java.util.List;
 
 public abstract class Member {
+    protected static final String DEALER_NAME = "딜러";
     protected static final int BUST_CONDITION = 21;
 
     private final String name;
@@ -19,7 +20,7 @@ public abstract class Member {
         return name;
     }
 
-    public int currentValue() {
+    public int currentScore() {
         return hand.calculateTotalValue();
     }
 

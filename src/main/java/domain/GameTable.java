@@ -1,6 +1,5 @@
 package domain;
 
-import constant.Word;
 import domain.card.Card;
 import domain.card.Deck;
 import dto.GameResult;
@@ -8,12 +7,10 @@ import dto.MemberStatus;
 import domain.member.Members;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class GameTable {
 
     private static final int BLACKJACK = 21;
-    private static final int DEALER_DRAW_CONDITION = 16;
 
     private final Members members;
     private final Deck deck;
@@ -24,46 +21,48 @@ public class GameTable {
     }
 
     public void distributeInitCard() {
-        for (String memberName : members.getAllMemberName()) {
-            members.provideCardToMember(memberName, deck.draw());
-            members.provideCardToMember(memberName, deck.draw());
+        members.provideCardToDealer(deck.draw());
+        members.provideCardToDealer(deck.draw());
+        for (String memberName : members.getAllPlayerName()) {
+            members.provideCardToPlayer(memberName, deck.draw());
+            members.provideCardToPlayer(memberName, deck.draw());
         }
     }
 
     public boolean checkBust(String memberName) {
-        return members.checkValue(memberName) > BLACKJACK;
+        return members.checkPlayerScore(memberName) > BLACKJACK;
     }
 
     public List<Card> drawForMember(String memberName) {
-        members.provideCardToMember(memberName, deck.draw());
+        members.provideCardToPlayer(memberName, deck.draw());
         return members.findCardByName(memberName);
     }
 
     public boolean drawForDealer() {
-        if (members.checkValue(Word.DEALER.getWord()) <= DEALER_DRAW_CONDITION) {
-            members.provideCardToMember(Word.DEALER.getWord(), deck.draw());
+        if (members.isMeetTheDrawConditionForDealer()) {
+            members.provideCardToDealer(deck.draw());
             return true;
         }
         return false;
     }
 
     public List<MemberStatus> checkMemberStatuses() {
-        return members.getAllMemberName()
-                .stream()
-                .map(name -> {
-                    List<Card> cards = members.findCardByName(name);
-                    int totalValue = members.checkValue(name);
-                    return new MemberStatus(name, cards, totalValue);
-                }).toList();
+        List<MemberStatus> memberStatuses = new ArrayList<>();
+        memberStatuses.add(
+                new MemberStatus(members.getDealerName(), members.findDealerCards(), members.checkDealerScore()));
+
+        members.getAllPlayerName().stream()
+                .map(name -> new MemberStatus(name, members.findCardByName(name), members.checkPlayerScore(name)))
+                .forEach(memberStatuses::add);
+        return List.copyOf(memberStatuses);
     }
 
     public List<GameResult> checkGameResult() {
         List<GameResult> gameResults = new ArrayList<>();
-        gameResults.add(new GameResult(Word.DEALER.getWord(),
+        gameResults.add(new GameResult(members.getDealerName(),
                 members.determineDealerGameResult()));
 
-        List<GameResult> playerResults =members.getAllMemberName().stream()
-                .filter(name -> !name.equals(Word.DEALER.getWord()))
+        List<GameResult> playerResults = members.getAllPlayerName().stream()
                 .map(name -> new GameResult(name, List.of(members.determinePlayerGameResult(name))))
                 .toList();
         gameResults.addAll(playerResults);

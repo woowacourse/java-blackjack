@@ -17,7 +17,7 @@ public class MembersTest {
 
         Members members = new Members(List.of(player1, player2));
 
-        Assertions.assertThat(members.getAllMemberName()).contains(player1, player2);
+        Assertions.assertThat(members.getAllPlayerName()).contains(player1, player2);
     }
 
     @DisplayName("해당 멤버에게 카드를 주면 정상적으로 카드를 보유하고 있는지 테스트")
@@ -27,7 +27,7 @@ public class MembersTest {
         Members members = new Members(List.of(playerName));
         Card card = new Card("2", "하트");
 
-        members.provideCardToMember(playerName, card);
+        members.provideCardToPlayer(playerName, card);
 
         Assertions.assertThat(members.findCardByName(playerName)).contains(card);
     }
@@ -41,8 +41,8 @@ public class MembersTest {
         List<Card> playerCards = List.of(new Card("2", "하트"), new Card("3", "하트"));
         MatchResult expected = MatchResult.WIN;
 
-        dealerCards.forEach(card -> members.provideCardToMember("딜러", card));
-        playerCards.forEach(card -> members.provideCardToMember(player, card));
+        dealerCards.forEach(members::provideCardToDealer);
+        playerCards.forEach(card -> members.provideCardToPlayer(player, card));
 
         Assertions.assertThat(members.determineDealerGameResult()).containsExactly(expected);
     }
@@ -56,8 +56,8 @@ public class MembersTest {
         List<Card> playerCards = List.of(new Card("2", "하트"), new Card("3", "하트"));
         MatchResult expected = MatchResult.LOSE;
 
-        dealerCards.forEach(card -> members.provideCardToMember("딜러", card));
-        playerCards.forEach(card -> members.provideCardToMember(player, card));
+        dealerCards.forEach(members::provideCardToDealer);
+        playerCards.forEach(card -> members.provideCardToPlayer(player, card));
 
         Assertions.assertThat(members.determinePlayerGameResult(player)).isEqualTo(expected);
     }

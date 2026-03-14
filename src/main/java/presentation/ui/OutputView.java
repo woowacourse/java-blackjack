@@ -1,6 +1,6 @@
 package presentation.ui;
 
-import static constant.Word.*;
+import static presentation.ui.ViewMessage.*;
 
 import dto.RoundResult;
 import domain.card.Card;
@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
+    private static final String DEALER_NAME = "딜러";
 
     public void printInitialStatus(List<MemberStatus> playerStatuses) {
         System.out.println();
@@ -42,19 +43,19 @@ public class OutputView {
 
     private void printDistributeMessage(List<MemberStatus> playerStatuses) {
         String playerNames = playerStatuses.stream()
-                .map(MemberStatus::playerName)
-                .filter(s -> !s.equals(DEALER.getWord()))
+                .map(MemberStatus::memberName)
+                .filter(s -> !s.equals(DEALER_NAME))
                 .collect(Collectors.joining(", "));
-        System.out.println(DISTRIBUTE_MESSAGE.format(DEALER.getWord(), playerNames));
+        System.out.println(DISTRIBUTE_MESSAGE.format(DEALER_NAME, playerNames));
     }
 
     private void printMemberCurrentCard(MemberStatus playerStatus) {
-        if (playerStatus.playerName().equals(DEALER.getWord())) {
+        if (playerStatus.memberName().equals(DEALER_NAME)) {
             printDealerCurrentCard(playerStatus);
             return;
         }
         System.out.println(
-                playerStatus.playerName()
+                playerStatus.memberName()
                         + ": "
                         + playerStatus.cards().stream()
                         .map(Card::cardName)
@@ -64,7 +65,7 @@ public class OutputView {
 
     private void printDealerCurrentCard(MemberStatus dealerStatus) {
         System.out.println(
-                dealerStatus.playerName()
+                dealerStatus.memberName()
                         + ": "
                         + dealerStatus.cards().getFirst().cardName()
         );
@@ -72,13 +73,13 @@ public class OutputView {
 
     private void printFinalMemberCardAndResult(MemberStatus status) {
         String cards = status.cards().stream().map(Card::cardName).collect(Collectors.joining(", "));
-        System.out.println(CARD_STATUS.format(status.playerName(), cards) + RESULT_MESSAGE.format(status.totalValue()));
+        System.out.println(CARD_STATUS.format(status.memberName(), cards) + RESULT_MESSAGE.format(status.totalValue()));
     }
 
     private void printMemberResult(GameResult gameResult) {
         String name = gameResult.name();
         List<MatchResult> results = gameResult.result();
-        if (name.equals(DEALER.getWord())) {
+        if (name.equals(DEALER_NAME)) {
             printDealerResult(results, name);
             return;
         }

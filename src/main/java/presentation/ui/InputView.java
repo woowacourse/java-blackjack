@@ -1,7 +1,7 @@
 package presentation.ui;
 
-import static constant.Word.CARD_MORD_MESSAGE;
-import static constant.Word.PLAYER_NAME_MESSAGE;
+import static presentation.ui.ViewMessage.CARD_MORD_MESSAGE;
+import static presentation.ui.ViewMessage.PLAYER_NAME_MESSAGE;
 
 import java.io.BufferedReader;
 import java.io.IOException;

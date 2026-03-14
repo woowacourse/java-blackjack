@@ -8,9 +8,10 @@ public class Player extends Member {
         super(name);
     }
 
+    @Override
     public MatchResult compareScoreWith(Member dealer) {
-        int playerScore = currentValue();
-        int dealerScore = dealer.currentValue();
+        int playerScore = currentScore();
+        int dealerScore = dealer.currentScore();
 
         if (playerScore > BUST_CONDITION) {
             return MatchResult.LOSE;
