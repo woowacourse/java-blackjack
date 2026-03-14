@@ -2,7 +2,7 @@ package domain.betting;
 
 import domain.gamer.Player;
 
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Bettings {
@@ -13,8 +13,8 @@ public class Bettings {
     private final Map<Player, Profit> profitByPlayer;
 
     public Bettings() {
-        this.profitByPlayer = new LinkedHashMap<>(); // TODO HashMap
-        this.bettingMoneyByPlayer = new LinkedHashMap<>(); // TODO HashMap
+        this.profitByPlayer = new HashMap<>();
+        this.bettingMoneyByPlayer = new HashMap<>();
     }
 
     public void bet(Player player, BettingMoney bettingMoney) {
