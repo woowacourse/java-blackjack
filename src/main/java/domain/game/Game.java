@@ -21,10 +21,10 @@ public class Game {
     private final Gamblers gamblers;
     private final GameCards gameCards;
 
-    public Game(String dealerName, Map<String, BettingAmount> gamblersNameAndBettingInfo, int amount) {
+    public Game(String dealerName, Map<String, BettingAmount> gamblersNameAndBettingInfo, int DEFAULT_CARD_SET) {
         this.dealer = new Dealer(dealerName);
         this.gamblers = new Gamblers(gamblersNameAndBettingInfo);
-        this.gameCards = new GameCards(amount);
+        this.gameCards = new GameCards(DEFAULT_CARD_SET);
     }
 
     public void initializeGame() {

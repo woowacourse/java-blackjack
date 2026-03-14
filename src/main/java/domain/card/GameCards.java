@@ -1,5 +1,7 @@
 package domain.card;
 
+import static util.Constants.DEFAULT_CARD_SET;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -11,11 +13,11 @@ public class GameCards {
 
     private List<Card> cards;
 
-    public GameCards(int amount) {
+    public GameCards(int DEFAULT_CARD_SET) {
         this.cards = Arrays.stream(CardKind.values())
                 .flatMap(cardKind -> Arrays.stream(CardScore.values())
                         .flatMap(cardScore ->
-                                IntStream.range(0, amount)
+                                IntStream.range(0, DEFAULT_CARD_SET)
                                         .mapToObj(card -> new Card(cardScore.getScore(),
                                                 cardKind.getKind()))
                         ))
