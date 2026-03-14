@@ -35,11 +35,11 @@ public enum Result {
         if (!player.isBlackjack() && dealer.isBlackjack()) {
             return true;
         }
-        return !dealer.isBust() && (player.getScore() < dealer.getScore());
+        return !dealer.isBust() && (player.calculateScore() < dealer.calculateScore());
     }
 
     private static boolean isPlayerDraw(Dealer dealer, Player player) {
-        if (player.getScore() == dealer.getScore()) {
+        if (player.calculateScore() == dealer.calculateScore()) {
             return true;
         }
         return player.isBlackjack() && dealer.isBlackjack();

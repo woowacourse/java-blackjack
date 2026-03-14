@@ -7,7 +7,9 @@ import domain.card.Deck;
 import domain.enums.Result;
 import domain.participant.Dealer;
 import domain.participant.Players;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Game {
     private final Players players;
@@ -63,15 +65,19 @@ public class Game {
         return players.getAllPlayerNames();
     }
 
-    public Result getPlayerResult(String name) {
-        return players.getPlayerResult(name, dealer);
+    public Map<String, Result> calculateAllPlayerResults() {
+        Map<String, Result> playerResults = new LinkedHashMap<>();
+        for (String name : players.getAllPlayerNames()) {
+            playerResults.put(name, players.getPlayerResult(name, dealer));
+        }
+        return playerResults;
     }
 
-    public int getPlayerScore(String name) {
-        return players.getPlayerScore(name);
+    public int calculatePlayerScore(String name) {
+        return players.calculatePlayerScore(name);
     }
 
-    public int getDealerScore() {
-        return dealer.getScore();
+    public int calculateDealerScore() {
+        return dealer.calculateScore();
     }
 }

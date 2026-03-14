@@ -90,7 +90,7 @@ public class GameTest {
             onePlayerGame.dealerHit(deck);
             onePlayerGame.dealerHit(deck);
 
-            assertThat(onePlayerGame.getDealerScore()).isEqualTo(21);
+            assertThat(onePlayerGame.calculateDealerScore()).isEqualTo(21);
             assertThat(onePlayerGame.getDealerCards().size()).isEqualTo(2);
         }
     }

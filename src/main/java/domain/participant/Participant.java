@@ -14,7 +14,7 @@ public abstract class Participant {
         cardBoard.add(card);
     }
 
-    public int getScore() {
+    public int calculateScore() {
         return cardBoard.calculateScore();
     }
 

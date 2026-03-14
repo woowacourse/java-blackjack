@@ -80,8 +80,8 @@ public class Players {
         return Result.calculatePlayerResult(dealer, foundPlayer);
     }
 
-    public int getPlayerScore(String name) {
+    public int calculatePlayerScore(String name) {
         Player foundPlayer = findPlayerByName(name);
-        return foundPlayer.getScore();
+        return foundPlayer.calculateScore();
     }
 }

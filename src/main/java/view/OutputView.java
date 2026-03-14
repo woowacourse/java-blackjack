@@ -26,22 +26,16 @@ public class OutputView {
         System.out.println(message);
     }
 
-    public static void printParticipantCards(List<CardDto> dealerCards, Map<String, List<CardDto>> playerCards) {
-        printDistributeComplete(playerCards.keySet().stream().toList());
-        printDealerFirstCard(dealerCards);
-
-        for (Map.Entry<String, List<CardDto>> entry : playerCards.entrySet()) {
-            printPlayerCards(entry.getKey(), entry.getValue());
-        }
-        System.out.println();
+    public static void printLineSeparator() {
+        System.out.printf(LINE_SEPARATOR);
     }
 
-    private static void printDistributeComplete(List<String> playerNames) {
+    public static void printDistributeComplete(List<String> playerNames) {
         System.out.printf(LINE_SEPARATOR + DISTRIBUTE_INITIAL_CARD + LINE_SEPARATOR,
                 String.join(STRING_JOIN_DELIMITER, playerNames), INIT_CARD_COUNT);
     }
 
-    private static void printDealerFirstCard(List<CardDto> dealerCards) {
+    public static void printDealerFirstCard(List<CardDto> dealerCards) {
         CardDto firstCard = dealerCards.getFirst();
         System.out.printf(DEALER_CARD + LINE_SEPARATOR, firstCard.rank() + firstCard.suit());
     }

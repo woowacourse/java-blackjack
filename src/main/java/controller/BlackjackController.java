@@ -10,18 +10,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
-import service.BlackjackService;
 import view.InputParser;
 import view.InputView;
 import view.OutputView;
 
 public class BlackjackController {
-    private final BlackjackService blackjackService;
-
-    public BlackjackController(BlackjackService blackjackService) {
-        this.blackjackService = blackjackService;
-    }
-
     public void start() {
         Deck deck = new Deck(CardGenerator.generateCards());
         Game game = retryOnException(() -> makeGame(deck));
@@ -41,7 +34,7 @@ public class BlackjackController {
 
     private void playGame(Game game, Deck deck) {
         BetAmounts betAmounts = makeBetAmounts(game);
-        printParticipantCards(game);
+        printInitCards(game);
         playTurn(game, deck);
         printResult(game, betAmounts);
     }
@@ -60,9 +53,14 @@ public class BlackjackController {
         return InputParser.parseBetAmount(input);
     }
 
-    private void printParticipantCards(Game game) {
-        OutputView.printParticipantCards(CardDto.fromCards(game.getDealerCards()),
-                blackjackService.makePlayerCardDtos(game));
+    private void printInitCards(Game game) {
+        List<String> names = game.getAllPlayerNames();
+        OutputView.printDistributeComplete(names);
+        OutputView.printDealerFirstCard(CardDto.fromCards(game.getDealerCards()));
+        for (String name : names) {
+            OutputView.printPlayerCards(name, CardDto.fromCards(game.getPlayerCards(name)));
+        }
+        OutputView.printLineSeparator();
     }
 
     private void playTurn(Game game, Deck deck) {
@@ -94,19 +92,20 @@ public class BlackjackController {
     }
 
     private void printResult(Game game, BetAmounts betAmounts) {
-        OutputView.printDealerCardsWithScore(CardDto.fromCards(game.getDealerCards()), game.getDealerScore());
         printFinalCards(game);
         printProfits(game, betAmounts);
     }
 
     private void printFinalCards(Game game) {
-        for (Map.Entry<String, List<CardDto>> entry : blackjackService.makePlayerCardDtos(game).entrySet()) {
-            OutputView.printPlayerCardsWithScore(entry.getKey(), entry.getValue(), game.getPlayerScore(entry.getKey()));
+        OutputView.printDealerCardsWithScore(CardDto.fromCards(game.getDealerCards()), game.calculateDealerScore());
+        for (String name : game.getAllPlayerNames()) {
+            OutputView.printPlayerCardsWithScore(name, CardDto.fromCards(game.getPlayerCards(name)),
+                    game.calculatePlayerScore(name));
         }
     }
 
     private void printProfits(Game game, BetAmounts betAmounts) {
-        Map<String, Result> playerResults = blackjackService.makePlayerResults(game);
+        Map<String, Result> playerResults = game.calculateAllPlayerResults();
         Map<String, Integer> playerProfits = betAmounts.calculatePlayerProfits(playerResults);
         int dealerProfit = betAmounts.calculateDealerProfit(playerProfits);
         OutputView.printGameResult(dealerProfit, playerProfits);
