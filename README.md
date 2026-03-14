@@ -177,7 +177,7 @@
 ## PR 리뷰 후 추가 수정 사항
 - [X] 사용하지 않는 Result enum 필드 제거
 - [X] DTO의 intialHandSize 제거
-- [ ] 동일한 카드가 플레이어에게 드로우되는 문제 해결
+- [X] 동일한 카드가 플레이어에게 드로우되는 문제 해결
 - [ ] Players 인스턴스 생성 및 추가 방식 수정
 - [ ] splitPlayerNameInput 스트림 불변 리스트로 수정(toList)
 - [ ] 테스트에서만 쓰이는 handSize 메서드 제거

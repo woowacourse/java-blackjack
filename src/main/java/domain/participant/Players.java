@@ -1,6 +1,7 @@
 package domain.participant;
 
 import domain.card.Card;
+import domain.card.Deck;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +12,8 @@ public class Players {
         players.add(player);
     }
 
-    public void receiveCard(Card card) {
-        players.forEach(player -> player.receiveCard(card));
+    public void receiveCard(Deck deck) {
+        players.forEach(player -> player.receiveCard(deck.draw()));
     }
 
     public List<Player> getPlayers() {

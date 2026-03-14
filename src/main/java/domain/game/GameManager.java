@@ -25,7 +25,7 @@ public class GameManager {
 
     public void startGame() {
         for (int i = 0; i < FIRST_DRAW_CARDS; i++) {
-            players.receiveCard(deck.draw());
+            players.receiveCard(deck);
             dealer.receiveCard(deck.draw());
         }
         players.updateNaturalBlackJackStatus();
