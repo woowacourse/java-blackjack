@@ -19,7 +19,7 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(List<String> names, List<BetAmount> betAmounts) {
+    public Players(List<PlayerName> names, List<BetAmount> betAmounts) {
         validatePlayerNames(names);
         List<Player> players = new ArrayList<>();
         for (int i = 0; i < names.size(); i++) {
@@ -28,12 +28,12 @@ public class Players {
         this.players = players;
     }
 
-    private void validatePlayerNames(List<String> names) {
+    private void validatePlayerNames(List<PlayerName> names) {
         validatePlayerDuplication(names);
         validatePlayerCount(names.size());
     }
 
-    private void validatePlayerDuplication(List<String> names) {
+    private void validatePlayerDuplication(List<PlayerName> names) {
         if (new HashSet<>(names).size() != names.size()) {
             throw new BlackjackException(PLAYER_DUPLICATED);
         }
