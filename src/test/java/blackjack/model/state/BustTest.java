@@ -14,7 +14,8 @@ class BustTest {
 
     private static final List<Card> DEFAULT_BUST_CARDS = List.of(new Card(Rank.KING, Suit.HEART),
             new Card(Rank.QUEEN, Suit.HEART),
-            new Card(Rank.JACK, Suit.HEART));
+            new Card(Rank.JACK, Suit.HEART)
+    );
 
     @Test
     void 생성_시_버스트가_아니라면_예외를_던진다() {
