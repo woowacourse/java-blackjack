@@ -27,16 +27,17 @@ public enum Rank {
         this.score = scoreValue;
     }
 
-    public static Score totalSum(int aceAmount, Score sum) {
-        for (int i = 0; i < aceAmount; i++) {
-            sum = sum.add(decideAceValue(sum, aceAmount - i - 1));
+    public static Score sumWithAce(int aceAmount, Score sumWithOutAce) {
+        Score sumWithAce = sumWithOutAce;
+        for (int consideredAce = 0; consideredAce < aceAmount; consideredAce++) {
+            sumWithAce = sumWithAce.add(decideAceValue(sumWithOutAce, aceAmount - consideredAce - 1));
         }
-        return sum;
+        return sumWithAce;
     }
 
-    private static Score decideAceValue(Score sum, int leftAce) {
-        if (sum.add(ACE_MAX).isLessThanOrEqualTo(BLACKJACK)
-                && BLACKJACK.sub(sum.add(ACE_MAX)).isGreaterThanOrEqualTo(leftAce)) {
+    private static Score decideAceValue(Score currentScore, int leftAce) {
+        if (currentScore.add(ACE_MAX).isLessThanOrEqualTo(BLACKJACK)
+                && BLACKJACK.sub(currentScore.add(ACE_MAX)).isGreaterThanOrEqualTo(leftAce)) {
             return ACE_MAX;
         }
         return ACE_MIN;

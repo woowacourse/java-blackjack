@@ -41,7 +41,7 @@ public class Hand {
     }
 
     public Score totalSum() {
-        return Rank.totalSum(getAceAmount(), getSumWithoutAce());
+        return Rank.sumWithAce(getAceAmount(), getSumWithoutAce());
     }
 
     private int getAceAmount() {
