@@ -33,7 +33,7 @@ public class BlackjackController {
         blackjackService.dealInitialCards();
         collectBets();
         printPlayerCards();
-        readHitOrStand();
+        inputAllPlayerActions();
         boolean dealerHit = blackjackService.drawDealerCard();
         if (dealerHit) {
             outputView.printDealerHit();
@@ -65,22 +65,29 @@ public class BlackjackController {
         outputView.printBlackjackResult(blackjackResult);
     }
 
-    private void readHitOrStand() {
-        for (int playerIndex = 0; playerIndex < blackjackService.getPlayerCount(); playerIndex++) {
-            inputHitOrStand(playerIndex);
+    private void inputAllPlayerActions() {
+        int playerCount = blackjackService.getPlayerCount();
+        for (int playerIndex = 0; playerIndex < playerCount; playerIndex++) {
+            inputPlayerAction(playerIndex);
         }
     }
 
-    private void inputHitOrStand(int playerIndex) {
-        String name = blackjackService.getPlayerName(playerIndex);
-        while (true) {
-            String input = inputView.inputHitOrStand(name);
-            if (PlayerAction.from(input).isStand()) {
-                outputView.printlnPlayer(blackjackService.createPlayerDto(playerIndex));
-                break;
-            }
-            blackjackService.updatePlayer(playerIndex);
-            outputView.printlnPlayer(blackjackService.createPlayerDto(playerIndex));
+    private void inputPlayerAction(int playerIndex) {
+        boolean isStandSelected = true;
+        while (isStandSelected) {
+            isStandSelected = isStandSelected(playerIndex);
         }
+    }
+
+    private boolean isStandSelected(int playerIndex) {
+        String name = blackjackService.getPlayerName(playerIndex);
+        String input = inputView.inputHitOrStand(name);
+        if (PlayerAction.from(input).isStand()) {
+            outputView.printlnPlayer(blackjackService.createPlayerDto(playerIndex));
+            return false;
+        }
+        blackjackService.updatePlayer(playerIndex);
+        outputView.printlnPlayer(blackjackService.createPlayerDto(playerIndex));
+        return true;
     }
 }
