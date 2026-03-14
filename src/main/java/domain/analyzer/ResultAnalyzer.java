@@ -2,6 +2,7 @@ package domain.analyzer;
 
 import domain.analyzer.dto.PlayerGameResult;
 import domain.analyzer.dto.ResultAnalysisDto;
+import domain.betting.GameResult;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
 

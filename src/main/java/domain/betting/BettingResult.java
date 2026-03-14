@@ -1,7 +1,5 @@
 package domain.betting;
 
-import domain.analyzer.GameResult;
-
 public enum BettingResult {
 
     BLACK_JACK_PUSH(1.0, GameResult.DRAW),

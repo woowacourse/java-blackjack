@@ -1,4 +1,4 @@
-package domain.analyzer;
+package domain.betting;
 
 import domain.gamer.Dealer;
 import domain.gamer.Player;

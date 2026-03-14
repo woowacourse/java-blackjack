@@ -1,6 +1,6 @@
 package domain.analyzer.dto;
 
-import domain.analyzer.GameResult;
+import domain.betting.GameResult;
 import domain.gamer.Player;
 
 public record PlayerGameResult(

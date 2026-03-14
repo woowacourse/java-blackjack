@@ -1,6 +1,6 @@
 package domain.analyzer.dto;
 
-import domain.analyzer.GameResult;
+import domain.betting.GameResult;
 
 import java.util.Arrays;
 import java.util.EnumMap;
