@@ -2,11 +2,11 @@ package blackjack.domain;
 
 public class Player extends Participant {
 
-    private int betAmount = 0;
+    private final BetAmount betAmount;
 
-    public Player(String name) {
+    public Player(String name, BetAmount betAmount) {
         super(name, new Hand());
-
+        this.betAmount = betAmount;
     }
 
     @Override
@@ -19,12 +19,8 @@ public class Player extends Participant {
         return !isBust();
     }
 
-
     public int getBetAmount() {
-        return betAmount;
+        return betAmount.getAmount();
     }
 
-    public void setBetAmount(int betAmount) {
-        this.betAmount = betAmount;
-    }
 }
