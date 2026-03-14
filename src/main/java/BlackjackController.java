@@ -17,16 +17,17 @@ public class BlackjackController {
     public void run() {
         BlackjackGame blackjackGame = readAndRegistPlayers();
 
-        blackjackGame.setBetMoney((player) -> inputView.readBetMoney(player));
+        blackjackGame.setBetMoney(inputView::readBetMoney);
+
         blackjackGame.giveHand();
 
         Players players = blackjackGame.getPlayers();
         Dealer dealer = blackjackGame.getDealer();
 
         resultView.printParticipantsCards(players.getPlayers(), dealer);
-        blackjackGame.hitStandEachPlayers((player) -> inputView.readHitStand(player),
-                (player) -> resultView.printCards(player));
-        blackjackGame.hitStandDealer((decision) -> resultView.printDealerHitStand(decision));
+        blackjackGame.hitStandEachPlayers(inputView::readHitStand, resultView::printCards);
+        blackjackGame.hitStandDealer(resultView::printDealerHitStand);
+
         resultView.printCardsWithResult(players.getPlayers(), dealer);
 
         resultView.printResult(blackjackGame.getResult());

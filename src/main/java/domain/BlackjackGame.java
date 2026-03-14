@@ -8,6 +8,7 @@ import domain.participant.Players;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class BlackjackGame {
     public static final int INITIAL_CARD_COUNT = 2;
@@ -37,13 +38,13 @@ public class BlackjackGame {
         dealer.addCards(deck.drawWithAmount(INITIAL_CARD_COUNT));
     }
 
-    public void hitStandEachPlayers(Function<Player, Boolean> decideHitStandFunc, Consumer<Player> printResultFunc) {
+    public void hitStandEachPlayers(Predicate<Player> decideHitStandFunc, Consumer<Player> printResultFunc) {
         players.hitStandEachPlayers(player -> hitStandPlayer(deck, decideHitStandFunc, printResultFunc, player));
     }
 
-    private void hitStandPlayer(Deck deck, Function<Player, Boolean> hitStandDecisionFunc,
+    private void hitStandPlayer(Deck deck, Predicate<Player> hitStandDecisionFunc,
                                 Consumer<Player> printResultFunc, Player player) {
-        while (!player.isBust() && hitStandDecisionFunc.apply(player)) {
+        while (!player.isBust() && hitStandDecisionFunc.test(player)) {
             player.addCard(deck.draw());
             printResultFunc.accept(player);
         }

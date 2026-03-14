@@ -55,7 +55,7 @@ public class Hand {
 
     private int getAceAmount() {
         return (int) cards.stream()
-                .filter(card -> card.isAce())
+                .filter(Card::isAce)
                 .count();
     }
 
