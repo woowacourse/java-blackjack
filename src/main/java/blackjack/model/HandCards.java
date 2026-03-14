@@ -32,8 +32,8 @@ public class HandCards {
         return new Score(aceTranslate(total, aceCount));
     }
 
-    public boolean isBlackjack() {
-        return cards.size() == BLACKJACK_CARD_COUNT && calculate().getScore() == BLACKJACK_SCORE;
+    public boolean isInitialCardSize() {
+        return cards.size() == BLACKJACK_CARD_COUNT;
     }
 
     public Card getFirstCard() {

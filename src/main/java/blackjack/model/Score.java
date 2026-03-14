@@ -1,8 +1,8 @@
 package blackjack.model;
 
 public class Score {
-    public static final int BUST_BOUNDARY = 21;
-    public static final int DEALER_HIT_BOUNDARY = 16;
+    public static final int MAX_SCORE = 21;
+    public static final int DEALER_DRAW_THRESHOLD = 16;
     private final int score;
 
     public Score(int score) {
@@ -18,15 +18,19 @@ public class Score {
     }
 
     public boolean isDealerHitScore() {
-        return score <= DEALER_HIT_BOUNDARY;
+        return score <= DEALER_DRAW_THRESHOLD;
     }
 
     public boolean isPlayerHitScore() {
-        return score <= BUST_BOUNDARY;
+        return score <= MAX_SCORE;
+    }
+
+    public boolean isMaxScore() {
+        return score == MAX_SCORE;
     }
 
     public boolean isBust() {
-        return score > BUST_BOUNDARY;
+        return score > MAX_SCORE;
     }
 
     public int getScore() {

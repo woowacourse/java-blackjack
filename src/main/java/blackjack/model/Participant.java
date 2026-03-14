@@ -23,7 +23,7 @@ public abstract class Participant {
     }
 
     public boolean isBlackjack() {
-        return handCards.isBlackjack();
+        return handCards.isInitialCardSize() && getScore().isMaxScore();
     }
 
     public final Card firstCardOpen() {
