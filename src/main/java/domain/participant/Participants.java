@@ -6,9 +6,9 @@ import java.util.function.Supplier;
 
 public record Participants(Dealer dealer, Players players) {
 
-    public static Participants of(List<String> names, List<BetAmount> betAmounts) {
+    public static Participants of(List<PlayerName> playerNames, List<BetAmount> betAmounts) {
         Dealer dealer = new Dealer();
-        Players players = new Players(names, betAmounts);
+        Players players = new Players(playerNames, betAmounts);
         return new Participants(dealer, players);
     }
 
