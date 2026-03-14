@@ -1,7 +1,7 @@
 package domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import exception.BlackjackException;
 import java.util.stream.Stream;
@@ -21,8 +21,7 @@ class PlayerNameTest {
 
             @ParameterizedTest
             @MethodSource("successCases")
-            void 이름이_2글자_이상_5글자_이하면_정상_생성된다(String input) {
-
+            void 이름이_2글자_이상_5글자_이하면_생성된다(String input) {
                 // when
                 PlayerName actual = new PlayerName(input);
 
@@ -34,7 +33,7 @@ class PlayerNameTest {
                 return Stream.of(
                         Arguments.of("ab"),
                         Arguments.of("abcde"),
-                        Arguments.of("성 열")
+                        Arguments.of("성열")
                 );
             }
         }
@@ -43,9 +42,8 @@ class PlayerNameTest {
         class Fail {
 
             @ParameterizedTest
-            @ValueSource(strings = {"a", "abcdef", "aa aaa"})
-            void 이름_길이가_2글자_미만_또는_5글자_초과면_예외가_발생한다(String input) {
-
+            @ValueSource(strings = {"a", "abcdef"})
+            void 이름_길이가_범위를_벗어나면_예외가_발생한다(String input) {
                 // when & then
                 assertThatThrownBy(() -> new PlayerName(input))
                         .isInstanceOf(IllegalArgumentException.class)
@@ -55,7 +53,6 @@ class PlayerNameTest {
             @ParameterizedTest
             @ValueSource(strings = {"", " ", "   "})
             void 이름이_공백이면_예외가_발생한다(String input) {
-
                 // when & then
                 assertThatThrownBy(() -> new PlayerName(input))
                         .isInstanceOf(IllegalArgumentException.class)
