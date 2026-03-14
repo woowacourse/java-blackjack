@@ -17,7 +17,7 @@ class BettingAmountTest {
     }
 
     @Test
-    @DisplayName("플레이어가 승리하면 배팅 금액을 잃지 않는다.")
+    @DisplayName("플레이어가 승리 시 배팅 금액만큼의 추가 수익을 얻는다.")
     void winAmountTest() {
         // given
         Player player = new Player("luke", 1000);
@@ -26,16 +26,16 @@ class BettingAmountTest {
     }
 
     @Test
-    @DisplayName("플레이어가 무승부면 배팅 금액을 유지된다.")
+    @DisplayName("무승부 시 추가 수익은 발생하지 않는다.")
     void drawAmountTest() {
         // given
         Player player = new Player("luke", 1000);
         // when & then
-        assertThat(player.getBettingAmount(GameResult.DRAW)).isEqualTo(1000);
+        assertThat(player.getBettingAmount(GameResult.DRAW)).isEqualTo(0);
     }
 
     @Test
-    @DisplayName("플레이어가 블랙잭이면 배팅 금액의 1.5배를 얻는다.")
+    @DisplayName("플레이어가 블랙잭 승리 시 배팅 금액의 1.5배를 수익으로 얻는다.")
     void blackjackAmountTest() {
         // given
         Player player = new Player("luke", 1000);
