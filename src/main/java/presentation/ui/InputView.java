@@ -1,6 +1,7 @@
 package presentation.ui;
 
 import static presentation.ui.ViewMessage.CARD_MORD_MESSAGE;
+import static presentation.ui.ViewMessage.PLAYER_BET_AMOUNT_MESSAGE;
 import static presentation.ui.ViewMessage.PLAYER_NAME_MESSAGE;
 
 import java.io.BufferedReader;
@@ -27,6 +28,16 @@ public class InputView {
                     .toList();
             validatedInput.validatePlayerName(playerNames);
             return playerNames;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int readPlayerBetAmount(String name) {
+        try {
+            System.out.println(PLAYER_BET_AMOUNT_MESSAGE.format(name));
+            String inputBetAmount = bufferedReader.readLine();
+            return Integer.parseInt(inputBetAmount);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
