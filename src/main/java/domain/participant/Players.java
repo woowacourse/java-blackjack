@@ -19,11 +19,11 @@ public class Players {
 
     private final List<Player> players;
 
-    public Players(List<String> names) {
+    public Players(List<String> names, List<BetAmount> betAmounts) {
         validatePlayerNames(names);
         List<Player> players = new ArrayList<>();
-        for (String name : names) {
-            players.add(new Player(name));
+        for (int i = 0; i < names.size(); i++) {
+            players.add(new Player(names.get(i), betAmounts.get(i)));
         }
         this.players = players;
     }
