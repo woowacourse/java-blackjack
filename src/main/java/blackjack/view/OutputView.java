@@ -14,7 +14,7 @@ public class OutputView {
         List<String> playerNames = players.getPlayers().stream()
                 .map(Player::getName).toList();
         System.out.println("\n딜러와 " + String.join(", ", playerNames) + "에게 " + "2장을 나누었습니다.");
-        System.out.println("딜러카드: " + dealer.FirstCardOpen().getCardName());
+        System.out.println("딜러카드: " + dealer.firstCardOpen().getCardName());
         for (Player player : players.getPlayers()) {
             printPlayerCardStatus(player, player.getHandCards());
         }

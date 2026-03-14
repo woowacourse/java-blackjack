@@ -26,7 +26,7 @@ public abstract class Participant {
         return handCards.isBlackjack();
     }
 
-    public final Card FirstCardOpen() {
+    public final Card firstCardOpen() {
         return handCards.getFirstCard();
     }
 
