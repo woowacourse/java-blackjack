@@ -15,7 +15,7 @@ public class Deck {
     public Deck(List<Card> cards, RandomValueGenerator randomValueGenerator) {
         validateSize(cards);
         validateDuplicate(cards);
-        this.cards = cards;
+        this.cards = new ArrayList<>(cards);
         this.randomValueGenerator = randomValueGenerator;
     }
 
