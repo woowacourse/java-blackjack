@@ -23,11 +23,15 @@ public class BlackjackController {
     }
 
     public void start() {
-        List<String> names = retryOnException(this::askPlayerNames);
         Deck deck = new Deck(CardGenerator.generateCards());
-        Game game = new Game(names, deck);
+        Game game = retryOnException(() -> makeGame(deck));
 
         playGame(game, deck);
+    }
+
+    private Game makeGame(Deck deck) {
+        List<String> names = askPlayerNames();
+        return new Game(names, deck);
     }
 
     private List<String> askPlayerNames() {
