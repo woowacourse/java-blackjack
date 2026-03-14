@@ -54,7 +54,7 @@ public class OutputView {
 
     public static void printParticipantPayoutResult(PayoutResult result) {
         println("## 최종 수익");
-        println("딜러: %d".formatted(result.dealerPayout()));
+        println("딜러: %s".formatted(result.dealerPayout()));
         result.playerPayouts().entrySet().stream()
                 .map(entry -> "%s: %s".formatted(entry.getKey(), entry.getValue()))
                 .forEach(OutputView::println);

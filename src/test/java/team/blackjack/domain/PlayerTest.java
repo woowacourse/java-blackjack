@@ -1,5 +1,6 @@
 package team.blackjack.domain;
 
+import java.math.BigDecimal;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -45,27 +46,27 @@ class PlayerTest {
     void 플레이어가_패배하는_경우_수익_금액은_마이너스_원금이_된다() {
         Player player = new Player("pobi", 10000);
 
-        int payout = player.getPayout(Result.LOSE);
+        BigDecimal payout = player.getPayout(Result.LOSE);
 
-        assertThat(payout).isEqualTo(-10000);
+        assertThat(payout).isEqualByComparingTo(BigDecimal.valueOf(-10000));
     }
 
     @Test
     void 플레이어가_승리하는_경우_수익_금액은_배팅금액이_된다() {
         Player player = new Player("pobi", 10000);
 
-        int payout = player.getPayout(Result.WIN);
+        BigDecimal payout = player.getPayout(Result.WIN);
 
-        assertThat(payout).isEqualTo(10000);
+        assertThat(payout).isEqualByComparingTo(BigDecimal.valueOf(10000));
     }
 
     @Test
     void 플레이어가_블랙잭으로_승리한_경우_수익_금액은_배팅금액의_1_5배가_된다() {
         Player player = new Player("pobi", 10000);
 
-        int payout = player.getPayout(Result.BLACKJACK);
+        BigDecimal payout = player.getPayout(Result.BLACKJACK);
 
-        assertThat(payout).isEqualTo(15000);
+        assertThat(payout).isEqualByComparingTo(BigDecimal.valueOf(15000));
     }
 
     /**
@@ -76,8 +77,8 @@ class PlayerTest {
     void 플레이어가_무승부인_경우_수익_금액은_없다() {
         Player player = new Player("pobi", 10000);
 
-        int payout = player.getPayout(Result.DRAW);
+        BigDecimal payout = player.getPayout(Result.DRAW);
 
-        assertThat(payout).isEqualTo(0);
+        assertThat(payout).isEqualByComparingTo(BigDecimal.valueOf(0));
     }
 }

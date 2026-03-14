@@ -1,7 +1,9 @@
 package team.blackjack.domain;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -49,7 +51,7 @@ public class BlackjackGame {
     }
 
     public Map<String, List<String>> getAllPlayerCards() {
-        final HashMap<String, List<String>> result = new HashMap<>();
+        final Map<String, List<String>> result = new LinkedHashMap<>();
         for (Player player : players) {
             result.put(player.getName(), getPlayerCardInAllHand(player));
         }
@@ -81,8 +83,8 @@ public class BlackjackGame {
         return getPlayerResult(player, dealer).reverse();
     }
 
-    public Map<String, Integer> calculatePlayerPayout() {
-        Map<String, Integer> playerPayouts = new HashMap<>();
+    public Map<String, BigDecimal> calculatePlayerPayout() {
+        Map<String, BigDecimal> playerPayouts = new LinkedHashMap<>();
 
         Hand dealerHand = dealer.getHand();
         for (Player player : players) {
@@ -94,13 +96,12 @@ public class BlackjackGame {
         return playerPayouts;
     }
 
-    public int calculateDealerPayout(Map<String, Integer> playerPayouts) {
-        int sum = playerPayouts.values()
+    public BigDecimal calculateDealerPayout(Map<String, BigDecimal> playerPayouts) {
+        BigDecimal sum = playerPayouts.values()
                 .stream()
-                .mapToInt(Integer::intValue)
-                .sum();
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        return -sum;
+        return sum.negate();
     }
 
     /**

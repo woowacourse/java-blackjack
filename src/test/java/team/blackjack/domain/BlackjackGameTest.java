@@ -2,6 +2,7 @@ package team.blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -237,11 +238,12 @@ class BlackjackGameTest {
      * 수익 금액 계산 테스트
      */
     @Test
-    void 딜러의_수익금액은_플레이어의_수익합산의_음수이다(){
-        Map<String, Integer> playerPayouts = Map.of("pobi", -10000, "jason", 20000);
+    void 딜러의_수익금액은_플레이어의_수익합산의_음수이다() {
+        Map<String, BigDecimal> playerPayouts = Map.of("pobi", BigDecimal.valueOf(-10000), "jason",
+                BigDecimal.valueOf(20000));
 
-        int dealerPayout = blackjackGame.calculateDealerPayout(playerPayouts);
+        BigDecimal dealerPayout = blackjackGame.calculateDealerPayout(playerPayouts);
 
-        assertThat(dealerPayout).isEqualTo(-10000);
+        assertThat(dealerPayout).isEqualTo(BigDecimal.valueOf(-10000));
     }
 }

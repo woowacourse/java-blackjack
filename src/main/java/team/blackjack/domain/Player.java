@@ -1,5 +1,6 @@
 package team.blackjack.domain;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class Player implements Participant {
         return hands.getFirst().getCardNames();
     }
 
-    public int getPayout(Result result){
+    public BigDecimal getPayout(Result result){
         return bet.calculatePayout(result);
     }
 

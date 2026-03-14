@@ -1,26 +1,28 @@
 package team.blackjack.domain;
 
+import java.math.BigDecimal;
+
 public final class Bet {
-    private static final double BLACKJACK_PAYOUT_RATIO = 1.5;
-    private static final double WIN_PAYOUT_RATIO = 1.0;
-    private static final double DRAW_PAYOUT_RATIO = 0.0;
-    private static final double LOSE_PAYOUT_RATIO = -1.0;
+    private static final BigDecimal BLACKJACK_PAYOUT_RATIO = new BigDecimal("1.5");
+    private static final BigDecimal WIN_PAYOUT_RATIO = BigDecimal.ONE;
+    private static final BigDecimal DRAW_PAYOUT_RATIO = BigDecimal.ZERO;
+    private static final BigDecimal LOSE_PAYOUT_RATIO = new BigDecimal("-1.0");
 
-    private final int stake;
+    private final BigDecimal stake;
 
-    private Bet(int stake) {
+    private Bet(BigDecimal stake) {
         this.stake = stake;
     }
 
     public static Bet from(int stake) {
-        return new Bet(stake);
+        return new Bet(BigDecimal.valueOf(stake));
     }
 
-    public int calculatePayout(Result result) {
-        return (int) (stake * payoutRatio(result));
+    public BigDecimal calculatePayout(Result result) {
+        return stake.multiply(payoutRatio(result));
     }
 
-    private double payoutRatio(Result result) {
+    private BigDecimal payoutRatio(Result result) {
         if (result == Result.BLACKJACK) {
             return BLACKJACK_PAYOUT_RATIO;
         }

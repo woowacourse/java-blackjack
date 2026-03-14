@@ -1,5 +1,7 @@
 package team.blackjack.service;
 
+import java.math.BigDecimal;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import team.blackjack.domain.Card;
@@ -72,9 +74,22 @@ public class BlackJackService {
     }
 
     public PayoutResult getPayoutResult() {
-        Map<String, Integer> playerPayouts = blackjackGame.calculatePlayerPayout();
-        int dealerPayout = blackjackGame.calculateDealerPayout(playerPayouts);
+        Map<String, BigDecimal> playerPayouts = blackjackGame.calculatePlayerPayout();
+        BigDecimal dealerPayout = blackjackGame.calculateDealerPayout(playerPayouts);
 
-        return new PayoutResult(dealerPayout, playerPayouts);
+        return new PayoutResult(parseDealerPayouts(dealerPayout), parsePlayerPayouts(playerPayouts));
+    }
+
+    private Map<String, String> parsePlayerPayouts(Map<String, BigDecimal> playerPayouts) {
+        Map<String, String> playerPayoutResults = new LinkedHashMap();
+
+        playerPayouts.forEach((name, payout)
+                -> playerPayoutResults.put(name, payout.stripTrailingZeros().toPlainString()));
+
+        return playerPayoutResults;
+    }
+
+    private String parseDealerPayouts(BigDecimal dealerPayout) {
+        return dealerPayout.stripTrailingZeros().toPlainString();
     }
 }
