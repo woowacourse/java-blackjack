@@ -6,7 +6,6 @@ import domain.dto.TotalResult;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
-
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -48,13 +47,13 @@ public class BlackjackGame {
 
     public void dealerHitStand(Consumer<Boolean> printDecisionOutput) {
         while (true) {
-            boolean dealerHitStand = dealer.decideHitStand(DEALER_HIT_STAND_BOUNDARY);
-            if (!dealerHitStand) {
-                printDecisionOutput.accept(dealerHitStand);
+            boolean isHittable = dealer.isHittable(DEALER_HIT_STAND_BOUNDARY);
+            if (!isHittable) {
+                printDecisionOutput.accept(isHittable);
                 break;
             }
             dealer.addCard(deck.draw());
-            printDecisionOutput.accept(dealerHitStand);
+            printDecisionOutput.accept(isHittable);
         }
     }
 

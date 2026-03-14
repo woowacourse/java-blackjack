@@ -12,7 +12,7 @@ public class Dealer extends Participant {
         return hand.peek();
     }
 
-    public boolean decideHitStand(Score boundary) {
+    public boolean isHittable(Score boundary) {
         return getTotalSum().isLessThanOrEqualTo(boundary);
     }
 }
