@@ -3,7 +3,7 @@ package blackjack.model.participant;
 import blackjack.common.error.ErrorCode;
 import blackjack.dto.CardDto;
 import blackjack.model.card.Hands;
-import blackjack.model.cardDeck.CardDeck;
+import blackjack.model.carddeck.CardDeck;
 import java.util.List;
 
 public abstract class Participant {

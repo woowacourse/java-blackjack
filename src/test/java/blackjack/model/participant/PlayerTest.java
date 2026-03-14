@@ -8,7 +8,7 @@ import blackjack.dto.CardDto;
 import blackjack.model.card.Card;
 import blackjack.model.card.Rank;
 import blackjack.model.card.Suit;
-import blackjack.model.cardDeck.CardDeck;
+import blackjack.model.carddeck.CardDeck;
 import blackjack.model.money.Money;
 import blackjack.model.result.PlayerResult;
 import java.math.BigDecimal;

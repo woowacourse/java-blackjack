@@ -2,8 +2,8 @@ package blackjack.controller;
 
 import blackjack.dto.PlayerResultDto;
 import blackjack.dto.PlayerResultsDto;
-import blackjack.model.cardDeck.CardDeck;
-import blackjack.model.cardDeck.RandomPickStrategy;
+import blackjack.model.carddeck.CardDeck;
+import blackjack.model.carddeck.RandomPickStrategy;
 import blackjack.model.money.Money;
 import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Player;

@@ -6,7 +6,7 @@ import blackjack.dto.CardDto;
 import blackjack.model.card.Card;
 import blackjack.model.card.Rank;
 import blackjack.model.card.Suit;
-import blackjack.model.cardDeck.CardDeck;
+import blackjack.model.carddeck.CardDeck;
 import blackjack.model.result.PlayerResult;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;

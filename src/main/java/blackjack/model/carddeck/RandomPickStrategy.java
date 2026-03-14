@@ -1,4 +1,4 @@
-package blackjack.model.cardDeck;
+package blackjack.model.carddeck;
 
 import blackjack.common.error.ErrorCode;
 import blackjack.model.card.Card;
