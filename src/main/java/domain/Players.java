@@ -22,4 +22,10 @@ public class Players {
     public List<Player> getPlayers() {
         return List.copyOf(players);
     }
+
+    public List<Player> getBlackjackPlayers() {
+        return players.stream()
+                .filter(Player::isBlackjack)
+                .toList();
+    }
 }

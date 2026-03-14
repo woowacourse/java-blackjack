@@ -72,7 +72,8 @@ public class GameController {
     }
 
     private void processBlackjack(Players players) {
-        outputView.printBlackjackWin(players);
+        List<Player> blackjackPlayers = gameService.getBlackjackPlayers(players);
+        outputView.printBlackjacks(blackjackPlayers);
     }
 
     private void processPlayerTurns(Players players) {

@@ -24,11 +24,9 @@ public class OutputView {
         System.out.println(player.getName() + "카드: " + cards);
     }
 
-    public void printBlackjackWin(Players players) {
-        for(Player player : players.getPlayers()) {
-            if(player.isBlackjack()) {
-                System.out.println(player.getName() + "는 블랙잭입니다!!");
-            }
+    public void printBlackjacks(List<Player> blackjackPlayers) {
+        for (Player player : blackjackPlayers) {
+            System.out.println(player.getName() + "는 블랙잭입니다!!");
         }
     }
 

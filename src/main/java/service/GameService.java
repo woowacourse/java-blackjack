@@ -2,6 +2,8 @@ package service;
 
 import domain.*;
 
+import java.util.List;
+
 
 public class GameService {
 
@@ -20,6 +22,10 @@ public class GameService {
 
     public void deal(Participant participant) {
         participant.receiveCard(cardDeck.draw());
+    }
+
+    public List<Player> getBlackjackPlayers(Players players) {
+        return players.getBlackjackPlayers();
     }
 
     public void determineResult(Players players, Dealer dealer) {
