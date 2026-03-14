@@ -7,14 +7,14 @@ import domain.participant.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-public record GameScoreDto(List<HandScoreDto> players, HandScoreDto dealer) {
+public record GameScoreDto(List<PlayerHandScoreDto> players, DealerHandScoreDto dealer) {
 
     public static GameScoreDto from(Players players, Dealer dealer) {
-        List<HandScoreDto> playerHandDtos = new ArrayList<>();
+        List<PlayerHandScoreDto> playerHandDtos = new ArrayList<>();
         for (Player player : players) {
-            playerHandDtos.add(HandScoreDto.from(player));
+            playerHandDtos.add(PlayerHandScoreDto.from(player));
         }
-        HandScoreDto dealerHandDto = HandScoreDto.from(dealer);
+        DealerHandScoreDto dealerHandDto = DealerHandScoreDto.from(dealer);
         return new GameScoreDto(playerHandDtos, dealerHandDto);
     }
 }

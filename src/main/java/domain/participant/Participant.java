@@ -8,11 +8,9 @@ import java.util.List;
 
 abstract public class Participant {
 
-    private final String name;
     protected Status status;
 
-    public Participant(String name) {
-        this.name = name;
+    public Participant() {
         this.status = new Start(new HandCards());
     }
 
@@ -30,10 +28,6 @@ abstract public class Participant {
 
     public boolean isRunning() {
         return this.status.isRunning();
-    }
-
-    public String getName() {
-        return name;
     }
 
     public int getScore() {

@@ -4,7 +4,7 @@ import domain.Players;
 import domain.betting.Money;
 import domain.participant.Dealer;
 import domain.participant.Player;
-import dto.HandDto;
+import dto.PlayerHandDto;
 import service.BattingCalculateService;
 import service.GameService;
 import util.HitOption;
@@ -81,12 +81,12 @@ public class GameController {
         // 플레이어가 턴이 끝나지 않았고(Bust나 Blackjack이 아님), Hit을 원할 때까지 반복
         while (player.isRunning() && inputHitOption(player) == HitOption.YES) {
             gameService.hit(player);
-            outputView.printHandCard(HandDto.from(player));
+            outputView.printHandCard(PlayerHandDto.from(player));
         }
 
         if (player.isRunning()) {
             gameService.stay(player);
-            outputView.printHandCard(HandDto.from(player));
+            outputView.printHandCard(PlayerHandDto.from(player));
         }
     }
 
