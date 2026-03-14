@@ -16,11 +16,11 @@ public abstract class BlackjackState {
         return new Hit(new Hand());
     }
 
-    public List<Card> getCards() {
+    public final List<Card> getCards() {
         return hand.getCards();
     }
 
-    public int getScore() {
+    public final int getScore() {
         return hand.calculateScore();
     }
 
