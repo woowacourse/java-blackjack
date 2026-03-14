@@ -66,11 +66,4 @@ public class OutputView {
                     playerStatisticDto.name(), playerStatisticDto.profit());
         }
     }
-
-    private String printResult(int result, String name) {
-        if (result == 0) {
-            return "";
-        }
-        return " " + result + name;
-    }
 }
