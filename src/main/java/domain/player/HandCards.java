@@ -1,6 +1,7 @@
 package domain.player;
 
 import domain.card.Card;
+import domain.card.TrumpNumber;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,7 +9,6 @@ import java.util.List;
 
 public class HandCards {
     private static final int MAX_SCORE = 21;
-    private static final int ACE_BONUS_SCORE = 10;
 
     private final List<Card> cards;
 
@@ -34,13 +34,17 @@ public class HandCards {
     // 손에 쥔 카드 점수 계산해 반환
     public int getCardScoreSum() {
         int sum = 0;
-
+        int aceCount = 0;
         for(Card card : cards) {
+            if (card.isAce()) {
+                aceCount++;
+                continue;
+            }
             sum += card.getValue();
         }
 
-        if (canPlusBonusScore(sum)) {
-            return sum + ACE_BONUS_SCORE;
+        for (int i = 0; i < aceCount; i++) {
+            sum += calculateAce(sum);
         }
         return sum;
     }
@@ -49,8 +53,16 @@ public class HandCards {
         return cards.size();
     }
 
-    private boolean canPlusBonusScore(int sum) {
-        return containsAce() && sum + ACE_BONUS_SCORE <= MAX_SCORE;
+    private int calculateAce(int sum) {
+        if (canUpGradeAce(sum)) {
+            return TrumpNumber.ACE.getUpgradeValue();
+        }
+
+        return TrumpNumber.ACE.getValue();
+    }
+
+    private boolean canUpGradeAce(int sum) {
+        return containsAce() && sum + TrumpNumber.ACE.getUpgradeValue() <= MAX_SCORE;
     }
 
     private boolean containsAce() {
