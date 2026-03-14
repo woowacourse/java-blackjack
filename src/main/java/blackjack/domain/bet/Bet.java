@@ -11,8 +11,8 @@ public final class Bet {
     private final int amount;
 
     public Bet(final int amount) {
-        validateAmountUnit(amount);
         validateAmountSize(amount);
+        validateAmountUnit(amount);
         this.amount = amount;
     }
 
