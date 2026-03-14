@@ -14,7 +14,7 @@ import domain.gamer.Players;
 import domain.gamer.dto.GamerHandDto;
 import domain.gamer.dto.GamerResultDto;
 import domain.gamer.dto.GamersNameDto;
-import domain.view.ApplicationView;
+import view.ApplicationView;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package domain.view;
+package view;
 
 import domain.answer.DrawDecision;
 import domain.betting.BettingMoney;

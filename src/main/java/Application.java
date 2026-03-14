@@ -1,9 +1,9 @@
 import controller.BlackjackGame;
 import domain.card.CardGenerator;
 import domain.card.BlackjackGameCardGenerator;
-import domain.view.ApplicationView;
-import domain.view.InputReader;
-import domain.view.OutputWriter;
+import view.ApplicationView;
+import view.InputReader;
+import view.OutputWriter;
 
 public class Application {
 
