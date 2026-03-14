@@ -20,7 +20,7 @@ public class BlackjackGame {
     public BlackjackGame(List<String> players) {
         validate(players);
         this.players = Players.from(players);
-        this.dealer = new Dealer();
+        this.dealer = Dealer.createReady();
         this.deck = new Deck();
     }
 

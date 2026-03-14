@@ -11,10 +11,10 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class PlayerTest {
-    private static final Dealer DEALER_BLACKJACK = new Dealer();
-    private static final Dealer DEALER_BUST = new Dealer();
-    private static final Dealer DEALER_21 = new Dealer();
-    private static final Dealer DEALER_20 = new Dealer();
+    private static final Dealer DEALER_BLACKJACK = Dealer.createReady();
+    private static final Dealer DEALER_BUST = Dealer.createReady();
+    private static final Dealer DEALER_21 = Dealer.createReady();
+    private static final Dealer DEALER_20 = Dealer.createReady();
     private static final Player PLAYER_BLACKJACK = Player.of("BLACKJACK", "10000");
     private static final Player PLAYER_BUST = Player.of("BUST", "10000");
     private static final Player PLAYER_21 = Player.of("21", "10000");
