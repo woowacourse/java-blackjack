@@ -58,14 +58,14 @@ public class BlackjackRunner {
 
     private Bets makeBets(Players players) {
         Bets bets = new Bets();
-        players.getPlayers().forEach(player -> makeBetWithReadPlayerBettingAmount(player, bets));
+        players.getPlayers().forEach(player -> bettingWithPlayerAmount(player, bets));
         return bets;
     }
 
-    private void makeBetWithReadPlayerBettingAmount(Player player, Bets bets) {
+    private void bettingWithPlayerAmount(Player player, Bets bets) {
         retry(() -> {
-            outputView.printAskPlayerBettingAmount(player.getNickname());
-            int betAmount = inputView.readPlayerBettingAmount();
+            outputView.printAskPlayerBetAmount(player.getNickname());
+            int betAmount = inputView.readPlayerbetAmount();
             bets.playerBet(player, betAmount);
             return true;
         });
