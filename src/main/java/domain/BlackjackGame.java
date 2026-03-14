@@ -44,15 +44,11 @@ public class BlackjackGame {
     }
 
     public void dealerHitStand(Consumer<Boolean> printDecisionOutput) {
-        while (true) {
-            boolean isHittable = dealer.isHittable(DEALER_HIT_STAND_BOUNDARY);
-            if (!isHittable) {
-                printDecisionOutput.accept(isHittable);
-                break;
-            }
+        while (dealer.isHittable(DEALER_HIT_STAND_BOUNDARY)) {
             dealer.addCard(deck.draw());
-            printDecisionOutput.accept(isHittable);
+            printDecisionOutput.accept(true);
         }
+        printDecisionOutput.accept(false);
     }
 
     public TotalResult getResult() {
