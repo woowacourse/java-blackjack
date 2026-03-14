@@ -64,18 +64,18 @@ class GameResultTest {
                 new Card(CardShape.HEART, CardContents.NINE)
         );
 
-        Map<Player, Long> expectPlayerWinLossResults = new LinkedHashMap<>();
-        expectPlayerWinLossResults.put(player1, 1500L);
-        expectPlayerWinLossResults.put(player2, -1000L);
-        expectPlayerWinLossResults.put(player3, 1000L);
-        expectPlayerWinLossResults.put(player4, 1000L);
+        Map<Player, Profit> expectPlayerWinLossResults = new LinkedHashMap<>();
+        expectPlayerWinLossResults.put(player1, new Profit(1500L));
+        expectPlayerWinLossResults.put(player2, new Profit(-1000L));
+        expectPlayerWinLossResults.put(player3, new Profit(1000L));
+        expectPlayerWinLossResults.put(player4, new Profit(1000L));
 
         long expectDealerWinLossResults = -2500L;
 
         // when
         GameResult gameResult = GameResult.calculate(dealer, players);
-        Map<Player, Long> playerResults = gameResult.getPlayerResults();
-        long dealerResults = gameResult.getDealerResult();
+        Map<Player, Profit> playerResults = gameResult.getPlayerProfits();
+        long dealerResults = gameResult.getDealerProfit();
 
         // then
         assertThat(playerResults).isEqualTo(expectPlayerWinLossResults);

@@ -10,8 +10,4 @@ public record BetMoney(int betAmount) {
             throw new IllegalArgumentException("배팅 금액은 양수여야 합니다.");
         }
     }
-
-    public int getBetAmount() {
-        return betAmount;
-    }
 }

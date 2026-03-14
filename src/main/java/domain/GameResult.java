@@ -5,19 +5,19 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class GameResult {
-    private final Map<Player, Long> playerResults;
-    private final long dealerResult;
+    private final Map<Player, Profit> playerProfits;
+    private final Profit dealerProfit;
 
-    private GameResult(Map<Player, Long> playerResults, long dealerResult) {
-        this.playerResults = playerResults;
-        this.dealerResult = dealerResult;
+    private GameResult(Map<Player, Profit> playerProfits, Profit dealerProfit) {
+        this.playerProfits = playerProfits;
+        this.dealerProfit = dealerProfit;
     }
 
     public static GameResult calculate(Dealer dealer, Players players) {
         validateCalculatable(dealer);
-        Map<Player, Long> playerResults = calculatePlayerResults(dealer, players);
-        long dealerResult = calculateDealerResult(playerResults);
-        return new GameResult(playerResults, dealerResult);
+        Map<Player, Profit> playerProfits = calculatePlayerResults(dealer, players);
+        Profit dealerProfit = calculateDealerResult(playerProfits);
+        return new GameResult(playerProfits, dealerProfit);
     }
 
     private static void validateCalculatable(Dealer dealer) {
@@ -26,30 +26,30 @@ public class GameResult {
         }
     }
 
-    private static Map<Player, Long> calculatePlayerResults(Dealer dealer, Players players) {
-        Map<Player, Long> playerWinTieLossResults = new LinkedHashMap<>();
+    private static Map<Player, Profit> calculatePlayerResults(Dealer dealer, Players players) {
+        Map<Player, Profit> playerWinTieLossResults = new LinkedHashMap<>();
         for (Player player : players) {
             PlayerResult playerResult = PlayerResult.determinePlayerResult(dealer, player);
             double rate = playerResult.getReturnRate();
             long profit = player.calculateBettingProfit(rate);
-            playerWinTieLossResults.put(player, profit);
+            playerWinTieLossResults.put(player, new Profit(profit));
         }
         return playerWinTieLossResults;
     }
 
-    private static long calculateDealerResult(Map<Player, Long> playerResults) {
+    private static Profit calculateDealerResult(Map<Player, Profit> playerProfits) {
         long playerBettingProfits = 0;
-        for (long playerResult : playerResults.values()) {
-            playerBettingProfits += playerResult;
+        for (Profit playerProfit : playerProfits.values()) {
+            playerBettingProfits += playerProfit.profit();
         }
-        return playerBettingProfits * (-1);
+        return new Profit(playerBettingProfits * (-1));
     }
 
-    public Map<Player, Long> getPlayerResults() {
-        return Collections.unmodifiableMap(playerResults);
+    public Map<Player, Profit> getPlayerProfits() {
+        return Collections.unmodifiableMap(playerProfits);
     }
 
-    public long getDealerResult() {
-        return dealerResult;
+    public long getDealerProfit() {
+        return dealerProfit.profit();
     }
 }

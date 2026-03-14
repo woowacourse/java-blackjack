@@ -19,7 +19,7 @@ class BetMoneyTest {
         BetMoney betMoney = new BetMoney(betAmount);
 
         // then
-        assertThat(betMoney.getBetAmount()).isEqualTo(betAmount);
+        assertThat(betMoney.betAmount()).isEqualTo(betAmount);
     }
 
     @ParameterizedTest

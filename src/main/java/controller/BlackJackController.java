@@ -18,16 +18,14 @@ import view.OutputView;
 public class BlackJackController {
     private final InputView inputView;
     private final OutputView outputView;
-    private final CardShuffleStrategy strategy;
 
-    public BlackJackController(InputView inputView, OutputView outputView, CardShuffleStrategy strategy) {
+    public BlackJackController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.strategy = strategy;
     }
 
-    public void doGame() {
-        Game game = setUpGame();
+    public void doGame(CardShuffleStrategy strategy) {
+        Game game = setUpGame(strategy);
 
         drawInitialCardsAndShowResult(game);
 
@@ -38,7 +36,7 @@ public class BlackJackController {
         showGameResult(game);
     }
 
-    private Game setUpGame() {
+    private Game setUpGame(CardShuffleStrategy strategy) {
         Players players = generatePlayers();
         return Game.registerParticipantsAndPrepareTotalDeck(players, strategy);
     }
