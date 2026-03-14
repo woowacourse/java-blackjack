@@ -15,7 +15,7 @@ class BlackjackGameTest {
                 new PlayerInfo(Name.from("pobi"), new Betting(10000)),
                 new PlayerInfo(Name.from("jason"), new Betting(20000)));
 
-        BlackjackGame blackjackGame = BlackjackGame.start(playerInfos);
+        BlackjackGame blackjackGame = BlackjackGame.start(playerInfos, cards -> {});
 
         Dealer dealer = blackjackGame.getDealer();
         Players players = blackjackGame.getPlayers();
@@ -35,7 +35,7 @@ class BlackjackGameTest {
                 new PlayerInfo(Name.from("pobi"), new Betting(10000)),
                 new PlayerInfo(Name.from("jason"), new Betting(20000)));
 
-        BlackjackGame blackjackGame = BlackjackGame.start(playerInfos);
+        BlackjackGame blackjackGame = BlackjackGame.start(playerInfos, cards -> {});
         for (Player player : blackjackGame.getPlayers().getPlayers()) {
             makePlayerBust(blackjackGame, player);
         }

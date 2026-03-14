@@ -24,7 +24,7 @@ class GameResultCalculatorTest {
     }
 
     @Test
-    void 딜러가_블랙잭인_경우_블랙잭이_아닌_21점_플레이어_패배_확인() {
+    void 딜러가_블랙잭인_경우_블랙잭이_아닌_21점의_플레이어_패배_확인() {
         Player player = PlayerFixture.createBlackjackScore("pobi");
         Players players = Players.from(List.of(player));
 
@@ -34,6 +34,19 @@ class GameResultCalculatorTest {
 
         FinalResult dealerWinResult = result.getTotalResult().getFirst();
         assertThat(dealerWinResult.getResultType()).isEqualTo(ResultType.LOSE);
+    }
+
+    @Test
+    void 딜러_버스트_플레이어_승리_확인() {
+        Player player = PlayerFixture.createDefault("pobi");
+        Players players = Players.from(List.of(player));
+
+        Dealer dealer = Dealer.from(HandFixture.createBust());
+
+        TotalFinalResult result = GameResultCalculator.checkGameResult(players, dealer);
+
+        FinalResult playerBlackjack = result.getTotalResult().getFirst();
+        assertThat(playerBlackjack.getResultType()).isEqualTo(ResultType.WIN);
     }
 
     @Test
