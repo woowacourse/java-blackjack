@@ -46,7 +46,7 @@ public class ResultView {
 
     public void printCards(Player player) {
         System.out.println(
-                player.getName().getValue() + "카드: " + cardsToString(player.getCards().getCards()));
+                player.getName().getValue() + "카드: " + cardsToString(player.getHand().getCards()));
     }
 
     private String cardsToString(List<Card> cards) {
@@ -79,7 +79,7 @@ public class ResultView {
         printEmptyLine();
         System.out.println(
                 "딜러카드: " + cardsToString(
-                        dealer.getCards().getCards()) + " - 결과: "
+                        dealer.getHand().getCards()) + " - 결과: "
                         + dealer.getTotalSum().value());
 
         for (Player player : players) {
@@ -90,7 +90,7 @@ public class ResultView {
     private void printCardWithResult(Player player) {
         System.out.println(
                 "카드: " + cardsToString(
-                        player.getCards().getCards()) + " - 결과: "
+                        player.getHand().getCards()) + " - 결과: "
                         + player.getTotalSum().value());
     }
 }

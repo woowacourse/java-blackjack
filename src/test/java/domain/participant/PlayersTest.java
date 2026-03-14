@@ -34,7 +34,7 @@ public class PlayersTest {
     }
 
     @Test
-    void getter로_받은_Player는_수정할_수_없다() {
+    void getter_수행_시_깊은_복사가_수행되어야_한다() {
         //given
         Players players = Players.from(
                 List.of(Player.of("jeje", "1000"), Player.of("mingu", "1000"), Player.of("minseo", "1000")));
@@ -45,6 +45,6 @@ public class PlayersTest {
 
         players.giveCardsToEachPlayers(deck, 2);
 
-        Assertions.assertThat(player.getCards().size()).isEqualTo(2);
+        Assertions.assertThat(player.getHand().size()).isEqualTo(2);
     }
 }

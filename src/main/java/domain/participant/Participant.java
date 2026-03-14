@@ -36,7 +36,7 @@ public abstract class Participant {
         return hand.totalSum();
     }
 
-    public Hand getCards() {
+    public Hand getHand() {
         return hand;
     }
 
