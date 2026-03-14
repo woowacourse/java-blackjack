@@ -4,7 +4,6 @@ import domain.card.Card;
 import domain.member.Hand;
 
 public class Hit extends Running {
-    private static final int BUST_CONDITION = 21;
 
     public Hit(Hand hand) {
         super(hand);
