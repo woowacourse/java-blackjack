@@ -2,47 +2,59 @@ package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.card.Deck;
+import blackjack.domain.bet.Bets;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class ParticipantsTest {
+class GamblersTest {
 
     @Test
-    @DisplayName("카드 분배 시 딜러와 모든 플레이어에게 정확히 2장씩 지급한다.")
-    void distributeCards_GiveTwoCardsToAllParticipants() {
-        List<String> names = List.of("pobi", "jason");
-        List<Integer> bettingAmounts = List.of(10000, 20000);
-        Players players = Players.fromPlayerNicknames(names, bettingAmounts);
+    @DisplayName("플레이어들의 수익금 합산의 정반대 부호를 딜러의 수익금으로 반환한다.")
+    void getDealerProfit_ReturnsZeroSumOfPlayerProfits() {
+        Players players = Players.fromPlayerNicknames(List.of("pobi", "jason"));
+        Bets bets = new Bets();
+        Gamblers gamblers = new Gamblers(players, bets);
+        Player pobi = players.getPlayers().get(0);
+        Player jason = players.getPlayers().get(1);
+        Map<Player, Integer> playerProfits = new LinkedHashMap<>();
+        playerProfits.put(pobi, 15000);
+        playerProfits.put(jason, -10000);
 
-        Dealer dealer = new Dealer();
-        Participants participants = new Participants(players, dealer);
-        Deck deck = new Deck();
+        long dealerProfit = gamblers.getDealerProfit(playerProfits);
 
-        participants.distributeCards(deck);
-
-        assertThat(dealer.getCards()).hasSize(2);
-        for (Player player : players.getPlayers()) {
-            assertThat(player.getCards()).hasSize(2);
-        }
+        assertThat(dealerProfit).isEqualTo(-5000L);
     }
 
     @Test
-    @DisplayName("전체 참가자 목록 조회 시 딜러가 첫 번째에 위치하고 플레이어들이 뒤따른다.")
-    void getParticipants_ReturnDealerAndPlayersInOrder() {
-        List<String> names = List.of("pobi", "jason");
-        List<Integer> bettingAmounts = List.of(10000, 20000);
-        Players players = Players.fromPlayerNicknames(names, bettingAmounts);
+    @DisplayName("플레이어들의 수익금 합산이 0일 때 딜러의 수익금도 정확히 0이다.")
+    void getDealerProfit_ReturnsZero_WhenPlayerProfitsSumIsZero() {
+        Players players = Players.fromPlayerNicknames(List.of("pobi", "jason"));
+        Bets bets = new Bets();
+        Gamblers gamblers = new Gamblers(players, bets);
+        Player pobi = players.getPlayers().get(0);
+        Player jason = players.getPlayers().get(1);
+        Map<Player, Integer> playerProfits = new LinkedHashMap<>();
+        playerProfits.put(pobi, 10000);
+        playerProfits.put(jason, -10000);
 
-        Dealer dealer = new Dealer();
-        Participants participants = new Participants(players, dealer);
+        long dealerProfit = gamblers.getDealerProfit(playerProfits);
 
-        List<Participant> allParticipants = participants.getParticipants();
+        assertThat(dealerProfit).isEqualTo(0L);
+    }
 
-        assertThat(allParticipants).hasSize(3);
-        assertThat(allParticipants.get(0)).isInstanceOf(Dealer.class);
-        assertThat(allParticipants.get(1).getNickname()).isEqualTo("pobi");
-        assertThat(allParticipants.get(2).getNickname()).isEqualTo("jason");
+    @Test
+    @DisplayName("정산 내역이 없을 경우 딜러의 수익금은 0이다.")
+    void getDealerProfit_ReturnsZero_WhenEmpty() {
+        Players players = Players.fromPlayerNicknames(List.of("pobi", "jason"));
+        Bets bets = new Bets();
+        Gamblers gamblers = new Gamblers(players, bets);
+        Map<Player, Integer> playerProfits = new LinkedHashMap<>();
+
+        long dealerProfit = gamblers.getDealerProfit(playerProfits);
+
+        assertThat(dealerProfit).isEqualTo(0L);
     }
 }

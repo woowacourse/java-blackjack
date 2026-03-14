@@ -3,7 +3,6 @@ package blackjack.domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import blackjack.domain.bet.ProfitRate;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
@@ -14,19 +13,26 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class PlayerTest {
 
-    @DisplayName("배팅 금액이 0 이하일 경우 예외가 발생한다.")
+    @DisplayName("플레이어 이름이 공백이면 예외가 발생한다.")
     @ParameterizedTest
-    @ValueSource(ints = {0, -1, -10000})
-    void validateBettingAmount_Exception_WhenInvalidAmount(int invalidAmount) {
-        assertThatThrownBy(() -> new Player("pobi", invalidAmount))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("배팅 금액");
+    @ValueSource(strings = {"", " ", "   "})
+    void create_ThrowsException_WhenNicknameIsBlank(String invalidNickname) {
+        assertThatThrownBy(() -> new Player(invalidNickname))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    @DisplayName("플레이어가 Stand를 선언하면 카드를 뽑을 수 없다.")
+    @DisplayName("초기 생성된 플레이어는 카드를 뽑을 수 있는 상태이다.")
+    void isDrawable_True_Initially() {
+        Player player = new Player("pobi");
+
+        assertThat(player.isDrawable()).isTrue();
+    }
+
+    @Test
+    @DisplayName("플레이어가 Stand를 선언하면 더 이상 카드를 뽑을 수 없다.")
     void isDrawable_False_WhenStand() {
-        Player player = new Player("pobi", 10000);
+        Player player = new Player("pobi");
 
         player.stand();
 
@@ -34,34 +40,13 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어가 Bust 상태이면 카드를 뽑을 수 없다.")
-    void isDrawable_False_WhenBust() {
-        Player player = new Player("pobi", 10000);
+    @DisplayName("플레이어의 점수가 정확히 21점 이상이면 카드를 뽑을 수 없다.")
+    void isDrawable_False_WhenScoreIs21OrMore() {
+        Player player = new Player("pobi");
         player.receiveCard(new Card(Rank.TEN, Suit.SPADES));
         player.receiveCard(new Card(Rank.TEN, Suit.HEARTS));
         player.receiveCard(new Card(Rank.TWO, Suit.CLUBS));
 
         assertThat(player.isDrawable()).isFalse();
-    }
-
-    @Test
-    @DisplayName("처음 두 장으로 블랙잭이 되면 카드를 뽑을 수 없다.")
-    void isDrawable_False_WhenBlackjack() {
-        Player player = new Player("pobi", 10000);
-        player.receiveCard(new Card(Rank.ACE, Suit.SPADES));
-        player.receiveCard(new Card(Rank.KING, Suit.HEARTS));
-
-        assertThat(player.isDrawable()).isFalse();
-    }
-
-    @Test
-    @DisplayName("전달받은 수익률에 자신의 배팅금을 곱해 최종 수익금을 반환한다.")
-    void calculateProfit_ReturnsCorrectAmount() {
-        Player player = new Player("pobi", 10000);
-
-        assertThat(player.calculateProfit(ProfitRate.WIN_BLACKJACK)).isEqualTo(15000);
-        assertThat(player.calculateProfit(ProfitRate.WIN)).isEqualTo(10000);
-        assertThat(player.calculateProfit(ProfitRate.DRAW)).isEqualTo(0);
-        assertThat(player.calculateProfit(ProfitRate.LOSE)).isEqualTo(-10000);
     }
 }
