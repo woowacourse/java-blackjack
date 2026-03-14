@@ -46,10 +46,9 @@ public class Hand {
     }
 
     private int calculateAceCount() {
-        return cards.stream()
+        return (int) cards.stream()
                 .filter(Card::isAce)
-                .toList()
-                .size();
+                .count();
     }
 
     private int calculateTotalScoreWithAceCalculation(int score, int aceCount) {
