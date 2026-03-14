@@ -20,7 +20,7 @@ public class Player extends Participant {
     }
 
     public static Player of(String name, String betMoney) {
-        return new Player(Name.valueOf(name), BetMoney.of(betMoney));
+        return new Player(Name.valueOf(name), BetMoney.valueOf(betMoney));
     }
 
     public static Player createReady(String name) {
@@ -64,7 +64,7 @@ public class Player extends Participant {
     }
 
     public void setBetMoney(long value) {
-        this.betMoney = BetMoney.of(value);
+        this.betMoney = BetMoney.valueOf(value);
     }
 
     public Name getName() {
