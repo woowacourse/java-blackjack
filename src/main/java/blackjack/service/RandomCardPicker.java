@@ -7,7 +7,6 @@ import blackjack.domain.Shape;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class RandomCardPicker implements CardPicker {
     private final NumberGenerator numberGenerator;

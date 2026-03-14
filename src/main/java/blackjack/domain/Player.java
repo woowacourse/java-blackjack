@@ -1,14 +1,25 @@
 package blackjack.domain;
 
 public class Player extends Participant {
-    private final String name;
 
-    public Player(String name) {
+    private final Money money;
+
+    public Player(String name, Money money) {
         super(name);
-        this.name = name;
+        this.money = money;
     }
 
-    public String getName() {
-        return name;
+    @Override
+    public int calculateFinalProfit(Participant dealer) {
+        if (isBlackjack() && dealer.isBlackjack()) {
+            return money.getBettingMoney();
+        }
+        if (isBlackjack()) {
+            return (int) (money.getBettingMoney() * 1.5);
+        }
+        if (isBust() || dealer.isBlackjack() || (calculateTotalScore() < dealer.calculateTotalScore() && !dealer.isBust())) {
+            return -money.getBettingMoney();
+        }
+        return money.getBettingMoney();
     }
 }
