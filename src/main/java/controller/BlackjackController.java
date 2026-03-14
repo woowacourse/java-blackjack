@@ -6,6 +6,7 @@ import domain.participant.BetAmount;
 import dto.BlackjackResultDto;
 import dto.BlackjackStatisticsDto;
 import dto.ParticipantDto;
+import java.util.ArrayList;
 import java.util.List;
 import util.Parser;
 import view.InputView;
@@ -35,8 +36,8 @@ public class BlackjackController {
     }
 
     private void initializeGame() {
-        inputPlayers();
-        inputBetAmounts();
+        List<String> playerNames = inputPlayerNames();
+        inputBetAmounts(playerNames);
         blackjackGameManager.drawInitialCards();
 
         List<ParticipantDto> playerDtoList = blackjackGameManager.generatePlayerDtoList();
@@ -46,17 +47,17 @@ public class BlackjackController {
         outputView.printHandList(dealerDto, playerDtoList);
     }
 
-    private void inputBetAmounts() {
-        List<ParticipantDto> playerDtoList = blackjackGameManager.generatePlayerDtoList();
-        for (ParticipantDto participantDto : playerDtoList) {
-            String betAmountInput = inputView.inputBetAmount(participantDto.name());
-            blackjackGameManager.setBetAmount(participantDto.name(), new BetAmount(betAmountInput));
+    private void inputBetAmounts(List<String> playerNames) {
+        List<BetAmount> betAmounts = new ArrayList<>();
+        for (String playerName : playerNames) {
+            String betAmountInput = inputView.inputBetAmount(playerName);
+            betAmounts.add(new BetAmount(betAmountInput));
         }
+        blackjackGameManager.createParticipants(playerNames, betAmounts);
     }
 
-    private void inputPlayers() {
-        List<String> input = Parser.parseInput(inputView.inputPlayers());
-        blackjackGameManager.createParticipants(input);
+    private List<String> inputPlayerNames() {
+        return Parser.parseInput(inputView.inputPlayers());
     }
 
     private void inputHitOrStandOnPlayer() {
