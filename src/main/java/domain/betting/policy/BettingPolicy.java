@@ -1,19 +1,19 @@
 package domain.betting.policy;
 
-import domain.betting.BettingResult;
+import domain.betting.BettingRate;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
 
 public abstract class BettingPolicy {
 
-    protected BettingResult bettingResult;
+    protected BettingRate bettingRate;
 
-    public BettingPolicy(BettingResult bettingResult) {
-        this.bettingResult = bettingResult;
+    public BettingPolicy(BettingRate bettingRate) {
+        this.bettingRate = bettingRate;
     }
 
     public abstract boolean isPolicyApplied(Dealer dealer, Player player);
 
-    public abstract double getBettingRate(Dealer dealer, Player player);
+    public abstract BettingRate getBettingRate(Dealer dealer, Player player);
 
 }

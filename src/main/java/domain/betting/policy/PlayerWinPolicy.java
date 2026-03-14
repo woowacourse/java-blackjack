@@ -1,13 +1,13 @@
 package domain.betting.policy;
 
-import domain.betting.BettingResult;
+import domain.betting.BettingRate;
 import domain.gamer.Dealer;
 import domain.gamer.Player;
 
 public class PlayerWinPolicy extends BettingPolicy{
 
     public PlayerWinPolicy() {
-        super(BettingResult.PLAYER_WIN);
+        super(BettingRate.PLAYER_WIN);
     }
 
     @Override
@@ -25,7 +25,7 @@ public class PlayerWinPolicy extends BettingPolicy{
     }
 
     @Override
-    public double getBettingRate(Dealer dealer, Player player) {
-        return bettingResult.bettingRate();
+    public BettingRate getBettingRate(Dealer dealer, Player player) {
+        return bettingRate;
     }
 }
