@@ -2,6 +2,8 @@ package domain.member;
 
 import domain.MatchResult;
 import domain.card.Card;
+import domain.state.State;
+
 import java.util.List;
 
 public abstract class Member {
@@ -9,11 +11,11 @@ public abstract class Member {
     protected static final int BUST_CONDITION = 21;
 
     private final String name;
-    private Hand hand;
+    protected State state;
 
-    public Member(String name) {
+    public Member(String name, State state) {
         this.name = name;
-        this.hand = new Hand();
+        this.state = state;
     }
 
     public String name() {
@@ -21,26 +23,18 @@ public abstract class Member {
     }
 
     public int currentScore() {
-        return hand.calculateTotalValue();
+        return state.hand().calculateTotalValue();
     }
 
     public List<Card> currentCards() {
-        return hand.getAllCard();
+        return state.hand().getAllCard();
+    }
+
+    public boolean isFinished() {
+        return state.isFinished();
     }
 
     public void receiveCard(Card card) {
-        hand = hand.appendCard(card);
-    }
-
-    public abstract MatchResult compareScoreWith(Member other);
-
-    protected MatchResult calculateResultFromNormalCase(int myScore, int targetScore) {
-        if (myScore > targetScore) {
-            return MatchResult.WIN;
-        }
-        if (myScore < targetScore) {
-            return MatchResult.LOSE;
-        }
-        return MatchResult.DRAW;
+        state = state.draw(card);
     }
 }

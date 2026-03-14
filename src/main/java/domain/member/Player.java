@@ -1,25 +1,16 @@
 package domain.member;
 
-import domain.MatchResult;
+import domain.state.State;
 
 public class Player extends Member {
+    private final Money betMoney;
 
-    public Player(String name) {
-        super(name);
+    public Player(String name, Money betMoney, State initialState) {
+        super(name, initialState);
+        this.betMoney = betMoney;
     }
 
-    @Override
-    public MatchResult compareScoreWith(Member dealer) {
-        int playerScore = currentScore();
-        int dealerScore = dealer.currentScore();
-
-        if (playerScore > BUST_CONDITION) {
-            return MatchResult.LOSE;
-        }
-        if (dealerScore > BUST_CONDITION) {
-            return MatchResult.WIN;
-        }
-
-        return calculateResultFromNormalCase(playerScore, dealerScore);
+    public int calculateProfit() {
+        return betMoney.calculateProfit(state.earningRate());
     }
 }
