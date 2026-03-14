@@ -6,7 +6,7 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.PlayerGroup;
-import blackjack.domain.result.GameJudge;
+import blackjack.domain.result.GameReferee;
 import blackjack.domain.result.GameResult;
 import java.util.List;
 
@@ -15,18 +15,23 @@ public class BlackjackGame {
 
     private final Deck deck;
     private final Dealer dealer;
+    private final GameReferee referee;
     private final PlayerGroup playerGroup;
 
-    public BlackjackGame(Deck deck, Dealer dealer, PlayerGroup playerGroup) {
+    public BlackjackGame(Deck deck, Dealer dealer, GameReferee referee, PlayerGroup playerGroup) {
         this.deck = deck;
         this.dealer = dealer;
+        this.referee = referee;
         this.playerGroup = playerGroup;
     }
 
-    public static BlackjackGame create(CardsGenerator cardsGenerator, String playerNames) {
+    public static BlackjackGame create(
+        CardsGenerator cardsGenerator, GameReferee referee, String playerNames) {
+
         return new BlackjackGame(
             Deck.create(cardsGenerator),
             Dealer.create(),
+            referee,
             PlayerGroup.from(playerNames));
     }
 
@@ -67,6 +72,6 @@ public class BlackjackGame {
     }
 
     public GameResult judge(Player player) {
-        return GameJudge.of(dealer, player);
+        return referee.judge(dealer, player);
     }
 }

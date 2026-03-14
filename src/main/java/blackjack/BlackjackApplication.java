@@ -3,6 +3,7 @@ package blackjack;
 import blackjack.core.BlackjackGame;
 import blackjack.domain.card.ShuffledCardsGenerator;
 import blackjack.domain.participant.Player;
+import blackjack.domain.result.BlackjackGameReferee;
 import blackjack.domain.result.GameResult;
 import blackjack.dto.DealerHitDto;
 import blackjack.dto.GameResultDtos;
@@ -76,7 +77,11 @@ public class BlackjackApplication {
 
     public static void main(String[] args) {
         BlackjackView view = new BlackjackView(new InputView(), new OutputView());
-        BlackjackGame game = BlackjackGame.create(new ShuffledCardsGenerator(), view.readPlayers());
+        BlackjackGame game = BlackjackGame.create(
+            new ShuffledCardsGenerator(),
+            new BlackjackGameReferee(),
+            view.readPlayers()
+        );
 
         new BlackjackApplication(view, game).run();
     }
