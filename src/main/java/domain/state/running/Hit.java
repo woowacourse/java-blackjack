@@ -4,7 +4,6 @@ import domain.card.Hand;
 import domain.card.vo.Card;
 import domain.state.State;
 import domain.state.finished.Bust;
-import domain.state.finished.Stay;
 
 public class Hit extends Running {
 
@@ -17,9 +16,6 @@ public class Hit extends Running {
         hand.add(card);
         if (hand.isBust()) {
             return new Bust(hand);
-        }
-        if (isFinished()) {
-            return new Stay(hand);
         }
         return new Hit(hand);
     }

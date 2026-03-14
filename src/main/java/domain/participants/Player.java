@@ -1,7 +1,6 @@
 package domain.participants;
 
 import domain.bet.Betting;
-import domain.card.Hand;
 import domain.hitStrategy.HitStrategy;
 import domain.hitStrategy.UntilBustHitStrategy;
 
@@ -10,8 +9,8 @@ public class Player extends Participant {
 
     protected final Betting betting;
 
-    public Player(String name, Hand hand, Betting betting, HitStrategy hitStrategy) {
-        super(name, hand, hitStrategy);
+    public Player(String name, Betting betting, HitStrategy hitStrategy) {
+        super(name, hitStrategy);
         this.betting = betting;
     }
 

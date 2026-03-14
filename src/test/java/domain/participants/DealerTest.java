@@ -3,29 +3,31 @@ package domain.participants;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.TestFixture;
+import domain.card.Hand;
 import domain.card.vo.Rank;
-import domain.state.finished.Blackjack;
-import domain.state.running.Hit;
 import java.util.List;
 import java.util.stream.Stream;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class DealerTest {
+    private final Dealer dealer = TestFixture.createDefaultDealer();
 
     public static Stream<Arguments> canDraw() {
         return Stream.of(
-                Arguments.of(TestFixture.createDefaultDealer(List.of(Rank.KING, Rank.SIX)), Hit.class),
-                Arguments.of(TestFixture.createDefaultDealer(List.of(Rank.KING, Rank.SEVEN)), Hit.class),
-                Arguments.of(TestFixture.createDefaultDealer(List.of(Rank.KING, Rank.ACE)), Blackjack.class)
+                Arguments.of(TestFixture.createHandByRank(List.of(Rank.TEN, Rank.SIX)), true),
+                Arguments.of(TestFixture.createHandByRank(List.of(Rank.TEN, Rank.SEVEN)), false)
         );
     }
 
     @ParameterizedTest
     @MethodSource
-    void canDraw(Dealer dealer, Class<?> clazz) {
-        assertThat(dealer.getState()).isInstanceOf(clazz);
+    @DisplayName("canDraw(): 16 이하이면서 Running State 라면 True를 리턴한다.")
+    void canDraw(Hand hand, boolean expected) {
+        dealer.startState(TestFixture.getDefaultStateGenerator(), hand);
+        assertThat(dealer.canDraw()).isEqualTo(expected);
     }
 
 

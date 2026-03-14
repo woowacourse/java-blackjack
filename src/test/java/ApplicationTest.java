@@ -4,6 +4,9 @@ import controller.BlackjackController;
 import domain.card.deckMaker.OneDeckMaker;
 import domain.participants.Dealer;
 import domain.participants.Player;
+import domain.state.generator.BlackjackGenerator;
+import domain.state.generator.BustGenerator;
+import domain.state.generator.FinishedStateGenerator;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -76,8 +79,10 @@ class ApplicationTest {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         BlackjackController blackjackController = new BlackjackController(
                 new InputView(inputArrayInputStream), new OutputView(new PrintStream(byteArrayOutputStream)));
+        List<FinishedStateGenerator> finishedStateGenerators = List.of(new BustGenerator(), new BlackjackGenerator());
 
-        blackjackController.start(new OneDeckMaker(), Dealer.getDefaultHitStrategy(), Player.getDefaultHitStrategy());
+        blackjackController.start(new OneDeckMaker(), Dealer.getDefaultHitStrategy(), Player.getDefaultHitStrategy(),
+                finishedStateGenerators);
         String outputString = byteArrayOutputStream.toString();
 
         assertThat(outputString).contains(expected.toArray(new String[0]));

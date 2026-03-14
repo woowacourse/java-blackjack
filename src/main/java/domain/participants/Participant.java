@@ -5,20 +5,22 @@ import domain.card.vo.Card;
 import domain.hitStrategy.HitStrategy;
 import domain.state.Started;
 import domain.state.State;
+import domain.state.generator.FinishedStateGenerator;
+import java.util.List;
 
 public abstract class Participant {
     private static final int MIN_NAME_SIZE = 2;
     private static final int MAX_NAME_SIZE = 7;
 
     protected final String name;
+    protected final HitStrategy hitStrategy;
     protected State state;
-    protected HitStrategy hitStrategy;
 
-    protected Participant(String name, Hand hand, HitStrategy hitStrategy) {
+    protected Participant(String name, HitStrategy hitStrategy) {
         validateNameLength(name);
         this.name = name;
-        this.state = getStartState(hand);
         this.hitStrategy = hitStrategy;
+        this.state = null;
     }
 
     private void validateNameLength(String name) {
@@ -44,10 +46,16 @@ public abstract class Participant {
     }
 
     public void drawCard(Card card) {
+        if (state == null || !canDraw()) {
+            throw new IllegalStateException("카드를 뽑을 수 없는 State 입니다.");
+        }
         this.state = getState().drawCard(card);
     }
 
-    public State getStartState(Hand hand) {
-        return Started.getStartState(hand);
+    public void startState(List<FinishedStateGenerator> finishedStateGenerators, Hand hand) {
+        if (hand.getSize() != Hand.MIN_SIZE) {
+            throw new IllegalStateException("시작 전에 핸드가 추가되어 오작동 할 여지가 있습니다.");
+        }
+        this.state = Started.getStartState(finishedStateGenerators, hand);
     }
 }

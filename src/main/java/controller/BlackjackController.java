@@ -9,6 +9,7 @@ import domain.hitStrategy.HitStrategy;
 import domain.participants.Dealer;
 import domain.participants.Participant;
 import domain.participants.Player;
+import domain.state.generator.FinishedStateGenerator;
 import dto.DealerDrawDto;
 import dto.NamesDto;
 import dto.PlayerCardsDto;
@@ -31,12 +32,16 @@ public class BlackjackController {
         this.outputView = outputView;
     }
 
-    public void start(final DeckMaker deckMaker, HitStrategy dealerStrategy, HitStrategy playerHitStrategy) {
+    public void start(final DeckMaker deckMaker, HitStrategy dealerStrategy, HitStrategy playerHitStrategy,
+                      List<FinishedStateGenerator> finishedStateGenerators) {
         Deck deck = Deck.createFromDeckMaker(deckMaker);
-        Participant dealer = new Dealer(Hand.createFromDeck(deck), dealerStrategy);
+        Participant dealer = new Dealer(dealerStrategy);
+        dealer.startState(finishedStateGenerators, Hand.createFromDeck(deck));
+
         List<Participant> players = readPlayersInfo().stream()
-                .map(player -> player.toDefaultStrategyPlayer(Hand.createFromDeck(deck), playerHitStrategy))
+                .map(player -> player.toDefaultStrategyPlayer(playerHitStrategy))
                 .toList();
+        players.forEach(p -> p.startState(finishedStateGenerators, Hand.createFromDeck(deck)));
 
         printCards(dealer, players);
         drawPlayerHandAndPrint(players, deck);

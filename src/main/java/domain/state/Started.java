@@ -2,7 +2,7 @@ package domain.state;
 
 import domain.card.Hand;
 import domain.card.vo.Card;
-import domain.state.finished.Blackjack;
+import domain.state.generator.FinishedStateGenerator;
 import domain.state.running.Hit;
 import java.util.List;
 
@@ -13,15 +13,13 @@ public abstract class Started implements State {
         this.hand = hand;
     }
 
-    public static State getStartState(Hand hand) {
-        if (Blackjack.isBlackJack(hand)) {
-            return new Blackjack(hand);
+    public static State getStartState(List<FinishedStateGenerator> finishedStateGenerators, Hand hand) {
+        for (FinishedStateGenerator finishedStateGenerator : finishedStateGenerators) {
+            if (finishedStateGenerator.supports(hand)) {
+                return finishedStateGenerator.create(hand);
+            }
         }
-        Hit hit = new Hit(hand);
-        if (hit.isFinished()) {
-            return hit.stay();
-        }
-        return hit;
+        return new Hit(hand);
     }
 
     @Override
