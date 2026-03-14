@@ -24,6 +24,10 @@ public class Participant {
         return hand.calculateTotalScore();
     }
 
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
+    }
+
     public List<Card> getHand() {
         return hand.getCard();
     }
