@@ -16,23 +16,23 @@ public abstract class Participant {
         this.state = state;
     }
 
-    public void addCard(Card card) {
+    public final void addCard(Card card) {
         state = state.hit(card);
     }
 
-    public BlackjackState getState() {
+    public final BlackjackState getState() {
         return state;
     }
 
-    public Collection<Card> getCards() {
+    public final Collection<Card> getCards() {
         return state.getCards();
     }
 
-    public int getScore() {
+    public final int getScore() {
         return state.getScore();
     }
 
-    public boolean isPlaying() {
+    public final boolean isPlaying() {
         return state.canHit();
     }
 }
