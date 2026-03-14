@@ -12,26 +12,26 @@ class MoneyTest {
     @DisplayName("뺄셈 테스트")
     void minusTest() {
         // given
-        Money money10k = Money.of(BigDecimal.valueOf(10000));
-        Money money3k = Money.of(BigDecimal.valueOf(3000));
+        Money money10k = Money.of(10000);
+        Money money3k = Money.of(3000);
 
         // when
         Money result = money10k.minus(money3k);
 
         // then
-        assertThat(result).isEqualTo(Money.of(BigDecimal.valueOf(7000)));
+        assertThat(result).isEqualTo(Money.of(7000));
     }
 
     @Test
     @DisplayName("곱셈 테스트")
     void multiplyTest() {
         // given
-        Money money = Money.of(BigDecimal.valueOf(10000));
+        Money money = Money.of(10000);
 
         // when
-        Money result = money.multiply(BigDecimal.valueOf(1.5));
+        Money result = money.multiply(1.5);
 
         // then
-        assertThat(result).isEqualTo(Money.of(BigDecimal.valueOf(15000.0)));
+        assertThat(result).isEqualTo(Money.of(15000));
     }
 }

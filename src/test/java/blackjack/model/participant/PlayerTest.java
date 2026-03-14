@@ -121,6 +121,6 @@ class PlayerTest {
         Money money = player1.calculateProfit(PlayerResult.WIN);
 
         // then
-        assertThat(money).isEqualTo(Money.of(BigDecimal.valueOf(15_000.00)));
+        assertThat(money).isEqualTo(Money.of(15_000));
     }
 }

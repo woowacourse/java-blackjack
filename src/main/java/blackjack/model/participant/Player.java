@@ -25,7 +25,7 @@ public class Player extends Participant {
     }
 
     public void bet(double amount) {
-        this.bettingMoney = Money.of(BigDecimal.valueOf(amount));
+        this.bettingMoney = Money.of(amount);
     }
 
     public Money calculateProfit(PlayerResult result) {
@@ -33,14 +33,14 @@ public class Player extends Participant {
             return calculateBlackjackBonus();
         }
         if (result == PlayerResult.LOSE) {
-            return bettingMoney.multiply(BigDecimal.valueOf(-1));
+            return bettingMoney.multiply(-1);
         }
         return Money.zero();
     }
 
     private Money calculateBlackjackBonus() {
         if (checkBonus()) {
-            return bettingMoney.multiply(BigDecimal.valueOf(1.5));
+            return bettingMoney.multiply(1.5);
         }
         return bettingMoney;
     }

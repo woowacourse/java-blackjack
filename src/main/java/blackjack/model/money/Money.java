@@ -12,8 +12,8 @@ public record Money(BigDecimal amount) {
         amount = amount.setScale(0, RoundingMode.HALF_UP);
     }
 
-    public static Money of(BigDecimal amount) {
-        return new Money(amount);
+    public static Money of(double amount) {
+        return new Money(BigDecimal.valueOf(amount));
     }
 
     public static Money zero() {
@@ -24,8 +24,8 @@ public record Money(BigDecimal amount) {
         return new Money(this.amount.subtract(money.amount));
     }
 
-    public Money multiply(BigDecimal value) {
-        return new Money(this.amount.multiply(value));
+    public Money multiply(double value) {
+        return new Money(this.amount.multiply(BigDecimal.valueOf(value)));
     }
 
     @Override
