@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.dto.DealerHitDto;
 import blackjack.dto.GameResultDtos;
 import blackjack.dto.InitialDealDtos;
 import blackjack.dto.ParticipantCardsDto;
@@ -32,8 +33,8 @@ public class BlackjackView {
         outputView.printParticipantCards(participantCardsDto);
     }
 
-    public void printDealerHit(final String dealerName) {
-        outputView.printDealerHit(dealerName);
+    public void printDealerHit(DealerHitDto dealerHitDto) {
+        outputView.printDealerHit(dealerHitDto);
     }
 
     public void printScore(ParticipantScoreDtos participantScoreDtos) {

@@ -3,9 +3,10 @@ package blackjack.view;
 import blackjack.domain.result.GameResult;
 import blackjack.domain.result.Score;
 import blackjack.dto.CardNameDto;
+import blackjack.dto.DealerHitDto;
 import blackjack.dto.DealerResultDto;
-import blackjack.dto.GameResultDtos;
 import blackjack.dto.GameResultDto;
+import blackjack.dto.GameResultDtos;
 import blackjack.dto.InitialDealDtos;
 import blackjack.dto.ParticipantCardsDto;
 import blackjack.dto.ParticipantScoreDto;
@@ -60,8 +61,10 @@ public class OutputView {
         System.out.println(playerName + "은 한장의 카드를 더 받겠습니까?(예는 " + YES + ", 아니오는 " + NO + ")");
     }
 
-    public void printDealerHit(final String dealerName) {
-        System.out.println(dealerName + "는 16이하라 한장의 카드를 더 받았습니다.");
+    public void printDealerHit(DealerHitDto dealerHitDto) {
+        System.out.printf("%s는 16장이하라 %d장의 카드를 더 받았습니다.%n",
+            dealerHitDto.dealerName(),
+            dealerHitDto.hitCount());
         System.out.println();
     }
 

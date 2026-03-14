@@ -3,6 +3,7 @@ package blackjack;
 import blackjack.core.BlackjackGame;
 import blackjack.domain.card.ShuffledCardsGenerator;
 import blackjack.domain.participant.Player;
+import blackjack.dto.DealerHitDto;
 import blackjack.dto.GameResultDtos;
 import blackjack.dto.InitialDealDtos;
 import blackjack.dto.ParticipantCardsDto;
@@ -22,8 +23,10 @@ public class BlackjackApplication {
 
     public void run() {
         initialDeal();
+
         playPlayers();
         playDealer();
+
         printScore();
         printResult();
     }
@@ -34,10 +37,10 @@ public class BlackjackApplication {
     }
 
     private void playPlayers() {
-        game.getPlayers().forEach(this::playPlayer);
+        game.getPlayers().forEach(this::play);
     }
 
-    private void playPlayer(Player player) {
+    private void play(Player player) {
         while (game.canHit(player) && view.isHitAnswer(player.getName())) {
             game.hit(player);
             view.printPlayerCards(ParticipantCardsDto.from(player));
@@ -45,10 +48,9 @@ public class BlackjackApplication {
     }
 
     private void playDealer() {
-        while (game.canHitDealer()) {
-            game.hitDealer();
-            view.printDealerHit(game.getDealerName());
-        }
+        int dealerHitCount = game.playDealer();
+        view.printDealerHit(
+            DealerHitDto.of(game.getDealer(), dealerHitCount));
     }
 
     private void printScore() {
@@ -58,7 +60,7 @@ public class BlackjackApplication {
 
     private void printResult() {
         view.printResult(
-            GameResultDtos.of(game.getDealer(), game.getPlayers()));
+            GameResultDtos.of(game.getPlayersResults()));
     }
 
     public static void main(String[] args) {

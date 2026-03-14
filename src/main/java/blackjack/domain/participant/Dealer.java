@@ -1,8 +1,6 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.card.Hand;
-import blackjack.domain.result.GameResult;
-import blackjack.domain.result.Score;
 
 public class Dealer extends Participant {
     private static final Name DEALER_NAME = new Name("딜러");
@@ -23,28 +21,5 @@ public class Dealer extends Participant {
     @Override
     public boolean canHit() {
         return getScore().isLessThanOrEqual(HIT_THRESHOLD);
-    }
-
-    public GameResult judgeAgainst(Player player) {
-        if (player.isBust()) {
-            return GameResult.DEALER_WIN;
-        }
-        if (isBust()) {
-            return GameResult.PLAYER_WIN;
-        }
-        return competeScoreWith(player);
-    }
-
-    private GameResult competeScoreWith(Player player) {
-        Score dealerScore = getScore();
-        Score playerScore = player.getScore();
-
-        if (dealerScore.isBiggerThan(playerScore)) {
-            return GameResult.DEALER_WIN;
-        }
-        if (playerScore.isBiggerThan(dealerScore)) {
-            return GameResult.PLAYER_WIN;
-        }
-        return GameResult.PUSH;
     }
 }

@@ -15,14 +15,14 @@ public record ParticipantScoreDtos(List<ParticipantScoreDto> scoreDtos) {
         return new ParticipantScoreDtos(scoreDtos);
     }
 
-    private static ParticipantScoreDto from(Participant participant) {
-        return ParticipantScoreDto.from(participant, participant.getScore());
-    }
-
     private static Stream<Participant> participantStream(Dealer dealer, List<Player> players) {
         return Stream.concat(
             Stream.of(dealer),
             players.stream()
         );
+    }
+
+    private static ParticipantScoreDto from(Participant participant) {
+        return ParticipantScoreDto.from(participant, participant.getScore());
     }
 }

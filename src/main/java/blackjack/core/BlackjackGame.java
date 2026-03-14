@@ -6,6 +6,7 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.PlayerGroup;
+import blackjack.domain.result.PlayerResults;
 import java.util.List;
 
 public class BlackjackGame {
@@ -36,10 +37,6 @@ public class BlackjackGame {
         return dealer;
     }
 
-    public String getDealerName() {
-        return dealer.getName();
-    }
-
     public void initialDeal() {
         for (int i = 0; i < INITIAL_DEAL_COUNT; i++) {
             hit(dealer);
@@ -51,8 +48,13 @@ public class BlackjackGame {
         participant.hit(deck.draw());
     }
 
-    public void hitDealer() {
-        hit(dealer);
+    public int playDealer() {
+        int dealerHitCount = 0;
+        while (canHitDealer()) {
+            hit(dealer);
+            dealerHitCount++;
+        }
+        return dealerHitCount;
     }
 
     public boolean canHit(Player player) {
@@ -61,5 +63,9 @@ public class BlackjackGame {
 
     public boolean canHitDealer() {
         return dealer.canHit();
+    }
+
+    public PlayerResults getPlayersResults() {
+        return PlayerResults.of(dealer, playerGroup);
     }
 }

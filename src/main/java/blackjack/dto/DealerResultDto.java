@@ -1,25 +1,25 @@
 package blackjack.dto;
 
 import blackjack.domain.result.GameResult;
-import java.util.List;
+import blackjack.domain.result.PlayerResults;
 
 public record DealerResultDto(int win, int lose, int push) {
-    public static DealerResultDto from(List<GameResultDto> gameResultDtos) {
-        int winCount = getPlayerWinCount(gameResultDtos);
-        int loseCount = getPlayerLoseCount(gameResultDtos);
-        int pushCount = getPushCount(gameResultDtos.size(), loseCount, winCount);
+    public static DealerResultDto from(PlayerResults results) {
+        int winCount = getPlayerWinCount(results);
+        int loseCount = getPlayerLoseCount(results);
+        int pushCount = getPushCount(results.entries().size(), loseCount, winCount);
         return new DealerResultDto(winCount, loseCount, pushCount);
     }
 
-    private static int getPlayerWinCount(List<GameResultDto> gameResultDtos) {
-        return (int) gameResultDtos.stream()
-            .filter(gameResultDto -> gameResultDto.result() == GameResult.DEALER_WIN)
+    private static int getPlayerWinCount(PlayerResults results) {
+        return (int) results.entries().values().stream()
+            .filter(result -> result == GameResult.DEALER_WIN)
             .count();
     }
 
-    private static int getPlayerLoseCount(List<GameResultDto> gameResultDtos) {
-        return (int) gameResultDtos.stream()
-            .filter(gameResultDto -> gameResultDto.result() == GameResult.PLAYER_WIN)
+    private static int getPlayerLoseCount(PlayerResults results) {
+        return (int) results.entries().values().stream()
+            .filter(result -> result == GameResult.PLAYER_WIN)
             .count();
     }
 
