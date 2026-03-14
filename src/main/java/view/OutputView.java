@@ -1,6 +1,7 @@
 package view;
 
 import domain.card.Card;
+import domain.game.ProfitResult;
 import domain.participant.Participant;
 import domain.participant.Player;
 import domain.card.Rank;
@@ -50,11 +51,10 @@ public class OutputView {
                 + " - 결과: " + participant.getScore());
     }
 
-    public void printProfitResult(String dealerName, int dealerProfit,
-                                   Map<Player, Integer> playerProfits) {
+    public void printProfitResult(String dealerName, ProfitResult profitResult) {
         System.out.println("\n## 최종 수익");
-        System.out.println(dealerName + ": " + dealerProfit);
-        for (Map.Entry<Player, Integer> entry : playerProfits.entrySet()) {
+        System.out.println(dealerName + ": " + profitResult.getDealerProfit());
+        for (Map.Entry<Player, Integer> entry : profitResult.getPlayerProfits().entrySet()) {
             System.out.println(entry.getKey().getName() + ": " + entry.getValue());
         }
     }

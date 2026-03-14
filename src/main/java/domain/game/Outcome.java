@@ -1,6 +1,6 @@
 package domain.game;
 
-public enum Result {
+public enum Outcome {
     BLACKJACK_WIN(1.5),
     WIN(1.0),
     LOSE(-1.0),
@@ -8,7 +8,7 @@ public enum Result {
 
     private final double profitRate;
 
-    Result(double profitRate) {
+    Outcome(double profitRate) {
         this.profitRate = profitRate;
     }
 

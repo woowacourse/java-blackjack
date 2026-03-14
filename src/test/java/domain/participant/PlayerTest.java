@@ -3,7 +3,6 @@ package domain.participant;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-import domain.bet.BettingMoney;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;

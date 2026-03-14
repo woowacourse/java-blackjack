@@ -4,8 +4,9 @@ import domain.participant.Dealer;
 import domain.card.Deck;
 import domain.participant.Player;
 import domain.participant.Players;
-import domain.game.Referee;
-import domain.game.Result;
+import domain.game.BlackjackRule;
+import domain.game.Outcome;
+import domain.game.ProfitResult;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,12 +36,6 @@ public class BlackjackController {
         printProfitResult(dealer, players);
     }
 
-    private void playAllPlayerTurns(Players players, Deck deck) {
-        for (Player player : players.getGamePlayers()) {
-            playPlayerTurn(player, deck);
-        }
-    }
-
     private Map<String, Integer> inputBets(List<String> names) {
         Map<String, Integer> nameToBet = new LinkedHashMap<>();
         for (String name : names) {
@@ -67,6 +62,12 @@ public class BlackjackController {
         outputView.printNewLine();
     }
 
+    private void playAllPlayerTurns(Players players, Deck deck) {
+        for (Player player : players.getGamePlayers()) {
+            playPlayerTurn(player, deck);
+        }
+    }
+
     private void playPlayerTurn(Player player, Deck deck) {
         while (player.canHit() && inputView.askHit(player.getName())) {
             player.addCard(deck.draw());
@@ -89,23 +90,14 @@ public class BlackjackController {
         }
     }
 
-    private Map<Player, Integer> calculateProfits(Dealer dealer, Players players) {
-        Referee referee = new Referee();
+    private void printProfitResult(Dealer dealer, Players players) {
+        BlackjackRule rule = new BlackjackRule();
         Map<Player, Integer> playerProfits = new LinkedHashMap<>();
         for (Player player : players.getGamePlayers()) {
-            Result result = referee.judge(player, dealer);
-            int profit = player.calculateProfit(result);
-            playerProfits.put(player, profit);
+            Outcome outcome = rule.judge(player, dealer);
+            playerProfits.put(player, player.calculateProfit(outcome));
         }
-        return playerProfits;
-    }
-
-    private void printProfitResult(Dealer dealer, Players players) {
-        Map<Player, Integer> playerProfits = calculateProfits(dealer, players);
-        int dealerProfit = 0;
-        for (int profit : playerProfits.values()) {
-            dealerProfit -= profit;
-        }
-        outputView.printProfitResult(dealer.getName(), dealerProfit, playerProfits);
+        ProfitResult profitResult = new ProfitResult(playerProfits);
+        outputView.printProfitResult(dealer.getName(), profitResult);
     }
 }

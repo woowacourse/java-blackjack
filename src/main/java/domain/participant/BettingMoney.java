@@ -1,6 +1,6 @@
-package domain.bet;
+package domain.participant;
 
-import domain.game.Result;
+import domain.game.Outcome;
 
 public class BettingMoney {
     private final int amount;
@@ -16,8 +16,8 @@ public class BettingMoney {
         }
     }
 
-    public int calculateProfit(Result result) {
-        return (int) (amount * result.getProfitRate());
+    public int calculateProfit(Outcome outcome) {
+        return (int) (amount * outcome.getProfitRate());
     }
 
     public int getAmount() {

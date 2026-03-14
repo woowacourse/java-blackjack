@@ -1,7 +1,6 @@
 package domain.participant;
 
-import domain.bet.BettingMoney;
-import domain.game.Result;
+import domain.game.Outcome;
 
 public class Player extends Participant {
     private final BettingMoney bettingMoney;
@@ -16,7 +15,7 @@ public class Player extends Participant {
         return !isBust() && !isBlackjack();
     }
 
-    public int calculateProfit(Result result) {
-        return bettingMoney.calculateProfit(result);
+    public int calculateProfit(Outcome outcome) {
+        return bettingMoney.calculateProfit(outcome);
     }
 }
