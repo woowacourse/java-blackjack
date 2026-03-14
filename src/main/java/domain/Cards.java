@@ -1,11 +1,9 @@
 package domain;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
-public class Cards implements Iterable<Card> {
+public class Cards {
     private static final int BUST_CRITERIA = 21;
     private static final int ACE_EXTRA_SCORE = 10;
 
@@ -57,12 +55,12 @@ public class Cards implements Iterable<Card> {
         return calculateCardScoreSum() > BUST_CRITERIA;
     }
 
-    @Override
-    public Iterator<Card> iterator() {
-        return Collections.unmodifiableList(cards).iterator();
-    }
+//    @Override
+//    public Iterator<Card> iterator() {
+//        return List.copyOf(cards).iterator();
+//    }
 
     public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+        return List.copyOf(cards);
     }
 }
