@@ -1,7 +1,8 @@
 package presentation.ui;
 
-import static constant.Word.CARD_MORD_MESSAGE;
-import static constant.Word.PLAYER_NAME_MESSAGE;
+import static presentation.ui.ViewMessage.CARD_MORD_MESSAGE;
+import static presentation.ui.ViewMessage.PLAYER_BET_AMOUNT_MESSAGE;
+import static presentation.ui.ViewMessage.PLAYER_NAME_MESSAGE;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,17 +13,32 @@ import java.util.stream.Stream;
 public class InputView {
 
     private final BufferedReader bufferedReader;
+    private final ValidatedInput validatedInput;
 
     public InputView() {
         this.bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        this.validatedInput = new ValidatedInput();
     }
 
     public List<String> readPlayerNames() {
         try {
             System.out.println(PLAYER_NAME_MESSAGE.format());
-            return Stream.of(bufferedReader.readLine().split(","))
-                    .map(String::trim)
+            List<String> playerNames = Stream.of(bufferedReader.readLine().split(","))
+                    .map(String::strip)
                     .toList();
+            validatedInput.validatePlayerName(playerNames);
+            return playerNames;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int readPlayerBetAmount(String name) {
+        try {
+            System.out.println();
+            System.out.println(PLAYER_BET_AMOUNT_MESSAGE.format(name));
+            String inputBetAmount = bufferedReader.readLine();
+            return Integer.parseInt(inputBetAmount);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

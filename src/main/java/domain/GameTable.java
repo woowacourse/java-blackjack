@@ -1,70 +1,71 @@
 package domain;
 
-import constant.Word;
-import domain.dto.GameResult;
-import domain.dto.MemberStatus;
+import domain.card.Card;
+import domain.card.Deck;
+import domain.member.Money;
+import dto.MemberStatus;
+import domain.member.Members;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class GameTable {
 
-    private static final int BLACKJACK = 21;
-    private static final int DEALER_DRAW_CONDITION = 16;
-
     private final Members members;
     private final Deck deck;
 
-    public GameTable(List<String> playerNames, Deck deck) {
-        this.members = new Members(playerNames);
+    public GameTable(Map<String, Money> playerBets, Deck deck) {
+        this.members = new Members(playerBets);
         this.deck = deck;
     }
 
     public void distributeInitCard() {
-        for (String memberName : members.getAllPlayerName()) {
-            members.provideCard(memberName, deck.draw());
-            members.provideCard(memberName, deck.draw());
+        members.provideCardToDealer(deck.draw());
+        members.provideCardToDealer(deck.draw());
+        for (String playerName : members.getAllPlayerName()) {
+            members.provideCardToPlayer(playerName, deck.draw());
+            members.provideCardToPlayer(playerName, deck.draw());
         }
     }
 
-    public boolean checkBust(String memberName) {
-        return members.checkValue(memberName) > BLACKJACK;
+    public boolean isPlayerBust(String playerName) {
+        return members.isPlayerBust(playerName);
     }
 
-    public List<Card> drawForMember(String memberName) {
-        members.provideCard(memberName, deck.draw());
-        return members.findCardByName(memberName);
+    public boolean isPlayerFinished(String playerName) {
+        return members.isPlayerFinishedByName(playerName);
+    }
+
+    public void changePlayerState(String playerName) {
+        members.changePlayerStateToStay(playerName);
+    }
+
+    public List<Card> drawForMember(String playerName) {
+        members.provideCardToPlayer(playerName, deck.draw());
+        return members.findCardByName(playerName);
     }
 
     public boolean drawForDealer() {
-        if (members.checkValue(Word.DEALER.getWord()) <= DEALER_DRAW_CONDITION) {
-            members.provideCard(Word.DEALER.getWord(), deck.draw());
+        if (members.canTheDealerDraw()) {
+            members.provideCardToDealer(deck.draw());
             return true;
         }
         return false;
     }
 
-    public List<MemberStatus> checkMemberStatuses() {
-        return members.getAllPlayerName()
-                .stream()
-                .map(name -> {
-                    List<Card> cards = members.findCardByName(name);
-                    int totalValue = members.checkValue(name);
-                    return new MemberStatus(name, cards, totalValue);
-                }).toList();
+    public List<MemberStatus> getMemberStatuses() {
+        List<MemberStatus> memberStatuses = new ArrayList<>();
+        memberStatuses.add(
+                new MemberStatus(members.getDealerName(), members.findDealerCards(), members.checkDealerScore()));
+
+        members.getAllPlayerName().stream()
+                .map(name -> new MemberStatus(name, members.findCardByName(name), members.checkPlayerScore(name)))
+                .forEach(memberStatuses::add);
+        return List.copyOf(memberStatuses);
     }
 
-    public List<GameResult> checkGameResult() {
-        List<GameResult> gameResults = new ArrayList<>();
-        gameResults.add(new GameResult(Word.DEALER.getWord(),
-                members.judgeDealerGameResult()));
-
-        Map<String, MatchResult> playerResults = members.judgePlayerGameResult();
-
-        for (String playerName : playerResults.keySet()) {
-            gameResults.add(new GameResult(playerName,
-                    List.of(playerResults.get(playerName))));
-        }
-        return gameResults;
+    public Map<String, Integer> getFinalProfits() {
+        return members.calculateFinalProfits();
     }
 }

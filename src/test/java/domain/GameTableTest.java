@@ -1,6 +1,12 @@
 package domain;
 
+import domain.card.Card;
+import domain.card.FixedDeck;
+
 import java.util.List;
+import java.util.Map;
+
+import domain.member.Money;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -15,30 +21,31 @@ class GameTableTest {
     @BeforeEach
     void setUpTest() {
         List<Card> cards = List.of(
-                new Card("10", "클로버"),
-                new Card("9", "클로버"),
-                new Card("8", "클로버"),
-                new Card("7", "클로버")
+                Card.from("10", "클로버"),
+                Card.from("9", "클로버"),
+                Card.from("8", "클로버"),
+                Card.from("7", "클로버")
         );
-        this.gameTable = new GameTable(List.of(pobiName), new FixedDeck(cards));
+        Map<String, Money> playerBets = Map.of(pobiName, new Money(10000));
+        this.gameTable = new GameTable(playerBets, new FixedDeck(cards));
     }
 
-    @DisplayName("카드의 총합이 21보다 크면 CurrentResult의 isBust는 true이다.")
+    @DisplayName("카드의 총합이 21보다 크면 isPlayerBust는 true이다.")
     @Test
-    void checkCurrentTest_playerHasCardSumOf22_returnTrue() {
+    void isPlayerBust_ScoreOver21_ReturnTrue() {
         gameTable.drawForMember(pobiName);
         gameTable.drawForMember(pobiName);
         gameTable.drawForMember(pobiName);
 
-        Assertions.assertTrue(gameTable.checkBust(pobiName));
+        Assertions.assertTrue(gameTable.isPlayerBust(pobiName));
     }
 
-    @DisplayName("카드의 총합이 21보다 작으면 CurrentResult의 isBust는 false이다.")
+    @DisplayName("카드의 총합이 21보다 작으면 isPlayerBust는 false이다.")
     @Test
-    void checkCurrentTest_playerHasCardSumOf20_returnFalse() {
+    void isPlayerBust_ScoreUnder21_ReturnFalse() {
         gameTable.drawForMember(pobiName);
         gameTable.drawForMember(pobiName);
 
-        Assertions.assertFalse(gameTable.checkBust(pobiName));
+        Assertions.assertFalse(gameTable.isPlayerBust(pobiName));
     }
 }
