@@ -1,6 +1,6 @@
 package blackjack.dto;
 
-import blackjack.domain.Player;
+import blackjack.domain.participant.Player;
 
 import java.util.List;
 

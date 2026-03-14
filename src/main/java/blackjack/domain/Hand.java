@@ -21,7 +21,9 @@ public class Hand {
         cards.add(card);
     }
 
-
+    public boolean isBlackjack(){
+        return calculateScore() == BLACKJACK_THRESHOLD;
+    }
     public boolean isBust() {
         return calculateScore() > BLACKJACK_THRESHOLD;
     }

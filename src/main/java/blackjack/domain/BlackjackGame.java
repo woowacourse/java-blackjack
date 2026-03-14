@@ -1,7 +1,12 @@
 package blackjack.domain;
 
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
+import blackjack.domain.vo.GameResult;
 import blackjack.domain.vo.MatchResult;
+import blackjack.domain.vo.Payoff;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +44,13 @@ public class BlackjackGame {
                 .collect(Collectors.collectingAndThen(Collectors.toList(), Players::of));
     }
 
+    public void betPlayers(BetDecision decision) {
+        players.forEach(player -> {
+            int amount = decision.decideBet(player.getName());
+            player.placeBet(amount);
+        });
+    }
+
     public void deal() {
         players.forEach(
                 player -> {
@@ -68,12 +80,35 @@ public class BlackjackGame {
         }
     }
 
+    public List<GameResult> gameResults(){
+        List<GameResult> results = new ArrayList<>();
+        players.forEach(player -> {
+            int profit = Payoff.playerResult(player, dealer)
+                    .calculateProfit(player.getBet().getAmount());
+            results.add(GameResult.from(player.getName(), profit));
+                }
+        );
+        return results;
+    }
+
+    public int getDealerProfit(List<GameResult> gameResults){
+        double profit = 0;
+        for (GameResult gameResult : gameResults) {
+            profit += gameResult.profit();
+        }
+        return (int) Math.abs(profit);
+    }
+
     public Map<String, MatchResult> matchResults() {
         Map<String, MatchResult> results = new LinkedHashMap<>();
         players.forEach(player ->
                 results.put(player.getName(), MatchResult.playerResult(player, dealer))
         );
         return results;
+    }
+
+    public Map<String, Long> getDealerFinalResult(Map<String, MatchResult> playerResult) {
+        return MatchResult.dealerResult(playerResult);
     }
 
     public Players getPlayers() {

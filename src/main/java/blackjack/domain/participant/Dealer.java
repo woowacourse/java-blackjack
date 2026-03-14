@@ -1,6 +1,9 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
-public class Dealer extends Participant{
+import blackjack.domain.Hand;
+import blackjack.domain.Name;
+
+public class Dealer extends Participant {
     private static final int DEALER_HIT_THRESHOLD = 16;
 
     private Dealer(Name name, Hand hand) {

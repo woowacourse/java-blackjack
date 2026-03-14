@@ -1,6 +1,9 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
-import java.util.Arrays;
+import blackjack.domain.Hand;
+import blackjack.domain.Name;
+import blackjack.domain.TrumpCard;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -23,8 +26,16 @@ abstract class Participant {
         hand.add(card);
     }
 
+    public boolean hasHigherScoreThan(Participant other){
+        return this.score() > other.score();
+    }
+
     public int score() {
         return hand.calculateScore();
+    }
+
+    public boolean isBlackjack() {
+        return hand.countCards() == 2 && hand.isBlackjack();
     }
 
     public boolean isBust() {

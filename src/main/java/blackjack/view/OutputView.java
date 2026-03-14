@@ -1,7 +1,7 @@
 package blackjack.view;
 
+import blackjack.domain.vo.GameResult;
 import blackjack.domain.vo.MatchResult;
-import blackjack.domain.Player;
 import blackjack.dto.CardDto;
 import blackjack.dto.DealResultDto;
 import blackjack.dto.DealerScoreDto;
@@ -58,24 +58,28 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printFinalResult(Map<String, MatchResult> matchResults) {
+    public static void printFinalResult(Map<String, MatchResult> matchResults, Map<String, Long> dealerResult) {
         System.out.println("## 최종 승패");
-        printDealerFinalResult(matchResults);
+        printDealerFinalResult(dealerResult);
         matchResults.forEach((name, result) ->
                 System.out.println(name + ": " + result.getDisplay())
         );
     }
 
-    private static void printDealerFinalResult(Map<String, MatchResult> matchResults) {
-        long winCount = matchResults.values().stream()
-                .filter(r -> r == MatchResult.LOSE).count();
-        long loseCount = matchResults.values().stream()
-                .filter(r -> r == MatchResult.WIN).count();
-        System.out.println("딜러: " + winCount + "승 " + loseCount + "패");
+    private static void printDealerFinalResult(Map<String, Long> dealerResult) {
+        System.out.println("딜러: " + dealerResult.get("승") + "승 "
+                + dealerResult.get("패") + "패");
     }
 
-    private static void printPlayerFinalResult(String playerName, String result) {
-        System.out.println(playerName + ": " + result);
+    public static void printFinalResult(List<GameResult> gameResults, int dealerProfit) {
+        System.out.println("## 최종 승패");
+        printDealerFinalResult(dealerProfit);
+        gameResults.forEach(result ->
+                System.out.println(result.name() + ": " + result.profit()));
+    }
+
+    private static void printDealerFinalResult(int dealerProfit) {
+        System.out.println("딜러: " + dealerProfit);
     }
 
     public static void printEmptyLine(){
