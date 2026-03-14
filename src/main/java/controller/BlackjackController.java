@@ -24,16 +24,10 @@ public class BlackjackController {
 
     public void run() {
         List<String> names = inputView.inputPlayers();
-        Map<String, Integer> nameToBet = new LinkedHashMap<>();
-        for (String name : names) {
-            int amount = inputView.inputBettingAmount(name);
-            nameToBet.put(name, amount);
-        }
-        Players players = new Players(nameToBet);
+        Players players = new Players(inputBets(names));
         Dealer dealer = new Dealer("딜러");
         Deck deck = new Deck();
-        dealInitialCards(dealer, players, deck);
-        dealInitialCards(dealer, players, deck);
+        dealInitialTwoCards(dealer, players, deck);
         printInitialState(dealer, players, names);
         playAllPlayerTurns(players, deck);
         playDealerTurn(dealer, deck);
@@ -47,11 +41,21 @@ public class BlackjackController {
         }
     }
 
-    private void dealInitialCards(Dealer dealer, Players players, Deck deck) {
-        for (Player player : players.getGamePlayers()) {
-            player.addCard(deck.draw());
+    private Map<String, Integer> inputBets(List<String> names) {
+        Map<String, Integer> nameToBet = new LinkedHashMap<>();
+        for (String name : names) {
+            nameToBet.put(name, inputView.inputBettingAmount(name));
         }
-        dealer.addCard(deck.draw());
+        return nameToBet;
+    }
+
+    private void dealInitialTwoCards(Dealer dealer, Players players, Deck deck) {
+        for (int i = 0; i < 2; i++) {
+            for (Player player : players.getGamePlayers()) {
+                player.addCard(deck.draw());
+            }
+            dealer.addCard(deck.draw());
+        }
     }
 
     private void printInitialState(Dealer dealer, Players players, List<String> names) {
