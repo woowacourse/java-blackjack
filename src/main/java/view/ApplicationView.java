@@ -3,6 +3,7 @@ package view;
 import domain.answer.DrawDecision;
 import domain.betting.BettingMoney;
 import domain.betting.dto.GamerBettingProfitDto;
+import domain.gamer.Players;
 import exception.BlackjackGameException;
 import domain.gamer.PlayerName;
 import domain.gamer.dto.GamerHandDto;
@@ -33,6 +34,18 @@ public class ApplicationView {
                     .map(String::trim)
                     .map(PlayerName::new)
                     .toList();
+        });
+    }
+
+    public Players enterPlayers() {
+        return retry(() -> {
+            writer.printInputNameGuideMessage();
+            String names = readInput();
+            List<PlayerName> playerNames = Arrays.stream(names.split(PLAYER_NAME_DELIMITER))
+                    .map(String::trim)
+                    .map(PlayerName::new)
+                    .toList();
+            return Players.enterByPlayerNames(playerNames);
         });
     }
 

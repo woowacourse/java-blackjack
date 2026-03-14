@@ -15,8 +15,12 @@ public abstract class Gamer {
         this.cardBundle = CardBundle.empty();
     }
 
-    public String getMyName() {
+    public String getName() {
         return name.name();
+    }
+
+    public PlayerName getGamerName() {
+        return name;
     }
 
     public int getResultScore() {

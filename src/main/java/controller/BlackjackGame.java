@@ -68,7 +68,7 @@ public class BlackjackGame {
 
     private void askBettingMoney(BettingTable bettingTable, Players players) {
         players.getPlayers().forEach(player -> {
-            BettingMoney bettingMoney = view.askBettingMoney(player.getMyName());
+            BettingMoney bettingMoney = view.askBettingMoney(player.getName());
             bettingTable.bet(player, bettingMoney);
         });
     }
@@ -106,7 +106,7 @@ public class BlackjackGame {
     }
 
     private boolean isPlayerWantCard(Player player) {
-        DrawDecision drawDecision = view.askDrawCard(player.getMyName());
+        DrawDecision drawDecision = view.askDrawCard(player.getName());
         return drawDecision.isYes();
     }
 

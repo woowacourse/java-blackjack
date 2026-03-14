@@ -4,7 +4,6 @@ import domain.card.*;
 import domain.card.exception.CardException;
 import domain.gamer.exception.PlayerException;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import utils.CardDeckBuilder;
 
@@ -46,7 +45,7 @@ public class PlayerTest {
 
     @Test
     void 플레이어를_생성한다() {
-        Assertions.assertThat(testPlayer.getMyName())
+        Assertions.assertThat(testPlayer.getName())
                 .isEqualTo(testPlayerName.name());
     }
 

@@ -14,9 +14,9 @@ public class BettingsTest {
         Player testPlayer = Player.from(new PlayerName("test"));
         Bettings bettings = new Bettings();
 
-        bettings.bet(testPlayer, bettingMoney);
+        bettings.bet(testPlayer.getGamerName(), bettingMoney);
 
-        BettingMoney actualBettingMoney = bettings.getPlayerBettingMoney(testPlayer);
+        BettingMoney actualBettingMoney = bettings.getPlayerBettingMoney(testPlayer.getGamerName());
         BettingMoney expectedBettingMoney = BettingMoney.bet(tenThousand);
 
         Assertions.assertThat(actualBettingMoney)
@@ -30,8 +30,8 @@ public class BettingsTest {
         Player testPlayer = Player.from(new PlayerName("test"));
         Bettings bettings = new Bettings();
 
-        bettings.bet(testPlayer, bettingMoney);
-        bettings.settleBettingMoney(testPlayer, 1.0);
+        bettings.bet(testPlayer.getGamerName(), bettingMoney);
+        bettings.settleBettingMoney(testPlayer.getGamerName(), 1.0);
 
         Profit actualDealerProfit = bettings.calculateDealerProfit();
         Profit expectedDealerProfit = new Profit(tenThousand).reverseProfit();

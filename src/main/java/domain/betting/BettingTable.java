@@ -16,11 +16,11 @@ public class BettingTable {
     }
 
     public void bet(Player player, BettingMoney bettingMoney) {
-        bettings.bet(player, bettingMoney);
+        bettings.bet(player.getGamerName(), bettingMoney);
     }
 
     public BettingMoney getBettingMoney(Player player) {
-        return bettings.getPlayerBettingMoney(player);
+        return bettings.getPlayerBettingMoney(player.getGamerName());
     }
 
     public void applyBettingRate(Dealer dealer, Players players) {
@@ -31,7 +31,7 @@ public class BettingTable {
 
     private void progressBetting(Dealer dealer, Player player) {
         double bettingRate = bettingManager.gainBettingRate(dealer, player);
-        bettings.settleBettingMoney(player, bettingRate);
+        bettings.settleBettingMoney(player.getGamerName(), bettingRate);
     }
 
     public Profit getDealerProfit() {
@@ -39,6 +39,6 @@ public class BettingTable {
     }
 
     public Profit getPlayerProfit(Player player) {
-        return bettings.getPlayerProfit(player);
+        return bettings.getPlayerProfit(player.getGamerName());
     }
 }

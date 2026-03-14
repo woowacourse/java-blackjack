@@ -1,6 +1,7 @@
 package domain.betting;
 
 import domain.gamer.Player;
+import domain.gamer.PlayerName;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,26 +10,26 @@ public class Bettings {
 
     private static final int PREFIX_INITIAL_PROFIT = 0;
 
-    private final Map<Player, BettingMoney> bettingMoneyByPlayer;
-    private final Map<Player, Profit> profitByPlayer;
+    private final Map<PlayerName, BettingMoney> bettingMoneyByPlayer;
+    private final Map<PlayerName, Profit> profitByPlayer;
 
     public Bettings() {
         this.profitByPlayer = new HashMap<>();
         this.bettingMoneyByPlayer = new HashMap<>();
     }
 
-    public void bet(Player player, BettingMoney bettingMoney) {
+    public void bet(PlayerName playerName, BettingMoney bettingMoney) {
         // TODO 베팅 두번 제한 로직
-        bettingMoneyByPlayer.put(player, bettingMoney);
+        bettingMoneyByPlayer.put(playerName, bettingMoney);
     }
 
-    public BettingMoney getPlayerBettingMoney(Player player) {
-        return bettingMoneyByPlayer.get(player);
+    public BettingMoney getPlayerBettingMoney(PlayerName playerName) {
+        return bettingMoneyByPlayer.get(playerName);
     }
 
-    public void settleBettingMoney(Player player, double bettingRate) {
-        BettingMoney bettingMoney = bettingMoneyByPlayer.get(player);
-        profitByPlayer.put(player, bettingMoney.withRate(bettingRate));
+    public void settleBettingMoney(PlayerName playerName, double bettingRate) {
+        BettingMoney bettingMoney = bettingMoneyByPlayer.get(playerName);
+        profitByPlayer.put(playerName, bettingMoney.withRate(bettingRate));
     }
 
     public Profit calculateDealerProfit() {
@@ -38,8 +39,8 @@ public class Bettings {
                 .reverseProfit();
     }
 
-    public Profit getPlayerProfit(Player player) {
-        return profitByPlayer.get(player);
+    public Profit getPlayerProfit(PlayerName playerName) {
+        return profitByPlayer.get(playerName);
     }
 
 }

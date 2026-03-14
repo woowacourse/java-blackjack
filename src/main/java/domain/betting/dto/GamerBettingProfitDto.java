@@ -9,7 +9,7 @@ public record GamerBettingProfitDto(
 ) {
 
     public static GamerBettingProfitDto of(Gamer gamer, Profit profit) {
-        return new GamerBettingProfitDto(gamer.getMyName(), profit.getProfit());
+        return new GamerBettingProfitDto(gamer.getName(), profit.getProfit());
     }
 
 }
