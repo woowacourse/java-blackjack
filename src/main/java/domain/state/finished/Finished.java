@@ -10,7 +10,7 @@ import java.util.function.Function;
 public abstract class Finished extends Started {
 
     public Finished(Hand hand) {
-        super(hand, null);
+        super(hand);
     }
 
     abstract public Function<Integer, Integer> earningRate(Result result);

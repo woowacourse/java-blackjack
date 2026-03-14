@@ -1,20 +1,19 @@
 package domain.state.running;
 
 import domain.card.Hand;
-import domain.hitStrategy.HitStrategy;
 import domain.state.Started;
 import domain.state.State;
 import domain.state.finished.Stay;
 
 public abstract class Running extends Started {
 
-    protected Running(Hand hand, HitStrategy hitStrategy) {
-        super(hand, hitStrategy);
+    protected Running(Hand hand) {
+        super(hand);
     }
 
     @Override
     public boolean isFinished() {
-        return !hitStrategy.canHit(this);
+        return false;
     }
 
     @Override
