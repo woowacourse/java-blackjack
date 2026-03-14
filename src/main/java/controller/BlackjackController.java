@@ -26,7 +26,7 @@ public class BlackjackController {
     public void start() {
         List<String> names = retryOnException(this::askPlayerNames);
         Deck deck = new Deck(CardGenerator.generateCards());
-        Game game = new Game(names);
+        Game game = new Game(names, deck);
 
         playGame(game, deck);
     }
@@ -37,7 +37,6 @@ public class BlackjackController {
     }
 
     private void playGame(Game game, Deck deck) {
-        game.initializeGame(deck);
         Map<String, BetAmount> betAmounts = retryOnException(() -> makeBetAmounts(game));
         printParticipantCards(game);
         playTurn(game, deck);

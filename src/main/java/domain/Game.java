@@ -13,12 +13,13 @@ public class Game {
     private final Players players;
     private final Dealer dealer;
 
-    public Game(List<String> names) {
+    public Game(List<String> names, Deck deck) {
         this.players = new Players(names);
         this.dealer = new Dealer();
+        initializeGame(deck);
     }
 
-    public void initializeGame(Deck deck) {
+    private void initializeGame(Deck deck) {
         for (int i = 0; i < INIT_CARD_COUNT; i++) {
             players.distributeCardForAllPlayers(deck);
             dealer.addCard(deck.drawCard());
