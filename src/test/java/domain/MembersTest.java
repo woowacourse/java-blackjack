@@ -31,7 +31,7 @@ class MembersTest {
         members.draw(pobi, new Card("5", "하트"));
         members.draw(pobi, new Card("7", "하트"));
 
-        Assertions.assertTrue(members.hasBust(pobi));
+        Assertions.assertTrue(pobi.hasBust());
     }
 
     @DisplayName("카드의 총합이 21보다 작으면 CurrentResult의 isBust는 false이다.")
@@ -41,7 +41,7 @@ class MembersTest {
         members.draw(pobi, new Card("5", "하트"));
         members.draw(pobi, new Card("5", "스페이드"));
 
-        Assertions.assertFalse(members.hasBust(pobi));
+        Assertions.assertFalse(pobi.hasBust());
     }
 
     @DisplayName("딜러의 카드 총합이 21을 넘으면 버스트(true)이다.")
@@ -53,7 +53,7 @@ class MembersTest {
         members.draw(dealer, new Card("10", "스페이드"));
         members.draw(dealer, new Card("5", "클로버"));
 
-        Assertions.assertTrue(members.hasBust(dealer));
+        Assertions.assertTrue(dealer.hasBust());
     }
 
     @DisplayName("플레이어와 딜러 모두 블랙잭이 아니고, 딜러가 18, 플레이어가 16이면 플레이어가 진다.")

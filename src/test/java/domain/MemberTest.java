@@ -24,6 +24,6 @@ public class MemberTest {
         player.receiveCard(new Card("4","다이아몬드"));
         player.receiveCard(new Card("2", "스페이드"));
 
-        Assertions.assertEquals(RoundResult.WIN, RoundResult.judgeAgainst(dealer.handValue(), player.handValue()));
+        Assertions.assertEquals(RoundResult.WIN, RoundResult.judgeAgainst(dealer, player));
     }
 }

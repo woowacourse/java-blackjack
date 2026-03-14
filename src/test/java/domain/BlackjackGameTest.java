@@ -36,7 +36,7 @@ class BlackjackGameTest {
         members.draw(pobi, new Card("10","클로버"));
         members.draw(pobi, new Card("A", "하트"));
 
-        members.applyBlackjackBonus(pobi);
+        pobi.applyBlackjackBonus();
         Map<Member, Integer> playerProfits = game.getPlayerProfits();
         int playerAmount = playerProfits.get(pobi);
 
@@ -53,7 +53,7 @@ class BlackjackGameTest {
         members.draw(pobi, new Card("10","클로버"));
         members.draw(pobi, new Card("A", "하트"));
 
-        members.applyBlackjackBonus(pobi);
+        pobi.applyBlackjackBonus();
         Map<Member, Integer> playerProfits = game.getPlayerProfits();
         int playerAmount = playerProfits.get(pobi);
 
@@ -73,7 +73,7 @@ class BlackjackGameTest {
         members.draw(lisa, new Card("10","하트"));
         members.draw(lisa, new Card("A", "클로버"));
 
-        members.applyBlackjackBonus(lisa);
+        lisa.applyBlackjackBonus();
         int dealerProfit = game.getDealerProfit();
         Map<Member, Integer> playerProfits = game.getPlayerProfits();
 
