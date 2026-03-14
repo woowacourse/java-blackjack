@@ -3,6 +3,7 @@ package controller;
 import domain.betting.BettingAmount;
 import domain.betting.BettingManager;
 import domain.betting.CalculateProfit;
+import domain.betting.Revenue;
 import domain.game.GameManager;
 import domain.game.GameResult;
 import domain.game.GameResultManager;
@@ -12,6 +13,7 @@ import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
 import dto.ParticipantCardsDto;
+import dto.ParticipantRevenueDto;
 import java.util.HashMap;
 import view.InputView;
 import view.OutputView;
@@ -40,8 +42,12 @@ public class BlackJackGameController {
         CalculateProfit calculateProfit = new CalculateProfit(bettingManager);
         GameResultManager gameResultManager =
                 new GameResultManager(calculateProfit, players, gameManager.getDealer());
-        Map<String, GameResult> gameResult = gameResultManager.getGameResult();
-        endGame(gameManager, players, gameResult);
+        //TODO: 여기 아래 가 변경되어야 함. 지금 gameResuㅣㅅ
+        //Map<String, GameResult> gameResult = gameResultManager.getGameResult();
+        Map<Name, Revenue> profits = gameResultManager.getParticipantsProfit();
+        List<ParticipantRevenueDto> revenueDtos = toParticipantRevenueDtos(profits);
+
+        endGame(gameManager, players, revenueDtos);
     }
 
     private BettingManager initBettingManager(Players players) {
@@ -52,6 +58,19 @@ public class BlackJackGameController {
         });
         return new BettingManager(bettingAmounts);
     }
+
+    private List<ParticipantRevenueDto> toParticipantRevenueDtos(Map<Name, Revenue> profits) {
+        List<ParticipantRevenueDto> revenueDtos = new ArrayList<>();
+        for (Map.Entry<Name, Revenue> entry : profits.entrySet()) {
+            revenueDtos.add(new ParticipantRevenueDto(
+                    entry.getKey().getName(),
+                    entry.getValue().getMoney()
+            ));
+        }
+        return revenueDtos;
+    }
+
+
 
     private void playGame(Players players, GameManager gameManager) {
         players.forEach(player -> playGameWithPlayer(player, gameManager));
@@ -92,10 +111,11 @@ public class BlackJackGameController {
         players.forEach(player -> OutputView.printCards(toParticipantCardsDto(player)));
     }
 
-    private void endGame(GameManager gameManager, Players players, Map<String, GameResult> gameResult) {
+    private void endGame(GameManager gameManager, Players players, List<ParticipantRevenueDto> participantRevenueDtos) {
         OutputView.printFinalCards(toParticipantCardsDto(gameManager.getDealer()));
         printFinalScores(players);
-        OutputView.printGameResult(gameResult);
+        // OutputView.printGameResult(gameResult);
+        OutputView.printParticipantRevenues(participantRevenueDtos);
     }
 
     private void printFinalScores(Players players) {

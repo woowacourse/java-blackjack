@@ -3,11 +3,8 @@ package domain.game;
 import domain.card.Card;
 import domain.participant.Dealer;
 import domain.card.Deck;
-import domain.participant.Name;
 import domain.participant.Participant;
 import domain.participant.Players;
-import java.util.HashMap;
-import java.util.Map;
 
 public class GameManager {
 
@@ -26,8 +23,7 @@ public class GameManager {
     }
 
     private Dealer initDealer() {
-        Name name = new Name("딜러");
-        Dealer dealer = new Dealer(name);
+        Dealer dealer = new Dealer();
         return dealer;
     }
 

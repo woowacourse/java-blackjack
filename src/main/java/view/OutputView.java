@@ -3,6 +3,7 @@ package view;
 import domain.game.GameResult;
 import dto.ParticipantCardsDto;
 
+import dto.ParticipantRevenueDto;
 import java.util.List;
 import java.util.Map;
 
@@ -50,6 +51,18 @@ public class OutputView {
         System.out.println("## 최종 승패");
         System.out.println(DEALER + ": " + loseCount + "승" + " " + winCount + "패");
         System.out.printf(resultMessage.toString());
+    }
+
+    public static void printParticipantRevenues(List<ParticipantRevenueDto> participantRevenueDtos) {
+        System.out.println();
+        System.out.println("## 최종 수익");
+
+        for (ParticipantRevenueDto participantRevenueDto : participantRevenueDtos) {
+            System.out.println(
+                    participantRevenueDto.name() + ": " + participantRevenueDto.revenue()
+            );
+        }
+
     }
 
     private static void printInitialPlayerCards(ParticipantCardsDto participantCardsDto) {

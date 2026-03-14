@@ -95,7 +95,7 @@ class PlayerTest {
     @Test
     void 딜러보다_점수가_높으면_승리한다() {
         Player player = new Player(new Name("pobi"));
-        Dealer dealer = new Dealer(new Name("딜러"));
+        Dealer dealer = new Dealer();
 
         player.receiveCard(new Card(Shape.SPADE, domain.card.Number.TEN));
         player.receiveCard(new Card(Shape.HEART, domain.card.Number.JACK));
@@ -111,7 +111,7 @@ class PlayerTest {
     @Test
     void 딜러와_점수가_같으면_무승부이다() {
         Player player = new Player(new Name("pobi"));
-        Dealer dealer = new Dealer(new Name("딜러"));
+        Dealer dealer = new Dealer();
 
         player.receiveCard(new Card(Shape.SPADE, domain.card.Number.TEN));
         player.receiveCard(new Card(Shape.HEART, domain.card.Number.JACK));
@@ -127,7 +127,7 @@ class PlayerTest {
     @Test
     void 딜러보다_점수가_낮으면_패배한다() {
         Player player = new Player(new Name("pobi"));
-        Dealer dealer = new Dealer(new Name("딜러"));
+        Dealer dealer = new Dealer();
 
         player.receiveCard(new Card(Shape.SPADE, domain.card.Number.TEN));
 
@@ -142,7 +142,7 @@ class PlayerTest {
     @Test
     void 플레이어가_버스트이면_패배한다() {
         Player player = new Player(new Name("pobi"));
-        Dealer dealer = new Dealer(new Name("딜러"));
+        Dealer dealer = new Dealer();
 
         player.receiveCard(new Card(Shape.SPADE, domain.card.Number.TWO));
         player.receiveCard(new Card(Shape.HEART, domain.card.Number.JACK));
@@ -159,7 +159,7 @@ class PlayerTest {
     @Test
     void 딜러가_버스트이면_승리한다() {
         Player player = new Player(new Name("pobi"));
-        Dealer dealer = new Dealer(new Name("딜러"));
+        Dealer dealer = new Dealer();
 
         player.receiveCard(new Card(Shape.SPADE, domain.card.Number.TEN));
         player.receiveCard(new Card(Shape.HEART, domain.card.Number.JACK));

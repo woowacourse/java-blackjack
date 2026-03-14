@@ -6,6 +6,7 @@ import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Players;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class GameResultManager {
@@ -28,13 +29,22 @@ public class GameResultManager {
         return gameResult;
     }
 
-    public Map<Name, Revenue> getParticipantsProfit() {
-        Map<Name, Revenue> finalRevenues = new HashMap<>();
+    public LinkedHashMap<Name, Revenue> getParticipantsProfit() {
+        LinkedHashMap<Name, Revenue> finalRevenues = new LinkedHashMap<>();
         players.forEach(player -> {
             GameResult result = player.judgeResult(dealer);
             Revenue revenue = calculateProfit.calculate(player.getName(), result);
             finalRevenues.put(player.getName(), revenue);
         });
+        finalRevenues.put(dealer.getName(), calculateDealerRevenue(finalRevenues));
         return finalRevenues;
     }
+
+    private Revenue calculateDealerRevenue(Map<Name, Revenue> revenues) {
+        int dealerRevenue = -revenues.values().stream()
+                .mapToInt(Revenue::getMoney)
+                .sum();
+        return new Revenue(dealerRevenue);
+    }
+
 }
