@@ -1,6 +1,7 @@
 package domain.participant;
 
 import exception.BlackjackException;
+import java.util.Objects;
 
 public record PlayerName(String name) {
 
@@ -29,5 +30,14 @@ public record PlayerName(String name) {
         if (name.isBlank()) {
             throw new BlackjackException(PLAYER_NAME_BLANK);
         }
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+        PlayerName that = (PlayerName) object;
+        return Objects.equals(name, that.name);
     }
 }
