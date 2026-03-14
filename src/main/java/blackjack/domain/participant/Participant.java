@@ -20,7 +20,7 @@ public class Participant {
 
     private void validate(String nickname) {
         if (nickname.isBlank()) {
-            throw new IllegalArgumentException("플레이어 이름은 공백이 될 수 없습니다.");
+            throw new IllegalArgumentException("참가자의 이름은 공백이 될 수 없습니다.");
         }
     }
 
