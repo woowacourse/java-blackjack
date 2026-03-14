@@ -2,9 +2,9 @@ package domain.card;
 
 import domain.Rank;
 import domain.Suit;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.stream.IntStream;
@@ -22,7 +22,7 @@ public class Deck {
     public static Deck createWithAllCards() {
         List<Card> generatedCards = getAllCards();
         Collections.shuffle(generatedCards);
-        return new Deck(new LinkedList<>(generatedCards));
+        return new Deck(new ArrayDeque<>(generatedCards));
     }
 
     private static List<Card> getAllCards() {
