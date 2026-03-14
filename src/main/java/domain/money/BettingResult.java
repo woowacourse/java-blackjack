@@ -2,6 +2,8 @@ package domain.money;
 
 import domain.card.MatchResult;
 
+import static util.BlackJackConstant.BLACKJACK_MULTIPLIER;
+
 public class BettingResult {
 
     private final int earnings;
@@ -12,7 +14,7 @@ public class BettingResult {
 
     public static BettingResult from(int betAmount, MatchResult matchResult, boolean isBlackJack) {
         if (matchResult == MatchResult.WIN && isBlackJack) {
-            return new BettingResult((int) (betAmount * 1.5));
+            return new BettingResult((int) (betAmount * BLACKJACK_MULTIPLIER));
         }
         if (matchResult == MatchResult.WIN) {
             return new BettingResult(betAmount);
@@ -28,6 +30,6 @@ public class BettingResult {
     }
 
     public int reverse() {
-        return earnings * (-1);
+        return -earnings;
     }
 }
