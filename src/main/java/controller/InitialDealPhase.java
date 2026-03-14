@@ -9,7 +9,7 @@ import view.OutputView;
 
 public class InitialDealPhase implements GamePhase {
 
-    CardDispenser cardDispenser;
+    private CardDispenser cardDispenser;
 
     public InitialDealPhase() {
     }
