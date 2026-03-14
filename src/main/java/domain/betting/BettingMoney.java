@@ -20,8 +20,8 @@ public record BettingMoney(
         return new BettingMoney(bettingMoney);
     }
 
-    public Profit withRate(double rate) {
-        return new Profit((int) (this.amount * rate));
+    public int withRate(double rate) {
+        return (int) (this.amount * rate);
     }
 
     public BettingMoney getBettingProfit() {

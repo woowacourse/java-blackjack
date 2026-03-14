@@ -30,7 +30,8 @@ public class BettingsTest {
         Player testPlayer = Player.from(new PlayerName("test"));
         Profits profits = new Profits();
 
-        profits.settleProfit(testPlayer.getGamerName(), bettingMoney.withRate(BettingRate.PLAYER_WIN.getBettingRate()));
+        Profit profit = bettingMoneyToProfit(bettingMoney, BettingRate.PLAYER_WIN.getBettingRate());
+        profits.settleProfit(testPlayer.getGamerName(), profit);
 
         Profit actualDealerProfit = profits.calculateDealerProfit();
         Profit expectedDealerProfit = new Profit(tenThousand).reverseProfit();
@@ -38,5 +39,10 @@ public class BettingsTest {
         Assertions.assertThat(actualDealerProfit)
                 .isEqualTo(expectedDealerProfit);
     }
+
+    public Profit bettingMoneyToProfit(BettingMoney bettingMoney, double rate) {
+        return new Profit(bettingMoney.withRate(rate));
+    }
+
 
 }

@@ -59,7 +59,7 @@ public class BettingTableTest {
         bettingTable.applyBettingRate(dealer, players);
 
         Profit actualProfit = bettingTable.getPlayerProfit(testPlayer);
-        Profit expectedProfit = thousandWon.withRate(blackJackRate.getBettingRate());
+        Profit expectedProfit = bettingMoneyToProfit(thousandWon, blackJackRate.getBettingRate());
 
         Assertions.assertThat(actualProfit)
                 .isEqualTo(expectedProfit);
@@ -76,8 +76,7 @@ public class BettingTableTest {
         bettingTable.applyBettingRate(dealer, players);
 
         Profit actualDealerProfit = bettingTable.getDealerProfit();
-        Profit expectedDealerProfit = thousandWon
-                .withRate(blackJackRate.getBettingRate())
+        Profit expectedDealerProfit = bettingMoneyToProfit(thousandWon, blackJackRate.getBettingRate())
                 .reverseProfit();
 
         Assertions.assertThat(actualDealerProfit)
@@ -87,6 +86,10 @@ public class BettingTableTest {
     private Dealer createDealer(List<Card> cards) {
         TestCardGenerator testCardGenerator = TestCardGenerator.of(cards);
         return Dealer.from(CardDeck.from(testCardGenerator));
+    }
+
+    public Profit bettingMoneyToProfit(BettingMoney bettingMoney, double rate) {
+        return new Profit(bettingMoney.withRate(rate));
     }
 
 }

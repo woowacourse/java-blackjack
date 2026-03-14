@@ -34,7 +34,8 @@ public class BettingTable {
     private void progressBetting(Dealer dealer, Player player) {
         BettingRate bettingRate = bettingManager.gainBettingRate(dealer, player);
         BettingMoney bettingMoney = bettings.getPlayerBettingMoney(player.getGamerName());
-        profits.settleProfit(player.getGamerName(), bettingMoney.withRate(bettingRate.getBettingRate()));
+        Profit profit = new Profit(bettingMoney.withRate(bettingRate.getBettingRate()));
+        profits.settleProfit(player.getGamerName(), profit);
     }
 
     public Profit getDealerProfit() {
