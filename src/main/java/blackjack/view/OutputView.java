@@ -15,7 +15,7 @@ public class OutputView {
     private static final String PARTICIPANT_FINAL_CARDS_FORMAT = "%s카드: %s - 결과: %d%n";
     private static final String FINAL_RESULTS_HEADER = "\n## 최종 승패";
     private static final String DEALER_RESULT_FORMAT = "딜러: %s%n";
-    private static final String PLAYER_RESULT_FORMAT = "%s: %s%n";
+    private static final String PROFIT_RESULT_FORMAT = "%s: %s%n";
     private static final String FINAL_PROFITS_HEADER = "\n## 최종 수익";
 
     public void printInitialDeal(InitialDealDto dto) {
@@ -47,17 +47,17 @@ public class OutputView {
         System.out.println(FINAL_RESULTS_HEADER);
         System.out.printf(DEALER_RESULT_FORMAT, dto.dealerResultText());
         dto.playerResults().forEach(p ->
-                System.out.printf(PLAYER_RESULT_FORMAT, p.name(), p.resultText())
+                System.out.printf(PROFIT_RESULT_FORMAT, p.name(), p.resultText())
         );
     }
 
     public void printDealerProfit(DealerProfitDto dto) {
         System.out.println(FINAL_PROFITS_HEADER);
-        System.out.printf(PLAYER_RESULT_FORMAT, dto.name(), dto.profit());
+        System.out.printf(PROFIT_RESULT_FORMAT, dto.name(), dto.profit());
     }
 
     public void printPlayerProfits(PlayerProfitsDto dto) {
-        dto.profits().forEach((name, profit) -> System.out.printf(PLAYER_RESULT_FORMAT, name, profit)
+        dto.profits().forEach((name, profit) -> System.out.printf(PROFIT_RESULT_FORMAT, name, profit)
         );
     }
 }
