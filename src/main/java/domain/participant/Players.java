@@ -1,18 +1,21 @@
 package domain.participant;
 
-import domain.card.Card;
 import domain.card.Deck;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Players {
-    private final List<Player> players = new ArrayList<>();
+    private final List<Player> players;
 
-    public void add(Player player) {
-        players.add(player);
+    private Players(final List<Player> players) {
+        this.players = new ArrayList<>(players);
     }
 
-    public void receiveCard(Deck deck) {
+    public static Players of(List<Player> playersList) {
+        return new Players(playersList);
+    }
+
+    public void receiveOneCardFrom(Deck deck) {
         players.forEach(player -> player.receiveCard(deck.draw()));
     }
 

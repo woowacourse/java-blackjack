@@ -3,6 +3,7 @@ package controller;
 import domain.dto.GameInitialInfoDto;
 import domain.game.GameManager;
 import domain.participant.Player;
+import java.util.ArrayList;
 import view.InputView;
 import view.OutputView;
 
@@ -43,10 +44,12 @@ public class GameController {
     }
 
     private void registerPlayersWithBettingMoney(List<String> playerNames) {
+        List<Integer> bettingMoneyList = new ArrayList<>();
         for (String playerName : playerNames) {
             int bettingMoney = inputView.readBettingMoney(playerName);
-            manager.addPlayer(playerName, bettingMoney);
+            bettingMoneyList.add(bettingMoney);
         }
+        manager.registerPlayers(playerNames, bettingMoneyList);
     }
 
     private void initGame() {

@@ -8,24 +8,24 @@ import domain.dto.GameScoreResultDto;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameManager {
     private static final int FIRST_DRAW_CARDS = 2;
 
     private final Deck deck;
-    private final Players players;
+    private Players players;
     private final Dealer dealer;
 
     public GameManager(Deck deck) {
         this.deck = deck;
-        this.players = new Players();
         this.dealer = new Dealer();
     }
 
     public void startGame() {
         for (int i = 0; i < FIRST_DRAW_CARDS; i++) {
-            players.receiveCard(deck);
+            players.receiveOneCardFrom(deck);
             dealer.receiveCard(deck.draw());
         }
         players.updateNaturalBlackJackStatus();
@@ -36,8 +36,14 @@ public class GameManager {
         return player.getHandToString();
     }
 
-    public void addPlayer(String name, int bettingMoney) {
-        players.add(new Player(name, bettingMoney));
+    public void registerPlayers(List<String> playerNames, List<Integer> bettingMoneyList) {
+        List<Player> players = new ArrayList<>();
+
+        for (int i  = 0; i < playerNames.size(); i++) {
+            players.add(new Player(playerNames.get(i), bettingMoneyList.get(i)));
+        }
+
+        this.players = Players.of(players);
     }
 
     public List<Player> getPlayersToPlay() {
