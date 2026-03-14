@@ -8,12 +8,25 @@ public class InputView {
 
     private static final String COMMA_DELIMITER = ",";
     private static final String BINARY_REGEX = "[yn]";
+    private static final String BINARY_Y = "y";
 
     private final Scanner sc = new Scanner(System.in);
 
     public List<String> readPlayers() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         return splitPlayerNames(userInput());
+    }
+
+    public int readBettingAmount(String name) {
+        while (true) {
+            try {
+                System.out.printf("%s의 배팅 금액은?%n", name);
+                String money = userInput();
+                return Integer.parseInt(money);
+            } catch (IllegalArgumentException e) {
+                OutputView.printErrorMessage("잘못된 입력입니다. 다시 입력해주세요.");
+            }
+        }
     }
 
     public boolean readPlayerToHitUntilValid(String name) {
@@ -42,7 +55,7 @@ public class InputView {
             throw new IllegalArgumentException("잘못된 입력입니다. 다시 입력해주세요.");
         }
 
-        return userInput.equals("y");
+        return userInput.equals(BINARY_Y);
     }
 
     private String userInput() {

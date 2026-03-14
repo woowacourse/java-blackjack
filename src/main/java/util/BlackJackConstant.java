@@ -8,6 +8,7 @@ public class BlackJackConstant {
     public static final int DEALER_HIT_LIMIT = 16;
     public static final int MAX_NAME_LENGTH = 8;
     public static final int MAX_PLAYER_SIZE = 5;
+    public static final double BLACKJACK_MULTIPLIER = 1.5;
 
     private BlackJackConstant() {
     }

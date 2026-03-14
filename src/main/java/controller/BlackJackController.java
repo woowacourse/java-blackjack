@@ -2,10 +2,10 @@ package controller;
 
 import domain.card.Deck;
 import domain.card.DefaultShuffleStrategy;
-import domain.card.MatchResult;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
+import domain.money.BettingResult;
 import service.BlackJackService;
 import view.InputView;
 import view.OutputView;
@@ -27,6 +27,7 @@ public class BlackJackController {
         Deck deck = new Deck(new DefaultShuffleStrategy());
         Dealer dealer = new Dealer();
         Players players = readUntilValidPlayers();
+        readUntilValidMoney(players);
 
         BlackJackService blackJackService = new BlackJackService(deck, dealer, players);
         blackJackService.initHand();
@@ -35,9 +36,9 @@ public class BlackJackController {
         playRound(deck, dealer, players);
         outputView.showHandsResult(dealer, players);
 
-        Map<String, MatchResult> playerResults = blackJackService.calculateResults();
-        outputView.showDealerResult(blackJackService.calculateDealerResult(playerResults));
-        outputView.showPlayerGameResult(playerResults);
+        Map<String, BettingResult> bettingResults = blackJackService.calculateBettingResults();
+        outputView.showDealerResult(blackJackService.calculateDealerResult(bettingResults));
+        outputView.showPlayerGameResult(bettingResults);
     }
 
     private void playRound(Deck deck, Dealer dealer, Players players) {
@@ -75,5 +76,12 @@ public class BlackJackController {
             }
         }
         return new Players(players);
+    }
+
+    private void readUntilValidMoney(Players players) {
+        for (Player player : players.getPlayers()) {
+            int betAmount = inputView.readBettingAmount(player.getName());
+            player.bet(betAmount);
+        }
     }
 }

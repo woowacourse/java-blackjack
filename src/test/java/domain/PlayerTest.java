@@ -62,4 +62,28 @@ class PlayerTest {
         // then
         Assertions.assertEquals(1, player.getHand().getHand().size());
     }
+
+    @Test
+    @DisplayName("플레이어는 한 번만 베팅할 수 있어야 한다.")
+    void 플레이어_베팅_한_번_성공() {
+        // given
+        Player player = new Player("pobi");
+
+        // when
+        player.bet(30000);
+    }
+
+    @Test
+    @DisplayName("플레이어는 베팅 금액은 두 번 이상 적용을 허용하지 않는다.")
+    void 플레이어_두번_베팅_실패() {
+        // given
+        Player player = new Player("pobi");
+
+        // when
+        player.bet(30000);
+
+        // then
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> player.bet(20000));
+    }
 }
