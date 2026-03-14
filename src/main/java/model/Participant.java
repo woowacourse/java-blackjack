@@ -1,23 +1,27 @@
 package model;
 
-import dto.Card;
-import dto.PlayerResult;
+import java.util.List;
 
 public class Participant {
 
     private final PlayerName name;
-    private final ParticipantHand participantHand = new ParticipantHand();
+    private final ParticipantHand participantHand;
 
     public Participant(PlayerName name) {
         this.name = name;
-    }
-
-    public PlayerResult getResult() {
-        return new PlayerResult(name.value(), participantHand.getHand(), getScore());
+        this.participantHand = new ParticipantHand();
     }
 
     public PlayerName getName() {
         return name;
+    }
+
+    public String getNameValue() {
+        return name.value();
+    }
+
+    public List<Card> getHand() {
+        return participantHand.getHand();
     }
 
     public Integer getScore() {

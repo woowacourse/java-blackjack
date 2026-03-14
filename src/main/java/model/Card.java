@@ -1,7 +1,4 @@
-package dto;
-
-import model.CardNumber;
-import model.Shape;
+package model;
 
 public record Card(Shape shape, CardNumber cardNumber) {
 

@@ -3,19 +3,18 @@ package model;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-import constant.PlayerErrorCode;
 import exception.GameException;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-public class TestPlayers {
+public class PlayersTest {
 
     @Test
     public void 정상_작동() {
-        Player player = new Player(new PlayerName("player1"));
-        Player player2 = new Player(new PlayerName("player2"));
+        Player player = new Player(new PlayerName("player1"), new BettingMoney("10000"));
+        Player player2 = new Player(new PlayerName("player2"), new BettingMoney("10000"));
 
-        Players players = new Players(List.of(player,player2));
+        Players players = new Players(List.of(player, player2));
 
         List<Player> playerList = players.getPlayers();
 
@@ -27,13 +26,14 @@ public class TestPlayers {
     @Test
     public void 중복_이름_예외() {
         PlayerName playerName = new PlayerName("player");
+        PlayerName playerName2 = new PlayerName("player");
+        BettingMoney bettingMoney = new BettingMoney("10000");
 
-        Player player = new Player(playerName);
-        Player player2 = new Player(playerName);
+        Player player = new Player(playerName, bettingMoney);
+        Player player2 = new Player(playerName2, bettingMoney);
 
         assertThatThrownBy(() -> new Players(List.of(player, player2)))
                 .isExactlyInstanceOf(GameException.class)
-                .satisfies(e -> assertThat(((GameException) e).getErrorCode())
-                        .isEqualTo(PlayerErrorCode.DUPLICATED_NAME));
+                .hasMessage("중복된 이름이 있습니다.");
     }
 }

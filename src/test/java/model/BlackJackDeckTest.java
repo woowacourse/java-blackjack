@@ -3,13 +3,11 @@ package model;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-import constant.CardErrorCode;
-import dto.Card;
 import exception.GameException;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-public class TestBlackJackDeck {
+public class BlackJackDeckTest {
 
     @Test
     public void 카드_드로우_정상_작동() {
@@ -27,7 +25,6 @@ public class TestBlackJackDeck {
 
         assertThatThrownBy(deck::draw)
                 .isExactlyInstanceOf(GameException.class)
-                .satisfies(e -> assertThat(((GameException) e).getErrorCode())
-                        .isEqualTo(CardErrorCode.NO_CARD_IN_DECK));
+                .hasMessage("카드 뭉치에 더 이상 남아있는 카드가 없습니다.");
     }
 }
