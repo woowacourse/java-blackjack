@@ -18,7 +18,6 @@ public class Game {
         this.dealer = dealer;
     }
 
-
     public void initializeDealToParticipants(Players players) {
         deck.shuffle();
         giveCardToParticipant(dealer, INITIAL_DEAL_REPEAT);

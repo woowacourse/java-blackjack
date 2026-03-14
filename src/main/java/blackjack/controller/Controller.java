@@ -62,7 +62,6 @@ public class Controller {
                 return;
             }
         }
-
     }
 
     private void turnToPlayers(Game game, Players players) {
