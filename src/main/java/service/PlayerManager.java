@@ -31,7 +31,7 @@ public class PlayerManager {
         List<PlayerInfoDto> playerInfoDtos = new ArrayList<>();
 
         for (Player player : playerGroup.getPlayers()) {
-            playerInfoDtos.add(new PlayerInfoDto(player.getName(), player.getCards(), player.getScore(), player.getWinStatus()));
+            playerInfoDtos.add(new PlayerInfoDto(player.getName().getValueOf(), player.getCards(), player.getScore(), player.getWinStatus()));
         }
 
         return playerInfoDtos;

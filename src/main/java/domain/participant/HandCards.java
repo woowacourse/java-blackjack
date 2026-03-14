@@ -43,6 +43,10 @@ public class HandCards {
         return score;
     }
 
+    public int getHandCardsSize() {
+        return cards.size();
+    }
+
     private int calculateCardsScoreExceptAce() {
         int score = 0;
 

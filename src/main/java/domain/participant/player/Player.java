@@ -1,5 +1,6 @@
 package domain.participant.player;
 
+import domain.participant.Dealer;
 import domain.participant.HandCards;
 import domain.participant.Participant;
 import domain.participant.WinStatus;
@@ -14,21 +15,21 @@ public class Player extends Participant {
         this.name = name;
     }
 
-    public String getName() {
-        return name.getName();
+    public Name getName() {
+        return name;
     }
 
     public WinStatus getWinStatus() {
         return winStatus;
     }
 
-    public void calculateResult(Participant dealer) {
+    public void calculateResult(Dealer dealer) {
         if (isBust()) {
             winStatus = WinStatus.LOSS;
             return;
         }
 
-        if (dealer.isBust() || getScore() > dealer.getScore()) {
+        if (this.isBlackjack() && !dealer.isBlackjack() || dealer.isBust() || getScore() > dealer.getScore()) {
             winStatus = WinStatus.WIN;
             return;
         }
