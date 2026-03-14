@@ -5,9 +5,9 @@ public class Player extends Participant {
     private final PlayerName playerName;
     private final BetAmount betAmount;
 
-    public Player(String name, BetAmount betAmount) {
+    public Player(PlayerName playerName, BetAmount betAmount) {
         super();
-        this.playerName = new PlayerName(name);
+        this.playerName = playerName;
         this.betAmount = betAmount;
     }
 
