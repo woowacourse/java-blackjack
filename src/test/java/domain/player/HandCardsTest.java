@@ -49,4 +49,14 @@ class HandCardsTest {
 
         assertEquals(21, handCards.getCardScoreSum());
     }
+
+    @Test
+    void ACE가_두장일__경우() {
+        HandCards handCards = new HandCards();
+
+        handCards.addCard(new Card(TrumpSuit.HEART, TrumpNumber.ACE));
+        handCards.addCard(new Card(TrumpSuit.SPADE, TrumpNumber.ACE));
+
+        assertEquals(12, handCards.getCardScoreSum());
+    }
 }
