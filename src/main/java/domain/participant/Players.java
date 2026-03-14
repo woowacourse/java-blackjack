@@ -14,16 +14,12 @@ public class Players {
     public static final int PLAYER_THRESHOLD = 5;
     public static final String ERROR_PLAYER_COUNT_OVER = "[ERROR] 플레이어의 수는 5명 이하여야 합니다.";
     public static final String ERROR_PLAYERS_NAME_DUPLICATION = "[ERROR] 참가자의 이름이 중복됩니다.";
-
+    public static final int INITIAL_AMOUNT = 0;
     private final List<Player> players = new ArrayList<>();
 
     public Players(List<String> names) {
-        this(names, new Money(0));
-    }
-
-    public Players(List<String> names, Money initialProfit) {
         for (String name : names) {
-            players.add(new Player(name, initialProfit));
+            players.add(new Player(name, new Money(INITIAL_AMOUNT)));
         }
         validatePlayerCount(players);
         validateDuplicatedName(players);
