@@ -17,12 +17,13 @@ public class Hand {
         return new Hand();
     }
 
-    public void receive(TrumpCard card) {
+    public void add(TrumpCard card) {
         cards.add(card);
     }
 
-    public int countCards() {
-        return cards.size();
+
+    public boolean isBust() {
+        return calculateScore() > BLACKJACK_THRESHOLD;
     }
 
     public int calculateScore() {
@@ -50,6 +51,17 @@ public class Hand {
                 .filter(TrumpCard::isAce)
                 .count();
     }
+
+    public List<String> cardNames() {
+        return cards.stream()
+                .map(TrumpCard::koreanName)
+                .toList();
+    }
+
+    public int countCards() {
+        return cards.size();
+    }
+
 
     public List<TrumpCard> getCards() {
         return List.copyOf(cards);

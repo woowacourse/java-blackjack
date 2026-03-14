@@ -22,18 +22,16 @@ public class Player {
         return new Player(name, Hand.init());
     }
 
-    public void receiveCards(List<TrumpCard> cards) {
-        for (TrumpCard card : cards) {
-            hand.receive(card);
-        }
+    public void hit(TrumpCard card) {
+        hand.add(card);
     }
 
-    public void receiveCard(TrumpCard card) {
-        hand.receive(card);
+    public boolean canHit() {
+        return !isBust();
     }
 
-    public int countCards() {
-        return hand.countCards();
+    public boolean isBust() {
+        return hand.isBust();
     }
 
     public int score() {
@@ -44,15 +42,7 @@ public class Player {
         return name.getName();
     }
 
-    public boolean canHit() {
-        return score() <= 21;
-    }
-
-    public boolean isBust() {
-        return score() > 21;
-    }
-
-    public List<TrumpCard> getCards() {
-        return hand.getCards();
+    public List<String> cardNames() {
+        return hand.cardNames();
     }
 }

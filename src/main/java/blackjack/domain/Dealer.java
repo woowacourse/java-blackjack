@@ -21,14 +21,8 @@ public class Dealer {
         return new Dealer(Hand.init());
     }
 
-    public void receiveCards(List<TrumpCard> cards) {
-        for (TrumpCard card : cards) {
-            hand.receive(card);
-        }
-    }
-
-    public void receive(TrumpCard card) {
-        hand.receive(card);
+    public void hit(TrumpCard card) {
+        hand.add(card);
     }
 
     public int score() {
@@ -43,11 +37,11 @@ public class Dealer {
         return score() <= DEALER_HIT_THRESHOLD;
     }
 
-    public TrumpCard getOpenCard() {
-        return hand.getCards().getFirst();
-    }
-
     public boolean isBust() {
         return score() > 21;
+    }
+
+    public int countCards() {
+        return hand.countCards();
     }
 }
