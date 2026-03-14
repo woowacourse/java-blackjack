@@ -43,7 +43,7 @@ public class GameTable {
     }
 
     public boolean drawForDealer() {
-        if (members.isMeetTheDrawConditionForDealer()) {
+        if (members.canTheDealerDraw()) {
             members.provideCardToDealer(deck.draw());
             return true;
         }

@@ -48,8 +48,8 @@ public class Members {
         return dealer.currentScore();
     }
 
-    public boolean isMeetTheDrawConditionForDealer() {
-        return dealer.isMeetTheDrawCondition();
+    public boolean canTheDealerDraw() {
+        return !dealer.isFinished();
     }
 
     public List<String> getAllPlayerName() {
