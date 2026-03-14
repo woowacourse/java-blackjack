@@ -29,10 +29,8 @@ public class GameResults {
     }
 
     public int getDealerProfit() {
-        int dealerProfit = 0;
-        for (Integer profit : gameResults.values()) {
-            dealerProfit -= profit;
-        }
-        return dealerProfit;
+        return gameResults.values().stream()
+                .mapToInt(value -> -value)
+                .sum();
     }
 }
