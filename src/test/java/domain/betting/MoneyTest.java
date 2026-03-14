@@ -1,4 +1,4 @@
-package domain.batting;
+package domain.betting;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

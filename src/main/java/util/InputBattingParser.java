@@ -1,6 +1,6 @@
 package util;
 
-import domain.batting.Money;
+import domain.betting.Money;
 
 public class InputBattingParser {
     private InputBattingParser() {

@@ -1,4 +1,4 @@
-package domain.batting;
+package domain.betting;
 
 import domain.card.Card;
 import domain.card.CardNumber;

@@ -1,6 +1,6 @@
 package domain.participant;
 
-import domain.batting.Money;
+import domain.betting.Money;
 
 public class Player extends Participant {
 
@@ -10,11 +10,11 @@ public class Player extends Participant {
         super(name);
     }
 
-    public void battingMoney(Money money) {
+    public void bettingMoney(Money money) {
         this.money = money;
     }
 
-    public Money getBattingMoney() {
+    public Money getBettingMoney() {
         return money;
     }
 }

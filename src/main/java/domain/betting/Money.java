@@ -1,4 +1,4 @@
-package domain.batting;
+package domain.betting;
 
 import java.util.Objects;
 
