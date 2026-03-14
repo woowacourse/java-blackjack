@@ -20,12 +20,4 @@ public class BetTable {
     public int findBetAmount(Player player) {
         return bettingTable.get(player.getName());
     }
-
-    public List<Integer> getAmountByPlayers() {
-        return List.copyOf(bettingTable.values().stream().toList());
-    }
-
-    public Map<String, Integer> getBettingTable() {
-        return Map.copyOf(bettingTable);
-    }
 }
