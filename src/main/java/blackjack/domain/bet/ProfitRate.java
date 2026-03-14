@@ -13,7 +13,7 @@ public enum ProfitRate {
         this.rate = rate;
     }
 
-    public int getProfit(int bettingAmount) {
-        return (int) Math.round(rate * bettingAmount);
+    public int getProfit(int betAmount) {
+        return (int) Math.round(rate * betAmount);
     }
 }

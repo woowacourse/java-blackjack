@@ -115,7 +115,7 @@
 
     2. 반대로, 지금은 명세에 충실하게 상태를 완벽히 은닉해 두고(YAGNI 준수), 
     훗날 배팅금 조회 명세가 확정되었을 때 기존 클래스에 
-    public int getBettingAmount()라는 단순한 통로를 하나 추가하는 
+    public int getbetAmount()라는 단순한 통로를 하나 추가하는 
     트레이드오프(부분적 OCP 양보)를 수용하는 것이 오히려 유지보수에 유리하지 않겠습니까?
 
 > 2. 인정.
@@ -306,9 +306,9 @@ SRP를 완벽히 지킨 것입니다.
 
 ## 🧪 구현
 
-- [x] 배팅금 `private final int bettingAmount`
+- [x] 배팅금 `private final int betAmount`
     - [x] 베팅금을 플레이어 팩토리 메서드에 추가
-        - `public static Player from(String nickname, int bettingAmount)`
+        - `public static Player from(String nickname, int betAmount)`
     - [x] 어떻게 유효성을 검증할 것인가?
         - 뷰 단에서 닉네임과 배팅금의 유효성 1차 검증
         - 교차 검증이 있어서 나쁠 것은 없다.
@@ -320,10 +320,10 @@ SRP를 완벽히 지킨 것입니다.
         - 배팅금 제약조건은 명시되지 않았으니 일단은 유효한 값인지만
         - 양수여야 한다는 규칙을 뷰가 알 필요가?
     - [x] 어떤 예외를 처리할 것인가?
-        - 배팅금을 입력하지 않음 - `readPlayerBettingAmount`
-        - 배팅금이 숫자가 아님 - `readPlayerBettingAmount`
-        - 배팅금이 0 - `validateBettingAmount`
-        - 배팅금이 음수 - `validateBettingAmount`
+        - 배팅금을 입력하지 않음 - `readPlayerbetAmount`
+        - 배팅금이 숫자가 아님 - `readPlayerbetAmount`
+        - 배팅금이 0 - `validatebetAmount`
+        - 배팅금이 음수 - `validatebetAmount`
     - [x] `사이드 이펙트`
         - 배팅금을 입력받기 위해 닉네임이 필요,
         - 중복된 닉네임을 먼저 검사해야 할 필요성 존재
@@ -358,7 +358,7 @@ SRP를 완벽히 지킨 것입니다.
 
 ## 🧪 테스트
 
-- [x] 배팅금 `private final int bettingAmount`
+- [x] 배팅금 `private final int betAmount`
 - [x] 수익금 `public int calculateProfit(GameResult result)`
 - [x] 딜러 수익금 계산 `public int determineProfit(List<Player> players)`
 - [x] 참가자 수익금 계산 `record ParticipantsProfit(String nickname, int profit)`

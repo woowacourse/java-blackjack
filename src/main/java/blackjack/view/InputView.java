@@ -20,7 +20,7 @@ public class InputView {
                 .toList();
     }
 
-    public int readPlayerBettingAmount() {
+    public int readPlayerbetAmount() {
         try {
             return Integer.parseInt(readLine());
         } catch (NumberFormatException exception) {
