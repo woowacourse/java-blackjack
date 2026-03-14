@@ -1,7 +1,7 @@
 package domain.participant;
 
 import constant.PolicyConstant;
-import domain.Hand;
+import domain.card.Hand;
 
 public class Dealer extends Participant {
 

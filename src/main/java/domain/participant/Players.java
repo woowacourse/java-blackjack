@@ -1,7 +1,7 @@
 package domain.participant;
 
 import constant.PolicyConstant;
-import domain.Card;
+import domain.card.Card;
 import exception.ErrorMessage;
 import java.util.List;
 

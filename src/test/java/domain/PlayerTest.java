@@ -5,6 +5,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import constant.Rank;
 import constant.Suit;
+import domain.card.Card;
 import domain.participant.Name;
 import domain.participant.Player;
 import exception.ErrorMessage;

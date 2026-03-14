@@ -2,6 +2,7 @@ package domain;
 
 import constant.Rank;
 import constant.Suit;
+import domain.card.Card;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;

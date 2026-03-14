@@ -2,6 +2,8 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.card.Card;
+import domain.card.CardMachine;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.Nested;

@@ -2,7 +2,7 @@ package constant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import domain.Card;
+import domain.card.Card;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Participant;
