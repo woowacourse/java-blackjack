@@ -33,12 +33,8 @@ public class Judge {
         return compareResult(player, dealer);
     }
 
-    private static boolean isBlackJack(Player player) {
-        return player.getHandSize() == BLACKJACK_HAND_SIZE && player.getScore() == BLACKJACK_NUMBER;
-    }
-
-    private static boolean isBlackJack(Dealer dealer) {
-        return dealer.getHandSize() == BLACKJACK_HAND_SIZE && dealer.getScore() == BLACKJACK_NUMBER;
+    private static boolean isBlackJack(Participant participant) {
+        return participant.getHandSize() == BLACKJACK_HAND_SIZE && participant.getScore() == BLACKJACK_NUMBER;
     }
 
     private static WinningStatus resolveBlackJack(Player player, Dealer dealer) {
