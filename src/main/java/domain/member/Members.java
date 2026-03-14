@@ -48,6 +48,10 @@ public class Members {
         return dealer.currentScore();
     }
 
+    public boolean isPlayerFinishedByName(String playerName) {
+        return findByPlayerName(playerName).isFinished();
+    }
+
     public boolean canTheDealerDraw() {
         return !dealer.isFinished();
     }
