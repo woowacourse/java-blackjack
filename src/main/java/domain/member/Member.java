@@ -54,6 +54,10 @@ public class Member {
         receiveCard(deck.draw());
     }
 
+    public boolean isBiggerThan(Member member) {
+        return this.handValue() > member.handValue();
+    }
+
     public String getName() {
         return name.getValue();
     }
