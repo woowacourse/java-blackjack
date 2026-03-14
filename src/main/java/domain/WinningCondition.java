@@ -39,7 +39,7 @@ public enum WinningCondition {
     }
 
     private static boolean isBothBlackJack(GameStatus player, GameStatus dealer) {
-        return player.hand().isBlackJack() && dealer.hand().isBlackJack();
+        return player.isBlackJack() && dealer.isBlackJack();
     }
 
     private static boolean isBustCase(GameStatus player, GameStatus dealer) {
@@ -55,7 +55,7 @@ public enum WinningCondition {
     }
 
     private static boolean isPlayerBust(GameStatus player) {
-        return player.hand().isBusted();
+        return player.isBusted();
     }
 
     private static WinningCondition compareResult(GameStatus player, GameStatus dealer) {
@@ -71,14 +71,14 @@ public enum WinningCondition {
     }
 
     private static boolean isDealerBust(GameStatus dealer) {
-        return dealer.hand().isBusted();
+        return dealer.isBusted();
     }
 
     private static boolean isDraw(GameStatus player, GameStatus dealer) {
-        return player.hand().scoreSum() == dealer.hand().scoreSum();
+        return player.score() == dealer.score();
     }
 
     private static boolean isLose(GameStatus player, GameStatus dealer) {
-        return player.hand().scoreSum() < dealer.hand().scoreSum();
+        return player.score() < dealer.score();
     }
 }

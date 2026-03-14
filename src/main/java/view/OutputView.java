@@ -68,12 +68,12 @@ public class OutputView {
         System.out.println();
     }
 
-    private static String getInitGameLog(GameStatus gameStatuses) {
-        if (gameStatuses.role().equals(ParticipantsRole.DEALER)) {
-            return String.format(OutputMessage.GAME_LOG.description(), gameStatuses.name(),
-                    joinInfo(gameStatuses.hand().cards().getFirst())); // 디미터의 법칙
+    private static String getInitGameLog(GameStatus gameStatus) {
+        if (gameStatus.role().equals(ParticipantsRole.DEALER)) {
+            return String.format(OutputMessage.GAME_LOG.description(), gameStatus.name(),
+                    joinInfo(gameStatus.cards().getFirst()));
         }
-        return String.format(getGameLog(gameStatuses));
+        return String.format(getGameLog(gameStatus));
     }
 
     private static String getGameLog(GameStatus gameStatuses) {
@@ -82,7 +82,7 @@ public class OutputView {
 
     private static String handInfo(GameStatus gameStatus) {
         List<String> cardList = new ArrayList<>();
-        for (Card card : gameStatus.hand().cards()) { // 디미터의 법칙
+        for (Card card : gameStatus.cards()) {
             cardList.add(joinInfo(card));
         }
         return String.join(CARD_JOINER, cardList);

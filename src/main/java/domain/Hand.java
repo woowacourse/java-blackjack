@@ -28,7 +28,7 @@ public class Hand {
         return List.copyOf(cards);
     }
 
-    boolean isBusted() {
+    public boolean isBusted() {
         int score = rawScoreSum();
         if (aceCount() > 0) {
             score -= aceCount() * ACE_WEIGHT;
