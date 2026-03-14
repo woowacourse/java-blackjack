@@ -41,14 +41,6 @@ public class Hand {
         return cards.size() == BLACKJACK_CARD_COUNT && totalSum().isBlackjack();
     }
 
-    public boolean isBust() {
-        return totalSum().isBust();
-    }
-
-    public int size() {
-        return cards.size();
-    }
-
     public Score totalSum() {
         return Rank.sumWithAce(getAceAmount(), getSumWithoutAce());
     }
@@ -64,6 +56,14 @@ public class Hand {
                 .filter(card -> !card.isAce())
                 .map(card -> card.getRank().getScore())
                 .reduce(Score.ZERO, Score::add);
+    }
+
+    public boolean isBust() {
+        return totalSum().isBust();
+    }
+
+    public int size() {
+        return cards.size();
     }
 
     public List<Card> getCards() {

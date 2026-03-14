@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 public class BetMoney {
-    public static final BetMoney ZERO = BetMoney.valueOf(0);
+    public static final BetMoney ZERO = BetMoney.valueOf(BigDecimal.ZERO);
     private static final BigDecimal BLACKJACK_ODDS = BigDecimal.valueOf(1.5);
     private static final BigDecimal WIN_ODDS = BigDecimal.valueOf(1.0);
     private static final BigDecimal LOSE_ODDS = BigDecimal.valueOf(-1);
@@ -22,14 +22,6 @@ public class BetMoney {
 
     public static BetMoney valueOf(String value) {
         return new BetMoney(new BigDecimal(value));
-    }
-
-    public static BetMoney valueOf(int value) {
-        return new BetMoney(BigDecimal.valueOf(value));
-    }
-
-    public static BetMoney valueOf(double value) {
-        return new BetMoney(BigDecimal.valueOf(value));
     }
 
     public BetMoney blackjack() {
@@ -61,7 +53,7 @@ public class BetMoney {
             return false;
         }
         BetMoney betMoney = (BetMoney) o;
-        return Objects.equals(value, betMoney.value);
+        return value.compareTo(betMoney.value) == 0;
     }
 
     @Override
