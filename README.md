@@ -52,43 +52,45 @@
 
 ### 베팅 금액 입력
 
-- [ ] 각 플레이어의 베팅 금액을 입력받는 기능
-- [ ] 베팅 금액 검증 (양수만 허용)
-- [ ] `BettingMoney` 값 객체 생성
+- [x] 각 플레이어의 베팅 금액을 입력받는 기능
+- [x] 베팅 금액 검증 (양수만 허용)
+- [x] `BettingMoney` 값 객체 생성
 
 ### 블랙잭 판별
 
-- [ ] `CardBundle`에 `isBlackjack()` 추가 (카드 2장 && 점수 21)
-- [ ] `CardBundle`에 `isBust()` 추가 (점수 > 21)
-- [ ] `Participant`에 위임 메서드 추가
+- [x] `CardBundle`에 `isBlackjack()` 추가 (카드 2장 && 점수 21)
+- [x] `CardBundle`에 `isBust()` 추가 (점수 > 21)
+- [x] `Participant`에 위임 메서드 추가
 
 ### 승패 판정 개선
 
-- [ ] `Result`에 `BLACKJACK_WIN` 추가 및 배율(profitRate) 필드 도입
-- [ ] `Referee` 블랙잭 판정 로직 추가
-  - [ ] 플레이어 블랙잭 + 딜러 블랙잭 → 무승부
-  - [ ] 플레이어 블랙잭 + 딜러 일반 → 블랙잭 승리 (1.5배)
-  - [ ] 딜러 버스트 → 남아있는 플레이어 승리
+- [x] `Outcome`에 `BLACKJACK_WIN` 추가 및 배율(profitRate) 필드 도입
+- [x] `BlackjackRule` 블랙잭 판정 로직 추가
+  - [x] 플레이어 블랙잭 + 딜러 블랙잭 → 무승부
+  - [x] 플레이어 블랙잭 + 딜러 일반 → 블랙잭 승리 (1.5배)
+  - [x] 딜러만 블랙잭 → 플레이어 패배
+  - [x] 딜러 버스트 → 남아있는 플레이어 승리
 
 ### 수익 계산
 
-- [ ] `BettingMoney`에 `calculateProfit(Result)` 구현 (금액 × 배율)
-- [ ] 딜러 수익 계산 (플레이어 수익 합산의 부호 반전)
+- [x] `BettingMoney`에 `calculateProfit(Outcome)` 구현 (금액 × 배율)
+- [x] 딜러 수익 계산 (플레이어 수익 합산의 부호 반전) — `ProfitResult`
 
 ### Player에 베팅 연결
 
-- [ ] `Player`에 `BettingMoney` 필드 추가
-- [ ] `Players` 생성 방식 변경 (이름 + 금액)
+- [x] `Player`에 `BettingMoney` 필드 추가
+- [x] `Players` 생성 방식 변경 (이름 + 금액)
 
 ### 입출력 수정
 
-- [ ] `InputView`에 베팅 금액 입력 메서드 추가
-- [ ] `OutputView` 최종 결과를 금액으로 출력하도록 변경
-- [ ] `BlackjackController`에 베팅 입력 단계 및 수익 출력 단계 추가
+- [x] `InputView`에 베팅 금액 입력 메서드 추가
+- [x] `OutputView` 최종 결과를 금액으로 출력하도록 변경
+- [x] `BlackjackController`에 베팅 입력 단계 및 수익 출력 단계 추가
 
 ### 테스트
 
-- [ ] `BettingMoney` 검증 테스트 (양수, 0, 음수)
-- [ ] `CardBundle` 블랙잭/버스트 판별 테스트
-- [ ] `Referee` 블랙잭 케이스 판정 테스트
-- [ ] 수익 계산 테스트 (블랙잭 승리, 일반 승리, 무승부, 패배)
+- [x] `BettingMoney` 검증 테스트 (양수, 0, 음수)
+- [x] `CardBundle` 블랙잭/버스트 판별 테스트
+- [x] `BlackjackRule` 블랙잭 케이스 판정 테스트 (8개 케이스)
+- [x] 수익 계산 테스트 (블랙잭 승리, 일반 승리, 무승부, 패배)
+- [x] `ProfitResult` 딜러 수익 집계 테스트
