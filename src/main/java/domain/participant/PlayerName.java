@@ -40,4 +40,9 @@ public record PlayerName(String name) {
         PlayerName that = (PlayerName) object;
         return Objects.equals(name, that.name);
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(name);
+    }
 }
