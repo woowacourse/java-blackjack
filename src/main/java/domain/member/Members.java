@@ -58,17 +58,6 @@ public class Members {
                 .toList();
     }
 
-//    public List<MatchResult> determineDealerGameResult() {
-//        List<MatchResult> gameResult = new ArrayList<>();
-//        players.forEach(player -> gameResult.add(dealer.compareScoreWith(player)));
-//        return List.copyOf(gameResult);
-//    }
-//
-//    public MatchResult determinePlayerGameResult(String name) {
-//        Member player = findByPlayerName(name);
-//        return player.compareScoreWith(dealer);
-//    }
-
     public Map<String, Integer> calculateFinalProfits() {
         validateFinished();
         Map<String, Integer> totalResults = new LinkedHashMap<>();

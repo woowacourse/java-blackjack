@@ -2,6 +2,7 @@ package domain;
 
 import domain.card.Card;
 import domain.card.FixedDeck;
+
 import java.util.List;
 import java.util.Map;
 

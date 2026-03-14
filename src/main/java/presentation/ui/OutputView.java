@@ -4,9 +4,9 @@ import static presentation.ui.ViewMessage.*;
 
 import dto.RoundResult;
 import domain.card.Card;
-import domain.MatchResult;
 import dto.GameResult;
 import dto.MemberStatus;
+
 import java.util.List;
 import java.util.stream.Collectors;
 

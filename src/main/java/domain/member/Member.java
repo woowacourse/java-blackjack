@@ -1,6 +1,5 @@
 package domain.member;
 
-import domain.MatchResult;
 import domain.card.Card;
 import domain.state.Bust;
 import domain.state.State;
