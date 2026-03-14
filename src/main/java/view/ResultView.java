@@ -1,6 +1,5 @@
 package view;
 
-import static domain.BlackjackGame.DEALER_HIT_STAND_BOUNDARY;
 
 import domain.BlackjackGame;
 import domain.Score;
@@ -20,7 +19,7 @@ public class ResultView {
         printEmptyLine();
         System.out.println(
                 "딜러와 " + joinPlayersNameByDelimiter(players) + "에게 "
-                        + BlackjackGame.DEFAULT_HAND_NUMBER
+                        + BlackjackGame.INITIAL_CARD_COUNT
                         + "장을 나누었습니다.");
         Card dealerCard = dealer.getFirstCard();
         System.out.println("딜러카드: " + dealerCard.getRank().getDisplayValue() + dealerCard.getSuit().getValue());
@@ -59,10 +58,10 @@ public class ResultView {
     public void printDealerHitStand(boolean value) {
         printEmptyLine();
         if (value) {
-            System.out.println("딜러는 " + DEALER_HIT_STAND_BOUNDARY.value() + "이하라 한장의 카드를 더 받았습니다.");
+            System.out.println("딜러는 " + Score.DEALER_HIT_STAND_BOUNDARY.value() + "이하라 한장의 카드를 더 받았습니다.");
             return;
         }
-        System.out.println("딜러는 " + (DEALER_HIT_STAND_BOUNDARY.add(Score.ONE).value()) + "이상이라 카드를 받지 않았습니다.");
+        System.out.println("딜러는 " + (Score.DEALER_HIT_STAND_BOUNDARY.add(Score.ONE).value()) + "이상이라 카드를 받지 않았습니다.");
     }
 
     public void printResult(TotalResult results) {

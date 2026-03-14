@@ -10,8 +10,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class BlackjackGame {
-    public static final int DEFAULT_HAND_NUMBER = 2;
-    public static final Score DEALER_HIT_STAND_BOUNDARY = new Score(16);
+    public static final int INITIAL_CARD_COUNT = 2;
     private final Players players;
     private final Dealer dealer;
     private final Deck deck;
@@ -34,8 +33,8 @@ public class BlackjackGame {
     }
 
     public void giveHand() {
-        players.giveCardsToEachPlayers(deck, DEFAULT_HAND_NUMBER);
-        dealer.addCards(deck.drawWithAmount(DEFAULT_HAND_NUMBER));
+        players.giveCardsToEachPlayers(deck, INITIAL_CARD_COUNT);
+        dealer.addCards(deck.drawWithAmount(INITIAL_CARD_COUNT));
     }
 
     public void hitStandEachPlayers(Function<Player, Boolean> decideHitStandFunc, Consumer<Player> printResultFunc) {
@@ -52,7 +51,7 @@ public class BlackjackGame {
     }
 
     public void hitStandDealer(Consumer<Boolean> printDecisionOutput) {
-        while (dealer.isHittable(DEALER_HIT_STAND_BOUNDARY)) {
+        while (dealer.isHittable(Score.DEALER_HIT_STAND_BOUNDARY)) {
             dealer.addCard(deck.draw());
             printDecisionOutput.accept(true);
         }

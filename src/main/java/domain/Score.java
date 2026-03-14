@@ -17,6 +17,7 @@ public record Score(
     public static final Score BLACKJACK = new Score(21);
     public static final Score ACE_MAX = new Score(11);
     public static final Score ACE_MIN = new Score(1);
+    public static final Score DEALER_HIT_STAND_BOUNDARY = new Score(16);
 
     public boolean isBlackjack() {
         return isEqualTo(BLACKJACK);

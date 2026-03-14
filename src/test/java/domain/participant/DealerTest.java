@@ -1,9 +1,9 @@
 package domain.participant;
 
-import static domain.BlackjackGame.DEALER_HIT_STAND_BOUNDARY;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import domain.Rank;
+import domain.Score;
 import domain.Suit;
 import domain.card.Card;
 import org.junit.jupiter.api.Assertions;
@@ -34,7 +34,7 @@ public class DealerTest {
         dealer.addCard(Card.of(Suit.CLUB, Rank.FOUR));
         dealer.addCard(Card.of(Suit.CLUB, Rank.ACE));
 
-        Assertions.assertEquals(dealer.isHittable(DEALER_HIT_STAND_BOUNDARY), true);
+        Assertions.assertEquals(dealer.isHittable(Score.DEALER_HIT_STAND_BOUNDARY), true);
     }
 
     @Test
@@ -44,6 +44,6 @@ public class DealerTest {
         dealer.addCard(Card.of(Suit.CLUB, Rank.SIX));
         dealer.addCard(Card.of(Suit.CLUB, Rank.ACE));
 
-        Assertions.assertEquals(dealer.isHittable(DEALER_HIT_STAND_BOUNDARY), false);
+        Assertions.assertEquals(dealer.isHittable(Score.DEALER_HIT_STAND_BOUNDARY), false);
     }
 }

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
+    private static final int BLACKJACK_CARD_COUNT = 2;
     private final List<Card> cards;
 
     private Hand() {
@@ -37,7 +38,7 @@ public class Hand {
     }
 
     public boolean isBlackjack() {
-        return cards.size() == 2 && totalSum().isBlackjack();
+        return cards.size() == BLACKJACK_CARD_COUNT && totalSum().isBlackjack();
     }
 
     public boolean isBust() {
