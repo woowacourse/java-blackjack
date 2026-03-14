@@ -1,31 +1,32 @@
 package blackjack.controller;
 
-import blackjack.domain.BlackJackGame;
 import blackjack.domain.Card;
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
 import blackjack.domain.Participant;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
+import blackjack.dto.EarningResultDto;
 import blackjack.dto.ParticipantDto;
-import blackjack.dto.PlayerGameResultDto;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BlackJackController {
+    private static final int INIT_DRAW_CARD_COUNT = 2;
     private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView();
 
     public void run() {
         List<String> names = inputView.readNames();
-        Players players = new Players(names);
+        List<BigDecimal> bettingAmounts = readBettingAmount(names);
+        Players players = new Players(names, bettingAmounts);
         Dealer dealer = new Dealer();
         Deck deck = new Deck();
 
-        BlackJackGame blackJackGame = new BlackJackGame(players, dealer, deck);
-        blackJackGame.initDraw();
+        initDraw(dealer, players, deck);
 
         printInitDrawResult(dealer, players);
 
@@ -35,7 +36,15 @@ public class BlackJackController {
 
         printFinalCardResult(dealer, players);
 
-        printFinalGameResult(dealer, players);
+        printFinalEarningResult(dealer, players);
+    }
+
+    private List<BigDecimal> readBettingAmount(List<String> names) {
+        List<BigDecimal> bettingAmounts = new ArrayList<>();
+        for (String name : names) {
+            bettingAmounts.add(inputView.readBettingAmount(name));
+        }
+        return bettingAmounts;
     }
 
     private ParticipantDto convertToDto(Participant participant) {
@@ -68,18 +77,30 @@ public class BlackJackController {
         outputView.printFinalCardResult(dealerDto, playerDtos);
     }
 
-    private void printFinalGameResult(Dealer dealer, Players players) {
-        List<PlayerGameResultDto> playerGameResultDtos = new ArrayList<>();
-        for (Player player : players.getPlayers()) {
-            playerGameResultDtos.add(new PlayerGameResultDto(player.getName(), player.compareResult(dealer).getName()));
-        }
-        outputView.printFinalGameResult(playerGameResultDtos);
-    }
-
     private void drawCardUntilStop(Player player, Deck deck) {
         while (!player.isBust() && inputView.readHitAnswer(player.getName())) {
             player.receiveCard(deck.draw());
             outputView.printCard(convertToDto(player));
         }
+    }
+
+    private void initDraw(Dealer dealer, Players players, Deck deck) {
+        for (int i = 0; i < INIT_DRAW_CARD_COUNT; i++) {
+            players.receiveCard(deck);
+            dealer.receiveCard(deck.draw());
+        }
+    }
+
+    private void printFinalEarningResult(Dealer dealer, Players players) {
+        List<EarningResultDto> earningResultDtos = new ArrayList<>();
+        for (Player player : players.getPlayers()) {
+            earningResultDtos.add(
+                    new EarningResultDto(
+                            player.getName(),
+                            player.calculateEarningAmount(dealer)
+                    )
+            );
+        }
+        outputView.printEarningResult(earningResultDtos);
     }
 }

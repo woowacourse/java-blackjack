@@ -28,7 +28,6 @@ public abstract class Participant {
         return hand.getCards();
     }
 
-
     public int getTotalPoint() {
         return hand.getTotalPoint();
     }
@@ -39,5 +38,9 @@ public abstract class Participant {
 
     public String getName() {
         return name;
+    }
+
+    public boolean isBlackJack() {
+        return hand.isBlackJack();
     }
 }

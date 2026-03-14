@@ -1,8 +1,8 @@
 package blackjack.view;
 
-import blackjack.domain.GameResult;
+import blackjack.dto.EarningResultDto;
 import blackjack.dto.ParticipantDto;
-import blackjack.dto.PlayerGameResultDto;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class OutputView {
@@ -17,7 +17,6 @@ public class OutputView {
 
         System.out.printf("딜러카드: %s%n", dealerFirstCard);
 
-        //플레이어 카드 출력
         for (ParticipantDto playerDto : playerDtos) {
             System.out.printf("%s카드: %s%n", playerDto.name(), String.join(", ", playerDto.cardNames()));
         }
@@ -41,27 +40,21 @@ public class OutputView {
         }
     }
 
-    public void printFinalGameResult(List<PlayerGameResultDto> playerGameResultDtos) {
-        System.out.println("\n## 최종 승패");
+    public void printEarningResult(List<EarningResultDto> earningResultDtos) {
+        System.out.println("\n## 최종 수익");
 
-        int winCount = 0;
-        int tieCount = 0;
-        int loseCount = 0;
-        for (PlayerGameResultDto dto : playerGameResultDtos) {
-            if (dto.gameResult().equals(GameResult.WIN.getName())) {
-                loseCount++;
-            }
-            if (dto.gameResult().equals(GameResult.LOSE.getName())) {
-                winCount++;
-            }
-            if (dto.gameResult().equals(GameResult.TIE.getName())) {
-                tieCount++;
-            }
-        }
-        System.out.printf("딜러: %d승 %d무 %d패%n", winCount, tieCount, loseCount);
-        for (PlayerGameResultDto dto : playerGameResultDtos) {
-            System.out.printf("%s: %s%n", dto.name(), dto.gameResult());
+        BigDecimal dealerEarning = calculateDealerEarningAmount(earningResultDtos);
+        System.out.println("딜러: " + dealerEarning);
+        for (EarningResultDto dto : earningResultDtos) {
+            System.out.printf("%s: %s%n", dto.name(), dto.earningAmount());
         }
     }
 
+    private BigDecimal calculateDealerEarningAmount(List<EarningResultDto> earningResultDtos) {
+        BigDecimal dealerEarning = BigDecimal.ZERO;
+        for (EarningResultDto dto : earningResultDtos) {
+            dealerEarning = dealerEarning.add(dto.earningAmount().multiply(new BigDecimal("-1")));
+        }
+        return dealerEarning;
+    }
 }
