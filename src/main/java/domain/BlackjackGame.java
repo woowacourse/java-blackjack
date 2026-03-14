@@ -1,6 +1,5 @@
 package domain;
 
-import domain.card.Card;
 import domain.card.Deck;
 import domain.dto.TotalResult;
 import domain.participant.Dealer;
@@ -26,7 +25,7 @@ public class BlackjackGame {
 
     private void validate(List<String> players) {
         if (players == null) {
-            throw new IllegalArgumentException(Card.FIELD_CAN_NOT_BE_NULL);
+            throw new IllegalArgumentException(CommonExceptionMessage.FIELD_CAN_NOT_BE_NULL.getMessage());
         }
     }
 

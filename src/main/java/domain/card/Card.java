@@ -1,5 +1,6 @@
 package domain.card;
 
+import domain.CommonExceptionMessage;
 import domain.Rank;
 import domain.Suit;
 import java.util.ArrayList;
@@ -9,7 +10,6 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Card {
-    public static final String FIELD_CAN_NOT_BE_NULL = "[ERROR] 멤버 변수로 Null을 넣을 수 없습니다.";
     private static final Map<String, Card> CACHE;
 
     static {
@@ -46,7 +46,7 @@ public class Card {
 
     private static void validate(Suit suit, Rank rank) {
         if (suit == null || rank == null) {
-            throw new IllegalArgumentException(FIELD_CAN_NOT_BE_NULL);
+            throw new IllegalArgumentException(CommonExceptionMessage.FIELD_CAN_NOT_BE_NULL.getMessage());
         }
     }
 
