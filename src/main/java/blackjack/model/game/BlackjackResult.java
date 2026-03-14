@@ -1,6 +1,7 @@
 package blackjack.model.game;
 
-import blackjack.model.hand.Hand;
+import blackjack.model.state.BlackjackState;
+import blackjack.model.state.Bust;
 import blackjack.model.participant.Bet;
 import java.util.function.BiFunction;
 
@@ -15,16 +16,16 @@ public enum BlackjackResult {
         this.profitCalculator = profitCalculator;
     }
 
-    public static BlackjackResult judge(Hand playerHand, Hand dealerHand) {
-        if (playerHand.isBust()) {
+    public static BlackjackResult judge(BlackjackState playerState, BlackjackState dealerState) {
+        if (playerState instanceof Bust) {
             return BlackjackResult.LOSS;
         }
-        if (dealerHand.isBust()) {
+        if (dealerState instanceof Bust) {
             return BlackjackResult.WIN;
         }
 
-        int playerScore = playerHand.calculateScore();
-        int dealerScore = dealerHand.calculateScore();
+        int playerScore = playerState.getScore();
+        int dealerScore = dealerState.getScore();
         if (playerScore > dealerScore) {
             return BlackjackResult.WIN;
         }

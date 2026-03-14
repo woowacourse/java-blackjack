@@ -1,6 +1,6 @@
 package blackjack.model.participant;
 
-import blackjack.model.hand.Hand;
+import blackjack.model.state.BlackjackState;
 
 public class Dealer extends Participant {
 
@@ -10,11 +10,11 @@ public class Dealer extends Participant {
         super();
     }
 
-    public Dealer(Hand hand) {
-        super(hand);
+    public Dealer(BlackjackState state) {
+        super(state);
     }
 
     public boolean shouldDraw() {
-        return hand.calculateScore() <= DRAW_UPPER_BOUND;
+        return state.getScore() <= DRAW_UPPER_BOUND;
     }
 }

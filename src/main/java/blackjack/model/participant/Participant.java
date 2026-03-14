@@ -1,39 +1,43 @@
 package blackjack.model.participant;
 
 import blackjack.model.card.Card;
-import blackjack.model.hand.Hand;
-import blackjack.model.hand.UninitializedHand;
+import blackjack.model.state.BlackjackState;
+import blackjack.model.card.Hand;
 import java.util.Collection;
 
 public abstract class Participant {
 
-    protected Hand hand;
+    protected BlackjackState state;
 
     protected Participant() {
-        this.hand = new UninitializedHand();
+        this.state = BlackjackState.init();
     }
 
-    protected Participant(Hand hand) {
-        this.hand = hand;
+    protected Participant(BlackjackState state) {
+        this.state = state;
     }
 
     public void addCard(Card card) {
-        hand = hand.hit(card);
+        state = state.hit(card);
+    }
+
+    public BlackjackState getState() {
+        return state;
     }
 
     public Hand getHand() {
-        return hand;
+        return state.getHand();
     }
 
     public Collection<Card> getCards() {
-        return hand.getCards();
+        return state.getCards();
     }
 
     public int getScore() {
-        return hand.calculateScore();
+        return state.getScore();
     }
 
     public boolean isPlaying() {
-        return hand.canHit();
+        return state.canHit();
     }
 }

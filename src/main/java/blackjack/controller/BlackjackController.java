@@ -108,7 +108,7 @@ public class BlackjackController {
     private void printResult(Collection<Player> players, Dealer dealer) {
         List<ResultDto> resultDtos = new ArrayList<>();
         for (Player player : players) {
-            double profit = player.calculateProfit(dealer.getHand());
+            double profit = player.calculateProfit(dealer.getState());
             resultDtos.add(new ResultDto(player.getName(), profit));
         }
 

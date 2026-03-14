@@ -1,12 +1,11 @@
-package blackjack.model.hand;
+package blackjack.model.state;
 
-import blackjack.model.card.Card;
-import java.util.Collection;
+import blackjack.model.card.Hand;
 
-public class BlackjackHand extends FinishedHand {
+public class Blackjack extends Finished {
 
-    public BlackjackHand(Collection<Card> cards) {
-        super(cards);
+    public Blackjack(Hand hand) {
+        super(hand);
 
         validateBlackjack();
     }
@@ -17,7 +16,7 @@ public class BlackjackHand extends FinishedHand {
     }
 
     private void validateBlackjack() {
-        if (!isBlackjack()) {
+        if (hand.isNotBlackjack()) {
             throw new IllegalStateException("패가 블랙잭이지 않습니다.");
         }
     }

@@ -1,18 +1,17 @@
-package blackjack.model.hand;
+package blackjack.model.state;
 
-import blackjack.model.card.Card;
-import java.util.Collection;
+import blackjack.model.card.Hand;
 
-public class BustHand extends FinishedHand {
+public class Bust extends Finished {
 
-    public BustHand(Collection<Card> cards) {
-        super(cards);
+    public Bust(Hand hand) {
+        super(hand);
 
         validateBust();
     }
 
     private void validateBust() {
-        if (!isBust()) {
+        if (hand.isNotBust()) {
             throw new IllegalStateException("패가 버스트이지 않습니다.");
         }
     }
