@@ -34,20 +34,20 @@ public class BlackJackGame {
         final Cards cards = new Cards(random);
 
         final BlackJackGame game = new BlackJackGame(players, dealer, cards);
-        game.drawInitialDealerCards(dealer, cards);
-        game.drawInitialPlayerCards(players, cards);
+        game.drawInitialDealerCards();
+        game.drawInitialPlayerCards();
         return game;
     }
 
-    private void drawInitialDealerCards(Dealer dealer, Cards cards) {
+    private void drawInitialDealerCards() {
         IntStream.range(0, GameRule.INITIAL_DRAW_COUNT).forEach(i -> dealer.drawCard(cards));
     }
 
-    private void drawInitialPlayerCards(Players players, Cards cards) {
-        players.forEachPlayer(player -> drawInitialCardsToPlayer(player, cards));
+    private void drawInitialPlayerCards() {
+        players.forEachPlayer(this::drawInitialCardsToPlayer);
     }
 
-    private void drawInitialCardsToPlayer(Player player, Cards cards) {
+    private void drawInitialCardsToPlayer(Player player) {
         IntStream.range(0, GameRule.INITIAL_DRAW_COUNT)
                 .forEach(i -> player.drawCard(cards));
     }
