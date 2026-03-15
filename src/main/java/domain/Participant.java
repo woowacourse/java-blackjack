@@ -1,6 +1,6 @@
 package domain;
 
-import dto.GameStatus;
+import java.util.List;
 
 public abstract class Participant {
 
@@ -16,23 +16,29 @@ public abstract class Participant {
 
     public abstract boolean isDealer();
 
-    public abstract GameStatus status();
-
     public void draw() {
         if (isPlayable()) {
             hand.drawCard();
         }
     }
 
+    public boolean isBlackJack() {
+        return hand.isBlackJack();
+    }
+
     public boolean isBusted() {
         return hand.isBusted();
     }
 
-    public int scoreSum() {
-        return hand.scoreSum();
-    }
-
     public String name() {
         return name;
+    }
+
+    public List<Card> cards() {
+        return hand.cards();
+    }
+
+    public int score() {
+        return hand.scoreSum();
     }
 }

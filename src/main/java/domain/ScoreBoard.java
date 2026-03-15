@@ -1,19 +1,17 @@
 package domain;
 
 import dto.GameResult;
-import dto.GameStatus;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ScoreBoard {
     private static final int CHANGE_NEGATIVE = -1;
 
-    public static List<GameResult> calculateGameResults(List<GameStatus> playersGameStatus,
-                                                        GameStatus dealerGameStatus) {
+    public static List<GameResult> calculateGameResults(List<Participant> players, Participant dealer) {
         List<GameResult> results = new ArrayList<>();
-        for (GameStatus gameStatus : playersGameStatus) {
-            WinningCondition condition = WinningCondition.from(gameStatus, dealerGameStatus);
-            results.add(new GameResult(gameStatus.name(), condition));
+        for (Participant player : players) {
+            WinningCondition condition = WinningCondition.from(player, dealer);
+            results.add(new GameResult(player.name(), condition));
         }
         return results;
     }

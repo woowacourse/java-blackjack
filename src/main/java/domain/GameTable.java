@@ -23,7 +23,8 @@ public class GameTable {
     public List<GameStatus> initGameStatus() {
         List<GameStatus> gameStatuses = new ArrayList<>();
         for (Participant participant : participants) {
-            gameStatuses.add(participant.status());
+            GameStatus gameStatus = GameStatus.from(participant);
+            gameStatuses.add(gameStatus);
         }
 
         return gameStatuses;
@@ -32,7 +33,8 @@ public class GameTable {
     public List<GameStatus> endedGameStatus() {
         List<GameStatus> gameStatuses = new ArrayList<>();
         for (Participant participant : participants) {
-            gameStatuses.add(participant.status());
+            GameStatus gameStatus = GameStatus.from(participant);
+            gameStatuses.add(gameStatus);
         }
 
         return gameStatuses;
@@ -49,7 +51,7 @@ public class GameTable {
     }
 
     public GameStatus currentPlayerStatus() {
-        return currentParticipant().status();
+        return GameStatus.from(currentParticipant());
     }
 
     public Participant currentPlayer() {
@@ -71,9 +73,9 @@ public class GameTable {
     }
 
     public List<GameResult> results() {
-        List<GameStatus> playersGameStatus = playerStatuses();
-        GameStatus dealerGameStatus = dealer().status();
-        return ScoreBoard.calculateGameResults(playersGameStatus, dealerGameStatus);
+        List<Participant> players = selectPlayers();
+        Participant dealer = dealer();
+        return ScoreBoard.calculateGameResults(players, dealer);
     }
 
     public String currentPlayerName() {
@@ -88,9 +90,9 @@ public class GameTable {
         return currentParticipant().isPlayable();
     }
 
-    private List<GameStatus> playerStatuses() {
+    private List<Participant> selectPlayers() {
         return participants.stream().filter(participant -> !participant.isDealer())
-                .map(Participant::status).collect(Collectors.toList());
+                .collect(Collectors.toList());
     }
 
     private Participant dealer() {

@@ -2,7 +2,6 @@ package view;
 
 import domain.Bet;
 import domain.Card;
-import domain.ParticipantsRole;
 import domain.ScoreBoard;
 import dto.GameResult;
 import dto.GameStatus;
@@ -67,7 +66,7 @@ public class OutputView {
     }
 
     private static String getInitGameLog(GameStatus gameStatus) {
-        if (gameStatus.role().equals(ParticipantsRole.DEALER)) {
+        if (gameStatus.isDealer()) {
             return String.format(OutputMessage.GAME_LOG.description(), gameStatus.name(),
                     joinInfo(gameStatus.cards().getFirst()));
         }

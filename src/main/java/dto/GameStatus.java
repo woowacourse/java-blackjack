@@ -1,24 +1,12 @@
 package dto;
 
 import domain.Card;
-import domain.Hand;
-import domain.ParticipantsRole;
+import domain.Participant;
 import java.util.List;
 
-public record GameStatus(ParticipantsRole role, String name, Hand hand) {
-    public int score() {
-        return hand.scoreSum();
-    }
-
-    public boolean isBusted() {
-        return hand.isBusted();
-    }
-
-    public boolean isBlackJack() {
-        return hand.isBlackJack();
-    }
-
-    public List<Card> cards() {
-        return hand.cards();
+public record GameStatus(boolean isDealer, String name, List<Card> cards, int score) {
+    public static GameStatus from(Participant participant) {
+        return new GameStatus(participant.isDealer(), participant.name(), participant.cards(),
+                participant.score());
     }
 }

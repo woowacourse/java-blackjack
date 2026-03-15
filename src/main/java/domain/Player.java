@@ -1,7 +1,5 @@
 package domain;
 
-import dto.GameStatus;
-
 public class Player extends Participant {
     private static final int PLAYER_PLAYING_THRESHOLD = 20;
 
@@ -17,10 +15,5 @@ public class Player extends Participant {
     @Override
     public boolean isDealer() {
         return false;
-    }
-
-    @Override
-    public GameStatus status() {
-        return new GameStatus(ParticipantsRole.PLAYER, this.name(), hand);
     }
 }
