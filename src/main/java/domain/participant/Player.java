@@ -2,7 +2,7 @@ package domain.participant;
 
 import domain.betting.Money;
 
-public class Player extends Participant {
+public final class Player extends Participant {
 
     private final String name;
     private Money money;

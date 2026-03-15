@@ -1,7 +1,6 @@
-package domain;
+package domain.participant;
 
 import domain.card.Deck;
-import domain.participant.Player;
 import util.InputNameParser;
 import util.InputNameValidator;
 

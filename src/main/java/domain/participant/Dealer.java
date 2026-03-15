@@ -3,7 +3,7 @@ package domain.participant;
 import domain.BlackJackInfo;
 import domain.card.Card;
 
-public class Dealer extends Participant {
+public final class Dealer extends Participant {
     public Dealer() {
     }
 

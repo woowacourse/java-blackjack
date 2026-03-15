@@ -32,7 +32,7 @@ class BettingResultTest {
         dealer.stay();
 
         // When
-        double earningsRate = GameResult.judge(player, dealer).getEarningRate();
+        double earningsRate = BettingResult.judge(player, dealer).getEarningRate();
 
         // Then
         assertThat(earningsRate).isEqualTo(1.0);
@@ -57,7 +57,7 @@ class BettingResultTest {
         dealer.stay();
 
         // When
-        double earningsRate = GameResult.judge(player, dealer).getEarningRate();
+        double earningsRate = BettingResult.judge(player, dealer).getEarningRate();
 
         // Then
         assertThat(earningsRate).isEqualTo(-1.0);
@@ -82,7 +82,7 @@ class BettingResultTest {
         dealer.stay();
 
         // When
-        double earningsRate = GameResult.judge(player, dealer).getEarningRate();
+        double earningsRate = BettingResult.judge(player, dealer).getEarningRate();
 
         // Then
         assertThat(earningsRate).isEqualTo(0.0);
@@ -107,7 +107,7 @@ class BettingResultTest {
         dealer.draw(new Card(CardNumber.EIGHT, CardShape.CLUB));
 
         // When
-        double earningsRate = GameResult.judge(player, dealer).getEarningRate();
+        double earningsRate = BettingResult.judge(player, dealer).getEarningRate();
 
         // Then
         assertThat(earningsRate).isEqualTo(-1.0);
@@ -129,7 +129,7 @@ class BettingResultTest {
         dealer.draw(new Card(CardNumber.EIGHT, CardShape.CLUB));
 
         // When
-        double earningsRate = GameResult.judge(player, dealer).getEarningRate();
+        double earningsRate = BettingResult.judge(player, dealer).getEarningRate();
 
         // Then
         assertThat(earningsRate).isEqualTo(1.5);
@@ -149,7 +149,7 @@ class BettingResultTest {
         dealer.drawInitialCards(dealerInitHands);
 
         // When
-        double earningsRate = GameResult.judge(player, dealer).getEarningRate();
+        double earningsRate = BettingResult.judge(player, dealer).getEarningRate();
 
         // Then
         assertThat(earningsRate).isEqualTo(0.0);
@@ -175,7 +175,7 @@ class BettingResultTest {
 
 
         // When
-        double earningsRate = GameResult.judge(player, dealer).getEarningRate();
+        double earningsRate = BettingResult.judge(player, dealer).getEarningRate();
 
         // Then
         assertThat(earningsRate).isEqualTo(1.0);
@@ -197,7 +197,7 @@ class BettingResultTest {
         dealer.drawInitialCards(dealerInitHands);
 
         // When
-        double earningsRate = GameResult.judge(player, dealer).getEarningRate();
+        double earningsRate = BettingResult.judge(player, dealer).getEarningRate();
 
         // Then
         assertThat(earningsRate).isEqualTo(-1.0);

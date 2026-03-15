@@ -3,7 +3,7 @@ package domain.betting;
 import domain.participant.Dealer;
 import domain.participant.Player;
 
-public enum GameResult {
+public enum BettingResult {
     WIN_WITH_BLACKJACK(1.5),
     WIN(1.0),
     DRAW(0.0),
@@ -11,11 +11,11 @@ public enum GameResult {
 
     private final double earningRate;
 
-    GameResult(double earningRate) {
+    BettingResult(double earningRate) {
         this.earningRate = earningRate;
     }
 
-    public static GameResult judge(Player player, Dealer dealer) {
+    public static BettingResult judge(Player player, Dealer dealer) {
         if (player.isBust()) {
             return LOSE;
         }
@@ -28,14 +28,14 @@ public enum GameResult {
         return judgeScore(player, dealer);
     }
 
-    private static GameResult judgeBlackJack(Dealer dealer) {
+    private static BettingResult judgeBlackJack(Dealer dealer) {
         if (dealer.isBlackJack()) {
             return DRAW;
         }
         return WIN_WITH_BLACKJACK;
     }
 
-    private static GameResult judgeScore(Player player, Dealer dealer) {
+    private static BettingResult judgeScore(Player player, Dealer dealer) {
         int playerScore = player.getScore();
         int dealerScore = dealer.getScore();
 

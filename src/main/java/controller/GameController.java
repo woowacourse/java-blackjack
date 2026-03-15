@@ -1,6 +1,6 @@
 package controller;
 
-import domain.Players;
+import domain.participant.Players;
 import domain.betting.Money;
 import domain.participant.Dealer;
 import domain.participant.Player;

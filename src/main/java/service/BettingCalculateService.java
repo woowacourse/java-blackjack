@@ -1,7 +1,7 @@
 package service;
 
-import domain.betting.GameResult;
-import domain.Players;
+import domain.betting.BettingResult;
+import domain.participant.Players;
 import domain.betting.Money;
 import domain.betting.Profit;
 import domain.participant.Dealer;
@@ -25,7 +25,7 @@ public class BettingCalculateService {
         List<Profit> playersProfit = new ArrayList<>();
         for (Player player : players) {
             Money bettingMoney = player.getBettingMoney();
-            GameResult judge = GameResult.judge(player, dealer);
+            BettingResult judge = BettingResult.judge(player, dealer);
             double earningsRate = judge.getEarningRate();
             playersProfit.add(new Profit(player.getName(), bettingMoney, earningsRate));
         }

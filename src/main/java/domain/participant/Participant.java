@@ -6,7 +6,7 @@ import domain.status.Status;
 
 import java.util.List;
 
-abstract public class Participant {
+public abstract class Participant {
 
     protected Status status;
 
@@ -15,7 +15,7 @@ abstract public class Participant {
     }
 
     public void drawInitialCards(List<Card> cards) {
-        this.status =  status.drawInitialCards(cards);
+        this.status = status.drawInitialCards(cards);
     }
 
     public void draw(Card card) {

@@ -1,6 +1,6 @@
 package dto;
 
-import domain.Players;
+import domain.participant.Players;
 import domain.participant.Dealer;
 import domain.participant.Player;
 
