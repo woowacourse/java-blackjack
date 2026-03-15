@@ -1,11 +1,9 @@
-package domain.participant;
+package domain.participant.player;
 
 import domain.card.Card;
 import domain.card.Pattern;
 import domain.card.Rank;
-import domain.participant.player.Money;
-import domain.participant.player.Player;
-import domain.participant.player.PlayerInfo;
+import domain.participant.Hand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
