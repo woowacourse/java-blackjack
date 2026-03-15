@@ -8,6 +8,7 @@ import domain.participant.player.Players;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class BlackJackService {
 
@@ -24,38 +25,32 @@ public class BlackJackService {
     }
 
     private Outcome calculatePlayerResults(Dealer dealer, Player player) {
-        Outcome blackJackResult = determineResultByBlackJack(dealer, player);
-        if (blackJackResult != null) {
-            return blackJackResult;
-        }
-        Outcome bustResult = determineResultByBust(dealer, player);
-        if (bustResult != null) {
-            return bustResult;
-        }
-        return determineResultByScore(dealer, player);
+        return determineResultByBlackJack(dealer, player)
+                .or(() -> determineResultByBust(dealer, player))
+                .orElseGet(() -> determineResultByScore(dealer, player));
     }
 
-    private Outcome determineResultByBlackJack(Dealer dealer, Player player) {
+    private Optional<Outcome> determineResultByBlackJack(Dealer dealer, Player player) {
         if (player.isBlackJack() && dealer.isBlackJack()) {
-            return Outcome.PUSH;
+            return Optional.of(Outcome.PUSH);
         }
         if (dealer.isBlackJack()) {
-            return Outcome.DEFEAT;
+            return Optional.of(Outcome.DEFEAT);
         }
         if (player.isBlackJack()) {
-            return Outcome.BLACKJACK_WIN;
+            return Optional.of(Outcome.BLACKJACK_WIN);
         }
-        return null;
+        return Optional.empty();
     }
 
-    private Outcome determineResultByBust(Dealer dealer, Player player) {
+    private Optional<Outcome> determineResultByBust(Dealer dealer, Player player) {
         if (player.getHand().isBust()) {
-            return Outcome.DEFEAT;
+            return Optional.of(Outcome.DEFEAT);
         }
         if (dealer.getHand().isBust()) {
-            return Outcome.WIN;
+            return Optional.of(Outcome.WIN);
         }
-        return null;
+        return Optional.empty();
     }
 
     private Outcome determineResultByScore(Dealer dealer, Player player) {
