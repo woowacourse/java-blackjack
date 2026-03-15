@@ -1,6 +1,7 @@
 package domain;
 
 import domain.card.Card;
+import domain.card.Deck;
 import domain.strategy.NoShuffleStrategy;
 import domain.strategy.ShuffleStrategy;
 import org.junit.jupiter.api.Test;

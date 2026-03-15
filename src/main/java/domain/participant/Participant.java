@@ -1,15 +1,12 @@
 package domain.participant;
 
-import domain.Hand;
-import domain.Name;
 import domain.card.Card;
 import domain.strategy.DrawStrategy;
-
 import java.util.List;
 
 public abstract class Participant {
     private final Name name;
-    private final Hand hand;
+    protected final Hand hand;
     private final DrawStrategy drawStrategy;
 
     public Participant(String name, DrawStrategy drawStrategy) {
@@ -35,7 +32,7 @@ public abstract class Participant {
     }
 
     public String name() {
-        return name.getName();
+        return name.name();
     }
 
     public List<Card> getAllCards() {

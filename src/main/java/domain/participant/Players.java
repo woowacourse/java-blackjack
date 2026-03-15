@@ -9,28 +9,25 @@ public class Players {
     public static final int PLAYER_THRESHOLD = 5;
     public static final String ERROR_PLAYER_COUNT_OVER = "[ERROR] 플레이어의 수는 5명 이하여야 합니다.";
     public static final String ERROR_PLAYERS_NAME_DUPLICATION = "[ERROR] 참가자의 이름이 중복됩니다.";
-
     private final List<Player> players = new ArrayList<>();
 
     public Players(List<String> names) {
         for (String name : names) {
-            Player player = new Player(name);
-            players.add(player);
+            players.add(new Player(name));
         }
 
         validatePlayerCount(players);
         validateDuplicatedName(players);
     }
 
-
-    public List<String> getPlayerNames(){
-        return  players.stream()
-                .map(player -> player.name())
+    public List<String> getPlayerNames() {
+        return players.stream()
+                .map(Player::name)
                 .collect(Collectors.toList());
     }
 
     public List<Player> getPlayers() {
-        return players;
+        return List.copyOf(players);
     }
 
     private void validatePlayerCount(List<Player> players) {
@@ -41,7 +38,7 @@ public class Players {
 
     private void validateDuplicatedName(List<Player> players) {
         Set<String> namesSet = players.stream()
-                .map(player -> player.name())
+                .map(Player::name)
                 .collect(Collectors.toSet());
 
         if (namesSet.size() != players.size()) {

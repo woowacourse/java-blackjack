@@ -1,17 +1,79 @@
 package view;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
 
-    public String getNames() {
-        System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
-        return scanner.nextLine();
+    public static final String PARTICIPANT_NAME_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
+    public static final String ERROR_NAMES_EMPTY = "[ERROR] 이름은 비어있을 수 없습니다.";
+    public static final String ERROR_INCORRECT_CHOICE = "[ERROR] y 또는 n을 입력해주세요.";
+    public static final String BETTING_MONEY_MESSAGE = "의 배팅 금액은?";
+    private static final String YES = "y";
+    private static final String NO = "n";
+    public static final String ONE_MORE_CARD_MESSAGE = "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
+    public static final String DELIMITER = ",";
+    public static final String ERROR_INVALID_NUMBER = "[ERROR] 정상적인 숫자를 입력해주세요.";
+
+    public List<String> getParsedNames() {
+        System.out.println(PARTICIPANT_NAME_MESSAGE);
+        String input = scanner.nextLine();
+        return parseNames(input);
     }
 
-    public String getUserChoice(String name) {
-        System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
-        return scanner.nextLine();
+    List<String> parseNames(String input) {
+        validateInputNull(input);
+
+        List<String> names = Arrays.stream(input.split(DELIMITER))
+                .map(String::strip)
+                .collect(Collectors.toList());
+
+        validateEmptyInput(names);
+
+        return names;
+    }
+
+    public boolean askForOneMoreCard(String name) {
+        System.out.println(name + ONE_MORE_CARD_MESSAGE);
+        String userChoice = scanner.nextLine();
+        validateUserChoice(userChoice);
+        return YES.equals(userChoice);
+    }
+
+    public int askForBettingAmount(String name) {
+        System.out.println(name + BETTING_MONEY_MESSAGE);
+        return parseAmount(scanner.nextLine());
+    }
+
+    private void validateEmptyInput(List<String> names) {
+        if (names.isEmpty()) {
+            throw new IllegalArgumentException(ERROR_NAMES_EMPTY);
+        }
+    }
+
+    private void validateInputNull(String input) {
+        if (input == null || input.isBlank()) {
+            throw new IllegalArgumentException(ERROR_NAMES_EMPTY);
+        }
+    }
+
+    private void validateUserChoice(String userChoice) {
+        if (!YES.equals(userChoice) && !NO.equals(userChoice)) {
+            throw new IllegalArgumentException(ERROR_INCORRECT_CHOICE);
+        }
+    }
+
+    int parseAmount(String input) {
+        String strippedInput = input.strip();
+
+        try {
+            int amount = Integer.parseInt(strippedInput);
+            return amount;
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(ERROR_INVALID_NUMBER);
+        }
     }
 }

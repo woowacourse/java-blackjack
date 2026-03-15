@@ -1,9 +1,9 @@
 package domain;
 
-import org.junit.jupiter.api.Test;
-
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
+
+import domain.participant.Name;
+import org.junit.jupiter.api.Test;
 
 class NameTest {
     @Test
@@ -11,5 +11,4 @@ class NameTest {
         assertThatThrownBy(() -> new Name("pobiss"))
                 .isInstanceOf(IllegalArgumentException.class);
     }
-
 }

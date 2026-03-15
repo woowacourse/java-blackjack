@@ -1,22 +1,22 @@
-// /Users/jaeheon/Desktop/Programming/WoowaCourse/java-blackjack/src/main/java/domain/WinningStatus.java
-package domain;
+package domain.game;
 
 import domain.participant.Dealer;
 import domain.participant.Player;
 
 public enum WinningStatus {
-    WIN, TIE, LOSE;
-
-    public static final int BLACK_JACK = 21;
+    WIN, TIE, LOSE, BLACKJACK_WIN;
 
     public static WinningStatus of(Player player, Dealer dealer) {
         int playerScore = player.score();
         int dealerScore = dealer.score();
 
-        if (playerScore > BLACK_JACK) {
+        if (playerScore > BlackjackRule.BLACKJACK_SCORE) {
             return LOSE;
         }
-        if (dealerScore > BLACK_JACK) {
+        if (isInitialBlackjack(player) && dealerScore != BlackjackRule.BLACKJACK_SCORE) {
+            return BLACKJACK_WIN;
+        }
+        if (dealerScore > BlackjackRule.BLACKJACK_SCORE) {
             return WIN;
         }
         return compareScore(playerScore, dealerScore);
@@ -30,5 +30,10 @@ public enum WinningStatus {
             return LOSE;
         }
         return TIE;
+    }
+
+    private static boolean isInitialBlackjack(Player player) {
+        return player.handSize() == BlackjackRule.INITIAL_CARD_COUNT
+                && player.score() == BlackjackRule.BLACKJACK_SCORE;
     }
 }

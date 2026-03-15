@@ -6,8 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
-import static domain.card.Rank.*;
-import static domain.card.Suit.*;
+import static domain.card.Rank.ACE;
+import static domain.card.Suit.CLOVER;
+import static domain.card.Suit.HEART;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class CardTest {
@@ -44,8 +45,7 @@ class CardTest {
     @EnumSource(value = Rank.class, names = {"JACK", "QUEEN", "KING", "ACE"}, mode = EnumSource.Mode.EXCLUDE)
     void 숫자2_부터_10_사이의_숫자는_그대로_반환한다(Rank rank) {
         Card card = new Card(rank, CLOVER);
-        int answer = rank.getValue();
-
+        int answer = rank.value();
         int score = card.score();
 
         assertThat(score).isEqualTo(answer);
