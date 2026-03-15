@@ -28,36 +28,28 @@ public class BlackjackController {
     }
 
     private BlackjackGame readyBlackjackGame() {
-        List<String> playerNames = inputName();
-        Players players = generatePlayers(playerNames);
-        Players playersWithBetAmount = inputBettingAmounts(players);
-        return BlackjackGame.create(playersWithBetAmount, new RandomShuffleStrategy());
+        List<Name> names = inputNames();
+        Players players = inputBettingAmounts(names);
+        return BlackjackGame.create(players, new RandomShuffleStrategy());
     }
 
-    private List<String> inputName() {
+    private List<Name> inputNames() {
         String input = readPlayNames();
         Parser.notEmpty(input);
-        return splitDelimiter(input);
+        return splitDelimiter(input).stream()
+                .map(Name::of)
+                .toList();
     }
 
-    private Players generatePlayers(List<String> playerNames) {
+    private Players inputBettingAmounts(List<Name> names) {
         List<Player> players = new ArrayList<>();
-        for (String playerName : playerNames) {
-            players.add(Player.of(Name.of(playerName)));
-        }
-        return Players.of(players);
-    }
-
-    private Players inputBettingAmounts(Players players) {
-        List<Player> playersWithBet = new ArrayList<>();
-        for (Player player : players.getPlayers()) {
+        for (Name name : names) {
             OutputView.printLineBreak();
-            Player playerWithBet = player.withBetAmount(
-                    BetAmount.of(Parser.parseAmount(InputView.readBettingAmount(player.name()))));
-            playersWithBet.add(playerWithBet);
+            BetAmount betAmount = BetAmount.of(Parser.parseAmount(InputView.readBettingAmount(name.getName())));
+            players.add(Player.of(name, betAmount));
         }
         OutputView.printLineBreak();
-        return Players.of(playersWithBet);
+        return Players.of(players);
     }
 
     private void dealAndPrintResult(BlackjackGame blackjackGame) {
