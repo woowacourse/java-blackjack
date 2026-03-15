@@ -62,7 +62,7 @@ public class BlackJackController {
         BetTable betTable = new BetTable();
         for (Player player : players.getAllPlayers()) {
             BetAmount betAmount = getBetAmount(player);
-            betTable.recodeAmount(player.getName(), betAmount.getBetAmount());
+            betTable.recordAmount(player.getName(), betAmount.getBetAmount());
         }
         return betTable;
     }
@@ -151,7 +151,7 @@ public class BlackJackController {
         ProfitTable profitTable = new ProfitTable();
         for (Player player : gameState.findAllPlayers()) {
             int profit = calculator.playerCalculateProfit(result, player);
-            profitTable.recodeProfit(player, profit);
+            profitTable.recordProfit(player, profit);
         }
         return profitTable;
     }

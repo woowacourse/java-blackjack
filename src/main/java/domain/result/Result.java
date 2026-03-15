@@ -33,7 +33,11 @@ public class Result {
         return dealerResultBoard;
     }
 
-    public ResultInfo findPlayerResult(Player player) {
+    public int calculateProfitFor(Player player, int betAmount) {
+        return findResultInfoFor(player).calculateProfit(betAmount);
+    }
+
+    private ResultInfo findResultInfoFor(Player player) {
         return gameResult.get(player.getName());
     }
 

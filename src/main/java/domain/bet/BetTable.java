@@ -3,7 +3,6 @@ package domain.bet;
 import domain.participant.Player;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class BetTable {
@@ -13,7 +12,7 @@ public class BetTable {
         this.bettingTable = new HashMap<>();
     }
 
-    public void recodeAmount(String name, int amount) {
+    public void recordAmount(String name, int amount) {
         bettingTable.put(name, amount);
     }
 

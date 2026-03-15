@@ -3,7 +3,6 @@ package domain.profit;
 import domain.participant.Player;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -18,7 +17,7 @@ public class ProfitTable {
         return profitTable.get(name);
     }
 
-    public void recodeProfit(Player player, int profit) {
+    public void recordProfit(Player player, int profit) {
         profitTable.put(player.getName(), profit);
     }
 
