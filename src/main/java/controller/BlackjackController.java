@@ -1,5 +1,6 @@
 package controller;
 
+import domain.Participants;
 import dto.ParticipantsInitDTO;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,11 +39,9 @@ public class BlackjackController {
 
     private void initParticipants() {
         List<String> participantsNames = readPlayersName();
-        List<ParticipantsInitDTO> participantsInitDTOS = new ArrayList<>();
-        for (String userName : participantsNames) {
-            Money bettingMoney = readBettingMoney(userName);
-            participantsInitDTOS.add(new ParticipantsInitDTO(userName, bettingMoney));
-        }
+        List<ParticipantsInitDTO> participantsInitDTOS = participantsNames.stream()
+                        .map(userName -> new ParticipantsInitDTO(userName, readBettingMoney(userName)))
+                        .toList();
         blackjackService.initParticipant(participantsInitDTOS);
     }
 
