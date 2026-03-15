@@ -4,60 +4,47 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class BlackjackResult {
-    private final Map<Player, BetResult> playerBets = new LinkedHashMap<>();
+    private final Map<Player, Long> playerProfit = new LinkedHashMap<>();
 
-    private BlackjackResult() {
-    }
-
-    public static BlackjackResult of() {
-        return new BlackjackResult();
-    }
-
-    public void add(Player player, long betAmount) {
-        if (isBlackjack(player)) {
-            playerBets.put(player, BetResult.withBetAmount((long) (betAmount * Policy.BLACKJACK_MULTIPLIER)));
-            return;
-        }
-        playerBets.put(player, BetResult.withBetAmount(betAmount));
-    }
-
-    private boolean isBlackjack(Player player) {
-        return player.getCards().calculateScore() == Policy.BLACKJACK_NUMBER;
-    }
-
-    public void resolveResults(Players players, Dealer dealer) {
+    private BlackjackResult(Players players, Dealer dealer, PlayerBets playerBets) {
         for (Player player : players.getPlayers()) {
-            resolveResult(player, dealer);
+            add(player, dealer, playerBets);
         }
     }
 
-    private void resolveResult(Player player, Dealer dealer) {
-        BetResult betResult = playerBets.get(player);
-        GameResult gameResult = player.compareResult(dealer);
-        playerBets.put(player, betResult.withGameResult(gameResult));
+    public static BlackjackResult of(Players players, Dealer dealer, PlayerBets playerBets) {
+        return new BlackjackResult(players, dealer, playerBets);
     }
 
-    public long dealerProfit() {
-        long dealerProfit = Policy.INITIAL_DEALER_PROFIT;
-        for (Map.Entry<Player, BetResult> playerBet : playerBets.entrySet()) {
-            dealerProfit += playerProfit(playerBet);
-        }
-        return -1 * dealerProfit;
+    public void add(Player player, Dealer dealer, PlayerBets playerBets) {
+        int playerScore = player.getCards().calculateScore();
+        int dealerScore = dealer.getCards().calculateScore();
+
+        BetAmount betAmount = playerBets.findBy(player);
+        int scoreMultiplier = scoreMultiplier(playerScore, dealerScore);
+
+        playerProfit.put(player, betAmount.getBetAmount() * scoreMultiplier);
     }
 
-    public long playerProfit(Map.Entry<Player, BetResult> playerBet) {
-        BetResult betResult = playerBet.getValue();
-        GameResult gameResult = betResult.getGameResult();
-        if (gameResult == GameResult.WIN) {
-            return Policy.WIN_MULTIPLIER * betResult.getBetAmount();
+    private int scoreMultiplier(long playerScore, long dealerScore) {
+        if (playerScore > dealerScore) {
+            return Policy.WIN_MULTIPLIER;
         }
-        if (gameResult == GameResult.LOSE) {
-            return Policy.LOSE_MULTIPLIER * betResult.getBetAmount();
+        if (playerScore < dealerScore) {
+            return Policy.LOSE_MULTIPLIER;
         }
         return Policy.DRAW_MULTIPLIER;
     }
 
-    public Map<Player, BetResult> getPlayerBets() {
-        return playerBets;
+    public long dealerProfit() {
+        long dealerProfit = Policy.INITIAL_DEALER_PROFIT;
+        for (long profit : playerProfit.values()) {
+            dealerProfit += profit;
+        }
+        return -1 * dealerProfit;
+    }
+
+    public Map<Player, Long> playerProfits() {
+        return playerProfit;
     }
 }
