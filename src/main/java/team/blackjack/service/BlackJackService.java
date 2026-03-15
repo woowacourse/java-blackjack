@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import team.blackjack.domain.Card;
+import team.blackjack.domain.rule.BlackjackRule;
 import team.blackjack.service.dto.DrawResult;
 import team.blackjack.service.dto.PayoutResult;
 import team.blackjack.service.dto.PlayerRequest;
@@ -15,9 +16,14 @@ import team.blackjack.domain.Player;
 
 public class BlackJackService {
     private BlackjackGame blackjackGame;
+    private BlackjackRule blackjackRule;
+
+    public BlackJackService(BlackjackRule blackjackRule){
+        this.blackjackRule = blackjackRule;
+    }
 
     public void initGame(List<PlayerRequest> playerRequests) {
-        blackjackGame = new BlackjackGame(playerRequests);
+        this.blackjackGame = new BlackjackGame(playerRequests);
     }
 
     /**
@@ -74,14 +80,14 @@ public class BlackJackService {
     }
 
     public PayoutResult getPayoutResult() {
-        Map<String, BigDecimal> playerPayouts = blackjackGame.calculatePlayerPayout();
+        Map<String, BigDecimal> playerPayouts = blackjackGame.calculatePlayersPayout(blackjackRule);
         BigDecimal dealerPayout = blackjackGame.calculateDealerPayout(playerPayouts);
 
         return new PayoutResult(parseDealerPayouts(dealerPayout), parsePlayerPayouts(playerPayouts));
     }
 
     private Map<String, String> parsePlayerPayouts(Map<String, BigDecimal> playerPayouts) {
-        Map<String, String> playerPayoutResults = new LinkedHashMap();
+        Map<String, String> playerPayoutResults = new LinkedHashMap<>();
 
         playerPayouts.forEach((name, payout)
                 -> playerPayoutResults.put(name, payout.stripTrailingZeros().toPlainString()));

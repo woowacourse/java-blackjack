@@ -1,11 +1,12 @@
 package team.blackjack.service;
 
-import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import team.blackjack.config.AppConfig;
 import team.blackjack.domain.Player;
 
 import java.util.List;
+import team.blackjack.domain.rule.BlackjackRule;
 import team.blackjack.service.dto.PlayerRequest;
 import team.blackjack.service.dto.ScoreResult;
 
@@ -13,11 +14,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class BlackJackServiceTest {
 
+    private final BlackjackRule blackjackRule = AppConfig.getInstance().blackjackRule();
     private BlackJackService blackJackService;
 
     @BeforeEach
     void setUp() {
-        blackJackService = new BlackJackService();
+        blackJackService = new BlackJackService(blackjackRule);
     }
 
     @Test
