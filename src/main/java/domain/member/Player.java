@@ -33,7 +33,7 @@ public class Player {
     }
 
     public int calculateProfit(RoundResult result) {
-        return result.calculateProfit(amount.getAmount());
+        return amount.calculateProfit(result);
     }
 
     public void applyBlackjackBonus() {

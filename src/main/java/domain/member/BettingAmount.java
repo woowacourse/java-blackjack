@@ -1,5 +1,7 @@
 package domain.member;
 
+import domain.vo.RoundResult;
+
 public class BettingAmount {
 
     private static final double BONUS_RATE = 1.5;
@@ -15,13 +17,13 @@ public class BettingAmount {
         return new BettingAmount((int) (this.amount * BONUS_RATE));
     }
 
-    public int getAmount() {
-        return amount;
-    }
-
     private void validate(int amount) {
         if (amount <= 0) {
             throw new IllegalArgumentException("배팅 금액은 0이거나 음수일 수 없습니다.");
         }
+    }
+
+    public int calculateProfit(RoundResult result) {
+        return result.calculateProfit(amount);
     }
 }
