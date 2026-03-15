@@ -13,12 +13,8 @@ public class Player extends Participant {
         this.betAmount = betAmount;
     }
 
-    public static Player of(Name name) {
-        return new Player(name, Hand.init(), BetAmount.of(1));
-    }
-
-    public Player withBetAmount(BetAmount betAmount) {
-        return new Player(name, hand, betAmount);
+    public static Player of(Name name, BetAmount betAmount) {
+        return new Player(name, Hand.init(), betAmount);
     }
 
     private void validate(Name name, BetAmount betAmount) {
