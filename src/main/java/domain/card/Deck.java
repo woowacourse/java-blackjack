@@ -1,4 +1,6 @@
-package domain;
+package domain.card;
+
+import exception.BlackjackException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,7 +23,7 @@ public class Deck {
 
     public Card pop() {
         if (cards.isEmpty()) {
-            throw new IllegalStateException("덱이 비었습니다.");
+            throw new BlackjackException("덱이 비었습니다.");
         }
 
         return cards.removeFirst();

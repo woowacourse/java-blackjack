@@ -1,5 +1,8 @@
-package domain;
+package domain.participant;
 
+import domain.card.Card;
+import domain.card.CardRank;
+import domain.card.CardShape;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,8 +16,7 @@ class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        Player player = new Player("요크");
-        this.player = player;
+        this.player = new Player("요크", new Bet(1000));
     }
 
     @DisplayName("카드 합계 구하기")
@@ -73,7 +75,7 @@ class PlayerTest {
 
     @DisplayName("Bust 여부 판단 - bust")
     @Test
-    void Burst_여부_판단_bust_정상_테스트() {
+    void Bust_여부_판단_bust_정상_테스트() {
         player.add(new Card(CardShape.SPADE, CardRank.TEN));
         player.add(new Card(CardShape.HEART, CardRank.TWO));
         player.add(new Card(CardShape.HEART, CardRank.TEN));
@@ -84,7 +86,7 @@ class PlayerTest {
 
     @DisplayName("Bust 여부 판단 - not Bust")
     @Test
-    void Burst_여부_판단_not_bust_정상_테스트() {
+    void Bust_여부_판단_not_bust_정상_테스트() {
         player.add(new Card(CardShape.SPADE, CardRank.TEN));
         player.add(new Card(CardShape.HEART, CardRank.TWO));
 
@@ -104,7 +106,7 @@ class PlayerTest {
     }
 
     private Player createPlayerFromCards(List<Card> cards) {
-        Player player = new Player("aaaa");
+        Player player = new Player("aaaa", new Bet(1000));
         for (Card card : cards) {
             player.add(card);
         }

@@ -1,6 +1,9 @@
 package view;
 
+import domain.participant.Bet;
+import exception.BlankInputException;
 import utils.Parser;
+import validator.NumberRangeValidator;
 import validator.Validator;
 
 import java.util.List;
@@ -20,6 +23,18 @@ public class InputView {
         return Parser.splitBy(input, DELIMITER);
     }
 
+    private String readInput(List<Validator> validators) {
+        try {
+            String input = new Scanner(System.in).nextLine();
+            for (Validator validator : validators) {
+                validator.validate(input);
+            }
+            return input;
+        } catch (NoSuchElementException e) {
+            throw new BlankInputException();
+        }
+    }
+
     public boolean readAdditionalCard(String name) {
         System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         String input = readInput(List.of(
@@ -30,15 +45,13 @@ public class InputView {
         return input.equals("y");
     }
 
-    private String readInput(List<Validator> validators) {
-        try {
-            String input = new Scanner(System.in).nextLine();
-            for (Validator validator : validators) {
-                validator.validate(input);
-            }
-            return input;
-        } catch (NoSuchElementException e) {
-            throw new IllegalArgumentException("입력이 비어있습니다.");
-        }
+    public Bet readBet(String playerName) {
+        System.out.printf("%s의 배팅 금액은?%n", playerName);
+        String input = readInput(List.of(
+                Validator::validateNotBlank,
+                NumberRangeValidator.createPositiveRange()
+        ));
+
+        return new Bet(Long.parseLong(input));
     }
 }

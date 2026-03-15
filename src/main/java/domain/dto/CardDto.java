@@ -1,9 +1,9 @@
 package domain.dto;
 
-import domain.Card;
+import domain.card.Card;
 
 public record CardDto(String rankName, String shapeName) {
     public static CardDto from(Card card) {
-        return new CardDto(card.getCardShape().getName(), card.getCardRank().getName());
+        return new CardDto(card.cardShape().getName(), card.cardRank().getName());
     }
 }

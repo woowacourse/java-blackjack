@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 import constant.GameConstant;
 
@@ -24,15 +24,18 @@ public class Hand implements Iterable<Card> {
         return cards.getFirst();
     }
 
-    public boolean hasAce() {
-        return cards.stream()
-                .anyMatch(c -> c.getCardRank().equals(CardRank.ACE));
+    public boolean isBust() {
+        return calculateFinalScore() > GameConstant.BLACKJACK_SCORE;
     }
 
-    public int calculateScore() {
+    public int calculateFinalScore() {
+        return calculateScore() + calculateAceScore();
+    }
+
+    private int calculateScore() {
         int total = 0;
         for (Card card : cards) {
-            total += card.getCardRank().getValue();
+            total += card.cardRank().getValue();
         }
         return total;
     }
@@ -44,12 +47,9 @@ public class Hand implements Iterable<Card> {
         return ACE_BONUS_SCORE;
     }
 
-    public int calculateFinalScore() {
-        return calculateScore() + calculateAceScore();
-    }
-
-    public boolean isBust() {
-        return calculateFinalScore() > GameConstant.BUST_THRESHOLD;
+    private boolean hasAce() {
+        return cards.stream()
+                .anyMatch(c -> c.cardRank().equals(CardRank.ACE));
     }
 
     @Override
