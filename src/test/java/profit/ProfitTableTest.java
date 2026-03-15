@@ -12,13 +12,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ProfitTableTest {
     @Test
     @DisplayName("플레이어가 승리했을 때의 수익(베팅금 그대로)을 수익테이블에 저장할 수 있다.")
-    void recodeProfit_savesWinProfit_whenPlayerIsWin() {
+    void recordProfit_savesWinProfit_whenPlayerIsWin() {
         Player player = new Player(new PlayerName("user1"), new Hand());
         ProfitTable profitTable = new ProfitTable();
         int betAmount = 10000;
         int winProfit = betAmount;
 
-        profitTable.recodeProfit(player, betAmount);
+        profitTable.recordProfit(player, betAmount);
         int profit = profitTable.findProfitByPlayerName("user1");
 
         assertThat(profit).isEqualTo(winProfit);
@@ -26,13 +26,13 @@ public class ProfitTableTest {
 
     @Test
     @DisplayName("플레이어가 패배했을 때의 수익(베팅금의 부호를 마이너스)을 수익테이블에 저장할 수 있다.")
-    void recodeProfit_savesDefeatProfit_whenPlayerIsDefeat() {
+    void recordProfit_savesDefeatProfit_whenPlayerIsDefeat() {
         Player player = new Player(new PlayerName("user1"), new Hand());
         ProfitTable profitTable = new ProfitTable();
         int betAmount = 10000;
         int defeatProfit = -betAmount;
 
-        profitTable.recodeProfit(player, defeatProfit);
+        profitTable.recordProfit(player, defeatProfit);
         int profit = profitTable.findProfitByPlayerName("user1");
 
         assertThat(profit).isEqualTo(defeatProfit);
@@ -40,27 +40,27 @@ public class ProfitTableTest {
 
     @Test
     @DisplayName("플레이어가 무승부했을 때의 수익(0원)을 수익테이블에 저장할 수 있다.")
-    void recodeProfit_savesDrawProfit_whenPlayerIsDraw() {
+    void recordProfit_savesDrawProfit_whenPlayerIsDraw() {
         Player player = new Player(new PlayerName("user1"), new Hand());
         ProfitTable profitTable = new ProfitTable();
         int betAmount = 10000;
         int drawProfit = betAmount - betAmount;
 
-        profitTable.recodeProfit(player, drawProfit);
+        profitTable.recordProfit(player, drawProfit);
         int profit = profitTable.findProfitByPlayerName("user1");
 
         assertThat(profit).isEqualTo(drawProfit);
     }
 
     @Test
-    @DisplayName("플레이어가 블랙잭했을 때의 수익(베팅금의 0.5배)을 수익테이블에 저장할 수 있다.")
-    void recodeProfit_savesBlackJackProfit_whenPlayerIsBlackJack() {
+    @DisplayName("플레이어가 블랙잭했을 때의 수익(베팅금의 1.5배)을 수익테이블에 저장할 수 있다.")
+    void recordProfit_savesBlackJackProfit_whenPlayerIsBlackJack() {
         Player player = new Player(new PlayerName("user1"), new Hand());
         ProfitTable profitTable = new ProfitTable();
         int betAmount = 10000;
-        int blackJackProfit = (int) (betAmount * 1.5) - betAmount;
+        int blackJackProfit = (int) (betAmount * 1.5);
 
-        profitTable.recodeProfit(player, blackJackProfit);
+        profitTable.recordProfit(player, blackJackProfit);
         int profit = profitTable.findProfitByPlayerName("user1");
 
         assertThat(profit).isEqualTo(blackJackProfit);
@@ -75,8 +75,8 @@ public class ProfitTableTest {
         int winProfit = 10000;
         int defeatProfit = -15000;
         int expectedProfit = 5000;
-        profitTable.recodeProfit(winPlayer, winProfit);
-        profitTable.recodeProfit(defeatPlayer, defeatProfit);
+        profitTable.recordProfit(winPlayer, winProfit);
+        profitTable.recordProfit(defeatPlayer, defeatProfit);
 
         int dealerProfit = profitTable.dealerCalculateProfit();
 
