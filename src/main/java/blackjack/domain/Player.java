@@ -10,12 +10,12 @@ public class Player extends Participant {
     }
 
     @Override
-    public int calculateFinalProfit(Participant dealer) {
+    public long calculateFinalProfit(Participant dealer) {
         if (isBlackjack() && dealer.isBlackjack()) {
             return money.getBettingMoney();
         }
         if (isBlackjack()) {
-            return (int) (money.getBettingMoney() * 1.5);
+            return (long) (money.getBettingMoney() * 1.5);
         }
         if (isBust() || dealer.isBlackjack() || (calculateTotalScore() < dealer.calculateTotalScore() && !dealer.isBust())) {
             return -money.getBettingMoney();

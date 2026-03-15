@@ -44,7 +44,7 @@ public abstract class Participant {
         return drawnCards.sumScore();
     }
 
-    public int calculateFinalProfit(Participant dealer) {
+    public long calculateFinalProfit(Participant dealer) {
         return 0;
     }
 

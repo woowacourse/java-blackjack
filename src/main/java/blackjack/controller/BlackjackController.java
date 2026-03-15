@@ -43,7 +43,7 @@ public class BlackjackController {
         List<Participant> players = new ArrayList<>();
         for (String playerName : playerNames) {
             String amountStr = InputView.askPlayerBettingAmount(playerName);
-            int amount = InputParser.convertNumber(amountStr);
+            long amount = InputParser.convertNumber(amountStr);
             players.add(Participant.createPlayer(playerName, new Money(amount)));
         }
         return players;
@@ -105,14 +105,14 @@ public class BlackjackController {
     }
 
     public void calculateFinalGameProfit(List<Participant> players, Participant dealer) {
-        HashMap<String, Integer> playersProfit = new HashMap<>();
-        int totalPlayerProfit = 0;
+        HashMap<String, Long> playersProfit = new HashMap<>();
+        long totalPlayerProfit = 0;
         for (Participant player : players) {
-            int profit = player.calculateFinalProfit(dealer);
+            long profit = player.calculateFinalProfit(dealer);
             playersProfit.put(player.getName(), profit);
             totalPlayerProfit += profit;
         }
-        int dealerProfit = -totalPlayerProfit;
+        long dealerProfit = -totalPlayerProfit;
         OutputView.printFinalProfit(dealerProfit, playersProfit);
     }
 }

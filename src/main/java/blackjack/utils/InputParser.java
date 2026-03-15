@@ -15,9 +15,9 @@ public class InputParser {
                 .toList();
     }
 
-    public static int convertNumber(String input) {
+    public static long convertNumber(String input) {
         try {
-            return Integer.parseInt(input);
+            return Long.parseLong(input);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("[ERROR] 숫자 이외의 값은 입력할 수 없습니다.");
         }
