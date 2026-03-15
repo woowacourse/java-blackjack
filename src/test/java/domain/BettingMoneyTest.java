@@ -6,27 +6,27 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-public class BattingMoneyTest {
+public class BettingMoneyTest {
 
     @ParameterizedTest
-    @ValueSource(ints = {1000, 200000, 1000000})
-    public void 정상_범위의_배팅금액_은_생성된다(int money) {
+    @ValueSource(longs = {1000, 200000, 1000000, Long.MAX_VALUE})
+    public void 정상_범위의_배팅금액_은_생성된다(long money) {
         // when & then
-        Assertions.assertDoesNotThrow(() -> new BattingMoney(money));
+        Assertions.assertDoesNotThrow(() -> new BettingMoney(money));
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {-10, 0, 2000000000})
-    public void 범위를_벗어난_금액은_예외가_발생한다(int money) {
+    @ValueSource(longs = {-10, -1, Long.MIN_VALUE})
+    public void 범위를_벗어난_금액은_예외가_발생한다(long money) {
         // when & then
         Assertions.assertThrows(IllegalArgumentException.class,
-                () -> new BattingMoney(money));
+                () -> new BettingMoney(money));
     }
 
     @Test
     public void 생성된_배팅금액_은_변경되지_않는다() throws Exception {
         // given
-        Class<BattingMoney> battingMoneyClass = (Class<BattingMoney>) Class.forName("domain.BattingMoney");
+        Class<BettingMoney> battingMoneyClass = (Class<BettingMoney>) Class.forName("domain.BettingMoney");
         Field recordMoney = battingMoneyClass.getDeclaredField("money");
         // when & then
         Assertions.assertThrows(IllegalAccessException.class, () -> recordMoney.set("money", 30000));
@@ -35,9 +35,9 @@ public class BattingMoneyTest {
     @Test
     public void 배팅금액이_같은_경우_동일하게_취급된다() {
         // given
-        BattingMoney battingMoney1 = new BattingMoney(1000);
-        BattingMoney battingMoney2 = new BattingMoney(1000);
+        BettingMoney bettingMoney1 = new BettingMoney(1000);
+        BettingMoney bettingMoney2 = new BettingMoney(1000);
         // when & then
-        Assertions.assertEquals(battingMoney1, battingMoney2);
+        Assertions.assertEquals(bettingMoney1, bettingMoney2);
     }
 }
