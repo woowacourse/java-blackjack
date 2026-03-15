@@ -14,14 +14,6 @@ public class Member {
         this.hand = new Hand();
     }
 
-    public int handValue() {
-        return hand.calculateTotalValue();
-    }
-
-    public List<Card> handCards() {
-        return hand.getCards();
-    }
-
     public void receiveCard(Card card) {
         hand.appendCard(card);
     }
@@ -37,6 +29,14 @@ public class Member {
     public void initDraw(Deck deck) {
         receiveCard(deck.draw());
         receiveCard(deck.draw());
+    }
+
+    public int handValue() {
+        return hand.calculateTotalValue();
+    }
+
+    public List<Card> handCards() {
+        return hand.getCards();
     }
 
     public String getName() {
