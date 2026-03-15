@@ -1,11 +1,12 @@
 package domain.bet;
 
+import constant.PolicyConstant;
 import exception.ErrorMessage;
 
 public record Money(
     int value
 ) {
-    
+
     public static Money from(String input) {
         validate(input);
         return new Money(Integer.parseInt(input));
@@ -30,13 +31,13 @@ public record Money(
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException(ErrorMessage.MONEY_OUT_OF_RANGE.getMessage());
         }
-        if (!(0 < money && money <= 100_000_000)) {
+        if (!(PolicyConstant.MONEY_MIN_VALUE <= money && money <= PolicyConstant.MONEY_MAX_VALUE)) {
             throw new IllegalArgumentException(ErrorMessage.MONEY_OUT_OF_RANGE.getMessage());
         }
     }
 
     private static void validateMoneyUnit(int money) {
-        if (money % 10 != 0) {
+        if (money % PolicyConstant.MONEY_UNIT != 0) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_MONEY_UNIT.getMessage());
         }
     }
