@@ -19,6 +19,12 @@ public class Results {
         return results.get(player);
     }
 
+    public int countResult(Result target) {
+        return (int) results.values().stream()
+                .filter(result -> result == target)
+                .count();
+    }
+
     public Map<Player, Result> getResults() {
         return Collections.unmodifiableMap(results);
     }
