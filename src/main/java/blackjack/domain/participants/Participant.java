@@ -1,11 +1,11 @@
 package blackjack.domain.participants;
 
+import blackjack.domain.card.Card;
 import blackjack.domain.card.Hand;
 import blackjack.domain.game.Score;
-import blackjack.domain.card.Card;
 import java.util.List;
 
-public abstract class Participant {
+abstract class Participant {
     private final Name name;
     private final Hand hand;
 

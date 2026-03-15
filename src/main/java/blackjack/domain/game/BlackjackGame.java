@@ -23,13 +23,12 @@ public class BlackjackGame {
     }
 
     public static BlackjackGame create(
-        CardsGenerator cardsGenerator, GameReferee referee, String playerNames) {
-
+        CardsGenerator cardsGenerator, GameReferee referee, PlayerGroup playerGroup) {
         return new BlackjackGame(
             Deck.create(cardsGenerator),
             Dealer.create(),
             referee,
-            PlayerGroup.from(playerNames));
+            playerGroup);
     }
 
     public List<Player> getPlayers() {

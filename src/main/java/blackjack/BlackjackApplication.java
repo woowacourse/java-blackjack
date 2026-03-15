@@ -1,10 +1,13 @@
 package blackjack;
 
-import blackjack.domain.game.BlackjackGame;
+import blackjack.domain.card.Hand;
 import blackjack.domain.card.ShuffledCardsGenerator;
-import blackjack.domain.participants.Player;
+import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.BlackjackGameReferee;
 import blackjack.domain.game.GameResult;
+import blackjack.domain.participants.Player;
+import blackjack.domain.participants.PlayerGroup;
+import blackjack.domain.participants.PlayerNames;
 import blackjack.dto.DealerHitDto;
 import blackjack.dto.GameResultDtos;
 import blackjack.dto.InitialDealDtos;
@@ -13,10 +16,26 @@ import blackjack.dto.ParticipantScoreDtos;
 import blackjack.view.BlackjackView;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackjackApplication {
+    public static void main(String[] args) {
+        BlackjackView view = new BlackjackView(new InputView(), new OutputView());
+        PlayerNames playerNames = PlayerNames.from(view.readPlayers());
+        List<Player> players = playerNames.names().stream()
+            .map(name -> new Player(name, new Hand()))
+            .toList();
+
+        BlackjackGame game = BlackjackGame.create(
+            new ShuffledCardsGenerator(),
+            new BlackjackGameReferee(),
+            new PlayerGroup(players)
+        );
+        new BlackjackApplication(view, game).run();
+    }
+
     private final BlackjackView view;
     private final BlackjackGame game;
 
@@ -73,16 +92,5 @@ public class BlackjackApplication {
                 player -> player,
                 game::judge
             ));
-    }
-
-    public static void main(String[] args) {
-        BlackjackView view = new BlackjackView(new InputView(), new OutputView());
-        BlackjackGame game = BlackjackGame.create(
-            new ShuffledCardsGenerator(),
-            new BlackjackGameReferee(),
-            view.readPlayers()
-        );
-
-        new BlackjackApplication(view, game).run();
     }
 }

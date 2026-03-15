@@ -4,10 +4,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardsGenerator;
+import blackjack.domain.card.Hand;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
 import blackjack.domain.participants.Dealer;
+import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Player;
+import blackjack.domain.participants.PlayerGroup;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +25,8 @@ class BlackjackGameTest {
         new Card(Rank.TEN, Suit.SPADE));
     private final GameReferee referee = new BlackjackGameReferee();
     private final BlackjackGame game = BlackjackGame.create(
-        cardsGenerator, referee, "pobi");
+        cardsGenerator, referee,
+        new PlayerGroup(List.of(new Player(new Name("pobi"), new Hand()))));
 
     @Test
     void 초기_카드를_딜러와_플레이어들에게_2장씩_분배한다() {
