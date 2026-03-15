@@ -29,12 +29,16 @@ public class Hand {
         return new Score(score);
     }
 
-    public Card getFirstCard() {
-        return cards.getFirst();
-    }
-
     public List<Card> getCards() {
         return List.copyOf(cards);
+    }
+
+    public boolean isBust() {
+        return calculateScore().isBust();
+    }
+
+    public boolean isBlackjack() {
+        return cards.size() == 2 && calculateScore().value() == BUST_THRESHOLD;
     }
 
     private int calculateAcePoint(int currentScore) {

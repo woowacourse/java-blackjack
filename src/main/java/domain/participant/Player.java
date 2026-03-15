@@ -1,14 +1,15 @@
 package domain.participant;
 
+import domain.state.Hit;
+
 public class Player extends Participant {
-    private final static int BUST_THRESHOLD = 21;
 
     public Player(Name name) {
-        super(name);
+        super(name, new Hit(new Hand()));
     }
 
     @Override
     public boolean canReceive() {
-        return getScore().value() <= BUST_THRESHOLD;
+        return !isFinished();
     }
 }

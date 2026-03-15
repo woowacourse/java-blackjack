@@ -1,5 +1,8 @@
-package domain.participant;
+package util;
 
+import domain.participant.Name;
+import domain.participant.Player;
+import domain.participant.Players;
 import java.util.Arrays;
 import java.util.List;
 

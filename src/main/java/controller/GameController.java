@@ -1,16 +1,22 @@
 package controller;
 
-import domain.HitCommand;
+import domain.Bet;
+import domain.BettingBoard;
+import domain.state.Started;
+import domain.state.State;
+import util.BettingParser;
 import domain.Deck;
 import domain.GameManager;
-import domain.dto.GameResultResponse;
+import domain.HitCommand;
+import domain.Profits;
+import domain.Referee;
 import domain.dto.ParticipantCardsResponse;
 import domain.dto.ParticipantResultResponse;
-import domain.Referee;
+import domain.dto.ProfitsResultResponse;
 import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;
-import domain.participant.PlayerParser;
+import util.PlayerParser;
 import domain.participant.Players;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,10 +36,17 @@ public class GameController {
     public void run() {
         Participants participants = new Participants(getPlayers(), new Dealer());
         GameManager gameManager = getManager();
+        BettingBoard bettingBoard = new BettingBoard();
+
+        for (Player player : participants.getPlayers()) {
+            Bet bet = BettingParser.parse(inputView.readBettingAmount(player.getName()));
+            bettingBoard.addBetting(player, bet);
+            outputView.printNewLine();
+        }
 
         initializeGame(gameManager, participants);
         playGame(gameManager, participants);
-        determineGame(participants);
+        determineGame(participants, bettingBoard);
     }
 
     private void initializeGame(GameManager gameManager, Participants participants) {
@@ -58,6 +71,9 @@ public class GameController {
             gameManager.dealCard(player);
             outputView.printParticipantCard(new ParticipantCardsResponse(player.getName(), player.getCards()));
         }
+        if (player.canReceive()) {
+            player.stay();
+        }
     }
 
     private boolean wantsToHit(Player player) {
@@ -73,14 +89,17 @@ public class GameController {
             gameManager.dealCard(dealer);
             outputView.printCompleteDealerTurn();
         }
+        if (dealer.canReceive()) {
+            dealer.stay();
+        }
 
         outputView.printDealerTurn(createResultResponses(dealer, players));
     }
 
-    private void determineGame(Participants participants) {
+    private void determineGame(Participants participants, BettingBoard bettingBoard) {
         Referee referee = new Referee();
-        GameResultResponse response = referee.evaluateMatch(participants);
-        outputView.printGameResult(response);
+        Profits profits = referee.calculateProfits(participants, bettingBoard);
+        outputView.printProfitsResult(ProfitsResultResponse.from(profits));
     }
 
     private List<ParticipantCardsResponse> createInitialResponses(Participants participants) {
