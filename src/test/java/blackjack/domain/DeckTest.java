@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 class DeckTest {
     private Deck emptyDeck(){
-        Deck deck = Deck.of(new ArrayList<>(TrumpCard.CARDS));
+        Deck deck = Deck.of(new ArrayList<>(TrumpCard.ALL_CARD));
         for (int i = 0; i < 52; i++) {
             deck.deal();
         }
@@ -28,7 +28,7 @@ class DeckTest {
 
     @Test
     void 전체_카드_수가_52장보다_많으면_예외_발생한다() {
-        List<TrumpCard> cards = new ArrayList<>(TrumpCard.CARDS);
+        List<TrumpCard> cards = new ArrayList<>(TrumpCard.ALL_CARD);
         cards.add(TrumpCard.of(Suit.SPADE, Rank.ACE));
 
         assertThatThrownBy(() -> Deck.of(cards))
@@ -38,7 +38,7 @@ class DeckTest {
 
     @Test
     void 중복된_카드가_존재하면_예외_발생한다() {
-        List<TrumpCard> cards = new ArrayList<>(TrumpCard.CARDS);
+        List<TrumpCard> cards = new ArrayList<>(TrumpCard.ALL_CARD);
         cards.removeFirst();
         cards.add(TrumpCard.of(Suit.CLOVER, Rank.KING));
 
@@ -58,7 +58,7 @@ class DeckTest {
 
     @Test
     void 카드를_지급하면_전체_카드_수가_줄어든다() {
-        Deck deck = Deck.of(new ArrayList<>(TrumpCard.CARDS));
+        Deck deck = Deck.of(new ArrayList<>(TrumpCard.ALL_CARD));
 
         deck.deal();
 
