@@ -36,18 +36,13 @@ public class BlackJackController {
     }
 
     private void drawPlayerTurn(Player player, Cards cards) {
-        while (!player.isDrawFinished()) {
-            drawEachPlayers(player, cards);
-        }
-    }
-
-    private void drawEachPlayers(Player player, Cards cards) {
-        final boolean hit = inputView.askHitOrStand(player);
-        if (hit) {
+        while (player.canHit()) {
+            final boolean hit = inputView.askHitOrStand(player);
+            if (!hit) {
+                break;
+            }
             hit(player, cards);
-            return;
         }
-        player.stand();
     }
 
     private void hit(Player player, Cards cards) {
@@ -57,14 +52,14 @@ public class BlackJackController {
     }
 
     private void printPlayerBustIfNeeded(Player player) {
-        if (player.getHandState().isBust()) {
+        if (player.checkBust()) {
             resultView.printPlayerBust(player.getName());
         }
     }
 
     private void drawDealerTurn(Dealer dealer, Cards cards) {
         resultView.printLineBreak();
-        while (dealer.getScore().isDealerDraw()) {
+        while (dealer.shouldDrawCard()) {
             dealer.drawCard(cards);
             resultView.printDealerDrawMessage();
         }
