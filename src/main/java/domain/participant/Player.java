@@ -1,5 +1,7 @@
 package domain.participant;
 
+import static exception.ErrorMessage.PLAYER_NAME_IS_EMPTY;
+
 import domain.Money;
 import domain.card.Card;
 import java.util.List;
@@ -17,7 +19,7 @@ public class Player extends Participant {
 
     private void validateEmptyNames(String playerName) {
         if (playerName.isBlank()) {
-            throw new IllegalArgumentException("[ERROR] 플레이어의 이름은 빈 값이 아니여야 합니다.");
+            throw new IllegalArgumentException(PLAYER_NAME_IS_EMPTY.getMessage());
         }
     }
 

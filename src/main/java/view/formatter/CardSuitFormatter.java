@@ -1,5 +1,7 @@
 package view.formatter;
 
+import static exception.ErrorMessage.CARD_SUIT_NOT_EXIST;
+
 import domain.card.CardSuit;
 
 public enum CardSuitFormatter {
@@ -23,6 +25,6 @@ public enum CardSuitFormatter {
                 return cardSuitFormatter.printMessage;
             }
         }
-        throw new IllegalStateException("[ERROR] 존재하지 않는 카드 문양입니다.");
+        throw new IllegalStateException(CARD_SUIT_NOT_EXIST.getMessage());
     }
 }

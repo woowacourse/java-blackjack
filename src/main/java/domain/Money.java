@@ -1,5 +1,7 @@
 package domain;
 
+import static exception.ErrorMessage.MONEY_INVALID_RANGE;
+
 public class Money {
     private static final int MINIMUM_BET_AMOUNT = 1_000;
     private static final int MAXIMUM_BET_AMOUNT = 300_000;
@@ -13,7 +15,7 @@ public class Money {
 
     private void validateRange(int betAmount) {
         if (betAmount < MINIMUM_BET_AMOUNT || betAmount > MAXIMUM_BET_AMOUNT) {
-            throw new IllegalArgumentException("[ERROR] 배팅 금액은 1,000원 이상 300,000원 이하로 입력해주세요.");
+            throw new IllegalArgumentException(MONEY_INVALID_RANGE.getMessage());
         }
     }
 

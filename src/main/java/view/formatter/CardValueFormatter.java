@@ -1,5 +1,7 @@
 package view.formatter;
 
+import static exception.ErrorMessage.CARD_VALUE_NOT_EXIST;
+
 import domain.card.CardValue;
 
 public enum CardValueFormatter {
@@ -32,6 +34,6 @@ public enum CardValueFormatter {
                 return cardValueFormatter.printMessage;
             }
         }
-        throw new IllegalStateException("[ERROR] 존재하지 않는 카드 점수입니다.");
+        throw new IllegalStateException(CARD_VALUE_NOT_EXIST.getMessage());
     }
 }
