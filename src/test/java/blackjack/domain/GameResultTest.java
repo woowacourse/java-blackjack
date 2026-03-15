@@ -2,7 +2,9 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.math.BigDecimal;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class GameResultTest {
@@ -15,56 +17,43 @@ class GameResultTest {
     }
 
     @Test
-    void 유저_승리_결과_저장_및_확인() {
+    @DisplayName("플레이어 수익 추가 후 딜러 수익은 반대 부호로 반환")
+    void getDealerProfit() {
         // given
-        gameResult.add("흑곰", true);
-
-        // when & then
-        assertThat(gameResult.isUserWin("흑곰")).isTrue();
-    }
-
-    @Test
-    void 유저_패배_결과_저장_및_확인() {
-        // given
-        gameResult.add("흑곰", false);
-
-        // when & then
-        assertThat(gameResult.isUserWin("흑곰")).isFalse();
-    }
-
-    @Test
-    void 딜러_승리_횟수_계산() {
-        // given
-        gameResult.add("흑곰", false);
-        gameResult.add("밀란", false);
-        gameResult.add("로치", true);
-
-        // when & then
-        assertThat(gameResult.getDealerWinCount()).isEqualTo(2);
-    }
-
-    @Test
-    void 유저_승리_횟수_계산() {
-        // given
-        gameResult.add("흑곰", true);
-        gameResult.add("밀란", true);
-        gameResult.add("로치", false);
-
-        // when & then
-        assertThat(gameResult.getUserWinCount()).isEqualTo(2);
-    }
-
-    @Test
-    void 승리_횟수와_패배_횟수의_합은_총_유저_수() {
-        // given
-        gameResult.add("흑곰", true);
-        gameResult.add("밀란", false);
-        gameResult.add("로치", false);
+        gameResult.add("흑곰", new BigDecimal("1000"));
 
         // when
-        int total = gameResult.getDealerWinCount() + gameResult.getUserWinCount();
+        BigDecimal dealerProfit = gameResult.getDealerProfit();
 
         // then
-        assertThat(total).isEqualTo(3);
+        assertThat(dealerProfit).isEqualByComparingTo(new BigDecimal("-1000"));
+    }
+
+    @Test
+    @DisplayName("여러 플레이어 수익 합산의 반대 부호가 딜러 수익")
+    void getDealerProfitWithMultiplePlayers() {
+        // given
+        gameResult.add("흑곰", new BigDecimal("1000"));
+        gameResult.add("밀란", new BigDecimal("-500"));
+
+        // when
+        BigDecimal dealerProfit = gameResult.getDealerProfit();
+
+        // then
+        assertThat(dealerProfit).isEqualByComparingTo(new BigDecimal("-500"));
+    }
+
+    @Test
+    @DisplayName("플레이어 수익이 모두 0이면 딜러 수익도 0")
+    void getDealerProfitWhenDraw() {
+        // given
+        gameResult.add("흑곰", BigDecimal.ZERO);
+        gameResult.add("밀란", BigDecimal.ZERO);
+
+        // when
+        BigDecimal dealerProfit = gameResult.getDealerProfit();
+
+        // then
+        assertThat(dealerProfit).isEqualByComparingTo(BigDecimal.ZERO);
     }
 }

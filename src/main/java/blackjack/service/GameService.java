@@ -1,10 +1,12 @@
 package blackjack.service;
 
-import blackjack.domain.Dealer;
-import blackjack.domain.Deck;
+import blackjack.domain.GameResultStatus;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.deck.Deck;
 import blackjack.domain.GameResult;
-import blackjack.domain.User;
-import blackjack.domain.Users;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.User;
+import blackjack.domain.participant.Users;
 
 public class GameService {
 
@@ -19,31 +21,50 @@ public class GameService {
     public void settingCards(Users users, Dealer dealer) {
         deck.shuffle();
         for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
-            distributeOneCard(users, dealer);
+            distributeCard(users, dealer);
         }
     }
 
-    private void distributeOneCard(Users users, Dealer dealer) {
-        users.forEach(user -> user.bring(deck.bringTopCard()));
-        dealer.bring(deck.bringTopCard());
+    private void distributeCard(Users users, Dealer dealer) {
+        users.forEach(user -> user.add(deck.bringTopCard()));
+        dealer.add(deck.bringTopCard());
     }
 
-    public void getMoreCard(User user) {
-        user.bring(deck.bringTopCard());
-    }
-
-    public boolean isDealerWinning(User user, Dealer dealer) {
-        if (user.isBurst()) {
-            return true;
-        }
-        if (dealer.isBurst()) {
-            return false;
-        }
-        return user.calculateCardsValue() < dealer.calculateCardsValue();
+    public void getMoreCard(Participant participant) {
+        participant.add(deck.bringTopCard());
     }
 
     public void applyGameResult(User user, Dealer dealer, GameResult gameResult) {
-        boolean isUserWin = !isDealerWinning(user, dealer);
-        gameResult.add(user.getName(), isUserWin);
+        GameResultStatus resultType = determineResult(user, dealer);
+        gameResult.add(user.getName(), resultType.calculateProfit(user.getBettingAmount()));
+    }
+
+    public GameResultStatus determineResult(User user, Dealer dealer) {
+        if (user.isBurst()) {
+            return GameResultStatus.LOSE;
+        }
+        if (user.isBlackjack() && dealer.isBlackjack()) {
+            return GameResultStatus.DRAW;
+        }
+        if (user.isBlackjack()) {
+            return GameResultStatus.BLACKJACK_WIN;
+        }
+        if (dealer.isBlackjack()) {
+            return GameResultStatus.LOSE;
+        }
+        if (dealer.isBurst()) {
+            return GameResultStatus.WIN;
+        }
+        return compareScore(user, dealer);
+    }
+
+    private GameResultStatus compareScore(User user, Dealer dealer) {
+        if (user.calculateCardsValue() > dealer.calculateCardsValue()) {
+            return GameResultStatus.WIN;
+        }
+        if (user.calculateCardsValue() == dealer.calculateCardsValue()) {
+            return GameResultStatus.DRAW;
+        }
+        return GameResultStatus.LOSE;
     }
 }

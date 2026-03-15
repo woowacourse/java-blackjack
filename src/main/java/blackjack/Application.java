@@ -1,7 +1,7 @@
 package blackjack;
 
 import blackjack.controller.BlackjackController;
-import blackjack.domain.Deck;
+import blackjack.domain.deck.Deck;
 import blackjack.service.GameService;
 import blackjack.view.InputView;
 
@@ -11,5 +11,4 @@ public class Application {
         BlackjackController controller = new BlackjackController(new GameService(new Deck()), new InputView());
         controller.run();
     }
-
 }

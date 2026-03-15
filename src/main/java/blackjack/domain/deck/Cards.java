@@ -1,9 +1,11 @@
-package blackjack.domain;
+package blackjack.domain.deck;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
+
+    private static final int BLACKJACK_NUMBER = 21;
 
     private final List<Card> cards;
 
@@ -21,6 +23,10 @@ public class Cards {
                 .toList();
     }
 
+    public int getCardsSize() {
+        return cards.size();
+    }
+
     public String getFirstName() {
         return cards.getFirst().getName();
     }
@@ -34,7 +40,7 @@ public class Cards {
     }
 
     private int applyBestAceValue(int sum) {
-        if (hasAce() && (sum + 10) <= 21) {
+        if (hasAce() && (sum + 10) <= BLACKJACK_NUMBER) {
             return sum + 10;
         }
 

@@ -2,17 +2,17 @@ package blackjack.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.Card;
-import blackjack.domain.CardShape;
-import blackjack.domain.CardValue;
-import blackjack.domain.Dealer;
-import blackjack.domain.Deck;
-import blackjack.domain.GameResult;
-import blackjack.domain.User;
-import blackjack.domain.Users;
-import java.util.HashMap;
+import blackjack.domain.BettingAmount;
+import blackjack.domain.GameResultStatus;
+import blackjack.domain.deck.Card;
+import blackjack.domain.deck.CardShape;
+import blackjack.domain.deck.CardValue;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.deck.Deck;
+import blackjack.domain.participant.User;
+import blackjack.domain.participant.Users;
+import java.math.BigDecimal;
 import java.util.List;
-import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,7 +30,7 @@ class GameServiceTest {
     @DisplayName("게임 시작 세팅 테스트")
     void gameSetting() {
         // given
-        User user = new User("흑곰");
+        User user = new User("흑곰", new BettingAmount(new BigDecimal("10000")));
         Dealer dealer = new Dealer();
         Users users = new Users(List.of(user));
 
@@ -42,36 +42,146 @@ class GameServiceTest {
     }
 
     @Test
-    @DisplayName("딜러 및 유저 승리 횟수 할당")
-    void applyWinningCount() {
+    @DisplayName("플레이어 버스트 시 LOSE 반환")
+    void playerBurst() {
         // given
-        User user = new User("흑곰");
+        User user = new User("흑곰", new BettingAmount(new BigDecimal("10000")));
         Dealer dealer = new Dealer();
-        GameResult gameResult = new GameResult();
-        user.bring(new Card(CardValue.SEVEN, CardShape.DIAMOND));
-        dealer.bring(new Card(CardValue.EIGHT, CardShape.DIAMOND));
+        user.add(new Card(CardValue.TEN, CardShape.DIAMOND));
+        user.add(new Card(CardValue.TEN, CardShape.HEART));
+        user.add(new Card(CardValue.TEN, CardShape.CLOVER));
 
         // when
-        gameService.applyGameResult(user, dealer, gameResult);
+        GameResultStatus result = gameService.determineResult(user, dealer);
 
         // then
-        assertThat(gameResult.isUserWin("흑곰")).isFalse();
+        assertThat(result).isEqualTo(GameResultStatus.LOSE);
     }
 
-
     @Test
-    @DisplayName("승패 판단 테스트")
-    void winningJudge() {
+    @DisplayName("플레이어와 딜러 모두 블랙잭 시 DRAW 반환")
+    void bothBlackjack() {
         // given
-        User user = new User("흑곰");
+        User user = new User("흑곰", new BettingAmount(new BigDecimal("10000")));
         Dealer dealer = new Dealer();
-        user.bring(new Card(CardValue.SEVEN, CardShape.DIAMOND));
-        dealer.bring(new Card(CardValue.EIGHT, CardShape.DIAMOND));
+        user.add(new Card(CardValue.ACE, CardShape.DIAMOND));
+        user.add(new Card(CardValue.TEN, CardShape.DIAMOND));
+        dealer.add(new Card(CardValue.ACE, CardShape.HEART));
+        dealer.add(new Card(CardValue.TEN, CardShape.HEART));
 
         // when
-        boolean isDealerWinning = gameService.isDealerWinning(user, dealer);
+        GameResultStatus result = gameService.determineResult(user, dealer);
 
         // then
-        assertThat(isDealerWinning).isTrue();
+        assertThat(result).isEqualTo(GameResultStatus.DRAW);
+    }
+
+    @Test
+    @DisplayName("플레이어만 블랙잭 시 BLACKJACK_WIN 반환")
+    void playerOnlyBlackjack() {
+        // given
+        User user = new User("흑곰", new BettingAmount(new BigDecimal("10000")));
+        Dealer dealer = new Dealer();
+        user.add(new Card(CardValue.ACE, CardShape.DIAMOND));
+        user.add(new Card(CardValue.TEN, CardShape.DIAMOND));
+        dealer.add(new Card(CardValue.EIGHT, CardShape.HEART));
+        dealer.add(new Card(CardValue.NINE, CardShape.HEART));
+
+        // when
+        GameResultStatus result = gameService.determineResult(user, dealer);
+
+        // then
+        assertThat(result).isEqualTo(GameResultStatus.BLACKJACK_WIN);
+    }
+
+    @Test
+    @DisplayName("딜러만 블랙잭 시 LOSE 반환")
+    void dealerOnlyBlackjack() {
+        // given
+        User user = new User("흑곰", new BettingAmount(new BigDecimal("10000")));
+        Dealer dealer = new Dealer();
+        user.add(new Card(CardValue.EIGHT, CardShape.DIAMOND));
+        user.add(new Card(CardValue.NINE, CardShape.DIAMOND));
+        dealer.add(new Card(CardValue.ACE, CardShape.HEART));
+        dealer.add(new Card(CardValue.TEN, CardShape.HEART));
+
+        // when
+        GameResultStatus result = gameService.determineResult(user, dealer);
+
+        // then
+        assertThat(result).isEqualTo(GameResultStatus.LOSE);
+    }
+
+    @Test
+    @DisplayName("딜러 버스트 시 WIN 반환")
+    void dealerBurst() {
+        // given
+        User user = new User("흑곰", new BettingAmount(new BigDecimal("10000")));
+        Dealer dealer = new Dealer();
+        user.add(new Card(CardValue.EIGHT, CardShape.DIAMOND));
+        user.add(new Card(CardValue.NINE, CardShape.DIAMOND));
+        dealer.add(new Card(CardValue.TEN, CardShape.HEART));
+        dealer.add(new Card(CardValue.TEN, CardShape.CLOVER));
+        dealer.add(new Card(CardValue.TEN, CardShape.DIAMOND));
+
+        // when
+        GameResultStatus result = gameService.determineResult(user, dealer);
+
+        // then
+        assertThat(result).isEqualTo(GameResultStatus.WIN);
+    }
+
+    @Test
+    @DisplayName("플레이어 점수가 딜러보다 높으면 WIN 반환")
+    void playerScoreHigher() {
+        // given
+        User user = new User("흑곰", new BettingAmount(new BigDecimal("10000")));
+        Dealer dealer = new Dealer();
+        user.add(new Card(CardValue.TEN, CardShape.DIAMOND));
+        user.add(new Card(CardValue.NINE, CardShape.DIAMOND));
+        dealer.add(new Card(CardValue.TEN, CardShape.HEART));
+        dealer.add(new Card(CardValue.EIGHT, CardShape.HEART));
+
+        // when
+        GameResultStatus result = gameService.determineResult(user, dealer);
+
+        // then
+        assertThat(result).isEqualTo(GameResultStatus.WIN);
+    }
+
+    @Test
+    @DisplayName("플레이어와 딜러 점수가 같으면 DRAW 반환")
+    void sameScore() {
+        // given
+        User user = new User("흑곰", new BettingAmount(new BigDecimal("10000")));
+        Dealer dealer = new Dealer();
+        user.add(new Card(CardValue.TEN, CardShape.DIAMOND));
+        user.add(new Card(CardValue.EIGHT, CardShape.DIAMOND));
+        dealer.add(new Card(CardValue.TEN, CardShape.HEART));
+        dealer.add(new Card(CardValue.EIGHT, CardShape.HEART));
+
+        // when
+        GameResultStatus result = gameService.determineResult(user, dealer);
+
+        // then
+        assertThat(result).isEqualTo(GameResultStatus.DRAW);
+    }
+
+    @Test
+    @DisplayName("플레이어 점수가 딜러보다 낮으면 LOSE 반환")
+    void playerScoreLower() {
+        // given
+        User user = new User("흑곰", new BettingAmount(new BigDecimal("10000")));
+        Dealer dealer = new Dealer();
+        user.add(new Card(CardValue.TEN, CardShape.DIAMOND));
+        user.add(new Card(CardValue.SEVEN, CardShape.DIAMOND));
+        dealer.add(new Card(CardValue.TEN, CardShape.HEART));
+        dealer.add(new Card(CardValue.EIGHT, CardShape.HEART));
+
+        // when
+        GameResultStatus result = gameService.determineResult(user, dealer);
+
+        // then
+        assertThat(result).isEqualTo(GameResultStatus.LOSE);
     }
 }

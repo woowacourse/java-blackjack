@@ -1,18 +1,22 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
+import blackjack.domain.deck.Card;
+import blackjack.domain.deck.Cards;
 import java.util.List;
 
-public class User {
+public abstract class Participant {
+
+    private static final int BLACKJACK_NUMBER = 21;
 
     private final UserName name;
     private final Cards cards;
 
-    public User(String name) {
+    public Participant(String name) {
         this.name = new UserName(name);
         this.cards = new Cards();
     }
 
-    public void bring(Card card) {
+    public void add(Card card) {
         cards.add(card);
     }
 
@@ -33,11 +37,11 @@ public class User {
     }
 
     public boolean isBurst() {
-        return calculateCardsValue() > 21;
+        return calculateCardsValue() > BLACKJACK_NUMBER;
     }
 
-    private boolean isBlackjack() {
-        return calculateCardsValue() == 21;
+    public boolean isBlackjack() {
+        return calculateCardsValue() == BLACKJACK_NUMBER && cards.getCardsSize() == 2;
     }
 
     public boolean isFinished() {

@@ -1,16 +1,20 @@
 package blackjack.controller;
 
-import blackjack.domain.Dealer;
+import blackjack.domain.BettingAmount;
+import blackjack.domain.participant.Dealer;
 import blackjack.domain.GameResult;
-import blackjack.domain.User;
-import blackjack.domain.Users;
+import blackjack.domain.participant.User;
+import blackjack.domain.participant.Users;
 import blackjack.service.GameService;
 import blackjack.util.InputParser;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class BlackjackController {
+
+    private static final String GET_MORE_CARD_BUTTON = "y";
 
     private final GameService gameService;
     private final InputView inputView;
@@ -21,27 +25,37 @@ public class BlackjackController {
     }
 
     public void run() {
-        Users users = createUsers();
-        Dealer dealer = new Dealer();
+        try {
+            Users users = createUsers();
+            Dealer dealer = new Dealer();
 
-        gameService.settingCards(users, dealer);
-        printGameSettingResult(users, dealer);
+            gameService.settingCards(users, dealer);
+            printGameSettingResult(users, dealer);
 
-        getMoreCards(users);
-        if (!users.isAllBurst()) {
-            getMoreCardsForDealer(dealer);
+            getMoreCards(users);
+            if (!users.isAllBurst()) {
+                getMoreCardsForDealer(dealer);
+            }
+
+            printGameResult(users, dealer);
+            printWinningResult(users, dealer);
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
         }
-
-        printGameResult(users, dealer);
-        printWinningResult(users, dealer);
     }
 
     private Users createUsers() {
         List<String> userNames = InputParser.parseUser(inputView.readUserName());
         List<User> users = userNames.stream()
-                .map(User::new)
+                .map(name -> new User(name, readBetting(name)))
                 .toList();
         return new Users(users);
+    }
+
+    private BettingAmount readBetting(String name) {
+        String input = inputView.readBettingAmount(name);
+        BigDecimal amount = InputParser.parseBettingAmount(input);
+        return new BettingAmount(amount);
     }
 
     private void printGameSettingResult(Users users, Dealer dealer) {
@@ -50,6 +64,7 @@ public class BlackjackController {
         users.forEach(user ->
                 OutputView.printSettingCardsResult(user.getName(), user.getCardsName())
         );
+        OutputView.printEmptyLine();
     }
 
     private void getMoreCards(Users users) {
@@ -57,23 +72,19 @@ public class BlackjackController {
     }
 
     private void processUserTurn(User user) {
-        boolean drew = drawIfWanted(user);
-        if (!drew) {
-            OutputView.printSettingCardsResult(user.getName(), user.getCardsName());
-        }
+        drawIfWanted(user);
+        OutputView.printSettingCardsResult(user.getName(), user.getCardsName());
     }
 
-    private boolean drawIfWanted(User user) {
-        boolean drew = false;
-        while (!user.isFinished() && "y".equals(inputView.readMoreCard(user.getName()))) {
+    private void drawIfWanted(User user) {
+        while (!user.isFinished() && GET_MORE_CARD_BUTTON.equals(inputView.readMoreCard(user.getName()))) {
             gameService.getMoreCard(user);
             OutputView.printSettingCardsResult(user.getName(), user.getCardsName());
-            drew = true;
         }
-        return drew;
     }
 
     private void getMoreCardsForDealer(Dealer dealer) {
+        OutputView.printEmptyLine();
         while (dealer.shouldDrawCard()) {
             OutputView.printGetMoreCardsForDealer(dealer.getName());
             gameService.getMoreCard(dealer);
@@ -89,6 +100,7 @@ public class BlackjackController {
 
     private void printWinningResult(Users users, Dealer dealer) {
         GameResult gameResult = new GameResult();
+        OutputView.printEmptyLine();
         users.forEach(user ->
                 gameService.applyGameResult(user, dealer, gameResult)
         );

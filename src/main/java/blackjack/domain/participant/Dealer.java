@@ -1,6 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
-public class Dealer extends User {
+public class Dealer extends Participant {
 
     private static final String DEALER_NAME = "딜러";
     private static final int HIT_THRESHOLD = 17;

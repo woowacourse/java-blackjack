@@ -1,38 +1,29 @@
 package blackjack.domain;
 
+import java.math.BigDecimal;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
 public class GameResult {
 
-    private final Map<String, Boolean> result;
+    private final Map<String, BigDecimal> result;
 
     public GameResult() {
         this.result = new LinkedHashMap<>();
     }
 
-    public void add(String userName, boolean isUserWin) {
-        result.put(userName, isUserWin);
+    public void add(String userName, BigDecimal profit) {
+        result.put(userName, profit);
     }
 
-    public boolean isUserWin(String userName) {
-        return result.getOrDefault(userName, false);
+    public BigDecimal getDealerProfit() {
+        return result.values().stream()
+                .reduce(BigDecimal.ZERO, BigDecimal::add)
+                .negate();
     }
 
-    public int getDealerWinCount() {
-        return (int) result.values().stream()
-                .filter(isWin -> !isWin)
-                .count();
-    }
-
-    public int getUserWinCount() {
-        return (int) result.values().stream()
-                .filter(isWin -> isWin)
-                .count();
-    }
-
-    public Set<Map.Entry<String, Boolean>> getEntries() {
+    public Set<Map.Entry<String, BigDecimal>> getEntries() {
         return result.entrySet();
     }
 }

@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 public record UserName(
         String name
@@ -7,12 +7,12 @@ public record UserName(
     private static final int MAX_LENGTH = 5;
 
     public UserName {
-        name = name.strip();
         validate(name);
+        name = name.strip();
     }
 
     private void validate(String name) {
-        if (name.isEmpty()) {
+        if (name.isBlank()) {
             throw new IllegalArgumentException("플레이어 이름은 공백이 될 수 없습니다.");
         }
         if (name.length() > MAX_LENGTH) {

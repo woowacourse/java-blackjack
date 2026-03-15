@@ -1,12 +1,23 @@
 package blackjack.view;
 
 import blackjack.domain.GameResult;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
 public class OutputView {
 
+    private static final String ERROR_MESSAGE_PREFIX = "[ERROR] ";
+
     private OutputView() {
+    }
+
+    public static void printEmptyLine() {
+        System.out.println();
+    }
+
+    public static void printErrorMessage(String errorMessage) {
+        System.out.println(ERROR_MESSAGE_PREFIX + errorMessage);
     }
 
     public static void printGameSettingMessage(String dealerName, List<String> playersName) {
@@ -28,25 +39,18 @@ public class OutputView {
     }
 
     public static void printWinningResult(GameResult gameResult, String dealerName) {
-        System.out.println("## 최종 승패");
+        System.out.println("## 최종 수익");
         printDealerResult(dealerName, gameResult);
         printUsersResult(gameResult);
     }
 
     private static void printDealerResult(String dealerName, GameResult gameResult) {
-        System.out.println(dealerName + ": " + gameResult.getDealerWinCount() + "승 " + gameResult.getUserWinCount() + "패");
+        System.out.println(dealerName + ": " + gameResult.getDealerProfit().stripTrailingZeros().toPlainString());
     }
 
     private static void printUsersResult(GameResult gameResult) {
-        for (Map.Entry<String, Boolean> entry : gameResult.getEntries()) {
-            System.out.println(entry.getKey() + ": " + toWinResult(entry.getValue()));
+        for (Map.Entry<String, BigDecimal> entry : gameResult.getEntries()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue().stripTrailingZeros().toPlainString());
         }
-    }
-
-    private static String toWinResult(boolean isWin) {
-        if (isWin) {
-            return "승";
-        }
-        return "패";
     }
 }
