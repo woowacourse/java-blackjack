@@ -5,10 +5,10 @@ import domain.card.Card;
 import java.math.BigDecimal;
 
 public abstract class Participant {
-    private final ParticipantInfo participantInfo;
-    private final Money bettingMoney;
     private static final int BLACKJACK_SATISFYING_HAND_COUNT = 2;
     private static final int BLACKJACK_SATISFYING_SCORE = 21;
+    private final ParticipantInfo participantInfo;
+    private final Money bettingMoney;
 
     public Participant(ParticipantInfo participantInfo, Money bettingMoney) {
         this.participantInfo = participantInfo;
