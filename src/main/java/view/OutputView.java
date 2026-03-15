@@ -27,9 +27,12 @@ public class OutputView {
     public void printGameResult(GameResult gameResult) {
         printFinalProfitMessage();
 
-        for (ParticipantResultInfo participantResultInfo : gameResult.participantResultInfos()) {
-            System.out.println(participantResultInfo.name() + ": " + participantResultInfo.profit());
+        for (ParticipantResultInfo playerResultInfo : gameResult.playersResultInfos()) {
+            System.out.println(playerResultInfo.name() + ": " + playerResultInfo.profit());
         }
+
+        ParticipantResultInfo dealerResultInfo = gameResult.dealerResultInfo();
+        System.out.println(dealerResultInfo.name() + ": " + dealerResultInfo.profit());
     }
 
     public void printParticipantCards(Participant participant) {

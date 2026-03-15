@@ -11,7 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameResult {
-    private final List<ParticipantResultInfo> participantResultInfos = new ArrayList<>();
+    private final List<ParticipantResultInfo> playersResultInfos = new ArrayList<>();
+    private final ParticipantResultInfo dealerResultInfo;
 
     public GameResult(Players players, Dealer dealer) {
         BigDecimal playersProfitSum = BigDecimal.ZERO;
@@ -19,20 +20,24 @@ public class GameResult {
             BigDecimal profit = calculatePlayerProfit(player, dealer);
             playersProfitSum = playersProfitSum.add(profit);
 
-            participantResultInfos.add(new ParticipantResultInfo(
+            playersResultInfos.add(new ParticipantResultInfo(
                     player.name(), profit
             ));
         }
 
-        participantResultInfos.add(new ParticipantResultInfo(dealer.name(), playersProfitSum.negate()));
+        dealerResultInfo = new ParticipantResultInfo(dealer.name(), playersProfitSum.negate());
     }
 
     public BigDecimal profit(Participant participant) {
         return participantResultInfo(participant).profit();
     }
 
-    public List<ParticipantResultInfo> participantResultInfos() {
-        return participantResultInfos;
+    public List<ParticipantResultInfo> playersResultInfos() {
+        return playersResultInfos;
+    }
+
+    public ParticipantResultInfo dealerResultInfo() {
+        return dealerResultInfo;
     }
 
     private BigDecimal calculatePlayerProfit(Player player, Dealer dealer) {
@@ -55,7 +60,7 @@ public class GameResult {
     }
 
     private ParticipantResultInfo participantResultInfo(Participant participant) {
-        return participantResultInfos.stream()
+        return playersResultInfos.stream()
                 .filter(participantResultInfo -> participantResultInfo.name().equals(participant.name()))
                 .findFirst()
                 .orElseThrow(IllegalStateException::new);
