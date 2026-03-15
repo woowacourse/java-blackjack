@@ -1,55 +1,45 @@
-package domain.participant;
+package domain.money;
 
 import domain.match.MatchResult;
 
+import java.math.BigDecimal;
+
 public class Bet {
 
-    private static final double WIN_WITH_BLACKJACK_PAYOUT_RATIO = 1.5;
-    private static final int WIN_PAYOUT_RATIO = 1;
-    private static final int DRAW_PAYOUT_RATIO = 0;
-    private static final int LOSE_PAYOUT_RATIO = -1;
-
+    private static final int ZERO = 0;
     private static final int MAX_BET_AMOUNT = 100_000_000;
-    private static final int BET_UNIT = 1000;
 
-    private final int amount;
+    private static final BigDecimal WIN_WITH_BLACKJACK_PAYOUT_RATIO = new BigDecimal("1.5");
+    private static final BigDecimal WIN_PAYOUT_RATIO = BigDecimal.ONE;
+    private static final BigDecimal DRAW_PAYOUT_RATIO = BigDecimal.ZERO;
+    private static final BigDecimal LOSE_PAYOUT_RATIO = new BigDecimal("-1");
 
-    public static Bet of(int amount) {
-        return new Bet(amount);
-    }
+    private final Money money;
 
-    private Bet(int amount) {
+    public Bet(int amount) {
         validatePositiveAmount(amount);
-        validateBetUnit(amount);
         validateMaxBetAmount(amount);
-        this.amount = amount;
+        this.money = Money.of(amount);
     }
 
-    public int calculateProfit(MatchResult result, boolean isBlackJack) {
+    public Money calculateProfit(MatchResult result, boolean isBlackJack) {
         if (result == MatchResult.WIN) {
             if (isBlackJack) {
-                return (int) (amount * WIN_WITH_BLACKJACK_PAYOUT_RATIO);
+                return money.multiply(WIN_WITH_BLACKJACK_PAYOUT_RATIO);
             }
-
-            return amount * WIN_PAYOUT_RATIO;
+            return money.multiply(WIN_PAYOUT_RATIO);
         }
 
         if (result == MatchResult.DRAW) {
-            return amount * DRAW_PAYOUT_RATIO;
+            return money.multiply(DRAW_PAYOUT_RATIO);
         }
 
-        return amount * LOSE_PAYOUT_RATIO;
+        return money.multiply(LOSE_PAYOUT_RATIO);
     }
 
     private void validatePositiveAmount(int amount) {
-        if (amount <= 0) {
-            throw new IllegalArgumentException(String.format("잘못된 배팅 금액: %d (배팅 금액은 0보다 커야 합니다.)", amount));
-        }
-    }
-
-    private void validateBetUnit(int amount) {
-        if (amount % BET_UNIT != 0) {
-            throw new IllegalArgumentException(String.format("잘못된 배팅 금액: %d (배팅 금액은 %d원 단위로 입력해야 합니다.)", amount, BET_UNIT));
+        if (amount <= ZERO) {
+            throw new IllegalArgumentException(String.format("잘못된 배팅 금액: %d (배팅 금액은 %d보다 커야 합니다.)", amount, ZERO));
         }
     }
 
@@ -57,5 +47,9 @@ public class Bet {
         if (amount > MAX_BET_AMOUNT) {
             throw new IllegalArgumentException(String.format("잘못된 배팅 금액: %d (배팅 금액은 %d을 초과할 수 없습니다.)", amount, MAX_BET_AMOUNT));
         }
+    }
+
+    public Money getMoney() {
+        return money;
     }
 }

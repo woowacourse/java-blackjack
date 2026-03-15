@@ -1,5 +1,6 @@
 package domain.match;
 
+import domain.money.Money;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
@@ -23,8 +24,8 @@ public class GameResult {
         }
     }
 
-    public Map<Player, Integer> calculatePlayersProfit() {
-        Map<Player, Integer> profit = new LinkedHashMap<>();
+    public Map<Player, Money> calculatePlayersProfit() {
+        Map<Player, Money> profit = new LinkedHashMap<>();
 
         for (Map.Entry<Player, MatchResult> entry : results.entrySet()) {
 
@@ -37,13 +38,13 @@ public class GameResult {
         return profit;
     }
 
-    public int calculateDealerProfit() {
-        int dealerProfit = 0;
+    public Money calculateDealerProfit() {
+        Money playerProfit = Money.zero();
 
-        for (int playerProfit : calculatePlayersProfit().values()) {
-            dealerProfit -= playerProfit;
+        for (Money money : calculatePlayersProfit().values()) {
+            playerProfit = playerProfit.add(money);
         }
 
-        return dealerProfit;
+        return playerProfit.negate();
     }
 }

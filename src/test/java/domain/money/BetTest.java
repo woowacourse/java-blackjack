@@ -1,7 +1,6 @@
-package domain.participant;
+package domain.money;
 
 import domain.match.MatchResult;
-import domain.money.Bet;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,7 +18,7 @@ public class BetTest {
         int amount = 3000;
 
         // when
-        Bet bet = Bet.of(amount);
+        Bet bet = new Bet(amount);
 
         // then
         assertNotNull(bet);
@@ -32,7 +31,7 @@ public class BetTest {
         int amount = 1000;
 
         // when - then
-        assertDoesNotThrow(() -> Bet.of(amount));
+        assertDoesNotThrow(() -> new Bet(amount));
     }
 
     @Test
@@ -42,7 +41,7 @@ public class BetTest {
         int amount = -1000;
 
         // when - then
-        assertThrows(IllegalArgumentException.class, () -> Bet.of(amount));
+        assertThrows(IllegalArgumentException.class, () -> new Bet(amount));
     }
 
     @Test
@@ -52,8 +51,9 @@ public class BetTest {
         int amount = 0;
 
         // when - then
-        assertThrows(IllegalArgumentException.class, () -> Bet.of(amount));
+        assertThrows(IllegalArgumentException.class, () -> new Bet(amount));
     }
+
 
     @Test
     @DisplayName("배팅 금액은 최대 배팅 금액을 초과할 수 없다.")
@@ -62,17 +62,7 @@ public class BetTest {
         int overBetAmount = 1_000_000_000; // MAX_BET_AMOUNT = 1억
 
         // when - then
-        assertThrows(IllegalArgumentException.class, () -> Bet.of(overBetAmount));
-    }
-
-    @Test
-    @DisplayName("배팅 금액은 1000원 단위로 입력해야 한다.")
-    void validateMaxBetUnitTest() {
-        // given
-        int amount = 500;
-
-        // when - then
-        assertThrows(IllegalArgumentException.class, () -> Bet.of(amount));
+        assertThrows(IllegalArgumentException.class, () -> new Bet(overBetAmount));
     }
 
     @ParameterizedTest
@@ -85,12 +75,12 @@ public class BetTest {
     })
     void calculateProfitTest(MatchResult matchResult, boolean isBlackJack, int expectedProfit) {
         // given
-        int amount = 3000;
+        Bet bet = new Bet(3000);
 
         // when
-        Bet bet = Bet.of(amount);
+        Money profit = bet.calculateProfit(matchResult, isBlackJack);
 
         // then
-        Assertions.assertEquals(expectedProfit, bet.calculateProfit(matchResult, isBlackJack));
+        Assertions.assertEquals(Money.of(expectedProfit), profit);
     }
 }

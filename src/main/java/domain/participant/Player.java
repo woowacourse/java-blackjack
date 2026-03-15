@@ -1,34 +1,27 @@
 package domain.participant;
 
 import domain.match.MatchResult;
+import domain.money.Bet;
+import domain.money.Money;
 
 import java.util.Objects;
 
 public class Player extends Participant {
 
-    private static final int MAX_NAME_LENGTH = 8;
-
-    private final String name;
+    private final Name name;
     private final Bet bet;
 
-    public Player(String name, Bet bet) {
-        validateNameLength(name);
+    public Player(Name name, Bet bet) {
         this.name = name;
         this.bet = bet;
     }
 
-    public int applyMatchResultToBet(MatchResult matchResult) {
+    public Money applyMatchResultToBet(MatchResult matchResult) {
         return bet.calculateProfit(matchResult, isBlackJack());
     }
 
-    private void validateNameLength(String name) {
-        if (name.isEmpty() || name.length() > MAX_NAME_LENGTH) {
-            throw new IllegalArgumentException(String.format("잘못된 이름: %s (플레이어 이름은 1자 이상 8자 이하여야 합니다.)", name));
-        }
-    }
-
     public String getName() {
-        return name;
+        return name.getName();
     }
 
     @Override

@@ -139,19 +139,9 @@ class HandTest {
         assertEquals(hand.getCards().size(), 2);
     }
 
-        @Test
-    @DisplayName("Hand에 카드가 없을 때 첫 카드를 확인하려고 하면 예외를 발생한다.")
-    void NULL_예외_처리_첫_카드() {
-        // given
-        Hand hand = new Hand();
-
-        // when - then
-        assertThrows(IllegalStateException.class, hand::getCards);
-    }
-
     @Test
-    @DisplayName("Hand에 카드가 없을 때 전체 카드를 확인하려고 하면 예외를 발생한다.")
-    void NULL_예외_처리_카드_전체() {
+    @DisplayName("Hand에 카드가 없을 때 카드를 확인하려고 하면 예외를 발생한다.")
+    void NULL_예외_처리_카드() {
         // given
         Hand hand = new Hand();
 

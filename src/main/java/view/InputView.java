@@ -3,6 +3,7 @@ package view;
 import view.message.BinaryOptionMessage;
 import view.validator.InputValidator;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 public class InputView {
@@ -48,13 +49,7 @@ public class InputView {
     }
 
     private List<String> splitPlayerNames(String userInput) {
-        List<String> names = Arrays.stream(userInput.split(COMMA_DELIMITER)).toList();
-
-        for (String name : names) {
-            InputValidator.validateNameLength(name);
-        }
-
-        return names;
+        return Arrays.stream(userInput.split(COMMA_DELIMITER)).toList();
     }
 
     private String userInput() {

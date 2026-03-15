@@ -1,10 +1,8 @@
 package controller;
 
 import domain.match.GameResult;
-import domain.participant.Bet;
-import domain.participant.Dealer;
-import domain.participant.Player;
-import domain.participant.Players;
+import domain.money.Bet;
+import domain.participant.*;
 import mapper.DealerMapper;
 import mapper.PlayersMapper;
 import domain.card.CardDistributor;
@@ -12,10 +10,7 @@ import mapper.ProfitResultMapper;
 import view.InputView;
 import view.OutputView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class BlackJackController {
 
@@ -36,7 +31,7 @@ public class BlackJackController {
         playBlackJack(players, dealer);
 
         outputView.showHandResultsOfParticipants(DealerMapper.toDto(dealer), PlayersMapper.toPlayersDto(players));
-        outputView.showProfitResult(ProfitResultMapper.toDto(new GameResult(players, dealer)));
+        outputView.showProfitResult(ProfitResultMapper.toDto(GameResult.of(players, dealer)));
     }
 
     private void playBlackJack(Players players, Dealer dealer) {
@@ -71,28 +66,21 @@ public class BlackJackController {
         outputView.showDealerStandMessage();
     }
 
-    private Players convertAndCreatePlayers(Map<String, Bet> playersInfo) {
-        List<Player> players = new ArrayList<>();
-
-        for (Map.Entry<String, Bet> playerInfo : playersInfo.entrySet()) {
-            Player player = new Player(playerInfo.getKey(), playerInfo.getValue());
-            players.add(player);
-        }
-
-        return new Players(players);
+    private Players createPlayers(List<Player> playersInfo) {
+        return new Players(new ArrayList<>(playersInfo));
     }
 
     private Players readPlayersUntilValid() {
         while (true) {
             try {
-                Map<String, Bet> playersInfo = new HashMap<>();
+                List<Player> playersInfo = new ArrayList<>();
                 List<String> names = inputView.readPlayers();
 
                 for (String name : names) {
-                    playersInfo.put(name, readPlayerBetAmountUntilValid(name));
+                    playersInfo.add(new Player(new Name(name), readPlayerBetAmountUntilValid(name)));
                 }
 
-                return convertAndCreatePlayers(playersInfo);
+                return createPlayers(playersInfo);
             } catch (IllegalArgumentException e) {
                 OutputView.printErrorMessage(e.getMessage());
             }
@@ -102,7 +90,7 @@ public class BlackJackController {
     private Bet readPlayerBetAmountUntilValid(String name) {
         while (true) {
             try {
-                return Bet.of(inputView.readPlayerBetAmount(name));
+                return new Bet(inputView.readPlayerBetAmount(name));
             } catch (IllegalArgumentException e) {
                 OutputView.printErrorMessage(e.getMessage());
             }

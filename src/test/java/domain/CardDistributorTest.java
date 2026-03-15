@@ -1,10 +1,8 @@
 package domain;
 
 import domain.card.CardDistributor;
-import domain.participant.Bet;
-import domain.participant.Dealer;
-import domain.participant.Player;
-import domain.participant.Players;
+import domain.money.Bet;
+import domain.participant.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,7 +15,9 @@ class CardDistributorTest {
     @DisplayName("딜러와 모든 플레이어는 게임 시작 시, 2장의 카드를 받는다.")
     void 게임_시작시_2장_카드() {
         // given
-        Players players = new Players(List.of(new Player("pobi", Bet.of(10000)), new Player("james", Bet.of(10000))));
+        Players players = new Players(List.of(
+                new Player(new Name("pobi"), new Bet(10000)),
+                new Player(new Name("james"), new Bet(10000))));
         Dealer dealer = new Dealer();
         CardDistributor cardDistributor = new CardDistributor();
 
@@ -49,7 +49,7 @@ class CardDistributorTest {
     @DisplayName("플레이어가 카드를 받는다.")
     void dealCardToPlayerTest() {
         // given
-        Player player = new Player("pobi", Bet.of(10000));
+        Player player = new Player(new Name("pobi"), new Bet(10000));
         CardDistributor cardDistributor = new CardDistributor();
 
         // when

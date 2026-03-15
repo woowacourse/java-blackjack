@@ -3,10 +3,9 @@ package domain.match;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
-import domain.participant.Bet;
-import domain.participant.Dealer;
-import domain.participant.Player;
-import domain.participant.Players;
+import domain.money.Bet;
+import domain.money.Money;
+import domain.participant.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,13 +21,13 @@ class GameResultTest {
         // given
         Dealer dealer = new Dealer();
         Players players = new Players(List.of(
-                new Player("pobi", Bet.of(10000)),
-                new Player("james", Bet.of(10000))));
+                new Player(new Name("pobi"), new Bet(10000)),
+                new Player(new Name("james"), new Bet(10000))));
 
-        GameResult gameResult = new GameResult(players, dealer);
+        GameResult gameResult = GameResult.of(players, dealer);
 
         // when
-        Map<Player, Integer> result = gameResult.calculatePlayersProfit();
+        Map<Player, Money> result = gameResult.calculatePlayersProfit();
 
         // then
         Assertions.assertEquals(2, result.size());
@@ -38,10 +37,10 @@ class GameResultTest {
     @DisplayName("플레이어 수익의 총합에 따라 딜러의 수익을 계산한다.")
     void calculateDealerProfit_dealerLoseTest() {
         // given
-        Player winWithBlackJack = new Player("pobi", Bet.of(10000));
-        Player win = new Player("james", Bet.of(10000));
-        Player draw = new Player("lala", Bet.of(10000));
-        Player lose = new Player("jeje", Bet.of(10000));
+        Player winWithBlackJack = new Player(new Name("pobi"), new Bet(10000));
+        Player win = new Player(new Name("james"), new Bet(10000));
+        Player draw = new Player(new Name("lala"), new Bet(10000));
+        Player lose = new Player(new Name("jeje"), new Bet(10000));
 
         winWithBlackJack.receive(new Card(Rank.ACE, Suit.DIAMOND));
         winWithBlackJack.receive(new Card(Rank.JACK, Suit.HEART));
@@ -64,9 +63,9 @@ class GameResultTest {
         Players players = new Players(List.of(winWithBlackJack, win, draw, lose));
 
         // when
-        GameResult gameResult = new GameResult(players, dealer);
+        GameResult gameResult = GameResult.of(players, dealer);
 
         // then
-        Assertions.assertEquals(gameResult.calculateDealerProfit(), -15000);
+        Assertions.assertEquals(gameResult.calculateDealerProfit(), Money.of(-15000));
     }
 }

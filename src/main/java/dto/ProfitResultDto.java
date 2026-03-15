@@ -1,34 +1,36 @@
 package dto;
 
+import domain.money.Money;
 import domain.participant.Player;
 
+import java.math.BigDecimal;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ProfitResultDto {
 
-    private final int dealerProfitResult;
-    private final Map<String, Integer> playersProfitResult;
+    private final BigDecimal dealerProfitResult;
+    private final Map<String, BigDecimal> playersProfitResult;
 
-    public ProfitResultDto(int dealerProfitResult, Map<Player, Integer> playersProfitResult) {
-        this.dealerProfitResult = dealerProfitResult;
+    public ProfitResultDto(Money dealerProfitResult, Map<Player, Money> playersProfitResult) {
+        this.dealerProfitResult = dealerProfitResult.getAmount();
 
         this.playersProfitResult = playersProfitResult.entrySet()
                 .stream()
                 .collect(Collectors.toMap(
                         entry -> entry.getKey().getName(),
-                        Map.Entry::getValue,
+                        entry -> entry.getValue().getAmount(),
                         (a, b) -> a,
                         LinkedHashMap::new
                 ));
     }
 
-    public int getDealerProfitResult() {
+    public BigDecimal getDealerProfitResult() {
         return dealerProfitResult;
     }
 
-    public Map<String, Integer> getPlayersProfitResult() {
+    public Map<String, BigDecimal> getPlayersProfitResult() {
         return playersProfitResult;
     }
 }

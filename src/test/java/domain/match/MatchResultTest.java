@@ -3,8 +3,9 @@ package domain.match;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
-import domain.participant.Bet;
+import domain.money.Bet;
 import domain.participant.Dealer;
+import domain.participant.Name;
 import domain.participant.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -28,7 +29,7 @@ public class MatchResultTest {
 
         // given
         Dealer dealer = new Dealer();
-        Player player = new Player("pobi", Bet.of(10000));
+        Player player = new Player(new Name("pobi"), new Bet(10000));
 
         dealerCards.forEach(dealer::receive);
         playerCards.forEach(player::receive);
