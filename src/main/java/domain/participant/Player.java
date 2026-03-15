@@ -2,11 +2,15 @@ package domain.participant;
 
 import domain.card.Card;
 
+import java.math.BigDecimal;
+
 public class Player extends Participant {
     private static final int PLAYER_MAX_HITTABLE_SCORE = 21;
+    private final PlayerInfo playerInfo;
 
-    public Player(ParticipantInfo participantInfo, Money bettingMoney) {
-        super(participantInfo, bettingMoney);
+    public Player(PlayerInfo playerInfo) {
+        super(new Hand());
+        this.playerInfo = playerInfo;
     }
 
     @Override
@@ -19,5 +23,14 @@ public class Player extends Participant {
         if (canHit()) {
             this.getHand().addCard(card);
         }
+    }
+
+    @Override
+    public String getName() {
+        return playerInfo.getName();
+    }
+
+    public BigDecimal getBettingMoney() {
+        return playerInfo.getBettingMoney();
     }
 }

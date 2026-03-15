@@ -2,15 +2,12 @@ package domain.participant;
 
 import domain.card.Card;
 
-import java.math.BigDecimal;
-
 public class Dealer extends Participant {
     private static final int DEALER_MAX_HITTABLE_SCORE = 17;
     private static final String DEALER_NAME = "딜러";
-    private static final BigDecimal DEALER_BETTING_MONEY = BigDecimal.ZERO;
 
     public Dealer() {
-        super(new ParticipantInfo(DEALER_NAME, new Hand()), new Money(DEALER_BETTING_MONEY));
+        super(new Hand());
     }
 
     @Override
@@ -23,5 +20,10 @@ public class Dealer extends Participant {
         if (canHit()) {
             this.getHand().addCard(card);
         }
+    }
+
+    @Override
+    public String getName() {
+        return DEALER_NAME;
     }
 }

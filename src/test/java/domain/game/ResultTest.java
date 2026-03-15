@@ -2,7 +2,7 @@ package domain.game;
 
 import domain.participant.Hand;
 import domain.participant.Money;
-import domain.participant.ParticipantInfo;
+import domain.participant.PlayerInfo;
 import domain.participant.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,12 +23,12 @@ public class ResultTest {
     void init() {
         playersResult = new HashMap<>();
         hand = new Hand();
-        playersResult.put(new Player(new ParticipantInfo("user1", hand),
-                new Money(BigDecimal.valueOf(30000))), Outcome.WIN);
-        playersResult.put(new Player(new ParticipantInfo("user2", hand),
-                new Money(BigDecimal.valueOf(20000))), Outcome.DEFEAT);
-        playersResult.put(new Player(new ParticipantInfo("user3", hand),
-                new Money(BigDecimal.valueOf(10000))), Outcome.PUSH);
+        playersResult.put(new Player(new PlayerInfo("user1",
+                new Money(BigDecimal.valueOf(30000)))), Outcome.WIN);
+        playersResult.put(new Player(new PlayerInfo("user1",
+                new Money(BigDecimal.valueOf(20000)))), Outcome.DEFEAT);
+        playersResult.put(new Player(new PlayerInfo("user1",
+                new Money(BigDecimal.valueOf(10000)))), Outcome.PUSH);
         result = new Result(playersResult);
     }
 

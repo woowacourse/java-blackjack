@@ -2,41 +2,31 @@ package domain.participant;
 
 import domain.card.Card;
 
-import java.math.BigDecimal;
-
 public abstract class Participant {
     private static final int BLACKJACK_SATISFYING_HAND_COUNT = 2;
     private static final int BLACKJACK_SATISFYING_SCORE = 21;
-    private final ParticipantInfo participantInfo;
-    private final Money bettingMoney;
+    private final Hand hand;
 
-    public Participant(ParticipantInfo participantInfo, Money bettingMoney) {
-        this.participantInfo = participantInfo;
-        this.bettingMoney = bettingMoney;
+    public Participant(Hand hand) {
+        this.hand = hand;
     }
 
     public abstract void keepCard(Card card);
 
     public abstract boolean canHit();
 
+    public abstract String getName();
+
     public int handSize() {
-        return participantInfo.handSize();
-    }
-
-    public int getTotalCardScore() {
-        return participantInfo.getTotalCardScore();
-    }
-
-    public String getName() {
-        return participantInfo.getName();
+        return hand.getHandSize();
     }
 
     public Hand getHand() {
-        return participantInfo.getHand();
+        return hand;
     }
 
-    public BigDecimal getBettingMoney() {
-        return bettingMoney.getBettingMoney();
+    public int getTotalCardScore() {
+        return hand.calculateTotalScore();
     }
 
     public boolean isMaxScore() {

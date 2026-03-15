@@ -25,7 +25,7 @@ public class BlackJackServiceTest {
     }
 
     private Player dummyPlayer(String name) {
-        return new Player(new ParticipantInfo(name, new Hand()), new Money(BigDecimal.ZERO));
+        return new Player(new PlayerInfo(name, new Money(BigDecimal.ZERO)));
     }
 
     @Test
@@ -112,6 +112,5 @@ public class BlackJackServiceTest {
         Outcome info = result.getPlayersResult().get(player);
 
         assertThat(info).isEqualTo(Outcome.DEFEAT);
-
     }
 }

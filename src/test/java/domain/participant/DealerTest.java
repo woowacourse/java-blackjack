@@ -6,8 +6,6 @@ import domain.card.Rank;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
-
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class DealerTest {
@@ -48,13 +46,5 @@ public class DealerTest {
         int afterSize = dealer.handSize();
 
         assertThat(beforeSize).isEqualTo(afterSize);
-    }
-
-    @Test
-    void 딜러는_배팅금이_없다() {
-        Dealer dealer = new Dealer();
-        BigDecimal amount = dealer.getBettingMoney();
-
-        assertThat(amount).isEqualTo(BigDecimal.ZERO);
     }
 }

@@ -39,7 +39,7 @@ public class BlackJackController {
         for (String name : names) {
             OutputView.askBettingMoneyMessage(name);
             Money bettingMoney = new Money(InputView.inputBettingMoney());
-            players.add(new Player(new ParticipantInfo(name, new Hand()), bettingMoney));
+            players.add(new Player(new PlayerInfo(name, bettingMoney)));
         }
         return players;
     }
