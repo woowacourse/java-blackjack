@@ -1,16 +1,16 @@
 package domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Results {
-    private final List<Result> results;
+    private final Map<Player, Result> results = new HashMap<>();
 
-    public Results(List<Result> results) {
-        this.results = new ArrayList<>();
+    public void add(Player player, Result result) {
+        results.put(player, result);
     }
 
-    public void addResult(Result result) {
-        results.add(result);
+    public Result findByPlayer(Player player) {
+        return results.get(player);
     }
 }
