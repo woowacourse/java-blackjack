@@ -18,18 +18,21 @@ public class BlackJackController {
         Dealer dealer = new Dealer();
         Deck deck = new Deck();
 
+        BlackJackGame blackJackGame = startGame(players, dealer, deck);
+        playGame(players, dealer, deck);
+        showGameResult(blackJackGame, dealer, players);
+    }
+
+    private BlackJackGame startGame(Players players, Dealer dealer, Deck deck) {
         BlackJackGame blackJackGame = new BlackJackGame(players, dealer, deck);
         blackJackGame.initDraw();
-
         outputView.printInitDraw(players, dealer);
+        return blackJackGame;
+    }
 
+    private void playGame(Players players, Dealer dealer, Deck deck) {
         playerTurn(players, deck);
         dealerTurn(dealer, deck);
-
-        outputView.printFinalCardResult(dealer, players);
-
-        FinalIncome result = blackJackGame.judgeGameResult();
-        outputView.printFinalGameResult(result);
     }
 
     private void dealerTurn(Dealer dealer, Deck deck) {
@@ -41,18 +44,20 @@ public class BlackJackController {
 
     private void playerTurn(Players players, Deck deck) {
         for (Player player : players.getPlayers()) {
-            while (player.shouldDraw()) {
-                boolean isHit = inputView.readHitAnswer(player.getName());
-                if (isHit) {
-                    player.recieveCard(deck.draw());
-                }
-
+            while (player.shouldDraw() && inputView.readHitAnswer(player.getName())) {
+                player.recieveCard(deck.draw());
                 outputView.printCard(player);
-
-                if (!isHit) {
-                    break;
-                }
+            }
+            if (!player.isBust()) {
+                outputView.printCard(player);
             }
         }
     }
+
+    private void showGameResult(BlackJackGame blackJackGame, Dealer dealer, Players players) {
+        outputView.printFinalCardResult(dealer, players);
+        FinalIncome result = blackJackGame.judgeGameResult();
+        outputView.printFinalGameResult(result);
+    }
+
 }
