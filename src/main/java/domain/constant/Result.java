@@ -1,23 +1,24 @@
 package domain.constant;
 
+import domain.participant.Dealer;
+import domain.participant.Player;
+
 public enum Result {
-    WIN(1),
-    DRAW(0),
-    LOSE(-1),
-    BLACKJACK(1.5),
-    BUST(-1);
+    BUST,
+    BLACKJACK,
+    WIN,
+    LOSE,
+    DRAW;
 
-    private double allocation;
+    public static Result from(Player player, Dealer dealer) {
+        int playerScore = player.getScore();
+        int dealerScore = dealer.getScore();
 
-    Result(double allocation) {
-        this.allocation = allocation;
-    }
+        if (player.isBust()) return BUST;
+        if (player.isNaturalBlackJack()) return BLACKJACK;
+        if (playerScore > dealerScore) return WIN;
+        if (playerScore < dealerScore) return LOSE;
 
-    public String getName() {
-        return name + " ";
-    }
-
-    public double getAllocation() {
-        return allocation;
+        return DRAW;
     }
 }

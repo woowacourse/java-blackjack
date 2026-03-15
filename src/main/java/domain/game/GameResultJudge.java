@@ -1,7 +1,7 @@
 package domain.game;
 
 import domain.constant.Result;
-import domain.dto.GameResultDto;
+import dto.GameResultDto;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
@@ -30,32 +30,9 @@ public class GameResultJudge {
     }
 
     private static GameResultDto judgePlayer(Player player, Dealer dealer) {
-        Result result = calculateResult(player, dealer);
+        Result result = Result.from(player, dealer);
         double proceeds = player.calculateProceeds(result);
         return new GameResultDto(player.getName(), result, proceeds);
-    }
-
-    private static Result calculateResult(Player player, Dealer dealer) {
-        int playerScore = player.getScore();
-        int dealerScore = dealer.getScore();
-
-        if (player.isBust()) {
-            return Result.BUST;
-        }
-
-        if (player.isNaturalBlackJack()) {
-            return Result.BLACKJACK;
-        }
-
-        if (playerScore > dealerScore) {
-            return Result.WIN;
-        }
-
-        if (playerScore < dealerScore) {
-            return Result.LOSE;
-        }
-
-        return Result.DRAW;
     }
 
     private static double calculateDealerProceeds(List<GameResultDto> results) {
