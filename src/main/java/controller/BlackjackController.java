@@ -32,7 +32,7 @@ public class BlackjackController {
         askPlayerAddCard(players, deck, dealer);
 
         BlackjackResult blackjackResult = BlackjackResult.of(players, dealer, playerBets);
-        printGameResult(blackjackResult);
+        printGameResults(blackjackResult);
     }
 
     private Players generatePlayers(List<String> userNames, Deck deck) {
@@ -148,13 +148,13 @@ public class BlackjackController {
         }
     }
 
-    private void printGameResult(BlackjackResult blackjackResults) {
+    private void printGameResults(BlackjackResult blackjackResults) {
         List<PlayerResultDto> playerResults = blackjackResults.playerProfits().entrySet().stream()
                 .map(entry -> new PlayerResultDto(
                         entry.getKey().getName(),
                         entry.getValue()
                 ))
                 .toList();
-        outputView.printFinalResult(playerResults);
+        outputView.printFinalResults(playerResults);
     }
 }

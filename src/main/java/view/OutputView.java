@@ -4,7 +4,6 @@ import domain.*;
 import view.mesage.OutputMessage;
 
 import java.util.List;
-import java.util.Map;
 
 public class OutputView {
 
@@ -47,7 +46,7 @@ public class OutputView {
         printEmptyLine();
     }
 
-    public void printFinalResult(List<PlayerResultDto> playerResults) {
+    public void printFinalResults(List<PlayerResultDto> playerResults) {
         System.out.println(OutputMessage.FINAL_MESSAGE.getMessage());
 
         long dealerProfit = -1 * playerResults.stream()
