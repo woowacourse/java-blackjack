@@ -1,8 +1,8 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.card.Hand;
 import domain.card.CardDeck;
+import domain.card.Hand;
 import java.util.List;
 
 public abstract class Participant {
@@ -16,23 +16,36 @@ public abstract class Participant {
     }
 
     public Hand drawCards(CardDeck cardDeck, int count) {
-        return cardDeck.draw(hand, count);
+        List<Card> cards = cardDeck.draw(count);
+        return hand.addUp(Hand.from(cards));
     }
 
     public boolean hasCard(Card targetCard) {
         return hand.checkExist(targetCard);
     }
 
-    public int getResultScore() {
-        return hand.getResultScore();
+    public boolean hasHigherScoreThan(Participant other) {
+        return this.hand.getResultScore() > other.hand.getResultScore();
     }
 
     public boolean isBusted() {
         return hand.isBusted();
     }
 
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
+    }
+
+    public int getResultScore() {
+        return hand.getResultScore();
+    }
+
     public String toDisplayMyName() {
         return name.name();
+    }
+
+    public ParticipantName getName() {
+        return name;
     }
 
     public List<String> disPlayMyCardBundle() {

@@ -1,15 +1,27 @@
 package domain.participant;
 
+import domain.betiing.BetAmount;
 import java.util.Objects;
 
-public class Player extends Participant{
+public class Player extends Participant {
 
-    private Player(ParticipantName name) {
+    private final BetAmount betAmount;
+
+    private Player(ParticipantName name, BetAmount betAmount) {
         super(name);
+        this.betAmount = betAmount;
     }
 
-    public static Player from(ParticipantName name) {
-        return new Player(name);
+    public static Player from(ParticipantName participantName) {
+        return new Player(participantName, BetAmount.from(0));
+    }
+
+    public static Player from(ParticipantName name, BetAmount betAmount) {
+        return new Player(name, betAmount);
+    }
+
+    public BetAmount getBetAmount() {
+        return betAmount;
     }
 
     @Override

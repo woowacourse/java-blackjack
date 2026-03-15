@@ -1,5 +1,5 @@
-import controller.BlackjackGame;
 import config.BlackjackGameConfiguration;
+import controller.BlackjackGame;
 
 public class Application {
 

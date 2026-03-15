@@ -1,10 +1,10 @@
 package domain.result.dto;
 
 import domain.participant.Player;
-import domain.result.GameResult;
+import domain.result.WinningStatus;
 
-public record PlayerGameResultDto(String playerName, GameResult gameResult) {
-    public static PlayerGameResultDto of(Player player, GameResult gameResult) {
-        return new PlayerGameResultDto(player.toDisplayMyName(), gameResult);
+public record PlayerGameResultDto(String playerName, WinningStatus winningStatus) {
+    public static PlayerGameResultDto of(Player player, WinningStatus winningStatus) {
+        return new PlayerGameResultDto(player.toDisplayMyName(), winningStatus);
     }
 }

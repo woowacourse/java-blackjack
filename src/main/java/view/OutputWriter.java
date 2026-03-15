@@ -1,19 +1,15 @@
 package view;
 
-import domain.result.GameResult;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 public class OutputWriter {
 
     private static final String LINE_SEPARATOR = System.lineSeparator();
     private static final String INPUT_NAME_GUIDE_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
+    private static final String INPUT_BET_AMOUNT_GUIDE_MESSAGE = "%s의 배팅 금액은?";
     private static final String DEAL_INITIAL_CARD_MESSAGE = "딜러와 %s에게 %d장을 나누었습니다.";
     private static final String ASK_DRAW_CARD_GUIDE_MESSAGE = "%s는 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private static final String DEALER_ADDITIONAL_DRAW_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
-    private static final String FINAL_RESULT_TITLE_MESSAGE = "## 최종 승패";
-    private static final String FINAL_RESULT_PLAYER = "%s: %s";
-    private static final String FINAL_RESULT_DEALER = "딜러: %s";
+    private static final String FINAL_BETTING_RESULT_TITLE_MESSAGE = "## 최종 수익";
+    private static final String FINAL_BETTING_RESULT = "%s: %d";
     private static final String PLAYER_HAND_MESSAGE = "%s카드: %s";
     private static final String CARD_SUM_RESULT_MESSAGE = "%s카드: %s - 결과: %d";
     private static final String ERROR_MESSAGE_PREFIX = "[ERROR] ";
@@ -49,31 +45,23 @@ public class OutputWriter {
         System.out.print(LINE_SEPARATOR);
     }
 
-    public void printFinalResultTitleMessage() {
-        System.out.print(LINE_SEPARATOR);
-        System.out.printf(FINAL_RESULT_TITLE_MESSAGE);
-    }
-
-    public void printFinalResultOfPlayer(String playerName, String status) {
-        System.out.printf(FINAL_RESULT_PLAYER, playerName, status);
-        System.out.print(LINE_SEPARATOR);
-    }
-
-    public void printFinalResultOfDealer(Map<GameResult, Integer> gameResultIntegerEnumMap) {
-        System.out.print(LINE_SEPARATOR);
-        System.out.printf(FINAL_RESULT_DEALER, formatDealerResult(gameResultIntegerEnumMap));
-        System.out.print(LINE_SEPARATOR);
-    }
-
-    private String formatDealerResult(Map<GameResult, Integer> gameResultIntegerEnumMap) {
-        return gameResultIntegerEnumMap.keySet().stream()
-                .map(result -> gameResultIntegerEnumMap.get(result) + result.displayName())
-                .collect(Collectors.joining(" "));
-    }
-
     public void printFinalResultMessage(String gamerName, String playerCards, int resultScore) {
         System.out.printf(CARD_SUM_RESULT_MESSAGE, gamerName, playerCards, resultScore);
         System.out.print(LINE_SEPARATOR);
     }
 
+    public void printInputBetAmountGuideMessage(String participantName) {
+        System.out.printf(INPUT_BET_AMOUNT_GUIDE_MESSAGE, participantName);
+        System.out.print(LINE_SEPARATOR);
+    }
+
+    public void printFinalBettingResultTitleMessage() {
+        System.out.print(LINE_SEPARATOR);
+        System.out.println(FINAL_BETTING_RESULT_TITLE_MESSAGE);
+    }
+
+    public void printBettingResult(String playerName, long profit) {
+        System.out.printf(FINAL_BETTING_RESULT, playerName, profit);
+        System.out.print(LINE_SEPARATOR);
+    }
 }
