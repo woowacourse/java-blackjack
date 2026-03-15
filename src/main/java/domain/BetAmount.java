@@ -5,20 +5,18 @@ import exception.ErrorMessage;
 public class BetAmount {
     private final long amount;
 
-    public BetAmount(Long amount){
+    public BetAmount(long amount){
         validateNegative(amount);
         this.amount = amount;
     }
 
     public BetAmount(String moneyInput) {
-        amount = parseInput(moneyInput);
+        this(parseInput(moneyInput));
     }
 
-    private long parseInput(String input) {
+    private static long parseInput(String input) {
         try {
-            long value = Long.parseLong(input);
-            validateNegative(value);
-            return value;
+            return Long.parseLong(input);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_MONEY.getMessage());
         }
