@@ -1,22 +1,27 @@
 package blackjack.domain.participants;
 
 import blackjack.domain.card.Hand;
+import blackjack.domain.game.GameResult;
 
 public class Player extends Participant {
-    private final Bet betAmount;
+    private final Bet bet;
 
     public Player(Name name, Hand hand, Bet bet) {
         super(name, hand);
-        this.betAmount = bet;
+        this.bet = bet;
     }
 
     public Player(String name, Hand hand, Bet bet) {
         super(new Name(name), hand);
-        this.betAmount = bet;
+        this.bet = bet;
     }
 
     @Override
     public boolean canHit() {
         return !isBust();
+    }
+
+    public Profit calculateProfit(GameResult gameResult) {
+        return bet.calculateProfit(gameResult);
     }
 }

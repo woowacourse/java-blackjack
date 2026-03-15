@@ -4,11 +4,11 @@ import blackjack.domain.card.Hand;
 import blackjack.domain.card.ShuffledCardsGenerator;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.BlackjackGameReferee;
-import blackjack.domain.game.GameResult;
 import blackjack.domain.participants.Bet;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.PlayerGroup;
 import blackjack.domain.participants.PlayerNames;
+import blackjack.domain.participants.Profit;
 import blackjack.dto.DealerHitDto;
 import blackjack.dto.GameResultDtos;
 import blackjack.dto.InitialDealDtos;
@@ -56,7 +56,7 @@ public class BlackjackApplication {
         playDealerTurn();
 
         printScore();
-        printResult();
+        printProfit();
     }
 
     private void initialDeal() {
@@ -86,16 +86,16 @@ public class BlackjackApplication {
             ParticipantScoreDtos.of(game.getDealer(), game.getPlayers()));
     }
 
-    private void printResult() {
-        Map<Player, GameResult> playerResults = parseResultMap();
+    private void printProfit() {
+        Map<Player, Profit> playerResults = parseResultMap();
         view.printResult(GameResultDtos.of(playerResults));
     }
 
-    private Map<Player, GameResult> parseResultMap() {
+    private Map<Player, Profit> parseResultMap() {
         return game.getPlayers().stream()
             .collect(Collectors.toMap(
                 player -> player,
-                game::judge
+                game::calculateProfit
             ));
     }
 }

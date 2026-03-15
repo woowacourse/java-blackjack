@@ -5,6 +5,7 @@ import blackjack.domain.card.Deck;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.PlayerGroup;
+import blackjack.domain.participants.Profit;
 import java.util.List;
 
 public class BlackjackGame {
@@ -59,7 +60,8 @@ public class BlackjackGame {
         return hitCount;
     }
 
-    public GameResult judge(Player player) {
-        return referee.judge(dealer, player);
+    public Profit calculateProfit(Player player) {
+        GameResult judge = referee.judge(dealer, player);
+        return player.calculateProfit(judge);
     }
 }

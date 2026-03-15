@@ -18,12 +18,19 @@ public record ParticipantCardsDto(
     public static ParticipantCardsDto of(Dealer dealer, long size) {
         return new ParticipantCardsDto(
             dealer.getName(),
-            convertCards(dealer.getCards()));
+            convertCards(dealer.getCards(), size));
     }
 
     private static List<CardNameDto> convertCards(List<Card> cards) {
         return cards.stream()
             .map(CardNameDto::from)
+            .toList();
+    }
+
+    private static List<CardNameDto> convertCards(List<Card> cards, long size) {
+        return cards.stream()
+            .map(CardNameDto::from)
+            .limit(size)
             .toList();
     }
 }
