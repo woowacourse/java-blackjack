@@ -6,7 +6,7 @@ import view.mesage.ErrorMessage;
 
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
-class BettingValidatorTest {
+class BetAmountTest {
 
     @Test
     @DisplayName("사용자 배팅금액이 0이하의 정수일 경우 실패")
@@ -14,7 +14,7 @@ class BettingValidatorTest {
         String input = "0";
 
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> BettingValidator.validateBetAmount(input))
+                .isThrownBy(() -> BetAmount.of(input))
                 .withMessage(ErrorMessage.INVALID_BET_AMOUNT.getMessage());
     }
 
@@ -24,7 +24,7 @@ class BettingValidatorTest {
         String input = "fail";
 
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> BettingValidator.validateBetAmount(input))
+                .isThrownBy(() ->  BetAmount.of(input))
                 .withMessage(ErrorMessage.INVALID_BET_AMOUNT.getMessage());
     }
 
@@ -34,7 +34,7 @@ class BettingValidatorTest {
         String input = null;
 
         assertThatIllegalArgumentException()
-                .isThrownBy(() -> BettingValidator.validateBetAmount(input))
+                .isThrownBy(() ->  BetAmount.of(input))
                 .withMessage(ErrorMessage.EMPTY_BET_AMOUNT_INPUT.getMessage());
     }
 }
