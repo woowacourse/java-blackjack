@@ -7,8 +7,7 @@ public class Deck {
     private DeckStatus deckStatus;
     private List<Card> cards;
 
-    public static final int BURST_CRITERIA = 21;
-    public static final int BLACKJACK_CRITERIA = 21;
+    public static final int BLACKJACK_SCORE = 21;
 
     private Deck(List<Card> cards, DeckStatus deckStatus) {
         this.cards = cards;
@@ -25,7 +24,7 @@ public class Deck {
     public int calculateFinalSum() {
         boolean hasAce = isHasAce();
         int sum = getSumWithAceAdditionalValue();
-        if (hasAce && sum <= BURST_CRITERIA) {
+        if (hasAce && sum <= BLACKJACK_SCORE) {
             return sum;
         }
         return getSumWithAceDefaultValue();
@@ -55,11 +54,11 @@ public class Deck {
     }
 
     private void judgeDeckStatus() {
-        if (getSize() == 2 && isHasAce() && getSumWithAceAdditionalValue() == BLACKJACK_CRITERIA) {
+        if (getSize() == 2 && isHasAce() && getSumWithAceAdditionalValue() == BLACKJACK_SCORE) {
             deckStatus = DeckStatus.BLACKJACK;
         }
 
-        if (getSumWithAceDefaultValue() > BURST_CRITERIA) {
+        if (getSumWithAceDefaultValue() > BLACKJACK_SCORE) {
             deckStatus = DeckStatus.BURST;
         }
     }

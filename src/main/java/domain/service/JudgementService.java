@@ -4,12 +4,9 @@ import domain.model.*;
 import dto.DealerResultDto;
 import dto.PlayerResultDto;
 import dto.ResultDto;
-import repository.PlayerBettingRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static constant.ErrorMessage.PLAYER_BETTING_NOT_FOUND;
 
 public class JudgementService {
 
