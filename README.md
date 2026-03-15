@@ -186,7 +186,7 @@
 - [X] Result와 배당 수익금 비율 분리
 - [X] PlayerStatus에서 수익 계산 하는 부분 분리하기
 - [X] 기록 내용 README.md 추가
-- [ ] updateNaturalBlackJack 상태 업데이트가 밖에서 호출되는 문제 수정
+- [X] updateNaturalBlackJack 상태 업데이트가 밖에서 호출되는 문제 수정
 
 
 
