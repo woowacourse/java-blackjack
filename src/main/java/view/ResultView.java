@@ -1,5 +1,6 @@
 package view;
 
+import domain.Card;
 import domain.Hand;
 import domain.Dealer;
 import domain.GameResult;
@@ -38,12 +39,16 @@ public class ResultView {
 
     public void printGameStart(Players players, Dealer dealer) {
         System.out.printf("딜러와 %s에게 2장을 나누었습니다.%n", joinPlayerNames(players));
-        System.out.printf("딜러카드: %s%n", dealer.getCardList().get(0).displayName());
+        System.out.printf("딜러카드: %s%n", formatCardName(dealer.getCardList().get(0)));
         players.forEachPlayer(player -> System.out.printf(
                 "%s카드: %s%n",
                 player.getName(),
                 joinCardNames(player.getCardList())
         ));
+    }
+
+    private String formatCardName(final Card card) {
+        return card.getRank().symbol() + card.getSuit().suit();
     }
 
     public void printResult(Players players, Dealer dealer) {
@@ -76,7 +81,7 @@ public class ResultView {
 
     public String joinCardNames(Hand cardList) {
         return cardList.getCards().stream()
-                .map(card -> card.displayName())
+                .map(this::formatCardName)
                 .collect(Collectors.joining(", "));
     }
 

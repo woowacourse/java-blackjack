@@ -19,7 +19,11 @@ public class Card {
         return rank.isAce();
     }
 
-    public String displayName() {
-        return rank.symbol() + suit.suit();
+    public Suit getSuit(){
+        return suit;
+    }
+
+    public Rank getRank(){
+        return rank;
     }
 }
