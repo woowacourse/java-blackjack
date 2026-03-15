@@ -3,15 +3,18 @@ package domain.result;
 import static config.BlackjackGameConstant.INITIAL_CARD_DRAW_COUNT;
 
 import domain.betiing.BetAmount;
-import domain.card.*;
+import domain.card.Card;
+import domain.card.CardDeck;
+import domain.card.CardDeckBuilder;
+import domain.card.CardDenomination;
+import domain.card.CardEmblem;
 import domain.participant.Dealer;
 import domain.participant.ParticipantInitialInformation;
 import domain.participant.ParticipantName;
 import domain.participant.Players;
+import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 class WinningStatusAnalyzerTest {
 
@@ -33,10 +36,11 @@ class WinningStatusAnalyzerTest {
         dealerScore4.drawCards(cardDeck, INITIAL_CARD_DRAW_COUNT);
         Players players = Players.from(List.of(
                 ParticipantInitialInformation.of(ParticipantName.from("p7"), BetAmount.from(0)),
-                ParticipantInitialInformation.of( ParticipantName.from("p11"), BetAmount.from(0))));
+                ParticipantInitialInformation.of(ParticipantName.from("p11"), BetAmount.from(0))));
         players.giveInitialCardBundle(cardDeck);
 
-        List<PlayerWinningResult> playerPlayerWinningResults = GameResultAnalyzer.analyzePlayerWinningResults(players, dealerScore4);
+        List<PlayerWinningResult> playerPlayerWinningResults = GameResultAnalyzer.analyzePlayerWinningResults(players,
+                dealerScore4);
 
         Assertions.assertThat(playerPlayerWinningResults.get(0).winningStatus()).isEqualTo(WinningStatus.WIN);
         Assertions.assertThat(playerPlayerWinningResults.get(1).winningStatus()).isEqualTo(WinningStatus.WIN);

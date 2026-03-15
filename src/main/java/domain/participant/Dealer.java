@@ -1,6 +1,7 @@
 package domain.participant;
 
-import static config.BlackjackGameConstant.*;
+import static config.BlackjackGameConstant.DEALER_DISPLAY_NAME;
+import static config.BlackjackGameConstant.DEFAULT_CARD_DRAW_COUNT;
 
 import domain.card.Card;
 import domain.card.CardDeck;

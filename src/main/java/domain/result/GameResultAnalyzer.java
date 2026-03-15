@@ -3,11 +3,10 @@ package domain.result;
 import static config.BlackjackGameConstant.DEALER_DISPLAY_NAME;
 
 import domain.betiing.BettingProfit;
+import domain.participant.Dealer;
 import domain.participant.ParticipantName;
 import domain.participant.Player;
-import domain.participant.Dealer;
 import domain.participant.Players;
-
 import java.util.List;
 
 public class GameResultAnalyzer {
@@ -29,7 +28,7 @@ public class GameResultAnalyzer {
             return player.isBusted() ? WinningStatus.DRAW : WinningStatus.WIN;
         }
 
-        if(player.isBusted()) {
+        if (player.isBusted()) {
             return WinningStatus.LOSS;
         }
 

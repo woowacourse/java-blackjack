@@ -82,7 +82,8 @@ class BettingResultAnalyzerTest {
 
         ParticipantName playerName = ParticipantName.from("test");
         BetAmount betAmount = BetAmount.from(1000);
-        ParticipantInitialInformation participantInitialInformation = ParticipantInitialInformation.of(playerName, betAmount);
+        ParticipantInitialInformation participantInitialInformation = ParticipantInitialInformation.of(playerName,
+                betAmount);
         Players players = Players.from(List.of(participantInitialInformation));
         Dealer dealer = Dealer.from();
 

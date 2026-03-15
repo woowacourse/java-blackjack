@@ -3,7 +3,7 @@ package domain.participant;
 import domain.betiing.BetAmount;
 import java.util.Objects;
 
-public class Player extends Participant{
+public class Player extends Participant {
 
     private final BetAmount betAmount;
 

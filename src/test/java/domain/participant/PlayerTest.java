@@ -2,11 +2,15 @@ package domain.participant;
 
 import static config.BlackjackGameConstant.DEFAULT_CARD_DRAW_COUNT;
 
-import domain.card.*;
+import domain.card.Card;
+import domain.card.CardDeck;
+import domain.card.CardDeckBuilder;
+import domain.card.CardDenomination;
+import domain.card.CardEmblem;
+import domain.card.Hand;
+import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 class PlayerTest {
 
@@ -49,7 +53,7 @@ class PlayerTest {
     void 이름이_5자가_넘으면_예외가_발생한다() {
         String overFiveLengthName = "testtest";
 
-        Assertions.assertThatThrownBy(() ->  ParticipantName.from(overFiveLengthName))
+        Assertions.assertThatThrownBy(() -> ParticipantName.from(overFiveLengthName))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

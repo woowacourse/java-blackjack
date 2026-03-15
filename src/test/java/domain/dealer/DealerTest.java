@@ -1,13 +1,14 @@
 package domain.dealer;
 
-import static config.BlackjackGameConstant.*;
-
-import domain.card.*;
+import domain.card.Card;
+import domain.card.CardDeck;
+import domain.card.CardDeckBuilder;
+import domain.card.CardDenomination;
+import domain.card.CardEmblem;
 import domain.participant.Dealer;
+import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 class DealerTest {
 

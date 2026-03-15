@@ -5,8 +5,7 @@ public enum WinningStatus {
     WIN("승"),
     LOSS("패"),
     DRAW("무"),
-    BLCAKJACK("블랙잭")
-    ;
+    BLCAKJACK("블랙잭");
 
     private final String result;
 
