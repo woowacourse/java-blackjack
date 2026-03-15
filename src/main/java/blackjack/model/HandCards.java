@@ -9,7 +9,6 @@ import java.util.List;
 public class HandCards {
 
     public static final int BLACKJACK_CARD_COUNT = 2;
-    public static final int BLACKJACK_SCORE = 21;
     private final List<Card> cards;
 
     public HandCards() {
