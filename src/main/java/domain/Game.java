@@ -5,79 +5,80 @@ import static domain.constant.GameRule.INIT_CARD_COUNT;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.enums.Result;
-import domain.participant.Dealer;
+import domain.participant.BetAmounts;
+import domain.participant.Participants;
 import domain.participant.Players;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Game {
-    private final Players players;
-    private final Dealer dealer;
+    private final Participants participants;
+    private final BetAmounts betAmounts;
 
-    public Game(List<String> names, Deck deck) {
-        this.players = new Players(names);
-        this.dealer = new Dealer();
+    public Game(Players players, BetAmounts betAmounts, Deck deck) {
+        this.participants = new Participants(players);
+        this.betAmounts = betAmounts;
         initializeGame(deck);
     }
 
     private void initializeGame(Deck deck) {
         for (int i = 0; i < INIT_CARD_COUNT; i++) {
-            players.distributeCardForAllPlayers(deck);
-            dealer.addCard(deck.drawCard());
+            participants.distributeCardForAllParticipants(deck);
         }
     }
 
     public boolean isPlayerEnd(String name, boolean wantHit) {
-        if (!wantHit) {
-            return true;
-        }
-        return !players.checkScoreUnderCriterion(name);
+        return participants.isPlayerEnd(name, wantHit);
     }
 
     public boolean isDealerEnd() {
-        return !dealer.checkScoreUnderCriterion();
+        return participants.isDealerEnd();
     }
 
     public void playerHit(String name, Deck deck, boolean isPlayerEnd) {
-        if (isPlayerEnd) {
-            return;
-        }
-        players.distributeCard(name, deck.drawCard());
+        participants.playerHit(name, deck, isPlayerEnd);
     }
 
     public void dealerHit(Deck deck) {
-        if (isDealerEnd()) {
-            return;
-        }
-        dealer.addCard(deck.drawCard());
-    }
-
-    public Map<String, Result> calculateAllPlayerResults() {
-        Map<String, Result> playerResults = new LinkedHashMap<>();
-        for (String name : players.getAllPlayerNames()) {
-            playerResults.put(name, players.calculatePlayerResult(name, dealer));
-        }
-        return playerResults;
+        participants.dealerHit(deck);
     }
 
     public int calculatePlayerScore(String name) {
-        return players.calculatePlayerScore(name);
+        return participants.calculatePlayerScore(name);
     }
 
     public int calculateDealerScore() {
-        return dealer.calculateScore();
+        return participants.calculateDealerScore();
+    }
+
+    public Map<String, Integer> calculatePlayerProfits() {
+        Map<String, Integer> profits = new LinkedHashMap<>();
+        for (String name : participants.getAllPlayerNames()) {
+            Result result = participants.calculatePlayerResult(name);
+            int profit = betAmounts.calculatePlayerProfit(name, result);
+            profits.put(name, profit);
+        }
+        return profits;
+    }
+
+    public int calculateDealerProfit() {
+        int dealerProfit = 0;
+        for (int profit : calculatePlayerProfits().values()) {
+            dealerProfit += -profit;
+        }
+        return dealerProfit;
     }
 
     public List<Card> getPlayerCards(String name) {
-        return players.getPlayerCards(name);
+        return participants.getPlayerCards(name);
     }
 
     public List<Card> getDealerCards() {
-        return dealer.getCards();
+        return participants.getDealerCards();
     }
 
     public List<String> getAllPlayerNames() {
-        return players.getAllPlayerNames();
+        return participants.getAllPlayerNames();
     }
 }

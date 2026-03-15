@@ -2,7 +2,6 @@ package domain.participant;
 
 import domain.enums.Result;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,25 +16,9 @@ public class BetAmounts {
         betAmounts.put(name, new BetAmount(amount));
     }
 
-    public Map<String, Integer> calculatePlayerProfits(Map<String, Result> playerResults) {
-        Map<String, Integer> profits = new LinkedHashMap<>();
-        for (String name : playerResults.keySet()) {
-            int profit = calculateProfit(playerResults.get(name), betAmounts.get(name));
-            profits.put(name, profit);
-        }
-        return profits;
-    }
-
-    private int calculateProfit(Result result, BetAmount betAmount) {
+    public int calculatePlayerProfit(String name, Result result) {
+        BetAmount betAmount = betAmounts.get(name);
         double profit = betAmount.amount() * result.getRate();
         return (int) profit;
-    }
-
-    public int calculateDealerProfit(Map<String, Integer> allPlayerProfits) {
-        int dealerProfit = 0;
-        for (int profit : allPlayerProfits.values()) {
-            dealerProfit += -profit;
-        }
-        return dealerProfit;
     }
 }

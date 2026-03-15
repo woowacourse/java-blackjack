@@ -3,8 +3,8 @@ package controller;
 import domain.Game;
 import domain.card.Deck;
 import domain.card.ShuffledCardGenerator;
-import domain.enums.Result;
 import domain.participant.BetAmounts;
+import domain.participant.Players;
 import dto.CardDto;
 import java.util.List;
 import java.util.Map;
@@ -17,32 +17,33 @@ import view.OutputView;
 public class BlackjackController {
     public void start() {
         Deck deck = new Deck(new ShuffledCardGenerator());
-        Game game = retryOnException(() -> makeGame(deck));
+        Game game = makeGame(deck);
 
         playGame(game, deck);
     }
 
     private Game makeGame(Deck deck) {
-        List<String> names = askPlayerNames();
-        return new Game(names, deck);
+        Players players = retryOnException(this::makePlayers);
+        BetAmounts betAmounts = retryOnException(() -> makeBetAmounts(players.getAllPlayerNames()));
+        return new Game(players, betAmounts, deck);
     }
 
-    private List<String> askPlayerNames() {
+    private Players makePlayers() {
         String input = InputView.askPlayerNames();
-        return InputParser.parseNames(input);
+        List<String> names = InputParser.parseNames(input);
+        return new Players(names);
     }
 
     private void playGame(Game game, Deck deck) {
-        BetAmounts betAmounts = makeBetAmounts(game);
         printInitCards(game);
         playTurn(game, deck);
-        printResult(game, betAmounts);
+        printResult(game);
     }
 
-    private BetAmounts makeBetAmounts(Game game) {
-        BetAmounts betAmounts = new BetAmounts(game.getAllPlayerNames());
-        for (String name : game.getAllPlayerNames()) {
-            int amount = retryOnException(() -> askBetAmount(name));
+    private BetAmounts makeBetAmounts(List<String> names) {
+        BetAmounts betAmounts = new BetAmounts(names);
+        for (String name : names) {
+            int amount = askBetAmount(name);
             betAmounts.addBetAmount(name, amount);
         }
         return betAmounts;
@@ -91,9 +92,9 @@ public class BlackjackController {
         }
     }
 
-    private void printResult(Game game, BetAmounts betAmounts) {
+    private void printResult(Game game) {
         printFinalCards(game);
-        printProfits(game, betAmounts);
+        printProfits(game);
     }
 
     private void printFinalCards(Game game) {
@@ -104,10 +105,9 @@ public class BlackjackController {
         }
     }
 
-    private void printProfits(Game game, BetAmounts betAmounts) {
-        Map<String, Result> playerResults = game.calculateAllPlayerResults();
-        Map<String, Integer> playerProfits = betAmounts.calculatePlayerProfits(playerResults);
-        int dealerProfit = betAmounts.calculateDealerProfit(playerProfits);
+    private void printProfits(Game game) {
+        Map<String, Integer> playerProfits = game.calculatePlayerProfits();
+        int dealerProfit = game.calculateDealerProfit();
         OutputView.printGameResult(dealerProfit, playerProfits);
     }
 
