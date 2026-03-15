@@ -2,6 +2,7 @@ package domain.model;
 
 import java.util.List;
 
+import static constant.BlackJackConstant.BLACK_JACK;
 import static constant.BlackJackConstant.BURST_CRITERIA;
 
 public class Deck {
@@ -67,6 +68,9 @@ public class Deck {
     private void checkStatus(int sum) {
         if (sum > BURST_CRITERIA) {
             deckStatus = DeckStatus.BURST;
+        }
+        if (sum == BLACK_JACK && cards.size() == 2) {
+            deckStatus = DeckStatus.BLACK_JACK;
         }
     }
 }

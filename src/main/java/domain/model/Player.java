@@ -2,10 +2,9 @@ package domain.model;
 
 import static constant.BlackJackConstant.BURST_CRITERIA;
 
-import constant.BlackJackConstant;
 import java.util.List;
 
-public class Player implements Person {
+public class Player implements WithDeck {
 
     private final String name;
     private Deck deck;
@@ -30,6 +29,10 @@ public class Player implements Person {
 
     public Deck getDeck() {
         return deck;
+    }
+
+    public boolean isBlackJack() {
+        return deck.getDeckStatus() == DeckStatus.BLACK_JACK;
     }
 
     public PlayerStatus getPlayerStatus() {

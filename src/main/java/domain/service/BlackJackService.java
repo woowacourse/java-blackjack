@@ -1,5 +1,6 @@
 package domain.service;
 
+import domain.model.Bets;
 import domain.model.Dealer;
 import domain.model.Player;
 import dto.*;
@@ -16,16 +17,19 @@ public class BlackJackService {
     private final DealerRepository dealerRepository;
     private final CardDistributor cardDistributor;
     private final JudgementService judgementService;
+    private final Bets bets;
 
     public BlackJackService(
             PlayerRepository playerRepository, DealerRepository dealerRepository,
             CardDistributor cardDistributor,
-            JudgementService judgementService
+            JudgementService judgementService,
+            Bets bets
     ) {
         this.playerRepository = playerRepository;
         this.dealerRepository = dealerRepository;
         this.cardDistributor = cardDistributor;
         this.judgementService = judgementService;
+        this.bets = bets;
     }
 
     // 플레이어 생성 후 카드 분배
@@ -43,7 +47,8 @@ public class BlackJackService {
     public PlayerResultDto additionalCard(Player player) {
         cardDistributor.distributeAdditionalCard(player);
         int sum = player.getDeckSum();
-        return PlayerResultDto.of(player, sum);
+        int money = bets.getFinalMoney(player);
+        return PlayerResultDto.of(player, sum, money);
     }
 
     public ResultDto judgement() {
@@ -62,5 +67,9 @@ public class BlackJackService {
     public void additionalDealerCard() {
         Dealer dealer = dealerRepository.getDealer();
         cardDistributor.distributeAdditionalCard(dealer);
+    }
+
+    public void addBet(Player player, int money) {
+        bets.addBet(player, money);
     }
 }

@@ -1,10 +1,12 @@
 package controller;
 
+import domain.model.Bets;
 import domain.model.Player;
 import domain.service.BlackJackService;
 import dto.InitialDto;
 import dto.PlayerResultDto;
 import dto.ResultDto;
+import java.util.List;
 import util.InputValidator;
 import util.Parser;
 import view.InputView;
@@ -15,23 +17,25 @@ public class BlackJackController {
     private final BlackJackService blackJackService;
     private final InputView inputView;
     private final OutputView outputView;
-    private final Parser<String> stringParser;
 
-    public BlackJackController(BlackJackService blackJackService, InputView inputView, OutputView outputView, Parser<String> stringParser) {
+    public BlackJackController(BlackJackService blackJackService, InputView inputView, OutputView outputView) {
         this.blackJackService = blackJackService;
         this.inputView = inputView;
         this.outputView = outputView;
-        this.stringParser = stringParser;
     }
 
     public void run() {
         // 사용자 이름 입력 후 초기 카드 분배 출력
         String inputPlayerNames = inputPlayers();
-        InitialDto initialDto = blackJackService.createPlayer(stringParser.splitToDelimiter(inputPlayerNames, ","));
+        InitialDto initialDto = blackJackService.createPlayer(Parser.splitToDelimiter(inputPlayerNames, ","));
         outputView.outputInitialMessage(initialDto);
 
+        List<Player> players = blackJackService.getAllPlayers();
+
+        players.forEach(this::getBetMoney);
+
         // 카드 추가 분배
-        blackJackService.getAllPlayers().forEach(this::getAdditionalCard);
+        players.forEach(this::getAdditionalCard);
         // 딜러 추가 배부
         getAdditionalDealerCard();
 
@@ -41,7 +45,9 @@ public class BlackJackController {
     }
 
     public void getAdditionalCard(Player player) {
-        if (player.isBurst()) return;
+        if (player.isBurst()) {
+            return;
+        }
 
         String isTrue = readYesOrNo(player);
         if (isTrue.equals("y")) {
@@ -65,10 +71,22 @@ public class BlackJackController {
         try {
             InputValidator.validatePlayerNames(inputPlayerNames);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            outputView.outputErrorMessage(e.getMessage());
             inputPlayers();
         }
         return inputPlayerNames;
+    }
+
+    public void getBetMoney(Player player) {
+        String inputMoney = inputView.inputBetMoney(player.getName());
+        int money = 0;
+        try {
+            money = Parser.toInt(inputMoney);
+        } catch (Exception e) {
+            outputView.outputErrorMessage(e.getMessage());
+            getBetMoney(player);
+        }
+        blackJackService.addBet(player, money);
     }
 
     public String readYesOrNo(Player player) {
@@ -76,7 +94,7 @@ public class BlackJackController {
         try {
             InputValidator.validateAdditionalCard(isTrue);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            outputView.outputErrorMessage(e.getMessage());
             readYesOrNo(player);
         }
 

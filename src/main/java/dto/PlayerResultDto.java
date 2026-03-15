@@ -10,14 +10,14 @@ public record PlayerResultDto(
         String playerName,
         List<CardDto> cardDtos,
         int sum,
-        String isWin
+        int finalMoney
 ) {
-    public static PlayerResultDto of(Player player, int finalScore) {
+    public static PlayerResultDto of(Player player, int finalScore, int finalMoney) {
         List<Card> cards = player.getDeck().getCards();
         List<CardDto> playerCards = new ArrayList<>();
         for (Card card : cards) {
             playerCards.add(CardDto.of(card));
         }
-        return new PlayerResultDto(player.getName(), playerCards, finalScore, player.getPlayerStatus().getName());
+        return new PlayerResultDto(player.getName(), playerCards, finalScore, finalMoney);
     }
 }

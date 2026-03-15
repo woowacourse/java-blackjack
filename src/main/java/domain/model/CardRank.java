@@ -44,8 +44,4 @@ public enum CardRank {
     public int getValue() {
         return value;
     }
-
-    public int getAdditionalValue() {
-        return additionalValue;
-    }
 }

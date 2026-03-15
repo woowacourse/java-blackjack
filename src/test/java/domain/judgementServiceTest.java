@@ -1,5 +1,6 @@
 package domain;
 
+import domain.model.Bets;
 import domain.model.Card;
 import domain.model.CardRank;
 import domain.model.CardShape;
@@ -19,7 +20,8 @@ public class judgementServiceTest {
 
     private JudgementService judgementService = new JudgementService(
             new PlayerRepository(),
-            new DealerRepository()
+            new DealerRepository(),
+            new Bets()
     );
 
     @Test
@@ -148,6 +150,4 @@ public class judgementServiceTest {
         // then
         assertThat(phobi.getPlayerStatus()).isEqualTo(PlayerStatus.DRAW);
     }
-
-
 }

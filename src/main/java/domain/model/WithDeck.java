@@ -1,6 +1,6 @@
 package domain.model;
 
-public interface Person {
+public interface WithDeck {
 
     // 덱의 총합 조회
     int getDeckSum();

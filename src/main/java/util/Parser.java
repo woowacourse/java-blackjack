@@ -1,8 +1,18 @@
 package util;
 
+import java.util.Arrays;
 import java.util.List;
 
-public interface Parser<T> {
+public class Parser {
 
-    List<T> splitToDelimiter(String input, String delimiter);
+    public static List<String> splitToDelimiter(String input, String delimiter) {
+        return Arrays.stream(input.split(delimiter))
+                .toList();
+    }
+
+    public static int toInt(String input) {
+        InputValidator.validateBetAmount(input);
+
+        return Integer.parseInt(input.trim());
+    }
 }

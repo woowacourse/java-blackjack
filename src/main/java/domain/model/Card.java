@@ -21,13 +21,6 @@ public class Card {
         return cardShape;
     }
 
-    public boolean isSameCard(Card card) {
-        if (card.cardRank == this.cardRank && card.cardShape == this.cardShape) {
-            return true;
-        }
-        return false;
-    }
-
     public int getValue() {
         return cardRank.getValue();
     }

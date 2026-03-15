@@ -1,6 +1,6 @@
 package domain.model;
 
-public class Dealer implements Person {
+public class Dealer implements WithDeck {
 
     private Deck deck;
 
@@ -18,6 +18,10 @@ public class Dealer implements Person {
 
     public Deck getDeck() {
         return deck;
+    }
+
+    public boolean isBlackJack() {
+        return deck.getDeckStatus() == DeckStatus.BLACK_JACK;
     }
 
     public boolean isBurst() {

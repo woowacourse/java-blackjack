@@ -41,11 +41,11 @@ public class OutputView {
             stringBuilder.append(" - 결과: ").append(playerResult.sum()).append("\n");
         }
 
-        stringBuilder.append("\n").append("## 최종 승패").append("\n");
-        stringBuilder.append("딜러: ").append(resultDto.dealerWinCount()).append("승 ");
-        stringBuilder.append(resultDto.dealerLossCount()).append("패").append("\n");
+        stringBuilder.append("\n").append("## 최종 수익").append("\n");
+        stringBuilder.append("딜러: ").append(resultDto.dealerFinalMoney()).append("\n");
         for (PlayerResultDto playerResultDto : resultDto.playerResultDtos()) {
-            stringBuilder.append(playerResultDto.playerName()).append(": ").append(playerResultDto.isWin()).append("\n");
+            stringBuilder.append(playerResultDto.playerName()).append(": ").append(playerResultDto.finalMoney())
+                    .append("\n");
         }
         System.out.println(stringBuilder);
     }
@@ -66,5 +66,9 @@ public class OutputView {
 
     public void outputDealerAdditionCardMessage() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+    }
+
+    public void outputErrorMessage(String errorMessage) {
+        System.out.println(errorMessage);
     }
 }

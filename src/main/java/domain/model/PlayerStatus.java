@@ -1,6 +1,7 @@
 package domain.model;
 
 public enum PlayerStatus {
+    BLACK_JACK("블랙잭"),
     WIN("승"),
     LOSS("패"),
     DRAW("무"),

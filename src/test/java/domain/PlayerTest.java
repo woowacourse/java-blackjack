@@ -1,6 +1,8 @@
 package domain;
 
+import domain.model.Bets;
 import domain.model.Player;
+import domain.model.PlayerStatus;
 import domain.service.CardDistributor;
 import domain.service.CardFactory;
 import org.junit.jupiter.api.Test;
@@ -10,7 +12,6 @@ import util.Parser;
 import util.RandomCardGenerator;
 import util.RandomRankNumberGenerator;
 import util.RandomShapeNumberGenerator;
-import util.StringParser;
 
 import java.util.List;
 
@@ -30,11 +31,10 @@ public class PlayerTest {
     );
 
     @Test
-    void 플레이어_셍성_테스트() {
+    void 플레이어_생성_테스트() {
         // given
         String playerNamesInput = "phobi,jason";
-        Parser parser = new StringParser();
-        List<String> playerNames = parser.splitToDelimiter(playerNamesInput, ",");
+        List<String> playerNames = Parser.splitToDelimiter(playerNamesInput, ",");
 
         // when
         // 플레이어 리스트 = 플레이어 객체를 만드는 메소드 실행
@@ -59,5 +59,20 @@ public class PlayerTest {
 
         // when
         cardDistributor.distributeAdditionalCard(phobi);
+    }
+
+    @Test
+    void 플레이어_최종_수익_테스트() {
+        // given
+        Player jason = Player.of("jason");
+        Bets bets = new Bets();
+        bets.addBet(jason, 20000);
+        jason.changeStatus(PlayerStatus.BLACK_JACK);
+
+        // then
+        int finalMoney = bets.getFinalMoney(jason);
+
+        // when
+        assertThat(finalMoney).isEqualTo(30000);
     }
 }

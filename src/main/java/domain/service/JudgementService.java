@@ -14,10 +14,12 @@ public class JudgementService {
 
     private final PlayerRepository playerRepository;
     private final DealerRepository dealerRepository;
+    private final Bets bets;
 
-    public JudgementService(PlayerRepository playerRepository, DealerRepository dealerRepository) {
+    public JudgementService(PlayerRepository playerRepository, DealerRepository dealerRepository, Bets bets) {
         this.playerRepository = playerRepository;
         this.dealerRepository = dealerRepository;
+        this.bets = bets;
     }
 
     public ResultDto getGameResult() {
@@ -28,8 +30,9 @@ public class JudgementService {
         List<PlayerResultDto> playerResultDtos = new ArrayList<>();
         for (Player player : players) {
             int playerFinalScore = player.calculateFinalSum();
+            int finalMoney = bets.getFinalMoney(player);
             judgementWinning(player, dealer);
-            PlayerResultDto playerResultDto = PlayerResultDto.of(player, playerFinalScore);
+            PlayerResultDto playerResultDto = PlayerResultDto.of(player, playerFinalScore, finalMoney);
             playerResultDtos.add(playerResultDto);
         }
 
@@ -38,6 +41,15 @@ public class JudgementService {
     }
 
     public void judgementWinning(Player player, Dealer dealer) {
+        // 버스트 비교
+        if (player.isBlackJack() && dealer.isBlackJack()) {
+            player.changeStatus(PlayerStatus.DRAW);
+            return;
+        }
+        if (player.isBlackJack()) {
+            player.changeStatus(PlayerStatus.BLACK_JACK);
+            return;
+        }
         // 버스트 비교
         if (player.isBurst()) {
             player.changeStatus(PlayerStatus.LOSS);
