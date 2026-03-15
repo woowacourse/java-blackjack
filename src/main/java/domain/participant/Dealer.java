@@ -11,7 +11,7 @@ public class Dealer extends Participant {
     }
 
     public boolean needAdditionalCard() {
-        return hand.calculateFinalScore() <= GameConstant.DEALER_HIT_THRESHOLD;
+        return getFinalScore() <= GameConstant.DEALER_HIT_THRESHOLD;
     }
 
     public Card getFirstCard() {
