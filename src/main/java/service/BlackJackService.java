@@ -1,7 +1,7 @@
 package service;
 
 import domain.game.Result;
-import domain.game.GameResult;
+import domain.game.Outcome;
 import domain.participant.*;
 
 import java.util.HashMap;
@@ -13,7 +13,7 @@ public class BlackJackService {
     }
 
     public Result calculateResult(Dealer dealer, Players players) {
-        Map<Player, GameResult> playersResult = new HashMap<>();
+        Map<Player, Outcome> playersResult = new HashMap<>();
         for (Player player : players.getPlayers()) {
             playersResult.put(player, calculatePlayerResults(dealer, player));
         }
@@ -21,51 +21,51 @@ public class BlackJackService {
         return new Result(playersResult);
     }
 
-    private GameResult calculatePlayerResults(Dealer dealer, Player player) {
-        GameResult blackJackResult = determineResultByBlackJack(dealer, player);
+    private Outcome calculatePlayerResults(Dealer dealer, Player player) {
+        Outcome blackJackResult = determineResultByBlackJack(dealer, player);
         if (blackJackResult != null) {
             return blackJackResult;
         }
-        GameResult bustResult = determineResultByBust(dealer, player);
+        Outcome bustResult = determineResultByBust(dealer, player);
         if (bustResult != null) {
             return bustResult;
         }
         return determineResultByScore(dealer, player);
     }
 
-    private GameResult determineResultByBlackJack(Dealer dealer, Player player) {
+    private Outcome determineResultByBlackJack(Dealer dealer, Player player) {
         if (player.isBlackJack() && dealer.isBlackJack()) {
-            return GameResult.PUSH;
+            return Outcome.PUSH;
         }
         if (dealer.isBlackJack()) {
-            return GameResult.DEFEAT;
+            return Outcome.DEFEAT;
         }
         if (player.isBlackJack()) {
-            return GameResult.BLACKJACK_WIN;
+            return Outcome.BLACKJACK_WIN;
         }
         return null;
     }
 
-    private GameResult determineResultByBust(Dealer dealer, Player player) {
+    private Outcome determineResultByBust(Dealer dealer, Player player) {
         if (player.getHand().isBust()) {
-            return GameResult.DEFEAT;
+            return Outcome.DEFEAT;
         }
         if (dealer.getHand().isBust()) {
-            return GameResult.WIN;
+            return Outcome.WIN;
         }
         return null;
     }
 
-    private GameResult determineResultByScore(Dealer dealer, Player player) {
+    private Outcome determineResultByScore(Dealer dealer, Player player) {
         int dealerTotalScore = dealer.getTotalCardScore();
         int playerTotalScore = player.getTotalCardScore();
 
         if (dealerTotalScore < playerTotalScore) {
-            return GameResult.WIN;
+            return Outcome.WIN;
         }
         if (dealerTotalScore > playerTotalScore) {
-            return GameResult.DEFEAT;
+            return Outcome.DEFEAT;
         }
-        return GameResult.PUSH;
+        return Outcome.PUSH;
     }
 }

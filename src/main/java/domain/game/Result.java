@@ -7,15 +7,15 @@ import java.util.*;
 
 public class Result {
     private static final int NEGATION_FACTOR = -1;
-    private final Map<Player, GameResult> playersResult;
+    private final Map<Player, Outcome> playersResult;
     private final BigDecimal dealerResult;
 
-    public Result(Map<Player, GameResult> playersResult) {
+    public Result(Map<Player, Outcome> playersResult) {
         this.playersResult = playersResult;
         this.dealerResult = calculateDealerResult(playersResult);
     }
 
-    public Map<Player, GameResult> getPlayersResult() {
+    public Map<Player, Outcome> getPlayersResult() {
         return Collections.unmodifiableMap(playersResult);
     }
 
@@ -23,10 +23,10 @@ public class Result {
         return dealerResult;
     }
 
-    private BigDecimal calculateDealerResult(Map<Player, GameResult> playersResult) {
+    private BigDecimal calculateDealerResult(Map<Player, Outcome> playersResult) {
         BigDecimal dealerResult = BigDecimal.ZERO;
         for (Player player : playersResult.keySet()) {
-            GameResult playerOutcome = playersResult.get(player);
+            Outcome playerOutcome = playersResult.get(player);
             BigDecimal playerBettingMoney = player.getBettingMoney();
             BigDecimal playerYield = playerOutcome.getYield();
             dealerResult = dealerResult.add(playerBettingMoney.multiply(playerYield));

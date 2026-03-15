@@ -2,7 +2,7 @@ package domain.game;
 
 import java.math.BigDecimal;
 
-public enum GameResult {
+public enum Outcome {
 
     WIN("승", BigDecimal.valueOf(1.0)),
     PUSH("무", BigDecimal.valueOf(0.0)),
@@ -12,7 +12,7 @@ public enum GameResult {
     private final String info;
     private final BigDecimal yield;
 
-    GameResult(String info, BigDecimal yield) {
+    Outcome(String info, BigDecimal yield) {
         this.info = info;
         this.yield = yield;
     }

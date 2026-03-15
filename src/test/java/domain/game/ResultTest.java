@@ -15,7 +15,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class ResultTest {
 
-    Map<Player, GameResult> playersResult;
+    Map<Player, Outcome> playersResult;
     Hand hand;
     Result result;
 
@@ -24,11 +24,11 @@ public class ResultTest {
         playersResult = new HashMap<>();
         hand = new Hand();
         playersResult.put(new Player(new ParticipantInfo("user1", hand),
-                new Money(BigDecimal.valueOf(30000))), GameResult.WIN);
+                new Money(BigDecimal.valueOf(30000))), Outcome.WIN);
         playersResult.put(new Player(new ParticipantInfo("user2", hand),
-                new Money(BigDecimal.valueOf(20000))), GameResult.DEFEAT);
+                new Money(BigDecimal.valueOf(20000))), Outcome.DEFEAT);
         playersResult.put(new Player(new ParticipantInfo("user3", hand),
-                new Money(BigDecimal.valueOf(10000))), GameResult.PUSH);
+                new Money(BigDecimal.valueOf(10000))), Outcome.PUSH);
         result = new Result(playersResult);
     }
 
