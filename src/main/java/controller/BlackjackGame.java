@@ -36,8 +36,8 @@ public class BlackjackGame {
 
     public void start() {
         Dealer dealer = Dealer.from();
-        List<ParticipantInitialInformation> participantInitialInformations = requestInitialInformations();
-        Players players = Players.from(participantInitialInformations);
+        List<ParticipantInitialInformation> participantInitialInformation = requestInitialInformation();
+        Players players = Players.from(participantInitialInformation);
 
         handOutInitialCard(dealer, players);
 
@@ -99,8 +99,8 @@ public class BlackjackGame {
         view.printInitialHandOutResult(players.displayNames(), INITIAL_CARD_DRAW_COUNT);
     }
 
-    private List<ParticipantInitialInformation> requestInitialInformations() {
-        return view.requestInitialInformations();
+    private List<ParticipantInitialInformation> requestInitialInformation() {
+        return view.requestInitialInformation();
     }
 
 }

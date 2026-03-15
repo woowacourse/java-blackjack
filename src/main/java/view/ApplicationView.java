@@ -29,7 +29,7 @@ public class ApplicationView {
         return new ApplicationView(reader, writer);
     }
 
-    public List<ParticipantInitialInformation> requestInitialInformations() {
+    public List<ParticipantInitialInformation> requestInitialInformation() {
         List<ParticipantName> participantNames = requestPlayerNames();
         return participantNames.stream().map(name -> {
             BetAmount betAmount = requestBetAmount(name.name());

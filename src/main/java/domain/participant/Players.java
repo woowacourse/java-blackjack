@@ -18,8 +18,8 @@ public class Players {
         this.playerList = playerList;
     }
 
-    public static Players from(List<ParticipantInitialInformation> initialInformations) {
-        return new Players(initialInformations.stream()
+    public static Players from(List<ParticipantInitialInformation> initialInformation) {
+        return new Players(initialInformation.stream()
                 .map(ParticipantInitialInformation::toPlayer)
                 .toList()
         );
