@@ -15,10 +15,6 @@ public class BlackjackResult {
         calculateMatchResult(dealer, players);
     }
 
-    public static BlackjackResult from(Dealer dealer, Players players) {
-        return new BlackjackResult(dealer, players);
-    }
-
     private void calculateMatchResult(Dealer dealer, Players players) {
         for (Player player : players) {
             determinePlayerResult(dealer, player);
@@ -30,6 +26,10 @@ public class BlackjackResult {
         MatchCase matchCase = matchJudge.judge();
         playerResultMap.put(player, matchCase);
         matchCase.increaseMatchCountOf(this);
+    }
+
+    public static BlackjackResult from(Dealer dealer, Players players) {
+        return new BlackjackResult(dealer, players);
     }
 
     public void increaseDealerWinCount() {

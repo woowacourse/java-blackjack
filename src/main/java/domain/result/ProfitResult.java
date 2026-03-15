@@ -12,16 +12,16 @@ public class ProfitResult {
         calculateProfits(blackjackResult);
     }
 
-    public static ProfitResult from(BlackjackResult blackjackResult) {
-        return new ProfitResult(blackjackResult);
-    }
-
     private void calculateProfits(BlackjackResult blackjackResult) {
         for (Map.Entry<Player, MatchCase> entry : blackjackResult.getPlayerResultMap().entrySet()) {
             Player player = entry.getKey();
             MatchCase matchCase = entry.getValue();
             playerProfitMap.put(player.getName(), player.calculateProfit(matchCase));
         }
+    }
+
+    public static ProfitResult from(BlackjackResult blackjackResult) {
+        return new ProfitResult(blackjackResult);
     }
 
     public Map<String, Long> getPlayerProfitMap() {

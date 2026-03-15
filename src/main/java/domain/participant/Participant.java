@@ -15,10 +15,6 @@ public abstract class Participant {
         this.name = name;
     }
 
-    public int getFinalScore() {
-        return hand.calculateFinalScore();
-    }
-
     public boolean isBust() {
         return hand.isBust();
     }
@@ -46,5 +42,9 @@ public abstract class Participant {
 
     public boolean isBlackjack() {
         return hand.getSize() == GameConstant.NUM_OF_TO_BLACKJACK && getFinalScore() == GameConstant.BLACKJACK_SCORE;
+    }
+
+    public int getFinalScore() {
+        return hand.calculateFinalScore();
     }
 }

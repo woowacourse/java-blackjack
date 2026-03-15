@@ -49,6 +49,19 @@ public class BlackjackController {
         return doRetry(inputView::readNames);
     }
 
+    private <T> T doRetry(Supplier<T> action) {
+        int retryCount = 0;
+        while (retryCount < MAX_RETRY) {
+            try {
+                return action.get();
+            } catch (BlackjackException e) {
+                retryCount++;
+                System.out.println("[ERROR] " + e.getMessage());
+            }
+        }
+        throw new BlackjackException("입력 횟수를 초과했습니다.");
+    }
+
     private Players createPlayers(List<String> names) {
         List<Player> playerList = new ArrayList<>();
         for (String name : names) {
@@ -124,18 +137,5 @@ public class BlackjackController {
         BlackjackResult blackjackResult = BlackjackResult.from(dealer, players);
         ProfitResult profitResult = ProfitResult.from(blackjackResult);
         outputView.displayMatchResult(BlackjackResultDto.from(profitResult));
-    }
-
-    private <T> T doRetry(Supplier<T> action) {
-        int retryCount = 0;
-        while (retryCount < MAX_RETRY) {
-            try {
-                return action.get();
-            } catch (BlackjackException e) {
-                retryCount++;
-                System.out.println("[ERROR] " + e.getMessage());
-            }
-        }
-        throw new BlackjackException("입력 횟수를 초과했습니다.");
     }
 }

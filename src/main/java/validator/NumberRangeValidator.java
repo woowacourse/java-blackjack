@@ -8,13 +8,13 @@ public class NumberRangeValidator implements Validator {
     private final long startInclusive;
     private final long endInclusive;
 
+    public NumberRangeValidator() {
+        this(Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+
     public NumberRangeValidator(long startInclusive, long endExclusive) {
         this.startInclusive = startInclusive;
         this.endInclusive = endExclusive;
-    }
-
-    public NumberRangeValidator() {
-        this(Long.MIN_VALUE, Long.MAX_VALUE);
     }
 
     public static Validator createPositiveRange() {

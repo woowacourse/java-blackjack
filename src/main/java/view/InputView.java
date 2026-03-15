@@ -23,6 +23,18 @@ public class InputView {
         return Parser.splitBy(input, DELIMITER);
     }
 
+    private String readInput(List<Validator> validators) {
+        try {
+            String input = new Scanner(System.in).nextLine();
+            for (Validator validator : validators) {
+                validator.validate(input);
+            }
+            return input;
+        } catch (NoSuchElementException e) {
+            throw new BlankInputException();
+        }
+    }
+
     public boolean readAdditionalCard(String name) {
         System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         String input = readInput(List.of(
@@ -41,17 +53,5 @@ public class InputView {
         ));
 
         return new Bet(Long.parseLong(input));
-    }
-
-    private String readInput(List<Validator> validators) {
-        try {
-            String input = new Scanner(System.in).nextLine();
-            for (Validator validator : validators) {
-                validator.validate(input);
-            }
-            return input;
-        } catch (NoSuchElementException e) {
-            throw new BlankInputException();
-        }
     }
 }
