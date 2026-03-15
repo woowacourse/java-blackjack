@@ -1,5 +1,6 @@
 package domain;
 
+import domain.model.Bets;
 import domain.model.Player;
 import domain.model.PlayerStatus;
 import domain.service.CardDistributor;
@@ -64,11 +65,12 @@ public class PlayerTest {
     void 플레이어_최종_수익_테스트() {
         // given
         Player jason = Player.of("jason");
-        jason.bet(20000);
+        Bets bets = new Bets();
+        bets.addBet(jason, 20000);
         jason.changeStatus(PlayerStatus.BLACK_JACK);
 
         // then
-        int finalMoney = jason.getFinalMoney();
+        int finalMoney = bets.getFinalMoney(jason);
 
         // when
         assertThat(finalMoney).isEqualTo(30000);

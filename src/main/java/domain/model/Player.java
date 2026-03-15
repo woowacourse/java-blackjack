@@ -9,7 +9,6 @@ public class Player implements WithDeck {
     private final String name;
     private Deck deck;
     private PlayerStatus playerStatus = PlayerStatus.NONE;
-    private Bet bet;
 
     private Player(String name, Deck deck) {
         this.name = name;
@@ -44,19 +43,9 @@ public class Player implements WithDeck {
         return deck.getCards();
     }
 
-    public int getBetAmount() {return bet.getBetAmount(); }
-
     // 플레이어에게 초기 생성된 카드 2개가 있는 덱을 부여
     public void assignDeck(Deck deck) {
         this.deck = deck;
-    }
-
-    public void bet(int betAmount) {
-        bet = Bet.of(betAmount);
-    }
-
-    public int getFinalMoney() {
-        return bet.getFinalMoney(playerStatus);
     }
 
     // 추가 카드 부여

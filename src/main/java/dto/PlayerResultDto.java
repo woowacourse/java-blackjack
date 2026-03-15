@@ -12,12 +12,12 @@ public record PlayerResultDto(
         int sum,
         int finalMoney
 ) {
-    public static PlayerResultDto of(Player player, int finalScore) {
+    public static PlayerResultDto of(Player player, int finalScore, int finalMoney) {
         List<Card> cards = player.getDeck().getCards();
         List<CardDto> playerCards = new ArrayList<>();
         for (Card card : cards) {
             playerCards.add(CardDto.of(card));
         }
-        return new PlayerResultDto(player.getName(), playerCards, finalScore, player.getFinalMoney());
+        return new PlayerResultDto(player.getName(), playerCards, finalScore, finalMoney);
     }
 }

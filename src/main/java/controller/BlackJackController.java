@@ -1,5 +1,6 @@
 package controller;
 
+import domain.model.Bets;
 import domain.model.Player;
 import domain.service.BlackJackService;
 import dto.InitialDto;
@@ -85,7 +86,7 @@ public class BlackJackController {
             outputView.outputErrorMessage(e.getMessage());
             getBetMoney(player);
         }
-        player.bet(money);
+        blackJackService.addBet(player, money);
     }
 
     public String readYesOrNo(Player player) {

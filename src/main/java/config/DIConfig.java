@@ -1,6 +1,7 @@
 package config;
 
 import controller.BlackJackController;
+import domain.model.Bets;
 import domain.service.BlackJackService;
 import domain.service.CardDistributor;
 import domain.service.CardFactory;
@@ -17,6 +18,7 @@ public class DIConfig {
     private PlayerRepository playerRepository = new PlayerRepository();
     private CardRepository cardRepository = new CardRepository();
     private DealerRepository dealerRepository = new DealerRepository();
+    private final Bets bets = new Bets();
 
     public BlackJackController blackJackController() {
         return new BlackJackController(
@@ -33,14 +35,16 @@ public class DIConfig {
                 playerRepository(),
                 dealerRepository(),
                 cardDistributor(),
-                judgementService()
+                judgementService(),
+                bets
         );
     }
 
     public JudgementService judgementService() {
         return new JudgementService(
                 playerRepository(),
-                dealerRepository()
+                dealerRepository(),
+                bets
         );
     }
 
