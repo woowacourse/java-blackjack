@@ -23,8 +23,14 @@ public enum MatchResult {
         }
 
         if (player.getScore() == dealer.getScore()) {
-            if (player.isBlackJack() && !dealer.isBlackJack()) return MatchResult.WIN;
-            if (!player.isBlackJack() && dealer.isBlackJack()) return MatchResult.LOSE;
+            if (player.isBlackJack() && !dealer.isBlackJack()) {
+                return MatchResult.WIN;
+            }
+
+            if (!player.isBlackJack() && dealer.isBlackJack()) {
+                return MatchResult.LOSE;
+            }
+
             return MatchResult.DRAW;
         }
 
