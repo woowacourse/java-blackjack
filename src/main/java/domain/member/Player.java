@@ -52,10 +52,6 @@ public class Player {
         return member.handValue();
     }
 
-    public List<Card> showFirstCards() {
-        return member.handCards();
-    }
-
     public String getName() {
         return member.getName();
     }

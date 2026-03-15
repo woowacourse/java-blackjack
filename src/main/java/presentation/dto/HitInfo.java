@@ -2,7 +2,6 @@ package presentation.dto;
 
 import domain.card.Card;
 import domain.member.Dealer;
-import domain.member.Member;
 import domain.member.Player;
 import java.util.List;
 
@@ -15,12 +14,12 @@ public record HitInfo(
         return new HitInfo(dealer.getName(), getCardNames(dealer.showFirstCards()));
     }
 
-    public static List<HitInfo> firstCardFrom(List<Player> members) {
-        return members.stream()
-                .map(member ->
+    public static List<HitInfo> firstCardFrom(List<Player> players) {
+        return players.stream()
+                .map(player ->
                         new HitInfo(
-                                member.getName(),
-                                getCardNames(member.showFirstCards())
+                                player.getName(),
+                                getCardNames(player.handCards())
                         )
                 ).toList();
     }
