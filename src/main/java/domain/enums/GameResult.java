@@ -14,7 +14,7 @@ public enum GameResult {
         this.profitRatio = profitRatio;
     }
 
-    public double getProfitRatio() {
-        return profitRatio;
+    public int calculateProfit(int betAmount) {
+        return (int) (betAmount * this.profitRatio);
     }
 }

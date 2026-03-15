@@ -25,7 +25,7 @@ public class BetProfit {
                     int betAmount = betHistory.get(playerName);
                     GameResult gameResult = playerResults.get(playerName);
 
-                    betAmount = (int) (betAmount * gameResult.getProfitRatio());
+                    betAmount = gameResult.calculateProfit(betAmount);
 
                     betProfit.put(playerName, betAmount);
                 }
