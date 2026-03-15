@@ -1,11 +1,6 @@
 package domain.participant;
 
-import static constant.GameRule.MAX_NAME_LENGTH;
-import static constant.GameRule.MAX_PLAYER_NUMBER;
-import static constant.GameRule.MIN_NAME_LENGTH;
-import static constant.GameRule.MIN_PLAYER_NUMBER;
 import static message.ErrorMessage.PLAYER_NAME_DUPLICATED;
-import static message.ErrorMessage.PLAYER_NAME_OUT_OF_RANGE;
 import static message.ErrorMessage.PLAYER_NOT_FOUND;
 import static message.ErrorMessage.PLAYER_NUMBER_OUT_OF_RANGE;
 
@@ -17,6 +12,9 @@ import java.util.List;
 import java.util.Set;
 
 public class Players {
+    public static final int MIN_PLAYER_NUMBER = 1;
+    public static final int MAX_PLAYER_NUMBER = 7;
+
     private final List<Player> players = new ArrayList<>();
 
     public Players(List<String> names) {
@@ -27,15 +25,8 @@ public class Players {
     }
 
     private void validatePlayers(List<String> names) {
-        names.forEach(this::validateNameLength);
         validateDuplicatedName(names);
         validatePlayerNumber(names);
-    }
-
-    private void validateNameLength(String name) {
-        if (name.length() < MIN_NAME_LENGTH || name.length() > MAX_NAME_LENGTH) {
-            throw new IllegalArgumentException(PLAYER_NAME_OUT_OF_RANGE.getMessage());
-        }
     }
 
     private void validateDuplicatedName(List<String> names) {
@@ -69,18 +60,19 @@ public class Players {
                 .orElseThrow(() -> new IllegalArgumentException(PLAYER_NOT_FOUND.getMessage()));
     }
 
-    public List<Result> decideAllResults(int dealerScore, boolean dealerBust) {
-        List<Result> results = new ArrayList<>();
-        for (Player player : players) {
-            Result playerResult = player.calculateResult(dealerScore, dealerBust);
-            results.add(playerResult);
-        }
-        return results;
-    }
-
     public boolean checkScoreUnderCriterion(String name) {
         Player foundPlayer = findPlayerByName(name);
         return foundPlayer.checkScoreUnderCriterion();
+    }
+
+    public Result calculatePlayerResult(String name, Dealer dealer) {
+        Player foundPlayer = findPlayerByName(name);
+        return Result.calculatePlayerResult(dealer, foundPlayer);
+    }
+
+    public int calculatePlayerScore(String name) {
+        Player foundPlayer = findPlayerByName(name);
+        return foundPlayer.calculateScore();
     }
 
     public List<String> getAllPlayerNames() {
@@ -92,15 +84,5 @@ public class Players {
     public List<Card> getPlayerCards(String name) {
         Player foundPlayer = findPlayerByName(name);
         return foundPlayer.getCards();
-    }
-
-    public Result getPlayerResult(String name, int dealerScore, boolean dealerBust) {
-        Player foundPlayer = findPlayerByName(name);
-        return foundPlayer.calculateResult(dealerScore, dealerBust);
-    }
-
-    public int getPlayerScore(String name) {
-        Player foundPlayer = findPlayerByName(name);
-        return foundPlayer.getScore();
     }
 }

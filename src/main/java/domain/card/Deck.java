@@ -11,7 +11,8 @@ import java.util.Queue;
 public class Deck {
     private final Queue<Card> cards = new ArrayDeque<>();
 
-    public Deck(List<Card> cards) {
+    public Deck(CardGenerator cardGenerator) {
+        List<Card> cards = cardGenerator.generate();
         validateDuplicatedCards(cards);
         this.cards.addAll(cards);
     }
@@ -26,14 +27,14 @@ public class Deck {
         }
     }
 
-    public List<Card> getCards() {
-        return List.copyOf(cards);
-    }
-
     public Card drawCard() {
         if (cards.isEmpty()) {
             throw new NoSuchElementException(DECK_IS_EMPTY.getMessage());
         }
         return cards.poll();
+    }
+
+    public List<Card> getCards() {
+        return List.copyOf(cards);
     }
 }

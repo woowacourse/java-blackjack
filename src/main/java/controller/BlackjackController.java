@@ -2,61 +2,81 @@ package controller;
 
 import domain.Game;
 import domain.card.Deck;
-import domain.enums.Result;
-import domain.participant.Dealer;
+import domain.card.ShuffledCardGenerator;
+import domain.participant.BetAmounts;
 import domain.participant.Players;
 import dto.CardDto;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Supplier;
-import service.BlackjackService;
-import util.InputParser;
+import view.InputParser;
 import view.InputView;
 import view.OutputView;
 
 public class BlackjackController {
-    private final BlackjackService blackjackService;
+    public void start() {
+        Deck deck = new Deck(new ShuffledCardGenerator());
+        Game game = makeGame(deck);
 
-    public BlackjackController(BlackjackService blackjackService) {
-        this.blackjackService = blackjackService;
+        playGame(game, deck);
     }
 
-    public void start() {
+    private Game makeGame(Deck deck) {
         Players players = retryOnException(this::makePlayers);
-        Deck deck = blackjackService.makeDeck();
-        Dealer dealer = new Dealer();
-        Game game = blackjackService.makeGame(players, dealer);
-
-        blackjackService.initializeGame(game, deck);
-        printParticipantCards(players, dealer);
-
-        playTurn(game, players, deck);
-        printResult(game, dealer, players);
+        BetAmounts betAmounts = retryOnException(() -> makeBetAmounts(players.getAllPlayerNames()));
+        return new Game(players, betAmounts, deck);
     }
 
     private Players makePlayers() {
         String input = InputView.askPlayerNames();
-        return blackjackService.makePlayers(input);
+        List<String> names = InputParser.parseNames(input);
+        return new Players(names);
     }
 
-    private void printParticipantCards(Players players, Dealer dealer) {
-        OutputView.printParticipantCards(CardDto.fromCards(dealer.getCards()),
-                blackjackService.makePlayerCardDtos(players));
+    private void playGame(Game game, Deck deck) {
+        printInitCards(game);
+        playTurn(game, deck);
+        printResult(game);
     }
 
-    private void playTurn(Game game, Players players, Deck deck) {
-        for (String name : players.getAllPlayerNames()) {
-            playPlayerTurn(game, players, name, deck);
+    private BetAmounts makeBetAmounts(List<String> names) {
+        BetAmounts betAmounts = new BetAmounts(names);
+        for (String name : names) {
+            int amount = askBetAmount(name);
+            betAmounts.addBetAmount(name, amount);
+        }
+        return betAmounts;
+    }
+
+    private int askBetAmount(String name) {
+        String input = InputView.askBetAmount(name);
+        return InputParser.parseBetAmount(input);
+    }
+
+    private void printInitCards(Game game) {
+        List<String> names = game.getAllPlayerNames();
+        OutputView.printDistributeComplete(names);
+        OutputView.printDealerFirstCard(CardDto.fromCards(game.getDealerCards()));
+        for (String name : names) {
+            OutputView.printPlayerCards(name, CardDto.fromCards(game.getPlayerCards(name)));
+        }
+        OutputView.printLineSeparator();
+    }
+
+    private void playTurn(Game game, Deck deck) {
+        for (String name : game.getAllPlayerNames()) {
+            playPlayerTurn(game, name, deck);
         }
         playDealerTurn(game, deck);
     }
 
-    private void playPlayerTurn(Game game, Players players, String name, Deck deck) {
-        boolean shouldContinue = true;
-        while (shouldContinue && !game.isPlayerBust(name)) {
-            shouldContinue = retryOnException(() -> isPlayerWantHit(name));
-            blackjackService.playPlayerTurn(game, name, deck, shouldContinue);
-            OutputView.printPlayerCards(name, CardDto.fromCards(players.getPlayerCards(name)));
+    private void playPlayerTurn(Game game, String name, Deck deck) {
+        boolean wantHit = true;
+        while (!game.isPlayerEnd(name, wantHit)) {
+            wantHit = retryOnException(() -> isPlayerWantHit(name));
+            game.playerHit(name, deck, game.isPlayerEnd(name, wantHit));
+            OutputView.printPlayerCards(name, CardDto.fromCards(game.getPlayerCards(name)));
         }
     }
 
@@ -66,30 +86,45 @@ public class BlackjackController {
     }
 
     public void playDealerTurn(Game game, Deck deck) {
-        while (!game.isDealerBust()) {
-            blackjackService.playDealerTurn(game, deck);
+        while (!game.isDealerEnd()) {
+            game.dealerHit(deck);
             OutputView.printDealerHit();
         }
     }
 
-    private void printResult(Game game, Dealer dealer, Players players) {
-        OutputView.printDealerCardsWithScore(CardDto.fromCards(dealer.getCards()), game.getDealerScore());
+    private void printResult(Game game) {
+        printFinalCards(game);
+        printProfits(game);
+    }
 
-        Map<String, Result> playerResults = blackjackService.makePlayerResults(players, game);
-        for (Map.Entry<String, List<CardDto>> entry : blackjackService.makePlayerCardDtos(players).entrySet()) {
-            OutputView.printPlayerCardsWithScore(entry.getKey(), entry.getValue(), game.getPlayerScore(entry.getKey()));
+    private void printFinalCards(Game game) {
+        OutputView.printDealerCardsWithScore(CardDto.fromCards(game.getDealerCards()), game.calculateDealerScore());
+        for (String name : game.getAllPlayerNames()) {
+            OutputView.printPlayerCardsWithScore(name, CardDto.fromCards(game.getPlayerCards(name)),
+                    game.calculatePlayerScore(name));
         }
+    }
 
-        OutputView.printGameResult(game.getDealerResult(), playerResults);
+    private void printProfits(Game game) {
+        Map<String, Integer> playerProfits = game.calculatePlayerProfits();
+        int dealerProfit = game.calculateDealerProfit();
+        OutputView.printGameResult(dealerProfit, playerProfits);
     }
 
     private <T> T retryOnException(Supplier<T> operation) {
-        while (true) {
-            try {
-                return operation.get();
-            } catch (IllegalArgumentException e) {
-                OutputView.printErrorMessage(e.getMessage());
-            }
+        Optional<T> result = tryOperation(operation);
+        while (result.isEmpty()) {
+            result = tryOperation(operation);
+        }
+        return result.orElseThrow();
+    }
+
+    private <T> Optional<T> tryOperation(Supplier<T> operation) {
+        try {
+            return Optional.of(operation.get());
+        } catch (IllegalArgumentException exception) {
+            OutputView.printErrorMessage(exception.getMessage());
+            return Optional.empty();
         }
     }
 }
