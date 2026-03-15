@@ -15,12 +15,20 @@ public class CardDeck {
     private final PickStrategy pickStrategy;
 
     private CardDeck(List<Card> cards, PickStrategy pickStrategy) {
-        if (cards.isEmpty()) {
-            throw new IllegalStateException("cards가 null입니다.");
-        }
+        validate(cards, pickStrategy);
 
         this.cards = cards;
         this.pickStrategy = pickStrategy;
+    }
+
+    private void validate(List<Card> cards, PickStrategy pickStrategy) {
+        if (cards == null || cards.size() != CARD_DECK_SIZE) {
+            throw new IllegalArgumentException("카드덱이 null이거나 카드 개수가"  + CARD_DECK_SIZE + "가 아닙니다.");
+        }
+
+        if (pickStrategy == null) {
+            throw new IllegalArgumentException("pickStrategy가 null입니다.");
+        }
     }
 
     public static CardDeck of(PickStrategy pickStrategy) {
@@ -28,11 +36,7 @@ public class CardDeck {
 
         Arrays.stream(Suit.values())
                 .forEach(suit -> Arrays.stream(Rank.values())
-                        .forEach(rank -> cards.add(Card.openedCard(rank, suit))));
-
-        if (cards.size() != CARD_DECK_SIZE) {
-            throw new IllegalStateException("덱이 잘못 생성됐습니다.");
-        }
+                        .forEach(rank -> cards.add(Card.createOpenedCard(rank, suit))));
 
         return new CardDeck(cards, pickStrategy);
     }

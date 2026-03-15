@@ -3,7 +3,6 @@ package blackjack.model.participant;
 import blackjack.model.card.Card;
 import blackjack.model.cardDeck.CardDeck;
 import blackjack.model.Hands;
-import blackjack.model.result.Result;
 
 public class Dealer extends Participant {
 
@@ -30,27 +29,5 @@ public class Dealer extends Participant {
 
     public boolean canPick() {
         return !hands.isTotalScoreOver(PICK_THRESHOLD);
-    }
-
-    public Result determineResultOf(Player player) {
-        if (player.isBust()) {
-            return Result.LOSE;
-        }
-
-        if (this.isBust()) {
-            return Result.WIN;
-        }
-
-        if (hands.isTotalScoreOver(
-                player.getCurrentTotalScore())
-        ) {
-            return Result.LOSE;
-        }
-
-        if (player.getCurrentTotalScore() > hands.calculateTotalScore()) {
-            return Result.WIN;
-        }
-
-        return Result.DRAW;
     }
 }

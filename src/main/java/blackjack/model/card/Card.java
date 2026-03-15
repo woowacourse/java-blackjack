@@ -27,7 +27,7 @@ public class Card {
         }
     }
 
-    public static Card openedCard(
+    public static Card createOpenedCard(
             Rank rank,
             Suit suit
     ) {
