@@ -19,9 +19,9 @@ public class BlackjackGameManager {
     private final BlackjackJudge blackjackJudge;
     private Participants participants;
 
-    public BlackjackGameManager() {
-        this.cardMachine = new CardMachine();
-        this.blackjackJudge = new BlackjackJudge();
+    public BlackjackGameManager(CardMachine cardMachine, BlackjackJudge blackjackJudge) {
+        this.cardMachine = cardMachine;
+        this.blackjackJudge = blackjackJudge;
     }
 
     public void createParticipants(List<PlayerName> playerNames, List<BetAmount> betAmounts) {
