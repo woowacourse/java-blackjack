@@ -4,6 +4,7 @@ import static model.game.Blackjack.BLACKJACK_SCORE;
 import static model.game.Blackjack.DEALOUT_DRAW_COUNT;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -135,6 +136,22 @@ public class BlackJackController {
     }
 
     private void proceedFinalPhase(Blackjack blackjack, Participants participants) {
+        printHandsWithScore(participants);
+
+        LinkedHashMap<String, Long> profitByName = blackjack.calculateFinalResult()
+                .entrySet()
+                .stream()
+                .collect(Collectors.toMap(
+                        Entry::getKey,
+                        entry -> entry.getValue().longValue(),
+                        (e1, e2) -> e1,
+                        LinkedHashMap::new
+                ));
+
+        outputView.printFinalProfit(profitByName);
+    }
+
+    private void printHandsWithScore(Participants participants) {
         for (Participant participant : participants.asList()) {
             List<Card> hand = participant.open();
             List<String> result = hand.stream()
@@ -143,7 +160,5 @@ public class BlackJackController {
 
             outputView.printHandsWithScore(participant.getName(), result, participant.calculateScore());
         }
-
-        outputView.printFinalProfit(blackjack.calculateFinalResult());
     }
 }

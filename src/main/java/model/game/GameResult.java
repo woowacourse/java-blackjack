@@ -1,6 +1,7 @@
 package model.game;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import model.participant.Dealer;
 import model.participant.Player;
 
@@ -42,7 +43,9 @@ public enum GameResult {
     }
 
     public BigDecimal getProfitFrom(BettingAmount amount) {
-        return amount.getAmount().multiply(profitRate);
+        return amount.getAmount()
+                .multiply(profitRate)
+                .setScale(0, RoundingMode.DOWN);
     }
 
     private static GameResult calculateFromScore(Dealer dealer, Player player) {
