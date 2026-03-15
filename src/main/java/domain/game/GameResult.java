@@ -10,6 +10,8 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
+import static domain.game.ProfitCalculator.calculatePlayerProfit;
+
 public class GameResult {
     private final Map<Participant, BigDecimal> participantsProfits = new HashMap<>();
 
@@ -27,25 +29,6 @@ public class GameResult {
 
     public ParticipantResultInfo participantResultInfo(Participant participant) {
         return new ParticipantResultInfo(participant.name(), participantsProfits.get(participant));
-    }
-
-    private BigDecimal calculatePlayerProfit(Player player, Dealer dealer) {
-        WinningStatus winningStatus = WinningStatus.of(player, dealer);
-        BigDecimal betAmount = player.betAmount();
-
-        if (player.isBlackjack() && winningStatus == WinningStatus.WIN) {
-            return betAmount.multiply(BigDecimal.valueOf(1.5));
-        }
-
-        if (winningStatus == WinningStatus.WIN) {
-            return betAmount;
-        }
-
-        if (winningStatus == WinningStatus.TIE) {
-            return BigDecimal.ZERO;
-        }
-
-        return betAmount.negate();
     }
 }
 
