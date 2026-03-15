@@ -1,22 +1,23 @@
 package controller;
 
-import static config.BlackjackGameConstant.*;
+import static config.BlackjackGameConstant.DEFAULT_CARD_DRAW_COUNT;
+import static config.BlackjackGameConstant.INITIAL_CARD_DRAW_COUNT;
 
+import config.BlackjackGameConfiguration;
+import domain.card.CardDeck;
+import domain.card.CardDeckInitializer;
+import domain.participant.Dealer;
 import domain.participant.ParticipantInitialInformation;
+import domain.participant.Player;
+import domain.participant.Players;
+import domain.participant.dto.ParticipantHandDto;
 import domain.participant.dto.ParticipantHandDtoMapper;
 import domain.result.BettingResult;
 import domain.result.GameResultAnalyzer;
 import domain.result.dto.BettingProfitDto;
-import domain.card.CardDeck;
-import domain.card.CardDeckInitializer;
-import config.BlackjackGameConfiguration;
-import domain.participant.Dealer;
-import domain.participant.Player;
-import domain.participant.Players;
 import domain.result.dto.ParticipantGameResultDto;
-import view.ApplicationView;
-
 import java.util.List;
+import view.ApplicationView;
 
 public class BlackjackGame {
 
@@ -63,12 +64,14 @@ public class BlackjackGame {
 
     private void printAllParticipantsFinalHandResult(Dealer dealer, Players players) {
         view.printParticipantResult(ParticipantGameResultDto.from(dealer));
-        players.toParticipantGameResultDtos().forEach(view::printParticipantResult);
+        players.stream()
+                .forEach(player -> view.printParticipantResult(ParticipantGameResultDto.from(player)));
     }
 
     private void printInitialParticipantsHand(Dealer dealer, Players players) {
         view.printParticipantHand(ParticipantHandDtoMapper.map(dealer, STARTING_REVEALED_CARD_COUNT));
-        view.printPlayerHands(players.toParticipantHandDtos());
+        players.stream()
+                .forEach(player -> view.printParticipantHand(ParticipantHandDto.from(player)));
     }
 
     private void proceedDealersTurn(Dealer dealer) {

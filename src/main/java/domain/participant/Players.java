@@ -3,9 +3,6 @@ package domain.participant;
 import static config.BlackjackGameConstant.INITIAL_CARD_DRAW_COUNT;
 
 import domain.card.CardDeck;
-import domain.participant.dto.ParticipantHandDto;
-import domain.participant.dto.ParticipantHandDtoMapper;
-import domain.result.dto.ParticipantGameResultDto;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -37,18 +34,6 @@ public class Players {
     public List<String> displayNames() {
         return playerList.stream()
                 .map(Player::toDisplayMyName)
-                .toList();
-    }
-
-    public List<ParticipantHandDto> toParticipantHandDtos() {
-        return playerList.stream()
-                .map(ParticipantHandDtoMapper::map)
-                .toList();
-    }
-
-    public List<ParticipantGameResultDto> toParticipantGameResultDtos() {
-        return playerList.stream()
-                .map(ParticipantGameResultDto::from)
                 .toList();
     }
 
