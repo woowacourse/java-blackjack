@@ -1,9 +1,10 @@
 package domain.participant;
 
+import domain.card.Card;
 import domain.card.Cards;
 import domain.card.Hand;
+import java.util.List;
 import domain.state.HandState;
-import domain.card.Score;
 
 public abstract class Participant {
     private final Hand hand;
@@ -16,12 +17,12 @@ public abstract class Participant {
         hand.addCard(cards.draw());
     }
 
-    public Hand getCardList() {
-        return hand;
+    public List<Card> getCardList() {
+        return hand.getCards();
     }
 
-    public Score getScore() {
-        return hand.getScore();
+    public void addCardForTest(final Card card) {
+        hand.addCard(card);
     }
 
     public int getResult() {
@@ -30,6 +31,10 @@ public abstract class Participant {
 
     public boolean checkBust() {
         return hand.checkBust();
+    }
+
+    public boolean isDealerDrawScore() {
+        return hand.isDealerDrawScore();
     }
 
     public HandState getHandState(){

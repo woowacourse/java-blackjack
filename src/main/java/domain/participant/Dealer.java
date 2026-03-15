@@ -4,4 +4,8 @@ public final class Dealer extends Participant {
     public Dealer() {
         super();
     }
+
+    public boolean shouldDrawCard() {
+        return isDealerDrawScore();
+    }
 }

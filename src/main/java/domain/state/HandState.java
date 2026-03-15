@@ -1,9 +1,13 @@
 package domain.state;
 
 public enum HandState {
-    NORMAL {
+    HIT {
         @Override
         public Outcome against(HandState dealerState, int playerScore, int dealerScore) {
+            if (dealerState.isBust()) {
+                return Outcome.WIN;
+            }
+
             if (playerScore > dealerScore) {
                 return Outcome.WIN;
             }
@@ -41,11 +45,11 @@ public enum HandState {
             if (isInitialCards) {
                 return HandState.BLACKJACK;
             }
-            return HandState.NORMAL;
+            return HandState.HIT;
         }
 
         if (score < 21) {
-            return NORMAL;
+            return HIT;
         }
 
         return BUST;
@@ -59,7 +63,7 @@ public enum HandState {
         return this == BLACKJACK;
     }
 
-    public boolean isNormal() {
-        return this == NORMAL;
+    public boolean isHit() {
+        return this == HIT;
     }
 }
