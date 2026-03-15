@@ -12,11 +12,13 @@ class PlayerTest {
     Player bustPlayer = Player.of(Name.from("pobi"), new Hand(new ArrayList<>(List.of(
             Card.of(CardNumber.J, CardShape.CLOVER),
             Card.of(CardNumber.K, CardShape.HEART),
-            Card.of(CardNumber.Q, CardShape.DIAMOND)))));
+            Card.of(CardNumber.Q, CardShape.DIAMOND)))),
+            BettingMoney.of(1000));
 
     Player normalPlayer = Player.of(Name.from("jason"), new Hand(new ArrayList<>(List.of(
             Card.of(CardNumber.J, CardShape.CLOVER),
-            Card.of(CardNumber.Q, CardShape.DIAMOND)))));
+            Card.of(CardNumber.Q, CardShape.DIAMOND)))),
+            BettingMoney.of(2000));
 
     @Test
     void 플레이어_카드_추가_확인() {
