@@ -94,7 +94,7 @@ class PlayersTest {
 
     @Test
     @DisplayName("버스트인 플레이어들은 최종 수익을 -1 * 배당금액으로 처리한다.")
-    void applyBust_bust_players() {
+    void applyBust_lose_players() {
         //given
         players.pickInitialCards(mustPickTen);
         players.perform(player -> player.pickAdditionalCard(mustPickTen));
@@ -111,7 +111,7 @@ class PlayersTest {
 
     @Test
     @DisplayName("버스트이 아닌 플레이어들은 최종 수익을 배당금액으로 처리한다.")
-    void applyBust_not_bust_players() {
+    void applyBust_not_lose_players() {
         //given
         players.pickInitialCards(mustPickTen);
 
@@ -127,7 +127,7 @@ class PlayersTest {
 
     @Test
     @DisplayName("딜러가 버스트이면, 버스트가 아닌 플레이어의 최종 수익은 배팅 금액으로 처리한다.")
-    void award_prize_when_dealer_bust() {
+    void award_prize_when_dealer_lose() {
         //given
         Dealer dealer =  new Dealer();
         dealer.pickAdditionalCard(mustPickTen);
@@ -147,7 +147,7 @@ class PlayersTest {
 
     @Test
     @DisplayName("딜러와 플레이어가 버스트가 아니고 플레이어 점수가 딜러 점수 이상이면(단 플레이어는 블랙잭이 아니다), 최종 수익을 배팅 금액으로 처리한다.")
-    void award_prize_when_dealer_player_are_not_bust_win() {
+    void award_prize_when_dealer_player_are_not_lose_win() {
         //given
         players.perform(winner -> {
             winner.pickAdditionalCard(mustPickTen);
@@ -171,7 +171,7 @@ class PlayersTest {
 
     @Test
     @DisplayName("딜러와 플레이어가 버스트가 아니고 플레이어 점수가 딜러 점수 미만이면, 최종 수익을 -1 * 배당 금액으로 처리한다.")
-    void award_prize_when_dealer_player_are_not_bust_lose() {
+    void award_prize_when_dealer_player_are_not_lose_lose() {
         //given
         players.perform(loser -> {
             loser.pickAdditionalCard(mustPickFive);

@@ -54,7 +54,7 @@ public class Players {
                 players.stream()
                         .map(player -> {
                             if (player.isBust()) {
-                                return player.bust();
+                                return player.lose();
                             }
 
                             return player;
@@ -84,7 +84,7 @@ public class Players {
             return player;
         }
 
-        return player.bust();
+        return player.lose();
     }
 
     public int getDealerProfit() {

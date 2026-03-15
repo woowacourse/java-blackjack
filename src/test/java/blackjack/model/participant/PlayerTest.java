@@ -58,12 +58,12 @@ class PlayerTest {
 
     @Test
     @DisplayName("최종 수익이 0인 새로운 플레이어를 반환한다.")
-    void bust() {
+    void lose() {
         //given
         Player player = Player.of("player1", 1000);
 
         //when & then
-        assertThat(player.bust().getPrize())
+        assertThat(player.lose().getPrize())
                 .isEqualTo(-1000);
     }
 }

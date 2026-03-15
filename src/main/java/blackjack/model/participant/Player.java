@@ -26,7 +26,7 @@ public class Player extends Participant {
         hands.addCard(cardDeck.pick());
     }
 
-    public Player bust() {
+    public Player lose() {
         int negativeMultiplier = -1;
 
         return new Player(

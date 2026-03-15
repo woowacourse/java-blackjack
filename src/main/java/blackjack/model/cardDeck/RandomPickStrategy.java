@@ -11,7 +11,6 @@ public class RandomPickStrategy implements PickStrategy {
     @Override
     public Card pick(List<Card> cards) {
         int randomIndex = random.nextInt(0, cards.size());
-
         return cards.remove(randomIndex);
     }
 }
