@@ -1,7 +1,6 @@
 package domain.gameplaying;
 
-import domain.common.NameAndCardInfos;
-import domain.common.PlayedGameResult;
+import dto.PlayedGameResult;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;
@@ -36,11 +35,11 @@ class Players {
         players.forEach(Participant::drawInitialCards);
     }
 
-    NameAndCardInfos currentPlayerCardInfos() {
+    PlayedGameResult currentPlayerCardInfos() {
         return currentPlayer().infos();
     }
     
-    List<NameAndCardInfos> allPlayerCardInfos() {
+    List<PlayedGameResult> allPlayerCardInfos() {
         return players.stream()
                 .map(Player::infos)
                 .toList();

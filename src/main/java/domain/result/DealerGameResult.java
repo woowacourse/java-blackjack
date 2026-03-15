@@ -1,6 +1,6 @@
 package domain.result;
 
-import domain.common.PlayedGameResult;
+import dto.PlayedGameResult;
 
 public class DealerGameResult {
 

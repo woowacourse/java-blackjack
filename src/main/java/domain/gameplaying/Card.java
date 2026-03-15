@@ -1,15 +1,15 @@
 package domain.gameplaying;
 
-import domain.common.CardInfo;
+import dto.CardInfo;
 
-public record Card(CardRank rank, CardMark mark) {
+public record Card(CardRank rank, CardMark cardMark) {
 
     boolean isAce() {
         return rank == CardRank.ACE;
     }
 
-    CardInfo info () {
-        return new CardInfo(rank.label(), mark.description());
+    CardInfo info() {
+        return new CardInfo(rank.label(), cardMark.description());
     }
 
     int score() {

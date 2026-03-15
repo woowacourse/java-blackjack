@@ -1,8 +1,8 @@
 package domain.gameplaying;
 
 import domain.common.BlackJackRule;
-import domain.common.CardInfo;
-import domain.common.NameAndCardInfos;
+import dto.CardInfo;
+import dto.PlayedGameResult;
 import java.util.List;
 
 abstract class Participant {
@@ -30,8 +30,12 @@ abstract class Participant {
         }
     }
 
-    NameAndCardInfos infos() {
-        return new NameAndCardInfos(name, cardInfos());
+//    NameAndCardInfos infos() {
+//        return new NameAndCardInfos(name, cardInfos());
+//    }
+//
+    PlayedGameResult infos() {
+        return PlayedGameResult.from(name, this.cardInfos(), this.scoreSum());
     }
 
     boolean isBusted() {

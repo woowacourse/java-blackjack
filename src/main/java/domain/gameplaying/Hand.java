@@ -1,7 +1,7 @@
 package domain.gameplaying;
 
 import domain.common.BlackJackRule;
-import domain.common.CardInfo;
+import dto.CardInfo;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +27,10 @@ class Hand {
         return cards.stream()
                 .map(Card::info)
                 .toList();
+    }
+
+    List<Card> cards() {
+        return List.copyOf(cards);
     }
 
     boolean isBusted() {

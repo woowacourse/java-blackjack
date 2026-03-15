@@ -1,7 +1,6 @@
 package service;
 
-import domain.common.NameAndCardInfos;
-import domain.common.PlayedGameResult;
+import dto.PlayedGameResult;
 import domain.gameplaying.Participants;
 import domain.result.DealerWinningScore;
 import domain.result.PlayerWinningInfo;
@@ -33,12 +32,12 @@ public class BlackJackQueryService {
     }
 
     public NameAndCardsResponse dealerCards() {
-        NameAndCardInfos dealerCards = participants.dealerCardInfos();
+        PlayedGameResult dealerCards = participants.dealerCardInfos();
         return NameAndCardsResponse.from(dealerCards);
     }
 
     public AllPlayersNameAndCardsResponse AllPlayersCards() {
-        List<NameAndCardInfos> playerCardInfos = participants.allPlayerCardInfos();
+        List<PlayedGameResult> playerCardInfos = participants.allPlayerCardInfos();
         return AllPlayersNameAndCardsResponse.from(playerCardInfos);
     }
 
@@ -48,8 +47,8 @@ public class BlackJackQueryService {
     }
 
     public NameAndCardsResponse currentPlayerCards() {
-        NameAndCardInfos dealerCards = participants.currentPlayerCardInfos();
-        return NameAndCardsResponse.from(dealerCards);
+        PlayedGameResult playerInfos = participants.currentPlayerCardInfos();
+        return NameAndCardsResponse.from(playerInfos);
     }
 
     public boolean isCurrentPlayerPlayable() {

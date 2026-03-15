@@ -1,4 +1,4 @@
-package domain.common;
+package dto;
 
 import java.util.List;
 
@@ -10,13 +10,11 @@ public record PlayedGameResult(NameAndCardInfos infos, int scoreSum) {
     }
 
     public String name() {
-        return infos.name();
+        return this.infos().name();
     }
 
-    public List<String> cardInfos() {
-        return infos.cardInfos().stream()
-                .map(CardInfo::toString)
-                .toList();
+    public List<CardInfo> cardInfos() {
+        return this.infos().cardInfos();
     }
 
     private record NameAndCardInfos(String name, List<CardInfo> cardInfos) {

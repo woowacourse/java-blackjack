@@ -1,7 +1,6 @@
 package domain.gameplaying;
 
-import domain.common.NameAndCardInfos;
-import domain.common.PlayedGameResult;
+import dto.PlayedGameResult;
 import java.util.List;
 
 public class Participants {
@@ -26,11 +25,11 @@ public class Participants {
         return players.names();
     }
 
-    public NameAndCardInfos dealerCardInfos() {
+    public PlayedGameResult dealerCardInfos() {
         return dealer.infos();
     }
 
-    public NameAndCardInfos currentPlayerCardInfos() {
+    public PlayedGameResult currentPlayerCardInfos() {
         return players.currentPlayerCardInfos();
     }
 
@@ -47,7 +46,7 @@ public class Participants {
         dealer.drawInitialCards();
     }
 
-    public List<NameAndCardInfos> allPlayerCardInfos() {
+    public List<PlayedGameResult> allPlayerCardInfos() {
         return players.allPlayerCardInfos();
     }
 

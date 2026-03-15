@@ -1,7 +1,7 @@
 package domain.result;
 
 import domain.common.BlackJackRule;
-import domain.common.PlayedGameResult;
+import dto.PlayedGameResult;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
