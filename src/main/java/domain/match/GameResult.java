@@ -4,15 +4,19 @@ import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class GameResult {
 
     private final Map<Player, MatchResult> results;
 
-    public GameResult(Players players, Dealer dealer) {
-        this.results = new HashMap<>();
+    public static GameResult of(Players players, Dealer dealer) {
+        return new GameResult(players, dealer);
+    }
+
+    private GameResult(Players players, Dealer dealer) {
+        this.results = new LinkedHashMap<>();
 
         for (Player player : players.getPlayers()) {
             results.put(player, MatchResult.judge(player, dealer));
@@ -20,7 +24,7 @@ public class GameResult {
     }
 
     public Map<Player, Integer> calculatePlayersProfit() {
-        Map<Player, Integer> profit = new HashMap<>();
+        Map<Player, Integer> profit = new LinkedHashMap<>();
 
         for (Map.Entry<Player, MatchResult> entry : results.entrySet()) {
 
