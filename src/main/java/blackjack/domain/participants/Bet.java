@@ -3,6 +3,10 @@ package blackjack.domain.participants;
 public class Bet {
     private final long amount;
 
+    public Bet() {
+        this.amount = 0L;
+    }
+
     public Bet(long amount) {
         validatePositive(amount);
         this.amount = amount;

@@ -8,10 +8,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.EnumSource.Mode;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class HandTest {
     private static final int ACE_ADJUST_AMOUNT = 10;
     private static final int BUST_THRESHOLD = 21;
+    private static final int BLACKJACK_SCORE = 21;
 
     private final Card card = new Card(Rank.ACE, Suit.CLOVER);
 
@@ -38,7 +40,7 @@ class HandTest {
         int sum = cards.stream().mapToInt(Card::getValue).sum();
         // when
         Hand hand = new Hand(cards);
-        Score score = hand.getScore();
+        Score score = hand.calculateScore();
         // then
         assertThat(score.value()).isEqualTo(sum + ACE_ADJUST_AMOUNT);
     }
@@ -55,7 +57,7 @@ class HandTest {
         int sum = cards.stream().mapToInt(Card::getValue).sum();
         // when
         Hand hand = new Hand(cards);
-        Score score = hand.getScore();
+        Score score = hand.calculateScore();
         // then
         assertThat(score.value()).isEqualTo(sum);
     }
@@ -68,7 +70,7 @@ class HandTest {
         int sum = rank.getValue();
         // when
         Hand hand = new Hand(cards);
-        Score score = hand.getScore();
+        Score score = hand.calculateScore();
         // then
         assertThat(score.value()).isEqualTo(sum);
     }
@@ -100,5 +102,59 @@ class HandTest {
         // when & then
         assertThat(sum <= BUST_THRESHOLD).isTrue();
         assertThat(hand.isBust()).isFalse();
+    }
+
+    @Test
+    void 점수와_카드수_모두_블랙잭_조건이면_블랙잭이다() {
+        // given
+        List<Card> cards = List.of(
+            new Card(Rank.ACE, Suit.HEART),
+            new Card(Rank.TEN, Suit.HEART)
+        );
+        Hand hand = new Hand(cards);
+        // when & then
+        assertThat(hand.calculateScore().value()).isEqualTo(BLACKJACK_SCORE);
+        assertThat(hand.isBlackjack()).isTrue();
+    }
+
+    @Test
+    void 점수만_블랙잭_조건이면_블랙잭이_아니다() {
+        // given
+        List<Card> cards = List.of(
+            new Card(Rank.ACE, Suit.HEART),
+            new Card(Rank.ACE, Suit.HEART),
+            new Card(Rank.NINE, Suit.HEART)
+        );
+        Hand hand = new Hand(cards);
+        // when & then
+        assertThat(hand.calculateScore().value()).isEqualTo(BLACKJACK_SCORE);
+        assertThat(hand.isBlackjack()).isFalse();
+    }
+
+    @Test
+    void 카드수만_블랙잭_조건이면_블랙잭이_아니다() {
+        // given
+        List<Card> cards = List.of(
+            new Card(Rank.ACE, Suit.HEART),
+            new Card(Rank.NINE, Suit.HEART)
+        );
+        Hand hand = new Hand(cards);
+        // when & then
+        assertThat(hand.calculateScore().value()).isNotEqualTo(BLACKJACK_SCORE);
+        assertThat(hand.isBlackjack()).isFalse();
+    }
+
+    @Test
+    void 점수와_카드수_모두_블랙잭_조건이_아니면_블랙잭이_아니다() {
+        // given
+        List<Card> cards = List.of(
+            new Card(Rank.ACE, Suit.HEART),
+            new Card(Rank.TWO, Suit.HEART),
+            new Card(Rank.THREE, Suit.HEART)
+        );
+        Hand hand = new Hand(cards);
+        // when & then
+        assertThat(hand.calculateScore().value()).isNotEqualTo(BLACKJACK_SCORE);
+        assertThat(hand.isBlackjack()).isFalse();
     }
 }

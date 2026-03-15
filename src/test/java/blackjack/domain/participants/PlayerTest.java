@@ -8,13 +8,14 @@ import org.junit.jupiter.api.Test;
 
 class PlayerTest {
     private final Hand emptyHand = new Hand();
+    private final Bet emptyBet = new Bet();
 
     @Test
     void 본인의_이름을_반환한다() {
         // given
         String playerName = "Player Name";
         // when
-        Player player = new Player(playerName, emptyHand);
+        Player player = new Player(playerName, emptyHand, emptyBet);
         // then
         assertThat(player.getName()).isEqualTo(playerName);
     }
@@ -24,7 +25,7 @@ class PlayerTest {
         // given
         String playerName = null;
         // when & then
-        assertThatThrownBy(() -> new Player(playerName, emptyHand))
+        assertThatThrownBy(() -> new Player(playerName, emptyHand, emptyBet))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -33,7 +34,7 @@ class PlayerTest {
         // given
         String playerName = "";
         // when & then
-        assertThatThrownBy(() -> new Player(playerName, emptyHand))
+        assertThatThrownBy(() -> new Player(playerName, emptyHand, emptyBet))
             .isInstanceOf(IllegalArgumentException.class);
     }
 }

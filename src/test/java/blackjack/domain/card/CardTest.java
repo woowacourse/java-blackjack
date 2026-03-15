@@ -8,7 +8,6 @@ import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.EnumSource.Mode;
 
 class CardTest {
-
     @Test
     void ACE_카드와_일치한다면_TRUE_를_반환한다() {
         // given

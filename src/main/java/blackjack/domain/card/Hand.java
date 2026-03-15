@@ -7,6 +7,8 @@ import java.util.List;
 public class Hand {
     private static final int ACE_ADJUST_AMOUNT = 10;
     private static final int BUST_THRESHOLD = 21;
+    private static final int BLACKJACK_SCORE = 21;
+    private static final int BLACKJACK_CARD_COUNT = 2;
 
     private final List<Card> cards;
 
@@ -27,18 +29,27 @@ public class Hand {
     }
 
     public boolean isBust() {
-        return getScore().isBiggerThan(BUST_THRESHOLD);
+        return calculateScore().isBiggerThan(BUST_THRESHOLD);
     }
 
-    public Score getScore() {
-        int sum = calculateSum();
+    public boolean isBlackjack() {
+        Score score = calculateScore();
+        return score.isEqualTo(BLACKJACK_SCORE) & hasBlackjackCardCount();
+    }
+
+    private boolean hasBlackjackCardCount() {
+        return cards.size() == BLACKJACK_CARD_COUNT;
+    }
+
+    public Score calculateScore() {
+        int sum = calculateRawSum();
         if (canApplyAceAmount(sum)) {
             return new Score(sum + ACE_ADJUST_AMOUNT);
         }
         return new Score(sum);
     }
 
-    private int calculateSum() {
+    private int calculateRawSum() {
         return cards.stream()
             .mapToInt(Card::getValue)
             .sum();

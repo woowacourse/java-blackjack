@@ -27,7 +27,7 @@ abstract class Participant {
     }
 
     public final Score getScore() {
-        return hand.getScore();
+        return hand.calculateScore();
     }
 
     public final boolean isBust() {

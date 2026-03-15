@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class DeckTest {
-
     private final CardsGenerator generator = new ShuffledCardsGenerator();
     private final CardsGenerator emptyCardsGenerator = List::of;
 

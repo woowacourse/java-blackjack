@@ -6,7 +6,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import org.junit.jupiter.api.Test;
 
 class NameTest {
-
     @Test
     void 공백을_제거한_이름을_반환한다() {
         // given
