@@ -5,22 +5,23 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import model.paticipant.Player;
 
-public class PlayerResult {
+public record PlayerResult<T extends Player>(Map<T, ResultStatus> result) {
 
-    private final Map<Player, GameStatus> result;
-
-    public PlayerResult(Map<Player, GameStatus> result) {
-        this.result = new LinkedHashMap<>(result);
+    public PlayerResult(Map<T, ResultStatus> result) {
+        this.result = Collections.unmodifiableMap(new LinkedHashMap<>(result));
     }
 
-    public int countByStatus(GameStatus gameStatus) {
+    public DealerResult calculateDealerResult() {
+        int dealerWinCount = countByStatus(ResultStatus.LOSE);
+        int dealerLoseCount = countByStatus(ResultStatus.WIN) + countByStatus(ResultStatus.BLACKJACK);
+        int dealerDrawCount = countByStatus(ResultStatus.DRAW);
+        return new DealerResult(dealerWinCount, dealerLoseCount, dealerDrawCount);
+    }
+
+    private int countByStatus(ResultStatus resultStatus) {
         return (int) result.values()
                 .stream()
-                .filter(status -> status == gameStatus)
+                .filter(status -> status == resultStatus)
                 .count();
-    }
-
-    public Map<Player, GameStatus> getResult() {
-        return Collections.unmodifiableMap(result);
     }
 }

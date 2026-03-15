@@ -28,6 +28,10 @@ public class Hand {
                 .count();
     }
 
+    public int size() {
+        return cards.size();
+    }
+
     public List<Card> getCards() {
         return Collections.unmodifiableList(this.cards);
     }

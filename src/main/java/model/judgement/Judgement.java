@@ -1,51 +1,40 @@
 package model.judgement;
 
-import static model.judgement.GameStatus.DRAW;
-import static model.judgement.GameStatus.LOSE;
-import static model.judgement.GameStatus.WIN;
-
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import model.judgement.strategy.BlackjackStrategy;
+import model.judgement.strategy.BustStrategy;
 import model.paticipant.Dealer;
+import model.paticipant.Participant;
 import model.paticipant.Player;
 import model.paticipant.Players;
 
 public class Judgement {
 
-    public static PlayerResult judgeByPlayer(Dealer dealer, Players players) {
-        Map<Player, GameStatus> result = new LinkedHashMap<>();
+    private static final List<JudgeStrategy> STRATEGIES = List.of(new BustStrategy(), new BlackjackStrategy());
+
+    public static <T extends Player> PlayerResult<T> judgeByPlayer(Dealer dealer, Players<T> players) {
+        Map<T, ResultStatus> result = new LinkedHashMap<>();
         players.forEach(player -> result.put(player, decide(dealer, player)));
-        return new PlayerResult(result);
+        return new PlayerResult<>(result);
     }
 
-    private static GameStatus decide(Dealer dealer, Player player) {
-        if (player.isBust()) {
-            return LOSE;
-        }
-        if (dealer.isBust()) {
-            return WIN;
-        }
-
-        return decideByScore(dealer, player);
+    private static ResultStatus decide(Dealer dealer, Participant participant) {
+        return STRATEGIES.stream()
+                .filter(strategy -> strategy.isApplicable(dealer, participant))
+                .findFirst()
+                .map(strategy -> strategy.getResult(dealer, participant))
+                .orElseGet(() -> compareScore(participant.calculateTotalScore(), dealer.calculateTotalScore()));
     }
 
-    private static GameStatus decideByScore(Dealer dealer, Player player) {
-        int dealerScore = dealer.calculateTotalScore();
-        int playerScore = player.calculateTotalScore();
-
+    private static ResultStatus compareScore(int playerScore, int dealerScore) {
         if (playerScore > dealerScore) {
-            return WIN;
+            return ResultStatus.WIN;
         }
         if (playerScore == dealerScore) {
-            return DRAW;
+            return ResultStatus.DRAW;
         }
-        return LOSE;
-    }
-
-    public static DealerResult judgeByDealer(PlayerResult playerResult) {
-        int dealerWinCount = playerResult.countByStatus(GameStatus.LOSE);
-        int dealerLoseCount = playerResult.countByStatus(GameStatus.WIN);
-        int dealerDrawCount = playerResult.countByStatus(GameStatus.DRAW);
-        return new DealerResult(dealerWinCount, dealerLoseCount, dealerDrawCount);
+        return ResultStatus.LOSE;
     }
 }
