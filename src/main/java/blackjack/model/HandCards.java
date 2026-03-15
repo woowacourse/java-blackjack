@@ -47,7 +47,7 @@ public class HandCards {
         return Collections.unmodifiableList(cards);
     }
 
-    private static int aceTranslate(int score, long aceCount) {
+    private int aceTranslate(int score, long aceCount) {
         while (score <= 11 && aceCount > 0) {
             score += 10;
             aceCount--;
