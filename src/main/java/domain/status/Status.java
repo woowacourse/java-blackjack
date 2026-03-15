@@ -20,8 +20,6 @@ public abstract class Status {
 
     public abstract boolean isRunning();
 
-    public abstract double earningsRate(Status dealerStatus);
-
     public HandCards getCards() {
         return cards;
     }

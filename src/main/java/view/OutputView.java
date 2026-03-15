@@ -1,6 +1,6 @@
 package view;
 
-import dto.BattingResultDto;
+import dto.BettingResultDto;
 import dto.DealerHandScoreDto;
 import dto.DealerInitialHandDto;
 import dto.GameScoreDto;
@@ -63,7 +63,7 @@ public class OutputView {
         }
     }
 
-    public void printBattingResults(BattingResultDto battingResultDto) {
+    public void printBettingResults(BettingResultDto battingResultDto) {
         long dealerProfit = battingResultDto.dealerProfit();
 
         List<PlayerProfitDto> playerProfitDtos = battingResultDto.playerProfitDtos();

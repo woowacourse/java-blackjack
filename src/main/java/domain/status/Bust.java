@@ -7,8 +7,4 @@ public final class Bust extends Finished {
         super(cards);
     }
 
-    @Override
-    public double earningsRate(Status dealerStatus) {
-        return -1.0;
-    }
 }

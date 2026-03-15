@@ -20,11 +20,6 @@ public abstract class Running extends Status {
         return true;
     }
 
-    @Override
-    public double earningsRate(Status dealerStatus) {
-        throw new IllegalStateException("게임이 끝나지 않아 수익률을 계산할 수 없습니다.");
-    }
-
     public abstract Status draw(Card card);
 
     public abstract Status stay();

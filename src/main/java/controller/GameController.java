@@ -5,10 +5,10 @@ import domain.betting.Money;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import dto.PlayerHandDto;
-import service.BattingCalculateService;
+import service.BettingCalculateService;
 import service.GameService;
 import util.HitOption;
-import util.InputBattingParser;
+import util.InputBettingParser;
 import view.InputView;
 import view.OutputView;
 
@@ -25,7 +25,7 @@ public class GameController {
         Players players = inputPlayers();
         Dealer dealer = new Dealer();
         GameService gameService = new GameService(players, dealer);
-        BattingCalculateService bettingCalculateService = new BattingCalculateService(players, dealer);
+        BettingCalculateService bettingCalculateService = new BettingCalculateService(players, dealer);
 
         playerBatting(players);
         outputView.printStartGame(gameService.startGame());
@@ -36,7 +36,7 @@ public class GameController {
         }
 
         outputView.printScore(gameService.getTotalScore());
-        outputView.printBattingResults(bettingCalculateService.getBattingResult());
+        outputView.printBettingResults(bettingCalculateService.getBattingResult());
     }
 
     private Players inputPlayers() {
@@ -64,8 +64,8 @@ public class GameController {
     private Money inputBattingMoney(Player player) {
         while (true) {
             try {
-                String rawBattingMoney = inputView.readBatting(player.getName());
-                return InputBattingParser.parseBattingParser(rawBattingMoney);
+                String rawBattingMoney = inputView.readBetting(player.getName());
+                return InputBettingParser.parseBattingParser(rawBattingMoney);
             } catch (IllegalArgumentException exception) {
                 outputView.printInputErrorMessage(exception.getMessage());
             }

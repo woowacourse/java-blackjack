@@ -8,4 +8,3 @@ public record DealerInitialHandDto(String firstHandCard) {
         return new DealerInitialHandDto(CardMapper.cardToKorean(dealer.getFirstCard()));
     }
 }
-

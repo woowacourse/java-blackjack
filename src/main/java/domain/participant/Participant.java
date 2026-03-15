@@ -1,7 +1,6 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.status.Blackjack;
 import domain.status.Start;
 import domain.status.Status;
 
@@ -27,14 +26,17 @@ abstract public class Participant {
         this.status = this.status.stay();
     }
 
-    public boolean isRunning() {
-        return this.status.isRunning();
+    public boolean isBust() {
+        return this.status.getCards().isBust();
     }
 
     public boolean isBlackJack() {
-        return this.status instanceof Blackjack;
+        return this.status.getCards().isBlackJack();
     }
 
+    public boolean isRunning() {
+        return this.status.isRunning();
+    }
 
     public int getScore() {
         return this.status.getCards().calculateScore();

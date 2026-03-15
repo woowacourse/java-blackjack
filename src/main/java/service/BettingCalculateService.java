@@ -1,21 +1,22 @@
 package service;
 
+import domain.betting.GameResult;
 import domain.Players;
 import domain.betting.Money;
 import domain.betting.Profit;
 import domain.participant.Dealer;
 import domain.participant.Player;
-import dto.BattingResultDto;
+import dto.BettingResultDto;
 import dto.PlayerProfitDto;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BattingCalculateService {
+public class BettingCalculateService {
     private final Players players;
     private final Dealer dealer;
 
-    public BattingCalculateService(Players players, Dealer dealer) {
+    public BettingCalculateService(Players players, Dealer dealer) {
         this.players = players;
         this.dealer = dealer;
     }
@@ -23,15 +24,16 @@ public class BattingCalculateService {
     private List<Profit> calculatePlayersProfit() {
         List<Profit> playersProfit = new ArrayList<>();
         for (Player player : players) {
-            Money battingMoney = player.getBettingMoney();
-            double earningsRate = player.getStatus().earningsRate(dealer.getStatus());
-            playersProfit.add(new Profit(player.getName(), battingMoney, earningsRate));
+            Money bettingMoney = player.getBettingMoney();
+            GameResult judge = GameResult.judge(player, dealer);
+            double earningsRate = judge.getEarningRate();
+            playersProfit.add(new Profit(player.getName(), bettingMoney, earningsRate));
         }
         return playersProfit;
     }
 
-    public BattingResultDto getBattingResult() {
-        return new BattingResultDto(getPlayersProfit(), getDealerProfit());
+    public BettingResultDto getBattingResult() {
+        return new BettingResultDto(getPlayersProfit(), getDealerProfit());
     }
     private List<PlayerProfitDto> getPlayersProfit() {
         List<Profit> profits = calculatePlayersProfit();

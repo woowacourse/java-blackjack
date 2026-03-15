@@ -34,9 +34,4 @@ public final class Start extends Status{
     public boolean isRunning() {
         return false;
     }
-
-    @Override
-    public double earningsRate(Status dealerStatus) {
-        throw new IllegalStateException("게임이 끝나지 않아 수익률을 계산할 수 없습니다.");
-    }
 }
