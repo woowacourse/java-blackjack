@@ -29,6 +29,10 @@ public class GameResultAnalyzer {
             return player.isBusted() ? WinningStatus.DRAW : WinningStatus.WIN;
         }
 
+        if(player.isBusted()) {
+            return WinningStatus.LOSS;
+        }
+
         if (player.isBlackjack() && dealer.isBlackjack()) {
             return WinningStatus.DRAW;
         }
