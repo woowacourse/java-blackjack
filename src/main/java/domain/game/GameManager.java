@@ -2,9 +2,9 @@ package domain.game;
 
 import domain.DtoFactory;
 import domain.card.Deck;
-import domain.dto.GameResultDto;
-import domain.dto.GameInitialInfoDto;
-import domain.dto.GameScoreResultDto;
+import dto.GameResultDto;
+import dto.GameInitialInfoDto;
+import dto.GameScoreResultDto;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;

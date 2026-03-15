@@ -1,8 +1,8 @@
 package view;
 
-import domain.dto.GameResultDto;
-import domain.dto.GameInitialInfoDto;
-import domain.dto.GameScoreResultDto;
+import dto.GameResultDto;
+import dto.GameInitialInfoDto;
+import dto.GameScoreResultDto;
 
 import java.text.MessageFormat;
 import java.util.List;

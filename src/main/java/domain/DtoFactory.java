@@ -1,7 +1,7 @@
 package domain;
 
-import domain.dto.GameInitialInfoDto;
-import domain.dto.GameScoreResultDto;
+import dto.GameInitialInfoDto;
+import dto.GameScoreResultDto;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
