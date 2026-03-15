@@ -2,6 +2,7 @@ package domain.result;
 
 import domain.participant.Player;
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -25,7 +26,7 @@ public class ProfitResult {
     }
 
     public Map<String, Long> getPlayerProfitMap() {
-        return Map.copyOf(playerProfitMap);
+        return Collections.unmodifiableMap(new LinkedHashMap<>(playerProfitMap));
     }
 
     public long getDealerBenefit() {

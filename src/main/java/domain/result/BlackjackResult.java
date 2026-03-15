@@ -4,6 +4,7 @@ import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -45,6 +46,6 @@ public class BlackjackResult {
     }
 
     public Map<Player, MatchCase> getPlayerResultMap() {
-        return Map.copyOf(playerResultMap);
+        return Collections.unmodifiableMap(new LinkedHashMap<>(playerResultMap));
     }
 }
