@@ -1,10 +1,10 @@
 package team.blackjack.controller;
 
+import java.util.ArrayList;
 import java.util.List;
-import team.blackjack.config.AppConfig;
-import team.blackjack.domain.rule.BlackjackRule;
 import team.blackjack.service.dto.DrawResult;
-import team.blackjack.service.dto.GameResult;
+import team.blackjack.service.dto.PayoutResult;
+import team.blackjack.service.dto.PlayerRequest;
 import team.blackjack.service.dto.ScoreResult;
 import team.blackjack.domain.Player;
 import team.blackjack.service.BlackJackService;
@@ -12,17 +12,16 @@ import team.blackjack.view.InputView;
 import team.blackjack.view.OutputView;
 
 public class BlackJackController {
-    private final BlackjackRule blackjackRule;
     private final BlackJackService blackJackService;
 
     public BlackJackController(BlackJackService blackJackService) {
-        this.blackjackRule = AppConfig.getInstance().blackjackRule();
         this.blackJackService = blackJackService;
     }
 
     public void run() {
         List<String> playerNames = readPlayerNames();
-        initializeBlackjackGame(playerNames);
+        List<PlayerRequest> playerRequests = readPlayerStakes(playerNames);
+        initializeBlackjackGame(playerRequests);
 
         DrawResult drawResult = blackJackService.getHandResult();
         OutputView.printDrawResult(drawResult);
@@ -37,8 +36,8 @@ public class BlackJackController {
         ScoreResult scoreResult = blackJackService.calculateAllParticipantScore();
         OutputView.printParticipantScoreResult(scoreResult);
 
-        GameResult gameResult = blackJackService.getGameResult();
-        OutputView.printGameResult(gameResult);
+        PayoutResult payoutResult = blackJackService.getPayoutResult();
+        OutputView.printParticipantPayoutResult(payoutResult);
     }
 
     private List<String> readPlayerNames() {
@@ -46,8 +45,19 @@ public class BlackJackController {
         return InputView.readPlayerNames();
     }
 
-    private void initializeBlackjackGame(List<String> playerNames) {
-        blackJackService.initGame(playerNames);
+    private List<PlayerRequest> readPlayerStakes(List<String> playerNames) {
+        List<PlayerRequest> playerRequests = new ArrayList<>();
+
+        for (String name : playerNames) {
+            OutputView.printPlayerStakeRequest(name);
+            playerRequests.add(new PlayerRequest(name, InputView.readPlayerStake()));
+        }
+
+        return playerRequests;
+    }
+
+    private void initializeBlackjackGame(List<PlayerRequest> playerRequests) {
+        blackJackService.initGame(playerRequests);
         blackJackService.dealInitialCards();
     }
 
@@ -56,7 +66,7 @@ public class BlackJackController {
     }
 
     private void processHit(Player player) {
-        while (!blackjackRule.isBust(player.getScore())) {
+        while (!player.getHands().getFirst().isBust()) {
             OutputView.printAskDrawCard(player.getName());
 
             if (!InputView.readHitDecision()) {

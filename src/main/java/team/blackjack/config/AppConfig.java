@@ -3,6 +3,7 @@ package team.blackjack.config;
 import team.blackjack.controller.BlackJackController;
 import team.blackjack.domain.rule.BlackjackRule;
 import team.blackjack.domain.rule.DefaultBlackjackRule;
+import team.blackjack.registry.ParticipantRegistry;
 import team.blackjack.service.BlackJackService;
 
 public class AppConfig {
@@ -16,7 +17,7 @@ public class AppConfig {
     }
 
     public BlackJackService blackJackService() {
-        return new BlackJackService();
+        return new BlackJackService(blackjackRule());
     }
 
     public BlackJackController blackJackController() {
@@ -25,5 +26,9 @@ public class AppConfig {
 
     public BlackjackRule blackjackRule() {
         return new DefaultBlackjackRule();
+    }
+
+    public ParticipantRegistry participantRegistry(){
+        return new ParticipantRegistry();
     }
 }

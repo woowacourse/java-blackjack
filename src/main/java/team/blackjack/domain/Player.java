@@ -1,15 +1,18 @@
 package team.blackjack.domain;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Player implements Participant {
     private final String name;
     private final List<Hand> hands;
+    private final Bet bet;
 
-    public Player(String name) {
+    public Player(String name, int stake) {
         this.name = name;
         this.hands = initHands();
+        this.bet = Bet.from(stake);
     }
 
     public List<Hand> getHands() {
@@ -20,19 +23,14 @@ public class Player implements Participant {
         return this.name;
     }
 
-    public List<String> getCardInAllHands(){
-        return hands.stream()
-                .map(Hand::getCards)
-                .flatMap(List::stream)
-                .map(Card::getCardName)
-                .toList();
+    public List<String> getCardInAllHands() {
+        return hands.getFirst().getCardNames();
     }
 
-    /**
-     * TODO: 추후 기능 확장시 한 라운드에 여러 개의 hand가 생기는 경우, 해당 메소드 수정 필요.
-     *
-     * @return
-     */
+    public BigDecimal getPayout(Result result){
+        return bet.calculatePayout(result);
+    }
+
     @Override
     public int getScore() {
         return this.hands.getFirst().getScore();

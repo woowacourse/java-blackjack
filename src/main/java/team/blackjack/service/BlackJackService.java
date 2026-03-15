@@ -1,25 +1,29 @@
 package team.blackjack.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.math.BigDecimal;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import team.blackjack.domain.Card;
+import team.blackjack.domain.rule.BlackjackRule;
 import team.blackjack.service.dto.DrawResult;
-import team.blackjack.service.dto.GameResult;
-import team.blackjack.service.dto.GameResult.DealerResult;
-import team.blackjack.service.dto.GameResult.PlayerResult;
+import team.blackjack.service.dto.PayoutResult;
+import team.blackjack.service.dto.PlayerRequest;
 import team.blackjack.service.dto.ScoreResult;
 import team.blackjack.domain.BlackjackGame;
 import team.blackjack.domain.Dealer;
 import team.blackjack.domain.Player;
-import team.blackjack.domain.Result;
 
 public class BlackJackService {
     private BlackjackGame blackjackGame;
+    private BlackjackRule blackjackRule;
 
-    public void initGame(List<String> playerNames) {
-        blackjackGame = new BlackjackGame(playerNames);
+    public BlackJackService(BlackjackRule blackjackRule){
+        this.blackjackRule = blackjackRule;
+    }
+
+    public void initGame(List<PlayerRequest> playerRequests) {
+        this.blackjackGame = new BlackjackGame(playerRequests);
     }
 
     /**
@@ -75,38 +79,23 @@ public class BlackJackService {
         );
     }
 
-    public GameResult getGameResult() {
-        final Map<String, PlayerResult> playerResults = calculatePlayersResult();
-        final DealerResult dealerResult = calculateDealerResult();
+    public PayoutResult getPayoutResult() {
+        Map<String, BigDecimal> playerPayouts = blackjackGame.calculatePlayersPayout(blackjackRule);
+        BigDecimal dealerPayout = blackjackGame.calculateDealerPayout(playerPayouts);
 
-        return new GameResult(dealerResult, playerResults);
+        return new PayoutResult(parseDealerPayouts(dealerPayout), parsePlayerPayouts(playerPayouts));
     }
 
-    private Map<String, PlayerResult> calculatePlayersResult() {
-        final Map<String, PlayerResult> playerResults = new HashMap<>();
+    private Map<String, String> parsePlayerPayouts(Map<String, BigDecimal> playerPayouts) {
+        Map<String, String> playerPayoutResults = new LinkedHashMap<>();
 
-        final Dealer dealer = blackjackGame.getDealer();
-        final List<Player> players = blackjackGame.getPlayers();
+        playerPayouts.forEach((name, payout)
+                -> playerPayoutResults.put(name, payout.stripTrailingZeros().toPlainString()));
 
-        for (Player player : players) {
-            PlayerResult playerResult = new PlayerResult(blackjackGame.getPlayerResult(player, dealer));
-            playerResults.put(player.getName(), playerResult);
-        }
-
-        return playerResults;
+        return playerPayoutResults;
     }
 
-    private DealerResult calculateDealerResult() {
-        List<Result> dealerResults = new ArrayList<>();
-
-        final Dealer dealer = blackjackGame.getDealer();
-        final List<Player> players = blackjackGame.getPlayers();
-
-        for (Player player : players) {
-            Result dealerResult = blackjackGame.getDealerResult(dealer, player);
-            dealerResults.add(dealerResult);
-        }
-
-        return new DealerResult(dealerResults);
+    private String parseDealerPayouts(BigDecimal dealerPayout) {
+        return dealerPayout.stripTrailingZeros().toPlainString();
     }
 }

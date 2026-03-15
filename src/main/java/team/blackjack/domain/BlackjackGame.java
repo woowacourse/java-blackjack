@@ -1,33 +1,35 @@
 package team.blackjack.domain;
 
-import java.util.HashMap;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import team.blackjack.config.AppConfig;
 import team.blackjack.domain.rule.BlackjackRule;
+import team.blackjack.registry.ParticipantRegistry;
+import team.blackjack.service.dto.PlayerRequest;
 
 public class BlackjackGame {
     private static final int INITIAL_CARD_COUNT = 2;
 
-    private final BlackjackRule blackjackRule;
-    private final Dealer dealer;
-    private final List<Player> players;
+    private final ParticipantRegistry participantRegistry;
     private final Deck deck;
 
-    public BlackjackGame(List<String> playerNames) {
-        this.blackjackRule = AppConfig.getInstance().blackjackRule();
-        this.dealer = new Dealer();
-        this.players = createPlayers(playerNames);
+    public BlackjackGame(List<PlayerRequest> playerRequests) {
+        this.participantRegistry = AppConfig.getInstance().participantRegistry();
         this.deck = new Deck();
+
+        createPlayers(playerRequests);
     }
 
     public Dealer getDealer() {
-        return dealer;
+        return participantRegistry.getDealer();
     }
 
     public List<Player> getPlayers() {
-        return players;
+        return participantRegistry.getPlayers();
     }
 
     public void dealInitialCardsTo(Participant participant) {
@@ -41,13 +43,13 @@ public class BlackjackGame {
     }
 
     public List<String> getPlayerNames() {
-        return this.players.stream()
-                .map(Player::getName)
-                .toList();
+        return participantRegistry.getPlayerNames();
     }
 
     public Map<String, List<String>> getAllPlayerCards() {
-        final HashMap<String, List<String>> result = new HashMap<>();
+        final Map<String, List<String>> result = new LinkedHashMap<>();
+
+        List<Player> players = participantRegistry.getPlayers();
         for (Player player : players) {
             result.put(player.getName(), getPlayerCardInAllHand(player));
         }
@@ -56,7 +58,9 @@ public class BlackjackGame {
     }
 
     public Map<String, Integer> getAllPlayerScores() {
-        return this.players.stream()
+        List<Player> players = participantRegistry.getPlayers();
+
+        return players.stream()
                 .collect(Collectors.toMap(
                         Player::getName,
                         Player::getScore)
@@ -64,28 +68,52 @@ public class BlackjackGame {
     }
 
     public List<String> getDealerCards() {
-        return dealer.getAllCards();
+        return participantRegistry.getDealer().getAllCards();
     }
 
     public int getDealerScore() {
-        return this.dealer.getScore();
+        return participantRegistry.getDealer().getScore();
     }
 
-    public Result getPlayerResult(Player player, Dealer dealer) {
-        return blackjackRule.judgePlayerResult(player.getScore(), dealer.getScore());
+    public Map<String, BigDecimal> calculatePlayersPayout(BlackjackRule blackjackRule) {
+        Map<String, BigDecimal> playerPayouts = new LinkedHashMap<>();
+
+        Hand dealerHand = participantRegistry.getDealer().getHand();
+        List<Player> players = participantRegistry.getPlayers();
+
+        for (Player player : players) {
+            playerPayouts.put(player.getName(), calculatePlayerPayout(player, dealerHand, blackjackRule));
+        }
+
+        return playerPayouts;
     }
 
-    public Result getDealerResult(Dealer dealer, Player player) {
-        return getPlayerResult(player, dealer).reverse();
+    public BigDecimal calculateDealerPayout(Map<String, BigDecimal> playerPayouts) {
+        BigDecimal sum = playerPayouts.values()
+                .stream()
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        return sum.negate();
+    }
+
+    /**
+     * 헬퍼 메소드
+     */
+    private void createPlayers(List<PlayerRequest> playerRequests) {
+        List<Player> players = new ArrayList<>();
+        playerRequests.forEach(
+                playerRequest -> players.add(
+                        new Player(playerRequest.name(), playerRequest.stake())));
+
+        participantRegistry.savePlayers(players);
     }
 
     private List<String> getPlayerCardInAllHand(Player player) {
         return player.getCardInAllHands();
     }
 
-    private List<Player> createPlayers(List<String> playerNames) {
-        return playerNames.stream()
-                .map(Player::new)
-                .toList();
+    private BigDecimal calculatePlayerPayout(Player player, Hand dealerHand, BlackjackRule blackjackRule) {
+        Hand playerHand = player.getHands().getFirst();
+        return player.getPayout(blackjackRule.judgePlayerResult(playerHand, dealerHand));
     }
 }

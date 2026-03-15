@@ -19,7 +19,7 @@ public class Dealer implements Participant {
 
     @Override
     public int getScore() {
-        return blackjackRule.calculateBestScore(this.getHand().getCards());
+        return hand.getScore();
     }
 
     public boolean shouldHit() {
@@ -32,8 +32,6 @@ public class Dealer implements Participant {
     }
 
     public List<String> getAllCards(){
-        return hand.getCards().stream()
-                .map(Card::getCardName)
-                .toList();
+        return hand.getCardNames();
     }
 }

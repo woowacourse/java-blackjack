@@ -1,14 +1,10 @@
 package team.blackjack.view;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 import team.blackjack.service.dto.DrawResult;
-import team.blackjack.service.dto.GameResult;
-import team.blackjack.service.dto.GameResult.DealerResult;
-import team.blackjack.service.dto.GameResult.PlayerResult;
+import team.blackjack.service.dto.PayoutResult;
 import team.blackjack.service.dto.ScoreResult;
-import team.blackjack.domain.Result;
 
 public class OutputView {
 
@@ -16,16 +12,12 @@ public class OutputView {
         System.out.println(message);
     }
 
-    private static void print(String message) {
-        System.out.print(message);
-    }
-
     public static void printPlayerNameRequest() {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
     }
 
-    public static void printPlayerActionRequest(String playerName) {
-        println("%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)".formatted(playerName));
+    public static void printPlayerStakeRequest(String playerName) {
+        println("\n%s의 배팅 금액은?".formatted(playerName));
     }
 
     public static void printDrawResult(DrawResult result) {
@@ -51,7 +43,8 @@ public class OutputView {
     }
 
     public static void printParticipantScoreResult(ScoreResult scoreResult) {
-        println("딜러의 최종 카드: %s - 결과: %d".formatted(String.join(", ", scoreResult.dealerCards()), scoreResult.dealerScore()));
+        println("딜러의 최종 카드: %s - 결과: %d".formatted(String.join(", ", scoreResult.dealerCards()),
+                scoreResult.dealerScore()));
         for (String playerName : scoreResult.playerNames()) {
             println("%s의 카드: %s - 결과: %d".formatted(playerName,
                     String.join(", ", scoreResult.playerCards().get(playerName)),
@@ -59,22 +52,12 @@ public class OutputView {
         }
     }
 
-     public static void printGameResult(GameResult result) {
-         final DealerResult dealerResult = result.dealerResult();
-         final Map<String, PlayerResult> playeredResultMap = result.playerResultMap();
-
-         println("## 최종 승패:");
-         println("");
-         println("딜러: %d승 %d패 %d무".formatted(
-                 dealerResult.countBy(Result.WIN),
-                 dealerResult.countBy(Result.LOSE),
-                 dealerResult.countBy(Result.DRAW))
-         );
-
-         playeredResultMap.entrySet().stream()
-                 .map(entry -> "%s: %s".formatted(entry.getKey(), entry.getValue().result().getName()))
-                 .forEach(OutputView::println);
-
+    public static void printParticipantPayoutResult(PayoutResult result) {
+        println("## 최종 수익");
+        println("딜러: %s".formatted(result.dealerPayout()));
+        result.playerPayouts().entrySet().stream()
+                .map(entry -> "%s: %s".formatted(entry.getKey(), entry.getValue()))
+                .forEach(OutputView::println);
     }
 
     public static void printBustMessage() {
