@@ -5,6 +5,7 @@ import blackjack.domain.card.ShuffledCardsGenerator;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.game.BlackjackGameReferee;
 import blackjack.domain.game.GameResult;
+import blackjack.domain.participants.Bet;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.PlayerGroup;
 import blackjack.domain.participants.PlayerNames;
@@ -24,8 +25,12 @@ public class BlackjackApplication {
     public static void main(String[] args) {
         BlackjackView view = new BlackjackView(new InputView(), new OutputView());
         PlayerNames playerNames = PlayerNames.from(view.readPlayers());
+
         List<Player> players = playerNames.names().stream()
-            .map(name -> new Player(name, new Hand()))
+            .map(name -> new Player(
+                name,
+                new Hand(),
+                new Bet(view.readBetAmount(name.getValue()))))
             .toList();
 
         BlackjackGame game = BlackjackGame.create(

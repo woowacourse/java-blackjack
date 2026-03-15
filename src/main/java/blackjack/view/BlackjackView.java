@@ -20,6 +20,11 @@ public class BlackjackView {
         return inputView.readPlayerNames();
     }
 
+    public long readBetAmount(final String playerName) {
+        outputView.askBetAmount(playerName);
+        return inputView.readLong();
+    }
+
     public boolean isHitAnswer(final String playerName) {
         outputView.askHit(playerName);
         return inputView.isHitAnswer();
