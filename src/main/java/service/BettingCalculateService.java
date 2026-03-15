@@ -26,7 +26,7 @@ public class BettingCalculateService {
         for (Player player : players) {
             Money bettingMoney = player.getBettingMoney();
             BettingResult judge = BettingResult.judge(player, dealer);
-            double earningsRate = judge.getEarningRate();
+            int earningsRate = judge.getEarningRate();
             playersProfit.add(new Profit(player.getName(), bettingMoney, earningsRate));
         }
         return playersProfit;

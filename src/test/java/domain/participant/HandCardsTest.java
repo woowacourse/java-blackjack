@@ -154,7 +154,7 @@ class HandCardsTest {
 
     private HandCards makeHandCards(List<Card> cards) {
         HandCards handCards = new HandCards();
-        handCards.receiveInitialCards(cards.subList(0,2));
+        handCards.receiveInitialCards(cards.subList(0, 2));
 
         List<Card> hitCards = cards.subList(2, cards.size());
         for (Card hitCard : hitCards) {

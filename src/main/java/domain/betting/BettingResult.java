@@ -4,14 +4,14 @@ import domain.participant.Dealer;
 import domain.participant.Player;
 
 public enum BettingResult {
-    WIN_WITH_BLACKJACK(1.5),
-    WIN(1.0),
-    DRAW(0.0),
-    LOSE(-1.0);
+    WIN_WITH_BLACKJACK(150),
+    WIN(100),
+    DRAW(0),
+    LOSE(-100);
 
-    private final double earningRate;
+    private final int earningRate;
 
-    BettingResult(double earningRate) {
+    BettingResult(int earningRate) {
         this.earningRate = earningRate;
     }
 
@@ -48,7 +48,7 @@ public enum BettingResult {
         return LOSE;
     }
 
-    public double getEarningRate() {
+    public int getEarningRate() {
         return earningRate;
     }
 }

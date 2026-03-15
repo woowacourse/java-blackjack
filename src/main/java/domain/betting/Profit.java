@@ -3,9 +3,9 @@ package domain.betting;
 public class Profit {
     private final String name;
     private final Money money;
-    private final double earningRate;
+    private final int earningRate;
 
-    public Profit(String name, Money money, double earningRate) {
+    public Profit(String name, Money money, int earningRate) {
         this.name = name;
         this.money = money;
         this.earningRate = earningRate;
@@ -16,6 +16,6 @@ public class Profit {
     }
 
     public long calculateProfit() {
-        return (long) (earningRate * money.getValue());
+        return (earningRate * money.getValue()) / 100;
     }
 }
