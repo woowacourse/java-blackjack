@@ -8,11 +8,13 @@ public class BlackJackGame {
     private final Players players;
     private final Dealer dealer;
     private final Cards cards;
+    private final ResultCalculator resultCalculator;
 
     private BlackJackGame(Players players, Dealer dealer, Cards cards) {
         this.players = players;
         this.dealer = dealer;
         this.cards = cards;
+        this.resultCalculator = new ResultCalculator();
     }
 
     public Players players(){
@@ -25,6 +27,10 @@ public class BlackJackGame {
 
     public Cards cards() {
         return cards;
+    }
+
+    public GameResult calculateResult() {
+        return resultCalculator.calculate(dealer, players);
     }
 
     public static BlackJackGame startGame(String participant){
