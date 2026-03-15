@@ -25,13 +25,21 @@ public enum GameStatus {
         }
 
         if (cards.size() == DEALOUT_DRAW_COUNT) {
-            if (cards.calculateScore() == BLACKJACK_SCORE) {
-                return BLACKJACK;
-            }
-
-            return CAN_HIT;
+            return evaluateInitialStatus(cards);
         }
 
+        return evaluateOngoingStatus(cards);
+    }
+
+    private static GameStatus evaluateInitialStatus(Cards cards) {
+        if (cards.calculateScore() == BLACKJACK_SCORE) {
+            return BLACKJACK;
+        }
+
+        return CAN_HIT;
+    }
+
+    private static GameStatus evaluateOngoingStatus(Cards cards) {
         if (cards.calculateScore() == BLACKJACK_SCORE) {
             return STAY_21;
         }
