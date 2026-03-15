@@ -8,7 +8,6 @@ import domain.member.Player;
 import domain.member.Players;
 
 import domain.member.Name;
-import domain.member.Settler;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +23,7 @@ class MembersTest {
     public MembersTest() {
         this.pobi = new Player(new Member(new Name("포비")), new BettingAmount(1000));
         this.players = new Players(List.of(pobi));
-        this.dealer = new Dealer(new Member(new Name("딜러")));
+        this.dealer = new Dealer();
     }
 
     @DisplayName("카드의 총합이 21보다 크면 CurrentResult의 isBust는 true이다.")

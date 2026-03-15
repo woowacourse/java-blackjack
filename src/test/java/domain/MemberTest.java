@@ -16,7 +16,7 @@ public class MemberTest {
     @DisplayName("플레이어가 이기면 RoundResult를 반환한다.")
     @Test
     void winnerTest_isPlayerThenDecide_returnMember() {
-        Dealer dealer = new Dealer(new Member(new Name("딜러")));
+        Dealer dealer = new Dealer();
         Player player = new Player(new Member(new Name("포비")), new BettingAmount(1000));
 
         dealer.draw(new Card("2", "하트"));

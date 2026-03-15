@@ -6,12 +6,13 @@ import java.util.List;
 
 public class Dealer {
 
+    private static final String DEALER_DEFAULT_NAME = "딜러";
     private static final int DEALER_DRAW_CONDITION = 16;
 
     private final Member member;
 
-    public Dealer(Member member) {
-        this.member = member;
+    public Dealer() {
+        this.member = new Member(new Name(DEALER_DEFAULT_NAME));
     }
 
     public void initDraw(Deck deck) {

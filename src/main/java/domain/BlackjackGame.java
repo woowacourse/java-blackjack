@@ -13,8 +13,6 @@ import java.util.Map;
 
 public class BlackjackGame {
 
-    private static final String DEALER_DEFAULT_NAME = "딜러";
-
     private final Deck deck;
     private final Dealer dealer;
     private final Players players;
@@ -22,7 +20,7 @@ public class BlackjackGame {
 
     public BlackjackGame(Players members) {
         this.deck = new Deck();
-        this.dealer = new Dealer(new Member(new Name(DEALER_DEFAULT_NAME)));
+        this.dealer = new Dealer();
         this.players = members;
         this.settler = new Settler();
         this.deck.init();
