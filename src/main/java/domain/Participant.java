@@ -26,4 +26,8 @@ public abstract class Participant {
     public boolean checkBust() {
         return hand.checkBust();
     }
+
+    public HandState getHandState(){
+        return hand.getHandState();
+    }
 }

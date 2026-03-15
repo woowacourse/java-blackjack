@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Hand {
     private static final int ACE_ADJUST_SCORE = 10;
+    private static final int INITIAL_CARD_COUNT = 2;
 
     private final List<Card> cards;
     private Score score;
@@ -55,5 +56,13 @@ public class Hand {
 
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
+    }
+
+    public HandState getHandState(){
+        return HandState.getState(score.getScore(), isInitialCards());
+    }
+
+    private boolean isInitialCards(){
+        return cards.size() == INITIAL_CARD_COUNT;
     }
 }

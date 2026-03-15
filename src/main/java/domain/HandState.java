@@ -1,9 +1,9 @@
 package domain;
 
-public enum State {
+public enum HandState {
     NORMAL {
         @Override
-        Outcome against(State dealerState, int playerScore, int dealerScore) {
+        Outcome against(HandState dealerState, int playerScore, int dealerScore) {
             if (playerScore > dealerScore) {
                 return Outcome.WIN;
             }
@@ -17,7 +17,7 @@ public enum State {
     },
     BLACKJACK {
         @Override
-        Outcome against(State dealerState, int playerScore, int dealerScore) {
+        Outcome against(HandState dealerState, int playerScore, int dealerScore) {
             if (dealerState == BLACKJACK) {
                 return Outcome.DRAW;
             }
@@ -27,19 +27,21 @@ public enum State {
     },
     BUST {
         @Override
-        Outcome against(State dealerState, int playerScore, int dealerScore) {
+        Outcome against(HandState dealerState, int playerScore, int dealerScore) {
             return Outcome.LOSE;
         }
     };
 
-    abstract Outcome against(State state, int playerScore, int dealerScore);
+    private static final int BLACKJACK_SCORE = 21;
 
-    public static State getState(int score, int cardCount) {
-        if (score == 21) {
-            if (cardCount == 2) {
-                return State.BLACKJACK;
+    abstract Outcome against(HandState state, int playerScore, int dealerScore);
+
+    public static HandState getState(final int score, final boolean isInitialCards) {
+        if (score == BLACKJACK_SCORE) {
+            if (isInitialCards) {
+                return HandState.BLACKJACK;
             }
-            return State.NORMAL;
+            return HandState.NORMAL;
         }
 
         if (score < 21) {
@@ -47,5 +49,17 @@ public enum State {
         }
 
         return BUST;
+    }
+
+    public boolean isBust() {
+        return this == BUST;
+    }
+
+    public boolean isBlackjack() {
+        return this == BLACKJACK;
+    }
+
+    public boolean isNormal() {
+        return this == NORMAL;
     }
 }
