@@ -77,8 +77,8 @@ public class OutputView {
 
         System.out.printf(DEALER_RESULT + LINE_SEPARATOR, winCount, loseCount, drawCount);
         for (Name playerName : playerResults.keySet()) {
-            System.out.printf(PLAYER_RESULT + LINE_SEPARATOR, playerName,
-                    playerResults.get(playerName).getDescription());
+            String result = convertGameResultToString(playerResults.get(playerName));
+            System.out.printf(PLAYER_RESULT + LINE_SEPARATOR, playerName, result);
         }
     }
 
@@ -89,5 +89,17 @@ public class OutputView {
         for (Name name : playerBetProfit.keySet()) {
             System.out.printf(PLAYER_PROFIT + LINE_SEPARATOR, name, playerBetProfit.get(name));
         }
+    }
+
+    private String convertGameResultToString(GameResult gameResult) {
+        if (gameResult == GameResult.LOSE) {
+            return "패";
+        }
+
+        if (gameResult == GameResult.DRAW) {
+            return "무";
+        }
+
+        return "승";
     }
 }

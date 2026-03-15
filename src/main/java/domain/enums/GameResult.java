@@ -8,17 +8,15 @@ import java.util.Map;
 
 public enum GameResult {
 
-    BLACKJACK_WIN("승", 1.5),
-    WIN("승", 1),
-    LOSE("패", -1),
-    DRAW("무", 0),
+    BLACKJACK_WIN(1.5),
+    WIN(1),
+    LOSE(-1),
+    DRAW(0),
     ;
 
-    private final String description;
     private final double profitRatio;
 
-    GameResult(String description, double profitRatio) {
-        this.description = description;
+    GameResult(double profitRatio) {
         this.profitRatio = profitRatio;
     }
 
@@ -77,10 +75,6 @@ public enum GameResult {
         }
 
         return DRAW;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     public double getProfitRatio() {
