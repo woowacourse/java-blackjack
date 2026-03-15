@@ -1,4 +1,6 @@
 import domain.Players;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import util.NameParser;
@@ -19,6 +21,8 @@ public class NameParserTest {
     void trimPlayerName() {
         Players players = NameParser.makeNameList("pobi, jason");
 
-        assertEquals("jason", players.getPlayer(1).getName());
+        final List<String> playerNames = new ArrayList<>();
+        players.forEachPlayer(player -> playerNames.add(player.getName()));
+        assertEquals("jason", playerNames.get(1));
     }
 }

@@ -19,7 +19,7 @@ public class CheckWinnerTest {
     void drawResult() {
         Dealer dealer = new Dealer();
         Players players = NameParser.makeNameList("pobi");
-        Player player = players.getPlayer(0);
+        Player player = getFirstPlayer(players);
         addCards(dealer,
                 new Card(Suit.SPADE, Rank.KING),
                 new Card(Suit.HEART, Rank.QUEEN));
@@ -37,7 +37,7 @@ public class CheckWinnerTest {
     void loseResult() {
         Dealer dealer = new Dealer();
         Players players = NameParser.makeNameList("pobi");
-        Player player = players.getPlayer(0);
+        Player player = getFirstPlayer(players);
         addCards(dealer,
                 new Card(Suit.SPADE, Rank.KING),
                 new Card(Suit.HEART, Rank.QUEEN));
@@ -55,7 +55,7 @@ public class CheckWinnerTest {
     void winResult() {
         Dealer dealer = new Dealer();
         Players players = NameParser.makeNameList("pobi");
-        Player player = players.getPlayer(0);
+        Player player = getFirstPlayer(players);
         addCards(dealer,
                 new Card(Suit.SPADE, Rank.TEN),
                 new Card(Suit.HEART, Rank.EIGHT));
@@ -72,5 +72,15 @@ public class CheckWinnerTest {
         for (Card card : cards) {
             participant.getCardList().addCard(card);
         }
+    }
+
+    private Player getFirstPlayer(Players players) {
+        final Player[] firstPlayer = new Player[1];
+        players.forEachPlayer(player -> {
+            if (firstPlayer[0] == null) {
+                firstPlayer[0] = player;
+            }
+        });
+        return firstPlayer[0];
     }
 }

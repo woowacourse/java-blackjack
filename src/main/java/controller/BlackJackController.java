@@ -32,9 +32,7 @@ public class BlackJackController {
     }
 
     private void drawPlayersTurn(Players players, Cards cards) {
-        for (int index = 0; index < players.getSize(); index++) {
-            drawPlayerTurn(players.getPlayer(index), cards);
-        }
+        players.forEachPlayer(player -> drawPlayerTurn(player, cards));
     }
 
     private void drawPlayerTurn(Player player, Cards cards) {

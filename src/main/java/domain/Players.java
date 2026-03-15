@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class Players {
     private final List<Player> players;
@@ -15,8 +16,8 @@ public class Players {
         return players.size();
     }
 
-    public Player getPlayer(int index) {
-        return players.get(index);
+    public void forEachPlayer(final Consumer<Player> action) {
+        players.forEach(action);
     }
 
     public GameResult calculateResult(Dealer dealer) {

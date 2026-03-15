@@ -44,9 +44,7 @@ public class BlackJackGame {
     }
 
     private void drawInitialPlayerCards(Players players, Cards cards) {
-        IntStream.range(0, players.getSize())
-                .mapToObj(players::getPlayer)
-                .forEach(player -> drawInitialCardsToPlayer(player, cards));
+        players.forEachPlayer(player -> drawInitialCardsToPlayer(player, cards));
     }
 
     private void drawInitialCardsToPlayer(Player player, Cards cards) {

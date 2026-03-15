@@ -7,7 +7,6 @@ import domain.Outcome;
 import domain.Player;
 import domain.Players;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import message.IOMessage;
 
 public class ResultView {
@@ -40,25 +39,21 @@ public class ResultView {
     public void printGameStart(Players players, Dealer dealer) {
         System.out.printf("딜러와 %s에게 2장을 나누었습니다.%n", joinPlayerNames(players));
         System.out.printf("딜러카드: %s%n", dealer.getCardList().get(0).displayName());
-        IntStream.range(0, players.getSize())
-                .mapToObj(players::getPlayer)
-                .forEach(player -> System.out.printf(
-                        "%s카드: %s%n",
-                        player.getName(),
-                        joinCardNames(player.getCardList())
-                ));
+        players.forEachPlayer(player -> System.out.printf(
+                "%s카드: %s%n",
+                player.getName(),
+                joinCardNames(player.getCardList())
+        ));
     }
 
     public void printResult(Players players, Dealer dealer) {
         System.out.println("딜러카드: " + joinCardNames(dealer.getCardList()) + " - 결과: " + dealer.getResult());
-        IntStream.range(0, players.getSize())
-                .mapToObj(players::getPlayer)
-                .forEach(player -> System.out.printf(
-                        "%s카드: %s - 결과: %s%n",
-                        player.getName(),
-                        joinCardNames(player.getCardList()),
-                        player.getResult()
-                ));
+        players.forEachPlayer(player -> System.out.printf(
+                "%s카드: %s - 결과: %s%n",
+                player.getName(),
+                joinCardNames(player.getCardList()),
+                player.getResult()
+        ));
     }
 
     public void printWinner(Players players, GameResult gameResult) {
@@ -69,9 +64,14 @@ public class ResultView {
     }
 
     private String joinPlayerNames(Players players) {
-        return IntStream.range(0, players.getSize())
-                .mapToObj(index -> players.getPlayer(index).getName())
-                .collect(Collectors.joining(", "));
+        final StringBuilder playerNames = new StringBuilder();
+        players.forEachPlayer(player -> {
+            if (playerNames.length() > 0) {
+                playerNames.append(", ");
+            }
+            playerNames.append(player.getName());
+        });
+        return playerNames.toString();
     }
 
     public String joinCardNames(Hand cardList) {
@@ -89,9 +89,7 @@ public class ResultView {
     }
 
     private void printPlayerOutcomes(Players players, GameResult gameResult) {
-        IntStream.range(0, players.getSize())
-                .mapToObj(players::getPlayer)
-                .forEach(player -> printPlayerOutcome(player, gameResult));
+        players.forEachPlayer(player -> printPlayerOutcome(player, gameResult));
     }
 
     private void printPlayerOutcome(Player player, GameResult gameResult) {

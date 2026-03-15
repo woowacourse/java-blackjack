@@ -9,15 +9,13 @@ public class ResultCalculator {
         final Map<String, Outcome> playerOutcomes = new HashMap<>();
         final Map<Outcome, Integer> dealerOutcomeCounts = initOutcomeCounts();
 
-        for (int index = 0; index < players.getSize(); index++) {
-            final Player player = players.getPlayer(index);
+        players.forEachPlayer(player -> {
             final int playerResultScore = toResultScore(player.getResult(), player.checkBust());
             final Outcome playerOutcome = decidePlayerOutcome(dealerResultScore, playerResultScore);
             final Outcome dealerOutcome = reverse(playerOutcome);
-
             playerOutcomes.put(player.getName(), playerOutcome);
             dealerOutcomeCounts.put(dealerOutcome, dealerOutcomeCounts.get(dealerOutcome) + 1);
-        }
+        });
         return new GameResult(playerOutcomes, dealerOutcomeCounts);
     }
 
