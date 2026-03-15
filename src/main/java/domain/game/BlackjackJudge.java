@@ -26,8 +26,4 @@ public record BlackjackJudge() {
         }
         return Result.LOSE;
     }
-
-    public int calculatePlayerProfit(Player player, Result result) {
-        return result.getProfit(player.getBetAmount());
-    }
 }
