@@ -3,14 +3,15 @@ package domain;
 
 public class Player extends Participant {
     private final Name name;
-
-    private Player(Name name, Hand hand) {
+    private final BettingMoney bettingMoney;
+    private Player(Name name, Hand hand ,BettingMoney bettingMoney) {
         super(hand);
         this.name = name;
+        this.bettingMoney = bettingMoney;
     }
 
-    public static Player of(Name name, Hand hand) {
-        return new Player(name, hand);
+    public static Player of(Name name, Hand hand, BettingMoney bettingMoney) {
+        return new Player(name, hand, bettingMoney);
     }
 
     public Name getName() {
@@ -19,5 +20,9 @@ public class Player extends Participant {
 
     public String getNameValue() {
         return name.getName();
+    }
+
+    public int getBettingMoneyValue(){
+        return bettingMoney.getMoney();
     }
 }
