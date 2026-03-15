@@ -5,21 +5,23 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Hand {
-    private List<Card> cards;
+    private static final Integer MAXIMUM_TOTAL_SCORE = 21;
+    private static final Integer MINIMUM_DEALER_SCORE = 16;
+
+    private final List<Card> cards;
     private int handTotalScore;
-    private boolean hasAce;
 
     public Hand() {
         cards = new ArrayList<>();
         handTotalScore = 0;
-        hasAce = false;
     }
 
     public void saveCard(Card card) {
         cards.add(card);
-        if (card.isAceCard()) {
-            hasAce = true;
-        }
+    }
+
+    public String getOneCardDisplay() {
+        return cards.getFirst().getDisplayName();
     }
 
     public String getCardsDisplay() {
@@ -29,29 +31,44 @@ public class Hand {
     }
 
     public void calculateHandScore() {
-        this.handTotalScore = 0;
-        for (Card card : cards) {
-            handTotalScore += card.getCardScore();
-        }
+        int initialScore = calculateInitialScore();
+        int aceCount = countAces();
+        this.handTotalScore = applyAceRule(initialScore, aceCount);
+    }
 
-        if (hasAce && handTotalScore > 21) {
-            handTotalScore -= 10;
+    private int calculateInitialScore() {
+        return cards.stream()
+                .mapToInt(Card::getCardScore)
+                .sum();
+    }
+
+    private int countAces() {
+        return (int) cards.stream()
+                .filter(Card::isAceCard)
+                .count();
+    }
+
+    private int applyAceRule(int score, int aceCount) {
+        while ((score > MAXIMUM_TOTAL_SCORE) && (aceCount > 0)) {
+            score -= 10;
+            aceCount--;
         }
+        return score;
     }
 
     public Boolean determineDealerDealMore() {
-        if (handTotalScore <= 16) {
-            return true;
-        }
-        return false;
-    }
-
-    public String getFinalDisplay() {
-        String finalDisplay = " - 결과: " + handTotalScore;
-        return finalDisplay;
+        return handTotalScore <= MINIMUM_DEALER_SCORE;
     }
 
     public int getHandTotalScore() {
         return handTotalScore;
+    }
+
+    public boolean isBlackjack() {
+        return (getHandTotalScore() == MAXIMUM_TOTAL_SCORE) && (cards.size() == 2);
+    }
+
+    public boolean isBust() {
+        return this.handTotalScore > MAXIMUM_TOTAL_SCORE;
     }
 }

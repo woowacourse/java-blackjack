@@ -1,20 +1,28 @@
 package domain;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 import vo.Rank;
 import vo.Suit;
 
 public class Deck {
-    private List<Card> cards;
+    private final ShuffleStrategy shuffleStrategy;
+    private final List<Card> cards;
 
-    public Deck() {
+    public Deck(ShuffleStrategy shuffleStrategy) {
+        this.shuffleStrategy = shuffleStrategy;
         this.cards = makeCards();
     }
 
-    public Card dealCard() {
-        Collections.shuffle(cards);
+    public void shuffleCards() {
+        shuffleStrategy.shuffle(cards);
+    }
+
+    public Card drawCard() {
+        if (cards.isEmpty()) {
+            throw new NoSuchElementException("[ERROR] 더 이상의 카드를 꺼낼 수 없습니다.");
+        }
         return cards.removeFirst();
     }
 

@@ -1,13 +1,16 @@
 package domain;
 
 import view.Message;
+import vo.Money;
 
 public class User {
-    private String username;
-    private Hand hand;
+    private final String userName;
+    private final Hand hand;
+    private final Money bettingMoney;
 
-    public User(String name) {
-        this.username = name;
+    public User(String name, Money bettingMoney) {
+        this.userName = name;
+        this.bettingMoney = bettingMoney;
         this.hand = new Hand();
     }
 
@@ -16,26 +19,30 @@ public class User {
     }
 
     public String getName() {
-        return username;
+        return userName;
     }
 
     public String getCardsDisplay() {
         return hand.getCardsDisplay();
     }
 
-    public String formatAskGetExtraCard() {
-        return String.format(Message.REQUEST_GET_EXTRA_CARD, username);
-    }
-
     public void calculateScore() {
         hand.calculateHandScore();
     }
 
-    public String getUserFinalDisplay() {
-        return hand.getFinalDisplay();
+    public int getTotalScore() {
+        return hand.getHandTotalScore();
     }
 
-    public int getHand() {
-        return hand.getHandTotalScore();
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
+    }
+
+    public boolean isBust() {
+        return hand.isBust();
+    }
+
+    public Money getBettingMoney() {
+        return bettingMoney;
     }
 }

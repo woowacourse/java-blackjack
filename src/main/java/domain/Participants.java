@@ -1,86 +1,82 @@
 package domain;
 
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.HashMap;
+import dto.DealerResultDTO;
+import dto.ParticipantsInitDTO;
+import dto.ProfitResultDTO;
+import dto.UserCardsDTO;
+import dto.UserResultDTO;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import vo.GameResult;
+import vo.Money;
 
 public class Participants {
     private static final Integer MAXIMUM_NUMBER_OF_PARTICIPANTS = 16;
 
-    private List<User> participants;
-    private Dealer dealer;
+    private final List<User> players;
+    private final Dealer dealer;
 
-    public Participants(List<String> parsedParticipantsName) {
-        this.participants = new ArrayList<>();
+    public Participants(List<ParticipantsInitDTO> participantsInitDTOS) {
+        validateParticipantsNumbers(participantsInitDTOS);
+        this.players = participantsInitDTOS.stream()
+                .map(dto -> new User(dto.getUserName(), dto.getBettingMoney()))
+                .collect(Collectors.toList());
         this.dealer = new Dealer();
-        validateParticipantsNumbers(parsedParticipantsName);
-        saveUsers(parsedParticipantsName);
     }
 
-    private void saveUsers(List<String> parsedParticipantsName) {
-        parsedParticipantsName.forEach(name -> {
-            participants.add(new User(name));
-        });
-    }
-
-    static void validateParticipantsNumbers(List<String> parsedParticipantsName) {
-        if (parsedParticipantsName.size() > MAXIMUM_NUMBER_OF_PARTICIPANTS) {
+    private void validateParticipantsNumbers(List<ParticipantsInitDTO> participantsInitDTOS) {
+        if (participantsInitDTOS.size() > MAXIMUM_NUMBER_OF_PARTICIPANTS) {
             throw new IllegalArgumentException("[ERROR] 최대 참가 인원은 16명 이하여야 합니다.");
         }
     }
 
-    public void dealCards(Deck deck) {
-        for (User user : participants) {
-            user.receiveCard(deck.dealCard());
+    public void dealOneCardToAll(Deck deck) {
+        deck.shuffleCards();
+        for (User user : players) {
+            user.receiveCard(deck.drawCard());
         }
-        dealer.receiveCard(deck.dealCard());
+        dealer.receiveCard(deck.drawCard());
     }
 
     public String getUserNames() {
-        return participants.stream().map(User::getName).collect(Collectors.joining(", "));
+        return players.stream().map(User::getName).collect(Collectors.joining(", "));
     }
 
-    public String getDealerCardsDisplay() {
-        return dealer.getCardsDisplay();
+    public String getDealerOneCardDisplay() {
+        return dealer.getOneCardDisplay();
     }
 
-    public List<String> getUserCardsDisplays() {
-        return participants.stream()
-                .map(this::makeOneUserCard)
+    public List<UserCardsDTO> getUserCards() {
+        return players.stream()
+                .map(UserCardsDTO::fromUser)
                 .collect(Collectors.toList());
     }
 
-    public String makeOneUserCardDelegator(int userIndex) {
-        return makeOneUserCard(participants.get(userIndex));
+    public UserCardsDTO getPlayerCards(int userIndex) {
+        return UserCardsDTO.fromUser(players.get(userIndex));
     }
 
-    private String makeOneUserCard(User user) {
-        return user.getName() + "카드: " + user.getCardsDisplay();
-    }
-
-    public List<String> askGetExtraCard() {
-        return participants.stream()
-                .map(User::formatAskGetExtraCard)
+    public List<String> getPlayerNames() {
+        return players.stream()
+                .map(User::getName)
                 .collect(Collectors.toList());
     }
 
     public void dealCard(Deck deck, int index) {
-        participants.get(index).receiveCard(deck.dealCard());
+        players.get(index).receiveCard(deck.drawCard());
     }
 
-    public void calculateScore(int index) {
-        participants.get(index).calculateScore();
+    public void calculateUserScore(int index) {
+        players.get(index).calculateScore();
     }
 
-    public void caculateDealerscore() {
+    public void calculateDealerScore() {
         dealer.calculateScore();
     }
 
-    public Boolean determineDealerDealMore() {
+    public Boolean shouldDealerDraw() {
         return dealer.determineDealerDealMore();
     }
 
@@ -89,46 +85,32 @@ public class Participants {
         dealer.calculateScore();
     }
 
-    public String getDealerFinalDisplay() {
-        return dealer.getDealerFinalDisplay();
+    public DealerResultDTO getDealerResult() {
+        return DealerResultDTO.fromDealer(dealer);
     }
 
-    public List<String> addScoreToUserHand() {
-        List<String> userDisplays = new ArrayList<>();
-        for (User user : participants) {
-            String userFinalDisplay = makeOneUserCard(user) + user.getUserFinalDisplay();
-            userDisplays.add(userFinalDisplay);
-        }
-        return userDisplays;
+    public List<UserResultDTO> getUserResults() {
+        return players.stream()
+                .map(UserResultDTO::fromUser)
+                .collect(Collectors.toList());
     }
 
-    public List<String> judgeWinner() {
-        EnumMap<GameResult, Integer> dealerScore = new EnumMap<>(GameResult.class);
+    public ProfitResultDTO calculateProfit() {
+        Map<String, Money> participantsProfit = new LinkedHashMap<>();
+        Money dealerProfit = new Money(0);
 
-        for (GameResult result : GameResult.values()) {
-            dealerScore.put(result, 0);
+        for (User user : players) {
+            GameResult isUserWin = dealer.judgeResultForUser(user);
+            Money earnedMoney = isUserWin.calculateProfit(user.getBettingMoney());
+            dealerProfit = dealerProfit.subtract(earnedMoney);
+            participantsProfit.put(user.getName(), earnedMoney);
         }
 
-        Map<String, GameResult> userScore = new HashMap<String, GameResult>();
+        return new ProfitResultDTO(dealerProfit, participantsProfit);
+    }
 
-        for (User user : participants) {
-            GameResult isDealerWin = dealer.judgeUserResult(user.getHand());
-            dealerScore.replace(isDealerWin, dealerScore.get(isDealerWin) + 1);
-
-            GameResult isUserWin = dealer.judgeUserWin(user.getHand());
-            userScore.put(user.getName(), isUserWin);
-        }
-
-        List<String> finalTotalDisplays = new ArrayList<>();
-        String dealerTotalFinalDisplay = "딜러: " + dealerScore.get(GameResult.WIN) + "승 " + dealerScore.get(GameResult.LOSE) + "패";
-        finalTotalDisplays.add(dealerTotalFinalDisplay);
-
-        for (User user : participants) {
-            String userTotalFinalDisplay = user.getName() + ": " + userScore.get(user.getName()).getName();
-            finalTotalDisplays.add(userTotalFinalDisplay);
-        }
-
-        return finalTotalDisplays;
+    public boolean isBust(int index) {
+        return players.get(index).isBust();
     }
 }
 
