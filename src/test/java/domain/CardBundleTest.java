@@ -47,4 +47,12 @@ public class CardBundleTest {
         cardBundle.addCard(new Card(Rank.ACE, Suit.HEART));  // 1
         assertThat(cardBundle.calculateScore()).isEqualTo(12);
     }
+
+    @Test
+    void 초기_두장이_21이면_블랙잭이다() {
+        cardBundle.addCard(new Card(Rank.KING, Suit.HEART)); // 10
+        cardBundle.addCard(new Card(Rank.ACE, Suit.SPADE)); // 11
+
+        assertThat(cardBundle.isBlackjack()).isTrue();
+    }
 }
