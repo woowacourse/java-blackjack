@@ -1,7 +1,6 @@
 package domain;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 public class BettingTable {
@@ -22,9 +21,13 @@ public class BettingTable {
     public void settleBettingTable(Map<Player, WinningStatus> winningStatusMap) {
         for (Map.Entry<Player, WinningStatus> entry : winningStatusMap.entrySet()) {
             WinningStatus winningStatus = winningStatusMap.get(entry.getKey());
-            Money money = new Money(calculateMoney(entry.getKey(), winningStatus));
-            moneyTable.put(entry.getKey(), money);
+            settleBet(entry.getKey(), winningStatus);
         }
+    }
+
+    public void settleBet(Player player, WinningStatus winningStatus) {
+        long settledAmount = calculateMoney(player, winningStatus);
+        moneyTable.put(player, new Money(settledAmount));
     }
 
     private long calculateMoney(Player player, WinningStatus winningStatus) {
