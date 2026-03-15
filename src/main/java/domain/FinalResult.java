@@ -1,24 +1,32 @@
 package domain;
 
 public class FinalResult {
-    private final Name name;
-    // ResultType이 아닌 최종 수익이 얼마인지 확인할 수 있는 필드
+    private final Player player;
     private final ResultType resultType;
     
-    private FinalResult(Name name, ResultType resultType) {
-        this.name = name;
+    private FinalResult(Player player, ResultType resultType) {
+        this.player = player;
         this.resultType = resultType;
     }
 
-    public static FinalResult from(Name name, ResultType resultType) {
-        return new FinalResult(name, resultType);
+    public static FinalResult from(Player player, ResultType resultType) {
+        return new FinalResult(player, resultType);
     }
 
     public Name getName() {
-        return name;
+        return player.getName();
     }
 
     public ResultType getResultType() {
         return resultType;
     }
+
+    public int getPlayerBettingAmount() {
+        return player.getBettingAmount();
+    }
+
+    public int getProfit() {
+        return resultType.calculateProfit(getPlayerBettingAmount());
+    }
+
 }

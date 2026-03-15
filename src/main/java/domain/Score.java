@@ -1,9 +1,13 @@
 package domain;
 
 public record Score(int value) {
-    private static final int BUST_LIMIT_SCORE = 21;
+    private static final int BLACKJACK_SCORE = 21;
 
     public boolean isBust() {
-        return value > BUST_LIMIT_SCORE;
+        return value > BLACKJACK_SCORE;
+    }
+
+    public boolean isBlackjackScore() {
+        return value == BLACKJACK_SCORE;
     }
 }

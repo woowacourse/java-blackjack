@@ -3,16 +3,19 @@ package view;
 import dto.DealerFinalResultDto;
 import dto.FinalResultDto;
 import dto.PlayerDto;
+import dto.PlayersDto;
+import dto.ProfitDto;
 import dto.ResultDto;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class OutputViewFormatter {
-    public String formatDealerResult(DealerFinalResultDto dealerFinalResultDto) {
-        if (dealerFinalResultDto.drawCount() > 0) {
-            return String.format("딜러: %d승 %d무 %d패%n", dealerFinalResultDto.winCount(), dealerFinalResultDto.drawCount(),
-                    dealerFinalResultDto.loseCount());
-        }
-        return String.format("딜러: %d승 %d패%n", dealerFinalResultDto.winCount(), dealerFinalResultDto.loseCount());
+    public String formatHandOutMessage(PlayersDto playersDto) {
+        String playersName = playersDto.playersDto().stream()
+                .map(PlayerDto::name)
+                .collect(Collectors.joining(", "));
+
+        return String.format("%n딜러와 %s에게 2장을 나누었습니다.", playersName);
     }
 
     public String formatDealerCardStatus(ResultDto resultDto) {
@@ -31,7 +34,11 @@ public class OutputViewFormatter {
         return String.format("%n%s카드: %s - 결과: %d", name, getCardStatusFormat(resultDto.cards()), resultDto.score());
     }
 
-    public String formatTotalResult(FinalResultDto finalResultDto) {
-        return String.format("%s: %s%n", finalResultDto.name(), finalResultDto.result());
+    public String formatProfit(ProfitDto profitDto) {
+        return String.format("%s: %d%n", profitDto.name(), profitDto.profit());
+    }
+
+    public String formatErrorMessage(String message) {
+        return String.format("[ERROR] %s 다시 입력해주세요.%n", message);
     }
 }
