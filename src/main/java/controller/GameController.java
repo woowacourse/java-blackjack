@@ -82,23 +82,11 @@ public class GameController {
     private boolean processDealerBlackJack(GameService gameService) {
         Dealer dealer = gameService.getDealer();
         if (dealer.isBlackJack()) {
-            endGameImmediately(gameService.getPlayers());
+            gameService.endGameImmediately();
             outputView.printDealerBlackJack();
             return true;
         }
         return false;
-    }
-
-    private void endGameImmediately(Players players) {
-        for (Player player : players) {
-            forceStay(player);
-        }
-    }
-
-    private void forceStay(Player player) {
-        if (player.isRunning()) {
-            player.stay();
-        }
     }
 
     private void playerTurn(Player player, GameService gameService) {
@@ -116,7 +104,7 @@ public class GameController {
     private void dealerTurn(GameService gameService) {
         Dealer dealer = gameService.getDealer();
 
-        while (dealer.isRunning() && dealer.isReceiveCard()) {
+        while (dealer.isReceiveCard()) {
             gameService.hit(dealer);
             outputView.printDealerReceiveCard();
         }

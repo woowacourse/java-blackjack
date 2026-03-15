@@ -23,11 +23,8 @@ public class GameService {
     }
 
     public GameStartDto startGame() {
-        for (Player player : players) {
-            player.drawInitialCards(deck.drawInitialCards());
-        }
+        players.drawInitialCards(deck);
         dealer.drawInitialCards(deck.drawInitialCards());
-
         return GameStartDto.from(players, dealer);
     }
 
@@ -37,6 +34,10 @@ public class GameService {
 
     public void stay(Participant participant) {
         participant.stay();
+    }
+
+    public void endGameImmediately() {
+        players.endGameImmediately();
     }
 
     public Players getPlayers() {
