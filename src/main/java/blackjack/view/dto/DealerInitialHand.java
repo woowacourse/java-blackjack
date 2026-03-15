@@ -1,6 +1,7 @@
-package blackjack.dto;
+package blackjack.view.dto;
 
 import blackjack.domain.participant.Dealer;
+import blackjack.view.CardMapper;
 
 public record DealerInitialHand(
         String nickname,
@@ -10,7 +11,7 @@ public record DealerInitialHand(
     public static DealerInitialHand from(Dealer dealer) {
         return new DealerInitialHand(
                 dealer.getNickname(),
-                CardDisplayName.from(dealer.getCards().getFirst()).displayName()
+                CardMapper.toDisplayName(dealer.getUpcard())
         );
     }
 }

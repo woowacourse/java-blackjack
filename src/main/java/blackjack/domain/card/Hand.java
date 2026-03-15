@@ -5,7 +5,8 @@ import java.util.List;
 
 public class Hand {
 
-    private static final int BUSTED_SCORE = 21;
+    private static final int ACE_SCORE = 10;
+    private static final int BLACKJACK_SCORE = 21;
 
     private final List<Card> cards;
 
@@ -26,20 +27,33 @@ public class Hand {
     }
 
     public boolean isBlackjack() {
-        return getTotalScore() == BUSTED_SCORE;
+        return getTotalScore() == BLACKJACK_SCORE && cards.size() == 2;
     }
 
-    public boolean isBusted() {
+    public boolean isBust() {
         int totalScore = getTotalScore();
-        return totalScore > BUSTED_SCORE;
+        return totalScore > BLACKJACK_SCORE;
+    }
+
+    public boolean isUnderBlackjackScore() {
+        int totalScore = getTotalScore();
+        return totalScore < BLACKJACK_SCORE;
+    }
+
+    public int getSize() {
+        return cards.size();
     }
 
     public int getTotalScore() {
         int scoreSum = calculateScoreSum();
-        if (hasAce() && (scoreSum + 10 <= BUSTED_SCORE)) {
-            return scoreSum + 10;
+        if (isSoftHand(scoreSum)) {
+            return scoreSum + ACE_SCORE;
         }
         return scoreSum;
+    }
+
+    private boolean isSoftHand(int scoreSum) {
+        return hasAce() && scoreSum + ACE_SCORE <= BLACKJACK_SCORE;
     }
 
     private int calculateScoreSum() {

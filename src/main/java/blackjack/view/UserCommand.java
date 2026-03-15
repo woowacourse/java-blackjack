@@ -3,7 +3,9 @@ package blackjack.view;
 import java.util.Arrays;
 
 public enum UserCommand {
-    YES("y"), NO("n");
+    YES("y"),
+    NO("n"),
+    ;
 
     private final String command;
 

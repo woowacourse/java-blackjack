@@ -1,81 +1,42 @@
 package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class PlayerTest {
 
-    @Test
-    @DisplayName("플레이어가 Stand 상태이면 카드를 뽑을 수 없다.")
-    void isDrawable_False_WhenStand() {
-        Player player = new Player("pobi");
-        player.stand();
-        assertThat(player.isDrawable()).isFalse();
+    @DisplayName("플레이어 이름이 공백이면 예외가 발생한다.")
+    @ParameterizedTest
+    @ValueSource(strings = {"", " ", "   "})
+    void create_ThrowsException_WhenNicknameIsBlank(String invalidNickname) {
+        assertThatThrownBy(() -> new Player(invalidNickname))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    @DisplayName("플레이어가 버스트 상태이면 카드를 뽑을 수 없다.")
-    void isDrawable_False_WhenBusted() {
+    @DisplayName("초기 생성된 플레이어는 카드를 뽑을 수 있는 상태이다.")
+    void isDrawable_True_Initially() {
         Player player = new Player("pobi");
-        player.hand.addCard(new Card(Rank.TEN, Suit.SPADE));
-        player.hand.addCard(new Card(Rank.TEN, Suit.HEART));
-        player.hand.addCard(new Card(Rank.TWO, Suit.CLOVER));
 
-        assertThat(player.isDrawable()).isFalse();
+        assertThat(player.isDrawable()).isTrue();
     }
 
     @Test
-    @DisplayName("플레이어가 블랙잭 상태이면 카드를 뽑을 수 없다.")
-    void isDrawable_False_WhenBlackjack() {
+    @DisplayName("플레이어의 점수가 정확히 21점 이상이면 카드를 뽑을 수 없다.")
+    void isDrawable_False_WhenScoreIs21OrMore() {
         Player player = new Player("pobi");
-        player.hand.addCard(new Card(Rank.ACE, Suit.SPADE));
-        player.hand.addCard(new Card(Rank.KING, Suit.HEART));
+        player.receiveCard(new Card(Rank.TEN, Suit.SPADES));
+        player.receiveCard(new Card(Rank.TEN, Suit.HEARTS));
+        player.receiveCard(new Card(Rank.TWO, Suit.CLUBS));
 
         assertThat(player.isDrawable()).isFalse();
-    }
-
-    @Test
-    @DisplayName("플레이어가 버스트 상태이면 딜러 점수와 무관하게 패배한다.")
-    void calculateResult_Lose_WhenPlayerIsBusted() {
-        Player player = new Player("pobi");
-        player.hand.addCard(new Card(Rank.TEN, Suit.SPADE));
-        player.hand.addCard(new Card(Rank.TEN, Suit.HEART));
-        player.hand.addCard(new Card(Rank.TWO, Suit.CLOVER));
-        Dealer dealer = new Dealer();
-
-        assertThat(GameResult.reverse(dealer.determineGameResult(player))).isEqualTo(GameResult.LOSE);
-    }
-
-    @Test
-    @DisplayName("플레이어가 버스트가 아니고 딜러가 버스트 상태이면 승리한다.")
-    void calculateResult_Win_WhenDealerIsBusted() {
-        Player player = new Player("pobi");
-        player.hand.addCard(new Card(Rank.TEN, Suit.SPADE));
-
-        Dealer dealer = new Dealer();
-        dealer.hand.addCard(new Card(Rank.TEN, Suit.SPADE));
-        dealer.hand.addCard(new Card(Rank.TEN, Suit.HEART));
-        dealer.hand.addCard(new Card(Rank.TWO, Suit.CLOVER));
-
-        assertThat(GameResult.reverse(dealer.determineGameResult(player))).isEqualTo(GameResult.WIN);
-    }
-
-    @Test
-    @DisplayName("둘 다 버스트가 아닐 때 플레이어 점수가 더 높으면 승리한다.")
-    void calculateResult_Win_WhenScoreIsHigherThanDealer() {
-        Player player = new Player("pobi");
-        player.hand.addCard(new Card(Rank.TEN, Suit.SPADE));
-        player.hand.addCard(new Card(Rank.NINE, Suit.HEART)); // 19
-
-        Dealer dealer = new Dealer();
-        dealer.hand.addCard(new Card(Rank.TEN, Suit.SPADE));
-        dealer.hand.addCard(new Card(Rank.EIGHT, Suit.HEART)); // 18
-
-        assertThat(GameResult.reverse(dealer.determineGameResult(player))).isEqualTo(GameResult.WIN);
     }
 }

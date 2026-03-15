@@ -5,55 +5,51 @@ import static org.assertj.core.api.Assertions.assertThat;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
-import java.util.List;
-import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class DealerTest {
 
     @Test
-    @DisplayName("딜러의 점수가 정확히 16점이면 카드를 뽑을 수 있다.")
-    void isDrawable_True_WhenScoreIsExactly16() {
+    @DisplayName("딜러는 점수가 16점 이하이면 카드를 추가로 뽑을 수 있다.")
+    void isDrawable_True_WhenScoreIs16OrLess() {
         Dealer dealer = new Dealer();
-        dealer.hand.addCard(new Card(Rank.TEN, Suit.SPADE));
-        dealer.hand.addCard(new Card(Rank.SIX, Suit.HEART));
+        dealer.receiveCard(new Card(Rank.TEN, Suit.SPADES));
+        dealer.receiveCard(new Card(Rank.SIX, Suit.HEARTS));
 
         assertThat(dealer.isDrawable()).isTrue();
     }
 
     @Test
-    @DisplayName("딜러의 점수가 정확히 17점이면 카드를 뽑을 수 없다.")
+    @DisplayName("딜러는 점수가 정확히 16점일 때 카드를 추가로 뽑을 수 있다. (엣지 케이스)")
+    void isDrawable_True_WhenScoreIsExactly16() {
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(Rank.TEN, Suit.SPADES));
+        dealer.receiveCard(new Card(Rank.SIX, Suit.HEARTS));
+
+        assertThat(dealer.isDrawable()).isTrue();
+    }
+
+    @Test
+    @DisplayName("딜러는 점수가 정확히 17점일 때 카드를 추가로 뽑을 수 없다. (엣지 케이스)")
     void isDrawable_False_WhenScoreIsExactly17() {
         Dealer dealer = new Dealer();
-        dealer.hand.addCard(new Card(Rank.TEN, Suit.SPADE));
-        dealer.hand.addCard(new Card(Rank.SEVEN, Suit.HEART));
+        dealer.receiveCard(new Card(Rank.TEN, Suit.SPADES));
+        dealer.receiveCard(new Card(Rank.SEVEN, Suit.HEARTS));
 
         assertThat(dealer.isDrawable()).isFalse();
     }
 
     @Test
-    @DisplayName("플레이어들을 상대로 딜러 관점의 승무패 빈도를 계산하여 반환한다.")
-    void calculateResult_GroupResultsByPlayerScores() {
+    @DisplayName("딜러가 받은 첫 번째 카드를 오픈 카드(Upcard)로 반환한다.")
+    void getUpcard_ReturnsUpcard() {
         Dealer dealer = new Dealer();
-        dealer.hand.addCard(new Card(Rank.TEN, Suit.SPADE));
-        dealer.hand.addCard(new Card(Rank.EIGHT, Suit.HEART));
+        Card firstCard = new Card(Rank.TEN, Suit.SPADES);
+        Card secondCard = new Card(Rank.SEVEN, Suit.HEARTS);
 
-        Player winPlayer = new Player("pobi");
-        winPlayer.hand.addCard(new Card(Rank.TEN, Suit.CLOVER));
-        winPlayer.hand.addCard(new Card(Rank.NINE, Suit.DIAMOND));
+        dealer.receiveCard(firstCard);
+        dealer.receiveCard(secondCard);
 
-        Player drawPlayer = new Player("jason");
-        drawPlayer.hand.addCard(new Card(Rank.TEN, Suit.CLOVER));
-        drawPlayer.hand.addCard(new Card(Rank.EIGHT, Suit.DIAMOND));
-
-        Player losePlayer = new Player("honux");
-        losePlayer.hand.addCard(new Card(Rank.TEN, Suit.CLOVER));
-        losePlayer.hand.addCard(new Card(Rank.FIVE, Suit.DIAMOND));
-
-        Map<GameResult, Long> dealerResult = dealer.determineGameResult(List.of(winPlayer, drawPlayer, losePlayer));
-
-        assertThat(dealerResult.get(GameResult.LOSE)).isEqualTo(1L);
-        assertThat(dealerResult.get(GameResult.WIN)).isEqualTo(1L);
+        assertThat(dealer.getUpcard()).isEqualTo(firstCard);
     }
 }

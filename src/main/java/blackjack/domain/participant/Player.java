@@ -1,23 +1,17 @@
 package blackjack.domain.participant;
 
-public class Player extends Participant {
+import static blackjack.domain.participant.Dealer.DEALER_NICKNAME;
 
-    private boolean stopDrawing;
+public class Player extends Participant {
 
     public Player(String nickname) {
         super(nickname);
-        stopDrawing = false;
+        validate(nickname);
     }
 
-    @Override
-    public boolean isDrawable() {
-        if (stopDrawing || isBusted()) {
-            return false;
+    private void validate(String nickname) {
+        if (nickname.equals(DEALER_NICKNAME)) {
+            throw new IllegalArgumentException("사용 불가능한 플레이어 닉네임입니다.");
         }
-        return !hand.isBlackjack();
-    }
-
-    public void stand() {
-        stopDrawing = true;
     }
 }

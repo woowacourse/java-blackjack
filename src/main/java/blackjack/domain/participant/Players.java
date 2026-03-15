@@ -4,43 +4,38 @@ import blackjack.domain.card.Deck;
 import java.util.List;
 
 public class Players {
-    
-    private final List<Player> playerList;
-    
-    private Players(List<Player> playerList) {
-        validate(playerList);
-        this.playerList = playerList;
+
+    private final List<Player> players;
+
+    private Players(List<Player> players) {
+        this.players = players;
     }
-    
-    public static Players fromNames(List<String> playerNames) {
-        List<Player> players = playerNames.stream()
+
+    public static Players fromPlayerNicknames(List<String> playerNicknames) {
+        validate(playerNicknames);
+        List<Player> players = playerNicknames.stream()
                 .map(Player::new)
                 .toList();
         return new Players(players);
     }
-    
-    private void validate(List<Player> playerList) {
-        long distinctCount = playerList.stream()
-                .map(Player::getNickname)
+
+    private static void validate(List<String> playerNicknames) {
+        if (playerNicknames.isEmpty()) {
+            throw new IllegalArgumentException("한 명 이상의 플레이어 닉네임을 입력해주세요");
+        }
+        long distinctCount = playerNicknames.stream()
                 .distinct()
                 .count();
-        if (distinctCount != playerList.size()) {
+        if (distinctCount != playerNicknames.size()) {
             throw new IllegalArgumentException("플레이어 이름은 중복될 수 없습니다.");
         }
     }
-    
+
     public void distributeCards(Deck deck) {
-        playerList.forEach(player -> player.drawInitialCards(deck));
+        players.forEach(player -> player.drawInitialCards(deck));
     }
-    
+
     public List<Player> getPlayers() {
-        return List.copyOf(playerList);
-    }
-    
-    public Player getDrawablePlayer() {
-        return playerList.stream()
-                .filter(Player::isDrawable)
-                .findFirst()
-                .orElse(null);
+        return List.copyOf(players);
     }
 }

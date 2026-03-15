@@ -1,136 +1,170 @@
 package blackjack;
 
+import blackjack.domain.bet.Bets;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Gamblers;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
-import blackjack.dto.DealerInitialHand;
-import blackjack.dto.ParticipantHandScore;
-import blackjack.dto.PlayerHand;
-import blackjack.dto.PlayerNames;
-import blackjack.dto.TotalWinningResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import blackjack.view.dto.DealerInitialHand;
+import blackjack.view.dto.ParticipantHandScore;
+import blackjack.view.dto.PlayerHand;
+import blackjack.view.dto.PlayerNicknames;
+import blackjack.view.dto.PlayerProfit;
+import blackjack.view.dto.TotalWinningResult;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
 
 public class BlackjackRunner {
-    
+
     private final InputView inputView;
     private final OutputView outputView;
-    
+
     public BlackjackRunner(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }
-    
+
     public void execute() {
-        Participants participants = makeParticipants();
-        Deck deck = new Deck();
-        initializeGame(participants, deck);
-        
-        playerTurn(participants, deck);
-        dealerTurn(participants, deck);
-        gameEnd(participants);
-    }
-    
-    private void playerTurn(Participants participants, Deck deck) {
-        while (true) {
-            Player currentPlayer = participants.getCurrentPlayer();
-            if (currentPlayer == null) {
-                break;
-            }
-            playerDraw(currentPlayer, deck);
-        }
-    }
-    
-    private Participants makeParticipants() {
-        outputView.askGameMembers();
-        List<String> playerNames = inputView.parsePlayerNames();
-        Players players = Players.fromNames(playerNames);
+        Gamblers gamblers = makeGamblers();
         Dealer dealer = new Dealer();
-        return new Participants(players, dealer);
+        Deck deck = new Deck();
+        initializeGame(gamblers, dealer, deck);
+
+        playerTurn(gamblers, deck);
+        dealerTurn(dealer, deck);
+        gameEnd(gamblers, dealer);
     }
-    
-    private void initializeGame(Participants participants, Deck deck) {
-        printParticipantsNames(participants);
-        participants.distributeCards(deck);
-        printInitialHand(participants);
+
+    private Gamblers makeGamblers() {
+        Players players = makePlayers();
+        Bets bets = makeBets(players);
+        return new Gamblers(players, bets);
     }
-    
-    private void printParticipantsNames(Participants participants) {
-        List<Player> players = participants.getPlayers();
-        outputView.printInitialSetUp(PlayerNames.from(players));
+
+    private Players makePlayers() {
+        return readPlayerNicknames();
     }
-    
-    private void printInitialHand(Participants participants) {
-        Dealer dealer = participants.getDealer();
-        List<Player> players = participants.getPlayers();
-        
+
+    private Players readPlayerNicknames() {
+        return retry(() -> {
+            outputView.askGameMembers();
+            return Players.fromPlayerNicknames(inputView.readPlayerNicknames());
+        });
+    }
+
+    private Bets makeBets(Players players) {
+        Bets bets = new Bets();
+        players.getPlayers().forEach(player -> bettingWithPlayerAmount(player, bets));
+        return bets;
+    }
+
+    private void bettingWithPlayerAmount(Player player, Bets bets) {
+        retry(() -> {
+            outputView.printAskPlayerBetAmount(player.getNickname());
+            int betAmount = inputView.readPlayerbetAmount();
+            bets.playerBet(player, betAmount);
+            return true;
+        });
+    }
+
+    private void initializeGame(Gamblers gamblers, Dealer dealer, Deck deck) {
+        printParticipantsNames(gamblers);
+        dealer.drawInitialCards(deck);
+        gamblers.distributeCards(deck);
+        printInitialHand(gamblers, dealer);
+    }
+
+    private void printParticipantsNames(Gamblers gamblers) {
+        List<Player> players = gamblers.getPlayers();
+        PlayerNicknames playerNicknames = PlayerNicknames.from(players);
+        outputView.printInitialSetUp(playerNicknames);
+    }
+
+    private void printInitialHand(Gamblers gamblers, Dealer dealer) {
+        List<Player> players = gamblers.getPlayers();
+
         printDealerInitialHand(dealer);
         printPlayersInitialHand(players);
     }
-    
+
     private void printDealerInitialHand(Dealer dealer) {
         outputView.printDealerInitialHand(DealerInitialHand.from(dealer));
     }
-    
+
     private void printPlayersInitialHand(List<Player> players) {
         outputView.printPlayersInitialHand(PlayerHand.listOf(players));
     }
-    
+
+    private void playerTurn(Gamblers gamblers, Deck deck) {
+        gamblers.getPlayers()
+                .forEach(player -> playerDraw(player, deck));
+    }
+
     private void playerDraw(Player currentPlayer, Deck deck) {
-        boolean hit = askHitOrStand(currentPlayer);
-        if (hit) {
-            currentPlayer.drawCard(deck);
-            printCurrentHand(currentPlayer);
+        if (!currentPlayer.isDrawable()) {
             return;
         }
-        if (currentPlayer.getCards().size() == 2) {
+        boolean hit = askHitOrStand(currentPlayer);
+        if (!hit) {
+            playerEndsDraw(currentPlayer);
+            return;
+        }
+        dealCard(currentPlayer, deck);
+    }
+
+    private void dealCard(Player currentPlayer, Deck deck) {
+        currentPlayer.receiveCard(deck.drawCard());
+        printCurrentHand(currentPlayer);
+        playerDraw(currentPlayer, deck);
+    }
+
+    private void playerEndsDraw(Player currentPlayer) {
+        if (currentPlayer.getCardsCount() == 2) {
             printCurrentHand(currentPlayer);
         }
-        currentPlayer.stand();
     }
-    
+
     private boolean askHitOrStand(Player currentPlayer) {
         return retry(() -> {
             outputView.hitOrStand(currentPlayer.getNickname());
-            return inputView.getUserCommand();
+            return inputView.readUserCommand();
         });
     }
-    
-    private void dealerTurn(Participants participants, final Deck deck) {
-        Dealer dealer = participants.getDealer();
-        while (dealer.isDrawable()) {
-            outputView.printDealerTurn();
-            dealer.drawCard(deck);
-        }
-    }
-    
+
     private void printCurrentHand(Player player) {
         outputView.printParticipantInitialHand(PlayerHand.from(player));
     }
-    
-    private void gameEnd(Participants participants) {
-        printGameResult(participants);
+
+    private void dealerTurn(Dealer dealer, Deck deck) {
+        while (dealer.isDrawable()) {
+            outputView.printDealerTurn();
+            dealer.receiveCard(deck.drawCard());
+        }
     }
-    
-    public void printGameResult(Participants participants) {
-        outputView.printParticipantsHandScore(ParticipantHandScore.listOf(participants.getParticipants()));
-        
-        TotalWinningResult totalWinningResult = determineTotalWinningResult(participants);
-        
-        outputView.printWinningResults(totalWinningResult);
+
+    private void gameEnd(Gamblers gamblers, Dealer dealer) {
+        printHandScores(gamblers, dealer);
+
+        TotalWinningResult totalWinningResult = determineTotalWinningResult(gamblers, dealer);
+
+        outputView.printFinalProfit(totalWinningResult);
     }
-    
-    private TotalWinningResult determineTotalWinningResult(Participants participants) {
-        Dealer dealer = participants.getDealer();
-        List<Player> players = participants.getPlayers();
-        
-        return TotalWinningResult.of(dealer, players);
+
+    private void printHandScores(Gamblers gamblers, Dealer dealer) {
+        outputView.printParticipantsHandScore(ParticipantHandScore.listOf(gamblers.getPlayers(), dealer));
     }
-    
+
+    private TotalWinningResult determineTotalWinningResult(Gamblers gamblers, Dealer dealer) {
+        Map<Player, Integer> playerProfits = gamblers.determinePlayerProfits(dealer);
+        long dealerProfit = gamblers.getDealerProfit(playerProfits);
+
+        return new TotalWinningResult(dealerProfit, PlayerProfit.listFrom(playerProfits));
+    }
+
     private <T> T retry(Supplier<T> supplier) {
         while (true) {
             try {

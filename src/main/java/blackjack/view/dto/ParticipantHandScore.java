@@ -1,7 +1,11 @@
-package blackjack.dto;
+package blackjack.view.dto;
 
+import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Player;
+import blackjack.view.CardMapper;
 import java.util.List;
+import java.util.stream.Stream;
 
 public record ParticipantHandScore(
         String nickname,
@@ -17,16 +21,18 @@ public record ParticipantHandScore(
         );
     }
 
-    public static List<ParticipantHandScore> listOf(List<Participant> participants) {
-        return participants.stream()
+    public static List<ParticipantHandScore> listOf(List<Player> players, Dealer dealer) {
+        List<ParticipantHandScore> participantHandScores = players.stream()
                 .map(ParticipantHandScore::from)
+                .toList();
+        return Stream
+                .concat(Stream.of(ParticipantHandScore.from(dealer)), participantHandScores.stream())
                 .toList();
     }
 
     private static List<String> toCardDisplayNames(Participant participant) {
         return participant.getCards().stream()
-                .map(CardDisplayName::from)
-                .map(CardDisplayName::displayName)
+                .map(CardMapper::toDisplayName)
                 .toList();
     }
 }
