@@ -3,7 +3,6 @@ package domain.player;
 import domain.game.Result;
 
 public class BettingProfit {
-    private static final double BLACKJACK_PAYOUT_RATE = 1.5;
     private static final int DRAW_PROFIT = 0;
 
     private final Money money;
@@ -31,7 +30,7 @@ public class BettingProfit {
     }
 
     public int blackjackWinProfit() {
-        return money.multiply(BLACKJACK_PAYOUT_RATE);
+        return money.multiply(3) / 2;
     }
 
     public int loseProfit() {

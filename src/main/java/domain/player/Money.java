@@ -19,8 +19,8 @@ public class Money {
         }
     }
 
-    public int multiply(double value) {
-        return (int) (this.amount * value);
+    public int multiply(int value) {
+        return this.amount * value;
     }
 
     public int getAmount() {
