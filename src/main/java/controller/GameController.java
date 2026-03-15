@@ -4,6 +4,7 @@ import domain.Money;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.participant.Dealer;
+import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
 import dto.ParticipantDto;
@@ -79,7 +80,7 @@ public class GameController {
         }
     }
 
-    private void printFinalScore(Players players, Dealer dealer) {
+    private void printFinalScore(Players players, Participant dealer) {
         List<ParticipantDto> participantDtos = players.getPlayers().stream()
                 .map(player -> ParticipantDto.of(player.getName(), player))
                 .toList();

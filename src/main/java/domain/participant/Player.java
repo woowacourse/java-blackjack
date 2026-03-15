@@ -15,13 +15,13 @@ public class Player extends Participant {
         this.money = money;
     }
 
-    public int finalProfit(Participant participant) {
-        if (participant.isBlackjack() && isBlackjack()) { return money.getBack(); }
+    public int finalProfit(Participant dealer) {
+        if (dealer.isBlackjack() && isBlackjack()) { return money.getBack(); }
         if (isBlackjack()) { return money.earnOnePointFiveTimes(); }
         if (isBust()) { return money.lose(); }
-        if (participant.isBust()) { return money.earn(); }
-        if (calculateScore() > participant.calculateScore()) { return money.earn(); }
-        if (calculateScore() == participant.calculateScore()) { return money.getBack(); }
+        if (dealer.isBust()) { return money.earn(); }
+        if (calculateScore() > dealer.calculateScore()) { return money.earn(); }
+        if (calculateScore() == dealer.calculateScore()) { return money.getBack(); }
         return money.lose();
     }
 
