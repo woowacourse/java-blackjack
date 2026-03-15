@@ -9,7 +9,7 @@ public class Dealer extends Participant {
     private static final String DEALER_NAME = "딜러";
     private static final int DEALER_PICK_THRESHOLD = 16;
 
-    private Dealer(Hands hands) {
+    private Dealer(final Hands hands) {
         super(DEALER_NAME, hands);
     }
 

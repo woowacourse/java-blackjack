@@ -15,7 +15,7 @@ public class BlackjackController {
     private final InputView inputView;
     private final OutputView outputView;
 
-    public BlackjackController(InputView inputView, OutputView outputView) {
+    public BlackjackController(final InputView inputView, final OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
     }
@@ -27,7 +27,7 @@ public class BlackjackController {
 
         askPlayersBetMoney(players);
 
-        distributeInitCards(dealer, cardDeck, players);
+        distributeInitCards(dealer, players, cardDeck);
 
         askPlayersHitOrStand(players, cardDeck);
         dealerHits(dealer, cardDeck);
@@ -38,11 +38,11 @@ public class BlackjackController {
         printResult(players, dealer);
     }
 
-    private void askPlayersBetMoney(List<Player> players) {
+    private void askPlayersBetMoney(final List<Player> players) {
         players.forEach(this::betMoney);
     }
 
-    private void betMoney(Player player) {
+    private void betMoney(final Player player) {
         outputView.printBettingAmountInputPlayer(player.getName());
         double amount = inputView.inputBettingAmount();
         player.bet(amount);
@@ -57,7 +57,7 @@ public class BlackjackController {
                 .toList();
     }
 
-    private void distributeInitCards(Dealer dealer, CardDeck cardDeck, List<Player> players) {
+    private void distributeInitCards(final Dealer dealer, final List<Player> players, final CardDeck cardDeck) {
         dealer.pickInitCards(cardDeck);
         players.forEach(player -> player.pickInitCards(cardDeck));
 
@@ -67,11 +67,11 @@ public class BlackjackController {
         players.forEach(player -> outputView.printParticipantHands(player.getName(), player.getInitCards()));
     }
 
-    private void askPlayersHitOrStand(List<Player> players, CardDeck cardDeck) {
+    private void askPlayersHitOrStand(final List<Player> players, final CardDeck cardDeck) {
         players.forEach(player -> askHitOrStand(cardDeck, player));
     }
 
-    private void askHitOrStand(CardDeck cardDeck, Player player) {
+    private void askHitOrStand(final CardDeck cardDeck, final Player player) {
         outputView.printMoreCardInputPrompt(player.getName());
         boolean isContinued = inputView.inputMoreCard();
 
@@ -83,7 +83,7 @@ public class BlackjackController {
         }
     }
 
-    private void dealerHits(Dealer dealer, CardDeck cardDeck) {
+    private void dealerHits(final Dealer dealer, final CardDeck cardDeck) {
         while (dealer.canPick()) {
             dealer.pickAdditionalCard(cardDeck);
             outputView.printDealerPicksCard();
@@ -91,7 +91,7 @@ public class BlackjackController {
         outputView.printDealerDoesNotPickCard();
     }
 
-    private void openPlayersHands(List<Player> players) {
+    private void openPlayersHands(final List<Player> players) {
         players.forEach(player -> outputView.printParticipantCardsWithScore(
                 player.getName(),
                 player.getAllCards(),
@@ -99,7 +99,7 @@ public class BlackjackController {
         ));
     }
 
-    private void openDealerHands(Dealer dealer) {
+    private void openDealerHands(final Dealer dealer) {
         outputView.printParticipantCardsWithScore(
                 dealer.getName(),
                 dealer.getAllCards(),
@@ -107,7 +107,7 @@ public class BlackjackController {
         );
     }
 
-    private void printResult(List<Player> players, Dealer dealer) {
+    private void printResult(final List<Player> players, final Dealer dealer) {
         List<PlayerResultDto> results = players.stream()
                 .map(player -> PlayerResultDto.from(player, player.getPlayerProfit(dealer)))
                 .toList();

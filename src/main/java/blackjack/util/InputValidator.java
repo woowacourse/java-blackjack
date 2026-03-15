@@ -10,7 +10,7 @@ public final class InputValidator {
         validateUniqueNames(names);
     }
 
-    private static void validateUniqueNames(List<String> names) {
+    private static void validateUniqueNames(final List<String> names) {
         if (new HashSet<>(names).size() < names.size()) {
             throw new IllegalArgumentException(ErrorCode.DUPLICATED_NAME.getMessage());
         }

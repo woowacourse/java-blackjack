@@ -5,12 +5,12 @@ public class Card {
     private final Rank rank;
     private final Suit suit;
 
-    private Card(Rank rank, Suit suit) {
+    private Card(final Rank rank, final Suit suit) {
         this.rank = rank;
         this.suit = suit;
     }
 
-    public static Card of(Rank rank, Suit suit) {
+    public static Card of(final Rank rank, final Suit suit) {
         return new Card(rank, suit);
     }
 

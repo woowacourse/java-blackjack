@@ -12,12 +12,12 @@ public class Player extends Participant {
 
     private Money bettingMoney;
 
-    private Player(String name, Hands hands, Money bettingMoney) {
+    private Player(final String name, final Hands hands, final Money bettingMoney) {
         super(name, hands);
         this.bettingMoney = bettingMoney;
     }
 
-    public static Player of(String name) {
+    public static Player of(final String name) {
         return new Player(name, Hands.empty(), Money.zero());
     }
 
@@ -26,16 +26,16 @@ public class Player extends Participant {
         return hands.getAllCards();
     }
 
-    public void bet(double amount) {
+    public void bet(final double amount) {
         this.bettingMoney = Money.of(amount);
     }
 
-    public Money getPlayerProfit(Dealer dealer) {
+    public Money getPlayerProfit(final Dealer dealer) {
         PlayerResult result = getPlayerResult(dealer);
         return calculatePlayerProfit(result);
     }
 
-    private PlayerResult getPlayerResult(Dealer dealer) {
+    private PlayerResult getPlayerResult(final Dealer dealer) {
         if (this.isBust()) {
             return PlayerResult.LOSE;
         }
@@ -55,7 +55,7 @@ public class Player extends Participant {
         return PlayerResult.DRAW;
     }
 
-    private Money calculatePlayerProfit(PlayerResult result) {
+    private Money calculatePlayerProfit(final PlayerResult result) {
         if (result == PlayerResult.WIN) {
             return checkNaturalBlackjack();
         }

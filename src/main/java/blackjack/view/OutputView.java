@@ -12,7 +12,7 @@ public class OutputView {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
     }
 
-    public void printCardDistributionCompleted(List<Player> players) {
+    public void printCardDistributionCompleted(final List<Player> players) {
         List<String> names = players.stream()
                 .map(Player::getName)
                 .toList();
@@ -21,17 +21,17 @@ public class OutputView {
         System.out.println("딜러와 " + joinedName + "에게 2장을 나누었습니다.");
     }
 
-    public void printParticipantHands(String name, List<CardDto> openedCards) {
+    public void printParticipantHands(final String name, final List<CardDto> openedCards) {
         String joinedCardNames = getJoinedCardNames(openedCards);
         System.out.println(name + "카드: " + joinedCardNames);
     }
 
-    public void printParticipantCardsWithScore(String name, List<CardDto> cards, int score) {
+    public void printParticipantCardsWithScore(final String name, final List<CardDto> cards, final int score) {
         String joinedCardNames = getJoinedCardNames(cards);
         System.out.println(name + "카드: " + joinedCardNames + " - 결과: " + score);
     }
 
-    public void printMoreCardInputPrompt(String name) {
+    public void printMoreCardInputPrompt(final String name) {
         System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
     }
 
@@ -43,24 +43,24 @@ public class OutputView {
         System.out.println("딜러는 16초과라 더 이상 카드를 받지 않습니다.");
     }
 
-    public void printResult(PlayerResultsDto playerResults) {
+    public void printResult(final PlayerResultsDto playerResults) {
         System.out.println("## 최종 수익");
         printDealerResult(playerResults);
         printAllPlayerResult(playerResults);
     }
 
-    private void printDealerResult(PlayerResultsDto dealerResult) {
+    private void printDealerResult(final PlayerResultsDto dealerResult) {
         System.out.printf("딜러: %s\n", dealerResult.getDealerProfit());
     }
 
-    private void printAllPlayerResult(PlayerResultsDto playerResults) {
+    private void printAllPlayerResult(final PlayerResultsDto playerResults) {
         String results = playerResults.results().stream()
                 .map(result -> result.name() + ": " + result.profit())
                 .collect(Collectors.joining("\n"));
         System.out.println(results);
     }
 
-    private String getJoinedCardNames(List<CardDto> cards) {
+    private String getJoinedCardNames(final List<CardDto> cards) {
         List<String> cardNames = cards.stream()
                 .map(card -> card.rank().getDisplayName() + card.suit().getDisplayName())
                 .toList();
@@ -68,7 +68,7 @@ public class OutputView {
         return String.join(", ", cardNames);
     }
 
-    public void printBettingAmountInputPlayer(String name) {
+    public void printBettingAmountInputPlayer(final String name) {
         System.out.println(name + "의 베팅 금액은?");
     }
 }

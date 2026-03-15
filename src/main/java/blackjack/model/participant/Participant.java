@@ -13,7 +13,7 @@ public abstract class Participant {
     private final String name;
     protected final Hands hands;
 
-    public Participant(String name, Hands hands) {
+    public Participant(final String name, final Hands hands) {
         validateName(name);
         validateHands(hands);
 
@@ -21,7 +21,7 @@ public abstract class Participant {
         this.hands = hands;
     }
 
-    private void validateName(String name) {
+    private void validateName(final String name) {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException(ErrorCode.NO_NAME_PARTICIPANT_NAME.getMessage());
         }
@@ -30,7 +30,7 @@ public abstract class Participant {
         }
     }
 
-    private void validateHands(Hands hands) {
+    private void validateHands(final Hands hands) {
         if (hands == null) {
             throw new IllegalArgumentException(ErrorCode.NULL_HANDS.getMessage());
         }
@@ -38,12 +38,12 @@ public abstract class Participant {
 
     public abstract List<CardDto> getInitCards();
 
-    public void pickInitCards(CardDeck cardDeck) {
+    public void pickInitCards(final CardDeck cardDeck) {
         hands.addCard(cardDeck.pick());
         hands.addCard(cardDeck.pick());
     }
 
-    public void pickAdditionalCard(CardDeck cardDeck) {
+    public void pickAdditionalCard(final CardDeck cardDeck) {
         hands.addCard(cardDeck.pick());
     }
 
@@ -55,7 +55,7 @@ public abstract class Participant {
         return hands.calculateTotalScore() == BLACKJACK_SCORE;
     }
 
-    public boolean hasHigherScoreThan(Participant other) {
+    public boolean hasHigherScoreThan(final Participant other) {
         return this.hands.hasScoreHigherThan(other.getScore());
     }
 

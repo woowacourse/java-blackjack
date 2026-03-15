@@ -6,7 +6,7 @@ import blackjack.model.card.Suit;
 
 public record CardDto(Rank rank, Suit suit) {
 
-    public static CardDto from(Card card) {
+    public static CardDto from(final Card card) {
         return new CardDto(card.getRank(), card.getSuit());
     }
 }

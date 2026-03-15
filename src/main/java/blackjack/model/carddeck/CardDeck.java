@@ -13,7 +13,7 @@ public class CardDeck {
     private final List<Card> cards;
     private final PickStrategy pickStrategy;
 
-    public CardDeck(List<Card> cards, PickStrategy pickStrategy) {
+    public CardDeck(final List<Card> cards, final PickStrategy pickStrategy) {
         validateCards(cards);
         validatePickStrategy(pickStrategy);
 
@@ -21,19 +21,19 @@ public class CardDeck {
         this.pickStrategy = pickStrategy;
     }
 
-    private void validateCards(List<Card> cards) {
+    private void validateCards(final List<Card> cards) {
         if (cards == null || cards.isEmpty()) {
             throw new IllegalStateException(ErrorCode.NULL_OR_EMPTY_CARDS.getMessage());
         }
     }
 
-    private void validatePickStrategy(PickStrategy pickStrategy) {
+    private void validatePickStrategy(final PickStrategy pickStrategy) {
         if (pickStrategy == null) {
             throw new IllegalArgumentException(ErrorCode.NULL_PICK_STRATEGY.getMessage());
         }
     }
 
-    public static CardDeck of(PickStrategy pickStrategy) {
+    public static CardDeck of(final PickStrategy pickStrategy) {
         List<Card> cards = Arrays.stream(Suit.values())
                 .flatMap(suit -> Arrays.stream(Rank.values())
                         .map(rank -> Card.of(rank, suit)))

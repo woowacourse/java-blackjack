@@ -5,7 +5,7 @@ import blackjack.model.participant.Player;
 
 public record PlayerResultDto(String name, Money profit) {
 
-    public static PlayerResultDto from(Player player, Money profit) {
+    public static PlayerResultDto from(final Player player, final Money profit) {
         return new PlayerResultDto(player.getName(), profit);
     }
 }

@@ -11,7 +11,7 @@ public class Hands {
 
     private final List<Card> cards;
 
-    private Hands(List<Card> cards) {
+    private Hands(final List<Card> cards) {
         this.cards = cards;
     }
 
@@ -19,7 +19,7 @@ public class Hands {
         return new Hands(new ArrayList<>());
     }
 
-    public void addCard(Card card) {
+    public void addCard(final Card card) {
         cards.add(card);
     }
 
