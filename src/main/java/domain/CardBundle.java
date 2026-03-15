@@ -25,6 +25,10 @@ public class CardBundle {
         return applyAceBonus(score, hasAce);
     }
 
+    public boolean isBlackjack() {
+        return cards.size() == 2 && calculateScore() == BUST_THRESHOLD;
+    }
+
     private int applyAceBonus(int score, boolean hasAce) {
         if (isSoftHand(score, hasAce)) {
             return score + 10;

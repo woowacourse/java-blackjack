@@ -28,4 +28,8 @@ public abstract class Participant {
     public int getScore() {
         return cardBundle.calculateScore();
     }
+
+    public boolean getBlackJack() {
+        return cardBundle.isBlackjack();
+    }
 }
