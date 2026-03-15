@@ -5,12 +5,13 @@ import domain.card.Card;
 import exception.ErrorMessage;
 import java.util.List;
 
-public record Players(
-    List<Player> value
-) {
+public class Players {
 
-    public Players {
-        validate(value);
+    private final List<Player> players;
+
+    private Players(List<Player> players) {
+        validate(players);
+        this.players = List.copyOf(players);
     }
 
     private static void validate(List<Player> players) {
@@ -32,14 +33,14 @@ public record Players(
     }
 
     public void addCardPlayer(int playerIndex, Card card) {
-        value.get(playerIndex).addCard(List.of(card));
+        players.get(playerIndex).addCard(List.of(card));
     }
 
     public Player getPlayerByIndex(int playerIndex) {
-        return value.get(playerIndex);
+        return players.get(playerIndex);
     }
 
     public List<Player> getAllPlayers() {
-        return value.stream().toList();
+        return players.stream().toList();
     }
 }

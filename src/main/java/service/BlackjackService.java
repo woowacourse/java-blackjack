@@ -41,7 +41,7 @@ public class BlackjackService {
     }
 
     public int getPlayerCount() {
-        return players.value().size();
+        return players.getAllPlayers().size();
     }
 
     public String getPlayerName(int playerIndex) {
@@ -53,7 +53,7 @@ public class BlackjackService {
     }
 
     public void dealInitialCards() {
-        for (Player player : players.value()) {
+        for (Player player : players.getAllPlayers()) {
             player.addCard(List.of(cardMachine.drawCard(), cardMachine.drawCard()));
         }
         dealer.addCard(List.of(cardMachine.drawCard(), cardMachine.drawCard()));
@@ -70,7 +70,7 @@ public class BlackjackService {
     public BlackjackProfitDto calculateBlackjackResult() {
         double dealerProfit = 0;
         List<PlayerResultDto> playerResultDtoList = new ArrayList<>();
-        for (Player player : players.value()) {
+        for (Player player : players.getAllPlayers()) {
             double profit = player.getBetAmount() * Result.from(dealer, player).getResult();
             dealerProfit += calculateDealerProfit(profit);
             playerResultDtoList.add(new PlayerResultDto(player.getName(), profit));
@@ -97,7 +97,7 @@ public class BlackjackService {
     public List<BlackjackResultDto> generateBlackjackResultDto() {
         List<BlackjackResultDto> blackjackResultDtoList = new ArrayList<>();
         addResult(dealer, blackjackResultDtoList);
-        for (Player player : players.value()) {
+        for (Player player : players.getAllPlayers()) {
             addResult(player, blackjackResultDtoList);
         }
         return Collections.unmodifiableList(blackjackResultDtoList);
