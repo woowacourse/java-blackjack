@@ -1,6 +1,7 @@
 package domain.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -140,6 +141,71 @@ class HandTest {
 
                 // then
                 assertThat(actual).isFalse();
+            }
+        }
+    }
+
+    @Nested
+    class GetFirstCardTest {
+
+        @Nested
+        class Success {
+
+            @Test
+            void 첫번째_카드를_반환한다() {
+
+                // given
+                Hand hand = new Hand();
+                Card firstCard = new Card(Rank.ACE, Suit.HEART);
+                Card secondCard = new Card(Rank.K, Suit.SPADE);
+                hand.addCard(firstCard);
+                hand.addCard(secondCard);
+
+                // when
+                Card actual = hand.getFirstCard();
+
+                // then
+                assertThat(actual).isEqualTo(firstCard);
+            }
+        }
+    }
+
+    @Nested
+    class GetCardTest {
+
+        @Nested
+        class Success {
+
+            @Test
+            void 손패의_전체_카드를_순서대로_반환한다() {
+
+                // given
+                Hand hand = new Hand();
+                Card firstCard = new Card(Rank.ACE, Suit.HEART);
+                Card secondCard = new Card(Rank.K, Suit.SPADE);
+                hand.addCard(firstCard);
+                hand.addCard(secondCard);
+
+                // when
+                var actual = hand.getCard();
+
+                // then
+                assertThat(actual)
+                        .hasSize(2)
+                        .containsExactly(firstCard, secondCard);
+            }
+
+            @Test
+            void 반환한_목록은_외부에서_수정할_수_없다() {
+
+                // given
+                Hand hand = new Hand();
+                hand.addCard(new Card(Rank.ACE, Suit.HEART));
+                var cards = hand.getCard();
+
+                // when & then
+                assertThatThrownBy(() -> cards.add(new Card(Rank.K, Suit.SPADE)))
+                        .isInstanceOf(UnsupportedOperationException.class);
             }
         }
     }
