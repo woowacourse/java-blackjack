@@ -15,28 +15,32 @@ public abstract class Participant {
         this.name = name;
     }
 
-    public void receiveCard(final Card card) {
+    public final void receiveCard(final Card card) {
         hand.add(card);
     }
 
-    public Score calculateScore() {
+    public final Score calculateScore() {
         return hand.calculateScore();
     }
 
-    public boolean isBust() {
+    public final boolean isBust() {
         return hand.isBust();
     }
 
-    public List<Card> getCards() {
+    public final List<Card> getCards() {
         return hand.getCards();
     }
 
-    public String getFirstCard() {
+    public final String getFirstCard() {
         return hand.getFirstCard();
     }
 
-    public String getName() {
+    public final String getName() {
         return name.value();
+    }
+
+    public final boolean isBlackjack() {
+        return hand.isBlackjack();
     }
 
     public abstract boolean canReceiveCard();

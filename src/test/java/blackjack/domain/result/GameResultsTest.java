@@ -6,6 +6,7 @@ import blackjack.domain.card.Suit;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
+import blackjack.fixture.GameResultFixture;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -23,7 +24,7 @@ class GameResultsTest {
         Player player = new Player("pobi");
         player.receiveCard(new Card(Suit.HEART, Rank.TEN));
         player.receiveCard(new Card(Suit.SPADE, Rank.TEN));
-        player.receiveCard(new Card(Suit.CLOVER, Rank.TEN));
+        player.receiveCard(new Card(Suit.CLUB, Rank.TEN));
 
         GameResults results = GameResults.create(new Players(List.of(player)), dealer);
 
@@ -31,47 +32,33 @@ class GameResultsTest {
     }
 
     @Test
-    void 플레이어가_승리하면_딜러_결과에_패가_1개_집계된다() {
+    void 플레이어가_승리하면_딜러_패수에_1이_추가되고_해당_플레이어_결과는_승이다() {
         Dealer dealer = new Dealer();
-        dealer.receiveCard(new Card(Suit.HEART, Rank.TEN));
-        dealer.receiveCard(new Card(Suit.SPADE, Rank.SEVEN));
-
         Player player = new Player("pobi");
-        player.receiveCard(new Card(Suit.HEART, Rank.TEN));
-        player.receiveCard(new Card(Suit.SPADE, Rank.NINE));
 
-        GameResults results = GameResults.create(new Players(List.of(player)), dealer);
+        GameResults gameResults = GameResultFixture.플레이어가_딜러에게_이기는_게임_결과(player, dealer);
 
-        assertThat(results.dealerResult().get(GameResult.LOSE)).isEqualTo(1);
+        assertThat(gameResults.dealerResult().get(GameResult.LOSE)).isEqualTo(1);
+        assertThat(gameResults.playerResults().get(player)).isEqualTo(GameResult.WIN);
     }
 
     @Test
-    void 플레이어가_패배하면_딜러_결과에_승이_1개_집계된다() {
+    void 플레이어가_패배하면_딜러_승수에_1이_추가되고_해당_플레이어_결과는_패이다() {
         Dealer dealer = new Dealer();
-        dealer.receiveCard(new Card(Suit.HEART, Rank.TEN));
-        dealer.receiveCard(new Card(Suit.SPADE, Rank.NINE));
-
         Player player = new Player("pobi");
-        player.receiveCard(new Card(Suit.HEART, Rank.TEN));
-        player.receiveCard(new Card(Suit.SPADE, Rank.SEVEN));
+        GameResults gameResults = GameResultFixture.플레이어가_딜러에게_지는_게임_결과(player, dealer);
 
-        GameResults results = GameResults.create(new Players(List.of(player)), dealer);
-
-        assertThat(results.dealerResult().get(GameResult.WIN)).isEqualTo(1);
+        assertThat(gameResults.dealerResult().get(GameResult.WIN)).isEqualTo(1);
+        assertThat(gameResults.playerResults().get(player)).isEqualTo(GameResult.LOSE);
     }
 
     @Test
-    void 점수가_같으면_딜러_결과에_무승부가_1개_집계된다() {
+    void 플레이어가_비기면_딜러_무승부수에_1이_추가되고_해당_플레이어_결과는_무승부이다() {
         Dealer dealer = new Dealer();
-        dealer.receiveCard(new Card(Suit.HEART, Rank.TEN));
-        dealer.receiveCard(new Card(Suit.SPADE, Rank.SEVEN));
-
         Player player = new Player("pobi");
-        player.receiveCard(new Card(Suit.HEART, Rank.TEN));
-        player.receiveCard(new Card(Suit.SPADE, Rank.SEVEN));
+        GameResults gameResults = GameResultFixture.플레이어가_딜러에게_비기는_게임_결과(player, dealer);
 
-        GameResults results = GameResults.create(new Players(List.of(player)), dealer);
-
-        assertThat(results.dealerResult().get(GameResult.DRAW)).isEqualTo(1);
+        assertThat(gameResults.dealerResult().get(GameResult.DRAW)).isEqualTo(1);
+        assertThat(gameResults.playerResults().get(player)).isEqualTo(GameResult.DRAW);
     }
 }
