@@ -15,7 +15,7 @@ public class BetAmount {
     }
 
     private void validateBetAmount(String betInput) {
-        if (betInput == null) {
+        if (betInput == null || betInput.isBlank()) {
             throw new IllegalArgumentException(ErrorMessage.EMPTY_BET_AMOUNT_INPUT.getMessage());
         }
         if (!betInput.matches("[1-9][0-9]*")) {
