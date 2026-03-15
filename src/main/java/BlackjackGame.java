@@ -19,7 +19,8 @@ public class BlackjackGame {
     public void run() {
         Deck deck = new Deck(new RandomShuffleStrategy());
         Players players = createPlayers(deck);
-        Dealer dealer = new Dealer(deck);
+        Dealer dealer = new Dealer();
+        dealer.initHand(deck);
 
         showCardNames(players, dealer);
         playTurn(players, deck, dealer);
@@ -44,7 +45,7 @@ public class BlackjackGame {
     private Player createPlayer(String name, Deck deck) {
         int amount = Parser.parseByBattingAmount(InputView.readBattingAmount(name));
 
-        Player player = Player.from(name, amount);
+        Player player = new Player(name, amount);
         player.initHand(deck);
         return player;
     }

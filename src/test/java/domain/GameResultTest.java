@@ -20,10 +20,10 @@ public class GameResultTest {
                 new Card(Emblem.HEART, Grade.ACE), new Card(Emblem.SPADE, Grade.SEVEN));
 
         Deck deck = new Deck(new FixShuffleStrategy(cards));
-        Player player = Player.from("토리", 1000);
+        Player player = new Player("토리", 1000);
         player.initHand(deck);
-        Dealer dealer = new Dealer(deck);
-
+        Dealer dealer = new Dealer();
+        dealer.initHand(deck);
         // when
         GameResult gameResult = GameResult.judge(dealer, player);
 
@@ -38,9 +38,11 @@ public class GameResultTest {
                 new Card(Emblem.HEART, Grade.ACE), new Card(Emblem.SPADE, Grade.SEVEN));
 
         Deck deck = new Deck(new FixShuffleStrategy(cards));
-        Player player = Player.from("토리", 1000);
+        Player player = new Player("토리", 1000);
         player.initHand(deck);
-        Dealer dealer = new Dealer(deck);
+        Dealer dealer = new Dealer();
+        dealer.playTurn(deck);
+        dealer.playTurn(deck);
 
         // when
         GameResult gameResult = GameResult.judge(dealer, player);
@@ -57,9 +59,10 @@ public class GameResultTest {
                 new Card(Emblem.CLOVER, Grade.NINE));
 
         Deck deck = new Deck(new FixShuffleStrategy(cards));
-        Player player = Player.from("토리", 1000);
+        Player player = new Player("토리", 1000);
         player.initHand(deck);
-        Dealer dealer = new Dealer(deck);
+        Dealer dealer = new Dealer();
+        dealer.initHand(deck);
         dealer.playTurn(deck);
 
         // when
@@ -77,10 +80,10 @@ public class GameResultTest {
                 new Card(Emblem.SPADE, Grade.SEVEN));
 
         Deck deck = new Deck(new FixShuffleStrategy(cards));
-        Player player = Player.from("토리", 1000);
+        Player player = new Player("토리", 1000);
         player.initHand(deck);
         player.playTurn(deck);
-        Dealer dealer = new Dealer(deck);
+        Dealer dealer = new Dealer();
 
         // when
         GameResult gameResult = GameResult.judge(dealer, player);

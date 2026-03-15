@@ -55,13 +55,13 @@ public final class OutputView {
         }
     }
 
-    public static void showDealerProfitResult(int dealerProfitResult) {
+    public static void showDealerProfitResult(long dealerProfitResult) {
         System.out.println(NEW_LINE + "## 최종 수익");
         System.out.println("딜러: " + dealerProfitResult);
     }
 
-    public static void showPlayerProfitResult(Map<String, Integer> profitResult) {
-        for (Map.Entry<String, Integer> entry : profitResult.entrySet()) {
+    public static void showPlayerProfitResult(Map<String, Long> profitResult) {
+        for (Map.Entry<String, Long> entry : profitResult.entrySet()) {
             System.out.printf("%s: %d %s", entry.getKey(), entry.getValue(), NEW_LINE);
         }
     }

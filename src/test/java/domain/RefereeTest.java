@@ -20,11 +20,11 @@ class RefereeTest {
         Deck deck = new Deck(new RandomShuffleStrategy());
 
         Referee referee = new Referee();
-        List<Player> playerList = List.of(Player.from("토리", 10000),
-                Player.from("이안", 20000), Player.from("에덴", 30000));
+        List<Player> playerList = List.of(new Player("토리", 10000),
+                new Player("에덴", 20000), new Player("이안", 30000));
         Players players = new Players(playerList);
 
-        Dealer dealer = new Dealer(deck);
+        Dealer dealer = new Dealer();
         Map<Player, GameResult> gameResultMap = referee.judge(dealer, players);
 
         // when & then
