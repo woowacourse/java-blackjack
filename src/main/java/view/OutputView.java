@@ -1,68 +1,62 @@
 package view;
 
-import domain.Card;
-import domain.Dealer;
-import domain.User;
+import domain.*;
 
 import java.util.List;
-import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 public class OutputView {
 
-    public void printInitialDeal(List<User> users, Dealer dealer) {
-        String userNames = users.stream()
-                .map(User::getName)
-                .collect(Collectors.joining(", "));
-        System.out.printf("%n딜러와 %s에게 2장을 나누었습니다.%n", userNames);
-        System.out.println("딜러카드: " + dealer.reveal().getDisplayName());
-        for(User user : users) {
-            String cards = user.getHand().stream()
-                    .map(Card::getDisplayName)
-                    .collect(Collectors.joining(", "));
-            System.out.println(user.getName()+"카드: " + cards);
+    public void printInitialDeal(BlackjackGame blackjackGame) {
+        List<String> names = blackjackGame.getPlayers().stream().map(Player::getName).toList();
+        System.out.println("\n" + "딜러와 " + String.join(", ", names) + "에게 2장을 나누었습니다.");
+        System.out.println("딜러: " + blackjackGame.getDealer().reveal().getDisplayName());
+        for(Player player : blackjackGame.getPlayers()) {
+            printHand(player);
         }
         System.out.println();
     }
 
-    public void printHand(User user) {
-        String cards = user.getHand().stream()
+    public void printHand(Player player) {
+        String cards = player.getHand().stream()
                 .map(Card::getDisplayName)
                 .collect(Collectors.joining(", "));
-        System.out.println(user.getName() + "카드: " + cards);
+        System.out.println(player.getName() + "카드: " + cards);
+    }
+
+    public void printBlackjacks(List<Player> blackjackPlayers) {
+        for (Player player : blackjackPlayers) {
+            System.out.println(player.getName() + "는 블랙잭입니다!!");
+        }
     }
 
     public void printDealerHit(){
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printDealerStand(){
-        System.out.println("딜러는 17이상이라 카드를 더 뽑지 않습니다.");
-    }
-
-    public void printCardResult(List<User> users, Dealer dealer) {
+    public void printCardResult(BlackjackGame blackjackGame) {
         System.out.println();
-        System.out.println("딜러카드: " + dealer.getHand().stream().map(Card::getDisplayName)
-                .collect(Collectors.joining(", "))+ "- 결과: " + dealer.getHand().stream().mapToInt(Card::getValue).sum());
-        for(User user : users) {
-            System.out.println(user.getName() + "카드: " + user.getHand().stream().map(Card::getDisplayName)
-                    .collect(Collectors.joining(", "))+ " - 결과: " + user.getHand().stream().mapToInt(Card::getValue).sum());
-        }
+        System.out.println(formatHandResult("딜러", blackjackGame.getDealer()));
+        blackjackGame.getPlayers().forEach(player ->
+                System.out.println(formatHandResult(player.getName(), player))
+        );
     }
 
-    public void printGameRecord(List<User> users, Dealer dealer) {
-        System.out.println('\n' + "## 최종 승패");
-        StringJoiner sj = new StringJoiner(" ");
+    private String formatHandResult(String name, Participant participant) {
+        String cards = participant.getHand().stream()
+                .map(Card::getDisplayName)
+                .collect(Collectors.joining(", "));
+        return  name + "카드: " + cards + " - 결과: " + participant.calculateScore();
+    }
 
-        if (dealer.getWinRounds() > 0) sj.add(dealer.getWinRounds() + "승");
-        if (dealer.getLoseRounds() > 0) sj.add(dealer.getLoseRounds() + "패");
-        if (dealer.getDrawRounds() > 0) sj.add(dealer.getDrawRounds() + "무");
-
-        if (sj.length() > 0) {
-            System.out.println("딜러: " + sj);
-            for(User user : users) {
-                System.out.println(user.getName()+": " + user.getGameResult().getName());
-            }
+    public void printGameRecord(BlackjackGame blackjackGame) {
+        System.out.println('\n' + "## 최종 수익");
+        int dealerProfit = blackjackGame.getPlayers().stream()
+                .mapToInt(Player::calculateProfit)
+                .sum() * -1;
+        System.out.println("딜러: " + dealerProfit);
+        for (Player player : blackjackGame.getPlayers()) {
+            System.out.println(player.getName() + ": " + player.calculateProfit());
         }
     }
 }

@@ -2,77 +2,97 @@ package controller;
 
 import java.util.List;
 
-import domain.Card;
-import domain.Dealer;
-import domain.User;
-import service.GameService;
-import util.InputParser;
+import domain.Amount;
+import domain.Player;
+import domain.Players;
+import domain.BlackjackGame;
 import view.InputView;
 import view.OutputView;
 
 public class GameController {
 
-    private final GameService gameService;
     private final InputView inputView;
     private final OutputView outputView;
+    private BlackjackGame blackjackGame;
 
-    private final Dealer dealer = new Dealer();
-
-    public GameController(InputView inputView, OutputView outputVIew, GameService gameService) {
+    public GameController(InputView inputView, OutputView outputVIew) {
         this.inputView = inputView;
         this.outputView = outputVIew;
-        this.gameService = gameService;
     }
 
     public void run() {
-        List<User> users = setUpUsers();
-        initDeal(users);
-        processUserTurns(users);
+        setUp();
+        play();
+        showResult();
+    }
+
+    private void setUp() {
+        Players players = createUsers();
+        this.blackjackGame = new BlackjackGame(players);
+        initDeal();
+    }
+
+    private void play() {
+        processBlackjack();
+        processPlayerTurns();
         processDealerTurn();
-        showCardResult(users);
-        showGameRecord(users);
     }
 
-    private List<User> setUpUsers(){
-        String input = inputView.readUsers();
-        return InputParser.parseUsers(input);
+    private void showResult() {
+        showCardResult();
+        showGameRecord();
     }
 
-    private void initDeal(List<User> users){
-        gameService.initDeal(users, dealer);
-        outputView.printInitialDeal(users, dealer);
+    private Players createUsers(){
+        List<String> userNames = readUserNames();
+        List<Player> players = userNames.stream()
+                .map(name -> new Player(name, readUserAmounts(name)))
+                .toList();
+        return new Players(players);
     }
 
-    private void processUserTurns(List<User> users) {
-        for (User user : users) {
-            boolean hitAtLeastOnce = false;
-            while (inputView.readWillHit(user.getName())) {
-                hitAtLeastOnce = true;
-                user.receiveCard(gameService.deal());
-                outputView.printHand(user);
-            }
-            if (!hitAtLeastOnce) {
-                outputView.printHand(user);
-            }
+    private List<String> readUserNames() {
+        return inputView.readUserNames();
+    }
+
+    private Amount readUserAmounts(String name) {
+        return new Amount(inputView.readBetAmount(name));
+    }
+
+    private void initDeal(){
+        blackjackGame.initDeal();
+        outputView.printInitialDeal(blackjackGame);
+    }
+
+    private void processBlackjack() {
+        List<Player> blackjackPlayers = blackjackGame.getBlackjackPlayers();
+        outputView.printBlackjacks(blackjackPlayers);
+    }
+
+    private void processPlayerTurns() {
+        for(Player player : blackjackGame.getPlayers()) {
+            processPlayerTurn(player);
         }
+    }
+
+    private void processPlayerTurn(Player player) {
+        while (!player.isBlackjack() && inputView.readWillHit(player.getName())) {
+            blackjackGame.deal(player);
+            outputView.printHand(player);
+        }
+        outputView.printHand(player);
     }
 
     private void processDealerTurn() {
-        int sum = dealer.getHand().stream().mapToInt(Card::getValue).sum();
-        if(dealer.isHit(sum)) {
-            dealer.receiveCard(gameService.deal());
-            outputView.printDealerHit();
-            return;
-        }
-        outputView.printDealerStand();
+        blackjackGame.processDealerTurn(outputView::printDealerHit);
     }
 
-    private void showCardResult(List<User> users) {
-        outputView.printCardResult(users, dealer);
+    private void showCardResult() {
+        outputView.printCardResult(blackjackGame);
     }
 
-    private void showGameRecord(List<User> users){
-        gameService.determineResult(users, dealer);
-        outputView.printGameRecord(users, dealer);
+    private void showGameRecord(){
+        blackjackGame.determineResult();
+        outputView.printGameRecord(blackjackGame);
     }
 }

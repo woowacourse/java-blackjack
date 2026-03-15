@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class Dealer extends Participant{
 
-    private final int DEALER_HIT_NUM = 16;
+    private static final int DEALER_HIT_NUM = 16;
 
     private final Map<GameResult, Integer> gameResults = new HashMap<>();
 
@@ -13,8 +13,12 @@ public class Dealer extends Participant{
         return hand.getFirst();
     }
 
-    public boolean isHit(int score) {
-        return score <= DEALER_HIT_NUM;
+    public boolean isHit() {
+        return getScore() <= DEALER_HIT_NUM;
+    }
+
+    private int getScore() {
+        return hand.stream().mapToInt(Card::getValue).sum();
     }
 
     public int getWinRounds() {

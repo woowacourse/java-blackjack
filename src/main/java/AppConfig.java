@@ -1,16 +1,11 @@
 import controller.GameController;
-import service.GameService;
 import view.InputView;
 import view.OutputView;
 
 public class AppConfig {
 
     public GameController controller() {
-        return new GameController(inputView(), outputView(), service());
-    }
-
-    private GameService service() {
-        return new GameService();
+        return new GameController(inputView(), outputView());
     }
 
     private InputView inputView() {

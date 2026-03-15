@@ -18,7 +18,7 @@ public class CardDeck {
         Collections.shuffle(this.cards);
     }
 
-    public Card deal() {
+    public Card draw() {
         return cards.removeFirst();
     }
 
