@@ -1,8 +1,8 @@
 package blackjack.view;
 
-import blackjack.domain.PlayerCardsName;
-import blackjack.domain.PlayerFinalCardsScore;
-import blackjack.domain.PlayerProfitResultDto;
+import blackjack.dto.PlayerCardsName;
+import blackjack.dto.PlayerFinalCardsScore;
+import blackjack.dto.PlayerProfitResult;
 import java.util.List;
 
 public class OutputView {
@@ -51,12 +51,12 @@ public class OutputView {
 
     public static void printFinalProfitResult(
             double dealerProfit,
-            List<PlayerProfitResultDto> playersProfitResults) {
+            List<PlayerProfitResult> playersProfitResults) {
         System.out.println();
         System.out.println("## 최종 수익");
         System.out.printf("딜러: %d%n", (int) dealerProfit);
 
-        for (PlayerProfitResultDto playerProfitResult : playersProfitResults) {
+        for (PlayerProfitResult playerProfitResult : playersProfitResults) {
             System.out.println(playerProfitResult.playerName() + ": " + (int) playerProfitResult.profit());
         }
     }

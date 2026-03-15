@@ -3,9 +3,9 @@ package blackjack.controller;
 import blackjack.domain.Dealer;
 import blackjack.domain.GameResult;
 import blackjack.domain.Player;
-import blackjack.domain.PlayerCardsName;
-import blackjack.domain.PlayerFinalCardsScore;
-import blackjack.domain.PlayerProfitResultDto;
+import blackjack.dto.PlayerCardsName;
+import blackjack.dto.PlayerFinalCardsScore;
+import blackjack.dto.PlayerProfitResult;
 import blackjack.domain.ProfitResults;
 import blackjack.service.CardDistributor;
 import blackjack.service.Game;
@@ -61,9 +61,9 @@ public class BlackjackController {
         double dealerProfit = profitResults.dealerProfit();
         Map<Player, Double> playerProfit = profitResults.playerProfit();
 
-        List<PlayerProfitResultDto> playerNameProfitResult = new ArrayList<>();
+        List<PlayerProfitResult> playerNameProfitResult = new ArrayList<>();
         for (Entry<Player, Double> entry : playerProfit.entrySet()) {
-            playerNameProfitResult.add(PlayerProfitResultDto.from(entry.getKey(), entry.getValue()));
+            playerNameProfitResult.add(PlayerProfitResult.from(entry.getKey(), entry.getValue()));
         }
         OutputView.printFinalProfitResult(dealerProfit, playerNameProfitResult);
     }
