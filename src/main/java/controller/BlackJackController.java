@@ -20,7 +20,7 @@ import model.participant.Participant;
 import model.participant.Participants;
 import model.participant.Dealer;
 import model.participant.Player;
-import util.PlayerNamesValidator;
+import validator.PlayerNamesValidator;
 import util.InputParser;
 import view.InputView;
 import view.OutputView;

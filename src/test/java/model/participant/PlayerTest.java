@@ -2,6 +2,7 @@ package model.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static util.ParticipantProvider.*;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -132,79 +133,12 @@ class PlayerTest {
             );
         }
 
-        private static Player createPlayerWithBlackjack() {
-            Player player = Player.of("player", 1000);
-            player.receive(Card.of(Suit.SPADE, Rank.ACE));
-            player.receive(Card.of(Suit.SPADE, Rank.JACK));
-
-            return player;
-        }
-
-        private static Player createPlayerWithBust() {
-            Player player = Player.of("player", 1000);
-            player.receive(Card.of(Suit.SPADE, Rank.KING));
-            player.receive(Card.of(Suit.SPADE, Rank.QUEEN));
-            player.receive(Card.of(Suit.SPADE, Rank.JACK));
-
-            return player;
-        }
-
-        private static Player createPlayerWithScore21() {
-            Player player = Player.of("player", 1000);
-            player.receive(Card.of(Suit.SPADE, Rank.ACE));
-            player.receive(Card.of(Suit.SPADE, Rank.JACK));
-            player.receive(Card.of(Suit.SPADE, Rank.QUEEN));
-
-            return player;
-        }
-
-        private static Player createPlayerWithScore20() {
-            Player player = Player.of("player", 1000);
-            player.receive(Card.of(Suit.SPADE, Rank.JACK));
-            player.receive(Card.of(Suit.SPADE, Rank.QUEEN));
-
-            return player;
-        }
-
-        private static Player createPlayerWithScore19() {
-            Player player = Player.of("player", 1000);
-            player.receive(Card.of(Suit.SPADE, Rank.JACK));
-            player.receive(Card.of(Suit.SPADE, Rank.NINE));
-
-            return player;
-        }
-
         private static Stream<Arguments> provideDealerCases() {
             return Stream.of(
                     Arguments.of(createDealerWithBust()),
                     Arguments.of(createDealerWithBlackjack()),
                     Arguments.of(createDealerWithScore20())
             );
-        }
-
-        private static Dealer createDealerWithBust() {
-            Dealer dealer = Dealer.create();
-            dealer.receive(Card.of(Suit.SPADE, Rank.JACK));
-            dealer.receive(Card.of(Suit.SPADE, Rank.QUEEN));
-            dealer.receive(Card.of(Suit.SPADE, Rank.KING));
-
-            return dealer;
-        }
-
-        private static Dealer createDealerWithBlackjack() {
-            Dealer dealer = Dealer.create();
-            dealer.receive(Card.of(Suit.SPADE, Rank.ACE));
-            dealer.receive(Card.of(Suit.SPADE, Rank.JACK));
-
-            return dealer;
-        }
-
-        private static Dealer createDealerWithScore20() {
-            Dealer dealer = Dealer.create();
-            dealer.receive(Card.of(Suit.SPADE, Rank.JACK));
-            dealer.receive(Card.of(Suit.SPADE, Rank.QUEEN));
-
-            return dealer;
         }
     }
 }
