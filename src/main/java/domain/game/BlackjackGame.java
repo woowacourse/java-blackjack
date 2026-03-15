@@ -1,6 +1,5 @@
 package domain.game;
 
-import domain.card.Card;
 import domain.card.Deck;
 import domain.player.BettingHand;
 import domain.player.BettingProfit;
@@ -21,11 +20,11 @@ public class BlackjackGame {
     private static final int FIRST_DRAW_CARDS_NUM = 2;
 
     private final Deck deck;
-    private final Table table;
+    private final Participants participants;
 
-    private BlackjackGame(Deck deck, Table table) {
+    private BlackjackGame(Deck deck, Participants participants) {
         this.deck = deck;
-        this.table = table;
+        this.participants = participants;
     }
 
     public static BlackjackGame create(Map<String, Integer> playerInfos,
@@ -33,7 +32,7 @@ public class BlackjackGame {
         Deck deck = DeckCreator.createDeck(CardsCreator.createCards(), randomValueGenerator);
         Dealer dealer = Dealer.from(createInitialHand(deck));
         Players players = Players.of(createPlayers(playerInfos, deck));
-        return new BlackjackGame(deck, Table.of(dealer, players));
+        return new BlackjackGame(deck, Participants.of(dealer, players));
     }
 
     private static List<Player> createPlayers(Map<String, Integer> playerInfos, Deck deck) {
@@ -56,64 +55,48 @@ public class BlackjackGame {
     }
 
     public int calculateDealerProfit() {
-        return table.getPlayerNames().stream()
-                .mapToInt(this::calculatePlayerProfit)
+        return getPlayers().stream()
+                .mapToInt(p -> p.calculateProfit(getDealer()))
                 .sum() * -1;
     }
 
-    public void hitPlayer(String name) {
-        table.findPlayer(name).hit(deck.drawCard());
+    public List<Player> getPlayers() {
+        return participants.getPlayers().getPlayers();
+    }
+
+    public Dealer getDealer() {
+        return participants.getDealer();
+    }
+
+    public boolean isNotFinishPlayersRound() {
+        return !participants.getPlayers().isAllFinished();
+    }
+
+    public Player getCurrentPlayer() {
+        return participants.getPlayers().getCurrentPlayer();
+    }
+
+    public void passTurn() {
+        participants.getPlayers().passTurn();
+    }
+
+    public void playCurrentPlayerTurn(boolean isHit) {
+        Player current = getCurrentPlayer();
+        if (isHit && current.canHit()) {
+            current.hit(deck.drawCard());
+            if (!current.canHit()) {
+                passTurn();
+            }
+            return;
+        }
+        passTurn();
     }
 
     public void hitDealer() {
-        table.getDealer().addCard(deck.drawCard());
-    }
-
-    public List<String> getPlayerNames() {
-        return table.getPlayerNames();
-    }
-
-    public String getDealerName() {
-        return table.getDealer().name();
-    }
-
-    public boolean canHit(String name) {
-        return table.findPlayer(name).canHit();
-    }
-
-    public boolean isBlackjack(String name) {
-        return table.findPlayer(name).isBlackjack();
-    }
-
-    public boolean dealerNeedsToHit() {
-        return table.getDealer().needsToHit();
+        participants.getDealer().addCard(deck.drawCard());
     }
 
     public boolean areAllPlayersBust() {
-        return table.areAllPlayersBust();
-    }
-
-    public List<Card> getDealerOpenCard() {
-        return table.getDealer().openFirstCard();
-    }
-
-    public List<Card> getDealerCards() {
-        return table.getDealer().cards();
-    }
-
-    public List<Card> getCardsOf(String name) {
-        return table.findPlayer(name).cards();
-    }
-
-    public int getDealerScore() {
-        return table.getDealer().totalScore();
-    }
-
-    public int getPlayerScore(String name) {
-        return table.findPlayer(name).totalScore();
-    }
-
-    public int calculatePlayerProfit(String name) {
-        return table.findPlayer(name).calculateProfit(table.getDealer());
+        return participants.getPlayers().areAllBust();
     }
 }

@@ -4,6 +4,9 @@ import domain.card.Card;
 import java.util.List;
 
 public class Player {
+
+    private static final int BLACKJACK_NUM = 21;
+
     private final Name name;
     private final BettingHand bettingHand;
 
@@ -29,7 +32,7 @@ public class Player {
     }
 
     public boolean canHit() {
-        return !bettingHand.isBust();
+        return !isBust() && !isBlackjack() && totalScore() < BLACKJACK_NUM;
     }
 
     public void hit(Card card) {

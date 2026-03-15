@@ -2,6 +2,7 @@ package controller;
 
 import domain.game.BlackjackGame;
 import domain.player.Dealer;
+import domain.player.Player;
 import domain.random.RandomValueGeneratorImpl;
 import dto.DealerDrawDto;
 import dto.NamesDto;
@@ -43,60 +44,82 @@ public class BlackjackController {
     }
 
     private void printInitialCards(BlackjackGame game) {
-        outputView.drawCard(new NamesDto(game.getDealerName(), game.getPlayerNames()));
-        outputView.showCard(ParticipantsCardsDto.ofDealerOpen(game.getDealerName(), game.getDealerOpenCard()));
+        Dealer dealer = game.getDealer();
+        List<Player> players = game.getPlayers();
+        List<String> playerNames = players.stream().map(Player::name).toList();
 
-        game.getPlayerNames().forEach(name ->
-                outputView.showCard(ParticipantsCardsDto.ofPlayer(name, game.getCardsOf(name))));
+        outputView.drawCard(new NamesDto(dealer.name(), playerNames));
+        outputView.showCard(ParticipantsCardsDto.ofDealerOpen(dealer.name(), dealer.openFirstCard()));
+
+        players.forEach(p ->
+                outputView.showCard(ParticipantsCardsDto.ofPlayer(p.name(), p.cards())));
     }
 
     private void playPlayers(BlackjackGame game) {
-        for (String name : game.getPlayerNames()) {
-            playSinglePlayer(game, name);
+        while (game.isNotFinishPlayersRound()) {
+            playSingleTurn(game);
         }
     }
 
-    private void playSinglePlayer(BlackjackGame game, String name) {
-        if (game.isBlackjack(name)) {
-            outputView.congratulateBlackjack(name);
+    private void playSingleTurn(BlackjackGame game) {
+        Player currentPlayer = game.getCurrentPlayer();
+
+        if (!currentPlayer.canHit()) {
+            finishCurrentTurn(game, currentPlayer);
             return;
         }
-        hitUntilBustOrStop(game, name);
+        proceedCurrentTurn(game, currentPlayer);
     }
 
-    private void hitUntilBustOrStop(BlackjackGame game, String name) {
-        while (game.canHit(name) && inputView.readNeedToHit(name)) {
-            game.hitPlayer(name);
-            outputView.showCard(ParticipantsCardsDto.ofPlayer(name, game.getCardsOf(name)));
+    private void finishCurrentTurn(BlackjackGame game, Player player) {
+        printIfBlackjack(player);
+        game.passTurn();
+    }
+
+    private void proceedCurrentTurn(BlackjackGame game, Player player) {
+        boolean isHit = inputView.readNeedToHit(player.name());
+        game.playCurrentPlayerTurn(isHit);
+
+        if (isHit) {
+            outputView.showCard(ParticipantsCardsDto.ofPlayer(player.name(), player.cards()));
+        }
+    }
+
+    private void printIfBlackjack(Player player) {
+        if (player.isBlackjack()) {
+            outputView.congratulateBlackjack(player.name());
         }
     }
 
     private void playDealer(BlackjackGame game) {
-        while (game.dealerNeedsToHit() && !game.areAllPlayersBust()) {
+        Dealer dealer = game.getDealer();
+        while (dealer.needsToHit() && !game.areAllPlayersBust()) {
             game.hitDealer();
-            outputView.drawDealer(new DealerDrawDto(game.getDealerName(), Dealer.HIT_BOUNDARY));
+            outputView.drawDealer(new DealerDrawDto(dealer.name(), Dealer.HIT_BOUNDARY));
         }
     }
 
     private void printResult(BlackjackGame game) {
+        Dealer dealer = game.getDealer();
+
         outputView.showCardsAndScore(
-                ParticipantsCardsDto.ofDealerAll(game.getDealerName(), game.getDealerCards()),
-                game.getDealerScore()
-        );
-        game.getPlayerNames().forEach(name ->
-                outputView.showCardsAndScore(ParticipantsCardsDto.ofPlayer(name, game.getCardsOf(name)),
-                        game.getPlayerScore(name)));
+                ParticipantsCardsDto.ofDealerAll(dealer.name(), dealer.cards()), dealer.totalScore());
+
+        game.getPlayers().forEach(p ->
+                outputView.showCardsAndScore(ParticipantsCardsDto.ofPlayer(p.name(), p.cards()), p.totalScore()));
 
         printProfit(game);
     }
 
     private void printProfit(BlackjackGame game) {
-        List<StatisticsDto> statisticsDtos = game.getPlayerNames().stream()
-                .map(name -> new StatisticsDto(name, game.calculatePlayerProfit(name)))
+        Dealer dealer = game.getDealer();
+
+        List<StatisticsDto> statisticsDtos = game.getPlayers().stream()
+                .map(p -> new StatisticsDto(p.name(), p.calculateProfit(dealer)))
                 .toList();
 
         int dealerProfit = game.calculateDealerProfit();
 
-        outputView.showResultStatistics(statisticsDtos, game.getDealerName(), dealerProfit);
+        outputView.showResultStatistics(statisticsDtos, dealer.name(), dealerProfit);
     }
 }
