@@ -1,8 +1,9 @@
 package blackjack;
 
+import blackjack.domain.Deck;
+import blackjack.domain.Hand;
 import blackjack.domain.Participants;
 import blackjack.domain.Players;
-import blackjack.domain.PlayingCards;
 import blackjack.domain.participant.Dealer;
 import blackjack.dto.DrawResult;
 import blackjack.dto.ParticipantResult;
@@ -28,7 +29,7 @@ public class BlackjackRunner {
 
     public void execute() {
         Participants participants = makeParticipants();
-        PlayingCards deck = PlayingCards.createShuffledDeck();
+        Deck deck = Deck.createShuffledDeck();
         deck = gameStart(participants, deck);
 
         printInitialSetup(participants);
@@ -39,7 +40,7 @@ public class BlackjackRunner {
         gameEnd(participants);
     }
 
-    private PlayingCards gameStart(Participants participants, PlayingCards deck) {
+    private Deck gameStart(Participants participants, Deck deck) {
         return participants.distributeCards(deck);
     }
 
@@ -87,26 +88,26 @@ public class BlackjackRunner {
         outputView.printTotalProfitResult(gameResult);
     }
 
-    private void dealerTurn(Participants participants, PlayingCards deck) {
+    private void dealerTurn(Participants participants, Deck deck) {
         while (participants.isDealerDraw()) {
             outputView.printDealerTurn();
             deck = participants.dealerDraw(deck);
         }
     }
 
-    private PlayingCards playerTurn(Participants participants, PlayingCards deck) {
+    private Deck playerTurn(Participants participants, Deck deck) {
         while (participants.findDrawablePlayer() != null) {
             deck = drawCard(participants, deck);
         }
         return deck;
     }
 
-    private PlayingCards drawCard(Participants participants, PlayingCards deck) {
+    private Deck drawCard(Participants participants, Deck deck) {
         String drawablePlayerNickname = participants.findDrawablePlayer();
         boolean isPlayerDraw = isDraw(drawablePlayerNickname);
         if (isPlayerDraw) {
             DrawResult drawResult = participants.addCardToAvailablePlayer(deck);
-            PlayingCards playerHand = drawResult.drewCard();
+            Hand playerHand = drawResult.drewCard();
             printDrewResult(drawablePlayerNickname, playerHand);
             return drawResult.drewDeck();
         }
@@ -114,7 +115,7 @@ public class BlackjackRunner {
         return deck;
     }
 
-    private void printDrewResult(String drawablePlayerNickname, PlayingCards playerCards) {
+    private void printDrewResult(String drawablePlayerNickname, Hand playerCards) {
         outputView.printPlayerStatus(drawablePlayerNickname, playerCards.getStatusByDisplayName());
     }
 

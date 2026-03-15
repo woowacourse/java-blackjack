@@ -52,9 +52,9 @@ public class Players {
         return player.getNickname();
     }
 
-    public PlayingCards addCardToAvailablePlayer(PlayingCards card) throws IllegalArgumentException {
+    public Hand addCardToAvailablePlayer(List<Card> cards) throws IllegalArgumentException {
         Player player = findDrawablePlayer();
-        return player.receiveCard(card);
+        return player.receiveCard(cards);
     }
 
     public Player findDrawablePlayer() {

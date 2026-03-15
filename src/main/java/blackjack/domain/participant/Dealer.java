@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.PlayingCards;
+import blackjack.domain.Hand;
 import blackjack.dto.DealerGameResult;
 import blackjack.dto.ParticipantResult;
 import blackjack.dto.PlayerGameResult;
@@ -13,7 +13,7 @@ public class Dealer extends Participant {
     private static final String DEALER_NICKNAME = "딜러";
 
     private Dealer(String nickname, Role role) {
-        super(nickname, PlayingCards.createEmptyHands(), role);
+        super(nickname, Hand.createEmptyHands(), role);
     }
 
     public static Dealer from() {

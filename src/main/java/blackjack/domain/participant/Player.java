@@ -1,7 +1,7 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.Hand;
 import blackjack.domain.MatchResult;
-import blackjack.domain.PlayingCards;
 import blackjack.dto.PlayerGameResult;
 
 public class Player extends Participant {
@@ -10,7 +10,7 @@ public class Player extends Participant {
     private final long amount;
 
     public Player(String nickname, Role role, long amount) {
-        super(nickname, PlayingCards.createEmptyHands(), role);
+        super(nickname, Hand.createEmptyHands(), role);
         stopDrawing = false;
         this.amount = amount;
     }
