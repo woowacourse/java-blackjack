@@ -64,6 +64,10 @@ public class Hand {
         return cards.size();
     }
 
+    public TrumpCard getFirstCard(){
+        return cards.getFirst();
+    }
+
     public List<TrumpCard> getCards() {
         return List.copyOf(cards);
     }

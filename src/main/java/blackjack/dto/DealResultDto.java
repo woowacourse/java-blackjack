@@ -11,7 +11,7 @@ public record DealResultDto(
         List<PlayerHandDto> playerHands = game.getPlayers().getPlayers().stream()
                 .map(PlayerHandDto::from)
                 .toList();
-        CardDto dealerCard = CardDto.from(game.getDealer().getCards().getFirst());
+        CardDto dealerCard = CardDto.from(game.getDealer().openFirstCard());
         return new DealResultDto(playerHands, dealerCard);
     }
 }

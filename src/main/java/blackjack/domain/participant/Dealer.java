@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.Hand;
 import blackjack.domain.Name;
+import blackjack.domain.TrumpCard;
 
 public class Dealer extends Participant {
     private static final int DEALER_HIT_THRESHOLD = 16;
@@ -17,5 +18,9 @@ public class Dealer extends Participant {
     @Override
     public boolean canHit() {
         return score() <= DEALER_HIT_THRESHOLD;
+    }
+
+    public TrumpCard openFirstCard(){
+        return hand.getFirstCard();
     }
 }
