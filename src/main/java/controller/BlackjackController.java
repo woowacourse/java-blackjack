@@ -82,10 +82,10 @@ public class BlackjackController {
             return;
         }
 
-        drawCardOnPlayer(name, hitOrStand);
+        drawCardOnPlayer(name);
     }
 
-    private void drawCardOnPlayer(String name, HitOrStand hitOrStand) {
+    private void drawCardOnPlayer(String name) {
         do {
             ParticipantDto playerDto = blackjackGameManager.updatePlayer(name);
             outputView.printlnHand(name, playerDto.hand());
