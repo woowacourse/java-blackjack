@@ -1,15 +1,15 @@
 package domain.result;
 
 import domain.participant.Player;
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class GameStatistics {
 
     private final Map<Player, GameResult> playerResult;
-    private final Map<String, Integer> dealerResult;
+    private final Map<GameResult, Integer> dealerResult;
 
     public GameStatistics(Map<Player, GameResult> gameResultMap) {
         this.playerResult = gameResultMap;
@@ -17,9 +17,10 @@ public class GameStatistics {
         initializeDealerResult();
     }
 
-    private Map<String, Integer> initializeMap() {
-        LinkedHashMap<String, Integer> dealerResult = new LinkedHashMap<>();
-        for (String gameResult : Arrays.stream(GameResult.values()).map(GameResult::getDescription).toList()) {
+    private Map<GameResult, Integer> initializeMap() {
+        EnumMap<GameResult, Integer> dealerResult = new EnumMap<>(GameResult.class);
+
+        for (GameResult gameResult : GameResult.values()) {
             dealerResult.put(gameResult, 0);
         }
         return dealerResult;
@@ -32,7 +33,7 @@ public class GameStatistics {
     }
 
     public void addDealerResult(GameResult gameResult) {
-        dealerResult.put(gameResult.getDescription(), dealerResult.getOrDefault(gameResult.getDescription(), 0) + 1);
+        dealerResult.put(gameResult, dealerResult.getOrDefault(gameResult, 0) + 1);
     }
 
     public Map<String, String> getPlayerResult() {
@@ -44,6 +45,12 @@ public class GameStatistics {
     }
 
     public Map<String, Integer> getDealerResult() {
-        return Collections.unmodifiableMap(dealerResult);
+        Map<String, Integer> result = new LinkedHashMap<>();
+        for (Map.Entry<GameResult, Integer> entry : dealerResult.entrySet()) {
+            String description = entry.getKey().getDescription();
+            int count = entry.getValue();
+            result.put(description, result.getOrDefault(description, 0) + count);
+        }
+        return Collections.unmodifiableMap(result);
     }
 }
