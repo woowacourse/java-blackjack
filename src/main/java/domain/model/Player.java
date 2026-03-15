@@ -56,7 +56,7 @@ public class Player implements WithDeck {
     }
 
     public int getFinalMoney() {
-        return (int)bet.getFinalMoney(playerStatus);
+        return bet.getFinalMoney(playerStatus);
     }
 
     // 추가 카드 부여
