@@ -107,18 +107,6 @@ public class BlackjackGame {
                 .sum();
     }
 
-    public Map<String, MatchResult> matchResults() {
-        Map<String, MatchResult> results = new LinkedHashMap<>();
-        players.forEach(player ->
-                results.put(player.getName(), MatchResult.playerResult(player, dealer))
-        );
-        return results;
-    }
-
-    public Map<String, Long> getDealerFinalResult(Map<String, MatchResult> playerResult) {
-        return MatchResult.dealerResult(playerResult);
-    }
-
     public Players getPlayers() {
         return players;
     }
