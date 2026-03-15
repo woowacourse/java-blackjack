@@ -1,5 +1,6 @@
 package model.judgement;
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import model.paticipant.BettingPlayer;
@@ -8,7 +9,7 @@ import model.paticipant.Player;
 public record PlayerResult(Map<Player, ResultStatus> result) {
 
     public PlayerResult(Map<Player, ResultStatus> result) {
-        this.result = Map.copyOf(result);
+        this.result = Collections.unmodifiableMap(new LinkedHashMap<>(result));
     }
 
     public DealerResult calculateDealerResult() {
