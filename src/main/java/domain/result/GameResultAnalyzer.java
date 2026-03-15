@@ -68,15 +68,15 @@ public class GameResultAnalyzer {
     }
 
     public static BettingResult analyzeDealerBettingResult(List<BettingResult> playerBettingResults) {
-        double sum = playerBettingResults.stream()
-                .mapToDouble(BettingResult::getProfit)
+        long sum = playerBettingResults.stream()
+                .mapToLong(BettingResult::getProfit)
                 .sum();
 
-        double dealerProfit = negate(sum);
+        long dealerProfit = negate(sum);
         return BettingResult.of(ParticipantName.from(DEALER_DISPLAY_NAME), BettingProfit.from(dealerProfit));
     }
 
-    private static double negate(double value) {
+    private static long negate(long value) {
         return -value;
     }
 }

@@ -21,7 +21,7 @@ public class BettingResult {
         return participantName;
     }
 
-    public double getProfit() {
+    public long getProfit() {
         return bettingProfit.getProfit();
     }
 }

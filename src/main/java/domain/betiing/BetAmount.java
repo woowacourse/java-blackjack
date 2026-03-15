@@ -15,4 +15,8 @@ public record BetAmount(int amount) {
         }
     }
 
+    public long calculateProfit(double odds) {
+        return Math.round(amount * odds);
+    }
+
 }
