@@ -2,8 +2,7 @@ package factory;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import domain.card.Card;
-import java.util.List;
+import domain.card.Cards;
 import org.junit.jupiter.api.Test;
 
 class CardFactoryTest {
@@ -11,10 +10,10 @@ class CardFactoryTest {
     @Test
     void 덱이_정상적으로_생성되는_경우() {
         // given, when
-        List<Card> cards = CardFactory.createDeck();
+        Cards cards = CardFactory.createDeck();
 
         // then
-        assertEquals(cards.stream().distinct().count(), cards.size());
+        assertEquals(cards.cards().stream().distinct().count(), cards.size());
         assertEquals(52, cards.size());
     }
 }

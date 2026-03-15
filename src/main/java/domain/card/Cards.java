@@ -7,6 +7,9 @@ import java.util.List;
 
 public record Cards(List<Card> cards) {
 
+    public record PopResult(Cards remaining, Card removedCard) {
+    }
+
     public Cards() {
         this(List.of());
     }
@@ -19,6 +22,13 @@ public record Cards(List<Card> cards) {
         List<Card> cards = new ArrayList<>(this.cards);
         cards.add(card);
         return new Cards(cards);
+    }
+
+    public PopResult pop() {
+        List<Card> cards = new ArrayList<>(this.cards);
+        Card removedCard = cards.removeFirst();
+        Cards remaining = new Cards(cards);
+        return new PopResult(remaining, removedCard);
     }
 
     public int getSum() {
@@ -41,6 +51,10 @@ public record Cards(List<Card> cards) {
         return cards.size();
     }
 
+    public boolean isEmpty() {
+        return cards.isEmpty();
+    }
+
     private int getInitSum() {
         return cards.stream()
                 .mapToInt(Card::getScore)
@@ -52,5 +66,4 @@ public record Cards(List<Card> cards) {
                 .filter(Card::isAce)
                 .count();
     }
-
 }
