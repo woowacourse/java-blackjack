@@ -26,6 +26,10 @@ public final class CardSuitMap {
             Map.entry(12, "K")
     );
 
+    private CardSuitMap() {
+
+    }
+
     public static String getSuit(int shape) {
         return SUIT_MAP.get(shape);
     }
@@ -34,3 +38,4 @@ public final class CardSuitMap {
         return RANK_MAP.get(number);
     }
 }
+
