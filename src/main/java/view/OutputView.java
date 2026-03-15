@@ -4,8 +4,10 @@ import domain.Card;
 import domain.Dealer;
 import domain.Participant;
 import domain.Player;
+import domain.Players;
 import domain.Rank;
 import domain.Result;
+import domain.Results;
 import domain.Suit;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,15 +56,15 @@ public class OutputView {
                 + " - 결과: " + participant.getScore());
     }
 
-    public void printFinalResult(Participant dealer, Map<Player, Result> results) {
+    public void printFinalResult(Participant dealer, Results results) {
         System.out.println("\n## 최종 승패");
         printDealerResult(dealer, results);
-        printPlayerResults(results);
+        printPlayerResult(results);
     }
 
-    private void printPlayerResults(Map<Player, Result> results) {
-        for (Map.Entry<Player, Result> entry : results.entrySet()) {
-            System.out.println(entry.getKey().getName() + ": " + RESULT_NAME.get(entry.getValue()));
+    private void printPlayerResult(Results results) {
+        for (Player player : results.getResults().keySet()) {
+            System.out.println(player.getName() + ": " + RESULT_NAME.get(results.findByPlayer(player)));
         }
     }
 

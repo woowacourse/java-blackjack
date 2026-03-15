@@ -55,4 +55,13 @@ public class CardBundleTest {
 
         assertThat(cardBundle.isBlackjack()).isTrue();
     }
+
+    @Test
+    void 카드가_3장이면_블랙잭이_아니다() {
+        cardBundle.addCard(new Card(Rank.KING, Suit.HEART));
+        cardBundle.addCard(new Card(Rank.FIVE, Suit.SPADE));
+        cardBundle.addCard(new Card(Rank.SIX, Suit.SPADE));
+
+        assertThat(cardBundle.isBlackjack()).isFalse();
+    }
 }
