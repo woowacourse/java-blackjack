@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.util.*;
 
 public class Result {
+    private static final int NEGATION_FACTOR = -1;
     private final Map<Player, GameResult> playersResult;
     private final BigDecimal dealerResult;
 
@@ -30,7 +31,7 @@ public class Result {
             BigDecimal playerYield = playerOutcome.getYield();
             dealerResult = dealerResult.add(playerBettingMoney.multiply(playerYield));
         }
-        return dealerResult.multiply(BigDecimal.valueOf(-1));
+        return dealerResult.multiply(BigDecimal.valueOf(NEGATION_FACTOR));
     }
 
     public Map<String, BigDecimal> calculatePlayerYield(Map<Player, GameResult> playersResult) {
