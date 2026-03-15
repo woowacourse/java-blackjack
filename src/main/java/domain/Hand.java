@@ -11,7 +11,7 @@ public class Hand {
 
     public Hand() {
         this.cards = new ArrayList<>();
-        this.score = new Score();
+        this.score = Score.zero();
         this.aceCount = AceCount.zero();
     }
 

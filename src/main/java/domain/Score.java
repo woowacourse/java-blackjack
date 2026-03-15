@@ -1,10 +1,16 @@
 package domain;
 
 public final class Score {
+    public static final Score ZERO = new Score(0);
+
     private final int score;
 
     public Score() {
         this(0);
+    }
+
+    public static Score zero() {
+        return ZERO;
     }
 
     private Score(int score) {
