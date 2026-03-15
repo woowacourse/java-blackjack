@@ -29,9 +29,8 @@ public class Settlement {
         return total;
     }
 
-    // 밖에서 정산 결과를 달라고 할 때 주는 Getter (DTO 변환용)
     public Map<Player, Profit> getPlayerProfits() {
-        return playerProfits;
+        return Map.copyOf(playerProfits);
     }
 
     public Profit getDealerProfit() {
