@@ -151,6 +151,26 @@ class HandCardsTest {
         assertThat(isBlackJack).isTrue();
     }
 
+    @Test
+    @DisplayName("합이 21이더라도 카드가 2장이 아닌 경우 블랙잭이 아니다.")
+    void blackJackScoreButNotBlackJackTest() {
+        // Given
+        List<Card> cards = List.of(
+                new Card(CardNumber.SEVEN, CardShape.CLUB),
+                new Card(CardNumber.KING, CardShape.HEART),
+                new Card(CardNumber.FOUR, CardShape.HEART)
+        );
+
+        HandCards handCards = makeHandCards(cards);
+
+        // When
+        boolean isBlackJack = handCards.isBlackJack();
+
+        // Then
+        assertThat(isBlackJack).isFalse();
+    }
+
+
 
     private HandCards makeHandCards(List<Card> cards) {
         HandCards handCards = new HandCards();

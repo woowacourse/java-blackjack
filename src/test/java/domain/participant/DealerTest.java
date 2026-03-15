@@ -18,7 +18,7 @@ class DealerTest {
         // Given
         List<Card> cards = List.of(
                 new Card(CardNumber.EIGHT, CardShape.CLUB),
-                new Card(CardNumber.FOUR, CardShape.CLUB)
+                new Card(CardNumber.SIX, CardShape.CLUB)
         );
 
         Dealer dealer = new Dealer();
@@ -30,4 +30,24 @@ class DealerTest {
         // Then
         assertThat(isReceiveCard).isTrue();
     }
+
+    @Test
+    @DisplayName("딜러는 점수의 합이 17 이상이라면 카드를 받지 않는다..")
+    void notReceiveCardTest() {
+        // Given
+        List<Card> cards = List.of(
+                new Card(CardNumber.SIX, CardShape.CLUB),
+                new Card(CardNumber.ACE, CardShape.CLUB)
+        );
+
+        Dealer dealer = new Dealer();
+
+        dealer.drawInitialCards(cards);
+        // When
+        boolean isReceiveCard = dealer.isReceiveCard();
+
+        // Then
+        assertThat(isReceiveCard).isFalse();
+    }
 }
+
