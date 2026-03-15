@@ -40,7 +40,16 @@ class DeckTest {
         }
 
         // when, then
-        assertThrows(IllegalStateException.class,
-                () -> deck.drawCard());
+        assertThrows(IllegalStateException.class, deck::drawCard);
+    }
+
+    @Test
+    void 랜덤으로_섞인_덱을_생성한다() {
+        // given, when
+        Deck deck = Deck.createShuffledDeck();
+
+        // then
+        assertEquals(deck.getCards().stream().distinct().count(), deck.size());
+        assertEquals(52, deck.size());
     }
 }

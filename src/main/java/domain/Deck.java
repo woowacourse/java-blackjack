@@ -50,6 +50,10 @@ public class Deck {
         return cards.cards();
     }
 
+    public int size() {
+        return cards.size();
+    }
+
     private void validateEmptyDeck() {
         if (cards.isEmpty()) {
             throw new IllegalStateException(EMPTY_DECK.getMessage());
