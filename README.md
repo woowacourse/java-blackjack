@@ -33,7 +33,7 @@
 - [ ] 승패 판독
 
 ## 피드백
-- [ ] HandTest isBusted() 테스트 추가하기
+- [x] HandTest isBusted() 테스트 추가하기
 - [x] isExactlyInstanceOf()로 변경
 - [ ] PlayedGameResult Dto화
 - [ ] BlackJackRule 관련

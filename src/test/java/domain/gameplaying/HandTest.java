@@ -1,5 +1,6 @@
 package domain.gameplaying;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 import domain.gameplaying.strategy.RandomStrategy;
@@ -48,6 +49,17 @@ class HandTest {
         List<CardInfo> actual = hand.cardInfos();
 
         assertEquals(expected, actual);
+    }
+
+    @ParameterizedTest
+    @MethodSource("bustedHands")
+    @DisplayName("버스트 상태를 확인할 수 있어야 한다.")
+    void 버스트_상태_확인(Hand bustedHand) {
+        assertThat(bustedHand.isBusted()).isTrue();
+    }
+
+    private static Stream<Hand> bustedHands() {
+        return TestFixtures.bustedHands();
     }
 
     private static Stream<Arguments> randomCards() {
