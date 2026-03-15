@@ -19,7 +19,7 @@ public record BlackjackJudge() {
             return Result.BLACKJACK_WIN;
         }
         if (player.calculateScore() > dealer.calculateScore()) {
-            return Result.BLACKJACK_WIN;
+            return Result.WIN;
         }
         if (player.calculateScore() == dealer.calculateScore()) {
             return Result.DRAW;
