@@ -19,8 +19,8 @@ public class Bet {
 
     private int validate(String amount) {
         int parsedAmount = parseAmount(amount.trim());
-        validateUnit(parsedAmount);
         validateMinimum(parsedAmount);
+        validateUnit(parsedAmount);
 
         return parsedAmount;
     }
@@ -33,15 +33,15 @@ public class Bet {
         }
     }
 
-    private void validateUnit(int parsedAmount) {
-        if (parsedAmount % UNIT_OF_BET != 0) {
-            throw new IllegalArgumentException(BET_UNIT_ERROR_MESSAGE);
-        }
-    }
-
     private void validateMinimum(int parsedAmount) {
         if (parsedAmount < MINIMUM_BET_AMOUNT) {
             throw new IllegalArgumentException(MINIMUM_BET_AMOUNT_ERROR_MESSAGE);
+        }
+    }
+
+    private void validateUnit(int parsedAmount) {
+        if (parsedAmount % UNIT_OF_BET != 0) {
+            throw new IllegalArgumentException(BET_UNIT_ERROR_MESSAGE);
         }
     }
 }
