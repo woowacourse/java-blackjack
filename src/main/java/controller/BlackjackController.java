@@ -77,7 +77,7 @@ public class BlackjackController {
 
     private void inputHitOrStand(String name, List<String> hand) {
         HitOrStand hitOrStand = HitOrStand.from(inputView.inputHitOrStand(name));
-        if (blackjackGameManager.isStand(hitOrStand)) {
+        if (hitOrStand.isStand()) {
             outputView.printlnHand(name, hand);
             return;
         }
@@ -86,11 +86,15 @@ public class BlackjackController {
     }
 
     private void drawCardOnPlayer(String name, HitOrStand hitOrStand) {
-        while (blackjackGameManager.isHit(hitOrStand)) {
+        while (canDrawContinue(name, hitOrStand)) {
             ParticipantDto playerDto = blackjackGameManager.updatePlayer(name);
             outputView.printlnHand(name, playerDto.hand());
             hitOrStand = HitOrStand.from(inputView.inputHitOrStand(name));
         }
+    }
+
+    private boolean canDrawContinue(String name, HitOrStand hitOrStand) {
+        return hitOrStand.isHit() && !blackjackGameManager.playerIsBust(name);
     }
 
     private void printBlackjackResult() {
