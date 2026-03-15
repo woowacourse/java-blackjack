@@ -16,10 +16,6 @@ public abstract class Finished extends Status {
     }
 
     @Override
-    public boolean isRunning() {
-        return false;
-    }
-    @Override
     public Status draw(Card card) {
         throw new IllegalStateException("이미 턴이 끝난 상태에서는 카드를 뽑을 수 없습니다.");
     }

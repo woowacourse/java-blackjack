@@ -11,7 +11,7 @@ public record PlayerHandScoreDto(String name, List<String> handCards, int score,
         return new PlayerHandScoreDto(
                 player.getName(), player.getHandCards().stream()
                 .map(CardMapper::cardToKorean)
-                .toList(), player.getScore(), player.getStatus().getCards().isBust(), player.getStatus().getCards().isBlackJack());
+                .toList(), player.getScore(), player.isBust(), player.isBlackJack());
     }
 
 }

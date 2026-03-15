@@ -11,7 +11,7 @@ public record DealerHandScoreDto(List<String> handCards, int score, boolean isBu
         return new DealerHandScoreDto(
                 dealer.getHandCards().stream().map(CardMapper::cardToKorean).toList(),
                 dealer.getScore(),
-                dealer.getStatus().getCards().isBust(),
-                dealer.getStatus().getCards().isBlackJack());
+                dealer.isBust(),
+                dealer.isBlackJack());
     }
 }

@@ -29,9 +29,4 @@ public final class Start extends Status{
     public Status stay() {
         throw new IllegalStateException("게임이 시작되지 않았습니다.");
     }
-
-    @Override
-    public boolean isRunning() {
-        return false;
-    }
 }

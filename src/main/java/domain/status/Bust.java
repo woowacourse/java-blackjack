@@ -7,4 +7,8 @@ public final class Bust extends Finished {
         super(cards);
     }
 
+    @Override
+    public boolean isBust() {
+        return true;
+    }
 }

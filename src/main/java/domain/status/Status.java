@@ -18,10 +18,27 @@ public abstract class Status {
 
     public abstract Status stay();
 
-    public abstract boolean isRunning();
-
-    public HandCards getCards() {
-        return cards;
+    public boolean isRunning() {
+        return false;
     }
 
+    public boolean isBust() {
+        return false;
+    }
+
+    public boolean isBlackJack() {
+        return false;
+    }
+
+    public int score() {
+        return cards.calculateScore();
+    }
+
+    public Card getFirstCard() {
+        return cards.getFirst();
+    }
+
+    public List<Card> getCards() {
+        return cards.getCards();
+    }
 }

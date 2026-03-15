@@ -27,11 +27,11 @@ abstract public class Participant {
     }
 
     public boolean isBust() {
-        return this.status.getCards().isBust();
+        return this.status.isBust();
     }
 
     public boolean isBlackJack() {
-        return this.status.getCards().isBlackJack();
+        return this.status.isBlackJack();
     }
 
     public boolean isRunning() {
@@ -39,14 +39,10 @@ abstract public class Participant {
     }
 
     public int getScore() {
-        return this.status.getCards().calculateScore();
+        return this.status.score();
     }
 
     public List<Card> getHandCards() {
-        return status.getCards().getCards();
-    }
-
-    public Status getStatus() {
-        return status;
+        return this.status.getCards();
     }
 }
