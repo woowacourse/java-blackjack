@@ -43,15 +43,15 @@ public class User {
         return hand.getHandTotalScore();
     }
 
-    public Money calculateProfit(GameResult gameResult) {
-        return gameResult.calculateProfit(this.bettingMoney);
-    }
-
     public boolean isBlackjack() {
         return hand.isBlackjack();
     }
 
     public boolean isBust() {
         return hand.isBust();
+    }
+
+    public Money getBettingMoney() {
+        return bettingMoney;
     }
 }
