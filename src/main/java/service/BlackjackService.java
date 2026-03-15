@@ -3,7 +3,9 @@ package service;
 import domain.Deck;
 import domain.Participants;
 import dto.ParticipantsInitDTO;
+import dto.UserCardsDTO;
 import java.util.List;
+import util.DisplayFormatter;
 import util.RandomShuffleStrategy;
 import view.Message;
 
@@ -42,7 +44,14 @@ public class BlackjackService {
     }
 
     public List<String> getUserCardsDisplays() {
-        return participants.getUserCardsDisplays();
+        List<UserCardsDTO> userCardsDTOS = participants.getUserCards();
+        return userCardsDTOS.stream()
+                .map(this::makeOneUserCardDisplay)
+                .toList();
+    }
+
+    private String makeOneUserCardDisplay(UserCardsDTO userCardsDTO) {
+        return DisplayFormatter.formatUserCardsDisplay(userCardsDTO);
     }
 
     public String hit(int index) {

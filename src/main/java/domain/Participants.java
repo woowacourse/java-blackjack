@@ -4,7 +4,6 @@ import dto.ParticipantsInitDTO;
 import dto.ProfitResultDTO;
 import dto.UserCardsDTO;
 import java.util.ArrayList;
-import java.util.Formatter;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,18 +52,18 @@ public class Participants {
         return dealer.getCardsDisplay();
     }
 
-    public List<String> getUserCardsDisplays() {
+    public List<UserCardsDTO> getUserCards() {
         return players.stream()
-                .map(this::makeOneUserCardDisplay)
+                .map(UserCardsDTO::fromUser)
                 .collect(Collectors.toList());
-    }
-
-    public String getPlayerCardStatus(int userIndex) {
-        return makeOneUserCardDisplay(players.get(userIndex));
     }
 
     private String makeOneUserCardDisplay(User user) {
         return DisplayFormatter.formatUserCardsDisplay(UserCardsDTO.fromUser(user));
+    }
+
+    public String getPlayerCardStatus(int userIndex) {
+        return makeOneUserCardDisplay(players.get(userIndex));
     }
 
     public List<String> askGetExtraCard() {
@@ -134,7 +133,7 @@ public class Participants {
 
         for (User user : players) {
             GameResult isUserWin = dealer.judgeResultForUser(user);
-            Money earnedMoney = user.calculateProfit(isUserWin);
+            Money earnedMoney = isUserWin.calculateProfit(user.getBettingMoney());
             dealerProfit = dealerProfit.subtract(earnedMoney);
             participantsProfit.put(user.getName(), earnedMoney);
         }
