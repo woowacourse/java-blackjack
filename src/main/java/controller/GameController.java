@@ -8,6 +8,7 @@ import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
 import dto.ParticipantDto;
+import dto.PlayerProfitDto;
 import java.util.ArrayList;
 import java.util.List;
 import view.InputParser;
@@ -36,8 +37,12 @@ public class GameController {
 
         printFinalScore(players, dealer);
 
-        outputView.printDealerFinalProfit(dealer.finalProfit(players));
-        outputView.printPlayerFinalProfit(players.getPlayers(), dealer);
+        List<PlayerProfitDto> playerProfitDtos = getPlayerProfitDtos(players, dealer);
+        int dealerFinalProfit = -playerProfitDtos.stream()
+                .mapToInt(PlayerProfitDto::profit)
+                .sum();
+        outputView.printDealerFinalProfit(dealerFinalProfit);
+        outputView.printPlayerFinalProfit(playerProfitDtos);
     }
 
     private Players getPlayers(List<String> playerNames, Deck deck) {
@@ -86,6 +91,22 @@ public class GameController {
                 .toList();
         outputView.printFinalScore(
                 ParticipantDto.of("딜러", dealer), participantDtos);
+    }
+
+    private List<PlayerProfitDto> getPlayerProfitDtos(Players players, Dealer dealer) {
+        List<PlayerProfitDto> playerProfitDtos = new ArrayList<>();
+        for (Player player : players.getPlayers()) {
+            playerProfitDtos.add(PlayerProfitDto.of(player.getName(), player.finalProfit(dealer)));
+        }
+        return playerProfitDtos;
+    }
+
+    private int getDealerFinalProfit(Players players, Dealer dealer) {
+        int result = 0;
+        for (Player player : players.getPlayers()) {
+            result += player.finalProfit(dealer);
+        }
+        return -result;
     }
 
     private void processRound(Player player, Deck deck) {

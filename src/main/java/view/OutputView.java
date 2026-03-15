@@ -4,10 +4,8 @@ import domain.GameResult;
 import domain.card.Card;
 import domain.card.CardSuit;
 import domain.card.CardValue;
-import domain.participant.Dealer;
-import domain.participant.Participant;
-import domain.participant.Player;
 import dto.ParticipantDto;
+import dto.PlayerProfitDto;
 import java.util.List;
 
 public class OutputView {
@@ -51,9 +49,9 @@ public class OutputView {
         System.out.println("딜러: " + dealerFinalProfit);
     }
 
-    public void printPlayerFinalProfit(List<Player> players, Participant participant) {
-        for (Player player : players) {
-            System.out.println(player.getName() + ": " + player.finalProfit(participant));
+    public void printPlayerFinalProfit(List<PlayerProfitDto> playerProfitDtos) {
+        for (PlayerProfitDto playerProfitDto : playerProfitDtos) {
+            System.out.println(playerProfitDto.name() + ": " + playerProfitDto.profit());
         }
     }
 
