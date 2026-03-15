@@ -3,7 +3,7 @@ package domain.betting;
 import java.util.Objects;
 
 public class BettingAmount {
-    private final Integer money;
+    private final int money;
 
     public BettingAmount(Integer bettingAmount) {
         validateMinus(bettingAmount);
