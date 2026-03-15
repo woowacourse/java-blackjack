@@ -26,19 +26,19 @@ public class Player extends Person {
     }
 
     public double applyBetting(int bettingValue) {
-        // 블랙잭일 때
-        if (super.isBlackJack() && playerStatus == PlayerStatus.WIN) {
-            super.plusProfit((double) bettingValue * 3 / 2);
-        }
+        if (playerStatus == PlayerStatus.WIN) {
+            if (super.isBlackJack()) {
+                super.plusProfit((double) bettingValue * 3 / 2);
+                return getProfit();
+            }
 
-        // 블랙잭이 아니고 승일 때
-        if (!super.isBlackJack() && playerStatus == PlayerStatus.WIN) {
             super.plusProfit(bettingValue);
+            return getProfit();
         }
 
-        // 패일때
         if (playerStatus == PlayerStatus.LOSS) {
             super.minusProfit(bettingValue);
+            return getProfit();
         }
         return getProfit();
     }
