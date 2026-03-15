@@ -48,15 +48,12 @@ public class GameResultAnalyzer {
     }
 
     private static WinningStatus judgePlayerWinningStatusByScore(Player player, Dealer dealer) {
-        int playerScore = player.getResultScore();
-        int dealerScore = dealer.getResultScore();
-
-        if (playerScore < dealerScore) {
-            return WinningStatus.LOSS;
+        if (player.hasHigherScoreThan(dealer)) {
+            return WinningStatus.WIN;
         }
 
-        if (playerScore > dealerScore) {
-            return WinningStatus.WIN;
+        if (dealer.hasHigherScoreThan(player)) {
+            return WinningStatus.LOSS;
         }
 
         return WinningStatus.DRAW;

@@ -24,8 +24,8 @@ public abstract class Participant {
         return hand.checkExist(targetCard);
     }
 
-    public int getResultScore() {
-        return hand.getResultScore();
+    public boolean hasHigherScoreThan(Participant other) {
+        return this.hand.getResultScore() > other.hand.getResultScore();
     }
 
     public boolean isBusted() {
@@ -34,6 +34,10 @@ public abstract class Participant {
 
     public boolean isBlackjack() {
         return hand.isBlackjack();
+    }
+
+    public int getResultScore() {
+        return hand.getResultScore();
     }
 
     public String toDisplayMyName() {
