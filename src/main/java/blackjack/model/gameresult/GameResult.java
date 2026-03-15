@@ -28,10 +28,7 @@ public enum GameResult {
             return LOSE;
         }
 
-        if (dealer.isBust()) {
-            return WIN;
-        }
-        return null;
+        return WIN;
     }
 
     private static GameResult judgeByBlackjack(Dealer dealer, Player player) {
@@ -43,10 +40,7 @@ public enum GameResult {
             return BLACKJACK_WIN;
         }
 
-        if (dealer.isBlackjack()) {
-            return LOSE;
-        }
-        return null;
+        return LOSE;
     }
 
     private static GameResult judgeByScore(Dealer dealer, Player player) {
