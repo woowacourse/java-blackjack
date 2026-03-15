@@ -1,8 +1,5 @@
 package domain.participant;
 
-import static domain.constant.GameRule.BLACKJACK_CRITERION;
-import static domain.constant.GameRule.INIT_CARD_COUNT;
-
 import domain.card.Card;
 import domain.card.CardBoard;
 import java.util.List;
@@ -19,7 +16,7 @@ public abstract class Participant {
     }
 
     public boolean checkScoreUnderCriterion() {
-        return cardBoard.calculateScore() <= BLACKJACK_CRITERION;
+        return cardBoard.checkScoreUnderCriterion();
     }
 
     public boolean isBust() {
@@ -27,10 +24,7 @@ public abstract class Participant {
     }
 
     public boolean isBlackjack() {
-        if (cardBoard.getCards().size() != INIT_CARD_COUNT) {
-            return false;
-        }
-        return cardBoard.calculateScore() == BLACKJACK_CRITERION;
+        return cardBoard.isBlackjack();
     }
 
     public List<Card> getCards() {

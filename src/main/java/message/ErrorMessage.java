@@ -1,12 +1,12 @@
 package message;
 
-import static domain.constant.GameRule.BET_AMOUNT_UNIT;
-import static domain.constant.GameRule.MAX_BET_AMOUNT;
-import static domain.constant.GameRule.MAX_NAME_LENGTH;
-import static domain.constant.GameRule.MAX_PLAYER_NUMBER;
-import static domain.constant.GameRule.MIN_BET_AMOUNT;
-import static domain.constant.GameRule.MIN_NAME_LENGTH;
-import static domain.constant.GameRule.MIN_PLAYER_NUMBER;
+import static domain.participant.BetAmount.BET_AMOUNT_UNIT;
+import static domain.participant.BetAmount.MAX_BET_AMOUNT;
+import static domain.participant.BetAmount.MIN_BET_AMOUNT;
+import static domain.participant.Name.MAX_NAME_LENGTH;
+import static domain.participant.Name.MIN_NAME_LENGTH;
+import static domain.participant.Players.MAX_PLAYER_NUMBER;
+import static domain.participant.Players.MIN_PLAYER_NUMBER;
 
 public enum ErrorMessage {
     INVALID_HIT_INPUT("[ERROR] 허용된 입력이 아닙니다."),

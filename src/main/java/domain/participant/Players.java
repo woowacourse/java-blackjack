@@ -1,7 +1,5 @@
 package domain.participant;
 
-import static domain.constant.GameRule.MAX_PLAYER_NUMBER;
-import static domain.constant.GameRule.MIN_PLAYER_NUMBER;
 import static message.ErrorMessage.PLAYER_NAME_DUPLICATED;
 import static message.ErrorMessage.PLAYER_NOT_FOUND;
 import static message.ErrorMessage.PLAYER_NUMBER_OUT_OF_RANGE;
@@ -14,6 +12,9 @@ import java.util.List;
 import java.util.Set;
 
 public class Players {
+    public static final int MIN_PLAYER_NUMBER = 1;
+    public static final int MAX_PLAYER_NUMBER = 7;
+
     private final List<Player> players = new ArrayList<>();
 
     public Players(List<String> names) {

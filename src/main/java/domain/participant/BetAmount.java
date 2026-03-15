@@ -1,12 +1,13 @@
 package domain.participant;
 
-import static domain.constant.GameRule.BET_AMOUNT_UNIT;
-import static domain.constant.GameRule.MAX_BET_AMOUNT;
-import static domain.constant.GameRule.MIN_BET_AMOUNT;
 import static message.ErrorMessage.BET_AMOUNT_INVALID_UNIT;
 import static message.ErrorMessage.BET_AMOUNT_OUT_OF_RANGE;
 
 public record BetAmount(int amount) {
+    public static final int MIN_BET_AMOUNT = 1_000;
+    public static final int MAX_BET_AMOUNT = 300_000;
+    public static final int BET_AMOUNT_UNIT = 1_000;
+
     public BetAmount {
         validateBetAmountRange(amount);
         validateBetAmountUnit(amount);

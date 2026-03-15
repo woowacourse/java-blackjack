@@ -1,7 +1,5 @@
 package domain;
 
-import static domain.constant.GameRule.INIT_CARD_COUNT;
-
 import domain.card.Card;
 import domain.card.Deck;
 import domain.enums.Result;
@@ -13,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 
 public class Game {
+    public static final int INIT_CARD_COUNT = 2;
+
     private final Participants participants;
     private final BetAmounts betAmounts;
 

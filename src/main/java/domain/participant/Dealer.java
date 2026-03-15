@@ -1,8 +1,7 @@
 package domain.participant;
 
-import static domain.constant.GameRule.DEALER_HIT_CRITERION;
-
 public class Dealer extends Participant {
+    private static final int DEALER_HIT_CRITERION = 17;
 
     @Override
     public boolean checkScoreUnderCriterion() {

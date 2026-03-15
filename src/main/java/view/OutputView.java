@@ -1,6 +1,6 @@
 package view;
 
-import static domain.constant.GameRule.INIT_CARD_COUNT;
+import static domain.Game.INIT_CARD_COUNT;
 import static view.constant.ViewRule.LINE_SEPARATOR;
 
 import dto.CardDto;
