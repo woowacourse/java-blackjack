@@ -5,7 +5,9 @@ import blackjack.domain.Dealer;
 import blackjack.domain.GameResult;
 import blackjack.domain.Player;
 import blackjack.domain.ProfitResults;
+import blackjack.domain.Rank;
 import blackjack.domain.ScoreCompareResult;
+import blackjack.domain.Shape;
 import blackjack.service.Game;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +23,8 @@ public class PlayerBetTest {
 
     @Test
     void calculate_profit_when_player_win_with_blackjack() {
-        Player player = createPlayer("player", 1000, "A:스페이드", "10:하트");
+        Player player = createPlayer("player", 1000,
+                new Card(Rank.ACE, Shape.SPADE), new Card(Rank.TEN, Shape.HEART));
 
         assertThat(player.calculateProfit(ScoreCompareResult.PLAYER_WIN)).isEqualTo(1500);
     }
@@ -42,9 +45,12 @@ public class PlayerBetTest {
 
     @Test
     void calculate_total_profit_result() {
-        Player winningPlayer = createPlayer("winningPlayer", 1000, "Q:스페이드", "10:하트");
-        Player losingPlayer = createPlayer("losingPlayer", 1500, "9:스페이드", "8:하트");
-        Dealer dealer = createDealer("10:스페이드", "8:하트");
+        Player winningPlayer = createPlayer("winningPlayer", 1000,
+                new Card(Rank.QUEEN, Shape.SPADE), new Card(Rank.TEN, Shape.HEART));
+        Player losingPlayer = createPlayer("losingPlayer", 1500,
+                new Card(Rank.NINE, Shape.SPADE), new Card(Rank.EIGHT, Shape.HEART));
+        Dealer dealer = createDealer(
+                new Card(Rank.TEN, Shape.SPADE), new Card(Rank.EIGHT, Shape.HEART));
 
         Game game = new Game(List.of(winningPlayer, losingPlayer), dealer);
         GameResult gameResult = game.judgeTotalGameResult();
@@ -58,20 +64,18 @@ public class PlayerBetTest {
     }
 
 
-    private Player createPlayer(String name, int bettingAmount, String... cards) {
+    private Player createPlayer(String name, int bettingAmount, Card... cards) {
         Player player = new Player(name, bettingAmount);
-        for (String card : cards) {
-            String[] parts = card.split(":");
-            player.receiveOneCard(new Card(parts[0], parts[1]));
+        for (Card card : cards) {
+            player.receiveOneCard(card);
         }
         return player;
     }
 
-    private Dealer createDealer(String... cards) {
+    private Dealer createDealer(Card... cards) {
         Dealer dealer = new Dealer();
-        for (String card : cards) {
-            String[] parts = card.split(":");
-            dealer.receiveOneCard(new Card(parts[0], parts[1]));
+        for (Card card : cards) {
+            dealer.receiveOneCard(card);
         }
         return dealer;
     }

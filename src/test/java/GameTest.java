@@ -2,11 +2,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import blackjack.domain.Rank;
 import blackjack.domain.ScoreCompareResult;
 import blackjack.domain.Card;
 import blackjack.domain.Dealer;
 import blackjack.domain.GameResult;
 import blackjack.domain.Player;
+import blackjack.domain.Shape;
 import blackjack.service.CardDistributor;
 import blackjack.service.Game;
 import java.util.LinkedHashMap;
@@ -38,11 +40,11 @@ public class GameTest {
         Player player = new Player("player1");
         Dealer dealer = new Dealer();
 
-        player.receiveOneCard(new Card("A", "하트"));
-        player.receiveOneCard(new Card("Q", "스페이드"));
+        player.receiveOneCard(new Card(Rank.ACE, Shape.HEART));
+        player.receiveOneCard(new Card(Rank.QUEEN, Shape.SPADE));
 
-        dealer.receiveOneCard(new Card("10", "하트"));
-        dealer.receiveOneCard(new Card("7", "스페이드"));
+        dealer.receiveOneCard(new Card(Rank.TEN, Shape.HEART));
+        dealer.receiveOneCard(new Card(Rank.SEVEN, Shape.SPADE));
 
         assertThat(Game.compareScore(player, dealer)).isEqualTo(ScoreCompareResult.PLAYER_WIN);
     }
@@ -52,11 +54,11 @@ public class GameTest {
         Player player = new Player("player1");
         Dealer dealer = new Dealer();
 
-        player.receiveOneCard(new Card("A", "하트"));
-        player.receiveOneCard(new Card("4", "스페이드"));
+        player.receiveOneCard(new Card(Rank.ACE, Shape.HEART));
+        player.receiveOneCard(new Card(Rank.FOUR, Shape.SPADE));
 
-        dealer.receiveOneCard(new Card("10", "하트"));
-        dealer.receiveOneCard(new Card("9", "스페이드"));
+        dealer.receiveOneCard(new Card(Rank.TEN, Shape.HEART));
+        dealer.receiveOneCard(new Card(Rank.NINE, Shape.SPADE));
 
         assertThat(Game.compareScore(player, dealer)).isEqualTo(ScoreCompareResult.DEALER_WIN);
     }
@@ -66,21 +68,26 @@ public class GameTest {
         Player player = new Player("player1");
         Dealer dealer = new Dealer();
 
-        player.receiveOneCard(new Card("A", "하트"));
-        player.receiveOneCard(new Card("Q", "스페이드"));
+        player.receiveOneCard(new Card(Rank.ACE, Shape.HEART));
+        player.receiveOneCard(new Card(Rank.QUEEN, Shape.SPADE));
 
-        dealer.receiveOneCard(new Card("10", "하트"));
-        dealer.receiveOneCard(new Card("A", "스페이드"));
+        dealer.receiveOneCard(new Card(Rank.TEN, Shape.HEART));
+        dealer.receiveOneCard(new Card(Rank.ACE, Shape.SPADE));
 
         assertThat(Game.compareScore(player, dealer)).isEqualTo(ScoreCompareResult.PUSH);
     }
 
     @Test
     void judge_total_winner_result() {
-        Player pobi = createPlayer("pobi", "2:하트", "8:스페이드", "A:클로버");
-        Player jason = createPlayer("jason", "7:클로버", "K:스페이드");
-        Player brown = createPlayer("brown", "10:하트", "10:클로버");
-        Dealer dealer = createDealer("3:다이아몬드", "9:클로버", "8:다이아몬드");
+        Player pobi = createPlayer("pobi",
+                new Card(Rank.TWO, Shape.HEART), new Card(Rank.EIGHT, Shape.SPADE), new Card(Rank.ACE, Shape.CLUB));
+        Player jason = createPlayer("jason",
+                new Card(Rank.SEVEN, Shape.CLUB), new Card(Rank.KING, Shape.SPADE));
+        Player brown = createPlayer("brown",
+                new Card(Rank.TEN, Shape.HEART), new Card(Rank.TEN, Shape.CLUB));
+        Dealer dealer = createDealer(
+                new Card(Rank.THREE, Shape.DIAMOND), new Card(Rank.NINE, Shape.CLUB),
+                new Card(Rank.EIGHT, Shape.DIAMOND));
 
         Game game = new Game(List.of(pobi, jason, brown), dealer);
 
@@ -105,20 +112,18 @@ public class GameTest {
         assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
     }
 
-    private Player createPlayer(String name, String... cards) {
+    private Player createPlayer(String name, Card... cards) {
         Player player = new Player(name);
-        for (String card : cards) {
-            String[] parts = card.split(":");
-            player.receiveOneCard(new Card(parts[0], parts[1]));
+        for (Card card : cards) {
+            player.receiveOneCard(card);
         }
         return player;
     }
 
-    private Dealer createDealer(String... cards) {
+    private Dealer createDealer(Card... cards) {
         Dealer dealer = new Dealer();
-        for (String card : cards) {
-            String[] parts = card.split(":");
-            dealer.receiveOneCard(new Card(parts[0], parts[1]));
+        for (Card card : cards) {
+            dealer.receiveOneCard(card);
         }
         return dealer;
     }
