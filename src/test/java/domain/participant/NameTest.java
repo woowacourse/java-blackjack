@@ -23,7 +23,7 @@ class NameTest {
     @ValueSource(strings = {"stark", "fizz", "스타크", "피즈"})
     void 플레이어_정상_생성_테스트(String name) {
         Name playerName = new Name(name);
-        Assertions.assertThat(playerName.getName()).isEqualTo(name);
+        Assertions.assertThat(playerName.name()).isEqualTo(name);
     }
 
     @DisplayName("Name 객체의 동등성 비교 테스트")
