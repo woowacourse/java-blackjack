@@ -14,18 +14,11 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class DealerTest {
 
-    Hand dummyHand;
-    PlayerName name;
-
-    @BeforeEach
-    void init() {
-        dummyHand = new Hand();
-        name = new PlayerName("딜러");
-    }
-
     @Test
     @DisplayName("딜러 핸드의 카드 총합이 21초과면 bust이다.")
     void isBust_ReturnsTrue_WhenTotalScoreExceeds21() {
+        Hand dummyHand = new Hand();
+
         Card card1 = new Card(Rank.JACK, Pattern.CLOVER);
         Card card2 = new Card(Rank.QUEEN, Pattern.CLOVER);
         Card card3 = new Card(Rank.KING, Pattern.CLOVER);
@@ -41,6 +34,8 @@ class DealerTest {
     @Test
     @DisplayName("딜러 핸드의 카드 총합이 21이하면 bust가 아니다.")
     void isBust_ReturnsFalse_WhenTotalScoreLessThan21() {
+        Hand dummyHand = new Hand();
+
         Card card1 = new Card(Rank.JACK, Pattern.CLOVER);
         Card card2 = new Card(Rank.TWO, Pattern.CLOVER);
         dummyHand.addCard(card1);
@@ -54,6 +49,8 @@ class DealerTest {
     @Test
     @DisplayName("딜러 핸드의 카드 총합이 16이하이면 카드를 더 뽑아야 한다.")
     void shouldHit_ReturnsTrue_WhenHandSizeLessThan16() {
+        Hand dummyHand = new Hand();
+
         Card card1 = new Card(Rank.JACK, Pattern.CLOVER);
         Card card2 = new Card(Rank.TWO, Pattern.CLOVER);
         dummyHand.addCard(card1);
@@ -67,6 +64,8 @@ class DealerTest {
     @Test
     @DisplayName("딜러 핸드의 카드 총합이 16초과이면 카드를 더 뽑지 않는다.")
     void shouldHit_ReturnsFalse_WhenHandSizeExceeds16() {
+        Hand dummyHand = new Hand();
+
         Card card1 = new Card(Rank.JACK, Pattern.CLOVER);
         Card card2 = new Card(Rank.SEVEN, Pattern.CLOVER);
         dummyHand.addCard(card1);
@@ -80,6 +79,8 @@ class DealerTest {
     @Test
     @DisplayName("딜러가 블랙잭인 경우 true를 반환한다.")
     void isBlackjack_returnsTrue_whenDealerHasBlackjack() {
+        Hand dummyHand = new Hand();
+
         Dealer blackJackDealer = new Dealer(dummyHand);
         blackJackDealer.keepCard(new Card(Rank.ACE, Pattern.CLOVER));
         blackJackDealer.keepCard(new Card(Rank.JACK, Pattern.CLOVER));
@@ -92,6 +93,8 @@ class DealerTest {
     @Test
     @DisplayName("딜러가 블랙잭이 아닌 경우 false를 반환한다")
     void isBlackjack_returnsFalse_whenDealerHasNotBlackjack() {
+        Hand dummyHand = new Hand();
+
         Dealer blackJackDealer2 = new Dealer(new Hand());
         blackJackDealer2.keepCard(new Card(Rank.ACE, Pattern.HEART));
         blackJackDealer2.keepCard(new Card(Rank.EIGHT, Pattern.HEART));

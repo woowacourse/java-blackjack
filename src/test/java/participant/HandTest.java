@@ -4,7 +4,6 @@ import domain.card.Card;
 import domain.card.Pattern;
 import domain.card.Rank;
 import domain.participant.Hand;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,51 +11,59 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class HandTest {
 
-    Hand dummyHand;
-    Card card1 = new Card(Rank.FIVE, Pattern.CLOVER);
-    Card card2 = new Card(Rank.TWO, Pattern.SPADE);
+    @Test
+    @DisplayName("핸드는 카드를 받을 수 있다")
+    void addCard_addsCardToHand() {
+        Hand dummyHand = new Hand();
+        int beforeSize = dummyHand.getHandSize();
 
-    @BeforeEach
-    void init() {
-        dummyHand = new Hand();
+        dummyHand.addCard(new Card(Rank.ACE, Pattern.DIAMOND));
+
+        assertThat(dummyHand.getHandSize()).isEqualTo(beforeSize + 1);
+    }
+
+    @Test
+    @DisplayName("에이스를 제외한 핸드의 총합을 계산할 수 있다")
+    void calculateTotalScore_calculatesTotalScoreWithoutAces() {
+        Hand dummyHand = new Hand();
+        Card card1 = new Card(Rank.QUEEN, Pattern.DIAMOND);
+        Card card2 = new Card(Rank.TWO, Pattern.DIAMOND);
         dummyHand.addCard(card1);
         dummyHand.addCard(card2);
-    }
+        int expectedScore = 12;
 
-    @Test
-    void 핸드는_카드를_받을_수_있다() {
-        int size = dummyHand.getHandSize();
-        dummyHand.addCard(new Card(Rank.FOUR, Pattern.DIAMOND));
-        assertThat(dummyHand.getHandSize()).isEqualTo(size + 1);
-    }
-
-    @Test
-    void 에이스를_제외한_핸드의_총합을_계산할_수_있다() {
-        int expectedScore = card1.getCardScore() + card2.getCardScore();
         int totalScore = dummyHand.calculateTotalScore();
 
         assertThat(totalScore).isEqualTo(expectedScore);
     }
 
     @Test
-    void 핸드의_총합을_에이스를_11로_간주하여_계산할_수_있다() {
-        Card card = new Card(Rank.ACE, Pattern.DIAMOND);
-        dummyHand.addCard(card);
+    @DisplayName("핸드의 총합을 에이스를 11로 간주하여 계산할 수 있다.")
+    void calculateTotalScore_calculatesTotalScoreWithAcesAs11() {
+        Hand dummyHand = new Hand();
+        Card card1 = new Card(Rank.THREE, Pattern.DIAMOND);
+        Card card2 = new Card(Rank.ACE, Pattern.DIAMOND);
+        dummyHand.addCard(card1);
+        dummyHand.addCard(card2);
+        int expectedScore = 14;
 
-        int expectedScore = card1.getCardScore() + card2.getCardScore() + card.getCardScore(); //18
         int totalScore = dummyHand.calculateTotalScore();
 
         assertThat(totalScore).isEqualTo(expectedScore);
     }
 
     @Test
-    void 핸드의_총합을_에이스를_1로_간주하여_계산할_수_있다() {
-        Card card3 = new Card(Rank.ACE, Pattern.DIAMOND);
-        Card card4 = new Card(Rank.TEN, Pattern.SPADE);
+    @DisplayName("핸드의 총합을 에이스를 1로 간주하여 계산할 수 있다.")
+    void calculateTotalScore_calculatesTotalScoreWithAcesAs1() {
+        Hand dummyHand = new Hand();
+        Card card1 = new Card(Rank.ACE, Pattern.DIAMOND);
+        Card card2 = new Card(Rank.TEN, Pattern.SPADE);
+        Card card3 = new Card(Rank.EIGHT, Pattern.SPADE);
+        dummyHand.addCard(card1);
+        dummyHand.addCard(card2);
         dummyHand.addCard(card3);
-        dummyHand.addCard(card4);
 
-        int expectedScore = 1 + card1.getCardScore() + card2.getCardScore() + card4.getCardScore(); //18
+        int expectedScore = 19;
         int totalScore = dummyHand.calculateTotalScore();
 
         assertThat(totalScore).isEqualTo(expectedScore);
@@ -65,14 +72,15 @@ class HandTest {
     @Test
     @DisplayName("에이스가 핸드에 여러 장 있어도 가장 유리하게 계산한다")
     void calculateTotalScore_WhenHandHasMultipleAces_UsesMostAdvantageousScore() {
-        Card card3 = new Card(Rank.ACE, Pattern.DIAMOND);
-        Card card4 = new Card(Rank.TEN, Pattern.SPADE);
-        Card card5 = new Card(Rank.ACE, Pattern.HEART);
+        Hand dummyHand = new Hand();
+        Card card1 = new Card(Rank.ACE, Pattern.DIAMOND);
+        Card card2 = new Card(Rank.TEN, Pattern.SPADE);
+        Card card3 = new Card(Rank.ACE, Pattern.HEART);
+        dummyHand.addCard(card1);
+        dummyHand.addCard(card2);
         dummyHand.addCard(card3);
-        dummyHand.addCard(card4);
-        dummyHand.addCard(card5);
 
-        int expectedScore = 1 + 1 + card1.getCardScore() + card2.getCardScore() + card4.getCardScore(); //19
+        int expectedScore = 12;
         int totalScore = dummyHand.calculateTotalScore();
 
         assertThat(totalScore).isEqualTo(expectedScore);
