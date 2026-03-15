@@ -1,5 +1,7 @@
 package domain.participant;
 
+import exception.BlackjackException;
+
 public class BetAmount {
 
     public static final String INVALID_BET_AMOUNT_NUMBER = "배팅 금액은 숫자여야 합니다.";
@@ -20,7 +22,7 @@ public class BetAmount {
 
     private void validateNumber(String betAmountInput) {
         if (isNotNumber(betAmountInput)) {
-            throw new IllegalArgumentException(INVALID_BET_AMOUNT_NUMBER);
+            throw new BlackjackException(INVALID_BET_AMOUNT_NUMBER);
         }
     }
 
@@ -30,7 +32,7 @@ public class BetAmount {
 
     private void validatePositive(String betAmountInput) {
         if (isNotPositive(betAmountInput)) {
-            throw new IllegalArgumentException(INVALID_BET_AMOUNT_POSITIVE);
+            throw new BlackjackException(INVALID_BET_AMOUNT_POSITIVE);
         }
     }
 
