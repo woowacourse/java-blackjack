@@ -37,20 +37,28 @@ class BlackJackGameTest {
         Players players = new Players(List.of(player));
         Dealer dealer = new Dealer();
 
-        Deck deck = new Deck(List.of(
+        Deck deck = new Deck(new FixedOrderShuffleStrategy(List.of(
                 new Card(CardPoint.TWO, CardPattern.CLUB),
                 new Card(CardPoint.THREE, CardPattern.DIAMOND),
-                new Card(CardPoint.NINE, CardPattern.HEART),
-                new Card(CardPoint.KING, CardPattern.SPADE),
-                new Card(CardPoint.FIVE, CardPattern.CLUB),
-                new Card(CardPoint.ACE, CardPattern.HEART)
-        ));
+                new Card(CardPoint.NINE, CardPattern.HEART),   // dealer 2라운드 - 4번째 뽑힘
+                new Card(CardPoint.KING, CardPattern.SPADE),   // pobi 2라운드 - 3번째 뽑힘
+                new Card(CardPoint.FIVE, CardPattern.CLUB),    // dealer 1라운드  2번째 뽑힘
+                new Card(CardPoint.ACE, CardPattern.HEART)     // pobi 1라운드  - 1번째 뽑힘
+        )));
 
         BlackJackGame blackJackGame = new BlackJackGame(players, dealer, deck);
-
         blackJackGame.initDraw();
 
         assertThat(player.isBlackJack()).isTrue();
     }
 
+
+    @Test
+    void NoShuffleStrategy를_주입하면_카드_순서가_유지된다() {
+        Deck deck = new Deck(new NoShuffleStrategy());
+
+        // draw()는 removeLast() 이므로 마지막 카드(CLUB × ACE)가 첫 번째로 나옴
+        Card firstDrawn = deck.draw();
+        assertThat(firstDrawn.getName()).isEqualTo("A클로버");
+    }
 }
