@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class Hand {
+    private static final int ACE_ADJUST_SCORE = 10;
+
     private final List<Card> cards;
     private Score score;
     private AceCount aceCount;
@@ -37,8 +39,8 @@ public class Hand {
     }
 
     private void adjustAceScore() {
-        while (score.getScore() > GameRule.BLACKJACK_SCORE && aceCount.hasAny()) {
-            score = score.subScore(GameRule.ACE_SCORE);
+        while (score.isBust() && aceCount.hasAny()) {
+            score = score.subScore(ACE_ADJUST_SCORE);
             aceCount = aceCount.decrease();
         }
     }

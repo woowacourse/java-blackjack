@@ -5,6 +5,8 @@ import java.util.stream.IntStream;
 import util.NameParser;
 
 public class BlackJackGame {
+    private static final int INITIAL_DRAW_COUNT = 2;
+
     private final Players players;
     private final Dealer dealer;
     private final Cards cards;
@@ -46,7 +48,7 @@ public class BlackJackGame {
     }
 
     private void drawInitialDealerCards() {
-        IntStream.range(0, GameRule.INITIAL_DRAW_COUNT).forEach(i -> dealer.drawCard(cards));
+        IntStream.range(0, INITIAL_DRAW_COUNT).forEach(i -> dealer.drawCard(cards));
     }
 
     private void drawInitialPlayerCards() {
@@ -54,7 +56,7 @@ public class BlackJackGame {
     }
 
     private void drawInitialCardsToPlayer(Player player) {
-        IntStream.range(0, GameRule.INITIAL_DRAW_COUNT)
+        IntStream.range(0, INITIAL_DRAW_COUNT)
                 .forEach(i -> player.drawCard(cards));
     }
 }
