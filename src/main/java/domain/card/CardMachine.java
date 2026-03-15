@@ -33,11 +33,11 @@ public class CardMachine {
 
     private void setSuits(List<Card> decks, Rank rank) {
         for (Suit suit : Suit.values()) {
-            addRepeatSix(decks, rank, suit);
+            addRepeatDeckCount(decks, rank, suit);
         }
     }
 
-    private void addRepeatSix(List<Card> decks, Rank rank, Suit suit) {
+    private void addRepeatDeckCount(List<Card> decks, Rank rank, Suit suit) {
         for (int i = 0; i < DECK_COUNT; i++) {
             decks.add(new Card(rank, suit));
         }

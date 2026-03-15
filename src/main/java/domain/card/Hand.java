@@ -6,6 +6,8 @@ import java.util.List;
 public class Hand {
 
     private static final int BLACKJACK_SCORE = 21;
+    private static final int REDUCED_SCORE_FROM_ACE = 10;
+    private static final int INITIAL_CARD_COUNT = 2;
 
     private final List<Card> cards;
 
@@ -17,21 +19,41 @@ public class Hand {
         cards.add(card);
     }
 
-    public int calculateScore() {
-        int score = cards.stream()
-            .map(Card::getScore)
-            .reduce(0, Integer::sum);
-        int aceCount = cards.stream()
-            .filter(Card::isAce)
-            .toList()
-            .size();
+    public int calculateTotalScore() {
+        int baseScore = calculateBaseScore();
+        int aceCount = calculateAceCount();
 
-        return calculateScoreWithBestAce(score, aceCount);
+        return calculateTotalScoreWithAceCalculation(baseScore, aceCount);
     }
 
-    private int calculateScoreWithBestAce(int score, int aceCount) {
+    private int calculateInitialScore() {
+        int baseScore = calculateInitialBaseScore();
+        int aceCount = calculateAceCount();
+
+        return calculateTotalScoreWithAceCalculation(baseScore, aceCount);
+    }
+
+    private Integer calculateBaseScore() {
+        return cards.stream()
+                .map(Card::getScore)
+                .reduce(0, Integer::sum);
+    }
+
+    private Integer calculateInitialBaseScore() {
+        return cards.subList(0, INITIAL_CARD_COUNT).stream()
+                .map(Card::getScore)
+                .reduce(0, Integer::sum);
+    }
+
+    private int calculateAceCount() {
+        return (int) cards.stream()
+                .filter(Card::isAce)
+                .count();
+    }
+
+    private int calculateTotalScoreWithAceCalculation(int score, int aceCount) {
         while (score > BLACKJACK_SCORE && aceCount > 0) {
-            score -= 10;
+            score -= REDUCED_SCORE_FROM_ACE;
             aceCount--;
         }
 
@@ -39,7 +61,7 @@ public class Hand {
     }
 
     public boolean isBust() {
-        return calculateScore() > BLACKJACK_SCORE;
+        return calculateTotalScore() > BLACKJACK_SCORE;
     }
 
     public Card getFirstCard() {
@@ -49,5 +71,9 @@ public class Hand {
     public List<Card> getCard() {
         return cards.stream()
                 .toList();
+    }
+
+    public boolean isBlackjack() {
+        return calculateInitialScore() == BLACKJACK_SCORE;
     }
 }

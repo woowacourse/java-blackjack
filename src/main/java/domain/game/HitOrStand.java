@@ -1,4 +1,4 @@
-package constant;
+package domain.game;
 
 import exception.BlackjackException;
 import java.util.Arrays;

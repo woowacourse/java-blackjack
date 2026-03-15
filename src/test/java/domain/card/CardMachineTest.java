@@ -19,13 +19,13 @@ class CardMachineTest {
         class Success {
 
             @Test
-            void 카드를_뽑으면_null이_아닌_Card를_반환해야_한다() {
+            void 카드를_정상적으로_뽑으면_Card를_반환해야_한다() {
 
                 // when
                 Card actual = cardMachine.drawCard();
 
                 // then
-                assertThat(actual).isNotNull();
+                assertThat(actual).isInstanceOf(Card.class);
             }
 
             @Test
@@ -42,7 +42,6 @@ class CardMachineTest {
 
                 // then
                 assertThat(counts).hasSize(52);
-                assertThat(counts.values()).allMatch(count -> count <= 6);
                 assertThat(counts.values()).allMatch(count -> count == 6);
             }
         }

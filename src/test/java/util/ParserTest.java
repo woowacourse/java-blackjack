@@ -15,15 +15,14 @@ class ParserTest {
 
             // given
             String input = "a,b,c";
-            String delimiter = ",";
 
             // when
-            List<String> actuals = Parser.parseInput(input);
+            List<String> actual = Parser.parseInput(input);
 
             // then
-            List<String> expecteds = List.of("a", "b", "c");
+            List<String> expected = List.of("a", "b", "c");
             for (int i = 0; i < 3; i++) {
-                Assertions.assertEquals(expecteds.get(i), actuals.get(i));
+                Assertions.assertEquals(expected.get(i), actual.get(i));
             }
         }
 
@@ -32,15 +31,14 @@ class ParserTest {
 
             // given
             String input = "    a ,b ,c  ";
-            String delimiter = ",";
 
             // when
-            List<String> actuals = Parser.parseInput(input);
+            List<String> actual = Parser.parseInput(input);
 
             // then
-            List<String> expecteds = List.of("a", "b", "c");
+            List<String> expected = List.of("a", "b", "c");
             for (int i = 0; i < 3; i++) {
-                Assertions.assertEquals(expecteds.get(i), actuals.get(i));
+                Assertions.assertEquals(expected.get(i), actual.get(i));
             }
         }
 
@@ -49,15 +47,14 @@ class ParserTest {
 
             // given
             String input = "    a b ,b  c ,c   d ";
-            String delimiter = ",";
 
             // when
-            List<String> actuals = Parser.parseInput(input);
+            List<String> actual = Parser.parseInput(input);
 
             // then
-            List<String> expecteds = List.of("a b", "b  c", "c   d");
+            List<String> expected = List.of("a b", "b  c", "c   d");
             for (int i = 0; i < 3; i++) {
-                Assertions.assertEquals(expecteds.get(i), actuals.get(i));
+                Assertions.assertEquals(expected.get(i), actual.get(i));
             }
         }
     }

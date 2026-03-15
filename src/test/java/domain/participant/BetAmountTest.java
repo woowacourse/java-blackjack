@@ -3,7 +3,6 @@ package domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import exception.BlackjackException;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -11,7 +10,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class PlayerNameTest {
+class BetAmountTest {
 
     @Nested
     class ConstructorTest {
@@ -21,19 +20,20 @@ class PlayerNameTest {
 
             @ParameterizedTest
             @MethodSource("successCases")
-            void 이름이_2글자_이상_5글자_이하면_생성된다(String input) {
+            void 양수_숫자면_배팅_금액이_정상_생성된다(String input, int expected) {
+
                 // when
-                PlayerName actual = new PlayerName(input);
+                BetAmount actual = new BetAmount(input);
 
                 // then
-                assertThat(actual.name()).isEqualTo(input);
+                assertThat(actual.getBetAmount()).isEqualTo(expected);
             }
 
             static Stream<Arguments> successCases() {
                 return Stream.of(
-                        Arguments.of("ab"),
-                        Arguments.of("abcde"),
-                        Arguments.of("성열")
+                        Arguments.of("1", 1),
+                        Arguments.of("1000", 1000),
+                        Arguments.of("50000", 50000)
                 );
             }
         }
@@ -42,21 +42,23 @@ class PlayerNameTest {
         class Fail {
 
             @ParameterizedTest
-            @ValueSource(strings = {"a", "abcdef"})
-            void 이름_길이가_범위를_벗어나면_예외가_발생한다(String input) {
+            @ValueSource(strings = {"abc", "1a", "12 3", "1.5"})
+            void 숫자가_아니면_예외가_발생한다(String input) {
+
                 // when & then
-                assertThatThrownBy(() -> new PlayerName(input))
+                assertThatThrownBy(() -> new BetAmount(input))
                         .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessageContaining(BlackjackException.ERROR_PREFIX + PlayerName.PLAYER_NAME_LENGTH_OUT_OF_RANGE);
+                        .hasMessageContaining(BetAmount.INVALID_BET_AMOUNT_NUMBER);
             }
 
             @ParameterizedTest
-            @ValueSource(strings = {"", " ", "   "})
-            void 이름이_공백이면_예외가_발생한다(String input) {
+            @ValueSource(strings = {"0", "-1", "-1000"})
+            void 제로_이하이면_예외가_발생한다(String input) {
+
                 // when & then
-                assertThatThrownBy(() -> new PlayerName(input))
+                assertThatThrownBy(() -> new BetAmount(input))
                         .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessageContaining(BlackjackException.ERROR_PREFIX + PlayerName.PLAYER_NAME_BLANK);
+                        .hasMessageContaining(BetAmount.INVALID_BET_AMOUNT_POSITIVE);
             }
         }
     }
