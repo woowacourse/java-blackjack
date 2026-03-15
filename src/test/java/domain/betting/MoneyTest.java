@@ -16,6 +16,12 @@ class MoneyTest {
     }
 
     @Test
+    @DisplayName("베팅 액수는 0이 될 수 없다.")
+    void zeroTest() {
+        assertThrows(IllegalArgumentException.class, () -> new Money(0));
+    }
+
+    @Test
     @DisplayName("베팅 액수가 양수가 아니면 오류를 반환한다.")
     void invalidValueTest() {
         assertThrows(IllegalArgumentException.class, () -> new Money(-1000));

@@ -17,7 +17,7 @@ public class Money {
     }
 
     private void validateMoney(long value) {
-        if (value < 0) {
+        if (value <= 0) {
             throw new IllegalArgumentException("베팅 금액은 양수입니다.");
         }
         if (value % BETTING_UNIT != 0) {
