@@ -16,11 +16,17 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class BlackjackResultTest {
-    private static final List<Card> BLACKJACK_CARDS = List.of(
-            new Card(CardShape.SPADE, CardRank.ACE),
-            new Card(CardShape.HEART, CardRank.TEN)
-    );
+    private BlackjackResultDto createResultDto(Dealer dealer, Player player) {
+        return createResultDto(dealer, PlayerTestUtil.createSinglePlayerSet(player));
+    }
 
+    private BlackjackResultDto createResultDto(Dealer dealer, Players players) {
+        BlackjackResult blackjackResult = BlackjackResult.from(dealer, players);
+        ProfitResult profitResult = ProfitResult.from(blackjackResult);
+        return BlackjackResultDto.from(profitResult);
+    }
+
+    
     @Test
     @DisplayName("참가자가 딜러보다 낮은 점수면 딜러가 이긴다")
     void 참가자가_딜러보다_점수_낮음() {
@@ -38,15 +44,14 @@ class BlackjackResultTest {
         )); // 21
 
         // when
-        BlackjackResult blackjackResult = BlackjackResult.from(dealer, createSinglePlayerSet(player));
-        ProfitResult profitResult = ProfitResult.from(blackjackResult);
-        BlackjackResultDto blackjackResultDto = BlackjackResultDto.from(profitResult);
+        BlackjackResultDto blackjackResultDto = createResultDto(dealer, player);
 
         // then
         long expected = PlayerTestUtil.DEFAULT_BET_AMOUNT;
         assertThat(blackjackResultDto.dealerBenefit()).isEqualTo(expected);
         assertThat(blackjackResultDto.playerProfitMap().get(player.getName())).isEqualTo(-expected);
     }
+
 
     @Test
     @DisplayName("참가자가 딜러보다 높은 점수면 딜러가 진다")
@@ -64,9 +69,7 @@ class BlackjackResultTest {
         )); // 20
 
         // when
-        BlackjackResult blackjackResult = BlackjackResult.from(dealer, createSinglePlayerSet(player));
-        ProfitResult profitResult = ProfitResult.from(blackjackResult);
-        BlackjackResultDto blackjackResultDto = BlackjackResultDto.from(profitResult);
+        BlackjackResultDto blackjackResultDto = createResultDto(dealer, player);
 
         // then
         long expected = PlayerTestUtil.DEFAULT_BET_AMOUNT;
@@ -78,7 +81,7 @@ class BlackjackResultTest {
     @DisplayName("참가자가 블랙잭이고 높은 점수면 딜러가 지고 베팅금의 1.5배를 참가자가 받음")
     void 참가자_블랙잭_딜러보다_점수_높음() {
         // given
-        Player player = PlayerTestUtil.createPlayer(BLACKJACK_CARDS);
+        Player player = PlayerTestUtil.createBlackjackPlayer();
 
         Dealer dealer = PlayerTestUtil.createDealer(List.of(
                 new Card(CardShape.SPADE, CardRank.TEN),
@@ -86,9 +89,7 @@ class BlackjackResultTest {
         )); // 20
 
         // when
-        BlackjackResult blackjackResult = BlackjackResult.from(dealer, createSinglePlayerSet(player));
-        ProfitResult profitResult = ProfitResult.from(blackjackResult);
-        BlackjackResultDto blackjackResultDto = BlackjackResultDto.from(profitResult);
+        BlackjackResultDto blackjackResultDto = createResultDto(dealer, player);
 
         // then
         long expected = (long) (PlayerTestUtil.DEFAULT_BET_AMOUNT * 1.5);
@@ -100,14 +101,12 @@ class BlackjackResultTest {
     @DisplayName("참가자와 딜러가 둘 다 블랙잭이면 수익 0")
     void 참가자_딜러_블랙잭() {
         // given
-        Player player = PlayerTestUtil.createPlayer(BLACKJACK_CARDS);
+        Player player = PlayerTestUtil.createBlackjackPlayer();
 
-        Dealer dealer = PlayerTestUtil.createDealer(BLACKJACK_CARDS); // 20
+        Dealer dealer = PlayerTestUtil.createBlackjackDealer(); // 20
 
         // when
-        BlackjackResult blackjackResult = BlackjackResult.from(dealer, createSinglePlayerSet(player));
-        ProfitResult profitResult = ProfitResult.from(blackjackResult);
-        BlackjackResultDto blackjackResultDto = BlackjackResultDto.from(profitResult);
+        BlackjackResultDto blackjackResultDto = createResultDto(dealer, player);
 
         // then
         final int noBenefit = 0;
@@ -130,9 +129,7 @@ class BlackjackResultTest {
         )); // 21
 
         // when
-        BlackjackResult blackjackResult = BlackjackResult.from(dealer, createSinglePlayerSet(player));
-        ProfitResult profitResult = ProfitResult.from(blackjackResult);
-        BlackjackResultDto blackjackResultDto = BlackjackResultDto.from(profitResult);
+        BlackjackResultDto blackjackResultDto = createResultDto(dealer, player);
 
         // then
         final int noBenefit = 0;
@@ -155,9 +152,7 @@ class BlackjackResultTest {
         )); // 2
 
         // when
-        BlackjackResult blackjackResult = BlackjackResult.from(dealer, createSinglePlayerSet(player));
-        ProfitResult profitResult = ProfitResult.from(blackjackResult);
-        BlackjackResultDto blackjackResultDto = BlackjackResultDto.from(profitResult);
+        BlackjackResultDto blackjackResultDto = createResultDto(dealer, player);
 
         // then
         long expected = PlayerTestUtil.DEFAULT_BET_AMOUNT;
@@ -180,9 +175,7 @@ class BlackjackResultTest {
         )); // 2
 
         // when
-        BlackjackResult blackjackResult = BlackjackResult.from(dealer, createSinglePlayerSet(player));
-        ProfitResult profitResult = ProfitResult.from(blackjackResult);
-        BlackjackResultDto blackjackResultDto = BlackjackResultDto.from(profitResult);
+        BlackjackResultDto blackjackResultDto = createResultDto(dealer, player);
 
         // then
         long expected = PlayerTestUtil.DEFAULT_BET_AMOUNT;
@@ -221,9 +214,7 @@ class BlackjackResultTest {
         )); // 22
 
         // when
-        BlackjackResult blackjackResult = BlackjackResult.from(dealer, players);
-        ProfitResult profitResult = ProfitResult.from(blackjackResult);
-        BlackjackResultDto blackjackResultDto = BlackjackResultDto.from(profitResult);
+        BlackjackResultDto blackjackResultDto = createResultDto(dealer, players);
 
         // then
 
@@ -266,17 +257,11 @@ class BlackjackResultTest {
         )); // 21
 
         // when
-        BlackjackResult blackjackResult = BlackjackResult.from(dealer, players);
-        ProfitResult profitResult = ProfitResult.from(blackjackResult);
-        BlackjackResultDto blackjackResultDto = BlackjackResultDto.from(profitResult);
+        BlackjackResultDto blackjackResultDto = createResultDto(dealer, players);
 
         // then
         long summation = blackjackResultDto.playerProfitMap().values().stream()
                 .reduce(0L, Long::sum);
         assertThat(blackjackResultDto.dealerBenefit()).isEqualTo((-1) * summation);
-    }
-
-    private Players createSinglePlayerSet(Player player) {
-        return new Players(List.of(player));
     }
 }
