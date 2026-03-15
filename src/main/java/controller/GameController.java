@@ -4,6 +4,8 @@ import domain.Command;
 import domain.GameManager;
 import domain.GameResultDto;
 import domain.Referee;
+import domain.betting.BettingAmount;
+import domain.betting.BettingAmountParser;
 import domain.card.CardsSnapshot;
 import domain.dto.InitialDealingResult;
 import domain.participant.Dealer;
@@ -35,6 +37,13 @@ public class GameController {
         readyPhase(participants);
         playPhase(dealer, players);
         resultPhase(dealer, players);
+    }
+
+    private void placeBet(Players players) {
+        for (Player player : players) {
+            String rawBettingAmount = inputView.askBettingAmount(player);
+            BettingAmount bettingAmount = BettingAmountParser.parse(rawBettingAmount);
+        }
     }
 
     private void readyPhase(Dealer dealer, Players players) {

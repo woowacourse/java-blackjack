@@ -1,5 +1,6 @@
 package view;
 
+import domain.participant.Player;
 import java.util.Scanner;
 
 public class InputView {
@@ -22,7 +23,11 @@ public class InputView {
     }
 
     private String readLine() {
-       return scanner.nextLine();
+        return scanner.nextLine();
     }
 
+    public String askBettingAmount(Player player) {
+        System.out.println(player.name() + "의 배팅 금액은?");
+        return readLine();
+    }
 }
