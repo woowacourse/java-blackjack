@@ -3,36 +3,36 @@ package domain;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
+import java.util.List;
 
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import static java.util.Collections.frequency;
-
-public class GameResult {
-    private final Map<String, WinningStatus> playerWinningStatus = new LinkedHashMap<>();
-
+public record GameResult(int dealerProfit, List<PlayerGameResult> playerResults) {
     public GameResult(Players players, Dealer dealer) {
-        for (Player player : players.getPlayers()) {
-            playerWinningStatus.put(player.name(), WinningStatus.of(player, dealer));
-        }
+        this(createPlayerResults(players, dealer));
     }
 
-    public Map<String, WinningStatus> getPlayerWinningStatus() {
-        return Collections.unmodifiableMap(new LinkedHashMap<>(playerWinningStatus));
+    private GameResult(List<PlayerGameResult> playerResults) {
+        this(calculateDealerProfit(playerResults), playerResults);
     }
 
-    public int dealerWinCount() {
-        return frequency(playerWinningStatus.values(), WinningStatus.LOSE);
+    private static List<PlayerGameResult> createPlayerResults(Players players, Dealer dealer) {
+        return players.getPlayers().stream()
+                .map(player -> createPlayerResult(player, dealer))
+                .toList();
     }
 
-    public int dealerTieCount() {
-        return frequency(playerWinningStatus.values(), WinningStatus.TIE);
+    private static PlayerGameResult createPlayerResult(Player player, Dealer dealer) {
+        WinningStatus status = WinningStatus.of(player, dealer);
+        return new PlayerGameResult(player.name(), player.profit(status));
     }
 
-    public int dealerLoseCount() {
-        return frequency(playerWinningStatus.values(), WinningStatus.WIN)
-                + frequency(playerWinningStatus.values(), WinningStatus.BLACKJACK_WIN);
+    private static int calculateDealerProfit(List<PlayerGameResult> playerResults) {
+        return -1 * calculatePlayersProfit(playerResults);
+
+    }
+
+    private static int calculatePlayersProfit(List<PlayerGameResult> playerResults) {
+        return playerResults.stream()
+                .mapToInt(PlayerGameResult::profit)
+                .sum();
     }
 }

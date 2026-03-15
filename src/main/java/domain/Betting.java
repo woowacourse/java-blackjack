@@ -8,6 +8,7 @@ public class Betting {
     public static final int BLACKJACK_NUMERATOR = 3;
     public static final int BLACKJACK_DENOMINATOR = 2;
     public static final int ZERO = 0;
+
     private final int amount;
 
     private Betting(int amount) {
@@ -24,7 +25,7 @@ public class Betting {
     }
 
     private static void validateBettingAmount(int amount) {
-        if (amount <= INITIAL_AMOUNT) {
+        if (amount <= 0) {
             throw new IllegalArgumentException(ERROR_BET_MUST_BE_POSITIVE);
         }
         if (amount % BET_UNIT != 0) {

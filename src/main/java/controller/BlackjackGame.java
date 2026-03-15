@@ -3,12 +3,13 @@ package controller;
 import domain.BlackjackRule;
 import domain.Deck;
 import domain.GameResult;
-import domain.Money;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
 import domain.strategy.RandomShuffleStrategy;
+import dto.DealerResultInfo;
+import dto.PlayerResultInfo;
 import java.util.ArrayList;
 import java.util.List;
 import view.InputView;
@@ -30,19 +31,17 @@ public class BlackjackGame {
         Deck deck = Deck.createDeck(new RandomShuffleStrategy());
 
         initializeBetting(players);
-
-        initParticipantsHand(players, dealer, deck);
-
+        initializeParticipantsHand(players, dealer, deck);
         proceedEachTurnWith(players, dealer, deck);
-
         showGameResult(players, dealer);
     }
 
     private void initializeBetting(Players players) {
         outputView.printBlankLine();
+
         for (Player player : players.getPlayers()) {
             int amount = inputView.askForBettingAmount(player.name());
-            player.bet(new Money(amount));
+            player.bet(amount);
             outputView.printBlankLine();
         }
     }
@@ -56,7 +55,7 @@ public class BlackjackGame {
         outputView.printBlankLine();
     }
 
-    private void initParticipantsHand(Players players, Dealer dealer, Deck deck) {
+    private void initializeParticipantsHand(Players players, Dealer dealer, Deck deck) {
         outputView.printBlankLine();
         List<Participant> participants = new ArrayList<>(players.getPlayers());
         participants.add(dealer);
@@ -94,14 +93,11 @@ public class BlackjackGame {
         outputView.printBlankLine();
 
         GameResult gameResult = new GameResult(players, dealer);
-        players.applyRoundResults(gameResult);
+        DealerResultInfo dealerResultInfo = new DealerResultInfo(gameResult.dealerProfit());
+        List<PlayerResultInfo> playerResultInfos = gameResult.playerResults().stream()
+                .map(result -> new PlayerResultInfo(result.name(), result.profit()))
+                .toList();
 
-        int dealerProfit = calculateDealerProfit(players);
-
-        outputView.printGameResult(dealerProfit, players.resultInfos());
-    }
-
-    private static int calculateDealerProfit(Players players) {
-        return -players.totalProfit();
+        outputView.printGameResult(dealerResultInfo, playerResultInfos);
     }
 }

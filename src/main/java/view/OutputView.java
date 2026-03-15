@@ -5,6 +5,7 @@ import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
+import dto.DealerResultInfo;
 import dto.PlayerResultInfo;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +28,9 @@ public class OutputView {
         printPlayersInitialCards(players);
     }
 
-    public void printGameResult(int dealerProfit, List<PlayerResultInfo> playersResult) {
+    public void printGameResult(DealerResultInfo dealerResultInfo, List<PlayerResultInfo> playersResult) {
         printFinalResultMessage();
-        printDealerResult(dealerProfit);
+        printDealerResult(dealerResultInfo.dealerProfit());
         printPlayersResult(playersResult);
     }
 

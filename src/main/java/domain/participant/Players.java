@@ -1,12 +1,7 @@
 package domain.participant;
 
-import domain.GameResult;
-import domain.Money;
-import domain.WinningStatus;
-import dto.PlayerResultInfo;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -14,47 +9,25 @@ public class Players {
     public static final int PLAYER_THRESHOLD = 5;
     public static final String ERROR_PLAYER_COUNT_OVER = "[ERROR] 플레이어의 수는 5명 이하여야 합니다.";
     public static final String ERROR_PLAYERS_NAME_DUPLICATION = "[ERROR] 참가자의 이름이 중복됩니다.";
-    public static final int INITIAL_AMOUNT = 0;
     private final List<Player> players = new ArrayList<>();
 
     public Players(List<String> names) {
         for (String name : names) {
-            players.add(new Player(name, new Money(INITIAL_AMOUNT)));
+            players.add(new Player(name));
         }
+
         validatePlayerCount(players);
         validateDuplicatedName(players);
     }
 
-
     public List<String> getPlayerNames() {
         return players.stream()
-                .map(player -> player.name())
+                .map(Player::name)
                 .collect(Collectors.toList());
     }
 
     public List<Player> getPlayers() {
-        return players;
-    }
-
-    public void applyRoundResults(GameResult gameResult) {
-        Map<String, WinningStatus> statuses = gameResult.getPlayerWinningStatus();
-
-        for (Player player : players) {
-            WinningStatus status = statuses.get(player.name());
-            player.applyRoundResult(status);
-        }
-    }
-
-    public List<PlayerResultInfo> resultInfos() {
-        return players.stream()
-                .map(player -> new PlayerResultInfo(player.name(), player.profit()))
-                .toList();
-    }
-
-    public int totalProfit() {
-        return players.stream()
-                .mapToInt(Player::profit)
-                .sum();
+        return List.copyOf(players);
     }
 
     private void validatePlayerCount(List<Player> players) {
@@ -65,7 +38,7 @@ public class Players {
 
     private void validateDuplicatedName(List<Player> players) {
         Set<String> namesSet = players.stream()
-                .map(player -> player.name())
+                .map(Player::name)
                 .collect(Collectors.toSet());
 
         if (namesSet.size() != players.size()) {

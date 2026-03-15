@@ -6,8 +6,8 @@ import static domain.card.Rank.FIVE;
 import static domain.card.Rank.NINE;
 import static domain.card.Rank.TEN;
 import static domain.card.Suit.HEART;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import domain.card.Card;
 import domain.card.Rank;
@@ -29,10 +29,9 @@ public class BettingTest {
         Dealer dealer = createDealer();
 
         WinningStatus status = WinningStatus.of(player, dealer);
-        player.applyRoundResult(status);
 
         assertThat(status).isEqualTo(WinningStatus.LOSE);
-        assertThat(player.profit()).isEqualTo(-10000);
+        assertThat(player.profit(status)).isEqualTo(-10000);
     }
 
     @Test
@@ -41,10 +40,9 @@ public class BettingTest {
         Dealer dealer = createDealer(TEN, ACE);
 
         WinningStatus status = WinningStatus.of(player, dealer);
-        player.applyRoundResult(status);
 
         assertThat(status).isEqualTo(WinningStatus.TIE);
-        assertThat(player.profit()).isEqualTo(0);
+        assertThat(player.profit(status)).isEqualTo(0);
     }
 
     @Test
@@ -53,10 +51,9 @@ public class BettingTest {
         Dealer dealer = createDealer(TEN, EIGHT);
 
         WinningStatus status = WinningStatus.of(player, dealer);
-        player.applyRoundResult(status);
 
         assertThat(status).isEqualTo(WinningStatus.BLACKJACK_WIN);
-        assertThat(player.profit()).isEqualTo(15000);
+        assertThat(player.profit(status)).isEqualTo(15000);
     }
 
     @Test
@@ -65,10 +62,9 @@ public class BettingTest {
         Dealer dealer = createDealer(TEN, EIGHT);
 
         WinningStatus status = WinningStatus.of(player, dealer);
-        player.applyRoundResult(status);
 
         assertThat(status).isEqualTo(WinningStatus.LOSE);
-        assertThat(player.profit()).isEqualTo(-10000);
+        assertThat(player.profit(status)).isEqualTo(-10000);
     }
 
     @Test
@@ -77,10 +73,9 @@ public class BettingTest {
         Dealer dealer = createDealer(TEN, EIGHT);
 
         WinningStatus status = WinningStatus.of(player, dealer);
-        player.applyRoundResult(status);
 
         assertThat(status).isEqualTo(WinningStatus.WIN);
-        assertThat(player.profit()).isEqualTo(10000);
+        assertThat(player.profit(status)).isEqualTo(10000);
     }
 
     @Test
@@ -89,10 +84,9 @@ public class BettingTest {
         Dealer dealer = createDealer(TEN, EIGHT);
 
         WinningStatus status = WinningStatus.of(player, dealer);
-        player.applyRoundResult(status);
 
         assertThat(status).isEqualTo(WinningStatus.WIN);
-        assertThat(player.profit()).isEqualTo(10000);
+        assertThat(player.profit(status)).isEqualTo(10000);
     }
 
     @Test
@@ -103,19 +97,16 @@ public class BettingTest {
 
         WinningStatus status1 = WinningStatus.of(player1, dealer);
         WinningStatus status2 = WinningStatus.of(player2, dealer);
-        player1.applyRoundResult(status1);
-        player2.applyRoundResult(status2);
 
         assertThat(status1).isEqualTo(WinningStatus.WIN);
         assertThat(status2).isEqualTo(WinningStatus.LOSE);
-        assertThat(player1.profit()).isEqualTo(10000);
-        assertThat(player2.profit()).isEqualTo(-20000);
+        assertThat(player1.profit(status1)).isEqualTo(10000);
+        assertThat(player2.profit(status2)).isEqualTo(-20000);
     }
 
     private Player createPlayer(int amount, Rank... ranks) {
-        Money money = new Money(amount);
         Player player = new Player("pobi");
-        player.bet(money);
+        player.bet(amount);
 
         for (Rank rank : ranks) {
             player.receive(new Card(rank, HEART));
