@@ -1,6 +1,7 @@
 package domain;
 
 import domain.constant.Result;
+import domain.game.ProceedsCalculator;
 
 public class PlayerStatus {
     private final int bettingMoney;
@@ -19,6 +20,6 @@ public class PlayerStatus {
     }
 
     public double calculateProceeds(Result result) {
-        return bettingMoney * result.getAllocation();
+        return ProceedsCalculator.calculate(bettingMoney, result);
     }
 }

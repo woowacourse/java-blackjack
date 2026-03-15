@@ -1,6 +1,6 @@
 package controller;
 
-import domain.dto.GameInitialInfoDto;
+import dto.GameInitialInfoDto;
 import domain.game.GameManager;
 import domain.participant.Player;
 import java.util.ArrayList;

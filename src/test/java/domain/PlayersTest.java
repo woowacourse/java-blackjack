@@ -15,9 +15,10 @@ public class PlayersTest {
 
     @Test
     void 플레이어를_등록한다() {
-        Players players = new Players();
-        players.add(new Player("pobi", 1000));
-        players.add(new Player("abc", 1000));
+        Players players = Players.of(List.of(
+                new Player("pobi", 1000),
+                new Player("abc", 1000)
+        ));
 
         List<Player> records = players.getPlayers();
 
@@ -28,7 +29,6 @@ public class PlayersTest {
 
     @Test
     void 초기_블랙잭인_플레이어는_naturalBlackJack_상태가_true가_된다() {
-        Players players = new Players();
         Player blackJackPlayer = new Player("pobi", 1000);
         Player normalPlayer = new Player("jason", 1000);
 
@@ -38,8 +38,7 @@ public class PlayersTest {
         normalPlayer.receiveCard(new Card(Rank.TWO, Suit.CLUB));
         normalPlayer.receiveCard(new Card(Rank.THREE, Suit.DIAMOND));
 
-        players.add(blackJackPlayer);
-        players.add(normalPlayer);
+        Players players = Players.of(List.of(blackJackPlayer, normalPlayer));
 
         players.updateNaturalBlackJackStatus();
 
@@ -49,7 +48,6 @@ public class PlayersTest {
 
     @Test
     void 초기_블랙잭이_아닌_플레이어들만_반환한다() {
-        Players players = new Players();
         Player blackJackPlayer = new Player("pobi", 1000);
         Player normalPlayer = new Player("jason", 1000);
 
@@ -59,8 +57,7 @@ public class PlayersTest {
         normalPlayer.receiveCard(new Card(Rank.TWO, Suit.CLUB));
         normalPlayer.receiveCard(new Card(Rank.THREE, Suit.DIAMOND));
 
-        players.add(blackJackPlayer);
-        players.add(normalPlayer);
+        Players players = Players.of(List.of(blackJackPlayer, normalPlayer));
 
         players.updateNaturalBlackJackStatus();
 

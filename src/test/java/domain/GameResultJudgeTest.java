@@ -4,7 +4,7 @@ import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
 import domain.constant.Result;
-import domain.dto.GameResultDto;
+import dto.GameResultDto;
 import domain.game.GameResultJudge;
 import domain.participant.Dealer;
 import domain.participant.Player;
@@ -20,7 +20,6 @@ public class GameResultJudgeTest {
     @Test
     void 플레이어가_bust면_BUST와_음수_수익을_가진다() {
         Dealer dealer = new Dealer();
-        Players players = new Players();
         Player player = new Player("pobi", 1000);
 
         dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
@@ -30,7 +29,7 @@ public class GameResultJudgeTest {
         player.receiveCard(new Card(Rank.QUEEN, Suit.DIAMOND));
         player.receiveCard(new Card(Rank.TWO, Suit.HEART)); // 22 bust
 
-        players.add(player);
+        Players players = Players.of(List.of(player));
 
         List<GameResultDto> results = GameResultJudge.judge(dealer, players);
 
@@ -48,7 +47,6 @@ public class GameResultJudgeTest {
     @Test
     void 플레이어_점수가_더_높으면_WIN이다() {
         Dealer dealer = new Dealer();
-        Players players = new Players();
         Player player = new Player("pobi", 1000);
 
         dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
@@ -57,7 +55,7 @@ public class GameResultJudgeTest {
         player.receiveCard(new Card(Rank.TEN, Suit.CLUB));
         player.receiveCard(new Card(Rank.EIGHT, Suit.DIAMOND)); // 18
 
-        players.add(player);
+        Players players = Players.of(List.of(player));
 
         List<GameResultDto> results = GameResultJudge.judge(dealer, players);
         GameResultDto playerResult = results.get(1);
@@ -69,7 +67,6 @@ public class GameResultJudgeTest {
     @Test
     void 플레이어_점수가_더_낮으면_LOSE다() {
         Dealer dealer = new Dealer();
-        Players players = new Players();
         Player player = new Player("pobi", 1000);
 
         dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
@@ -78,7 +75,7 @@ public class GameResultJudgeTest {
         player.receiveCard(new Card(Rank.TEN, Suit.CLUB));
         player.receiveCard(new Card(Rank.EIGHT, Suit.DIAMOND)); // 18
 
-        players.add(player);
+        Players players = Players.of(List.of(player));
 
         List<GameResultDto> results = GameResultJudge.judge(dealer, players);
         GameResultDto playerResult = results.get(1);
@@ -90,7 +87,6 @@ public class GameResultJudgeTest {
     @Test
     void 플레이어와_딜러의_점수가_같으면_DRAW다() {
         Dealer dealer = new Dealer();
-        Players players = new Players();
         Player player = new Player("pobi", 1000);
 
         dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
@@ -99,7 +95,7 @@ public class GameResultJudgeTest {
         player.receiveCard(new Card(Rank.NINE, Suit.CLUB));
         player.receiveCard(new Card(Rank.NINE, Suit.DIAMOND)); // 18
 
-        players.add(player);
+        Players players = Players.of(List.of(player));
 
         List<GameResultDto> results = GameResultJudge.judge(dealer, players);
         GameResultDto playerResult = results.get(1);
@@ -111,7 +107,6 @@ public class GameResultJudgeTest {
     @Test
     void naturalBlackJack인_플레이어는_BLACKJACK과_블랙잭_배당을_가진다() {
         Dealer dealer = new Dealer();
-        Players players = new Players();
         Player player = new Player("pobi", 10000);
 
         dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
@@ -121,7 +116,7 @@ public class GameResultJudgeTest {
         player.receiveCard(new Card(Rank.KING, Suit.DIAMOND)); // natural blackjack
         player.markNaturalBlackJack();
 
-        players.add(player);
+        Players players = Players.of(List.of(player));
 
         List<GameResultDto> results = GameResultJudge.judge(dealer, players);
         GameResultDto playerResult = results.get(1);
@@ -133,7 +128,6 @@ public class GameResultJudgeTest {
     @Test
     void 딜러의_총수익은_플레이어_수익의_합에_음수를_취한_값이다() {
         Dealer dealer = new Dealer();
-        Players players = new Players();
 
         Player winPlayer = new Player("pobi", 1000);
         Player losePlayer = new Player("jason", 2000);
@@ -147,8 +141,7 @@ public class GameResultJudgeTest {
         losePlayer.receiveCard(new Card(Rank.TEN, Suit.HEART));
         losePlayer.receiveCard(new Card(Rank.SEVEN, Suit.CLUB)); // 17 -> LOSE
 
-        players.add(winPlayer);
-        players.add(losePlayer);
+        Players players = Players.of(List.of(winPlayer, losePlayer));
 
         List<GameResultDto> results = GameResultJudge.judge(dealer, players);
 
