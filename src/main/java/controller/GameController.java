@@ -1,6 +1,7 @@
 package controller;
 
 import domain.Money;
+import domain.ProfitCalculator;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.participant.Dealer;
@@ -94,19 +95,12 @@ public class GameController {
     }
 
     private List<PlayerProfitDto> getPlayerProfitDtos(Players players, Dealer dealer) {
+        ProfitCalculator profitCalculator = new ProfitCalculator();
         List<PlayerProfitDto> playerProfitDtos = new ArrayList<>();
         for (Player player : players.getPlayers()) {
-            playerProfitDtos.add(PlayerProfitDto.of(player.getName(), player.finalProfit(dealer)));
+            playerProfitDtos.add(PlayerProfitDto.of(player.getName(), profitCalculator.calculateProfit(player, dealer, player.getMoney())));
         }
         return playerProfitDtos;
-    }
-
-    private int getDealerFinalProfit(Players players, Dealer dealer) {
-        int result = 0;
-        for (Player player : players.getPlayers()) {
-            result += player.finalProfit(dealer);
-        }
-        return -result;
     }
 
     private void processRound(Player player, Deck deck) {

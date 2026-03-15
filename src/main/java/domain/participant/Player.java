@@ -15,16 +15,6 @@ public class Player extends Participant {
         this.money = money;
     }
 
-    public int finalProfit(Participant dealer) {
-        if (dealer.isBlackjack() && isBlackjack()) { return money.getBack(); }
-        if (isBlackjack()) { return money.earnOnePointFiveTimes(); }
-        if (isBust()) { return money.lose(); }
-        if (dealer.isBust()) { return money.earn(); }
-        if (calculateScore() > dealer.calculateScore()) { return money.earn(); }
-        if (calculateScore() == dealer.calculateScore()) { return money.getBack(); }
-        return money.lose();
-    }
-
     private void validateEmptyNames(String playerName) {
         if (playerName.isBlank()) {
             throw new IllegalArgumentException("[ERROR] 플레이어의 이름은 빈 값이 아니여야 합니다.");
@@ -33,5 +23,9 @@ public class Player extends Participant {
 
     public String getName() {
         return name;
+    }
+
+    public Money getMoney() {
+        return money;
     }
 }
