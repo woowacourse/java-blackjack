@@ -17,26 +17,24 @@ public class BlackjackController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private final BlackjackGameManager blackjackGameManager;
 
-    public BlackjackController(InputView inputView, OutputView outputView, BlackjackGameManager blackjackGameManager) {
+    public BlackjackController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.blackjackGameManager = blackjackGameManager;
     }
 
-    public void start() {
-        initializeGame();
-        inputHitOrStandOnPlayer();
+    public void start(BlackjackGameManager blackjackGameManager) {
+        initializeGame(blackjackGameManager);
+        inputHitOrStandOnPlayer(blackjackGameManager);
         while (blackjackGameManager.drawDealerCard()) {
             outputView.printDealerHit();
         }
 
-        printBlackjackResult();
-        printBlackjackStatistics();
+        printBlackjackResult(blackjackGameManager);
+        printBlackjackStatistics(blackjackGameManager);
     }
 
-    private void initializeGame() {
+    private void initializeGame(BlackjackGameManager blackjackGameManager) {
         List<PlayerName> playerNames = inputPlayerNames();
         List<BetAmount> betAmounts = inputBetAmounts(playerNames);
         blackjackGameManager.createParticipants(playerNames, betAmounts);
@@ -68,40 +66,40 @@ public class BlackjackController {
         return playerNames;
     }
 
-    private void inputHitOrStandOnPlayer() {
+    private void inputHitOrStandOnPlayer(BlackjackGameManager blackjackGameManager) {
         List<ParticipantDto> playersDtoList = blackjackGameManager.generatePlayerDtoList();
         for (ParticipantDto playerDto : playersDtoList) {
-            inputHitOrStand(playerDto.name(), playerDto.hand());
+            inputHitOrStand(playerDto.name(), playerDto.hand(), blackjackGameManager);
         }
     }
 
-    private void inputHitOrStand(String name, List<String> hand) {
+    private void inputHitOrStand(String name, List<String> hand, BlackjackGameManager blackjackGameManager) {
         HitOrStand hitOrStand = HitOrStand.from(inputView.inputHitOrStand(name));
         if (hitOrStand.isStand()) {
             outputView.printlnHand(name, hand);
             return;
         }
 
-        drawCardOnPlayer(name);
+        drawCardOnPlayer(name, blackjackGameManager);
     }
 
-    private void drawCardOnPlayer(String name) {
+    private void drawCardOnPlayer(String name, BlackjackGameManager blackjackGameManager) {
         do {
             ParticipantDto playerDto = blackjackGameManager.updatePlayer(name);
             outputView.printlnHand(name, playerDto.hand());
-        } while (canDrawContinue(name));
+        } while (canDrawContinue(name, blackjackGameManager));
     }
 
-    private boolean canDrawContinue(String name) {
+    private boolean canDrawContinue(String name, BlackjackGameManager blackjackGameManager) {
         return !blackjackGameManager.playerIsBust(name) && HitOrStand.from(inputView.inputHitOrStand(name)).isHit();
     }
 
-    private void printBlackjackResult() {
+    private void printBlackjackResult(BlackjackGameManager blackjackGameManager) {
         BlackjackResultDto blackjackResultDto = blackjackGameManager.getBlackjackResult();
         outputView.printBlackjackResult(blackjackResultDto);
     }
 
-    private void printBlackjackStatistics() {
+    private void printBlackjackStatistics(BlackjackGameManager blackjackGameManager) {
         BlackjackStatisticsDto blackjackStatistics = blackjackGameManager.getBlackjackStatistics();
         outputView.printBlackjackStatistics(blackjackStatistics);
     }
