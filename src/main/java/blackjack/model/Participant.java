@@ -1,34 +1,42 @@
 package blackjack.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public abstract class Participant {
-    protected final List<Card> cards;
+
+    public static final int BUST_SCORE = 21;
+    private final HandCards handCards;
 
     public Participant() {
-        this.cards = new ArrayList<>();
+        this.handCards = new HandCards();
     }
 
-    public void receiveCard(Card card) {
-        cards.add(card);
+    public final void receiveCard(Card card) {
+        handCards.addCard(card);
     }
 
-    public Score getScore() {
-        return ScoreCalculator.calculate(cards);
+    public final Score getScore() {
+        return handCards.calculate();
     }
 
-    public boolean isBurst() {
-        return getScore().isBurst();
+    public final boolean isBust() {
+        return getScore().getScore() > BUST_SCORE;
     }
 
-    public Card getFirstCardName() {
-        return cards.getFirst();
+    public boolean isBlackjack() {
+        return handCards.isInitialCardSize() && getScore().isMaxScore();
     }
 
-    public List<Card> getCards() {
-        return Collections.unmodifiableList(cards);
+    public final Card firstCardOpen() {
+        return handCards.getFirstCard();
+    }
+
+    public final List<Card> getHandCards() {
+        return handCards.getCards();
+    }
+
+    public int totalScore() {
+        return getScore().getScore();
     }
 
     public abstract boolean canReceive();

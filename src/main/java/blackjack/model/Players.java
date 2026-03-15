@@ -3,7 +3,9 @@ package blackjack.model;
 import blackjack.exception.ErrorMessage;
 
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Players {
 
@@ -14,6 +16,21 @@ public class Players {
     public Players(List<Player> players) {
         validatePlayersNumber(players);
         this.players = players;
+    }
+
+    public void giveTwoCards(Deck deck) {
+        for (Player player : players) {
+            player.receiveCard(deck.giveCard());
+            player.receiveCard(deck.giveCard());
+        }
+    }
+
+    public Map<Player, GameResult> judgeAll(Dealer dealer, Referee referee) {
+        Map<Player, GameResult> gameResult = new LinkedHashMap<>();
+        for (Player player : players) {
+            gameResult.put(player, referee.judge(player, dealer));
+        }
+        return gameResult;
     }
 
     public List<Player> getPlayers() {

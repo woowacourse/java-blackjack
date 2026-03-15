@@ -12,10 +12,6 @@ public enum Figure {
         this.name = name;
     }
 
-    public static int getSize() {
-        return Figure.values().length;
-    }
-
     public String getName() {
         return name;
     }

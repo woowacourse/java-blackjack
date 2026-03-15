@@ -5,14 +5,15 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class GameResultTest {
+class RefereeTest {
 
     @Test
     @DisplayName("딜러의 카드 합보다 플레이어의 카드 합이 높으면 승 판정")
     void winTest() {
         // given
+        Referee referee = new Referee();
         Dealer dealer = new Dealer();
-        Player player = new Player("luke");
+        Player player = new Player("luke", 1000);
         Card card = new Card(Figure.SPADE, Number.THREE);
         Card card2 = new Card(Figure.CLOVER, Number.TWO);
 
@@ -23,7 +24,7 @@ class GameResultTest {
         dealer.getScore();
 
         // when & then
-        assertThat(GameResult.calculateScore(player, dealer).getStatus())
+        assertThat(referee.judge(player, dealer).getStatus())
                 .isEqualTo("승");
     }
 
@@ -31,8 +32,9 @@ class GameResultTest {
     @DisplayName("딜러의 카드 합보다 플레이어의 카드 합이 낮으면 패 판정")
     void loseTest() {
         // given
+        Referee referee = new Referee();
         Dealer dealer = new Dealer();
-        Player player = new Player("luke");
+        Player player = new Player("luke", 1000);
         Card card = new Card(Figure.SPADE, Number.TWO);
         Card card2 = new Card(Figure.CLOVER, Number.THREE);
 
@@ -43,7 +45,7 @@ class GameResultTest {
         dealer.getScore();
 
         // when & then
-        assertThat(GameResult.calculateScore(player, dealer).getStatus())
+        assertThat(referee.judge(player, dealer).getStatus())
                 .isEqualTo("패");
     }
 
@@ -51,8 +53,9 @@ class GameResultTest {
     @DisplayName("딜러의 카드 합과 플레이어의 카드 합이 같으면 무 판정")
     void drawTest() {
         // given
+        Referee referee = new Referee();
         Dealer dealer = new Dealer();
-        Player player = new Player("luke");
+        Player player = new Player("luke", 1000);
         Card card = new Card(Figure.SPADE, Number.JACK);
         Card card2 = new Card(Figure.SPADE, Number.ACE);
         Card card3 = new Card(Figure.SPADE, Number.KING);
@@ -67,16 +70,17 @@ class GameResultTest {
         dealer.getScore();
 
         // when & then
-        assertThat(GameResult.calculateScore(player, dealer).getStatus())
+        assertThat(referee.judge(player, dealer).getStatus())
                 .isEqualTo("무");
     }
 
     @Test
     @DisplayName("딜러가 버스트이고, 플레이어가 버스트가 아니면 승 판정")
-    void isWinWhenDealerIsBurstTest() {
+    void isWinWhenDealerIsBustTest() {
         // given
+        Referee referee = new Referee();
         Dealer dealer = new Dealer();
-        Player player = new Player("luke");
+        Player player = new Player("luke", 1000);
         Card card = new Card(Figure.SPADE, Number.THREE);
         Card card2 = new Card(Figure.SPADE, Number.TEN);
         Card card3 = new Card(Figure.SPADE, Number.KING);
@@ -91,16 +95,17 @@ class GameResultTest {
         dealer.getScore();
 
         // when & then
-        assertThat(GameResult.calculateScore(player, dealer).getStatus())
+        assertThat(referee.judge(player, dealer).getStatus())
                 .isEqualTo("승");
     }
 
     @Test
     @DisplayName("딜러가 버스트가 아니고, 플레이어가 버스트라면 패 판정")
-    void isLoseWhenPlayerIsBurstTest() {
+    void isLoseWhenPlayerIsBustTest() {
         // given
+        Referee referee = new Referee();
         Dealer dealer = new Dealer();
-        Player player = new Player("luke");
+        Player player = new Player("luke", 1000);
         Card card = new Card(Figure.SPADE, Number.JACK);
         Card card2 = new Card(Figure.SPADE, Number.TEN);
         Card card3 = new Card(Figure.SPADE, Number.KING);
@@ -115,16 +120,17 @@ class GameResultTest {
         dealer.getScore();
 
         // when & then
-        assertThat(GameResult.calculateScore(player, dealer).getStatus())
+        assertThat(referee.judge(player, dealer).getStatus())
                 .isEqualTo("패");
     }
 
     @Test
-    @DisplayName("딜러와 플레이어 모두 버스트인 경우 무 판정")
-    void isDrawWhenBothIsBurstTest() {
+    @DisplayName("딜러와 플레이어 모두 버스트인 경우 플레이어의 패 판정")
+    void isDrawWhenBothIsBustTest() {
         // given
+        Referee referee = new Referee();
         Dealer dealer = new Dealer();
-        Player player = new Player("luke");
+        Player player = new Player("luke", 1000);
         Card card = new Card(Figure.SPADE, Number.JACK);
         Card card2 = new Card(Figure.SPADE, Number.TEN);
         Card card3 = new Card(Figure.SPADE, Number.KING);
@@ -143,7 +149,70 @@ class GameResultTest {
         dealer.getScore();
 
         // when & then
-        assertThat(GameResult.calculateScore(player, dealer).getStatus())
-                .isEqualTo("무");
+        assertThat(referee.judge(player, dealer).getStatus())
+                .isEqualTo("패");
+    }
+
+    @Test
+    @DisplayName("플레이어가 블랙잭이면 블랙잭 판정")
+    void isBlackjackWhenPlayerTest() {
+        // given
+        Referee referee = new Referee();
+        Dealer dealer = new Dealer();
+        Player player = new Player("luke", 1000);
+        Card card = new Card(Figure.SPADE, Number.JACK);
+        Card card2 = new Card(Figure.SPADE, Number.ACE);
+        Card card3 = new Card(Figure.SPADE, Number.JACK);
+        Card card4 = new Card(Figure.SPADE, Number.TEN);
+
+        player.receiveCard(card);
+        player.receiveCard(card2);
+        dealer.receiveCard(card3);
+        dealer.receiveCard(card4);
+
+        // when & then
+        assertThat(referee.judge(player, dealer)).isEqualTo(GameResult.BLACKJACK);
+    }
+
+    @Test
+    @DisplayName("플레이어와 딜러가 둘 다 블랙잭이면 무 판정")
+    void IsBlackjackWhenPlayerAndDealerTest() {
+        // given
+        Referee referee = new Referee();
+        Dealer dealer = new Dealer();
+        Player player = new Player("luke", 1000);
+        Card card = new Card(Figure.SPADE, Number.JACK);
+        Card card2 = new Card(Figure.SPADE, Number.ACE);
+        Card card3 = new Card(Figure.DIAMOND, Number.JACK);
+        Card card4 = new Card(Figure.DIAMOND, Number.ACE);
+
+        player.receiveCard(card);
+        player.receiveCard(card2);
+        dealer.receiveCard(card3);
+        dealer.receiveCard(card4);
+
+        // when & then
+        assertThat(referee.judge(player, dealer)).isEqualTo(GameResult.DRAW);
+    }
+
+    @Test
+    @DisplayName("딜러가 블랙잭이면 패 판정")
+    void IsBlackjackWhenDealerTest() {
+        // given
+        Referee referee = new Referee();
+        Dealer dealer = new Dealer();
+        Player player = new Player("luke", 1000);
+        Card card = new Card(Figure.SPADE, Number.TWO);
+        Card card2 = new Card(Figure.SPADE, Number.ACE);
+        Card card3 = new Card(Figure.DIAMOND, Number.JACK);
+        Card card4 = new Card(Figure.DIAMOND, Number.ACE);
+
+        player.receiveCard(card);
+        player.receiveCard(card2);
+        dealer.receiveCard(card3);
+        dealer.receiveCard(card4);
+
+        // when & then
+        assertThat(referee.judge(player, dealer)).isEqualTo(GameResult.LOSE);
     }
 }

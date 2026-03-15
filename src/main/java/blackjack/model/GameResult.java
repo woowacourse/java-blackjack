@@ -1,32 +1,24 @@
 package blackjack.model;
 
 public enum GameResult {
-    WIN("승"),
-    LOSE("패"),
-    DRAW("무");
+    WIN("승", 1.0),
+    LOSE("패", -1.0),
+    DRAW("무", 0.0),
+    BLACKJACK("블랙잭", 1.5);
 
     private final String status;
+    private final Double payout;
 
-    GameResult(String status) {
+    GameResult(String status, Double payout) {
         this.status = status;
-    }
-
-    public static GameResult calculateScore(Player player, Dealer dealer) {
-        Score playerScore = player.getScore();
-        Score dealerScore = dealer.getScore();
-
-        if ((player.isBurst() && dealer.isBurst()) || (playerScore.isSame(dealerScore))) {
-            return DRAW;
-        }
-
-        if (player.isBurst() || (!dealer.isBurst() && (playerScore.isLess(dealerScore)))) {
-            return LOSE;
-        }
-
-        return WIN;
+        this.payout = payout;
     }
 
     public String getStatus() {
         return status;
+    }
+
+    public Double getPayout() {
+        return payout;
     }
 }

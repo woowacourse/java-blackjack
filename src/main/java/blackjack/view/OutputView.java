@@ -1,91 +1,49 @@
 package blackjack.view;
 
-import blackjack.model.*;
+import blackjack.dto.InitialStatusDto;
+import blackjack.dto.ParticipantResultDto;
+import blackjack.dto.ProfitsDto;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class OutputView {
-
-    public void printPlayerCardStatus(Player player, List<Card> cards) {
-        List<String> cardNames = cards.stream()
-                .map(Card::getCardName)
-                .toList();
-        System.out.println(player.getName() + "카드: " + String.join(", ", cardNames));
-    }
-
-    public void printFirstCardStatus(Dealer dealer, Players players) {
-        List<String> playerNames = players.getPlayers().stream()
-                .map(Player::getName).toList();
-        System.out.println("\n딜러와 " + String.join(", ", playerNames) + "에게 " + "2장을 나누었습니다.");
-        System.out.println("딜러카드: " + dealer.getFirstCardName().getCardName());
-        for (Player player : players.getPlayers()) {
-            printPlayerCardStatus(player, player.getCards());
+    public void printFirstCardStatus(InitialStatusDto dto) {
+        String playerNames = String.join(", ", dto.getPlayerNames());
+        System.out.println("\n" + dto.getDealerName() + "와 " + playerNames + "에게 2장을 나누었습니다.");
+        System.out.println(dto.getDealerName() + "카드: " + dto.getDealerFirstCardName());
+        for (ParticipantResultDto playerDto : dto.getPlayerDtos()) {
+            printPlayerCardStatus(playerDto);
         }
         System.out.println();
+    }
+
+    public void printPlayerCardStatus(ParticipantResultDto dto) {
+        String cardNames = String.join(", ", dto.getCardNames());
+        System.out.println(dto.getName() + "카드: " + cardNames);
     }
 
     public void printDealerReceiveCard() {
         System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printScoreResult(Dealer dealer, Players players) {
-        printParticipantGameResult(dealer, "\n딜러");
-        for (Player player : players.getPlayers()) {
-            printParticipantGameResult(player, player.getName());
-        }
-    }
-
-    public void printBurst(String name) {
-        System.out.println(name + "의 점수가 버스트 되었습니다.");
-    }
-
-    public void printGameResult(Map<Player, GameResult> gameResult) {
-        System.out.println("\n## 최종 승패");
-        Map<GameResult, Integer> dealerResult = new LinkedHashMap<>();
-
-        for (GameResult result : gameResult.values()) {
-            summaryGameResult(result, dealerResult);
-        }
-        printDealerGameResult(dealerResult);
-        printPlayersGameResult(gameResult);
-    }
-
-    private static void printPlayersGameResult(Map<Player, GameResult> gameResult) {
-        for (Player player : gameResult.keySet()) {
-            System.out.println(player.getName() + ": " + gameResult.get(player).getStatus());
-        }
-    }
-
-    private static void printDealerGameResult(Map<GameResult, Integer> dealerResult) {
-        System.out.print("딜러: ");
-        for (GameResult result : GameResult.values()) {
-            Integer count = dealerResult.getOrDefault(result, 0);
-            if (count != 0) {
-                System.out.print(count + result.getStatus() + " ");
-            }
-        }
+    public void printScoreResult(ParticipantResultDto dealerDto, List<ParticipantResultDto> playerDtos) {
         System.out.println();
+        printParticipantGameResult(dealerDto);
+        for (ParticipantResultDto playerDto : playerDtos) {
+            printParticipantGameResult(playerDto);
+        }
     }
 
-    private void printParticipantGameResult(Participant participant, String name) {
-        List<String> cardNames = participant.getCards().stream()
-                .map(Card::getCardName).toList();
-        System.out.println(name + "카드: " +
-                String.join(", ", cardNames) +
-                " - 결과: " + participant.getScore().getScore());
+    private void printParticipantGameResult(ParticipantResultDto dto) {
+        String cards = String.join(", ", dto.getCardNames());
+        System.out.println(dto.getName() + "카드: " + cards + " - 결과: " + dto.getScore());
     }
 
-    private static void summaryGameResult(GameResult result, Map<GameResult, Integer> dealerResult) {
-        if (result.equals(GameResult.WIN)) {
-            dealerResult.put(GameResult.LOSE, dealerResult.getOrDefault(GameResult.LOSE, 0) + 1);
-        }
-        if (result.equals(GameResult.LOSE)) {
-            dealerResult.put(GameResult.WIN, dealerResult.getOrDefault(GameResult.WIN, 0) + 1);
-        }
-        if (result.equals(GameResult.DRAW)) {
-            dealerResult.put(GameResult.DRAW, dealerResult.getOrDefault(GameResult.DRAW, 0) + 1);
+    public void printGameResult(ProfitsDto profitsDto) {
+        System.out.println("\n## 최종 수익");
+        System.out.println("딜러 : " + (int) profitsDto.getDealerProfit());
+        for (String playerName : profitsDto.getPlayerProfits().keySet()) {
+            System.out.println(playerName + ": " + profitsDto.getPlayerProfits().get(playerName).intValue());
         }
     }
 }

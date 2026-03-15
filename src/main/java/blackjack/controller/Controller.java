@@ -1,14 +1,20 @@
 package blackjack.controller;
 
-import blackjack.exception.ErrorMessage;
-import blackjack.model.*;
-import blackjack.util.NameSplitter;
+import blackjack.dto.InitialStatusDto;
+import blackjack.dto.ParticipantResultDto;
+import blackjack.dto.ProfitsDto;
+import blackjack.model.Dealer;
+import blackjack.model.Deck;
+import blackjack.model.Participant;
+import blackjack.model.Player;
+import blackjack.model.Players;
+import blackjack.model.Referee;
+import blackjack.model.Settlement;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class Controller {
 
@@ -24,83 +30,60 @@ public class Controller {
 
     public void run() {
         Deck deck = new Deck();
+        Referee referee = new Referee();
         Dealer dealer = new Dealer();
-        Players players = getPlayers();
-        List<Player> participants = players.getPlayers();
+        Players players = createPlayer();
 
         deck.shuffle();
-        initializeDealToParticipants(dealer, players, deck);
-        outputView.printFirstCardStatus(dealer, players);
+        dealFirstTwoCards(dealer, players, deck);
+        InitialStatusDto initialStatusDto = InitialStatusDto.from(dealer, players);
+        outputView.printFirstCardStatus(initialStatusDto);
 
-        turnToPlayers(participants, deck);
+        turnToPlayers(players, deck);
         turnToDealer(dealer, deck);
-        outputView.printScoreResult(dealer, players);
 
-        outputView.printGameResult(getPlayerGameResult(participants, dealer));
+        ParticipantResultDto dealerDto = ParticipantResultDto.from("딜러", dealer);
+        List<ParticipantResultDto> playerDtos = ParticipantResultDto.from(players);
+        outputView.printScoreResult(dealerDto, playerDtos);
+
+        Settlement settlement = new Settlement(players.judgeAll(dealer, referee));
+        outputView.printGameResult(ProfitsDto.from(settlement));
     }
 
-    private static Map<Player, GameResult> getPlayerGameResult(List<Player> participants, Dealer dealer) {
-        Map<Player, GameResult> gameResult = new LinkedHashMap<>();
-        for (Player player : participants) {
-            gameResult.put(player ,GameResult.calculateScore(player, dealer));
+    private Players createPlayer() {
+        List<Player> players = new ArrayList<>();
+        List<String> playerNames = inputView.getName();
+        for (String name : playerNames) {
+            players.add(new Player(name, inputView.getBettingAmount(name)));
         }
-        return gameResult;
+        return new Players(players);
     }
 
-    private void turnToDealer(Dealer dealer, Deck deck) {
-        dealer.getScore();
-
-        while (dealer.canReceive()) {
-            outputView.printDealerReceiveCard();
-            receiveCardToParticipant(dealer, deck, ONE_REPEAT);
-            dealer.getScore();
-            if (dealer.isBurst()) {
-                outputView.printBurst("딜러");
-                return;
-            }
-        }
+    private void dealFirstTwoCards(Dealer dealer, Players players, Deck deck) {
+        receiveCardToParticipant(dealer, deck, INITIAL_DEAL_REPEAT);
+        players.giveTwoCards(deck);
     }
 
-    private void turnToPlayers(List<Player> participants, Deck deck) {
-        for (Player player : participants) {
+    private void turnToPlayers(Players players, Deck deck) {
+        for (Player player : players.getPlayers()) {
             turnToOnePlayer(deck, player);
         }
     }
 
     private void turnToOnePlayer(Deck deck, Player player) {
-        player.getScore();
-
         while (player.canReceive()) {
-            String receiveCard = inputView.getReceiveCard(player);
-            if (receiveCard.equals("n")) {
+            if (!inputView.getReceiveCard(ParticipantResultDto.from(player.getName(), player))) {
                 return;
             }
-            if (!receiveCard.equals("y")) {
-                throw new IllegalArgumentException(ErrorMessage.INVALID_INPUT.getMessage());
-            }
-            receiveCardToParticipant(player, deck, ONE_REPEAT);
-            player.getScore();
-            if (player.isBurst()) {
-                outputView.printBurst(player.getName());
-                return;
-            }
-            outputView.printPlayerCardStatus(player, player.getCards());
+            player.receiveCard(deck.giveCard());
+            outputView.printPlayerCardStatus(ParticipantResultDto.from(player.getName(), player));
         }
     }
 
-    private Players getPlayers() {
-        List<Player> players = NameSplitter.split(inputView.getName())
-                .stream()
-                .map(Player::new)
-                .toList();
-        return new Players(players);
-    }
-
-    private void initializeDealToParticipants(Dealer dealer, Players players, Deck deck) {
-        receiveCardToParticipant(dealer, deck, INITIAL_DEAL_REPEAT);
-
-        for (Player player : players.getPlayers()) {
-            receiveCardToParticipant(player, deck, INITIAL_DEAL_REPEAT);
+    private void turnToDealer(Dealer dealer, Deck deck) {
+        while (dealer.canReceive()) {
+            outputView.printDealerReceiveCard();
+            receiveCardToParticipant(dealer, deck, ONE_REPEAT);
         }
     }
 
