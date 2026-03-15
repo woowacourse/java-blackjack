@@ -9,7 +9,6 @@ public record HitInfo(
         String memberName,
         List<String> cards
 ) {
-
     public static HitInfo firstCardFrom(Dealer dealer) {
         return new HitInfo(dealer.getName(), getCardNames(dealer.showFirstCards()));
     }

@@ -19,7 +19,6 @@ class MembersTest {
     private final Dealer dealer;
     private final Player pobi;
 
-
     public MembersTest() {
         this.pobi = new Player(new Member(new Name("포비")), new BettingAmount(1000));
         this.players = new Players(List.of(pobi));
