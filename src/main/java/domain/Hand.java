@@ -25,4 +25,8 @@ public class Hand {
         return getScore().value() <= value;
     }
 
+    public boolean isBlackjack(){
+        return cards.size() == 2 && getScore().value()==21;
+    }
+
 }
