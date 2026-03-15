@@ -13,7 +13,7 @@ public enum GameResult {
 
     public static GameResult judge(Dealer dealer, Player player) {
         if (player.isBust() || dealer.isBust()) {
-            return judgeByBust(dealer, player);
+            return judgeByBust(player);
         }
 
         if (player.isBlackjack() || dealer.isBlackjack()) {
@@ -23,7 +23,7 @@ public enum GameResult {
         return judgeByScore(dealer, player);
     }
 
-    private static GameResult judgeByBust(Dealer dealer, Player player) {
+    private static GameResult judgeByBust(Player player) {
         if (player.isBust()) {
             return LOSE;
         }
