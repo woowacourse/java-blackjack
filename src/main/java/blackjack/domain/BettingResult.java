@@ -1,15 +1,17 @@
 package blackjack.domain;
 
+import java.util.function.Function;
+
 public enum BettingResult {
-    BLACKJACK(1.5),
-    WIN(1.0),
-    DRAW(0.0),
-    LOSE(-1.0);
+    BLACKJACK(betAmount -> (int) (betAmount.money() * 1.5)),
+    WIN(BetAmount::money),
+    DRAW(betAmount -> 0),
+    LOSE(betAmount -> -betAmount.money());
 
-    private final double rateOfProfit;
+    private final Function<BetAmount, Integer> profitCalculator;
 
-    BettingResult(double rateOfProfit) {
-        this.rateOfProfit = rateOfProfit;
+    BettingResult(Function<BetAmount, Integer> profitCalculator) {
+        this.profitCalculator = profitCalculator;
     }
 
     public static BettingResult of(MatchResult matchResult, Player player) {
@@ -25,7 +27,7 @@ public enum BettingResult {
         return LOSE;
     }
 
-    public double calculateProfit(BetAmount betAmount) {
-        return betAmount.money() * rateOfProfit;
+    public int calculateProfit(BetAmount betAmount) {
+        return profitCalculator.apply(betAmount);
     }
 }
