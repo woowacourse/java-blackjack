@@ -34,16 +34,16 @@ public class GameController {
         Players players = getPlayers(playerNames, deck);
 
         printGameStart(playerNames, dealer, players);
+
         receiveMoreCard(players, dealer, deck);
 
         printFinalScore(players, dealer);
+        printFinalProfit(players, dealer);
+    }
 
-        List<PlayerProfitDto> playerProfitDtos = getPlayerProfitDtos(players, dealer);
-        int dealerFinalProfit = -playerProfitDtos.stream()
-                .mapToInt(PlayerProfitDto::profit)
-                .sum();
-        outputView.printDealerFinalProfit(dealerFinalProfit);
-        outputView.printPlayerFinalProfit(playerProfitDtos);
+    private List<String> getPlayerNames() {
+        String input = inputView.readPlayerName();
+        return InputParser.parsePlayerNames(input);
     }
 
     private Players getPlayers(List<String> playerNames, Deck deck) {
@@ -54,16 +54,6 @@ public class GameController {
             players.add(player);
         }
         return new Players(players);
-    }
-
-    private List<String> getPlayerNames() {
-        String input = inputView.readPlayerName();
-        return InputParser.parsePlayerNames(input);
-    }
-
-    private Money getMoney(String playerName) {
-        String input = inputView.readMoney(playerName);
-        return new Money(InputParser.parseMoney(input));
     }
 
     private void printGameStart(List<String> playerNames, Dealer dealer, Players players) {
@@ -94,13 +84,18 @@ public class GameController {
                 ParticipantDto.of("딜러", dealer), participantDtos);
     }
 
-    private List<PlayerProfitDto> getPlayerProfitDtos(Players players, Dealer dealer) {
-        ProfitCalculator profitCalculator = new ProfitCalculator();
-        List<PlayerProfitDto> playerProfitDtos = new ArrayList<>();
-        for (Player player : players.getPlayers()) {
-            playerProfitDtos.add(PlayerProfitDto.of(player.getName(), profitCalculator.calculateProfit(player, dealer, player.getMoney())));
-        }
-        return playerProfitDtos;
+    private void printFinalProfit(Players players, Dealer dealer) {
+        List<PlayerProfitDto> playerProfitDtos = getPlayerProfitDtos(players, dealer);
+        int dealerFinalProfit = -playerProfitDtos.stream()
+                .mapToInt(PlayerProfitDto::profit)
+                .sum();
+        outputView.printDealerFinalProfit(dealerFinalProfit);
+        outputView.printPlayerFinalProfit(playerProfitDtos);
+    }
+
+    private Money getMoney(String playerName) {
+        String input = inputView.readMoney(playerName);
+        return new Money(InputParser.parseMoney(input));
     }
 
     private void processRound(Player player, Deck deck) {
@@ -113,5 +108,14 @@ public class GameController {
             player.addCard(deck.draw());
             outputView.printCurrentHoldCard(ParticipantDto.of(player.getName(), player));
         }
+    }
+
+    private List<PlayerProfitDto> getPlayerProfitDtos(Players players, Dealer dealer) {
+        ProfitCalculator profitCalculator = new ProfitCalculator();
+        List<PlayerProfitDto> playerProfitDtos = new ArrayList<>();
+        for (Player player : players.getPlayers()) {
+            playerProfitDtos.add(PlayerProfitDto.of(player.getName(), profitCalculator.calculateProfit(player, dealer, player.getMoney())));
+        }
+        return playerProfitDtos;
     }
 }
