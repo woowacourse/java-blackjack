@@ -21,7 +21,10 @@ public class GameContext {
     }
 
     public void setPlayers(List<Player> players) {
-        this.players = players;
+        if (this.players != null) {
+            throw new IllegalArgumentException("플레이어는 이미 설정되었습니다.");
+        }
+        this.players = List.copyOf(players);
     }
 
     public Dealer dealer() {
