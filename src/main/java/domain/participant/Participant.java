@@ -6,7 +6,7 @@ import java.util.List;
 
 public abstract class Participant {
     private final Name name;
-    private final Hand hand;
+    protected final Hand hand;
     private final DrawStrategy drawStrategy;
 
     public Participant(String name, DrawStrategy drawStrategy) {
@@ -33,10 +33,6 @@ public abstract class Participant {
 
     public String name() {
         return name.name();
-    }
-
-    protected Card firstCard() {
-        return hand.firstCard();
     }
 
     public List<Card> getAllCards() {

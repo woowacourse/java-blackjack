@@ -26,7 +26,7 @@ class GameResultTest {
         distributeCardsAndBetTo(firstPlayer, 10000, NINE, TEN);
         distributeCardsAndBetTo(secondPlayer, 20000, NINE, EIGHT);
 
-        GameResult gameResult = new GameResult(players, dealer);
+        GameResult gameResult = GameResult.from(players, dealer);
 
         assertThat(gameResult.dealerProfit()).isEqualTo(10000);
     }

@@ -8,8 +8,6 @@ import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
 import domain.strategy.RandomShuffleStrategy;
-import dto.DealerResultInfo;
-import dto.PlayerResultInfo;
 import java.util.ArrayList;
 import java.util.List;
 import view.InputView;
@@ -92,12 +90,7 @@ public class BlackjackGame {
         participants.forEach(outputView::printFinalResult);
         outputView.printBlankLine();
 
-        GameResult gameResult = new GameResult(players, dealer);
-        DealerResultInfo dealerResultInfo = new DealerResultInfo(gameResult.dealerProfit());
-        List<PlayerResultInfo> playerResultInfos = gameResult.playerResults().stream()
-                .map(result -> new PlayerResultInfo(result.name(), result.profit()))
-                .toList();
-
-        outputView.printGameResult(dealerResultInfo, playerResultInfos);
+        GameResult gameResult = GameResult.from(players, dealer);
+        outputView.printGameResult(gameResult);
     }
 }

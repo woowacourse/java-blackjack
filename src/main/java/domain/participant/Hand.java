@@ -34,7 +34,7 @@ public class Hand {
         return total;
     }
 
-    public Card firstCard() {
+    protected Card firstCard() {
         if (cards.isEmpty()) {
             throw new IllegalStateException(ERROR_CARD_NOT_EXIST);
         }

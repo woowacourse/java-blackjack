@@ -6,8 +6,8 @@ import domain.participant.Players;
 import java.util.List;
 
 public record GameResult(int dealerProfit, List<PlayerGameResult> playerResults) {
-    public GameResult(Players players, Dealer dealer) {
-        this(createPlayerResults(players, dealer));
+    public static GameResult from(Players players, Dealer dealer) {
+        return new GameResult(createPlayerResults(players, dealer));
     }
 
     private GameResult(List<PlayerGameResult> playerResults) {

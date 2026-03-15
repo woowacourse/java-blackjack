@@ -5,8 +5,8 @@ import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
-import dto.DealerResultInfo;
-import dto.PlayerResultInfo;
+import domain.game.GameResult;
+import domain.game.PlayerGameResult;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,10 +28,10 @@ public class OutputView {
         printPlayersInitialCards(players);
     }
 
-    public void printGameResult(DealerResultInfo dealerResultInfo, List<PlayerResultInfo> playersResult) {
+    public void printGameResult(GameResult gameResult) {
         printFinalResultMessage();
-        printDealerResult(dealerResultInfo.dealerProfit());
-        printPlayersResult(playersResult);
+        printDealerResult(gameResult.dealerProfit());
+        printPlayersResult(gameResult.playerResults());
     }
 
     public void printParticipantCards(Participant participant) {
@@ -91,8 +91,8 @@ public class OutputView {
         System.out.println(String.format(DEALER_RESULT_FORMAT, dealerProfit));
     }
 
-    public void printPlayersResult(List<PlayerResultInfo> playersResult) {
-        for (PlayerResultInfo playerResult : playersResult) {
+    public void printPlayersResult(List<PlayerGameResult> playersResult) {
+        for (PlayerGameResult playerResult : playersResult) {
             System.out.println(String.format(
                     PLAYER_RESULT_FORMAT,
                     playerResult.name(),
