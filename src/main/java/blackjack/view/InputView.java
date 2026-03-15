@@ -24,6 +24,10 @@ public class InputView {
         return names;
     }
 
+    public double inputBettingAmount() {
+        return Long.parseLong(scanner.nextLine());
+    }
+
     public boolean inputMoreCard() {
         String input = scanner.nextLine();
 

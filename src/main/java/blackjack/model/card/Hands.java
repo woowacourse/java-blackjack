@@ -1,7 +1,6 @@
-package blackjack.model;
+package blackjack.model.card;
 
-import blackjack.model.card.Card;
-import blackjack.model.card.CardDto;
+import blackjack.dto.CardDto;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +11,7 @@ public class Hands {
 
     private final List<Card> cards;
 
-    private Hands(List<Card> cards) {
+    private Hands(final List<Card> cards) {
         this.cards = cards;
     }
 
@@ -20,7 +19,7 @@ public class Hands {
         return new Hands(new ArrayList<>());
     }
 
-    public void addCard(Card card) {
+    public void addCard(final Card card) {
         cards.add(card);
     }
 
@@ -43,16 +42,18 @@ public class Hands {
         return calculateTotalScore() > score;
     }
 
-    public List<CardDto> getAllCard() {
+    public CardDto getFirstCard() {
+        Card firstCard = cards.getFirst();
+        return CardDto.from(firstCard);
+    }
+
+    public List<CardDto> getAllCards() {
         return this.cards.stream()
-                .map(Card::toDto)
+                .map(CardDto::from)
                 .toList();
     }
 
-    public List<CardDto> getOpenedCards() {
-        return this.cards.stream()
-                .filter(Card::isOpened)
-                .map(Card::toDto)
-                .toList();
+    public boolean isTwoCardHand() {
+        return cards.size() == 2;
     }
 }

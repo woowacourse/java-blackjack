@@ -1,9 +1,9 @@
 package blackjack.model.participant;
 
 import blackjack.common.error.ErrorCode;
-import blackjack.model.Hands;
-import blackjack.model.card.CardDto;
-import blackjack.model.cardDeck.CardDeck;
+import blackjack.dto.CardDto;
+import blackjack.model.card.Hands;
+import blackjack.model.carddeck.CardDeck;
 import java.util.List;
 
 public abstract class Participant {
@@ -13,7 +13,7 @@ public abstract class Participant {
     private final String name;
     protected final Hands hands;
 
-    public Participant(String name, Hands hands) {
+    public Participant(final String name, final Hands hands) {
         validateName(name);
         validateHands(hands);
 
@@ -21,9 +21,29 @@ public abstract class Participant {
         this.hands = hands;
     }
 
-    public abstract void pickInitCards(CardDeck cardDeck);
+    private void validateName(final String name) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException(ErrorCode.NO_NAME_PARTICIPANT_NAME.getMessage());
+        }
+        if (!name.equals(name.strip())) {
+            throw new IllegalArgumentException(ErrorCode.NAME_STARTS_OR_ENDS_WITH_SPACE.getMessage());
+        }
+    }
 
-    public void pickAdditionalCard(CardDeck cardDeck) {
+    private void validateHands(final Hands hands) {
+        if (hands == null) {
+            throw new IllegalArgumentException(ErrorCode.NULL_HANDS.getMessage());
+        }
+    }
+
+    public abstract List<CardDto> getInitCards();
+
+    public void pickInitCards(final CardDeck cardDeck) {
+        hands.addCard(cardDeck.pick());
+        hands.addCard(cardDeck.pick());
+    }
+
+    public void pickAdditionalCard(final CardDeck cardDeck) {
         hands.addCard(cardDeck.pick());
     }
 
@@ -31,35 +51,23 @@ public abstract class Participant {
         return hands.hasScoreHigherThan(BLACKJACK_SCORE);
     }
 
-    public boolean hasHigherScoreThan(Participant other) {
-        return this.hands.hasScoreHigherThan(other.getCurrentTotalScore());
+    public boolean isBlackjack() {
+        return hands.calculateTotalScore() == BLACKJACK_SCORE;
     }
 
-    public int getCurrentTotalScore() {
+    public boolean hasHigherScoreThan(final Participant other) {
+        return this.hands.hasScoreHigherThan(other.getScore());
+    }
+
+    public int getScore() {
         return hands.calculateTotalScore();
     }
 
-    public List<CardDto> getAllCard() {
-        return hands.getAllCard();
-    }
-
-    public List<CardDto> getOpenedCards() {
-        return hands.getOpenedCards();
+    public List<CardDto> getAllCards() {
+        return hands.getAllCards();
     }
 
     public String getName() {
         return this.name;
-    }
-
-    private void validateName(String name) {
-        if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException(ErrorCode.NO_NAME_PARTICIPANT_NAME.getMessage());
-        }
-    }
-
-    private void validateHands(Hands hands) {
-        if (hands == null) {
-            throw new IllegalArgumentException(ErrorCode.NULL_HANDS.getMessage());
-        }
     }
 }
