@@ -14,6 +14,6 @@ public enum Result {
     }
 
     public int getProfit(int betAmount) {
-        return (int) this.multiple * betAmount;
+        return (int) (betAmount * this.multiple);
     }
 }
