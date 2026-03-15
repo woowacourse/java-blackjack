@@ -5,31 +5,49 @@ import java.util.List;
 
 public class Player {
 
+    private static final int BLACKJACK_NUM = 21;
+
     private final Name name;
-    private final Hand hand;
+    private final BettingHand bettingHand;
 
-    public Player(String name, Hand hand) {
-        this.name = new Name(name);
-        this.hand = hand;
+    private Player(Name name, BettingHand bettingHand) {
+        this.name = name;
+        this.bettingHand = bettingHand;
     }
 
-    public Hand getHand() {
-        return hand;
+    public static Player of(Name name, BettingHand bettingHand) {
+        return new Player(name, bettingHand);
     }
 
-    public List<Card> getCards() {
-        return getHand().getCards();
+    public boolean isBust() {
+        return bettingHand.isBust();
     }
 
-    public void addHand(Card card) {
-        hand.add(card);
+    public boolean isBlackjack() {
+        return bettingHand.isBlackjack();
     }
 
-    public String getName() {
+    public boolean canHit() {
+        return !isBust() && !isBlackjack() && totalScore() < BLACKJACK_NUM;
+    }
+
+    public void hit(Card card) {
+        bettingHand.addCard(card);
+    }
+
+    public List<Card> cards() {
+        return bettingHand.cards();
+    }
+
+    public String name() {
         return name.getName();
     }
 
-    public int getTotalScore() {
-        return hand.getTotalScore();
+    public int totalScore() {
+        return bettingHand.totalScore();
+    }
+
+    public int calculateProfit(Dealer dealer) {
+        return bettingHand.calculateProfit(dealer);
     }
 }

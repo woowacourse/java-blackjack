@@ -40,7 +40,7 @@ class HandTest {
             List<Card> cards = List.of(firstCard, secondCard);
             Hand hand = new Hand(cards);
 
-            assertThat(hand.getTotalScore()).isEqualTo(cardsSum);
+            assertThat(hand.calculateTotalScore()).isEqualTo(cardsSum);
         }
 
         @Test
@@ -49,15 +49,38 @@ class HandTest {
             List<Card> cards = TestDefaults.getCardsByRanks(List.of(Rank.ACE, Rank.JACK));
             Hand hand = new Hand(cards);
 
-            hand.add(TestDefaults.getCardByRank(Rank.KING));
+            hand.addCard(TestDefaults.getCardByRank(Rank.KING));
 
-            assertThat(hand.getTotalScore()).isEqualTo(21);
+            assertThat(hand.calculateTotalScore()).isEqualTo(21);
+        }
+    }
+
+    @Nested
+    @DisplayName("isBlackjack(): ")
+    class IsBlackjack {
+
+        @Test
+        @DisplayName("첫 패에서 합이 21이면 True를 반환한다.")
+        void isBlackjack() {
+            Hand hand = new Hand(TestDefaults.getCardsByRanks(List.of(Rank.ACE, Rank.QUEEN)));
+
+            assertThat(hand.isBlackjack()).isTrue();
+        }
+
+        @Test
+        @DisplayName("카드를 더 받아서 21일 경우 false를 반환한다.(Blackjack 아님)")
+        void notBlackjack() {
+            Hand hand = new Hand(TestDefaults.getCardsByRanks(List.of(Rank.KING, Rank.QUEEN)));
+
+            hand.addCard(TestDefaults.getCardByRank(Rank.ACE));
+
+            assertThat(hand.isBlackjack()).isFalse();
         }
     }
 
 
     @Nested
-    @DisplayName("isBurst(): ")
+    @DisplayName("isBust(): ")
     class IsBurst {
 
         @Test
@@ -65,7 +88,7 @@ class HandTest {
         void returnsTrueWhenTotalScoreIsOver21() {
             Hand hand = new Hand(TestDefaults.getCardsByRanks(List.of(Rank.KING, Rank.QUEEN)));
 
-            hand.add(TestDefaults.getCardByRank(Rank.TWO));
+            hand.addCard(TestDefaults.getCardByRank(Rank.TWO));
 
             assertThat(hand.isBust()).isTrue();
         }

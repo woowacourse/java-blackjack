@@ -22,7 +22,7 @@ class DealerTest {
     @MethodSource
     @DisplayName("16이하의 값이라면 딜러는 카드를 더 받는다.")
     void needsToHit(Hand hand, boolean expected) {
-        Dealer dealer = new Dealer(hand);
+        Dealer dealer = Dealer.from(hand);
 
         assertThat(dealer.needsToHit()).isEqualTo(expected);
     }

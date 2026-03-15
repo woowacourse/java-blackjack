@@ -7,7 +7,7 @@ import util.ErrorMessage;
 
 public class Hand {
     public static final int ACE_PROFIT_VALUE = 10;
-    public static final int BLACKJACK_MAX_SCORE = 21;
+    private static final int BLACKJACK_MAX_SCORE = 21;
     private static final int MIN_SIZE = 2;
 
     private final List<Card> cards;
@@ -18,16 +18,16 @@ public class Hand {
     }
 
     public boolean isBust() {
-        return getTotalScore() > BLACKJACK_MAX_SCORE;
+        return calculateTotalScore() > BLACKJACK_MAX_SCORE;
     }
 
-    private void validateCardsSize(List<Card> cards) { //테스트 작성
+    private void validateCardsSize(List<Card> cards) {
         if (cards.size() != MIN_SIZE) {
             throw new IllegalArgumentException(ErrorMessage.HANDS_CARDS_SIZE.getMessage());
         }
     }
 
-    public int getTotalScore() {    // 테스트
+    public int calculateTotalScore() {
         int totalScore = cards.stream()
                 .map(Card::getScore)
                 .reduce(Integer::sum)
@@ -40,11 +40,15 @@ public class Hand {
         return totalScore;
     }
 
+    public boolean isBlackjack() {
+        return (cards.size() == MIN_SIZE) && (calculateTotalScore() == BLACKJACK_MAX_SCORE);
+    }
+
     public int getHandsSize() {
         return cards.size();
     }
 
-    public void add(Card card) {
+    public void addCard(Card card) {
         cards.add(card);
     }
 
