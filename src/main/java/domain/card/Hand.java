@@ -11,20 +11,15 @@ public class Hand {
 
     private final List<Card> cards;
     private Score score;
-    private AceCount aceCount;
 
     public Hand() {
         this.cards = new ArrayList<>();
         this.score = Score.zero();
-        this.aceCount = AceCount.zero();
     }
 
     public void addCard(Card card) {
         this.cards.add(card);
         score = score.addScore(card.getScore());
-        if (card.isAce()) {
-            aceCount = aceCount.increase();
-        }
         adjustAceScore();
     }
 
@@ -41,10 +36,15 @@ public class Hand {
     }
 
     private void adjustAceScore() {
-        while (score.isBust() && aceCount.hasAny()) {
+        int aceCount = countAces();
+        while (score.isBust() && aceCount > 0) {
             score = score.subScore(ACE_ADJUST_SCORE);
-            aceCount = aceCount.decrease();
+            aceCount--;
         }
+    }
+
+    private int countAces() {
+        return (int) cards.stream().filter(Card::isAce).count();
     }
 
     public int size() {
