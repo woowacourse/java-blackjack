@@ -101,8 +101,8 @@ public class BlackjackController {
         OutputView.printFinalCardScores(playerResults, dealerResult);
     }
 
-    public void calculateFinalGameProfit(List<Participant> players, Participant dealer) {
-        LinkedHashMap<String, Long> playersProfit = new LinkedHashMap<>();
+    private void calculateFinalGameProfit(List<Participant> players, Participant dealer) {
+        Map<String, Long> playersProfit = new LinkedHashMap<>();
         long totalPlayersProfit = 0;
         for (Participant player : players) {
             Money profit = player.calculateFinalProfit(dealer);
