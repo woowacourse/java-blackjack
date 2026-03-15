@@ -22,7 +22,7 @@ public enum ResultInfo {
     BLACKJACK_WIN(3) {
         @Override
         public int calculateProfit(int amount) {
-            return (int) ((amount * 1.5) - amount);
+            return (int) (amount * 1.5);
         }
     };
 
