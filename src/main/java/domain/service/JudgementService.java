@@ -43,6 +43,10 @@ public class JudgementService {
             player.changeStatus(PlayerStatus.LOSS);
             return;
         }
+        if (player.isBlackJack() && dealer.isAlive()) {
+            player.changeStatus(PlayerStatus.WIN);
+            return;
+        }
         if (player.isBlackJack() && dealer.isBlackJack()) {
             player.changeStatus(PlayerStatus.DRAW);
             return;
