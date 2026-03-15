@@ -1,12 +1,10 @@
-import domain.Card;
-import domain.Hand;
-import domain.Rank;
-import domain.Suit;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+package domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 public class PlayerAceTest {
     @Test

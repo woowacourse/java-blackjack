@@ -1,9 +1,9 @@
-import domain.Rank;
-import domain.Score;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+package domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 public class ScoreTest {
     @Test
@@ -25,7 +25,7 @@ public class ScoreTest {
     @Test
     @DisplayName("Score는 불변 객체로 점수 합계를 계산한다")
     void totalScore() {
-        Score score = new Score();
+        Score score = Score.zero();
         score = score.addScore(Rank.ACE.value());
         score = score.addScore(Rank.JACK.value());
 

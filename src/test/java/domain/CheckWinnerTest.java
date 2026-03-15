@@ -1,22 +1,17 @@
+package domain;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import domain.Card;
-import domain.Dealer;
-import domain.GameResult;
-import domain.Outcome;
-import domain.Participant;
-import domain.Player;
-import domain.Players;
-import domain.Rank;
-import domain.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import util.NameParser;
 
 public class CheckWinnerTest {
+    private final ResultCalculator resultCalculator = new ResultCalculator();
+
     @Test
-    @DisplayName("점수가 같으면 무승부다")
-    void drawResult() {
+    @DisplayName("점수가 같으면 플레이어는 패배한다")
+    void sameScoreLoseResult() {
         Dealer dealer = new Dealer();
         Players players = NameParser.makeNameList("pobi");
         Player player = getFirstPlayer(players);
@@ -27,9 +22,9 @@ public class CheckWinnerTest {
                 new Card(Suit.DIAMOND, Rank.JACK),
                 new Card(Suit.CLUB, Rank.KING));
 
-        GameResult gameResult = players.calculateResult(dealer);
+        GameResult gameResult = resultCalculator.calculate(dealer, players);
 
-        assertEquals(Outcome.DRAW, gameResult.getPlayerOutcome(player.getName()));
+        assertEquals(Outcome.LOSE, gameResult.getPlayerOutcome(player.getName()));
     }
 
     @Test
@@ -45,7 +40,7 @@ public class CheckWinnerTest {
                 new Card(Suit.DIAMOND, Rank.TEN),
                 new Card(Suit.CLUB, Rank.EIGHT));
 
-        GameResult gameResult = players.calculateResult(dealer);
+        GameResult gameResult = resultCalculator.calculate(dealer, players);
 
         assertEquals(Outcome.LOSE, gameResult.getPlayerOutcome(player.getName()));
     }
@@ -63,9 +58,29 @@ public class CheckWinnerTest {
                 new Card(Suit.DIAMOND, Rank.KING),
                 new Card(Suit.CLUB, Rank.QUEEN));
 
-        GameResult gameResult = players.calculateResult(dealer);
+        GameResult gameResult = resultCalculator.calculate(dealer, players);
 
         assertEquals(Outcome.WIN, gameResult.getPlayerOutcome(player.getName()));
+    }
+
+    @Test
+    @DisplayName("플레이어가 버스트면 딜러 버스트 여부와 상관없이 패배한다")
+    void playerBustAlwaysLose() {
+        Dealer dealer = new Dealer();
+        Players players = NameParser.makeNameList("pobi");
+        Player player = getFirstPlayer(players);
+        addCards(dealer,
+                new Card(Suit.SPADE, Rank.KING),
+                new Card(Suit.HEART, Rank.QUEEN),
+                new Card(Suit.CLUB, Rank.TWO));
+        addCards(player,
+                new Card(Suit.DIAMOND, Rank.KING),
+                new Card(Suit.CLUB, Rank.QUEEN),
+                new Card(Suit.HEART, Rank.TWO));
+
+        GameResult gameResult = resultCalculator.calculate(dealer, players);
+
+        assertEquals(Outcome.LOSE, gameResult.getPlayerOutcome(player.getName()));
     }
 
     private void addCards(Participant participant, Card... cards) {

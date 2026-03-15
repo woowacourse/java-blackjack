@@ -1,11 +1,12 @@
+package util;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import domain.Players;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import util.NameParser;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class NameParserTest {
     @Test
