@@ -1,57 +1,22 @@
 package blackjack.model.gameresult;
 
-import blackjack.model.user.Dealer;
-import blackjack.model.user.Player;
+import blackjack.model.bet.BetAmount;
 
 public enum GameResult {
 
-    BLACKJACK_WIN,
-    WIN,
-    DRAW,
-    LOSE,
+    BLACKJACK_WIN(1.5),
+    WIN(1),
+    DRAW(0),
+    LOSE(-1),
     ;
 
-    public static GameResult judge(Dealer dealer, Player player) {
-        if (player.isBust() || dealer.isBust()) {
-            return judgeByBust(player);
-        }
+    private final double payoutRate;
 
-        if (player.isBlackjack() || dealer.isBlackjack()) {
-            return judgeByBlackjack(dealer, player);
-        }
-
-        return judgeByScore(dealer, player);
+    GameResult(double payoutRate) {
+        this.payoutRate = payoutRate;
     }
 
-    private static GameResult judgeByBust(Player player) {
-        if (player.isBust()) {
-            return LOSE;
-        }
-
-        return WIN;
-    }
-
-    private static GameResult judgeByBlackjack(Dealer dealer, Player player) {
-        if (player.isBlackjack() && dealer.isBlackjack()) {
-            return DRAW;
-        }
-
-        if (player.isBlackjack()) {
-            return BLACKJACK_WIN;
-        }
-
-        return LOSE;
-    }
-
-    private static GameResult judgeByScore(Dealer dealer, Player player) {
-        if (player.totalScore() > dealer.totalScore()) {
-            return WIN;
-        }
-
-        if (player.totalScore() < dealer.totalScore()) {
-            return LOSE;
-        }
-
-        return DRAW;
+    public int calculateProfit(BetAmount betAmount) {
+        return (int) Math.round(betAmount.getAmount() * this.payoutRate);
     }
 }

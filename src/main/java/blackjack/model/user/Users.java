@@ -45,8 +45,8 @@ public class Users {
         Dealer dealer = getDealer();
 
         for (Player player : players) {
-            GameResult gameResult = GameResult.judge(dealer, player);
-            int profit = betAmounts.calculateProfit(player, gameResult);
+            GameResult gameResult = player.judge(dealer);
+            int profit = gameResult.calculateProfit(betAmounts.findByPlayer(player));
             result.put(player, profit);
         }
         int dealerPayout = -getTotalPlayerProfit(result);
