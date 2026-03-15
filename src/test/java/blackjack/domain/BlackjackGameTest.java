@@ -93,11 +93,11 @@ class BlackjackGameTest {
     void 딜러_점수가_17이상이면_히트_불가능하다() {
         BlackjackGame game = createGame(List.of("handa"), List.of(10000));
         giveCards(game.getDealer(),
-                TrumpCard.of(Suit.HEART, Rank.EIGHT),
-                TrumpCard.of(Suit.HEART, Rank.SIX)
+                TrumpCard.of(Suit.HEART, Rank.TEN),
+                TrumpCard.of(Suit.HEART, Rank.SEVEN)
         );
 
-        assertThat(game.canDealerHit()).isTrue();
+        assertThat(game.canDealerHit()).isFalse();
     }
 
     @Test
