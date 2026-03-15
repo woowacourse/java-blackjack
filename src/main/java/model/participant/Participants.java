@@ -4,40 +4,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Participants {
-    private final List<Participant> values;
+    private final Dealer dealer;
+    private final List<Player> players;
 
-    private Participants(List<Participant> values) {
-        this.values = List.copyOf(values);
+    private Participants(Dealer dealer, List<Player> players) {
+        this.dealer = dealer;
+        this.players = List.copyOf(players);
     }
 
-    public static Participants from(List<Player> players) {
-        List<Participant> participants = new ArrayList<>();
-        participants.add(Dealer.create());
-
-        participants.addAll(players);
-
-        return new Participants(participants);
+    public static Participants of(Dealer dealer, List<Player> players) {
+        return new Participants(dealer, players);
     }
 
     public Dealer getDealer() {
-        return (Dealer) values.getFirst();
+        return dealer;
     }
 
     public List<Player> getPlayers() {
-        return values.stream()
-                .filter(participant -> participant instanceof Player)
-                .map(participant -> (Player) participant)
-                .toList();
+        return players;
     }
 
     public List<Participant> asList() {
-        return List.copyOf(values);
+        List<Participant> participants = new ArrayList<>();
+        participants.add(dealer);
+        participants.addAll(players);
+
+        return List.copyOf(participants);
     }
 
     @Override
     public String toString() {
         return "Participants{" +
-                "values=" + values +
+                "dealer=" + dealer +
+                ", players=" + players +
                 '}';
     }
 }

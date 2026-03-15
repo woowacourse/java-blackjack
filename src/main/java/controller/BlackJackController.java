@@ -59,7 +59,7 @@ public class BlackJackController {
             players.add(player);
         }
 
-        return Participants.from(players);
+        return Participants.of(Dealer.create(), players);
     }
 
     private Deck setUpDeck() {
