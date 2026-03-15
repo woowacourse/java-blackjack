@@ -45,9 +45,9 @@ public class BlackjackTest {
         pobi.receiveOneCard(new Card(Rank.ACE, Shape.HEART));
         pobi.receiveOneCard(new Card(Rank.TEN, Shape.SPADE));
 
-        long profit = pobi.calculateFinalProfit(dealer);
+        Money profit = pobi.calculateFinalProfit(dealer);
         long expectedAmount = (long) (bettingAmountValue * 1.5);
-        assertThat(profit).isEqualTo(expectedAmount);
+        assertThat(profit.getBettingMoney()).isEqualTo(expectedAmount);
     }
 
     @Test
@@ -61,9 +61,9 @@ public class BlackjackTest {
         pobi.receiveOneCard(new Card(Rank.TEN, Shape.SPADE));
         pobi.receiveOneCard(new Card(Rank.TWO, Shape.CLOVER));
 
-        long profit = pobi.calculateFinalProfit(dealer);
+        Money profit = pobi.calculateFinalProfit(dealer);
         long expectedAmount = -bettingAmountValue;
-        assertThat(profit).isEqualTo(expectedAmount);
+        assertThat(profit.getBettingMoney()).isEqualTo(expectedAmount);
     }
 
     @Test
@@ -78,9 +78,9 @@ public class BlackjackTest {
         dealer.receiveOneCard(new Card(Rank.ACE, Shape.CLOVER));
         dealer.receiveOneCard(new Card(Rank.QUEEN, Shape.SPADE));
 
-        long profit = pobi.calculateFinalProfit(dealer);
+        Money profit = pobi.calculateFinalProfit(dealer);
         long expectedAmount = -bettingAmountValue;
-        assertThat(profit).isEqualTo(expectedAmount);
+        assertThat(profit.getBettingMoney()).isEqualTo(expectedAmount);
     }
 
     @Test
@@ -95,8 +95,8 @@ public class BlackjackTest {
         dealer.receiveOneCard(new Card(Rank.ACE, Shape.CLOVER));
         dealer.receiveOneCard(new Card(Rank.QUEEN, Shape.SPADE));
 
-        long profit = pobi.calculateFinalProfit(dealer);
-        assertThat(profit).isEqualTo(bettingAmountValue);
+        Money profit = pobi.calculateFinalProfit(dealer);
+        assertThat(profit.getBettingMoney()).isEqualTo(bettingAmountValue);
     }
 
     @Test
@@ -113,8 +113,8 @@ public class BlackjackTest {
         dealer.receiveOneCard(new Card(Rank.EIGHT, Shape.CLOVER));
         dealer.receiveOneCard(new Card(Rank.QUEEN, Shape.SPADE));
 
-        long profit = pobi.calculateFinalProfit(dealer);
+        Money profit = pobi.calculateFinalProfit(dealer);
 
-        assertThat(profit).isEqualTo(bettingAmountValue);
+        assertThat(profit.getBettingMoney()).isEqualTo(bettingAmountValue);
     }
 }

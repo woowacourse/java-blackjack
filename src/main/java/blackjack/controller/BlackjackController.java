@@ -5,10 +5,7 @@ import blackjack.service.CardDistributor;
 import blackjack.service.Game;
 import blackjack.utils.InputParser;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import blackjack.view.InputView;
@@ -44,7 +41,7 @@ public class BlackjackController {
         for (String playerName : playerNames) {
             String amountStr = InputView.askPlayerBettingAmount(playerName);
             long amount = InputParser.convertNumber(amountStr);
-            players.add(Participant.createPlayer(playerName, new Money(amount)));
+            players.add(Participant.createPlayer(playerName, Money.fromBettingAmount(amount)));
         }
         return players;
     }
@@ -105,14 +102,15 @@ public class BlackjackController {
     }
 
     public void calculateFinalGameProfit(List<Participant> players, Participant dealer) {
-        HashMap<String, Long> playersProfit = new HashMap<>();
-        long totalPlayerProfit = 0;
+        LinkedHashMap<String, Long> playersProfit = new LinkedHashMap<>();
+        long totalPlayersProfit = 0;
         for (Participant player : players) {
-            long profit = player.calculateFinalProfit(dealer);
-            playersProfit.put(player.getName(), profit);
-            totalPlayerProfit += profit;
+            Money profit = player.calculateFinalProfit(dealer);
+            long bettingMoney = profit.getBettingMoney();
+            playersProfit.put(player.getName(), bettingMoney);
+            totalPlayersProfit += bettingMoney;
         }
-        long dealerProfit = -totalPlayerProfit;
+        long dealerProfit = -totalPlayersProfit;
         OutputView.printFinalProfit(dealerProfit, playersProfit);
     }
 }

@@ -44,8 +44,8 @@ public abstract class Participant {
         return drawnCards.sumScore();
     }
 
-    public long calculateFinalProfit(Participant dealer) {
-        return 0;
+    public Money calculateFinalProfit(Participant dealer) {
+        return new Money(0);
     }
 
     public GameResult judgeResult(List<Participant> players, Participant dealer) {

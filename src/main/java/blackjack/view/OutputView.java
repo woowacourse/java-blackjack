@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.domain.Money;
 import blackjack.domain.ParticipantResult;
 import java.util.List;
 import java.util.Map;
@@ -44,7 +45,7 @@ public class OutputView {
         }
     }
 
-    public static void printFinalProfit(long dealerProfit, Map<String,Long> playersProfit) {
+    public static void printFinalProfit(long dealerProfit, Map<String, Long> playersProfit) {
         System.out.println("\n## 최종 수익");
         System.out.println("딜러: " + dealerProfit);
         for (Map.Entry<String, Long> entry : playersProfit.entrySet()) {
