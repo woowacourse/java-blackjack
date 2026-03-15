@@ -1,10 +1,10 @@
 package domain.card;
 
-public class Card {
+public class Help {
     private final Shape shape;
     private final Number number;
 
-    public Card(Shape shape, Number number) {
+    public Help(Shape shape, Number number) {
         this.shape = shape;
         this.number = number;
     }

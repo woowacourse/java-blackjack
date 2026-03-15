@@ -1,6 +1,6 @@
 package domain.participant;
 
-import domain.card.Card;
+import domain.card.Help;
 import domain.card.Cards;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +15,8 @@ public abstract class Participant {
         participantCards = new ParticipantCards(new Cards(new ArrayList<>()));
     }
 
-    public void receiveCard(Card card) {
-        participantCards.addCard(card);
+    public void receiveCard(Help help) {
+        participantCards.addCard(help);
     }
 
     public abstract boolean isContinueGame();
