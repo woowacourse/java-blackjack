@@ -1,17 +1,20 @@
 package blackjack.controller;
 
-import blackjack.model.*;
+import blackjack.domain.betting.BettingAmount;
+import blackjack.domain.deck.Deck;
+import blackjack.domain.game.Game;
+import blackjack.domain.game.GameResults;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Name;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
+import blackjack.domain.rule.HitCommand;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Controller {
-    private static final int INITIAL_DEAL_REPEAT = 2;
-    private static final int ONE_REPEAT = 1;
-
     private final InputView inputView;
     private final OutputView outputView;
 
@@ -21,81 +24,66 @@ public class Controller {
     }
 
     public void run() {
-        Deck deck = new Deck();
-        Dealer dealer = new Dealer();
+        Game game = makeGameReady();
+        Players players = createPlayers();
 
-        Players players = Players.from(inputView.getName());
-        List<Player> participants = players.getPlayers();
+        game.initializeDealToParticipants(players);
+        outputView.printFirstCardStatus(game.getDealer(), players);
 
-        deck.shuffle();
-        initializeDealToParticipants(dealer, players, deck);
-        outputView.printFirstCardStatus(dealer, players);
+        turnToPlayers(game, players);
+        turnToDealer(game);
 
-        turnToPlayers(participants, deck);
-        turnToDealer(dealer, deck);
-        outputView.printScoreResult(dealer, players);
-
-        outputView.printGameResult(getPlayerGameResult(participants, dealer));
+        printResults(game, players);
     }
 
-    private static Map<Player, GameResult> getPlayerGameResult(List<Player> participants, Dealer dealer) {
-        Map<Player, GameResult> gameResult = new LinkedHashMap<>();
-        for (Player player : participants) {
-            gameResult.put(player ,GameResult.getResult(player, dealer));
-        }
-        return gameResult;
+    private void printResults(Game game, Players players) {
+        GameResults gameResults = GameResults.of(game.getDealer(), players);
+        outputView.printScoreResult(game.getDealer(), players);
+        outputView.printGameResultProfit(gameResults);
     }
 
-    private void turnToDealer(Dealer dealer, Deck deck) {
-        dealer.updateScore();
+    private static Game makeGameReady() {
+        return new Game(new Deck(), new Dealer());
+    }
 
-        while (dealer.canReceive()) {
+    private Players createPlayers() {
+        List<String> playerNames = inputView.readNames();
+        List<Player> players = playerNames.stream()
+                .map(name -> new Player(new Name(name), new BettingAmount(inputView.readBettingAmount(name))))
+                .toList();
+        return new Players(players);
+    }
+
+    private void turnToDealer(Game game) {
+        while (game.isDealerTurn()) {
             outputView.printDealerReceiveCard();
-            receiveCardToParticipant(dealer, deck, ONE_REPEAT);
-            dealer.updateScore();
-            if (dealer.isBurst()) {
-                outputView.printBurst("딜러");
+            game.hitDealer();
+            if (game.isDealerBust()) {
+                outputView.printBust("딜러");
                 return;
             }
         }
     }
 
-    private void turnToPlayers(List<Player> participants, Deck deck) {
-        for (Player player : participants) {
-            turnToOnePlayer(deck, player);
+    private void turnToPlayers(Game game, Players players) {
+        for (Player player : players.getPlayers()) {
+            turnToOnePlayer(game, player);
         }
     }
 
-    private void turnToOnePlayer(Deck deck, Player player) {
-        player.updateScore();
-
+    private void turnToOnePlayer(Game game, Player player) {
         while (player.canReceive()) {
-            HitCommand command = HitCommand.from(inputView.getReceiveCard(player));
+            HitCommand command = HitCommand.from(inputView.readReceiveCard(player));
             if (!command.isHit()) {
                 return;
             }
 
-            receiveCardToParticipant(player, deck, ONE_REPEAT);
-            player.updateScore();
-            if (player.isBurst()) {
-                outputView.printBurst(player.getName());
+            game.hitTo(player);
+            if (player.isBust()) {
+                outputView.printBust(player.getName());
                 return;
             }
             outputView.printPlayerCardStatus(player, player.getCards());
-        }
-    }
-
-    private void initializeDealToParticipants(Dealer dealer, Players players, Deck deck) {
-        receiveCardToParticipant(dealer, deck, INITIAL_DEAL_REPEAT);
-
-        for (Player player : players.getPlayers()) {
-            receiveCardToParticipant(player, deck, INITIAL_DEAL_REPEAT);
-        }
-    }
-
-    private void receiveCardToParticipant(Participant participant, Deck deck, int repeat) {
-        for (int i = 0; i < repeat; i++) {
-            participant.receiveCard(deck.hit());
         }
     }
 }

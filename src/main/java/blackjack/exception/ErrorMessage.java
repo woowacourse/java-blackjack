@@ -4,7 +4,11 @@ public enum ErrorMessage {
     DUPLICATED("이름은 중복될 수 없습니다."),
     OUT_OF_NAME_LENGTH("이름 길이는 최소 2자 이상, 5자 이하여야 합니다."),
     INVALID_PLAYERS("플레이어는 2명 이상 5명 이하여야 합니다."),
-    INVALID_INPUT("유효하지 않은 입력입니다.");
+    INVALID_INPUT("유효하지 않은 입력입니다."),
+    INVALID_BETTING_AMOUNT_INPUT("유효하지 않은 배팅 금액 입력입니다."),
+    OUT_OF_AMOUNT_RANGE("배팅 금액은 1000원 이상 50000원이하여야 합니다."),
+    INVALID_BETTING_AMOUNT_UNIT("배팅 금액은 천 원 단위여야 합니다."),
+    INVALID_MATCH("게임 결과를 계산 중 오류가 발생했습니다.");
 
     private final String message;
 

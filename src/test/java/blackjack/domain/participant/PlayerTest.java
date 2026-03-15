@@ -1,0 +1,44 @@
+package blackjack.domain.participant;
+
+import blackjack.domain.betting.BettingAmount;
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Figure;
+import blackjack.domain.card.Number;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+class PlayerTest {
+
+    private Name name;
+    private BettingAmount bettingAmount;
+
+    @BeforeEach
+    void setUp() {
+        name = new Name("luke");
+        bettingAmount = new BettingAmount(10000);
+    }
+
+    @Test
+    @DisplayName("플레이어의 점수가 21점을 넘지 않으면 카드를 뽑을 수 있다.")
+    void canReceiveCard() {
+        // given
+        Player player = new Player(name, bettingAmount);
+        // when& then
+        assertThat(player.canReceive()).isTrue();
+    }
+
+    @Test
+    @DisplayName("플레이어의 점수가 21점을 넘으면 카드를 뽑을 수 없다.")
+    void cantReceiveCard() {
+        // given
+        Player player = new Player(name, bettingAmount);
+        player.receiveCard(new Card(Figure.CLOVER, Number.ACE));
+        player.receiveCard(new Card(Figure.CLOVER, Number.KING));
+
+        // when& then
+        assertThat(player.canReceive()).isFalse();
+    }
+}

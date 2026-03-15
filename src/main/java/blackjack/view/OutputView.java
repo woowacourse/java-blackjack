@@ -1,12 +1,12 @@
 package blackjack.view;
 
-import blackjack.model.*;
-import blackjack.model.Dealer;
-import blackjack.model.Participant;
-import blackjack.model.Player;
-import blackjack.model.Players;
+import blackjack.domain.card.Card;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
+import blackjack.domain.game.GameResults;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +23,7 @@ public class OutputView {
         List<String> playerNames = players.getPlayers().stream()
                 .map(Player::getName).toList();
         System.out.println("\n딜러와 " + String.join(", ", playerNames) + "에게 " + "2장을 나누었습니다.");
-        System.out.println("딜러카드: " + dealer.getInitialCards());
+        System.out.println("딜러카드: " + dealer.getFirstCard());
         for (Player player : players.getPlayers()) {
             printPlayerCardStatus(player, player.getCards());
         }
@@ -41,36 +41,18 @@ public class OutputView {
         }
     }
 
-    public void printBurst(String name) {
+    public void printBust(String name) {
         System.out.println(name + "의 점수가 버스트 되었습니다.");
     }
 
-    public void printGameResult(Map<Player, GameResult> gameResult) {
-        System.out.println("\n## 최종 승패");
-        Map<GameResult, Integer> dealerResult = new LinkedHashMap<>();
+    public void printGameResultProfit(GameResults gameResults) {
+        Map<Player, Integer> playersProfit = gameResults.getPlayersProfit();
 
-        for (GameResult result : gameResult.values()) {
-            summaryGameResult(result, dealerResult);
+        System.out.println("\n## 최종 수익");
+        System.out.println("딜러: " + gameResults.getDealerProfit());
+        for (Player player : playersProfit.keySet()) {
+            System.out.println(player.getName() + ": " + playersProfit.get(player));
         }
-        printDealerGameResult(dealerResult);
-        printPlayersGameResult(gameResult);
-    }
-
-    private static void printPlayersGameResult(Map<Player, GameResult> gameResult) {
-        for (Player player : gameResult.keySet()) {
-            System.out.println(player.getName() + ": " + gameResult.get(player).getStatus());
-        }
-    }
-
-    private static void printDealerGameResult(Map<GameResult, Integer> dealerResult) {
-        System.out.print("딜러: ");
-        for (GameResult result : GameResult.values()) {
-            Integer count = dealerResult.getOrDefault(result, 0);
-            if (count != 0) {
-                System.out.print(count + result.getStatus() + " ");
-            }
-        }
-        System.out.println();
     }
 
     private void printParticipantGameResult(Participant participant, String name) {
@@ -78,18 +60,6 @@ public class OutputView {
                 .map(Card::getCardName).toList();
         System.out.println(name + "카드: " +
                 String.join(", ", cardNames) +
-                " - 결과: " + participant.getScore());
-    }
-
-    private static void summaryGameResult(GameResult result, Map<GameResult, Integer> dealerResult) {
-        if (result.equals(GameResult.WIN)) {
-            dealerResult.put(GameResult.LOSE, dealerResult.getOrDefault(GameResult.LOSE, 0) + 1);
-        }
-        if (result.equals(GameResult.LOSE)) {
-            dealerResult.put(GameResult.WIN, dealerResult.getOrDefault(GameResult.WIN, 0) + 1);
-        }
-        if (result.equals(GameResult.DRAW)) {
-            dealerResult.put(GameResult.DRAW, dealerResult.getOrDefault(GameResult.DRAW, 0) + 1);
-        }
+                " - 결과: " + participant.getScore().getScore());
     }
 }
