@@ -4,6 +4,8 @@ import java.util.Objects;
 
 public class Money {
     private final long value;
+    private final int BETTING_UNIT = 1000;
+    private final long MAX_BETTING_MONEY = 100_000_000L;
 
     public Money(long value) {
         validateMoney(value);
@@ -17,6 +19,12 @@ public class Money {
     private void validateMoney(long value) {
         if (value < 0) {
             throw new IllegalArgumentException("베팅 금액은 양수입니다.");
+        }
+        if (value % BETTING_UNIT != 0) {
+            throw new IllegalArgumentException(String.format("베팅 금액의 단위는 %s원 입니다.", BETTING_UNIT));
+        }
+        if (value > MAX_BETTING_MONEY) {
+            throw new IllegalArgumentException(String.format("최대 베팅 액수는 %s원 입니다.", MAX_BETTING_MONEY));
         }
     }
 

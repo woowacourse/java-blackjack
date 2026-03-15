@@ -16,7 +16,7 @@ class MoneyTest {
     }
 
     @Test
-    @DisplayName("배팅 액수가 양수가 아니면 오류를 반환한다.")
+    @DisplayName("베팅 액수가 양수가 아니면 오류를 반환한다.")
     void invalidValueTest() {
         assertThrows(IllegalArgumentException.class, () -> new Money(-1000));
     }
@@ -29,4 +29,24 @@ class MoneyTest {
 
         assertThat(money.sum(other)).isEqualTo(new Money(3000));
     }
+
+    @Test
+    @DisplayName("금액은 1000원 단위로 베팅할 수 있다.")
+    void bettingUnitTest() {
+        assertThrows(IllegalArgumentException.class, () -> new Money(10231230));
+    }
+
+    @Test
+    @DisplayName("최대 베팅 액수는 1억이다.")
+    void maximumMoneyTest() {
+        Money money = new Money(100_000_000);
+        assertThat(money.getValue()).isEqualTo(100_000_000);
+    }
+
+    @Test
+    @DisplayName("최대 베팅 액수가 넘어가면 오류를 반환한다.")
+    void invalidMaximumMoneyTest() {
+        assertThrows(IllegalArgumentException.class, () -> new Money(100_001_000));
+    }
+
 }
