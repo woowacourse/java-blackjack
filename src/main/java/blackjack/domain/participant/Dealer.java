@@ -1,12 +1,14 @@
-package blackjack.domain;
+package blackjack.domain.participant;
+
+import blackjack.domain.card.Card;
 
 public class Dealer extends Participant {
 
     private static final int DEALER_STAND_POINT = 17;
-
+    private static final String DEALER_NAME = "딜러";
 
     public Dealer() {
-        super("딜러", new Hand());
+        super(new Name(DEALER_NAME));
     }
 
     @Override

@@ -1,13 +1,16 @@
-package blackjack.domain;
+package blackjack.domain.participant;
+
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Hand;
 
 public abstract class Participant {
 
-    private final String name;
+    private final Name name;
     private final Hand hand;
 
-    public Participant(String name, Hand hand) {
+    protected Participant(Name name) {
         this.name = name;
-        this.hand = hand;
+        this.hand = new Hand();
     }
 
     public abstract void recieveCard(Card card);
@@ -30,7 +33,7 @@ public abstract class Participant {
     }
 
     public String getName() {
-        return name;
+        return name.getValue();
     }
 
     public void addCard(Card card) {
@@ -44,5 +47,7 @@ public abstract class Participant {
 
     public abstract boolean shouldDraw();
 
-
+    public boolean isBlackJack() {
+        return hand.isBlackJack();
+    }
 }

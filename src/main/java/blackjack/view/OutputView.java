@@ -1,65 +1,47 @@
 package blackjack.view;
 
-import blackjack.domain.Dealer;
-import blackjack.domain.GameResult;
-import blackjack.domain.Player;
-import blackjack.domain.Players;
+import blackjack.domain.game.FinalIncome;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
 import java.util.Map;
 
 public class OutputView {
+    private static final String lineSeparator = System.lineSeparator();
 
     public void printInitDraw(Players players, Dealer dealer) {
-        System.out.printf("%n딜러와 %s에게 2장을 나누었습니다.%n",
+        System.out.printf(lineSeparator + "딜러와 %s에게 2장을 나누었습니다." + lineSeparator,
                 String.join(", ", players.getNames()));
+        System.out.printf("딜러카드: %s" + lineSeparator, dealer.getFirstCardNames());
 
-        System.out.printf("딜러카드: %s%n", dealer.getFirstCardNames());
-
-        //플레이어 카드 출력
         for (Player player : players.getPlayers()) {
-            System.out.printf("%s카드: %s%n", player.getName(), player.getCardNames());
+            printCard(player);
         }
-
     }
 
     public void printCard(Player player) {
-        System.out.printf("%s카드: %s%n", player.getName(), player.getCardNames());
+        System.out.printf("%s카드: %s" + lineSeparator, player.getName(), player.getCardNames());
     }
 
     public void printDealerDraw() {
-        System.out.println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        System.out.println(lineSeparator + "딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
     public void printFinalCardResult(Dealer dealer, Players players) {
-
-        System.out.printf("%n딜러카드: %s - 결과: %d%n",
+        System.out.printf(lineSeparator + "딜러카드: %s - 결과: %d" + lineSeparator,
                 String.join(", ", dealer.getCardNames()), dealer.getTotalPoint());
         for (Player player : players.getPlayers()) {
-            System.out.printf("%s카드: %s - 결과: %d%n", player.getName(), player.getCardNames(), player.getTotalPoint());
+            System.out.printf("%s카드: %s - 결과: %d" + lineSeparator, player.getName(), player.getCardNames(),
+                    player.getTotalPoint());
         }
-
-
     }
 
-    public void printFinalGameResult(Map<Player, GameResult> result) {
-        System.out.println("\n## 최종 승패");
+    public void printFinalGameResult(FinalIncome finalIncome) {
+        System.out.println("\n## 최종 수익");
+        System.out.println("딜러: " + finalIncome.getDealerIncome());
 
-        int winCount = 0;
-        int tieCount = 0;
-        int loseCount = 0;
-        for (Map.Entry<Player, GameResult> entry : result.entrySet()) {
-            if (entry.getValue() == GameResult.WIN) {
-                loseCount++;
-            }
-            if (entry.getValue() == GameResult.LOSE) {
-                winCount++;
-            }
-            if (entry.getValue() == GameResult.TIE) {
-                tieCount++;
-            }
-        }
-        System.out.printf("딜러: %d승 %d무 %d패%n", winCount, tieCount, loseCount);
-        for (Map.Entry<Player, GameResult> entry : result.entrySet()) {
-            System.out.printf("%s: %s%n", entry.getKey().getName(), entry.getValue().getName());
+        for (Map.Entry<Player, Integer> entry : finalIncome.getPlayerIncomeResults().entrySet()) {
+            System.out.println(entry.getKey().getName() + ": " + entry.getValue());
         }
     }
 
