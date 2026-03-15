@@ -9,11 +9,15 @@ class BlackJackGameTest {
 
     private static final BetAmount DEFAULT_BET_AMOUNT = new BetAmount(1000);
 
+    private Player createPlayer(String name, int amount) {
+        return new Player(new Name(name), new BetAmount(amount));
+    }
+
     @Test
     void 게임_시작시_플레이어와_딜러는_각각_두장의_카드를_받는다() {
         Players players = new Players(List.of(
-                new Player("pobi", DEFAULT_BET_AMOUNT),
-                new Player("jason", DEFAULT_BET_AMOUNT)
+                new Player(new Name("pobi"), DEFAULT_BET_AMOUNT),
+                new Player(new Name("jason"), DEFAULT_BET_AMOUNT)
         ));
         Dealer dealer = new Dealer();
         Deck deck = new Deck();
@@ -29,7 +33,7 @@ class BlackJackGameTest {
 
     @Test
     void 시작_카드가_A와_K이면_플레이어는_블랙잭이다() {
-        Player player = new Player("pobi", DEFAULT_BET_AMOUNT);
+        Player player = new Player(new Name("pobi"), DEFAULT_BET_AMOUNT);
         Players players = new Players(List.of(player));
         Dealer dealer = new Dealer();
 

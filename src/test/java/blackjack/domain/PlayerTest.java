@@ -10,7 +10,7 @@ public class PlayerTest {
 
     @Test
     void 플레이어가_카드를_받는다() {
-        Player player = new Player("모카", DEFAULT_BET_AMOUNT);
+        Player player = new Player(new Name("모카"), DEFAULT_BET_AMOUNT);
 
         player.recieveCard(new Card(CardPoint.ACE, CardPattern.DIAMOND));
 
@@ -19,7 +19,7 @@ public class PlayerTest {
 
     @Test
     void 처음_두장의_합이_21이면_블랙잭이다() {
-        Player player = new Player("pobi", DEFAULT_BET_AMOUNT);
+        Player player = new Player(new Name("pobi"), DEFAULT_BET_AMOUNT);
         player.recieveCard(new Card(CardPoint.ACE, CardPattern.SPADE));
         player.recieveCard(new Card(CardPoint.KING, CardPattern.HEART));
 
@@ -28,7 +28,7 @@ public class PlayerTest {
 
     @Test
     void 세장의_합이_21이어도_블랙잭이_아니다() {
-        Player player = new Player("pobi", DEFAULT_BET_AMOUNT);
+        Player player = new Player(new Name("pobi"), DEFAULT_BET_AMOUNT);
         player.recieveCard(new Card(CardPoint.SEVEN, CardPattern.SPADE));
         player.recieveCard(new Card(CardPoint.SEVEN, CardPattern.HEART));
         player.recieveCard(new Card(CardPoint.SEVEN, CardPattern.CLUB));
@@ -38,7 +38,7 @@ public class PlayerTest {
 
     @Test
     void 처음_두장의_합이_21이_아니면_블랙잭이_아니다() {
-        Player player = new Player("pobi", DEFAULT_BET_AMOUNT);
+        Player player = new Player(new Name("pobi"), DEFAULT_BET_AMOUNT);
         player.recieveCard(new Card(CardPoint.ACE, CardPattern.SPADE));
         player.recieveCard(new Card(CardPoint.NINE, CardPattern.HEART));
 

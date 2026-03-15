@@ -2,12 +2,12 @@ package blackjack.domain;
 
 public abstract class Participant {
 
-    private final String name;
+    private final Name name;
     private final Hand hand;
 
-    public Participant(String name, Hand hand) {
+    protected Participant(Name name) {
         this.name = name;
-        this.hand = hand;
+        this.hand = new Hand();
     }
 
     public abstract void recieveCard(Card card);
@@ -30,7 +30,7 @@ public abstract class Participant {
     }
 
     public String getName() {
-        return name;
+        return name.getValue();
     }
 
     public void addCard(Card card) {

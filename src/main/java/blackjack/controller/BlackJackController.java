@@ -1,6 +1,5 @@
 package blackjack.controller;
 
-import blackjack.domain.BetAmount;
 import blackjack.domain.BlackJackGame;
 import blackjack.domain.Dealer;
 import blackjack.domain.Deck;
@@ -9,16 +8,13 @@ import blackjack.domain.Player;
 import blackjack.domain.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.ArrayList;
-import java.util.List;
 
 public class BlackJackController {
     private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView();
 
     public void run() {
-        List<String> names = inputView.readNames();
-        Players players = createPlayers(names);
+        Players players = inputView.readPlayers();
         Dealer dealer = new Dealer();
         Deck deck = new Deck();
 
@@ -35,16 +31,6 @@ public class BlackJackController {
         FinalIncome result = blackJackGame.judgeGameResult();
         outputView.printFinalGameResult(result);
     }
-
-    private Players createPlayers(List<String> names) {
-        List<Player> playerList = new ArrayList<>();
-        for (String name : names) {
-            int amount = inputView.readBetAmount(name);
-            playerList.add(new Player(name, new BetAmount(amount)));
-        }
-        return new Players(playerList);
-    }
-
 
     private void dealerTurn(Dealer dealer, Deck deck) {
         while (dealer.shouldDraw()) {

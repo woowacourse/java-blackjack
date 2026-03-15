@@ -4,8 +4,8 @@ public class Player extends Participant {
 
     private final BetAmount betAmount;
 
-    public Player(String name, BetAmount betAmount) {
-        super(name, new Hand());
+    public Player(Name name, BetAmount betAmount) {
+        super(name);
         this.betAmount = betAmount;
     }
 

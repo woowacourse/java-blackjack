@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 class BlackJackJudgeTest {
 
     private Player createPlayer(String name, int betAmount) {
-        return new Player(name, new BetAmount(betAmount));
+        return new Player(new Name(name), new BetAmount(betAmount));
     }
 
     private Players createPlayers(Player... players) {
