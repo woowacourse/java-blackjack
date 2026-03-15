@@ -12,6 +12,12 @@ public class BettingProfitCalculator {
 
     private static final int DEALER_PROFIT_INVERSION = -1;
 
+    private final DividendPolicy dividendPolicy;
+
+    public BettingProfitCalculator(DividendPolicy dividendPolicy) {
+        this.dividendPolicy = dividendPolicy;
+    }
+
     public BettingProfit calculate(Participants participants) {
         Dealer dealer = participants.getDealer();
 
@@ -26,8 +32,8 @@ public class BettingProfitCalculator {
 
         for (Player player : players) {
             BettingResult bettingResult = BettingResult.judge(dealer, player);
-            long profitRate = player.calculateProfitRate(bettingResult);
-            playerProfit.put(player, profitRate);
+            long profit = player.calculateProfit(dividendPolicy, bettingResult);
+            playerProfit.put(player, profit);
         }
         return playerProfit;
     }

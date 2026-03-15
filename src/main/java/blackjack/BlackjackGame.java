@@ -4,6 +4,7 @@ import blackjack.domain.GameCommand;
 import blackjack.domain.Participants;
 import blackjack.domain.betting.BettingProfit;
 import blackjack.domain.betting.BettingProfitCalculator;
+import blackjack.domain.betting.StandardDividendPolicy;
 import blackjack.domain.card.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
@@ -74,7 +75,7 @@ public class BlackjackGame {
     }
 
     private void judge(Participants participants) {
-        BettingProfitCalculator bettingProfitCalculator = new BettingProfitCalculator();
+        BettingProfitCalculator bettingProfitCalculator = new BettingProfitCalculator(new StandardDividendPolicy());
         BettingProfit bettingProfit = bettingProfitCalculator.calculate(participants);
         OutputView.showProfitRate(bettingProfit.getDealerProfit(), bettingProfit.getPlayerProfit());
     }

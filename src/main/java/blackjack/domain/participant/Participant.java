@@ -1,7 +1,6 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.GameScore;
-import blackjack.domain.betting.BettingResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Deck;
 import java.util.List;
@@ -11,19 +10,13 @@ public abstract class Participant {
 
     protected final Name name;
     protected final Hand hand;
-    protected BettingAmount bettingAmount;
 
     protected Participant(String name, Hand hand) {
         this.name = new Name(name);
         this.hand = hand;
-        this.bettingAmount = BettingAmount.initial();
     }
 
     public abstract List<Card> getInitialCards();
-
-    public final long calculateProfitRate(BettingResult bettingResult) {
-        return bettingResult.getProfitRate(bettingAmount.getBettingAmount());
-    }
 
     public final boolean isBust() {
         GameScore gameScore = hand.calculateTotalScore();

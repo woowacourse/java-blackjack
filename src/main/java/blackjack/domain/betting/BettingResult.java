@@ -5,20 +5,10 @@ import blackjack.domain.participant.Player;
 
 public enum BettingResult {
 
-    BLACKJACK_WIN(1.5),
-    WIN(1),
-    PUSH(0),
-    LOSE(-1);
-
-    private final double profitRate;
-
-    BettingResult(double profitRate) {
-        this.profitRate = profitRate;
-    }
-
-    public int getProfitRate(int betMoney) {
-        return (int) (betMoney * profitRate);
-    }
+    BLACKJACK_WIN,
+    WIN,
+    PUSH,
+    LOSE;
 
     public static BettingResult judge(Dealer dealer, Player player) {
         if (player.isBlackjack() && !dealer.isBlackjack()) {

@@ -24,7 +24,7 @@ class BettingProfitCalculatorTest {
 
         player.bet(10000);
 
-        BettingProfitCalculator bettingProfitCalculator = new BettingProfitCalculator();
+        BettingProfitCalculator bettingProfitCalculator = new BettingProfitCalculator(new StandardDividendPolicy());
         // when
         BettingProfit statistics = bettingProfitCalculator.calculate(participants);
         // then

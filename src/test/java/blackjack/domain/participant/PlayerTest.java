@@ -3,6 +3,7 @@ package blackjack.domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.betting.BettingResult;
+import blackjack.domain.betting.StandardDividendPolicy;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Emblem;
 import blackjack.domain.card.Grade;
@@ -78,8 +79,9 @@ class PlayerTest {
 
         int bettingAmount = 10_000;
         player.bet(bettingAmount);
+        StandardDividendPolicy dividendPolicy = new StandardDividendPolicy();
         // when
-        long profitRate = player.calculateProfitRate(bettingResult);
+        long profitRate = player.calculateProfit(dividendPolicy, bettingResult);
         // then
         assertThat(profitRate).isEqualTo(expectedProfitRate);
     }
