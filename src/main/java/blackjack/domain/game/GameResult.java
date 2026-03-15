@@ -1,14 +1,49 @@
 package blackjack.domain.game;
 
-import blackjack.domain.hand.Score;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
+import blackjack.exception.ErrorMessage;
+
+import java.util.Arrays;
 
 public enum GameResult {
-    BLACKJACK("블랙잭", "1.5"),
-    WIN("승", "1.0"),
-    LOSE("패", "-1.0"),
-    DRAW("무", "0.0");
+    BLACKJACK("블랙잭", "1.5") {
+        @Override
+        public boolean isMatch(Player player, Dealer dealer) {
+            return player.isBlackjack() && !dealer.isBlackjack();
+        }
+    },
+    WIN("승", "1.0") {
+        @Override
+        public boolean isMatch(Player player, Dealer dealer) {
+            if (dealer.isBust()) {
+                return !player.isBust();
+            }
+            return !player.isBust() && player.getScore().isGreaterThan(dealer.getScore());
+        }
+    },
+    LOSE("패", "-1.0") {
+        @Override
+        public boolean isMatch(Player player, Dealer dealer) {
+            if (player.isBust()) {
+                return true;
+            }
+            if (dealer.isBlackjack()) {
+                return !player.isBlackjack();
+            }
+            return dealer.getScore().isGreaterThan(player.getScore());
+        }
+    },
+    DRAW("무", "0.0") {
+        @Override
+        public boolean isMatch(Player player, Dealer dealer) {
+            if (player.isBlackjack() && dealer.isBlackjack()) {
+                return true;
+            }
+            return !player.isBust() && !dealer.isBust()
+                    && player.getScore().isSame(dealer.getScore());
+        }
+    };
 
     private final String status;
     private final String ratio;
@@ -18,36 +53,13 @@ public enum GameResult {
         this.ratio = ratio;
     }
 
+    public abstract boolean isMatch(Player player, Dealer dealer);
+
     public static GameResult matchResult(Player player, Dealer dealer) {
-        if (player.isBlackjack() && dealer.isBlackjack()) {
-            return DRAW;
-        }
-        if (player.isBlackjack()) {
-            return BLACKJACK;
-        }
-        if (dealer.isBlackjack()) {
-            return LOSE;
-        }
-        if (player.isBust()) {
-            return LOSE;
-        }
-        if (dealer.isBust()) {
-            return WIN;
-        }
-
-        return judgeScoreResult(player, dealer);
-    }
-
-    private static GameResult judgeScoreResult(Player player, Dealer dealer) {
-        Score playerScore = player.getScore();
-        Score dealerScore = dealer.getScore();
-        if (playerScore.isGreaterThan(dealerScore)) {
-            return WIN;
-        }
-        if (dealerScore.isGreaterThan(playerScore)) {
-            return LOSE;
-        }
-        return DRAW;
+        return Arrays.stream(GameResult.values())
+                .filter(gameResult -> gameResult.isMatch(player, dealer))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.INVALID_MATCH.getMessage()));
     }
 
     public String getRatio() {

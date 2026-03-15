@@ -21,6 +21,10 @@ public class Score {
         return this.score < score;
     }
 
+    public boolean isSame(Score score) {
+        return this.score == score.score;
+    }
+
     public boolean isGreaterThan(Score score) {
         return this.score > score.score;
     }
