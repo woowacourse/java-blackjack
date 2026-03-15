@@ -1,5 +1,8 @@
 package domain.enums;
 
+import domain.bet.Money;
+import domain.bet.Profit;
+
 public enum GameResult {
 
     BLACKJACK_WIN(1.5),
@@ -14,7 +17,7 @@ public enum GameResult {
         this.profitRatio = profitRatio;
     }
 
-    public int calculateProfit(int betAmount) {
-        return (int) (betAmount * this.profitRatio);
+    public Profit calculateProfit(Money betAmount) {
+        return Profit.calculate(betAmount, profitRatio);
     }
 }

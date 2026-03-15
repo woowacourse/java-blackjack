@@ -10,24 +10,24 @@ import java.util.Map;
 import java.util.Set;
 
 public class BetProfit {
-    private final Map<Name, Integer> betProfit;
+    private final Map<Name, Profit> betProfit;
 
-    private BetProfit(Map<Name, Integer> betProfit) {
+    private BetProfit(Map<Name, Profit> betProfit) {
         this.betProfit = new LinkedHashMap<>(betProfit);
     }
 
-    public static BetProfit calculateProfit(Map<Name, GameResult> playerResults, Map<Name, Integer> betHistory) {
+    public static BetProfit calculateProfit(Map<Name, GameResult> playerResults, Map<Name, Money> betHistory) {
         validatePlayers(playerResults.keySet(), betHistory.keySet());
-        Map<Name, Integer> betProfit = new LinkedHashMap<>();
+        Map<Name, Profit> betProfit = new LinkedHashMap<>();
 
         playerResults.keySet().forEach(
                 playerName -> {
-                    int betAmount = betHistory.get(playerName);
+                    Money bettingMoney = betHistory.get(playerName);
                     GameResult gameResult = playerResults.get(playerName);
 
-                    betAmount = gameResult.calculateProfit(betAmount);
+                    Profit profit = gameResult.calculateProfit(bettingMoney);
 
-                    betProfit.put(playerName, betAmount);
+                    betProfit.put(playerName, profit);
                 }
         );
 
@@ -42,20 +42,17 @@ public class BetProfit {
         }
     }
 
-    public Map<Name, Integer> getPlayerBetProfit() {
+    public Map<Name, Profit> getPlayerBetProfit() {
         return Collections.unmodifiableMap(new LinkedHashMap<>(betProfit));
     }
 
-    public int getDealerBetProfit() {
-        int playerProfitSum = betProfit.values()
-                .stream()
-                .mapToInt(i -> i)
-                .sum();
+    public Profit getDealerBetProfit() {
+        Profit playerProfitSum = Profit.of(0);
 
-        return negateBetAmount(playerProfitSum);
-    }
+        for (Profit profit : betProfit.values()) {
+            playerProfitSum = playerProfitSum.plus(profit);
+        }
 
-    private int negateBetAmount(int betAmount) {
-        return -betAmount;
+        return playerProfitSum.negate();
     }
 }

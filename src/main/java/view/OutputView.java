@@ -1,5 +1,6 @@
 package view;
 
+import domain.bet.Profit;
 import domain.card.Card;
 import domain.enums.GameResult;
 import domain.participant.Name;
@@ -82,12 +83,13 @@ public class OutputView {
         }
     }
 
-    public void printProfit(int dealerBetProfit, Map<Name, Integer> playerBetProfit) {
+    public void printProfit(Profit dealerBetProfit, Map<Name, Profit> playerBetProfit) {
         System.out.println(LINE_SEPARATOR + FINAL_PROFIT);
-        System.out.printf(DEALER_PROFIT + LINE_SEPARATOR, dealerBetProfit);
+        System.out.printf(DEALER_PROFIT + LINE_SEPARATOR, dealerBetProfit.amount());
 
         for (Name name : playerBetProfit.keySet()) {
-            System.out.printf(PLAYER_PROFIT + LINE_SEPARATOR, name, playerBetProfit.get(name));
+            Profit profit = playerBetProfit.get(name);
+            System.out.printf(PLAYER_PROFIT + LINE_SEPARATOR, name, profit.amount());
         }
     }
 
