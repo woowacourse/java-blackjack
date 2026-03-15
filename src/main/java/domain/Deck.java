@@ -7,7 +7,6 @@ import domain.card.Cards;
 import domain.card.Cards.PopResult;
 import domain.card.Rank;
 import domain.card.Suit;
-import factory.CardFactory;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -15,10 +14,6 @@ import java.util.List;
 public class Deck {
 
     private Cards cards;
-
-    public Deck() {
-        this.cards = CardFactory.createDeck();
-    }
 
     public Deck(Cards cards) {
         this.cards = cards;

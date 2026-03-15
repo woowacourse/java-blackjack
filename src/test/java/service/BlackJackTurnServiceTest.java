@@ -6,10 +6,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static util.TestUtil.createDealer;
 import static util.TestUtil.createPlayer;
 
-import domain.participant.Dealer;
 import domain.Deck;
-import domain.participant.Player;
 import domain.card.Rank;
+import domain.participant.Dealer;
+import domain.participant.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -26,7 +26,7 @@ class BlackJackTurnServiceTest {
     @Test
     void 플레이어가_정상적으로_Hit_하는_경우() {
         // given
-        Deck deck = new Deck();
+        Deck deck = Deck.createShuffledDeck();
         Player player = createPlayer("봉구스");
 
         // when
@@ -39,7 +39,7 @@ class BlackJackTurnServiceTest {
     @Test
     void 딜러가_정상적으로_Hit_하는_경우() {
         // given
-        Deck deck = new Deck();
+        Deck deck = Deck.createShuffledDeck();
         Dealer dealer = createDealer();
 
         // when
