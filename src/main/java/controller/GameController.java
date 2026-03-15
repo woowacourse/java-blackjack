@@ -44,15 +44,14 @@ public class GameController {
 
     private void playPlayerTurn(List<String> playerNames) {
         for (String playerName : playerNames) {
-            printPlayerHandIfBlackjack(playerName);
+            printPlayerHandIfInitialHandCannotHit(playerName);
             processPlayerTurn(playerName);
             printPlayerHandIfNeeded(playerName);
         }
     }
 
-    private void printPlayerHandIfBlackjack(String playerName) {
-        boolean canHit = manager.canPlayerReceiveCard(playerName);
-        if (!canHit) {
+    private void printPlayerHandIfInitialHandCannotHit(String playerName) {
+        if (!manager.canPlayerReceiveCard(playerName)) {
             outputView.printHand(manager.getPlayerHand(playerName), playerName);
         }
     }
