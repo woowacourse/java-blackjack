@@ -5,18 +5,13 @@ import java.util.List;
 import java.util.Map;
 import model.judgement.strategy.BlackjackStrategy;
 import model.judgement.strategy.BustStrategy;
-import model.judgement.strategy.ScoreComparisonStrategy;
 import model.paticipant.Dealer;
 import model.paticipant.Player;
 import model.paticipant.Players;
 
 public class Judgement {
 
-    private static final List<JudgeStrategy> STRATEGIES = List.of(
-            new BustStrategy(),
-            new BlackjackStrategy(),
-            new ScoreComparisonStrategy()
-    );
+    private static final List<JudgeStrategy> STRATEGIES = List.of(new BustStrategy(), new BlackjackStrategy());
 
     public static PlayerResult judgeByPlayer(Dealer dealer, Players players) {
         Map<Player, ResultStatus> result = new LinkedHashMap<>();
@@ -29,6 +24,16 @@ public class Judgement {
                 .filter(strategy -> strategy.isApplicable(dealer, player))
                 .findFirst()
                 .map(strategy -> strategy.getResult(dealer, player))
-                .orElse(ResultStatus.LOSE);
+                .orElseGet(() -> compareScore(dealer.calculateTotalScore(), player.calculateTotalScore()));
+    }
+
+    private static ResultStatus compareScore(int playerScore, int dealerScore) {
+        if (playerScore > dealerScore) {
+            return ResultStatus.WIN;
+        }
+        if (playerScore == dealerScore) {
+            return ResultStatus.DRAW;
+        }
+        return ResultStatus.LOSE;
     }
 }
