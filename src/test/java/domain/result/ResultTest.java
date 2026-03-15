@@ -27,7 +27,7 @@ class ResultTest {
         player.receiveCard(new Card(TEN, HEART));
         player.receiveCard(new Card(FIVE, HEART));
 
-        Result result = of(dealer, player);
+        Result result = Result.of(dealer, player);
 
         assertThat(result).isEqualTo(LOSE);
     }
@@ -41,7 +41,7 @@ class ResultTest {
 
         Player player = new Player("pobi", new Hand(), "10000");
 
-        Result result = of(dealer, player);
+        Result result = Result.of(dealer, player);
 
         assertThat(result).isEqualTo(WIN);
     }
@@ -69,7 +69,7 @@ class ResultTest {
         player4.receiveCard(new Card(QUEEN, HEART));
 
         List<Result> results = Stream.of(player1, player2, player3, player4)
-                .map(player -> of(dealer, player))
+                .map(player -> Result.of(dealer, player))
                 .toList();
 
         assertThat(results).containsExactly(LOSE, DRAW, WIN, BLACKJACK);
