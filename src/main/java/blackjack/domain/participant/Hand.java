@@ -56,7 +56,7 @@ public class Hand {
 
     public List<CardDto> getCardNames(final int startInclusive) {
         return cards.subList(startInclusive, cards.size()).stream()
-            .map(Card::toDto)
+            .map(CardDto::from)
             .toList();
     }
 }
