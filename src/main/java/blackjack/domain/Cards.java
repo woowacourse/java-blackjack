@@ -46,6 +46,6 @@ public class Cards {
     }
 
     private int countAces() {
-        return (int) cards.stream().filter(card -> card.rank().equals(Rank.ACE)).count();
+        return (int) cards.stream().filter(Card::isAce).count();
     }
 }

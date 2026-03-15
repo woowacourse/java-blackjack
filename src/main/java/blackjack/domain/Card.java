@@ -10,4 +10,8 @@ public record Card(Rank rank, Shape shape) {
         return rank.getScore();
     }
 
+    public boolean isAce() {
+        return rank == Rank.ACE;
+    }
+
 }
