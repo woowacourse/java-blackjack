@@ -2,30 +2,24 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
-import view.OutputView;
 
 public class BettingResult {
 
     private final int BLACK_JACK = 21;
     private final double BLACK_JACK_WIN_PRICE = 0.5;
-    private List<Participant> bettingResults;
+    private List<Participant> participantsBettingResults;
 
     public BettingResult() {
-        bettingResults = new ArrayList<>();
+        participantsBettingResults = new ArrayList<>();
     }
 
     public void calculateBettingMoney(Dealer dealer, List<Player> players) {
         int dealerScore = dealer.calculateTotalScore();
-        bettingResults.add(dealer);
+        participantsBettingResults.add(dealer);
         players.forEach(player -> {
             resolveBettingResult(dealerScore, player, dealer);
-            bettingResults.add(player);
+            participantsBettingResults.add(player);
         });
-    }
-
-    public void printBettingResult() {
-        OutputView.printBettingResultHeader();
-        OutputView.printBettingResult(bettingResults);
     }
 
     private void resolveBettingResult(int dealerScore, Player player, Dealer dealer) {
@@ -76,5 +70,9 @@ public class BettingResult {
         }
         player.addProfit(money);
         dealer.subtractProfit(money);
+    }
+
+    public List<Participant> participantsBettingResults() {
+        return participantsBettingResults;
     }
 }
