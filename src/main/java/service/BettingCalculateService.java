@@ -25,9 +25,8 @@ public class BettingCalculateService {
         List<Profit> playersProfit = new ArrayList<>();
         for (Player player : players) {
             Money bettingMoney = player.getBettingMoney();
-            BettingResult judge = BettingResult.judge(player, dealer);
-            int earningsRate = judge.getEarningRate();
-            playersProfit.add(new Profit(player.getName(), bettingMoney, earningsRate));
+            BettingResult bettingResult = BettingResult.judge(player, dealer);
+            playersProfit.add(new Profit(player.getName(), bettingMoney, bettingResult));
         }
         return playersProfit;
     }
@@ -35,6 +34,7 @@ public class BettingCalculateService {
     public BettingResultDto getBettingResult() {
         return new BettingResultDto(getPlayersProfit(), getDealerProfit());
     }
+
     private List<PlayerProfitDto> getPlayersProfit() {
         List<Profit> profits = calculatePlayersProfit();
         List<PlayerProfitDto> playersProfit = new ArrayList<>();

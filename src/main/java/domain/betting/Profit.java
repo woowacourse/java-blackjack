@@ -3,12 +3,12 @@ package domain.betting;
 public class Profit {
     private final String name;
     private final Money money;
-    private final int earningRate;
+    private final BettingResult bettingResult;
 
-    public Profit(String name, Money money, int earningRate) {
+    public Profit(String name, Money money, BettingResult bettingResult) {
         this.name = name;
         this.money = money;
-        this.earningRate = earningRate;
+        this.bettingResult = bettingResult;
     }
 
     public String getName() {
@@ -16,6 +16,6 @@ public class Profit {
     }
 
     public long calculateProfit() {
-        return (earningRate * money.getValue()) / 100;
+        return bettingResult.getEarningRate() * money.getValue() / 100;
     }
 }
