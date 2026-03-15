@@ -2,7 +2,7 @@ package util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import domain.Players;
+import domain.participant.Players;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;

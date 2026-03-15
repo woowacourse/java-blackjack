@@ -1,12 +1,12 @@
 package view;
 
-import domain.Card;
-import domain.Hand;
-import domain.Dealer;
-import domain.GameResult;
-import domain.Outcome;
-import domain.Player;
-import domain.Players;
+import domain.card.Card;
+import domain.card.Hand;
+import domain.participant.Dealer;
+import domain.game.GameResult;
+import domain.state.Outcome;
+import domain.participant.Player;
+import domain.participant.Players;
 import java.util.stream.Collectors;
 import message.IOMessage;
 

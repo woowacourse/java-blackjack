@@ -1,7 +1,7 @@
 package view;
 
-import domain.HitStand;
-import domain.Player;
+import domain.state.HitStand;
+import domain.participant.Player;
 import java.util.Scanner;
 import message.IOMessage;
 

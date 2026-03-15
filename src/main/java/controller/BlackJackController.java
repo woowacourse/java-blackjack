@@ -1,11 +1,11 @@
 package controller;
 
-import domain.BlackJackGame;
-import domain.Cards;
-import domain.Dealer;
-import domain.GameResult;
-import domain.Player;
-import domain.Players;
+import domain.game.BlackJackGame;
+import domain.card.Cards;
+import domain.participant.Dealer;
+import domain.game.GameResult;
+import domain.participant.Player;
+import domain.participant.Players;
 import view.InputView;
 import view.ResultView;
 
