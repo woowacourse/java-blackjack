@@ -49,7 +49,7 @@ public final class Card {
         return denomination == Denomination.ACE;
     }
 
-    public CardDto toDto() {
-        return CardDto.from(this);
+    public boolean isEqualTo(final Card other) {
+        return this.suit == other.suit && this.denomination == other.denomination;
     }
 }

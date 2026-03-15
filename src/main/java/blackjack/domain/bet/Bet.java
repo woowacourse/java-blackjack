@@ -37,4 +37,8 @@ public final class Bet {
     public int getAmount() {
         return amount;
     }
+
+    public boolean isEqualTo(final Bet other) {
+        return this.amount == other.amount;
+    }
 }
