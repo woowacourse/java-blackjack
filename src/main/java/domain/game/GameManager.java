@@ -13,7 +13,7 @@ public class GameManager {
     private final Deck deck;
 
     public GameManager(Players players) {
-        this.dealer = initDealer();
+        this.dealer = new Dealer();
         this.players = players;
         this.deck = new Deck();
     }
@@ -22,18 +22,9 @@ public class GameManager {
         return dealer;
     }
 
-    private Dealer initDealer() {
-        Dealer dealer = new Dealer();
-        return dealer;
-    }
-
     public void distributeInitialCards() {
-        distributeCardToDealer(dealer);
-        distributeCardToPlayers(players);
-    }
-
-    private void distributeCardToDealer(Dealer dealer) {
         distributeInitialCards(dealer);
+        distributeCardToPlayers(players);
     }
 
     private void distributeCardToPlayers(Players players) {
