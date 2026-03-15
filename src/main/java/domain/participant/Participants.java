@@ -31,7 +31,7 @@ public record Participants(Dealer dealer, Players players) {
         return players.getPlayer(name);
     }
 
-    public Player getPlayer(String name) {
-        return players.getPlayer(name);
+    public boolean playerIsBust(String name) {
+        return players.playerIsBust(name);
     }
 }
