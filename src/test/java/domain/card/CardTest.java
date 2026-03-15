@@ -1,6 +1,5 @@
-import domain.card.Card;
-import domain.card.Pattern;
-import domain.card.Rank;
+package domain.card;
+
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

@@ -1,3 +1,5 @@
+package service;
+
 import domain.card.Card;
 import domain.card.Pattern;
 import domain.card.Rank;
@@ -6,7 +8,6 @@ import domain.game.GameResult;
 import domain.participant.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import service.BlackJackService;
 
 import java.math.BigDecimal;
 import java.util.List;

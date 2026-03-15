@@ -1,5 +1,6 @@
+package domain.participant;
+
 import domain.card.Card;
-import domain.participant.Hand;
 import domain.card.Pattern;
 import domain.card.Rank;
 import org.junit.jupiter.api.BeforeEach;

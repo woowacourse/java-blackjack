@@ -1,5 +1,5 @@
-import domain.game.Result;
-import domain.game.GameResult;
+package domain.game;
+
 import domain.participant.Hand;
 import domain.participant.Money;
 import domain.participant.ParticipantInfo;
