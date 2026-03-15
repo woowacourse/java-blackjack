@@ -2,7 +2,7 @@ package domain.gameplaying;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import domain.gameplaying.strategy.RandomStrategy;
+import domain.gameplaying.strategy.InfiniteDeck;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +16,7 @@ class ParticipantsTest {
 
     @BeforeEach
     void setUp() {
-        this.participants = Participants.onlyDealer(new RandomStrategy());
+        this.participants = Participants.onlyDealer(new InfiniteDeck());
     }
 
     @ParameterizedTest

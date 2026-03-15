@@ -1,14 +1,16 @@
 package config;
 
 import controller.BlackJackController;
-import domain.gameplaying.DrawStrategy;
-import domain.gameplaying.strategy.OneDeckStrategy;
+import domain.gameplaying.BlackJackDeck;
+import domain.gameplaying.strategy.OnlyOneDeck;
 import repository.ParticipantRepository;
 import repository.ScoreRepository;
 import service.BlackJackCommandService;
 import service.BlackJackQueryService;
 
 public class AppConfig {
+
+    private final BlackJackDeck blackJackDeck = new OnlyOneDeck();
 
     public BlackJackController blackJackController() {
         ParticipantRepository participantRepository = new ParticipantRepository();
@@ -22,10 +24,10 @@ public class AppConfig {
 
     private BlackJackCommandService setupCommandService(ParticipantRepository participantRepository,
                                                         ScoreRepository scoreRepository) {
-        return new BlackJackCommandService(participantRepository, scoreRepository, drawStrategy());
+        return new BlackJackCommandService(participantRepository, scoreRepository, new OnlyOneDeck());
     }
 
-    private DrawStrategy drawStrategy() {
-        return new OneDeckStrategy();
+    private BlackJackDeck sharedDeck() {
+        return this.blackJackDeck;
     }
 }

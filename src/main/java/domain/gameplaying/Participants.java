@@ -14,8 +14,8 @@ public class Participants {
         this.players = players;
     }
 
-    public static Participants onlyDealer(DrawStrategy drawStrategy) {
-        return new Participants(Dealer.of(drawStrategy), Players.noOne(drawStrategy));
+    public static Participants onlyDealer(BlackJackDeck sharedDeck) {
+        return new Participants(Dealer.of(sharedDeck), Players.noOne(sharedDeck));
     }
 
     public Participants join(List<String> names) {

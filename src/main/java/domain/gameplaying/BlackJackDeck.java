@@ -1,6 +1,6 @@
 package domain.gameplaying;
 
 @FunctionalInterface
-public interface DrawStrategy {
+public interface BlackJackDeck {
     Card draw();
 }

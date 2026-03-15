@@ -9,19 +9,19 @@ import java.util.List;
 class Players {
 
     private final Deque<Player> players;
-    private final DrawStrategy drawStrategy;
+    private final BlackJackDeck sharedDeck;
 
-    private Players(List<Player> players, DrawStrategy drawStrategy) {
+    private Players(List<Player> players, BlackJackDeck sharedDeck) {
         this.players = new ArrayDeque<>(players);
-        this.drawStrategy = drawStrategy;
+        this.sharedDeck = sharedDeck;
     }
 
-    static Players noOne(DrawStrategy drawStrategy) {
-        return new Players(List.of(), drawStrategy);
+    static Players noOne(BlackJackDeck sharedDeck) {
+        return new Players(List.of(), sharedDeck);
     }
 
     Players join(List<String> names) {
-        return new Players(playersFrom(names), this.drawStrategy);
+        return new Players(playersFrom(names), this.sharedDeck);
     }
 
     List<String> names() {
@@ -50,6 +50,15 @@ class Players {
         }
     }
 
+    PlayedGameResult currentPlayerResult() {
+        requireCurrentPlayerExists();
+        Player gameFinishedPlayer = players.poll();
+        return PlayedGameResult.from(
+                gameFinishedPlayer.name(),
+                gameFinishedPlayer.cardInfos(),
+                gameFinishedPlayer.scoreSum());
+    }
+
     boolean isCurrentPlayerPlayable() {
         return hasWaitingPlayers() && currentPlayer().isPlayable();
     }
@@ -62,23 +71,14 @@ class Players {
         return currentPlayer().name();
     }
 
-    private List<Player> playersFrom(List<String> names) {
-        return names.stream()
-                .map(name -> Player.of(name, drawStrategy))
-                .toList();
-    }
-
     private Player currentPlayer() {
         return players.peek();
     }
 
-    PlayedGameResult currentPlayerResult() {
-        requireCurrentPlayerExists();
-        Player gameFinishedPlayer = players.poll();
-        return PlayedGameResult.from(
-                gameFinishedPlayer.name(),
-                gameFinishedPlayer.cardInfos(),
-                gameFinishedPlayer.scoreSum());
+    private List<Player> playersFrom(List<String> names) {
+        return names.stream()
+                .map(name -> Player.of(name, sharedDeck))
+                .toList();
     }
 
     private void requireCurrentPlayerExists() {

@@ -1,7 +1,7 @@
 package service;
 
 import domain.common.PlayedGameResult;
-import domain.gameplaying.DrawStrategy;
+import domain.gameplaying.BlackJackDeck;
 import domain.gameplaying.Participants;
 import domain.result.ScoreBoard;
 import java.util.List;
@@ -15,15 +15,14 @@ public class BlackJackCommandService {
 
     public BlackJackCommandService(ParticipantRepository participantRepository,
                                    ScoreRepository scoreRepository,
-                                   DrawStrategy drawStrategy) {
+                                   BlackJackDeck blackJackDeck) {
         this.participantRepository = participantRepository;
         this.scoreRepository = scoreRepository;
-
-        setupWith(drawStrategy);
+        setupWith(blackJackDeck);
     }
 
-    private void setupWith(DrawStrategy drawStrategy) {
-        participantRepository.setup(Participants.onlyDealer(drawStrategy));
+    private void setupWith(BlackJackDeck blackJackDeck) {
+        participantRepository.setup(Participants.onlyDealer(blackJackDeck));
         scoreRepository.setup(new ScoreBoard());
     }
 

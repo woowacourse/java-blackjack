@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import domain.gameplaying.strategy.RandomStrategy;
+import domain.gameplaying.strategy.InfiniteDeck;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
@@ -16,13 +16,13 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class ParticipantTest {
 
-    static Hand emptyHand = Hand.based(new RandomStrategy());
+    static Hand emptyHand = Hand.with(new InfiniteDeck());
     static Hand playingHand = new Hand(
-            new RandomStrategy(),
+            new InfiniteDeck(),
             List.of(new Card(CardRank.QUEEN, CardMark.SPADE),
                     new Card(CardRank.EIGHT, CardMark.HEART)));
     static Hand bustedHand = new Hand(
-            new RandomStrategy(),
+            new InfiniteDeck(),
             List.of(new Card(CardRank.QUEEN, CardMark.SPADE),
                     new Card(CardRank.EIGHT, CardMark.HEART),
                     new Card(CardRank.QUEEN, CardMark.CLOVER)));

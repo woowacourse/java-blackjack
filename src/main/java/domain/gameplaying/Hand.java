@@ -7,20 +7,20 @@ import java.util.List;
 
 class Hand {
 
-    private final DrawStrategy drawStrategy;
+    private final BlackJackDeck deck;
     private final List<Card> cards;
 
-    Hand(DrawStrategy drawStrategy, List<Card> cards) {
-        this.drawStrategy = drawStrategy;
+    Hand(BlackJackDeck deck, List<Card> cards) {
+        this.deck = deck;
         this.cards = new ArrayList<>(cards);
     }
 
-    static Hand based(DrawStrategy drawStrategy) {
-        return new Hand(drawStrategy, new ArrayList<>());
+    static Hand with(BlackJackDeck deck) {
+        return new Hand(deck, new ArrayList<>());
     }
 
     void drawCard() {
-        cards.add(drawStrategy.draw());
+        cards.add(deck.draw());
     }
 
     List<CardInfo> cardInfos() {
