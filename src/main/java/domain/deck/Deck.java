@@ -1,15 +1,15 @@
 package domain.deck;
 
-import domain.Card;
-import domain.constant.Rank;
-import domain.constant.Suit;
+import domain.card.Card;
+import domain.card.Rank;
+import domain.card.Suit;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Deck {
     private final Shuffle shuffle;
-    List<Card> cards = new ArrayList<>();
+    private final List<Card> cards = new ArrayList<>();
 
     public Deck(Shuffle shuffle) {
         this.shuffle = shuffle;

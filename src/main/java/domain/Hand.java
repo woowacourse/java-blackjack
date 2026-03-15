@@ -1,16 +1,25 @@
 package domain;
 
+import domain.card.Card;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
     private static final int MAX_NON_BUST_SCORE = 21;
+    private static final int BLACKJACK_SCORE = 21;
+    private static final int INITIAL_NUMBER_OF_CARDS = 2;
     private static final int ACE_BONUS_SCORE = 10;
+
 
     private final List<Card> cards = new ArrayList<>();
 
     public void addCard(Card card) {
         cards.add(card);
+    }
+
+    public boolean isBlackjack() {
+        return cards.size() == INITIAL_NUMBER_OF_CARDS && calculateScore() == BLACKJACK_SCORE;
     }
 
     public List<String> showHand() {

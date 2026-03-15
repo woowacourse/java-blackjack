@@ -1,13 +1,14 @@
 package domain.participant;
 
-import domain.Card;
+import domain.card.Card;
 import domain.Hand;
 
 import java.util.List;
 
 public abstract class Participant {
+
     private final String name;
-    protected final Hand hand;
+    private final Hand hand;
 
     protected Participant(String name, Hand hand) {
         this.name = name;
@@ -22,6 +23,10 @@ public abstract class Participant {
 
     public boolean isBust() {
         return hand.isBust();
+    }
+
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
     }
 
     public String getName() {

@@ -29,9 +29,9 @@ public class GameController {
 
     private List<String> registerPlayer() {
         List<String> playerNames = inputView.readPlayerName();
-
         for (String playerName : playerNames) {
-            manager.registerPlayer(playerName);
+            String betAmount = inputView.readBetAmount(playerName);
+            manager.registerPlayer(playerName, betAmount);
         }
 
         return playerNames;
@@ -44,10 +44,28 @@ public class GameController {
 
     private void playPlayerTurn(List<String> playerNames) {
         for (String playerName : playerNames) {
-            while (manager.canPlayerReceiveCard(playerName) && isStand(playerName)) {
-                List<String> playerHand = manager.drawPlayerCard(playerName);
-                outputView.printHand(playerHand, playerName);
-            }
+            printPlayerHandIfInitialHandCannotHit(playerName);
+            processPlayerTurn(playerName);
+            printPlayerHandIfNeeded(playerName);
+        }
+    }
+
+    private void printPlayerHandIfInitialHandCannotHit(String playerName) {
+        if (!manager.canPlayerReceiveCard(playerName)) {
+            outputView.printHand(manager.getPlayerHand(playerName), playerName);
+        }
+    }
+
+    private void processPlayerTurn(String playerName) {
+        while (manager.canPlayerReceiveCard(playerName) && isHit(playerName)) {
+            manager.drawPlayerCard(playerName);
+            outputView.printHand(manager.getPlayerHand(playerName), playerName);
+        }
+    }
+
+    private void printPlayerHandIfNeeded(String playerName) {
+        if (manager.canPlayerReceiveCard(playerName)) {
+            outputView.printHand(manager.getPlayerHand(playerName), playerName);
         }
     }
 
@@ -58,7 +76,7 @@ public class GameController {
         }
     }
 
-    private boolean isStand(String player) {
+    private boolean isHit(String player) {
         return !inputView.readCommand(player).equals("n");
     }
 }
