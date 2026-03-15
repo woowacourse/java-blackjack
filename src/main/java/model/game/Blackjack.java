@@ -1,5 +1,6 @@
 package model.game;
 
+import java.math.BigDecimal;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import model.card.Card;
@@ -49,16 +50,18 @@ public class Blackjack {
         return deck.draw();
     }
 
-    public Map<String, Long> calculateFinalResult() {
+    public Map<String, BigDecimal> calculateFinalResult() {
         Dealer dealer = participants.getDealer();
 
-        long dealerProfit = 0;
-        LinkedHashMap<String, Long> profitByName = new LinkedHashMap<>();
+        BigDecimal dealerProfit = new BigDecimal(0);
+        LinkedHashMap<String, BigDecimal> profitByName = new LinkedHashMap<>();
 
         for (Player player : participants.getPlayers()) {
             GameResult gameResult = GameResult.calculateResult(dealer, player);
-            profitByName.put(player.getName(), gameResult.getProfitFrom(player.getBettingAmount()));
-            dealerProfit += (-gameResult.getProfitFrom(player.getBettingAmount()));
+
+            BigDecimal playerProfit = gameResult.getProfitFrom(player.getBettingAmount());
+            profitByName.put(player.getName(), playerProfit);
+            dealerProfit = dealerProfit.subtract(playerProfit);
         }
 
         profitByName.putFirst(dealer.getName(), dealerProfit);

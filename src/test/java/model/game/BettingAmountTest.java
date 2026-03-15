@@ -3,6 +3,7 @@ package model.game;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.math.BigDecimal;
 import model.game.exception.BettingUnitMismatchException;
 import model.game.exception.UnderMinimumAmountException;
 import org.junit.jupiter.api.Test;
@@ -19,7 +20,7 @@ class BettingAmountTest {
     void 베팅_기준을_만족하면_성공적으로_객체를_생성한다(int validAmount, int expected) {
         BettingAmount bettingAmount = BettingAmount.from(validAmount);
 
-        assertThat(bettingAmount.getAmount()).isEqualTo(expected);
+        assertThat(bettingAmount.getAmount()).isEqualByComparingTo(new BigDecimal(expected));
     }
 
     @ParameterizedTest

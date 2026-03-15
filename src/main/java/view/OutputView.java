@@ -1,5 +1,6 @@
 package view;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -36,11 +37,11 @@ public class OutputView {
         System.out.println("딜러는 " + Dealer.DRAW_THRESHOLD + "을 초과하여 카드를 더 받지 않았습니다." + LINE_SEPARATOR);
     }
 
-    public void printFinalProfit(Map<String, Long> profitByParticipant) {
+    public void printFinalProfit(Map<String, BigDecimal> profitByParticipant) {
         final String header = "## 최종 수익" + System.lineSeparator();
         String output = profitByParticipant.entrySet()
                 .stream()
-                .map(entry -> entry.getKey() + ": " + entry.getValue())
+                .map(entry -> entry.getKey() + ": " + entry.getValue().longValue())
                 .collect(Collectors.joining(
                         System.lineSeparator(),
                         header,

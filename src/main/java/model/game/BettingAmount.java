@@ -1,5 +1,6 @@
 package model.game;
 
+import java.math.BigDecimal;
 import model.game.exception.BettingUnitMismatchException;
 import model.game.exception.UnderMinimumAmountException;
 
@@ -7,10 +8,10 @@ public final class BettingAmount {
     private static final int DIVIDE_UNIT = 100;
     private static final int MINIMUM_BATTING_AMOUNT = 1000;
 
-    private final int amount;
+    private final BigDecimal amount;
 
     private BettingAmount(int amount) {
-        this.amount = amount;
+        this.amount = new BigDecimal(amount);
     }
 
     public static BettingAmount from(int amount) {
@@ -36,7 +37,7 @@ public final class BettingAmount {
         }
     }
 
-    public int getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 }
