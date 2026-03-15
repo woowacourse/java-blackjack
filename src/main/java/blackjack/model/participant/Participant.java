@@ -25,7 +25,7 @@ public abstract class Participant {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException(ErrorCode.NO_NAME_PARTICIPANT_NAME.getMessage());
         }
-        if (name.startsWith(" ") || name.endsWith(" ")) {
+        if (!name.equals(name.strip())) {
             throw new IllegalArgumentException(ErrorCode.NAME_STARTS_OR_ENDS_WITH_SPACE.getMessage());
         }
     }
