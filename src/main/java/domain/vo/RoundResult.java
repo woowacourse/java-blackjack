@@ -1,6 +1,7 @@
 package domain.vo;
 
-import domain.member.Member;
+import domain.member.Dealer;
+import domain.member.Player;
 
 public enum RoundResult {
 
@@ -14,7 +15,7 @@ public enum RoundResult {
         this.profitRate = profitRate;
     }
 
-    public static RoundResult judgeAgainst(Member dealer, Member player) {
+    public static RoundResult judgeAgainst(Dealer dealer, Player player) {
         if (player.hasBust()) return RoundResult.LOSE;
         if (dealer.hasBust()) return RoundResult.WIN;
         if (player.isBiggerThan(dealer)) return RoundResult.WIN;
