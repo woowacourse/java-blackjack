@@ -4,13 +4,10 @@ import blackjack.dto.PlayerResultDto;
 import blackjack.dto.PlayerResultsDto;
 import blackjack.model.carddeck.CardDeck;
 import blackjack.model.carddeck.RandomPickStrategy;
-import blackjack.model.money.Money;
 import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Player;
-import blackjack.model.result.PlayerResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.ArrayList;
 import java.util.List;
 
 public class BlackjackController {
@@ -98,7 +95,7 @@ public class BlackjackController {
         players.forEach(player -> outputView.printParticipantCardsWithScore(
                 player.getName(),
                 player.getAllCards(),
-                player.getFinalScore()
+                player.getScore()
         ));
     }
 
@@ -106,18 +103,14 @@ public class BlackjackController {
         outputView.printParticipantCardsWithScore(
                 dealer.getName(),
                 dealer.getAllCards(),
-                dealer.getFinalScore()
+                dealer.getScore()
         );
     }
 
     private void printResult(List<Player> players, Dealer dealer) {
-        List<PlayerResultDto> results = new ArrayList<>();
-
-        for (Player player : players) {
-            PlayerResult result = dealer.judgePlayerResult(player);
-            Money profit = player.calculateProfit(result);
-            results.add(new PlayerResultDto(player.getName(), profit));
-        }
+        List<PlayerResultDto> results = players.stream()
+                .map(player -> PlayerResultDto.from(player, player.getPlayerProfit(dealer)))
+                .toList();
 
         outputView.printResult(new PlayerResultsDto(results));
     }

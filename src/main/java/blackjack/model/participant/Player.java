@@ -4,10 +4,11 @@ import blackjack.dto.CardDto;
 import blackjack.model.card.Hands;
 import blackjack.model.money.Money;
 import blackjack.model.result.PlayerResult;
-import java.math.BigDecimal;
 import java.util.List;
 
 public class Player extends Participant {
+
+    private static final double NATURAL_BLACKJACK_BONUS = 1.5;
 
     private Money bettingMoney;
 
@@ -28,9 +29,34 @@ public class Player extends Participant {
         this.bettingMoney = Money.of(amount);
     }
 
-    public Money calculateProfit(PlayerResult result) {
+    public Money getPlayerProfit(Dealer dealer) {
+        PlayerResult result = getPlayerResult(dealer);
+        return calculatePlayerProfit(result);
+    }
+
+    private PlayerResult getPlayerResult(Dealer dealer) {
+        if (this.isBust()) {
+            return PlayerResult.LOSE;
+        }
+
+        if (dealer.isBust()) {
+            return PlayerResult.WIN;
+        }
+
+        if (dealer.hasHigherScoreThan(this)) {
+            return PlayerResult.LOSE;
+        }
+
+        if (this.hasHigherScoreThan(dealer)) {
+            return PlayerResult.WIN;
+        }
+
+        return PlayerResult.DRAW;
+    }
+
+    private Money calculatePlayerProfit(PlayerResult result) {
         if (result == PlayerResult.WIN) {
-            return calculateBlackjackBonus();
+            return checkNaturalBlackjack();
         }
         if (result == PlayerResult.LOSE) {
             return bettingMoney.multiply(-1);
@@ -38,9 +64,9 @@ public class Player extends Participant {
         return Money.zero();
     }
 
-    private Money calculateBlackjackBonus() {
-        if (checkBonus()) {
-            return bettingMoney.multiply(1.5);
+    private Money checkNaturalBlackjack() {
+        if (isBlackjack() && hands.isTwoCardHand()) {
+            return bettingMoney.multiply(NATURAL_BLACKJACK_BONUS);
         }
         return bettingMoney;
     }

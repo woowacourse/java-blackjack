@@ -51,15 +51,15 @@ public abstract class Participant {
         return hands.hasScoreHigherThan(BLACKJACK_SCORE);
     }
 
-    protected boolean checkBonus() {
-        return hands.calculateTotalScore() == BLACKJACK_SCORE && hands.getAllCards().size() == 2;
+    public boolean isBlackjack() {
+        return hands.calculateTotalScore() == BLACKJACK_SCORE;
     }
 
     public boolean hasHigherScoreThan(Participant other) {
-        return this.hands.hasScoreHigherThan(other.getFinalScore());
+        return this.hands.hasScoreHigherThan(other.getScore());
     }
 
-    public int getFinalScore() {
+    public int getScore() {
         return hands.calculateTotalScore();
     }
 

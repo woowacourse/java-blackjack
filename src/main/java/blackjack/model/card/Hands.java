@@ -52,4 +52,8 @@ public class Hands {
                 .map(CardDto::from)
                 .toList();
     }
+
+    public boolean isTwoCardHand() {
+        return cards.size() == 2;
+    }
 }

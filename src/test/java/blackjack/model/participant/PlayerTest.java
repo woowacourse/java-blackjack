@@ -10,8 +10,6 @@ import blackjack.model.card.Rank;
 import blackjack.model.card.Suit;
 import blackjack.model.carddeck.CardDeck;
 import blackjack.model.money.Money;
-import blackjack.model.result.PlayerResult;
-import java.math.BigDecimal;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -106,19 +104,22 @@ class PlayerTest {
 
     @Test
     @DisplayName("손익 계산 테스트")
-    void calculateProfitTest() {
+    void getPlayerProfitTest() {
         // given
         CardDeck aceCardDeck = CardDeck.of(cards -> Card.of(Rank.ACE, Suit.CLOVER));
         CardDeck tenCardDeck = CardDeck.of(cards -> Card.of(Rank.TEN, Suit.CLOVER));
 
         Player player1 = Player.of("player1");
         player1.bet(10_000);
-
         player1.pickAdditionalCard(aceCardDeck);
         player1.pickAdditionalCard(tenCardDeck);
 
+        Dealer dealer = Dealer.create();
+        dealer.pickAdditionalCard(tenCardDeck);
+        dealer.pickAdditionalCard(tenCardDeck);
+
         // when
-        Money money = player1.calculateProfit(PlayerResult.WIN);
+        Money money = player1.getPlayerProfit(dealer);
 
         // then
         assertThat(money).isEqualTo(Money.of(15_000));
