@@ -24,6 +24,14 @@ public abstract class Participant {
         cards.cards().forEach(this::receive);
     }
 
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
+    }
+
+    public boolean isBust() {
+        return hand.isBust();
+    }
+
     public void receive(Card card) {
         hand.add(card);
     }

@@ -6,13 +6,10 @@ import java.util.stream.Collectors;
 
 public class Players {
     private static final int PLAYER_THRESHOLD = 5;
-    private final List<Player> players = new ArrayList<>();
+    private final List<Player> players;
 
-    public Players(List<String> names) {
-        for (String name : names) {
-            Player player = new Player(name);
-            players.add(player);
-        }
+    public Players(List<Player> players) {
+        this.players = new ArrayList<>(players);
 
         validatePlayerCount(players);
         validateDuplicatedName(players);
@@ -42,6 +39,6 @@ public class Players {
     }
 
     public List<Player> getPlayers() {
-        return players;
+        return List.copyOf(players);
     }
 }

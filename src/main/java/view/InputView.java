@@ -1,5 +1,6 @@
 package view;
 
+import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class InputView {
@@ -8,6 +9,16 @@ public class InputView {
     public String getNames() {
         System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
         return scanner.nextLine();
+    }
+
+    public BigDecimal getBetAmount(String name) {
+        System.out.println(name + "의 배팅 금액은?");
+
+        try {
+            return new BigDecimal(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException();
+        }
     }
 
     public String getChoice(String name) {

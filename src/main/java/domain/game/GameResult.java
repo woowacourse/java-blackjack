@@ -1,45 +1,34 @@
 package domain.game;
 
 import domain.participant.Dealer;
+import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
-import dto.DealerResultInfo;
-import dto.PlayerResultInfo;
+import dto.ParticipantResultInfo;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.Map;
 
-import static java.util.Collections.frequency;
+import static domain.game.ProfitCalculator.calculatePlayerProfit;
 
 public class GameResult {
-    private final Map<Player, WinningStatus> playerWinningStatus = new LinkedHashMap<>();
+    private final Map<Participant, BigDecimal> participantsProfits = new HashMap<>();
 
     public GameResult(Players players, Dealer dealer) {
+        BigDecimal playersProfitSum = BigDecimal.ZERO;
+
         for (Player player : players.getPlayers()) {
-            playerWinningStatus.put(player, WinningStatus.of(player, dealer));
+            BigDecimal profit = calculatePlayerProfit(player, dealer);
+            playersProfitSum = playersProfitSum.add(profit);
+
+            participantsProfits.put(player, profit);
         }
+        participantsProfits.put(dealer, playersProfitSum.negate());
     }
 
-    public List<PlayerResultInfo> getPlayersResult() {
-        List<PlayerResultInfo> result = new ArrayList<>();
-
-        for (Map.Entry<Player, WinningStatus> entry : playerWinningStatus.entrySet()) {
-            String name = entry.getKey().name();
-            WinningStatus status = entry.getValue();
-
-            result.add(new PlayerResultInfo(name, status));
-        }
-
-        return result;
-    }
-
-    public DealerResultInfo getDealerResult() {
-        int winCount = frequency(playerWinningStatus.values(), WinningStatus.LOSE);
-        int tieCount = frequency(playerWinningStatus.values(), WinningStatus.TIE);
-        int loseCount = frequency(playerWinningStatus.values(), WinningStatus.WIN);
-
-        return new DealerResultInfo(winCount, tieCount, loseCount);
+    public ParticipantResultInfo participantResultInfo(Participant participant) {
+        return new ParticipantResultInfo(participant.name(), participantsProfits.get(participant));
     }
 }
+

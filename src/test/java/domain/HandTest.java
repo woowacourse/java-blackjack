@@ -28,7 +28,7 @@ class HandTest {
     void 참가자가_가진_카드_목록을_반환한다() {
         Hand hand = new Hand();
 
-        Card card1 = new Card(Rank.ACE, Suit.HEART);
+        Card card1 = new Card(Rank.TWO, Suit.HEART);
         Card card2 = new Card(Rank.ACE, Suit.HEART);
 
         hand.add(card1);
@@ -39,7 +39,20 @@ class HandTest {
     }
 
     @Test
-    void 플레이어의_카드의_합이_21을_초과하는지_반환한다() {
+    void 참가자가_가진_카드_두_장의_합이_21인지_반환한다() {
+        Hand hand = new Hand();
+
+        Card card1 = new Card(Rank.JACK, Suit.HEART);
+        Card card2 = new Card(Rank.ACE, Suit.HEART);
+
+        hand.add(card1);
+        hand.add(card2);
+
+        assertThat(hand.isBlackjack()).isTrue();
+    }
+
+    @Test
+    void 참가자가_가진_카드의_합이_21을_초과하는지_반환한다() {
         List<Card> cards = createCards(Rank.JACK, Rank.QUEEN, Rank.KING);
         Hand hand = new Hand(cards);
 
@@ -59,7 +72,7 @@ class HandTest {
     }
 
     @Test
-    void 카드_중_에이스_카드가_하나_존재하고_카드의_합이_21_이하인_경우_합이_21에_근접하되_21을_초과하지_않도록_계산한다() {
+    void 참가자가_가진_카드_중_에이스_카드가_하나_존재하고_카드의_합이_21_이하인_경우_합이_21에_근접하되_21을_초과하지_않도록_계산한다() {
         List<Card> cards = createCards(Rank.ACE, Rank.QUEEN);
         Hand hand = new Hand(cards);
 
@@ -69,7 +82,7 @@ class HandTest {
     }
 
     @Test
-    void 카드_중_에이스_카드가_여러장_존재하고_카드의_합이_21을_초과하는_경우_합이_21에_근접하되_21을_초과하지_않도록_계산한다() {
+    void 참가자가_가진_카드_중_에이스_카드가_여러장_존재하고_카드의_합이_21을_초과하는_경우_합이_21에_근접하되_21을_초과하지_않도록_계산한다() {
         List<Card> cards = createCards(Rank.ACE, Rank.ACE, Rank.QUEEN);
         Hand hand = new Hand(cards);
 

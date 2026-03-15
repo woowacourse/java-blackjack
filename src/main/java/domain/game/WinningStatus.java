@@ -3,7 +3,7 @@ package domain.game;
 import domain.participant.Dealer;
 import domain.participant.Player;
 
-import static domain.BlackjackRule.BLACK_JACK;
+import java.util.Optional;
 
 public enum WinningStatus {
     WIN,
@@ -11,17 +11,35 @@ public enum WinningStatus {
     LOSE;
 
     public static WinningStatus of(Player player, Dealer dealer) {
-        int playerScore = player.score();
-        int dealerScore = dealer.score();
+        if (dealer.isBust()) {
+            return WIN;
+        }
 
-        if (playerScore > BLACK_JACK) {
+        if (player.isBust()) {
             return LOSE;
         }
 
-        if (dealerScore > BLACK_JACK) {
-            return WIN;
+        Optional<WinningStatus> winningStatus = judgeBlackjack(player, dealer);
+        return winningStatus.orElseGet(() -> compareScore(player.score(), dealer.score()));
+    }
+
+    private static Optional<WinningStatus> judgeBlackjack(Player player, Dealer dealer) {
+        boolean isPlayerBlackjack = player.isBlackjack();
+        boolean isDealerBlackjack = dealer.isBlackjack();
+
+        if (isPlayerBlackjack && !isDealerBlackjack) {
+            return Optional.of(WIN);
         }
-        return compareScore(playerScore, dealerScore);
+
+        if (!isPlayerBlackjack && isDealerBlackjack) {
+            return Optional.of(LOSE);
+        }
+
+        if (isPlayerBlackjack && isDealerBlackjack) {
+            return Optional.of(TIE);
+        }
+
+        return Optional.empty();
     }
 
     private static WinningStatus compareScore(int playerScore, int dealerScore) {
@@ -31,6 +49,7 @@ public enum WinningStatus {
         if (playerScore < dealerScore) {
             return LOSE;
         }
+
         return TIE;
     }
 }

@@ -30,9 +30,15 @@ public class BlackjackGame {
 
     public void run() {
         String names = inputView.getNames();
-        List<String> parsedName = InputParser.parseName(names);
+        List<String> parsedNames = InputParser.parseName(names);
 
-        Players players = new Players(parsedName);
+        Players players = new Players(parsedNames
+                .stream()
+                .map(Player::new).toList()
+        );
+
+        players.getPlayers().forEach(player -> player.bet(inputView.getBetAmount(player.name())));
+
         Dealer dealer = new Dealer(DEALER_NAME);
 
         CardShuffleStrategy cardShuffleStrategy = new RandomShuffleStrategy();
@@ -70,8 +76,15 @@ public class BlackjackGame {
 
     private void playerTurn(Player player, Deck deck) {
         while (player.canDraw()) {
-            if (inputView.getChoice(player.name()).equals("n")) {
+            String playerName = player.name();
+            String choice = inputView.getChoice(playerName);
+
+            if (choice.equals("n")) {
                 break;
+            }
+
+            if (!choice.equals("y")) {
+                throw new IllegalArgumentException();
             }
 
             player.receive(deck.draw());
@@ -85,6 +98,6 @@ public class BlackjackGame {
         participants.forEach(outputView::printFinalResult);
 
         GameResult gameResult = new GameResult(players, dealer);
-        outputView.printGameResult(gameResult, dealer);
+        outputView.printGameResult(gameResult, players, dealer);
     }
 }
