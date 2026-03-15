@@ -14,13 +14,27 @@ public class GameResultAnalyzer {
     private GameResultAnalyzer() {
     }
 
-    public static List<PlayerWinningResult> analyzePlayerWinningResults(Players players, Dealer dealer) {
-        return players.stream()
-                .map(player -> {
+    public static BettingResults analyzeBettingResults(Players players, Dealer dealer) {
+        List<BettingResult> playerBettingResults = analyzePlayerBettingResults(players, dealer);
+        BettingResult dealerBettingResult = analyzeDealerBettingResult(playerBettingResults);
+        return new BettingResults(dealerBettingResult, playerBettingResults);
+    }
+
+    private static List<BettingResult> analyzePlayerBettingResults(Players players, Dealer dealer) {
+        return players.stream().map(player -> {
                     WinningStatus winningStatus = judgePlayerGameResult(dealer, player);
-                    return new PlayerWinningResult(player.getName(), winningStatus);
-                })
-                .toList();
+                    return BettingResult.of(player.getName(), BettingProfit.of(winningStatus, player.getBetAmount()));
+                }
+        ).toList();
+    }
+
+    private static BettingResult analyzeDealerBettingResult(List<BettingResult> playerBettingResults) {
+        long sum = playerBettingResults.stream()
+                .mapToLong(BettingResult::getProfit)
+                .sum();
+
+        long dealerProfit = negate(sum);
+        return BettingResult.of(ParticipantName.from(DEALER_DISPLAY_NAME), BettingProfit.from(dealerProfit));
     }
 
     private static WinningStatus judgePlayerGameResult(Dealer dealer, Player player) {
@@ -59,24 +73,8 @@ public class GameResultAnalyzer {
         return WinningStatus.DRAW;
     }
 
-    public static List<BettingResult> analyzePlayerBettingResults(Players players, Dealer dealer) {
-        return players.stream().map(player -> {
-                    WinningStatus winningStatus = judgePlayerGameResult(dealer, player);
-                    return BettingResult.of(player.getName(), BettingProfit.of(winningStatus, player.getBetAmount()));
-                }
-        ).toList();
-    }
-
-    public static BettingResult analyzeDealerBettingResult(List<BettingResult> playerBettingResults) {
-        long sum = playerBettingResults.stream()
-                .mapToLong(BettingResult::getProfit)
-                .sum();
-
-        long dealerProfit = negate(sum);
-        return BettingResult.of(ParticipantName.from(DEALER_DISPLAY_NAME), BettingProfit.from(dealerProfit));
-    }
-
     private static long negate(long value) {
         return -value;
     }
+
 }
