@@ -25,16 +25,12 @@ public enum GameStatus {
         }
 
         if (cards.size() == DEALOUT_DRAW_COUNT) {
-            // 이 분기에서 버스트가 발생하지 않음은 보장된다.
-
             if (cards.calculateScore() == BLACKJACK_SCORE) {
                 return BLACKJACK;
             }
 
             return CAN_HIT;
         }
-
-        // 여기서부터는 무조건 카드 개수가 3개 이상이다.
 
         if (cards.calculateScore() == BLACKJACK_SCORE) {
             return STAY_21;
