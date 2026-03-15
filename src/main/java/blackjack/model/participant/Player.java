@@ -12,12 +12,13 @@ public class Player extends Participant {
 
     private Money bettingMoney;
 
-    private Player(String name, Hands hands) {
+    private Player(String name, Hands hands, Money bettingMoney) {
         super(name, hands);
+        this.bettingMoney = bettingMoney;
     }
 
     public static Player of(String name) {
-        return new Player(name, Hands.empty());
+        return new Player(name, Hands.empty(), Money.zero());
     }
 
     @Override
