@@ -19,10 +19,6 @@ public class Player {
         return new Player(name, bettingHand);
     }
 
-    public boolean hasSameName(String otherName) {
-        return name.getName().equals(otherName);
-    }
-
     public boolean isBust() {
         return bettingHand.isBust();
     }

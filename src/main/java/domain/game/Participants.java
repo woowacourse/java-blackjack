@@ -23,8 +23,4 @@ public class Participants {
     public Players getPlayers() {
         return players;
     }
-
-    public boolean areAllPlayersBust() {
-        return players.areAllBust();
-    }
 }
