@@ -1,7 +1,6 @@
 package blackjack.view;
 
 import blackjack.domain.vo.GameResult;
-import blackjack.domain.vo.MatchResult;
 import blackjack.dto.CardDto;
 import blackjack.dto.DealResultDto;
 import blackjack.dto.DealerScoreDto;
@@ -10,7 +9,6 @@ import blackjack.dto.PlayerHandDto;
 import blackjack.dto.PlayerScoreDto;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -62,19 +60,6 @@ public class OutputView {
     public void printDealerDrawMessage() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
         System.out.println();
-    }
-
-    public void printFinalResult(Map<String, MatchResult> matchResults, Map<String, Long> dealerResult) {
-        System.out.println("## 최종 승패");
-        printDealerFinalResult(dealerResult);
-        matchResults.forEach((name, result) ->
-                System.out.println(name + ": " + result.getDisplay())
-        );
-    }
-
-    private void printDealerFinalResult(Map<String, Long> dealerResult) {
-        System.out.println("딜러: " + dealerResult.get("승") + "승 "
-                + dealerResult.get("패") + "패");
     }
 
     public void printFinalResult(List<GameResult> gameResults, int dealerProfit) {

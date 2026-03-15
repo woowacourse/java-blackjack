@@ -3,13 +3,10 @@ package blackjack.domain;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.vo.GameResult;
-import blackjack.domain.vo.MatchResult;
 import blackjack.domain.vo.Payoff;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -90,7 +87,7 @@ public class BlackjackGame {
         }
     }
 
-    public List<GameResult> gameResults(){
+    public List<GameResult> calculatePlayerProfits(){
         List<GameResult> results = new ArrayList<>();
         players.forEach(player -> {
             int profit = Payoff.playerResult(player, dealer)
@@ -101,7 +98,7 @@ public class BlackjackGame {
         return results;
     }
 
-    public int getDealerProfit(List<GameResult> gameResults) {
+    public int calculateDealerProfit(List<GameResult> gameResults) {
         return -gameResults.stream()
                 .mapToInt(GameResult::profit)
                 .sum();

@@ -1,7 +1,5 @@
 package blackjack.domain.vo;
 
-import blackjack.domain.Players;
-
 public record GameResult(
     String name,
     int profit

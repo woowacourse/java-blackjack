@@ -48,8 +48,8 @@ public class BlackjackController {
 
         outputView.printGameResult(GameResultDto.from(game));
 
-        List<GameResult> gameResults = game.gameResults();
-        int dealerProfit = game.getDealerProfit(gameResults);
+        List<GameResult> gameResults = game.calculatePlayerProfits();
+        int dealerProfit = game.calculateDealerProfit(gameResults);
         outputView.printFinalResult(gameResults, dealerProfit);
     }
 
