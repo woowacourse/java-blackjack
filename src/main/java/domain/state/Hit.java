@@ -19,9 +19,4 @@ public class Hit extends Running {
         }
         return new Hit(getHand());
     }
-
-    @Override
-    public State stay() {
-        return new Stay(getHand());
-    }
 }

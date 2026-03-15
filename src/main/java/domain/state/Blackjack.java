@@ -9,8 +9,8 @@ public class Blackjack extends Finished {
     @Override
     public BigDecimal calculateProfitRate(State dealerState) {
         if (dealerState.isBlackjack()) {
-            return BigDecimal.ZERO;
+            return PROFIT_RATE_TIE;
         }
-        return new BigDecimal("1.5");
+        return PROFIT_RATE_BLACKJACK;
     }
 }

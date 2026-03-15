@@ -8,6 +8,6 @@ public class Bust extends Finished {
 
     @Override
     public BigDecimal calculateProfitRate(State dealerState) {
-        return new BigDecimal("-1.0");
+        return PROFIT_RATE_LOSE;
     }
 }

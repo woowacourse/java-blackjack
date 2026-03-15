@@ -4,19 +4,20 @@ import domain.participant.Hand;
 import java.math.BigDecimal;
 
 public class Stay extends Finished {
+
     public Stay(Hand hand) { super(hand); }
 
     @Override
     public BigDecimal calculateProfitRate(State dealerState) {
-        if (dealerState.isBust()) return BigDecimal.ONE;
+        if (dealerState.isBust()) return PROFIT_RATE_WIN;
 
         int compare = this.getScore().compareTo(dealerState.getScore());
         if (compare > 0) {
-            return BigDecimal.ONE;
+            return PROFIT_RATE_WIN;
         }
         if (compare < 0) {
-            return new BigDecimal("-1.0");
+            return PROFIT_RATE_LOSE;
         }
-        return BigDecimal.ZERO;
+        return PROFIT_RATE_TIE;
     }
 }
