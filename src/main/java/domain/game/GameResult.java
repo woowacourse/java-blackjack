@@ -20,7 +20,7 @@ public class GameResult {
             BigDecimal profit = calculatePlayerProfit(player, dealer);
             playersProfitSum = playersProfitSum.add(profit);
 
-            participantsProfits.put(player, player.betAmount());
+            participantsProfits.put(player, profit);
         }
         participantsProfits.put(dealer, playersProfitSum.negate());
     }

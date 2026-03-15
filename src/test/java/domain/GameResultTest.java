@@ -43,8 +43,8 @@ class GameResultTest {
 
         GameResult gameResult = new GameResult(players, dealer);
 
-        assertThat(gameResult.profit(pobi)).isEqualByComparingTo(BigDecimal.valueOf(1500));
-        assertThat(gameResult.profit(dealer)).isEqualByComparingTo(BigDecimal.valueOf(-1500));
+        assertThat(gameResult.participantResultInfo(pobi).profit()).isEqualByComparingTo(BigDecimal.valueOf(1500));
+        assertThat(gameResult.participantResultInfo(dealer).profit()).isEqualByComparingTo(BigDecimal.valueOf(-1500));
     }
 
     @Test
@@ -57,8 +57,8 @@ class GameResultTest {
 
         GameResult gameResult = new GameResult(players, dealer);
 
-        assertThat(gameResult.profit(pobi)).isEqualByComparingTo(BigDecimal.valueOf(1000));
-        assertThat(gameResult.profit(dealer)).isEqualByComparingTo(BigDecimal.valueOf(-1000));
+        assertThat(gameResult.participantResultInfo(pobi).profit()).isEqualByComparingTo(BigDecimal.valueOf(1000));
+        assertThat(gameResult.participantResultInfo(dealer).profit()).isEqualByComparingTo(BigDecimal.valueOf(-1000));
     }
 
     @Test
@@ -72,21 +72,21 @@ class GameResultTest {
 
         GameResult gameResult = new GameResult(players, dealer);
 
-        assertThat(gameResult.profit(pobi)).isEqualByComparingTo(BigDecimal.valueOf(-1000));
-        assertThat(gameResult.profit(dealer)).isEqualByComparingTo(BigDecimal.valueOf(1000));
+        assertThat(gameResult.participantResultInfo(pobi).profit()).isEqualByComparingTo(BigDecimal.valueOf(-1000));
+        assertThat(gameResult.participantResultInfo(dealer).profit()).isEqualByComparingTo(BigDecimal.valueOf(1000));
     }
 
     @Test
     void 무승부일_경우_플레이어는_자신이_베팅한_금액을_돌려받는다() {
-        Cards playerCards = new Cards(List.of(new Card(Rank.ACE, Suit.HEART), new Card(Rank.JACK, Suit.HEART)));
+        Cards playerCards = new Cards(List.of(new Card(Rank.TWO, Suit.HEART), new Card(Rank.JACK, Suit.HEART)));
         pobi.receiveInitialCards(playerCards);
 
-        Cards dealerCards = new Cards(List.of(new Card(Rank.ACE, Suit.CLOVER), new Card(Rank.JACK, Suit.CLOVER)));
+        Cards dealerCards = new Cards(List.of(new Card(Rank.TWO, Suit.CLOVER), new Card(Rank.JACK, Suit.CLOVER)));
         dealer.receiveInitialCards(dealerCards);
 
         GameResult gameResult = new GameResult(players, dealer);
 
-        assertThat(gameResult.profit(pobi)).isEqualByComparingTo(BigDecimal.valueOf(0));
-        assertThat(gameResult.profit(dealer)).isEqualByComparingTo(BigDecimal.valueOf(0));
+        assertThat(gameResult.participantResultInfo(pobi).profit()).isEqualByComparingTo(BigDecimal.valueOf(0));
+        assertThat(gameResult.participantResultInfo(dealer).profit()).isEqualByComparingTo(BigDecimal.valueOf(0));
     }
 }
