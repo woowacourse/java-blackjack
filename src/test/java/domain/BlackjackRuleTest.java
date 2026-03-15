@@ -39,9 +39,9 @@ public class BlackjackRuleTest {
 
         int dealerWinCount = getDealerResultCount(playerResult, GameResult.WIN);
 
-        assertSoftly(softly -> {
-            assertThat(playerResult).isEqualTo(GameResult.LOSE);
-            assertThat(dealerWinCount).isEqualTo(1);
+        assertSoftly(softAssertions -> {
+            softAssertions.assertThat(playerResult).isEqualTo(GameResult.LOSE);
+            softAssertions.assertThat(dealerWinCount).isEqualTo(1);
         });
     }
 
@@ -61,9 +61,9 @@ public class BlackjackRuleTest {
         GameResult playerResult = getPlayerResult();
         int dealerLoseCount = getDealerResultCount(playerResult, GameResult.LOSE);
 
-        assertSoftly(softly -> {
-            assertThat(playerResult).isEqualTo(GameResult.WIN);
-            assertThat(dealerLoseCount).isEqualTo(1);
+        assertSoftly(softAssertions -> {
+            softAssertions.assertThat(playerResult).isEqualTo(GameResult.WIN);
+            softAssertions.assertThat(dealerLoseCount).isEqualTo(1);
         });
     }
 
@@ -83,9 +83,9 @@ public class BlackjackRuleTest {
         GameResult playerResult = getPlayerResult();
         int dealerLoseCount = getDealerResultCount(playerResult, GameResult.LOSE);
 
-        assertSoftly(softly -> {
-            assertThat(playerResult).isEqualTo(GameResult.WIN);
-            assertThat(dealerLoseCount).isEqualTo(1);
+        assertSoftly(softAssertions -> {
+            softAssertions.assertThat(playerResult).isEqualTo(GameResult.WIN);
+            softAssertions.assertThat(dealerLoseCount).isEqualTo(1);
         });
     }
 
@@ -104,9 +104,9 @@ public class BlackjackRuleTest {
         GameResult playerResult = getPlayerResult();
         int dealerWinCount = getDealerResultCount(playerResult, GameResult.WIN);
 
-        assertSoftly(softly -> {
-            assertThat(playerResult).isEqualTo(GameResult.LOSE);
-            assertThat(dealerWinCount).isEqualTo(1);
+        assertSoftly(softAssertions -> {
+            softAssertions.assertThat(playerResult).isEqualTo(GameResult.LOSE);
+            softAssertions.assertThat(dealerWinCount).isEqualTo(1);
         });
     }
 
@@ -126,9 +126,9 @@ public class BlackjackRuleTest {
         int dealerDrawCount = getDealerResultCount(playerResult, GameResult.DRAW);
 
         //then
-        assertSoftly(softly -> {
-            assertThat(playerResult).isEqualTo(GameResult.DRAW);
-            assertThat(dealerDrawCount).isEqualTo(1);
+        assertSoftly(softAssertions -> {
+            softAssertions.assertThat(playerResult).isEqualTo(GameResult.DRAW);
+            softAssertions.assertThat(dealerDrawCount).isEqualTo(1);
         });
     }
 
@@ -147,9 +147,9 @@ public class BlackjackRuleTest {
         GameResult playerResult = getPlayerResult();
         int dealerLoseCount = getDealerResultCount(playerResult, GameResult.LOSE);
 
-        assertSoftly(softly -> {
-            assertThat(playerResult).isEqualTo(GameResult.BLACKJACK_WIN);
-            assertThat(dealerLoseCount).isEqualTo(1);
+        assertSoftly(softAssertions -> {
+            softAssertions.assertThat(playerResult).isEqualTo(GameResult.BLACKJACK_WIN);
+            softAssertions.assertThat(dealerLoseCount).isEqualTo(1);
         });
     }
 
@@ -169,9 +169,9 @@ public class BlackjackRuleTest {
         GameResult playerResult = getPlayerResult();
         int dealerResultCount = getDealerResultCount(playerResult, GameResult.WIN);
 
-        assertSoftly(softly -> {
-            assertThat(playerResult).isEqualTo(GameResult.LOSE);
-            assertThat(dealerResultCount).isEqualTo(1);
+        assertSoftly(softAssertions -> {
+            softAssertions.assertThat(playerResult).isEqualTo(GameResult.LOSE);
+            softAssertions.assertThat(dealerResultCount).isEqualTo(1);
         });
     }
 
@@ -190,9 +190,9 @@ public class BlackjackRuleTest {
         GameResult playerResult = getPlayerResult();
         int dealerDrawCount = getDealerResultCount(playerResult, GameResult.DRAW);
 
-        assertSoftly(softly -> {
-            assertThat(playerResult).isEqualTo(GameResult.DRAW);
-            assertThat(dealerDrawCount).isEqualTo(1);
+        assertSoftly(softAssertions -> {
+            softAssertions.assertThat(playerResult).isEqualTo(GameResult.DRAW);
+            softAssertions.assertThat(dealerDrawCount).isEqualTo(1);
         });
     }
 
@@ -204,6 +204,5 @@ public class BlackjackRuleTest {
         return BlackjackRule.judgePlayerResult(player, dealer);
     }
 }
-
 
 

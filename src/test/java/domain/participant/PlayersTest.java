@@ -7,7 +7,6 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import java.util.List;
 import java.util.stream.Stream;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -27,9 +26,9 @@ class PlayersTest {
         List<Name> allPlayersName = players.getAllPlayersName();
 
         //then
-        assertSoftly(softly -> {
-            Assertions.assertThat(allPlayersName).contains(new Name("피즈"));
-            Assertions.assertThat(allPlayersName).contains(new Name("스타크"));
+        assertSoftly(softAssertions -> {
+            softAssertions.assertThat(allPlayersName).contains(new Name("피즈"));
+            softAssertions.assertThat(allPlayersName).contains(new Name("스타크"));
         });
     }
 

@@ -49,11 +49,10 @@ public class GameTest {
             //when
             twoPlayerGame.initializeGame(deck);
             //then
-            assertSoftly(softly -> {
-                assertThat(twoPlayerGame.getPlayerCard(new Name("피즈")).size()).isEqualTo(2);
-                assertThat(twoPlayerGame.getPlayerCard(new Name("스타크")).size()).isEqualTo(2);
-
-                assertThat(dealer.getHand().size()).isEqualTo(2);
+            assertSoftly(softAssertions -> {
+                softAssertions.assertThat(twoPlayerGame.getPlayerCard(new Name("피즈")).size()).isEqualTo(2);
+                softAssertions.assertThat(twoPlayerGame.getPlayerCard(new Name("스타크")).size()).isEqualTo(2);
+                softAssertions.assertThat(dealer.getHand().size()).isEqualTo(2);
             });
         }
     }
@@ -144,18 +143,18 @@ public class GameTest {
             blackjackGame.playDealerTurn(delaerBlackjackDeck);
             blackjackGame.playDealerTurn(delaerBlackjackDeck);
 
-            assertSoftly(softly -> {
-                assertThat(dealer.getScore()).isEqualTo(21);
-                assertThat(dealer.getHand().size()).isEqualTo(2);
+            assertSoftly(softAssertions -> {
+                softAssertions.assertThat(dealer.getScore()).isEqualTo(21);
+                softAssertions.assertThat(dealer.getHand().size()).isEqualTo(2);
             });
         }
 
         private void assertCardDistribution(List<Card> cards, List<Rank> expectedRank, List<String> expectedSuit) {
             for (int i = 0; i < cards.size(); i++) {
                 int finalI = i;
-                assertSoftly(softly -> {
-                    assertThat(cards.get(finalI).getRank()).isEqualTo(expectedRank.get(finalI));
-                    assertThat(cards.get(finalI).getSuitString()).isEqualTo(expectedSuit.get(finalI));
+                assertSoftly(softAssertions -> {
+                    softAssertions.assertThat(cards.get(finalI).getRank()).isEqualTo(expectedRank.get(finalI));
+                    softAssertions.assertThat(cards.get(finalI).getSuitString()).isEqualTo(expectedSuit.get(finalI));
                 });
             }
         }
