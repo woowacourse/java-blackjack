@@ -41,13 +41,11 @@ public class Cards {
         return cardNames;
     }
 
+    public int getCardCount() {
+        return cards.size();
+    }
+
     private int countAces() {
-        int count = 0;
-        for (Card card : cards) {
-            if (card.rank().equals("A")) {
-                count++;
-            }
-        }
-        return count;
+        return (int) cards.stream().filter(Card::isAce).count();
     }
 }
