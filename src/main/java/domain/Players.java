@@ -14,7 +14,7 @@ public class Players {
         return new Players();
     }
 
-    public void addPlayer(Player player) {
+    public void add(Player player) {
         players.add(player);
     }
 

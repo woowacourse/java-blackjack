@@ -39,7 +39,7 @@ public class BlackjackController {
         Players players = Players.of();
         for (String userName : userNames) {
             Player player = Player.of(deck.drawInitialHand(), userName);
-            players.addPlayer(player);
+            players.add(player);
         }
         return players;
     }
