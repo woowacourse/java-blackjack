@@ -6,14 +6,6 @@ import blackjack.view.OutputView;
 
 public class AppConfig {
     public BlackjackController blackjackController(){
-        return new BlackjackController(inputView(), outputView());
-    }
-
-    public InputView inputView() {
-        return new InputView();
-    }
-
-    public OutputView outputView() {
-        return new OutputView();
+        return new BlackjackController(new InputView(), new OutputView());
     }
 }
