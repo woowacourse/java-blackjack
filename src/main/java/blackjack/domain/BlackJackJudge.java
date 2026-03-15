@@ -12,7 +12,7 @@ public class BlackJackJudge {
 
         for (Player player : players.getPlayers()) {
             GameResult gameResult = judgeGameResult(player, dealer);
-            int income = calculateIncome(player, gameResult);
+            int income = gameResult.calculateIncome(player.getBetAmount());  // ← 위임
 
             incomeResult.put(player, income);
             dealerIncome -= income;
@@ -21,32 +21,16 @@ public class BlackJackJudge {
         return new FinalIncome(dealerIncome, incomeResult);
     }
 
-    private int calculateIncome(Player player, GameResult gameResult) {
-        if (gameResult == GameResult.BACKJACK_WIN) {
-            return (int) (1.5 * player.getBetAmount());
-        }
-        if (gameResult == GameResult.WIN) {
-            return player.getBetAmount();
-        }
-        if (gameResult == GameResult.LOSE) {
-            return -player.getBetAmount();
-        }
-        return 0;
-    }
-
     private GameResult judgeGameResult(Player player, Dealer dealer) {
         if (player.isBust()) {
             return GameResult.LOSE;
         }
-
         if (dealer.isBust()) {
             return GameResult.WIN;
         }
-
         if (player.isBlackJack() && dealer.isBlackJack()) {
             return GameResult.TIE;
         }
-
         if (player.isBlackJack()) {
             return GameResult.BACKJACK_WIN;
         }
@@ -57,12 +41,9 @@ public class BlackJackJudge {
         if (playerTotalPoint == dealerTotalPoint) {
             return GameResult.TIE;
         }
-
         if (playerTotalPoint > dealerTotalPoint) {
             return GameResult.WIN;
         }
-
         return GameResult.LOSE;
     }
-
 }
