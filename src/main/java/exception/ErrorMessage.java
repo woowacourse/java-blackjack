@@ -16,6 +16,7 @@ public enum ErrorMessage {
     MONEY_NOT_NUMBER("베팅 금액은 숫자여야 합니다."),
     MONEY_OUT_OF_RANGE("베팅 금액은 0원 초과 100000000원 이하여야 합니다."),
     INVALID_MONEY_UNIT("베팅 금액의 단위는 10원 입니다."),
+    NO_CARDS_LEFT_TO_DRAW("카드를 더 이상 뽑을 수 없습니다."),
     ;
 
     private static final String PREFIX = "[ERROR] ";

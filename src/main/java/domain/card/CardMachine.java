@@ -3,6 +3,7 @@ package domain.card;
 import constant.PolicyConstant;
 import constant.Rank;
 import constant.Suit;
+import exception.ErrorMessage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -19,7 +20,7 @@ public class CardMachine {
 
     public Card drawCard() {
         if (isDrawFinished()) {
-            return null;
+            throw new IllegalArgumentException(ErrorMessage.NO_CARDS_LEFT_TO_DRAW.getMessage());
         }
         Card newCard = pickRandomCard();
         while (decks.getOrDefault(newCard, 0) >= PolicyConstant.DECK_COUNT) {
@@ -30,10 +31,10 @@ public class CardMachine {
     }
 
     private boolean isDrawFinished() {
-        return decks.size() >= PolicyConstant.DECK_SIZE && validateCardCount();
+        return decks.size() >= PolicyConstant.DECK_SIZE && areAllCardsExhausted();
     }
 
-    private boolean validateCardCount() {
+    private boolean areAllCardsExhausted() {
         return decks.values().stream()
             .allMatch(count -> count >= PolicyConstant.DECK_COUNT);
     }

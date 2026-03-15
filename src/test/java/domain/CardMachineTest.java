@@ -1,9 +1,11 @@
 package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import domain.card.Card;
 import domain.card.CardMachine;
+import exception.ErrorMessage;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.Nested;
@@ -48,18 +50,17 @@ class CardMachineTest {
             }
 
             @Test
-            void 카드가_모두_소진되면_null을_반환해야_한다() {
+            void 카드가_모두_소진되면_예외를_발생_시켜야_한다() {
 
                 // given
                 for (int i = 0; i < 312; i++) {
                     cardMachine.drawCard();
                 }
 
-                // when
-                Card actual = cardMachine.drawCard();
-
-                // then
-                assertThat(actual).isNull();
+                // when & then
+                assertThatThrownBy(cardMachine::drawCard)
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessageContaining(ErrorMessage.NO_CARDS_LEFT_TO_DRAW.getMessage());
             }
         }
     }
