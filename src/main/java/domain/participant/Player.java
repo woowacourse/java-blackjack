@@ -1,4 +1,6 @@
-package domain;
+package domain.participant;
+
+import domain.game.GameResult;
 
 public class Player extends Participant {
     private static final int CAN_RECEIVE_CARD_THRESHOLD = 21;
@@ -8,13 +10,19 @@ public class Player extends Participant {
     }
 
     public boolean isContinueGame() {
-        if (cards.calculateScore() >= CAN_RECEIVE_CARD_THRESHOLD) {
+        if (participantCards.calculateScore() >= CAN_RECEIVE_CARD_THRESHOLD) {
             return false;
         }
         return true;
     }
 
     public GameResult judgeResult(Dealer dealer) {
+        if (this.isBlackJack() && dealer.isBlackJack()) {
+            return GameResult.DRAW;
+        }
+        if (this.isBlackJack()) {
+            return GameResult.BLACKJACK;
+        }
         if (this.isBust()) {
             return GameResult.LOSE;
         }

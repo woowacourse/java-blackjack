@@ -1,8 +1,9 @@
 package view;
 
-import domain.GameResult;
+import domain.game.GameResult;
 import dto.ParticipantCardsDto;
 
+import dto.ParticipantRevenueDto;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ public class OutputView {
 
     public static void printGameInitialMessage(List<String> playersNames) {
         String playersNamesMessage = String.join(",", playersNames);
+        System.out.println();
         System.out.printf(DEALER + "와 %s에게 2장을 나누었습니다.%n", playersNamesMessage);
     }
 
@@ -26,6 +28,7 @@ public class OutputView {
     }
 
     public static void printDealerMessage() {
+        System.out.println();
         System.out.println(DEALER + "는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
@@ -44,10 +47,21 @@ public class OutputView {
             resultMessage.append(entry.getKey()).append(": ").append("패%n");
             loseCount += 1;
         }
-
+        System.out.println();
         System.out.println("## 최종 승패");
         System.out.println(DEALER + ": " + loseCount + "승" + " " + winCount + "패");
         System.out.printf(resultMessage.toString());
+    }
+
+    public static void printParticipantRevenues(List<ParticipantRevenueDto> participantRevenueDtos) {
+        System.out.println();
+        System.out.println("## 최종 수익");
+
+        for (ParticipantRevenueDto participantRevenueDto : participantRevenueDtos) {
+            System.out.println(
+                    participantRevenueDto.name() + ": " + participantRevenueDto.revenue()
+            );
+        }
     }
 
     private static void printInitialPlayerCards(ParticipantCardsDto participantCardsDto) {

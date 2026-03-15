@@ -1,7 +1,19 @@
 package controller;
 
-import domain.*;
+import domain.betting.BettingAmount;
+import domain.betting.BettingAmounts;
+import domain.betting.CalculateProfit;
+import domain.betting.Revenue;
+import domain.game.GameManager;
+import domain.game.GameResultManager;
+import domain.participant.Dealer;
+import domain.participant.Name;
+import domain.participant.Participant;
+import domain.participant.Player;
+import domain.participant.Players;
 import dto.ParticipantCardsDto;
+import dto.ParticipantRevenueDto;
+import java.util.HashMap;
 import view.InputView;
 import view.OutputView;
 
@@ -10,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import static view.OutputView.printCards;
+import static view.OutputView.printFinalCards;
 
 public class BlackJackGameController {
 
@@ -17,26 +30,44 @@ public class BlackJackGameController {
     }
 
     public void run() {
-        List<Player> players = initPlayer();
+        Players players = initPlayer();
         GameManager gameManager = new GameManager(players);
-
         List<String> playersNames = getPlayerNames(players);
+        BettingAmounts bettingAmounts = initBettingManager(players);
         OutputView.printGameInitialMessage(playersNames);
-
         gameManager.distributeInitialCards();
-        printParticipantCards(gameManager);
-
+        printParticipantCards(gameManager.getDealer(), players);
         playGame(players, gameManager);
-
-        Map<String, GameResult> gameResult = gameManager.getGameResult();
-
-        endGame(gameManager, players, gameResult);
+        CalculateProfit calculateProfit = new CalculateProfit(bettingAmounts);
+        GameResultManager gameResultManager =
+                new GameResultManager(calculateProfit, players, gameManager.getDealer());
+        Map<Name, Revenue> profits = gameResultManager.getParticipantsProfit();
+        List<ParticipantRevenueDto> revenueDtos = toParticipantRevenueDtos(profits);
+        endGame(gameManager, players, revenueDtos);
     }
 
-    private void playGame(List<Player> players, GameManager gameManager) {
-        for (Player player : players) {
-            playGameWithPlayer(player, gameManager);
+    private BettingAmounts initBettingManager(Players players) {
+        Map<Name, BettingAmount> bettingAmounts = new HashMap<>();
+        players.forEach(player -> {
+            int amount = InputView.askBettingAmount(player.getName().getName());
+            bettingAmounts.put(player.getName(), new BettingAmount(amount));
+        });
+        return new BettingAmounts(bettingAmounts);
+    }
+
+    private List<ParticipantRevenueDto> toParticipantRevenueDtos(Map<Name, Revenue> profits) {
+        List<ParticipantRevenueDto> revenueDtos = new ArrayList<>();
+        for (Map.Entry<Name, Revenue> entry : profits.entrySet()) {
+            revenueDtos.add(new ParticipantRevenueDto(
+                    entry.getKey().getName(),
+                    entry.getValue().getMoney()
+            ));
         }
+        return revenueDtos;
+    }
+
+    private void playGame(Players players, GameManager gameManager) {
+        players.forEach(player -> playGameWithPlayer(player, gameManager));
         playGameWithDealer(gameManager);
     }
 
@@ -56,45 +87,42 @@ public class BlackJackGameController {
                 break;
             }
             gameManager.drawCardTo(player);
-            printCards(player.getParticipantCardsDto());
+            printCards(toParticipantCardsDto(player));
         }
     }
 
     private boolean isStopGame(Player player) {
-        String response = InputView.askContinue(player.getName());
+        String response = InputView.askContinue(player.getName().getName());
         if (response.equals("n")) {
-            printCards(player.getParticipantCardsDto());
+            printCards(toParticipantCardsDto(player));
             return true;
         }
         return false;
     }
 
-    private void printParticipantCards(GameManager gameManager) {
-        ParticipantCardsDto dealerDto = gameManager.getDealerDto();
-        OutputView.printCards(dealerDto);
-        List<ParticipantCardsDto> playerDtos = gameManager.getPlayerDtos();
-        for (ParticipantCardsDto playerDto : playerDtos) {
-            OutputView.printCards(playerDto);
-        }
+    private void printParticipantCards(Dealer dealer, Players players) {
+        OutputView.printCards(toParticipantCardsDto(dealer));
+        players.forEach(player -> OutputView.printCards(toParticipantCardsDto(player)));
     }
 
-    private void endGame(GameManager gameManager, List<Player> players, Map<String, GameResult> gameResult) {
-        OutputView.printFinalCards(gameManager.getDealerDto());
+    private void endGame(GameManager gameManager, Players players, List<ParticipantRevenueDto> participantRevenueDtos) {
+        OutputView.printFinalCards(toParticipantCardsDto(gameManager.getDealer()));
         printFinalScores(players);
-        OutputView.printGameResult(gameResult);
+        OutputView.printParticipantRevenues(participantRevenueDtos);
     }
 
-    private void printFinalScores(List<Player> players) {
-        for (Player player : players) {
-            OutputView.printFinalCards(player.getParticipantCardsDto());
-        }
+    private void printFinalScores(Players players) {
+        players.forEach(player -> printFinalCards(toParticipantCardsDto(player)));
     }
 
-    private List<String> getPlayerNames(List<Player> players) {
-        return players.stream().map(Participant::getName).toList();
+    private List<String> getPlayerNames(Players players) {
+        List<String> playerNames = new ArrayList<>();
+        players.forEach(player -> playerNames.add(player.getName().getName()));
+        return playerNames;
+
     }
 
-    private List<Player> initPlayer() {
+    private Players initPlayer() {
         List<Player> players = new ArrayList<>();
         List<String> playerNames = getPlayerNames();
 
@@ -102,10 +130,18 @@ public class BlackJackGameController {
             Name playerName = new Name(name);
             players.add(new Player(playerName));
         }
-        return players;
+        return new Players(players);
     }
 
     private List<String> getPlayerNames() {
         return InputView.askPlayerNames();
+    }
+
+    private ParticipantCardsDto toParticipantCardsDto(Participant participant) {
+        return new ParticipantCardsDto(
+                participant.getName().getName(),
+                participant.getCardsInfo(),
+                participant.getScore()
+        );
     }
 }

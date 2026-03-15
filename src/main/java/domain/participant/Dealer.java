@@ -1,14 +1,15 @@
-package domain;
+package domain.participant;
 
 public class Dealer extends Participant {
     private static final int CAN_RECEIVE_CARD_THRESHOLD = 17;
+    private static final String DEALER = "딜러";
 
-    public Dealer(Name name) {
-        super(name);
+    public Dealer() {
+        super(new Name(DEALER));
     }
 
     public boolean isContinueGame() {
-        if (cards.calculateScore() >= CAN_RECEIVE_CARD_THRESHOLD) {
+        if (participantCards.calculateScore() >= CAN_RECEIVE_CARD_THRESHOLD) {
             return false;
         }
         return true;

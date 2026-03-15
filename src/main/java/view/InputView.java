@@ -1,7 +1,5 @@
 package view;
 
-import static domain.GameManager.validatePlayersNumber;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -13,16 +11,23 @@ public class InputView {
         Scanner sc = new Scanner(System.in);
         String input = sc.nextLine();
         List<String> playerNames = getPlayerNames(input);
-        validatePlayersNumber(playerNames);
-
         return playerNames;
     }
 
     public static String askContinue(String player) {
+        System.out.println();
         System.out.println(player + "는 한장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)");
         Scanner sc = new Scanner(System.in);
         String input = sc.nextLine();
-        validateContinueResponse(input);
+        InputValidator.validateContinueResponse(input);
+        return input;
+    }
+
+    public static Integer askBettingAmount(String player) {
+        System.out.println();
+        System.out.println(player + "의 배팅 금액은?");
+        Scanner sc = new Scanner(System.in);
+        Integer input = sc.nextInt();
         return input;
     }
 
@@ -31,11 +36,5 @@ public class InputView {
                 .map(String::trim)
                 .toList();
         return playerNames;
-    }
-
-    private static void validateContinueResponse(String input) {
-        if (!input.matches("[yn]")) {
-            throw new IllegalArgumentException("응답은 y와 n만 허용됩니다.");
-        }
     }
 }

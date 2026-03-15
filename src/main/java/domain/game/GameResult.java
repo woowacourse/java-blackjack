@@ -1,9 +1,10 @@
-package domain;
+package domain.game;
 
 public enum GameResult {
     WIN("승"),
     LOSE("패"),
-    DRAW("무");
+    DRAW("무"),
+    BLACKJACK("블랙잭");
 
     private final String resultKoreanName;
 
