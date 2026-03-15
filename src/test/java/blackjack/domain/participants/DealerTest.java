@@ -1,4 +1,4 @@
-package blackjack.domain.participant;
+package blackjack.domain.participants;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -11,7 +11,7 @@ class DealerTest {
     @Test
     void 점수가_임계점을_초과하면_스탠드한다() {
         // given
-        Dealer dealer = Dealer.create();
+        Dealer dealer = Dealer.createEmptyHand();
         dealer.hit(new Card(Rank.SEVEN, Suit.CLOVER));
         dealer.hit(new Card(Rank.TEN, Suit.CLOVER));
         // when
@@ -23,7 +23,7 @@ class DealerTest {
     @Test
     void 점수가_임계점_이하면_힛한다() {
         // given
-        Dealer dealer = Dealer.create();
+        Dealer dealer = Dealer.createEmptyHand();
         dealer.hit(new Card(Rank.FIVE, Suit.CLOVER));
         dealer.hit(new Card(Rank.TEN, Suit.CLOVER));
         // when

@@ -1,27 +1,19 @@
-package blackjack.domain.participant;
+package blackjack.domain.participants;
 
-import blackjack.domain.card.Deck;
-import blackjack.domain.card.Hand;
 import java.util.Arrays;
 import java.util.List;
 
-public record PlayerGroup(List<Player> players) {
+public record PlayerNames(List<Name> names) {
     private static final String DELIMITER = ",";
     private static final int INCLUDE_EMPTY_ELEMENT = -1;
 
-    public static PlayerGroup from(final String rawPlayerNames) {
-        List<Player> players = parsePlayersFrom(rawPlayerNames);
-        return new PlayerGroup(players);
-    }
-
-    private static List<Player> parsePlayersFrom(String rawPlayerNames) {
+    public static PlayerNames from(String rawPlayerNames) {
         List<Name> playerNames = Arrays.stream(
                 rawPlayerNames.split(DELIMITER, INCLUDE_EMPTY_ELEMENT))
             .map(Name::new)
             .toList();
         validateDuplicatedNames(playerNames);
-
-        return parsePlayersFrom(playerNames);
+        return new PlayerNames(playerNames);
     }
 
     private static void validateDuplicatedNames(List<Name> playerNames) {
@@ -34,25 +26,17 @@ public record PlayerGroup(List<Player> players) {
     }
 
     private static boolean containsDealerName(List<Name> playerNames) {
-        return playerNames.stream().anyMatch(Dealer::isDealerName);
+        return playerNames.stream()
+            .anyMatch(Dealer::isDealerName);
     }
 
     private static boolean isDuplicated(List<Name> playerNames) {
-        return playerNames.stream().distinct().count() != playerNames.size();
+        return countDistinct(playerNames) != playerNames.size();
     }
 
-    private static List<Player> parsePlayersFrom(List<Name> playerNames) {
+    private static long countDistinct(List<Name> playerNames) {
         return playerNames.stream()
-            .map(playerName -> new Player(playerName, new Hand()))
-            .toList();
-    }
-
-    @Override
-    public List<Player> players() {
-        return List.copyOf(players);
-    }
-
-    public void deal(Deck deck) {
-        players.forEach(participant -> participant.hit(deck.draw()));
+            .distinct()
+            .count();
     }
 }

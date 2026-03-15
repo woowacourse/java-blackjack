@@ -1,11 +1,11 @@
-package blackjack.domain.participant;
+package blackjack.domain.participants;
 
-import blackjack.domain.card.Hand;
-import blackjack.domain.result.Score;
 import blackjack.domain.card.Card;
+import blackjack.domain.card.Hand;
+import blackjack.domain.game.Score;
 import java.util.List;
 
-public abstract class Participant {
+abstract class Participant {
     private final Name name;
     private final Hand hand;
 
@@ -19,7 +19,7 @@ public abstract class Participant {
     }
 
     public final List<Card> getCards() {
-        return hand.getCards();
+        return hand.cards();
     }
 
     public final void hit(Card card) {
@@ -27,7 +27,7 @@ public abstract class Participant {
     }
 
     public final Score getScore() {
-        return hand.getScore();
+        return hand.calculateScore();
     }
 
     public final boolean isBust() {

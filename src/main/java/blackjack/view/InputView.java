@@ -16,6 +16,18 @@ public class InputView {
         return playerNames;
     }
 
+    public long readLong() {
+        return parseLong(readStrippedLine());
+    }
+
+    public Long parseLong(final String rawInput) {
+        try {
+            return Long.parseLong(rawInput);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("숫자만 입력 가능합니다.");
+        }
+    }
+
     public boolean isHitAnswer() {
         return isYes(readStrippedLine());
     }

@@ -1,7 +1,8 @@
 package blackjack.dto;
 
-import blackjack.domain.participant.Participant;
-import blackjack.domain.result.Score;
+import blackjack.domain.game.Score;
+import blackjack.domain.participants.Dealer;
+import blackjack.domain.participants.Player;
 import java.util.List;
 
 public record ParticipantScoreDto(
@@ -9,10 +10,17 @@ public record ParticipantScoreDto(
     List<CardNameDto> cards,
     Score score
 ) {
-    public static ParticipantScoreDto from(Participant participant, Score score) {
-        List<CardNameDto> cards = participant.getCards().stream()
+    public static ParticipantScoreDto from(Dealer dealer, Score score) {
+        List<CardNameDto> cards = dealer.getCards().stream()
             .map(CardNameDto::from)
             .toList();
-        return new ParticipantScoreDto(participant.getName(), cards, score);
+        return new ParticipantScoreDto(dealer.getName(), cards, score);
+    }
+
+    public static ParticipantScoreDto from(Player player, Score score) {
+        List<CardNameDto> cards = player.getCards().stream()
+            .map(CardNameDto::from)
+            .toList();
+        return new ParticipantScoreDto(player.getName(), cards, score);
     }
 }

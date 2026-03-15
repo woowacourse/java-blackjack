@@ -1,4 +1,4 @@
-package blackjack.domain.participant;
+package blackjack.domain.participants;
 
 import blackjack.domain.card.Hand;
 
@@ -10,8 +10,8 @@ public class Dealer extends Participant {
         super(DEALER_NAME, hand);
     }
 
-    public static Dealer create() {
-        return new Dealer(new Hand());
+    public static Dealer createEmptyHand() {
+        return new Dealer(Hand.empty());
     }
 
     public static boolean isDealerName(Name name) {
