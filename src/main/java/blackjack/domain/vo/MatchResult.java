@@ -1,4 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.vo;
+
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
 
 import java.util.Map;
 
@@ -33,7 +36,7 @@ public enum MatchResult {
         return DRAW;
     }
 
-    public static Map<String, Long> dealerResult(Map<Player, MatchResult> playerResults) {
+    public static Map<String, Long> dealerResult(Map<String, MatchResult> playerResults) {
         return Map.of(
                 "승", playerResults.values().stream().filter(r -> r == LOSE).count(),
                 "패", playerResults.values().stream().filter(r -> r == WIN).count(),

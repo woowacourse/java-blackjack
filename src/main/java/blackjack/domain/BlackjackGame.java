@@ -1,13 +1,15 @@
 package blackjack.domain;
 
-import blackjack.dto.GameResultDto;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
+import blackjack.domain.vo.GameResult;
+import blackjack.domain.vo.Payoff;
 
-import java.util.LinkedHashMap;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
-
 
 public class BlackjackGame {
     private final Dealer dealer;
@@ -40,52 +42,68 @@ public class BlackjackGame {
                 .collect(Collectors.collectingAndThen(Collectors.toList(), Players::of));
     }
 
+    public void betPlayers(BetDecision decision) {
+        players.forEach(player -> {
+            String amount = decision.decideBet(player.getName());
+            player.placeBet(amount);
+        });
+    }
+
     public void deal() {
-        players.receiveCards(deck);
-        dealer.receiveCards(deck.drawSecondTimes());
+        players.forEach(
+                player -> {
+                    player.hit(deck.deal());
+                    player.hit(deck.deal());
+                });
+        dealer.hit(deck.deal());
+        dealer.hit(deck.deal());
     }
 
-    public int playerCount() {
-        return players.count();
+    public void playPlayerTurns(HitDecision decision, TurnDisplay display) {
+        players.forEach(player -> {
+            playerTurn(player, decision, display);
+        });
     }
 
-    public boolean canPlayerHit(int index) {
-        return players.playerAt(index).canHit();
-    }
-
-    public String playerNameByIndex(int index) {
-        return players.playerAt(index).name();
-    }
-
-    public Player playerDraw(int index) {
-        TrumpCard drawn = deck.draw();
-        players.playerAt(index).receiveCard(drawn);
-        return players.playerAt(index);
-    }
-
-    public boolean canDealerHit() {
-        return dealer.shouldHit();
-    }
-
-    public void dealerDraw() {
-        TrumpCard drawn = deck.draw();
-        dealer.receive(drawn);
-    }
-
-    public GameResultDto generateGameResult() {
-        return GameResultDto.from(players, dealer);
-    }
-
-    public Map<Player, MatchResult> getPlayerFinalResult() {
-        Map<Player, MatchResult> playerResult = new LinkedHashMap<>();
-        for (Player player : players.getPlayers()) {
-            playerResult.put(player, MatchResult.playerResult(player, dealer));
+    private void playerTurn(Player player, HitDecision decision, TurnDisplay display) {
+        boolean playing = true;
+        while (player.canHit() && playing) {
+            playing = processHit(player, decision, display);
         }
-        return playerResult;
     }
 
-    public Map<String, Long> getDealerFinalResult(Map<Player, MatchResult> playerResult) {
-        return MatchResult.dealerResult(playerResult);
+    private boolean processHit(Player player, HitDecision decision, TurnDisplay display) {
+        if (!decision.wantsHit(player.getName())) {
+            display.show(player.getName(), player.getCardNames());
+            return false;
+        }
+        player.hit(deck.deal());
+        display.show(player.getName(), player.getCardNames());
+        return true;
+    }
+
+    public void playDealerTurn() {
+        while (dealer.canHit()) {
+            dealer.hit(deck.deal());
+        }
+    }
+
+    public List<GameResult> calculatePlayerProfits(){
+        List<GameResult> results = new ArrayList<>();
+        players.forEach(player -> {
+            BigDecimal profit = Payoff.playerResult(player, dealer)
+                    .calculateProfit(player.getBet().getAmount());
+            results.add(GameResult.from(player.getName(), profit));
+                }
+        );
+        return results;
+    }
+
+    public BigDecimal calculateDealerProfit(List<GameResult> gameResults) {
+        return gameResults.stream()
+                .map(GameResult::profit)
+                .reduce(BigDecimal.ZERO, BigDecimal::add)
+                .negate();
     }
 
     public Players getPlayers() {

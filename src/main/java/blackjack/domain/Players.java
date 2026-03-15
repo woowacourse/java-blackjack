@@ -1,7 +1,10 @@
 package blackjack.domain;
 
+import blackjack.domain.participant.Player;
+
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 public class Players {
     private final List<Player> players;
@@ -22,29 +25,15 @@ public class Players {
         return new Players(players);
     }
 
-    public void receiveCards(Deck deck) {
-        for (Player player : players) {
-            player.receiveCards(deck.drawSecondTimes());
-        }
-    }
+   public void forEach(Consumer<Player> action){
+        players.forEach(action);
+   }
 
     public int count() {
-        return this.players.size();
-    }
-
-    public boolean canHit(int playerIndex) {
-        return this.players.get(playerIndex).canHit();
+        return players.size();
     }
 
     public List<Player> getPlayers() {
-        return players;
-    }
-
-    public void hitPlayer(int index, TrumpCard card) {
-        players.get(index).receiveCard(card);
-    }
-
-    public Player playerAt(int index) {
-        return players.get(index);
+        return List.copyOf(players);
     }
 }

@@ -1,10 +1,8 @@
 package blackjack.domain;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class Deck {
     private static final int CARDS_COUNT = 52;
@@ -21,10 +19,7 @@ public class Deck {
     }
 
     public static Deck create(ShuffleStrategy strategy) {
-        List<TrumpCard> cards = Arrays.stream(Suit.values())
-                .flatMap(suit -> Arrays.stream(Rank.values())
-                        .map(rank -> TrumpCard.of(suit, rank)))
-                .collect(Collectors.toList());
+        List<TrumpCard> cards = new ArrayList<>(TrumpCard.ALL_CARD);
         strategy.shuffle(cards);
         return new Deck(cards);
     }
@@ -51,18 +46,14 @@ public class Deck {
         }
     }
 
-    public List<TrumpCard> drawSecondTimes() {
-        List<TrumpCard> cards = new ArrayList<>();
-
-        cards.add(draw());
-        cards.add(draw());
-        return cards;
-    }
-
-    public TrumpCard draw() {
+    public TrumpCard deal() {
         if (cards.isEmpty()) {
-            throw new IllegalArgumentException("덱에 카드가 없습니다.");
+            throw new IllegalStateException("덱에 카드가 없습니다.");
         }
         return cards.removeFirst();
+    }
+
+    public int countCards() {
+        return cards.size();
     }
 }
