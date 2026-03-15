@@ -2,8 +2,8 @@ package domain.participant;
 
 public class BetAmount {
 
-    private static final String INVALID_BET_AMOUNT_NUMBER = "배팅 금액은 숫자여야 합니다.";
-    private static final String INVALID_BET_AMOUNT_POSITIVE = "배팅 금액은 양수여야 합니다.";
+    public static final String INVALID_BET_AMOUNT_NUMBER = "배팅 금액은 숫자여야 합니다.";
+    public static final String INVALID_BET_AMOUNT_POSITIVE = "배팅 금액은 양수여야 합니다.";
     private static final String NUMBER_FORMAT = "-?\\d+";
 
     private final int betAmount;
