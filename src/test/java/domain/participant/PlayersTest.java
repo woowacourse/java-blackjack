@@ -11,105 +11,91 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;
 import java.util.function.Supplier;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.api.Test;
 
 class PlayersTest {
 
     @Nested
     class ConstructorTest {
 
-        @Nested
-        class Success {
+        @Test
+        void 유효한_이름과_배팅_금액이면_플레이어_목록을_생성한다() {
+            // when
+            Players actual = players(
+                    List.of("jacob", "seoye"),
+                    List.of("1000", "500")
+            );
 
-            @ParameterizedTest
-            @MethodSource("successCases")
-            void 인원수와_이름이_유효하면_생성된다(List<String> names, int expectedSize) {
-                // when
-                Players actual = new Players(names);
-
-                // then
-                assertThat(actual.getPlayers()).hasSize(expectedSize);
-            }
-
-            static Stream<Arguments> successCases() {
-                return Stream.of(
-                        Arguments.of(List.of("aa", "bb"), 2),
-                        Arguments.of(List.of("a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1"), 8)
-                );
-            }
+            // then
+            assertThat(actual.getPlayers()).hasSize(2);
+            assertThat(actual.getPlayers().get(0).getName()).isEqualTo("jacob");
+            assertThat(actual.getPlayers().get(1).getName()).isEqualTo("seoye");
         }
 
-        @Nested
-        class Fail {
+        @Test
+        void 플레이어_수가_2명_미만이면_예외가_발생한다() {
+            // when & then
+            assertThatThrownBy(() -> players(
+                    List.of("jacob"),
+                    List.of("1000")
+            ))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessageContaining(BlackjackException.ERROR_PREFIX + Players.PLAYER_COUNT_OUT_OF_RANGE);
+        }
 
-            @ParameterizedTest
-            @ValueSource(ints = {1, 9})
-            void 인원수가_범위를_벗어나면_예외가_발생한다(int size) {
-                // given
-                List<String> names = java.util.stream.IntStream.range(0, size)
-                        .mapToObj(i -> String.format("p%d", i))
-                        .toList();
+        @Test
+        void 플레이어_수가_8명_초과이면_예외가_발생한다() {
+            // when & then
+            assertThatThrownBy(() -> players(
+                    List.of("aa", "bb", "cc", "dd", "ee", "ff", "gg", "hh", "ii"),
+                    List.of("100", "100", "100", "100", "100", "100", "100", "100", "100")
+            ))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessageContaining(BlackjackException.ERROR_PREFIX + Players.PLAYER_COUNT_OUT_OF_RANGE);
+        }
 
-                // when & then
-                assertThatThrownBy(() -> new Players(names))
-                        .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessageContaining(BlackjackException.ERROR_PREFIX + Players.PLAYER_COUNT_OUT_OF_RANGE);
-            }
-
-            @ParameterizedTest
-            @MethodSource("duplicatedCases")
-            void 이름이_중복되면_예외가_발생한다(List<String> names) {
-                // when & then
-                assertThatThrownBy(() -> new Players(names))
-                        .isInstanceOf(IllegalArgumentException.class)
-                        .hasMessageContaining(BlackjackException.ERROR_PREFIX + Players.PLAYER_DUPLICATED);
-            }
-
-            static Stream<Arguments> duplicatedCases() {
-                return Stream.of(
-                        Arguments.of(List.of("aa", "aa")),
-                        Arguments.of(List.of("aa", "bb", "aa"))
-                );
-            }
+        @Test
+        void 플레이어_이름이_중복되면_예외가_발생한다() {
+            // when & then
+            assertThatThrownBy(() -> players(
+                    List.of("jacob", "jacob"),
+                    List.of("1000", "500")
+            ))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessageContaining(BlackjackException.ERROR_PREFIX + Players.PLAYER_DUPLICATED);
         }
     }
 
     @Nested
     class GetPlayerTest {
 
-        @ParameterizedTest
-        @MethodSource("successCases")
-        void 이름으로_플레이어를_조회한다(String targetName) {
+        @Test
+        void 이름으로_플레이어를_조회한다() {
             // given
-            Players players = new Players(List.of("jacob", "seoye"));
+            Players players = players(
+                    List.of("jacob", "seoye"),
+                    List.of("1000", "500")
+            );
 
             // when
-            Player actual = players.getPlayer(targetName);
+            Player actual = players.getPlayer("seoye");
 
             // then
-            assertThat(actual.getName()).isEqualTo(targetName);
+            assertThat(actual.getName()).isEqualTo("seoye");
+            assertThat(actual.getBetAmount()).isEqualTo(500);
         }
 
-        static Stream<Arguments> successCases() {
-            return Stream.of(
-                    Arguments.of("jacob"),
-                    Arguments.of("seoye")
-            );
-        }
-
-        @ParameterizedTest
-        @ValueSource(strings = {"brown", "jason"})
-        void 없는_이름이면_예외가_발생한다(String targetName) {
+        @Test
+        void 존재하지_않는_이름이면_예외가_발생한다() {
             // given
-            Players players = new Players(List.of("jacob", "seoye"));
+            Players players = players(
+                    List.of("jacob", "seoye"),
+                    List.of("1000", "500")
+            );
 
             // when & then
-            assertThatThrownBy(() -> players.getPlayer(targetName))
+            assertThatThrownBy(() -> players.getPlayer("brown"))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining(BlackjackException.ERROR_PREFIX + Players.NOT_FOUND_PLAYER);
         }
@@ -118,32 +104,33 @@ class PlayersTest {
     @Nested
     class GetPlayersTest {
 
-        @ParameterizedTest
-        @MethodSource("sizeCases")
-        void 전체_플레이어_목록을_조회한다(List<String> names, int expectedSize) {
+        @Test
+        void 전체_플레이어_목록을_조회한다() {
+            // given
+            Players players = players(
+                    List.of("jacob", "seoye"),
+                    List.of("1000", "500")
+            );
+
             // when
-            Players actual = new Players(names);
+            List<Player> actual = players.getPlayers();
 
             // then
-            assertThat(actual.getPlayers()).hasSize(expectedSize);
+            assertThat(actual).hasSize(2);
+            assertThat(actual.get(0).getName()).isEqualTo("jacob");
+            assertThat(actual.get(1).getName()).isEqualTo("seoye");
         }
 
-        static Stream<Arguments> sizeCases() {
-            return Stream.of(
-                    Arguments.of(List.of("aa", "bb"), 2),
-                    Arguments.of(List.of("aa", "bb", "cc"), 3)
-            );
-        }
-
-        @ParameterizedTest
-        @ValueSource(strings = {"zz"})
-        void 반환_목록은_수정할_수_없다(String newPlayerName) {
+        @Test
+        void 반환_목록은_수정할_수_없다() {
             // given
-            Players players = new Players(List.of("aa", "bb"));
-            Player newPlayer = new Player(newPlayerName + "1");
+            Players players = players(
+                    List.of("jacob", "seoye"),
+                    List.of("1000", "500")
+            );
 
             // when & then
-            assertThatThrownBy(() -> players.getPlayers().add(newPlayer))
+            assertThatThrownBy(() -> players.getPlayers().add(new Player(new PlayerName("brown"), new BetAmount("700"))))
                     .isInstanceOf(UnsupportedOperationException.class);
         }
     }
@@ -151,73 +138,118 @@ class PlayersTest {
     @Nested
     class DrawInitialCardsTest {
 
-        @ParameterizedTest
-        @MethodSource("drawCases")
-        void 모든_플레이어는_초기_카드를_2장씩_받는다(List<String> names) {
+        @Test
+        void 모든_플레이어는_초기_카드를_2장씩_받는다() {
             // given
-            Players players = new Players(names);
-            Supplier<Card> supplier = fixedCardSupplier(List.of(
+            Players players = players(
+                    List.of("jacob", "seoye"),
+                    List.of("1000", "500")
+            );
+            Supplier<Card> cardSupplier = fixedCardSupplier(List.of(
                     card(Rank.TEN, Suit.HEART),
                     card(Rank.SIX, Suit.SPADE),
                     card(Rank.ACE, Suit.CLOVER),
-                    card(Rank.K, Suit.DIAMOND),
-                    card(Rank.TWO, Suit.HEART),
-                    card(Rank.THREE, Suit.SPADE),
-                    card(Rank.FOUR, Suit.CLOVER),
-                    card(Rank.FIVE, Suit.DIAMOND)
+                    card(Rank.K, Suit.DIAMOND)
             ));
 
             // when
-            players.drawInitialCards(supplier);
+            players.drawInitialCards(cardSupplier);
 
             // then
-            assertThat(players.getPlayers())
-                    .allSatisfy(player -> assertThat(player.getHand()).hasSize(2));
-        }
-
-        static Stream<Arguments> drawCases() {
-            return Stream.of(
-                    Arguments.of(List.of("aa", "bb")),
-                    Arguments.of(List.of("aa", "bb", "cc", "dd"))
-            );
+            assertThat(players.getPlayer("jacob").getHand())
+                    .containsExactly(card(Rank.TEN, Suit.HEART), card(Rank.SIX, Suit.SPADE));
+            assertThat(players.getPlayer("seoye").getHand())
+                    .containsExactly(card(Rank.ACE, Suit.CLOVER), card(Rank.K, Suit.DIAMOND));
         }
     }
 
     @Nested
     class AddCardTest {
 
-        @ParameterizedTest
-        @MethodSource("successCases")
-        void 이름으로_찾은_플레이어에게_카드를_추가한다(String targetName) {
+        @Test
+        void 이름으로_찾은_플레이어에게_카드를_추가한다() {
             // given
-            Players players = new Players(List.of("jacob", "seoye"));
+            Players players = players(
+                    List.of("jacob", "seoye"),
+                    List.of("1000", "500")
+            );
             Card card = card(Rank.NINE, Suit.HEART);
 
             // when
-            players.addCard(targetName, card);
+            players.addCard("jacob", card);
 
             // then
-            assertThat(players.getPlayer(targetName).getHand()).containsExactly(card);
+            assertThat(players.getPlayer("jacob").getHand()).containsExactly(card);
         }
 
-        static Stream<Arguments> successCases() {
-            return Stream.of(
-                    Arguments.of("jacob"),
-                    Arguments.of("seoye")
-            );
-        }
-
-        @ParameterizedTest
-        @ValueSource(strings = {"brown"})
-        void 없는_플레이어에게_추가하면_예외가_발생한다(String targetName) {
+        @Test
+        void 없는_플레이어에게_카드를_추가하면_예외가_발생한다() {
             // given
-            Players players = new Players(List.of("jacob", "seoye"));
+            Players players = players(
+                    List.of("jacob", "seoye"),
+                    List.of("1000", "500")
+            );
 
             // when & then
-            assertThatThrownBy(() -> players.addCard(targetName, card(Rank.NINE, Suit.HEART)))
+            assertThatThrownBy(() -> players.addCard("brown", card(Rank.NINE, Suit.HEART)))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining(BlackjackException.ERROR_PREFIX + Players.NOT_FOUND_PLAYER);
         }
+    }
+
+    @Nested
+    class PlayerIsBustTest {
+
+        @Test
+        void 플레이어_점수가_21_초과면_true를_반환한다() {
+            // given
+            Players players = players(
+                    List.of("jacob", "seoye"),
+                    List.of("1000", "500")
+            );
+            players.addCard("jacob", card(Rank.TEN, Suit.HEART));
+            players.addCard("jacob", card(Rank.NINE, Suit.SPADE));
+            players.addCard("jacob", card(Rank.THREE, Suit.CLOVER));
+
+            // when
+            boolean actual = players.playerIsBust("jacob");
+
+            // then
+            assertThat(actual).isTrue();
+        }
+
+        @Test
+        void 플레이어_점수가_21_이하면_false를_반환한다() {
+            // given
+            Players players = players(
+                    List.of("jacob", "seoye"),
+                    List.of("1000", "500")
+            );
+            players.addCard("jacob", card(Rank.TEN, Suit.HEART));
+            players.addCard("jacob", card(Rank.SEVEN, Suit.SPADE));
+
+            // when
+            boolean actual = players.playerIsBust("jacob");
+
+            // then
+            assertThat(actual).isFalse();
+        }
+    }
+
+    private static Players players(List<String> names, List<String> betAmounts) {
+        return new Players(toPlayerNames(names), toBetAmounts(betAmounts));
+    }
+
+    private static List<PlayerName> toPlayerNames(List<String> names) {
+        return names.stream()
+                .map(PlayerName::new)
+                .toList();
+    }
+
+    private static List<BetAmount> toBetAmounts(List<String> betAmounts) {
+        return betAmounts.stream()
+                .map(BetAmount::new)
+                .toList();
     }
 
     private static Supplier<Card> fixedCardSupplier(List<Card> cards) {
