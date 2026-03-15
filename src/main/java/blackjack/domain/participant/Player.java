@@ -10,8 +10,8 @@ public class Player extends Participant {
     private final Name name;
     private final BettingAmount bettingAmount;
 
-    public Player(String name, BettingAmount bettingAmount) {
-        this.name = new Name(name);
+    public Player(Name name, BettingAmount bettingAmount) {
+        this.name = name;
         this.bettingAmount = bettingAmount;
     }
 

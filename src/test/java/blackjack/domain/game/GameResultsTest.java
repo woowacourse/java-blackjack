@@ -5,6 +5,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Figure;
 import blackjack.domain.card.Number;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import org.junit.jupiter.api.DisplayName;
@@ -59,7 +60,7 @@ class GameResultsTest {
     }
 
     private Player createPlayerWithCards(String name, int amount, Card... cards) {
-        Player player = new Player(name, new BettingAmount(amount));
+        Player player = new Player(new Name(name), new BettingAmount(amount));
         for (Card card : cards) {
             player.receiveCard(card);
         }

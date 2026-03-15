@@ -5,6 +5,7 @@ import blackjack.domain.deck.Deck;
 import blackjack.domain.game.Game;
 import blackjack.domain.game.GameResults;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.domain.rule.HitCommand;
@@ -48,7 +49,7 @@ public class Controller {
     private Players createPlayers() {
         List<String> playerNames = inputView.readNames();
         List<Player> players = playerNames.stream()
-                .map(name -> new Player(name, new BettingAmount(inputView.readBettingAmount(name))))
+                .map(name -> new Player(new Name(name), new BettingAmount(inputView.readBettingAmount(name))))
                 .toList();
         return new Players(players);
     }

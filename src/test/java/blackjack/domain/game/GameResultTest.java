@@ -5,6 +5,7 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Figure;
 import blackjack.domain.card.Number;
 import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Name;
 import blackjack.domain.participant.Player;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -174,7 +175,7 @@ class GameResultTest {
     }
 
     private Player createPlayerWithCars(Card... cards) {
-        Player player = new Player("usher", new BettingAmount(15000));
+        Player player = new Player(new Name("usher"), new BettingAmount(15000));
         for (Card card : cards) {
             player.receiveCard(card);
         }
