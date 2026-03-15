@@ -26,5 +26,4 @@ public class FinalIncome {
     public int getIncomeOf(Player player) {
         return playerIncomeResults.get(player);
     }
-
 }
