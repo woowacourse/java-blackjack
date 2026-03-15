@@ -12,7 +12,7 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printCardOpen(Dealer dealer, List<Player> participants) {
+    public static void printCardOpen(Dealer dealer, List<? extends Player> participants) {
         List<String> names = participants.stream()
                 .map(Player::getName)
                 .toList();
@@ -29,8 +29,8 @@ public class OutputView {
         System.out.println(dealer.getName() + ": " + card);
     }
 
-    private static void printCardByPlayers(List<Player> participants) {
-        participants.forEach(OutputView::printCardByPlayer);
+    private static void printCardByPlayers(List<? extends Player> players) {
+        players.forEach(OutputView::printCardByPlayer);
         System.out.println();
     }
 
@@ -47,7 +47,7 @@ public class OutputView {
         System.out.printf("%s는 16 이하라 한장의 카드를 더 받았습니다.%n", dealer.getName());
     }
 
-    public static void printFinalCards(Dealer dealer, List<Player> participants) {
+    public static void printFinalCards(Dealer dealer, List<? extends Player> participants) {
         System.out.println();
         printCardByParticipantWithScore(dealer);
         participants.forEach(OutputView::printCardByParticipantWithScore);

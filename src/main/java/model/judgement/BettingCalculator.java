@@ -6,13 +6,10 @@ import model.paticipant.BettingPlayer;
 
 public class BettingCalculator {
 
-    public Map<BettingPlayer, Profit> calculateProfits(PlayerResult playerResult) {
+    public Map<BettingPlayer, Profit> calculateProfits(PlayerResult<BettingPlayer> playerResult) {
         Map<BettingPlayer, Profit> profits = new LinkedHashMap<>();
-        playerResult.result().forEach((player, status) -> {
-            if (player instanceof BettingPlayer bettingPlayer) {
-                profits.put(bettingPlayer, bettingPlayer.calculateProfit(status));
-            }
-        });
+        playerResult.result()
+                .forEach((bettingPlayer, status) -> profits.put(bettingPlayer, bettingPlayer.calculateProfit(status)));
         return profits;
     }
 

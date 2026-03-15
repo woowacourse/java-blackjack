@@ -9,31 +9,31 @@ import model.paticipant.Players;
 import view.InputView;
 import view.OutputView;
 
-public class BlackjackController {
+public class BlackjackController<T extends Player> {
 
     private final BlackjackGame blackjackGame;
-    private final GameMode gameMode;
+    private final GameMode<T> gameMode;
 
-    public BlackjackController(BlackjackGame blackjackGame, GameMode gameMode) {
+    public BlackjackController(BlackjackGame blackjackGame, GameMode<T> gameMode) {
         this.blackjackGame = blackjackGame;
         this.gameMode = gameMode;
     }
 
     public void run() {
         Dealer dealer = new Dealer();
-        Players players = gameMode.createPlayers();
+        Players<T> players = gameMode.createPlayers();
 
         initialDeal(dealer, players);
         proceedTurns(dealer, players);
         finishGame(dealer, players);
     }
 
-    private void initialDeal(Dealer dealer, Players players) {
+    private void initialDeal(Dealer dealer, Players<T> players) {
         blackjackGame.drawInitCards(dealer, players);
         OutputView.printCardOpen(dealer, players.players());
     }
 
-    private void proceedTurns(Dealer dealer, Players players) {
+    private void proceedTurns(Dealer dealer, Players<T> players) {
         players.forEach(this::processPlayerTurn);
 
         while (dealer.canHit()) {
@@ -72,9 +72,9 @@ public class BlackjackController {
         return Continuation.from(inputCommand);
     }
 
-    private void finishGame(Dealer dealer, Players players) {
+    private void finishGame(Dealer dealer, Players<T> players) {
         OutputView.printFinalCards(dealer, players.players());
-        PlayerResult playerResult = Judgement.judgeByPlayer(dealer, players);
+        PlayerResult<T> playerResult = Judgement.judgeByPlayer(dealer, players);
         gameMode.reportResult(playerResult);
     }
 }

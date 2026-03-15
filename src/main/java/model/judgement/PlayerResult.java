@@ -5,9 +5,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import model.paticipant.Player;
 
-public record PlayerResult(Map<Player, ResultStatus> result) {
+public record PlayerResult<T extends Player>(Map<T, ResultStatus> result) {
 
-    public PlayerResult(Map<Player, ResultStatus> result) {
+    public PlayerResult(Map<T, ResultStatus> result) {
         this.result = Collections.unmodifiableMap(new LinkedHashMap<>(result));
     }
 

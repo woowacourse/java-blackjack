@@ -6,14 +6,14 @@ import model.paticipant.Player;
 import model.paticipant.Players;
 import view.InputView;
 
-public class NonBettingPlayerReader implements PlayerReader {
+public class NonBettingPlayerReader implements PlayerReader<Player> {
 
     @Override
-    public Players readPlayers() {
+    public Players<Player> readPlayers() {
         List<String> names = InputView.readPlayerNames();
         List<Player> players = names.stream()
                 .map(Player::new)
                 .collect(Collectors.toList());
-        return new Players(players);
+        return new Players<>(players);
     }
 }

@@ -2,12 +2,13 @@ package controller.result;
 
 import model.judgement.DealerResult;
 import model.judgement.PlayerResult;
+import model.paticipant.Player;
 import view.WinLossReportView;
 
-public class NonBettingResultReporter implements ResultReporter {
+public class NonBettingResultReporter implements ResultReporter<Player> {
 
     @Override
-    public void report(PlayerResult playerResult) {
+    public void report(PlayerResult<Player> playerResult) {
         DealerResult dealerResult = playerResult.calculateDealerResult();
 
         WinLossReportView.printFinalResultHeader();

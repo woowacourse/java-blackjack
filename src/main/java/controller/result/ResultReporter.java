@@ -1,8 +1,9 @@
 package controller.result;
 
 import model.judgement.PlayerResult;
+import model.paticipant.Player;
 
-public interface ResultReporter {
+public interface ResultReporter<T extends Player> {
 
-    void report(PlayerResult playerResult);
+    void report(PlayerResult<T> playerResult);
 }

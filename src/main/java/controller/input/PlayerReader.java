@@ -1,8 +1,10 @@
 package controller.input;
 
+import model.paticipant.Player;
 import model.paticipant.Players;
 
-public interface PlayerReader {
+public interface PlayerReader<T extends Player> {
 
-    Players readPlayers();
+    Players<T> readPlayers();
+
 }

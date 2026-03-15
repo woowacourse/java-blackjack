@@ -2,6 +2,7 @@ package view;
 
 import model.judgement.DealerResult;
 import model.judgement.PlayerResult;
+import model.paticipant.Player;
 import view.mapper.EnumMapper;
 
 public class WinLossReportView {
@@ -42,7 +43,7 @@ public class WinLossReportView {
         return "";
     }
 
-    public static void printResultByPlayers(PlayerResult playerResult) {
+    public static void printResultByPlayers(PlayerResult<Player> playerResult) {
         playerResult.result()
                 .forEach((player, status) ->
                         System.out.printf("%s: %s%n", player.getName(), EnumMapper.RESULT_STATUS_MAPPER.get(status)));

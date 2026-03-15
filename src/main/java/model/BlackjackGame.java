@@ -7,6 +7,7 @@ import model.card.CardShuffler;
 import model.card.Deck;
 import model.paticipant.Dealer;
 import model.paticipant.Participant;
+import model.paticipant.Player;
 import model.paticipant.Players;
 
 public class BlackjackGame {
@@ -27,7 +28,7 @@ public class BlackjackGame {
         return new BlackjackGame(deck);
     }
 
-    public void drawInitCards(Dealer dealer, Players players) {
+    public void drawInitCards(Dealer dealer, Players<? extends Player> players) {
         drawCardByParticipant(dealer, INITIAL_DISPENSE_COUNT);
         players.forEach(player -> drawCardByParticipant(player, INITIAL_DISPENSE_COUNT));
     }

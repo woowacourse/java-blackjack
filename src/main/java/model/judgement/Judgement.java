@@ -14,10 +14,10 @@ public class Judgement {
 
     private static final List<JudgeStrategy> STRATEGIES = List.of(new BustStrategy(), new BlackjackStrategy());
 
-    public static PlayerResult judgeByPlayer(Dealer dealer, Players players) {
-        Map<Player, ResultStatus> result = new LinkedHashMap<>();
+    public static <T extends Player> PlayerResult<T> judgeByPlayer(Dealer dealer, Players<T> players) {
+        Map<T, ResultStatus> result = new LinkedHashMap<>();
         players.forEach(player -> result.put(player, decide(dealer, player)));
-        return new PlayerResult(result);
+        return new PlayerResult<>(result);
     }
 
     private static ResultStatus decide(Dealer dealer, Participant participant) {
