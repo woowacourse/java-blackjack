@@ -62,7 +62,6 @@ public class OutputView {
                     participantRevenueDto.name() + ": " + participantRevenueDto.revenue()
             );
         }
-
     }
 
     private static void printInitialPlayerCards(ParticipantCardsDto participantCardsDto) {
