@@ -15,6 +15,10 @@ public class Dealer extends Participant {
         return hand.getSum() < HIT_LIMIT;
     }
 
+    public Score calculateScore() {
+        return new Score(hand.getSum(), isBlackJack());
+    }
+
     public Card getFirstCard() {
         return hand.getFirstCard();
     }

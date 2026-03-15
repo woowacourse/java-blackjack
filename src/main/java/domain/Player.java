@@ -10,4 +10,20 @@ public class Player extends Participant {
     public boolean canHit() {
         return hand.isLessThanBlackJack();
     }
+
+    public WinningStatus calculateResultAgainst(Score dealerScore){
+        if(isBlackJack() && !dealerScore.isBlackJack()){
+            return WinningStatus.BLACKJACK_WIN;
+        }
+        if(dealerScore.isBlackJack() && !isBlackJack()){
+            return WinningStatus.LOSE;
+        }
+        if(isBurst()){
+            return WinningStatus.LOSE;
+        }
+        if(dealerScore.isBurst()) {
+            return WinningStatus.WIN;
+        }
+        return new Score(hand.getSum(), isBlackJack()).compareTo(dealerScore);
+    }
 }

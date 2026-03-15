@@ -3,7 +3,9 @@ package domain;
 import exception.ErrorMessage;
 
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class Game {
@@ -38,10 +40,20 @@ public class Game {
         dealer.draw(deck.drawCard());
     }
 
-    public void settleRoundBets(Judge judge, BettingTable bettingTable) {
-        for (Player player : players) {
-            bettingTable.settleBet(player, judge.getPlayerResult(player));
+    public void settleRoundBets(BettingTable bettingTable) {
+        Score dealerScore = dealer.calculateScore();
+        Map<Player, WinningStatus> playerResults = calculateAllResults(dealerScore);
+        for (Map.Entry<Player, WinningStatus> entry : playerResults.entrySet()) {
+            bettingTable.settleBet(entry.getKey(), entry.getValue());
         }
+    }
+
+    private Map<Player, WinningStatus> calculateAllResults(Score dealerScore) {
+        Map<Player, WinningStatus> results = new LinkedHashMap<>();
+        for (Player player : players) {
+            results.put(player, player.calculateResultAgainst(dealerScore));
+        }
+        return results;
     }
 
     public void hitPlayer(Player player) {

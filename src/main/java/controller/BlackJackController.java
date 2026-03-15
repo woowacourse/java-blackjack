@@ -21,8 +21,7 @@ public class BlackJackController {
         playPlayers(game);
         playDealer(game);
 
-        Judge judge = createJudge(game);
-        game.settleRoundBets(judge, bettingTable);
+        game.settleRoundBets(bettingTable);
         OutputView.printFinalResult(OutputDtoAssembler
                 .toFinalResultDto(game.getDealer(), game.getPlayers(), bettingTable));
     }
@@ -69,10 +68,6 @@ public class BlackJackController {
     private Game createGame() {
         List<String> playerNames = InputView.askPlayerNames();
         return new Game(playerNames, new Deck(CardFactory.createDeck()));
-    }
-
-    private Judge createJudge(Game game) {
-        return Judge.from(game.getDealer(), game.getPlayers());
     }
 
     private BettingTable createBettingTable(Game game) {
