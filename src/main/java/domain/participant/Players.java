@@ -67,4 +67,8 @@ public class Players {
         Player player = getPlayer(name);
         player.addCard(card);
     }
+
+    public boolean playerIsBust(String name) {
+        return getPlayer(name).isBust();
+    }
 }
