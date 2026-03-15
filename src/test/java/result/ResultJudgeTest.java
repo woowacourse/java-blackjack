@@ -90,8 +90,10 @@ class ResultJudgeTest {
     @Test
     void 딜러의_총합과_플레이어의_총합이_같으면_비긴다() {
         ResultJudge resultJudge = new ResultJudge();
+
         Result result = resultJudge.calculateResult(dealer, players);
         ResultInfo info = result.getGameResult().get(drawPlayer.getName());
+
         assertThat(info).isEqualTo(ResultInfo.DRAW);
     }
 
@@ -132,9 +134,10 @@ class ResultJudgeTest {
     @DisplayName("플레이어가 블랙잭이 되면 승리한다.")
     void calculateResult_ReturnsBlackJackWin_WhenPlayerIsBlackJack() {
         ResultJudge resultJudge = new ResultJudge();
-        Result result = resultJudge.calculateResult(dealer, players);
 
+        Result result = resultJudge.calculateResult(dealer, players);
         ResultInfo resultInfo = result.getGameResult().get(blackJackPlayer.getName());
+
         assertThat(resultInfo).isEqualTo(ResultInfo.BLACKJACK_WIN);
     }
 
@@ -142,9 +145,10 @@ class ResultJudgeTest {
     @DisplayName("플레이어와 딜러가 둘 다 블랙잭이면 무승부이다.")
     void calculateResult_ReturnDraws_WhenPlayerAndDealerIsBlackJack() {
         ResultJudge resultJudge = new ResultJudge();
-        Result result = resultJudge.calculateResult(blackJackDealer, players);
 
+        Result result = resultJudge.calculateResult(blackJackDealer, players);
         ResultInfo resultInfo = result.getGameResult().get(blackJackPlayer.getName());
+
         assertThat(resultInfo).isEqualTo(ResultInfo.DRAW);
     }
 
@@ -152,9 +156,10 @@ class ResultJudgeTest {
     @DisplayName("플레이어가 블랙잭이고 딜러가 버스트이면 블랙잭 승리 처리한다.")
     void calculateResult_ReturnBlackJackWins_WhenPlayerIsBlackJackAndDealerIsBust() {
         ResultJudge resultJudge = new ResultJudge();
-        Result result = resultJudge.calculateResult(bustDealer, players);
 
+        Result result = resultJudge.calculateResult(bustDealer, players);
         ResultInfo resultInfo = result.getGameResult().get(blackJackPlayer.getName());
+
         assertThat(resultInfo).isEqualTo(ResultInfo.BLACKJACK_WIN);
     }
 }
