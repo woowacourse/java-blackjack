@@ -12,8 +12,8 @@ public class Hand {
 
     private final List<Card> cards;
 
-    public Hand() {
-        this(new ArrayList<>());
+    public static Hand empty() {
+        return new Hand(new ArrayList<>());
     }
 
     public Hand(List<Card> cards) {
@@ -26,19 +26,6 @@ public class Hand {
 
     public void addCard(Card card) {
         this.cards.add(card);
-    }
-
-    public boolean isBust() {
-        return calculateScore().isBiggerThan(BUST_THRESHOLD);
-    }
-
-    public boolean isBlackjack() {
-        Score score = calculateScore();
-        return score.isEqualTo(BLACKJACK_SCORE) & hasBlackjackCardCount();
-    }
-
-    private boolean hasBlackjackCardCount() {
-        return cards.size() == BLACKJACK_CARD_COUNT;
     }
 
     public Score calculateScore() {
@@ -61,5 +48,18 @@ public class Hand {
 
     private boolean containsAce() {
         return cards.stream().anyMatch(Card::isAce);
+    }
+
+    public boolean isBust() {
+        return calculateScore().isBiggerThan(BUST_THRESHOLD);
+    }
+
+    public boolean isBlackjack() {
+        Score score = calculateScore();
+        return score.isEqualTo(BLACKJACK_SCORE) & hasBlackjackCardCount();
+    }
+
+    private boolean hasBlackjackCardCount() {
+        return cards.size() == BLACKJACK_CARD_COUNT;
     }
 }

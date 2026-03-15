@@ -28,7 +28,7 @@ class BlackjackGameTest {
     private final BlackjackGame game = BlackjackGame.create(
         cardsGenerator,
         referee,
-        new PlayerGroup(List.of(new Player(new Name("pobi"), new Hand(), new Bet()))));
+        new PlayerGroup(List.of(new Player(new Name("pobi"), Hand.empty(), Bet.zero()))));
 
     @Test
     void 초기_카드를_딜러와_플레이어들에게_2장씩_분배한다() {

@@ -16,6 +16,10 @@ public class Player extends Participant {
         this.bet = bet;
     }
 
+    public static Player createEmptyHand(Name name, Bet bet) {
+        return new Player(name, Hand.empty(), bet);
+    }
+
     @Override
     public boolean canHit() {
         return !isBust();

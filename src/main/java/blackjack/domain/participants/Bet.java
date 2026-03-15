@@ -5,8 +5,8 @@ import blackjack.domain.game.GameResult;
 public class Bet {
     private final long amount;
 
-    public Bet() {
-        this.amount = 0L;
+    public static Bet zero() {
+        return new Bet(0L);
     }
 
     public Bet(long amount) {

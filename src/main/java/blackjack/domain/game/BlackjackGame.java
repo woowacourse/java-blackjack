@@ -27,7 +27,7 @@ public class BlackjackGame {
         CardsGenerator cardsGenerator, GameReferee referee, PlayerGroup playerGroup) {
         return new BlackjackGame(
             Deck.create(cardsGenerator),
-            Dealer.create(),
+            Dealer.createEmptyHand(),
             referee,
             playerGroup);
     }
