@@ -28,7 +28,7 @@ public class BlackJackController {
         resultView.printGameStartSection(players, dealer);
         drawPlayersTurn(players, cards);
         drawDealerTurn(dealer, cards);
-        printResult(players, dealer);
+        printResult(game);
     }
 
     private void drawPlayersTurn(Players players, Cards cards) {
@@ -55,9 +55,11 @@ public class BlackJackController {
         resultView.printLineBreak();
     }
 
-    private void printResult(Players players, Dealer dealer) {
+    private void printResult(BlackJackGame game) {
+        final Players players = game.players();
+        final Dealer dealer = game.dealer();
         printGameResult(players, dealer);
-        printWinnerResult(players, dealer);
+        printWinnerResult(game);
     }
 
     private void printGameResult(Players players, Dealer dealer) {
@@ -67,8 +69,8 @@ public class BlackJackController {
         }
     }
 
-    private void printWinnerResult(Players players, Dealer dealer) {
-        final GameResult gameResult = players.calculateResult(dealer);
-        resultView.printWinner(players, gameResult);
+    private void printWinnerResult(BlackJackGame game) {
+        final GameResult gameResult = game.calculateResult();
+        resultView.printWinner(game.players(), gameResult);
     }
 }
