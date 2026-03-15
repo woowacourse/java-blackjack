@@ -25,11 +25,9 @@ public class Cards {
     }
 
     public int sumScore() {
-        int sum = 0;
-        for (Card card : cards) {
-            sum += card.getScore();
-        }
-        return sum;
+        return cards.stream()
+                .mapToInt(Card::getScore)
+                .sum();
     }
 
     public void add(Card card) {
