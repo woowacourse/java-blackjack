@@ -34,6 +34,14 @@ public class Hand {
         return totalSum;
     }
 
+    public boolean isBust() {
+        return calculateTotalValue() > BLACKJACK;
+    }
+
+    public boolean isBlackjack() {
+        return calculateTotalValue() == BLACKJACK;
+    }
+
     private boolean hasAce() {
         return cards.stream()
                 .anyMatch(Card::isAce);

@@ -1,70 +1,81 @@
 import domain.BlackjackGame;
-import domain.vo.RoundResult;
+import domain.member.BettingAmount;
+import domain.member.Member;
+import domain.member.Player;
+import domain.member.Players;
+import domain.member.Name;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import presentation.dto.GameResult;
+import presentation.dto.HitInfo;
 import presentation.dto.MemberStatus;
 import presentation.ui.InputView;
 import presentation.ui.OutputView;
 
 public class Main {
+
     public static void main(String[] args) {
         InputView inputView = new InputView();
         OutputView outputView = new OutputView();
-        List<String> playerNames = inputView.readPlayerNames();
-        BlackjackGame game = new BlackjackGame(playerNames);
-        game.initialDeal();
-        outputView.printInitialStatus(game.getDealerName(), memberFirstHands(game));
-        for (String playerName : playerNames) {
-            askToDraw(playerName, inputView, outputView, game);
-        }
+        run(inputView, outputView);
+    }
+
+    private static void run(InputView inputView, OutputView outputView) {
+        BlackjackGame game = init(inputView);
+        hit(inputView, outputView, game);
         printResult(outputView, game);
     }
 
-    private static List<MemberStatus> memberFirstHands(BlackjackGame game) {
-        return game.getMemberNames()
-                .stream()
-                .map(name -> {
-                    List<String> cards = game.getFirstCardNames(name);
-                    int memberPoint = game.getMemberPoint(name);
-                    return new MemberStatus(name, cards, memberPoint);
-                }).toList();
+    private static BlackjackGame init(InputView inputView) {
+        List<Name> playerNames = inputView.readPlayerNames();
+        Players members = new Players(initPlayer(inputView, playerNames));
+        return new BlackjackGame(members);
     }
 
-    private static void askToDraw(String playerName, InputView inputView, OutputView outputView, BlackjackGame game) {
-        while (game.isContinuable(playerName) && inputView.playContinue(playerName)) {
-            game.drawPlayer(playerName);
-            outputView.printHandCard(playerName, game.getCardNames(playerName));
+    private static List<Player> initPlayer(InputView inputView, List<Name> playerNames) {
+        List<Player> players = new ArrayList<>();
+        for (Name playerName : playerNames) {
+            BettingAmount amount = inputView.readBettingAmount(playerName.getValue());
+            players.add(new Player(new Member(playerName), amount));
         }
+        return players;
+    }
+
+    private static void hit(InputView inputView, OutputView outputView, BlackjackGame game) {
+        game.initGame();
+        outputView.printInitialStatus(HitInfo.firstCardFrom(game.getDealer()), HitInfo.firstCardFrom(game.getPlayers()));
+        game.applyBlackjackBonus();
+        game.getPlayers().stream()
+                .filter(player -> !player.hasBlackjack())
+                .forEach(player -> askToDraw(player, inputView, outputView, game));
+    }
+
+    private static void askToDraw(Player player, InputView inputView, OutputView outputView, BlackjackGame game) {
+        while (!player.hasBust() && inputView.playContinue(player.getName())) {
+            game.drawPlayer(player);
+            outputView.printHandCard(HitInfo.from(player));
+        }
+        printBustOrStay(player, outputView);
+    }
+
+    private static void printBustOrStay(Player player, OutputView outputView) {
+        if (player.hasBust()) {
+            outputView.printBustMessage(player.getName());
+            return;
+        }
+        outputView.printHandCard(HitInfo.from(player));
     }
 
     private static void printResult(OutputView outputView, BlackjackGame game) {
-        if (game.canDealerDraw()) {
+        while (game.canDealerDraw()) {
             game.drawDealer();
             outputView.printDealerDrawResult();
         }
-        outputView.printFinalMemberStatus(memberHands(game));
+        outputView.printFinalMemberStatus(MemberStatus.from(game.getDealer()), MemberStatus.from(game.getPlayers()));
         printGameResult(outputView, game);
     }
 
-    private static List<MemberStatus> memberHands(BlackjackGame game) {
-        return game.getMemberNames()
-                .stream()
-                .map(name -> {
-                    List<String> cards = game.getCardNames(name);
-                    int playerPoint = game.getMemberPoint(name);
-                    return new MemberStatus(name, cards, playerPoint);
-                }).toList();
-    }
-
     private static void printGameResult(OutputView outputView, BlackjackGame game) {
-        Map<String, RoundResult> gameResults = game.getGameResults();
-        int dealerLoseAmount = Math.toIntExact(gameResults.values().stream()
-                .filter(result -> result.equals(RoundResult.WIN))
-                .count());
-        int dealerWinAmount = Math.toIntExact(gameResults.values().stream()
-                .filter(result -> result.equals(RoundResult.LOSE))
-                .count());
-        outputView.printGameResult(new GameResult(dealerWinAmount, dealerLoseAmount, gameResults));
+        outputView.printGameResult(GameResult.from(game.getPlayerProfits(), game.getDealerProfit()));
     }
 }

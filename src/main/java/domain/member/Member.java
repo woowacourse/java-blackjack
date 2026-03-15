@@ -1,24 +1,34 @@
 package domain.member;
 
 import domain.card.Card;
+import domain.card.Deck;
 import java.util.List;
 
-public abstract class Member {
+public class Member {
 
     private final Hand hand;
     private final Name name;
 
-    public Member(String name) {
-        this.name = new Name(name);
+    public Member(Name name) {
+        this.name = name;
         this.hand = new Hand();
     }
 
-    public abstract List<Card> showFirstCards();
+    public void receiveCard(Card card) {
+        hand.appendCard(card);
+    }
 
-    public abstract boolean isDealer();
+    public boolean hasBust() {
+        return hand.isBust();
+    }
 
-    public String getName() {
-        return name.getValue();
+    public boolean hasBlackjack() {
+        return hand.isBlackjack();
+    }
+
+    public void initDraw(Deck deck) {
+        receiveCard(deck.draw());
+        receiveCard(deck.draw());
     }
 
     public int handValue() {
@@ -29,7 +39,7 @@ public abstract class Member {
         return hand.getCards();
     }
 
-    public void receiveCard(Card card) {
-        hand.appendCard(card);
+    public String getName() {
+        return name.getValue();
     }
 }

@@ -1,21 +1,58 @@
 package domain.member;
 
 import domain.card.Card;
+import domain.card.Deck;
+import domain.vo.RoundResult;
 import java.util.List;
 
-public class Player extends Member {
+public class Player {
 
-    public Player(String name) {
-        super(name);
+    private final Member member;
+
+    private BettingAmount amount;
+
+    public Player(Member member, BettingAmount bettingAmount) {
+        this.member = member;
+        this.amount = bettingAmount;
     }
 
-    @Override
-    public List<Card> showFirstCards() {
-        return super.handCards();
+    public void initDraw(Deck deck) {
+        member.initDraw(deck);
     }
 
-    @Override
-    public boolean isDealer() {
-        return false;
+    public void draw(Card card) {
+        member.receiveCard(card);
+    }
+
+    public boolean hasBust() {
+        return member.hasBust();
+    }
+
+    public boolean hasBlackjack() {
+        return member.hasBlackjack();
+    }
+
+    public int calculateProfit(RoundResult result) {
+        return amount.calculateProfit(result);
+    }
+
+    public void applyBlackjackBonus() {
+        amount = amount.applyBonus();
+    }
+
+    public boolean isBiggerThan(Dealer dealer) {
+        return this.member.handValue() > dealer.handValue();
+    }
+
+    public List<Card> handCards() {
+        return member.handCards();
+    }
+
+    public int handValue() {
+        return member.handValue();
+    }
+
+    public String getName() {
+        return member.getName();
     }
 }

@@ -1,9 +1,12 @@
 package domain;
 
+import domain.member.BettingAmount;
+import domain.member.Dealer;
+import domain.member.Member;
+import domain.member.Name;
+import domain.member.Player;
 import domain.vo.RoundResult;
 import domain.card.Card;
-import domain.member.Dealer;
-import domain.member.Player;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,13 +17,13 @@ public class MemberTest {
     @Test
     void winnerTest_isPlayerThenDecide_returnMember() {
         Dealer dealer = new Dealer();
-        Player player = new Player("브리");
+        Player player = new Player(new Member(new Name("포비")), new BettingAmount(1000));
 
-        dealer.receiveCard(new Card("2", "하트"));
-        dealer.receiveCard(new Card("3","클로버"));
-        player.receiveCard(new Card("4","다이아몬드"));
-        player.receiveCard(new Card("2", "스페이드"));
+        dealer.draw(new Card("2", "하트"));
+        dealer.draw(new Card("3","클로버"));
+        player.draw(new Card("4","다이아몬드"));
+        player.draw(new Card("2", "스페이드"));
 
-        Assertions.assertEquals(RoundResult.WIN, RoundResult.judgeAgainst(dealer.handValue(), player.handValue()));
+        Assertions.assertEquals(RoundResult.WIN, RoundResult.judgeAgainst(dealer, player));
     }
 }

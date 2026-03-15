@@ -1,71 +1,65 @@
 package domain;
 
-import domain.table.GameTable;
-import domain.vo.RoundResult;
+import domain.member.Dealer;
+import domain.member.Player;
+import domain.member.Players;
 import domain.card.Deck;
+import domain.member.Settler;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 public class BlackjackGame {
 
-    private final GameTable gameTable;
     private final Deck deck;
+    private final Dealer dealer;
+    private final Players players;
+    private final Settler settler;
 
-    public BlackjackGame(List<String> playerNames) {
-        this.gameTable = new GameTable(playerNames);
+    public BlackjackGame(Players members) {
         this.deck = new Deck();
+        this.dealer = new Dealer();
+        this.players = members;
+        this.settler = new Settler();
         this.deck.init();
     }
 
-    public String getDealerName() {
-        return gameTable.getDealerName();
+    public void initGame() {
+        dealer.initDraw(deck);
+        players.initDraw(deck);
     }
 
-    public void initialDeal() {
-        gameTable.getMemberNames().forEach(name -> {
-                gameTable.draw(name, deck.draw());
-                gameTable.draw(name, deck.draw());
-            }
-        );
-    }
-
-    public void drawPlayer(String playerName) {
-        gameTable.draw(playerName, deck.draw());
-    }
-
-    public List<String> getCardNames(String memberName) {
-        return gameTable.getCards(memberName).stream()
-                .map(card -> card.getCourt() + card.getPattern())
-                .toList();
-    }
-
-    public List<String> getFirstCardNames(String memberName) {
-        return gameTable.getFirstCards(memberName).stream()
-                .map(card -> card.getCourt() + card.getPattern())
-                .toList();
-    }
-
-    public boolean canDealerDraw() {
-        return gameTable.canDealerDraw();
+    public void drawPlayer(Player player) {
+        players.draw(player, deck.draw());
     }
 
     public void drawDealer() {
-        gameTable.draw(getDealerName(), deck.draw());
+        dealer.draw(deck.draw());
     }
 
-    public List<String> getMemberNames() {
-        return gameTable.getMemberNames();
+    public boolean canDealerDraw() {
+        return dealer.canDealerDraw();
     }
 
-    public int getMemberPoint(String memberName) {
-        return gameTable.memberPoint(memberName);
+    public void applyBlackjackBonus() {
+        getPlayers().stream()
+                .filter(Player::hasBlackjack)
+                .forEach(Player::applyBlackjackBonus);
     }
 
-    public Map<String, RoundResult> getGameResults() {
-        return gameTable.checkGameResult();
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players.getPlayers());
     }
 
-    public boolean isContinuable(String playerName) {
-        return !gameTable.checkBust(playerName);
+    public Dealer getDealer() {
+        return dealer;
+    }
+
+    public Map<Player, Integer> getPlayerProfits() {
+        return settler.getPlayerProfits(dealer, getPlayers());
+    }
+
+    public int getDealerProfit() {
+        return settler.getDealerProfit(dealer, getPlayers());
     }
 }
