@@ -34,12 +34,12 @@ class GameResultTest {
 
     @Test
     void 플레이어가_처음_받은_카드_두_장의_합이_21이고_딜러는_아닐_경우_자신이_베팅한_금액의_1_5배를_딜러에게_받는다() {
-        Cards playerCards = new Cards(List.of(new Card(Rank.ACE, Suit.HEART), new Card(Rank.JACK, Suit.HEART)));
+        Cards playerCards = cards(card(Rank.ACE, Suit.HEART), card(Rank.JACK, Suit.HEART));
         pobi.receiveInitialCards(playerCards);
 
-        Cards dealerCards = new Cards(List.of(new Card(Rank.SEVEN, Suit.HEART), new Card(Rank.EIGHT, Suit.HEART)));
+        Cards dealerCards = cards(card(Rank.SEVEN, Suit.HEART), card(Rank.EIGHT, Suit.HEART));
         dealer.receiveInitialCards(dealerCards);
-        dealer.receive(new Card(Rank.SIX, Suit.HEART));
+        dealer.receive(card(Rank.SIX, Suit.HEART));
 
         GameResult gameResult = new GameResult(players, dealer);
 
@@ -49,10 +49,10 @@ class GameResultTest {
 
     @Test
     void 플레이어가_승리할_경우_자신이_베팅한_금액만큼_딜러에게_받는다() {
-        Cards playerCards = new Cards(List.of(new Card(Rank.ACE, Suit.HEART), new Card(Rank.NINE, Suit.HEART)));
+        Cards playerCards = cards(card(Rank.ACE, Suit.HEART), card(Rank.NINE, Suit.HEART));
         pobi.receiveInitialCards(playerCards);
 
-        Cards dealerCards = new Cards(List.of(new Card(Rank.THREE, Suit.HEART), new Card(Rank.FOUR, Suit.HEART)));
+        Cards dealerCards = cards(card(Rank.THREE, Suit.HEART), card(Rank.FOUR, Suit.HEART));
         dealer.receiveInitialCards(dealerCards);
 
         GameResult gameResult = new GameResult(players, dealer);
@@ -63,12 +63,12 @@ class GameResultTest {
 
     @Test
     void 딜러가_승리할_경우_플레이어는_자신이_베팅한_금액을_딜러에게_준다() {
-        Cards playerCards = new Cards(List.of(new Card(Rank.ACE, Suit.HEART), new Card(Rank.TWO, Suit.HEART)));
+        Cards playerCards = cards(card(Rank.ACE, Suit.HEART), card(Rank.TWO, Suit.HEART));
         pobi.receiveInitialCards(playerCards);
 
-        Cards dealerCards = new Cards(List.of(new Card(Rank.ACE, Suit.CLOVER), new Card(Rank.THREE, Suit.HEART)));
+        Cards dealerCards = cards(card(Rank.ACE, Suit.CLOVER), card(Rank.THREE, Suit.HEART));
         dealer.receiveInitialCards(dealerCards);
-        dealer.receive(new Card(Rank.FOUR, Suit.HEART));
+        dealer.receive(card(Rank.FOUR, Suit.HEART));
 
         GameResult gameResult = new GameResult(players, dealer);
 
@@ -78,15 +78,23 @@ class GameResultTest {
 
     @Test
     void 무승부일_경우_플레이어는_자신이_베팅한_금액을_돌려받는다() {
-        Cards playerCards = new Cards(List.of(new Card(Rank.TWO, Suit.HEART), new Card(Rank.JACK, Suit.HEART)));
+        Cards playerCards = cards(card(Rank.TWO, Suit.HEART), card(Rank.JACK, Suit.HEART));
         pobi.receiveInitialCards(playerCards);
 
-        Cards dealerCards = new Cards(List.of(new Card(Rank.TWO, Suit.CLOVER), new Card(Rank.JACK, Suit.CLOVER)));
+        Cards dealerCards = cards(card(Rank.TWO, Suit.CLOVER), new Card(Rank.JACK, Suit.CLOVER));
         dealer.receiveInitialCards(dealerCards);
 
         GameResult gameResult = new GameResult(players, dealer);
 
         assertThat(gameResult.participantResultInfo(pobi).profit()).isEqualByComparingTo(BigDecimal.valueOf(0));
         assertThat(gameResult.participantResultInfo(dealer).profit()).isEqualByComparingTo(BigDecimal.valueOf(0));
+    }
+
+    private Cards cards(Card... cards) {
+        return new Cards(List.of(cards));
+    }
+
+    private Card card(Rank rank, Suit suit) {
+        return new Card(rank, suit);
     }
 }
