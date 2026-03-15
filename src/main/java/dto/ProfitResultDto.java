@@ -2,6 +2,7 @@ package dto;
 
 import domain.participant.Player;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -12,14 +13,15 @@ public class ProfitResultDto {
 
     public ProfitResultDto(int dealerProfitResult, Map<Player, Integer> playersProfitResult) {
         this.dealerProfitResult = dealerProfitResult;
-        this.playersProfitResult = Map.copyOf(
-                playersProfitResult.entrySet()
+
+        this.playersProfitResult = playersProfitResult.entrySet()
                 .stream()
                 .collect(Collectors.toMap(
                         entry -> entry.getKey().getName(),
-                        Map.Entry::getValue
-                ))
-        );
+                        Map.Entry::getValue,
+                        (a, b) -> a,
+                        LinkedHashMap::new
+                ));
     }
 
     public int getDealerProfitResult() {
