@@ -264,4 +264,35 @@ class BlackjackResultTest {
                 .reduce(0L, Long::sum);
         assertThat(blackjackResultDto.dealerBenefit()).isEqualTo((-1) * summation);
     }
+
+    @DisplayName("수익 결과의 플레이어 순서는 입력 순서와 동일하다")
+    @Test
+    void 수익_결과_플레이어_순서_보장() {
+        // given
+        Player player1 = PlayerTestUtil.createPlayer(List.of(
+                new Card(CardShape.SPADE, CardRank.TEN),
+                new Card(CardShape.SPADE, CardRank.JACK)
+        ), "p1");
+        Player player2 = PlayerTestUtil.createPlayer(List.of(
+                new Card(CardShape.SPADE, CardRank.NINE),
+                new Card(CardShape.SPADE, CardRank.QUEEN)
+        ), "p2");
+        Player player3 = PlayerTestUtil.createPlayer(List.of(
+                new Card(CardShape.SPADE, CardRank.KING),
+                new Card(CardShape.SPADE, CardRank.QUEEN)
+        ), "p3");
+        Players players = new Players(List.of(player1, player2, player3));
+
+        Dealer dealer = PlayerTestUtil.createDealer(List.of(
+                new Card(CardShape.SPADE, CardRank.TEN),
+                new Card(CardShape.SPADE, CardRank.JACK)
+        ));
+
+        // when
+        BlackjackResultDto blackjackResultDto = createResultDto(dealer, players);
+
+        // then
+        assertThat(blackjackResultDto.playerProfitMap().keySet())
+                .containsExactly("p1", "p2", "p3");
+    }
 }
