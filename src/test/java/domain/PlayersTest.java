@@ -38,10 +38,6 @@ public class PlayersTest {
         normalPlayer.receiveCard(new Card(Rank.TWO, Suit.CLUB));
         normalPlayer.receiveCard(new Card(Rank.THREE, Suit.DIAMOND));
 
-        Players players = Players.of(List.of(blackJackPlayer, normalPlayer));
-
-        players.updateNaturalBlackJackStatus();
-
         assertThat(blackJackPlayer.isNaturalBlackJack()).isTrue();
         assertThat(normalPlayer.isNaturalBlackJack()).isFalse();
     }
@@ -58,8 +54,6 @@ public class PlayersTest {
         normalPlayer.receiveCard(new Card(Rank.THREE, Suit.DIAMOND));
 
         Players players = Players.of(List.of(blackJackPlayer, normalPlayer));
-
-        players.updateNaturalBlackJackStatus();
 
         List<Player> result = players.getNonNaturalBlackJackPlayers();
 

@@ -28,7 +28,6 @@ public class GameManager {
             players.receiveOneCardFrom(deck);
             dealer.receiveCard(deck.draw());
         }
-        players.updateNaturalBlackJackStatus();
     }
 
     public List<String> drawPlayerCard(Player player) {

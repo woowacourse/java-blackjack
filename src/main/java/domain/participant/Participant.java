@@ -12,6 +12,10 @@ public abstract class Participant {
         this.name = name;
     }
 
+    protected boolean hasTwoCards() {
+        return hand.size() == 2;
+    }
+
     public boolean isBust() {
         return hand.isBust();
     }

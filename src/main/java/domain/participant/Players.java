@@ -28,10 +28,4 @@ public class Players {
                 .filter(player -> !player.isNaturalBlackJack())
                 .toList();
     }
-
-    public void updateNaturalBlackJackStatus() {
-        players.stream()
-                .filter(Player::isBlackJack)
-                .forEach(Player::markNaturalBlackJack);
-    }
 }

@@ -1,6 +1,7 @@
 package domain.participant;
 
 import domain.PlayerStatus;
+import domain.card.Card;
 import domain.constant.Result;
 
 public class Player extends Participant {
@@ -9,6 +10,22 @@ public class Player extends Participant {
     public Player(String name, int bettingMoney) {
         super(name);
         this.status = new PlayerStatus(bettingMoney);
+    }
+
+    @Override
+    public void receiveCard(Card card) {
+        super.receiveCard(card);
+        updateNaturalBlackJackStatus();
+    }
+
+    private void updateNaturalBlackJackStatus() {
+        if (isInitialBlackJack()) {
+            status.markNaturalBlackJack();
+        }
+    }
+
+    private boolean isInitialBlackJack() {
+        return hasTwoCards() && isBlackJack();
     }
 
     public boolean isNaturalBlackJack() {
