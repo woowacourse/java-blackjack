@@ -1,6 +1,5 @@
-package blackjack.domain.config;
+package blackjack;
 
-import blackjack.BlackjackApplication;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.participants.Bet;
 import blackjack.domain.participants.Name;

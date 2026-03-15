@@ -1,6 +1,5 @@
 package blackjack;
 
-import blackjack.domain.config.BlackjackConsoleBootstrap;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Profit;
