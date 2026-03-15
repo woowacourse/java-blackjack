@@ -41,9 +41,11 @@ public class GameResultManager {
     }
 
     private Revenue calculateDealerRevenue(Map<Name, Revenue> revenues) {
-        int dealerRevenue = -revenues.values().stream()
+        int totalPlayerRevenue = revenues.values().stream()
                 .mapToInt(Revenue::getMoney)
                 .sum();
+        int dealerRevenue = Math.negateExact(totalPlayerRevenue);
+
         return new Revenue(dealerRevenue);
     }
 
