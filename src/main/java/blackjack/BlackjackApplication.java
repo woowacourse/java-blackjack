@@ -55,8 +55,9 @@ public class BlackjackApplication {
 
     private void playDealerTurn() {
         int dealerHitCount = game.playDealerTurn();
-        view.printDealerHit(
-            DealerHitDto.of(game.getDealer(), dealerHitCount));
+        if (dealerHitCount > 0) {
+            view.printDealerHit(DealerHitDto.of(game.getDealer(), dealerHitCount));
+        }
     }
 
     private void printScore() {

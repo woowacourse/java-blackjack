@@ -10,8 +10,8 @@ public record ParticipantScoreDtos(List<ParticipantScoreDto> scoreDtos) {
     public static ParticipantScoreDtos of(Dealer dealer, List<Player> players) {
         List<ParticipantScoreDto> scoreDtos = new ArrayList<>();
 
-        players.forEach(player -> scoreDtos.add(converScore(player)));
         scoreDtos.add(converScore(dealer));
+        players.forEach(player -> scoreDtos.add(converScore(player)));
 
         return new ParticipantScoreDtos(scoreDtos);
     }

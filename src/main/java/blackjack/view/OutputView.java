@@ -38,14 +38,15 @@ public class OutputView {
         );
 
         printParticipantInitialCards(initialDealDtos);
-        System.out.println();
     }
 
     private void printParticipantInitialCards(InitialDealDtos initialDealDtos) {
+        System.out.println();
         printParticipantCards(initialDealDtos.dealerCardsDto());
         for (ParticipantCardsDto playerCardsDto : initialDealDtos.playerCardsDtos()) {
             printParticipantCards(playerCardsDto);
         }
+        System.out.println();
     }
 
     public void printParticipantCards(ParticipantCardsDto participantCardsDto) {
@@ -60,6 +61,7 @@ public class OutputView {
     }
 
     public void printDealerHit(DealerHitDto dealerHitDto) {
+        System.out.println();
         System.out.printf("%s는 16장이하라 %d장의 카드를 더 받았습니다.%n",
             dealerHitDto.dealerName(),
             dealerHitDto.hitCount());
