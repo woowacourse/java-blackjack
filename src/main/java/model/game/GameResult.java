@@ -19,11 +19,11 @@ public enum GameResult {
 
     public static GameResult calculateResult(Dealer dealer, Player player) {
         if (player.isBlackjack()) {
-            if (!dealer.isBlackjack()) {
-                return BLACKJACK;
+            if (dealer.isBlackjack()) {
+                return PUSH;
             }
 
-            return WIN;
+            return BLACKJACK;
         }
 
         if (player.isBust()) {
