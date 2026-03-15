@@ -12,36 +12,43 @@ import java.util.Collections;
 import java.util.List;
 
 import static blackjack.util.Parser.splitDelimiter;
-import static blackjack.view.InputView.readPlayNames;
-import static blackjack.view.InputView.readYesOrNo;
+
 
 public class BlackjackController {
+    private final InputView inputView;
+    private final OutputView outputView;
+
+    public BlackjackController(InputView inputView, OutputView outputView) {
+        this.inputView = inputView;
+        this.outputView = outputView;
+    }
+
     public void run() {
         List<String> names = inputNames();
         BlackjackGame game = BlackjackGame.create(names, Collections::shuffle);
 
-        game.betPlayers(name -> Integer.parseInt(InputView.readBetAmount(name)));
+        game.betPlayers(name -> Integer.parseInt(inputView.readBetAmount(name)));
 
         game.deal();
-        OutputView.printDealResult(DealResultDto.from(game));
+        outputView.printDealResult(DealResultDto.from(game));
 
         game.playPlayerTurns(
-                name -> Parser.parseDrawInput(readYesOrNo(name)).isHit(),
-                OutputView::printPlayerHand
+                name -> Parser.parseDrawInput(inputView.readYesOrNo(name)).isHit(),
+                outputView::printPlayerHand
         );
 
         game.playDealerTurn();
-        OutputView.printDealerDrawMessage();
+        outputView.printDealerDrawMessage();
 
-        OutputView.printGameResult(GameResultDto.from(game));
+        outputView.printGameResult(GameResultDto.from(game));
 
         List<GameResult> gameResults = game.gameResults();
         int dealerProfit = game.getDealerProfit(gameResults);
-        OutputView.printFinalResult(gameResults, dealerProfit);
+        outputView.printFinalResult(gameResults, dealerProfit);
     }
 
     private List<String> inputNames() {
-        String input = readPlayNames();
+        String input = inputView.readPlayNames();
         Parser.notEmpty(input);
         return splitDelimiter(input);
     }

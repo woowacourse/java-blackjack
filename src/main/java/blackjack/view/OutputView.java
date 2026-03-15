@@ -14,10 +14,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
-    private OutputView() {
-    }
 
-    public static void printDealResult(DealResultDto dealResultDto) {
+    public void printDealResult(DealResultDto dealResultDto) {
         System.out.println("딜러카드: " + dealResultDto.dealerOpenCard().display());
         for (PlayerHandDto playerHand : dealResultDto.playerHands()) {
             printCurrentPlayerHand(playerHand);
@@ -25,17 +23,17 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printCurrentPlayerHand(PlayerHandDto playerHand) {
+    public void printCurrentPlayerHand(PlayerHandDto playerHand) {
         String cards = formatCards(playerHand.cards());
         System.out.println(playerHand.name() + "카드: " + cards);
     }
 
-    public static void printPlayerHand(String name, List<String> cards) {
+    public void printPlayerHand(String name, List<String> cards) {
         String cardDisplay = String.join(", ", cards);
         System.out.println(name + "카드: " + cardDisplay);
     }
 
-    public static void printGameResult(GameResultDto gameResultDto) {
+    public void printGameResult(GameResultDto gameResultDto) {
         DealerScoreDto dealer = gameResultDto.dealerResult();
         System.out.println("딜러카드: " + formatCards(dealer.cards())
                 + " - 결과: " + dealer.score());
@@ -47,18 +45,18 @@ public class OutputView {
         System.out.println();
     }
 
-    private static String formatCards(List<CardDto> cards) {
+    private String formatCards(List<CardDto> cards) {
         return cards.stream()
                 .map(CardDto::display)
                 .collect(Collectors.joining(", "));
     }
 
-    public static void printDealerDrawMessage() {
+    public void printDealerDrawMessage() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
         System.out.println();
     }
 
-    public static void printFinalResult(Map<String, MatchResult> matchResults, Map<String, Long> dealerResult) {
+    public void printFinalResult(Map<String, MatchResult> matchResults, Map<String, Long> dealerResult) {
         System.out.println("## 최종 승패");
         printDealerFinalResult(dealerResult);
         matchResults.forEach((name, result) ->
@@ -66,23 +64,23 @@ public class OutputView {
         );
     }
 
-    private static void printDealerFinalResult(Map<String, Long> dealerResult) {
+    private void printDealerFinalResult(Map<String, Long> dealerResult) {
         System.out.println("딜러: " + dealerResult.get("승") + "승 "
                 + dealerResult.get("패") + "패");
     }
 
-    public static void printFinalResult(List<GameResult> gameResults, int dealerProfit) {
+    public void printFinalResult(List<GameResult> gameResults, int dealerProfit) {
         System.out.println("## 최종 승패");
         printDealerFinalResult(dealerProfit);
         gameResults.forEach(result ->
                 System.out.println(result.name() + ": " + result.profit()));
     }
 
-    private static void printDealerFinalResult(int dealerProfit) {
+    private void printDealerFinalResult(int dealerProfit) {
         System.out.println("딜러: " + dealerProfit);
     }
 
-    public static void printEmptyLine(){
+    public void printEmptyLine(){
         System.out.println();
     }
 }
