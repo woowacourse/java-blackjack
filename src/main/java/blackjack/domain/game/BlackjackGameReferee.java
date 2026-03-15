@@ -3,9 +3,8 @@ package blackjack.domain.game;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Player;
 
-public class BlackjackGameReferee implements GameReferee {
-    @Override
-    public GameResult judge(Dealer dealer, Player player) {
+public class BlackjackGameReferee {
+    public static GameResult judge(Dealer dealer, Player player) {
         if (player.isBust()) {
             return GameResult.DEALER_WIN;
         }
@@ -15,7 +14,7 @@ public class BlackjackGameReferee implements GameReferee {
         return competeScoreWith(dealer, player);
     }
 
-    private GameResult competeScoreWith(Dealer dealer, Player player) {
+    private static GameResult competeScoreWith(Dealer dealer, Player player) {
         Score dealerScore = dealer.getScore();
         Score playerScore = player.getScore();
 

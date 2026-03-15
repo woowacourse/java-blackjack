@@ -1,9 +1,7 @@
 package blackjack.domain.config;
 
 import blackjack.BlackjackApplication;
-import blackjack.domain.card.ShuffledCardsGenerator;
 import blackjack.domain.game.BlackjackGame;
-import blackjack.domain.game.BlackjackGameReferee;
 import blackjack.domain.participants.Bet;
 import blackjack.domain.participants.Name;
 import blackjack.domain.participants.Player;
@@ -14,16 +12,12 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
 
-public class BlackjackConsoleConfig {
+public class BlackjackConsoleBootstrap {
     public static BlackjackApplication createApplication() {
         BlackjackView view = new BlackjackView(new InputView(), new OutputView());
         List<Player> players = readPlayers(view);
 
-        BlackjackGame game = BlackjackGame.create(
-            new ShuffledCardsGenerator(),
-            new BlackjackGameReferee(),
-            new PlayerGroup(players)
-        );
+        BlackjackGame game = BlackjackGame.createBasic(new PlayerGroup(players));
         return new BlackjackApplication(view, game);
     }
 

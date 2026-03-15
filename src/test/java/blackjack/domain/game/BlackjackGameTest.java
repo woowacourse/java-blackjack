@@ -2,11 +2,7 @@ package blackjack.domain.game;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.card.Card;
-import blackjack.domain.card.CardsGenerator;
 import blackjack.domain.card.Hand;
-import blackjack.domain.card.Rank;
-import blackjack.domain.card.Suit;
 import blackjack.domain.participants.Bet;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Name;
@@ -19,16 +15,10 @@ class BlackjackGameTest {
     private static final int INITIAL_DEAL_COUNT = 2;
     private static final int DEALER_HIT_THRESHOLD = 16;
 
-    private final CardsGenerator cardsGenerator = () -> List.of(
-        new Card(Rank.SIX, Suit.DIAMOND),
-        new Card(Rank.TEN, Suit.HEART),
-        new Card(Rank.TEN, Suit.CLOVER),
-        new Card(Rank.TEN, Suit.SPADE));
-    private final GameReferee referee = new BlackjackGameReferee();
-    private final BlackjackGame game = BlackjackGame.create(
-        cardsGenerator,
-        referee,
-        new PlayerGroup(List.of(new Player(new Name("pobi"), Hand.empty(), Bet.zero()))));
+    private final Bet bet = new Bet(1000L);
+
+    private final BlackjackGame game = BlackjackGame.createBasic(
+        new PlayerGroup(List.of(new Player(new Name("pobi"), Hand.empty(), bet))));
 
     @Test
     void 초기_카드를_딜러와_플레이어들에게_2장씩_분배한다() {

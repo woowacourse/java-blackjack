@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 
 class BlackjackGameRefereeTest {
     private final String playerName = "플레이어";
+    private final Bet bet = new Bet(1000L);
     private final BlackjackGameReferee referee = new BlackjackGameReferee();
 
     private final Hand lowerScoreHand =
@@ -30,7 +31,7 @@ class BlackjackGameRefereeTest {
     void 둘_다_버스트가_아니면서_플레이어가_점수가_더_높다면_플레이어가_승리한다() {
         // given
         Dealer dealer = new Dealer(lowerScoreHand);
-        Player player = new Player(this.playerName, higherScoreHand, Bet.zero());
+        Player player = new Player(this.playerName, higherScoreHand, bet);
         // when
         GameResult result = referee.judge(dealer, player);
         // then
@@ -41,7 +42,7 @@ class BlackjackGameRefereeTest {
     void 둘_다_버스트가_아니면서_딜러가_점수가_더_높다면_딜러가_승리한다() {
         // given
         Dealer dealer = new Dealer(higherScoreHand);
-        Player player = new Player(this.playerName, lowerScoreHand, Bet.zero());
+        Player player = new Player(this.playerName, lowerScoreHand, bet);
         // when
         GameResult result = referee.judge(dealer, player);
         // then
@@ -52,7 +53,7 @@ class BlackjackGameRefereeTest {
     void 둘_다_버스트가_아니면서_점수가_같다면_무승부한다() {
         // given
         Dealer dealer = new Dealer(defaultScoreHand);
-        Player player = new Player(this.playerName, defaultScoreHand, Bet.zero());
+        Player player = new Player(this.playerName, defaultScoreHand, bet);
         // when
         GameResult result = referee.judge(dealer, player);
         // then
@@ -63,7 +64,7 @@ class BlackjackGameRefereeTest {
     void 플레이어가_버스트라면_딜러가_승리한다() {
         // given
         Dealer dealer = new Dealer(defaultScoreHand);
-        Player player = new Player(this.playerName, bustScoreHand, Bet.zero());
+        Player player = new Player(this.playerName, bustScoreHand, bet);
         // when
         GameResult result = referee.judge(dealer, player);
         // then
@@ -74,7 +75,7 @@ class BlackjackGameRefereeTest {
     void 딜러만_버스트라면_플레이어가_승리한다() {
         // given
         Dealer dealer = new Dealer(bustScoreHand);
-        Player player = new Player(this.playerName, defaultScoreHand, Bet.zero());
+        Player player = new Player(this.playerName, defaultScoreHand, bet);
         // when
         GameResult result = referee.judge(dealer, player);
         // then
@@ -85,7 +86,7 @@ class BlackjackGameRefereeTest {
     void 둘_다_버스트라면_딜러가_승리한다() {
         // given
         Dealer dealer = new Dealer(bustScoreHand);
-        Player player = new Player(this.playerName, bustScoreHand, Bet.zero());
+        Player player = new Player(this.playerName, bustScoreHand, bet);
         // when
         GameResult result = referee.judge(dealer, player);
         // then

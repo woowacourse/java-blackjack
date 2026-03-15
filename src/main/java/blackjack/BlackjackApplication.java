@@ -1,6 +1,6 @@
 package blackjack;
 
-import blackjack.domain.config.BlackjackConsoleConfig;
+import blackjack.domain.config.BlackjackConsoleBootstrap;
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.Profit;
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 public class BlackjackApplication {
     public static void main(String[] args) {
-        BlackjackApplication application = BlackjackConsoleConfig.createApplication();
+        BlackjackApplication application = BlackjackConsoleBootstrap.createApplication();
         application.run();
     }
 

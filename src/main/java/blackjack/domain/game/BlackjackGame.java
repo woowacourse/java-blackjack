@@ -1,7 +1,6 @@
 package blackjack.domain.game;
 
-import blackjack.domain.card.CardsGenerator;
-import blackjack.domain.card.Deck;
+import blackjack.domain.card.ShuffledDeck;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.PlayerGroup;
@@ -11,24 +10,20 @@ import java.util.List;
 public class BlackjackGame {
     private static final int INITIAL_DEAL_COUNT = 2;
 
-    private final Deck deck;
+    private final ShuffledDeck deck;
     private final Dealer dealer;
-    private final GameReferee referee;
     private final PlayerGroup playerGroup;
 
-    public BlackjackGame(Deck deck, Dealer dealer, GameReferee referee, PlayerGroup playerGroup) {
+    public BlackjackGame(ShuffledDeck deck, Dealer dealer, PlayerGroup playerGroup) {
         this.deck = deck;
         this.dealer = dealer;
-        this.referee = referee;
         this.playerGroup = playerGroup;
     }
 
-    public static BlackjackGame create(
-        CardsGenerator cardsGenerator, GameReferee referee, PlayerGroup playerGroup) {
+    public static BlackjackGame createBasic(PlayerGroup playerGroup) {
         return new BlackjackGame(
-            Deck.create(cardsGenerator),
+            ShuffledDeck.create(),
             Dealer.createEmptyHand(),
-            referee,
             playerGroup);
     }
 
@@ -61,7 +56,7 @@ public class BlackjackGame {
     }
 
     public Profit calculateProfit(Player player) {
-        GameResult judge = referee.judge(dealer, player);
+        GameResult judge = BlackjackGameReferee.judge(dealer, player);
         return player.calculateProfit(judge);
     }
 }
