@@ -19,6 +19,7 @@ class GameResultAnalyzerTest {
 
     @Test
     void 플레이어가_승리한_경우_수익을_얻는다() {
+        // given
         Card spade2 = Card.of(CardDenomination.TWO, CardEmblem.SPADE);
         Card heart3 = Card.of(CardDenomination.THREE, CardEmblem.HEART);
         Card heart4 = Card.of(CardDenomination.FOUR, CardEmblem.HEART);
@@ -27,24 +28,26 @@ class GameResultAnalyzerTest {
                 .cards(spade2, heart3, heart4, spadeAce)
                 .build();
 
-        ParticipantName playerName = ParticipantName.from("test");
-        BetAmount betAmount = BetAmount.from(1000);
-        ParticipantInitialInformation participantInitialInformation = ParticipantInitialInformation.of(playerName,
-                betAmount);
-        Players players = Players.from(List.of(participantInitialInformation));
+        Players players = Players.from(List.of(
+                ParticipantInitialInformation.of(ParticipantName.from("test"), BetAmount.from(1000))
+        ));
         Dealer dealer = Dealer.from();
 
         dealer.drawCards(cardDeck, 2);
-        players.stream().forEach(
-                player -> player.drawCards(cardDeck, 2));
+        players.stream().forEach(player -> player.drawCards(cardDeck, 2));
+
+        // when
         BettingResults bettingResults = GameResultAnalyzer.analyzeBettingResults(players, dealer);
 
-        Assertions.assertThat(bettingResults.playerBettingResults().getFirst().getParticipantName().name()).isEqualTo("test");
-        Assertions.assertThat(bettingResults.playerBettingResults().getFirst().getProfit()).isEqualTo(1000);
+        // then
+        BettingResult result = bettingResults.playerBettingResults().getFirst();
+        Assertions.assertThat(result.getParticipantName().name()).isEqualTo("test");
+        Assertions.assertThat(result.getProfit()).isEqualTo(1000);
     }
 
     @Test
     void 플레이어가_패배한_경우_배팅금액을_잃는다() {
+        // given
         Card spade2 = Card.of(CardDenomination.TWO, CardEmblem.SPADE);
         Card heart3 = Card.of(CardDenomination.THREE, CardEmblem.HEART);
         Card heart4 = Card.of(CardDenomination.FOUR, CardEmblem.HEART);
@@ -52,26 +55,28 @@ class GameResultAnalyzerTest {
         CardDeck cardDeck = new CardDeckBuilder()
                 .cards(spade2, heart3, heart4, spadeAce)
                 .build();
-        ParticipantName playerName = ParticipantName.from("test");
-        BetAmount betAmount = BetAmount.from(1000);
-        ParticipantInitialInformation participantInitialInformation = ParticipantInitialInformation.of(playerName,
-                betAmount);
-        Players players = Players.from(List.of(participantInitialInformation));
+
+        Players players = Players.from(List.of(
+                ParticipantInitialInformation.of(ParticipantName.from("test"), BetAmount.from(1000))
+        ));
         Dealer dealer = Dealer.from();
 
-        players.stream().forEach(
-                player -> player.drawCards(cardDeck, 2));
+        players.stream().forEach(player -> player.drawCards(cardDeck, 2));
         dealer.drawCards(cardDeck, 2);
 
+        // when
         BettingResults bettingResults = GameResultAnalyzer.analyzeBettingResults(players, dealer);
 
-        Assertions.assertThat(bettingResults.playerBettingResults().getFirst().getParticipantName().name()).isEqualTo("test");
-        Assertions.assertThat(bettingResults.playerBettingResults().getFirst().getProfit()).isEqualTo(-1000);
+        // then
+        BettingResult result = bettingResults.playerBettingResults().getFirst();
+        Assertions.assertThat(result.getParticipantName().name()).isEqualTo("test");
+        Assertions.assertThat(result.getProfit()).isEqualTo(-1000);
     }
 
     @Test
     @DisplayName(value = "플레이어만 블랙잭인 경우 1.5배 수익을 얻는다")
     void 플레이어만_블랙잭인_경우_수익을_얻는다() {
+        // given
         Card spadeKing = Card.of(CardDenomination.KING, CardEmblem.SPADE);
         Card heartAce = Card.of(CardDenomination.ACE, CardEmblem.HEART);
         Card heart4 = Card.of(CardDenomination.FOUR, CardEmblem.HEART);
@@ -80,24 +85,26 @@ class GameResultAnalyzerTest {
                 .cards(spadeKing, heartAce, heart4, spadeAce)
                 .build();
 
-        ParticipantName playerName = ParticipantName.from("test");
-        BetAmount betAmount = BetAmount.from(1000);
-        ParticipantInitialInformation participantInitialInformation = ParticipantInitialInformation.of(playerName,
-                betAmount);
-        Players players = Players.from(List.of(participantInitialInformation));
+        Players players = Players.from(List.of(
+                ParticipantInitialInformation.of(ParticipantName.from("test"), BetAmount.from(1000))
+        ));
         Dealer dealer = Dealer.from();
 
         players.stream().forEach(player -> player.drawCards(cardDeck, 2));
         dealer.drawCards(cardDeck, 2);
 
+        // when
         BettingResults bettingResults = GameResultAnalyzer.analyzeBettingResults(players, dealer);
 
-        Assertions.assertThat(bettingResults.playerBettingResults().getFirst().getParticipantName().name()).isEqualTo("test");
-        Assertions.assertThat(bettingResults.playerBettingResults().getFirst().getProfit()).isEqualTo(1500);
+        // then
+        BettingResult result = bettingResults.playerBettingResults().getFirst();
+        Assertions.assertThat(result.getParticipantName().name()).isEqualTo("test");
+        Assertions.assertThat(result.getProfit()).isEqualTo(1500);
     }
 
     @Test
     void 딜러만_블랙잭인_경우_플레이어는_배팅금액을_잃는다() {
+        // given
         Card spadeKing = Card.of(CardDenomination.KING, CardEmblem.SPADE);
         Card heartAce = Card.of(CardDenomination.ACE, CardEmblem.HEART);
         Card heart4 = Card.of(CardDenomination.FOUR, CardEmblem.HEART);
@@ -106,24 +113,26 @@ class GameResultAnalyzerTest {
                 .cards(spadeKing, heartAce, heart4, spadeAce)
                 .build();
 
-        ParticipantName playerName = ParticipantName.from("test");
-        BetAmount betAmount = BetAmount.from(1000);
-        ParticipantInitialInformation participantInitialInformation = ParticipantInitialInformation.of(playerName,
-                betAmount);
-        Players players = Players.from(List.of(participantInitialInformation));
+        Players players = Players.from(List.of(
+                ParticipantInitialInformation.of(ParticipantName.from("test"), BetAmount.from(1000))
+        ));
         Dealer dealer = Dealer.from();
 
         dealer.drawCards(cardDeck, 2);
         players.stream().forEach(player -> player.drawCards(cardDeck, 2));
 
+        // when
         BettingResults bettingResults = GameResultAnalyzer.analyzeBettingResults(players, dealer);
 
-        Assertions.assertThat(bettingResults.playerBettingResults().getFirst().getParticipantName().name()).isEqualTo("test");
-        Assertions.assertThat(bettingResults.playerBettingResults().getFirst().getProfit()).isEqualTo(-1000);
+        // then
+        BettingResult result = bettingResults.playerBettingResults().getFirst();
+        Assertions.assertThat(result.getParticipantName().name()).isEqualTo("test");
+        Assertions.assertThat(result.getProfit()).isEqualTo(-1000);
     }
 
     @Test
     void 딜러가_버스트_되는_경우_나머지_플레이어는_승리한다() {
+        // given
         Card spade2 = Card.of(CardDenomination.TWO, CardEmblem.SPADE);
         Card heart3 = Card.of(CardDenomination.THREE, CardEmblem.HEART);
         Card heart4 = Card.of(CardDenomination.FOUR, CardEmblem.HEART);
@@ -133,21 +142,21 @@ class GameResultAnalyzerTest {
                 .cards(spade2, heart3, heart4, spadeQueen, spadeKing)
                 .build();
 
-        ParticipantName playerName = ParticipantName.from("test");
-        BetAmount betAmount = BetAmount.from(1000);
-        ParticipantInitialInformation participantInitialInformation = ParticipantInitialInformation.of(playerName,
-                betAmount);
-        Players players = Players.from(List.of(participantInitialInformation));
+        Players players = Players.from(List.of(
+                ParticipantInitialInformation.of(ParticipantName.from("test"), BetAmount.from(1000))
+        ));
         Dealer dealer = Dealer.from();
 
-        players.stream().forEach(
-                player -> player.drawCards(cardDeck, 2));
+        players.stream().forEach(player -> player.drawCards(cardDeck, 2));
         dealer.drawCards(cardDeck, 3);
 
-        Assertions.assertThat(dealer.isBusted()).isTrue();BettingResults bettingResults = GameResultAnalyzer.analyzeBettingResults(players, dealer);
+        // when
+        BettingResults bettingResults = GameResultAnalyzer.analyzeBettingResults(players, dealer);
 
-        Assertions.assertThat(bettingResults.playerBettingResults().getFirst().getParticipantName().name()).isEqualTo("test");
-        Assertions.assertThat(bettingResults.playerBettingResults().getFirst().getProfit()).isEqualTo(1000);
+        // then
+        BettingResult result = bettingResults.playerBettingResults().getFirst();
+        Assertions.assertThat(result.getParticipantName().name()).isEqualTo("test");
+        Assertions.assertThat(result.getProfit()).isEqualTo(1000);
     }
 
 }
