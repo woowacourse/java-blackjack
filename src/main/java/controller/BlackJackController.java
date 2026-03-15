@@ -1,10 +1,11 @@
 package controller;
 
 import domain.card.CardDeck;
-import domain.participant.Dealer;
-import domain.participant.Hand;
-import domain.participant.Player;
-import domain.participant.Players;
+import domain.participant.*;
+import domain.participant.player.Money;
+import domain.participant.player.Player;
+import domain.participant.player.PlayerInfo;
+import domain.participant.player.Players;
 import service.BlackJackService;
 import view.InputView;
 import view.OutputView;
@@ -22,7 +23,7 @@ public class BlackJackController {
     public void run() {
         CardDeck cardDeck = new CardDeck();
         Players players = new Players(getPlayer());
-        Dealer dealer = new Dealer(new Hand());
+        Dealer dealer = new Dealer();
 
         initGame(cardDeck, dealer, players);
 
@@ -40,7 +41,9 @@ public class BlackJackController {
         OutputView.inputPlayerMessage();
         List<String> names = new ArrayList<>(InputView.inputName());
         for (String name : names) {
-            players.add(new Player(name, new Hand()));
+            OutputView.askBettingMoneyMessage(name);
+            Money bettingMoney = new Money(InputView.inputBettingMoney());
+            players.add(new Player(new PlayerInfo(name, bettingMoney)));
         }
         return players;
     }
@@ -63,7 +66,7 @@ public class BlackJackController {
     }
 
     private boolean canPlayerDraw(Player player) {
-        if (player.getHand().isBust()) {
+        if (player.getHand().isBust() || player.isMaxScore()) {
             player.getTotalCardScore();
             return false;
         }
@@ -72,18 +75,24 @@ public class BlackJackController {
 
     private void drawAndShowCard(CardDeck cardDeck, Player player) {
         player.keepCard(cardDeck.drawCard());
-        OutputView.holdingCardMessage(player);
+        if (!player.isMaxScore()) {
+            OutputView.holdingCardMessage(player);
+        }
     }
 
     private void finalizePlayerTurn(Player player) {
         OutputView.holdingCardMessage(player);
-        player.getTotalCardScore();
     }
 
     private void progressGame(CardDeck cardDeck, Player player) {
+        if (player.isMaxScore()) {
+            OutputView.printLine();
+        }
+
         while (canPlayerDraw(player)) {
             drawAndShowCard(cardDeck, player);
         }
+
         if (!player.getHand().isBust()) {
             finalizePlayerTurn(player);
         }

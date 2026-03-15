@@ -1,4 +1,4 @@
-package domain.participant;
+package domain.participant.player;
 
 import java.util.Collections;
 import java.util.List;

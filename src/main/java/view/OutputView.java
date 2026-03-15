@@ -1,11 +1,11 @@
 package view;
 
-import domain.game.Result;
-import domain.game.ResultInfo;
+import domain.game.GameResult;
 import domain.participant.Dealer;
-import domain.participant.Player;
-import domain.participant.Players;
+import domain.participant.player.Player;
+import domain.participant.player.Players;
 
+import java.math.BigDecimal;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -13,9 +13,10 @@ public class OutputView {
     private static final String INPUT_PLAYER_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
     private static final String HIT_OR_STAND_MESSAGE = "%n%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)%n";
     private static final String DEALER_HIT_MESSAGE = "%n%n딜러는 16이하라 한장의 카드를 더 받았습니다.";
-    private static final String FINAL_WIN_DEFEAT_DRAW_MESSAGE = "%n## 최종 승패%n";
-    private static final String DEALER_RESULT = "딜러: %s%n";
-    private static final String PLAYER_RESULT = "%s: %s%n";
+    private static final String FINAL_YIELD_MESSAGE = "%n## 최종 수익%n";
+    private static final String DEALER_RESULT = "딜러: %.0f%n";
+    private static final String PLAYER_RESULT = "%s: %.0f%n";
+    private static final String INPUT_PLAYER_BETTING_MONEY = "%n%s의 배팅 금액은?%n";
 
     public static void inputPlayerMessage() {
         System.out.println(INPUT_PLAYER_MESSAGE);
@@ -56,20 +57,31 @@ public class OutputView {
         }
     }
 
-    public static void gameResultMessage(Result result) {
-        System.out.printf(FINAL_WIN_DEFEAT_DRAW_MESSAGE);
-        String dealerResultMessage = result.getDealerResult().entrySet().stream()
-                .map(entry -> entry.getValue() + entry.getKey().getInfo())
-                .collect(Collectors.joining(" "));
+    public static void gameResultMessage(GameResult gameResult) {
+        System.out.printf(FINAL_YIELD_MESSAGE);
+        BigDecimal dealerResultMessage = gameResult.getDealerResult();
         System.out.printf(DEALER_RESULT, dealerResultMessage);
 
-        for (Map.Entry<String, ResultInfo> entry : result.getPlayersResult().entrySet()) {
-            System.out.printf(PLAYER_RESULT, entry.getKey(), entry.getValue().getInfo());
+        Map<String, BigDecimal> playerYield = gameResult.calculatePlayerYield();
+        playerResultMessage(playerYield);
+    }
+
+    private static void playerResultMessage(Map<String, BigDecimal> playerYield) {
+        for (String s : playerYield.keySet()) {
+            System.out.printf(PLAYER_RESULT, s, playerYield.get(s));
         }
     }
 
     public static void holdingCardMessage(Player player) {
         System.out.print(player.getName() + "카드: " + playerCardPrint(player));
+    }
+
+    public static void askBettingMoneyMessage(String name) {
+        System.out.printf(INPUT_PLAYER_BETTING_MONEY, name);
+    }
+
+    public static void printLine() {
+        System.out.println();
     }
 
     private static String dealerCardPrint(Dealer dealer) {
