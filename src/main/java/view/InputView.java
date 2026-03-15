@@ -3,7 +3,6 @@ package view;
 import view.message.BinaryOptionMessage;
 import view.validator.InputValidator;
 
-import java.math.BigDecimal;
 import java.util.*;
 
 public class InputView {

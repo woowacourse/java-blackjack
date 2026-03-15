@@ -1,6 +1,5 @@
 package view.validator;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.HashSet;
 import java.util.List;
