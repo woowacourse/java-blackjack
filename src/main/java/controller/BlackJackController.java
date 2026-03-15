@@ -119,20 +119,16 @@ public class BlackJackController {
     }
 
     private void proceedDealerTurn(Blackjack blackjack, Dealer dealer) {
-        boolean needDraw = dealer.needDraw();
-
-        while (needDraw) {
-            outputView.printDealerDrawResult(needDraw);
+        while (dealer.needDraw()) {
+            outputView.printDealerHit();
             blackjack.giveCardTo(dealer);
 
             if (dealer.isBust()) {
                 outputView.printBustState(dealer.getName(), dealer.calculateScore(), BLACKJACK_SCORE);
             }
-
-            needDraw = dealer.needDraw();
         }
 
-        outputView.printDealerDrawResult(needDraw);
+        outputView.printDealerStay();
     }
 
     private void proceedFinalPhase(Blackjack blackjack, Participants participants) {

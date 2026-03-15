@@ -26,13 +26,12 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printDealerDrawResult(boolean draw) {
+    public void printDealerHit() {
         System.out.println();
-        if (draw) {
-            System.out.println("딜러는 " + Dealer.DRAW_THRESHOLD + "이하라 한장의 카드를 더 받았습니다." + LINE_SEPARATOR);
-            return;
-        }
+        System.out.println("딜러는 " + Dealer.DRAW_THRESHOLD + "이하라 한장의 카드를 더 받았습니다." + LINE_SEPARATOR);
+    }
 
+    public void printDealerStay() {
         System.out.println("딜러는 " + Dealer.DRAW_THRESHOLD + "을 초과하여 카드를 더 받지 않았습니다." + LINE_SEPARATOR);
     }
 
