@@ -16,13 +16,8 @@ public class ParticipantInitialInformation {
         return new ParticipantInitialInformation(participantName, betAmount);
     }
 
-    public ParticipantName name() {
-        return participantName;
+    public Player toPlayer() {
+        return Player.from(participantName, betAmount);
     }
-
-    public BetAmount betAmount() {
-        return betAmount;
-    }
-
 
 }

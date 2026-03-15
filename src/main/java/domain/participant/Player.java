@@ -16,8 +16,8 @@ public class Player extends Participant{
         return new Player(participantName, BetAmount.from(0));
     }
 
-    public static Player from(ParticipantInitialInformation initialInformation) {
-        return new Player(initialInformation.name(), initialInformation.betAmount());
+    public static Player from(ParticipantName name, BetAmount betAmount) {
+        return new Player(name, betAmount);
     }
 
     public BetAmount getBetAmount() {

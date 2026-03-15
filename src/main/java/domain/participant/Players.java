@@ -20,7 +20,7 @@ public class Players {
 
     public static Players from(List<ParticipantInitialInformation> initialInformations) {
         return new Players(initialInformations.stream()
-                .map(Player::from)
+                .map(ParticipantInitialInformation::toPlayer)
                 .toList()
         );
     }
