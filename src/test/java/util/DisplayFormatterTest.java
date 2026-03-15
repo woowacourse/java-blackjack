@@ -137,4 +137,17 @@ public class DisplayFormatterTest {
                 "영기: -20000"
         );
     }
+
+    @Test
+    @DisplayName("유저의 이름을 받아, 추가 카드 요청 메시지 형식에 맞춰 포맷팅 한다.")
+    void 추가_카드_요청_메시지_포맷팅_테스트() {
+        // given
+        String userName = "라이";
+
+        // when
+        String actualResult = DisplayFormatter.formatExtraCardRequest(userName);
+
+        // then
+        assertThat(actualResult).isEqualTo("라이는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+    }
 }

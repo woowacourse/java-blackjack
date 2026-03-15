@@ -58,9 +58,9 @@ public class Participants {
         return UserCardsDTO.fromUser(players.get(userIndex));
     }
 
-    public List<String> askGetExtraCard() {
+    public List<String> getPlayerNames() {
         return players.stream()
-                .map(User::formatAskGetExtraCard)
+                .map(User::getName)
                 .collect(Collectors.toList());
     }
 

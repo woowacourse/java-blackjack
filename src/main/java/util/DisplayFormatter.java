@@ -38,4 +38,8 @@ public class DisplayFormatter {
 
         return profitDisplays;
     }
+
+    public static String formatExtraCardRequest(String userName) {
+        return String.format(Message.REQUEST_GET_EXTRA_CARD, userName);
+    }
 }

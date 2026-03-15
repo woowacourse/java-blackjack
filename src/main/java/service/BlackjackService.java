@@ -39,7 +39,10 @@ public class BlackjackService {
     }
 
     public List<String> makeExtraCardRequests() {
-        return participants.askGetExtraCard();
+        List<String> playerNames = participants.getPlayerNames();
+        return playerNames.stream()
+                .map(DisplayFormatter::formatExtraCardRequest)
+                .toList();
     }
 
     public List<String> getUserCardsDisplays() {
