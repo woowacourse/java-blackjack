@@ -3,6 +3,7 @@ package domain.betiing;
 public record BetAmount(int amount) {
 
     private static final int MINIMUM_BET_AMOUNT = 0;
+    private static final int RATE_DIVISOR = 100;
 
     public static BetAmount from(int amount) {
         validatePositive(amount);
@@ -15,8 +16,8 @@ public record BetAmount(int amount) {
         }
     }
 
-    public long calculateProfit(double odds) {
-        return Math.round(amount * odds);
+    public long calculateProfit(int rate) {
+        return (long) amount * rate / RATE_DIVISOR;
     }
 
 }
