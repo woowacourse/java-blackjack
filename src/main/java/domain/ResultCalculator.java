@@ -5,13 +5,15 @@ import java.util.Map;
 
 public class ResultCalculator {
     public GameResult calculate(Dealer dealer, Players players) {
-        final int dealerResultScore = toResultScore(dealer.getResult(), dealer.checkBust());
+        final int dealerScore = dealer.getResult();
+        final boolean dealerBust = dealer.checkBust();
         final Map<String, Outcome> playerOutcomes = new HashMap<>();
         final Map<Outcome, Integer> dealerOutcomeCounts = initOutcomeCounts();
 
         players.forEachPlayer(player -> {
-            final int playerResultScore = toResultScore(player.getResult(), player.checkBust());
-            final Outcome playerOutcome = decidePlayerOutcome(dealerResultScore, playerResultScore);
+            final int playerScore = player.getResult();
+            final boolean playerBust = player.checkBust();
+            final Outcome playerOutcome = decidePlayerOutcome(dealerScore, dealerBust, playerScore, playerBust);
             final Outcome dealerOutcome = reverse(playerOutcome);
             playerOutcomes.put(player.getName(), playerOutcome);
             dealerOutcomeCounts.put(dealerOutcome, dealerOutcomeCounts.get(dealerOutcome) + 1);
@@ -27,27 +29,20 @@ public class ResultCalculator {
         return dealerOutcomeCounts;
     }
 
-    private int toResultScore(int score, boolean bust) {
-        if (bust) {
-            return -1;
+    private Outcome decidePlayerOutcome(int dealerScore, boolean dealerBust, int playerScore, boolean playerBust) {
+        if (playerBust) {
+            return Outcome.LOSE;
         }
-        return score;
-    }
-
-    private Outcome decidePlayerOutcome(int dealerResultScore, int playerResultScore) {
-        if (dealerResultScore == playerResultScore) {
-            return Outcome.DRAW;
+        if (dealerBust) {
+            return Outcome.WIN;
         }
-        if (dealerResultScore > playerResultScore) {
+        if (dealerScore >= playerScore) {
             return Outcome.LOSE;
         }
         return Outcome.WIN;
     }
 
     private Outcome reverse(Outcome playerOutcome) {
-        if (playerOutcome == Outcome.DRAW) {
-            return Outcome.DRAW;
-        }
         if (playerOutcome == Outcome.WIN) {
             return Outcome.LOSE;
         }
