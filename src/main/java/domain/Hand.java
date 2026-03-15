@@ -60,10 +60,6 @@ public class Hand {
         return handTotalScore <= MINIMUM_DEALER_SCORE;
     }
 
-    public String getFinalDisplay() {
-        return " - 결과: " + handTotalScore;
-    }
-
     public int getHandTotalScore() {
         return handTotalScore;
     }

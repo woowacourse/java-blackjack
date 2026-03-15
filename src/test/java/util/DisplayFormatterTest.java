@@ -6,8 +6,12 @@ import domain.Card;
 import domain.Dealer;
 import domain.User;
 import dto.DealerResultDTO;
+import dto.ProfitResultDTO;
 import dto.UserCardsDTO;
 import dto.UserResultDTO;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import vo.Money;
@@ -110,5 +114,27 @@ public class DisplayFormatterTest {
 
         // then
         assertThat(actualResult).isEqualTo("딜러 카드: K스페이드, 9하트 - 결과: 19");
+    }
+
+    @Test
+    @DisplayName("ProfitResultDTO를 출력 형식에 맞춰 포맷팅 한다.")
+    void 수익_결과_출력_포맷팅_테스트() {
+        // given
+        Money dealerProfit = new Money(10000);
+        Map<String, Money> participantsProfit = new LinkedHashMap<>();
+        participantsProfit.put("라이", new Money(10000));
+        participantsProfit.put("영기", new Money(-20000));
+
+        ProfitResultDTO profitResultDTO = new ProfitResultDTO(dealerProfit, participantsProfit);
+
+        // when
+        List<String> actualResult = DisplayFormatter.formatProfitResult(profitResultDTO);
+
+        // then
+        assertThat(actualResult).containsExactly(
+                "딜러: 10000",
+                "라이: 10000",
+                "영기: -20000"
+        );
     }
 }

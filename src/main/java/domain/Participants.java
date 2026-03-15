@@ -5,7 +5,6 @@ import dto.ParticipantsInitDTO;
 import dto.ProfitResultDTO;
 import dto.UserCardsDTO;
 import dto.UserResultDTO;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -96,28 +95,7 @@ public class Participants {
                 .collect(Collectors.toList());
     }
 
-    public List<String> makeProfitResultDisplays() {
-        ProfitResultDTO profitResultDTO = calculateProfit();
-        return formatProfitDisplays(profitResultDTO);
-    }
-
-    private List<String> formatProfitDisplays(ProfitResultDTO profitResultDTO) {
-        List<String> profitDisplays = new ArrayList<>();
-        Money dealerProfit = profitResultDTO.getDealerProfit();
-        Map<String, Money> participantsProfit = profitResultDTO.getParticipantsProfit();
-
-        profitDisplays.add(formatDealerProfitDisplay(dealerProfit));
-
-        for (Map.Entry<String, Money> entry : participantsProfit.entrySet()) {
-            String userName = entry.getKey();
-            Money userProfit = entry.getValue();
-            profitDisplays.add(formatUserProfitDisplay(userName, userProfit));
-        }
-
-        return profitDisplays;
-    }
-
-    private ProfitResultDTO calculateProfit() {
+    public ProfitResultDTO calculateProfit() {
         Map<String, Money> participantsProfit = new LinkedHashMap<>();
         Money dealerProfit = new Money(0);
 
@@ -129,14 +107,6 @@ public class Participants {
         }
 
         return new ProfitResultDTO(dealerProfit, participantsProfit);
-    }
-
-    private String formatDealerProfitDisplay(Money dealerProfit) {
-        return "딜러: " + dealerProfit.getValue();
-    }
-
-    private String formatUserProfitDisplay(String userName, Money userProfit) {
-        return userName + ": " + userProfit.getValue();
     }
 
     public boolean isBust(int index) {

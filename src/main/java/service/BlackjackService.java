@@ -4,6 +4,7 @@ import domain.Deck;
 import domain.Participants;
 import dto.DealerResultDTO;
 import dto.ParticipantsInitDTO;
+import dto.ProfitResultDTO;
 import dto.UserCardsDTO;
 import dto.UserResultDTO;
 import java.util.List;
@@ -94,7 +95,8 @@ public class BlackjackService {
     }
 
     public List<String> evaluateGame() {
-        return participants.makeProfitResultDisplays();
+        ProfitResultDTO profitResultDTO = participants.calculateProfit();
+        return DisplayFormatter.formatProfitResult(profitResultDTO);
     }
 
     public boolean isBust(int index) {
