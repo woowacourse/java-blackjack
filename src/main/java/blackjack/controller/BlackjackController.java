@@ -11,6 +11,7 @@ import blackjack.service.CardDistributor;
 import blackjack.service.Game;
 import blackjack.utils.InputParser;
 import blackjack.utils.RetryInput;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -58,11 +59,11 @@ public class BlackjackController {
         GameResult gameResult = game.judgeTotalGameResult();
         ProfitResults profitResults = game.calculateTotalProfitResults(gameResult);
 
-        double dealerProfit = profitResults.dealerProfit();
-        Map<Player, Double> playerProfit = profitResults.playerProfit();
+        BigDecimal dealerProfit = profitResults.dealerProfit();
+        Map<Player, BigDecimal> playerProfit = profitResults.playerProfit();
 
         List<PlayerProfitResult> playerNameProfitResult = new ArrayList<>();
-        for (Entry<Player, Double> entry : playerProfit.entrySet()) {
+        for (Entry<Player, BigDecimal> entry : playerProfit.entrySet()) {
             playerNameProfitResult.add(PlayerProfitResult.from(entry.getKey(), entry.getValue()));
         }
         OutputView.printFinalProfitResult(dealerProfit, playerNameProfitResult);
@@ -109,7 +110,7 @@ public class BlackjackController {
     private List<Player> createPlayersWithBettingAmounts(List<String> playerNames) {
         List<Player> players = new ArrayList<>();
         for (String playerName : playerNames) {
-            int bettingAmount = retryInput.read(
+            BigDecimal bettingAmount = retryInput.read(
                     () -> InputParser.parseBetAmount(InputView.askToPlayerBettingAmount(playerName)));
             players.add(new Player(playerName, bettingAmount));
         }

@@ -1,6 +1,7 @@
 package blackjack.domain;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
-public record ProfitResults(Double dealerProfit, Map<Player, Double> playerProfit) {
+public record ProfitResults(BigDecimal dealerProfit, Map<Player, BigDecimal> playerProfit) {
 }

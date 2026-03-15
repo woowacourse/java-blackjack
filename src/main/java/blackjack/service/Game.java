@@ -5,6 +5,7 @@ import blackjack.domain.GameResult;
 import blackjack.domain.Player;
 import blackjack.domain.ProfitResults;
 import blackjack.domain.ScoreCompareResult;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -36,14 +37,14 @@ public class Game {
     public ProfitResults calculateTotalProfitResults(GameResult gameResult) {
         LinkedHashMap<Player, ScoreCompareResult> playerResults = gameResult.playerResults();
 
-        double dealerProfit = 0;
-        Map<Player, Double> playerProfits = new LinkedHashMap<>();
+        BigDecimal dealerProfit = BigDecimal.ZERO;
+        Map<Player, BigDecimal> playerProfits = new LinkedHashMap<>();
         for (Map.Entry<Player, ScoreCompareResult> entry : playerResults.entrySet()) {
             Player player = entry.getKey();
             ScoreCompareResult result = entry.getValue();
 
-            double profit = player.calculateProfit(result);
-            dealerProfit += profit * -1.0;
+            BigDecimal profit = player.calculateProfit(result);
+            dealerProfit = dealerProfit.subtract(profit);
             playerProfits.put(player, profit);
         }
 

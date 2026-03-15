@@ -3,6 +3,7 @@ package blackjack.view;
 import blackjack.dto.PlayerCardsName;
 import blackjack.dto.PlayerFinalCardsScore;
 import blackjack.dto.PlayerProfitResult;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class OutputView {
@@ -50,14 +51,14 @@ public class OutputView {
     }
 
     public static void printFinalProfitResult(
-            double dealerProfit,
+            BigDecimal dealerProfit,
             List<PlayerProfitResult> playersProfitResults) {
         System.out.println();
         System.out.println("## 최종 수익");
-        System.out.printf("딜러: %d%n", (int) dealerProfit);
+        System.out.printf("딜러: %d%n", dealerProfit.intValue());
 
         for (PlayerProfitResult playerProfitResult : playersProfitResults) {
-            System.out.println(playerProfitResult.playerName() + ": " + (int) playerProfitResult.profit());
+            System.out.println(playerProfitResult.playerName() + ": " + playerProfitResult.profit().intValue());
         }
     }
 }

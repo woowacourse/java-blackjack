@@ -1,17 +1,19 @@
 package blackjack.domain;
 
 
+import java.math.BigDecimal;
+
 public class Player extends Participant {
-    private static final double BLACKJACK_PROFIT_RATE = 1.5;
+    private static final BigDecimal BLACKJACK_PROFIT_RATE = BigDecimal.valueOf(1.5);
 
     private final String name;
-    private final int bettingAmount;
+    private final BigDecimal bettingAmount;
 
     public Player(String name) {
-        this(name, 0);
+        this(name, BigDecimal.valueOf(0));
     }
 
-    public Player(String name, int bettingAmount) {
+    public Player(String name, BigDecimal bettingAmount) {
         this.name = name;
         this.bettingAmount = bettingAmount;
     }
@@ -20,19 +22,19 @@ public class Player extends Participant {
         return name;
     }
 
-    public double calculateProfit(ScoreCompareResult compareResult) {
+    public BigDecimal calculateProfit(ScoreCompareResult compareResult) {
         if (compareResult == ScoreCompareResult.PLAYER_WIN) {
             return calculateProfitWhenPlayerWins();
         }
         if (compareResult == ScoreCompareResult.PLAYER_LOSE) {
-            return -bettingAmount;
+            return bettingAmount.negate();
         }
-        return 0;
+        return BigDecimal.ZERO;
     }
 
-    private double calculateProfitWhenPlayerWins() {
+    private BigDecimal calculateProfitWhenPlayerWins() {
         if (isBlackjack()) {
-            return (bettingAmount * BLACKJACK_PROFIT_RATE);
+            return (bettingAmount.multiply(BLACKJACK_PROFIT_RATE));
         }
         return bettingAmount;
     }

@@ -1,5 +1,6 @@
 package blackjack.utils;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -20,10 +21,10 @@ public class InputParser {
                 .toList();
     }
 
-    public static int parseBetAmount(String input) {
+    public static BigDecimal parseBetAmount(String input) {
         try {
-            int amount = Integer.parseInt(input);
-            if (amount <= 0) {
+            BigDecimal amount = new BigDecimal(input);
+            if (amount.compareTo(BigDecimal.ZERO) <= 0) {
                 throw new IllegalArgumentException("[ERROR] 베팅 금액은 양수여야 합니다. 다시 입력해주세요.");
             }
             return amount;
