@@ -57,7 +57,7 @@ public class Player extends Participant {
 
     private Money calculatePlayerProfit(final PlayerResult result) {
         if (result == PlayerResult.WIN) {
-            return checkNaturalBlackjack();
+            return checkBlackJack();
         }
         if (result == PlayerResult.LOSE) {
             return bettingMoney.multiply(-1);
@@ -65,8 +65,8 @@ public class Player extends Participant {
         return Money.zero();
     }
 
-    private Money checkNaturalBlackjack() {
-        if (isBlackjack() && hands.isTwoCardHand()) {
+    private Money checkBlackJack() {
+        if (isBlackjack()) {
             return bettingMoney.multiply(NATURAL_BLACKJACK_BONUS);
         }
         return bettingMoney;

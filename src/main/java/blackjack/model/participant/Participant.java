@@ -52,7 +52,7 @@ public abstract class Participant {
     }
 
     public boolean isBlackjack() {
-        return hands.calculateTotalScore() == BLACKJACK_SCORE;
+        return hands.calculateTotalScore() == BLACKJACK_SCORE && hands.isTwoCardHand();
     }
 
     public boolean hasHigherScoreThan(final Participant other) {
