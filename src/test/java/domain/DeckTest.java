@@ -20,7 +20,6 @@ public class DeckTest {
     @Test
     void 덱에_카드_없을_경우_예외_발생() {
         Deck deck = Deck.createDeck(cards -> {});
-        List<Card> cards = deck.getCards();
         for (int i = 0; i < 52; i++) {
             deck.draw();
         }

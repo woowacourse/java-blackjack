@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class Name {
     private static final int NAME_LIMIT_LENGTH = 20;
-    private static final List<String> INVALID_NAMES = List.of("딜러", "Dealer", "dealer");
+    private static final List<String> INVALID_NAMES = List.of("딜러", "Dealer", "dealer", "참가자");
 
     private final String name;
 
