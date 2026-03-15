@@ -8,10 +8,10 @@ import dto.PlayersDto;
 public class PlayersMapper {
 
     public static PlayersDto toPlayersDto(Players players) {
-        return new PlayersDto(players.getPlayersHand(), players.getPlayersScore());
+        return new PlayersDto(players.getPlayers());
     }
 
     public static PlayerDto toPlayerDto(Player player) {
-        return new PlayerDto(player.getName(), player.getCards());
+        return new PlayerDto(player);
     }
 }
