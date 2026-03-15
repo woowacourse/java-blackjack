@@ -15,4 +15,9 @@ public class InputView {
         System.out.println(name + IOMessage.ASK_MORE_CARD.message());
         return scanner.nextLine();
     }
+
+    public String getMoney(String name) {
+        System.out.println(name + IOMessage.ASK_MONEY.message());
+        return scanner.nextLine();
+    }
 }

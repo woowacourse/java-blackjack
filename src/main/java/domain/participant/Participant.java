@@ -1,4 +1,8 @@
-package domain;
+package domain.participant;
+
+import domain.card.Card;
+import domain.result.Score;
+import java.util.List;
 
 public abstract class Participant {
     private final Hand hand;
@@ -7,6 +11,10 @@ public abstract class Participant {
     public Participant(String name) {
         this.name = new Name(name);
         this.hand = new Hand();
+    }
+
+    public boolean isFirstBlackJack() {
+        return hand.size() == 2 && hand.calculateScore().isBlackjack();
     }
 
     public void drawCard(Card card) {
@@ -18,11 +26,17 @@ public abstract class Participant {
     }
 
     public String getName() {
-        return name.getName();
+        return name.name();
     }
 
     public Hand getHand() {
-        return new Hand(hand.getCards());
+        return new Hand(hand.cards());
+    }
+
+    public List<String> getCardNames() {
+        return hand.cards().stream()
+                .map(Card::getCardName)
+                .toList();
     }
 
     public abstract boolean canDraw();

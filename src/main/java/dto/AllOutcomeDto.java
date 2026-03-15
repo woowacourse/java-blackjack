@@ -1,6 +1,6 @@
 package dto;
 
-import domain.Outcome;
+import domain.result.Outcome;
 import java.util.List;
 import java.util.Map;
 
