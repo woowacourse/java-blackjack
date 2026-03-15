@@ -4,7 +4,7 @@ import exception.OutOfRangeException;
 
 public record Bet(long amount) {
     private static final int MIN_BETTING_AMOUNT = 1;
-    private static final long MAX_BETTING_AMOUNT = Long.MAX_VALUE;
+    private static final long MAX_BETTING_AMOUNT = 300_000;
 
     public Bet {
         validateAmount(amount);
