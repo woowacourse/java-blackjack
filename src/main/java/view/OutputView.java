@@ -62,7 +62,7 @@ public class OutputView {
         BigDecimal dealerResultMessage = result.getDealerResult();
         System.out.printf(DEALER_RESULT, dealerResultMessage);
 
-        Map<String, BigDecimal> playerYield = result.calculatePlayerYield(result.getPlayersResult());
+        Map<String, BigDecimal> playerYield = result.calculatePlayerYield();
         playerResultMessage(playerYield);
     }
 

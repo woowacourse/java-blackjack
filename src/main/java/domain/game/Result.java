@@ -34,7 +34,7 @@ public class Result {
         return dealerResult.multiply(BigDecimal.valueOf(NEGATION_FACTOR));
     }
 
-    public Map<String, BigDecimal> calculatePlayerYield(Map<Player, GameResult> playersResult) {
+    public Map<String, BigDecimal> calculatePlayerYield() {
         Map<String, BigDecimal> playerYield = new HashMap<>();
         for (Player player : playersResult.keySet()) {
             playerYield.put(player.getName(),
