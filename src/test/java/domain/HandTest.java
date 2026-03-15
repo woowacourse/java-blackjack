@@ -76,31 +76,20 @@ public class HandTest {
     }
 
     @Test
-    void 첫_번째_카드를_확인한다() {
-        Hand hand = new Hand();
-        hand.addCard(new Card(ACE, SPADE));
-        hand.addCard(new Card(KING, HEART));
-
-        String firstCard = hand.getFirstCard();
-
-        assertThat(firstCard).isEqualTo("A스페이드");
-    }
-
-    @Test
-    void 핸드에_2장의_카드만_존재하는지_확인한다() {
+    void 핸드에_2장의_카드만_존재하고_점수합계가_21점이면_블랙잭이다() {
         Hand hand1 = new Hand();
         hand1.addCard(new Card(ACE, SPADE));
         hand1.addCard(new Card(KING, HEART));
-        hand1.addCard(new Card(SEVEN, DIAMOND));
+        hand1.addCard(new Card(TEN, DIAMOND));
 
         Hand hand2 = new Hand();
         hand2.addCard(new Card(JACK, SPADE));
-        hand2.addCard(new Card(QUEEN, HEART));
+        hand2.addCard(new Card(ACE, HEART));
 
         List<Hand> hands = List.of(hand1, hand2);
 
         assertThat(hands)
-                .extracting(Hand::hasOnlyTwoCards)
+                .extracting(Hand::isBlackjack)
                 .containsExactly(false, true);
     }
 }

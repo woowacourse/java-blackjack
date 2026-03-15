@@ -12,6 +12,7 @@ import domain.result.GameResult;
 import java.util.List;
 
 public class GameManager {
+    private static final int INITIAL_NUMBER_OF_CARDS = 2;
 
     private final Deck deck;
     private final Dealer dealer;
@@ -66,7 +67,7 @@ public class GameManager {
     }
 
     private void drawInitialCards() {
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < INITIAL_NUMBER_OF_CARDS; i++) {
             drawCardToParticipants();
         }
     }

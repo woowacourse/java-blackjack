@@ -7,7 +7,10 @@ import java.util.List;
 
 public class Hand {
     private static final int MAX_NON_BUST_SCORE = 21;
+    private static final int BLACKJACK_SCORE = 21;
+    private static final int INITIAL_NUMBER_OF_CARDS = 2;
     private static final int ACE_BONUS_SCORE = 10;
+
 
     private final List<Card> cards = new ArrayList<>();
 
@@ -15,12 +18,8 @@ public class Hand {
         cards.add(card);
     }
 
-    public String getFirstCard() {
-        return cards.getFirst().getName();
-    }
-
-    public boolean hasOnlyTwoCards() {
-        return cards.size() == 2;
+    public boolean isBlackjack() {
+        return cards.size() == INITIAL_NUMBER_OF_CARDS && calculateScore() == BLACKJACK_SCORE;
     }
 
     public List<String> showHand() {
