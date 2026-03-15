@@ -35,4 +35,23 @@ class DealerTest {
 
         assertThat(dealer.getOpenCard()).isEqualTo("A스페이드");
     }
+
+    @Test
+    void 보유한_카드가_2장이고_점수가_21점이면_블랙잭이다() {
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(ACE, SPADE));
+        dealer.receiveCard(new Card(TEN, SPADE));
+
+        assertThat(dealer.isBlackjack()).isTrue();
+    }
+
+    @Test
+    void 보유한_카드가_2장이_아니고_점수가_21점이면_블랙잭이_아니다() {
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(SEVEN, SPADE));
+        dealer.receiveCard(new Card(SEVEN, HEART));
+        dealer.receiveCard(new Card(SEVEN, CLUB));
+
+        assertThat(dealer.isBlackjack()).isFalse();
+    }
 }

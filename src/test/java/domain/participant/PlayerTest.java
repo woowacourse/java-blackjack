@@ -48,18 +48,21 @@ class PlayerTest {
     }
 
     @Test
-    void 블랙잭인지_판정한다() {
-        Player player1 = new Player("pobi", new Hand(), "10000");
-        player1.receiveCard(new Card(ACE, SPADE));
-        player1.receiveCard(new Card(TEN, SPADE));
+    void 보유한_카드가_2장이고_점수가_21점이면_블랙잭이다() {
+        Player player = new Player("pobi", new Hand(), "10000");
+        player.receiveCard(new Card(ACE, SPADE));
+        player.receiveCard(new Card(TEN, SPADE));
 
-        Player player2 = new Player("cary", new Hand(), "10000");
-        player2.receiveCard(new Card(JACK, SPADE));
-        player2.receiveCard(new Card(SEVEN, SPADE));
+        assertThat(player.isBlackjack()).isTrue();
+    }
 
-        assertAll(
-                () -> assertTrue(player1.isBlackjack()),
-                () -> assertFalse(player2.isBlackjack())
-        );
+    @Test
+    void 보유한_카드가_2장이_아니고_점수가_21점이면_블랙잭이_아니다() {
+        Player player = new Player("pobi", new Hand(), "10000");
+        player.receiveCard(new Card(SEVEN, SPADE));
+        player.receiveCard(new Card(SEVEN, HEART));
+        player.receiveCard(new Card(SEVEN, CLUB));
+
+        assertThat(player.isBlackjack()).isFalse();
     }
 }
