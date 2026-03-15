@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class BetTableTest {
+
     @Test
     @DisplayName("플레이어는 베팅 금액을 설정할 수 있다.")
     void recordAmount_setsBetAmount() {

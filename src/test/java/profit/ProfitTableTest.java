@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ProfitTableTest {
+
     @Test
     @DisplayName("플레이어가 승리했을 때의 수익(베팅금 그대로)을 수익테이블에 저장할 수 있다.")
     void recordProfit_savesWinProfit_whenPlayerIsWin() {
