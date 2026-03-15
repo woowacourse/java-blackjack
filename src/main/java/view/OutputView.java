@@ -24,14 +24,15 @@ public class OutputView {
         printPlayersInitialCards(players);
     }
 
-    public void printGameResult(GameResult gameResult) {
+    public void printGameResult(GameResult gameResult, Players players, Dealer dealer) {
         printFinalProfitMessage();
 
-        for (ParticipantResultInfo playerResultInfo : gameResult.playersResultInfos()) {
-            System.out.println(playerResultInfo.name() + ": " + playerResultInfo.profit());
+        for (Player player : players.getPlayers()) {
+            ParticipantResultInfo participantResultInfo = gameResult.participantResultInfo(player);
+            System.out.println(participantResultInfo.name() + ": " + participantResultInfo.profit());
         }
 
-        ParticipantResultInfo dealerResultInfo = gameResult.dealerResultInfo();
+        ParticipantResultInfo dealerResultInfo = gameResult.participantResultInfo(dealer);
         System.out.println(dealerResultInfo.name() + ": " + dealerResultInfo.profit());
     }
 

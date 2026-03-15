@@ -7,37 +7,26 @@ import domain.participant.Players;
 import dto.ParticipantResultInfo;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GameResult {
-    private final List<ParticipantResultInfo> playersResultInfos = new ArrayList<>();
-    private final ParticipantResultInfo dealerResultInfo;
+    private final Map<Participant, BigDecimal> participantsProfits = new HashMap<>();
 
     public GameResult(Players players, Dealer dealer) {
         BigDecimal playersProfitSum = BigDecimal.ZERO;
+
         for (Player player : players.getPlayers()) {
             BigDecimal profit = calculatePlayerProfit(player, dealer);
             playersProfitSum = playersProfitSum.add(profit);
 
-            playersResultInfos.add(new ParticipantResultInfo(
-                    player.name(), profit
-            ));
+            participantsProfits.put(player, player.betAmount());
         }
-
-        dealerResultInfo = new ParticipantResultInfo(dealer.name(), playersProfitSum.negate());
+        participantsProfits.put(dealer, playersProfitSum.negate());
     }
 
-    public BigDecimal profit(Participant participant) {
-        return participantResultInfo(participant).profit();
-    }
-
-    public List<ParticipantResultInfo> playersResultInfos() {
-        return playersResultInfos;
-    }
-
-    public ParticipantResultInfo dealerResultInfo() {
-        return dealerResultInfo;
+    public ParticipantResultInfo participantResultInfo(Participant participant) {
+        return new ParticipantResultInfo(participant.name(), participantsProfits.get(participant));
     }
 
     private BigDecimal calculatePlayerProfit(Player player, Dealer dealer) {
@@ -58,11 +47,5 @@ public class GameResult {
 
         return betAmount.negate();
     }
-
-    private ParticipantResultInfo participantResultInfo(Participant participant) {
-        return playersResultInfos.stream()
-                .filter(participantResultInfo -> participantResultInfo.name().equals(participant.name()))
-                .findFirst()
-                .orElseThrow(IllegalStateException::new);
-    }
 }
+
