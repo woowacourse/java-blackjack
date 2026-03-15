@@ -23,21 +23,21 @@ public class WinLossReportView {
 
     private static String extractWinMessage(int winCount) {
         if (winCount > 0) {
-            return "승 ";
+            return winCount + "승 ";
         }
         return "";
     }
 
     private static String extractDrawMessage(int drawCount) {
         if (drawCount > 0) {
-            return "무 ";
+            return drawCount + "무 ";
         }
         return "";
     }
 
     private static String extractLoseMessage(int loseCount) {
         if (loseCount > 0) {
-            return "패 ";
+            return loseCount + "패 ";
         }
         return "";
     }
