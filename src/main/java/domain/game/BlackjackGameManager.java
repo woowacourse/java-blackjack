@@ -3,7 +3,6 @@ package domain.game;
 import domain.card.Card;
 import domain.card.CardMachine;
 import domain.participant.BetAmount;
-import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;
 import domain.participant.PlayerName;
@@ -17,10 +16,12 @@ import java.util.List;
 public class BlackjackGameManager {
 
     private final CardMachine cardMachine;
+    private final BlackjackJudge blackjackJudge;
     private Participants participants;
 
     public BlackjackGameManager() {
         this.cardMachine = new CardMachine();
+        this.blackjackJudge = new BlackjackJudge();
     }
 
     public void createParticipants(List<PlayerName> playerNames, List<BetAmount> betAmounts) {
@@ -74,48 +75,13 @@ public class BlackjackGameManager {
         List<PlayerStatisticDto> playerStatisticDtoList = new ArrayList<>();
         int dealerProfit = 0;
         for (Player player : participants.players().getPlayers()) {
-            Result result = judgePlayerResult(participants.dealer(), player);
-            int playerProfit = calculatePlayerProfit(player, result);
+            Result result = blackjackJudge.judgePlayerResult(participants.dealer(), player);
+            int playerProfit = blackjackJudge.calculatePlayerProfit(player, result);
             dealerProfit += playerProfit * -1;
             playerStatisticDtoList.add(PlayerStatisticDto.of(player, playerProfit));
         }
 
         return BlackjackStatisticsDto.of(dealerProfit, playerStatisticDtoList);
-    }
-
-    private Result judgePlayerResult(Dealer dealer, Player player) {
-        if (player.isBust()) {
-            return Result.LOSE;
-        }
-        if (dealer.isBust()) {
-            return Result.BLACKJACK_WIN;
-        }
-        if (player.isBlackjack() && dealer.isBlackjack()) {
-            return Result.DRAW;
-        }
-        if (player.isBlackjack()) {
-            return Result.BLACKJACK_WIN;
-        }
-        if (player.calculateScore() > dealer.calculateScore()) {
-            return Result.BLACKJACK_WIN;
-        }
-        if (player.calculateScore() == dealer.calculateScore()) {
-            return Result.DRAW;
-        }
-        return Result.LOSE;
-    }
-
-    private int calculatePlayerProfit(Player player, Result result) {
-        if (result.equals(Result.BLACKJACK_WIN)) {
-            return player.getBetAmount() + player.getBetAmount() / 2;
-        }
-        if (result.equals(Result.WIN)) {
-            return player.getBetAmount();
-        }
-        if (result.equals(Result.LOSE)) {
-            return player.getBetAmount() * -1;
-        }
-        return 0;
     }
 
     public boolean isHit(HitOrStand hitOrStand) {
