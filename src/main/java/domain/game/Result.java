@@ -1,6 +1,6 @@
 package domain.game;
 
-import domain.participant.Player;
+import domain.participant.player.Player;
 
 import java.math.BigDecimal;
 import java.util.*;

@@ -1,9 +1,9 @@
 package domain.game;
 
 import domain.participant.Hand;
-import domain.participant.Money;
-import domain.participant.PlayerInfo;
-import domain.participant.Player;
+import domain.participant.player.Money;
+import domain.participant.player.PlayerInfo;
+import domain.participant.player.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,6 +1,8 @@
-package domain.participant;
+package domain.participant.player;
 
 import domain.card.Card;
+import domain.participant.Hand;
+import domain.participant.Participant;
 
 import java.math.BigDecimal;
 

@@ -3,6 +3,8 @@ package service;
 import domain.game.Result;
 import domain.game.Outcome;
 import domain.participant.*;
+import domain.participant.player.Player;
+import domain.participant.player.Players;
 
 import java.util.HashMap;
 import java.util.Map;

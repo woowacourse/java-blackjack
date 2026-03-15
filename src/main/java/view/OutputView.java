@@ -2,8 +2,8 @@ package view;
 
 import domain.game.Result;
 import domain.participant.Dealer;
-import domain.participant.Player;
-import domain.participant.Players;
+import domain.participant.player.Player;
+import domain.participant.player.Players;
 
 import java.math.BigDecimal;
 import java.util.Map;
