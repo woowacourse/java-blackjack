@@ -27,7 +27,7 @@ public class GameController {
         GameService gameService = new GameService(players, dealer);
         BettingCalculateService bettingCalculateService = new BettingCalculateService(players, dealer);
 
-        playerBatting(players);
+        playerBetting(players);
         outputView.printStartGame(gameService.startGame());
 
         boolean dealerIsBlackJack = processDealerBlackJack(gameService);
@@ -36,7 +36,7 @@ public class GameController {
         }
 
         outputView.printScore(gameService.getTotalScore());
-        outputView.printBettingResults(bettingCalculateService.getBattingResult());
+        outputView.printBettingResults(bettingCalculateService.getBettingResult());
     }
 
     private Players inputPlayers() {
@@ -61,11 +61,11 @@ public class GameController {
         }
     }
 
-    private Money inputBattingMoney(Player player) {
+    private Money inputBettingMoney(Player player) {
         while (true) {
             try {
-                String rawBattingMoney = inputView.readBetting(player.getName());
-                return InputBettingParser.parseBattingParser(rawBattingMoney);
+                String rawBettingMoney = inputView.readBetting(player.getName());
+                return InputBettingParser.parseBettingMoney(rawBettingMoney);
             } catch (IllegalArgumentException exception) {
                 outputView.printInputErrorMessage(exception.getMessage());
             }
@@ -126,9 +126,9 @@ public class GameController {
         }
     }
 
-    private void playerBatting(Players players) {
+    private void playerBetting(Players players) {
         for (Player player : players) {
-            player.bettingMoney(inputBattingMoney(player));
+            player.bettingMoney(inputBettingMoney(player));
         }
     }
 }

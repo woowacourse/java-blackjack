@@ -63,10 +63,10 @@ public class OutputView {
         }
     }
 
-    public void printBettingResults(BettingResultDto battingResultDto) {
-        long dealerProfit = battingResultDto.dealerProfit();
+    public void printBettingResults(BettingResultDto bettingResultDto) {
+        long dealerProfit = bettingResultDto.dealerProfit();
 
-        List<PlayerProfitDto> playerProfitDtos = battingResultDto.playerProfitDtos();
+        List<PlayerProfitDto> playerProfitDtos = bettingResultDto.playerProfitDtos();
 
         System.out.println();
         System.out.println("## 최종 수익");

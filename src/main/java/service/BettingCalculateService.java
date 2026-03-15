@@ -32,7 +32,7 @@ public class BettingCalculateService {
         return playersProfit;
     }
 
-    public BettingResultDto getBattingResult() {
+    public BettingResultDto getBettingResult() {
         return new BettingResultDto(getPlayersProfit(), getDealerProfit());
     }
     private List<PlayerProfitDto> getPlayersProfit() {
