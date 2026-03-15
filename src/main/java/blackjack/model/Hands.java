@@ -9,6 +9,10 @@ public class Hands {
     private final List<Card> cards;
 
     private Hands(List<Card> cards) {
+        if (cards == null) {
+            throw new IllegalArgumentException("cards가 null입니다.");
+        }
+
         this.cards = cards;
     }
 
