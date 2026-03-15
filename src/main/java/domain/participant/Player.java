@@ -13,7 +13,7 @@ public class Player extends Participant {
 
     @Override
     public boolean canDraw() {
-        return super.score() <= BLACK_JACK;
+        return super.score() < BLACK_JACK;
     }
 
     public void bet(BigDecimal betAmount) {
