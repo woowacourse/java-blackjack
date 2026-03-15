@@ -5,7 +5,6 @@ import static blackjack.view.InputView.readPlayNames;
 
 import blackjack.domain.BetAmount;
 import blackjack.domain.BlackjackGame;
-import blackjack.domain.MatchResult;
 import blackjack.domain.Name;
 import blackjack.domain.Player;
 import blackjack.domain.Players;
@@ -18,7 +17,6 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class BlackjackController {
     public void run() {
@@ -102,11 +100,6 @@ public class BlackjackController {
         }
     }
 
-    private void generateAndPrintPlayResult(BlackjackGame blackjackGame) {
-        printGameResult(blackjackGame);
-        printPlayResult(blackjackGame);
-    }
-
     private void generateAndPrintProfitResult(BlackjackGame blackjackGame) {
         printGameResult(blackjackGame);
         printProfitResult(blackjackGame);
@@ -117,11 +110,6 @@ public class BlackjackController {
         OutputView.printGameResult(gameResult);
     }
 
-    private void printPlayResult(BlackjackGame blackjackGame) {
-        Map<Player, MatchResult> playerFinalResult = blackjackGame.getPlayerFinalResult();
-        Map<String, Long> dealerFinalResult = blackjackGame.getDealerFinalResult(playerFinalResult);
-        OutputView.printFinalResult(playerFinalResult, dealerFinalResult);
-    }
 
     private void printProfitResult(BlackjackGame blackjackGame) {
         OutputView.printFinalResult(blackjackGame.calculateProfits());
