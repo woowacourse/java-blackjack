@@ -2,9 +2,9 @@ package domain;
 
 import domain.card.Card;
 import domain.card.Rank;
-import domain.constant.Result;
 import domain.card.Suit;
-import domain.dto.GameFinalResultDto;
+import domain.constant.Result;
+import dto.GameResultDto;
 import domain.game.GameResultJudge;
 import domain.participant.Dealer;
 import domain.participant.Player;
@@ -15,110 +15,142 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class GameResultJudgeTest {
+public class GameResultJudgeTest {
 
     @Test
-    void 플레이어가_딜러보다_점수가_높으면_WIN이다() {
+    void 플레이어가_bust면_BUST와_음수_수익을_가진다() {
         Dealer dealer = new Dealer();
+        Player player = new Player("pobi", 1000);
+
         dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
-        dealer.receiveCard(new Card(Rank.SEVEN, Suit.HEART));
+        dealer.receiveCard(new Card(Rank.SEVEN, Suit.HEART)); // 17
 
-        Player player = new Player("pobi");
-        player.receiveCard(new Card(Rank.TEN, Suit.CLUB));
-        player.receiveCard(new Card(Rank.NINE, Suit.DIAMOND));
-
-        Players players = new Players();
-        players.add(player);
-
-        List<GameFinalResultDto> result = GameResultJudge.judge(dealer, players);
-
-        assertThat(result).hasSize(2);
-        assertThat(result.get(1).getPlayerName()).isEqualTo("pobi");
-        assertThat(result.get(1).getResult()).isEqualTo(Result.WIN);
-    }
-
-    @Test
-    void 플레이어가_딜러보다_점수가_낮으면_LOSE이다() {
-        Dealer dealer = new Dealer();
-        dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
-        dealer.receiveCard(new Card(Rank.NINE, Suit.HEART));
-
-        Player player = new Player("pobi");
-        player.receiveCard(new Card(Rank.TEN, Suit.CLUB));
-        player.receiveCard(new Card(Rank.SEVEN, Suit.DIAMOND));
-
-        Players players = new Players();
-        players.add(player);
-
-        List<GameFinalResultDto> result = GameResultJudge.judge(dealer, players);
-
-        assertThat(result.get(1).getResult()).isEqualTo(Result.LOSE);
-    }
-
-    @Test
-    void 플레이어와_딜러의_점수가_같으면_DRAW이다() {
-        Dealer dealer = new Dealer();
-        dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
-        dealer.receiveCard(new Card(Rank.EIGHT, Suit.HEART));
-
-        Player player = new Player("pobi");
-        player.receiveCard(new Card(Rank.NINE, Suit.CLUB));
-        player.receiveCard(new Card(Rank.NINE, Suit.DIAMOND));
-
-        Players players = new Players();
-        players.add(player);
-
-        List<GameFinalResultDto> result = GameResultJudge.judge(dealer, players);
-
-        assertThat(result.get(1).getResult()).isEqualTo(Result.DRAW);
-    }
-
-    @Test
-    void 플레이어가_버스트면_딜러와_상관없이_LOSE이다() {
-        Dealer dealer = new Dealer();
-        dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
-        dealer.receiveCard(new Card(Rank.SEVEN, Suit.HEART));
-
-        Player player = new Player("pobi");
         player.receiveCard(new Card(Rank.KING, Suit.CLUB));
         player.receiveCard(new Card(Rank.QUEEN, Suit.DIAMOND));
-        player.receiveCard(new Card(Rank.TWO, Suit.HEART));
+        player.receiveCard(new Card(Rank.TWO, Suit.HEART)); // 22 bust
 
-        Players players = new Players();
-        players.add(player);
+        Players players = Players.of(List.of(player));
 
-        List<GameFinalResultDto> result = GameResultJudge.judge(dealer, players);
+        List<GameResultDto> results = GameResultJudge.judge(dealer, players);
 
-        assertThat(result.get(1).getResult()).isEqualTo(Result.LOSE);
+        GameResultDto dealerResult = results.get(0);
+        GameResultDto playerResult = results.get(1);
+
+        assertThat(playerResult.getPlayerName()).isEqualTo("pobi");
+        assertThat(playerResult.getResult()).isEqualTo(Result.BUST);
+        assertThat(playerResult.getProceeds()).isEqualTo(-1000);
+
+        assertThat(dealerResult.getPlayerName()).isEqualTo("딜러");
+        assertThat(dealerResult.getProceeds()).isEqualTo(1000);
     }
 
     @Test
-    void 딜러가_버스트면_플레이어가_버스트가_아닌_한_WIN이다() {
+    void 플레이어_점수가_더_높으면_WIN이다() {
         Dealer dealer = new Dealer();
-        dealer.receiveCard(new Card(Rank.KING, Suit.SPADE));
-        dealer.receiveCard(new Card(Rank.QUEEN, Suit.HEART));
-        dealer.receiveCard(new Card(Rank.TWO, Suit.CLUB));
+        Player player = new Player("pobi", 1000);
 
-        Player player = new Player("pobi");
-        player.receiveCard(new Card(Rank.TEN, Suit.DIAMOND));
-        player.receiveCard(new Card(Rank.SEVEN, Suit.HEART));
+        dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
+        dealer.receiveCard(new Card(Rank.SEVEN, Suit.HEART)); // 17
 
-        Players players = new Players();
-        players.add(player);
+        player.receiveCard(new Card(Rank.TEN, Suit.CLUB));
+        player.receiveCard(new Card(Rank.EIGHT, Suit.DIAMOND)); // 18
 
-        List<GameFinalResultDto> result = GameResultJudge.judge(dealer, players);
+        Players players = Players.of(List.of(player));
 
-        assertThat(result.get(1).getResult()).isEqualTo(Result.WIN);
+        List<GameResultDto> results = GameResultJudge.judge(dealer, players);
+        GameResultDto playerResult = results.get(1);
+
+        assertThat(playerResult.getResult()).isEqualTo(Result.WIN);
+        assertThat(playerResult.getProceeds()).isEqualTo(1000);
     }
 
     @Test
-    void 최종결과_첫번째에는_딜러가_포함된다() {
+    void 플레이어_점수가_더_낮으면_LOSE다() {
         Dealer dealer = new Dealer();
-        Players players = new Players();
-        players.add(new Player("pobi"));
+        Player player = new Player("pobi", 1000);
 
-        List<GameFinalResultDto> result = GameResultJudge.judge(dealer, players);
+        dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
+        dealer.receiveCard(new Card(Rank.NINE, Suit.HEART)); // 19
 
-        assertThat(result.getFirst().getPlayerName()).isEqualTo("딜러");
+        player.receiveCard(new Card(Rank.TEN, Suit.CLUB));
+        player.receiveCard(new Card(Rank.EIGHT, Suit.DIAMOND)); // 18
+
+        Players players = Players.of(List.of(player));
+
+        List<GameResultDto> results = GameResultJudge.judge(dealer, players);
+        GameResultDto playerResult = results.get(1);
+
+        assertThat(playerResult.getResult()).isEqualTo(Result.LOSE);
+        assertThat(playerResult.getProceeds()).isEqualTo(-1000);
+    }
+
+    @Test
+    void 플레이어와_딜러의_점수가_같으면_DRAW다() {
+        Dealer dealer = new Dealer();
+        Player player = new Player("pobi", 1000);
+
+        dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
+        dealer.receiveCard(new Card(Rank.EIGHT, Suit.HEART)); // 18
+
+        player.receiveCard(new Card(Rank.NINE, Suit.CLUB));
+        player.receiveCard(new Card(Rank.NINE, Suit.DIAMOND)); // 18
+
+        Players players = Players.of(List.of(player));
+
+        List<GameResultDto> results = GameResultJudge.judge(dealer, players);
+        GameResultDto playerResult = results.get(1);
+
+        assertThat(playerResult.getResult()).isEqualTo(Result.DRAW);
+        assertThat(playerResult.getProceeds()).isEqualTo(0);
+    }
+
+    @Test
+    void naturalBlackJack인_플레이어는_BLACKJACK과_블랙잭_배당을_가진다() {
+        Dealer dealer = new Dealer();
+        Player player = new Player("pobi", 10000);
+
+        dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
+        dealer.receiveCard(new Card(Rank.NINE, Suit.HEART)); // 19
+
+        player.receiveCard(new Card(Rank.ACE, Suit.CLUB));
+        player.receiveCard(new Card(Rank.KING, Suit.DIAMOND)); // natural blackjack
+        player.markNaturalBlackJack();
+
+        Players players = Players.of(List.of(player));
+
+        List<GameResultDto> results = GameResultJudge.judge(dealer, players);
+        GameResultDto playerResult = results.get(1);
+
+        assertThat(playerResult.getResult()).isEqualTo(Result.BLACKJACK);
+        assertThat(playerResult.getProceeds()).isEqualTo(15000);
+    }
+
+    @Test
+    void 딜러의_총수익은_플레이어_수익의_합에_음수를_취한_값이다() {
+        Dealer dealer = new Dealer();
+
+        Player winPlayer = new Player("pobi", 1000);
+        Player losePlayer = new Player("jason", 2000);
+
+        dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
+        dealer.receiveCard(new Card(Rank.EIGHT, Suit.HEART)); // 18
+
+        winPlayer.receiveCard(new Card(Rank.TEN, Suit.CLUB));
+        winPlayer.receiveCard(new Card(Rank.NINE, Suit.DIAMOND)); // 19 -> WIN
+
+        losePlayer.receiveCard(new Card(Rank.TEN, Suit.HEART));
+        losePlayer.receiveCard(new Card(Rank.SEVEN, Suit.CLUB)); // 17 -> LOSE
+
+        Players players = Players.of(List.of(winPlayer, losePlayer));
+
+        List<GameResultDto> results = GameResultJudge.judge(dealer, players);
+
+        GameResultDto dealerResult = results.get(0);
+        GameResultDto firstPlayerResult = results.get(1);
+        GameResultDto secondPlayerResult = results.get(2);
+
+        assertThat(firstPlayerResult.getProceeds()).isEqualTo(1000);
+        assertThat(secondPlayerResult.getProceeds()).isEqualTo(-2000);
+        assertThat(dealerResult.getProceeds()).isEqualTo(1000);
     }
 }

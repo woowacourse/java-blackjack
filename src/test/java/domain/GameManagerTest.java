@@ -1,9 +1,9 @@
 package domain;
 
 import domain.card.Deck;
-import domain.dto.GameFinalResultDto;
-import domain.dto.GameInitialInfoDto;
-import domain.dto.GameScoreResultDto;
+import dto.GameInitialInfoDto;
+import dto.GameResultDto;
+import dto.GameScoreResultDto;
 import domain.game.GameManager;
 import domain.participant.Player;
 import org.junit.jupiter.api.Test;
@@ -18,8 +18,10 @@ class GameManagerTest {
     void 등록된_플레이어와_딜러_순서대로_카드를_돌린다() {
         GameManager manager = new GameManager(new Deck());
 
-        manager.addPlayer("pobi");
-        manager.addPlayer("cary");
+        manager.registerPlayers(
+                List.of("pobi", "cary"),
+                List.of(1000, 1000)
+        );
 
         manager.startGame();
         List<GameScoreResultDto> scoreResults = manager.getScoreResults();
@@ -36,7 +38,10 @@ class GameManagerTest {
     void 딜러의_카드는_한_장만_공개한다() {
         GameManager manager = new GameManager(new Deck());
 
-        manager.addPlayer("pobi");
+        manager.registerPlayers(
+                List.of("pobi"),
+                List.of(1000)
+        );
 
         manager.startGame();
         List<GameInitialInfoDto> initialInfo = manager.getInitialInfo();
@@ -48,7 +53,10 @@ class GameManagerTest {
     void 플레이어의_카드는_두_장_공개한다() {
         GameManager manager = new GameManager(new Deck());
 
-        manager.addPlayer("pobi");
+        manager.registerPlayers(
+                List.of("pobi"),
+                List.of(1000)
+        );
 
         manager.startGame();
         List<GameInitialInfoDto> initialInfo = manager.getInitialInfo();
@@ -59,42 +67,49 @@ class GameManagerTest {
     @Test
     void 플레이어를_한명_등록한다() {
         GameManager manager = new GameManager(new Deck());
-        manager.addPlayer("pobi");
 
-        List<Player> result = manager.getPlayerSequence();
+        manager.registerPlayers(
+                List.of("pobi"),
+                List.of(1000)
+        );
 
-        assertThat(result.size()).isEqualTo(1);
+        List<Player> result = manager.getPlayersToPlay();
+
+        assertThat(result).hasSize(1);
         assertThat(result.getFirst().getName()).isEqualTo("pobi");
     }
 
     @Test
     void 플레이어를_세명_등록한다() {
         GameManager manager = new GameManager(new Deck());
-        List<String> playerNames = List.of("pobi", "cary", "rudy");
 
-        for (String playerName : playerNames) {
-            manager.addPlayer(playerName);
-        }
+        manager.registerPlayers(
+                List.of("pobi", "cary", "rudy"),
+                List.of(1000, 1000, 1000)
+        );
 
-        List<Player> result = manager.getPlayerSequence();
+        List<Player> result = manager.getPlayersToPlay();
 
-        assertThat(result.size()).isEqualTo(3);
+        assertThat(result).hasSize(3);
     }
-
 
     @Test
     void 플레이어가_카드를_한장_더_받는다() {
         GameManager manager = new GameManager(new Deck());
-        manager.addPlayer("pobi");
+
+        manager.registerPlayers(
+                List.of("pobi"),
+                List.of(1000)
+        );
 
         manager.startGame();
-        Player player = manager.getPlayerSequence().getFirst();
+        Player player = manager.getPlayersToPlay().getFirst();
 
-        int before = player.handSize();
+        int before = player.getHandToString().size();
 
         manager.drawPlayerCard(player);
 
-        int after = player.handSize();
+        int after = player.getHandToString().size();
 
         assertThat(after).isEqualTo(before + 1);
     }
@@ -111,10 +126,13 @@ class GameManagerTest {
     @Test
     void 게임_최종_결과에는_딜러와_모든_플레이어_결과가_포함된다() {
         GameManager manager = new GameManager(new Deck());
-        manager.addPlayer("pobi");
-        manager.addPlayer("cary");
 
-        List<GameFinalResultDto> result = manager.getFinalResult();
+        manager.registerPlayers(
+                List.of("pobi", "cary"),
+                List.of(1000, 1000)
+        );
+
+        List<GameResultDto> result = manager.getFinalResult();
 
         assertThat(result).hasSize(3);
         assertThat(result.get(0).getPlayerName()).isEqualTo("딜러");
@@ -126,6 +144,7 @@ class GameManagerTest {
     void 플레이어가_없는_경우_초기정보에는_딜러만_포함된다() {
         GameManager manager = new GameManager(new Deck());
 
+        manager.registerPlayers(List.of(), List.of());
         manager.startGame();
 
         List<GameInitialInfoDto> result = manager.getInitialInfo();
@@ -138,6 +157,7 @@ class GameManagerTest {
     void 플레이어가_없는_경우_점수결과에는_딜러만_포함된다() {
         GameManager manager = new GameManager(new Deck());
 
+        manager.registerPlayers(List.of(), List.of());
         manager.startGame();
 
         List<GameScoreResultDto> result = manager.getScoreResults();
@@ -150,12 +170,12 @@ class GameManagerTest {
     void 플레이어가_없는_경우_최종결과에는_딜러만_포함된다() {
         GameManager manager = new GameManager(new Deck());
 
+        manager.registerPlayers(List.of(), List.of());
         manager.startGame();
 
-        List<GameFinalResultDto> result = manager.getFinalResult();
+        List<GameResultDto> result = manager.getFinalResult();
 
         assertThat(result).hasSize(1);
         assertThat(result.getFirst().getPlayerName()).isEqualTo("딜러");
     }
-
 }

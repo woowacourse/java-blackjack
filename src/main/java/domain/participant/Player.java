@@ -1,49 +1,46 @@
 package domain.participant;
 
+import domain.PlayerStatus;
 import domain.card.Card;
-import domain.Hand;
-import java.util.List;
+import domain.constant.Result;
 
-public class Player {
-    private final String name;
-    private final Hand hand = new Hand();
-    // TODO: 베팅 기능 추가 시 베팅 금액 필드 또는 일급 객체 필요
+public class Player extends Participant {
+    private final PlayerStatus status;
 
-
-    public Player(String name) {
-        this.name = name;
-        // TODO: 베팅 기능 추가 시 생성자에서 베팅 금액도 함께 받아야 할 수 있음
+    public Player(String name, int bettingMoney) {
+        super(name);
+        this.status = new PlayerStatus(bettingMoney);
     }
 
-    public boolean isBust() {
-        return hand.isBust();
-    }
-
+    @Override
     public void receiveCard(Card card) {
-        hand.add(card);
+        super.receiveCard(card);
+        updateNaturalBlackJackStatus();
+    }
+
+    private void updateNaturalBlackJackStatus() {
+        if (isInitialBlackJack()) {
+            status.markNaturalBlackJack();
+        }
+    }
+
+    private boolean isInitialBlackJack() {
+        return hasTwoCards() && isBlackJack();
+    }
+
+    public boolean isNaturalBlackJack() {
+        return status.isNaturalBlackJack();
+    }
+
+    public void markNaturalBlackJack() {
+        status.markNaturalBlackJack();
+    }
+
+    public double calculateProceeds(Result result) {
+        return status.calculateProceeds(result);
     }
 
     public boolean canDraw() {
-        return !(isBust()|| hand.isBlackjack());
-    }
-
-    public int handSize() {
-        return hand.size();
-    }
-
-    public List<String> getHandToString() {
-        return hand.toStringList();
-    }
-
-    public int getScore(){
-        return hand.calculateScore();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Hand getHand() {
-        return hand;
+        return !(isBust() || isNaturalBlackJack());
     }
 }

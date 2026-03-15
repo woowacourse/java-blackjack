@@ -1,8 +1,9 @@
 package controller;
 
+import dto.GameInitialInfoDto;
 import domain.game.GameManager;
 import domain.participant.Player;
-import domain.dto.GameInitialInfoDto;
+import java.util.ArrayList;
 import view.InputView;
 import view.OutputView;
 
@@ -22,7 +23,6 @@ public class GameController {
 
     public void run() {
         registerPlayer();
-        // TODO: 베팅 기능 추가 시 플레이어 등록 후 베팅 입력 단계가 추가 필요
         initGame();
         playPlayerTurn();
         playDealerTurn();
@@ -31,21 +31,25 @@ public class GameController {
     }
 
     private void registerPlayer() {
-        // TODO: 베팅 기능 추가 시 이름 입력 후 각 플레이어의 베팅 금액도 함께 등록
         while (true) {
             try {
                 List<String> playerNames = inputView.readPlayerName();
                 validatePlayerNames(playerNames);
-
-                for (String playerName : playerNames) {
-                    manager.addPlayer(playerName);
-                }
+                registerPlayersWithBettingMoney(playerNames);
                 return;
-
             } catch (IllegalArgumentException e) {
                 outputView.printError(e.getMessage());
             }
         }
+    }
+
+    private void registerPlayersWithBettingMoney(List<String> playerNames) {
+        List<Integer> bettingMoneyList = new ArrayList<>();
+        for (String playerName : playerNames) {
+            int bettingMoney = inputView.readBettingMoney(playerName);
+            bettingMoneyList.add(bettingMoney);
+        }
+        manager.registerPlayers(playerNames, bettingMoneyList);
     }
 
     private void initGame() {
@@ -56,15 +60,24 @@ public class GameController {
     }
 
     private void playPlayerTurn() {
-        for (Player player : manager.getPlayerSequence()) {
+        for (Player player : manager.getPlayersToPlay()) {
             playSinglePlayerTurn(player);
         }
     }
 
     private void playSinglePlayerTurn(Player player) {
-        while (player.canDraw() && wantsToDraw(player)) {
-            List<String> playerHand = manager.drawPlayerCard(player);
+        while (player.canDraw()) {
+            boolean wantsToDraw = wantsToDraw(player);
+
+            List<String> playerHand = player.getHandToString();
+            if(wantsToDraw){
+                playerHand = manager.drawPlayerCard(player);
+            }
             outputView.printHand(playerHand, player.getName());
+
+            if(!wantsToDraw) {
+                break;
+            }
         }
     }
 

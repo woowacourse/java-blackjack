@@ -1,7 +1,7 @@
 package domain;
 
-import domain.dto.GameInitialInfoDto;
-import domain.dto.GameScoreResultDto;
+import dto.GameInitialInfoDto;
+import dto.GameScoreResultDto;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
@@ -37,7 +37,7 @@ public class DtoFactory {
     }
 
     private static void addPlayerScoreResults(List<GameScoreResultDto> results, Players players) {
-        for (Player player : players.getPlayers()) {
+        for (Player player : players.getNonNaturalBlackJackPlayers()) {
             results.add(new GameScoreResultDto(
                     player.getName(),
                     player.getHandToString(),
@@ -49,16 +49,14 @@ public class DtoFactory {
     private static void addDealerInitialInfo(List<GameInitialInfoDto> results, Dealer dealer) {
         results.add(new GameInitialInfoDto(
                 dealer.getName(),
-                INITIAL_HAND_SIZE,
                 List.of(dealer.getOpenCard())
         ));
     }
 
     private static void addPlayerInitialInfos(List<GameInitialInfoDto> results, Players players) {
-        for (Player player : players.getPlayers()) {
+        for (Player player : players.getNonNaturalBlackJackPlayers()) {
             results.add(new GameInitialInfoDto(
                     player.getName(),
-                    INITIAL_HAND_SIZE,
                     player.getHandToString()
             ));
         }
