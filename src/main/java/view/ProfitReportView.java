@@ -2,7 +2,7 @@ package view;
 
 import java.util.Map;
 import model.judgement.Profit;
-import model.paticipant.Player;
+import model.paticipant.BettingPlayer;
 
 public class ProfitReportView {
 
@@ -17,7 +17,7 @@ public class ProfitReportView {
         System.out.printf("딜러: %d%n", profit.value());
     }
 
-    public static void printProfitByPlayers(Map<Player, Profit> profits) {
+    public static void printProfitByPlayers(Map<BettingPlayer, Profit> profits) {
         profits.forEach((player, profit) ->
                 System.out.printf("%s: %d%n", player.getName(), profit.value())
         );

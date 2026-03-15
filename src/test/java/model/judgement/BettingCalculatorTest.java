@@ -8,7 +8,9 @@ import model.paticipant.BettingPlayer;
 import model.paticipant.Player;
 import org.junit.jupiter.api.Test;
 
-class PlayerResultTest {
+class BettingCalculatorTest {
+
+    private BettingCalculator bettingCalculator = new BettingCalculator();
 
     @Test
     void 플레이어별_수익을_계산한다() {
@@ -23,7 +25,7 @@ class PlayerResultTest {
         PlayerResult playerResult = new PlayerResult(result);
 
         // when
-        Map<Player, Profit> profits = playerResult.calculateProfits();
+        Map<BettingPlayer, Profit> profits = bettingCalculator.calculateProfits(playerResult);
 
         // then
         assertThat(profits.get(pobi)).isEqualTo(new Profit(10000));
@@ -41,9 +43,10 @@ class PlayerResultTest {
         result.put(jason, ResultStatus.LOSE);
 
         PlayerResult playerResult = new PlayerResult(result);
+        Map<BettingPlayer, Profit> profitByPlayer = bettingCalculator.calculateProfits(playerResult);
 
         // when
-        Profit dealerProfit = playerResult.calculateDealerProfit();
+        Profit dealerProfit = bettingCalculator.calculateDealerProfit(profitByPlayer);
 
         // then
         assertThat(dealerProfit).isEqualTo(new Profit(10000));
@@ -60,7 +63,7 @@ class PlayerResultTest {
         PlayerResult playerResult = new PlayerResult(result);
 
         // when
-        Map<Player, Profit> profits = playerResult.calculateProfits();
+        Map<BettingPlayer, Profit> profits = bettingCalculator.calculateProfits(playerResult);
 
         // then
         assertThat(profits.get(pobi)).isEqualTo(Profit.ZERO);
