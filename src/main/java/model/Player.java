@@ -1,45 +1,18 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
+public class Player extends AbstractParticipant {
 
-public class Player {
-
-    private static final int BUST_LIMIT = 21;
-    private static final int ACE_BONUS_SCORE = 10;
-
-    private final String name;
-    private final Cards cards;
+    private BettingMoney bettingMoney;
 
     public Player(String name) {
-        this.name = name;
-        this.cards = Cards.createEmpty();
+        super(name);
     }
 
-    public int calculateTotalScore() {
-        int score = this.cards.calculateScore();
-        int aceCount = this.cards.countAce();
-
-        while (aceCount > 0 && score + ACE_BONUS_SCORE <= BUST_LIMIT) {
-            score += ACE_BONUS_SCORE;
-            aceCount--;
-        }
-        return score;
+    public void setMoney(BettingMoney bettingMoney) {
+        this.bettingMoney = bettingMoney;
     }
 
-    public void addCard(Card card) {
-        this.cards.add(card);
-    }
-
-    public boolean canHit() {
-        return calculateTotalScore() < BUST_LIMIT;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public List<Card> getCards() {
-        return new ArrayList<>(cards.getCards());
+    public long bettingMoney() {
+        return this.bettingMoney.bettingMoney();
     }
 }
