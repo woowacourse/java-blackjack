@@ -67,16 +67,41 @@ public class ProfitTableTest {
     }
 
     @Test
-    @DisplayName("딜러의 수익을 계산할 수 있다")
-    void dealerCalculateProfit_returnsDealerProfit() {
+    @DisplayName("플레이어가 승리했을 때 딜러의 수익을 계산할 수 있다.")
+    void dealerCalculateProfit_returnsDealerProfit_WhenPlayerIsWin() {
         Player winPlayer = new Player(new PlayerName("winPlayer"), new Hand());
-        Player defeatPlayer = new Player(new PlayerName("defeatPlayer"), new Hand());
         ProfitTable profitTable = new ProfitTable();
         int winProfit = 10000;
-        int defeatProfit = -15000;
-        int expectedProfit = 5000;
+        int expectedProfit = -10000;
         profitTable.recordProfit(winPlayer, winProfit);
+
+        int dealerProfit = profitTable.dealerCalculateProfit();
+
+        assertThat(dealerProfit).isEqualTo(expectedProfit);
+    }
+
+    @Test
+    @DisplayName("플레이어가 패배했을 때 딜러의 수익을 계산할 수 있다.")
+    void dealerCalculateProfit_returnsDealerProfit_WhenPlayerIsDefeat() {
+        Player defeatPlayer = new Player(new PlayerName("defeatPlayer"), new Hand());
+        ProfitTable profitTable = new ProfitTable();
+        int defeatProfit = -15000;
+        int expectedProfit = 15000;
         profitTable.recordProfit(defeatPlayer, defeatProfit);
+
+        int dealerProfit = profitTable.dealerCalculateProfit();
+
+        assertThat(dealerProfit).isEqualTo(expectedProfit);
+    }
+
+    @Test
+    @DisplayName("플레이어와 딜러가 무승부했을 때 딜러의 수익을 계산할 수 있다.")
+    void dealerCalculateProfit_returnsDealerProfit() {
+        Player drawPlayer = new Player(new PlayerName("drawPlayer"), new Hand());
+        ProfitTable profitTable = new ProfitTable();
+        int drawProfit = 0;
+        int expectedProfit = 0;
+        profitTable.recordProfit(drawPlayer, drawProfit);
 
         int dealerProfit = profitTable.dealerCalculateProfit();
 
