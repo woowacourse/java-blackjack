@@ -63,15 +63,25 @@ public class BlackjackGame {
 
     public void playPlayerTurns(HitDecision decision, TurnDisplay display) {
         players.forEach(player -> {
-            while (player.canHit()) {
-                if (!decision.wantsHit(player.getName())) {
-                    display.show(player.getName(), player.getCardNames());
-                    break;
-                }
-                player.hit(deck.deal());
-                display.show(player.getName(), player.getCardNames());
-            }
+            playerTurn(player, decision, display);
         });
+    }
+
+    private void playerTurn(Player player, HitDecision decision, TurnDisplay display) {
+        boolean playing = true;
+        while (player.canHit() && playing) {
+            playing = processHit(player, decision, display);
+        }
+    }
+
+    private boolean processHit(Player player, HitDecision decision, TurnDisplay display) {
+        if (!decision.wantsHit(player.getName())) {
+            display.show(player.getName(), player.getCardNames());
+            return false;
+        }
+        player.hit(deck.deal());
+        display.show(player.getName(), player.getCardNames());
+        return true;
     }
 
     public void playDealerTurn() {
@@ -91,12 +101,10 @@ public class BlackjackGame {
         return results;
     }
 
-    public int getDealerProfit(List<GameResult> gameResults){
-        double profit = 0;
-        for (GameResult gameResult : gameResults) {
-            profit += gameResult.profit();
-        }
-        return (int) Math.abs(profit);
+    public int getDealerProfit(List<GameResult> gameResults) {
+        return -gameResults.stream()
+                .mapToInt(GameResult::profit)
+                .sum();
     }
 
     public Map<String, MatchResult> matchResults() {
