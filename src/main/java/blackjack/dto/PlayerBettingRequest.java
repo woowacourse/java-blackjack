@@ -24,12 +24,18 @@ public record PlayerBettingRequest(
     }
 
     private static long validateAmount(String rawAmount) {
-        long amount;
+        long amount = parse(rawAmount);
+        if (amount <= 0) {
+            throw new IllegalArgumentException("베팅 금액은 0보다 큰 양수여야 합니다.");
+        }
+        return amount;
+    }
+
+    private static long parse(String rawAmount) {
         try {
-            amount = Long.parseLong(rawAmount);
+            return Long.parseLong(rawAmount);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("금액은 숫자가 입력되어야 합니다.");
         }
-        return amount;
     }
 }

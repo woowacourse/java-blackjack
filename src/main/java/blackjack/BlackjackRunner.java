@@ -59,26 +59,45 @@ public class BlackjackRunner {
     }
 
     private Participants makeParticipants() {
-        outputView.askGameMembers();
-        String playerNamesInput = inputView.readLine();
-        List<String> playerNames = PlayerNameParser.parsePlayerNames(playerNamesInput);
-        PlayersBettingRequest initialRequest = PlayersBettingRequest.createInitialRequest(playerNames);
+        PlayersBettingRequest initialRequest = getPlayersNickname();
         PlayersBettingRequest playersBettingRequest = betPlayers(initialRequest);
         Players players = Players.makePlayers(playersBettingRequest);
         Dealer dealer = Dealer.from();
         return new Participants(players, dealer);
     }
 
+    private PlayersBettingRequest getPlayersNickname() {
+        try {
+            outputView.askGameMembers();
+            String playerNamesInput = inputView.readLine();
+            List<String> playerNames = PlayerNameParser.parsePlayerNames(playerNamesInput);
+            return PlayersBettingRequest.createInitialRequest(playerNames);
+        } catch (IllegalArgumentException e) {
+            outputView.printLine(e.getMessage());
+            return getPlayersNickname();
+        }
+    }
+
     private PlayersBettingRequest betPlayers(PlayersBettingRequest initialRequest) {
         List<PlayerBettingRequest> playerBettingRequests = new ArrayList<>();
         List<PlayerBettingRequest> value = initialRequest.value();
         for (PlayerBettingRequest playerBettingRequest : value) {
+            PlayerBettingRequest request = getPlayerBettingAmount(playerBettingRequest);
+            playerBettingRequests.add(request);
+        }
+        return PlayersBettingRequest.from(playerBettingRequests);
+    }
+
+    private PlayerBettingRequest getPlayerBettingAmount(PlayerBettingRequest playerBettingRequest) {
+        try {
             String playerNickname = playerBettingRequest.playerNickname();
             outputView.askBetAmount(playerNickname);
             String amount = inputView.readLine();
-            playerBettingRequests.add(PlayerBettingRequest.of(playerNickname, amount));
+            return PlayerBettingRequest.of(playerNickname, amount);
+        } catch (IllegalArgumentException e) {
+            outputView.printLine(e.getMessage());
+            return getPlayerBettingAmount(playerBettingRequest);
         }
-        return PlayersBettingRequest.from(playerBettingRequests);
     }
 
     public void printGameResult(Participants participants) {
