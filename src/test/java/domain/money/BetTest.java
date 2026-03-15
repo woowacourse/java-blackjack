@@ -1,6 +1,7 @@
 package domain.participant;
 
 import domain.match.MatchResult;
+import domain.money.Bet;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
