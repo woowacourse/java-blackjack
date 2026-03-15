@@ -35,7 +35,7 @@ class ProfitCalculatorTest {
                 new Card(CardValue.KING, CardSuit.HEART)
         ));
         Player player = new Player(cards, "pobi", new Money(1000));
-        int finalProfit = profitCalculator.calculateProfit(player, dealer, player.getMoney());
+        int finalProfit = profitCalculator.calculate(player, dealer, player.getMoney());
 
         Assertions.assertThat(player.isBlackjack()).isTrue();
         Assertions.assertThat(finalProfit).isEqualTo(1500);
@@ -54,7 +54,7 @@ class ProfitCalculatorTest {
                 new Card(CardValue.KING, CardSuit.CLUB)
         ));
         Player player = new Player(cards, "pobi", new Money(1000));
-        int finalProfit = profitCalculator.calculateProfit(player, dealer, player.getMoney());
+        int finalProfit = profitCalculator.calculate(player, dealer, player.getMoney());
 
         Assertions.assertThat(dealer.isBlackjack()).isTrue();
         Assertions.assertThat(player.isBlackjack()).isTrue();
@@ -76,7 +76,7 @@ class ProfitCalculatorTest {
         ));
         Player player = new Player(cards, "pobi", new Money(1000));
         player.addCard(new Card(CardValue.FIVE, CardSuit.HEART));
-        int finalProfit = profitCalculator.calculateProfit(player, dealer, player.getMoney());
+        int finalProfit = profitCalculator.calculate(player, dealer, player.getMoney());
 
         Assertions.assertThat(player.isBust()).isTrue();
         Assertions.assertThat(finalProfit).isEqualTo(-1000);
@@ -97,7 +97,7 @@ class ProfitCalculatorTest {
                         new Card(CardValue.THREE, CardSuit.CLUB)
                 ));
         Player player1 = new Player(player1Cards, "pobi", new Money(1000));
-        int finalProfit1 = profitCalculator.calculateProfit(player1, dealer, player1.getMoney());
+        int finalProfit1 = profitCalculator.calculate(player1, dealer, player1.getMoney());
 
         List<Card> player2Cards = new ArrayList<>(
                 List.of(
@@ -105,7 +105,7 @@ class ProfitCalculatorTest {
                         new Card(CardValue.THREE, CardSuit.HEART)
                 ));
         Player player2 = new Player(player2Cards, "woni", new Money(2000));
-        int finalProfit2 = profitCalculator.calculateProfit(player2, dealer, player2.getMoney());
+        int finalProfit2 = profitCalculator.calculate(player2, dealer, player2.getMoney());
 
         Assertions.assertThat(dealer.isBust()).isTrue();
         Assertions.assertThat(finalProfit1).isEqualTo(1000);

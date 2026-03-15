@@ -114,7 +114,8 @@ public class GameController {
         ProfitCalculator profitCalculator = new ProfitCalculator();
         List<PlayerProfitDto> playerProfitDtos = new ArrayList<>();
         for (Player player : players.getPlayers()) {
-            playerProfitDtos.add(PlayerProfitDto.of(player.getName(), profitCalculator.calculateProfit(player, dealer, player.getMoney())));
+            int finalProfit = profitCalculator.calculate(player, dealer, player.getMoney());
+            playerProfitDtos.add(PlayerProfitDto.of(player.getName(), finalProfit));
         }
         return playerProfitDtos;
     }
