@@ -14,7 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class ResultTest {
+public class BlackjackRuleTest {
 
     private Player player;
     private Dealer dealer;
@@ -197,11 +197,11 @@ public class ResultTest {
     }
 
     private Integer getDealerResultCount(GameResult playerResult, GameResult win) {
-        return GameResult.calculateDealerResult(List.of(playerResult)).get(win);
+        return BlackjackRule.judgeDealerResult(List.of(playerResult)).get(win);
     }
 
     private GameResult getPlayerResult() {
-        return GameResult.calculatePlayerResult(player, dealer);
+        return BlackjackRule.judgePlayerResult(player, dealer);
     }
 }
 

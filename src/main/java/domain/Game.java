@@ -66,9 +66,11 @@ public class Game {
     }
 
     public Map<GameResult, Integer> getDealerResult() {
-        return GameResult.calculateDealerResult(players.decidePlayerResults(dealer).values()
-                .stream()
-                .toList());
+        return BlackjackRule.judgeDealerResult(
+                players.decidePlayerResults(dealer)
+                        .values()
+                        .stream()
+                        .toList());
     }
 
     public List<Card> getPlayerCard(Name name) {

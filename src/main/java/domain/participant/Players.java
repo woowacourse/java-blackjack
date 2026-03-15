@@ -6,6 +6,7 @@ import static message.ErrorMessage.PLAYER_NAME_DUPLICATED;
 import static message.ErrorMessage.PLAYER_NOT_FOUND;
 import static message.ErrorMessage.PLAYER_NUMBER_OUT_OF_RANGE;
 
+import domain.BlackjackRule;
 import domain.card.Card;
 import domain.enums.GameResult;
 import java.util.ArrayList;
@@ -68,7 +69,7 @@ public class Players {
     public Map<Name, GameResult> decidePlayerResults(Dealer dealer) {
         Map<Name, GameResult> playerResults = new LinkedHashMap<>();
         for (Player player : players) {
-            playerResults.put(player.getName(), GameResult.calculatePlayerResult(player, dealer));
+            playerResults.put(player.getName(), BlackjackRule.judgePlayerResult(player, dealer));
         }
         return playerResults;
     }
@@ -85,7 +86,7 @@ public class Players {
 
     public GameResult getPlayerResult(Name name, Dealer dealer) {
         Player foundPlayer = findPlayerByName(name);
-        return GameResult.calculatePlayerResult(foundPlayer, dealer);
+        return BlackjackRule.judgePlayerResult(foundPlayer, dealer);
     }
 
     public int getPlayerScore(Name name) {
