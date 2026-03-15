@@ -117,4 +117,64 @@ public class BlackjackTest {
 
         assertThat(profit.getBettingMoney()).isEqualTo(bettingAmountValue);
     }
+
+    @Test
+    void 딜러가_버스트일때_플레이어가_이기면_배팅금액_돌려받음() {
+        long bettingAmountValue = 10000;
+        Money bettingAmount = new Money(bettingAmountValue);
+        Player pobi = new Player("pobi", bettingAmount);
+        Dealer dealer = new Dealer();
+
+        pobi.receiveOneCard(new Card(Rank.TEN, Shape.HEART));
+        pobi.receiveOneCard(new Card(Rank.TWO, Shape.SPADE));
+        pobi.receiveOneCard(new Card(Rank.EIGHT, Shape.CLOVER));
+
+        dealer.receiveOneCard(new Card(Rank.EIGHT, Shape.CLOVER));
+        dealer.receiveOneCard(new Card(Rank.QUEEN, Shape.SPADE));
+        dealer.receiveOneCard(new Card(Rank.NINE, Shape.CLOVER));
+
+        Money profit = pobi.calculateFinalProfit(dealer);
+
+        assertThat(profit.getBettingMoney()).isEqualTo(bettingAmountValue);
+    }
+
+    @Test
+    void 딜러와_플레이어_점수가_같으면_배팅금액_돌려받음() {
+        long bettingAmountValue = 20000;
+        Money bettingAmount = new Money(bettingAmountValue);
+        Player pobi = new Player("pobi", bettingAmount);
+        Dealer dealer = new Dealer();
+
+        pobi.receiveOneCard(new Card(Rank.TEN, Shape.HEART));
+        pobi.receiveOneCard(new Card(Rank.TWO, Shape.SPADE));
+        pobi.receiveOneCard(new Card(Rank.EIGHT, Shape.CLOVER));
+
+        dealer.receiveOneCard(new Card(Rank.TEN, Shape.HEART));
+        dealer.receiveOneCard(new Card(Rank.TWO, Shape.SPADE));
+        dealer.receiveOneCard(new Card(Rank.EIGHT, Shape.CLOVER));
+
+        Money profit = pobi.calculateFinalProfit(dealer);
+
+        assertThat(profit.getBettingMoney()).isEqualTo(bettingAmountValue);
+    }
+
+    @Test
+    void 플레이어_점수가_딜러보다_낮으면_배팅금액_잃음() {
+        long bettingAmountValue = 20000;
+        Money bettingAmount = new Money(bettingAmountValue);
+        Player pobi = new Player("pobi", bettingAmount);
+        Dealer dealer = new Dealer();
+
+        pobi.receiveOneCard(new Card(Rank.TEN, Shape.HEART));
+        pobi.receiveOneCard(new Card(Rank.TWO, Shape.SPADE));
+
+        dealer.receiveOneCard(new Card(Rank.TEN, Shape.HEART));
+        dealer.receiveOneCard(new Card(Rank.TWO, Shape.SPADE));
+        dealer.receiveOneCard(new Card(Rank.EIGHT, Shape.CLOVER));
+
+        Money profit = pobi.calculateFinalProfit(dealer);
+        long expectedAmount = -bettingAmountValue;
+
+        assertThat(profit.getBettingMoney()).isEqualTo(expectedAmount);
+    }
 }
