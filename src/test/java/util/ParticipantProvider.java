@@ -2,9 +2,9 @@ package util;
 
 import static model.card.Rank.ACE;
 import static model.card.Rank.JACK;
-import static model.card.Rank.KING;
 import static model.card.Rank.NINE;
 import static model.card.Rank.QUEEN;
+import static model.card.Rank.TWO;
 import static model.card.Suit.SPADE;
 
 import model.card.Card;
@@ -28,9 +28,9 @@ public final class ParticipantProvider {
 
     public static Player createPlayerWithBust() {
         Player player = Player.of(PLAYER_NAME, BETTING_AMOUNT);
-        player.receive(Card.of(SPADE, KING));
-        player.receive(Card.of(SPADE, QUEEN));
         player.receive(Card.of(SPADE, JACK));
+        player.receive(Card.of(SPADE, QUEEN));
+        player.receive(Card.of(SPADE, TWO));
 
         return player;
     }
@@ -72,7 +72,7 @@ public final class ParticipantProvider {
         Dealer dealer = Dealer.create();
         dealer.receive(Card.of(SPADE, JACK));
         dealer.receive(Card.of(SPADE, QUEEN));
-        dealer.receive(Card.of(SPADE, KING));
+        dealer.receive(Card.of(SPADE, TWO));
 
         return dealer;
     }
