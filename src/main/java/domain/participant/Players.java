@@ -1,7 +1,5 @@
 package domain.participant;
 
-import domain.card.Card;
-
 import java.util.*;
 
 public class Players {
@@ -13,7 +11,7 @@ public class Players {
     public Players(List<Player> players) {
         validateSize(players);
         validateDuplicateName(players);
-        this.players = players;
+        this.players = List.copyOf(players);
     }
 
     public Player findBy(Player targetPlayer) {
@@ -24,26 +22,6 @@ public class Players {
         }
 
         throw new IllegalArgumentException(String.format("%s는(은) 존재하지 않는 플레이어입니다.", targetPlayer.getName()));
-    }
-
-    public Map<Player, List<Card>> getPlayersHand() {
-        Map<Player, List<Card>> playersHand = new HashMap<>();
-
-        for (Player player : players) {
-            playersHand.put(player, player.getCards());
-        }
-
-        return playersHand;
-    }
-
-    public Map<Player, Integer> getPlayersScore() {
-        Map<Player, Integer> playersScore = new HashMap<>();
-
-        for (Player player : players) {
-            playersScore.put(player, player.getScore());
-        }
-
-        return playersScore;
     }
 
     private void validateDuplicateName(List<Player> players) {
