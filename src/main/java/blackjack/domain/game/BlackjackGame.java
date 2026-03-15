@@ -42,6 +42,10 @@ public class BlackjackGame {
         }
     }
 
+    public boolean canHit(Player player) {
+        return player.canHit();
+    }
+
     public void hit(Player player) {
         player.hit(deck.draw());
     }

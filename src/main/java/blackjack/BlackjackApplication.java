@@ -47,7 +47,7 @@ public class BlackjackApplication {
     }
 
     private void playTurn(Player player) {
-        while (player.canHit() && view.isHitAnswer(player.getName())) {
+        while (game.canHit(player) && view.isHitAnswer(player.getName())) {
             game.hit(player);
             view.printPlayerCards(ParticipantCardsDto.from(player));
         }
