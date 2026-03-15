@@ -49,7 +49,6 @@ public class BlackjackController {
 
     private List<String> inputNames() {
         String input = inputView.readPlayNames();
-        Parser.notEmpty(input);
         return splitDelimiter(input);
     }
 }
