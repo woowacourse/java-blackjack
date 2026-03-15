@@ -15,7 +15,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class BettingResultAnalyzerTest {
+class GameResultAnalyzerTest {
 
     @Test
     void 플레이어가_승리한_경우_수익을_얻는다() {
@@ -37,10 +37,10 @@ class BettingResultAnalyzerTest {
         dealer.drawCards(cardDeck, 2);
         players.stream().forEach(
                 player -> player.drawCards(cardDeck, 2));
-        List<BettingResult> bettingResults = GameResultAnalyzer.analyzePlayerBettingResults(players, dealer);
+        BettingResults bettingResults = GameResultAnalyzer.analyzeBettingResults(players, dealer);
 
-        Assertions.assertThat(bettingResults.getFirst().getParticipantName().name()).isEqualTo("test");
-        Assertions.assertThat(bettingResults.getFirst().getProfit()).isEqualTo(1000);
+        Assertions.assertThat(bettingResults.playerBettingResults().getFirst().getParticipantName().name()).isEqualTo("test");
+        Assertions.assertThat(bettingResults.playerBettingResults().getFirst().getProfit()).isEqualTo(1000);
     }
 
     @Test
@@ -63,10 +63,10 @@ class BettingResultAnalyzerTest {
                 player -> player.drawCards(cardDeck, 2));
         dealer.drawCards(cardDeck, 2);
 
-        List<BettingResult> bettingResults = GameResultAnalyzer.analyzePlayerBettingResults(players, dealer);
+        BettingResults bettingResults = GameResultAnalyzer.analyzeBettingResults(players, dealer);
 
-        Assertions.assertThat(bettingResults.getFirst().getParticipantName().name()).isEqualTo("test");
-        Assertions.assertThat(bettingResults.getFirst().getProfit()).isEqualTo(-1000);
+        Assertions.assertThat(bettingResults.playerBettingResults().getFirst().getParticipantName().name()).isEqualTo("test");
+        Assertions.assertThat(bettingResults.playerBettingResults().getFirst().getProfit()).isEqualTo(-1000);
     }
 
     @Test
@@ -90,11 +90,10 @@ class BettingResultAnalyzerTest {
         players.stream().forEach(player -> player.drawCards(cardDeck, 2));
         dealer.drawCards(cardDeck, 2);
 
-        List<BettingResult> bettingResults = GameResultAnalyzer.analyzePlayerBettingResults(players, dealer);
+        BettingResults bettingResults = GameResultAnalyzer.analyzeBettingResults(players, dealer);
 
-        Assertions.assertThat(bettingResults.getFirst().getParticipantName().name()).isEqualTo("test");
-        Assertions.assertThat(bettingResults.getFirst().getProfit()).isEqualTo(1500);
-
+        Assertions.assertThat(bettingResults.playerBettingResults().getFirst().getParticipantName().name()).isEqualTo("test");
+        Assertions.assertThat(bettingResults.playerBettingResults().getFirst().getProfit()).isEqualTo(1500);
     }
 
     @Test
@@ -117,10 +116,10 @@ class BettingResultAnalyzerTest {
         dealer.drawCards(cardDeck, 2);
         players.stream().forEach(player -> player.drawCards(cardDeck, 2));
 
-        List<BettingResult> bettingResults = GameResultAnalyzer.analyzePlayerBettingResults(players, dealer);
+        BettingResults bettingResults = GameResultAnalyzer.analyzeBettingResults(players, dealer);
 
-        Assertions.assertThat(bettingResults.getFirst().getParticipantName().name()).isEqualTo("test");
-        Assertions.assertThat(bettingResults.getFirst().getProfit()).isEqualTo(-1000);
+        Assertions.assertThat(bettingResults.playerBettingResults().getFirst().getParticipantName().name()).isEqualTo("test");
+        Assertions.assertThat(bettingResults.playerBettingResults().getFirst().getProfit()).isEqualTo(-1000);
     }
 
     @Test
@@ -145,11 +144,10 @@ class BettingResultAnalyzerTest {
                 player -> player.drawCards(cardDeck, 2));
         dealer.drawCards(cardDeck, 3);
 
-        Assertions.assertThat(dealer.isBusted()).isTrue();
-        List<BettingResult> bettingResults = GameResultAnalyzer.analyzePlayerBettingResults(players, dealer);
+        Assertions.assertThat(dealer.isBusted()).isTrue();BettingResults bettingResults = GameResultAnalyzer.analyzeBettingResults(players, dealer);
 
-        Assertions.assertThat(bettingResults.getFirst().getParticipantName().name()).isEqualTo("test");
-        Assertions.assertThat(bettingResults.getFirst().getProfit()).isEqualTo(1000);
+        Assertions.assertThat(bettingResults.playerBettingResults().getFirst().getParticipantName().name()).isEqualTo("test");
+        Assertions.assertThat(bettingResults.playerBettingResults().getFirst().getProfit()).isEqualTo(1000);
     }
 
 }
