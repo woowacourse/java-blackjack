@@ -4,6 +4,7 @@ import java.util.List;
 
 public abstract class Participant {
 
+    public static final int BUST_SCORE = 21;
     private final HandCards handCards;
 
     public Participant() {
@@ -19,7 +20,7 @@ public abstract class Participant {
     }
 
     public final boolean isBust() {
-        return getScore().isBust();
+        return getScore().getScore() > BUST_SCORE;
     }
 
     public boolean isBlackjack() {

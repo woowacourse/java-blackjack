@@ -1,5 +1,7 @@
 package blackjack.model;
 
+import java.util.Objects;
+
 public class Score {
     public static final int MAX_SCORE = 21;
     public static final int DEALER_DRAW_THRESHOLD = 16;
@@ -29,11 +31,19 @@ public class Score {
         return score == MAX_SCORE;
     }
 
-    public boolean isBust() {
-        return score > MAX_SCORE;
-    }
-
     public int getScore() {
         return score;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Score score1 = (Score) o;
+        return score == score1.score;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(score);
     }
 }
