@@ -1,8 +1,6 @@
-package domain;
+package domain.participant;
 
-import domain.card.Card;
 import domain.card.Deck;
-import domain.participant.Player;
 import util.InputNameParser;
 import util.InputNameValidator;
 
@@ -31,13 +29,23 @@ public class Players implements Iterable<Player>{
                 .toList();
     }
 
-    public void receiveInitialCards(Deck deck) {
+    public void drawInitialCards(Deck deck) {
         for (Player player : players) {
-            List<Card> firstHandCards = deck.dealFirstHandCards();
-            player.receiveInitialCards(firstHandCards);
+            player.drawInitialCards(deck.drawInitialCards());
         }
     }
 
+    public void endGameImmediately() {
+        for (Player player : players) {
+            forceStay(player);
+        }
+    }
+
+    private void forceStay(Player player) {
+        if (player.isRunning()) {
+            player.stay();
+        }
+    }
     @Override
     public Iterator<Player> iterator() {
         return players.iterator();

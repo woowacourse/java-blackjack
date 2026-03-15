@@ -1,21 +1,17 @@
 package domain.participant;
 
+import domain.BlackJackInfo;
 import domain.card.Card;
 
-public class Dealer extends Participant {
+public final class Dealer extends Participant {
     public Dealer() {
-        super("딜러");
-    }
-
-    public Dealer(HandCards handCards) {
-        super("딜러", handCards);
     }
 
     public Card getFirstCard() {
-        return getHandCards().getFirst();
+        return status.getFirstCard();
     }
 
     public boolean isReceiveCard() {
-        return calculateScore() <= 16;
+        return getScore() <= BlackJackInfo.DEALER_THRESHOLD_SCORE;
     }
 }

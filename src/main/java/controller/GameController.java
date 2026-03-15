@@ -1,10 +1,14 @@
 package controller;
 
-import domain.Players;
+import domain.participant.Players;
+import domain.betting.Money;
+import domain.participant.Dealer;
 import domain.participant.Player;
+import dto.PlayerHandDto;
+import service.BettingCalculateService;
 import service.GameService;
 import util.HitOption;
-import util.InputHitOptionParser;
+import util.InputBettingParser;
 import view.InputView;
 import view.OutputView;
 
@@ -19,13 +23,20 @@ public class GameController {
 
     public void run() {
         Players players = inputPlayers();
-        GameService gameService = new GameService(players);
+        Dealer dealer = new Dealer();
+        GameService gameService = new GameService(players, dealer);
+        BettingCalculateService bettingCalculateService = new BettingCalculateService(players, dealer);
+
+        playerBetting(players);
         outputView.printStartGame(gameService.startGame());
 
-        processGame(gameService);
+        boolean dealerIsBlackJack = processDealerBlackJack(gameService);
+        if (!dealerIsBlackJack) {
+            processGame(gameService);
+        }
 
         outputView.printScore(gameService.getTotalScore());
-        outputView.printResults(gameService.calculateResults());
+        outputView.printBettingResults(bettingCalculateService.getBettingResult());
     }
 
     private Players inputPlayers() {
@@ -34,7 +45,7 @@ public class GameController {
                 String rawPlayerNames = inputView.readPlayerNames();
                 return Players.fromString(rawPlayerNames);
             } catch (IllegalArgumentException exception) {
-                outputView.printErrorMessage(exception.getMessage());
+                outputView.printInputErrorMessage(exception.getMessage());
             }
         }
     }
@@ -43,9 +54,20 @@ public class GameController {
         while (true) {
             try {
                 String rawHitOption = inputView.readHitOption(player.getName());
-                return InputHitOptionParser.parseHitOption(rawHitOption);
+                return HitOption.of(rawHitOption);
             } catch (IllegalArgumentException exception) {
-                outputView.printErrorMessage(exception.getMessage());
+                outputView.printInputErrorMessage(exception.getMessage());
+            }
+        }
+    }
+
+    private Money inputBettingMoney(Player player) {
+        while (true) {
+            try {
+                String rawBettingMoney = inputView.readBetting(player.getName());
+                return InputBettingParser.parseBettingMoney(rawBettingMoney);
+            } catch (IllegalArgumentException exception) {
+                outputView.printInputErrorMessage(exception.getMessage());
             }
         }
     }
@@ -57,19 +79,44 @@ public class GameController {
         dealerTurn(gameService);
     }
 
-    private void playerTurn(Player player, GameService gameService) {
-        while (!player.isBust() && inputHitOption(player) == HitOption.YES) {
-            outputView.printHandCard(gameService.playerHit(player));
+    private boolean processDealerBlackJack(GameService gameService) {
+        Dealer dealer = gameService.getDealer();
+        if (dealer.isBlackJack()) {
+            gameService.endGameImmediately();
+            outputView.printDealerBlackJack();
+            return true;
         }
-        if (!player.isBust()) {
-            outputView.printHandCard(gameService.getCurrentHand(player));
+        return false;
+    }
+
+    private void playerTurn(Player player, GameService gameService) {
+        while (player.isRunning() && inputHitOption(player) == HitOption.YES) {
+            gameService.hit(player);
+            outputView.printHandCard(PlayerHandDto.from(player));
+        }
+
+        if (player.isRunning()) {
+            gameService.stay(player);
+            outputView.printHandCard(PlayerHandDto.from(player));
         }
     }
 
     private void dealerTurn(GameService gameService) {
-        while (gameService.getDealer().isReceiveCard()) {
-            gameService.dealerHit();
+        Dealer dealer = gameService.getDealer();
+
+        while (dealer.isReceiveCard()) {
+            gameService.hit(dealer);
             outputView.printDealerReceiveCard();
+        }
+
+        if (dealer.isRunning()) {
+            gameService.stay(dealer);
+        }
+    }
+
+    private void playerBetting(Players players) {
+        for (Player player : players) {
+            player.bettingMoney(inputBettingMoney(player));
         }
     }
 }

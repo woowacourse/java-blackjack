@@ -25,8 +25,4 @@ class InputNameParserTest {
                 Arguments.of("jun, jason", List.of("jun", "jason"))
         );
     }
-
-
-
-
 }

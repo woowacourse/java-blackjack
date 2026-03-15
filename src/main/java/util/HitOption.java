@@ -16,7 +16,7 @@ public enum HitOption {
     }
 
     public static HitOption of(String value) {
-        String lowerCaseValue = value.toLowerCase();
+        String lowerCaseValue = value.toLowerCase().trim();
         return Arrays.stream(HitOption.values())
                 .filter(hitOption -> lowerCaseValue.equals(hitOption.getValue()))
                 .findFirst()

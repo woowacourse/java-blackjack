@@ -1,13 +1,25 @@
 package domain.participant;
 
-public class Player extends Participant {
+import domain.betting.Money;
+
+public final class Player extends Participant {
+
+    private final String name;
+    private Money money;
 
     public Player(String name) {
-        super(name);
+        this.name = name;
     }
 
-    public Player(String name, HandCards handCards) {
-        super(name, handCards);
+    public void bettingMoney(Money money) {
+        this.money = money;
     }
 
+    public Money getBettingMoney() {
+        return money;
+    }
+
+    public String getName() {
+        return name;
+    }
 }
