@@ -12,7 +12,7 @@ import domain.player.Player;
 import domain.player.Players;
 import domain.random.RandomValueGenerator;
 import java.util.List;
-import java.util.stream.IntStream;
+import java.util.Map;
 import util.CardsCreator;
 import util.DeckCreator;
 
@@ -28,23 +28,22 @@ public class BlackjackGame {
         this.table = table;
     }
 
-    public static BlackjackGame create(List<String> names, List<Integer> amounts,
+    public static BlackjackGame create(Map<String, Integer> playerInfos,
                                        RandomValueGenerator randomValueGenerator) {
         Deck deck = DeckCreator.createDeck(CardsCreator.createCards(), randomValueGenerator);
         Dealer dealer = Dealer.from(createInitialHand(deck));
-        Players players = Players.of(createPlayers(names, amounts, deck));
+        Players players = Players.of(createPlayers(playerInfos, deck));
         return new BlackjackGame(deck, Table.of(dealer, players));
     }
 
-    private static List<Player> createPlayers(List<String> names, List<Integer> amounts, Deck deck) {
-        return IntStream.range(0, names.size())
-                .mapToObj(i -> {
-                    Name name = new Name(names.get(i));
-                    Money money = new Money(amounts.get(i));
+    private static List<Player> createPlayers(Map<String, Integer> playerInfos, Deck deck) {
+        return playerInfos.entrySet().stream()
+                .map(entry -> {
+                    Name name = new Name(entry.getKey());
+                    Money money = new Money(entry.getValue());
                     BettingProfit bettingProfit = new BettingProfit(money);
 
                     Hand initialHand = createInitialHand(deck);
-
                     BettingHand bettingHand = BettingHand.of(initialHand, bettingProfit);
 
                     return Player.of(name, bettingHand);

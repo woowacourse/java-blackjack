@@ -7,7 +7,9 @@ import dto.DealerDrawDto;
 import dto.NamesDto;
 import dto.ParticipantsCardsDto;
 import dto.StatisticsDto;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import util.Parser;
 import view.InputView;
 import view.OutputView;
@@ -31,10 +33,13 @@ public class BlackjackController {
 
     private BlackjackGame createGame() {
         List<String> names = Parser.parse(inputView.readPlayerName());
-        List<Integer> amounts = names.stream()
-                .map(inputView::readPlayerBettingAmount)
-                .toList();
-        return BlackjackGame.create(names, amounts, new RandomValueGeneratorImpl());
+
+        Map<String, Integer> bettingInfos = new HashMap<>();
+        for (String name : names) {
+            bettingInfos.put(name, inputView.readPlayerBettingAmount(name));
+        }
+
+        return BlackjackGame.create(bettingInfos, new RandomValueGeneratorImpl());
     }
 
     private void printInitialCards(BlackjackGame game) {
