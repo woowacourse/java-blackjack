@@ -1,9 +1,5 @@
 package view;
 
-import domain.result.WinningStatus;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 public class OutputWriter {
 
     private static final String LINE_SEPARATOR = System.lineSeparator();
@@ -12,10 +8,7 @@ public class OutputWriter {
     private static final String DEAL_INITIAL_CARD_MESSAGE = "딜러와 %s에게 %d장을 나누었습니다.";
     private static final String ASK_DRAW_CARD_GUIDE_MESSAGE = "%s는 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)";
     private static final String DEALER_ADDITIONAL_DRAW_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
-    private static final String FINAL_RESULT_TITLE_MESSAGE = "## 최종 승패";
     private static final String FINAL_BETTING_RESULT_TITLE_MESSAGE = "## 최종 수익";
-    private static final String FINAL_RESULT_PLAYER = "%s: %s";
-    private static final String FINAL_RESULT_DEALER = "딜러: %s";
     private static final String FINAL_BETTING_RESULT = "%s: %d";
     private static final String PLAYER_HAND_MESSAGE = "%s카드: %s";
     private static final String CARD_SUM_RESULT_MESSAGE = "%s카드: %s - 결과: %d";
@@ -50,28 +43,6 @@ public class OutputWriter {
         System.out.print(LINE_SEPARATOR);
         System.out.println(DEALER_ADDITIONAL_DRAW_MESSAGE);
         System.out.print(LINE_SEPARATOR);
-    }
-
-    public void printFinalResultTitleMessage() {
-        System.out.print(LINE_SEPARATOR);
-        System.out.printf(FINAL_RESULT_TITLE_MESSAGE);
-    }
-
-    public void printFinalResultOfPlayer(String playerName, String status) {
-        System.out.printf(FINAL_RESULT_PLAYER, playerName, status);
-        System.out.print(LINE_SEPARATOR);
-    }
-
-    public void printFinalResultOfDealer(Map<WinningStatus, Integer> gameResultIntegerEnumMap) {
-        System.out.print(LINE_SEPARATOR);
-        System.out.printf(FINAL_RESULT_DEALER, formatDealerResult(gameResultIntegerEnumMap));
-        System.out.print(LINE_SEPARATOR);
-    }
-
-    private String formatDealerResult(Map<WinningStatus, Integer> gameResultIntegerEnumMap) {
-        return gameResultIntegerEnumMap.keySet().stream()
-                .map(result -> gameResultIntegerEnumMap.get(result) + result.displayName())
-                .collect(Collectors.joining(" "));
     }
 
     public void printFinalResultMessage(String gamerName, String playerCards, int resultScore) {

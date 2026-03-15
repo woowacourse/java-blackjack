@@ -35,7 +35,7 @@ public class InputReader {
     }
 
     private void validateInCandidate(List<String> candidates, String input) {
-        if(!candidates.contains(input)) {
+        if (!candidates.contains(input)) {
             throw new IllegalArgumentException("잘못된 입력입니다.");
         }
     }
