@@ -68,10 +68,11 @@ public class OutputView {
         }
     }
 
-    private void printDealerResult(Participant dealer, Map<Player, Result> results) {
-        int dealerWin = countResult(results, Result.LOSE);
-        int dealerLose = countResult(results, Result.WIN);
-        System.out.println(dealer.getName() + ": " + dealerWin + "승 " + dealerLose + "패");
+    private void printDealerResult(Participant dealer, Results results) {
+        int dealerWin = results.countResult(Result.LOSE);
+        int dealerLose = results.countResult(Result.WIN) + results.countResult(Result.BLACKJACK);
+        int dealerTie = results.countResult(Result.TIE);
+        System.out.println(dealer.getName() + ": " + dealerWin + "승 " + dealerTie + "무 " + dealerLose + "패");
     }
 
     public void printFinalProfit(Dealer dealer, double dealerProfit, Map<Player, Integer> results) {
@@ -88,16 +89,6 @@ public class OutputView {
 
     private void printDealerProfit(Dealer dealer, int profit) {
         System.out.println(dealer.getName() + ": " + profit);
-    }
-
-    private int countResult(Map<Player, Result> results, Result target) {
-        int count = 0;
-        for (Result result : results.values()) {
-            if (result == target) {
-                count++;
-            }
-        }
-        return count;
     }
 
     private String formatCards(List<Card> cards) {
