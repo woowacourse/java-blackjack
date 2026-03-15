@@ -9,4 +9,12 @@ public class InputParser {
                 .map(String::strip)
                 .toList();
     }
+
+    public static int parseMoney(String money) {
+        try {
+            return Integer.parseInt(money);
+        } catch (NumberFormatException exception) {
+            throw new IllegalArgumentException("[ERROR] 배팅 금액은 숫자만 가능합니다.");
+        }
+    }
 }

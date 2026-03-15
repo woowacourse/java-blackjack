@@ -1,27 +1,30 @@
 package domain;
 
 public enum GameResult {
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패");
-
-    private final String value;
-
-    GameResult(String value) {
-        this.value = value;
-    }
-
-    public GameResult toDealerResult() {
-        if (this == WIN) {
-            return LOSE;
+    BLACKJACK_WIN {
+        @Override
+        public int profit(Money money) {
+            return money.earnOnePointFiveTimes();
         }
-        if (this == LOSE) {
-            return WIN;
+    },
+    WIN {
+        @Override
+        public int profit(Money money) {
+            return money.earn();
         }
-        return DRAW;
-    }
+    },
+    LOSE {
+        @Override
+        public int profit(Money money) {
+            return money.lose();
+        }
+    },
+    DRAW {
+        @Override
+        public int profit(Money money) {
+            return money.getBack();
+        }
+    };
 
-    public String getValue() {
-        return value;
-    }
+    public abstract int profit(Money money);
 }

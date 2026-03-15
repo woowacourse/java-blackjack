@@ -1,13 +1,11 @@
 package view;
 
-import domain.GameResult;
 import domain.card.Card;
-import domain.card.CardNumber;
-import domain.card.CardSuit;
 import dto.ParticipantDto;
-import dto.PlayerResultDto;
+import dto.PlayerProfitDto;
 import java.util.List;
-import java.util.Map;
+import view.formatter.CardSuitFormatter;
+import view.formatter.CardValueFormatter;
 
 public class OutputView {
 
@@ -16,8 +14,8 @@ public class OutputView {
         System.out.println("딜러와 " + String.join(", ", playerNames) + "에게 2장을 나누었습니다.");
     }
 
-    public void printDealerStartCard(CardNumber cardNumber, CardSuit cardSuit) {
-        System.out.println("딜러카드: " + cardNumber.getNumber() + getCardSuit(cardSuit));
+    public void printDealerStartCard(Card dealerFirstCard) {
+        System.out.println("딜러카드: " + CardValueFormatter.from(dealerFirstCard.getCardValue()) + CardSuitFormatter.from(dealerFirstCard.getCardSuit()));
     }
 
     public void printStartCard(List<ParticipantDto> playerDtos) {
@@ -44,35 +42,23 @@ public class OutputView {
         }
     }
 
-    public void printDealerFinalCount(Map<GameResult, Integer> dealerResults) {
+    public void printDealerFinalProfit(int dealerFinalProfit) {
         System.out.println();
-        System.out.println("## 최종 승패");
-        System.out.println("딜러: "
-                + dealerResults.getOrDefault(GameResult.WIN, 0) + "승 "
-                + dealerResults.getOrDefault(GameResult.DRAW, 0) + "무 "
-                + dealerResults.getOrDefault(GameResult.LOSE, 0) + "패");
+        System.out.println("## 최종 수익");
+        System.out.println("딜러: " + dealerFinalProfit);
     }
 
-    public void printPlayerFinalResults(List<PlayerResultDto> playerResultDtos) {
-        for (PlayerResultDto playerResult : playerResultDtos) {
-            System.out.println(playerResult.name() + ": " + playerResult.result());
+    public void printPlayerFinalProfit(List<PlayerProfitDto> playerProfitDtos) {
+        for (PlayerProfitDto playerProfitDto : playerProfitDtos) {
+            System.out.println(playerProfitDto.name() + ": " + playerProfitDto.profit());
         }
     }
 
-    private void printParticipantScore(ParticipantDto participant) {
-        System.out.println(participant.name() + "카드: " + cardsToString(participant.cards()) + " - 결과: " + participant.score());
+    private void printParticipantScore(ParticipantDto participantDto) {
+        System.out.println(participantDto.name() + "카드: " + cardsToString(participantDto.cards()) + " - 결과: " + participantDto.score());
     }
 
     private String cardsToString(List<Card> hand) {
-        return String.join(", ", hand.stream().map(card -> card.getCardNumber().getNumber() + getCardSuit(card.getCardSuit())).toList());
-    }
-
-    private String getCardSuit(CardSuit cardSuit) {
-        return switch (cardSuit) {
-            case HEART -> "하트";
-            case SPADE -> "스페이드";
-            case CLUB -> "클로버";
-            case DIAMOND -> "다이아몬드";
-        };
+        return String.join(", ", hand.stream().map(card -> CardValueFormatter.from(card.getCardValue()) + CardSuitFormatter.from(card.getCardSuit())).toList());
     }
 }
