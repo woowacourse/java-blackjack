@@ -18,12 +18,12 @@ public class HandStateTest {
     }
 
     @Test
-    @DisplayName("초기 2장이 아닌 21점은 NORMAL 상태다")
-    void normalWithNonInitialCards() {
+    @DisplayName("초기 2장이 아닌 21점은 HIT 상태다")
+    void hitWithNonInitialCards() {
         HandState handState = HandState.getState(21, false);
 
-        assertEquals(HandState.NORMAL, handState);
-        assertTrue(handState.isNormal());
+        assertEquals(HandState.HIT, handState);
+        assertTrue(handState.isHit());
         assertFalse(handState.isBlackjack());
     }
 
@@ -37,9 +37,9 @@ public class HandStateTest {
     }
 
     @Test
-    @DisplayName("NORMAL 상태에서 동점이면 무승부다")
-    void drawWhenSameScoreInNormal() {
-        Outcome outcome = HandState.NORMAL.against(HandState.NORMAL, 20, 20);
+    @DisplayName("HIT 상태에서 동점이면 무승부다")
+    void drawWhenSameScoreInHit() {
+        Outcome outcome = HandState.HIT.against(HandState.HIT, 20, 20);
 
         assertEquals(Outcome.DRAW, outcome);
     }

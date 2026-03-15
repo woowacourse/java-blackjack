@@ -91,9 +91,28 @@ public class CheckWinnerTest {
         assertEquals(Outcome.LOSE, gameResult.getPlayerOutcome(player.getName()));
     }
 
+    @Test
+    @DisplayName("딜러가 버스트고 플레이어가 정상 상태면 플레이어는 승리한다")
+    void dealerBustPlayerNormalWin() {
+        Dealer dealer = new Dealer();
+        Players players = NameParser.makeNameList("pobi");
+        Player player = getFirstPlayer(players);
+        addCards(dealer,
+                new Card(Suit.SPADE, Rank.KING),
+                new Card(Suit.HEART, Rank.QUEEN),
+                new Card(Suit.CLUB, Rank.TWO));
+        addCards(player,
+                new Card(Suit.DIAMOND, Rank.KING),
+                new Card(Suit.CLUB, Rank.QUEEN));
+
+        GameResult gameResult = resultCalculator.calculate(dealer, players);
+
+        assertEquals(Outcome.WIN, gameResult.getPlayerOutcome(player.getName()));
+    }
+
     private void addCards(Participant participant, Card... cards) {
         for (Card card : cards) {
-            participant.getCardList().addCard(card);
+            participant.addCardForTest(card);
         }
     }
 

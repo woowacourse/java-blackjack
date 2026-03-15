@@ -20,7 +20,7 @@ public class PlayerAceTest {
         hand.addCard(new Card(Suit.CLUB, Rank.FIVE));
 
         assertFalse(hand.checkBust());
-        assertEquals(15, hand.getScore().getScore());
+        assertEquals(15, hand.getScore());
     }
 
     @Test
@@ -33,6 +33,6 @@ public class PlayerAceTest {
         hand.addCard(new Card(Suit.DIAMOND, Rank.KING));
 
         assertFalse(hand.checkBust());
-        assertEquals(21, hand.getScore().getScore());
+        assertEquals(21, hand.getScore());
     }
 }

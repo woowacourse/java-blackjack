@@ -7,6 +7,7 @@ import domain.game.GameResult;
 import domain.state.Outcome;
 import domain.participant.Player;
 import domain.participant.Players;
+import java.util.List;
 import java.util.stream.Collectors;
 import message.IOMessage;
 
@@ -79,8 +80,8 @@ public class ResultView {
         return playerNames.toString();
     }
 
-    public String joinCardNames(Hand cardList) {
-        return cardList.getCards().stream()
+    public String joinCardNames(List<Card> cardList) {
+        return cardList.stream()
                 .map(this::formatCardName)
                 .collect(Collectors.joining(", "));
     }

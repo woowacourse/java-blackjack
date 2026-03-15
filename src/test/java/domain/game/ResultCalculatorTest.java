@@ -22,11 +22,11 @@ public class ResultCalculatorTest {
         final Player[] playerRef = new Player[1];
         players.forEachPlayer(player -> playerRef[0] = player);
 
-        dealer.getCardList().addCard(new Card(Suit.SPADE, Rank.TEN));
-        dealer.getCardList().addCard(new Card(Suit.HEART, Rank.EIGHT));
-        playerRef[0].getCardList().addCard(new Card(Suit.CLUB, Rank.KING));
-        playerRef[0].getCardList().addCard(new Card(Suit.DIAMOND, Rank.QUEEN));
-        playerRef[0].getCardList().addCard(new Card(Suit.HEART, Rank.TWO));
+        dealer.addCardForTest(new Card(Suit.SPADE, Rank.TEN));
+        dealer.addCardForTest(new Card(Suit.HEART, Rank.EIGHT));
+        playerRef[0].addCardForTest(new Card(Suit.CLUB, Rank.KING));
+        playerRef[0].addCardForTest(new Card(Suit.DIAMOND, Rank.QUEEN));
+        playerRef[0].addCardForTest(new Card(Suit.HEART, Rank.TWO));
 
         GameResult result = calculator.calculate(dealer, players);
 
