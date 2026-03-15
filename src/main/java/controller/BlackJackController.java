@@ -74,7 +74,7 @@ public class BlackJackController {
     }
 
     private void runPlayerInitGameProcess(SelectRequest select) {
-        if (select.isPositive()) {
+        if (select.isPositive() && queryService.isCurrentPlayerPlayable()) {
             commandService.currentPlayerDrawsCard();
         }
         OutputView.playerCardInfos(queryService.currentPlayerCards());

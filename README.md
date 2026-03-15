@@ -38,8 +38,9 @@
 - [ ] PlayedGameResult Dto화
 - [ ] BlackJackRule 관련
 - [x] AppConfig 에 DrawStrategy 변경
-- [ ] WinDrawLose 네이밍
-- [ ] 레포지토리 책임 조정하기
+- [x] WinDrawLose 네이밍
+- [x] 레포지토리 책임 조정하기
+  - 레포지토리 삭제
 - [ ] domain의 common 패키지 조정하기
 - [x] DrawStrategy 한 곳에서만 상태를 관리하게 하기
   - 피드백에 따라 카드나 전략을 파라미터로 전달하는 방식에 대해 많은 고민을 해봤습니다.

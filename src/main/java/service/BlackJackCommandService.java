@@ -1,54 +1,44 @@
 package service;
 
 import domain.common.PlayedGameResult;
-import domain.gameplaying.BlackJackDeck;
 import domain.gameplaying.Participants;
 import domain.result.ScoreBoard;
 import java.util.List;
-import repository.ParticipantRepository;
-import repository.ScoreRepository;
 
 public class BlackJackCommandService {
 
-    private final ParticipantRepository participantRepository;
-    private final ScoreRepository scoreRepository;
+    private final Participants participants;
+    private final ScoreBoard scoreBoard;
 
-    public BlackJackCommandService(ParticipantRepository participantRepository,
-                                   ScoreRepository scoreRepository,
-                                   BlackJackDeck blackJackDeck) {
-        this.participantRepository = participantRepository;
-        this.scoreRepository = scoreRepository;
-        setupWith(blackJackDeck);
-    }
-
-    private void setupWith(BlackJackDeck blackJackDeck) {
-        participantRepository.setup(Participants.onlyDealer(blackJackDeck));
-        scoreRepository.setup(new ScoreBoard());
+    public BlackJackCommandService(Participants participants,
+                                   ScoreBoard scoreBoard) {
+        this.participants = participants;
+        this.scoreBoard = scoreBoard;
     }
 
     public void setupPlayers(List<String> playerNames) {
-        participantRepository.updateParticipantsWith(playerNames);
+        participants.join(playerNames);
     }
 
     public void distributeInitialCards() {
-        participantRepository.distributeInitialCards();
+        participants.allParticipantsDrawInitialCards();
     }
 
     public void currentPlayerDrawsCard() {
-        participantRepository.currentPlayerDrawCard();
+        participants.currentPlayerDrawCard();
     }
 
     public void recordCurrentGameResult() {
-        PlayedGameResult currentPlayerResult = participantRepository.getCurrentPlayerResult();
-        scoreRepository.recordCurrentGameResult(currentPlayerResult);
+        PlayedGameResult currentPlayerResult = participants.currentPlayerResult();
+        scoreBoard.record(currentPlayerResult);
     }
 
     public void dealerDrawCard() {
-        participantRepository.dealerDrawCard();
+        participants.dealerDrawCard();
     }
 
     public void recordDealerGameResult() {
-        PlayedGameResult dealerResult = participantRepository.getDealerResult();
-        scoreRepository.recordDealerGameResult(dealerResult);
+        PlayedGameResult dealerResult = participants.dealerResult();
+        scoreBoard.recordDealerResult(dealerResult);
     }
 }

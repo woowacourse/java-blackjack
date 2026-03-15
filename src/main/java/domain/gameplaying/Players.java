@@ -20,8 +20,10 @@ class Players {
         return new Players(List.of(), sharedDeck);
     }
 
-    Players join(List<String> names) {
-        return new Players(playersFrom(names), this.sharedDeck);
+    void join(List<String> names) {
+        names.stream()
+                .map(name -> Player.of(name, sharedDeck))
+                .forEach(players::add);
     }
 
     List<String> names() {
@@ -73,12 +75,6 @@ class Players {
 
     private Player currentPlayer() {
         return players.peek();
-    }
-
-    private List<Player> playersFrom(List<String> names) {
-        return names.stream()
-                .map(name -> Player.of(name, sharedDeck))
-                .toList();
     }
 
     private void requireCurrentPlayerExists() {

@@ -23,7 +23,7 @@ class PlayersTest {
     @MethodSource("playerNames")
     @DisplayName("플레이어들 중 현재(peek) 플레이어의 이름을 반환할 수 있어야한다.")
     void 현재_플레이어_이름_확인(List<String> names) {
-        Players players = this.players.join(names);
+        players.join(names);
 
         String expected = names.getFirst();
         String actual = players.currentPlayerName();

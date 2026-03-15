@@ -23,7 +23,7 @@ class ParticipantsTest {
     @MethodSource("playerNames")
     @DisplayName("참여자들은 모든 플레이어의 이름을 반환할 수 있어야한다.")
     void 참여자들_생성_확인(List<String> names) {
-        Participants participants =  this.participants.join(names);
+        participants.join(names);
 
         List<String> actual = participants.allPlayerNames();
 

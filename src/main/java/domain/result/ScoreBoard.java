@@ -10,25 +10,20 @@ import java.util.stream.Collectors;
 
 public class ScoreBoard {
 
-    private final PlayedGameResult dealerResult;
+    private final DealerGameResult dealerResult;
     private final List<PlayedGameResult> gameResults;
 
     public ScoreBoard() {
-        this.dealerResult = null;
+        this.dealerResult = new DealerGameResult();
         this.gameResults = new ArrayList<>();
-    }
-
-    private ScoreBoard(PlayedGameResult dealerResult, List<PlayedGameResult> playerResults) {
-        this.dealerResult = dealerResult;
-        this.gameResults = List.copyOf(playerResults);
     }
 
     public void record(PlayedGameResult playerGameResult) {
         gameResults.add(playerGameResult);
     }
 
-    public ScoreBoard recordDealerResult(PlayedGameResult dealerResult) {
-        return new ScoreBoard(dealerResult, this.gameResults);
+    public void recordDealerResult(PlayedGameResult playerGameResult) {
+        dealerResult.record(playerGameResult);
     }
 
     public List<PlayedGameResult> playerGameResults() {
@@ -37,7 +32,7 @@ public class ScoreBoard {
 
     public PlayedGameResult dealerGameResult() {
         requireDealerGameResultExists();
-        return dealerResult;
+        return dealerResult.playedGameResult();
     }
 
     public DealerWinningScore dealerWinningScore() {

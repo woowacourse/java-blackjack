@@ -18,8 +18,8 @@ public class Participants {
         return new Participants(Dealer.of(sharedDeck), Players.noOne(sharedDeck));
     }
 
-    public Participants join(List<String> names) {
-        return new Participants(this.dealer, this.players.join(names));
+    public void join(List<String> names) {
+        this.players.join(names);
     }
 
     public List<String> allPlayerNames() {
