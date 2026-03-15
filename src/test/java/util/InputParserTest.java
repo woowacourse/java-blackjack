@@ -1,5 +1,7 @@
 package util;
 
+import static message.ErrorMessage.BETTING_MONEY_NOT_AVAILABLE;
+
 import java.util.List;
 import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
@@ -55,6 +57,6 @@ public class InputParserTest {
     void 정수_아닐_경우_예외_발생한다(String input) {
         Assertions.assertThatThrownBy(() -> InputParser.parseMoney(input))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 정수형 숫자만 입력 가능합니다.");
+                .hasMessage(BETTING_MONEY_NOT_AVAILABLE.getMessage());
     }
 }

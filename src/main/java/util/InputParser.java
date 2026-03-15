@@ -1,6 +1,7 @@
 package util;
 
 import static constant.GameRule.YES_ANSWER;
+import static message.ErrorMessage.BETTING_MONEY_NOT_AVAILABLE;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,7 +23,7 @@ public class InputParser {
         try {
             return Integer.parseInt(input);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("[ERROR] 정수형 숫자만 입력 가능합니다.");
+            throw new IllegalArgumentException(BETTING_MONEY_NOT_AVAILABLE.getMessage());
         }
     }
 }
