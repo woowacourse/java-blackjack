@@ -1,6 +1,7 @@
 package view;
 
 import domain.Card;
+import domain.Dealer;
 import domain.Participant;
 import domain.Player;
 import domain.Rank;
@@ -59,10 +60,32 @@ public class OutputView {
         printPlayerResults(results);
     }
 
+    private void printPlayerResults(Map<Player, Result> results) {
+        for (Map.Entry<Player, Result> entry : results.entrySet()) {
+            System.out.println(entry.getKey().getName() + ": " + RESULT_NAME.get(entry.getValue()));
+        }
+    }
+
     private void printDealerResult(Participant dealer, Map<Player, Result> results) {
         int dealerWin = countResult(results, Result.LOSE);
         int dealerLose = countResult(results, Result.WIN);
         System.out.println(dealer.getName() + ": " + dealerWin + "승 " + dealerLose + "패");
+    }
+
+    public void printFinalProfit(Dealer dealer, double dealerProfit, Map<Player, Integer> results) {
+        System.out.println("\n## 최종 수익");
+        printDealerProfit(dealer, (int) dealerProfit);
+        printPlayerProfit(results);
+    }
+
+    private void printPlayerProfit(Map<Player, Integer> results) {
+        for (Map.Entry<Player, Integer> entry : results.entrySet()) {
+            System.out.println(entry.getKey().getName() + ": " + entry.getValue());
+        }
+    }
+
+    private void printDealerProfit(Dealer dealer, int profit) {
+        System.out.println(dealer.getName() + ": " + profit);
     }
 
     private int countResult(Map<Player, Result> results, Result target) {
@@ -73,12 +96,6 @@ public class OutputView {
             }
         }
         return count;
-    }
-
-    private void printPlayerResults(Map<Player, Result> results) {
-        for (Map.Entry<Player, Result> entry : results.entrySet()) {
-            System.out.println(entry.getKey().getName() + ": " + RESULT_NAME.get(entry.getValue()));
-        }
     }
 
     private String formatCards(List<Card> cards) {

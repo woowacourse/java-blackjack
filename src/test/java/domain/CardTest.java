@@ -4,7 +4,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-class CardTest {
+public class CardTest {
     @Test
     void 카드의_점수를_반환한다() {
         Card card = new Card(Rank.KING, Suit.SPADE);
@@ -15,5 +15,17 @@ class CardTest {
     void ACE의_점수는_1이다() {
         Card card = new Card(Rank.ACE, Suit.HEART);
         assertThat(card.getScore()).isEqualTo(1);
+    }
+
+    @Test
+    void ACE_카드는_isAce가_true이다() {
+        Card card = new Card(Rank.ACE, Suit.HEART);
+        assertThat(card.isAce()).isTrue();
+    }
+
+    @Test
+    void ACE가_아닌_카드는_isAce가_false이다() {
+        Card card = new Card(Rank.KING, Suit.SPADE);
+        assertThat(card.isAce()).isFalse();
     }
 }

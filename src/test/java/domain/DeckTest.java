@@ -13,7 +13,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class DeckTest {
-    Deck deck;
+    private Deck deck;
 
     @BeforeEach
     void beforeEach() {

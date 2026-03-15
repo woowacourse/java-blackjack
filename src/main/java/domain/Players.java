@@ -7,11 +7,11 @@ import java.util.List;
 public class Players {
     private final List<Player> playerList;
 
-    public Players(List<String> names) {
+    public Players(List<String> names,List<Integer> betAmounts) {
         validateDuplicate(names);
         playerList = new ArrayList<>();
         for (String name : names) {
-            playerList.add(new Player(name));
+            playerList.add(new Player(name, betAmounts.get(names.indexOf(name))));
         }
     }
 

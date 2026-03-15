@@ -6,6 +6,7 @@ import domain.Player;
 import domain.Players;
 import domain.Referee;
 import domain.Result;
+import domain.Results;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,8 +25,9 @@ public class BlackjackController {
 
     public void run() {
         List<String> names = inputView.inputPlayers();
-        Players players = new Players(names);
-        Dealer dealer = new Dealer("딜러");
+        List<Integer> betAmounts = inputView.inputBetAmount(names);
+        Players players = new Players(names,betAmounts);
+        Dealer dealer = new Dealer();
         Deck deck = new Deck();
         dealInitialCards(dealer, players, deck);
         dealInitialCards(dealer, players, deck);
@@ -33,12 +35,8 @@ public class BlackjackController {
         playAllPlayerTurns(players, deck);
         playDealerTurn(dealer, deck);
         printFinalState(dealer, players);
-    }
-
-    private void playAllPlayerTurns(Players players, Deck deck) {
-        for (Player player : players.getGamePlayers()) {
-            playPlayerTurn(player, deck);
-        }
+        printResult(dealer, players);
+        printProfit(dealer, players);
     }
 
     private void dealInitialCards(Dealer dealer, Players players, Deck deck) {
@@ -57,14 +55,15 @@ public class BlackjackController {
         System.out.println();
     }
 
+    private void playAllPlayerTurns(Players players, Deck deck) {
+        for (Player player : players.getGamePlayers()) {
+            playPlayerTurn(player, deck);
+        }
+    }
+
     private void playPlayerTurn(Player player, Deck deck) {
-        boolean cardShown = false;
         while (player.canHit() && inputView.askHit(player.getName())) {
             player.addCard(deck.draw());
-            outputView.printPlayerCards(player);
-            cardShown = true;
-        }
-        if (!cardShown) {
             outputView.printPlayerCards(player);
         }
     }
@@ -82,11 +81,27 @@ public class BlackjackController {
         for (Player player : players.getGamePlayers()) {
             outputView.printFinalCards(player);
         }
+    }
+
+    private void printResult(Dealer dealer, Players players) {
         Referee referee = new Referee();
-        Map<Player, Result> results = new LinkedHashMap<>();
+        Results results = new Results();
         for (Player player : players.getGamePlayers()) {
-            results.put(player, referee.judge(player.getScore(), dealer.getScore()));
+            results.add(player, referee.judge(player.getScore(), dealer.getScore()));
         }
         outputView.printFinalResult(dealer, results);
+    }
+
+    private void printProfit(Dealer dealer, Players players) {
+        Referee referee = new Referee();
+        Map<Player, Integer> profit = new LinkedHashMap<>();
+        double dealerProfit = 0;
+        for (Player player : players.getGamePlayers()) {
+            Result result = referee.judge(player.getScore(), dealer.getScore());
+            int playerProfit = (int) referee.calculateProfit(result, player.getBetAmount());
+            dealerProfit -= playerProfit;
+            profit.put(player, playerProfit);
+        }
+        outputView.printFinalProfit(dealer, dealerProfit, profit);
     }
 }
