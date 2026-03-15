@@ -42,15 +42,15 @@ public class Game {
         if (wantHit) {
             players.distributeCard(name, deck.drawCard());
         }
-        return !players.checkScoreUnderCriterion(name);
+        return players.isBust(name);
     }
 
     public boolean playDealerTurn(Deck deck) {
-        if (!dealer.checkScoreUnderCriterion()) {
-            return false;
+        if (dealer.mustHit()) {
+            dealer.addCard(deck.drawCard());
+            return true;
         }
-        dealer.addCard(deck.drawCard());
-        return true;
+        return false;
     }
 
     public List<Name> getAllPlayersName() {

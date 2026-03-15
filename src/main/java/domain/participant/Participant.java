@@ -22,10 +22,6 @@ public abstract class Participant {
         return hand.calculateScore();
     }
 
-    public boolean checkScoreUnderCriterion() {
-        return hand.calculateScore() <= BLACKJACK_CRITERION;
-    }
-
     public boolean isBust() {
         return hand.isBust();
     }

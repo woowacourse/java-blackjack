@@ -74,9 +74,9 @@ public class Players {
         return playerResults;
     }
 
-    public boolean checkScoreUnderCriterion(Name name) {
+    public boolean isBust(Name name) {
         Player foundPlayer = findPlayerByName(name);
-        return foundPlayer.checkScoreUnderCriterion();
+        return foundPlayer.isBust();
     }
 
     public List<Card> getPlayerCards(Name name) {
