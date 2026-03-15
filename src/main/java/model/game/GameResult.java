@@ -19,33 +19,35 @@ public enum GameResult {
     }
 
     public static GameResult calculateResult(Dealer dealer, Player player) {
-        if (player.isBlackjack()) {
-            if (dealer.isBlackjack()) {
-                return PUSH;
-            }
-
-            return BLACKJACK;
+        if (player.isBlackjack() || dealer.isBlackjack()) {
+            return calculateFromBlackjackCase(dealer, player);
         }
 
-        if (player.isBust()) {
-            return LOSE;
-        }
-
-        if (dealer.isBust()) {
-            return WIN;
-        }
-
-        if (dealer.isBlackjack()) {
-            return LOSE;
+        if (player.isBust() || dealer.isBust()) {
+            return calculateFromBustCase(player);
         }
 
         return calculateFromScore(dealer, player);
     }
 
-    public BigDecimal getProfitFrom(BettingAmount amount) {
-        return amount.getAmount()
-                .multiply(profitRate)
-                .setScale(0, RoundingMode.DOWN);
+    private static GameResult calculateFromBlackjackCase(Dealer dealer, Player player) {
+        if (player.isBlackjack() && dealer.isBlackjack()) {
+            return PUSH;
+        }
+
+        if (player.isBlackjack()) {
+            return BLACKJACK;
+        }
+
+        return LOSE;
+    }
+
+    private static GameResult calculateFromBustCase(Player player) {
+        if (player.isBust()) {
+            return LOSE;
+        }
+
+        return WIN;
     }
 
     private static GameResult calculateFromScore(Dealer dealer, Player player) {
@@ -58,5 +60,11 @@ public enum GameResult {
         }
 
         return WIN;
+    }
+
+    public BigDecimal getProfitFrom(BettingAmount amount) {
+        return amount.getAmount()
+                .multiply(profitRate)
+                .setScale(0, RoundingMode.DOWN);
     }
 }
