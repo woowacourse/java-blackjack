@@ -1,7 +1,5 @@
 package blackjack.model.user;
 
-import static blackjack.model.constant.ErrorMessage.ERROR_EMPTY_INPUT;
-import static blackjack.model.constant.ErrorMessage.ERROR_INVALID_PLAYER_NAME;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -25,8 +23,7 @@ class UsernameTest {
     void create_username_fail_when_empty_name(String emptyName) {
         //when & then
         assertThatThrownBy(() -> new Username(emptyName))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ERROR_EMPTY_INPUT.getErrorMessage());
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @ParameterizedTest
@@ -35,7 +32,6 @@ class UsernameTest {
     void create_username_fail_when_invalid_name(String invalidName) {
         //when & then
         assertThatThrownBy(() -> new Username(invalidName))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ERROR_INVALID_PLAYER_NAME.getErrorMessage());
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

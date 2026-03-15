@@ -1,8 +1,7 @@
-package blackjack.model;
+package blackjack.model.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.model.card.CardProvider;
 import blackjack.model.user.Dealer;
 import blackjack.model.user.Player;
 import blackjack.model.user.Users;

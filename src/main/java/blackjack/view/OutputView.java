@@ -1,20 +1,19 @@
 package blackjack.view;
 
-import static blackjack.model.constant.Constant.BLACKJACK_SCORE;
-
 import blackjack.model.card.Card;
+import blackjack.model.gameresult.ProfitResult;
 import blackjack.model.user.Dealer;
-import blackjack.model.gameresult.GameResult;
 import blackjack.model.user.Player;
-import blackjack.model.gameresult.PlayersGameResult;
 import blackjack.model.user.User;
 import blackjack.model.user.Users;
-import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
+
+    private static final int BLACKJACK_SCORE = 21;
+
     public static void printInitCards(Users users) {
         List<Player> players = users.getPlayers();
         Dealer dealer = users.getDealer();
@@ -65,21 +64,17 @@ public class OutputView {
         System.out.println(sb);
     }
 
-    public static void printGameResult(PlayersGameResult playersGameResult, Users users) {
+    public static void printGameResult(ProfitResult profitResult, Users users) {
         System.out.println();
-        System.out.println("## 최종 승패");
+        System.out.println("## 최종 수익");
 
         Dealer dealer = users.getDealer();
-        EnumMap<GameResult, Integer> dealerGameResult = dealer.getGameResults();
-        System.out.println(
-                dealer.getName() + ": " + dealerGameResult.getOrDefault(GameResult.WIN, 0) + "승 " +
-                        dealerGameResult.getOrDefault(GameResult.DRAW, 0) + "무 " + dealerGameResult.getOrDefault(
-                        GameResult.LOSE, 0) + "패");
+        System.out.println(dealer.getName() + ": " + profitResult.dealerProfit());
 
-        Map<Player, GameResult> result = playersGameResult.result();
+        Map<Player, Integer> playersProfit = profitResult.playersProfit();
         for (Player player : users.getPlayers()) {
             System.out.print(player.getName() + ": ");
-            System.out.println(result.get(player).getFormat());
+            System.out.println(playersProfit.get(player));
         }
     }
 

@@ -1,19 +1,21 @@
 package blackjack.model.card;
 
-import static blackjack.model.constant.Constant.INIT_CARDS_END_IDX;
-import static blackjack.model.constant.Constant.INIT_CARDS_START_IDX;
-
 import blackjack.model.user.Dealer;
 import blackjack.model.user.Player;
 import blackjack.model.user.User;
 import blackjack.model.user.Users;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.stream.Collectors;
 
 public class CardProvider {
+
+    private static final int INIT_CARDS_START_IDX = 0;
+    private static final int INIT_CARDS_END_IDX = 2;
 
     private final Queue<Card> deck = new LinkedList<>();
 
@@ -22,12 +24,10 @@ public class CardProvider {
     }
 
     private void initDeck() {
-        List<Card> cards = new ArrayList<>();
-        for (Rank rank : Rank.values()) {
-            for (Suit suit : Suit.values()) {
-                cards.add(new Card(rank, suit));
-            }
-        }
+        List<Card> cards = Arrays.stream(Rank.values())
+                .flatMap(rank -> Arrays.stream(Suit.values())
+                        .map(suit -> new Card(rank, suit)))
+                .collect(Collectors.toCollection(ArrayList::new));
         Collections.shuffle(cards);
         this.deck.addAll(cards);
     }
@@ -36,10 +36,14 @@ public class CardProvider {
         List<Player> players = users.getPlayers();
         Dealer dealer = users.getDealer();
         for (int i = INIT_CARDS_START_IDX; i < INIT_CARDS_END_IDX; i++) {
-            for (Player player : players) {
-                provideOneCard(player);
-            }
+            provideOneCardToPlayers(players);
             provideOneCard(dealer);
+        }
+    }
+
+    private void provideOneCardToPlayers(List<Player> players) {
+        for (Player player : players) {
+            provideOneCard(player);
         }
     }
 
