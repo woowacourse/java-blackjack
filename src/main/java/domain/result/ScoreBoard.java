@@ -41,31 +41,31 @@ public class ScoreBoard {
     }
 
     public DealerWinningScore dealerWinningScore() {
-        Map<WinDrawLose, Long> statistics = statisticsOfWinningConditions();
+        Map<GameOutcome, Long> statistics = statisticsOfWinningConditions();
 
         return DealerWinningScore.of(
-                statistics.getOrDefault(WinDrawLose.WIN, 0L),
-                statistics.getOrDefault(WinDrawLose.DRAW, 0L),
-                statistics.getOrDefault(WinDrawLose.LOSE, 0L)
+                statistics.getOrDefault(GameOutcome.WIN, 0L),
+                statistics.getOrDefault(GameOutcome.DRAW, 0L),
+                statistics.getOrDefault(GameOutcome.LOSE, 0L)
         );
     }
 
-    private Map<WinDrawLose, Long> statisticsOfWinningConditions() {
+    private Map<GameOutcome, Long> statisticsOfWinningConditions() {
         return playerGameResults().stream()
                 .map(this::determineDealerWinningCondition)
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
     }
 
-    private WinDrawLose determineDealerWinningCondition(PlayedGameResult playerResult) {
-        if (determinePlayerWinDrawLose(playerResult) == WinDrawLose.WIN) {
-            return WinDrawLose.LOSE;
+    private GameOutcome determineDealerWinningCondition(PlayedGameResult playerResult) {
+        if (determinePlayerWinDrawLose(playerResult) == GameOutcome.WIN) {
+            return GameOutcome.LOSE;
         }
 
-        if (determinePlayerWinDrawLose(playerResult) == WinDrawLose.LOSE) {
-            return WinDrawLose.WIN;
+        if (determinePlayerWinDrawLose(playerResult) == GameOutcome.LOSE) {
+            return GameOutcome.WIN;
         }
 
-        return WinDrawLose.DRAW;
+        return GameOutcome.DRAW;
     }
 
     private void requireDealerGameResultExists() {
@@ -84,19 +84,19 @@ public class ScoreBoard {
         return new PlayerWinningInfo(playerResult.name(), determinePlayerWinDrawLose(playerResult));
     }
 
-    private WinDrawLose determinePlayerWinDrawLose(PlayedGameResult playedGameResult) {
+    private GameOutcome determinePlayerWinDrawLose(PlayedGameResult playedGameResult) {
         if (isPlayerBusted(playedGameResult)) {
-            return WinDrawLose.LOSE;
+            return GameOutcome.LOSE;
         }
 
         return determinePlayerWinningConditionIfPlayerNotBusted(playedGameResult);
     }
 
-    private WinDrawLose determinePlayerWinningConditionIfPlayerNotBusted(PlayedGameResult playedGameResult) {
+    private GameOutcome determinePlayerWinningConditionIfPlayerNotBusted(PlayedGameResult playedGameResult) {
         int dealerScore = dealerGameResult().scoreSum();
 
         if (dealerScore > BlackJackRule.BUST_NUMBER.value()) {
-            return WinDrawLose.WIN;
+            return GameOutcome.WIN;
         }
 
         return determinePlayerWinDrawLoseIfBothNotBusted(playedGameResult, dealerScore);
@@ -106,15 +106,15 @@ public class ScoreBoard {
         return playedGameResult.scoreSum() > BlackJackRule.BUST_NUMBER.value();
     }
 
-    private WinDrawLose determinePlayerWinDrawLoseIfBothNotBusted(PlayedGameResult playedGameResult, int dealerScore) {
+    private GameOutcome determinePlayerWinDrawLoseIfBothNotBusted(PlayedGameResult playedGameResult, int dealerScore) {
         if (dealerScore > playedGameResult.scoreSum()) {
-            return WinDrawLose.LOSE;
+            return GameOutcome.LOSE;
         }
 
         if (dealerScore == playedGameResult.scoreSum()) {
-            return WinDrawLose.DRAW;
+            return GameOutcome.DRAW;
         }
 
-        return WinDrawLose.WIN;
+        return GameOutcome.WIN;
     }
 }

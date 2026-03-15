@@ -1,4 +1,4 @@
 package domain.result;
 
-public record PlayerWinningInfo(String name, WinDrawLose winDrawLose) {
+public record PlayerWinningInfo(String name, GameOutcome gameOutcome) {
 }

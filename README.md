@@ -37,7 +37,8 @@
 - [x] isExactlyInstanceOf()로 변경
 - [ ] PlayedGameResult Dto화
 - [ ] BlackJackRule 관련
-- [ ] AppConfig 에 DrawStrategy 변경
+- [x] AppConfig 에 DrawStrategy 변경
+- [ ] WinDrawLose 네이밍
 - [ ] 레포지토리 책임 조정하기
 - [ ] domain의 common 패키지 조정하기
 - [x] DrawStrategy 한 곳에서만 상태를 관리하게 하기

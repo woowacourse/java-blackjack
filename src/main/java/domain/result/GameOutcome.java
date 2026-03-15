@@ -1,6 +1,6 @@
 package domain.result;
 
-public enum WinDrawLose {
+public enum GameOutcome {
 
     WIN("승"),
     DRAW("무"),
@@ -9,7 +9,7 @@ public enum WinDrawLose {
 
     private final String description;
 
-    WinDrawLose(String description) {
+    GameOutcome(String description) {
         this.description = description;
     }
 
