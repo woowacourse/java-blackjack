@@ -19,7 +19,7 @@ public class Deck {
     }
 
     public static Deck create(ShuffleStrategy strategy) {
-        List<TrumpCard> cards = new ArrayList<>(TrumpCard.CARDS);
+        List<TrumpCard> cards = new ArrayList<>(TrumpCard.ALL_CARD);
         strategy.shuffle(cards);
         return new Deck(cards);
     }

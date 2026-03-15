@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class TrumpCard {
-    public static final List<TrumpCard> CARDS = Arrays.stream(Suit.values())
+    public static final List<TrumpCard> ALL_CARD = Arrays.stream(Suit.values())
             .flatMap(suit -> Arrays.stream(Rank.values())
                     .map(rank -> TrumpCard.of(suit, rank)))
             .toList();
