@@ -1,6 +1,7 @@
 package dto;
 
 import domain.card.Card;
+import domain.participant.Dealer;
 
 import java.util.List;
 
@@ -10,10 +11,10 @@ public class DealerDto {
     private final List<Card> dealerHand;
     private final int score;
 
-    public DealerDto(Card firstOpenCard, List<Card> dealerHand, int score) {
-        this.firstOpenCard = firstOpenCard;
-        this.dealerHand = List.copyOf(dealerHand);
-        this.score = score;
+    public DealerDto(Dealer dealer) {
+        this.firstOpenCard = dealer.getFirstCard();
+        this.dealerHand = List.copyOf(dealer.getCards());
+        this.score = dealer.getScore();
     }
 
     public Card getFirstOpenCard() {
