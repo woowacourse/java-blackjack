@@ -20,7 +20,7 @@ public class InputValidator {
         }
     }
 
-    public static boolean validateBetAmount(String betAmount) {
+    public static void validateBetAmount(String betAmount) {
         if (betAmount == null || betAmount.isBlank()) {
             throw new IllegalArgumentException(INVALID_INPUT_PATTERN.getMessage());
         }
@@ -30,6 +30,5 @@ public class InputValidator {
         if (Integer.parseInt(betAmount) % 10 != 0) {
             throw new IllegalArgumentException(INVALID_BET_AMOUNT_UNIT.getMessage());
         }
-        return true;
     }
 }

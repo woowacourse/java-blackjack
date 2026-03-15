@@ -1,6 +1,7 @@
 package view;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.Test;
@@ -30,8 +31,9 @@ public class InputValidatorTest {
     void 베팅_금액_성공_테스트() {
         String betAmount = "20000";
 
-        assertThat(InputValidator.validateBetAmount(betAmount))
-                .isTrue();
+        assertThatCode(() -> InputValidator.validateBetAmount(betAmount))
+                .doesNotThrowAnyException();
+
     }
 
     @ParameterizedTest
