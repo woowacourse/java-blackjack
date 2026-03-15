@@ -25,9 +25,14 @@ public class BlackjackController {
 
     public void run() {
         List<String> names = inputNames();
+        outputView.printEmptyLine();
         BlackjackGame game = BlackjackGame.create(names, Collections::shuffle);
 
-        game.betPlayers(name -> Integer.parseInt(inputView.readBetAmount(name)));
+        game.betPlayers(name -> {
+            String amount = inputView.readBetAmount(name);
+            outputView.printEmptyLine();
+            return Integer.parseInt(amount);
+        });
 
         game.deal();
         outputView.printDealResult(DealResultDto.from(game));
@@ -36,6 +41,7 @@ public class BlackjackController {
                 name -> Parser.parseDrawInput(inputView.readYesOrNo(name)).isHit(),
                 outputView::printPlayerHand
         );
+        outputView.printEmptyLine();
 
         game.playDealerTurn();
         outputView.printDealerDrawMessage();

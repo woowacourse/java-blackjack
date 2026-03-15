@@ -16,11 +16,19 @@ import java.util.stream.Collectors;
 public class OutputView {
 
     public void printDealResult(DealResultDto dealResultDto) {
+        String names = joinPlayerNames(dealResultDto);
+        System.out.println("딜러와 " + names + "에게 2장을 나누었습니다.");
         System.out.println("딜러카드: " + dealResultDto.dealerOpenCard().display());
         for (PlayerHandDto playerHand : dealResultDto.playerHands()) {
             printCurrentPlayerHand(playerHand);
         }
         System.out.println();
+    }
+
+    private String joinPlayerNames(DealResultDto dealResultDto) {
+        return dealResultDto.playerHands().stream()
+                .map(PlayerHandDto::name)
+                .collect(Collectors.joining(", "));
     }
 
     public void printCurrentPlayerHand(PlayerHandDto playerHand) {
