@@ -1,14 +1,14 @@
 package view;
 
+import domain.Bet;
 import domain.Card;
-import domain.ParticipantsRole;
+import domain.ScoreBoard;
 import dto.GameResult;
 import dto.GameStatus;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OutputView {
-    private static final String WIN = "승";
     private static final String CARD_JOINER = ", ";
 
     public static void divideCards(List<String> participants) {
@@ -35,39 +35,42 @@ public class OutputView {
     public static void participantsResults(List<GameStatus> gameStatuses) {
         for (GameStatus gameStatus : gameStatuses) {
             System.out.println(
-                    OutputMessage.PARTICIPANTS_RESULT.description(getGameLog(gameStatus), gameStatus.scoreSum()));
+                    OutputMessage.PARTICIPANTS_RESULT.description(getGameLog(gameStatus),
+                            gameStatus.score()));
         }
         printTaskDivider();
     }
 
-    public static void gameResult(List<GameResult> gameResults) {
-        System.out.println(OutputMessage.RESULT_HEADER.description());
+    public static void gameResult(List<GameResult> gameResults, Bet bet) {
+        System.out.println(OutputMessage.RESULT_PROFIT_HEADER.description());
 
-        statisticDealer(gameResults);
-        playersWinningLog(gameResults);
+        statisticDealer(gameResults, bet);
+        playersWinningLog(gameResults, bet);
     }
 
-    private static void playersWinningLog(List<GameResult> gameResults) {
-        gameResults.forEach(c -> System.out.println(
-                OutputMessage.PLAYER_WINNING_CONDITION.description(c.name(), c.winningCondition())));
+    private static void playersWinningLog(List<GameResult> gameResults, Bet bet) {
+        for (GameResult gameResult : gameResults) {
+            System.out.println(
+                    OutputMessage.PLAYER_PROFIT.description(gameResult.name(),
+                            ScoreBoard.calculateEarningPrize(gameResult, bet)));
+        }
     }
 
-    private static void statisticDealer(List<GameResult> gameResults) {
-        long playersWin = gameResults.stream().filter(cond -> cond.winningCondition().equals(WIN)).count();
-        System.out.println(
-                OutputMessage.DEALER_WINNING_CONDITION.description(gameResults.size() - playersWin, playersWin));
+    private static void statisticDealer(List<GameResult> gameResults, Bet bet) {
+        System.out.printf(OutputMessage.DEALER_PROFIT.description() + System.lineSeparator(),
+                ScoreBoard.calculateDealerProfit(gameResults, bet));
     }
 
     public static void printTaskDivider() {
         System.out.println();
     }
 
-    private static String getInitGameLog(GameStatus gameStatuses) {
-        if (gameStatuses.role().equals(ParticipantsRole.DEALER)) {
-            return String.format(OutputMessage.GAME_LOG.description(), gameStatuses.name(),
-                    joinInfo(gameStatuses.cards().getFirst()));
+    private static String getInitGameLog(GameStatus gameStatus) {
+        if (gameStatus.isDealer()) {
+            return String.format(OutputMessage.GAME_LOG.description(), gameStatus.name(),
+                    joinInfo(gameStatus.cards().getFirst()));
         }
-        return String.format(getGameLog(gameStatuses));
+        return String.format(getGameLog(gameStatus));
     }
 
     private static String getGameLog(GameStatus gameStatuses) {

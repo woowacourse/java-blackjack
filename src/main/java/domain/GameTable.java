@@ -6,15 +6,14 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.stream.Collectors;
 
 public class GameTable {
 
     private final Queue<Participant> participants;
-    private final ScoreBoard scoreBoard;
 
     public GameTable() {
         this.participants = new LinkedList<>();
-        this.scoreBoard = new ScoreBoard();
     }
 
     public void addParticipant(Participant participant) {
@@ -24,18 +23,25 @@ public class GameTable {
     public List<GameStatus> initGameStatus() {
         List<GameStatus> gameStatuses = new ArrayList<>();
         for (Participant participant : participants) {
-            gameStatuses.add(participant.status());
+            GameStatus gameStatus = GameStatus.from(participant);
+            gameStatuses.add(gameStatus);
         }
 
         return gameStatuses;
     }
 
     public List<GameStatus> endedGameStatus() {
-        return scoreBoard.gameStatuses();
+        List<GameStatus> gameStatuses = new ArrayList<>();
+        for (Participant participant : participants) {
+            GameStatus gameStatus = GameStatus.from(participant);
+            gameStatuses.add(gameStatus);
+        }
+
+        return gameStatuses;
     }
 
     public void playCurrentPlayer() {
-        if (isPlayerExist()) {
+        if (isPlayer()) {
             currentPlayer().draw();
         }
     }
@@ -45,7 +51,7 @@ public class GameTable {
     }
 
     public GameStatus currentPlayerStatus() {
-        return currentParticipant().status();
+        return GameStatus.from(currentParticipant());
     }
 
     public Participant currentPlayer() {
@@ -58,17 +64,18 @@ public class GameTable {
         return participants.peek();
     }
 
-    public boolean isPlayerExist() {
-        return !participants.isEmpty() && !hasOnlyDealer();
+    public boolean isPlayer() {
+        return !participants.isEmpty() && !participants.peek().isDealer();
     }
 
-    public void recordResult() {
-        Participant current = participants.poll();
-        scoreBoard.record(current.status());
+    public void rotateParticipant() {
+        participants.add(participants.poll());
     }
 
-    public List<GameResult> result() {
-        return scoreBoard.playerResults();
+    public List<GameResult> results() {
+        List<Participant> players = selectPlayers();
+        Participant dealer = dealer();
+        return ScoreBoard.calculateGameResults(players, dealer);
     }
 
     public String currentPlayerName() {
@@ -83,12 +90,13 @@ public class GameTable {
         return currentParticipant().isPlayable();
     }
 
-    private Participant dealer() {
-        return participants.stream().filter(Participant::isDealer).findFirst().orElse(null);
+    private List<Participant> selectPlayers() {
+        return participants.stream().filter(participant -> !participant.isDealer())
+                .collect(Collectors.toList());
     }
 
-    private boolean hasOnlyDealer() {
-        return participants.stream().allMatch(Participant::isDealer);
+    private Participant dealer() {
+        return participants.stream().filter(Participant::isDealer).findFirst().orElse(null);
     }
 
     private Participant currentParticipant() {

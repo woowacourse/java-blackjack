@@ -1,79 +1,32 @@
 package domain;
 
 import dto.GameResult;
-import dto.GameStatus;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ScoreBoard {
-    private static final String WIN = "승";
-    private static final String LOSE = "패";
-    private static final int BUST_NUMBER = 21;
-    private static final int DEFAULT_HAND_SCORE = 0;
+    private static final int CHANGE_NEGATIVE = -1;
 
-    private final List<GameStatus> games;
-
-    public ScoreBoard() {
-        this.games = new ArrayList<>();
-    }
-
-    public void record(GameStatus status) {
-        games.add(status);
-    }
-
-    public List<GameResult> playerResults() {
-        List<GameResult> resultList = new ArrayList<>();
-        games.forEach(gameStatus -> addPlayerResult(gameStatus, resultList));
-
-        return resultList;
-    }
-
-    private void addPlayerResult(GameStatus gameStatus, List<GameResult> resultList) {
-        if (gameStatus.role().equals(ParticipantsRole.PLAYER)) {
-            addResults(gameStatus, resultList);
+    public static List<GameResult> calculateGameResults(List<Participant> players, Participant dealer) {
+        List<GameResult> results = new ArrayList<>();
+        for (Participant player : players) {
+            WinningCondition condition = WinningCondition.from(player, dealer);
+            results.add(new GameResult(player.name(), condition));
         }
+        return results;
     }
 
-    private void addResults(GameStatus gameStatus, List<GameResult> resultList) {
-        int dealerScore = getDealerScore();
-        if (isWin(gameStatus, dealerScore)) {
-            resultList.add(new GameResult(gameStatus.name(), WIN));
-            return;
+    public static int calculateEarningPrize(GameResult gameResult, Bet bet) {
+        WinningCondition condition = gameResult.winningCondition();
+        return (int) condition.earning(bet.bettingAmount(gameResult.name()));
+    }
+
+    public static int calculateDealerProfit(List<GameResult> gameResults, Bet bet) {
+        int playerProfit = 0;
+        for (GameResult gameResult : gameResults) {
+            WinningCondition condition = gameResult.winningCondition();
+            playerProfit += (int) condition.earning(bet.bettingAmount(gameResult.name()));
         }
-        resultList.add(new GameResult(gameStatus.name(), LOSE));
-    }
-
-    private boolean isDealer(GameStatus gameStatus) {
-        return gameStatus.role().equals(ParticipantsRole.DEALER);
-    }
-
-    private void resultSort() {
-        GameStatus lastState = games.removeLast();
-        games.addFirst(lastState);
-    }
-
-    private boolean isWin(GameStatus playerGameStatus, int dealerScore) {
-        if (playerGameStatus.scoreSum() > BUST_NUMBER) {
-            return false;
-        }
-
-        if (dealerScore > BUST_NUMBER) {
-            return true;
-        }
-
-        return playerGameStatus.scoreSum() > dealerScore;
-    }
-
-    private int getDealerScore() {
-        return games.stream()
-                .filter(this::isDealer)
-                .findFirst()
-                .map(GameStatus::scoreSum)
-                .orElse(DEFAULT_HAND_SCORE);
-    }
-
-    public List<GameStatus> gameStatuses() {
-        resultSort();
-        return List.copyOf(games);
+        return playerProfit * CHANGE_NEGATIVE;
     }
 }

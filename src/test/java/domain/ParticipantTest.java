@@ -78,7 +78,7 @@ class ParticipantTest {
         Participant participant = new Player("pobi", customHand);
         participant.draw();
         int expected = 19;
-        int actual = participant.scoreSum();
+        int actual = participant.score();
 
         assertEquals(expected, actual);
         assertFalse(participant.isBusted());

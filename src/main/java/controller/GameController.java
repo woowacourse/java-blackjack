@@ -1,5 +1,6 @@
 package controller;
 
+import domain.Bet;
 import domain.Dealer;
 import domain.GameTable;
 import domain.Hand;
@@ -22,6 +23,7 @@ public class GameController {
     private static final int DRAW_COUNT = 2;
 
     private GameTable gameTable;
+    private Bet bet;
 
     public void run() {
         setupPhase();
@@ -32,13 +34,15 @@ public class GameController {
 
     private void setupPhase() {
         gameTable = new GameTable();
+        bet = new Bet();
         dealerSetup();
         playerSetup();
         displayInitCard();
     }
 
     private void playerGamePhase() {
-        while (gameTable.isPlayerExist()) {
+        gameTable.rotateParticipant();
+        while (gameTable.isPlayer()) {
             playerExecute(gameTable.currentPlayerName());
         }
         OutputView.printTaskDivider();
@@ -49,7 +53,6 @@ public class GameController {
             gameTable.playDealer();
             OutputView.dealerStay();
         }
-        gameTable.recordResult();
         OutputView.printTaskDivider();
     }
 
@@ -57,8 +60,8 @@ public class GameController {
         List<GameStatus> gameStatuses = gameTable.endedGameStatus();
         OutputView.participantsResults(gameStatuses);
 
-        List<GameResult> result = gameTable.result();
-        OutputView.gameResult(result);
+        List<GameResult> result = gameTable.results();
+        OutputView.gameResult(result, bet);
     }
 
     private void displayInitCard() {
@@ -76,6 +79,7 @@ public class GameController {
     private void playerSetup() {
         String playerNames = InputView.readPlayers();
         List<String> names = Arrays.stream(playerNames.split(DELIMITER)).toList();
+        betSetup(names);
         OutputView.divideCards(names);
 
         for (String name : names) {
@@ -83,6 +87,13 @@ public class GameController {
             Participant player = new Player(name, hand);
             drawSetup(player);
             gameTable.addParticipant(new Player(name, hand));
+        }
+    }
+
+    private void betSetup(List<String> names) {
+        for (String name : names) {
+            int bettingAmount = InputView.readBettingAmount(name);
+            bet.addBetting(name, bettingAmount);
         }
     }
 
@@ -98,7 +109,7 @@ public class GameController {
             playLoop(name);
         }
 
-        gameTable.recordResult();
+        gameTable.rotateParticipant();
     }
 
     private void initProcess(String select) {

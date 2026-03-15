@@ -1,0 +1,41 @@
+package domain;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import dto.GameResult;
+import java.util.stream.Stream;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+class BetTest {
+    static Bet bet = new Bet();
+
+    @BeforeAll
+    static void setUp() {
+        bet.addBetting("1", 10000);
+        bet.addBetting("2", 20000);
+        bet.addBetting("3", 40000);
+    }
+
+    @ParameterizedTest
+    @MethodSource("results")
+    @DisplayName("플레이어 상황에 따라 수익을 반환해야한다.")
+    void 플레이어_승_딜러_손해(double expected, GameResult result) {
+
+        double actual = ScoreBoard.calculateEarningPrize(result, bet);
+
+        assertEquals(expected, actual);
+    }
+
+    private static Stream<Arguments> results() {
+        return Stream.of(
+                Arguments.arguments(10000, new GameResult("1", WinningCondition.WIN)),
+                Arguments.arguments(0, new GameResult("2", WinningCondition.DRAW)),
+                Arguments.arguments(60000, new GameResult("3", WinningCondition.BLACK_JACK)),
+                Arguments.arguments(15000, new GameResult("1", WinningCondition.BLACK_JACK))
+        );
+    }
+}
