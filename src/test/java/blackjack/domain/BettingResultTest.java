@@ -7,8 +7,7 @@ import org.junit.jupiter.api.Test;
 class BettingResultTest {
 
     private Player createPlayerWithCards(TrumpCard... cards) {
-        Player player = Player.of(Name.of("테스트"));
-        player = player.withBetAmount(BetAmount.of(10000));
+        Player player = Player.of(Name.of("테스트"), BetAmount.of(10000));
         for (TrumpCard card : cards) {
             player.receiveCard(card);
         }

@@ -8,7 +8,7 @@ class MatchResultTest {
 
     @Test
     void 플레이어가_버스트라면_진다() {
-        Player player = Player.of(Name.of("pobi"));
+        Player player = Player.of(Name.of("pobi"), BetAmount.of(1000));
         player.receiveCard(TrumpCard.of(Suit.SPADE, Rank.TEN));
         player.receiveCard(TrumpCard.of(Suit.HEART, Rank.TEN));
         player.receiveCard(TrumpCard.of(Suit.DIAMOND, Rank.FIVE));
@@ -22,7 +22,7 @@ class MatchResultTest {
 
     @Test
     void 플레이어가_버스트가_아니고_딜러가_버스트면_이긴다() {
-        Player player = Player.of(Name.of("pobi"));
+        Player player = Player.of(Name.of("pobi"), BetAmount.of(1000));
         player.receiveCard(TrumpCard.of(Suit.SPADE, Rank.TEN));
         player.receiveCard(TrumpCard.of(Suit.HEART, Rank.SEVEN));
 
@@ -36,7 +36,7 @@ class MatchResultTest {
 
     @Test
     void 둘_다_버스트가_아니면_더_큰_쪽이_이긴다() {
-        Player player = Player.of(Name.of("pobi"));
+        Player player = Player.of(Name.of("pobi"), BetAmount.of(1000));
         player.receiveCard(TrumpCard.of(Suit.SPADE, Rank.TEN));
         player.receiveCard(TrumpCard.of(Suit.HEART, Rank.TEN));
 
@@ -49,7 +49,7 @@ class MatchResultTest {
 
     @Test
     void 점수가_같으면_무승부() {
-        Player player = Player.of(Name.of("pobi"));
+        Player player = Player.of(Name.of("pobi"), BetAmount.of(1000));
         player.receiveCard(TrumpCard.of(Suit.SPADE, Rank.TEN));
         player.receiveCard(TrumpCard.of(Suit.HEART, Rank.SEVEN));
 

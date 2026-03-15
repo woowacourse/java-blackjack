@@ -14,14 +14,14 @@ public class PlayerTest {
     @BeforeEach
     void setUp() {
         Name newPlayerName = Name.of("한다");
-        player = Player.of(newPlayerName);
+        player = Player.of(newPlayerName, BetAmount.of(1000));
     }
 
     @Test
     void 플레이어_생성시_name이_null이면_예외_발생한다() {
         Name nullName = null;
 
-        assertThatThrownBy(() -> Player.of(nullName))
+        assertThatThrownBy(() -> Player.of(nullName, BetAmount.of(10000)))
                 .isInstanceOf(NullPointerException.class)
                 .hasMessage("name 은 null 이 올 수 없습니다.");
     }
@@ -150,9 +150,7 @@ public class PlayerTest {
 
     @Test
     void 플레이어의_배팅금액_값을_가져온다() {
-        Player player = Player.of(Name.of("handa"));
-        Player playerWithBet = player.withBetAmount(BetAmount.of(3000));
-
-        assertThat(playerWithBet.betAmount().money()).isEqualTo(3000);
+        Player player = Player.of(Name.of("handa"), BetAmount.of(3000));
+        assertThat(player.betAmount().money()).isEqualTo(3000);
     }
 }

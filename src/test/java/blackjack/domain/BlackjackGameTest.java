@@ -12,7 +12,7 @@ class BlackjackGameTest {
     private BlackjackGame createGame(List<String> names, List<Integer> amounts) {
         List<Player> players = new ArrayList<>();
         for (int i = 0; i < names.size(); i++) {
-            Player player = Player.of(Name.of(names.get(i))).withBetAmount(BetAmount.of(amounts.get(i)));
+            Player player = Player.of(Name.of(names.get(i)), BetAmount.of(amounts.get(i)));
             players.add(player);
         }
         return BlackjackGame.create(Players.of(players), cards -> {

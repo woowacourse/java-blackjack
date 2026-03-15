@@ -15,8 +15,8 @@ public class PlayersTest {
     @BeforeEach
     void setUp() {
         playerList = new ArrayList<>();
-        playerList.add(Player.of(Name.of("handa")));
-        playerList.add(Player.of(Name.of("dalsu")));
+        playerList.add(Player.of(Name.of("handa"), BetAmount.of(1000)));
+        playerList.add(Player.of(Name.of("dalsu"), BetAmount.of(1000)));
 
         List<TrumpCard> cards = new ArrayList<>();
         for (Suit suit : Suit.values()) {
