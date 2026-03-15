@@ -1,7 +1,7 @@
 package domain.participant;
 
-import domain.Betting;
-import domain.WinningStatus;
+import domain.game.Betting;
+import domain.game.WinningStatus;
 import domain.strategy.PlayerDrawStrategy;
 
 public class Player extends Participant {

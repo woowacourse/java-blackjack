@@ -9,6 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
+import domain.game.GameResult;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;

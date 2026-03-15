@@ -1,4 +1,4 @@
-package domain;
+package domain.game;
 
 public class Betting {
     public static final String ERROR_BET_MUST_BE_POSITIVE = "[ERROR] 베팅 금액은 0보다 커야 합니다.";

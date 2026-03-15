@@ -1,8 +1,8 @@
 package controller;
 
-import domain.BlackjackRule;
-import domain.Deck;
-import domain.GameResult;
+import domain.game.BlackjackRule;
+import domain.card.Deck;
+import domain.game.GameResult;
 import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Player;

@@ -1,5 +1,7 @@
 package domain;
 
+import domain.card.Deck;
+import domain.game.BlackjackRule;
 import domain.participant.Participant;
 import domain.participant.Player;
 import domain.strategy.RandomShuffleStrategy;

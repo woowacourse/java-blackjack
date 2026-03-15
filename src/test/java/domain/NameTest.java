@@ -2,6 +2,7 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import domain.participant.Name;
 import org.junit.jupiter.api.Test;
 
 class NameTest {

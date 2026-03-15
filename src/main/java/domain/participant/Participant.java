@@ -1,7 +1,5 @@
 package domain.participant;
 
-import domain.Hand;
-import domain.Name;
 import domain.card.Card;
 import domain.strategy.DrawStrategy;
 import java.util.List;
@@ -34,7 +32,7 @@ public abstract class Participant {
     }
 
     public String name() {
-        return name.getName();
+        return name.name();
     }
 
     protected Card firstCard() {

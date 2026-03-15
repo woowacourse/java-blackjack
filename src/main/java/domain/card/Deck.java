@@ -1,10 +1,6 @@
-package domain;
+package domain.card;
 
-import domain.card.Card;
-import domain.card.Rank;
-import domain.card.Suit;
 import domain.strategy.ShuffleStrategy;
-
 import java.util.ArrayList;
 import java.util.List;
 
