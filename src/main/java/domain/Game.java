@@ -40,18 +40,10 @@ public class Game {
         dealer.draw(deck.drawCard());
     }
 
-    public void settleRoundBets(BettingTable bettingTable) {
-        Score dealerScore = dealer.calculateScore();
-        Map<Player, WinningStatus> playerResults = calculateAllResults(dealerScore);
-        for (Map.Entry<Player, WinningStatus> entry : playerResults.entrySet()) {
-            bettingTable.settleBet(entry.getKey(), entry.getValue());
-        }
-    }
-
-    private Map<Player, WinningStatus> calculateAllResults(Score dealerScore) {
+    public Map<Player, WinningStatus> calculateAllResults() {
         Map<Player, WinningStatus> results = new LinkedHashMap<>();
         for (Player player : players) {
-            results.put(player, player.calculateResultAgainst(dealerScore));
+            results.put(player, player.calculateResult(dealer.calculateScore()));
         }
         return results;
     }

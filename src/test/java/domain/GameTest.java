@@ -7,7 +7,6 @@ import exception.ErrorMessage;
 import factory.CardFactory;
 import org.junit.jupiter.api.Test;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -138,34 +137,29 @@ class GameTest {
     }
 
     @Test
-    void 라운드_정산시_승패에_따라_베팅_결과를_반영한다() {
+    void 게임_진행_후_승패_결과를_올바르게_계산한다(){
         // given
         Deck deck = mock(Deck.class);
         when(deck.drawCard()).thenReturn(
-                new Card(Suit.HEARTS, Rank.NUM10),
-                new Card(Suit.SPADES, Rank.NUM10),
-                new Card(Suit.CLUBS, Rank.NUM8),
-                new Card(Suit.DIAMONDS, Rank.NUM7),
-                new Card(Suit.HEARTS, Rank.NUM9),
-                new Card(Suit.CLUBS, Rank.NUM8)
+                new Card(Suit.HEARTS, Rank.NUM2),
+                new Card(Suit.HEARTS, Rank.NUM3),
+                new Card(Suit.CLUBS, Rank.NUM4),
+                new Card(Suit.CLUBS, Rank.NUM5),
+                new Card(Suit.SPADES, Rank.NUM6),
+                new Card(Suit.SPADES, Rank.NUM7)
         );
-
         Game game = new Game(List.of("시오", "봉구스"), deck);
-        Player winPlayer = game.getPlayers().get(0);
-        Player losePlayer = game.getPlayers().get(1);
-
-        Map<Player, Money> moneyTable = new LinkedHashMap<>();
-        moneyTable.put(winPlayer, new Money(1000L));
-        moneyTable.put(losePlayer, new Money(1000L));
-        BettingTable bettingTable = new BettingTable(moneyTable);
-
+        Player firstPlayer = game.getPlayers().get(0);
+        Player secondPlayer = game.getPlayers().get(1);
+        
         // when
-        game.settleRoundBets(bettingTable);
+        Map<Player, WinningStatus> winningStatusMap = game.calculateAllResults();
 
         // then
         assertAll(
-                () -> assertEquals(1000L, bettingTable.getMoneyTable().get(winPlayer).amount()),
-                () -> assertEquals(-1000L, bettingTable.getMoneyTable().get(losePlayer).amount())
+                () -> assertEquals(2, winningStatusMap.size()),
+                () -> assertEquals(WinningStatus.LOSE, winningStatusMap.get(firstPlayer)),
+                () -> assertEquals(WinningStatus.LOSE, winningStatusMap.get(secondPlayer))
         );
     }
 }
