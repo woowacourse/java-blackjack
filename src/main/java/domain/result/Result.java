@@ -39,18 +39,6 @@ public enum Result {
         return profitCalculationOperator.applyAsInt(betAmount);
     }
 
-    public Result reverse() {
-        if (this == WIN) {
-            return LOSE;
-        }
-
-        if (this == LOSE) {
-            return WIN;
-        }
-
-        return DRAW;
-    }
-
     public String getName() {
         return name;
     }

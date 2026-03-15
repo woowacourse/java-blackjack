@@ -13,8 +13,7 @@ import static domain.card.Rank.*;
 import static domain.result.Result.*;
 import static domain.card.Suit.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ResultTest {
 
@@ -30,6 +29,38 @@ class ResultTest {
         Result result = Result.of(dealer, player);
 
         assertThat(result).isEqualTo(LOSE);
+    }
+
+    @Test
+    void 플레이어만_블랙잭이면_결과는_블랙잭이다() {
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(TEN, SPADE));
+        dealer.receiveCard(new Card(SEVEN, HEART));
+
+        Player player = new Player("pobi", new Hand(), "10000");
+        player.receiveCard(new Card(ACE, SPADE));
+        player.receiveCard(new Card(TEN, DIAMOND));
+
+        Result result = Result.of(dealer, player);
+        int profit = result.calculateProfit(player.getBetAmount());
+
+        assertThat(result).isSameAs(BLACKJACK);
+    }
+
+    @Test
+    void 플레이어가_블랙잭이고_딜러도_블랙잭이면_결과는_무승부이다() {
+        Dealer dealer = new Dealer();
+        dealer.receiveCard(new Card(KING, SPADE));
+        dealer.receiveCard(new Card(ACE, HEART));
+
+        Player player = new Player("pobi", new Hand(), "10000");
+        player.receiveCard(new Card(ACE, SPADE));
+        player.receiveCard(new Card(TEN, DIAMOND));
+
+        Result result = Result.of(dealer, player);
+        int profit = result.calculateProfit(player.getBetAmount());
+
+        assertThat(result).isSameAs(DRAW);
     }
 
     @Test
@@ -74,7 +105,6 @@ class ResultTest {
 
         assertThat(results).containsExactly(LOSE, DRAW, WIN, BLACKJACK);
     }
-
 
     @Test
     void 게임_결과에_따라_베팅_금액에_대한_수익금을_계산한다() {
