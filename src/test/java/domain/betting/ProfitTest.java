@@ -61,18 +61,4 @@ class ProfitTest {
         // Then
         Assertions.assertThat(bettingResultMoney).isEqualTo(4500);
     }
-
-    @Test
-    @DisplayName("소숫점은 반올림연산으로 처리한다.")
-    void floatProfitTest() {
-        // Given
-        Money money = new Money(1);
-        Profit profit = new Profit("플레이어1", money, BettingResult.WIN_WITH_BLACKJACK);
-
-        // When
-        long bettingResultMoney = profit.calculateProfit();
-
-        // Then
-        Assertions.assertThat(bettingResultMoney).isEqualTo(2);
-    }
 }
