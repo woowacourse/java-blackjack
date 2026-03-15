@@ -57,7 +57,7 @@ public class Blackjack {
         LinkedHashMap<String, BigDecimal> profitByName = new LinkedHashMap<>();
 
         for (Player player : participants.getPlayers()) {
-            GameResult gameResult = GameResult.calculateResult(dealer, player);
+            GameResult gameResult = GameResult.calculateResult(player, dealer);
 
             BigDecimal playerProfit = gameResult.getProfitFrom(player.getBettingAmount());
             profitByName.put(player.getName(), playerProfit);

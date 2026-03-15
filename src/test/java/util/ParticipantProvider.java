@@ -77,6 +77,15 @@ public final class ParticipantProvider {
         return dealer;
     }
 
+    public static Dealer createDealerWithScore21() {
+        Dealer dealer = Dealer.create();
+        dealer.receive(Card.of(SPADE, ACE));
+        dealer.receive(Card.of(SPADE, JACK));
+        dealer.receive(Card.of(SPADE, QUEEN));
+
+        return dealer;
+    }
+
     public static Dealer createDealerWithScore20() {
         Dealer dealer = Dealer.create();
         dealer.receive(Card.of(SPADE, JACK));

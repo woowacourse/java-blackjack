@@ -18,7 +18,7 @@ public enum GameResult {
         this.profitRate = profitRate;
     }
 
-    public static GameResult calculateResult(Dealer dealer, Player player) {
+    public static GameResult calculateResult(Player player, Dealer dealer) {
         if (player.isBlackjack() || dealer.isBlackjack()) {
             return calculateFromBlackjackCase(dealer, player);
         }
