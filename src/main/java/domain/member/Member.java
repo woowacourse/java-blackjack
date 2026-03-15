@@ -2,27 +2,16 @@ package domain.member;
 
 import domain.card.Card;
 import domain.card.Deck;
-import domain.vo.RoundResult;
 import java.util.List;
 
 public class Member {
 
     private final Hand hand;
     private final Name name;
-    private final MemberRole role;
 
-    public Member(Name name, MemberRole role) {
+    public Member(Name name) {
         this.name = name;
         this.hand = new Hand();
-        this.role = role;
-    }
-
-    public int calculateProfit(RoundResult result) {
-        return result.calculateProfit(role.getBettingAmount());
-    }
-
-    public void applyBlackjackBonus() {
-        role.applyBonus();
     }
 
     public int handValue() {
@@ -45,17 +34,9 @@ public class Member {
         return hand.isBlackjack();
     }
 
-    public List<Card> showFirstCards() {
-        return role.showFirstCards(hand.getCards());
-    }
-
     public void initDraw(Deck deck) {
         receiveCard(deck.draw());
         receiveCard(deck.draw());
-    }
-
-    public boolean isBiggerThan(Member member) {
-        return this.handValue() > member.handValue();
     }
 
     public String getName() {
