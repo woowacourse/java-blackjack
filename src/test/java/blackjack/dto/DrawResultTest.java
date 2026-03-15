@@ -4,33 +4,36 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.Card;
-import blackjack.domain.PlayingCards;
+import blackjack.domain.Deck;
+import blackjack.domain.Hand;
 import blackjack.domain.Rank;
 import blackjack.domain.Suit;
 import java.util.List;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class DrawResultTest {
 
     @Test
+    @DisplayName("카드를 뽑은 결과를 저장하는 dto 생성을 확인한다.")
     void makeDrawResult() {
         // given
-        PlayingCards drewDeck = PlayingCards.from(List.of(
+        Deck drewDeck = Deck.from(List.of(
             new Card(Rank.ACE, Suit.SPADE),
             new Card(Rank.TEN, Suit.HEART),
             new Card(Rank.TEN, Suit.CLOVER)
         ));
-        PlayingCards drewCards = PlayingCards.from(List.of(
+        Hand drewCards = Hand.from(List.of(
             new Card(Rank.TEN, Suit.SPADE)
         ));
 
         // when
-        DrawResult drawResult = DrawResult.of(drewCards, drewDeck);
+        DrawResult drawResult = DrawResult.of(drewCards.getCards(), drewDeck.getCards());
 
         // then
         assertAll(
-            () -> assertThat(drawResult.drewDeck().getStatusByDisplayName()).isEqualTo("A스페이드, 10하트, 10클로버"),
-            () -> assertThat(drawResult.drewCard().getStatusByDisplayName()).isEqualTo("10스페이드")
+            () -> assertThat(drawResult.drewDeck().getCards()).isEqualTo(drewDeck.getCards()),
+            () -> assertThat(drawResult.drewCard().getCards()).isEqualTo(drewCards.getCards())
         );
     }
 }

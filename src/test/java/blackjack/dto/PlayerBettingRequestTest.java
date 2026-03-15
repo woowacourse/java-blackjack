@@ -60,7 +60,7 @@ class PlayerBettingRequestTest {
         String playerNickname = "";
 
         // when & then
-        assertThatThrownBy(() -> PlayerBettingRequest.of(playerNickname, "1000"))
+        assertThatThrownBy(() -> PlayerBettingRequest.createInitialRequest(playerNickname))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("이름은 공백이 될 수 없습니다.");
     }
@@ -72,7 +72,7 @@ class PlayerBettingRequestTest {
         String playerNickname = " ";
 
         // when & then
-        assertThatThrownBy(() -> PlayerBettingRequest.of(playerNickname, "1000"))
+        assertThatThrownBy(() -> PlayerBettingRequest.createInitialRequest(playerNickname))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("이름은 공백이 될 수 없습니다.");
     }

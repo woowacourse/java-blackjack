@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.Card;
-import blackjack.domain.PlayingCards;
+import blackjack.domain.Hand;
 import blackjack.domain.Rank;
 import blackjack.domain.Suit;
 import blackjack.domain.participant.Player;
@@ -20,7 +20,10 @@ class ParticipantResultTest {
     void makeParticipantResult() {
         // given
         Player player = new Player("boye", Role.PLAYER, 100000);
-        player.receiveCard(PlayingCards.from(List.of(new Card(Rank.TEN, Suit.SPADE))));
+        Hand hand = Hand.from(List.of(
+            new Card(Rank.TEN, Suit.SPADE)
+        ));
+        player.receiveCard(hand.getCards());
 
         // when
         ParticipantResult participantResult = ParticipantResult.from(player);
@@ -38,7 +41,10 @@ class ParticipantResultTest {
     void makeParticipantResultToString() {
         // given
         Player player = new Player("boye", Role.PLAYER, 100000);
-        player.receiveCard(PlayingCards.from(List.of(new Card(Rank.TEN, Suit.SPADE))));
+        Hand hand = Hand.from(List.of(
+            new Card(Rank.TEN, Suit.SPADE)
+        ));
+        player.receiveCard(hand.getCards());
         ParticipantResult participantResult = ParticipantResult.from(player);
 
         // when
@@ -53,7 +59,10 @@ class ParticipantResultTest {
     void participantResultFullString() {
         // given
         Player player = new Player("boye", Role.PLAYER, 100000);
-        player.receiveCard(PlayingCards.from(List.of(new Card(Rank.TEN, Suit.SPADE))));
+        Hand hand = Hand.from(List.of(
+            new Card(Rank.TEN, Suit.SPADE)
+        ));
+        player.receiveCard(hand.getCards());
         ParticipantResult participantResult = ParticipantResult.from(player);
 
         // when

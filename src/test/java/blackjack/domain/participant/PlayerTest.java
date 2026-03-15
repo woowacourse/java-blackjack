@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.Card;
+import blackjack.domain.Hand;
 import blackjack.domain.MatchResult;
-import blackjack.domain.PlayingCards;
 import blackjack.domain.Rank;
 import blackjack.domain.Suit;
 import blackjack.dto.PlayerGameResult;
@@ -33,13 +33,13 @@ class PlayerTest {
     void isDrawableWhenNotBustedOrNotBlackjack() {
         // given
         Player player = new Player("pobi", Role.PLAYER, 1000);
-        PlayingCards blackjackCards = PlayingCards.from(List.of(
+        Hand blackjackCards = Hand.from(List.of(
             new Card(Rank.EIGHT, Suit.SPADE),
             new Card(Rank.NINE, Suit.HEART)
         ));
 
         // when
-        player.receiveCard(blackjackCards);
+        player.receiveCard(blackjackCards.getCards());
 
         // then
         assertThat(player.isDrawable()).isTrue();
@@ -50,13 +50,13 @@ class PlayerTest {
     void isNotDrawableWhenBustedOrBlackjack() {
         // given
         Player player = new Player("pobi", Role.PLAYER, 1000);
-        PlayingCards blackjackCards = PlayingCards.from(List.of(
+        Hand blackjackCards = Hand.from(List.of(
             new Card(Rank.ACE, Suit.SPADE),
             new Card(Rank.JACK, Suit.HEART)
         ));
 
         // when
-        player.receiveCard(blackjackCards);
+        player.receiveCard(blackjackCards.getCards());
 
         // then
         assertThat(player.isDrawable()).isFalse();
@@ -80,19 +80,19 @@ class PlayerTest {
     void determinePlayerResultIfDealerBusted() {
         // given
         Dealer dealer = Dealer.from();
-        PlayingCards bustedCard = PlayingCards.from(List.of(
+        Hand bustedCard = Hand.from(List.of(
             new Card(Rank.SIX, Suit.SPADE),
             new Card(Rank.TEN, Suit.HEART),
             new Card(Rank.NINE, Suit.DIAMOND)
         ));
-        PlayingCards notBustedCard = PlayingCards.from(List.of(
+        Hand notBustedCard = Hand.from(List.of(
             new Card(Rank.TEN, Suit.SPADE),
             new Card(Rank.SEVEN, Suit.HEART)
         ));
-        dealer.receiveCard(bustedCard);
+        dealer.receiveCard(bustedCard.getCards());
         long amount = 10000L;
         Player player = new Player("boye", Role.PLAYER, amount);
-        player.receiveCard(notBustedCard);
+        player.receiveCard(notBustedCard.getCards());
 
         // when
         PlayerGameResult playerGameResult = player.determinePlayerResult(dealer);
@@ -110,14 +110,14 @@ class PlayerTest {
     void determineDealerAndPlayerBothBlackJack() {
         // given
         Dealer dealer = Dealer.from();
-        PlayingCards blackjackCard = PlayingCards.from(List.of(
+        Hand blackjackCard = Hand.from(List.of(
             new Card(Rank.ACE, Suit.SPADE),
             new Card(Rank.JACK, Suit.HEART)
         ));
-        dealer.receiveCard(blackjackCard);
+        dealer.receiveCard(blackjackCard.getCards());
         long amount = 10000L;
         Player player = new Player("boye", Role.PLAYER, amount);
-        player.receiveCard(blackjackCard);
+        player.receiveCard(blackjackCard.getCards());
 
         // when
         PlayerGameResult playerGameResult = player.determinePlayerResult(dealer);
@@ -135,18 +135,18 @@ class PlayerTest {
     void determineWhenOnlyPlayerHasBlackjack() {
         // given
         Dealer dealer = Dealer.from();
-        PlayingCards blackjackCard = PlayingCards.from(List.of(
+        Hand blackjackCard = Hand.from(List.of(
             new Card(Rank.ACE, Suit.SPADE),
             new Card(Rank.JACK, Suit.HEART)
         ));
-        PlayingCards notBustedCard = PlayingCards.from(List.of(
+        Hand notBustedCard = Hand.from(List.of(
             new Card(Rank.TEN, Suit.SPADE),
             new Card(Rank.SEVEN, Suit.HEART)
         ));
-        dealer.receiveCard(notBustedCard);
+        dealer.receiveCard(notBustedCard.getCards());
         long amount = 10000L;
         Player player = new Player("boye", Role.PLAYER, amount);
-        player.receiveCard(blackjackCard);
+        player.receiveCard(blackjackCard.getCards());
 
         // when
         PlayerGameResult playerGameResult = player.determinePlayerResult(dealer);
@@ -164,19 +164,19 @@ class PlayerTest {
     void determineWhenPlayerBusted() {
         // given
         Dealer dealer = Dealer.from();
-        PlayingCards bustedCard = PlayingCards.from(List.of(
+        Hand bustedCard = Hand.from(List.of(
             new Card(Rank.SIX, Suit.SPADE),
             new Card(Rank.TEN, Suit.HEART),
             new Card(Rank.NINE, Suit.DIAMOND)
         ));
-        PlayingCards notBustedCard = PlayingCards.from(List.of(
+        Hand notBustedCard = Hand.from(List.of(
             new Card(Rank.TEN, Suit.SPADE),
             new Card(Rank.SEVEN, Suit.HEART)
         ));
-        dealer.receiveCard(notBustedCard);
+        dealer.receiveCard(notBustedCard.getCards());
         long amount = 10000L;
         Player player = new Player("boye", Role.PLAYER, amount);
-        player.receiveCard(bustedCard);
+        player.receiveCard(bustedCard.getCards());
 
         // when
         PlayerGameResult playerGameResult = player.determinePlayerResult(dealer);
@@ -194,19 +194,19 @@ class PlayerTest {
     void determineWhenPlayerWin() {
         // given
         Dealer dealer = Dealer.from();
-        PlayingCards cardsOfScore17 = PlayingCards.from(List.of(
+        Hand cardsOfScore17 = Hand.from(List.of(
             new Card(Rank.TEN, Suit.SPADE),
             new Card(Rank.SEVEN, Suit.HEART)
         ));
-        PlayingCards cardsOfScore20 = PlayingCards.from(List.of(
+        Hand cardsOfScore20 = Hand.from(List.of(
             new Card(Rank.TEN, Suit.SPADE),
             new Card(Rank.SEVEN, Suit.HEART),
             new Card(Rank.THREE, Suit.HEART)
         ));
-        dealer.receiveCard(cardsOfScore17);
+        dealer.receiveCard(cardsOfScore17.getCards());
         long amount = 10000L;
         Player player = new Player("boye", Role.PLAYER, amount);
-        player.receiveCard(cardsOfScore20);
+        player.receiveCard(cardsOfScore20.getCards());
 
         // when
         PlayerGameResult playerGameResult = player.determinePlayerResult(dealer);
@@ -224,14 +224,14 @@ class PlayerTest {
     void determineWhenPlayerAndDealerTie() {
         // given
         Dealer dealer = Dealer.from();
-        PlayingCards cardsOfScore17 = PlayingCards.from(List.of(
+        Hand cardsOfScore17 = Hand.from(List.of(
             new Card(Rank.TEN, Suit.SPADE),
             new Card(Rank.SEVEN, Suit.HEART)
         ));
-        dealer.receiveCard(cardsOfScore17);
+        dealer.receiveCard(cardsOfScore17.getCards());
         long amount = 10000L;
         Player player = new Player("boye", Role.PLAYER, amount);
-        player.receiveCard(cardsOfScore17);
+        player.receiveCard(cardsOfScore17.getCards());
 
         // when
         PlayerGameResult playerGameResult = player.determinePlayerResult(dealer);
@@ -249,19 +249,19 @@ class PlayerTest {
     void determineWHenPlayerLose() {
         // given
         Dealer dealer = Dealer.from();
-        PlayingCards cardsOfScore17 = PlayingCards.from(List.of(
+        Hand cardsOfScore17 = Hand.from(List.of(
             new Card(Rank.TEN, Suit.SPADE),
             new Card(Rank.SEVEN, Suit.HEART)
         ));
-        PlayingCards cardsOfScore20 = PlayingCards.from(List.of(
+        Hand cardsOfScore20 = Hand.from(List.of(
             new Card(Rank.TEN, Suit.SPADE),
             new Card(Rank.SEVEN, Suit.HEART),
             new Card(Rank.THREE, Suit.HEART)
         ));
-        dealer.receiveCard(cardsOfScore20);
+        dealer.receiveCard(cardsOfScore20.getCards());
         long amount = 10000L;
         Player player = new Player("boye", Role.PLAYER, amount);
-        player.receiveCard(cardsOfScore17);
+        player.receiveCard(cardsOfScore17.getCards());
 
         // when
         PlayerGameResult playerGameResult = player.determinePlayerResult(dealer);

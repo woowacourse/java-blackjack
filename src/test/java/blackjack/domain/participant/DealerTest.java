@@ -3,8 +3,8 @@ package blackjack.domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.Card;
+import blackjack.domain.Hand;
 import blackjack.domain.MatchResult;
-import blackjack.domain.PlayingCards;
 import blackjack.domain.Rank;
 import blackjack.domain.Suit;
 import blackjack.dto.DealerGameResult;
@@ -28,12 +28,12 @@ class DealerTest {
     @Test
     void isDealerDraw() {
         Dealer dealer = Dealer.from();
-        PlayingCards cards16 = PlayingCards.from(List.of(
+        Hand cards16 = Hand.from(List.of(
             new Card(Rank.TEN, Suit.SPADE),
             new Card(Rank.SIX, Suit.HEART)
         ));
 
-        dealer.receiveCard(cards16);
+        dealer.receiveCard(cards16.getCards());
         assertThat(dealer.isDealerDraw()).isTrue();
     }
 
@@ -41,12 +41,12 @@ class DealerTest {
     @Test
     void isDealerNotDraw() {
         Dealer dealer = Dealer.from();
-        PlayingCards cards17 = PlayingCards.from(List.of(
+        Hand cards17 = Hand.from(List.of(
             new Card(Rank.TEN, Suit.SPADE),
             new Card(Rank.SEVEN, Suit.HEART)
         ));
 
-        dealer.receiveCard(cards17);
+        dealer.receiveCard(cards17.getCards());
         assertThat(dealer.isDealerDraw()).isFalse();
     }
 
@@ -54,12 +54,12 @@ class DealerTest {
     @Test
     void getFirstCard() {
         Dealer dealer = Dealer.from();
-        PlayingCards cards = PlayingCards.from(List.of(
+        Hand cards = Hand.from(List.of(
             new Card(Rank.ACE, Suit.SPADE),
             new Card(Rank.TEN, Suit.HEART)
         ));
 
-        dealer.receiveCard(cards);
+        dealer.receiveCard(cards.getCards());
 
         assertThat(dealer.getFirstCard()).isEqualTo("A스페이드");
     }

@@ -54,13 +54,13 @@ class PlayersTest {
         PlayerBettingRequest jasonRequest = PlayerBettingRequest.of("jason", "2000");
         PlayersBettingRequest playersBettingRequest = PlayersBettingRequest.from(List.of(pobiRequest, jasonRequest));
         Players players = Players.makePlayers(playersBettingRequest);
-        PlayingCards bustedCards = PlayingCards.from(List.of(
+        Hand bustedCards = Hand.from(List.of(
             new Card(Rank.TEN, Suit.SPADE),
             new Card(Rank.TEN, Suit.HEART),
             new Card(Rank.TWO, Suit.DIAMOND)
         ));
 
-        players.addCardToAvailablePlayer(bustedCards);
+        players.addCardToAvailablePlayer(bustedCards.getCards());
 
         assertThat(players.findDrawablePlayerNickname()).isEqualTo("jason");
     }
@@ -83,17 +83,17 @@ class PlayersTest {
         PlayerBettingRequest playerBettingRequest = PlayerBettingRequest.of("pobi", "1000");
         PlayersBettingRequest playersBettingRequest = PlayersBettingRequest.from(List.of(playerBettingRequest));
         Players players = Players.makePlayers(playersBettingRequest);
-        PlayingCards playerCards = PlayingCards.from(List.of(
+        Hand playerCards = Hand.from(List.of(
             new Card(Rank.TEN, Suit.SPADE),
             new Card(Rank.TEN, Suit.HEART)
         ));
-        players.addCardToAvailablePlayer(playerCards);
+        players.addCardToAvailablePlayer(playerCards.getCards());
         Dealer dealer = Dealer.from();
-        PlayingCards dealerCards = PlayingCards.from(List.of(
+        Hand dealerCards = Hand.from(List.of(
             new Card(Rank.TEN, Suit.DIAMOND),
             new Card(Rank.EIGHT, Suit.HEART)
         ));
-        dealer.receiveCard(dealerCards);
+        dealer.receiveCard(dealerCards.getCards());
 
         List<PlayerGameResult> winningResultsWithDealer = players.getWinningResultsWithDealer(dealer);
         PlayerGameResult result = winningResultsWithDealer.getFirst();
@@ -107,17 +107,17 @@ class PlayersTest {
         PlayerBettingRequest playerBettingRequest = PlayerBettingRequest.of("pobi", "1000");
         PlayersBettingRequest playersBettingRequest = PlayersBettingRequest.from(List.of(playerBettingRequest));
         Players players = Players.makePlayers(playersBettingRequest);
-        PlayingCards playerCards = PlayingCards.from(List.of(
+        Hand playerCards = Hand.from(List.of(
             new Card(Rank.TEN, Suit.DIAMOND),
             new Card(Rank.EIGHT, Suit.HEART)
         ));
-        players.addCardToAvailablePlayer(playerCards);
+        players.addCardToAvailablePlayer(playerCards.getCards());
         Dealer dealer = Dealer.from();
-        PlayingCards dealerCards = PlayingCards.from(List.of(
+        Hand dealerCards = Hand.from(List.of(
             new Card(Rank.TEN, Suit.SPADE),
             new Card(Rank.TEN, Suit.HEART)
         ));
-        dealer.receiveCard(dealerCards);
+        dealer.receiveCard(dealerCards.getCards());
 
         List<PlayerGameResult> winningResultsWithDealer = players.getWinningResultsWithDealer(dealer);
         PlayerGameResult result = winningResultsWithDealer.getFirst();

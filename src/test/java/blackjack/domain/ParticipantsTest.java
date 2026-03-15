@@ -23,7 +23,7 @@ class ParticipantsTest {
         Players players = Players.makePlayers(playersBettingRequest);
         Dealer dealer = Dealer.from();
         Participants participants = new Participants(players, dealer);
-        PlayingCards deck = PlayingCards.createShuffledDeck();
+        Deck deck = Deck.createShuffledDeck();
 
         // when
         participants.distributeCards(deck);
@@ -43,7 +43,7 @@ class ParticipantsTest {
         PlayersBettingRequest playersBettingRequest = PlayersBettingRequest.from(List.of(pobiRequest, jasonRequest));
         Players players = Players.makePlayers(playersBettingRequest);
         Participants participants = new Participants(players, Dealer.from());
-        PlayingCards shortDeck = PlayingCards.from(List.of(
+        Deck shortDeck = Deck.from(List.of(
             new Card(Rank.TWO, Suit.SPADE),
             new Card(Rank.THREE, Suit.SPADE)
         ));
