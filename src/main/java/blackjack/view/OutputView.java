@@ -8,6 +8,7 @@ import blackjack.dto.GameResultDto;
 import blackjack.dto.PlayerHandDto;
 import blackjack.dto.PlayerScoreDto;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -62,14 +63,14 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printFinalResult(List<GameResult> gameResults, int dealerProfit) {
+    public void printFinalResult(List<GameResult> gameResults, BigDecimal dealerProfit) {
         System.out.println("## 최종 승패");
         printDealerFinalResult(dealerProfit);
         gameResults.forEach(result ->
                 System.out.println(result.name() + ": " + result.profit()));
     }
 
-    private void printDealerFinalResult(int dealerProfit) {
+    private void printDealerFinalResult(BigDecimal dealerProfit) {
         System.out.println("딜러: " + dealerProfit);
     }
 

@@ -3,6 +3,8 @@ package blackjack.domain.vo;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
+import java.math.BigDecimal;
+
 public enum Payoff {
     BLACKJACK(1.5),
     WIN(1.0),
@@ -47,7 +49,7 @@ public enum Payoff {
         return DRAW;
     }
 
-    public int calculateProfit(int betAmount) {
-        return (int) (betAmount * earningRate);
+    public BigDecimal calculateProfit(BigDecimal betAmount) {
+        return betAmount.multiply(BigDecimal.valueOf(earningRate));
     }
 }

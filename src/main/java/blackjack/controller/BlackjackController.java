@@ -8,11 +8,11 @@ import blackjack.util.Parser;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 
 import static blackjack.util.Parser.splitDelimiter;
-
 
 public class BlackjackController {
     private final InputView inputView;
@@ -31,7 +31,7 @@ public class BlackjackController {
         game.betPlayers(name -> {
             String amount = inputView.readBetAmount(name);
             outputView.printEmptyLine();
-            return Integer.parseInt(amount);
+            return amount;
         });
 
         game.deal();
@@ -49,7 +49,7 @@ public class BlackjackController {
         outputView.printGameResult(GameResultDto.from(game));
 
         List<GameResult> gameResults = game.calculatePlayerProfits();
-        int dealerProfit = game.calculateDealerProfit(gameResults);
+        BigDecimal dealerProfit = game.calculateDealerProfit(gameResults);
         outputView.printFinalResult(gameResults, dealerProfit);
     }
 

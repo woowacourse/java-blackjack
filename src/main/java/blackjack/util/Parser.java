@@ -27,5 +27,4 @@ public class Parser {
         notEmpty(input);
         return DrawCommand.of(input);
     }
-
 }

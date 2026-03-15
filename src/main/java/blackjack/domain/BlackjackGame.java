@@ -5,6 +5,7 @@ import blackjack.domain.participant.Player;
 import blackjack.domain.vo.GameResult;
 import blackjack.domain.vo.Payoff;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -43,7 +44,7 @@ public class BlackjackGame {
 
     public void betPlayers(BetDecision decision) {
         players.forEach(player -> {
-            int amount = decision.decideBet(player.getName());
+            String amount = decision.decideBet(player.getName());
             player.placeBet(amount);
         });
     }
@@ -90,7 +91,7 @@ public class BlackjackGame {
     public List<GameResult> calculatePlayerProfits(){
         List<GameResult> results = new ArrayList<>();
         players.forEach(player -> {
-            int profit = Payoff.playerResult(player, dealer)
+            BigDecimal profit = Payoff.playerResult(player, dealer)
                     .calculateProfit(player.getBet().getAmount());
             results.add(GameResult.from(player.getName(), profit));
                 }
@@ -98,10 +99,11 @@ public class BlackjackGame {
         return results;
     }
 
-    public int calculateDealerProfit(List<GameResult> gameResults) {
-        return -gameResults.stream()
-                .mapToInt(GameResult::profit)
-                .sum();
+    public BigDecimal calculateDealerProfit(List<GameResult> gameResults) {
+        return gameResults.stream()
+                .map(GameResult::profit)
+                .reduce(BigDecimal.ZERO, BigDecimal::add)
+                .negate();
     }
 
     public Players getPlayers() {

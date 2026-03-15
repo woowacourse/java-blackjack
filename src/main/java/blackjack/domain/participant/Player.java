@@ -16,8 +16,8 @@ public class Player extends Participant{
         return new Player(name, Hand.init(), Bet.init());
     }
 
-    public void placeBet(int amount) {
-        this.bet = bet.add(amount);
+    public void placeBet(String amount) {
+        this.bet = Bet.of(amount);
     }
 
     public Bet getBet() {
