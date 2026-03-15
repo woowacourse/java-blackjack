@@ -9,18 +9,18 @@ public record ParticipantScoreDtos(List<ParticipantScoreDto> scoreDtos) {
 
     public static ParticipantScoreDtos of(Dealer dealer, List<Player> players) {
         List<ParticipantScoreDto> scoreDtos = new ArrayList<>();
-        players.forEach(player ->
-            scoreDtos.add(from(player)));
-        scoreDtos.add(from(dealer));
+
+        players.forEach(player -> scoreDtos.add(converScore(player)));
+        scoreDtos.add(converScore(dealer));
 
         return new ParticipantScoreDtos(scoreDtos);
     }
 
-    private static ParticipantScoreDto from(Dealer dealer) {
+    private static ParticipantScoreDto converScore(Dealer dealer) {
         return ParticipantScoreDto.from(dealer, dealer.getScore());
     }
 
-    private static ParticipantScoreDto from(Player player) {
+    private static ParticipantScoreDto converScore(Player player) {
         return ParticipantScoreDto.from(player, player.getScore());
     }
 }

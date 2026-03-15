@@ -43,8 +43,8 @@ public class OutputView {
 
     private void printParticipantInitialCards(InitialDealDtos initialDealDtos) {
         printParticipantCards(initialDealDtos.dealerCardsDto());
-        for (ParticipantCardsDto participantCardsDto : initialDealDtos.playerCardsDtos()) {
-            printParticipantCards(participantCardsDto);
+        for (ParticipantCardsDto playerCardsDto : initialDealDtos.playerCardsDtos()) {
+            printParticipantCards(playerCardsDto);
         }
     }
 

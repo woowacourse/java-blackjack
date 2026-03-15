@@ -26,11 +26,18 @@ public record PlayerNames(List<Name> names) {
     }
 
     private static boolean containsDealerName(List<Name> playerNames) {
-        return playerNames.stream().anyMatch(Dealer::isDealerName);
+        return playerNames.stream()
+            .anyMatch(Dealer::isDealerName);
     }
 
     private static boolean isDuplicated(List<Name> playerNames) {
-        return playerNames.stream().distinct().count() != playerNames.size();
+        return countDistinct(playerNames) != playerNames.size();
+    }
+
+    private static long countDistinct(List<Name> playerNames) {
+        return playerNames.stream()
+            .distinct()
+            .count();
     }
 
     @Override

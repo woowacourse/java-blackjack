@@ -47,7 +47,8 @@ public class Hand {
     }
 
     private boolean containsAce() {
-        return cards.stream().anyMatch(Card::isAce);
+        return cards.stream()
+            .anyMatch(Card::isAce);
     }
 
     public boolean isBust() {
