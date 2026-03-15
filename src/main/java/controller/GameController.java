@@ -61,7 +61,7 @@ public class GameController {
 
     private void initDeal(){
         blackjackGame.initDeal();
-        outputView.printInitialDeal(blackjackGame.getPlayers(), blackjackGame.getDealer());
+        outputView.printInitialDeal(blackjackGame);
     }
 
     private void processBlackjack() {
@@ -88,11 +88,11 @@ public class GameController {
     }
 
     private void showCardResult() {
-        outputView.printCardResult(blackjackGame.getPlayers(), blackjackGame.getDealer());
+        outputView.printCardResult(blackjackGame);
     }
 
     private void showGameRecord(){
         blackjackGame.determineResult();
-        outputView.printGameRecord(blackjackGame.getPlayers());
+        outputView.printGameRecord(blackjackGame);
     }
 }
