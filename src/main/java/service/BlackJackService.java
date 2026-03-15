@@ -1,6 +1,6 @@
 package service;
 
-import domain.game.Result;
+import domain.game.GameResult;
 import domain.game.Outcome;
 import domain.participant.*;
 import domain.participant.player.Player;
@@ -15,13 +15,13 @@ public class BlackJackService {
     public BlackJackService() {
     }
 
-    public Result calculateResult(Dealer dealer, Players players) {
+    public GameResult calculateResult(Dealer dealer, Players players) {
         Map<Player, Outcome> playersResult = new HashMap<>();
         for (Player player : players.getPlayers()) {
             playersResult.put(player, calculatePlayerResults(dealer, player));
         }
 
-        return new Result(playersResult);
+        return new GameResult(playersResult);
     }
 
     private Outcome calculatePlayerResults(Dealer dealer, Player player) {

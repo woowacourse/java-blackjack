@@ -5,12 +5,12 @@ import domain.participant.player.Player;
 import java.math.BigDecimal;
 import java.util.*;
 
-public class Result {
+public class GameResult {
     private static final int NEGATION_FACTOR = -1;
     private final Map<Player, Outcome> playersResult;
     private final BigDecimal dealerResult;
 
-    public Result(Map<Player, Outcome> playersResult) {
+    public GameResult(Map<Player, Outcome> playersResult) {
         this.playersResult = playersResult;
         this.dealerResult = calculateDealerResult(playersResult);
     }

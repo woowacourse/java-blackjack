@@ -17,7 +17,7 @@ public class ResultTest {
 
     Map<Player, Outcome> playersResult;
     Hand hand;
-    Result result;
+    GameResult gameResult;
 
     @BeforeEach
     void init() {
@@ -29,14 +29,14 @@ public class ResultTest {
                 new Money(BigDecimal.valueOf(20000)))), Outcome.DEFEAT);
         playersResult.put(new Player(new PlayerInfo("user1",
                 new Money(BigDecimal.valueOf(10000)))), Outcome.PUSH);
-        result = new Result(playersResult);
+        gameResult = new GameResult(playersResult);
     }
 
     @Test
     void 딜러의_수익금은_플레이어의_수익금의_합을_음수로_만든것과_같다() {
         BigDecimal expectedDealerResult = BigDecimal.valueOf(-10000);
 
-        assertThat(result.getDealerResult()).isEqualByComparingTo(expectedDealerResult);
+        assertThat(gameResult.getDealerResult()).isEqualByComparingTo(expectedDealerResult);
     }
 
     @Test

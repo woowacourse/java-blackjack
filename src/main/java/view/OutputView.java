@@ -1,6 +1,6 @@
 package view;
 
-import domain.game.Result;
+import domain.game.GameResult;
 import domain.participant.Dealer;
 import domain.participant.player.Player;
 import domain.participant.player.Players;
@@ -57,12 +57,12 @@ public class OutputView {
         }
     }
 
-    public static void gameResultMessage(Result result) {
+    public static void gameResultMessage(GameResult gameResult) {
         System.out.printf(FINAL_YIELD_MESSAGE);
-        BigDecimal dealerResultMessage = result.getDealerResult();
+        BigDecimal dealerResultMessage = gameResult.getDealerResult();
         System.out.printf(DEALER_RESULT, dealerResultMessage);
 
-        Map<String, BigDecimal> playerYield = result.calculatePlayerYield();
+        Map<String, BigDecimal> playerYield = gameResult.calculatePlayerYield();
         playerResultMessage(playerYield);
     }
 
