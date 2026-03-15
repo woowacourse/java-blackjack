@@ -7,6 +7,8 @@ public record PlayerName(
         String name
 ) {
 
+    private static final int NAME_LENGTH_CONDITION = 5;
+
     public PlayerName{
         validateNameIsBlank(name);
         validateNameLength(name);
@@ -19,7 +21,7 @@ public record PlayerName(
     }
 
     private static void validateNameLength(String name) {
-        if(name.length() > 5) {
+        if(name.length() > NAME_LENGTH_CONDITION ) {
             throw new PlayerException(ErrorMessage.NAME_LENGTH_ERROR);
         }
     }

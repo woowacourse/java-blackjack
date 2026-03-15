@@ -7,7 +7,9 @@ import java.util.Objects;
 
 public class CardBundle {
 
-    private static final int BUSTED_CONDITION = 21;
+    private static final int BLACKJACK_CONDITION = 21;
+    private static final int BUSTED_CONDITION = BLACKJACK_CONDITION + 1;
+    private static final int NUMBER_OF_BLACKJACK_CARD = 2;
     private static final int ACE_BONUS_SCORE = 10;
 
     private final List<Card> cardBundle;
@@ -36,21 +38,9 @@ public class CardBundle {
         return new CardBundle(newCards);
     }
 
-    @Override
-    public boolean equals(Object object) {
-        if (object == null || getClass() != object.getClass()) return false;
-        CardBundle that = (CardBundle) object;
-        return Objects.equals(cardBundle, that.cardBundle);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(cardBundle);
-    }
-
     public int getResultScore() {
         int basicScore = getBasicScore();
-        if (hasAce() && (basicScore + ACE_BONUS_SCORE <= BUSTED_CONDITION)) {
+        if (hasAce() && (basicScore + ACE_BONUS_SCORE <= BLACKJACK_CONDITION)) {
             return basicScore + ACE_BONUS_SCORE;
         }
 
@@ -63,8 +53,20 @@ public class CardBundle {
                 .sum();
     }
 
+    public List<Card> openMyCards() {
+        return Collections.unmodifiableList(cardBundle);
+    }
+
+    public boolean isBlackjack() {
+        return cardBundle.size() == NUMBER_OF_BLACKJACK_CARD && getResultScore() == BLACKJACK_CONDITION;
+    }
+
+    public boolean isStand() {
+        return !isBlackjack() && !isBusted();
+    }
+
     public boolean isBusted() {
-        return getBasicScore() > BUSTED_CONDITION;
+        return getBasicScore() >= BUSTED_CONDITION;
     }
 
     public boolean hasAce() {
@@ -72,8 +74,16 @@ public class CardBundle {
                 .anyMatch(Card::isAce);
     }
 
-    public List<Card> openMyCards() {
-        return Collections.unmodifiableList(cardBundle);
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) return false;
+        CardBundle that = (CardBundle) object;
+        return Objects.equals(cardBundle, that.cardBundle);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(cardBundle);
     }
 
 }

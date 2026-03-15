@@ -1,8 +1,11 @@
 package controller;
 
-import domain.analyzer.ResultAnalyzer;
-import domain.analyzer.dto.ResultAnalysisDto;
 import domain.answer.DrawDecision;
+import domain.betting.BettingTable;
+import domain.betting.BettingMoney;
+import domain.betting.Profit;
+import domain.betting.dto.GamerBettingProfitDto;
+import domain.betting.manager.BettingPolicyManager;
 import domain.card.CardDeck;
 import domain.card.CardGenerator;
 import domain.gamer.Dealer;
@@ -12,7 +15,7 @@ import domain.gamer.Players;
 import domain.gamer.dto.GamerHandDto;
 import domain.gamer.dto.GamerResultDto;
 import domain.gamer.dto.GamersNameDto;
-import domain.view.ApplicationView;
+import view.ApplicationView;
 
 import java.util.List;
 
@@ -20,15 +23,20 @@ public class BlackjackGame {
 
     public ApplicationView view;
     public CardDeck cardDeck;
+    public BettingPolicyManager policyManager;
 
-    public BlackjackGame(ApplicationView view, CardGenerator cardGenerator) {
+    public BlackjackGame(ApplicationView view, CardGenerator cardGenerator, BettingPolicyManager policyManager) {
         this.view = view;
         this.cardDeck = CardDeck.from(cardGenerator);
+        this.policyManager = policyManager;
     }
 
     public void start() {
         Dealer dealer = enterDealer();
         Players players = enterPlayers();
+
+        BettingTable bettingTable = new BettingTable(policyManager);
+        askBettingMoney(bettingTable, players);
 
         dealInitialCard(dealer, players);
         showGamerHands(players, dealer);
@@ -37,7 +45,9 @@ public class BlackjackGame {
         tryHitDealer(dealer);
 
         showGamerHandResult(dealer, players);
-        showGameResultAnalysis(players, dealer);
+
+        bettingTable.applyBettingRate(dealer, players);
+        showGamerProfit(calculateProfit(bettingTable, players), calculateProfit(bettingTable, dealer));
     }
 
     private Dealer enterDealer() {
@@ -45,15 +55,14 @@ public class BlackjackGame {
     }
 
     private Players enterPlayers() {
-        return Players.from(requestPlayerNames()
-                .stream()
-                .map(Player::from)
-                .toList()
-        );
+        return view.enterPlayers();
     }
 
-    private List<PlayerName> requestPlayerNames() {
-        return view.requestPlayerNames();
+    private void askBettingMoney(BettingTable bettingTable, Players players) {
+        players.getPlayers().forEach(player -> {
+            BettingMoney bettingMoney = view.askBettingMoney(player.getName());
+            bettingTable.bet(player, bettingMoney);
+        });
     }
 
     private void dealInitialCard(Dealer dealer, Players players) {
@@ -75,13 +84,10 @@ public class BlackjackGame {
 
     private void tryHitPlayers(Players players, Dealer dealer) {
         players.getPlayers()
-                .forEach(player -> drawPlayerCard(player, dealer));
-    }
-
-    private void tryHitDealer(Dealer dealer) {
-        if (dealer.hitIfRequired()) {
-            view.printDealerAdditionalDrawCardMessage();
-        }
+                .forEach(player -> {
+                    drawPlayerCard(player, dealer);
+                    view.printParticipantHand(GamerHandDto.from(player));
+                });
     }
 
     private void drawPlayerCard(Player player, Dealer dealer) {
@@ -92,8 +98,14 @@ public class BlackjackGame {
     }
 
     private boolean isPlayerWantCard(Player player) {
-        DrawDecision drawDecision = view.askDrawCard(player.getMyName());
+        DrawDecision drawDecision = view.askDrawCard(player.getName());
         return drawDecision.isYes();
+    }
+
+    private void tryHitDealer(Dealer dealer) {
+        if (dealer.hitIfRequired()) {
+            view.printDealerAdditionalDrawCardMessage();
+        }
     }
 
     private void showGamerHandResult(Dealer dealer, Players players) {
@@ -103,13 +115,22 @@ public class BlackjackGame {
         });
     }
 
-    private void showGameResultAnalysis(Players players, Dealer dealer) {
-        ResultAnalysisDto analysis = analyzeBlackjackResult(players, dealer);
-        view.printFinalResultMessage(analysis);
+    private List<GamerBettingProfitDto> calculateProfit(BettingTable bettingTable, Players players) {
+        return players.getPlayers().stream()
+                .map(player -> {
+                    Profit playerProfit = bettingTable.getPlayerProfit(player);
+                    return GamerBettingProfitDto.of(player, playerProfit);
+                })
+                .toList();
     }
 
-    private ResultAnalysisDto analyzeBlackjackResult(Players players, Dealer dealer) {
-        return ResultAnalyzer.analyze(players.getPlayers(), dealer);
+    private GamerBettingProfitDto calculateProfit(BettingTable bettingTable, Dealer dealer) {
+        Profit dealerProfit = bettingTable.getDealerProfit();
+        return GamerBettingProfitDto.of(dealer, dealerProfit);
+    }
+
+    private void showGamerProfit(List<GamerBettingProfitDto> playersProfit, GamerBettingProfitDto dealerProfit) {
+        view.printGamerProfit(dealerProfit, playersProfit);
     }
 
 }

@@ -14,14 +14,8 @@ import java.util.List;
 
 public class DealerTest {
 
-    private PlayerName testPlayerName;
-    private Player testPlayer;
-
-    @BeforeEach
-    void setUp() {
-        testPlayerName = new PlayerName("test");
-        testPlayer = Player.from(testPlayerName);
-    }
+    private final PlayerName testPlayerName  = new PlayerName("test");
+    private final Player testPlayer = Player.from(testPlayerName);;
 
     @Test
     void 카드를_2장_나눠준다() {

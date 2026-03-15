@@ -12,11 +12,11 @@ public record GamerHandDto(
 ) {
 
     public static GamerHandDto from(Gamer gamer) {
-        return new GamerHandDto(gamer.getMyName(), joining(openGamerCards(gamer)));
+        return new GamerHandDto(gamer.getName(), joining(openGamerCards(gamer)));
     }
 
     public static GamerHandDto onlyFirstCard(Dealer dealer) {
-        return new GamerHandDto(dealer.getMyName(), dealer.openMyFirstCard().openCard());
+        return new GamerHandDto(dealer.getName(), dealer.openMyFirstCard().openCard());
     }
 
     private static String joining(List<String> strings) {

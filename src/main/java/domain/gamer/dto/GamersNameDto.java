@@ -10,7 +10,7 @@ public record GamersNameDto(
 
     public static GamersNameDto from(List<? extends Gamer> gamers) {
         List<String> playerNames = gamers.stream()
-                .map(Gamer::getMyName)
+                .map(Gamer::getName)
                 .toList();
         return new GamersNameDto(playerNames);
     }

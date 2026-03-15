@@ -1,9 +1,10 @@
 import controller.BlackjackGame;
+import domain.betting.manager.BettingPolicyManager;
 import domain.card.CardGenerator;
 import domain.card.BlackjackGameCardGenerator;
-import domain.view.ApplicationView;
-import domain.view.InputReader;
-import domain.view.OutputWriter;
+import view.ApplicationView;
+import view.InputReader;
+import view.OutputWriter;
 
 public class Application {
 
@@ -12,8 +13,9 @@ public class Application {
         OutputWriter writer = new OutputWriter();
         ApplicationView applicationView = new ApplicationView(reader, writer);
         CardGenerator gameCardGenerator = new BlackjackGameCardGenerator();
+        BettingPolicyManager bettingPolicyManager = new BettingPolicyManager();
 
-        BlackjackGame blackjackGame = new BlackjackGame(applicationView, gameCardGenerator);
+        BlackjackGame blackjackGame = new BlackjackGame(applicationView, gameCardGenerator, bettingPolicyManager);
         blackjackGame.start();
     }
 

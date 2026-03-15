@@ -1,7 +1,10 @@
-package domain.view;
+package view;
 
-import domain.analyzer.dto.ResultAnalysisDto;
 import domain.answer.DrawDecision;
+import domain.betting.BettingMoney;
+import domain.betting.dto.GamerBettingProfitDto;
+import domain.gamer.Players;
+import exception.BlackjackGameException;
 import domain.gamer.PlayerName;
 import domain.gamer.dto.GamerHandDto;
 import domain.gamer.dto.GamerResultDto;
@@ -23,21 +26,30 @@ public class ApplicationView {
         this.writer = writer;
     }
 
-    public List<PlayerName> requestPlayerNames() {
+    public Players enterPlayers() {
         return retry(() -> {
             writer.printInputNameGuideMessage();
-            String names = reader.readInput();
-            return Arrays.stream(names.split(PLAYER_NAME_DELIMITER))
+            String names = readInput();
+            List<PlayerName> playerNames = Arrays.stream(names.split(PLAYER_NAME_DELIMITER))
                     .map(String::trim)
                     .map(PlayerName::new)
                     .toList();
+            return Players.enterByPlayerNames(playerNames);
+        });
+    }
+
+    public BettingMoney askBettingMoney(String playerName) {
+        return retry(() -> {
+            writer.printBettingGuideMessage(playerName);
+            String money = readInput();
+            return BettingMoney.bet(money);
         });
     }
 
     public DrawDecision askDrawCard(String playerName) {
         return retry(() -> {
             writer.printDrawCardGuideMessage(playerName);
-            String userDecision = reader.readInput();
+            String userDecision = readInput();
             return DrawDecision.from(userDecision);
         });
     }
@@ -61,32 +73,35 @@ public class ApplicationView {
         writer.printDealerAdditionalDrawCardMessage();
     }
 
-    public void printFinalResultMessage(ResultAnalysisDto resultAnalysis) {
-        writer.printFinalResultTitleMessage();
-        writer.printFinalResultOfDealer(resultAnalysis.getDealerResult());
-        printAllPlayersResult(resultAnalysis);
-    }
-
-    private void printAllPlayersResult(ResultAnalysisDto resultAnalysis) {
-        resultAnalysis.playerGameResults()
-                .forEach(player -> {
-                    writer.printFinalResultOfPlayer(player.playerName(), player.gameResult().displayName());
-                });
-    }
-
     public void printFinalResultMessage(GamerResultDto playerResult) {
         GamerHandDto playerHand = playerResult.playerHand();
         writer.printFinalResultMessage(playerHand.playerName(), playerHand.handOnCards(), playerResult.resultScore());
+    }
+
+    public void printGamerProfit(GamerBettingProfitDto dealerProfit, List<GamerBettingProfitDto> playersProfit) {
+        writer.printProfitTitleMessage();
+        writer.printGamerProfit(dealerProfit.gamerName(), dealerProfit.bettingProfit());
+        printAllPlayerProfit(playersProfit);
+    }
+
+    private void printAllPlayerProfit(List<GamerBettingProfitDto> playersProfit) {
+        playersProfit.forEach(profit ->
+                writer.printGamerProfit(profit.gamerName(), profit.bettingProfit())
+        );
     }
 
     private <T> T retry(Supplier<T> task) {
         while (true) {
             try {
                 return task.get();
-            } catch (IllegalArgumentException e) {
+            } catch (BlackjackGameException e) {
                 writer.printErrorMessage(e.getMessage());
             }
         }
+    }
+
+    private String readInput() {
+        return reader.readInput();
     }
 
 }

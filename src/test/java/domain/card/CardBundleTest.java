@@ -10,14 +10,11 @@ public class CardBundleTest {
     private static final int ACE_BONUS_SCORE = 10;
 
     private CardBundle cardBundle;
-    private Card cloverAce;
-    private Card spadeJack;
+    private final Card cloverAce = Card.of(CardDenomination.ACE, CardEmblem.CLOVER);;
+    private final Card spadeJack = Card.of(CardDenomination.JACK, CardEmblem.SPADE);;
 
     @BeforeEach
     void setUp() {
-        cloverAce = Card.of(CardDenomination.ACE, CardEmblem.CLOVER);
-        spadeJack = Card.of(CardDenomination.JACK, CardEmblem.SPADE);
-
         this.cardBundle = new CardBundleBuilder()
                 .cards(cloverAce, spadeJack)
                 .build();
@@ -41,6 +38,12 @@ public class CardBundleTest {
         int expectedScore = cloverAce.getScore() + spadeJack.getScore() + ACE_BONUS_SCORE;
 
         Assertions.assertThat(actualScore).isEqualTo(expectedScore);
+    }
+
+    @Test
+    void 플레이어_블랙잭을_테스트한다() {
+        Assertions.assertThat(cardBundle.isBlackjack())
+                .isTrue();
     }
 
 }
