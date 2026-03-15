@@ -76,7 +76,7 @@ public class BlackjackGameManager {
         int dealerProfit = 0;
         for (Player player : participants.players().getPlayers()) {
             Result result = blackjackJudge.judgePlayerResult(participants.dealer(), player);
-            int playerProfit = blackjackJudge.calculatePlayerProfit(player, result);
+            int playerProfit = result.getProfit(player.getBetAmount());
             dealerProfit += playerProfit * -1;
             playerStatisticDtoList.add(PlayerStatisticDto.of(player, playerProfit));
         }
@@ -84,11 +84,7 @@ public class BlackjackGameManager {
         return BlackjackStatisticsDto.of(dealerProfit, playerStatisticDtoList);
     }
 
-    public boolean isHit(HitOrStand hitOrStand) {
-        return hitOrStand.isHit();
-    }
-
-    public boolean isStand(HitOrStand hitOrStand) {
-        return hitOrStand.isStand();
+    public boolean playerIsBust(String name) {
+        return participants.playerIsBust(name);
     }
 }
