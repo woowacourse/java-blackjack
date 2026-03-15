@@ -1,6 +1,6 @@
 package domain.participant;
 
-import domain.card.Help;
+import domain.card.Card;
 import domain.card.Cards;
 import java.util.List;
 
@@ -27,11 +27,11 @@ public class ParticipantCards {
         return sum;
     }
 
-    public void addCard(Help help) {
-        if (help.isAce()) {
+    public void addCard(Card card) {
+        if (card.isAce()) {
             changeAvailableAceCount += 1;
         }
-        cards.add(help);
+        cards.add(card);
     }
 
     public int getCardSize() {

@@ -4,35 +4,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cards {
-    private final List<Help> helps;
+    private final List<Card> cards;
 
-    public Cards(List<Help> helps) {
-        this.helps = new ArrayList<>(helps);
+    public Cards(List<Card> cards) {
+        this.cards = new ArrayList<>(cards);
     }
 
     public int getSize() {
-        return helps.size();
+        return cards.size();
     }
 
     public List<String> getCardsInfo() {
-        return helps.stream()
-                .map(Help::getCardInfo)
+        return cards.stream()
+                .map(Card::getCardInfo)
                 .toList();
     }
 
-    public Help removeFirst() {
-        return helps.removeFirst();
+    public Card removeFirst() {
+        return cards.removeFirst();
     }
 
     public int sumScore() {
         int sum = 0;
-        for (Help help : helps) {
-            sum += help.getScore();
+        for (Card card : cards) {
+            sum += card.getScore();
         }
         return sum;
     }
 
-    public void add(Help help) {
-        helps.add(help);
+    public void add(Card card) {
+        cards.add(card);
     }
 }

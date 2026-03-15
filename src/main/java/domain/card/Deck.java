@@ -11,10 +11,10 @@ public class Deck {
         this.cards = createDeck();
     }
 
-    public Help drawCard() {
+    public Card drawCard() {
         validateDeckSize();
-        Help help = cards.removeFirst();
-        return help;
+        Card card = cards.removeFirst();
+        return card;
     }
 
     private void validateDeckSize() {
@@ -24,13 +24,13 @@ public class Deck {
     }
 
     private Cards createDeck() {
-        List<Help> helps = new ArrayList<>();
+        List<Card> cards = new ArrayList<>();
         for (Shape shape : Shape.values()) {
             for (Number number : Number.values()) {
-                helps.add(new Help(shape, number));
+                cards.add(new Card(shape, number));
             }
         }
-        Collections.shuffle(helps);
-        return new Cards(helps);
+        Collections.shuffle(cards);
+        return new Cards(cards);
     }
 }

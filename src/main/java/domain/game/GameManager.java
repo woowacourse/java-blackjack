@@ -1,6 +1,6 @@
 package domain.game;
 
-import domain.card.Help;
+import domain.card.Card;
 import domain.participant.Dealer;
 import domain.card.Deck;
 import domain.participant.Participant;
@@ -46,7 +46,7 @@ public class GameManager {
     }
 
     public void drawCardTo(Participant participant) {
-        Help help = deck.drawCard();
-        participant.receiveCard(help);
+        Card card = deck.drawCard();
+        participant.receiveCard(card);
     }
 }

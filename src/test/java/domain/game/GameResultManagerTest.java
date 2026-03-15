@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import domain.betting.BettingAmount;
 import domain.betting.BettingAmounts;
 import domain.betting.CalculateProfit;
-import domain.card.Help;
+import domain.card.Card;
 import domain.card.Number;
 import domain.card.Shape;
 import domain.participant.Dealer;
@@ -26,14 +26,14 @@ class GameResultManagerTest {
         GameManager gameManager = new GameManager(players);
         Dealer dealer = gameManager.getDealer();
 
-        dealer.receiveCard(new Help(Shape.SPADE, domain.card.Number.TEN));
-        dealer.receiveCard(new Help(Shape.HEART, domain.card.Number.EIGHT));
+        dealer.receiveCard(new Card(Shape.SPADE, domain.card.Number.TEN));
+        dealer.receiveCard(new Card(Shape.HEART, domain.card.Number.EIGHT));
 
-        pobi.receiveCard(new Help(Shape.DIAMOND, domain.card.Number.TEN));
-        pobi.receiveCard(new Help(Shape.CLUB, domain.card.Number.TEN));
+        pobi.receiveCard(new Card(Shape.DIAMOND, domain.card.Number.TEN));
+        pobi.receiveCard(new Card(Shape.CLUB, domain.card.Number.TEN));
 
-        crong.receiveCard(new Help(Shape.SPADE, domain.card.Number.NINE));
-        crong.receiveCard(new Help(Shape.HEART, Number.SEVEN));
+        crong.receiveCard(new Card(Shape.SPADE, domain.card.Number.NINE));
+        crong.receiveCard(new Card(Shape.HEART, Number.SEVEN));
 
         Map<Name, BettingAmount> bettingAmounts = new HashMap<>();
         players.forEach(player -> bettingAmounts.put(player.getName(), new BettingAmount(1000)));
