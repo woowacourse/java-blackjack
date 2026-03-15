@@ -6,6 +6,7 @@ import java.util.List;
 public class Hand {
     private static final int ACE_DIFFERENCE = 10;
     private static final int BLACKJACK_THRESHOLD = 21;
+    private static final int BLACKJACK_CARD_COUNT = 2;
 
     private final List<TrumpCard> cards;
 
@@ -22,7 +23,7 @@ public class Hand {
     }
 
     public boolean isBlackjack(){
-        return calculateScore() == BLACKJACK_THRESHOLD;
+        return countCards() == BLACKJACK_CARD_COUNT && calculateScore() == BLACKJACK_THRESHOLD;
     }
     public boolean isBust() {
         return calculateScore() > BLACKJACK_THRESHOLD;

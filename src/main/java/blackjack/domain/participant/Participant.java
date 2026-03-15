@@ -35,7 +35,7 @@ abstract class Participant {
     }
 
     public boolean isBlackjack() {
-        return hand.countCards() == 2 && hand.isBlackjack();
+        return hand.isBlackjack();
     }
 
     public boolean isBust() {
