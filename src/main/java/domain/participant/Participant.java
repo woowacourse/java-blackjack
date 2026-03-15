@@ -35,6 +35,6 @@ public abstract class Participant {
     }
 
     public boolean isBlackjack() {
-        return hand.getCards().size() == 2 && hand.calculateScore() == BLACKJACK_CRITERION;
+        return hand.getSize() == 2 && hand.calculateScore() == BLACKJACK_CRITERION;
     }
 }
