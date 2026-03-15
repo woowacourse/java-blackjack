@@ -14,10 +14,6 @@ public class HandCards {
         this.cards = new ArrayList<>();
     }
 
-    public HandCards(List<Card> cards) {
-        this.cards = cards;
-    }
-
     public void receiveInitialCards(List<Card> firstHandCards) {
         cards.addAll(firstHandCards);
     }

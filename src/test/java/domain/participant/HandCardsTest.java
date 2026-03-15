@@ -35,7 +35,7 @@ class HandCardsTest {
                 new Card(CardNumber.FOUR, CardShape.CLUB)
         );
 
-        HandCards handCards = new HandCards(cards);
+        HandCards handCards = makeHandCards(cards);
         // When
         int score = handCards.calculateScore();
 
@@ -54,8 +54,7 @@ class HandCardsTest {
                 new Card(CardNumber.ACE, CardShape.CLUB)
         );
 
-        HandCards handCards = new HandCards(cards);
-
+        HandCards handCards = makeHandCards(cards);
         // When
         int score = handCards.calculateScore();
 
@@ -72,7 +71,7 @@ class HandCardsTest {
                 new Card(CardNumber.ACE, CardShape.CLUB)
         );
 
-        HandCards handCards = new HandCards(cards);
+        HandCards handCards = makeHandCards(cards);
 
         // When
         int score = handCards.calculateScore();
@@ -90,14 +89,15 @@ class HandCardsTest {
                 new Card(CardNumber.ACE, CardShape.CLUB),
                 new Card(CardNumber.ACE, CardShape.HEART)
         );
-        HandCards handCards = new HandCards(cards);
 
+        HandCards handCards = makeHandCards(cards);
         // When
         int score = handCards.calculateScore();
 
         // Then
         assertThat(score).isEqualTo(20);
     }
+
 
     @Test
     @DisplayName("21을 초과하면 버스트이다.")
@@ -108,7 +108,7 @@ class HandCardsTest {
                 new Card(CardNumber.FOUR, CardShape.CLUB),
                 new Card(CardNumber.KING, CardShape.HEART)
         );
-        HandCards handCards = new HandCards(cards);
+        HandCards handCards = makeHandCards(cards);
 
         // When
         boolean isBust = handCards.isBust();
@@ -125,7 +125,7 @@ class HandCardsTest {
                 new Card(CardNumber.JACK, CardShape.CLUB),
                 new Card(CardNumber.KING, CardShape.HEART)
         );
-        HandCards handCards = new HandCards(cards);
+        HandCards handCards = makeHandCards(cards);
 
         // When
         boolean isBust = handCards.isBust();
@@ -142,12 +142,24 @@ class HandCardsTest {
                 new Card(CardNumber.ACE, CardShape.CLUB),
                 new Card(CardNumber.KING, CardShape.HEART)
         );
-        HandCards handCards = new HandCards(cards);
+        HandCards handCards = makeHandCards(cards);
 
         // When
         boolean isBlackJack = handCards.isBlackJack();
 
         // Then
         assertThat(isBlackJack).isTrue();
+    }
+
+
+    private HandCards makeHandCards(List<Card> cards) {
+        HandCards handCards = new HandCards();
+        handCards.receiveInitialCards(cards.subList(0,2));
+
+        List<Card> hitCards = cards.subList(2, cards.size());
+        for (Card hitCard : hitCards) {
+            handCards.receiveHitCard(hitCard);
+        }
+        return handCards;
     }
 }
