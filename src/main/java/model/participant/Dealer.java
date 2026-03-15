@@ -2,7 +2,6 @@ package model.participant;
 
 import java.util.List;
 import model.card.Card;
-import model.participant.exception.UnmatchableParticipantsException;
 
 public class Dealer extends Participant {
     public static final String NAME = "딜러";
@@ -26,15 +25,6 @@ public class Dealer extends Participant {
         }
 
         return hand.asList();
-    }
-
-    @Override
-    public boolean beats(Participant participant) {
-        if (!(participant instanceof Player player)) {
-            throw new UnmatchableParticipantsException(getName(), participant.getName());
-        }
-
-        return !player.beats(this);
     }
 
     public boolean needDraw() {

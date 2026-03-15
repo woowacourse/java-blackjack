@@ -4,7 +4,6 @@ import java.util.List;
 import model.card.Card;
 import model.game.BettingAmount;
 import model.participant.exception.ForbiddenPlayerNameException;
-import model.participant.exception.UnmatchableParticipantsException;
 
 public class Player extends Participant {
     private final BettingAmount bettingAmount;
@@ -32,12 +31,7 @@ public class Player extends Participant {
         return hand.asList();
     }
 
-    @Override
-    public boolean beats(Participant participant) {
-        if (!(participant instanceof Dealer dealer)) {
-            throw new UnmatchableParticipantsException(getName(), participant.getName());
-        }
-
+    public boolean beats(Dealer dealer) {
         if (isBust()) {
             return false;
         }
@@ -54,7 +48,7 @@ public class Player extends Participant {
             return false;
         }
 
-        return calculateScore() >= participant.calculateScore();
+        return calculateScore() >= dealer.calculateScore();
     }
 
     public BettingAmount getBettingAmount() {

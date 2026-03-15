@@ -60,6 +60,4 @@ public abstract class Participant {
     }
 
     public abstract List<Card> open();
-
-    public abstract boolean beats(Participant participant);
 }

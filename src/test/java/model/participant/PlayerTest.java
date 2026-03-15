@@ -9,7 +9,6 @@ import model.card.Card;
 import model.card.Rank;
 import model.card.Suit;
 import model.participant.exception.ForbiddenPlayerNameException;
-import model.participant.exception.UnmatchableParticipantsException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -54,17 +53,10 @@ class PlayerTest {
 
     @Nested
     class 승패_판정 {
-        @Test
-        void 플레이어와의_승패_판정_대상이_딜러가_아니면_예외를_발생한다() {
-            Participant otherPlayer = Player.of("jason", 1000);
-            assertThatThrownBy(() -> player.beats(otherPlayer))
-                    .isInstanceOf(UnmatchableParticipantsException.class);
-        }
-
         @ParameterizedTest
         @MethodSource("provideDealerCases")
         void 플레이어가_버스트이면_딜러의_패와_관계없이_패배한다(Dealer dealer) {
-            Participant playerWithBust = Player.of("playerWithBust", 1000);
+            Player playerWithBust = Player.of("playerWithBust", 1000);
             playerWithBust.receive(Card.of(Suit.SPADE, Rank.JACK));
             playerWithBust.receive(Card.of(Suit.SPADE, Rank.QUEEN));
             playerWithBust.receive(Card.of(Suit.SPADE, Rank.KING));
@@ -75,7 +67,7 @@ class PlayerTest {
         @ParameterizedTest
         @MethodSource("provideDealerCases")
         void 플레이어가_블랙잭이면_딜러의_패와_관계없이_승리한다(Dealer dealer) {
-            Participant playerWithBlackjack = Player.of("playerWithBlackjack", 1000);
+            Player playerWithBlackjack = Player.of("playerWithBlackjack", 1000);
             playerWithBlackjack.receive(Card.of(Suit.SPADE, Rank.ACE));
             playerWithBlackjack.receive(Card.of(Suit.SPADE, Rank.JACK));
 

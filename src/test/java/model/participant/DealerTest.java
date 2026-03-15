@@ -7,7 +7,6 @@ import java.util.List;
 import model.card.Card;
 import model.card.Rank;
 import model.card.Suit;
-import model.participant.exception.UnmatchableParticipantsException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,12 +22,6 @@ class DealerTest {
     void 가진_카드패가_없는데_오픈하면_예외를_발생한다() {
         assertThatThrownBy(() -> dealer.open())
                 .isInstanceOf(IllegalStateException.class);
-    }
-
-    @Test
-    void 딜러와_승패를_판정하는_상대가_플레이어가_아니면_예외를_발생한다() {
-        assertThatThrownBy(() -> dealer.beats(Dealer.create()))
-                .isInstanceOf(UnmatchableParticipantsException.class);
     }
 
     @Test
