@@ -23,17 +23,25 @@ public class BlackjackController {
     public void run() {
         List<String> userNames = getUserNames();
         Deck deck = Deck.of(new RandomCardStrategy());
-
         Dealer dealer = Dealer.of(deck.drawInitialHand());
-        Players players = Players.of(deck, userNames);
-        BlackjackResult blackjackResult = BlackjackResult.of();
+        Players players = generatePlayers(userNames, deck);
 
-        askPlayerBets(players, blackjackResult);
+        PlayerBets playerBets = PlayerBets.of();
+        askPlayerBets(players, playerBets);
         printInitialCards(players, dealer);
         askPlayerAddCard(players, deck, dealer);
-        blackjackResult.resolveResults(players, dealer);
 
+        BlackjackResult blackjackResult = BlackjackResult.of(players, dealer, playerBets);
         printGameResult(blackjackResult);
+    }
+
+    private Players generatePlayers(List<String> userNames, Deck deck) {
+        Players players = Players.of();
+        for (String userName : userNames) {
+            Player player = Player.of(deck.drawInitialHand(), userName);
+            players.addPlayer(player);
+        }
+        return players;
     }
 
     private List<String> getUserNames() {
@@ -54,20 +62,19 @@ public class BlackjackController {
         }
     }
 
-    private void askPlayerBets(Players players, BlackjackResult blackjackResult) {
+    private void askPlayerBets(Players players, PlayerBets playerBets) {
         for (Player player : players.getPlayers()) {
-            long betAmount = askBetAmount(player);
-            blackjackResult.add(player, betAmount);
+            BetAmount betAmount = askBetAmount(player);
+            playerBets.add(player, betAmount);
         }
     }
 
-    private long askBetAmount(Player player) {
-        System.out.println();
+    private BetAmount askBetAmount(Player player) {
+        outputView.printEmptyLine();
         while (true) {
             try {
-                String betAmount = inputView.askBetAmount(player);
-                BettingValidator.validateBetAmount(betAmount);
-                return Long.parseLong(betAmount);
+                String input = inputView.askBetAmount(player);
+                return BetAmount.of(input);
             } catch (IllegalArgumentException exception) {
                 outputView.printLine(exception.getMessage());
             }
@@ -142,13 +149,11 @@ public class BlackjackController {
     }
 
     private void printGameResult(BlackjackResult blackjackResults) {
-        List<PlayerResultDto> playerResults = blackjackResults.getPlayerBets().entrySet().stream()
-                .map(blackjackResult ->
-                        new PlayerResultDto(
-                                blackjackResult.getKey().getName(),
-                                blackjackResults.playerProfit(blackjackResult)
-                        )
-                )
+        List<PlayerResultDto> playerResults = blackjackResults.playerProfits().entrySet().stream()
+                .map(entry -> new PlayerResultDto(
+                        entry.getKey().getName(),
+                        entry.getValue()
+                ))
                 .toList();
         outputView.printFinalResult(playerResults);
     }
