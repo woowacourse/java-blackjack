@@ -28,7 +28,7 @@ public class BetTest {
     @DisplayName("배팅 금액은 양의 정수여야 한다.")
     void validateAmount_PositiveTest() {
         // given
-        int amount = 1000;
+        int amount = 1;
 
         // when - then
         assertDoesNotThrow(() -> new Bet(amount));
@@ -38,7 +38,7 @@ public class BetTest {
     @DisplayName("배팅 금액은 양의 정수여야 한다.")
     void validateAmount_NegativeTest() {
         // given
-        int amount = -1000;
+        int amount = -1;
 
         // when - then
         assertThrows(IllegalArgumentException.class, () -> new Bet(amount));
@@ -53,7 +53,6 @@ public class BetTest {
         // when - then
         assertThrows(IllegalArgumentException.class, () -> new Bet(amount));
     }
-
 
     @Test
     @DisplayName("배팅 금액은 최대 배팅 금액을 초과할 수 없다.")

@@ -27,6 +27,7 @@ public class Bet {
             if (isBlackJack) {
                 return money.multiply(WIN_WITH_BLACKJACK_PAYOUT_RATIO);
             }
+
             return money.multiply(WIN_PAYOUT_RATIO);
         }
 
