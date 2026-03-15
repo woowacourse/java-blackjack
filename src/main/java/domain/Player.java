@@ -11,7 +11,7 @@ public class Player extends Participant {
         return hand.isLessThanBlackJack();
     }
 
-    public WinningStatus calculateResultAgainst(Score dealerScore){
+    public WinningStatus calculateResult(Score dealerScore){
         if(isBlackJack() && !dealerScore.isBlackJack()){
             return WinningStatus.BLACKJACK_WIN;
         }

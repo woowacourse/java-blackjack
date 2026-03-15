@@ -50,7 +50,7 @@ class PlayerTest {
                 new Card(Suit.DIAMONDS, Rank.KING)
         );
 
-        WinningStatus result = player.calculateResultAgainst(new Score(20, false));
+        WinningStatus result = player.calculateResult(new Score(20, false));
 
         assertEquals(WinningStatus.BLACKJACK_WIN, result);
     }
@@ -62,7 +62,7 @@ class PlayerTest {
                 new Card(Suit.DIAMONDS, Rank.NUM9)
         );
 
-        WinningStatus result = player.calculateResultAgainst(new Score(21, true));
+        WinningStatus result = player.calculateResult(new Score(21, true));
 
         assertEquals(WinningStatus.LOSE, result);
     }
@@ -75,7 +75,7 @@ class PlayerTest {
                 new Card(Suit.HEARTS, Rank.JACK)
         );
 
-        WinningStatus result = player.calculateResultAgainst(new Score(20, false));
+        WinningStatus result = player.calculateResult(new Score(20, false));
 
         assertEquals(WinningStatus.LOSE, result);
     }
@@ -87,7 +87,7 @@ class PlayerTest {
                 new Card(Suit.DIAMONDS, Rank.NUM8)
         );
 
-        WinningStatus result = player.calculateResultAgainst(new Score(22, false));
+        WinningStatus result = player.calculateResult(new Score(22, false));
 
         assertEquals(WinningStatus.WIN, result);
     }
@@ -99,7 +99,7 @@ class PlayerTest {
                 new Card(Suit.DIAMONDS, Rank.NUM9)
         );
 
-        WinningStatus result = player.calculateResultAgainst(new Score(18, false));
+        WinningStatus result = player.calculateResult(new Score(18, false));
 
         assertEquals(WinningStatus.WIN, result);
     }
@@ -111,7 +111,7 @@ class PlayerTest {
                 new Card(Suit.DIAMONDS, Rank.NUM8)
         );
 
-        WinningStatus result = player.calculateResultAgainst(new Score(18, false));
+        WinningStatus result = player.calculateResult(new Score(18, false));
 
         assertEquals(WinningStatus.DRAW, result);
     }
@@ -123,7 +123,7 @@ class PlayerTest {
                 new Card(Suit.DIAMONDS, Rank.NUM7)
         );
 
-        WinningStatus result = player.calculateResultAgainst(new Score(18, false));
+        WinningStatus result = player.calculateResult(new Score(18, false));
 
         assertEquals(WinningStatus.LOSE, result);
     }
