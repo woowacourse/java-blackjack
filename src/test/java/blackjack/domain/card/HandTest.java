@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.EnumSource.Mode;
-import org.junit.jupiter.params.provider.ValueSource;
 
 class HandTest {
     private static final int ACE_ADJUST_AMOUNT = 10;
@@ -21,11 +20,11 @@ class HandTest {
     void 한장의_카드를_받아서_손패에_추가한다() {
         // given
         Hand hand = Hand.empty();
-        List<Card> existCards = hand.getCards();
+        List<Card> existCards = hand.cards();
         // when
         hand.addCard(card);
         // then
-        List<Card> addedCards = hand.getCards();
+        List<Card> addedCards = hand.cards();
         assertThat(addedCards.size()).isEqualTo(existCards.size() + 1);
     }
 

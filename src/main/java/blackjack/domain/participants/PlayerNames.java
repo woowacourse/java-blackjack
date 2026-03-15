@@ -39,9 +39,4 @@ public record PlayerNames(List<Name> names) {
             .distinct()
             .count();
     }
-
-    @Override
-    public List<Name> names() {
-        return List.copyOf(names);
-    }
 }

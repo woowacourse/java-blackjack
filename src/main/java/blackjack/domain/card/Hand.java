@@ -4,24 +4,14 @@ import blackjack.domain.game.Score;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Hand {
+public record Hand(List<Card> cards) {
     private static final int ACE_ADJUST_AMOUNT = 10;
     private static final int BUST_THRESHOLD = 21;
     private static final int BLACKJACK_SCORE = 21;
     private static final int BLACKJACK_CARD_COUNT = 2;
 
-    private final List<Card> cards;
-
     public static Hand empty() {
         return new Hand(new ArrayList<>());
-    }
-
-    public Hand(List<Card> cards) {
-        this.cards = cards;
-    }
-
-    public List<Card> getCards() {
-        return List.copyOf(cards);
     }
 
     public void addCard(Card card) {

@@ -19,7 +19,7 @@ abstract class Participant {
     }
 
     public final List<Card> getCards() {
-        return hand.getCards();
+        return hand.cards();
     }
 
     public final void hit(Card card) {
