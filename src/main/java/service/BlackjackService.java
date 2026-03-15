@@ -6,8 +6,6 @@ import domain.participant.Player;
 import domain.participant.Players;
 import utils.generator.CardGenerator;
 
-import java.util.List;
-
 public class BlackjackService {
 
     public Deck generateCards() {
@@ -16,11 +14,7 @@ public class BlackjackService {
         return deck;
     }
 
-    public void giveInitialCards(Deck deck, Dealer dealer) {
-        dealer.receiveInitialCards(deck);
-    }
-
-    public void distributeInitialCards(Players players, Deck deck) {
+    public void distributeInitialCardsForPlayers(Players players, Deck deck) {
         for (Player player : players) {
             player.receiveInitialCards(deck);
         }
@@ -30,6 +24,10 @@ public class BlackjackService {
         Dealer dealer = new Dealer(Dealer.DEALER_NAME);
         giveInitialCards(deck, dealer);
         return dealer;
+    }
+
+    private void giveInitialCards(Deck deck, Dealer dealer) {
+        dealer.receiveInitialCards(deck);
     }
 
     public int determineAdditionalCardOfDealer(Dealer dealer, Deck deck) {

@@ -37,7 +37,7 @@ class BlackjackServiceTest {
                 new Player("요크", new Bet(1000)),
                 new Player("아티", new Bet(1000))
         ));
-        blackjackService.distributeInitialCards(players, cards);
+        blackjackService.distributeInitialCardsForPlayers(players, cards);
 
         for (Player player : players) {
             assertThat(player.getCardCount()).isEqualTo(2);

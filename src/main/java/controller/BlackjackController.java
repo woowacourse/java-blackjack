@@ -5,6 +5,7 @@ import domain.card.Deck;
 import domain.dto.BlackjackResultDto;
 import domain.dto.FinalPlayerCardDto;
 import domain.dto.PlayerCardDto;
+import domain.participant.Bet;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
@@ -37,7 +38,7 @@ public class BlackjackController {
         Players players = createPlayers(names);
 
         Dealer dealer = blackjackService.createDealer(cards);
-        distributeInitialCards(dealer, players, cards, names);
+        distributeInitialCards(players, cards, names);
         playRound(dealer, players, cards);
 
         displayFinalCards(dealer, players);
@@ -51,16 +52,15 @@ public class BlackjackController {
     private Players createPlayers(List<String> names) {
         List<Player> playerList = new ArrayList<>();
         for (String name : names) {
-            domain.participant.Bet bet = doRetry(() -> inputView.readBet(name));
+            Bet bet = doRetry(() -> inputView.readBet(name));
             playerList.add(new Player(name, bet));
         }
         return new Players(playerList);
     }
 
-    private void distributeInitialCards(Dealer dealer, Players players, Deck cards, List<String> names) {
+    private void distributeInitialCards(Players players, Deck cards, List<String> names) {
         outputView.displayCardDistribution(names);
-        blackjackService.giveInitialCards(cards, dealer);
-        blackjackService.distributeInitialCards(players, cards);
+        blackjackService.distributeInitialCardsForPlayers(players, cards);
     }
 
     private void playRound(Dealer dealer, Players players, Deck cards) {
