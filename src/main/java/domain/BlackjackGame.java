@@ -1,70 +1,69 @@
 package domain;
 
+import domain.member.Dealer;
 import domain.member.Member;
-import domain.member.Members;
+import domain.member.Name;
+import domain.member.Player;
+import domain.member.Players;
 import domain.card.Deck;
+import domain.member.Settler;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.stream.Collectors;
 
 public class BlackjackGame {
 
-    private final Deck deck;
-    private final Members members;
+    private static final String DEALER_DEFAULT_NAME = "딜러";
 
-    public BlackjackGame(Members members) {
-        this.members = members;
+    private final Deck deck;
+    private final Dealer dealer;
+    private final Players players;
+    private final Settler settler;
+
+    public BlackjackGame(Players members) {
         this.deck = new Deck();
+        this.dealer = new Dealer(new Member(new Name(DEALER_DEFAULT_NAME)));
+        this.players = members;
+        this.settler = new Settler();
         this.deck.init();
     }
 
     public void initGame() {
-        members.initDraw(deck);
+        dealer.initDraw(deck);
+        players.initDraw(deck);
     }
 
-    public void drawPlayer(Member player) {
-        members.draw(player, deck.draw());
+    public void drawPlayer(Player player) {
+        players.draw(player, deck.draw());
     }
 
     public void drawDealer() {
-        members.draw(members.getDealer(), deck.draw());
+        dealer.draw(deck.draw());
     }
 
     public boolean canDealerDraw() {
-        return members.canDealerDraw();
+        return dealer.canDealerDraw();
     }
 
     public void applyBlackjackBonus() {
         getPlayers().stream()
-                .filter(Member::hasBlackjack)
-                .forEach(Member::applyBlackjackBonus);
+                .filter(Player::hasBlackjack)
+                .forEach(Player::applyBlackjackBonus);
     }
 
-    public List<Member> getPlayers() {
-        return Collections.unmodifiableList(members.getPlayers());
+    public List<Player> getPlayers() {
+        return Collections.unmodifiableList(players.getPlayers());
     }
 
-    public Member getDealer() {
-        return members.getDealer();
+    public Dealer getDealer() {
+        return dealer;
     }
 
-    public Map<Member, Integer> getPlayerProfits() {
-        return members.judgeGameResults().entrySet().stream()
-                .collect(Collectors.toMap(
-                        Entry::getKey,
-                        entry -> entry.getKey()
-                                .calculateProfit(entry.getValue()),
-                        (oldValue, newValue) -> oldValue,
-                        LinkedHashMap::new
-                ));
+    public Map<Player, Integer> getPlayerProfits() {
+        return settler.getPlayerProfits(dealer, getPlayers());
     }
 
     public int getDealerProfit() {
-        return getPlayerProfits().values().stream()
-                .mapToInt(result -> -result)
-                .sum();
+        return settler.getDealerProfit(dealer, getPlayers());
     }
 }
