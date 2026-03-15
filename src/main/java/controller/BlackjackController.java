@@ -1,6 +1,8 @@
 package controller;
 
-import model.BlackjackService;
+import model.BlackjackGame;
+import model.judgement.Judgement;
+import model.judgement.PlayerResult;
 import model.paticipant.Dealer;
 import model.paticipant.Player;
 import model.paticipant.Players;
@@ -9,11 +11,11 @@ import view.OutputView;
 
 public class BlackjackController {
 
-    private final BlackjackService blackjackService;
+    private final BlackjackGame blackjackGame;
     private final GameMode gameMode;
 
-    public BlackjackController(BlackjackService blackjackService, GameMode gameMode) {
-        this.blackjackService = blackjackService;
+    public BlackjackController(BlackjackGame blackjackGame, GameMode gameMode) {
+        this.blackjackGame = blackjackGame;
         this.gameMode = gameMode;
     }
 
@@ -21,26 +23,44 @@ public class BlackjackController {
         Dealer dealer = new Dealer();
         Players players = gameMode.createPlayers();
 
-        drawInitCards(dealer, players);
-        drawMoreCardByPlayer(dealer, players);
-
-        gameMode.reportResult(dealer, players);
+        initialDeal(dealer, players);
+        proceedTurns(dealer, players);
+        finishGame(dealer, players);
     }
 
-    private void drawMoreCardByPlayer(Dealer dealer, Players players) {
-        players.forEach(this::chooseHitOrStand);
+    private void initialDeal(Dealer dealer, Players players) {
+        blackjackGame.drawInitCards(dealer, players);
+        OutputView.printCardOpen(dealer, players.players());
+    }
+
+    private void proceedTurns(Dealer dealer, Players players) {
+        players.forEach(this::processPlayerTurn);
 
         while (dealer.canHit()) {
             OutputView.printToOpenDealerNewCard(dealer);
-            blackjackService.drawOneCard(dealer);
+            blackjackGame.drawOneCard(dealer);
         }
     }
 
-    private void drawInitCards(Dealer dealer, Players players) {
-        blackjackService.drawTwoCards(dealer, players);
-        OutputView.printCardOpen(players);
-        OutputView.printCardByDealer(dealer);
-        OutputView.printCardByPlayers(players);
+    private void processPlayerTurn(Player player) {
+        if (player.isBlackjack()) {
+            return;
+        }
+
+        boolean hasDrawn = hitUntilStand(player);
+        if (!hasDrawn) {
+            OutputView.printCardByPlayer(player);
+        }
+    }
+
+    private boolean hitUntilStand(Player player) {
+        boolean hasDrawn = false;
+        while (canHitMore(player)) {
+            blackjackGame.drawOneCard(player);
+            OutputView.printCardByPlayer(player);
+            hasDrawn = true;
+        }
+        return hasDrawn;
     }
 
     private boolean canHitMore(Player player) {
@@ -52,24 +72,9 @@ public class BlackjackController {
         return Continuation.from(inputCommand);
     }
 
-    private void chooseHitOrStand(Player player) {
-        if (player.isBlackjack()) {
-            return;
-        }
-
-        boolean didDraw = drawMoreCard(player);
-        if (!didDraw) {
-            OutputView.printCardByPlayer(player);
-        }
-    }
-
-    private boolean drawMoreCard(Player player) {
-        boolean didDraw = false;
-        while (canHitMore(player)) {
-            blackjackService.drawOneCard(player);
-            OutputView.printCardByPlayer(player);
-            didDraw = true;
-        }
-        return didDraw;
+    private void finishGame(Dealer dealer, Players players) {
+        OutputView.printFinalCards(dealer, players.players());
+        PlayerResult playerResult = Judgement.judgeByPlayer(dealer, players);
+        gameMode.reportResult(playerResult);
     }
 }

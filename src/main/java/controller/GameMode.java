@@ -6,11 +6,8 @@ import controller.input.PlayerReader;
 import controller.result.BettingResultReporter;
 import controller.result.NonBettingResultReporter;
 import controller.result.ResultReporter;
-import model.judgement.Judgement;
 import model.judgement.PlayerResult;
-import model.paticipant.Dealer;
 import model.paticipant.Players;
-import view.OutputView;
 
 public class GameMode {
 
@@ -34,16 +31,7 @@ public class GameMode {
         return playerReader.readPlayers();
     }
 
-    public void reportResult(Dealer dealer, Players players) {
-        printFinalCards(dealer, players);
-
-        PlayerResult playerResult = Judgement.judgeByPlayer(dealer, players);
+    public void reportResult(PlayerResult playerResult) {
         resultReporter.report(playerResult);
-    }
-
-    private void printFinalCards(Dealer dealer, Players players) {
-        OutputView.printBlank();
-        OutputView.printCardByPlayerWithScore(dealer);
-        players.forEach(OutputView::printCardByPlayerWithScore);
     }
 }

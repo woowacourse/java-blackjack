@@ -5,15 +5,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class Players {
-
-    private final List<Player> players;
+public record Players(List<Player> players) {
 
     public Players(List<Player> players) {
         this.players = new ArrayList<>(players);
     }
 
-    public List<Player> getPlayers() {
+    @Override
+    public List<Player> players() {
         return Collections.unmodifiableList(players);
     }
 

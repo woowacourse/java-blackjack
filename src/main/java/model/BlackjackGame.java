@@ -10,25 +10,25 @@ import model.paticipant.Participant;
 import model.paticipant.Player;
 import model.paticipant.Players;
 
-public class BlackjackService {
+public class BlackjackGame {
 
     private static final int INITIAL_DISPENSE_COUNT = 2;
     private static final int BASE_DISPENSE_COUNT = 1;
 
     private final Deck deck;
 
-    public BlackjackService(Deck deck) {
+    public BlackjackGame(Deck deck) {
         this.deck = deck;
     }
 
-    public static BlackjackService createDefaultService(CardShuffler cardShuffler) {
+    public static BlackjackGame setup(CardShuffler cardShuffler) {
         List<Card> fullCards = CardFactory.createFullCards();
         List<Card> shuffledCards = cardShuffler.shuffle(fullCards);
         Deck deck = new Deck(shuffledCards);
-        return new BlackjackService(deck);
+        return new BlackjackGame(deck);
     }
 
-    public void drawTwoCards(Dealer dealer, Players players) {
+    public void drawInitCards(Dealer dealer, Players players) {
         drawCardByParticipant(dealer, INITIAL_DISPENSE_COUNT);
         players.forEach(player -> drawCardByPlayer(player, INITIAL_DISPENSE_COUNT));
     }
