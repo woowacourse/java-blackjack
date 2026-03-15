@@ -12,7 +12,7 @@ import java.util.Map;
 public class OutputView {
     public void displayCardDistribution(List<String> names) {
         String nameContent = String.join(", ", names);
-        System.out.printf("딜러가 %s에게 2장을 나누었습니다.\n\n", nameContent);
+        System.out.printf("딜러와 %s에게 2장을 나누었습니다.\n\n", nameContent);
     }
 
     public void displayCardContents(List<PlayerCardDto> playerCardDtos) {
