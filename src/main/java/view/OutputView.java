@@ -1,12 +1,11 @@
 package view;
 
-import domain.GameResult;
 import domain.card.Card;
-import domain.card.CardSuit;
-import domain.card.CardValue;
 import dto.ParticipantDto;
 import dto.PlayerProfitDto;
 import java.util.List;
+import view.formatter.CardSuitFormatter;
+import view.formatter.CardValueFormatter;
 
 public class OutputView {
 
@@ -15,8 +14,8 @@ public class OutputView {
         System.out.println("딜러와 " + String.join(", ", playerNames) + "에게 2장을 나누었습니다.");
     }
 
-    public void printDealerStartCard(CardValue cardValue, CardSuit cardSuit) {
-        System.out.println("딜러카드: " + cardValue.getName() + getCardSuit(cardSuit));
+    public void printDealerStartCard(Card dealerFirstCard) {
+        System.out.println("딜러카드: " + CardValueFormatter.from(dealerFirstCard.getCardValue()) + CardSuitFormatter.from(dealerFirstCard.getCardSuit()));
     }
 
     public void printStartCard(List<ParticipantDto> playerDtos) {
@@ -55,28 +54,11 @@ public class OutputView {
         }
     }
 
-    private void printParticipantScore(ParticipantDto participant) {
-        System.out.println(participant.name() + "카드: " + cardsToString(participant.cards()) + " - 결과: " + participant.score());
+    private void printParticipantScore(ParticipantDto participantDto) {
+        System.out.println(participantDto.name() + "카드: " + cardsToString(participantDto.cards()) + " - 결과: " + participantDto.score());
     }
 
     private String cardsToString(List<Card> hand) {
-        return String.join(", ", hand.stream().map(card -> card.getCardValue().getName() + getCardSuit(card.getCardSuit())).toList());
-    }
-
-    private String getCardSuit(CardSuit cardSuit) {
-        return switch (cardSuit) {
-            case HEART -> "하트";
-            case SPADE -> "스페이드";
-            case CLUB -> "클로버";
-            case DIAMOND -> "다이아몬드";
-        };
-    }
-
-    private String getGameResult(GameResult gameResult) {
-        return switch (gameResult) {
-            case WIN -> "승";
-            case DRAW -> "무";
-            case LOSE -> "패";
-        };
+        return String.join(", ", hand.stream().map(card -> CardValueFormatter.from(card.getCardValue()) + CardSuitFormatter.from(card.getCardSuit())).toList());
     }
 }

@@ -69,7 +69,7 @@ public class GameController {
         outputView.printStartCardMessage(playerNames);
 
         Card dealerFirstCard = dealer.getHand().getFirst();
-        outputView.printDealerStartCard(dealerFirstCard.getCardValue(), dealerFirstCard.getCardSuit());
+        outputView.printDealerStartCard(dealerFirstCard);
         outputView.printStartCard(
                 players.getPlayers().stream().map(player -> ParticipantDto.of(player.getName(), player)).toList());
     }
