@@ -11,9 +11,9 @@ public class Deck {
     private final Deque<Card> cards;
 
     public Deck(ShuffleStrategy shuffleStrategy) {
-        List<Card> initializeCards = initialize();
-        List<Card> shuffledCards = shuffleStrategy.shuffle(initializeCards);
-        this.cards = new ArrayDeque<>(shuffledCards);
+        List<Card> cards = initialize();
+        shuffleStrategy.shuffle(cards);
+        this.cards = new ArrayDeque<>(cards);
     }
 
     private List<Card> initialize() {

@@ -2,7 +2,6 @@ package domain;
 
 import domain.card.Card;
 import domain.card.ShuffleStrategy;
-import java.util.ArrayList;
 import java.util.List;
 
 public class FixShuffleStrategy implements ShuffleStrategy {
@@ -14,10 +13,8 @@ public class FixShuffleStrategy implements ShuffleStrategy {
     }
 
     @Override
-    public List<Card> shuffle(List<Card> cards) {
-        List<Card> newCards = new ArrayList<>(cards);
-        newCards.clear();
-        newCards.addAll(fixCard);
-        return newCards;
+    public void shuffle(List<Card> cards) {
+        cards.clear();
+        cards.addAll(fixCard);
     }
 }
