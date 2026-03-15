@@ -20,6 +20,6 @@ public class Player extends Participant {
 
     @Override
     public boolean canReceiveCard() {
-        return hand.calculateScore() < MAX_PLAYER_CAN_RECEIVE_SCORE;
+        return getScore() < MAX_PLAYER_CAN_RECEIVE_SCORE;
     }
 }

@@ -10,11 +10,11 @@ public class Dealer extends Participant {
     }
 
     public String getOpenCard() {
-        return hand.getFirstCard();
+        return showHand().getFirst();
     }
 
     @Override
     public boolean canReceiveCard() {
-        return hand.calculateScore() <= MAX_DEALER_SHOULD_RECEIVE_SCORE;
+        return getScore() <= MAX_DEALER_SHOULD_RECEIVE_SCORE;
     }
 }
