@@ -1,7 +1,16 @@
 package controller;
 
+import domain.bet.BetAmount;
+import domain.bet.BetTable;
 import domain.card.CardDeck;
-import domain.participant.*;
+import domain.participant.Dealer;
+import domain.participant.Hand;
+import domain.participant.ParticipantGroup;
+import domain.participant.Player;
+import domain.participant.PlayerName;
+import domain.participant.Players;
+import domain.profit.ProfitCalculator;
+import domain.profit.ProfitTable;
 import domain.result.GameState;
 import domain.result.Result;
 import domain.result.ResultJudge;
@@ -26,40 +35,13 @@ public class BlackJackController {
     }
 
     public void run() {
-        GameState gameState = prepareGame();
+        Players players = getPlayer();
+        BetTable betTable = playBet(players);
+        GameState gameState = prepareGame(players);
+
         playPlayers(gameState);
         playDealer(gameState);
-        showResult(gameState);
-    }
-
-    private GameState prepareGame() {
-        CardDeck cardDeck = new CardDeck();
-        Players players = getPlayer();
-        Dealer dealer = new Dealer(new Hand());
-
-        initGame(cardDeck, new ParticipantGroup(players, dealer));
-
-        return new GameState(new ParticipantGroup(players, dealer), cardDeck);
-    }
-
-    private void playPlayers(GameState gameState) {
-        for (Player player : gameState.getPlayers().getAllPlayers()) {
-            progressGame(gameState.getCardDeck(), player);
-        }
-    }
-
-    private void playDealer(GameState gameState) {
-        int hitCount = blackJackService.dealerHitOrStand(gameState.getDealer(), gameState.getCardDeck());
-
-        for (int i = 0; i < hitCount; i++) {
-            OutputView.dealerHitMessage();
-        }
-    }
-
-    private void showResult(GameState gameState) {
-        OutputView.scoreStatisticsMessage(gameState.getDealer(), gameState.getPlayers());
-        Result result = resultJudge.calculateResult(gameState.getDealer(), gameState.getPlayers());
-        OutputView.gameResultMessage(result);
+        showResult(gameState, betTable);
     }
 
     private Players getPlayer() {
@@ -76,34 +58,41 @@ public class BlackJackController {
         return new Players(players);
     }
 
+    private BetTable playBet(Players players) {
+        BetTable betTable = new BetTable();
+        for (Player player : players.getAllPlayers()) {
+            BetAmount betAmount = getBetAmount(player);
+            betTable.recordAmount(player.getName(), betAmount.getBetAmount());
+        }
+        return betTable;
+    }
+
+    private BetAmount getBetAmount(Player player) {
+        OutputView.betMessage(player);
+        String input = InputView.input();
+        Validator.validateInputIsNotNullOrBlank(input);
+        int betAmount = Parser.inputToNumber(input);
+        return new BetAmount(betAmount);
+    }
+
+    private GameState prepareGame(Players players) {
+        CardDeck cardDeck = new CardDeck();
+        Dealer dealer = new Dealer(new Hand());
+
+        initGame(cardDeck, new ParticipantGroup(players, dealer));
+
+        return new GameState(new ParticipantGroup(players, dealer), cardDeck);
+    }
+
     private void initGame(CardDeck cardDeck, ParticipantGroup participantGroup) {
         blackJackService.dealInitialCards(cardDeck, participantGroup);
         OutputView.gameStartMessage(participantGroup.getDealer(), participantGroup.getPlayers());
     }
 
-    private boolean isHitRequested(Player player) {
-        OutputView.hitOrStandMessage(player);
-        String input = InputView.input();
-        Validator.validateChoiceInput(input);
-        return HIT_COMMAND.equals(input);
-    }
-
-    private boolean canPlayerDraw(Player player) {
-        if (player.isBust()) {
-            player.getTotalCardScore();
-            return false;
+    private void playPlayers(GameState gameState) {
+        for (Player player : gameState.getPlayers().getAllPlayers()) {
+            progressGame(gameState.getCardDeck(), player);
         }
-        return isHitRequested(player);
-    }
-
-    private void drawAndShowCard(CardDeck cardDeck, Player player) {
-        player.keepCard(cardDeck.drawCard());
-        OutputView.holdingCardMessage(player);
-    }
-
-    private void finalizePlayerTurn(Player player) {
-        OutputView.holdingCardMessage(player);
-        player.getTotalCardScore();
     }
 
     private void progressGame(CardDeck cardDeck, Player player) {
@@ -113,5 +102,56 @@ public class BlackJackController {
         if (!player.isBust()) {
             finalizePlayerTurn(player);
         }
+    }
+
+    private boolean canPlayerDraw(Player player) {
+        if (player.isBust()) {
+            return false;
+        }
+        return isHitRequested(player);
+    }
+
+    private boolean isHitRequested(Player player) {
+        OutputView.hitOrStandMessage(player);
+        String input = InputView.input();
+        Validator.validateChoiceInput(input);
+        return HIT_COMMAND.equals(input);
+    }
+
+    private void drawAndShowCard(CardDeck cardDeck, Player player) {
+        player.keepCard(cardDeck.drawCard());
+        OutputView.holdingCardMessage(player);
+    }
+
+    private void finalizePlayerTurn(Player player) {
+        OutputView.holdingCardMessage(player);
+    }
+
+    private void playDealer(GameState gameState) {
+        int hitCount = blackJackService.dealerHitOrStand(gameState.getDealer(), gameState.getCardDeck());
+
+        for (int i = 0; i < hitCount; i++) {
+            OutputView.dealerHitMessage();
+        }
+    }
+
+    private void showResult(GameState gameState, BetTable betTable) {
+        OutputView.scoreStatisticsMessage(gameState.getDealer(), gameState.getPlayers());
+        Result result = resultJudge.calculateResult(gameState.getDealer(), gameState.getPlayers());
+
+        ProfitCalculator profitCalculator = new ProfitCalculator(betTable);
+        ProfitTable profitTable = savePlayerProfits(gameState, profitCalculator, result);
+
+        int dealerProfit = profitTable.dealerCalculateProfit();
+        OutputView.gameProfitResultMessage(profitTable, dealerProfit);
+    }
+
+    private ProfitTable savePlayerProfits(GameState gameState, ProfitCalculator calculator, Result result) {
+        ProfitTable profitTable = new ProfitTable();
+        for (Player player : gameState.findAllPlayers()) {
+            int profit = calculator.playerCalculateProfit(result, player);
+            profitTable.recordProfit(player, profit);
+        }
+        return profitTable;
     }
 }
