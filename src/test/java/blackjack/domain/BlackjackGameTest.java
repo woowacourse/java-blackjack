@@ -19,7 +19,7 @@ class BlackjackGameTest {
         List<String> askedPlayers = new ArrayList<>();
         game.betPlayers(name -> {
             askedPlayers.add(name);
-            return 10000;
+            return "10000";
         });
 
         assertThat(askedPlayers).containsExactly("pobi", "jason");
