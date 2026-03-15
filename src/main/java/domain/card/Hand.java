@@ -7,10 +7,10 @@ import java.util.Objects;
 
 public class Hand {
 
-    public static final int BLACK_JACK_SCORE_CONDITION = 21;
-    public static final int BLACK_JACK_CARD_COUNT_CONDITION = 2;
-    public static final int BUSTED_CONDITION = 21;
-    public static final int ACE_BONUS_SCORE = 10;
+    private static final int BLACK_JACK_SCORE_CONDITION = 21;
+    private static final int BLACK_JACK_CARD_COUNT_CONDITION = 2;
+    private static final int BUSTED_CONDITION = 21;
+    private static final int ACE_BONUS_SCORE = 10;
 
     private final List<Card> cards;
 

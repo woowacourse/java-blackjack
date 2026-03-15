@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Dealer extends Participant {
 
-    public static final int DEALER_ADDITIONAL_DRAW_CONDITION = 16;
+    private static final int DEALER_ADDITIONAL_DRAW_CONDITION = 16;
 
     private Dealer() {
         super(ParticipantName.from(DEALER_DISPLAY_NAME));

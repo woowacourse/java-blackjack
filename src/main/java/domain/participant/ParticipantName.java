@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public record ParticipantName(String name) {
 
-    public static final int PLAYER_NAME_LENGTH_LIMIT = 5;
+    private static final int PLAYER_NAME_LENGTH_LIMIT = 5;
 
     public static ParticipantName from(String name) {
         validateBlank(name);
