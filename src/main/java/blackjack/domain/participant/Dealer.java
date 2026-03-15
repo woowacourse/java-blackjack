@@ -1,6 +1,11 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
+import static blackjack.global.ParticipantConstants.DEALER_DISTRIBUTE_COUNT;
 import static blackjack.global.ParticipantConstants.DEALER_HIT_THRESHOLD;
+
+import blackjack.domain.trump.Card;
+import blackjack.domain.trump.Trump;
+import blackjack.dto.CardDto;
 
 import java.util.List;
 
@@ -26,9 +31,7 @@ public class Dealer extends Participant {
     }
 
     public void pitch(final List<Player> players) {
-        final int distributeCount = 2;
-
-        for (int i = 0; i < distributeCount; i++) {
+        for (int i = 0; i < DEALER_DISTRIBUTE_COUNT; i++) {
             players.forEach(this::giveCardTo);
             giveCardMyself();
         }
@@ -40,7 +43,7 @@ public class Dealer extends Participant {
         }
     }
 
-    public List<String> getOpenCardNames() {
+    public List<CardDto> getOpenCardNames() {
         final int holeIndex = 1;
         return hand.getCardNames(holeIndex);
     }

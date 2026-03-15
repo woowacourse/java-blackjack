@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.trump;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -29,14 +29,14 @@ public enum Denomination {
         this.score = score;
     }
 
-    public String getSymbol() {
-        return symbol;
-    }
-
     public static Denomination pick(final String symbol) {
         return Arrays.stream(values())
             .filter(card -> Objects.equals(card.symbol, symbol))
             .findFirst().orElseThrow(() -> new IllegalArgumentException("올바른 카드가 아닙니다."));
+    }
+
+    public String getSymbol() {
+        return symbol;
     }
 
     public int toScore() {

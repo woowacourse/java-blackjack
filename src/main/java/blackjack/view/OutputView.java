@@ -1,38 +1,30 @@
 package blackjack.view;
 
+import static blackjack.global.ParticipantConstants.DEALER_DISTRIBUTE_COUNT;
 import static blackjack.global.ParticipantConstants.DEALER_HIT_THRESHOLD;
 
-import blackjack.domain.Dealer;
-import blackjack.domain.Participant;
-import blackjack.domain.Participants;
-import blackjack.domain.Player;
-import blackjack.dto.FinalResultDto;
+import blackjack.dto.*;
+
 import java.util.List;
 
 public class OutputView {
 
     private static final String ERROR_PREFIX = "[ERROR]: ";
-    private static final String START_NUMBER_OF_CARD = "2";
 
     public static void printErrorMessage(final String message) {
         System.out.println(ERROR_PREFIX + message);
     }
 
-    public static void printStartMessage(final List<Player> players, final Dealer dealer) {
-        List<String> playerNicknames = players.stream()
-            .map(Player::getNickname)
-            .toList();
+    public static void printStartMessage(final StartMessageDto startMessageDto) {
+        System.out.printf("딜러와 %s에게 %d장을 나누었습니다.\n",
+            String.join(", ", startMessageDto.playerNicknames()), DEALER_DISTRIBUTE_COUNT);
 
-        System.out.printf("딜러와 %s에게 %s장을 나누었습니다.\n",
-            String.join(", ", playerNicknames), START_NUMBER_OF_CARD);
-
-        System.out.printf("딜러카드: %s\n", String.join(", ", dealer.getOpenCardNames()));
-
-        players.forEach(OutputView::printCardStatus);
+        startMessageDto.participantCardDtosMap().forEach((nickname, cardDtos) ->
+            System.out.println(participantHandFormat(nickname, cardDtos)));
     }
 
-    public static void printCardStatus(final Participant participant) {
-        System.out.println(participantHandFormat(participant));
+    public static void printCardStatus(final CardStatusDto cardStatusDto) {
+        System.out.println(participantHandFormat(cardStatusDto.nickname(), cardStatusDto.cardDtos()));
     }
 
 
@@ -40,31 +32,32 @@ public class OutputView {
         System.out.printf("딜러는 %d이하라 한장의 카드를 더 받았습니다.\n", DEALER_HIT_THRESHOLD);
     }
 
-    public static void printFinalStatus(final Participants participants) {
-        final String delimiter = " - ";
-        participants.all().forEach(participant ->
-            System.out.println(participantHandFormat(participant) + delimiter +
-                participantScoreResultFormat(participant))
-        );
+    public static void printFinalStatus(final FinalStatusDto finalStatusDto) {
+        for (final String nickname : finalStatusDto.nicknames()) {
+            System.out.printf("%s - 결과: %s\n",
+                participantHandFormat(nickname, finalStatusDto.nicknameCardDtosMap().get(nickname)),
+                finalStatusDto.nicknameScoreMap().get(nickname));
+        }
+
     }
 
-    public static void printFinalResult(final FinalResultDto dto) {
-        System.out.println("## 최종 승패");
-        System.out.printf("딜러: %d승 %d무 %d패\n",
-            dto.dealerWinCount(), dto.dealerDrawCount(), dto.dealerLoseCount());
-        dto.playerGameResultMap()
-            .forEach((key, value) ->
-                System.out.printf("%s: %s\n", key, value.getName()));
+    public static void printFinalProfits(final FinalProfitsDto finalProfitsDto) {
+        System.out.println("## 최종 수익");
+        System.out.printf("딜러: %d\n", finalProfitsDto.dealerProfit());
+        finalProfitsDto.nicknameProfitMap().forEach((nickname, profit) ->
+            System.out.printf("%s: %d\n", nickname, profit));
     }
 
-    private static String participantHandFormat(final Participant participant) {
+    private static String participantHandFormat(final String nickname, final List<CardDto> cardDtos) {
+        final List<String> cardNames = cardDtos.stream()
+            .map(OutputView::cardFormat)
+            .toList();
+
         return String.format("%s카드: %s",
-            participant.getNickname(),
-            String.join(", ", participant.getAllCardNames())
-        );
+            nickname, String.join(", ", cardNames));
     }
 
-    private static String participantScoreResultFormat(final Participant participant) {
-        return String.format("결과: %d", participant.getScore());
+    private static String cardFormat(final CardDto cardDto) {
+        return cardDto.denomination() + cardDto.suit();
     }
 }

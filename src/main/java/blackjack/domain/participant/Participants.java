@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.participant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,5 +18,13 @@ public class Participants {
         participants.addAll(players.all());
 
         return participants;
+    }
+
+    public Players getPlayers() {
+        return players;
+    }
+
+    public Dealer getDealer() {
+        return dealer;
     }
 }

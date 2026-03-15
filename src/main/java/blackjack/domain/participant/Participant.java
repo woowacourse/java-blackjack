@@ -1,4 +1,7 @@
-package blackjack.domain;
+package blackjack.domain.participant;
+
+import blackjack.domain.trump.Card;
+import blackjack.dto.CardDto;
 
 import java.util.List;
 
@@ -28,6 +31,10 @@ public abstract class Participant {
         return status == Status.BURST;
     }
 
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
+    }
+
     public void stay() {
         if (status == Status.HIT) {
             status = Status.STAY;
@@ -40,7 +47,7 @@ public abstract class Participant {
         }
     }
 
-    public List<String> getAllCardNames() {
+    public List<CardDto> getAllCardNames() {
         final int startIndex = 0;
         return hand.getCardNames(startIndex);
     }

@@ -1,14 +1,19 @@
 package blackjack.controller;
 
-import blackjack.domain.Answer;
-import blackjack.domain.Dealer;
-import blackjack.domain.Hand;
-import blackjack.domain.Participants;
-import blackjack.domain.Player;
-import blackjack.domain.Players;
-import blackjack.domain.Status;
-import blackjack.domain.Trump;
-import blackjack.dto.FinalResultDto;
+import blackjack.domain.bet.Bet;
+import blackjack.domain.participant.Answer;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Hand;
+import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Player;
+import blackjack.domain.participant.Players;
+import blackjack.domain.participant.Status;
+import blackjack.domain.trump.RandomSortBehavior;
+import blackjack.domain.trump.Trump;
+import blackjack.dto.CardStatusDto;
+import blackjack.dto.FinalProfitsDto;
+import blackjack.dto.FinalStatusDto;
+import blackjack.dto.StartMessageDto;
 import blackjack.utils.Parser;
 import blackjack.utils.RetryExecutor;
 import blackjack.view.InputView;
@@ -21,22 +26,31 @@ public class BlackjackController {
     public void run() {
         final Hand hand = new Hand(new ArrayList<>());
         final Players players = RetryExecutor.retry(this::readPlayers);
-        final Dealer dealer = new Dealer(hand, Status.HIT, new Trump());
+        final Dealer dealer = new Dealer(hand, Status.HIT, new Trump(new RandomSortBehavior()));
         final Participants participants = new Participants(players, dealer);
+
+        handleBet(players);
         dealer.pitch(players.all());
-        OutputView.printStartMessage(players.all(), dealer);
-
-        players.all().forEach(player -> handlePlayerAction(player, dealer));
-        handleDealerAction(dealer);
-
-        printResult(participants, players, dealer);
+        OutputView.printStartMessage(StartMessageDto.of(players, dealer));
+        handleAllActions(players, dealer);
+        printResult(participants);
     }
 
-    private void printResult(final Participants participants, final Players players,
-        final Dealer dealer) {
-        OutputView.printFinalStatus(participants);
-        final FinalResultDto finalResultDto = FinalResultDto.of(players.all(), dealer);
-        OutputView.printFinalResult(finalResultDto);
+    private void printResult(final Participants participants) {
+        final FinalProfitsDto finalProfitsDto = FinalProfitsDto.of(participants.getPlayers(),
+            participants.getDealer());
+        OutputView.printFinalStatus(FinalStatusDto.from(participants));
+        OutputView.printFinalProfits(finalProfitsDto);
+    }
+
+    private void handleBet(final Players players) {
+        players.all().forEach(player ->
+            player.bet(RetryExecutor.retry(this::readBet, player)));
+    }
+
+    private void handleAllActions(final Players players, final Dealer dealer) {
+        players.all().forEach(player -> handlePlayerAction(player, dealer));
+        handleDealerAction(dealer);
     }
 
     private void handleDealerAction(final Dealer dealer) {
@@ -53,7 +67,7 @@ public class BlackjackController {
         while (player.isHit()) {
             final Answer answer = RetryExecutor.retry(this::readAnswer, player.getNickname());
             handleAnswer(player, dealer, answer);
-            OutputView.printCardStatus(player);
+            OutputView.printCardStatus(CardStatusDto.from(player));
         }
     }
 
@@ -64,6 +78,11 @@ public class BlackjackController {
             .map(nickname -> new Player(new Hand(new ArrayList<>()), Status.HIT, nickname))
             .toList();
         return new Players(players);
+    }
+
+    private Bet readBet(final Player player) {
+        final int amount = InputView.readBetAmount(player.getNickname());
+        return new Bet(amount);
     }
 
     private Answer readAnswer(final String nickname) {
@@ -83,4 +102,5 @@ public class BlackjackController {
         dealer.giveCardTo(player);
         player.handleBurst();
     }
+
 }
