@@ -6,15 +6,15 @@ import java.util.List;
 
 public class BettingHand {
     private final Hand hand;
-    private final Bet bet;
+    private final BettingProfit bettingProfit;
 
-    private BettingHand(Hand hand, Bet bet) {
+    private BettingHand(Hand hand, BettingProfit bettingProfit) {
         this.hand = hand;
-        this.bet = bet;
+        this.bettingProfit = bettingProfit;
     }
 
-    public static BettingHand of(Hand hand, Bet bet) {
-        return new BettingHand(hand, bet);
+    public static BettingHand of(Hand hand, BettingProfit bettingProfit) {
+        return new BettingHand(hand, bettingProfit);
     }
 
     public void addCard(Card card) {
@@ -39,9 +39,9 @@ public class BettingHand {
 
     public int calculateProfit(Dealer dealer) {
         if (isBlackjackWin(dealer)) {
-            return bet.blackjackWinProfit();
+            return bettingProfit.blackjackWinProfit();
         }
-        return bet.profit(determineResult(dealer));
+        return bettingProfit.profit(determineResult(dealer));
     }
 
     public Result determineResult(Dealer dealer) {

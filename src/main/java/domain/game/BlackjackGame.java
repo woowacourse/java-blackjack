@@ -2,8 +2,8 @@ package domain.game;
 
 import domain.card.Card;
 import domain.card.Deck;
-import domain.player.Bet;
 import domain.player.BettingHand;
+import domain.player.BettingProfit;
 import domain.player.Dealer;
 import domain.player.Hand;
 import domain.player.Money;
@@ -41,11 +41,11 @@ public class BlackjackGame {
                 .mapToObj(i -> {
                     Name name = new Name(names.get(i));
                     Money money = new Money(amounts.get(i));
-                    Bet bet = new Bet(money);
+                    BettingProfit bettingProfit = new BettingProfit(money);
 
                     Hand initialHand = createInitialHand(deck);
 
-                    BettingHand bettingHand = BettingHand.of(initialHand, bet);
+                    BettingHand bettingHand = BettingHand.of(initialHand, bettingProfit);
 
                     return Player.of(name, bettingHand);
                 })

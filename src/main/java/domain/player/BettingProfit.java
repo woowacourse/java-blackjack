@@ -2,13 +2,13 @@ package domain.player;
 
 import domain.game.Result;
 
-public class Bet {
+public class BettingProfit {
     private static final double BLACKJACK_PAYOUT_RATE = 1.5;
     private static final int DRAW_PROFIT = 0;
 
     private final Money money;
 
-    public Bet(Money money) {
+    public BettingProfit(Money money) {
         this.money = money;
     }
 

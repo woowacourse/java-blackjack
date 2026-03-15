@@ -3,8 +3,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.game.Result;
-import domain.player.Bet;
 import domain.player.BettingHand;
+import domain.player.BettingProfit;
 import domain.player.Dealer;
 import domain.player.Hand;
 import domain.player.Money;
@@ -101,24 +101,25 @@ class BettingHandTest {
         }
 
         private static Stream<Arguments> calculateProfitCases() {
-            Bet bet = bet(1000);
+            BettingProfit bettingProfit = bet(1000);
             return Stream.of(
                     // "블랙잭으로 승리하면 블랙잭 승리 수익을 반환한다"
-                    Arguments.of(hand(Rank.ACE, Rank.KING), hand(Rank.TEN, Rank.NINE), bet.blackjackWinProfit()),
+                    Arguments.of(hand(Rank.ACE, Rank.KING), hand(Rank.TEN, Rank.NINE),
+                            bettingProfit.blackjackWinProfit()),
                     // "일반 승리이면 승리 수익을 반환한다"
-                    Arguments.of(hand(Rank.TEN, Rank.NINE), hand(Rank.TEN, Rank.EIGHT), bet.winProfit()),
+                    Arguments.of(hand(Rank.TEN, Rank.NINE), hand(Rank.TEN, Rank.EIGHT), bettingProfit.winProfit()),
                     // "무승부이면 베팅 금액을 반환한다"
-                    Arguments.of(hand(Rank.TEN, Rank.EIGHT), hand(Rank.NINE, Rank.NINE), bet.refundProfit()),
+                    Arguments.of(hand(Rank.TEN, Rank.EIGHT), hand(Rank.NINE, Rank.NINE), bettingProfit.refundProfit()),
                     // "패배이면 잃은 금액을 반환한다"
-                    Arguments.of(hand(Rank.TEN, Rank.EIGHT), hand(Rank.TEN, Rank.NINE), bet.loseProfit()),
+                    Arguments.of(hand(Rank.TEN, Rank.EIGHT), hand(Rank.TEN, Rank.NINE), bettingProfit.loseProfit()),
                     // "플레이어와 딜러가 모두 블랙잭이면 무승부 수익을 반환한다"
-                    Arguments.of(hand(Rank.ACE, Rank.KING), hand(Rank.ACE, Rank.QUEEN), bet.refundProfit())
+                    Arguments.of(hand(Rank.ACE, Rank.KING), hand(Rank.ACE, Rank.QUEEN), bettingProfit.refundProfit())
             );
         }
     }
 
-    private static Bet bet(int amount) {
-        return new Bet(new Money(amount));
+    private static BettingProfit bet(int amount) {
+        return new BettingProfit(new Money(amount));
     }
 
     private static Hand hand(Rank... ranks) {
