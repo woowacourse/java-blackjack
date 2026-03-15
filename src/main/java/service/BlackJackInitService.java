@@ -1,14 +1,14 @@
 package service;
 
-import domain.participant.Dealer;
 import domain.Deck;
+import domain.participant.Dealer;
 import domain.participant.Player;
 import java.util.List;
 
 public class BlackJackInitService {
 
     public Deck createDeck() {
-        return new Deck();
+        return Deck.createShuffledDeck();
     }
 
     public Dealer createDealer(Deck deck) {
