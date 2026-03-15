@@ -1,4 +1,4 @@
-package domain;
+package domain.hand;
 
 public record Score(int value) {
     private static final int BUST_LIMIT_SCORE = 21;

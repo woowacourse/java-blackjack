@@ -1,12 +1,12 @@
 package controller;
 
 import domain.BlackjackGame;
-import domain.BettingMoney;
-import domain.Dealer;
-import domain.Name;
-import domain.Player;
-import domain.PlayerCreationInfo;
-import domain.Players;
+import domain.participant.BettingMoney;
+import domain.participant.Dealer;
+import domain.participant.Name;
+import domain.participant.Player;
+import domain.participant.PlayerCreationInfo;
+import domain.participant.Players;
 import domain.ProfitCalculator;
 import dto.PlayerDto;
 import dto.PlayersDto;
@@ -50,9 +50,9 @@ public class GameController {
     private void printGameResult(BlackjackGame blackjackGame) {
         Dealer dealer = blackjackGame.getDealer();
         Players players = blackjackGame.getPlayers();
-        PlayersDto playersDto = PlayersDto.from(players);
+        PlayersDto afterPlayersDto = PlayersDto.from(players);
 
-        printCardResults(ResultDto.from(dealer), playersDto);
+        printCardResults(ResultDto.from(dealer), afterPlayersDto);
         printProfitResults(players, dealer);
     }
 
@@ -86,8 +86,8 @@ public class GameController {
         }
     }
 
-    private void printCardResults(ResultDto resultDto, PlayersDto playersDto) {
-        OutputView.printCardResult(resultDto, playersDto);
+    private void printCardResults(ResultDto resultDto, PlayersDto afterPlayersDto) {
+        OutputView.printCardResult(resultDto, afterPlayersDto);
     }
 
     private void printProfitResults(Players players, Dealer dealer) {

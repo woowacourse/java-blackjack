@@ -1,6 +1,9 @@
 package domain;
 
-import org.junit.jupiter.api.DisplayName;
+import domain.card.Card;
+import domain.card.CardNumber;
+import domain.card.CardShape;
+import domain.hand.ScoreCalculator;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

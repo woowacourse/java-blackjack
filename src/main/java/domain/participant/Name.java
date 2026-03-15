@@ -1,4 +1,4 @@
-package domain;
+package domain.participant;
 
 public class Name {
     private static final int NAME_LIMIT_LENGTH = 20;

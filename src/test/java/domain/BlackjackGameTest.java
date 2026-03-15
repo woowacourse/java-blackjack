@@ -2,6 +2,12 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
+
+import domain.card.Card;
+import domain.card.CardNumber;
+import domain.card.CardShape;
+import domain.card.Deck;
+import domain.participant.*;
 import org.junit.jupiter.api.Test;
 
 class BlackjackGameTest {
@@ -22,7 +28,7 @@ class BlackjackGameTest {
         assertThat(players.getPlayers()).hasSize(2);
 
         for (Player player : players.getPlayers()) {
-            assertThat(player.getHand().getCards()).hasSize(2);
+            assertThat(player.getHandCards()).hasSize(2);
         }
     }
 
@@ -43,10 +49,10 @@ class BlackjackGameTest {
         BlackjackGame blackjackGame = BlackjackGame.start(playerCreationInfos, deck);
         Player player = blackjackGame.getPlayersValue().getFirst();
 
-        int before = player.getHand().getCards().size();
+        int before = player.getHandCards().size();
         blackjackGame.addPlayerCard(player);
 
-        assertThat(player.getHand().getCards()).hasSize(before + 1);
+        assertThat(player.getHandCards()).hasSize(before + 1);
     }
 
     @Test

@@ -1,5 +1,8 @@
 package domain;
 
+import domain.participant.BettingMoney;
+import domain.participant.Name;
+import domain.participant.PlayerCreationInfo;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

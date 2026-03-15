@@ -1,11 +1,8 @@
 package view;
 
-import dto.DealerFinalResultDto;
 import dto.PlayerDto;
 import dto.PlayersDto;
 import dto.ResultDto;
-import dto.TotalFinalResultsDto;
-
 import java.util.List;
 import java.util.stream.Collectors;
 

@@ -1,5 +1,9 @@
 package domain;
 
+import domain.participant.Dealer;
+import domain.participant.Player;
+import domain.participant.Players;
+
 public class ProfitCalculator {
     private static final double BLACKJACK_PROFIT_RATE = 1.5;
 
