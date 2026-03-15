@@ -47,10 +47,8 @@ public class BettingCalculateService {
 
     private long getDealerProfit() {
         List<Profit> profits = calculatePlayersProfit();
-        long dealerProfit = 0L;
-        for (Profit profit : profits) {
-            dealerProfit -= profit.calculateProfit();
-        }
-        return dealerProfit;
+        return -profits.stream()
+                .mapToLong(Profit::calculateProfit)
+                .sum();
     }
 }
