@@ -10,7 +10,7 @@ class BetAmountTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"3.14", "돈", ""})
-    void 베팅_금액에_정수가_아닌_값을_입력하면_에러가_발생한다(String input){
+    void 베팅_금액에_정수가_아닌_값을_입력하면_에러가_발생한다(String input) {
         // given
         // when,then
         assertThatThrownBy(() -> new BetAmount(input))
@@ -20,7 +20,7 @@ class BetAmountTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"-1", "0"})
-    void 베팅_금액에_0이하인_값을_입력하면_에러가_발생한다(String input){
+    void 베팅_금액에_0이하인_값을_입력하면_에러가_발생한다(String input) {
         // given
         // when,then
         assertThatThrownBy(() -> new BetAmount(input))

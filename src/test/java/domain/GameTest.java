@@ -126,9 +126,9 @@ class GameTest {
     }
 
     @Test
-    void 플레이어의_이름이_중복된다면_예외를_발생한다(){
+    void 플레이어의_이름이_중복된다면_예외를_발생한다() {
         // given
-        List<String> names = List.of("시오","시오");
+        List<String> names = List.of("시오", "시오");
 
         // when, then
         assertThatThrownBy(() -> new Game(names, new Deck(CardFactory.createDeck())))
@@ -137,7 +137,7 @@ class GameTest {
     }
 
     @Test
-    void 게임_진행_후_승패_결과를_올바르게_계산한다(){
+    void 게임_진행_후_승패_결과를_올바르게_계산한다() {
         // given
         Deck deck = mock(Deck.class);
         when(deck.drawCard()).thenReturn(
@@ -151,7 +151,7 @@ class GameTest {
         Game game = new Game(List.of("시오", "봉구스"), deck);
         Player firstPlayer = game.getPlayers().get(0);
         Player secondPlayer = game.getPlayers().get(1);
-        
+
         // when
         Map<Player, WinningStatus> winningStatusMap = game.calculateAllResults();
 

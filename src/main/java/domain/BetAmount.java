@@ -5,7 +5,7 @@ import exception.ErrorMessage;
 public class BetAmount {
     private final long amount;
 
-    public BetAmount(long amount){
+    public BetAmount(long amount) {
         validateNegative(amount);
         this.amount = amount;
     }

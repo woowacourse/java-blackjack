@@ -10,12 +10,12 @@ public abstract class Participant {
     protected final String name;
     protected final Hand hand;
 
-    protected Participant(String name){
+    protected Participant(String name) {
         this.name = name;
         hand = new Hand();
     }
 
-    public void draw(Card card){
+    public void draw(Card card) {
         hand.addCard(card);
     }
 
@@ -23,13 +23,13 @@ public abstract class Participant {
         return hand.isBurst();
     }
 
-    public boolean isBlackJack(){
+    public boolean isBlackJack() {
         return hand.getSize() == BLACKJACK_HAND_SIZE && hand.getSum() == BLACKJACK_NUMBER;
     }
 
     public abstract boolean canHit();
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
