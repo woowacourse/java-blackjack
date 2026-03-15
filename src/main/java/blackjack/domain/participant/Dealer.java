@@ -1,7 +1,6 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.MatchResult;
-import blackjack.domain.PlayingCards;
+import blackjack.domain.Hand;
 import blackjack.dto.DealerGameResult;
 import blackjack.dto.ParticipantResult;
 import blackjack.dto.PlayerGameResult;
@@ -9,12 +8,12 @@ import java.util.List;
 
 public class Dealer extends Participant {
 
-    private final int DEALER_SCORE = 16;
+    private static final int DEALER_SCORE = 16;
 
-    private final static String DEALER_NICKNAME = "딜러";
+    private static final String DEALER_NICKNAME = "딜러";
 
     private Dealer(String nickname, Role role) {
-        super(nickname, PlayingCards.createEmptyHands(), role);
+        super(nickname, Hand.createEmptyHands(), role);
     }
 
     public static Dealer from() {
@@ -37,24 +36,15 @@ public class Dealer extends Participant {
         return hand.isBusted();
     }
 
-    public DealerGameResult getDealerWinningResult(List<PlayerGameResult> winningResultsWithDealer) {
-        int dealerWin = (int) winningResultsWithDealer
-            .stream()
-            .filter(result -> result.matchResult() == MatchResult.LOSE)
-            .count();
-        int dealerTie = (int) winningResultsWithDealer
-            .stream()
-            .filter(result -> result.matchResult() == MatchResult.TIE)
-            .count();
-        int dealerLose = (int) winningResultsWithDealer
-            .stream()
-            .filter(result -> result.matchResult() == MatchResult.WIN)
-            .count();
-        return new DealerGameResult(dealerWin, dealerTie, dealerLose);
+    public DealerGameResult calculateDealerProfitResult(List<PlayerGameResult> playerGameResults) {
+        long totalPlayerProfit = playerGameResults.stream()
+            .mapToLong(PlayerGameResult::profit)
+            .sum();
+        return DealerGameResult.from(-totalPlayerProfit);
     }
 
     public ParticipantResult getInitialResult() {
-        return new ParticipantResult(
+        return ParticipantResult.of(
             getDealerNickname(),
             getFirstCard(),
             getTotalScore()

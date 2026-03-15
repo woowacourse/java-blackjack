@@ -4,6 +4,7 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Role;
 import blackjack.dto.ParticipantResult;
+import blackjack.dto.PlayerBettingRequest;
 import blackjack.dto.PlayerGameResult;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,19 +21,16 @@ public class Players {
         return new Players(players);
     }
 
-    public static Players makePlayers(List<String> names) {
-        List<Player> result = new ArrayList<>();
-        for (String name : names) {
-            validate(name);
-            result.add(new Player(name, Role.PLAYER));
-        }
-        return from(result);
+    public static Players makeEmptyPlayers() {
+        return from(List.of());
     }
 
-    private static void validate(String name) {
-        if (name.isEmpty()) {
-            throw new IllegalArgumentException("이름은 공백이 될 수 없습니다.");
-        }
+    public Players addPlayer(PlayerBettingRequest playerRequest) {
+        List<Player> nowPlayers = new ArrayList<>(getPlayers());
+        String nickname = playerRequest.playerNickname();
+        long amount = playerRequest.amount();
+        nowPlayers.add(new Player(nickname, Role.PLAYER, amount));
+        return Players.from(nowPlayers);
     }
 
     public List<String> getAllPlayerNickname() {
@@ -55,9 +53,9 @@ public class Players {
         return player.getNickname();
     }
 
-    public PlayingCards addCardToAvailablePlayer(PlayingCards card) throws IllegalArgumentException {
+    public Hand addCardToAvailablePlayer(List<Card> cards) throws IllegalArgumentException {
         Player player = findDrawablePlayer();
-        return player.receiveCard(card);
+        return player.receiveCard(cards);
     }
 
     public Player findDrawablePlayer() {
@@ -84,8 +82,12 @@ public class Players {
     public List<ParticipantResult> getInitialResult() {
         List<ParticipantResult> initialResults = new ArrayList<>();
         for (Player player : players) {
-            initialResults.add(new ParticipantResult(player));
+            initialResults.add(ParticipantResult.from(player));
         }
         return initialResults;
+    }
+
+    private List<Player> getPlayers() {
+        return List.copyOf(players);
     }
 }

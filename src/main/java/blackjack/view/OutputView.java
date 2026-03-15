@@ -39,28 +39,6 @@ public class OutputView {
         printLine(String.format("%s카드: %s", drawablePlayerNickname, statusByDisplayName));
     }
 
-    public void printWinner(TotalGameResult gameResult) {
-        printNewLine();
-        printLine("## 최종 승패");
-        printDealerGameResult(gameResult.dealerGameResult());
-        printPlayersGameResult(gameResult.playerGameResult());
-    }
-
-    private void printPlayersGameResult(List<PlayerGameResult> playerGameResults) {
-        for (PlayerGameResult playerGameResult : playerGameResults) {
-            printLine(
-                String.format("%s: %s",
-                    playerGameResult.nickname(),
-                    playerGameResult.matchResult().getMessage()
-                )
-            );
-        }
-    }
-
-    private void printDealerGameResult(DealerGameResult dealerGameResult) {
-        printLine(String.format("딜러: %d승 %d패", dealerGameResult.dealerWin(), dealerGameResult.dealerLose()));
-    }
-
     public void printGameResult(List<ParticipantResult> participantResult) {
         printNewLine();
         for (ParticipantResult result : participantResult) {
@@ -75,5 +53,27 @@ public class OutputView {
 
     private void printNewLine() {
         System.out.println();
+    }
+
+    public void askBetAmount(String playerName) {
+        printNewLine();
+        printLine(String.format("%s의 배팅 금액은?", playerName));
+    }
+
+    public void printTotalProfitResult(TotalGameResult totalGameResult) {
+        printNewLine();
+        printLine("## 최종 수익");
+        printDealerProfitResult(totalGameResult.dealerGameResult());
+        printPlayersProfitResult(totalGameResult.playerGameResult());
+    }
+
+    private void printPlayersProfitResult(List<PlayerGameResult> playerGameResults) {
+        for (PlayerGameResult playerGameResult : playerGameResults) {
+            printLine(String.format("%s: %s", playerGameResult.nickname(), playerGameResult.profit()));
+        }
+    }
+
+    private void printDealerProfitResult(DealerGameResult dealerGameResult) {
+        printLine(String.format("딜러: %s", dealerGameResult.profit()));
     }
 }

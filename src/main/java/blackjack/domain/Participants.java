@@ -20,7 +20,7 @@ public class Participants {
         this.dealer = dealer;
     }
 
-    public PlayingCards distributeCards(PlayingCards deck) {
+    public Deck distributeCards(Deck deck) {
         List<Participant> participants = getParticipants();
         for (Participant participant : participants) {
             DrawResult drawResult = participant.distributeCards(deck);
@@ -49,7 +49,7 @@ public class Participants {
         List<Participant> participants = getParticipants();
         List<ParticipantResult> participantsTotalGameResult = new ArrayList<>();
         for (Participant participant : participants) {
-            participantsTotalGameResult.add(new ParticipantResult(participant));
+            participantsTotalGameResult.add(ParticipantResult.from(participant));
         }
         return participantsTotalGameResult;
     }
@@ -59,14 +59,14 @@ public class Participants {
         return players.findDrawablePlayerNickname();
     }
 
-    public DrawResult addCardToAvailablePlayer(PlayingCards deck) {
+    public DrawResult addCardToAvailablePlayer(Deck deck) {
         DrawResult drawResult = deck.draw();
-        PlayingCards drawCard = drawResult.drewCard();
-        PlayingCards drawDeck = drawResult.drewDeck();
+        List<Card> drawCard = drawResult.drewCard().getCards();
+        List<Card> drawDeck = drawResult.drewDeck().getCards();
 
-        PlayingCards playerHand = players.addCardToAvailablePlayer(drawCard);
+        Hand playerHand = players.addCardToAvailablePlayer(drawCard);
 
-        return new DrawResult(playerHand, drawDeck);
+        return DrawResult.of(playerHand.getCards(), drawDeck);
     }
 
     public void dontWantDraw() {
@@ -77,10 +77,10 @@ public class Participants {
         return dealer.isDealerDraw();
     }
 
-    public PlayingCards dealerDraw(PlayingCards deck) {
+    public Deck dealerDraw(Deck deck) {
         DrawResult drawResult = deck.draw();
-        PlayingCards drawCard = drawResult.drewCard();
-        dealer.receiveCard(drawCard);
+        Hand drawCard = drawResult.drewCard();
+        dealer.receiveCard(drawCard.getCards());
         return drawResult.drewDeck();
     }
 
@@ -90,7 +90,7 @@ public class Participants {
 
     public TotalGameResult getWinningResult() {
         List<PlayerGameResult> winningResultsWithDealer = players.getWinningResultsWithDealer(dealer);
-        DealerGameResult dealerWinningResult = dealer.getDealerWinningResult(winningResultsWithDealer);
-        return new TotalGameResult(dealerWinningResult, winningResultsWithDealer);
+        DealerGameResult dealerWinningResult = dealer.calculateDealerProfitResult(winningResultsWithDealer);
+        return TotalGameResult.of(dealerWinningResult, winningResultsWithDealer);
     }
 }

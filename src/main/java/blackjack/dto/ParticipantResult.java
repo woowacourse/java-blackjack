@@ -8,11 +8,19 @@ public record ParticipantResult(
     int totalScore
 ) {
 
-    public ParticipantResult(Participant participant) {
-        this(
+    public static ParticipantResult from(Participant participant) {
+        return new ParticipantResult(
             participant.getNickname(),
             participant.getCardStatus(),
             participant.getTotalScore()
+        );
+    }
+
+    public static ParticipantResult of(String nickname, String cardStatus, int totalScore) {
+        return new ParticipantResult(
+            nickname,
+            cardStatus,
+            totalScore
         );
     }
 

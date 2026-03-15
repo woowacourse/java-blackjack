@@ -1,9 +1,10 @@
 package blackjack.dto;
 
 public record DealerGameResult(
-    int dealerWin,
-    int dealerTie,
-    int dealerLose
+    long profit
 ) {
 
+    public static DealerGameResult from(long profit) {
+        return new DealerGameResult(profit);
+    }
 }

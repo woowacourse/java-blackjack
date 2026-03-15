@@ -1,17 +1,20 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.PlayingCards;
+import blackjack.domain.Card;
+import blackjack.domain.Deck;
+import blackjack.domain.Hand;
 import blackjack.dto.DrawResult;
+import java.util.List;
 
 public abstract class Participant {
 
     private static final int FIRST_DRAW_COUNT = 2;
 
     protected String nickname;
-    protected PlayingCards hand;
+    protected Hand hand;
     protected Role role;
 
-    public Participant(String nickname, PlayingCards hand, Role role) {
+    public Participant(String nickname, Hand hand, Role role) {
         this.nickname = nickname;
         this.hand = hand;
         this.role = role;
@@ -33,13 +36,13 @@ public abstract class Participant {
         return hand.calculateTotalScore();
     }
 
-    public DrawResult distributeCards(PlayingCards deck) {
+    public DrawResult distributeCards(Deck deck) {
         DrawResult drawResult = deck.draw(FIRST_DRAW_COUNT);
-        receiveCard(drawResult.drewCard());
+        receiveCard(drawResult.drewCard().getCards());
         return drawResult;
     }
 
-    public PlayingCards receiveCard(PlayingCards drewCards) {
+    public Hand receiveCard(List<Card> drewCards) {
         hand = hand.add(drewCards);
         return hand;
     }
