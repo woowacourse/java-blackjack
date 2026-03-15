@@ -33,6 +33,14 @@ public final class Card {
         this.denomination = denomination;
     }
 
+    public Suit getSuit() {
+        return suit;
+    }
+
+    public Denomination getDenomination() {
+        return denomination;
+    }
+
     public int toScore() {
         return denomination.toScore();
     }
@@ -42,6 +50,6 @@ public final class Card {
     }
 
     public CardDto toDto() {
-        return CardDto.of(denomination, suit);
+        return CardDto.from(this);
     }
 }
