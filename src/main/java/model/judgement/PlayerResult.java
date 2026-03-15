@@ -2,6 +2,7 @@ package model.judgement;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import model.paticipant.BettingPlayer;
 import model.paticipant.Player;
 
 public record PlayerResult(Map<Player, ResultStatus> result) {
@@ -19,7 +20,11 @@ public record PlayerResult(Map<Player, ResultStatus> result) {
 
     public Map<Player, Profit> calculateProfits() {
         Map<Player, Profit> profits = new LinkedHashMap<>();
-        result.forEach((player, status) -> profits.put(player, player.calculateProfit(status)));
+        result.forEach((player, status) -> {
+            if (player instanceof BettingPlayer bettingPlayer) {
+                profits.put(bettingPlayer, bettingPlayer.calculateProfit(status));
+            }
+        });
         return profits;
     }
 

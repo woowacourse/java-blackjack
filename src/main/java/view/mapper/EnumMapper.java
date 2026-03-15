@@ -1,6 +1,7 @@
 package view.mapper;
 
 import java.util.Map;
+import model.card.Card;
 import model.card.CardShape;
 import model.card.CardValue;
 import model.judgement.ResultStatus;
@@ -38,4 +39,8 @@ public class EnumMapper {
     );
 
     private EnumMapper(){}
+
+    public static String convert(Card card) {
+        return CARD_VALUE_MAPPER.get(card.value()) + CARD_SHAPE_MAPPER.get(card.shape());
+    }
 }

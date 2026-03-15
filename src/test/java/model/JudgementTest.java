@@ -28,13 +28,13 @@ public class JudgementTest {
         Dealer dealer = createDealer();
         dealerCards.forEach(dealer::addCard);
 
-        Player player = new BettingPlayer("pobi", 10000);
-        playerCards.forEach(player::addCard);
+        Player participant = new BettingPlayer("pobi", 10000);
+        playerCards.forEach(participant::addCard);
 
         // when
-        PlayerResult playerResult = Judgement.judgeByPlayer(dealer, new Players(List.of(player)));
+        PlayerResult playerResult = Judgement.judgeByPlayer(dealer, new Players(List.of(participant)));
 
         // then
-        assertThat(playerResult.result()).containsEntry(player, status);
+        assertThat(playerResult.result()).containsEntry(participant, status);
     }
 }

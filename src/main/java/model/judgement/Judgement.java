@@ -6,6 +6,7 @@ import java.util.Map;
 import model.judgement.strategy.BlackjackStrategy;
 import model.judgement.strategy.BustStrategy;
 import model.paticipant.Dealer;
+import model.paticipant.Participant;
 import model.paticipant.Player;
 import model.paticipant.Players;
 
@@ -19,12 +20,12 @@ public class Judgement {
         return new PlayerResult(result);
     }
 
-    private static ResultStatus decide(Dealer dealer, Player player) {
+    private static ResultStatus decide(Dealer dealer, Participant participant) {
         return STRATEGIES.stream()
-                .filter(strategy -> strategy.isApplicable(dealer, player))
+                .filter(strategy -> strategy.isApplicable(dealer, participant))
                 .findFirst()
-                .map(strategy -> strategy.getResult(dealer, player))
-                .orElseGet(() -> compareScore(dealer.calculateTotalScore(), player.calculateTotalScore()));
+                .map(strategy -> strategy.getResult(dealer, participant))
+                .orElseGet(() -> compareScore(participant.calculateTotalScore(), dealer.calculateTotalScore()));
     }
 
     private static ResultStatus compareScore(int playerScore, int dealerScore) {

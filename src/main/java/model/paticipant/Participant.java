@@ -41,8 +41,6 @@ public abstract class Participant {
         this.hand.add(card);
     }
 
-    public abstract boolean canHit();
-
     public String getName() {
         return name.name();
     }
@@ -50,4 +48,6 @@ public abstract class Participant {
     public List<Card> getCards() {
         return hand.getCards();
     }
+
+    public abstract boolean canHit();
 }

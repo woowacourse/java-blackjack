@@ -1,10 +1,10 @@
 package model.judgement;
 
 import model.paticipant.Dealer;
-import model.paticipant.Player;
+import model.paticipant.Participant;
 
 public interface JudgeStrategy {
 
-    boolean isApplicable(Dealer dealer, Player player);
-    ResultStatus getResult(Dealer dealer, Player player);
+    boolean isApplicable(Dealer dealer, Participant participant);
+    ResultStatus getResult(Dealer dealer, Participant participant);
 }
