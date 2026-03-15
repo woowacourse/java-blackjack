@@ -76,28 +76,4 @@ class PlayerBettingRequestTest {
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("이름은 공백이 될 수 없습니다.");
     }
-
-    @Test
-    @DisplayName("베팅 금액이 음수라면 예외가 발생한다.")
-    void validateNegativeBettingAmount() {
-        // given
-        String amount = "-10000";
-
-        // when & then
-        assertThatThrownBy(() -> PlayerBettingRequest.of("boye", amount))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("베팅 금액은 0보다 큰 양수여야 합니다.");
-    }
-
-    @Test
-    @DisplayName("베팅 금액이 0이라면 예외가 발생한다.")
-    void validateZeroBettingAmount() {
-        // given
-        String amount = "0";
-
-        // when & then
-        assertThatThrownBy(() -> PlayerBettingRequest.of("boye", amount))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("베팅 금액은 0보다 큰 양수여야 합니다.");
-    }
 }

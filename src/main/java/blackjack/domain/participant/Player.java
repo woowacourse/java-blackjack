@@ -6,12 +6,15 @@ import blackjack.dto.PlayerGameResult;
 
 public class Player extends Participant {
 
+    private static final long MAX_BETTING_AMOUNT = Long.MAX_VALUE / 5 * 2;
+
     private boolean stopDrawing;
     private final long amount;
 
     public Player(String nickname, Role role, long amount) {
         super(nickname, Hand.createEmptyHands(), role);
         stopDrawing = false;
+        validateAmount(amount);
         this.amount = amount;
     }
 
@@ -30,6 +33,15 @@ public class Player extends Participant {
         MatchResult matchResult = determineGameResult(dealer);
         double payout = determinePayout(matchResult);
         return PlayerGameResult.of(nickname, matchResult, (long) payout - amount);
+    }
+
+    private void validateAmount(long amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("베팅 금액은 0보다 큰 양수여야 합니다.");
+        }
+        if (amount > MAX_BETTING_AMOUNT) {
+            throw new IllegalArgumentException("베팅 금액의 최댓값을 초과한 금액입니다.");
+        }
     }
 
     private double determinePayout(MatchResult matchResult) {
