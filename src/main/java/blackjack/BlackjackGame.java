@@ -10,7 +10,6 @@ import blackjack.model.gameresult.ProfitResult;
 import blackjack.model.user.Dealer;
 import blackjack.model.user.Player;
 import blackjack.model.user.Users;
-import blackjack.view.OutputView;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,9 +46,9 @@ public class BlackjackGame {
     }
 
     public void hitPlayers(List<Player> players, Function<Player, String> readHitCommand,
-                           Consumer<Player> printPlayerCards) {
+                           Consumer<Player> printPlayerCards, Runnable printCantHit) {
         for (Player player : players) {
-            hitPlayer(player, readHitCommand, printPlayerCards);
+            hitPlayer(player, readHitCommand, printPlayerCards, printCantHit);
         }
     }
 
@@ -68,8 +67,13 @@ public class BlackjackGame {
         closeScanner.run();
     }
 
-    private void hitPlayer(Player player, Function<Player, String> readHitCommand, Consumer<Player> printPlayerCards) {
-        while (retryUntilSuccess(() -> checkY(player, readHitCommand)) && checkAddCard(player)) {
+    private void hitPlayer(Player player, Function<Player, String> readHitCommand, Consumer<Player> printPlayerCards,
+                           Runnable printCantHit) {
+        if (!isHitAvailable(player, printCantHit)) {
+            return;
+        }
+
+        while (retryUntilSuccess(() -> checkY(player, readHitCommand))) {
             cardProvider.provideOneCard(player);
             printPlayerCards.accept(player);
         }
@@ -81,11 +85,11 @@ public class BlackjackGame {
         return hitCommand.isY();
     }
 
-    private boolean checkAddCard(Player player) {
+    private boolean isHitAvailable(Player player, Runnable printCantHit) {
         if (player.isHitAvailable()) {
             return true;
         }
-        OutputView.printCantHit();
+        printCantHit.run();
         return false;
     }
 }
