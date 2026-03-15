@@ -16,6 +16,13 @@ public class Profit {
     }
 
     public long calculateProfit() {
-        return bettingResult.getEarningRate() * money.getValue() / 100;
+        long profit = bettingResult.getEarningRate() * money.getValue() / 100;
+
+        long mod = bettingResult.getEarningRate() * money.getValue() % 100;
+        if (mod >= 50) {
+            profit += 1;
+        }
+
+        return profit;
     }
 }
