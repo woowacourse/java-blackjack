@@ -6,49 +6,40 @@ import domain.enums.GameResult;
 import domain.participant.Name;
 import java.util.Collections;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class BetProfit {
-    private static final int ZERO = 0;
+    private final Map<Name, Integer> betProfit;
 
-    private final Map<Name, Integer> betProfit = new LinkedHashMap<>();
-
-    public BetProfit(List<Name> playerNames) {
-        playerNames.forEach(
-                playerName -> {
-                    betProfit.put(playerName, ZERO);
-                }
-        );
+    private BetProfit(Map<Name, Integer> betProfit) {
+        this.betProfit = new LinkedHashMap<>(betProfit);
     }
 
-    public void calculateProfit(Map<Name, GameResult> playerResults, Map<Name, Integer> betHistory) {
-        validatePlayers(playerResults.keySet());
+    public static BetProfit calculateProfit(Map<Name, GameResult> playerResults, Map<Name, Integer> betHistory) {
+        validatePlayers(playerResults.keySet(), betHistory.keySet());
+        Map<Name, Integer> betProfit = new LinkedHashMap<>();
 
         playerResults.keySet().forEach(
                 playerName -> {
                     int betAmount = betHistory.get(playerName);
                     GameResult gameResult = playerResults.get(playerName);
 
-                    betAmount = calculateBetAmount(gameResult, betAmount);
+                    betAmount = (int) (betAmount * gameResult.getProfitRatio());
 
                     betProfit.put(playerName, betAmount);
                 }
         );
+
+        return new BetProfit(betProfit);
     }
 
-    private void validatePlayers(Set<Name> playerNames) {
-        boolean match = playerNames.stream()
-                .allMatch(betProfit::containsKey);
+    private static void validatePlayers(Set<Name> playerNames, Set<Name> bettingPlayers) {
+        boolean match = bettingPlayers.containsAll(playerNames);
 
         if (!match) {
             throw new IllegalArgumentException(PLAYER_NOT_IN_BETTING.getMessage());
         }
-    }
-
-    private int calculateBetAmount(GameResult gameResult, int betAmount) {
-        return (int) (betAmount * gameResult.getProfitRatio());
     }
 
     public Map<Name, Integer> getPlayerBetProfit() {

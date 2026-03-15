@@ -20,13 +20,11 @@ class BetProfitTest {
 
     private Name firstPlayer;
     private Name secondPlayer;
-    private BetProfit betProfit;
 
     @BeforeEach
     void set_up() {
         firstPlayer = new Name("피즈");
         secondPlayer = new Name("스타크");
-        betProfit = new BetProfit(List.of(firstPlayer, secondPlayer));
     }
 
     @DisplayName("배팅에 참여하지 않은 플레이어의 수익은 계산할 수 없다.")
@@ -34,9 +32,9 @@ class BetProfitTest {
     void 배팅에_참여하지_않은_플레이어_수익_계산_예외() {
         Name unknownPlayer = new Name("신원미상");
 
-        assertThatThrownBy(() -> betProfit.calculateProfit(
+        assertThatThrownBy(() -> BetProfit.calculateProfit(
                 Map.of(unknownPlayer, GameResult.WIN),
-                Map.of(unknownPlayer, 10_000)
+                Map.of(firstPlayer, 10_000)
         ))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(PLAYER_NOT_IN_BETTING.getMessage());
@@ -48,7 +46,7 @@ class BetProfitTest {
         //given
         Map<Name, Integer> betHistory = Map.of(firstPlayer, 10_000);
         //when
-        betProfit.calculateProfit(Map.of(firstPlayer, GameResult.WIN), betHistory);
+        BetProfit betProfit = BetProfit.calculateProfit(Map.of(firstPlayer, GameResult.WIN), betHistory);
         //then
         assertThat(betProfit.getPlayerBetProfit().get(firstPlayer)).isEqualTo(10_000);
     }
@@ -59,7 +57,7 @@ class BetProfitTest {
         //given
         Map<Name, Integer> betHistory = Map.of(firstPlayer, 10_000);
         //when
-        betProfit.calculateProfit(Map.of(firstPlayer, GameResult.LOSE), betHistory);
+        BetProfit betProfit = BetProfit.calculateProfit(Map.of(firstPlayer, GameResult.LOSE), betHistory);
         //then
         assertThat(betProfit.getPlayerBetProfit().get(firstPlayer)).isEqualTo(-10_000);
     }
@@ -70,7 +68,7 @@ class BetProfitTest {
         //given
         Map<Name, Integer> betHistory = Map.of(firstPlayer, 10_000);
         //when
-        betProfit.calculateProfit(Map.of(firstPlayer, GameResult.DRAW), betHistory);
+        BetProfit betProfit = BetProfit.calculateProfit(Map.of(firstPlayer, GameResult.DRAW), betHistory);
         //then
         assertThat(betProfit.getPlayerBetProfit().get(firstPlayer)).isEqualTo(0);
     }
@@ -89,7 +87,7 @@ class BetProfitTest {
         //given
         Map<Name, Integer> betHistory = Map.of(firstPlayer, bettingMoney);
         //when
-        betProfit.calculateProfit(Map.of(firstPlayer, GameResult.BLACKJACK_WIN), betHistory);
+        BetProfit betProfit = BetProfit.calculateProfit(Map.of(firstPlayer, GameResult.BLACKJACK_WIN), betHistory);
         //then
         assertThat(betProfit.getPlayerBetProfit().get(firstPlayer)).isEqualTo(expectedProfit);
     }
@@ -109,7 +107,7 @@ class BetProfitTest {
     void 딜러_수익금_계산_테스트(List<Integer> bettingMoneys, List<GameResult> gameResults, int expectedProfit) {
         //given
         //when
-        betProfit.calculateProfit(
+        BetProfit betProfit = BetProfit.calculateProfit(
                 Map.of(
                         firstPlayer, gameResults.getFirst(),
                         secondPlayer, gameResults.getLast()
