@@ -1,10 +1,9 @@
 package view;
 
 import domain.*;
-import meesage.OutputMessage;
+import view.mesage.OutputMessage;
 
 import java.util.List;
-import java.util.Map;
 
 public class OutputView {
 
@@ -38,35 +37,33 @@ public class OutputView {
                 player.getName(),
                 String.join(OutputMessage.DELIMITER.getMessage(), player.getCards().getCardsInfo())
         );
-        System.out.println();
-    }
-
-    public void dealerDrawMessage() {
-        System.out.println(OutputMessage.DEALER_DRAW_CARD.getMessage());
-    }
-
-    public void printFinalResult(BlackjackResult blackjackResult) {
-        System.out.println(OutputMessage.FINAL_MESSAGE.getMessage());
-        printFinalDealerResult(blackjackResult);
-        printFinalPlayerResult(blackjackResult);
-    }
-
-    private void printFinalDealerResult(BlackjackResult blackjackResult) {
-        DealerResultDto dealerResult = blackjackResult.getDealerResult();
-        System.out.printf(OutputMessage.DEALER_RESULT_FORMAT.getMessage(),
-                dealerResult.win(),
-                dealerResult.draw(),
-                dealerResult.lose()
-        );
         printEmptyLine();
     }
 
-    private void printFinalPlayerResult(BlackjackResult blackjackResult) {
-        for (Map.Entry<Player, GameResult> entry : blackjackResult.getPlayerResults().entrySet()) {
-            Player player = entry.getKey();
-            GameResult result = entry.getValue();
+    public void dealerDrawMessage() {
+        printEmptyLine();
+        System.out.println(OutputMessage.DEALER_DRAW_CARD.getMessage());
+        printEmptyLine();
+    }
 
-            System.out.printf(OutputMessage.PLAYER_RESULT_FORMAT.getMessage(), player.getName(), result.getMessage());
+    public void printFinalResults(List<PlayerResultDto> playerResults) {
+        System.out.println(OutputMessage.FINAL_MESSAGE.getMessage());
+
+        long dealerProfit = -1 * playerResults.stream()
+                .mapToLong(PlayerResultDto::profit)
+                .sum();
+        printFinalDealerResult(dealerProfit);
+        printFinalPlayerResult(playerResults);
+    }
+
+    private void printFinalDealerResult(long profit) {
+        System.out.printf(OutputMessage.DEALER_RESULT_FORMAT.getMessage(), profit);
+        printEmptyLine();
+    }
+
+    private void printFinalPlayerResult(List<PlayerResultDto> playerResults) {
+        for (PlayerResultDto playerResult : playerResults) {
+            System.out.printf(OutputMessage.PLAYER_RESULT_FORMAT.getMessage(), playerResult.name(), playerResult.profit());
             printEmptyLine();
         }
     }

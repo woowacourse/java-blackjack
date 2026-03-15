@@ -1,7 +1,6 @@
 package domain;
 
 public class Dealer {
-
     private final Cards cards;
 
     private Dealer(Cards cards) {
@@ -20,7 +19,7 @@ public class Dealer {
         return cards;
     }
 
-    public int getScoreOrZeroIfBust(){
+    public int getScoreOrZeroIfBust() {
         return cards.getScoreOrZeroIfBust();
     }
 

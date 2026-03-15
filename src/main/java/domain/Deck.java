@@ -1,11 +1,13 @@
 package domain;
 
+import domain.shuffle.CardShuffleStrategy;
+import view.mesage.ErrorMessage;
+
 import static java.util.Arrays.*;
 
 import java.util.stream.Stream;
 
 public class Deck {
-
     private final Cards cards;
 
     private Deck(CardShuffleStrategy shuffleStrategy) {
@@ -25,12 +27,20 @@ public class Deck {
     }
 
     public Cards drawInitialHand() {
-        return Cards.of(Stream.generate(this::draw)
+        Cards cards = Cards.of(Stream.generate(this::draw)
                 .limit(Policy.FIRST_DRAW_SIZE)
                 .toList());
+        return cards;
     }
 
     public Card draw() {
+        validateDeckDrawing(cards);
         return cards.removeFirst();
+    }
+
+    private void validateDeckDrawing(Cards cards) {
+        if (cards.size() == 0){
+            throw new IllegalArgumentException(ErrorMessage.EMPTY_DECK.getMessage());
+        }
     }
 }

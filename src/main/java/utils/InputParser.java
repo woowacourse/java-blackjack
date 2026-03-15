@@ -3,10 +3,9 @@ package utils;
 import java.util.Arrays;
 import java.util.List;
 
-import meesage.ErrorMessage;
+import view.mesage.ErrorMessage;
 
 public class InputParser {
-
     private static final String DELIMITER = ",";
     private static final int MAX_PLAYERS_COUNT = 25;
 
@@ -24,7 +23,7 @@ public class InputParser {
 
     private static void validate(String input) {
         if (input.isEmpty()) {
-            throw new IllegalArgumentException(ErrorMessage.EMPTY_INPUT.getMessage());
+            throw new IllegalArgumentException(ErrorMessage.EMPTY_NAME_INPUT.getMessage());
         }
     }
 
@@ -32,7 +31,7 @@ public class InputParser {
         if (names.isEmpty()) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_NAMES_EMPTY.getMessage());
         }
-        if (names.size() >= MAX_PLAYERS_COUNT){
+        if (names.size() >= MAX_PLAYERS_COUNT) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_NAMES_EXCEED_LIMIT.getMessage());
         }
     }

@@ -1,7 +1,6 @@
 package domain;
 
 public enum GameResult {
-
     WIN("승"),
     LOSE("패"),
     DRAW("무"),
@@ -11,9 +10,5 @@ public enum GameResult {
 
     GameResult(String message) {
         this.message = message;
-    }
-
-    public String getMessage() {
-        return message;
     }
 }
