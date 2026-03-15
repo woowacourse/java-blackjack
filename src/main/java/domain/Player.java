@@ -1,47 +1,29 @@
 package domain;
 
-import domain.card.Card;
+public class Player extends Participant {
 
-import java.util.List;
-
-public class Player {
-    private final String name;
-    private final Hand hand;
-
-    public Player(String name){
-        this.name = name;
-        hand = new Hand();
+    public Player(String name) {
+        super(name);
     }
 
-    public void draw(Card card){
-        hand.addCard(card);
-    }
-
-    public boolean isBurst() {
-        return hand.isBurst();
-    }
-
+    @Override
     public boolean canHit() {
         return hand.isLessThanBlackJack();
     }
 
-    public boolean canNotHit(){
-        return hand.isLargerThanEqualToBlackJack();
-    }
-
-    public int getScore() {
-        return hand.getSum();
-    }
-
-    public List<Card> getCards(){
-        return hand.getCards();
-    }
-
-    public int getHandSize(){
-        return hand.getSize();
-    }
-
-    public String getName() {
-        return name;
+    public WinningStatus calculateResult(Score dealerScore) {
+        if (isBlackJack() && !dealerScore.isBlackJack()) {
+            return WinningStatus.BLACKJACK_WIN;
+        }
+        if (dealerScore.isBlackJack() && !isBlackJack()) {
+            return WinningStatus.LOSE;
+        }
+        if (isBurst()) {
+            return WinningStatus.LOSE;
+        }
+        if (dealerScore.isBurst()) {
+            return WinningStatus.WIN;
+        }
+        return new Score(hand.getSum(), isBlackJack()).compareTo(dealerScore);
     }
 }

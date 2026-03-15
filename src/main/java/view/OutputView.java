@@ -1,6 +1,5 @@
 package view;
 
-import domain.WinningStatus;
 import dto.BlackJackInitStatusDto;
 import dto.FinalResultDto;
 import dto.HandDto;
@@ -16,7 +15,7 @@ public class OutputView {
     private static final String HAND_WITH_SCORE_FORMAT = "%s카드 : %s - 결과: %d\n";
     private static final String DEALER_HIT_MESSAGE = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.";
     private static final String FINAL_RESULT_HEADER = "\n## 최종 승패";
-    private static final String FINAL_RESULT_DEALER_FORMAT = "딜러: %d승 %d패\n";
+    private static final String FINAL_RESULT_DEALER = "딜러: ";
 
     public static void printInitMessage(BlackJackInitStatusDto blackJackInitStatusDto) {
         String playerNames = blackJackInitStatusDto.playerHands().stream()
@@ -45,15 +44,13 @@ public class OutputView {
     public static void printFinalResult(FinalResultDto finalResultDto) {
         printScoreResult(finalResultDto);
         System.out.println(FINAL_RESULT_HEADER);
-        System.out.printf(FINAL_RESULT_DEALER_FORMAT,
-                finalResultDto.dealerWinCount(),
-                finalResultDto.dealerLoseCount());
-        for(Map.Entry<String, WinningStatus> entry : finalResultDto.playerResults().entrySet()){
-            System.out.println(entry.getKey() + ": " + entry.getValue().getDescription());
+        System.out.println(FINAL_RESULT_DEALER + finalResultDto.dealerProfit());
+        for (Map.Entry<String, Long> entry : finalResultDto.playerResults().entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
         }
     }
 
-    private static void printScoreResult(FinalResultDto finalResultDto){
+    private static void printScoreResult(FinalResultDto finalResultDto) {
         System.out.println();
         for (ScoreResultDto dto : finalResultDto.scoreResultDtos()) {
             String name = dto.handDto().name();
