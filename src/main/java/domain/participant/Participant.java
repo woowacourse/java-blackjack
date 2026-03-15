@@ -1,4 +1,7 @@
-package domain;
+package domain.participant;
+
+import domain.hand.Hand;
+import domain.card.Card;
 
 import java.util.List;
 
@@ -13,9 +16,7 @@ public abstract class Participant {
         return hand.getCards();
     }
 
-    public Hand getHand() {
-        return hand;
-    }
+    protected Hand getHand() {return hand;}
 
     public void addHandCard(Card card) {
         hand.addCard(card);
@@ -25,11 +26,12 @@ public abstract class Participant {
         return hand.getScore().isBust();
     }
 
-    public Score getScore() {
-        return hand.getScore();
-    }
-
     public int getScoreValue() {
         return hand.getScore().value();
     }
+
+    public boolean isBlackjack(){
+        return hand.isBlackjack();
+    }
+
 }

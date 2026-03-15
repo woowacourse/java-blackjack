@@ -1,4 +1,6 @@
-package domain;
+package domain.hand;
+
+import domain.card.Card;
 
 import java.util.List;
 
@@ -23,6 +25,10 @@ public class Hand {
 
     public boolean hasScoreLessThanOrEqual(int value) {
         return getScore().value() <= value;
+    }
+
+    public boolean isBlackjack(){
+        return cards.size() == 2 && getScore().value()==21;
     }
 
 }

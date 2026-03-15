@@ -1,4 +1,6 @@
-package domain;
+package domain.participant;
+
+import domain.hand.Hand;
 
 public class Dealer extends Participant {
     private static final int DEALER_CARD_SUM_THRESHOLD = 16;

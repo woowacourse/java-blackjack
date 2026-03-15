@@ -2,22 +2,33 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
+
+import domain.card.Card;
+import domain.card.CardNumber;
+import domain.card.CardShape;
+import domain.card.Deck;
+import domain.participant.*;
 import org.junit.jupiter.api.Test;
 
 class BlackjackGameTest {
 
     @Test
     void 게임_시작시_딜러와_플레이어에게_카드2장_배분() {
-        BlackjackGame blackjackGame = BlackjackGame.start(List.of("pobi", "jason"));
+        List<PlayerCreationInfo> playerCreationInfos = List.of(
+                PlayerCreationInfo.of(Name.from("pobi"), BettingMoney.of(1000)),
+                PlayerCreationInfo.of(Name.from("jason"), BettingMoney.of(2000))
+        );
+
+        BlackjackGame blackjackGame = BlackjackGame.start(playerCreationInfos);
 
         Dealer dealer = blackjackGame.getDealer();
         Players players = blackjackGame.getPlayers();
 
-        assertThat(dealer.getHand().getCards()).hasSize(2);
+        assertThat(dealer.getHandCards()).hasSize(2);
         assertThat(players.getPlayers()).hasSize(2);
 
         for (Player player : players.getPlayers()) {
-            assertThat(player.getHand().getCards()).hasSize(2);
+            assertThat(player.getHandCards()).hasSize(2);
         }
     }
 
@@ -31,14 +42,17 @@ class BlackjackGameTest {
                 Card.of(CardNumber.TWO, CardShape.SPADE)      // player draw
         ));
 
-        BlackjackGame blackjackGame = BlackjackGame.start(List.of("pobi"), deck);
-        Player player = blackjackGame.getPlayers().getPlayers().getFirst();
+        List<PlayerCreationInfo> playerCreationInfos = List.of(
+                PlayerCreationInfo.of(Name.from("pobi"), BettingMoney.of(1000))
+        );
 
-        int before = player.getHand().getCards().size();
+        BlackjackGame blackjackGame = BlackjackGame.start(playerCreationInfos, deck);
+        Player player = blackjackGame.getPlayersValue().getFirst();
 
+        int before = player.getHandCards().size();
         blackjackGame.addPlayerCard(player);
 
-        assertThat(player.getHand().getCards()).hasSize(before + 1);
+        assertThat(player.getHandCards()).hasSize(before + 1);
     }
 
     @Test
@@ -51,18 +65,21 @@ class BlackjackGameTest {
                 Card.of(CardNumber.THREE, CardShape.SPADE)    // player draw -> 22
         ));
 
-        BlackjackGame blackjackGame = BlackjackGame.start(List.of("pobi"), deck);
-        Player player = blackjackGame.getPlayers().getPlayers().getFirst();
+        List<PlayerCreationInfo> playerCreationInfos = List.of(
+                PlayerCreationInfo.of(Name.from("pobi"), BettingMoney.of(1000))
+        );
+        BlackjackGame blackjackGame = BlackjackGame.start(playerCreationInfos, deck);
+        Player player = blackjackGame.getPlayersValue().getFirst();
         Dealer dealer = blackjackGame.getDealer();
 
-        int dealerCardCountBefore = dealer.getHand().getCards().size();
+        int dealerCardCountBefore = dealer.getHandCards().size();
 
         blackjackGame.addPlayerCard(player);
         boolean result = blackjackGame.playDealerTurn();
 
         assertThat(player.isBust()).isTrue();
         assertThat(result).isFalse();
-        assertThat(dealer.getHand().getCards()).hasSize(dealerCardCountBefore);
+        assertThat(dealer.getHandCards()).hasSize(dealerCardCountBefore);
     }
 
     @Test
@@ -75,15 +92,18 @@ class BlackjackGameTest {
                 Card.of(CardNumber.TWO, CardShape.SPADE)      // dealer draw -> 18
         ));
 
-        BlackjackGame blackjackGame = BlackjackGame.start(List.of("pobi"), deck);
+        List<PlayerCreationInfo> playerCreationInfos = List.of(
+                PlayerCreationInfo.of(Name.from("pobi"), BettingMoney.of(1000))
+        );
+
+        BlackjackGame blackjackGame = BlackjackGame.start(playerCreationInfos, deck);
         Dealer dealer = blackjackGame.getDealer();
 
-        int dealerCardCountBefore = dealer.getHand().getCards().size();
-
+        int dealerCardCountBefore = dealer.getHandCards().size();
         boolean result = blackjackGame.playDealerTurn();
 
         assertThat(result).isTrue();
-        assertThat(dealer.getHand().getCards().size()).isGreaterThan(dealerCardCountBefore);
+        assertThat(dealer.getHandCards().size()).isGreaterThan(dealerCardCountBefore);
     }
 
     @Test
@@ -95,14 +115,17 @@ class BlackjackGameTest {
                 Card.of(CardNumber.SIX, CardShape.DIAMOND)    // player 2 -> 15
         ));
 
-        BlackjackGame blackjackGame = BlackjackGame.start(List.of("pobi"), deck);
+        List<PlayerCreationInfo> playerCreationInfos = List.of(
+                PlayerCreationInfo.of(Name.from("pobi"), BettingMoney.of(1000))
+        );
+
+        BlackjackGame blackjackGame = BlackjackGame.start(playerCreationInfos, deck);
         Dealer dealer = blackjackGame.getDealer();
 
-        int dealerCardCountBefore = dealer.getHand().getCards().size();
-
+        int dealerCardCountBefore = dealer.getHandCards().size();
         boolean result = blackjackGame.playDealerTurn();
 
         assertThat(result).isFalse();
-        assertThat(dealer.getHand().getCards()).hasSize(dealerCardCountBefore);
+        assertThat(dealer.getHandCards()).hasSize(dealerCardCountBefore);
     }
 }
