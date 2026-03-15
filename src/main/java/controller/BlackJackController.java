@@ -106,7 +106,6 @@ public class BlackJackController {
 
     private boolean canPlayerDraw(Player player) {
         if (player.isBust()) {
-            player.getTotalCardScore();
             return false;
         }
         return isHitRequested(player);
