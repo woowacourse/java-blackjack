@@ -18,11 +18,15 @@ public class Hand {
     }
 
     public int getTotalPoint() {
-        int totalPoint = 0;
-        for (Card card : cards) {
-            totalPoint += card.getCardPoint();
-        }
+        int totalPoint = cards.stream()
+                .mapToInt(Card::getCardPoint)
+                .sum();
+        return applyAceAdjustment(totalPoint);
+    }
+
+    private int applyAceAdjustment(int totalPoint) {
         int aceCount = getAceCount();
+
         while (aceCount > 0 && totalPoint > BLACKJACK_POINT) {
             totalPoint -= ACE_OFFSET_POINT;
             aceCount--;
@@ -32,13 +36,9 @@ public class Hand {
     }
 
     private int getAceCount() {
-        int aceCount = 0;
-        for (Card card : cards) {
-            if (card.isAce()) {
-                aceCount += 1;
-            }
-        }
-        return aceCount;
+        return (int) cards.stream()
+                .filter(Card::isAce)
+                .count();
     }
 
     public boolean isBust() {
@@ -56,7 +56,6 @@ public class Hand {
 
 
     public String getCardNames() {
-
         List<String> names = new ArrayList<>();
         for (Card card : cards) {
             names.add(card.getName());
