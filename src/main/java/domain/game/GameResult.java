@@ -17,7 +17,7 @@ public class GameResult {
         BigDecimal playersProfitSum = BigDecimal.ZERO;
         for (Player player : players.getPlayers()) {
             BigDecimal profit = calculatePlayerProfit(player, dealer);
-            playersProfitSum = playersProfitSum.add(calculatePlayerProfit(player, dealer));
+            playersProfitSum = playersProfitSum.add(profit);
 
             participantResultInfos.add(new ParticipantResultInfo(
                     player.name(), profit
