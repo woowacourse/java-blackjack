@@ -14,13 +14,13 @@ public class BlackjackGame {
         this.participants = participants;
     }
 
-    public static BlackjackGame start(List<String> names) {
-        return start(names, Deck.createDeck());
+    public static BlackjackGame start(List<PlayerCreationInfo> playerCreationInfos) {
+        return start(playerCreationInfos, Deck.createDeck());
     }
 
-    public static BlackjackGame start(List<String> names, Deck deck) {
+    public static BlackjackGame start(List<PlayerCreationInfo> playerCreationInfos, Deck deck) {
         Dealer dealer = Dealer.from(new Hand(initCards(deck)));
-        Players players = createPlayers(names, deck);
+        Players players = createPlayers(playerCreationInfos, deck);
         return new BlackjackGame(deck, GameParticipants.of(dealer, players));
     }
 
@@ -29,7 +29,7 @@ public class BlackjackGame {
     }
 
     public boolean playDealerTurn() {
-        if (cannotDealerDraw()) {
+        if (participants.cannotDealerDraw()) {
             return false;
         }
         drawDealerCards();
@@ -44,8 +44,8 @@ public class BlackjackGame {
         return participants.getPlayers();
     }
 
-    private boolean cannotDealerDraw() {
-        return participants.isAllPlayersBust() || !getDealer().checkThreshold();
+    public List<Player> getPlayersValue() {
+        return participants.getPlayers().getPlayers();
     }
 
     private void drawDealerCards() {
@@ -54,16 +54,20 @@ public class BlackjackGame {
         }
     }
 
-    private static Players createPlayers(List<String> names, Deck deck) {
+    private static Players createPlayers(List<PlayerCreationInfo> playerCreationInfos, Deck deck) {
         List<Player> players = new ArrayList<>();
-        for (String name : names) {
-            players.add(createPlayer(name, deck));
+        for (PlayerCreationInfo playerCreationInfo : playerCreationInfos) {
+            players.add(createPlayer(playerCreationInfo, deck));
         }
         return Players.from(players);
     }
 
-    private static Player createPlayer(String name, Deck deck) {
-        return Player.of(Name.from(name), new Hand(initCards(deck)));
+    private static Player createPlayer(PlayerCreationInfo playerCreationInfo, Deck deck) {
+        return Player.of(
+                playerCreationInfo.getName(),
+                new Hand(initCards(deck)),
+                playerCreationInfo.getBettingMoney()
+        );
     }
 
     private static List<Card> initCards(Deck deck) {
