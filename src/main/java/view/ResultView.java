@@ -31,7 +31,7 @@ public class ResultView {
         System.out.println("딜러는 버스트!");
     }
 
-    public void printGameStartSection(Players players, Dealer dealer) {
+    public void printGameStartMessage(Players players, Dealer dealer) {
         System.out.println();
         printGameStart(players, dealer);
         System.out.println();
