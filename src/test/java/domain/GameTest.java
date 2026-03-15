@@ -153,7 +153,6 @@ class GameTest {
         Game game = new Game(List.of("시오", "봉구스"), deck);
         Player winPlayer = game.getPlayers().get(0);
         Player losePlayer = game.getPlayers().get(1);
-        Judge judge = Judge.from(game.getDealer(), game.getPlayers());
 
         Map<Player, Money> moneyTable = new LinkedHashMap<>();
         moneyTable.put(winPlayer, new Money(1000L));
@@ -161,7 +160,7 @@ class GameTest {
         BettingTable bettingTable = new BettingTable(moneyTable);
 
         // when
-        game.settleRoundBets(judge, bettingTable);
+        game.settleRoundBets(bettingTable);
 
         // then
         assertAll(
