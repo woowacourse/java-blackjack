@@ -3,6 +3,7 @@ package domain.game;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import domain.card.Card;
+import domain.card.CardMachine;
 import domain.card.Rank;
 import domain.card.Suit;
 import domain.participant.BetAmount;
@@ -380,6 +381,7 @@ class BlackjackGameManagerTest {
         private final Deque<Card> cards;
 
         private FixedDeckBlackjackGameManager(List<Card> cards) {
+            super(new CardMachine(), new BlackjackJudge());
             this.cards = new ArrayDeque<>(cards);
         }
 
