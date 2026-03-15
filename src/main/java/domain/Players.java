@@ -6,16 +6,16 @@ import java.util.List;
 public class Players {
     private final List<Player> players;
 
-    private Players(Deck deck, List<String> userNames) {
-        List<Player> players = new ArrayList<>();
-        for (String userName : userNames) {
-            players.add(Player.of(deck.drawInitialHand(), userName));
-        }
-        this.players = players;
+    private Players() {
+        this.players = new ArrayList<>();
     }
 
-    public static Players of(Deck deck, List<String> userNames) {
-        return new Players(deck, userNames);
+    public static Players of() {
+        return new Players();
+    }
+
+    public void addPlayer(Player player) {
+        players.add(player);
     }
 
     public List<String> getPlayersName() {
