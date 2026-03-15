@@ -48,7 +48,7 @@ public class Deck {
 
     public TrumpCard deal() {
         if (cards.isEmpty()) {
-            throw new IllegalArgumentException("덱에 카드가 없습니다.");
+            throw new IllegalStateException("덱에 카드가 없습니다.");
         }
         return cards.removeFirst();
     }
