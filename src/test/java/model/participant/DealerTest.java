@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
 import model.card.Card;
-import model.card.Cards;
 import model.card.Rank;
 import model.card.Suit;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +15,7 @@ class DealerTest {
 
     @BeforeEach
     void setUp() {
-        dealer = Dealer.from("딜러");
+        dealer = Dealer.create();
     }
 
     @Test
@@ -34,11 +33,10 @@ class DealerTest {
         dealer.receive(card2);
 
         // when
-        Cards opened = dealer.open();
+        List<Card> opened = dealer.open();
 
         // then
-        assertThat(opened.asList()).containsExactly(card1);
-        assertThat(opened.asList()).hasSize(1);
+        assertThat(opened).containsExactly(card1);
     }
 
     @Test
@@ -51,11 +49,9 @@ class DealerTest {
 
         // when
         dealer.open();
-        Cards opened = dealer.open();
+        List<Card> opened = dealer.open();
 
         // then
-        assertThat(opened.asList()).contains(card1, card2);
-        assertThat(opened.asList()).containsAll(List.of(card1, card2));
-        assertThat(opened.asList()).hasSize(2);
+        assertThat(opened).containsExactlyInAnyOrder(card1, card2);
     }
 }

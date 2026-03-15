@@ -1,15 +1,15 @@
 package controller;
 
-import static model.GameRule.BLACKJACK_SCORE;
+import static model.game.Blackjack.BLACKJACK_SCORE;
+import static model.game.Blackjack.DEALOUT_DRAW_COUNT;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
-import model.Blackjack;
-import model.GameRule;
+import model.game.Blackjack;
 import model.card.Card;
 import model.card.Cards;
 import model.card.Deck;
@@ -20,6 +20,7 @@ import model.participant.Participant;
 import model.participant.Participants;
 import model.participant.Dealer;
 import model.participant.Player;
+import validator.PlayerNamesValidator;
 import util.InputParser;
 import view.InputView;
 import view.OutputView;
@@ -49,9 +50,17 @@ public class BlackJackController {
 
     private Participants setUpParticipants() {
         String rawNames = inputView.readPlayerNames();
-        List<String> parsed = InputParser.parseName(rawNames);
+        List<String> playerNames = InputParser.parseName(rawNames);
+        PlayerNamesValidator.validate(playerNames);
 
-        return Participants.from(parsed);
+        List<Player> players = new ArrayList<>();
+        for (String playerName : playerNames) {
+            int bettingAmount = inputView.readBettingAmount(playerName);
+            Player player = Player.of(playerName, bettingAmount);
+            players.add(player);
+        }
+
+        return Participants.of(Dealer.create(), players);
     }
 
     private Deck setUpDeck() {
@@ -62,8 +71,6 @@ public class BlackJackController {
                 cards.add(Card.of(suit, rank));
             }
         }
-
-        Collections.shuffle(cards);
 
         return RandomDeck.from(cards);
     }
@@ -78,13 +85,13 @@ public class BlackJackController {
                         ""
                 ));
 
-        outputView.printDealOut(playerNames, GameRule.DEALOUT_DRAW_COUNT);
+        outputView.printDealOut(playerNames, DEALOUT_DRAW_COUNT);
 
         for (Entry<String, Cards> entry : dealoutResult.entrySet()) {
             String participantName = entry.getKey();
-            List<Card> hands = entry.getValue().asList();
+            List<Card> hand = entry.getValue().asList();
 
-            List<String> result = hands.stream()
+            List<String> result = hand.stream()
                     .map(card -> card.getSuit().getName() + card.getRank().getName())
                     .toList();
 
@@ -94,11 +101,11 @@ public class BlackJackController {
 
     private void proceedPlayerTurns(Blackjack blackjack, List<Player> players) {
         for (Player player : players) {
-            while (player.canHit() && inputView.askHit(player.getName())) {
+            while (player.canReceive() && inputView.askHit(player.getName())) {
                 blackjack.giveCardTo(player);
 
-                List<Card> hands = player.open().asList();
-                List<String> result = hands.stream()
+                List<Card> hand = player.open();
+                List<String> result = hand.stream()
                         .map(card -> card.getSuit().getName() + card.getRank().getName())
                         .toList();
 
@@ -112,29 +119,42 @@ public class BlackJackController {
     }
 
     private void proceedDealerTurn(Blackjack blackjack, Dealer dealer) {
-        boolean draw = dealer.needDraw();
-
-        outputView.printDealerDrawResult(draw, GameRule.DEALER_DRAW_THRESHOLD);
-
-        if (draw) {
+        while (dealer.needDraw()) {
+            outputView.printDealerHit();
             blackjack.giveCardTo(dealer);
 
             if (dealer.isBust()) {
                 outputView.printBustState(dealer.getName(), dealer.calculateScore(), BLACKJACK_SCORE);
             }
         }
+
+        outputView.printDealerStay();
     }
 
     private void proceedFinalPhase(Blackjack blackjack, Participants participants) {
+        printHandsWithScore(participants);
+
+        LinkedHashMap<String, Long> profitByName = blackjack.calculateFinalResult()
+                .entrySet()
+                .stream()
+                .collect(Collectors.toMap(
+                        Entry::getKey,
+                        entry -> entry.getValue().longValue(),
+                        (e1, e2) -> e1,
+                        LinkedHashMap::new
+                ));
+
+        outputView.printFinalProfit(profitByName);
+    }
+
+    private void printHandsWithScore(Participants participants) {
         for (Participant participant : participants.asList()) {
-            List<Card> hands = participant.open().asList();
-            List<String> result = hands.stream()
+            List<Card> hand = participant.open();
+            List<String> result = hand.stream()
                     .map(card -> card.getSuit().getName() + card.getRank().getName())
                     .toList();
 
             outputView.printHandsWithScore(participant.getName(), result, participant.calculateScore());
         }
-
-        outputView.printFinalResult(blackjack.calculateDealerResult(), blackjack.calculatePlayerResult());
     }
 }

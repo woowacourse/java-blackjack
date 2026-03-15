@@ -1,31 +1,38 @@
 package model.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static util.ParticipantProvider.*;
 
 import java.util.List;
+import java.util.stream.Stream;
 import model.card.Card;
-import model.card.Cards;
 import model.card.Rank;
 import model.card.Suit;
+import model.participant.exception.ForbiddenPlayerNameException;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class PlayerTest {
     Participant player;
 
     @BeforeEach
     void setUp() {
-        player = Player.of("pobi");
+        player = Player.of("pobi", 1000);
     }
 
+    @DisplayName("플레이어가 '딜러'라는 이름을 사용하면 예외를 발생한다")
     @Test
-    void 플레이어_정상_생성_테스트() {
-        // given
-        // when
-
-        // then
-        assertThat(player.getName()).isEqualTo("pobi");
+    void 플레이어가_딜러라는_이름을_사용하면_예외를_발생한다() {
+        assertThatThrownBy(() -> Player.of("딜러", 1000))
+                .isInstanceOf(ForbiddenPlayerNameException.class);
     }
+
 
     @Test
     void 플레이어의_카드_오픈_테스트() {
@@ -37,11 +44,101 @@ class PlayerTest {
 
         // when
         player.open();
-        Cards opened = player.open();
+        List<Card> opened = player.open();
 
         // then
-        assertThat(opened.asList()).contains(card1, card2);
-        assertThat(opened.asList()).containsAll(List.of(card1, card2));
-        assertThat(opened.asList()).hasSize(2);
+        assertThat(opened).contains(card1, card2);
+        assertThat(opened).containsAll(List.of(card1, card2));
+        assertThat(opened).hasSize(2);
+    }
+
+    @Nested
+    class 승패_판정 {
+        @ParameterizedTest
+        @MethodSource("provideDealerCases")
+        void 플레이어가_버스트이면_딜러의_패와_관계없이_패배한다(Dealer dealer) {
+            Player playerWithBust = Player.of("playerWithBust", 1000);
+            playerWithBust.receive(Card.of(Suit.SPADE, Rank.JACK));
+            playerWithBust.receive(Card.of(Suit.SPADE, Rank.QUEEN));
+            playerWithBust.receive(Card.of(Suit.SPADE, Rank.KING));
+
+            assertThat(playerWithBust.beats(dealer)).isFalse();
+        }
+
+        @ParameterizedTest
+        @MethodSource("provideDealerCases")
+        void 플레이어가_블랙잭이면_딜러의_패와_관계없이_승리한다(Dealer dealer) {
+            Player playerWithBlackjack = Player.of("playerWithBlackjack", 1000);
+            playerWithBlackjack.receive(Card.of(Suit.SPADE, Rank.ACE));
+            playerWithBlackjack.receive(Card.of(Suit.SPADE, Rank.JACK));
+
+            assertThat(playerWithBlackjack.beats(dealer)).isTrue();
+        }
+
+        @ParameterizedTest
+        @MethodSource("provideAllCase")
+        void 플레이어가_버스트와_블랙잭이_아니라면_점수에_따라_승패를_계산한다(Player player, Dealer dealer, boolean expected) {
+            assertThat(player.beats(dealer)).isSameAs(expected);
+        }
+
+        @Nested
+        class 카드를_받을수_있는_경우_판정 {
+            @Test
+            void 카드의_합이_21이_아니면_추가로_카드를_받을_수_있다() {
+                Player playerWithScore20 = createPlayerWithScore20();
+
+                boolean canReceive = playerWithScore20.canReceive();
+
+                assertThat(canReceive).isTrue();
+            }
+        }
+
+        @Nested
+        class 카드를_받을_수_없는_경우_판정 {
+            @Test
+            void 블랙잭이면_추가로_카드를_받을_수_없다() {
+                Player playerWithBlackjack = createPlayerWithBlackjack();
+
+                boolean canReceive = playerWithBlackjack.canReceive();
+
+                assertThat(canReceive).isFalse();
+            }
+
+            @Test
+            void 블랙잭이_아니더라도_카드의_합이_21이면_추가로_카드를_받을_수_없다() {
+                Player playerWithScore21 = createPlayerWithScore21();
+
+                boolean canReceive = playerWithScore21.canReceive();
+
+                assertThat(canReceive).isFalse();
+            }
+
+            @Test
+            void 버스트라면_추가로_카드를_받을_수_없다() {
+                Player playerWithBust = createPlayerWithBust();
+
+                boolean canReceive = playerWithBust.canReceive();
+
+                assertThat(canReceive).isFalse();
+            }
+        }
+
+        private static Stream<Arguments> provideAllCase() {
+            return Stream.of(
+                    Arguments.of(createPlayerWithScore21(), createDealerWithScore20(), true),
+                    Arguments.of(createPlayerWithScore21(), createDealerWithBust(), true),
+                    Arguments.of(createPlayerWithScore21(), createDealerWithBlackjack(), false),
+                    Arguments.of(createPlayerWithScore20(), createDealerWithScore20(), true),
+                    Arguments.of(createPlayerWithScore19(), createDealerWithScore20(), false)
+            );
+        }
+
+        private static Stream<Arguments> provideDealerCases() {
+            return Stream.of(
+                    Arguments.of(createDealerWithBust()),
+                    Arguments.of(createDealerWithBlackjack()),
+                    Arguments.of(createDealerWithScore20())
+            );
+        }
     }
 }
