@@ -2,12 +2,10 @@ package view;
 
 import domain.betiing.BetAmount;
 import domain.participant.ParticipantInitialInformation;
-import domain.result.dto.BettingProfitDto;
-import domain.result.dto.GameResultDto;
 import domain.participant.ParticipantName;
 import domain.participant.dto.ParticipantHandDto;
+import domain.result.dto.BettingProfitDto;
 import domain.result.dto.ParticipantGameResultDto;
-
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -30,88 +28,91 @@ public class ApplicationView {
     }
 
     public List<ParticipantInitialInformation> requestInitialInformation() {
-        List<ParticipantName> participantNames = requestPlayerNames();
-        return participantNames.stream().map(name -> {
-            BetAmount betAmount = requestBetAmount(name.name());
-            return ParticipantInitialInformation.of(name, betAmount);
-        }).toList();
+        List<ParticipantName> participantNames = requestParticipantNames();
+
+        return participantNames.stream()
+                .map(name -> ParticipantInitialInformation.of(name, requestBetAmount(name.name())))
+                .toList();
     }
 
-    private List<ParticipantName> requestPlayerNames() {
-        return retry(this::readPlayerNames);
+    public boolean requestDrawCardDecision(String playerName) {
+        return retry(() -> readDrawCardDecision(playerName));
     }
 
-    private BetAmount requestBetAmount(String name) {
-        return retry(() -> readBetAmounts(name));
-    }
-
-    private List<ParticipantName> readPlayerNames() {
-        writer.printInputNameGuideMessage();
-        List<String> names = reader.readInputBasedOnSeparator(DELIMITER);
-
-        return names.stream().map(ParticipantName::from).toList();
-    }
-
-    private BetAmount readBetAmounts(String participantName) {
-        writer.printInputBetAmountGuideMessage(participantName);
-        int betAmount = reader.readInteger();
-        return BetAmount.from(betAmount);
-    }
-    public boolean requestDrawCardIntention(String playerName) {
-        return retry(() -> readDrawCardIntention(playerName));
-    }
-
-    private boolean readDrawCardIntention(String playerName) {
-        writer.printDrawCardGuideMessage(playerName);
-        String input = reader.readInputOnlyCandidate(List.of(INTENTION_YES, INTENTION_NO));
-
-        return input.equals(INTENTION_YES);
-    }
-
-    public void printInitialHandOutResult(List<String> playerNames, int initialCardCount) {
+    public void printInitialDeal(List<String> playerNames, int initialCardCount) {
         String formattedNames = String.join(DELIMITER, playerNames);
         writer.printDealInitialCardMessage(formattedNames, initialCardCount);
     }
 
-    public void printAllPlayersHand(List<ParticipantHandDto> playerHands) {
+    public void printPlayerHands(List<ParticipantHandDto> playerHands) {
         for (ParticipantHandDto playerHand : playerHands) {
             printParticipantHand(playerHand);
         }
     }
 
     public void printParticipantHand(ParticipantHandDto playerHand) {
-        writer.printAllParticipantsHand(playerHand.playerName(), formatHands(playerHand.handOnCards()));
-    }
-
-    public void printDealerAdditionalDrawCardMessage() {
-        writer.printDealerAdditionalDrawCardMessage();
-    }
-
-    public void printFinalBettingResult(BettingProfitDto dealerBettingResultDto, List<BettingProfitDto> playerBettingResultDtos) {
-        writer.printFinalBettingResultTitleMessage();
-        writer.printBettingResult(dealerBettingResultDto.playerName(), dealerBettingResultDto.totalProfit());
-        playerBettingResultDtos.forEach(bettingProfitDto ->
-                writer.printBettingResult(bettingProfitDto.playerName(), bettingProfitDto.totalProfit()));
-    }
-
-    public void printFinalResultMessage(GameResultDto resultAnalysis) {
-        writer.printFinalResultTitleMessage();
-        printAllPlayersResult(resultAnalysis);
-    }
-
-    private void printAllPlayersResult(GameResultDto resultAnalysis) {
-        writer.printFinalResultOfDealer(resultAnalysis.dealerGameResultDto().resultStatistic());
-        resultAnalysis.playerGameResultDtos().forEach(player ->
-                writer.printFinalResultOfPlayer(player.playerName(), player.winningStatus().displayName())
+        writer.printAllParticipantsHand(
+                playerHand.playerName(),
+                formatHand(playerHand.handOnCards())
         );
     }
 
-    public void printFinalResultMessage(ParticipantGameResultDto playerResult) {
-        ParticipantHandDto playerHand = playerResult.playerHand();
-        writer.printFinalResultMessage(playerHand.playerName(), formatHands(playerHand.handOnCards()), playerResult.resultScore());
+    public void printDealerDrawCard() {
+        writer.printDealerAdditionalDrawCardMessage();
     }
 
-    private String formatHands(List<String> hands) {
+    public void printBettingResults(
+            BettingProfitDto dealerBettingResultDto,
+            List<BettingProfitDto> playerBettingResultDtos
+    ) {
+        writer.printFinalBettingResultTitleMessage();
+        printBettingResult(dealerBettingResultDto);
+        playerBettingResultDtos.forEach(this::printBettingResult);
+    }
+
+    private void printBettingResult(BettingProfitDto dto) {
+        writer.printBettingResult(dto.playerName(), dto.totalProfit());
+    }
+
+    public void printParticipantResult(ParticipantGameResultDto playerResult) {
+        ParticipantHandDto playerHand = playerResult.playerHand();
+        writer.printFinalResultMessage(
+                playerHand.playerName(),
+                formatHand(playerHand.handOnCards()),
+                playerResult.resultScore()
+        );
+    }
+
+    private List<ParticipantName> requestParticipantNames() {
+        return retry(this::readParticipantNames);
+    }
+
+    private List<ParticipantName> readParticipantNames() {
+        writer.printInputNameGuideMessage();
+        List<String> names = reader.readInputBasedOnSeparator(DELIMITER);
+        return names.stream()
+                .map(ParticipantName::from)
+                .toList();
+    }
+
+
+    private BetAmount requestBetAmount(String participantName) {
+        return retry(() -> readBetAmount(participantName));
+    }
+
+    private BetAmount readBetAmount(String participantName) {
+        writer.printInputBetAmountGuideMessage(participantName);
+        int betAmount = reader.readInteger();
+        return BetAmount.from(betAmount);
+    }
+
+    private boolean readDrawCardDecision(String playerName) {
+        writer.printDrawCardGuideMessage(playerName);
+        String input = reader.readInputOnlyCandidate(List.of(INTENTION_YES, INTENTION_NO));
+        return input.equals(INTENTION_YES);
+    }
+
+    private String formatHand(List<String> hands) {
         return String.join(", ", hands);
     }
 
@@ -124,4 +125,5 @@ public class ApplicationView {
             }
         }
     }
+
 }

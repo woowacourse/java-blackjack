@@ -58,22 +58,22 @@ public class BlackjackGame {
                 .map(BettingProfitDto::from)
                 .toList();
 
-        view.printFinalBettingResult(dealerBettingResultDto, playerBettingResultDtos);
+        view.printBettingResults(dealerBettingResultDto, playerBettingResultDtos);
     }
 
     private void printAllParticipantsFinalHandResult(Dealer dealer, Players players) {
-        view.printFinalResultMessage(ParticipantGameResultDto.from(dealer));
-        players.toParticipantGameResultDtos().forEach(view::printFinalResultMessage);
+        view.printParticipantResult(ParticipantGameResultDto.from(dealer));
+        players.toParticipantGameResultDtos().forEach(view::printParticipantResult);
     }
 
     private void printInitialParticipantsHand(Dealer dealer, Players players) {
         view.printParticipantHand(ParticipantHandDtoMapper.map(dealer, STARTING_REVEALED_CARD_COUNT));
-        view.printAllPlayersHand(players.toParticipantHandDtos());
+        view.printPlayerHands(players.toParticipantHandDtos());
     }
 
     private void proceedDealersTurn(Dealer dealer) {
         if (dealer.hitIfRequired(cardDeck)) {
-            view.printDealerAdditionalDrawCardMessage();
+            view.printDealerDrawCard();
         }
     }
 
@@ -86,7 +86,7 @@ public class BlackjackGame {
             return;
         }
 
-        boolean drawCardIntention = view.requestDrawCardIntention(player.toDisplayMyName());
+        boolean drawCardIntention = view.requestDrawCardDecision(player.toDisplayMyName());
         while (!player.isBusted() && drawCardIntention) {
             player.drawCards(cardDeck, DEFAULT_CARD_DRAW_COUNT);
             view.printParticipantHand(ParticipantHandDtoMapper.map(player));
@@ -96,7 +96,7 @@ public class BlackjackGame {
     private void handOutInitialCard(Dealer dealer, Players players) {
         dealer.drawCards(cardDeck, INITIAL_CARD_DRAW_COUNT);
         players.giveInitialCardBundle(cardDeck);
-        view.printInitialHandOutResult(players.displayNames(), INITIAL_CARD_DRAW_COUNT);
+        view.printInitialDeal(players.displayNames(), INITIAL_CARD_DRAW_COUNT);
     }
 
     private List<ParticipantInitialInformation> requestInitialInformation() {
