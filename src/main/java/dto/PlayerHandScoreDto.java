@@ -1,7 +1,7 @@
 package dto;
 
 import domain.participant.Player;
-import util.CardMapper;
+import util.HandCardProcessor;
 
 import java.util.List;
 
@@ -9,9 +9,11 @@ public record PlayerHandScoreDto(String name, List<String> handCards, int score,
 
     public static PlayerHandScoreDto from(Player player) {
         return new PlayerHandScoreDto(
-                player.getName(), player.getHandCards().stream()
-                .map(CardMapper::cardToKorean)
-                .toList(), player.getScore(), player.isBust(), player.isBlackJack());
+                player.getName(),
+                HandCardProcessor.processHandCards(player.getHandCards()),
+                player.getScore(),
+                player.isBust(),
+                player.isBlackJack()
+        );
     }
-
 }
