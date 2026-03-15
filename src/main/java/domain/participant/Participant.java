@@ -1,6 +1,6 @@
 package domain.participant;
 
-import static domain.GameResult.BLACKJACK_SCORE;
+import static domain.result.GameResult.BLACKJACK_SCORE;
 
 import domain.card.Card;
 import domain.card.Deck;
@@ -20,6 +20,10 @@ public class Participant {
 
     public boolean isBust() {
         return getScore() > BLACKJACK_SCORE;
+    }
+
+    public boolean isBlackJack() {
+        return getScore() == BLACKJACK_SCORE && getCards().size() == INIT_CARD_SIZE;
     }
 
     public void playTurn(Deck deck) {
@@ -44,6 +48,12 @@ public class Participant {
 
     public int getScore() {
         return hand.calculate();
+    }
+
+    public List<String> createCardNames() {
+        return getCards().stream()
+                .map(Card::getCardName)
+                .toList();
     }
 
 }
