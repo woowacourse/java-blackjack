@@ -1,36 +1,29 @@
 package blackjack.domain;
 
-import java.util.List;
+import java.util.Objects;
 
-public class Player {
+public class Player extends Participant {
     private final Name name;
-    private final Hand hand;
+    private final BetAmount betAmount;
 
-    private Player(Name name, Hand hand) {
+    private Player(Name name, Hand hand, BetAmount betAmount) {
+        super(hand);
+        validate(name, betAmount);
         this.name = name;
-        this.hand = hand;
+        this.betAmount = betAmount;
     }
 
-    public static Player of(Name name) {
-        return new Player(name, Hand.init());
+    public static Player of(Name name, BetAmount betAmount) {
+        return new Player(name, Hand.init(), betAmount);
     }
 
-    public void receiveCards(List<TrumpCard> cards) {
-        for (TrumpCard card : cards) {
-            hand.receive(card);
-        }
+    private void validate(Name name, BetAmount betAmount) {
+        validateNameAndBetAmountNotNull(name, betAmount);
     }
 
-    public void receiveCard(TrumpCard card) {
-        hand.receive(card);
-    }
-
-    public int countCards() {
-        return hand.countCards();
-    }
-
-    public int score() {
-        return hand.calculateScore();
+    private void validateNameAndBetAmountNotNull(Name name, BetAmount betAmount) {
+        Objects.requireNonNull(name, "name 은 null 이 올 수 없습니다.");
+        Objects.requireNonNull(betAmount, "betAmount 은 null 이 올 수 없습니다.");
     }
 
     public String name() {
@@ -38,14 +31,10 @@ public class Player {
     }
 
     public boolean canHit() {
-        return score() <= 21;
+        return score() <= BLACKJACK_THRESHOLD;
     }
 
-    public boolean isBust() {
-        return score() > 21;
-    }
-
-    public List<TrumpCard> getCards() {
-        return hand.getCards();
+    public BetAmount betAmount() {
+        return betAmount;
     }
 }

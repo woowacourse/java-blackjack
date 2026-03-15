@@ -24,14 +24,20 @@ public class Parser {
         return splitResult;
     }
 
-    public static void yesOrNo(String input) {
+    public static boolean parseAnswer(String input) {
+        notEmpty(input);
+        yesOrNo(input);
+        return input.equals(YES);
+    }
+
+    public static Integer parseAmount(String input) {
+        notEmpty(input);
+        return Integer.parseInt(input);
+    }
+
+    private static void yesOrNo(String input) {
         if (!input.equals(YES) && !input.equals(NO)) {
             throw new IllegalArgumentException("y 또는 n만 입력 가능합니다.");
         }
     }
-
-    public static boolean parseAnswer(String input) {
-        return input.equals(YES);
-    }
-
 }

@@ -26,6 +26,15 @@ class NameTest {
     }
 
     @Test
+    void 이름이_null이면_예외_처리한다() {
+        String name = null;
+
+        assertThatThrownBy(() -> Name.of(name))
+                .isInstanceOf(NullPointerException.class)
+                .hasMessage("name 은 null 이 올 수 없습니다.");
+    }
+
+    @Test
     void 이름에_숫자가_들어가면_예외처리한다() {
         String name = "숫1자이름";
 

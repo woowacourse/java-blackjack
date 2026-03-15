@@ -3,9 +3,11 @@ package blackjack.controller;
 import static blackjack.util.Parser.splitDelimiter;
 import static blackjack.view.InputView.readPlayNames;
 
+import blackjack.domain.BetAmount;
 import blackjack.domain.BlackjackGame;
-import blackjack.domain.MatchResult;
+import blackjack.domain.Name;
 import blackjack.domain.Player;
+import blackjack.domain.Players;
 import blackjack.dto.DealResult;
 import blackjack.dto.GameResult;
 import blackjack.dto.PlayerHandResult;
@@ -13,8 +15,8 @@ import blackjack.service.RandomShuffleStrategy;
 import blackjack.util.Parser;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class BlackjackController {
     public void run() {
@@ -22,24 +24,37 @@ public class BlackjackController {
         dealAndPrintResult(blackjackGame);
         playPlayerTurn(blackjackGame);
         playDealerTurn(blackjackGame);
-        generateAndPrintPlayResult(blackjackGame);
+        generateAndPrintProfitResult(blackjackGame);
     }
 
     private BlackjackGame readyBlackjackGame() {
-        List<String> playerNames = inputName();
-        RandomShuffleStrategy shuffleStrategy = new RandomShuffleStrategy();
-        return BlackjackGame.create(playerNames, shuffleStrategy);
+        List<Name> names = inputNames();
+        Players players = inputBettingAmounts(names);
+        return BlackjackGame.create(players, new RandomShuffleStrategy());
     }
 
-    private List<String> inputName() {
+    private List<Name> inputNames() {
         String input = readPlayNames();
         Parser.notEmpty(input);
-        return splitDelimiter(input);
+        return splitDelimiter(input).stream()
+                .map(Name::of)
+                .toList();
+    }
+
+    private Players inputBettingAmounts(List<Name> names) {
+        List<Player> players = new ArrayList<>();
+        for (Name name : names) {
+            OutputView.printLineBreak();
+            BetAmount betAmount = BetAmount.of(Parser.parseAmount(InputView.readBettingAmount(name.getName())));
+            players.add(Player.of(name, betAmount));
+        }
+        OutputView.printLineBreak();
+        return Players.of(players);
     }
 
     private void dealAndPrintResult(BlackjackGame blackjackGame) {
         blackjackGame.deal();
-        DealResult dealResult = DealResult.from(blackjackGame.getPlayers(), blackjackGame.getDealer());
+        DealResult dealResult = DealResult.from(blackjackGame);
         OutputView.printDealResult(dealResult);
     }
 
@@ -67,8 +82,6 @@ public class BlackjackController {
 
     private boolean inputYesOrNo(String playerName) {
         String input = InputView.readYesOrNo(playerName);
-        Parser.notEmpty(input);
-        Parser.yesOrNo(input);
         return Parser.parseAnswer(input);
     }
 
@@ -79,12 +92,18 @@ public class BlackjackController {
         }
     }
 
-    private void generateAndPrintPlayResult(BlackjackGame blackjackGame) {
+    private void generateAndPrintProfitResult(BlackjackGame blackjackGame) {
+        printGameResult(blackjackGame);
+        printProfitResult(blackjackGame);
+    }
+
+    private void printGameResult(BlackjackGame blackjackGame) {
         GameResult gameResult = blackjackGame.generateGameResult();
         OutputView.printGameResult(gameResult);
+    }
 
-        Map<Player, MatchResult> playerFinalResult = blackjackGame.getPlayerFinalResult();
-        Map<String, Long> dealerFinalResult = blackjackGame.getDealerFinalResult(playerFinalResult);
-        OutputView.printFinalResult(playerFinalResult, dealerFinalResult);
+
+    private void printProfitResult(BlackjackGame blackjackGame) {
+        OutputView.printFinalResult(blackjackGame.calculateProfits());
     }
 }
