@@ -26,7 +26,7 @@ public class BlackjackController {
         List<String> names = inputView.inputPlayers();
         List<Integer> betAmounts = inputView.inputBetAmount(names);
         Players players = new Players(names,betAmounts);
-        Dealer dealer = new Dealer("딜러");
+        Dealer dealer = new Dealer();
         Deck deck = new Deck();
         dealInitialCards(dealer, players, deck);
         dealInitialCards(dealer, players, deck);
