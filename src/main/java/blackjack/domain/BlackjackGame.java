@@ -21,25 +21,10 @@ public class BlackjackGame {
         this.deck = deck;
     }
 
-    public static BlackjackGame create(List<String> names, ShuffleStrategy strategy) {
-        Dealer dealer = Dealer.of();
-        Players players = generatePlayers(names);
-        Deck deck = Deck.create(strategy);
-        return new BlackjackGame(dealer, players, deck);
-    }
-
     public static BlackjackGame create(Players playersWithBetAmounts, ShuffleStrategy strategy) {
         Dealer dealer = Dealer.of();
         Deck deck = Deck.create(strategy);
         return new BlackjackGame(dealer, playersWithBetAmounts, deck);
-    }
-
-    private static Players generatePlayers(List<String> names) {
-        List<Player> players = new ArrayList<>();
-        for (int i = 0; i < names.size(); i++) {
-            players.add(Player.of(Name.of(names.get(i))));
-        }
-        return Players.of(players);
     }
 
     private void validate(Dealer dealer, Players players, Deck deck) {
@@ -47,7 +32,6 @@ public class BlackjackGame {
         Objects.requireNonNull(players, "players 는 null 이 올 수 없습니다.");
         Objects.requireNonNull(deck, "deck 은 null 이 올 수 없습니다.");
     }
-
 
     public void deal() {
         players.receiveCards(deck);
