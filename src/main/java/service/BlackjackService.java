@@ -2,8 +2,10 @@ package service;
 
 import domain.Deck;
 import domain.Participants;
+import dto.DealerResultDTO;
 import dto.ParticipantsInitDTO;
 import dto.UserCardsDTO;
+import dto.UserResultDTO;
 import java.util.List;
 import util.DisplayFormatter;
 import util.RandomShuffleStrategy;
@@ -35,10 +37,6 @@ public class BlackjackService {
         return String.format(Message.DEALER_CARDS_MESSAGE, participants.getDealerOneCardDisplay());
     }
 
-    public String makeDealerCardsDisplay() {
-        return String.format(Message.DEALER_CARDS_MESSAGE, participants.getDealerCardsDisplay());
-    }
-
     public List<String> makeExtraCardRequests() {
         return participants.askGetExtraCard();
     }
@@ -57,12 +55,14 @@ public class BlackjackService {
     public String hit(int index) {
         participants.dealCard(deck, index);
         participants.calculateUserScore(index);
-        return participants.getPlayerCardStatus(index);
+        UserCardsDTO userCardsDTO = participants.getPlayerCards(index);
+        return DisplayFormatter.formatUserCardsDisplay(userCardsDTO);
     }
 
     public String stand(int index) {
         calculateUserScore(index);
-        return participants.getPlayerCardStatus(index);
+        UserCardsDTO userCardsDTO = participants.getPlayerCards(index);
+        return DisplayFormatter.formatUserCardsDisplay(userCardsDTO);
     }
 
     public void calculateDealerScore() {
@@ -78,11 +78,15 @@ public class BlackjackService {
     }
 
     public String makeDealerFinalResultDisplay() {
-        return makeDealerCardsDisplay() + participants.getDealerFinalDisplay();
+        DealerResultDTO dealerResultDTO = participants.getDealerResult();
+        return DisplayFormatter.formatDealerResultDisplay(dealerResultDTO);
     }
 
     public List<String> makeUserFinalResultDisplay() {
-        return participants.addScoreToUserHand();
+        List<UserResultDTO> userResultDTOS = participants.getUserResults();
+        return userResultDTOS.stream()
+                .map(DisplayFormatter::formatUserResultDisplay)
+                .toList();
     }
 
     private void calculateUserScore(int index) {

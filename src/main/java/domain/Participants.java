@@ -1,14 +1,15 @@
 package domain;
 
+import dto.DealerResultDTO;
 import dto.ParticipantsInitDTO;
 import dto.ProfitResultDTO;
 import dto.UserCardsDTO;
+import dto.UserResultDTO;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import util.DisplayFormatter;
 import vo.GameResult;
 import vo.Money;
 
@@ -48,22 +49,14 @@ public class Participants {
         return dealer.getOneCardDisplay();
     }
 
-    public String getDealerCardsDisplay() {
-        return dealer.getCardsDisplay();
-    }
-
     public List<UserCardsDTO> getUserCards() {
         return players.stream()
                 .map(UserCardsDTO::fromUser)
                 .collect(Collectors.toList());
     }
 
-    private String makeOneUserCardDisplay(User user) {
-        return DisplayFormatter.formatUserCardsDisplay(UserCardsDTO.fromUser(user));
-    }
-
-    public String getPlayerCardStatus(int userIndex) {
-        return makeOneUserCardDisplay(players.get(userIndex));
+    public UserCardsDTO getPlayerCards(int userIndex) {
+        return UserCardsDTO.fromUser(players.get(userIndex));
     }
 
     public List<String> askGetExtraCard() {
@@ -93,17 +86,14 @@ public class Participants {
         dealer.calculateScore();
     }
 
-    public String getDealerFinalDisplay() {
-        return dealer.getDealerFinalDisplay();
+    public DealerResultDTO getDealerResult() {
+        return DealerResultDTO.fromDealer(dealer);
     }
 
-    public List<String> addScoreToUserHand() {
-        List<String> userDisplays = new ArrayList<>();
-        for (User user : players) {
-            String userFinalDisplay = makeOneUserCardDisplay(user) + user.getUserFinalDisplay();
-            userDisplays.add(userFinalDisplay);
-        }
-        return userDisplays;
+    public List<UserResultDTO> getUserResults() {
+        return players.stream()
+                .map(UserResultDTO::fromUser)
+                .collect(Collectors.toList());
     }
 
     public List<String> makeProfitResultDisplays() {

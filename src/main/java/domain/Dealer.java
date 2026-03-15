@@ -31,8 +31,8 @@ public class Dealer {
         return hand.determineDealerDealMore();
     }
 
-    public String getDealerFinalDisplay() {
-        return hand.getFinalDisplay();
+    public int getTotalScore() {
+        return hand.getHandTotalScore();
     }
 
     public GameResult judgeResultForUser(User user) {

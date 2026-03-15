@@ -1,7 +1,6 @@
 package domain;
 
 import view.Message;
-import vo.GameResult;
 import vo.Money;
 
 public class User {
@@ -33,10 +32,6 @@ public class User {
 
     public void calculateScore() {
         hand.calculateHandScore();
-    }
-
-    public String getUserFinalDisplay() {
-        return hand.getFinalDisplay();
     }
 
     public int getTotalScore() {
