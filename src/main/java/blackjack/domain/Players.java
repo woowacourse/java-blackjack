@@ -4,7 +4,6 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Role;
 import blackjack.dto.ParticipantResult;
-import blackjack.dto.PlayerBettingRequest;
 import blackjack.dto.PlayerGameResult;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,10 +24,8 @@ public class Players {
         return from(List.of());
     }
 
-    public Players addPlayer(PlayerBettingRequest playerRequest) {
+    public Players addPlayer(Nickname nickname, long amount) {
         List<Player> nowPlayers = new ArrayList<>(getPlayers());
-        String nickname = playerRequest.playerNickname();
-        long amount = playerRequest.amount();
         nowPlayers.add(new Player(nickname, Role.PLAYER, amount));
         return Players.from(nowPlayers);
     }

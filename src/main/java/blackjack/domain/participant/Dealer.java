@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.Hand;
+import blackjack.domain.Nickname;
 import blackjack.dto.DealerGameResult;
 import blackjack.dto.ParticipantResult;
 import blackjack.dto.PlayerGameResult;
@@ -10,18 +11,12 @@ public class Dealer extends Participant {
 
     private static final int DEALER_SCORE = 16;
 
-    private static final String DEALER_NICKNAME = "딜러";
-
-    private Dealer(String nickname, Role role) {
-        super(nickname, Hand.createEmptyHands(), role);
+    private Dealer(Role role) {
+        super(Nickname.makeDealerNickname(), Hand.createEmptyHands(), role);
     }
 
     public static Dealer from() {
-        return new Dealer(DEALER_NICKNAME, Role.DEALER);
-    }
-
-    public String getDealerNickname() {
-        return DEALER_NICKNAME;
+        return new Dealer(Role.DEALER);
     }
 
     public String getFirstCard() {
@@ -45,7 +40,7 @@ public class Dealer extends Participant {
 
     public ParticipantResult getInitialResult() {
         return ParticipantResult.of(
-            getDealerNickname(),
+            getNickname(),
             getFirstCard(),
             getTotalScore()
         );

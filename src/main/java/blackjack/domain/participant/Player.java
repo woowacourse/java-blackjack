@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.Hand;
 import blackjack.domain.MatchResult;
+import blackjack.domain.Nickname;
 import blackjack.dto.PlayerGameResult;
 
 public class Player extends Participant {
@@ -11,7 +12,7 @@ public class Player extends Participant {
     private boolean stopDrawing;
     private final long amount;
 
-    public Player(String nickname, Role role, long amount) {
+    public Player(Nickname nickname, Role role, long amount) {
         super(nickname, Hand.createEmptyHands(), role);
         stopDrawing = false;
         validateAmount(amount);
@@ -32,7 +33,7 @@ public class Player extends Participant {
     public PlayerGameResult determinePlayerResult(Dealer dealer) {
         MatchResult matchResult = determineGameResult(dealer);
         double payout = determinePayout(matchResult);
-        return PlayerGameResult.of(nickname, matchResult, (long) payout - amount);
+        return PlayerGameResult.of(nickname.getValue(), matchResult, (long) payout - amount);
     }
 
     private void validateAmount(long amount) {

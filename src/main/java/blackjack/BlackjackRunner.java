@@ -2,6 +2,7 @@ package blackjack;
 
 import blackjack.domain.Deck;
 import blackjack.domain.Hand;
+import blackjack.domain.Nicknames;
 import blackjack.domain.Participants;
 import blackjack.domain.Players;
 import blackjack.domain.participant.Dealer;
@@ -9,7 +10,6 @@ import blackjack.dto.DrawResult;
 import blackjack.dto.ParticipantResult;
 import blackjack.dto.PlayerBettingRequest;
 import blackjack.dto.PlayerNicknamesResult;
-import blackjack.dto.PlayersBettingRequest;
 import blackjack.dto.TotalGameResult;
 import blackjack.util.PlayerNameParser;
 import blackjack.view.InputView;
@@ -58,52 +58,51 @@ public class BlackjackRunner {
     }
 
     private Participants makeParticipants() {
-        PlayersBettingRequest initialRequest = getPlayersNickname();
-        Players players = betPlayers(initialRequest);
+        Nicknames nicknames = getPlayersNickname();
+        Players players = betPlayers(nicknames);
         Dealer dealer = Dealer.from();
         return new Participants(players, dealer);
     }
 
-    private PlayersBettingRequest getPlayersNickname() {
+    private Nicknames getPlayersNickname() {
         try {
             outputView.askGameMembers();
             String playerNamesInput = inputView.readLine();
             List<String> playerNames = PlayerNameParser.parsePlayerNames(playerNamesInput);
-            return PlayersBettingRequest.createInitialRequest(playerNames);
+            return Nicknames.from(playerNames);
         } catch (IllegalArgumentException e) {
             outputView.printLine(e.getMessage());
             return getPlayersNickname();
         }
     }
 
-    private Players betPlayers(PlayersBettingRequest initialRequest) {
-        List<PlayerBettingRequest> value = initialRequest.value();
+    private Players betPlayers(Nicknames nicknames) {
+        List<String> playerNicknames = nicknames.getRawNicknames();
         Players players = Players.makeEmptyPlayers();
-        for (PlayerBettingRequest playerBettingRequest : value) {
-            players = addPlayerWithValidBet(playerBettingRequest, players);
+        for (String nickname : playerNicknames) {
+            players = addPlayerWithValidBet(nicknames, nickname, players);
         }
         return players;
     }
 
-    private Players addPlayerWithValidBet(PlayerBettingRequest playerBettingRequest, Players players) {
+    private Players addPlayerWithValidBet(Nicknames nicknames, String nickname, Players players) {
         try {
-            PlayerBettingRequest playerRequest = readBettingRequest(playerBettingRequest);
-            return players.addPlayer(playerRequest);
+            PlayerBettingRequest playerRequest = readBettingRequest(nickname);
+            return players.addPlayer(nicknames.findByNickname(nickname), playerRequest.amount());
         } catch (IllegalArgumentException e) {
             outputView.printLine(e.getMessage());
-            return addPlayerWithValidBet(playerBettingRequest, players);
+            return addPlayerWithValidBet(nicknames, nickname, players);
         }
     }
 
-    private PlayerBettingRequest readBettingRequest(PlayerBettingRequest playerBettingRequest) {
+    private PlayerBettingRequest readBettingRequest(String nickname) {
         try {
-            String playerNickname = playerBettingRequest.playerNickname();
-            outputView.askBetAmount(playerNickname);
+            outputView.askBetAmount(nickname);
             String amount = inputView.readLine();
-            return PlayerBettingRequest.of(playerNickname, amount);
+            return PlayerBettingRequest.of(nickname, amount);
         } catch (IllegalArgumentException e) {
             outputView.printLine(e.getMessage());
-            return readBettingRequest(playerBettingRequest);
+            return readBettingRequest(nickname);
         }
     }
 
