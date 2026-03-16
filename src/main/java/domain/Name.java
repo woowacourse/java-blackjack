@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class Name {
     private static final int NAME_LIMIT_LENGTH = 20;
-    private static final List<String> INVALID_NAMES = List.of("딜러", "Dealer", "dealer", "참가자");
+    private static final List<String> INVALID_NAMES = List.of("딜러", "dealer", "참가자");
 
     private final String name;
 
@@ -38,7 +38,9 @@ public class Name {
     }
 
     private static void validateInvalidName(String name) {
-        if (INVALID_NAMES.contains(name)) {
+        String checkName = name.replaceAll("\\s+", "");
+
+        if (INVALID_NAMES.contains(checkName.toLowerCase())) {
             throw new IllegalArgumentException("사용할 수 없는 이름입니다.");
         }
     }
