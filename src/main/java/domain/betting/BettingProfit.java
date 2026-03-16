@@ -17,15 +17,15 @@ public class BettingProfit {
     }
 
     public static BettingProfit of(WinningStatus winningStatus, BetAmount betAmount) {
-        if (winningStatus.equals(WinningStatus.BLCAKJACK)) {
+        if (winningStatus.isBlackjack()) {
             return new BettingProfit(betAmount.applyRate(BLACKJACK_RATE));
         }
 
-        if (winningStatus.equals(WinningStatus.WIN)) {
+        if (winningStatus.isWin()) {
             return new BettingProfit(betAmount.applyRate(WINNING_RATE));
         }
 
-        if (winningStatus.equals(WinningStatus.DRAW)) {
+        if (winningStatus.isDraw()) {
             return new BettingProfit(betAmount.applyRate(DRAW_RATE));
         }
 

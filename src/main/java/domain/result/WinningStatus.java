@@ -29,4 +29,16 @@ public enum WinningStatus {
         return this;
     }
 
+    public boolean isWin() {
+        return this == WIN;
+    }
+
+    public boolean isDraw() {
+        return this == DRAW;
+    }
+
+    public boolean isBlackjack() {
+        return this == BLCAKJACK;
+    }
+
 }
