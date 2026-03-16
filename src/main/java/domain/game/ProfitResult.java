@@ -15,7 +15,7 @@ public class ProfitResult {
     }
 
     public int getDealerProfit() {
-        return playerProfits.values().stream()
+        return -playerProfits.values().stream()
                 .mapToInt(Integer::intValue)
                 .sum();
     }
