@@ -39,6 +39,9 @@ public class BlackjackView {
     }
 
     public void printDealerHit(DealerHitDto dealerHitDto) {
+        if (dealerHitDto.hitCount() <= 0) {
+            return;
+        }
         outputView.printDealerHit(dealerHitDto);
     }
 
