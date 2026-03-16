@@ -13,22 +13,39 @@ public class GameResultCalculator {
     }
 
     private static ResultType getResultType(Hand playerHand, Hand dealerHand) {
-        if (playerHand.isBust() || (dealerHand.isBlackjack() && !playerHand.isBlackjack() || (
-                playerHand.getScore().value() < dealerHand.getScore().value()
-                        && !dealerHand.isBust()))) {
+        if (playerHand.isBust()) {
             return ResultType.LOSE;
         }
-        if (dealerHand.isBust() || (playerHand.isBlackjack() && !dealerHand.isBlackjack())
-                || playerHand.getScore().value() > dealerHand.getScore().value()) {
-            return checkBlackjackWin(playerHand);
+        if (dealerHand.isBust()) {
+            return ResultType.WIN;
         }
-        return ResultType.DRAW;
+        if (playerHand.isBlackjack() || dealerHand.isBlackjack()) {
+            return judgeBlackjack(playerHand, dealerHand);
+        }
+
+        return judgeScore(playerHand, dealerHand);
     }
 
-    private static ResultType checkBlackjackWin(Hand playerHand) {
+    private static ResultType judgeBlackjack(Hand playerHand, Hand dealerHand) {
+        if (playerHand.isBlackjack() && dealerHand.isBlackjack()) {
+            return ResultType.DRAW;
+        }
         if (playerHand.isBlackjack()) {
             return ResultType.BLACKJACK_WIN;
         }
-        return ResultType.WIN;
+        return ResultType.LOSE;
+    }
+
+    private static ResultType judgeScore(Hand playerHand, Hand dealerHand) {
+        int playerScore = playerHand.getScore().value();
+        int dealerScore = dealerHand.getScore().value();
+
+        if (playerScore > dealerScore) {
+            return ResultType.WIN;
+        }
+        if (playerScore < dealerScore) {
+            return ResultType.LOSE;
+        }
+        return ResultType.DRAW;
     }
 }
