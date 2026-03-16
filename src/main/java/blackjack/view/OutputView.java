@@ -2,6 +2,9 @@ package blackjack.view;
 
 import blackjack.model.card.Card;
 import blackjack.model.participant.Players;
+import blackjack.view.dto.DistributionCompleteOutputRequest;
+import blackjack.view.dto.ParticipantCardsOutputRequest;
+import blackjack.view.dto.ParticipantCardsWithScoreOutputRequest;
 import java.util.List;
 
 public class OutputView {
@@ -27,26 +30,23 @@ public class OutputView {
         System.out.printf(BET_AMOUNT_INPUT_PROMPT + NEW_LINE, name);
     }
 
-    public void printCardDistributionCompleted(
-            List<String> playerNames,
-            String dealerName
-    ) {
+    public void printCardDistributionCompleted(DistributionCompleteOutputRequest request) {
         System.out.printf(
                 CARD_DISTRIBUTION_COMPLETED + NEW_LINE,
-                dealerName,
-                String.join(COMMA_AND_SPACE, playerNames)
+                request.dealerName(),
+                String.join(COMMA_AND_SPACE, request.playerNames())
         );
     }
 
-    public void printParticipantCards(String name, List<Card> openedCards) {
-        List<String> cardNames = openedCards.stream()
+    public void printParticipantCards(ParticipantCardsOutputRequest request) {
+        List<String> cardNames = request.cards().stream()
                 .map(Card::toString)
                 .toList();
         String joinedCardNames = String.join(COMMA_AND_SPACE, cardNames);
 
         System.out.printf(
                 PARTICIPANT_CARDS + NEW_LINE,
-                name,
+                request.name(),
                 joinedCardNames
         );
     }
@@ -59,21 +59,17 @@ public class OutputView {
         System.out.println(DEALER_PICK_CARD);
     }
 
-    public void printParticipantCardsWithScore(
-            String name,
-            List<Card> cards,
-            int score
-    ) {
-        List<String> cardNames = cards.stream()
+    public void printParticipantCardsWithScore(ParticipantCardsWithScoreOutputRequest request) {
+        List<String> cardNames = request.cards().stream()
                 .map(Card::toString)
                 .toList();
         String joinedCardNames = String.join(COMMA_AND_SPACE, cardNames);
 
         System.out.printf(
                 PARTICIPANT_CARDS + RESULT + NEW_LINE,
-                name,
+                request.name(),
                 joinedCardNames,
-                score
+                request.score()
         );
     }
 

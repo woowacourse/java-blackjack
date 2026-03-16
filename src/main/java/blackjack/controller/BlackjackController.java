@@ -1,37 +1,45 @@
 package blackjack.controller;
 
-import blackjack.model.cardDeck.CardDeck;
 import blackjack.model.cardDeck.PickStrategy;
+import blackjack.model.cardDeck.RandomPickStrategy;
 import blackjack.model.participant.Dealer;
+import blackjack.model.participant.Participant;
 import blackjack.model.participant.Player;
 import blackjack.model.participant.Players;
+import blackjack.service.BlackjackService;
+import blackjack.model.GameState;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import blackjack.view.dto.DistributionCompleteOutputRequest;
+import blackjack.view.dto.ParticipantCardsOutputRequest;
+import blackjack.view.dto.ParticipantCardsWithScoreOutputRequest;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BlackjackController {
 
+    private static final PickStrategy PICK_STRATEGY = new RandomPickStrategy();
+
     private final InputView inputView;
     private final OutputView outputView;
-    private final PickStrategy pickStrategy;
+    private final BlackjackService blackjackService;
 
     public BlackjackController(
             InputView inputView,
             OutputView outputView,
-            PickStrategy pickStrategy
+            BlackjackService blackjackService
     ) {
-        validate(inputView, outputView, pickStrategy);
+        validate(inputView, outputView, blackjackService);
 
         this.inputView = inputView;
         this.outputView = outputView;
-        this.pickStrategy = pickStrategy;
+        this.blackjackService = blackjackService;
     }
 
     private void validate(
             InputView inputView,
             OutputView outputView,
-            PickStrategy pickStrategy
+            BlackjackService blackjackService
     ) {
         if (inputView == null) {
             throw new IllegalArgumentException("inputView가 null입니다.");
@@ -41,39 +49,30 @@ public class BlackjackController {
             throw new IllegalArgumentException("outputView가 null입니다.");
         }
 
-        if (pickStrategy == null) {
-            throw new IllegalArgumentException("pickStrategy가 null입니다.");
+        if (blackjackService == null) {
+            throw new IllegalArgumentException("blackjackService가 null입니다.");
         }
     }
 
     public void run() {
-        Players players = createPlayers();
-        Dealer dealer = new Dealer();
+        GameState gameState = startGame();
+        GameState cardDistributed = distributeInitialCards(gameState);
 
-        CardDeck cardDeck = CardDeck.of(pickStrategy);
-        distributeInitialCards(dealer, players, cardDeck);
+        GameState bustApplied = askHitOrStand(cardDistributed);
+        drawUntilSeventeen(bustApplied);
 
-        players = players.applyBlackjack();
-
-        players.perform(player -> askHitOrStand(cardDeck, player));
-        players = players.applyBust();
-
-        drawUntilSeventeen(dealer, cardDeck);
-        players = players.award(dealer);
-
-        openDealerHands(dealer);
-        openPlayersHands(players);
-
-        outputView.printPlayerPrizes(players, dealer.getName());
+        GameState awarded = awardPlayers(bustApplied);
+        outputFinalResult(awarded);
     }
 
-    private Players createPlayers() {
+    private GameState startGame() {
         List<String> names = inputPlayerNames();
         List<Integer> betAmounts = inputBetAmounts(names);
 
-        return Players.of(
+        return blackjackService.setUp(
                 names,
-                betAmounts
+                betAmounts,
+                PICK_STRATEGY
         );
     }
 
@@ -93,39 +92,53 @@ public class BlackjackController {
         return betAmounts;
     }
 
-    private void distributeInitialCards(
-            Dealer dealer,
-            Players players,
-            CardDeck cardDeck
-    ) {
-        dealer.pickInitialCards(cardDeck);
-        players.pickInitialCards(cardDeck);
+    private GameState distributeInitialCards(GameState gameState) {
+        Players distributedPlayers = blackjackService.distributeInitialCards(gameState);
+        GameState distributed = gameState.updatePlayers(distributedPlayers);
 
         outputView.printCardDistributionCompleted(
-                players.getNames(),
-                dealer.getName()
+                DistributionCompleteOutputRequest.from(distributed)
         );
 
+        openDealerHands(gameState.dealer());
+        openPlayerHands(distributedPlayers);
+
+        return distributed;
+    }
+    private void openDealerHands(Dealer dealer) {
         outputView.printParticipantCards(
-                dealer.getName(),
-                dealer.getOpenedCards()
+                ParticipantCardsOutputRequest.from(dealer)
         );
-        players.perform(
+    }
+
+    private void openPlayerHands(Players distributedPlayers) {
+        blackjackService.forEach(
+                distributedPlayers,
                 player -> outputView.printParticipantCards(
-                        player.getName(),
-                        player.getOpenedCards()
+                        ParticipantCardsOutputRequest.from(player)
                 )
         );
     }
 
-    private void askHitOrStand(
-            CardDeck cardDeck,
-            Player player
-    ) {
-        while (!player.isBust() && inputIsContinued(player)) {
-            player.pickAdditionalCard(cardDeck);
-            outputView.printParticipantCards(player.getName(), player.getAllCard());
-        }
+
+    private GameState askHitOrStand(GameState gameState) {
+        blackjackService.forEach(
+                gameState.players(),
+                player -> {
+                    while (!player.isBust() && inputIsContinued(player)) {
+                        blackjackService.pickAdditionalCard(player, gameState.cardDeck());
+                        outputView.printParticipantCards(ParticipantCardsOutputRequest.from(player));
+                    }
+                }
+        );
+
+        Players bustAppliedPlayers = blackjackService.applyBustToPlayers(gameState.players());
+
+        return new GameState(
+                bustAppliedPlayers,
+                gameState.dealer(),
+                gameState.cardDeck()
+        );
     }
 
     private boolean inputIsContinued(Player player) {
@@ -133,29 +146,44 @@ public class BlackjackController {
         return inputView.inputMoreCard();
     }
 
-    private void drawUntilSeventeen(
-            Dealer dealer,
-            CardDeck cardDeck
-    ) {
-        while (dealer.canPick()) {
-            dealer.pickAdditionalCard(cardDeck);
+    private void drawUntilSeventeen(GameState gameState) {
+        int drawnCount = blackjackService.drawDealerCardUntilSeventeen(gameState);
+
+        for (int outputCount = 0; outputCount < drawnCount; outputCount++) {
             outputView.printDealerPicksCard();
         }
     }
 
-    private void openDealerHands(Dealer dealer) {
+    private GameState awardPlayers(GameState bustApplied) {
+        Players awardedPlayers = blackjackService.awardPlayers(bustApplied);
+        return bustApplied.updatePlayers(awardedPlayers);
+    }
+
+    private void outputFinalResult(GameState gameState) {
+        openDealerHandsWithScore(gameState.dealer());
+        openPlayersHandsWithScore(gameState.players());
+        openPlayerPrizes(gameState);
+    }
+
+    private void openDealerHandsWithScore(Dealer dealer) {
         outputView.printParticipantCardsWithScore(
-                dealer.getName(),
-                dealer.getAllCard(),
-                dealer.getCurrentTotalScore()
+                ParticipantCardsWithScoreOutputRequest.from(dealer)
         );
     }
 
-    private void openPlayersHands(Players players) {
-        players.perform(player -> outputView.printParticipantCardsWithScore(
-                player.getName(),
-                player.getAllCard(),
-                player.getCurrentTotalScore()
-        ));
+    private void openPlayersHandsWithScore(Players players) {
+        blackjackService.forEach(
+                players,
+                player -> outputView.printParticipantCardsWithScore(
+                        ParticipantCardsWithScoreOutputRequest.from(player)
+                )
+        );
+    }
+
+    private void openPlayerPrizes(GameState gameState) {
+        outputView.printPlayerPrizes(
+                gameState.players(),
+                gameState.dealer().getName()
+        );
     }
 }

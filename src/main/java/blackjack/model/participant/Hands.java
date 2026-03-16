@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.model.participant;
 
 import blackjack.model.card.Card;
 import java.util.ArrayList;

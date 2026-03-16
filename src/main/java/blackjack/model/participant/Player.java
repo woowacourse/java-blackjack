@@ -1,7 +1,6 @@
 package blackjack.model.participant;
 
 import blackjack.model.cardDeck.CardDeck;
-import blackjack.model.Hands;
 
 public class Player extends Participant {
 

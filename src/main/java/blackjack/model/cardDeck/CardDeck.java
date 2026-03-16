@@ -32,6 +32,10 @@ public class CardDeck {
     }
 
     public static CardDeck of(PickStrategy pickStrategy) {
+        if (pickStrategy == null) {
+            throw new IllegalArgumentException("pickStrategy가 null입니다.");
+        }
+
         List<Card> cards = new ArrayList<>();
 
         Arrays.stream(Suit.values())

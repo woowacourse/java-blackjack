@@ -138,4 +138,12 @@ public class Players {
     public void perform(Consumer<Player> consumer) {
         players.forEach(consumer);
     }
+
+    public Players filterNotBustPlayers() {
+        return new Players(
+                players.stream()
+                        .filter(player -> !player.isBust())
+                        .toList()
+        );
+    }
 }
