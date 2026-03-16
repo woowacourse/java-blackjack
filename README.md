@@ -30,13 +30,10 @@
 
 5. ScoreBoard
 - [x] 참가자 별 베팅 금액 저장 
-- [ ] 승패 판독
 
 ## 피드백
 - [x] HandTest isBusted() 테스트 추가하기
 - [x] isExactlyInstanceOf()로 변경
-- [ ] PlayedGameResult Dto화
-- [ ] BlackJackRule 관련
 - [x] AppConfig 에 DrawStrategy 변경
 - [x] WinDrawLose 네이밍
 - [x] 레포지토리 책임 조정하기
