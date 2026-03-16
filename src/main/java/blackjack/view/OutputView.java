@@ -4,7 +4,7 @@ import static blackjack.domain.participant.Dealer.DEALER_HIT_THRESHOLD;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.judgement.DealerResult;
-import blackjack.domain.participant.Name;
+import blackjack.domain.participant.Nickname;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
@@ -23,8 +23,8 @@ public class OutputView {
 
     public static void printStartMessage(final List<Player> players, final Dealer dealer) {
         List<String> playerNicknames = players.stream()
-            .map(Player::getName)
-            .map(Name::toString)
+            .map(Player::getNickname)
+            .map(Nickname::toString)
             .toList();
 
         System.out.printf("딜러와 %s에게 %s장을 나누었습니다.\n",
@@ -73,7 +73,7 @@ public class OutputView {
 
     private static String participantHandFormat(final Participant participant) {
         return String.format("%s카드: %s",
-            participant.getName(),
+            participant.getNickname(),
             String.join(", ", participant.getCardNames())
         );
     }

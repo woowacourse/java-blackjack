@@ -17,7 +17,7 @@ public record FinalResultDto(
     public static FinalResultDto of(Players players, Dealer dealer) {
         Map<String, GameResult> playerGameResultMap = new LinkedHashMap<>();
         players.all().forEach(player ->
-                playerGameResultMap.put(player.getName().toString(), player.calculateGameResult(dealer)));
+                playerGameResultMap.put(player.getNickname().toString(), player.calculateGameResult(dealer)));
         long dealerWinCount = countByGameResult(playerGameResultMap.values(), GameResult.LOSE);
         long dealerDrawCount = countByGameResult(playerGameResultMap.values(), GameResult.DRAW);
         long dealerLoseCount = countByGameResult(playerGameResultMap.values(), GameResult.WIN);

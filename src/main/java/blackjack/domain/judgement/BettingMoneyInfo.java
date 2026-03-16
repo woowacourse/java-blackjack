@@ -1,17 +1,17 @@
 package blackjack.domain.judgement;
 
-import blackjack.domain.participant.Name;
+import blackjack.domain.participant.Nickname;
 import java.util.Map;
 
 public class BettingMoneyInfo {
 
-    private final Map<Name, BettingMoney> bettingMoneyInfo;
+    private final Map<Nickname, BettingMoney> bettingMoneyInfo;
 
-    public BettingMoneyInfo(Map<Name, BettingMoney> bettingMoneyInfo) {
+    public BettingMoneyInfo(Map<Nickname, BettingMoney> bettingMoneyInfo) {
         this.bettingMoneyInfo = bettingMoneyInfo;
     }
 
-    public BettingMoney findMoneyByName(Name nickname) {
+    public BettingMoney findMoneyByName(Nickname nickname) {
         return bettingMoneyInfo.get(nickname);
     }
 

@@ -12,12 +12,10 @@ public class Dealer extends Participant {
     public static final int DEALER_HIT_THRESHOLD = 16;
 
     private final Trump trump;
-    private final Name nickname;
 
     public Dealer(final Hand hand, final Status status, final Trump trump) {
         super(hand, status);
         this.trump = trump;
-        nickname = new DealerName();
     }
 
     public void giveCard(final Player player) {
@@ -53,7 +51,7 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public Name getName() {
-        return nickname;
+    public Nickname getNickname() {
+        return Nickname.dealer();
     }
 }

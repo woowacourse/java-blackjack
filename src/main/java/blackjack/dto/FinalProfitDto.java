@@ -2,7 +2,7 @@ package blackjack.dto;
 
 import blackjack.domain.judgement.BettingMoneyInfo;
 import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Name;
+import blackjack.domain.participant.Nickname;
 import blackjack.domain.participant.Participants;
 
 import blackjack.domain.participant.Player;
@@ -12,32 +12,32 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public record FinalProfitDto(
-        Map<Name, BigDecimal> bettingMoneyInfo,
+        Map<Nickname, BigDecimal> bettingMoneyInfo,
         BigDecimal profitByDealer
 ) {
 
     public static FinalProfitDto of(Participants participants, BettingMoneyInfo bettingMoneyInfo) {
-        Map<Name, BigDecimal> profitByPlayer = calculatePlayerProfit(participants, bettingMoneyInfo);
+        Map<Nickname, BigDecimal> profitByPlayer = calculatePlayerProfit(participants, bettingMoneyInfo);
 
         BigDecimal profitByDealer = calculateDealerProfit(profitByPlayer);
 
         return new FinalProfitDto(profitByPlayer, profitByDealer);
     }
 
-    private static Map<Name, BigDecimal> calculatePlayerProfit(Participants participants,
+    private static Map<Nickname, BigDecimal> calculatePlayerProfit(Participants participants,
                                                                BettingMoneyInfo bettingMoneyInfo) {
         Players players = participants.players();
         Dealer dealer = participants.dealer();
         return players.all().stream()
                 .collect(Collectors.toUnmodifiableMap(
-                                Player::getName,
+                                Player::getNickname,
                                 player -> player.calculateGameResult(dealer)
-                                        .calculateProfit(bettingMoneyInfo.findMoneyByName(player.getName()))
+                                        .calculateProfit(bettingMoneyInfo.findMoneyByName(player.getNickname()))
                         )
                 );
     }
 
-    private static BigDecimal calculateDealerProfit(Map<Name, BigDecimal> profitByPlayer) {
+    private static BigDecimal calculateDealerProfit(Map<Nickname, BigDecimal> profitByPlayer) {
         BigDecimal totalPlayerProfit = profitByPlayer.values().stream()
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 

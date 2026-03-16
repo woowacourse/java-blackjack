@@ -10,7 +10,7 @@ public class Player extends Participant {
 
     public Player(final Hand hand, final Status status, final String nickname) {
         super(hand, status);
-        this.nickname = new Nickname(nickname);
+        this.nickname = Nickname.from(nickname);
     }
 
     public GameResult calculateGameResult(Dealer dealer) {
@@ -40,7 +40,7 @@ public class Player extends Participant {
     }
 
     @Override
-    public Name getName() {
+    public Nickname getNickname() {
         return nickname;
     }
 }

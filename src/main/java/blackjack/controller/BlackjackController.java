@@ -5,7 +5,7 @@ import blackjack.domain.judgement.BettingMoney;
 import blackjack.domain.judgement.BettingMoneyInfo;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.card.Hand;
-import blackjack.domain.participant.Name;
+import blackjack.domain.participant.Nickname;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
@@ -53,17 +53,17 @@ public class BlackjackController {
     }
 
     private BettingMoneyInfo readBettingMoney(Players players) {
-        Map<Name, BettingMoney> bettingMoneyByPlayer = new HashMap<>();
+        Map<Nickname, BettingMoney> bettingMoneyByPlayer = new HashMap<>();
         players.all().forEach(player -> {
             BettingMoney bettingMoney = RetryExecutor.retry(this::readBettingMoneyByPlayer, player);
-            bettingMoneyByPlayer.put(player.getName(), bettingMoney);
+            bettingMoneyByPlayer.put(player.getNickname(), bettingMoney);
         });
 
         return new BettingMoneyInfo(bettingMoneyByPlayer);
     }
 
     private BettingMoney readBettingMoneyByPlayer(Player player) {
-        String rawBettingMoney = InputView.readBettingMoney(player.getName().toString());
+        String rawBettingMoney = InputView.readBettingMoney(player.getNickname().toString());
         return new BettingMoney(rawBettingMoney);
     }
 
@@ -74,10 +74,10 @@ public class BlackjackController {
     }
 
     private void handleDealerAction(Dealer dealer) {
-        dealer.decideHit();
+        dealer.decideStay();
         while (dealer.isHit()) {
             dealer.giveCard();
-            dealer.decideHit();
+            dealer.decideStay();
             OutputView.printDealerHitMessage();
         }
         dealer.handleBurst();
@@ -90,7 +90,7 @@ public class BlackjackController {
     private void handlePlayerAction(Player player, Dealer dealer) {
         while (player.isHit()) {
             Answer answer =
-                    RetryExecutor.retry(this::readAnswer, player.getName().toString());
+                    RetryExecutor.retry(this::readAnswer, player.getNickname().toString());
             handleAnswer(player, dealer, answer);
             OutputView.printCardStatus(player);
         }
