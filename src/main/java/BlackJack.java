@@ -24,7 +24,7 @@ public class BlackJack {
 
     public void start() {
         Dealer dealer = new Dealer();
-        Gamblers gamblers = new Gamblers(createGambler());
+        Gamblers gamblers = createGambler();
 
         initialDeal(dealer, gamblers);
         printInitialDealInfo(dealer, gamblers);
@@ -40,7 +40,7 @@ public class BlackJack {
         return PlayerNameParser.splitNames(InputView.readLine());
     }
 
-    private List<Gambler> createGambler() {
+    private Gamblers createGambler() {
         List<Gambler> gamblers = new ArrayList<>();
         List<String> names = getPlayerNames();
         for (String name : names) {
@@ -48,7 +48,7 @@ public class BlackJack {
             int money = Integer.parseInt(InputView.readLine());
             gamblers.add(new Gambler(name, new BettingMoney(money)));
         }
-        return gamblers;
+        return new Gamblers(gamblers);
     }
 
     private void initialDeal(Dealer dealer, Gamblers gamblers) {
