@@ -8,10 +8,11 @@ import java.util.List;
 public abstract class Participant {
 
     private final Name name;
-    private final Hand hand = new Hand();
+    private final Hand hand;
 
-    protected Participant(final Name name) {
+    protected Participant(final Name name, final Hand hand) {
         this.name = name;
+        this.hand = hand;
     }
 
     public void receiveCard(final Card card) {

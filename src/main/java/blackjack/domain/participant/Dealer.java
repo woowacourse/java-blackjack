@@ -2,6 +2,7 @@ package blackjack.domain.participant;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.deck.Deck;
+import blackjack.domain.hand.Hand;
 import blackjack.domain.hand.Score;
 
 public class Dealer extends Participant {
@@ -13,7 +14,7 @@ public class Dealer extends Participant {
     private final Deck deck;
 
     public Dealer(final Deck deck) {
-        super(new Name(DEALER_NAME));
+        super(new Name(DEALER_NAME), new Hand());
         this.deck = deck;
     }
 

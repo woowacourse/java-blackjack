@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.betting.BettingMoney;
+import blackjack.domain.hand.Hand;
 
 public class Player extends Participant {
 
@@ -10,7 +11,7 @@ public class Player extends Participant {
     private boolean isStayed = false;
 
     public Player(final Name name, final BettingMoney bettingMoney) {
-        super(name);
+        super(name, new Hand());
         this.bettingMoney = bettingMoney;
     }
 
