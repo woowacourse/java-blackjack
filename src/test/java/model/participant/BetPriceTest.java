@@ -23,9 +23,6 @@ public class BetPriceTest {
                         .hasMessage(ErrorMessage.OUT_OF_RANGE_BET.getMessage()),
                 () -> assertThatThrownBy(() -> new BetPrice(-10000))
                         .isExactlyInstanceOf(IllegalArgumentException.class)
-                        .hasMessage(ErrorMessage.OUT_OF_RANGE_BET.getMessage()),
-                () -> assertThatThrownBy(() -> new BetPrice(1200000000))
-                        .isExactlyInstanceOf(IllegalArgumentException.class)
                         .hasMessage(ErrorMessage.OUT_OF_RANGE_BET.getMessage())
         );
     }

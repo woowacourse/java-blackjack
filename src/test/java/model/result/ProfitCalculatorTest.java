@@ -7,14 +7,14 @@ import dto.status.PlayerStatus;
 import org.junit.jupiter.api.Test;
 
 public class ProfitCalculatorTest {
-    private static final Integer BET_AMOUNT = 10000;
+    private static final Long BET_AMOUNT = 10000L;
 
     @Test
     public void 플레이어만_버스트인_경우_정상_작동() {
         PlayerStatus player = new PlayerStatus("player", 22, BET_AMOUNT, true, false);
         DealerStatus dealer = new DealerStatus("dealer",20, false, false);
 
-        Integer result = ProfitCalculator.calculateBetAmount(dealer, player);
+        Long result = ProfitCalculator.calculateBetAmount(dealer, player);
 
         assertThat(result).isEqualTo(-BET_AMOUNT);
     }
@@ -24,7 +24,7 @@ public class ProfitCalculatorTest {
         PlayerStatus player = new PlayerStatus("player", 22, BET_AMOUNT, true, false);
         DealerStatus dealer = new DealerStatus("dealer", 23, true, false);
 
-        Integer result = ProfitCalculator.calculateBetAmount(dealer, player);
+        Long result = ProfitCalculator.calculateBetAmount(dealer, player);
 
         assertThat(result).isEqualTo(-BET_AMOUNT);
     }
@@ -34,7 +34,7 @@ public class ProfitCalculatorTest {
         PlayerStatus player = new PlayerStatus("player", 21, BET_AMOUNT, false, true);
         DealerStatus dealer = new DealerStatus("dealer" ,20, false, false);
 
-        Integer result = ProfitCalculator.calculateBetAmount(dealer, player);
+        Long result = ProfitCalculator.calculateBetAmount(dealer, player);
 
         assertThat(result).isEqualTo((int) (BET_AMOUNT * 1.5));
     }
@@ -44,7 +44,7 @@ public class ProfitCalculatorTest {
         PlayerStatus player = new PlayerStatus("player", 21, BET_AMOUNT, false, true);
         DealerStatus dealer = new DealerStatus("dealer", 21, false, true);
 
-        Integer result = ProfitCalculator.calculateBetAmount(dealer, player);
+        Long result = ProfitCalculator.calculateBetAmount(dealer, player);
 
         assertThat(result).isEqualTo(0);
     }
@@ -54,7 +54,7 @@ public class ProfitCalculatorTest {
         PlayerStatus player = new PlayerStatus("player", 17, BET_AMOUNT, false, false);
         DealerStatus dealer = new DealerStatus("dealer", 20, false, false);
 
-        Integer result = ProfitCalculator.calculateBetAmount(dealer, player);
+        Long result = ProfitCalculator.calculateBetAmount(dealer, player);
 
         assertThat(result).isEqualTo(-BET_AMOUNT);
     }
@@ -64,7 +64,7 @@ public class ProfitCalculatorTest {
         PlayerStatus player = new PlayerStatus("player", 17, BET_AMOUNT, false, false);
         DealerStatus dealer = new DealerStatus("dealer", 21, true, false);
 
-        Integer result = ProfitCalculator.calculateBetAmount(dealer, player);
+        Long result = ProfitCalculator.calculateBetAmount(dealer, player);
 
         assertThat(result).isEqualTo(BET_AMOUNT);
     }
@@ -74,7 +74,7 @@ public class ProfitCalculatorTest {
         PlayerStatus player = new PlayerStatus("player", 20, BET_AMOUNT, false, false);
         DealerStatus dealer = new DealerStatus("dealer", 17, false, false);
 
-        Integer result = ProfitCalculator.calculateBetAmount(dealer, player);
+        Long result = ProfitCalculator.calculateBetAmount(dealer, player);
 
         assertThat(result).isEqualTo(BET_AMOUNT);
     }
@@ -84,7 +84,7 @@ public class ProfitCalculatorTest {
         PlayerStatus player = new PlayerStatus("player", 17, BET_AMOUNT, false, false);
         DealerStatus dealer = new DealerStatus("dealer", 17, false, false);
 
-        Integer result = ProfitCalculator.calculateBetAmount(dealer, player);
+        Long result = ProfitCalculator.calculateBetAmount(dealer, player);
 
         assertThat(result).isEqualTo(0);
     }
