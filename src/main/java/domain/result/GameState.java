@@ -3,7 +3,10 @@ package domain.result;
 import domain.card.CardDeck;
 import domain.participant.Dealer;
 import domain.participant.ParticipantGroup;
+import domain.participant.Player;
 import domain.participant.Players;
+
+import java.util.List;
 
 public class GameState {
     private final ParticipantGroup participantGroup;
@@ -20,6 +23,10 @@ public class GameState {
 
     public Players getPlayers() {
         return participantGroup.getPlayers();
+    }
+
+    public List<Player> findAllPlayers() {
+        return List.copyOf(participantGroup.getPlayers().getAllPlayers());
     }
 
     public Dealer getDealer() {

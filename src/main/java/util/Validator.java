@@ -15,7 +15,7 @@ public class Validator {
         isNotYAndN(input);
     }
 
-    private static void validateInputIsNotNullOrBlank(String input) {
+    public static void validateInputIsNotNullOrBlank(String input) {
         if (input == null || input.isBlank()) {
             throw new IllegalArgumentException(INVALID_INPUT_ERROR_MESSAGE);
         }
