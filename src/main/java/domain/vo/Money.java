@@ -24,7 +24,7 @@ public class Money {
         return new Money(this.money.add(other.money));
     }
 
-    public BigDecimal multiplyLong(long input){
+    public BigDecimal multiplyLong(long input) {
         return this.money.multiply(BigDecimal.valueOf(input));
     }
 
@@ -40,17 +40,18 @@ public class Money {
         try {
             return new BigDecimal(input);
         } catch (NumberFormatException exception) {
-            throw new IllegalArgumentException("[ERROR] " + MIN_INCREMENT + "원 이상의 정수를 입력해야 합니다.");
+            throw new IllegalArgumentException("[ERROR] " + MIN_INCREMENT + "원 이상의 정수를 입력해야 하는데, 현재 입력값이 " + input + "입니다.");
         }
     }
 
     private void validateMinIncrement(BigDecimal value) {
         if (value.compareTo(MIN_INCREMENT) < 0) {
-            throw new IllegalArgumentException("[ERROR] 최소 금액은 " + MIN_INCREMENT + "원입니다.");
+            throw new IllegalArgumentException("[ERROR] 최소 금액은 " + MIN_INCREMENT + "원입니다. 그런데 현재 입력값이 " + value.toPlainString() + "입니다.");
         }
 
         if (value.remainder(MIN_INCREMENT).compareTo(BigDecimal.ZERO) != 0) {
-            throw new IllegalArgumentException("[ERROR] " + MIN_INCREMENT + "원 단위여야 하며, 최소 금액은 " + MIN_INCREMENT + "입니다.");
+            throw new IllegalArgumentException("[ERROR] " + MIN_INCREMENT + "원 단위여야 하며, 최소 금액은 " + MIN_INCREMENT + "합니다. "
+                    + "그런데 현재 입력값이" + value.toPlainString() + "입니다.");
         }
     }
 }
