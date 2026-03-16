@@ -198,7 +198,7 @@ class PlayersTest {
     }
 
     @Nested
-    class PlayerIsBustTest {
+    class IsPlayerBustTest {
 
         @Test
         void 플레이어_점수가_21_초과면_true를_반환한다() {
