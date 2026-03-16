@@ -1,17 +1,17 @@
 package view;
 
+import util.Validator;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import static util.BlackJackConstant.MAX_NAME_LENGTH;
-
 public class InputView {
 
     private static final String COMMA_DELIMITER = ",";
-    private static final String STRING_REGEX = "^[a-zA-Z]*$";
+
     private static final String BINARY_REGEX = "[yn]";
     private static final String BINARY_Y = "y";
 
@@ -33,7 +33,7 @@ public class InputView {
             try {
                 System.out.printf("%s의 배팅 금액은?%n", name);
                 String money = userInput();
-                return validateMoney(Integer.parseInt(money));
+                return Validator.validateMoney(Integer.parseInt(money));
             } catch (IllegalArgumentException e) {
                 OutputView.printErrorMessage("잘못된 입력입니다. 다시 입력해주세요.");
             }
@@ -58,12 +58,9 @@ public class InputView {
         for (String name : names) {
             name = name.trim();
 
-            if (name.isEmpty() || name.length() > MAX_NAME_LENGTH)  {
-                throw new IllegalArgumentException("잘못된 입력입니다. 다시 입력해주세요.");
-            }
-            if (!Pattern.matches(STRING_REGEX, name)) {
-                throw new IllegalArgumentException("플레이어 이름은 영문자만 포함되어야 합니다.");
-            }
+            Validator.validateNameLength(name);
+            Validator.validateNameEng(name);
+
             if (uniqNames.contains(name)) {
                 throw new IllegalArgumentException("플레이어 이름은 중복될 수 없습니다.");
             }
@@ -78,13 +75,6 @@ public class InputView {
         }
 
         return userInput.equals(BINARY_Y);
-    }
-
-    private int validateMoney(int money) {
-        if (money < 0)
-            throw new IllegalArgumentException("잘못된 입력입니다. 다시 입력해주세요.");
-
-        return money;
     }
 
 
