@@ -1,7 +1,6 @@
 package domain.member;
 
 import domain.card.Card;
-import domain.state.DealerHit;
 import domain.state.Hit;
 
 import java.util.LinkedHashMap;
@@ -15,7 +14,7 @@ public class Members {
     private final List<Player> players;
 
     public Members(Map<String, Money> playerBets) {
-        this.dealer = new Dealer(new MemberInfo(new DealerHit(new Hand())));
+        this.dealer = new Dealer(new MemberInfo(new Hit(new Hand())));
         this.players = playerBets.entrySet().stream()
                 .map(entry -> new Player(new MemberInfo(entry.getKey(), new Hit(new Hand())), entry.getValue()))
                 .toList();
@@ -53,7 +52,7 @@ public class Members {
     }
 
     public boolean canTheDealerDraw() {
-        return !dealer.isFinished();
+        return dealer.canDrawCard();
     }
 
     public List<String> getAllPlayerName() {
@@ -88,6 +87,10 @@ public class Members {
 
     public void changePlayerStateToStay(String playerName) {
         findByPlayerName(playerName).changeToStay();
+    }
+
+    public void changeDealerStateToStay() {
+        dealer.changeToStay();
     }
 
     public String getDealerName() {

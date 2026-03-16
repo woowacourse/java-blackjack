@@ -48,6 +48,7 @@ public class MembersTest {
         members.provideCardToDealer(Card.from("6", "하트"));
         members.provideCardToDealer(Card.from("4", "하트"));
         members.provideCardToDealer(Card.from("7", "하트"));
+        members.changeDealerStateToStay();
         Map<String, Integer> results = members.calculateFinalProfits();
 
         assertThat(results.get(playerName)).isEqualTo(10_000);

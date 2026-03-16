@@ -49,8 +49,10 @@ public class GameTable {
     public boolean drawForDealer() {
         if (members.canTheDealerDraw()) {
             members.provideCardToDealer(deck.draw());
+            members.changeDealerStateToStay();
             return true;
         }
+        members.changeDealerStateToStay();
         return false;
     }
 
