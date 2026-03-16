@@ -11,7 +11,6 @@ public class Gambler extends Player {
     private static final int GAMBLER_NAME_MAX_LENGTH = 10;
     private static final int GAMBLER_NAME_MIN_LENGTH = 2;
     private static final String MATCH_NUMBER_PATTERN = ".*\\d.*";
-    private static final String RESULT_FORMAT = "%s:%s";
 
     private final String name;
     private final BettingMoney bettingMoney;
@@ -19,11 +18,11 @@ public class Gambler extends Player {
     public Gambler(String name, BettingMoney bettingMoney) {
         super();
         this.bettingMoney = bettingMoney;
-        validate(name);
+        validateName(name);
         this.name = name;
     }
 
-    private void validate(String name) {
+    private void validateName(String name) {
         validateContainsNumber(name);
         validateLength(name);
     }
