@@ -34,7 +34,7 @@ public enum GameResult {
                 .orElse(DRAW);
     }
 
-    public BigDecimal calculateProfit(BettingMoney bettingMoney) {
-        return bettingMoney.toBigDecimal().multiply(dividendRate);
+    public Profit calculateProfit(BettingMoney bettingMoney) {
+        return new Profit(bettingMoney.toBigDecimal().multiply(dividendRate));
     }
 }

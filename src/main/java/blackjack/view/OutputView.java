@@ -2,15 +2,16 @@ package blackjack.view;
 
 import static blackjack.domain.participant.Dealer.DEALER_HIT_THRESHOLD;
 
+import blackjack.domain.judgement.Profit;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.judgement.DealerResult;
 import blackjack.domain.participant.Nickname;
 import blackjack.domain.participant.Participant;
 import blackjack.domain.participant.Participants;
 import blackjack.domain.participant.Player;
-import blackjack.dto.FinalProfitDto;
 import blackjack.dto.FinalResultDto;
 import java.util.List;
+import java.util.Map;
 
 public class OutputView {
 
@@ -62,11 +63,10 @@ public class OutputView {
                 System.out.printf("%s: %s\n", key, value.getName()));
     }
 
-    public static void printProfit(FinalProfitDto dto) {
+    public static void printProfit(Map<Nickname, Profit> playerProfit, Profit dealerProfit) {
         System.out.println("## 최종 수익");
-        System.out.printf("딜러: %.1f\n", dto.profitByDealer());
-        dto.bettingMoneyInfo()
-                .forEach((key, value) ->
+        System.out.printf("딜러: %s\n", dealerProfit);
+        playerProfit.forEach((key, value) ->
                         System.out.printf("%s: %s\n", key, value));
     }
 

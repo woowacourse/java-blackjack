@@ -3,6 +3,7 @@ package blackjack.controller;
 import blackjack.domain.judgement.Answer;
 import blackjack.domain.judgement.BettingMoney;
 import blackjack.domain.judgement.BettingMoneyInfo;
+import blackjack.domain.judgement.Profit;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.card.Hand;
 import blackjack.domain.participant.Nickname;
@@ -11,7 +12,7 @@ import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
 import blackjack.domain.judgement.Status;
 import blackjack.domain.card.Trump;
-import blackjack.dto.FinalProfitDto;
+import blackjack.domain.judgement.ProfitCalculator;
 import blackjack.strategy.ShuffleStrategy;
 import blackjack.utils.Parser;
 import blackjack.utils.RetryExecutor;
@@ -69,8 +70,9 @@ public class BlackjackController {
 
     private void printResult(Participants participants, BettingMoneyInfo bettingMoneyInfo) {
         OutputView.printFinalStatus(participants);
-        FinalProfitDto finalProfitDto = FinalProfitDto.of(participants, bettingMoneyInfo);
-        OutputView.printProfit(finalProfitDto);
+        Map<Nickname, Profit> playerProfit = ProfitCalculator.calculatePlayerProfit(participants, bettingMoneyInfo);
+        Profit dealerProfit = ProfitCalculator.calculateDealerProfit(playerProfit);
+        OutputView.printProfit(playerProfit, dealerProfit);
     }
 
     private void handleDealerAction(Dealer dealer) {
