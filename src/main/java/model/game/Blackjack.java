@@ -1,32 +1,26 @@
-package model;
+package model.game;
 
-import static model.GameRule.DEALOUT_DRAW_COUNT;
-
+import java.math.BigDecimal;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 import model.card.Card;
 import model.card.Cards;
 import model.card.Deck;
-import model.card.RandomDeck;
-import model.card.Rank;
-import model.card.Suit;
 import model.participant.Dealer;
 import model.participant.Participant;
 import model.participant.Participants;
 import model.participant.Player;
 
 public class Blackjack {
+    public static final int DEALOUT_DRAW_COUNT = 2;
+    public static final int BLACKJACK_SCORE = 21;
+
     private final Participants participants;
     private final Deck deck;
 
     private Blackjack(Participants participants, Deck deck) {
         this.participants = participants;
         this.deck = deck;
-    }
-
-    public static Blackjack from(Participants participants) {
-        return new Blackjack(participants, RandomDeck.of(Suit.values(), Rank.values()));
     }
 
     public static Blackjack of(Participants participants, Deck deck) {
@@ -42,7 +36,7 @@ public class Blackjack {
                 participant.receive(card);
             }
 
-            dealOutResult.put(participant.getName(), participant.open());
+            dealOutResult.put(participant.getName(), Cards.from(participant.open()));
         }
 
         return dealOutResult;
@@ -56,19 +50,22 @@ public class Blackjack {
         return deck.draw();
     }
 
-    public Map<String, Integer> calculateDealerResult() {
-        return participants.getDealer()
-                .calculateStatistics(participants.getPlayers());
-    }
-
-    public Map<String, Boolean> calculatePlayerResult() {
+    public Map<String, BigDecimal> calculateFinalResult() {
         Dealer dealer = participants.getDealer();
 
-        return participants.getPlayers()
-                .stream()
-                .collect(Collectors.toMap(
-                        Player::getName,
-                        player -> player.beats(dealer)
-                ));
+        BigDecimal dealerProfit = new BigDecimal(0);
+        LinkedHashMap<String, BigDecimal> profitByName = new LinkedHashMap<>();
+
+        for (Player player : participants.getPlayers()) {
+            GameResult gameResult = GameResult.calculateResult(player, dealer);
+
+            BigDecimal playerProfit = gameResult.getProfitFrom(player.getBettingAmount());
+            profitByName.put(player.getName(), playerProfit);
+            dealerProfit = dealerProfit.subtract(playerProfit);
+        }
+
+        profitByName.putFirst(dealer.getName(), dealerProfit);
+
+        return profitByName;
     }
 }

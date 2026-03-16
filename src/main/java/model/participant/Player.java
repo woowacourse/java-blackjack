@@ -1,39 +1,65 @@
 package model.participant;
 
-import model.card.Cards;
+import java.util.List;
+import model.card.Card;
+import model.game.BettingAmount;
+import model.participant.exception.ForbiddenPlayerNameException;
 
 public class Player extends Participant {
-    private Player(String name) {
+    private final BettingAmount bettingAmount;
+
+    private Player(String name, BettingAmount bettingAmount) {
         super(name);
+        this.bettingAmount = bettingAmount;
     }
 
-    public static Participant of(String input) {
-        return new Player(input);
+    public static Player of(String name, int bettingAmount) {
+        validateName(name);
+        BettingAmount amount = BettingAmount.from(bettingAmount);
+
+        return new Player(name, amount);
+    }
+
+    private static void validateName(String name) {
+        if (name.equals(Dealer.NAME)) {
+            throw new ForbiddenPlayerNameException(name);
+        }
     }
 
     @Override
-    public Cards open() {
-        return Cards.from(hands);
+    public List<Card> open() {
+        return hand.asList();
     }
 
-    @Override
-    public boolean beats(Participant participant) {
+    public boolean beats(Dealer dealer) {
         if (isBust()) {
             return false;
         }
 
-        if (participant.isBust()) {
+        if (isBlackjack()) {
+            return true;
+        }
+
+        if (dealer.isBust()) {
+            return true;
+        }
+
+        if (dealer.isBlackjack()) {
             return false;
         }
 
-        return calculateScore() > participant.calculateScore();
+        return calculateScore() >= dealer.calculateScore();
+    }
+
+    public BettingAmount getBettingAmount() {
+        return this.bettingAmount;
     }
 
     @Override
     public String toString() {
         return "Player{" +
                 "name='" + getName() + '\'' +
-                "hands=" + hands +
+                "hand=" + hand +
                 '}';
     }
 }

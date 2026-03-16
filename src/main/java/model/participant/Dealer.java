@@ -1,74 +1,34 @@
 package model.participant;
 
-import static model.GameRule.DEALER_DRAW_THRESHOLD;
-
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import model.card.Cards;
+import model.card.Card;
 
 public class Dealer extends Participant {
+    public static final String NAME = "딜러";
+    public static final int DRAW_THRESHOLD = 16;
+
     private boolean firstTurn = true;
 
     private Dealer(String name) {
         super(name);
     }
 
-    public static Participant from(String input) {
-        return new Dealer(input);
+    public static Dealer create() {
+        return new Dealer(NAME);
     }
 
     @Override
-    public Cards open() {
-        validateHasCards();
-
+    public List<Card> open() {
         if (firstTurn) {
             firstTurn = false;
-            return Cards.from(List.of(hands.getFirst()));
+            return List.of(hand.getFirst());
         }
 
-        return Cards.from(hands);
-    }
-
-    private void validateHasCards() {
-        if (hands.isEmpty()) {
-            throw new IllegalStateException("가진 카드 패가 없어 오픈할 수 없습니다.");
-        }
-    }
-
-    @Override
-    public boolean beats(Participant participant) {
-        if (participant.isBust()) {
-            return true;
-        }
-
-        if (isBust()) {
-            return false;
-        }
-
-        return calculateScore() >= participant.calculateScore();
+        return hand.asList();
     }
 
     public boolean needDraw() {
-        return this.calculateScore() <= DEALER_DRAW_THRESHOLD;
-    }
-
-    public Map<String, Integer> calculateStatistics(List<Player> players) {
-        return players.stream()
-                .map(this::judgeResult)
-                .collect(Collectors.toMap(
-                        key -> key,
-                        key -> 1,
-                        Integer::sum
-                ));
-    }
-
-    private String judgeResult(Player player) {
-        if (beats(player)) {
-            return "승";
-        }
-
-        return "패";
+        return this.calculateScore() <= DRAW_THRESHOLD;
     }
 
     @Override
@@ -76,7 +36,7 @@ public class Dealer extends Participant {
         return "Dealer{" +
                 "name='" + getName() + '\'' +
                 "firstTurn=" + firstTurn +
-                ", hands=" + hands +
+                ", hand=" + hand +
                 '}';
     }
 }
