@@ -23,4 +23,8 @@ public abstract class Player {
     public boolean isBust() {
         return score() > BLACKJACK_MAX_LIMIT;
     }
+
+    public boolean isBlackJack() {
+        return handCard.getCards().size() == 2 && score() == 21;
+    }
 }

@@ -84,4 +84,12 @@ public class OutputView {
     public static void addNewLine() {
         System.out.println();
     }
+
+    public static void printIsBlackJack(String name) {
+        System.out.printf("%s 블랙잭!", name);
+    }
+
+    public static void printDealerBlackJack() {
+        System.out.println("딜러 블랙잭!");
+    }
 }

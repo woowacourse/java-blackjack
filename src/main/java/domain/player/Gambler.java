@@ -43,6 +43,21 @@ public class Gambler extends Player {
     public MatchResult getResult(Dealer dealer) {
         int gamblerScore = normalize(score());
         int dealerScore = normalize(dealer.score());
+        if (isBust()) {
+            return MatchResult.LOSE;
+        }
+        if (isBlackJack() && dealer.isBlackJack()) {
+            return MatchResult.DRAW;
+        }
+
+        if (isBlackJack()) {
+            return MatchResult.BLACKJACK;
+        }
+
+        if (dealer.isBlackJack()) {
+            return MatchResult.LOSE;
+        }
+
         if (gamblerScore > dealerScore) {
             return MatchResult.WIN;
         }

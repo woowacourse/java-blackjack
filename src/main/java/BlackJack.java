@@ -74,6 +74,10 @@ public class BlackJack {
 
     private void gamblerTurn(Gambler gambler) {
         while (true) {
+            if (gambler.isBlackJack()) {
+                OutputView.printIsBlackJack(gambler.getName());
+                break;
+            }
             OutputView.askHit(gambler.getName());
             boolean answer = AnswerParser.parse(InputView.readLine());
             if (!answer) {
@@ -92,6 +96,10 @@ public class BlackJack {
 
     private void dealerTurn(Dealer dealer) {
         while (true) {
+            if (dealer.isBlackJack()) {
+                OutputView.printDealerBlackJack();
+                break;
+            }
             boolean canStand = dealer.canStand();
             if (canStand) {
                 break;
