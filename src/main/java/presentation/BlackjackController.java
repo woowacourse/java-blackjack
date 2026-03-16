@@ -72,6 +72,8 @@ public class BlackjackController {
             RoundResult roundResult = blackjackService.startOneRound(playerName);
             blackjackView.outputView().printCurrentCard(playerName, roundResult);
         }
-        blackjackService.endPlayerRound(playerName);
+        if (!blackjackService.isFinishedByName(playerName)) {
+            blackjackService.endPlayerRound(playerName);
+        }
     }
 }
