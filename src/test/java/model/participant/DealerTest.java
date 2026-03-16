@@ -21,7 +21,7 @@ public class DealerTest {
     @Test
     public void 첫_카드_가져오기_정상_작동() {
         Card card = new Card(Shape.DIAMOND, CardNumber.ACE);
-        assertThat(dealer.getFirstCard()).isEqualTo(card.getString());
+        assertThat(dealer.getInitialCard()).isEqualTo(card.getString());
     }
 
     @Test
