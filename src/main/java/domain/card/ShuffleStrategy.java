@@ -3,5 +3,5 @@ package domain.card;
 import java.util.List;
 
 public interface ShuffleStrategy {
-    void shuffle(List<Card> cards);
+    List<Card> shuffle(List<Card> cards);
 }

@@ -5,7 +5,7 @@ import java.util.List;
 public class NoShuffleStrategy implements ShuffleStrategy {
 
     @Override
-    public void shuffle(List<Card> cards) {
-
+    public List<Card> shuffle(List<Card> cards) {
+        return List.copyOf(cards);
     }
 }

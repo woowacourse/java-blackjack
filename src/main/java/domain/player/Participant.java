@@ -25,7 +25,7 @@ public class Participant {
     }
 
     public boolean isBlackJack() {
-        return (handCards.quantity() == BLACKJACK_CARD_QUANTITY) && (handCards.getCardScoreSum() == MAX_SCORE);
+        return (handCards.getQuantity() == BLACKJACK_CARD_QUANTITY) && (handCards.getCardScoreSum() == MAX_SCORE);
     }
 
     public String getName() {
