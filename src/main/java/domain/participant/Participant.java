@@ -17,7 +17,7 @@ public abstract class Participant {
 
     public Hand drawCards(CardDeck cardDeck, int count) {
         List<Card> cards = cardDeck.draw(count);
-        return hand.addUp(Hand.from(cards));
+        return hand.addUp(cards);
     }
 
     public boolean hasHigherScoreThan(Participant other) {

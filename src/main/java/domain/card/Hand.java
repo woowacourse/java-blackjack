@@ -26,8 +26,8 @@ public class Hand {
         return new Hand(new ArrayList<>());
     }
 
-    public Hand addUp(Hand additionalHand) {
-        cards.addAll(additionalHand.cards);
+    public Hand addUp(List<Card> additionalCards) {
+        cards.addAll(additionalCards);
         return this;
     }
 
