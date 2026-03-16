@@ -1,13 +1,19 @@
 package model;
 
 import dto.result.ParticipantCurrentHand;
+import dto.result.ParticipantProfit;
 import dto.result.ProfitResult;
+import dto.status.DealerStatus;
+import dto.status.PlayerStatus;
 import java.util.List;
 import model.card.BlackJackDeck;
 import model.card.Card;
 import dto.status.BetPrice;
 import model.participant.Participants;
 import dto.status.PlayerName;
+import model.result.DealerProfit;
+import model.result.PlayerProfits;
+import model.result.ProfitCalculator;
 
 public class BlackJackGame {
     private static final Integer INITIAL_DRAW_QUANTITY = 2;
@@ -69,7 +75,20 @@ public class BlackJackGame {
     }
 
     public ProfitResult getProfitResult() {
-        return participants.getProfitResult();
+        DealerProfit dealerProfit = new DealerProfit();
+        PlayerProfits playerProfit = new PlayerProfits();
+
+        DealerStatus dealerStatus = participants.getDealerStatus();
+        List<PlayerStatus> playerStatuses = participants.getPlayerStatuses();
+
+        playerStatuses.forEach(playerStatus -> {
+            Long profit = ProfitCalculator.calculateBetAmount(dealerStatus, playerStatus);
+
+            playerProfit.addPlayerProfit(new ParticipantProfit(playerStatus.name(), profit));
+            dealerProfit.increase(-profit);
+        });
+
+        return new ProfitResult(dealerProfit.getDealerProfit(dealerStatus.name()), playerProfit.getPlayerProfits());
     }
 
     private void shuffle() {

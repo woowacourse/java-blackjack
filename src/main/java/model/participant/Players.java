@@ -3,9 +3,6 @@ package model.participant;
 import constant.ErrorMessage;
 import dto.status.BetPrice;
 import dto.result.ParticipantCurrentHand;
-import dto.result.ParticipantProfit;
-import dto.result.ProfitResult;
-import dto.status.DealerStatus;
 import dto.status.PlayerName;
 import dto.status.PlayerStatus;
 import java.util.HashMap;
@@ -13,9 +10,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import model.card.Card;
-import model.result.DealerProfit;
-import model.result.PlayerProfits;
-import model.result.ProfitCalculator;
 
 public class Players {
     private final Map<String, Player> players = new LinkedHashMap<>();
@@ -62,19 +56,10 @@ public class Players {
         return player.isBust();
     }
 
-    public ProfitResult getProfitResult(DealerStatus dealerStatus) {
-        DealerProfit dealerProfit = new DealerProfit();
-        PlayerProfits playerProfit = new PlayerProfits();
-
-        players.values().forEach(player -> {
-            PlayerStatus playerStatus = getPlayerStatus(player);
-            Long profit = ProfitCalculator.calculateBetAmount(dealerStatus, playerStatus);
-
-            playerProfit.addPlayerProfit(new ParticipantProfit(player.getName(), profit));
-            dealerProfit.increase(-profit);
-        });
-
-        return new ProfitResult(dealerProfit.getDealerProfit(dealerStatus.name()), playerProfit.getPlayerProfits());
+    public List<PlayerStatus> getPlayerStatuses() {
+        return players.values().stream()
+                .map(player -> player.getPlayerStatus(playerBet.get(player.getName()).value()))
+                .toList();
     }
 
     private Player getPlayer(String playerName) {
@@ -83,20 +68,5 @@ public class Players {
         }
 
         return players.get(playerName);
-    }
-
-    private PlayerStatus getPlayerStatus(Player player) {
-        Long betPrice = getBetPriceValue(player);
-
-        return new PlayerStatus(player.getName(), player.getScore(), betPrice, player.isBust(), player.isBlackJack());
-    }
-
-    private Long getBetPriceValue(Player player) {
-        BetPrice betPrice = playerBet.get(player.getName());
-
-        if(betPrice == null) {
-            return 0L;
-        }
-        return betPrice.value();
     }
 }

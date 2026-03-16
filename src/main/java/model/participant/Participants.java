@@ -3,7 +3,9 @@ package model.participant;
 import dto.status.BetPrice;
 import dto.result.ParticipantCurrentHand;
 import dto.result.ProfitResult;
+import dto.status.DealerStatus;
 import dto.status.PlayerName;
+import dto.status.PlayerStatus;
 import java.util.List;
 import model.card.Card;
 
@@ -56,7 +58,11 @@ public class Participants {
         return dealer.canDraw();
     }
 
-    public ProfitResult getProfitResult() {
-        return players.getProfitResult(dealer.getDealerStatus());
+    public DealerStatus getDealerStatus() {
+        return dealer.getDealerStatus();
+    }
+
+    public List<PlayerStatus> getPlayerStatuses() {
+        return players.getPlayerStatuses();
     }
 }

@@ -1,6 +1,7 @@
 package model.participant;
 
 import dto.status.PlayerName;
+import dto.status.PlayerStatus;
 import java.util.Objects;
 
 public class Player extends Participant {
@@ -19,5 +20,9 @@ public class Player extends Participant {
     @Override
     public int hashCode() {
         return Objects.hash(super.getName());
+    }
+
+    public PlayerStatus getPlayerStatus(Long bet) {
+        return new PlayerStatus(super.getName(), super.getScore(), bet, super.isBust(), super.isBlackJack());
     }
 }
