@@ -21,7 +21,12 @@ public abstract class Participant {
 
     private void validate(String name, Hands hands) {
         if (name == null) {
-            throw new IllegalArgumentException("name이 null입니다.");
+            throw new IllegalArgumentException("이름이 null입니다.");
+        }
+        String blank = " ";
+
+        if (name.startsWith(blank) || name.endsWith(blank)) {
+            throw new IllegalArgumentException("이름이 공백으로 시작하거나 끝납니다.");
         }
 
         if (hands == null) {

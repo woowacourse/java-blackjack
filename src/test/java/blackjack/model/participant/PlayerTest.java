@@ -1,6 +1,7 @@
 package blackjack.model.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.Rank;
@@ -9,12 +10,23 @@ import blackjack.model.cardDeck.CardDeck;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class PlayerTest {
 
     CardDeck mustPickFive = CardDeck.of(cards -> Card.createOpenedCard(Rank.FIVE, Suit.CLOVER));
     CardDeck mustPickTen = CardDeck.of(cards -> Card.createOpenedCard(Rank.TEN, Suit.CLOVER));
     CardDeck mustPickAce = CardDeck.of(cards -> Card.createOpenedCard(Rank.ACE, Suit.CLOVER));
+
+    @ParameterizedTest
+    @ValueSource(strings = {" player", "player ", " player "})
+    @DisplayName("플레이어 이름이 공백으로 시작하거나 끝나면 예외가 발생한다.")
+    void of_space_in_name(String name) {
+        assertThatThrownBy(() -> Player.of(name, 1000))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("이름이 공백으로 시작하거나 끝납니다.");
+    }
 
     @Test
     @DisplayName("플레이어는 2 장의 오픈된 카드를 뽑는다.")

@@ -11,6 +11,10 @@ public class Players {
     private final List<Player> players;
 
     private Players(List<Player> players) {
+        if (players == null) {
+            throw new IllegalArgumentException("players가 null입니다.");
+        }
+
         this.players = players;
     }
 
@@ -18,7 +22,7 @@ public class Players {
             List<String> names,
             Function<String, Player> nameConsumer
     ) {
-        validate(names);
+        validateNames(names);
 
         return new Players(
                 names.stream()
@@ -27,21 +31,17 @@ public class Players {
         );
     }
 
-    private static void validate(List<String> names) {
-        String blank = " ";
-        boolean hasInvalidName = names.stream()
-                .anyMatch(name -> name.startsWith(blank) || name.endsWith(blank));
-
-        if (hasInvalidName) {
-            throw new IllegalArgumentException("이름이 공백으로 시작하거나 끝납니다.");
-        }
-
+    private static void validateNames(List<String> names) {
         if (new HashSet<>(names).size() < names.size()) {
             throw new IllegalArgumentException("중복된 플레이어 이름이 존재합니다.");
         }
     }
 
     public void pickInitialCards(CardDeck cardDeck) {
+        if (cardDeck == null) {
+            throw new IllegalArgumentException("카드덱이 null입니다.");
+        }
+
         players.forEach(
                 player -> player.pickInitialCards(cardDeck)
         );
@@ -80,6 +80,10 @@ public class Players {
     }
 
     public Players award(Dealer dealer) {
+        if (dealer == null) {
+            throw new IllegalArgumentException("딜러가 null입니다.");
+        }
+
         if (dealer.isBust()) {
             return this;
         }
@@ -105,11 +109,13 @@ public class Players {
     }
 
     public int getDealerProfit() {
-        int negativeMultiplier = -1;
-
-        return negativeMultiplier * players.stream()
+        int playersTotalPrize = players.stream()
                 .mapToInt(Player::getPrize)
                 .sum();
+
+        DealerProfit dealerProfit = new DealerProfit(playersTotalPrize);
+
+        return dealerProfit.getAmount();
     }
 
     public void perform(Consumer<Player> consumer) {

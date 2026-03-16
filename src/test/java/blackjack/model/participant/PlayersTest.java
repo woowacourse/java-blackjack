@@ -48,23 +48,6 @@ class PlayersTest {
     }
 
     @Test
-    @DisplayName("플레이어 이름이 공백으로 시작하거나 끝나면 예외가 발생한다.")
-    void of_space_in_name() {
-        //given
-        List<String> names = List.of(
-                " player",
-                "player ",
-                " player "
-        );
-        Function<String, Player> function = name -> Player.of(name, 1000);
-
-        // when & then
-        assertThatThrownBy(() -> Players.of(names, function))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("이름이 공백으로 시작하거나 끝납니다.");
-    }
-
-    @Test
     @DisplayName("중복 이름이 존재하면 예외가 발생한다.")
     void of_duplicated_names() {
         // given
