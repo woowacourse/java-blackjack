@@ -13,4 +13,14 @@ public class PlayerBet {
     public static PlayerBet of(Player player, int amount) {
         return new PlayerBet(player, BettingAmount.of(amount));
     }
+
+    public void applyProfitIfBlackjack() {
+        if (player.isBlackjack()) {
+            bettingAmount.applyBlackjackBonus();
+        }
+    }
+
+    public long amount() {
+        return bettingAmount.value();
+    }
 }
