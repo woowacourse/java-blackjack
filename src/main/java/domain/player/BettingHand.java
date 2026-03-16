@@ -66,4 +66,8 @@ public class BettingHand {
     private boolean isBlackjackWin(Dealer dealer) {
         return hand.isBlackjack() && !dealer.isBlackjack();
     }
+
+    public Hand getHand() {
+        return hand;
+    }
 }

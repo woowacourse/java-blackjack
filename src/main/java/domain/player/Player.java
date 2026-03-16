@@ -1,17 +1,15 @@
 package domain.player;
 
 import domain.card.Card;
-import java.util.List;
 
-public class Player {
+public class Player extends Participant {
 
     private static final int BLACKJACK_NUM = 21;
 
-    private final Name name;
     private final BettingHand bettingHand;
 
     private Player(Name name, BettingHand bettingHand) {
-        this.name = name;
+        super(name);
         this.bettingHand = bettingHand;
     }
 
@@ -19,12 +17,9 @@ public class Player {
         return new Player(name, bettingHand);
     }
 
-    public boolean isBust() {
-        return bettingHand.isBust();
-    }
-
-    public boolean isBlackjack() {
-        return bettingHand.isBlackjack();
+    @Override
+    protected Hand getHand() {
+        return bettingHand.getHand();
     }
 
     public boolean canHit() {
@@ -33,18 +28,6 @@ public class Player {
 
     public void hit(Card card) {
         bettingHand.addCard(card);
-    }
-
-    public List<Card> cards() {
-        return bettingHand.cards();
-    }
-
-    public String name() {
-        return name.getName();
-    }
-
-    public int totalScore() {
-        return bettingHand.totalScore();
     }
 
     public int calculateProfit(Dealer dealer) {

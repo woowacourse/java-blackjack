@@ -3,20 +3,24 @@ package domain.player;
 import domain.card.Card;
 import java.util.List;
 
-public class Dealer {
+public class Dealer extends Participant {
     public static final int HIT_BOUNDARY = 16;
     private static final String NAME = "딜러";
 
-    private final Name name;
     private final Hand hand;
 
     private Dealer(Hand hand) {
-        this.name = new Name(NAME);
+        super(new Name(NAME));
         this.hand = hand;
     }
 
     public static Dealer from(Hand hand) {
         return new Dealer(hand);
+    }
+
+    @Override
+    protected Hand getHand() {
+        return hand;
     }
 
     public boolean needsToHit() {
@@ -29,25 +33,5 @@ public class Dealer {
 
     public List<Card> openFirstCard() {
         return List.of(hand.getCards().getFirst());
-    }
-
-    public List<Card> cards() {
-        return hand.getCards();
-    }
-
-    public boolean isBust() {
-        return hand.isBust();
-    }
-
-    public boolean isBlackjack() {
-        return hand.isBlackjack();
-    }
-
-    public int totalScore() {
-        return hand.calculateTotalScore();
-    }
-
-    public String name() {
-        return name.getName();
     }
 }

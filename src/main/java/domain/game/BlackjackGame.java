@@ -104,8 +104,4 @@ public class BlackjackGame {
     public void hitDealer() {
         participants.getDealer().addCard(deck.drawCard());
     }
-
-    public boolean areAllPlayersBust() {
-        return participants.getPlayers().areAllBust();
-    }
 }
