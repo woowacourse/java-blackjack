@@ -1,8 +1,9 @@
 package domain.result;
 
 import domain.common.BlackJackRule;
+import domain.common.Money;
 import dto.PlayedGameResult;
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -10,29 +11,40 @@ import java.util.stream.Collectors;
 
 public class ScoreBoard {
 
-    private final DealerGameResult dealerResult;
-    private final List<PlayedGameResult> gameResults;
+    private static final int BLACK_JACK_NUMBER = 21;
+
+    private final DealerGameResult dealerGameState;
+    private final Map<String, PlayerState> playerGameStates;
 
     public ScoreBoard() {
-        this.dealerResult = new DealerGameResult();
-        this.gameResults = new ArrayList<>();
+        this.dealerGameState = new DealerGameResult();
+        this.playerGameStates = new LinkedHashMap<>();
     }
 
-    public void record(PlayedGameResult playerGameResult) {
-        gameResults.add(playerGameResult);
+    public void setupPlayers(String name, Money bettingMoney) {
+        playerGameStates.putIfAbsent(name, PlayerState.onlyBet(bettingMoney));
     }
 
-    public void recordDealerResult(PlayedGameResult playerGameResult) {
-        dealerResult.record(playerGameResult);
+    public void record(PlayedGameResult playedGameResult) {
+        playerGameStates.computeIfPresent(
+                playedGameResult.name(),
+                (name, state) -> state.updatePlayedGameResult(playedGameResult)
+        );
+    }
+
+    public void recordDealerResult(PlayedGameResult playedGameResult) {
+        dealerGameState.record(playedGameResult);
     }
 
     public List<PlayedGameResult> playerGameResults() {
-        return List.copyOf(gameResults);
+        return playerGameStates.values()
+                .stream()
+                .map(PlayerState::playedGameResult)
+                .toList();
     }
 
     public PlayedGameResult dealerGameResult() {
-        requireDealerGameResultExists();
-        return dealerResult.playedGameResult();
+        return dealerGameState.dealerResult();
     }
 
     public DealerWinningScore dealerWinningScore() {
@@ -63,14 +75,8 @@ public class ScoreBoard {
         return GameOutcome.DRAW;
     }
 
-    private void requireDealerGameResultExists() {
-        if (dealerResult == null) {
-            throw new IllegalStateException("딜러 기록이 저장되지 않았습니다.");
-        }
-    }
-
     public List<PlayerWinningInfo> playerWinningInfos() {
-        return gameResults.stream()
+        return playerGameResults().stream()
                 .map(this::playerWinningInfo)
                 .toList();
     }

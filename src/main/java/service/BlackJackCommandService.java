@@ -1,5 +1,6 @@
 package service;
 
+import domain.common.Money;
 import dto.PlayedGameResult;
 import domain.gameplaying.Participants;
 import domain.result.ScoreBoard;
@@ -18,6 +19,11 @@ public class BlackJackCommandService {
 
     public void setupPlayers(List<String> playerNames) {
         participants.join(playerNames);
+    }
+
+    public void setupBettingMoney(String name, long betting) {
+        Money bettingMoney = Money.of(betting);
+        scoreBoard.setupPlayers(name, bettingMoney);
     }
 
     public void distributeInitialCards() {

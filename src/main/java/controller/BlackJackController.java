@@ -1,11 +1,13 @@
 package controller;
 
+import dto.request.BettingMoneyRequest;
 import dto.response.AllPlayerWinningInfoResponse;
 import dto.response.DealerWinningStatisticsResponse;
 import dto.response.PlayedGameResultResponse;
 import dto.response.PlayerGameResultsResponse;
 import dto.request.PlayerNamesRequest;
 import dto.request.SelectRequest;
+import java.util.List;
 import service.BlackJackCommandService;
 import service.BlackJackQueryService;
 import view.InputView;
@@ -29,18 +31,32 @@ public class BlackJackController {
     }
 
     private void setupPhase() {
-        setupGameTable();
+        PlayerNamesRequest request = InputView.readPlayers();
+
+        setupGameTable(request.names());
         OutputView.printTaskDivider();
+
+        setupPlayerBets(request.names());
 
         distributeInitialCards();
         displayInitialCards();
         OutputView.printTaskDivider();
     }
 
-    private void setupGameTable() {
-        PlayerNamesRequest request = InputView.readPlayers();
-        commandService.setupPlayers(request.names());
+    private void setupGameTable(List<String> playerNames) {
+        commandService.setupPlayers(playerNames);
     }
+
+    private void setupPlayerBets(List<String> playerNames) {
+        playerNames.forEach(this::setupPlayerBet);
+    }
+
+    private void setupPlayerBet(String name) {
+        BettingMoneyRequest request = InputView.readBettingMoney(name);
+        commandService.setupBettingMoney(name, request.money());
+        OutputView.printTaskDivider();
+    }
+
 
     private void distributeInitialCards() {
         OutputView.distributeCards(queryService.allPlayerNames());

@@ -6,7 +6,7 @@ import dto.response.DealerWinningStatisticsResponse;
 import dto.response.NameAndCardsResponse;
 import dto.response.PlayedGameResultResponse;
 import dto.response.PlayerGameResultsResponse;
-import dto.request.PlayerNamesResponse;
+import dto.response.PlayerNamesResponse;
 import dto.response.PlayerWinningInfoResponse;
 import java.util.List;
 

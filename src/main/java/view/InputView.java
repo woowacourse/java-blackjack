@@ -1,5 +1,6 @@
 package view;
 
+import dto.request.BettingMoneyRequest;
 import dto.response.NameResponse;
 import dto.request.PlayerNamesRequest;
 import dto.request.SelectRequest;
@@ -16,6 +17,11 @@ public final class InputView {
     public static PlayerNamesRequest readPlayers() {
         System.out.println(InfoMessage.PLAYER_INPUT.message());
         return PlayerNamesRequest.from(scanner.nextLine());
+    }
+
+    public static BettingMoneyRequest readBettingMoney(String name) {
+        System.out.println(InfoMessage.BETTING.messageWith(name));
+        return BettingMoneyRequest.from(scanner.nextLine());
     }
 
     public static SelectRequest readSelect(NameResponse response) {

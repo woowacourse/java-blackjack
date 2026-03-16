@@ -5,7 +5,7 @@ import domain.gameplaying.Participants;
 import domain.result.DealerWinningScore;
 import domain.result.PlayerWinningInfo;
 import domain.result.ScoreBoard;
-import dto.request.PlayerNamesResponse;
+import dto.response.PlayerNamesResponse;
 import dto.response.AllPlayerWinningInfoResponse;
 import dto.response.AllPlayersNameAndCardsResponse;
 import dto.response.DealerWinningStatisticsResponse;
