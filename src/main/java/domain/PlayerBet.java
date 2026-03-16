@@ -1,5 +1,7 @@
 package domain;
 
+import java.math.BigDecimal;
+
 public class PlayerBet {
 
     private final Player player;
@@ -10,7 +12,7 @@ public class PlayerBet {
         this.bettingAmount = bettingAmount;
     }
 
-    public static PlayerBet of(Player player, int amount) {
+    public static PlayerBet of(Player player, BigDecimal amount) {
         return new PlayerBet(player, BettingAmount.of(amount));
     }
 
@@ -20,7 +22,13 @@ public class PlayerBet {
         }
     }
 
-    public long amount() {
+    public BigDecimal amount() {
         return bettingAmount.value();
+    }
+
+    public void loseBettingAmountIsBust() {
+        if (player.isBust()) {
+            bettingAmount.applyLoseAmount();
+        }
     }
 }
