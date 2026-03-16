@@ -8,7 +8,6 @@ import blackjack.model.card.Rank;
 import blackjack.model.card.Suit;
 import blackjack.model.cardDeck.CardDeck;
 import java.util.List;
-import java.util.function.Function;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +19,7 @@ class PlayersTest {
 
     Players players = Players.of(
             List.of("p1", "p2", "p3"),
-            name -> Player.of(name, 1000)
+            List.of(1000, 1000, 1000)
     );
 
     @Test
@@ -32,10 +31,14 @@ class PlayersTest {
                 "p2",
                 "p3"
         );
-        Function<String, Player> function = name -> Player.of(name, 1000);
+        List<Integer> betAmounts = List.of(
+                1000,
+                1000,
+                1000
+        );
 
         //when
-        Players players = Players.of(names, function);
+        Players players = Players.of(names, betAmounts);
 
         //then
         assertThat(players.getNames())
@@ -56,12 +59,36 @@ class PlayersTest {
                 "jun",
                 "pobi"
         );
-        Function<String, Player> function = name -> Player.of(name, 1000);
+        List<Integer> betAmounts = List.of(
+                1000,
+                1000,
+                1000
+        );
 
         // when & then
-        assertThatThrownBy(() -> Players.of(names, function))
+        assertThatThrownBy(() -> Players.of(names, betAmounts))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("중복된 플레이어 이름이 존재합니다.");
+    }
+
+    @Test
+    @DisplayName("이름과 배팅 금액의 개수가 다르면, 예외가 발생한다.")
+    void of_names_and_betAmounts_size_mismatch() {
+        // given
+        List<String> names = List.of(
+                "pobi",
+                "jun",
+                "hong"
+        );
+        List<Integer> betAmounts = List.of(
+                1000,
+                1000
+        );
+
+        // when & then
+        assertThatThrownBy(() -> Players.of(names, betAmounts))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("이름과 배팅 금액의 개수가 서로 다릅니다.");
     }
 
 

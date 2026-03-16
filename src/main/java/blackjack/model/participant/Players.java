@@ -1,10 +1,10 @@
 package blackjack.model.participant;
 
 import blackjack.model.cardDeck.CardDeck;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 public class Players {
 
@@ -20,20 +20,37 @@ public class Players {
 
     public static Players of(
             List<String> names,
-            Function<String, Player> nameConsumer
+            List<Integer> betAmounts
     ) {
-        validateNames(names);
+        validate(names, betAmounts);
 
-        return new Players(
-                names.stream()
-                        .map(nameConsumer)
-                        .toList()
-        );
+        List<Player> players = new ArrayList<>();
+
+        for (int index = 0; index < names.size(); index++) {
+            players.add(Player.of(names.get(index), betAmounts.get(index)));
+        }
+
+        return new Players(players);
     }
 
-    private static void validateNames(List<String> names) {
+    private static void validate(
+            List<String> names,
+            List<Integer> betAmounts
+    ) {
+        if (names == null) {
+            throw new IllegalArgumentException("names가 null입니다.");
+        }
+
         if (new HashSet<>(names).size() < names.size()) {
             throw new IllegalArgumentException("중복된 플레이어 이름이 존재합니다.");
+        }
+
+        if (betAmounts == null) {
+            throw new IllegalArgumentException("betAmounts가 null입니다.");
+        }
+
+        if (betAmounts.size() != names.size()) {
+            throw new IllegalArgumentException("이름과 배팅 금액의 개수가 서로 다릅니다.");
         }
     }
 

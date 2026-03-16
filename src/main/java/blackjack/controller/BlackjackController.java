@@ -7,6 +7,7 @@ import blackjack.model.participant.Player;
 import blackjack.model.participant.Players;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BlackjackController {
@@ -67,17 +68,29 @@ public class BlackjackController {
     }
 
     private Players createPlayers() {
-        outputView.printPlayerNamesInputPrompt();
-        List<String> names = inputView.inputPlayerNames();
+        List<String> names = inputPlayerNames();
+        List<Integer> betAmounts = inputBetAmounts(names);
 
         return Players.of(
                 names,
-                name -> {
-                    outputView.printBetAmountInputPrompt(name);
-                    int amount = inputView.inputBetAmount();
-                    return Player.of(name, amount);
-                }
+                betAmounts
         );
+    }
+
+    private List<String> inputPlayerNames() {
+        outputView.printPlayerNamesInputPrompt();
+        return inputView.inputPlayerNames();
+    }
+
+    private List<Integer> inputBetAmounts(List<String> names) {
+        List<Integer> betAmounts = new ArrayList<>();
+
+        for (String name: names) {
+            outputView.printBetAmountInputPrompt(name);
+            betAmounts.add(inputView.inputBetAmount());
+        }
+
+        return betAmounts;
     }
 
     private void distributeInitialCards(
