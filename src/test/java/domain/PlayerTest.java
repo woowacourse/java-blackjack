@@ -4,65 +4,42 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import domain.shuffle.NoShuffleStrategy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PlayerTest {
 
     @Test
-    @DisplayName("플레이어 카드의 점수 총 합을 정상적으로 계산하는 지 테스트한다.")
-    void 플레이어_카드_점수_합계_정상_계산_테스트() {
-        List<Card> cards = List.of(
-                Card.of(Rank.THREE, Suit.DIAMOND),
+    @DisplayName("플레이어 카드의 합이 21 초과일 시 Bust 판정을 적절히 하는지 테스트한다.")
+    void 플레이어_카드_Bust_판정_테스트() {
+        List<Card> cardList = List.of(
+                Card.of(Rank.NINE, Suit.DIAMOND),
                 Card.of(Rank.NINE, Suit.CLOVER),
                 Card.of(Rank.EIGHT, Suit.DIAMOND));
+        String name = "포비";
 
-        int cardScore = cards.stream()
-                .mapToInt(Card::getScore)
-                .sum();
+        Player player = Player.of(Cards.of(cardList), name);
+        boolean isBust = player.isBust();
 
-        int expect = 20;
-        assertThat(cardScore).isEqualTo(expect);
+        boolean expect = true;
+        assertThat(isBust).isEqualTo(expect);
     }
 
     @Test
-    @DisplayName("플레이어 카드의 합이 21 초과 시 ACE의 값을 1로 보정하여 계산한다.")
-    void ACE_카드_값_보정_후_합계_계산_정상_테스트() {
-        List<Card> cards = List.of(
-                Card.of(Rank.TWO, Suit.DIAMOND),
+    @DisplayName("플레이어 카드의 합이 21 초과일 시 최종 결과가 0으로 보정되는지 테스트한다.")
+    void 플레이어_카드_Bust시_0으로_보정_테스트() {
+        List<Card> cardList = List.of(
+                Card.of(Rank.NINE, Suit.DIAMOND),
                 Card.of(Rank.NINE, Suit.CLOVER),
-                Card.of(Rank.EIGHT, Suit.DIAMOND),
-                Card.of(Rank.ACE, Suit.HEART));
+                Card.of(Rank.EIGHT, Suit.DIAMOND));
+        String name = "포비";
 
-        int cardScore = Cards.of(cards).calculateScore();
+        Player player = Player.of(Cards.of(cardList), name);
+        int result = player.getScoreOrZeroIfBust();
 
-        int expect = 20;
-        assertThat(cardScore).isEqualTo(expect);
-    }
-
-    @Test
-    @DisplayName("ACE 카드를 2개 이상 보유한 경우의 점수 합계를 계산한다.")
-    void ACE_2개_이상_보유시_합계_계산_정상_테스트() {
-        List<Card> cards = List.of(
-                Card.of(Rank.ACE, Suit.DIAMOND),
-                Card.of(Rank.NINE, Suit.CLOVER),
-                Card.of(Rank.EIGHT, Suit.DIAMOND),
-                Card.of(Rank.ACE, Suit.HEART));
-
-        Player player = Player.of(Cards.of(cards), "포비");
-
-        int aceCount = (int) cards.stream().filter(Card::isAce).count();
-        int cardScore = cards.stream()
-                .mapToInt(Card::getScore)
-                .sum();
-
-        for (int i = 0; i < aceCount; i++) {
-            if (cardScore <= 21) break;
-            cardScore -= 10;
-        }
-
-        int expect = 19;
-        assertThat(cardScore).isEqualTo(expect);
+        int expect = 0;
+        assertThat(result).isEqualTo(expect);
     }
 
     @Test
@@ -83,5 +60,24 @@ class PlayerTest {
         player.addCard(deck.draw());
 
         assertThat(player.isInitialHand()).isFalse();
+    }
+
+    @Test
+    @DisplayName("플레이어 카드의 합이 22이이고, 딜러 카드의 합이 21일 때 패배를 반환하는지 테스트한다.")
+    void 플레이어_카드_Bust_딜러_카드_합이_21일때_패배_테스트() {
+        Deck deck = Deck.of(new NoShuffleStrategy());
+        List<Card> cardList = List.of(
+                Card.of(Rank.NINE, Suit.DIAMOND),
+                Card.of(Rank.NINE, Suit.CLOVER),
+                Card.of(Rank.EIGHT, Suit.DIAMOND));
+        String name = "포비";
+
+        Player player = Player.of(Cards.of(cardList), name);
+        Dealer dealer = Dealer.of(deck.drawInitialHand());
+
+        GameResult result = player.compareResult(dealer);
+
+        GameResult expect = GameResult.LOSE;
+        assertThat(result).isEqualTo(expect);
     }
 }

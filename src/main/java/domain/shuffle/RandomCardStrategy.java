@@ -1,4 +1,6 @@
-package domain;
+package domain.shuffle;
+
+import domain.Cards;
 
 public class RandomCardStrategy implements CardShuffleStrategy {
 

@@ -1,9 +1,8 @@
 package domain;
 
-import meesage.ErrorMessage;
+import view.mesage.ErrorMessage;
 
 public enum HitDecision {
-
     YES("y"),
     NO("n");
 

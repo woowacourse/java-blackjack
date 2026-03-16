@@ -4,7 +4,8 @@ import domain.*;
 
 import java.util.List;
 
-import meesage.InputMessage;
+import domain.shuffle.RandomCardStrategy;
+import view.mesage.InputMessage;
 import utils.InputParser;
 import view.InputView;
 import view.OutputView;
@@ -22,14 +23,25 @@ public class BlackjackController {
     public void run() {
         List<String> userNames = getUserNames();
         Deck deck = Deck.of(new RandomCardStrategy());
-
         Dealer dealer = Dealer.of(deck.drawInitialHand());
-        Players players = Players.of(deck, userNames);
+        Players players = generatePlayers(userNames, deck);
 
+        PlayerBets playerBets = PlayerBets.of();
+        askPlayerBets(players, playerBets);
         printInitialCards(players, dealer);
         askPlayerAddCard(players, deck, dealer);
 
-        printGameResult(dealer, players);
+        BlackjackResult blackjackResult = BlackjackResult.of(players, dealer, playerBets);
+        printGameResults(blackjackResult);
+    }
+
+    private Players generatePlayers(List<String> userNames, Deck deck) {
+        Players players = Players.of();
+        for (String userName : userNames) {
+            Player player = Player.of(deck.drawInitialHand(), userName);
+            players.add(player);
+        }
+        return players;
     }
 
     private List<String> getUserNames() {
@@ -47,6 +59,25 @@ public class BlackjackController {
         } catch (IllegalArgumentException exception) {
             outputView.printLine(exception.getMessage());
             return null;
+        }
+    }
+
+    private void askPlayerBets(Players players, PlayerBets playerBets) {
+        for (Player player : players.getPlayers()) {
+            BetAmount betAmount = askBetAmount(player);
+            playerBets.add(player, betAmount);
+        }
+    }
+
+    private BetAmount askBetAmount(Player player) {
+        outputView.printEmptyLine();
+        while (true) {
+            try {
+                String input = inputView.askBetAmount(player);
+                return BetAmount.of(input);
+            } catch (IllegalArgumentException exception) {
+                outputView.printLine(exception.getMessage());
+            }
         }
     }
 
@@ -117,9 +148,8 @@ public class BlackjackController {
         }
     }
 
-    private void printGameResult(Dealer dealer, Players players) {
-        outputView.printEmptyLine();
-        BlackjackResult blackjackResult = BlackjackResult.of(dealer, players);
-        outputView.printFinalResult(blackjackResult);
+    private void printGameResults(BlackjackResult blackjackResults) {
+        List<PlayerResultDto> playerResults = PlayerResultConverter.convert(blackjackResults);
+        outputView.printFinalResults(playerResults);
     }
 }
