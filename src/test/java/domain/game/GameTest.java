@@ -1,6 +1,7 @@
 package domain.game;
 
 import domain.betting.BettingAmount;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
@@ -14,8 +15,8 @@ class GameTest {
     void 게임_초기화_검증() {
         // given
         Map<String, BettingAmount> tempGamblers = new HashMap<>();
-        tempGamblers.put("pobi", new BettingAmount(10000));
-        tempGamblers.put("jason", new BettingAmount(20000));
+        tempGamblers.put("pobi", new BettingAmount(BigDecimal.valueOf(10000)));
+        tempGamblers.put("jason", new BettingAmount(BigDecimal.valueOf(20000)));
         Game game = new Game(tempGamblers);
 
         // when

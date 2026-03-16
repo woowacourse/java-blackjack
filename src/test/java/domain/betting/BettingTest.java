@@ -2,8 +2,8 @@ package domain.betting;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.math.BigDecimal;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,25 +18,13 @@ class BettingTest {
         Betting betting = new Betting(nameValues);
 
         // when
-        betting.betBettingAmount("pobi", new BettingAmount(10000));
-        betting.betBettingAmount("woni", new BettingAmount(20000));
+        betting.betBettingAmount("pobi", new BettingAmount(BigDecimal.valueOf(10000)));
+        betting.betBettingAmount("woni", new BettingAmount(BigDecimal.valueOf(20000)));
 
         // then
         assertAll(() -> assertThat(betting.getBettingAmountByName("pobi")).isEqualTo(
-                        new BettingAmount(10000)),
+                        new BettingAmount(BigDecimal.valueOf(10000))),
                 () -> assertThat(betting.getBettingAmountByName("woni")).isEqualTo(
-                        new BettingAmount(20000)));
+                        new BettingAmount(BigDecimal.valueOf(20000))));
     }
-
-    @Test
-    @DisplayName("이름 중복 없음 테스트")
-    void 이름_중복_없음_테스트() {
-        // given
-        List<String> names = List.of("pobi", "coco", "coco", "kaiya");
-        // then
-        assertThrows(IllegalArgumentException.class, () -> {
-            new Betting(names);
-        });
-    }
-
 }

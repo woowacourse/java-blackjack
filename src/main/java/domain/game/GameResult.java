@@ -16,14 +16,17 @@ public enum GameResult {
         if (gambler.isBust()) {
             return LOSE;
         }
+        if (gambler.isBlackJack() && dealer.isBlackJack()) {
+            return DRAW;
+        }
+        if (gambler.isBlackJack()) {
+            return BLACK_JACK;
+        }
         if (dealer.isBust()) {
             return WIN;
         }
         if (dealer.isBlackJack() && gambler.isBlackJack()) {
             return DRAW;
-        }
-        if (gambler.isBlackJack()) {
-            return BLACK_JACK;
         }
         if (dealer.isBlackJack()) {
             return LOSE;
