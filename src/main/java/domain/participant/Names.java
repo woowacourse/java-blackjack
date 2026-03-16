@@ -13,11 +13,11 @@ public record Names(
         validate(value);
     }
 
-    private static void validate(List<Name> value) {
+    private void validate(List<Name> value) {
         validateNameDuplicated(value);
     }
 
-    private static void validateNameDuplicated(List<Name> names) {
+    private void validateNameDuplicated(List<Name> names) {
         if (names.size() != names.stream().distinct().count()) {
             throw new IllegalArgumentException(ErrorMessage.NAME_DUPLICATED.getMessage());
         }
