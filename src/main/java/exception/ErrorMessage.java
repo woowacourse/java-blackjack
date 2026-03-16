@@ -12,6 +12,7 @@ public enum ErrorMessage {
     DUPLICATE_DEALER_NAME("딜러 이름 - " + DEALER_NAME + "과 중복할 수 없습니다."),
     DUPLICATE_PLAYER_NAME("플레이어 이름은 중복될 수 없습니다."),
     BET_AMOUNT_OUT_OF_RANGE("베팅 금액은 " + MINIMUM_BET_AMOUNT + "원 이상 " + MAXIMUM_BET_AMOUNT + "원 이하여야 합니다."),
+    BET_AMOUNT_NOT_DIVIDED_BY_TEN("베팅 금액은 10의 배수여야 합니다."),
     INVALID_HIT_STAND_INPUT_ERROR("y 또는 n만 입력 가능합니다."),
     PLAYER_COUNT_OUT_OF_RANGE("플레이어는 " + MINIMUM_BOUND + "명 이상, " + MAXIMUM_BOUND + "명 이하여야 합니다."),
     DECK_EMPTY("덱에 남아있는 카드가 없습니다.");

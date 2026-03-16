@@ -17,6 +17,7 @@ public class Participants {
     private final Dealer dealer;
     private final List<Player> players;
 
+    // TODO: 이름 중복 및 딜러 이름과 중복되는지 검증 테스트 추가
     public Participants(final List<Player> players) {
         validatePlayerCounts(players);
         validateSameAsDealerName(players);

@@ -11,13 +11,15 @@ import org.junit.jupiter.api.Test;
 
 class ParticipantsTest {
 
+    private static final int ONE_HUNDRED_THOUSAND = 100_000;
+
     @Test
     @DisplayName("플레이어 참가 제한에 맞아야 한다.")
     public void 플레이어_수가_제한_범위_이내라면_성공() {
         // given
         final List<Player> players = new ArrayList<>();
         for (int i = 1; i <= Participants.MAXIMUM_BOUND; i++) {
-            players.add(new Player(new Name(String.format("포비%d", i))));
+            players.add(new Player(new Name(String.format("포비%d", i)), ONE_HUNDRED_THOUSAND));
         }
 
         // then
@@ -31,7 +33,7 @@ class ParticipantsTest {
         // given
         final List<Player> players = new ArrayList<>();
         for (int i = 1; i <= Participants.MAXIMUM_BOUND + 1; i++) {
-            players.add(new Player(new Name(String.format("포비%d", i))));
+            players.add(new Player(new Name(String.format("포비%d", i)), ONE_HUNDRED_THOUSAND));
         }
 
         // then

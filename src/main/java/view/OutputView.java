@@ -9,9 +9,8 @@ import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;
 import domain.participant.Player;
-import domain.result.DealerResult;
-import domain.result.GameResults;
-import domain.result.PlayerResult;
+import domain.result.BetResult;
+import domain.result.BetResults;
 import java.util.List;
 
 public class OutputView {
@@ -29,7 +28,7 @@ public class OutputView {
 
     public void printBetAmountRequest(final String name) {
         System.out.println();
-        System.out.println(name + "의 베팅 금액은?");
+        System.out.println(name + "의 베팅 금액은? (10의 배수만 가능)");
     }
 
     public void printInitHandCard(final Participants participants) {
@@ -61,20 +60,18 @@ public class OutputView {
 
         printCardResult(dealer);
         printPlayerCardResult(players);
-
-        System.out.println();
     }
 
     public void printWhiteLine() {
         System.out.println();
     }
 
-    public void printGameResults(final GameResults results) {
+    public void printBetResults(final BetResults results) {
         System.out.println();
-        System.out.println("## 최종 승패");
+        System.out.println("## 최종 수익");
 
-        printDealerResult(results.dealerResult());
-        printPlayerResults(results.playerResults());
+        printBetResult(results.dealerResult());
+        printBetResults(results.betResults());
     }
 
 
@@ -128,25 +125,14 @@ public class OutputView {
         System.out.printf(" - 결과: %d%s", dealer.getScore(), NEW_LINE);
     }
 
-    private void printDealerResult(final DealerResult result) {
-        System.out.printf("%s: ", result.name());
-
-        if (result.winCount() != 0) {
-            System.out.printf("%d승 ", result.winCount());
+    private void printBetResults(final List<BetResult> results) {
+        for (final BetResult result : results) {
+            printBetResult(result);
         }
-        if (result.drawCount() != 0) {
-            System.out.printf("%d무 ", result.drawCount());
-        }
-        if (result.loseCount() != 0) {
-            System.out.printf("%d패", result.loseCount());
-        }
-        System.out.println();
     }
 
-    private void printPlayerResults(final List<PlayerResult> results) {
-        for (final PlayerResult result : results) {
-            System.out.printf("%s: %s", result.name(), result.result().getDescription());
-            System.out.println();
-        }
+    private void printBetResult(final BetResult result) {
+        System.out.printf("%s: %,d원", result.name(), result.profit());
+        System.out.println();
     }
 }

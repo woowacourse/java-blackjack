@@ -1,17 +1,19 @@
 package domain;
 
+import static domain.result.GameResult.BLACKJACK;
 import static domain.result.GameResult.DRAW;
 import static domain.result.GameResult.LOSE;
 import static domain.result.GameResult.WIN;
 
 import domain.card.Deck;
 import domain.card.Shuffler;
+import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;
-import domain.result.DealerResult;
+import domain.participant.Player;
+import domain.result.BetResult;
+import domain.result.BetResults;
 import domain.result.GameResult;
-import domain.result.GameResults;
-import domain.result.PlayerResult;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,39 +48,27 @@ public class BlackjackGame {
     }
 
 
-    public Participants getParticipants() {
-        return participants;
-    }
+    public BetResults getBetResults() {
+        final Dealer dealer = participants.getDealer();
+        final List<BetResult> playerResults = new ArrayList<>();
 
-    // FIXME: 10줄 넘는다
-    public GameResults getGameResults() {
-
-        final Participant dealer = participants.getDealer();
-        final List<PlayerResult> playerResults = new ArrayList<>();
-
-        int dealerWinCount = 0;
-        int dealerDrawCount = 0;
-        int dealerLoseCount = 0;
-        for (final Participant player : participants.getPlayers()) {
-
+        int dealerProfit = 0;
+        for (final Player player : participants.getPlayers()) {
             final GameResult result = judge(dealer, player);
 
-            playerResults.add(new PlayerResult(player.getName(), result));
+            final int playerProfit = result.calculateBetProfit(player.getBetAmount());
 
-            if (result == WIN) {
-                dealerLoseCount++;
-            }
-            if (result == DRAW) {
-                dealerDrawCount++;
-            }
-            if (result == LOSE) {
-                dealerWinCount++;
-            }
+            playerResults.add(new BetResult(player.getName(), playerProfit));
+
+            dealerProfit -= playerProfit;
         }
-        final DealerResult dealerResult =
-                new DealerResult(dealer.getName(), dealerWinCount, dealerDrawCount, dealerLoseCount);
+        final BetResult dealerResult = new BetResult(dealer.getName(), dealerProfit);
 
-        return new GameResults(dealerResult, playerResults);
+        return new BetResults(dealerResult, playerResults);
+    }
+
+    public Participants getParticipants() {
+        return participants;
     }
 
 
@@ -92,13 +82,15 @@ public class BlackjackGame {
         if (player.isBust()) {
             return LOSE;
         }
+
+        if (player.isBlackjack() && !dealer.isBlackjack()) {
+            return BLACKJACK;
+        }
+
         if (dealer.isBust()) {
             return WIN;
         }
 
-        if (player.isBlackjack() && !dealer.isBlackjack()) {
-            return WIN;
-        }
         if (dealer.isBlackjack() && !player.isBlackjack()) {
             return LOSE;
         }
