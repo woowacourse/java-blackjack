@@ -2,7 +2,6 @@ package view;
 
 import domain.bet.Profit;
 import domain.card.Card;
-import domain.enums.GameResult;
 import domain.participant.Name;
 import java.util.List;
 import java.util.Map;
@@ -17,9 +16,6 @@ public class OutputView {
     private static final String PLAYER_CARD = "%s카드: %s";
     private static final String SCORE = " - 결과: %d";
     private static final String DEALER_DRAW = "딜러는 16이하라 한장의 카드를 더 받았습니다.";
-    private static final String FINAL_RESULT = "## 최종 승패";
-    private static final String DEALER_RESULT = "딜러: %d승 %d패 %d무";
-    private static final String PLAYER_RESULT = "%s: %s";
     private static final String FINAL_PROFIT = "## 최종 수익";
     private static final String DEALER_PROFIT = "딜러: %d";
     private static final String PLAYER_PROFIT = "%s: %d";
@@ -69,20 +65,6 @@ public class OutputView {
         System.out.println(LINE_SEPARATOR + DEALER_DRAW);
     }
 
-    public void printGameResult(Map<GameResult, Integer> dealerResult, Map<Name, GameResult> playerResults) {
-        System.out.println(LINE_SEPARATOR + FINAL_RESULT);
-
-        int winCount = dealerResult.getOrDefault(GameResult.WIN, 0);
-        int loseCount = dealerResult.getOrDefault(GameResult.LOSE, 0);
-        int drawCount = dealerResult.getOrDefault(GameResult.DRAW, 0);
-
-        System.out.printf(DEALER_RESULT + LINE_SEPARATOR, winCount, loseCount, drawCount);
-        for (Name playerName : playerResults.keySet()) {
-            String result = convertGameResultToString(playerResults.get(playerName));
-            System.out.printf(PLAYER_RESULT + LINE_SEPARATOR, playerName, result);
-        }
-    }
-
     public void printProfit(Profit dealerBetProfit, Map<Name, Profit> playerBetProfit) {
         System.out.println(LINE_SEPARATOR + FINAL_PROFIT);
         System.out.printf(DEALER_PROFIT + LINE_SEPARATOR, dealerBetProfit.amount());
@@ -91,17 +73,5 @@ public class OutputView {
             Profit profit = playerBetProfit.get(name);
             System.out.printf(PLAYER_PROFIT + LINE_SEPARATOR, name, profit.amount());
         }
-    }
-
-    private String convertGameResultToString(GameResult gameResult) {
-        if (gameResult == GameResult.LOSE) {
-            return "패";
-        }
-
-        if (gameResult == GameResult.DRAW) {
-            return "무";
-        }
-
-        return "승";
     }
 }

@@ -7,7 +7,6 @@ import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Players;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -58,19 +57,7 @@ public class Game {
     }
 
     public Map<Name, GameResult> getAllPlayersResult() {
-        Map<Name, GameResult> playerResults = new LinkedHashMap<>();
-        players.getAllPlayersName().forEach(
-                name -> playerResults.put(name, players.getPlayerResult(name, dealer))
-        );
-        return playerResults;
-    }
-
-    public Map<GameResult, Integer> getDealerResult() {
-        return BlackjackRule.judgeDealerResult(
-                players.decidePlayerResults(dealer)
-                        .values()
-                        .stream()
-                        .toList());
+        return players.decidePlayerResults(dealer);
     }
 
     public List<Card> getPlayerCard(Name name) {

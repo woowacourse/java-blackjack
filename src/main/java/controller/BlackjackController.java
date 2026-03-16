@@ -5,7 +5,6 @@ import domain.bet.Bet;
 import domain.bet.BetProfit;
 import domain.card.Card;
 import domain.card.Deck;
-import domain.enums.GameResult;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import java.util.LinkedHashMap;
@@ -105,9 +104,6 @@ public class BlackjackController {
         for (Name name : playerNames) {
             outputView.printPlayerCardWithScore(name, game.getPlayerCard(name), game.getPlayerScore(name));
         }
-
-        Map<Name, GameResult> allPlayersResult = game.getAllPlayersResult();
-        outputView.printGameResult(game.getDealerResult(), allPlayersResult);
     }
 
     private void printProfit(Game game, Bet bet) {
