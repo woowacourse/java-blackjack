@@ -1,5 +1,6 @@
 package controller;
 
+import domain.factory.BlackjackGameManagerFactory;
 import domain.game.BlackjackGameManager;
 import domain.game.HitOrStand;
 import domain.participant.BetAmount;
@@ -23,7 +24,13 @@ public class BlackjackController {
         this.outputView = outputView;
     }
 
-    public void start(BlackjackGameManager blackjackGameManager) {
+    public void start() {
+        List<PlayerName> playerNames = inputPlayerNames();
+        List<BetAmount> betAmounts = inputBetAmounts(playerNames);
+        BlackjackGameManagerFactory blackjackGameManagerFactory = new BlackjackGameManagerFactory();
+        BlackjackGameManager blackjackGameManager = blackjackGameManagerFactory
+                .blackjackGameManager(playerNames, betAmounts);
+
         initializeGame(blackjackGameManager);
         inputHitOrStandOnPlayer(blackjackGameManager);
         while (blackjackGameManager.drawDealerCard()) {
@@ -35,10 +42,6 @@ public class BlackjackController {
     }
 
     private void initializeGame(BlackjackGameManager blackjackGameManager) {
-        List<PlayerName> playerNames = inputPlayerNames();
-        List<BetAmount> betAmounts = inputBetAmounts(playerNames);
-        blackjackGameManager.createParticipants(playerNames, betAmounts);
-
         blackjackGameManager.drawInitialCards();
 
         List<ParticipantDto> playerDtoList = blackjackGameManager.generatePlayerDtoList();
@@ -48,15 +51,6 @@ public class BlackjackController {
         outputView.printHandList(dealerDto, playerDtoList);
     }
 
-    private List<BetAmount> inputBetAmounts(List<PlayerName> playerNames) {
-        List<BetAmount> betAmounts = new ArrayList<>();
-        for (PlayerName playerName : playerNames) {
-            String betAmountInput = inputView.inputBetAmount(playerName.name());
-            betAmounts.add(new BetAmount(betAmountInput));
-        }
-        return betAmounts;
-    }
-
     private List<PlayerName> inputPlayerNames() {
         List<String> names = Parser.parseInput(inputView.inputPlayers());
         List<PlayerName> playerNames = new ArrayList<>();
@@ -64,6 +58,15 @@ public class BlackjackController {
             playerNames.add(new PlayerName(name));
         }
         return playerNames;
+    }
+
+    private List<BetAmount> inputBetAmounts(List<PlayerName> playerNames) {
+        List<BetAmount> betAmounts = new ArrayList<>();
+        for (PlayerName playerName : playerNames) {
+            String betAmountInput = inputView.inputBetAmount(playerName.name());
+            betAmounts.add(new BetAmount(betAmountInput));
+        }
+        return betAmounts;
     }
 
     private void inputHitOrStandOnPlayer(BlackjackGameManager blackjackGameManager) {
@@ -91,7 +94,7 @@ public class BlackjackController {
     }
 
     private boolean canDrawContinue(String name, BlackjackGameManager blackjackGameManager) {
-        return !blackjackGameManager.playerIsBust(name) && HitOrStand.from(inputView.inputHitOrStand(name)).isHit();
+        return !blackjackGameManager.isPlayerBust(name) && HitOrStand.from(inputView.inputHitOrStand(name)).isHit();
     }
 
     private void printBlackjackResult(BlackjackGameManager blackjackGameManager) {
