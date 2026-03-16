@@ -20,7 +20,7 @@ public class Score {
     }
 
     public boolean isBurst() {
-        return value > 21;
+        return value > BlackjackRule.BLACKJACK_SCORE;
     }
 
     public boolean isBlackJack() {

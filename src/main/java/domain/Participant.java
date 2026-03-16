@@ -5,8 +5,6 @@ import domain.card.Card;
 import java.util.List;
 
 public abstract class Participant {
-    private static final int BLACKJACK_NUMBER = 21;
-    private static final int BLACKJACK_HAND_SIZE = 2;
     protected final String name;
     protected final Hand hand;
 
@@ -24,7 +22,8 @@ public abstract class Participant {
     }
 
     public boolean isBlackJack() {
-        return hand.getSize() == BLACKJACK_HAND_SIZE && hand.getSum() == BLACKJACK_NUMBER;
+        return hand.getSize() == BlackjackRule.BLACKJACK_HAND_SIZE
+                && hand.getSum() == BlackjackRule.BLACKJACK_SCORE;
     }
 
     public abstract boolean canHit();
