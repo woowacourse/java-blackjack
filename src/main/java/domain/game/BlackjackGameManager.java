@@ -36,7 +36,7 @@ public class BlackjackGameManager {
         return false;
     }
 
-    public Card drawCard() {
+    private Card drawCard() {
         return cardMachine.drawCard();
     }
 
