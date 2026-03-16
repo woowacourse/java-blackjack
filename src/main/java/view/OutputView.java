@@ -33,7 +33,7 @@ public class OutputView {
     }
 
     private void printHand(String name, List<String> hand) {
-        System.out.printf(PRINT_HAND_MESSAGE, name, String.join(DELIMITER + " ", hand));
+        System.out.printf(PRINT_HAND_MESSAGE, name, String.join(DELIMITER, hand));
     }
 
     public void printlnHand(String name, List<String> hand) {
