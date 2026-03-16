@@ -90,12 +90,15 @@ public class BlackjackGame {
             return;
         }
 
-        boolean drawCardIntention = view.requestDrawCardDecision(player.getName().name());
-        while (!player.isBusted() && drawCardIntention) {
+        while (canContinueDraw(player)) {
             List<Card> cards = cardDeck.draw(DEFAULT_CARD_DRAW_COUNT);
             player.drawCards(cards);
             view.printParticipantHand(ParticipantHandDtoMapper.map(player));
         }
+    }
+
+    private boolean canContinueDraw(Player player) {
+        return !player.isBusted() && view.requestDrawCardDecision(player.getName().name());
     }
 
     private void handOutInitialCard(Dealer dealer, Players players) {
