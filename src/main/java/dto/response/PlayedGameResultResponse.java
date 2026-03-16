@@ -1,6 +1,7 @@
 package dto.response;
 
-import domain.common.PlayedGameResult;
+import domain.CardInfo;
+import domain.PlayedGameResult;
 import java.util.List;
 
 public record PlayedGameResultResponse(NameAndCardInfos infos, int scoreSum) {
@@ -15,9 +16,11 @@ public record PlayedGameResultResponse(NameAndCardInfos infos, int scoreSum) {
     }
 
     public List<String> cardInfos() {
-        return infos.cardInfos();
+        return infos.cardInfos().stream()
+                .map(CardInfo::toString)
+                .toList();
     }
 
-    private record NameAndCardInfos(String name, List<String> cardInfos) {
+    private record NameAndCardInfos(String name, List<CardInfo> cardInfos) {
     }
 }

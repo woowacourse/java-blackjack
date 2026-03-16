@@ -1,7 +1,6 @@
 package domain.gameplaying;
 
-import domain.common.NameAndCardInfos;
-import domain.common.PlayedGameResult;
+import domain.PlayedGameResult;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;
@@ -9,19 +8,21 @@ import java.util.List;
 class Players {
 
     private final Deque<Player> players;
-    private final DrawStrategy drawStrategy;
+    private final BlackJackDeck sharedDeck;
 
-    private Players(List<Player> players, DrawStrategy drawStrategy) {
+    private Players(List<Player> players, BlackJackDeck sharedDeck) {
         this.players = new ArrayDeque<>(players);
-        this.drawStrategy = drawStrategy;
+        this.sharedDeck = sharedDeck;
     }
 
-    static Players noOne(DrawStrategy drawStrategy) {
-        return new Players(List.of(), drawStrategy);
+    static Players noOne(BlackJackDeck sharedDeck) {
+        return new Players(List.of(), sharedDeck);
     }
 
-    Players join(List<String> names) {
-        return new Players(playersFrom(names), this.drawStrategy);
+    void join(List<String> names) {
+        names.stream()
+                .map(name -> Player.of(name, sharedDeck))
+                .forEach(players::add);
     }
 
     List<String> names() {
@@ -34,11 +35,11 @@ class Players {
         players.forEach(Participant::drawInitialCards);
     }
 
-    NameAndCardInfos currentPlayerCardInfos() {
+    PlayedGameResult currentPlayerCardInfos() {
         return currentPlayer().infos();
     }
     
-    List<NameAndCardInfos> allPlayerCardInfos() {
+    List<PlayedGameResult> allPlayerCardInfos() {
         return players.stream()
                 .map(Player::infos)
                 .toList();
@@ -48,6 +49,15 @@ class Players {
         if (hasWaitingPlayers()) {
             currentPlayer().draw();
         }
+    }
+
+    PlayedGameResult currentPlayerResult() {
+        requireCurrentPlayerExists();
+        Player gameFinishedPlayer = players.poll();
+        return PlayedGameResult.from(
+                gameFinishedPlayer.name(),
+                gameFinishedPlayer.cardInfos(),
+                gameFinishedPlayer.scoreSum());
     }
 
     boolean isCurrentPlayerPlayable() {
@@ -62,23 +72,8 @@ class Players {
         return currentPlayer().name();
     }
 
-    private List<Player> playersFrom(List<String> names) {
-        return names.stream()
-                .map(name -> Player.of(name, drawStrategy))
-                .toList();
-    }
-
     private Player currentPlayer() {
         return players.peek();
-    }
-
-    PlayedGameResult currentPlayerResult() {
-        requireCurrentPlayerExists();
-        Player gameFinishedPlayer = players.poll();
-        return PlayedGameResult.from(
-                gameFinishedPlayer.name(),
-                gameFinishedPlayer.cardInfos(),
-                gameFinishedPlayer.scoreSum());
     }
 
     private void requireCurrentPlayerExists() {

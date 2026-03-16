@@ -1,12 +1,12 @@
 package dto.response;
 
-import domain.common.CardInfo;
-import domain.common.NameAndCardInfos;
+import domain.CardInfo;
+import domain.PlayedGameResult;
 import java.util.List;
 
 public record NameAndCardsResponse(String name, List<String> cardInfos) {
 
-    public static NameAndCardsResponse from(NameAndCardInfos infos) {
+    public static NameAndCardsResponse from(PlayedGameResult infos) {
         return new NameAndCardsResponse(infos.name(), parse(infos.cardInfos()));
     }
 

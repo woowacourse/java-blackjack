@@ -1,7 +1,6 @@
 package domain.gameplaying;
 
-import domain.common.NameAndCardInfos;
-import domain.common.PlayedGameResult;
+import domain.PlayedGameResult;
 import java.util.List;
 
 public class Participants {
@@ -14,23 +13,23 @@ public class Participants {
         this.players = players;
     }
 
-    public static Participants onlyDealer(DrawStrategy drawStrategy) {
-        return new Participants(Dealer.of(drawStrategy), Players.noOne(drawStrategy));
+    public static Participants onlyDealer(BlackJackDeck sharedDeck) {
+        return new Participants(Dealer.of(sharedDeck), Players.noOne(sharedDeck));
     }
 
-    public Participants join(List<String> names) {
-        return new Participants(this.dealer, this.players.join(names));
+    public void join(List<String> names) {
+        this.players.join(names);
     }
 
     public List<String> allPlayerNames() {
         return players.names();
     }
 
-    public NameAndCardInfos dealerCardInfos() {
+    public PlayedGameResult dealerCardInfos() {
         return dealer.infos();
     }
 
-    public NameAndCardInfos currentPlayerCardInfos() {
+    public PlayedGameResult currentPlayerCardInfos() {
         return players.currentPlayerCardInfos();
     }
 
@@ -47,7 +46,7 @@ public class Participants {
         dealer.drawInitialCards();
     }
 
-    public List<NameAndCardInfos> allPlayerCardInfos() {
+    public List<PlayedGameResult> allPlayerCardInfos() {
         return players.allPlayerCardInfos();
     }
 

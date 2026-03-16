@@ -1,6 +1,6 @@
 package domain.gameplaying.strategy;
 
-import domain.gameplaying.DrawStrategy;
+import domain.gameplaying.BlackJackDeck;
 import domain.gameplaying.CardMark;
 import domain.gameplaying.CardRank;
 import domain.gameplaying.Card;
@@ -11,11 +11,11 @@ import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
 
-public class OneDeckStrategy implements DrawStrategy {
+public class OnlyOneDeck implements BlackJackDeck {
 
     private final Deque<Card> cards;
 
-    public OneDeckStrategy() {
+    public OnlyOneDeck() {
         this.cards = mixedCards();
     }
 

@@ -1,13 +1,13 @@
 package domain.gameplaying;
 
-import domain.common.BlackJackRule;
-import domain.common.CardInfo;
-import domain.common.NameAndCardInfos;
+import domain.CardInfo;
+import domain.PlayedGameResult;
 import java.util.List;
 
 abstract class Participant {
 
     protected static final String DEALER_NAME = "딜러";
+    protected static int INITIAL_CARD_COUNT = 2;
 
     private final String name;
     protected final Hand hand;
@@ -25,13 +25,13 @@ abstract class Participant {
     }
 
     void drawInitialCards() {
-        for (int i = 0; i < BlackJackRule.INITIAL_CARD_COUNT.value(); i++) {
+        for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
             draw();
         }
     }
 
-    NameAndCardInfos infos() {
-        return new NameAndCardInfos(name, cardInfos());
+    PlayedGameResult infos() {
+        return PlayedGameResult.from(name, this.cardInfos(), this.scoreSum());
     }
 
     boolean isBusted() {
