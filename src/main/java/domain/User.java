@@ -1,6 +1,5 @@
 package domain;
 
-import view.Message;
 import vo.Money;
 
 public class User {
