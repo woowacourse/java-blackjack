@@ -12,4 +12,9 @@ public class Player extends Participant {
     public Name getName() {
         return name;
     }
+
+    @Override
+    public boolean canDraw() {
+        return !isBust();
+    }
 }

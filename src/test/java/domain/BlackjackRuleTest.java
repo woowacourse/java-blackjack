@@ -1,6 +1,5 @@
 package domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import domain.card.Card;
@@ -28,12 +27,9 @@ public class BlackjackRuleTest {
     @DisplayName("플레이어가 버스트 되면 플레이어는 패배하고 딜러는 승리한다.")
     @Test
     void 플레이어_버스트_시_무조건_플레이어는_패배한다() {
-        player.addCards(List.of(
-                        new Card(Rank.JACK, Suit.CLOVER),
-                        new Card(Rank.QUEEN, Suit.CLOVER),
-                        new Card(Rank.EIGHT, Suit.CLOVER)
-                )
-        );
+        player.addCard(new Card(Rank.JACK, Suit.CLOVER));
+        player.addCard(new Card(Rank.QUEEN, Suit.CLOVER));
+        player.addCard(new Card(Rank.EIGHT, Suit.CLOVER));
 
         GameResult playerResult = getPlayerResult();
 
@@ -48,12 +44,9 @@ public class BlackjackRuleTest {
     @DisplayName("플레이어가 버스트 되지 않았을 때 플레이어의 점수가 더 높으면 플레이어가 승리하고 딜러는 패배한다.")
     @Test
     void 플레이어_점수_더_높으면_플레이어_승리한다() {
-        player.addCards(List.of(
-                        new Card(Rank.JACK, Suit.CLOVER),
-                        new Card(Rank.QUEEN, Suit.CLOVER),
-                        new Card(Rank.ACE, Suit.CLOVER)
-                )
-        );
+        player.addCard(new Card(Rank.JACK, Suit.CLOVER));
+        player.addCard(new Card(Rank.QUEEN, Suit.CLOVER));
+        player.addCard(new Card(Rank.ACE, Suit.CLOVER));
 
         dealer.addCard(new Card(Rank.JACK, Suit.HEART));
         dealer.addCard(new Card(Rank.QUEEN, Suit.HEART));
@@ -70,11 +63,8 @@ public class BlackjackRuleTest {
     @DisplayName("플레이어가 버스트 되지 않았을 때 딜러가 버스트된 경우 플레이어가 승리한다.")
     @Test
     void 딜러가_버스트된_경우_플레이어가_승리한다() {
-        player.addCards(List.of(
-                        new Card(Rank.JACK, Suit.CLOVER),
-                        new Card(Rank.QUEEN, Suit.CLOVER)
-                )
-        );
+        player.addCard(new Card(Rank.JACK, Suit.CLOVER));
+        player.addCard(new Card(Rank.QUEEN, Suit.CLOVER));
 
         dealer.addCard(new Card(Rank.JACK, Suit.HEART));
         dealer.addCard(new Card(Rank.SIX, Suit.HEART));
@@ -92,11 +82,8 @@ public class BlackjackRuleTest {
     @DisplayName("플레이어가 버스트 되지 않았을 때 플레이어의 점수가 더 낮으면 플레이어가 패배하고 딜러는 승리한다.")
     @Test
     void 플레이어_점수_더_높으면_플레이어_패배한다() {
-        player.addCards(List.of(
-                        new Card(Rank.JACK, Suit.CLOVER),
-                        new Card(Rank.NINE, Suit.CLOVER)
-                )
-        );
+        player.addCard(new Card(Rank.JACK, Suit.CLOVER));
+        player.addCard(new Card(Rank.NINE, Suit.CLOVER));
 
         dealer.addCard(new Card(Rank.JACK, Suit.HEART));
         dealer.addCard(new Card(Rank.QUEEN, Suit.HEART));
@@ -113,11 +100,8 @@ public class BlackjackRuleTest {
     @DisplayName("플레이어가 버스트 되지 않았을 때 플레이어와 딜러의 점수가 같으면 무승부가 된다.")
     @Test
     void 플레이어_딜러_점수_같으면_무승부_된다() {
-        player.addCards(List.of(
-                        new Card(Rank.JACK, Suit.CLOVER),
-                        new Card(Rank.QUEEN, Suit.CLOVER)
-                )
-        );
+        player.addCard(new Card(Rank.JACK, Suit.CLOVER));
+        player.addCard(new Card(Rank.QUEEN, Suit.CLOVER));
 
         dealer.addCard(new Card(Rank.JACK, Suit.HEART));
         dealer.addCard(new Card(Rank.QUEEN, Suit.HEART));
@@ -135,11 +119,8 @@ public class BlackjackRuleTest {
     @DisplayName("플레이어가 카드 2장으로 블랙잭이 되어 승리하면 BLACKJACK_WIN이 된다")
     @Test
     void 플레이어_카드_2장_블랙잭_승리_시_블랙잭_승리_된다() {
-        player.addCards(List.of(
-                        new Card(Rank.JACK, Suit.CLOVER),
-                        new Card(Rank.ACE, Suit.CLOVER)
-                )
-        );
+        player.addCard(new Card(Rank.JACK, Suit.CLOVER));
+        player.addCard(new Card(Rank.ACE, Suit.CLOVER));
 
         dealer.addCard(new Card(Rank.JACK, Suit.HEART));
         dealer.addCard(new Card(Rank.QUEEN, Suit.HEART));
@@ -156,12 +137,9 @@ public class BlackjackRuleTest {
     @DisplayName("딜러가 블랙잭이고 플레이어가 카드 3장으로 21점이 되면 플레이어가 패배한다.")
     @Test
     void 딜러_블랙잭_플레이어_패배() {
-        player.addCards(List.of(
-                        new Card(Rank.JACK, Suit.CLOVER),
-                        new Card(Rank.EIGHT, Suit.CLOVER),
-                        new Card(Rank.THREE, Suit.CLOVER)
-                )
-        );
+        player.addCard(new Card(Rank.JACK, Suit.CLOVER));
+        player.addCard(new Card(Rank.EIGHT, Suit.CLOVER));
+        player.addCard(new Card(Rank.THREE, Suit.CLOVER));
 
         dealer.addCard(new Card(Rank.JACK, Suit.HEART));
         dealer.addCard(new Card(Rank.ACE, Suit.HEART));
@@ -178,11 +156,8 @@ public class BlackjackRuleTest {
     @DisplayName("플레이어와 딜러가 모두 블랙잭이면 무승부가 된다.")
     @Test
     void 플레이어와_딜러_모두_블랙잭이면_무승부가_된다() {
-        player.addCards(List.of(
-                        new Card(Rank.JACK, Suit.CLOVER),
-                        new Card(Rank.ACE, Suit.CLOVER)
-                )
-        );
+        player.addCard(new Card(Rank.JACK, Suit.CLOVER));
+        player.addCard(new Card(Rank.ACE, Suit.CLOVER));
 
         dealer.addCard(new Card(Rank.JACK, Suit.HEART));
         dealer.addCard(new Card(Rank.ACE, Suit.HEART));

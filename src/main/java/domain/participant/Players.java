@@ -56,7 +56,7 @@ public class Players {
 
     public void distributeCards(Name name, List<Card> cards) {
         Player foundPlayer = findPlayerByName(name);
-        foundPlayer.addCards(cards);
+        foundPlayer.receiveInitialCards(cards);
     }
 
     private Player findPlayerByName(Name name) {
@@ -74,23 +74,18 @@ public class Players {
         return playerResults;
     }
 
-    public boolean isBust(Name name) {
-        Player foundPlayer = findPlayerByName(name);
-        return foundPlayer.isBust();
-    }
-
     public List<Card> getPlayerCards(Name name) {
         Player foundPlayer = findPlayerByName(name);
         return foundPlayer.getHand();
     }
 
-    public GameResult getPlayerResult(Name name, Dealer dealer) {
-        Player foundPlayer = findPlayerByName(name);
-        return BlackjackRule.judgePlayerResult(foundPlayer, dealer);
-    }
-
     public int getPlayerScore(Name name) {
         Player foundPlayer = findPlayerByName(name);
         return foundPlayer.getScore();
+    }
+
+    public boolean canDraw(Name name) {
+        Player foundPlayer = findPlayerByName(name);
+        return foundPlayer.canDraw();
     }
 }

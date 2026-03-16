@@ -1,14 +1,11 @@
-package config;
-
-import controller.BlackjackController;
 import java.util.Scanner;
 import view.InputView;
 import view.OutputView;
 
 public class AppConfig {
 
-    public BlackjackController controller() {
-        return new BlackjackController(inputView(), outputView());
+    public Blackjack controller() {
+        return new Blackjack(inputView(), outputView());
     }
 
     public InputView inputView() {

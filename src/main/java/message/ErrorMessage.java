@@ -17,7 +17,9 @@ public enum ErrorMessage {
     PLAYER_NOT_IN_GAME("[ERROR] 게임에 참여한 플레이어만 배팅이 가능합니다."),
     BETTING_MONEY_NOT_AVAILABLE("[ERROR] 배팅 금액은 0 또는 양수값만 가능합니다."),
     BETTING_MONEY_MUST_BE_MULTIPLE_OF_100("[ERROR] 배팅 금액은 100원 단위로만 가능합니다."),
-    PLAYER_NOT_IN_BETTING("[ERROR] 배팅에 참여한 플레이어만 수익 계산이 가능합니다.");
+    PLAYER_NOT_IN_BETTING("[ERROR] 배팅에 참여한 플레이어만 수익 계산이 가능합니다."),
+    INITIAL_CARD_SIZE_MISMATCH("[ERROR] 초기화 시 카드는 2장만 가능합니다."),
+    PARTICIPANT_MUST_NOT_HAVE_INITIAL_CARDS("[ERROR] 초기화 시 참가자는 카드를 들고 있지 않아야 합니다.");
 
     private final String message;
 

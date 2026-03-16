@@ -1,6 +1,7 @@
 package domain.card;
 
 import static message.ErrorMessage.DECK_CAN_NOT_DUPLICATED;
+import static message.ErrorMessage.DECK_OUT_OF_CARD_STOCK;
 
 import domain.enums.Rank;
 import domain.enums.Suit;
@@ -17,8 +18,7 @@ public class DeckTest {
     @DisplayName("52장의 서로 다른 카드가 정상 생성된다.")
     @Test
     void _52장의_서로_다른_카드가_정상_생성된다() {
-        CardGenerator cardGenerator = new ShuffledCardGenerator();
-        Deck deck = new Deck(cardGenerator.generate());
+        Deck deck = Deck.create(new ShuffledCardGenerator());
 
         Set<Card> distinctCards = Set.copyOf(deck.getCards());
 
@@ -26,28 +26,37 @@ public class DeckTest {
         Assertions.assertThat(distinctCards.size()).isEqualTo(52);
     }
 
+    public static class DuplicatedDeckGenerator implements CardGenerator {
+        @Override
+        public List<Card> generate() {
+            return List.of(new Card(Rank.ACE, Suit.SPADE), new Card(Rank.ACE, Suit.SPADE));
+        }
+    }
+
     @DisplayName("중복된 카드가 들어있을 경우 예외가 발생한다.")
     @Test
     void 중복_카드_예외_발생_한다() {
-        CardGenerator cardGenerator = new ShuffledCardGenerator();
-        List<Card> cards = cardGenerator.generate();
-        cards.add(new Card(Rank.ACE, Suit.SPADE));
-
-        Assertions.assertThatThrownBy(() -> new Deck(cards))
+        Assertions.assertThatThrownBy(() -> Deck.create(new DuplicatedDeckGenerator()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(DECK_CAN_NOT_DUPLICATED.getMessage());
+    }
+
+    public static class EmptyDeckGenerator implements CardGenerator {
+        @Override
+        public List<Card> generate() {
+            return List.of();
+        }
     }
 
     @DisplayName("덱에 카드가 없는 경우 예외가 발생한다.")
     @Test
     void 덱_카드_X_드로우_예외() {
         //given
-        Deck deck = new Deck(List.of());
+        Deck deck = Deck.create(new EmptyDeckGenerator());
         //when
         //then
         Assertions.assertThatThrownBy(deck::drawCard)
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage("[ERROR] 덱에 드로우할 카드가 존재하지 않습니다.");
+                .hasMessage(DECK_OUT_OF_CARD_STOCK.getMessage());
     }
 }
-
