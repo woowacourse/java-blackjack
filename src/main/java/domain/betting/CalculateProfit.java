@@ -14,7 +14,7 @@ public class CalculateProfit {
 
     public Revenue calculate(Name name, GameResult gameResult) {
         BettingAmount amount = bettingAmounts.getAmount(name);
-        return calculateRevenue(gameResult, amount);
+        return new Revenue(amount.getMoney().multiply(gameResult.getProfitRate()));
     }
 
     private static Revenue calculateRevenue(GameResult gameResult, BettingAmount amount) {
