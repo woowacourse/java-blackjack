@@ -20,7 +20,7 @@ class GameManagerTest {
 
         manager.registerPlayers(
                 List.of("pobi", "cary"),
-                List.of(1000, 1000)
+                List.of(new BettingMoney(1000), new BettingMoney(1000))
         );
 
         manager.startGame();
@@ -40,7 +40,7 @@ class GameManagerTest {
 
         manager.registerPlayers(
                 List.of("pobi"),
-                List.of(1000)
+                List.of(new BettingMoney(1000), new BettingMoney(1000))
         );
 
         manager.startGame();
@@ -55,7 +55,7 @@ class GameManagerTest {
 
         manager.registerPlayers(
                 List.of("pobi"),
-                List.of(1000)
+                List.of(new BettingMoney(1000), new BettingMoney(1000))
         );
 
         manager.startGame();
@@ -70,7 +70,7 @@ class GameManagerTest {
 
         manager.registerPlayers(
                 List.of("pobi"),
-                List.of(1000)
+                List.of(new BettingMoney(1000), new BettingMoney(1000))
         );
 
         List<Player> result = manager.getPlayersToPlay();
@@ -85,7 +85,7 @@ class GameManagerTest {
 
         manager.registerPlayers(
                 List.of("pobi", "cary", "rudy"),
-                List.of(1000, 1000, 1000)
+                List.of(new BettingMoney(1000), new BettingMoney(1000), new BettingMoney(1000))
         );
 
         List<Player> result = manager.getPlayersToPlay();
@@ -99,7 +99,7 @@ class GameManagerTest {
 
         manager.registerPlayers(
                 List.of("pobi"),
-                List.of(1000)
+                List.of(new BettingMoney(1000))
         );
 
         manager.startGame();
@@ -129,7 +129,7 @@ class GameManagerTest {
 
         manager.registerPlayers(
                 List.of("pobi", "cary"),
-                List.of(1000, 1000)
+                List.of(new BettingMoney(1000), new BettingMoney(1000))
         );
 
         GameResultDto result = manager.getFinalResult();

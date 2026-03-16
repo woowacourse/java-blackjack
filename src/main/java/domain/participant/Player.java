@@ -1,5 +1,6 @@
 package domain.participant;
 
+import domain.BettingMoney;
 import domain.PlayerStatus;
 import domain.card.Card;
 import domain.constant.Result;
@@ -7,7 +8,7 @@ import domain.constant.Result;
 public class Player extends Participant {
     private final PlayerStatus status;
 
-    public Player(String name, int bettingMoney) {
+    public Player(String name, BettingMoney bettingMoney) {
         super(name);
         this.status = new PlayerStatus(bettingMoney);
     }

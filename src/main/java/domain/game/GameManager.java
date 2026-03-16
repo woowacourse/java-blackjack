@@ -1,5 +1,6 @@
 package domain.game;
 
+import domain.BettingMoney;
 import domain.DtoFactory;
 import domain.card.Deck;
 import dto.GameInitialInfoDto;
@@ -35,7 +36,7 @@ public class GameManager {
         return player.getHandToString();
     }
 
-    public void registerPlayers(List<String> playerNames, List<Integer> bettingMoneyList) {
+    public void registerPlayers(List<String> playerNames, List<BettingMoney> bettingMoneyList) {
         List<Player> players = new ArrayList<>();
 
         for (int i = 0; i < playerNames.size(); i++) {

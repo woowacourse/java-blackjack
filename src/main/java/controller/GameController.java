@@ -1,6 +1,7 @@
 package controller;
 
 import dto.GameInitialInfoDto;
+import domain.BettingMoney;
 import domain.game.GameManager;
 import domain.participant.Player;
 import java.util.ArrayList;
@@ -44,9 +45,9 @@ public class GameController {
     }
 
     private void registerPlayersWithBettingMoney(List<String> playerNames) {
-        List<Integer> bettingMoneyList = new ArrayList<>();
+        List<BettingMoney> bettingMoneyList = new ArrayList<>();
         for (String playerName : playerNames) {
-            int bettingMoney = inputView.readBettingMoney(playerName);
+            BettingMoney bettingMoney = inputView.readBettingMoney(playerName);
             bettingMoneyList.add(bettingMoney);
         }
         manager.registerPlayers(playerNames, bettingMoneyList);
@@ -70,12 +71,12 @@ public class GameController {
             boolean wantsToDraw = wantsToDraw(player);
 
             List<String> playerHand = player.getHandToString();
-            if(wantsToDraw){
+            if (wantsToDraw) {
                 playerHand = manager.drawPlayerCard(player);
             }
             outputView.printHand(playerHand, player.getName());
 
-            if(!wantsToDraw) {
+            if (!wantsToDraw) {
                 break;
             }
         }

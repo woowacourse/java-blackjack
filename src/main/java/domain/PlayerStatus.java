@@ -1,13 +1,12 @@
 package domain;
 
 import domain.constant.Result;
-import domain.game.ProceedsCalculator;
 
 public class PlayerStatus {
-    private final int bettingMoney;
+    private final BettingMoney bettingMoney;
     private boolean naturalBlackJack;
 
-    public PlayerStatus(int bettingMoney) {
+    public PlayerStatus(BettingMoney bettingMoney) {
         this.bettingMoney = bettingMoney;
     }
 
@@ -20,6 +19,6 @@ public class PlayerStatus {
     }
 
     public double calculateProceeds(Result result) {
-        return ProceedsCalculator.calculate(bettingMoney, result);
+        return bettingMoney.calculateProceeds(result);
     }
 }

@@ -1,5 +1,6 @@
 package view;
 
+import domain.BettingMoney;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -24,15 +25,12 @@ public class InputView {
         return splitPlayerNameInput(input);
     }
 
-    public int readBettingMoney(String playerName) {
+    public BettingMoney readBettingMoney(String playerName) {
         while (true) {
             try {
                 System.out.println(playerName + BETTING_MONEY_INPUT_MESSAGE);
-                int bettingMoney = Integer.parseInt(scanner.nextLine());
-
-                if (bettingMoney <= 0) {
-                    throw new IllegalArgumentException();
-                }
+                String input = scanner.nextLine();
+                BettingMoney bettingMoney = new BettingMoney(Integer.parseInt(input));
                 System.out.println();
                 return bettingMoney;
             } catch (IllegalArgumentException e) {

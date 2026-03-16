@@ -11,7 +11,7 @@ public class PlayerStatusTest {
 
     @Test
     void naturalBlackJack_상태를_true로_변경한다() {
-        PlayerStatus status = new PlayerStatus(1000);
+        PlayerStatus status = new PlayerStatus(new BettingMoney(1000));
 
         status.markNaturalBlackJack();
 
@@ -27,7 +27,7 @@ public class PlayerStatusTest {
             "10000, BLACKJACK, 15000"
     })
     void 결과값에_따라_정산_금액을_계산한다(int bettingMoney, Result result, double expected) {
-        PlayerStatus status = new PlayerStatus(bettingMoney);
+        PlayerStatus status = new PlayerStatus(new BettingMoney(bettingMoney));
 
         double proceeds = status.calculateProceeds(result);
 
