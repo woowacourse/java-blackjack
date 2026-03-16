@@ -90,10 +90,6 @@ public class BlackjackService {
         return new ParticipantDto(player.getName(), player.getHand().getCardNames());
     }
 
-    private int calculateScore(Participant participant) {
-        return participant.calculateScore();
-    }
-
     public List<BlackjackResultDto> generateBlackjackResultDto() {
         List<BlackjackResultDto> blackjackResultDtoList = new ArrayList<>();
         addResult(dealer, blackjackResultDtoList);
@@ -104,7 +100,7 @@ public class BlackjackService {
     }
 
     private void addResult(Participant participant, List<BlackjackResultDto> blackjackResultDtoList) {
-        int score = calculateScore(participant);
+        int score = participant.calculateScore();
         BlackjackResultDto resultDto = new BlackjackResultDto(
             participant.getName(),
             participant.getHand().getCardNames(),
