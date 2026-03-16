@@ -41,21 +41,6 @@ public class Users {
                 .orElseThrow(() -> new IllegalArgumentException(ERROR_DEALER_NOT_FOUND));
     }
 
-//    public List<Player> getPlayers() {
-//        return users.stream()
-//                .filter(Player.class::isInstance)
-//                .map(Player.class::cast)
-//                .toList();
-//    }
-//
-//    public Dealer getDealer() {
-//        return users.stream()
-//                .filter(Dealer.class::isInstance)
-//                .map(Dealer.class::cast)
-//                .findFirst()
-//                .orElseThrow(() -> new IllegalArgumentException(ERROR_DEALER_NOT_FOUND));
-//    }
-
     public ProfitResult determineWinner(BetAmounts betAmounts) {
         Map<User, Integer> result = new HashMap<>();
         List<User> players = getPlayers();
@@ -76,24 +61,4 @@ public class Users {
                 .mapToInt(Integer::intValue)
                 .sum();
     }
-//    public ProfitResult determineWinner(BetAmounts betAmounts) {
-//        Map<Player, Integer> result = new HashMap<>();
-//        List<Player> players = getPlayers();
-//        Dealer dealer = getDealer();
-//
-//        for (Player player : players) {
-//            GameResult gameResult = player.judge(dealer);
-//            int profit = gameResult.calculateProfit(betAmounts.findByPlayer(player));
-//            result.put(player, profit);
-//        }
-//        int dealerPayout = -getTotalPlayerProfit(result);
-//
-//        return new ProfitResult(result, dealerPayout);
-//    }
-//
-//    private static int getTotalPlayerProfit(Map<Player, Integer> result) {
-//        return result.values().stream()
-//                .mapToInt(Integer::intValue)
-//                .sum();
-//    }
 }

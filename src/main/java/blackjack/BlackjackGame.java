@@ -37,13 +37,6 @@ public class BlackjackGame {
             BetAmount betAmount = new BetAmount(input);
             betAmounts.put(user, betAmount);
         }
-//        List<Player> players = users.getPlayers();
-//        Map<Player, BetAmount> betAmounts = new HashMap<>();
-//        for (Player player : players) {
-//            String input = readBetAmount.apply(player);
-//            BetAmount betAmount = new BetAmount(input);
-//            betAmounts.put(player, betAmount);
-//        }
         return new BetAmounts(betAmounts);
     }
 
