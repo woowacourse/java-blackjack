@@ -1,5 +1,6 @@
 package view;
 
+import static exception.ErrorMessage.BET_AMOUNT_OUT_OF_RANGE;
 import static exception.ErrorMessage.INPUT_EMPTY_ERROR;
 import static exception.ErrorMessage.INVALID_HIT_STAND_INPUT_ERROR;
 
@@ -11,7 +12,6 @@ public class InputView {
     Scanner scanner = new Scanner(System.in);
 
     public List<Name> readPlayers() {
-        System.out.println("게임에 참여할 사람의 이름을 입력하세요. (쉼표 기준으로 분리)");
         final String input = scanner.nextLine();
 
         validateIsBlank(input);
@@ -19,8 +19,19 @@ public class InputView {
         return InputParser.parsePlayers(input);
     }
 
-    public boolean readHitOrStand(final String name) {
-        System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+    public int readBetAmount() {
+        final String input = scanner.nextLine();
+
+        validateIsBlank(input);
+
+        try {
+            return Integer.parseInt(input);
+        } catch (final NumberFormatException e) {
+            throw new IllegalArgumentException(BET_AMOUNT_OUT_OF_RANGE.getMessage());
+        }
+    }
+
+    public boolean readHitOrStand() {
         String input = scanner.nextLine();
 
         validateIsBlank(input);
