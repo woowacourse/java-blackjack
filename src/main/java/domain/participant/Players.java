@@ -54,7 +54,7 @@ public class Players {
         foundPlayer.addCard(card);
     }
 
-    public void distributeCards(Name name, List<Card> cards) {
+    public void initializeCards(Name name, List<Card> cards) {
         Player foundPlayer = findPlayerByName(name);
         foundPlayer.receiveInitialCards(cards);
     }

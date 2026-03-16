@@ -41,7 +41,7 @@ public class Blackjack {
 
     private void initialize(Players players, Dealer dealer, Deck deck) {
         players.getAllPlayersName().forEach(name ->
-                players.distributeCards(name, initCards(deck))
+                players.initializeCards(name, initCards(deck))
         );
         dealer.receiveInitialCards(initCards(deck));
 
