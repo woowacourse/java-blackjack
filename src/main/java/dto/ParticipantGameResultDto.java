@@ -13,11 +13,7 @@ public record ParticipantGameResultDto(String name, int profit) {
                 new ParticipantGameResultDto(result.getDealerName(), result.getDealerProfit()));
 
         result.getPlayerResults().forEach((player, matchResult) ->
-                gameResultDtos.add(new ParticipantGameResultDto(
-                        player.getName(),
-                        result.getPlayerProfit(player)
-                ))
-        );
+                gameResultDtos.add(new ParticipantGameResultDto(player.getName(), result.getPlayerProfit(player))));
         return gameResultDtos;
     }
 }

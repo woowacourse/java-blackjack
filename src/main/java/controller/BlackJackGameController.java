@@ -43,10 +43,6 @@ public class BlackJackGameController {
         return InputView.askPlayerNames();
     }
 
-    private Money getPlayerBettingMoney(String playerName) {
-        return new Money(InputView.askPlayerBettingMoney(playerName));
-    }
-
     private List<Player> initPlayer(List<String> playerNames) {
         List<Player> players = playerNames.stream()
                 .map(playerName -> Player.from(playerName, (getPlayerBettingMoney(playerName))))
@@ -54,16 +50,13 @@ public class BlackJackGameController {
         return players;
     }
 
+    private Money getPlayerBettingMoney(String playerName) {
+        return new Money(InputView.askPlayerBettingMoney(playerName));
+    }
+
     private void playGame(BlackJackGame blackJackGame) {
         blackJackGame.getPlayers().forEach(player -> playGameWithPlayer(blackJackGame, player));
         playGameWithDealer(blackJackGame);
-    }
-
-    private void playGameWithDealer(BlackJackGame blackJackGame) {
-        while (blackJackGame.canDealerReceiveCard()) {
-            blackJackGame.playGameWithDealer();
-            OutputView.printDealerMessage();
-        }
     }
 
     private void playGameWithPlayer(BlackJackGame blackJackGame, Player player) {
@@ -76,16 +69,11 @@ public class BlackJackGameController {
         }
     }
 
-    private static void endGame(BlackJackGame blackJackGame, Result gameResult) {
-        OutputView.printFinalCards(ParticipantCardsDto.from(blackJackGame.getDealer()));
-        printFinalScores(blackJackGame);
-        OutputView.printGameResult(ParticipantGameResultDto.from(gameResult));
-    }
-
-    private static void printFinalScores(BlackJackGame blackJackGame) {
-        blackJackGame.getPlayers().stream()
-                .map(ParticipantCardsDto::from)
-                .forEach(OutputView::printFinalCards);
+    private void playGameWithDealer(BlackJackGame blackJackGame) {
+        while (blackJackGame.canDealerReceiveCard()) {
+            blackJackGame.playGameWithDealer();
+            OutputView.printDealerMessage();
+        }
     }
 
     private boolean isStopGame(Player player) {
@@ -98,5 +86,17 @@ public class BlackJackGameController {
 
     private boolean isStop(String response) {
         return response.equals("n");
+    }
+
+    private static void endGame(BlackJackGame blackJackGame, Result gameResult) {
+        OutputView.printFinalCards(ParticipantCardsDto.from(blackJackGame.getDealer()));
+        printFinalScores(blackJackGame);
+        OutputView.printGameResult(ParticipantGameResultDto.from(gameResult));
+    }
+
+    private static void printFinalScores(BlackJackGame blackJackGame) {
+        blackJackGame.getPlayers().stream()
+                .map(ParticipantCardsDto::from)
+                .forEach(OutputView::printFinalCards);
     }
 }
