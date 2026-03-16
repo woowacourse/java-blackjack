@@ -19,7 +19,7 @@ public class InputView {
         return List.of(split);
     }
 
-    public String readHitStand(Name name) {
+    public String readHitStand(String name) {
         System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         String input = readLine();
         if (!(input.equals("y") || input.equals("n"))) {

@@ -13,8 +13,8 @@ public abstract class Participant {
         this.cards = new Cards();
     }
 
-    public Name getName() {
-        return name;
+    public String getName() {
+        return name.toString();
     }
 
     public List<String> getCardNames() {
