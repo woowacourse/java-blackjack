@@ -1,7 +1,9 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import model.BlackJack;
 import model.factory.ParticipantsFactory;
 import model.participant.Participant;
@@ -50,12 +52,10 @@ public class BlackJackController {
     }
 
     private List<Integer> getBetAmounts(String[] names) {
-        List<Integer> betAmounts = new ArrayList<>();
-        for (int i = 0; i < names.length; i++) {
-            String bettingAmount = inputView.readBettingAmount(names[i]);
-            betAmounts.add(Integer.parseInt(bettingAmount));
-        }
-        return betAmounts;
+        return Arrays.stream(names)
+                .map(inputView::readBettingAmount)
+                .map(Integer::parseInt)
+                .toList();
     }
 
     private void playersCardDraw(Participants participants) {
