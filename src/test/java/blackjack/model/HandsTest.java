@@ -1,6 +1,7 @@
 package blackjack.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.Rank;
@@ -12,9 +13,9 @@ class HandsTest {
 
     @Test
     @DisplayName("빈 핸즈를 반환한다.")
-    void empty() {
+    void createEmptyHand() {
         assertThat(
-                Hands.empty()
+                Hands.createEmptyHand()
                         .getAllCard()
         ).isEmpty();
     }
@@ -23,7 +24,7 @@ class HandsTest {
     @DisplayName("인자로 넘겨받은 카드를 핸즈에 추가한다.")
     void addCard() {
         // given
-        Hands hands = Hands.empty();
+        Hands hands = Hands.createEmptyHand();
 
         //when
         hands.addCard(Card.createOpenedCard(Rank.TEN, Suit.CLOVER));
@@ -33,10 +34,22 @@ class HandsTest {
     }
 
     @Test
+    @DisplayName("인자로 넘겨받은 카드를 핸즈에 추가한다.")
+    void addCard_null() {
+        // given
+        Hands hands = Hands.createEmptyHand();
+
+        //when & then
+        assertThatThrownBy(() -> hands.addCard(null))
+                .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage("card가 null입니다.");
+    }
+
+    @Test
     @DisplayName("J/Q/K는 10점으로 숫자 카드는 해당되는 숫자로 점수를 계산한다.")
     void calculateTotalScore() {
         // given
-        Hands hands = Hands.empty();
+        Hands hands = Hands.createEmptyHand();
 
         hands.addCard(Card.createOpenedCard(Rank.TEN, Suit.CLOVER));
         hands.addCard(Card.createOpenedCard(Rank.J, Suit.CLOVER));
@@ -49,7 +62,7 @@ class HandsTest {
     @DisplayName("Ace 카드를 제외한 카다들의 총점이 11점 초과이면 에이스가 1점으로 계산된다.")
     void calculateTotalScoreWithAceOf1() {
         // given
-        Hands hands = Hands.empty();
+        Hands hands = Hands.createEmptyHand();
         hands.addCard(Card.createOpenedCard(Rank.TEN, Suit.CLOVER));
         hands.addCard(Card.createOpenedCard(Rank.TWO, Suit.CLOVER));
         hands.addCard(Card.createOpenedCard(Rank.ACE, Suit.CLOVER));
@@ -65,7 +78,7 @@ class HandsTest {
     @DisplayName("Ace 카드를 제외한 카다들의 총점이 11점 이하이면 에이스가 11점으로 계산된다.")
     void calculateTotalScoreWithAceOf11() {
         // given
-        Hands hands = Hands.empty();
+        Hands hands = Hands.createEmptyHand();
         hands.addCard(Card.createOpenedCard(Rank.TEN, Suit.CLOVER));
         hands.addCard(Card.createOpenedCard(Rank.ACE, Suit.CLOVER));
 
@@ -80,7 +93,7 @@ class HandsTest {
     @DisplayName("현재 총 점수가 인자로 넘겨받은 점수보다 크면 true를 반환한다.")
     void isTotalScoreOverTrue() {
         // given
-        Hands hands = Hands.empty();
+        Hands hands = Hands.createEmptyHand();
         hands.addCard(Card.createOpenedCard(Rank.SIX, Suit.CLOVER));
         hands.addCard(Card.createOpenedCard(Rank.ACE, Suit.CLOVER));
 
@@ -91,7 +104,7 @@ class HandsTest {
     @DisplayName("현재 총 점수가 인자로 넘겨받은 점수보다 크면 false를 반환한다.")
     void isTotalScoreOverFalse() {
         // given
-        Hands hands = Hands.empty();
+        Hands hands = Hands.createEmptyHand();
         hands.addCard(Card.createOpenedCard(Rank.SIX, Suit.CLOVER));
         hands.addCard(Card.createOpenedCard(Rank.ACE, Suit.CLOVER));
 
@@ -102,7 +115,7 @@ class HandsTest {
     @DisplayName("핸즈에서 오픈된 카드들만 반환한다")
     void getOpenedCards() {
         // given
-        Hands hands = Hands.empty();
+        Hands hands = Hands.createEmptyHand();
         hands.addCard(Card.createOpenedCard(Rank.SIX, Suit.CLOVER));
 
         Card opened = Card.createOpenedCard(Rank.ACE, Suit.CLOVER);
@@ -118,7 +131,7 @@ class HandsTest {
     @DisplayName("핸즈에 있는 초기 2 장의 카드의 점수를 반환한다.")
     void calculateInitialCardScore() {
         //given
-        Hands hands = Hands.empty();
+        Hands hands = Hands.createEmptyHand();
 
         hands.addCard(Card.createOpenedCard(Rank.TEN, Suit.CLOVER));
         hands.addCard(Card.createOpenedCard(Rank.TWO, Suit.CLOVER));

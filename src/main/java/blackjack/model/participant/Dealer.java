@@ -10,7 +10,7 @@ public class Dealer extends Participant {
     private static final int PICK_THRESHOLD = 16;
 
     public Dealer() {
-        super(DEALER_NAME, Hands.empty());
+        super(DEALER_NAME, Hands.createEmptyHand());
     }
 
     @Override

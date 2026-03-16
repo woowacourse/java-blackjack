@@ -15,7 +15,7 @@ public class Player extends Participant {
     public static Player of(String name, int betAmount) {
         return new Player(
                 name,
-                Hands.empty(),
+                Hands.createEmptyHand(),
                 Prize.of(betAmount)
         );
     }

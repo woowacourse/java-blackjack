@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Hands {
 
-    private static final int INTIAL_CARD_COUNT = 2;
+    private static final int INITIAL_CARD_COUNT = 2;
 
     private final List<Card> cards;
 
@@ -18,20 +18,24 @@ public class Hands {
         this.cards = cards;
     }
 
-    public static Hands empty() {
+    public static Hands createEmptyHand() {
         return new Hands(new ArrayList<>());
     }
 
     public void addCard(Card card) {
-        cards.add(card);
-    }
+         if (card == null) {
+             throw new IllegalArgumentException("card가 null입니다.");
+         }
 
-    public int calculateTotalScore() {
-        return calculateScoreOf(this.cards);
+        cards.add(card);
     }
 
     public boolean isTotalScoreOver(final int score) {
         return calculateTotalScore() > score;
+    }
+
+    public int calculateTotalScore() {
+        return calculateScoreOf(this.cards);
     }
 
     public List<Card> getOpenedCards() {
@@ -45,11 +49,11 @@ public class Hands {
     }
 
     public int calculateInitialCardScore() {
-        if (cards.size() < INTIAL_CARD_COUNT) {
-            throw new IllegalStateException("초기 " + INTIAL_CARD_COUNT + " 장의 카드 분배가 완료 되지 않았습니다.");
+        if (cards.size() < INITIAL_CARD_COUNT) {
+            throw new IllegalStateException("초기 " + INITIAL_CARD_COUNT + " 장의 카드 분배가 완료 되지 않았습니다.");
         }
 
-        return calculateScoreOf(cards.subList(0, INTIAL_CARD_COUNT));
+        return calculateScoreOf(cards.subList(0, INITIAL_CARD_COUNT));
     }
 
     private int calculateScoreOf(List<Card> cards) {
