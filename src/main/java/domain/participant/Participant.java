@@ -50,7 +50,7 @@ public abstract class Participant {
     }
 
     public boolean isBlackjack() {
-        return hand.getSize() == 2 && hand.calculateScore() == BLACKJACK_CRITERION;
+        return hand.getSize() == INITIAL_CARD_SIZE && hand.calculateScore() == BLACKJACK_CRITERION;
     }
 
     public abstract boolean canDraw();
