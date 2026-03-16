@@ -1,5 +1,7 @@
 package blackjack.domain.judgement;
 
+import java.math.BigDecimal;
+
 public class BettingMoney {
 
     private final Integer money;
@@ -29,7 +31,7 @@ public class BettingMoney {
         }
     }
 
-    public double multiply(double dividendRate) {
-        return money * dividendRate;
+    public BigDecimal toBigDecimal() {
+        return BigDecimal.valueOf(money);
     }
 }

@@ -7,23 +7,25 @@ import blackjack.domain.participant.Participants;
 
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
+import java.math.BigDecimal;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public record FinalProfitDto(
-        Map<Name, Double> bettingMoneyInfo,
-        double profitByDealer
+        Map<Name, BigDecimal> bettingMoneyInfo,
+        BigDecimal profitByDealer
 ) {
 
     public static FinalProfitDto of(Participants participants, BettingMoneyInfo bettingMoneyInfo) {
-        Map<Name, Double> profitByPlayer = calculatePlayerProfit(participants, bettingMoneyInfo);
+        Map<Name, BigDecimal> profitByPlayer = calculatePlayerProfit(participants, bettingMoneyInfo);
 
-        double profitByDealer = calculateDealerProfit(profitByPlayer);
+        BigDecimal profitByDealer = calculateDealerProfit(profitByPlayer);
 
         return new FinalProfitDto(profitByPlayer, profitByDealer);
     }
 
-    private static Map<Name, Double> calculatePlayerProfit(Participants participants, BettingMoneyInfo bettingMoneyInfo) {
+    private static Map<Name, BigDecimal> calculatePlayerProfit(Participants participants,
+                                                               BettingMoneyInfo bettingMoneyInfo) {
         Players players = participants.players();
         Dealer dealer = participants.dealer();
         return players.all().stream()
@@ -35,10 +37,11 @@ public record FinalProfitDto(
                 );
     }
 
-    private static double calculateDealerProfit(Map<Name, Double> profitByPlayer) {
-        return profitByPlayer.values().stream()
-                .mapToDouble(money -> -money)
-                .sum();
+    private static BigDecimal calculateDealerProfit(Map<Name, BigDecimal> profitByPlayer) {
+        BigDecimal totalPlayerProfit = profitByPlayer.values().stream()
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        return totalPlayerProfit.negate();
     }
 
 

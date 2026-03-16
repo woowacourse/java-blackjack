@@ -4,6 +4,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import blackjack.domain.judgement.BettingMoney;
 import blackjack.domain.judgement.GameResult;
+import java.math.BigDecimal;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,9 +15,9 @@ public class GameResultTest {
     void 승리_처리_테스트() {
         GameResult gameResult = GameResult.WIN;
         BettingMoney bettingMoney = new BettingMoney("10000");
-        double expected = 10000;
+        BigDecimal expected = new BigDecimal("10000.0");
 
-        double actual = gameResult.calculateProfit(bettingMoney);
+        BigDecimal actual = gameResult.calculateProfit(bettingMoney);
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -26,9 +27,9 @@ public class GameResultTest {
     void 패배_처리_테스트() {
         GameResult gameResult = GameResult.LOSE;
         BettingMoney bettingMoney = new BettingMoney("10000");
-        double expected = -10000;
+        BigDecimal expected = new BigDecimal("-10000.0");
 
-        double actual = gameResult.calculateProfit(bettingMoney);
+        BigDecimal actual = gameResult.calculateProfit(bettingMoney);
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -38,9 +39,9 @@ public class GameResultTest {
     void 블랙잭_처리_테스트() {
         GameResult gameResult = GameResult.BLACKJACK;
         BettingMoney bettingMoney = new BettingMoney("10000");
-        double expected = 15000;
+        BigDecimal expected = new BigDecimal("15000.0");
 
-        double actual = gameResult.calculateProfit(bettingMoney);
+        BigDecimal actual = gameResult.calculateProfit(bettingMoney);
 
         assertThat(actual).isEqualTo(expected);
     }
