@@ -1,4 +1,6 @@
-package domain;
+package domain.card;
+
+import domain.Score;
 
 public enum Rank {
     ACE("A", Score.ONE),

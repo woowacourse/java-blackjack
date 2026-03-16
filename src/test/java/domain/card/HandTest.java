@@ -1,9 +1,8 @@
 package domain.card;
 
 
-import domain.Rank;
 import domain.Score;
-import domain.Suit;
+import java.util.ArrayList;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -11,14 +10,14 @@ import org.junit.jupiter.api.Test;
 public class HandTest {
     @Test
     void 카드_더미가_정상적으로_생성되어야_한다() {
-        Assertions.assertThatNoException().isThrownBy(Hand::createEmpty);
+        Assertions.assertThatNoException().isThrownBy(() -> Hand.of(List.of(Card.of(Suit.DIAMOND, Rank.Q))));
     }
 
     @Test
     void 카드가_정상적으로_추가되어야_한다() {
         //given
         Card card = Card.of(Suit.SPADE, Rank.ACE);
-        Hand hand = Hand.createEmpty();
+        Hand hand = Hand.of(new ArrayList<>());
 
         //when
         hand.add(card);
@@ -30,12 +29,11 @@ public class HandTest {
     @Test
     void 여러_개의_카드가_정상적으로_추가되어야_한다() {
         //given
-        List<Card> threeCards = List.of(Card.of(Suit.SPADE, Rank.ACE), Card.of(Suit.SPADE, Rank.Q),
+        List<Card> threeCards = List.of(
+                Card.of(Suit.SPADE, Rank.ACE),
+                Card.of(Suit.SPADE, Rank.Q),
                 Card.of(Suit.SPADE, Rank.K));
-        Hand hand = Hand.createEmpty();
-
-        // when
-        hand.addAll(threeCards);
+        Hand hand = Hand.of(threeCards);
 
         //then
         Assertions.assertThat(hand.size()).isEqualTo(3);
@@ -44,11 +42,13 @@ public class HandTest {
     @Test
     void getCards_수행_시_방어적_복사가_수행되어야_한다() {
         //given
-        List<Card> threeCards = List.of(Card.of(Suit.SPADE, Rank.ACE), Card.of(Suit.SPADE, Rank.Q),
-                Card.of(Suit.SPADE, Rank.K));
+        List<Card> threeCards = new ArrayList<>(List.of(
+                Card.of(Suit.SPADE, Rank.ACE),
+                Card.of(Suit.SPADE, Rank.Q),
+                Card.of(Suit.SPADE, Rank.K))
+        );
 
-        Hand original = Hand.createEmpty();
-        original.addAll(threeCards);
+        Hand original = Hand.of(threeCards);
         List<Card> copied = original.getCards();
 
         // when
@@ -61,11 +61,12 @@ public class HandTest {
     @Test
     void 가장_처음에_받은_카드를_확인할_수_있다() {
         //given
-        List<Card> threeCards = List.of(Card.of(Suit.SPADE, Rank.ACE), Card.of(Suit.SPADE, Rank.Q),
+        List<Card> threeCards = List.of(
+                Card.of(Suit.SPADE, Rank.ACE),
+                Card.of(Suit.SPADE, Rank.Q),
                 Card.of(Suit.SPADE, Rank.K));
 
-        Hand hand = Hand.createEmpty();
-        hand.addAll(threeCards);
+        Hand hand = Hand.of(threeCards);
 
         // when
         Card peek = hand.peek();
@@ -77,10 +78,11 @@ public class HandTest {
     @Test
     void 블랙잭인_경우_참을_반환해야_한다() {
         //given
-        List<Card> blackjackCards = List.of(Card.of(Suit.SPADE, Rank.ACE), Card.of(Suit.SPADE, Rank.Q));
+        List<Card> blackjackCards = List.of(
+                Card.of(Suit.SPADE, Rank.ACE),
+                Card.of(Suit.SPADE, Rank.Q));
 
-        Hand hand = Hand.createEmpty();
-        hand.addAll(blackjackCards);
+        Hand hand = Hand.of(blackjackCards);
 
         // when & then
         Assertions.assertThat(hand.isBlackjack()).isEqualTo(true);
@@ -90,11 +92,12 @@ public class HandTest {
     @Test
     void 블랙잭이_아닌_경우_거짓을_반환해야_한다() {
         //given
-        List<Card> notBlackjackCards = List.of(Card.of(Suit.SPADE, Rank.ACE), Card.of(Suit.SPADE, Rank.Q),
+        List<Card> notBlackjackCards = List.of(
+                Card.of(Suit.SPADE, Rank.ACE),
+                Card.of(Suit.SPADE, Rank.Q),
                 Card.of(Suit.SPADE, Rank.THREE));
 
-        Hand hand = Hand.createEmpty();
-        hand.addAll(notBlackjackCards);
+        Hand hand = Hand.of(notBlackjackCards);
 
         // when & then
         Assertions.assertThat(hand.isBlackjack()).isEqualTo(false);
@@ -103,11 +106,12 @@ public class HandTest {
     @Test
     void 손패의_합계를_구할_수_있다_성공() {
         //given
-        List<Card> sum14Cards = List.of(Card.of(Suit.SPADE, Rank.ACE), Card.of(Suit.SPADE, Rank.Q),
+        List<Card> sum14Cards = List.of(
+                Card.of(Suit.SPADE, Rank.ACE),
+                Card.of(Suit.SPADE, Rank.Q),
                 Card.of(Suit.SPADE, Rank.THREE));
 
-        Hand hand = Hand.createEmpty();
-        hand.addAll(sum14Cards);
+        Hand hand = Hand.of(sum14Cards);
 
         // when & then
         Assertions.assertThat(hand.totalSum()).isEqualTo(new Score(14));
@@ -116,11 +120,12 @@ public class HandTest {
     @Test
     void 손패의_합계를_구할_수_있다_실패() {
         //given
-        List<Card> sum14Cards = List.of(Card.of(Suit.SPADE, Rank.ACE), Card.of(Suit.SPADE, Rank.Q),
+        List<Card> sum14Cards = List.of(
+                Card.of(Suit.SPADE, Rank.ACE),
+                Card.of(Suit.SPADE, Rank.Q),
                 Card.of(Suit.SPADE, Rank.THREE));
 
-        Hand hand = Hand.createEmpty();
-        hand.addAll(sum14Cards);
+        Hand hand = Hand.of(sum14Cards);
 
         // when & then
         Assertions.assertThat(hand.totalSum()).isNotEqualTo(new Score(17));
@@ -129,11 +134,12 @@ public class HandTest {
     @Test
     void 버스트인_경우_참을_반환해야_한다() {
         //given
-        List<Card> bustCards = List.of(Card.of(Suit.SPADE, Rank.J), Card.of(Suit.SPADE, Rank.Q),
+        List<Card> bustCards = List.of(
+                Card.of(Suit.SPADE, Rank.J),
+                Card.of(Suit.SPADE, Rank.Q),
                 Card.of(Suit.SPADE, Rank.K));
 
-        Hand hand = Hand.createEmpty();
-        hand.addAll(bustCards);
+        Hand hand = Hand.of(bustCards);
 
         // when & then
         Assertions.assertThat(hand.isBust()).isEqualTo(true);
@@ -142,11 +148,12 @@ public class HandTest {
     @Test
     void 버스트가_아니면_거짓을_반환해야_한다() {
         //given
-        List<Card> notBustCards = List.of(Card.of(Suit.SPADE, Rank.ACE), Card.of(Suit.SPADE, Rank.Q),
+        List<Card> notBustCards = List.of(
+                Card.of(Suit.SPADE, Rank.ACE),
+                Card.of(Suit.SPADE, Rank.Q),
                 Card.of(Suit.SPADE, Rank.K));
 
-        Hand hand = Hand.createEmpty();
-        hand.addAll(notBustCards);
+        Hand hand = Hand.of(notBustCards);
 
         // when & then
         Assertions.assertThat(hand.isBust()).isEqualTo(false);
@@ -154,9 +161,7 @@ public class HandTest {
 
     @Test
     void copyOf로_반환받은_컬렉션은_수정이_가능_해야한다() {
-        Hand hand = Hand.createEmpty();
-
-        hand.addAll(List.of(Card.of(Suit.SPADE, Rank.THREE)));
+        Hand hand = Hand.of(List.of(Card.of(Suit.SPADE, Rank.THREE)));
 
         Hand copied = Hand.copyOf(hand);
         Assertions.assertThatNoException().isThrownBy(() -> copied.add(Card.of(Suit.CLUB, Rank.TWO)));

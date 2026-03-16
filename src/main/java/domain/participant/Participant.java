@@ -1,57 +1,33 @@
 package domain.participant;
 
-import domain.Score;
+import domain.Result;
 import domain.card.Card;
-import domain.card.Hand;
-import domain.state.Blackjack;
-import domain.state.Bust;
 import domain.state.State;
-import domain.state.Stay;
-import java.util.List;
 
 public abstract class Participant {
-    protected final Hand hand;
+    protected State state;
 
-    protected Participant() {
-        this.hand = Hand.createEmpty();
+    protected Participant(State state) {
+        this.state = state;
     }
 
-    protected Participant(Hand hand) {
-        this.hand = hand;
+    public void draw(Card card) {
+        state = state.draw(card);
+    }
+
+    public void stay() {
+        state = state.stay();
+    }
+
+    public Result judge(Participant target) {
+        return state.judge(target.state);
+    }
+
+    public boolean isFinished() {
+        return state.isFinished();
     }
 
     public State getState() {
-        if (hand.isBlackjack()) {
-            return new Blackjack(hand);
-        }
-        if (hand.isBust()) {
-            return new Bust(hand);
-        }
-        return new Stay(hand);
+        return state;
     }
-
-    public boolean isBlackjack() {
-        return hand.isBlackjack();
-    }
-
-    public boolean isBust() {
-        return hand.isBust();
-    }
-
-    public void addCard(Card card) {
-        hand.add(card);
-    }
-
-    public void addCards(List<Card> cards) {
-        hand.addAll(cards);
-    }
-
-    public Score getTotalSum() {
-        return hand.totalSum();
-    }
-
-    public Hand getHand() {
-        return hand;
-    }
-
 }

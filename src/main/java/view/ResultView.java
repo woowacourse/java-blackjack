@@ -1,10 +1,10 @@
 package view;
 
 
-import domain.BetMoney;
 import domain.Score;
 import domain.card.Card;
 import domain.dto.Profit;
+import domain.participant.BetMoney;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Player;
@@ -47,7 +47,7 @@ public class ResultView {
 
     public void printCards(Player player) {
         System.out.println(
-                player.getName().getValue() + "카드: " + cardsToString(player.getHand().getCards()));
+                player.getName().getValue() + "카드: " + cardsToString(player.getState().getHand().getCards()));
     }
 
     private String cardsToString(List<Card> cards) {
@@ -81,8 +81,8 @@ public class ResultView {
         printEmptyLine();
         System.out.println(
                 "딜러카드: " + cardsToString(
-                        dealer.getHand().getCards()) + " - 결과: "
-                        + dealer.getTotalSum().value());
+                        dealer.getState().getHand().getCards()) + " - 결과: "
+                        + dealer.getState().getHand().totalSum().value());
 
         for (Player player : players) {
             printCardWithResult(player);
@@ -92,7 +92,7 @@ public class ResultView {
     private void printCardWithResult(Player player) {
         System.out.println(
                 player.getName().getValue() + "카드: " + cardsToString(
-                        player.getHand().getCards()) + " - 결과: "
-                        + player.getTotalSum().value());
+                        player.getState().getHand().getCards()) + " - 결과: "
+                        + player.getState().getHand().totalSum().value());
     }
 }

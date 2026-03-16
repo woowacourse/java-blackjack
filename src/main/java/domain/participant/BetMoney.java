@@ -1,4 +1,4 @@
-package domain;
+package domain.participant;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -20,8 +20,8 @@ public class BetMoney {
         return new BetMoney(new BigDecimal(value));
     }
 
-    public BetMoney getProfit(Result result) {
-        return BetMoney.valueOf(value.multiply(BigDecimal.valueOf(result.getOdd())));
+    public BetMoney multiply(double target) {
+        return BetMoney.valueOf(value.multiply(BigDecimal.valueOf(target)));
     }
 
     public BetMoney sub(BetMoney target) {

@@ -1,7 +1,6 @@
 package domain.card;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -24,20 +23,15 @@ public class DeckTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {1, 2, 10, 52})
-    void 원하는_개수의_카드를_뽑을_수_있다(int amount) {
-        Deck deck = Deck.createWithAllCards();
-        List<Card> cards = deck.drawWithAmount(amount);
-
-        Assertions.assertThat(cards).hasSize(amount);
-    }
-
-    @ParameterizedTest
-    @ValueSource(ints = {-1, 0, 53})
+    @ValueSource(ints = {53})
     void 범위를_벗어난_개수의_카드를_뽑으면_예외가_발생해야_한다(int amount) {
         Deck deck = Deck.createWithAllCards();
 
-        Assertions.assertThatThrownBy(() -> deck.drawWithAmount(amount)).isInstanceOf(IllegalArgumentException.class);
+        Assertions.assertThatThrownBy(() -> {
+            for (int i = 0; i < amount; i++) {
+                deck.draw();
+            }
+        }).isInstanceOf(IllegalArgumentException.class);
     }
 
 }

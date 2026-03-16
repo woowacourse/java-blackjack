@@ -8,16 +8,12 @@ public class Hand {
     private static final int BLACKJACK_CARD_COUNT = 2;
     private final List<Card> cards;
 
-    private Hand() {
-        this.cards = new ArrayList<>();
-    }
-
     private Hand(List<Card> cards) {
         this.cards = cards;
     }
 
-    public static Hand createEmpty() {
-        return new Hand();
+    public static Hand of(List<Card> cards) {
+        return new Hand(cards);
     }
 
     public static Hand copyOf(Hand hand) {
@@ -28,16 +24,16 @@ public class Hand {
         cards.add(card);
     }
 
-    public void addAll(List<Card> cards) {
-        this.cards.addAll(cards);
-    }
-
     public Card peek() {
         return cards.getFirst();
     }
 
     public boolean isBlackjack() {
         return cards.size() == BLACKJACK_CARD_COUNT && totalSum().isBlackjack();
+    }
+
+    public boolean isBust() {
+        return totalSum().isBust();
     }
 
     public Score totalSum() {
@@ -55,10 +51,6 @@ public class Hand {
                 .filter(card -> !card.isAce())
                 .map(card -> card.getRank().getScore())
                 .reduce(Score.ZERO, Score::add);
-    }
-
-    public boolean isBust() {
-        return totalSum().isBust();
     }
 
     public int size() {

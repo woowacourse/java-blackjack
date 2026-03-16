@@ -1,20 +1,16 @@
-import domain.BetMoney;
-import domain.Result;
-import domain.Score;
 import domain.card.Deck;
 import domain.dto.PlayerResult;
 import domain.dto.Profit;
+import domain.participant.BetMoney;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
-import domain.state.State;
 import java.util.ArrayList;
 import java.util.List;
 import view.InputView;
 import view.ResultView;
 
 public class BlackjackController {
-    public static final int INITIAL_CARD_COUNT = 2;
     private final InputView inputView;
     private final ResultView resultView;
 
@@ -24,73 +20,84 @@ public class BlackjackController {
     }
 
     public void run() {
-        Players players = readPlayerInfos();
-        Dealer dealer = Dealer.createReady();
         Deck deck = Deck.createWithAllCards();
-
-        giveHand(players, dealer, deck);
+        Players players = readPlayerInfo(deck);
+        Dealer dealer = Dealer.createReady(deck.drawInitialCards());
 
         resultView.printParticipantsCards(players.getPlayers(), dealer);
 
         hitStandPlayers(players, deck);
         hitStandDealer(dealer, deck);
 
-        List<PlayerResult> playerResults = new ArrayList<>();
+        List<PlayerResult> playerResults = collectPlayerResults(players, dealer);
 
-//        for (Player player : players.getPlayers()) {
-//            playerResults.add(new PlayerResult(player, GameResult.judgeResult(player, dealer)));
-//        }
+        List<Profit> profits = calculatePlayerProfits(playerResults);
 
-        State state = dealer.getState();
-        for (Player player : players.getPlayers()) {
-            Result judge = player.getState().judge(state);
-            playerResults.add(new PlayerResult(player, judge));
-        }
-
-        List<Profit> profits = new ArrayList<>();
-        for (PlayerResult playerResult : playerResults) {
-            profits.add(new Profit(playerResult.player(), playerResult.player().getProfit(playerResult.result())));
-        }
-
-        BetMoney dealerResult = calculateDealerResult(profits);
+        BetMoney dealerProfit = calculateDealerResult(profits);
 
         resultView.printCardsWithResult(players.getPlayers(), dealer);
-
-        resultView.printProfits(profits, dealerResult);
-
+        resultView.printProfits(profits, dealerProfit);
     }
 
-    private Players readPlayerInfos() {
+    private Players readPlayerInfo(Deck deck) {
         List<String> names = inputView.readPlayerNames();
         List<String> betMoneys = inputView.readBetMoney(names);
 
-        List<Player> players = new ArrayList<>();
+        List<Player> playerList = new ArrayList<>();
         for (int i = 0; i < names.size(); i++) {
-            players.add(Player.of(names.get(i), betMoneys.get(i)));
+            playerList.add(Player.of(deck.drawInitialCards(), names.get(i), betMoneys.get(i)));
         }
-        return Players.from(players);
+
+        return Players.from(playerList);
     }
 
     private void hitStandPlayers(Players players, Deck deck) {
         for (Player player : players.getPlayers()) {
-            while (!player.isBust() && inputView.readHitStand(player)) {
-                player.addCard(deck.draw());
-                resultView.printCards(player);
-            }
+            hitStandPlayer(deck, player);
         }
     }
 
-    private static void giveHand(Players players, Dealer dealer, Deck deck) {
-        players.addCardsToEachPlayers(deck, INITIAL_CARD_COUNT);
-        dealer.addCards(deck.drawWithAmount(INITIAL_CARD_COUNT));
+    private void hitStandPlayer(Deck deck, Player player) {
+        while (!player.isFinished()) {
+            hitByDecision(deck, player);
+            resultView.printCards(player);
+        }
+    }
+
+    private void hitByDecision(Deck deck, Player player) {
+        if (inputView.readHitStand(player)) {
+            player.draw(deck.draw());
+            return;
+        }
+        player.stay();
     }
 
     private void hitStandDealer(Dealer dealer, Deck deck) {
-        while (dealer.isHittable(Score.DEALER_HIT_STAND_BOUNDARY)) {
-            dealer.addCard(deck.draw());
-            resultView.printDealerHitStand(true);
+        while (!dealer.isFinished()) {
+            hitDealerByCondition(deck, dealer);
         }
         resultView.printDealerHitStand(false);
+    }
+
+    private void hitDealerByCondition(Deck deck, Dealer dealer) {
+        if (dealer.isHittable()) {
+            dealer.draw(deck.draw());
+            resultView.printDealerHitStand(true);
+            return;
+        }
+        dealer.stay();
+    }
+
+    private List<PlayerResult> collectPlayerResults(Players players, Dealer dealer) {
+        return players.getPlayers().stream()
+                .map(player -> new PlayerResult(player, player.judge(dealer)))
+                .toList();
+    }
+
+    private List<Profit> calculatePlayerProfits(List<PlayerResult> playerResults) {
+        return playerResults.stream()
+                .map(result -> new Profit(result.player(), result.player().getProfit(result.result())))
+                .toList();
     }
 
     private BetMoney calculateDealerResult(List<Profit> profits) {

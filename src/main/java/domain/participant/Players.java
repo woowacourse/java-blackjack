@@ -1,7 +1,6 @@
 package domain.participant;
 
 import domain.CommonExceptionMessage;
-import domain.card.Deck;
 import java.util.List;
 
 public class Players {
@@ -36,12 +35,6 @@ public class Players {
                 .count();
         if (players.size() != count) {
             throw new IllegalArgumentException(ALREADY_EXIST_NAME);
-        }
-    }
-
-    public void addCardsToEachPlayers(Deck deck, int quantity) {
-        for (Player player : players) {
-            player.addCards(deck.drawWithAmount(quantity));
         }
     }
 

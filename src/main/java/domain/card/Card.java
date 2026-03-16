@@ -1,8 +1,6 @@
 package domain.card;
 
 import domain.CommonExceptionMessage;
-import domain.Rank;
-import domain.Suit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

@@ -2,8 +2,6 @@ package domain.card;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import domain.Rank;
-import domain.Suit;
 import java.util.HashSet;
 import java.util.Set;
 import org.assertj.core.api.Assertions;
