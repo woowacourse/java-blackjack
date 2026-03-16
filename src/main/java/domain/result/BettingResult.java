@@ -1,6 +1,6 @@
 package domain.result;
 
-import domain.betiing.BettingProfit;
+import domain.betting.BettingProfit;
 import domain.participant.ParticipantName;
 
 public class BettingResult {

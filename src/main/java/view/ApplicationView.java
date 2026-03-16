@@ -1,6 +1,6 @@
 package view;
 
-import domain.betiing.BetAmount;
+import domain.betting.BetAmount;
 import domain.participant.ParticipantInitialInformation;
 import domain.participant.ParticipantName;
 import domain.participant.dto.ParticipantHandDto;

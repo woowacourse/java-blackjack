@@ -2,7 +2,7 @@ package domain.result;
 
 import static config.BlackjackGameConstant.DEALER_DISPLAY_NAME;
 
-import domain.betiing.BettingProfit;
+import domain.betting.BettingProfit;
 import domain.participant.Dealer;
 import domain.participant.ParticipantName;
 import domain.participant.Player;

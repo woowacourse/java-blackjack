@@ -1,6 +1,6 @@
 package domain.participant;
 
-import domain.betiing.BetAmount;
+import domain.betting.BetAmount;
 
 public class ParticipantInitialInformation {
 

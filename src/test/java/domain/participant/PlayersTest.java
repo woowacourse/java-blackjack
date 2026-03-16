@@ -1,6 +1,6 @@
 package domain.participant;
 
-import domain.betiing.BetAmount;
+import domain.betting.BetAmount;
 import domain.card.Card;
 import domain.card.CardDeck;
 import domain.card.CardDeckBuilder;

@@ -1,4 +1,4 @@
-package domain.betiing;
+package domain.betting;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

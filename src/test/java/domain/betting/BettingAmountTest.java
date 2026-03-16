@@ -1,6 +1,5 @@
 package domain.betting;
 
-import domain.betiing.BetAmount;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 

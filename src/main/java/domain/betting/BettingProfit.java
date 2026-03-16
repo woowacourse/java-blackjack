@@ -1,4 +1,4 @@
-package domain.betiing;
+package domain.betting;
 
 
 import domain.result.WinningStatus;
