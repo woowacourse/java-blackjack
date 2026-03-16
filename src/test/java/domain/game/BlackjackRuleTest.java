@@ -32,7 +32,7 @@ public class BlackjackRuleTest {
         dealer.addCard(new Card(Rank.ACE, Suit.HEART));
         dealer.addCard(new Card(Rank.QUEEN, Suit.SPADE));
 
-        assertThat(rule.judge(player, dealer)).isEqualTo(Outcome.TIE);
+        assertThat(rule.judge(player, dealer)).isSameAs(Outcome.TIE);
     }
 
     @DisplayName("플레이어만 블랙잭이면 블랙잭 승리다")
@@ -46,7 +46,7 @@ public class BlackjackRuleTest {
         dealer.addCard(new Card(Rank.KING, Suit.SPADE));
         dealer.addCard(new Card(Rank.NINE, Suit.HEART));
 
-        assertThat(rule.judge(player, dealer)).isEqualTo(Outcome.BLACKJACK_WIN);
+        assertThat(rule.judge(player, dealer)).isSameAs(Outcome.BLACKJACK_WIN);
     }
 
     @DisplayName("플레이어가 버스트면 패배한다")
@@ -61,7 +61,7 @@ public class BlackjackRuleTest {
         dealer.addCard(new Card(Rank.FIVE, Suit.SPADE));
         dealer.addCard(new Card(Rank.FIVE, Suit.HEART));
 
-        assertThat(rule.judge(player, dealer)).isEqualTo(Outcome.LOSE);
+        assertThat(rule.judge(player, dealer)).isSameAs(Outcome.LOSE);
     }
 
     @DisplayName("플레이어 점수가 딜러보다 높으면 승리한다")
@@ -75,7 +75,7 @@ public class BlackjackRuleTest {
         dealer.addCard(new Card(Rank.KING, Suit.HEART));
         dealer.addCard(new Card(Rank.FIVE, Suit.SPADE));
 
-        assertThat(rule.judge(player, dealer)).isEqualTo(Outcome.WIN);
+        assertThat(rule.judge(player, dealer)).isSameAs(Outcome.WIN);
     }
 
     @DisplayName("동점이면 무승부다")
@@ -89,7 +89,7 @@ public class BlackjackRuleTest {
         dealer.addCard(new Card(Rank.KING, Suit.HEART));
         dealer.addCard(new Card(Rank.FIVE, Suit.SPADE));
 
-        assertThat(rule.judge(player, dealer)).isEqualTo(Outcome.TIE);
+        assertThat(rule.judge(player, dealer)).isSameAs(Outcome.TIE);
     }
 
     @DisplayName("플레이어 점수가 딜러보다 낮으면 패배한다")
@@ -103,7 +103,7 @@ public class BlackjackRuleTest {
         dealer.addCard(new Card(Rank.KING, Suit.HEART));
         dealer.addCard(new Card(Rank.NINE, Suit.SPADE));
 
-        assertThat(rule.judge(player, dealer)).isEqualTo(Outcome.LOSE);
+        assertThat(rule.judge(player, dealer)).isSameAs(Outcome.LOSE);
     }
 
     @DisplayName("딜러가 버스트면 플레이어가 승리한다")
@@ -118,7 +118,7 @@ public class BlackjackRuleTest {
         dealer.addCard(new Card(Rank.KING, Suit.SPADE));
         dealer.addCard(new Card(Rank.TWO, Suit.DIAMOND));
 
-        assertThat(rule.judge(player, dealer)).isEqualTo(Outcome.WIN);
+        assertThat(rule.judge(player, dealer)).isSameAs(Outcome.WIN);
     }
 
     @DisplayName("딜러만 블랙잭이고 플레이어가 3장 21점이면 패배한다")
@@ -133,7 +133,7 @@ public class BlackjackRuleTest {
         dealer.addCard(new Card(Rank.ACE, Suit.HEART));
         dealer.addCard(new Card(Rank.KING, Suit.SPADE));
 
-        assertThat(rule.judge(player, dealer)).isEqualTo(Outcome.LOSE);
+        assertThat(rule.judge(player, dealer)).isSameAs(Outcome.LOSE);
     }
 
     private Player createPlayer(String name) {
