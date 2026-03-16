@@ -4,7 +4,7 @@ import domain.card.Card;
 
 import java.util.List;
 
-public class Participant {
+public abstract class Participant {
     protected static final int BLACKJACK_CONDITION = 21;
     protected HandCards handCards;
 
