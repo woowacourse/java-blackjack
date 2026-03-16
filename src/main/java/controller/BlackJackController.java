@@ -22,14 +22,21 @@ public class BlackJackController {
     private final BlackJackInitService blackJackInitService;
     private final BlackJackTurnService blackJackTurnService;
 
+    private final InputView inputView;
+    private final OutputView outputView;
+
     public BlackJackController(BlackJackInitService blackJackInitService,
-                               BlackJackTurnService blackJackTurnService) {
+                               BlackJackTurnService blackJackTurnService,
+                               InputView inputView,
+                               OutputView outputView) {
         this.blackJackInitService = blackJackInitService;
         this.blackJackTurnService = blackJackTurnService;
+        this.inputView = inputView;
+        this.outputView = outputView;
     }
 
     public void start() {
-        List<String> names = InputView.askPlayerNames();
+        List<String> names = inputView.askPlayerNames();
 
         Deck deck = blackJackInitService.createDeck();
         List<Player> players = blackJackInitService.createPlayers(names, deck);
@@ -44,7 +51,7 @@ public class BlackJackController {
     private Bettings betMoney(List<Player> players) {
         Bettings bettings = new Bettings();
         for (Player player : players) {
-            Money money = new Money(InputView.askBettingAmount(player.getNameString()));
+            Money money = new Money(inputView.askBettingAmount(player.getNameString()));
             Betting betting = new Betting(player, money);
             bettings = bettings.addBetting(betting);
         }
@@ -53,16 +60,16 @@ public class BlackJackController {
 
     private void printResult(Dealer dealer, List<Player> players, Results results) {
         ScoreResultDto scoreResultDto = ScoreResultDto.of(dealer, players);
-        OutputView.printScoreResult(scoreResultDto);
+        outputView.printScoreResult(scoreResultDto);
 
         FinalResultDto finalResultDto = FinalResultDto.from(results);
-        OutputView.printFinalResult(finalResultDto);
+        outputView.printFinalResult(finalResultDto);
     }
 
     private Results playGame(Deck deck, Dealer dealer, Bettings bettings) {
         List<Player> players = bettings.getPlayers();
         InitStatusDto initStatusDto = InitStatusDto.of(dealer, players);
-        OutputView.printInitMessage(initStatusDto);
+        outputView.printInitMessage(initStatusDto);
 
         // todo : player, players를 붋변객체로 만들어서 해당 로직도 불변에 맞게 수정
         for (Player player : players) {
@@ -81,20 +88,20 @@ public class BlackJackController {
     }
 
     private void repeatCommands(Player player, Deck deck) {
-        while (blackJackTurnService.canPlayerHit(player, InputView.askPlayerCommand(player.getNameString()))) {
+        while (blackJackTurnService.canPlayerHit(player, inputView.askPlayerCommand(player.getNameString()))) {
             blackJackTurnService.playerHit(player, deck);
             HandDto handDto = HandDto.from(player.getHand());
-            OutputView.printHandOutput(player.getNameString(), handDto);
+            outputView.printHandOutput(player.getNameString(), handDto);
         }
     }
 
     private boolean isFirstCommandNo(Player player, Deck deck) {
-        String yesNoInput = InputView.askPlayerCommand(player.getNameString());
+        String yesNoInput = inputView.askPlayerCommand(player.getNameString());
 
         if (blackJackTurnService.canPlayerHit(player, yesNoInput)) {
             blackJackTurnService.playerHit(player, deck);
             HandDto handDto = HandDto.from(player.getHand());
-            OutputView.printHandOutput(player.getNameString(), handDto);
+            outputView.printHandOutput(player.getNameString(), handDto);
         }
         return !blackJackTurnService.canPlayerHit(player, yesNoInput);
     }
@@ -102,7 +109,7 @@ public class BlackJackController {
     private void drawDealerCard(Dealer dealer, Deck deck) {
         while (blackJackTurnService.canDealerHit(dealer)) {
             blackJackTurnService.dealerHit(dealer, deck);
-            OutputView.printDealerHitMessage();
+            outputView.printDealerHitMessage();
         }
     }
 }

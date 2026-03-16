@@ -18,6 +18,8 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import service.BlackJackInitService;
 import service.BlackJackTurnService;
+import view.InputView;
+import view.OutputView;
 
 
 public class BlackJackControllerTest {
@@ -78,8 +80,14 @@ public class BlackJackControllerTest {
             doReturn(deck).when(blackJackInitService).createDeck();
 
             BlackJackTurnService blackJackTurnService = new BlackJackTurnService();
+            InputView inputView = new InputView();
+            OutputView outputView = new OutputView();
 
-            blackJackController = new BlackJackController(blackJackInitService, blackJackTurnService);
+            blackJackController = new BlackJackController(
+                    blackJackInitService,
+                    blackJackTurnService,
+                    inputView,
+                    outputView);
         }
 
         @Test
