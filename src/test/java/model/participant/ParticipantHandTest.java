@@ -4,6 +4,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import constant.ErrorMessage;
+import dto.status.PlayerName;
 import java.util.List;
 import model.card.Card;
 import model.card.CardNumber;
@@ -14,7 +15,6 @@ import org.junit.jupiter.api.Test;
 public class ParticipantHandTest {
     @Test
     public void 카드_넣기_정상_작동() {
-
         ParticipantHand participantHand = new ParticipantHand();
 
         Card card = new Card(Shape.CLOVER, CardNumber.ACE);
@@ -58,7 +58,7 @@ public class ParticipantHandTest {
 
     @Test
     public void ACE_제외_카드_점수_계산_정상_작동() {
-        Participant participant = new Participant("player");
+        Participant participant = new Participant(new PlayerName("player"));
 
         participant.addCard(new Card(Shape.DIAMOND, CardNumber.NINE));
 
@@ -71,7 +71,7 @@ public class ParticipantHandTest {
 
     @Test
     public void ACE_한_장일_때_카드_점수_계산_정상_작동() {
-        Participant participant = new Participant("player");
+        Participant participant = new Participant(new PlayerName("player"));
 
         participant.addCard(new Card(Shape.DIAMOND, CardNumber.ACE));
 
@@ -80,7 +80,7 @@ public class ParticipantHandTest {
 
     @Test
     public void ACE_두_장일_때__카드_점수_계산_정상_작동() {
-        Participant participant = new Participant("player");
+        Participant participant = new Participant(new PlayerName("player"));
 
         participant.addCard(new Card(Shape.DIAMOND, CardNumber.ACE));
         participant.addCard(new Card(Shape.HEART, CardNumber.ACE));
@@ -90,7 +90,7 @@ public class ParticipantHandTest {
 
     @Test
     public void 특정_값_이상일_때_ACE_점수_계산_정상_작동() {
-        Participant participant = new Participant("player");
+        Participant participant = new Participant(new PlayerName("player"));
 
         participant.addCard(new Card(Shape.DIAMOND, CardNumber.NINE));
         participant.addCard(new Card(Shape.DIAMOND, CardNumber.QUEEN));
@@ -101,7 +101,7 @@ public class ParticipantHandTest {
 
     @Test
     public void 특정_값_이하일_때_ACE_점수_계산_정상_작동() {
-        Participant participant = new Participant("player");
+        Participant participant = new Participant(new PlayerName("player"));
 
         participant.addCard(new Card(Shape.DIAMOND, CardNumber.NINE));
         participant.addCard(new Card(Shape.DIAMOND, CardNumber.ACE));
@@ -111,7 +111,7 @@ public class ParticipantHandTest {
 
     @Test
     public void 버스트_판정_정상_작동() {
-        Participant participant = new Participant("player");
+        Participant participant = new Participant(new PlayerName("player"));
         participant.addCard(new Card(Shape.CLOVER, CardNumber.KING));
         participant.addCard(new Card(Shape.DIAMOND, CardNumber.KING));
         participant.addCard(new Card(Shape.DIAMOND, CardNumber.ACE));
@@ -125,14 +125,14 @@ public class ParticipantHandTest {
 
     @Test
     public void 블랙잭_판정_정상_작동() {
-        Participant participant = new Participant("player");
+        Participant participant = new Participant(new PlayerName("player"));
 
         participant.addCard(new Card(Shape.DIAMOND, CardNumber.QUEEN));
         participant.addCard(new Card(Shape.DIAMOND, CardNumber.ACE));
 
         Assertions.assertThat(participant.isBlackJack()).isTrue();
 
-        Participant participant2 = new Participant("player2");
+        Participant participant2 = new Participant(new PlayerName("player2"));
 
         participant2.addCard(new Card(Shape.DIAMOND, CardNumber.ACE));
         participant2.addCard(new Card(Shape.DIAMOND, CardNumber.NINE));
