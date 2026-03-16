@@ -10,8 +10,8 @@ public class Player extends Participant {
     private final BettingMoney bettingMoney;
     private boolean isStayed = false;
 
-    public Player(final Name name, final BettingMoney bettingMoney) {
-        super(name, new Hand());
+    public Player(final Name name, final Hand hand, final BettingMoney bettingMoney) {
+        super(name, hand);
         this.bettingMoney = bettingMoney;
     }
 

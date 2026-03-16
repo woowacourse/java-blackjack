@@ -13,8 +13,8 @@ public class Dealer extends Participant {
 
     private final Deck deck;
 
-    public Dealer(final Deck deck) {
-        super(new Name(DEALER_NAME), new Hand());
+    public Dealer(final Hand hand, final Deck deck) {
+        super(new Name(DEALER_NAME), hand);
         this.deck = deck;
     }
 

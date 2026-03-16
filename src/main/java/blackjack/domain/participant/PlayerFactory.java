@@ -1,6 +1,7 @@
 package blackjack.domain.participant;
 
 import blackjack.domain.betting.BettingMoney;
+import blackjack.domain.hand.Hand;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -9,7 +10,7 @@ public class PlayerFactory {
     private PlayerFactory() {}
 
     public static Player create(final String name, final int amount) {
-        return new Player(new Name(name), new BettingMoney(amount));
+        return new Player(new Name(name), new Hand(), new BettingMoney(amount));
     }
 
     public static Players createPlayers(final List<String> names, final List<Integer> amounts) {
