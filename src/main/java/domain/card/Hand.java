@@ -21,7 +21,7 @@ public class Hand {
     }
 
     public static Hand copyOf(Hand hand) {
-        return new Hand(hand.getCards());
+        return new Hand(new ArrayList<>(hand.cards));
     }
 
     public void add(Card card) {

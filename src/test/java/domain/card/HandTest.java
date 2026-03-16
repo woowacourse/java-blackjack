@@ -151,4 +151,14 @@ public class HandTest {
         // when & then
         Assertions.assertThat(hand.isBust()).isEqualTo(false);
     }
+
+    @Test
+    void copyOf로_반환받은_컬렉션은_수정이_가능_해야한다() {
+        Hand hand = Hand.createEmpty();
+
+        hand.addAll(List.of(Card.of(Suit.SPADE, Rank.THREE)));
+
+        Hand copied = Hand.copyOf(hand);
+        Assertions.assertThatNoException().isThrownBy(() -> copied.add(Card.of(Suit.CLUB, Rank.TWO)));
+    }
 }
