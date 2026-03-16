@@ -14,6 +14,7 @@ import view.InputView;
 import view.OutputView;
 
 public class BlackjackController {
+    private static final int INITIAL_CARD_COUNT = 2;
 
     private final InputView inputView;
     private final OutputView outputView;
@@ -45,7 +46,7 @@ public class BlackjackController {
     }
 
     private void dealInitialTwoCards(Dealer dealer, Players players, Deck deck) {
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < INITIAL_CARD_COUNT; i++) {
             for (Player player : players.getGamePlayers()) {
                 player.addCard(deck.draw());
             }

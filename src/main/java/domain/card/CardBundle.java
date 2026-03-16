@@ -7,6 +7,7 @@ public class CardBundle {
     private final List<Card> cards;
     private static final int BUST_THRESHOLD = 21;
     private static final int ACE_BONUS = 10;
+    private static final int BLACKJACK_CARD_COUNT = 2;
 
     public CardBundle() {
         this.cards = new ArrayList<>();
@@ -46,7 +47,7 @@ public class CardBundle {
     }
 
     public boolean isBlackjack() {
-        return cards.size() == 2 && calculateScore() == BUST_THRESHOLD;
+        return cards.size() == BLACKJACK_CARD_COUNT && calculateScore() == BUST_THRESHOLD;
     }
 
     public boolean isBust() {
