@@ -6,8 +6,14 @@ import org.junit.jupiter.api.Test;
 
 public class DeckTest {
     @Test
-    void 덱_생성_시_정상적으로_생성되어야_한다() {
-        assertDoesNotThrow(() -> new Deck());
+    void 덱_생성_시_52장의_서로_다른_카드를_가져야_한다() {
+        Deck deck = new Deck();
+
+        assertDoesNotThrow(() -> {
+            for (int i = 0; i < 52; i++) {
+                deck.pull();
+            }
+        });
     }
 
     @Test
