@@ -41,16 +41,16 @@ public class BlackjackGame {
     }
 
     private void registerBettingAmount(Participants participants) {
-        for (Player player : participants.getPlayers()) {
+        participants.forEachPlayer(player -> {
             int bettingAmount = InputView.readBettingAmount(player.getName());
             player.bet(bettingAmount);
-        }
+        });
     }
 
     private void playTurns(Participants participants) {
         OutputView.showCardNames(participants);
-        participants.playPlayerTurn(this::hitByPlayer);
-        participants.playDealerTurn(this::hitByDealer);
+        participants.forEachPlayer(this::hitByPlayer);
+        participants.withDealer(this::hitByDealer);
         OutputView.showResult(participants);
     }
 
