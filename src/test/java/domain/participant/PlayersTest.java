@@ -1,6 +1,5 @@
 package domain.participant;
 
-import domain.card.Deck;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -31,20 +30,5 @@ public class PlayersTest {
 
         // when & then
         Assertions.assertThat(Players.from(uniqueNames).getPlayers()).hasSize(3);
-    }
-
-    @Test
-    void getter_수행_시_깊은_복사가_수행되어야_한다() {
-        //given
-        Players players = Players.from(
-                List.of(Player.of("jeje", "1000"), Player.of("mingu", "1000"), Player.of("minseo", "1000")));
-        Deck deck = Deck.createWithAllCards();
-        players.giveCardsToEachPlayers(deck, 2);
-
-        Player player = players.getPlayers().get(0);
-
-        players.giveCardsToEachPlayers(deck, 2);
-
-        Assertions.assertThat(player.getHand().size()).isEqualTo(2);
     }
 }

@@ -1,16 +1,13 @@
-package domain.participant;
+package domain;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-
-import domain.Rank;
-import domain.Score;
-import domain.Suit;
 import domain.card.Card;
+import domain.participant.Dealer;
+import domain.participant.Player;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class PlayerTest {
+public class GameResultTest {
     private static final Dealer DEALER_BLACKJACK = Dealer.createReady();
     private static final Dealer DEALER_BUST = Dealer.createReady();
     private static final Dealer DEALER_21 = Dealer.createReady();
@@ -40,32 +37,42 @@ public class PlayerTest {
     }
 
     @Test
-    void 합계는_정확해야_한다() {
-        Assertions.assertThat(PLAYER_20.getTotalSum()).isEqualTo(new Score(20));
+    void 플레이어만_블랙잭이면_블랙잭으로_승리한다() {
+        Assertions.assertThat(GameResult.judgeResult(PLAYER_BLACKJACK, DEALER_20)).isEqualTo(Result.BLACKJACK);
     }
 
     @Test
-    void 플레이어가_정상적으로_생성되어야_한다() {
-        assertDoesNotThrow(() -> Player.of("jeje", "1000"));
+    void 둘_다_블랙잭이면_무승부로_처리한다() {
+        Assertions.assertThat(GameResult.judgeResult(PLAYER_BLACKJACK, DEALER_BLACKJACK)).isEqualTo(Result.DRAW);
     }
 
     @Test
-    void 블랙잭_여부를_확인할_수_있다_성공() {
-        Assertions.assertThat(PLAYER_BLACKJACK.isBlackjack()).isEqualTo(true);
+    void 딜러만_블랙잭이면_패배한다() {
+        Assertions.assertThat(GameResult.judgeResult(PLAYER_20, DEALER_BLACKJACK)).isEqualTo(Result.LOSE);
     }
 
     @Test
-    void 블랙잭_여부를_확인할_수_있다_실패() {
-        Assertions.assertThat(PLAYER_20.isBlackjack()).isEqualTo(false);
+    void 플레이어가_버스트이면_패배한다() {
+        Assertions.assertThat(GameResult.judgeResult(PLAYER_BUST, DEALER_BLACKJACK)).isEqualTo(Result.LOSE);
     }
 
     @Test
-    void 버스트_여부를_확인할_수_있다_성공() {
-        Assertions.assertThat(PLAYER_BUST.isBust()).isEqualTo(true);
+    void 플레이어가_버스트가_아닐때_딜러가_버스트이면_승리한다() {
+        Assertions.assertThat(GameResult.judgeResult(PLAYER_20, DEALER_BUST)).isEqualTo(Result.WIN);
     }
 
     @Test
-    void 버스트_여부를_확인할_수_있다_실패() {
-        Assertions.assertThat(PLAYER_20.isBust()).isEqualTo(false);
+    void 둘_다_버스트가_아니고_스코어가_같으면_무승부로_처리한다() {
+        Assertions.assertThat(GameResult.judgeResult(PLAYER_20, DEALER_20)).isEqualTo(Result.DRAW);
+    }
+
+    @Test
+    void 둘_다_버스트가_아니고_플레이어의_스코어가_더_높으면_승리한다() {
+        Assertions.assertThat(GameResult.judgeResult(PLAYER_21, DEALER_20)).isEqualTo(Result.WIN);
+    }
+
+    @Test
+    void 둘_다_버스트가_아니고_딜러의_스코어가_더_높으면_패배한다() {
+        Assertions.assertThat(GameResult.judgeResult(PLAYER_20, DEALER_21)).isEqualTo(Result.LOSE);
     }
 }

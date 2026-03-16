@@ -5,10 +5,6 @@ import java.util.Objects;
 
 public class BetMoney {
     public static final BetMoney ZERO = BetMoney.valueOf(BigDecimal.ZERO);
-    private static final BigDecimal BLACKJACK_ODDS = BigDecimal.valueOf(1.5);
-    private static final BigDecimal WIN_ODDS = BigDecimal.valueOf(1.0);
-    private static final BigDecimal LOSE_ODDS = BigDecimal.valueOf(-1);
-    private static final BigDecimal DRAW_ODDS = BigDecimal.valueOf(0);
 
     private final BigDecimal value;
 
@@ -24,20 +20,8 @@ public class BetMoney {
         return new BetMoney(new BigDecimal(value));
     }
 
-    public BetMoney blackjack() {
-        return BetMoney.valueOf(value.multiply(BLACKJACK_ODDS));
-    }
-
-    public BetMoney win() {
-        return BetMoney.valueOf(value.multiply(WIN_ODDS));
-    }
-
-    public BetMoney draw() {
-        return BetMoney.valueOf(value.multiply(DRAW_ODDS));
-    }
-
-    public BetMoney lose() {
-        return BetMoney.valueOf(value.multiply(LOSE_ODDS));
+    public BetMoney getProfit(Result result) {
+        return BetMoney.valueOf(value.multiply(BigDecimal.valueOf(result.getOdd())));
     }
 
     public BetMoney sub(BetMoney target) {

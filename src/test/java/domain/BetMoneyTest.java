@@ -10,7 +10,7 @@ public class BetMoneyTest {
     void 블랙잭이면_정해진_배율이_곱해져야_한다() {
         BetMoney betMoney = BetMoney.valueOf("100");
 
-        BetMoney afterBlackjack = betMoney.blackjack();
+        BetMoney afterBlackjack = betMoney.getProfit(Result.BLACKJACK);
         Assertions.assertThat(afterBlackjack).isEqualTo(BetMoney.valueOf("150"));
     }
 
@@ -18,7 +18,7 @@ public class BetMoneyTest {
     void 승리_시_정해진_배율이_곱해져야_한다() {
         BetMoney betMoney = BetMoney.valueOf("100");
 
-        BetMoney afterBlackjack = betMoney.win();
+        BetMoney afterBlackjack = betMoney.getProfit(Result.WIN);
         Assertions.assertThat(afterBlackjack).isEqualTo(BetMoney.valueOf("100"));
     }
 
@@ -26,7 +26,7 @@ public class BetMoneyTest {
     void 무승부_시_정해진_배율이_곱해져야_한다() {
         BetMoney betMoney = BetMoney.valueOf("100");
 
-        BetMoney afterBlackjack = betMoney.draw();
+        BetMoney afterBlackjack = betMoney.getProfit(Result.DRAW);
         Assertions.assertThat(afterBlackjack).isEqualTo(BetMoney.valueOf("0"));
     }
 
@@ -34,7 +34,7 @@ public class BetMoneyTest {
     void 패배_시_정해진_배율이_곱해져야_한다() {
         BetMoney betMoney = BetMoney.valueOf("100");
 
-        BetMoney afterBlackjack = betMoney.lose();
+        BetMoney afterBlackjack = betMoney.getProfit(Result.LOSE);
         Assertions.assertThat(afterBlackjack).isEqualTo(BetMoney.valueOf("-100"));
     }
 
@@ -42,16 +42,16 @@ public class BetMoneyTest {
     void 블랙잭인_경우_출력_시_소수점은_버려진다() {
         BetMoney betMoney = BetMoney.valueOf("5");
 
-        BetMoney afterBlackjack = betMoney.blackjack();
+        BetMoney afterBlackjack = betMoney.getProfit(Result.BLACKJACK);
         Assertions.assertThat(afterBlackjack.getValue().setScale(0, RoundingMode.DOWN))
                 .isEqualTo(BigDecimal.valueOf(7));
     }
-    
+
     @Test
     void 소수점_출력_시_소수점_정책을_적용하지_않으면_예외가_발생한다() {
         BetMoney betMoney = BetMoney.valueOf("101");
 
-        BetMoney afterBlackjack = betMoney.blackjack();
+        BetMoney afterBlackjack = betMoney.getProfit(Result.BLACKJACK);
         Assertions.assertThatThrownBy(() -> afterBlackjack.getValue().setScale(0))
                 .isInstanceOf(ArithmeticException.class);
     }
@@ -60,7 +60,7 @@ public class BetMoneyTest {
     void 소수점_출력_시_소수점_정책을_적용하면_않으면_예외가_발생하지_않는다() {
         BetMoney betMoney = BetMoney.valueOf("101");
 
-        BetMoney afterBlackjack = betMoney.blackjack();
+        BetMoney afterBlackjack = betMoney.getProfit(Result.BLACKJACK);
         Assertions.assertThatNoException().isThrownBy(() -> afterBlackjack.getValue().setScale(0, RoundingMode.DOWN));
     }
 }

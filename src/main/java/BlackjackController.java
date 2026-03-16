@@ -1,6 +1,9 @@
 import domain.BetMoney;
-import domain.BlackjackGame;
+import domain.GameResult;
+import domain.Score;
+import domain.card.Deck;
 import domain.dto.PlayerResult;
+import domain.dto.Profit;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
@@ -10,6 +13,7 @@ import view.InputView;
 import view.ResultView;
 
 public class BlackjackController {
+    public static final int INITIAL_CARD_COUNT = 2;
     private final InputView inputView;
     private final ResultView resultView;
 
@@ -19,26 +23,37 @@ public class BlackjackController {
     }
 
     public void run() {
-        BlackjackGame blackjackGame = readPlayerInfos();
+        Players players = readPlayerInfos();
+        Dealer dealer = Dealer.createReady();
+        Deck deck = Deck.createWithAllCards();
 
-        blackjackGame.giveHand();
-        Players players = blackjackGame.getPlayers();
-        Dealer dealer = blackjackGame.getDealer();
+        giveHand(players, dealer, deck);
 
         resultView.printParticipantsCards(players.getPlayers(), dealer);
-        blackjackGame.hitStandEachPlayers(inputView::readHitStand, resultView::printCards);
-        blackjackGame.hitStandDealer(resultView::printDealerHitStand);
+
+        hitStandPlayers(players, deck);
+        hitStandDealer(dealer, deck);
+
+        List<PlayerResult> playerResults = new ArrayList<>();
+
+        for (Player player : players.getPlayers()) {
+            playerResults.add(new PlayerResult(player, GameResult.judgeResult(player, dealer)));
+        }
+
+        List<Profit> profits = new ArrayList<>();
+        for (PlayerResult playerResult : playerResults) {
+            profits.add(new Profit(playerResult.player(), playerResult.player().getProfit(playerResult.result())));
+        }
+
+        BetMoney dealerResult = calculateDealerResult(profits);
 
         resultView.printCardsWithResult(players.getPlayers(), dealer);
 
-        List<PlayerResult> playerResults = blackjackGame.collectPlayerProfits();
-        BetMoney dealerProfit = blackjackGame.calculateDealerResult(playerResults);
-
-        resultView.printProfits(playerResults, dealerProfit);
+        resultView.printProfits(profits, dealerResult);
 
     }
 
-    private BlackjackGame readPlayerInfos() {
+    private Players readPlayerInfos() {
         List<String> names = inputView.readPlayerNames();
         List<String> betMoneys = inputView.readBetMoney(names);
 
@@ -46,7 +61,34 @@ public class BlackjackController {
         for (int i = 0; i < names.size(); i++) {
             players.add(Player.of(names.get(i), betMoneys.get(i)));
         }
+        return Players.from(players);
+    }
 
-        return BlackjackGame.createNewGame(players);
+    private void hitStandPlayers(Players players, Deck deck) {
+        for (Player player : players.getPlayers()) {
+            while (!player.isBust() && inputView.readHitStand(player)) {
+                player.addCard(deck.draw());
+                resultView.printCards(player);
+            }
+        }
+    }
+
+    private static void giveHand(Players players, Dealer dealer, Deck deck) {
+        players.addCardsToEachPlayers(deck, INITIAL_CARD_COUNT);
+        dealer.addCards(deck.drawWithAmount(INITIAL_CARD_COUNT));
+    }
+
+    private void hitStandDealer(Dealer dealer, Deck deck) {
+        while (dealer.isHittable(Score.DEALER_HIT_STAND_BOUNDARY)) {
+            dealer.addCard(deck.draw());
+            resultView.printDealerHitStand(true);
+        }
+        resultView.printDealerHitStand(false);
+    }
+
+    private BetMoney calculateDealerResult(List<Profit> profits) {
+        return profits.stream()
+                .map(Profit::betMoney)
+                .reduce(BetMoney.ZERO, BetMoney::sub);
     }
 }

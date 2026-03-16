@@ -2,10 +2,9 @@ package view;
 
 
 import domain.BetMoney;
-import domain.BlackjackGame;
 import domain.Score;
 import domain.card.Card;
-import domain.dto.PlayerResult;
+import domain.dto.Profit;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Player;
@@ -15,12 +14,13 @@ import java.util.stream.Collectors;
 
 public class ResultView {
     private static final String DELIMITER = ", ";
+    private static final int INITIAL_CARD_COUNT = 2;
 
     public void printParticipantsCards(List<Player> players, Dealer dealer) {
         printEmptyLine();
         System.out.println(
                 "딜러와 " + joinPlayersNameByDelimiter(players) + "에게 "
-                        + BlackjackGame.INITIAL_CARD_COUNT
+                        + INITIAL_CARD_COUNT
                         + "장을 나누었습니다.");
         Card dealerCard = dealer.getFirstCard();
         System.out.println("딜러카드: " + dealerCard.getRank().getDisplayValue() + dealerCard.getSuit().getValue());
@@ -66,13 +66,13 @@ public class ResultView {
     }
 
 
-    public void printProfits(List<PlayerResult> playerResults, BetMoney dealerProfit) {
+    public void printProfits(List<Profit> profits, BetMoney dealerProfit) {
         printEmptyLine();
         System.out.println("## 최종 승패");
         System.out.println("딜러: " + dealerProfit.getValue().setScale(0, RoundingMode.DOWN));
 
-        for (PlayerResult result : playerResults) {
-            System.out.println(result.player().getName().getValue() + ": " + result.betMoney().getValue()
+        for (Profit profit : profits) {
+            System.out.println(profit.player().getName().getValue() + ": " + profit.betMoney().getValue()
                     .setScale(0, RoundingMode.DOWN));
         }
     }

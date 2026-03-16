@@ -1,10 +1,10 @@
 package domain.dto;
 
-import domain.Result;
+import domain.BetMoney;
 import domain.participant.Player;
 
-public record PlayerResult(
+public record Profit(
         Player player,
-        Result result
+        BetMoney betMoney
 ) {
 }

@@ -1,8 +1,7 @@
 package domain.participant;
 
 import domain.BetMoney;
-import domain.Score;
-import domain.card.Hand;
+import domain.Result;
 
 public class Player extends Participant {
     private final Name name;
@@ -13,59 +12,12 @@ public class Player extends Participant {
         this.betMoney = betMoney;
     }
 
-    private Player(Name name, BetMoney betMoney, Hand hand) {
-        super(hand);
-        this.name = name;
-        this.betMoney = betMoney;
-    }
-
     public static Player of(String name, String betMoney) {
         return new Player(Name.valueOf(name), BetMoney.valueOf(betMoney));
     }
 
-    public static Player copyOf(Player player) {
-        return new Player(player.name, player.betMoney, Hand.copyOf(player.getHand()));
-    }
-
-    public BetMoney judgeResult(Participant target) {
-        if (isBlackjack() || target.isBlackjack()) {
-            return judgeBlackjack(target);
-        }
-        if (isBust() || target.isBust()) {
-            return judgeBust();
-        }
-        return judgeByScore(target);
-    }
-
-    private BetMoney judgeBlackjack(Participant target) {
-        if (isBlackjack() && target.isBlackjack()) {
-            return betMoney.draw();
-        }
-        if (isBlackjack()) {
-            return betMoney.blackjack();
-        }
-        return betMoney.lose();
-    }
-
-    private BetMoney judgeBust() {
-        if (isBust()) {
-            return betMoney.lose();
-        }
-        return betMoney.win();
-    }
-
-
-    private BetMoney judgeByScore(Participant target) {
-        Score score = getTotalSum();
-        Score targetScore = target.getTotalSum();
-
-        if (score.isEqualTo(targetScore)) {
-            return betMoney.draw();
-        }
-        if (score.isGreaterThan(targetScore)) {
-            return betMoney.win();
-        }
-        return betMoney.lose();
+    public BetMoney getProfit(Result result) {
+        return betMoney.getProfit(result);
     }
 
     public Name getName() {
