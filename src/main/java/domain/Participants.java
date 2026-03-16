@@ -11,14 +11,14 @@ import vo.Name;
 public class Participants {
     private final List<User> participants;
 
-    public Participants(List<Name> names, Map<Name, Bet> bets) {
+    public Participants(Map<Name, Bet> bets) {
         this.participants = new ArrayList<>();
-        saveUsers(names, bets);
+        saveUsers(bets);
     }
 
-    private void saveUsers(List<Name> names, Map<Name, Bet> bets) {
-        names.forEach(name -> {
-            participants.add(new User(name, bets.get(name)));
+    private void saveUsers(Map<Name, Bet> bets) {
+        bets.forEach((name, bet) -> {
+            participants.add(new User(name, bet));
         });
     }
 

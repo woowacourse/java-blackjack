@@ -20,7 +20,7 @@ public class BlackjackGameTest {
         List<Name> names = List.of(new Name("영기"), new Name("라이"));
         Map<Name, Bet> bets = new LinkedHashMap<>();
         names.forEach(name -> bets.put(name, new Bet("1000")));
-        blackjackGame.prepare(names, bets);
+        blackjackGame.prepare(bets);
     }
 
     @Test

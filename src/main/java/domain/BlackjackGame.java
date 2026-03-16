@@ -16,8 +16,8 @@ public class BlackjackGame {
     private Dealer dealer;
     protected Deck deck;
 
-    public void prepare(List<Name> names, Map<Name, Bet> bets) {
-        this.participants = new Participants(names, bets);
+    public void prepare(Map<Name, Bet> bets) {
+        this.participants = new Participants(bets);
         this.dealer = new Dealer();
         makeDeck();
         dealCards();

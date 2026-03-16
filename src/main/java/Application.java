@@ -39,9 +39,8 @@ public class Application {
     }
 
     public void prepareParticipants() {
-        List<Name> names = readParticipants();
-        Map<Name, Bet> bets = readBetAmount(names);
-        blackjackGame.prepare(names, bets);
+        Map<Name, Bet> bets = readBetAmount(readParticipants());
+        blackjackGame.prepare(bets);
     }
 
     private List<Name> readParticipants() {
