@@ -5,6 +5,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import constant.ErrorMessage;
+import dto.status.BetPrice;
 import org.junit.jupiter.api.Test;
 
 public class BetPriceTest {

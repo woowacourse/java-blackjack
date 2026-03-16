@@ -1,6 +1,7 @@
 package model.participant;
 
 import constant.ErrorMessage;
+import dto.status.BetPrice;
 import dto.result.ParticipantCurrentHand;
 import dto.result.ParticipantProfit;
 import dto.result.ProfitResult;
@@ -26,7 +27,9 @@ public class Players {
         }
 
         Player player = new Player(playerName);
+
         players.put(player.getName(), player);
+        playerBet.put(player.getName(), null);
     }
 
     public List<String> getPlayerNames() {

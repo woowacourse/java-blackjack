@@ -5,7 +5,7 @@ import dto.result.ProfitResult;
 import dto.status.PlayerName;
 import java.util.List;
 import model.participant.Agreement;
-import model.participant.BetPrice;
+import dto.status.BetPrice;
 import model.BlackJackGame;
 import view.InputView;
 import view.OutputView;

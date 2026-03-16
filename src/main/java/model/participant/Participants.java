@@ -1,5 +1,6 @@
 package model.participant;
 
+import dto.status.BetPrice;
 import dto.result.ParticipantCurrentHand;
 import dto.result.ProfitResult;
 import dto.status.PlayerName;
