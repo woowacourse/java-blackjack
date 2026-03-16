@@ -20,7 +20,7 @@ public class BetHistory {
 
     public void bettingMoney(Name playerName, int bettingMoney) {
         Name foundPlayer = validatePlayer(playerName);
-        betHistory.put(foundPlayer, Money.bet(bettingMoney));
+        betHistory.put(foundPlayer, new Money(bettingMoney));
     }
 
     private Name validatePlayer(Name playerName) {

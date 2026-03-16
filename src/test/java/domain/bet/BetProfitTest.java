@@ -34,7 +34,7 @@ class BetProfitTest {
 
         assertThatThrownBy(() -> BetProfit.calculateProfit(
                 Map.of(unknownPlayer, GameResult.WIN),
-                Map.of(firstPlayer, Money.bet(10_000))
+                Map.of(firstPlayer, new Money(10_000))
         ))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(PLAYER_NOT_IN_BETTING.getMessage());
@@ -44,33 +44,33 @@ class BetProfitTest {
     @Test
     void 플레이어_승리_시_1배의_수익() {
         //given
-        Map<Name, Money> betHistory = Map.of(firstPlayer, Money.bet(10_000));
+        Map<Name, Money> betHistory = Map.of(firstPlayer, new Money(10_000));
         //when
         BetProfit betProfit = BetProfit.calculateProfit(Map.of(firstPlayer, GameResult.WIN), betHistory);
         //then
-        assertThat(betProfit.getPlayerBetProfit().get(firstPlayer)).isEqualTo(Profit.of(10_000));
+        assertThat(betProfit.getPlayerBetProfit().get(firstPlayer)).isEqualTo(new Profit(10_000));
     }
 
     @DisplayName("플레이어 패배 시 전액 손실이 된다.")
     @Test
     void 플레이어_패배_시_전액_손실() {
         //given
-        Map<Name, Money> betHistory = Map.of(firstPlayer, Money.bet(10_000));
+        Map<Name, Money> betHistory = Map.of(firstPlayer, new Money(10_000));
         //when
         BetProfit betProfit = BetProfit.calculateProfit(Map.of(firstPlayer, GameResult.LOSE), betHistory);
         //then
-        assertThat(betProfit.getPlayerBetProfit().get(firstPlayer)).isEqualTo(Profit.of(-10_000));
+        assertThat(betProfit.getPlayerBetProfit().get(firstPlayer)).isEqualTo(new Profit(-10_000));
     }
 
     @DisplayName("플레이어는 무승부 시 0원의 수익을 가진다.")
     @Test
     void 무승부_0원_수익() {
         //given
-        Map<Name, Money> betHistory = Map.of(firstPlayer, Money.bet(10_000));
+        Map<Name, Money> betHistory = Map.of(firstPlayer, new Money(10_000));
         //when
         BetProfit betProfit = BetProfit.calculateProfit(Map.of(firstPlayer, GameResult.DRAW), betHistory);
         //then
-        assertThat(betProfit.getPlayerBetProfit().get(firstPlayer)).isEqualTo(Profit.of(0));
+        assertThat(betProfit.getPlayerBetProfit().get(firstPlayer)).isEqualTo(new Profit(0));
     }
 
     private static Stream<Arguments> blackjackProfitTest() {
@@ -85,22 +85,22 @@ class BetProfitTest {
     @MethodSource("blackjackProfitTest")
     void 첫_카드_2장_승리_시_1_5배_수익(int bettingMoney, int expectedProfit) {
         //given
-        Map<Name, Money> betHistory = Map.of(firstPlayer, Money.bet(bettingMoney));
+        Map<Name, Money> betHistory = Map.of(firstPlayer, new Money(bettingMoney));
         //when
         BetProfit betProfit = BetProfit.calculateProfit(Map.of(firstPlayer, GameResult.BLACKJACK_WIN), betHistory);
         //then
-        assertThat(betProfit.getPlayerBetProfit().get(firstPlayer)).isEqualTo(Profit.of(expectedProfit));
+        assertThat(betProfit.getPlayerBetProfit().get(firstPlayer)).isEqualTo(new Profit(expectedProfit));
     }
 
     private static Stream<Arguments> dealerProfitTest() {
         return Stream.of(
-                Arguments.of(List.of(Money.bet(10_000), Money.bet(20_000)), List.of(GameResult.WIN, GameResult.LOSE),
+                Arguments.of(List.of(new Money(10_000), new Money(20_000)), List.of(GameResult.WIN, GameResult.LOSE),
                         10_000),
-                Arguments.of(List.of(Money.bet(20_000), Money.bet(20_000)), List.of(GameResult.WIN, GameResult.WIN),
+                Arguments.of(List.of(new Money(20_000), new Money(20_000)), List.of(GameResult.WIN, GameResult.WIN),
                         -40_000),
-                Arguments.of(List.of(Money.bet(20_000), Money.bet(20_000)),
+                Arguments.of(List.of(new Money(20_000), new Money(20_000)),
                         List.of(GameResult.BLACKJACK_WIN, GameResult.WIN), -50_000),
-                Arguments.of(List.of(Money.bet(20_000), Money.bet(20_000)), List.of(GameResult.LOSE, GameResult.DRAW),
+                Arguments.of(List.of(new Money(20_000), new Money(20_000)), List.of(GameResult.LOSE, GameResult.DRAW),
                         20_000)
         );
     }
@@ -123,6 +123,6 @@ class BetProfitTest {
         );
         //then
         Profit profit = betProfit.getDealerBetProfit();
-        assertThat(profit).isEqualTo(Profit.of(expectedProfit));
+        assertThat(profit).isEqualTo(new Profit(expectedProfit));
     }
 }

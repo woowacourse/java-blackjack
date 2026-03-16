@@ -3,22 +3,26 @@ package domain.bet;
 import static message.ErrorMessage.BETTING_MONEY_MUST_BE_MULTIPLE_OF_100;
 import static message.ErrorMessage.BETTING_MONEY_NOT_AVAILABLE;
 
-import java.util.Objects;
-
-public class Money {
+public record Money(long amount) {
 
     private static final long ZERO = 0;
-    private static final long HUNDRED_WON = 100;
+    private static final long AMOUNT_UNIT = 100;
 
-    private final long amount;
-
-    private Money(long amount) {
-        this.amount = amount;
+    public Money {
+        validateRange(amount);
+        validateUnit(amount);
     }
 
-    public static Money bet(long amount) {
-        validateBettingMoney(amount);
-        return new Money(amount);
+    private void validateRange(long amount) {
+        if (amount < ZERO) {
+            throw new IllegalArgumentException(BETTING_MONEY_NOT_AVAILABLE.getMessage());
+        }
+    }
+
+    private void validateUnit(long amount) {
+        if (amount % AMOUNT_UNIT != ZERO) {
+            throw new IllegalArgumentException(BETTING_MONEY_MUST_BE_MULTIPLE_OF_100.getMessage());
+        }
     }
 
     public static Money zero() {
@@ -27,31 +31,5 @@ public class Money {
 
     public long amount() {
         return amount;
-    }
-
-    private static void validateBettingMoney(long amount) {
-        if (amount <= ZERO) {
-            throw new IllegalArgumentException(BETTING_MONEY_NOT_AVAILABLE.getMessage());
-        }
-
-        if (amount % HUNDRED_WON != ZERO) {
-            throw new IllegalArgumentException(BETTING_MONEY_MUST_BE_MULTIPLE_OF_100.getMessage());
-        }
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        if (this == object) {
-            return true;
-        }
-        if (!(object instanceof Money money)) {
-            return false;
-        }
-        return amount == money.amount;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(amount);
     }
 }

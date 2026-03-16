@@ -45,8 +45,8 @@ class BetHistoryTest {
         Map<Name, Money> betLog = betHistory.getBetHistory();
 
         assertSoftly(softAssertions -> {
-            softAssertions.assertThat(betLog.get(firstPlayer)).isEqualTo(Money.bet(10_000));
-            softAssertions.assertThat(betLog.get(secondPlayer)).isEqualTo(Money.bet(20_000));
+            softAssertions.assertThat(betLog.get(firstPlayer)).isEqualTo(new Money(10_000));
+            softAssertions.assertThat(betLog.get(secondPlayer)).isEqualTo(new Money(20_000));
         });
     }
 

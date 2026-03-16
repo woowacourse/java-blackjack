@@ -47,7 +47,7 @@ public class BetProfit {
     }
 
     public Profit getDealerBetProfit() {
-        Profit playerProfitSum = Profit.of(0);
+        Profit playerProfitSum = new Profit(0);
 
         for (Profit profit : betProfit.values()) {
             playerProfitSum = playerProfitSum.plus(profit);

@@ -1,7 +1,5 @@
 package domain;
 
-import domain.bet.Bet;
-import domain.bet.BetProfit;
 import domain.card.Card;
 import domain.card.Deck;
 import domain.enums.GameResult;
@@ -12,18 +10,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class Game {
+public class Participants {
 
     private static final int INITIAL_CARD_COUNT = 2;
 
     private final Players players;
     private final Dealer dealer;
-    private final Bet bet;
 
-    public Game(List<String> playerNames, Dealer dealer) {
+    public Participants(List<String> playerNames, Dealer dealer) {
         this.players = new Players(playerNames);
         this.dealer = dealer;
-        this.bet = new Bet(players.getAllPlayersName());
     }
 
     public void initializeGame(Deck deck) {
@@ -78,13 +74,5 @@ public class Game {
 
     public int getDealerScore() {
         return dealer.getScore();
-    }
-
-    public void bettingMoney(Name name, int playerMoney) {
-        bet.bettingMoney(name, playerMoney);
-    }
-
-    public BetProfit calculateProfit() {
-        return bet.calculateProfit(getAllPlayersResult());
     }
 }

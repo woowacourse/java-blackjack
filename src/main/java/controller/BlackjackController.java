@@ -1,7 +1,6 @@
 package controller;
 
 import domain.Game;
-import domain.bet.Bet;
 import domain.bet.BetProfit;
 import domain.card.Card;
 import domain.card.Deck;
@@ -29,15 +28,14 @@ public class BlackjackController {
         Deck deck = initDeck();
         Game game = initGame();
         List<Name> playersName = game.getAllPlayersName();
-        Bet bet = new Bet(playersName);
 
-        askPlayerBet(bet, playersName);
+        askPlayerBet(game, playersName);
         game.initializeGame(deck);
         outputView.printPlayers(game.getDealerCard(), getPlayerCards(game, playersName));
 
         playTurn(game, playersName, deck);
         printResult(game, playersName);
-        printProfit(game, bet);
+        printProfit(game);
     }
 
     private Deck initDeck() {
@@ -54,11 +52,11 @@ public class BlackjackController {
         return InputParser.parseNames(input);
     }
 
-    private void askPlayerBet(Bet bet, List<Name> playersName) {
+    private void askPlayerBet(Game game, List<Name> playersName) {
         for (Name name : playersName) {
             String input = inputView.askPlayerBet(name);
             int playerMoney = InputParser.parseMoney(input);
-            bet.bettingMoney(name, playerMoney);
+            game.bettingMoney(name, playerMoney);
         }
     }
 
@@ -106,8 +104,8 @@ public class BlackjackController {
         }
     }
 
-    private void printProfit(Game game, Bet bet) {
-        BetProfit betProfit = bet.calculateProfit(game.getAllPlayersResult());
+    private void printProfit(Game game) {
+        BetProfit betProfit = game.calculateProfit();
         outputView.printProfit(betProfit.getDealerBetProfit(), betProfit.getPlayerBetProfit());
     }
 }
