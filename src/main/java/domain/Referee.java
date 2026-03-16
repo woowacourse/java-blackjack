@@ -16,19 +16,16 @@ public class Referee {
     }
 
     private MatchResult judgePlayer(Player player, Dealer dealer) {
-        boolean playerBlackJack = player.isInitialBlackJack();
-        boolean dealerBlackJack = dealer.isInitialBlackJack();
-
-        if (playerBlackJack && dealerBlackJack) {
+        if (player.isInitialBlackJack() && dealer.isInitialBlackJack()) {
             return MatchResult.DRAW;
         }
-        if (playerBlackJack) {
+        if (player.isInitialBlackJack()) {
             return MatchResult.BLACKJACK;
         }
+        return judgeByScore(player.getScore(), dealer.getScore());
+    }
 
-        int playerScore = player.getScore();
-        int dealerScore = dealer.getScore();
-
+    private MatchResult judgeByScore(int playerScore, int dealerScore) {
         if (playerScore > BUST_THRESHOLD) {
             return MatchResult.LOSE;
         }
