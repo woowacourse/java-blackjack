@@ -16,15 +16,8 @@ public class GamblersGameResult {
 
         this.gamblersResult = gamblers.getGamblers()
                 .stream()
-                .collect(Collectors.toMap(Gambler::getName, gambler -> {
-                    GameResult gameResult = GameResult.determine(dealerTotalScore, gambler.getTotalScore());
-                    if (gameResult == GameResult.WIN && gambler.isBlackjack()) {
-                        return gambler.getAmount() * 3 / 2;
-                    }
-                    if(gameResult == GameResult.WIN) return gambler.getAmount();
-                    if(gameResult == GameResult.LOSE) return -gambler.getAmount();
-                    return 0L;
-                }));
+                .collect(Collectors.toMap(Gambler::getName, gambler -> calculateProfit(dealerTotalScore, gambler)
+                ));
     }
 
     public Long getDealerResult() {
@@ -40,5 +33,20 @@ public class GamblersGameResult {
 
     public Map<String, Long> getResultInfo() {
         return Collections.unmodifiableMap(gamblersResult);
+    }
+
+    private long calculateProfit(int dealerTotalScore, Gambler gambler) {
+        GameResult gameResult = GameResult.determine(dealerTotalScore, gambler.getTotalScore());
+
+        if (gameResult == GameResult.WIN && gambler.isBlackjack()) {
+            return gambler.getAmount() * 3 / 2;
+        }
+        if (gameResult == GameResult.WIN) {
+            return gambler.getAmount();
+        }
+        if (gameResult == GameResult.LOSE) {
+            return -gambler.getAmount();
+        }
+        return 0L;
     }
 }
