@@ -1,20 +1,18 @@
 package blackjack.domain.betting;
 
 import blackjack.domain.participant.Player;
-import java.util.HashMap;
 import java.util.Map;
 
 public class Bettings {
 
-    // TODO: key는 String(PlayerName)이 좋을까? Player가 좋을까?
     private final Map<Player, BettingAmount> bettings;
 
-    public Bettings() {
-        this.bettings = new HashMap<>();
+    public Bettings(Map<Player, BettingAmount> bettings) {
+        this.bettings = bettings;
     }
 
-    public void put(Player playerName, BettingAmount bettingAmount) {
-        bettings.put(playerName, bettingAmount);
+    public static Bettings of(Map<Player, BettingAmount> bettings) {
+        return new Bettings(bettings);
     }
 
     public BettingAmount findByPlayer(Player player) {

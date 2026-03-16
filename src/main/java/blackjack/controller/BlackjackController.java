@@ -10,7 +10,9 @@ import blackjack.dto.ProfitResult;
 import blackjack.dto.StateResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BlackjackController {
 
@@ -44,12 +46,12 @@ public class BlackjackController {
     }
 
     private Bettings readBettingAmounts(Players players) {
-        Bettings bettings = new Bettings();
+        Map<Player, BettingAmount> bettings = new HashMap<>();
         for (Player player : players.getPlayers()) {
-            Integer bettingAmount = inputView.readBettingAmount(player.getName());
-            bettings.put(player, new BettingAmount(bettingAmount));
+            BettingAmount bettingAmount = new BettingAmount(inputView.readBettingAmount(player.getName()));
+            bettings.put(player, bettingAmount);
         }
-        return bettings;
+        return Bettings.of(bettings);
     }
 
     private void setInitialCards(Players players, Dealer dealer) {
