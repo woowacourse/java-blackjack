@@ -1,5 +1,6 @@
 package blackjack.model.card;
 
+import static blackjack.model.card.HitCommand.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -18,14 +19,14 @@ class HitCommandTest {
         assertDoesNotThrow(() -> new HitCommand(hitCommand));
     }
 
-
     @ParameterizedTest
     @ValueSource(strings = {"", " "})
     @DisplayName("공백이 입력될 경우 예외 발생")
     void create_hitCommand_fail_when_empty_input(String emptyInput) {
         //when & then
         assertThatThrownBy(() -> new HitCommand(emptyInput))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(ERROR_EMPTY_INPUT);
     }
 
     @ParameterizedTest
@@ -34,7 +35,8 @@ class HitCommandTest {
     void create_hitCommand_fail_when_invalid_input(String invalidInput) {
         //when & then
         assertThatThrownBy(() -> new HitCommand(invalidInput))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(ERROR_NOT_Y_N_INPUT);
     }
 
     @ParameterizedTest

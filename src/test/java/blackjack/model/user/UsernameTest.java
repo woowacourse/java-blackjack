@@ -1,5 +1,6 @@
 package blackjack.model.user;
 
+import static blackjack.model.user.Username.*;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -23,7 +24,8 @@ class UsernameTest {
     void create_username_fail_when_empty_name(String emptyName) {
         //when & then
         assertThatThrownBy(() -> new Username(emptyName))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(ERROR_EMPTY_INPUT);
     }
 
     @ParameterizedTest
@@ -32,6 +34,7 @@ class UsernameTest {
     void create_username_fail_when_invalid_name(String invalidName) {
         //when & then
         assertThatThrownBy(() -> new Username(invalidName))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(ERROR_INVALID_PLAYER_NAME);
     }
 }
