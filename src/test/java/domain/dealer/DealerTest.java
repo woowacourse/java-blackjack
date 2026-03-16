@@ -22,7 +22,7 @@ class DealerTest {
         CardDeck cardDeck = new CardDeckBuilder()
                 .cards(List.of(cloverQueen, clover6, clover2))
                 .build();
-        Dealer dealer = Dealer.from();
+        Dealer dealer = Dealer.create();
         dealer.drawCards(cardDeck, 2);
 
         // when & then
@@ -37,7 +37,7 @@ class DealerTest {
         CardDeck cardDeck = new CardDeckBuilder()
                 .cards(List.of(cloverQueen, clover6))
                 .build();
-        Dealer dealer = Dealer.from();
+        Dealer dealer = Dealer.create();
         dealer.drawCards(cardDeck, 2);
 
         // when & then

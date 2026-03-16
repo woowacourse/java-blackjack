@@ -41,7 +41,7 @@ class ParticipantTest {
         CardDeck cardDeck = new CardDeckBuilder()
                 .cards(List.of(clover8))
                 .build();
-        Dealer dealer = Dealer.from();
+        Dealer dealer = Dealer.create();
 
         // when & then
         Assertions.assertThatThrownBy(() -> {

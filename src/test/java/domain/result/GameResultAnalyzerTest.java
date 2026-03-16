@@ -31,7 +31,7 @@ class GameResultAnalyzerTest {
         Players players = Players.from(List.of(
                 ParticipantInitialInformation.of(ParticipantName.from("test"), BetAmount.from(1000))
         ));
-        Dealer dealer = Dealer.from();
+        Dealer dealer = Dealer.create();
 
         dealer.drawCards(cardDeck, 2);
         players.stream().forEach(player -> player.drawCards(cardDeck, 2));
@@ -59,7 +59,7 @@ class GameResultAnalyzerTest {
         Players players = Players.from(List.of(
                 ParticipantInitialInformation.of(ParticipantName.from("test"), BetAmount.from(1000))
         ));
-        Dealer dealer = Dealer.from();
+        Dealer dealer = Dealer.create();
 
         players.stream().forEach(player -> player.drawCards(cardDeck, 2));
         dealer.drawCards(cardDeck, 2);
@@ -88,7 +88,7 @@ class GameResultAnalyzerTest {
         Players players = Players.from(List.of(
                 ParticipantInitialInformation.of(ParticipantName.from("test"), BetAmount.from(1000))
         ));
-        Dealer dealer = Dealer.from();
+        Dealer dealer = Dealer.create();
 
         players.stream().forEach(player -> player.drawCards(cardDeck, 2));
         dealer.drawCards(cardDeck, 2);
@@ -116,7 +116,7 @@ class GameResultAnalyzerTest {
         Players players = Players.from(List.of(
                 ParticipantInitialInformation.of(ParticipantName.from("test"), BetAmount.from(1000))
         ));
-        Dealer dealer = Dealer.from();
+        Dealer dealer = Dealer.create();
 
         dealer.drawCards(cardDeck, 2);
         players.stream().forEach(player -> player.drawCards(cardDeck, 2));
@@ -145,7 +145,7 @@ class GameResultAnalyzerTest {
         Players players = Players.from(List.of(
                 ParticipantInitialInformation.of(ParticipantName.from("test"), BetAmount.from(1000))
         ));
-        Dealer dealer = Dealer.from();
+        Dealer dealer = Dealer.create();
 
         players.stream().forEach(player -> player.drawCards(cardDeck, 2));
         dealer.drawCards(cardDeck, 3);

@@ -1,7 +1,6 @@
 package domain.participant;
 
-import static config.BlackjackGameConstant.DEALER_DISPLAY_NAME;
-import static config.BlackjackGameConstant.DEFAULT_CARD_DRAW_COUNT;
+import static config.BlackjackGameConstant.*;
 
 import domain.card.Card;
 import domain.card.CardDeck;
@@ -16,7 +15,7 @@ public class Dealer extends Participant {
         super(ParticipantName.from(DEALER_DISPLAY_NAME));
     }
 
-    public static Dealer from() {
+    public static Dealer create() {
         return new Dealer();
     }
 

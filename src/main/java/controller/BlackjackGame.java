@@ -12,7 +12,6 @@ import domain.participant.Player;
 import domain.participant.Players;
 import domain.participant.dto.ParticipantHandDto;
 import domain.participant.dto.ParticipantHandDtoMapper;
-import domain.result.BettingResult;
 import domain.result.BettingResults;
 import domain.result.GameResultAnalyzer;
 import domain.result.dto.BettingProfitDto;
@@ -37,7 +36,7 @@ public class BlackjackGame {
     }
 
     public void start() {
-        Dealer dealer = Dealer.from();
+        Dealer dealer = Dealer.create();
         List<ParticipantInitialInformation> participantInitialInformation = requestInitialInformation();
         Players players = Players.from(participantInitialInformation);
 
