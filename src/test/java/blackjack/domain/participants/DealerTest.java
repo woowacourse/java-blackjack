@@ -3,7 +3,6 @@ package blackjack.domain.participants;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import blackjack.domain.card.Card;
-import blackjack.domain.card.Hand;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
 import java.util.List;

@@ -3,6 +3,7 @@ package blackjack.domain.card;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.game.Score;
+import blackjack.domain.participants.Hand;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
