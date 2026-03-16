@@ -42,4 +42,9 @@ public class Player extends Person {
         }
         return getProfit();
     }
+
+    @Override
+    public boolean canAppend() {
+        return getDeck().isAlive();
+    }
 }

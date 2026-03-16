@@ -12,8 +12,6 @@ public class BlackJackService {
     private final PlayerBettings playerBettings;
     private final Dealer dealer;
 
-    public static final int DEALER_APPEND_CRITERIA = 16;
-
     public BlackJackService(
             JudgementService judgementService,
             Players players,
@@ -52,7 +50,7 @@ public class BlackJackService {
     }
 
     public boolean isDealerCanAppend() {
-        return dealer.getFinalDeckSum() <= DEALER_APPEND_CRITERIA;
+        return dealer.canAppend();
     }
 
     public void assignAdditionalDealerCard() {

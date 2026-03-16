@@ -6,6 +6,8 @@ public class Dealer extends Person {
 
     private final CardDistributor cardDistributor;
 
+    public static final int DEALER_APPEND_CRITERIA = 16;
+
     public Dealer(CardDistributor cardDistributor) {
         this.cardDistributor = cardDistributor;
     }
@@ -28,5 +30,10 @@ public class Dealer extends Person {
 
     public void applyPlayerProfit(double totalPlayerProfit) {
         super.minusProfit(totalPlayerProfit);
+    }
+
+    @Override
+    public boolean canAppend() {
+        return getDeck().calculateFinalSum() <= DEALER_APPEND_CRITERIA;
     }
 }

@@ -5,10 +5,6 @@ public abstract class Person {
     private Deck deck;
     private double profit = 0.0;
 
-    public Person(Deck deck) {
-        this.deck = deck;
-    }
-
     public Person() {
     }
 
@@ -20,10 +16,6 @@ public abstract class Person {
         return deck.calculateFinalSum();
     }
 
-    public int getDeckSize() {
-        return deck.getSize();
-    }
-
     public double getProfit() {
         return profit;
     }
@@ -31,6 +23,8 @@ public abstract class Person {
     public void assignDeck(Deck deck) {
         this.deck = deck;
     }
+
+    public abstract boolean canAppend();
 
     public void appendCard(Card card) {
         deck.append(card);

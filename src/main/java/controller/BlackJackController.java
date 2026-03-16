@@ -58,7 +58,7 @@ public class BlackJackController {
     }
 
     public void getAdditionalCard(Player player) {
-        if (player.isBurst()) return;
+        if (!player.canAppend()) return;
 
         String isTrue = view.inputAdditionalCard(player.getName());
         InputValidator.validateAdditionalCard(isTrue);
