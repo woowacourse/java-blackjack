@@ -5,12 +5,15 @@ import java.util.List;
 import java.util.Map;
 
 public class Dealer extends Participant{
+
+    private static final int DEALER_HIT_LIMIT = 17;
+
     public Dealer() {
         super("딜러");
     }
 
     public boolean isDealerNotDone() {
-        return calculateTotalScore() < 17;
+        return calculateTotalScore() < DEALER_HIT_LIMIT;
     }
 
 
