@@ -10,7 +10,7 @@ public record BettingMoney(long money) {
     }
 
     public void validateAmountRange(long money) {
-        if (money < MINIMUM_MONEY) {
+        if (money <= MINIMUM_MONEY) {
             throw new IllegalArgumentException(ExceptionMessage.BATTING_MONEY_RANGE.getMessage());
         }
     }

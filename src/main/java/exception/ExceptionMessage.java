@@ -8,7 +8,7 @@ public enum ExceptionMessage {
     INVALID_BATTING_INPUT("[ERROR] 배팅 금액은 숫자만 입력해 주세요."),
     COMMAND_NOT_FOUND("[ERROR] 존재하지 않는 명령어 입니다. (y/n)"),
     DUPLICATED_PARTICIPANT_NAME("[ERROR] 중복된 참여자 이름이 존재합니다."),
-    BATTING_MONEY_RANGE("[ERROR] 배팅 범위는 1,000 ~ 1,000,000원 사이입니다."),
+    BATTING_MONEY_RANGE("[ERROR] 배팅 금액을 0원보다 크게 입력해 주세요."),
     ;
 
     private final String message;
