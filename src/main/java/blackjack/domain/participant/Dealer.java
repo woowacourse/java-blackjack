@@ -37,7 +37,7 @@ public class Dealer extends Participant {
                 });
     }
 
-    public void decideHit() {
+    public void decideStay() {
         int totalScore = getScore();
         if (totalScore > DEALER_HIT_THRESHOLD) {
             stay();

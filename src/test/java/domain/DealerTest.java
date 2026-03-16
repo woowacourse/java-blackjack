@@ -54,7 +54,7 @@ public class DealerTest {
         Dealer dealer = new Dealer(hand, Status.HIT, trump);
         Status expected = Status.HIT;
 
-        dealer.decideHit();
+        dealer.decideStay();
 
         assertThat(dealer).extracting("status")
             .isEqualTo(expected);
@@ -70,7 +70,7 @@ public class DealerTest {
             new Card(Suit.SPADE, Denomination.SEVEN)));
         Dealer dealer = new Dealer(hand, Status.HIT, trump);
 
-        dealer.decideHit();
+        dealer.decideStay();
 
         assertThat(dealer.isHit()).isFalse();
         assertThat(dealer.isBurst()).isFalse();
