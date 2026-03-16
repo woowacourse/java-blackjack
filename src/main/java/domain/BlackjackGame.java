@@ -21,7 +21,6 @@ public class BlackjackGame {
         dealCards();
     }
 
-    // 지워?
     public void makeDeck() {
         deck = new Deck();
     }

@@ -5,7 +5,9 @@
 ## ✅ 리팩토링 할 것 목록
 
 - [ ] **1. `Application`의 Map 객체 동등성 확인**
-- [ ] **2. `BlackjackGame`의 주석 지우기**
+  - 이 부분은 지금은 Name이 같은 참조를 쓰고 있어서 동작하지만, 리팩토링 하기 어려운 코드이다.
+  - Name 객체가 새로 만들어지는 순간 조용히 깨지는 코드가 된다.
+- [x] **2. `BlackjackGame`의 주석 지우기**
 - [ ] **3. `blackjackGame`의 protected field를 private으로 수정할 것.**
   - [ ] 이를 위해 blackjackGame의 prepare() 구조를 생성자로 옮겨야 함.
 - [ ] **4. `GameJudge`의 judge 함수를 dealer와 user 객체 자체를 받는 형식으로 수정**
