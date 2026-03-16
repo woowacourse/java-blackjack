@@ -212,7 +212,7 @@ class PlayersTest {
             players.addCard("jacob", card(Rank.THREE, Suit.CLOVER));
 
             // when
-            boolean actual = players.playerIsBust("jacob");
+            boolean actual = players.isPlayerBust("jacob");
 
             // then
             assertThat(actual).isTrue();
@@ -229,7 +229,7 @@ class PlayersTest {
             players.addCard("jacob", card(Rank.SEVEN, Suit.SPADE));
 
             // when
-            boolean actual = players.playerIsBust("jacob");
+            boolean actual = players.isPlayerBust("jacob");
 
             // then
             assertThat(actual).isFalse();
