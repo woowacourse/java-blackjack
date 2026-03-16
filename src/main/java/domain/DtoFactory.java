@@ -3,20 +3,19 @@ package domain;
 import dto.GameInitialInfoDto;
 import dto.GameScoreResultDto;
 import domain.participant.Dealer;
+import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DtoFactory {
-    private static final int INITIAL_HAND_SIZE = 2;
-
     private DtoFactory() {
     }
 
     public static List<GameScoreResultDto> toScoreResults(Dealer dealer, Players players) {
         List<GameScoreResultDto> results = new ArrayList<>();
-        addDealerScoreResult(results, dealer);
+        results.add(toScoreResult(dealer));
         addPlayerScoreResults(results, players);
         return results;
     }
@@ -28,21 +27,17 @@ public class DtoFactory {
         return results;
     }
 
-    private static void addDealerScoreResult(List<GameScoreResultDto> results, Dealer dealer) {
-        results.add(new GameScoreResultDto(
-                dealer.getName(),
-                dealer.getHandToString(),
-                dealer.getScore()
-        ));
+    private static GameScoreResultDto toScoreResult(Participant participant) {
+        return new GameScoreResultDto(
+                participant.getName(),
+                participant.getHandToString(),
+                participant.getScore()
+        );
     }
 
     private static void addPlayerScoreResults(List<GameScoreResultDto> results, Players players) {
         for (Player player : players.getNonNaturalBlackJackPlayers()) {
-            results.add(new GameScoreResultDto(
-                    player.getName(),
-                    player.getHandToString(),
-                    player.getScore()
-            ));
+            results.add(toScoreResult(player));
         }
     }
 
