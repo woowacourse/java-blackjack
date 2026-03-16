@@ -57,10 +57,10 @@ public class GameTable {
     public List<MemberStatus> getMemberStatuses() {
         List<MemberStatus> memberStatuses = new ArrayList<>();
         memberStatuses.add(
-                new MemberStatus(members.getDealerName(), members.findDealerCards(), members.checkDealerScore()));
+                new MemberStatus(members.getDealerName(), members.findDealerCards(), members.getDealerScore()));
 
         members.getAllPlayerName().stream()
-                .map(name -> new MemberStatus(name, members.findCardByName(name), members.checkPlayerScore(name)))
+                .map(name -> new MemberStatus(name, members.findCardByName(name), members.getPlayerScore(name)))
                 .forEach(memberStatuses::add);
         return List.copyOf(memberStatuses);
     }

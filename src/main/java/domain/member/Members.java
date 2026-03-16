@@ -39,12 +39,12 @@ public class Members {
         return dealer.currentCards();
     }
 
-    public int checkPlayerScore(String playerName) {
+    public int getPlayerScore(String playerName) {
         Player player = findByPlayerName(playerName);
         return player.currentScore();
     }
 
-    public int checkDealerScore() {
+    public int getDealerScore() {
         return dealer.currentScore();
     }
 
