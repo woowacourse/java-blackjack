@@ -40,14 +40,8 @@ public class PlayerGroups {
         return dealer;
     }
 
-    public Map<String, Integer> getPlayerTotalScore() {
-        Map<String, Integer> scores = new LinkedHashMap<>();
-
-        for (Player player : players) {
-            scores.put(player.getName(), player.getCardSum());
-        }
-
-        return scores;
+    public String getDealerName() {
+        return dealer.getName();
     }
 
     public Map<String, WinStatus> getGameResult() {
@@ -60,7 +54,29 @@ public class PlayerGroups {
         return result;
     }
 
+    public Map<String, Integer> getBettingResult() {
+        Map<String, Integer> result = new LinkedHashMap<>();
+
+        for (Player player : players) {
+            result.put(player.getName(), player.calculateProfit(getResultOf(player)));
+        }
+
+        return result;
+    }
+
+    public void addDealerCost(int money) {
+        dealer.addCost(money);
+    }
+
+    public int getDealerCost() {
+        return dealer.getCost();
+    }
+
     private WinStatus getResultOf(Player player) {
+        if (player.isBlackJack() && !dealer.isBlackJack()) {
+            return WinStatus.BLACKJACK_WIN;
+        }
+
         if (player.isBust()) {
             return WinStatus.LOSE;
         }

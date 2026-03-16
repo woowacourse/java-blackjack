@@ -1,26 +1,29 @@
 package domain.player;
 
 import domain.card.Card;
+import domain.vo.Cost;
 import domain.vo.Name;
 
 import java.util.List;
 
 public class Participant {
-    private static final int MAX_SCORE = 21;
-
     private final Name name;
-    private final HandCards handCards = new HandCards();
+    private final ParticipantStatus participantStatus = new ParticipantStatus();
 
     public Participant(Name name) {
         this.name = name;
     }
 
     public void addCard(Card card) {
-        handCards.addCard(card);
+        participantStatus.addCard(card);
     }
 
     public boolean isBust() {
-        return handCards.getCardScoreSum() > MAX_SCORE;
+        return participantStatus.isBust();
+    }
+
+    public boolean isBlackJack() {
+        return participantStatus.isBlackJack();
     }
 
     public String getName() {
@@ -28,23 +31,30 @@ public class Participant {
     }
 
     public List<String> getCards() {
-        return handCards.cardsToString();
+        return participantStatus.getCards();
     }
 
     public int getCardSum() {
-        return handCards.getCardScoreSum();
+        return participantStatus.getCardSum();
     }
 
     public WinStatus matchResult(int score) {
-        int myScore = handCards.getCardScoreSum();
-        if (myScore > score) {
-            return WinStatus.WIN;
-        }
+        return participantStatus.matchResult(score);
+    }
 
-        if (myScore < score) {
-            return WinStatus.LOSE;
-        }
+    public int calculateProfit(WinStatus winStatus) {
+        return participantStatus.calculateProfit(winStatus);
+    }
 
-        return WinStatus.DRAW;
+    public void addCost(int money) {
+        participantStatus.addCost(money);
+    }
+
+    public void setCost(Cost cost) {
+        participantStatus.setCost(cost);
+    }
+
+    public int getCost() {
+        return participantStatus.getCost();
     }
 }

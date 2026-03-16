@@ -1,6 +1,8 @@
 package controller;
 
+import domain.card.RandomShuffleStrategy;
 import domain.player.Player;
+import domain.vo.Cost;
 import dto.ParticipantResult;
 import service.GameService;
 import view.InputView;
@@ -17,13 +19,28 @@ public class GameController {
 
     public void run() {
         startGame();
+
+        bettingRound();
+
         printInitialCards();
 
         hitRound();
 
         printFinalStatus();
 
-        ResultView.printResult(gameService.result());
+//        ResultView.printResult(gameService.result());
+
+        ResultView.printBetResult(gameService.bettingResult());
+    }
+
+    private void bettingRound() {
+        List<Player> players = gameService.getPlayers();
+        for (Player player : players) {
+            String playerName = player.getName();
+            Cost bettingCost = new Cost(InputView.getBettingCost(playerName));
+
+            player.setCost(bettingCost);
+        }
     }
 
     private void printFinalStatus() {
@@ -54,6 +71,7 @@ public class GameController {
     private void startGame() {
         List<String> names = InputView.askName();
         gameService.joinPlayers(names);
+        gameService.createDeck(new RandomShuffleStrategy());
         gameService.initAllPlayerCard();
     }
 
@@ -66,7 +84,7 @@ public class GameController {
         while (InputView.askHit(player.getName())) {
             gameService.hit(player);
 
-            if (player.isBust()) {
+            if (player.isBust() || player.isBlackJack()) {
                 break;
             }
 

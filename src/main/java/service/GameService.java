@@ -1,16 +1,14 @@
 package service;
 
-import domain.card.Card;
 import domain.card.CardDeck;
-import domain.card.TrumpNumber;
-import domain.card.TrumpSuit;
+import domain.card.ShuffleStrategy;
 import domain.player.Player;
 import domain.player.PlayerGroups;
 import domain.player.WinStatus;
+import dto.ParticipantBetResult;
 import dto.ParticipantResult;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +16,7 @@ public class GameService {
     private static final int CARDS_PER_PLAYER_AT_START = 2;
 
     private PlayerGroups playerGroups;
-    private final CardDeck cardDeck = initCardDeck();
+    private CardDeck cardDeck;
 
     public void joinPlayers(List<String> playerNames) {
         playerGroups = new PlayerGroups(playerNames);
@@ -62,6 +60,20 @@ public class GameService {
         return playerGroups.getGameResult();
     }
 
+    public List<ParticipantBetResult> bettingResult() {
+        List<ParticipantBetResult> profitResults = new ArrayList<>();
+
+        Map<String, Integer> bettingResult = playerGroups.getBettingResult();
+        for (Map.Entry<String, Integer> playerBettingResult : bettingResult.entrySet()) {
+            Integer playerCost = playerBettingResult.getValue();
+            profitResults.add(new ParticipantBetResult(playerBettingResult.getKey(), playerCost));
+            playerGroups.addDealerCost(Math.negateExact(playerCost));
+        }
+
+        profitResults.addFirst(new ParticipantBetResult(playerGroups.getDealerName(), playerGroups.getDealerCost()));
+        return profitResults;
+    }
+
     public int getPlayerGroupSize() {
         return playerGroups.getPlayerGroupSize();
     }
@@ -70,16 +82,7 @@ public class GameService {
         return playerGroups.getDealerResult();
     }
 
-    private CardDeck initCardDeck() {
-        List<Card> cards = new ArrayList<>();
-        for (TrumpSuit suit : TrumpSuit.values()) {
-            for (TrumpNumber number : TrumpNumber.values()) {
-                cards.add(new Card(suit, number));
-            }
-        }
-
-        Collections.shuffle(cards);
-
-        return new CardDeck(cards);
+    public void createDeck(ShuffleStrategy shuffleStrategy) {
+        cardDeck = new CardDeck(shuffleStrategy);
     }
 }
