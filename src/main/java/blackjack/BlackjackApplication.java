@@ -10,7 +10,6 @@ import blackjack.dto.ParticipantCardsDto;
 import blackjack.dto.ParticipantScoreDtos;
 import blackjack.view.BlackjackView;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class BlackjackApplication {
     public static void main(String[] args) {
@@ -65,15 +64,7 @@ public class BlackjackApplication {
     }
 
     private void printProfit() {
-        Map<Player, Profit> playerResults = calculatePlayerProfits();
-        view.printResult(GameResultDtos.of(playerResults));
-    }
-
-    private Map<Player, Profit> calculatePlayerProfits() {
-        return game.getPlayers().stream()
-            .collect(Collectors.toMap(
-                player -> player,
-                game::calculateProfit
-            ));
+        Map<Player, Profit> playerProfits = game.calculatePlayerProfits();
+        view.printResult(GameResultDtos.of(playerProfits));
     }
 }

@@ -9,7 +9,7 @@ import java.util.Queue;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class ShuffledDeck {
+public class ShuffledDeck implements Deck {
     private final Queue<Card> cards;
 
     public ShuffledDeck(List<Card> cards) {
@@ -29,6 +29,7 @@ public class ShuffledDeck {
             .map(suit -> new Card(rank, suit));
     }
 
+    @Override
     public Card draw() {
         if (cards.isEmpty()) {
             throw new IllegalStateException("덱이 비어 있습니다.");

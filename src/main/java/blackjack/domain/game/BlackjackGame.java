@@ -1,20 +1,22 @@
 package blackjack.domain.game;
 
+import blackjack.domain.card.Deck;
 import blackjack.domain.card.ShuffledDeck;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.PlayerGroup;
 import blackjack.domain.participants.Profit;
 import java.util.List;
+import java.util.Map;
 
 public class BlackjackGame {
     private static final int INITIAL_DEAL_COUNT = 2;
 
-    private final ShuffledDeck deck;
+    private final Deck deck;
     private final Dealer dealer;
     private final PlayerGroup playerGroup;
 
-    public BlackjackGame(ShuffledDeck deck, Dealer dealer, PlayerGroup playerGroup) {
+    public BlackjackGame(Deck deck, Dealer dealer, PlayerGroup playerGroup) {
         this.deck = deck;
         this.dealer = dealer;
         this.playerGroup = playerGroup;
@@ -37,7 +39,7 @@ public class BlackjackGame {
 
     public void initialDeal() {
         for (int i = 0; i < INITIAL_DEAL_COUNT; i++) {
-            dealer.hit(deck.draw());
+            dealer.hitFrom(deck);
             playerGroup.deal(deck);
         }
     }
@@ -47,20 +49,19 @@ public class BlackjackGame {
     }
 
     public void hit(Player player) {
-        player.hit(deck.draw());
+        player.hitFrom(deck);
     }
 
     public int playDealerTurn() {
         int hitCount = 0;
         while (dealer.canHit()) {
-            dealer.hit(deck.draw());
+            dealer.hitFrom(deck);
             hitCount++;
         }
         return hitCount;
     }
 
-    public Profit calculateProfit(Player player) {
-        GameResult judge = BlackjackGameReferee.judge(dealer, player);
-        return player.calculateProfit(judge);
+    public Map<Player, Profit> calculatePlayerProfits() {
+        return playerGroup.calculatePlayersProfit(dealer);
     }
 }
