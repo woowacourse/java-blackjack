@@ -7,7 +7,6 @@ import model.card.BlackJackDeck;
 import model.card.Card;
 import model.participant.BetPrice;
 import model.participant.Participants;
-import model.participant.Player;
 import dto.status.PlayerName;
 
 public class BlackJackGame {

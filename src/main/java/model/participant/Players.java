@@ -18,7 +18,7 @@ import model.result.ProfitCalculator;
 
 public class Players {
     private final Map<String, Player> players = new LinkedHashMap<>();
-    private final Map<String, Integer> playerBet = new HashMap<>();
+    private final Map<String, BetPrice> playerBet = new HashMap<>();
 
     public void addPlayer(PlayerName playerName) {
         if(players.containsKey(playerName.name())) {
@@ -27,7 +27,6 @@ public class Players {
 
         Player player = new Player(playerName);
         players.put(player.getName(), player);
-        playerBet.put(player.getName(), 0);
     }
 
     public List<String> getPlayerNames() {
@@ -35,7 +34,7 @@ public class Players {
     }
 
     public void setBet(String playerName, BetPrice bet) {
-        playerBet.put(playerName, bet.value());
+        playerBet.put(playerName, bet);
     }
 
     public void drawCard(String playerName, Card card) {
@@ -84,12 +83,17 @@ public class Players {
     }
 
     private PlayerStatus getPlayerStatus(Player player) {
-        Integer betPrice = playerBet.get(player.getName());
-
-        if(betPrice == null) {
-            throw new IllegalArgumentException(ErrorMessage.NO_PLAYER_NAME.getMessage());
-        }
+        Integer betPrice = getBetPriceValue(player);
 
         return new PlayerStatus(player.getName(), player.getScore(), betPrice, player.isBust(), player.isBlackJack());
+    }
+
+    private Integer getBetPriceValue(Player player) {
+        BetPrice betPrice = playerBet.get(player.getName());
+
+        if(betPrice == null) {
+            return 0;
+        }
+        return betPrice.value();
     }
 }
