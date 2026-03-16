@@ -2,29 +2,26 @@ package strategy;
 
 import domain.result.GameResult;
 import domain.result.RoundBetInfo;
+import java.util.Map;
 
 public class DefaultBettingRule implements BettingRule {
     private static final double BLACKJACK_MULTIPLIER = 1.5;
-    private static final double WIN_MULTIPLIER = 1;
-    private static final double DRAW_MULTIPLIER = 0;
-    private static final double LOSE_MULTIPLIER = -1;
+    private static final Map<GameResult, Double> MULTIPLIERS = Map.of(
+            GameResult.WIN, 1.0,
+            GameResult.DRAW, 0.0,
+            GameResult.LOSE, -1.0
+    );
 
     @Override
-    public int calculateBetAmount(RoundBetInfo roundBetInfo, GameResult gameResult) {
-        int betAmount = roundBetInfo.betAmount();
-        boolean isBlackjack = roundBetInfo.user().isBlackjack();
-        if (isBlackjack) {
-            return (int) (betAmount * BLACKJACK_MULTIPLIER);
+    public double calculateBetAmount(RoundBetInfo roundBetInfo, GameResult gameResult) {
+        double betAmount = roundBetInfo.betAmount();
+        if (roundBetInfo.user().isBlackjack()) {
+            return betAmount * BLACKJACK_MULTIPLIER;
         }
-        if (gameResult == GameResult.WIN) {
-            return (int) (betAmount * WIN_MULTIPLIER);
+        Double multiplier = MULTIPLIERS.get(gameResult);
+        if (multiplier == null) {
+            throw new IllegalArgumentException("[ERROR] 유효하지 않은 게임 결과입니다.");
         }
-        if (gameResult == GameResult.DRAW) {
-            return (int) (betAmount * DRAW_MULTIPLIER);
-        }
-        if (gameResult == GameResult.LOSE) {
-            return (int) (betAmount * LOSE_MULTIPLIER);
-        }
-        throw new IllegalArgumentException("[ERROR] 유효하지 않은 게임 결과입니다.");
+        return betAmount * multiplier;
     }
 }
