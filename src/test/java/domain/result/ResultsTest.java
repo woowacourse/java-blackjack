@@ -10,15 +10,6 @@ import org.junit.jupiter.api.Test;
 class ResultsTest {
 
     @Test
-    void addResult() {
-    }
-
-    @Test
-    void results() {
-    }
-
-
-    @Test
     void 매개변수_없는_생성자로_생성이_가능하다() {
         // given
         Results results = new Results();
