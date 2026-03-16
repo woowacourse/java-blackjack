@@ -79,7 +79,7 @@ public class BlackjackGameManager {
         return BlackjackStatisticsDto.of(dealerProfit, playerStatisticDtoList);
     }
 
-    public boolean playerIsBust(String name) {
-        return participants.playerIsBust(name);
+    public boolean isPlayerBust(String name) {
+        return participants.isPlayerBust(name);
     }
 }

@@ -1,13 +1,11 @@
-import domain.game.BlackjackGameManager;
-import factory.BlackjackFactory;
 import controller.BlackjackController;
+import controller.factory.BlackjackControllerFactory;
 
 public class BlackjackApplication {
 
     public static void main(String[] args) {
-        BlackjackFactory blackjackFactory = new BlackjackFactory();
-        BlackjackController blackjackController = blackjackFactory.blackjackController();
-        BlackjackGameManager blackjackGameManager = blackjackFactory.blackjackGameManager();
-        blackjackController.start(blackjackGameManager);
+        BlackjackControllerFactory blackjackControllerFactory = new BlackjackControllerFactory();
+        BlackjackController blackjackController = blackjackControllerFactory.blackjackController();
+        blackjackController.start();
     }
 }
