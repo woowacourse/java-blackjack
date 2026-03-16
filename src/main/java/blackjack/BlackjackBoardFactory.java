@@ -14,9 +14,10 @@ public class BlackjackBoardFactory {
     private BlackjackBoardFactory() {}
 
     public static BlackjackBoard create() {
-        final Dealer dealer = new Dealer(new Hand(), new Deck(new RandomCardShuffler()));
+        final Deck deck = new Deck(new RandomCardShuffler());
+        final Dealer dealer = new Dealer(new Hand());
         final Players players = createPlayers();
-        return new BlackjackBoard(dealer, players);
+        return new BlackjackBoard(deck, dealer, players);
     }
 
     private static Players createPlayers() {
