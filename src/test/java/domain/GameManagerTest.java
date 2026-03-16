@@ -55,7 +55,7 @@ class GameManagerTest {
 
         manager.registerPlayers(
                 List.of("pobi"),
-                List.of(new BettingMoney(1000), new BettingMoney(1000))
+                List.of(new BettingMoney(1000))
         );
 
         manager.startGame();
