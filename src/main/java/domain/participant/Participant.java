@@ -24,7 +24,7 @@ public abstract class Participant {
         }
 
         boolean isAceExist = hand.stream()
-                .anyMatch(holdCard -> holdCard.getCardValue() == CardScore.ACE);
+                .anyMatch(Card::isAceExist);
         if (isSoftHand(isAceExist, results)) {
             return results + 10;
         }
