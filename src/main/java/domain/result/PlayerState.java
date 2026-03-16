@@ -6,11 +6,10 @@ import domain.PlayedGameResult;
 class PlayerState {
 
     private final Money bettingMoney;
-    private final PlayedGameResult playedGameResult;
+    private PlayedGameResult playedGameResult;
 
     private PlayerState(Money bettingMoney) {
         this.bettingMoney = bettingMoney;
-        this.playedGameResult = null;
     }
 
     private PlayerState(Money bettingMoney, PlayedGameResult playedGameResult) {

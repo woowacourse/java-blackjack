@@ -4,7 +4,7 @@ import domain.ProfitInfo;
 import domain.PlayedGameResult;
 import domain.gameplaying.Participants;
 import domain.result.ScoreBoard;
-import dto.response.PayoutResponse;
+import dto.response.ProfitResponse;
 import dto.response.PlayerNamesResponse;
 import dto.response.AllPlayersNameAndCardsResponse;
 import dto.response.NameAndCardsResponse;
@@ -72,8 +72,8 @@ public class BlackJackQueryService {
         return PlayerGameResultsResponse.from(playerGameResults);
     }
 
-    public List<PayoutResponse> allPayouts() {
-        List<PayoutResponse> playedGameResults = new ArrayList<>();
+    public List<ProfitResponse> allProfits() {
+        List<ProfitResponse> playedGameResults = new ArrayList<>();
 
         playedGameResults.add(this.dealerPayout());
         playedGameResults.addAll(playerPayouts());
@@ -81,13 +81,13 @@ public class BlackJackQueryService {
         return playedGameResults;
     }
 
-    private PayoutResponse dealerPayout() {
+    private ProfitResponse dealerPayout() {
         PlayedGameResult dealerResult = participants.dealerResult();
         ProfitInfo dealerProfitInfo = scoreBoard.profitInfoByDealer(dealerResult);
         return payoutResponseFrom(dealerProfitInfo);
     }
 
-    private List<PayoutResponse> playerPayouts() {
+    private List<ProfitResponse> playerPayouts() {
         PlayedGameResult dealerResult = participants.dealerResult();
         return scoreBoard.evaluatePlayerProfitInfosWith(dealerResult)
                 .stream()
@@ -95,7 +95,7 @@ public class BlackJackQueryService {
                 .toList();
     }
 
-    private PayoutResponse payoutResponseFrom(ProfitInfo info) {
-        return PayoutResponse.from(info.name(), info.money());
+    private ProfitResponse payoutResponseFrom(ProfitInfo info) {
+        return ProfitResponse.from(info.name(), info.money());
     }
 }

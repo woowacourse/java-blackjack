@@ -1,7 +1,7 @@
 package controller;
 
 import dto.request.BettingMoneyRequest;
-import dto.response.PayoutResponse;
+import dto.response.ProfitResponse;
 import dto.response.PlayedGameResultResponse;
 import dto.response.PlayerGameResultsResponse;
 import dto.request.PlayerNamesRequest;
@@ -135,7 +135,7 @@ public class BlackJackController {
 
         OutputView.printTaskDivider();
 
-        displayPayoutResults();
+        displayProfitResults();
     }
 
     private void displayDealersResult() {
@@ -148,10 +148,10 @@ public class BlackJackController {
         OutputView.playerResults(playerGameResultsResponse);
     }
 
-    private void displayPayoutResults() {
+    private void displayProfitResults() {
         OutputView.resultHeader();
-        List<PayoutResponse> responses = queryService.allPayouts();
+        List<ProfitResponse> responses = queryService.allProfits();
 
-        OutputView.allPayouts(responses);
+        OutputView.allProfits(responses);
     }
 }

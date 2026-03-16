@@ -2,7 +2,7 @@ package view;
 
 import dto.response.AllPlayersNameAndCardsResponse;
 import dto.response.NameAndCardsResponse;
-import dto.response.PayoutResponse;
+import dto.response.ProfitResponse;
 import dto.response.PlayedGameResultResponse;
 import dto.response.PlayerGameResultsResponse;
 import dto.response.PlayerNamesResponse;
@@ -11,7 +11,6 @@ import java.util.List;
 public final class OutputView {
 
     private static final String JOINER = ", ";
-    private static final String CONDITION_JOINER = " ";
 
     private OutputView() {
 
@@ -62,42 +61,12 @@ public final class OutputView {
     }
 
 
-    public static void allPayouts(List<PayoutResponse> response) {
+    public static void allProfits(List<ProfitResponse> response) {
         response.forEach(OutputView::printPayout);
     }
 
-    private static void printPayout(PayoutResponse info) {
+    private static void printPayout(ProfitResponse info) {
         System.out.println(OutputMessage.PROFIT.description(info.name(), info.amount()));
-    }
-
-//    private static void appendWin(int winCount, StringBuilder statistics) {
-//        if (winCount > 0) {
-//            statistics.append(OutputMessage.WIN.description(winCount)).append(CONDITION_JOINER);
-//        }
-//    }
-//
-//    private static void appendDraw(int drawCount, StringBuilder statistics) {
-//        if (drawCount > 0) {
-//            statistics.append(OutputMessage.DRAW.description(drawCount)).append(CONDITION_JOINER);
-//        }
-//    }
-//
-//    private static void appendLose(int loseCount, StringBuilder statistics) {
-//        if (loseCount > 0) {
-//            statistics.append(OutputMessage.LOSE.description(loseCount));
-//        }
-//    }
-//
-//    public static void playerWinningConditions(AllPlayerWinningInfoResponse response) {
-//        List<PlayerWinningInfoResponse> winningInfos = response.playerWinningInfoResponses();
-//
-//        winningInfos.forEach(info -> {
-//            System.out.println(OutputMessage.PLAYER_WINNING_CONDITION.description(info.name(), info.winningCondition()));
-//        });
-//    }
-
-    private static void winningConditionHeader() {
-        System.out.println(OutputMessage.RESULT_HEADER.description());
     }
 
     public static void printTaskDivider() {
