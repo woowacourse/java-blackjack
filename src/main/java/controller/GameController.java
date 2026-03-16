@@ -60,9 +60,7 @@ public class GameController {
         outputView.printStartCardMessage(playerNames);
 
         Card dealerFirstCard = dealer.getHand().getFirst();
-        List<ParticipantDto> participantDtos = players.getPlayers().stream()
-                .map(player -> ParticipantDto.of(player.getName(), player))
-                .toList();
+        List<ParticipantDto> participantDtos = getParticipantDtos(players);
         outputView.printDealerStartCard(dealerFirstCard);
         outputView.printStartCard(participantDtos);
     }
@@ -79,11 +77,8 @@ public class GameController {
     }
 
     private void printFinalScore(Players players, Participant dealer) {
-        List<ParticipantDto> participantDtos = players.getPlayers().stream()
-                .map(player -> ParticipantDto.of(player.getName(), player))
-                .toList();
-        outputView.printFinalScore(
-                ParticipantDto.of("딜러", dealer), participantDtos);
+        List<ParticipantDto> participantDtos = getParticipantDtos(players);
+        outputView.printFinalScore(ParticipantDto.of("딜러", dealer), participantDtos);
     }
 
     private void printFinalProfit(Players players, Dealer dealer) {
@@ -110,6 +105,12 @@ public class GameController {
             player.addCard(deck.draw());
             outputView.printCurrentHoldCard(ParticipantDto.of(player.getName(), player));
         }
+    }
+
+    private List<ParticipantDto> getParticipantDtos(Players players) {
+        return players.getPlayers().stream()
+                .map(player -> ParticipantDto.of(player.getName(), player))
+                .toList();
     }
 
     private List<PlayerProfitDto> getPlayerProfitDtos(Players players, Dealer dealer) {
