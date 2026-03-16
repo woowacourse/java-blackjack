@@ -3,6 +3,7 @@ package view;
 import java.util.List;
 import java.util.Scanner;
 
+import util.BettingMoneyParser;
 import util.NameParser;
 
 public class InputView {
@@ -22,6 +23,8 @@ public class InputView {
 
     public static Integer readBettingMoney(String name){
         System.out.printf("%s의 배팅 금액은?%n",name);
-        return Integer.parseInt(scanner.nextLine());
+        String money = scanner.nextLine();
+        System.out.println();
+        return BettingMoneyParser.parse(money);
     }
 }

@@ -61,7 +61,6 @@ public class GameController {
         List<PlayerCreationInfo> playerCreationInfos = new ArrayList<>();
         for (String name : names) {
             Integer money = InputView.readBettingMoney(name);
-            System.out.println();
             playerCreationInfos.add(PlayerCreationInfo.of(Name.from(name), BettingMoney.of(money)));
         }
         return playerCreationInfos;
