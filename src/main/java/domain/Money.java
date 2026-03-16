@@ -7,3 +7,4 @@ public record Money(int bettingMoney) {
         }
     }
 }
+

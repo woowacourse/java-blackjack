@@ -17,11 +17,10 @@ public class InputView {
     }
 
     public static int askPlayerBettingMoney(String playerName) {
-        System.out.printf("%s의 배팅 금액은?\n", playerName);
+        System.out.printf("%s의 배팅 금액은?%n", playerName);
 
         String input = sc.nextLine();
-        int money = Integer.parseInt(input);
-        return money;
+        return parsePositiveInt(input);
     }
 
     public static String askContinue(String player) {
@@ -41,6 +40,14 @@ public class InputView {
     private static void validateContinueResponse(String input) {
         if (!input.matches("[yn]")) {
             throw new IllegalArgumentException("응답은 y와 n만 허용됩니다.");
+        }
+    }
+
+    private static int parsePositiveInt(String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("숫자를 입력해주세요. 입력값 : " + input);
         }
     }
 }
