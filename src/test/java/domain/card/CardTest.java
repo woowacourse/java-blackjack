@@ -16,10 +16,10 @@ class CardTest {
         Card card = new Card(Rank.ACE, Suit.DIAMOND);
         //when
         //then
-        assertThat(card.getSuitString()).isEqualTo("다이아");
-        assertThat(card.getRankString()).isEqualTo("A");
-        assertThat(card.getRank()).isEqualTo(Rank.ACE);
-        assertThat(card.getRankScore()).isEqualTo(1);
+        assertThat(card.suitString()).isEqualTo("다이아");
+        assertThat(card.rankString()).isEqualTo("A");
+        assertThat(card.rank()).isEqualTo(Rank.ACE);
+        assertThat(card.rankScore()).isEqualTo(1);
     }
 
     @DisplayName("hashCode(), equals()를 구현한 카드 객체의 동등성 비교 테스트")

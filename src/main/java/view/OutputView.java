@@ -34,7 +34,7 @@ public class OutputView {
     }
 
     private void printDealerFirstCard(Card dealerCard) {
-        System.out.printf(DEALER_CARD + LINE_SEPARATOR, dealerCard.getRankString() + dealerCard.getSuitString());
+        System.out.printf(DEALER_CARD + LINE_SEPARATOR, dealerCard.rankString() + dealerCard.suitString());
     }
 
     public void printPlayerCard(Name name, List<Card> playerCard) {
@@ -57,7 +57,7 @@ public class OutputView {
 
     private String collectCards(List<Card> cards) {
         return cards.stream()
-                .map(card -> card.getRankString() + card.getSuitString())
+                .map(card -> card.rankString() + card.suitString())
                 .collect(Collectors.joining(STRING_JOIN_DELIMITER));
     }
 

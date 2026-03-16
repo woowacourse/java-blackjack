@@ -21,12 +21,12 @@ public class Hand {
     public int calculateScore() {
 
         int score = cards.stream()
-                .filter(card -> !card.getRank().equals(Rank.ACE))
-                .mapToInt(Card::getRankScore)
+                .filter(card -> !card.rank().equals(Rank.ACE))
+                .mapToInt(Card::rankScore)
                 .sum();
 
         boolean aceExist = cards.stream()
-                .anyMatch(card -> card.getRank().equals(Rank.ACE));
+                .anyMatch(card -> card.rank().equals(Rank.ACE));
 
         if (aceExist) {
             return (score + calculateAceScore(BLACKJACK_CRITERION - score));
@@ -37,8 +37,8 @@ public class Hand {
 
     private int calculateAceScore(int remainScore) {
         int minAceScore = cards.stream()
-                .filter(card -> card.getRank().equals(Rank.ACE))
-                .mapToInt(Card::getRankScore)
+                .filter(card -> card.rank().equals(Rank.ACE))
+                .mapToInt(Card::rankScore)
                 .sum();
 
         if (remainScore < minAceScore + ACE_BONUS_SCORE) {
