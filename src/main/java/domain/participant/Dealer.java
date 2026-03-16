@@ -8,8 +8,12 @@ public class Dealer extends Participant {
         super(DEALER_NAME);
     }
 
+    public String getFirstCardName() {
+        return getFirstName();
+    }
+
     @Override
     public boolean canDraw() {
-        return getScore().getGameScore() <= DEALER_DRAW_BOUND;
+        return getScore().isLessThanOrEqual(DEALER_DRAW_BOUND);
     }
 }
