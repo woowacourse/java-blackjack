@@ -14,4 +14,16 @@ public record Score(int score) {
     public boolean isBlackjack() {
         return score == BLACKJACK_SCORE;
     }
+
+    public boolean isLessThanOrEqual(int bound) {
+        return score <= bound;
+    }
+
+    public boolean isGreaterThan(Score other) {
+        return this.score > other.score;
+    }
+
+    public boolean isLessThan(Score other) {
+        return this.score < other.score;
+    }
 }
