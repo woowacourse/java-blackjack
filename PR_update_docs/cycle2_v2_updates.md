@@ -16,7 +16,7 @@
 - [ ] **6. `GameSummary`의 생성자 수정**
   - [ ] map 두개를 받는 구조로 짜여있는데, 하나만 있어도 User을 순회할 수 있음.
 - [ ] **7. `DeckTest`를 exception을 종료 조건으로 설정하지 말고, 직접 사이즈를 테스트하는 형식으로 수정.**
-- [ ] **8. `Participant`의 checkBust 함수 간소화**
+- [x] **8. `Participant`의 checkBust 함수 간소화**
 - [ ] **9. `Participants`의 saverUsers를 bets만 받아 객체 생성하도록 수정.**
 - [ ] **10. 뷰가 도메인 객체를 만들고 있는 부분 수정.**
   - [ ] inputView는 이름을 파싱하고 List<String>를 반환하고, Application에서 객체 생성

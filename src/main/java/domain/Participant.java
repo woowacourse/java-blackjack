@@ -28,9 +28,6 @@ public abstract class Participant {
     }
 
     public boolean checkBust() {
-        if (hand.calculateTotalScore() > BLACKJACK_SCORE) {
-            return true;
-        }
-        return false;
+        return hand.calculateTotalScore() > BLACKJACK_SCORE;
     }
 }
