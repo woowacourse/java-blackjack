@@ -21,8 +21,6 @@ public class ShuffledDeck {
         List<Card> cards = Arrays.stream(Rank.values())
             .flatMap(ShuffledDeck::createCardsByRank)
             .collect(Collectors.toCollection(ArrayList::new));
-        Collections.shuffle(cards);
-
         return new ShuffledDeck(cards);
     }
 

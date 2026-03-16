@@ -38,5 +38,7 @@ class ProfitTest {
         // then
         long expected = profit.value() * BLACKJACK_PAYOUT_NUMERATOR / BLACKJACK_PAYOUT_DENOMINATOR;
         assertThat(blackjackProfit.value()).isEqualTo(expected);
+        System.out.println(expected);
+        System.out.println(blackjackProfit.value());
     }
 }

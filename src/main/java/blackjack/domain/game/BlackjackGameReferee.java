@@ -5,7 +5,13 @@ import blackjack.domain.participants.Player;
 
 public class BlackjackGameReferee {
     public static GameResult judge(Dealer dealer, Player player) {
-        if (player.isBust()) {
+        if (player.isBlackjack() && dealer.isBlackjack()) {
+            return GameResult.PUSH;
+        }
+        if (player.isBlackjack()) {
+            return GameResult.PLAYER_BLACKJACK;
+        }
+        if (dealer.isBlackjack() || player.isBust()) {
             return GameResult.DEALER_WIN;
         }
         if (dealer.isBust()) {

@@ -14,12 +14,14 @@ abstract class Participant {
         this.hand = hand;
     }
 
+    public abstract boolean canHit();
+
     public final String getName() {
         return name.getValue();
     }
 
     public final List<Card> getCards() {
-        return hand.cards();
+        return hand.getCards();
     }
 
     public final void hit(Card card) {
@@ -34,5 +36,7 @@ abstract class Participant {
         return hand.isBust();
     }
 
-    public abstract boolean canHit();
+    public final boolean isBlackjack() {
+        return hand.isBlackjack();
+    }
 }
