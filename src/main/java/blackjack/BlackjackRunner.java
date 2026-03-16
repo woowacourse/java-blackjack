@@ -1,5 +1,6 @@
 package blackjack;
 
+import blackjack.domain.Amount;
 import blackjack.domain.Deck;
 import blackjack.domain.Hand;
 import blackjack.domain.Nicknames;
@@ -8,7 +9,6 @@ import blackjack.domain.Players;
 import blackjack.domain.participant.Dealer;
 import blackjack.dto.DrawResult;
 import blackjack.dto.ParticipantResult;
-import blackjack.dto.PlayerBettingRequest;
 import blackjack.dto.PlayerNicknamesResult;
 import blackjack.dto.TotalGameResult;
 import blackjack.util.PlayerNameParser;
@@ -87,23 +87,18 @@ public class BlackjackRunner {
 
     private Players addPlayerWithValidBet(Nicknames nicknames, String nickname, Players players) {
         try {
-            PlayerBettingRequest playerRequest = readBettingRequest(nickname);
-            return players.addPlayer(nicknames.findByNickname(nickname), playerRequest.amount());
+            Amount playerRequest = readBettingRequest(nickname);
+            return players.addPlayer(nicknames.findByNickname(nickname), playerRequest);
         } catch (IllegalArgumentException e) {
             outputView.printLine(e.getMessage());
             return addPlayerWithValidBet(nicknames, nickname, players);
         }
     }
 
-    private PlayerBettingRequest readBettingRequest(String nickname) {
-        try {
-            outputView.askBetAmount(nickname);
-            String amount = inputView.readLine();
-            return PlayerBettingRequest.of(nickname, amount);
-        } catch (IllegalArgumentException e) {
-            outputView.printLine(e.getMessage());
-            return readBettingRequest(nickname);
-        }
+    private Amount readBettingRequest(String nickname) {
+        outputView.askBetAmount(nickname);
+        String amount = inputView.readLine();
+        return Amount.from(amount);
     }
 
     public void printGameResult(Participants participants) {

@@ -1,5 +1,6 @@
 package blackjack.domain.participant;
 
+import blackjack.domain.Amount;
 import blackjack.domain.Hand;
 import blackjack.domain.MatchResult;
 import blackjack.domain.Nickname;
@@ -7,15 +8,12 @@ import blackjack.dto.PlayerGameResult;
 
 public class Player extends Participant {
 
-    private static final long MAX_BETTING_AMOUNT = Long.MAX_VALUE / 5 * 2;
-
     private boolean stopDrawing;
-    private final long amount;
+    private final Amount amount;
 
-    public Player(Nickname nickname, Role role, long amount) {
+    public Player(Nickname nickname, Role role, Amount amount) {
         super(nickname, Hand.createEmptyHands(), role);
         stopDrawing = false;
-        validateAmount(amount);
         this.amount = amount;
     }
 
@@ -33,16 +31,7 @@ public class Player extends Participant {
     public PlayerGameResult determinePlayerResult(Dealer dealer) {
         MatchResult matchResult = determineGameResult(dealer);
         double payout = determinePayout(matchResult);
-        return PlayerGameResult.of(nickname.getValue(), matchResult, (long) payout - amount);
-    }
-
-    private void validateAmount(long amount) {
-        if (amount <= 0) {
-            throw new IllegalArgumentException("베팅 금액은 0보다 큰 양수여야 합니다.");
-        }
-        if (amount > MAX_BETTING_AMOUNT) {
-            throw new IllegalArgumentException("베팅 금액의 최댓값을 초과한 금액입니다.");
-        }
+        return PlayerGameResult.of(nickname.getValue(), matchResult, (long) payout - amount.getValue());
     }
 
     private double determinePayout(MatchResult matchResult) {
@@ -50,12 +39,12 @@ public class Player extends Participant {
             return 0;
         }
         if (matchResult == MatchResult.TIE) {
-            return amount;
+            return amount.getValue();
         }
         if (hand.isBlackJack()) {
-            return amount * 2.5;
+            return amount.getValue() * 2.5;
         }
-        return amount * 2;
+        return amount.getValue() * 2;
     }
 
     private MatchResult determineGameResult(Dealer dealer) {

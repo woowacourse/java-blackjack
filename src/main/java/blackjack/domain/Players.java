@@ -24,7 +24,7 @@ public class Players {
         return from(List.of());
     }
 
-    public Players addPlayer(Nickname nickname, long amount) {
+    public Players addPlayer(Nickname nickname, Amount amount) {
         List<Player> nowPlayers = new ArrayList<>(getPlayers());
         nowPlayers.add(new Player(nickname, Role.PLAYER, amount));
         return Players.from(nowPlayers);
