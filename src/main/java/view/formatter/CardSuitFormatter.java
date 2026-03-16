@@ -3,6 +3,7 @@ package view.formatter;
 import static exception.ErrorMessage.CARD_SUIT_NOT_EXIST;
 
 import domain.card.CardSuit;
+import java.util.Arrays;
 
 public enum CardSuitFormatter {
     HEART(CardSuit.HEART, "하트"),
@@ -20,11 +21,14 @@ public enum CardSuitFormatter {
     }
 
     public static String from(CardSuit cardSuit) {
-        for (CardSuitFormatter cardSuitFormatter : CardSuitFormatter.values()) {
-            if (cardSuitFormatter.cardSuit == cardSuit) {
-                return cardSuitFormatter.printMessage;
-            }
-        }
-        throw new IllegalStateException(CARD_SUIT_NOT_EXIST.getMessage());
+        return Arrays.stream(CardSuitFormatter.values())
+                .filter(cardSuitFormatter -> cardSuitFormatter.cardSuit == cardSuit)
+                .map(CardSuitFormatter::getPrintMessage)
+                .findAny()
+                .orElseThrow(() -> new IllegalStateException(CARD_SUIT_NOT_EXIST.getMessage()));
+    }
+
+    public String getPrintMessage() {
+        return printMessage;
     }
 }

@@ -3,6 +3,7 @@ package view.formatter;
 import static exception.ErrorMessage.CARD_VALUE_NOT_EXIST;
 
 import domain.card.CardScore;
+import java.util.Arrays;
 
 public enum CardValueFormatter {
     ACE(CardScore.ACE, "A"),
@@ -29,11 +30,14 @@ public enum CardValueFormatter {
     }
 
     public static String from(CardScore cardScore) {
-        for (CardValueFormatter cardValueFormatter : CardValueFormatter.values()) {
-            if (cardValueFormatter.cardScore == cardScore) {
-                return cardValueFormatter.printMessage;
-            }
-        }
-        throw new IllegalStateException(CARD_VALUE_NOT_EXIST.getMessage());
+        return Arrays.stream(CardValueFormatter.values())
+                .filter(cardValueFormatter -> cardValueFormatter.cardScore == cardScore)
+                .map(CardValueFormatter::getPrintMessage)
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException(CARD_VALUE_NOT_EXIST.getMessage()));
+    }
+
+    public String getPrintMessage() {
+        return printMessage;
     }
 }
