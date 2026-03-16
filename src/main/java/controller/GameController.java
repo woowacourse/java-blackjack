@@ -8,9 +8,7 @@ import service.GameService;
 import view.InputView;
 import view.ResultView;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class GameController {
     private final GameService gameService;
@@ -22,7 +20,7 @@ public class GameController {
     public void run() {
         startGame();
 
-        Map<String, Cost> userBetInfo = bettingRound();
+        bettingRound();
 
         printInitialCards();
 
@@ -32,20 +30,17 @@ public class GameController {
 
 //        ResultView.printResult(gameService.result());
 
-        ResultView.printBetResult(gameService.bettingResult(userBetInfo));
+        ResultView.printBetResult(gameService.bettingResult());
     }
 
-    private Map<String, Cost> bettingRound() {
+    private void bettingRound() {
         List<Player> players = gameService.getPlayers();
-        Map<String, Cost> userBetCost = new HashMap<>();
         for (Player player : players) {
             String playerName = player.getName();
             Cost bettingCost = new Cost(InputView.getBettingCost(playerName));
 
-            userBetCost.put(playerName, bettingCost);
+            player.setCost(bettingCost);
         }
-
-        return userBetCost;
     }
 
     private void printFinalStatus() {

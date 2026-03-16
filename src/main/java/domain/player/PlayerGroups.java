@@ -54,6 +54,24 @@ public class PlayerGroups {
         return result;
     }
 
+    public Map<String, Integer> getBettingResult() {
+        Map<String, Integer> result = new LinkedHashMap<>();
+
+        for (Player player : players) {
+            result.put(player.getName(), player.calculateProfit(getResultOf(player)));
+        }
+
+        return result;
+    }
+
+    public void addDealerCost(int money) {
+        dealer.addCost(money);
+    }
+
+    public int getDealerCost() {
+        return dealer.getCost();
+    }
+
     private WinStatus getResultOf(Player player) {
         if (player.isBlackJack() && !dealer.isBlackJack()) {
             return WinStatus.BLACKJACK_WIN;

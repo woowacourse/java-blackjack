@@ -5,7 +5,6 @@ import domain.card.ShuffleStrategy;
 import domain.player.Player;
 import domain.player.PlayerGroups;
 import domain.player.WinStatus;
-import domain.vo.Cost;
 import dto.ParticipantBetResult;
 import dto.ParticipantResult;
 
@@ -61,19 +60,17 @@ public class GameService {
         return playerGroups.getGameResult();
     }
 
-    public List<ParticipantBetResult> bettingResult(Map<String, Cost> userBetInfo) {
+    public List<ParticipantBetResult> bettingResult() {
         List<ParticipantBetResult> profitResults = new ArrayList<>();
-        int dealerCost = 0;
 
-        for (Map.Entry<String, WinStatus> playerWinStatus : playerGroups.getGameResult().entrySet()) {
-            String userName = playerWinStatus.getKey();
-            int userCost = (int) (userBetInfo.get(userName).getCost() * playerWinStatus.getValue().getEarningsRate());
-
-            profitResults.add(new ParticipantBetResult(userName, userCost));
-            dealerCost -= userCost;
+        Map<String, Integer> bettingResult = playerGroups.getBettingResult();
+        for (Map.Entry<String, Integer> playerBettingResult : bettingResult.entrySet()) {
+            Integer playerCost = playerBettingResult.getValue();
+            profitResults.add(new ParticipantBetResult(playerBettingResult.getKey(), playerCost));
+            playerGroups.addDealerCost(Math.negateExact(playerCost));
         }
 
-        profitResults.addFirst(new ParticipantBetResult(playerGroups.getDealerName(), dealerCost));
+        profitResults.addFirst(new ParticipantBetResult(playerGroups.getDealerName(), playerGroups.getDealerCost()));
         return profitResults;
     }
 

@@ -1,5 +1,6 @@
 package domain.player;
 
+import domain.vo.Cost;
 import domain.vo.Name;
 
 public class Dealer extends Participant {
@@ -7,6 +8,7 @@ public class Dealer extends Participant {
 
     public Dealer() {
         super(new Name("딜러"));
+        setCost(new Cost(0));
     }
 
     public boolean isHit() {
