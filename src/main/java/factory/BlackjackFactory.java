@@ -7,7 +7,7 @@ import domain.game.BlackjackJudge;
 import view.InputView;
 import view.OutputView;
 
-public class BlackjackControllerFactory {
+public class BlackjackFactory {
 
     public BlackjackController blackjackController() {
         return new BlackjackController(inputView(), outputView());
