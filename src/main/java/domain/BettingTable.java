@@ -26,12 +26,9 @@ public class BettingTable {
     }
 
     public void settleBet(Player player, WinningStatus winningStatus) {
-        long settledAmount = calculateMoney(player, winningStatus);
-        moneyTable.put(player, new Money(settledAmount));
-    }
-
-    private long calculateMoney(Player player, WinningStatus winningStatus) {
-        return (long) (moneyTable.get(player).amount() * winningStatus.getPayoutRatio());
+        Money initialAmount = moneyTable.get(player);
+        Money profit = initialAmount.calculateProfit(winningStatus);
+        moneyTable.put(player, profit);
     }
 
     public long calculateDealerProfit() {
