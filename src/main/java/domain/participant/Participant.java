@@ -3,6 +3,10 @@ package domain.participant;
 import domain.Score;
 import domain.card.Card;
 import domain.card.Hand;
+import domain.state.Blackjack;
+import domain.state.Bust;
+import domain.state.State;
+import domain.state.Stay;
 import java.util.List;
 
 public abstract class Participant {
@@ -14,6 +18,16 @@ public abstract class Participant {
 
     protected Participant(Hand hand) {
         this.hand = hand;
+    }
+
+    public State getState() {
+        if (hand.isBlackjack()) {
+            return new Blackjack(hand);
+        }
+        if (hand.isBust()) {
+            return new Bust(hand);
+        }
+        return new Stay(hand);
     }
 
     public boolean isBlackjack() {

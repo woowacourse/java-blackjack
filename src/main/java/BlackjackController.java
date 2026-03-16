@@ -1,5 +1,5 @@
 import domain.BetMoney;
-import domain.GameResult;
+import domain.Result;
 import domain.Score;
 import domain.card.Deck;
 import domain.dto.PlayerResult;
@@ -7,6 +7,7 @@ import domain.dto.Profit;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
+import domain.state.State;
 import java.util.ArrayList;
 import java.util.List;
 import view.InputView;
@@ -36,8 +37,14 @@ public class BlackjackController {
 
         List<PlayerResult> playerResults = new ArrayList<>();
 
+//        for (Player player : players.getPlayers()) {
+//            playerResults.add(new PlayerResult(player, GameResult.judgeResult(player, dealer)));
+//        }
+
+        State state = dealer.getState();
         for (Player player : players.getPlayers()) {
-            playerResults.add(new PlayerResult(player, GameResult.judgeResult(player, dealer)));
+            Result judge = player.getState().judge(state);
+            playerResults.add(new PlayerResult(player, judge));
         }
 
         List<Profit> profits = new ArrayList<>();
