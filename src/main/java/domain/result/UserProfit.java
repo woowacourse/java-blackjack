@@ -1,3 +1,3 @@
 package domain.result;
 
-public record UserProfit(RoundBetInfo roundBetInfo, GameResult gameResult, int profit) {}
+public record UserProfit(RoundBetInfo roundBetInfo, GameResult gameResult, double profit) {}

@@ -79,12 +79,12 @@ public class GameService {
     }
 
     private UserProfit createEachUserProfit(RoundBetInfo roundBetInfo, GameResult gameResult) {
-        int eachProfit = bettingRule.calculateBetAmount(roundBetInfo, gameResult);
+        double eachProfit = bettingRule.calculateBetAmount(roundBetInfo, gameResult);
         return roundBetInfo.toUserProfit(gameResult, eachProfit);
     }
 
     public DealerProfit upsertDealerProfit(List<UserProfit> userProfits) {
-        int dealerProfit = 0;
+        double dealerProfit = 0;
         for (UserProfit each : userProfits) {
             dealerProfit += each.profit() * (-1);
         }
