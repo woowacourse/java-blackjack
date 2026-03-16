@@ -39,9 +39,7 @@ public class OutputView {
 
     public static void printParticipantHandWithScore(ParticipantCurrentHand dealerResult, List<ParticipantCurrentHand> players) {
         printPlayerHandWithScore(dealerResult);
-        for(ParticipantCurrentHand participantResult : players) {
-            printPlayerHandWithScore(participantResult);
-        }
+        players.forEach(OutputView::printPlayerHandWithScore);
         printNewLine();
     }
 
@@ -64,9 +62,7 @@ public class OutputView {
     }
 
     private static void printPlayersCurrentDeck(List<ParticipantCurrentHand> players) {
-        for(ParticipantCurrentHand participantHand : players) {
-            printPlayerCurrentDeck(participantHand);
-        }
+        players.forEach(OutputView::printPlayerCurrentDeck);
     }
 
     private static void printPlayerHandWithScore(ParticipantCurrentHand participantResult) {

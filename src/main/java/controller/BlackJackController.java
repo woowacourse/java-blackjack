@@ -35,10 +35,8 @@ public class BlackJackController {
     }
 
     private void addBet() {
-        for(String player : blackJackGame.getPlayerNames()) {
-            BetPrice betPrice = new BetPrice(InputView.getBet(player));
-            blackJackGame.setBet(player, betPrice);
-        }
+        List<String> playerNames = blackJackGame.getPlayerNames();
+        playerNames.forEach(playerName -> blackJackGame.setBet(playerName, new BetPrice(InputView.getBet(playerName))));
     }
 
     private void initGame() {
@@ -52,9 +50,8 @@ public class BlackJackController {
     }
 
     private void drawPlayersTurn() {
-        for(String playerName : blackJackGame.getPlayerNames()) {
-            drawPlayerTurns(playerName);
-        }
+        List<String> playerNames = blackJackGame.getPlayerNames();
+        playerNames.forEach(this::drawPlayerTurns);
         OutputView.printNewLine();
     }
 

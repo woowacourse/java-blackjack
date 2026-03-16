@@ -103,8 +103,7 @@ public class BlackJackGame {
     }
 
     private void initPlayersDraw() {
-        for(String player : participants.getPlayerNames()) {
-            participants.drawPlayer(player, cards.draw());
-        }
+        List<String> playerNames = participants.getPlayerNames();
+        playerNames.forEach(playerName -> participants.drawPlayer(playerName, cards.draw()));
     }
 }
