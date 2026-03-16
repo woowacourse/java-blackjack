@@ -90,6 +90,15 @@ class DealerTest {
         assertThat(dealer.isBust()).isTrue();
     }
 
+    @Test
+    @DisplayName("딜러 카드가 블랙잭(초기 2장의 카드가 21)인지 테스트")
+    void player_isBlackjack() {
+        List<Card> blackjackCards = List.of(Card.of(Rank.ACE, Suit.SPADE), Card.of(Rank.J, Suit.HEART));
+        Dealer dealer = Dealer.of(blackjackCards);
+
+        assertThat(dealer.isBlackjack()).isTrue();
+    }
+
     private Dealer dealerWithInitialCards() {
         return Dealer.of(new ArrayList<>(List.of(
                 Card.of(Rank.TWO, Suit.DIAMOND),

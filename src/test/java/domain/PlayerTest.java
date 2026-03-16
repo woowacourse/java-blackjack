@@ -92,4 +92,15 @@ class PlayerTest {
         assertThat(player.getCards()).hasSize(3);
     }
 
+    @Test
+    @DisplayName("플레이어 카드가 블랙잭(초기 2장의 카드가 21)인지 테스트")
+    void player_isBlackjack() {
+        Player player = Player.of(userName);
+        List<Card> blackjackCards = List.of(Card.of(Rank.ACE, Suit.SPADE), Card.of(Rank.J, Suit.HEART));
+
+        player.addInitialCards(blackjackCards);
+
+        assertThat(player.isBlackjack()).isTrue();
+    }
+
 }
