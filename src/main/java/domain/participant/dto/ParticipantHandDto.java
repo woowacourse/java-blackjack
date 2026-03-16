@@ -5,6 +5,6 @@ import java.util.List;
 
 public record ParticipantHandDto(String playerName, List<String> handOnCards) {
     public static ParticipantHandDto from(Participant participant) {
-        return new ParticipantHandDto(participant.toDisplayMyName(), participant.disPlayMyCardBundle());
+        return new ParticipantHandDto(participant.getName().name(), participant.disPlayMyCardBundle());
     }
 }

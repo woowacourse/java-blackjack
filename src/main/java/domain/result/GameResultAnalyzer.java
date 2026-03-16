@@ -1,13 +1,10 @@
 package domain.result;
 
-import domain.participant.Player;
-import domain.result.dto.DealerGameResultDto;
-import domain.result.dto.PlayerGameResultDto;
-import domain.result.dto.GameResultDto;
-import domain.participant.Dealer;
-import domain.participant.Players;
 
-import java.util.EnumMap;
+import domain.betting.BettingProfit;
+import domain.participant.Dealer;
+import domain.participant.Player;
+import domain.participant.Players;
 import java.util.List;
 
 public class GameResultAnalyzer {
@@ -15,53 +12,67 @@ public class GameResultAnalyzer {
     private GameResultAnalyzer() {
     }
 
-    public static GameResultDto analyze(Players players, Dealer dealer) {
-        List<PlayerGameResultDto> playerGameResultDtos = players.stream()
-                .map(player -> judgePlayerGameResult(dealer, player))
-                .toList();
-        DealerGameResultDto dealerGameResultDto = makeDealerResult(playerGameResultDtos);
-
-        return GameResultDto.of(dealerGameResultDto, playerGameResultDtos);
+    public static BettingResults analyzeBettingResults(Players players, Dealer dealer) {
+        List<BettingResult> playerBettingResults = analyzePlayerBettingResults(players, dealer);
+        BettingResult dealerBettingResult = analyzeDealerBettingResult(dealer, playerBettingResults);
+        return new BettingResults(dealerBettingResult, playerBettingResults);
     }
 
-    private static PlayerGameResultDto judgePlayerGameResult(Dealer dealer, Player player) {
-        if (player.isBusted()) {
-            return PlayerGameResultDto.of(player, GameResult.LOSS);
-        }
+    private static List<BettingResult> analyzePlayerBettingResults(Players players, Dealer dealer) {
+        return players.stream().map(player -> {
+                    WinningStatus winningStatus = judgePlayerGameResult(dealer, player);
+                    return BettingResult.of(player.getName(), BettingProfit.of(winningStatus, player.getBetAmount()));
+                }
+        ).toList();
+    }
 
+    private static BettingResult analyzeDealerBettingResult(Dealer dealer, List<BettingResult> playerBettingResults) {
+        long sum = playerBettingResults.stream()
+                .mapToLong(BettingResult::getProfit)
+                .sum();
+
+        long dealerProfit = negate(sum);
+        return BettingResult.of(dealer.getName(), BettingProfit.from(dealerProfit));
+    }
+
+    private static WinningStatus judgePlayerGameResult(Dealer dealer, Player player) {
         if (dealer.isBusted()) {
-            return PlayerGameResultDto.of(player, GameResult.WIN);
+            return player.isBusted() ? WinningStatus.DRAW : WinningStatus.WIN;
         }
 
-        int dealerResultScore = dealer.getResultScore();
-        GameResult gameResult = judge(dealerResultScore, player.getResultScore());
+        if (player.isBusted()) {
+            return WinningStatus.LOSS;
+        }
 
-        return PlayerGameResultDto.of(player, gameResult);
+        if (player.isBlackjack() && dealer.isBlackjack()) {
+            return WinningStatus.DRAW;
+        }
+
+        if (player.isBlackjack()) {
+            return WinningStatus.BLCAKJACK;
+        }
+
+        if (dealer.isBlackjack()) {
+            return WinningStatus.LOSS;
+        }
+
+        return judgePlayerWinningStatusByScore(player, dealer);
     }
 
-    private static GameResult judge(int dealerScore, int playerScore) {
-        if (dealerScore > playerScore) {
-            return GameResult.LOSS;
+    private static WinningStatus judgePlayerWinningStatusByScore(Player player, Dealer dealer) {
+        if (player.hasHigherScoreThan(dealer)) {
+            return WinningStatus.WIN;
         }
 
-        if (dealerScore == playerScore) {
-            return GameResult.DRAW;
+        if (dealer.hasHigherScoreThan(player)) {
+            return WinningStatus.LOSS;
         }
 
-        return GameResult.WIN;
+        return WinningStatus.DRAW;
     }
 
-    private static DealerGameResultDto makeDealerResult(List<PlayerGameResultDto> playerGameResultDtos) {
-        EnumMap<GameResult, Integer> dealerGameResult = new EnumMap<>(GameResult.class);
-        List<GameResult> list = playerGameResultDtos.stream()
-                .map(PlayerGameResultDto::gameResult)
-                .map(GameResult::reverseResult)
-                .toList();
-
-        for (GameResult gameResult : list) {
-            dealerGameResult.put(gameResult, dealerGameResult.getOrDefault(gameResult, 0) + 1);
-        }
-        return DealerGameResultDto.from(dealerGameResult);
+    private static long negate(long value) {
+        return -value;
     }
 
 }

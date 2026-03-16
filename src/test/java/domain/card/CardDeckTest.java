@@ -1,6 +1,5 @@
 package domain.card;
 
-import static config.BlackjackGameConstant.INITIAL_CARD_DRAW_COUNT;
 
 import java.util.List;
 import org.assertj.core.api.Assertions;
@@ -13,31 +12,33 @@ class CardDeckTest {
     @ParameterizedTest
     @ValueSource(ints = {1, 2})
     void 덱에서_카드를_정해진_개수만큼_뽑는다(int count) {
+        // given
         CardDeck cardDeck = new CardDeckBuilder()
                 .cards(Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER),
                         Card.of(CardDenomination.NINE, CardEmblem.SPADE))
                 .build();
 
-        Hand hand = Hand.empty();
-        cardDeck.draw(hand, 2);
+        // when
+        List<Card> cards = cardDeck.draw(2);
 
-        Assertions.assertThat(hand)
-                .isEqualTo(Hand.from(List.of(
+        // then
+        Assertions.assertThat(cards)
+                .isEqualTo(List.of(
                         Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER),
-                        Card.of(CardDenomination.NINE, CardEmblem.SPADE)))
+                        Card.of(CardDenomination.NINE, CardEmblem.SPADE))
                 );
     }
 
     @Test
     void 카드덱에_카드가없으면_카드를_뽑을_수_없다() {
+        // given
         CardDeck cardDeck = new CardDeckBuilder()
                 .cards(Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER))
                 .build();
 
-        Hand hand = Hand.empty();
-
+        // when & then
         Assertions.assertThatThrownBy(() -> {
-            cardDeck.draw(hand, INITIAL_CARD_DRAW_COUNT);
+            cardDeck.draw(2);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 

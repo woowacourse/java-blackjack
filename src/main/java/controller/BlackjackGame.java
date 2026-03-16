@@ -1,26 +1,28 @@
 package controller;
 
-import static config.BlackjackGameConstant.*;
 
-import domain.participant.dto.ParticipantHandDtoMapper;
-import domain.result.GameResultAnalyzer;
-import domain.result.dto.GameResultDto;
-import domain.intention.DrawCardIntetion;
+import config.BlackjackGameConfiguration;
+import domain.card.Card;
 import domain.card.CardDeck;
 import domain.card.CardDeckInitializer;
-import config.BlackjackGameConfiguration;
 import domain.participant.Dealer;
+import domain.participant.ParticipantInitialInformation;
 import domain.participant.Player;
-import domain.participant.ParticipantName;
 import domain.participant.Players;
+import domain.participant.dto.ParticipantHandDto;
+import domain.participant.dto.ParticipantHandDtoMapper;
+import domain.result.BettingResults;
+import domain.result.GameResultAnalyzer;
+import domain.result.dto.BettingProfitDto;
 import domain.result.dto.ParticipantGameResultDto;
-import view.ApplicationView;
-
 import java.util.List;
+import view.ApplicationView;
 
 public class BlackjackGame {
 
     private static final int STARTING_REVEALED_CARD_COUNT = 1;
+    private static final int INITIAL_CARD_DRAW_COUNT = 2;
+    private static final int DEFAULT_CARD_DRAW_COUNT = 1;
 
     private final ApplicationView view;
     private final CardDeck cardDeck;
@@ -35,38 +37,47 @@ public class BlackjackGame {
     }
 
     public void start() {
-        Dealer dealer = Dealer.from();
-        Players players = Players.from(requestPlayerNames());
+        Dealer dealer = Dealer.create();
+        List<ParticipantInitialInformation> participantInitialInformation = requestInitialInformation();
+        Players players = Players.from(participantInitialInformation);
 
         handOutInitialCard(dealer, players);
-
         printInitialParticipantsHand(dealer, players);
 
         proceedEachPlayersTurn(players);
         proceedDealersTurn(dealer);
 
         printAllParticipantsFinalHandResult(dealer, players);
-        printFinalWinningStatistic(players, dealer);
+        printBettingResult(players, dealer);
     }
 
-    private void printFinalWinningStatistic(Players players, Dealer dealer) {
-        GameResultDto analysis = analyzeBlackjackResult(players, dealer);
-        view.printFinalResultMessage(analysis);
+    private void printBettingResult(Players players, Dealer dealer) {
+        BettingResults bettingResults = GameResultAnalyzer.analyzeBettingResults(players, dealer);
+        BettingProfitDto dealerBettingResultDto = BettingProfitDto.from(bettingResults.dealerBettingResult());
+        List<BettingProfitDto> playerBettingResultDtos = bettingResults.playerBettingResults().stream()
+                .map(BettingProfitDto::from)
+                .toList();
+
+        view.printBettingResults(dealerBettingResultDto, playerBettingResultDtos);
     }
 
     private void printAllParticipantsFinalHandResult(Dealer dealer, Players players) {
-        view.printFinalResultMessage(ParticipantGameResultDto.from(dealer));
-        players.toParticipantGameResultDtos().forEach(view::printFinalResultMessage);
+        view.printParticipantResult(ParticipantGameResultDto.from(dealer));
+        players.stream()
+                .forEach(player -> view.printParticipantResult(ParticipantGameResultDto.from(player)));
     }
 
     private void printInitialParticipantsHand(Dealer dealer, Players players) {
         view.printParticipantHand(ParticipantHandDtoMapper.map(dealer, STARTING_REVEALED_CARD_COUNT));
-        view.printAllPlayersHand(players.toParticipantHandDtos());
+        players.stream()
+                .forEach(player -> view.printParticipantHand(ParticipantHandDto.from(player)));
     }
 
     private void proceedDealersTurn(Dealer dealer) {
-        if (dealer.hitIfRequired(cardDeck)) {
-            view.printDealerAdditionalDrawCardMessage();
+        if (dealer.canHit()) {
+            List<Card> cards = cardDeck.draw(DEFAULT_CARD_DRAW_COUNT);
+            dealer.drawCards(cards);
+            view.printDealerDrawCard();
         }
     }
 
@@ -79,25 +90,26 @@ public class BlackjackGame {
             return;
         }
 
-        DrawCardIntetion drawCardIntetion = view.requestDrawCardIntention(player.toDisplayMyName());
-        while (!player.isBusted() && drawCardIntetion.isYes()) {
-            player.drawCards(cardDeck, DEFAULT_CARD_DRAW_COUNT);
+        while (canContinueDraw(player)) {
+            List<Card> cards = cardDeck.draw(DEFAULT_CARD_DRAW_COUNT);
+            player.drawCards(cards);
             view.printParticipantHand(ParticipantHandDtoMapper.map(player));
         }
     }
 
+    private boolean canContinueDraw(Player player) {
+        return !player.isBusted() && view.requestDrawCardDecision(player.getName().name());
+    }
+
     private void handOutInitialCard(Dealer dealer, Players players) {
-        dealer.drawCards(cardDeck, INITIAL_CARD_DRAW_COUNT);
-        players.giveInitialCardBundle(cardDeck);
-        view.printInitialHandOutResult(players.displayNames(), INITIAL_CARD_DRAW_COUNT);
+        List<Card> cards = cardDeck.draw(INITIAL_CARD_DRAW_COUNT);
+        dealer.drawCards(cards);
+        players.drawCards(cardDeck, INITIAL_CARD_DRAW_COUNT);
+        view.printInitialDeal(players.getPlayerNames(), INITIAL_CARD_DRAW_COUNT);
     }
 
-    private List<ParticipantName> requestPlayerNames() {
-        return view.requestPlayerNames();
-    }
-
-    private GameResultDto analyzeBlackjackResult(Players players, Dealer dealer) {
-        return GameResultAnalyzer.analyze(players, dealer);
+    private List<ParticipantInitialInformation> requestInitialInformation() {
+        return view.requestInitialInformation();
     }
 
 }

@@ -1,12 +1,8 @@
 package domain.participant;
 
-import static config.BlackjackGameConstant.*;
 
+import domain.card.Card;
 import domain.card.CardDeck;
-import domain.participant.dto.ParticipantHandDto;
-import domain.participant.dto.ParticipantHandDtoMapper;
-import domain.result.dto.ParticipantGameResultDto;
-
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -19,9 +15,9 @@ public class Players {
         this.playerList = playerList;
     }
 
-    public static Players from(List<ParticipantName> participantNames) {
-        return new Players(participantNames.stream()
-                .map(Player::from)
+    public static Players from(List<ParticipantInitialInformation> initialInformation) {
+        return new Players(initialInformation.stream()
+                .map(ParticipantInitialInformation::toPlayer)
                 .toList()
         );
     }
@@ -30,26 +26,17 @@ public class Players {
         return playerList.stream();
     }
 
-    public Players giveInitialCardBundle(CardDeck cardDeck) {
-        playerList.forEach(player -> player.drawCards(cardDeck, INITIAL_CARD_DRAW_COUNT));
+    public Players drawCards(CardDeck cardDeck, int count) {
+        playerList.forEach(player -> {
+            List<Card> cards = cardDeck.draw(count);
+            player.drawCards(cards);
+        });
         return this;
     }
 
-    public List<String> displayNames() {
+    public List<ParticipantName> getPlayerNames() {
         return playerList.stream()
-                .map(Player::toDisplayMyName)
-                .toList();
-    }
-
-    public List<ParticipantHandDto> toParticipantHandDtos() {
-        return playerList.stream()
-                .map(ParticipantHandDtoMapper::map)
-                .toList();
-    }
-
-    public List<ParticipantGameResultDto> toParticipantGameResultDtos() {
-        return playerList.stream()
-                .map(ParticipantGameResultDto::from)
+                .map(Participant::getName)
                 .toList();
     }
 

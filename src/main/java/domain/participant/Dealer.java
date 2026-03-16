@@ -1,25 +1,16 @@
 package domain.participant;
 
-import static config.BlackjackGameConstant.*;
-
-import domain.card.CardDeck;
-
 public class Dealer extends Participant {
+
+    private static final int DEALER_ADDITIONAL_DRAW_CONDITION = 16;
+    private static final String DEALER_DISPLAY_NAME = "딜러";
 
     private Dealer() {
         super(ParticipantName.from(DEALER_DISPLAY_NAME));
     }
 
-    public static Dealer from() {
+    public static Dealer create() {
         return new Dealer();
-    }
-
-    public boolean hitIfRequired(CardDeck cardDeck) {
-        if (canHit()) {
-            cardDeck.draw(hand, DEFAULT_CARD_DRAW_COUNT);
-            return true;
-        }
-        return false;
     }
 
     public boolean canHit() {

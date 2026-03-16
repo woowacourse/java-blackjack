@@ -1,10 +1,11 @@
 package domain.participant;
 
-import static config.BlackjackGameConstant.PLAYER_NAME_LENGTH_LIMIT;
 
 import java.util.Objects;
 
 public record ParticipantName(String name) {
+
+    private static final int PLAYER_NAME_LENGTH_LIMIT = 5;
 
     public static ParticipantName from(String name) {
         validateBlank(name);

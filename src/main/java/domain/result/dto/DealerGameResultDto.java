@@ -1,12 +1,12 @@
 package domain.result.dto;
 
-import domain.result.GameResult;
+import domain.result.WinningStatus;
 import java.util.Map;
 
 public record DealerGameResultDto(
-        Map<GameResult, Integer> resultStatistic
+        Map<WinningStatus, Integer> resultStatistic
 ) {
-    public static DealerGameResultDto from(Map<GameResult, Integer> resultStatistic) {
+    public static DealerGameResultDto from(Map<WinningStatus, Integer> resultStatistic) {
         return new DealerGameResultDto(resultStatistic);
     }
 }
