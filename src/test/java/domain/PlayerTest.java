@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import domain.enums.CardRank;
 import domain.enums.CardShape;
+import testutil.PlayerTestUtil;
 
 class PlayerTest {
     private Player player;
@@ -112,5 +113,16 @@ class PlayerTest {
             player.add(card);
         }
         return player;
+    }
+
+
+    @DisplayName("카드 처음 2장 배부")
+    @Test
+    void 카드_처음_2장_배부_테스트() {
+        player.addInitializedCard(PlayerTestUtil.createDeck());
+
+        int result = player.getCards().size();
+
+        assertThat(result).isEqualTo(2);
     }
 }
