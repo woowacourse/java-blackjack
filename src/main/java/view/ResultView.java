@@ -51,11 +51,11 @@ public class ResultView {
 
     public static void printDealerProfit(Money profit) {
         System.out.println("## 최종 수익");
-        System.out.println("딜러: " + profit.getValueOf());
+        System.out.println("딜러: " + profit.toLong());
     }
 
     public static void printPlayerProfit(Name name, Money profit) {
-            System.out.println(name.getValueOf() + ": " + profit.getValueOf());
+            System.out.println(name.getValueOf() + ": " + profit.toLong());
     }
 
     private static void printDealerResult(DealerInfoDto dealerInfoDto) {

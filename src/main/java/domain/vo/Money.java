@@ -1,39 +1,56 @@
 package domain.vo;
 
+import java.math.BigDecimal;
+
 public class Money {
-    private static final int MIN_INCREMENT = 10_000;
-    private final int money;
+    private static final BigDecimal MIN_INCREMENT = BigDecimal.valueOf(10_000);
+    private final BigDecimal money;
 
     public Money(String input) {
-        int value = validateAndParse(input);
+        BigDecimal value = validateAndParse(input);
         validateMinIncrement(value);
         this.money = value;
     }
 
-    public Money(int input) {
+    public Money(long input) {
+        this.money = BigDecimal.valueOf(input);
+    }
+
+    public Money(BigDecimal input) {
         this.money = input;
     }
 
-    public Money(double input) {
-        int value = (int) (input);
-        this.money = value;
+    public Money add(Money other) {
+        return new Money(this.money.add(other.money));
     }
 
-    private int validateAndParse(String input) {
+    public BigDecimal multiplyLong(long input){
+        return this.money.multiply(BigDecimal.valueOf(input));
+    }
+
+    public long toLong() {
+        return money.longValue();
+    }
+
+    public Money negate() {
+        return new Money(this.money.negate());
+    }
+
+    private BigDecimal validateAndParse(String input) {
         try {
-            return Integer.parseInt(input);
+            return new BigDecimal(input);
         } catch (NumberFormatException exception) {
             throw new IllegalArgumentException("[ERROR] " + MIN_INCREMENT + "원 이상의 정수를 입력해야 합니다.");
         }
     }
 
-    private void validateMinIncrement(int value) {
-        if (value < MIN_INCREMENT || value % MIN_INCREMENT != 0){
-            throw new IllegalArgumentException("[ERROR] " + MIN_INCREMENT+ "원 단위여야 하며, 최소 금액은 " + MIN_INCREMENT + "입니다.");
+    private void validateMinIncrement(BigDecimal value) {
+        if (value.compareTo(MIN_INCREMENT) < 0) {
+            throw new IllegalArgumentException("[ERROR] 최소 금액은 " + MIN_INCREMENT + "원입니다.");
         }
-    }
 
-    public int getValueOf() {
-        return Integer.valueOf(money);
+        if (value.remainder(MIN_INCREMENT).compareTo(BigDecimal.ZERO) != 0) {
+            throw new IllegalArgumentException("[ERROR] " + MIN_INCREMENT + "원 단위여야 하며, 최소 금액은 " + MIN_INCREMENT + "입니다.");
+        }
     }
 }
