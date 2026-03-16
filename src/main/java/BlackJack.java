@@ -5,7 +5,9 @@ import domain.player.Dealer;
 import domain.player.Gambler;
 import domain.player.Gamblers;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import parser.AnswerParser;
 import parser.PlayerNameParser;
 import view.InputView;
@@ -119,7 +121,19 @@ public class BlackJack {
 
     private void printFinalResult(Dealer dealer, Gamblers gamblers) {
         OutputView.printFinalResultHeader();
-        int dealerFinalIncome = gamblers.dealerFinalIncome(dealer);
-        OutputView.printResult(gamblers.getResult(dealer), dealerFinalIncome);
+        Map<String, Integer> gamblersResult = getResult(dealer, gamblers);
+        int dealerIncome = 0;
+        for (int income : gamblersResult.values()) {
+            dealerIncome -= income;
+        }
+        OutputView.printResult(gamblersResult, dealerIncome);
+    }
+
+    private Map<String, Integer> getResult(Dealer dealer, Gamblers gamblers) {
+        Map<String, Integer> gamblersResult = new LinkedHashMap<>();
+        for (Gambler gambler : gamblers.getGamblers()) {
+            gamblersResult.put(gambler.getName(), gambler.calculateFinalIncome(dealer));
+        }
+        return gamblersResult;
     }
 }

@@ -58,6 +58,10 @@ public class Gambler extends Player {
             return MatchResult.LOSE;
         }
 
+        return scoreCompare(gamblerScore, dealerScore);
+    }
+
+    private MatchResult scoreCompare(int gamblerScore, int dealerScore) {
         if (gamblerScore > dealerScore) {
             return MatchResult.WIN;
         }
