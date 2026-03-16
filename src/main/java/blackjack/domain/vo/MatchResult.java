@@ -3,21 +3,36 @@ package blackjack.domain.vo;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
-import java.util.Map;
+import java.math.BigDecimal;
 
 public enum MatchResult {
-    WIN("승"),
-    LOSE("패"),
-    DRAW("무");
+    BLACKJACK("승", 1.5),
+    WIN("승", 1.0),
+    LOSE("패", -1.0),
+    DRAW("무", 0.0);
 
     private final String display;
+    private final double earningRate;
 
-    MatchResult(String display) {
+    MatchResult(String display, double earningRate) {
         this.display = display;
+        this.earningRate = earningRate;
     }
 
-    public static MatchResult playerResult(Player player, Dealer dealer) {
+    public static MatchResult judge(Player player, Dealer dealer) {
         if (player.isBust()) {
+            return LOSE;
+        }
+
+        if (player.isBlackjack() && dealer.isBlackjack()) {
+            return DRAW;
+        }
+
+        if (player.isBlackjack()) {
+            return BLACKJACK;
+        }
+
+        if (dealer.isBlackjack()) {
             return LOSE;
         }
 
@@ -25,23 +40,19 @@ public enum MatchResult {
             return WIN;
         }
 
-        if (player.score() > dealer.score()) {
+        if (player.hasHigherScoreThan(dealer)) {
             return WIN;
         }
 
-        if (player.score() < dealer.score()) {
+        if (dealer.hasHigherScoreThan(player)) {
             return LOSE;
         }
 
         return DRAW;
     }
 
-    public static Map<String, Long> dealerResult(Map<String, MatchResult> playerResults) {
-        return Map.of(
-                "승", playerResults.values().stream().filter(r -> r == LOSE).count(),
-                "패", playerResults.values().stream().filter(r -> r == WIN).count(),
-                "무", playerResults.values().stream().filter(r -> r == DRAW).count()
-        );
+    public BigDecimal calculateProfit(BigDecimal betAmount) {
+        return betAmount.multiply(BigDecimal.valueOf(earningRate));
     }
 
     public String getDisplay() {
