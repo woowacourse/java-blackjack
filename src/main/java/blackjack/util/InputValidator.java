@@ -25,7 +25,7 @@ public final class InputValidator {
     }
 
     public static void validateBetAmount(int amount) {
-        if (amount < 0 || amount % 100 != 0 ) {
+        if (amount <= 0 || amount % 100 != 0 ) {
             throw new IllegalArgumentException("100원 단위 자연수가 아닙니다.");
         }
     }

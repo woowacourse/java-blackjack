@@ -5,9 +5,9 @@ import blackjack.model.Hands;
 
 public class Player extends Participant {
 
-    private final int prize;
+    private final Prize prize;
 
-    private Player(String name, Hands hands, int prize) {
+    private Player(String name, Hands hands, Prize prize) {
         super(name, hands);
         this.prize = prize;
     }
@@ -16,7 +16,7 @@ public class Player extends Participant {
         return new Player(
                 name,
                 Hands.empty(),
-                betAmount
+                Prize.of(betAmount)
         );
     }
 
@@ -27,26 +27,22 @@ public class Player extends Participant {
     }
 
     public Player lose() {
-        int negativeMultiplier = -1;
-
         return new Player(
                 name,
                 hands,
-                negativeMultiplier * prize
+                prize.lose()
         );
     }
 
     public Player blackjack() {
-        double blackjackProfitRate = 1.5;
-
         return new Player(
                 name,
                 hands,
-                (int) (prize * blackjackProfitRate)
+                prize.blackjack()
         );
     }
 
     public int getPrize() {
-        return prize;
+        return prize.getAmount();
     }
 }
