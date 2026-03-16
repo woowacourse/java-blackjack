@@ -2,6 +2,7 @@ package blackjack.model.participant;
 
 import blackjack.dto.CardDto;
 import blackjack.model.card.Hands;
+import blackjack.model.result.PlayerResult;
 import java.util.List;
 
 public class Dealer extends Participant {
@@ -24,5 +25,25 @@ public class Dealer extends Participant {
 
     public boolean canPick() {
         return !hands.hasScoreHigherThan(DEALER_PICK_THRESHOLD);
+    }
+
+    public PlayerResult getPlayerResult(final Player player) {
+        if (player.isBust()) {
+            return PlayerResult.LOSE;
+        }
+
+        if (this.isBust()) {
+            return PlayerResult.WIN;
+        }
+
+        if (this.hasHigherScoreThan(player)) {
+            return PlayerResult.LOSE;
+        }
+
+        if (player.hasHigherScoreThan(this)) {
+            return PlayerResult.WIN;
+        }
+
+        return PlayerResult.DRAW;
     }
 }

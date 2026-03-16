@@ -5,6 +5,8 @@ import java.math.RoundingMode;
 
 public record Money(BigDecimal amount) {
 
+    public static final Money ZERO = Money.zero();
+
     public Money {
         if (amount == null) {
             throw new IllegalArgumentException("금액은 null일 수 없습니다.");

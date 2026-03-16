@@ -1,11 +1,10 @@
 package blackjack.controller;
 
-import blackjack.dto.PlayerResultDto;
-import blackjack.dto.PlayerResultsDto;
 import blackjack.model.carddeck.CardDeck;
 import blackjack.model.carddeck.RandomPickStrategy;
 import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Player;
+import blackjack.model.result.PlayerProfits;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import java.util.List;
@@ -108,10 +107,7 @@ public class BlackjackController {
     }
 
     private void printResult(final List<Player> players, final Dealer dealer) {
-        List<PlayerResultDto> results = players.stream()
-                .map(player -> PlayerResultDto.from(player, player.getPlayerProfit(dealer)))
-                .toList();
-
-        outputView.printResult(new PlayerResultsDto(results));
+        PlayerProfits playerProfits = PlayerProfits.of(players, dealer);
+        outputView.printResult(playerProfits.getDealerProfit(), playerProfits.getPlayerResults());
     }
 }

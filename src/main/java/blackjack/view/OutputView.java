@@ -1,7 +1,8 @@
 package blackjack.view;
 
 import blackjack.dto.CardDto;
-import blackjack.dto.PlayerResultsDto;
+import blackjack.dto.DealerProfitDto;
+import blackjack.dto.PlayerProfitsDto;
 import blackjack.model.participant.Player;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -43,17 +44,17 @@ public class OutputView {
         System.out.println("딜러는 16초과라 더 이상 카드를 받지 않습니다.");
     }
 
-    public void printResult(final PlayerResultsDto playerResults) {
+    public void printResult(final DealerProfitDto dealerProfit, final PlayerProfitsDto playerResults) {
         System.out.println("## 최종 수익");
-        printDealerResult(playerResults);
+        printDealerResult(dealerProfit);
         printAllPlayerResult(playerResults);
     }
 
-    private void printDealerResult(final PlayerResultsDto dealerResult) {
-        System.out.printf("딜러: %s\n", dealerResult.getDealerProfit());
+    private void printDealerResult(final DealerProfitDto dealerProfit) {
+        System.out.printf("딜러: %s\n", dealerProfit.profit());
     }
 
-    private void printAllPlayerResult(final PlayerResultsDto playerResults) {
+    private void printAllPlayerResult(final PlayerProfitsDto playerResults) {
         String results = playerResults.results().stream()
                 .map(result -> result.name() + ": " + result.profit())
                 .collect(Collectors.joining("\n"));

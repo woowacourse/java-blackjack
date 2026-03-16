@@ -10,7 +10,8 @@ public enum ErrorCode {
     NULL_PICK_STRATEGY("PickStrategy가 null 입니다."),
     EMPTY_CARD_DECK("카드 덱에 더 이상 카드가 존재하지 않습니다."),
     NULL_OR_EMPTY_RESULT("결과가 존재하지 않습니다."),
-    INVALID_INPUT("'y' 또는 'n'만 입력 가능합니다.");
+    INVALID_INPUT("'y' 또는 'n'만 입력 가능합니다."),
+    NOT_FOUND_PLAYER_RESULT("플레이어의 결과를 찾을 수 없습니다.");
 
     private final String message;
 
