@@ -30,7 +30,7 @@ public class BlackJackGame {
         participants.addPlayer(playerName);
     }
 
-    public void setBet(String playerName, BetPrice bet) {
+    public void placeBet(String playerName, BetPrice bet) {
         participants.addBet(playerName, bet);
     }
 

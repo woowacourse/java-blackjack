@@ -36,7 +36,7 @@ public class BlackJackController {
 
     private void addBet() {
         List<String> playerNames = blackJackGame.getPlayerNames();
-        playerNames.forEach(playerName -> blackJackGame.setBet(playerName, new BetPrice(InputView.getBet(playerName))));
+        playerNames.forEach(playerName -> blackJackGame.placeBet(playerName, new BetPrice(InputView.getBet(playerName))));
     }
 
     private void initGame() {
