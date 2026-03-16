@@ -7,6 +7,11 @@ public record Money(
     int value
 ) {
 
+    public Money {
+        validateMoneyOutOfRange(value);
+        validateMoneyUnit(value);
+    }
+
     public static Money from(String input) {
         validate(input);
         return new Money(Integer.parseInt(input));
@@ -31,7 +36,11 @@ public record Money(
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException(ErrorMessage.MONEY_OUT_OF_RANGE.getMessage());
         }
-        if (!(PolicyConstant.MONEY_MIN_VALUE <= money && money <= PolicyConstant.MONEY_MAX_VALUE)) {
+        validateMoneyOutOfRange(money);
+    }
+
+    private static void validateMoneyOutOfRange(int input) {
+        if (!(PolicyConstant.MONEY_MIN_VALUE <= input && input <= PolicyConstant.MONEY_MAX_VALUE)) {
             throw new IllegalArgumentException(ErrorMessage.MONEY_OUT_OF_RANGE.getMessage());
         }
     }
