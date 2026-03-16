@@ -18,18 +18,18 @@ public class BettingProfit {
 
     public static BettingProfit of(WinningStatus winningStatus, BetAmount betAmount) {
         if (winningStatus.equals(WinningStatus.BLCAKJACK)) {
-            return new BettingProfit(betAmount.calculateProfit(BLACKJACK_RATE));
+            return new BettingProfit(betAmount.applyRate(BLACKJACK_RATE));
         }
 
         if (winningStatus.equals(WinningStatus.WIN)) {
-            return new BettingProfit(betAmount.calculateProfit(WINNING_RATE));
+            return new BettingProfit(betAmount.applyRate(WINNING_RATE));
         }
 
         if (winningStatus.equals(WinningStatus.DRAW)) {
-            return new BettingProfit(betAmount.calculateProfit(DRAW_RATE));
+            return new BettingProfit(betAmount.applyRate(DRAW_RATE));
         }
 
-        return new BettingProfit(betAmount.calculateProfit(LOSS_RATE));
+        return new BettingProfit(betAmount.applyRate(LOSS_RATE));
     }
 
     public static BettingProfit from(long profit) {
