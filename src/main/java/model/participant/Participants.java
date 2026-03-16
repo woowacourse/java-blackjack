@@ -41,7 +41,7 @@ public class Participants {
     }
 
     public String getDealerFirstCard() {
-        return dealer.getFirstCard();
+        return dealer.getInitialCard();
     }
 
     public ParticipantCurrentHand getDealerHand() {

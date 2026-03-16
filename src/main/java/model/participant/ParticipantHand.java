@@ -35,10 +35,6 @@ public class ParticipantHand {
                 .toList();
     }
 
-    public String getFirstCard() {
-        return deck.getFirstCard().getString();
-    }
-
     public boolean isBust() {
         Integer score = getScore();
         return score > BUST_SCORE;

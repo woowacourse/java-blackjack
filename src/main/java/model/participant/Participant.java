@@ -2,6 +2,7 @@ package model.participant;
 
 import dto.result.ParticipantCurrentHand;
 import dto.status.PlayerName;
+import java.util.List;
 import model.card.Card;
 
 public class Participant {
@@ -36,7 +37,7 @@ public class Participant {
         return participantHand.isBlackJack();
     }
 
-    protected String getFirstCard() {
-        return participantHand.getFirstCard();
+    protected List<String> getCurrentCard() {
+        return participantHand.getDeck();
     }
 }

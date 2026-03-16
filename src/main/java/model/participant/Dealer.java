@@ -12,15 +12,14 @@ public class Dealer extends Participant {
         super(new PlayerName(DEALER_NAME));
     }
 
-    @Override
-    public String getFirstCard() {
-        return super.getFirstCard();
-    }
-
     public void validateSameName(String name) {
         if(name.equals(DEALER_NAME)) {
             throw new IllegalArgumentException(ErrorMessage.NO_PLAYER_NAME_DEALER.getMessage());
         }
+    }
+
+    public String getInitialCard() {
+        return super.getCurrentCard().getFirst();
     }
 
     public boolean canDraw() {
