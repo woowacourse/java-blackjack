@@ -8,7 +8,7 @@ public record InitStatusDto(List<String> names, HandDto dealerHandDto, List<Play
 
     public static InitStatusDto of(Dealer dealer, List<Player> players) {
         List<String> names = players.stream()
-                .map(Player::getName)
+                .map(Player::getNameString)
                 .toList();
 
         HandDto dealerHandDto = HandDto.from(dealer.getFirstCard());

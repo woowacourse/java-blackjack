@@ -1,11 +1,11 @@
 package controller;
 
-import domain.participant.Dealer;
 import domain.Deck;
 import domain.Money;
-import domain.participant.Player;
 import domain.betting.Betting;
 import domain.betting.Bettings;
+import domain.participant.Dealer;
+import domain.participant.Player;
 import domain.result.Results;
 import dto.FinalResultDto;
 import dto.HandDto;
@@ -44,7 +44,7 @@ public class BlackJackController {
     private Bettings betMoney(List<Player> players) {
         Bettings bettings = new Bettings();
         for (Player player : players) {
-            Money money = new Money(InputView.askBettingAmount(player.getName()));
+            Money money = new Money(InputView.askBettingAmount(player.getNameString()));
             Betting betting = new Betting(player, money);
             bettings = bettings.addBetting(betting);
         }
@@ -81,20 +81,20 @@ public class BlackJackController {
     }
 
     private void repeatCommands(Player player, Deck deck) {
-        while (blackJackTurnService.canPlayerHit(player, InputView.askPlayerCommand(player.getName()))) {
+        while (blackJackTurnService.canPlayerHit(player, InputView.askPlayerCommand(player.getNameString()))) {
             blackJackTurnService.playerHit(player, deck);
             HandDto handDto = HandDto.from(player.getHand());
-            OutputView.printHandOutput(player.getName(), handDto);
+            OutputView.printHandOutput(player.getNameString(), handDto);
         }
     }
 
     private boolean isFirstCommandNo(Player player, Deck deck) {
-        String yesNoInput = InputView.askPlayerCommand(player.getName());
+        String yesNoInput = InputView.askPlayerCommand(player.getNameString());
 
         if (blackJackTurnService.canPlayerHit(player, yesNoInput)) {
             blackJackTurnService.playerHit(player, deck);
             HandDto handDto = HandDto.from(player.getHand());
-            OutputView.printHandOutput(player.getName(), handDto);
+            OutputView.printHandOutput(player.getNameString(), handDto);
         }
         return !blackJackTurnService.canPlayerHit(player, yesNoInput);
     }

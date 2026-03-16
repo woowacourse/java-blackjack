@@ -7,7 +7,7 @@ import java.util.List;
 public record PlayerResultDto(String name, long profit) {
 
     public static PlayerResultDto from(Result result) {
-        String name = result.getPlayer().getName();
+        String name = result.getPlayer().getNameString();
         long profit = result.getProfit().amount();
         return new PlayerResultDto(name, profit);
     }
