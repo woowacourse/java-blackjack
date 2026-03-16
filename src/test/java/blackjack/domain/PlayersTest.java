@@ -3,7 +3,6 @@ package blackjack.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.participant.Dealer;
-import blackjack.dto.PlayerBettingRequest;
 import blackjack.dto.PlayerGameResult;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -17,9 +16,12 @@ class PlayersTest {
         // given
         Nickname boyeNickname = Nickname.from("boye");
         Nickname suminNickname = Nickname.from("sumin");
+        Amount boyeAmount = Amount.from("1000");
+        Amount suminAmount = Amount.from("20000");
 
         // when
-        Players players = Players.makeEmptyPlayers().addPlayer(boyeNickname, 1000).addPlayer(suminNickname, 20000);
+        Players players = Players.makeEmptyPlayers().addPlayer(boyeNickname, boyeAmount)
+            .addPlayer(suminNickname, suminAmount);
 
         // then
         assertThat(players.getAllPlayers()).hasSize(2);
@@ -32,7 +34,10 @@ class PlayersTest {
         // given
         Nickname boyeNickname = Nickname.from("boye");
         Nickname suminNickname = Nickname.from("sumin");
-        Players players = Players.makeEmptyPlayers().addPlayer(boyeNickname, 1000).addPlayer(suminNickname, 20000);
+        Amount boyeAmount = Amount.from("1000");
+        Amount suminAmount = Amount.from("20000");
+        Players players = Players.makeEmptyPlayers().addPlayer(boyeNickname, boyeAmount)
+            .addPlayer(suminNickname, suminAmount);
 
         // when & then
         assertThat(players.findDrawablePlayerNickname()).isEqualTo("boye");
@@ -50,7 +55,10 @@ class PlayersTest {
         // given
         Nickname boyeNickname = Nickname.from("boye");
         Nickname suminNickname = Nickname.from("sumin");
-        Players players = Players.makeEmptyPlayers().addPlayer(boyeNickname, 1000).addPlayer(suminNickname, 20000);
+        Amount boyeAmount = Amount.from("1000");
+        Amount suminAmount = Amount.from("20000");
+        Players players = Players.makeEmptyPlayers().addPlayer(boyeNickname, boyeAmount)
+            .addPlayer(suminNickname, suminAmount);
         Hand bustedCards = Hand.from(List.of(
             new Card(Rank.TEN, Suit.SPADE),
             new Card(Rank.TEN, Suit.HEART),
@@ -69,7 +77,8 @@ class PlayersTest {
     void findDrawablePlayerReturnsNullWhenAllDone() {
         // given
         Nickname boyeNickname = Nickname.from("boye");
-        Players players = Players.makeEmptyPlayers().addPlayer(boyeNickname, 1000);
+        Amount boyeAmount = Amount.from("1000");
+        Players players = Players.makeEmptyPlayers().addPlayer(boyeNickname, boyeAmount);
 
         // when
         players.dontWantDraw();
@@ -83,7 +92,8 @@ class PlayersTest {
     void getPlayerWinningResultsPlayerWins() {
         // given
         Nickname boyeNickname = Nickname.from("boye");
-        Players players = Players.makeEmptyPlayers().addPlayer(boyeNickname, 1000);
+        Amount boyeAmount = Amount.from("1000");
+        Players players = Players.makeEmptyPlayers().addPlayer(boyeNickname, boyeAmount);
         Hand playerCards = Hand.from(List.of(
             new Card(Rank.TEN, Suit.SPADE),
             new Card(Rank.TEN, Suit.HEART)
@@ -109,7 +119,8 @@ class PlayersTest {
     void getPlayerWinningResultsPlayerLoses() {
         // given
         Nickname boyeNickname = Nickname.from("boye");
-        Players players = Players.makeEmptyPlayers().addPlayer(boyeNickname, 1000);
+        Amount boyeAmount = Amount.from("1000");
+        Players players = Players.makeEmptyPlayers().addPlayer(boyeNickname, boyeAmount);
         Hand playerCards = Hand.from(List.of(
             new Card(Rank.TEN, Suit.DIAMOND),
             new Card(Rank.EIGHT, Suit.HEART)

@@ -2,6 +2,7 @@ package blackjack.dto;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.Amount;
 import blackjack.domain.Nickname;
 import blackjack.domain.Participants;
 import blackjack.domain.Players;
@@ -18,8 +19,8 @@ class PlayerNicknamesResultTest {
     @DisplayName("플레이어들의 닉네임 dto 생성읋 확인한다.")
     void makePlayerNicknameResult() {
         // given
-        Player playerA = new Player(Nickname.from("boye"), Role.PLAYER, 1000);
-        Player playerB = new Player(Nickname.from("sumin"), Role.PLAYER, 2000);
+        Player playerA = new Player(Nickname.from("boye"), Role.PLAYER, Amount.from("1000"));
+        Player playerB = new Player(Nickname.from("sumin"), Role.PLAYER, Amount.from("2000"));
         Players players = Players.from(List.of(playerA, playerB));
         Dealer dealer = Dealer.from();
         Participants participants = new Participants(players, dealer);
