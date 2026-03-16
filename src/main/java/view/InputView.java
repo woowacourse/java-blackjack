@@ -1,7 +1,9 @@
 package view;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import static util.BlackJackConstant.MAX_NAME_LENGTH;
@@ -51,6 +53,8 @@ public class InputView {
 
     private List<String> splitPlayerNames(String playerNames) {
         List<String> names = List.of(playerNames.split(COMMA_DELIMITER, -1));
+
+        Set<String> uniqNames = new HashSet<>();
         for (String name : names) {
             name = name.trim();
 
@@ -60,6 +64,10 @@ public class InputView {
             if (!Pattern.matches(STRING_REGEX, name)) {
                 throw new IllegalArgumentException("플레이어 이름은 영문자만 포함되어야 합니다.");
             }
+            if (uniqNames.contains(name)) {
+                throw new IllegalArgumentException("플레이어 이름은 중복될 수 없습니다.");
+            }
+            uniqNames.add(name);
         }
         return names;
     }

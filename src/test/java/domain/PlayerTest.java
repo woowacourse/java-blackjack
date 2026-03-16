@@ -17,7 +17,7 @@ class PlayerTest {
         String name = "pobi";
 
         // when - then
-        Assertions.assertDoesNotThrow(() -> new Player(name));
+        Assertions.assertDoesNotThrow(() -> new Player(name, 10000));
     }
 
     @Test
@@ -27,7 +27,7 @@ class PlayerTest {
         String name = "";
 
         // when - then
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new Player(name));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new Player(name, 10000));
     }
 
     @Test
@@ -37,7 +37,7 @@ class PlayerTest {
         String name = "pobipobip";
 
         // when - then
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new Player(name));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new Player(name, 10000));
     }
 
     @Test
@@ -47,43 +47,19 @@ class PlayerTest {
         String name = "&*&@$";
 
         // when - then
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new Player(name));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new Player(name, 10000));
     }
 
     @Test
     @DisplayName("hit 처리 시, 1장을 뽑는다.")
     void Hand에_1장_추가() {
         // given
-        Player player = new Player("pobi");
+        Player player = new Player("pobi", 10000);
 
         // when
         player.hit(new Card(Rank.ACE, Suit.DIAMOND));
 
         // then
         Assertions.assertEquals(1, player.getHand().getHand().size());
-    }
-
-    @Test
-    @DisplayName("플레이어는 한 번만 베팅할 수 있어야 한다.")
-    void 플레이어_베팅_한_번_성공() {
-        // given
-        Player player = new Player("pobi");
-
-        // when
-        player.bet(30000);
-    }
-
-    @Test
-    @DisplayName("플레이어는 베팅 금액은 두 번 이상 적용을 허용하지 않는다.")
-    void 플레이어_두번_베팅_실패() {
-        // given
-        Player player = new Player("pobi");
-
-        // when
-        player.bet(30000);
-
-        // then
-        Assertions.assertThrows(IllegalArgumentException.class,
-                () -> player.bet(20000));
     }
 }

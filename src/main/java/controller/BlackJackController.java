@@ -10,6 +10,7 @@ import service.BlackJackService;
 import view.InputView;
 import view.OutputView;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,8 +27,10 @@ public class BlackJackController {
     public void play() {
         Deck deck = new Deck(new DefaultShuffleStrategy());
         Dealer dealer = new Dealer();
-        Players players = readUntilValidPlayers();
-        readUntilValidMoney(players);
+
+        List<String> playerNames = readUntilValidPlayers();
+        Map<String, Integer> playerBets = readUntilValidMoney(playerNames);
+        Players players = new Players(playerBets);
 
         BlackJackService blackJackService = new BlackJackService(deck, dealer, players);
         blackJackService.initHand();
@@ -65,15 +68,16 @@ public class BlackJackController {
         }
     }
 
-    private Players readUntilValidPlayers() {
-        List<String> players = inputView.readPlayers();
-        return new Players(players);
+    private List<String> readUntilValidPlayers() {
+        return inputView.readPlayers();
     }
 
-    private void readUntilValidMoney(Players players) {
-        for (Player player : players.getPlayers()) {
-            int betAmount = inputView.readBettingAmount(player.getName());
-            player.bet(betAmount);
+    private Map<String, Integer> readUntilValidMoney(List<String> playerNames) {
+        Map<String, Integer> players = new HashMap<>();
+        for (String name : playerNames) {
+            int betAmount = inputView.readBettingAmount(name);
+            players.put(name, betAmount);
         }
+        return players;
     }
 }

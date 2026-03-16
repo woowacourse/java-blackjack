@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 class BlackJackServiceTest {
@@ -20,7 +20,9 @@ class BlackJackServiceTest {
     void 게임_시작시_2장_카드() {
         // given
         Dealer dealer = new Dealer();
-        Players players = new Players(List.of("pobi", "james"));
+        Map<String, Integer> playerBets = new HashMap<>();
+        playerBets.put("pobi", 1000);
+        Players players = new Players(playerBets);
 
         BlackJackService blackJackService = new BlackJackService(
                 new Deck(new DefaultShuffleStrategy()), dealer, players);
@@ -45,7 +47,10 @@ class BlackJackServiceTest {
     void 플레이어_승_판단() {
         // given
         Dealer dealer = new Dealer();
-        Players players = new Players(List.of("pobi"));
+        Map<String, Integer> playerBets = new HashMap<>();
+        playerBets.put("pobi", 1000);
+        Players players = new Players(playerBets);
+
         BlackJackService blackJackService = new BlackJackService(
                 new Deck(new DefaultShuffleStrategy()), dealer, players);
 
@@ -71,7 +76,10 @@ class BlackJackServiceTest {
     void 플레이어_무승부_판단() {
         // given
         Dealer dealer = new Dealer();
-        Players players = new Players(List.of("pobi"));
+        Map<String, Integer> playerBets = new HashMap<>();
+        playerBets.put("pobi", 1000);
+        Players players = new Players(playerBets);
+
         BlackJackService blackJackService = new BlackJackService(
                 new Deck(new DefaultShuffleStrategy()), dealer, players);
 
@@ -97,7 +105,10 @@ class BlackJackServiceTest {
     void 플레이어_패_판단() {
         // given
         Dealer dealer = new Dealer();
-        Players players = new Players(List.of("pobi"));
+        Map<String, Integer> playerBets = new HashMap<>();
+        playerBets.put("pobi", 1000);
+        Players players = new Players(playerBets);
+
         BlackJackService blackJackService = new BlackJackService(
                 new Deck(new DefaultShuffleStrategy()), dealer, players);
 
@@ -123,7 +134,10 @@ class BlackJackServiceTest {
     void 플레이어만_버스트_패_판단() {
         // given
         Dealer dealer = new Dealer();
-        Players players = new Players(List.of("pobi"));
+        Map<String, Integer> playerBets = new HashMap<>();
+        playerBets.put("pobi", 1000);
+        Players players = new Players(playerBets);
+
         BlackJackService blackJackService = new BlackJackService(
                 new Deck(new DefaultShuffleStrategy()), dealer, players);
 
@@ -150,7 +164,10 @@ class BlackJackServiceTest {
     void 딜러만_버스트_플레이어_패_판단() {
         // given
         Dealer dealer = new Dealer();
-        Players players = new Players(List.of("pobi"));
+        Map<String, Integer> playerBets = new HashMap<>();
+        playerBets.put("pobi", 1000);
+        Players players = new Players(playerBets);
+
         BlackJackService blackJackService = new BlackJackService(
                 new Deck(new DefaultShuffleStrategy()), dealer, players);
 
@@ -177,7 +194,10 @@ class BlackJackServiceTest {
     void 동점_플레이어_블랙잭_승리_판단() {
         // given
         Dealer dealer = new Dealer();
-        Players players = new Players(List.of("pobi"));
+        Map<String, Integer> playerBets = new HashMap<>();
+        playerBets.put("pobi", 1000);
+        Players players = new Players(playerBets);
+
         BlackJackService blackJackService = new BlackJackService(
                 new Deck(new DefaultShuffleStrategy()), dealer, players);
 
@@ -204,7 +224,10 @@ class BlackJackServiceTest {
     void 동점_딜러_블랙잭_플레이어_패배_판단() {
         // given
         Dealer dealer = new Dealer();
-        Players players = new Players(List.of("pobi"));
+        Map<String, Integer> playerBets = new HashMap<>();
+        playerBets.put("pobi", 1000);
+        Players players = new Players(playerBets);
+
         BlackJackService blackJackService = new BlackJackService(
                 new Deck(new DefaultShuffleStrategy()), dealer, players);
 
@@ -231,7 +254,10 @@ class BlackJackServiceTest {
     void 동점_블랙잭_무승_판단() {
         // given
         Dealer dealer = new Dealer();
-        Players players = new Players(List.of("pobi"));
+        Map<String, Integer> playerBets = new HashMap<>();
+        playerBets.put("pobi", 1000);
+        Players players = new Players(playerBets);
+
         BlackJackService blackJackService = new BlackJackService(
                 new Deck(new DefaultShuffleStrategy()), dealer, players);
 
@@ -258,7 +284,10 @@ class BlackJackServiceTest {
         // given
         Dealer dealer = new Dealer();
         String name = "pobi";
-        Players players = new Players(List.of(name));
+        Map<String, Integer> playerBets = new HashMap<>();
+        int money = 1000;
+        playerBets.put(name, money);
+        Players players = new Players(playerBets);
 
         BlackJackService blackJackService = new BlackJackService(
                 new Deck(new DefaultShuffleStrategy()), dealer, players);
@@ -267,7 +296,6 @@ class BlackJackServiceTest {
         dealer.hit(new Card(Rank.SEVEN, Suit.HEART));
 
         Player player = players.getPlayers().getFirst();
-        player.bet(10000);
 
         player.hit(new Card(Rank.NINE, Suit.HEART));
         player.hit(new Card(Rank.KING, Suit.CLOVER));
@@ -276,7 +304,7 @@ class BlackJackServiceTest {
         Map<String, BettingResult> results = blackJackService.calculateBettingResults();
 
         // then
-        Assertions.assertEquals(10000, results.get(name).getEarnings());
+        Assertions.assertEquals(money, results.get(name).getEarnings());
     }
 
     @Test
@@ -284,8 +312,12 @@ class BlackJackServiceTest {
     void 플레이어_블랙잭_승리_베팅결과() {
         // given
         Dealer dealer = new Dealer();
+
         String name = "pobi";
-        Players players = new Players(List.of(name));
+        int money = 10000;
+        Map<String, Integer> playerBets = new HashMap<>();
+        playerBets.put(name, money);
+        Players players = new Players(playerBets);
 
         BlackJackService blackJackService = new BlackJackService(
                 new Deck(new DefaultShuffleStrategy()), dealer, players);
@@ -294,9 +326,6 @@ class BlackJackServiceTest {
         dealer.hit(new Card(Rank.SEVEN, Suit.HEART));
 
         Player player = players.getPlayers().getFirst();
-        int money = 10000;
-        player.bet(money);
-
         player.hit(new Card(Rank.ACE, Suit.CLOVER));
         player.hit(new Card(Rank.KING, Suit.CLOVER));
 
@@ -312,8 +341,12 @@ class BlackJackServiceTest {
     void 플레이어_패배_베팅결과() {
         // given
         Dealer dealer = new Dealer();
+
         String name = "pobi";
-        Players players = new Players(List.of(name));
+        int money = 10000;
+        Map<String, Integer> playerBets = new HashMap<>();
+        playerBets.put(name, money);
+        Players players = new Players(playerBets);
 
         BlackJackService blackJackService = new BlackJackService(
                 new Deck(new DefaultShuffleStrategy()), dealer, players);
@@ -322,8 +355,6 @@ class BlackJackServiceTest {
         dealer.hit(new Card(Rank.KING, Suit.CLOVER));
 
         Player player = players.getPlayers().getFirst();
-        int money = 10000;
-        player.bet(money);
         player.hit(new Card(Rank.JACK, Suit.CLOVER));
         player.hit(new Card(Rank.SEVEN, Suit.HEART));
 
@@ -339,8 +370,12 @@ class BlackJackServiceTest {
     void 플레이어_무승부_베팅결과() {
         // given
         Dealer dealer = new Dealer();
+
         String name = "pobi";
-        Players players = new Players(List.of(name));
+        int money = 10000;
+        Map<String, Integer> playerBets = new HashMap<>();
+        playerBets.put(name, money);
+        Players players = new Players(playerBets);
 
         BlackJackService blackJackService = new BlackJackService(
                 new Deck(new DefaultShuffleStrategy()), dealer, players);
@@ -349,8 +384,6 @@ class BlackJackServiceTest {
         dealer.hit(new Card(Rank.SEVEN, Suit.HEART));
 
         Player player = players.getPlayers().getFirst();
-        int money = 10000;
-        player.bet(money);
         player.hit(new Card(Rank.NINE, Suit.CLOVER));
         player.hit(new Card(Rank.EIGHT, Suit.CLOVER));
 
