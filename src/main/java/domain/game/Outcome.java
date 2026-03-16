@@ -12,6 +12,10 @@ public enum Outcome {
         this.profitRate = profitRate;
     }
 
+    public int calculateProfit(int amount) {
+        return (int) (amount * profitRate);
+    }
+
     public double getProfitRate() {
         return profitRate;
     }
