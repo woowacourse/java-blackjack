@@ -40,7 +40,7 @@ class BetAmountTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"0", "-1"})
-    @DisplayName("입력값이 1원 이하일 경우 예외 발생")
+    @DisplayName("입력값이 0원 이하일 경우 예외 발생")
     void createBetAmount_fail_when_input_is_not_positive(String negativeInput) {
         //when & then
         Assertions.assertThatThrownBy(() -> new BetAmount(negativeInput))
