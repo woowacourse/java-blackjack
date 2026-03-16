@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import domain.Money;
 import domain.card.Card;
 import domain.card.CardSuit;
-import domain.card.CardValue;
+import domain.card.CardScore;
 import domain.card.Deck;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,13 +17,13 @@ public class PlayerTest {
     @Test
     @DisplayName("숫자에 대한 카드 점수를 계산한다.")
     void calculateNumberTotalScoreTest() {
-        List<Card> cards1 = List.of(new Card(CardValue.EIGHT, CardSuit.CLUB),
-                new Card(CardValue.FOUR, CardSuit.CLUB));
+        List<Card> cards1 = List.of(new Card(CardScore.EIGHT, CardSuit.CLUB),
+                new Card(CardScore.FOUR, CardSuit.CLUB));
         Player player1 = new Player(cards1, "pobi", new Money(1000));
 
         int totalScore1 = player1.calculateScore();
 
-        List<Card> cards2 = List.of(new Card(CardValue.EIGHT, CardSuit.CLUB), new Card(CardValue.TWO, CardSuit.CLUB));
+        List<Card> cards2 = List.of(new Card(CardScore.EIGHT, CardSuit.CLUB), new Card(CardScore.TWO, CardSuit.CLUB));
         Player player2 = new Player(cards2, "woni", new Money(1000));
 
         int totalScore2 = player2.calculateScore();
@@ -35,7 +35,7 @@ public class PlayerTest {
     @Test
     @DisplayName("알파벳에 대한 카드 점수를 계산한다. (ex - J, Q, K)")
     void calculateAlphabetTotalScoreTest() {
-        List<Card> cards = List.of(new Card(CardValue.JACK, CardSuit.CLUB), new Card(CardValue.FOUR, CardSuit.CLUB));
+        List<Card> cards = List.of(new Card(CardScore.JACK, CardSuit.CLUB), new Card(CardScore.FOUR, CardSuit.CLUB));
 
         Player player = new Player(cards, "pobi", new Money(1000));
 
@@ -48,13 +48,13 @@ public class PlayerTest {
     @DisplayName("Ace에 대한 점수를 처리한다.")
     void judgeAceTest() {
         List<Card> cards1 = new ArrayList(
-                List.of(new Card(CardValue.JACK, CardSuit.CLUB), new Card(CardValue.FOUR, CardSuit.CLUB)));
+                List.of(new Card(CardScore.JACK, CardSuit.CLUB), new Card(CardScore.FOUR, CardSuit.CLUB)));
         Player player1 = new Player(cards1, "pobi", new Money(1000));
-        player1.addCard(new Card(CardValue.ACE, CardSuit.CLUB));
+        player1.addCard(new Card(CardScore.ACE, CardSuit.CLUB));
         int player1TotalScore = player1.calculateScore();
 
         List<Card> cards2 = new ArrayList(
-                List.of(new Card(CardValue.FOUR, CardSuit.CLUB), new Card(CardValue.ACE, CardSuit.CLUB)));
+                List.of(new Card(CardScore.FOUR, CardSuit.CLUB), new Card(CardScore.ACE, CardSuit.CLUB)));
         Player player2 = new Player(cards2, "woni", new Money(1000));
         int player2TotalScore = player2.calculateScore();
 
@@ -66,16 +66,16 @@ public class PlayerTest {
     @DisplayName("여러 장의 Ace에 대한 점수를 처리한다.")
     void judgeManyAceTest() {
         List<Card> cards1 = new ArrayList<>(
-                List.of(new Card(CardValue.EIGHT, CardSuit.CLUB), new Card(CardValue.ACE, CardSuit.CLUB)));
+                List.of(new Card(CardScore.EIGHT, CardSuit.CLUB), new Card(CardScore.ACE, CardSuit.CLUB)));
         Player player1 = new Player(cards1, "pobi", new Money(1000));
-        player1.addCard(new Card(CardValue.ACE, CardSuit.SPADE));
+        player1.addCard(new Card(CardScore.ACE, CardSuit.SPADE));
         int player1TotalScore = player1.calculateScore();
 
         List<Card> cards2 = new ArrayList<>(
-                List.of(new Card(CardValue.FOUR, CardSuit.CLUB), new Card(CardValue.ACE, CardSuit.CLUB)));
+                List.of(new Card(CardScore.FOUR, CardSuit.CLUB), new Card(CardScore.ACE, CardSuit.CLUB)));
         Player player2 = new Player(cards2, "woni", new Money(1000));
-        player2.addCard(new Card(CardValue.ACE, CardSuit.SPADE));
-        player2.addCard(new Card(CardValue.ACE, CardSuit.HEART));
+        player2.addCard(new Card(CardScore.ACE, CardSuit.SPADE));
+        player2.addCard(new Card(CardScore.ACE, CardSuit.HEART));
         int player2TotalScore = player2.calculateScore();
 
         Assertions.assertThat(player1TotalScore).isEqualTo(20);
@@ -86,9 +86,9 @@ public class PlayerTest {
     @DisplayName("21을 초과하면 버스트이다.")
     void judgeBustTest() {
         List<Card> cards = new ArrayList<>(
-                List.of(new Card(CardValue.JACK, CardSuit.CLUB), new Card(CardValue.FOUR, CardSuit.CLUB)));
+                List.of(new Card(CardScore.JACK, CardSuit.CLUB), new Card(CardScore.FOUR, CardSuit.CLUB)));
         Player player = new Player(cards, "pobi", new Money(1000));
-        player.addCard(new Card(CardValue.EIGHT, CardSuit.CLUB));
+        player.addCard(new Card(CardScore.EIGHT, CardSuit.CLUB));
         boolean isBust = player.isBust();
 
         assertTrue(isBust);

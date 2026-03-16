@@ -1,6 +1,6 @@
 package domain.card;
 
-public enum CardValue {
+public enum CardScore {
     ACE(1),
     TWO(2),
     THREE(3),
@@ -16,13 +16,13 @@ public enum CardValue {
     KING(10)
     ;
 
-    private final int value;
+    private final int score;
 
-    CardValue(int value) {
-        this.value = value;
+    CardScore(int score) {
+        this.score = score;
     }
 
-    public int getValue() {
-        return value;
+    public int getScore() {
+        return score;
     }
 }

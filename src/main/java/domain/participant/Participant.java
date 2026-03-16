@@ -1,7 +1,7 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.card.CardValue;
+import domain.card.CardScore;
 import java.util.List;
 
 public abstract class Participant {
@@ -20,11 +20,11 @@ public abstract class Participant {
     public int calculateScore() {
         int results = 0;
         for (Card holdCard : hand) {
-            results += holdCard.getCardValue().getValue();
+            results += holdCard.getCardValue().getScore();
         }
 
         boolean isAceExist = hand.stream()
-                .anyMatch(holdCard -> holdCard.getCardValue() == CardValue.ACE);
+                .anyMatch(holdCard -> holdCard.getCardValue() == CardScore.ACE);
         if (isSoftHand(isAceExist, results)) {
             return results + 10;
         }

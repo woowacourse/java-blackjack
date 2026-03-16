@@ -3,16 +3,16 @@ package domain.card;
 import java.util.Objects;
 
 public class Card {
-    private final CardValue cardValue;
+    private final CardScore cardScore;
     private final CardSuit cardSuit;
 
-    public Card(CardValue cardValue, CardSuit cardSuit) {
-        this.cardValue = cardValue;
+    public Card(CardScore cardScore, CardSuit cardSuit) {
+        this.cardScore = cardScore;
         this.cardSuit = cardSuit;
     }
 
-    public CardValue getCardValue() {
-        return cardValue;
+    public CardScore getCardValue() {
+        return cardScore;
     }
 
     public CardSuit getCardSuit() {
@@ -25,11 +25,11 @@ public class Card {
             return false;
         }
         Card card = (Card) object;
-        return cardValue == card.cardValue && cardSuit == card.cardSuit;
+        return cardScore == card.cardScore && cardSuit == card.cardSuit;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cardValue, cardSuit);
+        return Objects.hash(cardScore, cardSuit);
     }
 }

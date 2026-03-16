@@ -2,35 +2,35 @@ package view.formatter;
 
 import static exception.ErrorMessage.CARD_VALUE_NOT_EXIST;
 
-import domain.card.CardValue;
+import domain.card.CardScore;
 
 public enum CardValueFormatter {
-    ACE(CardValue.ACE, "A"),
-    TWO(CardValue.TWO, "2"),
-    THREE(CardValue.THREE, "3"),
-    FOUR(CardValue.FOUR, "4"),
-    FIVE(CardValue.FIVE, "5"),
-    SIX(CardValue.SIX, "6"),
-    SEVEN(CardValue.SEVEN, "7"),
-    EIGHT(CardValue.EIGHT, "8"),
-    NINE(CardValue.NINE, "9"),
-    TEN(CardValue.TEN, "10"),
-    JACK(CardValue.JACK, "J"),
-    QUEEN(CardValue.QUEEN, "Q"),
-    KING(CardValue.KING, "K")
+    ACE(CardScore.ACE, "A"),
+    TWO(CardScore.TWO, "2"),
+    THREE(CardScore.THREE, "3"),
+    FOUR(CardScore.FOUR, "4"),
+    FIVE(CardScore.FIVE, "5"),
+    SIX(CardScore.SIX, "6"),
+    SEVEN(CardScore.SEVEN, "7"),
+    EIGHT(CardScore.EIGHT, "8"),
+    NINE(CardScore.NINE, "9"),
+    TEN(CardScore.TEN, "10"),
+    JACK(CardScore.JACK, "J"),
+    QUEEN(CardScore.QUEEN, "Q"),
+    KING(CardScore.KING, "K")
     ;
 
-    private final CardValue cardValue;
+    private final CardScore cardScore;
     private final String printMessage;
 
-    CardValueFormatter(CardValue cardValue, String printMessage) {
-        this.cardValue = cardValue;
+    CardValueFormatter(CardScore cardScore, String printMessage) {
+        this.cardScore = cardScore;
         this.printMessage = printMessage;
     }
 
-    public static String from(CardValue cardValue) {
+    public static String from(CardScore cardScore) {
         for (CardValueFormatter cardValueFormatter : CardValueFormatter.values()) {
-            if (cardValueFormatter.cardValue == cardValue) {
+            if (cardValueFormatter.cardScore == cardScore) {
                 return cardValueFormatter.printMessage;
             }
         }

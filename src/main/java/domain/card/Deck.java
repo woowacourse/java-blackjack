@@ -21,7 +21,7 @@ public class Deck {
     private Deque<Card> initialize() {
         Deque<Card> results = new ArrayDeque<>();
         for (CardSuit cardSuit : CardSuit.values()) {
-            Arrays.stream(CardValue.values())
+            Arrays.stream(CardScore.values())
                     .forEach(cardNumber -> results.add(new Card(cardNumber, cardSuit)));
         }
         return shuffle(results);
