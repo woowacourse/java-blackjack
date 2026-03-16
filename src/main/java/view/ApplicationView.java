@@ -39,8 +39,11 @@ public class ApplicationView {
         return retry(() -> readDrawCardDecision(playerName));
     }
 
-    public void printInitialDeal(List<String> playerNames, int initialCardCount) {
-        String formattedNames = String.join(DELIMITER, playerNames);
+    public void printInitialDeal(List<ParticipantName> playerNames, int initialCardCount) {
+        List<String> names = playerNames.stream()
+                .map(ParticipantName::name)
+                .toList();
+        String formattedNames = String.join(DELIMITER, names);
         writer.printDealInitialCardMessage(formattedNames, initialCardCount);
     }
 

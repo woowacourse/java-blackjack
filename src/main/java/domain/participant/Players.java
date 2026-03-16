@@ -30,6 +30,11 @@ public class Players {
         return this;
     }
 
+    public List<ParticipantName> getPlayerNames() {
+        return playerList.stream()
+                .map(Participant::getName)
+                .toList();
+    }
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) {

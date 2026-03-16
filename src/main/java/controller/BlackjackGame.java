@@ -98,10 +98,7 @@ public class BlackjackGame {
     private void handOutInitialCard(Dealer dealer, Players players) {
         dealer.drawCards(cardDeck, INITIAL_CARD_DRAW_COUNT);
         players.drawCards(cardDeck, INITIAL_CARD_DRAW_COUNT);
-        List<String> playerNames = players.stream()
-                .map(player -> player.getName().name())
-                .toList();
-        view.printInitialDeal(playerNames, INITIAL_CARD_DRAW_COUNT);
+        view.printInitialDeal(players.getPlayerNames(), INITIAL_CARD_DRAW_COUNT);
     }
 
     private List<ParticipantInitialInformation> requestInitialInformation() {
