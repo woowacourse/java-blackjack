@@ -1,6 +1,7 @@
 package blackjack.model.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.Rank;
@@ -21,7 +22,6 @@ class PlayersTest {
             List.of("p1", "p2", "p3"),
             name -> Player.of(name, 1000)
     );
-
 
     @Test
     @DisplayName("입력받은 이름들에 대해 function을 수행해 Player로 변환하여 Players를 반환한다.")
@@ -46,6 +46,41 @@ class PlayersTest {
                         .isEqualTo(1000)
         );
     }
+
+    @Test
+    @DisplayName("플레이어 이름이 공백으로 시작하거나 끝나면 예외가 발생한다.")
+    void of_space_in_name() {
+        //given
+        List<String> names = List.of(
+                " player",
+                "player ",
+                " player "
+        );
+        Function<String, Player> function = name -> Player.of(name, 1000);
+
+        // when & then
+        assertThatThrownBy(() -> Players.of(names, function))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("이름이 공백으로 시작하거나 끝납니다.");
+    }
+
+    @Test
+    @DisplayName("중복 이름이 존재하면 예외가 발생한다.")
+    void of_duplicated_names() {
+        // given
+        List<String> names = List.of(
+                "pobi",
+                "jun",
+                "pobi"
+        );
+        Function<String, Player> function = name -> Player.of(name, 1000);
+
+        // when & then
+        assertThatThrownBy(() -> Players.of(names, function))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("중복된 플레이어 이름이 존재합니다.");
+    }
+
 
     @Test
     @DisplayName("각 플레이어들을 카드덱에서 카드를 2 장씩 뽑는다.")

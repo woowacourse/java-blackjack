@@ -1,7 +1,6 @@
 package blackjack.view;
 
 import blackjack.util.InputParser;
-import blackjack.util.InputValidator;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -19,13 +18,9 @@ public class InputView {
     }
 
     public List<String> inputPlayerNames() {
-        List<String> names = Arrays.stream(
+        return Arrays.stream(
                 scanner.nextLine().split(COMMA)
         ).toList();
-
-        InputValidator.validatePlayerNames(names);
-
-        return names;
     }
 
     public boolean inputMoreCard() {
@@ -42,12 +37,8 @@ public class InputView {
     }
 
     public int inputBetAmount() {
-        int amount = InputParser.parseInt(
+        return InputParser.parseInt(
                 scanner.nextLine()
         );
-
-        InputValidator.validateBetAmount(amount);
-
-        return amount;
     }
 }

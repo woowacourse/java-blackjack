@@ -6,6 +6,8 @@ import java.util.List;
 
 public class Hands {
 
+    private static final int INTIAL_CARD_COUNT = 2;
+
     private final List<Card> cards;
 
     private Hands(List<Card> cards) {
@@ -43,11 +45,11 @@ public class Hands {
     }
 
     public int calculateInitialCardScore() {
-        if (cards.size() < 2) {
-            throw new IllegalStateException("초기 2 장의 카드 분배가 완료 되지 않았습니다.");
+        if (cards.size() < INTIAL_CARD_COUNT) {
+            throw new IllegalStateException("초기 " + INTIAL_CARD_COUNT + " 장의 카드 분배가 완료 되지 않았습니다.");
         }
 
-        return calculateScoreOf(cards.subList(0, 2));
+        return calculateScoreOf(cards.subList(0, INTIAL_CARD_COUNT));
     }
 
     private int calculateScoreOf(List<Card> cards) {
