@@ -87,4 +87,50 @@ class HandTest {
         // then
         assertThat(result).isTrue();
     }
+
+    @Test
+    @DisplayName("첫 2장이 ACE + 10점 카드이면 블랙잭이다")
+    void isBlackjack_returnsTrue_whenAceAndTenPointCard() {
+        // given
+        Hand hand = new Hand();
+        hand.add(new Card(Suit.HEART, Rank.ACE));
+        hand.add(new Card(Suit.SPADE, Rank.KING));
+
+        // when
+        boolean result = hand.isBlackjack();
+
+        // then
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    @DisplayName("3장으로 합계가 21이어도 블랙잭이 아니다")
+    void isBlackjack_returnsFalse_whenTwentyOneWithThreeCards() {
+        // given
+        Hand hand = new Hand();
+        hand.add(new Card(Suit.HEART, Rank.SEVEN));
+        hand.add(new Card(Suit.SPADE, Rank.SEVEN));
+        hand.add(new Card(Suit.CLOVER, Rank.SEVEN));
+
+        // when
+        boolean result = hand.isBlackjack();
+
+        // then
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    @DisplayName("2장이지만 합계가 21이 아니면 블랙잭이 아니다")
+    void isBlackjack_returnsFalse_whenTwoCardsButNotTwentyOne() {
+        // given
+        Hand hand = new Hand();
+        hand.add(new Card(Suit.HEART, Rank.TEN));
+        hand.add(new Card(Suit.SPADE, Rank.NINE));
+
+        // when
+        boolean result = hand.isBlackjack();
+
+        // then
+        assertThat(result).isFalse();
+    }
 }

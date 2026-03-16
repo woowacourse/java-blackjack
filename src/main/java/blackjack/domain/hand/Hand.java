@@ -7,15 +7,12 @@ import java.util.List;
 public class Hand {
 
     private static final int ACE_BONUS = 10;
+    private static final int BLACKJACK_CARD_COUNT = 2;
 
     private final List<Card> cards = new ArrayList<>();
 
     public void add(final Card card) {
         cards.add(card);
-    }
-
-    public List<Card> getCards() {
-        return List.copyOf(cards);
     }
 
     public Score calculateScore() {
@@ -33,7 +30,7 @@ public class Hand {
                 .sum();
     }
 
-    private boolean shouldApplyAceBonus(Score score) {
+    private boolean shouldApplyAceBonus(final Score score) {
         return hasAce() && !score.isBust();
     }
 
@@ -42,7 +39,16 @@ public class Hand {
                 .anyMatch(Card::isAce);
     }
 
+    public boolean isBlackjack() {
+        return cards.size() == BLACKJACK_CARD_COUNT &&
+                calculateScore().isBlackjackScore();
+    }
+
     public boolean isBust() {
         return calculateScore().isBust();
+    }
+
+    public List<Card> getCards() {
+        return List.copyOf(cards);
     }
 }

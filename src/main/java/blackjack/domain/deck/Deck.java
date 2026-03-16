@@ -6,7 +6,6 @@ import blackjack.domain.card.Card;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class Deck {
@@ -15,16 +14,16 @@ public class Deck {
 
     private final List<Card> cards;
 
-    public Deck() {
+    public Deck(final CardShuffler shuffler) {
         this.cards = createAllCards();
-        Collections.shuffle(this.cards);
+        shuffler.shuffle(this.cards);
     }
 
     private List<Card> createAllCards() {
         return Arrays.stream(Suit.values())
-                        .flatMap(suit -> Arrays.stream(Rank.values())
+                .flatMap(suit -> Arrays.stream(Rank.values())
                         .map(rank -> new Card(suit, rank)))
-                        .collect(toList());
+                .collect(toList());
     }
 
     public Card draw() {

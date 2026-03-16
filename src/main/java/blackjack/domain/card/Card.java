@@ -10,15 +10,15 @@ public class Card {
         this.rank = rank;
     }
 
+    public boolean isAce() {
+        return rank.isAce();
+    }
+
     public String getDisplayName() {
         return rank.getName() + suit.getName();
     }
 
     public int getValue() {
         return rank.getValue();
-    }
-
-    public boolean isAce() {
-        return rank.isAce();
     }
 }

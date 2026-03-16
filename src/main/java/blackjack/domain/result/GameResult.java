@@ -1,32 +1,44 @@
 package blackjack.domain.result;
 
+import blackjack.domain.betting.BettingMoney;
+import blackjack.domain.betting.Profit;
 import blackjack.domain.hand.Score;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.participant.Player;
 
 public enum GameResult {
-
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패"),
+    BLACKJACK(3, 2),
+    WIN(1, 1),
+    DRAW(0, 1),
+    LOSE(-1, 1),
     ;
 
-    private final String displayName;
+    private final int numerator;
+    private final int denominator;
 
-    GameResult(final String displayName) {
-        this.displayName = displayName;
+    GameResult(final int numerator, final int denominator) {
+        this.numerator = numerator;
+        this.denominator = denominator;
     }
 
-    public String getDisplayName() {
-        return displayName;
+    public Profit calculateProfit(final BettingMoney bettingMoney) {
+        return new Profit(bettingMoney.getAmount() * numerator / denominator);
     }
 
-    public static GameResult of(final Score playerScore, final Score dealerScore) {
-        if (playerScore.isBust()) {
+    public static GameResult of(final Player player, final Dealer dealer) {
+        if (player.isBlackjack() && dealer.isBlackjack()) {
+            return DRAW;
+        }
+        if (player.isBlackjack()) {
+            return BLACKJACK;
+        }
+        if (player.isBust()) {
             return LOSE;
         }
-        if (dealerScore.isBust()) {
+        if (dealer.isBust()) {
             return WIN;
         }
-        return compare(playerScore, dealerScore);
+        return compare(player.calculateScore(), dealer.calculateScore());
     }
 
     private static GameResult compare(final Score playerScore, final Score dealerScore) {
@@ -35,16 +47,6 @@ public enum GameResult {
         }
         if (playerScore.isLessThan(dealerScore)) {
             return LOSE;
-        }
-        return DRAW;
-    }
-
-    public GameResult reverse() {
-        if (this == WIN) {
-            return LOSE;
-        }
-        if (this == LOSE) {
-            return WIN;
         }
         return DRAW;
     }

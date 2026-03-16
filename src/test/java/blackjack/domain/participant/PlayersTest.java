@@ -3,6 +3,8 @@ package blackjack.domain.participant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.betting.BettingMoney;
+import blackjack.domain.hand.Hand;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,7 +24,10 @@ class PlayersTest {
     @DisplayName("중복된 이름의 플레이어가 있으면 예외가 발생한다")
     void constructor_throwsException_whenDuplicateNames() {
         // given
-        List<Player> duplicated = List.of(new Player("pobi"), new Player("pobi"));
+        List<Player> duplicated = List.of(
+                new Player(new Name("pobi"), new Hand(), new BettingMoney(1000)),
+                new Player(new Name("pobi"), new Hand(), new BettingMoney(1000))
+        );
 
         // when & then
         assertThatThrownBy(() -> new Players(duplicated))
@@ -34,7 +39,7 @@ class PlayersTest {
     @DisplayName("플레이어가 1명이면 생성에 성공한다")
     void constructor_succeeds_whenOnePlayer() {
         // given
-        List<Player> players = List.of(new Player("pobi"));
+        List<Player> players = List.of(new Player(new Name("pobi"), new Hand(), new BettingMoney(1000)));
 
         // when
         Players result = new Players(players);
