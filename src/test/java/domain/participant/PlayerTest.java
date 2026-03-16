@@ -24,13 +24,13 @@ class PlayerTest {
                         Card.of(CardDenomination.THREE, CardEmblem.HEART))
                 .build();
         Player player = Player.from(ParticipantName.from("test"));
-
-        //when
-        player.drawCards(cardDeck, DEFAULT_CARD_DRAW_COUNT);
         Card card = Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER);
 
+        //when
+        Hand hand = player.drawCards(cardDeck, DEFAULT_CARD_DRAW_COUNT);
+
         //then
-        Assertions.assertThat(player.hasCard(card)).isTrue();
+        Assertions.assertThat(hand).isEqualTo(Hand.from(List.of(card)));
     }
 
     @Test

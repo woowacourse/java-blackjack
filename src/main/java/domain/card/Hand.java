@@ -69,11 +69,6 @@ public class Hand {
                 .anyMatch(Card::isAce);
     }
 
-    public boolean checkExist(Card targetCard) {
-        return cards.stream().
-                anyMatch(c -> c.equals(targetCard));
-    }
-
     public List<String> toDisplay() {
         return cards.stream()
                 .map(Card::toDisplay)

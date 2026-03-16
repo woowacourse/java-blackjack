@@ -20,10 +20,6 @@ public abstract class Participant {
         return hand.addUp(Hand.from(cards));
     }
 
-    public boolean hasCard(Card targetCard) {
-        return hand.checkExist(targetCard);
-    }
-
     public boolean hasHigherScoreThan(Participant other) {
         return this.hand.getResultScore() > other.hand.getResultScore();
     }
