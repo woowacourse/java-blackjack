@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 public class BettingMoney {
 
-    private final Integer money;
+    private final int money;
 
     public BettingMoney(String rawBettingMoney) {
         int money = parseInt(rawBettingMoney);
@@ -25,7 +25,7 @@ public class BettingMoney {
         }
     }
 
-    private void validatePositive(Integer money) {
+    private void validatePositive(int money) {
         if (money < 0) {
             throw new IllegalArgumentException("배팅 금액은 음수일 수 없습니다.");
         }
