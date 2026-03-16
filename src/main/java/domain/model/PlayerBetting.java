@@ -29,9 +29,8 @@ public class PlayerBetting {
         return this.player == player;
     }
 
-    public void applyBetting(Dealer dealer) {
-        double playerProfit = player.applyBetting(value);
-        dealer.applyBetting(playerProfit);
+    public double calculateProfit() {
+        return player.applyBetting(value);
     }
 
     private static void validateValue(int value) {

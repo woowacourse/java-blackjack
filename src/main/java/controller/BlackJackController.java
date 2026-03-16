@@ -47,7 +47,7 @@ public class BlackJackController {
     }
 
     private void displayGameResult() {
-        ResultDto resultDto = blackJackService.judgement();
+        ResultDto resultDto = blackJackService.getGameResult();
         view.playerResultMessage(resultDto);
     }
 
@@ -63,7 +63,7 @@ public class BlackJackController {
         String isTrue = view.inputAdditionalCard(player.getName());
         InputValidator.validateAdditionalCard(isTrue);
         if (isTrue.equals("y")) {
-            PlayerResultDto playerResultDto = blackJackService.additionalCard(player);
+            PlayerResultDto playerResultDto = blackJackService.assignAdditionalCard(player);
             view.outputPlayerDeckDtos(playerResultDto);
             getAdditionalCard(player);
         }
@@ -72,7 +72,7 @@ public class BlackJackController {
     public void getAdditionalDealerCard() {
         boolean dealerCanAppend = blackJackService.isDealerCanAppend();
         if (dealerCanAppend) {
-            blackJackService.additionalDealerCard();
+            blackJackService.assignAdditionalDealerCard();
             view.outputDealerAdditionCardMessage();
             getAdditionalDealerCard();
         }

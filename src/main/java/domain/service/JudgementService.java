@@ -7,66 +7,52 @@ import dto.ResultDto;
 
 import java.util.List;
 
-
 public class JudgementService {
 
-    private final PersonService personService;
+    private final PlayerBettings playerBettings;
 
-    public JudgementService(PersonService personService) {
-        this.personService = personService;
+    public JudgementService(PlayerBettings playerBettings) {
+        this.playerBettings = playerBettings;
     }
 
-    public ResultDto getGameResult() {
-        List<Player> players = personService.findAllPlayers();
-        Dealer dealer = personService.getDealer();
-        List<PlayerResultDto> playerResultDtos = players.stream().map(player -> {
-            judge(player, dealer);
-            return PlayerResultDto.of(player);
-        }).toList();
+    public ResultDto getGameResult(List<Player> players, Dealer dealer) {
+        players.forEach(player -> judge(player, dealer));
+        dealer.applyPlayerProfit(playerBettings.calculateAllPlayerBettings());
 
+        List<PlayerResultDto> playerResultDtos = players.stream()
+                .map(PlayerResultDto::of)
+                .toList();
         DealerResultDto dealerResultDto = DealerResultDto.of(dealer);
         return ResultDto.of(dealerResultDto, playerResultDtos);
     }
 
     private void judge(Player player, Dealer dealer) {
-        judgementWinning(player, dealer);
-        PlayerBetting playerBetting = personService.findPlayerBettingByPlayer(player);
-        playerBetting.applyBetting(dealer);
+        player.changeStatus(judgementWinning(player.getDeck(), dealer.getDeck()));
     }
 
-    public void judgementWinning(Player player, Dealer dealer) {
-        if (dealer.isBurst()) {
-            player.changeStatus(PlayerStatus.WIN);
-            return;
+    public PlayerStatus judgementWinning(Deck playerDeck, Deck dealerDeck) {
+        if (dealerDeck.isBurst() || (playerDeck.isBlackJack() && dealerDeck.isAlive())) {
+            return PlayerStatus.WIN;
         }
-        if (player.isBurst() && dealer.isAlive()) {
-            player.changeStatus(PlayerStatus.LOSS);
-            return;
+        if (playerDeck.isBurst() && dealerDeck.isAlive()) {
+            return PlayerStatus.LOSS;
         }
-        if (player.isBlackJack() && dealer.isAlive()) {
-            player.changeStatus(PlayerStatus.WIN);
-            return;
+        if (playerDeck.isBlackJack() && dealerDeck.isBlackJack()) {
+            return PlayerStatus.DRAW;
         }
-        if (player.isBlackJack() && dealer.isBlackJack()) {
-            player.changeStatus(PlayerStatus.DRAW);
-            return;
+        if (playerDeck.isAlive() && dealerDeck.isAlive()) {
+            return getPlayerStatusByDeckSum(playerDeck.calculateFinalSum(), dealerDeck.calculateFinalSum());
         }
-        if (player.isAlive() && dealer.isAlive()) {
-            judgeStatusByDeckSum(player, dealer);
-        }
+        return PlayerStatus.NONE;
     }
 
-    private void judgeStatusByDeckSum(Player player, Dealer dealer) {
-        if (player.getFinalDeckSum() > dealer.getFinalDeckSum()) {
-            player.changeStatus(PlayerStatus.WIN);
+    private PlayerStatus getPlayerStatusByDeckSum(int playerDeckSum, int dealerDeckSum) {
+        if (playerDeckSum > dealerDeckSum) {
+            return PlayerStatus.WIN;
         }
-
-        if (player.getFinalDeckSum() < dealer.getFinalDeckSum()) {
-            player.changeStatus(PlayerStatus.LOSS);
+        if (playerDeckSum < dealerDeckSum) {
+            return PlayerStatus.LOSS;
         }
-
-        if (player.getFinalDeckSum() == dealer.getFinalDeckSum()) {
-            player.changeStatus(PlayerStatus.DRAW);
-        }
+        return PlayerStatus.DRAW;
     }
 }
