@@ -27,6 +27,22 @@ public record Score(
         return isGreaterThan(BLACKJACK);
     }
 
+    public Score sumWithAce(int aceAmount) {
+        Score sumWithAce = this;
+        for (int consideredAce = 0; consideredAce < aceAmount; consideredAce++) {
+            sumWithAce = sumWithAce.add(sumWithAce.decideAceValue(aceAmount - consideredAce - 1));
+        }
+        return sumWithAce;
+    }
+
+    private Score decideAceValue(int leftAce) {
+        if (this.add(ACE_MAX).isLessThanOrEqualTo(BLACKJACK)
+                && BLACKJACK.sub(this.add(ACE_MAX)).isGreaterThanOrEqualTo(leftAce)) {
+            return ACE_MAX;
+        }
+        return ACE_MIN;
+    }
+
     public Score add(Score target) {
         return new Score(target.value + this.value);
     }

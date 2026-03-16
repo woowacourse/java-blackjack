@@ -1,6 +1,5 @@
 package domain.card;
 
-import domain.Rank;
 import domain.Score;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +41,7 @@ public class Hand {
     }
 
     public Score totalSum() {
-        return Rank.sumWithAce(getAceAmount(), getSumWithoutAce());
+        return getSumWithoutAce().sumWithAce(getAceAmount());
     }
 
     private int getAceAmount() {

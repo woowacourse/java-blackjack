@@ -1,9 +1,5 @@
 package domain;
 
-import static domain.Score.ACE_MAX;
-import static domain.Score.ACE_MIN;
-import static domain.Score.BLACKJACK;
-
 public enum Rank {
     ACE("A", Score.ONE),
     TWO("2", Score.TWO),
@@ -25,24 +21,6 @@ public enum Rank {
     Rank(String displayValue, Score scoreValue) {
         this.displayValue = displayValue;
         this.score = scoreValue;
-    }
-
-    public static Score sumWithAce(int aceAmount, Score sumWithOutAce) {
-        Score sumWithAce = sumWithOutAce;
-        for (int consideredAce = 0; consideredAce < aceAmount; consideredAce++) {
-            sumWithAce = sumWithAce.add(decideAceValue(sumWithAce, aceAmount - consideredAce - 1));
-        }
-        return sumWithAce;
-        // 9, 2
-        // 20, 1
-    }
-
-    private static Score decideAceValue(Score currentScore, int leftAce) {
-        if (currentScore.add(ACE_MAX).isLessThanOrEqualTo(BLACKJACK)
-                && BLACKJACK.sub(currentScore.add(ACE_MAX)).isGreaterThanOrEqualTo(leftAce)) {
-            return ACE_MAX;
-        }
-        return ACE_MIN;
     }
 
     public boolean isAce() {
