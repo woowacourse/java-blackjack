@@ -31,7 +31,7 @@ public class InputView {
             try {
                 System.out.printf("%s의 배팅 금액은?%n", name);
                 String money = userInput();
-                return Integer.parseInt(money);
+                return validateMoney(Integer.parseInt(money));
             } catch (IllegalArgumentException e) {
                 OutputView.printErrorMessage("잘못된 입력입니다. 다시 입력해주세요.");
             }
@@ -71,6 +71,14 @@ public class InputView {
 
         return userInput.equals(BINARY_Y);
     }
+
+    private int validateMoney(int money) {
+        if (money < 0)
+            throw new IllegalArgumentException("잘못된 입력입니다. 다시 입력해주세요.");
+
+        return money;
+    }
+
 
     private String userInput() {
         return sc.nextLine();
