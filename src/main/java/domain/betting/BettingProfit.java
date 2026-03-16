@@ -5,11 +5,6 @@ import domain.result.WinningStatus;
 
 public class BettingProfit {
 
-    private static final int WINNING_RATE = 100;
-    private static final int DRAW_RATE = 0;
-    private static final int LOSS_RATE = -100;
-    private static final int BLACKJACK_RATE = 150;
-
     private final long profit;
 
     private BettingProfit(long profit) {
@@ -17,19 +12,8 @@ public class BettingProfit {
     }
 
     public static BettingProfit of(WinningStatus winningStatus, BetAmount betAmount) {
-        if (winningStatus.isBlackjack()) {
-            return new BettingProfit(betAmount.applyRate(BLACKJACK_RATE));
-        }
-
-        if (winningStatus.isWin()) {
-            return new BettingProfit(betAmount.applyRate(WINNING_RATE));
-        }
-
-        if (winningStatus.isDraw()) {
-            return new BettingProfit(betAmount.applyRate(DRAW_RATE));
-        }
-
-        return new BettingProfit(betAmount.applyRate(LOSS_RATE));
+        long result = betAmount.applyRate(winningStatus.getProfitRate());
+        return new BettingProfit(result);
     }
 
     public static BettingProfit from(long profit) {

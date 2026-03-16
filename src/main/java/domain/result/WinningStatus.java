@@ -2,19 +2,15 @@ package domain.result;
 
 public enum WinningStatus {
 
-    WIN("승"),
-    LOSS("패"),
-    DRAW("무"),
-    BLCAKJACK("블랙잭");
+    WIN(100),
+    LOSS(-100),
+    DRAW(0),
+    BLCAKJACK(150);
 
-    private final String result;
+    private final int profitRate;
 
-    WinningStatus(String result) {
-        this.result = result;
-    }
-
-    public String displayName() {
-        return result;
+    WinningStatus(int profitRate) {
+        this.profitRate = profitRate;
     }
 
     public WinningStatus reverseResult() {
@@ -29,16 +25,8 @@ public enum WinningStatus {
         return this;
     }
 
-    public boolean isWin() {
-        return this == WIN;
-    }
-
-    public boolean isDraw() {
-        return this == DRAW;
-    }
-
-    public boolean isBlackjack() {
-        return this == BLCAKJACK;
+    public int getProfitRate() {
+        return profitRate;
     }
 
 }
