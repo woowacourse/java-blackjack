@@ -54,6 +54,7 @@ public class BlackJackGameController {
         return new Money(InputView.askPlayerBettingMoney(playerName));
     }
 
+
     private void playGame(BlackJackGame blackJackGame) {
         blackJackGame.getPlayers().forEach(player -> playGameWithPlayer(blackJackGame, player));
         playGameWithDealer(blackJackGame);
