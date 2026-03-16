@@ -22,8 +22,6 @@ class GamblerTest {
         Assertions.assertThat(gambler.getCardSize()).isEqualTo(1);
     }
 
-
-    // 버스트 확인
     @Test
     @DisplayName("카드 버스트 확인 테스트")
     void 카드_버스트_테스트() {
@@ -43,7 +41,6 @@ class GamblerTest {
         Assertions.assertThat(gambler.isBust()).isEqualTo(true);
     }
 
-    // 합산
     @Test
     @DisplayName("카드 값 합산")
     void 카드_값_합산_테스트() {

@@ -1,11 +1,11 @@
-package view.requestDto;
+package view.requestdto;
 
 import java.util.List;
 import view.Parser;
 
 public record NameRequestDto(List<String> names) {
 
-    public static final String COMMA_DELIMITER = ",";
+    private static final String COMMA_DELIMITER = ",";
 
     public static NameRequestDto from(String input) {
         validateNameIsNotNullAndIsNotBlank(input);

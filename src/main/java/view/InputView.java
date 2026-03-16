@@ -1,9 +1,9 @@
 package view;
 
-import view.requestDto.AgreementRequestDto;
-import view.requestDto.BettingAmountRequestDto;
-import view.requestDto.NameRequestDto;
 import java.util.Scanner;
+import view.requestdto.AgreementRequestDto;
+import view.requestdto.BettingAmountRequestDto;
+import view.requestdto.NameRequestDto;
 
 public class InputView {
 

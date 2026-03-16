@@ -14,14 +14,14 @@ public enum CardKind {
         this.kind = kind;
     }
 
-    public String getKind() {
-        return kind;
-    }
-
     public static CardKind of(final String kind) {
         return Arrays.stream(values())
                 .filter(val -> val.kind.equals(kind))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("생성할 수 없는 kind 입니다."));
+    }
+
+    public String getKind() {
+        return kind;
     }
 }

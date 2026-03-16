@@ -16,7 +16,7 @@ class GamblersGameResultTest {
     @DisplayName("딜러, 참여자들의 수익을 정산")
     void 딜러_참여자들_수익_정산() {
         // given
-        Dealer dealer = new Dealer(Dealer.DEALER_NAME);
+        Dealer dealer = new Dealer();
         dealer.addCard(new Card("K", "하트"));
         dealer.addCard(new Card("Q", "하트"));
 

@@ -1,4 +1,4 @@
-package view.requestDto;
+package view.requestdto;
 
 public record AgreementRequestDto(String agreement) {
 

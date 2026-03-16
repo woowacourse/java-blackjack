@@ -1,4 +1,4 @@
-package view.responseDto;
+package view.responsedto;
 
 import java.util.List;
 import java.util.Map;

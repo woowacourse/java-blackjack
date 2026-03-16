@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class GamblersGameResult {
 
-    public static final int REVERSE_SIGN = -1;
+    private static final int REVERSE_SIGN = -1;
 
     private Map<String, Profit> participantProfits;
 

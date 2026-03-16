@@ -2,7 +2,6 @@ package domain.game;
 
 import domain.betting.BettingAmount;
 import domain.card.GameCards;
-import domain.player.Dealer;
 import java.util.HashMap;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
@@ -18,7 +17,7 @@ class GameTest {
         Map<String, BettingAmount> tempGamblers = new HashMap<>();
         tempGamblers.put("pobi", new BettingAmount(10000));
         tempGamblers.put("jason", new BettingAmount(20000));
-        Game game = new Game(Dealer.DEALER_NAME, tempGamblers, GameCards.DEFAULT_CARD_SET);
+        Game game = new Game(tempGamblers, GameCards.DEFAULT_CARD_SET);
 
         // when
         game.initializeGame();
@@ -27,7 +26,7 @@ class GameTest {
         Assertions.assertThat(game.getDealerHandSize()).isEqualTo(2);
         Assertions.assertThat(game.getGamblersHandSize()
                         .stream()
-                        .allMatch(count -> count == GameCards.DEFAULT_START_CARD_COUNT))
+                        .allMatch(count -> count == 2))
                 .isEqualTo(true);
     }
 }

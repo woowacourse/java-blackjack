@@ -13,7 +13,7 @@ class GameCardsTest {
     @DisplayName("덱 세트 양에 따라서 카드가 정상적으로 생성되는지 검증")
     void 덱_세트_검증() {
         // given
-        GameCards cards = new GameCards(1);
+        GameCards cards = new GameCards();
 
         // when
         int size = cards.getSize();
@@ -34,7 +34,7 @@ class GameCardsTest {
     @DisplayName("52개 종류의 카드 포함 여부 검증")
     void 덱_종류_검증(String string) {
         // given
-        GameCards cards = new GameCards(1);
+        GameCards cards = new GameCards();
 
         // when
         boolean flag = cards.containsCard(string);

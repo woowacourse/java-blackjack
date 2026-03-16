@@ -7,8 +7,8 @@ import java.util.stream.Collectors;
 
 public class Hand {
 
-    public static final int ACE_HIGH_SCORE = 11;
-    public static final int ACE_LOW_SCORE = 1;
+    private static final int ACE_HIGH_SCORE = 11;
+    private static final int ACE_LOW_SCORE = 1;
 
     public static final int BLACK_JACK_SCORE = 21;
 

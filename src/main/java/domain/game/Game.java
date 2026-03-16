@@ -15,19 +15,20 @@ import java.util.Map;
 
 public class Game {
 
+    public static final int DEFAULT_START_CARD_COUNT = 2;
     private final Dealer dealer;
     private final Gamblers gamblers;
     private final GameCards gameCards;
 
-    public Game(String dealerName, Map<String, BettingAmount> gamblersNameAndBettingInfo,
-            int DEFAULT_CARD_SET) {
-        this.dealer = new Dealer(dealerName);
+    public Game(Map<String, BettingAmount> gamblersNameAndBettingInfo,
+            int defaultCardSet) {
+        this.dealer = new Dealer();
         this.gamblers = new Gamblers(gamblersNameAndBettingInfo);
-        this.gameCards = new GameCards(DEFAULT_CARD_SET);
+        this.gameCards = new GameCards();
     }
 
     public void initializeGame() {
-        for (int i = 0; i < GameCards.DEFAULT_START_CARD_COUNT; i++) {
+        for (int i = 0; i < DEFAULT_START_CARD_COUNT; i++) {
             dealer.addCard(gameCards.drawCard());
             gamblers.receiveCards(gameCards);
         }
@@ -43,6 +44,7 @@ public class Game {
     public Dealer getDealer() {
         return dealer;
     }
+
     public boolean shouldDealerDraw() {
         return dealer.isBelowDrawThreshold();
     }

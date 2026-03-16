@@ -5,23 +5,23 @@ import domain.betting.BettingAmount;
 import domain.card.GameCards;
 import domain.game.GamblersGameResult;
 import domain.game.Game;
-import domain.player.Dealer;
 import domain.player.Gambler;
-import view.requestDto.AgreementRequestDto;
-import view.requestDto.BettingAmountRequestDto;
-import view.responseDto.DealerResultDto;
-import view.responseDto.ParticipantHandResponseDto;
-import view.responseDto.ParticipantsGameInfoDto;
-import view.responseDto.ParticipantsHandResponseDto;
 import java.util.List;
 import java.util.Map;
 import view.InputView;
 import view.OutputView;
+import view.requestdto.AgreementRequestDto;
+import view.requestdto.BettingAmountRequestDto;
+import view.responsedto.DealerResultDto;
+import view.responsedto.ParticipantHandResponseDto;
+import view.responsedto.ParticipantsGameInfoDto;
+import view.responsedto.ParticipantsHandResponseDto;
 
 public class BlackJackController {
 
     private final InputView inputView;
     private final OutputView outputView;
+
 
     public BlackJackController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
@@ -56,7 +56,7 @@ public class BlackJackController {
     }
 
     private Game initializeGame(Map<String, BettingAmount> gamblerNameAndBettingInfo) {
-        Game game = new Game(Dealer.DEALER_NAME, gamblerNameAndBettingInfo,
+        Game game = new Game(gamblerNameAndBettingInfo,
                 GameCards.DEFAULT_CARD_SET);
 
         outputView.printInitialDeal(gamblerNameAndBettingInfo.keySet().stream().toList());

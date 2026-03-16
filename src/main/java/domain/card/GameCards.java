@@ -10,11 +10,9 @@ import java.util.stream.IntStream;
 public class GameCards {
 
     public static final int DEFAULT_CARD_SET = 1;
-    public static final int DEFAULT_START_CARD_COUNT = 2;
+    private final List<Card> cards;
 
-    private List<Card> cards;
-
-    public GameCards(int DEFAULT_CARD_SET) {
+    public GameCards() {
         this.cards = Arrays.stream(CardKind.values())
                 .flatMap(cardKind -> Arrays.stream(CardScore.values())
                         .flatMap(cardScore ->

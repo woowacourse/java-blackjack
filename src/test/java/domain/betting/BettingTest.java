@@ -1,7 +1,7 @@
 package domain.betting;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
@@ -22,12 +22,10 @@ class BettingTest {
         betting.betBettingAmount("woni", new BettingAmount(20000));
 
         // then
-        assertAll(
-                () -> assertThat(betting.getBettingAmountByName("pobi"))
-                        .isEqualTo(new BettingAmount(10000)),
-                () -> assertThat(betting.getBettingAmountByName("woni"))
-                        .isEqualTo(new BettingAmount(20000))
-        );
+        assertAll(() -> assertThat(betting.getBettingAmountByName("pobi")).isEqualTo(
+                        new BettingAmount(10000)),
+                () -> assertThat(betting.getBettingAmountByName("woni")).isEqualTo(
+                        new BettingAmount(20000)));
     }
 
     @Test

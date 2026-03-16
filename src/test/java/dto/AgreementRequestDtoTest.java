@@ -3,7 +3,7 @@ package dto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import view.requestDto.AgreementRequestDto;
+import view.requestdto.AgreementRequestDto;
 
 class AgreementRequestDtoTest {
 

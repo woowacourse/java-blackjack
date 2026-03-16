@@ -2,13 +2,13 @@ package view;
 
 import domain.game.Profit;
 import domain.player.ParticipantGameInfo;
-import view.responseDto.DealerResultDto;
-import view.responseDto.ParticipantHandResponseDto;
-import view.responseDto.ParticipantsGameInfoDto;
-import view.responseDto.ParticipantsHandResponseDto;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import view.responsedto.DealerResultDto;
+import view.responsedto.ParticipantHandResponseDto;
+import view.responsedto.ParticipantsGameInfoDto;
+import view.responsedto.ParticipantsHandResponseDto;
 
 public class OutputView {
 
