@@ -13,10 +13,12 @@ public class BlackjackGame {
 
     private final GameJudge gameJudge = new GameJudge();
     private Participants participants;
+    private Dealer dealer;
     protected Deck deck;
 
     public void prepare(List<Name> names, Map<Name, Bet> bets) {
-        participants = new Participants(names, bets);
+        this.participants = new Participants(names, bets);
+        this.dealer = new Dealer();
         makeDeck();
         dealCards();
     }
@@ -28,6 +30,7 @@ public class BlackjackGame {
     public void dealCards() {
         for (int cardCount = 0; cardCount < FIRST_CARD_DEAL_COUNT; cardCount++) {
             participants.dealCards(deck);
+            dealer.receiveCard(deck.dealCard());
         }
     }
 
@@ -40,7 +43,7 @@ public class BlackjackGame {
     }
 
     public Dealer getDealer() {
-        return participants.getDealer();
+        return dealer;
     }
 
     public GameSummary getResult() {
@@ -49,7 +52,7 @@ public class BlackjackGame {
 
         for (User user : participants.getUsers()) {
             userResults.put(user,
-                    gameJudge.judge(user, participants.getDealer()));
+                    gameJudge.judge(user, dealer));
             betAmounts.put(user, user.getBetAmount());
         }
         return new GameSummary(userResults, betAmounts);
@@ -60,8 +63,8 @@ public class BlackjackGame {
     }
 
     public boolean dealToDealer() {
-        if (participants.determineDealerDealMore()) {
-            participants.dealCardToDealer(deck.dealCard());
+        if (dealer.determineDealerDealMore()) {
+            dealer.receiveCard(deck.dealCard());
             return true;
         }
         return false;

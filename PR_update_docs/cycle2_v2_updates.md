@@ -11,8 +11,8 @@
 - [ ] **3. `blackjackGame`의 protected field를 private으로 수정할 것.**
   - [ ] 이를 위해 blackjackGame의 prepare() 구조를 생성자로 옮겨야 함.
 - [x] **4. `GameJudge`의 judge 함수를 dealer와 user 객체 자체를 받는 형식으로 수정**
-- [ ] **5. `Participants`의 Dealer 제거**
-  - [ ] dealer는 BlackjackGame에서 직접 관리하도록 수정
+- [x] **5. `Participants`의 Dealer 제거**
+  - [x] dealer는 BlackjackGame에서 직접 관리하도록 수정
 - [ ] **6. `GameSummary`의 생성자 수정**
   - [ ] map 두개를 받는 구조로 짜여있는데, 하나만 있어도 User을 순회할 수 있음.
 - [x] **7. `DeckTest`를 exception을 종료 조건으로 설정하지 말고, 직접 사이즈를 테스트하는 형식으로 수정.**
