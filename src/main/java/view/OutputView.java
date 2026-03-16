@@ -1,7 +1,5 @@
 package view;
 
-import constant.GameConstant;
-import domain.MatchCase;
 import domain.dto.BlackjackResultDto;
 import domain.dto.CardDto;
 import domain.dto.FinalPlayerCardDto;
@@ -14,10 +12,10 @@ import java.util.Map;
 public class OutputView {
     public void displayCardDistribution(List<String> names) {
         String nameContent = String.join(", ", names);
-        System.out.printf("딜러가 %s에게 2장을 나누었습니다.\n", nameContent);
+        System.out.printf("딜러와 %s에게 2장을 나누었습니다.\n\n", nameContent);
     }
 
-    public void displayCardContent(List<PlayerCardDto> playerCardDtos) {
+    public void displayCardContents(List<PlayerCardDto> playerCardDtos) {
         for (PlayerCardDto dto : playerCardDtos) {
             List<String> cardContents = new ArrayList<>();
             for (CardDto card : dto.cards()) {
@@ -26,20 +24,10 @@ public class OutputView {
 
             System.out.printf("%s카드: %s\n", dto.name(), String.join(", ", cardContents));
         }
-
     }
 
-    public void displayCardContent(PlayerCardDto dto) {
-        List<String> cardContents = new ArrayList<>();
-        for (CardDto card : dto.cards()) {
-            cardContents.add(card.rankName() + card.shapeName());
-        }
-
-        System.out.printf("%s카드: %s\n", dto.name(), String.join(", ", cardContents));
-    }
-
-    public void displayDealerCard() {
-        System.out.println("딜러는 " + GameConstant.DEALER_HIT_THRESHOLD + "이하라 한장의 카드를 더 받았습니다.");
+    public void displayDealerCard(int hitThreshold) {
+        System.out.println("딜러는 " + hitThreshold + "이하라 한장의 카드를 더 받았습니다.");
     }
 
     public void displayFinalCard(List<FinalPlayerCardDto> finalPlayerCardDtos) {
@@ -51,14 +39,14 @@ public class OutputView {
 
             System.out.printf("%s카드: %s - 결과: %d\n", dto.name(), String.join(", ", cardContents), dto.total());
         }
-
+        System.out.println();
     }
 
     public void displayMatchResult(BlackjackResultDto resultDto) {
-        System.out.printf("## 최종 승패\n딜러: %d승 %d패\n", resultDto.winCount(), resultDto.loseCount());
-        Map<String, MatchCase> resultMap = resultDto.matchResultMap();
+        System.out.printf("## 최종 수익\n딜러: %d\n", resultDto.dealerBenefit());
+        Map<String, Long> resultMap = resultDto.playerProfitMap();
         for (String playerName : resultMap.keySet()) {
-            System.out.printf("%s: %s\n", playerName, resultMap.get(playerName).getKorDisplayName());
+            System.out.printf("%s: %d\n", playerName, resultMap.get(playerName));
         }
     }
 }

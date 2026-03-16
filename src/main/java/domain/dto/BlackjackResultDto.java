@@ -1,22 +1,21 @@
 package domain.dto;
 
-import domain.BlackjackResult;
-import domain.MatchCase;
+import domain.result.ProfitResult;
 
 import java.util.Map;
 
 public record BlackjackResultDto(
-        int winCount,
-        int drawCount,
-        int loseCount,
-        Map<String, MatchCase> matchResultMap
+        long dealerBenefit,
+        PlayerResultDto matchResultMap
 ) {
-    public static BlackjackResultDto from(BlackjackResult blackjackResult) {
+    public static BlackjackResultDto from(ProfitResult profitResult) {
         return new BlackjackResultDto(
-                blackjackResult.getDealerWinningCount(),
-                blackjackResult.getDrawCount(),
-                blackjackResult.getDealerLoseCount(),
-                blackjackResult.getPlayerResultMap()
+                profitResult.getDealerBenefit(),
+                PlayerResultDto.from(profitResult)
         );
+    }
+
+    public Map<String, Long> playerProfitMap() {
+        return matchResultMap.resultMap();
     }
 }

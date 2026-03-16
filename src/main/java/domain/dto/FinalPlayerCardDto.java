@@ -1,19 +1,19 @@
 package domain.dto;
 
-import domain.Player;
+import domain.participant.Participant;
 
 import java.util.List;
 
 public record FinalPlayerCardDto(String name, List<CardDto> cards, int total) {
-    public static FinalPlayerCardDto from(Player player) {
-        List<CardDto> cardDtos = player.getCards().stream()
+    public static FinalPlayerCardDto from(Participant participant) {
+        List<CardDto> cardDtos = participant.getCards().stream()
                 .map(CardDto::from)
                 .toList();
 
         return new FinalPlayerCardDto(
-                player.getName(),
+                participant.getName(),
                 cardDtos,
-                player.getFinalScore()
+                participant.getFinalScore()
         );
     }
 }

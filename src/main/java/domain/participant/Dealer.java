@@ -1,8 +1,9 @@
-package domain;
+package domain.participant;
 
 import constant.GameConstant;
+import domain.card.Card;
 
-public class Dealer extends Player {
+public class Dealer extends Participant {
     public static final String DEALER_NAME = "딜러";
 
     public Dealer(String name) {
@@ -10,7 +11,7 @@ public class Dealer extends Player {
     }
 
     public boolean needAdditionalCard() {
-        return hand.calculateFinalScore() <= GameConstant.DEALER_HIT_THRESHOLD;
+        return getFinalScore() <= GameConstant.DEALER_HIT_THRESHOLD;
     }
 
     public Card getFirstCard() {

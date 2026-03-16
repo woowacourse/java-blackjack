@@ -1,9 +1,11 @@
-package domain;
+package domain.card;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+
+import exception.BlackjackException;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -22,6 +24,6 @@ class DeckTest {
         }
 
         assertThatThrownBy(deck::pop)
-                .isInstanceOf(IllegalStateException.class);
+                .isInstanceOf(BlackjackException.class);
     }
 }
