@@ -47,11 +47,12 @@ public class BlackJackController {
     }
 
     private int readPlayerBattingMoneyRetry(String playerName) {
-        int battingMoney = -1;
+        int battingMoney;
 
-        while (battingMoney <= 0) {
+        do {
             battingMoney = readPlayerBattingMoney(playerName);
-        }
+        } while (battingMoney <= 0);
+
         return battingMoney;
     }
 
