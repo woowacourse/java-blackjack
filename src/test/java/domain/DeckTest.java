@@ -74,4 +74,21 @@ public class DeckTest {
         // then
         assertThat(deck.getDeckStatus()).isEqualTo(DeckStatus.BLACKJACK);
     }
+
+    @Test
+    void 덱의_ACE가_여러개일_때_합산_처리() {
+        // given
+        List<Card> cards = new ArrayList<>();
+        cards.add(Card.of(CardRank.ACE, CardShape.HEART));
+        cards.add(Card.of(CardRank.ACE, CardShape.DIAMOND));
+        cards.add(Card.of(CardRank.ACE, CardShape.SPADE));
+        cards.add(Card.of(CardRank.ACE, CardShape.CLUB));
+        cards.add(Card.of(CardRank.SEVEN, CardShape.HEART));
+
+        // when
+        Deck deck = Deck.of(cards);
+
+        // then
+        assertThat(deck.calculateFinalSum()).isEqualTo(21);
+    }
 }

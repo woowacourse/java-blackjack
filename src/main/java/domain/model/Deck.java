@@ -22,12 +22,13 @@ public class Deck {
 
     // 최종 점수 계산 메서드
     public int calculateFinalSum() {
-        boolean hasAce = isHasAce();
         int sum = getSumWithAceAdditionalValue();
-        if (hasAce && sum <= BLACKJACK_SCORE) {
-            return sum;
+        int aceCount = getAceCount();
+        while (sum > BLACKJACK_SCORE && aceCount > 0) {
+            sum -= 10;
+            aceCount--;
         }
-        return getSumWithAceDefaultValue();
+        return sum;
     }
 
     public List<Card> getCards() {
@@ -89,5 +90,11 @@ public class Deck {
 
     private boolean isHasAce() {
         return cards.stream().anyMatch(Card::isAce);
+    }
+
+    private int getAceCount() {
+        return (int) cards.stream()
+                .filter(Card::isAce)
+                .count();
     }
 }
