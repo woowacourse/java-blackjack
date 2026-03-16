@@ -32,5 +32,4 @@ class CardTest {
 
         assertThat(baseScore).isEqualTo(1);
     }
-
 }

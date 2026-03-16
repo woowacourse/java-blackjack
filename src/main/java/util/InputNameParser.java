@@ -1,21 +1,22 @@
 package util;
 
+import domain.participant.Name;
+
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.PatternSyntaxException;
 
 public class InputNameParser {
+
+    private static final String DELIMITER = ",";
 
     private InputNameParser() {
     }
 
-    public static List<String> parsePlayerNames(String inputNames) {
+    public static List<Name> parsePlayerNames(String inputNames) {
         try {
-            List<String> names = Arrays.stream(inputNames.split(",", -1))
-                    .map(String::strip)
+            return Arrays.stream(inputNames.split(DELIMITER, -1))
+                    .map(Name::new)
                     .toList();
-            InputNameValidator.validateInputNames(names);
-            return names;
         } catch (IllegalArgumentException exception) {
             throw new IllegalArgumentException(exception.getMessage());
         }

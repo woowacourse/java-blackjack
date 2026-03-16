@@ -1,6 +1,5 @@
 package domain.card;
 
-
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,7 +25,7 @@ public class Deck {
         return new ArrayDeque<>(cards);
     }
 
-    public List<Card> dealFirstHandCards() {
+    public List<Card> drawInitialCards() {
         List<Card> firstHandCards = new ArrayList<>();
         for (int index = 0; index < 2; index++) {
             firstHandCards.add(drawCard());

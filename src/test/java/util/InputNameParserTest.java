@@ -1,5 +1,6 @@
 package util;
 
+import domain.participant.Name;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -21,12 +22,8 @@ class InputNameParserTest {
 
     static Stream<Arguments> inputNameProvider() {
         return Stream.of(
-                Arguments.of("pobi, woni", List.of("pobi", "woni")),
-                Arguments.of("jun, jason", List.of("jun", "jason"))
+                Arguments.of("pobi, woni", List.of(new Name("pobi"), new Name("woni"))),
+                Arguments.of("jun, jason", List.of(new Name("jun"), new Name("jason")))
         );
     }
-
-
-
-
 }

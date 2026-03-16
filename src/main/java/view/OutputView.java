@@ -1,63 +1,92 @@
 package view;
 
-import dto.*;
+import dto.BettingResultDto;
+import dto.DealerHandScoreDto;
+import dto.DealerInitialHandDto;
+import dto.GameScoreDto;
+import dto.GameStartDto;
+import dto.PlayerHandDto;
+import dto.PlayerHandScoreDto;
+import dto.PlayerProfitDto;
 
 import java.util.List;
 
 public class OutputView {
-    public void printStartGame(GameStartDTO gameStartDTO) {
-        System.out.println("딜러와 " + convertListToString(gameStartDTO.playerNames()) + "에게 2장을 나누었습니다.");
-        printDealerInitialHandCard(gameStartDTO.dealer());
+    public void printStartGame(GameStartDto gameStartDto) {
+        System.out.println("딜러와 " + convertListToString(gameStartDto.playerNames()) + "에게 2장을 나누었습니다.");
+        printDealerInitialHandCard(gameStartDto.dealer());
 
-        List<HandDTO> players = gameStartDTO.players();
-        for (HandDTO player : players) {
+        List<PlayerHandDto> players = gameStartDto.players();
+        for (PlayerHandDto player : players) {
             printHandCard(player);
         }
         System.out.println();
     }
 
-    private void printDealerInitialHandCard(DealerInitialHandDTO dealerInitialHandDTO) {
-        System.out.println("딜러카드: " + dealerInitialHandDTO.firstHandCard());
+    private void printDealerInitialHandCard(DealerInitialHandDto dealerInitialHandDto) {
+        System.out.println("딜러: " + dealerInitialHandDto.firstHandCard());
     }
 
-    public void printHandCard(HandDTO playerHandDTO) {
-        System.out.println(playerHandDTO.name() + "카드: " + convertListToString(playerHandDTO.handCards()));
+    public void printHandCard(PlayerHandDto playerHandDto) {
+        System.out.println(playerHandDto.name() + "카드: " + convertListToString(playerHandDto.handCards()));
     }
 
-    public void printHandCardWithScore(HandScoreDTO handScoreDTO) {
-        System.out.println(handScoreDTO.name() + "카드: " + convertListToString(handScoreDTO.handCards()) + " - 결과: " + handScoreDTO.score());
+    private void printDealerHandCardWithScore(DealerHandScoreDto handScoreDto) {
+        System.out.println("딜러 카드: " + convertListToString(handScoreDto.handCards()) + " - 결과: " + printScore(handScoreDto.isBlackJack(), handScoreDto.isBust(), handScoreDto.score()));
+    }
+
+    private void printPlayerHandCardWithScore(PlayerHandScoreDto handScoreDto) {
+        System.out.println(handScoreDto.name() + "카드: " + convertListToString(handScoreDto.handCards()) + " - 결과: " + printScore(handScoreDto.isBlackJack(), handScoreDto.isBust(), handScoreDto.score()));
+    }
+
+    private String printScore(boolean isBlackJack, boolean isBust, int score) {
+        if (isBlackJack) {
+            return "블랙잭";
+        }
+        if (isBust) {
+            return "버스트";
+        }
+        return String.valueOf(score);
     }
 
     public void printDealerReceiveCard() {
         System.out.println("딜러는 16이하라 한장의 카드를 더 받았습니다.");
     }
 
-    public void printScore(GameScoreDTO gameResultDTO) {
+    public void printScore(GameScoreDto gameResultDto) {
         System.out.println();
-        printHandCardWithScore(gameResultDTO.dealer());
+        printDealerHandCardWithScore(gameResultDto.dealer());
 
-        List<HandScoreDTO> players = gameResultDTO.players();
-        for (HandScoreDTO player : players) {
-            printHandCardWithScore(player);
+        List<PlayerHandScoreDto> players = gameResultDto.players();
+        for (PlayerHandScoreDto player : players) {
+            printPlayerHandCardWithScore(player);
         }
     }
-    public void printResults(GameResultDTO gameResultDTO) {
-        DealerResultDTO dealerResultDTO = gameResultDTO.dealerResultDTO();
-        List<PlayerResultDTO> playerResultDTOs = gameResultDTO.playerResultDTOs();
-        System.out.println();
-        System.out.println("## 최종 승패");
-        System.out.println("딜러: " + dealerResultDTO.win() + "승 " + dealerResultDTO.draw() + "무 " + dealerResultDTO.lose() + "패");
 
-        for (PlayerResultDTO playerResultDTO : playerResultDTOs) {
-            System.out.println(playerResultDTO.name() + ": " + playerResultDTO.result());
+    public void printBettingResults(BettingResultDto bettingResultDto) {
+        long dealerProfit = bettingResultDto.dealerProfit();
+
+        List<PlayerProfitDto> playerProfitDtos = bettingResultDto.playerProfitDtos();
+
+        System.out.println();
+        System.out.println("## 최종 수익");
+        System.out.println("딜러: " + dealerProfit);
+
+        for (PlayerProfitDto playerProfitDto : playerProfitDtos) {
+            System.out.println(playerProfitDto.name() + ": " + playerProfitDto.profit());
         }
     }
+
 
     private String convertListToString(List<String> list) {
         return String.join(", ", list);
     }
 
-    public void printErrorMessage(String errorMessage) {
+    public void printInputErrorMessage(String errorMessage) {
         System.out.printf("%s 다시 입력해주세요\n", errorMessage);
+    }
+
+    public void printDealerBlackJack() {
+        System.out.println("딜러가 블랙잭입니다. 즉시 점수 계산을 시작합니다.");
     }
 }
