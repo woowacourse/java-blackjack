@@ -3,16 +3,16 @@ package domain.game;
 import domain.participant.Dealer;
 import domain.participant.Player;
 
-public record BlackjackJudge() {
+public class BlackjackJudge {
 
     public Result judgePlayerResult(Dealer dealer, Player player) {
         if (player.isBust()) {
             return Result.LOSE;
         }
-        if (player.isBlackjack() && dealer.isBlackjack()) {
-            return Result.DRAW;
-        }
         if (player.isBlackjack()) {
+            if (dealer.isBlackjack()) {
+                return Result.DRAW;
+            }
             return Result.BLACKJACK_WIN;
         }
         if (dealer.isBust()) {
