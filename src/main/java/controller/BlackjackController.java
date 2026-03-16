@@ -4,7 +4,7 @@ import domain.BlackjackGame;
 import domain.participant.Name;
 import domain.participant.Participants;
 import domain.participant.Player;
-import domain.result.BetResults;
+import domain.result.BetProfits;
 import java.util.ArrayList;
 import java.util.List;
 import view.InputView;
@@ -74,7 +74,7 @@ public class BlackjackController {
 
     private void firstDraw(final BlackjackGame blackjackGame) {
         blackjackGame.initDraw();
-        outputView.printInitHandCard(blackjackGame.getParticipants());
+        outputView.printInitHand(blackjackGame.getInitHands());
     }
 
 
@@ -90,12 +90,12 @@ public class BlackjackController {
             final boolean hit = readHitOrStand(player);
 
             if (!hit) {
-                outputView.printCurrentHandCard(player);
+                outputView.printCurrentHand(player.getCurrentHand());
                 break;
             }
 
             game.hit(player);
-            outputView.printCurrentHandCard(player);
+            outputView.printCurrentHand(player.getCurrentHand());
         }
     }
 
@@ -118,11 +118,9 @@ public class BlackjackController {
     }
 
     private void printResult(final BlackjackGame game) {
-        final Participants participants = game.getParticipants();
+        outputView.printHandResults(game.getFinalResult());
 
-        outputView.printHandResults(participants);
-
-        final BetResults results = game.getBetResults();
-        outputView.printBetResults(results);
+        final BetProfits results = game.getBetProfits();
+        outputView.printBetProfits(results);
     }
 }

@@ -1,6 +1,7 @@
 package domain.participant;
 
 import domain.card.Card;
+import domain.card.CurrentHand;
 import domain.card.Hand;
 import java.util.List;
 
@@ -40,5 +41,9 @@ public abstract class Participant {
 
     public List<Card> getHand() {
         return hand.getHand();
+    }
+
+    public CurrentHand getCurrentHand() {
+        return new CurrentHand(getName(), getHand());
     }
 }

@@ -1,6 +1,6 @@
 package domain.result;
 
-public record BetResult(
+public record BetProfit(
         String name,
         int profit
 ) {

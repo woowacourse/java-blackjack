@@ -13,8 +13,8 @@ import domain.participant.Name;
 import domain.participant.Participant;
 import domain.participant.Participants;
 import domain.participant.Player;
-import domain.result.BetResult;
-import domain.result.BetResults;
+import domain.result.BetProfit;
+import domain.result.BetProfits;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -76,13 +76,13 @@ class BlackjackGameTest {
         final BlackjackGame blackjackGame = new BlackjackGame(participants);
 
         // when
-        final BetResults results = blackjackGame.getBetResults();
+        final BetProfits results = blackjackGame.getBetProfits();
 
         // then
-        final BetResult playerResult = results.betResults().getFirst();
+        final BetProfit playerResult = results.betProfits().getFirst();
 
         assertThat(playerResult.profit()).isEqualTo(expectedPlayerProfit);
-        assertThat(results.dealerResult().profit()).isEqualTo(expectedDealerProfit);
+        assertThat(results.dealerProfit().profit()).isEqualTo(expectedDealerProfit);
     }
 
     private static Stream<Arguments> 게임_결과_테스트케이스() {
