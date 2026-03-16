@@ -31,15 +31,12 @@ public class Game {
 
     public Map<String, MatchCase> calculateMatch() {
         Map<String, MatchCase> matchResult = new LinkedHashMap<>();
-        // 1. 참가자들이 모두 burst면 딜러가 승리한다.
         if (players.isAllPlayerBurst()) {
             return getPlayersAllBurstCase(matchResult);
         }
-        // 2. 딜러가 burst이면 살아남은 참가자는 우승이다.
         if (dealer.isBust()) {
             return getDealerBurstCase(matchResult);
         }
-        // 3. 딜러가 burst가 아니면, 딜러보다 크면 승, 작으면 패, 같은면 무승부이다.
         return getGeneralCase(matchResult);
     }
 

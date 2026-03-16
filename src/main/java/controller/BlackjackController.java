@@ -93,9 +93,7 @@ public class BlackjackController {
 
     public int inputBettingPrice(String name) {
         return doRetry(
-                () -> {
-                    return inputView.readBettingPrice(name);
-                }
+                () -> inputView.readBettingPrice(name)
         );
     }
 

@@ -40,22 +40,28 @@ public class Player {
 
     public void calculateMoney(MatchCase matchCase, boolean isDealerBlackjack) {
         if (cards.isBlackjack() && !isDealerBlackjack) {
-            bettingScore = (int) ((int) bettingScore * Game.BLACKJACK_BONUS);
+            gainMoney();
             return;
         }
         if (matchCase.equals(MatchCase.LOSE)) {
             loseMoney();
             return;
         }
-
         if (matchCase.equals(MatchCase.WIN)) {
             return;
         }
+        resetMoneyZero();
+    }
 
+    private void resetMoneyZero() {
         bettingScore = 0;
     }
 
-    public void loseMoney() {
+    private void gainMoney() {
+        bettingScore = (int) ((int) bettingScore * Game.BLACKJACK_BONUS);
+    }
+
+    private void loseMoney() {
         int minusScore = bettingScore * 2;
         bettingScore -= minusScore;
     }
