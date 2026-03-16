@@ -44,8 +44,8 @@ public class OutputView {
                 scoreResultDto.dealerScore());
         for (PlayerHandScoreDto playerHandScoreDto : scoreResultDto.playerHandScoreDtos()) {
             System.out.printf(SCORE_RESULT_FORMAT,
-                    playerHandScoreDto.name(),
-                    getHandString(playerHandScoreDto.hand()),
+                    playerHandScoreDto.getName(),
+                    getHandString(playerHandScoreDto.getHandDto()),
                     playerHandScoreDto.score());
         }
         System.out.println();

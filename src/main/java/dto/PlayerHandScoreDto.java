@@ -2,9 +2,18 @@ package dto;
 
 import domain.participant.Player;
 
-public record PlayerHandScoreDto(String name, HandDto hand, int score) {
+public record PlayerHandScoreDto(PlayerHandDto playerHandDto, int score) {
 
     public static PlayerHandScoreDto from(Player player) {
-        return new PlayerHandScoreDto(player.getNameString(), HandDto.from(player.getHand()), player.getScore());
+        PlayerHandDto playerHandDto = PlayerHandDto.from(player);
+        return new PlayerHandScoreDto(playerHandDto, player.getScore());
+    }
+
+    public String getName() {
+        return playerHandDto.name();
+    }
+
+    public HandDto getHandDto() {
+        return playerHandDto.handDto();
     }
 }

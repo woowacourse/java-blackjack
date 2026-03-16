@@ -2,11 +2,11 @@ package dto;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import domain.participant.Dealer;
-import domain.participant.Player;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
+import domain.participant.Dealer;
+import domain.participant.Player;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,13 +44,13 @@ class ScoreResultDtoTest {
         assertEquals(12, scoreResultDto.dealerScore());
 
         PlayerHandScoreDto first = scoreResultDto.playerHandScoreDtos().getFirst();
-        assertEquals("봉구스", first.name());
-        assertEquals(List.of("A클로버", "K다이아몬드"), first.hand().cards());
+        assertEquals("봉구스", first.getName());
+        assertEquals(List.of("A클로버", "K다이아몬드"), first.getHandDto().cards());
         assertEquals(21, first.score());
 
         PlayerHandScoreDto second = scoreResultDto.playerHandScoreDtos().get(1);
-        assertEquals("시오", second.name());
-        assertEquals(List.of("5하트", "J스페이드"), second.hand().cards());
+        assertEquals("시오", second.getName());
+        assertEquals(List.of("5하트", "J스페이드"), second.getHandDto().cards());
         assertEquals(15, second.score());
     }
 }
