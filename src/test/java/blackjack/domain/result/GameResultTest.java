@@ -6,8 +6,6 @@ import blackjack.domain.betting.BettingMoney;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
-import blackjack.domain.deck.Deck;
-import blackjack.domain.deck.shuffler.RandomCardShuffler;
 import blackjack.domain.hand.Hand;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
@@ -21,7 +19,7 @@ class GameResultTest {
     @DisplayName("플레이어가 버스트이면 패이다")
     void of_returnsLose_whenPlayerIsBust() {
         // given
-        Dealer dealer = new Dealer(new Hand(), new Deck(new RandomCardShuffler()));
+        Dealer dealer = new Dealer(new Hand());
         dealer.receiveCard(new Card(Suit.HEART, Rank.TEN));
         dealer.receiveCard(new Card(Suit.SPADE, Rank.EIGHT));
 
@@ -41,7 +39,7 @@ class GameResultTest {
     @DisplayName("딜러가 버스트이면 승이다")
     void of_returnsWin_whenDealerIsBust() {
         // given
-        Dealer dealer = new Dealer(new Hand(), new Deck(new RandomCardShuffler()));
+        Dealer dealer = new Dealer(new Hand());
         dealer.receiveCard(new Card(Suit.HEART, Rank.TEN));
         dealer.receiveCard(new Card(Suit.SPADE, Rank.TEN));
         dealer.receiveCard(new Card(Suit.CLOVER, Rank.THREE));
@@ -61,7 +59,7 @@ class GameResultTest {
     @DisplayName("플레이어 점수가 딜러보다 높으면 승이다")
     void of_returnsWin_whenPlayerScoreIsHigher() {
         // given
-        Dealer dealer = new Dealer(new Hand(), new Deck(new RandomCardShuffler()));
+        Dealer dealer = new Dealer(new Hand());
         dealer.receiveCard(new Card(Suit.HEART, Rank.TEN));
         dealer.receiveCard(new Card(Suit.SPADE, Rank.SEVEN));
 
@@ -80,7 +78,7 @@ class GameResultTest {
     @DisplayName("플레이어 점수가 딜러보다 낮으면 패이다")
     void of_returnsLose_whenPlayerScoreIsLower() {
         // given
-        Dealer dealer = new Dealer(new Hand(), new Deck(new RandomCardShuffler()));
+        Dealer dealer = new Dealer(new Hand());
         dealer.receiveCard(new Card(Suit.HEART, Rank.TEN));
         dealer.receiveCard(new Card(Suit.SPADE, Rank.NINE));
 
@@ -99,7 +97,7 @@ class GameResultTest {
     @DisplayName("플레이어 점수와 딜러 점수가 같으면 무승부이다")
     void of_returnsDraw_whenScoresAreEqual() {
         // given
-        Dealer dealer = new Dealer(new Hand(), new Deck(new RandomCardShuffler()));
+        Dealer dealer = new Dealer(new Hand());
         dealer.receiveCard(new Card(Suit.HEART, Rank.TEN));
         dealer.receiveCard(new Card(Suit.SPADE, Rank.EIGHT));
 
@@ -118,7 +116,7 @@ class GameResultTest {
     @DisplayName("플레이어만 블랙잭이면 블랙잭이다")
     void of_returnsBlackjack_whenOnlyPlayerHasBlackjack() {
         // given
-        Dealer dealer = new Dealer(new Hand(), new Deck(new RandomCardShuffler()));
+        Dealer dealer = new Dealer(new Hand());
         dealer.receiveCard(new Card(Suit.HEART, Rank.TEN));
         dealer.receiveCard(new Card(Suit.SPADE, Rank.EIGHT));
 
@@ -137,7 +135,7 @@ class GameResultTest {
     @DisplayName("플레이어와 딜러 모두 블랙잭이면 무승부이다")
     void of_returnsDraw_whenBothHaveBlackjack() {
         // given
-        Dealer dealer = new Dealer(new Hand(), new Deck(new RandomCardShuffler()));
+        Dealer dealer = new Dealer(new Hand());
         dealer.receiveCard(new Card(Suit.HEART, Rank.ACE));
         dealer.receiveCard(new Card(Suit.SPADE, Rank.KING));
 

@@ -6,8 +6,6 @@ import blackjack.domain.betting.BettingMoney;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Rank;
 import blackjack.domain.card.Suit;
-import blackjack.domain.deck.Deck;
-import blackjack.domain.deck.shuffler.RandomCardShuffler;
 import blackjack.domain.hand.Hand;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Name;
@@ -23,7 +21,7 @@ class GameResultsTest {
     @DisplayName("플레이어가 승리하면 플레이어 수익은 배팅 금액과 같다")
     void calculate_playerProfitEqualsAmount_whenPlayerWins() {
         // given
-        Dealer dealer = new Dealer(new Hand(), new Deck(new RandomCardShuffler()));
+        Dealer dealer = new Dealer(new Hand());
         dealer.receiveCard(new Card(Suit.HEART, Rank.TEN));
         dealer.receiveCard(new Card(Suit.SPADE, Rank.SEVEN));
 
@@ -42,7 +40,7 @@ class GameResultsTest {
     @DisplayName("플레이어가 패배하면 플레이어 수익은 배팅 금액의 음수이다")
     void calculate_playerProfitIsNegative_whenPlayerLoses() {
         // given
-        Dealer dealer = new Dealer(new Hand(), new Deck(new RandomCardShuffler()));
+        Dealer dealer = new Dealer(new Hand());
         dealer.receiveCard(new Card(Suit.HEART, Rank.TEN));
         dealer.receiveCard(new Card(Suit.SPADE, Rank.NINE));
 
@@ -61,7 +59,7 @@ class GameResultsTest {
     @DisplayName("플레이어가 무승부이면 플레이어 수익은 0이다")
     void calculate_playerProfitIsZero_whenDraw() {
         // given
-        Dealer dealer = new Dealer(new Hand(), new Deck(new RandomCardShuffler()));
+        Dealer dealer = new Dealer(new Hand());
         dealer.receiveCard(new Card(Suit.HEART, Rank.TEN));
         dealer.receiveCard(new Card(Suit.SPADE, Rank.SEVEN));
 
@@ -80,7 +78,7 @@ class GameResultsTest {
     @DisplayName("플레이어가 블랙잭이면 플레이어 수익은 배팅 금액의 1.5배이다")
     void calculate_playerProfitIsOnePointFiveTimes_whenBlackjack() {
         // given
-        Dealer dealer = new Dealer(new Hand(), new Deck(new RandomCardShuffler()));
+        Dealer dealer = new Dealer(new Hand());
         dealer.receiveCard(new Card(Suit.HEART, Rank.TEN));
         dealer.receiveCard(new Card(Suit.SPADE, Rank.SEVEN));
 
@@ -99,7 +97,7 @@ class GameResultsTest {
     @DisplayName("딜러 수익은 플레이어 수익의 합산을 반전한 값이다")
     void calculate_dealerProfitIsNegativeSumOfPlayerProfits() {
         // given
-        Dealer dealer = new Dealer(new Hand(), new Deck(new RandomCardShuffler()));
+        Dealer dealer = new Dealer(new Hand());
         dealer.receiveCard(new Card(Suit.HEART, Rank.TEN));
         dealer.receiveCard(new Card(Suit.SPADE, Rank.SEVEN));
 
