@@ -8,15 +8,13 @@ import vo.GameResult;
 
 public class GameSummary {
     private final Map<User, GameResult> userResults;
-    private final Map<User, BigDecimal> betAmounts;
 
-    public GameSummary(Map<User, GameResult> userResults, Map<User, BigDecimal> betAmounts) {
+    public GameSummary(Map<User, GameResult> userResults) {
         this.userResults = new LinkedHashMap<>(userResults);
-        this.betAmounts = new LinkedHashMap<>(betAmounts);
     }
 
     public BigDecimal getUserProfit(User user) {
-        return userResults.get(user).calculateProfit(betAmounts.get(user));
+        return userResults.get(user).calculateProfit(user.getBetAmount());
     }
 
     public BigDecimal getDealerProfit() {

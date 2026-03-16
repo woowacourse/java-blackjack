@@ -51,14 +51,12 @@ public class BlackjackGame {
 
     public GameSummary getResult() {
         Map<User, GameResult> userResults = new LinkedHashMap<>();
-        Map<User, BigDecimal> betAmounts = new LinkedHashMap<>();
 
         for (User user : participants.getUsers()) {
             userResults.put(user,
                     gameJudge.judge(user, dealer));
-            betAmounts.put(user, user.getBetAmount());
         }
-        return new GameSummary(userResults, betAmounts);
+        return new GameSummary(userResults);
     }
 
     public void processPlayerDecision(User user) {
