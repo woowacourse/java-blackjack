@@ -4,6 +4,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import constant.ErrorMessage;
+import dto.status.PlayerName;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,13 +14,13 @@ public class PlayersTest {
 
     @BeforeEach
     public void setUp() {
-        players = new Players();
+        players = new Players(null);
     }
 
     @Test
     public void 플레이어_등록_정상_작동() {
-        Player player = new Player("player1");
-        Player player2 = new Player("player2");
+        PlayerName player = new PlayerName("player1");
+        PlayerName player2 = new PlayerName("player2");
 
         players.addPlayer(player);
         players.addPlayer(player2);
@@ -33,8 +34,8 @@ public class PlayersTest {
 
     @Test
     public void 중복_이름_참가자_예외() {
-        Player player1 = new Player("player");
-        Player player2 = new Player("player");
+        PlayerName player1 = new PlayerName("player");
+        PlayerName player2 = new PlayerName("player");
 
         players.addPlayer(player1);
 
