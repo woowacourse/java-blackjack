@@ -8,7 +8,7 @@ import java.util.List;
 
 public abstract class Participant {
 
-    protected final Hand hand = new Hand();
+    private final Hand hand = new Hand();
 
     public void addCard(Card card) {
         hand.add(card);
