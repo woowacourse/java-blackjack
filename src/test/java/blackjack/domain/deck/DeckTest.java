@@ -3,6 +3,10 @@ package blackjack.domain.deck;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.Rank;
+import blackjack.domain.card.Suit;
+import blackjack.domain.deck.shuffler.FixedCardShuffler;
 import blackjack.domain.deck.shuffler.RandomCardShuffler;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -61,5 +65,20 @@ class DeckTest {
 
         // then
         assertThat(deck.size()).isZero();
+    }
+
+    @Test
+    @DisplayName("셔플하지 않으면 첫 번째 드로우 카드는 덱의 첫 번째 카드이다")
+    void draw_returnsFirstCard_whenDeckIsNotShuffled() {
+        // given
+        Deck deck = new Deck(new FixedCardShuffler());
+
+        // when
+        Card card = deck.draw();
+
+        // then
+        assertThat(card.getDisplayName()).isEqualTo(
+                new Card(Suit.HEART, Rank.ACE).getDisplayName()
+        );
     }
 }
