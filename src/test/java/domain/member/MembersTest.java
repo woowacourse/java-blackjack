@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class MembersTest {
 
-    private final Money defaultMoney = new Money(10000);
+    private final Money defaultMoney = new Money(10_000);
 
     @DisplayName("멤버 명단을 정상적으로 불러오는지 테스트")
     @Test
@@ -41,7 +41,7 @@ public class MembersTest {
     @Test
     void calculateFinalProfits_GameOver_ReturnsCorrectResults() {
         String playerName = "pobi";
-        Members members = new Members(Map.of(playerName, new Money(10000)));
+        Members members = new Members(Map.of(playerName, new Money(10_000)));
         members.provideCardToPlayer(playerName, Card.from("Q", "하트"));
         members.provideCardToPlayer(playerName, Card.from("K", "하트"));
         members.changePlayerStateToStay(playerName);
@@ -50,15 +50,15 @@ public class MembersTest {
         members.provideCardToDealer(Card.from("7", "하트"));
         Map<String, Integer> results = members.calculateFinalProfits();
 
-        assertThat(results.get(playerName)).isEqualTo(10000);
-        assertThat(results.get(members.getDealerName())).isEqualTo(-10000);
+        assertThat(results.get(playerName)).isEqualTo(10_000);
+        assertThat(results.get(members.getDealerName())).isEqualTo(-10_000);
     }
 
     @DisplayName("딜러와 플레이어가 모두 블랙잭이면 수익은 0원이다")
     @Test
     void calculateFinalProfits_BothBlackjack_ReturnsZero() {
         String playerName = "pobi";
-        Members members = new Members(Map.of(playerName, new Money(10000)));
+        Members members = new Members(Map.of(playerName, new Money(10_000)));
         members.provideCardToPlayer(playerName, Card.from("A", "하트"));
         members.provideCardToPlayer(playerName, Card.from("K", "하트"));
         members.provideCardToDealer(Card.from("A", "스페이드"));
@@ -74,7 +74,7 @@ public class MembersTest {
     @Test
     void calculateFinalProfits_DealerBust_PlayerWins() {
         String playerName = "pobi";
-        Members members = new Members(Map.of(playerName, new Money(10000)));
+        Members members = new Members(Map.of(playerName, new Money(10_000)));
         members.provideCardToPlayer(playerName, Card.from("2", "하트"));
         members.provideCardToPlayer(playerName, Card.from("Q", "하트"));
         members.changePlayerStateToStay(playerName);
@@ -83,7 +83,7 @@ public class MembersTest {
         members.provideCardToDealer(Card.from("7", "하트"));
         Map<String, Integer> results = members.calculateFinalProfits();
 
-        assertThat(results.get(playerName)).isEqualTo(10000);
-        assertThat(results.get(members.getDealerName())).isEqualTo(-10000);
+        assertThat(results.get(playerName)).isEqualTo(10_000);
+        assertThat(results.get(members.getDealerName())).isEqualTo(-10_000);
     }
 }

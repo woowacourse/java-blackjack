@@ -26,7 +26,7 @@ class GameTableTest {
                 Card.from("8", "클로버"),
                 Card.from("7", "클로버")
         );
-        Map<String, Money> playerBets = Map.of(pobiName, new Money(10000));
+        Map<String, Money> playerBets = Map.of(pobiName, new Money(10_000));
         this.gameTable = new GameTable(playerBets, new FixedDeck(cards));
     }
 
