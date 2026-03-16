@@ -67,7 +67,9 @@ public class BlackJackController {
     }
 
     private Game createGame() {
-        List<String> playerNames = InputView.askPlayerNames();
+        List<Name> playerNames = InputView.askPlayerNames().stream()
+                .map(Name::new)
+                .toList();
         return new Game(playerNames, new Deck(CardFactory.createDeck()));
     }
 

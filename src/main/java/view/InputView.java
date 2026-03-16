@@ -17,14 +17,9 @@ public class InputView {
 
     public static List<String> askPlayerNames() {
         System.out.println(START_MESSAGE);
-        List<String> inputs = Arrays.stream(sc.nextLine().split(","))
+        return Arrays.stream(sc.nextLine().split(","))
                 .map(String::trim)
                 .collect(Collectors.toList());
-
-        for (String input : inputs) {
-            validateInput(input);
-        }
-        return inputs;
     }
 
     public static String askPlayerBettingMoney(String name) {
@@ -39,11 +34,5 @@ public class InputView {
             return input;
         }
         throw new IllegalArgumentException(ErrorMessage.INVALID_YN.getMessage());
-    }
-
-    private static void validateInput(String input) {
-        if (input == null || input.isBlank()) {
-            throw new IllegalArgumentException(ErrorMessage.EMPTY_NAME.getMessage());
-        }
     }
 }

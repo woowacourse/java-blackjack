@@ -13,19 +13,20 @@ public class Game {
     private final Dealer dealer;
     private final Deck deck;
 
-    public Game(List<String> playerNames, Deck deck) {
+    public Game(List<Name> playerNames, Deck deck) {
         validateDuplicate(playerNames);
 
         this.deck = deck;
         this.dealer = new Dealer();
         this.players = playerNames.stream()
+                .map(Name::name)
                 .map(Player::new)
                 .toList();
         initCards();
     }
 
-    private static void validateDuplicate(List<String> playerNames) {
-        Set<String> set = new HashSet<>(playerNames);
+    private static void validateDuplicate(List<Name> playerNames) {
+        Set<Name> set = new HashSet<>(playerNames);
         if (set.size() != playerNames.size()) {
             throw new IllegalArgumentException(ErrorMessage.DUPLICATE_NAME.getMessage());
         }

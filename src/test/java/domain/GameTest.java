@@ -30,7 +30,7 @@ class GameTest {
         );
 
         // when
-        Game game = new Game(List.of("시오", "봉구스"), deck);
+        Game game = new Game(List.of(new Name("시오"), new Name("봉구스")), deck);
 
         // then
         assertAll(
@@ -53,7 +53,7 @@ class GameTest {
                 new Card(Suit.SPADES, Rank.NUM7),
                 new Card(Suit.DIAMONDS, Rank.NUM8)
         );
-        Game game = new Game(List.of("시오", "봉구스"), deck);
+        Game game = new Game(List.of(new Name("시오"), new Name("봉구스")), deck);
         Player player = game.getPlayers().get(0);
 
         // when
@@ -76,7 +76,7 @@ class GameTest {
                 new Card(Suit.SPADES, Rank.NUM7),
                 new Card(Suit.DIAMONDS, Rank.NUM8)
         );
-        Game game = new Game(List.of("시오", "봉구스"), deck);
+        Game game = new Game(List.of(new Name("시오"), new Name("봉구스")), deck);
 
         // when
         game.hitDealer();
@@ -99,7 +99,7 @@ class GameTest {
         );
 
         // when
-        Game game = new Game(List.of("시오", "봉구스"), deck);
+        Game game = new Game(List.of(new Name("시오"), new Name("봉구스")), deck);
 
         // then
         assertTrue(game.dealerCanHit());
@@ -119,7 +119,7 @@ class GameTest {
         );
 
         // when
-        Game game = new Game(List.of("시오", "봉구스"), deck);
+        Game game = new Game(List.of(new Name("시오"), new Name("봉구스")), deck);
 
         // then
         assertFalse(game.dealerCanHit());
@@ -128,7 +128,7 @@ class GameTest {
     @Test
     void 플레이어의_이름이_중복된다면_예외를_발생한다() {
         // given
-        List<String> names = List.of("시오", "시오");
+        List<Name> names = List.of(new Name("시오"), new Name("시오"));
 
         // when, then
         assertThatThrownBy(() -> new Game(names, new Deck(CardFactory.createDeck())))
@@ -148,7 +148,7 @@ class GameTest {
                 new Card(Suit.SPADES, Rank.NUM6),
                 new Card(Suit.SPADES, Rank.NUM7)
         );
-        Game game = new Game(List.of("시오", "봉구스"), deck);
+        Game game = new Game(List.of(new Name("시오"), new Name("봉구스")), deck);
         Player firstPlayer = game.getPlayers().get(0);
         Player secondPlayer = game.getPlayers().get(1);
 
