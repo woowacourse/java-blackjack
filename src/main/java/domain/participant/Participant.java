@@ -8,9 +8,9 @@ public abstract class Participant {
     private final Name name;
     private final Hand hand;
 
-    public Participant(final Name name, final Hand hand) {
+    public Participant(final Name name) {
         this.name = name;
-        this.hand = hand;
+        this.hand = new Hand();
     }
 
 
@@ -18,6 +18,8 @@ public abstract class Participant {
         hand.addCard(card);
     }
 
+
+    public abstract boolean isDrawable();
 
     public boolean isBust() {
         return hand.isBust();

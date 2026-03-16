@@ -1,15 +1,18 @@
 package domain.participant;
 
-import domain.card.Hand;
-
 public class Player extends Participant {
 
-    public Player(final Name name, final Hand hand) {
-        super(name, hand);
+    public static final int MINIMUM_BET_AMOUNT = 0;
+    public static final int MAXIMUM_BET_AMOUNT = 1_000_000;
+
+    private final int betAmount = 0;
+
+    public Player(final Name name) {
+        super(name);
     }
 
-
-    public boolean canDraw() {
+    @Override
+    public boolean isDrawable() {
         return !isBust() && !isBlackjack();
     }
 }

@@ -4,7 +4,6 @@ import static exception.ErrorMessage.PLAYER_COUNT_OUT_OF_RANGE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import domain.card.Hand;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -18,7 +17,7 @@ class ParticipantsTest {
         // given
         final List<Player> players = new ArrayList<>();
         for (int i = 1; i <= Participants.MAXIMUM_BOUND; i++) {
-            players.add(new Player(new Name(String.format("포비%d", i)), new Hand()));
+            players.add(new Player(new Name(String.format("포비%d", i))));
         }
 
         // then
@@ -32,7 +31,7 @@ class ParticipantsTest {
         // given
         final List<Player> players = new ArrayList<>();
         for (int i = 1; i <= Participants.MAXIMUM_BOUND + 1; i++) {
-            players.add(new Player(new Name(String.format("포비%d", i)), new Hand()));
+            players.add(new Player(new Name(String.format("포비%d", i))));
         }
 
         // then

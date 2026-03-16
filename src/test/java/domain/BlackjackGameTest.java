@@ -10,7 +10,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import domain.card.Card;
 import domain.card.CardRank;
 import domain.card.CardSuit;
-import domain.card.Hand;
 import domain.card.Shuffler;
 import domain.participant.Dealer;
 import domain.participant.Name;
@@ -32,7 +31,7 @@ class BlackjackGameTest {
     public void 첫_드로우_성공() {
         // given
         final BlackjackGame blackjackGame = new BlackjackGame(
-                new Participants(List.of(new Player(new Name("zzaekkii"), new Hand()))));
+                new Participants(List.of(new Player(new Name("zzaekkii")))));
 
         // when
         blackjackGame.initDraw();
@@ -48,7 +47,7 @@ class BlackjackGameTest {
     @DisplayName("Hit할 경우, 1장(HIT_DRAW_COUNT)을 뽑는다.")
     public void 히트_드로우_성공() {
         // given
-        final Player player = new Player(new Name("zzaekkii"), new Hand());
+        final Player player = new Player(new Name("zzaekkii"));
         final BlackjackGame blackjackGame = new BlackjackGame(
                 new Participants(List.of(player)));
         blackjackGame.initDraw();
@@ -85,12 +84,12 @@ class BlackjackGameTest {
     }
 
     private static Participants initParticipants() {
-        final Player pobi = new Player(new Name("포비"), new Hand());
+        final Player pobi = new Player(new Name("포비"));
         pobi.draw(new Card(CardSuit.HEART, CardRank.TWO));
         pobi.draw(new Card(CardSuit.SPADE, CardRank.EIGHT));
         pobi.draw(new Card(CardSuit.CLUB, CardRank.ACE));
 
-        final Player jason = new Player(new Name("제이슨"), new Hand());
+        final Player jason = new Player(new Name("제이슨"));
         jason.draw(new Card(CardSuit.CLUB, CardRank.SEVEN));
         jason.draw(new Card(CardSuit.SPADE, CardRank.KING));
 

@@ -19,7 +19,7 @@ class DealerTest {
         dealer.draw(new Card(CardSuit.SPADE, CardRank.SIX));
 
         // when
-        final boolean result = dealer.shouldDraw();
+        final boolean result = dealer.isDrawable();
 
         // then
         assertThat(result).isTrue();
@@ -34,7 +34,7 @@ class DealerTest {
         dealer.draw(new Card(CardSuit.SPADE, CardRank.SEVEN));
 
         // when
-        final boolean result = dealer.shouldDraw();
+        final boolean result = dealer.isDrawable();
 
         // then
         assertThat(result).isFalse();

@@ -1,18 +1,16 @@
 package domain.participant;
 
-import domain.card.Hand;
-
 public class Dealer extends Participant {
 
     public static final String DEALER_NAME = "딜러";
     public static final int DEALER_DRAW_BOUND = 16;
 
     public Dealer() {
-        super(new Name(DEALER_NAME), new Hand());
+        super(new Name(DEALER_NAME));
     }
 
-
-    public boolean shouldDraw() {
+    @Override
+    public boolean isDrawable() {
         return getScore() <= DEALER_DRAW_BOUND;
     }
 }
