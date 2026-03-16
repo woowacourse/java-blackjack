@@ -1,5 +1,8 @@
 package testutil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import domain.Card;
 import domain.Deck;
 import domain.Player;
@@ -8,9 +11,6 @@ import domain.enums.CardRank;
 import domain.enums.CardShape;
 import utils.generator.CardsGenerator;
 import utils.generator.ShuffledCardsGenerator;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public final class PlayerTestUtil {
     private static final String DEALER = "딜러";
@@ -113,10 +113,10 @@ public final class PlayerTestUtil {
         public List<Card> generateShuffledCards() {
             return new ArrayList<>(
                     List.of(new Card(CardShape.SPADE, CardRank.ACE),
-                    new Card(CardShape.SPADE, CardRank.TWO),
-                    new Card(CardShape.SPADE, CardRank.THREE),
-                    new Card(CardShape.SPADE, CardRank.FOUR),
-                    new Card(CardShape.SPADE, CardRank.FIVE))
+                            new Card(CardShape.SPADE, CardRank.TWO),
+                            new Card(CardShape.SPADE, CardRank.THREE),
+                            new Card(CardShape.SPADE, CardRank.FOUR),
+                            new Card(CardShape.SPADE, CardRank.FIVE))
             );
         }
     }

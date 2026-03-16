@@ -9,7 +9,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PlayersTest {
-
     private Players players;
 
     @BeforeEach
@@ -22,7 +21,7 @@ class PlayersTest {
 
     @DisplayName("총 배팅 금액을 구한다.")
     @Test
-    void 총_배팅_금액_계산(){
+    void 총_배팅_금액_계산() {
         Player player1 = new Player("player1");
         Player player2 = new Player("player2");
 
@@ -35,8 +34,6 @@ class PlayersTest {
 
         assertThat(total).isEqualTo(30000);
     }
-
-
 
 
 }

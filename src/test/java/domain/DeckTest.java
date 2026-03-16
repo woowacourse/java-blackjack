@@ -18,7 +18,7 @@ class DeckTest {
     void 처음_전쳬_카드_개수_테스트() {
         CardsGenerator cardsGenerator = new ShuffledCardsGenerator();
 
-        Deck deck= new Deck(cardsGenerator);
+        Deck deck = new Deck(cardsGenerator);
 
         assertThat(deck.getCards().size()).isEqualTo(52);
     }
@@ -28,7 +28,7 @@ class DeckTest {
     void 셔플_카드_배부_테스트() {
         CardsGenerator fakeCardsGenerator = new PlayerTestUtil.FakeShuffledCardsGenerator();
 
-        Deck deck= new Deck(fakeCardsGenerator);
+        Deck deck = new Deck(fakeCardsGenerator);
 
         assertThat(deck.pop()).isEqualTo(new Card(CardShape.SPADE, CardRank.ACE));
         assertThat(deck.pop()).isEqualTo(new Card(CardShape.SPADE, CardRank.TWO));

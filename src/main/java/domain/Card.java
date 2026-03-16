@@ -14,8 +14,8 @@ public class Card {
         this.cardRank = cardRank;
     }
 
-    public boolean isAce(){
-        return  cardRank.equals(CardRank.ACE);
+    public boolean isAce() {
+        return cardRank.equals(CardRank.ACE);
     }
 
     public CardRank getCardRank() {

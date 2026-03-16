@@ -35,7 +35,7 @@ class GameTest {
                         new Card(CardShape.SPADE, CardRank.TWO),
                         new Card(CardShape.SPADE, CardRank.JACK)
                 )); // 12
-        Game game = new Game(deck,players,dealer);
+        Game game = new Game(deck, players, dealer);
 
         boolean isDealerNeedAdditionalCard = game.needAdditionalCard();
 
@@ -52,7 +52,7 @@ class GameTest {
                         new Card(CardShape.SPADE, CardRank.QUEEN),
                         new Card(CardShape.SPADE, CardRank.JACK)
                 )); // 20
-        Game game = new Game(deck,players,dealer);
+        Game game = new Game(deck, players, dealer);
 
         boolean isDealerNeedAdditionalCard = game.needAdditionalCard();
 

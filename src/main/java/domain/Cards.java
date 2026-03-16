@@ -3,8 +3,6 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import domain.enums.CardRank;
-
 public class Cards {
     public static final int ACE_ADDITIONAL_SCORE = 11;
     public static final int CARD_COUNT = 2;

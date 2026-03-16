@@ -14,7 +14,7 @@ public class Players implements Iterable<Player> {
         player.add(card);
     }
 
-    public int getTotalBettingScore(){
+    public int getTotalBettingScore() {
         return players.stream()
                 .mapToInt(Player::getBettingScore)
                 .sum();
