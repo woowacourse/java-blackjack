@@ -21,7 +21,7 @@ public class GameManager {
     }
 
     public void dealCard(Participant participant) {
-        participant.addCard(deck.pop());
+        participant.draw(deck.pop());
     }
 
     public void dealCardTo(Players players, int count) {

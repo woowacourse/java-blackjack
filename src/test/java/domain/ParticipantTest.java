@@ -1,5 +1,10 @@
 package domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import domain.card.Card;
+import domain.card.Rank;
+import domain.card.Suit;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Player;
@@ -9,58 +14,62 @@ import org.junit.jupiter.api.Test;
 class ParticipantTest {
 
     @Test
-    void 핸드_점수_총합이_21_초과인_경우_버스트_판정() {
-        GameManager gameManager = new GameManager(Deck.create());
-
-        // A K Q J 10 9 8 7 6 순서 고정
+    void 플레이어_핸드_점수가_21점_미만이면_계속_받을_수_있다() {
+        GameManager gameManager = createCustomManager(Rank.TWO, Rank.THREE, Rank.FOUR);
         Player player = new Player(Name.from("나무"));
 
-        gameManager.dealCard(player); // A
-        gameManager.dealCard(player); // K
-        gameManager.dealCard(player); // Q
-        gameManager.dealCard(player); // J
+        gameManager.dealCard(player);
+        gameManager.dealCard(player);
+        gameManager.dealCard(player);
 
-        Assertions.assertThat(player.canReceive()).isFalse();
+        assertThat(player.canReceive()).isTrue();
     }
 
     @Test
-    void 핸드_점수_총합이_21_이하인_경우() {
-        GameManager gameManager = new GameManager(Deck.create());
-
-        // A K Q J 10 9 8 7 6 순서 고정
+    void 플레이어_핸드_점수가_21점_초과시_자동으로_버스트되어_더_받을_수_없다() {
+        GameManager gameManager = createCustomManager(Rank.TEN, Rank.TEN, Rank.TWO);
         Player player = new Player(Name.from("나무"));
 
-        gameManager.dealCard(player); // A
-        gameManager.dealCard(player); // K
-        gameManager.dealCard(player); // Q
+        gameManager.dealCard(player);
+        gameManager.dealCard(player);
+        gameManager.dealCard(player);
 
-        Assertions.assertThat(player.canReceive()).isTrue();
+        assertThat(player.canReceive()).isFalse();
     }
 
     @Test
-    void 딜러_핸드_점수_총합이_16_초과인_경우_히트가능() {
-        GameManager gameManager = new GameManager(Deck.create());
-
-        // A K Q J 10 9 8 7 6 순서 고정
+    void 딜러_핸드_점수가_16점_이하이면_더_받을_수_있다() {
+        // 10 + 6 = 16점
+        GameManager gameManager = createCustomManager(Rank.TEN, Rank.SIX);
         Dealer dealer = new Dealer();
 
-        gameManager.dealCard(dealer); // A
-        gameManager.dealCard(dealer); // K
+        gameManager.dealCard(dealer);
+        gameManager.dealCard(dealer);
 
-        Assertions.assertThat(dealer.canReceive()).isFalse();
+        assertThat(dealer.canReceive()).isTrue();
     }
 
     @Test
-    void 딜러_핸드_점수_총합이_16_인_경우() {
-        GameManager gameManager = new GameManager(Deck.create());
-
-        // A K Q J 10 9 8 7 6 순서 고정
+    void 딜러_핸드_점수가_16점_초과면_규칙에_따라_더_받을_수_없다() {
+        // 10 + 7 = 17점
+        GameManager gameManager = createCustomManager(Rank.TEN, Rank.SEVEN);
         Dealer dealer = new Dealer();
 
-        gameManager.dealCard(dealer); // A
-        gameManager.dealCard(dealer); // K
-        gameManager.dealCard(dealer); // Q
+        gameManager.dealCard(dealer);
+        gameManager.dealCard(dealer);
 
-        Assertions.assertThat(dealer.canReceive()).isFalse();
+        assertThat(dealer.canReceive()).isFalse();
+    }
+
+    // 헬퍼 메서드: 테스트용 카드 배치를 위한 매니저 생성
+    private GameManager createCustomManager(Rank... ranks) {
+        Deck deck = Deck.create();
+        deck.shuffle(cards -> {
+            cards.clear();
+            for (Rank rank : ranks) {
+                cards.add(new Card(Suit.SPADE, rank));
+            }
+        });
+        return new GameManager(deck);
     }
 }
