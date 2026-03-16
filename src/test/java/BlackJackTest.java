@@ -24,12 +24,11 @@ public class BlackJackTest {
     void setUp() {
         List<Participant> rawParticipants = new ArrayList<>();
 
-        rawParticipants.add(Dealer.of("딜러"));
+        Dealer dealer = Dealer.of("딜러");
         rawParticipants.add(Player.of("pobi", BetAmount.of(10000)));
         rawParticipants.add(Player.of("jason", BetAmount.of(20000)));
-        participants = Participants.of(rawParticipants);
+        participants = Participants.of(rawParticipants, dealer);
 
-        Participant dealer = participants.getDealer();
         dealer.draw(Card.of("스페이드", 1));
         dealer.draw(Card.of("스페이드", 3));
 
@@ -82,7 +81,7 @@ public class BlackJackTest {
         playersAndDealer.add(dealer);
         playersAndDealer.add(player);
 
-        Participants playerAndDealerParticipants = Participants.of(playersAndDealer);
+        Participants playerAndDealerParticipants = Participants.of(playersAndDealer, dealer);
         BlackJack blackJackGame = BlackJack.from(playerAndDealerParticipants);
 
         // when
@@ -103,11 +102,10 @@ public class BlackJackTest {
         player.draw(Card.of("하트", 10));
         player.draw(Card.of("스페이드", 11));
 
-        ArrayList<Participant> playersAndDealer = new ArrayList<>();
-        playersAndDealer.add(dealer);
-        playersAndDealer.add(player);
+        ArrayList<Participant> players = new ArrayList<>();
+        players.add(player);
 
-        Participants playerAndDealerParticipants = Participants.of(playersAndDealer);
+        Participants playerAndDealerParticipants = Participants.of(players, dealer);
         BlackJack blackJackGame = BlackJack.from(playerAndDealerParticipants);
 
         // when
@@ -128,11 +126,10 @@ public class BlackJackTest {
         player.draw(Card.of("하트", 2));
         player.draw(Card.of("스페이드", 3));
 
-        ArrayList<Participant> playersAndDealer = new ArrayList<>();
-        playersAndDealer.add(dealer);
-        playersAndDealer.add(player);
+        ArrayList<Participant> players = new ArrayList<>();
+        players.add(player);
 
-        Participants playerAndDealerParticipants = Participants.of(playersAndDealer);
+        Participants playerAndDealerParticipants = Participants.of(players, dealer);
         BlackJack blackJackGame = BlackJack.from(playerAndDealerParticipants);
 
         // when
@@ -149,13 +146,12 @@ public class BlackJackTest {
         List<Participant> rawParticipants2 = new ArrayList<>();
         Participants participants2;
 
-        rawParticipants2.add(Dealer.of("딜러"));
+        Dealer dealer = Dealer.of("딜러");
         rawParticipants2.add(Player.of("pobi", BetAmount.of(10000)));
         rawParticipants2.add(Player.of("jason", BetAmount.of(20000)));
         rawParticipants2.add(Player.of("coys", BetAmount.of(30000)));
-        participants2 = Participants.of(rawParticipants2);
+        participants2 = Participants.of(rawParticipants2, dealer);
 
-        Participant dealer = participants2.getDealer();
         dealer.draw(Card.of("스페이드", 9));
         dealer.draw(Card.of("스페이드", 9));
         dealer.draw(Card.of("스페이드", 9));

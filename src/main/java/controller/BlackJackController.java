@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import model.BlackJack;
 import model.factory.ParticipantsFactory;
-import model.participant.Dealer;
 import model.participant.Participant;
 import model.Participants;
 import util.InputParser;
@@ -61,10 +60,6 @@ public class BlackJackController {
 
     private void playersCardDraw(Participants participants) {
         for (Participant participant : participants) {
-            if (isDealerOrReachTargetNumber(participant)) {
-                continue;
-            }
-
             String input;
             do {
                 input = inputView.readHitOrNot(participant.getName());
@@ -82,13 +77,5 @@ public class BlackJackController {
 
             } while (input.equals("y"));
         }
-    }
-
-    private boolean isDealerOrReachTargetNumber(Participant participant) {
-        if (participant instanceof Dealer) {
-            return true;
-        }
-
-        return participant.calculateScore() == TARGET_NUMBER;
     }
 }

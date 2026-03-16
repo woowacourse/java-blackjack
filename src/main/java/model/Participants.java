@@ -8,22 +8,23 @@ import model.participant.Participant;
 
 public final class Participants implements Iterable<Participant> {
     private final List<Participant> values;
+    private final Participant dealer;
 
-    private Participants(List<Participant> values) {
+    private Participants(List<Participant> values, Participant dealer) {
         this.values = values;
+        this.dealer = dealer;
     }
 
-    public static Participants of(List<Participant> values) {
-
-        return new Participants(values);
+    public static Participants of(List<Participant> values, Participant dealer) {
+        return new Participants(values, dealer);
     }
 
     public Participant getDealer() {
-        return values.getFirst();
+        return dealer;
     }
 
     public List<Participant> getPlayers() {
-        return values.subList(1, values.size());
+        return values;
     }
 
     public List<String> getNames() {

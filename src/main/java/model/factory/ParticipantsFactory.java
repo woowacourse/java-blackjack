@@ -18,13 +18,12 @@ public final class ParticipantsFactory {
         List<Participant> participants = new ArrayList<>();
 
         Dealer dealer = Dealer.of(DEALER_PARTICIPANT);
-        participants.add(dealer);
 
         for (int i = 0; i < names.length; i++) {
             Player player = Player.of(names[i], BetAmount.of(betAmounts.get(i)));
             participants.add(player);
         }
 
-        return Participants.of(participants);
+        return Participants.of(participants, dealer);
     }
 }

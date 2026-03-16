@@ -3,7 +3,6 @@ package model.participant;
 import java.util.ArrayList;
 import java.util.List;
 import model.Card;
-import model.CardNumber;
 import model.Cards;
 
 public abstract class Participant {
