@@ -3,6 +3,7 @@ package blackjack.view;
 import blackjack.domain.Participants;
 import blackjack.domain.card.Card;
 import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Player;
 import java.util.List;
 import java.util.Map;
 
@@ -53,7 +54,7 @@ public final class OutputView {
         System.out.println(getCardNames(participant.getName(), participant.getCards()) + " - 결과: " + score);
     }
 
-    public static void showProfitRate(long dealerProfitRate, Map<Participant, Long> statistics) {
+    public static void showProfitRate(long dealerProfitRate, Map<Player, Long> statistics) {
         System.out.println(NEW_LINE + "## 최종 수익");
         showDealerResult(dealerProfitRate);
         showPlayerResult(statistics);
@@ -63,8 +64,8 @@ public final class OutputView {
         System.out.println("딜러: " + dealerResult);
     }
 
-    private static void showPlayerResult(Map<Participant, Long> playerResult) {
-        for (Map.Entry<Participant, Long> entry : playerResult.entrySet()) {
+    private static void showPlayerResult(Map<Player, Long> playerResult) {
+        for (Map.Entry<Player, Long> entry : playerResult.entrySet()) {
             System.out.println(entry.getKey().getName() + ": " + entry.getValue());
         }
     }

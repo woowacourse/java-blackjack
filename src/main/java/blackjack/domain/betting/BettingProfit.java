@@ -1,14 +1,14 @@
 package blackjack.domain.betting;
 
-import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Player;
 import java.util.Map;
 
 public class BettingProfit {
 
-    private final Map<Participant, Long> playerProfit;
+    private final Map<Player, Long> playerProfit;
     private final long dealerProfit;
 
-    public BettingProfit(Map<Participant, Long> playerProfit, Long dealerProfit) {
+    public BettingProfit(Map<Player, Long> playerProfit, Long dealerProfit) {
         this.playerProfit = playerProfit;
         this.dealerProfit = dealerProfit;
     }
@@ -17,7 +17,7 @@ public class BettingProfit {
         return dealerProfit;
     }
 
-    public Map<Participant, Long> getPlayerProfit() {
+    public Map<Player, Long> getPlayerProfit() {
         return playerProfit;
     }
 }
