@@ -1,6 +1,7 @@
 package view;
 
 import dto.PlayerDto;
+import dto.PlayerProfitDto;
 import dto.PlayersDto;
 import dto.ResultDto;
 import java.util.List;
@@ -62,11 +63,12 @@ public class OutputView {
                 playerDto.resultDto().score());
     }
 
-    public static void printTotalProfit(String dealerProfit, List<String> playerProfitResults) {
+    public static void printTotalProfit(String dealerProfit, List<PlayerProfitDto> playerProfitResults) {
         System.out.println("\n\n## 최종 수익");
         System.out.printf("딜러: %s%n", dealerProfit);
-        for (String playerProfitResult : playerProfitResults) {
-            System.out.print(playerProfitResult);
+        for(PlayerProfitDto playerProfitResult : playerProfitResults){
+            System.out.printf("%s: %s%n",playerProfitResult.name(),playerProfitResult.profit());
         }
+
     }
 }

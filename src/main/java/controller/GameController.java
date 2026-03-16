@@ -9,6 +9,7 @@ import domain.participant.PlayerCreationInfo;
 import domain.participant.Players;
 import domain.ProfitCalculator;
 import dto.PlayerDto;
+import dto.PlayerProfitDto;
 import dto.PlayersDto;
 import dto.ResultDto;
 import view.InputView;
@@ -95,11 +96,10 @@ public class GameController {
                 ProfitCalculator.calculateDealerProfit(players, dealer)
         );
 
-        List<String> playerProfitResults = players.getPlayers().stream()
-                .map(player -> String.format("%s: %s%n",
+        List<PlayerProfitDto> playerProfitResults = players.getPlayers().stream()
+                .map(player -> new PlayerProfitDto(
                         player.getNameValue(),
-                        ProfitCalculator.formatProfit(
-                                ProfitCalculator.calculatePlayerProfit(player, dealer)
+                        ProfitCalculator.formatProfit(ProfitCalculator.calculatePlayerProfit(player, dealer)
                         )))
                 .toList();
 
