@@ -132,12 +132,12 @@ class GameManagerTest {
                 List.of(1000, 1000)
         );
 
-        List<GameResultDto> result = manager.getFinalResult();
+        GameResultDto result = manager.getFinalResult();
 
-        assertThat(result).hasSize(3);
-        assertThat(result.get(0).getPlayerName()).isEqualTo("딜러");
-        assertThat(result.get(1).getPlayerName()).isEqualTo("pobi");
-        assertThat(result.get(2).getPlayerName()).isEqualTo("cary");
+        assertThat(result.getDealerResult().getDealerName()).isEqualTo("딜러");
+        assertThat(result.getPlayerResults()).hasSize(2);
+        assertThat(result.getPlayerResults().get(0).getPlayerName()).isEqualTo("pobi");
+        assertThat(result.getPlayerResults().get(1).getPlayerName()).isEqualTo("cary");
     }
 
     @Test
@@ -173,9 +173,9 @@ class GameManagerTest {
         manager.registerPlayers(List.of(), List.of());
         manager.startGame();
 
-        List<GameResultDto> result = manager.getFinalResult();
+        GameResultDto result = manager.getFinalResult();
 
-        assertThat(result).hasSize(1);
-        assertThat(result.getFirst().getPlayerName()).isEqualTo("딜러");
+        assertThat(result.getDealerResult().getDealerName()).isEqualTo("딜러");
+        assertThat(result.getPlayerResults()).isEmpty();
     }
 }

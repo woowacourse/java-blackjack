@@ -32,9 +32,6 @@ public class Player extends Participant {
         return status.isNaturalBlackJack();
     }
 
-    public void markNaturalBlackJack() {
-        status.markNaturalBlackJack();
-    }
 
     public double calculateProceeds(Result result) {
         return status.calculateProceeds(result);

@@ -4,7 +4,9 @@ import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
 import domain.constant.Result;
+import dto.DealerResultDto;
 import dto.GameResultDto;
+import dto.PlayerResultDto;
 import domain.game.GameResultJudge;
 import domain.participant.Dealer;
 import domain.participant.Player;
@@ -31,16 +33,16 @@ public class GameResultJudgeTest {
 
         Players players = Players.of(List.of(player));
 
-        List<GameResultDto> results = GameResultJudge.judge(dealer, players);
+        GameResultDto result = GameResultJudge.judge(dealer, players);
 
-        GameResultDto dealerResult = results.get(0);
-        GameResultDto playerResult = results.get(1);
+        DealerResultDto dealerResult = result.getDealerResult();
+        PlayerResultDto playerResult = result.getPlayerResults().getFirst();
 
         assertThat(playerResult.getPlayerName()).isEqualTo("pobi");
         assertThat(playerResult.getResult()).isEqualTo(Result.BUST);
         assertThat(playerResult.getProceeds()).isEqualTo(-1000);
 
-        assertThat(dealerResult.getPlayerName()).isEqualTo("딜러");
+        assertThat(dealerResult.getDealerName()).isEqualTo("딜러");
         assertThat(dealerResult.getProceeds()).isEqualTo(1000);
     }
 
@@ -57,8 +59,8 @@ public class GameResultJudgeTest {
 
         Players players = Players.of(List.of(player));
 
-        List<GameResultDto> results = GameResultJudge.judge(dealer, players);
-        GameResultDto playerResult = results.get(1);
+        GameResultDto result = GameResultJudge.judge(dealer, players);
+        PlayerResultDto playerResult = result.getPlayerResults().getFirst();
 
         assertThat(playerResult.getResult()).isEqualTo(Result.WIN);
         assertThat(playerResult.getProceeds()).isEqualTo(1000);
@@ -77,8 +79,8 @@ public class GameResultJudgeTest {
 
         Players players = Players.of(List.of(player));
 
-        List<GameResultDto> results = GameResultJudge.judge(dealer, players);
-        GameResultDto playerResult = results.get(1);
+        GameResultDto result = GameResultJudge.judge(dealer, players);
+        PlayerResultDto playerResult = result.getPlayerResults().getFirst();
 
         assertThat(playerResult.getResult()).isEqualTo(Result.LOSE);
         assertThat(playerResult.getProceeds()).isEqualTo(-1000);
@@ -97,8 +99,8 @@ public class GameResultJudgeTest {
 
         Players players = Players.of(List.of(player));
 
-        List<GameResultDto> results = GameResultJudge.judge(dealer, players);
-        GameResultDto playerResult = results.get(1);
+        GameResultDto result = GameResultJudge.judge(dealer, players);
+        PlayerResultDto playerResult = result.getPlayerResults().getFirst();
 
         assertThat(playerResult.getResult()).isEqualTo(Result.DRAW);
         assertThat(playerResult.getProceeds()).isEqualTo(0);
@@ -114,12 +116,11 @@ public class GameResultJudgeTest {
 
         player.receiveCard(new Card(Rank.ACE, Suit.CLUB));
         player.receiveCard(new Card(Rank.KING, Suit.DIAMOND)); // natural blackjack
-        player.markNaturalBlackJack();
 
         Players players = Players.of(List.of(player));
 
-        List<GameResultDto> results = GameResultJudge.judge(dealer, players);
-        GameResultDto playerResult = results.get(1);
+        GameResultDto result = GameResultJudge.judge(dealer, players);
+        PlayerResultDto playerResult = result.getPlayerResults().getFirst();
 
         assertThat(playerResult.getResult()).isEqualTo(Result.BLACKJACK);
         assertThat(playerResult.getProceeds()).isEqualTo(15000);
@@ -143,11 +144,11 @@ public class GameResultJudgeTest {
 
         Players players = Players.of(List.of(winPlayer, losePlayer));
 
-        List<GameResultDto> results = GameResultJudge.judge(dealer, players);
+        GameResultDto result = GameResultJudge.judge(dealer, players);
 
-        GameResultDto dealerResult = results.get(0);
-        GameResultDto firstPlayerResult = results.get(1);
-        GameResultDto secondPlayerResult = results.get(2);
+        DealerResultDto dealerResult = result.getDealerResult();
+        PlayerResultDto firstPlayerResult = result.getPlayerResults().get(0);
+        PlayerResultDto secondPlayerResult = result.getPlayerResults().get(1);
 
         assertThat(firstPlayerResult.getProceeds()).isEqualTo(1000);
         assertThat(secondPlayerResult.getProceeds()).isEqualTo(-2000);

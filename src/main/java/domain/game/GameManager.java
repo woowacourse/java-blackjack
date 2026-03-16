@@ -2,8 +2,8 @@ package domain.game;
 
 import domain.DtoFactory;
 import domain.card.Deck;
-import dto.GameResultDto;
 import dto.GameInitialInfoDto;
+import dto.GameResultDto;
 import dto.GameScoreResultDto;
 import domain.participant.Dealer;
 import domain.participant.Player;
@@ -38,7 +38,7 @@ public class GameManager {
     public void registerPlayers(List<String> playerNames, List<Integer> bettingMoneyList) {
         List<Player> players = new ArrayList<>();
 
-        for (int i  = 0; i < playerNames.size(); i++) {
+        for (int i = 0; i < playerNames.size(); i++) {
             players.add(new Player(playerNames.get(i), bettingMoneyList.get(i)));
         }
 
@@ -66,7 +66,7 @@ public class GameManager {
         return true;
     }
 
-    public List<GameResultDto> getFinalResult() {
+    public GameResultDto getFinalResult() {
         return GameResultJudge.judge(dealer, players);
     }
 }

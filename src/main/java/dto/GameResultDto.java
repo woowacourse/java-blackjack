@@ -1,40 +1,21 @@
 package dto;
 
-import domain.constant.Result;
+import java.util.List;
 
 public class GameResultDto {
-    private final String playerName;
-    private final Result result;
-    private final double proceeds;
+    private final DealerResultDto dealerResult;
+    private final List<PlayerResultDto> playerResults;
 
-    public GameResultDto(String playerName, double proceeds) {
-        this(playerName, null, proceeds);
+    public GameResultDto(DealerResultDto dealerResult, List<PlayerResultDto> playerResults) {
+        this.dealerResult = dealerResult;
+        this.playerResults = playerResults;
     }
 
-    public GameResultDto(String playerName, Result result, double proceeds) {
-        this.playerName = playerName;
-        this.result = result;
-        this.proceeds = proceeds;
+    public DealerResultDto getDealerResult() {
+        return dealerResult;
     }
 
-    public String getPlayerName() {
-        return playerName;
-    }
-
-    public Result getResult() {
-        return result;
-    }
-
-    public double getProceeds() {
-        return proceeds;
-    }
-
-    @Override
-    public String toString() {
-        return "GameResultDto{" +
-                "playerName='" + playerName + '\'' +
-                ", result=" + result +
-                ", proceeds=" + proceeds +
-                '}';
+    public List<PlayerResultDto> getPlayerResults() {
+        return playerResults;
     }
 }

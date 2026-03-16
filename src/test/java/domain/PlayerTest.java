@@ -16,7 +16,6 @@ public class PlayerTest {
 
         player.receiveCard(new Card(Rank.ACE, Suit.SPADE));
         player.receiveCard(new Card(Rank.KING, Suit.HEART));
-        player.markNaturalBlackJack();
 
         assertThat(player.canDraw()).isFalse();
     }

@@ -3,6 +3,7 @@ package view;
 import dto.GameResultDto;
 import dto.GameInitialInfoDto;
 import dto.GameScoreResultDto;
+import dto.PlayerResultDto;
 
 import java.text.MessageFormat;
 import java.util.List;
@@ -47,10 +48,16 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printFinalResult(List<GameResultDto> finalResult) {
+    public void printFinalResult(GameResultDto finalResult) {
         System.out.println("## 최종 수익");
 
-        for (GameResultDto result : finalResult) {
+        System.out.println(MessageFormat.format(
+                FINAL_PROCEEDS_MESSAGE,
+                finalResult.getDealerResult().getDealerName(),
+                formatProceeds(finalResult.getDealerResult().getProceeds())
+        ));
+
+        for (PlayerResultDto result : finalResult.getPlayerResults()) {
             System.out.println(MessageFormat.format(
                     FINAL_PROCEEDS_MESSAGE,
                     result.getPlayerName(),
@@ -68,7 +75,7 @@ public class OutputView {
         System.out.println(MessageFormat.format(
                 DEAL_MESSAGE,
                 playerNames,
-                2
+                INITIAL_HAND_SIZE
         ));
     }
 
