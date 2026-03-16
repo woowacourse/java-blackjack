@@ -24,7 +24,7 @@ public class Money {
         return new Money(this.money.add(other.money));
     }
 
-    public BigDecimal multiplyLong(long input) {
+    public BigDecimal multiplyDouble(double input) {
         return this.money.multiply(BigDecimal.valueOf(input));
     }
 
