@@ -16,6 +16,14 @@ public class InputView {
         return playerNames;
     }
 
+    public static int askPlayerBettingMoney(String playerName) {
+        System.out.printf("%s의 배팅 금액은?\n", playerName);
+
+        String input = sc.nextLine();
+        int money = Integer.parseInt(input);
+        return money;
+    }
+
     public static String askContinue(String player) {
         System.out.println(player + "는 한장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)");
         String input = sc.nextLine();

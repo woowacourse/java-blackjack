@@ -3,6 +3,7 @@ package controller;
 import domain.BlackJackGame;
 import domain.Dealer;
 import domain.Deck;
+import domain.Money;
 import domain.Player;
 import domain.Result;
 import dto.ParticipantCardsDto;
@@ -19,6 +20,7 @@ public class BlackJackGameController {
     public void run() {
         List<String> playerNames = getPlayerNames();
         List<Player> players = initPlayer(playerNames);
+
         Deck deck = new Deck();
 
         BlackJackGame blackJackGame = new BlackJackGame(deck, players, Dealer.create());
@@ -41,8 +43,14 @@ public class BlackJackGameController {
         return InputView.askPlayerNames();
     }
 
+    private Money getPlayerBettingMoney(String playerName) {
+        return new Money(InputView.askPlayerBettingMoney(playerName));
+    }
+
     private List<Player> initPlayer(List<String> playerNames) {
-        List<Player> players = playerNames.stream().map(Player::from).toList();
+        List<Player> players = playerNames.stream()
+                .map(playerName -> Player.from(playerName, (getPlayerBettingMoney(playerName))))
+                .toList();
         return players;
     }
 
