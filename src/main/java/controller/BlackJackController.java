@@ -2,7 +2,6 @@ package controller;
 
 import domain.betting.Betting;
 import domain.betting.BettingAmount;
-import domain.card.GameCards;
 import domain.game.GamblersGameResult;
 import domain.game.Game;
 import domain.player.Gambler;
@@ -56,8 +55,7 @@ public class BlackJackController {
     }
 
     private Game initializeGame(Map<String, BettingAmount> gamblerNameAndBettingInfo) {
-        Game game = new Game(gamblerNameAndBettingInfo,
-                GameCards.DEFAULT_CARD_SET);
+        Game game = new Game(gamblerNameAndBettingInfo);
 
         outputView.printInitialDeal(gamblerNameAndBettingInfo.keySet().stream().toList());
         game.initializeGame();
@@ -80,12 +78,12 @@ public class BlackJackController {
     private void playTurn(Game game, Gambler gambler) {
         while (!gambler.isBust()) {
             AgreementRequestDto agreementRequestDto = inputView.askHitOrStand(gambler.getName());
-            if (agreementRequestDto.agreement().equals(InputView.HIT)) {
+            if (agreementRequestDto.isHit()) {
                 game.drawCardTo(gambler);
                 outputView.printParticipantInfo(
                         new ParticipantHandResponseDto(gambler.getName(), gambler.getHandInfo()));
             }
-            if (agreementRequestDto.agreement().equals(InputView.STAND)) {
+            if (agreementRequestDto.isStand()) {
                 break;
             }
         }

@@ -1,12 +1,13 @@
 package domain.betting;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 public class BettingAmount {
 
-    private final int bettingAmount;
+    private final BigDecimal bettingAmount;
 
-    public BettingAmount(int bettingAmount) {
+    public BettingAmount(BigDecimal bettingAmount) {
         this.bettingAmount = bettingAmount;
     }
 
@@ -27,7 +28,7 @@ public class BettingAmount {
         return Objects.hash(bettingAmount);
     }
 
-    public int getBettingAmount() {
+    public BigDecimal getBettingAmount() {
         return bettingAmount;
     }
 }

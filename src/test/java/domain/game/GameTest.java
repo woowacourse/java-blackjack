@@ -1,7 +1,6 @@
 package domain.game;
 
 import domain.betting.BettingAmount;
-import domain.card.GameCards;
 import java.util.HashMap;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
@@ -17,7 +16,7 @@ class GameTest {
         Map<String, BettingAmount> tempGamblers = new HashMap<>();
         tempGamblers.put("pobi", new BettingAmount(10000));
         tempGamblers.put("jason", new BettingAmount(20000));
-        Game game = new Game(tempGamblers, GameCards.DEFAULT_CARD_SET);
+        Game game = new Game(tempGamblers);
 
         // when
         game.initializeGame();

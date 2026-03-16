@@ -1,11 +1,11 @@
 package domain.game;
 
 import domain.betting.BettingAmount;
-import domain.card.Card;
 import domain.card.GameCards;
 import domain.player.Dealer;
 import domain.player.Gambler;
 import domain.player.Gamblers;
+import domain.player.GamblersFactory;
 import domain.player.Participant;
 import domain.player.ParticipantGameInfo;
 import java.util.ArrayList;
@@ -15,23 +15,20 @@ import java.util.Map;
 
 public class Game {
 
-    public static final int DEFAULT_START_CARD_COUNT = 2;
     private final Dealer dealer;
     private final Gamblers gamblers;
     private final GameCards gameCards;
 
-    public Game(Map<String, BettingAmount> gamblersNameAndBettingInfo,
-            int defaultCardSet) {
+    public Game(Map<String, BettingAmount> gamblersNameAndBettingInfo) {
         this.dealer = new Dealer();
-        this.gamblers = new Gamblers(gamblersNameAndBettingInfo);
+        List<Gambler> gamblers = GamblersFactory.createGamblers(gamblersNameAndBettingInfo);
+        this.gamblers = new Gamblers(gamblers);
         this.gameCards = new GameCards();
     }
 
     public void initializeGame() {
-        for (int i = 0; i < DEFAULT_START_CARD_COUNT; i++) {
-            dealer.addCard(gameCards.drawCard());
-            gamblers.receiveCards(gameCards);
-        }
+        dealer.receiveInitialCards(gameCards);
+        gamblers.receiveInitialCards(gameCards);
     }
 
     public Map<String, List<String>> getInitialParticipantsHandInfo() {
@@ -49,12 +46,8 @@ public class Game {
         return dealer.isBelowDrawThreshold();
     }
 
-    public Card pickCard() {
-        return gameCards.drawCard();
-    }
-
     public void drawCardTo(Participant participant) {
-        participant.addCard(pickCard());
+        participant.addCard(gameCards.drawCard());
     }
 
     public List<Gambler> getGamblersList() {

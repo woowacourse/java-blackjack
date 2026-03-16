@@ -9,6 +9,7 @@ public class InputView {
 
     public static final String HIT = "y";
     public static final String STAND = "n";
+
     private Scanner sc = new Scanner(System.in);
 
     public NameRequestDto askGamblerNames() {

@@ -9,7 +9,7 @@ import java.util.stream.IntStream;
 
 public class GameCards {
 
-    public static final int DEFAULT_CARD_SET = 1;
+    private static final int DEFAULT_CARD_SET = 1;
     private final List<Card> cards;
 
     public GameCards() {

@@ -7,6 +7,8 @@ import java.util.List;
 
 public class Participant {
 
+    protected static final int DEFAULT_START_CARD_COUNT = 2;
+
     protected final Name name;
 
     protected Hand hand;
@@ -41,11 +43,7 @@ public class Participant {
     }
 
     public ParticipantGameInfo getParticipantGameInfo() {
-        return new ParticipantGameInfo(
-                name.getName(),
-                hand.getInfo(),
-                hand.calculateScore()
-        );
+        return new ParticipantGameInfo(name.getName(), hand.getInfo(), hand.calculateScore());
     }
 
     public boolean isEqualName(String name) {

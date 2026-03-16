@@ -1,30 +1,30 @@
 package domain.player;
 
-import domain.betting.BettingAmount;
 import domain.card.GameCards;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Gamblers {
 
     private List<Gambler> gamblers;
 
-    public Gamblers(Map<String, BettingAmount> gamblerNameAndBettingInfo) {
-        this.gamblers = gamblerNameAndBettingInfo.entrySet()
-                .stream()
-                .map(entry -> new Gambler(entry.getKey(), entry.getValue()))
-                .collect(Collectors.toList());
+    public Gamblers(List<Gambler> gamblers) {
+        validateNameDuplication(gamblers);
+        this.gamblers = gamblers;
     }
 
-    public Gamblers(List<Gambler> gamblerList) {
-        this.gamblers = gamblerList;
-    }
-
-    public boolean containGambler(String name) {
-        return gamblers.stream()
-                .anyMatch(gambler -> gambler.isEqualName(name));
+    private void validateNameDuplication(List<Gambler> gamblers) {
+        Set<String> names = new HashSet<>();
+        for (Gambler gambler : gamblers) {
+            names.add(gambler.getName());
+        }
+        if (names.size() != gamblers.size()) {
+            throw new IllegalArgumentException("중복된 이름이 입력됩니다.");
+        }
     }
 
     public Map<String, List<String>> getHandsInfo() {
@@ -60,5 +60,11 @@ public class Gamblers {
 
     public int getGamblersSize() {
         return gamblers.size();
+    }
+
+    public void receiveInitialCards(GameCards gameCards) {
+        for (Gambler gambler : gamblers) {
+            gambler.receiveInitialCards(gameCards);
+        }
     }
 }
