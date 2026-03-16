@@ -149,12 +149,7 @@ public class BlackjackController {
     }
 
     private void printGameResults(BlackjackResult blackjackResults) {
-        List<PlayerResultDto> playerResults = blackjackResults.playerProfits().entrySet().stream()
-                .map(entry -> new PlayerResultDto(
-                        entry.getKey().getName(),
-                        entry.getValue()
-                ))
-                .toList();
+        List<PlayerResultDto> playerResults = PlayerResultConverter.convert(blackjackResults);
         outputView.printFinalResults(playerResults);
     }
 }
