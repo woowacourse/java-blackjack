@@ -5,9 +5,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import model.card.Card;
-import model.judgement.GameStatus;
 import model.judgement.Judgement;
 import model.judgement.PlayerResult;
+import model.judgement.ResultStatus;
+import model.paticipant.BettingPlayer;
 import model.paticipant.Dealer;
 import model.paticipant.Player;
 import model.paticipant.Players;
@@ -21,19 +22,19 @@ public class JudgementTest {
     void 다양한_게임_상황에서_승패를_올바르게_판정한다(
             List<Card> playerCards,
             List<Card> dealerCards,
-            GameStatus status
+            ResultStatus status
     ) {
         // given
         Dealer dealer = createDealer();
         dealerCards.forEach(dealer::addCard);
 
-        Player player = new Player("pobi");
-        playerCards.forEach(player::addCard);
+        Player participant = new BettingPlayer("pobi", 10000);
+        playerCards.forEach(participant::addCard);
 
         // when
-        PlayerResult playerResult = Judgement.judgeByPlayer(dealer, new Players(List.of(player)));
+        PlayerResult playerResult = Judgement.judgeByPlayer(dealer, new Players(List.of(participant)));
 
         // then
-        assertThat(playerResult.countByStatus(status)).isEqualTo(1);
+        assertThat(playerResult.result()).containsEntry(participant, status);
     }
 }

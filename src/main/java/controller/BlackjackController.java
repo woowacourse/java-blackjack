@@ -1,8 +1,6 @@
 package controller;
 
-import java.util.List;
-import model.BlackjackService;
-import model.judgement.DealerResult;
+import model.BlackjackGame;
 import model.judgement.Judgement;
 import model.judgement.PlayerResult;
 import model.paticipant.Dealer;
@@ -11,43 +9,58 @@ import model.paticipant.Players;
 import view.InputView;
 import view.OutputView;
 
-public class BlackjackController {
+public class BlackjackController<T extends Player> {
 
-    private final BlackjackService blackjackService;
+    private final BlackjackGame blackjackGame;
+    private final GameMode<T> gameMode;
 
-    public BlackjackController(BlackjackService blackjackService) {
-        this.blackjackService = blackjackService;;
+    public BlackjackController(BlackjackGame blackjackGame, GameMode<T> gameMode) {
+        this.blackjackGame = blackjackGame;
+        this.gameMode = gameMode;
     }
 
     public void run() {
         Dealer dealer = new Dealer();
-        Players players = createPlayers();
+        Players<T> players = gameMode.createPlayers();
 
-        drawInitCards(dealer, players);
-        drawMoreCardByPlayer(dealer, players);
-
-        printFinalCards(dealer, players);
-        judgeGame(dealer, players);
+        initialDeal(dealer, players);
+        proceedTurns(dealer, players);
+        finishGame(dealer, players);
     }
 
-    private Players createPlayers() {
-        List<String> names = InputView.readPlayerNames();
-        return Players.from(names);
+    private void initialDeal(Dealer dealer, Players<T> players) {
+        blackjackGame.drawInitCards(dealer, players);
+        OutputView.printCardOpen(dealer, players.players());
     }
 
-    private void drawMoreCardByPlayer(Dealer dealer, Players players) {
-        players.forEach(this::chooseHitOrStand);
+    private void proceedTurns(Dealer dealer, Players<T> players) {
+        players.forEach(this::processPlayerTurn);
+
         while (dealer.canHit()) {
             OutputView.printToOpenDealerNewCard(dealer);
-            blackjackService.drawOneCard(dealer);
+            blackjackGame.drawOneCard(dealer);
         }
     }
 
-    private void drawInitCards(Dealer dealer, Players players) {
-        blackjackService.drawTwoCards(dealer, players);
-        OutputView.printCardOpen(players);
-        OutputView.printCardByDealer(dealer);
-        OutputView.printCardByPlayers(players);
+    private void processPlayerTurn(Player player) {
+        if (player.isBlackjack()) {
+            return;
+        }
+
+        boolean hasDrawn = hitUntilStand(player);
+        if (!hasDrawn) {
+            OutputView.printCardByPlayer(player);
+        }
+    }
+
+    private boolean hitUntilStand(Player player) {
+        boolean hasDrawn = false;
+        while (canHitMore(player)) {
+            blackjackGame.drawOneCard(player);
+            OutputView.printCardByPlayer(player);
+            hasDrawn = true;
+        }
+        return hasDrawn;
     }
 
     private boolean canHitMore(Player player) {
@@ -59,31 +72,9 @@ public class BlackjackController {
         return Continuation.from(inputCommand);
     }
 
-    private void chooseHitOrStand(Player player) {
-        boolean printed = false;
-        while (canHitMore(player)) {
-            blackjackService.drawOneCard(player);
-            OutputView.printCardByPlayer(player);
-            printed = true;
-        }
-
-        if (!printed) {
-            OutputView.printCardByPlayer(player);
-        }
-    }
-
-    private void printFinalCards(Dealer dealer, Players players) {
-        OutputView.printBlank();
-        OutputView.printCardByPlayerWithScore(dealer);
-        players.forEach(OutputView::printCardByPlayerWithScore);
-    }
-
-    private void judgeGame(Dealer dealer, Players players) {
-        PlayerResult playerResult = Judgement.judgeByPlayer(dealer, players);
-        DealerResult dealerResult = Judgement.judgeByDealer(playerResult);
-
-        OutputView.printFinalResultHeader();
-        OutputView.printResultByDealer(dealerResult);
-        OutputView.printResultByPlayers(playerResult);
+    private void finishGame(Dealer dealer, Players<T> players) {
+        OutputView.printFinalCards(dealer, players.players());
+        PlayerResult<T> playerResult = Judgement.judgeByPlayer(dealer, players);
+        gameMode.reportResult(playerResult);
     }
 }
