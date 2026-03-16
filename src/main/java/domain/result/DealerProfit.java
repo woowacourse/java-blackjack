@@ -1,3 +1,5 @@
 package domain.result;
 
-public record DealerProfit(double profit) {}
+import java.math.BigDecimal;
+
+public record DealerProfit(BigDecimal profit) {}

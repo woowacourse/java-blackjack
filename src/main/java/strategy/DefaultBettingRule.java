@@ -2,26 +2,27 @@ package strategy;
 
 import domain.result.GameResult;
 import domain.result.RoundBetInfo;
+import java.math.BigDecimal;
 import java.util.Map;
 
 public class DefaultBettingRule implements BettingRule {
-    private static final double BLACKJACK_MULTIPLIER = 1.5;
-    private static final Map<GameResult, Double> MULTIPLIERS = Map.of(
-            GameResult.WIN, 1.0,
-            GameResult.DRAW, 0.0,
-            GameResult.LOSE, -1.0
+    private static final BigDecimal BLACKJACK_MULTIPLIER = new BigDecimal("1.5");
+    private static final Map<GameResult, BigDecimal> MULTIPLIERS = Map.of(
+            GameResult.WIN, new BigDecimal("1"),
+            GameResult.DRAW, new BigDecimal("0"),
+            GameResult.LOSE, new BigDecimal("-1")
     );
 
     @Override
-    public double calculateBetAmount(RoundBetInfo roundBetInfo, GameResult gameResult) {
-        double betAmount = roundBetInfo.betAmount();
+    public BigDecimal calculateBetAmount(RoundBetInfo roundBetInfo, GameResult gameResult) {
+        BigDecimal betAmount = roundBetInfo.betAmount();
         if (roundBetInfo.user().isBlackjack()) {
-            return betAmount * BLACKJACK_MULTIPLIER;
+            return betAmount.multiply(BLACKJACK_MULTIPLIER);
         }
-        Double multiplier = MULTIPLIERS.get(gameResult);
+        BigDecimal multiplier = MULTIPLIERS.get(gameResult);
         if (multiplier == null) {
             throw new IllegalArgumentException("[ERROR] 유효하지 않은 게임 결과입니다.");
         }
-        return betAmount * multiplier;
+        return betAmount.multiply(multiplier);
     }
 }

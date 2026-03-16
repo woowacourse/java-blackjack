@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,9 +28,9 @@ class BettingRuleTest {
         User blackjackUser = User.from("test");
         blackjackUser.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_ACE));
         blackjackUser.calculateScore();
-        RoundBetInfo roundBetInfo = new RoundBetInfo(1, blackjackUser, 1000);
+        RoundBetInfo roundBetInfo = new RoundBetInfo(1, blackjackUser, BigDecimal.valueOf(1000));
 
-        assertThat(bettingRule.calculateBetAmount(roundBetInfo, GameResult.WIN)).isEqualTo(1500);
+        assertThat(bettingRule.calculateBetAmount(roundBetInfo, GameResult.WIN)).isEqualByComparingTo("1500");
     }
 
     @Test
@@ -38,9 +39,9 @@ class BettingRuleTest {
         User user = User.from("test");
         user.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_SEVEN));
         user.calculateScore();
-        RoundBetInfo roundBetInfo = new RoundBetInfo(1, user, 1000);
+        RoundBetInfo roundBetInfo = new RoundBetInfo(1, user, BigDecimal.valueOf(1000));
 
-        assertThat(bettingRule.calculateBetAmount(roundBetInfo, GameResult.WIN)).isEqualTo(1000);
+        assertThat(bettingRule.calculateBetAmount(roundBetInfo, GameResult.WIN)).isEqualByComparingTo("1000");
     }
 
     @Test
@@ -49,9 +50,9 @@ class BettingRuleTest {
         User user = User.from("test");
         user.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_SEVEN));
         user.calculateScore();
-        RoundBetInfo roundBetInfo = new RoundBetInfo(1, user, 1000);
+        RoundBetInfo roundBetInfo = new RoundBetInfo(1, user, BigDecimal.valueOf(1000));
 
-        assertThat(bettingRule.calculateBetAmount(roundBetInfo, GameResult.DRAW)).isEqualTo(0);
+        assertThat(bettingRule.calculateBetAmount(roundBetInfo, GameResult.DRAW)).isEqualByComparingTo("0");
     }
 
     @Test
@@ -60,8 +61,8 @@ class BettingRuleTest {
         User user = User.from("test");
         user.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_SEVEN));
         user.calculateScore();
-        RoundBetInfo roundBetInfo = new RoundBetInfo(1, user, 1000);
+        RoundBetInfo roundBetInfo = new RoundBetInfo(1, user, BigDecimal.valueOf(1000));
 
-        assertThat(bettingRule.calculateBetAmount(roundBetInfo, GameResult.LOSE)).isEqualTo(-1000);
+        assertThat(bettingRule.calculateBetAmount(roundBetInfo, GameResult.LOSE)).isEqualByComparingTo("-1000");
     }
 }

@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import strategy.BettingRule;
 import strategy.DefaultBettingRule;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -50,7 +51,11 @@ class GameServiceTest {
         User loseUser = User.from("poby");
         User drawUser = User.from("draw");
         List<User> users = List.of(winUser, loseUser, drawUser);
-        List<RoundBetInfo> roundBetInfos = List.of(new RoundBetInfo(1,winUser,1000), new RoundBetInfo(1,drawUser,2000), new RoundBetInfo(1,loseUser,3000));
+        List<RoundBetInfo> roundBetInfos = List.of(
+                new RoundBetInfo(1, winUser, BigDecimal.valueOf(1000)),
+                new RoundBetInfo(1, drawUser, BigDecimal.valueOf(2000)),
+                new RoundBetInfo(1, loseUser, BigDecimal.valueOf(3000))
+        );
 
         dealer.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_NINE));
         winUser.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_SEVEN));
@@ -78,7 +83,11 @@ class GameServiceTest {
         User loseUser = User.from("poby");
         User drawUser = User.from("draw");
         List<User> users = List.of(winUser, loseUser, drawUser);
-        List<RoundBetInfo> roundBetInfos = List.of(new RoundBetInfo(1,winUser,1000), new RoundBetInfo(1,drawUser,2000), new RoundBetInfo(1,loseUser,3000));
+        List<RoundBetInfo> roundBetInfos = List.of(
+                new RoundBetInfo(1, winUser, BigDecimal.valueOf(1000)),
+                new RoundBetInfo(1, drawUser, BigDecimal.valueOf(2000)),
+                new RoundBetInfo(1, loseUser, BigDecimal.valueOf(3000))
+        );
 
 
         dealer.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_NINE));
@@ -90,6 +99,6 @@ class GameServiceTest {
 
         DealerProfit dealerProfit = gameService.upsertDealerProfit(userProfits);
 
-        assertThat(dealerProfit.profit()).isEqualTo(1500);
+        assertThat(dealerProfit.profit()).isEqualByComparingTo("1500");
     }
 }
