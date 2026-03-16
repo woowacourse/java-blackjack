@@ -53,11 +53,11 @@ public class PlayerTest {
         // given
         Player milan = new Player("밀란");
         milan.draw(new Card(CardValue.FOUR, CardShape.DIAMOND));
-        Player blackBear = new Player("흑곰");
-        blackBear.draw(new Card(CardValue.SIX, CardShape.CLOVER));
+        Dealer dealer = new Dealer();
+        dealer.draw(new Card(CardValue.SIX, CardShape.CLOVER));
 
         // when
-        boolean isWin = milan.winsAgainst(blackBear);
+        boolean isWin = milan.winsAgainst(dealer);
 
         // then
         assertThat(isWin).isFalse();
@@ -178,6 +178,20 @@ public class PlayerTest {
 
         // then
         assertThat(canDraw).isTrue();
+    }
+
+    @Test
+    void 플레이어가_초기_카드보다_더_뽑았었는지_확인하는_기능_테스트() {
+        // given
+        Player player = new Player("밀란");
+        player.draw(new Card(CardValue.TEN, CardShape.CLOVER));
+        player.draw(new Card(CardValue.TEN, CardShape.DIAMOND));
+
+        // when
+        boolean hasDrawn = player.hasNeverDrawn(2);
+
+        // that
+        assertThat(hasDrawn).isTrue();
     }
 
 }

@@ -10,6 +10,16 @@ public final class Player extends Participant {
         return getCardsName().size() <= compare;
     }
 
+    public boolean winsAgainst(Dealer other) {
+        if (other.isBurst()) {
+            return true;
+        }
+        if (this.isBurst()) {
+            return false;
+        }
+        return other.getSumOfCards() < this.getSumOfCards();
+    }
+
     @Override
     public boolean canDraw() {
         return !isBurst() && !isBlackjack();

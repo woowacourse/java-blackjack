@@ -22,16 +22,6 @@ public abstract class Participant {
         return cards.calculateSumOfCards();
     }
 
-    public final boolean winsAgainst(Participant other) {
-        if (other.isBurst()) {
-            return true;
-        }
-        if (this.isBurst()) {
-            return false;
-        }
-        return other.getSumOfCards() < this.getSumOfCards();
-    }
-
     public final boolean isBurst() {
         return cards.isBurst();
     }
