@@ -2,6 +2,7 @@ package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,5 +47,33 @@ public class PlayersTest {
         players.forEach(p -> names.add(p.getName()));
 
         assertThat(names).containsExactly("handa", "dalsu");
+    }
+
+    @Test
+    void 모든_플레이어는_배팅한다(){
+        Players players = Players.of(List.of(
+                player("handa"),
+                player("dalsu")
+        ));
+
+        players.betPlayers(name -> "5000");
+
+        List<BigDecimal> playerBetAmounts = new ArrayList<>();
+        players.forEach(player -> {playerBetAmounts.add(player.getBet().getAmount());});
+        assertThat(playerBetAmounts).containsOnly(new BigDecimal("5000"));
+    }
+
+    @Test
+    void 모든_플레이어는_덱에서_카드를_2장씩_받는다(){
+        Players players = Players.of(List.of(
+                player("handa"),
+                player("dalsu")
+        ));
+
+        players.deal(() -> TrumpCard.of(Suit.SPADE, Rank.ACE));
+
+        List<Integer> cardCounts = new ArrayList<>();
+        players.forEach(player -> {cardCounts.add(player.countCards());});
+        assertThat(cardCounts).containsOnly(2);
     }
 }

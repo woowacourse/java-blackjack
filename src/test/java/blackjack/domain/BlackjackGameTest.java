@@ -13,31 +13,12 @@ class BlackjackGameTest {
     }
 
     @Test
-    void 모든_플레이어에게_배팅_금액을_입력받는다(){
-        BlackjackGame game = createGame("pobi", "jason");
-
-        List<String> askedPlayers = new ArrayList<>();
-        game.betPlayers(name -> {
-            askedPlayers.add(name);
-            return "10000";
-        });
-
-        assertThat(askedPlayers).containsExactly("pobi", "jason");
-    }
-
-    @Test
-    void 모든_플레이어는_2장_딜러는_2장을_가진다(){
+    void 딜러는_2장을_가진다(){
         BlackjackGame game = createGame("pobi", "jason");
 
         game.deal();
 
         assertThat(game.getDealer().countCards()).isEqualTo(2);
-        List<Integer> cardCounts = new ArrayList<>();
-        game.getPlayers().forEach(player -> {
-                    cardCounts.add(player.countCards());
-                }
-        );
-        assertThat(cardCounts).containsOnly(2);
     }
 
     @Test

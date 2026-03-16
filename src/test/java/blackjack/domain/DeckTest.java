@@ -52,7 +52,7 @@ class DeckTest {
         Deck deck = emptyDeck();
 
         assertThatThrownBy(deck::deal)
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(IllegalStateException.class)
                 .hasMessage("덱에 카드가 없습니다.");
     }
 
