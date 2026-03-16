@@ -30,9 +30,11 @@ public enum Rank {
     public static Score sumWithAce(int aceAmount, Score sumWithOutAce) {
         Score sumWithAce = sumWithOutAce;
         for (int consideredAce = 0; consideredAce < aceAmount; consideredAce++) {
-            sumWithAce = sumWithAce.add(decideAceValue(sumWithOutAce, aceAmount - consideredAce - 1));
+            sumWithAce = sumWithAce.add(decideAceValue(sumWithAce, aceAmount - consideredAce - 1));
         }
         return sumWithAce;
+        // 9, 2
+        // 20, 1
     }
 
     private static Score decideAceValue(Score currentScore, int leftAce) {
