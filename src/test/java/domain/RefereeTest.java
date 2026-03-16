@@ -18,11 +18,11 @@ class RefereeTest {
     void player_score_compare(String description, List<Number> dealerCards, List<Number> playerCards,
                               MatchResult expected) {
         Dealer dealer = createDealer(dealerCards);
-        Player player = Player.from("pobi");
+        Player player = createPlayer("pobi");
         playerCards.forEach(number -> player.receiveCard(new Card(Shape.HEART, number)));
 
         Result result = new Referee().judge(dealer, List.of(player));
-        assertThat(result.getPlayerResults().get("pobi")).isEqualTo(expected);
+        assertThat(result.getPlayerResults().get(player)).isEqualTo(expected);
     }
 
     static Stream<Arguments> playerScoreTestCases() {
@@ -42,11 +42,11 @@ class RefereeTest {
     @DisplayName("플레이어의 점수가 버스트되면 딜러의 점수와 무관하게 패배한다.")
     void player_bust(String description, List<Number> dealerCards, List<Number> playerCards, MatchResult expected) {
         Dealer dealer = createDealer(dealerCards);
-        Player player = Player.from("pobi");
+        Player player = createPlayer("pobi");
         playerCards.forEach(number -> player.receiveCard(new Card(Shape.HEART, number)));
 
         Result result = new Referee().judge(dealer, List.of(player));
-        assertThat(result.getPlayerResults().get("pobi")).isEqualTo(expected);
+        assertThat(result.getPlayerResults().get(player)).isEqualTo(expected);
     }
 
     static Stream<Arguments> playerBustTestCases() {
@@ -65,24 +65,28 @@ class RefereeTest {
     @DisplayName("딜러가 버스트면 플레이어가 이긴다.")
     void dealer_bust() {
         Dealer dealer = createDealer(List.of(Number.TEN, Number.JACK, Number.QUEEN));
-        Player player = Player.from("pobi");
+        Player player = createPlayer("pobi");
         player.receiveCard(new Card(Shape.HEART, Number.TEN));
         player.receiveCard(new Card(Shape.HEART, Number.EIGHT));
 
         Result result = new Referee().judge(dealer, List.of(player));
-        assertThat(result.getPlayerResults().get("pobi")).isEqualTo(MatchResult.WIN);
+        assertThat(result.getPlayerResults().get(player)).isEqualTo(MatchResult.WIN);
     }
 
     @Test
     @DisplayName("동점이면 무승부다.")
     void player_dealer_draw() {
         Dealer dealer = createDealer(List.of(Number.TEN, Number.NINE));
-        Player player = Player.from("pobi");
+        Player player = createPlayer("pobi");
         player.receiveCard(new Card(Shape.HEART, Number.TEN));
         player.receiveCard(new Card(Shape.HEART, Number.NINE));
 
         Result result = new Referee().judge(dealer, List.of(player));
-        assertThat(result.getPlayerResults().get("pobi")).isEqualTo(MatchResult.DRAW);
+        assertThat(result.getPlayerResults().get(player)).isEqualTo(MatchResult.DRAW);
+    }
+
+    private Player createPlayer(String name) {
+        return Player.from(name, new Money(10000));
     }
 
     private Dealer createDealer(List<Number> numbers) {
