@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.domain.vo.GameResult;
+import blackjack.domain.vo.GamePayoffResult;
 import blackjack.dto.CardDto;
 import blackjack.dto.DealResultDto;
 import blackjack.dto.DealerScoreDto;
@@ -63,10 +63,10 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printFinalResult(List<GameResult> gameResults, BigDecimal dealerProfit) {
+    public void printFinalResult(List<GamePayoffResult> gamePayoffResults, BigDecimal dealerProfit) {
         System.out.println("## 최종 승패");
         printDealerFinalResult(dealerProfit);
-        gameResults.forEach(result ->
+        gamePayoffResults.forEach(result ->
                 System.out.println(result.name() + ": " + result.profit()));
     }
 

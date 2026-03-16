@@ -2,14 +2,13 @@ package blackjack.domain;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
-import blackjack.domain.vo.GameResult;
+import blackjack.domain.vo.GamePayoffResult;
 import blackjack.domain.vo.MatchResult;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class BlackjackGame {
@@ -82,20 +81,20 @@ public class BlackjackGame {
         }
     }
 
-    public List<GameResult> calculatePlayerProfits(){
-        List<GameResult> results = new ArrayList<>();
+    public List<GamePayoffResult> calculatePlayerProfits(){
+        List<GamePayoffResult> results = new ArrayList<>();
         players.forEach(player -> {
             BigDecimal profit = MatchResult.judge(player, dealer)
                     .calculateProfit(player.getBet().getAmount());
-            results.add(GameResult.from(player.getName(), profit));
+            results.add(GamePayoffResult.from(player.getName(), profit));
                 }
         );
         return results;
     }
 
-    public BigDecimal calculateDealerProfit(List<GameResult> gameResults) {
-        return gameResults.stream()
-                .map(GameResult::profit)
+    public BigDecimal calculateDealerProfit(List<GamePayoffResult> gamePayoffResults) {
+        return gamePayoffResults.stream()
+                .map(GamePayoffResult::profit)
                 .reduce(BigDecimal.ZERO, BigDecimal::add)
                 .negate();
     }

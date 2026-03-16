@@ -1,7 +1,7 @@
 package blackjack.controller;
 
 import blackjack.domain.BlackjackGame;
-import blackjack.domain.vo.GameResult;
+import blackjack.domain.vo.GamePayoffResult;
 import blackjack.dto.DealResultDto;
 import blackjack.dto.GameResultDto;
 import blackjack.util.Parser;
@@ -48,9 +48,9 @@ public class BlackjackController {
 
         outputView.printGameResult(GameResultDto.from(game));
 
-        List<GameResult> gameResults = game.calculatePlayerProfits();
-        BigDecimal dealerProfit = game.calculateDealerProfit(gameResults);
-        outputView.printFinalResult(gameResults, dealerProfit);
+        List<GamePayoffResult> gamePayoffResults = game.calculatePlayerProfits();
+        BigDecimal dealerProfit = game.calculateDealerProfit(gamePayoffResults);
+        outputView.printFinalResult(gamePayoffResults, dealerProfit);
     }
 
     private List<String> inputNames() {
