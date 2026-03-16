@@ -5,11 +5,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import blackjack.common.error.ErrorCode;
 import blackjack.dto.CardDto;
+import blackjack.dto.PlayerProfitDto;
 import blackjack.model.card.Card;
 import blackjack.model.card.Rank;
 import blackjack.model.card.Suit;
 import blackjack.model.carddeck.CardDeck;
 import blackjack.model.money.Money;
+import blackjack.model.result.PlayerProfits;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -124,4 +126,29 @@ class PlayerTest {
         // then
         assertThat(money).isEqualTo(Money.of(15_000));
     }
+
+    @Test
+    @DisplayName("플레이어 수익 계산 테스트")
+    void playerAndDealerProfitTest() {
+        // given
+        CardDeck tenCloverDeck = CardDeck.of(cards -> Card.of(Rank.TEN, Suit.CLOVER));
+        CardDeck aceCloverDeck = CardDeck.of(cards -> Card.of(Rank.ACE, Suit.CLOVER));
+
+        Player player = Player.of("player");
+        player.bet(10_000);
+        player.pickAdditionalCard(tenCloverDeck);
+        player.pickAdditionalCard(aceCloverDeck);
+
+
+        Dealer dealer = Dealer.create();
+        dealer.pickAdditionalCard(tenCloverDeck);
+        dealer.pickAdditionalCard(tenCloverDeck);
+
+        // when
+        Money playerProfit = player.getPlayerProfit(dealer);
+
+        // then
+        assertThat(playerProfit).isEqualTo(Money.of(15_000));
+    }
+
 }
