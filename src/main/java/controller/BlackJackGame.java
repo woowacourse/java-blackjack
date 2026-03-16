@@ -9,7 +9,7 @@ import domain.participant.Players;
 import domain.result.Outcome;
 import dto.FinalScoreDto;
 import dto.InitialDto;
-import dto.MoneyDTO;
+import dto.MoneyDto;
 import dto.ParticipantDto;
 import dto.ParticipantScoreDto;
 import dto.PlayerOutcomeDto;
@@ -71,14 +71,13 @@ public class BlackJackGame {
     }
 
     private void printInitialStatus(Dealer dealer, Players players) {
-        ParticipantDto dealerDto = ParticipantDto.from(dealer);
         List<ParticipantDto> participants =
                 players.players()
                         .stream()
                         .map(ParticipantDto::from)
                         .toList();
         String joinedNames = players.getJoinedNames();
-        resultView.printGameStart(new InitialDto(joinedNames, dealerDto, participants));
+        resultView.printGameStart(InitialDto.from(joinedNames, dealer.getFirstCardName(), participants));
     }
 
     private void drawPlayerTurn(Deck deck, Player player) {
@@ -102,18 +101,23 @@ public class BlackJackGame {
                         .stream()
                         .map(ParticipantScoreDto::from)
                         .toList();
-        resultView.printResult(new FinalScoreDto(dealerScoreDto, playerScoreDtos));
+        resultView.printResult(FinalScoreDto.from(dealerScoreDto, playerScoreDtos));
     }
 
     private void printFinalProfit(Dealer dealer, Players players) {
-        int dealerProfit = 0;
         List<PlayerOutcomeDto> outcomeDtos = new ArrayList<>();
+        Money dealerProfit = calculateDealerProfit(dealer, players, outcomeDtos);
+        resultView.printScore(MoneyDto.from(dealerProfit, outcomeDtos));
+    }
+
+    private Money calculateDealerProfit(Dealer dealer, Players players, List<PlayerOutcomeDto> outcomeDtos) {
+        Money dealerProfit = Money.zero();
         for (Player player : players.players()) {
             Outcome outcome = Outcome.decideWinner(player, dealer);
-            Money playerProfit = player.getMoney().multiply(outcome.getRate());
-            dealerProfit -= playerProfit.getAmount();
-            outcomeDtos.add(PlayerOutcomeDto.of(player, playerProfit));
+            Money playerProfit = player.calculateProfit(outcome);
+            dealerProfit = dealerProfit.subtract(playerProfit);
+            outcomeDtos.add(PlayerOutcomeDto.from(player, playerProfit));
         }
-        resultView.printScore(new MoneyDTO(String.valueOf(dealerProfit), outcomeDtos));
+        return dealerProfit;
     }
 }
