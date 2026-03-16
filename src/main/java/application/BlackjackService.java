@@ -14,12 +14,9 @@ import java.util.Map;
 
 public class BlackjackService {
 
-    private GameTable gameTable;
+    private final GameTable gameTable;
 
-    public BlackjackService() {
-    }
-
-    public void initializeGame(Map<String, Integer> playerBetAmounts) {
+    public BlackjackService(Map<String, Integer> playerBetAmounts) {
         Map<String, Money> playerBets = new HashMap<>();
         for (String name : playerBetAmounts.keySet()) {
             Money betMoney = new Money(playerBetAmounts.get(name));
@@ -34,23 +31,23 @@ public class BlackjackService {
     }
 
     public RoundResult startOneRound(String memberName) {
-        List<Card> playerCards = getGameTable().drawForMember(memberName);
+        List<Card> playerCards = gameTable.drawForMember(memberName);
 
-        boolean isBust = getGameTable().isPlayerBust(memberName);
+        boolean isBust = gameTable.isPlayerBust(memberName);
 
         return new RoundResult(playerCards, isBust);
     }
 
     public void endPlayerRound(String playerName) {
-        getGameTable().changePlayerState(playerName);
+        gameTable.changePlayerState(playerName);
     }
 
     public boolean checkDealerDrawable() {
-        return getGameTable().drawForDealer();
+        return gameTable.drawForDealer();
     }
 
     public List<MemberStatus> getMemberStatuses() {
-        return getGameTable().getMemberStatuses();
+        return gameTable.getMemberStatuses();
     }
 
     public List<GameResult> getGameResults() {
@@ -58,12 +55,5 @@ public class BlackjackService {
         return profits.entrySet().stream()
                 .map(entry -> new GameResult(entry.getKey(), entry.getValue()))
                 .toList();
-    }
-
-    private GameTable getGameTable() {
-        if (gameTable == null) {
-            throw new IllegalStateException("게임이 초기화가 되지 않았습니다.");
-        }
-        return gameTable;
     }
 }

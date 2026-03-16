@@ -1,4 +1,3 @@
-import application.BlackjackService;
 import presentation.BlackjackController;
 import presentation.ui.BlackjackView;
 import presentation.ui.InputView;
@@ -9,9 +8,7 @@ public class Main {
         InputView inputView = new InputView();
         OutputView outputView = new OutputView();
 
-        BlackjackService blackjackService = new BlackjackService();
-        BlackjackController blackjackController = new BlackjackController(blackjackService,
-                new BlackjackView(inputView, outputView));
+        BlackjackController blackjackController = new BlackjackController(new BlackjackView(inputView, outputView));
 
         blackjackController.executeGame();
     }
