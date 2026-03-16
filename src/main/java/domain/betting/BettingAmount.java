@@ -1,22 +1,23 @@
 package domain.betting;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 public class BettingAmount {
-    private final int money;
+    private final BigDecimal money;
 
-    public BettingAmount(Integer bettingAmount) {
+    public BettingAmount(BigDecimal bettingAmount) {
         validateMinus(bettingAmount);
         this.money = bettingAmount;
     }
 
-    private static void validateMinus(Integer bettingAmount) {
-        if (bettingAmount < 0) {
-            throw new IllegalArgumentException("베팅 금액은 음수일 없습니다.");
+    private void validateMinus(BigDecimal bettingAmount) {
+        if (bettingAmount.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("베팅 금액은 음수일 수 없습니다.");
         }
     }
 
-    public Integer getMoney() {
+    public BigDecimal getMoney() {
         return money;
     }
 

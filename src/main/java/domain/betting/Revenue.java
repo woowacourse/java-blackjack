@@ -1,15 +1,16 @@
 package domain.betting;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Revenue {
-    private final int money;
+    private final BigDecimal money;
 
-    public Revenue(int money) {
+    public Revenue(BigDecimal money) {
         this.money = money;
     }
 
-    public int getMoney() {
+    public BigDecimal getMoney() {
         return money;
     }
 
@@ -19,7 +20,7 @@ public class Revenue {
             return false;
         }
         Revenue revenue = (Revenue) o;
-        return money == revenue.money;
+        return Objects.equals(money, revenue.money);
     }
 
     @Override

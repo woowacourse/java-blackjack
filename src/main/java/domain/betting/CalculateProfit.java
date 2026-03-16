@@ -2,9 +2,10 @@ package domain.betting;
 
 import domain.game.GameResult;
 import domain.participant.Name;
+import java.math.BigDecimal;
 
 public class CalculateProfit {
-    private static final double PROFIT_RATE = 1.5;
+    private static final BigDecimal PROFIT_RATE = new BigDecimal("1.5");
     private final BettingAmounts bettingAmounts;
 
     public CalculateProfit(BettingAmounts bettingAmounts) {
@@ -18,14 +19,14 @@ public class CalculateProfit {
 
     private static Revenue calculateRevenue(GameResult gameResult, BettingAmount amount) {
         if (gameResult == GameResult.BLACKJACK) {
-            return new Revenue((int) (amount.getMoney() * PROFIT_RATE));
+            return new Revenue(amount.getMoney().multiply(PROFIT_RATE));
         }
         if (gameResult == GameResult.WIN) {
             return new Revenue(amount.getMoney());
         }
         if (gameResult == GameResult.LOSE) {
-            return new Revenue(-amount.getMoney());
+            return new Revenue(amount.getMoney().negate());
         }
-        return new Revenue(0);
+        return new Revenue(BigDecimal.ZERO);
     }
 }
