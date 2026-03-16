@@ -3,6 +3,7 @@ package domain;
 import domain.card.Card;
 
 public class Dealer extends Participant {
+    public static final int DEALER_HIT_LIMIT = 17;
     private static final String DEALER_NAME = "딜러";
 
     public Dealer() {
@@ -11,7 +12,7 @@ public class Dealer extends Participant {
 
     @Override
     public boolean canHit() {
-        return hand.getSum() < BlackjackRule.DEALER_HIT_LIMIT;
+        return hand.getSum() < DEALER_HIT_LIMIT;
     }
 
     public Score calculateScore() {

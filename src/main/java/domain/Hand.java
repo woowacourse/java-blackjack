@@ -8,6 +8,7 @@ import java.util.List;
 import static domain.card.Rank.ACE;
 
 public class Hand {
+    public static final int ACE_SCORE_ADJUSTMENT = 10;
     private final List<Card> cards;
 
     public Hand() {
@@ -19,7 +20,7 @@ public class Hand {
         long aceCount = countAce();
 
         while (aceCount > 0 && sum > BlackjackRule.BLACKJACK_SCORE) {
-            sum -= BlackjackRule.ACE_SCORE_ADJUSTMENT;
+            sum -= ACE_SCORE_ADJUSTMENT;
             aceCount--;
         }
 
