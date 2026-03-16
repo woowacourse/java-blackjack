@@ -52,28 +52,4 @@ class PlayerBettingRequestTest {
         // then
         assertThat(playerBettingRequest.amount()).isEqualTo(2200000000L);
     }
-
-    @DisplayName("이름이 존재하지 않을 경우 예외가 발생한다.")
-    @Test
-    void validateEmptyName() {
-        // given
-        String playerNickname = "";
-
-        // when & then
-        assertThatThrownBy(() -> PlayerBettingRequest.createInitialRequest(playerNickname))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("이름은 공백이 될 수 없습니다.");
-    }
-
-    @Test
-    @DisplayName("이름에 공백만 입력될 경우 예외가 발생한다.")
-    void validateBlankName() {
-        // given
-        String playerNickname = " ";
-
-        // when & then
-        assertThatThrownBy(() -> PlayerBettingRequest.createInitialRequest(playerNickname))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("이름은 공백이 될 수 없습니다.");
-    }
 }

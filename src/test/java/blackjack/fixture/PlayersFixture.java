@@ -1,20 +1,20 @@
 package blackjack.fixture;
 
+import blackjack.domain.Nickname;
 import blackjack.domain.Players;
-import blackjack.dto.PlayerBettingRequest;
 
 public class PlayersFixture {
 
     public static Players createValidSinglePlayer() {
-        PlayerBettingRequest boyeRequest = PlayerBettingRequest.of("boye", "10000");
-        return Players.makeEmptyPlayers().addPlayer(boyeRequest);
+        Nickname nickname = Nickname.from("boye");
+        return Players.makeEmptyPlayers().addPlayer(nickname, 10000);
     }
 
     public static Players createValidTwoPlayers() {
-        PlayerBettingRequest boyeRequest = PlayerBettingRequest.of("boye", "10000");
-        PlayerBettingRequest suminRequest = PlayerBettingRequest.of("sumin", "20000");
+        Nickname boyeNickname = Nickname.from("boye");
+        Nickname suminNickname = Nickname.from("sumin");
         return Players.makeEmptyPlayers()
-            .addPlayer(boyeRequest)
-            .addPlayer(suminRequest);
+            .addPlayer(boyeNickname, 10000)
+            .addPlayer(suminNickname, 20000);
     }
 }

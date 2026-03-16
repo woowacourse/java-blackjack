@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import blackjack.domain.Card;
 import blackjack.domain.Hand;
 import blackjack.domain.MatchResult;
+import blackjack.domain.Nickname;
 import blackjack.domain.Rank;
 import blackjack.domain.Suit;
 import blackjack.dto.PlayerGameResult;
@@ -20,11 +21,11 @@ class PlayerTest {
     @DisplayName("플레이어가 정상적으로 생성된다.")
     void createPlayer() {
         // given
-        Player player = new Player("pobi", Role.PLAYER, 1000);
+        Player player = new Player(Nickname.from("boye"), Role.PLAYER, 1000);
 
         // when & then
         assertAll(
-            () -> assertThat(player.getNickname()).isEqualTo("pobi"),
+            () -> assertThat(player.getNickname()).isEqualTo("boye"),
             () -> assertThat(player.isDealer()).isFalse()
         );
     }
@@ -33,7 +34,7 @@ class PlayerTest {
     @DisplayName("플레이어의 점수가 21점 미만이면 카드를 받을 수 있다.")
     void isDrawableWhenNotBustedOrNotBlackjack() {
         // given
-        Player player = new Player("pobi", Role.PLAYER, 1000);
+        Player player = new Player(Nickname.from("boye"), Role.PLAYER, 1000);
         Hand blackjackCards = Hand.from(List.of(
             new Card(Rank.EIGHT, Suit.SPADE),
             new Card(Rank.NINE, Suit.HEART)
@@ -50,7 +51,7 @@ class PlayerTest {
     @DisplayName("플레이어의 점수가 21점 이상이면 더 이상 카드를 받을 수 없다.")
     void isNotDrawableWhenBustedOrBlackjack() {
         // given
-        Player player = new Player("pobi", Role.PLAYER, 1000);
+        Player player = new Player(Nickname.from("boye"), Role.PLAYER, 1000);
         Hand blackjackCards = Hand.from(List.of(
             new Card(Rank.ACE, Suit.SPADE),
             new Card(Rank.JACK, Suit.HEART)
@@ -67,7 +68,7 @@ class PlayerTest {
     @DisplayName("플레이어가 명시적으로 stop()을 호출하면 점수와 상관없이 카드를 받을 수 없다.")
     void stopDrawing() {
         // given
-        Player player = new Player("pobi", Role.PLAYER, 1000);
+        Player player = new Player(Nickname.from("boye"), Role.PLAYER, 1000);
 
         // when
         player.stop();
@@ -92,7 +93,7 @@ class PlayerTest {
         ));
         dealer.receiveCard(bustedCard.getCards());
         long amount = 10000L;
-        Player player = new Player("boye", Role.PLAYER, amount);
+        Player player = new Player(Nickname.from("boye"), Role.PLAYER, amount);
         player.receiveCard(notBustedCard.getCards());
 
         // when
@@ -117,7 +118,7 @@ class PlayerTest {
         ));
         dealer.receiveCard(blackjackCard.getCards());
         long amount = 10000L;
-        Player player = new Player("boye", Role.PLAYER, amount);
+        Player player = new Player(Nickname.from("boye"), Role.PLAYER, amount);
         player.receiveCard(blackjackCard.getCards());
 
         // when
@@ -146,7 +147,7 @@ class PlayerTest {
         ));
         dealer.receiveCard(notBustedCard.getCards());
         long amount = 10000L;
-        Player player = new Player("boye", Role.PLAYER, amount);
+        Player player = new Player(Nickname.from("boye"), Role.PLAYER, amount);
         player.receiveCard(blackjackCard.getCards());
 
         // when
@@ -176,7 +177,7 @@ class PlayerTest {
         ));
         dealer.receiveCard(notBustedCard.getCards());
         long amount = 10000L;
-        Player player = new Player("boye", Role.PLAYER, amount);
+        Player player = new Player(Nickname.from("boye"), Role.PLAYER, amount);
         player.receiveCard(bustedCard.getCards());
 
         // when
@@ -206,7 +207,7 @@ class PlayerTest {
         ));
         dealer.receiveCard(cardsOfScore17.getCards());
         long amount = 10000L;
-        Player player = new Player("boye", Role.PLAYER, amount);
+        Player player = new Player(Nickname.from("boye"), Role.PLAYER, amount);
         player.receiveCard(cardsOfScore20.getCards());
 
         // when
@@ -231,7 +232,7 @@ class PlayerTest {
         ));
         dealer.receiveCard(cardsOfScore17.getCards());
         long amount = 10000L;
-        Player player = new Player("boye", Role.PLAYER, amount);
+        Player player = new Player(Nickname.from("boye"), Role.PLAYER, amount);
         player.receiveCard(cardsOfScore17.getCards());
 
         // when
@@ -261,7 +262,7 @@ class PlayerTest {
         ));
         dealer.receiveCard(cardsOfScore20.getCards());
         long amount = 10000L;
-        Player player = new Player("boye", Role.PLAYER, amount);
+        Player player = new Player(Nickname.from("boye"), Role.PLAYER, amount);
         player.receiveCard(cardsOfScore17.getCards());
 
         // when
@@ -282,7 +283,7 @@ class PlayerTest {
         long amount = -10000;
 
         // when & then
-        assertThatThrownBy(() -> new Player("boye", Role.PLAYER, amount))
+        assertThatThrownBy(() -> new Player(Nickname.from("boye"), Role.PLAYER, amount))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("베팅 금액은 0보다 큰 양수여야 합니다.");
     }
@@ -294,7 +295,7 @@ class PlayerTest {
         long amount = 0;
 
         // when & then
-        assertThatThrownBy(() -> new Player("boye", Role.PLAYER, amount))
+        assertThatThrownBy(() -> new Player(Nickname.from("boye"), Role.PLAYER, amount))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("베팅 금액은 0보다 큰 양수여야 합니다.");
     }

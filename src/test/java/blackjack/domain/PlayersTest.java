@@ -15,30 +15,30 @@ class PlayersTest {
     @Test
     void createPlayers() {
         // given
-        PlayerBettingRequest pobiRequest = PlayerBettingRequest.of("pobi", "1000");
-        PlayerBettingRequest jasonRequest = PlayerBettingRequest.of("jason", "2000");
+        Nickname boyeNickname = Nickname.from("boye");
+        Nickname suminNickname = Nickname.from("sumin");
 
         // when
-        Players players = Players.makeEmptyPlayers().addPlayer(pobiRequest).addPlayer(jasonRequest);
+        Players players = Players.makeEmptyPlayers().addPlayer(boyeNickname, 1000).addPlayer(suminNickname, 20000);
 
         // then
         assertThat(players.getAllPlayers()).hasSize(2);
-        assertThat(players.getAllPlayerNickname()).containsExactly("pobi", "jason");
+        assertThat(players.getAllPlayerNickname()).containsExactly("boye", "sumin");
     }
 
     @DisplayName("카드를 받을 수 있는 플레이어를 순서대로 찾는다.")
     @Test
     void findDrawablePlayer() {
         // given
-        PlayerBettingRequest pobiRequest = PlayerBettingRequest.of("pobi", "1000");
-        PlayerBettingRequest jasonRequest = PlayerBettingRequest.of("jason", "2000");
-        Players players = Players.makeEmptyPlayers().addPlayer(pobiRequest).addPlayer(jasonRequest);
+        Nickname boyeNickname = Nickname.from("boye");
+        Nickname suminNickname = Nickname.from("sumin");
+        Players players = Players.makeEmptyPlayers().addPlayer(boyeNickname, 1000).addPlayer(suminNickname, 20000);
 
         // when & then
-        assertThat(players.findDrawablePlayerNickname()).isEqualTo("pobi");
+        assertThat(players.findDrawablePlayerNickname()).isEqualTo("boye");
 
         players.dontWantDraw();
-        assertThat(players.findDrawablePlayerNickname()).isEqualTo("jason");
+        assertThat(players.findDrawablePlayerNickname()).isEqualTo("sumin");
 
         players.dontWantDraw();
         assertThat(players.findDrawablePlayerNickname()).isNull();
@@ -47,26 +47,29 @@ class PlayersTest {
     @DisplayName("버스트된 플레이어는 건너뛰고 다음 드로우 가능 플레이어를 찾는다.")
     @Test
     void skipBustedPlayerWhenFindingDrawable() {
-        PlayerBettingRequest pobiRequest = PlayerBettingRequest.of("pobi", "1000");
-        PlayerBettingRequest jasonRequest = PlayerBettingRequest.of("jason", "2000");
-        Players players = Players.makeEmptyPlayers().addPlayer(pobiRequest).addPlayer(jasonRequest);
+        // given
+        Nickname boyeNickname = Nickname.from("boye");
+        Nickname suminNickname = Nickname.from("sumin");
+        Players players = Players.makeEmptyPlayers().addPlayer(boyeNickname, 1000).addPlayer(suminNickname, 20000);
         Hand bustedCards = Hand.from(List.of(
             new Card(Rank.TEN, Suit.SPADE),
             new Card(Rank.TEN, Suit.HEART),
             new Card(Rank.TWO, Suit.DIAMOND)
         ));
 
+        // when
         players.addCardToAvailablePlayer(bustedCards.getCards());
 
-        assertThat(players.findDrawablePlayerNickname()).isEqualTo("jason");
+        // then
+        assertThat(players.findDrawablePlayerNickname()).isEqualTo("sumin");
     }
 
     @DisplayName("모든 플레이어가 카드를 받을 수 없는 상태면 null을 반환한다.")
     @Test
     void findDrawablePlayerReturnsNullWhenAllDone() {
         // given
-        PlayerBettingRequest playerBettingRequest = PlayerBettingRequest.of("pobi", "1000");
-        Players players = Players.makeEmptyPlayers().addPlayer(playerBettingRequest);
+        Nickname boyeNickname = Nickname.from("boye");
+        Players players = Players.makeEmptyPlayers().addPlayer(boyeNickname, 1000);
 
         // when
         players.dontWantDraw();
@@ -79,8 +82,8 @@ class PlayersTest {
     @Test
     void getPlayerWinningResultsPlayerWins() {
         // given
-        PlayerBettingRequest playerBettingRequest = PlayerBettingRequest.of("pobi", "1000");
-        Players players = Players.makeEmptyPlayers().addPlayer(playerBettingRequest);
+        Nickname boyeNickname = Nickname.from("boye");
+        Players players = Players.makeEmptyPlayers().addPlayer(boyeNickname, 1000);
         Hand playerCards = Hand.from(List.of(
             new Card(Rank.TEN, Suit.SPADE),
             new Card(Rank.TEN, Suit.HEART)
@@ -105,8 +108,8 @@ class PlayersTest {
     @Test
     void getPlayerWinningResultsPlayerLoses() {
         // given
-        PlayerBettingRequest playerBettingRequest = PlayerBettingRequest.of("pobi", "1000");
-        Players players = Players.makeEmptyPlayers().addPlayer(playerBettingRequest);
+        Nickname boyeNickname = Nickname.from("boye");
+        Players players = Players.makeEmptyPlayers().addPlayer(boyeNickname, 1000);
         Hand playerCards = Hand.from(List.of(
             new Card(Rank.TEN, Suit.DIAMOND),
             new Card(Rank.EIGHT, Suit.HEART)

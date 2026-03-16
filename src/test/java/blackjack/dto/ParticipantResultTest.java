@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import blackjack.domain.Card;
 import blackjack.domain.Hand;
+import blackjack.domain.Nickname;
 import blackjack.domain.Rank;
 import blackjack.domain.Suit;
 import blackjack.domain.participant.Player;
@@ -19,7 +20,7 @@ class ParticipantResultTest {
     @DisplayName("참가자 결과 dto 생성을 확인한다.")
     void makeParticipantResult() {
         // given
-        Player player = new Player("boye", Role.PLAYER, 100000);
+        Player player = new Player(Nickname.from("boye"), Role.PLAYER, 100000);
         Hand hand = Hand.from(List.of(
             new Card(Rank.TEN, Suit.SPADE)
         ));
@@ -40,7 +41,7 @@ class ParticipantResultTest {
     @DisplayName("카드 결과 string 생성을 확인한다.")
     void makeParticipantResultToString() {
         // given
-        Player player = new Player("boye", Role.PLAYER, 100000);
+        Player player = new Player(Nickname.from("boye"), Role.PLAYER, 100000);
         Hand hand = Hand.from(List.of(
             new Card(Rank.TEN, Suit.SPADE)
         ));
@@ -58,7 +59,7 @@ class ParticipantResultTest {
     @DisplayName("결과값을 포함한 카드 결과 string 생성을 확인한다.")
     void participantResultFullString() {
         // given
-        Player player = new Player("boye", Role.PLAYER, 100000);
+        Player player = new Player(Nickname.from("boye"), Role.PLAYER, 100000);
         Hand hand = Hand.from(List.of(
             new Card(Rank.TEN, Suit.SPADE)
         ));
