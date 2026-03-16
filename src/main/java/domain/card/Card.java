@@ -1,6 +1,12 @@
 package domain.card;
 
 public record Card(int card) {
+    public Card {
+        if (card < 0 || card > 51) {
+            throw new IllegalArgumentException("카드는 0~51 범위여야 합니다.");
+        }
+    }
+
     public String getCardName() {
         int shape = card / 13;
         int number = card % 13;
