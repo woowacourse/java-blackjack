@@ -28,17 +28,6 @@ class GameScoreTest {
     }
 
     @Test
-    void 다른_점수보다_같거나_작은지_판단할_수_있다() {
-        // given
-        GameScore score = new GameScore(18);
-        GameScore other = new GameScore(20);
-        // when
-        boolean result = score.isSameOrSmallerThan(other);
-        // then
-        assertThat(result).isTrue();
-    }
-
-    @Test
     void 같은_점수인지_판단할_수_있다() {
         // given
         GameScore score = new GameScore(21);

@@ -13,11 +13,7 @@ public class GameScore {
     public boolean isBiggerThan(GameScore other) {
         return this.score > other.score;
     }
-
-    public boolean isSameOrSmallerThan(GameScore other) {
-        return this.score <= other.score;
-    }
-
+    
     public GameScore minus(int amount) {
         return new GameScore(this.score - amount);
     }
