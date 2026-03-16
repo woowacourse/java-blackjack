@@ -9,9 +9,8 @@ public class CardDeck {
     private final Deque<Card> cardDeck = new ArrayDeque<>();
 
     public CardDeck(ShuffleStrategy shuffleStrategy) {
-        List<Card> cards = createCards();
-        shuffleStrategy.shuffle(cards);
-        addAllCards(cards);
+        List<Card> shuffledCards = shuffleStrategy.shuffle(createCards());
+        addAllCards(shuffledCards);
     }
 
     public Card draw() {
@@ -25,11 +24,18 @@ public class CardDeck {
     private List<Card> createCards() {
         List<Card> cards = new ArrayList<>();
         for (TrumpSuit suit : TrumpSuit.values()) {
-            for (TrumpNumber number : TrumpNumber.values()) {
-                cards.add(new Card(suit, number));
-            }
+            cards.addAll(generateCardsBySuit(suit));
         }
 
         return cards;
+    }
+
+    private List<Card> generateCardsBySuit(TrumpSuit suit) {
+        List<Card> suitCards = new ArrayList<>();
+        for (TrumpNumber number : TrumpNumber.values()) {
+            suitCards.add(new Card(suit, number));
+        }
+
+        return suitCards;
     }
 }
