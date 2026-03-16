@@ -21,20 +21,8 @@ public class BettingHand {
         hand.addCard(card);
     }
 
-    public boolean isBust() {
-        return hand.isBust();
-    }
-
-    public boolean isBlackjack() {
-        return hand.isBlackjack();
-    }
-
     public List<Card> cards() {
         return hand.getCards();
-    }
-
-    public int totalScore() {
-        return hand.calculateTotalScore();
     }
 
     public int calculateProfit(Dealer dealer) {
