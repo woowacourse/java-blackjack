@@ -35,7 +35,11 @@ public final class BlackJack {
         List<Participant> players = participants.getPlayers();
 
         for (Participant player : players) {
-            if (dealer.calculateScore() > player.calculateScore() || player.isBust()) {
+
+            boolean dealerWins = !player.isBust() && (!dealer.isBust())
+                    && dealer.calculateScore() >= player.calculateScore();
+            boolean playerBust = player.isBust();
+            if (dealerWins || playerBust) {
                 resultMap.merge("승", 1, Integer::sum);
                 continue;
             }
@@ -93,10 +97,15 @@ public final class BlackJack {
                 continue;
             }
 
+            if (dealer.isBust() && participant.isBust()) {
+                dealerRevenue += ((Player) participant).getBetAmount();
+                calculatedPlayerRevenues.merge(entry.getKey(), -((Player) participant).getBetAmount(), Integer::sum);
+                continue;
+            }
+
             if (dealer.isBust() && !participant.isBust()) {
                 calculatedTotalRevenues.put(participant.getName(), ((Player) participant).getBetAmount());
                 dealerRevenue -= ((Player) participant).getBetAmount();
-                calculatedTotalRevenues.merge(DEALER_NAME, dealerRevenue, Integer::sum);
                 continue;
             }
 
@@ -113,10 +122,10 @@ public final class BlackJack {
 
             dealerRevenue = calculateTotalRevenue(entry, calculatedPlayerRevenues, (Player) participant, dealerRevenue, dealer);
 
-            calculatedTotalRevenues.put(DEALER_NAME, dealerRevenue);
-            calculatedTotalRevenues.putAll(calculatedPlayerRevenues);
         }
 
+        calculatedTotalRevenues.put(DEALER_NAME, dealerRevenue);
+        calculatedTotalRevenues.putAll(calculatedPlayerRevenues);
         return calculatedTotalRevenues;
     }
 

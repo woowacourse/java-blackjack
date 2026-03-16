@@ -142,4 +142,44 @@ public class BlackJackTest {
         assertThat(calculateRevenue.get("nuno")).isEqualTo(10000);
         assertThat(calculateRevenue.get(DEALER_NAME)).isEqualTo(-10000);
     }
+
+    @Test
+    void 딜러가_버스트일때_최종_수익을_계산한다() {
+        // given
+        List<Participant> rawParticipants2 = new ArrayList<>();
+        Participants participants2;
+
+        rawParticipants2.add(Dealer.of("딜러"));
+        rawParticipants2.add(Player.of("pobi", BetAmount.of(10000)));
+        rawParticipants2.add(Player.of("jason", BetAmount.of(20000)));
+        rawParticipants2.add(Player.of("coys", BetAmount.of(30000)));
+        participants2 = Participants.of(rawParticipants2);
+
+        Participant dealer = participants2.getDealer();
+        dealer.draw(Card.of("스페이드", 9));
+        dealer.draw(Card.of("스페이드", 9));
+        dealer.draw(Card.of("스페이드", 9));
+
+        Participant player3 = participants2.getPlayers().get(0);
+        player3.draw(Card.of("하트", 9));
+        player3.draw(Card.of("하트", 9));
+        player3.draw(Card.of("하트", 9));
+        Participant player4 = participants2.getPlayers().get(1);
+        player4.draw(Card.of("하트", 5));
+        player4.draw(Card.of("하트", 6));
+        Participant player5 = participants2.getPlayers().get(2);
+        player5.draw(Card.of("하트", 5));
+        player5.draw(Card.of("하트", 8));
+
+        BlackJack blackJack2 = BlackJack.from(participants2);
+
+        // when
+        Map<String, Integer> calculatedRevenue2 = blackJack2.calculateRevenue();
+
+        // then
+        assertThat(calculatedRevenue2.get("딜러")).isEqualTo(-40000);
+        assertThat(calculatedRevenue2.get("pobi")).isEqualTo(-10000);
+        assertThat(calculatedRevenue2.get("jason")).isEqualTo(20000);
+        assertThat(calculatedRevenue2.get("coys")).isEqualTo(30000);
+    }
 }
