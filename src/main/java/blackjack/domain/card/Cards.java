@@ -18,19 +18,19 @@ public class Cards {
         cards.add(card);
     }
 
-    public final boolean isBurst() {
+    public boolean isBurst() {
         return calculateSumOfCards() > BLACKJACK_VALUE;
     }
 
-    public final boolean isBlackjack() {
+    public boolean isBlackjack() {
         return calculateSumOfCards() == BLACKJACK_VALUE;
     }
-
+    
     public String getFirstCardName() {
         return cards.getFirst().getName();
     }
 
-    public final List<String> getCardsName() {
+    public List<String> getCardsName() {
         return cards.stream()
                 .map(Card::getName)
                 .toList();

@@ -6,6 +6,10 @@ public final class Player extends Participant {
         super(name);
     }
 
+    public boolean hasNeverDrawn(int compare) {
+        return getCardsName().size() <= compare;
+    }
+
     @Override
     public boolean canDraw() {
         return !isBurst() && !isBlackjack();

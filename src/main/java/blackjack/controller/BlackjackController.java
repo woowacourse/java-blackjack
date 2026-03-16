@@ -85,13 +85,11 @@ public class BlackjackController {
     }
 
     private void getMoreCardsOfPlayer(Player player) {
-        boolean isDraw = false;
         while (player.canDraw() && readPlayerWantMoreCard(player)) {
             player.draw(Deck.pop());
             outputView.printCards(player.getName(), player.getCardsName());
-            isDraw = true;
         }
-        if (!isDraw) {
+        if (player.hasNeverDrawn(SIZE_OF_INITIAL_CARD)) {
             outputView.printCards(player.getName(), player.getCardsName());
         }
     }
