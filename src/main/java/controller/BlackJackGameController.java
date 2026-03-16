@@ -89,14 +89,14 @@ public class BlackJackGameController {
     }
 
     private boolean isStopGame(Player player) {
-        if (!isContinue(InputView.askContinue(player.getName()))) {
+        if (isStop(InputView.askContinue(player.getName()))) {
             OutputView.printCards(ParticipantCardsDto.from(player));
             return true;
         }
         return false;
     }
 
-    private boolean isContinue(String response) {
-        return response.equals("y");
+    private boolean isStop(String response) {
+        return response.equals("n");
     }
 }
