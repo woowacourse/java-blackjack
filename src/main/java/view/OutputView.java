@@ -18,6 +18,16 @@ public class OutputView {
 
     private static final String NEW_LINE = System.lineSeparator();
 
+    public void printErrorMessage(final String message) {
+        System.out.println();
+        System.out.println(message);
+    }
+
+    public void printBetAmountRequest(final String name) {
+        System.out.println();
+        System.out.println(name + "의 베팅 금액은?");
+    }
+
     public void printInitHandCard(final Participants participants) {
         final Dealer dealer = participants.getDealer();
         final List<Player> players = participants.getPlayers();

@@ -34,10 +34,25 @@ public class BlackjackController {
 
 
     private BlackjackGame initializeGame() {
-        final List<Player> playerList = readPlayers();
-        final Participants participants = new Participants(playerList);
+        final Participants participants = generateParticipants();
+
+        for (final Player player : participants.getPlayers()) {
+            outputView.printBetAmountRequest(player.getName());
+            inputView.readBetAmount();
+        }
 
         return new BlackjackGame(participants);
+    }
+
+    private Participants generateParticipants() {
+        while (true) {
+            try {
+                final List<Player> playerList = readPlayers();
+                return new Participants(playerList);
+            } catch (final IllegalArgumentException e) {
+                outputView.printErrorMessage(e.getMessage());
+            }
+        }
     }
 
     // TODO: inputView와 outputView 명확히 분리하기 (inputView에서 출력도 섞이는 중)
@@ -88,7 +103,6 @@ public class BlackjackController {
     }
 
     private void printResult(final BlackjackGame game) {
-
         final Participants participants = game.getParticipants();
 
         outputView.printHandResults(participants);
