@@ -48,7 +48,8 @@ public class Dealer extends Participant {
 
     public List<String> getOpenCardNames() {
         final int holeIndex = 1;
-        return getCardNames(holeIndex);
+        List<String> allCardNames = getCardNames();
+        return allCardNames.subList(holeIndex, allCardNames.size());
     }
 
     @Override

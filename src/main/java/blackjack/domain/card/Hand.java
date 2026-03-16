@@ -33,8 +33,8 @@ public class Hand {
         return calculateScore() > BURST_THRESHOLD;
     }
 
-    public List<String> getCardNames(int startInclusive) {
-        return cards.subList(startInclusive, cards.size()).stream()
+    public List<String> getCardNames() {
+        return cards.stream()
             .map(Card::toString)
             .toList();
     }

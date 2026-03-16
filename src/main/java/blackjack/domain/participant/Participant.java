@@ -58,7 +58,7 @@ public abstract class Participant {
     }
 
     public List<String> getCardNames() {
-        return hand.getCardNames(0);
+        return hand.getCardNames();
     }
 
     protected List<String> getCardNames(int startInclusive) {
