@@ -40,7 +40,6 @@ public class BlackjackGame {
             player.addCard(deck.draw());
             printResultFunc.accept(player);
         }
-        printResultFunc.accept(player);
     }
 
     public void hitStandDealer(Consumer<Boolean> printDecisionOutput) {
