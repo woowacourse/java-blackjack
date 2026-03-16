@@ -2,10 +2,8 @@ package domain.game;
 
 import domain.card.Card;
 import domain.card.CardMachine;
-import domain.participant.BetAmount;
 import domain.participant.Participants;
 import domain.participant.Player;
-import domain.participant.PlayerName;
 import dto.BlackjackResultDto;
 import dto.BlackjackStatisticsDto;
 import dto.ParticipantDto;
@@ -17,15 +15,12 @@ public class BlackjackGameManager {
 
     private final CardMachine cardMachine;
     private final BlackjackJudge blackjackJudge;
-    private Participants participants;
+    private final Participants participants;
 
-    public BlackjackGameManager(CardMachine cardMachine, BlackjackJudge blackjackJudge) {
+    public BlackjackGameManager(CardMachine cardMachine, BlackjackJudge blackjackJudge, Participants participants) {
         this.cardMachine = cardMachine;
         this.blackjackJudge = blackjackJudge;
-    }
-
-    public void createParticipants(List<PlayerName> playerNames, List<BetAmount> betAmounts) {
-        participants = Participants.of(playerNames, betAmounts);
+        this.participants = participants;
     }
 
     public void drawInitialCards() {
