@@ -1,8 +1,15 @@
 package blackjack.domain;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class TrumpCard {
+    public static final List<TrumpCard> ALL_CARD = Arrays.stream(Suit.values())
+            .flatMap(suit -> Arrays.stream(Rank.values())
+                    .map(rank -> TrumpCard.of(suit, rank)))
+            .toList();
+
     private final Suit suit;
     private final Rank rank;
 
@@ -25,16 +32,12 @@ public class TrumpCard {
         return rank == Rank.ACE;
     }
 
-    public String koreanName() {
-        return suit.getKoreanName();
-    }
-
-    public int score() {
+    public int getScore() {
         return rank.getScore();
     }
 
-    public String symbol() {
-        return rank.getSymbol();
+    public String name() {
+        return rank.getSymbol() + suit.getKoreanName();
     }
 
     @Override

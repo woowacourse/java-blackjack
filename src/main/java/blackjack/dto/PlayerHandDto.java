@@ -1,6 +1,6 @@
 package blackjack.dto;
 
-import blackjack.domain.Player;
+import blackjack.domain.participant.Player;
 
 import java.util.List;
 
@@ -12,6 +12,6 @@ public record PlayerHandDto(
         List<CardDto> cardDtos = player.getCards().stream()
                 .map(CardDto::from)
                 .toList();
-        return new PlayerHandDto(player.name(), cardDtos);
+        return new PlayerHandDto(player.getName(), cardDtos);
     }
 }

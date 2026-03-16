@@ -17,6 +17,13 @@ class NameTest {
     }
 
     @Test
+    void 이름의_길이가_10개이면_정상_생성된다(){
+        String name = "일이삼사오육칠팔구십";
+        Name playerName = Name.of(name);
+        assertThat(playerName).isNotNull();
+    }
+
+    @Test
     void 이름이_비어있으면_예외_처리한다() {
         String name = "";
 

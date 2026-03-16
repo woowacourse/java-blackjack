@@ -6,6 +6,7 @@ import java.util.List;
 public class Hand {
     private static final int ACE_DIFFERENCE = 10;
     private static final int BLACKJACK_THRESHOLD = 21;
+    private static final int BLACKJACK_CARD_COUNT = 2;
 
     private final List<TrumpCard> cards;
 
@@ -17,12 +18,15 @@ public class Hand {
         return new Hand();
     }
 
-    public void receive(TrumpCard card) {
+    public void add(TrumpCard card) {
         cards.add(card);
     }
 
-    public int countCards() {
-        return cards.size();
+    public boolean isBlackjack(){
+        return countCards() == BLACKJACK_CARD_COUNT && calculateScore() == BLACKJACK_THRESHOLD;
+    }
+    public boolean isBust() {
+        return calculateScore() > BLACKJACK_THRESHOLD;
     }
 
     public int calculateScore() {
@@ -32,7 +36,7 @@ public class Hand {
 
     private int sumCardScores() {
         return cards.stream()
-                .mapToInt(TrumpCard::score)
+                .mapToInt(TrumpCard::getScore)
                 .sum();
     }
 
@@ -49,6 +53,20 @@ public class Hand {
         return (int) cards.stream()
                 .filter(TrumpCard::isAce)
                 .count();
+    }
+
+    public List<String> cardNames() {
+        return cards.stream()
+                .map(TrumpCard::name)
+                .toList();
+    }
+
+    public int countCards() {
+        return cards.size();
+    }
+
+    public TrumpCard getFirstCard(){
+        return cards.getFirst();
     }
 
     public List<TrumpCard> getCards() {
