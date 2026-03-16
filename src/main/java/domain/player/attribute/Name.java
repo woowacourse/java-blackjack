@@ -15,10 +15,6 @@ public class Name {
         return name;
     }
 
-    public boolean isEqualName(String name) {
-        return this.name.equals(name);
-    }
-
     private void validate(String name) {
         validateNameIsEnglish(name);
         validateNameRangeTwoToTen(name);
