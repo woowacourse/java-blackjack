@@ -7,6 +7,8 @@ import java.util.List;
 
 public class Player extends Participant {
 
+    private static final int VISIBLE_CARD_COUNT = 2;
+
     private BettingAmount bettingAmount;
 
     public Player(String name, Hand hand) {
@@ -16,7 +18,7 @@ public class Player extends Participant {
 
     @Override
     public List<Card> getInitialCards() {
-        return hand.getCards();
+        return hand.getInitCards(VISIBLE_CARD_COUNT);
     }
 
     public void bet(int bettingAmount) {

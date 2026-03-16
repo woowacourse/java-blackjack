@@ -20,9 +20,15 @@ public class Hand {
         this.cards.add(card);
     }
 
-    public Card getFirstCard() {
-        return cards.getFirst();
+    public List<Card> getInitCards(int cardSize) {
+        return cards.stream()
+                .limit(cardSize)
+                .toList();
     }
+
+//    public Card getFirstCard() {
+//        return cards.getFirst();
+//    }
 
     public List<Card> getCards() {
         return List.copyOf(cards);
