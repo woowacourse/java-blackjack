@@ -14,7 +14,7 @@ public record PlayerName(String name) {
     }
 
     private static void validateNameEmpty(String name) {
-        if (name == null || name.isBlank()) {
+        if (name.isBlank()) {
             throw new IllegalArgumentException(ErrorMessage.NO_EMPTY_NAME.getMessage());
         }
     }

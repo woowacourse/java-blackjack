@@ -3,6 +3,7 @@ package model.participant;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
+import constant.ErrorMessage;
 import dto.status.PlayerName;
 import org.junit.jupiter.api.Test;
 
@@ -25,11 +26,11 @@ public class PlayerTest {
     @Test
     public void 검증_전략_정상_작동() {
         NameValidator nameValidator = (String name) -> {
-            if(name.equals("테스트")) {
-                throw new IllegalArgumentException("테스트 이름을 사용할 수 없습니다.");
+            if(name.equals("딜러")) {
+                throw new IllegalArgumentException(ErrorMessage.NO_PLAYER_NAME_DEALER.getMessage());
             }
         };
 
-        assertThatThrownBy(() -> new Player(new PlayerName("테스트"), nameValidator)).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("테스트 이름을 사용할 수 없습니다.");
+        assertThatThrownBy(() -> new Player(new PlayerName("테스트"), nameValidator)).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage(ErrorMessage.NO_PLAYER_NAME_DEALER.getMessage());
     }
 }

@@ -20,9 +20,5 @@ public class PlayerNameTest {
         assertThatThrownBy(() -> new PlayerName(" "))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.NO_EMPTY_NAME.getMessage());
-
-        assertThatThrownBy(() -> new PlayerName(null))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ErrorMessage.NO_EMPTY_NAME.getMessage());
     }
 }
