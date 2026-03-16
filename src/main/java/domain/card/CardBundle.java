@@ -20,20 +20,14 @@ public class CardBundle {
     }
 
     private int calculateBasicScore() {
-        int score = 0;
-        for (Card card : cards) {
-            score += card.getScore();
-        }
-        return score;
+        return cards.stream()
+                .mapToInt(Card::getScore)
+                .sum();
     }
 
     private boolean hasAce() {
-        for (Card card : cards) {
-            if (card.isAce()) {
-                return true;
-            }
-        }
-        return false;
+        return cards.stream()
+                .anyMatch(Card::isAce);
     }
 
     private int applyAceBonus(int score, boolean hasAce) {
