@@ -24,6 +24,10 @@ public class Card {
         return 0;
     }
 
+    public boolean isAce() {
+        return rank.isAce();
+    }
+
     @Override
     public String toString() {
         return rank.getDisplayValue() + suit.getValue();
