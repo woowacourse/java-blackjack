@@ -5,6 +5,7 @@ import dto.result.ParticipantCurrentHand;
 import dto.result.ParticipantProfit;
 import dto.result.ProfitResult;
 import dto.status.DealerStatus;
+import dto.status.PlayerName;
 import dto.status.PlayerStatus;
 import java.util.HashMap;
 import java.util.List;
@@ -19,10 +20,12 @@ public class Players {
     private final Map<String, Player> players = new ConcurrentHashMap<>();
     private final Map<String, Integer> playerBet = new HashMap<>();
 
-    public void addPlayer(Player player) {
-        if(players.containsKey(player.getName())) {
+    public void addPlayer(PlayerName playerName) {
+        if(players.containsKey(playerName.name())) {
             throw new IllegalArgumentException((ErrorMessage.DUPLICATED_NAME.getMessage()));
         }
+
+        Player player = new Player(playerName);
         players.put(player.getName(), player);
         playerBet.put(player.getName(), 0);
     }

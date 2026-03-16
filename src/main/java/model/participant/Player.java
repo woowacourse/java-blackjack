@@ -1,9 +1,10 @@
 package model.participant;
 
+import dto.status.PlayerName;
 import java.util.Objects;
 
 public class Player extends Participant {
-    public Player(String name) {
+    public Player(PlayerName name) {
         super(name);
     }
 

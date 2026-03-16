@@ -2,6 +2,7 @@ package model.participant;
 
 import dto.result.ParticipantCurrentHand;
 import dto.result.ProfitResult;
+import dto.status.PlayerName;
 import java.util.List;
 import model.card.Card;
 
@@ -9,9 +10,9 @@ public class Participants {
     private final Dealer dealer = new Dealer();
     private final Players players = new Players();
 
-    public void addPlayer(Player player) {
-        dealer.validateSameName(player.getName());
-        players.addPlayer(player);
+    public void addPlayer(PlayerName playerName) {
+        dealer.validateSameName(playerName.name());
+        players.addPlayer(playerName);
     }
 
     public List<String> getPlayerNames() {

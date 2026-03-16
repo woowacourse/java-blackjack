@@ -2,13 +2,14 @@ package model.participant;
 
 import constant.ErrorMessage;
 import dto.status.DealerStatus;
+import dto.status.PlayerName;
 
 public class Dealer extends Participant {
     private static final String DEALER_NAME = "딜러";
     private static final Integer CARD_DRAW_THRESHOLD = 16;
 
     public Dealer() {
-        super(DEALER_NAME);
+        super(new PlayerName(DEALER_NAME));
     }
 
     @Override

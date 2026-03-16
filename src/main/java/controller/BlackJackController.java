@@ -2,10 +2,10 @@ package controller;
 
 import dto.result.ParticipantCurrentHand;
 import dto.result.ProfitResult;
+import dto.status.PlayerName;
 import java.util.List;
 import model.participant.Agreement;
 import model.participant.BetPrice;
-import model.participant.Player;
 import model.BlackJackGame;
 import view.InputView;
 import view.OutputView;
@@ -29,8 +29,8 @@ public class BlackJackController {
     private void registerParticipant() {
         List<String> playerNamesInput = InputView.getPlayerNames();
         playerNamesInput.forEach(name -> {
-            Player player = new Player(name);
-            blackJackGame.registerPlayer(player);
+           PlayerName playerName = new PlayerName(name);
+            blackJackGame.registerPlayer(playerName);
         });
     }
 

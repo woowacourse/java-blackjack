@@ -8,6 +8,7 @@ import model.card.Card;
 import model.participant.BetPrice;
 import model.participant.Participants;
 import model.participant.Player;
+import dto.status.PlayerName;
 
 public class BlackJackGame {
     private static final Integer INITIAL_DRAW_QUANTITY = 2;
@@ -20,8 +21,8 @@ public class BlackJackGame {
         this.participants = new Participants();
     }
 
-    public void registerPlayer(Player player) {
-        participants.addPlayer(player);
+    public void registerPlayer(PlayerName playerName) {
+        participants.addPlayer(playerName);
     }
 
     public void setBet(String playerName, BetPrice bet) {

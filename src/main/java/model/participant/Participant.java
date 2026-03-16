@@ -1,14 +1,15 @@
 package model.participant;
 
 import dto.result.ParticipantCurrentHand;
+import dto.status.PlayerName;
 import model.card.Card;
 
 public class Participant {
     private final PlayerName name;
     private final ParticipantHand participantHand = new ParticipantHand();
 
-    public Participant(String playerName) {
-        this.name = new PlayerName(playerName);
+    public Participant(PlayerName playerName) {
+        this.name = playerName;
     }
 
     public String getName() {
