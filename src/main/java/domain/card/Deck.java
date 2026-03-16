@@ -1,11 +1,14 @@
 package domain.card;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public record Deck(List<Card> cards) {
+public class Deck {
+    private final List<Card> cards;
+
     public Deck(List<Card> cards) {
-        this.cards = cards;
+        this.cards = new ArrayList<>(cards);
         shuffle();
     }
 
