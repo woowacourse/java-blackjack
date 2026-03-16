@@ -1,73 +1,84 @@
 package domain;
 
-import static constant.GameRule.INIT_CARD_COUNT;
-
+import domain.card.Card;
 import domain.card.Deck;
 import domain.enums.Result;
-import domain.participant.Dealer;
+import domain.participant.BetAmounts;
+import domain.participant.Participants;
 import domain.participant.Players;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Game {
+    public static final int INIT_CARD_COUNT = 2;
 
-    private final Players players;
-    private final Dealer dealer;
+    private final Participants participants;
+    private final BetAmounts betAmounts;
 
-    public Game(Players players, Dealer dealer) {
-        this.players = players;
-        this.dealer = dealer;
+    public Game(Players players, BetAmounts betAmounts, Deck deck) {
+        this.participants = new Participants(players);
+        this.betAmounts = betAmounts;
+        initializeGame(deck);
     }
 
-    public void initializeGame(Deck deck) {
+    private void initializeGame(Deck deck) {
         for (int i = 0; i < INIT_CARD_COUNT; i++) {
-            players.distributeCardForAllPlayers(deck);
-            dealer.addCard(deck.drawCard());
+            participants.distributeCardForAllParticipants(deck);
         }
     }
 
-    public void distributeCard(String name, Deck deck) {
-        players.distributeCard(name, deck.drawCard());
+    public boolean isPlayerEnd(String name, boolean wantHit) {
+        return participants.isPlayerEnd(name, wantHit);
     }
 
-    public void distributeCard(Deck deck) {
-        dealer.addCard(deck.drawCard());
+    public boolean isDealerEnd() {
+        return participants.isDealerEnd();
+    }
+
+    public void playerHit(String name, Deck deck, boolean isPlayerEnd) {
+        participants.playerHit(name, deck, isPlayerEnd);
     }
 
     public void dealerHit(Deck deck) {
-        distributeCard(deck);
+        participants.dealerHit(deck);
     }
 
-    public boolean isPlayerBust(String name) {
-        return !players.checkScoreUnderCriterion(name);
+    public int calculatePlayerScore(String name) {
+        return participants.calculatePlayerScore(name);
     }
 
-    public boolean isDealerBust() {
-        return !dealer.checkScoreUnderCriterion();
+    public int calculateDealerScore() {
+        return participants.calculateDealerScore();
     }
 
-    public void playerHit(String name, Deck deck, boolean wantHit) {
-        if (wantHit) {
-            distributeCard(name, deck);
+    public Map<String, Integer> calculatePlayerProfits() {
+        Map<String, Integer> profits = new LinkedHashMap<>();
+        for (String name : participants.getAllPlayerNames()) {
+            Result result = participants.calculatePlayerResult(name);
+            int profit = betAmounts.calculatePlayerProfit(name, result);
+            profits.put(name, profit);
         }
+        return profits;
     }
 
-    public Map<Result, Integer> getDealerResult() {
-        int dealerScore = dealer.calculateScore();
-        boolean dealerBust = dealer.isBust();
-        return dealer.calculateResults(players.decideAllResults(dealerScore, dealerBust));
+    public int calculateDealerProfit() {
+        int dealerProfit = 0;
+        for (int profit : calculatePlayerProfits().values()) {
+            dealerProfit += -profit;
+        }
+        return dealerProfit;
     }
 
-    public Result getPlayerResult(String name) {
-        int dealerScore = dealer.calculateScore();
-        boolean dealerBust = dealer.isBust();
-        return players.getPlayerResult(name, dealerScore, dealerBust);
+    public List<Card> getPlayerCards(String name) {
+        return participants.getPlayerCards(name);
     }
 
-    public int getPlayerScore(String name) {
-        return players.getPlayerScore(name);
+    public List<Card> getDealerCards() {
+        return participants.getDealerCards();
     }
 
-    public int getDealerScore() {
-        return dealer.calculateScore();
+    public List<String> getAllPlayerNames() {
+        return participants.getAllPlayerNames();
     }
 }

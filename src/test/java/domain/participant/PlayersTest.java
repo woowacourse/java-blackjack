@@ -15,17 +15,13 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class PlayersTest {
-
     @DisplayName("모든 플레이어가 정상적으로 생성된다.")
     @Test
     void 모든_플레이어가_정상적으로_생성된다() {
-        //given
         Players players = new Players(List.of("피즈", "스타크"));
 
-        //when
         List<String> allPlayersName = players.getAllPlayerNames();
 
-        //then
         Assertions.assertThat(allPlayersName).contains("피즈");
         Assertions.assertThat(allPlayersName).contains("스타크");
     }
