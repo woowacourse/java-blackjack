@@ -2,7 +2,7 @@ package domain;
 
 public class BettingAmount {
 
-    private final int amount;
+    private long amount;
 
     private BettingAmount(int amount) {
         this.amount = amount;
@@ -12,7 +12,11 @@ public class BettingAmount {
         return new BettingAmount(amount);
     }
 
-    public int value() {
+    public void applyBlackjackBonus() {
+        amount = (int) (amount * 1.5);
+    }
+
+    public long value() {
         return amount;
     }
 }
