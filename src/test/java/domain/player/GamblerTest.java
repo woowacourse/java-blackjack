@@ -100,4 +100,96 @@ class GamblerTest {
         //then
         assertThat(finalIncome).isEqualTo(1000);
     }
+
+    @Test
+    @DisplayName("블랙잭 시 배팅금액")
+    void 블랙잭_시_배팅금액() {
+        //given
+        BettingMoney bettingMoney = new BettingMoney(1000);
+        Dealer dealer = new Dealer();
+        Gambler pobi = new Gambler("pobi", bettingMoney);
+
+        Card ten = new Card(CardRank.TEN, CardSuit.CLOVER);
+        Card ace = new Card(CardRank.ACE, CardSuit.CLOVER);
+        Card nine = new Card(CardRank.NINE, CardSuit.CLOVER);
+        Card seven = new Card(CardRank.SEVEN, CardSuit.CLOVER);
+
+        List<Card> pobiCards = List.of(ten, ace);
+        List<Card> dealerCards = List.of(nine, seven);
+
+        Deck pobiDeck = new FixedDeck(pobiCards);
+        Deck dealerDeck = new FixedDeck(dealerCards);
+
+        pobi.deal(pobiDeck);
+        dealer.deal(dealerDeck);
+        pobi.deal(pobiDeck);
+        dealer.deal(dealerDeck);
+
+        //when
+        int finalIncome = pobi.calculateFinalIncome(dealer);
+
+        //then
+        assertThat(finalIncome).isEqualTo(1500);
+    }
+
+    @Test
+    @DisplayName("딜러와 겜블러 모두 블랙잭 시 무승부")
+    void 딜러와_겜블러_동시_블랙잭() {
+        BettingMoney bettingMoney = new BettingMoney(1000);
+        Dealer dealer = new Dealer();
+        Gambler pobi = new Gambler("pobi", bettingMoney);
+
+        Card ten = new Card(CardRank.TEN, CardSuit.CLOVER);
+        Card aceClover = new Card(CardRank.ACE, CardSuit.CLOVER);
+        Card king = new Card(CardRank.KING, CardSuit.CLOVER);
+        Card aceDiamond = new Card(CardRank.ACE, CardSuit.DIAMOND);
+
+        List<Card> pobiCards = List.of(ten, aceClover);
+        List<Card> dealerCards = List.of(king, aceDiamond);
+
+        Deck pobiDeck = new FixedDeck(pobiCards);
+        Deck dealerDeck = new FixedDeck(dealerCards);
+
+        pobi.deal(pobiDeck);
+        dealer.deal(dealerDeck);
+        pobi.deal(pobiDeck);
+        dealer.deal(dealerDeck);
+
+        //when
+        int finalIncome = pobi.calculateFinalIncome(dealer);
+
+        //then
+        assertThat(finalIncome).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("딜러와 겜블러 모두 21이지만 딜러만 블랙잭")
+    void 딜러와_겜블러_21이지만_딜러만_블랙잭() {
+        BettingMoney bettingMoney = new BettingMoney(1000);
+        Dealer dealer = new Dealer();
+        Gambler pobi = new Gambler("pobi", bettingMoney);
+
+        Card tenClover = new Card(CardRank.TEN, CardSuit.CLOVER);
+        Card two = new Card(CardRank.TEN, CardSuit.DIAMOND);
+        Card nine = new Card(CardRank.NINE, CardSuit.CLOVER);
+        Card king = new Card(CardRank.KING, CardSuit.CLOVER);
+        Card ace = new Card(CardRank.ACE, CardSuit.DIAMOND);
+
+        List<Card> pobiCards = List.of(tenClover, two, nine);
+        List<Card> dealerCards = List.of(king, ace);
+
+        Deck pobiDeck = new FixedDeck(pobiCards);
+        Deck dealerDeck = new FixedDeck(dealerCards);
+
+        pobi.deal(pobiDeck);
+        dealer.deal(dealerDeck);
+        pobi.deal(pobiDeck);
+        dealer.deal(dealerDeck);
+
+        //when
+        int finalIncome = pobi.calculateFinalIncome(dealer);
+
+        //then
+        assertThat(finalIncome).isEqualTo(-1000);
+    }
 }
