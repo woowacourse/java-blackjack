@@ -3,6 +3,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import blackjack.domain.Card;
+import blackjack.domain.Rank;
+import blackjack.domain.Shape;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
@@ -15,10 +17,10 @@ public class RandomCardPickerTest {
         Random mockRandom = mock(Random.class);
         RandomCardPicker randomCardPicker = new RandomCardPicker(mockRandom);
 
-        when(mockRandom.nextInt(13)).thenReturn(0); // "2"
-        when(mockRandom.nextInt(4)).thenReturn(0); // "하트"
+        when(mockRandom.nextInt(13)).thenReturn(0); // Rank.TWO
+        when(mockRandom.nextInt(4)).thenReturn(0); // Shape.HEART
 
-        assertThat(randomCardPicker.drawCard()).isEqualTo(new Card("2", "하트"));
+        assertThat(randomCardPicker.drawCard()).isEqualTo(new Card(Rank.TWO, Shape.HEART));
     }
 
     @Test

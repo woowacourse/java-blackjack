@@ -3,16 +3,16 @@ package blackjack.controller;
 import blackjack.domain.Dealer;
 import blackjack.domain.GameResult;
 import blackjack.domain.Player;
-import blackjack.domain.PlayerCardsName;
-import blackjack.domain.PlayerFinalCardsScore;
-import blackjack.domain.PlayerFinalResult;
-import blackjack.domain.ScoreCompareResult;
+import blackjack.dto.PlayerCardsName;
+import blackjack.dto.PlayerFinalCardsScore;
+import blackjack.dto.PlayerProfitResult;
+import blackjack.domain.ProfitResults;
 import blackjack.service.CardDistributor;
 import blackjack.service.Game;
 import blackjack.utils.InputParser;
 import blackjack.utils.RetryInput;
+import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -20,18 +20,16 @@ import blackjack.view.InputView;
 import blackjack.view.OutputView;
 
 public class BlackjackController {
-    private final CardDistributor cardDistributor;
-    private final Game game;
     private static final RetryInput retryInput = new RetryInput();
+    private final CardDistributor cardDistributor;
 
     public BlackjackController(CardDistributor cardDistributor) {
         this.cardDistributor = cardDistributor;
-        this.game = new Game(cardDistributor);
     }
 
     public void startGame() {
         List<String> playerNames = getPlayerNames();
-        List<Player> players = getPlayers(playerNames);
+        List<Player> players = createPlayersWithBettingAmounts(playerNames);
         Dealer dealer = new Dealer();
 
         setupInitialHand(players, dealer, playerNames); // 2장씩 카드 분배
@@ -39,8 +37,10 @@ public class BlackjackController {
         processTurn(players); // 플레이어 hit or stand
         playDealerTurn(dealer);
 
+        Game game = new Game(players, dealer);
+
         calculateFinalScore(players, dealer);
-        calculateFinalGameResult(players, dealer);
+        calculateFinalGameProfitResult(game);
     }
 
     private void setupInitialHand(List<Player> players, Dealer dealer, List<String> playerNames) {
@@ -55,20 +55,22 @@ public class BlackjackController {
         );
     }
 
-    private void calculateFinalGameResult(List<Player> players, Dealer dealer) {
-        GameResult gameResult = game.judgeTotalGameResult(players, dealer);
-        Map<ScoreCompareResult, Integer> dealerResult = gameResult.dealerResult();
+    private void calculateFinalGameProfitResult(Game game) {
+        GameResult gameResult = game.judgeTotalGameResult();
+        ProfitResults profitResults = game.calculateTotalProfitResults(gameResult);
 
-        LinkedHashMap<Player, ScoreCompareResult> playerResult = gameResult.playerResults();
-        List<PlayerFinalResult> playerNameResult = new ArrayList<>();
-        for (Entry<Player, ScoreCompareResult> entry : playerResult.entrySet()) {
-            playerNameResult.add(new PlayerFinalResult(entry.getKey().getName(), entry.getValue()));
+        BigDecimal dealerProfit = profitResults.dealerProfit();
+        Map<Player, BigDecimal> playerProfit = profitResults.playerProfit();
+
+        List<PlayerProfitResult> playerNameProfitResult = new ArrayList<>();
+        for (Entry<Player, BigDecimal> entry : playerProfit.entrySet()) {
+            playerNameProfitResult.add(PlayerProfitResult.from(entry.getKey(), entry.getValue()));
         }
-        OutputView.printFinalResult(dealerResult, playerNameResult);
+        OutputView.printFinalProfitResult(dealerProfit, playerNameProfitResult);
     }
 
     private void playDealerTurn(Dealer dealer) {
-        game.dealerDrawsCardsUntilDone(dealer);
+        cardDistributor.distributeCardsToDealerUntilScoreAtLeast(dealer);
         OutputView.printDealerCardDrawnResult(dealer.getAdditionalDrawnCardCount());
     }
 
@@ -85,12 +87,15 @@ public class BlackjackController {
     }
 
     private boolean canContinueTurn(Player player) {
+        if (player.isBust()) {
+            return false;
+        }
         String hitOrStand = InputView.askHitOrStand(player.getName());
-        return isHit(hitOrStand) && !player.isBust();
+        return isHit(hitOrStand);
     }
 
     private void drawCard(Player player) {
-        cardDistributor.distributeCardToPlayer(player);
+        cardDistributor.distributeCardsToParticipant(player, 1);
         OutputView.printDrawnCards(player.getName(), player.getCardNames());
     }
 
@@ -102,10 +107,12 @@ public class BlackjackController {
         OutputView.printAllUserCards(playersCardsName, dealer.getOneCardName());
     }
 
-    private List<Player> getPlayers(List<String> playerNames) {
+    private List<Player> createPlayersWithBettingAmounts(List<String> playerNames) {
         List<Player> players = new ArrayList<>();
         for (String playerName : playerNames) {
-            players.add(new Player(playerName));
+            BigDecimal bettingAmount = retryInput.read(
+                    () -> InputParser.parseBetAmount(InputView.askToPlayerBettingAmount(playerName)));
+            players.add(new Player(playerName, bettingAmount));
         }
         return players;
     }
@@ -125,9 +132,9 @@ public class BlackjackController {
 
     private void distributeInitialCards(List<Player> players, Dealer dealer) {
         for (Player player : players) {
-            cardDistributor.distributeTwoCardsToPlayer(player);
+            cardDistributor.distributeCardsToParticipant(player, 2);
         }
-        cardDistributor.distributeTwoCardsToDealer(dealer);
+        cardDistributor.distributeCardsToParticipant(dealer, 2);
     }
 
     private boolean isHit(String hitOrStand) {
@@ -139,5 +146,4 @@ public class BlackjackController {
         }
         throw new IllegalArgumentException("잘못된 입력입니다. y 또는 n을 입력해주세요");
     }
-
 }

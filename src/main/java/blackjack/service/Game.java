@@ -3,27 +3,25 @@ package blackjack.service;
 import blackjack.domain.Dealer;
 import blackjack.domain.GameResult;
 import blackjack.domain.Player;
+import blackjack.domain.ProfitResults;
 import blackjack.domain.ScoreCompareResult;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Game {
+    private final List<Player> players;
+    private final Dealer dealer;
 
-    private final CardDistributor cardDistributor;
 
-    public Game(CardDistributor cardDistributor) {
-        this.cardDistributor = cardDistributor;
+    public Game(List<Player> players, Dealer dealer) {
+        this.players = players;
+        this.dealer = dealer;
     }
 
-    public void dealerDrawsCardsUntilDone(Dealer dealer) {
-        while (!dealer.isDealerDone()) {
-            cardDistributor.distributeCardToDealer(dealer);
-        }
-    }
-
-    public GameResult judgeTotalGameResult(List<Player> players, Dealer dealer) {
+    public GameResult judgeTotalGameResult() {
         Map<ScoreCompareResult, Integer> dealerResult = new HashMap<>();
         LinkedHashMap<Player, ScoreCompareResult> playerResults = new LinkedHashMap<>();
 
@@ -36,22 +34,39 @@ public class Game {
         return new GameResult(dealerResult, playerResults);
     }
 
-    private ScoreCompareResult toPlayerResult(ScoreCompareResult result) {
+    public ProfitResults calculateTotalProfitResults(GameResult gameResult) {
+        LinkedHashMap<Player, ScoreCompareResult> playerResults = gameResult.playerResults();
+
+        BigDecimal dealerProfit = BigDecimal.ZERO;
+        Map<Player, BigDecimal> playerProfits = new LinkedHashMap<>();
+        for (Map.Entry<Player, ScoreCompareResult> entry : playerResults.entrySet()) {
+            Player player = entry.getKey();
+            ScoreCompareResult result = entry.getValue();
+
+            BigDecimal profit = player.calculateProfit(result);
+            dealerProfit = dealerProfit.subtract(profit);
+            playerProfits.put(player, profit);
+        }
+
+        return new ProfitResults(dealerProfit, playerProfits);
+    }
+
+    private static ScoreCompareResult toPlayerResult(ScoreCompareResult result) {
         if (result == ScoreCompareResult.DEALER_WIN) {
-            return ScoreCompareResult.PLAYER_LOSS;
+            return ScoreCompareResult.PLAYER_LOSE;
         }
         return result;
     }
 
-    private ScoreCompareResult toDealerKey(ScoreCompareResult result) {
+    private static ScoreCompareResult toDealerKey(ScoreCompareResult result) {
         if (result == ScoreCompareResult.PLAYER_WIN) {
-            return ScoreCompareResult.DEALER_LOSS;
+            return ScoreCompareResult.DEALER_LOSE;
         }
         return result;
     }
 
 
-    public ScoreCompareResult compareScore(Player player, Dealer dealer) {
+    public static ScoreCompareResult compareScore(Player player, Dealer dealer) {
         boolean isPlayerBust = player.isBust();
         boolean isDealerBust = dealer.isBust();
 
@@ -63,7 +78,7 @@ public class Game {
 
     }
 
-    private ScoreCompareResult compareScoreWhenBust(boolean isPlayerBust, boolean isDealerBust) {
+    private static ScoreCompareResult compareScoreWhenBust(boolean isPlayerBust, boolean isDealerBust) {
         if (isPlayerBust && isDealerBust) {
             return ScoreCompareResult.PUSH;
         }
@@ -76,7 +91,7 @@ public class Game {
         throw new IllegalArgumentException("버스트인 사람이 1명은 포함되어야 합니다.");
     }
 
-    private ScoreCompareResult compareScoreWhenNotBust(int playerTotalScore, int dealerTotalScore) {
+    private static ScoreCompareResult compareScoreWhenNotBust(int playerTotalScore, int dealerTotalScore) {
         if (playerTotalScore > dealerTotalScore) {
             return ScoreCompareResult.PLAYER_WIN;
         }
