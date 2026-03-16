@@ -45,7 +45,7 @@ class GameServiceTest {
 
         gameService.dealerHit(); // 카드 한 장 추가
 
-        assertBetResult(player1.getName(), 15000, -15000);
+        assertBetResult(player1, 15000, -15000);
     }
 
     @Test
@@ -59,7 +59,7 @@ class GameServiceTest {
 
         gameService.dealerHit(); // 카드 한 장 추가
 
-        assertBetResult(player1.getName(), 10000, -10000);
+        assertBetResult(player1, 10000, -10000);
     }
 
     @Test
@@ -72,7 +72,7 @@ class GameServiceTest {
 
         gameService.dealerHit(); // 카드 한 장 추가
 
-        assertBetResult(player1.getName(), 0, 0);
+        assertBetResult(player1, 0, 0);
     }
 
     @Test
@@ -85,17 +85,17 @@ class GameServiceTest {
 
         gameService.dealerHit(); // 카드 한 장 추가
 
-        assertBetResult(player1.getName(), -10000, 10000);
+        assertBetResult(player1, -10000, 10000);
     }
 
-    private void assertBetResult(String playerName, int expectedPlayerProfit, int expectedDealerProfit) {
-        Map<String, Cost> betInfo = Map.of(playerName, new Cost(BET_AMOUNT));
+    private void assertBetResult(Player player, int expectedPlayerProfit, int expectedDealerProfit) {
+        player.setCost(new Cost(BET_AMOUNT));
 
-        Map<String, Integer> results = gameService.bettingResult(betInfo).stream()
+        Map<String, Integer> results = gameService.bettingResult().stream()
                 .collect(Collectors.toMap(ParticipantBetResult::name, ParticipantBetResult::cost));
 
         String dealerName = gameService.getDealerResult().name();
-        assertThat(results.get(playerName)).isEqualTo(expectedPlayerProfit);
+        assertThat(results.get(player.getName())).isEqualTo(expectedPlayerProfit);
         assertThat(results.get(dealerName)).isEqualTo(expectedDealerProfit);
     }
 }
