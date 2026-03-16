@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class InputView {
     private static final String COMMAND_REINPUT_MESSAGE = "y 혹은 n만 입력할 수 있습니다.";
