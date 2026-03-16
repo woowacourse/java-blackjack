@@ -10,6 +10,16 @@ public abstract class Started implements State {
     }
 
     @Override
+    public boolean isBust() {
+        return false;
+    }
+
+    @Override
+    public boolean isBlackjack() {
+        return false;
+    }
+
+    @Override
     public Hand hand() {
         return hand;
     }

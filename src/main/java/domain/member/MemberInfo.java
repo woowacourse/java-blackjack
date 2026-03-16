@@ -47,7 +47,7 @@ public class MemberInfo {
     }
 
     public boolean isBust() {
-        return state instanceof Bust;
+        return state.isBust();
     }
 
     public void changeToStay() {

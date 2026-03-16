@@ -11,10 +11,10 @@ public class Stay extends Finished {
 
     @Override
     public double earningRate(State dealerState) {
-        if (dealerState instanceof Bust) {
+        if (dealerState.isBust()) {
             return MatchResult.WIN.profitRate();
         }
-        if (dealerState instanceof Blackjack) {
+        if (dealerState.isBlackjack()) {
             return MatchResult.LOSE.profitRate();
         }
         return judgeScore(dealerState.hand().calculateTotalValue());
@@ -22,8 +22,12 @@ public class Stay extends Finished {
 
     private double judgeScore(int dealerScore) {
         int myScore = hand.calculateTotalValue();
-        if (myScore > dealerScore) return MatchResult.WIN.profitRate();
-        if (myScore < dealerScore) return MatchResult.LOSE.profitRate();
+        if (myScore > dealerScore) {
+            return MatchResult.WIN.profitRate();
+        }
+        if (myScore < dealerScore) {
+            return MatchResult.LOSE.profitRate();
+        }
         return MatchResult.DRAW.profitRate();
     }
 }

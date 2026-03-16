@@ -10,8 +10,13 @@ public class Blackjack extends Finished {
     }
 
     @Override
+    public boolean isBlackjack() {
+        return true;
+    }
+
+    @Override
     public double earningRate(State dealerState) {
-        if (dealerState instanceof Blackjack) {
+        if (dealerState.isBlackjack()) {
             return MatchResult.DRAW.profitRate();
         }
         return MatchResult.BLACKJACK_WIN.profitRate();

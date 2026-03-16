@@ -9,6 +9,11 @@ public class Bust extends Finished {
     }
 
     @Override
+    public boolean isBust() {
+        return true;
+    }
+
+    @Override
     public double earningRate(State dealerState) {
         return -1.0;
     }
