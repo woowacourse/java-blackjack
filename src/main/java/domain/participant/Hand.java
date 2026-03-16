@@ -20,17 +20,30 @@ public record Hand(List<Card> cards) {
     }
 
     public Score calculateScore() {
-        int totalScore = cards.stream()
-                .mapToInt(Card::getScore)
-                .sum();
-        int aceCount = (int) cards.stream()
-                .filter(Card::isAce)
-                .count();
+        int totalScore = calculateTotalScore();
+        int aceCount = countAce();
+        totalScore = adjustAceScore(totalScore, aceCount);
+        return new Score(totalScore);
+    }
+
+    private int adjustAceScore(int totalScore, int aceCount) {
         while (canLowerAceScore(totalScore, aceCount)) {
             totalScore -= 10;
             aceCount--;
         }
-        return new Score(totalScore);
+        return totalScore;
+    }
+
+    private int countAce() {
+        return (int) cards.stream()
+                .filter(Card::isAce)
+                .count();
+    }
+
+    private int calculateTotalScore() {
+        return cards.stream()
+                .mapToInt(Card::getScore)
+                .sum();
     }
 
     public int size() {
