@@ -27,10 +27,6 @@ public class Cards {
         return new ArrayList<>(cards);
     }
 
-    public Card getFirstCard() {
-        return cards.getFirst();
-    }
-
     public boolean hasAce() {
         return hasAce;
     }
