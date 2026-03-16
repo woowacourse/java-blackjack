@@ -5,8 +5,8 @@ import dto.status.PlayerStatus;
 import java.util.Objects;
 
 public class Player extends Participant {
-    public Player(PlayerName name) {
-        super(name);
+    public Player(PlayerName name, NameValidator policy) {
+        super(validate(name, policy));
     }
 
     @Override
@@ -24,5 +24,14 @@ public class Player extends Participant {
 
     public PlayerStatus getPlayerStatus(Long bet) {
         return new PlayerStatus(super.getName(), super.getScore(), bet, super.isBust(), super.isBlackJack());
+    }
+
+    private static PlayerName validate(PlayerName name, NameValidator policy) {
+        if(policy == null) {
+            return name;
+        }
+
+        policy.validate(name.name());
+        return name;
     }
 }

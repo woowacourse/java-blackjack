@@ -1,72 +1,50 @@
 package model.participant;
 
-import constant.ErrorMessage;
 import dto.status.BetPrice;
 import dto.result.ParticipantCurrentHand;
 import dto.status.PlayerName;
 import dto.status.PlayerStatus;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import model.card.Card;
 
 public class Players {
-    private final Map<String, Player> players = new LinkedHashMap<>();
-    private final Map<String, BetPrice> playerBet = new HashMap<>();
+    private final CurrentPlayers currentPlayers = new CurrentPlayers();
+    private final NameValidator nameValidator;
+
+    public Players(NameValidator nameValidator) {
+        this.nameValidator = nameValidator;
+    }
 
     public void addPlayer(PlayerName playerName) {
-        if(players.containsKey(playerName.name())) {
-            throw new IllegalArgumentException((ErrorMessage.DUPLICATED_NAME.getMessage()));
-        }
-
-        Player player = new Player(playerName);
-
-        players.put(player.getName(), player);
-        playerBet.put(player.getName(), null);
+        Player player = new Player(playerName, nameValidator);
+        currentPlayers.addPlayer(player);
     }
 
     public List<String> getPlayerNames() {
-        return List.copyOf(players.keySet());
+        return currentPlayers.getPlayerNames();
     }
 
     public void setBet(String playerName, BetPrice bet) {
-        playerBet.put(playerName, bet);
+        currentPlayers.setBet(playerName, bet);
     }
 
     public void drawCard(String playerName, Card card) {
-        Player player = getPlayer(playerName);
-        player.addCard(card);
+        currentPlayers.drawCard(playerName, card);
     }
 
     public ParticipantCurrentHand getPlayersCurrentHand(String playerName) {
-        Player player = getPlayer(playerName);
-
-        return player.getCurrentHand();
+        return currentPlayers.getPlayersCurrentHand(playerName);
     }
 
     public List<ParticipantCurrentHand> getPlayersHand() {
-        return players.values().stream()
-                .map(Participant::getCurrentHand)
-                .toList();
+        return currentPlayers.getPlayersHand();
     }
 
     public boolean isPlayerBust(String playerName) {
-        Player player = getPlayer(playerName);
-        return player.isBust();
+        return currentPlayers.isPlayerBust(playerName);
     }
 
     public List<PlayerStatus> getPlayerStatuses() {
-        return players.values().stream()
-                .map(player -> player.getPlayerStatus(playerBet.get(player.getName()).value()))
-                .toList();
-    }
-
-    private Player getPlayer(String playerName) {
-        if(!players.containsKey(playerName)) {
-            throw new IllegalArgumentException(ErrorMessage.NO_PLAYER_NAME.getMessage());
-        }
-
-        return players.get(playerName);
+        return currentPlayers.getPlayerStatuses();
     }
 }

@@ -2,7 +2,6 @@ package model.participant;
 
 import dto.status.BetPrice;
 import dto.result.ParticipantCurrentHand;
-import dto.result.ProfitResult;
 import dto.status.DealerStatus;
 import dto.status.PlayerName;
 import dto.status.PlayerStatus;
@@ -11,10 +10,13 @@ import model.card.Card;
 
 public class Participants {
     private final Dealer dealer = new Dealer();
-    private final Players players = new Players();
+    private final Players players;
+
+    public Participants() {
+        this.players = new Players(Dealer.nameValidate());
+    }
 
     public void addPlayer(PlayerName playerName) {
-        dealer.validateSameName(playerName.name());
         players.addPlayer(playerName);
     }
 

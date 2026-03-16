@@ -22,7 +22,7 @@ public class BlackJackController {
         addBet();
 
         initGame();
-        participantTurn();
+        participantsTurn();
         displayResult();
     }
 
@@ -46,7 +46,7 @@ public class BlackJackController {
         OutputView.printInitDeck(blackJackGame.getPlayerCurrentHands(), blackJackGame.getDealerFirstCard());
     }
 
-    private void participantTurn() {
+    private void participantsTurn() {
         drawPlayersTurn();
         drawDealerTurn();
     }

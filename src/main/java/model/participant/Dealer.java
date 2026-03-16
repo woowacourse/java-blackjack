@@ -12,12 +12,6 @@ public class Dealer extends Participant {
         super(new PlayerName(DEALER_NAME));
     }
 
-    public void validateSameName(String name) {
-        if(name.equals(DEALER_NAME)) {
-            throw new IllegalArgumentException(ErrorMessage.NO_PLAYER_NAME_DEALER.getMessage());
-        }
-    }
-
     public String getInitialCard() {
         return super.getCurrentCard().getFirst();
     }
@@ -28,5 +22,13 @@ public class Dealer extends Participant {
 
     public DealerStatus getDealerStatus() {
         return new DealerStatus(DEALER_NAME, super.getScore(), super.isBust(), super.isBlackJack());
+    }
+
+    public static NameValidator nameValidate() {
+        return(String playerName) -> {
+            if(playerName.equals(DEALER_NAME)) {
+                throw new IllegalArgumentException(ErrorMessage.NO_PLAYER_NAME_DEALER.getMessage());
+            }
+        };
     }
 }
