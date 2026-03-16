@@ -9,31 +9,13 @@ public class Player extends Participant {
         this.money = money;
     }
 
-
-    public Money calculateFinalProfit(Participant dealer) {
-        if (isBlackjack() && dealer.isBlackjack()) {
-            return money.keepBettingAmount();
-        }
-        if (isBlackjack()) {
+    public Money calculateFinalProfit(ScoreCompareResult result) {
+        if (isBlackjack() && result == ScoreCompareResult.PLAYER_WIN) {
             return money.multiplyBettingAmount(BONUS_AMOUNT);
         }
-        if (isPlayerLoss(dealer)) {
+        if (result == ScoreCompareResult.PLAYER_LOSS) {
             return money.lossBettingAmount();
         }
         return money.keepBettingAmount();
-    }
-
-    private boolean isPlayerLoss(Participant dealer) {
-        if (isBust()) {
-            return true;
-        }
-        if (dealer.isBlackjack()) {
-            return true;
-        }
-        return isScoreLowerThanDealer(dealer);
-    }
-
-    private boolean isScoreLowerThanDealer(Participant dealer) {
-        return calculateTotalScore() < dealer.calculateTotalScore() && !dealer.isBust();
     }
 }

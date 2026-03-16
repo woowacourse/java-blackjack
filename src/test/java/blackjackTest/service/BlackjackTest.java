@@ -3,10 +3,16 @@ package blackjackTest.service;
 import blackjack.domain.*;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BlackjackTest {
 
+    private ScoreCompareResult getPlayerResult(Dealer dealer, Player player) {
+        GameResult gameResult = dealer.judgeResult(List.of(player));
+        return gameResult.playerResults().get(player);
+    }
     @Test
     void 플레이어_초기카드_합_21인지_확인() {
         Player pobi = new Player("pobi", new Money(10000));
@@ -45,7 +51,8 @@ public class BlackjackTest {
         pobi.receiveOneCard(new Card(Rank.ACE, Shape.HEART));
         pobi.receiveOneCard(new Card(Rank.TEN, Shape.SPADE));
 
-        Money profit = pobi.calculateFinalProfit(dealer);
+        ScoreCompareResult playerResult = getPlayerResult(dealer, pobi);
+        Money profit = pobi.calculateFinalProfit(playerResult);
         long expectedAmount = (long) (bettingAmountValue * 1.5);
         assertThat(profit.getBettingMoney()).isEqualTo(expectedAmount);
     }
@@ -61,7 +68,8 @@ public class BlackjackTest {
         pobi.receiveOneCard(new Card(Rank.TEN, Shape.SPADE));
         pobi.receiveOneCard(new Card(Rank.TWO, Shape.CLOVER));
 
-        Money profit = pobi.calculateFinalProfit(dealer);
+        ScoreCompareResult playerResult = getPlayerResult(dealer, pobi);
+        Money profit = pobi.calculateFinalProfit(playerResult);
         long expectedAmount = -bettingAmountValue;
         assertThat(profit.getBettingMoney()).isEqualTo(expectedAmount);
     }
@@ -78,7 +86,8 @@ public class BlackjackTest {
         dealer.receiveOneCard(new Card(Rank.ACE, Shape.CLOVER));
         dealer.receiveOneCard(new Card(Rank.QUEEN, Shape.SPADE));
 
-        Money profit = pobi.calculateFinalProfit(dealer);
+        ScoreCompareResult playerResult = getPlayerResult(dealer, pobi);
+        Money profit = pobi.calculateFinalProfit(playerResult);
         long expectedAmount = -bettingAmountValue;
         assertThat(profit.getBettingMoney()).isEqualTo(expectedAmount);
     }
@@ -95,7 +104,8 @@ public class BlackjackTest {
         dealer.receiveOneCard(new Card(Rank.ACE, Shape.CLOVER));
         dealer.receiveOneCard(new Card(Rank.QUEEN, Shape.SPADE));
 
-        Money profit = pobi.calculateFinalProfit(dealer);
+        ScoreCompareResult playerResult = getPlayerResult(dealer, pobi);
+        Money profit = pobi.calculateFinalProfit(playerResult);
         assertThat(profit.getBettingMoney()).isEqualTo(bettingAmountValue);
     }
 
@@ -113,7 +123,8 @@ public class BlackjackTest {
         dealer.receiveOneCard(new Card(Rank.EIGHT, Shape.CLOVER));
         dealer.receiveOneCard(new Card(Rank.QUEEN, Shape.SPADE));
 
-        Money profit = pobi.calculateFinalProfit(dealer);
+        ScoreCompareResult playerResult = getPlayerResult(dealer, pobi);
+        Money profit = pobi.calculateFinalProfit(playerResult);
 
         assertThat(profit.getBettingMoney()).isEqualTo(bettingAmountValue);
     }
@@ -133,7 +144,8 @@ public class BlackjackTest {
         dealer.receiveOneCard(new Card(Rank.QUEEN, Shape.SPADE));
         dealer.receiveOneCard(new Card(Rank.NINE, Shape.CLOVER));
 
-        Money profit = pobi.calculateFinalProfit(dealer);
+        ScoreCompareResult playerResult = getPlayerResult(dealer, pobi);
+        Money profit = pobi.calculateFinalProfit(playerResult);
 
         assertThat(profit.getBettingMoney()).isEqualTo(bettingAmountValue);
     }
@@ -153,7 +165,8 @@ public class BlackjackTest {
         dealer.receiveOneCard(new Card(Rank.TWO, Shape.SPADE));
         dealer.receiveOneCard(new Card(Rank.EIGHT, Shape.CLOVER));
 
-        Money profit = pobi.calculateFinalProfit(dealer);
+        ScoreCompareResult playerResult = getPlayerResult(dealer, pobi);
+        Money profit = pobi.calculateFinalProfit(playerResult);
 
         assertThat(profit.getBettingMoney()).isEqualTo(bettingAmountValue);
     }
@@ -172,9 +185,12 @@ public class BlackjackTest {
         dealer.receiveOneCard(new Card(Rank.TWO, Shape.SPADE));
         dealer.receiveOneCard(new Card(Rank.EIGHT, Shape.CLOVER));
 
-        Money profit = pobi.calculateFinalProfit(dealer);
+        ScoreCompareResult playerResult = getPlayerResult(dealer, pobi);
+        Money profit = pobi.calculateFinalProfit(playerResult);
         long expectedAmount = -bettingAmountValue;
 
         assertThat(profit.getBettingMoney()).isEqualTo(expectedAmount);
     }
+
+
 }

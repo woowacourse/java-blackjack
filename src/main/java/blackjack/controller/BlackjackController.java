@@ -102,17 +102,29 @@ public class BlackjackController {
     }
 
     private void calculateFinalGameProfit(List<Participant> players, Participant dealer) {
+        Map<String, Long> playersProfit = calculatePlayersProfit(players, (Dealer) dealer);
+        long dealerProfit = calculateDealerProfit(playersProfit);
+        OutputView.printFinalProfit(dealerProfit, playersProfit);
+    }
+
+    private Map<String, Long> calculatePlayersProfit(List<Participant> players, Dealer dealer) {
+        GameResult gameResult = dealer.judgeResult(players);
+        Map<Participant, ScoreCompareResult> results = gameResult.playerResults();
         Map<String, Long> playersProfit = new LinkedHashMap<>();
-        long totalPlayersProfit = 0;
         for (Participant participant : players) {
             Player player = (Player) participant;
-            Money profit = player.calculateFinalProfit(dealer);
 
-            long bettingMoney = profit.getBettingMoney();
-            playersProfit.put(player.getName(), bettingMoney);
-            totalPlayersProfit += bettingMoney;
+            ScoreCompareResult result = results.get(player);
+            Money profit = player.calculateFinalProfit(result);
+            playersProfit.put(player.getName(), profit.getBettingMoney());
         }
-        long dealerProfit = -totalPlayersProfit;
-        OutputView.printFinalProfit(dealerProfit, playersProfit);
+        return playersProfit;
+    }
+
+    private long calculateDealerProfit(Map<String, Long> playersProfit) {
+        long totalPlayersProfit = playersProfit.values().stream()
+                .mapToLong(Long::longValue)
+                .sum();
+        return -totalPlayersProfit;
     }
 }
