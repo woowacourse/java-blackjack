@@ -1,6 +1,7 @@
 package view;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 
@@ -34,7 +35,15 @@ public class InputView {
         List<String> playerNames = Arrays.stream(input.split(","))
                 .map(String::trim)
                 .toList();
+
+        validateDuplicateNames(playerNames);
         return playerNames;
+    }
+
+    private static void validateDuplicateNames(List<String> playerNames) {
+        if (playerNames.size() != new HashSet<>(playerNames).size()) {
+            throw new IllegalArgumentException("중복된 이름은 입력할 수 없습니다.");
+        }
     }
 
     private static void validateContinueResponse(String input) {
