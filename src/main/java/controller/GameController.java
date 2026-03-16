@@ -6,6 +6,8 @@ import domain.GameResultDto;
 import domain.Referee;
 import domain.betting.BettingAmount;
 import domain.betting.BettingAmountParser;
+import domain.betting.BettingTable;
+import domain.betting.PlayerBetting;
 import domain.card.CardsSnapshot;
 import domain.dto.InitialDealingResult;
 import domain.participant.Dealer;
@@ -33,17 +35,27 @@ public class GameController {
         Players players = readPlayers();
         Dealer dealer = new Dealer();
         Participants participants = Participants.of(dealer, players);
+        BettingTable bettingTable = placeBet(players);
 
         readyPhase(participants);
         playPhase(dealer, players);
         resultPhase(dealer, players);
     }
 
-    private void placeBet(Players players) {
+    private BettingTable placeBet(Players players) {
+        BettingTable bettingTable = BettingTable.create();
         for (Player player : players) {
-            String rawBettingAmount = inputView.askBettingAmount(player);
-            BettingAmount bettingAmount = BettingAmountParser.parse(rawBettingAmount);
+            BettingAmount bettingAmount = readBettingAmountFor(player);
+
+            PlayerBetting playerBetting = PlayerBetting.from(player, bettingAmount);
+            bettingTable.add(playerBetting);
         }
+        return bettingTable;
+    }
+
+    private BettingAmount readBettingAmountFor(Player player) {
+        String rawBettingAmount = inputView.askBettingAmount(player);
+        return BettingAmountParser.parse(rawBettingAmount);
     }
 
     private void readyPhase(Dealer dealer, Players players) {
@@ -51,9 +63,9 @@ public class GameController {
         gameManager.dealCardTo(players, 2);
 
         Map<String, CardsSnapshot> result = new LinkedHashMap<>();
-        result.put(dealer.getName(), gameManager.getStartingCard(dealer));
+        result.put(dealer.name(), gameManager.getStartingCard(dealer));
         for (Player player : players) {
-            result.put(player.getName(), gameManager.getCardsResult(player));
+            result.put(player.name(), gameManager.getCardsResult(player));
         }
 
         outputView.printGameInitResult(result);
@@ -71,7 +83,7 @@ public class GameController {
         Referee referee = new Referee();
         Map<String, Integer> scoreByPlayerNames = new LinkedHashMap<>();
         for (Player player : players) {
-            scoreByPlayerNames.put(player.getName(), player.getScore());
+            scoreByPlayerNames.put(player.name(), player.getScore());
         }
         GameResultDto gameResultDto = referee.createGameResult(dealer.getScore(), scoreByPlayerNames);
         outputView.printResult(gameResultDto);
@@ -89,10 +101,10 @@ public class GameController {
         }
         outputView.printNewLine();
 
-        outputView.printParticipantResult(dealer.getName(), gameManager.getCardsResult(dealer).getFormattedCards(),
+        outputView.printParticipantResult(dealer.name(), gameManager.getCardsResult(dealer).getFormattedCards(),
                 dealer.getScore());
         for (Player player : players) {
-            outputView.printParticipantResult(player.getName(), gameManager.getCardsResult(player).getFormattedCards(),
+            outputView.printParticipantResult(player.name(), gameManager.getCardsResult(player).getFormattedCards(),
                     player.getScore());
         }
         outputView.printNewLine();
@@ -119,13 +131,13 @@ public class GameController {
     }
 
     private boolean isUserWantHit(Player player) {
-        Command command = Command.from(inputView.askPlayHit(player.getName()));
+        Command command = Command.from(inputView.askPlayHit(player.name()));
         return !command.isNo();
     }
 
     private void drawAndPrint(Player player) {
         gameManager.dealCard(player);
-        outputView.printParticipantCard(player.getName(),
+        outputView.printParticipantCard(player.name(),
                 gameManager.getCardsResult(player).getFormattedCards());
     }
 

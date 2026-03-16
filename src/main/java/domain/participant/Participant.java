@@ -31,8 +31,8 @@ public abstract class Participant {
         return hand.firstCardSnapshot();
     }
 
-    public String getName() {
-        return name.value();
+    public Name getName() {
+        return this.name;
     }
 
     public int getScore() {
