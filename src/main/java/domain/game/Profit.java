@@ -1,16 +1,32 @@
 package domain.game;
 
+import domain.betting.BettingAmount;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Profit {
 
-    private final int profit;
+    private final BigDecimal profit;
 
-    public Profit(int profit) {
+    public Profit(BigDecimal profit) {
         this.profit = profit;
     }
 
-    public int getProfit() {
+    public static Profit calculateProfit(GameResult result, BettingAmount bettingAmount) {
+        if (result == GameResult.BLACK_JACK) {
+            return new Profit((bettingAmount.getBettingAmount()
+                    .multiply(BigDecimal.valueOf(3).divide(BigDecimal.TWO))));
+        }
+        if (result == GameResult.WIN) {
+            return new Profit(bettingAmount.getBettingAmount());
+        }
+        if (result == GameResult.DRAW) {
+            return new Profit(BigDecimal.ZERO);
+        }
+        return new Profit(bettingAmount.getBettingAmount().negate());
+    }
+
+    public BigDecimal getProfit() {
         return profit;
     }
 
@@ -23,7 +39,7 @@ public class Profit {
             return false;
         }
         Profit that = (Profit) o;
-        return profit == that.profit;
+        return this.profit.compareTo(that.profit) == 0;
     }
 
     @Override

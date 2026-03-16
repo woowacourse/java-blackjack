@@ -7,11 +7,9 @@ import java.util.stream.Collectors;
 
 public class Hand {
 
+    public static final int BLACK_JACK_SCORE = 21;
     private static final int ACE_HIGH_SCORE = 11;
     private static final int ACE_LOW_SCORE = 1;
-
-    public static final int BLACK_JACK_SCORE = 21;
-
     private final List<Card> cards;
 
     public Hand() {

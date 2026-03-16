@@ -1,8 +1,10 @@
 package view.requestdto;
 
+import java.math.BigDecimal;
+
 public record BettingAmountRequestDto(String bettingAmount) {
 
-    public static final int MINIMUM_BETTING_AMOUNT = 10;
+    public static final BigDecimal MINIMUM_BETTING_AMOUNT = BigDecimal.TEN;
 
     public BettingAmountRequestDto {
         validateBettingAmountIsNotNullAndNotBlank(bettingAmount);
@@ -25,13 +27,14 @@ public record BettingAmountRequestDto(String bettingAmount) {
     }
 
     private void validateBettingAmountIsOverMinimumAmount(String bettingAmount) {
-        if (Integer.parseInt(bettingAmount) < MINIMUM_BETTING_AMOUNT) {
+        BigDecimal bettingAmountDecimal = new BigDecimal(bettingAmount);
+        if (bettingAmountDecimal.compareTo(MINIMUM_BETTING_AMOUNT) < 0) {
             throw new IllegalArgumentException(
                     "[ERROR] 최소 베팅 금액은 " + MINIMUM_BETTING_AMOUNT + " 입니다");
         }
     }
 
-    public int getBettingAmount() {
-        return Integer.parseInt(bettingAmount);
+    public BigDecimal getBettingAmount() {
+        return new BigDecimal(bettingAmount);
     }
 }

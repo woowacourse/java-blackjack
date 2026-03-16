@@ -3,6 +3,7 @@ package domain.game;
 import domain.player.Gambler;
 import domain.player.Gamblers;
 import domain.player.Participant;
+import java.math.BigDecimal;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -20,7 +21,7 @@ public class GamblersGameResult {
     private void calculateProfits(Participant dealer, Gamblers gamblers) {
         for (Gambler gambler : gamblers.getGamblers()) {
             GameResult result = GameResult.determine(dealer, gambler);
-            Profit profit = result.calculateProfit(gambler.getBettingAmount());
+            Profit profit = Profit.calculateProfit(result, gambler.getBettingAmount());
             participantProfits.put(gambler.getName(), profit);
         }
     }
@@ -34,9 +35,9 @@ public class GamblersGameResult {
     }
 
     public Profit getDealerProfit() {
-        int totalProfit = participantProfits.values().stream()
-                .mapToInt(Profit::getProfit)
-                .sum();
-        return new Profit(totalProfit * REVERSE_SIGN);
+        BigDecimal totalProfit = participantProfits.values().stream()
+                .map(Profit::getProfit)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        return new Profit(totalProfit.negate());
     }
 }

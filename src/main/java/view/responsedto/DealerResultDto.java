@@ -1,5 +1,7 @@
 package view.responsedto;
 
-public record DealerResultDto(int dealerProfit) {
+import java.math.BigDecimal;
+
+public record DealerResultDto(BigDecimal dealerProfit) {
 
 }

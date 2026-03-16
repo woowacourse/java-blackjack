@@ -8,7 +8,7 @@ public class BettingAmount {
     private final BigDecimal bettingAmount;
 
     public BettingAmount(BigDecimal bettingAmount) {
-        this.bettingAmount = bettingAmount;
+        this.bettingAmount = bettingAmount.stripTrailingZeros();
     }
 
     @Override
@@ -20,7 +20,7 @@ public class BettingAmount {
             return false;
         }
         BettingAmount that = (BettingAmount) o;
-        return bettingAmount == that.bettingAmount;
+        return this.bettingAmount.compareTo(that.bettingAmount) == 0;
     }
 
     @Override

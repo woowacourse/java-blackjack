@@ -54,7 +54,8 @@ public class OutputView {
 
     public void printGamblerResult(Map<String, Profit> gamblersResult) {
         for (Entry<String, Profit> result : gamblersResult.entrySet()) {
-            System.out.println(result.getKey() + ": " + result.getValue().getProfit());
+            System.out.println(
+                    result.getKey() + ": " + result.getValue().getProfit().toPlainString());
         }
     }
 
