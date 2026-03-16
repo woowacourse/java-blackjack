@@ -39,5 +39,9 @@ public abstract class Participant {
                 .toList();
     }
 
+    public String getFirstName() {
+        return getCardNames().getFirst();
+    }
+
     public abstract boolean canDraw();
 }
