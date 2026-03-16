@@ -66,15 +66,7 @@ public class BlackJackController {
     }
 
     private Players readUntilValidPlayers() {
-        List<String> players;
-        while (true) {
-            try {
-                players = inputView.readPlayers();
-                break;
-            } catch (IllegalArgumentException e) {
-                OutputView.printErrorMessage(e.getMessage());
-            }
-        }
+        List<String> players = inputView.readPlayers();
         return new Players(players);
     }
 

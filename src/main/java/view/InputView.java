@@ -4,17 +4,26 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+import static util.BlackJackConstant.MAX_NAME_LENGTH;
+
 public class InputView {
 
     private static final String COMMA_DELIMITER = ",";
+    private static final String STRING_REGEX = "^[a-zA-Z]*$";
     private static final String BINARY_REGEX = "[yn]";
     private static final String BINARY_Y = "y";
 
     private final Scanner sc = new Scanner(System.in);
 
     public List<String> readPlayers() {
-        System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
-        return splitPlayerNames(userInput());
+        while (true) {
+            try {
+                System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
+                return splitPlayerNames(userInput());
+            } catch (IllegalArgumentException e) {
+                OutputView.printErrorMessage(e.getMessage());
+            }
+        }
     }
 
     public int readBettingAmount(String name) {
@@ -43,8 +52,13 @@ public class InputView {
     private List<String> splitPlayerNames(String playerNames) {
         List<String> names = List.of(playerNames.split(COMMA_DELIMITER, -1));
         for (String name : names) {
-            if (name.trim().isEmpty()) {
+            name = name.trim();
+
+            if (name.isEmpty() || name.length() > MAX_NAME_LENGTH)  {
                 throw new IllegalArgumentException("잘못된 입력입니다. 다시 입력해주세요.");
+            }
+            if (!Pattern.matches(STRING_REGEX, name)) {
+                throw new IllegalArgumentException("플레이어 이름은 영문자만 포함되어야 합니다.");
             }
         }
         return names;

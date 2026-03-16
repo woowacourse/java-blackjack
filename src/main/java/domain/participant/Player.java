@@ -43,7 +43,7 @@ public class Player extends Participant {
     }
 
     private void validateOnlyEnglish(String name) {
-        if (!Pattern.matches(STRING_REGEX, name)) {
+        if (!Pattern.matches(STRING_REGEX, name.trim())) {
             throw new IllegalArgumentException("플레이어 이름은 영문자만 포함되어야 합니다.");
         }
     }
