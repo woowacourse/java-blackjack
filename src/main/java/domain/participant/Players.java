@@ -1,7 +1,9 @@
 package domain.participant;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Consumer;
 
 public class Players {
@@ -37,12 +39,11 @@ public class Players {
     }
 
     private static void validateDuplicateName(List<Player> players) {
-        long uniqueCount = players.stream()
-                .map(Player::getName)
-                .distinct()
-                .count();
-
-        if (players.size() != uniqueCount) {
+        Set<Name> uniqueNames = new HashSet<>();
+        for (Player player : players) {
+            uniqueNames.add(player.getName());
+        }
+        if (players.size() != uniqueNames.size()) {
             throw new IllegalArgumentException("중복된 참가자 이름이 있습니다!");
         }
     }
