@@ -21,7 +21,7 @@ public class Cards {
 
     public boolean isAceExist() {
         return cards.stream()
-                .anyMatch(c -> c.getCardRank().equals(CardRank.ACE));
+                .anyMatch(Card::isAce);
     }
 
     public boolean isBlackjack() {
