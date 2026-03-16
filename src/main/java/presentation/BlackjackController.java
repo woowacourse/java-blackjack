@@ -1,6 +1,7 @@
 package presentation;
 
 import application.BlackjackService;
+import domain.card.StandardDeck;
 import dto.RoundResult;
 import dto.GameResult;
 import dto.MemberStatus;
@@ -21,7 +22,7 @@ public class BlackjackController {
 
     public void executeGame() {
         List<String> playerNames = blackjackView.inputView().readPlayerNames();
-        BlackjackService blackjackService = new BlackjackService(readPlayerInitStatus(playerNames));
+        BlackjackService blackjackService = new BlackjackService(readPlayerInitStatus(playerNames), new StandardDeck());
         setUpGame(blackjackService);
         playGame(blackjackService, playerNames);
         checkDrawableOfDealer(blackjackService);
