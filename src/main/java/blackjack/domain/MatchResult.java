@@ -1,53 +1,34 @@
 package blackjack.domain;
 
 import java.util.Arrays;
+import java.util.function.IntPredicate;
 
 public enum MatchResult {
-    WIN("승") {
-        @Override
-        public boolean matches(Player player, Dealer dealer) {
-            if (player.isBust()) {
-                return false;
-            }
-            if (dealer.isBust()) {
-                return true;
-            }
-            return player.score() > dealer.score();
-        }
-    },
-    LOSE("패") {
-        @Override
-        public boolean matches(Player player, Dealer dealer) {
-            if (player.isBust()) {
-                return true;
-            }
-            if (dealer.isBust()) {
-                return false;
-            }
-            return player.score() < dealer.score();
-        }
-    },
-    DRAW("무") {
-        @Override
-        public boolean matches(Player player, Dealer dealer) {
-            if (player.isBust() || dealer.isBust()) {
-                return false;
-            }
-            return player.score() == dealer.score();
-        }
-    };
+    WIN("승", scoreComparison -> scoreComparison > 0),
+    LOSE("패", scoreComparison -> scoreComparison < 0),
+    DRAW("무", scoreComparison -> scoreComparison == 0);
 
     private final String display;
+    private final IntPredicate scoreMatcher;
 
-    MatchResult(String display) {
+    MatchResult(String display, IntPredicate scoreMatcher) {
         this.display = display;
+        this.scoreMatcher = scoreMatcher;
     }
 
     public String getDisplay() {
         return display;
     }
 
-    public abstract boolean matches(Player player, Dealer dealer);
+    public boolean matches(Player player, Dealer dealer) {
+        if (player.isBust()) {
+            return this == LOSE;
+        }
+        if (dealer.isBust()) {
+            return this == WIN;
+        }
+        return scoreMatcher.test(compareScore(player, dealer));
+    }
 
     public static MatchResult of(Player player, Dealer dealer) {
         return Arrays.stream(values())
@@ -55,5 +36,8 @@ public enum MatchResult {
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("매칭되는 결과가 없습니다."));
     }
-}
 
+    private int compareScore(Player player, Dealer dealer) {
+        return player.score() - dealer.score();
+    }
+}

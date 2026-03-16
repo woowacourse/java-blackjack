@@ -1,6 +1,7 @@
 package blackjack.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,16 @@ public class PlayerTest {
     @BeforeEach
     void setUp() {
         Name newPlayerName = Name.of("한다");
-        player = Player.of(newPlayerName);
+        player = Player.of(newPlayerName, BetAmount.of(1000));
+    }
+
+    @Test
+    void 플레이어_생성시_name이_null이면_예외_발생한다() {
+        Name nullName = null;
+
+        assertThatThrownBy(() -> Player.of(nullName, BetAmount.of(10000)))
+                .isInstanceOf(NullPointerException.class)
+                .hasMessage("name 은 null 이 올 수 없습니다.");
     }
 
     @Test
@@ -34,27 +44,27 @@ public class PlayerTest {
 
     @Test
     void 플레이어가_카드1장_받는다() {
-        TrumpCard spaceAce = TrumpCard.of(Suit.SPADE, Rank.ACE);
-        player.receiveCard(spaceAce);
+        TrumpCard spadeAce = TrumpCard.of(Suit.SPADE, Rank.ACE);
+        player.receiveCard(spadeAce);
         assertThat(player.countCards()).isEqualTo(1);
     }
 
     @Test
     void 플레이어가_여러_카드를_받는다() {
-        TrumpCard spaceAce = TrumpCard.of(Suit.SPADE, Rank.ACE);
+        TrumpCard spadeAce = TrumpCard.of(Suit.SPADE, Rank.ACE);
         TrumpCard heartKing = TrumpCard.of(Suit.HEART, Rank.KING);
 
-        player.receiveCard(spaceAce);
+        player.receiveCard(spadeAce);
         player.receiveCard(heartKing);
         assertThat(player.countCards()).isEqualTo(2);
     }
 
     @Test
     void 플레이어의_현재_점수를_계산한다() {
-        TrumpCard spaceAce = TrumpCard.of(Suit.SPADE, Rank.ACE);
+        TrumpCard spadeAce = TrumpCard.of(Suit.SPADE, Rank.ACE);
         TrumpCard heartKing = TrumpCard.of(Suit.HEART, Rank.KING);
 
-        player.receiveCard(spaceAce);
+        player.receiveCard(spadeAce);
         player.receiveCard(heartKing);
 
         assertThat(player.score()).isEqualTo(21);
@@ -101,5 +111,46 @@ public class PlayerTest {
 
         assertThat(player.getCards()).hasSize(2);
         assertThat(player.getCards()).containsExactly(spadeAce, heartKing);
+    }
+
+    @Test
+    void 처음_두장의_합이_21이면_블랙잭이다() {
+        TrumpCard spadeAce = TrumpCard.of(Suit.SPADE, Rank.ACE);
+        TrumpCard heartKing = TrumpCard.of(Suit.HEART, Rank.KING);
+
+        player.receiveCard(spadeAce);
+        player.receiveCard(heartKing);
+
+        assertThat(player.isBlackjack()).isTrue();
+    }
+
+    @Test
+    void 세장_이상으로_합이_21이면_블랙잭이_아니다() {
+        TrumpCard spadeAce = TrumpCard.of(Suit.SPADE, Rank.ACE);
+        TrumpCard heartKing = TrumpCard.of(Suit.HEART, Rank.KING);
+        TrumpCard cloverKing = TrumpCard.of(Suit.CLOVER, Rank.KING);
+
+        player.receiveCard(spadeAce);
+        player.receiveCard(heartKing);
+        player.receiveCard(cloverKing);
+
+        assertThat(player.isBlackjack()).isFalse();
+    }
+
+    @Test
+    void 두장이지만_합이_21이_아니면_블랙잭이_아니다() {
+        TrumpCard spadeJack = TrumpCard.of(Suit.SPADE, Rank.JACK);
+        TrumpCard heartKing = TrumpCard.of(Suit.HEART, Rank.KING);
+
+        player.receiveCard(spadeJack);
+        player.receiveCard(heartKing);
+
+        assertThat(player.isBlackjack()).isFalse();
+    }
+
+    @Test
+    void 플레이어의_배팅금액_값을_가져온다() {
+        Player player = Player.of(Name.of("handa"), BetAmount.of(3000));
+        assertThat(player.betAmount().money()).isEqualTo(3000);
     }
 }

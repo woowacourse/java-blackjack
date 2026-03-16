@@ -1,37 +1,14 @@
 package blackjack.domain;
 
-import java.util.List;
-
-public class Dealer {
+public class Dealer extends Participant {
     private static final int DEALER_HIT_THRESHOLD = 16;
-    private static final int BLACKJACK_THRESHOLD = 21;
-
-    private final Hand hand;
 
     private Dealer(Hand hand) {
-        this.hand = hand;
+        super(hand);
     }
 
     public static Dealer of() {
         return new Dealer(Hand.init());
-    }
-
-    public void receiveCards(List<TrumpCard> cards) {
-        for (TrumpCard card : cards) {
-            hand.receive(card);
-        }
-    }
-
-    public void receive(TrumpCard card) {
-        hand.receive(card);
-    }
-
-    public int score() {
-        return hand.calculateScore();
-    }
-
-    public List<TrumpCard> getCards() {
-        return hand.getCards();
     }
 
     public boolean shouldHit() {
@@ -40,9 +17,5 @@ public class Dealer {
 
     public TrumpCard getOpenCard() {
         return hand.getCards().getFirst();
-    }
-
-    public boolean isBust() {
-        return score() > BLACKJACK_THRESHOLD;
     }
 }

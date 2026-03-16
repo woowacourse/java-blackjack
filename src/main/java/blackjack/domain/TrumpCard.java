@@ -26,11 +26,11 @@ public class TrumpCard {
         }
     }
 
-    public String koreanName() {
+    public String suitKoreanName() {
         return suit.getKoreanName();
     }
 
-    public int score() {
+    public int rankScore() {
         return rank.getScore();
     }
 
