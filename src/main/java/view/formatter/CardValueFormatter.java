@@ -33,7 +33,7 @@ public enum CardValueFormatter {
         return Arrays.stream(CardValueFormatter.values())
                 .filter(cardValueFormatter -> cardValueFormatter.cardScore == cardScore)
                 .map(CardValueFormatter::getPrintMessage)
-                .findFirst()
+                .findAny()
                 .orElseThrow(() -> new IllegalStateException(CARD_VALUE_NOT_EXIST.getMessage()));
     }
 
