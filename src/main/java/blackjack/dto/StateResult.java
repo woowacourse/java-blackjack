@@ -19,7 +19,7 @@ public record StateResult(
         return new StateResult(stateResult);
     }
 
-    public State get(Player player) {
+    public State findByPlayer(Player player) {
         return stateResult.get(player);
     }
 

@@ -33,7 +33,7 @@ public class OutputView {
     public void printResult(ProfitResult profitResult) {
         System.out.println();
         System.out.println("## 최종 수익");
-        printResultOfDealer(profitResult.getProfitOfDealer());
+        printResultOfDealer(profitResult.calculateProfitOfDealer());
         printResultOfPlayers(profitResult);
     }
 

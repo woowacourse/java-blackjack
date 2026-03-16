@@ -16,14 +16,14 @@ public record ProfitResult(
         Map<String, Integer> profitResult = new LinkedHashMap<>();
         for (Player player : players.getPlayers()) {
             BettingAmount bettingAmount = bettings.findByPlayer(player);
-            State state = stateResult.get(player);
+            State state = stateResult.findByPlayer(player);
             profitResult.put(player.getName(), (int) state.apply(bettingAmount.amount()));
 
         }
         return new ProfitResult(profitResult);
     }
 
-    public int getProfitOfDealer() {
+    public int calculateProfitOfDealer() {
         return profitResult.values().stream()
                 .mapToInt(Integer::intValue)
                 .sum() * (-1);
