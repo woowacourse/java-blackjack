@@ -11,19 +11,8 @@ public class DeckTest {
         // given
         Deck deck = new Deck();
 
-        // when
-        int count = 0;
-        while (true) {
-            try {
-                deck.dealCard();
-                count++;
-            } catch (Exception e) {
-                break;
-            }
-        }
-
         // then
-        assertThat(count).isEqualTo(52); // 4 suits × 13 ranks
+        assertThat(deck.getSize()).isEqualTo(52); // 4 suits × 13 ranks
     }
 
 }
