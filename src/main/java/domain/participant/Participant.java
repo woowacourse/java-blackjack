@@ -3,6 +3,7 @@ package domain.participant;
 import domain.card.Card;
 import domain.card.CardBundle;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Participant {
     private final PlayerName playerName;
@@ -41,5 +42,19 @@ public abstract class Participant {
 
     public CardBundle getCardBundle() {
         return cardBundle;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Participant that = (Participant) o;
+        return Objects.equals(playerName, that.playerName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(playerName);
     }
 }
