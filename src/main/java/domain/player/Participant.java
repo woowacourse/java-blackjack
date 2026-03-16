@@ -46,15 +46,7 @@ public class Participant {
         return new ParticipantGameInfo(name.getName(), hand.getInfo(), hand.calculateScore());
     }
 
-    public boolean isEqualName(String name) {
-        return this.name.isEqualName(name);
-    }
-
     public boolean isBlackJack() {
         return hand.isBlackJack();
-    }
-
-    public boolean canHit() {
-        return !isBlackJack() && !isBust();
     }
 }

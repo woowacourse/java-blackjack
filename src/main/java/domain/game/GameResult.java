@@ -25,9 +25,6 @@ public enum GameResult {
         if (dealer.isBust()) {
             return WIN;
         }
-        if (dealer.isBlackJack() && gambler.isBlackJack()) {
-            return DRAW;
-        }
         if (dealer.isBlackJack()) {
             return LOSE;
         }

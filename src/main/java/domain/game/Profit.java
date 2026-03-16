@@ -15,7 +15,7 @@ public class Profit {
     public static Profit calculateProfit(GameResult result, BettingAmount bettingAmount) {
         if (result == GameResult.BLACK_JACK) {
             return new Profit((bettingAmount.getBettingAmount()
-                    .multiply(BigDecimal.valueOf(3).divide(BigDecimal.TWO))));
+                    .multiply(new BigDecimal("1.5"))));
         }
         if (result == GameResult.WIN) {
             return new Profit(bettingAmount.getBettingAmount());

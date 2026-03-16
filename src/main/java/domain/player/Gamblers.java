@@ -36,12 +36,6 @@ public class Gamblers {
                 ));
     }
 
-    public void receiveCards(GameCards gameCards) {
-        for (Gambler gambler : gamblers) {
-            gambler.addCard(gameCards.drawCard());
-        }
-    }
-
     public List<ParticipantGameInfo> getParticipantGameInfos() {
         return gamblers.stream()
                 .map(Gambler::getParticipantGameInfo)

@@ -9,8 +9,6 @@ import java.util.Map;
 
 public class GamblersGameResult {
 
-    private static final int REVERSE_SIGN = -1;
-
     private Map<String, Profit> participantProfits;
 
     public GamblersGameResult(Participant dealer, Gamblers gamblers) {
@@ -35,8 +33,7 @@ public class GamblersGameResult {
     }
 
     public Profit getDealerProfit() {
-        BigDecimal totalProfit = participantProfits.values().stream()
-                .map(Profit::getProfit)
+        BigDecimal totalProfit = participantProfits.values().stream().map(Profit::getProfit)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
         return new Profit(totalProfit.negate());
     }
