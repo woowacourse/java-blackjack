@@ -1,6 +1,7 @@
 package blackjack.model.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,15 +17,28 @@ class CardTest {
 
     @Test
     @DisplayName("공개된 카드를 뒤집으면, isOpened가 false가 된다.")
-    void flip() {
+    void close_opened() {
         // given
         Card card = Card.createOpenedCard(Rank.ACE, Suit.CLOVER);
 
         // when
-        card.flip();
+        Card closed = card.close();
 
         // then
-        assertThat(card.isOpened()).isFalse();
+        assertThat(closed.isOpened()).isFalse();
+    }
+
+    @Test
+    @DisplayName("이미 뎦혀진 카드를 뒤집으면, 예외가 발생한다.")
+    void close_closed() {
+        // given
+        Card card = Card.createOpenedCard(Rank.ACE, Suit.CLOVER);
+        Card closed = card.close();
+
+        // when & then
+        assertThatThrownBy(() -> closed.close())
+                .isInstanceOf(IllegalStateException.class)
+                        .hasMessage("이미 덮혀져 있습니다.");
     }
 
     @Test
@@ -75,9 +89,9 @@ class CardTest {
     void isOpenedFalse() {
         // given
         Card card = Card.createOpenedCard(Rank.ACE, Suit.CLOVER);
-        card.flip();
+        Card closed = card.close();
 
         // when & then
-        assertThat(card.isOpened()).isFalse();
+        assertThat(closed.isOpened()).isFalse();
     }
 }

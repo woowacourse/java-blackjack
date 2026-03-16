@@ -20,6 +20,10 @@ public enum Rank {
     private final String displayName;
 
     Rank(int defaultScore, String displayName) {
+        if (displayName == null) {
+            throw new IllegalArgumentException("displayName이 null입니다.");
+        }
+
         this.defaultScore = defaultScore;
         this.displayName = displayName;
     }
@@ -30,5 +34,9 @@ public enum Rank {
 
     public String getDisplayName() {
         return displayName;
+    }
+
+    public boolean isAce() {
+        return this == ACE;
     }
 }

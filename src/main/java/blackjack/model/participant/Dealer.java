@@ -22,9 +22,8 @@ public class Dealer extends Participant {
     }
     
     private Card pickSecondCard(CardDeck cardDeck) {
-        Card secondPickedCard = cardDeck.pick();
-        secondPickedCard.flip();
-        return secondPickedCard;
+        Card card = cardDeck.pick();
+        return card.close();
     }
 
     public boolean canPick() {

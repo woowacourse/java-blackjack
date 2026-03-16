@@ -105,8 +105,8 @@ class HandsTest {
         Hands hands = Hands.empty();
         hands.addCard(Card.createOpenedCard(Rank.SIX, Suit.CLOVER));
 
-        Card closed = Card.createOpenedCard(Rank.ACE, Suit.CLOVER);
-        closed.flip();
+        Card opened = Card.createOpenedCard(Rank.ACE, Suit.CLOVER);
+        Card closed = opened.close();
 
         hands.addCard(closed);
 
