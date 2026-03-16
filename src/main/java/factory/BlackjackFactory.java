@@ -17,11 +17,11 @@ public class BlackjackFactory {
         return new BlackjackGameManager(cardMachine(), blackjackJudge());
     }
 
-    public CardMachine cardMachine() {
+    private CardMachine cardMachine() {
         return new CardMachine();
     }
 
-    public BlackjackJudge blackjackJudge() {
+    private BlackjackJudge blackjackJudge() {
         return new BlackjackJudge();
     }
 
