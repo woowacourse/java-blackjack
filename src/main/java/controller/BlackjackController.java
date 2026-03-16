@@ -92,9 +92,10 @@ public class BlackjackController {
     }
 
     private void playDealer(BlackjackGame game) {
-        Dealer dealer = game.getDealer();
-        while (dealer.needsToHit() && !game.areAllPlayersBust()) {
+        while (game.canDealerHit()) {
             game.hitDealer();
+
+            Dealer dealer = game.getDealer();
             outputView.drawDealer(new DealerDrawDto(dealer.name(), Dealer.HIT_BOUNDARY));
         }
     }

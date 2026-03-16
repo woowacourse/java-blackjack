@@ -92,6 +92,13 @@ public class BlackjackGame {
         passTurn();
     }
 
+    public boolean canDealerHit() {
+        Dealer dealer = participants.getDealer();
+        boolean isAllPlayersBust = participants.getPlayers().areAllBust();
+
+        return dealer.needsToHit() && !isAllPlayersBust;
+    }
+
     public void hitDealer() {
         participants.getDealer().addCard(deck.drawCard());
     }
