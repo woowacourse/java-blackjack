@@ -1,6 +1,5 @@
 package blackjack.view.dto;
 
-import blackjack.model.GameState;
 import blackjack.model.card.Card;
 import blackjack.model.participant.Participant;
 import java.util.List;

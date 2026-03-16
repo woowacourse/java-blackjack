@@ -3,7 +3,6 @@ package blackjack.controller;
 import blackjack.model.cardDeck.PickStrategy;
 import blackjack.model.cardDeck.RandomPickStrategy;
 import blackjack.model.participant.Dealer;
-import blackjack.model.participant.Participant;
 import blackjack.model.participant.Player;
 import blackjack.model.participant.Players;
 import blackjack.service.BlackjackService;
