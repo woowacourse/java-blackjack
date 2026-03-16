@@ -29,7 +29,7 @@ public class BlackjackGameFlowTest {
                 new Card(Suit.CLUB, Rank.SEVEN),
                 new Card(Suit.CLUB, Rank.TEN)
         ));
-        blackjackGame = new TestBlackjackGame(fixedDeck);
+        blackjackGame = new BlackjackGame(fixedDeck);
         List<Name> names = List.of(new Name("영기"), new Name("라이"));
         Map<Name, Bet> bets = new LinkedHashMap<>();
         names.forEach(name -> bets.put(name, new Bet("1000")));

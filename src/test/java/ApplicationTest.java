@@ -1,8 +1,8 @@
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.BlackjackGame;
 import domain.Card;
 import domain.Deck;
-import domain.TestBlackjackGame;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -47,7 +47,7 @@ public class ApplicationTest {
 
         Application app = new Application(
                 new InputView(), new OutputView(),
-                new TestBlackjackGame(new Deck(FIXED_CARDS))
+                new BlackjackGame(new Deck(FIXED_CARDS))
         );
 
         // when
@@ -68,7 +68,7 @@ public class ApplicationTest {
 
         Application app = new Application(
                 new InputView(), new OutputView(),
-                new TestBlackjackGame(new Deck(FIXED_CARDS))
+                new BlackjackGame(new Deck(FIXED_CARDS))
         );
 
         // when
@@ -87,7 +87,7 @@ public class ApplicationTest {
 
         Application app = new Application(
                 new InputView(), new OutputView(),
-                new TestBlackjackGame(new Deck(FIXED_CARDS))
+                new BlackjackGame(new Deck(FIXED_CARDS))
         );
 
         // when
@@ -115,7 +115,7 @@ public class ApplicationTest {
 
         Application app = new Application(
                 new InputView(), new OutputView(),
-                new TestBlackjackGame(new Deck(bustDeck))
+                new BlackjackGame(new Deck(bustDeck))
         );
 
         // when

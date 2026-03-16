@@ -8,8 +8,8 @@
   - 이 부분은 지금은 Name이 같은 참조를 쓰고 있어서 동작하지만, 리팩토링 하기 어려운 코드이다.
   - Name 객체가 새로 만들어지는 순간 조용히 깨지는 코드가 된다.
 - [x] **2. `BlackjackGame`의 주석 지우기**
-- [ ] **3. `blackjackGame`의 protected field를 private으로 수정할 것.**
-  - [ ] 이를 위해 blackjackGame의 prepare() 구조를 생성자로 옮겨야 함.
+- [x] **3. `blackjackGame`의 protected field를 private으로 수정할 것.**
+  - [x] 이를 위해 blackjackGame의 prepare() 구조를 생성자로 옮겨야 함.
 - [x] **4. `GameJudge`의 judge 함수를 dealer와 user 객체 자체를 받는 형식으로 수정**
 - [x] **5. `Participants`의 Dealer 제거**
   - [x] dealer는 BlackjackGame에서 직접 관리하도록 수정

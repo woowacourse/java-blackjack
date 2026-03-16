@@ -14,17 +14,20 @@ public class BlackjackGame {
     private final GameJudge gameJudge = new GameJudge();
     private Participants participants;
     private Dealer dealer;
-    protected Deck deck;
+    private final Deck deck;
+
+    public BlackjackGame() {
+        this.deck = new Deck();
+    }
+
+    public BlackjackGame(Deck deck) {
+        this.deck = deck;
+    }
 
     public void prepare(Map<Name, Bet> bets) {
         this.participants = new Participants(bets);
         this.dealer = new Dealer();
-        makeDeck();
         dealCards();
-    }
-
-    public void makeDeck() {
-        deck = new Deck();
     }
 
     public void dealCards() {
