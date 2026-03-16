@@ -31,14 +31,14 @@ public class JudgementService {
     }
 
     public PlayerStatus judgementWinning(Deck playerDeck, Deck dealerDeck) {
-        if (dealerDeck.isBurst() || (playerDeck.isBlackJack() && dealerDeck.isAlive())) {
-            return PlayerStatus.WIN;
-        }
-        if (playerDeck.isBurst() && dealerDeck.isAlive()) {
+        if (playerDeck.isBurst()) {
             return PlayerStatus.LOSS;
         }
         if (playerDeck.isBlackJack() && dealerDeck.isBlackJack()) {
             return PlayerStatus.DRAW;
+        }
+        if (dealerDeck.isBurst() || (playerDeck.isBlackJack() && dealerDeck.isAlive())) {
+            return PlayerStatus.WIN;
         }
         if (playerDeck.isAlive() && dealerDeck.isAlive()) {
             return getPlayerStatusByDeckSum(playerDeck.calculateFinalSum(), dealerDeck.calculateFinalSum());

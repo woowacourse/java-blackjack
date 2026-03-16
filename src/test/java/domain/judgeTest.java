@@ -30,7 +30,7 @@ public class judgeTest {
     private final JudgementService judgementService = new JudgementService(playerBettings);
 
     @Test
-    void 플레이어_딜러_둘다_버스트_테스트() {
+    void 플레이어가_버스트일_때_테스트() {
         // given
         List<Card> cards1 = List.of(
                 Card.of(CardRank.NINE, CardShape.HEART),
@@ -50,7 +50,7 @@ public class judgeTest {
         PlayerStatus playerStatus = judgementService.judgementWinning(playerDeck, dealerDeck);
 
         // then
-        assertThat(playerStatus).isEqualTo(PlayerStatus.WIN);
+        assertThat(playerStatus).isEqualTo(PlayerStatus.LOSS);
     }
 
     // 플레이어 버스트
