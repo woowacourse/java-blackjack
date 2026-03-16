@@ -21,7 +21,7 @@ public class DtoFactoryTest {
         dealer.receiveCard(new Card(Rank.ACE, Suit.SPADE));
         dealer.receiveCard(new Card(Rank.KING, Suit.HEART));
 
-        Player player = new Player("pobi", new BettingMoney(1000));
+        Player player = new Player(new Name("pobi"), new BettingMoney(1000));
         player.receiveCard(new Card(Rank.TWO, Suit.CLUB));
         player.receiveCard(new Card(Rank.THREE, Suit.DIAMOND));
 
@@ -40,7 +40,7 @@ public class DtoFactoryTest {
         dealer.receiveCard(new Card(Rank.ACE, Suit.SPADE));
         dealer.receiveCard(new Card(Rank.KING, Suit.HEART));
 
-        Player player = new Player("pobi", new BettingMoney(1000));
+        Player player = new Player(new Name("pobi"), new BettingMoney(1000));
         player.receiveCard(new Card(Rank.TWO, Suit.CLUB));
         player.receiveCard(new Card(Rank.THREE, Suit.DIAMOND));
 
@@ -58,7 +58,7 @@ public class DtoFactoryTest {
         dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
         dealer.receiveCard(new Card(Rank.SEVEN, Suit.HEART));
 
-        Player player = new Player("pobi", new BettingMoney(1000));
+        Player player = new Player(new Name("pobi"), new BettingMoney(1000));
         player.receiveCard(new Card(Rank.NINE, Suit.CLUB));
         player.receiveCard(new Card(Rank.EIGHT, Suit.DIAMOND));
 

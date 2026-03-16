@@ -1,12 +1,15 @@
 package domain.participant;
 
+import domain.Name;
+
 public class Dealer extends Participant {
     private static final int DEALER_DRAW_CONDITION = 16;
 
     public Dealer() {
-        super("딜러");
+        super(new Name("딜러"));
     }
 
+    @Override
     public boolean canDraw() {
         return getScore() <= DEALER_DRAW_CONDITION;
     }

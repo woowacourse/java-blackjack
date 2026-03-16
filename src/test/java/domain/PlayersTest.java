@@ -16,8 +16,8 @@ public class PlayersTest {
     @Test
     void 플레이어를_등록한다() {
         Players players = Players.of(List.of(
-                new Player("pobi", new BettingMoney(1000)),
-                new Player("abc", new BettingMoney(1000))
+                new Player(new Name("pobi"), new BettingMoney(1000)),
+                new Player(new Name("abc"), new BettingMoney(1000))
         ));
 
         List<Player> records = players.getPlayers();
@@ -29,8 +29,8 @@ public class PlayersTest {
 
     @Test
     void 초기_블랙잭인_플레이어는_naturalBlackJack_상태가_true가_된다() {
-        Player blackJackPlayer = new Player("pobi", new BettingMoney(1000));
-        Player normalPlayer = new Player("jason", new BettingMoney(1000));
+        Player blackJackPlayer = new Player(new Name("pobi"), new BettingMoney(1000));
+        Player normalPlayer = new Player(new Name("jason"), new BettingMoney(1000));
 
         blackJackPlayer.receiveCard(new Card(Rank.ACE, Suit.SPADE));
         blackJackPlayer.receiveCard(new Card(Rank.KING, Suit.HEART));
@@ -44,8 +44,8 @@ public class PlayersTest {
 
     @Test
     void 초기_블랙잭이_아닌_플레이어들만_반환한다() {
-        Player blackJackPlayer = new Player("pobi", new BettingMoney(1000));
-        Player normalPlayer = new Player("jason", new BettingMoney(1000));
+        Player blackJackPlayer = new Player(new Name("pobi"), new BettingMoney(1000));
+        Player normalPlayer = new Player(new Name("jason"), new BettingMoney(1000));
 
         blackJackPlayer.receiveCard(new Card(Rank.ACE, Suit.SPADE));
         blackJackPlayer.receiveCard(new Card(Rank.KING, Suit.HEART));

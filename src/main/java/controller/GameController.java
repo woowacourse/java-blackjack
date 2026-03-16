@@ -2,13 +2,13 @@ package controller;
 
 import dto.GameInitialInfoDto;
 import domain.BettingMoney;
+import domain.Name;
 import domain.game.GameManager;
 import domain.participant.Player;
 import java.util.ArrayList;
+import java.util.List;
 import view.InputView;
 import view.OutputView;
-
-import java.util.List;
 
 public class GameController {
 
@@ -34,8 +34,8 @@ public class GameController {
     private void registerPlayer() {
         while (true) {
             try {
-                List<String> playerNames = inputView.readPlayerName();
-                validatePlayerNames(playerNames);
+                List<String> rawPlayerNames = inputView.readPlayerName();
+                List<Name> playerNames = toNames(rawPlayerNames);
                 registerPlayersWithBettingMoney(playerNames);
                 return;
             } catch (IllegalArgumentException e) {
@@ -44,10 +44,16 @@ public class GameController {
         }
     }
 
-    private void registerPlayersWithBettingMoney(List<String> playerNames) {
+    private List<Name> toNames(List<String> rawPlayerNames) {
+        return rawPlayerNames.stream()
+                .map(Name::new)
+                .toList();
+    }
+
+    private void registerPlayersWithBettingMoney(List<Name> playerNames) {
         List<BettingMoney> bettingMoneyList = new ArrayList<>();
-        for (String playerName : playerNames) {
-            BettingMoney bettingMoney = inputView.readBettingMoney(playerName);
+        for (Name playerName : playerNames) {
+            BettingMoney bettingMoney = inputView.readBettingMoney(playerName.getValue());
             bettingMoneyList.add(bettingMoney);
         }
         manager.registerPlayers(playerNames, bettingMoneyList);
@@ -89,16 +95,6 @@ public class GameController {
     private void playDealerTurn() {
         while (manager.proceedDealerTurn()) {
             outputView.printDealerTurn();
-        }
-    }
-
-    private void validatePlayerNames(List<String> playerNames) {
-        if (playerNames == null || playerNames.isEmpty()) {
-            throw new IllegalArgumentException("플레이어 이름을 입력해야 합니다.");
-        }
-
-        if (playerNames.stream().anyMatch(name -> name == null || name.isBlank())) {
-            throw new IllegalArgumentException("플레이어 이름은 비어 있을 수 없습니다.");
         }
     }
 }

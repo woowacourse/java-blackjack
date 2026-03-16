@@ -1,7 +1,6 @@
 package view;
 
 import domain.BettingMoney;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -50,13 +49,11 @@ public class InputView {
     }
 
     private static List<String> splitPlayerNameInput(String s) {
-        if (s == null || s.trim().isEmpty()) {
-            return new ArrayList<>();
+        if (s == null || s.isBlank()) {
+            return List.of();
         }
 
         return Arrays.stream(s.split(","))
-                .map(String::trim)
-                .filter(c -> !c.isEmpty())
                 .toList();
     }
 }

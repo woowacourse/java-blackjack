@@ -19,7 +19,7 @@ class GameManagerTest {
         GameManager manager = new GameManager(new Deck());
 
         manager.registerPlayers(
-                List.of("pobi", "cary"),
+                List.of(new Name("pobi"), new Name("cary")),
                 List.of(new BettingMoney(1000), new BettingMoney(1000))
         );
 
@@ -39,7 +39,7 @@ class GameManagerTest {
         GameManager manager = new GameManager(new Deck());
 
         manager.registerPlayers(
-                List.of("pobi"),
+                List.of(new Name("pobi")),
                 List.of(new BettingMoney(1000), new BettingMoney(1000))
         );
 
@@ -54,7 +54,7 @@ class GameManagerTest {
         GameManager manager = new GameManager(new Deck());
 
         manager.registerPlayers(
-                List.of("pobi"),
+                List.of(new Name("pobi")),
                 List.of(new BettingMoney(1000))
         );
 
@@ -69,7 +69,7 @@ class GameManagerTest {
         GameManager manager = new GameManager(new Deck());
 
         manager.registerPlayers(
-                List.of("pobi"),
+                List.of(new Name("pobi")),
                 List.of(new BettingMoney(1000), new BettingMoney(1000))
         );
 
@@ -84,7 +84,7 @@ class GameManagerTest {
         GameManager manager = new GameManager(new Deck());
 
         manager.registerPlayers(
-                List.of("pobi", "cary", "rudy"),
+                List.of(new Name("pobi"), new Name("jason"), new Name("cary")),
                 List.of(new BettingMoney(1000), new BettingMoney(1000), new BettingMoney(1000))
         );
 
@@ -98,7 +98,7 @@ class GameManagerTest {
         GameManager manager = new GameManager(new Deck());
 
         manager.registerPlayers(
-                List.of("pobi"),
+                List.of(new Name("pobi")),
                 List.of(new BettingMoney(1000))
         );
 
@@ -128,7 +128,7 @@ class GameManagerTest {
         GameManager manager = new GameManager(new Deck());
 
         manager.registerPlayers(
-                List.of("pobi", "cary"),
+                List.of(new Name("pobi"), new Name("jason")),
                 List.of(new BettingMoney(1000), new BettingMoney(1000))
         );
 
@@ -137,7 +137,7 @@ class GameManagerTest {
         assertThat(result.getDealerResult().getDealerName()).isEqualTo("딜러");
         assertThat(result.getPlayerResults()).hasSize(2);
         assertThat(result.getPlayerResults().get(0).getPlayerName()).isEqualTo("pobi");
-        assertThat(result.getPlayerResults().get(1).getPlayerName()).isEqualTo("cary");
+        assertThat(result.getPlayerResults().get(1).getPlayerName()).isEqualTo("jason");
     }
 
     @Test

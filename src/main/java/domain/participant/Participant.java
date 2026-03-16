@@ -1,14 +1,15 @@
 package domain.participant;
 
 import domain.Hand;
+import domain.Name;
 import domain.card.Card;
 import java.util.List;
 
 public abstract class Participant {
-    private final String name;
+    private final Name name;
     private final Hand hand = new Hand();
 
-    protected Participant(String name) {
+    protected Participant(Name name) {
         this.name = name;
     }
 
@@ -37,7 +38,7 @@ public abstract class Participant {
     }
 
     public String getName() {
-        return name;
+        return name.getValue();
     }
 
     public abstract boolean canDraw();

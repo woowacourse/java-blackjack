@@ -22,7 +22,7 @@ public class GameResultJudgeTest {
     @Test
     void 플레이어가_bust면_BUST와_음수_수익을_가진다() {
         Dealer dealer = new Dealer();
-        Player player = new Player("pobi", new BettingMoney(1000));
+        Player player = new Player(new Name("pobi"), new BettingMoney(1000));
 
         dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
         dealer.receiveCard(new Card(Rank.SEVEN, Suit.HEART)); // 17
@@ -49,7 +49,7 @@ public class GameResultJudgeTest {
     @Test
     void 플레이어_점수가_더_높으면_WIN이다() {
         Dealer dealer = new Dealer();
-        Player player = new Player("pobi", new BettingMoney(1000));
+        Player player = new Player(new Name("pobi"), new BettingMoney(1000));
 
         dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
         dealer.receiveCard(new Card(Rank.SEVEN, Suit.HEART)); // 17
@@ -69,7 +69,7 @@ public class GameResultJudgeTest {
     @Test
     void 플레이어_점수가_더_낮으면_LOSE다() {
         Dealer dealer = new Dealer();
-        Player player = new Player("pobi", new BettingMoney(1000));
+        Player player = new Player(new Name("pobi"), new BettingMoney(1000));
 
         dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
         dealer.receiveCard(new Card(Rank.NINE, Suit.HEART)); // 19
@@ -89,7 +89,7 @@ public class GameResultJudgeTest {
     @Test
     void 플레이어와_딜러의_점수가_같으면_DRAW다() {
         Dealer dealer = new Dealer();
-        Player player = new Player("pobi", new BettingMoney(1000));
+        Player player = new Player(new Name("pobi"), new BettingMoney(1000));
 
         dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
         dealer.receiveCard(new Card(Rank.EIGHT, Suit.HEART)); // 18
@@ -109,7 +109,7 @@ public class GameResultJudgeTest {
     @Test
     void naturalBlackJack인_플레이어는_BLACKJACK과_블랙잭_배당을_가진다() {
         Dealer dealer = new Dealer();
-        Player player = new Player("pobi", new BettingMoney(10000));
+        Player player = new Player(new Name("pobi"), new BettingMoney(10000));
 
         dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
         dealer.receiveCard(new Card(Rank.NINE, Suit.HEART)); // 19
@@ -130,8 +130,8 @@ public class GameResultJudgeTest {
     void 딜러의_총수익은_플레이어_수익의_합에_음수를_취한_값이다() {
         Dealer dealer = new Dealer();
 
-        Player winPlayer = new Player("pobi", new BettingMoney(1000));
-        Player losePlayer = new Player("jason", new BettingMoney(2000));
+        Player winPlayer = new Player(new Name("pobi"), new BettingMoney(1000));
+        Player losePlayer = new Player(new Name("jason"), new BettingMoney(2000));
 
         dealer.receiveCard(new Card(Rank.TEN, Suit.SPADE));
         dealer.receiveCard(new Card(Rank.EIGHT, Suit.HEART)); // 18
