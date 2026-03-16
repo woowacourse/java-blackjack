@@ -13,6 +13,10 @@ public class Cards {
         this.cards = new ArrayList<>(cards);
     }
 
+    public boolean isInitialBlackJack() {
+        return cards.size() == 2 && calculateOptimalScore() == BLACKJACK_SCORE;
+    }
+
     public int calculateOptimalScore() {
         int sum = calculateScore();
         for (int i = countAce(); i > 0; i--) {
