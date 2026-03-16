@@ -8,30 +8,17 @@ public class ProfitCalculator {
     private static final double BLACKJACK_PROFIT_RATE = 1.5;
 
     public static double calculatePlayerProfit(Player player, Dealer dealer) {
-        int bettingMoney = player.getBettingMoneyValue();
-        int playerScore = player.getScoreValue();
-        int dealerScore = dealer.getScoreValue();
-
-        if (player.isBlackjack() && dealer.isBlackjack()) {
+        if (isDrawBlackjack(player, dealer)) {
             return 0;
         }
         if (player.isBlackjack()) {
-            return bettingMoney * BLACKJACK_PROFIT_RATE;
+            return player.getBettingMoneyValue() * BLACKJACK_PROFIT_RATE;
         }
-        if (dealer.isBlackjack()) {
-            return -bettingMoney;
+        if (isLose(player, dealer)) {
+            return -player.getBettingMoneyValue();
         }
-        if (player.isBust()) {
-            return -bettingMoney;
-        }
-        if (dealer.isBust()) {
-            return bettingMoney;
-        }
-        if (playerScore > dealerScore) {
-            return bettingMoney;
-        }
-        if (playerScore < dealerScore) {
-            return -bettingMoney;
+        if (isWin(player, dealer)) {
+            return player.getBettingMoneyValue();
         }
         return 0;
     }
@@ -47,5 +34,28 @@ public class ProfitCalculator {
             return String.valueOf((long) profit);
         }
         return String.valueOf(profit);
+    }
+
+    private static boolean isDrawBlackjack(Player player, Dealer dealer) {
+        return player.isBlackjack() && dealer.isBlackjack();
+    }
+
+    private static boolean isLose(Player player, Dealer dealer) {
+        return dealer.isBlackjack()
+                || player.isBust()
+                || isDealerHigher(player, dealer);
+    }
+
+    private static boolean isWin(Player player, Dealer dealer) {
+        return dealer.isBust()
+                || isPlayerHigher(player, dealer);
+    }
+
+    private static boolean isDealerHigher(Player player, Dealer dealer) {
+        return player.getScoreValue() < dealer.getScoreValue() && !dealer.isBust();
+    }
+
+    private static boolean isPlayerHigher(Player player, Dealer dealer) {
+        return player.getScoreValue() > dealer.getScoreValue();
     }
 }
