@@ -21,7 +21,7 @@ public class OutputView {
 
     public void printInitMessage(InitStatusDto initStatusDto) {
         System.out.println();
-        System.out.printf(HEADER_FORMAT, String.join(", ", initStatusDto.names()));
+        System.out.printf(HEADER_FORMAT, String.join(", ", initStatusDto.getNames()));
         System.out.printf(DEALER_STATUS_FORMAT, getHandString(initStatusDto.dealerHandDto()));
 
         for (PlayerHandDto playerHandDto : initStatusDto.playerHandDtos()) {

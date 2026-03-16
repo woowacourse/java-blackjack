@@ -2,11 +2,11 @@ package dto;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import domain.participant.Dealer;
-import domain.participant.Player;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
+import domain.participant.Dealer;
+import domain.participant.Player;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,7 +41,7 @@ class InitStatusDtoTest {
         InitStatusDto initStatusDto = InitStatusDto.of(dealer, players);
 
         // then
-        assertEquals(List.of("봉구스", "시오"), initStatusDto.names());
+        assertEquals(List.of("봉구스", "시오"), initStatusDto.getNames());
         assertEquals(List.of("4하트"), initStatusDto.dealerHandDto().cards());
         List<String> firstCards = initStatusDto.playerHandDtos().getFirst().handDto().cards();
         assertEquals(List.of("A클로버", "K다이아몬드"), firstCards);
