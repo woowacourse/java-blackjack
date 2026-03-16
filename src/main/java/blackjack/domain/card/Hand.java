@@ -17,16 +17,16 @@ public class Hand {
 
     public int calculateScore() {
         int totalScore = cards.stream()
-            .mapToInt(Card::toScore)
-            .sum();
+                .mapToInt(Card::toScore)
+                .sum();
 
         return handleAce(totalScore);
     }
 
     public long countAce() {
         return cards.stream()
-            .filter(Card::isAce)
-            .count();
+                .filter(Card::isAce)
+                .count();
     }
 
     public boolean isBurst() {
@@ -35,8 +35,8 @@ public class Hand {
 
     public List<String> getCardNames() {
         return cards.stream()
-            .map(Card::toString)
-            .toList();
+                .map(Card::toString)
+                .toList();
     }
 
     public boolean isBlackjack() {

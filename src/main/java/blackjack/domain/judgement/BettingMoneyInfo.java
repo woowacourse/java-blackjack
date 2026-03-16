@@ -14,6 +14,4 @@ public class BettingMoneyInfo {
     public BettingMoney findMoneyByName(Nickname nickname) {
         return bettingMoneyInfo.get(nickname);
     }
-
-
 }

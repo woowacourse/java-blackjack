@@ -29,9 +29,9 @@ public enum GameResult {
 
     public static GameResult pick(String name) {
         return all().stream()
-            .filter(gameResult -> Objects.equals(name, gameResult.name))
-            .findFirst()
-            .orElse(DRAW);
+                .filter(gameResult -> Objects.equals(name, gameResult.name))
+                .findFirst()
+                .orElse(DRAW);
     }
 
     public BigDecimal calculateProfit(BettingMoney bettingMoney) {

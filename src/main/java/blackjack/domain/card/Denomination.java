@@ -5,7 +5,6 @@ import java.util.Objects;
 
 public enum Denomination {
 
-
     ACE("A", 11),
     TWO("2", 2),
     THREE("3", 3),
@@ -23,7 +22,6 @@ public enum Denomination {
     private final String symbol;
     private final int score;
 
-
     private Denomination(String symbol, int score) {
         this.symbol = symbol;
         this.score = score;
@@ -35,8 +33,8 @@ public enum Denomination {
 
     public static Denomination pick(final String symbol) {
         return all().stream()
-            .filter(card -> Objects.equals(card.symbol, symbol))
-            .findFirst().orElseThrow(() -> new IllegalArgumentException("올바른 카드가 아닙니다."));
+                .filter(card -> Objects.equals(card.symbol, symbol))
+                .findFirst().orElseThrow(() -> new IllegalArgumentException("올바른 카드가 아닙니다."));
     }
 
     public boolean isTypeOf(Denomination denomination) {

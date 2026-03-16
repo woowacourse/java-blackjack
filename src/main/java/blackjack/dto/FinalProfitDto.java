@@ -43,6 +43,4 @@ public record FinalProfitDto(
 
         return totalPlayerProfit.negate();
     }
-
-
 }

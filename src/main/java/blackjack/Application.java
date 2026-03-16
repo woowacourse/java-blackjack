@@ -11,5 +11,4 @@ public class Application {
         BlackjackController blackjackController = new BlackjackController(shuffleStrategy);
         blackjackController.run();
     }
-
 }

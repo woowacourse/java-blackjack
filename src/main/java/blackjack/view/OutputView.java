@@ -39,7 +39,6 @@ public class OutputView {
         System.out.println(participantHandFormat(participant));
     }
 
-
     public static void printDealerHitMessage() {
         System.out.printf("딜러는 %d이하라 한장의 카드를 더 받았습니다.\n", DEALER_HIT_THRESHOLD);
     }
