@@ -12,4 +12,9 @@ public class Dealer extends User {
     public boolean isHitAvailable() {
         return totalScore() < DEALER_ADD_CARD_STAND;
     }
+
+    @Override
+    public boolean isPlayer() {
+        return false;
+    }
 }

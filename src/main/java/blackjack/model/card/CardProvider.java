@@ -1,7 +1,5 @@
 package blackjack.model.card;
 
-import blackjack.model.user.Dealer;
-import blackjack.model.user.Player;
 import blackjack.model.user.User;
 import blackjack.model.user.Users;
 import java.util.ArrayList;
@@ -33,17 +31,8 @@ public class CardProvider {
     }
 
     public void provideInitCards(Users users) {
-        List<Player> players = users.getPlayers();
-        Dealer dealer = users.getDealer();
-        for (int i = INIT_CARDS_START_IDX; i < INIT_CARDS_END_IDX; i++) {
-            provideOneCardToPlayers(players);
-            provideOneCard(dealer);
-        }
-    }
-
-    private void provideOneCardToPlayers(List<Player> players) {
-        for (Player player : players) {
-            provideOneCard(player);
+        for (User user : users.getUsers()) {
+            provideTwoCard(user);
         }
     }
 
@@ -52,5 +41,11 @@ public class CardProvider {
             initDeck();
         }
         user.addCard(deck.poll());
+    }
+
+    private void provideTwoCard(User user) {
+        for (int i = INIT_CARDS_START_IDX; i < INIT_CARDS_END_IDX; i++) {
+            provideOneCard(user);
+        }
     }
 }

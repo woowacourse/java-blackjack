@@ -8,7 +8,7 @@ import blackjack.model.card.CardProvider;
 import blackjack.model.card.HitCommand;
 import blackjack.model.gameresult.ProfitResult;
 import blackjack.model.user.Dealer;
-import blackjack.model.user.Player;
+import blackjack.model.user.User;
 import blackjack.model.user.Users;
 import java.util.HashMap;
 import java.util.List;
@@ -30,14 +30,20 @@ public class BlackjackGame {
         return new Users(input);
     }
 
-    public BetAmounts createBetAmount(Function<Player, String> readBetAmount, Users users) {
-        List<Player> players = users.getPlayers();
-        Map<Player, BetAmount> betAmounts = new HashMap<>();
-        for (Player player : players) {
-            String input = readBetAmount.apply(player);
+    public BetAmounts createBetAmount(Function<User, String> readBetAmount, Users users) {
+        Map<User, BetAmount> betAmounts = new HashMap<>();
+        for (User user : users.getUsers()) {
+            String input = readBetAmount.apply(user);
             BetAmount betAmount = new BetAmount(input);
-            betAmounts.put(player, betAmount);
+            betAmounts.put(user, betAmount);
         }
+//        List<Player> players = users.getPlayers();
+//        Map<Player, BetAmount> betAmounts = new HashMap<>();
+//        for (Player player : players) {
+//            String input = readBetAmount.apply(player);
+//            BetAmount betAmount = new BetAmount(input);
+//            betAmounts.put(player, betAmount);
+//        }
         return new BetAmounts(betAmounts);
     }
 
@@ -45,16 +51,16 @@ public class BlackjackGame {
         cardProvider.provideInitCards(users);
     }
 
-    public void hitPlayers(List<Player> players, Function<Player, String> readHitCommand,
-                           Consumer<Player> printPlayerCards, Runnable printCantHit) {
-        for (Player player : players) {
-            hitPlayer(player, readHitCommand, printPlayerCards, printCantHit);
+    public void hitPlayers(List<User> users, Function<User, String> readHitCommand,
+                           Consumer<User> printPlayerCards, Runnable printCantHit) {
+        for (User user : users) {
+            hitPlayer(user, readHitCommand, printPlayerCards, printCantHit);
         }
     }
 
-    public void hitDealer(Dealer dealer, Runnable printDealerHit) {
-        while (dealer.isHitAvailable()) {
-            cardProvider.provideOneCard(dealer);
+    public void hitDealer(User user, Runnable printDealerHit) {
+        while (user.isHitAvailable()) {
+            cardProvider.provideOneCard(user);
             printDealerHit.run();
         }
     }
@@ -67,26 +73,26 @@ public class BlackjackGame {
         closeScanner.run();
     }
 
-    private void hitPlayer(Player player, Function<Player, String> readHitCommand, Consumer<Player> printPlayerCards,
+    private void hitPlayer(User user, Function<User, String> readHitCommand, Consumer<User> printPlayerCards,
                            Runnable printCantHit) {
-        if (!isHitAvailable(player, printCantHit)) {
+        if (!isHitAvailable(user, printCantHit)) {
             return;
         }
 
-        while (retryUntilSuccess(() -> checkY(player, readHitCommand))) {
-            cardProvider.provideOneCard(player);
-            printPlayerCards.accept(player);
+        while (retryUntilSuccess(() -> checkY(user, readHitCommand))) {
+            cardProvider.provideOneCard(user);
+            printPlayerCards.accept(user);
         }
     }
 
-    private boolean checkY(Player player, Function<Player, String> readHitCommand) {
-        String input = readHitCommand.apply(player);
+    private boolean checkY(User user, Function<User, String> readHitCommand) {
+        String input = readHitCommand.apply(user);
         HitCommand hitCommand = new HitCommand(input);
         return hitCommand.isY();
     }
 
-    private boolean isHitAvailable(Player player, Runnable printCantHit) {
-        if (player.isHitAvailable()) {
+    private boolean isHitAvailable(User user, Runnable printCantHit) {
+        if (user.isHitAvailable()) {
             return true;
         }
         printCantHit.run();

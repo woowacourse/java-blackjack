@@ -17,47 +17,52 @@ public class Player extends User {
         return totalScore() < BLACKJACK_SCORE;
     }
 
-    public GameResult judge(Dealer dealer) {
-        if (this.isBust() || dealer.isBust()) {
-            return judgeByBust();
-        }
-
-        if (this.isBlackjack() || dealer.isBlackjack()) {
-            return judgeByBlackjack(dealer);
-        }
-
-        return judgeByScore(dealer);
+    @Override
+    public boolean isPlayer() {
+        return true;
     }
 
-    private GameResult judgeByBust() {
-        if (this.isBust()) {
-            return LOSE;
-        }
-
-        return WIN;
-    }
-
-    private GameResult judgeByBlackjack(Dealer dealer) {
-        if (this.isBlackjack() && dealer.isBlackjack()) {
-            return DRAW;
-        }
-
-        if (this.isBlackjack()) {
-            return BLACKJACK_WIN;
-        }
-
-        return LOSE;
-    }
-
-    private GameResult judgeByScore(Dealer dealer) {
-        if (this.totalScore() > dealer.totalScore()) {
-            return WIN;
-        }
-
-        if (this.totalScore() < dealer.totalScore()) {
-            return LOSE;
-        }
-
-        return DRAW;
-    }
+//    public GameResult judge(Dealer dealer) {
+//        if (this.isBust() || dealer.isBust()) {
+//            return judgeByBust();
+//        }
+//
+//        if (this.isBlackjack() || dealer.isBlackjack()) {
+//            return judgeByBlackjack(dealer);
+//        }
+//
+//        return judgeByScore(dealer);
+//    }
+//
+//    private GameResult judgeByBust() {
+//        if (this.isBust()) {
+//            return LOSE;
+//        }
+//
+//        return WIN;
+//    }
+//
+//    private GameResult judgeByBlackjack(Dealer dealer) {
+//        if (this.isBlackjack() && dealer.isBlackjack()) {
+//            return DRAW;
+//        }
+//
+//        if (this.isBlackjack()) {
+//            return BLACKJACK_WIN;
+//        }
+//
+//        return LOSE;
+//    }
+//
+//    private GameResult judgeByScore(Dealer dealer) {
+//        if (this.totalScore() > dealer.totalScore()) {
+//            return WIN;
+//        }
+//
+//        if (this.totalScore() < dealer.totalScore()) {
+//            return LOSE;
+//        }
+//
+//        return DRAW;
+//    }
 }
