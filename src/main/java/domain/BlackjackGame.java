@@ -4,6 +4,7 @@ import domain.card.Card;
 import domain.card.Deck;
 import domain.hand.Hand;
 import domain.participant.*;
+import dto.PlayerCreationInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,9 +70,9 @@ public class BlackjackGame {
 
     private static Player createPlayer(PlayerCreationInfo playerCreationInfo, Deck deck) {
         return Player.of(
-                playerCreationInfo.getName(),
+                playerCreationInfo.name(),
                 new Hand(initCards(deck)),
-                playerCreationInfo.getBettingMoney()
+                playerCreationInfo.bettingMoney()
         );
     }
 

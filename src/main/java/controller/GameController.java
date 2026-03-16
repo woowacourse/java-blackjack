@@ -1,17 +1,9 @@
 package controller;
 
 import domain.BlackjackGame;
-import domain.participant.BettingMoney;
-import domain.participant.Dealer;
-import domain.participant.Name;
-import domain.participant.Player;
-import domain.participant.PlayerCreationInfo;
-import domain.participant.Players;
+import domain.participant.*;
 import domain.ProfitCalculator;
-import dto.PlayerDto;
-import dto.PlayerProfitDto;
-import dto.PlayersDto;
-import dto.ResultDto;
+import dto.*;
 import view.InputView;
 import view.OutputView;
 
@@ -61,7 +53,10 @@ public class GameController {
         List<PlayerCreationInfo> playerCreationInfos = new ArrayList<>();
         for (String name : names) {
             Integer money = InputView.readBettingMoney(name);
-            playerCreationInfos.add(PlayerCreationInfo.of(Name.from(name), BettingMoney.of(money)));
+            playerCreationInfos.add(new PlayerCreationInfo(
+                    Name.from(name),
+                    BettingMoney.of(money)
+            ));
         }
         return playerCreationInfos;
     }

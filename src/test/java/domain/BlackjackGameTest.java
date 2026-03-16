@@ -8,6 +8,7 @@ import domain.card.CardNumber;
 import domain.card.CardShape;
 import domain.card.Deck;
 import domain.participant.*;
+import dto.PlayerCreationInfo;
 import org.junit.jupiter.api.Test;
 
 class BlackjackGameTest {
@@ -15,8 +16,8 @@ class BlackjackGameTest {
     @Test
     void 게임_시작시_딜러와_플레이어에게_카드2장_배분() {
         List<PlayerCreationInfo> playerCreationInfos = List.of(
-                PlayerCreationInfo.of(Name.from("pobi"), BettingMoney.of(1000)),
-                PlayerCreationInfo.of(Name.from("jason"), BettingMoney.of(2000))
+                new PlayerCreationInfo(Name.from("pobi"), BettingMoney.of(1000)),
+                new PlayerCreationInfo(Name.from("jason"), BettingMoney.of(2000))
         );
 
         BlackjackGame blackjackGame = BlackjackGame.start(playerCreationInfos);
@@ -43,7 +44,7 @@ class BlackjackGameTest {
         ));
 
         List<PlayerCreationInfo> playerCreationInfos = List.of(
-                PlayerCreationInfo.of(Name.from("pobi"), BettingMoney.of(1000))
+                new PlayerCreationInfo(Name.from("pobi"), BettingMoney.of(1000))
         );
 
         BlackjackGame blackjackGame = BlackjackGame.start(playerCreationInfos, deck);
@@ -66,7 +67,7 @@ class BlackjackGameTest {
         ));
 
         List<PlayerCreationInfo> playerCreationInfos = List.of(
-                PlayerCreationInfo.of(Name.from("pobi"), BettingMoney.of(1000))
+                new PlayerCreationInfo(Name.from("pobi"), BettingMoney.of(1000))
         );
         BlackjackGame blackjackGame = BlackjackGame.start(playerCreationInfos, deck);
         Player player = blackjackGame.getPlayersValue().getFirst();
@@ -93,7 +94,7 @@ class BlackjackGameTest {
         ));
 
         List<PlayerCreationInfo> playerCreationInfos = List.of(
-                PlayerCreationInfo.of(Name.from("pobi"), BettingMoney.of(1000))
+                new PlayerCreationInfo(Name.from("pobi"), BettingMoney.of(1000))
         );
 
         BlackjackGame blackjackGame = BlackjackGame.start(playerCreationInfos, deck);
@@ -116,7 +117,7 @@ class BlackjackGameTest {
         ));
 
         List<PlayerCreationInfo> playerCreationInfos = List.of(
-                PlayerCreationInfo.of(Name.from("pobi"), BettingMoney.of(1000))
+                new PlayerCreationInfo(Name.from("pobi"), BettingMoney.of(1000))
         );
 
         BlackjackGame blackjackGame = BlackjackGame.start(playerCreationInfos, deck);
