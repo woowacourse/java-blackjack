@@ -1,7 +1,9 @@
-package blackjack.domain;
+package blackjack.domain.deck;
 
+import blackjack.domain.card.Card;
+import blackjack.domain.card.CardPattern;
+import blackjack.domain.card.CardPoint;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Deck {
@@ -9,17 +11,21 @@ public class Deck {
     private final List<Card> deck;
 
     public Deck() {
-        this.deck = createDeck();
+        this(new RandomShuffleStrategy());
     }
 
-    private List<Card> createDeck() {
+    public Deck(ShuffleStrategy shuffleStrategy) {
+        this.deck = createDeck(shuffleStrategy);
+    }
+
+    private List<Card> createDeck(ShuffleStrategy shuffleStrategy) {
         List<Card> deck = new ArrayList<>();
         for (CardPattern cardPattern : CardPattern.values()) {
             for (CardPoint cardPoint : CardPoint.values()) {
                 deck.add(new Card(cardPoint, cardPattern));
             }
         }
-        Collections.shuffle(deck);
+        shuffleStrategy.shuffle(deck);
         return deck;
     }
 

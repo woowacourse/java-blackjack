@@ -1,4 +1,4 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -48,5 +48,5 @@ public class CardPointTest {
         );
 
     }
-    
+
 }
