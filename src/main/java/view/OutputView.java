@@ -1,6 +1,8 @@
 package view;
 
 import domain.card.Card;
+import domain.participant.Player;
+import domain.participant.Players;
 import dto.ParticipantDto;
 import dto.PlayerProfitDto;
 import java.util.List;
@@ -18,15 +20,15 @@ public class OutputView {
         System.out.println("딜러카드: " + CardValueFormatter.from(dealerFirstCard.getCardValue()) + CardSuitFormatter.from(dealerFirstCard.getCardSuit()));
     }
 
-    public void printStartCard(List<ParticipantDto> playerDtos) {
-        for (ParticipantDto participant : playerDtos) {
-            printCurrentHoldCard(participant);
+    public void printStartCard(Players players) {
+        for (Player player : players.getPlayers()) {
+            printCurrentHoldCard(player);
         }
         System.out.println();
     }
 
-    public void printCurrentHoldCard(ParticipantDto dto) {
-        System.out.println(dto.name() + "카드: " + cardsToString(dto.cards()));
+    public void printCurrentHoldCard(Player player) {
+        System.out.println(player.getName() + "카드: " + cardsToString(player.getHand()));
     }
 
     public void printDealerReceiveCard() {

@@ -60,9 +60,8 @@ public class GameController {
         outputView.printStartCardMessage(playerNames);
 
         Card dealerFirstCard = dealer.getHand().getFirst();
-        List<ParticipantDto> participantDtos = getParticipantDtos(players);
         outputView.printDealerStartCard(dealerFirstCard);
-        outputView.printStartCard(participantDtos);
+        outputView.printStartCard(players);
     }
 
     private void receiveMoreCard(Players players, Dealer dealer, Deck deck) {
@@ -103,7 +102,7 @@ public class GameController {
                 break;
             }
             player.addCard(deck.draw());
-            outputView.printCurrentHoldCard(ParticipantDto.of(player.getName(), player));
+            outputView.printCurrentHoldCard(player);
         }
     }
 
