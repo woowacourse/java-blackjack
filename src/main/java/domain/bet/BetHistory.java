@@ -19,15 +19,14 @@ public class BetHistory {
     }
 
     public void bettingMoney(Name playerName, int bettingMoney) {
-        Name foundPlayer = validatePlayer(playerName);
-        betHistory.put(foundPlayer, new Money(bettingMoney));
+        validatePlayer(playerName);
+        betHistory.put(playerName, new Money(bettingMoney));
     }
 
-    private Name validatePlayer(Name playerName) {
-        return betHistory.keySet().stream()
-                .filter(name -> name.equals(playerName))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(PLAYER_NOT_IN_GAME.getMessage()));
+    private void validatePlayer(Name playerName) {
+        if (!betHistory.containsKey(playerName)) {
+            throw new IllegalArgumentException(PLAYER_NOT_IN_GAME.getMessage());
+        }
     }
 
     public Map<Name, Money> getBetHistory() {
