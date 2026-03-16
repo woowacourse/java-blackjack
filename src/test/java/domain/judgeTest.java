@@ -153,7 +153,6 @@ public class judgeTest {
         assertThat(playerStatus).isEqualTo(PlayerStatus.LOSS);
     }
 
-    // 플레이어 == 딜러
     @Test
     void 플레이어와_딜러의_합이_동일한_경우_테스트() {
         // given
@@ -242,5 +241,27 @@ public class judgeTest {
 
         // then
         assertThat(playerStatus).isEqualTo(PlayerStatus.WIN);
+    }
+
+    @Test
+    void 플레이어가_일반생존이고_딜러가_블랙잭일_때_패배_테스트() {
+        // given
+        List<Card> cards1 = List.of(
+                Card.of(CardRank.THREE, CardShape.HEART),
+                Card.of(CardRank.FOUR, CardShape.CLUB)
+        );
+        Deck playerDeck = Deck.of(cards1);
+
+        List<Card> cards2 = List.of(
+                Card.of(CardRank.ACE, CardShape.DIAMOND),
+                Card.of(CardRank.TEN, CardShape.CLUB)
+        );
+        Deck dealerDeck = Deck.of(cards2);
+
+        // when
+        PlayerStatus playerStatus = judgementService.judgementWinning(playerDeck, dealerDeck);
+
+        // then
+        assertThat(playerStatus).isEqualTo(PlayerStatus.LOSS);
     }
 }

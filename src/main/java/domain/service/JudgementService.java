@@ -31,7 +31,7 @@ public class JudgementService {
     }
 
     public PlayerStatus judgementWinning(Deck playerDeck, Deck dealerDeck) {
-        if (playerDeck.isBurst()) {
+        if (playerDeck.isBurst() || (playerDeck.isAlive() && dealerDeck.isBlackJack())) {
             return PlayerStatus.LOSS;
         }
         if (playerDeck.isBlackJack() && dealerDeck.isBlackJack()) {
