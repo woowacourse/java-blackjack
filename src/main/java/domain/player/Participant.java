@@ -1,6 +1,6 @@
 package domain.player;
 
-import static util.Constants.BLACK_JACK_NUMBER;
+import static util.Constants.BLACKJACK_NUMBER;
 
 import domain.card.Card;
 import domain.player.attribute.Hand;
@@ -30,8 +30,8 @@ public class Participant {
         return hand.isBust();
     }
 
-    public boolean isBlackJack() {
-        return hand.getCardsSize() == 2 && getTotalScore() == BLACK_JACK_NUMBER;
+    public boolean isBlackjack() {
+        return hand.getCardsSize() == 2 && getTotalScore() == BLACKJACK_NUMBER;
     }
 
     public String getName() {

@@ -18,7 +18,7 @@ public class GamblersGameResult {
                 .stream()
                 .collect(Collectors.toMap(Gambler::getName, gambler -> {
                     GameResult gameResult = GameResult.determine(dealerTotalScore, gambler.getTotalScore());
-                    if (gameResult == GameResult.WIN && gambler.isBlackJack()) {
+                    if (gameResult == GameResult.WIN && gambler.isBlackjack()) {
                         return gambler.getAmount() * 3 / 2;
                     }
                     if(gameResult == GameResult.WIN) return gambler.getAmount();
