@@ -19,6 +19,5 @@
 - [x] **7. `DeckTest`를 exception을 종료 조건으로 설정하지 말고, 직접 사이즈를 테스트하는 형식으로 수정.**
 - [x] **8. `Participant`의 checkBust 함수 간소화**
 - [x] **9. `Participants`의 saverUsers를 bets만 받아 객체 생성하도록 수정.**
-- [ ] **10. 뷰가 도메인 객체를 만들고 있는 부분 수정.**
-  - [ ] inputView는 이름을 파싱하고 List<String>를 반환하고, Application에서 객체 생성
-  - [ ] `Names`라는 일급 컬렉션을 하나 만들어서 객체 생성과 검증 단계를 한번에 진행. 
+- [x] **10. 뷰가 도메인 객체를 만들고 있는 부분 수정.**
+  - [x] inputView는 이름을 파싱하고 List<String>를 반환하고, Application에서 객체 생성

@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Stream;
 import vo.Bet;
-import vo.Name;
 
 public class InputView {
     private static final Integer MAX_PLAYER_COUNT = 16;
@@ -15,9 +14,8 @@ public class InputView {
         this.scanner = new Scanner(System.in);
     }
 
-    public List<Name> readParticipantsName() {
-        return parseName(scanner.nextLine())
-                .stream().map(Name::new).toList();
+    public List<String> readParticipantsName() {
+        return parseName(scanner.nextLine());
     }
 
     public Bet readBetAmount() {

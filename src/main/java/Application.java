@@ -40,14 +40,17 @@ public class Application {
     }
 
     public void prepareParticipants() {
-        List<Entry<Name, Bet>> bets = readBetAmount(readParticipants());
+        List<Name> names = readParticipants();
+        List<Entry<Name, Bet>> bets = readBetAmount(names);
         blackjackGame.prepare(bets);
     }
 
     private List<Name> readParticipants() {
         return retryUntilSuccess(() -> {
             outputView.printMessage(Message.INPUT_PARTICIPANTS_MESSAGE);
-            return inputView.readParticipantsName();
+            return inputView.readParticipantsName().stream()
+                    .map(Name::new)
+                    .toList();
         });
     }
 

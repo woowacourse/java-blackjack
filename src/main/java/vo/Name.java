@@ -1,6 +1,5 @@
 package vo;
 
-import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class Name {
@@ -17,7 +16,7 @@ public class Name {
     public String getName() {
         return name;
     }
-    
+
     private void validateName(String name) {
         validateParticipantEmptyInput(name);
         validateNonLiteralInput(name);
