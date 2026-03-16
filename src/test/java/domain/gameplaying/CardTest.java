@@ -2,7 +2,7 @@ package domain.gameplaying;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import dto.CardInfo;
+import domain.CardInfo;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;

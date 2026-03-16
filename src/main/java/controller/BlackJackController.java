@@ -1,8 +1,7 @@
 package controller;
 
 import dto.request.BettingMoneyRequest;
-import dto.response.AllPlayerWinningInfoResponse;
-import dto.response.DealerWinningStatisticsResponse;
+import dto.response.PayoutResponse;
 import dto.response.PlayedGameResultResponse;
 import dto.response.PlayerGameResultsResponse;
 import dto.request.PlayerNamesRequest;
@@ -32,7 +31,6 @@ public class BlackJackController {
 
     private void setupPhase() {
         PlayerNamesRequest request = InputView.readPlayers();
-
         setupGameTable(request.names());
         OutputView.printTaskDivider();
 
@@ -114,10 +112,8 @@ public class BlackJackController {
     private void dealerGamePhase() {
         if (queryService.isDealerPlayable()) {
             runDealerGameLoop();
-            commandService.recordDealerGameResult();
             OutputView.printTaskDivider();
         }
-        commandService.recordDealerGameResult();
     }
 
     private void runDealerGameLoop() {
@@ -139,8 +135,7 @@ public class BlackJackController {
 
         OutputView.printTaskDivider();
 
-        displayDealerWinningStatistics();
-        displayPlayerWinningConditions();
+        displayPayoutResults();
     }
 
     private void displayDealersResult() {
@@ -153,14 +148,10 @@ public class BlackJackController {
         OutputView.playerResults(playerGameResultsResponse);
     }
 
-    private void displayDealerWinningStatistics() {
-        OutputView.winningConditionsHeader();
-        DealerWinningStatisticsResponse response = queryService.dealerWinningStatistics();
-        OutputView.dealerWinningStatistics(response);
-    }
+    private void displayPayoutResults() {
+        OutputView.resultHeader();
+        List<PayoutResponse> responses = queryService.allPayouts();
 
-    private void displayPlayerWinningConditions() {
-        AllPlayerWinningInfoResponse response = queryService.playerWinningInfos();
-        OutputView.playerWinningConditions(response);
+        OutputView.allPayouts(responses);
     }
 }

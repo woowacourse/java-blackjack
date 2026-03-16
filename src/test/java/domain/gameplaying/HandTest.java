@@ -4,7 +4,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 import domain.gameplaying.strategy.InfiniteDeck;
-import dto.CardInfo;
+import domain.CardInfo;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;

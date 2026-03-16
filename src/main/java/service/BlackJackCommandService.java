@@ -1,7 +1,7 @@
 package service;
 
-import domain.common.Money;
-import dto.PlayedGameResult;
+import domain.Money;
+import domain.PlayedGameResult;
 import domain.gameplaying.Participants;
 import domain.result.ScoreBoard;
 import java.util.List;
@@ -41,10 +41,5 @@ public class BlackJackCommandService {
 
     public void dealerDrawCard() {
         participants.dealerDrawCard();
-    }
-
-    public void recordDealerGameResult() {
-        PlayedGameResult dealerResult = participants.dealerResult();
-        scoreBoard.recordDealerResult(dealerResult);
     }
 }

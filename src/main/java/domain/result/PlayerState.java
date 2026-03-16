@@ -1,9 +1,9 @@
 package domain.result;
 
-import domain.common.Money;
-import dto.PlayedGameResult;
+import domain.Money;
+import domain.PlayedGameResult;
 
-public class PlayerState {
+class PlayerState {
 
     private final Money bettingMoney;
     private final PlayedGameResult playedGameResult;
@@ -19,15 +19,30 @@ public class PlayerState {
     }
 
     static PlayerState onlyBet(Money bettingMoney) {
-        System.out.println(bettingMoney.amount());
         return new PlayerState(bettingMoney);
     }
 
-    public PlayerState updatePlayedGameResult(PlayedGameResult playedGameResult) {
+    PlayerState updatePlayedGameResult(PlayedGameResult playedGameResult) {
         return new PlayerState(this.bettingMoney, playedGameResult);
     }
 
-    public PlayedGameResult playedGameResult() {
+    Money bettingMoney() {
+        return bettingMoney;
+    }
+
+    PlayedGameResult playedGameResult() {
         return playedGameResult;
+    }
+
+    boolean isBusted() {
+        return playedGameResult.isBusted();
+    }
+
+    boolean isBlackJack() {
+        return playedGameResult.isBlackJack();
+    }
+
+    int scoreSum() {
+        return playedGameResult.scoreSum();
     }
 }

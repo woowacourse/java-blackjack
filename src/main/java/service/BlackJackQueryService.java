@@ -1,18 +1,17 @@
 package service;
 
-import dto.PlayedGameResult;
+import domain.ProfitInfo;
+import domain.PlayedGameResult;
 import domain.gameplaying.Participants;
-import domain.result.DealerWinningScore;
-import domain.result.PlayerWinningInfo;
 import domain.result.ScoreBoard;
+import dto.response.PayoutResponse;
 import dto.response.PlayerNamesResponse;
-import dto.response.AllPlayerWinningInfoResponse;
 import dto.response.AllPlayersNameAndCardsResponse;
-import dto.response.DealerWinningStatisticsResponse;
 import dto.response.NameAndCardsResponse;
 import dto.response.NameResponse;
 import dto.response.PlayedGameResultResponse;
 import dto.response.PlayerGameResultsResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BlackJackQueryService {
@@ -73,17 +72,30 @@ public class BlackJackQueryService {
         return PlayerGameResultsResponse.from(playerGameResults);
     }
 
-    public DealerWinningStatisticsResponse dealerWinningStatistics() {
-        DealerWinningScore winningStatistics = scoreBoard.dealerWinningScore();
-        return new DealerWinningStatisticsResponse(
-                winningStatistics.winCount(),
-                winningStatistics.drawCount(),
-                winningStatistics.loseCount()
-        );
+    public List<PayoutResponse> allPayouts() {
+        List<PayoutResponse> playedGameResults = new ArrayList<>();
+
+        playedGameResults.add(this.dealerPayout());
+        playedGameResults.addAll(playerPayouts());
+
+        return playedGameResults;
     }
 
-    public AllPlayerWinningInfoResponse playerWinningInfos() {
-        List<PlayerWinningInfo> playerWinningInfos = scoreBoard.playerWinningInfos();
-        return AllPlayerWinningInfoResponse.of(playerWinningInfos);
+    private PayoutResponse dealerPayout() {
+        PlayedGameResult dealerResult = participants.dealerResult();
+        ProfitInfo dealerProfitInfo = scoreBoard.profitInfoByDealer(dealerResult);
+        return payoutResponseFrom(dealerProfitInfo);
+    }
+
+    private List<PayoutResponse> playerPayouts() {
+        PlayedGameResult dealerResult = participants.dealerResult();
+        return scoreBoard.evaluatePlayerProfitInfosWith(dealerResult)
+                .stream()
+                .map(this::payoutResponseFrom)
+                .toList();
+    }
+
+    private PayoutResponse payoutResponseFrom(ProfitInfo info) {
+        return PayoutResponse.from(info.name(), info.money());
     }
 }

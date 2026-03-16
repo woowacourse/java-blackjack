@@ -1,6 +1,6 @@
 package domain.gameplaying;
 
-import dto.CardInfo;
+import domain.CardInfo;
 
 public record Card(CardRank rank, CardMark cardMark) {
 

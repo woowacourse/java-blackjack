@@ -1,23 +1,17 @@
 package domain.result;
 
-import domain.common.BlackJackRule;
-import domain.common.Money;
-import dto.PlayedGameResult;
+import domain.Money;
+import domain.ProfitInfo;
+import domain.PlayedGameResult;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class ScoreBoard {
 
-    private static final int BLACK_JACK_NUMBER = 21;
-
-    private final DealerGameResult dealerGameState;
     private final Map<String, PlayerState> playerGameStates;
 
     public ScoreBoard() {
-        this.dealerGameState = new DealerGameResult();
         this.playerGameStates = new LinkedHashMap<>();
     }
 
@@ -32,10 +26,6 @@ public class ScoreBoard {
         );
     }
 
-    public void recordDealerResult(PlayedGameResult playedGameResult) {
-        dealerGameState.record(playedGameResult);
-    }
-
     public List<PlayedGameResult> playerGameResults() {
         return playerGameStates.values()
                 .stream()
@@ -43,79 +33,84 @@ public class ScoreBoard {
                 .toList();
     }
 
-    public PlayedGameResult dealerGameResult() {
-        return dealerGameState.dealerResult();
+    public ProfitInfo profitInfoByDealer(PlayedGameResult dealerGameResult) {
+        return new ProfitInfo(dealerGameResult.name(), evaluateDealerProfit(dealerGameResult));
     }
 
-    public DealerWinningScore dealerWinningScore() {
-        Map<GameOutcome, Long> statistics = statisticsOfWinningConditions();
-
-        return DealerWinningScore.of(
-                statistics.getOrDefault(GameOutcome.WIN, 0L),
-                statistics.getOrDefault(GameOutcome.DRAW, 0L),
-                statistics.getOrDefault(GameOutcome.LOSE, 0L)
-        );
-    }
-
-    private Map<GameOutcome, Long> statisticsOfWinningConditions() {
-        return playerGameResults().stream()
-                .map(this::determineDealerWinningCondition)
-                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
-    }
-
-    private GameOutcome determineDealerWinningCondition(PlayedGameResult playerResult) {
-        if (determinePlayerWinDrawLose(playerResult) == GameOutcome.WIN) {
-            return GameOutcome.LOSE;
-        }
-
-        if (determinePlayerWinDrawLose(playerResult) == GameOutcome.LOSE) {
-            return GameOutcome.WIN;
-        }
-
-        return GameOutcome.DRAW;
-    }
-
-    public List<PlayerWinningInfo> playerWinningInfos() {
-        return playerGameResults().stream()
-                .map(this::playerWinningInfo)
+    public List<ProfitInfo> evaluatePlayerProfitInfosWith(PlayedGameResult dealerGameResult) {
+        return playerGameStates.keySet().stream()
+                .map(playerName -> profitInfo(playerName, dealerGameResult))
                 .toList();
     }
 
-    private PlayerWinningInfo playerWinningInfo(PlayedGameResult playerResult) {
-        return new PlayerWinningInfo(playerResult.name(), determinePlayerWinDrawLose(playerResult));
+    private List<Money> evaluatePlayerProfits(PlayedGameResult dealerGameResult) {
+        return playerGameStates.values()
+                .stream()
+                .map(playerState -> evaluatePlayerProfit(playerState, dealerGameResult))
+                .toList();
     }
 
-    private GameOutcome determinePlayerWinDrawLose(PlayedGameResult playedGameResult) {
-        if (isPlayerBusted(playedGameResult)) {
-            return GameOutcome.LOSE;
-        }
-
-        return determinePlayerWinningConditionIfPlayerNotBusted(playedGameResult);
+    private ProfitInfo profitInfo(String name, PlayedGameResult dealerGameResult) {
+        return new ProfitInfo(name, evaluatePlayerProfit(playerGameStates.get(name), dealerGameResult));
     }
 
-    private GameOutcome determinePlayerWinningConditionIfPlayerNotBusted(PlayedGameResult playedGameResult) {
-        int dealerScore = dealerGameResult().scoreSum();
-
-        if (dealerScore > BlackJackRule.BUST_NUMBER.value()) {
-            return GameOutcome.WIN;
-        }
-
-        return determinePlayerWinDrawLoseIfBothNotBusted(playedGameResult, dealerScore);
+    private Money evaluatePlayerProfit(PlayerState playerState, PlayedGameResult dealerGameResult) {
+        return determinePlayerGameOutcome(playerState, dealerGameResult).calculateProfit(playerState.bettingMoney());
     }
 
-    private boolean isPlayerBusted(PlayedGameResult playedGameResult) {
-        return playedGameResult.scoreSum() > BlackJackRule.BUST_NUMBER.value();
+    private Money evaluateDealerProfit(PlayedGameResult dealerGameResult) {
+        List<Money> playerPayouts = evaluatePlayerProfits(dealerGameResult);
+
+        long lossSum = playerPayouts.stream().mapToLong(Money::amount).sum();
+        return Money.of(Math.negateExact(lossSum));
     }
 
-    private GameOutcome determinePlayerWinDrawLoseIfBothNotBusted(PlayedGameResult playedGameResult, int dealerScore) {
-        if (dealerScore > playedGameResult.scoreSum()) {
-            return GameOutcome.LOSE;
+    private PlayerGameOutcome determinePlayerGameOutcome(PlayerState playerState, PlayedGameResult dealerGameResult) {
+        if (playerState.isBusted()) {
+            return PlayerGameOutcome.LOSE;
         }
 
-        if (dealerScore == playedGameResult.scoreSum()) {
-            return GameOutcome.DRAW;
+        return determinePlayerGameOutcomeIfPlayerNotBusted(playerState, dealerGameResult);
+    }
+
+    private PlayerGameOutcome determinePlayerGameOutcomeIfPlayerNotBusted(PlayerState playerState,
+                                                                          PlayedGameResult dealerGameResult) {
+        if (playerState.isBlackJack()) {
+            return determinePlayerGameOutcomeIfPlayerIsBlackJack(dealerGameResult);
         }
 
-        return GameOutcome.WIN;
+        if (dealerGameResult.isBusted()) {
+            return PlayerGameOutcome.WIN;
+        }
+
+        return determinePlayerGameOutcomeIfBothNotBusted(playerState, dealerGameResult);
+    }
+
+    private PlayerGameOutcome determinePlayerGameOutcomeIfPlayerIsBlackJack(PlayedGameResult dealerGameResult) {
+        if (dealerGameResult.isBlackJack()) {
+            return PlayerGameOutcome.DRAW;
+        }
+        return PlayerGameOutcome.BLACK_JACK_WIN;
+    }
+
+    private PlayerGameOutcome determinePlayerGameOutcomeIfBothNotBusted(PlayerState playerState,
+                                                                        PlayedGameResult dealerGameResult) {
+        int playerScoreSum = playerState.scoreSum();
+        int dealerScoreSum = dealerGameResult.scoreSum();
+
+        return determinePlayerGameOutcomeIfBothNotBustedCompareWith(dealerScoreSum, playerScoreSum);
+    }
+
+    private PlayerGameOutcome determinePlayerGameOutcomeIfBothNotBustedCompareWith(int dealerScoreSum,
+                                                                                   int playerScoreSum) {
+        if (dealerScoreSum > playerScoreSum) {
+            return PlayerGameOutcome.LOSE;
+        }
+
+        if (dealerScoreSum == playerScoreSum) {
+            return PlayerGameOutcome.DRAW;
+        }
+
+        return PlayerGameOutcome.WIN;
     }
 }

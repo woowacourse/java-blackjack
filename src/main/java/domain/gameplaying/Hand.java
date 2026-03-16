@@ -1,11 +1,13 @@
 package domain.gameplaying;
 
-import domain.common.BlackJackRule;
-import dto.CardInfo;
+import domain.CardInfo;
 import java.util.ArrayList;
 import java.util.List;
 
 class Hand {
+
+    private static final int BUST_THRESHOLD = 21;
+    private static final int ACE_WEIGHT = 10;
 
     private final BlackJackDeck deck;
     private final List<Card> cards;
@@ -29,22 +31,18 @@ class Hand {
                 .toList();
     }
 
-    List<Card> cards() {
-        return List.copyOf(cards);
-    }
-
     boolean isBusted() {
         int score = rawScoreSum();
         if (aceCount() > 0) {
-            score -= aceCount() * BlackJackRule.ACE_WEIGHT.value();
+            score -= aceCount() * ACE_WEIGHT;
         }
-        return score > BlackJackRule.BUST_NUMBER.value();
+        return score > BUST_THRESHOLD;
     }
 
     int scoreSum() {
         int total = rawScoreSum();
         if (isExceededBustNumber(total)) {
-            total -= aceCount() * BlackJackRule.ACE_WEIGHT.value();
+            total -= aceCount() * ACE_WEIGHT;
         }
         return total;
     }
@@ -62,6 +60,6 @@ class Hand {
     }
 
     private boolean isExceededBustNumber(int total) {
-        return total > BlackJackRule.BUST_NUMBER.value();
+        return total > BUST_THRESHOLD;
     }
 }

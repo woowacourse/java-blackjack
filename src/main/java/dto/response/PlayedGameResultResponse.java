@@ -1,7 +1,7 @@
 package dto.response;
 
-import dto.CardInfo;
-import dto.PlayedGameResult;
+import domain.CardInfo;
+import domain.PlayedGameResult;
 import java.util.List;
 
 public record PlayedGameResultResponse(NameAndCardInfos infos, int scoreSum) {

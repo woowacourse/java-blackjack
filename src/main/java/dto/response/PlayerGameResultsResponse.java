@@ -1,6 +1,6 @@
 package dto.response;
 
-import dto.PlayedGameResult;
+import domain.PlayedGameResult;
 import java.util.List;
 
 public record PlayerGameResultsResponse(List<PlayedGameResultResponse> results) {
