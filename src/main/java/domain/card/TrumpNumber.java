@@ -26,11 +26,15 @@ public enum TrumpNumber {
     }
 
     public int getValue() {
-        return value.getFirst();
+        return value.stream().mapToInt(Integer::intValue)
+                .min()
+                .orElseThrow();
     }
 
     public int getUpgradeValue() {
-        return value.getLast();
+        return value.stream().mapToInt(Integer::intValue)
+                .max()
+                .orElseThrow();
     }
 
     @Override
