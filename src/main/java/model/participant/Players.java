@@ -8,16 +8,16 @@ import dto.status.DealerStatus;
 import dto.status.PlayerName;
 import dto.status.PlayerStatus;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import model.card.Card;
 import model.result.DealerProfit;
 import model.result.PlayerProfits;
 import model.result.ProfitCalculator;
 
 public class Players {
-    private final Map<String, Player> players = new ConcurrentHashMap<>();
+    private final Map<String, Player> players = new LinkedHashMap<>();
     private final Map<String, Integer> playerBet = new HashMap<>();
 
     public void addPlayer(PlayerName playerName) {
