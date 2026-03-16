@@ -1,7 +1,6 @@
 package domain.participant;
 
-import static exception.ErrorMessage.DUPLICATE_DEALER_NAME;
-import static exception.ErrorMessage.DUPLICATE_PLAYER_NAME;
+import static domain.participant.Dealer.DEALER_NAME;
 import static exception.ErrorMessage.PLAYER_COUNT_OUT_OF_RANGE;
 
 import java.util.ArrayList;
@@ -13,6 +12,9 @@ public class Participants {
 
     public static final int MINIMUM_BOUND = 1;
     public static final int MAXIMUM_BOUND = 5;
+
+    private static final String DUPLICATE_DEALER_NAME = "딜러 이름 - " + DEALER_NAME + "과 중복할 수 없습니다.";
+    private static final String DUPLICATE_PLAYER_NAME = "플레이어 이름은 중복될 수 없습니다.";
 
     private final Dealer dealer;
     private final List<Player> players;
@@ -45,8 +47,8 @@ public class Participants {
 
     private void validateSameAsDealerName(final List<Player> players) {
         for (final Player player : players) {
-            if (Dealer.DEALER_NAME.equals(player.getName())) {
-                throw new IllegalArgumentException(DUPLICATE_DEALER_NAME.getMessage());
+            if (DEALER_NAME.equals(player.getName())) {
+                throw new IllegalArgumentException(DUPLICATE_DEALER_NAME);
             }
         }
     }
@@ -59,7 +61,7 @@ public class Participants {
         }
 
         if (names.size() != players.size()) {
-            throw new IllegalArgumentException(DUPLICATE_PLAYER_NAME.getMessage());
+            throw new IllegalArgumentException(DUPLICATE_PLAYER_NAME);
         }
     }
 }
