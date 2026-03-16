@@ -33,10 +33,20 @@ public class GameTest {
 
     @Test
     void judge_total_winner_result() {
-        Player pobi = createPlayer("pobi", "2:하트", "8:스페이드", "A:클로버");
-        Player jason = createPlayer("jason", "7:클로버", "K:스페이드");
-        Player brown = createPlayer("brown", "10:하트", "10:클로버");
-        Dealer dealer = createDealer("3:다이아몬드", "9:클로버", "8:다이아몬드");
+        Player pobi = createPlayer("pobi",
+                new Card(Rank.TWO, Shape.HEART),
+                new Card(Rank.EIGHT, Shape.SPADE),
+                new Card(Rank.ACE, Shape.CLOVER));
+        Player jason = createPlayer("jason",
+                new Card(Rank.SEVEN, Shape.CLOVER),
+                new Card(Rank.KING, Shape.SPADE));
+        Player brown = createPlayer("brown",
+                new Card(Rank.TEN, Shape.HEART),
+                new Card(Rank.TEN, Shape.CLOVER));
+
+        Dealer dealer = createDealer(new Card(Rank.THREE, Shape.DIAMOND),
+                new Card(Rank.NINE, Shape.CLOVER),
+                new Card(Rank.EIGHT, Shape.DIAMOND));
 
         GameResult expected = new GameResult(
                 Map.of(
@@ -54,26 +64,18 @@ public class GameTest {
         assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
     }
 
-    private Player createPlayer(String name, String... cards) {
+    private Player createPlayer(String name, Card... cards) {
         Player player = new Player(name, new Money(10000));
-        for (String card : cards) {
-            String[] parts = card.split(":");
-            Rank rank = Rank.from(parts[0]);
-            Shape shape = Shape.from(parts[1]);
-
-            player.receiveOneCard(new Card(rank, shape));
+        for (Card card : cards) {
+            player.receiveOneCard(card);
         }
         return player;
     }
 
-    private Dealer createDealer(String... cards) {
+    private Dealer createDealer(Card... cards) {
         Dealer dealer = new Dealer();
-        for (String card : cards) {
-            String[] parts = card.split(":");
-            Rank rank = Rank.from(parts[0]);
-            Shape shape = Shape.from(parts[1]);
-
-            dealer.receiveOneCard(new Card(rank, shape));
+        for (Card card : cards) {
+            dealer.receiveOneCard(card);
         }
         return dealer;
     }
