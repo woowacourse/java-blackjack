@@ -7,20 +7,22 @@ import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 
 public enum GameResult {
-    BLACKJACK(1.5),
-    WIN(1.0),
-    DRAW(0.0),
-    LOSE(-1.0),
+    BLACKJACK(3, 2),
+    WIN(1, 1),
+    DRAW(0, 1),
+    LOSE(-1, 1),
     ;
 
-    private final double profitMultiplier;
+    private final int numerator;
+    private final int denominator;
 
-    GameResult(final double profitMultiplier) {
-        this.profitMultiplier = profitMultiplier;
+    GameResult(final int numerator, final int denominator) {
+        this.numerator = numerator;
+        this.denominator = denominator;
     }
 
     public Profit calculateProfit(final BettingMoney bettingMoney) {
-        return new Profit((int) (bettingMoney.getAmount() * profitMultiplier));
+        return new Profit(bettingMoney.getAmount() * numerator / denominator);
     }
 
     public static GameResult of(final Player player, final Dealer dealer) {
