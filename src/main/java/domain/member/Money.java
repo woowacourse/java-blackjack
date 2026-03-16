@@ -7,11 +7,11 @@ public class Money {
     private final int amount;
 
     public Money(int amount) {
-        validateUnderZero(amount);
+        validateMoreThanZero(amount);
         this.amount = amount;
     }
 
-    private void validateUnderZero(int amount) {
+    private void validateMoreThanZero(int amount) {
         if (amount <= 0) {
             throw new IllegalArgumentException("베팅 금액은 0보다 커야 합니다.");
         }

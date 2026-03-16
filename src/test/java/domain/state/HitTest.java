@@ -44,7 +44,7 @@ public class HitTest {
 
     @DisplayName("플레이어가 카드를 뽑아 21점이 되었을 때 카드 개수가 2개가 아니면 Stay 상태를 반환한다")
     @Test
-    void draw_TotalScoreIs21AndCardSizeIsNot2_ReturnBlackjack() {
+    void draw_TotalScoreIs21AndCardSizeIsNot2_ReturnStay() {
         Hand hand = new Hand().appendCard(Card.from("10", "스페이드"))
                 .appendCard(Card.from("9", "하트"));
         State state = new Hit(hand);
