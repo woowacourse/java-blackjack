@@ -3,7 +3,7 @@ package domain.game;
 import domain.participant.Dealer;
 import domain.participant.Player;
 
-public class BlackjackJudge {
+public final class BlackjackJudge {
 
     public Result judgePlayerResult(Dealer dealer, Player player) {
         if (player.isBust()) {
