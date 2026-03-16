@@ -1,4 +1,4 @@
-package blackjack.model.cardDeck;
+package blackjack.model.carddeck;
 
 import blackjack.common.error.ErrorCode;
 import blackjack.model.card.Card;
@@ -13,7 +13,7 @@ public class CardDeck {
     private final List<Card> cards;
     private final PickStrategy pickStrategy;
 
-    public CardDeck(List<Card> cards, PickStrategy pickStrategy) {
+    public CardDeck(final List<Card> cards, final PickStrategy pickStrategy) {
         validateCards(cards);
         validatePickStrategy(pickStrategy);
 
@@ -21,10 +21,22 @@ public class CardDeck {
         this.pickStrategy = pickStrategy;
     }
 
-    public static CardDeck of(PickStrategy pickStrategy) {
+    private void validateCards(final List<Card> cards) {
+        if (cards == null || cards.isEmpty()) {
+            throw new IllegalStateException(ErrorCode.NULL_OR_EMPTY_CARDS.getMessage());
+        }
+    }
+
+    private void validatePickStrategy(final PickStrategy pickStrategy) {
+        if (pickStrategy == null) {
+            throw new IllegalArgumentException(ErrorCode.NULL_PICK_STRATEGY.getMessage());
+        }
+    }
+
+    public static CardDeck of(final PickStrategy pickStrategy) {
         List<Card> cards = Arrays.stream(Suit.values())
                 .flatMap(suit -> Arrays.stream(Rank.values())
-                        .map(rank -> Card.opened(rank, suit)))
+                        .map(rank -> Card.of(rank, suit)))
                 .collect(Collectors.toList());
 
         return new CardDeck(cards, pickStrategy);
@@ -38,18 +50,6 @@ public class CardDeck {
     private void validateCanPick() {
         if (cards.isEmpty()) {
             throw new IllegalStateException(ErrorCode.EMPTY_CARD_DECK.getMessage());
-        }
-    }
-
-    private void validateCards(List<Card> cards) {
-        if (cards == null || cards.isEmpty()) {
-            throw new IllegalStateException(ErrorCode.NULL_OR_EMPTY_CARDS.getMessage());
-        }
-    }
-
-    private void validatePickStrategy(PickStrategy pickStrategy) {
-        if (pickStrategy == null) {
-            throw new IllegalArgumentException(ErrorCode.NULL_PICK_STRATEGY.getMessage());
         }
     }
 }

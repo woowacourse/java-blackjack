@@ -2,79 +2,81 @@ package blackjack.model.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.dto.CardDto;
 import blackjack.model.card.Card;
 import blackjack.model.card.Rank;
 import blackjack.model.card.Suit;
-import blackjack.model.cardDeck.CardDeck;
-import blackjack.model.cardDeck.PickStrategy;
-import blackjack.model.result.Result;
+import blackjack.model.carddeck.CardDeck;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class DealerTest {
-
-    PickStrategy mustPickTen = cards -> Card.opened(Rank.TEN, Suit.CLOVER);
-    PickStrategy mustPickFive = cards -> Card.opened(Rank.FIVE, Suit.CLOVER);
-    PickStrategy mustPickAce = cards -> Card.opened(Rank.ACE, Suit.CLOVER);
-
-    @Test
-    @DisplayName("딜러가 뽑은 두 장의 카드 중 한 장만 오픈돼 있다.")
-    void pickInitCards() {
-        // given
-        Dealer dealer = Dealer.create();
-        CardDeck cardDeck = CardDeck.of(mustPickTen);
-
-        // when
-        dealer.pickInitCards(cardDeck);
-
-        //then
-        assertThat(dealer.getOpenedCards().size()).isEqualTo(1);
-        assertThat(dealer.getAllCard().size()).isEqualTo(2);
-    }
 
     @Test
     @DisplayName("딜러의 점수가 16점을 초과하면 false를 반환한다.")
     void canPick() {
         //given
         Dealer dealer = Dealer.create();
-        CardDeck cardDeck = CardDeck.of(mustPickTen);
+        CardDeck tenCloverCardDeck = CardDeck.of(cards -> Card.of(Rank.TEN, Suit.CLOVER));
 
-        dealer.pickAdditionalCard(cardDeck);
-        dealer.pickAdditionalCard(cardDeck);
+        dealer.pickAdditionalCard(tenCloverCardDeck);
+        dealer.pickAdditionalCard(tenCloverCardDeck);
 
         // when & then
         assertThat(dealer.canPick()).isFalse();
     }
 
     @Test
-    @DisplayName("딜러랑 플레이어 핸드 비교 결과 테스트")
-    void judgePlayerResult() {
+    @DisplayName("첫 카드 뽑기 테스트")
+    void pickInitCardsTest() {
         // given
+        Card tenClover = Card.of(Rank.TEN, Suit.CLOVER);
         Dealer dealer = Dealer.create();
 
-        CardDeck cardDeckForMustPickTen = CardDeck.of(mustPickTen);
-        dealer.pickInitCards(cardDeckForMustPickTen);
+        // when
+        dealer.pickInitCards(CardDeck.of(cards -> tenClover));
 
-        Player player1 = Player.of("player1");
+        // then
+        List<CardDto> cards = dealer.getAllCards();
+        assertThat(cards).hasSize(2);
+        assertThat(cards).containsExactlyInAnyOrder(
+                CardDto.from(tenClover),
+                CardDto.from(tenClover)
+        );
+    }
 
-        CardDeck cardDeckForMustPickFive = CardDeck.of(mustPickFive);
-        player1.pickAdditionalCard(cardDeckForMustPickFive);
-        player1.pickAdditionalCard(cardDeckForMustPickFive);
+    @Test
+    @DisplayName("카드 덱에서 추가 1장 더 가져오기")
+    void pickAdditionalTest() {
+        // given
+        Card tenClover = Card.of(Rank.TEN, Suit.CLOVER);
+        Dealer dealer = Dealer.create();
+        CardDeck mustPickTenClover = CardDeck.of(cards -> tenClover);
 
-        Player player2 = Player.of("player2");
+        // when
+        dealer.pickAdditionalCard(mustPickTenClover);
 
-        CardDeck cardDeckForMustPickAce = CardDeck.of(mustPickAce);
-        player2.pickAdditionalCard(cardDeckForMustPickTen);
-        player2.pickAdditionalCard(cardDeckForMustPickAce);
+        // then
+        assertThat(dealer.getAllCards()).hasSize(1);
+        assertThat(dealer.getAllCards().getFirst()).isEqualTo(CardDto.from(tenClover));
+    }
 
-        Player player3 = Player.of("player3");
+    @Test
+    @DisplayName("버스트 테스트")
+    void isBustTest() {
+        // given
+        Card tenClover = Card.of(Rank.TEN, Suit.CLOVER);
+        CardDeck mustPickTenClover = CardDeck.of(cards -> tenClover);
 
-        player3.pickAdditionalCard(cardDeckForMustPickTen);
-        player3.pickAdditionalCard(cardDeckForMustPickTen);
+        Dealer dealer = Dealer.create();
 
-        // when & then
-        assertThat(dealer.judgePlayerResult(player1)).isEqualTo(Result.LOSE);
-        assertThat(dealer.judgePlayerResult(player2)).isEqualTo(Result.WIN);
-        assertThat(dealer.judgePlayerResult(player3)).isEqualTo(Result.DRAW);
+        // when
+        dealer.pickAdditionalCard(mustPickTenClover);
+        dealer.pickAdditionalCard(mustPickTenClover);
+        dealer.pickAdditionalCard(mustPickTenClover); // pick 30
+
+        // then
+        assertThat(dealer.isBust()).isTrue();
     }
 }

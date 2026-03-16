@@ -1,16 +1,16 @@
 package blackjack.model.participant;
 
-import blackjack.model.Hands;
-import blackjack.model.card.Card;
-import blackjack.model.cardDeck.CardDeck;
-import blackjack.model.result.Result;
+import blackjack.dto.CardDto;
+import blackjack.model.card.Hands;
+import blackjack.model.result.PlayerResult;
+import java.util.List;
 
 public class Dealer extends Participant {
 
     private static final String DEALER_NAME = "딜러";
     private static final int DEALER_PICK_THRESHOLD = 16;
 
-    private Dealer(Hands hands) {
+    private Dealer(final Hands hands) {
         super(DEALER_NAME, hands);
     }
 
@@ -19,35 +19,31 @@ public class Dealer extends Participant {
     }
 
     @Override
-    public void pickInitCards(CardDeck cardDeck) {
-        hands.addCard(cardDeck.pick());
-
-        Card secondPickedCard = cardDeck.pick();
-        secondPickedCard.flip();
-        hands.addCard(secondPickedCard);
+    public List<CardDto> getInitCards() {
+        return List.of(hands.getFirstCard());
     }
 
     public boolean canPick() {
         return !hands.hasScoreHigherThan(DEALER_PICK_THRESHOLD);
     }
 
-    public Result judgePlayerResult(Player player) {
+    public PlayerResult getPlayerResult(final Player player) {
         if (player.isBust()) {
-            return Result.LOSE;
+            return PlayerResult.LOSE;
         }
 
         if (this.isBust()) {
-            return Result.WIN;
+            return PlayerResult.WIN;
         }
 
         if (this.hasHigherScoreThan(player)) {
-            return Result.LOSE;
+            return PlayerResult.LOSE;
         }
 
         if (player.hasHigherScoreThan(this)) {
-            return Result.WIN;
+            return PlayerResult.WIN;
         }
 
-        return Result.DRAW;
+        return PlayerResult.DRAW;
     }
 }

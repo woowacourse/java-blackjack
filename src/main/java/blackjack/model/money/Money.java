@@ -1,0 +1,33 @@
+package blackjack.model.money;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
+public record Money(BigDecimal amount) {
+
+    public static final Money ZERO = new Money(BigDecimal.ZERO);
+
+    public Money {
+        if (amount == null) {
+            throw new IllegalArgumentException("금액은 null일 수 없습니다.");
+        }
+        amount = amount.setScale(0, RoundingMode.HALF_UP);
+    }
+
+    public static Money of(final double amount) {
+        return new Money(BigDecimal.valueOf(amount));
+    }
+
+    public Money minus(final Money money) {
+        return new Money(this.amount.subtract(money.amount));
+    }
+
+    public Money multiply(final double value) {
+        return new Money(this.amount.multiply(BigDecimal.valueOf(value)));
+    }
+
+    @Override
+    public String toString() {
+        return amount.toString();
+    }
+}

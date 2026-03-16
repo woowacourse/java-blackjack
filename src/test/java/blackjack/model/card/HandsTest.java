@@ -1,10 +1,8 @@
-package blackjack.model;
+package blackjack.model.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.model.card.Card;
-import blackjack.model.card.Rank;
-import blackjack.model.card.Suit;
+import blackjack.dto.CardDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,10 +11,8 @@ class HandsTest {
     @Test
     @DisplayName("빈 핸즈를 반환한다.")
     void empty() {
-        assertThat(
-                Hands.empty()
-                        .getAllCard()
-        ).isEmpty();
+        // given & when & then
+        assertThat(Hands.empty().getAllCards()).isEmpty();
     }
 
     @Test
@@ -26,10 +22,10 @@ class HandsTest {
         Hands hands = Hands.empty();
 
         //when
-        hands.addCard(Card.opened(Rank.TEN, Suit.CLOVER));
+        hands.addCard(Card.of(Rank.TEN, Suit.CLOVER));
 
         // then
-        assertThat(hands.getAllCard().size()).isEqualTo(1);
+        assertThat(hands.getAllCards().size()).isEqualTo(1);
     }
 
     @Test
@@ -38,8 +34,8 @@ class HandsTest {
         // given
         Hands hands = Hands.empty();
 
-        hands.addCard(Card.opened(Rank.TEN, Suit.CLOVER));
-        hands.addCard(Card.opened(Rank.J, Suit.CLOVER));
+        hands.addCard(Card.of(Rank.TEN, Suit.CLOVER));
+        hands.addCard(Card.of(Rank.J, Suit.CLOVER));
 
         // when & then
         assertThat(hands.calculateTotalScore()).isEqualTo(20);
@@ -50,9 +46,9 @@ class HandsTest {
     void aceScoreTest1() {
         // given
         Hands hands = Hands.empty();
-        hands.addCard(Card.opened(Rank.TEN, Suit.CLOVER));
-        hands.addCard(Card.opened(Rank.TWO, Suit.CLOVER));
-        hands.addCard(Card.opened(Rank.ACE, Suit.CLOVER));
+        hands.addCard(Card.of(Rank.TEN, Suit.CLOVER));
+        hands.addCard(Card.of(Rank.TWO, Suit.CLOVER));
+        hands.addCard(Card.of(Rank.ACE, Suit.CLOVER));
 
         // when
         int totalScore = hands.calculateTotalScore();
@@ -66,8 +62,8 @@ class HandsTest {
     void aceScoreTest2() {
         // given
         Hands hands = Hands.empty();
-        hands.addCard(Card.opened(Rank.TEN, Suit.CLOVER));
-        hands.addCard(Card.opened(Rank.ACE, Suit.CLOVER));
+        hands.addCard(Card.of(Rank.TEN, Suit.CLOVER));
+        hands.addCard(Card.of(Rank.ACE, Suit.CLOVER));
 
         // when
         int totalScore = hands.calculateTotalScore();
@@ -81,25 +77,25 @@ class HandsTest {
     void hasScoreHigherThan() {
         // given
         Hands hands = Hands.empty();
-        hands.addCard(Card.opened(Rank.SIX, Suit.CLOVER));
-        hands.addCard(Card.opened(Rank.ACE, Suit.CLOVER));
+        hands.addCard(Card.of(Rank.SIX, Suit.CLOVER));
+        hands.addCard(Card.of(Rank.ACE, Suit.CLOVER));
 
         assertThat(hands.hasScoreHigherThan(16)).isTrue();
     }
 
     @Test
-    @DisplayName("핸즈에서 오픈된 카드들만 반환한다")
-    void getOpenedCards() {
+    @DisplayName("첫 번째 카드 반환")
+    void getFirstCardTest() {
         // given
         Hands hands = Hands.empty();
-        hands.addCard(Card.opened(Rank.SIX, Suit.CLOVER));
+        hands.addCard(Card.of(Rank.SIX, Suit.CLOVER));
+        hands.addCard(Card.of(Rank.ACE, Suit.CLOVER));
 
-        Card closed = Card.opened(Rank.ACE, Suit.CLOVER);
-        closed.flip();
+        // when
+        CardDto firstCard = hands.getFirstCard();
 
-        hands.addCard(closed);
-
-        // when & then
-        assertThat(hands.getOpenedCards().size()).isEqualTo(1);
+        // then
+        assertThat(firstCard.rank()).isEqualTo(Rank.SIX);
+        assertThat(firstCard.suit()).isEqualTo(Suit.CLOVER);
     }
 }

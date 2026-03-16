@@ -2,12 +2,14 @@ package blackjack.model.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.model.Hands;
+import blackjack.dto.CardDto;
 import blackjack.model.card.Card;
+import blackjack.model.card.Hands;
 import blackjack.model.card.Rank;
 import blackjack.model.card.Suit;
-import blackjack.model.cardDeck.CardDeck;
-import blackjack.model.cardDeck.PickStrategy;
+import blackjack.model.carddeck.CardDeck;
+import blackjack.model.carddeck.PickStrategy;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -24,8 +26,8 @@ class ParticipantTest {
         participant.pickAdditionalCard(cardDeck);
 
         // then
-        assertThat(participant.getAllCard().size()).isEqualTo(1);
-        assertThat(participant.getAllCard().getFirst().rank()).isEqualTo(Rank.ACE);
+        assertThat(participant.getAllCards().size()).isEqualTo(1);
+        assertThat(participant.getAllCards().getFirst().rank()).isEqualTo(Rank.ACE);
     }
 
     @Test
@@ -48,8 +50,8 @@ class ParticipantTest {
         assertThat(participant2.isBust()).isFalse();
     }
 
-    PickStrategy mustPickTen = cards -> Card.opened(Rank.TEN, Suit.CLOVER);
-    PickStrategy mustPickAce = cards -> Card.opened(Rank.ACE, Suit.CLOVER);
+    PickStrategy mustPickTen = cards -> Card.of(Rank.TEN, Suit.CLOVER);
+    PickStrategy mustPickAce = cards -> Card.of(Rank.ACE, Suit.CLOVER);
 
     static class TestParticipant extends Participant {
 
@@ -58,8 +60,8 @@ class ParticipantTest {
         }
 
         @Override
-        public void pickInitCards(CardDeck cardDeck) {
-            // do nothing
+        public List<CardDto> getInitCards() {
+            return List.of();
         }
     }
 }

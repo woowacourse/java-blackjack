@@ -16,27 +16,14 @@ class CardTest {
         Suit clover = Suit.CLOVER;
 
         // when & then
-        assertThatCode(() -> Card.opened(ace, clover)).doesNotThrowAnyException();
-    }
-
-    @Test
-    @DisplayName("뒤집기 테스트")
-    void flipTest() {
-        // given
-        Card card = Card.opened(Rank.ACE, Suit.CLOVER);
-
-        // when
-        card.flip();
-
-        // then
-        assertThat(card.isOpened()).isFalse();
+        assertThatCode(() -> Card.of(ace, clover)).doesNotThrowAnyException();
     }
 
     @Test
     @DisplayName("카드 기본 점수 가져오기")
     void getCardDefaultScoreTest() {
         // given
-        Card card = Card.opened(Rank.TEN, Suit.CLOVER);
+        Card card = Card.of(Rank.TEN, Suit.CLOVER);
 
         // when
         int score = card.getDefaultScore();
@@ -49,24 +36,11 @@ class CardTest {
     @DisplayName("에이스 판별 테스트")
     void isAceTest() {
         // given
-        Card card1 = Card.opened(Rank.ACE, Suit.CLOVER);
-        Card card2 = Card.opened(Rank.TEN, Suit.CLOVER);
+        Card card1 = Card.of(Rank.ACE, Suit.CLOVER);
+        Card card2 = Card.of(Rank.TEN, Suit.CLOVER);
 
         // when & then
         assertThat(card1.isAce()).isTrue();
         assertThat(card2.isAce()).isFalse();
-    }
-
-    @Test
-    @DisplayName("오픈 판별 테스트")
-    void isOpenedTest() {
-        // given
-        Card card1 = Card.opened(Rank.ACE, Suit.CLOVER);
-        Card card2 = Card.opened(Rank.ACE, Suit.CLOVER);
-        card2.flip();
-
-        // when & then
-        assertThat(card1.isOpened()).isTrue();
-        assertThat(card2.isOpened()).isFalse();
     }
 }

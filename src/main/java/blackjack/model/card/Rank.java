@@ -19,7 +19,7 @@ public enum Rank {
     private final int defaultScore;
     private final String displayName;
 
-    Rank(int defaultScore, String displayName) {
+    Rank(final int defaultScore, final String displayName) {
         this.defaultScore = defaultScore;
         this.displayName = displayName;
     }
