@@ -20,6 +20,10 @@ public abstract class User {
         this.hand = new Hand();
     }
 
+    public abstract boolean isHitAvailable();
+
+    public abstract boolean isPlayer();
+
     public String getName() {
         return name.getName();
     }
@@ -55,10 +59,6 @@ public abstract class User {
 
         return judgeByScore(user);
     }
-
-    public abstract boolean isHitAvailable();
-
-    public abstract boolean isPlayer();
 
     private GameResult judgeByBust() {
         if (this.isBust()) {
