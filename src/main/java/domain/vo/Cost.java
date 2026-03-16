@@ -1,10 +1,12 @@
 package domain.vo;
 
+import domain.player.WinStatus;
+
 public class Cost {
     private static final int COST_UNIT = 100;
     private static final int MAX_COST = 10_000_000;
-    private static final int MIN_COST = 100;
-    private final int cost;
+    private static final int MIN_COST = 0;
+    private int cost;
 
 
     public Cost(int cost) {
@@ -14,6 +16,15 @@ public class Cost {
     }
 
     public int getCost() {
+        return cost;
+    }
+
+    public void addCost(int money) {
+        cost += money;
+    }
+
+    public int calculateProfit(WinStatus winStatus) {
+        cost = (int) (cost * winStatus.getEarningsRate());
         return cost;
     }
 
