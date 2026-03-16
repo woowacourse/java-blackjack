@@ -11,9 +11,9 @@ public class Deck {
         this.cards = cards;
     }
 
-    public static Deck createDeck() {
+    public static Deck createDeck(CardShuffler cardShuffler) {
         List<Card> cards = generateAllCards();
-        Collections.shuffle(cards);
+        cardShuffler.shuffle(cards);
         return new Deck(cards);
     }
 

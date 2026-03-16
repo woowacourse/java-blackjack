@@ -19,6 +19,14 @@ class DealerTest {
     @Test
     @DisplayName("딜러 카드 16이하 여부 확인 테스트")
     void 딜러_16이하_여부_확인() {
+        Dealer underThreshold = Dealer.from(HandFixture.createHand(List.of(
+                Card.of(CardNumber.EIGHT, CardShape.CLOVER),
+                Card.of(CardNumber.SEVEN, CardShape.CLOVER))));
+
+        Dealer overThreshold = Dealer.from(HandFixture.createHand(List.of(
+                Card.of(CardNumber.EIGHT, CardShape.CLOVER),
+                Card.of(CardNumber.J, CardShape.CLOVER))));
+
         assertThat(underThreshold.checkThreshold()).isTrue();
         assertThat(overThreshold.checkThreshold()).isFalse();
     }

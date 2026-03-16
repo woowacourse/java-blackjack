@@ -3,10 +3,10 @@ package view;
 import dto.DealerFinalResultDto;
 import dto.FinalResultDto;
 import dto.PlayerDto;
+import dto.ProfitDto;
 import dto.PlayersDto;
 import dto.ResultDto;
 import dto.TotalFinalResultsDto;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -17,11 +17,7 @@ public class OutputView {
     }
 
     public void printHandOutMessage(PlayersDto playersDto) {
-        String playersName = playersDto.playersDto().stream()
-                .map(PlayerDto::name)
-                .collect(Collectors.joining(","));
-
-        System.out.print("\n딜러와 " + playersName + "에게 2장을 나누었습니다.");
+        System.out.print(outputViewFormatter.formatHandOutMessage(playersDto));
     }
 
     public void printDealerCardStatus(ResultDto resultDto) {
@@ -60,12 +56,15 @@ public class OutputView {
         }
     }
 
-    public void printTotalResult(DealerFinalResultDto dealerFinalResultDto,
-                                        TotalFinalResultsDto totalFinalResultsDto) {
-        System.out.println("\n\n## 최종 승패");
-        System.out.print(outputViewFormatter.formatDealerResult(dealerFinalResultDto));
-        for (FinalResultDto finalResult : totalFinalResultsDto.totalResults()) {
-            System.out.print(outputViewFormatter.formatTotalResult(finalResult));
-        }
+    public void printProfitMessage() {
+        System.out.println("\n\n## 최종 수익");
+    }
+
+    public void printProfit(ProfitDto profitDto) {
+        System.out.print(outputViewFormatter.formatProfit(profitDto));
+    }
+
+    public void printErrorMessage(String message) {
+        System.out.print(outputViewFormatter.formatErrorMessage(message));
     }
 }

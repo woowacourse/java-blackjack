@@ -1,4 +1,5 @@
 import controller.GameController;
+import domain.RandomCardShuffler;
 import java.util.Scanner;
 import view.InputView;
 import view.OutputView;
@@ -13,6 +14,6 @@ public class Application {
         OutputView outputView = new OutputView(outputViewFormatter);
 
         GameController gameController = new GameController(inputView, outputView);
-        gameController.start();
+        gameController.start(new RandomCardShuffler());
     }
 }
