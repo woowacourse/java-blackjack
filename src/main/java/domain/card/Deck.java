@@ -54,8 +54,8 @@ public class Deck {
         }
     }
 
-    private void validateCardsCount(int n) {
-        if (n <= 0 || n > cards.size()) {
+    private void validateCardsCount(int cardCount) {
+        if (cardCount <= 0 || cardCount > cards.size()) {
             throw new IllegalArgumentException(ErrorMessage.INDEX_RANGE.getMessage());
         }
     }
