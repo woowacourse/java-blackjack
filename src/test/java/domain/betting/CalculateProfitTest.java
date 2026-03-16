@@ -15,52 +15,40 @@ class CalculateProfitTest {
     @Test
     void 참가자가_패배하면_수익은_배팅금액만큼_감소한다() {
         Name name = new Name("pobi");
-        Player player = new Player(name);
-        Map<Name, BettingAmount> amountMap = new HashMap<>();
-        amountMap.put(player.getName(), new BettingAmount(BigDecimal.valueOf(1000)));
-        BettingAmounts bettingAmounts = new BettingAmounts(amountMap);
-        CalculateProfit calculateProfit = new CalculateProfit(bettingAmounts);
+        CalculateProfit calculateProfit = createCalculateProfit(name, 1000);
+
         BigDecimal expected = BigDecimal.valueOf(-1000);
         BigDecimal actual = calculateProfit.calculate(name, GameResult.LOSE).getMoney();
+
         assertEquals(0, expected.compareTo(actual));
     }
 
     @Test
     void 참가자가_승리하면_수익은_배팅금액만큼_증가한다() {
         Name name = new Name("pobi");
-        Player player = new Player(name);
-        Map<Name, BettingAmount> amountMap = new HashMap<>();
-        amountMap.put(player.getName(), new BettingAmount(BigDecimal.valueOf(1000)));
-        BettingAmounts bettingAmounts = new BettingAmounts(amountMap);
-        CalculateProfit calculateProfit = new CalculateProfit(bettingAmounts);
+        CalculateProfit calculateProfit = createCalculateProfit(name, 1000);
+
         BigDecimal expected = BigDecimal.valueOf(1000);
         BigDecimal actual = calculateProfit.calculate(name, GameResult.WIN).getMoney();
+
         assertEquals(0, expected.compareTo(actual));
     }
 
     @Test
     void 참가자가_블랙잭이면_수익은_배팅금액의_1_5배가_된다() {
         Name name = new Name("pobi");
-        Player player = new Player(name);
-        Map<Name, BettingAmount> amountMap = new HashMap<>();
-        amountMap.put(player.getName(), new BettingAmount(BigDecimal.valueOf(1000)));
-        BettingAmounts bettingAmounts = new BettingAmounts(amountMap);
-        CalculateProfit calculateProfit = new CalculateProfit(bettingAmounts);
+        CalculateProfit calculateProfit = createCalculateProfit(name, 1000);
 
         BigDecimal expected = BigDecimal.valueOf(1500);
         BigDecimal actual = calculateProfit.calculate(name, GameResult.BLACKJACK).getMoney();
-        
+
         assertEquals(0, expected.compareTo(actual));
     }
 
     @Test
     void 홀수_금액을_배팅한_참가자가_블랙잭이면_수익은_1_5배로_계산된다() {
         Name name = new Name("pobi");
-        Player player = new Player(name);
-        Map<Name, BettingAmount> amountMap = new HashMap<>();
-        amountMap.put(player.getName(), new BettingAmount(BigDecimal.valueOf(23)));
-        BettingAmounts bettingAmounts = new BettingAmounts(amountMap);
-        CalculateProfit calculateProfit = new CalculateProfit(bettingAmounts);
+        CalculateProfit calculateProfit = createCalculateProfit(name, 23);
 
         BigDecimal expected = BigDecimal.valueOf(34.5);
         BigDecimal actual = calculateProfit.calculate(name, GameResult.BLACKJACK).getMoney();
@@ -71,15 +59,18 @@ class CalculateProfitTest {
     @Test
     void 참가자가_비기면_수익은_0원이다() {
         Name name = new Name("pobi");
-        Player player = new Player(name);
-        Map<Name, BettingAmount> amountMap = new HashMap<>();
-        amountMap.put(player.getName(), new BettingAmount(BigDecimal.valueOf(1000)));
-        BettingAmounts bettingAmounts = new BettingAmounts(amountMap);
-        CalculateProfit calculateProfit = new CalculateProfit(bettingAmounts);
+        CalculateProfit calculateProfit = createCalculateProfit(name, 1000);
 
         BigDecimal expected = BigDecimal.valueOf(0);
         BigDecimal actual = calculateProfit.calculate(name, GameResult.DRAW).getMoney();
 
         assertEquals(0, expected.compareTo(actual));
+    }
+
+    private CalculateProfit createCalculateProfit(Name name, int amount) {
+        Map<Name, BettingAmount> amountMap = new HashMap<>();
+        amountMap.put(name, new BettingAmount(BigDecimal.valueOf(amount)));
+        BettingAmounts bettingAmounts = new BettingAmounts(amountMap);
+        return new CalculateProfit(bettingAmounts);
     }
 }

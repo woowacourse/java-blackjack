@@ -21,31 +21,48 @@ import org.junit.jupiter.api.Test;
 class GameResultManagerTest {
     @Test
     void 플레이어들의_점수를_딜러와_비교해_승패를_반환한다() {
-        Player pobi = new Player(new Name("pobi"));
-        Player crong = new Player(new Name("crong"));
-        Players players = new Players(List.of(pobi, crong));
-        GameManager gameManager = new GameManager(players);
-        Dealer dealer = gameManager.getDealer();
+        TestFixture fixture = createFixture();
+        dealCards(fixture.dealer(), fixture.pobi(), fixture.crong());
 
-        dealer.receiveCard(new Card(Shape.SPADE, domain.card.Number.TEN));
-        dealer.receiveCard(new Card(Shape.HEART, domain.card.Number.EIGHT));
-
-        pobi.receiveCard(new Card(Shape.DIAMOND, domain.card.Number.TEN));
-        pobi.receiveCard(new Card(Shape.CLUB, domain.card.Number.TEN));
-
-        crong.receiveCard(new Card(Shape.SPADE, domain.card.Number.NINE));
-        crong.receiveCard(new Card(Shape.HEART, Number.SEVEN));
-
-        Map<Name, BettingAmount> bettingAmounts = new HashMap<>();
-        players.forEach(player -> bettingAmounts.put(player.getName(), new BettingAmount(BigDecimal.valueOf(1000))));
-
-        BettingAmounts bettingManager = new BettingAmounts(bettingAmounts);
-        CalculateProfit calculateProfit = new CalculateProfit(bettingManager);
-        GameResultManager gameResultManager = new GameResultManager(calculateProfit, players, dealer);
+        GameResultManager gameResultManager = createGameResultManager(fixture);
 
         Map<String, GameResult> result = gameResultManager.getGameResult();
 
         assertEquals(GameResult.WIN, result.get("pobi"));
         assertEquals(GameResult.LOSE, result.get("crong"));
+    }
+
+    private GameResultManager createGameResultManager(TestFixture fixture) {
+        Map<Name, BettingAmount> bettingAmounts = new HashMap<>();
+        fixture.players().forEach(player ->
+                bettingAmounts.put(player.getName(), new BettingAmount(BigDecimal.valueOf(1000)))
+        );
+
+        BettingAmounts bettingBook = new BettingAmounts(bettingAmounts);
+        CalculateProfit calculateProfit = new CalculateProfit(bettingBook);
+        return new GameResultManager(calculateProfit, fixture.players(), fixture.dealer());
+    }
+
+
+    private TestFixture createFixture() {
+        Player pobi = new Player(new Name("pobi"));
+        Player crong = new Player(new Name("crong"));
+        Players players = new Players(List.of(pobi, crong));
+        Dealer dealer = new Dealer();
+        return new TestFixture(pobi, crong, players, dealer);
+    }
+
+    private record TestFixture(Player pobi, Player crong, Players players, Dealer dealer) {
+    }
+
+    private static void dealCards(Dealer dealer, Player pobi, Player crong) {
+        dealer.receiveCard(new Card(Shape.SPADE, Number.TEN));
+        dealer.receiveCard(new Card(Shape.HEART, Number.EIGHT));
+
+        pobi.receiveCard(new Card(Shape.DIAMOND, Number.TEN));
+        pobi.receiveCard(new Card(Shape.CLUB, Number.TEN));
+
+        crong.receiveCard(new Card(Shape.SPADE, Number.NINE));
+        crong.receiveCard(new Card(Shape.HEART, Number.SEVEN));
     }
 }
