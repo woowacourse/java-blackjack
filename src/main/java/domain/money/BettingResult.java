@@ -14,7 +14,7 @@ public class BettingResult {
 
     public static BettingResult from(int betAmount, MatchResult matchResult, boolean isBlackJack) {
         if (matchResult == MatchResult.WIN && isBlackJack) {
-            return new BettingResult((int) (betAmount * BLACKJACK_MULTIPLIER));
+            return new BettingResult(calculateBlackJackEarnings(betAmount));
         }
         if (matchResult == MatchResult.WIN) {
             return new BettingResult(betAmount);
@@ -31,5 +31,9 @@ public class BettingResult {
 
     public int reverse() {
         return -earnings;
+    }
+
+    private static int calculateBlackJackEarnings(int betAmount) {
+        return (int) (betAmount * BLACKJACK_MULTIPLIER);
     }
 }
