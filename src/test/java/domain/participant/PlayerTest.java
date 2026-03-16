@@ -55,7 +55,7 @@ class PlayerTest {
         Player player = Player.from(ParticipantName.from(name));
 
         // then
-        Assertions.assertThat(player.toDisplayMyName()).isEqualTo(name);
+        Assertions.assertThat(player.getName().name()).isEqualTo(name);
     }
 
     @Test

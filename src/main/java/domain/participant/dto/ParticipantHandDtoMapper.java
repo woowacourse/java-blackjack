@@ -9,11 +9,11 @@ public class ParticipantHandDtoMapper {
     }
 
     public static ParticipantHandDto map(Participant participant) {
-        return new ParticipantHandDto(participant.toDisplayMyName(), participant.disPlayMyCardBundle());
+        return new ParticipantHandDto(participant.getName().name(), participant.disPlayMyCardBundle());
     }
 
     public static ParticipantHandDto map(Participant participant, int cardCount) {
-        return new ParticipantHandDto(participant.toDisplayMyName(), extractAsCount(participant, cardCount));
+        return new ParticipantHandDto(participant.getName().name(), extractAsCount(participant, cardCount));
     }
 
     private static List<String> extractAsCount(Participant participant, int cardCount) {

@@ -31,12 +31,6 @@ public class Players {
         return this;
     }
 
-    public List<String> displayNames() {
-        return playerList.stream()
-                .map(Player::toDisplayMyName)
-                .toList();
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) {

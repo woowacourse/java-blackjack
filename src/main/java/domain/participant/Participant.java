@@ -36,10 +36,6 @@ public abstract class Participant {
         return hand.getResultScore();
     }
 
-    public String toDisplayMyName() {
-        return name.name();
-    }
-
     public ParticipantName getName() {
         return name;
     }

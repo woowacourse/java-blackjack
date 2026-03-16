@@ -88,7 +88,7 @@ public class BlackjackGame {
             return;
         }
 
-        boolean drawCardIntention = view.requestDrawCardDecision(player.toDisplayMyName());
+        boolean drawCardIntention = view.requestDrawCardDecision(player.getName().name());
         while (!player.isBusted() && drawCardIntention) {
             player.drawCards(cardDeck, DEFAULT_CARD_DRAW_COUNT);
             view.printParticipantHand(ParticipantHandDtoMapper.map(player));
@@ -98,7 +98,10 @@ public class BlackjackGame {
     private void handOutInitialCard(Dealer dealer, Players players) {
         dealer.drawCards(cardDeck, INITIAL_CARD_DRAW_COUNT);
         players.giveInitialCardBundle(cardDeck);
-        view.printInitialDeal(players.displayNames(), INITIAL_CARD_DRAW_COUNT);
+        List<String> playerNames = players.stream()
+                .map(player -> player.getName().name())
+                .toList();
+        view.printInitialDeal(playerNames, INITIAL_CARD_DRAW_COUNT);
     }
 
     private List<ParticipantInitialInformation> requestInitialInformation() {
