@@ -16,7 +16,7 @@ public class Player extends Participant {
     }
 
     public static Player of(final String name) {
-        return new Player(name, Hands.empty(), Money.zero());
+        return new Player(name, Hands.empty(), Money.ZERO);
     }
 
     @Override

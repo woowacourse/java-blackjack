@@ -5,7 +5,7 @@ import java.math.RoundingMode;
 
 public record Money(BigDecimal amount) {
 
-    public static final Money ZERO = Money.zero();
+    public static final Money ZERO = new Money(BigDecimal.ZERO);
 
     public Money {
         if (amount == null) {
@@ -16,10 +16,6 @@ public record Money(BigDecimal amount) {
 
     public static Money of(final double amount) {
         return new Money(BigDecimal.valueOf(amount));
-    }
-
-    public static Money zero() {
-        return new Money(BigDecimal.ZERO);
     }
 
     public Money minus(final Money money) {
