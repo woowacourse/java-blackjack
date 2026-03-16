@@ -2,15 +2,13 @@ package model.participant;
 
 import constant.ErrorMessage;
 
-public record BetPrice(int value) {
-    private static final int MAX_BET = 100000000;
-
+public record BetPrice(long value) {
     public BetPrice {
         validate(value);
     }
 
-    private static void validate(int value) {
-        if(value <= 0 || value > MAX_BET) {
+    private static void validate(long value) {
+        if(value < 0) {
             throw new IllegalArgumentException(ErrorMessage.OUT_OF_RANGE_BET.getMessage());
         }
     }

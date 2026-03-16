@@ -7,8 +7,8 @@ import dto.status.PlayerStatus;
 public class ProfitCalculator {
     private static final Double BLACK_JACK_BAT_RATE = 1.5;
 
-    public static Integer calculateBetAmount(DealerStatus dealer, PlayerStatus player) {
-        return calculateBustBetAmount(dealer, player).intValue();
+    public static Long calculateBetAmount(DealerStatus dealer, PlayerStatus player) {
+        return calculateBustBetAmount(dealer, player).longValue();
     }
 
     private static BigDecimal calculateBustBetAmount(DealerStatus dealer, PlayerStatus player) {

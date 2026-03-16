@@ -3,9 +3,9 @@ package model.result;
 import dto.result.ParticipantProfit;
 
 public class DealerProfit {
-    private Integer profit = 0;
+    private Long profit = 0L;
 
-    public void increase(Integer betAmount) {
+    public void increase(Long betAmount) {
         profit += betAmount;
     }
 

@@ -27,11 +27,11 @@ public class InputView {
         return getInput();
     }
 
-    public static Integer getBet(String name) {
+    public static Long getBet(String name) {
         System.out.println(name + BET_REQUEST_TEXT);
 
         try {
-            Integer value = Integer.parseInt(getInput());
+            Long value = Long.parseLong(getInput());
             System.out.println();
             return value;
         } catch (NumberFormatException exception) {

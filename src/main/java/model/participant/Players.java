@@ -65,7 +65,7 @@ public class Players {
 
         players.values().forEach(player -> {
             PlayerStatus playerStatus = getPlayerStatus(player);
-            Integer profit = ProfitCalculator.calculateBetAmount(dealerStatus, playerStatus);
+            Long profit = ProfitCalculator.calculateBetAmount(dealerStatus, playerStatus);
 
             playerProfit.addPlayerProfit(new ParticipantProfit(player.getName(), profit));
             dealerProfit.increase(-profit);
@@ -83,16 +83,16 @@ public class Players {
     }
 
     private PlayerStatus getPlayerStatus(Player player) {
-        Integer betPrice = getBetPriceValue(player);
+        Long betPrice = getBetPriceValue(player);
 
         return new PlayerStatus(player.getName(), player.getScore(), betPrice, player.isBust(), player.isBlackJack());
     }
 
-    private Integer getBetPriceValue(Player player) {
+    private Long getBetPriceValue(Player player) {
         BetPrice betPrice = playerBet.get(player.getName());
 
         if(betPrice == null) {
-            return 0;
+            return 0L;
         }
         return betPrice.value();
     }
