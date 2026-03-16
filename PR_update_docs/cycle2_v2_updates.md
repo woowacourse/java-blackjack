@@ -10,7 +10,7 @@
 - [x] **2. `BlackjackGame`의 주석 지우기**
 - [ ] **3. `blackjackGame`의 protected field를 private으로 수정할 것.**
   - [ ] 이를 위해 blackjackGame의 prepare() 구조를 생성자로 옮겨야 함.
-- [ ] **4. `GameJudge`의 judge 함수를 dealer와 user 객체 자체를 받는 형식으로 수정**
+- [x] **4. `GameJudge`의 judge 함수를 dealer와 user 객체 자체를 받는 형식으로 수정**
 - [ ] **5. `Participants`의 Dealer 제거**
   - [ ] dealer는 BlackjackGame에서 직접 관리하도록 수정
 - [ ] **6. `GameSummary`의 생성자 수정**

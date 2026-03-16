@@ -5,20 +5,20 @@ import vo.GameResult;
 public class GameJudge {
     private static final Integer BUST_THRESHOLD = 21;
 
-    public GameResult judge(int dealerScore, int userScore, boolean dealerBlackjack, boolean userBlackjack) {
-        if (userScore > BUST_THRESHOLD) {
+    public GameResult judge(User user, Dealer dealer) {
+        if (user.getScore() > BUST_THRESHOLD) {
             return GameResult.BUST;
         }
-        if (dealerBlackjack && !userBlackjack) {
+        if (dealer.isBlackjack() && !user.isBlackjack()) {
             return GameResult.LOSE;
         }
-        if (userBlackjack && !dealerBlackjack) {
+        if (user.isBlackjack() && !dealer.isBlackjack()) {
             return GameResult.BLACKJACK;
         }
-        if (userScore == dealerScore) {
+        if (user.getScore() == dealer.getScore()) {
             return GameResult.PUSH;
         }
-        if (dealerScore > BUST_THRESHOLD || userScore > dealerScore) {
+        if (dealer.getScore() > BUST_THRESHOLD || user.getScore() > dealer.getScore()) {
             return GameResult.WIN;
         }
         return GameResult.LOSE;
