@@ -26,9 +26,7 @@ public enum Outcome {
         if (dealer.isFirstBlackJack()) {
             return LOSE;
         }
-        Score playerScore = player.getScore();
-        Score dealerScore = dealer.getScore();
-        return decideByScore(playerScore, dealerScore);
+        return decideByScore(player.getScore(), dealer.getScore());
     }
 
     private static Outcome decideByScore(Score playerScore, Score dealerScore) {
@@ -38,10 +36,14 @@ public enum Outcome {
         if (dealerScore.isBust()) {
             return WIN;
         }
-        if (playerScore.getGameScore() > dealerScore.getGameScore()) {
+        return compareScore(playerScore, dealerScore);
+    }
+
+    private static Outcome compareScore(Score playerScore, Score dealerScore) {
+        if (playerScore.isGreaterThan(dealerScore)) {
             return WIN;
         }
-        if (playerScore.getGameScore() < dealerScore.getGameScore()) {
+        if (playerScore.isLessThan(dealerScore)) {
             return LOSE;
         }
         return DRAW;
@@ -53,15 +55,5 @@ public enum Outcome {
 
     public double getRate() {
         return rate;
-    }
-
-    public Outcome opposite() {
-        if (this == WIN) {
-            return LOSE;
-        }
-        if (this == LOSE) {
-            return WIN;
-        }
-        return DRAW;
     }
 }
