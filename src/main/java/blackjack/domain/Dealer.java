@@ -13,13 +13,13 @@ public class Dealer extends Participant{
         return calculateTotalScore() < 17;
     }
 
-    @Override
-    public GameResult judgeResult(List<Participant> players, Participant dealer) {
+
+    public GameResult judgeResult(List<Participant> players) {
         Map<ScoreCompareResult, Integer> dealerResult = new HashMap<>();
         Map<Participant, ScoreCompareResult> playerResults = new HashMap<>();
 
         for (Participant player : players) {
-            ScoreCompareResult result = compareScore(player, dealer);
+            ScoreCompareResult result = compareScore(player, this);
             playerResults.put(player, toPlayerResult(result));
             dealerResult.merge(toDealerKey(result), 1, Integer::sum);
         }

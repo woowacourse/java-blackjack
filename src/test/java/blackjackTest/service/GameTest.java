@@ -59,7 +59,7 @@ public class GameTest {
                         brown, ScoreCompareResult.PUSH)
         );
 
-        GameResult actual = dealer.judgeResult(List.of(pobi, jason, brown), dealer);
+        GameResult actual = dealer.judgeResult(List.of(pobi, jason, brown));
 
         assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
     }

@@ -9,7 +9,7 @@ public class Player extends Participant {
         this.money = money;
     }
 
-    @Override
+
     public Money calculateFinalProfit(Participant dealer) {
         if (isBlackjack() && dealer.isBlackjack()) {
             return money.keepBettingAmount();

@@ -104,8 +104,10 @@ public class BlackjackController {
     private void calculateFinalGameProfit(List<Participant> players, Participant dealer) {
         Map<String, Long> playersProfit = new LinkedHashMap<>();
         long totalPlayersProfit = 0;
-        for (Participant player : players) {
+        for (Participant participant : players) {
+            Player player = (Player) participant;
             Money profit = player.calculateFinalProfit(dealer);
+
             long bettingMoney = profit.getBettingMoney();
             playersProfit.put(player.getName(), bettingMoney);
             totalPlayersProfit += bettingMoney;

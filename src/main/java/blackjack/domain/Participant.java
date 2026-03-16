@@ -1,6 +1,5 @@
 package blackjack.domain;
 
-import java.util.HashMap;
 import java.util.List;
 
 public abstract class Participant {
@@ -39,14 +38,6 @@ public abstract class Participant {
 
     public int calculateTotalScore() {
         return drawnCards.sumScore();
-    }
-
-    public Money calculateFinalProfit(Participant dealer) {
-        return new Money(0);
-    }
-
-    public GameResult judgeResult(List<Participant> players, Participant dealer) {
-        return new GameResult(new HashMap<>(), new HashMap<>());
     }
 
     public String getName() {
