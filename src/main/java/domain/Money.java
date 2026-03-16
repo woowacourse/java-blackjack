@@ -19,15 +19,15 @@ public class Money {
         }
     }
 
-    public int earnOnePointFiveTimes() {
+    public int multiply() {
         return (int) (betAmount * 1.5);
     }
 
-    public int earn() {
+    public int add() {
         return betAmount;
     }
 
-    public int lose() {
+    public int subtract() {
         return -betAmount;
     }
 

@@ -4,19 +4,19 @@ public enum GameResult {
     BLACKJACK_WIN {
         @Override
         public int profit(Money money) {
-            return money.earnOnePointFiveTimes();
+            return money.multiply();
         }
     },
     WIN {
         @Override
         public int profit(Money money) {
-            return money.earn();
+            return money.add();
         }
     },
     LOSE {
         @Override
         public int profit(Money money) {
-            return money.lose();
+            return money.subtract();
         }
     },
     DRAW {
