@@ -7,6 +7,7 @@ import blackjack.domain.deck.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
 import blackjack.domain.participant.Players;
+import blackjack.dto.CardResult;
 import blackjack.dto.ProfitResult;
 import blackjack.dto.StateResult;
 import blackjack.view.InputView;
@@ -111,9 +112,9 @@ public class BlackjackController {
 
     private void printCardsOfParticipants(Players players, Dealer dealer) {
         outputView.println();
-        outputView.printCardsWithScore(dealer.getName(), dealer.getCardsName(), dealer.getSumOfCards());
+        outputView.printCardsWithScore(CardResult.from(dealer));
         for (Player player : players.getPlayers()) {
-            outputView.printCardsWithScore(player.getName(), player.getCardsName(), player.getSumOfCards());
+            outputView.printCardsWithScore(CardResult.from(player));
         }
     }
 

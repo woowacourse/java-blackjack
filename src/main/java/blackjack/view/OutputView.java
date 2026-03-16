@@ -1,5 +1,6 @@
 package blackjack.view;
 
+import blackjack.dto.CardResult;
 import blackjack.dto.ProfitResult;
 import java.util.List;
 import java.util.StringJoiner;
@@ -18,8 +19,10 @@ public class OutputView {
         System.out.println(playerName + "카드: " + stringJoinWithComma(cards));
     }
 
-    public void printCardsWithScore(String playerName, List<String> cards, int score) {
-        System.out.println(playerName + "카드: " + stringJoinWithComma(cards) + " - 결과: " + score);
+    public void printCardsWithScore(CardResult cardResult) {
+        System.out.println(cardResult.participantName()
+                + "카드: " + stringJoinWithComma(cardResult.cardsName())
+                + " - 결과: " + cardResult.score());
     }
 
     public void printGetMoreCardsMessageForDealer(String dealerName) {
@@ -44,8 +47,7 @@ public class OutputView {
 
     private void printResultOfPlayers(ProfitResult profitResult) {
         profitResult.profitResult().forEach((playerName, profit) ->
-                System.out.println(playerName + ": " + profit)
-        );
+                System.out.println(playerName + ": " + profit));
     }
 
     private String stringJoinWithComma(List<String> strings) {
