@@ -38,6 +38,7 @@ public class InputView {
             System.out.println();
             System.out.println(PLAYER_BET_AMOUNT_MESSAGE.format(name));
             String inputBetAmount = bufferedReader.readLine();
+            validatedInput.validatePlayerBetAmount(inputBetAmount);
             return Integer.parseInt(inputBetAmount);
         } catch (IOException e) {
             throw new RuntimeException(e);
