@@ -17,4 +17,17 @@ class MoneyTest {
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> new Money(negativeMoney));
     }
+
+    @Test
+    @DisplayName("돈은 0이 될 수 있어야 한다.")
+    void 돈이_0인_경우_성공() {
+        // given
+        int zeroMoney = 0;
+
+        // when
+        Money money = new Money(zeroMoney);
+
+        // then
+        Assertions.assertEquals(zeroMoney, money.getValue());
+    }
 }
