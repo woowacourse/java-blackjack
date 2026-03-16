@@ -1,72 +1,99 @@
 package controller;
 
-import domain.card.Deck;
-import domain.participant.Dealer;
-import domain.participant.Player;
-import domain.participant.Players;
-import service.GameManager;
+import domain.match.GameResult;
+import domain.money.Bet;
+import domain.participant.*;
+import mapper.DealerMapper;
+import mapper.PlayersMapper;
+import domain.card.CardDistributor;
+import mapper.ProfitResultMapper;
 import view.InputView;
 import view.OutputView;
+
+import java.util.*;
 
 public class BlackJackController {
 
     private final InputView inputView;
     private final OutputView outputView;
+    private final CardDistributor cardDistributor;
 
-    public BlackJackController(InputView inputView, OutputView outputView) {
+    public BlackJackController(InputView inputView, OutputView outputView, CardDistributor cardDistributor) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.cardDistributor = cardDistributor;
     }
 
     public void playGame() {
-        Deck deck = new Deck();
         Dealer dealer = new Dealer();
-        Players players = readUntilValidPlayers();
+        Players players = readPlayersUntilValid();
 
-        GameManager gameManager = new GameManager(dealer, players);
-        gameManager.initHands(deck);
-        outputView.showInitialHands(dealer, players);
+        playBlackJack(players, dealer);
 
-        playBlackJack(deck, dealer, players);
-        outputView.showHandResults(dealer, players);
-        outputView.showGameResult(gameManager.calculateResults());
+        outputView.showHandResultsOfParticipants(DealerMapper.toDto(dealer), PlayersMapper.toPlayersDto(players));
+        outputView.showProfitResult(ProfitResultMapper.toDto(GameResult.of(players, dealer)));
     }
 
-    private void playBlackJack(Deck deck, Dealer dealer, Players players) {
+    private void playBlackJack(Players players, Dealer dealer) {
+        cardDistributor.dealInitialCardsToParticipants(dealer, players);
+        outputView.showInitialHandsOfParticipants(DealerMapper.toDto(dealer), PlayersMapper.toPlayersDto(players));
+
         for (Player player : players.getPlayers()) {
-            playPlayerTurn(deck, player);
+            playPlayerTurn(player);
         }
 
-        playDealerTurn(deck, dealer);
+        playDealerTurn(dealer);
     }
 
-    private void playPlayerTurn(Deck deck, Player player) {
+    private void playPlayerTurn(Player player) {
         while (!player.isBust()) {
             if (!inputView.readPlayerToHitUntilValid(player.getName())) {
                 break;
             }
 
-            player.receive(deck.drawCard());
-            outputView.showPlayerHand(player);
+            cardDistributor.dealCardTo(player);
+            outputView.showPlayerHand(PlayersMapper.toPlayerDto(player));
         }
     }
 
-    private void playDealerTurn(Deck deck, Dealer dealer) {
+    private void playDealerTurn(Dealer dealer) {
         while (dealer.shouldHit()) {
             outputView.showDealerHitMessage();
-            dealer.receive(deck.drawCard());
-            outputView.showDealerHand(dealer);
+            cardDistributor.dealCardTo(dealer);
+            outputView.showDealerHand(DealerMapper.toDto(dealer));
         }
 
         outputView.showDealerStandMessage();
     }
 
-    private Players readUntilValidPlayers() {
-        try {
-            return new Players(inputView.readPlayers());
-        } catch (IllegalArgumentException e) {
-            OutputView.printErrorMessage(e.getMessage());
-            return readUntilValidPlayers();
+    private Players createPlayers(List<Player> playersInfo) {
+        return new Players(new ArrayList<>(playersInfo));
+    }
+
+    private Players readPlayersUntilValid() {
+        while (true) {
+            try {
+                List<Player> playersInfo = new ArrayList<>();
+                List<String> names = inputView.readPlayers();
+
+                for (String name : names) {
+                    playersInfo.add(new Player(new Name(name), readPlayerBetAmountUntilValid(name)));
+                }
+
+                return createPlayers(playersInfo);
+            } catch (IllegalArgumentException e) {
+                OutputView.printErrorMessage(e.getMessage());
+            }
+        }
+    }
+
+    private Bet readPlayerBetAmountUntilValid(String name) {
+        while (true) {
+            try {
+                return new Bet(inputView.readPlayerBetAmount(name));
+            } catch (IllegalArgumentException e) {
+                OutputView.printErrorMessage(e.getMessage());
+            }
         }
     }
 }

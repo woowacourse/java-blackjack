@@ -1,4 +1,6 @@
-package domain.card;
+package domain.participant;
+
+import domain.card.Card;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +23,9 @@ public class Hand {
 
         for (Card card : cards) {
             sum += card.getRank().getValue();
-            if (card.isAce()) aceCount++;
+            if (card.isAce()) {
+                aceCount++;
+            }
         }
 
         sum = adjustAceValue(sum, aceCount);

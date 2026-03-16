@@ -1,0 +1,38 @@
+package domain.participant;
+
+import java.util.Objects;
+
+public class Name {
+
+    private static final int MAX_NAME_LENGTH = 8;
+
+    private final String name;
+
+    public Name(String name) {
+        validateNameLength(name);
+        this.name = name;
+    }
+
+    private void validateNameLength(String name) {
+        if (name.isEmpty() || name.length() > MAX_NAME_LENGTH) {
+            throw new IllegalArgumentException(String.format("잘못된 이름: %s (플레이어 이름은 1자 이상 8자 이하여야 합니다.)", name));
+        }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Name name1 = (Name) o;
+        return Objects.equals(name, name1.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(name);
+    }
+}

@@ -1,15 +1,11 @@
 package domain.participant;
 
-import domain.MatchResult;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.HashMap;
-import java.util.Map;
 
 class DealerTest {
 
@@ -61,27 +57,5 @@ class DealerTest {
 
         // when - then
         Assertions.assertEquals(dealer.getFirstCard(), firstCard);
-    }
-
-    @Test
-    @DisplayName("딜러의 승패를 올바르게 판단한다.")
-    void 딜러_승패_판단() {
-        // given
-        Dealer dealer = new Dealer();
-        Map<Player, MatchResult> playerResults = new HashMap<>();
-
-        playerResults.put(new Player("pobi"), MatchResult.WIN);
-        playerResults.put(new Player("sisi"), MatchResult.WIN);
-        playerResults.put(new Player("ao"), MatchResult.WIN);
-        playerResults.put(new Player("james"), MatchResult.DRAW);
-        playerResults.put(new Player("lala"), MatchResult.LOSE);
-
-        // when
-        Map<MatchResult, Integer> dealerResult = dealer.calculateResult(playerResults);
-
-        // then
-        Assertions.assertEquals(dealerResult.get(MatchResult.LOSE), 3);
-        Assertions.assertEquals(dealerResult.get(MatchResult.DRAW), 1);
-        Assertions.assertEquals(dealerResult.get(MatchResult.WIN), 1);
     }
 }

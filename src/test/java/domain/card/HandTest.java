@@ -1,5 +1,6 @@
 package domain.card;
 
+import domain.participant.Hand;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,7 +35,8 @@ class HandTest {
         );
     }
 
-    @ParameterizedTest(name = "{0}")
+    @ParameterizedTest
+    @DisplayName("Ace는 1 또는 11로 계산할 수 있으며, King, Queen, Jack은 각각 10으로 계산한다.")
     @MethodSource("handScoreProvider")
     void calculateScoreTests(HandScoreTestCase testCase) {
         // given
@@ -137,23 +139,11 @@ class HandTest {
         assertEquals(hand.getCards().size(), 2);
     }
 
-        @Test
-    @DisplayName("Hand에 카드가 없을 때 첫 카드를 확인하려고 하면 예외를 발생한다.")
-    void NULL_예외_처리_첫_카드() {
-        // given
-        Hand hand = new Hand();
-
-
-        // when - then
-        assertThrows(IllegalStateException.class, hand::getCards);
-    }
-
     @Test
-    @DisplayName("Hand에 카드가 없을 때 전체 카드를 확인하려고 하면 예외를 발생한다.")
-    void NULL_예외_처리_카드_전체() {
+    @DisplayName("Hand에 카드가 없을 때 카드를 확인하려고 하면 예외를 발생한다.")
+    void NULL_예외_처리_카드() {
         // given
         Hand hand = new Hand();
-
 
         // when - then
         assertThrows(IllegalStateException.class, hand::getCards);
