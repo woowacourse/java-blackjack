@@ -1,5 +1,5 @@
-import domain.Card;
-import domain.CardDeck;
+import domain.card.Card;
+import domain.card.CardDeck;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

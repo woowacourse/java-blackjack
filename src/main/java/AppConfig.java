@@ -1,5 +1,7 @@
-import domain.RandomShuffle;
-import domain.ShuffleStrategy;
+import domain.card.RandomShuffle;
+import domain.card.ShuffleStrategy;
+import strategy.BettingRule;
+import strategy.DefaultBettingRule;
 import view.InputView;
 import view.OutputView;
 
@@ -10,7 +12,7 @@ public class AppConfig {
     }
 
     private GameService service() {
-        return new GameService(strategy());
+        return new GameService(strategy(), bettingRule());
     }
 
     private InputView inputView() {
@@ -23,5 +25,9 @@ public class AppConfig {
 
     private ShuffleStrategy strategy() {
         return new RandomShuffle();
+    }
+
+    private BettingRule bettingRule() {
+        return new DefaultBettingRule();
     }
 }

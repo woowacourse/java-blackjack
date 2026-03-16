@@ -1,6 +1,6 @@
-import domain.Card;
-import domain.CardDeck;
-import domain.Dealer;
+import domain.card.Card;
+import domain.card.CardDeck;
+import domain.player.Dealer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,8 +1,10 @@
 package view;
 
-import domain.Card;
-import domain.Dealer;
-import domain.User;
+import domain.card.Card;
+import domain.player.Dealer;
+import domain.result.DealerProfit;
+import domain.player.User;
+import domain.result.UserProfit;
 
 import java.util.List;
 import java.util.StringJoiner;
@@ -55,7 +57,7 @@ public class OutputView {
      * pobi: 승
      * jason: 패
      */
-    public void printGameRecord(List<User> users, Dealer dealer) {
+    public void printGameRecord(List<UserProfit> userProfits, Dealer dealer) {
         System.out.println('\n' + "## 최종 승패");
         StringJoiner sj = new StringJoiner(" ");
 
@@ -65,9 +67,17 @@ public class OutputView {
 
         if (sj.length() > 0) {
             System.out.println("딜러: " + sj.toString());
-            for(User user : users) {
-                System.out.println(user.getName()+": " + user.getGameResult().getName());
+            for (UserProfit userProfit : userProfits) {
+                System.out.println(userProfit.roundBetInfo().user().getName() + ": " + userProfit.gameResult().getName());
             }
+        }
+    }
+
+    public void printTotalProfit(List<UserProfit> userProfits, DealerProfit dealerProfit) {
+        System.out.println('\n' + "## 최종 수익");
+        System.out.println("딜러: " + dealerProfit.profit());
+        for (UserProfit userProfit : userProfits) {
+            System.out.println(userProfit.roundBetInfo().user().getName() + ": " + userProfit.profit());
         }
     }
 }

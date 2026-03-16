@@ -1,7 +1,9 @@
-import domain.Card;
-import domain.CardDeck;
-import domain.ShuffleStrategy;
-import domain.User;
+import domain.card.Card;
+import domain.card.CardDeck;
+import domain.card.ShuffleStrategy;
+import strategy.BettingRule;
+import strategy.DefaultBettingRule;
+import domain.player.User;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,7 +22,8 @@ class UserTest {
     @BeforeEach
     void setUp() {
         ShuffleStrategy strategy = (cards -> {});
-        gameService = new GameService(strategy);
+        BettingRule bettingRule = new DefaultBettingRule();
+        gameService = new GameService(strategy, bettingRule);
     }
 
     @Test
@@ -41,4 +44,5 @@ class UserTest {
         user.receiveInitCard(cards);
         assertThat(user.getHand().size()).isEqualTo(2);
     }
+
 }

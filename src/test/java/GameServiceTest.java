@@ -1,13 +1,19 @@
-import domain.Card;
-import domain.Dealer;
-import domain.GameResult;
-import domain.RandomShuffle;
-import domain.ShuffleStrategy;
-import domain.User;
+import domain.card.Card;
+import domain.player.Dealer;
+import domain.result.DealerProfit;
+import domain.result.GameResult;
+import domain.card.RandomShuffle;
+import domain.card.ShuffleStrategy;
+import domain.player.User;
+import domain.result.RoundBetInfo;
+import domain.result.UserProfit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import strategy.BettingRule;
+import strategy.DefaultBettingRule;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,7 +25,8 @@ class GameServiceTest {
     @BeforeEach
     void setUp() {
         ShuffleStrategy strategy = new RandomShuffle();
-        gameService = new GameService(strategy);
+        BettingRule bettingRule = new DefaultBettingRule();
+        gameService = new GameService(strategy, bettingRule);
     }
 
     @Test
@@ -43,23 +50,55 @@ class GameServiceTest {
         User winUser = User.from("json");
         User loseUser = User.from("poby");
         User drawUser = User.from("draw");
-        List<User> users = List.of(winUser, loseUser);
+        List<User> users = List.of(winUser, loseUser, drawUser);
+        List<RoundBetInfo> roundBetInfos = List.of(
+                new RoundBetInfo(1, winUser, BigDecimal.valueOf(1000)),
+                new RoundBetInfo(1, drawUser, BigDecimal.valueOf(2000)),
+                new RoundBetInfo(1, loseUser, BigDecimal.valueOf(3000))
+        );
 
         dealer.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_NINE));
         winUser.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_SEVEN));
         loseUser.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_ACE));
         drawUser.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_NINE));
 
-        gameService.settleResult(users, dealer);
-        long totalUserWinRounds = users.stream().filter(user -> user.getGameResult() == GameResult.WIN)
+        List<UserProfit> userProfits = gameService.settleResult(roundBetInfos, dealer);
+        long totalUserWinRounds = userProfits.stream().filter(up -> up.gameResult() == GameResult.WIN)
                         .count();
-        long totalUserLoseRounds = users.stream().filter(user -> user.getGameResult() == GameResult.LOSE)
+        long totalUserLoseRounds = userProfits.stream().filter(up -> up.gameResult() == GameResult.LOSE)
                         .count();
-        long totalUserDrawRounds = users.stream().filter(user -> user.getGameResult() == GameResult.DRAW)
+        long totalUserDrawRounds = userProfits.stream().filter(up -> up.gameResult() == GameResult.DRAW)
                 .count();
 
         assertThat(dealer.getWinRounds()).isEqualTo(totalUserLoseRounds);
         assertThat(dealer.getLoseRounds()).isEqualTo(totalUserWinRounds);
         assertThat(dealer.getDrawRounds()).isEqualTo(totalUserDrawRounds);
+    }
+
+     @Test
+    @DisplayName("딜러의 수익은 유저 수익의 반대 부호다.")
+    public void dealer_profit_reverse_user_profit() {
+        Dealer dealer = new Dealer();
+        User winUser = User.from("json");
+        User loseUser = User.from("poby");
+        User drawUser = User.from("draw");
+        List<User> users = List.of(winUser, loseUser, drawUser);
+        List<RoundBetInfo> roundBetInfos = List.of(
+                new RoundBetInfo(1, winUser, BigDecimal.valueOf(1000)),
+                new RoundBetInfo(1, drawUser, BigDecimal.valueOf(2000)),
+                new RoundBetInfo(1, loseUser, BigDecimal.valueOf(3000))
+        );
+
+
+        dealer.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_NINE));
+        winUser.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_ACE));
+        loseUser.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_SEVEN));
+        drawUser.receiveInitCard(List.of(Card.CLUB_KING, Card.CLUB_NINE));
+
+        List<UserProfit> userProfits = gameService.settleResult(roundBetInfos, dealer);
+
+        DealerProfit dealerProfit = gameService.upsertDealerProfit(userProfits);
+
+        assertThat(dealerProfit.profit()).isEqualByComparingTo("1500");
     }
 }
