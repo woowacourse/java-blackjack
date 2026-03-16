@@ -15,10 +15,10 @@ public class Dealer extends Participant {
 
     @Override
     public void pickInitialCards(CardDeck cardDeck) {
+        validateCardDeck(cardDeck);
+
         hands.addCard(cardDeck.pick());
-        
-        Card secondPickedCard = pickSecondCard(cardDeck);
-        hands.addCard(secondPickedCard);
+        hands.addCard(pickSecondCard(cardDeck));
     }
     
     private Card pickSecondCard(CardDeck cardDeck) {

@@ -13,12 +13,20 @@ public abstract class Participant {
     protected final Hands hands;
 
     public Participant(String name, Hands hands) {
-        if (hands == null) {
-            throw new IllegalArgumentException("hands가 null입니다.");
-        }
+        validate(name, hands);
 
         this.name = name;
         this.hands = hands;
+    }
+
+    private void validate(String name, Hands hands) {
+        if (name == null) {
+            throw new IllegalArgumentException("name이 null입니다.");
+        }
+
+        if (hands == null) {
+            throw new IllegalArgumentException("hands가 null입니다.");
+        }
     }
 
     public abstract void pickInitialCards(CardDeck cardDeck);
@@ -40,6 +48,7 @@ public abstract class Participant {
     }
 
     public void pickAdditionalCard(CardDeck cardDeck) {
+        validateCardDeck(cardDeck);
         hands.addCard(cardDeck.pick());
     }
 
@@ -49,5 +58,11 @@ public abstract class Participant {
 
     public String getName() {
         return this.name;
+    }
+
+    protected void validateCardDeck(CardDeck cardDeck) {
+        if (cardDeck == null) {
+            throw new IllegalArgumentException("카드 덱이 null입니다.");
+        }
     }
 }

@@ -9,6 +9,11 @@ public class Player extends Participant {
 
     private Player(String name, Hands hands, Prize prize) {
         super(name, hands);
+
+        if (prize == null) {
+            throw new IllegalArgumentException("prize가 null입니다.");
+        }
+
         this.prize = prize;
     }
 
@@ -22,6 +27,7 @@ public class Player extends Participant {
 
     @Override
     public void pickInitialCards(CardDeck cardDeck) {
+        validateCardDeck(cardDeck);
         hands.addCard(cardDeck.pick());
         hands.addCard(cardDeck.pick());
     }
