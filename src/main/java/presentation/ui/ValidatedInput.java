@@ -2,8 +2,9 @@ package presentation.ui;
 
 import java.util.List;
 
+import static domain.member.MemberInfo.DEALER_NAME;
+
 public class ValidatedInput {
-    private static final String DEALER_NAME = "딜러";
 
     public void validatePlayerName(List<String> playerNames) {
         playerNames.forEach(name -> {

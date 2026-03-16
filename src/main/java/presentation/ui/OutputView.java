@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
-    private static final String DEALER_NAME = "딜러";
 
     public void printInitialStatus(List<MemberStatus> playerStatuses) {
         System.out.println();
@@ -39,23 +38,28 @@ public class OutputView {
     public void printGameResult(List<GameResult> gameResults) {
         System.out.println(FINAL_GAME_RESULT_MESSAGE.format());
         gameResults.stream()
-                .filter(result -> result.name().equals(DEALER_NAME))
+                .filter(GameResult::isDealer)
                 .forEach(this::printMemberResult);
         gameResults.stream()
-                .filter(result -> !result.name().equals(DEALER_NAME))
+                .filter(result -> !result.isDealer())
                 .forEach(this::printMemberResult);
     }
 
     private void printDistributeMessage(List<MemberStatus> playerStatuses) {
-        String playerNames = playerStatuses.stream()
+        String dealerName = playerStatuses.stream()
+                .filter(MemberStatus::isDealer)
                 .map(MemberStatus::memberName)
-                .filter(s -> !s.equals(DEALER_NAME))
+                .findFirst()
+                .orElseThrow();
+        String playerNames = playerStatuses.stream()
+                .filter(memberStatus -> !memberStatus.isDealer())
+                .map(MemberStatus::memberName)
                 .collect(Collectors.joining(", "));
-        System.out.println(DISTRIBUTE_MESSAGE.format(DEALER_NAME, playerNames));
+        System.out.println(DISTRIBUTE_MESSAGE.format(dealerName, playerNames));
     }
 
     private void printMemberCurrentCard(MemberStatus playerStatus) {
-        if (playerStatus.memberName().equals(DEALER_NAME)) {
+        if (playerStatus.isDealer()) {
             printDealerCurrentCard(playerStatus);
             return;
         }
