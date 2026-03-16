@@ -1,6 +1,7 @@
 package domain.participant;
 
 import domain.game.Outcome;
+import java.util.Objects;
 
 public class BettingMoney {
     private final int amount;
@@ -22,5 +23,19 @@ public class BettingMoney {
 
     public int getAmount() {
         return amount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        BettingMoney that = (BettingMoney) o;
+        return amount == that.amount;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(amount);
     }
 }

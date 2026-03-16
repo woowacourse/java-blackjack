@@ -62,4 +62,20 @@ public class BettingMoneyTest {
         BettingMoney money = new BettingMoney(999);
         assertThat(money.calculateProfit(Outcome.BLACKJACK_WIN)).isEqualTo(1498);
     }
+
+    @DisplayName("같은 금액의 BettingMoney는 동등하다")
+    @Test
+    void 같은_금액의_BettingMoney는_동등하다() {
+        BettingMoney money1 = new BettingMoney(1000);
+        BettingMoney money2 = new BettingMoney(1000);
+        assertThat(money1).isEqualTo(money2);
+    }
+
+    @DisplayName("다른 금액의 BettingMoney는 동등하지 않다")
+    @Test
+    void 다른_금액의_BettingMoney는_동등하지_않다() {
+        BettingMoney money1 = new BettingMoney(1000);
+        BettingMoney money2 = new BettingMoney(2000);
+        assertThat(money1).isNotEqualTo(money2);
+    }
 }
