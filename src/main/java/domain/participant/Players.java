@@ -1,6 +1,7 @@
 package domain.participant;
 
 
+import domain.card.Card;
 import domain.card.CardDeck;
 import java.util.List;
 import java.util.Objects;
@@ -26,7 +27,10 @@ public class Players {
     }
 
     public Players drawCards(CardDeck cardDeck, int count) {
-        playerList.forEach(player -> player.drawCards(cardDeck, count));
+        playerList.forEach(player -> {
+            List<Card> cards = cardDeck.draw(count);
+            player.drawCards(cards);
+        });
         return this;
     }
 
@@ -35,6 +39,7 @@ public class Players {
                 .map(Participant::getName)
                 .toList();
     }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) {

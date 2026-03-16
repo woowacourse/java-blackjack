@@ -2,8 +2,6 @@ package domain.result;
 
 import domain.betting.BetAmount;
 import domain.card.Card;
-import domain.card.CardDeck;
-import domain.card.CardDeckBuilder;
 import domain.card.CardDenomination;
 import domain.card.CardEmblem;
 import domain.participant.Dealer;
@@ -24,17 +22,16 @@ class GameResultAnalyzerTest {
         Card heart3 = Card.of(CardDenomination.THREE, CardEmblem.HEART);
         Card heart4 = Card.of(CardDenomination.FOUR, CardEmblem.HEART);
         Card spadeAce = Card.of(CardDenomination.ACE, CardEmblem.SPADE);
-        CardDeck cardDeck = new CardDeckBuilder()
-                .cards(spade2, heart3, heart4, spadeAce)
-                .build();
+        List<Card> dealerCards = List.of(spade2, heart3);
+        List<Card> playerCards = List.of(heart4, spadeAce);
 
         Players players = Players.from(List.of(
                 ParticipantInitialInformation.of(ParticipantName.from("test"), BetAmount.from(1000))
         ));
         Dealer dealer = Dealer.create();
 
-        dealer.drawCards(cardDeck, 2);
-        players.stream().forEach(player -> player.drawCards(cardDeck, 2));
+        dealer.drawCards(dealerCards);
+        players.stream().forEach(player -> player.drawCards(playerCards));
 
         // when
         BettingResults bettingResults = GameResultAnalyzer.analyzeBettingResults(players, dealer);
@@ -52,17 +49,15 @@ class GameResultAnalyzerTest {
         Card heart3 = Card.of(CardDenomination.THREE, CardEmblem.HEART);
         Card heart4 = Card.of(CardDenomination.FOUR, CardEmblem.HEART);
         Card spadeAce = Card.of(CardDenomination.ACE, CardEmblem.SPADE);
-        CardDeck cardDeck = new CardDeckBuilder()
-                .cards(spade2, heart3, heart4, spadeAce)
-                .build();
-
+        List<Card> playerCards = List.of(spade2, heart3);
+        List<Card> dealerCards = List.of(heart4, spadeAce);
         Players players = Players.from(List.of(
                 ParticipantInitialInformation.of(ParticipantName.from("test"), BetAmount.from(1000))
         ));
         Dealer dealer = Dealer.create();
 
-        players.stream().forEach(player -> player.drawCards(cardDeck, 2));
-        dealer.drawCards(cardDeck, 2);
+        dealer.drawCards(dealerCards);
+        players.stream().forEach(player -> player.drawCards(playerCards));
 
         // when
         BettingResults bettingResults = GameResultAnalyzer.analyzeBettingResults(players, dealer);
@@ -81,19 +76,16 @@ class GameResultAnalyzerTest {
         Card heartAce = Card.of(CardDenomination.ACE, CardEmblem.HEART);
         Card heart4 = Card.of(CardDenomination.FOUR, CardEmblem.HEART);
         Card spadeAce = Card.of(CardDenomination.ACE, CardEmblem.SPADE);
-        CardDeck cardDeck = new CardDeckBuilder()
-                .cards(spadeKing, heartAce, heart4, spadeAce)
-                .build();
-
+        List<Card> playerCards = List.of(spadeKing, heartAce);
+        List<Card> dealerCards = List.of(heart4, spadeAce);
         Players players = Players.from(List.of(
                 ParticipantInitialInformation.of(ParticipantName.from("test"), BetAmount.from(1000))
         ));
         Dealer dealer = Dealer.create();
 
-        players.stream().forEach(player -> player.drawCards(cardDeck, 2));
-        dealer.drawCards(cardDeck, 2);
-
         // when
+        dealer.drawCards(dealerCards);
+        players.stream().forEach(player -> player.drawCards(playerCards));
         BettingResults bettingResults = GameResultAnalyzer.analyzeBettingResults(players, dealer);
 
         // then
@@ -109,17 +101,16 @@ class GameResultAnalyzerTest {
         Card heartAce = Card.of(CardDenomination.ACE, CardEmblem.HEART);
         Card heart4 = Card.of(CardDenomination.FOUR, CardEmblem.HEART);
         Card spadeAce = Card.of(CardDenomination.ACE, CardEmblem.SPADE);
-        CardDeck cardDeck = new CardDeckBuilder()
-                .cards(spadeKing, heartAce, heart4, spadeAce)
-                .build();
+        List<Card> dealerCards = List.of(spadeKing, heartAce);
+        List<Card> playerCards = List.of(heart4, spadeAce);
 
         Players players = Players.from(List.of(
                 ParticipantInitialInformation.of(ParticipantName.from("test"), BetAmount.from(1000))
         ));
         Dealer dealer = Dealer.create();
 
-        dealer.drawCards(cardDeck, 2);
-        players.stream().forEach(player -> player.drawCards(cardDeck, 2));
+        dealer.drawCards(dealerCards);
+        players.stream().forEach(player -> player.drawCards(playerCards));
 
         // when
         BettingResults bettingResults = GameResultAnalyzer.analyzeBettingResults(players, dealer);
@@ -138,17 +129,16 @@ class GameResultAnalyzerTest {
         Card heart4 = Card.of(CardDenomination.FOUR, CardEmblem.HEART);
         Card spadeQueen = Card.of(CardDenomination.QUEEN, CardEmblem.SPADE);
         Card spadeKing = Card.of(CardDenomination.KING, CardEmblem.SPADE);
-        CardDeck cardDeck = new CardDeckBuilder()
-                .cards(spade2, heart3, heart4, spadeQueen, spadeKing)
-                .build();
+        List<Card> playerCards = List.of(spade2, heart3);
+        List<Card> dealerCards = List.of(heart4, spadeQueen, spadeKing);
 
         Players players = Players.from(List.of(
                 ParticipantInitialInformation.of(ParticipantName.from("test"), BetAmount.from(1000))
         ));
         Dealer dealer = Dealer.create();
 
-        players.stream().forEach(player -> player.drawCards(cardDeck, 2));
-        dealer.drawCards(cardDeck, 3);
+        dealer.drawCards(dealerCards);
+        players.stream().forEach(player -> player.drawCards(playerCards));
 
         // when
         BettingResults bettingResults = GameResultAnalyzer.analyzeBettingResults(players, dealer);

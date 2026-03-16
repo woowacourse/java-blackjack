@@ -1,7 +1,6 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.card.CardDeck;
 import domain.card.Hand;
 import java.util.List;
 
@@ -15,8 +14,7 @@ public abstract class Participant {
         this.name = name;
     }
 
-    public Hand drawCards(CardDeck cardDeck, int count) {
-        List<Card> cards = cardDeck.draw(count);
+    public Hand drawCards(List<Card> cards) {
         return hand.addUp(cards);
     }
 

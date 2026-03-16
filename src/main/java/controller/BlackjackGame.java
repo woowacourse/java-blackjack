@@ -2,6 +2,7 @@ package controller;
 
 
 import config.BlackjackGameConfiguration;
+import domain.card.Card;
 import domain.card.CardDeck;
 import domain.card.CardDeckInitializer;
 import domain.participant.Dealer;
@@ -74,7 +75,8 @@ public class BlackjackGame {
 
     private void proceedDealersTurn(Dealer dealer) {
         if (dealer.canHit()) {
-            dealer.drawCards(cardDeck, DEFAULT_CARD_DRAW_COUNT);
+            List<Card> cards = cardDeck.draw(DEFAULT_CARD_DRAW_COUNT);
+            dealer.drawCards(cards);
             view.printDealerDrawCard();
         }
     }
@@ -90,13 +92,15 @@ public class BlackjackGame {
 
         boolean drawCardIntention = view.requestDrawCardDecision(player.getName().name());
         while (!player.isBusted() && drawCardIntention) {
-            player.drawCards(cardDeck, DEFAULT_CARD_DRAW_COUNT);
+            List<Card> cards = cardDeck.draw(DEFAULT_CARD_DRAW_COUNT);
+            player.drawCards(cards);
             view.printParticipantHand(ParticipantHandDtoMapper.map(player));
         }
     }
 
     private void handOutInitialCard(Dealer dealer, Players players) {
-        dealer.drawCards(cardDeck, INITIAL_CARD_DRAW_COUNT);
+        List<Card> cards = cardDeck.draw(INITIAL_CARD_DRAW_COUNT);
+        dealer.drawCards(cards);
         players.drawCards(cardDeck, INITIAL_CARD_DRAW_COUNT);
         view.printInitialDeal(players.getPlayerNames(), INITIAL_CARD_DRAW_COUNT);
     }
