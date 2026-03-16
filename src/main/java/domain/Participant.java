@@ -20,6 +20,10 @@ public abstract class Participant {
         return cards.canReceiveCard(getHitThreshold());
     }
 
+    public boolean isInitialBlackJack() {
+        return cards.isInitialBlackJack();
+    }
+
     protected abstract int getHitThreshold();
 
     public String getName() {
