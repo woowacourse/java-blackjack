@@ -24,13 +24,4 @@ public class GameScoreResultDto {
     public int getResult() {
         return result;
     }
-
-    @Override
-    public String toString() {
-        return "domain.dto.GameScoreResultDto{" +
-                "playerName='" + playerName + '\'' +
-                ", hand=" + hand +
-                ", result=" + result +
-                '}';
-    }
 }

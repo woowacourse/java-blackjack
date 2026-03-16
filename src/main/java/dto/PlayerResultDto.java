@@ -25,13 +25,4 @@ public class PlayerResultDto {
     public double getProceeds() {
         return proceeds;
     }
-
-    @Override
-    public String toString() {
-        return "GameResultDto{" +
-                "playerName='" + playerName + '\'' +
-                ", result=" + result +
-                ", proceeds=" + proceeds +
-                '}';
-    }
 }
