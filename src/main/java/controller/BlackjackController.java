@@ -40,7 +40,9 @@ public class BlackjackController {
             bettingInfos.put(name, inputView.readPlayerBettingAmount(name));
         }
 
-        return BlackjackGame.create(bettingInfos, new RandomValueGeneratorImpl());
+        BlackjackGame game = BlackjackGame.create(new RandomValueGeneratorImpl());
+        game.start(bettingInfos);
+        return game;
     }
 
     private void printInitialCards(BlackjackGame game) {

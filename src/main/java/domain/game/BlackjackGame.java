@@ -20,22 +20,24 @@ public class BlackjackGame {
     private static final int FIRST_DRAW_CARDS_NUM = 2;
 
     private final Deck deck;
-    private final Participants participants;
+    private Participants participants;
 
-    private BlackjackGame(Deck deck, Participants participants) {
+    private BlackjackGame(Deck deck) {
         this.deck = deck;
-        this.participants = participants;
     }
 
-    public static BlackjackGame create(Map<String, Integer> playerInfos,
-                                       RandomValueGenerator randomValueGenerator) {
+    public static BlackjackGame create(RandomValueGenerator randomValueGenerator) {
         Deck deck = DeckCreator.createDeck(CardsCreator.createCards(), randomValueGenerator);
-        Dealer dealer = Dealer.from(createInitialHand(deck));
-        Players players = Players.of(createPlayers(playerInfos, deck));
-        return new BlackjackGame(deck, Participants.of(dealer, players));
+        return new BlackjackGame(deck);
     }
 
-    private static List<Player> createPlayers(Map<String, Integer> playerInfos, Deck deck) {
+    public void start(Map<String, Integer> playerInfos) {
+        Dealer dealer = Dealer.from(createInitialHand(deck));
+        Players players = Players.of(createPlayers(playerInfos));
+        this.participants = Participants.of(dealer, players);
+    }
+
+    private List<Player> createPlayers(Map<String, Integer> playerInfos) {
         return playerInfos.entrySet().stream()
                 .map(entry -> {
                     Name name = new Name(entry.getKey());
