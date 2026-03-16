@@ -4,8 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.math.BigDecimal;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import vo.Bet;
@@ -31,8 +33,8 @@ public class BlackjackGameFlowTest {
         ));
         blackjackGame = new BlackjackGame(fixedDeck);
         List<Name> names = List.of(new Name("영기"), new Name("라이"));
-        Map<Name, Bet> bets = new LinkedHashMap<>();
-        names.forEach(name -> bets.put(name, new Bet("1000")));
+        List<Entry<Name, Bet>> bets = new LinkedList<>();
+        names.forEach(name -> bets.add(Map.entry(name, new Bet("1000"))));
         blackjackGame.prepare(bets);
     }
 

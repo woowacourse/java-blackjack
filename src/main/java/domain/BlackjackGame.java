@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import vo.Bet;
 import vo.GameResult;
 import vo.Name;
@@ -24,7 +25,7 @@ public class BlackjackGame {
         this.deck = deck;
     }
 
-    public void prepare(Map<Name, Bet> bets) {
+    public void prepare(List<Entry<Name, Bet>> bets) {
         this.participants = new Participants(bets);
         this.dealer = new Dealer();
         dealCards();

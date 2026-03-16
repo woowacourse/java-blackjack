@@ -4,9 +4,10 @@
 
 ## ✅ 리팩토링 할 것 목록
 
-- [ ] **1. `Application`의 Map 객체 동등성 확인**
+- [x] **1. `Application`의 Map 객체 동등성 확인**
   - 이 부분은 지금은 Name이 같은 참조를 쓰고 있어서 동작하지만, 리팩토링 하기 어려운 코드이다.
   - Name 객체가 새로 만들어지는 순간 조용히 깨지는 코드가 된다.
+  - map을 쓰지 말자.
 - [x] **2. `BlackjackGame`의 주석 지우기**
 - [x] **3. `blackjackGame`의 protected field를 private으로 수정할 것.**
   - [x] 이를 위해 blackjackGame의 prepare() 구조를 생성자로 옮겨야 함.

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import vo.Bet;
 import vo.Name;
@@ -11,14 +12,14 @@ import vo.Name;
 public class Participants {
     private final List<User> participants;
 
-    public Participants(Map<Name, Bet> bets) {
+    public Participants(List<Entry<Name, Bet>> bets) {
         this.participants = new ArrayList<>();
         saveUsers(bets);
     }
 
-    private void saveUsers(Map<Name, Bet> bets) {
-        bets.forEach((name, bet) -> {
-            participants.add(new User(name, bet));
+    private void saveUsers(List<Entry<Name, Bet>> bets) {
+        bets.forEach((entry) -> {
+            participants.add(new User(entry.getKey(), entry.getValue()));
         });
     }
 
