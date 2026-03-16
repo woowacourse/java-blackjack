@@ -1,7 +1,6 @@
 package view;
 
-import domain.ExceptionMessage;
-import domain.participant.Name;
+import exception.InvalidHitStandInputException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -23,7 +22,7 @@ public class InputView {
         System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
         String input = readLine();
         if (!(input.equals("y") || input.equals("n"))) {
-            throw new IllegalArgumentException(ExceptionMessage.INVALID_HIT_STAND_RESPONSE.getMessage());
+            throw new InvalidHitStandInputException();
         }
         return input;
     }
