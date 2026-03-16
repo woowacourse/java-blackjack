@@ -49,7 +49,7 @@ public class HandCards {
         return sum;
     }
 
-    public int quantity() {
+    public int getQuantity() {
         return cards.size();
     }
 
