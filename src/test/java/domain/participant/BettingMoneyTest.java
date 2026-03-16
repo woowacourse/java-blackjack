@@ -11,41 +11,41 @@ public class BettingMoneyTest {
 
     @Test
     void 베팅_금액을_생성한다() {
-        BettingMoney money = new BettingMoney(1000);
-        assertThat(money.getAmount()).isEqualTo(1000);
+        BettingMoney money = new BettingMoney(1_000);
+        assertThat(money.getAmount()).isEqualTo(1_000);
     }
 
     @Test
     void 양의_정수가_아니라면_예외가_발생한다() {
-        assertThatThrownBy(() -> new BettingMoney(-1000))
+        assertThatThrownBy(() -> new BettingMoney(-1_000))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("승리하면 베팅 금액만큼 수익이다")
     @Test
     void 승리하면_베팅_금액만큼_수익이다() {
-        BettingMoney money = new BettingMoney(10000);
-        assertThat(money.calculateProfit(Outcome.WIN)).isEqualTo(10000);
+        BettingMoney money = new BettingMoney(10_000);
+        assertThat(money.calculateProfit(Outcome.WIN)).isEqualTo(10_000);
     }
 
     @DisplayName("블랙잭 승리하면 1.5배 수익이다")
     @Test
     void 블랙잭_승리하면_1점5배_수익이다() {
-        BettingMoney money = new BettingMoney(10000);
-        assertThat(money.calculateProfit(Outcome.BLACKJACK_WIN)).isEqualTo(15000);
+        BettingMoney money = new BettingMoney(10_000);
+        assertThat(money.calculateProfit(Outcome.BLACKJACK_WIN)).isEqualTo(15_000);
     }
 
     @DisplayName("패배하면 베팅 금액만큼 손해다")
     @Test
     void 패배하면_베팅_금액만큼_손해다() {
-        BettingMoney money = new BettingMoney(10000);
-        assertThat(money.calculateProfit(Outcome.LOSE)).isEqualTo(-10000);
+        BettingMoney money = new BettingMoney(10_000);
+        assertThat(money.calculateProfit(Outcome.LOSE)).isEqualTo(-10_000);
     }
 
     @DisplayName("무승부면 수익이 0이다")
     @Test
     void 무승부면_수익이_0이다() {
-        BettingMoney money = new BettingMoney(10000);
+        BettingMoney money = new BettingMoney(10_000);
         assertThat(money.calculateProfit(Outcome.TIE)).isEqualTo(0);
     }
 
@@ -60,22 +60,22 @@ public class BettingMoneyTest {
     @Test
     void 홀수_금액의_블랙잭_승리는_소수점을_버린다() {
         BettingMoney money = new BettingMoney(999);
-        assertThat(money.calculateProfit(Outcome.BLACKJACK_WIN)).isEqualTo(1498);
+        assertThat(money.calculateProfit(Outcome.BLACKJACK_WIN)).isEqualTo(1_498);
     }
 
     @DisplayName("같은 금액의 BettingMoney는 동등하다")
     @Test
     void 같은_금액의_BettingMoney는_동등하다() {
-        BettingMoney money1 = new BettingMoney(1000);
-        BettingMoney money2 = new BettingMoney(1000);
+        BettingMoney money1 = new BettingMoney(1_000);
+        BettingMoney money2 = new BettingMoney(1_000);
         assertThat(money1).isEqualTo(money2);
     }
 
     @DisplayName("다른 금액의 BettingMoney는 동등하지 않다")
     @Test
     void 다른_금액의_BettingMoney는_동등하지_않다() {
-        BettingMoney money1 = new BettingMoney(1000);
-        BettingMoney money2 = new BettingMoney(2000);
+        BettingMoney money1 = new BettingMoney(1_000);
+        BettingMoney money2 = new BettingMoney(2_000);
         assertThat(money1).isNotEqualTo(money2);
     }
 }

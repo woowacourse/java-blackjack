@@ -15,13 +15,13 @@ public class PlayerTest {
 
     @BeforeEach
     void beforeEach() {
-        player = new Player("아나키", new BettingMoney(1000));
+        player = new Player("아나키", new BettingMoney(1_000));
     }
 
     @DisplayName("공백이 들어오면 예외처리한다")
     @Test
     void 공백_들어오면_예외처리한다() {
-        assertThatThrownBy(() -> new Player(" ", new BettingMoney(1000)))
+        assertThatThrownBy(() -> new Player(" ", new BettingMoney(1_000)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

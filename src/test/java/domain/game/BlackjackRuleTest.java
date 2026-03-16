@@ -137,6 +137,6 @@ public class BlackjackRuleTest {
     }
 
     private Player createPlayer(String name) {
-        return new Player(name, new BettingMoney(1000));
+        return new Player(name, new BettingMoney(1_000));
     }
 }

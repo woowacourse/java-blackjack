@@ -15,23 +15,23 @@ public class ProfitResultTest {
     @Test
     void 딜러_수익은_플레이어_수익_합산의_부호_반전이다() {
         Map<Player, Integer> playerProfits = new LinkedHashMap<>();
-        playerProfits.put(new Player("pobi", new BettingMoney(10000)), 10000);
-        playerProfits.put(new Player("jason", new BettingMoney(20000)), -20000);
+        playerProfits.put(new Player("pobi", new BettingMoney(10_000)), 10_000);
+        playerProfits.put(new Player("jason", new BettingMoney(20_000)), -20_000);
 
         ProfitResult profitResult = new ProfitResult(playerProfits);
 
-        assertThat(profitResult.getDealerProfit()).isEqualTo(10000);
+        assertThat(profitResult.getDealerProfit()).isEqualTo(10_000);
     }
 
     @DisplayName("플레이어별 수익을 반환한다")
     @Test
     void 플레이어별_수익을_반환한다() {
-        Player player = new Player("pobi", new BettingMoney(10000));
+        Player player = new Player("pobi", new BettingMoney(10_000));
         Map<Player, Integer> playerProfits = new LinkedHashMap<>();
-        playerProfits.put(player, 15000);
+        playerProfits.put(player, 15_000);
 
         ProfitResult profitResult = new ProfitResult(playerProfits);
 
-        assertThat(profitResult.getPlayerProfits().get(player)).isEqualTo(15000);
+        assertThat(profitResult.getPlayerProfits().get(player)).isEqualTo(15_000);
     }
 }
