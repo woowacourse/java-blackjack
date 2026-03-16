@@ -76,7 +76,7 @@ public class BlackjackService {
     }
 
     public BettingResultDto getBettingScoreDto(Game game) {
-        return new BettingResultDto(game.getTotalMoney(), game.getBettingScore(game));
+        return new BettingResultDto(-game.getTotalMoney(), game.getBettingScore(game));
     }
 
 }

@@ -23,8 +23,13 @@ class PlayersTest {
     @DisplayName("총 배팅 금액을 구한다.")
     @Test
     void 총_배팅_금액_계산(){
-        players.getPlayer(0).betMoney(10000);
-        players.getPlayer(1).betMoney(20000);
+        Player player1 = new Player("player1");
+        Player player2 = new Player("player2");
+
+        player1.betMoney(10000);
+        player2.betMoney(20000);
+
+        Players players = new Players(List.of(player1, player2));
 
         int total = players.getTotalBettingScore();
 

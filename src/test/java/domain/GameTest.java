@@ -279,8 +279,4 @@ class GameTest {
         assertThat(dealer.getBettingScore()).isEqualTo(0);
     }
 
-    private Players createSinglePlayerSet(Player player) {
-        return new Players(List.of(player));
-    }
-
 }

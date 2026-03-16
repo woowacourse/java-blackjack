@@ -29,8 +29,4 @@ public class Players implements Iterable<Player> {
         return players.stream().allMatch(Player::isBust);
     }
 
-    public Player getPlayer(int index){
-        return players.get(index);
-    }
-
 }
