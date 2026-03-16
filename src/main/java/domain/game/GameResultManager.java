@@ -5,6 +5,7 @@ import domain.betting.Revenue;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Players;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -41,12 +42,9 @@ public class GameResultManager {
     }
 
     private Revenue calculateDealerRevenue(Map<Name, Revenue> revenues) {
-        int totalPlayerRevenue = revenues.values().stream()
-                .mapToInt(Revenue::getMoney)
-                .sum();
-        int dealerRevenue = Math.negateExact(totalPlayerRevenue);
-
-        return new Revenue(dealerRevenue);
+        BigDecimal totalPlayerRevenue = revenues.values().stream()
+                .map(Revenue::getMoney)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        return new Revenue(totalPlayerRevenue.negate());
     }
-
 }

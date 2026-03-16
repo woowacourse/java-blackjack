@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import domain.game.GameResult;
 import domain.participant.Name;
 import domain.participant.Player;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
@@ -16,11 +17,12 @@ class CalculateProfitTest {
         Name name = new Name("pobi");
         Player player = new Player(name);
         Map<Name, BettingAmount> amountMap = new HashMap<>();
-        amountMap.put(player.getName(), new BettingAmount(1000));
+        amountMap.put(player.getName(), new BettingAmount(BigDecimal.valueOf(1000)));
         BettingAmounts bettingAmounts = new BettingAmounts(amountMap);
         CalculateProfit calculateProfit = new CalculateProfit(bettingAmounts);
-        int expected = -1000;
-        assertEquals(expected, calculateProfit.calculate(name, GameResult.LOSE).getMoney());
+        BigDecimal expected = BigDecimal.valueOf(-1000);
+        BigDecimal actual = calculateProfit.calculate(name, GameResult.LOSE).getMoney();
+        assertEquals(0, expected.compareTo(actual));
     }
 
     @Test
@@ -28,11 +30,12 @@ class CalculateProfitTest {
         Name name = new Name("pobi");
         Player player = new Player(name);
         Map<Name, BettingAmount> amountMap = new HashMap<>();
-        amountMap.put(player.getName(), new BettingAmount(1000));
+        amountMap.put(player.getName(), new BettingAmount(BigDecimal.valueOf(1000)));
         BettingAmounts bettingAmounts = new BettingAmounts(amountMap);
         CalculateProfit calculateProfit = new CalculateProfit(bettingAmounts);
-        int expected = 1000;
-        assertEquals(expected, calculateProfit.calculate(name, GameResult.WIN).getMoney());
+        BigDecimal expected = BigDecimal.valueOf(1000);
+        BigDecimal actual = calculateProfit.calculate(name, GameResult.WIN).getMoney();
+        assertEquals(0, expected.compareTo(actual));
     }
 
     @Test
@@ -40,11 +43,12 @@ class CalculateProfitTest {
         Name name = new Name("pobi");
         Player player = new Player(name);
         Map<Name, BettingAmount> amountMap = new HashMap<>();
-        amountMap.put(player.getName(), new BettingAmount(1000));
+        amountMap.put(player.getName(), new BettingAmount(BigDecimal.valueOf(1000)));
         BettingAmounts bettingAmounts = new BettingAmounts(amountMap);
         CalculateProfit calculateProfit = new CalculateProfit(bettingAmounts);
-        int expected = 1500;
-        assertEquals(expected, calculateProfit.calculate(name, GameResult.BLACKJACK).getMoney());
+        BigDecimal expected = BigDecimal.valueOf(1500);
+        BigDecimal actual = calculateProfit.calculate(name, GameResult.BLACKJACK).getMoney();
+        assertEquals(0, expected.compareTo(actual));
     }
 
     @Test
@@ -52,10 +56,11 @@ class CalculateProfitTest {
         Name name = new Name("pobi");
         Player player = new Player(name);
         Map<Name, BettingAmount> amountMap = new HashMap<>();
-        amountMap.put(player.getName(), new BettingAmount(1000));
+        amountMap.put(player.getName(), new BettingAmount(BigDecimal.valueOf(1000)));
         BettingAmounts bettingAmounts = new BettingAmounts(amountMap);
         CalculateProfit calculateProfit = new CalculateProfit(bettingAmounts);
-        int expected = 0;
-        assertEquals(expected, calculateProfit.calculate(name, GameResult.DRAW).getMoney());
+        BigDecimal expected = BigDecimal.valueOf(0);
+        BigDecimal actual = calculateProfit.calculate(name, GameResult.DRAW).getMoney();
+        assertEquals(0, expected.compareTo(actual));
     }
 }

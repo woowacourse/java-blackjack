@@ -13,6 +13,7 @@ import domain.participant.Player;
 import domain.participant.Players;
 import dto.ParticipantCardsDto;
 import dto.ParticipantRevenueDto;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import view.InputView;
 import view.OutputView;
@@ -50,7 +51,7 @@ public class BlackJackGameController {
         Map<Name, BettingAmount> bettingAmounts = new HashMap<>();
         players.forEach(player -> {
             int amount = InputView.askBettingAmount(player.getName().getName());
-            bettingAmounts.put(player.getName(), new BettingAmount(amount));
+            bettingAmounts.put(player.getName(), new BettingAmount(BigDecimal.valueOf(amount)));
         });
         return new BettingAmounts(bettingAmounts);
     }

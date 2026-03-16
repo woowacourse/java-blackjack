@@ -12,6 +12,7 @@ import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Player;
 import domain.participant.Players;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +37,7 @@ class GameResultManagerTest {
         crong.receiveCard(new Card(Shape.HEART, Number.SEVEN));
 
         Map<Name, BettingAmount> bettingAmounts = new HashMap<>();
-        players.forEach(player -> bettingAmounts.put(player.getName(), new BettingAmount(1000)));
+        players.forEach(player -> bettingAmounts.put(player.getName(), new BettingAmount(BigDecimal.valueOf(1000))));
 
         BettingAmounts bettingManager = new BettingAmounts(bettingAmounts);
         CalculateProfit calculateProfit = new CalculateProfit(bettingManager);
