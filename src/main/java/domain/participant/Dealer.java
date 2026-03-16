@@ -19,15 +19,6 @@ public class Dealer extends Participant {
         return new Dealer();
     }
 
-    public boolean hitIfRequired(CardDeck cardDeck) {
-        if (canHit()) {
-            List<Card> cards = cardDeck.draw(DEFAULT_CARD_DRAW_COUNT);
-            hand.addUp(Hand.from(cards));
-            return true;
-        }
-        return false;
-    }
-
     public boolean canHit() {
         return hand.getBasicScore() <= DEALER_ADDITIONAL_DRAW_CONDITION;
     }

@@ -26,7 +26,7 @@ class DealerTest {
         dealer.drawCards(cardDeck, 2);
 
         // when & then
-        Assertions.assertThat(dealer.hitIfRequired(cardDeck)).isTrue();
+        Assertions.assertThat(dealer.canHit()).isTrue();
     }
 
     @Test
@@ -41,6 +41,6 @@ class DealerTest {
         dealer.drawCards(cardDeck, 2);
 
         // when & then
-        Assertions.assertThat(dealer.hitIfRequired(cardDeck)).isFalse();
+        Assertions.assertThat(dealer.canHit()).isFalse();
     }
 }

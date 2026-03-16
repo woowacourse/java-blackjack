@@ -41,7 +41,6 @@ public class BlackjackGame {
         Players players = Players.from(participantInitialInformation);
 
         handOutInitialCard(dealer, players);
-
         printInitialParticipantsHand(dealer, players);
 
         proceedEachPlayersTurn(players);
@@ -74,7 +73,8 @@ public class BlackjackGame {
     }
 
     private void proceedDealersTurn(Dealer dealer) {
-        if (dealer.hitIfRequired(cardDeck)) {
+        if (dealer.canHit()) {
+            dealer.drawCards(cardDeck, DEFAULT_CARD_DRAW_COUNT);
             view.printDealerDrawCard();
         }
     }
