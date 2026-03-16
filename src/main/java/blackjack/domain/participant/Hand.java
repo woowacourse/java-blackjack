@@ -26,10 +26,6 @@ public class Hand {
                 .toList();
     }
 
-//    public Card getFirstCard() {
-//        return cards.getFirst();
-//    }
-
     public List<Card> getCards() {
         return List.copyOf(cards);
     }
