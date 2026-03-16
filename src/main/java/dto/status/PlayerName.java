@@ -3,15 +3,17 @@ package dto.status;
 import constant.ErrorMessage;
 
 public record PlayerName(String name) {
-    public PlayerName {
-        validate(name);
+    public PlayerName(String name) {
+        this.name = normalize(name);
     }
 
-    private void validate(String name) {
+    private static String normalize(String value) {
+        String name = value.strip();
         validateNameEmpty(name);
+        return name;
     }
 
-    private void validateNameEmpty(String name) {
+    private static void validateNameEmpty(String name) {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException(ErrorMessage.NO_EMPTY_NAME.getMessage());
         }
