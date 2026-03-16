@@ -4,10 +4,10 @@ import domain.betting.Money;
 
 public final class Player extends Participant {
 
-    private final String name;
+    private final Name name;
     private Money money;
 
-    public Player(String name) {
+    public Player(Name name) {
         this.name = name;
     }
 
@@ -20,6 +20,6 @@ public final class Player extends Participant {
     }
 
     public String getName() {
-        return name;
+        return name.getValue();
     }
 }
