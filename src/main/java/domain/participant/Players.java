@@ -1,6 +1,5 @@
 package domain.participant;
 
-import static config.BlackjackGameConstant.INITIAL_CARD_DRAW_COUNT;
 
 import domain.card.CardDeck;
 import java.util.List;
@@ -26,8 +25,8 @@ public class Players {
         return playerList.stream();
     }
 
-    public Players giveInitialCardBundle(CardDeck cardDeck) {
-        playerList.forEach(player -> player.drawCards(cardDeck, INITIAL_CARD_DRAW_COUNT));
+    public Players drawCards(CardDeck cardDeck, int count) {
+        playerList.forEach(player -> player.drawCards(cardDeck, count));
         return this;
     }
 

@@ -27,7 +27,7 @@ class PlayersTest {
                 .build();
 
         // when
-        Players afterInitialize = players.giveInitialCardBundle(cardDeck);
+        Players afterInitialize = players.drawCards(cardDeck, 2);
 
         // then
         Assertions.assertThat(afterInitialize).isEqualTo(players);

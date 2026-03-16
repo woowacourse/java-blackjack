@@ -1,7 +1,5 @@
 package controller;
 
-import static config.BlackjackGameConstant.DEFAULT_CARD_DRAW_COUNT;
-import static config.BlackjackGameConstant.INITIAL_CARD_DRAW_COUNT;
 
 import config.BlackjackGameConfiguration;
 import domain.card.CardDeck;
@@ -22,6 +20,8 @@ import view.ApplicationView;
 public class BlackjackGame {
 
     private static final int STARTING_REVEALED_CARD_COUNT = 1;
+    private static final int INITIAL_CARD_DRAW_COUNT = 2;
+    private static final int DEFAULT_CARD_DRAW_COUNT = 1;
 
     private final ApplicationView view;
     private final CardDeck cardDeck;
@@ -97,7 +97,7 @@ public class BlackjackGame {
 
     private void handOutInitialCard(Dealer dealer, Players players) {
         dealer.drawCards(cardDeck, INITIAL_CARD_DRAW_COUNT);
-        players.giveInitialCardBundle(cardDeck);
+        players.drawCards(cardDeck, INITIAL_CARD_DRAW_COUNT);
         List<String> playerNames = players.stream()
                 .map(player -> player.getName().name())
                 .toList();

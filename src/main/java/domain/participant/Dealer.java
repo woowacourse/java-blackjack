@@ -1,15 +1,9 @@
 package domain.participant;
 
-import static config.BlackjackGameConstant.*;
-
-import domain.card.Card;
-import domain.card.CardDeck;
-import domain.card.Hand;
-import java.util.List;
-
 public class Dealer extends Participant {
 
     private static final int DEALER_ADDITIONAL_DRAW_CONDITION = 16;
+    private static final String DEALER_DISPLAY_NAME = "딜러";
 
     private Dealer() {
         super(ParticipantName.from(DEALER_DISPLAY_NAME));

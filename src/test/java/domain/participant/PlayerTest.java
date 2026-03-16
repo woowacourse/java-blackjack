@@ -1,6 +1,5 @@
 package domain.participant;
 
-import static config.BlackjackGameConstant.DEFAULT_CARD_DRAW_COUNT;
 
 import domain.card.Card;
 import domain.card.CardDeck;
@@ -27,7 +26,7 @@ class PlayerTest {
         Card card = Card.of(CardDenomination.EIGHT, CardEmblem.CLOVER);
 
         //when
-        Hand hand = player.drawCards(cardDeck, DEFAULT_CARD_DRAW_COUNT);
+        Hand hand = player.drawCards(cardDeck, 1);
 
         //then
         Assertions.assertThat(hand).isEqualTo(Hand.from(List.of(card)));
@@ -42,7 +41,7 @@ class PlayerTest {
 
         // when & then
         Assertions.assertThatThrownBy(() -> {
-            player.drawCards(cardDeck, DEFAULT_CARD_DRAW_COUNT);
+            player.drawCards(cardDeck, 1);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 

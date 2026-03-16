@@ -1,6 +1,5 @@
 package domain.card;
 
-import static config.BlackjackGameConstant.INITIAL_CARD_DRAW_COUNT;
 
 import java.util.List;
 import org.assertj.core.api.Assertions;
@@ -39,7 +38,7 @@ class CardDeckTest {
 
         // when & then
         Assertions.assertThatThrownBy(() -> {
-            cardDeck.draw(INITIAL_CARD_DRAW_COUNT);
+            cardDeck.draw(2);
         }).isInstanceOf(IllegalArgumentException.class);
     }
 

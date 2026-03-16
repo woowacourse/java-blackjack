@@ -1,10 +1,8 @@
 package domain.result;
 
-import static config.BlackjackGameConstant.DEALER_DISPLAY_NAME;
 
 import domain.betting.BettingProfit;
 import domain.participant.Dealer;
-import domain.participant.ParticipantName;
 import domain.participant.Player;
 import domain.participant.Players;
 import java.util.List;
@@ -16,7 +14,7 @@ public class GameResultAnalyzer {
 
     public static BettingResults analyzeBettingResults(Players players, Dealer dealer) {
         List<BettingResult> playerBettingResults = analyzePlayerBettingResults(players, dealer);
-        BettingResult dealerBettingResult = analyzeDealerBettingResult(playerBettingResults);
+        BettingResult dealerBettingResult = analyzeDealerBettingResult(dealer, playerBettingResults);
         return new BettingResults(dealerBettingResult, playerBettingResults);
     }
 
@@ -28,13 +26,13 @@ public class GameResultAnalyzer {
         ).toList();
     }
 
-    private static BettingResult analyzeDealerBettingResult(List<BettingResult> playerBettingResults) {
+    private static BettingResult analyzeDealerBettingResult(Dealer dealer, List<BettingResult> playerBettingResults) {
         long sum = playerBettingResults.stream()
                 .mapToLong(BettingResult::getProfit)
                 .sum();
 
         long dealerProfit = negate(sum);
-        return BettingResult.of(ParticipantName.from(DEALER_DISPLAY_NAME), BettingProfit.from(dealerProfit));
+        return BettingResult.of(dealer.getName(), BettingProfit.from(dealerProfit));
     }
 
     private static WinningStatus judgePlayerGameResult(Dealer dealer, Player player) {
