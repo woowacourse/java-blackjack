@@ -7,7 +7,8 @@ import java.util.List;
 public class Dealer extends Participant {
 
     private static final String NAME_VALUE = "딜러";
-    private static final int STAND_SCORE = 17;
+    private static final GameScore STAND_SCORE = new GameScore(17);
+
 
     public Dealer(Hand hand) {
         super(NAME_VALUE, hand);
@@ -19,9 +20,7 @@ public class Dealer extends Participant {
     }
 
     public boolean isStand() {
-        GameScore standScore = new GameScore(STAND_SCORE);
-
-        return getScore().isBiggerThan(standScore)
-                || getScore().equals(standScore);
+        return getScore().isBiggerThan(STAND_SCORE)
+                || getScore().equals(STAND_SCORE);
     }
 }
