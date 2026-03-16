@@ -1,14 +1,10 @@
 package domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
 
-    private static final int ACE_HIGH_LOW_DIFF = 10;
-    private static final int BUST_THRESHOLD = 21;
-
-    private final List<Card> cards = new ArrayList<>();
+    private final Hand hand = new Hand();
     private final String name;
 
     private Player(String name) {
@@ -20,47 +16,27 @@ public class Player {
     }
 
     public void addInitialCards(List<Card> cards) {
-        cards.forEach(this::addCard);
+        hand.addInitialCards(cards);
     }
 
     public void addCard(Card card) {
-        cards.add(card);
+        hand.addCard(card);
     }
 
     public int calculateScore() {
-        int cardScore = calculateRawScore();
-        int aceCount = countAce();
-
-        for (int i = 0; i < aceCount; i++) {
-            cardScore = adjustForAce(cardScore);
-        }
-
-        return cardScore;
-    }
-
-    private int calculateRawScore() {
-        return cards.stream()
-                .mapToInt(Card::getScore)
-                .sum();
-    }
-
-    private int countAce() {
-        return (int) cards.stream().filter(Card::isAce).count();
-    }
-
-    private int adjustForAce(int cardScore) {
-        if (cardScore > BUST_THRESHOLD) {
-            return cardScore - ACE_HIGH_LOW_DIFF;
-        }
-        return cardScore;
+        return hand.calculateScore();
     }
 
     public boolean isBust() {
-        return calculateScore() > BUST_THRESHOLD;
+        return hand.isBust();
+    }
+
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
     }
 
     public List<Card> getCards() {
-        return List.copyOf(cards);
+        return hand.getCards();
     }
 
     public String getName() {
