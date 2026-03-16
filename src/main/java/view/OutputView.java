@@ -32,7 +32,7 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printHand(String name, List<String> hand) {
+    private void printHand(String name, List<String> hand) {
         System.out.printf(PRINT_HAND_MESSAGE, name, String.join(DELIMITER + " ", hand));
     }
 
