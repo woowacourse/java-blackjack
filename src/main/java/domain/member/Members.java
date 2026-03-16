@@ -15,14 +15,14 @@ public class Members {
     private final List<Player> players;
 
     public Members(Map<String, Money> playerBets) {
-        this.dealer = new Dealer(new DealerHit(new Hand()));
+        this.dealer = new Dealer(new MemberInfo(new DealerHit(new Hand())));
         this.players = playerBets.entrySet().stream()
-                .map(entry -> new Player(entry.getKey(), entry.getValue(), new Hit(new Hand())))
+                .map(entry -> new Player(new MemberInfo(entry.getKey(), new Hit(new Hand())), entry.getValue()))
                 .toList();
     }
 
     public void provideCardToPlayer(String playerName, Card card) {
-        Member player = findByPlayerName(playerName);
+        Player player = findByPlayerName(playerName);
         player.receiveCard(card);
     }
 
@@ -31,7 +31,7 @@ public class Members {
     }
 
     public List<Card> findCardByName(String playerName) {
-        Member player = findByPlayerName(playerName);
+        Player player = findByPlayerName(playerName);
         return player.currentCards();
     }
 
@@ -40,7 +40,7 @@ public class Members {
     }
 
     public int checkPlayerScore(String playerName) {
-        Member player = findByPlayerName(playerName);
+        Player player = findByPlayerName(playerName);
         return player.currentScore();
     }
 
@@ -58,7 +58,7 @@ public class Members {
 
     public List<String> getAllPlayerName() {
         return players.stream()
-                .map(Member::name)
+                .map(Player::name)
                 .toList();
     }
 
@@ -66,7 +66,7 @@ public class Members {
         validateFinished();
         Map<String, Integer> totalResults = new LinkedHashMap<>();
         players.forEach(player ->
-                totalResults.put(player.name(), player.calculateProfit(dealer)));
+                totalResults.put(player.name(), player.calculateProfit(dealer.info())));
         int totalPlayerProfit = totalResults.values()
                 .stream()
                 .mapToInt(Integer::intValue)

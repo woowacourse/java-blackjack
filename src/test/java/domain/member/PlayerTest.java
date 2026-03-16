@@ -15,11 +15,11 @@ public class PlayerTest {
     @Test
     void calculateProfit_StateIsBlackjack_ReturnAccurateEarning() {
         Money betMoney = new Money(10000);
-        Player player = new Player("pobi", betMoney, new Blackjack(new Hand()));
-        Member dealer = new Dealer(new Stay(new Hand().appendCard(Card.from("10", "하트"))));
+        Player player = new Player(new MemberInfo("pobi", new Blackjack(new Hand())), betMoney);
+        Dealer dealer = new Dealer(new MemberInfo(new Stay(new Hand().appendCard(Card.from("10", "하트")))));
         int expected = 15000;
 
-        int profit = player.calculateProfit(dealer);
+        int profit = player.calculateProfit(dealer.info());
 
         assertThat(profit).isEqualTo(expected);
     }
@@ -28,11 +28,12 @@ public class PlayerTest {
     @Test
     void calculateProfit_StateIsBust_ReturnLostEarning() {
         Money betMoney = new Money(10000);
-        Player player = new Player("pobi", betMoney, new Bust(new Hand().appendCard(Card.from("10", "하트"))));
-        Member dealer = new Dealer(new Stay(new Hand().appendCard(Card.from("2", "클로버"))));
+        Player player = new Player(new MemberInfo("pobi",
+                new Bust(new Hand().appendCard(Card.from("10", "하트")))), betMoney);
+        Dealer dealer = new Dealer(new MemberInfo(new Stay(new Hand().appendCard(Card.from("2", "클로버")))));
         int expected = -10000;
 
-        int profit = player.calculateProfit(dealer);
+        int profit = player.calculateProfit(dealer.info());
 
         assertThat(profit).isEqualTo(expected);
     }

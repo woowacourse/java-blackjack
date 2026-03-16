@@ -1,20 +1,21 @@
 package domain.member;
 
-import domain.state.State;
+public class Player implements Participant {
 
-public class Player extends Member {
+    private final MemberInfo playerInfo;
     private final Money betMoney;
 
-    public Player(String name, Money betMoney, State initialState) {
-        super(name, initialState);
+    public Player(MemberInfo playerInfo, Money betMoney) {
+        this.playerInfo = playerInfo;
         this.betMoney = betMoney;
     }
 
-    public void changeToStay() {
-        this.state = state.stay();
+    @Override
+    public MemberInfo info() {
+        return playerInfo;
     }
 
-    public int calculateProfit(Member member) {
-        return betMoney.calculateProfit(state.earningRate(member.state));
+    public int calculateProfit(MemberInfo memberInfo) {
+        return betMoney.calculateProfit(playerInfo.state().earningRate(memberInfo.state()));
     }
 }

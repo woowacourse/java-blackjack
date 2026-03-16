@@ -1,10 +1,15 @@
 package domain.member;
 
-import domain.state.State;
+public class Dealer implements Participant {
 
-public class Dealer extends Member {
+    private final MemberInfo dealerInfo;
 
-    public Dealer(State initialState) {
-        super(DEALER_NAME, initialState);
+    public Dealer(MemberInfo dealerInfo) {
+        this.dealerInfo = dealerInfo;
+    }
+
+    @Override
+    public MemberInfo info() {
+        return dealerInfo;
     }
 }

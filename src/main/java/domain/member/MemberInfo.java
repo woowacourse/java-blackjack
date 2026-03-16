@@ -6,19 +6,28 @@ import domain.state.State;
 
 import java.util.List;
 
-public abstract class Member {
-    protected static final String DEALER_NAME = "딜러";
+public class MemberInfo {
+    public static final String DEALER_NAME = "딜러";
 
     private final String name;
-    protected State state;
+    private State state;
 
-    public Member(String name, State state) {
+    public MemberInfo(State state) {
+        this.name = DEALER_NAME;
+        this.state = state;
+    }
+
+    public MemberInfo(String name, State state) {
         this.name = name;
         this.state = state;
     }
 
     public String name() {
         return name;
+    }
+
+    public State state() {
+        return state;
     }
 
     public int currentScore() {
@@ -39,5 +48,9 @@ public abstract class Member {
 
     public boolean isBust() {
         return state instanceof Bust;
+    }
+
+    public void changeToStay() {
+        this.state = state.stay();
     }
 }
