@@ -8,9 +8,11 @@ import domain.state.HandState;
 
 public abstract class Participant {
     private final Hand hand;
+    private final Balance balance;
 
     protected Participant() {
         this.hand = new Hand();
+        this.balance = Balance.ZERO;
     }
 
     public void drawCard(Cards cards) {
