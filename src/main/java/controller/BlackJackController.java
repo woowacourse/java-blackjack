@@ -3,7 +3,7 @@ package controller;
 import domain.Deck;
 import domain.betting.Betting;
 import domain.betting.Bettings;
-import domain.money.Money;
+import domain.money.BettingMoney;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.result.Results;
@@ -51,8 +51,8 @@ public class BlackJackController {
     private Bettings betMoney(List<Player> players) {
         Bettings bettings = new Bettings();
         for (Player player : players) {
-            Money money = new Money(inputView.askBettingAmount(player.getNameString()));
-            Betting betting = new Betting(player, money);
+            BettingMoney bettingMoney = BettingMoney.from(inputView.askBettingAmount(player.getNameString()));
+            Betting betting = new Betting(player, bettingMoney);
             bettings = bettings.addBetting(betting);
         }
         return bettings;

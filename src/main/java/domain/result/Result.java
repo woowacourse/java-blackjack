@@ -13,15 +13,15 @@ public record Result(Betting betting, WinningStatus winningStatus) {
 
     public Money getProfit() {
         if (winningStatus == WinningStatus.WIN) {
-            return betting.money();
+            return betting.bettingMoney().money();
         }
         if (winningStatus == WinningStatus.BLACKJACK_WIN) {
-            return betting.money().multiply(1.5);
+            return betting.bettingMoney().money().multiply(1.5);
         }
         if (winningStatus == WinningStatus.LOSE) {
-            return betting.money().multiply(-1);
+            return betting.bettingMoney().money().multiply(-1);
         }
-        return betting.money().multiply(0);
+        return betting.bettingMoney().money().multiply(0);
     }
 
     public static Result of(Dealer dealer, Betting betting) {
