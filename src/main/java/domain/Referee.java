@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 public class Referee {
-    private static final int BUST_THRESHOLD = 21;
 
     public Result judge(Dealer dealer, List<Player> players) {
         Map<Player, MatchResult> gameResult = new LinkedHashMap<>();
@@ -22,20 +21,20 @@ public class Referee {
         if (player.isBlackJack()) {
             return MatchResult.BLACKJACK;
         }
-        return judgeByScore(player.getScore(), dealer.getScore());
+        return judgeByScore(player, dealer);
     }
 
-    private MatchResult judgeByScore(int playerScore, int dealerScore) {
-        if (playerScore > BUST_THRESHOLD) {
+    private MatchResult judgeByScore(Player player, Dealer dealer) {
+        if (player.isBust()) {
             return MatchResult.LOSE;
         }
-        if (dealerScore > BUST_THRESHOLD) {
+        if (dealer.isBust()) {
             return MatchResult.WIN;
         }
-        if (playerScore == dealerScore) {
+        if (player.getScore() == dealer.getScore()) {
             return MatchResult.DRAW;
         }
-        if (playerScore > dealerScore) {
+        if (player.getScore() > dealer.getScore()) {
             return MatchResult.WIN;
         }
         return MatchResult.LOSE;
