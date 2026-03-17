@@ -2,18 +2,18 @@ package domain.player.attribute;
 
 public class Money {
 
-    private final Long betAmount;
+    private final long betAmount;
 
     public Money(String betAmountInput) {
         this.betAmount = validateBetAmount(betAmountInput);
     }
 
-    public Long getBetAmount() {
+    public long getBetAmount() {
         return this.betAmount;
     }
 
-    private Long validateBetAmount(String betAmountInput) {
-        Long betAmount = validateNumericAmount(betAmountInput);
+    private long validateBetAmount(String betAmountInput) {
+        long betAmount = validateNumericAmount(betAmountInput);
         validateThousandUnit(betAmount);
         validateBetAmountIsPositive(betAmount);
         validateAmountDoesNotExceedMaxAmount(betAmount);
@@ -21,7 +21,7 @@ public class Money {
         return betAmount;
     }
 
-    private Long validateNumericAmount(String betAmountInput) {
+    private long validateNumericAmount(String betAmountInput) {
         try {
             return Long.parseLong(betAmountInput);
         } catch (NumberFormatException e) {
@@ -29,19 +29,19 @@ public class Money {
         }
     }
 
-    private void validateThousandUnit(Long betAmount) {
+    private void validateThousandUnit(long betAmount) {
         if (betAmount % 1000 != 0) {
             throw new IllegalArgumentException("베팅 금액은 1000원 단위여야 합니다.");
         }
     }
 
-    private void validateBetAmountIsPositive(Long betAmount) {
+    private void validateBetAmountIsPositive(long betAmount) {
         if (betAmount <= 0) {
             throw new IllegalArgumentException("베팅 금액은 양수여야 한다");
         }
     }
 
-    private void validateAmountDoesNotExceedMaxAmount(Long betAmount) {
+    private void validateAmountDoesNotExceedMaxAmount(long betAmount) {
         if (betAmount > 10_000_000_000L) {
             throw new IllegalArgumentException("베팅 금액은 100억을 넘지 않는다");
         }

@@ -13,7 +13,7 @@ public class Gambler extends Participant {
         this.betAmount = betAmount;
     }
 
-    public Long getAmount() {
+    public long getAmount() {
         return betAmount.getBetAmount();
     }
 }
