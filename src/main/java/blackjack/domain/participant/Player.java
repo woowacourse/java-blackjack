@@ -26,6 +26,6 @@ public class Player extends Participant {
     }
 
     public long calculateProfit(DividendPolicy dividendPolicy, GameResult gameResult) {
-        return dividendPolicy.calculate(bettingAmount.getBettingAmount(), gameResult);
+        return dividendPolicy.calculate(bettingAmount, gameResult);
     }
 }

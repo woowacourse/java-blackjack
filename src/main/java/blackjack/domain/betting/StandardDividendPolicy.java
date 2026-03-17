@@ -1,6 +1,7 @@
 package blackjack.domain.betting;
 
 import blackjack.domain.GameResult;
+import blackjack.domain.participant.BettingAmount;
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -15,8 +16,8 @@ public class StandardDividendPolicy implements DividendPolicy {
         PROFIT_RATES.put(GameResult.LOSE, -1.0);
     }
 
-    public int calculate(int betMoney, GameResult gameResult) {
+    public long calculate(BettingAmount bettingAmount, GameResult gameResult) {
         double profitRate = PROFIT_RATES.get(gameResult);
-        return (int) Math.round(betMoney * profitRate);
+        return bettingAmount.calculateProfit(profitRate);
     }
 }

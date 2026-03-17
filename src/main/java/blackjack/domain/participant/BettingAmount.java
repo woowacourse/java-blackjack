@@ -41,7 +41,7 @@ public class BettingAmount {
         }
     }
 
-    public int getBettingAmount() {
-        return bettingAmount;
+    public long calculateProfit(double profitRate) {
+        return Math.round(bettingAmount * profitRate);
     }
 }

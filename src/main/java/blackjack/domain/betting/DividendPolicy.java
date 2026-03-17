@@ -1,8 +1,9 @@
 package blackjack.domain.betting;
 
 import blackjack.domain.GameResult;
+import blackjack.domain.participant.BettingAmount;
 
 public interface DividendPolicy {
 
-    int calculate(int betMoney, GameResult gameResult);
+    long calculate(BettingAmount bettingAmount, GameResult gameResult);
 }
