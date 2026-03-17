@@ -20,8 +20,7 @@ public class Profits {
         for (Profit profit : profits) {
             dealerProfit -= profit.getProfit();
         }
-        Profit profit = new Profit(dealerProfit);
-        return profit;
+        return new Profit(dealerProfit);
     }
 
     public List<Profit> getProfits() {

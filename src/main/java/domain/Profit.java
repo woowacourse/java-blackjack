@@ -1,8 +1,5 @@
 package domain;
 
-import java.util.ArrayList;
-import java.util.Map;
-
 public class Profit {
     private final int profit;
 

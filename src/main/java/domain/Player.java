@@ -2,9 +2,9 @@ package domain;
 
 public class Player extends Participant {
     private static final int BUST_THRESHOLD = 21;
-    private final int betAmount;
+    private final BetAmount betAmount; // int 대신 객체 사용
 
-    public Player(String name, int betAmount) {
+    public Player(PlayerName name, BetAmount betAmount) {
         super(name);
         this.betAmount = betAmount;
     }
@@ -15,6 +15,6 @@ public class Player extends Participant {
     }
 
     public int getBetAmount() {
-        return betAmount;
+        return betAmount.getBetAmount();
     }
 }

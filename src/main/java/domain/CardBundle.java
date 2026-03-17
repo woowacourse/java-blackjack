@@ -29,6 +29,14 @@ public class CardBundle {
         return cards.size() == 2 && calculateScore() == BUST_THRESHOLD;
     }
 
+    public void addCard(Card card) {
+        cards.add(card);
+    }
+
+    public List<Card> getCards() {
+        return cards;
+    }
+
     private int applyAceBonus(int score, boolean hasAce) {
         if (isSoftHand(score, hasAce)) {
             return score + 10;
@@ -38,13 +46,5 @@ public class CardBundle {
 
     private boolean isSoftHand(int score, boolean hasAce) {
         return hasAce && score + ACE_BONUS <= BUST_THRESHOLD;
-    }
-
-    public void addCard(Card card) {
-        cards.add(card);
-    }
-
-    public List<Card> getCards() {
-        return cards;
     }
 }

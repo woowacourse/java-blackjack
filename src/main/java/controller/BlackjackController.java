@@ -3,6 +3,7 @@ package controller;
 import domain.Dealer;
 import domain.Deck;
 import domain.Player;
+import domain.PlayerDto;
 import domain.Players;
 import domain.Profit;
 import domain.Profits;
@@ -11,6 +12,7 @@ import domain.Result;
 import domain.Results;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.IntStream;
 import view.InputView;
 import view.OutputView;
 
@@ -27,7 +29,11 @@ public class BlackjackController {
     public void run() {
         List<String> names = inputView.inputPlayers();
         List<Integer> betAmounts = inputView.inputBetAmount(names);
-        Players players = new Players(names,betAmounts);
+        List<PlayerDto> playerDtos = IntStream.range(0, names.size())
+                .mapToObj(i -> new PlayerDto(names.get(i), betAmounts.get(i)))
+                .toList();
+
+        Players players = Players.from(playerDtos);
         Dealer dealer = new Dealer();
         Deck deck = new Deck();
         Referee referee = new Referee();
@@ -38,7 +44,7 @@ public class BlackjackController {
         playAllPlayerTurns(players, deck);
         playDealerTurn(dealer, deck);
         printFinalState(dealer, players);
-        printResult(referee,results,dealer,players);
+        printResult(referee, results, dealer, players);
         printProfit(referee, players, results, dealer);
     }
 
@@ -95,7 +101,6 @@ public class BlackjackController {
 
     private void printProfit(Referee referee,Players players, Results results, Dealer dealer) {
         Profits profits = new Profits(referee, results);
-        List<Profit> playerProfit = profits.getProfits();
         Profit dealerProfit = profits.getDealerProfit();
         outputView.printFinalProfit(dealer, players, results, profits, dealerProfit);
     }

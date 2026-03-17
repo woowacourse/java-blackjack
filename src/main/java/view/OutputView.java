@@ -71,9 +71,9 @@ public class OutputView {
     }
 
     private void printDealerResult(Participant dealer, Results results) {
-        int dealerWin = results.countResult(Result.LOSE);
-        int dealerLose = results.countResult(Result.WIN) + results.countResult(Result.BLACKJACK);
-        int dealerTie = results.countResult(Result.TIE);
+        int dealerWin = results.countPlayerResult(Result.LOSE);
+        int dealerLose = results.countPlayerResult(Result.WIN) + results.countPlayerResult(Result.BLACKJACK);
+        int dealerTie = results.countPlayerResult(Result.TIE);
         System.out.println(dealer.getName() + ": " + dealerWin + "승 " + dealerTie + "무 " + dealerLose + "패");
     }
 
