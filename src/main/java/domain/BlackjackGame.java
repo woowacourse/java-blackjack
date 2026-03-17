@@ -1,12 +1,8 @@
 package domain;
 
-import java.math.BigDecimal;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 import vo.Bet;
-import vo.GameResult;
 import vo.Name;
 
 public class BlackjackGame {
@@ -50,13 +46,7 @@ public class BlackjackGame {
     }
 
     public GameSummary getResult() {
-        Map<User, GameResult> userResults = new LinkedHashMap<>();
-
-        for (User user : participants.getUsers()) {
-            userResults.put(user,
-                    GameJudge.judge(user, dealer));
-        }
-        return new GameSummary(userResults);
+        return participants.judgeAll(dealer);
     }
 
     public void processPlayerDecision(User user) {
