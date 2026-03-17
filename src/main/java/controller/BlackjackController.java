@@ -1,10 +1,9 @@
 package controller;
 
-import domain.Participants;
 import dto.ParticipantsInitDTO;
-import java.util.ArrayList;
 import java.util.List;
 import service.BlackjackService;
+import util.DisplayFormatter;
 import util.Parser;
 import util.ServiceLocator;
 import util.Validator;
@@ -91,7 +90,7 @@ public class BlackjackController {
     }
 
     private Money readBettingMoney(String userName) {
-        String getBettingMoneyRequestMessage = bettingMoneyRequest(userName);
+        String getBettingMoneyRequestMessage = DisplayFormatter.formatBettingMoneyRequest(userName);
         while (true) {
             try {
                 outputView.printMessage(getBettingMoneyRequestMessage);
@@ -148,9 +147,5 @@ public class BlackjackController {
 
     private List<String> extraCardRequest() {
         return blackjackService.makeExtraCardRequests();
-    }
-
-    private String bettingMoneyRequest(String userName) {
-        return String.format(Message.INPUT_BETTING_MONEY_MESSAGE, userName);
     }
 }
