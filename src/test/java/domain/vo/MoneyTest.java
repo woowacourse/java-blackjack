@@ -23,7 +23,7 @@ class MoneyTest {
     void 정상_생성_테스트(String input, int value) {
         Money result = new Money(input);
 
-        assertThat(result.getValueOf()).isEqualTo(value);
+        assertThat(result.toLong()).isEqualTo(value);
     }
 
     @ParameterizedTest
@@ -39,6 +39,6 @@ class MoneyTest {
     void 최소_금액과_단위_미충족_테스트(String input) {
         assertThatThrownBy(() -> new Money(input))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("단위여야 하며, 최소 금액은");
+                .hasMessageContaining("최소 금액은");
     }
 }

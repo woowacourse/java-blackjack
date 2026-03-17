@@ -28,21 +28,21 @@ class PlayerTest {
     @Test
     void 플레이어_승리_테스트() {
         player.drawCard(new Card(TrumpSuit.SPADE, TrumpNumber.FIVE)); // 플레이어 점수 21
-        player.calculateResult(dealer);
-        assertThat(player.getWinStatus()).isEqualTo(WinStatus.WIN);
+        player.decideWinStatus(dealer);
+        assertThat(player.decideWinStatus(dealer)).isEqualTo(WinStatus.WIN);
     }
 
     @Test
     void 플레이어_무승부_테스트() { // 플레이어 점수 20
         player.drawCard(new Card(TrumpSuit.SPADE, TrumpNumber.FOUR));
-        player.calculateResult(dealer);
-        assertThat(player.getWinStatus()).isEqualTo(WinStatus.DRAW);
+        player.decideWinStatus(dealer);
+        assertThat(player.decideWinStatus(dealer)).isEqualTo(WinStatus.DRAW);
     }
 
     @Test
     void 플레이어_패배_테스트() {
         player.drawCard(new Card(TrumpSuit.HEART, TrumpNumber.THREE)); // 19
-        player.calculateResult(dealer);
-        assertThat(player.getWinStatus()).isEqualTo(WinStatus.LOSS);
+        player.decideWinStatus(dealer);
+        assertThat(player.decideWinStatus(dealer)).isEqualTo(WinStatus.LOSS);
     }
 }
