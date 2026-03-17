@@ -29,6 +29,14 @@ public abstract class Participant {
     }
 
     public boolean isBlackjack() {
-        return handCards.getHandCardsSize() == 2 && getScore() == BLACKJACK_CONDITION;
+        return isInitialHand() && isBlackjackConditionScore();
+    }
+
+    private boolean isInitialHand() {
+        return handCards.getHandCardsSize() == 2;
+    }
+
+    private boolean isBlackjackConditionScore() {
+        return getScore() == BLACKJACK_CONDITION;
     }
 }
