@@ -30,23 +30,15 @@ public class BettingAmount {
     }
 
     private void validateRange(int bettingAmount) {
-        if (isOutOfRange(bettingAmount)) {
+        if (bettingAmount < MIN_AMOUNT || bettingAmount > MAX_AMOUNT) {
             throw new IllegalArgumentException(ExceptionMessage.BETTING_AMOUNT_OUT_OF_RANGE.getMessage());
         }
     }
 
-    private boolean isOutOfRange(int bettingAmount) {
-        return bettingAmount < MIN_AMOUNT || bettingAmount > MAX_AMOUNT;
-    }
-
     private void validateUnit(int bettingAmount) {
-        if (isInvalidUnit(bettingAmount)) {
+        if (bettingAmount % BETTING_UNIT != INIT_AMOUNT) {
             throw new IllegalArgumentException(ExceptionMessage.INVALID_BETTING_UNIT.getMessage(BETTING_UNIT));
         }
-    }
-
-    private boolean isInvalidUnit(int bettingAmount) {
-        return bettingAmount % BETTING_UNIT != INIT_AMOUNT;
     }
 
     public int getBettingAmount() {
