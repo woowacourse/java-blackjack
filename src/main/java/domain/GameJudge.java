@@ -3,17 +3,21 @@ package domain;
 import vo.GameResult;
 
 public class GameJudge {
-    private static final Integer BUST_THRESHOLD = 21;
-
-    public GameResult judge(int dealerScore, int userScore) {
-        if (userScore > BUST_THRESHOLD) {
+    public static GameResult judge(User user, Dealer dealer) {
+        if (user.isBust()) {
             return GameResult.BUST;
         }
-        if (dealerScore > BUST_THRESHOLD || userScore > dealerScore) {
-            return GameResult.WIN;
+        if (dealer.isBlackjack() && !user.isBlackjack()) {
+            return GameResult.LOSE;
         }
-        if (userScore == dealerScore) {
+        if (user.isBlackjack() && !dealer.isBlackjack()) {
+            return GameResult.BLACKJACK;
+        }
+        if (user.hasSameScore(dealer)) {
             return GameResult.PUSH;
+        }
+        if (dealer.isBust() || user.hasHigherScoreThan(dealer)) {
+            return GameResult.WIN;
         }
         return GameResult.LOSE;
     }

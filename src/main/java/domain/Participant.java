@@ -3,6 +3,8 @@ package domain;
 import java.util.List;
 
 public abstract class Participant {
+    private static final Integer BLACKJACK_SCORE = 21;
+
     protected final Hand hand;
 
     public Participant() {
@@ -19,5 +21,21 @@ public abstract class Participant {
 
     public int getScore() {
         return hand.calculateTotalScore();
+    }
+
+    public boolean isBlackjack() {
+        return hand.isBlackjack();
+    }
+
+    public boolean isBust() {
+        return hand.calculateTotalScore() > BLACKJACK_SCORE;
+    }
+
+    public boolean hasSameScore(Participant other) {
+        return this.getScore() == other.getScore();
+    }
+
+    public boolean hasHigherScoreThan(Participant other) {
+        return this.getScore() > other.getScore();
     }
 }

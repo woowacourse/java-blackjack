@@ -2,9 +2,13 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.math.BigDecimal;
+import java.util.LinkedHashMap;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import vo.Bet;
+import vo.Name;
 
 public class BlackjackGameTest {
     private BlackjackGame blackjackGame;
@@ -12,8 +16,10 @@ public class BlackjackGameTest {
     @BeforeEach
     void setUp() {
         blackjackGame = new BlackjackGame();
-        blackjackGame.prepare("영기,라이");
-        blackjackGame.makeDeck();
+        List<Name> names = List.of(new Name("영기"), new Name("라이"));
+        LinkedHashMap<Name, Bet> bets = new LinkedHashMap<>();
+        names.forEach(name -> bets.put(name, new Bet("1000")));
+        blackjackGame.prepare(bets);
     }
 
     @Test
@@ -71,24 +77,30 @@ public class BlackjackGameTest {
     void 게임_결과에_각_참가자_이름_포함() {
         // given
         blackjackGame.dealCards();
+        List<User> users = blackjackGame.getUsers();
 
         // when
         GameSummary summary = blackjackGame.getResult();
+        User user1 = users.get(0);
+        User user2 = users.get(1);
 
         // then
-        assertThat(summary.getUserResults()).containsKey("영기");
-        assertThat(summary.getUserResults()).containsKey("라이");
+        assertThat(summary.getUserResults()).containsKey(user1);
+        assertThat(summary.getUserResults()).containsKey(user2);
     }
 
     @Test
-    void 딜러_결과에_승패_집계_포함() {
+    void 딜러_수익은_유저_수익의_합산에_반전() {
         // given
         blackjackGame.dealCards();
 
         // when
         GameSummary summary = blackjackGame.getResult();
+        BigDecimal userProfitSum = summary.getUserResults().keySet().stream()
+                .map(summary::getUserProfit)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         // then
-        assertThat(summary.getDealerWinCount() + summary.getDealerLoseCount()).isEqualTo(2);
+        assertThat(summary.getDealerProfit()).isEqualTo(userProfitSum.negate());
     }
 }

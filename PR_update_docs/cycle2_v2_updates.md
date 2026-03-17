@@ -1,0 +1,23 @@
+# cycle 2 - PR Review v2 - 수정 사항
+
+---
+
+## ✅ 리팩토링 할 것 목록
+
+- [x] **1. `Application`의 Map 객체 동등성 확인**
+  - 이 부분은 지금은 Name이 같은 참조를 쓰고 있어서 동작하지만, 리팩토링 하기 어려운 코드이다.
+  - Name 객체가 새로 만들어지는 순간 조용히 깨지는 코드가 된다.
+  - map을 쓰지 말자.
+- [x] **2. `BlackjackGame`의 주석 지우기**
+- [x] **3. `blackjackGame`의 protected field를 private으로 수정할 것.**
+  - [x] 이를 위해 blackjackGame의 prepare() 구조를 생성자로 옮겨야 함.
+- [x] **4. `GameJudge`의 judge 함수를 dealer와 user 객체 자체를 받는 형식으로 수정**
+- [x] **5. `Participants`의 Dealer 제거**
+  - [x] dealer는 BlackjackGame에서 직접 관리하도록 수정
+- [x] **6. `GameSummary`의 생성자 수정**
+  - [x] map 두개를 받는 구조로 짜여있는데, 하나만 있어도 User을 순회할 수 있음.
+- [x] **7. `DeckTest`를 exception을 종료 조건으로 설정하지 말고, 직접 사이즈를 테스트하는 형식으로 수정.**
+- [x] **8. `Participant`의 checkBust 함수 간소화**
+- [x] **9. `Participants`의 saverUsers를 bets만 받아 객체 생성하도록 수정.**
+- [x] **10. 뷰가 도메인 객체를 만들고 있는 부분 수정.**
+  - [x] inputView는 이름을 파싱하고 List<String>를 반환하고, Application에서 객체 생성

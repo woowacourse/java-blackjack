@@ -1,5 +1,6 @@
 package vo;
 
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class Name {
@@ -15,6 +16,20 @@ public class Name {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Name name1 = (Name) o;
+        return Objects.equals(name, name1.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(name);
     }
 
     private void validateName(String name) {

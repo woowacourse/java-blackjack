@@ -23,6 +23,10 @@ public class Deck {
         return cards.removeFirst();
     }
 
+    public Integer getSize() {
+        return cards.size();
+    }
+
     private List<Card> makeCards() {
         List<Card> cards = new ArrayList<>();
         for (Suit suit : Suit.values()) {

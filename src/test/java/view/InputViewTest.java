@@ -2,6 +2,7 @@ package view;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 public class InputViewTest {
@@ -20,6 +21,17 @@ public class InputViewTest {
     }
 
     @Test
+    void 참가자_수_초과_예외_테스트() {
+        // given
+        List<String> names = List.of("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q");
+
+        // when & then
+        assertThatThrownBy(() -> InputView.validateParticipantsNumbers(names))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageStartingWith(ERROR_PREFIX);
+    }
+
+    @Test
     void y_n_외의_문자_입력_테스트() {
         // given
         String answer = "d";
@@ -31,4 +43,14 @@ public class InputViewTest {
                 .hasMessageStartingWith(ERROR_PREFIX);
     }
 
+    @Test
+    void 동일이름_예외_테스트() {
+        // given
+        List<String> names = List.of("영기", "영기");
+
+        // when & then
+        assertThatThrownBy(() -> InputView.validateDuplicateNames(names))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageStartingWith(ERROR_PREFIX);
+    }
 }

@@ -1,31 +1,21 @@
 package vo;
 
+import java.math.BigDecimal;
+
 public enum GameResult {
-    WIN("승"),
-    LOSE("패"),
-    PUSH("승"),
-    BUST("패");
+    BLACKJACK(new BigDecimal("1.5")),
+    WIN(new BigDecimal("1.0")),
+    LOSE(new BigDecimal("-1.0")),
+    PUSH(new BigDecimal("0.0")),
+    BUST(new BigDecimal("-1.0"));
 
-    private final String name;
+    private final BigDecimal multiplier;
 
-    GameResult(String name) {
-        this.name = name;
+    GameResult(BigDecimal multiplier) {
+        this.multiplier = multiplier;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public GameResult opposite() {
-        if (this == LOSE) {
-            return WIN;
-        }
-        if (this == WIN) {
-            return LOSE;
-        }
-        if (this == BUST) {
-            return WIN;
-        }
-        return this;
+    public BigDecimal calculateProfit(BigDecimal betAmount) {
+        return betAmount.multiply(multiplier);
     }
 }

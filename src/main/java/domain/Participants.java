@@ -2,45 +2,27 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+import vo.Bet;
+import vo.GameResult;
+import vo.Name;
 
 public class Participants {
-    private static final Integer MAX_PLAYER_COUNT = 16;
+    private static final int MAX_PLAYER_COUNT = 16;
 
     private final List<User> participants;
-    private final Dealer dealer;
 
-    public Participants(String participantsName) {
+    public Participants(LinkedHashMap<Name, Bet> bets) {
+        validate(bets);
         this.participants = new ArrayList<>();
-        this.dealer = new Dealer();
-        saveUsers(participantsName);
-    }
-
-    private void saveUsers(String participantsName) {
-        parseName(participantsName)
-                .forEach(name -> participants.add(new User(name.trim())));
-    }
-
-    private List<String> parseName(String participantsName) {
-        List<String> parsedName = List.of(participantsName.split(","));
-        validateParticipantsNumbers(parsedName);
-
-        return parsedName;
-    }
-
-    private void validateParticipantsNumbers(List<String> parsedName) {
-        if (parsedName.size() > MAX_PLAYER_COUNT) {
-            throw new IllegalArgumentException("[ERROR] 최대 참가 인원은 16명 이하여야 합니다.");
-        }
+        saveUsers(bets);
     }
 
     public List<User> getUsers() {
         return Collections.unmodifiableList(participants);
-    }
-
-    public Dealer getDealer() {
-        return dealer;
     }
 
     public List<String> getParticipantNames() {
@@ -53,18 +35,33 @@ public class Participants {
         for (User user : participants) {
             user.receiveCard(deck.dealCard());
         }
-        dealer.receiveCard(deck.dealCard());
     }
 
     public void dealCard(Deck deck, User user) {
         user.receiveCard(deck.dealCard());
     }
 
-    public Boolean determineDealerDealMore() {
-        return dealer.determineDealerDealMore();
+    public GameSummary judgeAll(Dealer dealer) {
+        Map<User, GameResult> userResults = new LinkedHashMap<>();
+        for (User user : participants) {
+            userResults.put(user,
+                    GameJudge.judge(user, dealer));
+        }
+        return new GameSummary(userResults);
     }
 
-    public void dealCardToDealer(Card card) {
-        dealer.receiveCard(card);
+    private void validate(LinkedHashMap<Name, Bet> bets) {
+        if (bets == null || bets.isEmpty()) {
+            throw new IllegalArgumentException("[ERROR] 참가자는 최소 1명이어야 합니다.");
+        }
+        if (bets.size() > MAX_PLAYER_COUNT) {
+            throw new IllegalArgumentException("[ERROR] 최대 참가 인원은 16명 이하여야 합니다.");
+        }
+    }
+
+    private void saveUsers(LinkedHashMap<Name, Bet> bets) {
+        bets.forEach((user, gameResult) -> {
+            participants.add(new User(user, gameResult));
+        });
     }
 }
