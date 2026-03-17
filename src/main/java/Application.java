@@ -1,7 +1,7 @@
 import controller.GameController;
 import domain.Deck;
 import domain.GameManager;
-import java.util.Collections;
+import domain.RandomDeckShuffler;
 import java.util.Scanner;
 import view.InputView;
 import view.OutputView;
@@ -13,7 +13,7 @@ public class Application {
         OutputView outputView = new OutputView();
 
         Deck deck = Deck.create();
-        deck.shuffle(Collections::shuffle);
+        deck = deck.shuffle(new RandomDeckShuffler());
         GameManager gameManager = GameManager.createWith(deck);
 
         GameController gameController = new GameController(inputView, outputView, gameManager);
