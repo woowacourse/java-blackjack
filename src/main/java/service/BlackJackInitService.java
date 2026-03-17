@@ -1,6 +1,8 @@
 package service;
 
 import domain.Deck;
+import domain.card.Card;
+import domain.card.Name;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import java.util.List;
@@ -11,6 +13,7 @@ public class BlackJackInitService {
         return Deck.createShuffledDeck();
     }
 
+    // todo 딜러도 카드리스트 주입!
     public Dealer createDealer(Deck deck) {
         Dealer dealer = new Dealer();
         dealer.draw(deck.drawCard());
@@ -21,10 +24,9 @@ public class BlackJackInitService {
     public List<Player> createPlayers(List<String> names, Deck deck) {
         return names.stream()
                 .map(name -> {
-                    Player player = new Player(name);
-                    player.draw(deck.drawCard());
-                    player.draw(deck.drawCard());
-                    return player;
+                    List<Card> cards = List.of(deck.drawCard(), deck.drawCard());
+                    Name nameObject = new Name(name);
+                    return Player.of(nameObject, cards);
                 })
                 .toList();
     }

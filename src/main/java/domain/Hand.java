@@ -16,6 +16,11 @@ public class Hand {
         this.cards = cards;
     }
 
+    public static Hand from(List<Card> cardList) {
+        Cards cards = new Cards(cardList);
+        return new Hand(cards);
+    }
+
     public int getSum() {
         return cards.getSum();
     }

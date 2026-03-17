@@ -11,6 +11,10 @@ public class Participant {
         hand = new Hand();
     }
 
+    public Participant(Hand hand) {
+        this.hand = hand;
+    }
+
     public boolean isBust() {
         return hand.isBust();
     }
