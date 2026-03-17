@@ -39,4 +39,31 @@ class ParticipantsTest {
         assertThatThrownBy(() -> new Participants(players))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    @DisplayName("플레이어 이름은 서로 중복될 수 없다.")
+    public void 중복된_플레이어_이름이_있으면_실패() {
+        // given
+        final String pobi = "포비";
+        final List<Player> duplicatedNamePlayers = List.of(
+                new Player(new Name(pobi), ONE_HUNDRED_THOUSAND),
+                new Player(new Name(pobi), ONE_HUNDRED_THOUSAND)
+        );
+
+        // then
+        assertThatThrownBy(() -> new Participants(duplicatedNamePlayers))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("플레이어 이름은 딜러 이름과 겹칠 수 없다.")
+    public void 플레이어_이름이_딜러_이름과_같으면_실패() {
+        // given
+        final List<Player> playerWithDealerName = List.of(
+                new Player(new Name(Dealer.DEALER_NAME), ONE_HUNDRED_THOUSAND));
+
+        // then
+        assertThatThrownBy(() -> new Participants(playerWithDealerName))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }
