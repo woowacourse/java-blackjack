@@ -1,10 +1,11 @@
 package domain.participant;
 
 import domain.card.Cards;
+import domain.state.Outcome;
 
 public final class Player extends Participant {
     private final Name name;
-    private final Betting betting;
+    private Betting betting;
 
     public Player(Name name, Betting betting) {
         super();
@@ -14,9 +15,6 @@ public final class Player extends Participant {
 
     public Player(String name, int betting) {
         this(new Name(name), new Betting(betting));
-    }
-
-    public Player(String s) {
     }
 
     public void hit(final Cards cards) {
@@ -29,5 +27,9 @@ public final class Player extends Participant {
 
     public String getName() {
         return name.getName();
+    }
+
+    public void updateBalance(Outcome outcome){
+        updateBalance((int) (betting.getBettingMoney() * outcome.winningCoefficient()));
     }
 }

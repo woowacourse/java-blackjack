@@ -8,7 +8,7 @@ import domain.state.HandState;
 
 public abstract class Participant {
     private final Hand hand;
-    private final Balance balance;
+    private Balance balance;
 
     protected Participant() {
         this.hand = new Hand();
@@ -41,5 +41,9 @@ public abstract class Participant {
 
     public HandState getHandState(){
         return hand.getHandState();
+    }
+
+    public void updateBalance(int betting){
+        this.balance = new Balance(balance.getBalance() + betting);
     }
 }
