@@ -50,10 +50,6 @@ public class GameTest {
 
         GameResult expected = new GameResult(
                 Map.of(
-                        ScoreCompareResult.DEALER_WIN, 1,
-                        ScoreCompareResult.DEALER_LOSS, 1,
-                        ScoreCompareResult.PUSH, 1),
-                Map.of(
                         pobi, ScoreCompareResult.PLAYER_WIN,
                         jason, ScoreCompareResult.PLAYER_LOSS,
                         brown, ScoreCompareResult.PUSH)

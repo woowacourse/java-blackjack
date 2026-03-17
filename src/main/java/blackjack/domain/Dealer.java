@@ -18,16 +18,13 @@ public class Dealer extends Participant{
 
 
     public GameResult judgeResult(List<Participant> players) {
-        Map<ScoreCompareResult, Integer> dealerResult = new HashMap<>();
         Map<Participant, ScoreCompareResult> playerResults = new HashMap<>();
-
         for (Participant player : players) {
             ScoreCompareResult result = compareScore(player, this);
             playerResults.put(player, toPlayerResult(result));
-            dealerResult.merge(toDealerKey(result), 1, Integer::sum);
         }
 
-        return new GameResult(dealerResult, playerResults);
+        return new GameResult(playerResults);
     }
 
     private ScoreCompareResult compareScore(Participant player, Participant dealer) {
@@ -44,13 +41,6 @@ public class Dealer extends Participant{
     private ScoreCompareResult toPlayerResult(ScoreCompareResult result) {
         if (result == ScoreCompareResult.DEALER_WIN) {
             return ScoreCompareResult.PLAYER_LOSS;
-        }
-        return result;
-    }
-
-    private ScoreCompareResult toDealerKey(ScoreCompareResult result) {
-        if (result == ScoreCompareResult.PLAYER_WIN) {
-            return ScoreCompareResult.DEALER_LOSS;
         }
         return result;
     }
