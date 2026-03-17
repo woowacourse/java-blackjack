@@ -2,6 +2,7 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Participant {
     private final Name name;
@@ -40,5 +41,19 @@ public abstract class Participant {
 
     public List<Card> getCards() {
         return cards.getCards();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Participant participant = (Participant) o;
+        return Objects.equals(getName(), participant.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getName());
     }
 }
