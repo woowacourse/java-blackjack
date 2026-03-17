@@ -40,10 +40,6 @@ public abstract class Participant {
         return cardBundle.isBust();
     }
 
-    public CardBundle getCardBundle() {
-        return cardBundle;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) {

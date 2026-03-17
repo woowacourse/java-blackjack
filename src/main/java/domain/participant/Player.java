@@ -5,9 +5,9 @@ import domain.game.Outcome;
 public class Player extends Participant {
     private final BettingMoney bettingMoney;
 
-    public Player(String name, BettingMoney bettingMoney) {
+    public Player(String name, int amount) {
         super(name);
-        this.bettingMoney = bettingMoney;
+        this.bettingMoney = new BettingMoney(amount);
     }
 
     @Override

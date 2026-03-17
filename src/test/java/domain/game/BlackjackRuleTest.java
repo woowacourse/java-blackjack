@@ -2,7 +2,6 @@ package domain.game;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-import domain.participant.BettingMoney;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
@@ -137,6 +136,6 @@ public class BlackjackRuleTest {
     }
 
     private Player createPlayer(String name) {
-        return new Player(name, new BettingMoney(1_000));
+        return new Player(name, 1_000);
     }
 }

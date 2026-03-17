@@ -10,7 +10,7 @@ public class Players {
     public Players(Map<String, Integer> nameToBet) {
         playerList = new ArrayList<>();
         for (Map.Entry<String, Integer> entry : nameToBet.entrySet()) {
-            playerList.add(new Player(entry.getKey(), new BettingMoney(entry.getValue())));
+            playerList.add(new Player(entry.getKey(), entry.getValue()));
         }
     }
 
