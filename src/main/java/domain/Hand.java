@@ -45,9 +45,11 @@ public class Hand {
     }
 
     private int countAces() {
-        return (int) cards.stream()
+        long aceCount = cards.stream()
                 .filter(Card::isAceCard)
                 .count();
+
+        return (int) aceCount;
     }
 
     private int applyAceRule(int score, int aceCount) {
