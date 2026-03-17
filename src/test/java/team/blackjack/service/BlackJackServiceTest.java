@@ -2,7 +2,10 @@ package team.blackjack.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import team.blackjack.domain.Dealer;
@@ -24,7 +27,7 @@ class BlackJackServiceTest {
 
     @Test
     void 플레이어_이름_목록으로_게임을_초기화한다() {
-        Players players = new Players(List.of("pobi", "jason"));
+        Players players = new Players(new LinkedHashSet<>(List.of("pobi", "jason")));
 
         List<String> playerNames = blackjackService.getAllPlayerNames(players);
 
@@ -36,7 +39,7 @@ class BlackJackServiceTest {
     void 게임초기화_후_각_플레이어와_딜러가_카드_2장씩_가진다() {
         Deck deck = new Deck();
         Dealer dealer = new Dealer();
-        Players players = new Players(List.of("pobi"));
+        Players players = new Players(Set.of("pobi"));
 
         blackjackService.drawInitialCards(deck, players, dealer);
 
@@ -49,7 +52,7 @@ class BlackJackServiceTest {
     void 플레이어가_hit_하는_경우_카드가_한_장_추가된다() {
         Deck deck = new Deck();
         Dealer dealer = new Dealer();
-        Players players = new Players(List.of("pobi"));
+        Players players = new Players(Set.of("pobi"));
         blackjackService.drawInitialCards(deck, players, dealer);
 
         Player pobi = players.getPlayerByName("pobi");
@@ -64,7 +67,7 @@ class BlackJackServiceTest {
     void 딜러와_모든_플레이어_점수와_카드정보를_계산한다() {
         Deck deck = new Deck();
         Dealer dealer = new Dealer();
-        Players players = new Players(List.of("pobi", "jason"));
+        Players players = new Players(new LinkedHashSet<>(List.of("pobi", "jason")));
         blackjackService.drawInitialCards(deck, players, dealer);
 
         ScoreResult scoreResult = blackjackService.calculateAllParticipantScore(players, dealer);
@@ -79,7 +82,7 @@ class BlackJackServiceTest {
     void 딜러가_hit하는_경우_카드가_추가된다() {
         Deck deck = new Deck();
         Dealer dealer = new Dealer();
-        Players players = new Players(List.of("pobi"));
+        Players players = new Players(Set.of("pobi"));
         blackjackService.drawInitialCards(deck, players, dealer);
 
         int dealerCardsBefore = dealer.getCards().size();

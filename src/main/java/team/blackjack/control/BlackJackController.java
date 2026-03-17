@@ -1,7 +1,9 @@
 package team.blackjack.control;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import team.blackjack.domain.Card;
 import team.blackjack.domain.Deck;
@@ -91,7 +93,7 @@ public class BlackJackController {
         return battingMoney;
     }
 
-    private List<String> readPlayerNames(){
+    private Set<String> readPlayerNames(){
         OutputView.printPlayerNameRequest();
         List<String> playerNames = InputView.readPlayerNames();
 
@@ -100,11 +102,11 @@ public class BlackJackController {
             OutputView.printPlayerNameRequest();
             playerNames = InputView.readPlayerNames();
         }
-        return playerNames;
+        return new HashSet<>(playerNames);
     }
 
     private boolean hasDuplicatedName(List<String> playerNames) {
-        return playerNames.size() != playerNames.stream().distinct().count();
+        return playerNames.size() != new HashSet<>(playerNames).size();
     }
 
     private void readPlayerHitDecision(Deck deck, Players players) {

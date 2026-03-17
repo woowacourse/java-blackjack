@@ -8,7 +8,7 @@ import java.util.Set;
 public class Players {
     private final List<Player> players;
 
-    public Players(List<String> playerNames) {
+    public Players(Set<String> playerNames) {
         this.players =  playerNames.stream()
                 .map(Player::new)
                 .toList();
