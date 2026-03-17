@@ -2,6 +2,9 @@ package domain.betting;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import domain.card.Card;
+import domain.card.Rank;
+import domain.card.Suit;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Player;
@@ -31,8 +34,14 @@ class BettingRuleTest {
 
     @Test
     void 플레이어가_버스트면_딜러와_무관하게_플레이어버스트_판정() {
-        Player player = createTestPlayer(22);
-        Dealer dealer = createTestDealer(22);
+        Player player = new Player(Name.from("나무"));
+        player.add(new Card(Rank.TWO, Suit.SPADE));
+        player.add(new Card(Rank.TEN, Suit.SPADE));
+        player.add(new Card(Rank.JACK, Suit.SPADE));
+        Dealer dealer = new Dealer();
+        dealer.add(new Card(Rank.TWO, Suit.SPADE));
+        dealer.add(new Card(Rank.TEN, Suit.SPADE));
+        dealer.add(new Card(Rank.JACK, Suit.SPADE));
 
         BettingRule rule = BettingRule.determine(dealer, player);
 
@@ -41,8 +50,13 @@ class BettingRuleTest {
 
     @Test
     void 플레이어가_버스트가_아니고_딜러가_버스트인_경우_플레이어승리_판정() {
-        Player player = createTestPlayer(20);
-        Dealer dealer = createTestDealer(22);
+        Player player = new Player(Name.from("나무"));
+        player.add(new Card(Rank.TEN, Suit.SPADE));
+        player.add(new Card(Rank.JACK, Suit.SPADE));
+        Dealer dealer = new Dealer();
+        dealer.add(new Card(Rank.TWO, Suit.SPADE));
+        dealer.add(new Card(Rank.TEN, Suit.SPADE));
+        dealer.add(new Card(Rank.JACK, Suit.SPADE));
 
         BettingRule rule = BettingRule.determine(dealer, player);
 
@@ -51,8 +65,12 @@ class BettingRuleTest {
 
     @Test
     void 플레이어와_딜러_둘다_내추럴인_경우_정상판정() {
-        Player player = createTestPlayer(21);
-        Dealer dealer = createTestDealer(21);
+        Player player = new Player(Name.from("나무"));
+        player.add(new Card(Rank.ACE, Suit.SPADE));
+        player.add(new Card(Rank.TEN, Suit.SPADE));
+        Dealer dealer = new Dealer();
+        dealer.add(new Card(Rank.ACE, Suit.SPADE));
+        dealer.add(new Card(Rank.TEN, Suit.SPADE));
 
         BettingRule rule = BettingRule.determine(dealer, player);
 
@@ -61,8 +79,12 @@ class BettingRuleTest {
 
     @Test
     void 플레이어만_내추럴인_경우_정상판정() {
-        Player player = createTestPlayer(21);
-        Dealer dealer = createTestDealer(20);
+        Player player = new Player(Name.from("나무"));
+        player.add(new Card(Rank.ACE, Suit.SPADE));
+        player.add(new Card(Rank.TEN, Suit.SPADE));
+        Dealer dealer = new Dealer();
+        dealer.add(new Card(Rank.TEN, Suit.SPADE));
+        dealer.add(new Card(Rank.JACK, Suit.SPADE));
 
         BettingRule rule = BettingRule.determine(dealer, player);
 
@@ -71,8 +93,12 @@ class BettingRuleTest {
 
     @Test
     void 딜러만_내추럴인_경우_정상판정() {
-        Player player = createTestPlayer(20);
-        Dealer dealer = createTestDealer(21);
+        Player player = new Player(Name.from("나무"));
+        player.add(new Card(Rank.TEN, Suit.SPADE));
+        player.add(new Card(Rank.JACK, Suit.SPADE));
+        Dealer dealer = new Dealer();
+        dealer.add(new Card(Rank.ACE, Suit.SPADE));
+        dealer.add(new Card(Rank.TEN, Suit.SPADE));
 
         BettingRule rule = BettingRule.determine(dealer, player);
 
@@ -81,8 +107,12 @@ class BettingRuleTest {
 
     @Test
     void 버스트나_내추럴이_없을경우_플레이어점수가_높으면_플레이어승리_판정() {
-        Player player = createTestPlayer(20);
-        Dealer dealer = createTestDealer(19);
+        Player player = new Player(Name.from("나무"));
+        player.add(new Card(Rank.TEN, Suit.SPADE));
+        player.add(new Card(Rank.JACK, Suit.SPADE));
+        Dealer dealer = new Dealer();
+        dealer.add(new Card(Rank.NINE, Suit.SPADE));
+        dealer.add(new Card(Rank.TEN, Suit.SPADE));
 
         BettingRule rule = BettingRule.determine(dealer, player);
 
@@ -91,8 +121,12 @@ class BettingRuleTest {
 
     @Test
     void 버스트나_내추럴이_없을경우_플레이어와_딜러_점수가_같으면_무승부_판정() {
-        Player player = createTestPlayer(19);
-        Dealer dealer = createTestDealer(19);
+        Player player = new Player(Name.from("나무"));
+        player.add(new Card(Rank.NINE, Suit.SPADE));
+        player.add(new Card(Rank.TEN, Suit.SPADE));
+        Dealer dealer = new Dealer();
+        dealer.add(new Card(Rank.NINE, Suit.SPADE));
+        dealer.add(new Card(Rank.TEN, Suit.SPADE));
 
         BettingRule rule = BettingRule.determine(dealer, player);
 
@@ -101,30 +135,16 @@ class BettingRuleTest {
 
     @Test
     void 버스트나_내추럴이_없을경우_플레이어점수가_낮으면_플레이어패배_판정() {
-        Player player = createTestPlayer(18);
-        Dealer dealer = createTestDealer(19);
+        Player player = new Player(Name.from("나무"));
+        player.add(new Card(Rank.EIGHT, Suit.SPADE));
+        player.add(new Card(Rank.TEN, Suit.SPADE));
+        Dealer dealer = new Dealer();
+        dealer.add(new Card(Rank.NINE, Suit.SPADE));
+        dealer.add(new Card(Rank.TEN, Suit.SPADE));
 
         BettingRule rule = BettingRule.determine(dealer, player);
 
         assertThat(rule).isEqualTo(BettingRule.PLAYER_LOSE);
-    }
-
-    private Player createTestPlayer(int score) {
-        return new Player(new Name("나무")) {
-            @Override
-            public int getScore() {
-                return score;
-            }
-        };
-    }
-
-    private Dealer createTestDealer(int score) {
-        return new Dealer() {
-            @Override
-            public int getScore() {
-                return score;
-            }
-        };
     }
 
 }
