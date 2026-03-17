@@ -1,27 +1,28 @@
 package domain.player;
 
-import domain.MatchResult;
+import domain.BettingMoney;
 import domain.card.Card;
-import expcetion.BlackjackException;
-import expcetion.ExceptionMessage;
+import exception.BlackjackException;
+import exception.ExceptionMessage;
 import java.util.List;
 
 public class Gambler extends Player {
+
     private static final int GAMBLER_NAME_MAX_LENGTH = 10;
     private static final int GAMBLER_NAME_MIN_LENGTH = 2;
     private static final String MATCH_NUMBER_PATTERN = ".*\\d.*";
-    private static final String RESULT_FORMAT = "%s:%s";
 
     private final String name;
+    private final BettingMoney bettingMoney;
 
-    public Gambler(String name) {
+    public Gambler(String name, BettingMoney bettingMoney) {
         super();
-        validate(name);
+        this.bettingMoney = bettingMoney;
+        validateName(name);
         this.name = name;
     }
 
-
-    private void validate(String name) {
+    private void validateName(String name) {
         validateContainsNumber(name);
         validateLength(name);
     }
@@ -38,29 +39,8 @@ public class Gambler extends Player {
         }
     }
 
-    public MatchResult getResult(Dealer dealer) {
-        int gamblerScore = normalize(score());
-        int dealerScore = normalize(dealer.score());
-        if (gamblerScore > dealerScore) {
-            return MatchResult.WIN;
-        }
-
-        if (gamblerScore < dealerScore) {
-            return MatchResult.LOSE;
-        }
-        return MatchResult.DRAW;
-    }
-
-    private int normalize(int score) {
-        if (score > BLACKJACK_MAX_LIMIT) {
-            return 0;
-        }
-        return score;
-    }
-
-
-    public String showResult(MatchResult result) {
-        return String.format(RESULT_FORMAT, name, result.getName());
+    public BettingMoney getBettingMoney() {
+        return bettingMoney;
     }
 
     public String getName() {

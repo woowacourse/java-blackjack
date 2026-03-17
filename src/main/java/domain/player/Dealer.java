@@ -4,6 +4,7 @@ import domain.card.Card;
 import java.util.List;
 
 public class Dealer extends Player {
+
     private static final int DEALER_STOP_SCORE = 17;
 
     public boolean canStand() {
