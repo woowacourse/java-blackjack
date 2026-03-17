@@ -5,7 +5,7 @@ import blackjack.model.cardDeck.PickStrategy;
 import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Player;
 import blackjack.model.participant.Players;
-import blackjack.model.GameState;
+import blackjack.service.dto.GameState;
 import java.util.List;
 import java.util.function.Consumer;
 

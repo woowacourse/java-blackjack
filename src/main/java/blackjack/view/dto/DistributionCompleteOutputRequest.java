@@ -2,7 +2,7 @@ package blackjack.view.dto;
 
 import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Players;
-import blackjack.model.GameState;
+import blackjack.service.dto.GameState;
 import java.util.List;
 
 public record DistributionCompleteOutputRequest(

@@ -8,7 +8,7 @@ import blackjack.model.card.Suit;
 import blackjack.model.cardDeck.CardDeck;
 import blackjack.model.cardDeck.PickStrategy;
 import blackjack.model.participant.Players;
-import blackjack.model.GameState;
+import blackjack.service.dto.GameState;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.jupiter.api.DisplayName;

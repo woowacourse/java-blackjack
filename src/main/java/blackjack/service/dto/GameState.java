@@ -1,4 +1,4 @@
-package blackjack.model;
+package blackjack.service.dto;
 
 import blackjack.model.cardDeck.CardDeck;
 import blackjack.model.participant.Dealer;

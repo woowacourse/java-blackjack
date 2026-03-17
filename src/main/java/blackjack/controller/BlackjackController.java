@@ -6,7 +6,7 @@ import blackjack.model.participant.Dealer;
 import blackjack.model.participant.Player;
 import blackjack.model.participant.Players;
 import blackjack.service.BlackjackService;
-import blackjack.model.GameState;
+import blackjack.service.dto.GameState;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
 import blackjack.view.dto.DistributionCompleteOutputRequest;
