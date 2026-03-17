@@ -4,17 +4,16 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import blackjack.domain.Card;
-import blackjack.domain.Dealer;
-import blackjack.domain.Denomination;
-import blackjack.domain.GameResult;
-import blackjack.domain.Hand;
-import blackjack.domain.Player;
-import blackjack.domain.Status;
-import blackjack.domain.Suit;
-import blackjack.domain.Trump;
+import blackjack.domain.card.Card;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.judgement.GameResult;
+import blackjack.domain.card.Hand;
+import blackjack.domain.participant.Player;
+import blackjack.domain.judgement.Status;
+import blackjack.domain.card.Suit;
+import blackjack.domain.card.Trump;
 import blackjack.strategy.ShuffleStrategy;
-import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -29,26 +28,6 @@ public class PlayerTest {
     void setUp() {
         ShuffleStrategy strategy = new NoShuffleStrategy();
         trump = new Trump(strategy);
-    }
-
-    @Test
-    @DisplayName("닉네임 처리 테스트: 닉네임이 4~10자인 경우")
-    void 정상_테스트_1() {
-        assertDoesNotThrow(() ->  new Player(new Hand(new ArrayList<>()), Status.HIT, "pobi"));
-    }
-
-    @Test
-    @DisplayName("닉네임 처리 테스트: 닉네임이 4자 미만인 경우")
-    void 예외_테스트_1() {
-        assertThatThrownBy(() ->  new Player(new Hand(new ArrayList<>()), Status.HIT, "pob"))
-            .isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
-    @DisplayName("닉네임 처리 테스트: 닉네임이 10자 초과인 경우")
-    void 예외_테스트_2() {
-        assertThatThrownBy(() ->  new Player(new Hand(new ArrayList<>()), Status.HIT, "jasonjasonj"))
-            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Nested
@@ -160,6 +139,66 @@ public class PlayerTest {
                 new Card(Suit.DIAMOND, Denomination.TEN),
                 new Card(Suit.SPADE, Denomination.SIX)));
             Player player = new Player(playerHand, Status.STAY, "pobi");
+            GameResult expected = GameResult.LOSE;
+
+            GameResult actual = player.calculateGameResult(dealer);
+
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        @Test
+        @DisplayName("딜러 스테이, 플레이어 스테이: 둘 다 블랙잭인 경우")
+        void 딜러_스테이_플레이어_스테이_둘_다_블랙잭인_경우() {
+            Hand dealerHand = new Hand(List.of(
+                    new Card(Suit.DIAMOND, Denomination.TEN),
+                    new Card(Suit.SPADE, Denomination.ACE)));
+            Dealer dealer = new Dealer(dealerHand, Status.STAY, trump);
+
+            Hand playerHand = new Hand(List.of(
+                    new Card(Suit.SPADE, Denomination.TEN),
+                    new Card(Suit.DIAMOND, Denomination.ACE)));
+            Player player = new Player(playerHand, Status.STAY, "pobi");
+
+            GameResult expected = GameResult.DRAW;
+
+            GameResult actual = player.calculateGameResult(dealer);
+
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        @Test
+        @DisplayName("딜러 스테이, 플레이어 스테이: 플레이어만 블랙잭인 경우")
+        void 딜러_스테이_플레이어_스테이_플레이어만_블랙잭인_경우() {
+            Hand dealerHand = new Hand(List.of(
+                    new Card(Suit.DIAMOND, Denomination.TEN),
+                    new Card(Suit.SPADE, Denomination.NINE)));
+            Dealer dealer = new Dealer(dealerHand, Status.STAY, trump);
+
+            Hand playerHand = new Hand(List.of(
+                    new Card(Suit.SPADE, Denomination.TEN),
+                    new Card(Suit.DIAMOND, Denomination.ACE)));
+            Player player = new Player(playerHand, Status.STAY, "pobi");
+
+            GameResult expected = GameResult.BLACKJACK;
+
+            GameResult actual = player.calculateGameResult(dealer);
+
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        @Test
+        @DisplayName("딜러 스테이, 플레이어 스테이: 딜러만 블랙잭인 경우")
+        void 딜러_스테이_플레이어_스테이_딜러만_블랙잭인_경우() {
+            Hand dealerHand = new Hand(List.of(
+                    new Card(Suit.DIAMOND, Denomination.TEN),
+                    new Card(Suit.SPADE, Denomination.ACE)));
+            Dealer dealer = new Dealer(dealerHand, Status.STAY, trump);
+
+            Hand playerHand = new Hand(List.of(
+                    new Card(Suit.SPADE, Denomination.TEN),
+                    new Card(Suit.DIAMOND, Denomination.NINE)));
+            Player player = new Player(playerHand, Status.STAY, "pobi");
+
             GameResult expected = GameResult.LOSE;
 
             GameResult actual = player.calculateGameResult(dealer);

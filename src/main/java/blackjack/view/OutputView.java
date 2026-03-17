@@ -1,14 +1,15 @@
 package blackjack.view;
 
-import static blackjack.domain.Dealer.DEALER_HIT_THRESHOLD;
+import static blackjack.domain.participant.Dealer.DEALER_HIT_THRESHOLD;
 
-import blackjack.domain.Dealer;
-import blackjack.domain.DealerResult;
-import blackjack.domain.Participant;
-import blackjack.domain.Participants;
-import blackjack.domain.Player;
+import blackjack.domain.judgement.Profit;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.judgement.DealerResult;
+import blackjack.domain.participant.Nickname;
+import blackjack.domain.participant.Participant;
+import blackjack.domain.participant.Participants;
+import blackjack.domain.participant.Player;
 import blackjack.dto.FinalResultDto;
-import java.io.FilterOutputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +25,7 @@ public class OutputView {
     public static void printStartMessage(final List<Player> players, final Dealer dealer) {
         List<String> playerNicknames = players.stream()
             .map(Player::getNickname)
+            .map(Nickname::toString)
             .toList();
 
         System.out.printf("딜러와 %s에게 %s장을 나누었습니다.\n",
@@ -37,7 +39,6 @@ public class OutputView {
     public static void printCardStatus(final Participant participant) {
         System.out.println(participantHandFormat(participant));
     }
-
 
     public static void printDealerHitMessage() {
         System.out.printf("딜러는 %d이하라 한장의 카드를 더 받았습니다.\n", DEALER_HIT_THRESHOLD);
@@ -60,6 +61,13 @@ public class OutputView {
         dto.playerGameResultMap()
             .forEach((key, value) ->
                 System.out.printf("%s: %s\n", key, value.getName()));
+    }
+
+    public static void printProfit(Map<Nickname, Profit> playerProfit, Profit dealerProfit) {
+        System.out.println("## 최종 수익");
+        System.out.printf("딜러: %s\n", dealerProfit);
+        playerProfit.forEach((key, value) ->
+                        System.out.printf("%s: %s\n", key, value));
     }
 
     private static String participantHandFormat(final Participant participant) {

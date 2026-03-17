@@ -1,6 +1,5 @@
-package blackjack.domain;
+package blackjack.domain.card;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
@@ -18,26 +17,30 @@ public class Hand {
 
     public int calculateScore() {
         int totalScore = cards.stream()
-            .mapToInt(Card::toScore)
-            .sum();
+                .mapToInt(Card::toScore)
+                .sum();
 
         return handleAce(totalScore);
     }
 
     public long countAce() {
         return cards.stream()
-            .filter(Card::isAce)
-            .count();
+                .filter(Card::isAce)
+                .count();
     }
 
     public boolean isBurst() {
         return calculateScore() > BURST_THRESHOLD;
     }
 
-    public List<String> getCardNames(int startInclusive) {
-        return cards.subList(startInclusive, cards.size()).stream()
-            .map(Card::toString)
-            .toList();
+    public List<String> getCardNames() {
+        return cards.stream()
+                .map(Card::toString)
+                .toList();
+    }
+
+    public boolean isBlackjack() {
+        return cards.size() == 2 && calculateScore() == BURST_THRESHOLD;
     }
 
     private int handleAce(int totalScore) {

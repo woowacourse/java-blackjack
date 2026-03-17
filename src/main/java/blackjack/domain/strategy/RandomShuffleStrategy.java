@@ -1,5 +1,6 @@
-package blackjack.domain;
+package blackjack.domain.strategy;
 
+import blackjack.domain.card.Card;
 import blackjack.strategy.ShuffleStrategy;
 import java.util.Collections;
 import java.util.List;

@@ -2,14 +2,14 @@ package domain;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-import blackjack.domain.Card;
-import blackjack.domain.Dealer;
-import blackjack.domain.Denomination;
-import blackjack.domain.Hand;
-import blackjack.domain.Player;
-import blackjack.domain.Status;
-import blackjack.domain.Suit;
-import blackjack.domain.Trump;
+import blackjack.domain.card.Card;
+import blackjack.domain.participant.Dealer;
+import blackjack.domain.card.Denomination;
+import blackjack.domain.card.Hand;
+import blackjack.domain.participant.Player;
+import blackjack.domain.judgement.Status;
+import blackjack.domain.card.Suit;
+import blackjack.domain.card.Trump;
 import blackjack.strategy.ShuffleStrategy;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +54,7 @@ public class DealerTest {
         Dealer dealer = new Dealer(hand, Status.HIT, trump);
         Status expected = Status.HIT;
 
-        dealer.decideHit();
+        dealer.decideStay();
 
         assertThat(dealer).extracting("status")
             .isEqualTo(expected);
@@ -70,7 +70,7 @@ public class DealerTest {
             new Card(Suit.SPADE, Denomination.SEVEN)));
         Dealer dealer = new Dealer(hand, Status.HIT, trump);
 
-        dealer.decideHit();
+        dealer.decideStay();
 
         assertThat(dealer.isHit()).isFalse();
         assertThat(dealer.isBurst()).isFalse();
