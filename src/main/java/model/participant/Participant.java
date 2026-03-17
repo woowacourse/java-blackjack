@@ -3,37 +3,38 @@ package model.participant;
 import java.util.ArrayList;
 import java.util.List;
 import model.Card;
-import model.CardNumber;
+import model.Cards;
 
 public abstract class Participant {
     private static final int BUST_THRESHOLD = 21;
     private static final int DEALER_THRESHOLD = 16;
-    private static final String DEALER_NAME = "딜러";
-    private String name;
-    protected List<Card> hands;
+    private static final int BLACKJACK_SCORE = 21;
+    private static final int FIRST_TURN_CARD_COUNT = 2;
+
+    protected final String name;
+    protected final Cards hands;
 
     protected Participant(String name) {
-        this(name, new ArrayList<Card>());
+        this(name, new ArrayList<>());
     }
 
     public Participant(String name, List<Card> hands) {
         this.name = name;
-        this.hands = hands;
+        this.hands = Cards.of(hands);
     }
 
     public String getName() {
         return name;
     }
 
-    public List<Card> draw(Card card) {
-        hands.add(card);
-        return List.copyOf(hands);
+    public Cards draw(Card card) {
+        return hands.add(card);
     }
 
     public int calculateScore() {
-        int total = calculate();
-        int aceCardCount = aceCount();
-        while (aceCardCount-- > 0 && total > 21) {
+        int total = hands.calculateScore();
+        int aceCardCount = hands.aceCount();
+        while (aceCardCount-- > 0 && total > BUST_THRESHOLD) {
             total -= 10;
         }
 
@@ -53,26 +54,16 @@ public abstract class Participant {
     }
 
     public boolean isDealer() {
-        return name.equals(DEALER_NAME);
+        return false;
     }
 
-    private int calculate() {
-        return hands.stream()
-                .map(Card::getCardNumber)
-                .mapToInt(CardNumber::toValue)
-                .sum();
-    }
-
-    private int aceCount() {
-        int count = 0;
-        for (Card card : hands) {
-            if (card.getCardNumber() == CardNumber.ACE) {
-                count++;
-            }
-        }
-
-        return count;
+    public boolean isBlackJack() {
+        return hands.size() == FIRST_TURN_CARD_COUNT && calculateScore() == BLACKJACK_SCORE;
     }
 
     public abstract List<String> open();
+
+    public abstract List<String> openAll();
+
+    public abstract int calculateRevenue(int dealerScore, boolean dealerBust, boolean dealerBlackJack);
 }

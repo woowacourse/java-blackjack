@@ -19,7 +19,7 @@ public enum Suits {
         return Arrays.stream(Suits.values())
                 .filter(suits -> suits.name.equals(name))
                 .findFirst()
-                .orElseThrow();
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당하는 카드 이름을 찾을 수 없습니다."));
     }
 
     public String getName() {

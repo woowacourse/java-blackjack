@@ -1,10 +1,13 @@
 package controller;
 
+import java.util.Arrays;
+import java.util.List;
 import model.BlackJack;
+import model.cardpicker.CardPicker;
 import model.participant.Participant;
 import model.Participants;
+import model.vo.BetAmount;
 import util.InputParser;
-import util.Randoms;
 import view.InputView;
 import view.OutputView;
 
@@ -12,33 +15,51 @@ public class BlackJackController {
 
     private final InputView inputView;
     private final OutputView outputView;
+    private final CardPicker cardPicker;
 
-    public BlackJackController(InputView inputView, OutputView outputView) {
+    public BlackJackController(InputView inputView, OutputView outputView, CardPicker cardPicker) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.cardPicker = cardPicker;
     }
 
     public void run() {
-        String rawParticipants = "딜러,";
-        rawParticipants += inputView.readParticipantNames();
-        String[] parsedName = InputParser.parseName(rawParticipants);
+        String inputNames = inputView.readParticipantNames();
+        String[] names = InputParser.parseName(inputNames);
 
-        Participants participants = Participants.of(parsedName);
-        BlackJack blackJack = BlackJack.from(participants);
+        List<BetAmount> betAmounts = getBetAmounts(names);
+
+        Participants participants = Participants.of(names, betAmounts);
+        BlackJack blackJack = BlackJack.from(participants, cardPicker);
 
         blackJack.dealOut();
         outputView.printDealOut(participants);
-        blackJack.setFirstTurn();
 
+        playersCardDraw(participants, cardPicker);
+        dealerNeedDraw(participants, cardPicker);
+
+        outputView.printHandsAndScore(participants);
+        outputView.printResultRevenue(blackJack.calculateRevenue());
+    }
+
+    private void dealerNeedDraw(Participants participants, CardPicker cardPicker) {
+        Participant dealer = participants.getDealer();
+        if (dealer.dealerNeedDraw()) {
+            dealer.draw(cardPicker.pick());
+            outputView.printDealerDraw();
+        }
+    }
+
+    private List<BetAmount> getBetAmounts(String[] names) {
+        return Arrays.stream(names)
+                .map(inputView::readBettingAmount)
+                .map(Integer::parseInt)
+                .map(BetAmount::of)
+                .toList();
+    }
+
+    private void playersCardDraw(Participants participants, CardPicker cardPicker) {
         for (Participant participant : participants) {
-            if (participant.isDealer()) {
-                continue;
-            }
-
-            if (participant.calculateScore() == 21) {
-                continue;
-            }
-
             String input;
             do {
                 input = inputView.readHitOrNot(participant.getName());
@@ -46,7 +67,8 @@ public class BlackJackController {
                     outputView.printHands(participant);
                     break;
                 }
-                participant.draw(Randoms.pick());
+
+                participant.draw(cardPicker.pick());
                 if (participant.isBust()) {
                     outputView.printBustState(participant.getName(), participant.calculateScore());
                     outputView.printHands(participant);
@@ -56,14 +78,5 @@ public class BlackJackController {
 
             } while (input.equals("y"));
         }
-
-        Participant dealer = participants.getDealer();
-        if (dealer.dealerNeedDraw()) {
-            dealer.draw(Randoms.pick());
-            outputView.printDealerDraw();
-        }
-
-        outputView.printHandsAndScore(participants);
-        outputView.printResult(blackJack.calculateDealerResult(), blackJack.calculatePlayerResult());
     }
 }
