@@ -59,7 +59,12 @@ public class Player extends Participant {
         return gameState.isFinished();
     }
 
-    public GameResult calculateGameResult(Dealer dealer) {
+    public double calculateEarnMoney(Dealer dealer) {
+        GameResult gameResult = calculateGameResult(dealer);
+        return gameResult.getAllocation() * getBetAmount();
+    }
+
+    private GameResult calculateGameResult(Dealer dealer) {
         return GameResult.decidePlayerResult(this, dealer);
     }
 
