@@ -34,11 +34,11 @@ public class ParserTest {
         // when & then
         assertThatThrownBy(() -> parser.parseBettingMoney(bettingMoney))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 배팅 금액은 숫자 외의 문자를 포함할 수 없습니다.");
+                .hasMessage("[ERROR] 베팅 금액은 숫자 외의 문자를 포함할 수 없습니다.");
     }
 
     @Test
-    @DisplayName("배팅 금액에 숫자 외의 문자가 포함되는 경우, IllegalArgumentException이 발생한다.")
+    @DisplayName("베팅 금액에 숫자 외의 문자가 포함되는 경우, IllegalArgumentException이 발생한다.")
     void 배팅_금액_숫자_외의_문자_예외_테스트() {
         // given
         Parser parser = new Parser();
@@ -47,6 +47,6 @@ public class ParserTest {
         // when & then
         assertThatThrownBy(() -> parser.parseBettingMoney(bettingMoney))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 배팅 금액은 숫자 외의 문자를 포함할 수 없습니다.");
+                .hasMessage("[ERROR] 베팅 금액은 숫자 외의 문자를 포함할 수 없습니다.");
     }
 }

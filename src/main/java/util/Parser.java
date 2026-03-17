@@ -15,7 +15,7 @@ public class Parser {
         try {
             return new Money(Integer.parseInt(bettingMoney));
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("[ERROR] 배팅 금액은 숫자 외의 문자를 포함할 수 없습니다.");
+            throw new IllegalArgumentException("[ERROR] 베팅 금액은 숫자 외의 문자를 포함할 수 없습니다.");
         }
     }
 }
