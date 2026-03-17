@@ -60,7 +60,6 @@ public class BlackJackGameController {
         return revenueDtos;
     }
 
-    // TODO: InputView에서 받은 amount를 player와 매핑해 bettingAmounts를 생성 InputView랑 강결합 되어서 Players로 보내기 애매하다.
     private BettingAmounts initBettingManager(Players players) {
         Map<Name, BettingAmount> bettingAmounts = new HashMap<>();
         players.forEach(player -> {
@@ -75,13 +74,11 @@ public class BlackJackGameController {
         playGameWithDealer(gameManager);
     }
 
-    // TODO: player를 순회하며, dto인자로 player를 넘겨줌 [공통로직] -> 그렇다고 Domain쪽으로 옮기면 도메인이 DTO를 알게 된다.
     private void printParticipantCards(Dealer dealer, Players players) {
         printCards(toParticipantCardsDto(dealer));
         players.forEach(player -> printCards(toParticipantCardsDto(player)));
     }
 
-    // TODO: player를 순회하며, dto인자로 player를 넘겨줌 [공통로직]
     private void printFinalScores(Players players) {
         players.forEach(player -> printFinalCards(toParticipantCardsDto(player)));
     }

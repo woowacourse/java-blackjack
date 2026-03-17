@@ -30,7 +30,6 @@ public class GameResultManager {
         return finalRevenues;
     }
 
-
     private Revenue calculateDealerRevenue(Map<Name, Revenue> revenues) {
         BigDecimal totalPlayerRevenue = revenues.values().stream()
                 .map(Revenue::getMoney)

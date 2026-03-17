@@ -27,7 +27,6 @@ public class GameManager {
         distributeCardToPlayers(players);
     }
 
-    // ToDO: GameManager가 초기 카드를 배분하는 게임 진행 흐름의 일부이다. 플레이어들이 무얼하나 보다는, 초기 카드를 배분하는 게임 흐름의 책임.
     private void distributeCardToPlayers(Players players) {
         players.forEach(this::distributeInitialCards);
     }
