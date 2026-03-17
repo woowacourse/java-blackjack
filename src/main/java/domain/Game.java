@@ -76,7 +76,7 @@ public class Game {
     }
 
     public boolean needAdditionalCard() {
-        return dealer.needAdditinalCard();
+        return dealer.needAdditionalCard();
     }
 
     public boolean isAllPlayerBurst() {

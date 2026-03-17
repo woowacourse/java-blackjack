@@ -30,7 +30,7 @@ public class Dealer {
         return cards.isBlackjack();
     }
 
-    public boolean needAdditinalCard() {
+    public boolean needAdditionalCard() {
         return getCardsTotalSum() <= ADDITIONAL_THRESHOLD;
     }
 
