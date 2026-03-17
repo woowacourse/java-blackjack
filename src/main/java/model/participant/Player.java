@@ -3,8 +3,8 @@ package model.participant;
 import java.util.Objects;
 
 public class Player extends Participant {
-    public Player(PlayerName name, NameValidator policy) {
-        super(validate(name, policy));
+    public Player(String name) {
+        super(name);
     }
 
     @Override
@@ -24,12 +24,4 @@ public class Player extends Participant {
         return new PlayerStatus(super.getName(), super.getScore(), bet, super.isBust(), super.isBlackJack());
     }
 
-    private static PlayerName validate(PlayerName name, NameValidator policy) {
-        if(policy == null) {
-            return name;
-        }
-
-        policy.validate(name.name());
-        return name;
-    }
 }

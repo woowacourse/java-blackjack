@@ -1,5 +1,6 @@
 package model.participant;
 
+import constant.ErrorMessage;
 import model.result.ParticipantCurrentHand;
 import java.util.List;
 import model.card.Card;
@@ -9,11 +10,15 @@ public class Participants {
     private final Players players;
 
     public Participants() {
-        this.players = new Players(Dealer.nameValidate());
+        this.players = new Players();
     }
 
-    public void addPlayer(PlayerName playerName) {
-        players.addPlayer(playerName);
+    public void addPlayer(String playerName) {
+        if(dealer.isSameName(playerName)) {
+            throw new IllegalArgumentException(ErrorMessage.NO_PLAYER_NAME_DEALER.getMessage());
+        }
+        Player player = new Player(playerName);
+        players.addPlayer(player);
     }
 
     public List<String> getPlayerNames() {

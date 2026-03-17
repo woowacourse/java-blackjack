@@ -1,6 +1,5 @@
 package model.participant;
 
-import constant.ErrorMessage;
 import model.card.Card;
 
 public class Dealer extends Participant {
@@ -8,7 +7,7 @@ public class Dealer extends Participant {
     private static final Integer CARD_DRAW_THRESHOLD = 16;
 
     public Dealer() {
-        super(new PlayerName(DEALER_NAME));
+        super(DEALER_NAME);
     }
 
     public Card getInitialCard() {
@@ -23,11 +22,7 @@ public class Dealer extends Participant {
         return new DealerStatus(DEALER_NAME, super.getScore(), super.isBust(), super.isBlackJack());
     }
 
-    public static NameValidator nameValidate() {
-        return(String playerName) -> {
-            if(playerName.equals(DEALER_NAME)) {
-                throw new IllegalArgumentException(ErrorMessage.NO_PLAYER_NAME_DEALER.getMessage());
-            }
-        };
+    public boolean isSameName(String playerName) {
+        return playerName.equals(DEALER_NAME);
     }
 }

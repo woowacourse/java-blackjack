@@ -10,7 +10,6 @@ import model.card.BlackJackDeck;
 import model.card.Card;
 import model.participant.BetPrice;
 import model.participant.Participants;
-import model.participant.PlayerName;
 import model.result.DealerProfit;
 import model.result.PlayerProfits;
 import model.result.ProfitCalculator;
@@ -26,7 +25,7 @@ public class BlackJackGame {
         this.participants = new Participants();
     }
 
-    public void registerPlayer(PlayerName playerName) {
+    public void registerPlayer(String playerName) {
         participants.addPlayer(playerName);
     }
 

@@ -8,18 +8,18 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class CurrentPlayersTest {
+public class PlayersTest {
     private Players players;
 
     @BeforeEach
     public void setUp() {
-        players = new Players(null);
+        players = new Players();
     }
 
     @Test
     public void 플레이어_등록_정상_작동() {
-        PlayerName player = new PlayerName("player1");
-        PlayerName player2 = new PlayerName("player2");
+        Player player = new Player("player1");
+        Player player2 = new Player("player2");
 
         players.addPlayer(player);
         players.addPlayer(player2);
@@ -33,8 +33,8 @@ public class CurrentPlayersTest {
 
     @Test
     public void 중복_이름_참가자_예외() {
-        PlayerName player1 = new PlayerName("player");
-        PlayerName player2 = new PlayerName("player");
+        Player player1 = new Player("player");
+        Player player2 = new Player("player");
 
         players.addPlayer(player1);
 

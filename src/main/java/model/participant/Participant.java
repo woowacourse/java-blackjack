@@ -8,8 +8,8 @@ public class Participant {
     private final PlayerName name;
     private final ParticipantHand participantHand = new ParticipantHand();
 
-    public Participant(PlayerName playerName) {
-        this.name = playerName;
+    public Participant(String name) {
+        this.name = new PlayerName(name);
     }
 
     public String getName() {
