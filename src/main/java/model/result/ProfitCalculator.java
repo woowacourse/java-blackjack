@@ -12,7 +12,7 @@ public class ProfitCalculator {
     }
 
     private static BigDecimal calculateBustBetAmount(DealerStatus dealer, PlayerStatus player) {
-        if(player.isBust()) {
+        if (player.isBust()) {
             return BigDecimal.valueOf(-player.bet());
         }
 
@@ -20,11 +20,11 @@ public class ProfitCalculator {
     }
 
     private static BigDecimal calculateBlackJackBetAmount(DealerStatus dealer, PlayerStatus player) {
-        if(player.isBlackJack() && dealer.isBlackJack()) {
+        if (player.isBlackJack() && dealer.isBlackJack()) {
             return BigDecimal.ZERO;
         }
 
-        if(player.isBlackJack()) {
+        if (player.isBlackJack()) {
             return BigDecimal.valueOf(player.bet()).multiply(BigDecimal.valueOf(BLACK_JACK_BAT_RATE));
         }
 
@@ -32,11 +32,11 @@ public class ProfitCalculator {
     }
 
     private static BigDecimal calculateRegularBetAmount(DealerStatus dealer, PlayerStatus player) {
-        if(player.score() > dealer.score() || dealer.isBust()) {
+        if (player.score() > dealer.score() || dealer.isBust()) {
             return BigDecimal.valueOf(player.bet());
         }
 
-        if(player.score() < dealer.score()) {
+        if (player.score() < dealer.score()) {
             return BigDecimal.valueOf(-player.bet());
         }
 

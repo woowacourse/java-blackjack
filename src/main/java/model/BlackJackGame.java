@@ -59,7 +59,7 @@ public class BlackJackGame {
     }
 
     public void drawDealer(Runnable onDraw) {
-        while(participants.isDealerCanDraw()) {
+        while (participants.isDealerCanDraw()) {
             Card card = cards.draw();
             participants.drawDealer(card);
             onDraw.run();

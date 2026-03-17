@@ -23,7 +23,7 @@ public class ParticipantHand {
     }
 
     public Integer getScore() {
-        if(deck.hasAce() && score.getScore() <= MAX_ACE_SCORE) {
+        if (deck.hasAce() && score.getScore() <= MAX_ACE_SCORE) {
             return score.getScore() + ADDITIONAL_ACE_SCORE;
         }
         return score.getScore();
@@ -44,7 +44,7 @@ public class ParticipantHand {
     }
 
     private void validateCardDuplicate(Card card) {
-        if(deck.get().contains(card)) {
+        if (deck.get().contains(card)) {
             throw new IllegalArgumentException(ErrorMessage.DUPLICATED_CARD_IN_DECK.getMessage());
         }
     }

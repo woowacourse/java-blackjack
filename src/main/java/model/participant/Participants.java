@@ -14,7 +14,7 @@ public class Participants {
     }
 
     public void addPlayer(String playerName) {
-        if(dealer.isSameName(playerName)) {
+        if (dealer.isSameName(playerName)) {
             throw new IllegalArgumentException(ErrorMessage.NO_PLAYER_NAME_DEALER.getMessage());
         }
         Player player = new Player(playerName);

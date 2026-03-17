@@ -59,11 +59,11 @@ public class BlackJackController {
     }
 
     private void drawPlayerTurns(String playerName) {
-        while(drawPlayerTurn(playerName));
+        while (drawPlayerTurn(playerName));
     }
 
     private boolean drawPlayerTurn(String playerName) {
-        if(!getCondition(playerName)) {
+        if (!getCondition(playerName)) {
             return false;
         }
 

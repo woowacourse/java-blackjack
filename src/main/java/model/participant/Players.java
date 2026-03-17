@@ -13,7 +13,7 @@ public class Players {
     private final Map<String, BetPrice> playerBet = new HashMap<>();
 
     public void addPlayer(Player player) {
-        if(players.containsKey(player.getName())) {
+        if (players.containsKey(player.getName())) {
             throw new IllegalArgumentException(ErrorMessage.DUPLICATED_NAME.getMessage());
         }
 
@@ -58,7 +58,7 @@ public class Players {
     }
 
     private Player getPlayer(String playerName) {
-        if(!players.containsKey(playerName)) {
+        if (!players.containsKey(playerName)) {
             throw new IllegalArgumentException(ErrorMessage.NO_PLAYER_NAME.getMessage());
         }
 

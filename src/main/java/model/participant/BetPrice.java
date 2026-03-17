@@ -8,7 +8,7 @@ public record BetPrice(long value) {
     }
 
     private static void validate(long value) {
-        if(value <= 0) {
+        if (value <= 0) {
             throw new IllegalArgumentException(ErrorMessage.OUT_OF_RANGE_BET.getMessage());
         }
     }
