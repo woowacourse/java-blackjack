@@ -4,8 +4,8 @@ import java.util.List;
 
 public class BlackjackController {
 
-    private GameContext gameContext;
-    private List<GamePhase> gamePhaseList;
+    private final GameContext gameContext;
+    private final List<GamePhase> gamePhaseList;
 
     public BlackjackController() {
         gameContext = new GameContext();

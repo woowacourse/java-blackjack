@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import model.BettingResult;
 import model.CardDispenser;
@@ -11,20 +12,18 @@ public class GameContext {
     private final Dealer dealer;
     private final CardDispenser cardDispenser;
     private final BettingResult bettingResult;
-    private List<Player> players;
+    private final List<Player> players;
 
     public GameContext() {
         dealer = new Dealer();
         Cards cards = Cards.createShuffledDeck();
         this.cardDispenser = new CardDispenser(cards);
         bettingResult = new BettingResult();
+        players = new ArrayList<>();
     }
 
     public void setPlayers(List<Player> players) {
-        if (this.players != null) {
-            throw new IllegalArgumentException("플레이어는 이미 설정되었습니다.");
-        }
-        this.players = List.copyOf(players);
+        this.players.addAll(players);
     }
 
     public Dealer dealer() {
