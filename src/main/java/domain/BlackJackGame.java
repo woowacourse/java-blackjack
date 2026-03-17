@@ -1,6 +1,5 @@
 package domain;
 
-import common.ErrorMessage;
 import domain.state.GameState;
 import dto.DealerResultDto;
 import dto.GameResultDto;
@@ -34,38 +33,30 @@ public class BlackJackGame {
         List<Card> dealersInitialCards = totalDeck.drawTwoCards();
         Hand initialDealerHand = Hand.of(
                 dealersInitialCards.get(0),
-                dealersInitialCards.get(1)
-        );
+                dealersInitialCards.get(1));
         return Dealer.from(
-                GameState.createInitialGameState(initialDealerHand)
-        );
+                GameState.createInitialGameState(initialDealerHand));
     }
 
     public Optional<Player> whoseBettingTurn() {
-        return multiPlayers.findNotBetPlayer();
+        return multiPlayers.getNextBetPlayer();
     }
 
     public Optional<Player> whosePlayTurn() {
-        return multiPlayers.findNotStayPlayer();
+        return multiPlayers.getNextPlayablePlayer();
     }
 
-    public void doBetProcess(int value) {
-        Player target = multiPlayers.findNotBetPlayer()
-                .orElseThrow(() -> new IllegalStateException(ErrorMessage.NO_MORE_BETTABLE_PLAYER.getMessage()));
+    public void doBetProcess(Player target, int value) {
         multiPlayers.executeBet(target, value);
     }
 
-    public ParticipantDto doHitProcess() {
-        Player newPlayer = multiPlayers.findNotStayPlayer()
-                .map(player -> multiPlayers.executeHit(player, totalDeck::drawCard))
-                .orElseThrow(() -> new IllegalStateException(ErrorMessage.NO_MORE_PLAYABLE_PLAYER.getMessage()));
+    public ParticipantDto doHitProcess(Player target) {
+        Player newPlayer = multiPlayers.executeHit(target, totalDeck::drawCard);
         return ParticipantDto.from(newPlayer);
     }
 
-    public ParticipantDto doStandProcess() {
-        Player newPlayer = multiPlayers.findNotStayPlayer()
-                .map(multiPlayers::executeStand)
-                .orElseThrow(() -> new IllegalStateException(ErrorMessage.NO_MORE_PLAYABLE_PLAYER.getMessage()));
+    public ParticipantDto doStandProcess(Player target) {
+        Player newPlayer = multiPlayers.executeStand(target);
         return ParticipantDto.from(newPlayer);
     }
 

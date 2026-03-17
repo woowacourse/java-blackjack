@@ -6,6 +6,7 @@ import domain.Player;
 import dto.GameResultDto;
 import dto.ParticipantDto;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Supplier;
 import view.InputView;
 import view.OutputView;
@@ -15,9 +16,7 @@ public class BlackJackController {
     private final OutputView outputView;
     private final CardCreationStrategy strategy;
 
-    public BlackJackController(InputView inputView,
-                               OutputView outputView,
-                               CardCreationStrategy strategy) {
+    public BlackJackController(InputView inputView, OutputView outputView, CardCreationStrategy strategy) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.strategy = strategy;
@@ -36,11 +35,16 @@ public class BlackJackController {
     }
 
     private void betPlayers(BlackJackGame game) {
-        while (game.whoseBettingTurn().isPresent()) {
-            Player currentPlayer = game.whoseBettingTurn().get();
+        while (true) {
+            Optional<Player> player = game.whoseBettingTurn();
+            if (player.isEmpty()) {
+                break;
+            }
+            Player currentPlayer = player.get();
+
             outputView.printBetAmountPrompt(currentPlayer.getName());
             int betAmountValue = retry(inputView::readBetAmountValue);
-            game.doBetProcess(betAmountValue);
+            game.doBetProcess(currentPlayer, betAmountValue);
         }
     }
 
@@ -57,31 +61,36 @@ public class BlackJackController {
     }
 
     private void playPlayersTurn(BlackJackGame game) {
-        while (game.whosePlayTurn().isPresent()) {
-            Player currentPlayer = game.whosePlayTurn().get();
+        while (true) {
+            Optional<Player> player = game.whosePlayTurn();
+            if (player.isEmpty()) {
+                break;
+            }
+            Player currentPlayer = player.get();
+
             outputView.printHitOrStandPrompt(currentPlayer.getName());
             boolean wantToHit = retry(inputView::wantToHit);
-            doHitOrStand(wantToHit, game);
+            doHitOrStand(game, currentPlayer, wantToHit);
         }
     }
 
-    private void doHitOrStand(boolean wantToHit, BlackJackGame game) {
+    private void doHitOrStand(BlackJackGame game, Player player, boolean wantToHit) {
         if (wantToHit) {
-            handlePlayerHitProcess(game);
-        } else {
-            handlePlayerStandProcess(game);
+            handlePlayerHitProcess(game, player);
+            return;
         }
+        handlePlayerStandProcess(game, player);
     }
 
-    private void handlePlayerStandProcess(BlackJackGame game) {
-        ParticipantDto playerState = game.doStandProcess();
+    private void handlePlayerStandProcess(BlackJackGame game, Player player) {
+        ParticipantDto playerState = game.doStandProcess(player);
         if (playerState.cards().size() == 2) {
             outputView.printUserState(playerState);
         }
     }
 
-    private void handlePlayerHitProcess(BlackJackGame game) {
-        ParticipantDto playerState = game.doHitProcess();
+    private void handlePlayerHitProcess(BlackJackGame game, Player player) {
+        ParticipantDto playerState = game.doHitProcess(player);
         outputView.printUserState(playerState);
     }
 

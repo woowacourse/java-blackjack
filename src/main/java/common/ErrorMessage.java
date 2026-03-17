@@ -13,6 +13,7 @@ public enum ErrorMessage {
     NOT_ALLOW_METHOD_CALL("현재 상태에서 허용되지 않는 메소드 호출입니다"),
     ZERO_MINUS_MONEY("0원 이하 금액을 베팅할 수는 없습니다"),
     ONLY_NUMBER("숫자만 입력 가능합니다"),
+    TEST_STATE_EROR("테스트 조건이 이상합니다"),
     MAX_PLAYER_ERROR("최대 인원을 초과했습니다.");
 
     private final String message;

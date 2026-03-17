@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import common.ErrorMessage;
 import dto.GameResultDto;
 import dto.GameStateDto;
 import dto.ParticipantDto;
@@ -56,8 +57,11 @@ class BlackJackGameTest {
         int betAmountValue = 1_000;
         BlackJackGame testGame = BlackJackGame.ready(TEST_PLAYER_NAMES, this::createSampleCards);
 
+        Player testPlayer = testGame.whoseBettingTurn().orElseThrow(
+                () -> new IllegalStateException(ErrorMessage.TEST_STATE_EROR.getMessage())
+        );
         assertDoesNotThrow(
-                () -> testGame.doBetProcess(betAmountValue)
+                () -> testGame.doBetProcess(testPlayer, betAmountValue)
         );
     }
 
@@ -66,9 +70,12 @@ class BlackJackGameTest {
     void doHitProcess_success() {
         BlackJackGame testGame = BlackJackGame.ready(TEST_PLAYER_NAMES, this::createSampleCards);
 
-        ParticipantDto result = testGame.doHitProcess();
+        Player testPlayer = testGame.whoseBettingTurn().orElseThrow(
+                () -> new IllegalStateException(ErrorMessage.TEST_STATE_EROR.getMessage())
+        );
+        ParticipantDto firstPlayerParticipantDto = testGame.doHitProcess(testPlayer);
 
-        assertEquals(ParticipantDto.class, result.getClass());
+        assertEquals(TEST_PLAYER_NAMES.getFirst(), firstPlayerParticipantDto.name());
     }
 
     @Test
@@ -76,9 +83,13 @@ class BlackJackGameTest {
     void doStandProcess_success() {
         BlackJackGame testGame = BlackJackGame.ready(TEST_PLAYER_NAMES, this::createSampleCards);
 
-        ParticipantDto result = testGame.doStandProcess();
+        Player testPlayer = testGame.whoseBettingTurn().orElseThrow(
+                () -> new IllegalStateException(ErrorMessage.TEST_STATE_EROR.getMessage())
+        );
+        ParticipantDto firstPlayerParticipantDto = testGame.doStandProcess(testPlayer);
 
-        assertEquals(ParticipantDto.class, result.getClass());
+        assertEquals(TEST_PLAYER_NAMES.getFirst(), firstPlayerParticipantDto.name());
+        assertEquals(TEST_PLAYER_NAMES.getFirst(), firstPlayerParticipantDto.name());
     }
 
     @Nested
