@@ -100,6 +100,6 @@ public class BlackjackController {
     private void printProfit(Referee referee,Players players, Results results, Dealer dealer) {
         Profits profits = new Profits(referee, results);
         Profit dealerProfit = profits.getDealerProfit();
-        outputView.printFinalProfit(dealer, players, results, profits, dealerProfit);
+        outputView.printFinalProfit(dealer, players, profits, dealerProfit);
     }
 }
