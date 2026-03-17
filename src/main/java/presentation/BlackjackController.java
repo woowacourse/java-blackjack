@@ -1,74 +1,79 @@
 package presentation;
 
 import application.BlackjackService;
-import application.dto.RoundResult;
-import domain.dto.GameResult;
-import domain.dto.MemberStatus;
+import domain.card.StandardDeck;
+import dto.RoundResult;
+import dto.GameResult;
+import dto.MemberStatus;
+
+import java.util.HashMap;
 import java.util.List;
-import presentation.ui.InputView;
-import presentation.ui.OutputView;
+import java.util.Map;
+
+import presentation.ui.BlackjackView;
 
 public class BlackjackController {
 
-    private final BlackjackService blackjackService;
-    private final InputView inputView;
-    private final OutputView outputView;
+    private final BlackjackView blackjackView;
 
-    public BlackjackController(BlackjackService blackjackService, InputView inputView, OutputView outputView) {
-        this.blackjackService = blackjackService;
-        this.inputView = inputView;
-        this.outputView = outputView;
+    public BlackjackController(BlackjackView blackjackView) {
+        this.blackjackView = blackjackView;
     }
 
     public void executeGame() {
-        List<String> playerNames = getPlayerNames();
-        InitialCards();
-        playGame(playerNames);
-        checkDrawableOfDealer();
-        finalGameStatus();
-        finalGameResult();
+        List<String> playerNames = blackjackView.inputView().readPlayerNames();
+        BlackjackService blackjackService = new BlackjackService(readPlayerInitStatus(playerNames), new StandardDeck());
+        setUpGame(blackjackService);
+        playGame(blackjackService, playerNames);
+        checkDrawableOfDealer(blackjackService);
+        finalGameStatus(blackjackService);
+        finalGameResult(blackjackService);
     }
 
-    private void finalGameResult() {
+    private void finalGameResult(BlackjackService blackjackService) {
         List<GameResult> gameResults = blackjackService.getGameResults();
-        outputView.printGameResult(gameResults);
+        blackjackView.outputView().printGameResult(gameResults);
     }
 
-    private void finalGameStatus() {
+    private void finalGameStatus(BlackjackService blackjackService) {
         List<MemberStatus> statuses = blackjackService.getMemberStatuses();
-        outputView.printFinalMemberStatus(statuses);
+        blackjackView.outputView().printFinalMemberStatus(statuses);
     }
 
-    private void checkDrawableOfDealer() {
+    private void checkDrawableOfDealer(BlackjackService blackjackService) {
         boolean dealerDrawable = blackjackService.checkDealerDrawable();
         if (dealerDrawable) {
-            outputView.printDealerDrawOut();
+            blackjackView.outputView().printDealerDrawOut();
         }
     }
 
-    private void playGame(List<String> playerNames) {
+    private void playGame(BlackjackService blackjackService, List<String> playerNames) {
         for (String playerName : playerNames) {
-            playAllRoundOfPlayer(playerName);
+            playAllRoundOfPlayer(blackjackService, playerName);
         }
     }
 
-    private void InitialCards() {
+    private Map<String, Integer> readPlayerInitStatus(List<String> playerNames) {
+        Map<String, Integer> playerBets = new HashMap<>();
+        for (String playerName : playerNames) {
+            int betAmount = blackjackView.inputView().readPlayerBetAmount(playerName);
+            playerBets.put(playerName, betAmount);
+        }
+        return playerBets;
+    }
+
+    private void setUpGame(BlackjackService blackjackService) {
         List<MemberStatus> memberStatuses = blackjackService.getMemberStatuses();
-        outputView.printInitialStatus(memberStatuses);
+        blackjackView.outputView().printInitialStatus(memberStatuses);
     }
 
-    private List<String> getPlayerNames() {
-        List<String> playerNames = inputView.readPlayerNames();
-        blackjackService.initializeGame(playerNames);
-        return playerNames;
-    }
-
-    private void playAllRoundOfPlayer(String playerName) {
-        boolean isBust = false;
-        while (!isBust && inputView.playContinue(playerName)) {
+    private void playAllRoundOfPlayer(BlackjackService blackjackService, String playerName) {
+        while (!blackjackService.isFinishedByName(playerName) && blackjackView.inputView().playContinue(playerName)) {
             RoundResult roundResult = blackjackService.startOneRound(playerName);
-            outputView.printCurrentCard(playerName, roundResult);
-            isBust = roundResult.isBust();
+            blackjackView.outputView().printCurrentCard(playerName, roundResult);
+        }
+        if (!blackjackService.isFinishedByName(playerName)) {
+            blackjackService.endPlayerRound(playerName);
         }
     }
 }
