@@ -18,7 +18,7 @@ public enum CardValueFormatter {
     TEN(CardScore.TEN, "10"),
     JACK(CardScore.JACK, "J"),
     QUEEN(CardScore.QUEEN, "Q"),
-    KING(CardScore.KING, "K")
+    KING(CardScore.KING, "K"),
     ;
 
     private final CardScore cardScore;

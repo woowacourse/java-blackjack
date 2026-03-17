@@ -9,7 +9,7 @@ public enum CardSuitFormatter {
     HEART(CardSuit.HEART, "하트"),
     SPADE(CardSuit.SPADE, "스페이드"),
     CLUB(CardSuit.CLUB, "클럽"),
-    DIAMOND(CardSuit.DIAMOND, "다이아몬드")
+    DIAMOND(CardSuit.DIAMOND, "다이아몬드"),
     ;
 
     private final CardSuit cardSuit;
