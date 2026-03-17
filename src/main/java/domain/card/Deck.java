@@ -1,7 +1,7 @@
-package domain.player;
+package domain.card;
 
-import domain.RandomValueGenerator;
-import domain.card.Card;
+import domain.random.RandomValueGenerator;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import util.ErrorMessage;
@@ -15,7 +15,7 @@ public class Deck {
     public Deck(List<Card> cards, RandomValueGenerator randomValueGenerator) {
         validateSize(cards);
         validateDuplicate(cards);
-        this.cards = cards;
+        this.cards = new ArrayList<>(cards);
         this.randomValueGenerator = randomValueGenerator;
     }
 
@@ -32,16 +32,32 @@ public class Deck {
     }
 
     public Card drawCard() {
-        int idx = randomValueGenerator.generate(CARD_SIZE);
+        validateCardsIsEmpty();
+        int idx = randomValueGenerator.generate(cards.size());
 
-        if (idx < 0 || idx >= cards.size()) {
+        return cards.remove(idx);
+    }
+
+    public List<Card> drawCards(int n) {
+        validateCardsCount(n);
+        List<Card> drawnCards = new ArrayList<>();
+
+        for (int i = 0; i < n; i++) {
+            drawnCards.add(drawCard());
+        }
+        return drawnCards;
+    }
+
+    private void validateCardsIsEmpty() {
+        if (cards.isEmpty()) {
+            throw new IllegalArgumentException(ErrorMessage.CARDS_IS_EMPTY.getMessage());
+        }
+    }
+
+    private void validateCardsCount(int cardCount) {
+        if (cardCount <= 0 || cardCount > cards.size()) {
             throw new IllegalArgumentException(ErrorMessage.INDEX_RANGE.getMessage());
         }
-
-        Card card = cards.get(idx);
-        cards.remove(idx);
-
-        return card;
     }
 
     public boolean contains(Card card) {

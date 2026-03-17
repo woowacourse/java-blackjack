@@ -1,35 +1,36 @@
 package domain.player;
 
 import domain.card.Card;
-import java.util.List;
 
-public class Player {
+public class Player extends Participant {
 
-    private final Name name;
-    private final Hand hand;
+    private static final int BLACKJACK_NUM = 21;
 
-    public Player(String name, Hand hand) {
-        this.name = new Name(name);
-        this.hand = hand;
+    private final BettingHand bettingHand;
+
+    private Player(Name name, BettingHand bettingHand) {
+        super(name);
+        this.bettingHand = bettingHand;
     }
 
-    public Hand getHand() {
-        return hand;
+    public static Player of(Name name, BettingHand bettingHand) {
+        return new Player(name, bettingHand);
     }
 
-    public List<Card> getCards() {
-        return getHand().getCards();
+    @Override
+    protected Hand getHand() {
+        return bettingHand.getHand();
     }
 
-    public void addHand(Card card) {
-        hand.add(card);
+    public boolean canHit() {
+        return !isBust() && !isBlackjack() && totalScore() < BLACKJACK_NUM;
     }
 
-    public String getName() {
-        return name.getName();
+    public void hit(Card card) {
+        bettingHand.addCard(card);
     }
 
-    public int getTotalScore() {
-        return hand.getTotalScore();
+    public int calculateProfit(Dealer dealer) {
+        return bettingHand.calculateProfit(dealer);
     }
 }

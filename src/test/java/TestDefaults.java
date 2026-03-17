@@ -1,8 +1,8 @@
-import domain.RandomValueGenerator;
 import domain.card.Card;
+import domain.card.Deck;
 import domain.card.Rank;
 import domain.card.Suit;
-import domain.player.Deck;
+import domain.random.RandomValueGenerator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
