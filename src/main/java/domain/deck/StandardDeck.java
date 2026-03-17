@@ -17,20 +17,11 @@ public class StandardDeck implements Deck {
     public StandardDeck() {
         this.cards = new ArrayList<>();
         this.index = 0;
-        init();
-    }
-
-    private void init() {
         for (CardSuit cardSuit : CardSuit.values()) {
-            Arrays.stream(CardRank.values()).forEach(c -> cards.add(new Card(c, cardSuit)));
+            Arrays.stream(CardRank.values())
+                    .forEach(c -> cards.add(new Card(c, cardSuit)));
         }
-
-        Collections.shuffle(cards);
-    }
-
-    public void shuffle() {
-        Collections.shuffle(cards);
-        index = 0;
+        Collections.shuffle(this.cards);
     }
 
     @Override
