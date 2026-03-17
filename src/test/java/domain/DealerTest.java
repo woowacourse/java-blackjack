@@ -4,7 +4,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.jupiter.api.DisplayName;
+
+import domain.card.Card;
+import domain.card.CardNumber;
+import domain.card.CardShape;
+import domain.hand.Hand;
+import domain.participant.Dealer;
 import org.junit.jupiter.api.Test;
 
 class DealerTest {
@@ -14,7 +19,7 @@ class DealerTest {
 
     Dealer overThreshold = Dealer.from(new Hand(new ArrayList<>(List.of(
             Card.of(CardNumber.EIGHT, CardShape.CLOVER),
-            Card.of(CardNumber.J, CardShape.CLOVER)))));
+            Card.of(CardNumber.JACK, CardShape.CLOVER)))));
 
     @Test
     void 딜러_16이하_여부_확인() {

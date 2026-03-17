@@ -1,10 +1,9 @@
 package view;
 
-import dto.DealerFinalResultDto;
 import dto.PlayerDto;
+import dto.PlayerProfitDto;
 import dto.PlayersDto;
 import dto.ResultDto;
-import dto.TotalFinalResultsDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,7 +14,7 @@ public class OutputView {
                 .map(PlayerDto::name)
                 .collect(Collectors.joining(","));
 
-        System.out.print("\n딜러와 " + playersName + "에게 2장을 나누었습니다.");
+        System.out.print("딜러와 " + playersName + "에게 2장을 나누었습니다.");
     }
 
     public static void printDealerCardStatus(ResultDto resultDto) {
@@ -31,7 +30,7 @@ public class OutputView {
         for (PlayerDto playerDto : playersDto.playersDto()) {
             printPlayerCardStatus(playerDto);
         }
-        System.out.print(System.lineSeparator());
+        System.out.println();
     }
 
     private static String getCardStatusFormat(List<String> cards) {
@@ -65,12 +64,11 @@ public class OutputView {
                 playerDto.resultDto().score());
     }
 
-    public static void printTotalResult(DealerFinalResultDto dealerFinalResultDto,
-                                        TotalFinalResultsDto totalFinalResultsDto) {
-        System.out.println("\n\n## 최종 승패");
-        System.out.print(dealerFinalResultDto.result());
-        for (String finalResult : totalFinalResultsDto.totalResults()) {
-            System.out.print(finalResult);
+    public static void printTotalProfit(String dealerProfit, List<PlayerProfitDto> playerProfitResults) {
+        System.out.printf("%n%n## 최종 수익%n");
+        System.out.printf("딜러: %s%n", dealerProfit);
+        for (PlayerProfitDto playerProfitResult : playerProfitResults) {
+            System.out.printf("%s: %s%n", playerProfitResult.name(), playerProfitResult.profit());
         }
     }
 }

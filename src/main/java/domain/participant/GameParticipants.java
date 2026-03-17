@@ -1,4 +1,6 @@
-package domain;
+package domain.participant;
+
+import java.util.List;
 
 public class GameParticipants {
     private final Dealer dealer;
@@ -21,7 +23,11 @@ public class GameParticipants {
         return players;
     }
 
-    public boolean isAllPlayersBust() {
-        return players.isAllBust();
+    public List<Player> getPlayersValue() {
+        return players.getPlayers();
+    }
+
+    public boolean cannotDealerDraw() {
+        return players.isAllBust() || !dealer.checkThreshold();
     }
 }

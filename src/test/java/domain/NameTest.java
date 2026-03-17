@@ -2,7 +2,7 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import org.junit.jupiter.api.DisplayName;
+import domain.participant.Name;
 import org.junit.jupiter.api.Test;
 
 class NameTest {
@@ -20,5 +20,4 @@ class NameTest {
         assertThatThrownBy(() -> Name.from(blankName)).isInstanceOf(IllegalArgumentException.class);
         assertThatThrownBy(() -> Name.from(emptyName)).isInstanceOf(IllegalArgumentException.class);
     }
-
 }

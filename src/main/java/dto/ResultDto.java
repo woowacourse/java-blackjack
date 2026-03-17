@@ -1,8 +1,8 @@
 package dto;
 
-import domain.Card;
-import domain.Dealer;
-import domain.Participant;
+import domain.card.Card;
+import domain.participant.Dealer;
+import domain.participant.Participant;
 
 import java.util.List;
 
@@ -26,5 +26,4 @@ public record ResultDto(
 
         return new ResultDto(cardInfo, dealer.getScoreValue());
     }
-
 }

@@ -1,4 +1,4 @@
-package domain;
+package domain.card;
 
 public class Card {
     private final CardNumber cardNumber;
@@ -7,7 +7,7 @@ public class Card {
     private Card(CardNumber cardNumber, CardShape cardShape) {
         this.cardNumber = cardNumber;
         this.cardShape = cardShape;
-    };
+    }
 
     public static Card of(CardNumber cardNumber, CardShape cardShape) {
         return new Card(cardNumber, cardShape);

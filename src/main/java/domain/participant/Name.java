@@ -1,4 +1,4 @@
-package domain;
+package domain.participant;
 
 public class Name {
     private static final int NAME_LIMIT_LENGTH = 20;
@@ -34,5 +34,4 @@ public class Name {
             throw new IllegalArgumentException("잘못된 입력입니다. 다시 확인해주세요.");
         }
     }
-
 }
