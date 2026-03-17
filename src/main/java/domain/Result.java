@@ -1,6 +1,5 @@
 package domain;
 
-import java.math.BigDecimal;
 import java.util.Map;
 
 public class Result {
@@ -14,9 +13,7 @@ public class Result {
 
     public int getPlayerProfit(Player player) {
         MatchResult matchResult = playerResults.get(player);
-        BigDecimal profit = matchResult.getMultiplier()
-                .multiply(BigDecimal.valueOf(player.getBettingMoney().bettingMoney()));
-        return profit.intValue();
+        return (int) matchResult.getMultiplier() * player.getBettingMoney().bettingMoney();
     }
 
     public int getDealerProfit() {
