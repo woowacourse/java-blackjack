@@ -1,4 +1,7 @@
 package dto.domain;
 
-public record PlayerNameAndBettingDto() {
+public record PlayerNameAndBettingDto(
+        String name,
+        int betting
+) {
 }
