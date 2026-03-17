@@ -21,33 +21,38 @@ Java로 구현한 콘솔 기반 블랙잭 게임입니다.
 src/main/java/
 ├── Main.java                     # 진입점
 ├── controller/
-│   └── BlackJackController.java  # 게임 흐름 제어
+│   └── BlackJackController       # 게임 흐름 제어
 ├── model/
 │   ├── card
-│   │     ├── BlackJackDeck.java  # 게임에 사용할 카드
+│   │     ├── BlackJackDeck       # 게임에 사용할 카드
 │   │     ├── Card                # 카드
 │   │     ├── CardNumber          # 카드 번호
 │   │     ├── Cards               # 현재 갖고 있는 카드 관리
-│   │     └── Shape.java          # 딜러/플레이어 공통 부모 클래스
+│   │     └── Shape               # 딜러/플레이어 공통 부모 클래스
 │   ├── participant
-│   │     ├── CurrentPlayers      # 현재 참가 플레이어 및 배팅 금액 관리
+│   │     ├── Agreement           # 참가자 드로우 여부 입력 관리
+│   │     ├── BetPrice            # 참가자 배팅 금액 입력 관리
 │   │     ├── Dealer              # 딜러
-│   │     ├── NameValidator       # 이름 검증
+│   │     ├── DealerStatus        # 딜러 상태(이름, 점수, 버스트 여부, 블랙잭 여부) 관리
 │   │     ├── Participant         # 참가자(플레이어, 딜러)
 │   │     ├── ParticipantHand     # 참가자 손패(점수, 카드)
 │   │     ├── Participants        # 게임의 딜러, 플레이어들 관리
 │   │     ├── Player              # 플레이어
+│   │     ├── PlayerName          # 플레이어 이름 관리
 │   │     ├── Players             # 참가자 생성 및 등록 관리
+│   │     ├── PlayerStatus        # 플레이어 상태(이름, 점수, 배팅 금액, 버스트 여부, 블랙잭 여부) 관리
 │   │     └── Score               # 현재 점수 관리
 │   ├── result
 │   │     ├── DealerProfit        # 딜러 수익금 관리
-│   │     ├── PlayerProfit        # 플레이어 수익 저장
-│   │     └── ProfitCalculator    # 수익 계산
-│   └── BlackJackGame.java        # 블랙잭 게임 관리
+│   │     ├── ParticipantProfit   # 참가자 수익 저장
+│   │     ├── PlayerProfits       # 플레이어들 수익 저장
+│   │     ├── ProfitCalculator    # 수익 계산
+│   │     └── ProfitResult        # 딜러, 참가자 수익 관리
+│   └── BlackJackGame             # 블랙잭 게임 관리
 ├── dto/                          # 데이터 전달 객체
 └── view/
-    ├── InputView.java            # 입력 뷰
-    └── OutputView.java           # 출력 뷰
+    ├── InputView                 # 입력 뷰
+    └── OutputView                # 출력 뷰
 ```
 
 ### 주요 규칙
