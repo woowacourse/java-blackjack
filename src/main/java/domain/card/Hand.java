@@ -23,10 +23,10 @@ public class Hand {
                 .mapToInt(Card::rankScore)
                 .sum();
 
-        boolean aceExist = cards.stream()
+        boolean hasAce = cards.stream()
                 .anyMatch(card -> card.rank().equals(Rank.ACE));
 
-        if (aceExist && (totalScore + ACE_BONUS_SCORE) <= BLACKJACK_CRITERION) {
+        if (hasAce && (totalScore + ACE_BONUS_SCORE) <= BLACKJACK_CRITERION) {
             return totalScore + ACE_BONUS_SCORE;
         }
 
