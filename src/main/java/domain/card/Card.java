@@ -14,7 +14,7 @@ public class Card {
         this.cardSuit = cardSuit;
     }
 
-    public boolean isAceExist() {
+    public boolean isAce() {
         return this.getCardValue() == CardScore.ACE;
     }
 
