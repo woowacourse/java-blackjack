@@ -35,7 +35,7 @@ public class OutputView {
     }
 
     public static void askHit(String name) {
-        System.out.println(name + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+        System.out.println(name + "은 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
     }
 
     public static void printDealerHit() {
@@ -43,7 +43,7 @@ public class OutputView {
     }
 
     public static void printFinalDealer(Dealer dealer, int score) {
-        System.out.println("딜러카드: " + formatCards(dealer.getCards()) + " - 결과: " + score);
+        System.out.println("딜러 카드: " + formatCards(dealer.getCards()) + " - 결과: " + score);
     }
 
     public static void printFinalPlayer(Gambler gambler) {
