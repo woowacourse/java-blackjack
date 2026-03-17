@@ -1,13 +1,15 @@
 package controller;
 
-import domain.BlackjackResult;
+import domain.BlackjackBettingCalculator;
 import domain.Card;
 import domain.Deck;
 import domain.Dealer;
 import domain.Player;
+import domain.PlayerBet;
 import domain.Players;
-import domain.GameResult;
+import domain.PlayerBets;
 import infra.RandomCardShuffler;
+import java.math.BigDecimal;
 import java.util.List;
 import meesage.InputMessage;
 import meesage.OutputMessage;
@@ -30,12 +32,15 @@ public class BlackjackController {
         Dealer dealer = Dealer.of(deck.drawInitialHand());
         Players players = getPlayers();
 
+        PlayerBets playerBets = new PlayerBets();
+        createPlayersBetFromInput(players, playerBets);
+
         addPlayerInitialCard(players, deck);
 
         printInitialCards(players, dealer);
         addCard(players, deck, dealer);
         printFinalCards(dealer, players);
-        printGameResult(dealer, players);
+        printGameResult(dealer, players, playerBets);
     }
 
     private List<String> getUserNames() {
@@ -50,6 +55,20 @@ public class BlackjackController {
     private Players getPlayers() {
         List<String> userNames = getUserNames();
         return Players.of(userNames);
+    }
+
+    private void createPlayersBetFromInput(Players players, PlayerBets playersBet) {
+        outputView.separatorLine();
+        for (Player player : players.getPlayers()) {
+            playersBet.add(createPlayerBet(player));
+        }
+    }
+
+    private PlayerBet createPlayerBet(Player player) {
+        String rawBettingAmount = inputView.askUserInputWithMessage(
+                InputMessage.ASK_PLAYER_BETTING_AMOUNT.format(player.getName()));
+        int bettingAmount = InputParser.parseIntStrict(rawBettingAmount);
+        return PlayerBet.of(player, new BigDecimal(bettingAmount));
     }
 
     private static void addPlayerInitialCard(Players players, Deck deck) {
@@ -103,6 +122,8 @@ public class BlackjackController {
     }
 
     private void askAddCard(Player player, Deck deck) {
+        if (player.isBlackjack()) return;
+
         String answer = InputMessage.USER_INPUT_YES.getMessage();
         int initialHandSize = player.getCards().size();
         while (!player.isBust() && answer.equals(InputMessage.USER_INPUT_YES.getMessage())) {
@@ -163,25 +184,54 @@ public class BlackjackController {
         outputView.println(OutputMessage.RESULT_TEXT.format(dealerCardsFormat, dealer.calculateScore()));
     }
 
-    private void printGameResult(Dealer dealer, Players players) {
+    private void printGameResult(Dealer dealer, Players players, PlayerBets playerBets) {
         outputView.separatorLine();
-        BlackjackResult blackjackResult = BlackjackResult.of(dealer, players);
+        BlackjackBettingCalculator.calculate(dealer, playerBets);
 
         outputView.println(OutputMessage.FINAL_MESSAGE.getMessage());
 
-        outputView.println(OutputMessage.DEALER_RESULT_FORMAT.format(blackjackResult.countDealerWinOrLoseReversePlayerResult(
-                        GameResult.LOSE),
-                blackjackResult.countDealerWinOrLoseReversePlayerResult(GameResult.DRAW), blackjackResult.countDealerWinOrLoseReversePlayerResult(
-                        GameResult.WIN)));
+        printDealerProfitResult(playerBets);
 
-        printPlayersResult(players, blackjackResult);
+        printPlayerProfitResult(players, playerBets);
     }
 
-    private void printPlayersResult(Players players, BlackjackResult blackjackResult) {
-        List<GameResult> playerResult = blackjackResult.getPlayersResult();
+    private void printDealerProfitResult(PlayerBets playerBets) {
+        BigDecimal dealerBettingAmount = BigDecimal.ZERO;
+        for (PlayerBet playerBet : playerBets.getPlayersBets()) {
+            dealerBettingAmount = dealerBettingAmount.add(playerBet.amount().negate());
+        }
+        outputView.println(OutputMessage.DEALER_PROFIT_RESULT_FORMAT.format(dealerBettingAmount.stripTrailingZeros().toPlainString()));
+    }
+
+    private void printPlayerProfitResult(Players players, PlayerBets playerBets) {
         for (int i = 0; i < players.getPlayers().size(); i++) {
-            outputView.println(OutputMessage.PLAYER_RESULT_FORMAT.format(players.getUserNames().get(i),
-                    playerResult.get(i).getMessage()));
+            String userName = players.getUserNames().get(i);
+            PlayerBet playerBet = playerBets.getPlayersBets().get(i);
+            outputView.println(OutputMessage.PLAYER_RESULT_FORMAT.format(userName, playerBet.amount().stripTrailingZeros().toPlainString()));
         }
     }
+
+//    private void printGameResult(Dealer dealer, Players players) {
+//        outputView.separatorLine();
+//        BlackjackResult blackjackResult = BlackjackResult.of(dealer, players);
+//
+//        outputView.println(OutputMessage.FINAL_MESSAGE.getMessage());
+//
+//        outputView.println(
+//                OutputMessage.DEALER_RESULT_FORMAT.format(blackjackResult.countDealerWinOrLoseReversePlayerResult(
+//                                GameResult.LOSE),
+//                        blackjackResult.countDealerWinOrLoseReversePlayerResult(GameResult.DRAW),
+//                        blackjackResult.countDealerWinOrLoseReversePlayerResult(
+//                                GameResult.WIN)));
+//
+//        printPlayersResult(players, blackjackResult);
+//    }
+//
+//    private void printPlayersResult(Players players, BlackjackResult blackjackResult) {
+//        List<GameResult> playerResult = blackjackResult.getPlayersResult();
+//        for (int i = 0; i < players.getPlayers().size(); i++) {
+//            outputView.println(OutputMessage.PLAYER_RESULT_FORMAT.format(players.getUserNames().get(i),
+//                    playerResult.get(i).getMessage()));
+//        }
+//    }
 }
