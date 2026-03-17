@@ -1,5 +1,6 @@
 package domain;
 
+import domain.participant.BettingMoney;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
@@ -8,17 +9,19 @@ public class ProfitCalculator {
     private static final double BLACKJACK_PROFIT_RATE = 1.5;
 
     public static double calculatePlayerProfit(Player player, Dealer dealer) {
+        BettingMoney bettingMoney = player.getBettingMoney();
+
         if (isDrawBlackjack(player, dealer)) {
             return 0;
         }
         if (player.isBlackjack()) {
-            return player.getBettingMoneyValue() * BLACKJACK_PROFIT_RATE;
+            return bettingMoney.blackjackProfit();
         }
         if (isLose(player, dealer)) {
-            return -player.getBettingMoneyValue();
+            return bettingMoney.loseProfit();
         }
         if (isWin(player, dealer)) {
-            return player.getBettingMoneyValue();
+            return bettingMoney.winProfit();
         }
         return 0;
     }
