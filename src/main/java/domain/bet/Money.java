@@ -28,8 +28,4 @@ public record Money(long amount) {
     public static Money zero() {
         return new Money(ZERO);
     }
-
-    public long amount() {
-        return amount;
-    }
 }
