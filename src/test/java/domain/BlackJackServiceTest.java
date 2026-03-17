@@ -4,8 +4,6 @@ import domain.model.*;
 import domain.service.*;
 import org.junit.jupiter.api.Test;
 import repository.CardRepository;
-import repository.DealerRepository;
-import repository.PlayerRepository;
 import util.RandomRankNumberGenerator;
 import util.RandomShapeNumberGenerator;
 
@@ -15,12 +13,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class BlackJackServiceTest {
 
-    private final PlayerRepository playerRepository = new PlayerRepository();
-    private final DealerRepository dealerRepository = new DealerRepository();
-    private final PersonService personService = new PersonService(
-            playerRepository,
-            dealerRepository
-    );
+    private final Players players = new Players();
+    private final PlayerBettings playerBettings = new PlayerBettings();
     private final CardRepository cardRepository = new CardRepository();
     private final CardNumberGenerator cardNumberGenerator = new CardNumberGenerator(
             new RandomRankNumberGenerator(),
@@ -31,16 +25,15 @@ public class BlackJackServiceTest {
             cardNumberGenerator
     );
     private final CardDistributor cardDistributor = new CardDistributor(
-            personService,
             cardFactory
     );
-    private final JudgementService judgementService = new JudgementService(
-            personService
-    );
+    private final Dealer dealer = new Dealer(cardDistributor);
+    private final JudgementService judgementService = new JudgementService(playerBettings);
     private final BlackJackService blackJackService = new BlackJackService(
-            personService,
-            cardDistributor,
-            judgementService
+            judgementService,
+            players,
+            playerBettings,
+            dealer
     );
 
     @Test
@@ -51,8 +44,7 @@ public class BlackJackServiceTest {
                 Card.of(CardRank.SIX, CardShape.CLUB)
         );
         Deck deck = Deck.of(cards);
-        Dealer dealer = Dealer.of(deck);
-        dealerRepository.save(dealer);
+        dealer.assignDeck(deck);
 
         assertThat(blackJackService.isDealerCanAppend()).isFalse();
     }

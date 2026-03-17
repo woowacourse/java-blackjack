@@ -1,11 +1,39 @@
 package domain.model;
 
+import domain.service.CardDistributor;
+
 public class Dealer extends Person {
-    private Dealer(Deck deck) {
-        super(deck);
+
+    private final CardDistributor cardDistributor;
+
+    public static final int DEALER_APPEND_CRITERIA = 16;
+
+    public Dealer(CardDistributor cardDistributor) {
+        this.cardDistributor = cardDistributor;
     }
 
-    public static Dealer of(Deck deck) {
-        return new Dealer(deck);
+    public void assignDeck() {
+        assignDeck(cardDistributor.getInitialDeck());
+    }
+
+    public Deck getInitialDeck() {
+        return cardDistributor.getInitialDeck();
+    }
+
+    public Card getAdditionalCard() {
+        return cardDistributor.getAdditionalCard();
+    }
+
+    public void assignAdditionalCard() {
+        super.appendCard(cardDistributor.getAdditionalCard());
+    }
+
+    public void applyPlayerProfit(double totalPlayerProfit) {
+        super.minusProfit(totalPlayerProfit);
+    }
+
+    @Override
+    public boolean canAppend() {
+        return getDeck().calculateFinalSum() <= DEALER_APPEND_CRITERIA;
     }
 }

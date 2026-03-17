@@ -20,25 +20,50 @@ public class BlackJackController {
     }
 
     public void run() {
+        initializeGame();
+        handleAdditionalCardPhase();
+        displayGameResult();
+    }
+
+    private void initializeGame() {
+        InitialDto initialDto = createPlayers();
+        createBets();
+        view.outputInitialMessage(initialDto);
+    }
+
+    private void createBets() {
+        blackJackService.getAllPlayers().forEach(this::createBetting);
+    }
+
+    private InitialDto createPlayers() {
         String inputPlayerNames = view.inputPlayerNames();
         InputValidator.validatePlayerNames(inputPlayerNames);
-        InitialDto initialDto = blackJackService.createPlayer(StringParser.parse(inputPlayerNames));
-        view.outputInitialMessage(initialDto);
+        return blackJackService.createPlayer(StringParser.parse(inputPlayerNames));
+    }
 
+    private void handleAdditionalCardPhase() {
         blackJackService.getAllPlayers().forEach(this::getAdditionalCard);
         getAdditionalDealerCard();
+    }
 
-        ResultDto resultDto = blackJackService.judgement();
+    private void displayGameResult() {
+        ResultDto resultDto = blackJackService.getGameResult();
         view.playerResultMessage(resultDto);
     }
 
+    private void createBetting(Player player) {
+        String bettingPriceInput = view.inputPlayerBetting(player.getName());
+        InputValidator.validateBettingPrice(bettingPriceInput);
+        blackJackService.createBetting(player, Integer.parseInt(bettingPriceInput));
+    }
+
     public void getAdditionalCard(Player player) {
-        if (player.isBurst()) return;
+        if (!player.canAppend()) return;
 
         String isTrue = view.inputAdditionalCard(player.getName());
         InputValidator.validateAdditionalCard(isTrue);
         if (isTrue.equals("y")) {
-            PlayerResultDto playerResultDto = blackJackService.additionalCard(player);
+            PlayerResultDto playerResultDto = blackJackService.assignAdditionalCard(player);
             view.outputPlayerDeckDtos(playerResultDto);
             getAdditionalCard(player);
         }
@@ -47,7 +72,7 @@ public class BlackJackController {
     public void getAdditionalDealerCard() {
         boolean dealerCanAppend = blackJackService.isDealerCanAppend();
         if (dealerCanAppend) {
-            blackJackService.additionalDealerCard();
+            blackJackService.assignAdditionalDealerCard();
             view.outputDealerAdditionCardMessage();
             getAdditionalDealerCard();
         }

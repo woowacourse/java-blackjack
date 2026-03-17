@@ -16,6 +16,10 @@ public class View {
         return inputView.inputPlayerNames();
     }
 
+    public String inputPlayerBetting(String name) {
+        return inputView.inputBettingPrice(name);
+    }
+
     public String inputAdditionalCard(String name) {
         return inputView.inputAdditionalCard(name);
     }
@@ -25,7 +29,8 @@ public class View {
     }
 
     public void playerResultMessage(ResultDto resultDto) {
-        outputView.playerResultMessage(resultDto);    }
+        outputView.playerResultMessage(resultDto);
+    }
 
     public void outputPlayerDeckDtos(PlayerResultDto playerResultDto) {
         outputView.outputPlayerDeckDtos(playerResultDto);

@@ -8,7 +8,7 @@ import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class CardCalculatorTest {
+public class DeckTest {
 
     @Test
     void 플레이어_덱_합산_테스트() {
@@ -24,10 +24,9 @@ public class CardCalculatorTest {
         phobi.assignDeck(Deck.of(cards));
 
         // then
-        assertThat(phobi.getDeckSum()).isEqualTo(9);
+        assertThat(phobi.getFinalDeckSum()).isEqualTo(9);
     }
 
-    // TODO: ACE 예외 케이스랑 엣지케이스들 추가
     @Test
     void 플레이어덱_합산_ACE_1로_처리_테스트() {
         // given
@@ -42,7 +41,7 @@ public class CardCalculatorTest {
         phobi.assignDeck(Deck.of(cards));
 
         // then
-        assertThat(phobi.getDeckSum()).isEqualTo(18);
+        assertThat(phobi.getFinalDeckSum()).isEqualTo(18);
     }
 
     @Test
@@ -57,9 +56,39 @@ public class CardCalculatorTest {
 
         // when
         phobi.assignDeck(Deck.of(cards));
-        phobi.calculateFinalSum();
 
         // then
-        assertThat(phobi.calculateFinalSum()).isEqualTo(16);
+        assertThat(phobi.getFinalDeckSum()).isEqualTo(16);
+    }
+
+    @Test
+    void 블랙잭_판단_테스트() {
+        // given
+        List<Card> cards = new ArrayList<>();
+        cards.add(Card.of(CardRank.ACE, CardShape.HEART));
+        cards.add(Card.of(CardRank.TEN, CardShape.HEART));
+
+        // when
+        Deck deck = Deck.of(cards);
+
+        // then
+        assertThat(deck.getDeckStatus()).isEqualTo(DeckStatus.BLACKJACK);
+    }
+
+    @Test
+    void 덱의_ACE가_여러개일_때_합산_처리() {
+        // given
+        List<Card> cards = new ArrayList<>();
+        cards.add(Card.of(CardRank.ACE, CardShape.HEART));
+        cards.add(Card.of(CardRank.ACE, CardShape.DIAMOND));
+        cards.add(Card.of(CardRank.ACE, CardShape.SPADE));
+        cards.add(Card.of(CardRank.ACE, CardShape.CLUB));
+        cards.add(Card.of(CardRank.SEVEN, CardShape.HEART));
+
+        // when
+        Deck deck = Deck.of(cards);
+
+        // then
+        assertThat(deck.calculateFinalSum()).isEqualTo(21);
     }
 }

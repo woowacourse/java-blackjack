@@ -1,10 +1,11 @@
 package config;
 
 import controller.BlackJackController;
+import domain.model.Dealer;
+import domain.model.PlayerBettings;
+import domain.model.Players;
 import domain.service.*;
 import repository.CardRepository;
-import repository.DealerRepository;
-import repository.PlayerRepository;
 import util.*;
 import view.InputView;
 import view.OutputView;
@@ -12,9 +13,9 @@ import view.View;
 
 public class DIConfig {
 
-    private PlayerRepository playerRepository = new PlayerRepository();
-    private CardRepository cardRepository = new CardRepository();
-    private DealerRepository dealerRepository = new DealerRepository();
+    private final CardRepository cardRepository = new CardRepository();
+    private final Players players = new Players();
+    private final PlayerBettings playerBettings = new PlayerBettings();
 
     public BlackJackController blackJackController() {
         return new BlackJackController(
@@ -23,31 +24,22 @@ public class DIConfig {
         );
     }
 
-    public PersonService personService() {
-        return new PersonService(
-                playerRepository(),
-                dealerRepository()
-        );
-    }
-
     // service
     public BlackJackService blackJackService() {
         return new BlackJackService(
-                personService(),
-                cardDistributor(),
-                judgementService()
+                judgementService(),
+                players(),
+                playerBettings(),
+                dealer()
         );
     }
 
     public JudgementService judgementService() {
-        return new JudgementService(
-                personService()
-        );
+        return new JudgementService(playerBettings());
     }
 
     public CardDistributor cardDistributor() {
         return new CardDistributor(
-                personService(),
                 cardFactory()
         );
     }
@@ -66,17 +58,20 @@ public class DIConfig {
         );
     }
 
-    // repository
-    public PlayerRepository playerRepository() {
-        return playerRepository;
-    }
-
     public CardRepository cardRepository() {
         return cardRepository;
     }
 
-    public DealerRepository dealerRepository() {
-        return dealerRepository;
+    public Players players() {
+        return players;
+    }
+
+    public Dealer dealer() {
+        return new Dealer(cardDistributor());
+    }
+
+    public PlayerBettings playerBettings() {
+        return playerBettings;
     }
 
     // util

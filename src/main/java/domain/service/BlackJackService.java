@@ -1,58 +1,63 @@
 package domain.service;
 
-import domain.model.Dealer;
-import domain.model.Player;
+import domain.model.*;
 import dto.*;
 
 import java.util.List;
 
-import static constant.BlackJackConstant.DEALER_APPEND_CRITERIA;
-
 public class BlackJackService {
 
-    private final PersonService personService;
-    private final CardDistributor cardDistributor;
     private final JudgementService judgementService;
+    private final Players players;
+    private final PlayerBettings playerBettings;
+    private final Dealer dealer;
 
     public BlackJackService(
-            PersonService personService,
-            CardDistributor cardDistributor,
-            JudgementService judgementService
+            JudgementService judgementService,
+            Players players,
+            PlayerBettings playerBettings,
+            Dealer dealer
     ) {
-        this.personService = personService;
-        this.cardDistributor = cardDistributor;
         this.judgementService = judgementService;
+        this.players = players;
+        this.playerBettings = playerBettings;
+        this.dealer = dealer;
     }
 
     // 플레이어 생성 후 카드 분배
     public InitialDto createPlayer(List<String> playerNames) {
-        List<Player> players = playerNames.stream()
-                .map(Player::of)
-                .toList();
-        cardDistributor.initialize(players);
-        return InitialDto.of(cardDistributor.getDealer(), players);
+        List<Player> allPlayers = players.saveAllPlayers(playerNames);
+        for (Player player : allPlayers) {
+            players.giveDeck(player, dealer.getInitialDeck());
+        }
+        dealer.assignDeck();
+        return InitialDto.of(dealer, allPlayers);
     }
 
     public List<Player> getAllPlayers() {
-        return personService.findAllPlayers();
+        return players.getAllPlayers();
     }
 
-    public PlayerResultDto additionalCard(Player player) {
-        cardDistributor.distributeAdditionalCard(player);
+    public void createBetting(Player player, int bettingPrice) {
+        PlayerBetting playerBetting = PlayerBetting.of(player, bettingPrice);
+        playerBettings.save(playerBetting);
+    }
+
+    public PlayerResultDto assignAdditionalCard(Player player) {
+        Card additionalCard = dealer.getAdditionalCard();
+        player.appendCard(additionalCard);
         return PlayerResultDto.of(player);
     }
 
-    public ResultDto judgement() {
-        return judgementService.getGameResult();
-    }
-
     public boolean isDealerCanAppend() {
-        Dealer dealer = personService.getDealer();
-        return dealer.calculateFinalSum() <= DEALER_APPEND_CRITERIA;
+        return dealer.canAppend();
     }
 
-    public void additionalDealerCard() {
-        Dealer dealer = personService.getDealer();
-        cardDistributor.distributeAdditionalCard(dealer);
+    public void assignAdditionalDealerCard() {
+        dealer.assignAdditionalCard();
+    }
+
+    public ResultDto getGameResult() {
+        return judgementService.getGameResult(getAllPlayers(), dealer);
     }
 }
