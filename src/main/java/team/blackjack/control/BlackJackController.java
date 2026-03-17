@@ -1,48 +1,71 @@
 package team.blackjack.control;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import team.blackjack.domain.Card;
+import team.blackjack.domain.Deck;
+import team.blackjack.domain.Result;
+import team.blackjack.service.RevenueService;
+import team.blackjack.domain.Dealer;
+import team.blackjack.domain.Player;
+import team.blackjack.domain.Players;
 import team.blackjack.service.dto.DrawResult;
 import team.blackjack.service.dto.RevenueResult;
 import team.blackjack.service.dto.ScoreResult;
-import team.blackjack.service.BlackJackService;
+import team.blackjack.service.BlackjackService;
 import team.blackjack.view.InputView;
 import team.blackjack.view.OutputView;
 
 public class BlackJackController {
-    private final BlackJackService blackJackService;
+    public static final String YES_INPUT = "y";
+    public static final String NO_INPUT = "n";
 
-    public BlackJackController(BlackJackService blackJackService) {
+    private final BlackjackService blackJackService;
+    private final RevenueService revenueService;
+
+    public BlackJackController(BlackjackService blackJackService,
+                               RevenueService revenueService) {
         this.blackJackService = blackJackService;
+        this.revenueService = revenueService;
     }
 
     public void run() {
-        List<String> playerNames = readPlayerNames();
-        blackJackService.initGame(playerNames);
-        blackJackService.drawInitialCards();
+        final Deck deck = new Deck();
+        final Dealer dealer = new Dealer();
+        final Players players = new Players(readPlayerNames());
 
-        readAllPlayerBattingMoneyRetry(blackJackService.getAllPlayerNames());
+        blackJackService.drawInitialCards(deck, players, dealer);
 
-        DrawResult drawResult = blackJackService.getDrawResult();
+        readAllPlayerBattingMoneyRetry(players.getPlayerList());
+
+        DrawResult drawResult = blackJackService.getDrawResult(dealer, players);
         OutputView.printDrawResult(drawResult);
 
-        readPlayerHitDecision(blackJackService.getAllPlayerNames());
+        readPlayerHitDecision(deck, players);
 
-        while (blackJackService.shouldDealerHit()) {
+        while (blackJackService.shouldDealerHit(dealer)) {
             OutputView.printDealerHitMessage();
-            blackJackService.hitDealer();
+            blackJackService.hit(deck, dealer);
         }
 
-        ScoreResult scoreResult = blackJackService.calculateAllParticipantScore();
+        ScoreResult scoreResult = blackJackService.calculateAllParticipantScore(players, dealer);
         OutputView.printParticipantScoreResult(scoreResult);
 
-        RevenueResult revenueResult = blackJackService.getRevenueResult();
+        final Map<Player, Result> judgeResults = players.getPlayerList().stream()
+                .collect(Collectors.toMap(
+                        player -> player,
+                        player -> blackJackService.judge(player, dealer)
+                ));
+
+        RevenueResult revenueResult = revenueService.getRevenueResult(judgeResults);
         OutputView.printRevenueResult(revenueResult);
     }
 
-    public void readAllPlayerBattingMoneyRetry(List<String> playerNames) {
-       playerNames.forEach(playerName -> {
-           int battingMoney = readPlayerBattingMoneyRetry(playerName);
-           blackJackService.batMoney(playerName, battingMoney);
+    public void readAllPlayerBattingMoneyRetry(List<Player> playerNames) {
+       playerNames.forEach(player -> {
+           int battingMoney = readPlayerBattingMoneyRetry(player.getName());
+           blackJackService.batMoney(player, battingMoney);
        });
     }
 
@@ -84,33 +107,34 @@ public class BlackJackController {
         return playerNames.size() != playerNames.stream().distinct().count();
     }
 
-    private void readPlayerHitDecision(List<String> playerNames) {
-        playerNames.forEach(this::processPlayerHit);
+    private void readPlayerHitDecision(Deck deck, Players players) {
+        try {
+            players.getPlayerList()
+                    .forEach(player -> processPlayerHit(deck, player));
+        } catch (IllegalStateException e) {
+            OutputView.printBustMessage();
+        }
     }
 
-    private void processPlayerHit(String playerName) {
-        while (readPlayerHitDecision(playerName)) {
-            blackJackService.hitPlayer(playerName);
-            OutputView.printPlayerCards(playerName, blackJackService.findPlayerCardNamesByName(playerName));
+    private void processPlayerHit(Deck deck, Player player) {
+        while (readPlayerHitDecision(player.getName())) {
+            blackJackService.hit(deck, player);
+            OutputView.printPlayerCards(player.getName(), player.getCards().stream()
+                    .map(Card::getCardName)
+                    .toList());
         }
     }
 
     private boolean readPlayerHitDecision(String playerName) {
-        final boolean isPlayerBust = blackJackService.isPlayerBust(playerName);
-
-        if (isPlayerBust) {
-            OutputView.printBustMessage();
-            return false;
-        }
-
         OutputView.printAskDrawCard(playerName);
         String hitYn = InputView.readHitDecision();
 
-        while (!"y".equalsIgnoreCase(hitYn) && !"n".equalsIgnoreCase(hitYn)) {
+        while (!YES_INPUT.equalsIgnoreCase(hitYn) && !NO_INPUT.equalsIgnoreCase(hitYn)) {
             OutputView.printWrongDecisionInputMessage();
             hitYn = InputView.readHitDecision();
         }
 
-        return "y".equalsIgnoreCase(hitYn);
+        return YES_INPUT.equalsIgnoreCase(hitYn);
     }
+
 }

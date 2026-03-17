@@ -3,13 +3,15 @@ package team.blackjack.domain;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 public class Players {
     private final List<Player> players;
 
-    public Players(List<Player> players) {
-        this.players = players;
+    public Players(List<String> playerNames) {
+        this.players =  playerNames.stream()
+                .map(Player::new)
+                .toList();
     }
 
     public List<Player> getPlayerList() {
@@ -23,8 +25,8 @@ public class Players {
         }
     }
 
-    public Map<String, List<Card>> getCardsByPlayer(){
-        final HashMap<String, List<Card>> result = new HashMap<>();
+    public Map<String, Set<Card>> getCardsByPlayer(){
+        final HashMap<String, Set<Card>> result = new HashMap<>();
         for (Player player : players) {
             result.put(player.getName(), player.getCards());
         }
@@ -36,14 +38,6 @@ public class Players {
         return players.stream()
                 .map(Player::getName)
                 .toList();
-    }
-
-    public Map<String, Integer> getPlayerScoresByPlayer() {
-        return players.stream()
-                .collect(Collectors.toMap(
-                        Player::getName,
-                        Player::getScore)
-                );
     }
 
     public Player getPlayerByName(String name) {

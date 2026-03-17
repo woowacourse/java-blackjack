@@ -1,8 +1,8 @@
 package team.blackjack.domain;
 
-import java.util.List;
+import java.util.Set;
 
-public class Participant {
+public abstract class Participant {
     private final Hand hand;
 
     public Participant() {
@@ -15,13 +15,12 @@ public class Participant {
 
     public void hit(Card card) {
         if (isBust()) {
-            throw new IllegalStateException("이미 Bust 상태입니다.");
+            throw new IllegalStateException("이미 Bust 상태입니다. 더 이상 카드를 받을 수 없습니다.");
         }
-
         this.hand.addCard(card);
     }
 
-    public List<Card> getCards() {
+    public Set<Card> getCards() {
         return hand.getCards();
     }
 

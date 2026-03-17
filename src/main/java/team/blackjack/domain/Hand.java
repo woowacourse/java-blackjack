@@ -1,16 +1,15 @@
 package team.blackjack.domain;
 
-import static team.blackjack.domain.rule.DefaultBlackjackRule.BLACKJACK;
-import static team.blackjack.domain.rule.DefaultBlackjackRule.BLACKJACK_CARD_COUNT;
-
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-import team.blackjack.domain.rule.DefaultBlackjackRule;
 
 public class Hand {
+    private static final int BLACKJACK = 21;
+    private static final int BLACKJACK_CARD_COUNT = 2;
 
     private final Set<Card> cards = new LinkedHashSet<>();
 
@@ -18,8 +17,8 @@ public class Hand {
         cards.add(card);
     }
 
-    public List<Card> getCards() {
-        return cards.stream().toList();
+    public Set<Card> getCards() {
+        return new HashSet<>(cards);
     }
 
     public List<String> getCardNames() {

@@ -14,6 +14,10 @@ public class Player extends Participant {
     }
 
     public void bat(double money) {
+        if (money <= 0) {
+            throw new IllegalArgumentException("배팅 금액은 0보다 커야 합니다.");
+        }
+
         this.batMoney = money;
     }
 
