@@ -53,7 +53,7 @@ class BlackJackGameTest {
     @Test
     @DisplayName("bet을 시켜도 오류가 안난다")
     void doBetProcess_success() {
-        String betAmountValue = "1000";
+        int betAmountValue = 1_000;
         BlackJackGame testGame = BlackJackGame.ready(TEST_PLAYER_NAMES, this::createSampleCards);
 
         assertDoesNotThrow(

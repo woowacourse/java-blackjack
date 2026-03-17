@@ -3,25 +3,16 @@ package domain;
 import common.ErrorMessage;
 
 public record BetAmount(
-        int betAmount
+        int value
 ) {
-    public static BetAmount of(String betAmountValue) {
-        int betAmount = parseBetAmount(betAmountValue);
-        validatePositiveNumber(betAmount);
-        return new BetAmount(betAmount);
+    public static BetAmount of(int value) {
+        validateOverThanZero(value);
+        return new BetAmount(value);
     }
 
-    private static void validatePositiveNumber(int betAmount) {
-        if (betAmount <= 0) {
+    private static void validateOverThanZero(int value) {
+        if (value < 1) {
             throw new IllegalArgumentException(ErrorMessage.ZERO_MINUS_MONEY.getMessage());
-        }
-    }
-
-    private static int parseBetAmount(String betAmountValue) {
-        try {
-            return Integer.parseInt(betAmountValue);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(ErrorMessage.ONLY_NUMBER.getMessage());
         }
     }
 
@@ -30,7 +21,7 @@ public record BetAmount(
     }
 
     public boolean isBetPlaced() {
-        return betAmount != 0;
+        return value != 0;
     }
 }
 

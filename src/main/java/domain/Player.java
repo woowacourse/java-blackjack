@@ -17,11 +17,11 @@ public class Player extends Participant {
         return new Player(name, gameState, BetAmount.empty());
     }
 
-    public Player bet(String betAmountValue) {
+    public Player bet(int value) {
         return new Player(
                 this.participantName.name(),
                 this.gameState,
-                BetAmount.of(betAmountValue)
+                BetAmount.of(value)
         );
     }
 
@@ -30,7 +30,7 @@ public class Player extends Participant {
     }
 
     public int getBetAmount() {
-        return betAmount.betAmount();
+        return betAmount.value();
     }
 
     public Player hit(Supplier<Card> cardSupplier) {

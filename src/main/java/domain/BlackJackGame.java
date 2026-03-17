@@ -49,10 +49,10 @@ public class BlackJackGame {
         return multiPlayers.findNotStayPlayer();
     }
 
-    public void doBetProcess(String betAmountValue) {
+    public void doBetProcess(int value) {
         Player target = multiPlayers.findNotBetPlayer()
                 .orElseThrow(() -> new IllegalStateException(ErrorMessage.NO_MORE_BETTABLE_PLAYER.getMessage()));
-        multiPlayers.executeBet(target, betAmountValue);
+        multiPlayers.executeBet(target, value);
     }
 
     public ParticipantDto doHitProcess() {

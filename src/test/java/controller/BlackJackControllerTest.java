@@ -50,8 +50,8 @@ class BlackJackControllerTest {
         }
 
         @Override
-        public String readBetAmountValue() {
-            return "100000";
+        public int readBetAmountValue() {
+            return 100_000;
         }
 
         @Override

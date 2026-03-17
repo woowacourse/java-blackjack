@@ -60,8 +60,8 @@ public class MultiPlayers {
                 .findFirst();
     }
 
-    public void executeBet(Player player, String betMoneyValue) {
-        applyAction(player.getName(), p -> p.bet(betMoneyValue));
+    public void executeBet(Player player, int value) {
+        applyAction(player.getName(), p -> p.bet(value));
     }
 
     public Optional<Player> findNotStayPlayer() {

@@ -39,7 +39,7 @@ public class BlackJackController {
         while (game.whoseBettingTurn().isPresent()) {
             Player currentPlayer = game.whoseBettingTurn().get();
             outputView.printBetAmountPrompt(currentPlayer.getName());
-            String betAmountValue = retry(inputView::readBetAmountValue);
+            int betAmountValue = retry(inputView::readBetAmountValue);
             game.doBetProcess(betAmountValue);
         }
     }

@@ -158,7 +158,7 @@ class PlayerTest {
                 GameState.createInitialGameState(playerHand)
         );
 
-        String gumpBetAmountValue = "1000";
+        int gumpBetAmountValue = 1000;
 
         //when
         Player bettedGump = gump.bet(gumpBetAmountValue);
@@ -169,7 +169,7 @@ class PlayerTest {
 
     @Nested
     class BetResultTest {
-        String betAmountValue = "10000";
+        int betAmountValue = 10_000;
 
         Hand blackJackHand = Hand.of(
                 new Card(CardShape.스페이드, CardContents.A),
@@ -194,7 +194,7 @@ class PlayerTest {
         @Test
         @DisplayName("본인의 베팅에 따른 수익을 잘 구한다 - 블랙잭 승리")
         void player_win_blackjack() {
-            String betAmountValue = "10000";
+            int betAmountValue = 10_000;
             double blackJackAllocation = 1.5;
             Player gump = Player.from(
                     GUMP,
@@ -205,7 +205,7 @@ class PlayerTest {
                     GameState.createInitialGameState(normalHandTwenty)
             );
 
-            double expect = Integer.parseInt(betAmountValue) * blackJackAllocation;
+            double expect = betAmountValue * blackJackAllocation;
 
             double result = gump.calculateEarnMoney(dealer);
 
@@ -225,7 +225,7 @@ class PlayerTest {
                     GameState.createInitialGameState(normalHandFive)
             );
 
-            double expect = Integer.parseInt(betAmountValue) * normalAllocation;
+            double expect = betAmountValue * normalAllocation;
 
             double result = gump.calculateEarnMoney(dealer);
 
@@ -235,7 +235,6 @@ class PlayerTest {
         @Test
         @DisplayName("본인의 베팅에 따른 수익을 잘 구한다 - 무승부")
         void player_draw() {
-            String betAmountValue = "10000";
             Player gump = Player.from(
                     GUMP,
                     GameState.createInitialGameState(normalHandTwenty)

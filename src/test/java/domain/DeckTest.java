@@ -24,7 +24,7 @@ class DeckTest {
 
     @BeforeEach
     void init() {
-        deck = Deck.createDeck(fixedCardCreationStrategy); //TODO : 전략 넣기
+        deck = Deck.createDeck(fixedCardCreationStrategy);
     }
 
     @Test
