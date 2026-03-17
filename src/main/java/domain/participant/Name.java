@@ -15,9 +15,4 @@ public record Name(String name) {
             throw new IllegalArgumentException(PLAYER_NAME_OUT_OF_RANGE.getMessage());
         }
     }
-
-    @Override
-    public String toString() {
-        return name;
-    }
 }

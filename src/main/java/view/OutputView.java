@@ -22,7 +22,7 @@ public class OutputView {
 
     public void printPlayers(List<Card> dealerCard, Map<Name, List<Card>> playerCards) {
         String playerNames = playerCards.keySet().stream()
-                .map(Name::toString)
+                .map(Name::name)
                 .collect(Collectors.joining(", "));
 
         System.out.printf(LINE_SEPARATOR + DISTRIBUTE_INITIAL_CARD + LINE_SEPARATOR, playerNames);
@@ -40,7 +40,7 @@ public class OutputView {
     public void printPlayerCard(Name name, List<Card> playerCard) {
         String card = collectCards(playerCard);
 
-        System.out.printf(PLAYER_CARD + LINE_SEPARATOR, name, card);
+        System.out.printf(PLAYER_CARD + LINE_SEPARATOR, name.name(), card);
     }
 
     public void printDealerCardWithScore(List<Card> dealerCard, int score) {
@@ -52,7 +52,7 @@ public class OutputView {
     public void printPlayerCardWithScore(Name name, List<Card> playerCard, int score) {
         String card = collectCards(playerCard);
 
-        System.out.printf(PLAYER_CARD + SCORE + LINE_SEPARATOR, name, card, score);
+        System.out.printf(PLAYER_CARD + SCORE + LINE_SEPARATOR, name.name(), card, score);
     }
 
     private String collectCards(List<Card> cards) {
@@ -71,7 +71,7 @@ public class OutputView {
 
         for (Name name : playerBetProfit.keySet()) {
             Profit profit = playerBetProfit.get(name);
-            System.out.printf(PLAYER_PROFIT + LINE_SEPARATOR, name, profit.amount());
+            System.out.printf(PLAYER_PROFIT + LINE_SEPARATOR, name.name(), profit.amount());
         }
     }
 }
