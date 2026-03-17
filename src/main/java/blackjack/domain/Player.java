@@ -10,10 +10,10 @@ public class Player extends Participant {
     }
 
     public Money calculateFinalProfit(ScoreCompareResult result) {
-        if (isBlackjack() && result == ScoreCompareResult.PLAYER_WIN) {
+        if (isBlackjack() && result.isPlayerWin()) {
             return money.multiplyBettingAmount(BONUS_AMOUNT);
         }
-        if (result == ScoreCompareResult.PLAYER_LOSS) {
+        if (result.isPlayerLoss()) {
             return money.lossBettingAmount();
         }
         return money.keepBettingAmount();
