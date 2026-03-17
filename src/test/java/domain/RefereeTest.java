@@ -86,7 +86,7 @@ class RefereeTest {
     }
 
     @Test
-    @DisplayName("플레이어만 블랙잭이면 블랙잭이다.")
+    @DisplayName("플레이어만 블랙잭이면 플레이어의 승리이다.")
     void player_blackjack() {
         Dealer dealer = createDealer(List.of(Number.TEN, Number.NINE));
         Player player = createPlayer();
@@ -95,6 +95,18 @@ class RefereeTest {
 
         Result result = new Referee().judge(dealer, List.of(player));
         assertThat(result.getPlayerResults().get(player)).isEqualTo(MatchResult.BLACKJACK);
+    }
+
+    @Test
+    @DisplayName("딜러만 블랙잭이면 플레이어의 패배다.")
+    void dealer_blackjack() {
+        Dealer dealer = createDealer(List.of(Number.TEN, Number.ACE));
+        Player player = createPlayer();
+        player.receiveCard(new Card(Shape.HEART, Number.TEN));
+        player.receiveCard(new Card(Shape.HEART, Number.TEN));
+
+        Result result = new Referee().judge(dealer, List.of(player));
+        assertThat(result.getPlayerResults().get(player)).isEqualTo(MatchResult.LOSE);
     }
 
     @Test
