@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -42,9 +43,9 @@ public class BlackjackController {
         Deck deck = blackjackService.generateCards();
         List<String> names = inputNames();
 
-        Players players = blackjackService.createPlayers(names, deck);
+        List<Player> playersWithBetting = getPlayersWithBetting(names);
+        Players players = blackjackService.createPlayers(playersWithBetting, deck);
         Game game = blackjackService.createGame(deck, players);
-        setPlayerBetting(players);
         OutputView.displayCardDistribution(names);
 
         List<CardContentDto> firstCardContents = blackjackService.getCardContentDtos(game);
@@ -78,11 +79,13 @@ public class BlackjackController {
     }
 
 
-    public void setPlayerBetting(Players playerList) {
-        for (Player player : playerList) {
-            int bettingScore = inputBettingPrice(player.getName());
-            player.betMoney(bettingScore);
+    public List<Player> getPlayersWithBetting(List<String> names) {
+        List<Player> players = new ArrayList<>();
+        for (String name : names) {
+            int bettingMoney = inputBettingPrice(name);
+            players.add(blackjackService.createPlayer(name, bettingMoney));
         }
+        return players;
     }
 
     private List<String> inputNames() {

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import domain.Betting;
 import domain.Deck;
 import domain.Game;
 import domain.Player;
@@ -23,10 +24,13 @@ public class BlackjackService {
         return new Deck(cardsGenerator);
     }
 
-    public Players createPlayers(List<String> names, Deck deck) {
+    public Player createPlayer(String playerName, int money) {
+        return new Player(playerName, new Betting(money));
+    }
+
+    public Players createPlayers(List<Player> players, Deck deck) {
         List<Player> playerList = new ArrayList<>();
-        for (String name : names) {
-            Player player = new Player(name);
+        for (Player player : players) {
             player.addInitializedCard(deck);
             playerList.add(player);
         }
@@ -71,12 +75,13 @@ public class BlackjackService {
     public MatchResultDto getPlayerResultDto(Game game) {
         Map<String, MatchCase> playerResult = game.calculateMatch();
         Map<MatchCase, Integer> dealerResult = game.calculateDealerMatch(playerResult);
+
         return new MatchResultDto(dealerResult, playerResult);
 
     }
 
     public BettingResultDto getBettingScoreDto(Game game) {
-        return new BettingResultDto(-game.getTotalMoney(), game.getBettingScore());
+        return new BettingResultDto(game.getDealerBettingScore(), game.getBettingScore());
     }
 
 }

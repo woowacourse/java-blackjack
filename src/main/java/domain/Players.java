@@ -26,7 +26,7 @@ public class Players implements Iterable<Player> {
     }
 
     public boolean isAllPlayerBurst() {
-        if (players.size() == 0) {
+        if (players.isEmpty()) {
             return false;
         }
         return players.stream().allMatch(Player::isBust);

@@ -8,12 +8,25 @@ public class Player {
 
     private final Cards cards;
     private final String name;
-    private int bettingScore;
+    private final Betting betting;
+
+    public Player(String name, Betting betting) {
+        this.name = name;
+        this.betting = betting;
+        this.cards = new Cards();
+    }
 
     public Player(String name) {
+        validateDealer(name);
         this.name = name;
-        this.bettingScore = 0;
+        this.betting = new Betting(0);
         this.cards = new Cards();
+    }
+
+    private void validateDealer(String dealerName) {
+        if (!dealerName.equals(Game.DEALER_NAME)){
+            throw new IllegalArgumentException("[ERROR] 딜러가 아닙니다.]");
+        }
     }
 
     public void add(Card card) {
@@ -40,34 +53,17 @@ public class Player {
 
     public void calculateMoney(MatchCase matchCase, boolean isDealerBlackjack) {
         if (cards.isBlackjack() && !isDealerBlackjack) {
-            gainMoney();
+            betting.gainMoney();
             return;
         }
         if (matchCase.equals(MatchCase.LOSE)) {
-            loseMoney();
+            betting.loseMoney();
             return;
         }
         if (matchCase.equals(MatchCase.WIN)) {
             return;
         }
-        resetMoneyZero();
-    }
-
-    private void resetMoneyZero() {
-        bettingScore = 0;
-    }
-
-    private void gainMoney() {
-        bettingScore = (int) ((int) bettingScore * Game.BLACKJACK_BONUS);
-    }
-
-    private void loseMoney() {
-        int minusScore = bettingScore * 2;
-        bettingScore -= minusScore;
-    }
-
-    public void betMoney(int money) {
-        bettingScore = money;
+        betting.resetMoneyZero();
     }
 
     public boolean isBust() {
@@ -86,11 +82,12 @@ public class Player {
         return cards.getCards();
     }
 
+    public int getBettingScore() {
+        return betting.getBettingScore();
+    }
+
     public int getCardsTotalSum() {
         return cards.getFinalScore();
     }
 
-    public int getBettingScore() {
-        return bettingScore;
-    }
 }

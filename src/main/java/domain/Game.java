@@ -94,12 +94,12 @@ public class Game {
         dealer.add(deck.pop());
     }
 
-    public Card getDealerFirstCard() {
-        return dealer.getCards().getFirst();
+    public int getDealerBettingScore() {
+        return -players.getTotalBettingScore();
     }
 
-    public int getTotalMoney() {
-        return players.getTotalBettingScore();
+    public Card getDealerFirstCard() {
+        return dealer.getCards().getFirst();
     }
 
     public Players getPlayers() {

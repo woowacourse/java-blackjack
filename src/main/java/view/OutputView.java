@@ -52,8 +52,8 @@ public final class OutputView {
         Map<String, MatchCase> playerMap = matchResultDto.playerResult();
 
         System.out.printf("## 최종 승패\n%s: ", Game.DEALER_NAME);
-        for (Map.Entry<MatchCase, Integer> matchcase : dealerMap.entrySet()) {
-            System.out.printf("%d%s ", matchcase.getValue().intValue(), matchcase.getKey().getReversedKorResult());
+        for (Map.Entry<MatchCase, Integer> matchCase : dealerMap.entrySet()) {
+            System.out.printf("%d%s ", matchCase.getValue().intValue(), matchCase.getKey().getReversedKorResult());
         }
 
         for (Map.Entry<String, MatchCase> playerName : playerMap.entrySet()) {
@@ -69,7 +69,7 @@ public final class OutputView {
         System.out.printf("%s: %d\n", Game.DEALER_NAME, resultDto.totalMoney());
 
         for (Map.Entry<String, Integer> playerName : resultMap.entrySet()) {
-            System.out.printf("%s: %d\n", playerName.getKey(), playerName.getValue().intValue());
+            System.out.printf("%s: %d\n", playerName.getKey(), playerName.getValue());
         }
     }
 
