@@ -19,9 +19,11 @@ public class ResultCalculator {
             final HandState playerState = player.getHandState();
             final Outcome playerOutcome = playerState.against(dealerState, playerScore, dealerScore);
             final Outcome dealerOutcome = reverse(playerOutcome);
+            player.updateBalance(playerOutcome);
             playerOutcomes.put(player.getName(), playerOutcome);
             dealerOutcomeCounts.put(dealerOutcome, dealerOutcomeCounts.get(dealerOutcome) + 1);
         });
+
         return new GameResult(playerOutcomes, dealerOutcomeCounts);
     }
 
@@ -37,9 +39,9 @@ public class ResultCalculator {
         if (playerOutcome == Outcome.DRAW) {
             return Outcome.DRAW;
         }
-        if (playerOutcome == Outcome.WIN) {
-            return Outcome.LOSE;
+        if (playerOutcome == Outcome.LOSE) {
+            return Outcome.DEFAULT_WIN;
         }
-        return Outcome.WIN;
+        return Outcome.LOSE;
     }
 }
