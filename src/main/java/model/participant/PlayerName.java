@@ -1,4 +1,4 @@
-package dto.status;
+package model.participant;
 
 import constant.ErrorMessage;
 

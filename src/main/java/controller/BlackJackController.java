@@ -2,10 +2,10 @@ package controller;
 
 import dto.result.ParticipantCurrentHand;
 import dto.result.ProfitResult;
-import dto.status.PlayerName;
+import model.participant.PlayerName;
 import java.util.List;
-import dto.status.Agreement;
-import dto.status.BetPrice;
+import model.participant.Agreement;
+import model.participant.BetPrice;
 import model.BlackJackGame;
 import view.InputView;
 import view.OutputView;

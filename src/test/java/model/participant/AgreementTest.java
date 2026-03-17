@@ -4,7 +4,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import constant.ErrorMessage;
-import dto.status.Agreement;
 import org.junit.jupiter.api.Test;
 
 public class AgreementTest {

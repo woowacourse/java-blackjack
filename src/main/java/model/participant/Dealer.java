@@ -2,7 +2,6 @@ package model.participant;
 
 import constant.ErrorMessage;
 import dto.status.DealerStatus;
-import dto.status.PlayerName;
 
 public class Dealer extends Participant {
     private static final String DEALER_NAME = "딜러";
