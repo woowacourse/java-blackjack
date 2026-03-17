@@ -15,7 +15,7 @@ public class ProfitCalculatorTest {
 
     @Test
     void 플레이어가_버스트면_배팅금액만큼_잃는다() {
-        Player player = player("pobi",1000,
+        Player player = player("pobi", 1000,
                 card(CardNumber.K, CardShape.SPADE),
                 card(CardNumber.Q, CardShape.HEART),
                 card(CardNumber.TWO, CardShape.CLOVER));
@@ -30,8 +30,8 @@ public class ProfitCalculatorTest {
     }
 
     @Test
-    void 플레이어가_블랙잭이면_배팅금액의_1점5배를_번다(){
-        Player player = player("pobi",1000,
+    void 플레이어가_블랙잭이면_배팅금액의_1점5배를_번다() {
+        Player player = player("pobi", 1000,
                 card(CardNumber.ACE, CardShape.DIAMOND),
                 card(CardNumber.K, CardShape.CLOVER));
 
@@ -44,8 +44,8 @@ public class ProfitCalculatorTest {
     }
 
     @Test
-    void 플레이어와_딜러가_모두_블랙잭이면_무승부다(){
-        Player player = player("pobi",1000,
+    void 플레이어와_딜러가_모두_블랙잭이면_무승부다() {
+        Player player = player("pobi", 1000,
                 card(CardNumber.ACE, CardShape.SPADE),
                 card(CardNumber.K, CardShape.HEART));
 
@@ -54,13 +54,12 @@ public class ProfitCalculatorTest {
                 card(CardNumber.Q, CardShape.CLOVER));
 
         double profit = ProfitCalculator.calculatePlayerProfit(player, dealer);
-
         assertThat(profit).isEqualTo(0);
     }
 
     @Test
-    void 딜러가_버스트면_플레이어는_배팅금액만큼_수익(){
-        Player player = player("pobi",1000,
+    void 딜러가_버스트면_플레이어는_배팅금액만큼_수익() {
+        Player player = player("pobi", 1000,
                 card(CardNumber.TEN, CardShape.SPADE),
                 card(CardNumber.NINE, CardShape.HEART));
 
@@ -70,13 +69,12 @@ public class ProfitCalculatorTest {
                 card(CardNumber.Q, CardShape.HEART));
 
         double profit = ProfitCalculator.calculatePlayerProfit(player, dealer);
-
         assertThat(profit).isEqualTo(1000);
     }
 
     @Test
-    void 플레이어_점수가_더_크면_배팅금액만큼_수익(){
-        Player player = player("pobi",1000,
+    void 플레이어_점수가_더_크면_배팅금액만큼_수익() {
+        Player player = player("pobi", 1000,
                 card(CardNumber.EIGHT, CardShape.DIAMOND),
                 card(CardNumber.K, CardShape.SPADE));
 
@@ -87,9 +85,10 @@ public class ProfitCalculatorTest {
         double profit = ProfitCalculator.calculatePlayerProfit(player, dealer);
         assertThat(profit).isEqualTo(1000);
     }
+
     @Test
     void 플레이어_점수가_더_작으면_배팅금액만큼_잃는다() {
-        Player player = player("pobi",1000,
+        Player player = player("pobi", 1000,
                 card(CardNumber.TEN, CardShape.SPADE),
                 card(CardNumber.SEVEN, CardShape.HEART));
 
@@ -98,13 +97,12 @@ public class ProfitCalculatorTest {
                 card(CardNumber.NINE, CardShape.CLOVER));
 
         double profit = ProfitCalculator.calculatePlayerProfit(player, dealer);
-
         assertThat(profit).isEqualTo(-1000);
     }
 
     @Test
     void 점수가_같으면_무승부다() {
-        Player player = player("pobi",1000,
+        Player player = player("pobi", 1000,
                 card(CardNumber.TEN, CardShape.SPADE),
                 card(CardNumber.EIGHT, CardShape.HEART));
 
@@ -113,7 +111,6 @@ public class ProfitCalculatorTest {
                 card(CardNumber.NINE, CardShape.CLOVER));
 
         double profit = ProfitCalculator.calculatePlayerProfit(player, dealer);
-
         assertThat(profit).isEqualTo(0);
     }
 
@@ -132,9 +129,7 @@ public class ProfitCalculatorTest {
                 card(CardNumber.EIGHT, CardShape.CLOVER));
 
         Players players = Players.from(List.of(winPlayer, losePlayer));
-
         double dealerProfit = ProfitCalculator.calculateDealerProfit(players, dealer);
-
         assertThat(dealerProfit).isEqualTo(1000);
     }
 
@@ -151,8 +146,7 @@ public class ProfitCalculatorTest {
         return Dealer.from(new Hand(List.of(cards)));
     }
 
-    private Card card(CardNumber cardNumber, CardShape cardShape){
+    private Card card(CardNumber cardNumber, CardShape cardShape) {
         return Card.of(cardNumber, cardShape);
     }
-
 }

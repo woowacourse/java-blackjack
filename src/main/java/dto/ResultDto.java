@@ -26,5 +26,4 @@ public record ResultDto(
 
         return new ResultDto(cardInfo, dealer.getScoreValue());
     }
-
 }

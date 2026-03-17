@@ -7,5 +7,4 @@ public record PlayerCreationInfo(
         Name name,
         BettingMoney bettingMoney
 ) {
-
 }

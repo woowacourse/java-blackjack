@@ -6,7 +6,8 @@ import domain.hand.Hand;
 public class Player extends Participant {
     private final Name name;
     private final BettingMoney bettingMoney;
-    private Player(Name name, Hand hand , BettingMoney bettingMoney) {
+
+    private Player(Name name, Hand hand, BettingMoney bettingMoney) {
         super(hand);
         this.name = name;
         this.bettingMoney = bettingMoney;
@@ -24,7 +25,7 @@ public class Player extends Participant {
         return name.getName();
     }
 
-    public int getBettingMoneyValue(){
-        return bettingMoney.getMoney();
+    public BettingMoney getBettingMoney() {
+        return bettingMoney;
     }
 }

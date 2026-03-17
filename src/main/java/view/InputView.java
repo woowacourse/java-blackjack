@@ -21,8 +21,8 @@ public class InputView {
         return scanner.nextLine().equalsIgnoreCase("y");
     }
 
-    public static Integer readBettingMoney(String name){
-        System.out.printf("%s의 배팅 금액은?%n",name);
+    public static Integer readBettingMoney(String name) {
+        System.out.printf("%s의 배팅 금액은?%n", name);
         String money = scanner.nextLine();
         System.out.println();
         return BettingMoneyParser.parse(money);

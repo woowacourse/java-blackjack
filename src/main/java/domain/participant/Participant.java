@@ -16,7 +16,9 @@ public abstract class Participant {
         return hand.getCards();
     }
 
-    protected Hand getHand() {return hand;}
+    protected Hand getHand() {
+        return hand;
+    }
 
     public void addHandCard(Card card) {
         hand.addCard(card);
@@ -30,8 +32,7 @@ public abstract class Participant {
         return hand.getScore().value();
     }
 
-    public boolean isBlackjack(){
+    public boolean isBlackjack() {
         return hand.isBlackjack();
     }
-
 }

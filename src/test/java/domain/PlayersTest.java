@@ -24,8 +24,8 @@ class PlayersTest {
     );
 
     Player normalPlayer = Player.of(Name.from("jason"), new Hand(new ArrayList<>(List.of(
-            Card.of(CardNumber.J, CardShape.CLOVER),
-            Card.of(CardNumber.Q, CardShape.DIAMOND)))),
+                    Card.of(CardNumber.J, CardShape.CLOVER),
+                    Card.of(CardNumber.Q, CardShape.DIAMOND)))),
             BettingMoney.of(2000));
 
     Players allBustPlayers = Players.from(List.of(bustPlayer, bustPlayer, bustPlayer));
