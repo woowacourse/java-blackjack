@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import static domain.BlackjackRule.BLACK_JACK;
 
 public class Player extends Participant {
-    private BigDecimal betAmount = BigDecimal.ZERO;
+    private BetAmount betAmount;
 
     public Player(String name) {
         super(name);
@@ -17,10 +17,10 @@ public class Player extends Participant {
     }
 
     public void bet(BigDecimal betAmount) {
-        this.betAmount = betAmount;
+        this.betAmount = new BetAmount(betAmount);
     }
 
     public BigDecimal betAmount() {
-        return betAmount;
+        return betAmount.amount();
     }
 }

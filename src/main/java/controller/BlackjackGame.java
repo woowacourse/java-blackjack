@@ -4,10 +4,7 @@ import domain.deck.CardShuffleStrategy;
 import domain.deck.Deck;
 import domain.deck.RandomShuffleStrategy;
 import domain.game.GameResult;
-import domain.participant.Dealer;
-import domain.participant.Participant;
-import domain.participant.Player;
-import domain.participant.Players;
+import domain.participant.*;
 
 import java.util.ArrayList;
 
@@ -36,6 +33,7 @@ public class BlackjackGame {
                 .stream()
                 .map(Player::new).toList()
         );
+
 
         players.getPlayers().forEach(player -> player.bet(inputView.getBetAmount(player.name())));
 
