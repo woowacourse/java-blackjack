@@ -6,7 +6,6 @@ import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Players;
 import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -22,24 +21,15 @@ public class GameResultManager {
     }
 
     public Map<String, GameResult> getGameResult() {
-        Map<String, GameResult> gameResult = new HashMap<>();
-        players.forEach(player -> {
-            GameResult result = player.judgeResult(dealer);
-            gameResult.put(player.getName().getName(), result);
-        });
-        return gameResult;
+        return players.judgeResultsAgainst(dealer);
     }
 
     public LinkedHashMap<Name, Revenue> getParticipantsProfit() {
-        LinkedHashMap<Name, Revenue> finalRevenues = new LinkedHashMap<>();
-        players.forEach(player -> {
-            GameResult result = player.judgeResult(dealer);
-            Revenue revenue = calculateProfit.calculate(player.getName(), result);
-            finalRevenues.put(player.getName(), revenue);
-        });
+        LinkedHashMap<Name, Revenue> finalRevenues = players.calculateProfitsAgainst(dealer, calculateProfit);
         finalRevenues.put(dealer.getName(), calculateDealerRevenue(finalRevenues));
         return finalRevenues;
     }
+
 
     private Revenue calculateDealerRevenue(Map<Name, Revenue> revenues) {
         BigDecimal totalPlayerRevenue = revenues.values().stream()

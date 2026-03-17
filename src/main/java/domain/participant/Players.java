@@ -1,8 +1,17 @@
 package domain.participant;
 
+import domain.betting.BettingAmount;
+import domain.betting.BettingAmounts;
+import domain.betting.CalculateProfit;
+import domain.betting.Revenue;
+import domain.game.GameResult;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -18,6 +27,42 @@ public class Players {
 
     public void forEach(Consumer<Player> action) {
         players.forEach(action);
+    }
+
+    public List<String> getPlayerNames() {
+        List<String> playersName = new ArrayList<>();
+        players.forEach(player -> {
+            playersName.add(player.getName().getName());
+        });
+        return playersName;
+    }
+
+    public BettingAmounts createBettingAmounts(BigDecimal amount) {
+        Map<Name, BettingAmount> bettingAmounts = new HashMap<>();
+        players.forEach(player -> {
+            bettingAmounts.put(player.getName(), new BettingAmount(amount));
+        });
+        return new BettingAmounts(bettingAmounts);
+    }
+
+    public Map<String, GameResult> judgeResultsAgainst(Dealer dealer) {
+        Map<String, GameResult> gameResult = new HashMap<>();
+        players.forEach(player -> {
+            GameResult result = player.judgeResult(dealer);
+            gameResult.put(player.getName().getName(), result);
+        });
+        return gameResult;
+    }
+
+    public LinkedHashMap<Name, Revenue> calculateProfitsAgainst(Dealer dealer, CalculateProfit calculateProfit) {
+        LinkedHashMap<Name, Revenue> finalRevenues = new LinkedHashMap<>();
+
+        players.forEach(player -> {
+            GameResult result = player.judgeResult(dealer);
+            Revenue revenue = calculateProfit.calculate(player.getName(), result);
+            finalRevenues.put(player.getName(), revenue);
+        });
+        return finalRevenues;
     }
 
     public static void validatePlayersNumber(List<Player> players) {

@@ -33,16 +33,10 @@ class GameResultManagerTest {
     }
 
     private GameResultManager createGameResultManager(TestFixture fixture) {
-        Map<Name, BettingAmount> bettingAmounts = new HashMap<>();
-        fixture.players().forEach(player ->
-                bettingAmounts.put(player.getName(), new BettingAmount(BigDecimal.valueOf(1000)))
-        );
-
-        BettingAmounts bettingBook = new BettingAmounts(bettingAmounts);
+        BettingAmounts bettingBook = fixture.players().createBettingAmounts(BigDecimal.valueOf(1000));
         CalculateProfit calculateProfit = new CalculateProfit(bettingBook);
         return new GameResultManager(calculateProfit, fixture.players(), fixture.dealer());
     }
-
 
     private TestFixture createFixture() {
         Player pobi = new Player(new Name("pobi"));

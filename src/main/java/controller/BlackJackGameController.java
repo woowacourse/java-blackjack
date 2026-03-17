@@ -16,14 +16,16 @@ import dto.ParticipantRevenueDto;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import view.InputView;
-import view.OutputView;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import static view.OutputView.printCards;
+import static view.OutputView.printDealerMessage;
 import static view.OutputView.printFinalCards;
+import static view.OutputView.printGameInitialMessage;
+import static view.OutputView.printParticipantRevenues;
 
 public class BlackJackGameController {
 
@@ -33,9 +35,9 @@ public class BlackJackGameController {
     public void run() {
         Players players = initPlayer();
         GameManager gameManager = new GameManager(players);
-        List<String> playersNames = getPlayerNames(players);
+        List<String> playerNames = players.getPlayerNames();
         BettingAmounts bettingAmounts = initBettingManager(players);
-        OutputView.printGameInitialMessage(playersNames);
+        printGameInitialMessage(playerNames);
         gameManager.distributeInitialCards();
         printParticipantCards(gameManager.getDealer(), players);
         playGame(players, gameManager);
@@ -45,15 +47,6 @@ public class BlackJackGameController {
         Map<Name, Revenue> profits = gameResultManager.getParticipantsProfit();
         List<ParticipantRevenueDto> revenueDtos = toParticipantRevenueDtos(profits);
         endGame(gameManager, players, revenueDtos);
-    }
-
-    private BettingAmounts initBettingManager(Players players) {
-        Map<Name, BettingAmount> bettingAmounts = new HashMap<>();
-        players.forEach(player -> {
-            int amount = InputView.askBettingAmount(player.getName().getName());
-            bettingAmounts.put(player.getName(), new BettingAmount(BigDecimal.valueOf(amount)));
-        });
-        return new BettingAmounts(bettingAmounts);
     }
 
     private List<ParticipantRevenueDto> toParticipantRevenueDtos(Map<Name, Revenue> profits) {
@@ -67,9 +60,30 @@ public class BlackJackGameController {
         return revenueDtos;
     }
 
+    // TODO: InputView에서 받은 amount를 player와 매핑해 bettingAmounts를 생성 InputView랑 강결합 되어서 Players로 보내기 애매하다.
+    private BettingAmounts initBettingManager(Players players) {
+        Map<Name, BettingAmount> bettingAmounts = new HashMap<>();
+        players.forEach(player -> {
+            int amount = InputView.askBettingAmount(player.getName().getName());
+            bettingAmounts.put(player.getName(), new BettingAmount(BigDecimal.valueOf(amount)));
+        });
+        return new BettingAmounts(bettingAmounts);
+    }
+
     private void playGame(Players players, GameManager gameManager) {
         players.forEach(player -> playGameWithPlayer(player, gameManager));
         playGameWithDealer(gameManager);
+    }
+
+    // TODO: player를 순회하며, dto인자로 player를 넘겨줌 [공통로직] -> 그렇다고 Domain쪽으로 옮기면 도메인이 DTO를 알게 된다.
+    private void printParticipantCards(Dealer dealer, Players players) {
+        printCards(toParticipantCardsDto(dealer));
+        players.forEach(player -> printCards(toParticipantCardsDto(player)));
+    }
+
+    // TODO: player를 순회하며, dto인자로 player를 넘겨줌 [공통로직]
+    private void printFinalScores(Players players) {
+        players.forEach(player -> printFinalCards(toParticipantCardsDto(player)));
     }
 
     public void playGameWithDealer(GameManager gameManager) {
@@ -78,7 +92,7 @@ public class BlackJackGameController {
                 break;
             }
             gameManager.drawCardTo(gameManager.getDealer());
-            OutputView.printDealerMessage();
+            printDealerMessage();
         }
     }
 
@@ -101,26 +115,10 @@ public class BlackJackGameController {
         return false;
     }
 
-    private void printParticipantCards(Dealer dealer, Players players) {
-        OutputView.printCards(toParticipantCardsDto(dealer));
-        players.forEach(player -> OutputView.printCards(toParticipantCardsDto(player)));
-    }
-
     private void endGame(GameManager gameManager, Players players, List<ParticipantRevenueDto> participantRevenueDtos) {
-        OutputView.printFinalCards(toParticipantCardsDto(gameManager.getDealer()));
+        printFinalCards(toParticipantCardsDto(gameManager.getDealer()));
         printFinalScores(players);
-        OutputView.printParticipantRevenues(participantRevenueDtos);
-    }
-
-    private void printFinalScores(Players players) {
-        players.forEach(player -> printFinalCards(toParticipantCardsDto(player)));
-    }
-
-    private List<String> getPlayerNames(Players players) {
-        List<String> playerNames = new ArrayList<>();
-        players.forEach(player -> playerNames.add(player.getName().getName()));
-        return playerNames;
-
+        printParticipantRevenues(participantRevenueDtos);
     }
 
     private Players initPlayer() {
