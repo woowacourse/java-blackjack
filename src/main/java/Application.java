@@ -102,7 +102,7 @@ public class Application {
     }
 
     private boolean wantExtraCard(User user) {
-        if (user.checkBust()) {
+        if (user.isBust()) {
             outputView.printMessage(Message.BUST_ANNOUNCE);
             return false;
         }

@@ -27,7 +27,15 @@ public abstract class Participant {
         return hand.isBlackjack();
     }
 
-    public boolean checkBust() {
+    public boolean isBust() {
         return hand.calculateTotalScore() > BLACKJACK_SCORE;
+    }
+
+    public boolean hasSameScore(Participant other) {
+        return this.getScore() == other.getScore();
+    }
+
+    public boolean hasHigherScoreThan(Participant other) {
+        return this.getScore() > other.getScore();
     }
 }
