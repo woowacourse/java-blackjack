@@ -1,13 +1,13 @@
 import controller.BlackJackController;
-import model.BlackJackDeck;
-import service.BlackJackService;
+import model.card.BlackJackDeck;
+import model.BlackJackGame;
 
 public class Main {
 
     public static void main(String[] args) {
-        BlackJackService blackJackService = new BlackJackService(new BlackJackDeck());
-        BlackJackController blackJackController = new BlackJackController(blackJackService);
+        BlackJackGame blackJackGame = new BlackJackGame(new BlackJackDeck());
+        BlackJackController blackJackController = new BlackJackController(blackJackGame);
 
-        blackJackController.run();
+        blackJackController.playBlackJackGame();
     }
 }

@@ -1,105 +1,118 @@
 package controller;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import dto.ParticipantCurrentHandResponse;
+import dto.ParticipantProfitResponse;
+import model.card.Card;
+import model.result.ParticipantCurrentHand;
+import model.result.ParticipantProfit;
+import model.result.ProfitResult;
 import java.util.List;
-import model.Agreement;
-import model.Dealer;
-import model.Participant;
-import model.Player;
-import model.Players;
-import model.PlayerName;
-import model.dto.PlayerResult;
-import service.BlackJackService;
+import model.participant.Agreement;
+import model.participant.BetPrice;
+import model.BlackJackGame;
 import view.InputView;
 import view.OutputView;
 
 public class BlackJackController {
-    private static final Integer INITIAL_DRAW_QUANTITY = 2;
-    private static final String NAME_SPLIT_REGEX = ",";
+    private final BlackJackGame blackJackGame;
 
-    private final BlackJackService blackJackService;
-
-    public BlackJackController(BlackJackService blackJackService) {
-        this.blackJackService = blackJackService;
+    public BlackJackController(BlackJackGame blackJackGame) {
+        this.blackJackGame = blackJackGame;
     }
 
-    public void run() {
-        Players players = getParticipantsName();
-        Dealer dealer = new Dealer();
+    public void playBlackJackGame() {
+        registerParticipant();
+        addBet();
 
-        OutputView.printNewLine();
-
-        blackJackService.shuffle();
-
-        initDraw(dealer, players);
-
-        drawPlayersTurn(players);
-        drawDealer(dealer);
-
-        OutputView.printPlayersScore(dealer.getResult(), players.getPlayersResult());
-        OutputView.printResult(blackJackService.getGameResult(players, dealer));
+        initGame();
+        participantsTurn();
+        displayResult();
     }
 
-    private Players getParticipantsName() {
-        String nameInput = InputView.getPlayerNames();
-        List<Player> players = Arrays.stream(nameInput.split(NAME_SPLIT_REGEX, -1))
-                .map((name) -> new Player(new PlayerName(name.trim())))
+    private void registerParticipant() {
+        List<String> playerNamesInput = InputView.getPlayerNames();
+        playerNamesInput.forEach(blackJackGame::registerPlayer);
+    }
+
+    private void addBet() {
+        List<String> playerNames = blackJackGame.getPlayerNames();
+        playerNames.forEach(playerName -> blackJackGame.placeBet(playerName, new BetPrice(InputView.getBet(playerName))));
+    }
+
+    private void initGame() {
+        blackJackGame.initGame();
+        List<ParticipantCurrentHandResponse> hands = blackJackGame.getPlayerCurrentHands().stream()
+                .map(this::getCurrentHandDto)
                 .toList();
-
-        return new Players(players);
+        OutputView.printInitDeck(hands, blackJackGame.getDealerFirstCard().getString());
     }
 
-
-    private void initDraw(Dealer dealer, Players players) {
-        initParticipantDraw(dealer);
-        List<PlayerResult> playersResult = new ArrayList<>();
-
-        for(Player player : players.getPlayers()) {
-            initParticipantDraw(player);
-            playersResult.add(player.getResult());
-        }
-
-        OutputView.printInitDeck(playersResult, dealer.getFirstCard());
+    private void participantsTurn() {
+        drawPlayersTurn();
+        drawDealerTurn();
     }
 
-    private void initParticipantDraw(Participant participant) {
-        for(int i  = 0; i < INITIAL_DRAW_QUANTITY; i++) {
-            blackJackService.draw(participant);
-        }
-    }
-
-    private void drawPlayersTurn(Players players) {
-        for(Player player : players.getPlayers()) {
-            drawPlayerTurns(player);
-        }
+    private void drawPlayersTurn() {
+        List<String> playerNames = blackJackGame.getPlayerNames();
+        playerNames.forEach(this::drawPlayerTurns);
         OutputView.printNewLine();
     }
 
-    private void drawPlayerTurns(Player player) {
-        while(drawPlayerTurn(player));
+    private void drawPlayerTurns(String playerName) {
+        while (drawPlayerTurn(playerName));
     }
 
-    private boolean drawPlayerTurn(Player player) {
-        if(!getCondition(player.getName())) {
+    private boolean drawPlayerTurn(String playerName) {
+        if (!getCondition(playerName)) {
             return false;
         }
 
-        blackJackService.draw(player);
-        OutputView.printPlayerCurrentDeck(player.getResult());
+        ParticipantCurrentHandResponse currentHand = getCurrentHandDto(blackJackGame.drawPlayer(playerName));
+        OutputView.printPlayerCurrentDeck(currentHand);
 
-        return !player.isBust();
+        return !blackJackGame.isBust(playerName);
     }
 
     private boolean getCondition(String name) {
-        return new Agreement(InputView.getDrawCondition(name)).get();
+        return new Agreement(InputView.getDrawCondition(name)).value();
     }
 
-    private void drawDealer(Dealer dealer) {
-        while (dealer.canDraw()) {
-            blackJackService.draw(dealer);
-            OutputView.printDealerCardDrawMessage();
-        }
+    private void drawDealerTurn() {
+        blackJackGame.drawDealer(OutputView::printDealerCardDrawMessage);
     }
 
+    private void displayResult() {
+        printParticipantHandResult();
+        printParticipantsProfitResult();
+    }
+
+    private ParticipantCurrentHandResponse getCurrentHandDto(ParticipantCurrentHand participantCurrentHand) {
+        List<String> deck = participantCurrentHand.deck().stream()
+                .map(Card::getString)
+                .toList();
+        return new ParticipantCurrentHandResponse(participantCurrentHand.name(), deck, participantCurrentHand.score());
+    }
+
+    private void printParticipantHandResult() {
+        List<ParticipantCurrentHandResponse> playerHands = blackJackGame.getPlayerCurrentHands().stream()
+                .map(this::getCurrentHandDto)
+                .toList();
+        ParticipantCurrentHandResponse dealerHand = getCurrentHandDto(blackJackGame.getDealerCurrentHand());
+
+        OutputView.printParticipantHandWithScore(dealerHand, playerHands);
+    }
+
+    private void printParticipantsProfitResult() {
+        ProfitResult profitResult = blackJackGame.getProfitResult();
+
+        ParticipantProfitResponse dealerProfitResult = getProfitResultDto(profitResult.dealerProfit());
+        List<ParticipantProfitResponse> playersProfitResult = profitResult.playerProfit().stream()
+                .map(this::getProfitResultDto)
+                .toList();
+        OutputView.printProfitResult(dealerProfitResult, playersProfitResult);
+    }
+
+    private ParticipantProfitResponse getProfitResultDto(ParticipantProfit profitResult) {
+        return new ParticipantProfitResponse(profitResult.name(), profitResult.profit());
+    }
 }
