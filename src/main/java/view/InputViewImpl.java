@@ -19,11 +19,7 @@ public class InputViewImpl implements InputView {
     }
 
     public int readBetAmountValue() {
-        String line = sc.nextLine();
-        validateIsBlank(line);
-        int number = parseToNumber(line);
-        validatePositiveNumber(number);
-        return number;
+        return sc.nextInt();
     }
 
     public Boolean wantToHit() {
@@ -36,20 +32,6 @@ public class InputViewImpl implements InputView {
     private void validateIsBlank(String line) {
         if (line.isBlank()) {
             throw new IllegalArgumentException(ErrorMessage.NOT_ALLOW_EMPTY_INPUT.getMessage());
-        }
-    }
-
-    private int parseToNumber(String line) {
-        try {
-            return Integer.parseInt(line);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(ErrorMessage.ONLY_NUMBER.getMessage());
-        }
-    }
-
-    private static void validatePositiveNumber(int number) {
-        if (number <= 0) {
-            throw new IllegalArgumentException(ErrorMessage.ZERO_MINUS_MONEY.getMessage());
         }
     }
 
