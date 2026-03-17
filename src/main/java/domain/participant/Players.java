@@ -9,26 +9,22 @@ import static message.ErrorMessage.PLAYER_NUMBER_OUT_OF_RANGE;
 import domain.BlackjackRule;
 import domain.card.Card;
 import domain.enums.GameResult;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 public class Players {
-    private final List<Player> players = new ArrayList<>();
+    private final Map<Name, Player> players = new LinkedHashMap<>();
 
     public Players(List<String> names) {
         validatePlayers(names);
-        players.addAll(names.stream()
-                .map(Player::new)
-                .toList());
+        names.forEach(name -> players.put(new Name(name), new Player(name)));
     }
 
     public List<Name> getAllPlayersName() {
-        return players.stream()
-                .map(Player::getName)
-                .toList();
+        return List.copyOf(players.keySet());
     }
 
     private void validatePlayers(List<String> names) {
@@ -60,16 +56,17 @@ public class Players {
     }
 
     private Player findPlayerByName(Name name) {
-        return players.stream()
-                .filter(player -> player.getName().equals(name))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(PLAYER_NOT_FOUND.getMessage()));
+        if (!players.containsKey(name)) {
+            throw new IllegalArgumentException(PLAYER_NOT_FOUND.getMessage());
+        }
+
+        return players.get(name);
     }
 
     public Map<Name, GameResult> decidePlayerResults(Dealer dealer) {
         Map<Name, GameResult> playerResults = new LinkedHashMap<>();
-        for (Player player : players) {
-            playerResults.put(player.getName(), BlackjackRule.judgePlayerResult(player, dealer));
+        for (Entry<Name, Player> playerEntry : players.entrySet()) {
+            playerResults.put(playerEntry.getKey(), BlackjackRule.judgePlayerResult(playerEntry.getValue(), dealer));
         }
         return playerResults;
     }
