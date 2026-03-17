@@ -8,8 +8,6 @@ public interface Participant {
 
     void addCard(Card card);
 
-    void checkBlackJack();
-
     boolean canHit();
 
     String name();

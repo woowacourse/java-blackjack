@@ -10,26 +10,17 @@ public abstract class AbstractParticipant implements Participant {
 
     private final String name;
     private final Cards cards;
-    private boolean isBlackJack;
     private long profit;
 
     public AbstractParticipant(String name) {
         this.name = name;
         this.cards = Cards.createEmpty();
-        this.isBlackJack = false;
         this.profit = 0;
     }
 
     @Override
     public void addCard(Card card) {
         this.cards.add(card);
-    }
-
-    @Override
-    public void checkBlackJack() {
-        if (calculateTotalScore() == BLACK_JACK && this.cards.size() == BLACK_JACK_REQUIREMENT) {
-            this.isBlackJack = true;
-        }
     }
 
     public void addProfit(long money) {
@@ -68,7 +59,10 @@ public abstract class AbstractParticipant implements Participant {
     }
 
     public boolean isBlackJack() {
-        return this.isBlackJack;
+        if (calculateTotalScore() == BLACK_JACK && this.cards.size() == BLACK_JACK_REQUIREMENT) {
+            return true;
+        }
+        return false;
     }
 
     public long profit() {
