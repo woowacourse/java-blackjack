@@ -4,6 +4,7 @@ import constant.ErrorMessage;
 
 public record BetPrice(long value) {
     private static final Long MAX_BET = 6_148_914_691_236_517_204L;
+
     public BetPrice {
         validate(value);
     }

@@ -14,7 +14,6 @@ public class CardTest {
 
         assertThat(card.shape()).isEqualTo(shape);
         assertThat(card.cardNumber()).isEqualTo(number);
-
     }
 
     @Test
