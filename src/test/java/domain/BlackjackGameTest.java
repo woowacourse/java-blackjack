@@ -64,6 +64,90 @@ class BlackjackGameTest {
         assertThat(dealer.getHand()).hasSize(INIT_DRAW_COUNT + HIT_DRAW_COUNT);
     }
 
+    @Test
+    @DisplayName("3장으로 21점을 만들면 블랙잭이 아니다.")
+    void 세장_이상으로_만든_21점은_블랙잭_아님() {
+        // given
+        final Player player = new Player(new Name("포비"), ONE_HUNDRED_THOUSAND);
+        player.draw(new Card(CardSuit.DIAMOND, CardRank.SEVEN));
+        player.draw(new Card(CardSuit.HEART, CardRank.SEVEN));
+        player.draw(new Card(CardSuit.CLUB, CardRank.SEVEN)); // 21
+
+        // then
+        assertThat(player.isBlackjack()).isFalse();
+    }
+
+    @Test
+    @DisplayName("딜러와 플레이어 모두 블랙잭이면 무승부다.")
+    void 딜러와_플레이어가_둘_다_블랙잭이면_무승부() {
+        // given
+        final Player player = new Player(new Name("포비"), ONE_HUNDRED_THOUSAND);
+        player.draw(new Card(CardSuit.DIAMOND, CardRank.ACE));
+        player.draw(new Card(CardSuit.DIAMOND, CardRank.KING));
+
+        final Participants participants = new Participants(List.of(player));
+        final Participant dealer = participants.getDealer();
+        dealer.draw(new Card(CardSuit.DIAMOND, CardRank.ACE));
+        dealer.draw(new Card(CardSuit.DIAMOND, CardRank.QUEEN));
+
+        final BlackjackGame game = new BlackjackGame(participants);
+
+        // when
+        final BetProfits result = game.getBetProfits();
+
+        // then
+        assertThat(result.betProfits().getFirst().profit()).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("블랙잭은 3장으로 만든 21보다 우선되는 승리 조건이다.")
+    void 블랙잭은_일반_21보다_우선() {
+        // given
+        final Player player = new Player(new Name("포비"), ONE_HUNDRED_THOUSAND);
+        player.draw(new Card(CardSuit.DIAMOND, CardRank.ACE));
+        player.draw(new Card(CardSuit.DIAMOND, CardRank.KING)); // 블랙잭
+
+        final Participants participants = new Participants(List.of(player));
+        final Participant dealer = participants.getDealer();
+
+        dealer.draw(new Card(CardSuit.DIAMOND, CardRank.SEVEN));
+        dealer.draw(new Card(CardSuit.DIAMOND, CardRank.SEVEN));
+        dealer.draw(new Card(CardSuit.DIAMOND, CardRank.SEVEN)); // 세 장으로 만든 21
+
+        final BlackjackGame game = new BlackjackGame(participants);
+
+        // when
+        final BetProfits result = game.getBetProfits();
+
+        // then
+        assertThat(result.betProfits().getFirst().profit()).isEqualTo(150_000);
+    }
+
+    @Test
+    @DisplayName("플레이어가 bust면 딜러가 bust여도 패배한다.")
+    void 플레이어_버스트면_무조건_패배() {
+        // given
+        final Player player = new Player(new Name("포비"), ONE_HUNDRED_THOUSAND);
+        player.draw(new Card(CardSuit.DIAMOND, CardRank.KING));
+        player.draw(new Card(CardSuit.DIAMOND, CardRank.KING));
+        player.draw(new Card(CardSuit.DIAMOND, CardRank.TWO)); // 22로 버스트
+
+        final Participants participants = new Participants(List.of(player));
+        final Participant dealer = participants.getDealer();
+
+        dealer.draw(new Card(CardSuit.DIAMOND, CardRank.KING));
+        dealer.draw(new Card(CardSuit.DIAMOND, CardRank.KING));
+        dealer.draw(new Card(CardSuit.DIAMOND, CardRank.TWO)); // 22 버스트
+
+        final BlackjackGame game = new BlackjackGame(participants);
+
+        // when
+        final BetProfits result = game.getBetProfits();
+
+        // then
+        assertThat(result.betProfits().getFirst().profit()).isEqualTo(-ONE_HUNDRED_THOUSAND);
+    }
+
     @ParameterizedTest
     @MethodSource("게임_결과_테스트케이스")
     @DisplayName("게임 결과에 따라 플레이어와 딜러 수익을 계산한다.")
