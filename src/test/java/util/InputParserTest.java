@@ -45,7 +45,7 @@ public class InputParserTest {
     @MethodSource("inputMoney")
     void 정수형_숫자로_파싱한다(String input, int expectedValue) {
         //given
-        int money = InputParser.parseMoney(input);
+        long money = InputParser.parseMoney(input);
         //when
         //then
         Assertions.assertThat(money).isEqualTo(expectedValue);

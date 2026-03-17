@@ -13,7 +13,7 @@ public class Bet {
         this.betHistory = new BetHistory(playerNames);
     }
 
-    public void bettingMoney(Name playerName, int bettingMoney) {
+    public void bettingMoney(Name playerName, long bettingMoney) {
         betHistory.bettingMoney(playerName, bettingMoney);
     }
 

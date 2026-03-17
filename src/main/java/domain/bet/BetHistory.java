@@ -18,7 +18,7 @@ public class BetHistory {
         );
     }
 
-    public void bettingMoney(Name playerName, int bettingMoney) {
+    public void bettingMoney(Name playerName, long bettingMoney) {
         validatePlayer(playerName);
         betHistory.put(playerName, new Money(bettingMoney));
     }

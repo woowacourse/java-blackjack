@@ -22,9 +22,9 @@ public class InputParser {
         return YES_ANSWER.contains(input);
     }
 
-    public static int parseMoney(String input) {
+    public static long parseMoney(String input) {
         try {
-            return Integer.parseInt(input);
+            return Long.parseLong(input);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException(BETTING_MONEY_NOT_AVAILABLE.getMessage());
         }
