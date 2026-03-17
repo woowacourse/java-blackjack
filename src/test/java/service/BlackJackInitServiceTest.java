@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import domain.Deck;
 import domain.participant.Dealer;
-import domain.participant.Player;
+import domain.participant.Players;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -42,7 +42,7 @@ class BlackJackInitServiceTest {
     void 플레이어들을_정상적으로_생성() {
         //given, when
         Deck deck = Deck.createShuffledDeck();
-        List<Player> players = blackJackInitService.createPlayers(List.of("봉구스", "시오"), deck);
+        Players players = blackJackInitService.createPlayers(List.of("봉구스", "시오"), deck);
 
         // then
         assertNotNull(players);

@@ -1,6 +1,7 @@
 package domain.betting;
 
 import domain.participant.Player;
+import domain.participant.Players;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,9 +21,10 @@ public record Bettings(List<Betting> bettings) {
         return new Bettings(bettings);
     }
 
-    public List<Player> getPlayers() {
-        return bettings.stream()
+    public Players getPlayers() {
+        List<Player> players = bettings.stream()
                 .map(Betting::player)
                 .toList();
+        return new Players(players);
     }
 }

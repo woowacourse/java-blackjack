@@ -6,6 +6,7 @@ import domain.betting.Bettings;
 import domain.money.BettingMoney;
 import domain.participant.Dealer;
 import domain.participant.Player;
+import domain.participant.Players;
 import domain.result.Results;
 import dto.FinalResultDto;
 import dto.HandDto;
@@ -39,7 +40,7 @@ public class BlackJackController {
         List<String> names = inputView.askPlayerNames();
 
         Deck deck = blackJackInitService.createDeck();
-        List<Player> players = blackJackInitService.createPlayers(names, deck);
+        Players players = blackJackInitService.createPlayers(names, deck);
         Dealer dealer = blackJackInitService.createDealer(deck);
 
         Bettings bettings = betMoney(players);
@@ -67,7 +68,7 @@ public class BlackJackController {
     }
 
     private Results playGame(Deck deck, Dealer dealer, Bettings bettings) {
-        List<Player> players = bettings.getPlayers();
+        Players players = bettings.getPlayers();
         InitStatusDto initStatusDto = InitStatusDto.of(dealer, players);
         outputView.printInitMessage(initStatusDto);
 

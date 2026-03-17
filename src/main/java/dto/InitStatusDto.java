@@ -1,15 +1,15 @@
 package dto;
 
 import domain.participant.Dealer;
-import domain.participant.Player;
+import domain.participant.Players;
 import java.util.List;
 
 public record InitStatusDto(HandDto dealerHandDto, List<PlayerHandDto> playerHandDtos) {
 
-    public static InitStatusDto of(Dealer dealer, List<Player> players) {
+    public static InitStatusDto of(Dealer dealer, Players players) {
         HandDto dealerHandDto = HandDto.from(dealer.getFirstCard());
 
-        List<PlayerHandDto> playerHandDtos = players.stream()
+        List<PlayerHandDto> playerHandDtos = players.players().stream()
                 .map(PlayerHandDto::from)
                 .toList();
 

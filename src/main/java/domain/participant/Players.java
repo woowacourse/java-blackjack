@@ -18,4 +18,8 @@ public record Players(List<Player> players) {
         Players.this.players.add(player);
         return new Players(players);
     }
+
+    public int size() {
+        return players.size();
+    }
 }
