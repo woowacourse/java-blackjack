@@ -1,6 +1,8 @@
-package domain.participant;
+package domain.betting;
 
-import domain.betting.BettingRule;
+import domain.participant.Dealer;
+import domain.participant.Name;
+import domain.participant.Player;
 
 public record PlayerBettingResult
         (Name playerName,

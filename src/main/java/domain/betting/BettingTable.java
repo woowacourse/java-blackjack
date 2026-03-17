@@ -1,7 +1,6 @@
 package domain.betting;
 
 import domain.participant.Name;
-import domain.participant.PlayerBettingResult;
 import java.util.ArrayList;
 import java.util.List;
 

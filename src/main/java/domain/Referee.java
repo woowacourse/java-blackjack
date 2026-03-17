@@ -1,5 +1,6 @@
 package domain;
 
+import domain.dto.GameResultDto;
 import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.Map;

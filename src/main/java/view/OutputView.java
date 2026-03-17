@@ -1,9 +1,9 @@
 package view;
 
-import domain.GameResultDto;
 import domain.MatchResult;
 import domain.betting.ParticipantsProfitResult;
 import domain.card.CardsSnapshot;
+import domain.dto.GameResultDto;
 import domain.dto.InitialDealingResult;
 import domain.dto.ParticipantCards;
 import java.util.ArrayList;
