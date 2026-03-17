@@ -21,4 +21,8 @@ public class Betting {
     public Betting lose(){
         return new Betting(-betting);
     }
+
+    public int getBettingMoney(){
+        return betting;
+    }
 }
