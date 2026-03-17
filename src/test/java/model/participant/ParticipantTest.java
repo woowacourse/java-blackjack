@@ -23,7 +23,7 @@ class ParticipantTest {
         Participant participant1 = Dealer.of();
 
         // then
-        assertThat(participant1).isInstanceOf(Dealer.class);
+        assertThat(participant1.getName()).isEqualTo("딜러");
     }
 
     @BeforeEach
