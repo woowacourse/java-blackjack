@@ -2,10 +2,13 @@ package domain.player;
 
 import static util.Constants.DEALER_REFERENCE_POINT;
 
+import domain.player.attribute.Hand;
+import domain.player.attribute.Name;
+
 public class Dealer extends Participant {
 
-    public Dealer(String name) {
-        super(name);
+    public Dealer(Name name, Hand hand) {
+        super(name, hand);
     }
 
     public boolean isTotalScore16OrLess() {

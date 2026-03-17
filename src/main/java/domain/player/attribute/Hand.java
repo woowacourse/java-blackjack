@@ -2,7 +2,7 @@ package domain.player.attribute;
 
 import static util.Constants.ACE_HIGH_SCORE;
 import static util.Constants.ACE_LOW_SCORE;
-import static util.Constants.BLACK_JACK;
+import static util.Constants.BLACKJACK_NUMBER;
 
 import domain.card.Card;
 import java.util.ArrayList;
@@ -26,14 +26,14 @@ public class Hand {
     }
 
     public boolean isBust() {
-        return calculateScore() > BLACK_JACK;
+        return calculateScore() > BLACKJACK_NUMBER;
     }
 
     public int calculateScore() {
         int sum = calculateBaseScore();
         int aceCount = countAce();
 
-        while (sum > BLACK_JACK && aceCount > 0) {
+        while (sum > BLACKJACK_NUMBER && aceCount > 0) {
             sum -= (ACE_HIGH_SCORE - ACE_LOW_SCORE);
             aceCount--;
         }

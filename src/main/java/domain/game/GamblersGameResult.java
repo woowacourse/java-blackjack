@@ -1,55 +1,52 @@
 package domain.game;
 
-import java.util.LinkedHashMap;
+import domain.player.Dealer;
+import domain.player.Gambler;
+import domain.player.Gamblers;
+import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class GamblersGameResult {
 
-    private Map<String, GameResult> gamblersResult;
+    private Map<String, Long> gamblersResult;
 
-    public GamblersGameResult(int dealerScore, Map<String, Integer> gameResults) {
-        this.gamblersResult = gameResults.entrySet()
+    public GamblersGameResult(Dealer dealer, Gamblers gamblers) {
+        int dealerTotalScore = dealer.getTotalScore();
+
+        this.gamblersResult = gamblers.getGamblers()
                 .stream()
-                .collect(Collectors.toMap(Map.Entry::getKey,
-                        entry -> GameResult.determine(
-                                dealerScore,
-                                entry.getValue()),
-                                (a, b) -> a, LinkedHashMap::new));
+                .collect(Collectors.toMap(Gambler::getName, gambler -> calculateProfit(dealerTotalScore, gambler)
+                ));
     }
 
-    public GameResult getMatchResult(String name) {
+    public Long getDealerResult() {
+        return -gamblersResult.values()
+                .stream()
+                .mapToLong(Long::longValue)
+                .sum();
+    }
+
+    public Long getMatchResult(String name) {
         return gamblersResult.get(name);
     }
 
-    public int countDealerWin() {
-        return (int) gamblersResult.values()
-                .stream()
-                .filter(result -> result == GameResult.LOSE)
-                .count();
+    public Map<String, Long> getResultInfo() {
+        return Collections.unmodifiableMap(gamblersResult);
     }
 
-    public int countDealerLose() {
-        return (int) gamblersResult.values()
-                .stream()
-                .filter(result -> result == GameResult.WIN)
-                .count();
-    }
+    private long calculateProfit(int dealerTotalScore, Gambler gambler) {
+        GameResult gameResult = GameResult.determine(dealerTotalScore, gambler.getTotalScore());
 
-    public int countDealerDraw() {
-        return (int) gamblersResult
-                .values()
-                .stream()
-                .filter(result -> result == GameResult.DRAW)
-                .count();
-    }
-
-    public Map<String, String> getResultInfo() {
-        return gamblersResult.entrySet()
-                .stream()
-                .collect(Collectors.toMap(Map.Entry::getKey,
-                        entry -> entry.getValue().getGameResult(),
-                        (a, b) -> a, LinkedHashMap::new
-                ));
+        if (gameResult == GameResult.WIN && gambler.isBlackjack()) {
+            return gambler.getAmount() * 3 / 2;
+        }
+        if (gameResult == GameResult.WIN) {
+            return gambler.getAmount();
+        }
+        if (gameResult == GameResult.LOSE) {
+            return -gambler.getAmount();
+        }
+        return 0L;
     }
 }

@@ -1,7 +1,6 @@
-package domain.player;
+package domain.player.attribute;
 
 import domain.card.Card;
-import domain.player.attribute.Hand;
 import java.util.Arrays;
 import java.util.List;
 import org.assertj.core.api.Assertions;

@@ -1,9 +1,9 @@
 package view.output;
 
-import dto.DealerResultDto;
-import dto.ParticipantHandResponseDto;
-import dto.ParticipantsGameInfoDto;
-import dto.ParticipantsHandResponseDto;
+import dto.response.DealerResultDto;
+import dto.response.ParticipantHandResponseDto;
+import dto.response.ParticipantsGameInfoDto;
+import dto.response.ParticipantsHandResponseDto;
 import java.util.List;
 import java.util.Map;
 
@@ -14,5 +14,5 @@ public interface OutputView {
     void printParticipantInfo(ParticipantHandResponseDto responseDto);
     void printParticipantsGameInfo(ParticipantsGameInfoDto responseDto);
     void printDealerResult(DealerResultDto resultDto);
-    void printGamblerResult(Map<String, String> gamblersResult);
+    void printGamblerResult(Map<String, Long> gamblersResult);
 }

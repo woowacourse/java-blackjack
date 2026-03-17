@@ -1,4 +1,4 @@
-package dto;
+package dto.request;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

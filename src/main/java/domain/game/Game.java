@@ -19,10 +19,10 @@ public class Game {
     private final Gamblers gamblers;
     private final GameCards gameCards;
 
-    public Game(String dealerName, List<String> names, int amount) {
-        this.dealer = new Dealer(dealerName);
-        this.gamblers = new Gamblers(names);
-        this.gameCards = new GameCards(amount);
+    public Game(Dealer dealer, Gamblers gamblers, GameCards gameCards) {
+        this.dealer = dealer;
+        this.gamblers = gamblers;
+        this.gameCards = gameCards;
     }
 
     public void initializeGame() {
@@ -71,7 +71,7 @@ public class Game {
     }
 
     public GamblersGameResult getResult(){
-        return new GamblersGameResult(dealer.getTotalScore(), gamblers.getParticipantTotalScore());
+        return new GamblersGameResult(dealer, gamblers);
     }
 }
 

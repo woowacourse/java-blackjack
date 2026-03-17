@@ -12,7 +12,7 @@ public class Constants {
 
     public static final int ACE_LOW_SCORE = 1;
 
-    public static final int BLACK_JACK = 21;
+    public static final int BLACKJACK_NUMBER = 21;
 
     public static final int DEALER_REFERENCE_POINT = 16;
 
