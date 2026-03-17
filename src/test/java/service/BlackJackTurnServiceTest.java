@@ -42,7 +42,7 @@ class BlackJackTurnServiceTest {
         Dealer dealer = createDealer();
 
         // when
-        blackJackTurnService.dealerHit(dealer, deck);
+        blackJackTurnService.hitByDealer(dealer, deck);
 
         // then
         assertEquals(1, dealer.getHand().getCards().size());
@@ -54,7 +54,7 @@ class BlackJackTurnServiceTest {
         Dealer dealer = createDealer(Rank.TWO, Rank.FIVE);
 
         // when, then
-        assertTrue(blackJackTurnService.canDealerHit(dealer));
+        assertTrue(blackJackTurnService.hitByDealer(dealer, deck));
     }
 
     @Test
@@ -63,7 +63,7 @@ class BlackJackTurnServiceTest {
         Dealer dealer = createDealer(Rank.JACK, Rank.QUEEN, Rank.KING);
 
         // when, then
-        assertFalse(blackJackTurnService.canDealerHit(dealer));
+        assertFalse(blackJackTurnService.hitByDealer(dealer, deck));
     }
 
     @Test

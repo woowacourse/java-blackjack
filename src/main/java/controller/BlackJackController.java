@@ -109,8 +109,7 @@ public class BlackJackController {
     }
 
     private void drawDealerCard(Dealer dealer, Deck deck) {
-        while (blackJackTurnService.canDealerHit(dealer)) {
-            blackJackTurnService.dealerHit(dealer, deck);
+        while (blackJackTurnService.hitByDealer(dealer, deck)) {
             outputView.printDealerHitMessage();
         }
     }
