@@ -17,7 +17,7 @@ class PlayerTest {
     @Test
     void 드로우가_정상적으로_동작하는_경우() {
         // given
-        Player player = new Player("봉구스");
+        Player player = Player.from("봉구스");
 
         // when
         player.draw(new Card(Suit.CLUBS, Rank.ACE));
@@ -29,7 +29,7 @@ class PlayerTest {
     @Test
     void Bust인_경우_isBust가_True를_리턴한다() {
         // given
-        Player player = new Player("봉구스");
+        Player player = Player.from("봉구스");
 
         // when
         player.draw(new Card(Suit.CLUBS, Rank.KING));
@@ -43,7 +43,7 @@ class PlayerTest {
     @Test
     void 플레이어가_Bust가_아닌_경우_isBust가_False를_리턴한다() {
         // given
-        Player player = new Player("봉구스");
+        Player player = Player.from("봉구스");
 
         // when
         player.draw(new Card(Suit.CLUBS, Rank.KING));

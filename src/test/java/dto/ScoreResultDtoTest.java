@@ -1,6 +1,8 @@
 package dto;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static util.TestUtil.createDealer;
+import static util.TestUtil.createPlayer;
 
 import domain.card.Card;
 import domain.card.Rank;
@@ -19,19 +21,11 @@ class ScoreResultDtoTest {
     @BeforeEach
     void setUp() {
         players = new ArrayList<>();
-        Player player1 = new Player("봉구스");
-        player1.draw(new Card(Suit.CLUBS, Rank.ACE));
-        player1.draw(new Card(Suit.DIAMONDS, Rank.KING));
+        Player player1 = createPlayer("봉구스", new Card(Suit.CLUBS, Rank.ACE), new Card(Suit.DIAMONDS, Rank.KING));
+        Player player2 = createPlayer("시오", new Card(Suit.HEARTS, Rank.FIVE), new Card(Suit.SPADES, Rank.JACK));
 
-        Player player2 = new Player("시오");
-        player2.draw(new Card(Suit.HEARTS, Rank.FIVE));
-        player2.draw(new Card(Suit.SPADES, Rank.JACK));
-        players.add(player1);
-        players.add(player2);
-
-        dealer = new Dealer();
-        dealer.draw(new Card(Suit.HEARTS, Rank.FOUR));
-        dealer.draw(new Card(Suit.CLUBS, Rank.EIGHT));
+        players = List.of(player1, player2);
+        dealer = createDealer(new Card(Suit.HEARTS, Rank.FOUR), new Card(Suit.CLUBS, Rank.EIGHT));
     }
 
     @Test

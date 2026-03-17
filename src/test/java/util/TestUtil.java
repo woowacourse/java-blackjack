@@ -2,6 +2,7 @@ package util;
 
 import domain.betting.Betting;
 import domain.card.Card;
+import domain.card.Name;
 import domain.card.Rank;
 import domain.card.Suit;
 import domain.money.BettingMoney;
@@ -14,12 +15,16 @@ import java.util.Arrays;
 
 public class TestUtil {
 
+    public static Name createName(String name) {
+        return new Name(name);
+    }
+
     public static Player createPlayer(String name) {
-        return new Player(name);
+        return new Player(createName(name));
     }
 
     public static Player createPlayer(String name, Card... cards) {
-        Player player = new Player(name);
+        Player player = new Player(createName(name));
         for (Card card : cards) {
             player.draw(card);
         }
@@ -27,7 +32,7 @@ public class TestUtil {
     }
 
     public static Player createPlayer(String name, Rank... ranks) {
-        Player player = new Player(name);
+        Player player = new Player(createName(name));
         for (Rank rank : ranks) {
             Card card = new Card(Suit.SPADES, rank);
             player.draw(card);
