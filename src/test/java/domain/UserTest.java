@@ -12,6 +12,17 @@ import vo.Suit;
 
 public class UserTest {
     @Test
+    @DisplayName("유저 객체 생성 시, 이름과 베팅 머니가 초기화된다.")
+    void 유저_객체_초기화_테스트() {
+        // given
+        User user = new User("라이", new Money(10000));
+
+        // when & then
+        assertThat(user.getUserName()).isEqualTo("라이");
+        assertThat(user.getBettingMoney()).isEqualTo(new Money(10000));
+    }
+
+    @Test
     @DisplayName("유저가 카드를 받는다. - receiveCard(Card card) + getCardsDisplay()")
     void 유저_카드_받기_테스트() {
         // given
@@ -80,31 +91,5 @@ public class UserTest {
 
         // when & then
         assertThat(user.isBust()).isTrue();
-    }
-
-    @Test
-    @DisplayName("유저의 이름을 반환한다. - getUserName()")
-    void 유저_이름_반환_테스트() {
-        // given
-        User user = UserFixture.createDefaultUser();
-
-        // when
-        String expectedResult = "라이";
-
-        // then
-        assertThat(user.getUserName()).isEqualTo(expectedResult);
-    }
-
-    @Test
-    @DisplayName("유저의 베팅 머니를 반환한다. - getBettingMoney()")
-    void 유저_베팅_머니_반환_테스트() {
-        // given
-        User user = UserFixture.createDefaultUser();
-
-        // when
-        Money expectedResult = new Money(10000);
-
-        // then
-        assertThat(user.getBettingMoney()).isEqualTo(expectedResult);
     }
 }
