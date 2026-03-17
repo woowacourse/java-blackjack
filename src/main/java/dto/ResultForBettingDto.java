@@ -3,12 +3,12 @@ package dto;
 import domain.participant.WinStatus;
 import domain.vo.Name;
 
-public class ResultForBettingCalculateDto {
+public class ResultForBettingDto {
     private final Name name;
     private final WinStatus winStatus;
     private final boolean isBlackjack;
 
-    public ResultForBettingCalculateDto(Name name, WinStatus winStatus, boolean isBlackjack) {
+    public ResultForBettingDto(Name name, WinStatus winStatus, boolean isBlackjack) {
         this.name = name;
         this.winStatus = winStatus;
         this.isBlackjack = isBlackjack;

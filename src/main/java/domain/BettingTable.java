@@ -1,41 +1,43 @@
 package domain;
 
 import domain.participant.WinStatus;
-import domain.participant.player.Player;
 import domain.vo.Money;
+import domain.vo.Name;
+import dto.ResultForBettingDto;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BettingTable {
     private static final double BLACKJACK_BONUS = 1.5;
-    private final Map<Player, Money> bettingTable = new HashMap<>();
+    private final Map<Name, Money> bettingTable = new HashMap<>();
 
-    public void placeBet(Player player, Money money) {
-        bettingTable.put(player, money);
+    public void placeBet(Name name, Money money) {
+        bettingTable.put(name, money);
     }
 
-    public Money calculateProfit(Player player) {
-        if (player.getWinStatus() == WinStatus.WIN && player.isBlackjack()) {
-            return new Money(bettingTable.get(player).multiplyDouble(BLACKJACK_BONUS));
+    public Money calculateProfit(ResultForBettingDto dto) {
+        if (dto.getWinStatus() == WinStatus.WIN && dto.isBlackjack()) {
+            return new Money(bettingTable.get(dto.getName()).multiplyDouble(BLACKJACK_BONUS));
         }
 
-        if (player.getWinStatus() == WinStatus.LOSS) {
-            return bettingTable.get(player).negate();
+        if (dto.getWinStatus() == WinStatus.LOSS) {
+            return bettingTable.get(dto.getName()).negate();
         }
 
-        if (player.getWinStatus() == WinStatus.DRAW) {
+        if (dto.getWinStatus() == WinStatus.DRAW) {
             return new Money(BigDecimal.ZERO);
         }
 
-        return bettingTable.get(player);
+        return bettingTable.get(dto.getName());
     }
 
-    public Money getDealerProfit() {
-        return bettingTable.keySet().stream()
-                .map(this::calculateProfit)
-                .reduce(new Money(0), Money::add)
+    public Money getDealerProfit(List<ResultForBettingDto> dtos) {
+        return dtos.stream()
+                .map((dto) -> calculateProfit(dto))
+                .reduce(new Money(BigDecimal.ZERO), Money::add)
                 .negate();
     }
 }
