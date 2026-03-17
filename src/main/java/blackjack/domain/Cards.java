@@ -1,5 +1,10 @@
 package blackjack.domain;
 
+import blackjack.domain.state.Blackjack;
+import blackjack.domain.state.Bust;
+import blackjack.domain.state.State;
+import blackjack.domain.state.Stay;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,6 +22,16 @@ public class Cards {
 
     public Cards(List<Card> cards) {
         this.cards = new ArrayList<>(cards);
+    }
+
+    public State getState() {
+        if (isBust()) {
+            return new Bust();
+        }
+        if (isBlackjack()) {
+            return new Blackjack();
+        }
+        return new Stay(sumScore());
     }
 
     public int sumScore() {

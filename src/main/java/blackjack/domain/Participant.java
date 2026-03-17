@@ -1,5 +1,7 @@
 package blackjack.domain;
 
+import blackjack.domain.state.State;
+
 import java.util.List;
 
 public abstract class Participant {
@@ -46,5 +48,9 @@ public abstract class Participant {
 
     public List<String> getCardNames() {
         return drawnCards.getCardNames();
+    }
+
+    public State getState() {
+        return drawnCards.getState();
     }
 }
