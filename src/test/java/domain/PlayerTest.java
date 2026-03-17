@@ -89,7 +89,7 @@ class PlayerTest {
         player.draw(createSpadesCard(Rank.JACK));
 
         // then
-        assertTrue(player.isBlackjack());
+        assertTrue(player.isBlackjackAtFirst());
     }
 
     @Test
@@ -102,6 +102,6 @@ class PlayerTest {
         player.draw(createSpadesCard(Rank.TWO));
 
         // then
-        assertFalse(player.isBlackjack());
+        assertFalse(player.isBlackjackAtFirst());
     }
 }

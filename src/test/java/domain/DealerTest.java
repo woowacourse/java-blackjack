@@ -90,7 +90,7 @@ class DealerTest {
         dealer.draw(createSpadesCard(Rank.JACK));
 
         // then
-        assertTrue(dealer.isBlackjack());
+        assertTrue(dealer.isBlackjackAtFirst());
     }
 
     @Test
@@ -103,6 +103,6 @@ class DealerTest {
         dealer.draw(createSpadesCard(Rank.TWO));
 
         // then
-        assertFalse(dealer.isBlackjack());
+        assertFalse(dealer.isBlackjackAtFirst());
     }
 }
