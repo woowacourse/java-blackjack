@@ -43,6 +43,14 @@ public class GameContext {
         this.cardDispenser.dispenseStartingCards(player);
     }
 
+    public void calculateBettingMoney() {
+        this.bettingResult.calculateBettingMoney(this.dealer, this.players);
+    }
+
+    public List<Participant> participantsBettingResults() {
+        return this.bettingResult.participantsBettingResults();
+    }
+
     public BettingResult bettingResult() {
         return this.bettingResult;
     }

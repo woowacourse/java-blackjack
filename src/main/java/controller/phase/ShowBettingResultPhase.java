@@ -1,7 +1,6 @@
 package controller.phase;
 
 import controller.GameContext;
-import model.BettingResult;
 import view.OutputView;
 
 public class ShowBettingResultPhase implements GamePhase {
@@ -11,12 +10,12 @@ public class ShowBettingResultPhase implements GamePhase {
 
     @Override
     public void execute(GameContext gameContext) {
-        gameContext.bettingResult().calculateBettingMoney(gameContext.dealer(), gameContext.players());
-        printBettingResult(gameContext.bettingResult());
+        gameContext.calculateBettingMoney();
+        printBettingResult(gameContext);
     }
 
-    private void printBettingResult(BettingResult bettingResult) {
+    private void printBettingResult(GameContext gameContext) {
         OutputView.printBettingResultHeader();
-        OutputView.printBettingResult((bettingResult).participantsBettingResults());
+        OutputView.printBettingResult(gameContext.participantsBettingResults());
     }
 }
