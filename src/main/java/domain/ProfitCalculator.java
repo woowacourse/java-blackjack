@@ -6,7 +6,6 @@ import domain.participant.Player;
 import domain.participant.Players;
 
 public class ProfitCalculator {
-    private static final double BLACKJACK_PROFIT_RATE = 1.5;
 
     public static double calculatePlayerProfit(Player player, Dealer dealer) {
         BettingMoney bettingMoney = player.getBettingMoney();
