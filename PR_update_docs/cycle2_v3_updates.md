@@ -16,7 +16,7 @@
   - [ ] Application의 90번줄 `blackjackGame.getUsers().forEach(outputView::printUserFinalHand);` 또한 위임 대상인지 검토할 것.
 - [ ] **4. blackjackGame 생성자 생성 시점을 객체 생성 시점으로 만들기**
 - [ ] **5. blackjackGame GameJudge를 static으로 바꾸거나, 로컬 변수로 변경**
-- [ ] **6. Participants에서 도메인 방어 중복으로 생성하기**
+- [x] **6. Participants에서 도메인 방어 중복으로 생성하기**
   ```java
     if (bets == null || bets.isEmpty()) {
       throw new IllegalArgumentException("[ERROR] 참가자는 최소 1명이어야 합니다.");                                                                                                                          
