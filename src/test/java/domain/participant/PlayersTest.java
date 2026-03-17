@@ -22,18 +22,20 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class PlayersTest {
+    private static final Name STARK = new Name("스타크");
+    private static final Name FIZZ = new Name("피즈");
 
     private Players players;
     private Dealer dealer;
 
     @BeforeEach
     void setUp() {
-        players = new Players(List.of("스타크", "피즈"));
+        players = new Players(List.of(STARK.name(), FIZZ.name()));
         dealer = new Dealer();
 
-        players.initializeCards(new Name("스타크"),
+        players.initializeCards(STARK,
                 List.of(new Card(Rank.ACE, Suit.DIAMOND), new Card(Rank.JACK, Suit.DIAMOND)));
-        players.initializeCards(new Name("피즈"),
+        players.initializeCards(FIZZ,
                 List.of(new Card(Rank.THREE, Suit.DIAMOND), new Card(Rank.SEVEN, Suit.DIAMOND)));
         dealer.receiveInitialCards(List.of(new Card(Rank.TEN, Suit.DIAMOND), new Card(Rank.KING, Suit.DIAMOND)));
     }
@@ -49,8 +51,8 @@ class PlayersTest {
 
         //then
         assertSoftly(softAssertions -> {
-            softAssertions.assertThat(allPlayerNames).contains(new Name("피즈"));
-            softAssertions.assertThat(allPlayerNames).contains(new Name("스타크"));
+            softAssertions.assertThat(allPlayerNames).contains(FIZZ);
+            softAssertions.assertThat(allPlayerNames).contains(STARK);
         });
     }
 
@@ -58,7 +60,7 @@ class PlayersTest {
     @Test
     void 특정_플레이어_카드_가져오기() {
         //given
-        List<Card> playerCards = players.getPlayerCards(new Name("스타크"));
+        List<Card> playerCards = players.getPlayerCards(STARK);
         //when
         //then
         assertThat(playerCards).containsExactly(new Card(Rank.ACE, Suit.DIAMOND), new Card(Rank.JACK, Suit.DIAMOND));
@@ -68,7 +70,7 @@ class PlayersTest {
     @Test
     void 특정_플레이어_점수_계산한다() {
         //given
-        int playerScore = players.getPlayerScore(new Name("스타크"));
+        int playerScore = players.getPlayerScore(STARK);
         //when
 
         //then
@@ -83,8 +85,8 @@ class PlayersTest {
         Map<Name, GameResult> gameResults = players.decidePlayerResults(dealer);
         //then
         assertSoftly(softAssertions -> {
-            softAssertions.assertThat(gameResults.get(new Name("스타크"))).isEqualTo(GameResult.BLACKJACK_WIN);
-            softAssertions.assertThat(gameResults.get(new Name("피즈"))).isEqualTo(GameResult.LOSE);
+            softAssertions.assertThat(gameResults.get(STARK)).isEqualTo(GameResult.BLACKJACK_WIN);
+            softAssertions.assertThat(gameResults.get(FIZZ)).isEqualTo(GameResult.LOSE);
         });
     }
 
