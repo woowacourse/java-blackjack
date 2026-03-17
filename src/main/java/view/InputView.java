@@ -33,7 +33,10 @@ public class InputView {
             try {
                 System.out.printf("%s의 배팅 금액은?%n", name);
                 String money = userInput();
-                return Validator.validateMoney(Integer.parseInt(money));
+
+                int bettingAmount = Integer.parseInt(money);
+                Validator.validateMoney(bettingAmount);
+                return bettingAmount;
             } catch (IllegalArgumentException e) {
                 OutputView.printErrorMessage("잘못된 입력입니다. 다시 입력해주세요.");
             }

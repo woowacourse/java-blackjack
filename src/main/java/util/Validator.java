@@ -20,11 +20,10 @@ public class Validator {
         }
     }
 
-    public static int validateMoney(int money) {
+    public static void validateMoney(Integer money) {
         if (money < 0) {
             throw new IllegalArgumentException("잘못된 입력입니다. 다시 입력해주세요.");
         }
-        return money;
     }
 
     private Validator() {}
