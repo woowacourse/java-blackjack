@@ -1,27 +1,19 @@
 package domain.result;
 
 import domain.betting.Betting;
-import domain.money.Money;
+import domain.money.Profit;
 import domain.participant.Dealer;
 import domain.participant.Player;
 
+// todo 배팅결과, 게임 결과를 분리
 public record Result(Betting betting, WinningStatus winningStatus) {
 
     public Player getPlayer() {
         return betting.player();
     }
 
-    public Money getProfit() {
-        if (winningStatus == WinningStatus.WIN) {
-            return betting.bettingMoney().money();
-        }
-        if (winningStatus == WinningStatus.BLACKJACK_WIN) {
-            return betting.bettingMoney().money().multiply(1.5);
-        }
-        if (winningStatus == WinningStatus.LOSE) {
-            return betting.bettingMoney().money().multiply(-1);
-        }
-        return betting.bettingMoney().money().multiply(0);
+    public Profit getProfit() {
+        return Profit.calculateProfit(betting.bettingMoney(), winningStatus);
     }
 
     public static Result of(Dealer dealer, Betting betting) {

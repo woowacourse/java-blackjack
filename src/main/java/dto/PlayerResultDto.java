@@ -8,7 +8,7 @@ public record PlayerResultDto(String name, long profit) {
 
     public static PlayerResultDto from(Result result) {
         String name = result.getPlayer().getNameString();
-        long profit = result.getProfit().amount();
+        long profit = result.getProfit().money().amount(); // todo 디미터의 법칙 적용
         return new PlayerResultDto(name, profit);
     }
 

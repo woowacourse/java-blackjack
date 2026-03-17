@@ -2,7 +2,6 @@ package domain.result;
 
 import static util.TestUtil.createAmount10000Result;
 
-import domain.money.Money;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -16,6 +15,6 @@ class ResultTest {
         Result result = createAmount10000Result("봉구스", winningStatus);
 
         // when, then
-        Assertions.assertEquals(new Money(expectedAmount), result.getProfit());
+        Assertions.assertEquals(expectedAmount, result.getProfit().getAmount());
     }
 }
