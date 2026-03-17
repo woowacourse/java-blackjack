@@ -4,6 +4,9 @@ import domain.card.Card;
 import domain.card.CardScore;
 import java.util.List;
 
+/**
+ * '참가자'라는 상위 개념을 관리하는 클래스
+ */
 public abstract class Participant {
     private static final int BLACKJACK_SCORE = 21;
 

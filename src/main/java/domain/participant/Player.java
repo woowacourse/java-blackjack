@@ -6,6 +6,9 @@ import domain.Money;
 import domain.card.Card;
 import java.util.List;
 
+/**
+ * 한 명의 플레이어를 관리하는 클래스
+ */
 public class Player extends Participant {
     private final String name;
     private final Money money;

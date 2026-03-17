@@ -1,5 +1,8 @@
 package domain;
 
+/**
+ * 게임 결과를 관리하는 클래스
+ */
 public enum GameResult {
     BLACKJACK_WIN {
         @Override

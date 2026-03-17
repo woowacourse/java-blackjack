@@ -5,6 +5,9 @@ import static exception.ErrorMessage.PLAYER_NAME_IS_DUPLICATE;
 
 import java.util.List;
 
+/**
+ * 여러 명의 플레이어를 관리하는 클래스
+ */
 public class Players {
     private final List<Player> players;
 

@@ -2,6 +2,9 @@ package domain.card;
 
 import java.util.Objects;
 
+/**
+ * 한 개의 카드의 점수와 문양을 관리하는 클래스
+ */
 public class Card {
     private final CardScore cardScore;
     private final CardSuit cardSuit;

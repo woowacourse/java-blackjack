@@ -3,6 +3,9 @@ package domain;
 import static exception.ErrorMessage.MONEY_INVALID_RANGE;
 import static exception.ErrorMessage.MONEY_INVALID_UNIT;
 
+/**
+ * 돈(금액)을 관리하는 클래스
+ */
 public class Money {
     private static final int MINIMUM_BET_AMOUNT = 1_000;
     private static final int MAXIMUM_BET_AMOUNT = 300_000;
