@@ -18,6 +18,6 @@ public class BettingProfit {
     }
 
     public Map<Player, Long> getPlayerProfit() {
-        return playerProfit;
+        return Map.copyOf(playerProfit);
     }
 }
