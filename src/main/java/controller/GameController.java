@@ -50,11 +50,8 @@ public class GameController {
         List<PlayerBettingResult> playerBettingResults = participants.playersBettingResult();
         ParticipantsProfitResult participantsProfitResult = bettingTable.calculateAllParticipantsProfit(
                 playerBettingResults);
-//        TODO:
-//        outputView.printParticipantsProfit(participantsProfitResult);
-
+        outputView.printParticipantsProfit(participantsProfitResult);
     }
-
 
     private BettingTable placeBet(Players players) {
         BettingTable bettingTable = BettingTable.create();

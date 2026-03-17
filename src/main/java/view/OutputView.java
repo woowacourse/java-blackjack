@@ -2,6 +2,7 @@ package view;
 
 import domain.GameResultDto;
 import domain.MatchResult;
+import domain.betting.ParticipantsProfitResult;
 import domain.card.CardsSnapshot;
 import domain.dto.InitialDealingResult;
 import domain.dto.ParticipantCards;
@@ -43,6 +44,7 @@ public class OutputView {
         System.out.println("## 최종 승패");
         printDealerResult(gameResultDto.dealerMatchResult());
         printPlayerResults(gameResultDto.playerMatchResults());
+        println();
     }
 
     public void printNewLine() {
@@ -89,5 +91,10 @@ public class OutputView {
     private void printlnMessage(String message) {
         printMessage(message);
         println();
+    }
+
+    public void printParticipantsProfit(ParticipantsProfitResult participantsProfitResult) {
+        printlnMessage("## 최종 수익");
+        printlnMessage(Formatter.participantsProfitResult(participantsProfitResult));
     }
 }

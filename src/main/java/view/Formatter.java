@@ -1,5 +1,7 @@
 package view;
 
+import domain.betting.ParticipantsProfitResult;
+import domain.betting.PlayerProfitResult;
 import domain.card.Card;
 import domain.card.Suit;
 import domain.dto.ParticipantCards;
@@ -43,4 +45,26 @@ public class Formatter {
             throw new IllegalArgumentException();
         }
     }
+
+    public static String participantsProfitResult(ParticipantsProfitResult result) {
+        String dealerLine = dealerProfit(result);
+        String playersLines = playersProfit(result);
+
+        return String.join(System.lineSeparator(), dealerLine, playersLines);
+    }
+
+    private static String dealerProfit(ParticipantsProfitResult result) {
+        return "딜러: " + result.dealerProfit();
+    }
+
+    private static String playersProfit(ParticipantsProfitResult result) {
+        return result.playersProfitResult().stream()
+                .map(Formatter::playerProfitResult)
+                .collect(Collectors.joining(System.lineSeparator()));
+    }
+
+    private static String playerProfitResult(PlayerProfitResult result) {
+        return result.name() + ": " + result.profit();
+    }
+
 }
