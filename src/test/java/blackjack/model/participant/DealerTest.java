@@ -6,27 +6,24 @@ import blackjack.model.card.Card;
 import blackjack.model.card.Rank;
 import blackjack.model.card.Suit;
 import blackjack.model.cardDeck.CardDeck;
-import blackjack.model.cardDeck.PickStrategy;
-import blackjack.model.result.Result;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class DealerTest {
 
-    PickStrategy mustPickTen = cards -> Card.openedCard(Rank.TEN, Suit.CLOVER);
-    PickStrategy mustPickFive = cards -> Card.openedCard(Rank.FIVE, Suit.CLOVER);
-    PickStrategy mustPickAce = cards -> Card.openedCard(Rank.ACE, Suit.CLOVER);
+    CardDeck mustPickFive = CardDeck.of(cards -> Card.createOpenedCard(Rank.FIVE, Suit.CLOVER));
+    CardDeck mustPickTen = CardDeck.of(cards -> Card.createOpenedCard(Rank.TEN, Suit.CLOVER));
+    CardDeck mustPickAce = CardDeck.of(cards -> Card.createOpenedCard(Rank.ACE, Suit.CLOVER));
 
     @Test
     @DisplayName("딜러가 뽑은 두 장의 카드 중 한 장만 오픈돼 있다.")
     void pickInitialCards() {
         // given
         Dealer dealer = new Dealer();
-        CardDeck cardDeck = CardDeck.of(mustPickTen);
 
         // when
-        dealer.pickInitialCards(cardDeck);
+        dealer.pickInitialCards(mustPickTen);
 
         //then
         List<Card> cards = dealer.getOpenedCards();
@@ -40,44 +37,81 @@ class DealerTest {
     void canPick() {
         //given
         Dealer dealer =  new Dealer();
-        CardDeck cardDeck = CardDeck.of(mustPickTen);
 
-        dealer.pickAdditionalCard(cardDeck);
-        dealer.pickAdditionalCard(cardDeck);
+        dealer.pickAdditionalCard(mustPickTen);
+        dealer.pickAdditionalCard(mustPickTen); // 10 + 10 = 20
 
         // when & then
         assertThat(dealer.canPick()).isFalse();
     }
 
     @Test
-    @DisplayName("딜러랑 플레이어 핸드 비교 결과 테스트")
-    void determineResultOf() {
+    @DisplayName("점수가 21 점을 초과하면 true를 반환한다.")
+    void isBustTrue() {
         // given
         Dealer dealer =  new Dealer();
 
-        CardDeck cardDeckForMustPickTen = CardDeck.of(mustPickTen);
-        dealer.pickInitialCards(cardDeckForMustPickTen);
+        // when
+        dealer.pickAdditionalCard(mustPickTen);
+        dealer.pickAdditionalCard(mustPickTen);
+        dealer.pickAdditionalCard(mustPickTen); // pick 30
 
-        Player player1 = Player.of("player1");
+        // then
+        assertThat(dealer.isBust()).isTrue();
+    }
 
-        CardDeck cardDeckForMustPickFive = CardDeck.of(mustPickFive);
-        player1.pickAdditionalCard(cardDeckForMustPickFive);
-        player1.pickAdditionalCard(cardDeckForMustPickFive);
+    @Test
+    @DisplayName("점수가 21 점 이하이면 false를 반환한다.")
+    void isBustFalse() {
+        // given
+        Dealer dealer =  new Dealer();
 
-        Player player2 = Player.of("player2");
+        // when
+        dealer.pickAdditionalCard(mustPickTen); // pick 10
 
-        CardDeck cardDeckForMustPickAce = CardDeck.of(mustPickAce);
-        player2.pickAdditionalCard(cardDeckForMustPickTen);
-        player2.pickAdditionalCard(cardDeckForMustPickAce);
+        // then
+        assertThat(dealer.isBust()).isFalse();
+    }
 
-        Player player3 = Player.of("player3");
+    @Test
+    @DisplayName("초기 두 장의 카드가 21점이면 true를 반환한다.")
+    void isBlackjackTrue() {
+        // given
+        Dealer dealer =  new Dealer();
 
-        player3.pickAdditionalCard(cardDeckForMustPickTen);
-        player3.pickAdditionalCard(cardDeckForMustPickTen);
+        // when
+        dealer.pickAdditionalCard(mustPickTen);
+        dealer.pickAdditionalCard(mustPickAce);     // 10 + 11 = 21
 
-        // when & then
-        assertThat(dealer.determineResultOf(player1)).isEqualTo(Result.LOSE);
-        assertThat(dealer.determineResultOf(player2)).isEqualTo(Result.WIN);
-        assertThat(dealer.determineResultOf(player3)).isEqualTo(Result.DRAW);
+        // then
+        assertThat(dealer.isBlackjack()).isTrue();
+    }
+
+    @Test
+    @DisplayName("초기 두 장의 카드가 21점이 아니몀ㄴ false를 반환한다.")
+    void isBlackjackFalse() {
+        // given
+        Dealer dealer =  new Dealer();
+
+        // when
+        dealer.pickAdditionalCard(mustPickTen);
+        dealer.pickAdditionalCard(mustPickFive);    //10 + 5 = 15
+
+        // then
+        assertThat(dealer.isBlackjack()).isFalse();
+    }
+
+    @Test
+    @DisplayName("카드 덱에서 추가 1장을 더 가지고 온다.")
+    void pickAdditionalCard() {
+        // given
+        Dealer dealer =  new Dealer();
+
+        // when
+        dealer.pickAdditionalCard(mustPickAce);
+
+        // then
+        assertThat(dealer.getAllCard().size()).isEqualTo(1);
+        assertThat(dealer.getAllCard().getFirst().isAce()).isTrue();
     }
 }

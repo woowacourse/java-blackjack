@@ -1,6 +1,6 @@
 package blackjack.view;
 
-import blackjack.util.InputValidator;
+import blackjack.util.InputParser;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -18,13 +18,9 @@ public class InputView {
     }
 
     public List<String> inputPlayerNames() {
-        List<String> names = Arrays.stream(
+        return Arrays.stream(
                 scanner.nextLine().split(COMMA)
         ).toList();
-
-        InputValidator.validatePlayerNames(names);
-
-        return names;
     }
 
     public boolean inputMoreCard() {
@@ -37,6 +33,12 @@ public class InputView {
             return false;
         }
 
-        throw new IllegalArgumentException(YES + "또는 " + NO + "만 입력 가능합니다.");
+        throw new IllegalArgumentException(YES + "또는 " + NO + "만 입력 가능합니다");
+    }
+
+    public int inputBetAmount() {
+        return InputParser.parseInt(
+                scanner.nextLine()
+        );
     }
 }

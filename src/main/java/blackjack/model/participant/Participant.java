@@ -2,7 +2,6 @@ package blackjack.model.participant;
 
 import blackjack.model.card.Card;
 import blackjack.model.cardDeck.CardDeck;
-import blackjack.model.Hands;
 import java.util.List;
 
 public abstract class Participant {
@@ -13,20 +12,35 @@ public abstract class Participant {
     protected final Hands hands;
 
     public Participant(String name, Hands hands) {
-        if (hands == null) {
-            throw new IllegalArgumentException("hands가 null입니다.");
-        }
+        validate(name, hands);
 
         this.name = name;
         this.hands = hands;
     }
 
-    public abstract void pickInitialCards(CardDeck cardDeck);
+    private void validate(String name, Hands hands) {
+        if (name == null) {
+            throw new IllegalArgumentException("이름이 null입니다.");
+        }
+        String blank = " ";
 
-    public abstract boolean canPick();
+        if (name.startsWith(blank) || name.endsWith(blank)) {
+            throw new IllegalArgumentException("이름이 공백으로 시작하거나 끝납니다.");
+        }
+
+        if (hands == null) {
+            throw new IllegalArgumentException("hands가 null입니다.");
+        }
+    }
+
+    public abstract void pickInitialCards(CardDeck cardDeck);
 
     public boolean isBust() {
         return hands.isTotalScoreOver(BLACKJACK_SCORE);
+    }
+
+    public boolean isBlackjack() {
+        return hands.calculateInitialCardScore() == BLACKJACK_SCORE;
     }
 
     public List<Card> getOpenedCards() {
@@ -38,6 +52,7 @@ public abstract class Participant {
     }
 
     public void pickAdditionalCard(CardDeck cardDeck) {
+        validateCardDeck(cardDeck);
         hands.addCard(cardDeck.pick());
     }
 
@@ -47,5 +62,11 @@ public abstract class Participant {
 
     public String getName() {
         return this.name;
+    }
+
+    protected void validateCardDeck(CardDeck cardDeck) {
+        if (cardDeck == null) {
+            throw new IllegalArgumentException("카드 덱이 null입니다.");
+        }
     }
 }
