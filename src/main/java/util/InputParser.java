@@ -8,6 +8,9 @@ import java.util.List;
 
 public class InputParser {
 
+    private InputParser() {
+    }
+
     private static final String DELIMITER = ",";
 
     public static List<String> parseNames(String input) {

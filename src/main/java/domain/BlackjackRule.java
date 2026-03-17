@@ -14,6 +14,9 @@ import java.util.Map;
 
 public class BlackjackRule {
 
+    private BlackjackRule() {
+    }
+
     public static GameResult judgePlayerResult(Player player, Dealer dealer) {
         if (player.isBlackjack() || dealer.isBlackjack()) {
             return calculateBlackjackResult(player, dealer);
