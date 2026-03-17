@@ -35,7 +35,8 @@ class BetAmountTest {
         //when & then
         Assertions.assertThatThrownBy(() -> new BetAmount(stringInput))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ERROR_BET_AMOUNT_NOT_INTEGER);
+                .hasMessageContaining(ERROR_BET_AMOUNT_NOT_INTEGER)
+                .hasMessageContaining(stringInput);
     }
 
     @ParameterizedTest
@@ -45,6 +46,7 @@ class BetAmountTest {
         //when & then
         Assertions.assertThatThrownBy(() -> new BetAmount(negativeInput))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ERROR_BET_AMOUNT_NOT_POSITIVE);
+                .hasMessageContaining(ERROR_BET_AMOUNT_NOT_POSITIVE)
+                .hasMessageContaining(negativeInput);
     }
 }

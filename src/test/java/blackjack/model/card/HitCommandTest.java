@@ -36,7 +36,8 @@ class HitCommandTest {
         //when & then
         assertThatThrownBy(() -> new HitCommand(invalidInput))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ERROR_NOT_Y_N_INPUT);
+                .hasMessageContaining(ERROR_NOT_Y_N_INPUT)
+                .hasMessageContaining(invalidInput);
     }
 
     @ParameterizedTest

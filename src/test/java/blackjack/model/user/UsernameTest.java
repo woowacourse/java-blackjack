@@ -35,6 +35,7 @@ class UsernameTest {
         //when & then
         assertThatThrownBy(() -> new Username(invalidName))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ERROR_INVALID_PLAYER_NAME);
+                .hasMessageContaining(ERROR_INVALID_PLAYER_NAME)
+                .hasMessageContaining(invalidName);
     }
 }

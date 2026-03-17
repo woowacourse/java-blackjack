@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 public class Username {
 
     static final String ERROR_EMPTY_INPUT = "입력값은 공백일 수 없습니다.";
-    static final String ERROR_INVALID_PLAYER_NAME = "플레이어의 이름은 영어 or 한글로만 이루어질 수 있습니다.";
+    static final String ERROR_INVALID_PLAYER_NAME = "플레이어의 이름은 영어 or 한글로만 이루어질 수 있습니다 : %s";
     private static final String PLAYER_NAME_REGEX = "^[a-zA-Z가-힣]*$";
 
     private final String name;
@@ -28,7 +28,7 @@ public class Username {
 
     private void validateRegex(String name) {
         if (!Pattern.matches(PLAYER_NAME_REGEX, name)) {
-            throw new IllegalArgumentException(ERROR_INVALID_PLAYER_NAME);
+            throw new IllegalArgumentException(ERROR_INVALID_PLAYER_NAME.formatted(name));
         }
     }
 }
