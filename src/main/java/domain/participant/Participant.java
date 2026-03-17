@@ -18,7 +18,7 @@ public abstract class Participant {
 
     public void receiveInitialCards(Cards cards) {
         if (cards.size() != INITIAL_CARDS_COUNT) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("초기 카드값이 잘못되었습니다.");
         }
 
         cards.cards().forEach(this::receive);

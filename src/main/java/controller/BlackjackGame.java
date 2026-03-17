@@ -71,7 +71,7 @@ public class BlackjackGame {
         String choice = inputView.getChoice(player.name());
 
         if (!choice.equals("y") && !choice.equals("n")) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("입력값이 잘못되었습니다.");
         }
 
         return choice.equals("y");

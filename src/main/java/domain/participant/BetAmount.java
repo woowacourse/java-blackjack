@@ -11,7 +11,7 @@ public record BetAmount(BigDecimal amount) {
 
     private void validateAmount(BigDecimal amount) {
         if (amount.compareTo(MIN_BET_AMOUNT) <= 0) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("0원 이상 베팅 가능합니다.");
         }
     }
 }

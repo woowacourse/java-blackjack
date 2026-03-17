@@ -17,7 +17,7 @@ public class InputView {
         try {
             return new BigDecimal(scanner.nextLine());
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("베팅 금액 입력 값이 올바르지 않습니다.");
         }
     }
 
