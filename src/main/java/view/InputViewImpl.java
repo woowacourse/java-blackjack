@@ -7,7 +7,9 @@ import java.util.Scanner;
 
 public class InputViewImpl implements InputView {
     private static final String DELIMITER = ",";
-    private static final List<String> HIT_OR_STAND = List.of("y", "n");
+    private static final String HIT_INPUT_VALUE = "y";
+    private static final String STAND_INPUT_VALUE = "n";
+    private static final List<String> HIT_OR_STAND = List.of(HIT_INPUT_VALUE, STAND_INPUT_VALUE);
     private static final Scanner sc = new Scanner(System.in);
 
     public List<String> readNames() {
@@ -26,7 +28,7 @@ public class InputViewImpl implements InputView {
         String input = sc.nextLine().trim();
         validateIsBlank(input);
         validateHitOrStandValue(input);
-        return input.equals("y");
+        return input.equals(HIT_INPUT_VALUE);
     }
 
     private void validateIsBlank(String line) {
