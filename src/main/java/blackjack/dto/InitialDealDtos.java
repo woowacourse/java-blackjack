@@ -1,7 +1,7 @@
 package blackjack.dto;
 
-import blackjack.domain.participant.Dealer;
-import blackjack.domain.participant.Player;
+import blackjack.domain.participants.Dealer;
+import blackjack.domain.participants.Player;
 import java.util.List;
 
 public record InitialDealDtos(

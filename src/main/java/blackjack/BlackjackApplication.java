@@ -1,22 +1,21 @@
 package blackjack;
 
-import blackjack.core.BlackjackGame;
-import blackjack.domain.card.ShuffledCardsGenerator;
-import blackjack.domain.participant.Player;
-import blackjack.domain.result.BlackjackGameReferee;
-import blackjack.domain.result.GameResult;
+import blackjack.domain.game.BlackjackGame;
+import blackjack.domain.participants.Player;
 import blackjack.dto.DealerHitDto;
 import blackjack.dto.GameResultDtos;
 import blackjack.dto.InitialDealDtos;
 import blackjack.dto.ParticipantCardsDto;
 import blackjack.dto.ParticipantScoreDtos;
 import blackjack.view.BlackjackView;
-import blackjack.view.InputView;
-import blackjack.view.OutputView;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class BlackjackApplication {
+    public static void main(String[] args) {
+        BlackjackApplication application = BlackjackConsoleBootstrap.createApplication();
+        application.run();
+    }
+
     private final BlackjackView view;
     private final BlackjackGame game;
 
@@ -32,7 +31,7 @@ public class BlackjackApplication {
         playDealerTurn();
 
         printScore();
-        printResult();
+        printProfit();
     }
 
     private void initialDeal() {
@@ -45,7 +44,7 @@ public class BlackjackApplication {
     }
 
     private void playTurn(Player player) {
-        while (player.canHit() && view.isHitAnswer(player.getName())) {
+        while (game.canHit(player) && view.isHitAnswer(player.getName())) {
             game.hit(player);
             view.printPlayerCards(ParticipantCardsDto.from(player));
         }
@@ -53,8 +52,7 @@ public class BlackjackApplication {
 
     private void playDealerTurn() {
         int dealerHitCount = game.playDealerTurn();
-        view.printDealerHit(
-            DealerHitDto.of(game.getDealer(), dealerHitCount));
+        view.printDealerHit(DealerHitDto.of(game.getDealer(), dealerHitCount));
     }
 
     private void printScore() {
@@ -62,27 +60,8 @@ public class BlackjackApplication {
             ParticipantScoreDtos.of(game.getDealer(), game.getPlayers()));
     }
 
-    private void printResult() {
-        Map<Player, GameResult> playerResults = parseResultMap();
-        view.printResult(GameResultDtos.of(playerResults));
-    }
-
-    private Map<Player, GameResult> parseResultMap() {
-        return game.getPlayers().stream()
-            .collect(Collectors.toMap(
-                player -> player,
-                game::judge
-            ));
-    }
-
-    public static void main(String[] args) {
-        BlackjackView view = new BlackjackView(new InputView(), new OutputView());
-        BlackjackGame game = BlackjackGame.create(
-            new ShuffledCardsGenerator(),
-            new BlackjackGameReferee(),
-            view.readPlayers()
-        );
-
-        new BlackjackApplication(view, game).run();
+    private void printProfit() {
+        Map<Player, Long> playerProfits = game.calculatePlayerProfits();
+        view.printResult(GameResultDtos.of(playerProfits));
     }
 }

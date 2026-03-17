@@ -1,24 +1,36 @@
 package blackjack.dto;
 
-import blackjack.domain.participant.Participant;
+import blackjack.domain.card.Card;
+import blackjack.domain.participants.Dealer;
+import blackjack.domain.participants.Player;
 import java.util.List;
 
 public record ParticipantCardsDto(
     String participantName,
     List<CardNameDto> cards
 ) {
-    public static ParticipantCardsDto from(Participant participant) {
-        List<CardNameDto> cards = participant.getCards().stream()
-            .map(CardNameDto::from)
-            .toList();
-        return new ParticipantCardsDto(participant.getName(), cards);
+    public static ParticipantCardsDto from(Player player) {
+        return new ParticipantCardsDto(
+            player.getName(),
+            convertCards(player.getCards()));
     }
 
-    public static ParticipantCardsDto of(Participant participant, long size) {
-        List<CardNameDto> cards = participant.getCards().stream()
-            .limit(size)
+    public static ParticipantCardsDto of(Dealer dealer, long size) {
+        return new ParticipantCardsDto(
+            dealer.getName(),
+            convertCards(dealer.getCards(), size));
+    }
+
+    private static List<CardNameDto> convertCards(List<Card> cards) {
+        return cards.stream()
             .map(CardNameDto::from)
             .toList();
-        return new ParticipantCardsDto(participant.getName(), cards);
+    }
+
+    private static List<CardNameDto> convertCards(List<Card> cards, long size) {
+        return cards.stream()
+            .map(CardNameDto::from)
+            .limit(size)
+            .toList();
     }
 }

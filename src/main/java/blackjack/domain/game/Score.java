@@ -1,4 +1,4 @@
-package blackjack.domain.result;
+package blackjack.domain.game;
 
 public record Score(int value) {
 
@@ -12,5 +12,13 @@ public record Score(int value) {
 
     public boolean isLessThanOrEqual(final int otherValue) {
         return !isBiggerThan(otherValue);
+    }
+
+    public boolean isEqualTo(Score other) {
+        return this.value == other.value;
+    }
+
+    public boolean isEqualTo(final int otherValue) {
+        return isEqualTo(new Score(otherValue));
     }
 }

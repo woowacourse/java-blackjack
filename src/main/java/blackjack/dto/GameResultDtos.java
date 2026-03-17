@@ -1,20 +1,24 @@
 package blackjack.dto;
 
-import blackjack.domain.participant.Player;
-import blackjack.domain.result.GameResult;
+import blackjack.domain.participants.Player;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public record GameResultDtos(
-    DealerResultDto dealerResultDto,
-    List<GameResultDto> gameResultDtos
+    DealerProfitDto dealerProfitDto,
+    List<PlayerProfitDto> playerProfitDtos
 ) {
-    public static GameResultDtos of(Map<Player, GameResult> results) {
-        List<GameResultDto> gameResultDtos = results.entrySet().stream()
-            .map(entry -> GameResultDto.of(entry.getKey(), entry.getValue()))
+    public static GameResultDtos of(Map<Player, Long> playerProfits) {
+        List<PlayerProfitDto> playerProfitDtos = playerProfits.entrySet().stream()
+            .map(GameResultDtos::convert)
             .toList();
 
-        DealerResultDto dealerResultDto = DealerResultDto.from(results);
-        return new GameResultDtos(dealerResultDto, gameResultDtos);
+        DealerProfitDto dealerProfitDto = DealerProfitDto.from(playerProfits);
+        return new GameResultDtos(dealerProfitDto, playerProfitDtos);
+    }
+
+    private static PlayerProfitDto convert(Entry<Player, Long> playerProfit) {
+        return PlayerProfitDto.of(playerProfit.getKey(), playerProfit.getValue());
     }
 }
