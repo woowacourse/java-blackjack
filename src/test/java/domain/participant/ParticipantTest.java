@@ -24,14 +24,14 @@ public class ParticipantTest {
     private Participant dealer;
 
     @BeforeEach
-    void set_up() {
+    void setUp() {
         player = new Player(new Name("stark"));
         dealer = new Dealer();
     }
 
     @DisplayName("게임 시작 후 플레이어가 2장의 카드를 분배 받는다.")
     @Test
-    void 게임_시작_후_플레이어_2장의_카드_분배를_받는다() {
+    void 게임_시작_후_플레이어가_2장의_카드를_분배받는다() {
         //given
         //when
         player.receiveInitialCards(List.of(new Card(Rank.FIVE, Suit.CLOVER), new Card(Rank.SIX, Suit.CLOVER)));
@@ -110,7 +110,7 @@ public class ParticipantTest {
 
     @DisplayName("플레이어와 딜러가 각자의 기준에 어긋나면 카드를 드로우 할 수 없다")
     @Test
-    void 기준_어긋날_때_카드_드로우_예외_발생() {
+    void 드로우_기준에_어긋나면_카드를_더_받을_수_없다() {
         //given
         //when
         List<Card> playerCards = List.of(new Card(Rank.JACK, Suit.CLOVER), new Card(Rank.QUEEN, Suit.CLOVER),
@@ -132,7 +132,7 @@ public class ParticipantTest {
 
     @DisplayName("분배된 카드를 알맞게 들고 있는지 확인한다")
     @Test
-    void 분배된_카드_확인() {
+    void 분배된_카드를_정상적으로_확인한다() {
         //given
         //when
         player.addCard(new Card(Rank.JACK, Suit.CLOVER));

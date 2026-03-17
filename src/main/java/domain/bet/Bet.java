@@ -7,20 +7,20 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class Bet {
-    private final Map<Name, Money> bet = new LinkedHashMap<>();
+    private final Map<Name, Money> bettingLog = new LinkedHashMap<>();
 
-    public Bet(Map<Name, Long> betHistory) {
-        for (Entry<Name, Long> betEntry : betHistory.entrySet()) {
+    public Bet(Map<Name, Long> bettingLog) {
+        for (Entry<Name, Long> betEntry : bettingLog.entrySet()) {
             Money money = new Money(betEntry.getValue());
-            bet.put(betEntry.getKey(), money);
+            this.bettingLog.put(betEntry.getKey(), money);
         }
     }
 
     public Map<Name, Money> getBettingLog() {
-        return Map.copyOf(bet);
+        return Map.copyOf(bettingLog);
     }
 
     public BetProfit calculateProfit(Map<Name, GameResult> playerResults) {
-        return BetProfit.calculateProfit(playerResults, bet);
+        return BetProfit.calculateProfit(playerResults, bettingLog);
     }
 }

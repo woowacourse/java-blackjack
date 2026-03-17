@@ -20,13 +20,13 @@ public class OutputView {
     private static final String DEALER_PROFIT = "딜러: %d";
     private static final String PLAYER_PROFIT = "%s: %d";
 
-    public void printPlayers(List<Card> dealerCard, Map<Name, List<Card>> playerCards) {
+    public void printPlayers(List<Card> dealerCards, Map<Name, List<Card>> playerCards) {
         String playerNames = playerCards.keySet().stream()
                 .map(Name::name)
                 .collect(Collectors.joining(", "));
 
         System.out.printf(LINE_SEPARATOR + DISTRIBUTE_INITIAL_CARD + LINE_SEPARATOR, playerNames);
-        printDealerFirstCard(dealerCard.getFirst());
+        printDealerFirstCard(dealerCards.getFirst());
         for (Name playerName : playerCards.keySet()) {
             printPlayerCard(playerName, playerCards.get(playerName));
         }
@@ -37,20 +37,20 @@ public class OutputView {
         System.out.printf(DEALER_CARD + LINE_SEPARATOR, dealerCard.rankString() + dealerCard.suitString());
     }
 
-    public void printPlayerCard(Name name, List<Card> playerCard) {
-        String card = collectCards(playerCard);
+    public void printPlayerCard(Name name, List<Card> playerCards) {
+        String card = collectCards(playerCards);
 
         System.out.printf(PLAYER_CARD + LINE_SEPARATOR, name.name(), card);
     }
 
-    public void printDealerCardWithScore(List<Card> dealerCard, int score) {
-        String card = collectCards(dealerCard);
+    public void printDealerCardWithScore(List<Card> dealerCards, int score) {
+        String card = collectCards(dealerCards);
 
         System.out.printf(LINE_SEPARATOR + DEALER_CARD + SCORE + LINE_SEPARATOR, card, score);
     }
 
-    public void printPlayerCardWithScore(Name name, List<Card> playerCard, int score) {
-        String card = collectCards(playerCard);
+    public void printPlayerCardWithScore(Name name, List<Card> playerCards, int score) {
+        String card = collectCards(playerCards);
 
         System.out.printf(PLAYER_CARD + SCORE + LINE_SEPARATOR, name.name(), card, score);
     }

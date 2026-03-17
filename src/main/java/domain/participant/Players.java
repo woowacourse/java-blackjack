@@ -26,7 +26,7 @@ public class Players {
         });
     }
 
-    public List<Name> getAllPlayersName() {
+    public List<Name> getAllPlayerNames() {
         return List.copyOf(players.keySet());
     }
 

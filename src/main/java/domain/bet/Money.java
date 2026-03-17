@@ -14,7 +14,7 @@ public record Money(long amount) {
     }
 
     private void validateRange(long amount) {
-        if (amount < ZERO) {
+        if (amount <= ZERO) {
             throw new IllegalArgumentException(BETTING_MONEY_NOT_AVAILABLE.getMessage());
         }
     }

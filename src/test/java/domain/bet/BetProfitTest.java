@@ -22,7 +22,7 @@ class BetProfitTest {
     private Name secondPlayer;
 
     @BeforeEach
-    void set_up() {
+    void setUp() {
         firstPlayer = new Name("피즈");
         secondPlayer = new Name("스타크");
     }
@@ -108,7 +108,7 @@ class BetProfitTest {
     @DisplayName("딜러의 수익금은 플레이어의 수익에서 음수가 된 값인지 확인한다.")
     @ParameterizedTest
     @MethodSource("dealerProfitTest")
-    void 딜러_수익금_계산_테스트(List<Money> bettingMoneys, List<GameResult> gameResults, int expectedProfit) {
+    void 딜러_수익금을_계산한다(List<Money> bettingAmounts, List<GameResult> gameResults, int expectedProfit) {
         //given
         //when
         BetProfit betProfit = BetProfit.calculateProfit(
@@ -117,8 +117,8 @@ class BetProfitTest {
                         secondPlayer, gameResults.getLast()
                 ),
                 Map.of(
-                        firstPlayer, bettingMoneys.getFirst(),
-                        secondPlayer, bettingMoneys.getLast()
+                        firstPlayer, bettingAmounts.getFirst(),
+                        secondPlayer, bettingAmounts.getLast()
                 )
         );
         //then

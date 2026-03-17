@@ -17,7 +17,7 @@ public class DeckTest {
 
     @DisplayName("52장의 서로 다른 카드가 정상 생성된다.")
     @Test
-    void _52장의_서로_다른_카드가_정상_생성된다() {
+    void 서로_다른_52장의_카드가_정상_생성된다() {
         Deck deck = Deck.create(new ShuffledCardGenerator());
 
         Set<Card> distinctCards = Set.copyOf(deck.getCards());
@@ -35,7 +35,7 @@ public class DeckTest {
 
     @DisplayName("중복된 카드가 들어있을 경우 예외가 발생한다.")
     @Test
-    void 중복_카드_예외_발생_한다() {
+    void 중복된_카드가_있으면_예외가_발생한다() {
         Assertions.assertThatThrownBy(() -> Deck.create(new DuplicatedDeckGenerator()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(DECK_CAN_NOT_DUPLICATED.getMessage());
@@ -50,7 +50,7 @@ public class DeckTest {
 
     @DisplayName("덱에 카드가 없는 경우 예외가 발생한다.")
     @Test
-    void 덱_카드_X_드로우_예외() {
+    void 덱에_카드가_없으면_드로우_시_예외가_발생한다() {
         //given
         Deck deck = Deck.create(new EmptyDeckGenerator());
         //when

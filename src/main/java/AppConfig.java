@@ -4,7 +4,7 @@ import view.OutputView;
 
 public class AppConfig {
 
-    public Blackjack controller() {
+    public Blackjack blackjack() {
         return new Blackjack(inputView(), outputView());
     }
 

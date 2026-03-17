@@ -20,7 +20,7 @@ public class BlackjackRuleTest {
     private Dealer dealer;
 
     @BeforeEach
-    void set_up() {
+    void setUp() {
         player = new Player(new Name("stark"));
         dealer = new Dealer();
     }
@@ -137,7 +137,7 @@ public class BlackjackRuleTest {
 
     @DisplayName("딜러가 블랙잭이고 플레이어가 카드 3장으로 21점이 되면 플레이어가 패배한다.")
     @Test
-    void 딜러_블랙잭_플레이어_패배() {
+    void 딜러가_블랙잭이고_플레이어가_세_장으로_21점이면_플레이어_패배한다() {
         player.addCard(new Card(Rank.JACK, Suit.CLOVER));
         player.addCard(new Card(Rank.EIGHT, Suit.CLOVER));
         player.addCard(new Card(Rank.THREE, Suit.CLOVER));
@@ -172,13 +172,12 @@ public class BlackjackRuleTest {
         });
     }
 
-    private Integer getDealerResultCount(GameResult playerResult, GameResult win) {
-        return BlackjackRule.judgeDealerResult(List.of(playerResult)).get(win);
+    private int getDealerResultCount(GameResult playerResult, GameResult dealerResult) {
+        return BlackjackRule.judgeDealerResult(List.of(playerResult)).get(dealerResult);
     }
 
     private GameResult getPlayerResult() {
         return BlackjackRule.judgePlayerResult(player, dealer);
     }
 }
-
 

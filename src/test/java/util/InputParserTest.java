@@ -13,7 +13,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 public class InputParserTest {
 
-    private static Stream<Arguments> inputNames() {
+    private static Stream<Arguments> nameInputs() {
         return Stream.of(
                 Arguments.of("pobi", List.of("pobi")),
                 Arguments.of("pobi,jason", List.of("pobi", "jason")),
@@ -25,14 +25,14 @@ public class InputParserTest {
 
     @DisplayName("구분자(,)를 통해 플레이어 이름을 구분한다.")
     @ParameterizedTest
-    @MethodSource("inputNames")
+    @MethodSource("nameInputs")
     void 구분자를_통해_플레이어_이름을_구분한다(String input, List<String> expectedNames) {
         List<String> playerNames = InputParser.parseNames(input);
 
         Assertions.assertThat(playerNames).isEqualTo(expectedNames);
     }
 
-    private static Stream<Arguments> inputMoney() {
+    private static Stream<Arguments> moneyInputs() {
         return Stream.of(
                 Arguments.of("10000", 10000),
                 Arguments.of("0", 0),
@@ -40,10 +40,10 @@ public class InputParserTest {
         );
     }
 
-    @DisplayName("String으로 된 숫자를 int 숫자로 파싱한다.")
+    @DisplayName("문자열로 된 숫자를 long 숫자로 파싱한다.")
     @ParameterizedTest
-    @MethodSource("inputMoney")
-    void 정수형_숫자로_파싱한다(String input, int expectedValue) {
+    @MethodSource("moneyInputs")
+    void 숫자_문자열을_long으로_파싱한다(String input, int expectedValue) {
         //given
         long money = InputParser.parseMoney(input);
         //when

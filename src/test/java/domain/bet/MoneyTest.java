@@ -20,10 +20,10 @@ class MoneyTest {
         assertThat(money.amount()).isEqualTo(10_000);
     }
 
-    @DisplayName("플레이어는 0과 양수 이외의 값을 배팅할 수 없다.")
+    @DisplayName("플레이어는 0과 음수 금액을 배팅할 수 없다.")
     @ParameterizedTest
-    @ValueSource(ints = {-10_000, -50})
-    void _0_이하_배팅_불가(int amount) {
+    @ValueSource(ints = {-10_000, -50, 0})
+    void 음수_금액과_0원은_배팅할_수_없다(int amount) {
         assertThatThrownBy(() -> new Money(amount))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(BETTING_MONEY_NOT_AVAILABLE.getMessage());
@@ -32,7 +32,7 @@ class MoneyTest {
     @DisplayName("플레이어는 100원 단위의 배팅이 아닌 값을 배팅할 경우 예외가 발생한다.")
     @ParameterizedTest
     @ValueSource(ints = {130, 50, 230})
-    void _100원_단위가_아닌_금액_배팅_불가(int amount) {
+    void 백원_단위가_아닌_금액은_배팅할_수_없다(int amount) {
         assertThatThrownBy(() -> new Money(amount))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(BETTING_MONEY_MUST_BE_MULTIPLE_OF_100.getMessage());

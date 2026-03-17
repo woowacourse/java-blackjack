@@ -30,7 +30,7 @@ public class Blackjack {
         Deck deck = Deck.create(new ShuffledCardGenerator());
         Players players = new Players(parsePlayerNames());
         Dealer dealer = new Dealer();
-        Bet bet = new Bet(askPlayerBet(players.getAllPlayersName()));
+        Bet bet = new Bet(askPlayerBets(players.getAllPlayerNames()));
 
         initialize(players, dealer, deck);
 
@@ -41,7 +41,7 @@ public class Blackjack {
     }
 
     private void initialize(Players players, Dealer dealer, Deck deck) {
-        players.getAllPlayersName().forEach(name ->
+        players.getAllPlayerNames().forEach(name ->
                 players.initializeCards(name, initCards(deck))
         );
         dealer.receiveInitialCards(initCards(deck));
@@ -62,9 +62,9 @@ public class Blackjack {
         return InputParser.parseNames(input);
     }
 
-    private Map<Name, Long> askPlayerBet(List<Name> playersName) {
+    private Map<Name, Long> askPlayerBets(List<Name> playerNames) {
         Map<Name, Long> bettingLog = new LinkedHashMap<>();
-        for (Name name : playersName) {
+        for (Name name : playerNames) {
             String input = inputView.askPlayerBet(name);
             bettingLog.put(name, InputParser.parseMoney(input));
         }
@@ -73,14 +73,14 @@ public class Blackjack {
 
     private Map<Name, List<Card>> getPlayerCards(Players players) {
         Map<Name, List<Card>> playerCards = new LinkedHashMap<>();
-        for (Name name : players.getAllPlayersName()) {
+        for (Name name : players.getAllPlayerNames()) {
             playerCards.put(name, players.getPlayerCards(name));
         }
         return playerCards;
     }
 
     private void playGame(Players players, Dealer dealer, Deck deck) {
-        for (Name name : players.getAllPlayersName()) {
+        for (Name name : players.getAllPlayerNames()) {
             playPlayerTurn(players, name, deck);
         }
         playDealerTurn(dealer, deck);
@@ -108,7 +108,7 @@ public class Blackjack {
     private void printGameResult(BetProfit betProfit, Players players, Dealer dealer) {
         outputView.printDealerCardWithScore(dealer.getHand(), dealer.getScore());
 
-        for (Name name : players.getAllPlayersName()) {
+        for (Name name : players.getAllPlayerNames()) {
             outputView.printPlayerCardWithScore(name, players.getPlayerCards(name), players.getPlayerScore(name));
         }
 
