@@ -6,12 +6,14 @@ import domain.participant.Player;
 import java.math.BigDecimal;
 
 public class ProfitCalculator {
+    public static final double BETTING_MULTIPLIER = 1.5;
+
     public static BigDecimal calculatePlayerProfit(Player player, Dealer dealer) {
         WinningStatus winningStatus = WinningStatus.of(player, dealer);
         BigDecimal betAmount = player.betAmount();
 
         if (player.isBlackjack() && winningStatus == WinningStatus.WIN) {
-            return betAmount.multiply(BigDecimal.valueOf(1.5));
+            return betAmount.multiply(BigDecimal.valueOf(BETTING_MULTIPLIER));
         }
 
         if (winningStatus == WinningStatus.WIN) {
