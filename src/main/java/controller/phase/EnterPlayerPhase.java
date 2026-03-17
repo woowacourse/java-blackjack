@@ -14,7 +14,7 @@ public class EnterPlayerPhase implements GamePhase {
     public void execute(GameContext gameContext) {
         List<String> inputNames = InputView.readPlayerNames();
         List<Player> players = createPlayers(inputNames);
-        gameContext.setPlayers(players);
+        gameContext.initializePlayers(players);
     }
 
     private List<Player> createPlayers(List<String> names) {

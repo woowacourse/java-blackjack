@@ -22,7 +22,7 @@ public class GameContext {
         players = new ArrayList<>();
     }
 
-    public void setPlayers(List<Player> players) {
+    public void initializePlayers(List<Player> players) {
         this.players.addAll(players);
     }
 
