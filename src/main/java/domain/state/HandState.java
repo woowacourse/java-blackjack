@@ -5,11 +5,11 @@ public enum HandState {
         @Override
         public Outcome against(HandState dealerState, int playerScore, int dealerScore) {
             if (dealerState.isBust()) {
-                return Outcome.WIN;
+                return Outcome.DEFAULT_WIN;
             }
 
             if (playerScore > dealerScore) {
-                return Outcome.WIN;
+                return Outcome.DEFAULT_WIN;
             }
 
             if (playerScore < dealerScore) {
@@ -26,7 +26,7 @@ public enum HandState {
                 return Outcome.DRAW;
             }
 
-            return Outcome.WIN;
+            return Outcome.BLACKJACK_WIN;
         }
     },
     BUST {
