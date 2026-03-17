@@ -14,7 +14,7 @@ public class UserResultDTO {
     }
 
     public static UserResultDTO fromUser(User user) {
-        return new UserResultDTO(user.getName(), user.getCardsDisplay(), user.getTotalScore());
+        return new UserResultDTO(user.getUserName(), user.getCardsDisplay(), user.getTotalScore());
     }
 
     public String getUserName() {

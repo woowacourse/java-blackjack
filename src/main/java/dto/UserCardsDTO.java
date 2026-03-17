@@ -12,7 +12,7 @@ public class UserCardsDTO {
     }
 
     public static UserCardsDTO fromUser(User user) {
-        return new UserCardsDTO(user.getName(), user.getCardsDisplay());
+        return new UserCardsDTO(user.getUserName(), user.getCardsDisplay());
     }
 
     public String getUserName() {

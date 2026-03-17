@@ -42,7 +42,7 @@ public class Participants {
     }
 
     public String getUserNames() {
-        return players.stream().map(User::getName).collect(Collectors.joining(", "));
+        return players.stream().map(User::getUserName).collect(Collectors.joining(", "));
     }
 
     public String getDealerOneCardDisplay() {
@@ -61,7 +61,7 @@ public class Participants {
 
     public List<String> getPlayerNames() {
         return players.stream()
-                .map(User::getName)
+                .map(User::getUserName)
                 .collect(Collectors.toList());
     }
 
@@ -104,7 +104,7 @@ public class Participants {
             GameResult isUserWin = dealer.judgeResultForUser(user);
             Money earnedMoney = isUserWin.calculateProfit(user.getBettingMoney());
             dealerProfit = dealerProfit.subtract(earnedMoney);
-            participantsProfit.put(user.getName(), earnedMoney);
+            participantsProfit.put(user.getUserName(), earnedMoney);
         }
 
         return new ProfitResultDTO(dealerProfit, participantsProfit);

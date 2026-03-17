@@ -17,7 +17,7 @@ public class User {
         hand.saveCard(card);
     }
 
-    public String getName() {
+    public String getUserName() {
         return userName;
     }
 
