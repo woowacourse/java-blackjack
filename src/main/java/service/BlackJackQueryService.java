@@ -83,7 +83,7 @@ public class BlackJackQueryService {
 
     private ProfitResponse dealerPayout() {
         PlayedGameResult dealerResult = participants.dealerResult();
-        ProfitInfo dealerProfitInfo = scoreBoard.profitInfoByDealer(dealerResult);
+        ProfitInfo dealerProfitInfo = scoreBoard.evaluateDealerProfitInfo(dealerResult);
         return payoutResponseFrom(dealerProfitInfo);
     }
 

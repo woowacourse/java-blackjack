@@ -99,12 +99,12 @@ class ScoreBoardTest {
     }
 
     private void setupBlackJackPlayer(long bettingMoney) {
-        scoreBoard.setupPlayers("pobi", Money.of(bettingMoney));
+        scoreBoard.setupPlayerBettingMoney("pobi", Money.of(bettingMoney));
         scoreBoard.record(PlayedGameResult.from("pobi", blackjackCardInfos, BLACK_JACK_NUMBER));
     }
 
     private void setupParticipant(String name, long bettingMoney, List<CardInfo> cardInfos, int scoreSum) {
-        scoreBoard.setupPlayers(name, Money.of(bettingMoney));
+        scoreBoard.setupPlayerBettingMoney(name, Money.of(bettingMoney));
         scoreBoard.record(PlayedGameResult.from(name, cardInfos, scoreSum));
     }
 

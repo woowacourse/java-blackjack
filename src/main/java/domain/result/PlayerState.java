@@ -25,12 +25,63 @@ class PlayerState {
         return new PlayerState(this.bettingMoney, playedGameResult);
     }
 
-    Money bettingMoney() {
-        return bettingMoney;
-    }
-
     PlayedGameResult playedGameResult() {
         return playedGameResult;
+    }
+
+    Money evaluateProfitWith(PlayedGameResult dealerGameResult) {
+        return determinePlayerGameOutcomeWith(dealerGameResult).calculate(bettingMoney);
+    }
+
+    private PlayerGameOutcome determinePlayerGameOutcomeWith(PlayedGameResult dealerGameResult) {
+        if (playedGameResult.isBusted()) {
+            return PlayerGameOutcome.LOSE;
+        }
+
+        return determinePlayerGameOutcomeIfPlayerNotBusted(dealerGameResult);
+    }
+
+    private PlayerGameOutcome determinePlayerGameOutcomeIfPlayerNotBusted(PlayedGameResult dealerGameResult) {
+        if (playedGameResult.isBlackJack()) {
+            return determinePlayerGameOutcomeIfPlayerIsBlackJack(dealerGameResult);
+        }
+
+        if (dealerGameResult.isBusted()) {
+            return PlayerGameOutcome.WIN;
+        }
+
+        return determinePlayerGameOutcomeIfBothNotBusted(dealerGameResult);
+
+    }
+
+    private PlayerGameOutcome determinePlayerGameOutcomeIfPlayerIsBlackJack(PlayedGameResult dealerGameResult) {
+        if (dealerGameResult.isBlackJack()) {
+            return PlayerGameOutcome.DRAW;
+        }
+        return PlayerGameOutcome.BLACK_JACK_WIN;
+    }
+
+    private PlayerGameOutcome determinePlayerGameOutcomeIfBothNotBusted(PlayedGameResult dealerGameResult) {
+        int playerScoreSum = playedGameResult.scoreSum();
+        int dealerScoreSum = dealerGameResult.scoreSum();
+
+        return determinePlayerGameOutcomeIfBothNotBustedCompareWith(playerScoreSum, dealerScoreSum);
+    }
+
+    private PlayerGameOutcome determinePlayerGameOutcomeIfBothNotBustedCompareWith(int playerScoreSum, int dealerScoreSum) {
+        if (dealerScoreSum > playerScoreSum) {
+            return PlayerGameOutcome.LOSE;
+        }
+
+        if (dealerScoreSum == playerScoreSum) {
+            return PlayerGameOutcome.DRAW;
+        }
+
+        return PlayerGameOutcome.WIN;
+    }
+
+    Money bettingMoney() {
+        return bettingMoney;
     }
 
     boolean isBusted() {
