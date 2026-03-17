@@ -50,8 +50,4 @@ public class GameContext {
     public List<Participant> participantsBettingResults() {
         return this.bettingResult.participantsBettingResults();
     }
-
-    public BettingResult bettingResult() {
-        return this.bettingResult;
-    }
 }
