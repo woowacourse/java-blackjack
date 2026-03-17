@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import vo.Bet;
 import vo.GameResult;
@@ -16,7 +15,7 @@ public class Participants {
 
     private final List<User> participants;
 
-    public Participants(List<Entry<Name, Bet>> bets) {
+    public Participants(LinkedHashMap<Name, Bet> bets) {
         validate(bets);
         this.participants = new ArrayList<>();
         saveUsers(bets);
@@ -51,7 +50,7 @@ public class Participants {
         return new GameSummary(userResults);
     }
 
-    private void validate(List<Entry<Name, Bet>> bets) {
+    private void validate(LinkedHashMap<Name, Bet> bets) {
         if (bets == null || bets.isEmpty()) {
             throw new IllegalArgumentException("[ERROR] 참가자는 최소 1명이어야 합니다.");
         }
@@ -60,9 +59,9 @@ public class Participants {
         }
     }
 
-    private void saveUsers(List<Entry<Name, Bet>> bets) {
-        bets.forEach((entry) -> {
-            participants.add(new User(entry.getKey(), entry.getValue()));
+    private void saveUsers(LinkedHashMap<Name, Bet> bets) {
+        bets.forEach((user, gameResult) -> {
+            participants.add(new User(user, gameResult));
         });
     }
 }

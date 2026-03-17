@@ -1,9 +1,7 @@
 import domain.BlackjackGame;
 import domain.User;
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.function.Supplier;
 import view.InputView;
 import view.Message;
@@ -41,7 +39,7 @@ public class Application {
 
     public void prepareParticipants() {
         List<Name> names = readParticipants();
-        List<Entry<Name, Bet>> bets = readBetAmount(names);
+        LinkedHashMap<Name, Bet> bets = readBetAmount(names);
         blackjackGame.prepare(bets);
     }
 
@@ -54,14 +52,14 @@ public class Application {
         });
     }
 
-    private List<Entry<Name, Bet>> readBetAmount(List<Name> names) {
-        List<Entry<Name, Bet>> bets = new ArrayList<>();
+    private LinkedHashMap<Name, Bet> readBetAmount(List<Name> names) {
+        LinkedHashMap<Name, Bet> bets = new LinkedHashMap<>();
         for (Name name : names) {
             Bet bet = retryUntilSuccess(() -> {
                 outputView.printAskBetAmount(name.getName());
                 return inputView.readBetAmount();
             });
-            bets.add(Map.entry(name, bet));
+            bets.put(name, bet);
         }
         return bets;
     }
