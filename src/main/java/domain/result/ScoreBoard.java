@@ -34,9 +34,9 @@ public class ScoreBoard {
     }
 
     private Money evaluateDealerProfit(PlayedGameResult dealerGameResult) {
-        List<Money> playerProfits = playerGameStates.evaluatePlayerProfits(dealerGameResult);
+        Money playerProfits = playerGameStates.PlayerProfitsSumFrom(dealerGameResult);
+        long loss = playerProfits.amount();
 
-        long lossSum = playerProfits.stream().mapToLong(Money::amount).sum();
-        return Money.of(Math.negateExact(lossSum));
+        return Money.of(Math.negateExact(loss));
     }
 }

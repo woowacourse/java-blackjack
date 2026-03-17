@@ -79,20 +79,4 @@ class PlayerState {
 
         return PlayerGameOutcome.WIN;
     }
-
-    Money bettingMoney() {
-        return bettingMoney;
-    }
-
-    boolean isBusted() {
-        return playedGameResult.isBusted();
-    }
-
-    boolean isBlackJack() {
-        return playedGameResult.isBlackJack();
-    }
-
-    int scoreSum() {
-        return playedGameResult.scoreSum();
-    }
 }

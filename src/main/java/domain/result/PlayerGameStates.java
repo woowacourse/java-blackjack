@@ -39,7 +39,17 @@ class PlayerGameStates {
                 .toList();
     }
 
-    List<Money> evaluatePlayerProfits(PlayedGameResult dealerGameResult) {
+    Money PlayerProfitsSumFrom(PlayedGameResult dealerGameResult) {
+        List<Money> playerProfits = evaluatePlayerProfitsWith(dealerGameResult);
+
+        long profitSum = playerProfits.stream()
+                .mapToLong(Money::amount)
+                .sum();
+
+        return Money.of(profitSum);
+    }
+
+    private List<Money> evaluatePlayerProfitsWith(PlayedGameResult dealerGameResult) {
         return playerGameStates.values()
                 .stream()
                 .map(playerState -> evaluatePlayerProfit(playerState, dealerGameResult))
