@@ -11,7 +11,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 public class BettingMoneyTest {
-
     @ParameterizedTest
     @ValueSource(ints = {999, 0, -999, -2000})
     @DisplayName("1000 미만 숫자 입력 시 오류발생")

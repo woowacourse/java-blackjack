@@ -134,5 +134,4 @@ class GamblerTest {
         //then
         assertThat(finalIncome).isEqualTo(1500);
     }
-
 }
