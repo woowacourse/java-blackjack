@@ -1,20 +1,15 @@
 package controller;
 
-import domain.deck.CardShuffleStrategy;
 import domain.deck.Deck;
-import domain.deck.RandomShuffleStrategy;
 import domain.game.GameResult;
 import domain.participant.*;
 
 import java.util.ArrayList;
 
-import util.InputParser;
 import view.InputView;
 import view.OutputView;
 
 import java.util.List;
-
-import static domain.BlackjackRule.DEALER_NAME;
 
 public class BlackjackGame {
     private final InputView inputView;
@@ -26,21 +21,10 @@ public class BlackjackGame {
     }
 
     public void run() {
-        String names = inputView.getNames();
-        List<String> parsedNames = InputParser.parseName(names);
-
-        Players players = new Players(parsedNames
-                .stream()
-                .map(Player::new).toList()
-        );
-
-
-        players.getPlayers().forEach(player -> player.bet(inputView.getBetAmount(player.name())));
-
-        Dealer dealer = new Dealer(DEALER_NAME);
-
-        CardShuffleStrategy cardShuffleStrategy = new RandomShuffleStrategy();
-        Deck deck = Deck.createDeck(cardShuffleStrategy);
+        BlackjackGameSetUp blackjackGameSetUp = new BlackjackGameSetUp(inputView);
+        Players players = blackjackGameSetUp.setUpPlayer();
+        Dealer dealer = blackjackGameSetUp.setUpDealer();
+        Deck deck = blackjackGameSetUp.setUpDeck();
 
         playGame(players, dealer, deck);
     }
