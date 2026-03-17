@@ -22,7 +22,7 @@ public class BlackjackConsoleBootstrap {
 
     private static List<Player> readPlayers(BlackjackView view) {
         PlayerNames playerNames = PlayerNames.from(view.readPlayers());
-        return playerNames.names().stream()
+        return playerNames.getNames().stream()
             .map(name -> initPlayer(name, view.readBetAmount(name.getValue())))
             .toList();
     }

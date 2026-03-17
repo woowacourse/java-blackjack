@@ -15,8 +15,8 @@ class PlayerNamesTest {
         // when
         PlayerNames names = PlayerNames.from(rawPlayerNames);
         // then
-        assertThat(names.names().size()).isEqualTo(2);
-        assertThat(names.names()).contains(new Name("pobi"), new Name("jason"));
+        assertThat(names.getNames().size()).isEqualTo(2);
+        assertThat(names.getNames()).contains(new Name("pobi"), new Name("jason"));
     }
 
     @ParameterizedTest

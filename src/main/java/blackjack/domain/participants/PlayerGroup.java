@@ -7,7 +7,17 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public record PlayerGroup(List<Player> players) {
+public final class PlayerGroup {
+    private final List<Player> players;
+
+    public PlayerGroup(List<Player> players) {
+        this.players = players;
+    }
+
+    public List<Player> getPlayers() {
+        return List.copyOf(players);
+    }
+
     public void deal(Deck deck) {
         players.forEach(participant -> participant.hitFrom(deck));
     }

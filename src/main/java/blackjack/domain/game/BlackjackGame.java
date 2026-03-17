@@ -29,7 +29,7 @@ public class BlackjackGame {
     }
 
     public List<Player> getPlayers() {
-        return playerGroup.players();
+        return playerGroup.getPlayers();
     }
 
     public Dealer getDealer() {

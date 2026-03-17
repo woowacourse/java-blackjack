@@ -3,9 +3,14 @@ package blackjack.domain.participants;
 import java.util.Arrays;
 import java.util.List;
 
-public record PlayerNames(List<Name> names) {
+public final class PlayerNames {
     private static final String DELIMITER = ",";
     private static final int INCLUDE_EMPTY_ELEMENT = -1;
+    private final List<Name> names;
+
+    public PlayerNames(List<Name> names) {
+        this.names = names;
+    }
 
     public static PlayerNames from(String rawPlayerNames) {
         List<Name> playerNames = Arrays.stream(
@@ -38,5 +43,9 @@ public record PlayerNames(List<Name> names) {
         return playerNames.stream()
             .distinct()
             .count();
+    }
+
+    public List<Name> getNames() {
+        return List.copyOf(names);
     }
 }
