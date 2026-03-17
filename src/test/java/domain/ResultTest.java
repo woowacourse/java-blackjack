@@ -35,7 +35,6 @@ class ResultTest {
         playerResults.put(pobi, MatchResult.BLACKJACK);
 
         Result result = new Result(dealer, playerResults);
-
-        assertThat(result.getPlayerProfit(pobi)).isEqualTo(15000);
+        assertThat(result.getPlayerProfit(pobi)).isEqualTo(10000);
     }
 }

@@ -19,4 +19,11 @@ class MoneyTest {
     void bettingMoney_should_be_positive() {
         assertThatThrownBy(() -> new Money(0)).isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    @DisplayName("배팅 금액은 10원 단위로만 허용된다.")
+    void bettingMoney_should_be_multiple_of_ten() {
+        assertThatThrownBy(() -> new Money(115))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }
