@@ -12,41 +12,37 @@ public class Hand {
     private static final int DEALER_DRAW_SCORE = 16;
 
     private final List<Card> cards;
-    private int score;
 
     public Hand() {
         this.cards = new ArrayList<>();
-        this.score = 0;
     }
 
     public void addCard(Card card) {
         this.cards.add(card);
-        score += card.getScore();
-        adjustAceScore();
     }
 
     public int getScore() {
-        return score;
-    }
-
-    public int getResult() {
-        return score;
+        return calculateScore();
     }
 
     public boolean checkBust() {
-        return score > BLACKJACK_SCORE;
+        return calculateScore() > BLACKJACK_SCORE;
     }
 
     public boolean isDealerDrawScore() {
-        return score <= DEALER_DRAW_SCORE;
+        return calculateScore() <= DEALER_DRAW_SCORE;
     }
 
-    private void adjustAceScore() {
+    private int calculateScore() {
+        int totalScore = cards.stream()
+                .mapToInt(Card::getScore)
+                .sum();
         int aceCount = countAces();
-        while (checkBust() && aceCount > 0) {
-            score -= ACE_ADJUST_SCORE;
+        while (totalScore > BLACKJACK_SCORE && aceCount > 0) {
+            totalScore -= ACE_ADJUST_SCORE;
             aceCount--;
         }
+        return totalScore;
     }
 
     private int countAces() {
@@ -58,7 +54,7 @@ public class Hand {
     }
 
     public HandState getHandState(){
-        return HandState.getState(score, isInitialCards());
+        return HandState.getState(calculateScore(), isInitialCards());
     }
 
     private boolean isInitialCards(){

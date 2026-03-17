@@ -9,13 +9,13 @@ import java.util.Map;
 
 public class ResultCalculator {
     public GameResult calculate(Dealer dealer, Players players) {
-        final int dealerScore = dealer.getResult();
+        final int dealerScore = dealer.getScore();
         final HandState dealerState = dealer.getHandState();
         final Map<String, Outcome> playerOutcomes = new HashMap<>();
         final Map<Outcome, Integer> dealerOutcomeCounts = initOutcomeCounts();
 
         players.forEachPlayer(player -> {
-            final int playerScore = player.getResult();
+            final int playerScore = player.getScore();
             final HandState playerState = player.getHandState();
             final Outcome playerOutcome = playerState.against(dealerState, playerScore, dealerScore);
             final Outcome dealerOutcome = reverse(playerOutcome);

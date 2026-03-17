@@ -25,8 +25,8 @@ public abstract class Participant {
         hand.addCard(card);
     }
 
-    public int getResult() {
-        return hand.getResult();
+    public int getScore() {
+        return hand.getScore();
     }
 
     public boolean checkBust() {

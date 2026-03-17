@@ -1,7 +1,6 @@
 package view;
 
 import domain.card.Card;
-import domain.card.Hand;
 import domain.participant.Dealer;
 import domain.game.GameResult;
 import domain.state.Outcome;
@@ -53,12 +52,12 @@ public class ResultView {
     }
 
     public void printResult(Players players, Dealer dealer) {
-        System.out.println("딜러카드: " + joinCardNames(dealer.getCardList()) + " - 결과: " + dealer.getResult());
+        System.out.println("딜러카드: " + joinCardNames(dealer.getCardList()) + " - 결과: " + dealer.getScore());
         players.forEachPlayer(player -> System.out.printf(
                 "%s카드: %s - 결과: %s%n",
                 player.getName(),
                 joinCardNames(player.getCardList()),
-                player.getResult()
+                player.getScore()
         ));
     }
 

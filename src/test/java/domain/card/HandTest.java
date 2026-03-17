@@ -14,6 +14,6 @@ public class HandTest {
         hand.addCard(new Card(Suit.SPADE, Rank.TEN));
         hand.addCard(new Card(Suit.HEART, Rank.TWO));
 
-        assertEquals(12, hand.getResult());
+        assertEquals(12, hand.getScore());
     }
 }
