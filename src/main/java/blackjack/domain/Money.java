@@ -31,7 +31,7 @@ public class Money {
 
     private static void validateMoney(long bettingMoney) {
         if (bettingMoney <= 0) {
-            throw new IllegalArgumentException("[ERROR] 배팅 금액을 정확하게 입력해 주세요.");
+            throw new IllegalArgumentException("[ERROR] 배팅 금액을 정확하게 입력해 주세요.: " + bettingMoney);
         }
     }
 }
