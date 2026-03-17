@@ -55,7 +55,7 @@ public class ScoreBoard {
     }
 
     private Money evaluatePlayerProfit(PlayerState playerState, PlayedGameResult dealerGameResult) {
-        return determinePlayerGameOutcome(playerState, dealerGameResult).calculateProfit(playerState.bettingMoney());
+        return determinePlayerGameOutcome(playerState, dealerGameResult).calculate(playerState.bettingMoney());
     }
 
     private Money evaluateDealerProfit(PlayedGameResult dealerGameResult) {
