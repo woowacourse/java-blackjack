@@ -77,7 +77,7 @@ public class OutputView {
         System.out.println(dealer.getName() + ": " + dealerWin + "승 " + dealerTie + "무 " + dealerLose + "패");
     }
 
-    public void printFinalProfit(Dealer dealer, Players players, Results results, Profits profits,
+    public void printFinalProfit(Dealer dealer, Players players, Profits profits,
                                  Profit dealerProfit) {
 
         System.out.println("\n## 최종 수익");
