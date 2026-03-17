@@ -65,7 +65,7 @@ public class OutputView {
     }
 
     public static void printTotalProfit(String dealerProfit, List<PlayerProfitDto> playerProfitResults) {
-        System.out.printf("%n%n## 최종 수익");
+        System.out.printf("%n%n## 최종 수익%n");
         System.out.printf("딜러: %s%n", dealerProfit);
         for (PlayerProfitDto playerProfitResult : playerProfitResults) {
             System.out.printf("%s: %s%n", playerProfitResult.name(), playerProfitResult.profit());
