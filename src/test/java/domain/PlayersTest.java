@@ -35,5 +35,15 @@ class PlayersTest {
         assertThat(total).isEqualTo(30000);
     }
 
+    @DisplayName("Player가 없으면 allBurst는 false를 반환한다.")
+    @Test
+    void 플레이어가_없으면_allBurst는_false_반환() {
+        Players players = new Players(List.of());
+
+        boolean isAllBurst = players.isAllPlayerBurst();
+
+        assertThat(isAllBurst).isEqualTo(false);
+    }
+
 
 }
