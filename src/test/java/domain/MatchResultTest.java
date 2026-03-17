@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class MatchResultTest {
+
     @Test
     @DisplayName("승리 시 배팅금액의 1배")
     void 승리_시_수익() {

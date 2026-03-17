@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HandCard {
+
     private static final int BLACKJACK_MAX_LIMIT = 21;
     private static final int ACE_MAX_VALUE = 11;
     private static final int ACE_MIN_VALUE = 1;

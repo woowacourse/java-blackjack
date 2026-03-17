@@ -17,6 +17,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class GamblerTest {
+
     private Gambler createGambler(String name) {
         return new Gambler(name, new BettingMoney(1000));
     }

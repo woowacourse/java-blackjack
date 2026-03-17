@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 public class Gamblers {
+
     private final List<Gambler> gamblers;
 
     public Gamblers(List<Gambler> gamblers) {

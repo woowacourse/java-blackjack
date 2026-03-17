@@ -4,6 +4,7 @@ import exception.BlackjackException;
 import exception.ExceptionMessage;
 
 public class AnswerParser {
+
     private AnswerParser() {
     }
 

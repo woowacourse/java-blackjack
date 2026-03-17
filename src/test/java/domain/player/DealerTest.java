@@ -12,6 +12,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class DealerTest {
+
     @Test
     @DisplayName("처음 출력할 때 1장만 나오게 함")
     void 딜러는_처음_출력_때_1장만_나오게_함() {

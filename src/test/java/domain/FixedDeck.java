@@ -5,6 +5,7 @@ import domain.deck.Deck;
 import java.util.List;
 
 public class FixedDeck implements Deck {
+
     private final List<Card> deck;
     private int index;
 

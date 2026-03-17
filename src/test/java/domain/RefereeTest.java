@@ -13,6 +13,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class RefereeTest {
+
     @Test
     @DisplayName("겜블러가 버스트 됐을 때 즉시 패배")
     void 겜블러가_버스트됐을_시_즉시_패배() {

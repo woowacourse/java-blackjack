@@ -16,6 +16,7 @@ import view.InputView;
 import view.OutputView;
 
 public class BlackJack {
+
     private static final int INITIAL_CARD_COUNT = 2;
 
     private final Deck deck;

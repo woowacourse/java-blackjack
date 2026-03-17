@@ -5,6 +5,7 @@ import exception.ExceptionMessage;
 import java.util.Objects;
 
 public class BettingMoney {
+
     private final int money;
 
     public BettingMoney(int money) {
