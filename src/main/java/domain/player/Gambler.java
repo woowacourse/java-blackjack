@@ -4,7 +4,7 @@ import domain.player.attribute.Hand;
 import domain.player.attribute.Money;
 import domain.player.attribute.Name;
 
-public class Gambler extends Participant{
+public class Gambler extends Participant {
 
     private final Money betAmount;
 
