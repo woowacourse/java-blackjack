@@ -1,30 +1,34 @@
 package domain;
 
 import domain.card.Card;
+import domain.state.Hit;
+import domain.state.PlayerState;
 
 import java.util.List;
 
 public abstract class Participant {
-    public static final int BLACKJACK_HAND_SIZE = 2;
     protected final String name;
-    protected final Hand hand;
+    protected PlayerState state;
 
     protected Participant(String name) {
         this.name = name;
-        hand = new Hand();
+        this.state = new Hit(new Hand());
     }
 
     public void draw(Card card) {
-        hand.addCard(card);
+        state = state.draw(card);
+    }
+
+    public void stay(){
+        state = state.onStay();
     }
 
     public boolean isBurst() {
-        return hand.isBurst();
+        return state.isBust();
     }
 
     public boolean isBlackJack() {
-        return hand.getSize() == BLACKJACK_HAND_SIZE
-                && hand.getSum() == BlackjackRule.BLACKJACK_SCORE;
+        return state.isBlackJack();
     }
 
     public abstract boolean canHit();
@@ -34,14 +38,14 @@ public abstract class Participant {
     }
 
     public int getScore() {
-        return hand.getSum();
+        return state.getScore();
     }
 
     public List<Card> getCards() {
-        return hand.getCards();
+        return state.getCards();
     }
 
     public int getHandSize() {
-        return hand.getSize();
+        return state.getHandSize();
     }
 }

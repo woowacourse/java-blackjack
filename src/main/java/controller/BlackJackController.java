@@ -36,17 +36,18 @@ public class BlackJackController {
     private void playPlayer(Game game, Player player) {
         boolean hasPrintHand = false;
 
-        while (player.canHit() && wantsToHit(player, hasPrintHand)) {
+        while (player.canHit() && wantsToHit(game, player, hasPrintHand)) {
             game.hitPlayer(player);
             OutputView.printHandOutput(OutputDtoAssembler.toPlayerHandDto(player));
             hasPrintHand = true;
         }
     }
 
-    private boolean wantsToHit(Player player, boolean hasPrintHand) {
+    private boolean wantsToHit(Game game, Player player, boolean hasPrintHand) {
         String yesNoInput = InputView.askPlayerCommand(player.getName());
 
         if (yesNoInput.equals("n")) {
+            game.stayPlayer(player);
             printHandIfFirstTurn(player, hasPrintHand);
             return false;
         }
@@ -64,6 +65,7 @@ public class BlackJackController {
             OutputView.printDealerHitMessage();
             game.hitDealer();
         }
+        game.stayDealer();
     }
 
     private Game createGame() {

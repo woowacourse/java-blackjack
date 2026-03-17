@@ -8,7 +8,7 @@ public class Player extends Participant {
 
     @Override
     public boolean canHit() {
-        return hand.isLessThanBlackJack();
+        return !state.isFinished();
     }
 
     public WinningStatus calculateResult(Score dealerScore) {
@@ -24,6 +24,6 @@ public class Player extends Participant {
         if (dealerScore.isBurst()) {
             return WinningStatus.WIN;
         }
-        return new Score(hand.getSum(), isBlackJack()).compareTo(dealerScore);
+        return new Score(state.getScore(), isBlackJack()).compareTo(dealerScore);
     }
 }

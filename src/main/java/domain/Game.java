@@ -49,6 +49,14 @@ public class Game {
         return results;
     }
 
+    public void stayPlayer(Player player) {
+        player.stay();
+    }
+
+    public void stayDealer() {
+        dealer.stay();
+    }
+
     public void hitPlayer(Player player) {
         player.draw(deck.drawCard());
     }

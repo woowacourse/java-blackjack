@@ -1,7 +1,5 @@
 package domain;
 
-import domain.card.Card;
-
 public class Dealer extends Participant {
     public static final int DEALER_HIT_LIMIT = 17;
     private static final String DEALER_NAME = "딜러";
@@ -12,14 +10,14 @@ public class Dealer extends Participant {
 
     @Override
     public boolean canHit() {
-        return hand.getSum() < DEALER_HIT_LIMIT;
+        return !state.isFinished() &&  state.getScore() < DEALER_HIT_LIMIT;
     }
 
     public Score calculateScore() {
-        return new Score(hand.getSum(), isBlackJack());
+        return new Score(state.getScore(), isBlackJack());
     }
 
-    public Card getFirstCard() {
-        return hand.getFirstCard();
+    public String getFirstCardName(){
+        return state.getFirstCard().getCardName();
     }
 }

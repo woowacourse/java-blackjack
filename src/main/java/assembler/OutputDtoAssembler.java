@@ -63,7 +63,7 @@ public class OutputDtoAssembler {
     private static HandDto toDealerInitHandDto(Dealer dealer) {
         return new HandDto(
                 DEALER_NAME,
-                List.of(dealer.getFirstCard().getCardName())
+                List.of(dealer.getFirstCardName())
         );
     }
 
