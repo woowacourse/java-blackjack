@@ -4,22 +4,24 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
+import model.cardpicker.CardPicker;
 import model.participant.Participant;
-import util.RandomNumberPicker;
 
 public final class BlackJack {
     private static final int STARTING_CARDS = 2;
 
     private final Participants participants;
     private final Set<Card> pickedCards;
+    private final CardPicker cardPicker;
 
-    private BlackJack(Participants participants) {
+    private BlackJack(Participants participants, CardPicker cardPicker) {
         this.participants = participants;
+        this.cardPicker = cardPicker;
         this.pickedCards = new HashSet<>();
     }
 
-    public static BlackJack from(Participants participants) {
-        return new BlackJack(participants);
+    public static BlackJack from(Participants participants, CardPicker cardPicker) {
+        return new BlackJack(participants, cardPicker);
     }
 
     public void dealOut() {
@@ -27,7 +29,7 @@ public final class BlackJack {
 
         for (Participant participant : participants) {
             for (int i = 0; i < STARTING_CARDS; i++) {
-                Card pick = RandomNumberPicker.pick();
+                Card pick = cardPicker.pick();
                 pick = pickUniqueCard(pick);
                 pickedCards.add(pick);
                 participant.draw(pick);
@@ -54,15 +56,17 @@ public final class BlackJack {
 
     private void dealerDealout() {
         Participant dealer = participants.getDealer();
-        Card pick = RandomNumberPicker.pick();
-        pick = pickUniqueCard(pick);
-        pickedCards.add(pick);
-        dealer.draw(pick);
+        for (int i = 0; i < STARTING_CARDS; i++) {
+            Card pick = cardPicker.pick();
+            pick = pickUniqueCard(pick);
+            pickedCards.add(pick);
+            dealer.draw(pick);
+        }
     }
 
     private Card pickUniqueCard(Card pick) {
         while (pickedCards.contains(pick)) {
-            pick = RandomNumberPicker.pick();
+            pick = cardPicker.pick();
         }
         return pick;
     }

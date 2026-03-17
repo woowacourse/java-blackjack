@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import model.BlackJack;
 import model.Card;
+import model.cardpicker.RandomCardPicker;
 import model.participant.Dealer;
 import model.participant.Participant;
 import model.Participants;
@@ -39,7 +40,7 @@ public class BlackJackTest {
         player2.draw(Card.of("하트", 5));
         player2.draw(Card.of("하트", 6));
 
-        blackJack = BlackJack.from(participants);
+        blackJack = BlackJack.from(participants, new RandomCardPicker());
     }
 
     @Test
@@ -69,7 +70,7 @@ public class BlackJackTest {
         playersAndDealer.add(player);
 
         Participants playerAndDealerParticipants = Participants.of(playersAndDealer, dealer);
-        BlackJack blackJackGame = BlackJack.from(playerAndDealerParticipants);
+        BlackJack blackJackGame = BlackJack.from(playerAndDealerParticipants, new RandomCardPicker());
 
         // when
         Map<String, Integer> calculateRevenue = blackJackGame.calculateRevenue();
@@ -93,7 +94,7 @@ public class BlackJackTest {
         players.add(player);
 
         Participants playerAndDealerParticipants = Participants.of(players, dealer);
-        BlackJack blackJackGame = BlackJack.from(playerAndDealerParticipants);
+        BlackJack blackJackGame = BlackJack.from(playerAndDealerParticipants, new RandomCardPicker());
 
         // when
         Map<String, Integer> calculateRevenue = blackJackGame.calculateRevenue();
@@ -117,7 +118,7 @@ public class BlackJackTest {
         players.add(player);
 
         Participants playerAndDealerParticipants = Participants.of(players, dealer);
-        BlackJack blackJackGame = BlackJack.from(playerAndDealerParticipants);
+        BlackJack blackJackGame = BlackJack.from(playerAndDealerParticipants, new RandomCardPicker());
 
         // when
         Map<String, Integer> calculateRevenue = blackJackGame.calculateRevenue();
@@ -154,7 +155,7 @@ public class BlackJackTest {
         player5.draw(Card.of("하트", 5));
         player5.draw(Card.of("하트", 8));
 
-        BlackJack blackJack2 = BlackJack.from(participants2);
+        BlackJack blackJack2 = BlackJack.from(participants2, new RandomCardPicker());
 
         // when
         Map<String, Integer> calculatedRevenue2 = blackJack2.calculateRevenue();
