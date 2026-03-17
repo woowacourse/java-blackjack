@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Deck {
-    private final Cards cards;
+    private final List<Card> cards;
 
     public Deck() {
         this.cards = createDeck();
@@ -13,17 +13,16 @@ public class Deck {
 
     public Card drawCard() {
         validateDeckSize();
-        Card card = cards.removeFirst();
-        return card;
+        return cards.removeFirst();
     }
 
     private void validateDeckSize() {
-        if (cards.getSize() == 0) {
+        if (cards.isEmpty()) {
             throw new IllegalArgumentException("덱에 카드가 없습니다.");
         }
     }
 
-    private Cards createDeck() {
+    private List<Card> createDeck() {
         List<Card> cards = new ArrayList<>();
         for (Shape shape : Shape.values()) {
             for (Number number : Number.values()) {
@@ -31,6 +30,6 @@ public class Deck {
             }
         }
         Collections.shuffle(cards);
-        return new Cards(cards);
+        return cards;
     }
 }

@@ -1,40 +1,42 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.card.Cards;
 import java.util.List;
 
 public class ParticipantCards {
-    private final Cards cards;
-    private int changeAvailableAceCount;
+    private final List<Card> cards;
 
-    public ParticipantCards(Cards cards) {
+    public ParticipantCards(List<Card> cards) {
         this.cards = cards;
-        this.changeAvailableAceCount = 0;
     }
 
     public List<String> getCardsInfo() {
-        return cards.getCardsInfo();
+        return cards.stream()
+                .map(Card::getCardInfo)
+                .toList();
     }
 
     public int calculateScore() {
-        int sum = cards.sumScore();
-        int availableAceCount = changeAvailableAceCount;
-        while (availableAceCount > 0 && sum > 21) {
+        int sum = 0;
+        int aceCount = 0;
+        for (Card card : cards) {
+            sum += card.getScore();
+            if (card.isAce()) {
+                aceCount++;
+            }
+        }
+        while (aceCount > 0 && sum > 21) {
             sum -= 10;
-            availableAceCount -= 1;
+            aceCount--;
         }
         return sum;
     }
 
     public void addCard(Card card) {
-        if (card.isAce()) {
-            changeAvailableAceCount += 1;
-        }
         cards.add(card);
     }
 
     public int getCardSize() {
-        return cards.getSize();
+        return cards.size();
     }
 }

@@ -1,7 +1,6 @@
 package domain.participant;
 
 import domain.card.Card;
-import domain.card.Cards;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +11,7 @@ public abstract class Participant {
 
     public Participant(Name name) {
         this.name = name;
-        participantCards = new ParticipantCards(new Cards(new ArrayList<>()));
+        participantCards = new ParticipantCards(new ArrayList<>());
     }
 
     public void receiveCard(Card card) {

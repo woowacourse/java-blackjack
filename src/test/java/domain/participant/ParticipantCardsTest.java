@@ -3,7 +3,6 @@ package domain.participant;
 import static org.junit.jupiter.api.Assertions.*;
 
 import domain.card.Card;
-import domain.card.Cards;
 import domain.card.Number;
 import domain.card.Shape;
 import java.util.ArrayList;
@@ -16,7 +15,7 @@ class ParticipantCardsTest {
         Card card1 = new Card(Shape.SPADE, domain.card.Number.EIGHT);
         Card card2 = new Card(Shape.HEART, domain.card.Number.EIGHT);
 
-        ParticipantCards testParticipantCards = new ParticipantCards(new Cards(new ArrayList<>()));
+        ParticipantCards testParticipantCards = new ParticipantCards(new ArrayList<>());
 
         testParticipantCards.addCard(card1);
         testParticipantCards.addCard(card2);
@@ -30,7 +29,7 @@ class ParticipantCardsTest {
         Card card2 = new Card(Shape.HEART, domain.card.Number.FIVE);
         Card card3 = new Card(Shape.CLUB, Number.EIGHT);
 
-        ParticipantCards testParticipantCards = new ParticipantCards(new Cards(new ArrayList<>()));
+        ParticipantCards testParticipantCards = new ParticipantCards(new ArrayList<>());
 
         testParticipantCards.addCard(card1);
         testParticipantCards.addCard(card2);
