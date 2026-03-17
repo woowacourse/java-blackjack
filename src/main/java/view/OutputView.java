@@ -1,9 +1,10 @@
 package view;
 
-import dto.result.ParticipantProfit;
-import dto.result.ProfitResult;
+import dto.ParticipantCurrentHandResponse;
+import dto.ParticipantProfitResponse;
+import model.result.ParticipantProfit;
+import model.result.ProfitResult;
 import java.util.List;
-import dto.result.ParticipantCurrentHand;
 
 public class OutputView {
     private static final String JOIN_DELIMITER = ", ";
@@ -17,9 +18,9 @@ public class OutputView {
     private static final String DEALER_CARD_TEXT = "딜러카드: ";
     private static final String SCORE_TEXT = " - 결과: ";
 
-    public static void printInitDeck(List<ParticipantCurrentHand> players, String dealerFirstCard) {
+    public static void printInitDeck(List<ParticipantCurrentHandResponse> players, String dealerFirstCard) {
         List<String> playerNames = players.stream()
-                .map(ParticipantCurrentHand::name)
+                .map(ParticipantCurrentHandResponse::name)
                 .toList();
 
         printInitDeckDrawMessage(playerNames);
@@ -28,8 +29,8 @@ public class OutputView {
         printNewLine();
     }
 
-    public static void printPlayerCurrentDeck(ParticipantCurrentHand participantHand) {
-        System.out.println(participantHand.name() + CARD_TEXT + String.join(JOIN_DELIMITER, participantHand.deck()));
+    public static void printPlayerCurrentDeck(ParticipantCurrentHandResponse participantHand) {
+        System.out.println(participantHand.name() + CARD_TEXT + String.join(JOIN_DELIMITER, participantHand.cards()));
     }
 
     public static void printDealerCardDrawMessage() {
@@ -37,7 +38,7 @@ public class OutputView {
         printNewLine();
     }
 
-    public static void printParticipantHandWithScore(ParticipantCurrentHand dealerResult, List<ParticipantCurrentHand> players) {
+    public static void printParticipantHandWithScore(ParticipantCurrentHandResponse dealerResult, List<ParticipantCurrentHandResponse> players) {
         printPlayerHandWithScore(dealerResult);
         players.forEach(OutputView::printPlayerHandWithScore);
         printNewLine();
@@ -47,10 +48,10 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printProfitResult(ProfitResult profitResult) {
+    public static void printProfitResult(ParticipantProfitResponse dealerProfit, List<ParticipantProfitResponse> playersProfit) {
         System.out.println(FINAL_RESULT_TEXT);
-        printDealerResult(profitResult.dealerProfit());
-        printPlayersProfit(profitResult.playerProfit());
+        printProfitResult(dealerProfit);
+        printPlayersProfit(playersProfit);
     }
 
     private static void printInitDeckDrawMessage(List<String> players) {
@@ -61,21 +62,21 @@ public class OutputView {
         System.out.println(DEALER_CARD_TEXT + firstCard);
     }
 
-    private static void printPlayersCurrentDeck(List<ParticipantCurrentHand> players) {
+    private static void printPlayersCurrentDeck(List<ParticipantCurrentHandResponse> players) {
         players.forEach(OutputView::printPlayerCurrentDeck);
     }
 
-    private static void printPlayerHandWithScore(ParticipantCurrentHand participantResult) {
+    private static void printPlayerHandWithScore(ParticipantCurrentHandResponse participantResult) {
         System.out.println(
-                participantResult.name() + CARD_TEXT + String.join(JOIN_DELIMITER, participantResult.deck()) + SCORE_TEXT + participantResult.score());
+                participantResult.name() + CARD_TEXT + String.join(JOIN_DELIMITER, participantResult.cards()) + SCORE_TEXT + participantResult.score());
     }
 
-    private static void printDealerResult(ParticipantProfit dealerProfit) {
-        System.out.println(dealerProfit.name() + ": " + dealerProfit.profit());
+    private static void printPlayersProfit(List<ParticipantProfitResponse> playersProfit) {
+        playersProfit.forEach(OutputView::printProfitResult);
     }
 
-    private static void printPlayersProfit(List<ParticipantProfit> playersProfit) {
-       playersProfit.forEach(playerProfit -> System.out.println(playerProfit.name() + RESULT_DELIMITER + playerProfit.profit()));
+    private static void printProfitResult(ParticipantProfitResponse profitResult) {
+        System.out.println(profitResult.name() + ": " + profitResult.profit());
     }
 
 }

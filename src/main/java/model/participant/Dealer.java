@@ -1,7 +1,7 @@
 package model.participant;
 
 import constant.ErrorMessage;
-import dto.status.DealerStatus;
+import model.card.Card;
 
 public class Dealer extends Participant {
     private static final String DEALER_NAME = "딜러";
@@ -11,7 +11,7 @@ public class Dealer extends Participant {
         super(new PlayerName(DEALER_NAME));
     }
 
-    public String getInitialCard() {
+    public Card getInitialCard() {
         return super.getCurrentCard().getFirst();
     }
 

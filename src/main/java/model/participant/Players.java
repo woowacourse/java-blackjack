@@ -1,7 +1,6 @@
 package model.participant;
 
-import dto.result.ParticipantCurrentHand;
-import dto.status.PlayerStatus;
+import model.result.ParticipantCurrentHand;
 import java.util.List;
 import model.card.Card;
 

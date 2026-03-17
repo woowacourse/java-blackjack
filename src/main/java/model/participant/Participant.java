@@ -1,6 +1,6 @@
 package model.participant;
 
-import dto.result.ParticipantCurrentHand;
+import model.result.ParticipantCurrentHand;
 import java.util.List;
 import model.card.Card;
 
@@ -36,7 +36,7 @@ public class Participant {
         return participantHand.isBlackJack();
     }
 
-    protected List<String> getCurrentCard() {
+    protected List<Card> getCurrentCard() {
         return participantHand.getDeck();
     }
 }

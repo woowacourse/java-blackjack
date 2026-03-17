@@ -29,10 +29,8 @@ public class ParticipantHand {
         return score.getScore();
     }
 
-    public List<String> getDeck() {
-        return deck.get().stream()
-                .map(Card::getString)
-                .toList();
+    public List<Card> getDeck() {
+        return deck.get();
     }
 
     public boolean isBust() {

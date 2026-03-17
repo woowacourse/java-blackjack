@@ -1,7 +1,5 @@
 package model.result;
 
-import dto.result.ParticipantProfit;
-
 public class DealerProfit {
     private Long profit = 0L;
 

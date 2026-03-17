@@ -1,7 +1,11 @@
 package controller;
 
-import dto.result.ParticipantCurrentHand;
-import dto.result.ProfitResult;
+import dto.ParticipantCurrentHandResponse;
+import dto.ParticipantProfitResponse;
+import model.card.Card;
+import model.result.ParticipantCurrentHand;
+import model.result.ParticipantProfit;
+import model.result.ProfitResult;
 import model.participant.PlayerName;
 import java.util.List;
 import model.participant.Agreement;
@@ -41,7 +45,10 @@ public class BlackJackController {
 
     private void initGame() {
         blackJackGame.initGame();
-        OutputView.printInitDeck(blackJackGame.getPlayerCurrentHands(), blackJackGame.getDealerFirstCard());
+        List<ParticipantCurrentHandResponse> hands = blackJackGame.getPlayerCurrentHands().stream()
+                .map(this::getCurrentHandDto)
+                .toList();
+        OutputView.printInitDeck(hands, blackJackGame.getDealerFirstCard().getString());
     }
 
     private void participantsTurn() {
@@ -64,7 +71,7 @@ public class BlackJackController {
             return false;
         }
 
-        ParticipantCurrentHand currentHand = blackJackGame.drawPlayer(playerName);
+        ParticipantCurrentHandResponse currentHand = getCurrentHandDto(blackJackGame.drawPlayer(playerName));
         OutputView.printPlayerCurrentDeck(currentHand);
 
         return !blackJackGame.isBust(playerName);
@@ -79,12 +86,37 @@ public class BlackJackController {
     }
 
     private void displayResult() {
-        List<ParticipantCurrentHand> playerHands = blackJackGame.getPlayerCurrentHands();
-        ParticipantCurrentHand dealerHand = blackJackGame.getDealerCurrentHand();
+        printParticipantHandResult();
+        printParticipantsProfitResult();
+    }
 
-        ProfitResult profitResult = blackJackGame.getProfitResult();
+    private ParticipantCurrentHandResponse getCurrentHandDto(ParticipantCurrentHand participantCurrentHand) {
+        List<String> deck = participantCurrentHand.deck().stream()
+                .map(Card::getString)
+                .toList();
+        return new ParticipantCurrentHandResponse(participantCurrentHand.name(), deck, participantCurrentHand.score());
+    }
+
+    private void printParticipantHandResult() {
+        List<ParticipantCurrentHandResponse> playerHands = blackJackGame.getPlayerCurrentHands().stream()
+                .map(this::getCurrentHandDto)
+                .toList();
+        ParticipantCurrentHandResponse dealerHand = getCurrentHandDto(blackJackGame.getDealerCurrentHand());
 
         OutputView.printParticipantHandWithScore(dealerHand, playerHands);
-        OutputView.printProfitResult(profitResult);
+    }
+
+    private void printParticipantsProfitResult() {
+        ProfitResult profitResult = blackJackGame.getProfitResult();
+
+        ParticipantProfitResponse dealerProfitResult = getProfitResultDto(profitResult.dealerProfit());
+        List<ParticipantProfitResponse> playersProfitResult = profitResult.playerProfit().stream()
+                .map(this::getProfitResultDto)
+                .toList();
+        OutputView.printProfitResult(dealerProfitResult, playersProfitResult);
+    }
+
+    private ParticipantProfitResponse getProfitResultDto(ParticipantProfit profitResult) {
+        return new ParticipantProfitResponse(profitResult.name(), profitResult.profit());
     }
 }

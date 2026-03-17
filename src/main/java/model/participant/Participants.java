@@ -1,8 +1,6 @@
 package model.participant;
 
-import dto.result.ParticipantCurrentHand;
-import dto.status.DealerStatus;
-import dto.status.PlayerStatus;
+import model.result.ParticipantCurrentHand;
 import java.util.List;
 import model.card.Card;
 
@@ -42,7 +40,7 @@ public class Participants {
         return players.getPlayersHand();
     }
 
-    public String getDealerFirstCard() {
+    public Card getDealerFirstCard() {
         return dealer.getInitialCard();
     }
 

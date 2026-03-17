@@ -1,3 +1,3 @@
-package dto.result;
+package model.result;
 
 public record ParticipantProfit(String name, Long profit) {}

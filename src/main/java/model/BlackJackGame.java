@@ -1,10 +1,10 @@
 package model;
 
-import dto.result.ParticipantCurrentHand;
-import dto.result.ParticipantProfit;
-import dto.result.ProfitResult;
-import dto.status.DealerStatus;
-import dto.status.PlayerStatus;
+import model.result.ParticipantCurrentHand;
+import model.result.ParticipantProfit;
+import model.result.ProfitResult;
+import model.participant.DealerStatus;
+import model.participant.PlayerStatus;
 import java.util.List;
 import model.card.BlackJackDeck;
 import model.card.Card;
@@ -51,7 +51,7 @@ public class BlackJackGame {
         return participants.getPlayersHand();
     }
 
-    public String getDealerFirstCard() {
+    public Card getDealerFirstCard() {
         return participants.getDealerFirstCard();
     }
 

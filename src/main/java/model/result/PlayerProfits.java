@@ -1,6 +1,5 @@
 package model.result;
 
-import dto.result.ParticipantProfit;
 import java.util.ArrayList;
 import java.util.List;
 

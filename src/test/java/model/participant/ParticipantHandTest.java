@@ -19,8 +19,8 @@ public class ParticipantHandTest {
         Card card = new Card(Shape.CLOVER, CardNumber.ACE);
         participantHand.addDeck(card);
 
-        List<String> cards = participantHand.getDeck();
-        String firstCard = cards.getFirst();
+        List<Card> cards = participantHand.getDeck();
+        String firstCard = cards.getFirst().getString();
 
         assertThat(cards.size()).isEqualTo(1);
         assertThat(card.getString()).isEqualTo(firstCard);

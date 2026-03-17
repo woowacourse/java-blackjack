@@ -2,8 +2,8 @@ package model.result;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-import dto.status.DealerStatus;
-import dto.status.PlayerStatus;
+import model.participant.DealerStatus;
+import model.participant.PlayerStatus;
 import org.junit.jupiter.api.Test;
 
 public class ProfitCalculatorTest {

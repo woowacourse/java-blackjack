@@ -1,8 +1,8 @@
 package model.result;
 
 import java.math.BigDecimal;
-import dto.status.DealerStatus;
-import dto.status.PlayerStatus;
+import model.participant.DealerStatus;
+import model.participant.PlayerStatus;
 
 public class ProfitCalculator {
     private static final Double BLACK_JACK_BAT_RATE = 1.5;

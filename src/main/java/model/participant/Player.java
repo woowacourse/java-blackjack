@@ -1,6 +1,5 @@
 package model.participant;
 
-import dto.status.PlayerStatus;
 import java.util.Objects;
 
 public class Player extends Participant {

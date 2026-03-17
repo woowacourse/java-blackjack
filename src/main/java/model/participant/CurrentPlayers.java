@@ -1,8 +1,7 @@
 package model.participant;
 
 import constant.ErrorMessage;
-import dto.result.ParticipantCurrentHand;
-import dto.status.PlayerStatus;
+import model.result.ParticipantCurrentHand;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;

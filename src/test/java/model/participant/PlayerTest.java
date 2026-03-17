@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 public class PlayerTest {
     @Test
     public void 정상_작동() {
-        Player player = new Player(new PlayerName("player1"), null);
+        Player player = new Player(new PlayerName("player"), null);
 
         assertThat(player.getCurrentHand().name()).isEqualTo("player");
     }
@@ -30,6 +30,6 @@ public class PlayerTest {
             }
         };
 
-        assertThatThrownBy(() -> new Player(new PlayerName("테스트"), nameValidator)).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage(ErrorMessage.NO_PLAYER_NAME_DEALER.getMessage());
+        assertThatThrownBy(() -> new Player(new PlayerName("딜러"), nameValidator)).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage(ErrorMessage.NO_PLAYER_NAME_DEALER.getMessage());
     }
 }
