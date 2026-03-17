@@ -70,7 +70,7 @@ public class Game {
         return matchResult;
     }
 
-    public Map<String, Integer> getBettingScore(Game game) {
+    public Map<String, Integer> getBettingScore() {
         Map<String, Integer> bettingResult = new LinkedHashMap<>();
         for (Player player : players) {
             bettingResult.put(player.getName(), player.getBettingScore());
