@@ -19,7 +19,7 @@ public class Results {
         return results.get(player);
     }
 
-    public int countResult(Result target) {
+    public int countPlayerResult(Result target) {
         return (int) results.values().stream()
                 .filter(result -> result == target)
                 .count();
