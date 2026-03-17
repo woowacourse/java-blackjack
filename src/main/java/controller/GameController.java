@@ -7,15 +7,18 @@ import domain.Referee;
 import domain.betting.BettingAmount;
 import domain.betting.BettingAmountParser;
 import domain.betting.BettingTable;
+import domain.betting.ParticipantsProfitResult;
 import domain.betting.PlayerBetting;
 import domain.card.CardsSnapshot;
 import domain.dto.InitialDealingResult;
 import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;
+import domain.participant.PlayerBettingResult;
 import domain.participant.PlayerParser;
 import domain.participant.Players;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import view.InputView;
 import view.OutputView;
@@ -40,7 +43,18 @@ public class GameController {
         readyPhase(participants);
         playPhase(dealer, players);
         resultPhase(dealer, players);
+        bettingResultPhase(bettingTable, participants);
     }
+
+    private void bettingResultPhase(BettingTable bettingTable, Participants participants) {
+        List<PlayerBettingResult> playerBettingResults = participants.playersBettingResult();
+        ParticipantsProfitResult participantsProfitResult = bettingTable.calculateAllParticipantsProfit(
+                playerBettingResults);
+//        TODO:
+//        outputView.printParticipantsProfit(participantsProfitResult);
+
+    }
+
 
     private BettingTable placeBet(Players players) {
         BettingTable bettingTable = BettingTable.create();

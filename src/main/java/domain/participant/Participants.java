@@ -1,6 +1,7 @@
 package domain.participant;
 
 import domain.Deck;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Participants {
@@ -27,5 +28,15 @@ public class Participants {
     public void distributeCardsToAll(Deck deck, int cardCount) {
         dealer.addAll(deck.draw(cardCount));
         players.distributeCardsToAll(deck, cardCount);
+    }
+
+    public List<PlayerBettingResult> playersBettingResult() {
+        List<PlayerBettingResult> playersBettingResult = new ArrayList<>();
+
+        for (Player player : players) {
+            playersBettingResult.add(PlayerBettingResult.from(dealer, player));
+        }
+
+        return playersBettingResult;
     }
 }

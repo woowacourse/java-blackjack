@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class Participant {
+    public static final int BUST_THRESHOLD = 21;
+    public static final int BLACKJACK_SCORE = 21;
+
     private final Name name;
     private final Hand hand;
 
@@ -31,12 +34,44 @@ public abstract class Participant {
         return hand.firstCardSnapshot();
     }
 
-    public Name getName() {
-        return this.name;
+    public List<Card> cardsInHand() {
+        return hand.cards();
+    }
+
+    public Card firstCardInHand() {
+        return hand.firstCard();
+    }
+
+    public int cardsCount() {
+        return hand.cardsCount();
     }
 
     public int getScore() {
         return hand.calculateScore();
+    }
+
+    public boolean hasScoreHigherThan(Participant otherParticipant) {
+        return this.getScore() > otherParticipant.getScore();
+    }
+
+    public boolean hasScoreSameAs(Participant otherParticipant) {
+        return this.getScore() == otherParticipant.getScore();
+    }
+
+    public boolean isBust() {
+        return getScore() > BUST_THRESHOLD;
+    }
+
+    public boolean isNatural() {
+        return getScore() == BLACKJACK_SCORE;
+    }
+
+    public String name() {
+        return name.value();
+    }
+
+    public Name getName() {
+        return this.name;
     }
 
     @Override
@@ -51,17 +86,5 @@ public abstract class Participant {
     @Override
     public int hashCode() {
         return Objects.hash(name);
-    }
-
-    public List<Card> cardsInHand() {
-        return hand.cards();
-    }
-
-    public String name() {
-        return name.value();
-    }
-
-    public Card firstCardInHand() {
-        return hand.firstCard();
     }
 }

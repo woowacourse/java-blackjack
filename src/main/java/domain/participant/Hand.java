@@ -60,4 +60,8 @@ public class Hand {
     public List<Card> cards() {
         return List.copyOf(cards);
     }
+
+    public int cardsCount() {
+        return cards.size();
+    }
 }
