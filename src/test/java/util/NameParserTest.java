@@ -1,5 +1,6 @@
 package util;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
@@ -21,5 +22,13 @@ class NameParserTest {
         List<String> names = NameParser.makeNameList("pobi, jason");
 
         assertEquals("jason", names.get(1));
+    }
+
+    @Test
+    @DisplayName("입력된 이름 중 중복되는 이름이 존재하면 예외가 발생한다")
+    void throwExceptionWhenNameIsDuplicated() {
+        assertThatThrownBy(() -> NameParser.makeNameList("pobi,pobi"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("중복된 이름은 허용하지 않습니다.");
     }
 }
