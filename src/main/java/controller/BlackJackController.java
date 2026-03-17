@@ -28,7 +28,7 @@ public class BlackJackController {
 
         List<BetAmount> betAmounts = getBetAmounts(names);
 
-        Participants participants = ParticipantsFactory.create(names, betAmounts);
+        Participants participants = Participants.of(names, betAmounts);
         BlackJack blackJack = BlackJack.from(participants);
 
         blackJack.dealOut();
