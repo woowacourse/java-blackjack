@@ -8,6 +8,7 @@ import java.util.Objects;
 public abstract class Participant {
     public static final int BUST_THRESHOLD = 21;
     public static final int BLACKJACK_SCORE = 21;
+    private static final int NATURAL_CARDS_COUNT = 2;
 
     private final Name name;
     private final Hand hand;
@@ -63,7 +64,7 @@ public abstract class Participant {
     }
 
     public boolean isNatural() {
-        return getScore() == BLACKJACK_SCORE;
+        return (getScore() == BLACKJACK_SCORE) && (cardsCount() == NATURAL_CARDS_COUNT);
     }
 
     public String name() {
