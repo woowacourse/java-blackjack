@@ -16,7 +16,7 @@ public class HandTest {
     void 처음_두장_합이_21이면_블랙잭이다() {
         Hand hand = new Hand(List.of(
                 Card.of(CardNumber.ACE, CardShape.CLOVER),
-                Card.of(CardNumber.J, CardShape.SPADE)
+                Card.of(CardNumber.JACK, CardShape.SPADE)
         ));
         assertThat(hand.isBlackjack()).isTrue();
     }

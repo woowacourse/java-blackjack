@@ -18,14 +18,14 @@ import org.junit.jupiter.api.Test;
 class PlayerTest {
     Player bustPlayer = Player.of(new PlayerInfo(Name.from("pobi"), BettingMoney.of(1000)),
             new Hand(new ArrayList<>(List.of(
-                    Card.of(CardNumber.J, CardShape.CLOVER),
-                    Card.of(CardNumber.K, CardShape.HEART),
-                    Card.of(CardNumber.Q, CardShape.DIAMOND)))));
+                    Card.of(CardNumber.JACK, CardShape.CLOVER),
+                    Card.of(CardNumber.KING, CardShape.HEART),
+                    Card.of(CardNumber.QUEEN, CardShape.DIAMOND)))));
 
     Player normalPlayer = Player.of(new PlayerInfo(Name.from("jason"), BettingMoney.of(2000)),
             new Hand(new ArrayList<>(List.of(
-                    Card.of(CardNumber.J, CardShape.CLOVER),
-                    Card.of(CardNumber.Q, CardShape.DIAMOND)))));
+                    Card.of(CardNumber.JACK, CardShape.CLOVER),
+                    Card.of(CardNumber.QUEEN, CardShape.DIAMOND)))));
 
     @Test
     void 플레이어_카드_추가_확인() {

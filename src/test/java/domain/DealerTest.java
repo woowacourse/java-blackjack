@@ -19,7 +19,7 @@ class DealerTest {
 
     Dealer overThreshold = Dealer.from(new Hand(new ArrayList<>(List.of(
             Card.of(CardNumber.EIGHT, CardShape.CLOVER),
-            Card.of(CardNumber.J, CardShape.CLOVER)))));
+            Card.of(CardNumber.JACK, CardShape.CLOVER)))));
 
     @Test
     void 딜러_16이하_여부_확인() {

@@ -16,8 +16,8 @@ public class ProfitCalculatorTest {
     @Test
     void 플레이어가_버스트면_배팅금액만큼_잃는다() {
         Player player = player("pobi", 1000,
-                card(CardNumber.K, CardShape.SPADE),
-                card(CardNumber.Q, CardShape.HEART),
+                card(CardNumber.KING, CardShape.SPADE),
+                card(CardNumber.QUEEN, CardShape.HEART),
                 card(CardNumber.TWO, CardShape.CLOVER));
 
         Dealer dealer = dealer(
@@ -33,7 +33,7 @@ public class ProfitCalculatorTest {
     void 플레이어가_블랙잭이면_배팅금액의_1점5배를_번다() {
         Player player = player("pobi", 1000,
                 card(CardNumber.ACE, CardShape.DIAMOND),
-                card(CardNumber.K, CardShape.CLOVER));
+                card(CardNumber.KING, CardShape.CLOVER));
 
         Dealer dealer = dealer(
                 card(CardNumber.TEN, CardShape.CLOVER),
@@ -47,11 +47,11 @@ public class ProfitCalculatorTest {
     void 플레이어와_딜러가_모두_블랙잭이면_무승부다() {
         Player player = player("pobi", 1000,
                 card(CardNumber.ACE, CardShape.SPADE),
-                card(CardNumber.K, CardShape.HEART));
+                card(CardNumber.KING, CardShape.HEART));
 
         Dealer dealer = dealer(
                 card(CardNumber.ACE, CardShape.DIAMOND),
-                card(CardNumber.Q, CardShape.CLOVER));
+                card(CardNumber.QUEEN, CardShape.CLOVER));
 
         double profit = ProfitCalculator.calculatePlayerProfit(player, dealer);
         assertThat(profit).isEqualTo(0);
@@ -64,9 +64,9 @@ public class ProfitCalculatorTest {
                 card(CardNumber.NINE, CardShape.HEART));
 
         Dealer dealer = dealer(
-                card(CardNumber.K, CardShape.DIAMOND),
+                card(CardNumber.KING, CardShape.DIAMOND),
                 card(CardNumber.TWO, CardShape.CLOVER),
-                card(CardNumber.Q, CardShape.HEART));
+                card(CardNumber.QUEEN, CardShape.HEART));
 
         double profit = ProfitCalculator.calculatePlayerProfit(player, dealer);
         assertThat(profit).isEqualTo(1000);
@@ -76,7 +76,7 @@ public class ProfitCalculatorTest {
     void 플레이어_점수가_더_크면_배팅금액만큼_수익() {
         Player player = player("pobi", 1000,
                 card(CardNumber.EIGHT, CardShape.DIAMOND),
-                card(CardNumber.K, CardShape.SPADE));
+                card(CardNumber.KING, CardShape.SPADE));
 
         Dealer dealer = dealer(
                 card(CardNumber.TEN, CardShape.CLOVER),
