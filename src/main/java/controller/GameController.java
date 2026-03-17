@@ -1,21 +1,23 @@
 package controller;
 
-import domain.participant.player.Player;
 import domain.vo.Money;
+import domain.vo.Name;
+import dto.DealerResultDto;
+import dto.PlayerResultDto;
 import service.BlackjackService;
-import service.PlayerManager;
 import view.InputView;
 import view.ResultView;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class GameController {
     private final BlackjackService blackjackService;
-    private final PlayerManager playerManager;
+    private List<Name> names = new ArrayList<>();
 
-    public GameController(BlackjackService blackjackService, PlayerManager playerManager) {
+    public GameController(BlackjackService blackjackService) {
         this.blackjackService = blackjackService;
-        this.playerManager = playerManager;
     }
 
     public void run() {
@@ -24,32 +26,29 @@ public class GameController {
 
         participantsHit();
         finalizeGameResult();
-
-        printProfits();
     }
 
     private void gameSetup() {
         List<String> names = InputView.askName();
-        playerManager.registerPlayers(names);
+        this.names = names.stream()
+                .map((String name) -> new Name(name))
+                .collect(Collectors.toList());
 
-        blackjackService.dealDealerCardsOut();
+        blackjackService.registerPlayers(names);
+        blackjackService.dealCardsOut();
 
-        for (Player player : playerManager.getPlayers()) {
-            blackjackService.dealPlayerCardsOut(player);
-        }
-
-        ResultView.printStartPlayersCards(blackjackService.getDealerInfo(), playerManager.getAllPlayersInfo());
+        ResultView.printStartPlayersCards(blackjackService.getDealerInfo(), blackjackService.getPlayerInfos());
     }
 
     private void askBettingMoney() {
-        for (Player player : playerManager.getPlayers()) {
-            blackjackService.placeBet(player, new Money(InputView.askBettingMoney(player.getName().getValueOf())));
+        for (Name name : names) {
+            blackjackService.placeBet(name, new Money(InputView.askBettingMoney(name.getValueOf())));
         }
     }
 
     private void participantsHit() {
-        for (Player player : playerManager.getPlayers()) {
-            playerHit(player);
+        for (Name name : names) {
+            playerHit(name);
         }
 
         if (blackjackService.isDealerHit()) {
@@ -57,41 +56,37 @@ public class GameController {
         }
     }
 
-    private void playerHit(Player player) {
-        while (canHitAndDraw(player)) {
-            ResultView.printPlayerCards(player.getName().getValueOf(), player.getCards());
+    private void playerHit(Name name) {
+        while (canHitAndDraw(name)) {
+            ResultView.printPlayerCards(blackjackService.getPlayerInfo(name));
         }
     }
 
-    private void finalizeGameResult() {
-        for (Player player : playerManager.getPlayers()) {
-            blackjackService.finalizeGameResult(player);
-        }
-
-        ResultView.printCardsAndScoreResult(blackjackService.getDealerInfo(), playerManager.getAllPlayersInfo());
-        ResultView.printRankResult(blackjackService.getDealerInfo(), playerManager.getAllPlayersInfo());
-    }
-
-    private boolean canHitAndDraw(Player player) {
-        if (player.isBust()) {
+    private boolean canHitAndDraw(Name name) {
+        if (blackjackService.isBust(name)) {
             return false;
         }
 
-        if (InputView.askHit(player.getName().getValueOf())) {
-            blackjackService.playerHit(player);
+        if (InputView.askHit(name.getValueOf())) {
+            blackjackService.playerHit(name);
             return true;
         }
 
-        ResultView.printPlayerCards(player.getName().getValueOf(), player.getCards());
+        ResultView.printPlayerCards(blackjackService.getPlayerInfo(name));
         return false;
     }
 
-    private void printProfits() {
-        ResultView.printDealerProfit(blackjackService.getDealerProfit());
+    private void finalizeGameResult() {
+        blackjackService.decideDealerResult(names);
 
-        for (Player player : playerManager.getPlayers()) {
-            ResultView.printPlayerProfit(player.getName(), blackjackService.getProfit(player))
-            ;
-        }
+        DealerResultDto dealerResultDto = blackjackService.getDealerResult();
+        List<PlayerResultDto> playerResultDtos = blackjackService.getPlayerResultInfos();
+
+        ResultView.printCardsAndScoreResult(dealerResultDto, playerResultDtos);
+        ResultView.printRankResult(dealerResultDto, playerResultDtos);
+
+        ResultView.printDealerProfit(dealerResultDto);
+        playerResultDtos.stream()
+                .forEach(playerResultDto -> ResultView.printPlayerProfit(playerResultDto));
     }
 }
