@@ -5,6 +5,7 @@ import domain.card.Cards;
 import domain.card.Rank;
 import domain.card.Suit;
 import domain.participant.Hand;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -30,7 +31,7 @@ class HandTest {
     @Test
     void 참가자가_가진_카드_두_장의_합이_21인지_반환한다() {
         Cards cards = CardFixture.blackjackCards();
-        Hand hand = new Hand(cards.cards());
+        Hand hand = createHand(cards);
 
         assertThat(hand.isBlackjack()).isTrue();
     }
@@ -38,7 +39,7 @@ class HandTest {
     @Test
     void 참가자가_가진_카드의_합이_21을_초과하는지_반환한다() {
         Cards cards = CardFixture.twentyTwoCards();
-        Hand hand = new Hand(cards.cards());
+        Hand hand = createHand(cards);
 
         assertThat(hand.isBust()).isTrue();
     }
@@ -46,26 +47,36 @@ class HandTest {
     @Test
     void 카드의_합을_계산한다() {
         Cards cards = CardFixture.seventeenCards();
-        Hand hand = new Hand(cards.cards());
+        Hand hand = createHand(cards);
 
         assertThat(hand.score()).isEqualTo(17);
     }
 
-    @Test
-    void 참가자가_가진_카드_중_에이스_카드가_하나_존재하고_카드의_합이_21_이하인_경우_합이_21에_근접하되_21을_초과하지_않도록_계산한다() {
-        Cards cards = CardFixture.sixteenCardsWithAce();
-        Hand hand = new Hand(cards.cards());
+    @Nested
+    class 참가자가_가진_카드_중_에이스가_존재하는_경우_카드_합을_21을_초과하지_않되_21에_근접하도록_계산한다 {
+        @Test
+        void 에이스_카드가_여러장일_경우(){
+            Cards cards = CardFixture.seventeenCardsWithAces();
+            Hand hand = createHand(cards);
 
-        int score = hand.score();
+            assertThat(hand.score()).isEqualTo(17);
+        }
 
-        assertThat(score).isEqualTo(21);
+        @Test
+         void 에이스_카드가_한_장일_경우(){
+             Cards cards = CardFixture.sixteenCardsWithAce();
+             Hand hand = createHand(cards);
+
+             int score = hand.score();
+
+             assertThat(score).isEqualTo(16);
+         }
+
     }
 
-    @Test
-    void 참가자가_가진_카드_중_에이스_카드가_여러장_존재하고_카드의_합이_21을_초과하는_경우_합이_21에_근접하되_21을_초과하지_않도록_계산한다() {
-        Cards cards = CardFixture.seventeenCardsWithAces();
-        Hand hand = new Hand(cards.cards());
-
-        assertThat(hand.score()).isEqualTo(16);
+    private Hand createHand(Cards cards) {
+        Hand hand = new Hand();
+        cards.cards().forEach(hand::add);
+        return hand;
     }
 }

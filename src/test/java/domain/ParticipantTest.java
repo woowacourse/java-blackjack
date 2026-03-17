@@ -22,7 +22,9 @@ class ParticipantTest {
         Deck deck = Deck.createDeck(new RandomShuffleStrategy());
         pobi.receive(deck.draw());
 
-        assertThat(pobi.handSize()).isEqualTo(1);
+        int cardsSize = Math.toIntExact(pobi.cards().size());
+
+        assertThat(cardsSize).isEqualTo(1);
     }
 
     @Test
@@ -30,6 +32,8 @@ class ParticipantTest {
         Deck deck = Deck.createDeck(new RandomShuffleStrategy());
         pobi.receiveInitialCards(deck.drawInitialCards());
 
-        assertThat(pobi.handSize()).isEqualTo(2);
+        int cardsSize = Math.toIntExact(pobi.cards().size());
+
+        assertThat(cardsSize).isEqualTo(2);
     }
 }

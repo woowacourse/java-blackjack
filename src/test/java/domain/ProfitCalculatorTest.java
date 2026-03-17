@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.util.List;
 
-import static domain.BlackjackRule.DEALER_NAME;
+import static domain.game.BlackjackRule.DEALER_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ProfitCalculatorTest {

@@ -13,7 +13,7 @@ import view.InputView;
 import java.util.ArrayList;
 import java.util.List;
 
-import static domain.BlackjackRule.DEALER_NAME;
+import static domain.game.BlackjackRule.DEALER_NAME;
 
 public class BlackjackGameSetUp {
     private final InputView inputView;

@@ -5,7 +5,7 @@ import domain.participant.Dealer;
 import domain.participant.Participant;
 import org.junit.jupiter.api.Test;
 
-import static domain.BlackjackRule.DEALER_NAME;
+import static domain.game.BlackjackRule.DEALER_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class DealerTest {

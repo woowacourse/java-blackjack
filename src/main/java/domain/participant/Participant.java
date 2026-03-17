@@ -5,7 +5,7 @@ import domain.card.Cards;
 
 import java.util.List;
 
-import static domain.BlackjackRule.INITIAL_CARDS_COUNT;
+import static domain.game.BlackjackRule.INITIAL_CARDS_COUNT;
 
 public abstract class Participant {
     private final Name name;
@@ -34,10 +34,6 @@ public abstract class Participant {
 
     public void receive(Card card) {
         hand.add(card);
-    }
-
-    public int handSize() {
-        return hand.size();
     }
 
     public int score() {

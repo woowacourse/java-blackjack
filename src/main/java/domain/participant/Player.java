@@ -2,7 +2,7 @@ package domain.participant;
 
 import java.math.BigDecimal;
 
-import static domain.BlackjackRule.BLACK_JACK;
+import static domain.game.BlackjackRule.BLACK_JACK;
 
 public class Player extends Participant {
     private BetAmount betAmount;

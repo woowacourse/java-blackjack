@@ -5,8 +5,8 @@ import domain.card.Cards;
 
 import java.util.List;
 
-import static domain.BlackjackRule.BLACK_JACK;
-import static domain.BlackjackRule.INITIAL_CARDS_COUNT;
+import static domain.game.BlackjackRule.BLACK_JACK;
+import static domain.game.BlackjackRule.INITIAL_CARDS_COUNT;
 
 public class Hand {
     public static final int ACE_ADJUST_VALUE = 10;
@@ -15,10 +15,6 @@ public class Hand {
 
     public Hand() {
         this.cards = new Cards();
-    }
-
-    public Hand(List<Card> cards) {
-        this.cards = new Cards(cards);
     }
 
     public boolean isBust() {
