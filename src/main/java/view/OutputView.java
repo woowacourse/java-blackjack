@@ -4,12 +4,14 @@ import static domain.BlackjackGame.INIT_DRAW_COUNT;
 import static domain.participant.Dealer.DEALER_DRAW_BOUND;
 import static domain.participant.Dealer.DEALER_NAME;
 
+import domain.card.Card;
 import domain.card.CurrentHand;
 import domain.card.CurrentHands;
 import domain.result.BetProfit;
 import domain.result.BetProfits;
 import domain.result.FinalResult;
 import java.util.List;
+import java.util.StringJoiner;
 
 public class OutputView {
 
@@ -86,7 +88,12 @@ public class OutputView {
 
     private static void printHand(final CurrentHand currentHand) {
         System.out.printf("%s카드: ", currentHand.name());
-        System.out.print(currentHand.getCardsToString());
+
+        final StringJoiner hand = new StringJoiner(", ");
+        for (final Card card : currentHand.cards()) {
+            hand.add(card.getCardDescription());
+        }
+        System.out.print(hand);
     }
 
     private void printBetProfits(final List<BetProfit> results) {
