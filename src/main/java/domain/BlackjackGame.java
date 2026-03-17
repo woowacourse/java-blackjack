@@ -12,7 +12,6 @@ import vo.Name;
 public class BlackjackGame {
     private final static Integer FIRST_CARD_DEAL_COUNT = 2;
 
-    private final GameJudge gameJudge = new GameJudge();
     private Participants participants;
     private Dealer dealer;
     private final Deck deck;
@@ -55,7 +54,7 @@ public class BlackjackGame {
 
         for (User user : participants.getUsers()) {
             userResults.put(user,
-                    gameJudge.judge(user, dealer));
+                    GameJudge.judge(user, dealer));
         }
         return new GameSummary(userResults);
     }

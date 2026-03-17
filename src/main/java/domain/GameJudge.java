@@ -3,7 +3,7 @@ package domain;
 import vo.GameResult;
 
 public class GameJudge {
-    public GameResult judge(User user, Dealer dealer) {
+    public static GameResult judge(User user, Dealer dealer) {
         if (user.isBust()) {
             return GameResult.BUST;
         }

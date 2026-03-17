@@ -15,7 +15,7 @@
   - [ ] Application의 76번줄 `List<User> participants = blackjackGame.getUsers();`
   - [ ] Application의 90번줄 `blackjackGame.getUsers().forEach(outputView::printUserFinalHand);` 또한 위임 대상인지 검토할 것.
 - [ ] **4. blackjackGame 생성자 생성 시점을 객체 생성 시점으로 만들기**
-- [ ] **5. blackjackGame GameJudge를 static으로 바꾸거나, 로컬 변수로 변경**
+- [x] **5. blackjackGame GameJudge를 static으로 바꾸거나, 로컬 변수로 변경**
 - [x] **6. Participants에서 도메인 방어 중복으로 생성하기**
   ```java
     if (bets == null || bets.isEmpty()) {
