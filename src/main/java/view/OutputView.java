@@ -1,6 +1,7 @@
 package view;
 
 import java.util.List;
+import model.AbstractParticipant;
 import model.Card;
 import model.Dealer;
 import model.Participant;
@@ -36,7 +37,7 @@ public class OutputView {
     }
 
 
-    public static void printCardByPlayerWithScore(Participant player) {
+    public static void printCardByPlayerWithScore(AbstractParticipant player) {
         int sum = player.calculateTotalScore();
         List<String> cards = player.cards()
                 .stream()

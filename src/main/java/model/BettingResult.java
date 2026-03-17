@@ -60,16 +60,23 @@ public class BettingResult {
     private void updateProfit(Dealer dealer, Player player, boolean dealerWin, boolean blackJack) {
         long money = player.bettingMoney();
         if (blackJack) {
-            player.addProfit((int) (money * BLACK_JACK_WIN_PRICE));
-            dealer.subtractProfit((int) (money * BLACK_JACK_WIN_PRICE));
+            settleAccountsPlayerWin(dealer, player, (long) (money * BLACK_JACK_WIN_PRICE));
             return;
         } else if (dealerWin) {
-            player.subtractProfit(money);
-            dealer.addProfit(money);
+            settleAccountsDealerWin(dealer, player, money);
             return;
         }
+        settleAccountsPlayerWin(dealer, player, money);
+    }
+
+    private void settleAccountsPlayerWin(Dealer dealer, Player player, long money) {
         player.addProfit(money);
         dealer.subtractProfit(money);
+    }
+
+    private void settleAccountsDealerWin(Dealer dealer, Player player, long money) {
+        dealer.addProfit(money);
+        player.subtractProfit(money);
     }
 
     public List<Participant> participantsBettingResults() {
