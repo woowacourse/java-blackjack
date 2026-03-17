@@ -5,8 +5,6 @@ import domain.card.Card;
 import java.util.ArrayList;
 import java.util.List;
 
-import static domain.card.Rank.ACE;
-
 public class Hand {
     public static final int ACE_SCORE_ADJUSTMENT = 10;
     private final List<Card> cards;
@@ -41,10 +39,6 @@ public class Hand {
 
     public boolean isBurst() {
         return getSum() > BlackjackRule.BLACKJACK_SCORE;
-    }
-
-    public boolean isLessThanBlackJack() {
-        return getSum() < BlackjackRule.BLACKJACK_SCORE;
     }
 
     public int getSize() {
