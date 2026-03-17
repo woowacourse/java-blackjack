@@ -24,9 +24,9 @@ public final class OutputView {
     }
 
     private static void showCards(Participants participants) {
-        participants.getParticipants().stream()
-                .map(participant -> getCardNames(participant.getName(), participant.getInitialCards()))
-                .forEach(System.out::println);
+        participants.forEachParticipant(participant ->
+                System.out.println(getCardNames(participant.getName(), participant.getInitialCards()))
+        );
     }
 
     private static String getCardNames(String name, List<Card> cards) {
@@ -46,8 +46,8 @@ public final class OutputView {
 
     public static void showResult(Participants participants) {
         System.out.println();
-        participants.getParticipants()
-                .forEach(participant -> showCardAndScore(participant, participant.getScore().getScore()));
+        participants.forEachParticipant(participant ->
+                showCardAndScore(participant, participant.getScore().getScore()));
     }
 
     private static void showCardAndScore(Participant participant, int score) {

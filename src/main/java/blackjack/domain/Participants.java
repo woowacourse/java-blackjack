@@ -37,18 +37,9 @@ public class Participants {
                 .count() != values.size();
     }
 
-    public String getDealerName() {
-        return dealer.getName();
-    }
-
-    public List<String> getPlayerNames() {
-        return players.stream()
-                .map(Participant::getName)
-                .toList();
-    }
-
-    public List<Participant> getParticipants() {
-        return getParticipants(dealer, players);
+    public void forEachParticipant(Consumer<Participant> consumer) {
+        consumer.accept(dealer);
+        players.forEach(consumer);
     }
 
     public void forEachPlayer(Consumer<Player> consumer) {
@@ -57,5 +48,15 @@ public class Participants {
 
     public void withDealer(Consumer<Dealer> consumer) {
         consumer.accept(dealer);
+    }
+
+    public String getDealerName() {
+        return dealer.getName();
+    }
+
+    public List<String> getPlayerNames() {
+        return players.stream()
+                .map(Participant::getName)
+                .toList();
     }
 }
