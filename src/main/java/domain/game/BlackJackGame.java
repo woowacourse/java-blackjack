@@ -4,6 +4,8 @@ import domain.card.Cards;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
+import dto.domain.PlayerNameAndBettingDto;
+import java.util.List;
 import java.util.Random;
 import java.util.stream.IntStream;
 import util.NameParser;
@@ -39,12 +41,13 @@ public class BlackJackGame {
         return resultCalculator.calculate(dealer, players);
     }
 
-    public static BlackJackGame startGame(String participant){
+    public static BlackJackGame startGame(List<PlayerNameAndBettingDto> playerInfos) {
         final Random random = new Random();
-        final Players players = NameParser.makeNameList(participant);
+        final Players players = new Players(playerInfos.stream()
+                .map(info -> new Player(info.name(), info.betting()))
+                .toList());
         final Dealer dealer = new Dealer();
         final Cards cards = new Cards(random);
-
         final BlackJackGame game = new BlackJackGame(players, dealer, cards);
         game.drawInitialDealerCards();
         game.drawInitialPlayerCards();
