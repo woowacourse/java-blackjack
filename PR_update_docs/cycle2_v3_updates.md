@@ -23,3 +23,4 @@
     if (bets.size() > MAX_PLAYER_COUNT) {
       throw new IllegalArgumentException("[ERROR] 최대 참가 인원은 16명 이하여야 합니다.");                                                                                                                   
     }
+- [x] **6. 동일 이름의 사람은 동일 객체로 보도록 수정**

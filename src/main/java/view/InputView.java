@@ -1,5 +1,6 @@
 package view;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Stream;
@@ -33,7 +34,14 @@ public class InputView {
                 .map(String::trim)
                 .toList();
         validateParticipantsNumbers(parsedName);
+        validateDuplicateNames(parsedName);
         return parsedName;
+    }
+
+    static void validateDuplicateNames(List<String> names) {
+        if (names.size() != new HashSet<>(names).size()) {
+            throw new IllegalArgumentException("[ERROR] 중복된 이름은 사용할 수 없습니다.");
+        }
     }
 
     static void validateParticipantsNumbers(List<String> parsedName) {

@@ -43,4 +43,14 @@ public class InputViewTest {
                 .hasMessageStartingWith(ERROR_PREFIX);
     }
 
+    @Test
+    void 동일이름_예외_테스트() {
+        // given
+        List<String> names = List.of("영기", "영기");
+
+        // when & then
+        assertThatThrownBy(() -> InputView.validateDuplicateNames(names))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageStartingWith(ERROR_PREFIX);
+    }
 }
