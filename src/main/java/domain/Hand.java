@@ -1,13 +1,15 @@
 package domain;
 
+import static domain.BlackjackRule.ACE_SCORE_DIFFERENCE;
+import static domain.BlackjackRule.BLACKJACK_CARD_COUNT;
+import static domain.BlackjackRule.BLACKJACK_TARGET_SCORE;
+import static domain.BlackjackRule.DEALER_MAX_HIT_SCORE;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Hand {
-    private static final Integer MAXIMUM_TOTAL_SCORE = 21;
-    private static final Integer MINIMUM_DEALER_SCORE = 16;
-
     private final List<Card> cards;
     private int handTotalScore;
 
@@ -49,15 +51,15 @@ public class Hand {
     }
 
     private int applyAceRule(int score, int aceCount) {
-        while ((score > MAXIMUM_TOTAL_SCORE) && (aceCount > 0)) {
-            score -= 10;
+        while ((score > BLACKJACK_TARGET_SCORE) && (aceCount > 0)) {
+            score -= ACE_SCORE_DIFFERENCE;
             aceCount--;
         }
         return score;
     }
 
     public Boolean determineDealerDealMore() {
-        return handTotalScore <= MINIMUM_DEALER_SCORE;
+        return handTotalScore <= DEALER_MAX_HIT_SCORE;
     }
 
     public int getHandTotalScore() {
@@ -65,10 +67,10 @@ public class Hand {
     }
 
     public boolean isBlackjack() {
-        return (getHandTotalScore() == MAXIMUM_TOTAL_SCORE) && (cards.size() == 2);
+        return (getHandTotalScore() == BLACKJACK_TARGET_SCORE) && (cards.size() == BLACKJACK_CARD_COUNT);
     }
 
     public boolean isBust() {
-        return this.handTotalScore > MAXIMUM_TOTAL_SCORE;
+        return this.handTotalScore > BLACKJACK_TARGET_SCORE;
     }
 }

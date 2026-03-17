@@ -1,10 +1,10 @@
 package domain;
 
+import static domain.BlackjackRule.BLACKJACK_TARGET_SCORE;
+
 import vo.GameResult;
 
 public class Dealer {
-    private static final Integer MAXIMUM_TOTAL_SCORE = 21;
-
     private final Hand hand;
 
     public Dealer() {
@@ -41,7 +41,7 @@ public class Dealer {
         boolean isDealerBlackjack = this.hand.isBlackjack();
 
         // 유저 버스트
-        if (userTotalScore > MAXIMUM_TOTAL_SCORE) {
+        if (userTotalScore > BLACKJACK_TARGET_SCORE) {
             return GameResult.LOSE;
         }
 
@@ -61,7 +61,7 @@ public class Dealer {
         }
 
         // 딜러 버스트
-        if (hand.getHandTotalScore() > MAXIMUM_TOTAL_SCORE) {
+        if (hand.getHandTotalScore() > BLACKJACK_TARGET_SCORE) {
             return GameResult.WIN;
         }
 

@@ -1,5 +1,7 @@
 package domain;
 
+import static domain.BlackjackRule.MAX_PARTICIPANTS_COUNT;
+
 import dto.DealerResultDTO;
 import dto.ParticipantsInitDTO;
 import dto.ProfitResultDTO;
@@ -13,8 +15,6 @@ import vo.GameResult;
 import vo.Money;
 
 public class Participants {
-    private static final Integer MAXIMUM_NUMBER_OF_PARTICIPANTS = 16;
-
     private final List<User> players;
     private final Dealer dealer;
 
@@ -27,8 +27,9 @@ public class Participants {
     }
 
     private void validateParticipantsNumbers(List<ParticipantsInitDTO> participantsInitDTOS) {
-        if (participantsInitDTOS.size() > MAXIMUM_NUMBER_OF_PARTICIPANTS) {
-            throw new IllegalArgumentException("[ERROR] 최대 참가 인원은 16명 이하여야 합니다.");
+        if (participantsInitDTOS.size() > MAX_PARTICIPANTS_COUNT) {
+            String errorMessage = String.format("[ERROR] 최대 참가 인원은 %d명 이하여야 합니다.", MAX_PARTICIPANTS_COUNT);
+            throw new IllegalArgumentException(errorMessage);
         }
     }
 
