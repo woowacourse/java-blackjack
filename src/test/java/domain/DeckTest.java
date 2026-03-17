@@ -12,8 +12,6 @@ import vo.Rank;
 import vo.Suit;
 
 public class DeckTest {
-    public static final String ERROR_PREFIX = "[ERROR] ";
-
     @Test
     @DisplayName("덱은 중복이 아닌, 52장의 카드로 생성된다.")
     void 덱_52장_중복_없음_테스트() {
@@ -60,6 +58,6 @@ public class DeckTest {
         // when & then
         assertThatThrownBy(deck::drawCard)
                 .isInstanceOf(NoSuchElementException.class)
-                .hasMessageStartingWith(ERROR_PREFIX);
+                .hasMessage("[ERROR] 더 이상의 카드를 꺼낼 수 없습니다.");
     }
 }

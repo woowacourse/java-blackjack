@@ -11,8 +11,6 @@ import org.junit.jupiter.api.Test;
 import vo.Money;
 
 public class ParticipantsTest {
-    public static final String ERROR_PREFIX = "[ERROR] ";
-
     @Test
     @DisplayName("참가자 수가 16명인 경우, 정상 동작한다.")
     void 참가자_수_정상_범위_테스트() {
@@ -33,7 +31,7 @@ public class ParticipantsTest {
         // when & then
         assertThatThrownBy(() -> new Participants(participantsInitDTOS))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageStartingWith(ERROR_PREFIX);
+                .hasMessage("[ERROR] 최대 참가 인원은 16명 이하여야 합니다.");
     }
 
     private List<ParticipantsInitDTO> createParticipantsDTOs(int count) {
