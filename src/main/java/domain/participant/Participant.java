@@ -5,6 +5,7 @@ import java.util.List;
 
 public abstract class Participant {
     private static final int BLACKJACK_SCORE = 21;
+    private static final int ACE_ADDITIONAL_SCORE = 10;
 
     private final List<Card> hand;
 
@@ -34,13 +35,13 @@ public abstract class Participant {
     }
 
     public boolean isSoftHand(boolean isAceExist, int results) {
-        return isAceExist && (results + 10) <= BLACKJACK_SCORE;
+        return isAceExist && (results + ACE_ADDITIONAL_SCORE) <= BLACKJACK_SCORE;
     }
 
     private int applyAce(int results) {
         boolean isAceExist = hand.stream().anyMatch(Card::isAce);
         if (isSoftHand(isAceExist, results)) {
-            return results + 10;
+            return results + ACE_ADDITIONAL_SCORE;
         }
         return results;
     }
