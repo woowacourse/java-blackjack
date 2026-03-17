@@ -25,8 +25,9 @@ public class RevenueService {
     }
 
     public double calculateDealerRevenue(Map<Player, Result> judgeResults) {
-        return judgeResults.entrySet().stream()
-                .mapToDouble(entry -> -calculatePlayerRevenue(entry.getKey(), entry.getValue()))
-                .sum() * -1;
+        double totalPlayerRevenue = judgeResults.entrySet().stream()
+                .mapToDouble(entry -> calculatePlayerRevenue(entry.getKey(), entry.getValue()))
+                .sum();
+        return -totalPlayerRevenue;
     }
 }
