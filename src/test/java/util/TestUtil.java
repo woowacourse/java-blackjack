@@ -1,10 +1,10 @@
 package util;
 
-import domain.Money;
 import domain.betting.Betting;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
+import domain.money.Money;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.result.Result;

@@ -2,7 +2,7 @@ package domain.result;
 
 import static util.TestUtil.createAmount10000Result;
 
-import domain.Money;
+import domain.money.Money;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

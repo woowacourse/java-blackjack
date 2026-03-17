@@ -1,7 +1,7 @@
 package domain.result;
 
-import domain.Money;
 import domain.betting.Betting;
+import domain.money.Money;
 import domain.participant.Dealer;
 import domain.participant.Player;
 

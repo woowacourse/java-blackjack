@@ -8,7 +8,7 @@ public record PlayerResultDto(String name, long profit) {
 
     public static PlayerResultDto from(Result result) {
         String name = result.getPlayer().getNameString();
-        long profit = result.getProfit().amount();
+        long profit = result.getProfit().getAmount();
         return new PlayerResultDto(name, profit);
     }
 
