@@ -7,9 +7,6 @@ import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
 
-/**
- * 52장의 카드 묶음을 관리하는 클래스
- */
 public class Deck {
     private final Deque<Card> cards;
 

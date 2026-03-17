@@ -2,9 +2,6 @@ package domain;
 
 import domain.participant.Participant;
 
-/**
- * 승패 판단과 수익 계산을 관리하는 클래스
- */
 public class ProfitCalculator {
     public int calculate(Participant player, Participant dealer, Money money) {
         GameResult gameResult = judge(player, dealer);
