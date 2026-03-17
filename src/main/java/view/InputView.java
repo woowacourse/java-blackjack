@@ -3,7 +3,6 @@ package view;
 import domain.state.HitStand;
 import domain.participant.Player;
 import dto.domain.PlayerNameAndBettingDto;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import message.IOMessage;
@@ -37,7 +36,7 @@ public class InputView {
 
     private PlayerNameAndBettingDto readPlayerBetting(String name) {
         while (true) {
-            System.out.println(name + "의 배팅 금액은?");
+            System.out.println(name + IOMessage.ASK_PLAYER_BETTING.message());
             final String input = scanner.nextLine().trim();
             try {
                 return new PlayerNameAndBettingDto(name, Integer.parseInt(input));
