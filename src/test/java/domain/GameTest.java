@@ -30,11 +30,11 @@ class GameTest {
     void 딜러_카드_추가_배부_필요_정상_테스트() {
         Players players = PlayerTestUtil.createPlayers();
         Deck deck = PlayerTestUtil.createDeck();
-        Player dealer = PlayerTestUtil.createPlayer("딜러",
+        Dealer dealer = PlayerTestUtil.createDealer(
                 List.of(
                         new Card(CardShape.SPADE, CardRank.TWO),
                         new Card(CardShape.SPADE, CardRank.JACK)
-                ),10000); // 12
+                )); // 12
         Game game = new Game(deck, players, dealer);
 
         boolean isDealerNeedAdditionalCard = game.needAdditionalCard();
@@ -47,11 +47,11 @@ class GameTest {
     void 딜러_카드_추가_배부_불필요_정상_테스트() {
         Players players = PlayerTestUtil.createPlayers();
         Deck deck = PlayerTestUtil.createDeck();
-        Player dealer = PlayerTestUtil.createPlayer("딜러",
+        Dealer dealer = PlayerTestUtil.createDealer(
                 List.of(
                         new Card(CardShape.SPADE, CardRank.QUEEN),
                         new Card(CardShape.SPADE, CardRank.JACK)
-                ),10000); // 20
+                )); // 20
         Game game = new Game(deck, players, dealer);
 
         boolean isDealerNeedAdditionalCard = game.needAdditionalCard();
@@ -63,7 +63,7 @@ class GameTest {
     @DisplayName("참가자가 딜러보다 낮은 점수면 딜러가 이긴다")
     void 참가자가_딜러보다_점수_낮음() {
         Player player = PlayerTestUtil.createNonBurstPlayer(10000);
-        Player dealer = PlayerTestUtil.createBlackjackDealer();
+        Dealer dealer = PlayerTestUtil.createBlackjackDealer();
 
         Players players = new Players(List.of(player));
         Game game = new Game(deck, players, dealer);
@@ -76,9 +76,9 @@ class GameTest {
     @Test
     @DisplayName("참가자가 딜러보다 높은 점수면 딜러가 진다")
     void 참가자가_딜러보다_점수_높음() {
-        Player player = PlayerTestUtil.createBlackjackDealer();
+        Player player = PlayerTestUtil.createBlackjackPlayer(10000);
 
-        Player dealer = PlayerTestUtil.createNonBurstDealer();
+        Dealer dealer = PlayerTestUtil.createNonBurstDealer();
 
         Players players = new Players(List.of(player));
         Game game = new Game(deck, players, dealer);
@@ -93,7 +93,7 @@ class GameTest {
     @Test
     void 참가자_딜러_무승부() {
         Player player = PlayerTestUtil.createNonBurstPlayer(10000);
-        Player dealer = PlayerTestUtil.createNonBurstDealer();
+        Dealer dealer = PlayerTestUtil.createNonBurstDealer();
 
         Players players = new Players(List.of(player));
         Game game = new Game(deck, players, dealer);
@@ -109,7 +109,7 @@ class GameTest {
     @Test
     void 참가자_버스트_딜러_생존() {
         Player player = PlayerTestUtil.createBurstPlayer(10000);
-        Player dealer = PlayerTestUtil.createNonBurstDealer();
+        Dealer dealer = PlayerTestUtil.createNonBurstDealer();
 
         Players players = new Players(List.of(player));
         Game game = new Game(deck, players, dealer);
@@ -125,7 +125,7 @@ class GameTest {
     @Test
     void 참가자_생존_딜러_버스트() {
         Player player = PlayerTestUtil.createNonBurstPlayer(10000);
-        Player dealer = PlayerTestUtil.createBurstDealer();
+        Dealer dealer = PlayerTestUtil.createBurstDealer();
 
         Players players = new Players(List.of(player));
         Game game = new Game(deck, players, dealer);
@@ -149,7 +149,7 @@ class GameTest {
                 List.of(player1, player2)
         );
 
-        Player dealer = PlayerTestUtil.createBurstDealer();
+        Dealer dealer = PlayerTestUtil.createBurstDealer();
 
         Game game = new Game(deck, players, dealer);
         Map<String, MatchCase> result = game.calculateMatch();
@@ -165,7 +165,7 @@ class GameTest {
     void 참가자_bust_배팅금액_마이너스() {
         Player player = PlayerTestUtil.createBurstPlayer(10000);
 
-        Player dealer = PlayerTestUtil.createNonBurstDealer();
+        Dealer dealer = PlayerTestUtil.createNonBurstDealer();
 
         Players players = new Players(List.of(player));
         Game game = new Game(deck, players, dealer);
@@ -180,7 +180,7 @@ class GameTest {
     void 참가자_블랙잭_배팅금액_보너스() {
         Player player = PlayerTestUtil.createBlackjackPlayer(10000);
 
-        Player dealer = PlayerTestUtil.createNonBurstDealer();
+        Dealer dealer = PlayerTestUtil.createNonBurstDealer();
 
         Players players = new Players(List.of(player));
         Game game = new Game(deck, players, dealer);
@@ -194,14 +194,14 @@ class GameTest {
     @Test
     void 딜러_참가자_블랙잭_배팅금액_반환() {
         Player player = PlayerTestUtil.createBlackjackPlayer(10000);
-        Player dealer = PlayerTestUtil.createBlackjackDealer();
+        Dealer dealer = PlayerTestUtil.createBlackjackDealer();
 
         Players players = new Players(List.of(player));
         Game game = new Game(deck, players, dealer);
         game.calculateMatch();
 
         assertThat(player.getBettingScore()).isEqualTo(0);
-        assertThat(dealer.getBettingScore()).isEqualTo(0);
+        assertThat(game.getDealerBettingScore()).isEqualTo(0);
     }
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import domain.Betting;
 import domain.Card;
+import domain.Dealer;
 import domain.Deck;
 import domain.Player;
 import domain.Players;
@@ -14,7 +15,6 @@ import utils.generator.CardsGenerator;
 import utils.generator.ShuffledCardsGenerator;
 
 public final class PlayerTestUtil {
-    private static final String DEALER = "딜러";
     private static final String PLAYER_NAME_1 = "아티";
     private static final String PLAYER_NAME_2 = "요크";
 
@@ -22,6 +22,12 @@ public final class PlayerTestUtil {
         Player player = new Player(name, new Betting(money));
         cards.forEach(player::add);
         return player;
+    }
+
+    public static Dealer createDealer(List<Card> cards) {
+        Dealer dealer = new Dealer();
+        cards.forEach(dealer::add);
+        return dealer;
     }
 
     public static Players createPlayers() {
@@ -73,34 +79,31 @@ public final class PlayerTestUtil {
 
     }
 
-    public static Player createBurstDealer() {
-        return createPlayer(
-                DEALER,
+    public static Dealer createBurstDealer() {
+        return createDealer(
                 List.of(
                         new Card(CardShape.SPADE, CardRank.TEN),
                         new Card(CardShape.SPADE, CardRank.JACK),
                         new Card(CardShape.SPADE, CardRank.NINE)
-                ),0); // 29
+                )); // 29
 
     }
 
-    public static Player createNonBurstDealer() {
-        return createPlayer(
-                DEALER,
+    public static Dealer createNonBurstDealer() {
+        return createDealer(
                 List.of(
                         new Card(CardShape.SPADE, CardRank.TEN),
                         new Card(CardShape.SPADE, CardRank.JACK)
-                ),0); // 20
+                )); // 20
 
     }
 
-    public static Player createBlackjackDealer() {
-        return createPlayer(
-                DEALER,
+    public static Dealer createBlackjackDealer() {
+        return createDealer(
                 List.of(
                         new Card(CardShape.SPADE, CardRank.TEN),
                         new Card(CardShape.SPADE, CardRank.ACE)
-                ),0); // 21
+                )); // 21
 
     }
 
