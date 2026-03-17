@@ -6,6 +6,7 @@ import model.BettingResult;
 import model.CardDispenser;
 import model.Cards;
 import model.Dealer;
+import model.Participant;
 import model.Player;
 
 public class GameContext {
@@ -34,8 +35,12 @@ public class GameContext {
         return this.players;
     }
 
-    public CardDispenser cardDispenser() {
-        return this.cardDispenser;
+    public void dispenseOneCard(Participant player) {
+        this.cardDispenser.dispenseOneCard(player);
+    }
+
+    public void dispenseStartingCards(Participant player) {
+        this.cardDispenser.dispenseStartingCards(player);
     }
 
     public BettingResult bettingResult() {

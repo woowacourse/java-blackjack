@@ -2,7 +2,6 @@ package controller.phase;
 
 import controller.GameContext;
 import java.util.List;
-import model.CardDispenser;
 import model.Dealer;
 import model.Participant;
 import model.Player;
@@ -10,30 +9,27 @@ import view.OutputView;
 
 public class InitialDealPhase implements GamePhase {
 
-    private CardDispenser cardDispenser;
-
     public InitialDealPhase() {
     }
 
     @Override
     public void execute(GameContext gameContext) {
-        this.cardDispenser = gameContext.cardDispenser();
         OutputView.printCardOpen(gameContext.players());
-        distributeCardToDealer(gameContext.dealer());
-        distributeCardToPlayer(gameContext.players());
+        distributeCardToDealer(gameContext.dealer(), gameContext);
+        distributeCardToPlayer(gameContext.players(), gameContext);
         checkBlackJack(gameContext.dealer());
         for (Player player : gameContext.players()) {
             checkBlackJack(player);
         }
     }
 
-    private void distributeCardToDealer(Dealer dealer) {
-        cardDispenser.dispenseStartingCards(dealer);
+    private void distributeCardToDealer(Dealer dealer, GameContext gameContext) {
+        gameContext.dispenseStartingCards(dealer);
     }
 
-    private void distributeCardToPlayer(List<Player> players) {
+    private void distributeCardToPlayer(List<Player> players, GameContext gameContext) {
         for (Player player : players) {
-            cardDispenser.dispenseStartingCards(player);
+            gameContext.dispenseStartingCards(player);
         }
     }
 

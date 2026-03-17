@@ -2,34 +2,31 @@ package controller.phase;
 
 import controller.Continuation;
 import controller.GameContext;
-import model.CardDispenser;
 import model.Player;
 import view.InputView;
 import view.OutputView;
 
 public class PlayerTurnPhase implements GamePhase {
 
-    private CardDispenser cardDispenser;
-
     public PlayerTurnPhase() {
     }
 
     @Override
     public void execute(GameContext gameContext) {
-        this.cardDispenser = gameContext.cardDispenser();
         for (Player player : gameContext.players()) {
-            chooseHitOrStand(player);
+            chooseHitOrStand(player, gameContext);
         }
     }
 
-    private void chooseHitOrStand(Player player) {
+    private void chooseHitOrStand(Player player, GameContext gameContext) {
         boolean drawCard = false;
         while (canHitMore(player)) {
-            distributeMoreOneCard(player);
+            distributeMoreOneCard(player, gameContext);
+            printCardByPlayer(player);
             drawCard = true;
         }
         if (!drawCard) {
-            OutputView.printCardByPlayer(player);
+            printCardByPlayer(player);
         }
     }
 
@@ -42,8 +39,11 @@ public class PlayerTurnPhase implements GamePhase {
         return Continuation.from(inputCommand);
     }
 
-    private void distributeMoreOneCard(Player player) {
-        cardDispenser.dispenseOneCard(player);
+    private void distributeMoreOneCard(Player player, GameContext gameContext) {
+        gameContext.dispenseOneCard(player);
+    }
+
+    private void printCardByPlayer(Player player) {
         OutputView.printCardByPlayer(player);
     }
 }
