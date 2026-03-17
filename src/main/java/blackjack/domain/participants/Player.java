@@ -24,7 +24,7 @@ public class Player extends Participant {
         return !isBust();
     }
 
-    public Profit calculateProfit(GameResult gameResult) {
+    public long calculateProfit(GameResult gameResult) {
         return bet.calculateProfit(gameResult);
     }
 }

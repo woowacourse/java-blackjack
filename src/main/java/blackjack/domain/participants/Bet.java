@@ -20,21 +20,7 @@ public class Bet {
         }
     }
 
-    public Profit calculateProfit(GameResult gameResult) {
-        Profit baseProfit = new Profit(amount);
-
-        if (gameResult.isPlayerBlackjack()) {
-            return baseProfit.applyBlackjackPayout();
-        }
-        if (gameResult.isPush()) {
-            return Profit.zero();
-        }
-        if (gameResult.isPlayerWin()) {
-            return baseProfit;
-        }
-        if (gameResult.isDealerWin()) {
-            return baseProfit.negative();
-        }
-        throw new IllegalArgumentException("유효하지 않은 게임 결과로 수익을 계산할 수 없습니다.");
+    public long calculateProfit(GameResult gameResult) {
+        return gameResult.calculateProfit(amount);
     }
 }

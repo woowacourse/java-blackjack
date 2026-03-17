@@ -1,13 +1,12 @@
 package blackjack.dto;
 
 import blackjack.domain.participants.Player;
-import blackjack.domain.participants.Profit;
 import java.util.Map;
 
 public record DealerProfitDto(long profit) {
-    public static DealerProfitDto from(Map<Player, Profit> playerProfits) {
+    public static DealerProfitDto from(Map<Player, Long> playerProfits) {
         long playerProfitSum = playerProfits.values().stream()
-            .mapToLong(Profit::value)
+            .mapToLong(playerProfit -> playerProfit)
             .sum();
         return new DealerProfitDto(calculateDealerProfit(playerProfitSum));
     }

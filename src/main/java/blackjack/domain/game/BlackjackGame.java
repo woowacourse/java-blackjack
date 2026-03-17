@@ -5,7 +5,6 @@ import blackjack.domain.card.ShuffledDeck;
 import blackjack.domain.participants.Dealer;
 import blackjack.domain.participants.Player;
 import blackjack.domain.participants.PlayerGroup;
-import blackjack.domain.participants.Profit;
 import java.util.List;
 import java.util.Map;
 
@@ -61,7 +60,7 @@ public class BlackjackGame {
         return hitCount;
     }
 
-    public Map<Player, Profit> calculatePlayerProfits() {
+    public Map<Player, Long> calculatePlayerProfits() {
         return playerGroup.calculatePlayersProfit(dealer);
     }
 }

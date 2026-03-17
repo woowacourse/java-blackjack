@@ -62,7 +62,7 @@ public class BlackjackApplication {
     }
 
     private void printProfit() {
-        Map<Player, Profit> playerProfits = game.calculatePlayerProfits();
+        Map<Player, Long> playerProfits = game.calculatePlayerProfits();
         view.printResult(GameResultDtos.of(playerProfits));
     }
 }

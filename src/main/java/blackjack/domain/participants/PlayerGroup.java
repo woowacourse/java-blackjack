@@ -12,15 +12,15 @@ public record PlayerGroup(List<Player> players) {
         players.forEach(participant -> participant.hitFrom(deck));
     }
 
-    public Map<Player, Profit> calculatePlayersProfit(Dealer dealer) {
-        Map<Player, Profit> playerProfits = new LinkedHashMap<>();
+    public Map<Player, Long> calculatePlayersProfit(Dealer dealer) {
+        Map<Player, Long> playerProfits = new LinkedHashMap<>();
         players.forEach(player ->
             playerProfits.put(player, calculateProfit(dealer, player)));
         return playerProfits;
     }
 
-    private Profit calculateProfit(Dealer dealer, Player player) {
-        GameResult judge = BlackjackGameReferee.judge(dealer, player);
-        return player.calculateProfit(judge);
+    private long calculateProfit(Dealer dealer, Player player) {
+        GameResult result = BlackjackGameReferee.judge(dealer, player);
+        return player.calculateProfit(result);
     }
 }

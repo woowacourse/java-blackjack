@@ -1,21 +1,20 @@
 package blackjack.domain.game;
 
 public enum GameResult {
-    PLAYER_BLACKJACK, PLAYER_WIN, DEALER_WIN, PUSH;
+    PLAYER_BLACKJACK(3, 2),
+    PLAYER_WIN(1, 1),
+    DEALER_WIN(-1, 1),
+    PUSH(0, 1);
 
-    public boolean isPlayerBlackjack() {
-        return this == PLAYER_BLACKJACK;
+    private final long numerator;
+    private final long denominator;
+
+    GameResult(long numerator, long denominator) {
+        this.numerator = numerator;
+        this.denominator = denominator;
     }
 
-    public boolean isPlayerWin() {
-        return this == PLAYER_WIN;
-    }
-
-    public boolean isDealerWin() {
-        return this == DEALER_WIN;
-    }
-
-    public boolean isPush() {
-        return this == PUSH;
+    public long calculateProfit(long betAmount) {
+        return betAmount * this.numerator / this.denominator;
     }
 }

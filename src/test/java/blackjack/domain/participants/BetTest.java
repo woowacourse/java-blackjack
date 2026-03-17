@@ -26,9 +26,9 @@ class BetTest {
         Bet bet = new Bet(BET_AMOUNT);
         GameResult gameResult = GameResult.PLAYER_BLACKJACK;
         // when
-        Profit profit = bet.calculateProfit(gameResult);
+        long profit = bet.calculateProfit(gameResult);
         // then
-        assertThat(profit.value()).isEqualTo(
+        assertThat(profit).isEqualTo(
             BET_AMOUNT * BLACKJACK_PAYOUT_NUMERATOR / BLACKJACK_PAYOUT_DENOMINATOR);
     }
 
@@ -38,9 +38,9 @@ class BetTest {
         Bet bet = new Bet(BET_AMOUNT);
         GameResult gameResult = GameResult.PUSH;
         // when
-        Profit profit = bet.calculateProfit(gameResult);
+        long profit = bet.calculateProfit(gameResult);
         // then
-        assertThat(profit.value()).isEqualTo(0L);
+        assertThat(profit).isEqualTo(0L);
     }
 
     @Test
@@ -49,9 +49,9 @@ class BetTest {
         Bet bet = new Bet(BET_AMOUNT);
         GameResult gameResult = GameResult.DEALER_WIN;
         // when
-        Profit profit = bet.calculateProfit(gameResult);
+        long profit = bet.calculateProfit(gameResult);
         // then
-        assertThat(profit.value()).isEqualTo(BET_AMOUNT * -1);
+        assertThat(profit).isEqualTo(BET_AMOUNT * -1);
     }
 
     @Test
@@ -60,8 +60,8 @@ class BetTest {
         Bet bet = new Bet(BET_AMOUNT);
         GameResult gameResult = GameResult.PLAYER_WIN;
         // when
-        Profit profit = bet.calculateProfit(gameResult);
+        long profit = bet.calculateProfit(gameResult);
         // then
-        assertThat(profit.value()).isEqualTo(BET_AMOUNT);
+        assertThat(profit).isEqualTo(BET_AMOUNT);
     }
 }
