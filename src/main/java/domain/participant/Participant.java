@@ -22,7 +22,7 @@ public abstract class Participant {
             results += holdCard.getCardValue().getScore();
         }
 
-        return checkAce(results);
+        return applyAce(results);
     }
 
     public boolean isBlackjack() {
@@ -37,7 +37,7 @@ public abstract class Participant {
         return isAceExist && (results + 10) <= BLACKJACK_SCORE;
     }
 
-    private int checkAce(int results) {
+    private int applyAce(int results) {
         boolean isAceExist = hand.stream().anyMatch(Card::isAce);
         if (isSoftHand(isAceExist, results)) {
             return results + 10;
