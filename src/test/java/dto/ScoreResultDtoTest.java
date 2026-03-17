@@ -9,22 +9,21 @@ import domain.card.Rank;
 import domain.card.Suit;
 import domain.participant.Dealer;
 import domain.participant.Player;
-import java.util.ArrayList;
+import domain.participant.Players;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class ScoreResultDtoTest {
-    List<Player> players;
+    Players players;
     Dealer dealer;
 
     @BeforeEach
     void setUp() {
-        players = new ArrayList<>();
         Player player1 = createPlayer("봉구스", new Card(Suit.CLUBS, Rank.ACE), new Card(Suit.DIAMONDS, Rank.KING));
         Player player2 = createPlayer("시오", new Card(Suit.HEARTS, Rank.FIVE), new Card(Suit.SPADES, Rank.JACK));
 
-        players = List.of(player1, player2);
+        players = new Players(List.of(player1, player2));
         dealer = createDealer(new Card(Suit.HEARTS, Rank.FOUR), new Card(Suit.CLUBS, Rank.EIGHT));
     }
 

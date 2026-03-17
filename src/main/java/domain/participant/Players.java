@@ -22,4 +22,8 @@ public record Players(List<Player> players) {
     public int size() {
         return players.size();
     }
+
+    public Player get(int index) {
+        return players.get(index);
+    }
 }

@@ -49,9 +49,10 @@ public class BlackJackController {
         printResult(dealer, players, results);
     }
 
-    private Bettings betMoney(List<Player> players) {
+    private Bettings betMoney(Players players) {
         Bettings bettings = new Bettings();
-        for (Player player : players) {
+        for (int i = 0; i < players.size(); i++) {
+            Player player = players.get(i);
             BettingMoney bettingMoney = BettingMoney.from(inputView.askBettingAmount(player.getNameString()));
             Betting betting = new Betting(player, bettingMoney);
             bettings = bettings.addBetting(betting);
@@ -59,7 +60,7 @@ public class BlackJackController {
         return bettings;
     }
 
-    private void printResult(Dealer dealer, List<Player> players, Results results) {
+    private void printResult(Dealer dealer, Players players, Results results) {
         ScoreResultDto scoreResultDto = ScoreResultDto.of(dealer, players);
         outputView.printScoreResult(scoreResultDto);
 
@@ -73,7 +74,8 @@ public class BlackJackController {
         outputView.printInitMessage(initStatusDto);
 
         // todo : player, players를 붋변객체로 만들어서 해당 로직도 불변에 맞게 수정
-        for (Player player : players) {
+        for (int i = 0; i < players.size(); i++) {
+            Player player = players.get(i);
             drawPlayerCard(player, deck);
         }
         drawDealerCard(dealer, deck);
