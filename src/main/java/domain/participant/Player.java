@@ -4,9 +4,9 @@ public class Player extends Participant {
 
     private final Name name;
 
-    public Player(String name) {
+    public Player(Name name) {
         super();
-        this.name = new Name(name);
+        this.name = name;
     }
 
     public Name getName() {

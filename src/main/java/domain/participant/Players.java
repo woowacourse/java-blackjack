@@ -20,7 +20,10 @@ public class Players {
 
     public Players(List<String> names) {
         validatePlayers(names);
-        names.forEach(name -> players.put(new Name(name), new Player(name)));
+        names.forEach(name -> {
+            Name playerName = new Name(name);
+            players.put(playerName, new Player(playerName));
+        });
     }
 
     public List<Name> getAllPlayersName() {

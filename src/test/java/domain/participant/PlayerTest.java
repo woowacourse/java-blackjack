@@ -7,14 +7,15 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class PlayerTest {
 
-    @DisplayName("플레이어 정상 생성 테스트")
+    @DisplayName("플레이어는 전달받은 이름을 가진다.")
     @ParameterizedTest
     @ValueSource(strings = {"tony", "fizz"})
-    void 플레이어_이름_예외_테스트(String name) {
-        Player player = new Player(name);
+    void 플레이어_이름_전달받은_이름_동일(String name) {
+        Name playerName = new Name(name);
+        Player player = new Player(playerName);
 
-        Name playerName = player.getName();
+        Name actualName = player.getName();
 
-        Assertions.assertThat(playerName).isEqualTo(new Name(name));
+        Assertions.assertThat(actualName).isEqualTo(playerName);
     }
 }

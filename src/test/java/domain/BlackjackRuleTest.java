@@ -7,6 +7,7 @@ import domain.enums.GameResult;
 import domain.enums.Rank;
 import domain.enums.Suit;
 import domain.participant.Dealer;
+import domain.participant.Name;
 import domain.participant.Player;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +21,7 @@ public class BlackjackRuleTest {
 
     @BeforeEach
     void set_up() {
-        player = new Player("stark");
+        player = new Player(new Name("stark"));
         dealer = new Dealer();
     }
 
@@ -81,7 +82,7 @@ public class BlackjackRuleTest {
 
     @DisplayName("플레이어가 버스트 되지 않았을 때 플레이어의 점수가 더 낮으면 플레이어가 패배하고 딜러는 승리한다.")
     @Test
-    void 플레이어_점수_더_높으면_플레이어_패배한다() {
+    void 플레이어_점수_더_낮으면_플레이어_패배한다() {
         player.addCard(new Card(Rank.JACK, Suit.CLOVER));
         player.addCard(new Card(Rank.NINE, Suit.CLOVER));
 

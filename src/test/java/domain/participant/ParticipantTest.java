@@ -11,6 +11,7 @@ import domain.enums.Rank;
 import domain.enums.Suit;
 import java.util.List;
 import java.util.stream.Stream;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -19,11 +20,19 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 public class ParticipantTest {
 
+    private Participant player;
+    private Participant dealer;
+
+    @BeforeEach
+    void set_up() {
+        player = new Player(new Name("stark"));
+        dealer = new Dealer();
+    }
+
     @DisplayName("게임 시작 후 플레이어가 2장의 카드를 분배 받는다.")
     @Test
     void 게임_시작_후_플레이어_2장의_카드_분배를_받는다() {
         //given
-        Participant player = new Player("stark");
         //when
         player.receiveInitialCards(List.of(new Card(Rank.FIVE, Suit.CLOVER), new Card(Rank.SIX, Suit.CLOVER)));
         //then
@@ -34,7 +43,6 @@ public class ParticipantTest {
     @Test
     void 플레이어_이미_카드_소지_시_2장_카드_분배_시_예외_발생() {
         //given
-        Participant player = new Player("stark");
         //when
         player.addCard(new Card(Rank.JACK, Suit.CLOVER));
         //then
@@ -62,7 +70,6 @@ public class ParticipantTest {
     @MethodSource("initialCards")
     void 카드_초기_분배_시_2장_아닌_경우_예외_발생(List<Card> initialCards) {
         //given
-        Participant player = new Player("stark");
         //when
         //then
         assertThatThrownBy(() -> player.receiveInitialCards(initialCards))
@@ -85,9 +92,8 @@ public class ParticipantTest {
     @ParameterizedTest
     @MethodSource("safeScoreCards")
     public void 카드_점수_합계를_정상적으로_계산한다(List<Card> cards, int expectedValue) {
-        Participant participant = new Dealer();
-        cards.forEach(participant::addCard);
-        int score = participant.getScore();
+        cards.forEach(dealer::addCard);
+        int score = dealer.getScore();
 
         assertThat(score).isEqualTo(expectedValue);
     }
@@ -95,20 +101,17 @@ public class ParticipantTest {
     @DisplayName("카드 점수 합계가 21을 초과하면 버스트를 판정한다.")
     @Test
     public void 카드_점수_합계가_21을_넘으면_버스트를_판정한다() {
-        Participant participant = new Player("stark");
         List<Card> burstCards = List.of(new Card(Rank.JACK, Suit.CLOVER), new Card(Rank.QUEEN, Suit.CLOVER),
                 new Card(Rank.TWO, Suit.CLOVER));
-        burstCards.forEach(participant::addCard);
+        burstCards.forEach(player::addCard);
 
-        assertThat(participant.isBust()).isTrue();
+        assertThat(player.isBust()).isTrue();
     }
 
     @DisplayName("플레이어와 딜러가 각자의 기준에 어긋나면 카드를 드로우 할 수 없다")
     @Test
     void 기준_어긋날_때_카드_드로우_예외_발생() {
         //given
-        Participant player = new Player("스타크");
-        Participant dealer = new Dealer();
         //when
         List<Card> playerCards = List.of(new Card(Rank.JACK, Suit.CLOVER), new Card(Rank.QUEEN, Suit.CLOVER),
                 new Card(Rank.TWO, Suit.CLOVER));
@@ -131,7 +134,6 @@ public class ParticipantTest {
     @Test
     void 분배된_카드_확인() {
         //given
-        Participant player = new Player("스타크");
         //when
         player.addCard(new Card(Rank.JACK, Suit.CLOVER));
         player.addCard(new Card(Rank.QUEEN, Suit.CLOVER));
