@@ -8,7 +8,6 @@ import domain.vo.Name;
 
 public class Player extends Participant {
     private final Name name;
-    private WinStatus winStatus;
 
     public Player(Name name, HandCards handCards) {
         super(handCards);
@@ -19,26 +18,29 @@ public class Player extends Participant {
         return name;
     }
 
-    public WinStatus getWinStatus() {
-        return winStatus;
+    public WinStatus decideWinStatus(Dealer dealer) {
+        if (isBust()) {
+            return WinStatus.LOSS;
+        }
+
+        if (isWinningCondition(dealer)) {
+            return WinStatus.WIN;
+        }
+
+        if (isDrawCondition(dealer)) {
+            return WinStatus.DRAW;
+        }
+
+        return WinStatus.LOSS;
     }
 
-    public void calculateResult(Dealer dealer) {
-        if (isBust()) {
-            winStatus = WinStatus.LOSS;
-            return;
-        }
+    private boolean isWinningCondition(Dealer dealer) {
+        return (this.isBlackjack() && !dealer.isBlackjack())
+                || dealer.isBust()
+                || getScore() > dealer.getScore();
+    }
 
-        if (this.isBlackjack() && !dealer.isBlackjack() || dealer.isBust() || getScore() > dealer.getScore()) {
-            winStatus = WinStatus.WIN;
-            return;
-        }
-
-        if (getScore() == dealer.getScore()) {
-            winStatus = WinStatus.DRAW;
-            return;
-        }
-
-        winStatus = WinStatus.LOSS;
+    private boolean isDrawCondition(Dealer dealer) {
+        return getScore() == dealer.getScore();
     }
 }
