@@ -9,8 +9,12 @@ public class Dealer extends Participant {
         super("딜러", new Hand());
     }
 
+    public String getOpenCard() {
+        return showHand().getFirst();
+    }
+
     @Override
     public boolean canReceiveCard() {
-        return hand.calculateScore() <= MAX_DEALER_SHOULD_RECEIVE_SCORE;
+        return getScore() <= MAX_DEALER_SHOULD_RECEIVE_SCORE;
     }
 }

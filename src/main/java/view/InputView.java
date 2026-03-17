@@ -43,4 +43,13 @@ public class InputView {
             System.out.println(COMMAND_REINPUT_MESSAGE);
         }
     }
+
+    public String readBetAmount(String playerName) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println(playerName + "의 베팅 금액은?");
+        String input = sc.nextLine();
+        System.out.println();
+
+        return input;
+    }
 }

@@ -1,11 +1,11 @@
-package domain;
+package domain.card;
 
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static domain.constant.Rank.*;
-import static domain.constant.Suit.*;
+import static domain.card.Rank.*;
+import static domain.card.Suit.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 

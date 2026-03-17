@@ -1,13 +1,13 @@
 package domain.participant;
 
-import domain.Card;
+import domain.card.Card;
 import domain.dto.GameScoreResultDto;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static domain.constant.Rank.*;
-import static domain.constant.Suit.*;
+import static domain.card.Rank.*;
+import static domain.card.Suit.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -17,8 +17,8 @@ public class PlayersTest {
     @Test
     void 플레이어_저장_테스트() {
         Players players = new Players();
-        players.register("pobi");
-        players.register("cary");
+        players.register("pobi", "10000");
+        players.register("cary", "10000");
 
         List<Player> allPlayer = players.getAll();
 
@@ -33,9 +33,9 @@ public class PlayersTest {
     @Test
     void 이름에_해당하는_플레이어에게_카드를_드로우한다() {
         Players players = new Players();
-        players.register("pobi");
+        players.register("pobi", "10000");
 
-        List<String> hand = players.drawCardTo("pobi", new Card(ACE, SPADE));
+        List<String> hand = players.drawCardToPlayer("pobi", new Card(ACE, SPADE));
 
         assertThat(players.getAll())
                 .extracting(
@@ -47,9 +47,9 @@ public class PlayersTest {
     @Test
     void 이름에_해당하는_플레이어가_추가로_카드를_받을_수_있는지_확인한다() {
         Players players = new Players();
-        players.register("pobi");
-        players.drawCardTo("pobi", new Card(ACE, SPADE));
-        players.drawCardTo("pobi", new Card(QUEEN, SPADE));
+        players.register("pobi", "10000");
+        players.drawCardToPlayer("pobi", new Card(ACE, SPADE));
+        players.drawCardToPlayer("pobi", new Card(QUEEN, SPADE));
 
         assertThat(players.canReceiveCard("pobi")).isFalse();
     }
@@ -57,15 +57,15 @@ public class PlayersTest {
     @Test
     void 모든_플레이어의_점수결과를_확인한다() {
         Players players = new Players();
-        players.register("pobi");
-        players.drawCardTo("pobi", new Card(ACE, SPADE));
-        players.drawCardTo("pobi", new Card(KING, DIAMOND));
+        players.register("pobi", "10000");
+        players.drawCardToPlayer("pobi", new Card(ACE, SPADE));
+        players.drawCardToPlayer("pobi", new Card(KING, DIAMOND));
 
-        players.register("cary");
-        players.drawCardTo("cary", new Card(SIX, HEART));
-        players.drawCardTo("cary", new Card(TEN, CLUB));
+        players.register("cary", "10000");
+        players.drawCardToPlayer("cary", new Card(SIX, HEART));
+        players.drawCardToPlayer("cary", new Card(TEN, CLUB));
 
-        List<GameScoreResultDto> scoreResults = players.getScoreResults();
+        List<GameScoreResultDto> scoreResults = GameScoreResultDto.from(players);
 
         assertThat(scoreResults)
                 .extracting(
@@ -76,5 +76,17 @@ public class PlayersTest {
                         tuple("pobi", List.of("A스페이드", "K다이아몬드"), 21),
                         tuple("cary", List.of("6하트", "10클로버"), 16));
 
+    }
+
+    @Test
+    void 플레이어의_핸드를_보여준다() {
+        Players players = new Players();
+        players.register("pobi", "10000");
+        players.drawCardToPlayer("pobi", new Card(ACE, SPADE));
+        players.drawCardToPlayer("pobi", new Card(KING, DIAMOND));
+
+        List<String> hand = players.showPlayerHand("pobi");
+
+        assertThat(hand).containsExactly("A스페이드", "K다이아몬드");
     }
 }

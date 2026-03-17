@@ -1,8 +1,8 @@
 package domain.deck;
 
-import domain.Card;
-import domain.constant.Rank;
-import domain.constant.Suit;
+import domain.card.Card;
+import domain.card.Rank;
+import domain.card.Suit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

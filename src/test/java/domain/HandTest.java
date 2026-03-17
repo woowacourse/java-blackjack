@@ -1,9 +1,12 @@
 package domain;
 
+import domain.card.Card;
 import org.junit.jupiter.api.Test;
 
-import static domain.constant.Rank.*;
-import static domain.constant.Suit.*;
+import java.util.List;
+
+import static domain.card.Rank.*;
+import static domain.card.Suit.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class HandTest {
@@ -70,5 +73,23 @@ public class HandTest {
         hand.addCard(new Card(KING, HEART));
 
         assertThat(hand.isBust()).isFalse();
+    }
+
+    @Test
+    void 핸드에_2장의_카드만_존재하고_점수합계가_21점이면_블랙잭이다() {
+        Hand hand1 = new Hand();
+        hand1.addCard(new Card(ACE, SPADE));
+        hand1.addCard(new Card(KING, HEART));
+        hand1.addCard(new Card(TEN, DIAMOND));
+
+        Hand hand2 = new Hand();
+        hand2.addCard(new Card(JACK, SPADE));
+        hand2.addCard(new Card(ACE, HEART));
+
+        List<Hand> hands = List.of(hand1, hand2);
+
+        assertThat(hands)
+                .extracting(Hand::isBlackjack)
+                .containsExactly(false, true);
     }
 }
