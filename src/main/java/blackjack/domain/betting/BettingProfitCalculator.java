@@ -1,5 +1,6 @@
 package blackjack.domain.betting;
 
+import blackjack.domain.GameResult;
 import blackjack.domain.Participants;
 import blackjack.domain.participant.Player;
 import java.util.LinkedHashMap;
@@ -26,8 +27,8 @@ public class BettingProfitCalculator {
 
         participants.withDealer(dealer ->
                 participants.forEachPlayer(player -> {
-                    BettingResult bettingResult = BettingResult.judge(dealer, player);
-                    long profit = player.calculateProfit(dividendPolicy, bettingResult);
+                    GameResult gameResult = GameResult.judge(dealer, player);
+                    long profit = player.calculateProfit(dividendPolicy, gameResult);
                     playerProfit.put(player, profit);
                 })
         );

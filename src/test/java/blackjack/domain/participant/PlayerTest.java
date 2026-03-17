@@ -2,7 +2,7 @@ package blackjack.domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.domain.betting.BettingResult;
+import blackjack.domain.GameResult;
 import blackjack.domain.betting.StandardDividendPolicy;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Emblem;
@@ -67,7 +67,7 @@ class PlayerTest {
             "WIN, 10_000",
             "LOSE, -10_000",
             "PUSH, 0"})
-    void 수익률을_계산한다(BettingResult bettingResult, int expectedProfitRate) {
+    void 수익률을_계산한다(GameResult gameResult, int expectedProfitRate) {
         // given
         Hand hand = new Hand(
                 List.of(
@@ -81,7 +81,7 @@ class PlayerTest {
         player.bet(bettingAmount);
         StandardDividendPolicy dividendPolicy = new StandardDividendPolicy();
         // when
-        long profitRate = player.calculateProfit(dividendPolicy, bettingResult);
+        long profitRate = player.calculateProfit(dividendPolicy, gameResult);
         // then
         assertThat(profitRate).isEqualTo(expectedProfitRate);
     }

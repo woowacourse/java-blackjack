@@ -1,6 +1,6 @@
 package blackjack.domain.participant;
 
-import blackjack.domain.betting.BettingResult;
+import blackjack.domain.GameResult;
 import blackjack.domain.betting.DividendPolicy;
 import blackjack.domain.card.Card;
 import java.util.List;
@@ -25,7 +25,7 @@ public class Player extends Participant {
         this.bettingAmount = this.bettingAmount.register(bettingAmount);
     }
 
-    public long calculateProfit(DividendPolicy dividendPolicy, BettingResult bettingResult) {
-        return dividendPolicy.calculate(bettingAmount.getBettingAmount(), bettingResult);
+    public long calculateProfit(DividendPolicy dividendPolicy, GameResult gameResult) {
+        return dividendPolicy.calculate(bettingAmount.getBettingAmount(), gameResult);
     }
 }

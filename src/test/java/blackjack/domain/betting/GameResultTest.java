@@ -13,6 +13,7 @@ import static blackjack.domain.card.Grade.QUEEN;
 import static blackjack.domain.card.Grade.TWO;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import blackjack.domain.GameResult;
 import blackjack.domain.card.Card;
 import blackjack.domain.card.Emblem;
 import blackjack.domain.card.Grade;
@@ -25,15 +26,15 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class BettingResultTest {
+class GameResultTest {
 
     @ParameterizedTest
     @MethodSource("bettingResults")
-    void 베팅_결과를_판단한다(Dealer dealer, Player player, BettingResult expectedResult) {
+    void 베팅_결과를_판단한다(Dealer dealer, Player player, GameResult expectedResult) {
         // when
-        BettingResult bettingResult = BettingResult.judge(dealer, player);
+        GameResult gameResult = GameResult.judge(dealer, player);
         // then
-        assertThat(bettingResult).isEqualTo(expectedResult);
+        assertThat(gameResult).isEqualTo(expectedResult);
     }
 
     static Stream<Arguments> bettingResults() {
@@ -41,37 +42,37 @@ class BettingResultTest {
                 Arguments.of(
                         createDealer(createCard(CLOVER, ACE), createCard(HEART, EIGHT)),
                         createPlayer(createCard(CLOVER, ACE), createCard(HEART, JACK)),
-                        BettingResult.BLACKJACK_WIN
+                        GameResult.BLACKJACK_WIN
                 ),
                 Arguments.of(
                         createDealer(createCard(CLOVER, FIVE), createCard(HEART, EIGHT), createCard(HEART, NINE)),
                         createPlayer(createCard(CLOVER, ACE), createCard(HEART, JACK)),
-                        BettingResult.BLACKJACK_WIN
+                        GameResult.BLACKJACK_WIN
                 ),
                 Arguments.of(
                         createDealer(createCard(CLOVER, ACE), createCard(HEART, EIGHT)),
                         createPlayer(createCard(CLOVER, TWO), createCard(HEART, JACK), createCard(HEART, JACK)),
-                        BettingResult.LOSE
+                        GameResult.LOSE
                 ),
                 Arguments.of(
                         createDealer(createCard(CLOVER, FIVE), createCard(HEART, EIGHT), createCard(HEART, NINE)),
                         createPlayer(createCard(CLOVER, TWO), createCard(HEART, JACK), createCard(HEART, JACK)),
-                        BettingResult.LOSE
+                        GameResult.LOSE
                 ),
                 Arguments.of(
                         createDealer(createCard(CLOVER, ACE), createCard(HEART, QUEEN)),
                         createPlayer(createCard(CLOVER, ACE), createCard(HEART, JACK)),
-                        BettingResult.PUSH
+                        GameResult.PUSH
                 ),
                 Arguments.of(
                         createDealer(createCard(CLOVER, KING), createCard(CLOVER, FOUR), createCard(HEART, EIGHT)),
                         createPlayer(createCard(CLOVER, TWO), createCard(HEART, JACK)),
-                        BettingResult.WIN
+                        GameResult.WIN
                 ),
                 Arguments.of(
                         createDealer(createCard(CLOVER, KING), createCard(CLOVER, TWO), createCard(HEART, EIGHT)),
                         createPlayer(createCard(CLOVER, TWO), createCard(HEART, KING), createCard(HEART, NINE)),
-                        BettingResult.WIN
+                        GameResult.WIN
                 )
         );
     }
