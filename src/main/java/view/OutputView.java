@@ -37,13 +37,12 @@ public class OutputView {
     }
 
 
-    public static void printCardByPlayerWithScore(AbstractParticipant player) {
-        int sum = player.calculateTotalScore();
+    public static void printCardByPlayerWithScore(AbstractParticipant player, int score) {
         List<String> cards = player.cards()
                 .stream()
                 .map(OutputView::convert)
                 .toList();
-        System.out.printf("%s카드: %s - 결과: %d%n", player.name(), String.join(", ", cards), sum);
+        System.out.printf("%s카드: %s - 결과: %d%n", player.name(), String.join(", ", cards), score);
     }
 
     private static String convert(Card card) {
