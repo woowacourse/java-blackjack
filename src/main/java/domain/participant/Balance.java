@@ -5,7 +5,7 @@ public class Balance {
 
     private final int balance;
 
-    private Balance(int balance) {
+    public Balance(int balance) {
         this.balance = balance;
     }
 
@@ -15,5 +15,9 @@ public class Balance {
 
     public Balance adjust(int betting){
         return new Balance(betting + balance);
+    }
+
+    public int getBalance(){
+        return balance;
     }
 }
