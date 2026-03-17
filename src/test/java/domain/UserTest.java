@@ -6,6 +6,7 @@ import fixture.UserFixture;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import vo.Money;
 import vo.Rank;
 import vo.Suit;
 
@@ -79,5 +80,31 @@ public class UserTest {
 
         // when & then
         assertThat(user.isBust()).isTrue();
+    }
+
+    @Test
+    @DisplayName("유저의 이름을 반환한다. - getUserName()")
+    void 유저_이름_반환_테스트() {
+        // given
+        User user = UserFixture.createDefaultUser();
+
+        // when
+        String expectedResult = "라이";
+
+        // then
+        assertThat(user.getUserName()).isEqualTo(expectedResult);
+    }
+
+    @Test
+    @DisplayName("유저의 베팅 머니를 반환한다. - getBettingMoney()")
+    void 유저_베팅_머니_반환_테스트() {
+        // given
+        User user = UserFixture.createDefaultUser();
+
+        // when
+        Money expectedResult = new Money(10000);
+
+        // then
+        assertThat(user.getBettingMoney()).isEqualTo(expectedResult);
     }
 }
