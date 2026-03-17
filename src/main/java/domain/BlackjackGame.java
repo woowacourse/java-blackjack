@@ -1,10 +1,5 @@
 package domain;
 
-import static domain.result.GameResult.BLACKJACK;
-import static domain.result.GameResult.DRAW;
-import static domain.result.GameResult.LOSE;
-import static domain.result.GameResult.WIN;
-
 import domain.card.CurrentHand;
 import domain.card.CurrentHands;
 import domain.card.Deck;
@@ -13,10 +8,8 @@ import domain.participant.Dealer;
 import domain.participant.Participant;
 import domain.participant.Participants;
 import domain.participant.Player;
-import domain.result.BetProfit;
 import domain.result.BetProfits;
 import domain.result.FinalResult;
-import domain.result.GameResult;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,22 +73,7 @@ public class BlackjackGame {
     }
 
     public BetProfits getBetProfits() {
-        final Dealer dealer = participants.getDealer();
-        final List<BetProfit> playerResults = new ArrayList<>();
-
-        int dealerProfit = 0;
-        for (final Player player : participants.getPlayers()) {
-            final GameResult result = judge(dealer, player);
-
-            final int playerProfit = result.calculateBetProfit(player.getBetAmount());
-
-            playerResults.add(new BetProfit(player.getName(), playerProfit));
-
-            dealerProfit -= playerProfit;
-        }
-        final BetProfit dealerResult = new BetProfit(dealer.getName(), dealerProfit);
-
-        return new BetProfits(dealerResult, playerResults);
+        return BetProfits.from(participants.getDealer(), participants.getPlayers());
     }
 
     public Participants getParticipants() {
@@ -109,39 +87,6 @@ public class BlackjackGame {
         }
     }
 
-    private GameResult judge(final Participant dealer, final Participant player) {
-        if (player.isBust()) {
-            return LOSE;
-        }
 
-        if (player.isBlackjack() && !dealer.isBlackjack()) {
-            return BLACKJACK;
-        }
-
-        if (dealer.isBust()) {
-            return WIN;
-        }
-
-        if (dealer.isBlackjack() && !player.isBlackjack()) {
-            return LOSE;
-        }
-
-        return compareScore(dealer, player);
-    }
-
-    private GameResult compareScore(final Participant dealer, final Participant player) {
-
-        final int dealerScore = dealer.getScore();
-        final int playerScore = player.getScore();
-
-        if (dealerScore < playerScore) {
-            return WIN;
-        }
-        if (dealerScore > playerScore) {
-            return LOSE;
-        }
-
-        return DRAW;
-    }
 }
 
