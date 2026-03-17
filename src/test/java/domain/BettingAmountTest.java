@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 class BettingAmountTest {
 
-    private final BigDecimal amount = new BigDecimal("10000");
+    private final BigDecimal amount = new BigDecimal(10_000);
 
     @Test
     @DisplayName("배팅 금액 1.5배 증가")
@@ -17,7 +17,7 @@ class BettingAmountTest {
 
         bettingAmount.applyBlackjackBonus();
 
-        assertThat(bettingAmount.value()).isEqualTo(new BigDecimal("15000"));
+        assertThat(bettingAmount.value().intValueExact()).isEqualTo(15_000);
     }
 
     @Test
@@ -27,7 +27,18 @@ class BettingAmountTest {
 
         bettingAmount.applyLoseAmount();
 
-        assertThat(bettingAmount.value()).isEqualTo(new BigDecimal(-10_000));
+        assertThat(bettingAmount.value().intValueExact()).isEqualTo(-10_000);
     }
+
+    @Test
+    @DisplayName("무승부 시 배팅 금액 0으로 조정")
+    void bettingAmount_draw_isZero() {
+        BettingAmount bettingAmount = BettingAmount.of(amount);
+
+        bettingAmount.applyDrawAmount();
+
+        assertThat(bettingAmount.value()).isZero();
+    }
+
 
 }
