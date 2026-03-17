@@ -1,5 +1,6 @@
-package controller;
+package controller.phase;
 
+import controller.GameContext;
 import model.CardDispenser;
 import model.Dealer;
 import view.OutputView;

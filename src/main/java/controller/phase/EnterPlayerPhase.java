@@ -1,5 +1,6 @@
-package controller;
+package controller.phase;
 
+import controller.GameContext;
 import java.util.List;
 import model.Player;
 import view.InputView;

@@ -1,5 +1,6 @@
-package controller;
+package controller.phase;
 
+import controller.GameContext;
 import view.OutputView;
 
 public class CalculateScorePhase implements GamePhase {
