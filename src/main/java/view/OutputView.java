@@ -30,7 +30,7 @@ public class OutputView {
         for (PlayerDto playerDto : playersDto.playersDto()) {
             printPlayerCardStatus(playerDto);
         }
-        System.out.print(System.lineSeparator());
+        System.out.println();
     }
 
     private static String getCardStatusFormat(List<String> cards) {
@@ -65,11 +65,10 @@ public class OutputView {
     }
 
     public static void printTotalProfit(String dealerProfit, List<PlayerProfitDto> playerProfitResults) {
-        System.out.println("\n\n## 최종 수익");
+        System.out.printf("%n%n## 최종 수익");
         System.out.printf("딜러: %s%n", dealerProfit);
         for (PlayerProfitDto playerProfitResult : playerProfitResults) {
             System.out.printf("%s: %s%n", playerProfitResult.name(), playerProfitResult.profit());
         }
-
     }
 }
