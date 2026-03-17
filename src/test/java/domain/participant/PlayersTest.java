@@ -80,11 +80,11 @@ class PlayersTest {
     void 블랙잭_게임_결과_생성() {
         //given
         //when
-        Map<Name, GameResult> GameResults = players.decidePlayerResults(dealer);
+        Map<Name, GameResult> gameResults = players.decidePlayerResults(dealer);
         //then
         assertSoftly(softAssertions -> {
-            softAssertions.assertThat(GameResults.get(new Name("스타크"))).isEqualTo(GameResult.BLACKJACK_WIN);
-            softAssertions.assertThat(GameResults.get(new Name("피즈"))).isEqualTo(GameResult.LOSE);
+            softAssertions.assertThat(gameResults.get(new Name("스타크"))).isEqualTo(GameResult.BLACKJACK_WIN);
+            softAssertions.assertThat(gameResults.get(new Name("피즈"))).isEqualTo(GameResult.LOSE);
         });
     }
 
