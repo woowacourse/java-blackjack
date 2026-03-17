@@ -16,7 +16,7 @@ public class DealerTest {
         int expected = 16;
 
         // when
-        while (dealer.stay()) {
+        while (dealer.canHit()) {
             dealer.playTurn(deck);
         }
         // then

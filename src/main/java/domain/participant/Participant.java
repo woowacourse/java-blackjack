@@ -6,7 +6,7 @@ import domain.card.Card;
 import domain.card.Deck;
 import java.util.List;
 
-public class Participant {
+abstract public class Participant {
 
     private static final int INIT_CARD_SIZE = 2;
 
@@ -27,15 +27,22 @@ public class Participant {
     }
 
     public void playTurn(Deck deck) {
-        Card hitCard = deck.drawCard();
-        hand.receiveCard(hitCard);
+        if (canHit()) {
+            receivedCard(deck);
+        }
     }
+    
+    abstract public boolean canHit();
 
     public void initHand(Deck deck) {
         for (int size = 0; size < INIT_CARD_SIZE; size++) {
             Card card = deck.drawCard();
             hand.receiveCard(card);
         }
+    }
+
+    public void receivedCard(Deck deck) {
+        hand.receiveCard(deck.drawCard());
     }
 
     public String getName() {

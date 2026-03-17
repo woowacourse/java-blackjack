@@ -10,11 +10,11 @@ public class Dealer extends Participant {
     public Dealer() {
         super(new Name("딜러"), new Hand());
     }
-
-    public boolean stay() {
+    
+    @Override
+    public boolean canHit() {
         return getScore() < STAND_SCORE;
     }
-
 
     public List<String> firstCardNames() {
         List<String> dealerCard = new ArrayList<>(createCardNames());
