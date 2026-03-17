@@ -13,7 +13,7 @@ public enum ErrorMessage {
     DUPLICATED_NAME("중복된 이름이 있습니다."),
     NO_PLAYER_NAME("해당 이름을 갖는 플레이어가 없습니다."),
 
-    INVALID_BET_INPUT("정수만 입력할 수  있습니다."),
+    INVALID_BET_INPUT("정수만 입력할 수 있습니다."),
     OUT_OF_RANGE_BET("배팅 금액은 양의 정수만 가능합니다.");
 
     private final String message;
