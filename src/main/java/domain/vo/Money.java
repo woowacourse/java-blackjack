@@ -12,10 +12,6 @@ public class Money {
         this.money = value;
     }
 
-    public Money(long input) {
-        this.money = BigDecimal.valueOf(input);
-    }
-
     public Money(BigDecimal input) {
         this.money = input;
     }
