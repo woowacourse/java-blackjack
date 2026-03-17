@@ -24,8 +24,4 @@ public record Money(long amount) {
             throw new IllegalArgumentException(BETTING_MONEY_MUST_BE_MULTIPLE_OF_100.getMessage());
         }
     }
-
-    public static Money zero() {
-        return new Money(ZERO);
-    }
 }

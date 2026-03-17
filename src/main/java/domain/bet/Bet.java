@@ -2,22 +2,25 @@ package domain.bet;
 
 import domain.enums.GameResult;
 import domain.participant.Name;
-import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class Bet {
+    private final Map<Name, Money> bet = new LinkedHashMap<>();
 
-    private final BetHistory betHistory;
-
-    public Bet(List<Name> playerNames) {
-        this.betHistory = new BetHistory(playerNames);
+    public Bet(Map<Name, Long> betHistory) {
+        for (Entry<Name, Long> betEntry : betHistory.entrySet()) {
+            Money money = new Money(betEntry.getValue());
+            bet.put(betEntry.getKey(), money);
+        }
     }
 
-    public void bettingMoney(Name playerName, long bettingMoney) {
-        betHistory.bettingMoney(playerName, bettingMoney);
+    public Map<Name, Money> getBettingLog() {
+        return Map.copyOf(bet);
     }
 
     public BetProfit calculateProfit(Map<Name, GameResult> playerResults) {
-        return BetProfit.calculateProfit(playerResults, betHistory.getBetHistory());
+        return BetProfit.calculateProfit(playerResults, bet);
     }
 }

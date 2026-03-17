@@ -30,13 +30,14 @@ public class Blackjack {
         Deck deck = Deck.create(new ShuffledCardGenerator());
         Players players = new Players(parsePlayerNames());
         Dealer dealer = new Dealer();
-        final Bet bet = askPlayerBet(players.getAllPlayersName());
+        Bet bet = new Bet(askPlayerBet(players.getAllPlayersName()));
 
         initialize(players, dealer, deck);
 
         playGame(players, dealer, deck);
-        printResult(players, dealer);
-        printProfit(bet, players, dealer);
+        BetProfit betProfit = bet.calculateProfit(players.decidePlayerResults(dealer));
+
+        printGameResult(betProfit, players, dealer);
     }
 
     private void initialize(Players players, Dealer dealer, Deck deck) {
@@ -61,13 +62,13 @@ public class Blackjack {
         return InputParser.parseNames(input);
     }
 
-    private Bet askPlayerBet(List<Name> playersName) {
-        Bet bet = new Bet(playersName);
+    private Map<Name, Long> askPlayerBet(List<Name> playersName) {
+        Map<Name, Long> bettingLog = new LinkedHashMap<>();
         for (Name name : playersName) {
             String input = inputView.askPlayerBet(name);
-            bet.bettingMoney(name, InputParser.parseMoney(input));
+            bettingLog.put(name, InputParser.parseMoney(input));
         }
-        return bet;
+        return bettingLog;
     }
 
     private Map<Name, List<Card>> getPlayerCards(Players players) {
@@ -104,16 +105,13 @@ public class Blackjack {
         }
     }
 
-    private void printResult(Players players, Dealer dealer) {
+    private void printGameResult(BetProfit betProfit, Players players, Dealer dealer) {
         outputView.printDealerCardWithScore(dealer.getHand(), dealer.getScore());
 
         for (Name name : players.getAllPlayersName()) {
             outputView.printPlayerCardWithScore(name, players.getPlayerCards(name), players.getPlayerScore(name));
         }
-    }
 
-    private void printProfit(Bet bet, Players players, Dealer dealer) {
-        BetProfit betProfit = bet.calculateProfit(players.decidePlayerResults(dealer));
         outputView.printProfit(betProfit.getDealerBetProfit(), betProfit.getPlayerBetProfit());
     }
 }
