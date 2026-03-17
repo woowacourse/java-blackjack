@@ -4,6 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import domain.card.Card;
+import domain.card.Hand;
+import domain.card.Rank;
+import domain.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +15,10 @@ public class HandStateTest {
     @Test
     @DisplayName("초기 2장으로 21이면 BLACKJACK 상태다")
     void blackjackWithInitialCards() {
-        HandState handState = HandState.getState(21, true);
+        Hand hand = new Hand();
+        hand.addCard(new Card(Suit.SPADE, Rank.ACE));
+        hand.addCard(new Card(Suit.HEART, Rank.KING));
+        HandState handState = hand.getHandState();
 
         assertEquals(HandState.BLACKJACK, handState);
         assertTrue(handState.isBlackjack());
@@ -20,7 +27,11 @@ public class HandStateTest {
     @Test
     @DisplayName("초기 2장이 아닌 21점은 HIT 상태다")
     void hitWithNonInitialCards() {
-        HandState handState = HandState.getState(21, false);
+        Hand hand = new Hand();
+        hand.addCard(new Card(Suit.SPADE, Rank.SEVEN));
+        hand.addCard(new Card(Suit.HEART, Rank.SEVEN));
+        hand.addCard(new Card(Suit.DIAMOND, Rank.SEVEN));
+        HandState handState = hand.getHandState();
 
         assertEquals(HandState.HIT, handState);
         assertTrue(handState.isHit());
@@ -30,7 +41,11 @@ public class HandStateTest {
     @Test
     @DisplayName("21점을 초과하면 BUST 상태다")
     void bustState() {
-        HandState handState = HandState.getState(22, false);
+        Hand hand = new Hand();
+        hand.addCard(new Card(Suit.SPADE, Rank.KING));
+        hand.addCard(new Card(Suit.HEART, Rank.QUEEN));
+        hand.addCard(new Card(Suit.DIAMOND, Rank.TWO));
+        HandState handState = hand.getHandState();
 
         assertEquals(HandState.BUST, handState);
         assertTrue(handState.isBust());
