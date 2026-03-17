@@ -13,7 +13,7 @@ class DealerTest {
 
     @BeforeEach
     void setUp() {
-        dealer = Dealer.of("딜러");
+        dealer = Dealer.of();
     }
 
     @Test
@@ -50,7 +50,7 @@ class DealerTest {
         dealer.draw(card1);
         dealer.draw(card2);
 
-        Dealer dealer2 = Dealer.of("딜러2");
+        Dealer dealer2 = Dealer.of();
         dealer2.draw(card1);
         dealer2.draw(card2);
         dealer2.draw(card3);

@@ -13,13 +13,13 @@ public final class ParticipantsFactory {
     private ParticipantsFactory() {
     }
 
-    public static Participants create(String[] names, List<Integer> betAmounts) {
+    public static Participants create(String[] names, List<BetAmount> betAmounts) {
         List<Participant> participants = new ArrayList<>();
 
         Dealer dealer = Dealer.of();
 
         for (int i = 0; i < names.length; i++) {
-            Player player = Player.of(names[i], BetAmount.of(betAmounts.get(i)));
+            Player player = Player.of(names[i], betAmounts.get(i));
             participants.add(player);
         }
 

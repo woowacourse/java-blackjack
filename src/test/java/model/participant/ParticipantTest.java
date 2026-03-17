@@ -20,8 +20,7 @@ class ParticipantTest {
     void 참가자_생성_테스트() {
         // given
         // when
-        String dealerName = "딜러";
-        Participant participant1 = Dealer.of(dealerName);
+        Participant participant1 = Dealer.of();
 
         // then
         assertThat(participant1).isInstanceOf(Dealer.class);

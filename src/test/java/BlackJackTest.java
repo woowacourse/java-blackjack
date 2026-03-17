@@ -24,7 +24,7 @@ public class BlackJackTest {
     void setUp() {
         List<Participant> rawParticipants = new ArrayList<>();
 
-        Dealer dealer = Dealer.of("딜러");
+        Dealer dealer = Dealer.of();
         rawParticipants.add(Player.of("pobi", BetAmount.of(10000)));
         rawParticipants.add(Player.of("jason", BetAmount.of(20000)));
         participants = Participants.of(rawParticipants, dealer);
@@ -70,7 +70,7 @@ public class BlackJackTest {
     @Test
     void 딜러와_플레이어가_동시에_블랙잭이면_플레이어는_베팅한_금액을_돌려받는다() {
         // given
-        Dealer dealer = Dealer.of(DEALER_NAME);
+        Dealer dealer = Dealer.of();
         dealer.draw(Card.of("스페이드", 10));
         dealer.draw(Card.of("스페이드", 11));
         Player player = Player.of("nuno", BetAmount.of(10000));
@@ -95,7 +95,7 @@ public class BlackJackTest {
     @Test
     void onlyPlayerBlackJack() {
         // given
-        Dealer dealer = Dealer.of(DEALER_NAME);
+        Dealer dealer = Dealer.of();
         dealer.draw(Card.of("스페이드", 5));
         dealer.draw(Card.of("스페이드", 3));
         Player player = Player.of("nuno", BetAmount.of(10000));
@@ -118,7 +118,7 @@ public class BlackJackTest {
     @Test
     void 딜러가_버스트면_남아있는_플레이어들은_플레이어의_승패에_상관없이_베팅금액을_받는다() {
         // given
-        Dealer dealer = Dealer.of(DEALER_NAME);
+        Dealer dealer = Dealer.of();
         dealer.draw(Card.of("스페이드", 10));
         dealer.draw(Card.of("스페이드", 10));
         dealer.draw(Card.of("스페이드", 10));
@@ -146,7 +146,7 @@ public class BlackJackTest {
         List<Participant> rawParticipants2 = new ArrayList<>();
         Participants participants2;
 
-        Dealer dealer = Dealer.of("딜러");
+        Dealer dealer = Dealer.of();
         rawParticipants2.add(Player.of("pobi", BetAmount.of(10000)));
         rawParticipants2.add(Player.of("jason", BetAmount.of(20000)));
         rawParticipants2.add(Player.of("coys", BetAmount.of(30000)));
