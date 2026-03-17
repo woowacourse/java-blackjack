@@ -2,7 +2,6 @@ package blackjack;
 
 import blackjack.domain.game.BlackjackGame;
 import blackjack.domain.participants.Player;
-import blackjack.domain.participants.Profit;
 import blackjack.dto.DealerHitDto;
 import blackjack.dto.GameResultDtos;
 import blackjack.dto.InitialDealDtos;
