@@ -13,12 +13,10 @@ import java.util.List;
 
 public class BlackjackController {
 
-    private final GameContext gameContext;
-    private final List<GamePhase> gamePhaseList;
+    private final List<GamePhase> gamePhases;
 
     public BlackjackController() {
-        gameContext = new GameContext();
-        gamePhaseList = List.of(
+        gamePhases = List.of(
                 new EnterPlayerPhase(),
                 new BettingPhase(),
                 new InitialDealPhase(),
@@ -31,7 +29,8 @@ public class BlackjackController {
     }
 
     public void run() {
-        for (GamePhase gamePhase : gamePhaseList) {
+        GameContext gameContext = new GameContext();
+        for (GamePhase gamePhase : gamePhases) {
             gamePhase.execute(gameContext);
         }
     }
