@@ -1,4 +1,6 @@
 import domain.BettingMoney;
+import domain.MatchResult;
+import domain.Referee;
 import domain.deck.Deck;
 import domain.deck.StandardDeck;
 import domain.player.Dealer;
@@ -132,7 +134,8 @@ public class BlackJack {
     private Map<String, Integer> getResult(Dealer dealer, Gamblers gamblers) {
         Map<String, Integer> gamblersResult = new LinkedHashMap<>();
         for (Gambler gambler : gamblers.getGamblers()) {
-            gamblersResult.put(gambler.getName(), gambler.calculateFinalIncome(dealer));
+            MatchResult matchResult = Referee.judge(dealer, gambler);
+            gamblersResult.put(gambler.getName(), matchResult.calculateIncome(gambler.getBettingMoney()));
         }
         return gamblersResult;
     }

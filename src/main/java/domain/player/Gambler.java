@@ -1,7 +1,6 @@
 package domain.player;
 
 import domain.BettingMoney;
-import domain.MatchResult;
 import domain.card.Card;
 import exception.BlackjackException;
 import exception.ExceptionMessage;
@@ -39,48 +38,8 @@ public class Gambler extends Player {
         }
     }
 
-    public MatchResult getResult(Dealer dealer) {
-        int gamblerScore = normalize(score());
-        int dealerScore = normalize(dealer.score());
-        if (isBust()) {
-            return MatchResult.LOSE;
-        }
-        if (isBlackJack() && dealer.isBlackJack()) {
-            return MatchResult.DRAW;
-        }
-
-        if (isBlackJack()) {
-            return MatchResult.BLACKJACK;
-        }
-
-        if (dealer.isBlackJack()) {
-            return MatchResult.LOSE;
-        }
-
-        return scoreCompare(gamblerScore, dealerScore);
-    }
-
-    private MatchResult scoreCompare(int gamblerScore, int dealerScore) {
-        if (gamblerScore > dealerScore) {
-            return MatchResult.WIN;
-        }
-
-        if (gamblerScore < dealerScore) {
-            return MatchResult.LOSE;
-        }
-        return MatchResult.DRAW;
-    }
-
-    public int calculateFinalIncome(Dealer dealer) {
-        MatchResult matchResult = getResult(dealer);
-        return matchResult.calculateIncome(this.bettingMoney);
-    }
-
-    private int normalize(int score) {
-        if (score > BLACKJACK_MAX_LIMIT) {
-            return 0;
-        }
-        return score;
+    public BettingMoney getBettingMoney() {
+        return bettingMoney;
     }
 
     public String getName() {
