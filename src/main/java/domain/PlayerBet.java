@@ -16,19 +16,45 @@ public class PlayerBet {
         return new PlayerBet(player, BettingAmount.of(amount));
     }
 
-    public void applyProfitIfBlackjack() {
+    public boolean applyProfitIfBlackjackAndReturnApplied() {
         if (player.isBlackjack()) {
             bettingAmount.applyBlackjackBonus();
+            return true;
+        }
+        return false;
+    }
+
+    public void applyProfitIfDealerBlackjack() {
+        if (player.isBlackjack()) {
+            bettingAmount.applyDrawAmount();
+            return;
+        }
+        bettingAmount.applyLoseAmount();
+    }
+
+    public void IsBustLoseBettingAmount() {
+        if (player.isBust()) {
+            bettingAmount.applyLoseAmount();
+        }
+    }
+
+    public void applyProfitByDealerScore(int dealerScore) {
+        if (player.isBust()) {
+            bettingAmount.applyLoseAmount();
+            return;
+        }
+
+        int playerScore = player.calculateScore();
+        if (dealerScore > playerScore) {
+            bettingAmount.applyLoseAmount();
+            return;
+        }
+        if (dealerScore == playerScore) {
+            bettingAmount.applyDrawAmount();
         }
     }
 
     public BigDecimal amount() {
         return bettingAmount.value();
-    }
-
-    public void loseBettingAmountIsBust() {
-        if (player.isBust()) {
-            bettingAmount.applyLoseAmount();
-        }
     }
 }
