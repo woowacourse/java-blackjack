@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Hand {
     private static final int BUST_CRITERIA = 21;
+    private static final int DEALER_FULL_CRITERIA = 17;
     private final List<Card> cards;
 
     private Hand(List<Card> cards) {
@@ -22,6 +23,10 @@ public class Hand {
 
     public boolean isFull() {
         return calculateCardScoreSum() == BUST_CRITERIA;
+    }
+
+    public boolean isDealerFull() {
+        return calculateCardScoreSum() >= DEALER_FULL_CRITERIA;
     }
 
     public boolean isBlackJack() {

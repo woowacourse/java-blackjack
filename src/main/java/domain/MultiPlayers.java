@@ -43,7 +43,7 @@ public class MultiPlayers {
         Hand newPlayerHand = Hand.of(twoCards.get(0), twoCards.get(1));
         return Player.from(
                 name,
-                GameState.createInitialGameState(newPlayerHand)
+                GameState.createPlayerInitialGameState(newPlayerHand)
         );
     }
 

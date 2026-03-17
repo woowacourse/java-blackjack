@@ -37,8 +37,8 @@ class GameResultTest {
             @DisplayName("플레이어가 블랙잭이면 플레이어가 블랙잭으로 이긴 결과를 도출한다")
             void decidePlayerResult_player_blackjack() {
                 //given
-                Dealer testDealer = Dealer.from(GameState.createInitialGameState(normalHand));
-                Player testPlayer = Player.from(GUMP, GameState.createInitialGameState(blackJackHand));
+                Dealer testDealer = Dealer.from(GameState.createDealerInitialGameState(normalHand));
+                Player testPlayer = Player.from(GUMP, GameState.createPlayerInitialGameState(blackJackHand));
 
                 //when
                 GameResult result = GameResult.decidePlayerResult(testPlayer, testDealer);
@@ -51,8 +51,8 @@ class GameResultTest {
             @DisplayName("딜러가 블랙잭이면 플레이어가 진 결과를 도출한다")
             void decidePlayerResult_dealer_blackjack() {
                 //given
-                Dealer testDealer = Dealer.from(GameState.createInitialGameState(blackJackHand));
-                Player testPlayer = Player.from(GUMP, GameState.createInitialGameState(normalHand));
+                Dealer testDealer = Dealer.from(GameState.createDealerInitialGameState(blackJackHand));
+                Player testPlayer = Player.from(GUMP, GameState.createPlayerInitialGameState(normalHand));
 
                 //when
                 GameResult result = GameResult.decidePlayerResult(testPlayer, testDealer);
@@ -70,8 +70,8 @@ class GameResultTest {
                         new Card(CardShape.하트, CardContents.TEN)
                 );
 
-                Dealer testDealer = Dealer.from(GameState.createInitialGameState(blackJackHand));
-                Player testPlayer = Player.from(GUMP, GameState.createInitialGameState(anotherBlackJackHand));
+                Dealer testDealer = Dealer.from(GameState.createDealerInitialGameState(blackJackHand));
+                Player testPlayer = Player.from(GUMP, GameState.createPlayerInitialGameState(anotherBlackJackHand));
 
                 //when
                 GameResult result = GameResult.decidePlayerResult(testPlayer, testDealer);
@@ -97,8 +97,8 @@ class GameResultTest {
             void player_bust_case() {
                 //given
 
-                Player testPlayer = Player.from(GUMP, GameState.createInitialGameState(handThatValue16));
-                Dealer testDealer = Dealer.from(GameState.createInitialGameState(normalHand));
+                Player testPlayer = Player.from(GUMP, GameState.createPlayerInitialGameState(handThatValue16));
+                Dealer testDealer = Dealer.from(GameState.createDealerInitialGameState(normalHand));
                 testPlayer = testPlayer.hit(testTotalDeck::drawCard);
 
                 //when
@@ -112,8 +112,8 @@ class GameResultTest {
             @DisplayName("딜러가 bust 이면 승 결과를 반환")
             void dealer_bust_case() {
                 //given
-                Player testPlayer = Player.from(GUMP, GameState.createInitialGameState(normalHand));
-                Dealer testDealer = Dealer.from(GameState.createInitialGameState(handThatValue16));
+                Player testPlayer = Player.from(GUMP, GameState.createPlayerInitialGameState(normalHand));
+                Dealer testDealer = Dealer.from(GameState.createDealerInitialGameState(handThatValue16));
 
                 testDealer = testDealer.addCard(testTotalDeck::drawCard);
 

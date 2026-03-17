@@ -19,7 +19,9 @@ public class InputViewImpl implements InputView {
     }
 
     public int readBetAmountValue() {
-        return sc.nextInt();
+        int betValue = sc.nextInt();
+        sc.nextLine();
+        return betValue;
     }
 
     public Boolean wantToHit() {

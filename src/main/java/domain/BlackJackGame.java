@@ -35,7 +35,7 @@ public class BlackJackGame {
                 dealersInitialCards.get(0),
                 dealersInitialCards.get(1));
         return Dealer.from(
-                GameState.createInitialGameState(initialDealerHand));
+                GameState.createDealerInitialGameState(initialDealerHand));
     }
 
     public Optional<Player> whoseBettingTurn() {
@@ -61,6 +61,9 @@ public class BlackJackGame {
     }
 
     public boolean doDealerHitOrStandProcess() {
+        if (dealer.gameState.isFinished()) {
+            return false;
+        }
         Dealer newDealer = dealer.addCard(totalDeck::drawCard);
         updateDealer(newDealer);
         return !newDealer.gameState.isFinished();

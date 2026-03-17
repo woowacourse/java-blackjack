@@ -28,7 +28,7 @@ class PlayerTest {
         );
 
         assertDoesNotThrow(
-                () -> Player.from(GUMP, GameState.createInitialGameState(playerHand))
+                () -> Player.from(GUMP, GameState.createPlayerInitialGameState(playerHand))
         );
     }
 
@@ -48,7 +48,7 @@ class PlayerTest {
 
         Player testPlayerWhoHoldTotal15Cards = Player.from(
                 GUMP,
-                GameState.createInitialGameState(playerHand)
+                GameState.createPlayerInitialGameState(playerHand)
         );
 
         @Test
@@ -90,7 +90,7 @@ class PlayerTest {
             );
             Player testPlayer = Player.from(
                     GUMP,
-                    GameState.createInitialGameState(playerHand)
+                    GameState.createPlayerInitialGameState(playerHand)
             );
             testPlayer.hit(onlyTwoTenCardSupplier);
 
@@ -112,7 +112,7 @@ class PlayerTest {
         );
         Player testPlayer = Player.from(
                 GUMP,
-                GameState.createInitialGameState(playerHand)
+                GameState.createPlayerInitialGameState(playerHand)
         );
 
         //when
@@ -135,11 +135,11 @@ class PlayerTest {
         );
         Player firstGump = Player.from(
                 GUMP,
-                GameState.createInitialGameState(playerHand1)
+                GameState.createPlayerInitialGameState(playerHand1)
         );
         Player secondGump = Player.from(
                 GUMP,
-                GameState.createInitialGameState(playerHand2)
+                GameState.createPlayerInitialGameState(playerHand2)
         );
         //when, then
         Assertions.assertThat(firstGump.equals(secondGump)).isTrue();
@@ -155,7 +155,7 @@ class PlayerTest {
         );
         Player gump = Player.from(
                 GUMP,
-                GameState.createInitialGameState(playerHand)
+                GameState.createPlayerInitialGameState(playerHand)
         );
 
         int gumpBetAmountValue = 1000;
@@ -198,11 +198,11 @@ class PlayerTest {
             double blackJackAllocation = 1.5;
             Player gump = Player.from(
                     GUMP,
-                    GameState.createInitialGameState(blackJackHand)
+                    GameState.createPlayerInitialGameState(blackJackHand)
             );
             gump = gump.bet(betAmountValue);
             Dealer dealer = Dealer.from(
-                    GameState.createInitialGameState(normalHandTwenty)
+                    GameState.createDealerInitialGameState(normalHandTwenty)
             );
 
             double expect = betAmountValue * blackJackAllocation;
@@ -218,11 +218,11 @@ class PlayerTest {
             double normalAllocation = 1.0;
             Player gump = Player.from(
                     GUMP,
-                    GameState.createInitialGameState(normalHandTwenty)
+                    GameState.createPlayerInitialGameState(normalHandTwenty)
             );
             gump = gump.bet(betAmountValue);
             Dealer dealer = Dealer.from(
-                    GameState.createInitialGameState(normalHandFive)
+                    GameState.createDealerInitialGameState(normalHandFive)
             );
 
             double expect = betAmountValue * normalAllocation;
@@ -237,11 +237,11 @@ class PlayerTest {
         void player_draw() {
             Player gump = Player.from(
                     GUMP,
-                    GameState.createInitialGameState(normalHandTwenty)
+                    GameState.createPlayerInitialGameState(normalHandTwenty)
             );
             gump = gump.bet(betAmountValue);
             Dealer dealer = Dealer.from(
-                    GameState.createInitialGameState(normalHandAnotherTwenty)
+                    GameState.createDealerInitialGameState(normalHandAnotherTwenty)
             );
 
             double expect = 0;

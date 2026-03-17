@@ -132,13 +132,13 @@ class BlackJackGameTest {
         }
 
         @Test
-        @DisplayName("카드를 추가안하면 false 반환")
-        void doDealerHitOrStandProcess_return_false() {
+        @DisplayName("카드 추가할 수 없는 상황에서는 false 를 반환")
+        void doDealerHitOrStandProcess_return_false_when_over_seventeen() {
             //given
             List<Card> testCards = new ArrayList<>();
             List<Card> dealersCardsThatOverThan16 = List.of(
                     new Card(CardShape.하트, CardContents.TEN),
-                    new Card(CardShape.하트, CardContents.Q)
+                    new Card(CardShape.하트, CardContents.J)
             );
             testCards.addAll(dealersCardsThatOverThan16);
             testCards.addAll(playersCardsCandidates);
@@ -146,7 +146,29 @@ class BlackJackGameTest {
             Deque<Card> testDeckCards = new ArrayDeque<>(testCards);
             BlackJackGame testGame = BlackJackGame.ready(TEST_PLAYER_NAMES, () -> testDeckCards);
 
-            //when
+            //when, then
+            boolean result = testGame.doDealerHitOrStandProcess();
+
+            //then
+            assertFalse(result);
+        }
+
+        @Test
+        @DisplayName("카드를 추가안하면 false 반환")
+        void doDealerHitOrStandProcess_return_false_when_dealer_blackjack() {
+            //given
+            List<Card> testCards = new ArrayList<>();
+            List<Card> dealersCardsThatOverThan16 = List.of(
+                    new Card(CardShape.하트, CardContents.TEN),
+                    new Card(CardShape.하트, CardContents.A)
+            );
+            testCards.addAll(dealersCardsThatOverThan16);
+            testCards.addAll(playersCardsCandidates);
+
+            Deque<Card> testDeckCards = new ArrayDeque<>(testCards);
+            BlackJackGame testGame = BlackJackGame.ready(TEST_PLAYER_NAMES, () -> testDeckCards);
+
+            //when, then
             boolean result = testGame.doDealerHitOrStandProcess();
 
             //then
