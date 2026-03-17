@@ -6,6 +6,10 @@ import domain.participant.Dealer;
 import domain.game.GameResult;
 import domain.participant.Player;
 import domain.participant.Players;
+import dto.domain.PlayerNameAndBettingDto;
+import java.util.ArrayList;
+import java.util.List;
+import util.NameParser;
 import view.InputView;
 import view.ResultView;
 
@@ -19,8 +23,9 @@ public class BlackJackController {
     }
 
     public void run() {
-        final String participant = inputView.getPlayerNames();
-        final BlackJackGame game = BlackJackGame.startGame(participant);
+        final List<String> participantNames = NameParser.makeNameList(inputView.getPlayerNames());
+        final List<PlayerNameAndBettingDto> playersInfo = inputView.getPlayerBetting(participantNames);
+        final BlackJackGame game = BlackJackGame.startGame(playersInfo);
         final Players players = game.players();
         final Dealer dealer = game.dealer();
         final Cards cards = game.cards();
