@@ -1,12 +1,14 @@
 package domain;
 
 import domain.card.*;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.*;
 
 class DeckTest {
 
@@ -20,8 +22,8 @@ class DeckTest {
         Card firstCard = deck.drawCard();
 
         // then
-        Assertions.assertEquals(Rank.TWO, firstCard.getRank());
-        Assertions.assertEquals(Suit.HEART, firstCard.getSuit());
+        assertEquals(Rank.TWO, firstCard.getRank());
+        assertEquals(Suit.HEART, firstCard.getSuit());
     }
 
     @Test
@@ -38,8 +40,9 @@ class DeckTest {
         }
 
         // then
-        Assertions.assertEquals(52, cards.size());
-
-        Assertions.assertThrows(IllegalArgumentException.class, deck::drawCard);
+        assertEquals(52, cards.size());
+        assertThatThrownBy(deck::drawCard)
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage("더 이상 카드가 존재하지 않습니다.");
     }
 }

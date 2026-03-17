@@ -4,9 +4,12 @@ import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
 import domain.participant.Player;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class PlayerTest {
 
@@ -17,7 +20,7 @@ class PlayerTest {
         String name = "pobi";
 
         // when - then
-        Assertions.assertDoesNotThrow(() -> new Player(name, 10000));
+        assertDoesNotThrow(() -> new Player(name, 10000));
     }
 
     @Test
@@ -27,7 +30,9 @@ class PlayerTest {
         String name = "";
 
         // when - then
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new Player(name, 10000));
+        assertThatThrownBy(() -> new Player(name, 10000))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("잘못된 입력입니다. 다시 입력해주세요.");
     }
 
     @Test
@@ -37,7 +42,9 @@ class PlayerTest {
         String name = "pobipobip";
 
         // when - then
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new Player(name, 10000));
+        assertThatThrownBy(() -> new Player(name, 10000))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("잘못된 입력입니다. 다시 입력해주세요.");
     }
 
     @Test
@@ -47,7 +54,9 @@ class PlayerTest {
         String name = "&*&@$";
 
         // when - then
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new Player(name, 10000));
+        assertThatThrownBy(() -> new Player(name, 10000))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("플레이어 이름은 영문자만 포함되어야 합니다.");
     }
 
     @Test
@@ -60,6 +69,6 @@ class PlayerTest {
         player.hit(new Card(Rank.ACE, Suit.DIAMOND));
 
         // then
-        Assertions.assertEquals(1, player.getHand().getHand().size());
+        assertEquals(1, player.getHand().getHand().size());
     }
 }

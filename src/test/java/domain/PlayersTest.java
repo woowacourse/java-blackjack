@@ -1,12 +1,14 @@
 package domain;
 
 import domain.participant.Players;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.*;
 
 class PlayersTest {
 
@@ -19,7 +21,7 @@ class PlayersTest {
         players.put("james", 2000);
 
         // when - then
-        Assertions.assertDoesNotThrow(() -> new Players(players));
+        assertDoesNotThrow(() -> new Players(players));
     }
 
     @Test
@@ -35,6 +37,8 @@ class PlayersTest {
         playerBets.put("ruro2", 1000);
 
         // when - then
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new Players(playerBets));
+        assertThatThrownBy(() -> new Players(playerBets))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("플레이어 인원 수는 5명 이하여야 합니다.");
     }
 }

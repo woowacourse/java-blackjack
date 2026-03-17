@@ -1,9 +1,11 @@
 package domain;
 
 import domain.money.Money;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MoneyTest {
 
@@ -14,8 +16,9 @@ class MoneyTest {
         int negativeMoney = -3000;
 
         // when - then
-        Assertions.assertThrows(IllegalArgumentException.class,
-                () -> new Money(negativeMoney));
+        assertThatThrownBy(() ->  new Money(negativeMoney))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("잘못된 입력입니다. 다시 입력해주세요.");
     }
 
     @Test
@@ -28,6 +31,6 @@ class MoneyTest {
         Money money = new Money(zeroMoney);
 
         // then
-        Assertions.assertEquals(zeroMoney, money.getValue());
+        assertEquals(zeroMoney, money.getValue());
     }
 }
