@@ -1,5 +1,7 @@
 package domain.participant;
 
+import static domain.card.Hand.BUST_BOUND;
+
 public class Player extends Participant {
 
     public static final int MINIMUM_BET_AMOUNT = 0;
@@ -23,7 +25,7 @@ public class Player extends Participant {
 
     @Override
     public boolean isDrawable() {
-        return !isBust() && !isBlackjack();
+        return !isBust() && !isBlackjack() && (getScore() < BUST_BOUND);
     }
 
 
