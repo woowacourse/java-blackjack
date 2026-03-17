@@ -73,21 +73,24 @@ public class BlackjackGame {
     }
 
     private void playerTurn(Player player, Deck deck) {
-        while (player.canDraw()) {
-            String playerName = player.name();
-            String choice = inputView.getChoice(playerName);
-
-            if (choice.equals("n")) {
-                break;
-            }
-
-            if (!choice.equals("y")) {
-                throw new IllegalArgumentException();
-            }
-
+        while (shouldPlayerDraw(player)) {
             player.receive(deck.draw());
             outputView.printParticipantCards(player);
         }
+    }
+
+    private boolean shouldPlayerDraw(Player player) {
+        if (!player.canDraw()) {
+            return false;
+        }
+
+        String choice = inputView.getChoice(player.name());
+
+        if (!choice.equals("y") && !choice.equals("n")) {
+            throw new IllegalArgumentException();
+        }
+
+        return choice.equals("y");
     }
 
     private void showGameResult(Players players, Dealer dealer) {
