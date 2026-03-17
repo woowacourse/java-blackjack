@@ -23,7 +23,7 @@ public class BlackJackCommandService {
 
     public void setupBettingMoney(String name, long betting) {
         Money bettingMoney = Money.of(betting);
-        scoreBoard.setupPlayers(name, bettingMoney);
+        scoreBoard.setupPlayerBettingMoney(name, bettingMoney);
     }
 
     public void distributeInitialCards() {
