@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.Collections;
 import java.util.List;
 
 import domain.enums.MatchCase;
@@ -79,7 +80,7 @@ public class Player {
     }
 
     public List<Card> getCards() {
-        return cards.getCards();
+        return Collections.unmodifiableList(cards.getCards());
     }
 
     public int getBettingScore() {
