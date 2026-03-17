@@ -9,7 +9,6 @@ import model.participant.Player;
 import model.vo.BetAmount;
 
 public final class ParticipantsFactory {
-    private static final String DEALER_PARTICIPANT = "딜러";
 
     private ParticipantsFactory() {
     }
@@ -17,7 +16,7 @@ public final class ParticipantsFactory {
     public static Participants create(String[] names, List<Integer> betAmounts) {
         List<Participant> participants = new ArrayList<>();
 
-        Dealer dealer = Dealer.of(DEALER_PARTICIPANT);
+        Dealer dealer = Dealer.of();
 
         for (int i = 0; i < names.length; i++) {
             Player player = Player.of(names[i], BetAmount.of(betAmounts.get(i)));
