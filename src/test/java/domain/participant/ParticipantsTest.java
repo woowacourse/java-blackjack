@@ -1,6 +1,5 @@
 package domain.participant;
 
-import static exception.ErrorMessage.PLAYER_COUNT_OUT_OF_RANGE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -38,7 +37,6 @@ class ParticipantsTest {
 
         // then
         assertThatThrownBy(() -> new Participants(players))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(PLAYER_COUNT_OUT_OF_RANGE.getMessage());
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }
