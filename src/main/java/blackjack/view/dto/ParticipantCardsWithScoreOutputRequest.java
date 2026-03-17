@@ -12,7 +12,7 @@ public record ParticipantCardsWithScoreOutputRequest(
     public static ParticipantCardsWithScoreOutputRequest from(Participant participant) {
         return new ParticipantCardsWithScoreOutputRequest(
                 participant.getName(),
-                participant.getOpenedCards(),
+                participant.getAllCard(),
                 participant.getCurrentTotalScore()
         );
     }
