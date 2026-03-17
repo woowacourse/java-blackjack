@@ -1,6 +1,8 @@
 package domain;
 
 public class Betting {
+    public static final double BLACKJACK_BONUS = 1.5;
+
     private final int bettingMoney;
     private int bettingScore;
 
@@ -14,7 +16,7 @@ public class Betting {
     }
 
     public void gainMoney() {
-        bettingScore = (int) ((int) bettingMoney * Game.BLACKJACK_BONUS);
+        bettingScore = (int) ((int) bettingMoney * BLACKJACK_BONUS);
     }
 
     public void loseMoney() {

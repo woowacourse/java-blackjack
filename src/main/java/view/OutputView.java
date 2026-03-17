@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import domain.Card;
+import domain.Dealer;
 import domain.Game;
 import domain.dto.BettingResultDto;
 import domain.dto.CardContentDto;
@@ -15,7 +16,7 @@ import domain.enums.MatchCase;
 public final class OutputView {
     public static void displayCardDistribution(List<String> names) {
         String nameContent = String.join(", ", names);
-        System.out.printf("%s와 %s에게 2장을 나누었습니다.\n", Game.DEALER_NAME, nameContent);
+        System.out.printf("%s와 %s에게 2장을 나누었습니다.\n", Dealer.DEALER_NAME, nameContent);
     }
 
     public static void displayCardContents(List<CardContentDto> cardContentDto) {
@@ -33,7 +34,7 @@ public final class OutputView {
     }
 
     public static void displayDealerCard() {
-        System.out.printf("%s는 %d 이하라 한장의 카드를 더 받았습니다.\n", Game.DEALER_NAME, Game.ADDITIONAL_THRESHOLD);
+        System.out.printf("%s는 %d 이하라 한장의 카드를 더 받았습니다.\n", Dealer.DEALER_NAME, Dealer.ADDITIONAL_THRESHOLD);
     }
 
     public static void displayFinalCard(List<FinalCardDto> finalCardDto) {
@@ -51,7 +52,7 @@ public final class OutputView {
         Map<MatchCase, Integer> dealerMap = matchResultDto.dealerResult();
         Map<String, MatchCase> playerMap = matchResultDto.playerResult();
 
-        System.out.printf("## 최종 승패\n%s: ", Game.DEALER_NAME);
+        System.out.printf("## 최종 승패\n%s: ", Dealer.DEALER_NAME);
         for (Map.Entry<MatchCase, Integer> matchCase : dealerMap.entrySet()) {
             System.out.printf("%d%s ", matchCase.getValue().intValue(), matchCase.getKey().getReversedKorResult());
         }
@@ -66,7 +67,7 @@ public final class OutputView {
         Map<String, Integer> resultMap = resultDto.bettingResult();
 
         System.out.println("\n## 최종 수익");
-        System.out.printf("%s: %d\n", Game.DEALER_NAME, resultDto.totalMoney());
+        System.out.printf("%s: %d\n", Dealer.DEALER_NAME, resultDto.totalMoney());
 
         for (Map.Entry<String, Integer> playerName : resultMap.entrySet()) {
             System.out.printf("%s: %d\n", playerName.getKey(), playerName.getValue());

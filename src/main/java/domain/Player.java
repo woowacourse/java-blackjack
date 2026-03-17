@@ -17,19 +17,6 @@ public class Player {
         this.cards = new Cards();
     }
 
-    public Player(String name) {
-        validateDealer(name);
-        this.name = name;
-        this.betting = new Betting(0);
-        this.cards = new Cards();
-    }
-
-    private void validateDealer(String dealerName) {
-        if (!dealerName.equals(Game.DEALER_NAME)){
-            throw new IllegalArgumentException("[ERROR] 딜러가 아닙니다.]");
-        }
-    }
-
     public void add(Card card) {
         cards.addCard(card);
     }
@@ -69,10 +56,6 @@ public class Player {
 
     public boolean isBust() {
         return cards.getFinalScore() > Game.BLACKJACK_VALUE;
-    }
-
-    public boolean isDealerBlackjack() {
-        return cards.isBlackjack();
     }
 
     public String getName() {

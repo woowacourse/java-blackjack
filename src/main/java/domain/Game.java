@@ -6,16 +6,13 @@ import java.util.Map;
 import domain.enums.MatchCase;
 
 public class Game {
-    public static final int ADDITIONAL_THRESHOLD = 16;
     public static final int BLACKJACK_VALUE = 21;
-    public static final double BLACKJACK_BONUS = 1.5;
-    public static final String DEALER_NAME = "딜러";
 
     private final Deck deck;
-    private final Player dealer;
+    private final Dealer dealer;
     private final Players players;
 
-    public Game(Deck deck, Players players, Player dealer) {
+    public Game(Deck deck, Players players, Dealer dealer) {
         this.deck = deck;
         this.players = players;
         this.dealer = dealer;
@@ -79,7 +76,7 @@ public class Game {
     }
 
     public boolean needAdditionalCard() {
-        return dealer.getCardsTotalSum() <= ADDITIONAL_THRESHOLD;
+        return dealer.needAdditinalCard();
     }
 
     public boolean isAllPlayerBurst() {
@@ -106,7 +103,7 @@ public class Game {
         return players;
     }
 
-    public Player getDealer() {
+    public Dealer getDealer() {
         return dealer;
     }
 

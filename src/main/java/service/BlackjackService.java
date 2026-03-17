@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import domain.Betting;
+import domain.Dealer;
 import domain.Deck;
 import domain.Game;
 import domain.Player;
@@ -37,14 +38,14 @@ public class BlackjackService {
         return new Players(playerList);
     }
 
-    public Player createDealer(Deck deck) {
-        Player dealer = new Player(Game.DEALER_NAME);
+    public Dealer createDealer(Deck deck) {
+        Dealer dealer = new Dealer();
         dealer.addInitializedCard(deck);
         return dealer;
     }
 
     public Game createGame(Deck deck, Players players) {
-        Player dealer = createDealer(deck);
+        Dealer dealer = createDealer(deck);
         return new Game(deck, players, dealer);
     }
 
@@ -54,7 +55,7 @@ public class BlackjackService {
 
     public List<CardContentDto> getCardContentDtos(Game game) {
         List<CardContentDto> firstCardContents = new ArrayList<>();
-        firstCardContents.add(new CardContentDto(Game.DEALER_NAME, List.of(game.getDealerFirstCard())));
+        firstCardContents.add(new CardContentDto(Dealer.DEALER_NAME, List.of(game.getDealerFirstCard())));
         for (Player player : game.getPlayers()) {
             firstCardContents.add(getCardContentDto(player));
         }
@@ -63,7 +64,7 @@ public class BlackjackService {
 
     public List<FinalCardDto> getFinalCardDtos(Game game) {
         List<FinalCardDto> finalCards = new ArrayList<>();
-        Player dealer = game.getDealer();
+        Dealer dealer = game.getDealer();
         finalCards.add(new FinalCardDto(dealer.getName(), dealer.getCards(), dealer.getCardsTotalSum()));
 
         for (Player player : game.getPlayers()) {
