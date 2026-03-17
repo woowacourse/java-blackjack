@@ -78,12 +78,11 @@ public class OutputView {
     private void printInitHandInfo(final List<CurrentHand> playerHands) {
         System.out.println();
         System.out.printf("%s와 ", DEALER_NAME);
-        final StringBuilder playerNames = new StringBuilder();
+        final StringJoiner players = new StringJoiner(", ");
         for (final CurrentHand playerHand : playerHands) {
-            playerNames.append(playerHand.name()).append(", ");
+            players.add(playerHand.name());
         }
-        playerNames.delete(playerNames.length() - 2, playerNames.length());
-        System.out.printf("%s에게 %d장을 나누었습니다.%s", playerNames, INIT_DRAW_COUNT, NEW_LINE);
+        System.out.printf("%s에게 %d장을 나누었습니다.%s", players, INIT_DRAW_COUNT, NEW_LINE);
     }
 
     private static void printHand(final CurrentHand currentHand) {
