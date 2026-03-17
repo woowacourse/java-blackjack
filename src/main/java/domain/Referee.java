@@ -16,10 +16,10 @@ public class Referee {
     }
 
     private MatchResult judgePlayer(Player player, Dealer dealer) {
-        if (player.isInitialBlackJack() && dealer.isInitialBlackJack()) {
+        if (player.isBlackJack() && dealer.isBlackJack()) {
             return MatchResult.DRAW;
         }
-        if (player.isInitialBlackJack()) {
+        if (player.isBlackJack()) {
             return MatchResult.BLACKJACK;
         }
         return judgeByScore(player.getScore(), dealer.getScore());

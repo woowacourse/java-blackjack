@@ -13,7 +13,7 @@ public class Cards {
         this.cards = new ArrayList<>(cards);
     }
 
-    public boolean isInitialBlackJack() {
+    public boolean isBlackJack() {
         return cards.size() == 2 && calculateOptimalScore() == BLACKJACK_SCORE;
     }
 
