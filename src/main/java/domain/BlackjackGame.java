@@ -4,7 +4,6 @@ import domain.card.Card;
 import domain.card.Deck;
 import domain.hand.Hand;
 import domain.participant.*;
-import dto.PlayerCreationInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,13 +19,13 @@ public class BlackjackGame {
         this.participants = participants;
     }
 
-    public static BlackjackGame start(List<PlayerCreationInfo> playerCreationInfos) {
-        return start(playerCreationInfos, Deck.createDeck());
+    public static BlackjackGame start(List<PlayerInfo> playerInfos) {
+        return start(playerInfos, Deck.createDeck());
     }
 
-    public static BlackjackGame start(List<PlayerCreationInfo> playerCreationInfos, Deck deck) {
+    public static BlackjackGame start(List<PlayerInfo> playerInfos, Deck deck) {
         Dealer dealer = Dealer.from(new Hand(initCards(deck)));
-        Players players = createPlayers(playerCreationInfos, deck);
+        Players players = createPlayers(playerInfos, deck);
         return new BlackjackGame(deck, GameParticipants.of(dealer, players));
     }
 
@@ -51,7 +50,7 @@ public class BlackjackGame {
     }
 
     public List<Player> getPlayersValue() {
-        return participants.getPlayers().getPlayers();
+        return participants.getPlayersValue();
     }
 
     private void drawDealerCards() {
@@ -60,19 +59,18 @@ public class BlackjackGame {
         }
     }
 
-    private static Players createPlayers(List<PlayerCreationInfo> playerCreationInfos, Deck deck) {
+    private static Players createPlayers(List<PlayerInfo> playerInfos, Deck deck) {
         List<Player> players = new ArrayList<>();
-        for (PlayerCreationInfo playerCreationInfo : playerCreationInfos) {
-            players.add(createPlayer(playerCreationInfo, deck));
+        for (PlayerInfo playerInfo : playerInfos) {
+            players.add(createPlayer(playerInfo, deck));
         }
         return Players.from(players);
     }
 
-    private static Player createPlayer(PlayerCreationInfo playerCreationInfo, Deck deck) {
+    private static Player createPlayer(PlayerInfo playerInfo, Deck deck) {
         return Player.of(
-                playerCreationInfo.name(),
-                new Hand(initCards(deck)),
-                playerCreationInfo.bettingMoney()
+                playerInfo,
+                new Hand(initCards(deck))
         );
     }
 

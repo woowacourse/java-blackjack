@@ -136,9 +136,8 @@ public class ProfitCalculatorTest {
 
     private Player player(String name, int bettingMoney, Card... cards) {
         return Player.of(
-                Name.from(name),
-                new Hand(List.of(cards)),
-                BettingMoney.of(bettingMoney)
+                new PlayerInfo(Name.from(name), BettingMoney.of(bettingMoney)),
+                new Hand(List.of(cards))
         );
     }
 

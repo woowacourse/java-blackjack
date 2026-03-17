@@ -1,5 +1,7 @@
 package domain.participant;
 
+import java.util.List;
+
 public class GameParticipants {
     private final Dealer dealer;
     private final Players players;
@@ -19,6 +21,10 @@ public class GameParticipants {
 
     public Players getPlayers() {
         return players;
+    }
+
+    public List<Player> getPlayersValue() {
+        return players.getPlayers();
     }
 
     public boolean cannotDealerDraw() {

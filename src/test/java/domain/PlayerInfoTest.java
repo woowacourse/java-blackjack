@@ -2,20 +2,20 @@ package domain;
 
 import domain.participant.BettingMoney;
 import domain.participant.Name;
-import dto.PlayerCreationInfo;
+import domain.participant.PlayerInfo;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class PlayerCreationInfoTest {
+public class PlayerInfoTest {
 
     @Test
     void 플레이어_생성정보를_만들_수_있다() {
         Name name = Name.from("pobi");
         BettingMoney bettingMoney = BettingMoney.of(1000);
-        PlayerCreationInfo playerCreationInfo = new PlayerCreationInfo(name, bettingMoney);
+        PlayerInfo playerInfo = new PlayerInfo(name, bettingMoney);
 
-        assertThat(playerCreationInfo.name()).isEqualTo(name);
-        assertThat(playerCreationInfo.bettingMoney()).isEqualTo(bettingMoney);
+        assertThat(playerInfo.name()).isEqualTo(name);
+        assertThat(playerInfo.bettingMoney()).isEqualTo(bettingMoney);
     }
 }

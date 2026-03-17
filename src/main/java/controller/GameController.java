@@ -21,8 +21,8 @@ public class GameController {
 
     private BlackjackGame startGame() {
         List<String> names = InputView.readParticipants();
-        List<PlayerCreationInfo> playerCreationInfos = createPlayerCreationInfos(names);
-        return BlackjackGame.start(playerCreationInfos);
+        List<PlayerInfo> playerInfos = createPlayerInfos(names);
+        return BlackjackGame.start(playerInfos);
     }
 
     private void printInitialStatus(BlackjackGame blackjackGame) {
@@ -49,16 +49,16 @@ public class GameController {
         printProfitResults(players, dealer);
     }
 
-    private List<PlayerCreationInfo> createPlayerCreationInfos(List<String> names) {
-        List<PlayerCreationInfo> playerCreationInfos = new ArrayList<>();
+    private List<PlayerInfo> createPlayerInfos(List<String> names) {
+        List<PlayerInfo> playerInfos = new ArrayList<>();
         for (String name : names) {
             Integer money = InputView.readBettingMoney(name);
-            playerCreationInfos.add(new PlayerCreationInfo(
+            playerInfos.add(new PlayerInfo(
                     Name.from(name),
                     BettingMoney.of(money)
             ));
         }
-        return playerCreationInfos;
+        return playerInfos;
     }
 
     private void addPlayersCard(BlackjackGame blackjackGame, Players players) {

@@ -9,24 +9,24 @@ import domain.card.Card;
 import domain.card.CardNumber;
 import domain.card.CardShape;
 import domain.hand.Hand;
-import domain.participant.BettingMoney;
-import domain.participant.Name;
-import domain.participant.Player;
-import domain.participant.Players;
+import domain.participant.*;
 import org.junit.jupiter.api.Test;
 
 class PlayersTest {
-    Player bustPlayer = Player.of(Name.from("pobi"), new Hand(new ArrayList<>(List.of(
+    Player bustPlayer = Player.of(
+            new PlayerInfo(Name.from("pobi"), BettingMoney.of(1000)),
+            new Hand(new ArrayList<>(List.of(
                     Card.of(CardNumber.J, CardShape.CLOVER),
                     Card.of(CardNumber.K, CardShape.HEART),
                     Card.of(CardNumber.Q, CardShape.DIAMOND))))
-            , BettingMoney.of(1000)
     );
 
-    Player normalPlayer = Player.of(Name.from("jason"), new Hand(new ArrayList<>(List.of(
+    Player normalPlayer = Player.of(
+            new PlayerInfo(Name.from("jason"), BettingMoney.of(2000)),
+            new Hand(new ArrayList<>(List.of(
                     Card.of(CardNumber.J, CardShape.CLOVER),
-                    Card.of(CardNumber.Q, CardShape.DIAMOND)))),
-            BettingMoney.of(2000));
+                    Card.of(CardNumber.Q, CardShape.DIAMOND)
+            ))));
 
     Players allBustPlayers = Players.from(List.of(bustPlayer, bustPlayer, bustPlayer));
     Players containBustPlayers = Players.from(List.of(bustPlayer, normalPlayer, normalPlayer));
