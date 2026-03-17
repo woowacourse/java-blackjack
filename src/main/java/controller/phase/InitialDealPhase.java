@@ -9,9 +9,6 @@ import view.OutputView;
 
 public class InitialDealPhase implements GamePhase {
 
-    public InitialDealPhase() {
-    }
-
     @Override
     public void execute(GameContext gameContext) {
         OutputView.printCardOpen(gameContext.players());

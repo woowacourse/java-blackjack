@@ -5,9 +5,6 @@ import view.OutputView;
 
 public class ShowBettingResultPhase implements GamePhase {
 
-    public ShowBettingResultPhase() {
-    }
-
     @Override
     public void execute(GameContext gameContext) {
         gameContext.calculateBettingMoney();

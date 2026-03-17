@@ -8,9 +8,6 @@ import view.OutputView;
 
 public class PlayerTurnPhase implements GamePhase {
 
-    public PlayerTurnPhase() {
-    }
-
     @Override
     public void execute(GameContext gameContext) {
         for (Player player : gameContext.players()) {

@@ -4,10 +4,7 @@ import controller.GameContext;
 import view.OutputView;
 
 public class CalculateScorePhase implements GamePhase {
-
-    public CalculateScorePhase() {
-    }
-
+    
     @Override
     public void execute(GameContext gameContext) {
         OutputView.printBlank();

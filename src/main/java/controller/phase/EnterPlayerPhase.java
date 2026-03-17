@@ -7,9 +7,6 @@ import view.InputView;
 
 public class EnterPlayerPhase implements GamePhase {
 
-    public EnterPlayerPhase() {
-    }
-
     @Override
     public void execute(GameContext gameContext) {
         List<String> inputNames = InputView.readPlayerNames();

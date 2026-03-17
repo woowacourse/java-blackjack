@@ -6,9 +6,6 @@ import view.OutputView;
 
 public class DealerTurnPhase implements GamePhase {
 
-    public DealerTurnPhase() {
-    }
-
     @Override
     public void execute(GameContext gameContext) {
         Dealer dealer = gameContext.dealer();
