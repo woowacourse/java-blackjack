@@ -48,7 +48,7 @@ public enum HandState {
             return HandState.HIT;
         }
 
-        if (score < 21) {
+        if (score < BLACKJACK_SCORE) {
             return HIT;
         }
 
