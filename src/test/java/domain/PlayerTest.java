@@ -17,7 +17,7 @@ class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        Player player = new Player("요크");
+        Player player = new Player("요크", new Betting(1000));
         this.player = player;
     }
 
@@ -108,7 +108,6 @@ class PlayerTest {
     }
 
     private Player createPlayerFromCards(List<Card> cards) {
-        Player player = new Player("aaaa");
         for (Card card : cards) {
             player.add(card);
         }

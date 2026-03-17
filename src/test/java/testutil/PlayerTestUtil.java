@@ -3,6 +3,7 @@ package testutil;
 import java.util.ArrayList;
 import java.util.List;
 
+import domain.Betting;
 import domain.Card;
 import domain.Deck;
 import domain.Player;
@@ -17,8 +18,8 @@ public final class PlayerTestUtil {
     private static final String PLAYER_NAME_1 = "아티";
     private static final String PLAYER_NAME_2 = "요크";
 
-    public static Player createPlayer(String name, List<Card> cards) {
-        Player player = new Player(name);
+    public static Player createPlayer(String name, List<Card> cards, int money) {
+        Player player = new Player(name, new Betting(money));
         cards.forEach(player::add);
         return player;
     }
@@ -29,46 +30,46 @@ public final class PlayerTestUtil {
                 List.of(
                         new Card(CardShape.SPADE, CardRank.TEN),
                         new Card(CardShape.SPADE, CardRank.JACK)
-                )); // 20
+                ), 10000); // 20
 
         Player player2 = createPlayer(
                 PLAYER_NAME_2,
                 List.of(
                         new Card(CardShape.SPADE, CardRank.TEN),
                         new Card(CardShape.SPADE, CardRank.JACK)
-                )); // 20
+                ), 10000); // 20
 
         return new Players(List.of(player1, player2));
     }
 
-    public static Player createBurstPlayer() {
+    public static Player createBurstPlayer(int money) {
         return createPlayer(
                 PLAYER_NAME_1,
                 List.of(
                         new Card(CardShape.SPADE, CardRank.TEN),
                         new Card(CardShape.SPADE, CardRank.JACK),
                         new Card(CardShape.SPADE, CardRank.NINE)
-                )); // 29
+                ), money); // 29
 
     }
 
-    public static Player createNonBurstPlayer() {
+    public static Player createNonBurstPlayer(int money) {
         return createPlayer(
                 PLAYER_NAME_2,
                 List.of(
                         new Card(CardShape.SPADE, CardRank.TEN),
                         new Card(CardShape.SPADE, CardRank.JACK)
-                )); // 20
+                ),money); // 20
 
     }
 
-    public static Player createBlackjackPlayer() {
+    public static Player createBlackjackPlayer(int money) {
         return createPlayer(
                 PLAYER_NAME_2,
                 List.of(
                         new Card(CardShape.SPADE, CardRank.TEN),
                         new Card(CardShape.SPADE, CardRank.ACE)
-                )); // 21
+                ),money); // 21
 
     }
 
@@ -79,7 +80,7 @@ public final class PlayerTestUtil {
                         new Card(CardShape.SPADE, CardRank.TEN),
                         new Card(CardShape.SPADE, CardRank.JACK),
                         new Card(CardShape.SPADE, CardRank.NINE)
-                )); // 29
+                ),0); // 29
 
     }
 
@@ -89,7 +90,7 @@ public final class PlayerTestUtil {
                 List.of(
                         new Card(CardShape.SPADE, CardRank.TEN),
                         new Card(CardShape.SPADE, CardRank.JACK)
-                )); // 20
+                ),0); // 20
 
     }
 
@@ -99,7 +100,7 @@ public final class PlayerTestUtil {
                 List.of(
                         new Card(CardShape.SPADE, CardRank.TEN),
                         new Card(CardShape.SPADE, CardRank.ACE)
-                )); // 21
+                ),0); // 21
 
     }
 

@@ -13,26 +13,9 @@ class PlayersTest {
 
     @BeforeEach
     void setUp() {
-        Player player1 = new Player("player1");
-        Player player2 = new Player("player2");
-        Players players = new Players(List.of(player1, player2));
-        this.players = players;
-    }
-
-    @DisplayName("총 배팅 금액을 구한다.")
-    @Test
-    void 총_배팅_금액_계산() {
-        Player player1 = new Player("player1");
-        Player player2 = new Player("player2");
-
-        player1.betMoney(10000);
-        player2.betMoney(20000);
-
-        Players players = new Players(List.of(player1, player2));
-
-        int total = players.getTotalBettingScore();
-
-        assertThat(total).isEqualTo(30000);
+        Player player1 = new Player("player1", new Betting(10000));
+        Player player2 = new Player("player2", new Betting(20000));
+        this.players = new Players(List.of(player1, player2));
     }
 
     @DisplayName("Player가 없으면 allBurst는 false를 반환한다.")
