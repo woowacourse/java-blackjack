@@ -10,16 +10,15 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
-import static domain.game.ProfitCalculator.calculatePlayerProfit;
-
 public class GameResult {
     private final Map<Participant, BigDecimal> participantsProfits = new HashMap<>();
+    private final ProfitCalculator profitCalculator = new ProfitCalculator();
 
     public GameResult(Players players, Dealer dealer) {
         BigDecimal playersProfitSum = BigDecimal.ZERO;
 
         for (Player player : players.getPlayers()) {
-            BigDecimal profit = calculatePlayerProfit(player, dealer);
+            BigDecimal profit = profitCalculator.calculatePlayerProfit(player, dealer);
             playersProfitSum = playersProfitSum.add(profit);
 
             participantsProfits.put(player, profit);

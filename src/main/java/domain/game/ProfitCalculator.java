@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 public class ProfitCalculator {
 
-    public static BigDecimal calculatePlayerProfit(Player player, Dealer dealer) {
+    public BigDecimal calculatePlayerProfit(Player player, Dealer dealer) {
         WinningStatus winningStatus = WinningStatus.of(player, dealer);
         BigDecimal betAmount = player.betAmount();
 

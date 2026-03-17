@@ -18,6 +18,7 @@ class ProfitCalculatorTest {
     Player pobi;
     Players players;
     Dealer dealer;
+    ProfitCalculator profitCalculator;
 
     @BeforeEach
     void setUp() {
@@ -27,6 +28,8 @@ class ProfitCalculatorTest {
         pobi.bet(BigDecimal.valueOf(1000));
 
         dealer = new Dealer(DEALER_NAME);
+
+        profitCalculator = new ProfitCalculator();
     }
 
     @Test
@@ -37,7 +40,7 @@ class ProfitCalculatorTest {
         Cards dealerCards = CardFixture.seventeenCards();
         dealer.receiveInitialCards(dealerCards);
 
-        assertThat(ProfitCalculator.calculatePlayerProfit(pobi, dealer)).isEqualByComparingTo(BigDecimal.valueOf(1500));
+        assertThat(profitCalculator.calculatePlayerProfit(pobi, dealer)).isEqualByComparingTo(BigDecimal.valueOf(1500));
     }
 
     @Test
@@ -48,7 +51,7 @@ class ProfitCalculatorTest {
         Cards dealerCards = CardFixture.seventeenCards();
         dealer.receiveInitialCards(dealerCards);
 
-        assertThat(ProfitCalculator.calculatePlayerProfit(pobi, dealer)).isEqualByComparingTo(BigDecimal.valueOf(1000));
+        assertThat(profitCalculator.calculatePlayerProfit(pobi, dealer)).isEqualByComparingTo(BigDecimal.valueOf(1000));
     }
 
     @Test
@@ -59,7 +62,7 @@ class ProfitCalculatorTest {
         Cards dealerCards = CardFixture.twentyCards();
         dealer.receiveInitialCards(dealerCards);
 
-        assertThat(ProfitCalculator.calculatePlayerProfit(pobi, dealer)).isEqualByComparingTo(BigDecimal.valueOf(-1000));
+        assertThat(profitCalculator.calculatePlayerProfit(pobi, dealer)).isEqualByComparingTo(BigDecimal.valueOf(-1000));
     }
 
     @Test
@@ -70,6 +73,6 @@ class ProfitCalculatorTest {
         Cards dealerCards = CardFixture.seventeenCards();
         dealer.receiveInitialCards(dealerCards);
 
-        assertThat(ProfitCalculator.calculatePlayerProfit(pobi, dealer)).isEqualByComparingTo(BigDecimal.valueOf(0));
+        assertThat(profitCalculator.calculatePlayerProfit(pobi, dealer)).isEqualByComparingTo(BigDecimal.valueOf(0));
     }
 }
