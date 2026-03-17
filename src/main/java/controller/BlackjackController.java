@@ -4,7 +4,7 @@ import domain.participant.Dealer;
 import domain.card.Deck;
 import domain.participant.Player;
 import domain.participant.Players;
-import domain.game.BlackjackRule;
+import domain.game.HandState;
 import domain.game.Outcome;
 import domain.game.ProfitResult;
 import java.util.LinkedHashMap;
@@ -92,10 +92,10 @@ public class BlackjackController {
     }
 
     private ProfitResult calculateProfits(Dealer dealer, Players players) {
-        BlackjackRule rule = new BlackjackRule();
+        HandState dealerState = dealer.resolveState();
         Map<Player, Integer> playerProfits = new LinkedHashMap<>();
         for (Player player : players.getGamePlayers()) {
-            Outcome outcome = rule.judge(player, dealer);
+            Outcome outcome = player.resolveState().versus(dealerState);
             playerProfits.put(player, player.calculateProfit(outcome));
         }
         return new ProfitResult(playerProfits);

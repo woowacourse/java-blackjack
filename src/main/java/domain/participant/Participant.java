@@ -2,6 +2,7 @@ package domain.participant;
 
 import domain.card.Card;
 import domain.card.CardBundle;
+import domain.game.HandState;
 import java.util.List;
 import java.util.Objects;
 
@@ -30,6 +31,10 @@ public abstract class Participant {
 
     public int getScore() {
         return cardBundle.calculateScore();
+    }
+
+    public HandState resolveState() {
+        return cardBundle.resolveState();
     }
 
     public boolean isBlackjack() {
