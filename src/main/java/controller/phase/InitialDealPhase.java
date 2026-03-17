@@ -19,7 +19,6 @@ public class InitialDealPhase implements GamePhase {
     public void execute(GameContext gameContext) {
         this.cardDispenser = gameContext.cardDispenser();
         OutputView.printCardOpen(gameContext.players());
-
         distributeCardToDealer(gameContext.dealer());
         distributeCardToPlayer(gameContext.players());
         checkBlackJack(gameContext.dealer());
@@ -30,14 +29,12 @@ public class InitialDealPhase implements GamePhase {
 
     private void distributeCardToDealer(Dealer dealer) {
         cardDispenser.dispenseStartingCards(dealer);
-        OutputView.printCardByDealer(dealer);
     }
 
     private void distributeCardToPlayer(List<Player> players) {
         for (Player player : players) {
             cardDispenser.dispenseStartingCards(player);
         }
-        OutputView.printCardByPlayers(players);
     }
 
     private void checkBlackJack(Participant participant) {

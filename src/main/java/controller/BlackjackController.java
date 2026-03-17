@@ -7,6 +7,7 @@ import controller.phase.EnterPlayerPhase;
 import controller.phase.GamePhase;
 import controller.phase.InitialDealPhase;
 import controller.phase.PlayerTurnPhase;
+import controller.phase.PrintParticipantsCardPhase;
 import controller.phase.ShowBettingResultPhase;
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class BlackjackController {
                 new EnterPlayerPhase(),
                 new BettingPhase(),
                 new InitialDealPhase(),
+                new PrintParticipantsCardPhase(),
                 new PlayerTurnPhase(),
                 new DealerTurnPhase(),
                 new CalculateScorePhase(),
