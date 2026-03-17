@@ -62,4 +62,8 @@ public abstract class Participant {
     }
 
     public abstract List<String> open();
+
+    public abstract List<String> openAll();
+
+    public abstract int calculateRevenue(int dealerScore, boolean dealerBust, boolean dealerBlackJack);
 }

@@ -58,7 +58,7 @@ class DealerTest {
         // when
         dealer.open();
         List<String> opened = dealer.open();
-        List<String> opened2 = dealer2.open();
+        List<String> opened2 = dealer2.openAll();
 
         // then
         assertThat(opened).hasSize(1);

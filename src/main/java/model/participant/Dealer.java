@@ -4,7 +4,6 @@ import java.util.List;
 
 public final class Dealer extends Participant {
     private static final String DEALER_NAME = "딜러";
-    private static final int FIRST_TURN_CARD_COUNT = 2;
 
     private Dealer(String name) {
         super(name);
@@ -16,11 +15,17 @@ public final class Dealer extends Participant {
 
     @Override
     public List<String> open() {
-        if (hands.size() == FIRST_TURN_CARD_COUNT) {
-            return List.of(hands.getFirst());
-        }
+        return List.of(hands.getFirst());
+    }
 
+    @Override
+    public List<String> openAll() {
         return hands.open();
+    }
+
+    @Override
+    public int calculateRevenue(int dealerScore, boolean dealerBust, boolean dealerBlackJack) {
+        return 0;
     }
 
     @Override

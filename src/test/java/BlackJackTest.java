@@ -43,19 +43,6 @@ public class BlackJackTest {
     }
 
     @Test
-    void 전체_참여자들의_승패를_계산한다() {
-        // when
-        Map<String, Integer> dealerResult = blackJack.calculateDealerResult();
-        Map<String, Boolean> playerResult = blackJack.calculatePlayerResult();
-
-        assertThat(dealerResult.get("승")).isEqualTo(1);
-        assertThat(dealerResult.get("패")).isEqualTo(1);
-
-        assertThat(playerResult.get("pobi")).isEqualTo(Boolean.FALSE);
-        assertThat(playerResult.get("jason")).isEqualTo(Boolean.TRUE);
-    }
-
-    @Test
     void 딜러와_참가자들의_최종_수익을_계산한다() {
         // given
         // when
