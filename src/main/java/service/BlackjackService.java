@@ -8,6 +8,7 @@ import domain.Betting;
 import domain.Dealer;
 import domain.Deck;
 import domain.Game;
+import domain.Participant;
 import domain.Player;
 import domain.Players;
 import domain.dto.BettingResultDto;
@@ -64,8 +65,8 @@ public class BlackjackService {
 
     public List<FinalCardDto> getFinalCardDtos(Game game) {
         List<FinalCardDto> finalCards = new ArrayList<>();
-        Dealer dealer = game.getDealer();
-        finalCards.add(new FinalCardDto(dealer.getName(), dealer.getCardsDisplay(), dealer.getCardsTotalSum()));
+        Participant dealer = game.getDealer();
+        finalCards.add(new FinalCardDto(Dealer.DEALER_NAME, dealer.getCardsDisplay(), dealer.getCardsTotalSum()));
 
         for (Player player : game.getPlayers()) {
             finalCards.add(new FinalCardDto(player.getName(), player.getCardsDisplay(), player.getCardsTotalSum()));

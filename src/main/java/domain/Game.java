@@ -83,8 +83,8 @@ public class Game {
         return players.isAllPlayerBurst();
     }
 
-    public void addCard(Player player) {
-        players.addAdditionalCard(player, deck.pop());
+    public void addCard(Participant participant) {
+        participant.add(deck.pop());
     }
 
     public void addDealerAdditionalCard() {
@@ -103,7 +103,7 @@ public class Game {
         return players;
     }
 
-    public Dealer getDealer() {
+    public Participant getDealer() {
         return dealer;
     }
 

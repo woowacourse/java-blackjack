@@ -11,9 +11,9 @@ public class Players implements Iterable<Player> {
         this.players = new ArrayList<>(players);
     }
 
-    public void addAdditionalCard(Player player, Card card) {
-        player.add(card);
-    }
+//    public void addAdditionalCard(Player player, Card card) {
+//        player.add(card);
+//    }
 
     public int getTotalBettingScore() {
         return players.stream()
