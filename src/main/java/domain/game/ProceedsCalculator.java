@@ -12,7 +12,7 @@ public class ProceedsCalculator {
     private ProceedsCalculator() {
     }
 
-    public static double calculate(int bettingMoney, Result result) {
+    public static double calculate(Long bettingMoney, Result result) {
         if (result == Result.BLACKJACK) {
             return bettingMoney * BLACKJACK_PROCEEDS_RATE;
         }

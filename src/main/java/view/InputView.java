@@ -28,7 +28,7 @@ public class InputView {
             try {
                 System.out.println(playerName + BETTING_MONEY_INPUT_MESSAGE);
                 String input = scanner.nextLine();
-                BettingMoney bettingMoney = new BettingMoney(Integer.parseInt(input));
+                BettingMoney bettingMoney = new BettingMoney(Long.parseLong(input));
                 System.out.println();
                 return bettingMoney;
             } catch (IllegalArgumentException e) {

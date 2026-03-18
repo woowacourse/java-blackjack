@@ -187,7 +187,8 @@
 - [X] PlayerStatus에서 수익 계산 하는 부분 분리하기
 - [X] 기록 내용 README.md 추가
 - [X] updateNaturalBlackJack 상태 업데이트가 밖에서 호출되는 문제 수정
-
+- [X] DtoFactory 초기 카드 오픈 로직 추상화하여 중복 로직 줄이기 
+- [X] 베팅머니 데이터 타입 수정(Integer.Max보다 큰 값이 나올 경우 대비)
 
 
 

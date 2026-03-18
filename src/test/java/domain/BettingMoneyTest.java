@@ -8,7 +8,7 @@ public class BettingMoneyTest {
 
     @Test
     void 배팅금액은_0보다_커야_한다() {
-        assertThatThrownBy(() -> new BettingMoney(0))
+        assertThatThrownBy(() -> new BettingMoney(0L))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

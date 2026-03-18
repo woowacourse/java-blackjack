@@ -20,7 +20,7 @@ class GameManagerTest {
 
         manager.registerPlayers(
                 List.of(new Name("pobi"), new Name("cary")),
-                List.of(new BettingMoney(1000), new BettingMoney(1000))
+                List.of(new BettingMoney(1000L), new BettingMoney(1000L))
         );
 
         manager.startGame();
@@ -55,7 +55,7 @@ class GameManagerTest {
 
         manager.registerPlayers(
                 List.of(new Name("pobi")),
-                List.of(new BettingMoney(1000))
+                List.of(new BettingMoney(1000L))
         );
 
         manager.startGame();
