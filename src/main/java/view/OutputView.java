@@ -1,9 +1,9 @@
 package view;
 
-import domain.betting.ParticipantsProfitResult;
 import java.util.List;
 import view.dto.InitialDealingResult;
 import view.dto.ParticipantCards;
+import view.dto.ParticipantsProfit;
 
 public class OutputView {
     private static final String LINE_FEED = "\n";
@@ -47,8 +47,8 @@ public class OutputView {
         println();
     }
 
-    public void printParticipantsProfit(ParticipantsProfitResult participantsProfitResult) {
+    public void printParticipantsProfit(ParticipantsProfit participantsProfit) {
         printlnMessage("## 최종 수익");
-        printlnMessage(Formatter.participantsProfitResult(participantsProfitResult));
+        printlnMessage(Formatter.participantsProfitResult(participantsProfit));
     }
 }

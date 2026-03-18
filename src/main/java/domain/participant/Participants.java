@@ -1,7 +1,7 @@
 package domain.participant;
 
 import domain.Deck;
-import domain.betting.PlayerBettingResult;
+import domain.betting.PlayerMatchResult;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,11 +31,11 @@ public class Participants {
         players.distributeCardsToAll(deck, cardCount);
     }
 
-    public List<PlayerBettingResult> playersBettingResult() {
-        List<PlayerBettingResult> playersBettingResult = new ArrayList<>();
+    public List<PlayerMatchResult> playersBettingResult() {
+        List<PlayerMatchResult> playersBettingResult = new ArrayList<>();
 
         for (Player player : players) {
-            playersBettingResult.add(PlayerBettingResult.from(dealer, player));
+            playersBettingResult.add(PlayerMatchResult.from(dealer, player));
         }
 
         return playersBettingResult;

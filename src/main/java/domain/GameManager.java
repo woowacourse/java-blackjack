@@ -3,8 +3,6 @@ package domain;
 import domain.card.CardsSnapshot;
 import domain.participant.Participant;
 import domain.participant.Participants;
-import domain.participant.Player;
-import domain.participant.Players;
 
 public class GameManager {
     private static final int STARTING_CARD_COUNT = 2;
@@ -20,14 +18,6 @@ public class GameManager {
 
     public void dealCard(Participant participant) {
         participant.add(deck.pop());
-    }
-
-    public void dealCardTo(Players players, int count) {
-        for (int i = 0; i < count; i++) {
-            for (Player player : players) {
-                dealCard(player);
-            }
-        }
     }
 
     public CardsSnapshot getCardsResult(Participant participant) {

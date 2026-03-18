@@ -1,6 +1,6 @@
 package view.dto;
 
-public record PlayerProfitResult(
+public record PlayerProfit(
         String name,
         int profit
 ) {

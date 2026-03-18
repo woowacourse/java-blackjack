@@ -3,7 +3,7 @@ package domain.betting;
 import domain.participant.Dealer;
 import domain.participant.Player;
 
-public enum MatchingRule {
+public enum MatchResult {
     PLAYER_BUST(-10),
     BOTH_NATURAL_BLACKJACK(0),
     PLAYER_NATURAL(15),
@@ -14,7 +14,7 @@ public enum MatchingRule {
 
     private final int profitRate;
 
-    MatchingRule(int profitRate) {
+    MatchResult(int profitRate) {
         this.profitRate = profitRate;
     }
 
@@ -22,7 +22,7 @@ public enum MatchingRule {
         return (this.profitRate * bettingAmount.getValue()) / 10;
     }
 
-    public static MatchingRule determine(Dealer dealer, Player player) {
+    public static MatchResult determine(Dealer dealer, Player player) {
         if (player.isBust()) {
             return PLAYER_BUST;
         }

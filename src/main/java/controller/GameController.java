@@ -4,9 +4,8 @@ import domain.Command;
 import domain.GameManager;
 import domain.betting.BettingAmount;
 import domain.betting.BettingTable;
-import domain.betting.ParticipantsProfitResult;
-import domain.betting.PlayerBetting;
-import domain.betting.PlayerBettingResult;
+import domain.betting.PlayerBet;
+import domain.betting.PlayerMatchResult;
 import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;
@@ -17,6 +16,7 @@ import view.InputView;
 import view.OutputView;
 import view.PlayerParser;
 import view.dto.InitialDealingResult;
+import view.dto.ParticipantsProfit;
 
 public class GameController {
     private final InputView inputView;
@@ -37,7 +37,7 @@ public class GameController {
 
         readyPhase(participants);
         playPhase(dealer, players);
-        bettingResultPhase(bettingTable, participants);
+        resultPhase(bettingTable, participants);
     }
 
     private BettingTable placeBet(Players players) {
@@ -45,8 +45,8 @@ public class GameController {
         for (Player player : players) {
             BettingAmount bettingAmount = readBettingAmountFor(player);
 
-            PlayerBetting playerBetting = PlayerBetting.from(player, bettingAmount);
-            bettingTable.add(playerBetting);
+            PlayerBet playerBet = PlayerBet.from(player, bettingAmount);
+            bettingTable.register(playerBet);
         }
 
         return bettingTable;
@@ -61,7 +61,8 @@ public class GameController {
 
     private void playPhase(Dealer dealer, Players players) {
         playPlayersTurn(players);
-        playDealerTurn(players, dealer);
+        playDealerTurn(dealer);
+        printPlayResult(players, dealer);
     }
 
     private void playPlayersTurn(Players players) {
@@ -71,13 +72,15 @@ public class GameController {
         outputView.printNewLine();
     }
 
-    private void playDealerTurn(Players players, Dealer dealer) {
+    private void playDealerTurn(Dealer dealer) {
         while (dealer.canReceive()) {
             gameManager.dealCard(dealer);
             outputView.printCompleteDealerTurn();
         }
         outputView.printNewLine();
+    }
 
+    private void printPlayResult(Players players, Dealer dealer) {
         outputView.printParticipantResult(dealer.name(), gameManager.getCardsResult(dealer).getFormattedCards(),
                 dealer.getScore());
         for (Player player : players) {
@@ -87,11 +90,11 @@ public class GameController {
         outputView.printNewLine();
     }
 
-    private void bettingResultPhase(BettingTable bettingTable, Participants participants) {
-        List<PlayerBettingResult> playerBettingResults = participants.playersBettingResult();
-        ParticipantsProfitResult participantsProfitResult = bettingTable.calculateAllParticipantsProfit(
-                playerBettingResults);
-        outputView.printParticipantsProfit(participantsProfitResult);
+    private void resultPhase(BettingTable bettingTable, Participants participants) {
+        List<PlayerMatchResult> playerMatchResults = participants.playersBettingResult();
+        ParticipantsProfit participantsProfit = bettingTable.calculateAllParticipantsProfit(
+                playerMatchResults);
+        outputView.printParticipantsProfit(participantsProfit);
     }
 
     private BettingAmount readBettingAmountFor(Player player) {

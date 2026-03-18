@@ -1,13 +1,13 @@
 package view;
 
-import domain.betting.ParticipantsProfitResult;
 import domain.card.Card;
 import domain.card.Suit;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import view.dto.ParticipantCards;
-import view.dto.PlayerProfitResult;
+import view.dto.ParticipantsProfit;
+import view.dto.PlayerProfit;
 
 public class Formatter {
     private static final Map<Suit, String> SUIT_FORMATS = Map.of(
@@ -46,24 +46,24 @@ public class Formatter {
         }
     }
 
-    public static String participantsProfitResult(ParticipantsProfitResult result) {
+    public static String participantsProfitResult(ParticipantsProfit result) {
         String dealerLine = dealerProfit(result);
         String playersLines = playersProfit(result);
 
         return String.join(System.lineSeparator(), dealerLine, playersLines);
     }
 
-    private static String dealerProfit(ParticipantsProfitResult result) {
+    private static String dealerProfit(ParticipantsProfit result) {
         return "딜러: " + result.dealerProfit();
     }
 
-    private static String playersProfit(ParticipantsProfitResult result) {
+    private static String playersProfit(ParticipantsProfit result) {
         return result.playersProfitResult().stream()
                 .map(Formatter::playerProfitResult)
                 .collect(Collectors.joining(System.lineSeparator()));
     }
 
-    private static String playerProfitResult(PlayerProfitResult result) {
+    private static String playerProfitResult(PlayerProfit result) {
         return result.name() + ": " + result.profit();
     }
 

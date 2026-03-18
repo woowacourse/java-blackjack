@@ -3,54 +3,55 @@ package domain.betting;
 import domain.participant.Name;
 import java.util.ArrayList;
 import java.util.List;
-import view.dto.PlayerProfitResult;
+import view.dto.ParticipantsProfit;
+import view.dto.PlayerProfit;
 
 public class BettingTable {
-    private final List<PlayerBetting> bettingTable;
+    private final List<PlayerBet> playerBets;
 
-    private BettingTable(List<PlayerBetting> bettingTable) {
-        this.bettingTable = bettingTable;
+    private BettingTable(List<PlayerBet> playerBets) {
+        this.playerBets = playerBets;
     }
 
     public static BettingTable create() {
-        List<PlayerBetting> bettingTable = new ArrayList<>();
+        List<PlayerBet> bettingTable = new ArrayList<>();
         return new BettingTable(bettingTable);
     }
 
-    public void add(PlayerBetting playerBetting) {
-        bettingTable.add(playerBetting);
+    public void register(PlayerBet playerBet) {
+        playerBets.add(playerBet);
     }
 
-    public ParticipantsProfitResult calculateAllParticipantsProfit(List<PlayerBettingResult> playersBettingResult) {
-        List<PlayerProfitResult> playersProfitResult = calculatePlayersProfit(playersBettingResult);
+    public ParticipantsProfit calculateAllParticipantsProfit(List<PlayerMatchResult> playersBettingResult) {
+        List<PlayerProfit> playersProfitResult = calculatePlayersProfit(playersBettingResult);
         int dealerProfit = calculateDealerProfit(playersProfitResult);
 
-        return new ParticipantsProfitResult(dealerProfit, playersProfitResult);
+        return new ParticipantsProfit(dealerProfit, playersProfitResult);
     }
 
-    private List<PlayerProfitResult> calculatePlayersProfit(List<PlayerBettingResult> playersBettingResult) {
+    private List<PlayerProfit> calculatePlayersProfit(List<PlayerMatchResult> playersBettingResult) {
         return playersBettingResult.stream()
                 .map(this::calculatePlayerProfit)
                 .toList();
     }
 
-    private PlayerProfitResult calculatePlayerProfit(PlayerBettingResult playerBettingResult) {
-        Name name = playerBettingResult.playerName();
-        MatchingRule bettingRule = playerBettingResult.bettingRule();
-        BettingAmount bettingAmount = findBettingByName(name).bettingAmount();
+    private PlayerProfit calculatePlayerProfit(PlayerMatchResult playerMatchResult) {
+        Name name = playerMatchResult.playerName();
+        MatchResult matchResult = playerMatchResult.matchResult();
+        BettingAmount bettingAmount = findBetByName(name).bettingAmount();
 
-        int playerProfit = bettingRule.calculateProfit(bettingAmount);
-        return new PlayerProfitResult(name.value(), playerProfit);
+        int playerProfit = matchResult.calculateProfit(bettingAmount);
+        return new PlayerProfit(name.value(), playerProfit);
     }
 
-    private int calculateDealerProfit(List<PlayerProfitResult> playersProfitResult) {
+    private int calculateDealerProfit(List<PlayerProfit> playersProfitResult) {
         return (-1) * playersProfitResult.stream()
-                .mapToInt(PlayerProfitResult::profit)
+                .mapToInt(PlayerProfit::profit)
                 .sum();
     }
 
-    private PlayerBetting findBettingByName(Name targetName) {
-        return bettingTable.stream()
+    private PlayerBet findBetByName(Name targetName) {
+        return playerBets.stream()
                 .filter(currentBetting -> currentBetting.playerName().equals(targetName))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("배팅 정보 찾기 오류"));
