@@ -42,17 +42,13 @@ public class BlackJackController {
     }
 
     private void drawPlayerTurn(Player player, Cards cards) {
-        while (player.canHit()) {
-            final boolean hit = inputView.askHitOrStand(player);
-            if (!hit) {
-                break;
-            }
+        while (player.canHit() && inputView.askHitOrStand(player)) {
             hit(player, cards);
         }
     }
 
     private void hit(Player player, Cards cards) {
-        player.hit(cards);
+        player.drawCard(cards);
         resultView.printPlayerCards(player.getName(), resultView.joinCardNames(player.getCardList()));
         printPlayerBustIfNeeded(player);
     }

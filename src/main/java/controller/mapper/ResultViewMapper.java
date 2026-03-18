@@ -29,7 +29,7 @@ public class ResultViewMapper {
 
     public StartBlackJackDto toStartBlackJackDto(Players players, Dealer dealer) {
         return new StartBlackJackDto(
-                formatCardName(dealer.getCardList().get(0)),
+                resultView.formatCardName(dealer.getCardList().get(0)),
                 toPlayerCardsDtos(players)
         );
     }
@@ -96,11 +96,7 @@ public class ResultViewMapper {
 
     private List<String> toCardNames(List<Card> cards) {
         return cards.stream()
-                .map(this::formatCardName)
+                .map(resultView::formatCardName)
                 .collect(Collectors.toList());
-    }
-
-    private String formatCardName(Card card) {
-        return card.getRank().symbol() + card.getSuit().suit();
     }
 }

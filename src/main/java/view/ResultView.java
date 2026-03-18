@@ -49,7 +49,7 @@ public class ResultView {
         ));
     }
 
-    private String formatCardName(final Card card) {
+    public String formatCardName(final Card card) {
         return card.getRank().symbol() + card.getSuit().suit();
     }
 

@@ -9,14 +9,6 @@ public class Balance {
         this.balance = balance;
     }
 
-    public static Balance zero(){
-        return ZERO;
-    }
-
-    public Balance adjust(int betting){
-        return new Balance(betting + balance);
-    }
-
     public int getBalance(){
         return balance;
     }

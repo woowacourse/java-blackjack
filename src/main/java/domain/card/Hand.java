@@ -55,18 +55,18 @@ public class Hand {
 
     public HandState getHandState(){
         final int score = calculateScore();
-        if (score == BLACKJACK_SCORE) {
-            if (isInitialCards()) {
-                return HandState.BLACKJACK;
-            }
-            return HandState.HIT;
+        if (score > BLACKJACK_SCORE) {
+            return HandState.BUST;
         }
 
         if (score < BLACKJACK_SCORE) {
             return HandState.HIT;
         }
 
-        return HandState.BUST;
+        if (isInitialCards()) {
+            return HandState.BLACKJACK;
+        }
+        return HandState.HIT;
     }
 
     private boolean isInitialCards(){

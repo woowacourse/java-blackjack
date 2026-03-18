@@ -8,7 +8,6 @@ import dto.domain.PlayerNameAndBettingDto;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.IntStream;
-import util.NameParser;
 
 public class BlackJackGame {
     private static final int INITIAL_DRAW_COUNT = 2;
