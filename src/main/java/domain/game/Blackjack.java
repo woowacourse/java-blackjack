@@ -9,4 +9,9 @@ public class Blackjack implements HandState {
         }
         return Outcome.BLACKJACK_WIN;
     }
+
+    @Override
+    public boolean canHit() {
+        return false;
+    }
 }

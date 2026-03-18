@@ -50,11 +50,11 @@ public class CardBundle {
         cards.add(card);
     }
 
-    public boolean isBlackjack() {
+    private boolean isBlackjack() {
         return cards.size() == BLACKJACK_CARD_COUNT && calculateScore() == BUST_THRESHOLD;
     }
 
-    public boolean isBust() {
+    private boolean isBust() {
         return calculateScore() > BUST_THRESHOLD;
     }
 

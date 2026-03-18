@@ -16,7 +16,4 @@ public enum Outcome {
         return (int) (amount * profitRate);
     }
 
-    public double getProfitRate() {
-        return profitRate;
-    }
 }

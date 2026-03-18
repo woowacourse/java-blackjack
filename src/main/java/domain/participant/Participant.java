@@ -9,16 +9,20 @@ import java.util.Objects;
 public abstract class Participant {
     private final PlayerName playerName;
     private final CardBundle cardBundle;
+    private HandState state;
 
     protected Participant(String name) {
         this.playerName = new PlayerName(name);
         this.cardBundle = new CardBundle();
     }
 
-    public abstract boolean canHit();
+    public boolean canHit() {
+        return state.canHit();
+    }
 
     public void addCard(Card card) {
         cardBundle.addCard(card);
+        this.state = cardBundle.resolveState();
     }
 
     public List<Card> getCards() {
@@ -33,16 +37,8 @@ public abstract class Participant {
         return cardBundle.calculateScore();
     }
 
-    public HandState resolveState() {
-        return cardBundle.resolveState();
-    }
-
-    public boolean isBlackjack() {
-        return cardBundle.isBlackjack();
-    }
-
-    public boolean isBust() {
-        return cardBundle.isBust();
+    public HandState getState() {
+        return state;
     }
 
     @Override

@@ -11,7 +11,7 @@ public class Dealer extends Participant {
 
     @Override
     public boolean canHit() {
-        return getScore() <= HIT_THRESHOLD;
+        return super.canHit() && getScore() <= HIT_THRESHOLD;
     }
 
     public Card getInitialCard() {

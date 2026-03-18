@@ -92,10 +92,10 @@ public class BlackjackController {
     }
 
     private ProfitResult calculateProfits(Dealer dealer, Players players) {
-        HandState dealerState = dealer.resolveState();
+        HandState dealerState = dealer.getState();
         Map<Player, Integer> playerProfits = new LinkedHashMap<>();
         for (Player player : players.getGamePlayers()) {
-            Outcome outcome = player.resolveState().versus(dealerState);
+            Outcome outcome = player.getState().versus(dealerState);
             playerProfits.put(player, player.calculateProfit(outcome));
         }
         return new ProfitResult(playerProfits);

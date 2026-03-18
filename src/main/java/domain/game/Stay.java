@@ -20,6 +20,11 @@ public class Stay implements HandState {
         return compareScore(otherStay);
     }
 
+    @Override
+    public boolean canHit() {
+        return true;
+    }
+
     private Outcome compareScore(Stay other) {
         if (this.score > other.score) {
             return Outcome.WIN;

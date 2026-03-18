@@ -10,11 +10,6 @@ public class Player extends Participant {
         this.bettingMoney = new BettingMoney(amount);
     }
 
-    @Override
-    public boolean canHit() {
-        return !isBust() && !isBlackjack();
-    }
-
     public int calculateProfit(Outcome outcome) {
         return outcome.calculateProfit(bettingMoney.getAmount());
     }
