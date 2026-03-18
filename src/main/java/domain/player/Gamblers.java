@@ -1,5 +1,6 @@
 package domain.player;
 
+import domain.betting.BettingAmount;
 import domain.card.GameCards;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -12,9 +13,20 @@ public class Gamblers {
 
     private List<Gambler> gamblers;
 
-    public Gamblers(List<Gambler> gamblers) {
+    private Gamblers(List<Gambler> gamblers) {
         validateNameDuplication(gamblers);
         this.gamblers = gamblers;
+    }
+
+    public static Gamblers from(List<Gambler> gamblers) {
+        return new Gamblers(gamblers);
+    }
+
+    public static Gamblers from(Map<String, BettingAmount> gamblersInfo) {
+        List<Gambler> createdGamblers = gamblersInfo.entrySet().stream()
+                .map(entry -> new Gambler(entry.getKey(), entry.getValue()))
+                .collect(Collectors.toList());
+        return new Gamblers(createdGamblers);
     }
 
     private void validateNameDuplication(List<Gambler> gamblers) {

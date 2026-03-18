@@ -5,7 +5,6 @@ import domain.card.GameCards;
 import domain.player.Dealer;
 import domain.player.Gambler;
 import domain.player.Gamblers;
-import domain.player.GamblersFactory;
 import domain.player.Participant;
 import domain.player.ParticipantGameInfo;
 import java.util.ArrayList;
@@ -21,8 +20,7 @@ public class Game {
 
     public Game(Map<String, BettingAmount> gamblersNameAndBettingInfo) {
         this.dealer = new Dealer();
-        List<Gambler> gamblers = GamblersFactory.createGamblers(gamblersNameAndBettingInfo);
-        this.gamblers = new Gamblers(gamblers);
+        this.gamblers = Gamblers.from(gamblersNameAndBettingInfo);
         this.gameCards = new GameCards();
     }
 

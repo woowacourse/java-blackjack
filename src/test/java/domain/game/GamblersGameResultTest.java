@@ -33,7 +33,7 @@ class GamblersGameResultTest {
         kaiya.addCard(new Card("J", "하트"));
         kaiya.addCard(new Card("Q", "다이아몬드"));
 
-        Gamblers gamblers = new Gamblers(List.of(pobi, coco, kaiya));
+        Gamblers gamblers = Gamblers.from(List.of(pobi, coco, kaiya));
 
         // when
         GamblersGameResult gameResult = new GamblersGameResult(dealer, gamblers);
@@ -73,7 +73,7 @@ class GamblersGameResultTest {
         kaiya.addCard(new Card("4", "하트"));
         kaiya.addCard(new Card("Q", "다이아몬드"));
 
-        Gamblers gamblers = new Gamblers(List.of(pobi, coco, kaiya));
+        Gamblers gamblers = Gamblers.from(List.of(pobi, coco, kaiya));
 
         // when
         GamblersGameResult gameResult = new GamblersGameResult(dealer, gamblers);
@@ -113,7 +113,7 @@ class GamblersGameResultTest {
         kaiya.addCard(new Card("4", "하트"));
         kaiya.addCard(new Card("Q", "다이아몬드"));
 
-        Gamblers gamblers = new Gamblers(List.of(pobi, coco, kaiya));
+        Gamblers gamblers = Gamblers.from(List.of(pobi, coco, kaiya));
 
         // when
         GamblersGameResult gameResult = new GamblersGameResult(dealer, gamblers);

@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class GamblersGameResult {
 
-    private Map<String, Profit> participantProfits;
+    private final Map<String, Profit> participantProfits;
 
     public GamblersGameResult(Participant dealer, Gamblers gamblers) {
         this.participantProfits = new LinkedHashMap<>();

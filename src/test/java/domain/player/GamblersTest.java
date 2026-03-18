@@ -20,7 +20,7 @@ class GamblersTest {
         gamblerBettingInfo.put("coco", new BettingAmount(BigDecimal.valueOf(20000)));
 
         // when
-        Gamblers gamblers = new Gamblers(GamblersFactory.createGamblers(gamblerBettingInfo));
+        Gamblers gamblers = Gamblers.from(gamblerBettingInfo);
 
         // then
         Assertions.assertThat(gamblers.getGamblersSize()).isEqualTo(2);
