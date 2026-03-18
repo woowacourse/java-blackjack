@@ -1,9 +1,9 @@
 package domain.player.attribute;
 
-import static util.Constants.MAXIMUM_NAME_LENGTH;
-import static util.Constants.MINIMUM_NAME_LENGTH;
-
 public class Name {
+
+    private static final int MINIMUM_NAME_LENGTH = 2;
+    private static final int MAXIMUM_NAME_LENGTH = 10;
     private final String name;
 
     public Name(String name) {
@@ -13,10 +13,6 @@ public class Name {
 
     public String getName() {
         return name;
-    }
-
-    public boolean isEqualName(String name) {
-        return this.name.equals(name);
     }
 
     private void validate(String name) {

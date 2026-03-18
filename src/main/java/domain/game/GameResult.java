@@ -1,33 +1,43 @@
 package domain.game;
 
-import static util.Constants.BLACK_JACK;
+import domain.player.Participant;
 
 public enum GameResult {
 
-    WIN("승"),
-    LOSE("패"),
-    DRAW("무");
+    BLACK_JACK(1.5), WIN(1.0), LOSE(-1.0), DRAW(0.0);
 
-    private String gameResult;
+    private final double benefitRatio;
 
-    GameResult(String gameResult) {
-        this.gameResult = gameResult;
+    GameResult(double gameResult) {
+        this.benefitRatio = gameResult;
     }
 
-    public static GameResult determine(int dealerScore, int gamblerScore) {
-        if(gamblerScore > BLACK_JACK) return LOSE;
-        if(dealerScore > BLACK_JACK) return WIN;
-
-        if(dealerScore < gamblerScore) {
+    public static GameResult determine(Participant dealer, Participant gambler) {
+        if (gambler.isBust()) {
+            return LOSE;
+        }
+        if (gambler.isBlackJack() && dealer.isBlackJack()) {
+            return DRAW;
+        }
+        if (gambler.isBlackJack()) {
+            return BLACK_JACK;
+        }
+        if (dealer.isBust()) {
             return WIN;
         }
-        if(dealerScore > gamblerScore) {
+        if (dealer.isBlackJack()) {
             return LOSE;
+        }
+        if (dealer.getTotalScore() > gambler.getTotalScore()) {
+            return LOSE;
+        }
+        if (dealer.getTotalScore() < gambler.getTotalScore()) {
+            return WIN;
         }
         return DRAW;
     }
 
-    public String getGameResult() {
-        return gameResult;
+    public double getBenefitRatio() {
+        return benefitRatio;
     }
 }

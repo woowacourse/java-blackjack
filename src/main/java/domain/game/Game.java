@@ -1,12 +1,11 @@
 package domain.game;
 
-import static util.Constants.DEFAULT_START_CARD_COUNT;
-
-import domain.card.Card;
+import domain.betting.BettingAmount;
 import domain.card.GameCards;
 import domain.player.Dealer;
 import domain.player.Gambler;
 import domain.player.Gamblers;
+import domain.player.Participant;
 import domain.player.ParticipantGameInfo;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -19,17 +18,15 @@ public class Game {
     private final Gamblers gamblers;
     private final GameCards gameCards;
 
-    public Game(String dealerName, List<String> names, int amount) {
-        this.dealer = new Dealer(dealerName);
-        this.gamblers = new Gamblers(names);
-        this.gameCards = new GameCards(amount);
+    public Game(Map<String, BettingAmount> gamblersNameAndBettingInfo) {
+        this.dealer = new Dealer();
+        this.gamblers = Gamblers.from(gamblersNameAndBettingInfo);
+        this.gameCards = new GameCards();
     }
 
     public void initializeGame() {
-        for (int i = 0; i < DEFAULT_START_CARD_COUNT; i++) {
-            dealer.addCard(gameCards.drawCard());
-            gamblers.receiveCards(gameCards);
-        }
+        dealer.receiveInitialCards(gameCards);
+        gamblers.receiveInitialCards(gameCards);
     }
 
     public Map<String, List<String>> getInitialParticipantsHandInfo() {
@@ -39,19 +36,19 @@ public class Game {
         return info;
     }
 
+    public Dealer getDealer() {
+        return dealer;
+    }
+
     public boolean shouldDealerDraw() {
         return dealer.isBelowDrawThreshold();
     }
 
-    public void addDealerCard() {
-        dealer.addCard(pickCard());
+    public void drawCardTo(Participant participant) {
+        participant.addCard(gameCards.drawCard());
     }
 
-    public Card pickCard() {
-        return gameCards.drawCard();
-    }
-
-    public List<Gambler> getGamblersList() {
+    public List<Gambler> getGamblers() {
         return gamblers.getGamblers();
     }
 
@@ -70,7 +67,7 @@ public class Game {
         return gamblers.getHandSize();
     }
 
-    public GamblersGameResult getResult(){
-        return new GamblersGameResult(dealer.getTotalScore(), gamblers.getParticipantTotalScore());
+    public GamblersGameResult getResult() {
+        return GamblersGameResult.calculate(dealer, gamblers);
     }
 }

@@ -1,9 +1,5 @@
 package domain.player.attribute;
 
-import static util.Constants.ACE_HIGH_SCORE;
-import static util.Constants.ACE_LOW_SCORE;
-import static util.Constants.BLACK_JACK;
-
 import domain.card.Card;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +7,9 @@ import java.util.stream.Collectors;
 
 public class Hand {
 
+    public static final int BLACK_JACK_SCORE = 21;
+    private static final int ACE_HIGH_SCORE = 11;
+    private static final int ACE_LOW_SCORE = 1;
     private final List<Card> cards;
 
     public Hand() {
@@ -26,18 +25,16 @@ public class Hand {
     }
 
     public boolean isBust() {
-        return calculateScore() > BLACK_JACK;
+        return calculateScore() > BLACK_JACK_SCORE;
     }
 
     public int calculateScore() {
         int sum = calculateBaseScore();
         int aceCount = countAce();
-
-        while (sum > BLACK_JACK && aceCount > 0) {
+        while (sum > BLACK_JACK_SCORE && aceCount > 0) {
             sum -= (ACE_HIGH_SCORE - ACE_LOW_SCORE);
             aceCount--;
         }
-
         return sum;
     }
 
@@ -53,21 +50,21 @@ public class Hand {
 
     private int calculateBaseScore() {
         int sum = 0;
-
         for (Card card : cards) {
             sum += getCardScore(card);
         }
-
         return sum;
+    }
+
+    public boolean isBlackJack() {
+        return getCardsSize() == 2 && calculateScore() == BLACK_JACK_SCORE;
     }
 
     private int countAce() {
         int aceCount = 0;
-
         for (Card card : cards) {
             aceCount += getAceToInt(card);
         }
-
         return aceCount;
     }
 

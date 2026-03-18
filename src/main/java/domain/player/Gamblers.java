@@ -1,25 +1,42 @@
 package domain.player;
 
+import domain.betting.BettingAmount;
 import domain.card.GameCards;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Gamblers {
 
-    private List<Gambler> gamblers;
+    private final List<Gambler> gamblers;
 
-    public Gamblers(List<String> names) {
-        validateDuplicateNames(names);
-        this.gamblers = names.stream()
-                .map(Gambler::new)
-                .collect(Collectors.toList());
+    private Gamblers(List<Gambler> gamblers) {
+        validateNameDuplication(gamblers);
+        this.gamblers = gamblers;
     }
 
-    public boolean containGambler(String name) {
-        return gamblers.stream()
-                .anyMatch(gambler -> gambler.isEqualName(name));
+    public static Gamblers from(List<Gambler> gamblers) {
+        return new Gamblers(gamblers);
+    }
+
+    public static Gamblers from(Map<String, BettingAmount> gamblersInfo) {
+        List<Gambler> createdGamblers = gamblersInfo.entrySet().stream()
+                .map(entry -> new Gambler(entry.getKey(), entry.getValue()))
+                .collect(Collectors.toList());
+        return new Gamblers(createdGamblers);
+    }
+
+    private void validateNameDuplication(List<Gambler> gamblers) {
+        Set<String> names = new HashSet<>();
+        for (Gambler gambler : gamblers) {
+            names.add(gambler.getName());
+        }
+        if (names.size() != gamblers.size()) {
+            throw new IllegalArgumentException("중복된 이름이 입력됩니다.");
+        }
     }
 
     public Map<String, List<String>> getHandsInfo() {
@@ -29,17 +46,6 @@ public class Gamblers {
                         (a, b) -> a,
                         LinkedHashMap::new
                 ));
-    }
-
-    public Map<String, Integer> getParticipantTotalScore() {
-        return gamblers.stream()
-                .collect(Collectors.toMap(Gambler::getName, Gambler::getTotalScore));
-    }
-
-    public void receiveCards(GameCards gameCards) {
-        for (Gambler gambler : gamblers) {
-            gambler.addCard(gameCards.drawCard());
-        }
     }
 
     public List<ParticipantGameInfo> getParticipantGameInfos() {
@@ -58,11 +64,13 @@ public class Gamblers {
         return gamblers;
     }
 
-    public void validateDuplicateNames(List<String> names) {
-        List<String> distinctNamesCount = names.stream().
-                distinct().collect(Collectors.toList());
-        if(distinctNamesCount.size() != names.size()) {
-            throw new IllegalArgumentException("중복된 이름이 입력됩니다.");
+    public int getGamblersSize() {
+        return gamblers.size();
+    }
+
+    public void receiveInitialCards(GameCards gameCards) {
+        for (Gambler gambler : gamblers) {
+            gambler.receiveInitialCards(gameCards);
         }
     }
 }

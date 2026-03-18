@@ -1,6 +1,8 @@
 package domain.player;
 
+import domain.betting.BettingAmount;
 import domain.card.Card;
+import java.math.BigDecimal;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,7 +14,7 @@ class GamblerTest {
     void 카드_정상적으로_받기_테스트() {
         // given
         Card card = new Card("2", "하트");
-        Gambler gambler = new Gambler("coco");
+        Gambler gambler = new Gambler("coco", new BettingAmount(BigDecimal.valueOf(20000)));
 
         // when
         gambler.addCard(card);
@@ -21,8 +23,6 @@ class GamblerTest {
         Assertions.assertThat(gambler.getCardSize()).isEqualTo(1);
     }
 
-
-    // 버스트 확인
     @Test
     @DisplayName("카드 버스트 확인 테스트")
     void 카드_버스트_테스트() {
@@ -31,7 +31,7 @@ class GamblerTest {
         Card card2 = new Card("K", "다이아몬드");
         Card card3 = new Card("K", "클로버");
 
-        Gambler gambler = new Gambler("coco");
+        Gambler gambler = new Gambler("coco", new BettingAmount(BigDecimal.valueOf(20000)));
 
         // when
         gambler.addCard(card1);
@@ -42,7 +42,6 @@ class GamblerTest {
         Assertions.assertThat(gambler.isBust()).isEqualTo(true);
     }
 
-    // 합산
     @Test
     @DisplayName("카드 값 합산")
     void 카드_값_합산_테스트() {
@@ -51,7 +50,7 @@ class GamblerTest {
         Card card2 = new Card("K", "다이아몬드");
         Card card3 = new Card("K", "클로버");
 
-        Gambler gambler = new Gambler("coco");
+        Gambler gambler = new Gambler("coco", new BettingAmount(BigDecimal.valueOf(20000)));
 
         // when
         gambler.addCard(card1);

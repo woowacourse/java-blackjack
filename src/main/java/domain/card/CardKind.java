@@ -5,7 +5,7 @@ import java.util.Arrays;
 public enum CardKind {
     CLOVER("클로버"),
     HEART("하트"),
-    DIAMOND ("다이아몬드"),
+    DIAMOND("다이아몬드"),
     SPADES("스페이드");
 
     private final String kind;
@@ -14,14 +14,14 @@ public enum CardKind {
         this.kind = kind;
     }
 
-    public String getKind() {
-        return kind;
-    }
-
-    public static CardKind of(final String kind){
+    public static CardKind of(final String kind) {
         return Arrays.stream(values())
                 .filter(val -> val.kind.equals(kind))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("생성할 수 없는 kind 입니다."));
+    }
+
+    public String getKind() {
+        return kind;
     }
 }

@@ -25,18 +25,18 @@ public enum CardScore {
         this.number = number;
     }
 
+    public static CardScore of(final String score) {
+        return Arrays.stream(values())
+                .filter(val -> val.score.equals(score))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("생성할 수 없는 value 입니다."));
+    }
+
     public int getNumber() {
         return this.number;
     }
 
     public String getScore() {
         return this.score;
-    }
-
-    public static CardScore of(final String score){
-        return Arrays.stream(values())
-                .filter(val -> val.score.equals(score))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("생성할 수 없는 value 입니다."));
     }
 }
