@@ -2,11 +2,11 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import fixture.UserFixture;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import vo.GameResult;
-import vo.Money;
 import vo.Rank;
 import vo.Suit;
 
@@ -21,7 +21,7 @@ public class GameJudgeTest {
         ));
 
         // given 유저 25점
-        User user = createUserWithCards(List.of(
+        User user = UserFixture.createUserWithCards(List.of(
                 new Card(Suit.HEART, Rank.TEN),
                 new Card(Suit.HEART, Rank.TEN),
                 new Card(Suit.HEART, Rank.FIVE)
@@ -44,7 +44,7 @@ public class GameJudgeTest {
         ));
 
         // given
-        User user = createUserWithCards(List.of(
+        User user = UserFixture.createUserWithCards(List.of(
                 new Card(Suit.HEART, Rank.ACE),
                 new Card(Suit.HEART, Rank.KING)
         ));
@@ -66,7 +66,7 @@ public class GameJudgeTest {
         ));
 
         // given
-        User user = createUserWithCards(List.of(
+        User user = UserFixture.createUserWithCards(List.of(
                 new Card(Suit.HEART, Rank.SEVEN),
                 new Card(Suit.SPADE, Rank.SEVEN),
                 new Card(Suit.CLUB, Rank.SEVEN)
@@ -90,7 +90,7 @@ public class GameJudgeTest {
         ));
 
         // given 유저 15점
-        User user = createUserWithCards(List.of(
+        User user = UserFixture.createUserWithCards(List.of(
                 new Card(Suit.HEART, Rank.TEN),
                 new Card(Suit.HEART, Rank.FIVE)
         ));
@@ -112,7 +112,7 @@ public class GameJudgeTest {
         ));
 
         // given 유저 19점
-        User user = createUserWithCards(List.of(
+        User user = UserFixture.createUserWithCards(List.of(
                 new Card(Suit.HEART, Rank.QUEEN),
                 new Card(Suit.HEART, Rank.NINE)
         ));
@@ -134,7 +134,7 @@ public class GameJudgeTest {
         ));
 
         // given 유저 카드 2장, 21점
-        User user = createUserWithCards(List.of(
+        User user = UserFixture.createUserWithCards(List.of(
                 new Card(Suit.HEART, Rank.ACE),
                 new Card(Suit.HEART, Rank.KING)
         ));
@@ -156,7 +156,7 @@ public class GameJudgeTest {
         ));
 
         // given 유저 카드 3장, 21점
-        User user = createUserWithCards(List.of(
+        User user = UserFixture.createUserWithCards(List.of(
                 new Card(Suit.HEART, Rank.SEVEN),
                 new Card(Suit.SPADE, Rank.SEVEN),
                 new Card(Suit.CLUB, Rank.SEVEN)
@@ -176,14 +176,5 @@ public class GameJudgeTest {
         }
         dealer.calculateScore();
         return dealer;
-    }
-
-    private User createUserWithCards(List<Card> cards) {
-        User user = new User("라이", new Money(10000));
-        for (Card card : cards) {
-            user.receiveCard(card);
-        }
-        user.calculateScore();
-        return user;
     }
 }
