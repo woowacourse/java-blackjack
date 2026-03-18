@@ -11,8 +11,8 @@ import org.junit.jupiter.api.Test;
 
 class PlayersTest {
 
-    @DisplayName("이름 목록으로 플레이어 일급 컬렉션을 생성한다.")
     @Test
+    @DisplayName("이름 목록으로 플레이어 일급 컬렉션을 생성한다.")
     void createPlayers() {
         // given
         Players players = PlayersFixture.createValidTwoPlayers();
@@ -22,8 +22,8 @@ class PlayersTest {
         assertThat(players.getAllPlayerNickname()).containsExactly("boye", "sumin");
     }
 
-    @DisplayName("첫 번째 드로우 가능 플레이어를 찾는다.")
     @Test
+    @DisplayName("첫 번째 드로우 가능 플레이어를 찾는다.")
     void getFirstDrawablePlayer() {
         // given
         Players players = PlayersFixture.createValidTwoPlayers();
@@ -33,8 +33,8 @@ class PlayersTest {
         assertThat(players.getDrawablePlayerNickname()).isEqualTo("boye");
     }
 
-    @DisplayName("플레이어가 드로우를 멈추면 다음 플레이어가 드로우 대상이 된다.")
     @Test
+    @DisplayName("플레이어가 드로우를 멈추면 다음 플레이어가 드로우 대상이 된다.")
     void moveToNextDrawablePlayerWhenCurrentPlayerStops() {
         // given
         Players players = PlayersFixture.createValidTwoPlayers();
@@ -47,8 +47,8 @@ class PlayersTest {
         assertThat(players.getDrawablePlayerNickname()).isEqualTo("sumin");
     }
 
-    @DisplayName("버스트된 플레이어는 건너뛰고 다음 드로우 가능 플레이어를 찾는다.")
     @Test
+    @DisplayName("버스트된 플레이어는 건너뛰고 다음 드로우 가능 플레이어를 찾는다.")
     void skipBustedPlayerWhenFindingDrawable() {
         // given
         Nickname boyeNickname = Nickname.from("boye");
@@ -70,8 +70,8 @@ class PlayersTest {
         assertThat(players.getDrawablePlayerNickname()).isEqualTo("sumin");
     }
 
-    @DisplayName("모든 플레이어가 카드를 받을 수 없는 상태면 drawable player가 없다.")
     @Test
+    @DisplayName("모든 플레이어가 카드를 받을 수 없는 상태면 drawable player가 없다.")
     void hasNoDrawablePlayerWhenAllDone() {
         // given
         Players players = PlayersFixture.createValidSinglePlayer();
@@ -83,8 +83,8 @@ class PlayersTest {
         assertThat(players.hasDrawablePlayer()).isFalse();
     }
 
-    @DisplayName("플레이어가 딜러보다 점수가 높으면 승리로 기록되어야 한다.")
     @Test
+    @DisplayName("플레이어가 딜러보다 점수가 높으면 승리로 기록되어야 한다.")
     void getPlayerWinningResultsPlayerWins() {
         // given
         Players players = PlayersFixture.createValidSinglePlayer();
@@ -108,8 +108,8 @@ class PlayersTest {
         assertThat(result.matchResult()).isEqualTo(MatchResult.WIN);
     }
 
-    @DisplayName("플레이어가 딜러보다 점수가 낮으면 패배로 기록되어야 한다.")
     @Test
+    @DisplayName("플레이어가 딜러보다 점수가 낮으면 패배로 기록되어야 한다.")
     void getPlayerWinningResultsPlayerLoses() {
         // given
         Players players = PlayersFixture.createValidSinglePlayer();
