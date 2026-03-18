@@ -33,6 +33,10 @@ public abstract class Participant {
         return hand.calculateTotalScore();
     }
 
+    public boolean isBlackJack() {
+        return hand.isBlackJack();
+    }
+
     public DrawResult distributeCards(Deck deck) {
         DrawResult drawResult = deck.draw(FIRST_DRAW_COUNT);
         receiveCard(drawResult.drewCard().getCards());

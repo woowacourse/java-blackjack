@@ -55,6 +55,12 @@ public class Player extends Participant {
         if (dealer.isBusted()) {
             return MatchResult.WIN;
         }
+        if (hand.isBlackJack() && !dealer.isBlackJack()) {
+            return MatchResult.WIN;
+        }
+        if (!hand.isBlackJack() && dealer.isBlackJack()) {
+            return MatchResult.LOSE;
+        }
         return compareScore(dealer.getTotalScore(), getTotalScore());
     }
 
