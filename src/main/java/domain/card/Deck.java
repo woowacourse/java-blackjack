@@ -1,5 +1,6 @@
 package domain.card;
 
+import exception.ExceptionMessage;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,6 +30,9 @@ public class Deck {
     }
 
     public Card drawCard() {
+        if (cards.isEmpty()) {
+            throw new IllegalStateException(ExceptionMessage.DECK_EMPTY.getMessage());
+        }
         return cards.poll();
     }
 }

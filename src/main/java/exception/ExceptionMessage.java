@@ -9,7 +9,7 @@ public enum ExceptionMessage {
     COMMAND_NOT_FOUND("[ERROR] 존재하지 않는 명령어 입니다. (y/n)"),
     DUPLICATED_PARTICIPANT_NAME("[ERROR] 중복된 참여자 이름이 존재합니다."),
     BATTING_MONEY_RANGE("[ERROR] 배팅 금액을 0원보다 크게 입력해 주세요."),
-    ;
+    DECK_EMPTY("[ERROR] 덱에 더 이상 뽑을 카드가 없습니다.");;
 
     private final String message;
 
