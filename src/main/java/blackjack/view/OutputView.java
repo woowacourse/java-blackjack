@@ -1,26 +1,23 @@
 package blackjack.view;
 
-import static blackjack.model.constant.Constant.BLACKJACK_SCORE;
-
 import blackjack.model.card.Card;
-import blackjack.model.user.Dealer;
-import blackjack.model.gameresult.GameResult;
-import blackjack.model.user.Player;
-import blackjack.model.gameresult.PlayersGameResult;
+import blackjack.model.gameresult.ProfitResult;
 import blackjack.model.user.User;
 import blackjack.model.user.Users;
-import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
+
+    private static final int BLACKJACK_SCORE = 21;
+
     public static void printInitCards(Users users) {
-        List<Player> players = users.getPlayers();
-        Dealer dealer = users.getDealer();
+        List<User> players = users.getPlayers();
+        User dealer = users.getDealer();
 
         List<String> names = players.stream()
-                .map(Player::getName)
+                .map(User::getName)
                 .toList();
         StringBuilder sb = new StringBuilder();
         sb.append("딜러와 ");
@@ -29,20 +26,20 @@ public class OutputView {
         System.out.println(sb);
 
         printDealerCard(dealer);
-        for (Player player : players) {
+        for (User player : players) {
             printPlayerCards(player);
         }
         System.out.println();
     }
 
-    private static void printDealerCard(Dealer dealer) {
-        Card firstCard = dealer.cards().getFirst();
+    private static void printDealerCard(User user) {
+        Card firstCard = user.cards().getFirst();
         System.out.println("딜러카드: " + getCardFormat(firstCard));
     }
 
-    public static void printPlayerCards(Player player) {
-        String cardsFormat = getCardsFormat(player);
-        System.out.println(player.getName() + "카드: " + cardsFormat);
+    public static void printPlayerCards(User user) {
+        String cardsFormat = getCardsFormat(user);
+        System.out.println(user.getName() + "카드: " + cardsFormat);
     }
 
     public static void printCantHit() {
@@ -54,32 +51,28 @@ public class OutputView {
     }
 
     public static void printHandStatus(Users users) {
-        Dealer dealer = users.getDealer();
-        List<Player> players = users.getPlayers();
+        User dealer = users.getDealer();
+        List<User> players = users.getPlayers();
         StringBuilder sb = new StringBuilder();
 
         createHandStatusFormat(sb, dealer);
-        for (Player player : players) {
+        for (User player : players) {
             createHandStatusFormat(sb, player);
         }
         System.out.println(sb);
     }
 
-    public static void printGameResult(PlayersGameResult playersGameResult, Users users) {
+    public static void printGameResult(ProfitResult profitResult, Users users) {
         System.out.println();
-        System.out.println("## 최종 승패");
+        System.out.println("## 최종 수익");
 
-        Dealer dealer = users.getDealer();
-        EnumMap<GameResult, Integer> dealerGameResult = dealer.getGameResults();
-        System.out.println(
-                dealer.getName() + ": " + dealerGameResult.getOrDefault(GameResult.WIN, 0) + "승 " +
-                        dealerGameResult.getOrDefault(GameResult.DRAW, 0) + "무 " + dealerGameResult.getOrDefault(
-                        GameResult.LOSE, 0) + "패");
+        User dealer = users.getDealer();
+        System.out.println(dealer.getName() + ": " + profitResult.dealerProfit());
 
-        Map<Player, GameResult> result = playersGameResult.result();
-        for (Player player : users.getPlayers()) {
+        Map<User, Integer> playersProfit = profitResult.playersProfit();
+        for (User player : users.getPlayers()) {
             System.out.print(player.getName() + ": ");
-            System.out.println(result.get(player).getFormat());
+            System.out.println(playersProfit.get(player));
         }
     }
 

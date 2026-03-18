@@ -1,0 +1,54 @@
+package blackjack.model.state;
+
+import blackjack.model.card.Card;
+import blackjack.model.card.Hand;
+import blackjack.model.gameresult.GameResult;
+
+public class Stay extends Finished{
+
+    @Override
+    public GameResult judge(Hand hand, Hand otherHand) {
+        if (otherHand.isBlackjack()) {
+            return GameResult.LOSE;
+        }
+
+        if (otherHand.isBust()) {
+            return GameResult.WIN;
+        }
+
+        return judgeWithScore(hand, otherHand);
+    }
+
+    @Override
+    public HandState draw(Hand hand, Card card) {
+        return this;
+//        throw new IllegalStateException("이미 턴이 종료되어 카드를 추가로 받을 수 없습니다.");
+    }
+
+    @Override
+    public boolean isFinished() {
+        return true;
+    }
+
+    @Override
+    public boolean isBlackjack() {
+        return false;
+    }
+
+    @Override
+    public boolean isBust() {
+        return false;
+    }
+
+    private GameResult judgeWithScore(Hand hand, Hand otherHand) {
+        if (hand.calculateTotalScore() == otherHand.calculateTotalScore()) {
+            return GameResult.DRAW;
+        }
+
+        if (hand.calculateTotalScore() > otherHand.calculateTotalScore()) {
+            return GameResult.WIN;
+        }
+
+        return GameResult.LOSE;
+    }
+}

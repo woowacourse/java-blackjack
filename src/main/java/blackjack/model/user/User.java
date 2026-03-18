@@ -2,6 +2,7 @@ package blackjack.model.user;
 
 import blackjack.model.card.Card;
 import blackjack.model.card.Hand;
+import blackjack.model.gameresult.GameResult;
 import java.util.List;
 
 public abstract class User {
@@ -14,6 +15,10 @@ public abstract class User {
         this.hand = new Hand();
     }
 
+    public abstract boolean isHitAvailable();
+
+    public abstract boolean isPlayer();
+
     public String getName() {
         return name.getName();
     }
@@ -22,21 +27,23 @@ public abstract class User {
         return hand.getCards();
     }
 
-    public void addCard(Card card) {
-        hand.addCard(card);
+    public void draw(Card card) {
+        hand.draw(card);
     }
 
-    public boolean isBlackjack() {
-        return hand.isBlackjack();
+    public void stay() {
+        hand.stay();
     }
 
-    public boolean isBust() {
-        return hand.isBust();
+    public boolean isFinished() {
+        return hand.isFinished();
     }
 
     public int totalScore() {
         return hand.calculateTotalScore();
     }
 
-    public abstract boolean isHitAvailable();
+    public GameResult judge(User user) {
+        return hand.judge(user.hand);
+    }
 }

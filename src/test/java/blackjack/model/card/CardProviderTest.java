@@ -1,8 +1,7 @@
-package blackjack.model;
+package blackjack.model.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.model.card.CardProvider;
 import blackjack.model.user.Dealer;
 import blackjack.model.user.Player;
 import blackjack.model.user.Users;
@@ -15,17 +14,19 @@ class CardProviderTest {
     @Test
     @DisplayName("딜러 및 플레이어에게 초기 카드 2장 정상 배분")
     void test_provide_init_cards() {
+        // given
         CardProvider cardProvider = new CardProvider();
 
         List<Player> players = List.of(new Player("pobi"), new Player("james"));
         Dealer dealer = new Dealer();
         Users users = new Users(players, dealer);
 
-        cardProvider.provideInitCards(users);
+        // when
+        cardProvider.drawInitCards(users);
 
-        for (Player player : players) {
-            assertThat(player.cards().size()).isEqualTo(2);
-        }
+        // then
+        assertThat(players).allSatisfy(player ->
+                assertThat(player.cards().size()).isEqualTo(2));
         assertThat(dealer.cards().size()).isEqualTo(2);
     }
 
@@ -35,7 +36,7 @@ class CardProviderTest {
         Player player = new Player("pobi");
         CardProvider cardProvider = new CardProvider();
 
-        cardProvider.provideOneCard(player);
+        cardProvider.drawOneCard(player);
 
         assertThat(player.cards().size()).isEqualTo(1);
     }

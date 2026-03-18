@@ -1,11 +1,10 @@
-package blackjack.model;
+package blackjack.model.command;
 
-import static blackjack.model.constant.ErrorMessage.ERROR_EMPTY_INPUT;
-import static blackjack.model.constant.ErrorMessage.ERROR_NOT_Y_N_INPUT;
+import static blackjack.model.command.HitCommand.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import blackjack.model.card.HitCommand;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -20,7 +19,6 @@ class HitCommandTest {
         assertDoesNotThrow(() -> new HitCommand(hitCommand));
     }
 
-
     @ParameterizedTest
     @ValueSource(strings = {"", " "})
     @DisplayName("공백이 입력될 경우 예외 발생")
@@ -28,16 +26,47 @@ class HitCommandTest {
         //when & then
         assertThatThrownBy(() -> new HitCommand(emptyInput))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ERROR_EMPTY_INPUT.getErrorMessage());
+                .hasMessage(ERROR_EMPTY_INPUT);
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"ad", "y*"})
     @DisplayName("정해진 입력 외의 문자열을 입력할 경우 예외 발생")
     void create_hitCommand_fail_when_invalid_input(String invalidInput) {
+        // given
+        String expectedErrorMessage = ERROR_NOT_Y_N_INPUT.formatted(invalidInput);
+
         //when & then
         assertThatThrownBy(() -> new HitCommand(invalidInput))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ERROR_NOT_Y_N_INPUT.getErrorMessage());
+                .hasMessage(expectedErrorMessage);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"y", "Y"})
+    @DisplayName("입력값이 y 또는 Y일 경우 true 반환")
+    void isY_return_true_when_y_Y(String hitCommandInput) {
+        // given
+        HitCommand hitCommand = new HitCommand(hitCommandInput);
+
+        //when
+        boolean result = hitCommand.isY();
+
+        // then
+        assertThat(result).isTrue();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"n", "N"})
+    @DisplayName("입력값이 n 또는 N일 경우 false 반환")
+    void isY_return_false_when_n_N(String hitCommandInput) {
+        // given
+        HitCommand hitCommand = new HitCommand(hitCommandInput);
+
+        //when
+        boolean result = hitCommand.isY();
+
+        // then
+        assertThat(result).isFalse();
     }
 }

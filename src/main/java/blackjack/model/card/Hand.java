@@ -1,11 +1,8 @@
 package blackjack.model.card;
 
-import static blackjack.model.constant.Constant.ACE_SCORE_ELEVEN;
-import static blackjack.model.constant.Constant.ACE_SCORE_ONE;
-import static blackjack.model.constant.Constant.INIT_CARDS_END_IDX;
-import static blackjack.model.constant.Constant.INIT_CARDS_START_IDX;
-import static blackjack.model.constant.Constant.BLACKJACK_SCORE;
-
+import blackjack.model.gameresult.GameResult;
+import blackjack.model.state.HandState;
+import blackjack.model.state.Hit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -13,27 +10,52 @@ import java.util.stream.Collectors;
 
 public class Hand {
 
+    private static final int BLACKJACK_SCORE = 21;
+    private static final int ACE_SCORE_ONE = 1;
+    private static final int ACE_SCORE_ELEVEN = 11;
+
     private final List<Card> cards;
+    private HandState handState;
 
     public Hand() {
         this.cards = new ArrayList<>();
+        this.handState = new Hit();
     }
 
-    public List<Card> getCards() {
-        return List.copyOf(cards);
+    public GameResult judge(Hand otherHand) {
+        return handState.judge(this, otherHand);
+    }
+
+    public int size() {
+        return cards.size();
+    }
+
+    public void draw(Card card) {
+        handState = handState.draw(this, card);
     }
 
     public void addCard(Card card) {
         cards.add(card);
     }
 
+    public void stay() {
+        handState = handState.stay(this);
+    }
+
+    public boolean isFinished() {
+        return handState.isFinished();
+    }
+
     public boolean isBlackjack() {
-        List<Card> initCards = cards.subList(INIT_CARDS_START_IDX, INIT_CARDS_END_IDX);
-        return totalScore(initCards) == BLACKJACK_SCORE;
+        return handState.isBlackjack();
     }
 
     public boolean isBust() {
-        return totalScore(cards) > BLACKJACK_SCORE;
+        return handState.isBust();
+    }
+
+    public List<Card> getCards() {
+        return List.copyOf(cards);
     }
 
     public int calculateTotalScore() {
@@ -55,13 +77,15 @@ public class Hand {
 
     private int addAceScore(List<Card> aceCards, int totalScore) {
         for (int i = 0; i < aceCards.size(); i++) {
-            if (totalScore + ACE_SCORE_ELEVEN > BLACKJACK_SCORE) {
-                totalScore += ACE_SCORE_ONE;
-                continue;
-            }
-            totalScore += ACE_SCORE_ELEVEN;
+            totalScore += calculateAceScore(totalScore);
         }
-
         return totalScore;
+    }
+
+    private static int calculateAceScore(int totalScore) {
+        if (totalScore + ACE_SCORE_ELEVEN > BLACKJACK_SCORE) {
+            return ACE_SCORE_ONE;
+        }
+        return ACE_SCORE_ELEVEN;
     }
 }

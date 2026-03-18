@@ -14,8 +14,8 @@ class PlayerTest {
     void isHitAvailable_return_true() {
         //given
         Player player = new Player("pobi");
-        player.addCard(new Card(Rank.K, Suit.DIAMOND));
-        player.addCard(new Card(Rank.J, Suit.DIAMOND));
+        player.draw(new Card(Rank.K, Suit.DIAMOND));
+        player.draw(new Card(Rank.J, Suit.DIAMOND));
 
         //when & then
         Assertions.assertThat(player.isHitAvailable()).isTrue();
@@ -26,8 +26,8 @@ class PlayerTest {
     void isHitAvailable_return_false() {
         //given
         Player player = new Player("pobi");
-        player.addCard(new Card(Rank.K, Suit.DIAMOND));
-        player.addCard(new Card(Rank.ACE, Suit.DIAMOND));
+        player.draw(new Card(Rank.K, Suit.DIAMOND));
+        player.draw(new Card(Rank.ACE, Suit.DIAMOND));
 
         //when & then
         Assertions.assertThat(player.isHitAvailable()).isFalse();

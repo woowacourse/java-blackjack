@@ -1,19 +1,22 @@
 package blackjack.model.gameresult;
 
+import blackjack.model.bet.BetAmount;
+
 public enum GameResult {
 
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패"),
+    BLACKJACK_WIN(1.5),
+    WIN(1),
+    DRAW(0),
+    LOSE(-1),
     ;
 
-    private final String format;
+    private final double payoutRate;
 
-    GameResult(String format) {
-        this.format = format;
+    GameResult(double payoutRate) {
+        this.payoutRate = payoutRate;
     }
 
-    public String getFormat() {
-        return format;
+    public int calculateProfit(BetAmount betAmount) {
+        return (int) Math.round(betAmount.getAmount() * this.payoutRate);
     }
 }

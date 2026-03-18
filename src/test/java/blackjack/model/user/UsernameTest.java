@@ -1,7 +1,6 @@
 package blackjack.model.user;
 
-import static blackjack.model.constant.ErrorMessage.ERROR_EMPTY_INPUT;
-import static blackjack.model.constant.ErrorMessage.ERROR_INVALID_PLAYER_NAME;
+import static blackjack.model.user.Username.*;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -26,16 +25,19 @@ class UsernameTest {
         //when & then
         assertThatThrownBy(() -> new Username(emptyName))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ERROR_EMPTY_INPUT.getErrorMessage());
+                .hasMessage(ERROR_EMPTY_INPUT);
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"pobi!", "jason1"})
     @DisplayName("이름에 영어와 한글 외의 문자가 존재할 경우 예외 발생")
     void create_username_fail_when_invalid_name(String invalidName) {
+        // given
+        String expectedErrorMessage = ERROR_INVALID_PLAYER_NAME.formatted(invalidName);
+
         //when & then
         assertThatThrownBy(() -> new Username(invalidName))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ERROR_INVALID_PLAYER_NAME.getErrorMessage());
+                .hasMessage(expectedErrorMessage);
     }
 }

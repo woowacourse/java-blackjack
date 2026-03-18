@@ -1,11 +1,7 @@
-package blackjack.model;
+package blackjack.model.card;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import blackjack.model.card.Card;
-import blackjack.model.card.Hand;
-import blackjack.model.card.Rank;
-import blackjack.model.card.Suit;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,8 +12,8 @@ class HandTest {
     void isBlackjack_return_true() {
         //given
         Hand hand = new Hand();
-        hand.addCard(new Card(Rank.J, Suit.DIAMOND));
-        hand.addCard(new Card(Rank.ACE, Suit.DIAMOND));
+        hand.draw(new Card(Rank.J, Suit.DIAMOND));
+        hand.draw(new Card(Rank.ACE, Suit.DIAMOND));
 
         //when & then
         assertThat(hand.isBlackjack()).isTrue();
@@ -28,8 +24,8 @@ class HandTest {
     void isBlackjack_return_false() {
         //given
         Hand hand = new Hand();
-        hand.addCard(new Card(Rank.J, Suit.DIAMOND));
-        hand.addCard(new Card(Rank.K, Suit.DIAMOND));
+        hand.draw(new Card(Rank.J, Suit.DIAMOND));
+        hand.draw(new Card(Rank.K, Suit.DIAMOND));
 
         //when & then
         assertThat(hand.isBlackjack()).isFalse();
@@ -40,9 +36,9 @@ class HandTest {
     void isBust_return_true() {
         //given
         Hand hand = new Hand();
-        hand.addCard(new Card(Rank.J, Suit.DIAMOND));
-        hand.addCard(new Card(Rank.Q, Suit.DIAMOND));
-        hand.addCard(new Card(Rank.TWO, Suit.DIAMOND));
+        hand.draw(new Card(Rank.J, Suit.DIAMOND));
+        hand.draw(new Card(Rank.Q, Suit.DIAMOND));
+        hand.draw(new Card(Rank.TWO, Suit.DIAMOND));
 
         //when & then
         assertThat(hand.isBust()).isTrue();
@@ -53,9 +49,9 @@ class HandTest {
     void isBust_return_false() {
         //given
         Hand hand = new Hand();
-        hand.addCard(new Card(Rank.J, Suit.DIAMOND));
-        hand.addCard(new Card(Rank.Q, Suit.DIAMOND));
-        hand.addCard(new Card(Rank.ACE, Suit.DIAMOND));
+        hand.draw(new Card(Rank.J, Suit.DIAMOND));
+        hand.draw(new Card(Rank.Q, Suit.DIAMOND));
+        hand.draw(new Card(Rank.ACE, Suit.DIAMOND));
 
         //when & then
         assertThat(hand.isBust()).isFalse();

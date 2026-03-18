@@ -1,7 +1,8 @@
 package blackjack.model.user;
 
+import blackjack.model.bet.BetAmounts;
 import blackjack.model.gameresult.GameResult;
-import blackjack.model.gameresult.PlayersGameResult;
+import blackjack.model.gameresult.ProfitResult;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,108 +10,55 @@ import java.util.Map;
 
 public class Users {
 
-    private final List<Player> players;
-    private final Dealer dealer;
+    private static final String ERROR_DEALER_NOT_FOUND = "딜러가 존재하지 않습니다.";
+
+    private final List<User> users;
 
     public Users(List<Player> players, Dealer dealer) {
-        this.players = players;
-        this.dealer = dealer;
+        users = new ArrayList<>(players);
+        users.add(dealer);
     }
 
     public Users(String playerNames) {
-        this.players = PlayerParser.parse(playerNames);
-        this.dealer = new Dealer();
-    }
-
-    public List<Player> getPlayers() {
-        return List.copyOf(players);
-    }
-
-    public Dealer getDealer() {
-        return dealer;
+        users = new ArrayList<>(PlayerParser.parse(playerNames));
+        users.add(new Dealer());
     }
 
     public List<User> getUsers() {
-        List<User> users = new ArrayList<>(List.copyOf(players));
-        users.add(dealer);
-        return users;
+        return List.copyOf(users);
     }
 
-    public PlayersGameResult determineWinner() {
-        Map<Player, GameResult> result = new HashMap<>();
-        for (Player player : players) {
-            if (calculateWhenBlackjack(player, dealer, result)) {
-                continue;
-            }
-
-            if (calculateWhenBust(player, dealer, result)) {
-                continue;
-            }
-
-            calculateWhenNormal(player, dealer, result);
-        }
-        return new PlayersGameResult(result);
+    public List<User> getPlayers() {
+        return users.stream()
+                .filter(User::isPlayer)
+                .toList();
     }
 
-    private boolean calculateWhenBlackjack(Player player, Dealer dealer, Map<Player, GameResult> result) {
-        if (player.isBlackjack() && dealer.isBlackjack()) {
-            logDraw(player, dealer, result);
-            return true;
-        }
-
-        if (player.isBlackjack()) {
-            logPlayerWin(player, dealer, result);
-            return true;
-        }
-
-        if (dealer.isBlackjack()) {
-            logPlayerLose(player, dealer, result);
-            return true;
-        }
-
-        return false;
+    public User getDealer() {
+        return users.stream()
+                .filter(user -> !user.isPlayer())
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(ERROR_DEALER_NOT_FOUND));
     }
 
-    private boolean calculateWhenBust(Player player, Dealer dealer, Map<Player, GameResult> result) {
-        if (player.isBust()) {
-            logPlayerLose(player, dealer, result);
-            return true;
-        }
+    public ProfitResult judgeWinner(BetAmounts betAmounts) {
+        Map<User, Integer> result = new HashMap<>();
+        List<User> players = getPlayers();
+        User dealer = getDealer();
 
-        if (dealer.isBust()) {
-            logPlayerWin(player, dealer, result);
-            return true;
+        for (User player : players) {
+            GameResult gameResult = player.judge(dealer);
+            int profit = gameResult.calculateProfit(betAmounts.findByUser(player));
+            result.put(player, profit);
         }
+        int dealerPayout = -getTotalPlayerProfit(result);
 
-        return false;
+        return new ProfitResult(result, dealerPayout);
     }
 
-    private void calculateWhenNormal(Player player, Dealer dealer, Map<Player, GameResult> result) {
-        if (player.totalScore() > dealer.totalScore()) {
-            logPlayerWin(player, dealer, result);
-            return;
-        }
-
-        if (player.totalScore() < dealer.totalScore()) {
-            logPlayerLose(player, dealer, result);
-            return;
-        }
-
-        logDraw(player, dealer, result);
-    }
-
-    private void logPlayerWin(Player player, Dealer dealer, Map<Player, GameResult> result) {
-        result.put(player, GameResult.WIN);
-        dealer.addResult(GameResult.LOSE);
-    }
-
-    private void logPlayerLose(Player player, Dealer dealer, Map<Player, GameResult> result) {
-        result.put(player, GameResult.LOSE);
-        dealer.addResult(GameResult.WIN);
-    }
-
-    private void logDraw(Player player, Dealer dealer, Map<Player, GameResult> result) {
-        result.put(player, GameResult.DRAW);
-        dealer.addResult(GameResult.DRAW);
+    private static int getTotalPlayerProfit(Map<User, Integer> result) {
+        return result.values().stream()
+                .mapToInt(Integer::intValue)
+                .sum();
     }
 }
