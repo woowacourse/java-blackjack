@@ -4,16 +4,13 @@ import blackjack.domain.Deck;
 import blackjack.domain.Hand;
 import blackjack.domain.Participants;
 import blackjack.dto.DrawResult;
-import blackjack.dto.ParticipantResult;
-import blackjack.dto.PlayerNicknamesResult;
-import blackjack.dto.TotalGameResult;
 import blackjack.view.InputView;
 import blackjack.view.OutputView;
-import java.util.List;
 
 public class BlackjackRunner {
 
     private final ParticipantsCreator participantsCreator;
+    private final BlackjackGameView blackjackGameView;
     private final OutputView outputView;
     private final InputView inputView;
 
@@ -21,6 +18,7 @@ public class BlackjackRunner {
         this.inputView = inputView;
         this.outputView = outputView;
         this.participantsCreator = new ParticipantsCreator(inputView, outputView);
+        this.blackjackGameView = new BlackjackGameView(outputView);
     }
 
     public void execute() {
@@ -28,28 +26,10 @@ public class BlackjackRunner {
         Deck deck = Deck.createShuffledDeck();
         deck = participants.distributeCards(deck);
 
-        printInitialSetup(participants);
-        printInitialResult(participants);
+        blackjackGameView.printInitialState(participants);
         deck = playerTurn(participants, deck);
         dealerTurn(participants, deck);
-        printGameResult(participants);
-    }
-
-    private void printInitialSetup(Participants participants) {
-        PlayerNicknamesResult playerNicknamesResult = PlayerNicknamesResult.from(participants);
-        outputView.printInitialSetUp(playerNicknamesResult);
-    }
-
-    private void printInitialResult(Participants participants) {
-        List<ParticipantResult> participantResults = participants.getInitialResult();
-        outputView.printInitialResult(participantResults);
-    }
-
-    public void printGameResult(Participants participants) {
-        List<ParticipantResult> participantResult = participants.getGameResult();
-        outputView.printGameResult(participantResult);
-        TotalGameResult gameResult = participants.getWinningResult();
-        outputView.printTotalProfitResult(gameResult);
+        blackjackGameView.printFinalResult(participants);
     }
 
     private void dealerTurn(Participants participants, Deck deck) {
