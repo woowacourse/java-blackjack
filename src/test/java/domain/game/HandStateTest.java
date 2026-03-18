@@ -67,6 +67,42 @@ public class HandStateTest {
         assertThat(createStay(Rank.KING, Rank.FIVE).versus(createStay(Rank.KING, Rank.EIGHT))).isSameAs(Outcome.LOSE);
     }
 
+    @DisplayName("Hit에서 카드를 뽑아도 버스트/블랙잭이 아니면 Hit을 유지한다")
+    @Test
+    void Hit에서_일반_카드를_뽑으면_Hit을_유지한다() {
+        Hit hit = new Hit(new CardBundle());
+        HandState result = hit.draw(new Card(Rank.FIVE, Suit.SPADE));
+        assertThat(result).isInstanceOf(Hit.class);
+    }
+
+    @DisplayName("Hit에서 2장으로 21점이 되면 Blackjack으로 전이한다")
+    @Test
+    void Hit에서_블랙잭이_되면_Blackjack으로_전이한다() {
+        Hit hit = new Hit(new CardBundle());
+        hit.draw(new Card(Rank.ACE, Suit.SPADE));
+        HandState result = hit.draw(new Card(Rank.KING, Suit.HEART));
+        assertThat(result).isInstanceOf(Blackjack.class);
+    }
+
+    @DisplayName("Hit에서 점수가 21을 초과하면 Bust로 전이한다")
+    @Test
+    void Hit에서_버스트가_되면_Bust로_전이한다() {
+        Hit hit = new Hit(new CardBundle());
+        hit.draw(new Card(Rank.KING, Suit.SPADE));
+        hit.draw(new Card(Rank.KING, Suit.HEART));
+        HandState result = hit.draw(new Card(Rank.TWO, Suit.DIAMOND));
+        assertThat(result).isInstanceOf(Bust.class);
+    }
+
+    @DisplayName("Hit에서 stay하면 Stay로 전이한다")
+    @Test
+    void Hit에서_stay하면_Stay로_전이한다() {
+        Hit hit = new Hit(new CardBundle());
+        hit.draw(new Card(Rank.KING, Suit.SPADE));
+        HandState result = hit.stay();
+        assertThat(result).isInstanceOf(Stay.class);
+    }
+
     private Blackjack createBlackjack() {
         CardBundle cardBundle = new CardBundle();
         cardBundle.addCard(new Card(Rank.ACE, Suit.SPADE));
