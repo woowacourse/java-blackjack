@@ -1,5 +1,6 @@
 package view;
 
+import domain.card.Card;
 import java.util.List;
 import java.util.Map;
 
@@ -14,8 +15,9 @@ public final class OutputView {
                 + "에게 2장을 나누었습니다."));
     }
 
-    public static void showDealerCardName(List<String> dealerCard) {
-        System.out.println(getCardNames("딜러", dealerCard));
+    public static void showDealerCardName(List<Card> dealerCard) {
+        Card card = dealerCard.getFirst();
+        System.out.println("딜러 카드: " + card.getCardName());
     }
 
     public static void showCardName(String name, List<String> cardNames) {

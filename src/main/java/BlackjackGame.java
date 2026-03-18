@@ -53,7 +53,7 @@ public class BlackjackGame {
 
     private void showCardNames(Players players, Dealer dealer) {
         OutputView.showIntroMessage(players.getPlayerNames());
-        OutputView.showDealerCardName(dealer.firstCardNames());
+        OutputView.showDealerCardName(dealer.getCards());
         players.players().forEach(
                 player -> OutputView.showCardName(player.getName(), player.createCardNames())
         );
