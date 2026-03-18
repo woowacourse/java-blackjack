@@ -10,7 +10,6 @@ public class Player extends Participant {
     public Player(String name, Betting betting) {
         this.name = name;
         this.betting = betting;
-        this.cards = new Cards();
     }
 
     public void calculateMoney(MatchCase matchCase, boolean isDealerBlackjack) {
