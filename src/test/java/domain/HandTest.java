@@ -147,4 +147,97 @@ class HandTest {
             }
         }
     }
+
+    @Nested
+    class IsBustTest {
+
+        @Nested
+        class Success {
+
+            @Test
+            void 점수가_21점을_초과하면_버스트여야_한다() {
+
+                // given
+                Hand hand = new Hand();
+                hand.addCard(new Card(Rank.TEN, Suit.HEART));
+                hand.addCard(new Card(Rank.K, Suit.SPADE));
+                hand.addCard(new Card(Rank.TWO, Suit.DIAMOND));
+
+                // when
+                boolean actual = hand.isBust();
+
+                // then
+                assertThat(actual).isTrue();
+            }
+
+            @Test
+            void 점수가_21점_이하면_버스트가_아니어야_한다() {
+
+                // given
+                Hand hand = new Hand();
+                hand.addCard(new Card(Rank.TEN, Suit.HEART));
+                hand.addCard(new Card(Rank.ACE, Suit.SPADE));
+
+                // when
+                boolean actual = hand.isBust();
+
+                // then
+                assertThat(actual).isFalse();
+            }
+        }
+    }
+
+    @Nested
+    class IsBlackjackTest {
+
+        @Nested
+        class Success {
+
+            @Test
+            void 점수가_21점이고_카드가_2장이면_블랙잭이어야_한다() {
+
+                // given
+                Hand hand = new Hand();
+                hand.addCard(new Card(Rank.ACE, Suit.HEART));
+                hand.addCard(new Card(Rank.K, Suit.SPADE));
+
+                // when
+                boolean actual = hand.isBlackjack();
+
+                // then
+                assertThat(actual).isTrue();
+            }
+
+            @Test
+            void 점수가_21점이어도_카드가_3장이면_블랙잭이_아니어야_한다() {
+
+                // given
+                Hand hand = new Hand();
+                hand.addCard(new Card(Rank.ACE, Suit.HEART));
+                hand.addCard(new Card(Rank.K, Suit.SPADE));
+                hand.addCard(new Card(Rank.Q, Suit.DIAMOND));
+
+                // when
+                boolean actual = hand.isBlackjack();
+
+                // then
+                assertThat(actual).isFalse();
+            }
+
+            @Test
+            void 카드가_2장이어도_점수가_21점이_아니면_블랙잭이_아니어야_한다() {
+
+                // given
+                Hand hand = new Hand();
+                hand.addCard(new Card(Rank.TEN, Suit.HEART));
+                hand.addCard(new Card(Rank.NINE, Suit.SPADE));
+
+                // when
+                boolean actual = hand.isBlackjack();
+
+                // then
+                assertThat(actual).isFalse();
+            }
+        }
+    }
 }

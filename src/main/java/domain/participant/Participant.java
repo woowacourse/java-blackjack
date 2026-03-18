@@ -1,6 +1,5 @@
 package domain.participant;
 
-import constant.PolicyConstant;
 import domain.card.Card;
 import domain.card.Hand;
 import java.util.List;
@@ -29,15 +28,15 @@ public class Participant {
         }
     }
 
-    public boolean isBust() {
-        return hand.calculateScore() > PolicyConstant.BLACKJACK_SCORE;
-    }
-
     public int calculateScore() {
         return hand.calculateScore();
     }
 
+    public boolean isBust() {
+        return hand.isBust();
+    }
+
     public boolean isBlackjack() {
-        return hand.calculateScore() == PolicyConstant.BLACKJACK_SCORE && hand.getCardNames().size() == 2;
+        return hand.isBlackjack();
     }
 }

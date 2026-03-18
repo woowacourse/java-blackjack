@@ -46,4 +46,12 @@ public class Hand {
     public Card getFirstCard() {
         return cards.getFirst();
     }
+
+    public boolean isBust() {
+        return calculateScore() > PolicyConstant.BLACKJACK_SCORE;
+    }
+
+    public boolean isBlackjack() {
+        return calculateScore() == PolicyConstant.BLACKJACK_SCORE && this.cards.size() == 2;
+    }
 }
