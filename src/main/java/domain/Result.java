@@ -13,7 +13,7 @@ public class Result {
 
     public int getPlayerProfit(Player player) {
         MatchResult matchResult = playerResults.get(player);
-        return (int) matchResult.getMultiplier() * player.getBettingMoney().bettingMoney();
+        return (int) (matchResult.getMultiplier() * player.getBettingMoney().bettingMoney());
     }
 
     public int getDealerProfit() {
