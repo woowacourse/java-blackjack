@@ -9,10 +9,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
 
+    private Player createPlayerWithCards(String name, Card... cards) {
+        Player player = new Player(new Name(name));
+        for (Card card : cards) {
+            player.draw(card);
+        }
+        return player;
+    }
+
     @Test
     void 플레이어가_카드를_뽑으면_손패의_크기가_1_증가한다() {
         // given
-        Player player = new Player("봉구스");
+        Player player = new Player(new Name("봉구스"));
 
         // when
         player.draw(new Card(Suit.CLUBS, Rank.ACE));
@@ -22,16 +30,47 @@ class PlayerTest {
     }
 
     @Test
-    void 플레이어의_카드_점수_합이_21을_초과하면_버스트_상태가_된다() {
-        // given
-        Player player = new Player("봉구스");
+    void 플레이어는_초기상태에서_hit할수있다() {
+        Player player = new Player(new Name("시오"));
+        assertTrue(player.canHit());
+    }
 
-        // when
-        player.draw(new Card(Suit.CLUBS, Rank.KING));
-        player.draw(new Card(Suit.CLUBS, Rank.QUEEN));
-        player.draw(new Card(Suit.CLUBS, Rank.JACK));
+    @Test
+    void 플레이어가_stay하면_hit할수없다() {
+        Player player = createPlayerWithCards("봉구스",
+                new Card(Suit.CLUBS, Rank.NUM2),
+                new Card(Suit.DIAMONDS, Rank.NUM3)
+        );
 
-        // then
-        assertTrue(player.isBurst());
+        player.stay();
+
+        assertFalse(player.canHit());
+    }
+
+    @Test
+    void 플레이어가_블랙잭이면_hit할수없다() {
+        Player player = createPlayerWithCards("봉구스",
+                new Card(Suit.CLUBS, Rank.ACE),
+                new Card(Suit.DIAMONDS, Rank.KING)
+        );
+
+        assertAll(
+                () -> assertTrue(player.isBlackJack()),
+                () -> assertFalse(player.canHit())
+        );
+    }
+
+    @Test
+    void 플레이어가_버스트면_hit할수없다() {
+        Player player = createPlayerWithCards("봉구스",
+                new Card(Suit.CLUBS, Rank.KING),
+                new Card(Suit.DIAMONDS, Rank.QUEEN),
+                new Card(Suit.HEARTS, Rank.JACK)
+        );
+
+        assertAll(
+                () -> assertTrue(player.isBurst()),
+                () -> assertFalse(player.canHit())
+        );
     }
 }

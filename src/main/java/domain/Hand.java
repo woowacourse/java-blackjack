@@ -5,53 +5,53 @@ import domain.card.Card;
 import java.util.ArrayList;
 import java.util.List;
 
-import static domain.card.Rank.ACE;
-
 public class Hand {
-    private static final int BLACKJACK_NUMBER = 21;
+    public static final int BLACKJACK_HAND_SIZE = 2;
+    public static final int BLACKJACK_SCORE = 21;
+    public static final int ACE_SCORE_ADJUSTMENT = 10;
     private final List<Card> cards;
 
     public Hand() {
         cards = new ArrayList<>();
     }
 
-    public int getSum() {
-        int sum = getInitSum();
+    public int calculateScore() {
+        int sum = calculateInitSum();
         long aceCount = countAce();
 
-        while (aceCount > 0 && sum > 21) {
-            sum -= 10;
+        while (aceCount > 0 && sum > BLACKJACK_SCORE) {
+            sum -= ACE_SCORE_ADJUSTMENT;
             aceCount--;
         }
 
         return sum;
     }
 
-    private int getInitSum() {
+    private int calculateInitSum() {
         return cards.stream()
-                .mapToInt(c -> c.rank().getScore())
+                .mapToInt(Card::getScore)
                 .sum();
     }
 
     private long countAce() {
         return cards.stream()
-                .filter(c -> c.rank() == ACE)
+                .filter(Card::isAce)
                 .count();
     }
 
-    public boolean isBurst() {
-        return getSum() > 21;
+    public boolean isBust() {
+        return calculateScore() > BLACKJACK_SCORE;
     }
 
-    public boolean isLessThanBlackJack(){
-        return getSum() < BLACKJACK_NUMBER;
+    public boolean isBlackJack() {
+        return getSize() == BLACKJACK_HAND_SIZE && isMaxScore();
     }
 
-    public boolean isLargerThanEqualToBlackJack(){
-        return getSum() >= BLACKJACK_NUMBER;
+    public boolean isMaxScore() {
+        return calculateScore() == BLACKJACK_SCORE;
     }
 
-    public int getSize(){
+    public int getSize() {
         return cards.size();
     }
 
@@ -59,7 +59,7 @@ public class Hand {
         cards.add(card);
     }
 
-    public Card getFirstCard(){
+    public Card getFirstCard() {
         return cards.getFirst();
     }
 

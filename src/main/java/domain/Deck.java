@@ -2,26 +2,15 @@ package domain;
 
 import domain.card.Card;
 import exception.ErrorMessage;
-import factory.CardFactory;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Deck {
     private final List<Card> cards;
 
-    public Deck() {
-        this.cards = CardFactory.createDeck();
-        shuffle();
-    }
-
     public Deck(List<Card> cards) {
         this.cards = new ArrayList<>(cards);
-    }
-
-    private void shuffle() {
-        Collections.shuffle(cards);
     }
 
     public Card drawCard() {
@@ -29,7 +18,7 @@ public class Deck {
         return cards.removeFirst();
     }
 
-    public int getCardsSize(){
+    public int getCardsSize() {
         return cards.size();
     }
 

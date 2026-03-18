@@ -3,10 +3,13 @@ package domain;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
+import factory.CardFactory;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Map;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -26,7 +29,7 @@ class GameTest {
         );
 
         // when
-        Game game = new Game(List.of("시오", "봉구스"), deck);
+        Game game = new Game(List.of(new Name("시오"), new Name("봉구스")), deck);
 
         // then
         assertAll(
@@ -49,7 +52,7 @@ class GameTest {
                 new Card(Suit.SPADES, Rank.NUM7),
                 new Card(Suit.DIAMONDS, Rank.NUM8)
         );
-        Game game = new Game(List.of("시오", "봉구스"), deck);
+        Game game = new Game(List.of(new Name("시오"), new Name("봉구스")), deck);
         Player player = game.getPlayers().get(0);
 
         // when
@@ -72,7 +75,7 @@ class GameTest {
                 new Card(Suit.SPADES, Rank.NUM7),
                 new Card(Suit.DIAMONDS, Rank.NUM8)
         );
-        Game game = new Game(List.of("시오", "봉구스"), deck);
+        Game game = new Game(List.of(new Name("시오"), new Name("봉구스")), deck);
 
         // when
         game.hitDealer();
@@ -95,10 +98,10 @@ class GameTest {
         );
 
         // when
-        Game game = new Game(List.of("시오", "봉구스"), deck);
+        Game game = new Game(List.of(new Name("시오"), new Name("봉구스")), deck);
 
         // then
-        assertTrue(game.dealerShouldHit());
+        assertTrue(game.dealerCanHit());
     }
 
     @Test
@@ -115,9 +118,83 @@ class GameTest {
         );
 
         // when
-        Game game = new Game(List.of("시오", "봉구스"), deck);
+        Game game = new Game(List.of(new Name("시오"), new Name("봉구스")), deck);
 
         // then
-        assertFalse(game.dealerShouldHit());
+        assertFalse(game.dealerCanHit());
+    }
+
+    @Test
+    void 모든_참가자가_턴을_종료하면_승패_결과를_계산한다() {
+        // given
+        Deck deck = mock(Deck.class);
+        when(deck.drawCard()).thenReturn(
+                new Card(Suit.HEARTS, Rank.NUM2),
+                new Card(Suit.HEARTS, Rank.NUM3),
+                new Card(Suit.CLUBS, Rank.NUM4),
+                new Card(Suit.CLUBS, Rank.NUM5),
+                new Card(Suit.SPADES, Rank.NUM10),
+                new Card(Suit.SPADES, Rank.NUM7)
+        );
+        Game game = new Game(List.of(new Name("시오"), new Name("봉구스")), deck);
+        Player firstPlayer = game.getPlayers().get(0);
+        Player secondPlayer = game.getPlayers().get(1);
+
+        game.stayPlayer(firstPlayer);
+        game.stayPlayer(secondPlayer);
+        game.stayDealer();
+
+        // when
+        Map<Player, WinningStatus> winningStatusMap = game.calculateAllResults();
+
+        // then
+        assertAll(
+                () -> assertEquals(2, winningStatusMap.size()),
+                () -> assertEquals(WinningStatus.LOSE, winningStatusMap.get(firstPlayer)),
+                () -> assertEquals(WinningStatus.LOSE, winningStatusMap.get(secondPlayer))
+        );
+    }
+
+    @Test
+    void 플레이어의_이름이_중복된다면_예외를_발생한다() {
+        // given
+        List<Name> names = List.of(new Name("시오"), new Name("시오"));
+
+        // when, then
+        assertThatThrownBy(() -> new Game(names, new Deck(CardFactory.createDeck())))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("닉네임은 서로 달라야 합니다.");
+    }
+
+    @Test
+    void 초기분배에서_플레이어가_블랙잭이면_hit할수없다() {
+        Deck deck = mock(Deck.class);
+        when(deck.drawCard()).thenReturn(
+                new Card(Suit.CLUBS, Rank.ACE),
+                new Card(Suit.DIAMONDS, Rank.KING),
+                new Card(Suit.SPADES, Rank.NUM4),
+                new Card(Suit.SPADES, Rank.NUM5)
+        );
+        Game game = new Game(List.of(new Name("시오")), deck);
+        Player player = game.getPlayers().get(0);
+
+        assertAll(
+                () -> assertTrue(player.isBlackJack()),
+                () -> assertFalse(player.canHit())
+        );
+    }
+
+    @Test
+    void 초기분배에서_딜러가_블랙잭이면_딜러는_hit할수없다() {
+        Deck deck = mock(Deck.class);
+        when(deck.drawCard()).thenReturn(
+                new Card(Suit.CLUBS, Rank.NUM2),
+                new Card(Suit.DIAMONDS, Rank.NUM3),
+                new Card(Suit.SPADES, Rank.ACE),
+                new Card(Suit.HEARTS, Rank.KING)
+        );
+        Game game = new Game(List.of(new Name("시오")), deck);
+
+        assertFalse(game.dealerCanHit());
     }
 }

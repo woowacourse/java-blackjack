@@ -1,42 +1,19 @@
 package domain;
 
-import domain.card.Card;
+public class Dealer extends Participant {
+    public static final int DEALER_HIT_LIMIT = 17;
+    private static final String DEALER_NAME = "딜러";
 
-import java.util.List;
-
-public class Dealer {
-    private static final int HIT_LIMIT = 17;
-    private final Hand hand;
-
-    public Dealer(){
-        hand = new Hand();
+    public Dealer() {
+        super(new Name(DEALER_NAME));
     }
 
-    public boolean isBurst() {
-        return hand.isBurst();
+    @Override
+    public boolean canHit() {
+        return !state.isFinished() &&  state.getScore() < DEALER_HIT_LIMIT;
     }
 
-    public void draw(Card card){
-        hand.addCard(card);
-    }
-
-    public List<Card> getCards(){
-        return hand.getCards();
-    }
-
-    public Card getFirstCard(){
-        return hand.getFirstCard();
-    }
-
-    public boolean shouldHit() {
-        return hand.getSum() < HIT_LIMIT;
-    }
-
-    public int getHandSize(){
-        return hand.getSize();
-    }
-
-    public int getScore() {
-        return hand.getSum();
+    public String getFirstCardName(){
+        return state.getFirstCard().getCardName();
     }
 }

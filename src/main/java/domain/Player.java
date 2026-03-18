@@ -1,47 +1,19 @@
 package domain;
 
-import domain.card.Card;
+import domain.state.ParticipantState;
 
-import java.util.List;
+public class Player extends Participant {
 
-public class Player {
-    private final String name;
-    private final Hand hand;
-
-    public Player(String name){
-        this.name = name;
-        hand = new Hand();
+    public Player(Name name) {
+        super(name);
     }
 
-    public void draw(Card card){
-        hand.addCard(card);
-    }
-
-    public boolean isBurst() {
-        return hand.isBurst();
-    }
-
+    @Override
     public boolean canHit() {
-        return hand.isLessThanBlackJack();
+        return !state.isFinished();
     }
 
-    public boolean canNotHit(){
-        return hand.isLargerThanEqualToBlackJack();
-    }
-
-    public int getScore() {
-        return hand.getSum();
-    }
-
-    public List<Card> getCards(){
-        return hand.getCards();
-    }
-
-    public int getHandSize(){
-        return hand.getSize();
-    }
-
-    public String getName() {
-        return name;
+    public WinningStatus calculateResult(ParticipantState dealerState) {
+        return state.calculateWinningStatus(dealerState);
     }
 }
