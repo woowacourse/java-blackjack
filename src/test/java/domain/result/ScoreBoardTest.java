@@ -2,10 +2,12 @@ package domain.result;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-import domain.CardInfo;
 import domain.Money;
 import domain.PlayedGameResult;
 import domain.ProfitInfo;
+import domain.gameplaying.Card;
+import domain.gameplaying.CardMark;
+import domain.gameplaying.CardRank;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -40,7 +42,7 @@ class ScoreBoardTest {
     void 플레이어가_블랙잭_딜러도_블랙잭_수익_확인() {
         long bettingMoney = 1000L;
         setupBlackJackPlayer(bettingMoney);
-        PlayedGameResult dealerResult = PlayedGameResult.from("딜러", blackjackCardInfos, BLACK_JACK_NUMBER);
+        PlayedGameResult dealerResult = PlayedGameResult.from("딜러", blackjackCards, BLACK_JACK_NUMBER);
 
         List<ProfitInfo> profitInfos = scoreBoard.evaluatePlayerProfitInfosWith(dealerResult);
         ProfitInfo playerProfitInfo = profitInfos.getFirst();
@@ -54,7 +56,7 @@ class ScoreBoardTest {
     void 플레이어와_딜러_모두_블랙잭_그리고_버스트_아닐_때_플레이어_승리() {
         long bettingMoney = 1000L;
 
-        setupParticipant("pobi", bettingMoney, dummyCardInfos,15);
+        setupParticipant("pobi", bettingMoney, dummyCards,15);
         PlayedGameResult dealerResult = getDealerResultWithScoreSum(11);
 
         List<ProfitInfo> profitInfos = scoreBoard.evaluatePlayerProfitInfosWith(dealerResult);
@@ -69,7 +71,7 @@ class ScoreBoardTest {
     void 플레이어와_딜러_모두_블랙잭이나_버스트가_아닐_때_플레이어_무승부() {
         long bettingMoney = 1000L;
 
-        setupParticipant("pobi", bettingMoney, dummyCardInfos,20);
+        setupParticipant("pobi", bettingMoney, dummyCards,20);
         PlayedGameResult dealerResult = getDealerResultWithScoreSum(20);
 
         List<ProfitInfo> profitInfos = scoreBoard.evaluatePlayerProfitInfosWith(dealerResult);
@@ -84,7 +86,7 @@ class ScoreBoardTest {
     void 플레이어와_딜러_모두_블랙잭이나_버스트가_아닐_때_플레이어_패() {
         long bettingMoney = 1000L;
 
-        setupParticipant("pobi", bettingMoney, dummyCardInfos,10);
+        setupParticipant("pobi", bettingMoney, dummyCards,10);
         PlayedGameResult dealerResult = getDealerResultWithScoreSum(20);
 
         List<ProfitInfo> profitInfos = scoreBoard.evaluatePlayerProfitInfosWith(dealerResult);
@@ -95,38 +97,39 @@ class ScoreBoardTest {
     }
 
     private PlayedGameResult getDealerResultWithScoreSum(int scoreSum) {
-        return PlayedGameResult.from("딜러", dummyCardInfos, scoreSum);
+        return PlayedGameResult.from("딜러", dummyCards, scoreSum);
     }
 
     private void setupBlackJackPlayer(long bettingMoney) {
         scoreBoard.setupPlayerBettingMoney("pobi", Money.of(bettingMoney));
-        scoreBoard.record(PlayedGameResult.from("pobi", blackjackCardInfos, BLACK_JACK_NUMBER));
+        scoreBoard.record(PlayedGameResult.from("pobi", blackjackCards, BLACK_JACK_NUMBER));
     }
 
-    private void setupParticipant(String name, long bettingMoney, List<CardInfo> cardInfos, int scoreSum) {
+    private void setupParticipant(String name, long bettingMoney, List<Card> cards, int scoreSum) {
         scoreBoard.setupPlayerBettingMoney(name, Money.of(bettingMoney));
-        scoreBoard.record(PlayedGameResult.from(name, cardInfos, scoreSum));
+        scoreBoard.record(PlayedGameResult.from(name, cards, scoreSum));
     }
 
-    private static List<CardInfo> blackjackCardInfos = List.of(
-            new CardInfo("A" , "클로버"),
-            new CardInfo("10" , "클로버")
+    private static List<Card> blackjackCards = List.of(
+            new Card(CardRank.ACE, CardMark.CLOVER),
+            new Card(CardRank.QUEEN, CardMark.CLOVER)
     );
 
-    private static List<CardInfo> nonBlackJackTwentyOne = List.of(
-            new CardInfo("10" , "클로버"),
-            new CardInfo("9" , "클로버"),
-            new CardInfo("2" , "클로버")
+    private static List<Card> nonBlackJackTwentyOne = List.of(
+            new Card(CardRank.TWO, CardMark.CLOVER),
+            new Card(CardRank.NINE, CardMark.CLOVER),
+            new Card(CardRank.QUEEN, CardMark.CLOVER)
     );
 
-    private static List<CardInfo> scoreSumSix = List.of(
-            new CardInfo("2" , "클로버"),
-            new CardInfo("2" , "클로버"),
-            new CardInfo("2" , "클로버")
+    private static List<Card> scoreSumSix = List.of(
+            new Card(CardRank.TWO, CardMark.CLOVER),
+            new Card(CardRank.TWO, CardMark.CLOVER),
+            new Card(CardRank.TWO, CardMark.CLOVER)
     );
-    private static List<CardInfo> dummyCardInfos = List.of(
-            new CardInfo("1" , "클로버"),
-            new CardInfo("1" , "클로버"),
-            new CardInfo("1" , "클로버")
+
+    private static List<Card> dummyCards = List.of(
+            new Card(CardRank.TWO, CardMark.CLOVER),
+            new Card(CardRank.TWO, CardMark.CLOVER),
+            new Card(CardRank.TWO, CardMark.CLOVER)
     );
 }

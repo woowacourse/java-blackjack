@@ -1,6 +1,5 @@
 package domain.gameplaying;
 
-import domain.CardInfo;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,10 +24,8 @@ class Hand {
         cards.add(deck.draw());
     }
 
-    List<CardInfo> cardInfos() {
-        return cards.stream()
-                .map(Card::info)
-                .toList();
+    List<Card> cards() {
+        return List.copyOf(cards);
     }
 
     boolean isBusted() {

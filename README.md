@@ -32,8 +32,7 @@
 - [x] 참가자 별 베팅 금액 저장 
 
 ## 피드백
-- [ ] CardInfo, NameAndCardInfo 제거하거나 변경
-- [ ] DrawStrategy 의존성 변경
+- [x] CardInfo 제거하거나 변경
 - [ ] 네이밍 
   - [ ] InfiniteDeck
   - [ ] BlackJackNumber -> Score

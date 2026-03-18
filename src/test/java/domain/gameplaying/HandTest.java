@@ -4,7 +4,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 import domain.gameplaying.strategy.InfiniteDeck;
-import domain.CardInfo;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -23,7 +22,7 @@ class HandTest {
         hand.drawCard();
 
         int expected = 1;
-        int actual = hand.cardInfos().size();
+        int actual = hand.cards().size();
 
         assertEquals(expected, actual);
     }
@@ -42,13 +41,12 @@ class HandTest {
     @Test
     @DisplayName("손패의 카드 정보들을 반환해야 한다.")
     void 손패_카드들_정보_반환() {
-        List<Card> cards = List.of(new Card(CardRank.QUEEN, CardMark.SPADE), new Card(CardRank.EIGHT, CardMark.HEART));
+        Card card = new Card(CardRank.QUEEN, CardMark.SPADE);
+        List<Card> cards = List.of(card);
         Hand hand = new Hand(new InfiniteDeck(), cards);
 
-        List<CardInfo> expected = List.of(new CardInfo("Q", "스페이드"), new CardInfo("8", "하트"));
-        List<CardInfo> actual = hand.cardInfos();
 
-        assertEquals(expected, actual);
+        assertThat(hand.cards().getFirst().toString()).isEqualTo(card.toString());
     }
 
     @ParameterizedTest

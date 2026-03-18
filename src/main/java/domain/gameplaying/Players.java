@@ -56,7 +56,7 @@ class Players {
         Player gameFinishedPlayer = players.poll();
         return PlayedGameResult.from(
                 gameFinishedPlayer.name(),
-                gameFinishedPlayer.cardInfos(),
+                gameFinishedPlayer.cards(),
                 gameFinishedPlayer.scoreSum());
     }
 
