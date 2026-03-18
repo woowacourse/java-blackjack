@@ -179,19 +179,5 @@ public class PlayerTest {
         // then
         assertThat(canDraw).isTrue();
     }
-
-    @Test
-    void 플레이어가_초기_카드보다_더_뽑았었는지_확인하는_기능_테스트() {
-        // given
-        Player player = new Player("밀란");
-        player.draw(new Card(CardValue.TEN, CardShape.CLOVER));
-        player.draw(new Card(CardValue.TEN, CardShape.DIAMOND));
-
-        // when
-        boolean hasDrawn = player.hasNeverDrawn(2);
-
-        // that
-        assertThat(hasDrawn).isTrue();
-    }
-
+    
 }

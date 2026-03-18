@@ -6,10 +6,6 @@ public final class Player extends Participant {
         super(name);
     }
 
-    public boolean hasNeverDrawn(int compare) {
-        return getCardsName().size() <= compare;
-    }
-
     public boolean winsAgainst(Dealer other) {
         if (other.isBurst()) {
             return true;

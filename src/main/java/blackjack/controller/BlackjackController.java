@@ -88,9 +88,6 @@ public class BlackjackController {
             player.draw(deck.pop());
             outputView.printCards(player.getName(), player.getCardsName());
         }
-        if (player.hasNeverDrawn(SIZE_OF_INITIAL_CARD)) {
-            outputView.printCards(player.getName(), player.getCardsName());
-        }
     }
 
     private boolean readPlayerWantMoreCard(Player player) {
