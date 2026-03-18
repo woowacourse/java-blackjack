@@ -2,7 +2,6 @@ package blackjack.controller;
 
 import blackjack.domain.betting.BettingAmount;
 import blackjack.domain.betting.Bettings;
-import blackjack.domain.command.Command;
 import blackjack.domain.deck.Deck;
 import blackjack.domain.participant.Dealer;
 import blackjack.domain.participant.Player;
@@ -95,7 +94,7 @@ public class BlackjackController {
     }
 
     private boolean readPlayerWantMoreCard(Player player) {
-        return Command.isYes(inputView.readMoreCard(player.getName()));
+        return inputView.readMoreCard(player.getName());
     }
 
     private void getMoreCardsOfDealer(Dealer dealer, Players players) {

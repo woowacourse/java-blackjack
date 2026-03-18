@@ -5,6 +5,9 @@ import java.util.List;
 
 public class InputView {
 
+    private static final String YES = "y";
+    private static final String NO = "n";
+
     public InputView() {
     }
 
@@ -29,9 +32,9 @@ public class InputView {
         }
     }
 
-    public String readMoreCard(String playerName) {
-        System.out.println(playerName + "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
-        return Console.readLine();
+    public boolean readMoreCard(String playerName) {
+        System.out.println(playerName + String.format("는 한장의 카드를 더 받겠습니까?(예는 %s, 아니오는 %s)", YES, NO));
+        return YES.equals(Console.readLine());
     }
 
 }
