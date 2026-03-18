@@ -163,7 +163,7 @@ public class HandTest {
     void copyOf로_반환받은_컬렉션은_수정이_가능_해야한다() {
         Hand hand = Hand.of(List.of(Card.of(Suit.SPADE, Rank.THREE)));
 
-        Hand copied = Hand.copyOf(hand);
+        Hand copied = Hand.mutableCopyOf(hand);
         Assertions.assertThatNoException().isThrownBy(() -> copied.add(Card.of(Suit.CLUB, Rank.TWO)));
     }
 }

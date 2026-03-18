@@ -34,18 +34,6 @@ public class BlackjackTest {
                         Card.of(Suit.HEART, Rank.ACE)))));
     }
 
-    @Test
-    void Blackjack_상태에서_카드를_뽑으면_Bust를_반환한다() {
-        state = state.draw(deck.poll());
-
-        Assertions.assertThat(state).isInstanceOf(Bust.class);
-    }
-
-    @Test
-    void Blackjack_상태에서_Stay를_호출하면_BlackJack이_반환된다() {
-        state = state.stay();
-        Assertions.assertThat(state).isInstanceOf(Blackjack.class);
-    }
 
     @Test
     void Blackjack_상태의_isFinished는_true를_반환해야_한다() {
@@ -62,5 +50,20 @@ public class BlackjackTest {
     void 비교_대상이_Blackjack이_아니면_블랙잭을_반환한다() {
         Result result = state.judge(STAY_8_STATE);
         Assertions.assertThat(result).isEqualTo(Result.BLACKJACK);
+    }
+
+    @Test
+    void 카드를_더_뽑으면_예외가_발상해야_한다() {
+        Assertions.assertThatThrownBy(() -> state.draw(deck.poll()));
+    }
+
+    @Test
+    void 스테이를_하면_예외가_발상해야_한다() {
+        Assertions.assertThatThrownBy(() -> state.stay());
+    }
+
+    @Test
+    void Finsihed는_참을_반환해야_한다() {
+        Assertions.assertThat(state.isFinished()).isTrue();
     }
 }

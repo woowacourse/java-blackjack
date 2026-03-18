@@ -16,7 +16,7 @@ public class Hand {
         return new Hand(cards);
     }
 
-    public static Hand copyOf(Hand hand) {
+    public static Hand mutableCopyOf(Hand hand) {
         return new Hand(new ArrayList<>(hand.cards));
     }
 

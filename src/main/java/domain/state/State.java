@@ -1,47 +1,18 @@
 package domain.state;
 
 import domain.Result;
-import domain.Score;
 import domain.card.Card;
 import domain.card.Hand;
 
-public abstract class State {
-    protected final Hand hand;
+public interface State {
 
-    public State(Hand hand) {
-        this.hand = hand;
-    }
+    State draw(Card card);
 
-    public abstract State draw(Card card);
+    State stay();
 
-    public abstract State stay();
+    boolean isFinished();
 
-    public abstract boolean isFinished();
+    Result judge(State state);
 
-    public Result judge(State state) {
-        if (state instanceof Blackjack) {
-            return Result.LOSE;
-        }
-        if (state instanceof Bust) {
-            return Result.WIN;
-        }
-        return judgeByScore(state);
-    }
-
-    private Result judgeByScore(State state) {
-        Score sum = hand.totalSum();
-        Score targetSum = state.hand.totalSum();
-
-        if (sum.isEqualTo(targetSum)) {
-            return Result.DRAW;
-        }
-        if (sum.isGreaterThan(targetSum)) {
-            return Result.WIN;
-        }
-        return Result.LOSE;
-    }
-
-    public Hand getHand() {
-        return hand;
-    }
+    Hand hand();
 }

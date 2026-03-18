@@ -16,10 +16,10 @@ public class Dealer extends Participant {
     }
 
     public Card getFirstCard() {
-        return state.getHand().peek();
+        return state.hand().peek();
     }
 
     public boolean isHittable() {
-        return state.getHand().totalSum().isLessThanOrEqualTo(Score.DEALER_HIT_STAND_BOUNDARY);
+        return state.hand().totalSum().isLessThanOrEqualTo(Score.DEALER_HIT_STAND_BOUNDARY);
     }
 }

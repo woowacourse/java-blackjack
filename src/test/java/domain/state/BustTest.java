@@ -36,19 +36,6 @@ public class BustTest {
     }
 
     @Test
-    void Bust_상태에서_카드를_뽑으면_Bust가_반환된다() {
-        state = state.draw(deck.poll());
-
-        Assertions.assertThat(state).isInstanceOf(Bust.class);
-    }
-
-    @Test
-    void Bust_상태에서_Stay를_호출하면_Bust가_반환된다() {
-        state = state.stay();
-        Assertions.assertThat(state).isInstanceOf(Bust.class);
-    }
-
-    @Test
     void Bust_상태의_isFinished는_true를_반환해야_한다() {
         Assertions.assertThat(state.isFinished()).isTrue();
     }
@@ -56,5 +43,20 @@ public class BustTest {
     @Test
     void Bust_상태는_반드시_패배한다() {
         Assertions.assertThat(state.judge(STAY_8_STATE)).isEqualTo(Result.LOSE);
+    }
+
+    @Test
+    void 카드를_더_뽑으면_예외가_발상해야_한다() {
+        Assertions.assertThatThrownBy(() -> state.draw(deck.poll()));
+    }
+
+    @Test
+    void 스테이를_하면_예외가_발상해야_한다() {
+        Assertions.assertThatThrownBy(() -> state.stay());
+    }
+
+    @Test
+    void Finsihed는_참을_반환해야_한다() {
+        Assertions.assertThat(state.isFinished()).isTrue();
     }
 }

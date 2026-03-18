@@ -38,19 +38,6 @@ public class StayTest {
     }
 
     @Test
-    void Stay_상태에서_카드를_뽑았을_때_21을_넘지_않으면_Hit를_반환한다() {
-        state = state.draw(deck.poll());
-
-        Assertions.assertThat(state).isInstanceOf(Hit.class);
-    }
-
-    @Test
-    void Stay_상태에서_stay를_호출하면_Stay를_반환한다() {
-        state = state.stay();
-        Assertions.assertThat(state).isInstanceOf(Stay.class);
-    }
-
-    @Test
     void Stay_상태의_isFinished는_true를_반환해야_한다() {
         Assertions.assertThat(state.isFinished()).isTrue();
     }
@@ -83,5 +70,20 @@ public class StayTest {
     void Stay_상태에서_점수가_같으면_무승부한다() {
         Result judge = state.judge(STAY_12_STATE);
         Assertions.assertThat(judge).isEqualTo(Result.DRAW);
+    }
+
+    @Test
+    void 카드를_더_뽑으면_예외가_발상해야_한다() {
+        Assertions.assertThatThrownBy(() -> state.draw(deck.poll()));
+    }
+
+    @Test
+    void 스테이를_하면_예외가_발상해야_한다() {
+        Assertions.assertThatThrownBy(() -> state.stay());
+    }
+
+    @Test
+    void Finsihed는_참을_반환해야_한다() {
+        Assertions.assertThat(state.isFinished()).isTrue();
     }
 }

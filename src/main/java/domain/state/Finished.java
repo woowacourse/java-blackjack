@@ -3,7 +3,7 @@ package domain.state;
 import domain.card.Card;
 import domain.card.Hand;
 
-public class Finished extends State {
+public abstract class Finished extends Started {
 
     public Finished(Hand hand) {
         super(hand);

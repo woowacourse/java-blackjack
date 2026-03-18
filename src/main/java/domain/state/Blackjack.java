@@ -10,7 +10,7 @@ public class Blackjack extends Finished {
 
     @Override
     public Result judge(State state) {
-        if (state instanceof Blackjack) {
+        if (state.hand().isBlackjack()) {
             return Result.DRAW;
         }
         return Result.BLACKJACK;
