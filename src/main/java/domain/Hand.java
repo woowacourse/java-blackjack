@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
+    public static final int BLACKJACK_HAND_SIZE = 2;
     public static final int BLACKJACK_SCORE = 21;
     public static final int ACE_SCORE_ADJUSTMENT = 10;
     private final List<Card> cards;
@@ -36,6 +37,18 @@ public class Hand {
         return cards.stream()
                 .filter(Card::isAce)
                 .count();
+    }
+
+    public boolean isBust() {
+        return calculateScore() > BLACKJACK_SCORE;
+    }
+
+    public boolean isBlackJack() {
+        return getSize() == BLACKJACK_HAND_SIZE && isMaxScore();
+    }
+
+    public boolean isMaxScore() {
+        return calculateScore() == BLACKJACK_SCORE;
     }
 
     public int getSize() {

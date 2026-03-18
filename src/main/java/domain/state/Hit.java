@@ -6,7 +6,6 @@ import domain.card.Card;
 import exception.ErrorMessage;
 
 public final class Hit extends Started {
-    public static final int BLACKJACK_HAND_SIZE = 2;
 
     public Hit(Hand hand) {
         super(hand);
@@ -15,10 +14,10 @@ public final class Hit extends Started {
     @Override
     public ParticipantState draw(Card card) {
         hand.addCard(card);
-        if (hand.calculateScore() > Hand.BLACKJACK_SCORE) {
+        if (hand.isBust()) {
             return new Bust(hand);
         }
-        if (hand.getSize() == BLACKJACK_HAND_SIZE && hand.calculateScore() == Hand.BLACKJACK_SCORE) {
+        if (hand.isBlackJack()) {
             return new BlackJack(hand);
         }
         if (hand.calculateScore() == Hand.BLACKJACK_SCORE) {
