@@ -55,8 +55,12 @@ public class Participants {
     }
 
 
-    public String findDrawablePlayer() {
-        return players.findDrawablePlayerNickname();
+    public boolean hasDrawablePlayer() {
+        return players.hasDrawablePlayer();
+    }
+
+    public String getDrawablePlayerNickname() {
+        return players.getDrawablePlayerNickname();
     }
 
     public DrawResult addCardToAvailablePlayer(Deck deck) {

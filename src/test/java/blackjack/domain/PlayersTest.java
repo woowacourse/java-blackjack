@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.participant.Dealer;
 import blackjack.dto.PlayerGameResult;
+import blackjack.fixture.PlayersFixture;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,39 +15,36 @@ class PlayersTest {
     @Test
     void createPlayers() {
         // given
-        Nickname boyeNickname = Nickname.from("boye");
-        Nickname suminNickname = Nickname.from("sumin");
-        Amount boyeAmount = Amount.from("1000");
-        Amount suminAmount = Amount.from("20000");
-
-        // when
-        Players players = Players.makeEmptyPlayers().addPlayer(boyeNickname, boyeAmount)
-            .addPlayer(suminNickname, suminAmount);
+        Players players = PlayersFixture.createValidTwoPlayers();
 
         // then
         assertThat(players.getAllPlayers()).hasSize(2);
         assertThat(players.getAllPlayerNickname()).containsExactly("boye", "sumin");
     }
 
-    @DisplayName("카드를 받을 수 있는 플레이어를 순서대로 찾는다.")
+    @DisplayName("첫 번째 드로우 가능 플레이어를 찾는다.")
     @Test
-    void findDrawablePlayer() {
+    void getFirstDrawablePlayer() {
         // given
-        Nickname boyeNickname = Nickname.from("boye");
-        Nickname suminNickname = Nickname.from("sumin");
-        Amount boyeAmount = Amount.from("1000");
-        Amount suminAmount = Amount.from("20000");
-        Players players = Players.makeEmptyPlayers().addPlayer(boyeNickname, boyeAmount)
-            .addPlayer(suminNickname, suminAmount);
+        Players players = PlayersFixture.createValidTwoPlayers();
 
         // when & then
-        assertThat(players.findDrawablePlayerNickname()).isEqualTo("boye");
+        assertThat(players.hasDrawablePlayer()).isTrue();
+        assertThat(players.getDrawablePlayerNickname()).isEqualTo("boye");
+    }
 
-        players.dontWantDraw();
-        assertThat(players.findDrawablePlayerNickname()).isEqualTo("sumin");
+    @DisplayName("플레이어가 드로우를 멈추면 다음 플레이어가 드로우 대상이 된다.")
+    @Test
+    void moveToNextDrawablePlayerWhenCurrentPlayerStops() {
+        // given
+        Players players = PlayersFixture.createValidTwoPlayers();
 
+        // when
         players.dontWantDraw();
-        assertThat(players.findDrawablePlayerNickname()).isNull();
+
+        // then
+        assertThat(players.hasDrawablePlayer()).isTrue();
+        assertThat(players.getDrawablePlayerNickname()).isEqualTo("sumin");
     }
 
     @DisplayName("버스트된 플레이어는 건너뛰고 다음 드로우 가능 플레이어를 찾는다.")
@@ -69,31 +67,27 @@ class PlayersTest {
         players.addCardToAvailablePlayer(bustedCards.getCards());
 
         // then
-        assertThat(players.findDrawablePlayerNickname()).isEqualTo("sumin");
+        assertThat(players.getDrawablePlayerNickname()).isEqualTo("sumin");
     }
 
-    @DisplayName("모든 플레이어가 카드를 받을 수 없는 상태면 null을 반환한다.")
+    @DisplayName("모든 플레이어가 카드를 받을 수 없는 상태면 drawable player가 없다.")
     @Test
-    void findDrawablePlayerReturnsNullWhenAllDone() {
+    void hasNoDrawablePlayerWhenAllDone() {
         // given
-        Nickname boyeNickname = Nickname.from("boye");
-        Amount boyeAmount = Amount.from("1000");
-        Players players = Players.makeEmptyPlayers().addPlayer(boyeNickname, boyeAmount);
+        Players players = PlayersFixture.createValidSinglePlayer();
 
         // when
         players.dontWantDraw();
 
         // then
-        assertThat(players.findDrawablePlayerNickname()).isNull();
+        assertThat(players.hasDrawablePlayer()).isFalse();
     }
 
     @DisplayName("플레이어가 딜러보다 점수가 높으면 승리로 기록되어야 한다.")
     @Test
     void getPlayerWinningResultsPlayerWins() {
         // given
-        Nickname boyeNickname = Nickname.from("boye");
-        Amount boyeAmount = Amount.from("1000");
-        Players players = Players.makeEmptyPlayers().addPlayer(boyeNickname, boyeAmount);
+        Players players = PlayersFixture.createValidSinglePlayer();
         Hand playerCards = Hand.from(List.of(
             new Card(Rank.TEN, Suit.SPADE),
             new Card(Rank.TEN, Suit.HEART)
@@ -118,9 +112,7 @@ class PlayersTest {
     @Test
     void getPlayerWinningResultsPlayerLoses() {
         // given
-        Nickname boyeNickname = Nickname.from("boye");
-        Amount boyeAmount = Amount.from("1000");
-        Players players = Players.makeEmptyPlayers().addPlayer(boyeNickname, boyeAmount);
+        Players players = PlayersFixture.createValidSinglePlayer();
         Hand playerCards = Hand.from(List.of(
             new Card(Rank.TEN, Suit.DIAMOND),
             new Card(Rank.EIGHT, Suit.HEART)

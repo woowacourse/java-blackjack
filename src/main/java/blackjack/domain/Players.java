@@ -42,28 +42,37 @@ public class Players {
         return List.copyOf(players);
     }
 
-    public String findDrawablePlayerNickname() {
-        Player player = findDrawablePlayer();
-        if (player == null) {
-            return null;
-        }
-        return player.getNickname();
+    public boolean hasDrawablePlayer() {
+        return players.stream()
+            .anyMatch(Player::isDrawable);
+    }
+
+    public String getDrawablePlayerNickname() {
+        return getDrawablePlayer().getNickname();
     }
 
     public Hand addCardToAvailablePlayer(List<Card> cards) throws IllegalArgumentException {
-        Player player = findDrawablePlayer();
+        Player player = getDrawablePlayer();
         return player.receiveCard(cards);
     }
 
-    public Player findDrawablePlayer() {
+    private Player findDrawablePlayer() {
         return players.stream()
             .filter(Player::isDrawable)
             .findFirst()
             .orElse(null);
     }
 
-    public void dontWantDraw() {
+    private Player getDrawablePlayer() {
         Player player = findDrawablePlayer();
+        if (player == null) {
+            throw new IllegalStateException("카드를 더 받을 수 있는 플레이어가 없습니다.");
+        }
+        return player;
+    }
+
+    public void dontWantDraw() {
+        Player player = getDrawablePlayer();
         player.stop();
     }
 

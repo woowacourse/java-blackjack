@@ -116,14 +116,14 @@ public class BlackjackRunner {
     }
 
     private Deck playerTurn(Participants participants, Deck deck) {
-        while (participants.findDrawablePlayer() != null) {
+        while (participants.hasDrawablePlayer()) {
             deck = drawCard(participants, deck);
         }
         return deck;
     }
 
     private Deck drawCard(Participants participants, Deck deck) {
-        String drawablePlayerNickname = participants.findDrawablePlayer();
+        String drawablePlayerNickname = participants.getDrawablePlayerNickname();
         boolean isPlayerDraw = isDraw(drawablePlayerNickname);
         if (isPlayerDraw) {
             DrawResult drawResult = participants.addCardToAvailablePlayer(deck);
