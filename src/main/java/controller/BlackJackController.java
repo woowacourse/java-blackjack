@@ -45,8 +45,10 @@ public class BlackJackController {
     }
 
     private void printInitialCards(BlackJackGame game) {
+        OutputView.printCardOpen(game.players());
         OutputView.printCardByDealer(game.dealer());
         game.players().players().forEach(OutputView::printCardByPlayer);
+        OutputView.printBlank();
     }
 
     private void printFinalCards(BlackJackGame game) {

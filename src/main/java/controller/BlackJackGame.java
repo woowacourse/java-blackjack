@@ -19,7 +19,6 @@ public class BlackJackGame {
         round.betPlayers();
         OutputView.printBlank();
         round.initialDeal();
-        OutputView.printBlank();
     }
 
     public void play() {

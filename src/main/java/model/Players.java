@@ -36,7 +36,7 @@ public class Players {
         }
     }
 
-    private void drawCardIfAllowed(Player player, CardDispenser cardDispenser) {
+    private void drawCardIfAllowed(Player player, CardDispenser cardDispenser) {d
         while (player.canHit()) {
             String inputCommand = InputView.readMoreCard(player.name());
             if (!Continuation.from(inputCommand).isContinue()) {

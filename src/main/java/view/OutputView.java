@@ -6,20 +6,16 @@ import model.Card;
 import model.Dealer;
 import model.Participant;
 import model.Player;
+import model.Players;
 
 public class OutputView {
 
-    public static void printCardOpen(List<Player> players) {
-        List<String> names = players.stream()
+    public static void printCardOpen(Players players) {
+        List<String> names = players.players().stream()
                 .map(Player::name)
                 .toList();
         System.out.println();
         System.out.printf("딜러와 %s에게 2장을 나누었습니다.%n", String.join(", ", names));
-    }
-
-    public static void printCardByPlayers(List<Player> players) {
-        players.forEach(OutputView::printCardByPlayer);
-        System.out.println();
     }
 
     public static void printCardByDealer(Dealer dealer) {
