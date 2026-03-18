@@ -12,6 +12,10 @@ public enum GameResult {
         this.benefitRatio = gameResult;
     }
 
+    public double getBenefitRatio() {
+        return benefitRatio;
+    }
+
     public static GameResult determine(Participant dealer, Participant gambler) {
         if (gambler.isBust()) {
             return LOSE;

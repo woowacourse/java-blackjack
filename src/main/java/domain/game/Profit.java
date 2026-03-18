@@ -13,17 +13,8 @@ public class Profit {
     }
 
     public static Profit calculateProfit(GameResult result, BettingAmount bettingAmount) {
-        if (result == GameResult.BLACK_JACK) {
-            return new Profit((bettingAmount.getBettingAmount()
-                    .multiply(new BigDecimal("1.5"))));
-        }
-        if (result == GameResult.WIN) {
-            return new Profit(bettingAmount.getBettingAmount());
-        }
-        if (result == GameResult.DRAW) {
-            return new Profit(BigDecimal.ZERO);
-        }
-        return new Profit(bettingAmount.getBettingAmount().negate());
+        return new Profit((bettingAmount.getBettingAmount()
+                .multiply(new BigDecimal(result.getBenefitRatio()))));
     }
 
     public BigDecimal getProfit() {
