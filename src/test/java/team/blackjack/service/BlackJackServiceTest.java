@@ -1,85 +1,105 @@
 package team.blackjack.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
+import team.blackjack.domain.Dealer;
+import team.blackjack.domain.Deck;
+import team.blackjack.domain.Players;
+import team.blackjack.service.dto.RevenueResult;
 import team.blackjack.service.dto.ScoreResult;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class BlackJackServiceTest {
 
-    private BlackJackService blackJackService;
+    private BlackjackService blackjackService;
+    private BlackjackJudge blackjackJudge;
+    private Players players;
+    private Dealer dealer;
+    private Deck deck;
 
     @BeforeEach
     void setUp() {
-        blackJackService = new BlackJackService();
+        blackjackJudge = new BlackjackJudge();
+        deck = new Deck();
+        dealer = new Dealer();
     }
 
     @Test
     void 플레이어_이름_목록으로_게임을_초기화한다() {
-        blackJackService.initGame(List.of("pobi", "jason"));
+        players = new Players(Set.of("pobi", "jason"));
+        blackjackService = new BlackjackService(blackjackJudge, players, dealer, deck);
 
-        List<String> playerNames = blackJackService.getAllPlayerNames();
-        assertThat(playerNames).hasSize(2);
-        assertThat(playerNames)
-                .containsExactly("pobi", "jason");
+        assertThat(blackjackService.getAllPlayerNames()).hasSize(2);
+        assertThat(blackjackService.getAllPlayerNames()).containsExactlyInAnyOrder("pobi", "jason");
     }
 
     @Test
     void 게임초기화_후_각_플레이어와_딜러가_카드_2장씩_가진다() {
-        String pobi = "pobi";
-        blackJackService.initGame(List.of(pobi));
-        blackJackService.drawInitialCards();
+        players = new Players(Set.of("pobi"));
+        blackjackService = new BlackjackService(blackjackJudge, players, dealer, deck);
+        blackjackService.initParticipantCard();
 
-        List<String> playerCards = blackJackService.findPlayerCardNamesByName(pobi);
-        assertThat(playerCards.getFirst()).hasSize(2);
+        assertThat(blackjackService.getPlayerCardNames("pobi")).hasSize(2);
 
-        ScoreResult scoreResult = blackJackService.calculateAllParticipantScore();
+        ScoreResult scoreResult = blackjackService.getParticipantScoreResult();
         assertThat(scoreResult.dealerCard()).hasSize(2);
-        assertThat(scoreResult.playerCards().get(pobi)).hasSize(2);
+        assertThat(scoreResult.playerCards().get("pobi")).hasSize(2);
     }
 
     @Test
     void 플레이어가_hit_하는_경우_카드가_한_장_추가된다() {
-        String playerName = "pobi";
-        blackJackService.initGame(List.of(playerName));
-        blackJackService.drawInitialCards();
+        players = new Players(Set.of("pobi"));
+        blackjackService = new BlackjackService(blackjackJudge, players, dealer, deck);
+        blackjackService.initParticipantCard();
 
-        List<String> pobiCardNames = blackJackService.findPlayerCardNamesByName(playerName);
-        int sizeBefore = pobiCardNames.size();
+        int sizeBefore = blackjackService.getPlayerCardNames("pobi").size();
+        blackjackService.hitPlayer("pobi");
+        int sizeAfter = blackjackService.getPlayerCardNames("pobi").size();
 
-        blackJackService.hitPlayer(playerName);
-
-        pobiCardNames = blackJackService.findPlayerCardNamesByName(playerName);
-        int sizeAfter = pobiCardNames.size();
         assertThat(sizeAfter).isEqualTo(sizeBefore + 1);
     }
 
     @Test
     void 딜러와_모든_플레이어_점수와_카드정보를_계산한다() {
-        blackJackService.initGame(List.of("pobi", "jason"));
-        blackJackService.drawInitialCards();
+        players = new Players(Set.of("pobi", "jason"));
+        blackjackService = new BlackjackService(blackjackJudge, players, dealer, deck);
+        blackjackService.initParticipantCard();
 
-        var scoreResult = blackJackService.calculateAllParticipantScore();
+        ScoreResult scoreResult = blackjackService.getParticipantScoreResult();
 
-        assertThat(scoreResult.playerNames()).containsExactly("pobi", "jason");
+        assertThat(scoreResult.playerNames()).containsExactlyInAnyOrder("pobi", "jason");
         assertThat(scoreResult.dealerCard()).isNotEmpty();
         assertThat(scoreResult.playerCards()).containsKeys("pobi", "jason");
         assertThat(scoreResult.playerScores()).containsKeys("pobi", "jason");
-
     }
 
     @Test
     void 딜러가_hit하는_경우_카드가_추가된다() {
-        blackJackService.initGame(List.of("pobi"));
-        blackJackService.drawInitialCards();
+        players = new Players(Set.of("pobi"));
+        blackjackService = new BlackjackService(blackjackJudge, players, dealer, deck);
+        blackjackService.initParticipantCard();
 
-        int dealerCardsBefore = blackJackService.calculateAllParticipantScore().dealerCard().size();
-        blackJackService.hitDealer();
-        int dealerCardsAfter = blackJackService.calculateAllParticipantScore().dealerCard().size();
+        int dealerCardsBefore = blackjackService.getParticipantScoreResult().dealerCard().size();
+        blackjackService.hitDealer();
+        int dealerCardsAfter = blackjackService.getParticipantScoreResult().dealerCard().size();
 
         assertThat(dealerCardsAfter).isEqualTo(dealerCardsBefore + 1);
+    }
+
+    @Test
+    void 플레이어_배팅_후_수익_결과_반환() {
+        players = new Players(Set.of("pobi"));
+        blackjackService = new BlackjackService(blackjackJudge, players, dealer, deck);
+        blackjackService.initParticipantCard();
+        blackjackService.batMoney("pobi", 1000);
+
+        RevenueResult revenueResult = blackjackService.getRevenueResult();
+
+        assertThat(revenueResult.playerRevenueMap()).containsKey("pobi");
+        assertThat(revenueResult.playerRevenueMap().get("pobi")).isNotNull();
+        double playerSum = revenueResult.playerRevenueMap().values().stream().mapToDouble(Double::doubleValue).sum();
+        assertThat(revenueResult.dealerRevenue()).isEqualTo(-playerSum);
     }
 }

@@ -1,48 +1,27 @@
 package team.blackjack.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class Player {
+public class Player extends Participant {
     private final String name;
-    private final List<Hand> hands;
+    private double batMoney;
 
     public Player(String name) {
         this.name = name;
-        this.hands = initHands();
-    }
 
-    public List<Hand> getHands() {
-        return List.copyOf(hands);
     }
 
     public String getName() {
         return this.name;
     }
 
-    /**
-     * TODO: 추후 기능 확장시 한 라운드에 여러 개의 hand가 생기는 경우, 해당 메소드 수정 필요.
-     * @return
-     */
-    public int getScore(){
-        return this.hands.getFirst().getScore();
+    public void bat(double money) {
+        if (money <= 0) {
+            throw new IllegalArgumentException("배팅 금액은 0보다 커야 합니다.");
+        }
+
+        this.batMoney = money;
     }
 
-    public void hit(Card card) {
-        this.hands.getFirst().addCard(card);
-    }
-
-    private List<Hand> initHands(){
-        List<Hand> hands = new ArrayList<>();
-        hands.add(new Hand());
-        return hands;
-    }
-
-    public List<String> getCardInAllHand() {
-        return hands.stream()
-                .map(Hand::getCards)
-                .flatMap(List::stream)
-                .map(Card::getCardName)
-                .toList();
+    public double getBatMoney() {
+        return this.batMoney;
     }
 }

@@ -1,31 +1,20 @@
 package team.blackjack.config;
 
-import team.blackjack.controler.BlackJackController;
-import team.blackjack.service.BlackJackService;
+import team.blackjack.control.BlackJackController;
+import team.blackjack.service.BlackjackService;
 
 public class AppConfig {
-    private static volatile AppConfig instance;
+    private static final AppConfig instance = new AppConfig();
+    private final BlackjackService blackJackService = new BlackjackService();
+    private final BlackJackController blackJackController = new BlackJackController(blackJackService);
 
-    private AppConfig() {
-    }
+    private AppConfig() {}
 
     public static AppConfig getInstance() {
-        if (instance == null) {
-            synchronized (AppConfig.class) {
-                if (instance == null) {
-                    instance = new AppConfig();
-                }
-            }
-        }
-
         return instance;
     }
 
-    public BlackJackService blackJackService() {
-        return new BlackJackService();
-    }
-
     public BlackJackController blackJackController() {
-        return new BlackJackController(blackJackService());
+        return blackJackController;
     }
 }
