@@ -46,11 +46,11 @@ public class OutputDtoAssembler {
     }
 
     private static Map<String, Long> convertPlayerMoneyMap(BettingTable bettingTable) {
-        Map<Player, Money> moneyTable = bettingTable.getMoneyTable();
+        Map<Player, Earning> moneyTable = bettingTable.getMoneyTable();
         Map<String, Long> playerMoneyMap = new LinkedHashMap<>();
-        for (Map.Entry<Player, Money> entry : moneyTable.entrySet()) {
+        for (Map.Entry<Player, Earning> entry : moneyTable.entrySet()) {
             Player Key = entry.getKey();
-            Money value = entry.getValue();
+            Earning value = entry.getValue();
 
             String name = Key.getName();
             Long money = value.amount();

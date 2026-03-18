@@ -13,9 +13,9 @@ class BettingTableTest {
         // given
         Player player1 = new Player(new Name("시오"));
         Player player2 = new Player(new Name("봉구스"));
-        Map<Player, Money> bets = Map.of(
-                player1, new Money(1000L),
-                player2, new Money(2000L)
+        Map<Player, Earning> bets = Map.of(
+                player1, new Earning(1000L),
+                player2, new Earning(2000L)
         );
         BettingTable bettingTable = new BettingTable(bets);
 
@@ -32,8 +32,8 @@ class BettingTableTest {
     void 패배시_베팅금액은_1배로_차감된다() {
         // given
         Player player1 = new Player(new Name("시오"));
-        Map<Player, Money> bets = Map.of(
-                player1, new Money(1000L)
+        Map<Player, Earning> bets = Map.of(
+                player1, new Earning(1000L)
         );
         BettingTable bettingTable = new BettingTable(bets);
 
@@ -48,8 +48,8 @@ class BettingTableTest {
     void 블랙잭일_때_베팅금액은_일점오배로_정산된다() {
         // given
         Player player1 = new Player(new Name("시오"));
-        Map<Player, Money> bets = Map.of(
-                player1, new Money(1000L)
+        Map<Player, Earning> bets = Map.of(
+                player1, new Earning(1000L)
         );
         BettingTable bettingTable = new BettingTable(bets);
 
@@ -65,9 +65,9 @@ class BettingTableTest {
         // given
         Player player1 = new Player(new Name("시오"));
         Player player2 = new Player(new Name("봉구스"));
-        Map<Player, Money> bets = Map.of(
-                player1, new Money(1000L),
-                player2, new Money(2000L)
+        Map<Player, Earning> bets = Map.of(
+                player1, new Earning(1000L),
+                player2, new Earning(2000L)
         );
         BettingTable bettingTable = new BettingTable(bets);
 
@@ -84,9 +84,9 @@ class BettingTableTest {
         // given
         Player player1 = new Player(new Name("시오"));
         Player player2 = new Player(new Name("봉구스"));
-        Map<Player, Money> bets = Map.of(
-                player1, new Money(2000L),
-                player2, new Money(3000L)
+        Map<Player, Earning> bets = Map.of(
+                player1, new Earning(2000L),
+                player2, new Earning(3000L)
         );
         BettingTable bettingTable = new BettingTable(bets);
 
@@ -103,9 +103,9 @@ class BettingTableTest {
         // given
         Player player1 = new Player(new Name("시오"));
         Player player2 = new Player(new Name("봉구스"));
-        Map<Player, Money> bets = Map.of(
-                player1, new Money(1000L),
-                player2, new Money(2000L)
+        Map<Player, Earning> bets = Map.of(
+                player1, new Earning(1000L),
+                player2, new Earning(2000L)
         );
         BettingTable bettingTable = new BettingTable(bets);
 

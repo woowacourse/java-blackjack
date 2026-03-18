@@ -4,16 +4,16 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class BettingTable {
-    private final Map<Player, Money> moneyTable;
+    private final Map<Player, Earning> moneyTable;
 
-    public BettingTable(Map<Player, Money> moneyTable) {
+    public BettingTable(Map<Player, Earning> moneyTable) {
         this.moneyTable = new LinkedHashMap<>(moneyTable);
     }
 
     public static BettingTable from(Map<Player, BetAmount> moneyTable) {
-        Map<Player, Money> moneyMap = new LinkedHashMap<>();
+        Map<Player, Earning> moneyMap = new LinkedHashMap<>();
         for (Player player : moneyTable.keySet()) {
-            moneyMap.put(player, new Money(moneyTable.get(player).getAmount()));
+            moneyMap.put(player, new Earning(moneyTable.get(player).getAmount()));
         }
         return new BettingTable(moneyMap);
     }
@@ -26,14 +26,14 @@ public class BettingTable {
     }
 
     public void updateProfit(Player player, WinningStatus winningStatus) {
-        Money initialAmount = moneyTable.get(player);
-        Money profit = initialAmount.calculateProfit(winningStatus);
-        moneyTable.put(player, profit);
+        Earning initialAmount = moneyTable.get(player);
+        Earning earning = initialAmount.calculateProfit(winningStatus);
+        moneyTable.put(player, earning);
     }
 
     public long calculateDealerProfit() {
         long totalPlayerProfit = moneyTable.values().stream()
-                .mapToLong(Money::amount)
+                .mapToLong(Earning::amount)
                 .sum();
         return -totalPlayerProfit;
     }
@@ -42,7 +42,7 @@ public class BettingTable {
         return moneyTable.get(player).amount();
     }
 
-    public Map<Player, Money> getMoneyTable() {
+    public Map<Player, Earning> getMoneyTable() {
         return new LinkedHashMap<>(moneyTable);
     }
 }
