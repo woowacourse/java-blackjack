@@ -1,11 +1,15 @@
 package domain.game;
 
+import domain.card.Card;
+import domain.card.CardBundle;
+import java.util.List;
+
 public class Stay implements HandState {
 
-    private final int score;
+    private final CardBundle cardBundle;
 
-    public Stay(int score) {
-        this.score = score;
+    public Stay(CardBundle cardBundle) {
+        this.cardBundle = cardBundle;
     }
 
     @Override
@@ -16,20 +20,39 @@ public class Stay implements HandState {
         if (other instanceof Bust) {
             return Outcome.WIN;
         }
-        Stay otherStay = (Stay) other;
-        return compareScore(otherStay);
+        return compareScore((Stay) other);
     }
 
     @Override
     public boolean canHit() {
-        return true;
+        return false;
+    }
+
+    @Override
+    public HandState draw(Card card) {
+        return this;
+    }
+
+    @Override
+    public HandState stay() {
+        return this;
+    }
+
+    @Override
+    public List<Card> cards() {
+        return cardBundle.getCards();
+    }
+
+    @Override
+    public int score() {
+        return cardBundle.calculateScore();
     }
 
     private Outcome compareScore(Stay other) {
-        if (this.score > other.score) {
+        if (this.score() > other.score()) {
             return Outcome.WIN;
         }
-        if (this.score == other.score) {
+        if (this.score() == other.score()) {
             return Outcome.TIE;
         }
         return Outcome.LOSE;

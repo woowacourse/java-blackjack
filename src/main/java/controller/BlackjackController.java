@@ -1,12 +1,11 @@
 package controller;
 
-import domain.participant.Dealer;
 import domain.card.Deck;
-import domain.participant.Player;
-import domain.participant.Players;
-import domain.game.HandState;
 import domain.game.Outcome;
 import domain.game.ProfitResult;
+import domain.participant.Dealer;
+import domain.participant.Player;
+import domain.participant.Players;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,6 +73,7 @@ public class BlackjackController {
             player.addCard(deck.draw());
             outputView.printPlayerCards(player);
         }
+        player.stay();
     }
 
     private void playDealerTurn(Dealer dealer, Deck deck) {
@@ -81,6 +81,7 @@ public class BlackjackController {
             dealer.addCard(deck.draw());
             outputView.printDealerHit();
         }
+        dealer.stay();
     }
 
     private void printFinalCards(Dealer dealer, Players players) {
@@ -92,10 +93,9 @@ public class BlackjackController {
     }
 
     private ProfitResult calculateProfits(Dealer dealer, Players players) {
-        HandState dealerState = dealer.getState();
         Map<Player, Integer> playerProfits = new LinkedHashMap<>();
         for (Player player : players.getGamePlayers()) {
-            Outcome outcome = player.getState().versus(dealerState);
+            Outcome outcome = player.compete(dealer.getState());
             playerProfits.put(player, player.calculateProfit(outcome));
         }
         return new ProfitResult(playerProfits);

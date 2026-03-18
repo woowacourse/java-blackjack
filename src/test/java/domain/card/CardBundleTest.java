@@ -2,9 +2,6 @@ package domain.card;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-import domain.game.Blackjack;
-import domain.game.Bust;
-import domain.game.Stay;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -56,7 +53,7 @@ public class CardBundleTest {
     void ACE와_10점_카드_2장이면_블랙잭이다() {
         cardBundle.addCard(new Card(Rank.ACE, Suit.SPADE));
         cardBundle.addCard(new Card(Rank.KING, Suit.HEART));
-        assertThat(cardBundle.resolveState()).isInstanceOf(Blackjack.class);
+        assertThat(cardBundle.isBlackjack()).isTrue();
     }
 
     @DisplayName("3장으로 21점이면 블랙잭이 아니다")
@@ -65,7 +62,7 @@ public class CardBundleTest {
         cardBundle.addCard(new Card(Rank.ACE, Suit.SPADE));
         cardBundle.addCard(new Card(Rank.FIVE, Suit.HEART));
         cardBundle.addCard(new Card(Rank.FIVE, Suit.DIAMOND));
-        assertThat(cardBundle.resolveState()).isInstanceOf(Stay.class);
+        assertThat(cardBundle.isBlackjack()).isFalse();
     }
 
     @DisplayName("2장이지만 21점이 아니면 블랙잭이 아니다")
@@ -73,7 +70,7 @@ public class CardBundleTest {
     void 두_장이지만_21점이_아니면_블랙잭이_아니다() {
         cardBundle.addCard(new Card(Rank.KING, Suit.SPADE));
         cardBundle.addCard(new Card(Rank.FIVE, Suit.HEART));
-        assertThat(cardBundle.resolveState()).isInstanceOf(Stay.class);
+        assertThat(cardBundle.isBlackjack()).isFalse();
     }
 
     @DisplayName("점수가 21을 초과하면 버스트다")
@@ -82,7 +79,7 @@ public class CardBundleTest {
         cardBundle.addCard(new Card(Rank.KING, Suit.SPADE));
         cardBundle.addCard(new Card(Rank.KING, Suit.HEART));
         cardBundle.addCard(new Card(Rank.TWO, Suit.DIAMOND));
-        assertThat(cardBundle.resolveState()).isInstanceOf(Bust.class);
+        assertThat(cardBundle.isBust()).isTrue();
     }
 
     @DisplayName("점수가 21이면 버스트가 아니다")
@@ -90,6 +87,6 @@ public class CardBundleTest {
     void 점수가_21이면_버스트가_아니다() {
         cardBundle.addCard(new Card(Rank.ACE, Suit.SPADE));
         cardBundle.addCard(new Card(Rank.KING, Suit.HEART));
-        assertThat(cardBundle.resolveState()).isNotInstanceOf(Bust.class);
+        assertThat(cardBundle.isBust()).isFalse();
     }
 }

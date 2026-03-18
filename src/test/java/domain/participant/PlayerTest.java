@@ -44,9 +44,9 @@ public class PlayerTest {
     @DisplayName("ACE가 있고 버스트면 1로 계산한다")
     @Test
     void ACE가_있고_버스트면_1로_계산한다() {
-        player.addCard(new Card(Rank.ACE, Suit.SPADE));    // 1
         player.addCard(new Card(Rank.KING, Suit.HEART));   // 10
         player.addCard(new Card(Rank.FIVE, Suit.DIAMOND)); // 5
+        player.addCard(new Card(Rank.ACE, Suit.SPADE));    // 1
         assertThat(player.getScore()).isEqualTo(16);
     }
 

@@ -3,17 +3,17 @@ package domain.participant;
 import domain.card.Card;
 import domain.card.CardBundle;
 import domain.game.HandState;
+import domain.game.Hit;
 import java.util.List;
 import java.util.Objects;
 
 public abstract class Participant {
     private final PlayerName playerName;
-    private final CardBundle cardBundle;
     private HandState state;
 
     protected Participant(String name) {
         this.playerName = new PlayerName(name);
-        this.cardBundle = new CardBundle();
+        this.state = new Hit(new CardBundle());
     }
 
     public boolean canHit() {
@@ -21,12 +21,15 @@ public abstract class Participant {
     }
 
     public void addCard(Card card) {
-        cardBundle.addCard(card);
-        this.state = cardBundle.resolveState();
+        this.state = state.draw(card);
+    }
+
+    public void stay() {
+        this.state = state.stay();
     }
 
     public List<Card> getCards() {
-        return cardBundle.getCards();
+        return state.cards();
     }
 
     public String getName() {
@@ -34,7 +37,7 @@ public abstract class Participant {
     }
 
     public int getScore() {
-        return cardBundle.calculateScore();
+        return state.score();
     }
 
     public HandState getState() {

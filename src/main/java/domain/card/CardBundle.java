@@ -1,9 +1,5 @@
 package domain.card;
 
-import domain.game.Blackjack;
-import domain.game.Bust;
-import domain.game.HandState;
-import domain.game.Stay;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,22 +46,12 @@ public class CardBundle {
         cards.add(card);
     }
 
-    private boolean isBlackjack() {
+    public boolean isBlackjack() {
         return cards.size() == BLACKJACK_CARD_COUNT && calculateScore() == BUST_THRESHOLD;
     }
 
-    private boolean isBust() {
+    public boolean isBust() {
         return calculateScore() > BUST_THRESHOLD;
-    }
-
-    public HandState resolveState() {
-        if (isBlackjack()) {
-            return new Blackjack();
-        }
-        if (isBust()) {
-            return new Bust();
-        }
-        return new Stay(calculateScore());
     }
 
     public List<Card> getCards() {
