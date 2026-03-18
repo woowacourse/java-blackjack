@@ -11,7 +11,7 @@ public class GameJudge {
         boolean isDealerBlackjack = dealer.isBlackjack();
 
         // 유저 버스트
-        if (userTotalScore > BLACKJACK_TARGET_SCORE) {
+        if (user.isBust()) {
             return GameResult.LOSE;
         }
 
@@ -31,7 +31,7 @@ public class GameJudge {
         }
 
         // 딜러 버스트
-        if (dealer.getTotalScore() > BLACKJACK_TARGET_SCORE) {
+        if (dealer.isBust()) {
             return GameResult.WIN;
         }
 
