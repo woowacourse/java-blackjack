@@ -12,8 +12,8 @@ class HandTest {
     void isBlackjack_return_true() {
         //given
         Hand hand = new Hand();
-        hand.addCard(new Card(Rank.J, Suit.DIAMOND));
-        hand.addCard(new Card(Rank.ACE, Suit.DIAMOND));
+        hand.draw(new Card(Rank.J, Suit.DIAMOND));
+        hand.draw(new Card(Rank.ACE, Suit.DIAMOND));
 
         //when & then
         assertThat(hand.isBlackjack()).isTrue();
@@ -24,8 +24,8 @@ class HandTest {
     void isBlackjack_return_false() {
         //given
         Hand hand = new Hand();
-        hand.addCard(new Card(Rank.J, Suit.DIAMOND));
-        hand.addCard(new Card(Rank.K, Suit.DIAMOND));
+        hand.draw(new Card(Rank.J, Suit.DIAMOND));
+        hand.draw(new Card(Rank.K, Suit.DIAMOND));
 
         //when & then
         assertThat(hand.isBlackjack()).isFalse();
@@ -36,9 +36,9 @@ class HandTest {
     void isBust_return_true() {
         //given
         Hand hand = new Hand();
-        hand.addCard(new Card(Rank.J, Suit.DIAMOND));
-        hand.addCard(new Card(Rank.Q, Suit.DIAMOND));
-        hand.addCard(new Card(Rank.TWO, Suit.DIAMOND));
+        hand.draw(new Card(Rank.J, Suit.DIAMOND));
+        hand.draw(new Card(Rank.Q, Suit.DIAMOND));
+        hand.draw(new Card(Rank.TWO, Suit.DIAMOND));
 
         //when & then
         assertThat(hand.isBust()).isTrue();
@@ -49,9 +49,9 @@ class HandTest {
     void isBust_return_false() {
         //given
         Hand hand = new Hand();
-        hand.addCard(new Card(Rank.J, Suit.DIAMOND));
-        hand.addCard(new Card(Rank.Q, Suit.DIAMOND));
-        hand.addCard(new Card(Rank.ACE, Suit.DIAMOND));
+        hand.draw(new Card(Rank.J, Suit.DIAMOND));
+        hand.draw(new Card(Rank.Q, Suit.DIAMOND));
+        hand.draw(new Card(Rank.ACE, Suit.DIAMOND));
 
         //when & then
         assertThat(hand.isBust()).isFalse();

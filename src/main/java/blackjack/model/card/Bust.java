@@ -2,7 +2,7 @@ package blackjack.model.card;
 
 import blackjack.model.gameresult.GameResult;
 
-public class Bust implements HandState{
+public class Bust extends Finished{
 
     @Override
     public GameResult judge(Hand hand, Hand otherHand) {
@@ -11,7 +11,12 @@ public class Bust implements HandState{
 
     @Override
     public void draw(Hand hand, Card card) {
-        throw new IllegalArgumentException("버스트 상태에서는 카드를 추가로 받을 수 없습니다.");
+        throw new IllegalStateException("버스트 상태에서는 카드를 추가로 받을 수 없습니다.");
+    }
+
+    @Override
+    public boolean isFinished() {
+        return true;
     }
 
     @Override

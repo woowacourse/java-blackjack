@@ -40,6 +40,14 @@ public class Hand {
         cards.add(card);
     }
 
+    public void stay() {
+        handState.stay(this);
+    }
+
+    public boolean isFinished() {
+        return handState.isFinished();
+    }
+
     public boolean isBlackjack() {
         return handState.isBlackjack();
     }

@@ -55,6 +55,7 @@ public class BlackjackGame {
             cardProvider.drawOneCard(user);
             printDealerHit.run();
         }
+        user.stay();
     }
 
     public ProfitResult judgeWinner(Users users, BetAmounts betAmounts) {
@@ -71,6 +72,7 @@ public class BlackjackGame {
             cardProvider.drawOneCard(user);
             printPlayerCards.accept(user);
         }
+        user.stay();
     }
 
     private boolean checkY(User user, Function<User, String> readHitCommand) {

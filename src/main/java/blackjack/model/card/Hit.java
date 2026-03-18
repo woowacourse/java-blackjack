@@ -2,22 +2,14 @@ package blackjack.model.card;
 
 import blackjack.model.gameresult.GameResult;
 
-public class Hit implements HandState{
+public class Hit implements HandState {
 
     private static final int BLACKJACK_RANK = 21;
     private static final int BLACKJACK_CHECK_SIZE = 2;
 
     @Override
     public GameResult judge(Hand hand, Hand otherHand) {
-        if (otherHand.isBlackjack()) {
-            return GameResult.LOSE;
-        }
-
-        if (otherHand.isBust()) {
-            return GameResult.WIN;
-        }
-
-        return judgeWithScore(hand, otherHand);
+        throw new IllegalStateException("아직 턴이 종료되지 않았습니다.");
     }
 
     @Override
@@ -32,6 +24,16 @@ public class Hit implements HandState{
         if (hand.size() == BLACKJACK_CHECK_SIZE) {
             checkBlackjack(hand);
         }
+    }
+
+    @Override
+    public void stay(Hand hand) {
+        hand.setState(new Stay());
+    }
+
+    @Override
+    public boolean isFinished() {
+        return false;
     }
 
     @Override

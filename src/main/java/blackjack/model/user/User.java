@@ -31,6 +31,14 @@ public abstract class User {
         hand.draw(card);
     }
 
+    public void stay() {
+        hand.stay();
+    }
+
+    public boolean isFinished() {
+        return hand.isFinished();
+    }
+
     public boolean isBlackjack() {
         return hand.isBlackjack();
     }

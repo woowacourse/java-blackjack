@@ -8,6 +8,10 @@ public interface HandState {
 
     void draw(Hand hand, Card card);
 
+    void stay(Hand hand);
+
+    boolean isFinished();
+
     boolean isBlackjack();
 
     boolean isBust();
