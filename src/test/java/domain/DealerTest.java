@@ -35,4 +35,35 @@ class DealerTest {
         assertTrue(dealer.isBurst());
     }
 
+    @Test
+    void 딜러가_stay하면_hit할수없다() {
+        Dealer dealer = new Dealer();
+        dealer.draw(new Card(Suit.CLUBS, Rank.NUM2));
+        dealer.draw(new Card(Suit.DIAMONDS, Rank.NUM3));
+        assertTrue(dealer.canHit());
+
+        dealer.stay();
+
+        assertFalse(dealer.canHit());
+    }
+
+    @Test
+    void 딜러의_첫번째_카드이름을_반환한다() {
+        Dealer dealer = new Dealer();
+        Card first = new Card(Suit.CLUBS, Rank.ACE);
+        dealer.draw(first);
+        dealer.draw(new Card(Suit.DIAMONDS, Rank.NUM7));
+
+        assertEquals(first.getCardName(), dealer.getFirstCardName());
+    }
+
+    @Test
+    void 딜러의_카드합이_17이상이면_hit할수없다() {
+        Dealer dealer = new Dealer();
+        dealer.draw(new Card(Suit.CLUBS, Rank.NUM10));
+        dealer.draw(new Card(Suit.DIAMONDS, Rank.NUM7));
+
+        assertFalse(dealer.canHit());
+    }
+
 }
