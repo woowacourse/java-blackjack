@@ -18,7 +18,7 @@ public class ResultCalculatorTest {
     void playerBustLose() {
         ResultCalculator calculator = new ResultCalculator();
         Dealer dealer = new Dealer();
-        Players players = new Players(java.util.List.of(new Player("pobi")));
+        Players players = new Players(java.util.List.of(new Player("pobi", 1000)));
         final Player[] playerRef = new Player[1];
         players.forEachPlayer(player -> playerRef[0] = player);
 

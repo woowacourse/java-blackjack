@@ -9,7 +9,8 @@ public class OutcomeTest {
     @Test
     @DisplayName("Outcome은 결과 라벨을 제공한다")
     void resultLabel() {
-        assertEquals("승", Outcome.WIN.result());
+        assertEquals("승", Outcome.DEFAULT_WIN.result());
+        assertEquals("승", Outcome.BLACKJACK_WIN.result());
         assertEquals("패", Outcome.LOSE.result());
     }
 }

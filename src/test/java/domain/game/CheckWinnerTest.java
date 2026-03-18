@@ -10,6 +10,7 @@ import domain.participant.Participant;
 import domain.participant.Player;
 import domain.participant.Players;
 import domain.state.Outcome;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import util.NameParser;
@@ -21,7 +22,7 @@ public class CheckWinnerTest {
     @DisplayName("점수가 같으면 무승부이다.")
     void sameScoreLoseResult() {
         Dealer dealer = new Dealer();
-        Players players = NameParser.makeNameList("pobi");
+        Players players = makePlayers("pobi");
         Player player = getFirstPlayer(players);
         addCards(dealer,
                 new Card(Suit.SPADE, Rank.KING),
@@ -39,7 +40,7 @@ public class CheckWinnerTest {
     @DisplayName("딜러 점수가 더 크면 플레이어는 패배한다")
     void loseResult() {
         Dealer dealer = new Dealer();
-        Players players = NameParser.makeNameList("pobi");
+        Players players = makePlayers("pobi");
         Player player = getFirstPlayer(players);
         addCards(dealer,
                 new Card(Suit.SPADE, Rank.KING),
@@ -57,7 +58,7 @@ public class CheckWinnerTest {
     @DisplayName("플레이어 점수가 더 크면 플레이어는 승리한다")
     void winResult() {
         Dealer dealer = new Dealer();
-        Players players = NameParser.makeNameList("pobi");
+        Players players = makePlayers("pobi");
         Player player = getFirstPlayer(players);
         addCards(dealer,
                 new Card(Suit.SPADE, Rank.TEN),
@@ -68,14 +69,14 @@ public class CheckWinnerTest {
 
         GameResult gameResult = resultCalculator.calculate(dealer, players);
 
-        assertEquals(Outcome.WIN, gameResult.getPlayerOutcome(player.getName()));
+        assertEquals(Outcome.DEFAULT_WIN, gameResult.getPlayerOutcome(player.getName()));
     }
 
     @Test
     @DisplayName("플레이어가 버스트면 딜러 버스트 여부와 상관없이 패배한다")
     void playerBustAlwaysLose() {
         Dealer dealer = new Dealer();
-        Players players = NameParser.makeNameList("pobi");
+        Players players = makePlayers("pobi");
         Player player = getFirstPlayer(players);
         addCards(dealer,
                 new Card(Suit.SPADE, Rank.KING),
@@ -95,7 +96,7 @@ public class CheckWinnerTest {
     @DisplayName("딜러가 버스트고 플레이어가 정상 상태면 플레이어는 승리한다")
     void dealerBustPlayerNormalWin() {
         Dealer dealer = new Dealer();
-        Players players = NameParser.makeNameList("pobi");
+        Players players = makePlayers("pobi");
         Player player = getFirstPlayer(players);
         addCards(dealer,
                 new Card(Suit.SPADE, Rank.KING),
@@ -107,7 +108,7 @@ public class CheckWinnerTest {
 
         GameResult gameResult = resultCalculator.calculate(dealer, players);
 
-        assertEquals(Outcome.WIN, gameResult.getPlayerOutcome(player.getName()));
+        assertEquals(Outcome.DEFAULT_WIN, gameResult.getPlayerOutcome(player.getName()));
     }
 
     private void addCards(Participant participant, Card... cards) {
@@ -124,5 +125,10 @@ public class CheckWinnerTest {
             }
         });
         return firstPlayer[0];
+    }
+
+    private Players makePlayers(String participant) {
+        List<String> nameList = NameParser.makeNameList(participant);
+        return new Players(nameList.stream().map(name -> new Player(name, 1000)).toList());
     }
 }
