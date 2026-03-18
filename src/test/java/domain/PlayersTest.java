@@ -1,9 +1,11 @@
 package domain;
 
+import domain.participant.BetAmount;
 import domain.participant.Player;
 import domain.participant.Players;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -16,7 +18,7 @@ class PlayersTest {
         List<String> names = List.of("pobi", "pobi");
         List<Player> players = (names
                 .stream()
-                .map(Player::new).toList()
+                .map(this::player).toList()
         );
 
         assertThatThrownBy(() -> new Players(players))
@@ -28,10 +30,14 @@ class PlayersTest {
         List<String> names = List.of("pobi", "jason", "neo", "brown", "woni", "lisa");
         List<Player> players = (names
                 .stream()
-                .map(Player::new).toList()
+                .map(this::player).toList()
         );
 
         assertThatThrownBy(() -> new Players(players))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    private Player player(String name) {
+        return new Player(name, new BetAmount(BigDecimal.valueOf(1000)));
     }
 }

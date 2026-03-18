@@ -5,19 +5,16 @@ import java.math.BigDecimal;
 import static domain.game.BlackjackRule.BLACK_JACK;
 
 public class Player extends Participant {
-    private BetAmount betAmount;
+    private final BetAmount betAmount;
 
-    public Player(String name) {
+    public Player(String name, BetAmount betAmount) {
         super(name);
+        this.betAmount = betAmount;
     }
 
     @Override
     public boolean canDraw() {
         return super.score() < BLACK_JACK;
-    }
-
-    public void bet(BigDecimal betAmount) {
-        this.betAmount = new BetAmount(betAmount);
     }
 
     public BigDecimal betAmount() {
