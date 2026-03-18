@@ -8,7 +8,8 @@ import java.util.List;
 public class OutputView {
 
     public static void printGameInitialMessage(List<String> playersNames) {
-        String playersNamesMessage = String.join(",", playersNames);
+        String playersNamesMessage = String.join(", ", playersNames);
+        System.out.println();
         System.out.printf("딜러와 %s에게 2장을 나누었습니다.%n", playersNamesMessage);
     }
 
@@ -26,15 +27,10 @@ public class OutputView {
     }
 
     public static void printGameResult(List<ParticipantGameResultDto> participantGameResultDtos) {
-        System.out.println("## 최종 승패");
-
+        System.out.println();
+        System.out.println("## 최종 수익");
         for (ParticipantGameResultDto participantGameResultDto : participantGameResultDtos) {
-            if (participantGameResultDto.name().equals("딜러")) {
-                System.out.println(toDealerGameResultString(participantGameResultDto));
-                continue;
-            }
-
-            System.out.println(toPlayerGameResultString(participantGameResultDto));
+            System.out.println(toParticipantGameResultString(participantGameResultDto));
         }
     }
 
@@ -42,27 +38,12 @@ public class OutputView {
         List<String> cardsInfo = participantCardsDto.cardsInfo().stream()
                 .map(cardInfoDto -> cardInfoDto.numberDisplayName() + cardInfoDto.shape()).toList();
 
-        String cardsInfoString = String.join(",", cardsInfo);
+        String cardsInfoString = String.join(", ", cardsInfo);
         return cardsInfoString;
     }
 
-    private static String toDealerGameResultString(ParticipantGameResultDto participantGameResultDto) {
-        return String.format("%s: %d승 %d패 %d무", participantGameResultDto.name(), participantGameResultDto.win(),
-                participantGameResultDto.lose(), participantGameResultDto.draw());
-    }
-
-    private static String toPlayerGameResultString(ParticipantGameResultDto dto) {
-        StringBuilder sb = new StringBuilder(dto.name() + ": ");
-        if (dto.win() > 0) {
-            sb.append(dto.win()).append("승 ");
-        }
-        if (dto.lose() > 0) {
-            sb.append(dto.lose()).append("패 ");
-        }
-        if (dto.draw() > 0) {
-            sb.append(dto.draw()).append("무");
-        }
-        return sb.toString().trim();
+    private static String toParticipantGameResultString(ParticipantGameResultDto participantGameResultDto) {
+        return String.format("%s: %d", participantGameResultDto.name(), participantGameResultDto.profit());
     }
 
     public static void printInitialDealerCards(ParticipantCardsDto participantCardsDto) {

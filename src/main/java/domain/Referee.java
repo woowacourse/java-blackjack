@@ -1,36 +1,45 @@
 package domain;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Referee {
-    private static final int BUST_THRESHOLD = 21;
 
     public Result judge(Dealer dealer, List<Player> players) {
-        Map<String, MatchResult> gameResult = new HashMap<>();
+        Map<Player, MatchResult> gameResult = new LinkedHashMap<>();
         for (Player player : players) {
-            gameResult.put(player.getName(), isPlayerWin(player.getScore(), dealer.getScore()));
+            gameResult.put(player, judgePlayer(player, dealer));
         }
         return new Result(dealer, gameResult);
     }
 
-    private MatchResult isPlayerWin(int playerScore, int dealerScore) {
-        if (playerScore > BUST_THRESHOLD) {
-            return MatchResult.LOSE;
-        }
-        if (dealerScore > BUST_THRESHOLD) {
-            return MatchResult.WIN;
-        }
-
-        if (dealerScore == playerScore) {
+    private MatchResult judgePlayer(Player player, Dealer dealer) {
+        if (player.isBlackJack() && dealer.isBlackJack()) {
             return MatchResult.DRAW;
         }
-
-        if (dealerScore > playerScore) {
+        if (dealer.isBlackJack()) {
             return MatchResult.LOSE;
         }
+        if (player.isBlackJack()) {
+            return MatchResult.BLACKJACK;
+        }
+        return judgeByScore(player, dealer);
+    }
 
-        return MatchResult.WIN;
+    private MatchResult judgeByScore(Player player, Dealer dealer) {
+        if (player.isBust()) {
+            return MatchResult.LOSE;
+        }
+        if (dealer.isBust()) {
+            return MatchResult.WIN;
+        }
+        if (player.getScore() == dealer.getScore()) {
+            return MatchResult.DRAW;
+        }
+        if (player.getScore() > dealer.getScore()) {
+            return MatchResult.WIN;
+        }
+        return MatchResult.LOSE;
     }
 }

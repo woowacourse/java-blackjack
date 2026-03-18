@@ -2,13 +2,12 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import java.util.List;
-import java.util.stream.Stream;
 
 class PlayerTest {
 
@@ -16,7 +15,8 @@ class PlayerTest {
     @MethodSource("canReceiveCardTestCases")
     @DisplayName("플레이어가 카드를 받을 수 있는지 확인한다.")
     void canReceiveCard(String description, List<Number> numbers, boolean expected) {
-        Player player = Player.from("pobi");
+
+        Player player = Player.from("pobi", new Money(1000));
         numbers.forEach(number -> player.receiveCard(new Card(Shape.HEART, number)));
 
         assertThat(player.canReceiveCard()).isEqualTo(expected);

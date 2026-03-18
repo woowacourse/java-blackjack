@@ -18,11 +18,11 @@ class RefereeTest {
     void player_score_compare(String description, List<Number> dealerCards, List<Number> playerCards,
                               MatchResult expected) {
         Dealer dealer = createDealer(dealerCards);
-        Player player = Player.from("pobi");
+        Player player = createPlayer();
         playerCards.forEach(number -> player.receiveCard(new Card(Shape.HEART, number)));
 
         Result result = new Referee().judge(dealer, List.of(player));
-        assertThat(result.getPlayerResults().get("pobi")).isEqualTo(expected);
+        assertThat(result.getPlayerResults().get(player)).isEqualTo(expected);
     }
 
     static Stream<Arguments> playerScoreTestCases() {
@@ -42,11 +42,11 @@ class RefereeTest {
     @DisplayName("플레이어의 점수가 버스트되면 딜러의 점수와 무관하게 패배한다.")
     void player_bust(String description, List<Number> dealerCards, List<Number> playerCards, MatchResult expected) {
         Dealer dealer = createDealer(dealerCards);
-        Player player = Player.from("pobi");
+        Player player = createPlayer();
         playerCards.forEach(number -> player.receiveCard(new Card(Shape.HEART, number)));
 
         Result result = new Referee().judge(dealer, List.of(player));
-        assertThat(result.getPlayerResults().get("pobi")).isEqualTo(expected);
+        assertThat(result.getPlayerResults().get(player)).isEqualTo(expected);
     }
 
     static Stream<Arguments> playerBustTestCases() {
@@ -65,24 +65,77 @@ class RefereeTest {
     @DisplayName("딜러가 버스트면 플레이어가 이긴다.")
     void dealer_bust() {
         Dealer dealer = createDealer(List.of(Number.TEN, Number.JACK, Number.QUEEN));
-        Player player = Player.from("pobi");
+        Player player = createPlayer();
         player.receiveCard(new Card(Shape.HEART, Number.TEN));
         player.receiveCard(new Card(Shape.HEART, Number.EIGHT));
 
         Result result = new Referee().judge(dealer, List.of(player));
-        assertThat(result.getPlayerResults().get("pobi")).isEqualTo(MatchResult.WIN);
+        assertThat(result.getPlayerResults().get(player)).isEqualTo(MatchResult.WIN);
     }
 
     @Test
     @DisplayName("동점이면 무승부다.")
     void player_dealer_draw() {
         Dealer dealer = createDealer(List.of(Number.TEN, Number.NINE));
-        Player player = Player.from("pobi");
+        Player player = createPlayer();
         player.receiveCard(new Card(Shape.HEART, Number.TEN));
         player.receiveCard(new Card(Shape.HEART, Number.NINE));
 
         Result result = new Referee().judge(dealer, List.of(player));
-        assertThat(result.getPlayerResults().get("pobi")).isEqualTo(MatchResult.DRAW);
+        assertThat(result.getPlayerResults().get(player)).isEqualTo(MatchResult.DRAW);
+    }
+
+    @Test
+    @DisplayName("플레이어만 블랙잭이면 플레이어의 승리이다.")
+    void player_blackjack() {
+        Dealer dealer = createDealer(List.of(Number.TEN, Number.NINE));
+        Player player = createPlayer();
+        player.receiveCard(new Card(Shape.HEART, Number.ACE));
+        player.receiveCard(new Card(Shape.HEART, Number.TEN));
+
+        Result result = new Referee().judge(dealer, List.of(player));
+        assertThat(result.getPlayerResults().get(player)).isEqualTo(MatchResult.BLACKJACK);
+    }
+
+    @Test
+    @DisplayName("딜러만 블랙잭이면 플레이어의 패배다.")
+    void dealer_blackjack() {
+        Dealer dealer = createDealer(List.of(Number.TEN, Number.ACE));
+        Player player = createPlayer();
+        player.receiveCard(new Card(Shape.HEART, Number.TEN));
+        player.receiveCard(new Card(Shape.HEART, Number.TEN));
+
+        Result result = new Referee().judge(dealer, List.of(player));
+        assertThat(result.getPlayerResults().get(player)).isEqualTo(MatchResult.LOSE);
+    }
+
+    @Test
+    @DisplayName("딜러와 플레이어 모두 블랙잭이면 무승부다.")
+    void both_blackjack() {
+        Dealer dealer = createDealer(List.of(Number.ACE, Number.TEN));
+        Player player = createPlayer();
+        player.receiveCard(new Card(Shape.HEART, Number.ACE));
+        player.receiveCard(new Card(Shape.HEART, Number.TEN));
+
+        Result result = new Referee().judge(dealer, List.of(player));
+        assertThat(result.getPlayerResults().get(player)).isEqualTo(MatchResult.DRAW);
+    }
+
+    @Test
+    @DisplayName("딜러만 블랙잭이고 플레이어가 일반 21점이면 플레이어의 패배이다.")
+    void dealer_blackjack_player_not_blackjack() {
+        Dealer dealer = createDealer(List.of(Number.ACE, Number.TEN));
+        Player player = createPlayer();
+        player.receiveCard(new Card(Shape.HEART, Number.ACE));
+        player.receiveCard(new Card(Shape.HEART, Number.TEN));
+        player.receiveCard(new Card(Shape.HEART, Number.QUEEN));
+
+        Result result = new Referee().judge(dealer, List.of(player));
+        assertThat(result.getPlayerResults().get(player)).isEqualTo(MatchResult.LOSE);
+    }
+
+    private Player createPlayer() {
+        return Player.from("pobi", new Money(10000));
     }
 
     private Dealer createDealer(List<Number> numbers) {

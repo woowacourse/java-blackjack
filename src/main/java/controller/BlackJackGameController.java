@@ -3,6 +3,7 @@ package controller;
 import domain.BlackJackGame;
 import domain.Dealer;
 import domain.Deck;
+import domain.Money;
 import domain.Player;
 import domain.Result;
 import dto.ParticipantCardsDto;
@@ -19,6 +20,7 @@ public class BlackJackGameController {
     public void run() {
         List<String> playerNames = getPlayerNames();
         List<Player> players = initPlayer(playerNames);
+
         Deck deck = new Deck();
 
         BlackJackGame blackJackGame = new BlackJackGame(deck, players, Dealer.create());
@@ -42,13 +44,32 @@ public class BlackJackGameController {
     }
 
     private List<Player> initPlayer(List<String> playerNames) {
-        List<Player> players = playerNames.stream().map(Player::from).toList();
+        List<Player> players = playerNames.stream()
+                .map(playerName -> Player.from(playerName, (getPlayerBettingMoney(playerName))))
+                .toList();
         return players;
     }
 
+    private Money getPlayerBettingMoney(String playerName) {
+        return new Money(InputView.askPlayerBettingMoney(playerName));
+    }
+
     private void playGame(BlackJackGame blackJackGame) {
-        blackJackGame.getPlayers().forEach(player -> playGameWithPlayer(blackJackGame, player));
+        playGameWithCurrentPlayer(blackJackGame);
         playGameWithDealer(blackJackGame);
+    }
+
+    private void playGameWithCurrentPlayer(BlackJackGame blackJackGame) {
+        while (blackJackGame.hasCurrentPlayer()) {
+            while (blackJackGame.canCurrentPlayerReceiveCard()) {
+                if (isStopGame(blackJackGame)) {
+                    break;
+                }
+                blackJackGame.hitCurrentPlayer();
+                OutputView.printCards(ParticipantCardsDto.from(blackJackGame.getCurrentPlayer()));
+            }
+            blackJackGame.moveToNextPlayer();
+        }
     }
 
     private void playGameWithDealer(BlackJackGame blackJackGame) {
@@ -58,14 +79,16 @@ public class BlackJackGameController {
         }
     }
 
-    private void playGameWithPlayer(BlackJackGame blackJackGame, Player player) {
-        while (blackJackGame.canPlayerReceiveCard(player)) {
-            if (isStopGame(player)) {
-                break;
-            }
-            blackJackGame.playGameWithPlayer(player);
-            OutputView.printCards(ParticipantCardsDto.from(player));
+    private boolean isStopGame(BlackJackGame blackJackGame) {
+        if (isStop(InputView.askContinue(blackJackGame.getCurrentPlayerName()))) {
+            OutputView.printCards(ParticipantCardsDto.from(blackJackGame.getCurrentPlayer()));
+            return true;
         }
+        return false;
+    }
+
+    private boolean isStop(String response) {
+        return response.equals("n");
     }
 
     private static void endGame(BlackJackGame blackJackGame, Result gameResult) {
@@ -78,17 +101,5 @@ public class BlackJackGameController {
         blackJackGame.getPlayers().stream()
                 .map(ParticipantCardsDto::from)
                 .forEach(OutputView::printFinalCards);
-    }
-
-    private boolean isStopGame(Player player) {
-        if (!isContinue(InputView.askContinue(player.getName()))) {
-            OutputView.printCards(ParticipantCardsDto.from(player));
-            return true;
-        }
-        return false;
-    }
-
-    private boolean isContinue(String response) {
-        return response.equals("y");
     }
 }

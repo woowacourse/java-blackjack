@@ -6,11 +6,20 @@ import java.util.List;
 public class Cards {
     private static final int BLACKJACK_SCORE = 21;
     private static final int ACE_ADJUSTMENT = 10;
+    private static final int BUST_THRESHOLD = 21;
 
     private final List<Card> cards;
 
     public Cards(List<Card> cards) {
         this.cards = new ArrayList<>(cards);
+    }
+
+    public boolean isBlackJack() {
+        return cards.size() == 2 && calculateOptimalScore() == BLACKJACK_SCORE;
+    }
+
+    public boolean isBust() {
+        return calculateOptimalScore() > BUST_THRESHOLD;
     }
 
     public int calculateOptimalScore() {
