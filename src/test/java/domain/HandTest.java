@@ -6,6 +6,7 @@ import domain.card.Card;
 import domain.card.Deck;
 import domain.card.Emblem;
 import domain.card.Grade;
+import domain.card.RandomShuffleStrategy;
 import domain.participant.Hand;
 import java.util.List;
 import java.util.stream.Stream;
@@ -20,7 +21,7 @@ class HandTest {
     @Test
     void 카드를_받으면_손패의_카드_수가_늘어난다() {
         // given
-        Deck deck = new Deck();
+        Deck deck = new Deck(new RandomShuffleStrategy());
         Hand hand = new Hand();
         Card card = deck.drawCard();
         // when

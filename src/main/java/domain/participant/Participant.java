@@ -1,12 +1,12 @@
 package domain.participant;
 
-import static domain.GameResult.BLACKJACK_SCORE;
+import static domain.result.GameResult.BLACKJACK_SCORE;
 
 import domain.card.Card;
 import domain.card.Deck;
 import java.util.List;
 
-public class Participant {
+abstract public class Participant {
 
     private static final int INIT_CARD_SIZE = 2;
 
@@ -22,16 +22,27 @@ public class Participant {
         return getScore() > BLACKJACK_SCORE;
     }
 
-    public void playTurn(Deck deck) {
-        Card hitCard = deck.drawCard();
-        hand.receiveCard(hitCard);
+    public boolean isBlackJack() {
+        return getScore() == BLACKJACK_SCORE && getCards().size() == INIT_CARD_SIZE;
     }
+
+    public void playTurn(Deck deck) {
+        if (canHit()) {
+            receivedCard(deck);
+        }
+    }
+    
+    abstract public boolean canHit();
 
     public void initHand(Deck deck) {
         for (int size = 0; size < INIT_CARD_SIZE; size++) {
             Card card = deck.drawCard();
             hand.receiveCard(card);
         }
+    }
+
+    public void receivedCard(Deck deck) {
+        hand.receiveCard(deck.drawCard());
     }
 
     public String getName() {
@@ -44,6 +55,12 @@ public class Participant {
 
     public int getScore() {
         return hand.calculate();
+    }
+
+    public List<String> createCardNames() {
+        return getCards().stream()
+                .map(Card::getCardName)
+                .toList();
     }
 
 }
