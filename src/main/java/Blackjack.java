@@ -5,6 +5,11 @@ import domain.card.Deck;
 import domain.participant.Dealer;
 import domain.participant.Name;
 import domain.participant.Players;
+import dto.BetProfitDto;
+import dto.DealerCardDto;
+import dto.DealerCardWithScoreDto;
+import dto.PlayerCardDto;
+import dto.PlayerCardWithScoreDto;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -46,7 +51,7 @@ public class Blackjack {
         );
         dealer.receiveInitialCards(initCards(deck));
 
-        outputView.printPlayers(dealer.getHand(), getPlayerCards(players));
+        outputView.printPlayers(DealerCardDto.from(dealer.getHand()), getPlayerCardDtos(players));
     }
 
     private List<Card> initCards(Deck deck) {
@@ -65,18 +70,16 @@ public class Blackjack {
     private Map<Name, Long> askPlayerBets(List<Name> playerNames) {
         Map<Name, Long> bettingLog = new LinkedHashMap<>();
         for (Name name : playerNames) {
-            String input = inputView.askPlayerBet(name);
+            String input = inputView.askPlayerBet(name.name());
             bettingLog.put(name, InputParser.parseMoney(input));
         }
         return bettingLog;
     }
 
-    private Map<Name, List<Card>> getPlayerCards(Players players) {
-        Map<Name, List<Card>> playerCards = new LinkedHashMap<>();
-        for (Name name : players.getAllPlayerNames()) {
-            playerCards.put(name, players.getPlayerCards(name));
-        }
-        return playerCards;
+    private List<PlayerCardDto> getPlayerCardDtos(Players players) {
+        return players.getAllPlayerNames().stream()
+                .map(name -> PlayerCardDto.from(name, players.getPlayerCards(name)))
+                .toList();
     }
 
     private void playGame(Players players, Dealer dealer, Deck deck) {
@@ -89,12 +92,12 @@ public class Blackjack {
     private void playPlayerTurn(Players players, Name name, Deck deck) {
         while (players.canDraw(name) && isPlayerWantHit(name)) {
             players.distributeCard(name, deck.drawCard());
-            outputView.printPlayerCard(name, players.getPlayerCards(name));
+            outputView.printPlayerCard(PlayerCardDto.from(name, players.getPlayerCards(name)));
         }
     }
 
     private boolean isPlayerWantHit(Name name) {
-        String input = inputView.askPlayerHit(name);
+        String input = inputView.askPlayerHit(name.name());
         return InputParser.parseHitAnswer(input);
     }
 
@@ -106,12 +109,14 @@ public class Blackjack {
     }
 
     private void printGameResult(BetProfit betProfit, Players players, Dealer dealer) {
-        outputView.printDealerCardWithScore(dealer.getHand(), dealer.getScore());
+        outputView.printDealerCardWithScore(DealerCardWithScoreDto.from(dealer.getHand(), dealer.getScore()));
 
         for (Name name : players.getAllPlayerNames()) {
-            outputView.printPlayerCardWithScore(name, players.getPlayerCards(name), players.getPlayerScore(name));
+            outputView.printPlayerCardWithScore(
+                    PlayerCardWithScoreDto.from(name, players.getPlayerCards(name), players.getPlayerScore(name))
+            );
         }
 
-        outputView.printProfit(betProfit.getDealerBetProfit(), betProfit.getPlayerBetProfit());
+        outputView.printProfit(BetProfitDto.from(betProfit));
     }
 }

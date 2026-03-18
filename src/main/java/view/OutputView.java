@@ -1,10 +1,13 @@
 package view;
 
-import domain.bet.Profit;
-import domain.card.Card;
-import domain.participant.Name;
+import dto.BetProfitDto;
+import dto.CardDto;
+import dto.DealerCardDto;
+import dto.DealerCardWithScoreDto;
+import dto.PlayerCardDto;
+import dto.PlayerCardWithScoreDto;
+import dto.PlayerProfitDto;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -20,44 +23,47 @@ public class OutputView {
     private static final String DEALER_PROFIT = "딜러: %d";
     private static final String PLAYER_PROFIT = "%s: %d";
 
-    public void printPlayers(List<Card> dealerCards, Map<Name, List<Card>> playerCards) {
-        String playerNames = playerCards.keySet().stream()
-                .map(Name::name)
+    public void printPlayers(DealerCardDto dealerCardDto, List<PlayerCardDto> playerCardDtos) {
+        String playerNames = playerCardDtos.stream()
+                .map(PlayerCardDto::name)
                 .collect(Collectors.joining(", "));
 
         System.out.printf(LINE_SEPARATOR + DISTRIBUTE_INITIAL_CARD + LINE_SEPARATOR, playerNames);
-        printDealerFirstCard(dealerCards.getFirst());
-        for (Name playerName : playerCards.keySet()) {
-            printPlayerCard(playerName, playerCards.get(playerName));
+        printDealerFirstCard(dealerCardDto);
+        for (PlayerCardDto playerCardDto : playerCardDtos) {
+            printPlayerCard(playerCardDto);
         }
         System.out.print(LINE_SEPARATOR);
     }
 
-    private void printDealerFirstCard(Card dealerCard) {
-        System.out.printf(DEALER_CARD + LINE_SEPARATOR, dealerCard.rankString() + dealerCard.suitString());
+    private void printDealerFirstCard(DealerCardDto dealerCardDto) {
+        System.out.printf(DEALER_CARD + LINE_SEPARATOR, dealerCardDto.cards().getFirst().cardName());
     }
 
-    public void printPlayerCard(Name name, List<Card> playerCards) {
-        String card = collectCards(playerCards);
+    public void printPlayerCard(PlayerCardDto playerCardDto) {
+        String card = collectCards(playerCardDto.cards());
 
-        System.out.printf(PLAYER_CARD + LINE_SEPARATOR, name.name(), card);
+        System.out.printf(PLAYER_CARD + LINE_SEPARATOR, playerCardDto.name(), card);
     }
 
-    public void printDealerCardWithScore(List<Card> dealerCards, int score) {
-        String card = collectCards(dealerCards);
+    public void printDealerCardWithScore(DealerCardWithScoreDto dealerCardWithScoreDto) {
+        String card = collectCards(dealerCardWithScoreDto.cards());
 
-        System.out.printf(LINE_SEPARATOR + DEALER_CARD + SCORE + LINE_SEPARATOR, card, score);
+        System.out.printf(LINE_SEPARATOR + DEALER_CARD + SCORE + LINE_SEPARATOR, card, dealerCardWithScoreDto.score());
     }
 
-    public void printPlayerCardWithScore(Name name, List<Card> playerCards, int score) {
-        String card = collectCards(playerCards);
+    public void printPlayerCardWithScore(PlayerCardWithScoreDto playerCardWithScoreDto) {
+        String card = collectCards(playerCardWithScoreDto.cards());
 
-        System.out.printf(PLAYER_CARD + SCORE + LINE_SEPARATOR, name.name(), card, score);
+        System.out.printf(PLAYER_CARD + SCORE + LINE_SEPARATOR,
+                playerCardWithScoreDto.name(),
+                card,
+                playerCardWithScoreDto.score());
     }
 
-    private String collectCards(List<Card> cards) {
+    private String collectCards(List<CardDto> cards) {
         return cards.stream()
-                .map(card -> card.rankString() + card.suitString())
+                .map(CardDto::cardName)
                 .collect(Collectors.joining(STRING_JOIN_DELIMITER));
     }
 
@@ -65,13 +71,12 @@ public class OutputView {
         System.out.println(LINE_SEPARATOR + DEALER_DRAW);
     }
 
-    public void printProfit(Profit dealerBetProfit, Map<Name, Profit> playerBetProfit) {
+    public void printProfit(BetProfitDto betProfitDto) {
         System.out.println(LINE_SEPARATOR + FINAL_PROFIT);
-        System.out.printf(DEALER_PROFIT + LINE_SEPARATOR, dealerBetProfit.amount());
+        System.out.printf(DEALER_PROFIT + LINE_SEPARATOR, betProfitDto.dealerProfit());
 
-        for (Name name : playerBetProfit.keySet()) {
-            Profit profit = playerBetProfit.get(name);
-            System.out.printf(PLAYER_PROFIT + LINE_SEPARATOR, name.name(), profit.amount());
+        for (PlayerProfitDto playerProfitDto : betProfitDto.playerProfits()) {
+            System.out.printf(PLAYER_PROFIT + LINE_SEPARATOR, playerProfitDto.name(), playerProfitDto.profit());
         }
     }
 }

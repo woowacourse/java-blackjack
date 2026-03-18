@@ -3,7 +3,6 @@ package view;
 import static constant.GameRule.NO_ANSWER;
 import static constant.GameRule.YES_ANSWER;
 
-import domain.participant.Name;
 import java.util.Scanner;
 import message.ErrorMessage;
 
@@ -25,13 +24,13 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public String askPlayerBet(Name name) {
-        System.out.printf(LINE_SEPARATOR + ASK_BETTING_MONEY + LINE_SEPARATOR, name.name());
+    public String askPlayerBet(String name) {
+        System.out.printf(LINE_SEPARATOR + ASK_BETTING_MONEY + LINE_SEPARATOR, name);
         return scanner.nextLine();
     }
 
-    public String askPlayerHit(Name name) {
-        System.out.printf(ASK_HIT_OR_NOT + LINE_SEPARATOR, name.name(), YES_ANSWER, NO_ANSWER);
+    public String askPlayerHit(String name) {
+        System.out.printf(ASK_HIT_OR_NOT + LINE_SEPARATOR, name, YES_ANSWER, NO_ANSWER);
         String input = scanner.nextLine();
         if (!YES_ANSWER.contains(input) && !NO_ANSWER.contains(input)) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_HIT_INPUT.getMessage());
