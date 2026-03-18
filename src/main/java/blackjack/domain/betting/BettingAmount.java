@@ -13,7 +13,8 @@ public record BettingAmount(
 
     private void validateAmountRange(int amount) {
         if (MIN_AMOUNT_RANGE > amount || amount > MAX_AMOUNT_RANGE) {
-            throw new IllegalArgumentException("베팅 금액은 최소 1,000원 ~ 최대 1,000,000원 입니다.");
+            throw new IllegalArgumentException(
+                    String.format("베팅 금액은 최소 %d원 ~ 최대 %d원 입니다.", MIN_AMOUNT_RANGE, MAX_AMOUNT_RANGE));
         }
     }
 
