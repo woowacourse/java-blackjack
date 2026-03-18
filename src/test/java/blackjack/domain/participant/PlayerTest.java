@@ -49,8 +49,8 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어의 점수가 21점 이상이면 더 이상 카드를 받을 수 없다.")
-    void isNotDrawableWhenBustedOrBlackjack() {
+    @DisplayName("플레이어가 블랙잭이어도 아직 멈추지 않았다면 카드 draw 여부를 물어본다.")
+    void isDrawableWhenBlackjack() {
         // given
         Player player = new Player(Nickname.from("boye"), Role.PLAYER, Amount.from("1000"));
         Hand blackjackCards = Hand.from(List.of(
@@ -60,6 +60,24 @@ class PlayerTest {
 
         // when
         player.receiveCard(blackjackCards.getCards());
+
+        // then
+        assertThat(player.isDrawable()).isTrue();
+    }
+
+    @Test
+    @DisplayName("플레이어가 bust되면 카드를 더이상 받지 않는다.")
+    void isNotDrawableWhenBusted() {
+        // given
+        Player player = new Player(Nickname.from("boye"), Role.PLAYER, Amount.from("1000"));
+        Hand bustedCards = Hand.from(List.of(
+            new Card(Rank.TEN, Suit.SPADE),
+            new Card(Rank.TEN, Suit.HEART),
+            new Card(Rank.TWO, Suit.DIAMOND)
+        ));
+
+        // when
+        player.receiveCard(bustedCards.getCards());
 
         // then
         assertThat(player.isDrawable()).isFalse();
