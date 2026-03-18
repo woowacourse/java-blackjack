@@ -11,6 +11,10 @@ public class BettingAmount {
         this.bettingAmount = bettingAmount.stripTrailingZeros();
     }
 
+    public BigDecimal getBettingAmount() {
+        return bettingAmount;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -26,9 +30,5 @@ public class BettingAmount {
     @Override
     public int hashCode() {
         return Objects.hash(bettingAmount);
-    }
-
-    public BigDecimal getBettingAmount() {
-        return bettingAmount;
     }
 }

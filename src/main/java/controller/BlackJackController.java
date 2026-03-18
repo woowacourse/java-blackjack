@@ -65,7 +65,7 @@ public class BlackJackController {
     }
 
     private void playGame(Game game) {
-        List<Gambler> gamblers = game.getGamblersList();
+        List<Gambler> gamblers = game.getGamblers();
         for (Gambler gambler : gamblers) {
             if (gambler.isBlackJack()) {
                 outputView.printBlackJackMessage(gambler.getName());

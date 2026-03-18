@@ -50,7 +50,7 @@ public class Game {
         participant.addCard(gameCards.drawCard());
     }
 
-    public List<Gambler> getGamblersList() {
+    public List<Gambler> getGamblers() {
         return gamblers.getGamblers();
     }
 
