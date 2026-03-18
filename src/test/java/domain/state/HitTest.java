@@ -4,13 +4,14 @@ import domain.Hand;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
+import exception.ErrorMessage;
 import org.junit.jupiter.api.Test;
 
 import static domain.state.StateFixtures.handOf;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class HitTest {
@@ -82,7 +83,9 @@ class HitTest {
                 new Card(Suit.HEARTS, Rank.NUM7)
         ));
 
-        assertThrows(IllegalStateException.class, () -> hit.calculateWinningStatus(dealerState));
+        assertThatThrownBy(() -> hit.calculateWinningStatus(dealerState))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage(ErrorMessage.CANNOT_CALCULATE_WINNING_STATUS_ON_HIT.getMessage());
     }
 
     @Test

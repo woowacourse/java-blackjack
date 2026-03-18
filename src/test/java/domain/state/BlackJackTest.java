@@ -5,14 +5,15 @@ import domain.WinningStatus;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
+import exception.ErrorMessage;
 import org.junit.jupiter.api.Test;
 
 import static domain.state.StateFixtures.handOf;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class BlackJackTest {
@@ -22,7 +23,9 @@ class BlackJackTest {
         BlackJack blackJack = new BlackJack(new Hand());
         Card card = new Card(Suit.CLUBS, Rank.ACE);
 
-        assertThrows(IllegalStateException.class, () -> blackJack.draw(card));
+        assertThatThrownBy(() -> blackJack.draw(card))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage(ErrorMessage.CANNOT_HIT_ON_BLACKJACK.getMessage());
     }
 
     @Test
