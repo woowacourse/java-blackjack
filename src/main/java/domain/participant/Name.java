@@ -1,12 +1,12 @@
 package domain.participant;
 
-import static exception.ErrorMessage.PLAYER_NAME_LENGTH_ERROR;
-
 public record Name(
         String name
 ) {
     public static final int MINIMUM_BOUND = 2;
     public static final int MAXIMUM_BOUND = 10;
+
+    private static final String PLAYER_NAME_LENGTH_ERROR = "플레이어의 이름은 2글자 이상 10글자 이하여야 합니다.";
 
     public Name {
         validateNameLength(name);
@@ -15,7 +15,7 @@ public record Name(
 
     private void validateNameLength(final String name) {
         if ((name.length() < MINIMUM_BOUND) || (name.length() > MAXIMUM_BOUND)) {
-            throw new IllegalArgumentException(PLAYER_NAME_LENGTH_ERROR.getMessage());
+            throw new IllegalArgumentException(PLAYER_NAME_LENGTH_ERROR);
         }
     }
 }

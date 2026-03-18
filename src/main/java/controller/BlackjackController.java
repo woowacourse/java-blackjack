@@ -1,11 +1,10 @@
 package controller;
 
 import domain.BlackjackGame;
-import domain.card.Hand;
 import domain.participant.Name;
 import domain.participant.Participants;
 import domain.participant.Player;
-import domain.result.GameResults;
+import domain.result.BetProfits;
 import java.util.ArrayList;
 import java.util.List;
 import view.InputView;
@@ -34,28 +33,48 @@ public class BlackjackController {
 
 
     private BlackjackGame initializeGame() {
-        final List<Player> playerList = readPlayers();
-        final Participants participants = new Participants(playerList);
+        while (true) {
+            try {
+                final List<Name> playerNames = readPlayerNames();
 
-        return new BlackjackGame(participants);
+                final List<Player> players = generatePlayersWithBetAmount(playerNames);
+
+                final Participants participants = new Participants(players);
+
+                return new BlackjackGame(participants);
+            } catch (final IllegalArgumentException e) {
+                outputView.printErrorMessage(e.getMessage());
+            }
+        }
     }
 
-    // TODO: inputView와 outputView 명확히 분리하기 (inputView에서 출력도 섞이는 중)
-    private List<Player> readPlayers() {
-        final List<Name> playerNames = inputView.readPlayers();
-
+    private List<Player> generatePlayersWithBetAmount(final List<Name> playerNames) {
         final List<Player> players = new ArrayList<>();
-        for (final Name name : playerNames) {
-            players.add(new Player(name, new Hand()));
+
+        for (final Name playerName : playerNames) {
+            outputView.printBetAmountRequest(playerName.name());
+            final int betAmount = inputView.readBetAmount();
+            players.add(new Player(playerName, betAmount));
         }
 
         return players;
     }
 
+    private List<Name> readPlayerNames() {
+        while (true) {
+            try {
+                outputView.printPlayerNamesRequest();
+                return inputView.readPlayers();
+            } catch (final IllegalArgumentException e) {
+                outputView.printErrorMessage(e.getMessage());
+            }
+        }
+    }
+
 
     private void firstDraw(final BlackjackGame blackjackGame) {
         blackjackGame.initDraw();
-        outputView.printInitHandCard(blackjackGame.getParticipants());
+        outputView.printInitHand(blackjackGame.getInitHands());
     }
 
 
@@ -67,33 +86,41 @@ public class BlackjackController {
     }
 
     private void hitOrStand(final BlackjackGame game, final Player player) {
-        while (player.canDraw()) {
-            final boolean hit = inputView.readHitOrStand(player.getName());
+        while (player.isDrawable()) {
+            final boolean hit = readHitOrStand(player);
 
             if (!hit) {
-                outputView.printCurrentHandCard(player);
+                outputView.printCurrentHand(player.getCurrentHand());
                 break;
             }
 
             game.hit(player);
-            outputView.printCurrentHandCard(player);
+            outputView.printCurrentHand(player.getCurrentHand());
+        }
+    }
+
+    private boolean readHitOrStand(final Player player) {
+        while (true) {
+            try {
+                outputView.printHitOrStandRequest(player.getName());
+                return inputView.readHitOrStand();
+            } catch (final IllegalArgumentException e) {
+                outputView.printErrorMessage(e.getMessage());
+            }
         }
     }
 
     private void hitOrStandDealer(final BlackjackGame game) {
-        while (game.getParticipants().getDealer().shouldDraw()) {
+        while (game.getParticipants().getDealer().isDrawable()) {
             outputView.printDealerAdditionalDraw();
             game.hit(game.getParticipants().getDealer());
         }
     }
 
     private void printResult(final BlackjackGame game) {
+        outputView.printHandResults(game.getFinalResult());
 
-        final Participants participants = game.getParticipants();
-
-        outputView.printHandResults(participants);
-
-        final GameResults results = game.getGameResults();
-        outputView.printGameResults(results);
+        final BetProfits results = game.getBetProfits();
+        outputView.printBetProfits(results);
     }
 }

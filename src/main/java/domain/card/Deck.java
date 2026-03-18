@@ -1,13 +1,14 @@
 package domain.card;
 
-import static exception.ErrorMessage.DECK_EMPTY;
-
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
 
 public class Deck {
+
+    private static final String DECK_EMPTY = "덱에 남아있는 카드가 없습니다.";
+
     private final Deque<Card> deck;
 
     public Deck() {
@@ -22,7 +23,7 @@ public class Deck {
 
     public Card draw() {
         if (deck.isEmpty()) {
-            throw new IllegalStateException(DECK_EMPTY.getMessage());
+            throw new IllegalStateException(DECK_EMPTY);
         }
 
         return deck.pollFirst();
