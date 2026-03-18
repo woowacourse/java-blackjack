@@ -36,7 +36,7 @@ class GamblersGameResultTest {
         Gamblers gamblers = Gamblers.from(List.of(pobi, coco, kaiya));
 
         // when
-        GamblersGameResult gameResult = new GamblersGameResult(dealer, gamblers);
+        GamblersGameResult gameResult = GamblersGameResult.calculate(dealer, gamblers);
 
         // then
         Assertions.assertThat(
@@ -76,7 +76,7 @@ class GamblersGameResultTest {
         Gamblers gamblers = Gamblers.from(List.of(pobi, coco, kaiya));
 
         // when
-        GamblersGameResult gameResult = new GamblersGameResult(dealer, gamblers);
+        GamblersGameResult gameResult = GamblersGameResult.calculate(dealer, gamblers);
 
         // then
         Assertions.assertThat(
@@ -116,7 +116,7 @@ class GamblersGameResultTest {
         Gamblers gamblers = Gamblers.from(List.of(pobi, coco, kaiya));
 
         // when
-        GamblersGameResult gameResult = new GamblersGameResult(dealer, gamblers);
+        GamblersGameResult gameResult = GamblersGameResult.calculate(dealer, gamblers);
 
         // then
         Assertions.assertThat(

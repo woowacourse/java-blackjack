@@ -4,24 +4,25 @@ import domain.player.Gambler;
 import domain.player.Gamblers;
 import domain.player.Participant;
 import java.math.BigDecimal;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.Map;
 
 public class GamblersGameResult {
 
     private final Map<String, Profit> participantProfits;
 
-    public GamblersGameResult(Participant dealer, Gamblers gamblers) {
-        this.participantProfits = new LinkedHashMap<>();
-        calculateProfits(dealer, gamblers);
+    private GamblersGameResult(Map<String, Profit> participantProfits) {
+        this.participantProfits = participantProfits;
     }
 
-    private void calculateProfits(Participant dealer, Gamblers gamblers) {
+    public static GamblersGameResult calculate(Participant dealer, Gamblers gamblers) {
+        Map<String, Profit> calculatedProfits = new HashMap<>();
         for (Gambler gambler : gamblers.getGamblers()) {
             GameResult result = GameResult.determine(dealer, gambler);
             Profit profit = Profit.calculateProfit(result, gambler.getBettingAmount());
-            participantProfits.put(gambler.getName(), profit);
+            calculatedProfits.put(gambler.getName(), profit);
         }
+        return new GamblersGameResult(calculatedProfits);
     }
 
     public Profit getMatchProfits(String name) {
@@ -33,8 +34,10 @@ public class GamblersGameResult {
     }
 
     public Profit getDealerProfit() {
-        BigDecimal totalProfit = participantProfits.values().stream().map(Profit::getProfit)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-        return new Profit(totalProfit.negate());
+        Profit totalGamblerProfit = new Profit(BigDecimal.ZERO);
+        for (Profit profit : participantProfits.values()) {
+            totalGamblerProfit = totalGamblerProfit.add(profit);
+        }
+        return totalGamblerProfit.negate();
     }
 }

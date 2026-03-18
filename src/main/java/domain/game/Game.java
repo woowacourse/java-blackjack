@@ -68,6 +68,6 @@ public class Game {
     }
 
     public GamblersGameResult getResult() {
-        return new GamblersGameResult(dealer, gamblers);
+        return GamblersGameResult.calculate(dealer, gamblers);
     }
 }

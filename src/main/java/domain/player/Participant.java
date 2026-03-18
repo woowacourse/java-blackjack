@@ -11,7 +11,7 @@ public class Participant {
 
     protected final Name name;
 
-    protected Hand hand;
+    protected final Hand hand;
 
     public Participant(String name) {
         this.name = new Name(name);

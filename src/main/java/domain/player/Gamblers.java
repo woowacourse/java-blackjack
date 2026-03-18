@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class Gamblers {
 
-    private List<Gambler> gamblers;
+    private final List<Gambler> gamblers;
 
     private Gamblers(List<Gambler> gamblers) {
         validateNameDuplication(gamblers);

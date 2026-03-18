@@ -21,6 +21,14 @@ public class Profit {
         return profit;
     }
 
+    public Profit add(Profit other) {
+        return new Profit(this.profit.add(other.profit));
+    }
+
+    public Profit negate() {
+        return new Profit(this.profit.negate());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
