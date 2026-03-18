@@ -31,7 +31,8 @@ public class Player extends Participant {
     public PlayerGameResult determinePlayerResult(Dealer dealer) {
         MatchResult matchResult = determineGameResult(dealer);
         double payout = determinePayout(matchResult);
-        return PlayerGameResult.of(nickname.getValue(), matchResult, (long) payout - amount.getValue());
+        long profit = Math.round(payout - amount.getValue());
+        return PlayerGameResult.of(nickname.getValue(), matchResult, profit);
     }
 
     private double determinePayout(MatchResult matchResult) {
