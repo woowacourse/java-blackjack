@@ -26,16 +26,12 @@ public class Hand {
         return handState.judge(this, otherHand);
     }
 
-    public void setState(HandState handState) {
-        this.handState = handState;
-    }
-
     public int size() {
         return cards.size();
     }
 
     public void draw(Card card) {
-        handState.draw(this, card);
+        handState = handState.draw(this, card);
     }
 
     public void addCard(Card card) {
@@ -43,7 +39,7 @@ public class Hand {
     }
 
     public void stay() {
-        handState.stay(this);
+        handState = handState.stay(this);
     }
 
     public boolean isFinished() {

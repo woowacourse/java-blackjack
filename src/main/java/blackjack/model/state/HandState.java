@@ -8,9 +8,9 @@ public interface HandState {
 
     GameResult judge(Hand hand, Hand otherHand);
 
-    void draw(Hand hand, Card card);
+    HandState draw(Hand hand, Card card);
 
-    void stay(Hand hand);
+    HandState stay(Hand hand);
 
     boolean isFinished();
 

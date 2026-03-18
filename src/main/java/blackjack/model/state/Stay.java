@@ -20,8 +20,9 @@ public class Stay extends Finished{
     }
 
     @Override
-    public void draw(Hand hand, Card card) {
-        throw new IllegalStateException("이미 턴이 종료되어 카드를 추가로 받을 수 없습니다.");
+    public HandState draw(Hand hand, Card card) {
+        return this;
+//        throw new IllegalStateException("이미 턴이 종료되어 카드를 추가로 받을 수 없습니다.");
     }
 
     @Override

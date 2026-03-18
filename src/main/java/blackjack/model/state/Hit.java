@@ -15,22 +15,23 @@ public class Hit implements HandState {
     }
 
     @Override
-    public void draw(Hand hand, Card card) {
+    public HandState draw(Hand hand, Card card) {
         hand.addCard(card);
 
         if (hand.calculateTotalScore() > BLACKJACK_RANK) {
-            hand.setState(new Bust());
-            return;
+            return new Bust();
         }
 
-        if (hand.size() == BLACKJACK_CHECK_SIZE) {
-            checkBlackjack(hand);
+        if (hand.calculateTotalScore() == BLACKJACK_RANK) {
+            return checkBlackjack(hand);
         }
+
+        return this;
     }
 
     @Override
-    public void stay(Hand hand) {
-        hand.setState(new Stay());
+    public HandState stay(Hand hand) {
+        return new Stay();
     }
 
     @Override
@@ -60,9 +61,10 @@ public class Hit implements HandState {
         return GameResult.LOSE;
     }
 
-    private static void checkBlackjack(Hand hand) {
-        if (hand.calculateTotalScore() == BLACKJACK_RANK) {
-            hand.setState(new Blackjack());
+    private HandState checkBlackjack(Hand hand) {
+        if (hand.size() == BLACKJACK_CHECK_SIZE) {
+            return new Blackjack();
         }
+        return new Stay();
     }
 }
