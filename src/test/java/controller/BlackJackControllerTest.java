@@ -17,8 +17,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import service.BlackJackInitService;
-import service.BlackJackResultService;
 import service.BlackJackTurnService;
+import view.InputView;
+import view.OutputView;
 
 
 public class BlackJackControllerTest {
@@ -27,9 +28,6 @@ public class BlackJackControllerTest {
 
     @BeforeEach
     void setUp() {
-        systemIn("시오,봉구스\ny\nn\ny\nn\n"
-                + "시오,봉구스\ny\nn\ny\nn");
-
         outputStreamCaptor = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStreamCaptor));
     }
@@ -79,30 +77,98 @@ public class BlackJackControllerTest {
             doReturn(deck).when(blackJackInitService).createDeck();
 
             BlackJackTurnService blackJackTurnService = new BlackJackTurnService();
-            BlackJackResultService blackJackResultService = new BlackJackResultService();
 
-            blackJackController = new BlackJackController(blackJackInitService,
+            systemIn("시오,봉구스\n10000\n20000\ny\nn\ny\nn\n");
+            InputView inputView = new InputView();
+            OutputView outputView = new OutputView();
+
+            blackJackController = new BlackJackController(
+                    blackJackInitService,
                     blackJackTurnService,
-                    blackJackResultService);
+                    inputView,
+                    outputView);
         }
 
         @Test
-        void 출력_형식을_지켜야_한다() {
+        void 닉네임_요청_메시지를_출력한다() {
             // when
-            blackJackController.run();
+            blackJackController.start();
 
             // then
             String output = getOutput();
             assertThat(output)
-                    .contains("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
-                    .contains("딜러와 시오, 봉구스에게 2장을 나누었습니다.")
+                    .contains("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
+        }
+
+        @Test
+        void 닉네임으로_초기_카드_분배_메시지를_출력한다() {
+            // when
+            blackJackController.start();
+
+            // then
+            String output = getOutput();
+            assertThat(output)
+                    .contains("딜러와 시오, 봉구스에게 2장을 나누었습니다.");
+        }
+
+        @Test
+        void 플레이어마다_배팅_금액_요청_메시지를_출력한다() {
+            // when
+            blackJackController.start();
+
+            // then
+            String output = getOutput();
+            assertThat(output)
+                    .contains("시오의 배팅 금액은?")
+                    .contains("봉구스의 배팅 금액은?");
+        }
+
+        @Test
+        void 카드_출력_형식을_지켜야_한다() {
+            // when
+            blackJackController.start();
+
+            // then
+            String output = getOutput();
+            assertThat(output)
                     .contains("딜러카드:")
                     .contains("시오카드:")
-                    .contains("봉구스카드:")
+                    .contains("봉구스카드:");
+
+        }
+
+        @Test
+        void HIT_유무_요청_메시지를_출력한다() {
+            // when
+            blackJackController.start();
+
+            // then
+            String output = getOutput();
+            assertThat(output)
                     .contains("시오는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-                    .contains("봉구스는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-                    .contains("딜러는 16이하라 한장의 카드를 더 받았습니다.")
-                    .contains("## 최종 승패")
+                    .contains("봉구스는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)");
+        }
+
+        @Test
+        void 딜러_HIT_메시지를_출력한다() {
+            // when
+            blackJackController.start();
+
+            // then
+            String output = getOutput();
+            assertThat(output)
+                    .contains("딜러는 16이하라 한장의 카드를 더 받았습니다.");
+        }
+
+        @Test
+        void 최종_결과를_출력한다() {
+            // when
+            blackJackController.start();
+
+            // then
+            String output = getOutput();
+            assertThat(output)
+                    .contains("## 최종 수익")
                     .contains("딜러:")
                     .contains("시오:")
                     .contains("봉구스:");
@@ -111,7 +177,7 @@ public class BlackJackControllerTest {
         @Test
         void 로직이_정상적으로_동작한다() {
             // when
-            blackJackController.run();
+            blackJackController.start();
 
             // then
             String output = getOutput();
@@ -124,10 +190,9 @@ public class BlackJackControllerTest {
                     .contains("딜러카드: 6하트, 7하트, 2스페이드, 3스페이드 - 결과: 18")
                     .contains("시오카드: 2하트, 3하트, 8하트 - 결과: 13")
                     .contains("봉구스카드: 4하트, 5하트, 9하트 - 결과: 18")
-                    .contains("딜러: 1승 0패")
-                    .contains("시오: 패")
-                    .contains("봉구스: 무");
+                    .contains("딜러: 10000")
+                    .contains("시오: -10000")
+                    .contains("봉구스: 0");
         }
     }
-
 }

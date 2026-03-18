@@ -6,10 +6,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static util.TestUtil.createDealer;
 import static util.TestUtil.createPlayer;
 
-import domain.Dealer;
 import domain.Deck;
-import domain.Player;
 import domain.card.Rank;
+import domain.participant.Dealer;
+import domain.participant.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Test;
 class BlackJackTurnServiceTest {
 
     BlackJackTurnService blackJackTurnService;
+    Deck deck = Deck.createShuffledDeck();
 
     @BeforeEach
     void setUp() {
@@ -26,11 +27,10 @@ class BlackJackTurnServiceTest {
     @Test
     void 플레이어가_정상적으로_Hit_하는_경우() {
         // given
-        Deck deck = new Deck();
         Player player = createPlayer("봉구스");
 
         // when
-        blackJackTurnService.playerHit(player, deck);
+        blackJackTurnService.hitByPlayer(player, "y", deck);
 
         // then
         assertEquals(1, player.getHand().getCards().size());
@@ -39,11 +39,10 @@ class BlackJackTurnServiceTest {
     @Test
     void 딜러가_정상적으로_Hit_하는_경우() {
         // given
-        Deck deck = new Deck();
         Dealer dealer = createDealer();
 
         // when
-        blackJackTurnService.dealerHit(dealer, deck);
+        blackJackTurnService.hitByDealer(dealer, deck);
 
         // then
         assertEquals(1, dealer.getHand().getCards().size());
@@ -55,7 +54,7 @@ class BlackJackTurnServiceTest {
         Dealer dealer = createDealer(Rank.TWO, Rank.FIVE);
 
         // when, then
-        assertTrue(blackJackTurnService.canDealerHit(dealer));
+        assertTrue(blackJackTurnService.hitByDealer(dealer, deck));
     }
 
     @Test
@@ -64,7 +63,7 @@ class BlackJackTurnServiceTest {
         Dealer dealer = createDealer(Rank.JACK, Rank.QUEEN, Rank.KING);
 
         // when, then
-        assertFalse(blackJackTurnService.canDealerHit(dealer));
+        assertFalse(blackJackTurnService.hitByDealer(dealer, deck));
     }
 
     @Test
@@ -73,7 +72,8 @@ class BlackJackTurnServiceTest {
         Player player = createPlayer("시오", Rank.TWO, Rank.FIVE);
 
         // when, then
-        assertTrue(blackJackTurnService.canPlayerHit(player, "y"));
+
+        assertTrue(blackJackTurnService.hitByPlayer(player, "y", deck));
     }
 
     @Nested
@@ -84,7 +84,7 @@ class BlackJackTurnServiceTest {
             Player player = createPlayer("시오", Rank.JACK, Rank.QUEEN, Rank.KING);
 
             // when, then
-            assertFalse(blackJackTurnService.canPlayerHit(player, "y"));
+            assertFalse(blackJackTurnService.hitByPlayer(player, "y", deck));
         }
 
         @Test
@@ -93,7 +93,7 @@ class BlackJackTurnServiceTest {
             Player player = createPlayer("시오", Rank.TWO, Rank.FIVE);
 
             // when, then
-            assertFalse(blackJackTurnService.canPlayerHit(player, "n"));
+            assertFalse(blackJackTurnService.hitByPlayer(player, "n", deck));
         }
     }
 

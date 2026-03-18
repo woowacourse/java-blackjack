@@ -1,19 +1,30 @@
 package util;
 
-import domain.Dealer;
-import domain.Player;
+import domain.betting.Betting;
 import domain.card.Card;
+import domain.card.Name;
 import domain.card.Rank;
 import domain.card.Suit;
+import domain.money.BettingMoney;
+import domain.participant.Dealer;
+import domain.participant.Player;
+import domain.result.Result;
+import domain.result.Results;
+import domain.result.WinningStatus;
+import java.util.Arrays;
 
 public class TestUtil {
 
+    public static Name createName(String name) {
+        return new Name(name);
+    }
+
     public static Player createPlayer(String name) {
-        return new Player(name);
+        return new Player(createName(name));
     }
 
     public static Player createPlayer(String name, Card... cards) {
-        Player player = new Player(name);
+        Player player = new Player(createName(name));
         for (Card card : cards) {
             player.draw(card);
         }
@@ -21,7 +32,7 @@ public class TestUtil {
     }
 
     public static Player createPlayer(String name, Rank... ranks) {
-        Player player = new Player(name);
+        Player player = new Player(createName(name));
         for (Rank rank : ranks) {
             Card card = new Card(Suit.SPADES, rank);
             player.draw(card);
@@ -56,5 +67,21 @@ public class TestUtil {
 
     public static Card createSpadesCard(Rank rank) {
         return new Card(Suit.SPADES, rank);
+    }
+
+    public static Betting createBetting(String name, long amount) {
+        return new Betting(createPlayer(name), BettingMoney.from(amount));
+    }
+
+    public static Result createResult(String name, long amount, WinningStatus winningStatus) {
+        return new Result(createBetting(name, amount), winningStatus);
+    }
+
+    public static Result createAmount10000Result(String name, WinningStatus winningStatus) {
+        return new Result(createBetting(name, 10000), winningStatus);
+    }
+
+    public static Results createResults(Result... results) {
+        return new Results(Arrays.stream(results).toList());
     }
 }

@@ -1,15 +1,19 @@
 package controller;
 
-import domain.Dealer;
 import domain.Deck;
-import domain.Player;
-import dto.BlackJackHandDto;
-import dto.BlackJackInitStatusDto;
+import domain.betting.Betting;
+import domain.betting.Bettings;
+import domain.money.BettingMoney;
+import domain.participant.Dealer;
+import domain.participant.Player;
+import domain.participant.Players;
+import domain.result.Results;
 import dto.FinalResultDto;
+import dto.HandDto;
+import dto.InitStatusDto;
 import dto.ScoreResultDto;
 import java.util.List;
 import service.BlackJackInitService;
-import service.BlackJackResultService;
 import service.BlackJackTurnService;
 import view.InputView;
 import view.OutputView;
@@ -18,42 +22,65 @@ public class BlackJackController {
 
     private final BlackJackInitService blackJackInitService;
     private final BlackJackTurnService blackJackTurnService;
-    private final BlackJackResultService blackJackResultService;
+
+    private final InputView inputView;
+    private final OutputView outputView;
 
     public BlackJackController(BlackJackInitService blackJackInitService,
                                BlackJackTurnService blackJackTurnService,
-                               BlackJackResultService blackJackResultService) {
+                               InputView inputView,
+                               OutputView outputView) {
         this.blackJackInitService = blackJackInitService;
         this.blackJackTurnService = blackJackTurnService;
-        this.blackJackResultService = blackJackResultService;
+        this.inputView = inputView;
+        this.outputView = outputView;
     }
 
-    public void run() {
-        List<String> names = InputView.askPlayerNames();
+    public void start() {
+        List<String> names = inputView.askPlayerNames();
 
         Deck deck = blackJackInitService.createDeck();
-        List<Player> players = blackJackInitService.createPlayers(names, deck);
+        Players players = blackJackInitService.createPlayers(names, deck);
         Dealer dealer = blackJackInitService.createDealer(deck);
 
-        playGame(deck, dealer, players);
-        printResult(dealer, players);
+        Bettings bettings = betMoney(players);
+
+        Results results = playGame(deck, dealer, bettings);
+        printResult(dealer, players, results);
     }
 
-    private void printResult(Dealer dealer, List<Player> players) {
-        ScoreResultDto scoreResultDto = blackJackResultService.createScoreResultDto(dealer, players);
-        OutputView.printScoreResult(scoreResultDto);
-
-        FinalResultDto finalResultDto = blackJackResultService.createFinalResultDto(dealer, players);
-        OutputView.printFinalResult(finalResultDto);
+    private Bettings betMoney(Players players) {
+        Bettings bettings = new Bettings();
+        for (int i = 0; i < players.size(); i++) {
+            Player player = players.get(i);
+            BettingMoney bettingMoney = BettingMoney.from(inputView.askBettingAmount(player.getNameString()));
+            Betting betting = new Betting(player, bettingMoney);
+            bettings = bettings.addBetting(betting);
+        }
+        return bettings;
     }
 
-    private void playGame(Deck deck, Dealer dealer, List<Player> players) {
-        BlackJackInitStatusDto blackJackInitStatusDto = blackJackInitService.createInitStatusDto(dealer, players);
-        OutputView.printInitMessage(blackJackInitStatusDto);
+    private void printResult(Dealer dealer, Players players, Results results) {
+        ScoreResultDto scoreResultDto = ScoreResultDto.of(dealer, players);
+        outputView.printScoreResult(scoreResultDto);
 
-        players.forEach(player -> drawPlayerCard(player, deck));
+        FinalResultDto finalResultDto = FinalResultDto.from(results);
+        outputView.printFinalResult(finalResultDto);
+    }
 
+    private Results playGame(Deck deck, Dealer dealer, Bettings bettings) {
+        Players players = bettings.getPlayers();
+        InitStatusDto initStatusDto = InitStatusDto.of(dealer, players);
+        outputView.printInitMessage(initStatusDto);
+
+        // todo : player, players를 붋변객체로 만들어서 해당 로직도 불변에 맞게 수정
+        for (int i = 0; i < players.size(); i++) {
+            Player player = players.get(i);
+            drawPlayerCard(player, deck);
+        }
         drawDealerCard(dealer, deck);
+
+        return Results.of(dealer, bettings);
     }
 
     private void drawPlayerCard(Player player, Deck deck) {
@@ -64,28 +91,26 @@ public class BlackJackController {
     }
 
     private void repeatCommands(Player player, Deck deck) {
-        while (blackJackTurnService.canPlayerHit(player, InputView.askPlayerCommand(player.getName()))) {
-            blackJackTurnService.playerHit(player, deck);
-            BlackJackHandDto blackJackHandDto = blackJackTurnService.createHandDto(player);
-            OutputView.printHandOutput(blackJackHandDto);
+        while (blackJackTurnService.hitByPlayer(player, inputView.askPlayerCommand(player.getNameString()), deck)) {
+            HandDto handDto = HandDto.from(player.getHand());
+            outputView.printHandOutput(player.getNameString(), handDto);
         }
     }
 
     private boolean isFirstCommandNo(Player player, Deck deck) {
-        String yesNoInput = InputView.askPlayerCommand(player.getName());
+        String yesNoInput = inputView.askPlayerCommand(player.getNameString());
 
-        BlackJackHandDto blackJackHandDto = blackJackTurnService.createHandDto(player);
-        OutputView.printHandOutput(blackJackHandDto);
-        if (blackJackTurnService.canPlayerHit(player, yesNoInput)) {
-            blackJackTurnService.playerHit(player, deck);
+        if (blackJackTurnService.hitByPlayer(player, yesNoInput, deck)) {
+            HandDto handDto = HandDto.from(player.getHand());
+            outputView.printHandOutput(player.getNameString(), handDto);
+            return true;
         }
-        return !blackJackTurnService.canPlayerHit(player, yesNoInput);
+        return false;
     }
 
     private void drawDealerCard(Dealer dealer, Deck deck) {
-        while (blackJackTurnService.canDealerHit(dealer)) {
-            blackJackTurnService.dealerHit(dealer, deck);
-            OutputView.printDealerHitMessage();
+        while (blackJackTurnService.hitByDealer(dealer, deck)) {
+            outputView.printDealerHitMessage();
         }
     }
 }

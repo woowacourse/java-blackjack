@@ -1,17 +1,20 @@
 package service;
 
-import domain.Dealer;
 import domain.Deck;
-import domain.Player;
-import dto.BlackJackInitStatusDto;
+import domain.card.Card;
+import domain.card.Name;
+import domain.participant.Dealer;
+import domain.participant.Player;
+import domain.participant.Players;
 import java.util.List;
 
 public class BlackJackInitService {
 
     public Deck createDeck() {
-        return new Deck();
+        return Deck.createShuffledDeck();
     }
 
+    // todo 딜러도 카드리스트 주입!
     public Dealer createDealer(Deck deck) {
         Dealer dealer = new Dealer();
         dealer.draw(deck.drawCard());
@@ -19,18 +22,14 @@ public class BlackJackInitService {
         return dealer;
     }
 
-    public List<Player> createPlayers(List<String> names, Deck deck) {
-        return names.stream()
+    public Players createPlayers(List<String> names, Deck deck) {
+        List<Player> players = names.stream()
                 .map(name -> {
-                    Player player = new Player(name);
-                    player.draw(deck.drawCard());
-                    player.draw(deck.drawCard());
-                    return player;
+                    List<Card> cards = List.of(deck.drawCard(), deck.drawCard());
+                    Name nameObject = new Name(name);
+                    return Player.of(nameObject, cards);
                 })
                 .toList();
-    }
-
-    public BlackJackInitStatusDto createInitStatusDto(Dealer dealer, List<Player> players) {
-        return new BlackJackInitStatusDto(dealer, players);
+        return new Players(players);
     }
 }

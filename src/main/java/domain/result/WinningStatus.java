@@ -1,6 +1,7 @@
-package domain;
+package domain.result;
 
 public enum WinningStatus {
+    BLACKJACK_WIN("승"),
     WIN("승"),
     DRAW("무"),
     LOSE("패");

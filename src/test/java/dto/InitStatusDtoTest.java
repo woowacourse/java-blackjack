@@ -14,7 +14,8 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class ScoreResultDtoTest {
+class InitStatusDtoTest {
+
     Players players;
     Dealer dealer;
 
@@ -28,22 +29,16 @@ class ScoreResultDtoTest {
     }
 
     @Test
-    void ScoreResultDto가_올바른_값을_가진다() {
-        // given
-        ScoreResultDto scoreResultDto = ScoreResultDto.of(dealer, players);
+    void initStatus() {
+        // given, when
+        InitStatusDto initStatusDto = InitStatusDto.of(dealer, players);
 
-        // when, then
-        assertEquals(List.of("4하트", "8클로버"), scoreResultDto.dealerHandDto().cards());
-        assertEquals(12, scoreResultDto.dealerScore());
-
-        PlayerHandScoreDto first = scoreResultDto.playerHandScoreDtos().getFirst();
-        assertEquals("봉구스", first.getName());
-        assertEquals(List.of("A클로버", "K다이아몬드"), first.getHandDto().cards());
-        assertEquals(21, first.score());
-
-        PlayerHandScoreDto second = scoreResultDto.playerHandScoreDtos().get(1);
-        assertEquals("시오", second.getName());
-        assertEquals(List.of("5하트", "J스페이드"), second.getHandDto().cards());
-        assertEquals(15, second.score());
+        // then
+        assertEquals(List.of("봉구스", "시오"), initStatusDto.getNames());
+        assertEquals(List.of("4하트"), initStatusDto.dealerHandDto().cards());
+        List<String> firstCards = initStatusDto.playerHandDtos().getFirst().handDto().cards();
+        assertEquals(List.of("A클로버", "K다이아몬드"), firstCards);
+        List<String> secondCards = initStatusDto.playerHandDtos().get(1).handDto().cards();
+        assertEquals(List.of("5하트", "J스페이드"), secondCards);
     }
 }

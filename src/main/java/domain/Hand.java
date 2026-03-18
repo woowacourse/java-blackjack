@@ -1,49 +1,55 @@
 package domain;
 
 import domain.card.Card;
-import java.util.ArrayList;
+import domain.card.Cards;
 import java.util.List;
 
 public class Hand {
-    private final List<Card> cards;
+    public static final int BLACKJACK_SCORE = 21;
+    private final Cards cards;
 
     public Hand() {
-        cards = new ArrayList<>();
+        cards = new Cards();
+    }
+
+    public Hand(Cards cards) {
+        this.cards = cards;
+    }
+
+    public static Hand from(List<Card> cardList) {
+        Cards cards = new Cards(cardList);
+        return new Hand(cards);
     }
 
     public int getSum() {
-        int sum = getInitSum();
-        long aceCount = countAce();
-
-        while (aceCount > 0 && sum > 21) {
-            sum -= 10;
-            aceCount--;
-        }
-
-        return sum;
-    }
-
-    private int getInitSum() {
-        return cards.stream()
-                .mapToInt(Card::getScore)
-                .sum();
-    }
-
-    private long countAce() {
-        return cards.stream()
-                .filter(Card::isAce)
-                .count();
+        return cards.getSum();
     }
 
     public boolean isBust() {
-        return getSum() > 21;
+        return getSum() > BLACKJACK_SCORE;
     }
 
-    public void addCard(Card card) {
-        cards.add(card);
+    public boolean isBlackjack() {
+        return getSum() == BLACKJACK_SCORE;
     }
 
-    public List<Card> getCards() {
+    public Hand addCard(Card card) {
+        return new Hand(cards.addCard(card));
+    }
+
+    public Cards getCards() {
         return cards;
+    }
+
+    public List<Card> getCardsList() {
+        return cards.cards();
+    }
+
+    public Card getFirstCard() {
+        return cards.getFirst();
+    }
+
+    public int size() {
+        return cards.size();
     }
 }

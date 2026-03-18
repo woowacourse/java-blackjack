@@ -12,7 +12,7 @@ class DeckTest {
     @Test
     void 덱을_정상적으로_생성하는_경우() {
         // given
-        Deck deck = new Deck();
+        Deck deck = Deck.createShuffledDeck();
 
         // when, then
         assertEquals(52, deck.getCards().size());
@@ -21,7 +21,7 @@ class DeckTest {
     @Test
     void 드로우가_정상적으로_실행되는_경우() {
         // given
-        Deck deck = new Deck();
+        Deck deck = Deck.createShuffledDeck();
 
         // when
         Card card = deck.drawCard();
@@ -34,13 +34,22 @@ class DeckTest {
     @Test
     void 드로우가_실패하는_경우() {
         // given
-        Deck deck = new Deck();
+        Deck deck = Deck.createShuffledDeck();
         for (int i = 0; i < 52; i++) {
             deck.drawCard();
         }
 
         // when, then
-        assertThrows(IllegalStateException.class,
-                () -> deck.drawCard());
+        assertThrows(IllegalStateException.class, deck::drawCard);
+    }
+
+    @Test
+    void 랜덤으로_섞인_덱을_생성한다() {
+        // given, when
+        Deck deck = Deck.createShuffledDeck();
+
+        // then
+        assertEquals(deck.getCards().stream().distinct().count(), deck.size());
+        assertEquals(52, deck.size());
     }
 }
