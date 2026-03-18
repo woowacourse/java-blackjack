@@ -42,4 +42,28 @@ class AmountTest {
         // then
         assertThat(amount.getValue()).isEqualTo(2200000000L);
     }
+
+    @DisplayName("베팅 금액이 0 이하일 경우 예외가 발생한다.")
+    @Test
+    void betZeroLessAmount() {
+        // given
+        String rawAmount = "-1000";
+
+        // when & then
+        assertThatThrownBy(() -> Amount.from(rawAmount))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("베팅 금액은 0보다 큰 양수여야 합니다.");
+    }
+
+    @DisplayName("베팅 금액이 0일 경우 예외가 발생한다.")
+    @Test
+    void betZeroAmount() {
+        // given
+        String rawAmount = "0";
+
+        // when & then
+        assertThatThrownBy(() -> Amount.from(rawAmount))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("베팅 금액은 0보다 큰 양수여야 합니다.");
+    }
 }
