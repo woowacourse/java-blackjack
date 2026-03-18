@@ -1,4 +1,4 @@
-package domain;
+package domain.participant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
@@ -6,8 +6,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import constant.Rank;
 import constant.Suit;
 import domain.card.Card;
-import domain.participant.Name;
-import domain.participant.Player;
 import exception.ErrorMessage;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
