@@ -2,6 +2,7 @@ package view;
 
 import domain.card.Card;
 import domain.card.MatchResult;
+import domain.money.BettingResult;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
@@ -66,22 +67,19 @@ public class OutputView {
         }
     }
 
-    public void showDealerResult(Map<MatchResult, Integer> dealerResult) {
+    public void showDealerResult(int dealerResult) {
         StringBuilder dealerStatistics = new StringBuilder();
 
         System.out.println("\n## 최종 승패");
 
-        dealerStatistics.append("딜러: ");
-        for (Map.Entry<MatchResult, Integer> results : dealerResult.entrySet()) {
-            printDealerStatistics(results, dealerStatistics);
-        }
+        dealerStatistics.append("딜러: ").append(dealerResult);
 
         System.out.println(dealerStatistics);
     }
 
-    public void showPlayerGameResult(Map<String, MatchResult> playerResults) {
-        for (Map.Entry<String, MatchResult> results : playerResults.entrySet()) {
-            System.out.printf("%s: %s\n", results.getKey(), results.getValue().getValue());
+    public void showPlayerGameResult(Map<String, BettingResult> playerResults) {
+        for (Map.Entry<String, BettingResult> results : playerResults.entrySet()) {
+            System.out.printf("%s: %s\n", results.getKey(), results.getValue().getEarnings());
         }
     }
 
@@ -108,11 +106,5 @@ public class OutputView {
 
         playerCards.append(String.join(", ", cards));
         return playerCards;
-    }
-
-    private static void printDealerStatistics(Map.Entry<MatchResult, Integer> results, StringBuilder result) {
-        if (results.getValue() != 0) {
-            result.append(String.format("%d%s ", results.getValue(), results.getKey().getValue()));
-        }
     }
 }

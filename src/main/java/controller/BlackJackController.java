@@ -2,14 +2,15 @@ package controller;
 
 import domain.card.Deck;
 import domain.card.DefaultShuffleStrategy;
-import domain.card.MatchResult;
 import domain.participant.Dealer;
 import domain.participant.Player;
 import domain.participant.Players;
+import domain.money.BettingResult;
 import service.BlackJackService;
 import view.InputView;
 import view.OutputView;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,7 +27,10 @@ public class BlackJackController {
     public void play() {
         Deck deck = new Deck(new DefaultShuffleStrategy());
         Dealer dealer = new Dealer();
-        Players players = readUntilValidPlayers();
+
+        List<String> playerNames = readUntilValidPlayers();
+        Map<String, Integer> playerBets = readUntilValidMoney(playerNames);
+        Players players = new Players(playerBets);
 
         BlackJackService blackJackService = new BlackJackService(deck, dealer, players);
         blackJackService.initHand();
@@ -35,9 +39,9 @@ public class BlackJackController {
         playRound(deck, dealer, players);
         outputView.showHandsResult(dealer, players);
 
-        Map<String, MatchResult> playerResults = blackJackService.calculateResults();
-        outputView.showDealerResult(blackJackService.calculateDealerResult(playerResults));
-        outputView.showPlayerGameResult(playerResults);
+        Map<String, BettingResult> bettingResults = blackJackService.calculateBettingResults();
+        outputView.showDealerResult(blackJackService.calculateDealerResult(bettingResults));
+        outputView.showPlayerGameResult(bettingResults);
     }
 
     private void playRound(Deck deck, Dealer dealer, Players players) {
@@ -64,16 +68,16 @@ public class BlackJackController {
         }
     }
 
-    private Players readUntilValidPlayers() {
-        List<String> players;
-        while (true) {
-            try {
-                players = inputView.readPlayers();
-                break;
-            } catch (IllegalArgumentException e) {
-                OutputView.printErrorMessage(e.getMessage());
-            }
+    private List<String> readUntilValidPlayers() {
+        return inputView.readPlayers();
+    }
+
+    private Map<String, Integer> readUntilValidMoney(List<String> playerNames) {
+        Map<String, Integer> players = new HashMap<>();
+        for (String name : playerNames) {
+            int betAmount = inputView.readBettingAmount(name);
+            players.put(name, betAmount);
         }
-        return new Players(players);
+        return players;
     }
 }

@@ -1,19 +1,46 @@
 package view;
 
+import util.Validator;
+
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 public class InputView {
 
     private static final String COMMA_DELIMITER = ",";
+
     private static final String BINARY_REGEX = "[yn]";
+    private static final String BINARY_Y = "y";
 
     private final Scanner sc = new Scanner(System.in);
 
     public List<String> readPlayers() {
-        System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
-        return splitPlayerNames(userInput());
+        while (true) {
+            try {
+                System.out.println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)");
+                return splitPlayerNames(userInput());
+            } catch (IllegalArgumentException e) {
+                OutputView.printErrorMessage(e.getMessage());
+            }
+        }
+    }
+
+    public int readBettingAmount(String name) {
+        while (true) {
+            try {
+                System.out.printf("%s의 배팅 금액은?%n", name);
+                String money = userInput();
+
+                int bettingAmount = Integer.parseInt(money);
+                Validator.validateMoney(bettingAmount);
+                return bettingAmount;
+            } catch (IllegalArgumentException e) {
+                OutputView.printErrorMessage("잘못된 입력입니다. 다시 입력해주세요.");
+            }
+        }
     }
 
     public boolean readPlayerToHitUntilValid(String name) {
@@ -29,10 +56,18 @@ public class InputView {
 
     private List<String> splitPlayerNames(String playerNames) {
         List<String> names = List.of(playerNames.split(COMMA_DELIMITER, -1));
+
+        Set<String> uniqNames = new HashSet<>();
         for (String name : names) {
-            if (name.trim().isEmpty()) {
-                throw new IllegalArgumentException("잘못된 입력입니다. 다시 입력해주세요.");
+            name = name.trim();
+
+            Validator.validateNameLength(name);
+            Validator.validateNameEng(name);
+
+            if (uniqNames.contains(name)) {
+                throw new IllegalArgumentException("플레이어 이름은 중복될 수 없습니다.");
             }
+            uniqNames.add(name);
         }
         return names;
     }
@@ -42,8 +77,9 @@ public class InputView {
             throw new IllegalArgumentException("잘못된 입력입니다. 다시 입력해주세요.");
         }
 
-        return userInput.equals("y");
+        return userInput.equals(BINARY_Y);
     }
+
 
     private String userInput() {
         return sc.nextLine();

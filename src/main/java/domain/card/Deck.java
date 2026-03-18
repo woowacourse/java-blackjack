@@ -8,7 +8,7 @@ public class Deck {
 
     public Deck(ShuffleStrategy shuffleStrategy) {
         for (Suit suit : Suit.values()) {
-            generateRank(suit);
+            generateCardBySuit(suit);
         }
 
         shuffleStrategy.shuffle(cards);
@@ -22,7 +22,7 @@ public class Deck {
         throw new IllegalArgumentException("더 이상 카드가 존재하지 않습니다.");
     }
 
-    private void generateRank(Suit suit) {
+    private void generateCardBySuit(Suit suit) {
         for (Rank rank : Rank.values()) {
             cards.add(new Card(rank, suit));
         }
