@@ -2,6 +2,7 @@ package domain.state;
 
 import domain.BlackjackRule;
 import domain.Hand;
+import domain.WinningStatus;
 import domain.card.Card;
 
 public final class Hit extends Started {
@@ -12,9 +13,8 @@ public final class Hit extends Started {
     }
 
     @Override
-    public PlayerState draw(Card card) {
+    public ParticipantState draw(Card card) {
         hand.addCard(card);
-
         if (hand.getSum() > BlackjackRule.BLACKJACK_SCORE) {
             return new Bust(hand);
         }
@@ -28,7 +28,12 @@ public final class Hit extends Started {
     }
 
     @Override
-    public PlayerState onStay() {
+    public WinningStatus calculateWinningStatus(ParticipantState dealerState){
+        throw new IllegalStateException("Hit 상태에서는 승패를 계산할 수 없습니다.");
+    }
+
+    @Override
+    public ParticipantState onStay() {
         return new Stay(hand);
     }
 }

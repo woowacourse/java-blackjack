@@ -13,10 +13,6 @@ public class Dealer extends Participant {
         return !state.isFinished() &&  state.getScore() < DEALER_HIT_LIMIT;
     }
 
-    public Score calculateScore() {
-        return new Score(state.getScore(), isBlackJack());
-    }
-
     public String getFirstCardName(){
         return state.getFirstCard().getCardName();
     }

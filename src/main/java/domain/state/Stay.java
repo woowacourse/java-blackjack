@@ -1,6 +1,7 @@
 package domain.state;
 
 import domain.Hand;
+import domain.WinningStatus;
 import domain.card.Card;
 
 public final class Stay extends Started {
@@ -10,12 +11,33 @@ public final class Stay extends Started {
     }
 
     @Override
-    public PlayerState draw(Card card) {
+    public ParticipantState draw(Card card) {
         throw new IllegalStateException("Stay 상태에서는 hit할 수 없습니다.");
     }
 
     @Override
-    public PlayerState onStay() {
+    public WinningStatus calculateWinningStatus(ParticipantState dealerState) {
+        if (dealerState.isBust()) {
+            return WinningStatus.WIN;
+        }
+        if (dealerState.isBlackJack()) {
+            return WinningStatus.LOSE;
+        }
+        return compareScore(dealerState.getScore());
+    }
+
+    private WinningStatus compareScore(int otherScore) {
+        if (this.getScore() > otherScore) {
+            return WinningStatus.WIN;
+        }
+        if (this.getScore() < otherScore) {
+            return WinningStatus.LOSE;
+        }
+        return WinningStatus.DRAW;
+    }
+
+    @Override
+    public ParticipantState onStay() {
         return this;
     }
 

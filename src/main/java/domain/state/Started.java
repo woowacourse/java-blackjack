@@ -5,7 +5,7 @@ import domain.card.Card;
 
 import java.util.List;
 
-public abstract class Started implements PlayerState {
+public abstract class Started implements ParticipantState {
     protected final Hand hand;
 
     protected Started(Hand hand) {

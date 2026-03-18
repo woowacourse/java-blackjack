@@ -44,7 +44,7 @@ public class Game {
     public Map<Player, WinningStatus> calculateAllResults() {
         Map<Player, WinningStatus> results = new LinkedHashMap<>();
         for (Player player : players) {
-            results.put(player, player.calculateResult(dealer.calculateScore()));
+            results.put(player, player.calculateResult(dealer.state));
         }
         return results;
     }

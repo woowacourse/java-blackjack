@@ -2,13 +2,13 @@ package domain;
 
 import domain.card.Card;
 import domain.state.Hit;
-import domain.state.PlayerState;
+import domain.state.ParticipantState;
 
 import java.util.List;
 
 public abstract class Participant {
     protected final String name;
-    protected PlayerState state;
+    protected ParticipantState state;
 
     protected Participant(String name) {
         this.name = name;

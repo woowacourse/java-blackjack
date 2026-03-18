@@ -126,18 +126,7 @@ class GameTest {
     }
 
     @Test
-    void 플레이어의_이름이_중복된다면_예외를_발생한다() {
-        // given
-        List<Name> names = List.of(new Name("시오"), new Name("시오"));
-
-        // when, then
-        assertThatThrownBy(() -> new Game(names, new Deck(CardFactory.createDeck())))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ErrorMessage.DUPLICATE_NAME.getMessage());
-    }
-
-    @Test
-    void 게임_진행_후_승패_결과를_올바르게_계산한다() {
+    void 모든_참가자가_턴을_종료하면_승패_결과를_계산한다() {
         // given
         Deck deck = mock(Deck.class);
         when(deck.drawCard()).thenReturn(
@@ -145,12 +134,16 @@ class GameTest {
                 new Card(Suit.HEARTS, Rank.NUM3),
                 new Card(Suit.CLUBS, Rank.NUM4),
                 new Card(Suit.CLUBS, Rank.NUM5),
-                new Card(Suit.SPADES, Rank.NUM6),
+                new Card(Suit.SPADES, Rank.NUM10),
                 new Card(Suit.SPADES, Rank.NUM7)
         );
         Game game = new Game(List.of(new Name("시오"), new Name("봉구스")), deck);
         Player firstPlayer = game.getPlayers().get(0);
         Player secondPlayer = game.getPlayers().get(1);
+
+        game.stayPlayer(firstPlayer);
+        game.stayPlayer(secondPlayer);
+        game.stayDealer();
 
         // when
         Map<Player, WinningStatus> winningStatusMap = game.calculateAllResults();
@@ -161,6 +154,17 @@ class GameTest {
                 () -> assertEquals(WinningStatus.LOSE, winningStatusMap.get(firstPlayer)),
                 () -> assertEquals(WinningStatus.LOSE, winningStatusMap.get(secondPlayer))
         );
+    }
+
+    @Test
+    void 플레이어의_이름이_중복된다면_예외를_발생한다() {
+        // given
+        List<Name> names = List.of(new Name("시오"), new Name("시오"));
+
+        // when, then
+        assertThatThrownBy(() -> new Game(names, new Deck(CardFactory.createDeck())))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(ErrorMessage.DUPLICATE_NAME.getMessage());
     }
 
     @Test
