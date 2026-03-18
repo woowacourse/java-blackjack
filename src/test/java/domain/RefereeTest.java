@@ -121,6 +121,19 @@ class RefereeTest {
         assertThat(result.getPlayerResults().get(player)).isEqualTo(MatchResult.DRAW);
     }
 
+    @Test
+    @DisplayName("딜러만 블랙잭이고 플레이어가 일반 21점이면 플레이어의 패배이다.")
+    void dealer_blackjack_player_not_blackjack() {
+        Dealer dealer = createDealer(List.of(Number.ACE, Number.TEN));
+        Player player = createPlayer();
+        player.receiveCard(new Card(Shape.HEART, Number.ACE));
+        player.receiveCard(new Card(Shape.HEART, Number.TEN));
+        player.receiveCard(new Card(Shape.HEART, Number.QUEEN));
+
+        Result result = new Referee().judge(dealer, List.of(player));
+        assertThat(result.getPlayerResults().get(player)).isEqualTo(MatchResult.LOSE);
+    }
+
     private Player createPlayer() {
         return Player.from("pobi", new Money(10000));
     }

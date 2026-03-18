@@ -18,6 +18,9 @@ public class Referee {
         if (player.isBlackJack() && dealer.isBlackJack()) {
             return MatchResult.DRAW;
         }
+        if (dealer.isBlackJack()) {
+            return MatchResult.LOSE;
+        }
         if (player.isBlackJack()) {
             return MatchResult.BLACKJACK;
         }
