@@ -4,7 +4,6 @@ import domain.Hand;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
-import exception.ErrorMessage;
 import org.junit.jupiter.api.Test;
 
 import static domain.state.StateFixtures.handOf;
@@ -85,7 +84,7 @@ class HitTest {
 
         assertThatThrownBy(() -> hit.calculateWinningStatus(dealerState))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage(ErrorMessage.CANNOT_CALCULATE_WINNING_STATUS_ON_HIT.getMessage());
+                .hasMessage("HIT 상태에서는 승패를 계산할 수 없습니다.");
     }
 
     @Test

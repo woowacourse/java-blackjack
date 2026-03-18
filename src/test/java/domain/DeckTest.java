@@ -1,7 +1,6 @@
 package domain;
 
 import domain.card.Card;
-import exception.ErrorMessage;
 import factory.CardFactory;
 import org.junit.jupiter.api.Test;
 
@@ -42,7 +41,7 @@ class DeckTest {
         // when, then
         assertThatThrownBy(deck::drawCard)
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage(ErrorMessage.EMPTY_DECK.getMessage());
+                .hasMessage("덱에 카드가 없습니다.");
     }
 
 }

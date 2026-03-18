@@ -1,6 +1,5 @@
 package domain;
 
-import exception.ErrorMessage;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -15,7 +14,7 @@ class BetAmountTest {
         // when,then
         assertThatThrownBy(() -> new BetAmount(input))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ErrorMessage.INVALID_MONEY.getMessage());
+                .hasMessage("베팅 금액은 숫자로 입력해야 합니다.");
     }
 
     @ParameterizedTest
@@ -25,6 +24,6 @@ class BetAmountTest {
         // when,then
         assertThatThrownBy(() -> new BetAmount(input))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ErrorMessage.NEGATIVE_MONEY.getMessage());
+                .hasMessage("베팅 금액은 양의 정수여야 합니다.");
     }
 }

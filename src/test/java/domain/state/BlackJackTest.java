@@ -5,7 +5,6 @@ import domain.WinningStatus;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
-import exception.ErrorMessage;
 import org.junit.jupiter.api.Test;
 
 import static domain.state.StateFixtures.handOf;
@@ -25,7 +24,7 @@ class BlackJackTest {
 
         assertThatThrownBy(() -> blackJack.draw(card))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage(ErrorMessage.CANNOT_HIT_ON_BLACKJACK.getMessage());
+                .hasMessage("BlackJack 상태에서는 hit할 수 없습니다.");
     }
 
     @Test

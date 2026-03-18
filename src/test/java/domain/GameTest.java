@@ -3,7 +3,6 @@ package domain;
 import domain.card.Card;
 import domain.card.Rank;
 import domain.card.Suit;
-import exception.ErrorMessage;
 import factory.CardFactory;
 import org.junit.jupiter.api.Test;
 
@@ -164,7 +163,7 @@ class GameTest {
         // when, then
         assertThatThrownBy(() -> new Game(names, new Deck(CardFactory.createDeck())))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ErrorMessage.DUPLICATE_NAME.getMessage());
+                .hasMessage("닉네임은 서로 달라야 합니다.");
     }
 
     @Test
