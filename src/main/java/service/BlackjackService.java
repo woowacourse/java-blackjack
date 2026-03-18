@@ -50,7 +50,7 @@ public class BlackjackService {
     }
 
     public CardContentDto getCardContentDto(Player player) {
-        return new CardContentDto(player.getName(), player.getCards());
+        return new CardContentDto(player.getName(), player.getCardsDisplay());
     }
 
     public List<CardContentDto> getCardContentDtos(Game game) {
@@ -65,10 +65,10 @@ public class BlackjackService {
     public List<FinalCardDto> getFinalCardDtos(Game game) {
         List<FinalCardDto> finalCards = new ArrayList<>();
         Dealer dealer = game.getDealer();
-        finalCards.add(new FinalCardDto(dealer.getName(), dealer.getCards(), dealer.getCardsTotalSum()));
+        finalCards.add(new FinalCardDto(dealer.getName(), dealer.getCardsDisplay(), dealer.getCardsTotalSum()));
 
         for (Player player : game.getPlayers()) {
-            finalCards.add(new FinalCardDto(player.getName(), player.getCards(), player.getCardsTotalSum()));
+            finalCards.add(new FinalCardDto(player.getName(), player.getCardsDisplay(), player.getCardsTotalSum()));
         }
         return finalCards;
     }

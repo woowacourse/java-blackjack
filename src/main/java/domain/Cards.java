@@ -45,7 +45,18 @@ public class Cards {
         return calculateScore() + calculateAceScore();
     }
 
+    public  Card getFirstCard() {
+        return getCards().getFirst();
+    }
     public List<Card> getCards() {
         return new ArrayList<>(cards);
+    }
+
+    public List<String> getCardsDisplay() {
+        List<String> cardsDisplay = new ArrayList<>();
+        for (Card card : cards) {
+            cardsDisplay.add(card.getCardDisplay());
+        }
+        return new ArrayList<>(cardsDisplay);
     }
 }

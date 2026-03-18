@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -32,6 +33,14 @@ public class Dealer {
 
     public boolean needAdditionalCard() {
         return getCardsTotalSum() <= ADDITIONAL_THRESHOLD;
+    }
+
+    public String getFirstCardDisplay() {
+        return cards.getFirstCard().getCardDisplay();
+    }
+
+    public List<String> getCardsDisplay() {
+        return Collections.unmodifiableList(cards.getCardsDisplay());
     }
 
     public String getName() {

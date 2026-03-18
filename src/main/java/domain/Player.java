@@ -66,6 +66,10 @@ public class Player {
         return Collections.unmodifiableList(cards.getCards());
     }
 
+    public List<String> getCardsDisplay() {
+        return Collections.unmodifiableList(cards.getCardsDisplay());
+    }
+
     public int getBettingScore() {
         return betting.getBettingScore();
     }

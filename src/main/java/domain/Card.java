@@ -26,6 +26,10 @@ public class Card {
         return cardShape;
     }
 
+    public String getCardDisplay() {
+        return cardShape.getName()+cardRank.getName();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;

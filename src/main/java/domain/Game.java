@@ -95,8 +95,8 @@ public class Game {
         return -players.getTotalBettingScore();
     }
 
-    public Card getDealerFirstCard() {
-        return dealer.getCards().getFirst();
+    public String getDealerFirstCard() {
+        return dealer.getFirstCardDisplay();
     }
 
     public Players getPlayers() {

@@ -26,11 +26,7 @@ public final class OutputView {
     }
 
     public static void displayCardContent(CardContentDto dto) {
-        List<String> cardContents = new ArrayList<>();
-        for (Card card : dto.cards()) {
-            cardContents.add(card.getCardRank().getName() + card.getCardShape().getName());
-        }
-        System.out.printf("%s카드: %s\n", dto.name(), String.join(", ", cardContents));
+        System.out.printf("%s카드: %s\n", dto.name(), String.join(", ", dto.cards()));
     }
 
     public static void displayDealerCard() {
@@ -39,11 +35,7 @@ public final class OutputView {
 
     public static void displayFinalCard(List<FinalCardDto> finalCardDto) {
         for (FinalCardDto dto : finalCardDto) {
-            List<String> cardContents = new ArrayList<>();
-            for (Card card : dto.cards()) {
-                cardContents.add(card.getCardRank().getName() + card.getCardShape().getName());
-            }
-            System.out.printf("%s카드: %s - 결과: %d\n", dto.name(), String.join(", ", cardContents), dto.total());
+            System.out.printf("%s카드: %s - 결과: %d\n", dto.name(), String.join(", ", dto.cards()), dto.total());
         }
     }
 
