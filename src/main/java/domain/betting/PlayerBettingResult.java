@@ -6,10 +6,10 @@ import domain.participant.Player;
 
 public record PlayerBettingResult
         (Name playerName,
-         BettingRule bettingRule) {
+         MatchingRule bettingRule) {
 
     public static PlayerBettingResult from(Dealer dealer, Player player) {
-        BettingRule bettingRule = BettingRule.determine(dealer, player);
+        MatchingRule bettingRule = MatchingRule.determine(dealer, player);
 
         return new PlayerBettingResult(player.getName(), bettingRule);
     }

@@ -1,4 +1,6 @@
-package domain.betting;
+package view;
+
+import domain.betting.BettingAmount;
 
 public class BettingAmountParser {
     private BettingAmountParser() {

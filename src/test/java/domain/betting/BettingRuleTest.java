@@ -24,7 +24,7 @@ class BettingRuleTest {
             "DRAW, 1000, 0",
             "PLAYER_LOSE, 1000, -1000"
     })
-    void 배팅룰에_따라_수익금_정상_계산(BettingRule bettingRule, int betting, int expectedProfit) {
+    void 배팅룰에_따라_수익금_정상_계산(MatchingRule bettingRule, int betting, int expectedProfit) {
         BettingAmount bettingAmount = BettingAmount.of(betting);
 
         int profit = bettingRule.calculateProfit(bettingAmount);
@@ -43,9 +43,9 @@ class BettingRuleTest {
         dealer.add(new Card(Rank.TEN, Suit.SPADE));
         dealer.add(new Card(Rank.JACK, Suit.SPADE));
 
-        BettingRule rule = BettingRule.determine(dealer, player);
+        MatchingRule rule = MatchingRule.determine(dealer, player);
 
-        assertThat(rule).isEqualTo(BettingRule.PLAYER_BUST);
+        assertThat(rule).isEqualTo(MatchingRule.PLAYER_BUST);
     }
 
     @Test
@@ -58,9 +58,9 @@ class BettingRuleTest {
         dealer.add(new Card(Rank.TEN, Suit.SPADE));
         dealer.add(new Card(Rank.JACK, Suit.SPADE));
 
-        BettingRule rule = BettingRule.determine(dealer, player);
+        MatchingRule rule = MatchingRule.determine(dealer, player);
 
-        assertThat(rule).isEqualTo(BettingRule.PLAYER_WIN);
+        assertThat(rule).isEqualTo(MatchingRule.PLAYER_WIN);
     }
 
     @Test
@@ -72,9 +72,9 @@ class BettingRuleTest {
         dealer.add(new Card(Rank.ACE, Suit.SPADE));
         dealer.add(new Card(Rank.TEN, Suit.SPADE));
 
-        BettingRule rule = BettingRule.determine(dealer, player);
+        MatchingRule rule = MatchingRule.determine(dealer, player);
 
-        assertThat(rule).isEqualTo(BettingRule.BOTH_NATURAL_BLACKJACK);
+        assertThat(rule).isEqualTo(MatchingRule.BOTH_NATURAL_BLACKJACK);
     }
 
     @Test
@@ -86,9 +86,9 @@ class BettingRuleTest {
         dealer.add(new Card(Rank.TEN, Suit.SPADE));
         dealer.add(new Card(Rank.JACK, Suit.SPADE));
 
-        BettingRule rule = BettingRule.determine(dealer, player);
+        MatchingRule rule = MatchingRule.determine(dealer, player);
 
-        assertThat(rule).isEqualTo(BettingRule.PLAYER_NATURAL);
+        assertThat(rule).isEqualTo(MatchingRule.PLAYER_NATURAL);
     }
 
     @Test
@@ -100,9 +100,9 @@ class BettingRuleTest {
         dealer.add(new Card(Rank.ACE, Suit.SPADE));
         dealer.add(new Card(Rank.TEN, Suit.SPADE));
 
-        BettingRule rule = BettingRule.determine(dealer, player);
+        MatchingRule rule = MatchingRule.determine(dealer, player);
 
-        assertThat(rule).isEqualTo(BettingRule.DEALER_NATURAL);
+        assertThat(rule).isEqualTo(MatchingRule.DEALER_NATURAL);
     }
 
     @Test
@@ -114,9 +114,9 @@ class BettingRuleTest {
         dealer.add(new Card(Rank.NINE, Suit.SPADE));
         dealer.add(new Card(Rank.TEN, Suit.SPADE));
 
-        BettingRule rule = BettingRule.determine(dealer, player);
+        MatchingRule rule = MatchingRule.determine(dealer, player);
 
-        assertThat(rule).isEqualTo(BettingRule.PLAYER_WIN);
+        assertThat(rule).isEqualTo(MatchingRule.PLAYER_WIN);
     }
 
     @Test
@@ -128,9 +128,9 @@ class BettingRuleTest {
         dealer.add(new Card(Rank.NINE, Suit.SPADE));
         dealer.add(new Card(Rank.TEN, Suit.SPADE));
 
-        BettingRule rule = BettingRule.determine(dealer, player);
+        MatchingRule rule = MatchingRule.determine(dealer, player);
 
-        assertThat(rule).isEqualTo(BettingRule.DRAW);
+        assertThat(rule).isEqualTo(MatchingRule.DRAW);
     }
 
     @Test
@@ -142,9 +142,9 @@ class BettingRuleTest {
         dealer.add(new Card(Rank.NINE, Suit.SPADE));
         dealer.add(new Card(Rank.TEN, Suit.SPADE));
 
-        BettingRule rule = BettingRule.determine(dealer, player);
+        MatchingRule rule = MatchingRule.determine(dealer, player);
 
-        assertThat(rule).isEqualTo(BettingRule.PLAYER_LOSE);
+        assertThat(rule).isEqualTo(MatchingRule.PLAYER_LOSE);
     }
 
 }

@@ -12,7 +12,7 @@ public class InputView {
         this.scanner = scanner;
     }
 
-    public String readPlayerName() {
+    public String readPlayerNames() {
         System.out.println(REQUEST_PLAYER_NAME);
         return readLine();
     }

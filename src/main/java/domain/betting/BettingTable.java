@@ -3,6 +3,7 @@ package domain.betting;
 import domain.participant.Name;
 import java.util.ArrayList;
 import java.util.List;
+import view.dto.PlayerProfitResult;
 
 public class BettingTable {
     private final List<PlayerBetting> bettingTable;
@@ -35,7 +36,7 @@ public class BettingTable {
 
     private PlayerProfitResult calculatePlayerProfit(PlayerBettingResult playerBettingResult) {
         Name name = playerBettingResult.playerName();
-        BettingRule bettingRule = playerBettingResult.bettingRule();
+        MatchingRule bettingRule = playerBettingResult.bettingRule();
         BettingAmount bettingAmount = findBettingByName(name).bettingAmount();
 
         int playerProfit = bettingRule.calculateProfit(bettingAmount);

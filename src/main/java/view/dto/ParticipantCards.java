@@ -1,4 +1,4 @@
-package domain.dto;
+package view.dto;
 
 import domain.card.Card;
 import domain.participant.Dealer;

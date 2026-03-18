@@ -1,13 +1,13 @@
 package view;
 
 import domain.betting.ParticipantsProfitResult;
-import domain.betting.PlayerProfitResult;
 import domain.card.Card;
 import domain.card.Suit;
-import domain.dto.ParticipantCards;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import view.dto.ParticipantCards;
+import view.dto.PlayerProfitResult;
 
 public class Formatter {
     private static final Map<Suit, String> SUIT_FORMATS = Map.of(

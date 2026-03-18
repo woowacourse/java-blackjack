@@ -1,9 +1,9 @@
 package view;
 
 import domain.betting.ParticipantsProfitResult;
-import domain.dto.InitialDealingResult;
-import domain.dto.ParticipantCards;
 import java.util.List;
+import view.dto.InitialDealingResult;
+import view.dto.ParticipantCards;
 
 public class OutputView {
     private static final String LINE_FEED = "\n";

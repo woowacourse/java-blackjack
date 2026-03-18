@@ -3,20 +3,20 @@ package controller;
 import domain.Command;
 import domain.GameManager;
 import domain.betting.BettingAmount;
-import domain.betting.BettingAmountParser;
 import domain.betting.BettingTable;
 import domain.betting.ParticipantsProfitResult;
 import domain.betting.PlayerBetting;
 import domain.betting.PlayerBettingResult;
-import domain.dto.InitialDealingResult;
 import domain.participant.Dealer;
 import domain.participant.Participants;
 import domain.participant.Player;
-import domain.participant.PlayerParser;
 import domain.participant.Players;
 import java.util.List;
+import view.BettingAmountParser;
 import view.InputView;
 import view.OutputView;
+import view.PlayerParser;
+import view.dto.InitialDealingResult;
 
 public class GameController {
     private final InputView inputView;
@@ -40,13 +40,6 @@ public class GameController {
         bettingResultPhase(bettingTable, participants);
     }
 
-    private void bettingResultPhase(BettingTable bettingTable, Participants participants) {
-        List<PlayerBettingResult> playerBettingResults = participants.playersBettingResult();
-        ParticipantsProfitResult participantsProfitResult = bettingTable.calculateAllParticipantsProfit(
-                playerBettingResults);
-        outputView.printParticipantsProfit(participantsProfitResult);
-    }
-
     private BettingTable placeBet(Players players) {
         BettingTable bettingTable = BettingTable.create();
         for (Player player : players) {
@@ -55,12 +48,8 @@ public class GameController {
             PlayerBetting playerBetting = PlayerBetting.from(player, bettingAmount);
             bettingTable.add(playerBetting);
         }
-        return bettingTable;
-    }
 
-    private BettingAmount readBettingAmountFor(Player player) {
-        String rawBettingAmount = inputView.askBettingAmount(player);
-        return BettingAmountParser.parse(rawBettingAmount);
+        return bettingTable;
     }
 
     private void readyPhase(Participants participants) {
@@ -70,10 +59,16 @@ public class GameController {
         outputView.printInitialDealingResult(initialDealingResult);
     }
 
-
     private void playPhase(Dealer dealer, Players players) {
         playPlayersTurn(players);
         playDealerTurn(players, dealer);
+    }
+
+    private void playPlayersTurn(Players players) {
+        for (Player player : players) {
+            playPlayerTurn(player);
+        }
+        outputView.printNewLine();
     }
 
     private void playDealerTurn(Players players, Dealer dealer) {
@@ -92,12 +87,18 @@ public class GameController {
         outputView.printNewLine();
     }
 
-    private void playPlayersTurn(Players players) {
-        for (Player player : players) {
-            playPlayerTurn(player);
-        }
-        outputView.printNewLine();
+    private void bettingResultPhase(BettingTable bettingTable, Participants participants) {
+        List<PlayerBettingResult> playerBettingResults = participants.playersBettingResult();
+        ParticipantsProfitResult participantsProfitResult = bettingTable.calculateAllParticipantsProfit(
+                playerBettingResults);
+        outputView.printParticipantsProfit(participantsProfitResult);
     }
+
+    private BettingAmount readBettingAmountFor(Player player) {
+        String rawBettingAmount = inputView.askBettingAmount(player);
+        return BettingAmountParser.parse(rawBettingAmount);
+    }
+
 
     private void playPlayerTurn(Player player) {
         while (shouldDrawCard(player)) {
@@ -124,7 +125,7 @@ public class GameController {
     }
 
     private Players readPlayers() {
-        String rawPlayerName = inputView.readPlayerName();
-        return PlayerParser.parseToPlayers(rawPlayerName);
+        String rawPlayerNames = inputView.readPlayerNames();
+        return PlayerParser.parseToPlayers(rawPlayerNames);
     }
 }

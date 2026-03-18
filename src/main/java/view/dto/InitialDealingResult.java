@@ -1,4 +1,4 @@
-package domain.dto;
+package view.dto;
 
 import domain.participant.Participants;
 import java.util.List;
