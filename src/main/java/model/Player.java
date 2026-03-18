@@ -8,7 +8,7 @@ public class Player extends AbstractParticipant {
         super(name);
     }
 
-    public void setMoney(BettingMoney bettingMoney) {
+    public void betMoney(BettingMoney bettingMoney) {
         this.bettingMoney = bettingMoney;
     }
 

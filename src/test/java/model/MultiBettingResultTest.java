@@ -25,13 +25,13 @@ public class MultiBettingResultTest {
         for (PlayerScenario playerScenario : playerScenarios) {
             Player player = new Player(playerScenario.name());
             playerScenario.cards().forEach(player::addCard);
-            player.setMoney(playerScenario.bettingMoney());
+            player.betMoney(playerScenario.bettingMoney());
             players.add(player);
         }
 
         // when
-        BettingResult bettingResult = new BettingResult();
-        bettingResult.calculateBettingMoney(dealer, players);
+        BettingCalculator bettingResult = new BettingCalculator();
+        bettingResult.calculateBettingMoney(dealer, new Players(players));
 
         // then
         assertAll(

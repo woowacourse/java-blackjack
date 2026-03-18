@@ -24,11 +24,12 @@ public class BettingResultTest {
 
         Player player = new Player("pobi");
         playerCards.forEach(player::addCard);
-        player.setMoney(new BettingMoney(playerStartMoney));
+        player.betMoney(new BettingMoney(playerStartMoney));
+        Players players = new Players(List.of(player));
 
         // when
-        BettingResult bettingResult = new BettingResult();
-        bettingResult.calculateBettingMoney(dealer, List.of(player));
+        BettingCalculator bettingResult = new BettingCalculator();
+        bettingResult.calculateBettingMoney(dealer, players);
         long playerMoney = player.profit();
         long dealerMoney = dealer.profit();
 
