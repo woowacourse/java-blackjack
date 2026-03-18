@@ -11,41 +11,61 @@ public enum WinningStatus {
     LOSE;
 
     public static WinningStatus of(Player player, Dealer dealer) {
-        if (dealer.isBust()) {
-            return WIN;
+        if (isBustCase(player, dealer)) { // 버스트 승패 판단이 가능한 경우
+            return bustResult(player, dealer);
         }
 
+        if (isBlackjackCase(player, dealer)) {
+            return blackjackResult(player, dealer);
+        }
+
+        return compareScore(player.score(), dealer.score());
+    }
+
+    private static boolean isBustCase(Player player, Dealer dealer) {
+        return player.isBust() || dealer.isBust();
+    }
+
+    private static WinningStatus bustResult(Player player, Dealer dealer) {
         if (player.isBust()) {
             return LOSE;
         }
 
-        Optional<WinningStatus> winningStatus = judgeBlackjack(player, dealer);
-        return winningStatus.orElseGet(() -> compareScore(player.score(), dealer.score()));
+        if (dealer.isBust()) {
+            return WIN;
+        }
+
+        throw new IllegalStateException("버스트 상태가 올바르지 않습니다.");
     }
 
-    private static Optional<WinningStatus> judgeBlackjack(Player player, Dealer dealer) {
-        boolean isPlayerBlackjack = player.isBlackjack();
-        boolean isDealerBlackjack = dealer.isBlackjack();
+    private static boolean isBlackjackCase(Player player, Dealer dealer) {
+        return player.isBlackjack() || dealer.isBlackjack();
+    }
 
-        if (isPlayerBlackjack && !isDealerBlackjack) {
-            return Optional.of(WIN);
+    private static WinningStatus blackjackResult(Player player, Dealer dealer) {
+        boolean playerBlackjack = player.isBlackjack();
+        boolean dealerBlackjack = dealer.isBlackjack();
+
+        if (playerBlackjack && dealerBlackjack) {
+            return TIE;
         }
 
-        if (!isPlayerBlackjack && isDealerBlackjack) {
-            return Optional.of(LOSE);
+        if (playerBlackjack) {
+            return WIN;
         }
 
-        if (isPlayerBlackjack && isDealerBlackjack) {
-            return Optional.of(TIE);
+        if (dealerBlackjack) {
+            return LOSE;
         }
 
-        return Optional.empty();
+        throw new IllegalStateException("블랙잭 상태가 올바르지 않습니다.");
     }
 
     private static WinningStatus compareScore(int playerScore, int dealerScore) {
         if (playerScore > dealerScore) {
             return WIN;
         }
+
         if (playerScore < dealerScore) {
             return LOSE;
         }
