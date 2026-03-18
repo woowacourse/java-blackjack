@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 public class Hand {
 
-    private static final int BUSTED_SCORE = 21;
+    private static final int BLACKJACK_SCORE = 21;
     private final List<Card> cards;
 
     private Hand(List<Card> cards) {
@@ -47,15 +47,15 @@ public class Hand {
 
     public boolean isBlackJack() {
         List<Card> allCards = getCards();
-        return allCards.size() == 2 && calculateTotalScore() == BUSTED_SCORE;
+        return allCards.size() == 2 && calculateTotalScore() == BLACKJACK_SCORE;
     }
 
     public boolean isDrawable() {
-        return calculateTotalScore() < BUSTED_SCORE;
+        return calculateTotalScore() < BLACKJACK_SCORE;
     }
 
     public boolean isBusted() {
-        return calculateTotalScore() > BUSTED_SCORE;
+        return calculateTotalScore() > BLACKJACK_SCORE;
     }
 
     public List<Card> getCards() {
@@ -63,7 +63,7 @@ public class Hand {
     }
 
     private boolean isRawSumBusted() {
-        return calculateScoreSum() > BUSTED_SCORE;
+        return calculateScoreSum() > BLACKJACK_SCORE;
     }
 
     private int calculateScoreSum() {
@@ -85,7 +85,7 @@ public class Hand {
             return scoreSum;
         }
         int calculatedScore = scoreSum - 10;
-        if (calculatedScore <= BUSTED_SCORE) {
+        if (calculatedScore <= BLACKJACK_SCORE) {
             return calculatedScore;
         }
         return calculateWithAce(calculatedScore, aceCount - 1);
