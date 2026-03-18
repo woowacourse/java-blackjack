@@ -58,4 +58,11 @@ public class HandStateTest {
 
         assertEquals(Outcome.DRAW, outcome);
     }
+
+    @Test
+    @DisplayName("딜러가 BLACKJACK이면 플레이어 21(비-Blackjack)은 패배한다")
+    void loseWhenDealerBlackjackAndPlayerTwentyOneButNotBlackjack() {
+        Outcome outcome = HandState.HIT.against(HandState.BLACKJACK, 21, 21);
+        assertEquals(Outcome.LOSE, outcome);
+    }
 }
