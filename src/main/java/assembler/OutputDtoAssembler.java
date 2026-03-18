@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 public class OutputDtoAssembler {
-    private static final String DEALER_NAME = "딜러";
 
     public static HandDto toPlayerHandDto(Player player) {
         return new HandDto(
@@ -23,7 +22,7 @@ public class OutputDtoAssembler {
 
     public static HandDto toDealerHandDto(Dealer dealer) {
         return new HandDto(
-                DEALER_NAME,
+                dealer.getName(),
                 dealer.getCards().stream()
                         .map(Card::getCardName)
                         .toList()
@@ -62,7 +61,7 @@ public class OutputDtoAssembler {
 
     private static HandDto toDealerInitHandDto(Dealer dealer) {
         return new HandDto(
-                DEALER_NAME,
+                dealer.getName(),
                 List.of(dealer.getFirstCardName())
         );
     }
