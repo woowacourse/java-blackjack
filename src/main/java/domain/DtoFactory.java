@@ -22,8 +22,13 @@ public class DtoFactory {
 
     public static List<GameInitialInfoDto> toInitialInfo(Dealer dealer, Players players) {
         List<GameInitialInfoDto> results = new ArrayList<>();
-        addDealerInitialInfo(results, dealer);
-        addPlayerInitialInfos(results, players);
+
+        results.add(toInitialInfo(dealer));
+
+        for (Player player : players.getNonNaturalBlackJackPlayers()) {
+            results.add(toInitialInfo(player));
+        }
+
         return results;
     }
 
@@ -41,19 +46,10 @@ public class DtoFactory {
         }
     }
 
-    private static void addDealerInitialInfo(List<GameInitialInfoDto> results, Dealer dealer) {
-        results.add(new GameInitialInfoDto(
-                dealer.getName(),
-                List.of(dealer.getOpenCard())
-        ));
-    }
-
-    private static void addPlayerInitialInfos(List<GameInitialInfoDto> results, Players players) {
-        for (Player player : players.getNonNaturalBlackJackPlayers()) {
-            results.add(new GameInitialInfoDto(
-                    player.getName(),
-                    player.getHandToString()
-            ));
-        }
+    private static GameInitialInfoDto toInitialInfo(Participant participant) {
+        return new GameInitialInfoDto(
+                participant.getName(),
+                participant.getInitialOpenCards()
+        );
     }
 }

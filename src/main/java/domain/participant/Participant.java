@@ -42,4 +42,6 @@ public abstract class Participant {
     }
 
     public abstract boolean canDraw();
+
+    public abstract List<String> getInitialOpenCards();
 }

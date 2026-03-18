@@ -5,6 +5,7 @@ import domain.Name;
 import domain.PlayerStatus;
 import domain.card.Card;
 import domain.constant.Result;
+import java.util.List;
 
 public class Player extends Participant {
     private final PlayerStatus status;
@@ -41,5 +42,10 @@ public class Player extends Participant {
     @Override
     public boolean canDraw() {
         return !(isBust() || isNaturalBlackJack());
+    }
+
+    @Override
+    public List<String> getInitialOpenCards(){
+        return getHandToString();
     }
 }
