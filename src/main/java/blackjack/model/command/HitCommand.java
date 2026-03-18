@@ -1,4 +1,4 @@
-package blackjack.model.card;
+package blackjack.model.command;
 
 import java.util.regex.Pattern;
 
